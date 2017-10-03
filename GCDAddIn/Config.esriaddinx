@@ -1,0 +1,22 @@
+﻿<ESRI.Configuration xmlns="http://schemas.esri.com/Desktop/AddIns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Name>GCDAddIn</Name>
+  <AddInID>{f8ca7dea-22fb-40a3-8412-b84a4b528602}</AddInID>
+  <Description>Type in a description for this Add-in.</Description>
+  <Version>1.0</Version>
+  <Image>Images\GCDAddIn.png</Image>
+  <Author>Philip Bailey</Author>
+  <Company>North Arrow Research</Company>
+  <Date>10/3/2017</Date>
+  <Targets>
+    <Target name="Desktop" version="10.4" />
+  </Targets>
+  <AddIn language="CLR" library="GCDAddIn.dll" namespace="GCDAddIn">
+    <ArcMap>
+      <DockableWindows>
+        <DockableWindow id="North_Arrow_Research_GCDAddIn_ucDockableWindow" class="ucDockableWindow+AddinImpl" caption="My Dockable Window" image="Images\ucDockableWindow.png">
+          <InitialPlacement height="300" width="300" state="pinned" position="left" />
+        </DockableWindow>
+      </DockableWindows>
+    </ArcMap>
+  </AddIn>
+</ESRI.Configuration>
