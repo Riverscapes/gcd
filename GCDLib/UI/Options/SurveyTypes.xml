@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<SurveyTypes xmlns="http://tempuri.org/SurveyTypes.xsd">
+    <SurveyTypes>
+        <TypeID>9</TypeID>
+        <Name>[Undefined]</Name>
+        <Error>0.00</Error>
+    </SurveyTypes>
+    <SurveyTypes>
+        <TypeID>1</TypeID>
+        <Name>Total Station</Name>
+        <Error>0.04</Error>
+    </SurveyTypes>
+    <SurveyTypes>
+        <TypeID>2</TypeID>
+        <Name>rtkGPS</Name>
+        <Error>0.06</Error>
+    </SurveyTypes>
+    <SurveyTypes>
+        <TypeID>3</TypeID>
+        <Name>LiDAR</Name>
+        <Error>0.15</Error>
+    </SurveyTypes>
+    <SurveyTypes>
+        <TypeID>4</TypeID>
+        <Name>Single Beam Sonar</Name>
+        <Error>0.10</Error>
+    </SurveyTypes>
+    <SurveyTypes>
+        <TypeID>5</TypeID>
+        <Name>Multi Beam Sonar</Name>
+        <Error>0.03</Error>
+    </SurveyTypes>
+    <SurveyTypes>
+        <TypeID>6</TypeID>
+        <Name>TLS</Name>
+        <Error>0.03</Error>
+    </SurveyTypes>
+    <SurveyTypes>
+        <TypeID>7</TypeID>
+        <Name>Bathymetric LiDAR</Name>
+        <Error>0.18</Error>
+    </SurveyTypes>
+    <SurveyTypes>
+        <TypeID>8</TypeID>
+        <Name>Photogrammetry</Name>
+        <Error>0.12</Error>
+    </SurveyTypes>
+</SurveyTypes>

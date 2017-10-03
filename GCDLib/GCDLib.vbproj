@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{71E635EF-24B4-4802-9CBC-CA08B45E1014}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>GCDLib</RootNamespace>
+    <RootNamespace>GCD.GCDLib</RootNamespace>
     <AssemblyName>GCDLib</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
@@ -45,6 +45,9 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -63,7 +66,57 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.vb" />
+    <Compile Include="Core\BudgetSegregation\BSResultSet.vb" />
+    <Compile Include="Core\BudgetSegregation\BudgetClass.vb" />
+    <Compile Include="Core\BudgetSegregation\BudgetSegregationEngine.vb" />
+    <Compile Include="Core\BudgetSegregation\BudgetSegregationOutputsClass.vb" />
+    <Compile Include="Core\BudgetSegregation\MaskStatsClass.vb" />
+    <Compile Include="Core\ChangeDetection\ChangeDetectionEngineBase.vb" />
+    <Compile Include="Core\ChangeDetection\ChangeDetectionEngineMinLOD.vb" />
+    <Compile Include="Core\ChangeDetection\ChangeDetectionEngineProbabilistic.vb" />
+    <Compile Include="Core\ChangeDetection\ChangeDetectionEnginePropProb.vb" />
+    <Compile Include="Core\ChangeDetection\ChangeDetectionProperties.vb" />
+    <Compile Include="Core\ChangeDetection\ChangeStats.vb" />
+    <Compile Include="Core\ChangeDetection\ChangeStatsCalculator.vb" />
+    <Compile Include="Core\ChangeDetection\DoDResultHistograms.vb" />
+    <Compile Include="Core\ChangeDetection\DoDResultSet.vb" />
+    <Compile Include="Core\ChangeDetection\HistogramStats.vb" />
+    <Compile Include="Core\ElevationChangeBarViewer.vb" />
+    <Compile Include="Core\ErrorHandling\ExceptionBase.vb" />
+    <Compile Include="Core\ErrorHandling\ExceptionForm.Designer.vb">
+      <DependentUpon>ExceptionForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Core\ErrorHandling\ExceptionForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Core\ErrorHandling\ExceptionUI.vb" />
+    <Compile Include="Core\ErrorHandling\ExceptionUIWithDLLs.vb" />
+    <Compile Include="Core\External\ExternalLibs.vb" />
+    <Compile Include="Core\External\GCDCoreDLL.vb" />
+    <Compile Include="Core\External\NARCError.vb" />
+    <Compile Include="Core\External\RasterManager.vb" />
+    <Compile Include="Core\FileSystem.vb" />
+    <Compile Include="Core\GCDProject\ProjectDS.Designer.vb">
+      <DependentUpon>ProjectDS.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Core\GCDProject\ProjectDS.vb">
+      <DependentUpon>ProjectDS.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Core\GCDProject\ProjectDS1.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProjectDS.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Core\GCDProject\ProjectManager.vb" />
+    <Compile Include="Core\GCDProject\ProjectManagerBase.vb" />
+    <Compile Include="Core\GCDProject\ProjectManagerUI.vb" />
+    <Compile Include="Core\GCDProject\SurveyDateTime.vb" />
+    <Compile Include="Core\GISDataStructures\ExtentRectangle.vb" />
+    <Compile Include="Core\GISDataStructures\GISDataSource.vb" />
+    <Compile Include="Core\GISDataStructures\Polygon.vb" />
+    <Compile Include="Core\GISDataStructures\Raster.vb" />
+    <Compile Include="Core\OutputManager.vb" />
+    <Compile Include="Core\WorkspaceManager.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -79,16 +132,86 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="UI\SurveyLibrary\frmSurveyDateTime.Designer.vb">
+      <DependentUpon>frmSurveyDateTime.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\SurveyLibrary\frmSurveyDateTime.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\SurveyLibrary\frmImportRaster.Designer.vb">
+      <DependentUpon>frmImportRaster.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\SurveyLibrary\frmImportRaster.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\SurveyLibrary\frmPointDensity.Designer.vb">
+      <DependentUpon>frmPointDensity.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\SurveyLibrary\frmPointDensity.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\SurveyLibrary\frmAssocSurfaceProperties.Designer.vb">
+      <DependentUpon>frmAssocSurfaceProperties.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\SurveyLibrary\frmAssocSurfaceProperties.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\SurveyLibrary\frmSurfaceRoughness.Designer.vb">
+      <DependentUpon>frmSurfaceRoughness.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\SurveyLibrary\frmSurfaceRoughness.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\SurveyLibrary\frmDEMSurveyProperties.Designer.vb">
+      <DependentUpon>frmDEMSurveyProperties.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\SurveyLibrary\frmDEMSurveyProperties.vb">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Core\ErrorHandling\ExceptionForm.resx">
+      <DependentUpon>ExceptionForm.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\SurveyLibrary\frmSurveyDateTime.resx">
+      <DependentUpon>frmSurveyDateTime.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\SurveyLibrary\frmImportRaster.resx">
+      <DependentUpon>frmImportRaster.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\SurveyLibrary\frmPointDensity.resx">
+      <DependentUpon>frmPointDensity.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\SurveyLibrary\frmAssocSurfaceProperties.resx">
+      <DependentUpon>frmAssocSurfaceProperties.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\SurveyLibrary\frmSurfaceRoughness.resx">
+      <DependentUpon>frmSurfaceRoughness.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\SurveyLibrary\frmDEMSurveyProperties.resx">
+      <DependentUpon>frmDEMSurveyProperties.vb</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Core\GCDProject\ProjectDS.xsc">
+      <DependentUpon>ProjectDS.xsd</DependentUpon>
+    </None>
+    <None Include="Core\GCDProject\ProjectDS.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ProjectDS1.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Core\GCDProject\ProjectDS.xss">
+      <DependentUpon>ProjectDS.xsd</DependentUpon>
+      <SubType>Designer</SubType>
+    </None>
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -98,6 +221,166 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\naru\naru.csproj">
+      <Project>{1f496953-a809-4086-990b-884a5077bdc4}</Project>
+      <Name>naru</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\Add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AddToMap.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\alphabetical.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AOI.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AssociatedSurfaces.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BrowseFolder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BudgetSeg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\chart.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Check.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CleanRaster.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CoincidentPoints.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ConcaveHull.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Copy.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CurrentFunders.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CurrentFunders2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Delta.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DEMSurvey.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Developers.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DoD_Logo.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Excel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\FISLibrary.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GCD.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GCD_SplashLogo_200.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Help.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Histogram.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ICRRR_Logo_100.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\IdahoPower.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\IdahoPower_63height.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\NewProject.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OpenProject.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Options.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PointDensity.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\polygon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PreviousFunders.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\print.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\refresh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Report.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Reservoir.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Roughness.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SaveGIS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SelectAll.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SelectNone.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Settings.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sigma.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SlopeDegree.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SlopePercent.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TopCat.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\USGS.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\USUlogo.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="SurveyTypes" targetNamespace="http://tempuri.org/SurveyTypes.xsd" xmlns:mstns="http://tempuri.org/SurveyTypes.xsd" xmlns="http://tempuri.org/SurveyTypes.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="SurveyTypes" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="SurveyTypes" msprop:Generator_UserDSName="SurveyTypes">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="SurveyTypes" msprop:Generator_TableClassName="SurveyTypesDataTable" msprop:Generator_TableVarName="tableSurveyTypes" msprop:Generator_TablePropName="_SurveyTypes" msprop:Generator_RowDeletingName="SurveyTypesRowDeleting" msprop:Generator_UserTableName="SurveyTypes" msprop:Generator_RowChangingName="SurveyTypesRowChanging" msprop:Generator_RowEvHandlerName="SurveyTypesRowChangeEventHandler" msprop:Generator_RowDeletedName="SurveyTypesRowDeleted" msprop:Generator_RowEvArgName="SurveyTypesRowChangeEvent" msprop:Generator_RowChangedName="SurveyTypesRowChanged" msprop:Generator_RowClassName="SurveyTypesRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="TypeID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="1" msprop:Generator_ColumnVarNameInTable="columnTypeID" msprop:Generator_ColumnPropNameInRow="TypeID" msprop:Generator_ColumnPropNameInTable="TypeIDColumn" msprop:Generator_UserColumnName="TypeID" type="xs:int" minOccurs="0" />
+              <xs:element name="Name" msprop:Generator_ColumnVarNameInTable="columnName" msprop:Generator_ColumnPropNameInRow="Name" msprop:Generator_ColumnPropNameInTable="NameColumn" msprop:Generator_UserColumnName="Name" type="xs:string" minOccurs="0" />
+              <xs:element name="Error" msprop:Generator_ColumnVarNameInTable="columnError" msprop:Generator_ColumnPropNameInRow="_Error" msprop:Generator_ColumnPropNameInTable="ErrorColumn" msprop:Generator_UserColumnName="Error" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1">
+      <xs:selector xpath=".//mstns:SurveyTypes" />
+      <xs:field xpath="mstns:TypeID" />
+    </xs:unique>
+    <xs:unique name="Constraint2">
+      <xs:selector xpath=".//mstns:SurveyTypes" />
+      <xs:field xpath="mstns:Name" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>
