@@ -127,6 +127,18 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="UI\Project\frmProjectProperties.Designer.vb">
+      <DependentUpon>frmProjectProperties.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Project\frmProjectProperties.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Project\ucProjectExplorer.Designer.vb">
+      <DependentUpon>ucProjectExplorer.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Project\ucProjectExplorer.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="UI\SurveyLibrary\frmSurveyDateTime.Designer.vb">
       <DependentUpon>frmSurveyDateTime.vb</DependentUpon>
     </Compile>
@@ -201,6 +213,12 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\Project\frmProjectProperties.resx">
+      <DependentUpon>frmProjectProperties.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Project\ucProjectExplorer.resx">
+      <DependentUpon>ucProjectExplorer.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\SurveyLibrary\frmSurveyDateTime.resx">
       <DependentUpon>frmSurveyDateTime.vb</DependentUpon>
     </EmbeddedResource>
@@ -259,9 +277,7 @@
       <Name>naru</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="UI\Project\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="Resources\Add.png" />
   </ItemGroup>

@@ -78,10 +78,10 @@
             'Dim sPolygonMask As String = GISDataStructures.VectorDataSource.GetNewSafeName(sOutputFolder, "Mask")
 
             'Changed to provide a more descriptive name than mask - Hensleigh 4/24/2014
-            Dim sPolygonMask As String = GISDataStructures.VectorDataSource.GetNewSafeName(sOutputFolder, IO.Path.GetFileNameWithoutExtension(gInputPolygonMask.FullPath) & "_" & sMaskField)
+            Dim sPolygonMask As String = GISDataStructures.Vector.GetNewSafeName(sOutputFolder, IO.Path.GetFileNameWithoutExtension(gInputPolygonMask.FullPath) & "_" & sMaskField)
             Dim gPolygonFL As ESRI.ArcGIS.Carto.IFeatureLayer = GP.DataManagement.MakeFeatureLayer(gInputPolygonMask.FeatureClass, WorkspaceManager.GetRandomString)
             GISCode.GP.DataManagement.CopyFeatures(gPolygonFL, sPolygonMask)
-            m_gPolygonMask = New GISDataStructures.PolygonDataSource(sPolygonMask)
+            m_gPolygonMask = New GISDataStructures.Vector(sPolygonMask)
 
             ' Build the dictionary of budget classes. This method also writes the 
             ' class indexes to the shapefile in an integer field.
@@ -106,11 +106,11 @@
             ' With precise size.
             Dim sTempMask As String = WorkspaceManager.GetTempRaster("TempMask")
             GP.Conversion.PolygonToRaster_conversion(m_gPolygonMask, m_sClassField, sTempMask, gDoDRaw)
-            GP.DataManagement.DefineProjection(sTempMask, gDoDRaw.SpatialReference)
+            GP.DataManagement.DefineProjection(sTempMask, gDoDRaw.SpatialReferenceWKS)
 
             ' Now copy to the desired location
             Dim sMaskRaster As String = Core.GISDataStructures.Raster.GetNewSafeName(sOutputFolder, "Mask")
-            If Not External.RasterManager.Copy(sTempMask, sMaskRaster, gDoDRaw.CellSize, gDoDRaw.Extent.Left, gDoDRaw.Extent.Top, gDoDRaw.Rows, gDoDRaw.Columns, GCDProject.ProjectManager.GCDNARCError.ErrorString) = RasterManagerOutputCodes.PROCESS_OK Then
+            If Not External.RasterManager.Copy(sTempMask, sMaskRaster, gDoDRaw.CellSize, gDoDRaw.Extent.Left, gDoDRaw.Extent.Top, gDoDRaw.Rows, gDoDRaw.Columns, GCDProject.ProjectManager.GCDNARCError.ErrorString) = External.RasterManager.RasterManagerOutputCodes.PROCESS_OK Then
                 Throw New Exception(GCDProject.ProjectManager.GCDNARCError.ErrorString.ToString)
             End If
             Dim gMaskRaster As New GISDataStructures.Raster(sMaskRaster)

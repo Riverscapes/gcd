@@ -4,26 +4,25 @@
 
         Private m_DEMSurveyID As Integer
         Private m_ImportRasterform As frmImportRaster
-        Private m_SurveyDateTime As SurveyDateTime
+        Private m_SurveyDateTime As Core.GCDProject.SurveyDateTime
 
 #Region "Survey Property Routines"
 
-        Public Sub New(ByRef pApp As IApplication, ByVal nSurveyID As Integer)
+        Public Sub New(ByVal nSurveyID As Integer)
             ' This call is required by the Windows Form Designer.
             InitializeComponent()
-            m_pArcMap = pApp
             m_DEMSurveyID = nSurveyID
             m_ImportRasterform = Nothing
-            m_SurveyDateTime = New SurveyDateTime
+            m_SurveyDateTime = New Core.GCDProject.SurveyDateTime
         End Sub
 
         Private Sub SurveyPropertiesForm_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
             SetToolTips()
-            SurveyTypesBindingSource.DataSource = ProjectManager.surveyds
-            DEMSurveyBindingSource.DataSource = ProjectManager.ds
-            DEMSurfaceBindingSource.DataSource = ProjectManager.ds
-            ErrorTableBindingSource.DataSource = ProjectManager.ds
+            SurveyTypesBindingSource.DataSource = Core.GCDProject.ProjectManager.surveyds
+            DEMSurveyBindingSource.DataSource = Core.GCDProject.ProjectManager.ds
+            DEMSurfaceBindingSource.DataSource = Core.GCDProject.ProjectManager.ds
+            ErrorTableBindingSource.DataSource = Core.GCDProject.ProjectManager.ds
 
             If m_DEMSurveyID < 1 Then
                 'DEMSurveyBindingSource.AddNew()

@@ -39,7 +39,7 @@
 
         Public MustOverride Overloads Function Validate() As Boolean
 
-        Public MustOverride ReadOnly Property IsValidPath() As Boolean
+        'Public MustOverride ReadOnly Property IsValidPath() As Boolean
 
         Protected MustOverride Function Browse() As String
 

@@ -24,12 +24,8 @@ Namespace UI.UtilityForms
                 End If
             End If
 
-            If GISDataStructures.IsFileGeodatabase(sFullPath) Then
-                sFullPath = IO.Path.Combine(IO.Path.GetDirectoryName(sFullPath), IO.Path.GetFileNameWithoutExtension(sFullPath))
-            Else
-                If Not IO.Path.HasExtension(sFullPath) Then
-                    sFullPath = IO.Path.ChangeExtension(sFullPath, GISDataStructures.Raster.GetRasterExtension(m_eDefaultRasterType, False))
-                End If
+            If Not IO.Path.HasExtension(sFullPath) Then
+                sFullPath = IO.Path.ChangeExtension(sFullPath, "tif")
             End If
 
             Return sFullPath

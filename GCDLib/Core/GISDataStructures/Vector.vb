@@ -3,10 +3,26 @@
     Public Class Vector
         Inherits GISDataStructures.GISDataSource
 
-        Public Sub New(sFilePath As String, sSpatialReference As String)
-            MyBase.New(sFilePath, sSpatialReference)
+        Public Sub New(sFilePath As String)
+            MyBase.New(sFilePath)
+
+            ' TODO: Open the shapefile using OGR and set the spatial reference here
 
         End Sub
+
+        Public Function FindField(sFieldName As String) As Int32
+
+            If (String.IsNullOrEmpty(sFieldName)) Then
+                Throw New ArgumentNullException(sFieldName)
+            End If
+
+            ' TODO: lookup field index in ShapeFile
+
+            Return -1
+
+        End Function
+
+
 
         ''' <summary>
         ''' Alters the file extension depending on file geodatabase or not.
