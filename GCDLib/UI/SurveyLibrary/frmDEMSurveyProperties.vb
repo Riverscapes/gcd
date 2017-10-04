@@ -1,4 +1,4 @@
-﻿Namespace UI
+﻿Namespace UI.SurveyLibrary
 
     Public Class frmDEMSurveyProperties
 

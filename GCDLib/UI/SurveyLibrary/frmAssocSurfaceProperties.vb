@@ -1,4 +1,6 @@
-﻿Namespace UI
+﻿Imports GCD.GCDLib.Core
+
+Namespace UI.SurveyLibrary
 
     Public Class frmAssocSurfaceProperties
 
@@ -36,16 +38,15 @@
         End Property
 
 
-        Public Sub New(pArcMap As IApplication, ByVal nSurveyID As Integer, Optional ByVal nSurfaceID As Integer = 0)
+        Public Sub New(ByVal nSurveyID As Integer, Optional ByVal nSurfaceID As Integer = 0)
 
             ' This call is required by the Windows Form Designer.
             InitializeComponent()
-            m_pArcMap = pArcMap
             m_eMethod = AssociatedSurfaceMethods.Browse
             '
             ' Bind to the run time datasource
             '
-            AssociatedSurfaceBindingSource.DataSource = ProjectManager.ds
+            AssociatedSurfaceBindingSource.DataSource = GCDProject.ProjectManager.ds
             Debug.Assert(nSurveyID > 0, "The survey ID must be greater than zero")
             'm_nDEMSurveyID = nSurveyID
             If nSurfaceID = 0 Then
@@ -119,7 +120,7 @@
                     ImportRaster()
                 Catch ex As Exception
                     bRasterSavedOK = False
-                    ExceptionUI.HandleException(ex, "The GCD project associated surface raster was not created successfully. The GCD project will not be updated. You should check the GCD project folder to ensure that no remnants of the raster remain.")
+                    naru.error.ExceptionUI.HandleException(ex, "The GCD project associated surface raster was not created successfully. The GCD project will not be updated. You should check the GCD project folder to ensure that no remnants of the raster remain.")
                 End Try
             End If
 
@@ -158,7 +159,7 @@
                     End If
 
                 Catch ex As Exception
-                    ExceptionUI.HandleException(ex, "The GCD attribute information failed to save to the GCD project file. The associated surface raster still exists.")
+                    naru.error.ExceptionUI.HandleException(ex, "The GCD attribute information failed to save to the GCD project file. The associated surface raster still exists.")
                     Me.DialogResult = System.Windows.Forms.DialogResult.None
                 End Try
             Else
@@ -174,7 +175,7 @@
 
             Try
                 ' Make sure that the destination folder exists where the associated surface will be output
-                Dim sWorkspacePath As String = Core.GISDataStructures.Raster.GetWorkspacePath(txtProjectRaster.Text)
+                Dim sWorkspacePath As String = GISDataStructures.Raster.GetWorkspacePath(txtProjectRaster.Text)
                 IO.Directory.CreateDirectory(sWorkspacePath)
 
                 ' Create the slope surface or point density rasters
@@ -218,7 +219,7 @@
             Catch ex As Exception
 
                 ' Something went wrong. Check if the raster exists and safely attempt to clean it up if it does.
-                If Core.GISDataStructures.Raster.Exists(txtProjectRaster.Text) Then
+                If GISDataStructures.Raster.Exists(txtProjectRaster.Text) Then
                     Try
                         GP.DataManagement.Delete(txtProjectRaster.Text)
                     Catch ex2 As Exception
@@ -230,7 +231,7 @@
                     MsgBox("The name must be unique.", MsgBoxStyle.Exclamation, My.Resources.ApplicationNameLong)
                     Me.DialogResult = System.Windows.Forms.DialogResult.None
                 Else
-                    ExceptionUI.HandleException(ex, "An error occured while trying to save the information.")
+                    naru.error.ExceptionUI.HandleException(ex, "An error occured while trying to save the information.")
                 End If
 
                 Me.DialogResult = System.Windows.Forms.DialogResult.None
@@ -288,7 +289,7 @@
             Else
                 Dim dr As DataRowView = AssociatedSurfaceBindingSource.Current
                 If dr.IsNew Then
-                    If Core.GISDataStructures.Raster.Exists(txtProjectRaster.Text) Then
+                    If GISDataStructures.Raster.Exists(txtProjectRaster.Text) Then
                         MsgBox("The associated surface project raster path already exists. Changing the name of the associated surface will change the raster path.", MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
                         Return False
                     End If
@@ -309,7 +310,7 @@
 
             Dim dr As DataRowView = AssociatedSurfaceBindingSource.Current
             Dim assocRow As ProjectDS.AssociatedSurfaceRow = dr.Row
-            Dim rows As ProjectDS.AssociatedSurfaceRow() = ProjectManager.ds.AssociatedSurface.Select("DEMSurveyID = " & assocRow.DEMSurveyID)
+            Dim rows As ProjectDS.AssociatedSurfaceRow() = GCDProject.ProjectManager.ds.AssociatedSurface.Select("DEMSurveyID = " & assocRow.DEMSurveyID)
             If Not rows Is Nothing Then
                 For Each r As ProjectDS.AssociatedSurfaceRow In rows
                     If assocRow.AssociatedSurfaceID <> r.AssociatedSurfaceID Then
@@ -328,12 +329,12 @@
 
             If Not TypeOf m_ImportForm Is frmImportRaster Then
                 Dim gAssocRow As ProjectDS.AssociatedSurfaceRow = DirectCast(AssociatedSurfaceBindingSource.Current, DataRowView).Row
-                Dim gDEMSurveyRaster As New GISDataStructures.RasterDirect(GCD.GCDProject.ProjectManager.GetAbsolutePath(gAssocRow.DEMSurveyRow.Source))
-                m_ImportForm = New frmImportRaster(m_pArcMap, gDEMSurveyRaster, gAssocRow.DEMSurveyRow, frmImportRaster.ImportRasterPurposes.AssociatedSurface, "Associated Surface")
+                Dim gDEMSurveyRaster As New Core.GISDataStructures.Raster(Core.GCDProject.ProjectManager.GetAbsolutePath(gAssocRow.DEMSurveyRow.Source))
+                m_ImportForm = New frmImportRaster(gDEMSurveyRaster, gAssocRow.DEMSurveyRow, frmImportRaster.ImportRasterPurposes.AssociatedSurface, "Associated Surface")
             End If
 
             m_ImportForm.txtName.Text = txtName.Text
-            If m_ImportForm.ShowDialog = Windows.Forms.DialogResult.OK Then
+            If m_ImportForm.ShowDialog = System.Windows.Forms.DialogResult.OK Then
                 txtName.Text = m_ImportForm.txtName.Text
                 txtOriginalRaster.Text = m_ImportForm.ucRaster.SelectedItem.FullPath
             End If
@@ -363,7 +364,7 @@
                 End If
             Next
 
-            txtOriginalRaster.Text = GCD.GCDProject.ProjectManager.GetAbsolutePath(AssociatedSurfaceRow.DEMSurveyRow.Source)
+            txtOriginalRaster.Text = GCDProject.ProjectManager.GetAbsolutePath(AssociatedSurfaceRow.DEMSurveyRow.Source)
 
             MsgBox("The slope raster will be generated after you click OK.", MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
 
@@ -386,20 +387,20 @@
                 End If
             Next
 
-            txtOriginalRaster.Text = GCD.GCDProject.ProjectManager.GetAbsolutePath(AssociatedSurfaceRow.DEMSurveyRow.Source)
+            txtOriginalRaster.Text = Core.GCDProject.ProjectManager.GetAbsolutePath(AssociatedSurfaceRow.DEMSurveyRow.Source)
 
             MsgBox("The slope raster will be generated after you click OK.", MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
 
         End Sub
 
-        Private Function GetDEMSurveyRaster() As GISDataStructures.RasterDirect
+        Private Function GetDEMSurveyRaster() As Core.GISDataStructures.Raster
 
-            Dim gResult As GISDataStructures.RasterDirect = Nothing
+            Dim gResult As Core.GISDataStructures.Raster = Nothing
             Dim dr As DataRowView = AssociatedSurfaceBindingSource.Current
             Dim assocRow As ProjectDS.AssociatedSurfaceRow = dr.Row
             Dim demRow As ProjectDS.DEMSurveyRow = assocRow.DEMSurveyRow
-            If GISDataStructures.Raster.Exists(GCD.GCDProject.ProjectManager.GetAbsolutePath(demRow.Source)) Then
-                gResult = New GISDataStructures.RasterDirect(GCD.GCDProject.ProjectManager.GetAbsolutePath(demRow.Source))
+            If GISDataStructures.Raster.Exists(Core.GCDProject.ProjectManager.GetAbsolutePath(demRow.Source)) Then
+                gResult = New Core.GISDataStructures.Raster(Core.GCDProject.ProjectManager.GetAbsolutePath(demRow.Source))
             Else
                 Dim ex As New Exception("The DEM Survey raster does not exist.")
                 ex.Data.Add("DEM Survey Raster Path", demRow.Source)
@@ -412,11 +413,11 @@
         Private Sub btnDensity_Click(sender As System.Object, e As System.EventArgs) Handles btnDensity.Click
 
             If m_frmPointDensity Is Nothing Then
-                Dim gDEMSurveyRaster As GISDataStructures.RasterDirect = GetDEMSurveyRaster()
-                m_frmPointDensity = New frmPointDensity(m_pArcMap, GISDataStructures.GetLinearUnitsAsString(gDEMSurveyRaster.LinearUnits, True))
+                Dim gDEMSurveyRaster As Core.GISDataStructures.Raster = GetDEMSurveyRaster()
+                m_frmPointDensity = New frmPointDensity(GISDataStructures.GetLinearUnitsAsString(gDEMSurveyRaster.LinearUnits, True))
             End If
 
-            If m_frmPointDensity.ShowDialog = Windows.Forms.DialogResult.OK Then
+            If m_frmPointDensity.ShowDialog = System.Windows.Forms.DialogResult.OK Then
                 If String.IsNullOrEmpty(txtName.Text) Then
                     txtName.Text = "PDensity"
                 End If
@@ -439,9 +440,9 @@
             End If
         End Sub
 
-        Private Function CalculatePointDensity(sDEM As String, sPointCloud As String, fSampleDistance As Double, sOutputRaster As String, gReferenceRaster As GISDataStructures.RasterDirect) As GISDataStructures.RasterDirect
+        Private Function CalculatePointDensity(sDEM As String, sPointCloud As String, fSampleDistance As Double, sOutputRaster As String, gReferenceRaster As GISDataStructures.Raster) As GISDataStructures.Raster
 
-            Dim gResult As GISDataStructures.RasterDirect = Nothing
+            Dim gResult As Core.GISDataStructures.Raster = Nothing
             Try
 
             Catch ex As Exception
@@ -450,7 +451,7 @@
                 ex2.Data.Add("Point Cloud", sPointCloud)
                 ex2.Data.Add("Sample Distance", fSampleDistance)
                 ex2.Data.Add("Output raster", sOutputRaster)
-                If TypeOf gReferenceRaster Is GISDataStructures.RasterDirect Then
+                If TypeOf gReferenceRaster Is Core.GISDataStructures.Raster Then
                     ex2.Data.Add("Reference raster", gReferenceRaster.FullPath)
                 End If
                 Throw ex2
@@ -465,19 +466,19 @@
             Dim dr As DataRowView = AssociatedSurfaceBindingSource.Current
             If dr.IsNew Then
                 Dim assocRow As ProjectDS.AssociatedSurfaceRow = dr.Row
-                txtProjectRaster.Text = GCD.GCDProject.ProjectManager.OutputManager.AssociatedSurfaceRasterPath(assocRow.DEMSurveyRow.Name, txtName.Text)
+                txtProjectRaster.Text = Core.GCDProject.ProjectManager.OutputManager.AssociatedSurfaceRasterPath(assocRow.DEMSurveyRow.Name, txtName.Text)
             End If
         End Sub
 
         Private Sub btnRoughness_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnRoughness.Click
 
             If m_SurfaceRoughnessForm Is Nothing Then
-                Dim gDEMSurveyRaster As GISDataStructures.RasterDirect = GetDEMSurveyRaster()
+                Dim gDEMSurveyRaster As Core.GISDataStructures.Raster = GetDEMSurveyRaster()
                 Dim dReferenceResolution As Double = Math.Abs(gDEMSurveyRaster.CellWidth)
                 m_SurfaceRoughnessForm = New frmSurfaceRoughness(dReferenceResolution)
             End If
 
-            If m_SurfaceRoughnessForm.ShowDialog = Windows.Forms.DialogResult.OK Then
+            If m_SurfaceRoughnessForm.ShowDialog = System.Windows.Forms.DialogResult.OK Then
                 If String.IsNullOrEmpty(txtName.Text) Then
                     txtName.Text = "Roughness"
                 End If
@@ -494,7 +495,7 @@
                 Try
                     txtOriginalRaster.Text = m_SurfaceRoughnessForm.ucToPCAT_Inputs.txtBox_RawPointCloudFile.Text
                 Catch ex As Exception
-                    ExceptionUI.HandleException(ex)
+                    naru.error.ExceptionUI.HandleException(ex)
                 End Try
             End If
 

@@ -1,6 +1,6 @@
 ﻿Imports System.Windows.Forms
 
-Namespace UI
+Namespace UI.SurveyLibrary
 
     Public Class frmPointDensity
 
@@ -12,7 +12,7 @@ Namespace UI
 
             m_sLinearUnits = sLinearUnits
 
-            ucPointCloud.Initialize(m_pArcMap, "Point Cloud", GISDataStructures.BrowseVectorTypes.Point)
+            ucPointCloud.Initialize("Point Cloud", GISDataStructures.BrowseVectorTypes.Point)
 
         End Sub
 

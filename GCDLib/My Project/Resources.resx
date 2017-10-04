@@ -280,4 +280,7 @@
   <data name="USUlogo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\USUlogo.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="PrecisionHelp" xml:space="preserve">
+    <value>The horizontal decimal precision refers to the number of decimals places used to define the raster extent and cell size. This value should be the minimum number of decimal places required to accurately store the raster cell size. e.g. a cell size of 0.01m (1cm) should use a precision of 2.</value>
+  </data>
 </root>

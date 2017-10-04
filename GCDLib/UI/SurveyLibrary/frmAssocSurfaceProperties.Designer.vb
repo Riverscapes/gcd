@@ -1,4 +1,4 @@
-﻿Namespace UI
+﻿Namespace UI.SurveyLibrary
 
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
     Partial Class frmAssocSurfaceProperties

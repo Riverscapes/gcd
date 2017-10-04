@@ -419,6 +419,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to The horizontal decimal precision refers to the number of decimals places used to define the raster extent and cell size. This value should be the minimum number of decimal places required to accurately store the raster cell size. e.g. a cell size of 0.01m (1cm) should use a precision of 2..
+        '''</summary>
+        Friend ReadOnly Property PrecisionHelp() As String
+            Get
+                Return ResourceManager.GetString("PrecisionHelp", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property PreviousFunders() As System.Drawing.Bitmap
