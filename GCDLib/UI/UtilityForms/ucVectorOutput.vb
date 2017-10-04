@@ -1,4 +1,6 @@
-﻿Namespace UI.UtilityForms
+﻿Imports GCD.GCDLib.Core
+
+Namespace UI.UtilityForms
 
     Public Class VectorOutputUC
         Inherits ucOutputBase
@@ -35,20 +37,20 @@
             End Get
         End Property
 
-        Private ReadOnly Property GeometryTypeESRI As ESRI.ArcGIS.Geometry.esriGeometryType
-            Get
-                Select Case GeometryType
-                    Case GISDataStructures.GeometryTypes.Point
-                        Return ESRI.ArcGIS.Geometry.esriGeometryType.esriGeometryPoint
+        'Private ReadOnly Property GeometryTypeESRI As ESRI.ArcGIS.Geometry.esriGeometryType
+        '    Get
+        '        Select Case GeometryType
+        '            Case GISDataStructures.GeometryTypes.Point
+        '                Return ESRI.ArcGIS.Geometry.esriGeometryType.esriGeometryPoint
 
-                    Case GISDataStructures.GeometryTypes.Line
-                        Return ESRI.ArcGIS.Geometry.esriGeometryType.esriGeometryPolyline
+        '            Case GISDataStructures.GeometryTypes.Line
+        '                Return ESRI.ArcGIS.Geometry.esriGeometryType.esriGeometryPolyline
 
-                    Case GISDataStructures.GeometryTypes.Polygon
-                        Return ESRI.ArcGIS.Geometry.esriGeometryType.esriGeometryPolygon
-                End Select
-            End Get
-        End Property
+        '            Case GISDataStructures.GeometryTypes.Polygon
+        '                Return ESRI.ArcGIS.Geometry.esriGeometryType.esriGeometryPolygon
+        '        End Select
+        '    End Get
+        'End Property
 
         Public Overrides Function FullPath() As String
 
@@ -60,18 +62,13 @@
                     sFullPath = IO.Path.Combine(m_sWorkspace, m_sInitialDatasetName)
                 End If
             End If
-            GISDataStructures.VectorDataSource.ConfirmExtension(sFullPath)
+            GISDataStructures.Vector.ConfirmExtension(sFullPath)
             Return sFullPath
 
         End Function
 
-        Public Shadows Sub Initialize(ByVal pArcMap As ESRI.ArcGIS.Framework.IApplication, ByVal sNoun As String, ByVal sInitialDatasetName As String, ByVal eBrowseType As GISDataStructures.BrowseVectorTypes)
-            MyBase.Initialize(pArcMap, sNoun, sInitialDatasetName)
-            BrowseType = eBrowseType
-        End Sub
-
         Public Shadows Sub Initialize(ByVal sNoun As String, ByVal sInitialDatasetName As String, ByVal eBrowseType As GISDataStructures.BrowseVectorTypes)
-            MyBase.Initialize(Nothing, sNoun, sInitialDatasetName)
+            MyBase.Initialize(sNoun, sInitialDatasetName)
             BrowseType = eBrowseType
         End Sub
 
@@ -82,13 +79,9 @@
         ''' <remarks>This is polymorphic method overriden from base class</remarks>
         Protected Overrides Function Browse() As String
 
-            Dim sTitle As String = GISCode.UserInterface.WrapMessageWithNoun("Select", Noun, "Output Location")
-            Dim sFullPath As String = GISDataStructures.VectorDataSource.BrowseSave(sTitle, "", txtOutput.Text, Me.Parent.Handle, "", GeometryType)
-
-            If Not String.IsNullOrEmpty(sFullPath) Then
-                txtOutput.Text = sFullPath.Substring(GISDataStructures.GISDataSource.GetWorkspacePath(sFullPath).Length)
-            End If
-            Return sFullPath
+            Dim sTitle As String = naru.ui.UIHelpers.WrapMessageWithNoun("Select", Noun, "Output Location")
+            naru.ui.Textbox.BrowseSaveVector(txtOutput, sTitle, txtOutput.Text)
+            Return txtOutput.Text
 
         End Function
 
@@ -99,10 +92,10 @@
                 Return False
             End If
 
-            If GISDataStructures.VectorDataSource.Exists(txtOutput.Text, Me.GeometryTypeESRI) Then
+            If GISDataStructures.GISDataSource.Exists(txtOutput.Text) Then
                 If MsgBox("The " & Noun & " feature class already exists. Do you wish to overwrite it?", MsgBoxStyle.YesNo Or MsgBoxStyle.DefaultButton2 Or MsgBoxStyle.Question, My.Resources.ApplicationNameLong) = MsgBoxResult.Yes Then
                     Try
-                        GISCode.GP.DataManagement.Delete(txtOutput.Text)
+                        External.RasterManager.Delete(txtOutput.Text, GCDProject.ProjectManager.GCDNARCError.ErrorString)
                     Catch ex As Exception
                         ExceptionHelper.HandleException(ex, "Error attempting to delete the existing feature class")
                         Return False
@@ -129,33 +122,33 @@
                 If String.IsNullOrEmpty(sWorkspace) Then
                     bValid = False
                 Else
-                    If GISDataStructures.IsFileGeodatabase(sFullPath) Then
-                        If GISCode.GISDataStructures.FileGeodatabase.Exists(sWorkspace) Then
-                            If String.IsNullOrEmpty(IO.Path.GetFileNameWithoutExtension(sFullPath)) Then
+                    'If GISDataStructures.IsFileGeodatabase(sFullPath) Then
+                    '    If GISCode.GISDataStructures.FileGeodatabase.Exists(sWorkspace) Then
+                    '        If String.IsNullOrEmpty(IO.Path.GetFileNameWithoutExtension(sFullPath)) Then
+                    '            bValid = False
+                    '        Else
+                    '            bValid = String.IsNullOrEmpty(IO.Path.GetExtension(sFullPath))
+                    '        End If
+                    '    Else
+                    '        bValid = False
+                    '    End If
+                    'Else
+                    If IO.Directory.Exists(sWorkspace) Then
+                        If String.IsNullOrEmpty(IO.Path.GetFileNameWithoutExtension(sFullPath)) Then
+                            bValid = False
+                        Else
+                            Dim sExt As String = IO.Path.GetExtension(sFullPath)
+                            If String.IsNullOrEmpty(sExt) Then
                                 bValid = False
                             Else
-                                bValid = String.IsNullOrEmpty(IO.Path.GetExtension(sFullPath))
+                                bValid = String.Compare(sExt, ".shp", True) = 0
                             End If
-                        Else
-                            bValid = False
                         End If
                     Else
-                        If IO.Directory.Exists(sWorkspace) Then
-                            If String.IsNullOrEmpty(IO.Path.GetFileNameWithoutExtension(sFullPath)) Then
-                                bValid = False
-                            Else
-                                Dim sExt As String = IO.Path.GetExtension(sFullPath)
-                                If String.IsNullOrEmpty(sExt) Then
-                                    bValid = False
-                                Else
-                                    bValid = String.Compare(sExt, ".shp", True) = 0
-                                End If
-                            End If
-                        Else
-                            bValid = False
-                        End If
+                        bValid = False
                     End If
                 End If
+                'End If
                 Return bValid
             End Get
         End Property

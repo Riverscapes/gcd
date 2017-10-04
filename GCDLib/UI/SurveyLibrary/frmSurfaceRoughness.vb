@@ -18,82 +18,82 @@ Namespace UI.SurveyLibrary
 
             'Create dedicated folder in temp workspace
             Dim bResult As Boolean
-            Dim sTemp As String = WorkspaceManager.WorkspacePath
+            'Dim sTemp As String = Core.WorkspaceManager.WorkspacePath
 
-            Cursor.Current = Cursors.WaitCursor
-            Dim tempDir = WindowsManagement.CreateTemporaryDirectory("ToPCAT_Raster")
+            'Cursor.Current = Cursors.WaitCursor
+            'Dim tempDir = WindowsManagement.CreateTemporaryDirectory("ToPCAT_Raster")
 
-            Try
+            'Try
 
-                ToPCAT_Assistant.RunToPCat(ucToPCAT_Inputs.txtBox_RawPointCloudFile.Text,
-                                       ucToPCAT_Inputs.numXresolution.Value,
-                                       ucToPCAT_Inputs.numYresolution.Value,
-                                       ucToPCAT_Inputs.numNtoCalculateStats.Value.ToString)
-
-
-                Dim sMessages As String = Nothing
-                If Not TopCAT.ToPCAT_Assistant.MoveToPCAT_TextFiles(ucToPCAT_Inputs.txtBox_RawPointCloudFile.Text, tempDir, sMessages) Then
-                    MsgBox(sMessages, MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
-                    Return False
-                End If
-                Dim rawPointCloudPaths As New RawPointCloudPaths(ucToPCAT_Inputs.txtBox_RawPointCloudFile.Text, tempDir)
-
-                'Initialize the geoprocessor engine
-                Dim geoProcessorEngine As ESRI.ArcGIS.Geoprocessing.GeoProcessor = New ESRI.ArcGIS.Geoprocessing.GeoProcessor()
+            '    ToPCAT_Assistant.RunToPCat(ucToPCAT_Inputs.txtBox_RawPointCloudFile.Text,
+            '                           ucToPCAT_Inputs.numXresolution.Value,
+            '                           ucToPCAT_Inputs.numYresolution.Value,
+            '                           ucToPCAT_Inputs.numNtoCalculateStats.Value.ToString)
 
 
-                'Create an IVariant to hold the parameter values & populate the variant array with parameter values
-                '
-                Dim tempPointLayerParameters As ESRI.ArcGIS.esriSystem.IVariantArray = New ESRI.ArcGIS.esriSystem.VarArray
-                tempPointLayerParameters.Add(rawPointCloudPaths.zStatText)
-                tempPointLayerParameters.Add("x")
-                tempPointLayerParameters.Add("y")
-                tempPointLayerParameters.Add("tempLayer")
+            '    Dim sMessages As String = Nothing
+            '    If Not TopCAT.ToPCAT_Assistant.MoveToPCAT_TextFiles(ucToPCAT_Inputs.txtBox_RawPointCloudFile.Text, tempDir, sMessages) Then
+            '        MsgBox(sMessages, MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
+            '        Return False
+            '    End If
+            '    Dim rawPointCloudPaths As New RawPointCloudPaths(ucToPCAT_Inputs.txtBox_RawPointCloudFile.Text, tempDir)
 
-                'Dim spatialRef As ESRI.ArcGIS.Geometry.ISpatialReference = TryCast(gDEMRaster.SpatialReference, ESRI.ArcGIS.Geometry.ISpatialReference)
-                tempPointLayerParameters.Add(gDEMRaster.SpatialReference)
-                tempPointLayerParameters.Add("stdev_detrended")
-                MyGeoprocessing.RunToolGeoprocessingTool("MakeXYEventLayer_management", geoProcessorEngine, tempPointLayerParameters, True)
+            '    'Initialize the geoprocessor engine
+            '    Dim geoProcessorEngine As ESRI.ArcGIS.Geoprocessing.GeoProcessor = New ESRI.ArcGIS.Geoprocessing.GeoProcessor()
 
-                'Set the geoprocessing extent environment
-                geoProcessorEngine.SetEnvironmentValue("extent", gDEMRaster.ExtentAsString)
 
-                Dim pointToRasterParameters As ESRI.ArcGIS.esriSystem.IVariantArray = New ESRI.ArcGIS.esriSystem.VarArray
-                pointToRasterParameters.Add(tempPointLayerParameters.Element(3))
-                pointToRasterParameters.Add("stdev_detrended")
-                pointToRasterParameters.Add(sOutputPath)
-                pointToRasterParameters.Add("")
-                pointToRasterParameters.Add("")
-                pointToRasterParameters.Add(ucToPCAT_Inputs.numXresolution.Value.ToString())
-                MyGeoprocessing.RunToolGeoprocessingTool("PointToRaster_conversion", geoProcessorEngine, pointToRasterParameters, True)
+            '    'Create an IVariant to hold the parameter values & populate the variant array with parameter values
+            '    '
+            '    Dim tempPointLayerParameters As ESRI.ArcGIS.esriSystem.IVariantArray = New ESRI.ArcGIS.esriSystem.VarArray
+            '    tempPointLayerParameters.Add(rawPointCloudPaths.zStatText)
+            '    tempPointLayerParameters.Add("x")
+            '    tempPointLayerParameters.Add("y")
+            '    tempPointLayerParameters.Add("tempLayer")
 
-                'Define projection for output raster
-                '
-                ' Temporary fix. The above routine seems does not project
-                ' the resultant raster. So assume that the output project is identical to the
-                ' input project and simply use the geoprocessing routine to define it.
-                Try
+            '    'Dim spatialRef As ESRI.ArcGIS.Geometry.ISpatialReference = TryCast(gDEMRaster.SpatialReference, ESRI.ArcGIS.Geometry.ISpatialReference)
+            '    tempPointLayerParameters.Add(gDEMRaster.SpatialReference)
+            '    tempPointLayerParameters.Add("stdev_detrended")
+            '    MyGeoprocessing.RunToolGeoprocessingTool("MakeXYEventLayer_management", geoProcessorEngine, tempPointLayerParameters, True)
 
-                    Dim pSR As ESRI.ArcGIS.Geometry.ISpatialReference = Nothing
-                    If TypeOf gDEMRaster Is GISDataStructures.RasterDirect Then
-                        pSR = gDEMRaster.SpatialReference
-                    End If
+            '    'Set the geoprocessing extent environment
+            '    geoProcessorEngine.SetEnvironmentValue("extent", gDEMRaster.ExtentAsString)
 
-                    If IO.File.Exists(sOutputPath) Then
-                        GP.DataManagement.DefineProjection(sOutputPath, pSR)
-                    End If
+            '    Dim pointToRasterParameters As ESRI.ArcGIS.esriSystem.IVariantArray = New ESRI.ArcGIS.esriSystem.VarArray
+            '    pointToRasterParameters.Add(tempPointLayerParameters.Element(3))
+            '    pointToRasterParameters.Add("stdev_detrended")
+            '    pointToRasterParameters.Add(sOutputPath)
+            '    pointToRasterParameters.Add("")
+            '    pointToRasterParameters.Add("")
+            '    pointToRasterParameters.Add(ucToPCAT_Inputs.numXresolution.Value.ToString())
+            '    MyGeoprocessing.RunToolGeoprocessingTool("PointToRaster_conversion", geoProcessorEngine, pointToRasterParameters, True)
 
-                Catch
-                    'Do nothing
-                End Try
+            '    'Define projection for output raster
+            '    '
+            '    ' Temporary fix. The above routine seems does not project
+            '    ' the resultant raster. So assume that the output project is identical to the
+            '    ' input project and simply use the geoprocessing routine to define it.
+            '    Try
 
-                bResult = True
-            Catch ex As Exception
-                bResult = False
-            Finally
-                System.IO.Directory.Delete(tempDir, True)
-                Cursor.Current = Cursors.Default
-            End Try
+            '        Dim pSR As ESRI.ArcGIS.Geometry.ISpatialReference = Nothing
+            '        If TypeOf gDEMRaster Is GISDataStructures.RasterDirect Then
+            '            pSR = gDEMRaster.SpatialReference
+            '        End If
+
+            '        If IO.File.Exists(sOutputPath) Then
+            '            GP.DataManagement.DefineProjection(sOutputPath, pSR)
+            '        End If
+
+            '    Catch
+            '        'Do nothing
+            '    End Try
+
+            '    bResult = True
+            'Catch ex As Exception
+            '    bResult = False
+            'Finally
+            '    System.IO.Directory.Delete(tempDir, True)
+            '    Cursor.Current = Cursors.Default
+            'End Try
 
             Return bResult
 

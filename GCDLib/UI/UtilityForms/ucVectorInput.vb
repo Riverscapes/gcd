@@ -1,4 +1,5 @@
 ﻿Imports ESRI.ArcGIS.Framework
+Imports GCD.GCDLib.Core
 
 Namespace UI.UtilityForms
 
@@ -60,20 +61,20 @@ Namespace UI.UtilityForms
             End Get
         End Property
 
-        Public ReadOnly Property GeometryTypeESRI As ESRI.ArcGIS.Geometry.esriGeometryType
-            Get
-                Select Case GeometryType
-                    Case GISDataStructures.GeometryTypes.Line
-                        Return ESRI.ArcGIS.Geometry.esriGeometryType.esriGeometryPolyline
+        'Public ReadOnly Property GeometryTypeESRI As ESRI.ArcGIS.Geometry.esriGeometryType
+        '    Get
+        '        Select Case GeometryType
+        '            Case GISDataStructures.GeometryTypes.Line
+        '                Return ESRI.ArcGIS.Geometry.esriGeometryType.esriGeometryPolyline
 
-                    Case GISDataStructures.GeometryTypes.Point
-                        Return ESRI.ArcGIS.Geometry.esriGeometryType.esriGeometryPoint
+        '            Case GISDataStructures.GeometryTypes.Point
+        '                Return ESRI.ArcGIS.Geometry.esriGeometryType.esriGeometryPoint
 
-                    Case GISDataStructures.GeometryTypes.Polygon
-                        Return ESRI.ArcGIS.Geometry.esriGeometryType.esriGeometryPolygon
-                End Select
-            End Get
-        End Property
+        '            Case GISDataStructures.GeometryTypes.Polygon
+        '                Return ESRI.ArcGIS.Geometry.esriGeometryType.esriGeometryPolygon
+        '        End Select
+        '    End Get
+        'End Property
 
 #End Region
 
@@ -82,49 +83,22 @@ Namespace UI.UtilityForms
         ''' <summary>
         ''' 
         ''' </summary>
-        ''' <param name="pArcMap"></param>
         ''' <param name="sNoun"></param>
         ''' <param name="eBrowseType"></param>
         ''' <remarks></remarks>
-        Public Shadows Sub Initialize(ByVal pArcMap As ESRI.ArcGIS.Framework.IApplication, ByVal sNoun As String, ByVal eBrowseType As GISDataStructures.BrowseVectorTypes)
-
-            ArcMap = pArcMap
-            Noun = sNoun
-            BrowseType = eBrowseType
-        End Sub
-
         Public Shadows Sub Initialize(ByVal sNoun As String, ByVal eBrowseType As GISDataStructures.BrowseVectorTypes)
-            ArcMap = Nothing
             Noun = sNoun
             BrowseType = eBrowseType
         End Sub
 
         Private Sub VectorInputUC_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
-            Dim eCrossSections As GISCode.ArcMap.eShapeFileStore = GISCode.ArcMap.eShapeFileStore.AllFeatureClasses
-            If GISDataStructures.BrowseVectorTypes.CrossSections = BrowseType Then
-                eCrossSections = GISCode.ArcMap.eShapeFileStore.OnlyIncludeXStores
-                'Else
-                '   eCrossSections = GISCode.ArcMap.eShapeFileStore.ExcludeXSStores
-            End If
-
-            If TypeOf ArcMap Is ESRI.ArcGIS.Framework.IApplication Then
-                GISCode.ArcMap.FillComboFromMap(cboInput, ArcMap, GeometryTypeESRI, True, eCrossSections)
-            Else
-                'Throw New Exception("You must provide the pointer to the ArcMAp application before this control loads")
-            End If
-
         End Sub
 
         Protected Overrides Sub Browse()
 
             Try
-
-
-                Dim gVector As GISDataStructures.VectorDataSource = GISDataStructures.VectorDataSource.BrowseOpen(cboInput, "Browse and select a " & Noun & " feature class", GeometryType, Me.Parent.Handle)
-                If TypeOf gVector Is GISDataStructures.VectorDataSource Then
-                    tTip.SetToolTip(cboInput, gVector.FullPath)
-                End If
+                naru.ui.Textbox.BrowseOpenVector(txtPath, naru.ui.UIHelpers.WrapMessageWithNoun("Select a", Noun, " Feature Class"))
             Catch ex As Exception
                 ExceptionHelper.HandleException(ex, "Error browsing for vector input dataset.")
             End Try
@@ -132,8 +106,8 @@ Namespace UI.UtilityForms
 
         Public Overrides Function Validate() As Boolean
 
-            If Not TypeOf SelectedItem() Is GISDataStructures.VectorDataSource Then
-                MsgBox(GISCode.UserInterface.WrapMessageWithNoun("Please select a", Noun, " feature class to continue."), MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
+            If (String.IsNullOrEmpty(txtPath.Text) OrElse Not System.IO.File.Exists(txtPath.Text)) Then
+                System.Windows.Forms.MessageBox.Show(naru.ui.UIHelpers.WrapMessageWithNoun("Please select a", Noun, " feature class to continue."), My.Resources.ApplicationNameLong, System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information)
                 Return False
             End If
 
@@ -141,8 +115,8 @@ Namespace UI.UtilityForms
 
         End Function
 
-        Public Shadows Function SelectedItem() As GISDataStructures.VectorDataSource
-            Return DirectCast(MyBase.SelectedItem, GISDataStructures.VectorDataSource)
+        Public Shadows Function SelectedItem() As GISDataStructures.Vector
+            Return DirectCast(MyBase.SelectedItem, GISDataStructures.Vector)
         End Function
 
 #End Region

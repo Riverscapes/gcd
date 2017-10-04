@@ -1,7 +1,7 @@
 ﻿Imports naru.math
 Imports System.Windows.Forms.DataVisualization.Charting
 
-Namespace GISCode.GCD
+Namespace Core.Visualization
 
     Public Class ElevationChangeBarViewer
 

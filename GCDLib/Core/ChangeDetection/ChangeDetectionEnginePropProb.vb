@@ -39,7 +39,7 @@
 
         Public Sub New(ByVal sName As String, ByVal sFolder As String, ByVal gNewDEM As GISDataStructures.Raster, ByVal gOldDEM As GISDataStructures.Raster,
                        ByVal gNewError As GISDataStructures.Raster, ByVal gOldError As GISDataStructures.Raster,
-                       ByVal gAOI As GISDataStructures.Polygon, ByVal fChartHeight As Integer, ByVal fChartWidth As Integer)
+                       ByVal gAOI As GISDataStructures.Vector, ByVal fChartHeight As Integer, ByVal fChartWidth As Integer)
             MyBase.New(sName, sFolder, gNewDEM, gOldDEM, gAOI, fChartHeight, fChartWidth)
 
             m_gOriginalNewError = gNewError

@@ -20,7 +20,7 @@
         Private m_gAnalysisNewDEM As GISDataStructures.Raster
         Private m_gAnalysisOldDEM As GISDataStructures.Raster
 
-        Private m_gAOI As GISDataStructures.Polygon
+        Private m_gAOI As GISDataStructures.Vector
 
         ' This is a polymorphic class. Call calculate and it will calculate
         ' the statistics different ways depending on the type instantiated.
@@ -60,7 +60,7 @@
             End Get
         End Property
 
-        Public ReadOnly Property AOI As GISDataStructures.Polygon
+        Public ReadOnly Property AOI As GISDataStructures.Vector
             Get
                 Return m_gAOI
             End Get
@@ -93,7 +93,7 @@
 #End Region
 
         Public Sub New(ByVal sName As String, ByVal sFolder As String, ByVal gNewDEM As GISDataStructures.Raster, ByVal gOldDEM As GISDataStructures.Raster,
-                       ByVal gAOI As GISDataStructures.Polygon, ByVal fChartHeight As Integer, ByVal fChartWidth As Integer)
+                       ByVal gAOI As GISDataStructures.Vector, ByVal fChartHeight As Integer, ByVal fChartWidth As Integer)
 
             If String.IsNullOrEmpty(sName) Then
                 Throw New ArgumentNullException("sName", "The change detection analysis name cannot be empty.")

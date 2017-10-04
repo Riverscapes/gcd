@@ -15,8 +15,8 @@
             m_sMessage = sMessage
             Me.MaximizeBox = False
             Me.MinimizeBox = False
-            Me.SizeGripStyle = Windows.Forms.SizeGripStyle.Hide
-            Me.FormBorderStyle = Windows.Forms.FormBorderStyle.FixedDialog
+            Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide
+            Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         End Sub
 
 

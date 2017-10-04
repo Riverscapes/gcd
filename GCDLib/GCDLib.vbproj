@@ -81,7 +81,11 @@
     <Compile Include="Core\ChangeDetection\DoDResultHistograms.vb" />
     <Compile Include="Core\ChangeDetection\DoDResultSet.vb" />
     <Compile Include="Core\ChangeDetection\HistogramStats.vb" />
-    <Compile Include="Core\ElevationChangeBarViewer.vb" />
+    <Compile Include="Core\ExceptionHelper.vb" />
+    <Compile Include="Core\TopCAT\Stats.vb" />
+    <Compile Include="Core\TopCAT\WindowsManagement.vb" />
+    <Compile Include="Core\Visualization\DoDHistogramViewerClass.vb" />
+    <Compile Include="Core\Visualization\ElevationChangeBarViewer.vb" />
     <Compile Include="Core\External\ExternalLibs.vb" />
     <Compile Include="Core\External\GCDCoreDLL.vb" />
     <Compile Include="Core\External\NARCError.vb" />
@@ -104,7 +108,7 @@
     <Compile Include="Core\GCDProject\SurveyDateTime.vb" />
     <Compile Include="Core\GISDataStructures\ExtentRectangle.vb" />
     <Compile Include="Core\GISDataStructures\GISDataSource.vb" />
-    <Compile Include="Core\GISDataStructures\Polygon.vb" />
+    <Compile Include="Core\GISDataStructures\Vector.vb" />
     <Compile Include="Core\GISDataStructures\Raster.vb" />
     <Compile Include="Core\OutputManager.vb" />
     <Compile Include="Core\WorkspaceManager.vb" />
@@ -126,7 +130,9 @@
     <Compile Include="UI\SurveyLibrary\frmSurveyDateTime.Designer.vb">
       <DependentUpon>frmSurveyDateTime.vb</DependentUpon>
     </Compile>
-    <Compile Include="UI\SurveyLibrary\frmSurveyDateTime.vb" />
+    <Compile Include="UI\SurveyLibrary\frmSurveyDateTime.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="UI\SurveyLibrary\frmImportRaster.Designer.vb">
       <DependentUpon>frmImportRaster.vb</DependentUpon>
     </Compile>
@@ -148,17 +154,13 @@
     <Compile Include="UI\SurveyLibrary\frmSurfaceRoughness.Designer.vb">
       <DependentUpon>frmSurfaceRoughness.vb</DependentUpon>
     </Compile>
-    <Compile Include="UI\SurveyLibrary\frmSurfaceRoughness.vb" />
+    <Compile Include="UI\SurveyLibrary\frmSurfaceRoughness.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="UI\SurveyLibrary\frmDEMSurveyProperties.Designer.vb">
       <DependentUpon>frmDEMSurveyProperties.vb</DependentUpon>
     </Compile>
     <Compile Include="UI\SurveyLibrary\frmDEMSurveyProperties.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\UtilityForms\frmProcessResults.Designer.vb">
-      <DependentUpon>frmProcessResults.vb</DependentUpon>
-    </Compile>
-    <Compile Include="UI\UtilityForms\frmProcessResults.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\UtilityForms\frmInformation.Designer.vb">
@@ -216,9 +218,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\SurveyLibrary\frmDEMSurveyProperties.resx">
       <DependentUpon>frmDEMSurveyProperties.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UI\UtilityForms\frmProcessResults.resx">
-      <DependentUpon>frmProcessResults.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\UtilityForms\frmInformation.resx">
       <DependentUpon>frmInformation.vb</DependentUpon>

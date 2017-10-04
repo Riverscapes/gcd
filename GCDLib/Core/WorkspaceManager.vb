@@ -20,7 +20,7 @@ Namespace Core
         Public Shared Function GetTempRaster(sRootName As String) As String
 
             Dim sResult As String
-            sResult = GISDataStructures.Raster.GetNewSafeName(m_diWorkspacePath.FullName, GISDataStructures.Raster.RasterTypes.TIFF, IO.Path.GetFileNameWithoutExtension(sRootName), 13)
+            sResult = GISDataStructures.Raster.GetNewSafeName(m_diWorkspacePath.FullName, sRootName)
             Return sResult
 
         End Function
@@ -31,7 +31,7 @@ Namespace Core
                 Throw New ArgumentNullException("sRootName")
             End If
             sRootName = IO.Path.ChangeExtension(sRootName, ".shp")
-            Dim sResult As String = GISDataStructures.VectorDataSource.GetNewSafeName(m_diWorkspacePath.FullName, sRootName)
+            Dim sResult As String = GISDataStructures.Vector.GetNewSafeName(m_diWorkspacePath.FullName, sRootName)
             Return sResult
 
         End Function

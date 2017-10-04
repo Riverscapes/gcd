@@ -13,7 +13,8 @@ Namespace Core.GISDataStructures
         Private m_fNoData As Double
         Private m_fLeft As Double
         Private m_fTop As Double
-        Private m_sUnits As String
+
+        Private m_eLinearUnits As naru.math.LinearUnitClass
 
 #Region "Properties"
 
@@ -53,9 +54,9 @@ Namespace Core.GISDataStructures
             End Get
         End Property
 
-        Public ReadOnly Property Units As String
+        Public ReadOnly Property LinearUnits As naru.math.LinearUnitClass
             Get
-                Return m_sUnits
+                Return m_eLinearUnits
             End Get
         End Property
 
@@ -98,7 +99,11 @@ Namespace Core.GISDataStructures
             End If
 
             SpatialReferenceWKS = sSpatialReference.ToString()
-            m_sUnits = sUnits.ToString()
+
+            m_eLinearUnits = New naru.math.LinearUnitClass(naru.math.NumberFormatting.LinearUnits.yard)
+            If (Not String.IsNullOrEmpty(sUnits.ToString())) Then
+                m_eLinearUnits = New naru.math.LinearUnitClass(naru.math.NumberFormatting.GetLinearUnitsFromString(sUnits.ToString()))
+            End If
 
             m_bHasNoData = nNoData <> 0
         End Sub
@@ -123,26 +128,12 @@ Namespace Core.GISDataStructures
 
         Public Shared Sub DeleteRaster(sFullPath As String)
 
-            If String.IsNullOrEmpty(sFullPath) Then
+            If String.IsNullOrEmpty(sFullPath) OrElse Not System.IO.File.Exists(sFullPath) Then
                 Exit Sub
             End If
 
-            If Not System.IO.File.Exists(sFullPath) Then
-                Exit Sub
-            End If
             Try
-                Dim sDirectory As String = System.IO.Path.GetDirectoryName(sFullPath)
-                Dim sFileName As String = System.IO.Path.GetFileName(sFullPath)
-                Dim nFirstPeriod As Integer = sFileName.IndexOf(".")
-                Dim sSearchPattern As String = System.IO.Path.GetFileNameWithoutExtension(sFullPath)
-                If nFirstPeriod > 0 Then
-                    sSearchPattern = String.Format("{0}.*", sFileName.Substring(0, nFirstPeriod))
-                End If
-
-                Dim sFiles As String() = System.IO.Directory.GetFiles(sDirectory, sSearchPattern)
-                For Each aFile As String In sFiles
-                    System.IO.File.Delete(aFile)
-                Next
+                External.RasterManager.Delete(sFullPath, GCDProject.ProjectManager.GCDNARCError.ErrorString)
 
             Catch ex As Exception
 #If DEBUG Then
@@ -153,6 +144,37 @@ Namespace Core.GISDataStructures
             End Try
 
         End Sub
+
+        ''' <summary>
+        ''' Alters the file extension depending on file geodatabase or not.
+        ''' </summary>
+        ''' <param name="inFullPath">Full path to an existing or new feature class</param>
+        ''' <remarks></remarks>
+        Public Shared Sub ConfirmExtension(ByRef inFullPath As String, eRasterType As GISDataStructures.RasterTypes)
+
+            If String.IsNullOrEmpty(inFullPath) Then
+                Throw New ArgumentNullException("inFullPath", "Null or empty feature class full path")
+            End If
+
+            Dim sExtension As String = String.Empty
+            Select Case eRasterType
+                Case RasterTypes.TIFF
+                    sExtension = "tiff"
+                Case RasterTypes.IMG
+                    sExtension = "img"
+                Case Else
+                    Throw New Exception(String.Format("Unhandled raster type: {0}", eRasterType))
+            End Select
+
+            inFullPath = IO.Path.ChangeExtension(inFullPath, sExtension)
+
+        End Sub
+
+        Public Shared Function GetNewSafeName(sDirectory As String, sFileName As String) As String
+
+            Return naru.os.File.GetNewSafeName(sDirectory, sFileName, "tif").FullName
+
+        End Function
 
     End Class
 

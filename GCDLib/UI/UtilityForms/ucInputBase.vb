@@ -1,22 +1,10 @@
-﻿Imports ESRI.ArcGIS.Framework
-
-Namespace UI.UtilityForms
+﻿Namespace UI.UtilityForms
 
     Public MustInherit Class ucInputBase
 
         Private m_sNoun As String
-        Protected m_gPreSelect As GISDataStructures.GISDataSource
 
 #Region "Properties"
-
-        Public Property ArcMap As ESRI.ArcGIS.Framework.IApplication
-            Get
-                Return m_pArcMap
-            End Get
-            Set(ByVal value As ESRI.ArcGIS.Framework.IApplication)
-                m_pArcMap = value
-            End Set
-        End Property
 
         Public Property Noun As String
             Get
@@ -27,28 +15,19 @@ Namespace UI.UtilityForms
                     m_sNoun = String.Empty
                 Else
                     m_sNoun = value.Trim
-                    tTip.SetToolTip(cmdBrowse, GISCode.UserInterface.WrapMessageWithNoun("Browse and select a", Noun, " feature class"))
+                    tTip.SetToolTip(cmdBrowse, naru.ui.UIHelpers.WrapMessageWithNoun("Browse and select a", Noun, " feature class"))
                 End If
             End Set
         End Property
 
-        Public ReadOnly Property SelectedItem As GISDataStructures.GISDataSource
+        Public ReadOnly Property SelectedItem As Core.GISDataStructures.GISDataSource
             Get
-                Dim gResult As GISDataStructures.GISDataSource = Nothing
-                If TypeOf cboInput.SelectedItem Is GISDataStructures.GISDataSource Then
-                    gResult = DirectCast(cboInput.SelectedItem, GISDataStructures.GISDataSource)
+                Dim gResult As Core.GISDataStructures.GISDataSource = Nothing
+                If Core.GISDataStructures.GISDataSource.Exists(txtPath.Text) Then
+                    gResult = New Core.GISDataStructures.GISDataSource(txtPath.Text)
                 End If
                 Return gResult
             End Get
-        End Property
-
-        Public Property ToolTip As String
-            Get
-                Return tTip.GetToolTip(cboInput)
-            End Get
-            Set(ByVal value As String)
-                tTip.SetToolTip(cboInput, value)
-            End Set
         End Property
 
 #End Region
@@ -73,34 +52,34 @@ Namespace UI.UtilityForms
 
         Public MustOverride Shadows Function Validate() As Boolean
 
-        Public Function AddSelectedItemToArcMap() As ESRI.ArcGIS.Carto.IFeatureLayer
+        'Public Function AddSelectedItemToArcMap() As ESRI.ArcGIS.Carto.IFeatureLayer
 
-            If Not TypeOf m_pArcMap Is ESRI.ArcGIS.Framework.IApplication Then
-                Throw New Exception("You must provide the pointer to the ArcMAp application before this control loads")
-            End If
+        '    If Not TypeOf m_pArcMap Is ESRI.ArcGIS.Framework.IApplication Then
+        '        Throw New Exception("You must provide the pointer to the ArcMAp application before this control loads")
+        '    End If
 
-            Dim pFLayer As ESRI.ArcGIS.Carto.IFeatureLayer = Nothing
-            Dim gVector As GISDataStructures.VectorDataSource = SelectedItem
-            If TypeOf gVector Is GISDataStructures.VectorDataSource Then
-                pFLayer = gVector.AddToMap(ArcMap)
-            End If
+        '    Dim pFLayer As ESRI.ArcGIS.Carto.IFeatureLayer = Nothing
+        '    Dim gVector As GISDataStructures.VectorDataSource = SelectedItem
+        '    If TypeOf gVector Is GISDataStructures.VectorDataSource Then
+        '        pFLayer = gVector.AddToMap(ArcMap)
+        '    End If
 
-            Return pFLayer
+        '    Return pFLayer
 
-        End Function
+        'End Function
 
-        Public Function AddToMap() As ESRI.ArcGIS.Carto.ILayer
+        'Public Function AddToMap() As ESRI.ArcGIS.Carto.ILayer
 
-            Dim pLayer As ESRI.ArcGIS.Carto.ILayer = Nothing
-            If TypeOf ArcMap Is IApplication Then
-                If TypeOf SelectedItem Is GISDataStructures.GISDataSource Then
-                    pLayer = SelectedItem.AddToMap(ArcMap)
-                End If
-            End If
+        '    Dim pLayer As ESRI.ArcGIS.Carto.ILayer = Nothing
+        '    If TypeOf ArcMap Is IApplication Then
+        '        If TypeOf SelectedItem Is GISDataStructures.GISDataSource Then
+        '            pLayer = SelectedItem.AddToMap(ArcMap)
+        '        End If
+        '    End If
 
-            Return pLayer
+        '    Return pLayer
 
-        End Function
+        'End Function
 
         ''' <summary>
         ''' Specify the item that will be added to the dropdown and selected in the dropdown
@@ -108,36 +87,13 @@ Namespace UI.UtilityForms
         ''' <param name="gGISDataSource"></param>
         ''' <remarks>Use this method if the form needs to be be re-loaded. The specified item
         ''' will be added to the dropdown and then selected when the form is shown.</remarks>
-        Public Sub PreSelect(ByVal gGISDataSource As GISDataStructures.GISDataSource)
-            m_gPreSelect = gGISDataSource
+        Public Sub PreSelect(ByVal gGISDataSource As Core.GISDataStructures.GISDataSource)
+            'm_gPreSelect = gGISDataSource
         End Sub
 
 #End Region
 
 #Region "Events"
-
-        Private Sub cboInput_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles cboInput.SelectedIndexChanged
-
-            Dim sFullPath As String = String.Empty
-            Dim gSource As GISDataStructures.GISDataSource = cboInput.SelectedItem
-            If TypeOf gSource Is GISDataStructures.GISDataSource Then
-                tTip.SetToolTip(cboInput, gSource.FullPath)
-                '
-                ' Raise the event that the workspace has changed. This will bubble to the parent form
-                ' which will then send the workspace to any output user controls on the form so that
-                ' the output goes to the correct workspace.
-                '
-                RaiseEvent WorkspaceChanged(Me, New InputUCWorkspaceChangedEventArgs(gSource.WorkspacePath))
-
-                sFullPath = gSource.FullPath
-            Else
-                tTip.SetToolTip(cboInput, String.Empty)
-            End If
-            '
-            ' Raise the event that selected item has changed.
-            '
-            RaiseEvent SelectedItemChanged(Me, New InputUCSelectedItemChangedEventArgs(sFullPath))
-        End Sub
 
         Public Event WorkspaceChanged(ByVal Sender As System.Object, ByVal e As InputUCWorkspaceChangedEventArgs)
 

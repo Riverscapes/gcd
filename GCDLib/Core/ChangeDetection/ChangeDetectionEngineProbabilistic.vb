@@ -22,7 +22,7 @@ Namespace Core.ChangeDetection
         Public Sub New(ByVal sName As String, ByVal sFolder As String,
                        ByVal gNewDEM As GISDataStructures.Raster, ByVal gOldDEM As GISDataStructures.Raster,
                        ByVal gNewError As GISDataStructures.Raster, ByVal gOldError As GISDataStructures.Raster,
-                       ByVal gAOI As GISDataStructures.Polygon,
+                       ByVal gAOI As GISDataStructures.Vector,
                        ByVal fThreshold As Double, ByVal fChartHeight As Integer, ByVal fChartWidth As Integer, Optional ByVal spatCoherence As CoherenceProperties = Nothing)
 
             ' Call the base class constructor to instantiate common members.

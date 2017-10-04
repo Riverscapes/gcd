@@ -59,12 +59,12 @@ Namespace Core.ChangeDetection
         ''' Unfortunately this trickles back up to inherited classes, but at least those classes can obtain the
         ''' cell size and linear units from the original raw DoD which is never deleted during a budget set loop.
         ''' </remarks>
-        Public Sub New(sRawDoD As String, sThresholdedDoD As String, fCellSize As Double, eLinearUnits As LinearUnits)
+        Public Sub New(sRawDoD As String, sThresholdedDoD As String, fCellSize As Double, eLinearUnits As naru.math.LinearUnitClass)
 
             m_sRawDoD = sRawDoD
             m_sThresholdedDoD = sThresholdedDoD
             m_fCellSize = fCellSize
-            m_eLinearUnits = New naru.math.LinearUnitClass(eLinearUnits)
+            m_eLinearUnits = eLinearUnits
 
         End Sub
 
@@ -84,7 +84,7 @@ Namespace Core.ChangeDetection
 
             Dim dodProps As ChangeDetectionProperties = Nothing
             If rDoD.TypeMinLOD Then
-                dodProps = New ChangeDetectionPropertiesMinLoD(sRawDoDPath, sThrDoDPath, rDoD.Threshold, gRawDoDPath.CellSize, naru.math.NumberFormatting.GetLinearUnitsFromESRI(gRawDoDPath.LinearUnits))
+                dodProps = New ChangeDetectionPropertiesMinLoD(sRawDoDPath, sThrDoDPath, rDoD.Threshold, gRawDoDPath.CellSize, gRawDoDPath.LinearUnits)
             Else
                 Dim sPropErrPath As String = String.Empty
                 If Not rDoD.IsPropagatedErrorRasterPathNull Then
@@ -96,7 +96,7 @@ Namespace Core.ChangeDetection
                 End If
 
                 If rDoD.TypePropagated Then
-                    dodProps = New ChangeDetection.ChangeDetectionPropertiesPropagated(sRawDoDPath, sThrDoDPath, sPropErrPath, gRawDoDPath.CellSize, naru.math.NumberFormatting.GetLinearUnitsFromESRI(gRawDoDPath.LinearUnits))
+                    dodProps = New ChangeDetection.ChangeDetectionPropertiesPropagated(sRawDoDPath, sThrDoDPath, sPropErrPath, gRawDoDPath.CellSize, gRawDoDPath.LinearUnits)
                 ElseIf rDoD.TypeProbabilistic Then
 
 
@@ -149,7 +149,7 @@ Namespace Core.ChangeDetection
             End Get
         End Property
 
-        Public Sub New(sRawDoD As String, sThresholdedDoD As String, fThreshold As Double, fCellSize As Double, eLinearUnits As naru.math.NumberFormatting.LinearUnits)
+        Public Sub New(sRawDoD As String, sThresholdedDoD As String, fThreshold As Double, fCellSize As Double, eLinearUnits As naru.math.LinearUnitClass)
             MyBase.New(sRawDoD, sThresholdedDoD, fCellSize, eLinearUnits)
 
             m_fThreshold = fThreshold
@@ -168,7 +168,7 @@ Namespace Core.ChangeDetection
             End Get
         End Property
 
-        Public Sub New(sRawDoD As String, sThresholdedDoD As String, sPropagatedErrorRaster As String, fCellSize As Double, eLinearUnits As naru.math.NumberFormatting.LinearUnits)
+        Public Sub New(sRawDoD As String, sThresholdedDoD As String, sPropagatedErrorRaster As String, fCellSize As Double, eLinearUnits As naru.math.LinearUnitClass)
             MyBase.New(sRawDoD, sThresholdedDoD, fCellSize, eLinearUnits)
 
             m_sPropagatedErrorRaster = sPropagatedErrorRaster
@@ -246,7 +246,7 @@ Namespace Core.ChangeDetection
 
 
         Public Sub New(sRawDoD As String, sThresholdedDod As String, sPropagatedErrorRaster As String, sProbabilityRaster As String, sSpatialCoErosionRaster As String, sSpatialCoDepositionRaster As String, sConditionalProbabilityRaster As String, sPosteriorRaster As String, fConfidenceLevel As Double, nFilter As Integer, bBayesianUpdating As Boolean,
-                       fCellSize As Double, eLinearUnits As naru.math.NumberFormatting.LinearUnits)
+                       fCellSize As Double, eLinearUnits As naru.math.LinearUnitClass)
             MyBase.New(sRawDoD, sThresholdedDod, sPropagatedErrorRaster, fCellSize, eLinearUnits)
 
             m_fConfidenceLevel = fConfidenceLevel

@@ -4,7 +4,7 @@
 
         Private m_DoDInfo As ChangeDetection.ChangeDetectionProperties
 
-        Private m_gPolygonMask As GISDataStructures.Polygon
+        Private m_gPolygonMask As GISDataStructures.Vector
         Private m_sMaskField As String ' This is the string field containing the BS class
         Private m_sClassField As String ' This is an integer representing the BS class
         Private m_dOutputFolder As IO.DirectoryInfo
@@ -35,7 +35,7 @@
 
         End Sub
 
-        Public Function Calculate(gInputPolygonMask As GISDataStructures.Polygon, sMaskField As String, nChartWidth As Integer, nChartHeight As Integer, bDeleteIntermediateRasters As Boolean) As BudgetSegregationOutputsClass
+        Public Function Calculate(gInputPolygonMask As GISDataStructures.Vector, sMaskField As String, nChartWidth As Integer, nChartHeight As Integer, bDeleteIntermediateRasters As Boolean) As BudgetSegregationOutputsClass
 
             ' 1. Build Dictionary of Mask Labels
             ' 2. Loop through each mask
@@ -109,11 +109,11 @@
             GP.DataManagement.DefineProjection(sTempMask, gDoDRaw.SpatialReference)
 
             ' Now copy to the desired location
-            Dim sMaskRaster As String = GISDataStructures.RasterDirect.GetNewSafeName(sOutputFolder, "Mask")
-            If Not RasterManager.Copy(sTempMask, sMaskRaster, gDoDRaw.CellSize, gDoDRaw.Extent.Left, gDoDRaw.Extent.Top, gDoDRaw.Rows, gDoDRaw.Columns, GCD.GCDProject.ProjectManager.GCDNARCError.ErrorString) = RasterManagerOutputCodes.PROCESS_OK Then
-                Throw New Exception(GCD.GCDProject.ProjectManager.GCDNARCError.ErrorString.ToString)
+            Dim sMaskRaster As String = Core.GISDataStructures.Raster.GetNewSafeName(sOutputFolder, "Mask")
+            If Not External.RasterManager.Copy(sTempMask, sMaskRaster, gDoDRaw.CellSize, gDoDRaw.Extent.Left, gDoDRaw.Extent.Top, gDoDRaw.Rows, gDoDRaw.Columns, GCDProject.ProjectManager.GCDNARCError.ErrorString) = RasterManagerOutputCodes.PROCESS_OK Then
+                Throw New Exception(GCDProject.ProjectManager.GCDNARCError.ErrorString.ToString)
             End If
-            Dim gMaskRaster As New GISDataStructures.RasterDirect(sMaskRaster)
+            Dim gMaskRaster As New GISDataStructures.Raster(sMaskRaster)
 
             Dim bsOutputs As New BudgetSegregationOutputsClass(sOutputFolder, dMaskClasses, m_gPolygonMask.FullPath)
 
@@ -128,12 +128,12 @@
                 sMaskIndicesAndCSVPaths &= bsOutputs.MaskOutputs(sMaskName).MaskValue & ";" & bsOutputs.MaskOutputs(sMaskName).csvFilename & ";"
             Next
             sMaskIndicesAndCSVPaths = sMaskIndicesAndCSVPaths.Substring(0, sMaskIndicesAndCSVPaths.Length - 1)
-            If Not GCDCore.CalculateAndWriteMaskHistograms(DoD.ThresholdedDoD, sMaskRaster, sMaskIDList, sMaskIndicesAndCSVPaths, GCD.GCDProject.ProjectManager.GCDNARCError.ErrorString) = GCDCoreOutputCodes.PROCESS_OK Then
-                Throw New Exception(GCD.GCDProject.ProjectManager.GCDNARCError.ErrorString.ToString)
+            If Not External.GCDCore.CalculateAndWriteMaskHistograms(DoD.ThresholdedDoD, sMaskRaster, sMaskIDList, sMaskIndicesAndCSVPaths, GCDProject.ProjectManager.GCDNARCError.ErrorString) = External.GCDCoreOutputCodes.PROCESS_OK Then
+                Throw New Exception(GCDProject.ProjectManager.GCDNARCError.ErrorString.ToString)
             End If
 
             For Each kvMask As KeyValuePair(Of String, BudgetSegregation.BudgetSegregationOutputsClass.MaskOutputClass) In bsOutputs.MaskOutputs
-                Dim sSafeMaskName As String = GISCode.FileSystem.RemoveDangerousCharacters(kvMask.Value.MaskValue)
+                Dim sSafeMaskName As String = FileSystem.RemoveDangerousCharacters(kvMask.Value.MaskValue)
                 Debug.WriteLine(String.Format("Budget Segregation Class with value {0} and safe name '{1}'.", kvMask.Value.MaskValue, sSafeMaskName))
                 Dim maskOutputClass As BudgetSegregationOutputsClass.MaskOutputClass = bsOutputs.MaskOutputs(kvMask.Key)
                 '
@@ -141,37 +141,37 @@
                 ' This version of RasterMan MaskValue **retains** cells in the mask that possess the argument value.
                 '
                 Dim sPositiveMask As String = WorkspaceManager.GetTempRaster("PMask_" & sSafeMaskName)
-                RasterManager.MaskValue(sMaskRaster, sPositiveMask, Convert.ToDouble(kvMask.Value.MaskValue), GCD.GCDProject.ProjectManager.GCDNARCError.ErrorString)
+                External.RasterManager.MaskValue(sMaskRaster, sPositiveMask, Convert.ToDouble(kvMask.Value.MaskValue), GCDProject.ProjectManager.GCDNARCError.ErrorString)
                 '
                 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
                 ' Mask the raw and thresholded DoDs to create a pair of rasters that just have values
                 ' for the valid areas for the current Mask
                 Dim sMaskRaw As String = WorkspaceManager.GetTempRaster("MR_" & sSafeMaskName)
-                RasterManager.Mask(DoD.RawDoD, sPositiveMask, sMaskRaw, GCD.GCDProject.ProjectManager.GCDNARCError.ErrorString)
+                External.RasterManager.Mask(DoD.RawDoD, sPositiveMask, sMaskRaw, GCDProject.ProjectManager.GCDNARCError.ErrorString)
 
                 Dim sMaskThr As String = WorkspaceManager.GetTempRaster("MT_" & sSafeMaskName)
-                RasterManager.Mask(DoD.ThresholdedDoD, sPositiveMask, sMaskThr, GCD.GCDProject.ProjectManager.GCDNARCError.ErrorString)
+                External.RasterManager.Mask(DoD.ThresholdedDoD, sPositiveMask, sMaskThr, GCDProject.ProjectManager.GCDNARCError.ErrorString)
 
                 ' Need to create a new ChangeStats for the new masked out DoD rasters.
                 ' First build a new DoD Properties depending on the type of the full DoD
                 ' for the whole raster. Then use the attributes of this full DoD combined
                 ' with the newly created masked DoDs for the new BS change stats for this mask.
-                If TypeOf DoD Is GCD.ChangeDetection.ChangeDetectionPropertiesMinLoD Then
-                    Dim BSDoD As New ChangeDetection.ChangeDetectionPropertiesMinLoD(sMaskRaw, sMaskThr, DirectCast(DoD, GCD.ChangeDetection.ChangeDetectionPropertiesMinLoD).Threshold, gDoDRaw.CellSize, NumberFormatting.GetLinearUnitsFromESRI(gDoDRaw.LinearUnits))
-                    maskOutputClass.ChangeStats = New GCD.ChangeDetection.ChangeStatsCalculator(BSDoD)
+                If TypeOf DoD Is ChangeDetection.ChangeDetectionPropertiesMinLoD Then
+                    Dim BSDoD As New ChangeDetection.ChangeDetectionPropertiesMinLoD(sMaskRaw, sMaskThr, DirectCast(DoD, ChangeDetection.ChangeDetectionPropertiesMinLoD).Threshold, gDoDRaw.CellSize, gDoDRaw.LinearUnits)
+                    maskOutputClass.ChangeStats = New ChangeDetection.ChangeStatsCalculator(BSDoD)
                 Else
                     ' PGB - 8 Apr 2015 - Need to check type against probabilistic first because the 
                     ' probabilistic class is **inherited** from the propagated. Hence the type will
                     ' always be propagated, even when it is probabilistic. i.e. perform the more
                     ' restrictive check first.
                     ' 
-                    If TypeOf DoD Is GCD.ChangeDetection.ChangeDetectionPropertiesProbabilistic Then
-                        Dim FullDoD As GCD.ChangeDetection.ChangeDetectionPropertiesProbabilistic = DirectCast(DoD, ChangeDetection.ChangeDetectionPropertiesProbabilistic)
-                        Dim BSDoD As New ChangeDetection.ChangeDetectionPropertiesProbabilistic(sMaskRaw, sMaskThr, FullDoD.PropagatedErrorRaster, FullDoD.ProbabilityRaster, FullDoD.SpatialCoErosionRaster, FullDoD.SpatialCoDepositionRaster, FullDoD.ConditionalRaster, FullDoD.PosteriorRaster, FullDoD.ConfidenceLevel, FullDoD.SpatialCoherenceFilter, FullDoD.BayesianUpdating, gDoDRaw.CellSize, NumberFormatting.GetLinearUnitsFromESRI(gDoDRaw.LinearUnits))
-                        maskOutputClass.ChangeStats = New GCD.ChangeDetection.ChangeStatsCalculator(BSDoD)
-                    ElseIf TypeOf DoD Is GCD.ChangeDetection.ChangeDetectionPropertiesPropagated Then
-                        Dim BSDoD As New ChangeDetection.ChangeDetectionPropertiesPropagated(sMaskRaw, sMaskThr, DirectCast(DoD, ChangeDetection.ChangeDetectionPropertiesPropagated).PropagatedErrorRaster, gDoDRaw.CellSize, NumberFormatting.GetLinearUnitsFromESRI(gDoDRaw.LinearUnits))
-                        maskOutputClass.ChangeStats = New GCD.ChangeDetection.ChangeStatsCalculator(BSDoD)
+                    If TypeOf DoD Is ChangeDetection.ChangeDetectionPropertiesProbabilistic Then
+                        Dim FullDoD As ChangeDetection.ChangeDetectionPropertiesProbabilistic = DirectCast(DoD, ChangeDetection.ChangeDetectionPropertiesProbabilistic)
+                        Dim BSDoD As New ChangeDetection.ChangeDetectionPropertiesProbabilistic(sMaskRaw, sMaskThr, FullDoD.PropagatedErrorRaster, FullDoD.ProbabilityRaster, FullDoD.SpatialCoErosionRaster, FullDoD.SpatialCoDepositionRaster, FullDoD.ConditionalRaster, FullDoD.PosteriorRaster, FullDoD.ConfidenceLevel, FullDoD.SpatialCoherenceFilter, FullDoD.BayesianUpdating, gDoDRaw.CellSize, gDoDRaw.LinearUnits)
+                        maskOutputClass.ChangeStats = New ChangeDetection.ChangeStatsCalculator(BSDoD)
+                    ElseIf TypeOf DoD Is ChangeDetection.ChangeDetectionPropertiesPropagated Then
+                        Dim BSDoD As New ChangeDetection.ChangeDetectionPropertiesPropagated(sMaskRaw, sMaskThr, DirectCast(DoD, ChangeDetection.ChangeDetectionPropertiesPropagated).PropagatedErrorRaster, gDoDRaw.CellSize, gDoDRaw.LinearUnits)
+                        maskOutputClass.ChangeStats = New ChangeDetection.ChangeStatsCalculator(BSDoD)
                     Else
                         Dim ex As New Exception("Unhandled change detection type.")
                         Throw ex
@@ -180,25 +180,24 @@
 
                 ' Export the change statistics XML file.
                 Dim sSummaryXMLPath As String = IO.Path.Combine(m_dOutputFolder.FullName, "c" & maskOutputClass.MaskValue.ToString("000") & "_summary.xml")
-                DirectCast(maskOutputClass.ChangeStats, GCD.ChangeDetection.ChangeStatsCalculator).ExportSummary(GCD.GCDProject.ProjectManager.ExcelTemplatesFolder.FullName,
-                                                                                                                 NumberFormatting.GetUnitsAsString(DoD.Units.LinearUnit),
+                DirectCast(maskOutputClass.ChangeStats, ChangeDetection.ChangeStatsCalculator).ExportSummary(GCDProject.ProjectManager.ExcelTemplatesFolder.FullName,
+                                                                                                               naru.math.NumberFormatting.GetUnitsAsString(DoD.Units.LinearUnit),
                                                                                                                  sSummaryXMLPath)
 
                 ' Write the thresholded histogram CSV file. Then load it as a DoD result histogram
                 'maskHistograms.writeCSV(maskOutputClass.MaskValue, maskOutputClass.csvFilename)
-                Dim ExportStatsData As New GCD.ChangeDetection.DoDResultHistograms(maskOutputClass.csvFilename)
+                Dim ExportStatsData As New ChangeDetection.DoDResultHistograms(maskOutputClass.csvFilename)
 
                 ' Export the histogram graphics
                 'Dim c As New Windows.Forms.DataVisualization.Charting.Chart
-                Dim c As New ZedGraph.ZedGraphControl
-                Dim ExportHistogramViewer As New DoDHistogramViewerClass(c, DoD.Units.ToString)
+                Dim c As New System.Windows.Forms.DataVisualization.Charting.Chart
+                Dim ExportHistogramViewer As New Core.Visualization.DoDHistogramViewerClass(c, DoD.Units.ToString)
 
-                Dim lUnits As New LinearUnitClass(NumberFormatting.GetLinearUnitsFromESRI(gDoDRaw.LinearUnits))
                 IO.Directory.CreateDirectory(IO.Path.GetDirectoryName(maskOutputClass.AreaChartPath))
-                ExportHistogramViewer.ExportCharts(ExportStatsData, lUnits, maskOutputClass.AreaChartPath, maskOutputClass.VolumeChartPath, nChartWidth, nChartHeight)
+                ExportHistogramViewer.ExportCharts(ExportStatsData, gDoDRaw.LinearUnits, maskOutputClass.AreaChartPath, maskOutputClass.VolumeChartPath, nChartWidth, nChartHeight)
 
-                Dim cbViewer As New GCD.ElevationChangeBarViewer(c, lUnits.ToString)
-                DirectCast(maskOutputClass.ChangeStats, GCD.ChangeDetection.ChangeStatsCalculator).GenerateChangeBarGraphicFiles(GCD.GCDProject.ProjectManager.OutputManager.GetChangeDetectionFiguresFolder(sOutputFolder, True), DoD.Units.LinearUnit, m_fChartWidth, m_fChartHeight, "c" & maskOutputClass.MaskValue.ToString("000"))
+                Dim cbViewer As New Core.Visualization.ElevationChangeBarViewer(c, gDoDRaw.LinearUnits.GetUnitsAsString)
+                DirectCast(maskOutputClass.ChangeStats, ChangeDetection.ChangeStatsCalculator).GenerateChangeBarGraphicFiles(GCDProject.ProjectManager.OutputManager.GetChangeDetectionFiguresFolder(sOutputFolder, True), DoD.Units.LinearUnit, m_fChartWidth, m_fChartHeight, "c" & maskOutputClass.MaskValue.ToString("000"))
 
                 ' Append this class to the legend file
                 sbClassLegend.AppendLine(maskOutputClass.MaskValue & "," & kvMask.Key)
@@ -208,9 +207,9 @@
                 '
                 If bDeleteIntermediateRasters Then
                     GC.Collect()
-                    GISDataStructures.RasterDirect.DeleteRaster(sPositiveMask)
-                    GISDataStructures.RasterDirect.DeleteRaster(sMaskRaw)
-                    GISDataStructures.RasterDirect.DeleteRaster(sMaskThr)
+                    GISDataStructures.Raster.DeleteRaster(sPositiveMask)
+                    GISDataStructures.Raster.DeleteRaster(sMaskRaw)
+                    GISDataStructures.Raster.DeleteRaster(sMaskThr)
                 End If
             Next
             'maskHistograms.Dispose()
