@@ -226,8 +226,8 @@ Namespace Core.BudgetSegregation
             End If
 
             ' New method for calculating and writing mask values.
-            If Not External.GCDCore.CalculateAndWriteMaskHistograms(_DoDSource, _SegregationRaster, maskValues, sMaskIndicesAndCSVFilePath, GCDProject.ProjectManager.GCDNARCError.ErrorString) = External.GCDCoreOutputCodes.PROCESS_OK Then
-                Throw New Exception(GCDProject.ProjectManager.GCDNARCError.ErrorString.ToString)
+            If Not External.GCDCore.CalculateAndWriteMaskHistograms(_DoDSource, _SegregationRaster, maskValues, sMaskIndicesAndCSVFilePath, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString) = External.GCDCoreOutputCodes.PROCESS_OK Then
+                Throw New Exception(GCDProject.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
             End If
 
             'add to ClassLegend csv string

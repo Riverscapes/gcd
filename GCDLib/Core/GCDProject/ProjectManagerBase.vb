@@ -30,6 +30,8 @@ Namespace Core.GCDProject
 
         Protected Shared m_GCDNARCError As External.NARCError
 
+        Protected Shared m_eDefaultRasterType As GISDataStructures.RasterTypes
+
         Public Shared ReadOnly Property GCDNARCError As External.NARCError
             Get
                 Return m_GCDNARCError
@@ -135,6 +137,12 @@ Namespace Core.GCDProject
             End Get
         End Property
 
+        Public Shared ReadOnly Property DefaultRasterType As GISDataStructures.RasterTypes
+            Get
+                Return m_eDefaultRasterType
+            End Get
+        End Property
+
 
         Public Shared Sub save()
             m_ProjectDS.WriteXml(FilePath)
@@ -155,15 +163,16 @@ Namespace Core.GCDProject
             End Get
         End Property
 
-        Public Sub New(ByVal sResourcesFolder As String,
-                       ByVal sExcelTempateFolder As String,
-                       ByVal ColourErosion As System.Drawing.Color,
-                       ByVal ColourDeposition As System.Drawing.Color)
+        Public Sub New(ByVal eDefaultRasterType As GISDataStructures.RasterTypes,
+                ByVal sResourcesFolder As String,
+                ByVal sExcelTempateFolder As String,
+                ByVal ColourErosion As System.Drawing.Color,
+                ByVal ColourDeposition As System.Drawing.Color)
 
             m_OutputManager = New OutputManager()
             m_cColourErosion = ColourErosion
             m_cColourDeposition = ColourDeposition
-
+            m_eDefaultRasterType = eDefaultRasterType
             m_GCDNARCError = New External.NARCError()
 
             If IO.Directory.Exists(sResourcesFolder) Then

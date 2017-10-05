@@ -20,7 +20,7 @@ Namespace UI.ChangeDetection
 
         Private Sub ChangeBarsUC_Load(sender As Object, e As System.EventArgs) Handles Me.Load
 
-            m_Viewer = New ElevationChangeBarViewer(zGraph, m_eUnits)
+            m_Viewer = New ElevationChangeBarViewer(chtControl, m_eUnits)
 
             cboType.Items.Add(New naru.db.NamedObject(ElevationChangeBarViewer.BarTypes.Area, "Areal"))
             cboType.Items.Add(New naru.db.NamedObject(ElevationChangeBarViewer.BarTypes.Volume, "Volumetric"))

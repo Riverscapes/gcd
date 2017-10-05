@@ -283,4 +283,10 @@
   <data name="PrecisionHelp" xml:space="preserve">
     <value>The horizontal decimal precision refers to the number of decimals places used to define the raster extent and cell size. This value should be the minimum number of decimal places required to accurately store the raster cell size. e.g. a cell size of 0.01m (1cm) should use a precision of 2.</value>
   </data>
+  <data name="FISRepositoryWebsite" xml:space="preserve">
+    <value>https://github.com/Riverscapes/fis-dem-error</value>
+  </data>
+  <data name="ApplicationNameShort" xml:space="preserve">
+    <value>GCD</value>
+  </data>
 </root>

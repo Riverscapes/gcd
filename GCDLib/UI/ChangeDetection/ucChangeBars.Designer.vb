@@ -24,7 +24,7 @@
         <System.Diagnostics.DebuggerStepThrough()>
         Private Sub InitializeComponent()
             Me.components = New System.ComponentModel.Container()
-            Me.zGraph = New ZedGraph.ZedGraphControl()
+            Me.chtControl = New System.Windows.Forms.DataVisualization.Charting.Chart()
             Me.cboType = New System.Windows.Forms.ComboBox()
             Me.rdoAbsolute = New System.Windows.Forms.RadioButton()
             Me.rdoRelative = New System.Windows.Forms.RadioButton()
@@ -32,21 +32,13 @@
             '
             'zGraph
             '
-            Me.zGraph.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Me.chtControl.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-            Me.zGraph.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-            Me.zGraph.Location = New System.Drawing.Point(0, 57)
-            Me.zGraph.Name = "zGraph"
-            Me.zGraph.ScrollGrace = 0.0R
-            Me.zGraph.ScrollMaxX = 0.0R
-            Me.zGraph.ScrollMaxY = 0.0R
-            Me.zGraph.ScrollMaxY2 = 0.0R
-            Me.zGraph.ScrollMinX = 0.0R
-            Me.zGraph.ScrollMinY = 0.0R
-            Me.zGraph.ScrollMinY2 = 0.0R
-            Me.zGraph.Size = New System.Drawing.Size(200, 320)
-            Me.zGraph.TabIndex = 4
+            Me.chtControl.Location = New System.Drawing.Point(0, 57)
+            Me.chtControl.Name = "zGraph"
+            Me.chtControl.Size = New System.Drawing.Size(200, 320)
+            Me.chtControl.TabIndex = 4
             '
             'cboType
             '
@@ -88,14 +80,14 @@
             Me.Controls.Add(Me.rdoRelative)
             Me.Controls.Add(Me.rdoAbsolute)
             Me.Controls.Add(Me.cboType)
-            Me.Controls.Add(Me.zGraph)
+            Me.Controls.Add(Me.chtControl)
             Me.Name = "ChangeBarsUC"
             Me.Size = New System.Drawing.Size(200, 381)
             Me.ResumeLayout(False)
             Me.PerformLayout()
 
         End Sub
-        Friend WithEvents zGraph As ZedGraph.ZedGraphControl
+        Friend WithEvents chtControl As System.Windows.Forms.DataVisualization.Charting.Chart
         Friend WithEvents cboType As System.Windows.Forms.ComboBox
         Friend WithEvents rdoAbsolute As System.Windows.Forms.RadioButton
         Friend WithEvents rdoRelative As System.Windows.Forms.RadioButton

@@ -22,17 +22,15 @@ Namespace Core.GCDProject
         End Property
 
         Public Sub New(ByVal sFISDatasetPath As String, ByVal sSurveyTypesDatasetPath As String,
-                     ByVal eDefaultRasterType As GISDataStructures.Raster.RasterTypes,
+                     ByVal eDefaultRasterType As GISDataStructures.RasterTypes,
                      ByVal sResourcesFolder As String,
                      ByVal sExcelTemplateFolder As String,
-                     ByVal pArcMap As ESRI.ArcGIS.Framework.IApplication,
                      ByVal ColourErosion As System.Drawing.Color,
                      ByVal ColourDeposition As System.Drawing.Color,
                      ByVal sAutomaticPyramids As String)
 
             MyBase.New(sFISDatasetPath, sResourcesFolder, sExcelTemplateFolder, sSurveyTypesDatasetPath,
                                     eDefaultRasterType,
-                                    pArcMap,
                                     ColourErosion,
                                     ColourDeposition)
 

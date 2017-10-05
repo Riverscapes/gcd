@@ -1,18 +1,17 @@
-﻿Imports System.Windows.Forms
-
+﻿
 Namespace UI.SurveyLibrary
 
     Public Class frmPointDensity
 
-        Private m_sLinearUnits As String
+        Private m_eLinearUnits As naru.math.LinearUnitClass
 
-        Public Sub New(sLinearUnits As String)
+        Public Sub New(eLinearUnits As naru.math.LinearUnitClass)
 
             InitializeComponent()
 
-            m_sLinearUnits = sLinearUnits
+            m_eLinearUnits = eLinearUnits
 
-            ucPointCloud.Initialize("Point Cloud", GISDataStructures.BrowseVectorTypes.Point)
+            ucPointCloud.Initialize("Point Cloud", Core.GISDataStructures.BrowseVectorTypes.Point)
 
         End Sub
 
@@ -24,11 +23,8 @@ Namespace UI.SurveyLibrary
             cboNeighbourhood.Items.Add("Rectangle")
             cboNeighbourhood.SelectedIndex = 1
 
-            If String.IsNullOrEmpty(m_sLinearUnits) Then
-                lblDistance.Visible = False
-            Else
-                lblDistance.Text = lblDistance.Text.Substring(0, lblDistance.Text.Length - 1) & " " & m_sLinearUnits & ":"
-            End If
+            lblDistance.Text = lblDistance.Text.Substring(0, lblDistance.Text.Length - 1) & " " & m_eLinearUnits.GetUnitsAsString & ":"
+
         End Sub
 
         Public ReadOnly Property Neighborhood As String
@@ -46,7 +42,7 @@ Namespace UI.SurveyLibrary
         Private Sub btnOK_Click(sender As Object, e As System.EventArgs) Handles btnOK.Click
 
             If Not ucPointCloud.Validate Then
-                Me.DialogResult = Windows.Forms.DialogResult.None
+                Me.DialogResult = System.Windows.Forms.DialogResult.None
                 Exit Sub
             End If
 

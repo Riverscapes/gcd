@@ -57,7 +57,7 @@
             ' Threshold the raster
             Dim eResult As External.GCDCore.GCDCoreOutputCodes
             sThreshDodPath = GCDProject.ProjectManager.OutputManager.GetDoDThresholdPath(Name, Folder.FullName)
-            eResult = External.GCDCore.ThresholdDoDPropErr(sRawDoDPath, sPropagatedErrorRaster, sThreshDodPath, GCDProject.ProjectManager.GCDNARCError.ErrorString)
+            eResult = External.GCDCore.ThresholdDoDPropErr(sRawDoDPath, sPropagatedErrorRaster, sThreshDodPath, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
 
             ' Check that the raster exists
             If Not System.IO.File.Exists(sRawDoDPath) Then
@@ -65,13 +65,13 @@
             End If
 
             If eResult <> External.GCDCoreOutputCodes.PROCESS_OK Then
-                Dim ex As New Exception(GCDProject.ProjectManager.GCDNARCError.ErrorString.ToString)
+                Dim ex As New Exception(GCDProject.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
                 Throw New Exception("Error calculating the raw DEM of difference raster.", ex)
             End If
 
             sThreshHistPath = GCDProject.ProjectManager.OutputManager.GetCsvThresholdPath(Name, Folder.FullName)
-            If Not External.GCDCore.CalculateAndWriteDoDHistogram(sThreshDodPath, sThreshHistPath, GCDProject.ProjectManager.GCDNARCError.ErrorString) = External.GCDCoreOutputCodes.PROCESS_OK Then
-                Throw New Exception(GCDProject.ProjectManager.GCDNARCError.ErrorString.ToString)
+            If Not External.GCDCore.CalculateAndWriteDoDHistogram(sThreshDodPath, sThreshHistPath, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString) = External.GCDCoreOutputCodes.PROCESS_OK Then
+                Throw New Exception(GCDProject.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
             End If
 
             Dim gRawDoD As New GISDataStructures.Raster(sRawDoDPath)
@@ -100,8 +100,8 @@
 
             Dim sPropagatedErrorPath As String = GCDProject.ProjectManager.OutputManager.GetPropagatedErrorPath(Name, Folder.FullName)
             Try
-                If Not External.RasterManager.RootSumSquares(AnalysisNewError.FullPath, AnalysisOldError.FullPath, sPropagatedErrorPath, GCDProject.ProjectManager.GCDNARCError.ErrorString) = External.RasterManagerOutputCodes.PROCESS_OK Then
-                    Throw New Exception(GCDProject.ProjectManager.GCDNARCError.ErrorString.ToString)
+                If Not External.RasterManager.RootSumSquares(AnalysisNewError.FullPath, AnalysisOldError.FullPath, sPropagatedErrorPath, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString) = External.RasterManagerOutputCodes.PROCESS_OK Then
+                    Throw New Exception(GCDProject.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
                 End If
             Catch ex As Exception
                 Dim ex2 As New Exception("Error generating propagated error raster.", ex)
@@ -134,8 +134,8 @@
             Else
                 ' Clip error raster to extent
                 If Not External.RasterManager.Copy(m_gOriginalNewError.FullPath, sNewError, AnalysisNewDEM.CellSize, theAnalysisExtent.Left, theAnalysisExtent.Top,
-                                          AnalysisNewDEM.Rows, AnalysisNewDEM.Columns, GCDProject.ProjectManager.GCDNARCError.ErrorString) = External.RasterManagerOutputCodes.PROCESS_OK Then
-                    Throw New Exception(GCDProject.ProjectManager.GCDNARCError.ErrorString.ToString)
+                                          AnalysisNewDEM.Rows, AnalysisNewDEM.Columns, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString) = External.RasterManagerOutputCodes.PROCESS_OK Then
+                    Throw New Exception(GCDProject.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
                 End If
                 'GP.SpatialAnalyst.Raster_Calculator(Chr(34) & m_gOriginalNewError.FullPath & Chr(34), sNewError, theAnalysisExtent.Rectangle, m_gOriginalNewError.CellSize)
             End If
@@ -146,8 +146,8 @@
             Else
                 ' Clip error raster to extent
                 If Not External.RasterManager.Copy(m_gOriginalOldError.FullPath, sOldError, AnalysisOldDEM.CellSize, theAnalysisExtent.Left, theAnalysisExtent.Top,
-                                          AnalysisOldDEM.Rows, AnalysisOldDEM.Columns, GCDProject.ProjectManager.GCDNARCError.ErrorString) = External.RasterManagerOutputCodes.PROCESS_OK Then
-                    Throw New Exception(GCDProject.ProjectManager.GCDNARCError.ErrorString.ToString)
+                                          AnalysisOldDEM.Rows, AnalysisOldDEM.Columns, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString) = External.RasterManagerOutputCodes.PROCESS_OK Then
+                    Throw New Exception(GCDProject.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
                 End If
                 ' GP.SpatialAnalyst.Raster_Calculator(Chr(34) & m_gOriginalOldError.FullPath & Chr(34), sOldError, theAnalysisExtent.Rectangle, m_gOriginalOldError.CellSize)
             End If

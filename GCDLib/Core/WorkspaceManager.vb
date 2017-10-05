@@ -153,26 +153,14 @@ Namespace Core
         ''' Get the default workspace
         ''' </summary>
         ''' <returns></returns>
-        ''' <remarks>
-        ''' Should resolve to the application folder, e.g. 
-        ''' C:\Documents and Settings\[User]\Application Data\ESSA_Technologies_Ltd\RBT
-        ''' Composed of Environment.SpecialFolder.ApplicationData, My.Resousource.idsManufacturer and My.resources.ApplicationNameShort
-        ''' 
-        ''' PGB 18 Jul 2011 - based on a conversation with Joe Wheaton on 11 July 2011. The 
-        ''' default temp workspace will now be in the users application data folder and then:
-        ''' appfolder\GCD\TempWorkspace
-        '''
-        ''' This should also work for the RBT. It is a good solution because the ESSA Technologies
-        ''' compontent using the manufaturer was a bit odd anyways.</remarks>
-        Public Shared Function GetDefaultWorkspace(sManufacturer As String, sApplicationShort As String) As String
+        ''' <remarks></remarks>
+        Public Shared Function GetDefaultWorkspace(sApplicationShort As String) As String
 
-            'Debug.Assert(Not String.IsNullOrEmpty(sManufacturer))
-            Debug.Assert(Not String.IsNullOrEmpty(sApplicationShort))
+            If (String.IsNullOrEmpty(sApplicationShort)) Then
+                Throw New ArgumentNullException("sApplicationShort", "Invalid default workspace parameter")
+            End If
 
             Dim sDefault As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
-            ' 
-            '
-            'sDefault = IO.Path.Combine(IO.Path.Combine(sDefault, sManufacturer), sApplicationShort)
             sDefault = IO.Path.Combine(sDefault, sApplicationShort)
             If Not IO.Directory.Exists(sDefault) Then
                 IO.Directory.CreateDirectory(sDefault)
@@ -184,6 +172,39 @@ Namespace Core
             End If
 
             Return sDefault
+
+        End Function
+
+        Public Shared Function ValidateWorkspace(sWorkspacePath As String) As Boolean
+
+            ' This string will remain empty unless there is a problem, in which
+            ' case it will contain the relevant message to show the user.
+            Dim sWarningMessage As String = String.Empty
+            Dim sFixMessage As String = String.Format("Open the {0} Options to assign a valid temporary workspace path.", My.Resources.ApplicationNameShort)
+
+            If String.IsNullOrEmpty(sWorkspacePath) Then
+                sWarningMessage = String.Format("The {0} temporary workspace path cannot be empty.{1}", My.Resources.ApplicationNameShort, sFixMessage)
+            Else
+                If System.IO.Directory.Exists(sWorkspacePath) Then
+                    If My.Settings.StartUpWorkspaceWarning Then
+                        If System.Text.RegularExpressions.Regex.IsMatch(sWorkspacePath, "[ .]") Then
+                            ' Show the message box that asks the user whether they want to proceed.
+                            ' This message box also controls whether they are warned again.
+                            Dim frm As New UI.Options.frmMessageBoxWithReminder(sWorkspacePath)
+                            Return frm.ShowDialog = System.Windows.Forms.DialogResult.Yes
+                        End If
+                    End If
+                Else
+                    sWarningMessage = String.Format("The {0} temporary workspace path does not exist.{1}", My.Resources.ApplicationNameLong, sFixMessage)
+                End If
+
+            End If
+
+            If Not String.IsNullOrEmpty(sWarningMessage) Then
+                System.Windows.Forms.MessageBox.Show(sWarningMessage, String.Format("Invalid {0} Temporary Workspace", My.Resources.ApplicationNameShort), System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information)
+            End If
+
+            Return String.IsNullOrEmpty(sWarningMessage)
 
         End Function
 
@@ -207,10 +228,10 @@ Namespace Core
 
         End Function
 
-        Public Shared Function SetWorkspacePathDefault(sManufacturer As String, sApplicationShort As String) As String
+        Public Shared Function SetWorkspacePathDefault(sApplicationShort As String) As String
 
             'Dim ApplicationDataFolder As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
-            Dim diPath As New DirectoryInfo(GetDefaultWorkspace(sManufacturer, sApplicationShort)) 'IO.Path.Combine(IO.Path.Combine(ApplicationDataFolder, sManufacturer), sApplicationShort))
+            Dim diPath As New DirectoryInfo(GetDefaultWorkspace(sApplicationShort)) 'IO.Path.Combine(IO.Path.Combine(ApplicationDataFolder, sManufacturer), sApplicationShort))
 
             If Not diPath.Exists Then
                 Directory.CreateDirectory(diPath.FullName)

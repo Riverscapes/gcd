@@ -70,6 +70,7 @@
 
         Private m_FilePath As System.IO.FileInfo
         Private m_SpatialReferenceWKS As String ' GDAL Spatial Ref well known string
+        Protected m_eLinearUnits As naru.math.LinearUnitClass
 
         Public ReadOnly Property FilePath As System.IO.FileInfo
             Get
@@ -83,12 +84,24 @@
             End Get
         End Property
 
-        Public Property SpatialReferenceWKS As String
+        Public Property SpatialReference As String
             Protected Set(value As String)
                 m_SpatialReferenceWKS = value
             End Set
             Get
                 Return m_SpatialReferenceWKS
+            End Get
+        End Property
+
+        Public ReadOnly Property LinearUnits As naru.math.LinearUnitClass
+            Get
+                Return m_eLinearUnits
+            End Get
+        End Property
+
+        Public ReadOnly Property DatasetName As String
+            Get
+                Return IO.Path.GetFileNameWithoutExtension(FullPath)
             End Get
         End Property
 
@@ -107,7 +120,7 @@
         End Function
 
         Public Function CheckSpatialReferenceMatches(otherDataSource As GISDataSource) As Boolean
-            Return CheckSpatialReferenceMatches(otherDataSource.SpatialReferenceWKS)
+            Return CheckSpatialReferenceMatches(otherDataSource.SpatialReference)
         End Function
 
         Public Shared Function Exists(sFullPath As String) As Boolean
@@ -115,7 +128,7 @@
         End Function
 
         Public Shared Function GetWorkspacePath(sFullPath As String) As String
-            Return System.IO.Path.GetDirectoryName(sFullPath)
+            Return IO.Path.GetDirectoryName(sFullPath)
         End Function
     End Class
 

@@ -114,11 +114,11 @@ Namespace Core.ErrorCalculation
                 Debug.Print(sAllMethodRasters)
                 Dim eResult As External.RasterManagerOutputCodes = External.RasterManager.Mosaic(sAllMethodRasters, sMosaicWithoutMask, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
                 If eResult <> External.RasterManagerOutputCodes.PROCESS_OK Then
-                    Dim exInner As New Exception(GCDProject.ProjectManager.GCDNARCError.ErrorString.ToString)
+                    Dim exInner As New Exception(GCDProject.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
                     Dim ex As New Exception("Error mosaicing the raster.", exInner)
                     ex.Data("Input rasters") = sAllMethodRasters
                     ex.Data("Output raster") = sOutputRasterPath
-                    ex.Data("Error Message") = GCDProject.ProjectManager.GCDNARCError.ErrorString.ToString
+                    ex.Data("Error Message") = GCDProject.ProjectManagerBase.GCDNARCError.ErrorString.ToString
                     Throw ex
                 End If
 
@@ -148,7 +148,7 @@ Namespace Core.ErrorCalculation
 
             Try
                 ' Do the conditional geoprocessing.
-                Dim eResult As External.GCDCoreOutputCodes = External.UniformError(gRasterMask.FullPath, sOutputRasterPath, fErrorValue, GCDProject.ProjectManager.GCDNARCError.ErrorString)
+                Dim eResult As External.GCDCoreOutputCodes = External.UniformError(gRasterMask.FullPath, sOutputRasterPath, fErrorValue, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
                 If eResult <> External.GCDCoreOutputCodes.PROCESS_OK Then
                     Dim exInner As New Exception(GCDProject.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
                     Dim ex As New Exception("Error producing uniform error surface.", exInner)

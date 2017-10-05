@@ -224,7 +224,7 @@
 
                 If eResult <> External.GCDCoreOutputCodes.PROCESS_OK Then
 
-                    Dim ex As New Exception(GCDProject.ProjectManager.GCDNARCError.ErrorString.ToString)
+                    Dim ex As New Exception(GCDProject.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
                     Throw New Exception("Error calculating the raw DEM of difference raster", ex)
 
                 End If
@@ -241,7 +241,7 @@
                 End If
 
                 sRawHistogram = GCDProject.ProjectManager.OutputManager.GetCsvRawPath(IO.Path.GetDirectoryName(sRawDoDPath), Name)
-                eResult = External.CalculateAndWriteDoDHistogramWithBins(sRawDoDPath, sRawHistogram, m_nNumBins, m_nMinimumBin, m_fBinSize, m_fBinIncrement, GCDProject.ProjectManager.GCDNARCError.ErrorString)
+                eResult = External.CalculateAndWriteDoDHistogramWithBins(sRawDoDPath, sRawHistogram, m_nNumBins, m_nMinimumBin, m_fBinSize, m_fBinIncrement, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
                 If eResult <> External.GCDCoreOutputCodes.PROCESS_OK Then
                     Dim ex As New Exception(GCDProject.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
                     Throw New Exception("Error calculating and writing the raw DEM histogram.", ex)

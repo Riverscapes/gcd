@@ -95,7 +95,7 @@ Namespace UI.UtilityForms
             If GISDataStructures.GISDataSource.Exists(txtOutput.Text) Then
                 If MsgBox("The " & Noun & " feature class already exists. Do you wish to overwrite it?", MsgBoxStyle.YesNo Or MsgBoxStyle.DefaultButton2 Or MsgBoxStyle.Question, My.Resources.ApplicationNameLong) = MsgBoxResult.Yes Then
                     Try
-                        External.RasterManager.Delete(txtOutput.Text, GCDProject.ProjectManager.GCDNARCError.ErrorString)
+                        External.RasterManager.Delete(txtOutput.Text, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
                     Catch ex As Exception
                         ExceptionHelper.HandleException(ex, "Error attempting to delete the existing feature class")
                         Return False

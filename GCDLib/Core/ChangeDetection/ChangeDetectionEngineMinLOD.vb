@@ -12,7 +12,7 @@
         End Property
 
         Public Sub New(ByVal sName As String, ByVal sFolder As String, ByVal gNewDEM As GISDataStructures.Raster, ByVal gOldDEM As GISDataStructures.Raster,
-                       ByVal gAOI As GISDataStructures.PolygonDataSource, ByVal fThreshold As Double, ByVal fChartWidth As Integer, ByVal fChartHeight As Integer)
+                       ByVal gAOI As GISDataStructures.Vector, ByVal fThreshold As Double, ByVal fChartWidth As Integer, ByVal fChartHeight As Integer)
             MyBase.New(sName, sFolder, gNewDEM, gOldDEM, gAOI, fChartHeight, fChartWidth)
 
             m_fThreshold = fThreshold
@@ -23,39 +23,39 @@
             GenerateAnalysisRasters()
 
             CalculateRawDoD(sRawDoDPath, sRawHistPath)
-            sThreshDodPath = GCD.GCDProject.ProjectManager.OutputManager.GetDoDThresholdPath(Name, Folder.FullName)
+            sThreshDodPath = GCDProject.ProjectManagerBase.OutputManager.GetDoDThresholdPath(Name, Folder.FullName)
 
-            Dim eResult As GCDCore.GCDCoreOutputCodes
-            eResult = GCDCore.ThresholdDoDMinLoD(sRawDoDPath, sThreshDodPath, m_fThreshold, GCD.GCDProject.ProjectManager.OutputManager.OutputDriver,
-                                                                              GCD.GCDProject.ProjectManager.OutputManager.NoData, GCD.GCDProject.ProjectManager.GCDNARCError.ErrorString)
+            Dim eResult As External.GCDCoreOutputCodes
+            eResult = External.ThresholdDoDMinLoD(sRawDoDPath, sThreshDodPath, m_fThreshold, GCDProject.ProjectManagerBase.OutputManager.OutputDriver,
+                                                                              GCDProject.ProjectManagerBase.OutputManager.NoData, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
 
-            If eResult <> GCDCoreOutputCodes.PROCESS_OK Then
-                Dim ex As New Exception(GCDProject.ProjectManager.GCDNARCError.ErrorString.ToString)
+            If eResult <> External.GCDCoreOutputCodes.PROCESS_OK Then
+                Dim ex As New Exception(GCDProject.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
                 Throw New Exception("Error calculating the raw DEM of difference raster.", ex)
             End If
 
             ' Check that the raster exists
-            If Not GISDataStructures.Raster.Exists(sThreshDodPath) Then
+            If Not GISDataStructures.GISDataSource.Exists(sThreshDodPath) Then
                 Throw New Exception("The thresholded DoD raster file does noth exist.")
             End If
 
-            sThreshHistPath = GCD.GCDProject.ProjectManager.OutputManager.GetCsvThresholdPath(Name, Folder.FullName)
-            eResult = GCDCore.CalculateAndWriteDoDHistogram(sThreshDodPath, sThreshHistPath, GCD.GCDProject.ProjectManager.GCDNARCError.ErrorString)
-            If eResult <> GCDCoreOutputCodes.PROCESS_OK Then
-                Dim ex As New Exception(GCDProject.ProjectManager.GCDNARCError.ErrorString.ToString)
+            sThreshHistPath = GCDProject.ProjectManagerBase.OutputManager.GetCsvThresholdPath(Name, Folder.FullName)
+            eResult = External.CalculateAndWriteDoDHistogram(sThreshDodPath, sThreshHistPath, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
+            If eResult <> External.GCDCoreOutputCodes.PROCESS_OK Then
+                Dim ex As New Exception(GCDProject.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
                 Throw New Exception("Error calculating and writing the raw DEM histogram.", ex)
             End If
 
-            Dim gRawDoD As New GISDataStructures.RasterDirect(sRawDoDPath)
-            Dim dodProps As New ChangeDetectionPropertiesMinLoD(sRawDoDPath, sThreshDodPath, Threshold, gRawDoD.CellSize, NumberFormatting.GetLinearUnitsFromESRI(gRawDoD.LinearUnits))
+            Dim gRawDoD As New GISDataStructures.Raster(sRawDoDPath)
+            Dim dodProps As New ChangeDetectionPropertiesMinLoD(sRawDoDPath, sThreshDodPath, Threshold, gRawDoD.CellSize, gRawDoD.LinearUnits)
             Dim theChangeStats As New ChangeStatsCalculator(dodProps)
             sSummaryXMLPath = GenerateSummaryXML(theChangeStats)
 
             Dim dodHistos As New DoDResultHistograms(sRawHistPath, sThreshHistPath)
             Dim dodResultSet As New DoDResultSet(theChangeStats, dodHistos, dodProps)
 
-            theChangeStats.GenerateChangeBarGraphicFiles(GCD.GCDProject.ProjectManager.OutputManager.GetChangeDetectionFiguresFolder(Folder.FullName, True), dodProps.Units.LinearUnit, ChartHeight, ChartWidth)
-            GenerateHistogramGraphicFiles(dodHistos, dodProps.Units.LinearUnit)
+            theChangeStats.GenerateChangeBarGraphicFiles(GCDProject.ProjectManagerBase.OutputManager.GetChangeDetectionFiguresFolder(Folder.FullName, True), dodProps.Units, ChartHeight, ChartWidth)
+            GenerateHistogramGraphicFiles(dodHistos, dodProps.Units)
 
             Return dodResultSet
 

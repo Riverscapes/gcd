@@ -35,7 +35,7 @@
             Me.GroupBox1 = New System.Windows.Forms.GroupBox()
             Me.Label3 = New System.Windows.Forms.Label()
             Me.cboNeighbourhood = New System.Windows.Forms.ComboBox()
-            Me.ucPointCloud = New GCDAddIn.GISCode.UserInterface.VectorInputUC()
+            Me.ucPointCloud = New UtilityForms.ucVectorInput
             CType(Me.valSampleDistance, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.GroupBox1.SuspendLayout()
             Me.SuspendLayout()
@@ -132,14 +132,12 @@
             '
             'ucPointCloud
             '
-            Me.ucPointCloud.ArcMap = Nothing
-            Me.ucPointCloud.BrowseType = GCDAddIn.GISCode.GISDataStructures.BrowseVectorTypes.Point
+            Me.ucPointCloud.BrowseType = Core.GISDataStructures.BrowseVectorTypes.Point
             Me.ucPointCloud.Location = New System.Drawing.Point(110, 11)
             Me.ucPointCloud.Name = "ucPointCloud"
             Me.ucPointCloud.Noun = ""
             Me.ucPointCloud.Size = New System.Drawing.Size(360, 25)
             Me.ucPointCloud.TabIndex = 1
-            Me.ucPointCloud.ToolTip = ""
             '
             'PointDensityForm
             '
@@ -178,7 +176,7 @@
         Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
         Friend WithEvents Label3 As System.Windows.Forms.Label
         Friend WithEvents cboNeighbourhood As System.Windows.Forms.ComboBox
-        Friend WithEvents ucPointCloud As GISCode.UserInterface.VectorInputUC
+        Friend WithEvents ucPointCloud As UtilityForms.ucVectorInput
     End Class
 
 End Namespace

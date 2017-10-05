@@ -101,6 +101,246 @@ Namespace My
                 Me("ChartWidth") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property ValidateProjectOnLoad() As Boolean
+            Get
+                Return CType(Me("ValidateProjectOnLoad"),Boolean)
+            End Get
+            Set
+                Me("ValidateProjectOnLoad") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property ClearWorkspaceOnStartup() As Boolean
+            Get
+                Return CType(Me("ClearWorkspaceOnStartup"),Boolean)
+            End Get
+            Set
+                Me("ClearWorkspaceOnStartup") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property AddInputLayersToMap() As Boolean
+            Get
+                Return CType(Me("AddInputLayersToMap"),Boolean)
+            End Get
+            Set
+                Me("AddInputLayersToMap") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property WarnAboutLongPaths() As Boolean
+            Get
+                Return CType(Me("WarnAboutLongPaths"),Boolean)
+            End Get
+            Set
+                Me("WarnAboutLongPaths") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property AutoLoadFISLibrary() As Boolean
+            Get
+                Return CType(Me("AutoLoadFISLibrary"),Boolean)
+            End Get
+            Set
+                Me("AutoLoadFISLibrary") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property ApplyComparativeSymbology() As Boolean
+            Get
+                Return CType(Me("ApplyComparativeSymbology"),Boolean)
+            End Get
+            Set
+                Me("ApplyComparativeSymbology") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property ApplyTransparencySymbology() As Boolean
+            Get
+                Return CType(Me("ApplyTransparencySymbology"),Boolean)
+            End Get
+            Set
+                Me("ApplyTransparencySymbology") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property ComparativeSymbology3dPointQuality() As Boolean
+            Get
+                Return CType(Me("ComparativeSymbology3dPointQuality"),Boolean)
+            End Get
+            Set
+                Me("ComparativeSymbology3dPointQuality") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property ComparativeSymbologyInterpolationError() As Boolean
+            Get
+                Return CType(Me("ComparativeSymbologyInterpolationError"),Boolean)
+            End Get
+            Set
+                Me("ComparativeSymbologyInterpolationError") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property ComparativeSymbologyPointDensity() As Boolean
+            Get
+                Return CType(Me("ComparativeSymbologyPointDensity"),Boolean)
+            End Get
+            Set
+                Me("ComparativeSymbologyPointDensity") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property ComparativeSymbologyDoD() As Boolean
+            Get
+                Return CType(Me("ComparativeSymbologyDoD"),Boolean)
+            End Get
+            Set
+                Me("ComparativeSymbologyDoD") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property ComparativeSymbologyFISError() As Boolean
+            Get
+                Return CType(Me("ComparativeSymbologyFISError"),Boolean)
+            End Get
+            Set
+                Me("ComparativeSymbologyFISError") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property StartUpWorkspaceWarning() As Boolean
+            Get
+                Return CType(Me("StartUpWorkspaceWarning"),Boolean)
+            End Get
+            Set
+                Me("StartUpWorkspaceWarning") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property TransparencyAssociatedLayers() As Boolean
+            Get
+                Return CType(Me("TransparencyAssociatedLayers"),Boolean)
+            End Get
+            Set
+                Me("TransparencyAssociatedLayers") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property TransparencyAnalysesLayers() As Boolean
+            Get
+                Return CType(Me("TransparencyAnalysesLayers"),Boolean)
+            End Get
+            Set
+                Me("TransparencyAnalysesLayers") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property TransparencyErrorLayers() As Boolean
+            Get
+                Return CType(Me("TransparencyErrorLayers"),Boolean)
+            End Get
+            Set
+                Me("TransparencyErrorLayers") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("50")>  _
+        Public Property AutoTransparencyValue() As Double
+            Get
+                Return CType(Me("AutoTransparencyValue"),Double)
+            End Get
+            Set
+                Me("AutoTransparencyValue") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("ESRI GeoTIFF")>  _
+        Public Property DefaultRasterFormat() As String
+            Get
+                Return CType(Me("DefaultRasterFormat"),String)
+            End Get
+            Set
+                Me("DefaultRasterFormat") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property AutomaticPyramids() As Boolean
+            Get
+                Return CType(Me("AutomaticPyramids"),Boolean)
+            End Get
+            Set
+                Me("AutomaticPyramids") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property TempWorkspace() As String
+            Get
+                Return CType(Me("TempWorkspace"),String)
+            End Get
+            Set
+                Me("TempWorkspace") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

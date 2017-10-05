@@ -34,7 +34,7 @@ Namespace Core.ChangeDetection
         ''' <remarks>Calls into C++ DLL that iterates over the raw DoD raster using GDAL. This replaces
         ''' the old code that derived the statistics using ArcGIS geoprocessing. The RasterManager.dll
         ''' file must be in the same folder as the GCD AddIn DLL, as well as the GDAL DLLs.</remarks>
-        <Runtime.InteropServices.DllImport(ExternalLibs.m_sRasterManagerDLLFileName)>
+        <Runtime.InteropServices.DllImport(External.ExternalLibs.m_sRasterManagerDLLFileName)>
         Private Shared Sub GetDoDMinLoDStats(ByVal sDoDRawPath As String, fThreshold As Double,
                                         ByRef fAreaErosionRaw As Double,
                                         ByRef fAreaDepositonRaw As Double,
@@ -67,7 +67,7 @@ Namespace Core.ChangeDetection
         ''' <remarks>Calls into C++ DLL that iterates over the raw DoD raster using GDAL. This replaces
         ''' the old code that derived the statistics using ArcGIS geoprocessing. The RasterManager.dll
         ''' file must be in the same folder as the GCD AddIn DLL, as well as the GDAL DLLs.</remarks>
-        <Runtime.InteropServices.DllImport(ExternalLibs.m_sRasterManagerDLLFileName)>
+        <Runtime.InteropServices.DllImport(External.ExternalLibs.m_sRasterManagerDLLFileName)>
         Private Shared Sub GetDoDPropStats(ByVal sDoDRawPath As String, sPropagatedError As String,
                                         ByRef fAreaErosionRaw As Double,
                                         ByRef fAreaDepositonRaw As Double,
@@ -101,7 +101,7 @@ Namespace Core.ChangeDetection
         ''' <remarks>Calls into C++ DLL that iterates over the raw DoD raster using GDAL. This replaces
         ''' the old code that derived the statistics using ArcGIS geoprocessing. The RasterManager.dll
         ''' file must be in the same folder as the GCD AddIn DLL, as well as the GDAL DLLs.</remarks>
-        <Runtime.InteropServices.DllImport(ExternalLibs.m_sRasterManagerDLLFileName)>
+        <Runtime.InteropServices.DllImport(External.ExternalLibs.m_sRasterManagerDLLFileName)>
         Private Shared Sub GetDoDProbStats(ByVal sDoDRawPath As String, sDoDThrPath As String,
                                     ByVal sPropagatedErrorPath As String,
                                         ByRef fAreaErosionRaw As Double,
@@ -166,7 +166,7 @@ Namespace Core.ChangeDetection
                             fVolErosionRaw, fVolDepositionRaw,
                             fVolErosionThr, fVolDepositionThr,
                             fVolErosionErr, fVolDepositonErr,
-                            GCDProject.ProjectManager.GCDNARCError.ErrorString)
+                            GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
 
             AreaErosion_Raw = fAreaErosionRaw
             AreaDeposition_Raw = fAreaDepositonRaw
@@ -253,7 +253,7 @@ Namespace Core.ChangeDetection
                             fVolErosionRaw, fVolDepositionRaw,
                             fVolErosionThr, fVolDepositionThr,
                             fVolErosionErr, fVolDepositonErr,
-                            GCDProject.ProjectManager.GCDNARCError.ErrorString)
+                            GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
 
             AreaErosion_Raw = fAreaErosionRaw
             AreaDeposition_Raw = fAreaDepositonRaw

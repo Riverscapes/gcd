@@ -130,8 +130,7 @@ Namespace Core.GCDProject
 
         Public Sub New(ByVal sFISDatasetPath As String, ByVal sResourcesFolder As String, ByVal sExcelTemplateFolder As String,
                        ByVal sSurveyTypesDatasetPath As String,
-                       ByVal eDefaultRasterType As GISDataStructures.Raster.RasterTypes,
-                       ByVal pArcMap As ESRI.ArcGIS.Framework.IApplication,
+                       ByVal eDefaultRasterType As GISDataStructures.RasterTypes,
                        ByVal ColourErosion As System.Drawing.Color,
                        ByVal ColourDeposition As System.Drawing.Color)
 
@@ -160,7 +159,7 @@ Namespace Core.GCDProject
             m_FISLibraryXMLFilePath = sFISDatasetPath
             m_SurveyTypesLibraryXMLFilePath = sSurveyTypesDatasetPath
 
-            m_GCDNARCError = New NARCError
+            m_GCDNARCError = New External.NARCError
 
         End Sub
 

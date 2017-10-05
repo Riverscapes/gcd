@@ -101,8 +101,8 @@ Namespace UI.SurveyLibrary
             valCellSize.Maximum = 1000 ' This needs to be changed to a larger value or else rasters with cell sizes greater than 1 will cause an error to be thrown. Perhaps 1000 is more appropriate?
             valCellSize.Value = 1
 
-            If GCDExtension.GetGCDExtension(ucRaster.ArcMap).IsCurrentProject Then
-                valPrecision.Value = Core.GCDProject.ProjectManager.CurrentProject.Precision.ToString
+            If m_ePurpose <> ImportRasterPurposes.StandaloneTool AndAlso Not (GCDProject.ProjectManagerBase.ds Is Nothing) Then
+                valPrecision.Value = GCDProject.ProjectManagerBase.CurrentProject.Precision.ToString
             End If
 
             valTop.ReadOnly = Not (m_ePurpose = ImportRasterPurposes.DEMSurvey OrElse m_ePurpose = ImportRasterPurposes.StandaloneTool)
@@ -215,37 +215,29 @@ Namespace UI.SurveyLibrary
             End If
 
             If TypeOf ucRaster.SelectedItem Is GISDataStructures.Raster Then
-                If Not ucRaster.SelectedItem.GISDataStorageType = GISDataStructures.GISDataStorageTypes.FileGeodatase Then
-                    Dim r As GISDataStructures.Raster = ucRaster.SelectedItem
-                    Dim rbc As ESRI.ArcGIS.DataSourcesRaster.IRasterBandCollection = r.RasterDataset
-                    If rbc.Count > 0 Then
-                        If DirectCast(rbc.Item(0), ESRI.ArcGIS.DataSourcesRaster.IRasterProps).NoDataValue Is Nothing Then
-                            MsgBox("The raster is missing a NoDataValue. You  must set the NoDataValue before you can use this raster with GCD.", MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
-                            Return False
-                        End If
-                    Else
-                        MsgBox("This raster has no bands. Please choose a raster with at least one band.", MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
-                        Return False
-                    End If
+                Dim r As GISDataStructures.Raster = ucRaster.SelectedItem
+                If Not r.HasNoDataValue Then
+                    MsgBox("The raster is missing a NoDataValue. You  must set the NoDataValue before you can use this raster with GCD.", MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
+                    Return False
                 End If
 
                 Dim bMissingSpatialReference As Boolean = True
                 If TypeOf ucRaster.SelectedItem.SpatialReference Is ESRI.ArcGIS.Geometry.ISpatialReference Then
-                    bMissingSpatialReference = ucRaster.SelectedItem.SpatialReference.Name.ToLower.Contains("unknown")
+                    bMissingSpatialReference = ucRaster.SelectedItem.SpatialReference.ToLower.Contains("unknown")
                 End If
 
                 If bMissingSpatialReference Then
                     MsgBox("The selected raster appears to be missing a spatial reference. All GCD rasters must possess a spatial reference and it must be the same spatial reference for all rasters in a GCD project." &
-                            " If the selected raster exists in the same coordinate system, " & m_gReferenceRaster.SpatialReference.Name.ToString & ", but the coordinate system has not yet been defined for the raster." &
-                            " Use the ArcToolbox 'Define Projection' geoprocessing tool in the 'Data Management -> Projection & Transformations' Toolbox to correct the problem with the selected raster by defining the coordinate system as:" & vbCrLf & vbCrLf & m_gReferenceRaster.SpatialReference.Name.ToString & vbCrLf & vbCrLf & "Then try importing it into the GCD again.", MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
+                            " If the selected raster exists in the same coordinate system, " & m_gReferenceRaster.SpatialReference & ", but the coordinate system has not yet been defined for the raster." &
+                            " Use the ArcToolbox 'Define Projection' geoprocessing tool in the 'Data Management -> Projection & Transformations' Toolbox to correct the problem with the selected raster by defining the coordinate system as:" & vbCrLf & vbCrLf & m_gReferenceRaster.SpatialReference.ToString & vbCrLf & vbCrLf & "Then try importing it into the GCD again.", MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
                     Return False
                 Else
                     If TypeOf m_gReferenceRaster Is GISDataStructures.Raster Then
                         If Not m_gReferenceRaster.CheckSpatialReferenceMatches(ucRaster.SelectedItem.SpatialReference) Then
-                            MsgBox("The coordinate system of the selected raster:" & vbCrLf & vbCrLf & ucRaster.SelectedItem.SpatialReference.Name.ToString & vbCrLf & vbCrLf & "does not match that of the GCD project:" & vbCrLf & vbCrLf & m_gReferenceRaster.SpatialReference.Name.ToString & "." & vbCrLf & vbCrLf &
+                            MsgBox("The coordinate system of the selected raster:" & vbCrLf & vbCrLf & ucRaster.SelectedItem.SpatialReference.ToString & vbCrLf & vbCrLf & "does not match that of the GCD project:" & vbCrLf & vbCrLf & m_gReferenceRaster.SpatialReference.ToString & "." & vbCrLf & vbCrLf &
                                "All rasters within a GCD project must have the identical coordinate system. However, small discrepencies in coordinate system names might cause the two coordinate systems to appear different. " &
                                "If you believe that the selected raster does in fact possess the same coordinate system as the GCD project then use the ArcToolbox 'Define Projection' geoprocessing tool in the " &
-                               "'Data Management -> Projection & Transformations' Toolbox to correct the problem with the selected raster by defining the coordinate system as:" & vbCrLf & vbCrLf & m_gReferenceRaster.SpatialReference.Name.ToString & vbCrLf & vbCrLf & "Then try importing it into the GCD again.", MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
+                               "'Data Management -> Projection & Transformations' Toolbox to correct the problem with the selected raster by defining the coordinate system as:" & vbCrLf & vbCrLf & m_gReferenceRaster.SpatialReference & vbCrLf & vbCrLf & "Then try importing it into the GCD again.", MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
                             Return False
                         End If
                     End If
@@ -263,7 +255,7 @@ Namespace UI.SurveyLibrary
                 End If
                 Return False
             Else
-                If GISDataStructures.Raster.Exists(txtRasterPath.Text) Then
+                If GISDataStructures.GISDataSource.Exists(txtRasterPath.Text) Then
                     MsgBox("The project raster path already exists. Try using a different name for the raster.", MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
                     Return False
                 Else
@@ -312,12 +304,11 @@ Namespace UI.SurveyLibrary
 
             If (m_ePurpose = ImportRasterPurposes.DEMSurvey AndAlso valPrecision.Enabled = False) Or (m_ePurpose = ImportRasterPurposes.AssociatedSurface) Or (m_ePurpose = ImportRasterPurposes.ErrorCalculation) Then
                 'If the project units have not yet been written to 
-                If Not GCDProject.ProjectManager.CurrentProject.DisplayUnits Is Nothing Then
+                If Not GCDProject.ProjectManagerBase.CurrentProject.DisplayUnits Is Nothing Then
                     If TypeOf ucRaster.SelectedItem Is GISDataStructures.Raster Then
-                        Dim pLinearUnits As naru.math.LinearUnitClass = New naru.math.LinearUnitClass(naru.math.NumberFormatting.GetLinearUnitsFromESRI(ucRaster.SelectedItem.LinearUnits))
-                        If Not String.Compare(pLinearUnits.ToString, GCDProject.ProjectManager.CurrentProject.DisplayUnits) = 0 Then
+                        If Not String.Compare(ucRaster.SelectedItem.LinearUnits.GetUnitsAsString, GCDProject.ProjectManager.CurrentProject.DisplayUnits) = 0 Then
                             MsgBox(String.Format("The linear units of the selected raster {0} does not match the linear units {1} of the GCD Project." & vbCrLf & vbCrLf & "Please select a raster that has the same linear units as the GCD Project.",
-                                             pLinearUnits.ToString, GCDProject.ProjectManager.CurrentProject.DisplayUnits), MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
+                                             ucRaster.SelectedItem.LinearUnits, GCDProject.ProjectManagerBase.CurrentProject.DisplayUnits), MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
                             Return False
                         End If
                     End If
@@ -328,7 +319,7 @@ Namespace UI.SurveyLibrary
 
         End Function
 
-        Private Sub OnRasterChanged(ByVal snder As Object, ByVal e As GISCode.UserInterface.InputUCSelectedItemChangedEventArgs) Handles ucRaster.SelectedItemChanged
+        Private Sub OnRasterChanged(ByVal snder As Object, ByVal e As UI.UtilityForms.InputUCSelectedItemChangedEventArgs) Handles ucRaster.SelectedItemChanged
 
             Try
                 OriginalRasterChanged()
@@ -461,20 +452,7 @@ Namespace UI.SurveyLibrary
 
             gRasterDirect = Nothing
             If TypeOf ucRaster.SelectedItem Is Core.GISDataStructures.Raster Then
-                Dim sGDALRasterPath As String = String.Empty
-                If GISDataStructures.IsFileGeodatabase(ucRaster.SelectedItem.FullPath) Then
-                    If m_RasterDirects.ContainsKey(ucRaster.SelectedItem.FullPath) Then
-                        sGDALRasterPath = m_RasterDirects(ucRaster.SelectedItem.FullPath)
-                    Else
-                        Cursor.Current = Cursors.WaitCursor
-                        sGDALRasterPath = Core.GISDataStructures.Raster.GetNewSafeName(WorkspaceManager.WorkspacePath, "Import")
-                        GP.DataManagement.CopyRaster(ucRaster.SelectedItem.FullPath, sGDALRasterPath)
-                        m_RasterDirects.Add(ucRaster.SelectedItem.FullPath, sGDALRasterPath)
-                        Cursor.Current = Cursors.Default
-                    End If
-                Else
-                    sGDALRasterPath = ucRaster.SelectedItem.FullPath
-                End If
+                Dim sGDALRasterPath As String = ucRaster.SelectedItem.FullPath
                 gRasterDirect = New Core.GISDataStructures.Raster(sGDALRasterPath)
             End If
 
@@ -494,8 +472,6 @@ Namespace UI.SurveyLibrary
                 If Not String.IsNullOrEmpty(txtName.Text) Then
                     If TypeOf ucRaster.SelectedItem Is GISDataStructures.Raster Then
                         ' Get the appropriate raster path depending on the purpose of this window (DEM, associated surface, error surface)
-
-                        Dim g As GCDExtension = GCDExtension.GetGCDExtension(My.ThisApplication)
 
                         Select Case m_ePurpose
                             Case ImportRasterPurposes.DEMSurvey
@@ -543,14 +519,14 @@ Namespace UI.SurveyLibrary
                                 ' Call the bilinear interpolation routine in the C++ raster manager DLL
                                 Debug.WriteLine("Resampling:" & vbTab & valCellSize.Value.ToString & vbTab & valTop.Value.ToString & vbTab & valLeft.Value & vbTab & nRows.ToString & vbTab & nCols.ToString)
                                 eResult = Core.External.RasterManager.BiLinearResample(gRaster.FullPath, txtRasterPath.Text, valCellSize.Value, valLeft.Value, valTop.Value, nRows, nCols,
-                                                                     Core.GCDProject.ProjectManagerUI.GCDNARCError.ErrorString)
+                                                                     GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
                             Else
-                                eResult = External.RasterManager.Copy(gRaster.FullPath, txtRasterPath.Text, valCellSize.Value, valLeft.Value, valTop.Value, nRows, nCols, GCD.GCDProject.ProjectManagerUI.GCDNARCError.ErrorString)
+                                eResult = External.RasterManager.Copy(gRaster.FullPath, txtRasterPath.Text, valCellSize.Value, valLeft.Value, valTop.Value, nRows, nCols, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
                                 Debug.WriteLine("Copying raster:" & vbTab & valTop.Value.ToString & vbTab & valLeft.Value & vbTab & nRows.ToString & vbTab & nCols.ToString & vbTab & valCellSize.Value)
                             End If
 
                             If eResult = External.RasterManager.RasterManagerOutputCodes.PROCESS_OK Then
-                                If GISDataStructures.Raster.Exists(txtRasterPath.Text) Then
+                                If GISDataStructures.GISDataSource.Exists(txtRasterPath.Text) Then
                                     '
                                     ' Temporary fix. The copy raster routine seems to be messing up the projection on 
                                     ' the resultant raster. So assume that the output project is identical to the
@@ -564,7 +540,7 @@ Namespace UI.SurveyLibrary
                                     End If
 
                                     gResult = New GISDataStructures.Raster(txtRasterPath.Text)
-                                    GP.DataManagement.DefineProjection(gResult.RasterDataset, pSR)
+                                    GP.DataManagement.DefineProjection(gResult, pSR)
 
                                     ' This method will check to see if pyrmaids are need and then build if necessary.
                                     PerformRasterPyramids(m_ePurpose, txtRasterPath.Text)
@@ -573,19 +549,18 @@ Namespace UI.SurveyLibrary
                                     If m_ePurpose = ImportRasterPurposes.DEMSurvey AndAlso valPrecision.Enabled Then
                                         Try
                                             'If the project units have not yet been written to 
-                                            If GCDProject.ProjectManager.CurrentProject.DisplayUnits Is Nothing Then
-                                                Dim pLinearUnits As naru.math.LinearUnitClass = New naru.math.LinearUnitClass(GISCode.NumberFormatting.GetLinearUnitsFromESRI(gRaster.LinearUnits))
-                                                GCDProject.ProjectManager.CurrentProject.DisplayUnits = pLinearUnits.ToString
+                                            If GCDProject.ProjectManagerBase.CurrentProject.DisplayUnits Is Nothing Then
+                                                GCDProject.ProjectManagerBase.CurrentProject.DisplayUnits = gRaster.LinearUnits.GetUnitsAsString
                                             End If
 
                                             'If the coordinate system has not yet been written to 
-                                            If GCDProject.ProjectManager.CurrentProject.CoordinateSystem Is Nothing Then
-                                                Dim sCoordinateSystem As String = gRaster.SpatialReference.Name
-                                                GCDProject.ProjectManager.CurrentProject.CoordinateSystem = sCoordinateSystem
+                                            If GCDProject.ProjectManagerBase.CurrentProject.CoordinateSystem Is Nothing Then
+                                                Dim sCoordinateSystem As String = gRaster.SpatialReference
+                                                GCDProject.ProjectManagerBase.CurrentProject.CoordinateSystem = sCoordinateSystem
                                             End If
 
-                                            GCDProject.ProjectManager.CurrentProject.Precision = CInt(valPrecision.Value)
-                                            GCDProject.ProjectManager.save()
+                                            GCDProject.ProjectManagerBase.CurrentProject.Precision = CInt(valPrecision.Value)
+                                            GCDProject.ProjectManagerBase.save()
                                         Catch ex As Exception
                                             MsgBox("Failed to save the new precision to the GCD project.", MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
                                         End Try
@@ -595,10 +570,9 @@ Namespace UI.SurveyLibrary
 
                                 If m_ePurpose = ImportRasterPurposes.DEMSurvey Then
                                     ' Now try the hillshade for DEM Surveys
-                                    Dim sHillshadePath As String = GCDProject.ProjectManager.OutputManager.DEMSurveyHillShadeRasterPath(txtName.Text)
-                                    GP.SpatialAnalyst.Hillshade(gResult.FullPath, sHillshadePath)
-
-                                    GISCode.GCD.RasterPyramidManager.PerformRasterPyramids(GCD.RasterPyramidManager.PyramidRasterTypes.Hillshade, sHillshadePath)
+                                    Dim sHillshadePath As String = GCDProject.ProjectManagerBase.OutputManager.DEMSurveyHillShadeRasterPath(txtName.Text)
+                                    External.CreateHillshade(gResult.FullPath, sHillshadePath, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
+                                    RasterPyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.Hillshade, sHillshadePath)
                                 End If
                             Else
                                 '
@@ -628,7 +602,7 @@ Namespace UI.SurveyLibrary
             End If
 
             GC.Collect()
-            System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default
+            Cursor.Current = Cursors.Default
             Return gResult
 
         End Function
@@ -720,7 +694,6 @@ Namespace UI.SurveyLibrary
             txtProjCols.Text = (fProjWidth / valCellSize.Value).ToString("#,##0")
             txtProjWidth.Text = fProjWidth.ToString
             txtProjHeight.Text = fProjHeight.ToString
-
 
             valTop.ForeColor = Drawing.Color.Black
             valLeft.ForeColor = Drawing.Color.Black
@@ -855,7 +828,7 @@ Namespace UI.SurveyLibrary
         End Sub
 
         Private Sub cmdHelpPrecision_Click(sender As System.Object, e As System.EventArgs) Handles cmdHelpPrecision.Click
-            Dim frm As New UI.Project.frmInformation
+            Dim frm As New UtilityForms.frmInformation
             frm.InitializeFixedDialog("Horizontal Decimal Precision", My.Resources.PrecisionHelp)
             frm.ShowDialog()
         End Sub
@@ -880,17 +853,17 @@ Namespace UI.SurveyLibrary
 
         Private Sub PerformRasterPyramids(ePurpose As ImportRasterPurposes, sRasterPath As String)
 
-            Dim ePyramidRasterType As GCD.RasterPyramidManager.PyramidRasterTypes
+            Dim ePyramidRasterType As RasterPyramidManager.PyramidRasterTypes
             Select Case m_ePurpose
-                Case ImportRasterPurposes.DEMSurvey : ePyramidRasterType = GCD.RasterPyramidManager.PyramidRasterTypes.DEM
-                Case ImportRasterPurposes.AssociatedSurface : ePyramidRasterType = GCD.RasterPyramidManager.PyramidRasterTypes.AssociatedSurfaces
-                Case ImportRasterPurposes.ErrorCalculation : ePyramidRasterType = GCD.RasterPyramidManager.PyramidRasterTypes.ErrorSurfaces
+                Case ImportRasterPurposes.DEMSurvey : ePyramidRasterType = RasterPyramidManager.PyramidRasterTypes.DEM
+                Case ImportRasterPurposes.AssociatedSurface : ePyramidRasterType = RasterPyramidManager.PyramidRasterTypes.AssociatedSurfaces
+                Case ImportRasterPurposes.ErrorCalculation : ePyramidRasterType = RasterPyramidManager.PyramidRasterTypes.ErrorSurfaces
                 Case ImportRasterPurposes.StandaloneTool : Exit Sub
                 Case Else
                     Debug.Assert(False, String.Format("The import raster purpose '{0}' does not have a corresponding raster pyramid build type.", m_ePurpose))
             End Select
 
-            GISCode.GCD.RasterPyramidManager.PerformRasterPyramids(ePyramidRasterType, sRasterPath)
+            RasterPyramidManager.PerformRasterPyramids(ePyramidRasterType, sRasterPath)
 
         End Sub
 

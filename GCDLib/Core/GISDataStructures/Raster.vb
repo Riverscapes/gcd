@@ -14,8 +14,6 @@ Namespace Core.GISDataStructures
         Private m_fLeft As Double
         Private m_fTop As Double
 
-        Private m_eLinearUnits As naru.math.LinearUnitClass
-
 #Region "Properties"
 
         Public ReadOnly Property CellSize As Double
@@ -54,15 +52,17 @@ Namespace Core.GISDataStructures
             End Get
         End Property
 
-        Public ReadOnly Property LinearUnits As naru.math.LinearUnitClass
-            Get
-                Return m_eLinearUnits
-            End Get
-        End Property
-
         Public ReadOnly Property IsDivisible As Boolean
             Get
                 Return Extent.IsDivisible(CellSize)
+            End Get
+        End Property
+
+        Public ReadOnly Property HasNoDataValue As Boolean
+            Get
+                'TODO: needs implementation from GDAL
+                Throw New Exception("not implemented")
+                Return True
             End Get
         End Property
 
@@ -98,7 +98,7 @@ Namespace Core.GISDataStructures
                 Throw New Exception(theError.ErrorString.ToString)
             End If
 
-            SpatialReferenceWKS = sSpatialReference.ToString()
+            SpatialReference = sSpatialReference.ToString()
 
             m_eLinearUnits = New naru.math.LinearUnitClass(naru.math.NumberFormatting.LinearUnits.yard)
             If (Not String.IsNullOrEmpty(sUnits.ToString())) Then
@@ -109,7 +109,7 @@ Namespace Core.GISDataStructures
         End Sub
 
         Public Function CheckSpatialReferenceMatches(sSpatialReferenceWKS As String) As Boolean
-            Return String.Compare(SpatialReferenceWKS, sSpatialReferenceWKS, True) = 0
+            Return String.Compare(SpatialReference, sSpatialReferenceWKS, True) = 0
         End Function
 
         ''' <summary>
@@ -133,7 +133,7 @@ Namespace Core.GISDataStructures
             End If
 
             Try
-                External.RasterManager.Delete(sFullPath, GCDProject.ProjectManager.GCDNARCError.ErrorString)
+                External.RasterManager.Delete(sFullPath, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
 
             Catch ex As Exception
 #If DEBUG Then

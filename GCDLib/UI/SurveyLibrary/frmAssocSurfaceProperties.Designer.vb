@@ -43,10 +43,6 @@
             Me.Label4 = New System.Windows.Forms.Label()
             Me.btnRoughness = New System.Windows.Forms.Button()
             Me.btnSlopeDegree = New System.Windows.Forms.Button()
-            Me.ProjectDS = New Core.GCDProject.ProjectDS()
-            Me.AssociatedSurfaceBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-            CType(Me.ProjectDS, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(Me.AssociatedSurfaceBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.SuspendLayout()
             '
             'Label1
@@ -209,16 +205,6 @@
             Me.btnSlopeDegree.TabIndex = 5
             Me.btnSlopeDegree.UseVisualStyleBackColor = True
             '
-            'ProjectDS
-            '
-            Me.ProjectDS.DataSetName = "ProjectDS"
-            Me.ProjectDS.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
-            '
-            'AssociatedSurfaceBindingSource
-            '
-            Me.AssociatedSurfaceBindingSource.DataMember = "AssociatedSurface"
-            Me.AssociatedSurfaceBindingSource.DataSource = Me.ProjectDS
-            '
             'SurfacePropertiesForm
             '
             Me.AcceptButton = Me.btnOK
@@ -249,8 +235,6 @@
             Me.MinimizeBox = False
             Me.Name = "SurfacePropertiesForm"
             Me.Text = "Associated Surface Properties"
-            CType(Me.ProjectDS, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(Me.AssociatedSurfaceBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
             Me.ResumeLayout(False)
             Me.PerformLayout()
 
@@ -272,8 +256,6 @@
         Friend WithEvents Label4 As System.Windows.Forms.Label
         Friend WithEvents btnRoughness As System.Windows.Forms.Button
         Friend WithEvents btnSlopeDegree As System.Windows.Forms.Button
-        Friend WithEvents ProjectDS As Core.GCDProject.ProjectDS
-        Friend WithEvents AssociatedSurfaceBindingSource As System.Windows.Forms.BindingSource
     End Class
 
 End Namespace

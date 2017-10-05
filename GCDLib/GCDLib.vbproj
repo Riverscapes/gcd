@@ -95,6 +95,11 @@
     </Compile>
     <Compile Include="Core\ErrorCalculation\FIS\FISRuleFile.vb" />
     <Compile Include="Core\ExceptionHelper.vb" />
+    <Compile Include="Core\GCDProject\ProjectDS1.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProjectDS.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Core\GCDProject\SurveyTypes.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -110,9 +115,6 @@
     <Compile Include="Core\External\NARCError.vb" />
     <Compile Include="Core\External\RasterManager.vb" />
     <Compile Include="Core\FileSystem.vb" />
-    <Compile Include="Core\GCDProject\ProjectDS.Designer.vb">
-      <DependentUpon>ProjectDS.vb</DependentUpon>
-    </Compile>
     <Compile Include="Core\GCDProject\ProjectDS.vb">
       <DependentUpon>ProjectDS.xsd</DependentUpon>
     </Compile>
@@ -207,6 +209,36 @@
       <DependentUpon>frmErrorCalculation.vb</DependentUpon>
     </Compile>
     <Compile Include="UI\ErrorCalculation\frmErrorCalculation.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\FISLibrary\frmEditFIS.Designer.vb">
+      <DependentUpon>frmEditFIS.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\FISLibrary\frmEditFIS.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\FISLibrary\frmAddFIS.Designer.vb">
+      <DependentUpon>frmAddFIS.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\FISLibrary\frmAddFIS.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\FISLibrary\frmFISLibrary.Designer.vb">
+      <DependentUpon>frmFISLibrary.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\FISLibrary\frmFISLibrary.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Options\frmMessageBoxWithReminder.Designer.vb">
+      <DependentUpon>frmMessageBoxWithReminder.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Options\frmMessageBoxWithReminder.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Options\frmOptions.Designer.vb">
+      <DependentUpon>frmOptions.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Options\frmOptions.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\Project\frmProjectProperties.Designer.vb">
@@ -327,6 +359,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\ErrorCalculation\frmErrorCalculation.resx">
       <DependentUpon>frmErrorCalculation.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\FISLibrary\frmEditFIS.resx">
+      <DependentUpon>frmEditFIS.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\FISLibrary\frmAddFIS.resx">
+      <DependentUpon>frmAddFIS.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\FISLibrary\frmFISLibrary.resx">
+      <DependentUpon>frmFISLibrary.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Options\frmMessageBoxWithReminder.resx">
+      <DependentUpon>frmMessageBoxWithReminder.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Options\frmOptions.resx">
+      <DependentUpon>frmOptions.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Project\frmProjectProperties.resx">
       <DependentUpon>frmProjectProperties.vb</DependentUpon>

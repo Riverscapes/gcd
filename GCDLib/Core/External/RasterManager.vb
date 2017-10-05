@@ -6,6 +6,11 @@
             PROCESS_OK = 0
         End Enum
 
+        Public Enum SlopeTypes
+            Percent
+            Degrees
+        End Enum
+
         ''' <summary>
         ''' Retrieve the file version information for the required DLL
         ''' </summary>
@@ -208,8 +213,12 @@
         Public Function SpatialReferenceMatches(sRaster1 As String, sRaster2 As String, ByRef nResult As Integer, sError As System.Text.StringBuilder) As Integer
         End Function
 
+        Public Function CreateSlope(sInputRaster As String, sOutputSlopeRaster As String, eSlopeType As SlopeTypes, sError As System.Text.StringBuilder) As Integer
+            Return CreateSlope(sInputRaster, sOutputSlopeRaster, IIf(eSlopeType = SlopeTypes.Degrees, "degrees", "percent"), sError)
+        End Function
+
         <Runtime.InteropServices.DllImport(ExternalLibs.m_sRasterManagerDLLFileName)>
-        Public Function CreateSlope(sInputRaster As String, sOutputSlopeRaster As String, sSlopeType As String, sError As System.Text.StringBuilder) As Integer
+        Private Function CreateSlope(sInputRaster As String, sOutputSlopeRaster As String, sSlopeType As String, sError As System.Text.StringBuilder) As Integer
         End Function
 
         <Runtime.InteropServices.DllImport(ExternalLibs.m_sRasterManagerDLLFileName)>

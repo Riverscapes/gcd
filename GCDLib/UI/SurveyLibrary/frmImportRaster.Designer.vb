@@ -47,7 +47,7 @@
             Me.txtOrigHeight = New System.Windows.Forms.TextBox()
             Me.txtTop = New System.Windows.Forms.TextBox()
             Me.Label11 = New System.Windows.Forms.Label()
-            Me.ucRaster = New GCDAddIn.GISCode.UserInterface.RasterInputUC()
+            Me.ucRaster = New UI.UtilityForms.ucRasterInput()
             Me.grpProjectRaaster = New System.Windows.Forms.GroupBox()
             Me.cmdHelpPrecision = New System.Windows.Forms.Button()
             Me.Label1 = New System.Windows.Forms.Label()
@@ -309,13 +309,11 @@
             '
             'ucRaster
             '
-            Me.ucRaster.ArcMap = Nothing
             Me.ucRaster.Location = New System.Drawing.Point(101, 19)
             Me.ucRaster.Name = "ucRaster"
             Me.ucRaster.Noun = ""
             Me.ucRaster.Size = New System.Drawing.Size(491, 25)
             Me.ucRaster.TabIndex = 1
-            Me.ucRaster.ToolTip = ""
             '
             'grpProjectRaaster
             '
@@ -623,7 +621,7 @@
         Friend WithEvents lblName As System.Windows.Forms.Label
         Friend WithEvents txtName As System.Windows.Forms.TextBox
         Friend WithEvents Label2 As System.Windows.Forms.Label
-        Friend WithEvents ucRaster As GISCode.UserInterface.RasterInputUC
+        Friend WithEvents ucRaster As UI.UtilityForms.ucRasterInput
         Friend WithEvents lblRasterPath As System.Windows.Forms.Label
         Friend WithEvents txtRasterPath As System.Windows.Forms.TextBox
         Friend WithEvents grpOriginalRaster As System.Windows.Forms.GroupBox

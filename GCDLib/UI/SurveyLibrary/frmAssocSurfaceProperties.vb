@@ -31,9 +31,9 @@ Namespace UI.SurveyLibrary
         Private ReadOnly Property AssociatedSurfaceRow As ProjectDS.AssociatedSurfaceRow
             Get
 
-                Dim dr As DataRowView = AssociatedSurfaceBindingSource.Current
-                Dim assocRow As ProjectDS.AssociatedSurfaceRow = dr.Row
-                Return assocRow
+                'Dim dr As DataRowView = AssociatedSurfaceBindingSource.Current
+                'Dim assocRow As ProjectDS.AssociatedSurfaceRow = dr.Row
+                'Return assocRow
             End Get
         End Property
 
@@ -43,22 +43,25 @@ Namespace UI.SurveyLibrary
             ' This call is required by the Windows Form Designer.
             InitializeComponent()
             m_eMethod = AssociatedSurfaceMethods.Browse
+
+            ' TODO: This form used to use binding sources. Requires refactoring
+            Throw New Exception("Not implement. Need to remove old binding source code")
             '
             ' Bind to the run time datasource
             '
-            AssociatedSurfaceBindingSource.DataSource = GCDProject.ProjectManager.ds
-            Debug.Assert(nSurveyID > 0, "The survey ID must be greater than zero")
-            'm_nDEMSurveyID = nSurveyID
-            If nSurfaceID = 0 Then
-                ' assign the DEM Survey ID to this surface.
-                'Dim demRow As ProjectDS.DEMSurveyRow = GCD.GCDProject.ProjectManager.ds.DEMSurvey.FindByDEMSurveyID(nSurveyID)
-                Dim cr As DataRowView = AssociatedSurfaceBindingSource.AddNew
-                DirectCast(cr.Row, ProjectDS.AssociatedSurfaceRow).DEMSurveyID = nSurveyID
-            Else
-                Dim nIndex As Integer = AssociatedSurfaceBindingSource.Find("AssociatedSurfaceID", nSurfaceID)
-                AssociatedSurfaceBindingSource.Position = nIndex
-                DirectCast(AssociatedSurfaceBindingSource.Current, DataRowView).BeginEdit()
-            End If
+            'AssociatedSurfaceBindingSource.DataSource = GCDProject.ProjectManagerBase.ds
+            'Debug.Assert(nSurveyID > 0, "The survey ID must be greater than zero")
+            ''m_nDEMSurveyID = nSurveyID
+            'If nSurfaceID = 0 Then
+            '    ' assign the DEM Survey ID to this surface.
+            '    'Dim demRow As ProjectDS.DEMSurveyRow = GCD.GCDProject.ProjectManager.ds.DEMSurvey.FindByDEMSurveyID(nSurveyID)
+            '    Dim cr As DataRowView = AssociatedSurfaceBindingSource.AddNew
+            '    DirectCast(cr.Row, ProjectDS.AssociatedSurfaceRow).DEMSurveyID = nSurveyID
+            'Else
+            '    Dim nIndex As Integer = AssociatedSurfaceBindingSource.Find("AssociatedSurfaceID", nSurfaceID)
+            '    AssociatedSurfaceBindingSource.Position = nIndex
+            '    DirectCast(AssociatedSurfaceBindingSource.Current, DataRowView).BeginEdit()
+            'End If
 
         End Sub
 #End Region
@@ -77,7 +80,7 @@ Namespace UI.SurveyLibrary
             ttpTooltip.SetToolTip(btnRoughness, "Calculate a surface roughness raster from space delimited point cloud file.")
 
             cboType.SelectedIndex = 0
-            Dim dr As DataRowView = AssociatedSurfaceBindingSource.Current
+            Dim dr As DataRowView '= AssociatedSurfaceBindingSource.Current
             If Not dr.IsNew Then
                 Dim assocRow As ProjectDS.AssociatedSurfaceRow = dr.Row
                 txtName.Text = assocRow.Name
@@ -113,7 +116,7 @@ Namespace UI.SurveyLibrary
 
             System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor
 
-            Dim dr As DataRowView = AssociatedSurfaceBindingSource.Current
+            Dim dr As DataRowView '= AssociatedSurfaceBindingSource.Current
             Dim bRasterSavedOK As Boolean = True
             If dr.IsNew Then
                 Try
@@ -151,19 +154,19 @@ Namespace UI.SurveyLibrary
                         assocRow.Source = Core.GCDProject.ProjectManager.GetRelativePath(txtProjectRaster.Text)
                         assocRow.OriginalSource = txtProjectRaster.Text
                     End If
-                    AssociatedSurfaceBindingSource.EndEdit()
-                    Core.GCDProject.ProjectManager.save()
+                    'AssociatedSurfaceBindingSource.EndEdit()
+                    GCDProject.ProjectManagerBase.save()
 
                     If My.Settings.AddOutputLayersToMap Then
-                        Core.GCDProject.ProjectManagerUI.ArcMapManager.AddAssociatedSurface(assocRow)
+                        GCDProject.ProjectManagerUI.ArcMapManager.AddAssociatedSurface(assocRow)
                     End If
 
                 Catch ex As Exception
                     naru.error.ExceptionUI.HandleException(ex, "The GCD attribute information failed to save to the GCD project file. The associated surface raster still exists.")
-                    Me.DialogResult = System.Windows.Forms.DialogResult.None
+                    DialogResult = System.Windows.Forms.DialogResult.None
                 End Try
             Else
-                AssociatedSurfaceBindingSource.CancelEdit()
+                ' AssociatedSurfaceBindingSource.CancelEdit()
                 Me.DialogResult = System.Windows.Forms.DialogResult.None
             End If
 
@@ -175,7 +178,7 @@ Namespace UI.SurveyLibrary
 
             Try
                 ' Make sure that the destination folder exists where the associated surface will be output
-                Dim sWorkspacePath As String = GISDataStructures.Raster.GetWorkspacePath(txtProjectRaster.Text)
+                Dim sWorkspacePath As String = GISDataStructures.GISDataSource.GetWorkspacePath(txtProjectRaster.Text)
                 IO.Directory.CreateDirectory(sWorkspacePath)
 
                 ' Create the slope surface or point density rasters
@@ -189,10 +192,10 @@ Namespace UI.SurveyLibrary
 
                         Select Case m_eMethod
                             Case AssociatedSurfaceMethods.SlopeDegree
-                                GP.SpatialAnalyst.Slope(gDEMRaster, txtProjectRaster.Text, "DEGREE")
+                                External.CreateSlope(gDEMRaster.FullPath, txtProjectRaster.Text, External.RasterManager.SlopeTypes.Degrees, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
 
                             Case AssociatedSurfaceMethods.SlopePercent
-                                GP.SpatialAnalyst.Slope(gDEMRaster, txtProjectRaster.Text, "PERCENT_RISE")
+                                External.CreateSlope(gDEMRaster.FullPath, txtProjectRaster.Text, External.RasterManager.SlopeTypes.Percent, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
 
                             Case AssociatedSurfaceMethods.PointDensity
                                 Dim sTemp As String = WorkspaceManager.GetTempRaster("PDensity.tif")
@@ -207,8 +210,8 @@ Namespace UI.SurveyLibrary
                         End Select
 
                         ' Build raster pyramids
-                        If GISCode.GCD.RasterPyramidManager.AutomaticallyBuildPyramids(GISCode.GCD.RasterPyramidManager.PyramidRasterTypes.AssociatedSurfaces) Then
-                            GISCode.GCD.RasterPyramidManager.PerformRasterPyramids(GISCode.GCD.RasterPyramidManager.PyramidRasterTypes.AssociatedSurfaces, txtProjectRaster.Text)
+                        If RasterPyramidManager.AutomaticallyBuildPyramids(RasterPyramidManager.PyramidRasterTypes.AssociatedSurfaces) Then
+                            RasterPyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.AssociatedSurfaces, txtProjectRaster.Text)
                         End If
 
                     Case Else
@@ -221,7 +224,7 @@ Namespace UI.SurveyLibrary
                 ' Something went wrong. Check if the raster exists and safely attempt to clean it up if it does.
                 If GISDataStructures.Raster.Exists(txtProjectRaster.Text) Then
                     Try
-                        GP.DataManagement.Delete(txtProjectRaster.Text)
+                        External.Delete(txtProjectRaster.Text, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
                     Catch ex2 As Exception
 
                     End Try
@@ -287,7 +290,7 @@ Namespace UI.SurveyLibrary
                     Return False
                 End If
             Else
-                Dim dr As DataRowView = AssociatedSurfaceBindingSource.Current
+                Dim dr As DataRowView '= AssociatedSurfaceBindingSource.Current
                 If dr.IsNew Then
                     If GISDataStructures.Raster.Exists(txtProjectRaster.Text) Then
                         MsgBox("The associated surface project raster path already exists. Changing the name of the associated surface will change the raster path.", MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
@@ -308,9 +311,9 @@ Namespace UI.SurveyLibrary
 
         Private Function IsNameUniqueForSurvey() As Boolean
 
-            Dim dr As DataRowView = AssociatedSurfaceBindingSource.Current
+            Dim dr As DataRowView '= AssociatedSurfaceBindingSource.Current
             Dim assocRow As ProjectDS.AssociatedSurfaceRow = dr.Row
-            Dim rows As ProjectDS.AssociatedSurfaceRow() = GCDProject.ProjectManager.ds.AssociatedSurface.Select("DEMSurveyID = " & assocRow.DEMSurveyID)
+            Dim rows As ProjectDS.AssociatedSurfaceRow() = GCDProject.ProjectManagerBase.ds.AssociatedSurface.Select("DEMSurveyID = " & assocRow.DEMSurveyID)
             If Not rows Is Nothing Then
                 For Each r As ProjectDS.AssociatedSurfaceRow In rows
                     If assocRow.AssociatedSurfaceID <> r.AssociatedSurfaceID Then
@@ -328,8 +331,8 @@ Namespace UI.SurveyLibrary
         Private Sub btnBrowse_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnBrowse.Click
 
             If Not TypeOf m_ImportForm Is frmImportRaster Then
-                Dim gAssocRow As ProjectDS.AssociatedSurfaceRow = DirectCast(AssociatedSurfaceBindingSource.Current, DataRowView).Row
-                Dim gDEMSurveyRaster As New Core.GISDataStructures.Raster(Core.GCDProject.ProjectManager.GetAbsolutePath(gAssocRow.DEMSurveyRow.Source))
+                Dim gAssocRow As ProjectDS.AssociatedSurfaceRow '= DirectCast(AssociatedSurfaceBindingSource.Current, DataRowView).Row
+                Dim gDEMSurveyRaster As New Core.GISDataStructures.Raster(GCDProject.ProjectManagerBase.GetAbsolutePath(gAssocRow.DEMSurveyRow.Source))
                 m_ImportForm = New frmImportRaster(gDEMSurveyRaster, gAssocRow.DEMSurveyRow, frmImportRaster.ImportRasterPurposes.AssociatedSurface, "Associated Surface")
             End If
 
@@ -344,7 +347,7 @@ Namespace UI.SurveyLibrary
 #End Region
 
         Private Sub btnCancel_Click(sender As Object, e As System.EventArgs) Handles btnCancel.Click
-            AssociatedSurfaceBindingSource.CancelEdit()
+            'AssociatedSurfaceBindingSource.CancelEdit()
         End Sub
 
         Private Sub btnSlope_Click(sender As System.Object, e As System.EventArgs) Handles btnSlopePercent.Click
@@ -364,7 +367,7 @@ Namespace UI.SurveyLibrary
                 End If
             Next
 
-            txtOriginalRaster.Text = GCDProject.ProjectManager.GetAbsolutePath(AssociatedSurfaceRow.DEMSurveyRow.Source)
+            txtOriginalRaster.Text = GCDProject.ProjectManagerBase.GetAbsolutePath(AssociatedSurfaceRow.DEMSurveyRow.Source)
 
             MsgBox("The slope raster will be generated after you click OK.", MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
 
@@ -387,7 +390,7 @@ Namespace UI.SurveyLibrary
                 End If
             Next
 
-            txtOriginalRaster.Text = Core.GCDProject.ProjectManager.GetAbsolutePath(AssociatedSurfaceRow.DEMSurveyRow.Source)
+            txtOriginalRaster.Text = GCDProject.ProjectManagerBase.GetAbsolutePath(AssociatedSurfaceRow.DEMSurveyRow.Source)
 
             MsgBox("The slope raster will be generated after you click OK.", MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
 
@@ -396,11 +399,11 @@ Namespace UI.SurveyLibrary
         Private Function GetDEMSurveyRaster() As Core.GISDataStructures.Raster
 
             Dim gResult As Core.GISDataStructures.Raster = Nothing
-            Dim dr As DataRowView = AssociatedSurfaceBindingSource.Current
+            Dim dr As DataRowView ' = AssociatedSurfaceBindingSource.Current
             Dim assocRow As ProjectDS.AssociatedSurfaceRow = dr.Row
             Dim demRow As ProjectDS.DEMSurveyRow = assocRow.DEMSurveyRow
-            If GISDataStructures.Raster.Exists(Core.GCDProject.ProjectManager.GetAbsolutePath(demRow.Source)) Then
-                gResult = New Core.GISDataStructures.Raster(Core.GCDProject.ProjectManager.GetAbsolutePath(demRow.Source))
+            If GISDataStructures.GISDataSource.Exists(GCDProject.ProjectManagerBase.GetAbsolutePath(demRow.Source)) Then
+                gResult = New Core.GISDataStructures.Raster(GCDProject.ProjectManagerBase.GetAbsolutePath(demRow.Source))
             Else
                 Dim ex As New Exception("The DEM Survey raster does not exist.")
                 ex.Data.Add("DEM Survey Raster Path", demRow.Source)
@@ -413,8 +416,8 @@ Namespace UI.SurveyLibrary
         Private Sub btnDensity_Click(sender As System.Object, e As System.EventArgs) Handles btnDensity.Click
 
             If m_frmPointDensity Is Nothing Then
-                Dim gDEMSurveyRaster As Core.GISDataStructures.Raster = GetDEMSurveyRaster()
-                m_frmPointDensity = New frmPointDensity(GISDataStructures.GetLinearUnitsAsString(gDEMSurveyRaster.LinearUnits, True))
+                Dim gDEMSurveyRaster As GISDataStructures.Raster = GetDEMSurveyRaster()
+                m_frmPointDensity = New frmPointDensity(gDEMSurveyRaster.LinearUnits)
             End If
 
             If m_frmPointDensity.ShowDialog = System.Windows.Forms.DialogResult.OK Then
@@ -463,7 +466,7 @@ Namespace UI.SurveyLibrary
 
         Private Sub txtName_TextChanged(sender As Object, e As System.EventArgs) Handles txtName.TextChanged
 
-            Dim dr As DataRowView = AssociatedSurfaceBindingSource.Current
+            Dim dr As DataRowView ' = AssociatedSurfaceBindingSource.Current
             If dr.IsNew Then
                 Dim assocRow As ProjectDS.AssociatedSurfaceRow = dr.Row
                 txtProjectRaster.Text = Core.GCDProject.ProjectManager.OutputManager.AssociatedSurfaceRasterPath(assocRow.DEMSurveyRow.Name, txtName.Text)

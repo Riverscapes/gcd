@@ -322,8 +322,8 @@ Namespace UI.Project
                             frm = New frmAssocSurfaceProperties(nSurveyID, nID)
 
                         Case GCDNodeTypes.ErrorSurface
-                            Dim rError As ProjectDS.ErrorSurfaceRow = GCDProject.ProjectManagerUI.ds.ErrorSurface.FindByErrorSurfaceID(nID)
-                            frm = New frmErrorCalculation(rError)
+                            Dim rError As ProjectDS.ErrorSurfaceRow = GCDProject.ProjectManagerBase.ds.ErrorSurface.FindByErrorSurfaceID(nID)
+                            frm = New ErrorCalculation.frmErrorCalculation(rError)
 
                     End Select
 
@@ -681,9 +681,9 @@ Namespace UI.Project
                         nID = GetNodeID(selNode.Parent)
                     End If
 
-                    Dim rDEMSurvey As ProjectDS.DEMSurveyRow = Core.GCDProject.ProjectManager.ds.DEMSurvey.FindByDEMSurveyID(nID)
+                    Dim rDEMSurvey As ProjectDS.DEMSurveyRow = GCDProject.ProjectManagerBase.ds.DEMSurvey.FindByDEMSurveyID(nID)
                     If TypeOf rDEMSurvey Is ProjectDS.DEMSurveyRow Then
-                        Dim frm As New frmErrorCalculation(rDEMSurvey)
+                        Dim frm As New ErrorCalculation.frmErrorCalculation(rDEMSurvey)
                         If frm.ShowDialog() = DialogResult.OK Then
                             LoadTree(selNode.Tag)
                         End If
@@ -760,7 +760,7 @@ Namespace UI.Project
                         Dim nErrorID As Integer = GetNodeID(selNode)
                         Dim rError As ProjectDS.ErrorSurfaceRow = GCDProject.ProjectManager.ds.ErrorSurface.FindByErrorSurfaceID(nErrorID)
                         If TypeOf rError Is ProjectDS.ErrorSurfaceRow Then
-                            Dim frm As New frmErrorCalculation(rError)
+                            Dim frm As New ErrorCalculation.frmErrorCalculation(rError)
                             If frm.ShowDialog() = DialogResult.OK Then
                                 LoadTree(selNode.Tag)
                             End If
@@ -1018,7 +1018,7 @@ Namespace UI.Project
         Public Sub AddDoDChangeDetection()
 
             Try
-                Dim frmDoDCalculation As New frmDoDProperties()
+                Dim frmDoDCalculation As New ChangeDetection.frmDoDProperties()
                 DoChangeDetection(frmDoDCalculation)
 
             Catch ex As Exception
@@ -1026,7 +1026,7 @@ Namespace UI.Project
             End Try
         End Sub
 
-        Private Sub DoChangeDetection(ByRef frmDoDCalculation As frmDoDProperties)
+        Private Sub DoChangeDetection(ByRef frmDoDCalculation As ChangeDetection.frmDoDProperties)
 
             Try
                 If frmDoDCalculation.ShowDialog() = DialogResult.OK Then
@@ -1036,7 +1036,7 @@ Namespace UI.Project
                         LoadTree(sTag)
 
                         ' Now show the results form for this new DoD Calculation
-                        Dim frmResults As New frmDoDResults(frmDoDCalculation.DoDResults, frmDoDCalculation.DoDRow)
+                        Dim frmResults As New ChangeDetection.frmDoDResults(frmDoDCalculation.DoDResults, frmDoDCalculation.DoDRow)
                         frmResults.ShowDialog()
                     End If
                 End If
@@ -1054,7 +1054,7 @@ Namespace UI.Project
                 If TypeOf selNode Is TreeNode Then
                     Dim eType As GCDNodeTypes = GetNodeType(selNode)
                     If eType = GCDNodeTypes.ChangeDetectionGroup Then
-                        For Each rDoD As ProjectDS.DoDsRow In GCDProject.ProjectManager.CurrentProject.GetDoDsRows
+                        For Each rDoD As ProjectDS.DoDsRow In GCDProject.ProjectManagerBase.CurrentProject.GetDoDsRows
                             GCDProject.ProjectManagerUI.ArcMapManager.AddDoD(rDoD)
                         Next
                     End If
@@ -1119,17 +1119,17 @@ Namespace UI.Project
                     Dim eType As GCDNodeTypes = GetNodeType(selNode)
                     If eType = GCDNodeTypes.DoD Then
                         Dim nID As Integer = GetNodeID(selNode)
-                        Dim rDoD As ProjectDS.DoDsRow = GCDProject.ProjectManager.ds.DoDs.FindByDoDID(nID)
+                        Dim rDoD As ProjectDS.DoDsRow = GCDProject.ProjectManagerBase.ds.DoDs.FindByDoDID(nID)
                         If TypeOf rDoD Is ProjectDS.DoDsRow Then
 
                             Dim changeStats As New Core.ChangeDetection.ChangeStatsFromDoDRow(rDoD)
-                            Dim sRawHistoStats As String = GCDProject.ProjectManager.GetAbsolutePath(rDoD.RawHistPath)
-                            Dim sThrHistoStats As String = GCDProject.ProjectManager.GetAbsolutePath(rDoD.ThreshHistPath)
+                            Dim sRawHistoStats As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rDoD.RawHistPath)
+                            Dim sThrHistoStats As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rDoD.ThreshHistPath)
 
                             Dim changeHistos As New Core.ChangeDetection.DoDResultHistograms(sRawHistoStats, sThrHistoStats)
                             Dim dodProp As Core.ChangeDetection.ChangeDetectionProperties = Core.ChangeDetection.ChangeDetectionProperties.CreateFromDoDRow(rDoD)
                             Dim rResults As New Core.ChangeDetection.DoDResultSet(changeStats, changeHistos, dodProp)
-                            Dim frm As New UI.ChangeDetection.DoD.frmDoDResults(rResults, rDoD)
+                            Dim frm As New ChangeDetection.frmDoDResults(rResults, rDoD)
                             If frm.ShowDialog() = DialogResult.OK Then
                                 ' Don't need to reload the tree here. Nothing changed.
                                 ' LoadTree(selNode.Tag)
@@ -1567,7 +1567,7 @@ Namespace UI.Project
                                 For Each rAssoc As ProjectDS.AssociatedSurfaceRow In rDEM.GetAssociatedSurfaceRows
 
                                     'Get path of associated surface source path, get group layer, and check for presence of associated surface in associated surface sub layer of survey layer
-                                    Dim sPath As String = GCD.GCDProject.ProjectManager.GetAbsolutePath(rAssoc.Source)
+                                    Dim sPath As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rAssoc.Source)
                                     Dim pAssocGroupLayer As ESRI.ArcGIS.Carto.IGroupLayer = ArcMap.GetGroupLayer(My.ThisApplication, "Associated Surfaces", pSurveyGroupLayer)
                                     pLayer = GCDProject.ProjectManagerUI.ArcMapManager.IsLayerInGroupLayer(sPath, pAssocGroupLayer)
                                     If pLayer IsNot Nothing Then
@@ -1819,7 +1819,7 @@ Namespace UI.Project
 
                         If Integer.TryParse(nodSelected.Tag.ToString.Substring(n1stUnderscore + 1, n2ndUnderscore - n1stUnderscore - 1), nNewDEMID) Then
                             If Integer.TryParse(nodSelected.Tag.ToString.Substring(n2ndUnderscore + 1, nodSelected.Tag.ToString.Length - n2ndUnderscore - 1), nOldDEMID) Then
-                                Dim frmDoDCalculation As New UI.ChangeDetection.DoD.frmDoDProperties(nNewDEMID, nOldDEMID)
+                                Dim frmDoDCalculation As New ChangeDetection.frmDoDProperties(nNewDEMID, nOldDEMID)
                                 DoChangeDetection(frmDoDCalculation)
                             End If
                         End If
@@ -1831,7 +1831,6 @@ Namespace UI.Project
             End Try
 
         End Sub
-
 
         Private Sub AddAllChangeDetectionsToTheMapToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AddAllChangeDetectionsToTheMapToolStripMenuItem.Click
 
@@ -1846,7 +1845,7 @@ Namespace UI.Project
                             If Integer.TryParse(nodSelected.Tag.ToString.Substring(n2ndUnderscore + 1, nodSelected.Tag.ToString.Length - n2ndUnderscore - 1), nOldDEMID) Then
                                 Dim sNewDEMName As String = String.Empty
                                 Dim sOldDEMName As String = String.Empty
-                                For Each aDEMRow As ProjectDS.DEMSurveyRow In GCDProject.ProjectManager.ds.DEMSurvey
+                                For Each aDEMRow As ProjectDS.DEMSurveyRow In GCDProject.ProjectManagerBase.ds.DEMSurvey
                                     If aDEMRow.DEMSurveyID = nNewDEMID Then
                                         sNewDEMName = aDEMRow.Name
                                     ElseIf aDEMRow.DEMSurveyID = nOldDEMID Then
@@ -1927,7 +1926,7 @@ Namespace UI.Project
                     Dim eType As GCDNodeTypes = GetNodeType(nodSelected)
                     Dim nID As Integer = GetNodeID(nodSelected)
                     If eType = GCDNodeTypes.BudgetSegregation AndAlso nID > 0 Then
-                        Dim frm As New frmBudgetSegResults(nID)
+                        Dim frm As New BudgetSegregation.frmBudgetSegResults(nID)
                         frm.ShowDialog()
                     End If
                 End If
@@ -1990,18 +1989,18 @@ Namespace UI.Project
 
                         Case GCDNodeTypes.ErrorSurfaceGroup
                             nID = GetNodeID(nodSelected.Parent)
-                            For Each rDEM As ProjectDS.DEMSurveyRow In GCDProject.ProjectManager.CurrentProject.GetDEMSurveyRows
+                            For Each rDEM As ProjectDS.DEMSurveyRow In GCDProject.ProjectManagerBase.CurrentProject.GetDEMSurveyRows
                                 If nID = rDEM.DEMSurveyID Then
-                                    frm = New frmErrorCalculation(rDEM)
+                                    frm = New ErrorCalculation.frmErrorCalculation(rDEM)
                                     Exit For
                                 End If
                             Next
 
                         Case GCDNodeTypes.ErrorSurface
                             nID = GetNodeID(nodSelected.Parent.Parent)
-                            For Each rDEM As ProjectDS.DEMSurveyRow In GCDProject.ProjectManager.CurrentProject.GetDEMSurveyRows
+                            For Each rDEM As ProjectDS.DEMSurveyRow In GCDProject.ProjectManagerBase.CurrentProject.GetDEMSurveyRows
                                 If nID = rDEM.DEMSurveyID Then
-                                    frm = New frmErrorCalculation(rDEM)
+                                    frm = New ErrorCalculation.frmErrorCalculation(rDEM)
                                     Exit For
                                 End If
                             Next
@@ -2011,15 +2010,15 @@ Namespace UI.Project
 
                         Case GCDNodeTypes.BudgetSegregationGroup, GCDNodeTypes.BudgetSegregation
                             nID = GetNodeID(nodSelected.Parent.Parent)
-                            For Each rDoD As ProjectDS.DoDsRow In GCDProject.ProjectManager.ds.DoDs
+                            For Each rDoD As ProjectDS.DoDsRow In GCDProject.ProjectManagerBase.ds.DoDs
                                 If rDoD.DoDID = nID Then
-                                    frm = New frmBudgetSegProperties(rDoD)
+                                    frm = New BudgetSegregation.frmBudgetSegProperties(rDoD)
                                     Exit For
                                 End If
                             Next
 
                         Case GCDNodeTypes.DoD, GCDNodeTypes.ChangeDetectionGroup, GCDNodeTypes.ChangeDetectionDEMPair, GCDNodeTypes.AnalysesGroup
-                            frm = New frmDoDProperties()
+                            frm = New ChangeDetection.frmDoDProperties()
 
                     End Select
 
@@ -2062,12 +2061,12 @@ Namespace UI.Project
                     End Select
                     Dim nDoDID As Integer = GetNodeID(nodDoD)
 
-                    For Each rDoD As ProjectDS.DoDsRow In GCDProject.ProjectManager.ds.DoDs
+                    For Each rDoD As ProjectDS.DoDsRow In GCDProject.ProjectManagerBase.ds.DoDs
                         If rDoD.DoDID = nDoDID Then
-                            Dim frm As New frmBudgetSegProperties(rDoD)
+                            Dim frm As New BudgetSegregation.frmBudgetSegProperties(rDoD)
                             If frm.ShowDialog() = DialogResult.OK Then
                                 LoadTree(frm.BSID)
-                                Dim frmResults As New frmBudgetSegResults(frm.BSID)
+                                Dim frmResults As New BudgetSegregation.frmBudgetSegResults(frm.BSID)
                                 frmResults.ShowDialog()
                             End If
                             Exit For

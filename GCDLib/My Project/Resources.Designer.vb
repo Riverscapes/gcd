@@ -110,6 +110,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to GCD.
+        '''</summary>
+        Friend ReadOnly Property ApplicationNameShort() As String
+            Get
+                Return ResourceManager.GetString("ApplicationNameShort", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property AssociatedSurfaces() As System.Drawing.Bitmap
@@ -286,6 +295,15 @@ Namespace My.Resources
             Get
                 Dim obj As Object = ResourceManager.GetObject("FISLibrary", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to https://github.com/Riverscapes/fis-dem-error.
+        '''</summary>
+        Friend ReadOnly Property FISRepositoryWebsite() As String
+            Get
+                Return ResourceManager.GetString("FISRepositoryWebsite", resourceCulture)
             End Get
         End Property
         
