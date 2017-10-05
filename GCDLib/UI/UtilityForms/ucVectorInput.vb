@@ -1,9 +1,8 @@
-﻿Imports ESRI.ArcGIS.Framework
-Imports GCD.GCDLib.Core
+﻿Imports GCD.GCDLib.Core
 
 Namespace UI.UtilityForms
 
-    Public Class VectorInputUC
+    Public Class ucVectorInput
         Inherits ucInputBase
 
         Private m_GeometryType As GISDataStructures.BrowseVectorTypes

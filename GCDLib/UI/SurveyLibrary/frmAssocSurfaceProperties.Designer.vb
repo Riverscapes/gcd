@@ -153,7 +153,7 @@
             'btnSlopePercent
             '
             Me.btnSlopePercent.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-            Me.btnSlopePercent.Image = Global.GCDAddIn.My.Resources.Resources.SlopePercent
+            Me.btnSlopePercent.Image = My.Resources.Resources.SlopePercent
             Me.btnSlopePercent.Location = New System.Drawing.Point(515, 39)
             Me.btnSlopePercent.Name = "btnSlopePercent"
             Me.btnSlopePercent.Size = New System.Drawing.Size(25, 22)
@@ -163,7 +163,7 @@
             'btnDensity
             '
             Me.btnDensity.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-            Me.btnDensity.Image = Global.GCDAddIn.My.Resources.Resources.PointDensity
+            Me.btnDensity.Image = My.Resources.Resources.PointDensity
             Me.btnDensity.Location = New System.Drawing.Point(544, 39)
             Me.btnDensity.Name = "btnDensity"
             Me.btnDensity.Size = New System.Drawing.Size(25, 22)
@@ -192,7 +192,7 @@
             '
             'btnRoughness
             '
-            Me.btnRoughness.Image = Global.GCDAddIn.My.Resources.Resources.Roughness
+            Me.btnRoughness.Image = My.Resources.Resources.Roughness
             Me.btnRoughness.Location = New System.Drawing.Point(573, 39)
             Me.btnRoughness.Name = "btnRoughness"
             Me.btnRoughness.Size = New System.Drawing.Size(25, 22)

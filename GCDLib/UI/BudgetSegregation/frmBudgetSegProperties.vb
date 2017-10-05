@@ -207,10 +207,10 @@ Namespace UI.BudgetSegregation
 
         Private Sub cboDoD_SelectedIndexChanged(sender As Object, e As System.EventArgs) Handles cboDoD.SelectedIndexChanged
 
-            If TypeOf cboDoD.SelectedItem Is ListItem Then
-                Dim nDoDID As Integer = DirectCast(cboDoD.SelectedItem, ListItem).ID
+            If TypeOf cboDoD.SelectedItem Is naru.db.NamedObject Then
+                Dim nDoDID As Integer = DirectCast(cboDoD.SelectedItem, naru.db.NamedObject).ID
                 If nDoDID > 0 Then
-                    For Each rDoD As ProjectDS.DoDsRow In GCD.GCDProject.ProjectManager.CurrentProject.GetDoDsRows
+                    For Each rDoD As ProjectDS.DoDsRow In GCDProject.ProjectManager.CurrentProject.GetDoDsRows
                         If rDoD.DoDID = nDoDID Then
                             txtNewDEM.Text = rDoD.NewSurveyName
                             txtOldDEM.Text = rDoD.OldSurveyName
@@ -276,7 +276,8 @@ Namespace UI.BudgetSegregation
 
         Private Sub PolygonChanged(ByVal sender As Object, ByVal e As UI.UtilityForms.InputUCSelectedItemChangedEventArgs) Handles ucPolygon.SelectedItemChanged
             If TypeOf ucPolygon.SelectedItem Is GISDataStructures.Vector Then
-                ucPolygon.SelectedItem.FillComboWithFields(cboField, "Mask", ESRI.ArcGIS.Geodatabase.esriFieldType.esriFieldTypeString, True)
+                ' TODO: Figure solution to following line
+                'ucPolygon.SelectedItem.FillComboWithFields(cboField, "Mask", ESRI.ArcGIS.Geodatabase.esriFieldType.esriFieldTypeString, True)
             End If
 
             If cboField.Items.Count > 0 Then

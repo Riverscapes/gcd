@@ -217,7 +217,7 @@
             '
             Me.cmdHelpPrecision.FlatAppearance.BorderSize = 0
             Me.cmdHelpPrecision.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-            Me.cmdHelpPrecision.Image = Global.GCDAddIn.My.Resources.Resources.Help
+            Me.cmdHelpPrecision.Image = My.Resources.Resources.Help
             Me.cmdHelpPrecision.Location = New System.Drawing.Point(189, 185)
             Me.cmdHelpPrecision.Name = "cmdHelpPrecision"
             Me.cmdHelpPrecision.Size = New System.Drawing.Size(23, 23)

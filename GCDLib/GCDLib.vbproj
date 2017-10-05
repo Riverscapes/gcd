@@ -83,7 +83,23 @@
     <Compile Include="Core\ChangeDetection\DoDResultHistograms.vb" />
     <Compile Include="Core\ChangeDetection\DoDResultSet.vb" />
     <Compile Include="Core\ChangeDetection\HistogramStats.vb" />
+    <Compile Include="Core\ErrorCalculation\ErrorCalcProperties.vb" />
+    <Compile Include="Core\ErrorCalculation\ErrorSurfaceEngine.vb" />
+    <Compile Include="Core\ErrorCalculation\FIS\FISLibrary.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FISLibrary.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Core\ErrorCalculation\FIS\FISLibrary.vb">
+      <DependentUpon>FISLibrary.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Core\ErrorCalculation\FIS\FISRuleFile.vb" />
     <Compile Include="Core\ExceptionHelper.vb" />
+    <Compile Include="Core\GCDProject\SurveyTypes.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SurveyTypes.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Core\RasterPyramidManager.vb" />
     <Compile Include="Core\TopCAT\Stats.vb" />
     <Compile Include="Core\TopCAT\WindowsManagement.vb" />
@@ -191,6 +207,12 @@
     </Compile>
     <Compile Include="UI\ChangeDetection\ucDoDSummary.vb">
       <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\ErrorCalculation\frmErrorCalculation.Designer.vb">
+      <DependentUpon>frmErrorCalculation.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ErrorCalculation\frmErrorCalculation.vb">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\Project\frmProjectProperties.Designer.vb">
       <DependentUpon>frmProjectProperties.vb</DependentUpon>
@@ -308,6 +330,9 @@
     <EmbeddedResource Include="UI\ChangeDetection\ucDoDSummary.resx">
       <DependentUpon>ucDoDSummary.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\ErrorCalculation\frmErrorCalculation.resx">
+      <DependentUpon>frmErrorCalculation.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\Project\frmProjectProperties.resx">
       <DependentUpon>frmProjectProperties.vb</DependentUpon>
     </EmbeddedResource>
@@ -344,6 +369,17 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Core\ErrorCalculation\FIS\FISLibrary.xsc">
+      <DependentUpon>FISLibrary.xsd</DependentUpon>
+    </None>
+    <None Include="Core\ErrorCalculation\FIS\FISLibrary.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>FISLibrary.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Core\ErrorCalculation\FIS\FISLibrary.xss">
+      <DependentUpon>FISLibrary.xsd</DependentUpon>
+    </None>
     <None Include="Core\GCDProject\ProjectDS.xsc">
       <DependentUpon>ProjectDS.xsd</DependentUpon>
     </None>
@@ -355,6 +391,17 @@
     <None Include="Core\GCDProject\ProjectDS.xss">
       <DependentUpon>ProjectDS.xsd</DependentUpon>
       <SubType>Designer</SubType>
+    </None>
+    <None Include="Core\GCDProject\SurveyTypes.xsc">
+      <DependentUpon>SurveyTypes.xsd</DependentUpon>
+    </None>
+    <None Include="Core\GCDProject\SurveyTypes.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>SurveyTypes.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Core\GCDProject\SurveyTypes.xss">
+      <DependentUpon>SurveyTypes.xsd</DependentUpon>
     </None>
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>

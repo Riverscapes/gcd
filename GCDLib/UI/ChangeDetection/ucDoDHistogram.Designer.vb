@@ -27,7 +27,7 @@
             Me.rdoArea = New System.Windows.Forms.RadioButton()
             Me.rdoVolume = New System.Windows.Forms.RadioButton()
             Me.cmdRefresh = New System.Windows.Forms.Button()
-            Me.zGraph = New ZedGraph.ZedGraphControl()
+            Me.zGraph = New System.Windows.Forms.DataVisualization.Charting.Chart
             Me.SuspendLayout()
             '
             'rdoArea
@@ -54,7 +54,7 @@
             '
             'cmdRefresh
             '
-            Me.cmdRefresh.Image = Global.GCDAddIn.My.Resources.Resources.refresh
+            Me.cmdRefresh.Image = My.Resources.Resources.refresh
             Me.cmdRefresh.Location = New System.Drawing.Point(472, 3)
             Me.cmdRefresh.Name = "cmdRefresh"
             Me.cmdRefresh.Size = New System.Drawing.Size(23, 23)
@@ -67,16 +67,8 @@
             Me.zGraph.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-            Me.zGraph.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
             Me.zGraph.Location = New System.Drawing.Point(0, 32)
             Me.zGraph.Name = "zGraph"
-            Me.zGraph.ScrollGrace = 0.0R
-            Me.zGraph.ScrollMaxX = 0.0R
-            Me.zGraph.ScrollMaxY = 0.0R
-            Me.zGraph.ScrollMaxY2 = 0.0R
-            Me.zGraph.ScrollMinX = 0.0R
-            Me.zGraph.ScrollMinY = 0.0R
-            Me.zGraph.ScrollMinY2 = 0.0R
             Me.zGraph.Size = New System.Drawing.Size(500, 365)
             Me.zGraph.TabIndex = 3
             '
@@ -98,7 +90,7 @@
         Friend WithEvents rdoArea As System.Windows.Forms.RadioButton
         Friend WithEvents rdoVolume As System.Windows.Forms.RadioButton
         Friend WithEvents cmdRefresh As System.Windows.Forms.Button
-        Friend WithEvents zGraph As ZedGraph.ZedGraphControl
+        Friend WithEvents zGraph As System.Windows.Forms.DataVisualization.Charting.Chart
 
     End Class
 End Namespace

@@ -1,6 +1,6 @@
 ﻿Imports System.Text.RegularExpressions
 
-Namespace GISCode.GCD.ErrorCalculation
+Namespace Core.ErrorCalculation.FIS
 
     ''' <summary>
     ''' Class for loading a FIS rule file and then making the inputs available via a list.

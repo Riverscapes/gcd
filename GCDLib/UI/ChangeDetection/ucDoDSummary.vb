@@ -141,8 +141,8 @@ Namespace UI.ChangeDetection
             aRow = grdData.Rows(nIndex)
                 aRow.Cells(0).Value = "Total Area of Erosion (" & NumberFormatting.GetUnitsAsString(m_Options.AreaUnits) & ")" 'the superscript 2 is ALT+0178
                 aRow.Cells(0).ToolTipText = "The amount of area experiencing erosion"
-                aRow.Cells(1).Value = NumberFormatting.Convert((m_DoDResultSet.DoDProperties.Units.AreaUnit, m_Options.AreaUnits, m_DoDResultSet.ChangeStats.AreaErosion_Raw).ToString(sFormat)
-                aRow.Cells(2).Value = NumberFormatting.Convert((m_DoDResultSet.DoDProperties.Units.AreaUnit, m_Options.AreaUnits, m_DoDResultSet.ChangeStats.AreaErosion_Thresholded).ToString(sFormat)
+                aRow.Cells(1).Value = NumberFormatting.Convert(m_DoDResultSet.DoDProperties.Units.AreaUnit, m_Options.AreaUnits, m_DoDResultSet.ChangeStats.AreaErosion_Raw).ToString(sFormat)
+                aRow.Cells(2).Value = NumberFormatting.Convert(m_DoDResultSet.DoDProperties.Units.AreaUnit, m_Options.AreaUnits, m_DoDResultSet.ChangeStats.AreaErosion_Thresholded).ToString(sFormat)
                 aRow.Cells(3).Style.BackColor = Drawing.Color.LightGray
             aRow.Cells(4).Style.BackColor = Drawing.Color.LightGray
             aRow.Cells(5).Style.BackColor = Drawing.Color.LightGray

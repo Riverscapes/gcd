@@ -58,6 +58,12 @@
         TIFF
     End Enum
 
+    Public Enum FieldTypes
+        IntField
+        StringField
+        DoubleField
+    End Enum
+
 #End Region
 
     Public Class GISDataSource

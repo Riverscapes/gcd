@@ -166,7 +166,7 @@
             '
             'btnCalculateError
             '
-            Me.btnCalculateError.Image = Global.GCDAddIn.My.Resources.Resources.sigma
+            Me.btnCalculateError.Image = My.Resources.Resources.sigma
             Me.btnCalculateError.Location = New System.Drawing.Point(40, 6)
             Me.btnCalculateError.Name = "btnCalculateError"
             Me.btnCalculateError.Size = New System.Drawing.Size(29, 23)
@@ -176,7 +176,7 @@
             'btnAddErrorToMap
             '
             Me.btnAddErrorToMap.Enabled = False
-            Me.btnAddErrorToMap.Image = Global.GCDAddIn.My.Resources.Resources.AddToMap
+            Me.btnAddErrorToMap.Image = My.Resources.Resources.AddToMap
             Me.btnAddErrorToMap.Location = New System.Drawing.Point(144, 6)
             Me.btnAddErrorToMap.Name = "btnAddErrorToMap"
             Me.btnAddErrorToMap.Size = New System.Drawing.Size(29, 23)
@@ -228,7 +228,7 @@
             'btnErrorDelete
             '
             Me.btnErrorDelete.Enabled = False
-            Me.btnErrorDelete.Image = Global.GCDAddIn.My.Resources.Resources.Delete
+            Me.btnErrorDelete.Image = My.Resources.Resources.Delete
             Me.btnErrorDelete.Location = New System.Drawing.Point(74, 6)
             Me.btnErrorDelete.Name = "btnErrorDelete"
             Me.btnErrorDelete.Size = New System.Drawing.Size(29, 23)
@@ -238,7 +238,7 @@
             'btnErrorSettings
             '
             Me.btnErrorSettings.Enabled = False
-            Me.btnErrorSettings.Image = Global.GCDAddIn.My.Resources.Resources.Settings
+            Me.btnErrorSettings.Image = My.Resources.Resources.Settings
             Me.btnErrorSettings.Location = New System.Drawing.Point(109, 6)
             Me.btnErrorSettings.Name = "btnErrorSettings"
             Me.btnErrorSettings.Size = New System.Drawing.Size(29, 23)
@@ -247,7 +247,7 @@
             '
             'btnAddError
             '
-            Me.btnAddError.Image = Global.GCDAddIn.My.Resources.Resources.Add
+            Me.btnAddError.Image = My.Resources.Resources.Add
             Me.btnAddError.Location = New System.Drawing.Point(6, 6)
             Me.btnAddError.Name = "btnAddError"
             Me.btnAddError.Size = New System.Drawing.Size(29, 23)
@@ -338,7 +338,7 @@
             '
             'btnAddAssociatedSurface
             '
-            Me.btnAddAssociatedSurface.Image = Global.GCDAddIn.My.Resources.Resources.Add
+            Me.btnAddAssociatedSurface.Image = My.Resources.Resources.Add
             Me.btnAddAssociatedSurface.Location = New System.Drawing.Point(3, 6)
             Me.btnAddAssociatedSurface.Name = "btnAddAssociatedSurface"
             Me.btnAddAssociatedSurface.Size = New System.Drawing.Size(29, 23)
@@ -348,7 +348,7 @@
             'btnAddToMap
             '
             Me.btnAddToMap.Enabled = False
-            Me.btnAddToMap.Image = Global.GCDAddIn.My.Resources.Resources.AddToMap
+            Me.btnAddToMap.Image = My.Resources.Resources.AddToMap
             Me.btnAddToMap.Location = New System.Drawing.Point(108, 6)
             Me.btnAddToMap.Name = "btnAddToMap"
             Me.btnAddToMap.Size = New System.Drawing.Size(29, 23)
@@ -358,7 +358,7 @@
             'btnDeleteAssociatedSurface
             '
             Me.btnDeleteAssociatedSurface.Enabled = False
-            Me.btnDeleteAssociatedSurface.Image = Global.GCDAddIn.My.Resources.Resources.Delete
+            Me.btnDeleteAssociatedSurface.Image = My.Resources.Resources.Delete
             Me.btnDeleteAssociatedSurface.Location = New System.Drawing.Point(73, 6)
             Me.btnDeleteAssociatedSurface.Name = "btnDeleteAssociatedSurface"
             Me.btnDeleteAssociatedSurface.Size = New System.Drawing.Size(29, 23)
@@ -368,7 +368,7 @@
             'btnSettingsAssociatedSurface
             '
             Me.btnSettingsAssociatedSurface.Enabled = False
-            Me.btnSettingsAssociatedSurface.Image = Global.GCDAddIn.My.Resources.Resources.Settings
+            Me.btnSettingsAssociatedSurface.Image = My.Resources.Resources.Settings
             Me.btnSettingsAssociatedSurface.Location = New System.Drawing.Point(38, 6)
             Me.btnSettingsAssociatedSurface.Name = "btnSettingsAssociatedSurface"
             Me.btnSettingsAssociatedSurface.Size = New System.Drawing.Size(29, 23)

@@ -323,7 +323,7 @@ Namespace UI.Project
 
                         Case GCDNodeTypes.ErrorSurface
                             Dim rError As ProjectDS.ErrorSurfaceRow = GCDProject.ProjectManagerUI.ds.ErrorSurface.FindByErrorSurfaceID(nID)
-                            frm = New frmErrorCalculation2(rError)
+                            frm = New frmErrorCalculation(rError)
 
                     End Select
 
@@ -683,7 +683,7 @@ Namespace UI.Project
 
                     Dim rDEMSurvey As ProjectDS.DEMSurveyRow = Core.GCDProject.ProjectManager.ds.DEMSurvey.FindByDEMSurveyID(nID)
                     If TypeOf rDEMSurvey Is ProjectDS.DEMSurveyRow Then
-                        Dim frm As New frmErrorCalculation2(rDEMSurvey)
+                        Dim frm As New frmErrorCalculation(rDEMSurvey)
                         If frm.ShowDialog() = DialogResult.OK Then
                             LoadTree(selNode.Tag)
                         End If
@@ -760,7 +760,7 @@ Namespace UI.Project
                         Dim nErrorID As Integer = GetNodeID(selNode)
                         Dim rError As ProjectDS.ErrorSurfaceRow = GCDProject.ProjectManager.ds.ErrorSurface.FindByErrorSurfaceID(nErrorID)
                         If TypeOf rError Is ProjectDS.ErrorSurfaceRow Then
-                            Dim frm As New frmErrorCalculation2(rError)
+                            Dim frm As New frmErrorCalculation(rError)
                             If frm.ShowDialog() = DialogResult.OK Then
                                 LoadTree(selNode.Tag)
                             End If
@@ -1992,7 +1992,7 @@ Namespace UI.Project
                             nID = GetNodeID(nodSelected.Parent)
                             For Each rDEM As ProjectDS.DEMSurveyRow In GCDProject.ProjectManager.CurrentProject.GetDEMSurveyRows
                                 If nID = rDEM.DEMSurveyID Then
-                                    frm = New frmErrorCalculation2(rDEM)
+                                    frm = New frmErrorCalculation(rDEM)
                                     Exit For
                                 End If
                             Next
@@ -2001,7 +2001,7 @@ Namespace UI.Project
                             nID = GetNodeID(nodSelected.Parent.Parent)
                             For Each rDEM As ProjectDS.DEMSurveyRow In GCDProject.ProjectManager.CurrentProject.GetDEMSurveyRows
                                 If nID = rDEM.DEMSurveyID Then
-                                    frm = New frmErrorCalculation2(rDEM)
+                                    frm = New frmErrorCalculation(rDEM)
                                     Exit For
                                 End If
                             Next

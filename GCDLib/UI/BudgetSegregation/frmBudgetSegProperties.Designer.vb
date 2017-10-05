@@ -36,7 +36,7 @@
             Me.Label2 = New System.Windows.Forms.Label()
             Me.cboDoD = New System.Windows.Forms.ComboBox()
             Me.Label6 = New System.Windows.Forms.Label()
-            Me.ucPolygon = New GISCode.UserInterface.VectorInputUC()
+            Me.ucPolygon = New UI.UtilityForms.ucVectorInput
             Me.cmdHelp = New System.Windows.Forms.Button()
             Me.cmdCancel = New System.Windows.Forms.Button()
             Me.cmdOK = New System.Windows.Forms.Button()
@@ -162,14 +162,12 @@
             '
             'ucPolygon
             '
-            Me.ucPolygon.ArcMap = Nothing
-            Me.ucPolygon.BrowseType = GCDAddIn.GISCode.GISDataStructures.BrowseVectorTypes.Point
+            Me.ucPolygon.BrowseType = Core.GISDataStructures.BrowseVectorTypes.Point
             Me.ucPolygon.Location = New System.Drawing.Point(120, 21)
             Me.ucPolygon.Name = "ucPolygon"
             Me.ucPolygon.Noun = ""
             Me.ucPolygon.Size = New System.Drawing.Size(355, 25)
             Me.ucPolygon.TabIndex = 0
-            Me.ucPolygon.ToolTip = ""
             '
             'cmdHelp
             '
@@ -293,7 +291,7 @@
         Friend WithEvents Label2 As System.Windows.Forms.Label
         Friend WithEvents cboDoD As System.Windows.Forms.ComboBox
         Friend WithEvents Label6 As System.Windows.Forms.Label
-        Friend WithEvents ucPolygon As GISCode.UserInterface.VectorInputUC
+        Friend WithEvents ucPolygon As UI.UtilityForms.ucVectorInput
         Friend WithEvents cmdHelp As System.Windows.Forms.Button
         Friend WithEvents cmdCancel As System.Windows.Forms.Button
         Friend WithEvents cmdOK As System.Windows.Forms.Button

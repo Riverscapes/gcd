@@ -150,7 +150,7 @@
             '
             'cmdBayesianProperties
             '
-            Me.cmdBayesianProperties.Image = Global.GCDAddIn.My.Resources.Resources.Settings
+            Me.cmdBayesianProperties.Image = My.Resources.Resources.Settings
             Me.cmdBayesianProperties.Location = New System.Drawing.Point(189, 141)
             Me.cmdBayesianProperties.Name = "cmdBayesianProperties"
             Me.cmdBayesianProperties.Size = New System.Drawing.Size(23, 23)

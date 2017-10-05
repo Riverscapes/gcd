@@ -21,7 +21,7 @@
 
         Private Sub DoDResultsForm_Load(sender As Object, e As System.EventArgs) Handles Me.Load
             txtDoDName.Text = m_rDoD.Name
-            ucBars.Initialize(ucHistogram.DoDResultSet.ChangeStats, ucSummary.Options.m_eLinearUnits)
+            ucBars.Initialize(ucHistogram.DoDResultSet.ChangeStats, New naru.math.LinearUnitClass(ucSummary.Options.LinearUnits))
 
             'Hide Report tab for now
             tabProperties.TabPages.Remove(TabPage4)

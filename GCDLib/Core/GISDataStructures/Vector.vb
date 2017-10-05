@@ -17,10 +17,19 @@
             End If
 
             ' TODO: lookup field index in ShapeFile
+            Throw New Exception("Not implemented yet")
 
             Return -1
 
         End Function
+
+        Public ReadOnly Property FeatureCount As Integer
+            Get
+                ' TODO: implmenet this function
+                Throw New Exception("Not implemented yet")
+                Return 0
+            End Get
+        End Property
 
 
 

@@ -778,7 +778,7 @@ Namespace UI.SurveyLibrary
             If ValidateForm() Then
                 SaveDEMSurvey()
                 Dim dr As DataRowView = DEMSurveyBindingSource.Current
-                Dim frm As New frmErrorCalculation2(DirectCast(dr.Row, ProjectDS.DEMSurveyRow))
+                Dim frm As New frmErrorCalculation(DirectCast(dr.Row, ProjectDS.DEMSurveyRow))
                 frm.ShowDialog()
             End If
 
@@ -881,7 +881,7 @@ Namespace UI.SurveyLibrary
 
             Dim CurrentRow As DataRowView = Me.ErrorTableBindingSource.Current
             If Not CurrentRow Is Nothing AndAlso TypeOf CurrentRow.Row Is ProjectDS.ErrorSurfaceRow Then
-                Dim frm As New frmErrorCalculation2(DirectCast(CurrentRow.Row, ProjectDS.ErrorSurfaceRow))
+                Dim frm As New frmErrorCalculation(DirectCast(CurrentRow.Row, ProjectDS.ErrorSurfaceRow))
                 frm.ShowDialog()
             End If
 

@@ -2,7 +2,7 @@
 
 Namespace UI.UtilityForms
 
-    Public Class VectorOutputUC
+    Public Class ucVectorOutput
         Inherits ucOutputBase
 
         Private m_GeometryType As GISDataStructures.BrowseVectorTypes

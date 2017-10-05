@@ -97,7 +97,7 @@
             '
             'Button1
             '
-            Me.Button1.Image = Global.GCDAddIn.My.Resources.Resources.Excel
+            Me.Button1.Image = My.Resources.Resources.Excel
             Me.Button1.Location = New System.Drawing.Point(89, 4)
             Me.Button1.Name = "Button1"
             Me.Button1.Size = New System.Drawing.Size(23, 23)
@@ -107,7 +107,7 @@
             '
             'cmdRefresh
             '
-            Me.cmdRefresh.Image = Global.GCDAddIn.My.Resources.Resources.refresh
+            Me.cmdRefresh.Image = My.Resources.Resources.refresh
             Me.cmdRefresh.Location = New System.Drawing.Point(60, 4)
             Me.cmdRefresh.Name = "cmdRefresh"
             Me.cmdRefresh.Size = New System.Drawing.Size(23, 23)
@@ -117,7 +117,7 @@
             '
             'cmdProperties
             '
-            Me.cmdProperties.Image = Global.GCDAddIn.My.Resources.Resources.Settings
+            Me.cmdProperties.Image = My.Resources.Resources.Settings
             Me.cmdProperties.Location = New System.Drawing.Point(0, 4)
             Me.cmdProperties.Name = "cmdProperties"
             Me.cmdProperties.Size = New System.Drawing.Size(23, 23)

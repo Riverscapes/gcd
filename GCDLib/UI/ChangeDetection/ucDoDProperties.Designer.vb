@@ -116,14 +116,14 @@
             '
             'PropertiesToolStripMenuItem
             '
-            Me.PropertiesToolStripMenuItem.Image = Global.GCDAddIn.My.Resources.Resources.Settings
+            Me.PropertiesToolStripMenuItem.Image = My.Resources.Resources.Settings
             Me.PropertiesToolStripMenuItem.Name = "PropertiesToolStripMenuItem"
             Me.PropertiesToolStripMenuItem.Size = New System.Drawing.Size(137, 22)
             Me.PropertiesToolStripMenuItem.Text = "Properties"
             '
             'AddToMapToolStripMenuItem
             '
-            Me.AddToMapToolStripMenuItem.Image = Global.GCDAddIn.My.Resources.Resources.AddToMap
+            Me.AddToMapToolStripMenuItem.Image = My.Resources.Resources.AddToMap
             Me.AddToMapToolStripMenuItem.Name = "AddToMapToolStripMenuItem"
             Me.AddToMapToolStripMenuItem.Size = New System.Drawing.Size(137, 22)
             Me.AddToMapToolStripMenuItem.Text = "Add to Map"
@@ -279,7 +279,7 @@
             '
             'Button1
             '
-            Me.Button1.Image = Global.GCDAddIn.My.Resources.Resources.Copy
+            Me.Button1.Image = My.Resources.Resources.Copy
             Me.Button1.Location = New System.Drawing.Point(3, 3)
             Me.Button1.Name = "Button1"
             Me.Button1.Size = New System.Drawing.Size(23, 23)
@@ -486,7 +486,7 @@
             '
             'AddToMapToolStripMenuItem1
             '
-            Me.AddToMapToolStripMenuItem1.Image = Global.GCDAddIn.My.Resources.Resources.AddToMap
+            Me.AddToMapToolStripMenuItem1.Image = My.Resources.Resources.AddToMap
             Me.AddToMapToolStripMenuItem1.Name = "AddToMapToolStripMenuItem1"
             Me.AddToMapToolStripMenuItem1.Size = New System.Drawing.Size(137, 22)
             Me.AddToMapToolStripMenuItem1.Text = "Add to Map"

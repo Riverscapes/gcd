@@ -1,4 +1,4 @@
-﻿Namespace ErrorCalculation
+﻿Namespace Core.ErrorCalculation
 
     Public Class ErrorCalcPropertiesBase
 
@@ -93,7 +93,7 @@
 
             m_nFISID = nFISID
             m_sFISRuleFilePath = sFISRuleFilePath
-   
+
             If dFISInputs Is Nothing Then
                 m_dFISInputs = New Dictionary(Of String, Integer)
             Else
