@@ -1,4 +1,4 @@
-﻿Imports System.Xml
+﻿Imports GCD.GCDLib.Core.Visualization
 
 Namespace Core.ChangeDetection
 
@@ -209,7 +209,7 @@ Namespace Core.ChangeDetection
                             fVolErosionRaw, fVolDepositionRaw,
                             fVolErosionThr, fVolDepositionThr,
                             fVolErosionErr, fVolDepositonErr,
-                            GCDProject.ProjectManager.GCDNARCError.ErrorString)
+                            GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
 
             AreaErosion_Raw = fAreaErosionRaw
             AreaDeposition_Raw = fAreaDepositonRaw
@@ -321,10 +321,10 @@ Namespace Core.ChangeDetection
         ''' <summary>
         ''' Write the statistics to a new copy of the GCDSummary.xml spreadsheet XML file.
         ''' </summary>
-        ''' <param name="sDisplayUnits">Units of measurement for the statistics. e.g. "ft"</param>
+        ''' <param name="eUnits">Units of measurement for the statistics. e.g. "ft"</param>
         ''' <param name="sOutputPath">Full path to the output XML path where the GCD Summary stats XML file should be generated</param>
         ''' <remarks></remarks>
-        Public Sub ExportSummary(sExcelTemplateFolder As String, ByVal sDisplayUnits As String, ByVal sOutputPath As String)
+        Public Sub ExportSummary(sExcelTemplateFolder As String, eUnits As naru.math.LinearUnitClass, ByVal sOutputPath As String)
 
             Dim TemplateFile As String = IO.Path.Combine(sExcelTemplateFolder, "GCDSummary.xml")
             If Not IO.File.Exists(TemplateFile) Then
@@ -348,7 +348,7 @@ Namespace Core.ChangeDetection
             ' PGB 3 Mar 2012
             ' Need to dynamically put the units in the summary XML.
             '
-            OutputText.Replace("[LinearUnits]", sDisplayUnits)
+            OutputText.Replace("[LinearUnits]", eUnits.GetUnitsAsString)
 
             OutputText.Replace("[TotalAreaOfErosionRaw]", AreaErosion_Raw)
             OutputText.Replace("[TotalAreaOfErosionThresholded]", AreaErosion_Thresholded)
@@ -371,11 +371,11 @@ Namespace Core.ChangeDetection
 
         End Sub
 
-        Public Sub GenerateChangeBarGraphicFiles(ByVal sFiguresFolder As String, ByVal eLinearUnit As naru.math.NumberFormatting.LinearUnits, ByVal fChartWidth As Double, ByVal fChartHeight As Double, Optional ByVal sFilePrefix As String = "")
+        Public Sub GenerateChangeBarGraphicFiles(ByVal sFiguresFolder As String, ByVal eLinearUnit As naru.math.LinearUnitClass, ByVal fChartWidth As Double, ByVal fChartHeight As Double, Optional ByVal sFilePrefix As String = "")
 
             Dim nDPI As Integer = 300
-            Dim ZedGraph As New ZedGraph.ZedGraphControl
-            Dim barViewer As New GCD.ElevationChangeBarViewer(ZedGraph, naru.math.NumberFormatting.GetUnitsAsString(eLinearUnit))
+            Dim chtControl As New System.Windows.Forms.DataVisualization.Charting.Chart
+            Dim barViewer As New ElevationChangeBarViewer(chtControl, eLinearUnit)
 
             If Not String.IsNullOrEmpty(sFilePrefix) Then
                 If Not sFilePrefix.EndsWith("_") Then

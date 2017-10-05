@@ -14,24 +14,24 @@ Namespace Core.Visualization
         Private m_chtControl As Chart
         'Private _ThresholdedHist As Dictionary(Of Double, Double)
         'Private _RawHist As Dictionary(Of Double, Double)
-        Private m_sUnits As String
+        Private m_eLinearUnits As LinearUnitClass
 
-        Public Sub New(ByRef chtControl As Chart, ByVal sUnits As String)
+        Public Sub New(ByRef chtControl As Chart, eLinearUnits As LinearUnitClass)
             m_chtControl = chtControl
-            m_sUnits = sUnits
+            m_eLinearUnits = eLinearUnits
         End Sub
 
-        Public Sub Refresh(fErosion As Double, fDeposition As Double, eUnits As naru.math.LinearUnitClass, eType As BarTypes, bAbsolute As Boolean)
+        Public Sub Refresh(fErosion As Double, fDeposition As Double, eUnits As LinearUnitClass, eType As BarTypes, bAbsolute As Boolean)
 
             Refresh(fErosion, fDeposition, 0, 0, 0, 0, eUnits, False, False, eType, bAbsolute)
         End Sub
 
-        Public Sub Refresh(fErosion As Double, fDeposition As Double, fNet As Double, fErosionError As Double, fDepositionError As Double, fNetError As Double, eUnits As naru.math.LinearUnitClass, eType As BarTypes, bAbsolute As Boolean)
+        Public Sub Refresh(fErosion As Double, fDeposition As Double, fNet As Double, fErosionError As Double, fDepositionError As Double, fNetError As Double, eUnits As LinearUnitClass, eType As BarTypes, bAbsolute As Boolean)
 
             Refresh(fErosion, fDeposition, fNet, fErosionError, fDepositionError, fNetError, eUnits, True, True, eType, bAbsolute)
         End Sub
 
-        Private Sub Refresh(fErosion As Double, fDeposition As Double, fNet As Double, fErosionError As Double, fDepositionError As Double, fNetError As Double, eUnits As naru.math.LinearUnitClass, bShowErrorBars As Boolean, bShowNet As Boolean, eType As BarTypes, bAbsolute As Boolean)
+        Private Sub Refresh(fErosion As Double, fDeposition As Double, fNet As Double, fErosionError As Double, fDepositionError As Double, fNetError As Double, eUnits As LinearUnitClass, bShowErrorBars As Boolean, bShowNet As Boolean, eType As BarTypes, bAbsolute As Boolean)
 
             'If Not TypeOf _ZedGraph Is ZedGraph.ZedGraphControl Then
             '    Exit Sub

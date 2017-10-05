@@ -31,7 +31,12 @@
             End Get
         End Property
 
-
+        Public ReadOnly Property OIDFieldName As String
+            Get
+                ' TODO: implmenet this function
+                Throw New Exception("Not implemented yet")
+            End Get
+        End Property
 
         ''' <summary>
         ''' Alters the file extension depending on file geodatabase or not.

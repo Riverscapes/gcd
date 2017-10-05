@@ -144,7 +144,7 @@
             Dim sNewDEM As String = WorkspaceManager.GetTempRaster("NewDEM")
             Dim sOldDEM As String = WorkspaceManager.GetTempRaster("OldDEM")
 
-            If TypeOf m_gAOI Is GISDataStructures.PolygonDataSource Then
+            If TypeOf m_gAOI Is GISDataStructures.Vector Then
 
                 ' Mask the rasters using the specified AOI
                 Dim sAOIRaster As String = WorkspaceManager.GetTempRaster("AOI")
@@ -154,7 +154,7 @@
                 GP.SpatialAnalyst.SetNull(sAOIRaster, m_gOriginalNewDEM.FullPath, sNewDEM, """VALUE"" IS NULL")
                 GP.SpatialAnalyst.SetNull(sAOIRaster, m_gOriginalOldDEM.FullPath, sOldDEM, """VALUE"" IS NULL")
             Else
-                If m_gOriginalNewDEM.IsConcurrent(m_gOriginalOldDEM.Extent) Then
+                If m_gOriginalNewDEM.Extent.IsConcurrent(m_gOriginalOldDEM.Extent) Then
                     ' Rasters already concurrent. Simply use in situ
                     sNewDEM = m_gOriginalNewDEM.FullPath
                     sOldDEM = m_gOriginalOldDEM.FullPath
@@ -163,7 +163,7 @@
                     Dim theUnionExtent As GISDataStructures.ExtentRectangle = m_gOriginalNewDEM.Extent
                     theUnionExtent.Union(m_gOriginalOldDEM.Extent)
 
-                    Dim nP As Integer = GCD.GCDProject.ProjectManager.CurrentProject.Precision
+                    Dim nP As Integer = GCDProject.ProjectManagerBase.CurrentProject.Precision
                     Dim nCols As Integer = (theUnionExtent.Right - theUnionExtent.Left) / m_gOriginalNewDEM.CellSize
                     Dim nRows As Integer = (theUnionExtent.Top - theUnionExtent.Bottom) / m_gOriginalNewDEM.CellSize
 
@@ -172,13 +172,13 @@
                     'GP.SpatialAnalyst.Raster_Calculator(Chr(34) & m_gOriginalNewDEM.FullPath & Chr(34), sNewDEM, theUnionExtent.Rectangle, m_gOriginalNewDEM.CellSize)
                     'GP.SpatialAnalyst.Raster_Calculator(Chr(34) & m_gOriginalOldDEM.FullPath & Chr(34), sOldDEM, theUnionExtent.Rectangle, m_gOriginalOldDEM.CellSize)
 
-                    If Not RasterManager.Copy(m_gOriginalNewDEM.FullPath, sNewDEM, fCellSize, Math.Round(theUnionExtent.Left, nP), Math.Round(theUnionExtent.Top, nP),
-                                              nRows, nCols, GCD.GCDProject.ProjectManager.GCDNARCError.ErrorString) = RasterManagerOutputCodes.PROCESS_OK Then
-                        Throw New Exception(GCD.GCDProject.ProjectManager.GCDNARCError.ErrorString.ToString)
+                    If Not External.Copy(m_gOriginalNewDEM.FullPath, sNewDEM, fCellSize, Math.Round(theUnionExtent.Left, nP), Math.Round(theUnionExtent.Top, nP),
+                                              nRows, nCols, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString) = External.RasterManagerOutputCodes.PROCESS_OK Then
+                        Throw New Exception(GCDProject.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
                     End If
-                    If Not RasterManager.Copy(m_gOriginalOldDEM.FullPath, sOldDEM, fCellSize, Math.Round(theUnionExtent.Left, nP), Math.Round(theUnionExtent.Top, nP),
-                                              nRows, nCols, GCD.GCDProject.ProjectManager.GCDNARCError.ErrorString) = RasterManagerOutputCodes.PROCESS_OK Then
-                        Throw New Exception(GCD.GCDProject.ProjectManager.GCDNARCError.ErrorString.ToString)
+                    If Not External.Copy(m_gOriginalOldDEM.FullPath, sOldDEM, fCellSize, Math.Round(theUnionExtent.Left, nP), Math.Round(theUnionExtent.Top, nP),
+                                              nRows, nCols, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString) = External.RasterManagerOutputCodes.PROCESS_OK Then
+                        Throw New Exception(GCDProject.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
                     End If
                 End If
             End If
@@ -187,7 +187,7 @@
             Dim gTempOld As New GISDataStructures.Raster(sOldDEM)
 
             ' Final check
-            If Not gTempNew.IsConcurrent(gTempOld.Extent) Then
+            If Not gTempNew.Extent.IsConcurrent(gTempOld.Extent) Then
                 Dim ex As New Exception("Failed to make analysis rasters concurrent.")
                 ex.Data("Original New DEM Path") = m_gOriginalNewDEM.FullPath
                 ex.Data("Original New DEM Extent") = m_gOriginalNewDEM.Extent.Rectangle
@@ -216,15 +216,15 @@
         Protected Function CalculateRawDoD(ByRef sRawDoDPath As String, ByRef sRawHistogram As String) As String
 
             Try
-                sRawDoDPath = GCD.GCDProject.ProjectManager.OutputManager.GetDoDRawPath(Name, m_dAnalysisFolder.FullName)
+                sRawDoDPath = Core.GCDProject.ProjectManager.OutputManager.GetDoDRawPath(Name, m_dAnalysisFolder.FullName)
 
                 Dim eResult As External.GCDCoreOutputCodes = External.DoDRaw(AnalysisNewDEM.FullPath, AnalysisOldDEM.FullPath, sRawDoDPath,
-                                                           GCD.GCDProject.ProjectManager.OutputManager.OutputDriver, GCD.GCDProject.ProjectManager.OutputManager.NoData,
-                                                          GCD.GCDProject.ProjectManager.GCDNARCError.ErrorString)
+                                                           GCDProject.ProjectManagerBase.OutputManager.OutputDriver, GCDProject.ProjectManagerBase.OutputManager.NoData,
+                                                          GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
 
                 If eResult <> External.GCDCoreOutputCodes.PROCESS_OK Then
 
-                    Dim ex As New Exception(GCD.GCDProject.ProjectManager.GCDNARCError.ErrorString.ToString)
+                    Dim ex As New Exception(GCDProject.ProjectManager.GCDNARCError.ErrorString.ToString)
                     Throw New Exception("Error calculating the raw DEM of difference raster", ex)
 
                 End If
@@ -240,10 +240,10 @@
                     Throw New Exception("There was an error calculating the raw DoD. All values are zero in raw DoD.")
                 End If
 
-                sRawHistogram = GCD.GCDProject.ProjectManager.OutputManager.GetCsvRawPath(IO.Path.GetDirectoryName(sRawDoDPath), Name)
-                eResult = External.CalculateAndWriteDoDHistogramWithBins(sRawDoDPath, sRawHistogram, m_nNumBins, m_nMinimumBin, m_fBinSize, m_fBinIncrement, GCD.GCDProject.ProjectManager.GCDNARCError.ErrorString)
+                sRawHistogram = GCDProject.ProjectManager.OutputManager.GetCsvRawPath(IO.Path.GetDirectoryName(sRawDoDPath), Name)
+                eResult = External.CalculateAndWriteDoDHistogramWithBins(sRawDoDPath, sRawHistogram, m_nNumBins, m_nMinimumBin, m_fBinSize, m_fBinIncrement, GCDProject.ProjectManager.GCDNARCError.ErrorString)
                 If eResult <> External.GCDCoreOutputCodes.PROCESS_OK Then
-                    Dim ex As New Exception(GCD.GCDProject.ProjectManager.GCDNARCError.ErrorString.ToString)
+                    Dim ex As New Exception(GCDProject.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
                     Throw New Exception("Error calculating and writing the raw DEM histogram.", ex)
                 End If
 
@@ -257,23 +257,23 @@
 
         End Function
 
-        Protected Function GenerateSummaryXML(theChangeStats As GCD.ChangeDetection.ChangeStatsCalculator) As String
+        Protected Function GenerateSummaryXML(theChangeStats As ChangeDetection.ChangeStatsCalculator) As String
 
-            Dim sSummaryXMLPath As String = GCD.GCDProject.ProjectManager.OutputManager.GetGCDSummaryXMLPath(Name, m_dAnalysisFolder.FullName)
-            theChangeStats.ExportSummary(GCD.GCDProject.ProjectManager.ExcelTemplatesFolder.FullName, GISDataStructures.GetLinearUnitsAsString(AnalysisNewDEM.LinearUnits), sSummaryXMLPath)
+            Dim sSummaryXMLPath As String = GCDProject.ProjectManagerBase.OutputManager.GetGCDSummaryXMLPath(Name, m_dAnalysisFolder.FullName)
+            theChangeStats.ExportSummary(GCDProject.ProjectManagerBase.ExcelTemplatesFolder.FullName, AnalysisNewDEM.LinearUnits, sSummaryXMLPath)
             Return sSummaryXMLPath
 
         End Function
 
-        Protected Sub GenerateHistogramGraphicFiles(histStats As DoDResultHistograms, ByVal eLinearUnit As GISCode.NumberFormatting.LinearUnits)
+        Protected Sub GenerateHistogramGraphicFiles(histStats As DoDResultHistograms, ByVal eLinearUnit As naru.math.LinearUnitClass)
 
             'Save Histograms & Create Figs subfolder - Hensleigh 4/24/2014
-            Dim sFiguresFolder As String = GCD.GCDProject.ProjectManager.OutputManager.GetChangeDetectionFiguresFolder(m_dAnalysisFolder.FullName, True)
-            Dim zedGraph As New ZedGraph.ZedGraphControl
+            Dim sFiguresFolder As String = GCDProject.ProjectManagerBase.OutputManager.GetChangeDetectionFiguresFolder(m_dAnalysisFolder.FullName, True)
+            Dim zedGraph As New System.Windows.Forms.DataVisualization.Charting.Chart
             Dim areaHistPath As String = IO.Path.Combine(sFiguresFolder, "Histogram_Area" & ".png")
             Dim volhistPath As String = IO.Path.Combine(sFiguresFolder, "Histogram_Volume" & ".png")
-            Dim ExportHistogramViewer As New GCD.DoDHistogramViewerClass(zedGraph, NumberFormatting.GetUnitsAsString(eLinearUnit))
-            ExportHistogramViewer.ExportCharts(histStats, New LinearUnitClass(eLinearUnit), areaHistPath, volhistPath, 600, 600)
+            Dim ExportHistogramViewer As New Visualization.DoDHistogramViewerClass(zedGraph, eLinearUnit)
+            ExportHistogramViewer.ExportCharts(histStats, eLinearUnit, areaHistPath, volhistPath, 600, 600)
 
         End Sub
 

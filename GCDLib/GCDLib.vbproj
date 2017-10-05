@@ -116,11 +116,6 @@
     <Compile Include="Core\GCDProject\ProjectDS.vb">
       <DependentUpon>ProjectDS.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Core\GCDProject\ProjectDS1.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ProjectDS.xsd</DependentUpon>
-    </Compile>
     <Compile Include="Core\GCDProject\ProjectManager.vb" />
     <Compile Include="Core\GCDProject\ProjectManagerBase.vb" />
     <Compile Include="Core\GCDProject\ProjectManagerUI.vb" />
