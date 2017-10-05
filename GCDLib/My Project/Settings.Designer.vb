@@ -65,6 +65,42 @@ Namespace My
                 Me("AddOutputLayersToMap") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property LastUsedProjectFolder() As String
+            Get
+                Return CType(Me("LastUsedProjectFolder"),String)
+            End Get
+            Set
+                Me("LastUsedProjectFolder") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("300")>  _
+        Public Property ChartHeight() As Integer
+            Get
+                Return CType(Me("ChartHeight"),Integer)
+            End Get
+            Set
+                Me("ChartHeight") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("300")>  _
+        Public Property ChartWidth() As Integer
+            Get
+                Return CType(Me("ChartWidth"),Integer)
+            End Get
+            Set
+                Me("ChartWidth") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

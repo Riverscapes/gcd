@@ -1,4 +1,5 @@
 ﻿Imports System.Xml
+Imports GCD.GCDLib.Core.External.ExternalLibs
 
 Namespace Core.ChangeDetection
 
@@ -450,7 +451,7 @@ Namespace Core.ChangeDetection
 
 #End Region
 
-        Public Function GetSummaryStatsAsHTML(ByVal sFormat As String, ByVal eLinearUnit As GISCode.NumberFormatting.LinearUnits) As String
+        Public Function GetSummaryStatsAsHTML(ByVal sFormat As String, ByVal eLinearUnit As naru.math.LinearUnitClass) As String
 
             Dim sHTML As New Text.StringBuilder
 
@@ -472,28 +473,28 @@ Namespace Core.ChangeDetection
             'AREAL
             sHTML.Append("<tr><td class=""DoDRowGroupHeader"" colspan=""6"">AREAL:</td></tr>").AppendLine()
             sHTML.Append("<tr>").AppendLine()
-            sHTML.Append("<td>Total Area of Erosion (" & GISCode.NumberFormatting.GetUnitsAsString(eLinearUnit) & "&#178)</td>").AppendLine()
+            sHTML.Append("<td>Total Area of Erosion (" & eLinearUnit.GetUnitsAsString & "&#178)</td>").AppendLine()
             sHTML.Append("<td>" & Me.AreaErosion_Raw.ToString(sFormat) & "</td>").AppendLine()
             sHTML.Append("<td align = right>" & Me.AreaErosion_Thresholded.ToString(sFormat) & "</td>").AppendLine()
             EmptyCol(sHTML, 3)
             sHTML.Append("</tr>").AppendLine()
 
             sHTML.Append("<tr>").AppendLine()
-            sHTML.Append("<td>Total Area of Deposition (" & GISCode.NumberFormatting.GetUnitsAsString(eLinearUnit) & "&#178)</td>").AppendLine()
+            sHTML.Append("<td>Total Area of Deposition (" & eLinearUnit.GetUnitsAsString & "&#178)</td>").AppendLine()
             sHTML.Append("<td>" & Me.AreaDeposition_Raw.ToString(sFormat) & "</td>").AppendLine()
             sHTML.Append("<td align = right>" & Me.AreaDeposition_Thresholded.ToString(sFormat) & "</td>").AppendLine()
             EmptyCol(sHTML, 3)
             sHTML.Append("</tr>").AppendLine()
 
             sHTML.Append("<tr>").AppendLine()
-            sHTML.Append("<td>Total Area of Detectable Change (" & GISCode.NumberFormatting.GetUnitsAsString(eLinearUnit) & "&#178)</td>").AppendLine()
+            sHTML.Append("<td>Total Area of Detectable Change (" & eLinearUnit.GetUnitsAsString & "&#178)</td>").AppendLine()
             sHTML.Append("<td>NA</td>").AppendLine()
             sHTML.Append("<td align = right>" & Me.AreaDetectableChange_Thresholded.ToString(sFormat) & "</td>").AppendLine()
             EmptyCol(sHTML, 3)
             sHTML.Append("</tr>").AppendLine()
 
             sHTML.Append("<tr>").AppendLine()
-            sHTML.Append("<td>Total Area of Interest (" & GISCode.NumberFormatting.GetUnitsAsString(eLinearUnit) & "&#178)</td>").AppendLine()
+            sHTML.Append("<td>Total Area of Interest (" & eLinearUnit.GetUnitsAsString & "&#178)</td>").AppendLine()
             sHTML.Append("<td>" & Me.AreaOfInterest_Raw.ToString(sFormat) & "</td>").AppendLine()
             sHTML.Append("<td align = right>NA</td>").AppendLine()
             EmptyCol(sHTML, 3)
@@ -510,7 +511,7 @@ Namespace Core.ChangeDetection
             sHTML.Append("<tr><td class=""DoDRowGroupHeader"" colspan=""6"">VOLUMETRIC:</td></tr>").AppendLine()
 
             sHTML.Append("<tr>").AppendLine()
-            sHTML.Append("<td>Total Volume of Erosion (" & GISCode.NumberFormatting.GetUnitsAsString(eLinearUnit) & "&#179)</td>").AppendLine()
+            sHTML.Append("<td>Total Volume of Erosion (" & eLinearUnit.GetUnitsAsString & "&#179)</td>").AppendLine()
             sHTML.Append("<td>" & Me.VolumeErosion_Raw.ToString(sFormat) & "</td>").AppendLine()
             sHTML.Append("<td align = right>" & Me.VolumeErosion_Thresholded.ToString(sFormat) & "</td>").AppendLine()
             sHTML.Append("<td>&#177</td>").AppendLine()
@@ -519,7 +520,7 @@ Namespace Core.ChangeDetection
             sHTML.Append("</tr>").AppendLine()
 
             sHTML.Append("<tr>").AppendLine()
-            sHTML.Append("<td>Total Volume of Deposition (" & GISCode.NumberFormatting.GetUnitsAsString(eLinearUnit) & "&#179)</td>").AppendLine()
+            sHTML.Append("<td>Total Volume of Deposition (" & eLinearUnit.GetUnitsAsString & "&#179)</td>").AppendLine()
             sHTML.Append("<td>" & Me.VolumeDeposition_Raw.ToString(sFormat) & "</td>").AppendLine()
             sHTML.Append("<td align = right>" & Me.VolumeDeposition_Thresholded.ToString(sFormat) & "</td>").AppendLine()
             sHTML.Append("<td>&#177</td>").AppendLine()
@@ -528,7 +529,7 @@ Namespace Core.ChangeDetection
             sHTML.Append("</tr>").AppendLine()
 
             sHTML.Append("<tr>").AppendLine()
-            sHTML.Append("<td>Total Volume of Difference (" & GISCode.NumberFormatting.GetUnitsAsString(eLinearUnit) & "&#179)</td>").AppendLine()
+            sHTML.Append("<td>Total Volume of Difference (" & eLinearUnit.GetUnitsAsString & "&#179)</td>").AppendLine()
             sHTML.Append("<td>" & Me.VolumeOfDifference_Raw.ToString(sFormat) & "</td>").AppendLine()
             sHTML.Append("<td align = right>" & Me.VolumeOfDifference_Thresholded.ToString(sFormat) & "</td>").AppendLine()
             sHTML.Append("<td>&#177</td>").AppendLine()
@@ -537,7 +538,7 @@ Namespace Core.ChangeDetection
             sHTML.Append("</tr>").AppendLine()
 
             sHTML.Append("<tr>").AppendLine()
-            sHTML.Append("<td>Total Net Volume of Difference (" & GISCode.NumberFormatting.GetUnitsAsString(eLinearUnit) & "&#179)</td>").AppendLine()
+            sHTML.Append("<td>Total Net Volume of Difference (" & eLinearUnit.GetUnitsAsString & "&#179)</td>").AppendLine()
             sHTML.Append("<td>" & Me.NetVolumeOfDifference_Raw.ToString(sFormat) & "</td>").AppendLine()
             sHTML.Append("<td align = right>" & Me.NetVolumeOfDifference_Thresholded.ToString(sFormat) & "</td>").AppendLine()
             sHTML.Append("<td>&#177</td>").AppendLine()
@@ -553,7 +554,7 @@ Namespace Core.ChangeDetection
             sHTML.Append("</tr>").AppendLine()
 
             sHTML.Append("<tr>").AppendLine()
-            sHTML.Append("<td>Average Depth of Erosion (" & GISCode.NumberFormatting.GetUnitsAsString(eLinearUnit) & ")</td>").AppendLine()
+            sHTML.Append("<td>Average Depth of Erosion (" & eLinearUnit.GetUnitsAsString & ")</td>").AppendLine()
             sHTML.Append("<td>" & Me.AverageDepthErosion_Raw.ToString(sFormat) & "</td>").AppendLine()
             sHTML.Append("<td align = right>" & Me.AverageDepthErosion_Raw.ToString(sFormat) & "</td>").AppendLine()
             sHTML.Append("<td>&#177</td>").AppendLine()
@@ -562,7 +563,7 @@ Namespace Core.ChangeDetection
             sHTML.Append("</tr>").AppendLine()
 
             sHTML.Append("<tr>").AppendLine()
-            sHTML.Append("<td>Average Depth of Deposition (" & GISCode.NumberFormatting.GetUnitsAsString(eLinearUnit) & ")</td>").AppendLine()
+            sHTML.Append("<td>Average Depth of Deposition (" & eLinearUnit.GetUnitsAsString & ")</td>").AppendLine()
             sHTML.Append("<td>" & Me.AverageDepthDeposition_Raw.ToString(sFormat) & "</td>").AppendLine()
             sHTML.Append("<td align = right>" & Me.AverageDepthDeposition_Raw.ToString(sFormat) & "</td>").AppendLine()
             sHTML.Append("<td>&#177</td>").AppendLine()
@@ -571,7 +572,7 @@ Namespace Core.ChangeDetection
             sHTML.Append("</tr>").AppendLine()
 
             sHTML.Append("<tr>").AppendLine()
-            sHTML.Append("<td>Average Total Thickness Of Difference (" & GISCode.NumberFormatting.GetUnitsAsString(eLinearUnit) & ") for Area of Interest</td>").AppendLine()
+            sHTML.Append("<td>Average Total Thickness Of Difference (" & eLinearUnit.GetUnitsAsString & ") for Area of Interest</td>").AppendLine()
             sHTML.Append("<td>" & Me.AverageThicknessOfDifferenceAOI_Raw.ToString(sFormat) & "</td>").AppendLine()
             sHTML.Append("<td align = right>" & Me.AverageThicknessOfDifferenceAOI_Raw.ToString(sFormat) & "</td>").AppendLine()
             sHTML.Append("<td>&#177</td>").AppendLine()
@@ -580,7 +581,7 @@ Namespace Core.ChangeDetection
             sHTML.Append("</tr>").AppendLine()
 
             sHTML.Append("<tr>").AppendLine()
-            sHTML.Append("<td>Average Net Thickness Of Difference (" & GISCode.NumberFormatting.GetUnitsAsString(eLinearUnit) & ") for Area of Interest</td>").AppendLine()
+            sHTML.Append("<td>Average Net Thickness Of Difference (" & eLinearUnit.GetUnitsAsString & ") for Area of Interest</td>").AppendLine()
             sHTML.Append("<td>" & Me.AverageThicknessOfDifferenceAOI_Raw.ToString(sFormat) & "</td>").AppendLine()
             sHTML.Append("<td align = right>" & Me.AverageThicknessOfDifferenceAOI_Raw.ToString(sFormat) & "</td>").AppendLine()
             sHTML.Append("<td>&#177</td>").AppendLine()
@@ -589,7 +590,7 @@ Namespace Core.ChangeDetection
             sHTML.Append("</tr>").AppendLine()
 
             sHTML.Append("<tr>").AppendLine()
-            sHTML.Append("<td>Average Total Thickness Of Difference (" & GISCode.NumberFormatting.GetUnitsAsString(eLinearUnit) & ") for Area with Detectable Change</td>").AppendLine()
+            sHTML.Append("<td>Average Total Thickness Of Difference (" & eLinearUnit.GetUnitsAsString & ") for Area with Detectable Change</td>").AppendLine()
             sHTML.Append("<td>NA</td>").AppendLine()
             sHTML.Append("<td align = right>" & Me.AverageThicknessOfDifferenceADC_Thresholded.ToString(sFormat) & "</td>").AppendLine()
             sHTML.Append("<td>&#177</td>").AppendLine()
@@ -598,7 +599,7 @@ Namespace Core.ChangeDetection
             sHTML.Append("</tr>").AppendLine()
 
             sHTML.Append("<tr>").AppendLine()
-            sHTML.Append("<td>Average Net Thickness Of Difference (" & GISCode.NumberFormatting.GetUnitsAsString(eLinearUnit) & ") for Area with Detectable Change</td>").AppendLine()
+            sHTML.Append("<td>Average Net Thickness Of Difference (" & eLinearUnit.GetUnitsAsString & ") for Area with Detectable Change</td>").AppendLine()
             sHTML.Append("<td>NA</td>").AppendLine()
             sHTML.Append("<td align = right>" & Me.AverageNetThicknessOfDifferenceADC_Thresholded.ToString(sFormat) & "</td>").AppendLine()
             sHTML.Append("<td>&#177</td>").AppendLine()
@@ -646,7 +647,7 @@ Namespace Core.ChangeDetection
             Return finishedHTML_Table
         End Function
 
-        Public Function GetSummaryStatsAsJSON(ByVal sFormat As String, ByVal eLinearUnit As GISCode.NumberFormatting.LinearUnits) As String()()
+        Public Function GetSummaryStatsAsJSON(ByVal sFormat As String, ByVal eLinearUnit As naru.math.LinearUnitClass) As String()()
 
 
             Dim jsonDoDTable As String()() = New String(23)() {}
@@ -654,20 +655,20 @@ Namespace Core.ChangeDetection
             'AREAL
             jsonDoDTable(0) = New String(0) {"AREAL:"}
 
-            jsonDoDTable(1) = New String(2) {"Total Area of Erosion (" & GISCode.NumberFormatting.GetUnitsAsString(eLinearUnit) & "&#178)",
+            jsonDoDTable(1) = New String(2) {"Total Area of Erosion (" & eLinearUnit.GetUnitsAsString & "&#178)",
                                              Me.AreaErosion_Raw.ToString(sFormat),
                                              Me.AreaErosion_Thresholded.ToString(sFormat)}
 
-            jsonDoDTable(2) = New String(2) {"Total Area of Deposition (" & GISCode.NumberFormatting.GetUnitsAsString(eLinearUnit) & "&#178)",
+            jsonDoDTable(2) = New String(2) {"Total Area of Deposition (" & eLinearUnit.GetUnitsAsString & "&#178)",
                                              Me.AreaDeposition_Raw.ToString(sFormat),
                                              Me.AreaDeposition_Thresholded.ToString(sFormat)}
 
-            jsonDoDTable(3) = New String(2) {"Total Area of Detectable Change (" & GISCode.NumberFormatting.GetUnitsAsString(eLinearUnit) & "&#178)",
+            jsonDoDTable(3) = New String(2) {"Total Area of Detectable Change (" & eLinearUnit.GetUnitsAsString & "&#178)",
                                              "NA",
                                              Me.AreaDetectableChange_Thresholded.ToString(sFormat)}
 
 
-            jsonDoDTable(4) = New String(2) {"Total Area of Interest (" & GISCode.NumberFormatting.GetUnitsAsString(eLinearUnit) & "&#178)",
+            jsonDoDTable(4) = New String(2) {"Total Area of Interest (" & eLinearUnit.GetUnitsAsString & "&#178)",
                                          Me.AreaOfInterest_Raw.ToString(sFormat),
                                          "NA"}
 
@@ -678,35 +679,35 @@ Namespace Core.ChangeDetection
             'VOLUMETRIC
             jsonDoDTable(6) = New String(0) {"VOLUMETRIC:"}
 
-            jsonDoDTable(7) = New String(5) {"Total Volume of Erosion (" & GISCode.NumberFormatting.GetUnitsAsString(eLinearUnit) & "&#179)",
+            jsonDoDTable(7) = New String(5) {"Total Volume of Erosion (" & eLinearUnit.GetUnitsAsString & "&#179)",
                                              Me.VolumeErosion_Raw.ToString(sFormat),
                                              Me.VolumeErosion_Thresholded.ToString(sFormat),
                                              "&#177",
                                              Me.VolumeErosion_Error.ToString(sFormat),
                                              "Percent Error"}
 
-            jsonDoDTable(8) = New String(5) {"Total Volume of Deposition (" & GISCode.NumberFormatting.GetUnitsAsString(eLinearUnit) & "&#179)",
+            jsonDoDTable(8) = New String(5) {"Total Volume of Deposition (" & eLinearUnit.GetUnitsAsString & "&#179)",
                                              Me.VolumeDeposition_Raw.ToString(sFormat),
                                              Me.VolumeDeposition_Thresholded.ToString(sFormat),
                                              "&#177",
                                              Me.VolumeDeposition_Error.ToString(sFormat),
                                              "Percent Error"}
 
-            jsonDoDTable(9) = New String(5) {"Total Volume of Difference (" & GISCode.NumberFormatting.GetUnitsAsString(eLinearUnit) & "&#179)",
+            jsonDoDTable(9) = New String(5) {"Total Volume of Difference (" & eLinearUnit.GetUnitsAsString & "&#179)",
                                              Me.VolumeOfDifference_Raw.ToString(sFormat),
                                              Me.VolumeOfDifference_Thresholded.ToString(sFormat),
                                              "&#177",
                                              Me.VolumeOfDifference_Error.ToString(sFormat),
                                              "Percent Error"}
 
-            jsonDoDTable(10) = New String(5) {"Total Net Volume of Difference (" & GISCode.NumberFormatting.GetUnitsAsString(eLinearUnit) & "&#179)",
+            jsonDoDTable(10) = New String(5) {"Total Net Volume of Difference (" & eLinearUnit.GetUnitsAsString & "&#179)",
                                               Me.NetVolumeOfDifference_Raw.ToString(sFormat),
                                               Me.NetVolumeOfDifference_Thresholded.ToString(sFormat),
                                               "&#177",
                                               Me.NetVolumeOfDifference_Error.ToString(sFormat),
                                               "Percent Error"}
 
-            jsonDoDTable(11) = New String(5) {"Total Net Volume of Difference (" & GISCode.NumberFormatting.GetUnitsAsString(eLinearUnit) & "&#179)",
+            jsonDoDTable(11) = New String(5) {"Total Net Volume of Difference (" & eLinearUnit.GetUnitsAsString & "&#179)",
                                               Me.NetVolumeOfDifference_Raw.ToString(sFormat),
                                               Me.NetVolumeOfDifference_Thresholded.ToString(sFormat),
                                               "&#177",
@@ -721,42 +722,42 @@ Namespace Core.ChangeDetection
                                               "&#177 Error Thickness",
                                               "&#037 Error"}
 
-            jsonDoDTable(13) = New String(5) {"Average Depth of Erosion (" & GISCode.NumberFormatting.GetUnitsAsString(eLinearUnit) & ")",
+            jsonDoDTable(13) = New String(5) {"Average Depth of Erosion (" & eLinearUnit.GetUnitsAsString & ")",
                                               Me.AverageDepthErosion_Raw.ToString(sFormat),
                                               Me.AverageDepthErosion_Raw.ToString(sFormat),
                                               "&#177",
                                               Me.AverageDepthErosion_Error.ToString(sFormat),
                                               "Percent Error"}
 
-            jsonDoDTable(14) = New String(5) {"Average Depth of Deposition (" & GISCode.NumberFormatting.GetUnitsAsString(eLinearUnit) & ")",
+            jsonDoDTable(14) = New String(5) {"Average Depth of Deposition (" & eLinearUnit.GetUnitsAsString & ")",
                                               Me.AverageDepthDeposition_Raw.ToString(sFormat),
                                               Me.AverageDepthDeposition_Raw.ToString(sFormat),
                                               "&#177",
                                               Me.AverageDepthDeposition_Error.ToString(sFormat),
                                               "Percent Error"}
 
-            jsonDoDTable(15) = New String(5) {"Average Total Thickness Of Difference (" & GISCode.NumberFormatting.GetUnitsAsString(eLinearUnit) & ") for Area of Interest",
+            jsonDoDTable(15) = New String(5) {"Average Total Thickness Of Difference (" & eLinearUnit.GetUnitsAsString & ") for Area of Interest",
                                               Me.AverageThicknessOfDifferenceAOI_Raw.ToString(sFormat),
                                               Me.AverageThicknessOfDifferenceAOI_Raw.ToString(sFormat),
                                               "&#177",
                                               Me.AverageThicknessOfDifferenceAOI_Error.ToString(sFormat),
                                               "Percent Error"}
 
-            jsonDoDTable(16) = New String(5) {"Average Net Thickness Of Difference (" & GISCode.NumberFormatting.GetUnitsAsString(eLinearUnit) & ") for Area of Interest",
+            jsonDoDTable(16) = New String(5) {"Average Net Thickness Of Difference (" & eLinearUnit.GetUnitsAsString & ") for Area of Interest",
                                               Me.AverageThicknessOfDifferenceAOI_Raw.ToString(sFormat),
                                               Me.AverageThicknessOfDifferenceAOI_Raw.ToString(sFormat),
                                               "&#177",
                                               Me.AverageThicknessOfDifferenceAOI_Error.ToString(sFormat),
                                               "Percent Error"}
 
-            jsonDoDTable(17) = New String(5) {"Average Total Thickness Of Difference (" & GISCode.NumberFormatting.GetUnitsAsString(eLinearUnit) & ") for Area with Detectable Change",
+            jsonDoDTable(17) = New String(5) {"Average Total Thickness Of Difference (" & eLinearUnit.GetUnitsAsString & ") for Area with Detectable Change",
                                               "NA",
                                               Me.AverageThicknessOfDifferenceADC_Thresholded.ToString(sFormat),
                                               "&#177",
                                               Me.AverageThicknessOfDifferenceADC_Error.ToString(sFormat),
                                               "Percent Error"}
 
-            jsonDoDTable(18) = New String(5) {"Average Net Thickness Of Difference (" & GISCode.NumberFormatting.GetUnitsAsString(eLinearUnit) & ") for Area with Detectable Change",
+            jsonDoDTable(18) = New String(5) {"Average Net Thickness Of Difference (" & eLinearUnit.GetUnitsAsString & ") for Area with Detectable Change",
                                               "NA",
                                               Me.AverageNetThicknessOfDifferenceADC_Thresholded.ToString(sFormat),
                                               "&#177",

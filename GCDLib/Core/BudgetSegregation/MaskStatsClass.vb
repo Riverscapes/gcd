@@ -3,29 +3,29 @@
 Namespace Core.BudgetSegregation
 
     Public Class MaskStatsClass
-        Private _MaskStats As New Dictionary(Of String, ChangeDetection.StatsDataClass)
-        Private _TotalStats As New ChangeDetection.StatsDataClass
+        Private _MaskStats As New Dictionary(Of String, ChangeDetection.ChangeStats)
+        Private _TotalStats As New ChangeDetection.ChangeStats
 
-        Public ReadOnly Property TotalStats As ChangeDetection.StatsDataClass
+        Public ReadOnly Property TotalStats As ChangeDetection.ChangeStats
             Get
                 Return _TotalStats
             End Get
         End Property
 
-        Public ReadOnly Property MaskStats As Dictionary(Of String, ChangeDetection.StatsDataClass)
+        Public ReadOnly Property MaskStats As Dictionary(Of String, ChangeDetection.ChangeStats)
             Get
                 Return _MaskStats
             End Get
         End Property
 
-        Public Sub ExportSummaries(sExcelTemplatefolder As String, ByVal MaskOutputs As Dictionary(Of String, BudgetSegregationOutputsClass.MaskOutputClass), sDisplayUnits As String)
+        Public Sub ExportSummaries(sExcelTemplatefolder As String, ByVal MaskOutputs As Dictionary(Of String, BudgetSegregationOutputsClass.MaskOutputClass), eUnits As naru.math.LinearUnitClass)
 
             For Each kvp As KeyValuePair(Of String, BudgetSegregationOutputsClass.MaskOutputClass) In MaskOutputs
                 Dim MaskName As String = kvp.Key
                 Dim MaskOutput As BudgetSegregationOutputsClass.MaskOutputClass = kvp.Value
                 Dim SummaryPath As String = MaskOutput.SummaryPath
-                Dim MaskStat As ChangeDetection.StatsDataClass = _MaskStats(MaskName)
-                ExportMaskStat(sExcelTemplatefolder, MaskStat, SummaryPath, sDisplayUnits)
+                Dim MaskStat As ChangeDetection.ChangeStats = _MaskStats(MaskName)
+                ExportMaskStat(sExcelTemplatefolder, MaskStat, SummaryPath, eUnits)
             Next
 
         End Sub
@@ -66,7 +66,7 @@ Namespace Core.BudgetSegregation
                 objReader = New System.IO.StreamReader(TemplateFile)
             Catch ex As System.IO.IOException
                 'need to limit the length of the file to display properly
-                Dim TrimmedFilename As String = GISCode.FileSystem.TrimFilename(TemplateFile, 80)
+                Dim TrimmedFilename As String = FileSystem.TrimFilename(TemplateFile, 80)
                 ex.Data("UIMessage") = "Could not access the file '" & TrimmedFilename & "' because it is being used by another program."
                 Throw ex
             End Try
@@ -83,7 +83,7 @@ Namespace Core.BudgetSegregation
             For Each kvp As KeyValuePair(Of String, BudgetSegregationOutputsClass.MaskOutputClass) In MaskOutputs
                 Dim MaskName As String = kvp.Key
                 Dim MaskOutput As BudgetSegregationOutputsClass.MaskOutputClass = kvp.Value
-                Dim MaskStat As ChangeDetection.StatsDataClass = _MaskStats(MaskName)
+                Dim MaskStat As ChangeDetection.ChangeStats = _MaskStats(MaskName)
 
                 Dim nIndex As Integer = OutputText.ToString.IndexOf("[CLASS_NAME]")
                 OutputText.Replace("[CLASS_NAME]", MaskName, nIndex, "[CLASS_NAME]".Length)
@@ -173,10 +173,10 @@ Namespace Core.BudgetSegregation
             Return sText
         End Function
 
-        Private Sub ExportMaskStat(sExcelTemplateFolder As String, ByVal StatsData As ChangeDetection.StatsDataClass, ByVal SummaryPath As String, sDisplayUnits As String)
+        Private Sub ExportMaskStat(sExcelTemplateFolder As String, ByVal StatsData As ChangeDetection.ChangeStats, ByVal SummaryPath As String, eUnits As naru.math.LinearUnitClass)
 
             ' PGB 15 Jan 2014. Each class now gets its own copy of the new GCD SummaryXML file.
-            StatsData.ExportSummary(sDisplayUnits, sDisplayUnits, SummaryPath)
+            StatsData.ExportSummary(sDisplayUnits, eUnits, SummaryPath)
         End Sub
 
         Private Sub WriteCell(ByRef Template As StringBuilder, ByVal tag As String, ByVal value As Double, Optional ByVal format As String = "")

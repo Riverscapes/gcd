@@ -11,27 +11,27 @@ Namespace Core.Visualization
             Vertical
         End Enum
 
-        Private _ZedGraph As Chart
+        Private m_chtControl As Chart
         'Private _ThresholdedHist As Dictionary(Of Double, Double)
         'Private _RawHist As Dictionary(Of Double, Double)
         Private m_sUnits As String
 
-        Public Sub New(ByRef Zedgraph As Chart, ByVal sUnits As String)
-            _ZedGraph = Zedgraph
+        Public Sub New(ByRef chtControl As Chart, ByVal sUnits As String)
+            m_chtControl = chtControl
             m_sUnits = sUnits
         End Sub
 
-        Public Sub Refresh(fErosion As Double, fDeposition As Double, eUnits As NumberFormatting.LinearUnits, eType As BarTypes, bAbsolute As Boolean)
+        Public Sub Refresh(fErosion As Double, fDeposition As Double, eUnits As naru.math.LinearUnitClass, eType As BarTypes, bAbsolute As Boolean)
 
             Refresh(fErosion, fDeposition, 0, 0, 0, 0, eUnits, False, False, eType, bAbsolute)
         End Sub
 
-        Public Sub Refresh(fErosion As Double, fDeposition As Double, fNet As Double, fErosionError As Double, fDepositionError As Double, fNetError As Double, eUnits As NumberFormatting.LinearUnits, eType As BarTypes, bAbsolute As Boolean)
+        Public Sub Refresh(fErosion As Double, fDeposition As Double, fNet As Double, fErosionError As Double, fDepositionError As Double, fNetError As Double, eUnits As naru.math.LinearUnitClass, eType As BarTypes, bAbsolute As Boolean)
 
             Refresh(fErosion, fDeposition, fNet, fErosionError, fDepositionError, fNetError, eUnits, True, True, eType, bAbsolute)
         End Sub
 
-        Private Sub Refresh(fErosion As Double, fDeposition As Double, fNet As Double, fErosionError As Double, fDepositionError As Double, fNetError As Double, eUnits As NumberFormatting.LinearUnits, bShowErrorBars As Boolean, bShowNet As Boolean, eType As BarTypes, bAbsolute As Boolean)
+        Private Sub Refresh(fErosion As Double, fDeposition As Double, fNet As Double, fErosionError As Double, fDepositionError As Double, fNetError As Double, eUnits As naru.math.LinearUnitClass, bShowErrorBars As Boolean, bShowNet As Boolean, eType As BarTypes, bAbsolute As Boolean)
 
             'If Not TypeOf _ZedGraph Is ZedGraph.ZedGraphControl Then
             '    Exit Sub
@@ -172,7 +172,7 @@ Namespace Core.Visualization
         End Sub
 
         Public Sub Save(sFilePath As String, nChartWidth As Integer, nChartHeight As Integer, nDPI As Integer)
-            _ZedGraph.SaveImage(sFilePath, ChartImageFormat.Png)
+            m_chtControl.SaveImage(sFilePath, ChartImageFormat.Png)
         End Sub
 
     End Class

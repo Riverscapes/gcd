@@ -7,547 +7,547 @@ Namespace UI.Project
 
     Public Class ucProjectExplorer
 
-    Private Const m_sGroupInputs As String = "Inputs"
-    Private Const m_sAssocSurfaces As String = "Associated Surfaces"
-    Private Const m_sErrorSurfaces As String = "Error Surfaces"
-    Private Const m_sBudgetSegs As String = "Budget Segregations"
-    Private Shared m_eSortBy As SortSurveyBy = SortSurveyBy.DEMSurveyID_Asc
+        Private Const m_sGroupInputs As String = "Inputs"
+        Private Const m_sAssocSurfaces As String = "Associated Surfaces"
+        Private Const m_sErrorSurfaces As String = "Error Surfaces"
+        Private Const m_sBudgetSegs As String = "Budget Segregations"
+        Private Shared m_eSortBy As SortSurveyBy = SortSurveyBy.DEMSurveyID_Asc
 
-    Public Enum GCDNodeTypes
-        Project
-        InputsGroup
-        SurveysGroup
-        DEMSurvey
-        AssociatedSurfaceGroup
-        AssociatedSurface
-        ErrorSurfaceGroup
-        ErrorSurface
-        AOIGroup
-        AOI
-        AnalysesGroup
-        ChangeDetectionGroup
-        ChangeDetectionDEMPair
-        DoD
-        BudgetSegregationGroup
-        BudgetSegregationMask
-        BudgetSegregation
-        ReservoirGroup
-        Reservoir
-    End Enum
+        Public Enum GCDNodeTypes
+            Project
+            InputsGroup
+            SurveysGroup
+            DEMSurvey
+            AssociatedSurfaceGroup
+            AssociatedSurface
+            ErrorSurfaceGroup
+            ErrorSurface
+            AOIGroup
+            AOI
+            AnalysesGroup
+            ChangeDetectionGroup
+            ChangeDetectionDEMPair
+            DoD
+            BudgetSegregationGroup
+            BudgetSegregationMask
+            BudgetSegregation
+            ReservoirGroup
+            Reservoir
+        End Enum
 
-    Public Enum SortSurveyBy
-        NameAsc
-        NameDsc
-        SurveyDateAsc
-        SurveyDateDsc
-        DEMSurveyID_Asc
-        DEMSurveyID_Dsc
-    End Enum
+        Public Enum SortSurveyBy
+            NameAsc
+            NameDsc
+            SurveyDateAsc
+            SurveyDateDsc
+            DEMSurveyID_Asc
+            DEMSurveyID_Dsc
+        End Enum
 
-    Private Sub ProjectExplorerUC_Load(sender As Object, e As System.EventArgs) Handles Me.Load
+        Private Sub ProjectExplorerUC_Load(sender As Object, e As System.EventArgs) Handles Me.Load
 
-        tTip.SetToolTip(btnAdd, "Add to the GCD Project.")
-        tTip.SetToolTip(btnProperties, "Edit the properties of the selected object.")
-        tTip.SetToolTip(btnDelete, "Delete the selected object from the GCD project.")
-        tTip.SetToolTip(btnAddToMap, "Add the selected item (and it's children) to the current ArcMap document.")
-        tTip.SetToolTip(btnCopy, "Create a new copy of the selected object.")
-        tTip.SetToolTip(btnHelp, "Get help of the GCD Project Explorer.")
+            tTip.SetToolTip(btnAdd, "Add to the GCD Project.")
+            tTip.SetToolTip(btnProperties, "Edit the properties of the selected object.")
+            tTip.SetToolTip(btnDelete, "Delete the selected object from the GCD project.")
+            tTip.SetToolTip(btnAddToMap, "Add the selected item (and it's children) to the current ArcMap document.")
+            tTip.SetToolTip(btnCopy, "Create a new copy of the selected object.")
+            tTip.SetToolTip(btnHelp, "Get help of the GCD Project Explorer.")
 
-        '#If DEBUG Then
-        cmdRefresh.Visible = True
-        '#End If
+            '#If DEBUG Then
+            cmdRefresh.Visible = True
+            '#End If
 
-        LoadTree()
-    End Sub
+            LoadTree()
+        End Sub
 
-    ''' <summary>
-    ''' 
-    ''' </summary>
-    ''' <param name="sSelectedNodeTag">If provided, the code will make this the selected node</param>
-    ''' <remarks>Grouping nodes are added to the tree with the enumeration above as their key. i.e. Project node has key "1".
-    ''' Items that have database IDs are added with the key as type_id. So DEM Survey with ID 4 would have key "3_4"</remarks>
-    Private Sub LoadTree(Optional sSelectedNodeTag As String = "", Optional eSortSurveyBy As SortSurveyBy = SortSurveyBy.DEMSurveyID_Asc)
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="sSelectedNodeTag">If provided, the code will make this the selected node</param>
+        ''' <remarks>Grouping nodes are added to the tree with the enumeration above as their key. i.e. Project node has key "1".
+        ''' Items that have database IDs are added with the key as type_id. So DEM Survey with ID 4 would have key "3_4"</remarks>
+        Private Sub LoadTree(Optional sSelectedNodeTag As String = "", Optional eSortSurveyBy As SortSurveyBy = SortSurveyBy.DEMSurveyID_Asc)
 
-        treProject.Nodes.Clear()
+            treProject.Nodes.Clear()
 
-        Dim ds As ProjectDS = GCD.GCDProject.ProjectManager.ds
-        If Not TypeOf ds Is ProjectDS Then
-            Exit Sub
-        End If
-
-        Dim dr As ProjectDS.ProjectRow = GCD.GCDProject.ProjectManager.CurrentProject
-        If TypeOf dr Is ProjectDS.ProjectRow Then
-            LoadTree(treProject, dr, False, sSelectedNodeTag, eSortSurveyBy)
-        End If
-
-        UpdateButtons()
-
-    End Sub
-
-    Public Shared Sub LoadTree(ByRef tre As TreeView,
-                               rProject As ProjectDS.ProjectRow,
-                               bCheckboxes As Boolean,
-                               Optional sSelectedNodeTag As String = "",
-                               Optional eSortSurveyBy As SortSurveyBy = SortSurveyBy.DEMSurveyID_Asc)
-
-        Try
-
-
-            Dim nodProject As TreeNode = tre.Nodes.Add(GCDNodeTypes.Project.ToString, rProject.Name, GCDNodeTypes.Project, GCDNodeTypes.Project)
-            nodProject.Tag = GCDNodeTypes.Project.ToString
-            nodProject.SelectedImageIndex = nodProject.ImageIndex
-            If nodProject.Tag = sSelectedNodeTag Then tre.SelectedNode = nodProject
-
-            Dim nodInputs As TreeNode = nodProject.Nodes.Add(GCDNodeTypes.InputsGroup.ToString, m_sGroupInputs, GCDNodeTypes.InputsGroup)
-            nodInputs.Tag = GCDNodeTypes.InputsGroup.ToString
-            nodInputs.SelectedImageIndex = nodInputs.ImageIndex
-            If nodInputs.Tag = sSelectedNodeTag Then tre.SelectedNode = nodInputs
-
-            Dim nodSurveysGroup As TreeNode = nodInputs.Nodes.Add(GCDNodeTypes.SurveysGroup.ToString, "DEM Surveys", GCDNodeTypes.SurveysGroup)
-            nodSurveysGroup.Tag = GCDNodeTypes.SurveysGroup.ToString
-            nodSurveysGroup.SelectedImageIndex = nodSurveysGroup.ImageIndex
-            If nodSurveysGroup.Tag = sSelectedNodeTag Then tre.SelectedNode = nodSurveysGroup
-
-            'Lambda Expression way
-            Dim leSortBy As Func(Of ProjectDS.DEMSurveyRow, String, String) = Function(pKey, sField) pKey.Item(sField)
-            Dim sSortBy As String = eSortSurveyBy.ToString()
-            'For Each rSurveys As ProjectDS.DEMSurveyRow In rProject.GetDEMSurveyRows.OrderBy(leSortBy.Invoke(rSurveys, sSortBy))
-
-            'Store DEM Survey Rows in an Ienumerable then loop over
-            Dim sortedSurveys As System.Linq.IOrderedEnumerable(Of GCDAddIn.ProjectDS.DEMSurveyRow) = GetSortedSurveyRows(rProject, m_eSortBy)
-
-
-            ' DEM survyes
-            'For Each rSurveys As ProjectDS.DEMSurveyRow In rProject.GetDEMSurveyRows.OrderBy(Function(pKey As ProjectDS.DEMSurveyRow) pKey.Item(eSortSurveyBy.ToString))
-            If sortedSurveys Is Nothing Then
+            Dim ds As ProjectDS = GCDProject.ProjectManagerBase.ds
+            If Not TypeOf ds Is ProjectDS Then
                 Exit Sub
             End If
 
-            For Each rSurveys As ProjectDS.DEMSurveyRow In sortedSurveys
-                Dim nodSurvey As TreeNode = nodSurveysGroup.Nodes.Add(GCDNodeTypes.DEMSurvey.ToString & "_" & rSurveys.DEMSurveyID.ToString, rSurveys.Name, GCDNodeTypes.DEMSurvey)
-                nodSurvey.Tag = GCDNodeTypes.DEMSurvey.ToString & "_" & rSurveys.DEMSurveyID.ToString
-                nodSurvey.SelectedImageIndex = nodSurvey.ImageIndex
-                If nodSurvey.Tag = sSelectedNodeTag Then tre.SelectedNode = nodSurvey
-                Dim bExpandSurveyNode As Boolean = False
+            Dim dr As ProjectDS.ProjectRow = GCDProject.ProjectManagerBase.CurrentProject
+            If TypeOf dr Is ProjectDS.ProjectRow Then
+                LoadTree(treProject, dr, False, sSelectedNodeTag, eSortSurveyBy)
+            End If
 
-                ' Associated surfaces
-                Dim nodAssocGroup As TreeNode = nodSurvey.Nodes.Add(GCDNodeTypes.AssociatedSurfaceGroup.ToString, m_sAssocSurfaces, GCDNodeTypes.AssociatedSurfaceGroup)
-                nodAssocGroup.Tag = GCDNodeTypes.AssociatedSurfaceGroup.ToString
-                nodAssocGroup.SelectedImageIndex = nodAssocGroup.ImageIndex
-                If nodAssocGroup.Tag = sSelectedNodeTag Then tre.SelectedNode = nodAssocGroup
+            UpdateButtons()
 
-                For Each rAssoc As ProjectDS.AssociatedSurfaceRow In rSurveys.GetAssociatedSurfaceRows
-                    Dim nodAssoc As TreeNode = nodAssocGroup.Nodes.Add(GCDNodeTypes.AssociatedSurface.ToString & "_" & rAssoc.AssociatedSurfaceID.ToString, rAssoc.Name, GCDNodeTypes.AssociatedSurface)
-                    nodAssoc.Tag = GCDNodeTypes.AssociatedSurface.ToString & "_" & rAssoc.AssociatedSurfaceID.ToString
-                    nodAssoc.SelectedImageIndex = nodAssoc.ImageIndex
-                    If nodAssoc.Tag = sSelectedNodeTag Then tre.SelectedNode = nodAssoc
-                    bExpandSurveyNode = True
-                Next
+        End Sub
 
-                ' Error surfaces
-                Dim nodErrorGroup As TreeNode = nodSurvey.Nodes.Add(GCDNodeTypes.ErrorSurfaceGroup.ToString, m_sErrorSurfaces, GCDNodeTypes.ErrorSurfaceGroup)
-                nodErrorGroup.Tag = GCDNodeTypes.ErrorSurfaceGroup.ToString
-                nodErrorGroup.SelectedImageIndex = nodErrorGroup.ImageIndex
-                If nodErrorGroup.Tag = sSelectedNodeTag Then tre.SelectedNode = nodErrorGroup
+        Public Shared Sub LoadTree(ByRef tre As TreeView,
+                                   rProject As ProjectDS.ProjectRow,
+                                   bCheckboxes As Boolean,
+                                   Optional sSelectedNodeTag As String = "",
+                                   Optional eSortSurveyBy As SortSurveyBy = SortSurveyBy.DEMSurveyID_Asc)
 
-                For Each rError As ProjectDS.ErrorSurfaceRow In rSurveys.GetErrorSurfaceRows
-                    Dim nodError As TreeNode = nodErrorGroup.Nodes.Add(GCDNodeTypes.ErrorSurface.ToString & "_" & rError.ErrorSurfaceID.ToString, rError.Name, GCDNodeTypes.ErrorSurface)
-                    nodError.Tag = GCDNodeTypes.ErrorSurface.ToString & "_" & rError.ErrorSurfaceID.ToString
-                    nodError.SelectedImageIndex = nodError.ImageIndex
-                    If nodError.Tag = sSelectedNodeTag Then tre.SelectedNode = nodError
-                    bExpandSurveyNode = True
-                Next
+            Try
 
-                If bExpandSurveyNode Then nodSurvey.Expand()
-            Next
 
-            nodInputs.Expand()
-            nodSurveysGroup.Expand()
+                Dim nodProject As TreeNode = tre.Nodes.Add(GCDNodeTypes.Project.ToString, rProject.Name, GCDNodeTypes.Project, GCDNodeTypes.Project)
+                nodProject.Tag = GCDNodeTypes.Project.ToString
+                nodProject.SelectedImageIndex = nodProject.ImageIndex
+                If nodProject.Tag = sSelectedNodeTag Then tre.SelectedNode = nodProject
 
-            Dim nodAOIGroup As TreeNode = nodInputs.Nodes.Add(GCDNodeTypes.AOIGroup.ToString, "Areas of Interest", GCDNodeTypes.AOIGroup)
-            nodAOIGroup.Tag = GCDNodeTypes.AOIGroup.ToString
-            nodAOIGroup.SelectedImageIndex = nodAOIGroup.ImageIndex
-            If nodAOIGroup.Tag = sSelectedNodeTag Then tre.SelectedNode = nodAOIGroup
-            nodAOIGroup.Expand()
+                Dim nodInputs As TreeNode = nodProject.Nodes.Add(GCDNodeTypes.InputsGroup.ToString, m_sGroupInputs, GCDNodeTypes.InputsGroup)
+                nodInputs.Tag = GCDNodeTypes.InputsGroup.ToString
+                nodInputs.SelectedImageIndex = nodInputs.ImageIndex
+                If nodInputs.Tag = sSelectedNodeTag Then tre.SelectedNode = nodInputs
 
-            Dim bAOI As Boolean = False
-            For Each rAOI As ProjectDS.AOIsRow In rProject.GetAOIsRows
-                Dim nodAOI As TreeNode = nodAOIGroup.Nodes.Add(GCDNodeTypes.AOI.ToString, rAOI.Name, GCDNodeTypes.AOI)
-                nodAOI.Tag = GCDNodeTypes.AOI.ToString & "_" & rAOI.AOIID.ToString
-                nodAOI.SelectedImageIndex = nodAOI.ImageIndex
-                If nodAOI.Tag = sSelectedNodeTag Then tre.SelectedNode = nodAOI
-                bAOI = True
-            Next
-            nodAOIGroup.Expand()
+                Dim nodSurveysGroup As TreeNode = nodInputs.Nodes.Add(GCDNodeTypes.SurveysGroup.ToString, "DEM Surveys", GCDNodeTypes.SurveysGroup)
+                nodSurveysGroup.Tag = GCDNodeTypes.SurveysGroup.ToString
+                nodSurveysGroup.SelectedImageIndex = nodSurveysGroup.ImageIndex
+                If nodSurveysGroup.Tag = sSelectedNodeTag Then tre.SelectedNode = nodSurveysGroup
 
-            Dim AnalNode As TreeNode = nodProject.Nodes.Add(GCDNodeTypes.AnalysesGroup.ToString, "Analyses", GCDNodeTypes.AnalysesGroup)
-            AnalNode.Tag = GCDNodeTypes.AnalysesGroup.ToString
-            AnalNode.SelectedImageIndex = AnalNode.ImageIndex
-            If AnalNode.Tag = sSelectedNodeTag Then tre.SelectedNode = AnalNode
+                'Lambda Expression way
+                Dim leSortBy As Func(Of ProjectDS.DEMSurveyRow, String, String) = Function(pKey, sField) pKey.Item(sField)
+                Dim sSortBy As String = eSortSurveyBy.ToString()
+                'For Each rSurveys As ProjectDS.DEMSurveyRow In rProject.GetDEMSurveyRows.OrderBy(leSortBy.Invoke(rSurveys, sSortBy))
 
-            Dim CDNode As TreeNode = AnalNode.Nodes.Add(GCDNodeTypes.ChangeDetectionGroup.ToString, "Change Detection", GCDNodeTypes.ChangeDetectionGroup)
-            CDNode.Tag = GCDNodeTypes.ChangeDetectionGroup.ToString
-            CDNode.SelectedImageIndex = CDNode.ImageIndex
-            If CDNode.Tag = sSelectedNodeTag Then tre.SelectedNode = CDNode
-            Dim bExpandCDNode As Boolean = False
+                'Store DEM Survey Rows in an Ienumerable then loop over
+                Dim sortedSurveys As System.Linq.IOrderedEnumerable(Of ProjectDS.DEMSurveyRow) = GetSortedSurveyRows(rProject, m_eSortBy)
 
-            Dim dDoD As New Dictionary(Of String, TreeNode)
-            For Each rDoD As ProjectDS.DoDsRow In rProject.GetDoDsRows
-                CDNode.Expand()
 
-                Dim sDEMPair As String = rDoD.NewSurveyName & " - " & rDoD.OldSurveyName
-                Dim theParent As TreeNode = Nothing
-                If dDoD.ContainsKey(sDEMPair) Then
-                    ' This pair of DEMs already exists in the tree
-                    theParent = dDoD(sDEMPair)
-                Else
-                    ' Create a new parent of DEM surveys for this DoD
-
-                    ' Find the two DEMs for this DEM and add their ID to the tag of the pair node.
-                    Dim rNewDEM As ProjectDS.DEMSurveyRow = Nothing
-                    Dim rOldDEM As ProjectDS.DEMSurveyRow = Nothing
-                    For Each rDEM As ProjectDS.DEMSurveyRow In GCD.GCDProject.ProjectManager.ds.DEMSurvey
-                        If String.Compare(rDEM.Name, rDoD.NewSurveyName, True) = 0 Then
-                            rNewDEM = rDEM
-                        ElseIf String.Compare(rDEM.Name = rDoD.OldSurveyName, True) = 0 Then
-                            rOldDEM = rDEM
-                        End If
-                    Next
-
-                    theParent = CDNode.Nodes.Add(sDEMPair, sDEMPair, GCDNodeTypes.ChangeDetectionDEMPair)
-                    theParent.SelectedImageIndex = theParent.ImageIndex
-                    theParent.Tag = GCDNodeTypes.ChangeDetectionDEMPair.ToString
-
-                    If TypeOf rNewDEM Is ProjectDS.DEMSurveyRow AndAlso TypeOf rOldDEM Is ProjectDS.DEMSurveyRow Then
-                        theParent.Tag &= "_" & rNewDEM.DEMSurveyID.ToString & "_" & rOldDEM.DEMSurveyID.ToString
-                    End If
-
-                    dDoD.Add(sDEMPair, theParent)
+                ' DEM survyes
+                'For Each rSurveys As ProjectDS.DEMSurveyRow In rProject.GetDEMSurveyRows.OrderBy(Function(pKey As ProjectDS.DEMSurveyRow) pKey.Item(eSortSurveyBy.ToString))
+                If sortedSurveys Is Nothing Then
+                    Exit Sub
                 End If
 
-                ' Now create the actual DoD node under the node for the pair of DEMs
-                Dim nodDoD As TreeNode = theParent.Nodes.Add(rDoD.Name, rDoD.Name, GCDNodeTypes.DoD)
-                nodDoD.SelectedImageIndex = nodDoD.ImageIndex
-                nodDoD.Tag = GCDNodeTypes.DoD.ToString & "_" & rDoD.DoDID.ToString
-                theParent.Expand()
+                For Each rSurveys As ProjectDS.DEMSurveyRow In sortedSurveys
+                    Dim nodSurvey As TreeNode = nodSurveysGroup.Nodes.Add(GCDNodeTypes.DEMSurvey.ToString & "_" & rSurveys.DEMSurveyID.ToString, rSurveys.Name, GCDNodeTypes.DEMSurvey)
+                    nodSurvey.Tag = GCDNodeTypes.DEMSurvey.ToString & "_" & rSurveys.DEMSurveyID.ToString
+                    nodSurvey.SelectedImageIndex = nodSurvey.ImageIndex
+                    If nodSurvey.Tag = sSelectedNodeTag Then tre.SelectedNode = nodSurvey
+                    Dim bExpandSurveyNode As Boolean = False
 
-                ' DoD Summary XML node
-                'If Not rDoD.IsSummaryXMLPathNull Then
-                '    If IO.File.Exists(rDoD.SummaryXMLPath) Then
-                '        Dim nodSummary As TreeNode = nodDoD.Nodes.Add(GCDNodeTypes.SummaryXML.ToString & "_" & rDoD.DoDID.ToString, IO.Path.GetFileNameWithoutExtension(rDoD.SummaryXMLPath), GCDNodeTypes.SummaryXML)
-                '        nodSummary.Tag = GCDNodeTypes.SummaryXML.ToString & "_" & rDoD.DoDID.ToString
-                '        nodSummary.SelectedImageIndex = nodSummary.ImageIndex
-                '    End If
-                'End If
+                    ' Associated surfaces
+                    Dim nodAssocGroup As TreeNode = nodSurvey.Nodes.Add(GCDNodeTypes.AssociatedSurfaceGroup.ToString, m_sAssocSurfaces, GCDNodeTypes.AssociatedSurfaceGroup)
+                    nodAssocGroup.Tag = GCDNodeTypes.AssociatedSurfaceGroup.ToString
+                    nodAssocGroup.SelectedImageIndex = nodAssocGroup.ImageIndex
+                    If nodAssocGroup.Tag = sSelectedNodeTag Then tre.SelectedNode = nodAssocGroup
 
-                ' Budget Segregation Group Node
-                Dim nodBSGroup As TreeNode = Nothing
-                Dim sMaskDict As New Dictionary(Of String, String)
-                For Each rBS As ProjectDS.BudgetSegregationsRow In rDoD.GetBudgetSegregationsRows
-                    nodDoD.Expand()
-
-                    ' Loop through and find all the unique polygon masks used
-                    sMaskDict(rBS.PolygonMask) = IO.Path.GetFileNameWithoutExtension(rBS.PolygonMask)
-                Next
-
-                ' Now loop through all the BS and add them under the appropriate mask polygon node
-                For Each sPolygonMask As String In sMaskDict.Keys
-                    Dim nodMask As TreeNode = Nothing
-
-                    For Each rBS As ProjectDS.BudgetSegregationsRow In rDoD.GetBudgetSegregationsRows
-                        If String.Compare(sPolygonMask, rBS.PolygonMask, True) = 0 Then
-
-                            If Not TypeOf nodBSGroup Is TreeNode Then
-                                nodBSGroup = nodDoD.Nodes.Add(GCDNodeTypes.BudgetSegregationGroup.ToString, m_sBudgetSegs, GCDNodeTypes.BudgetSegregationGroup)
-                                nodBSGroup.Tag = GCDNodeTypes.BudgetSegregationGroup.ToString
-                                nodBSGroup.SelectedImageIndex = nodBSGroup.ImageIndex
-                                nodBSGroup.Expand()
-                            End If
-
-                            If nodMask Is Nothing Then
-                                Dim sTag As String = GCDNodeTypes.BudgetSegregationMask.ToString & "_bs_" & GISCode.FileSystem.RemoveDangerousCharacters(rBS.PolygonMask) & "_dod_" & rDoD.DoDID
-                                nodMask = nodBSGroup.Nodes.Add(sTag, sMaskDict(sPolygonMask), GCDNodeTypes.BudgetSegregationMask)
-                                nodMask.SelectedImageIndex = nodMask.ImageIndex
-                                nodMask.Tag = sTag
-                            End If
-
-                            ' Budget Segregation
-                            Dim nodBS As TreeNode = nodMask.Nodes.Add(GCDNodeTypes.BudgetSegregation.ToString & "_" & rBS.BudgetID.ToString, rBS.Name, GCDNodeTypes.BudgetSegregation)
-                            nodBS.Tag = GCDNodeTypes.BudgetSegregation.ToString & "_" & rBS.BudgetID.ToString
-                            nodBS.SelectedImageIndex = nodBS.ImageIndex
-                        End If
+                    For Each rAssoc As ProjectDS.AssociatedSurfaceRow In rSurveys.GetAssociatedSurfaceRows
+                        Dim nodAssoc As TreeNode = nodAssocGroup.Nodes.Add(GCDNodeTypes.AssociatedSurface.ToString & "_" & rAssoc.AssociatedSurfaceID.ToString, rAssoc.Name, GCDNodeTypes.AssociatedSurface)
+                        nodAssoc.Tag = GCDNodeTypes.AssociatedSurface.ToString & "_" & rAssoc.AssociatedSurfaceID.ToString
+                        nodAssoc.SelectedImageIndex = nodAssoc.ImageIndex
+                        If nodAssoc.Tag = sSelectedNodeTag Then tre.SelectedNode = nodAssoc
+                        bExpandSurveyNode = True
                     Next
+
+                    ' Error surfaces
+                    Dim nodErrorGroup As TreeNode = nodSurvey.Nodes.Add(GCDNodeTypes.ErrorSurfaceGroup.ToString, m_sErrorSurfaces, GCDNodeTypes.ErrorSurfaceGroup)
+                    nodErrorGroup.Tag = GCDNodeTypes.ErrorSurfaceGroup.ToString
+                    nodErrorGroup.SelectedImageIndex = nodErrorGroup.ImageIndex
+                    If nodErrorGroup.Tag = sSelectedNodeTag Then tre.SelectedNode = nodErrorGroup
+
+                    For Each rError As ProjectDS.ErrorSurfaceRow In rSurveys.GetErrorSurfaceRows
+                        Dim nodError As TreeNode = nodErrorGroup.Nodes.Add(GCDNodeTypes.ErrorSurface.ToString & "_" & rError.ErrorSurfaceID.ToString, rError.Name, GCDNodeTypes.ErrorSurface)
+                        nodError.Tag = GCDNodeTypes.ErrorSurface.ToString & "_" & rError.ErrorSurfaceID.ToString
+                        nodError.SelectedImageIndex = nodError.ImageIndex
+                        If nodError.Tag = sSelectedNodeTag Then tre.SelectedNode = nodError
+                        bExpandSurveyNode = True
+                    Next
+
+                    If bExpandSurveyNode Then nodSurvey.Expand()
                 Next
 
-                bExpandCDNode = True
-                nodDoD.ExpandAll()
-            Next
+                nodInputs.Expand()
+                nodSurveysGroup.Expand()
 
-            AnalNode.Expand()
-            CDNode.Expand()
+                Dim nodAOIGroup As TreeNode = nodInputs.Nodes.Add(GCDNodeTypes.AOIGroup.ToString, "Areas of Interest", GCDNodeTypes.AOIGroup)
+                nodAOIGroup.Tag = GCDNodeTypes.AOIGroup.ToString
+                nodAOIGroup.SelectedImageIndex = nodAOIGroup.ImageIndex
+                If nodAOIGroup.Tag = sSelectedNodeTag Then tre.SelectedNode = nodAOIGroup
+                nodAOIGroup.Expand()
 
-            'nodProject.ExpandAll()
-            nodProject.Expand()
+                Dim bAOI As Boolean = False
+                For Each rAOI As ProjectDS.AOIsRow In rProject.GetAOIsRows
+                    Dim nodAOI As TreeNode = nodAOIGroup.Nodes.Add(GCDNodeTypes.AOI.ToString, rAOI.Name, GCDNodeTypes.AOI)
+                    nodAOI.Tag = GCDNodeTypes.AOI.ToString & "_" & rAOI.AOIID.ToString
+                    nodAOI.SelectedImageIndex = nodAOI.ImageIndex
+                    If nodAOI.Tag = sSelectedNodeTag Then tre.SelectedNode = nodAOI
+                    bAOI = True
+                Next
+                nodAOIGroup.Expand()
 
-        Catch ex As Exception
-            ExceptionUI.HandleException(ex)
-        End Try
-    End Sub
+                Dim AnalNode As TreeNode = nodProject.Nodes.Add(GCDNodeTypes.AnalysesGroup.ToString, "Analyses", GCDNodeTypes.AnalysesGroup)
+                AnalNode.Tag = GCDNodeTypes.AnalysesGroup.ToString
+                AnalNode.SelectedImageIndex = AnalNode.ImageIndex
+                If AnalNode.Tag = sSelectedNodeTag Then tre.SelectedNode = AnalNode
 
-    Private Sub treProject_AfterSelect(sender As Object, e As System.Windows.Forms.TreeViewEventArgs) Handles treProject.AfterSelect
-        UpdateButtons()
-    End Sub
+                Dim CDNode As TreeNode = AnalNode.Nodes.Add(GCDNodeTypes.ChangeDetectionGroup.ToString, "Change Detection", GCDNodeTypes.ChangeDetectionGroup)
+                CDNode.Tag = GCDNodeTypes.ChangeDetectionGroup.ToString
+                CDNode.SelectedImageIndex = CDNode.ImageIndex
+                If CDNode.Tag = sSelectedNodeTag Then tre.SelectedNode = CDNode
+                Dim bExpandCDNode As Boolean = False
 
-    Private Sub treProject_BeforeCollapse(sender As Object, e As System.Windows.Forms.TreeViewCancelEventArgs) Handles treProject.BeforeCollapse
-        'e.Cancel = True
-    End Sub
+                Dim dDoD As New Dictionary(Of String, TreeNode)
+                For Each rDoD As ProjectDS.DoDsRow In rProject.GetDoDsRows
+                    CDNode.Expand()
 
-    Private Sub treProject_DoubleClick(sender As Object, e As System.EventArgs) Handles treProject.DoubleClick
+                    Dim sDEMPair As String = rDoD.NewSurveyName & " - " & rDoD.OldSurveyName
+                    Dim theParent As TreeNode = Nothing
+                    If dDoD.ContainsKey(sDEMPair) Then
+                        ' This pair of DEMs already exists in the tree
+                        theParent = dDoD(sDEMPair)
+                    Else
+                        ' Create a new parent of DEM surveys for this DoD
 
-        Try
+                        ' Find the two DEMs for this DEM and add their ID to the tag of the pair node.
+                        Dim rNewDEM As ProjectDS.DEMSurveyRow = Nothing
+                        Dim rOldDEM As ProjectDS.DEMSurveyRow = Nothing
+                        For Each rDEM As ProjectDS.DEMSurveyRow In GCDProject.ProjectManagerBase.ds.DEMSurvey
+                            If String.Compare(rDEM.Name, rDoD.NewSurveyName, True) = 0 Then
+                                rNewDEM = rDEM
+                            ElseIf String.Compare(rDEM.Name = rDoD.OldSurveyName, True) = 0 Then
+                                rOldDEM = rDEM
+                            End If
+                        Next
 
-            Dim theNode As TreeNode = treProject.SelectedNode
-            If TypeOf theNode Is TreeNode Then
+                        theParent = CDNode.Nodes.Add(sDEMPair, sDEMPair, GCDNodeTypes.ChangeDetectionDEMPair)
+                        theParent.SelectedImageIndex = theParent.ImageIndex
+                        theParent.Tag = GCDNodeTypes.ChangeDetectionDEMPair.ToString
 
-                Dim eType As GCDNodeTypes = GetNodeType(theNode)
-                Dim nID As Integer = GetNodeID(theNode)
-                Dim frm As Form = Nothing
+                        If TypeOf rNewDEM Is ProjectDS.DEMSurveyRow AndAlso TypeOf rOldDEM Is ProjectDS.DEMSurveyRow Then
+                            theParent.Tag &= "_" & rNewDEM.DEMSurveyID.ToString & "_" & rOldDEM.DEMSurveyID.ToString
+                        End If
 
-                Select Case eType
-                    Case GCDNodeTypes.DEMSurvey
+                        dDoD.Add(sDEMPair, theParent)
+                    End If
+
+                    ' Now create the actual DoD node under the node for the pair of DEMs
+                    Dim nodDoD As TreeNode = theParent.Nodes.Add(rDoD.Name, rDoD.Name, GCDNodeTypes.DoD)
+                    nodDoD.SelectedImageIndex = nodDoD.ImageIndex
+                    nodDoD.Tag = GCDNodeTypes.DoD.ToString & "_" & rDoD.DoDID.ToString
+                    theParent.Expand()
+
+                    ' DoD Summary XML node
+                    'If Not rDoD.IsSummaryXMLPathNull Then
+                    '    If IO.File.Exists(rDoD.SummaryXMLPath) Then
+                    '        Dim nodSummary As TreeNode = nodDoD.Nodes.Add(GCDNodeTypes.SummaryXML.ToString & "_" & rDoD.DoDID.ToString, IO.Path.GetFileNameWithoutExtension(rDoD.SummaryXMLPath), GCDNodeTypes.SummaryXML)
+                    '        nodSummary.Tag = GCDNodeTypes.SummaryXML.ToString & "_" & rDoD.DoDID.ToString
+                    '        nodSummary.SelectedImageIndex = nodSummary.ImageIndex
+                    '    End If
+                    'End If
+
+                    ' Budget Segregation Group Node
+                    Dim nodBSGroup As TreeNode = Nothing
+                    Dim sMaskDict As New Dictionary(Of String, String)
+                    For Each rBS As ProjectDS.BudgetSegregationsRow In rDoD.GetBudgetSegregationsRows
+                        nodDoD.Expand()
+
+                        ' Loop through and find all the unique polygon masks used
+                        sMaskDict(rBS.PolygonMask) = IO.Path.GetFileNameWithoutExtension(rBS.PolygonMask)
+                    Next
+
+                    ' Now loop through all the BS and add them under the appropriate mask polygon node
+                    For Each sPolygonMask As String In sMaskDict.Keys
+                        Dim nodMask As TreeNode = Nothing
+
+                        For Each rBS As ProjectDS.BudgetSegregationsRow In rDoD.GetBudgetSegregationsRows
+                            If String.Compare(sPolygonMask, rBS.PolygonMask, True) = 0 Then
+
+                                If Not TypeOf nodBSGroup Is TreeNode Then
+                                    nodBSGroup = nodDoD.Nodes.Add(GCDNodeTypes.BudgetSegregationGroup.ToString, m_sBudgetSegs, GCDNodeTypes.BudgetSegregationGroup)
+                                    nodBSGroup.Tag = GCDNodeTypes.BudgetSegregationGroup.ToString
+                                    nodBSGroup.SelectedImageIndex = nodBSGroup.ImageIndex
+                                    nodBSGroup.Expand()
+                                End If
+
+                                If nodMask Is Nothing Then
+                                    Dim sTag As String = GCDNodeTypes.BudgetSegregationMask.ToString & "_bs_" & FileSystem.RemoveDangerousCharacters(rBS.PolygonMask) & "_dod_" & rDoD.DoDID
+                                    nodMask = nodBSGroup.Nodes.Add(sTag, sMaskDict(sPolygonMask), GCDNodeTypes.BudgetSegregationMask)
+                                    nodMask.SelectedImageIndex = nodMask.ImageIndex
+                                    nodMask.Tag = sTag
+                                End If
+
+                                ' Budget Segregation
+                                Dim nodBS As TreeNode = nodMask.Nodes.Add(GCDNodeTypes.BudgetSegregation.ToString & "_" & rBS.BudgetID.ToString, rBS.Name, GCDNodeTypes.BudgetSegregation)
+                                nodBS.Tag = GCDNodeTypes.BudgetSegregation.ToString & "_" & rBS.BudgetID.ToString
+                                nodBS.SelectedImageIndex = nodBS.ImageIndex
+                            End If
+                        Next
+                    Next
+
+                    bExpandCDNode = True
+                    nodDoD.ExpandAll()
+                Next
+
+                AnalNode.Expand()
+                CDNode.Expand()
+
+                'nodProject.ExpandAll()
+                nodProject.Expand()
+
+            Catch ex As Exception
+                ExceptionHelper.HandleException(ex)
+            End Try
+        End Sub
+
+        Private Sub treProject_AfterSelect(sender As Object, e As System.Windows.Forms.TreeViewEventArgs) Handles treProject.AfterSelect
+            UpdateButtons()
+        End Sub
+
+        Private Sub treProject_BeforeCollapse(sender As Object, e As System.Windows.Forms.TreeViewCancelEventArgs) Handles treProject.BeforeCollapse
+            'e.Cancel = True
+        End Sub
+
+        Private Sub treProject_DoubleClick(sender As Object, e As System.EventArgs) Handles treProject.DoubleClick
+
+            Try
+
+                Dim theNode As TreeNode = treProject.SelectedNode
+                If TypeOf theNode Is TreeNode Then
+
+                    Dim eType As GCDNodeTypes = GetNodeType(theNode)
+                    Dim nID As Integer = GetNodeID(theNode)
+                    Dim frm As Form = Nothing
+
+                    Select Case eType
+                        Case GCDNodeTypes.DEMSurvey
                             frm = New frmDEMSurveyProperties(nID)
 
                         Case GCDNodeTypes.AssociatedSurface
-                        Dim nSurveyID As Integer = GetNodeID(theNode.Parent.Parent)
+                            Dim nSurveyID As Integer = GetNodeID(theNode.Parent.Parent)
                             frm = New frmAssocSurfaceProperties(nSurveyID, nID)
 
                         Case GCDNodeTypes.ErrorSurface
                             Dim rError As ProjectDS.ErrorSurfaceRow = GCDProject.ProjectManagerUI.ds.ErrorSurface.FindByErrorSurfaceID(nID)
-                            frm = New frmErrorCalculation2(My.ThisApplication, rError)
+                            frm = New frmErrorCalculation2(rError)
 
-                End Select
+                    End Select
 
-                If TypeOf frm Is Form Then
-                    If frm.ShowDialog() = DialogResult.OK Then
-                        LoadTree(theNode.Tag)
+                    If TypeOf frm Is Form Then
+                        If frm.ShowDialog() = DialogResult.OK Then
+                            LoadTree(theNode.Tag)
+                        End If
                     End If
                 End If
+            Catch ex As Exception
+                ExceptionHelper.HandleException(ex)
+            End Try
+
+        End Sub
+
+        Private Function GetNodeType(aNode As TreeNode) As GCDNodeTypes
+
+            Dim sType As String = String.Empty
+            If aNode.Tag.ToString.Contains("_") Then
+                Dim nIndexOfSeparator As Integer = aNode.Tag.ToString.IndexOf("_")
+                sType = aNode.Tag.ToString.Substring(0, nIndexOfSeparator)
+            Else
+                sType = aNode.Tag.ToString
             End If
-        Catch ex As Exception
-            ExceptionUI.HandleException(ex)
-        End Try
 
-    End Sub
-
-    Private Function GetNodeType(aNode As TreeNode) As GCDNodeTypes
-
-        Dim sType As String = String.Empty
-        If aNode.Tag.ToString.Contains("_") Then
-            Dim nIndexOfSeparator As Integer = aNode.Tag.ToString.IndexOf("_")
-            sType = aNode.Tag.ToString.Substring(0, nIndexOfSeparator)
-        Else
-            sType = aNode.Tag.ToString
-        End If
-
-        Dim eType As GCDNodeTypes
-        Select Case sType
-            Case GCDNodeTypes.Project.ToString : eType = GCDNodeTypes.Project
-            Case GCDNodeTypes.InputsGroup.ToString : eType = GCDNodeTypes.InputsGroup
-            Case GCDNodeTypes.SurveysGroup.ToString : eType = GCDNodeTypes.SurveysGroup
-            Case GCDNodeTypes.DEMSurvey.ToString : eType = GCDNodeTypes.DEMSurvey
-            Case GCDNodeTypes.AssociatedSurfaceGroup.ToString : eType = GCDNodeTypes.AssociatedSurfaceGroup
-            Case GCDNodeTypes.AssociatedSurface.ToString : eType = GCDNodeTypes.AssociatedSurface
-            Case GCDNodeTypes.ErrorSurfaceGroup.ToString : eType = GCDNodeTypes.ErrorSurfaceGroup
-            Case GCDNodeTypes.ErrorSurface.ToString : eType = GCDNodeTypes.ErrorSurface
-            Case GCDNodeTypes.AnalysesGroup.ToString : eType = GCDNodeTypes.AnalysesGroup
-            Case GCDNodeTypes.ChangeDetectionGroup.ToString : eType = GCDNodeTypes.ChangeDetectionGroup
-            Case GCDNodeTypes.ChangeDetectionDEMPair.ToString : eType = GCDNodeTypes.ChangeDetectionDEMPair
-            Case GCDNodeTypes.DoD.ToString : eType = GCDNodeTypes.DoD
+            Dim eType As GCDNodeTypes
+            Select Case sType
+                Case GCDNodeTypes.Project.ToString : eType = GCDNodeTypes.Project
+                Case GCDNodeTypes.InputsGroup.ToString : eType = GCDNodeTypes.InputsGroup
+                Case GCDNodeTypes.SurveysGroup.ToString : eType = GCDNodeTypes.SurveysGroup
+                Case GCDNodeTypes.DEMSurvey.ToString : eType = GCDNodeTypes.DEMSurvey
+                Case GCDNodeTypes.AssociatedSurfaceGroup.ToString : eType = GCDNodeTypes.AssociatedSurfaceGroup
+                Case GCDNodeTypes.AssociatedSurface.ToString : eType = GCDNodeTypes.AssociatedSurface
+                Case GCDNodeTypes.ErrorSurfaceGroup.ToString : eType = GCDNodeTypes.ErrorSurfaceGroup
+                Case GCDNodeTypes.ErrorSurface.ToString : eType = GCDNodeTypes.ErrorSurface
+                Case GCDNodeTypes.AnalysesGroup.ToString : eType = GCDNodeTypes.AnalysesGroup
+                Case GCDNodeTypes.ChangeDetectionGroup.ToString : eType = GCDNodeTypes.ChangeDetectionGroup
+                Case GCDNodeTypes.ChangeDetectionDEMPair.ToString : eType = GCDNodeTypes.ChangeDetectionDEMPair
+                Case GCDNodeTypes.DoD.ToString : eType = GCDNodeTypes.DoD
                 'Case GCDNodeTypes.SummaryXML.ToString : eType = GCDNodeTypes.SummaryXML
-            Case GCDNodeTypes.BudgetSegregationGroup.ToString : eType = GCDNodeTypes.BudgetSegregationGroup
-            Case GCDNodeTypes.BudgetSegregationMask.ToString : eType = GCDNodeTypes.BudgetSegregationMask
-            Case GCDNodeTypes.BudgetSegregation.ToString : eType = GCDNodeTypes.BudgetSegregation
-            Case GCDNodeTypes.ReservoirGroup.ToString : eType = GCDNodeTypes.ReservoirGroup
-            Case GCDNodeTypes.Reservoir.ToString : eType = GCDNodeTypes.Reservoir
-            Case GCDNodeTypes.AOIGroup.ToString : eType = GCDNodeTypes.AOIGroup
-            Case GCDNodeTypes.AOI.ToString : eType = GCDNodeTypes.AOI
-            Case Else
-                Throw New Exception("Unhandled tree node type")
-        End Select
+                Case GCDNodeTypes.BudgetSegregationGroup.ToString : eType = GCDNodeTypes.BudgetSegregationGroup
+                Case GCDNodeTypes.BudgetSegregationMask.ToString : eType = GCDNodeTypes.BudgetSegregationMask
+                Case GCDNodeTypes.BudgetSegregation.ToString : eType = GCDNodeTypes.BudgetSegregation
+                Case GCDNodeTypes.ReservoirGroup.ToString : eType = GCDNodeTypes.ReservoirGroup
+                Case GCDNodeTypes.Reservoir.ToString : eType = GCDNodeTypes.Reservoir
+                Case GCDNodeTypes.AOIGroup.ToString : eType = GCDNodeTypes.AOIGroup
+                Case GCDNodeTypes.AOI.ToString : eType = GCDNodeTypes.AOI
+                Case Else
+                    Throw New Exception("Unhandled tree node type")
+            End Select
 
-        Return eType
+            Return eType
 
-    End Function
+        End Function
 
-    Private Shared Function GetSortedSurveyRows(ByVal rProject As GCDAddIn.ProjectDS.ProjectRow, ByVal eSortSurveyBy As SortSurveyBy) As System.Linq.IOrderedEnumerable(Of GCDAddIn.ProjectDS.DEMSurveyRow)
+        Private Shared Function GetSortedSurveyRows(ByVal rProject As ProjectDS.ProjectRow, ByVal eSortSurveyBy As SortSurveyBy) As System.Linq.IOrderedEnumerable(Of ProjectDS.DEMSurveyRow)
 
-        'Store DEM Survey Rows in an Ienumerable then loop over
-        Dim sortedSurveys As System.Linq.IOrderedEnumerable(Of GCDAddIn.ProjectDS.DEMSurveyRow) = Nothing
-        Select Case eSortSurveyBy
+            'Store DEM Survey Rows in an Ienumerable then loop over
+            Dim sortedSurveys As System.Linq.IOrderedEnumerable(Of ProjectDS.DEMSurveyRow) = Nothing
+            Select Case eSortSurveyBy
 
-            Case SortSurveyBy.NameDsc
-                sortedSurveys = rProject.GetDEMSurveyRows.OrderByDescending(Function(pKey As ProjectDS.DEMSurveyRow) pKey.Name)
+                Case SortSurveyBy.NameDsc
+                    sortedSurveys = rProject.GetDEMSurveyRows.OrderByDescending(Function(pKey As ProjectDS.DEMSurveyRow) pKey.Name)
 
-            Case SortSurveyBy.NameAsc
-                sortedSurveys = rProject.GetDEMSurveyRows.OrderBy(Function(pKey As ProjectDS.DEMSurveyRow) pKey.Name)
+                Case SortSurveyBy.NameAsc
+                    sortedSurveys = rProject.GetDEMSurveyRows.OrderBy(Function(pKey As ProjectDS.DEMSurveyRow) pKey.Name)
 
-            Case SortSurveyBy.DEMSurveyID_Dsc
-                sortedSurveys = rProject.GetDEMSurveyRows.OrderByDescending(Function(pKey As ProjectDS.DEMSurveyRow) pKey.DEMSurveyID)
+                Case SortSurveyBy.DEMSurveyID_Dsc
+                    sortedSurveys = rProject.GetDEMSurveyRows.OrderByDescending(Function(pKey As ProjectDS.DEMSurveyRow) pKey.DEMSurveyID)
 
-            Case SortSurveyBy.DEMSurveyID_Asc
-                sortedSurveys = rProject.GetDEMSurveyRows.OrderBy(Function(pKey As ProjectDS.DEMSurveyRow) pKey.DEMSurveyID)
+                Case SortSurveyBy.DEMSurveyID_Asc
+                    sortedSurveys = rProject.GetDEMSurveyRows.OrderBy(Function(pKey As ProjectDS.DEMSurveyRow) pKey.DEMSurveyID)
 
-            Case SortSurveyBy.SurveyDateAsc
-                sortedSurveys = rProject.GetDEMSurveyRows.OrderBy(Function(aKey As ProjectDS.DEMSurveyRow) If(Not aKey.IsSurveyYearNull(), aKey.SurveyYear, 0)). _
-                    ThenBy(Function(bKey As ProjectDS.DEMSurveyRow) If(Not bKey.IsSurveyMonthNull(), bKey.SurveyMonth, 0)). _
-                    ThenBy(Function(cKey As ProjectDS.DEMSurveyRow) If(Not cKey.IsSurveyDayNull, cKey.SurveyDay, 0)). _
-                    ThenBy(Function(dKey As ProjectDS.DEMSurveyRow) If(Not dKey.IsSurveyHourNull, dKey.SurveyHour, -1)). _
+                Case SortSurveyBy.SurveyDateAsc
+                    sortedSurveys = rProject.GetDEMSurveyRows.OrderBy(Function(aKey As ProjectDS.DEMSurveyRow) If(Not aKey.IsSurveyYearNull(), aKey.SurveyYear, 0)).
+                    ThenBy(Function(bKey As ProjectDS.DEMSurveyRow) If(Not bKey.IsSurveyMonthNull(), bKey.SurveyMonth, 0)).
+                    ThenBy(Function(cKey As ProjectDS.DEMSurveyRow) If(Not cKey.IsSurveyDayNull, cKey.SurveyDay, 0)).
+                    ThenBy(Function(dKey As ProjectDS.DEMSurveyRow) If(Not dKey.IsSurveyHourNull, dKey.SurveyHour, -1)).
                     ThenBy(Function(eKey As ProjectDS.DEMSurveyRow) If(Not eKey.IsSurveyMinNull, eKey.SurveyMin, -1))
 
-            Case SortSurveyBy.SurveyDateDsc
-                sortedSurveys = rProject.GetDEMSurveyRows.OrderByDescending(Function(aKey As ProjectDS.DEMSurveyRow) If(Not aKey.IsSurveyYearNull(), aKey.SurveyYear, 0)). _
-                    ThenByDescending(Function(bKey As ProjectDS.DEMSurveyRow) If(Not bKey.IsSurveyMonthNull(), bKey.SurveyMonth, 0)). _
-                    ThenByDescending(Function(cKey As ProjectDS.DEMSurveyRow) If(Not cKey.IsSurveyDayNull, cKey.SurveyDay, 0)). _
-                    ThenByDescending(Function(dKey As ProjectDS.DEMSurveyRow) If(Not dKey.IsSurveyHourNull, dKey.SurveyHour, -1)). _
+                Case SortSurveyBy.SurveyDateDsc
+                    sortedSurveys = rProject.GetDEMSurveyRows.OrderByDescending(Function(aKey As ProjectDS.DEMSurveyRow) If(Not aKey.IsSurveyYearNull(), aKey.SurveyYear, 0)).
+                    ThenByDescending(Function(bKey As ProjectDS.DEMSurveyRow) If(Not bKey.IsSurveyMonthNull(), bKey.SurveyMonth, 0)).
+                    ThenByDescending(Function(cKey As ProjectDS.DEMSurveyRow) If(Not cKey.IsSurveyDayNull, cKey.SurveyDay, 0)).
+                    ThenByDescending(Function(dKey As ProjectDS.DEMSurveyRow) If(Not dKey.IsSurveyHourNull, dKey.SurveyHour, -1)).
                     ThenByDescending(Function(eKey As ProjectDS.DEMSurveyRow) If(Not eKey.IsSurveyMinNull, eKey.SurveyMin, -1))
 
-        End Select
+            End Select
 
-        Return sortedSurveys
+            Return sortedSurveys
 
-    End Function
+        End Function
 
-    Private Sub UpdateButtons()
+        Private Sub UpdateButtons()
 
-        btnAdd.Enabled = False
-        btnProperties.Enabled = False
-        btnDelete.Enabled = False
-        btnCopy.Enabled = False
-        btnAddToMap.Enabled = False
+            btnAdd.Enabled = False
+            btnProperties.Enabled = False
+            btnDelete.Enabled = False
+            btnCopy.Enabled = False
+            btnAddToMap.Enabled = False
 
-        Dim nodSelected As TreeNode = treProject.SelectedNode
-        If TypeOf nodSelected Is TreeNode Then
-            Dim eType As GCDNodeTypes = GetNodeType(nodSelected)
+            Dim nodSelected As TreeNode = treProject.SelectedNode
+            If TypeOf nodSelected Is TreeNode Then
+                Dim eType As GCDNodeTypes = GetNodeType(nodSelected)
 
-            btnAdd.Enabled = Not (eType = GCDNodeTypes.Project OrElse eType = GCDNodeTypes.ChangeDetectionGroup OrElse eType = GCDNodeTypes.ErrorSurface OrElse eType = GCDNodeTypes.AssociatedSurface OrElse eType = GCDNodeTypes.DEMSurvey)
-            btnProperties.Enabled = (eType = GCDNodeTypes.DEMSurvey OrElse eType = GCDNodeTypes.AssociatedSurface OrElse eType = GCDNodeTypes.ErrorSurface OrElse eType = GCDNodeTypes.Project)
-            btnDelete.Enabled = btnProperties.Enabled
-            btnAddToMap.Enabled = (eType = GCDNodeTypes.DEMSurvey OrElse eType = GCDNodeTypes.ErrorSurface OrElse eType = GCDNodeTypes.AssociatedSurface OrElse eType = GCDNodeTypes.DoD)
-            'btnAddToMap.Enabled = Not (eType = GCDNodeTypes.SummaryXML)
-        End If
+                btnAdd.Enabled = Not (eType = GCDNodeTypes.Project OrElse eType = GCDNodeTypes.ChangeDetectionGroup OrElse eType = GCDNodeTypes.ErrorSurface OrElse eType = GCDNodeTypes.AssociatedSurface OrElse eType = GCDNodeTypes.DEMSurvey)
+                btnProperties.Enabled = (eType = GCDNodeTypes.DEMSurvey OrElse eType = GCDNodeTypes.AssociatedSurface OrElse eType = GCDNodeTypes.ErrorSurface OrElse eType = GCDNodeTypes.Project)
+                btnDelete.Enabled = btnProperties.Enabled
+                btnAddToMap.Enabled = (eType = GCDNodeTypes.DEMSurvey OrElse eType = GCDNodeTypes.ErrorSurface OrElse eType = GCDNodeTypes.AssociatedSurface OrElse eType = GCDNodeTypes.DoD)
+                'btnAddToMap.Enabled = Not (eType = GCDNodeTypes.SummaryXML)
+            End If
 
-    End Sub
+        End Sub
 
-    Private Function GetNodeID(aNode As TreeNode) As Integer
+        Private Function GetNodeID(aNode As TreeNode) As Integer
 
-        Dim nID As Integer = -1
-        Dim nIndex As Integer = aNode.Tag.ToString.IndexOf("_")
-        If nIndex > 0 Then
-            Integer.TryParse(aNode.Tag.ToString.Substring(nIndex + 1), nID)
-        End If
+            Dim nID As Integer = -1
+            Dim nIndex As Integer = aNode.Tag.ToString.IndexOf("_")
+            If nIndex > 0 Then
+                Integer.TryParse(aNode.Tag.ToString.Substring(nIndex + 1), nID)
+            End If
 
-        Return nID
+            Return nID
 
-    End Function
+        End Function
 
-    Private Sub treProject_MouseDown(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles treProject.MouseDown
+        Private Sub treProject_MouseDown(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles treProject.MouseDown
 
-        Try
-            If e.Button = Windows.Forms.MouseButtons.Right Then
-                Dim theNode As TreeNode = treProject.GetNodeAt(e.X, e.Y)
-                If TypeOf theNode Is TreeNode Then
-                    treProject.SelectedNode = theNode
-                    Dim cms As ContextMenuStrip = Nothing
-                    Select Case GetNodeType(theNode)
+            Try
+                If e.Button = System.Windows.Forms.MouseButtons.Right Then
+                    Dim theNode As TreeNode = treProject.GetNodeAt(e.X, e.Y)
+                    If TypeOf theNode Is TreeNode Then
+                        treProject.SelectedNode = theNode
+                        Dim cms As ContextMenuStrip = Nothing
+                        Select Case GetNodeType(theNode)
 
-                        Case GCDNodeTypes.Project
-                            cms = cmsProject
+                            Case GCDNodeTypes.Project
+                                cms = cmsProject
 
-                        Case GCDNodeTypes.InputsGroup
-                            cms = cmsInputsGroup
+                            Case GCDNodeTypes.InputsGroup
+                                cms = cmsInputsGroup
 
-                        Case GCDNodeTypes.SurveysGroup
-                            cms = cmsSurveysGroup
+                            Case GCDNodeTypes.SurveysGroup
+                                cms = cmsSurveysGroup
 
-                        Case GCDNodeTypes.DEMSurvey
-                            cms = cmsDEMSurvey
+                            Case GCDNodeTypes.DEMSurvey
+                                cms = cmsDEMSurvey
 
-                        Case GCDNodeTypes.AssociatedSurfaceGroup
-                            cms = cmsAssociatedSurfaceGroup
+                            Case GCDNodeTypes.AssociatedSurfaceGroup
+                                cms = cmsAssociatedSurfaceGroup
 
-                        Case GCDNodeTypes.AssociatedSurface
-                            cms = cmsAssociatedSurface
+                            Case GCDNodeTypes.AssociatedSurface
+                                cms = cmsAssociatedSurface
 
-                        Case GCDNodeTypes.ErrorSurfaceGroup
-                            cms = cmsErrorSurfacesGroup
+                            Case GCDNodeTypes.ErrorSurfaceGroup
+                                cms = cmsErrorSurfacesGroup
 
-                        Case GCDNodeTypes.ErrorSurface
-                            cms = cmsErrorSurface
+                            Case GCDNodeTypes.ErrorSurface
+                                cms = cmsErrorSurface
 
-                        Case GCDNodeTypes.ChangeDetectionGroup
-                            cms = cmsChangeDetectionGroup
+                            Case GCDNodeTypes.ChangeDetectionGroup
+                                cms = cmsChangeDetectionGroup
 
-                        Case GCDNodeTypes.DoD
-                            cms = cmsChangeDetection
+                            Case GCDNodeTypes.DoD
+                                cms = cmsChangeDetection
 
                             'Case GCDNodeTypes.SummaryXML
                             '    cms = cmsSummaryXML
 
-                        Case GCDNodeTypes.AOIGroup : cms = cmsAOIGroup
-                        Case GCDNodeTypes.AOI : cms = cmsAOI
-                        Case GCDNodeTypes.ChangeDetectionDEMPair : cms = cmsDEMSurveyPair
-                        Case GCDNodeTypes.BudgetSegregationGroup : cms = cmsBSGroup
-                        Case GCDNodeTypes.BudgetSegregation : cms = cmsBS
-                        Case GCDNodeTypes.BudgetSegregationMask : cms = cmsBSGroup
+                            Case GCDNodeTypes.AOIGroup : cms = cmsAOIGroup
+                            Case GCDNodeTypes.AOI : cms = cmsAOI
+                            Case GCDNodeTypes.ChangeDetectionDEMPair : cms = cmsDEMSurveyPair
+                            Case GCDNodeTypes.BudgetSegregationGroup : cms = cmsBSGroup
+                            Case GCDNodeTypes.BudgetSegregation : cms = cmsBS
+                            Case GCDNodeTypes.BudgetSegregationMask : cms = cmsBSGroup
 
-                    End Select
+                        End Select
 
-                    If TypeOf cms Is ContextMenuStrip Then
-                        cms.Show(treProject, New Point(e.X, e.Y))
+                        If TypeOf cms Is ContextMenuStrip Then
+                            cms.Show(treProject, New Point(e.X, e.Y))
+                        End If
                     End If
+
                 End If
 
+            Catch ex As Exception
+                ExceptionHelper.HandleException(ex)
+            End Try
+
+        End Sub
+
+        Public Function AddDEMSurvey() As Integer
+
+            Dim nDEMSurveyID As Integer = 0
+            Dim gReferenceRaster As GISDataStructures.Raster = Nothing
+
+            If Core.GCDProject.ProjectManager.ds.DEMSurvey.Rows.Count > 0 Then
+                Dim sRasterPath As String = Core.GCDProject.ProjectManager.GetAbsolutePath(Core.GCDProject.ProjectManager.ds.DEMSurvey.Item(0).Source)
+                gReferenceRaster = New GISDataStructures.Raster(sRasterPath)
             End If
+            Dim frmImport As New UI.SurveyLibrary.frmImportRaster(gReferenceRaster, Nothing, frmImportRaster.ImportRasterPurposes.DEMSurvey, "DEM Survey")
+            If frmImport.ShowDialog = System.Windows.Forms.DialogResult.OK Then
 
-        Catch ex As Exception
-            ExceptionUI.HandleException(ex)
-        End Try
+                Dim gRaster As GISDataStructures.Raster = frmImport.ProcessRaster
+                If TypeOf gRaster Is GISDataStructures.Raster Then
 
-    End Sub
+                    Dim sRelativeRasterPath As String = Core.GCDProject.ProjectManager.GetRelativePath(frmImport.txtRasterPath.Text)
 
-    Public Function AddDEMSurvey() As Integer
-
-        Dim nDEMSurveyID As Integer = 0
-        Dim gReferenceRaster As GISDataStructures.RasterDirect = Nothing
-
-        If GCD.GCDProject.ProjectManager.ds.DEMSurvey.Rows.Count > 0 Then
-            Dim sRasterPath As String = GCD.GCDProject.ProjectManager.GetAbsolutePath(GCD.GCDProject.ProjectManager.ds.DEMSurvey.Item(0).Source)
-            gReferenceRaster = New GISDataStructures.RasterDirect(sRasterPath)
-        End If
-        Dim frmImport As New ImportRasterForm(My.ThisApplication, gReferenceRaster, Nothing, ImportRasterForm.ImportRasterPurposes.DEMSurvey, "DEM Survey")
-        If frmImport.ShowDialog = Windows.Forms.DialogResult.OK Then
-
-            Dim gRaster As GISDataStructures.RasterDirect = frmImport.ProcessRaster
-            If TypeOf gRaster Is GISDataStructures.RasterDirect Then
-
-                Dim sRelativeRasterPath As String = GCD.GCDProject.ProjectManager.GetRelativePath(frmImport.txtRasterPath.Text)
-
-                Dim demRow As ProjectDS.DEMSurveyRow = GCD.GCDProject.ProjectManager.ds.DEMSurvey.AddDEMSurveyRow(frmImport.txtName.Text, sRelativeRasterPath, _
-                    "[Undefined]", "", "", GCD.GCDProject.ProjectManager.CurrentProject, True, False, "", frmImport.valCellSize.Value, _
-                    frmImport.valLeft.Value, frmImport.valBottom.Value, frmImport.valRight.Value, frmImport.valTop.Value, _
-                    frmImport.OriginalExtent.Left, frmImport.OriginalExtent.Bottom, frmImport.OriginalExtent.Right, frmImport.OriginalExtent.Top, _
+                    Dim demRow As ProjectDS.DEMSurveyRow = Core.GCDProject.ProjectManager.ds.DEMSurvey.AddDEMSurveyRow(frmImport.txtName.Text, sRelativeRasterPath,
+                    "[Undefined]", "", "", Core.GCDProject.ProjectManager.CurrentProject, True, False, "", frmImport.valCellSize.Value,
+                    frmImport.valLeft.Value, frmImport.valBottom.Value, frmImport.valRight.Value, frmImport.valTop.Value,
+                    frmImport.OriginalExtent.Left, frmImport.OriginalExtent.Bottom, frmImport.OriginalExtent.Right, frmImport.OriginalExtent.Top,
                     frmImport.ucRaster.SelectedItem.FullPath, System.Net.Dns.GetHostName, frmImport.valCellSize.Value, Nothing, Nothing, Nothing, Nothing, Nothing)
-                GCD.GCDProject.ProjectManager.save()
+                    Core.GCDProject.ProjectManager.save()
 
-                nDEMSurveyID = demRow.DEMSurveyID
+                    nDEMSurveyID = demRow.DEMSurveyID
 
-                LoadTree(GCDNodeTypes.DEMSurvey.ToString & "_" & nDEMSurveyID.ToString)
+                    LoadTree(GCDNodeTypes.DEMSurvey.ToString & "_" & nDEMSurveyID.ToString)
 
-                If My.Settings.AddOutputLayersToMap Then
-                    GCD.GCDProject.ProjectManagerUI.ArcMapManager.AddSurvey(demRow)
-                End If
+                    If My.Settings.AddOutputLayersToMap Then
+                        Core.GCDProject.ProjectManagerUI.ArcMapManager.AddSurvey(demRow)
+                    End If
 
-                    Dim SurveyForm As New frmSurveyProperties(demRow.DEMSurveyID)
+                    Dim SurveyForm As New UI.SurveyLibrary.frmDEMSurveyProperties(demRow.DEMSurveyID)
                     SurveyForm.ShowDialog()
 
                     ' Load the tree again because the use may have added Assoc or error surfaces
@@ -681,16 +681,16 @@ Namespace UI.Project
                         nID = GetNodeID(selNode.Parent)
                     End If
 
-                    Dim rDEMSurvey As ProjectDS.DEMSurveyRow = GCD.GCDProject.ProjectManager.ds.DEMSurvey.FindByDEMSurveyID(nID)
+                    Dim rDEMSurvey As ProjectDS.DEMSurveyRow = Core.GCDProject.ProjectManager.ds.DEMSurvey.FindByDEMSurveyID(nID)
                     If TypeOf rDEMSurvey Is ProjectDS.DEMSurveyRow Then
-                        Dim frm As New frmErrorCalculation2(My.ThisApplication, rDEMSurvey)
+                        Dim frm As New frmErrorCalculation2(rDEMSurvey)
                         If frm.ShowDialog() = DialogResult.OK Then
                             LoadTree(selNode.Tag)
                         End If
                     End If
                 End If
             Catch ex As Exception
-                ExceptionUI.HandleException(ex)
+                Core.ExceptionHelper.HandleException(ex)
             End Try
         End Sub
 
@@ -709,19 +709,19 @@ Namespace UI.Project
                         nID = GetNodeID(selNode.Parent)
                     End If
 
-                    Dim rDEMSurvey As ProjectDS.DEMSurveyRow = GCD.GCDProject.ProjectManager.ds.DEMSurvey.FindByDEMSurveyID(nID)
+                    Dim rDEMSurvey As ProjectDS.DEMSurveyRow = Core.GCDProject.ProjectManager.ds.DEMSurvey.FindByDEMSurveyID(nID)
                     If TypeOf rDEMSurvey Is ProjectDS.DEMSurveyRow Then
-                        Dim rError As ProjectDS.ErrorSurfaceRow = frmSurveyProperties.SpecifyErrorSurface(My.ThisApplication, rDEMSurvey)
+                        Dim rError As ProjectDS.ErrorSurfaceRow = frmDEMSurveyProperties.SpecifyErrorSurface(rDEMSurvey)
                         If TypeOf rError Is ProjectDS.ErrorSurfaceRow Then
                             If My.Settings.AddOutputLayersToMap Then
-                                GCD.GCDProject.ProjectManagerUI.ArcMapManager.AddErrSurface(rError)
+                                Core.GCDProject.ProjectManagerUI.ArcMapManager.AddErrSurface(rError)
                             End If
                             LoadTree(GCDNodeTypes.ErrorSurface.ToString & "_" & rError.ErrorSurfaceID.ToString)
                         End If
                     End If
                 End If
             Catch ex As Exception
-                ExceptionUI.HandleException(ex)
+                ExceptionHelper.HandleException(ex)
             End Try
         End Sub
 
@@ -733,16 +733,16 @@ Namespace UI.Project
                     Dim eType As GCDNodeTypes = GetNodeType(selNode)
                     If eType = GCDNodeTypes.ErrorSurfaceGroup Then
                         Dim nParentID As Integer = GetNodeID(selNode.Parent)
-                        Dim rDEMSurvey As ProjectDS.DEMSurveyRow = GCD.GCDProject.ProjectManager.ds.DEMSurvey.FindByDEMSurveyID(nParentID)
+                        Dim rDEMSurvey As ProjectDS.DEMSurveyRow = GCDProject.ProjectManagerBase.ds.DEMSurvey.FindByDEMSurveyID(nParentID)
                         If TypeOf rDEMSurvey Is ProjectDS.DEMSurveyRow Then
                             For Each rError As ProjectDS.ErrorSurfaceRow In rDEMSurvey.GetErrorSurfaceRows
-                                GCD.GCDProject.ProjectManagerUI.ArcMapManager.AddErrSurface(rError)
+                                GCDProject.ProjectManagerUI.ArcMapManager.AddErrSurface(rError)
                             Next
                         End If
                     End If
                 End If
             Catch ex As Exception
-                ExceptionUI.HandleException(ex)
+                ExceptionHelper.HandleException(ex)
             End Try
         End Sub
 
@@ -758,9 +758,9 @@ Namespace UI.Project
                     Dim eType As GCDNodeTypes = GetNodeType(selNode)
                     If eType = GCDNodeTypes.ErrorSurface Then
                         Dim nErrorID As Integer = GetNodeID(selNode)
-                        Dim rError As ProjectDS.ErrorSurfaceRow = GCD.GCDProject.ProjectManager.ds.ErrorSurface.FindByErrorSurfaceID(nErrorID)
+                        Dim rError As ProjectDS.ErrorSurfaceRow = GCDProject.ProjectManager.ds.ErrorSurface.FindByErrorSurfaceID(nErrorID)
                         If TypeOf rError Is ProjectDS.ErrorSurfaceRow Then
-                            Dim frm As New frmErrorCalculation2(My.ThisApplication, rError)
+                            Dim frm As New frmErrorCalculation2(rError)
                             If frm.ShowDialog() = DialogResult.OK Then
                                 LoadTree(selNode.Tag)
                             End If
@@ -768,7 +768,7 @@ Namespace UI.Project
                     End If
                 End If
             Catch ex As Exception
-                ExceptionUI.HandleException(ex)
+                ExceptionHelper.HandleException(ex)
             End Try
 
         End Sub
@@ -782,11 +782,11 @@ Namespace UI.Project
                     If eType = GCDNodeTypes.ErrorSurface Then
                         Dim nParentID As Integer = GetNodeID(selNode.Parent.Parent)
                         Dim nID As Integer = GetNodeID(selNode)
-                        Dim rDEMSurvey As ProjectDS.DEMSurveyRow = GCD.GCDProject.ProjectManager.ds.DEMSurvey.FindByDEMSurveyID(nParentID)
+                        Dim rDEMSurvey As ProjectDS.DEMSurveyRow = GCDProject.ProjectManagerBase.ds.DEMSurvey.FindByDEMSurveyID(nParentID)
                         If TypeOf rDEMSurvey Is ProjectDS.DEMSurveyRow Then
                             For Each rError As ProjectDS.ErrorSurfaceRow In rDEMSurvey.GetErrorSurfaceRows
                                 If rError.ErrorSurfaceID = nID Then
-                                    GCD.GCDProject.ProjectManagerUI.ArcMapManager.AddErrSurface(rError)
+                                    GCDProject.ProjectManagerUI.ArcMapManager.AddErrSurface(rError)
                                     Exit For
                                 End If
                             Next
@@ -794,7 +794,7 @@ Namespace UI.Project
                     End If
                 End If
             Catch ex As Exception
-                ExceptionUI.HandleException(ex)
+                ExceptionHelper.HandleException(ex)
             End Try
         End Sub
 
@@ -808,46 +808,46 @@ Namespace UI.Project
 
         Private Sub EditGCDProjectPropertiesToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles EditGCDProjectPropertiesToolStripMenuItem.Click
 
-            Dim frm As New frmProjectProperties(My.ThisApplication, frmProjectProperties.DisplayModes.Edit)
+            Dim frm As New frmProjectProperties(frmProjectProperties.DisplayModes.Edit)
             Try
                 frm.ShowDialog()
             Catch ex As Exception
-                ExceptionUI.HandleException(ex)
+                ExceptionHelper.HandleException(ex)
             End Try
         End Sub
 
         Private Sub ToolStripMenuItem2_Click(sender As System.Object, e As System.EventArgs) Handles ToolStripMenuItem2.Click
             Try
-                Dim rProject As ProjectDS.ProjectRow = GCD.GCDProject.ProjectManager.CurrentProject
+                Dim rProject As ProjectDS.ProjectRow = GCDProject.ProjectManagerBase.CurrentProject
 
                 'TODO: Insert the GetSortedSurveyRowsMethod
                 If TypeOf rProject Is ProjectDS.ProjectRow Then
 
                     'Store DEM Survey Rows in an Ienumerable then loop over
-                    Dim sortedSurveys As System.Linq.IOrderedEnumerable(Of GCDAddIn.ProjectDS.DEMSurveyRow) = GetSortedSurveyRows(rProject, m_eSortBy)
+                    Dim sortedSurveys As System.Linq.IOrderedEnumerable(Of ProjectDS.DEMSurveyRow) = GetSortedSurveyRows(rProject, m_eSortBy)
                     For Each rDEM As ProjectDS.DEMSurveyRow In sortedSurveys.Reverse()
-                        GCD.GCDProject.ProjectManagerUI.ArcMapManager.AddDEM(rDEM)
+                        GCDProject.ProjectManagerUI.ArcMapManager.AddDEM(rDEM)
 
                         For Each rAssoc As ProjectDS.AssociatedSurfaceRow In rDEM.GetAssociatedSurfaceRows
-                            GCD.GCDProject.ProjectManagerUI.ArcMapManager.AddAssociatedSurface(rAssoc)
+                            GCDProject.ProjectManagerUI.ArcMapManager.AddAssociatedSurface(rAssoc)
                         Next
 
                         For Each rError As ProjectDS.ErrorSurfaceRow In rDEM.GetErrorSurfaceRows
-                            GCD.GCDProject.ProjectManagerUI.ArcMapManager.AddErrSurface(rError)
+                            GCDProject.ProjectManagerUI.ArcMapManager.AddErrSurface(rError)
                         Next
                     Next
 
                     For Each rAOI As ProjectDS.AOIsRow In rProject.GetAOIsRows
-                        GCD.GCDProject.ProjectManagerUI.ArcMapManager.AddAOI(rAOI)
+                        GCDProject.ProjectManagerUI.ArcMapManager.AddAOI(rAOI)
                     Next
 
                     For Each rDoD As ProjectDS.DoDsRow In rProject.GetDoDsRows
-                        GCD.GCDProject.ProjectManagerUI.ArcMapManager.AddDoD(rDoD)
+                        GCDProject.ProjectManagerUI.ArcMapManager.AddDoD(rDoD)
                     Next
                 End If
 
             Catch ex As Exception
-                ExceptionUI.HandleException(ex)
+                ExceptionHelper.HandleException(ex)
             End Try
 
         End Sub
@@ -864,7 +864,7 @@ Namespace UI.Project
                 End If
 
             Catch ex As Exception
-                ExceptionUI.HandleException(ex)
+                ExceptionHelper.HandleException(ex)
             End Try
         End Sub
 
@@ -901,14 +901,14 @@ Namespace UI.Project
                     Dim eType As GCDNodeTypes = GetNodeType(selNode)
                     If eType = GCDNodeTypes.DEMSurvey Then
                         Dim nID As Integer = GetNodeID(selNode)
-                        Dim rDEMSurvey As ProjectDS.DEMSurveyRow = GCD.GCDProject.ProjectManager.ds.DEMSurvey.FindByDEMSurveyID(nID)
+                        Dim rDEMSurvey As ProjectDS.DEMSurveyRow = GCDProject.ProjectManager.ds.DEMSurvey.FindByDEMSurveyID(nID)
                         If TypeOf rDEMSurvey Is ProjectDS.DEMSurveyRow Then
-                            GCD.GCDProject.ProjectManagerUI.ArcMapManager.AddDEM(rDEMSurvey)
+                            GCDProject.ProjectManagerUI.ArcMapManager.AddDEM(rDEMSurvey)
                         End If
                     End If
                 End If
             Catch ex As Exception
-                ExceptionUI.HandleException(ex)
+                ExceptionHelper.HandleException(ex)
             End Try
         End Sub
 
@@ -930,7 +930,7 @@ Namespace UI.Project
                     End If
                 End If
             Catch ex As Exception
-                ExceptionUI.HandleException(ex)
+                ExceptionHelper.HandleException(ex)
             End Try
 
         End Sub
@@ -974,23 +974,23 @@ Namespace UI.Project
         Private Sub AddAllDEMSurveysToTheMapToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles AddAllDEMSurveysToTheMapToolStripMenuItem.Click
 
             Try
-                Dim rProject As ProjectDS.ProjectRow = GCD.GCDProject.ProjectManager.CurrentProject
+                Dim rProject As ProjectDS.ProjectRow = GCDProject.ProjectManager.CurrentProject
                 If TypeOf rProject Is ProjectDS.ProjectRow Then
 
                     'Store DEM Survey Rows in an Ienumerable then loop over
-                    Dim sortedSurveys As System.Linq.IOrderedEnumerable(Of GCDAddIn.ProjectDS.DEMSurveyRow) = GetSortedSurveyRows(rProject, m_eSortBy)
+                    Dim sortedSurveys As System.Linq.IOrderedEnumerable(Of ProjectDS.DEMSurveyRow) = GetSortedSurveyRows(rProject, m_eSortBy)
 
                     For Each rDEMSurvey As ProjectDS.DEMSurveyRow In sortedSurveys.Reverse()
-                        GCD.GCDProject.ProjectManagerUI.ArcMapManager.AddDEM(rDEMSurvey)
+                        GCDProject.ProjectManagerUI.ArcMapManager.AddDEM(rDEMSurvey)
                     Next
 
                     For Each rAOI As ProjectDS.AOIsRow In rProject.GetAOIsRows
-                        GCD.GCDProject.ProjectManagerUI.ArcMapManager.AddAOI(rAOI)
+                        GCDProject.ProjectManagerUI.ArcMapManager.AddAOI(rAOI)
                     Next
                 End If
 
             Catch ex As Exception
-                ExceptionUI.HandleException(ex)
+                ExceptionHelper.HandleException(ex)
             End Try
         End Sub
 
@@ -1018,15 +1018,15 @@ Namespace UI.Project
         Public Sub AddDoDChangeDetection()
 
             Try
-                Dim frmDoDCalculation As New DoDPropertiesForm(My.ThisApplication)
+                Dim frmDoDCalculation As New frmDoDProperties()
                 DoChangeDetection(frmDoDCalculation)
 
             Catch ex As Exception
-                ExceptionUI.HandleException(ex)
+                ExceptionHelper.HandleException(ex)
             End Try
         End Sub
 
-        Private Sub DoChangeDetection(ByRef frmDoDCalculation As DoDPropertiesForm)
+        Private Sub DoChangeDetection(ByRef frmDoDCalculation As frmDoDProperties)
 
             Try
                 If frmDoDCalculation.ShowDialog() = DialogResult.OK Then
@@ -1036,13 +1036,13 @@ Namespace UI.Project
                         LoadTree(sTag)
 
                         ' Now show the results form for this new DoD Calculation
-                        Dim frmResults As New DoDResultsForm(My.ThisApplication, frmDoDCalculation.DoDResults, frmDoDCalculation.DoDRow)
+                        Dim frmResults As New frmDoDResults(frmDoDCalculation.DoDResults, frmDoDCalculation.DoDRow)
                         frmResults.ShowDialog()
                     End If
                 End If
 
             Catch ex As Exception
-                ExceptionUI.HandleException(ex)
+                ExceptionHelper.HandleException(ex)
             End Try
 
         End Sub
@@ -1054,14 +1054,14 @@ Namespace UI.Project
                 If TypeOf selNode Is TreeNode Then
                     Dim eType As GCDNodeTypes = GetNodeType(selNode)
                     If eType = GCDNodeTypes.ChangeDetectionGroup Then
-                        For Each rDoD As ProjectDS.DoDsRow In GCD.GCDProject.ProjectManager.CurrentProject.GetDoDsRows
-                            GCD.GCDProject.ProjectManagerUI.ArcMapManager.AddDoD(rDoD)
+                        For Each rDoD As ProjectDS.DoDsRow In GCDProject.ProjectManager.CurrentProject.GetDoDsRows
+                            GCDProject.ProjectManagerUI.ArcMapManager.AddDoD(rDoD)
                         Next
                     End If
                 End If
 
             Catch ex As Exception
-                ExceptionUI.HandleException(ex)
+                ExceptionHelper.HandleException(ex)
             End Try
         End Sub
 
@@ -1078,15 +1078,15 @@ Namespace UI.Project
                     Dim eType As GCDNodeTypes = GetNodeType(selNode)
                     If eType = GCDNodeTypes.DoD Then
                         Dim nID As Integer = GetNodeID(selNode)
-                        Dim rDod As ProjectDS.DoDsRow = GCD.GCDProject.ProjectManager.ds.DoDs.FindByDoDID(nID)
+                        Dim rDod As ProjectDS.DoDsRow = GCDProject.ProjectManager.ds.DoDs.FindByDoDID(nID)
                         If TypeOf rDod Is ProjectDS.DoDsRow Then
-                            GCD.GCDProject.ProjectManagerUI.ArcMapManager.AddDoD(rDod)
+                            GCDProject.ProjectManagerUI.ArcMapManager.AddDoD(rDod)
                         End If
                     End If
                 End If
 
             Catch ex As Exception
-                ExceptionUI.HandleException(ex)
+                ExceptionHelper.HandleException(ex)
             End Try
 
         End Sub
@@ -1099,15 +1099,15 @@ Namespace UI.Project
                     Dim eType As GCDNodeTypes = GetNodeType(selNode)
                     If eType = GCDNodeTypes.DoD Then
                         Dim nID As Integer = GetNodeID(selNode)
-                        Dim rDod As ProjectDS.DoDsRow = GCD.GCDProject.ProjectManager.ds.DoDs.FindByDoDID(nID)
+                        Dim rDod As ProjectDS.DoDsRow = GCDProject.ProjectManager.ds.DoDs.FindByDoDID(nID)
                         If TypeOf rDod Is ProjectDS.DoDsRow Then
-                            GCD.GCDProject.ProjectManagerUI.ArcMapManager.AddDoD(rDod, False)
+                            GCDProject.ProjectManagerUI.ArcMapManager.AddDoD(rDod, False)
                         End If
                     End If
                 End If
 
             Catch ex As Exception
-                ExceptionUI.HandleException(ex)
+                ExceptionHelper.HandleException(ex)
             End Try
         End Sub
 
@@ -1119,17 +1119,17 @@ Namespace UI.Project
                     Dim eType As GCDNodeTypes = GetNodeType(selNode)
                     If eType = GCDNodeTypes.DoD Then
                         Dim nID As Integer = GetNodeID(selNode)
-                        Dim rDoD As ProjectDS.DoDsRow = GCD.GCDProject.ProjectManager.ds.DoDs.FindByDoDID(nID)
+                        Dim rDoD As ProjectDS.DoDsRow = GCDProject.ProjectManager.ds.DoDs.FindByDoDID(nID)
                         If TypeOf rDoD Is ProjectDS.DoDsRow Then
 
-                            Dim changeStats As New GCD.ChangeDetection.ChangeStatsFromDoDRow(rDoD)
-                            Dim sRawHistoStats As String = GCD.GCDProject.ProjectManager.GetAbsolutePath(rDoD.RawHistPath)
-                            Dim sThrHistoStats As String = GCD.GCDProject.ProjectManager.GetAbsolutePath(rDoD.ThreshHistPath)
+                            Dim changeStats As New Core.ChangeDetection.ChangeStatsFromDoDRow(rDoD)
+                            Dim sRawHistoStats As String = GCDProject.ProjectManager.GetAbsolutePath(rDoD.RawHistPath)
+                            Dim sThrHistoStats As String = GCDProject.ProjectManager.GetAbsolutePath(rDoD.ThreshHistPath)
 
-                            Dim changeHistos As New GCD.ChangeDetection.DoDResultHistograms(sRawHistoStats, sThrHistoStats)
-                            Dim dodProp As GCD.ChangeDetection.ChangeDetectionProperties = GCD.ChangeDetection.ChangeDetectionProperties.CreateFromDoDRow(rDoD)
-                            Dim rResults As New GCD.ChangeDetection.DoDResultSet(changeStats, changeHistos, dodProp)
-                            Dim frm As New DoDResultsForm(My.ThisApplication, rResults, rDoD)
+                            Dim changeHistos As New Core.ChangeDetection.DoDResultHistograms(sRawHistoStats, sThrHistoStats)
+                            Dim dodProp As Core.ChangeDetection.ChangeDetectionProperties = Core.ChangeDetection.ChangeDetectionProperties.CreateFromDoDRow(rDoD)
+                            Dim rResults As New Core.ChangeDetection.DoDResultSet(changeStats, changeHistos, dodProp)
+                            Dim frm As New UI.ChangeDetection.DoD.frmDoDResults(rResults, rDoD)
                             If frm.ShowDialog() = DialogResult.OK Then
                                 ' Don't need to reload the tree here. Nothing changed.
                                 ' LoadTree(selNode.Tag)
@@ -1139,7 +1139,7 @@ Namespace UI.Project
                 End If
 
             Catch ex As Exception
-                ExceptionUI.HandleException(ex)
+                ExceptionHelper.HandleException(ex)
             End Try
 
         End Sub
@@ -1160,8 +1160,8 @@ Namespace UI.Project
 
                 ' Both raw and thresholded DoD rasters can be in the map. Make a list and remove both.
                 Dim lDoDSource As New List(Of String)
-                lDoDSource.Add(GCD.GCDProject.ProjectManager.GetAbsolutePath(rDoD.RawDoDPath))
-                lDoDSource.Add(GCD.GCDProject.ProjectManager.GetAbsolutePath(rDoD.ThreshDoDPath))
+                lDoDSource.Add(GCDProject.ProjectManager.GetAbsolutePath(rDoD.RawDoDPath))
+                lDoDSource.Add(GCDProject.ProjectManager.GetAbsolutePath(rDoD.ThreshDoDPath))
 
                 For Each sDoDSource As String In lDoDSource
                     'New code to remove project layer from map if in map
@@ -1187,13 +1187,13 @@ Namespace UI.Project
                     DeleteSurveyFiles(IO.Path.GetDirectoryName(lDoDSource(0)))
                     IO.Directory.Delete(IO.Path.GetDirectoryName(lDoDSource(0)), True)
                 Catch ex As Exception
-                    ExceptionUI.HandleException(ex, "The GCD survey files failed to delete. Some of the files associated with this survey still exist.")
+                    ExceptionHelper.HandleException(ex, "The GCD survey files failed to delete. Some of the files associated with this survey still exist.")
                     'Dim ex2 As New Exception("The GCD survey files failed to delete. Some of the files associated with this survey still exist.", ex)
                     'ex2.Data.Add("Project Name: ", projectName)
                     'Throw ex2
                 Finally
                     rDoD.Delete()
-                    ProjectManager.save()
+                    GCDProject.ProjectManager.save()
                 End Try
 
             End If
@@ -1214,7 +1214,7 @@ Namespace UI.Project
                 Dim pMXDoc As ESRI.ArcGIS.ArcMapUI.IMxDocument = DirectCast(My.ThisApplication, ESRI.ArcGIS.Framework.IApplication).Document
                 Dim pMap As ESRI.ArcGIS.Carto.IMap = pMXDoc.FocusMap
                 Dim projectName As String = rDEMSurvey.Name
-                Dim pSurveySource As String = GCD.GCDProject.ProjectManager.GetAbsolutePath(rDEMSurvey.Source)
+                Dim pSurveySource As String = GCDProject.ProjectManager.GetAbsolutePath(rDEMSurvey.Source)
 
                 'New code to remove project layer from map if in map
                 Dim enumLayer As ESRI.ArcGIS.Carto.IEnumLayer = pMap.Layers
@@ -1243,10 +1243,10 @@ Namespace UI.Project
                     Next
 
                 Catch ex As Exception
-                    ExceptionUI.HandleException(ex, "Some of the folders associated with this survey still exist because an ESRI lock file cannot be deleted while current ArcMap session is still running.")
+                    ExceptionHelper.HandleException(ex, "Some of the folders associated with this survey still exist because an ESRI lock file cannot be deleted while current ArcMap session is still running.")
                 Finally
                     rDEMSurvey.Delete()
-                    ProjectManager.save()
+                    GCDProject.ProjectManagerBase.save()
                 End Try
 
             End If
@@ -1296,8 +1296,6 @@ Namespace UI.Project
         DeleteChangeDetectionToolStripMenuItem.Click,
         DeleteAOIToolStripMenuItem.Click
 
-
-
             Dim nodSelected As TreeNode = treProject.SelectedNode
             If Not TypeOf nodSelected Is TreeNode Then
                 Exit Sub
@@ -1307,33 +1305,33 @@ Namespace UI.Project
             Dim nID As Integer = GetNodeID(nodSelected)
             Select Case eType
                 Case GCDNodeTypes.DEMSurvey
-                    Dim rDEMSurvey As ProjectDS.DEMSurveyRow = GCD.GCDProject.ProjectManager.ds.DEMSurvey.FindByDEMSurveyID(nID)
+                    Dim rDEMSurvey As ProjectDS.DEMSurveyRow = GCDProject.ProjectManager.ds.DEMSurvey.FindByDEMSurveyID(nID)
                     DeleteDEMSurvey(rDEMSurvey)
                     LoadTree(nodSelected.Parent.Tag)
 
                 Case GCDNodeTypes.AssociatedSurface
                     Dim nDEMSurveyID As Integer = GetNodeID(nodSelected.Parent.Parent)
-                    Dim rDEMSurvey As ProjectDS.DEMSurveyRow = GCD.GCDProject.ProjectManager.ds.DEMSurvey.FindByDEMSurveyID(nDEMSurveyID)
+                    Dim rDEMSurvey As ProjectDS.DEMSurveyRow = GCDProject.ProjectManager.ds.DEMSurvey.FindByDEMSurveyID(nDEMSurveyID)
                     For Each rAssoc As ProjectDS.AssociatedSurfaceRow In rDEMSurvey.GetAssociatedSurfaceRows
                         If rAssoc.AssociatedSurfaceID = nID Then
-                            frmSurveyProperties.DeleteAssociatedSurface(rAssoc)
+                            frmDEMSurveyProperties.DeleteAssociatedSurface(rAssoc)
                             LoadTree(nodSelected.Parent.Tag)
                         End If
                     Next
 
                 Case GCDNodeTypes.ErrorSurface
                     Dim nDEMSurveyID As Integer = GetNodeID(nodSelected.Parent.Parent)
-                    Dim rDEMSurvey As ProjectDS.DEMSurveyRow = GCD.GCDProject.ProjectManager.ds.DEMSurvey.FindByDEMSurveyID(nDEMSurveyID)
+                    Dim rDEMSurvey As ProjectDS.DEMSurveyRow = GCDProject.ProjectManagerBase.ds.DEMSurvey.FindByDEMSurveyID(nDEMSurveyID)
                     For Each rError As ProjectDS.ErrorSurfaceRow In rDEMSurvey.GetErrorSurfaceRows
                         If rError.ErrorSurfaceID = nID Then
-                            frmSurveyProperties.DeleteErrorSurface(rError)
+                            frmDEMSurveyProperties.DeleteErrorSurface(rError)
                             LoadTree(nodSelected.Parent.Tag)
                         End If
                     Next
 
                 Case GCDNodeTypes.DoD
                     Dim nDoDID As Integer = GetNodeID(nodSelected)
-                    For Each rDoD As ProjectDS.DoDsRow In GCD.GCDProject.ProjectManager.ds.DoDs
+                    For Each rDoD As ProjectDS.DoDsRow In GCDProject.ProjectManagerBase.ds.DoDs
                         If rDoD.DoDID = nDoDID Then
                             DeleteDoD(rDoD)
                             LoadTree(nodSelected.Parent.Tag)
@@ -1364,10 +1362,10 @@ Namespace UI.Project
                 Select Case eType
 
                     Case GCDNodeTypes.Project
-                        frm = New frmProjectProperties(My.ThisApplication, frmProjectProperties.DisplayModes.Edit)
+                        frm = New frmProjectProperties(frmProjectProperties.DisplayModes.Edit)
 
                     Case GCDNodeTypes.DEMSurvey
-                        frm = New frmDEMSurveyProperties(My.ThisApplication, nID)
+                        frm = New frmDEMSurveyProperties(nID)
 
                     Case GCDNodeTypes.AssociatedSurface
                         Dim nDEMSurveyID As Integer = GetNodeID(nodSelected.Parent.Parent)
@@ -1396,7 +1394,7 @@ Namespace UI.Project
                 End If
 
             Catch ex As Exception
-                ExceptionUI.HandleException(ex)
+                ExceptionHelper.HandleException(ex)
             End Try
         End Sub
 
@@ -1415,53 +1413,52 @@ Namespace UI.Project
 
                 Select Case eType
                     Case GCDNodeTypes.InputsGroup
-                        For Each rDEMSurvey As ProjectDS.DEMSurveyRow In GCD.GCDProject.ProjectManager.CurrentProject.GetDEMSurveyRows
-                            GCD.GCDProject.ProjectManagerUI.ArcMapManager.AddDEM(rDEMSurvey)
+                        For Each rDEMSurvey As ProjectDS.DEMSurveyRow In GCDProject.ProjectManager.CurrentProject.GetDEMSurveyRows
+                            GCDProject.ProjectManagerUI.ArcMapManager.AddDEM(rDEMSurvey)
                             For Each rAssoc As ProjectDS.AssociatedSurfaceRow In rDEMSurvey.GetAssociatedSurfaceRows
-                                GCD.GCDProject.ProjectManagerUI.ArcMapManager.AddAssociatedSurface(rAssoc)
+                                GCDProject.ProjectManagerUI.ArcMapManager.AddAssociatedSurface(rAssoc)
                             Next
 
                             For Each rError As ProjectDS.ErrorSurfaceRow In rDEMSurvey.GetErrorSurfaceRows
-                                GCD.GCDProject.ProjectManagerUI.ArcMapManager.AddErrSurface(rError)
+                                GCDProject.ProjectManagerUI.ArcMapManager.AddErrSurface(rError)
                             Next
                         Next
 
                     Case GCDNodeTypes.DEMSurvey
-                        Dim rDEMSurvey As ProjectDS.DEMSurveyRow = GCD.GCDProject.ProjectManager.ds.DEMSurvey.FindByDEMSurveyID(nID)
-                        GCD.GCDProject.ProjectManagerUI.ArcMapManager.AddDEM(rDEMSurvey)
+                        Dim rDEMSurvey As ProjectDS.DEMSurveyRow = GCDProject.ProjectManager.ds.DEMSurvey.FindByDEMSurveyID(nID)
+                        GCDProject.ProjectManagerUI.ArcMapManager.AddDEM(rDEMSurvey)
 
                     Case GCDNodeTypes.AssociatedSurface, GCDNodeTypes.AssociatedSurfaceGroup
                         Dim nDEMSurveyID As Integer = GetNodeID(nodSelected.Parent.Parent)
-                        Dim rDEMSurvey As ProjectDS.DEMSurveyRow = GCD.GCDProject.ProjectManager.ds.DEMSurvey.FindByDEMSurveyID(nDEMSurveyID)
+                        Dim rDEMSurvey As ProjectDS.DEMSurveyRow = GCDProject.ProjectManager.ds.DEMSurvey.FindByDEMSurveyID(nDEMSurveyID)
                         For Each rAssoc As ProjectDS.AssociatedSurfaceRow In rDEMSurvey.GetAssociatedSurfaceRows
                             If nID = -1 OrElse rAssoc.AssociatedSurfaceID = nID Then
-                                GCD.GCDProject.ProjectManagerUI.ArcMapManager.AddAssociatedSurface(rAssoc)
+                                GCDProject.ProjectManagerUI.ArcMapManager.AddAssociatedSurface(rAssoc)
                             End If
                         Next
 
                     Case GCDNodeTypes.ErrorSurface, GCDNodeTypes.ErrorSurfaceGroup
                         Dim nDEMSurveyID As Integer = GetNodeID(nodSelected.Parent.Parent)
-                        Dim rDEMSurvey As ProjectDS.DEMSurveyRow = GCD.GCDProject.ProjectManager.ds.DEMSurvey.FindByDEMSurveyID(nDEMSurveyID)
+                        Dim rDEMSurvey As ProjectDS.DEMSurveyRow = GCDProject.ProjectManager.ds.DEMSurvey.FindByDEMSurveyID(nDEMSurveyID)
                         For Each rError As ProjectDS.ErrorSurfaceRow In rDEMSurvey.GetErrorSurfaceRows
                             If nID = -1 OrElse rError.ErrorSurfaceID = nID Then
-                                GCD.GCDProject.ProjectManagerUI.ArcMapManager.AddErrSurface(rError)
+                                GCDProject.ProjectManagerUI.ArcMapManager.AddErrSurface(rError)
                             End If
                         Next
 
                     Case GCDNodeTypes.DoD
-                        For Each rDoD As ProjectDS.DoDsRow In GCD.GCDProject.ProjectManager.ds.DoDs.Rows
+                        For Each rDoD As ProjectDS.DoDsRow In GCDProject.ProjectManager.ds.DoDs.Rows
                         Next
                 End Select
 
             Catch ex As Exception
-                ExceptionUI.HandleException(ex)
+                ExceptionHelper.HandleException(ex)
             End Try
 
         End Sub
 
         Private Sub cmdRefresh_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles _
         cmdRefresh.Click
-
 
             Dim sSortBy As String = sender.ToString
 
@@ -1484,7 +1481,6 @@ Namespace UI.Project
         NameAscendingToolStripMenuItem.Click,
         DateAddedDescendingToolStripMenuItem.Click,
         DateAddedAscendingToolStripMenuItem.Click
-
 
             'Get the name of the menu item that was clicked
             Dim pMenuItem As ToolStripMenuItem = CType(sender, ToolStripMenuItem)
@@ -1532,13 +1528,13 @@ Namespace UI.Project
             LoadTree(Nothing, m_eSortBy)
 
             Try
-                Dim rProject As ProjectDS.ProjectRow = GCD.GCDProject.ProjectManager.CurrentProject
+                Dim rProject As ProjectDS.ProjectRow = GCDProject.ProjectManager.CurrentProject
                 If TypeOf rProject Is ProjectDS.ProjectRow Then
 
                     'Loop over the survey rows in the order provided by the m_eSortBy
                     'For Each rDEM As ProjectDS.DEMSurveyRow In rProject.GetDEMSurveyRows.OrderByDescending(Function(pKey As ProjectDS.DEMSurveyRow) pKey.Item(m_eSortBy.ToString()))
                     'Store DEM Survey Rows in an Ienumerable then loop over
-                    Dim sortedSurveys As System.Linq.IOrderedEnumerable(Of GCDAddIn.ProjectDS.DEMSurveyRow) = GetSortedSurveyRows(rProject, m_eSortBy)
+                    Dim sortedSurveys As System.Linq.IOrderedEnumerable(Of ProjectDS.DEMSurveyRow) = GetSortedSurveyRows(rProject, m_eSortBy)
 
 
                     ' DEM survyes
@@ -1573,7 +1569,7 @@ Namespace UI.Project
                                     'Get path of associated surface source path, get group layer, and check for presence of associated surface in associated surface sub layer of survey layer
                                     Dim sPath As String = GCD.GCDProject.ProjectManager.GetAbsolutePath(rAssoc.Source)
                                     Dim pAssocGroupLayer As ESRI.ArcGIS.Carto.IGroupLayer = ArcMap.GetGroupLayer(My.ThisApplication, "Associated Surfaces", pSurveyGroupLayer)
-                                    pLayer = GCD.GCDProject.ProjectManagerUI.ArcMapManager.IsLayerInGroupLayer(sPath, pAssocGroupLayer)
+                                    pLayer = GCDProject.ProjectManagerUI.ArcMapManager.IsLayerInGroupLayer(sPath, pAssocGroupLayer)
                                     If pLayer IsNot Nothing Then
                                         'Add associated surface row to list to be used later
                                         lAssocLayers.Add(rAssoc)
@@ -1589,9 +1585,9 @@ Namespace UI.Project
                                 For Each rError As ProjectDS.ErrorSurfaceRow In rDEM.GetErrorSurfaceRows
 
                                     'Get path of error surface source path, get group layer, and check for presence of error surface in error surface sub layer of survey layer
-                                    Dim sPath As String = GCD.GCDProject.ProjectManager.GetAbsolutePath(rError.Source)
+                                    Dim sPath As String = GCDProject.ProjectManager.GetAbsolutePath(rError.Source)
                                     Dim pErrorGroupLayer As ESRI.ArcGIS.Carto.IGroupLayer = ArcMap.GetGroupLayer(My.ThisApplication, "Error Surfaces", pSurveyGroupLayer)
-                                    pLayer = GCD.GCDProject.ProjectManagerUI.ArcMapManager.IsLayerInGroupLayer(sPath, pErrorGroupLayer)
+                                    pLayer = GCDProject.ProjectManagerUI.ArcMapManager.IsLayerInGroupLayer(sPath, pErrorGroupLayer)
                                     If pLayer IsNot Nothing Then
                                         'Add error surface row to list to be used later
                                         lErrorLayers.Add(rError)
@@ -1603,19 +1599,19 @@ Namespace UI.Project
                             ArcMap.RemoveGroupLayer(My.ThisApplication, pSurveyGroupLayer.Name)
 
                             'Add DEM in the order new order that is created by loop with OrderByDescending
-                            GCD.GCDProject.ProjectManagerUI.ArcMapManager.AddDEM(rDEM)
+                            GCDProject.ProjectManagerUI.ArcMapManager.AddDEM(rDEM)
 
                             'Add all associated surfaces to group layer that were previously in map
                             If lAssocLayers.Count > 0 Then
                                 For Each rAssoc As ProjectDS.AssociatedSurfaceRow In lAssocLayers
-                                    GCD.GCDProject.ProjectManagerUI.ArcMapManager.AddAssociatedSurface(rAssoc)
+                                    GCDProject.ProjectManagerUI.ArcMapManager.AddAssociatedSurface(rAssoc)
                                 Next
                             End If
 
                             'Add all error surfaces to group layer that were previously in map
                             If lErrorLayers.Count > 0 Then
                                 For Each rError As ProjectDS.ErrorSurfaceRow In lErrorLayers
-                                    GCD.GCDProject.ProjectManagerUI.ArcMapManager.AddErrSurface(rError)
+                                    GCDProject.ProjectManagerUI.ArcMapManager.AddErrSurface(rError)
                                 Next
                             End If
                         End If
@@ -1623,9 +1619,8 @@ Namespace UI.Project
 
                 End If
             Catch ex As Exception
-                ExceptionUI.HandleException(ex)
+                ExceptionHelper.HandleException(ex)
             End Try
-
 
         End Sub
 
@@ -1684,9 +1679,9 @@ Namespace UI.Project
                     Dim eType As GCDNodeTypes = GetNodeType(selNode)
                     If eType = GCDNodeTypes.DoD Then
                         Dim nID As Integer = GetNodeID(selNode)
-                        Dim rDod As ProjectDS.DoDsRow = GCD.GCDProject.ProjectManager.ds.DoDs.FindByDoDID(nID)
+                        Dim rDod As ProjectDS.DoDsRow = GCDProject.ProjectManager.ds.DoDs.FindByDoDID(nID)
                         If TypeOf rDod Is ProjectDS.DoDsRow Then
-                            Dim sFolder As String = GCD.GCDProject.ProjectManager.OutputManager.GetDoDOutputFolder(rDod.Name)
+                            Dim sFolder As String = GCDProject.ProjectManager.OutputManager.GetDoDOutputFolder(rDod.Name)
                             If IO.Directory.Exists(sFolder) Then
                                 If sFolder.Contains(" ") Then
                                     sFolder = """" & sFolder & """"
@@ -1699,7 +1694,7 @@ Namespace UI.Project
                 End If
 
             Catch ex As Exception
-                ExceptionUI.HandleException(ex)
+                ExceptionHelper.HandleException(ex)
             End Try
 
         End Sub
@@ -1710,11 +1705,11 @@ Namespace UI.Project
                 If TypeOf selNode Is TreeNode Then
                     Dim eType As GCDNodeTypes = GetNodeType(selNode)
                     If eType = GCDNodeTypes.Project Then
-                        Process.Start("explorer.exe", IO.Path.GetDirectoryName(GCD.GCDProject.ProjectManager.FilePath))
+                        Process.Start("explorer.exe", IO.Path.GetDirectoryName(GCDProject.ProjectManager.FilePath))
                     End If
                 End If
             Catch ex As Exception
-                ExceptionUI.HandleException(ex)
+                ExceptionHelper.HandleException(ex)
             End Try
         End Sub
 
@@ -1723,14 +1718,14 @@ Namespace UI.Project
         Private Sub AddAllAOIsToTheMapToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AddAllAOIsToTheMapToolStripMenuItem.Click
 
             Try
-                Dim rProject As ProjectDS.ProjectRow = GCD.GCDProject.ProjectManager.CurrentProject
+                Dim rProject As ProjectDS.ProjectRow = GCDProject.ProjectManager.CurrentProject
                 If TypeOf rProject Is ProjectDS.ProjectRow Then
                     For Each rAOI As ProjectDS.AOIsRow In rProject.GetAOIsRows
-                        GCD.GCDProject.ProjectManagerUI.ArcMapManager.AddAOI(rAOI)
+                        GCDProject.ProjectManagerUI.ArcMapManager.AddAOI(rAOI)
                     Next
                 End If
             Catch ex As Exception
-                ExceptionUI.HandleException(ex)
+                ExceptionHelper.HandleException(ex)
             End Try
         End Sub
 
@@ -1738,18 +1733,18 @@ Namespace UI.Project
         AddAOIToolStripMenuItem.Click,
         AddAOIToolStripMenuItem1.Click
 
-            Try
-                Dim frm As New AOIPropertiesForm(My.ThisApplication)
-                If frm.ShowDialog = DialogResult.OK Then
-                    Dim nID As Integer = frm.AOIID
-                    If nID > 0 Then
-                        Dim sTag As String = GCDNodeTypes.AOI.ToString & "_" & nID.ToString
-                        LoadTree(sTag)
-                    End If
-                End If
-            Catch ex As Exception
-                ExceptionUI.HandleException(ex)
-            End Try
+            'Try
+            '    Dim frm As New AOIPropertiesForm(My.ThisApplication)
+            '    If frm.ShowDialog = DialogResult.OK Then
+            '        Dim nID As Integer = frm.AOIID
+            '        If nID > 0 Then
+            '            Dim sTag As String = GCDNodeTypes.AOI.ToString & "_" & nID.ToString
+            '            LoadTree(sTag)
+            '        End If
+            '    End If
+            'Catch ex As Exception
+            '    ExceptionUI.HandleException(ex)
+            'End Try
         End Sub
 
 #End Region
@@ -1758,24 +1753,24 @@ Namespace UI.Project
 
         Private Sub EditAOIPropertiesToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles EditAOIPropertiesToolStripMenuItem.Click
 
-            Try
-                Dim selNode As TreeNode = treProject.SelectedNode
-                If TypeOf selNode Is TreeNode Then
-                    Dim eType As GCDNodeTypes = GetNodeType(selNode)
-                    If eType = GCDNodeTypes.AOI Then
-                        Dim nID As Integer = GetNodeID(selNode)
-                        If nID > 0 Then
-                            Dim frm As New AOIPropertiesForm(My.ThisApplication, nID)
-                            If frm.ShowDialog = DialogResult.OK Then
-                                LoadTree(selNode.Tag)
-                            End If
-                        End If
-                    End If
-                End If
+            'Try
+            '    Dim selNode As TreeNode = treProject.SelectedNode
+            '    If TypeOf selNode Is TreeNode Then
+            '        Dim eType As GCDNodeTypes = GetNodeType(selNode)
+            '        If eType = GCDNodeTypes.AOI Then
+            '            Dim nID As Integer = GetNodeID(selNode)
+            '            If nID > 0 Then
+            '                Dim frm As New AOIPropertiesForm(My.ThisApplication, nID)
+            '                If frm.ShowDialog = DialogResult.OK Then
+            '                    LoadTree(selNode.Tag)
+            '                End If
+            '            End If
+            '        End If
+            '    End If
 
-            Catch ex As Exception
-                ExceptionUI.HandleException(ex)
-            End Try
+            'Catch ex As Exception
+            '    ExceptionUI.HandleException(ex)
+            'End Try
 
         End Sub
 
@@ -1787,9 +1782,9 @@ Namespace UI.Project
                     Dim eType As GCDNodeTypes = GetNodeType(selNode)
                     If eType = GCDNodeTypes.AOI Then
                         Dim nID As Integer = GetNodeID(selNode)
-                        For Each rAOI As ProjectDS.AOIsRow In GCD.GCDProject.ProjectManager.CurrentProject.GetAOIsRows
+                        For Each rAOI As ProjectDS.AOIsRow In GCDProject.ProjectManager.CurrentProject.GetAOIsRows
                             If rAOI.AOIID = nID Then
-                                GCD.GCDProject.ProjectManagerUI.ArcMapManager.AddAOI(rAOI)
+                                GCDProject.ProjectManagerUI.ArcMapManager.AddAOI(rAOI)
                                 Exit Sub
                             End If
                         Next
@@ -1797,14 +1792,10 @@ Namespace UI.Project
                 End If
 
             Catch ex As Exception
-                ExceptionUI.HandleException(ex)
+                ExceptionHelper.HandleException(ex)
             End Try
 
         End Sub
-
-        'Private Sub DeleteAOIToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles DeleteAOIToolStripMenuItem.Click
-        '    MsgBox("TODO")
-        'End Sub
 
 #End Region
 
@@ -1828,7 +1819,7 @@ Namespace UI.Project
 
                         If Integer.TryParse(nodSelected.Tag.ToString.Substring(n1stUnderscore + 1, n2ndUnderscore - n1stUnderscore - 1), nNewDEMID) Then
                             If Integer.TryParse(nodSelected.Tag.ToString.Substring(n2ndUnderscore + 1, nodSelected.Tag.ToString.Length - n2ndUnderscore - 1), nOldDEMID) Then
-                                Dim frmDoDCalculation As New DoDPropertiesForm(My.ThisApplication, nNewDEMID, nOldDEMID)
+                                Dim frmDoDCalculation As New UI.ChangeDetection.DoD.frmDoDProperties(nNewDEMID, nOldDEMID)
                                 DoChangeDetection(frmDoDCalculation)
                             End If
                         End If
@@ -1836,7 +1827,7 @@ Namespace UI.Project
                     End If
                 End If
             Catch ex As Exception
-                ExceptionUI.HandleException(ex)
+                ExceptionHelper.HandleException(ex)
             End Try
 
         End Sub
@@ -1855,7 +1846,7 @@ Namespace UI.Project
                             If Integer.TryParse(nodSelected.Tag.ToString.Substring(n2ndUnderscore + 1, nodSelected.Tag.ToString.Length - n2ndUnderscore - 1), nOldDEMID) Then
                                 Dim sNewDEMName As String = String.Empty
                                 Dim sOldDEMName As String = String.Empty
-                                For Each aDEMRow As ProjectDS.DEMSurveyRow In GCD.GCDProject.ProjectManager.ds.DEMSurvey
+                                For Each aDEMRow As ProjectDS.DEMSurveyRow In GCDProject.ProjectManager.ds.DEMSurvey
                                     If aDEMRow.DEMSurveyID = nNewDEMID Then
                                         sNewDEMName = aDEMRow.Name
                                     ElseIf aDEMRow.DEMSurveyID = nOldDEMID Then
@@ -1865,10 +1856,10 @@ Namespace UI.Project
 
                                 If Not String.IsNullOrEmpty(sNewDEMName) Then
                                     If Not String.IsNullOrEmpty(sOldDEMName) Then
-                                        For Each aDoDRow As ProjectDS.DoDsRow In GCD.GCDProject.ProjectManager.ds.DoDs
+                                        For Each aDoDRow As ProjectDS.DoDsRow In GCDProject.ProjectManager.ds.DoDs
                                             If String.Compare(aDoDRow.NewSurveyName, sNewDEMName, True) = 0 Then
                                                 If String.Compare(aDoDRow.OldSurveyName, sOldDEMName, True) = 0 Then
-                                                    GCD.GCDProject.ProjectManagerUI.ArcMapManager.AddDoD(aDoDRow)
+                                                    GCDProject.ProjectManagerUI.ArcMapManager.AddDoD(aDoDRow)
                                                 End If
                                             End If
                                         Next
@@ -1879,7 +1870,7 @@ Namespace UI.Project
                     End If
                 End If
             Catch ex As Exception
-                ExceptionUI.HandleException(ex)
+                ExceptionHelper.HandleException(ex)
             End Try
 
         End Sub
@@ -1889,7 +1880,7 @@ Namespace UI.Project
             Try
                 Process.Start(My.Resources.HelpBaseURL & "gcd-command-reference/gcd-project-explorer")
             Catch ex As Exception
-                ExceptionUI.HandleException(ex)
+                ExceptionHelper.HandleException(ex)
             End Try
 
         End Sub
@@ -1898,20 +1889,20 @@ Namespace UI.Project
 
             Try
 
-                Dim rProject As ProjectDS.ProjectRow = GCD.GCDProject.ProjectManager.CurrentProject
+                Dim rProject As ProjectDS.ProjectRow = GCDProject.ProjectManager.CurrentProject
 
                 'TODO: Insert the GetSortedSurveyRowsMethod
                 'Store DEM Survey Rows in an Ienumerable then loop over
-                Dim sortedSurveys As System.Linq.IOrderedEnumerable(Of GCDAddIn.ProjectDS.DEMSurveyRow) = GetSortedSurveyRows(rProject, m_eSortBy)
+                Dim sortedSurveys As System.Linq.IOrderedEnumerable(Of ProjectDS.DEMSurveyRow) = GetSortedSurveyRows(rProject, m_eSortBy)
 
                 If TypeOf rProject Is ProjectDS.ProjectRow Then
                     For Each rDEM As ProjectDS.DEMSurveyRow In sortedSurveys.Reverse()
                         'For Each rDEM As ProjectDS.DEMSurveyRow In rProject.GetDEMSurveyRows
-                        GCD.GCDProject.ProjectManagerUI.ArcMapManager.AddDEM(rDEM)
+                        GCDProject.ProjectManagerUI.ArcMapManager.AddDEM(rDEM)
                     Next
                 End If
             Catch ex As Exception
-                ExceptionUI.HandleException(ex)
+                ExceptionHelper.HandleException(ex)
             End Try
 
 
@@ -1921,7 +1912,7 @@ Namespace UI.Project
             Try
                 AddDEMSurvey()
             Catch ex As Exception
-                ExceptionUI.HandleException(ex)
+                ExceptionHelper.HandleException(ex)
             End Try
 
         End Sub
@@ -1936,12 +1927,12 @@ Namespace UI.Project
                     Dim eType As GCDNodeTypes = GetNodeType(nodSelected)
                     Dim nID As Integer = GetNodeID(nodSelected)
                     If eType = GCDNodeTypes.BudgetSegregation AndAlso nID > 0 Then
-                        Dim frm As New BudgetSegResultsForm(My.ThisApplication, nID)
+                        Dim frm As New frmBudgetSegResults(nID)
                         frm.ShowDialog()
                     End If
                 End If
             Catch ex As Exception
-                ExceptionUI.HandleException(ex)
+                ExceptionHelper.HandleException(ex)
             End Try
         End Sub
 
@@ -1952,9 +1943,9 @@ Namespace UI.Project
                     Dim eType As GCDNodeTypes = GetNodeType(nodSelected)
                     Dim nID As Integer = GetNodeID(nodSelected)
 
-                    For Each rBS As ProjectDS.BudgetSegregationsRow In GCD.GCDProject.ProjectManager.ds.BudgetSegregations
+                    For Each rBS As ProjectDS.BudgetSegregationsRow In GCDProject.ProjectManager.ds.BudgetSegregations
                         If rBS.BudgetID = nID Then
-                            Dim sPath As String = GCD.GCDProject.ProjectManager.GetAbsolutePath(rBS.OutputFolder)
+                            Dim sPath As String = GCDProject.ProjectManager.GetAbsolutePath(rBS.OutputFolder)
                             If IO.Directory.Exists(sPath) Then
                                 Process.Start("explorer.exe", sPath)
                                 Exit For
@@ -1968,7 +1959,7 @@ Namespace UI.Project
 
                 End If
             Catch ex As Exception
-                ExceptionUI.HandleException(ex)
+                ExceptionHelper.HandleException(ex)
             End Try
         End Sub
 
@@ -1987,106 +1978,106 @@ Namespace UI.Project
                         'frm = New frmSurveyProperties(My.ThisApplication, 0)
 
                         Case GCDNodeTypes.SurveysGroup
-                        AddDEMSurvey()
+                            AddDEMSurvey()
 
-                    Case GCDNodeTypes.AssociatedSurfaceGroup
-                        nID = GetNodeID(nodSelected.Parent)
+                        Case GCDNodeTypes.AssociatedSurfaceGroup
+                            nID = GetNodeID(nodSelected.Parent)
                             frm = New frmAssocSurfaceProperties(nID, 0)
 
                         Case GCDNodeTypes.AssociatedSurface
-                        nID = GetNodeID(nodSelected.Parent.Parent)
+                            nID = GetNodeID(nodSelected.Parent.Parent)
                             frm = New frmAssocSurfaceProperties(nID, 0)
 
                         Case GCDNodeTypes.ErrorSurfaceGroup
-                        nID = GetNodeID(nodSelected.Parent)
+                            nID = GetNodeID(nodSelected.Parent)
                             For Each rDEM As ProjectDS.DEMSurveyRow In GCDProject.ProjectManager.CurrentProject.GetDEMSurveyRows
                                 If nID = rDEM.DEMSurveyID Then
-                                    frm = New frmErrorCalculation2(My.ThisApplication, rDEM)
+                                    frm = New frmErrorCalculation2(rDEM)
                                     Exit For
                                 End If
                             Next
 
                         Case GCDNodeTypes.ErrorSurface
-                        nID = GetNodeID(nodSelected.Parent.Parent)
-                        For Each rDEM As ProjectDS.DEMSurveyRow In GCD.GCDProject.ProjectManager.CurrentProject.GetDEMSurveyRows
-                            If nID = rDEM.DEMSurveyID Then
-                                frm = New frmErrorCalculation2(My.ThisApplication, rDEM)
-                                Exit For
-                            End If
-                        Next
+                            nID = GetNodeID(nodSelected.Parent.Parent)
+                            For Each rDEM As ProjectDS.DEMSurveyRow In GCDProject.ProjectManager.CurrentProject.GetDEMSurveyRows
+                                If nID = rDEM.DEMSurveyID Then
+                                    frm = New frmErrorCalculation2(rDEM)
+                                    Exit For
+                                End If
+                            Next
 
-                    Case GCDNodeTypes.AOIGroup, GCDNodeTypes.AOI
-                        frm = New AOIPropertiesForm(My.ThisApplication)
+                        Case GCDNodeTypes.AOIGroup, GCDNodeTypes.AOI
+                            'frm = New AOIPropertiesForm(My.ThisApplication)
 
-                    Case GCDNodeTypes.BudgetSegregationGroup, GCDNodeTypes.BudgetSegregation
-                        nID = GetNodeID(nodSelected.Parent.Parent)
-                        For Each rDoD As ProjectDS.DoDsRow In GCD.GCDProject.ProjectManager.ds.DoDs
-                            If rDoD.DoDID = nID Then
-                                frm = New BudgetSegPropertiesForm(My.ThisApplication, rDoD)
-                                Exit For
-                            End If
-                        Next
+                        Case GCDNodeTypes.BudgetSegregationGroup, GCDNodeTypes.BudgetSegregation
+                            nID = GetNodeID(nodSelected.Parent.Parent)
+                            For Each rDoD As ProjectDS.DoDsRow In GCDProject.ProjectManager.ds.DoDs
+                                If rDoD.DoDID = nID Then
+                                    frm = New frmBudgetSegProperties(rDoD)
+                                    Exit For
+                                End If
+                            Next
 
-                    Case GCDNodeTypes.DoD, GCDNodeTypes.ChangeDetectionGroup, GCDNodeTypes.ChangeDetectionDEMPair, GCDNodeTypes.AnalysesGroup
-                        frm = New DoDPropertiesForm(My.ThisApplication)
+                        Case GCDNodeTypes.DoD, GCDNodeTypes.ChangeDetectionGroup, GCDNodeTypes.ChangeDetectionDEMPair, GCDNodeTypes.AnalysesGroup
+                            frm = New frmDoDProperties()
 
-                End Select
+                    End Select
 
-                If TypeOf frm Is Form Then
-                    If frm.ShowDialog = DialogResult.OK Then
-                        LoadTree(nodSelected.Tag)
+                    If TypeOf frm Is Form Then
+                        If frm.ShowDialog = DialogResult.OK Then
+                            LoadTree(nodSelected.Tag)
+                        End If
                     End If
                 End If
-            End If
-        Catch ex As Exception
-            ExceptionUI.HandleException(ex)
-        End Try
-    End Sub
-
-    Private Sub AddBudgetSegregationToolStripMenuItem1_Click(sender As System.Object, e As System.EventArgs) Handles _
-        AddBudgetSegregationToolStripMenuItem1.Click, _
-        AddBudgetSegregationToolStripMenuItem2.Click, _
-        AddBudgetSegregationToolStripMenuItem.Click
-
-        Try
-            Dim nodSelected As TreeNode = treProject.SelectedNode
-            If TypeOf nodSelected Is TreeNode Then
-                Dim nID As Integer = GetNodeID(nodSelected)
-                Dim eType As GCDNodeTypes = GetNodeType(nodSelected)
-                Dim nodDoD As TreeNode = Nothing
-                Select Case eType
-                    Case GCDNodeTypes.DoD
-                        nodDoD = nodSelected
-
-                    Case GCDNodeTypes.BudgetSegregationGroup
-                        nodDoD = nodSelected.Parent
-
-                    Case GCDNodeTypes.BudgetSegregationMask
-                        nodDoD = nodSelected.Parent.Parent
-
-                    Case GCDNodeTypes.BudgetSegregation
-                        nodDoD = nodSelected.Parent.Parent.Parent
-                    Case Else
-                        Throw New Exception("Unhandled Node Type")
-                End Select
-                Dim nDoDID As Integer = GetNodeID(nodDoD)
-
-                For Each rDoD As ProjectDS.DoDsRow In GCD.GCDProject.ProjectManager.ds.DoDs
-                    If rDoD.DoDID = nDoDID Then
-                        Dim frm As New BudgetSegPropertiesForm(My.ThisApplication, rDoD)
-                        If frm.ShowDialog() = DialogResult.OK Then
-                            LoadTree(frm.BSID)
-                                Dim frmResults As New BudgetSegResultsForm(My.ThisApplication, frm.BSID)
-                                frmResults.ShowDialog()
-                        End If
-                        Exit For
-                    End If
-                Next
-            End If
-        Catch ex As Exception
+            Catch ex As Exception
                 ExceptionHelper.HandleException(ex)
             End Try
-    End Sub
+        End Sub
+
+        Private Sub AddBudgetSegregationToolStripMenuItem1_Click(sender As System.Object, e As System.EventArgs) Handles _
+            AddBudgetSegregationToolStripMenuItem1.Click,
+            AddBudgetSegregationToolStripMenuItem2.Click,
+            AddBudgetSegregationToolStripMenuItem.Click
+
+            Try
+                Dim nodSelected As TreeNode = treProject.SelectedNode
+                If TypeOf nodSelected Is TreeNode Then
+                    Dim nID As Integer = GetNodeID(nodSelected)
+                    Dim eType As GCDNodeTypes = GetNodeType(nodSelected)
+                    Dim nodDoD As TreeNode = Nothing
+                    Select Case eType
+                        Case GCDNodeTypes.DoD
+                            nodDoD = nodSelected
+
+                        Case GCDNodeTypes.BudgetSegregationGroup
+                            nodDoD = nodSelected.Parent
+
+                        Case GCDNodeTypes.BudgetSegregationMask
+                            nodDoD = nodSelected.Parent.Parent
+
+                        Case GCDNodeTypes.BudgetSegregation
+                            nodDoD = nodSelected.Parent.Parent.Parent
+                        Case Else
+                            Throw New Exception("Unhandled Node Type")
+                    End Select
+                    Dim nDoDID As Integer = GetNodeID(nodDoD)
+
+                    For Each rDoD As ProjectDS.DoDsRow In GCDProject.ProjectManager.ds.DoDs
+                        If rDoD.DoDID = nDoDID Then
+                            Dim frm As New frmBudgetSegProperties(rDoD)
+                            If frm.ShowDialog() = DialogResult.OK Then
+                                LoadTree(frm.BSID)
+                                Dim frmResults As New frmBudgetSegResults(frm.BSID)
+                                frmResults.ShowDialog()
+                            End If
+                            Exit For
+                        End If
+                    Next
+                End If
+            Catch ex As Exception
+                ExceptionHelper.HandleException(ex)
+            End Try
+        End Sub
 
     End Class
 

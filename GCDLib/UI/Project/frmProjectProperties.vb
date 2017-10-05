@@ -29,11 +29,11 @@ Namespace UI.Project
         Private Sub CreateNewProjectForm_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
 
-            If GISCode.WorkspaceManager.WorkspacePath.Contains(" ") Then
+            If Core.WorkspaceManager.WorkspacePath.Contains(" ") Then
                 MessageBox.Show(String.Format("The specified temp workspace directory contains spaces ({0}). You must specify a temp workspace that does not contain spaces or punctuation characters in the GCD Options before you create or open a GCD project.", WorkspaceManager.WorkspacePath), My.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Warning)
                 Me.Close()
             Else
-                If Not System.IO.Directory.Exists(WorkspaceManager.WorkspacePath) Then
+                If Not System.IO.Directory.Exists(Core.WorkspaceManager.WorkspacePath) Then
                     MessageBox.Show("The temporary workspace directory does not exist. Change the temporary workspace path in GCD Options before creating or opening a GCD project.", My.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information)
                     Me.Close()
                 End If
@@ -48,14 +48,14 @@ Namespace UI.Project
             ttpTooltip.SetToolTip(cboDisplayUnits, "The default units for displaying and outputting change detection results.")
             ttpTooltip.SetToolTip(valPrecision, "The number of decimal places used to round raster cell coordinates when determining divisible raster extents.")
 
-            cboDisplayUnits.Items.Add(New LinearUnitClass("millimeters (mm)", NumberFormatting.LinearUnits.mm))
-            cboDisplayUnits.Items.Add(New LinearUnitClass("centimeters (cm)", NumberFormatting.LinearUnits.cm))
-            Dim i As Integer = cboDisplayUnits.Items.Add(New LinearUnitClass("meters (m)", NumberFormatting.LinearUnits.m))
-            cboDisplayUnits.Items.Add(New LinearUnitClass("kilometers (km)", NumberFormatting.LinearUnits.km))
-            cboDisplayUnits.Items.Add(New LinearUnitClass("inches (in)", NumberFormatting.LinearUnits.inch))
-            cboDisplayUnits.Items.Add(New LinearUnitClass("feet (ft)", NumberFormatting.LinearUnits.ft))
-            cboDisplayUnits.Items.Add(New LinearUnitClass("yards (yd)", NumberFormatting.LinearUnits.yard))
-            cboDisplayUnits.Items.Add(New LinearUnitClass("miles (mi)", NumberFormatting.LinearUnits.mile))
+            cboDisplayUnits.Items.Add(New naru.math.LinearUnitClass("millimeters (mm)", naru.math.NumberFormatting.LinearUnits.mm))
+            cboDisplayUnits.Items.Add(New naru.math.LinearUnitClass("centimeters (cm)", naru.math.NumberFormatting.LinearUnits.cm))
+            Dim i As Integer = cboDisplayUnits.Items.Add(New naru.math.LinearUnitClass("meters (m)", naru.math.NumberFormatting.LinearUnits.m))
+            cboDisplayUnits.Items.Add(New naru.math.LinearUnitClass("kilometers (km)", naru.math.NumberFormatting.LinearUnits.km))
+            cboDisplayUnits.Items.Add(New naru.math.LinearUnitClass("inches (in)", naru.math.NumberFormatting.LinearUnits.inch))
+            cboDisplayUnits.Items.Add(New naru.math.LinearUnitClass("feet (ft)", naru.math.NumberFormatting.LinearUnits.ft))
+            cboDisplayUnits.Items.Add(New naru.math.LinearUnitClass("yards (yd)", naru.math.NumberFormatting.LinearUnits.yard))
+            cboDisplayUnits.Items.Add(New naru.math.LinearUnitClass("miles (mi)", naru.math.NumberFormatting.LinearUnits.mile))
             cboDisplayUnits.SelectedIndex = i
 
             If DisplayMode = DisplayModes.Create Then
@@ -72,10 +72,10 @@ Namespace UI.Project
             Else
                 Me.Text = Me.Text & " Properties"
 
-                Dim theProjectRow As ProjectDS.ProjectRow = GCD.GCDProject.ProjectManager.CurrentProject
+                Dim theProjectRow As ProjectDS.ProjectRow = Core.GCDProject.ProjectManager.CurrentProject
                 txtName.Text = theProjectRow.Name
                 txtDirectory.Text = theProjectRow.OutputDirectory
-                txtGCDPath.Text = GCD.GCDProject.ProjectManager.FilePath
+                txtGCDPath.Text = Core.GCDProject.ProjectManager.FilePath
                 txtDescription.Text = theProjectRow.Description
                 valPrecision.Value = theProjectRow.Precision
 
@@ -99,12 +99,11 @@ Namespace UI.Project
 
         Private Sub btnBrowseOutput_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnBrowseOutput.Click
 
-            Dim sFolder As String = GISCode.FileSystem.BrowseToFolder("Select the GCD Project Parent Directory", My.Settings.LastUsedProjectFolder)
-            If String.IsNullOrEmpty(sFolder) Then
+            If naru.os.Folder.BrowseFolder(txtDirectory, "Select the GCD Project Parent Directory", My.Settings.LastUsedProjectFolder) <> DialogResult.OK Then
                 Exit Sub
             End If
 
-            Dim dFolder As New IO.DirectoryInfo(sFolder)
+            Dim dFolder As New IO.DirectoryInfo(txtDirectory.Text)
             If dFolder.Exists Then
                 Dim diar1 As IO.FileInfo() = dFolder.GetFiles()
                 Dim dra As IO.FileInfo
@@ -118,9 +117,9 @@ Namespace UI.Project
                         Exit Sub
                     End If
                 Next
-                txtDirectory.Text = sFolder
+
                 If String.IsNullOrEmpty(txtName.Text) Then
-                    txtName.Text = IO.Path.GetFileName(sFolder)
+                    txtName.Text = IO.Path.GetFileName(txtDirectory.Text)
                     btnOK.Focus()
                 End If
             Else
@@ -135,8 +134,8 @@ Namespace UI.Project
             If Not String.IsNullOrEmpty(txtName.Text) Then
                 If Not String.IsNullOrEmpty(txtDirectory.Text) Then
                     If IO.Directory.Exists(txtDirectory.Text) Then
-                        sGCDPath = IO.Path.Combine(txtDirectory.Text, GISCode.FileSystem.RemoveDangerousCharacters(txtName.Text))
-                        sGCDPath = IO.Path.Combine(sGCDPath, GISCode.FileSystem.RemoveDangerousCharacters(txtName.Text))
+                        sGCDPath = IO.Path.Combine(txtDirectory.Text, Core.FileSystem.RemoveDangerousCharacters(txtName.Text))
+                        sGCDPath = IO.Path.Combine(sGCDPath, Core.FileSystem.RemoveDangerousCharacters(txtName.Text))
                         sGCDPath = IO.Path.ChangeExtension(sGCDPath, "gcd")
                     End If
                 End If
@@ -155,7 +154,7 @@ Namespace UI.Project
         Private Sub btnOK_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnOK.Click
 
             If Not ValidateForm() Then
-                Me.DialogResult = Windows.Forms.DialogResult.None
+                Me.DialogResult = System.Windows.Forms.DialogResult.None
                 Exit Sub
             End If
 
@@ -166,9 +165,9 @@ Namespace UI.Project
             '
             Try
                 If DisplayMode = DisplayModes.Create Then
-                    ProjectManagerUI.FilePath = txtGCDPath.Text
+                    Core.GCDProject.ProjectManagerUI.FilePath = txtGCDPath.Text
                     'ProjectManagerUI.ds.Project.AddProjectRow(txtName.Text, txtDescription.Text, txtDirectory.Text, Now, System.Reflection.Assembly.GetExecutingAssembly.GetName.Version.ToString, valPrecision.Value, DirectCast(cboDisplayUnits.SelectedItem, LinearUnitClass).LinearUnit.ToString)
-                    ProjectManagerUI.ds.Project.AddProjectRow(txtName.Text, txtDescription.Text, txtDirectory.Text, Now, System.Reflection.Assembly.GetExecutingAssembly.GetName.Version.ToString, valPrecision.Value, Nothing, Nothing, GCD.GCDProject.ProjectManager.ProjectTypes.AddIn.ToString())
+                    Core.GCDProject.ProjectManagerUI.ds.Project.AddProjectRow(txtName.Text, txtDescription.Text, txtDirectory.Text, Now, System.Reflection.Assembly.GetExecutingAssembly.GetName.Version.ToString, valPrecision.Value, Nothing, Nothing, GCD.GCDProject.ProjectManager.ProjectTypes.AddIn.ToString())
                     Try
                         Dim gcd As GCDExtension = GCDExtension.GetGCDExtension(My.ThisApplication)
                         If TypeOf gcd Is GCDExtension Then
@@ -183,24 +182,24 @@ Namespace UI.Project
                         ex.Data.Add("Project Name", txtName.Text)
                         ex.Data.Add("XML File", txtGCDPath.Text)
                         ex.Data.Add("Directory", txtDirectory.Text)
-                        ExceptionUI.HandleException(ex, "An error occured while updating the extension with the latest project")
+                        Core.ExceptionHelper.HandleException(ex, "An error occured while updating the extension with the latest project")
                     End Try
 
                 Else
                     ' Editing properties of existing project
-                    Dim theProjectRow As ProjectDS.ProjectRow = GCD.GCDProject.ProjectManager.CurrentProject
+                    Dim theProjectRow As ProjectDS.ProjectRow = Core.GCDProject.ProjectManager.CurrentProject
                     theProjectRow.Name = txtName.Text
                     theProjectRow.Description = txtDescription.Text
                     'theProjectRow.DisplayUnits = DirectCast(cboDisplayUnits.SelectedItem, LinearUnitClass).LinearUnit.ToString
                 End If
 
-                ProjectManager.save()
+                Core.GCDProject.ProjectManager.save()
 
             Catch ex As Exception
                 ex.Data.Add("Project Name", txtName.Text)
                 ex.Data.Add("XML File", txtGCDPath.Text)
                 ex.Data.Add("Directory", txtDirectory.Text)
-                ExceptionUI.HandleException(ex, "An error occured while trying to save the information")
+                Core.ExceptionHelper.HandleException(ex, "An error occured while trying to save the information")
             End Try
 
         End Sub

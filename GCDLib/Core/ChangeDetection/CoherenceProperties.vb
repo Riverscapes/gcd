@@ -1,4 +1,4 @@
-﻿Namespace GISCode.GCD.ChangeDetection
+﻿Namespace Core.ChangeDetection
 
     Public Class CoherenceProperties
 

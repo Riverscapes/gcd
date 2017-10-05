@@ -1,4 +1,7 @@
-﻿Namespace UI.SurveyLibrary
+﻿Imports GCD.GCDLib.Core
+Imports System.Windows.Forms
+
+Namespace UI.SurveyLibrary
 
     Public Class frmDEMSurveyProperties
 
@@ -33,15 +36,15 @@
                 txtName.Text = demRow.Name
                 txtRasterPath.Text = demRow.Source
                 txtMask.Text = demRow.MethodMask
-                txtFolder.Text = GCD.GCDProject.ProjectManager.OutputManager.DEMSurveyFolder(demRow.Name)
+                txtFolder.Text = Core.GCDProject.ProjectManager.OutputManager.DEMSurveyFolder(demRow.Name)
                 rdoSingle.Checked = demRow.SingleMethod
                 rdoMulti.Checked = demRow.MultiMethod
 
                 ' Select the method mask field
                 If demRow.MultiMethod Then
-                    Dim sMaskPath As String = GCD.GCDProject.ProjectManager.GetAbsolutePath(txtMask.Text)
-                    If GISDataStructures.VectorDataSource.Exists(sMaskPath, esriGeometryPolygon) Then
-                        Dim gMask As New GISDataStructures.PolygonDataSource(sMaskPath)
+                    Dim sMaskPath As String = Core.GCDProject.ProjectManager.GetAbsolutePath(txtMask.Text)
+                    If Core.GISDataStructures.Vector.Exists(sMaskPath, esriGeometryPolygon) Then
+                        Dim gMask As New Core.GISDataStructures.Vector(sMaskPath)
                         gMask.FillComboWithFields(cboIdentify, "Method", esriFieldType.esriFieldTypeString, True)
                         For i As Integer = 0 To cboIdentify.Items.Count - 1
                             If String.Compare(cboIdentify.Items(i).ToString, demRow.MethodMaskField, True) = 0 Then
@@ -59,7 +62,7 @@
                     Next
                 End If
 
-                m_SurveyDateTime = New SurveyDateTime(demRow)
+                m_SurveyDateTime = New Core.GCDProject.SurveyDateTime(demRow)
             End If
 
             lblDatetime.Text = m_SurveyDateTime.ToString
@@ -108,10 +111,10 @@
 
         Private Function ValidateForm() As Boolean
 
-            For Each aDEM As ProjectDS.DEMSurveyRow In GCD.GCDProject.ProjectManagerUI.ds.DEMSurvey
+            For Each aDEM As ProjectDS.DEMSurveyRow In Core.GCDProject.ProjectManagerUI.ds.DEMSurvey
                 If aDEM.DEMSurveyID <> m_DEMSurveyID Then
                     If String.Compare(aDEM.Name, txtName.Text, True) = 0 Then
-                        MessageBox.Show(String.Format("Ther is already another DEM survey in this project with the name '{0}'. Each DEM Survey must have a unique name.", txtName.Text))
+                        System.Windows.Forms.MessageBox.Show(String.Format("Ther is already another DEM survey in this project with the name '{0}'. Each DEM Survey must have a unique name.", txtName.Text))
                         Return False
                     End If
                 End If
@@ -201,8 +204,8 @@
 
                 Dim message As String = "You have loaded DEM files into your project, are you sure you want to exit without saving this survey to your project's survey library in the project GCD file?"
                 Dim caption As String = "Are you sure?"
-                Dim response = MessageBox.Show(message, caption, MessageBoxButtons.YesNo, MessageBoxIcon.Question)
-                If response = DialogResult.Yes Then
+                Dim response = System.Windows.Forms.MessageBox.Show(message, caption, MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                If response = System.Windows.Forms.DialogResult.Yes Then
                     DEMSurveyBindingSource.CancelEdit()
                 Else
                     DialogResult = Nothing
@@ -219,7 +222,7 @@
                 If Not String.IsNullOrEmpty(txtName.Text) Then
                     If TypeOf m_ImportRasterform Is frmImportRaster Then
                         If TypeOf m_ImportRasterform.ucRaster.SelectedItem Is GISDataStructures.Raster Then
-                            sRasterPath = GCD.GCDProject.ProjectManager.OutputManager.DEMSurveyRasterPath(txtName.Text)
+                            sRasterPath = GCDProject.ProjectManager.OutputManager.DEMSurveyRasterPath(txtName.Text)
                         End If
                     End If
                 End If
@@ -250,9 +253,9 @@
 
             If ValidateForm() Then
                 SaveDEMSurvey()
-                Me.DialogResult = Windows.Forms.DialogResult.OK
+                Me.DialogResult = DialogResult.OK
             Else
-                Me.DialogResult = Windows.Forms.DialogResult.None
+                Me.DialogResult = DialogResult.None
             End If
 
         End Sub
@@ -300,7 +303,7 @@
             End If
 
             DEMSurfaceBindingSource.EndEdit()
-            ProjectManager.save()
+            GCDProject.ProjectManager.save()
 
             'TODO: call here to update the ProjectExplorer Tree
             'ProjectExplorerUC.LoadTree(ProjectExplorerUC.GCDNodeTypes.DEMSurvey.ToString)
@@ -309,7 +312,7 @@
         Private Sub btnBrowseFile_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdAddToMap.Click
 
             Dim CurrentRow As DataRowView = DEMSurfaceBindingSource.Current
-            GCD.GCDProject.ProjectManagerUI.ArcMapManager.AddDEM(DEMSurveyBindingSource.Current.Row)
+            GCDProject.ProjectManagerUI.ArcMapManager.AddDEM(DEMSurveyBindingSource.Current.Row)
 
             'If GISDataStructures.Raster.Exists(txtRasterPath.Text) Then
             '    Dim sHillShade As String = GCD.GCDProject.ProjectManager.OutputManager.DEMSurveyHillShadeRasterPath(txtName.Text)
@@ -336,24 +339,24 @@
 
                 ' browse and see if the user selects a new polygon feature class.
                 Dim gNewMask As GISDataStructures.PolygonDataSource = GISDataStructures.VectorDataSource.BrowseOpen("DEM Survey Method Polygon Mask", sFolder, sName, GISDataStructures.BrowseGISTypes.Polygon, Me.Handle)
-                If Not TypeOf gNewMask Is GISDataStructures.PolygonDataSource Then
+                If Not TypeOf gNewMask Is GISDataStructures.Vector Then
                     Exit Sub
                 End If
 
                 ' Check if the user has browsed to the same mask. In which case do nothing except reload the fields
                 ' (just in case they are doing this for a reason.
-                Dim sTempPath As String = GCD.GCDProject.ProjectManager.GetRelativePath(gNewMask.FullPath)
+                Dim sTempPath As String = GCDProject.ProjectManager.GetRelativePath(gNewMask.FullPath)
                 If String.Compare(sTempPath, txtMask.Text, True) = 0 Then
                     gNewMask.FillComboWithFields(cboIdentify, "Method", esriFieldType.esriFieldTypeString, True)
                     Exit Sub
                 End If
 
-                If TypeOf gNewMask Is GISDataStructures.PolygonDataSource Then
+                If TypeOf gNewMask Is GISDataStructures.Vector Then
 
                     ' Check that the new mask has the same spatial reference as the DEM survey.
                     Dim dr As DataRowView = DEMSurveyBindingSource.Current
                     Dim demRow As ProjectDS.DEMSurveyRow = dr.Row
-                    Dim gDEM As New GISDataStructures.RasterDirect(GCD.GCDProject.ProjectManager.GetAbsolutePath(demRow.Source))
+                    Dim gDEM As New GISDataStructures.Raster(GCDProject.ProjectManager.GetAbsolutePath(demRow.Source))
                     If Not gDEM.CheckSpatialReferenceMatches(gNewMask.SpatialReference) Then
                         MsgBox("The spatial reference of the selected polygon feature class does not match that of the DEM survey raster (" & gDEM.SpatialReference.Name.ToString & ").", MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
                         Exit Sub
@@ -383,21 +386,21 @@
                     ' Attempt to delete any existing mask feature class
                     DeleteExistingMaskFeatureClass()
 
-                    Dim sMethodMask As String = GCD.GCDProject.ProjectManager.OutputManager.DEMSurveyMethodMaskPath(txtName.Text)
+                    Dim sMethodMask As String = GCDProject.ProjectManager.OutputManager.DEMSurveyMethodMaskPath(txtName.Text)
                     Try
-                        IO.Directory.CreateDirectory(GISDataStructures.VectorDataSource.GetWorkspacePath(sMethodMask))
+                        IO.Directory.CreateDirectory(GISDataStructures.GISDataSource.GetWorkspacePath(sMethodMask))
                     Catch ex As Exception
                         Dim ex2 As New Exception("Error attempting to create the directory for the DEM Survey method mask.")
                         ex2.Data.Add("Method Mask Folder", sMethodMask)
-                        ExceptionUI.HandleException(ex2)
+                        ExceptionHelper.HandleException(ex2)
                         Exit Sub
                     End Try
 
-                    If GISDataStructures.PolygonDataSource.Exists(sMethodMask, esriGeometryPolygon) Then
+                    If GISDataStructures.GISDataSource.Exists(sMethodMask, esriGeometryPolygon) Then
                         Dim ex As New Exception("The polygon mask feature class already exists.")
                         ex.Data.Add("Original Mask", gNewMask.FullPath)
                         ex.Data.Add("GCD Project Mask", sMethodMask)
-                        ExceptionUI.HandleException(ex)
+                        ExceptionHelper.HandleException(ex)
                     Else
                         Try
                             ' GP.Copy doesn't work for file geodatabases.
@@ -409,17 +412,17 @@
                             End If
                             GP.DataManagement.Copy(sSourcePath, sMethodMask)
 
-                            gNewMask = New GISDataStructures.PolygonDataSource(sMethodMask)
+                            gNewMask = New GISDataStructures.Vector(sMethodMask)
 
                             ' Poplulate the method mask dropdown with the string fields from the feature class
                             gNewMask.FillComboWithFields(cboIdentify, "Method", esriFieldType.esriFieldTypeString)
-                            txtMask.Text = GCD.GCDProject.ProjectManager.GetRelativePath(sMethodMask)
+                            txtMask.Text = GCDProject.ProjectManager.GetRelativePath(sMethodMask)
 
                         Catch ex As Exception
                             Dim ex2 As New Exception("Error attempting to copy the method mask feature class into the GCD project folder.", ex)
                             ex2.Data.Add("Original Path", gNewMask.FullPath)
                             ex2.Data.Add("GCD Project Path", sMethodMask)
-                            ExceptionUI.HandleException(ex2)
+                            ExceptionHelper.HandleException(ex2)
                             Exit Sub
                         End Try
                     End If
@@ -427,7 +430,7 @@
                 End If
 
             Catch ex As Exception
-                ExceptionUI.HandleException(ex)
+                ExceptionHelper.HandleException(ex)
             End Try
         End Sub
 
@@ -437,15 +440,15 @@
         ''' <remarks>Called from choosing a new feature class or from setting the survey type to single.</remarks>
         Private Sub DeleteExistingMaskFeatureClass()
 
-            Dim sMaskPath As String = GCD.GCDProject.ProjectManager.GetAbsolutePath(txtMask.Text)
-            If GISDataStructures.PolygonDataSource.Exists(sMaskPath) Then
-                Dim sWorkspace As String = GISDataStructures.VectorDataSource.GetWorkspacePath(sMaskPath)
+            Dim sMaskPath As String = GCDProject.ProjectManager.GetAbsolutePath(txtMask.Text)
+            If GISDataStructures.GISDataSource.Exists(sMaskPath) Then
+                Dim sWorkspace As String = GISDataStructures.Vector.GetWorkspacePath(sMaskPath)
                 Try
-                    GP.DataManagement.Delete(sMaskPath)
+                    GISDataStructures.Raster.DeleteRaster(sMaskPath)
                     txtMask.Text = String.Empty
                     cboIdentify.Items.Clear()
                 Catch ex As Exception
-                    ExceptionUI.HandleException(ex, "Error deleting the existing DEM survey method mask polygon feature class. You can attempt to delete it using ArcCatalog and then try again to browse to a new method mask.")
+                    ExceptionHelper.HandleException(ex, "Error deleting the existing DEM survey method mask polygon feature class. You can attempt to delete it using ArcCatalog and then try again to browse to a new method mask.")
                     Exit Sub
                 End Try
 
@@ -475,12 +478,12 @@
 
         Private Sub LoadRasterProperties()
 
-            Dim sAbsolutePath As String = GCD.GCDProject.ProjectManager.GetAbsolutePath(txtRasterPath.Text)
+            Dim sAbsolutePath As String = GCDProject.ProjectManager.GetAbsolutePath(txtRasterPath.Text)
             If Not GISDataStructures.Raster.Exists(sAbsolutePath) Then
                 Exit Sub
             End If
 
-            Dim gRaster As New GISDataStructures.RasterDirect(sAbsolutePath)
+            Dim gRaster As New GISDataStructures.Raster(sAbsolutePath)
             Dim demRow As ProjectDS.DEMSurveyRow = DirectCast(DEMSurveyBindingSource.Current, DataRowView).Row
 
             Dim sRasterProperties As String = "-- GCD Raster Properties --"
@@ -535,12 +538,12 @@
             If Not CurrentRow Is Nothing Then
 
                 DEMSurveyBindingSource.EndEdit()
-                ProjectManager.save()
+                GCDProject.ProjectManager.save()
 
                 Dim CurrentSurfaceRow As DataRowView = DEMSurfaceBindingSource.Current
                 If TypeOf CurrentSurfaceRow Is DataRowView AndAlso TypeOf CurrentSurfaceRow.Row Is ProjectDS.AssociatedSurfaceRow Then
                     Dim DEMSurfaceID As Integer = DirectCast(CurrentSurfaceRow.Row, ProjectDS.AssociatedSurfaceRow).AssociatedSurfaceID
-                    Dim SurfaceForm As New frmAssocSurfaceProperties(m_pArcMap, m_DEMSurveyID, DEMSurfaceID)
+                    Dim SurfaceForm As New frmAssocSurfaceProperties(m_DEMSurveyID, DEMSurfaceID)
                     SurfaceForm.ShowDialog()
                 End If
             End If
@@ -707,42 +710,42 @@
             End If
 
             Try
-                Dim demRow As ProjectDS.DEMSurveyRow = GCD.GCDProject.ProjectManager.ds.DEMSurvey.FindByDEMSurveyID(m_DEMSurveyID)
+                Dim demRow As ProjectDS.DEMSurveyRow = GCDProject.ProjectManager.ds.DEMSurvey.FindByDEMSurveyID(m_DEMSurveyID)
                 DEMSurveyBindingSource.EndEdit()
-                SpecifyErrorSurface(m_pArcMap, demRow)
+                SpecifyErrorSurface(demRow)
             Catch ex As Exception
-                ExceptionUI.HandleException(ex)
+                ExceptionHelper.HandleException(ex)
             End Try
 
         End Sub
 
-        Public Shared Function SpecifyErrorSurface(pArcMap As IApplication, rDEM As ProjectDS.DEMSurveyRow) As ProjectDS.ErrorSurfaceRow
+        Public Shared Function SpecifyErrorSurface(rDEM As ProjectDS.DEMSurveyRow) As ProjectDS.ErrorSurfaceRow
 
             Dim rError As ProjectDS.ErrorSurfaceRow = Nothing
-            Dim gDEM As New GISDataStructures.RasterDirect(GCD.GCDProject.ProjectManager.GetAbsolutePath(rDEM.Source))
-            Dim frm As New frmImportRaster(pArcMap, gDEM, rDEM, frmImportRaster.ImportRasterPurposes.ErrorCalculation, "Error Surface")
-            If frm.ShowDialog = Windows.Forms.DialogResult.OK Then
-                Dim gRaster As GISDataStructures.RasterDirect = Nothing
+            Dim gDEM As New Core.GISDataStructures.Raster(Core.GCDProject.ProjectManager.GetAbsolutePath(rDEM.Source))
+            Dim frm As New frmImportRaster(gDEM, rDEM, frmImportRaster.ImportRasterPurposes.ErrorCalculation, "Error Surface")
+            If frm.ShowDialog = System.Windows.Forms.DialogResult.OK Then
+                Dim gRaster As GISDataStructures.Raster = Nothing
                 Try
                     gRaster = frm.ProcessRaster
                 Catch ex As Exception
                     Try
-                        IO.Directory.Delete(GISDataStructures.Raster.GetWorkspacePath(frm.txtRasterPath.Text))
+                        GISDataStructures.Raster.DeleteRaster(Core.GISDataStructures.Raster.GetWorkspacePath(frm.txtRasterPath.Text))
                     Catch ex2 As Exception
                         ' do nothing
                     End Try
 
-                    ExceptionUI.HandleException(ex, "An error occurred attempting to import the error surface into the GCD project. No information has been saved to the GCD project file but you should check the GCD project folder to determine if any remains of the raster remain.")
+                    ExceptionHelper.HandleException(ex, "An error occurred attempting to import the error surface into the GCD project. No information has been saved to the GCD project file but you should check the GCD project folder to determine if any remains of the raster remain.")
                 End Try
 
-                If TypeOf gRaster Is GISDataStructures.RasterDirect Then
+                If TypeOf gRaster Is GISDataStructures.Raster Then
                     Try
-                        Dim sRasterPath As String = GCD.GCDProject.ProjectManager.GetRelativePath(frm.txtRasterPath.Text)
-                        rError = GCD.GCDProject.ProjectManager.ds.ErrorSurface.AddErrorSurfaceRow(frm.txtName.Text, "Imported Raster", sRasterPath, rDEM)
-                        ProjectManager.save()
+                        Dim sRasterPath As String = Core.GCDProject.ProjectManager.GetRelativePath(frm.txtRasterPath.Text)
+                        rError = GCDProject.ProjectManager.ds.ErrorSurface.AddErrorSurfaceRow(frm.txtName.Text, "Imported Raster", sRasterPath, rDEM)
+                        GCDProject.ProjectManager.save()
 
                         If My.Settings.AddOutputLayersToMap Then
-                            GCD.GCDProject.ProjectManagerUI.ArcMapManager.AddErrSurface(rError)
+                            GCDProject.ProjectManagerUI.ArcMapManager.AddErrSurface(rError)
                         End If
                     Catch ex As Exception
                         Dim bRasterExists As Boolean = True
@@ -760,7 +763,7 @@
                             sMsg &= "The GCD project error surface raster was deleted."
                         End If
 
-                        ExceptionUI.HandleException(ex, sMsg)
+                        ExceptionHelper.HandleException(ex, sMsg)
                     End Try
                 End If
             End If
@@ -775,7 +778,7 @@
             If ValidateForm() Then
                 SaveDEMSurvey()
                 Dim dr As DataRowView = DEMSurveyBindingSource.Current
-                Dim frm As New frmErrorCalculation2(m_pArcMap, DirectCast(dr.Row, ProjectDS.DEMSurveyRow))
+                Dim frm As New frmErrorCalculation2(DirectCast(dr.Row, ProjectDS.DEMSurveyRow))
                 frm.ShowDialog()
             End If
 
@@ -816,7 +819,7 @@
 
             Dim response As MsgBoxResult = MsgBox("Are you sure you want to delete the selected error surface from the GCD project? This will also delete the raster associated with this error surface.", MsgBoxStyle.YesNo Or MsgBoxStyle.Question, My.Resources.ApplicationNameLong)
             If response = MsgBoxResult.Yes Then
-                Dim sPath As String = GCD.GCDProject.ProjectManager.GetAbsolutePath(rError.Source.ToString)
+                Dim sPath As String = Core.GCDProject.ProjectManager.GetAbsolutePath(rError.Source.ToString)
                 Dim bContinue As Boolean = True
 
                 Try
@@ -828,11 +831,11 @@
 
                 If bContinue Then
                     If Not rError.IsSourceNull Then
-                        If GISDataStructures.Raster.Exists(GCD.GCDProject.ProjectManager.GetAbsolutePath(rError.Source)) Then
+                        If GISDataStructures.Raster.Exists(Core.GCDProject.ProjectManager.GetAbsolutePath(rError.Source)) Then
                             Try
-                                GP.DataManagement.Delete(sPath)
+                                Core.GISDataStructures.Raster.DeleteRaster(sPath)
                             Catch ex As Exception
-                                ExceptionUI.HandleException(ex, "Failed to delete the error surface raster.")
+                                Core.ExceptionHelper.HandleException(ex, "Failed to delete the error surface raster.")
                                 bContinue = False
                             End Try
                         End If
@@ -841,7 +844,7 @@
 
                 If bContinue Then
                     Try
-                        IO.Directory.Delete(GISDataStructures.Raster.GetWorkspacePath(GCD.GCDProject.ProjectManager.GetAbsolutePath(rError.Source)))
+                        IO.Directory.Delete(GISDataStructures.Raster.GetWorkspacePath(Core.GCDProject.ProjectManager.GetAbsolutePath(rError.Source)))
                     Catch ex As Exception
                         ' do nothing
                     End Try
@@ -850,9 +853,9 @@
                 If bContinue Then
                     Try
                         rError.Delete()
-                        ProjectManager.save()
+                        Core.GCDProject.ProjectManager.save()
                     Catch ex As Exception
-                        ExceptionUI.HandleException(ex, "The raster file was deleted, but an error occurred removing the surface from the GCD project file. This will be fixed automatically by closing and opening ArcMap if Validate Project is selected from the options menu")
+                        ExceptionHelper.HandleException(ex, "The raster file was deleted, but an error occurred removing the surface from the GCD project file. This will be fixed automatically by closing and opening ArcMap if Validate Project is selected from the options menu")
                     End Try
                 End If
 
@@ -864,7 +867,7 @@
 
             Dim CurrentRow As DataRowView = Me.ErrorTableBindingSource.Current
             If Not CurrentRow Is Nothing AndAlso TypeOf CurrentRow.Row Is ProjectDS.ErrorSurfaceRow Then
-                GCD.GCDProject.ProjectManagerUI.ArcMapManager.AddErrSurface(CurrentRow.Row)
+                Core.GCDProject.ProjectManagerUI.ArcMapManager.AddErrSurface(CurrentRow.Row)
             Else
                 Dim warnNothing = MessageBox.Show("You have not selected an error surface to add to your map. An error surface must exist and be selected to be added to the map.", "No Error Surface Selected!", MessageBoxButtons.OK)
                 btnErrorSettings.Enabled = False
@@ -878,7 +881,7 @@
 
             Dim CurrentRow As DataRowView = Me.ErrorTableBindingSource.Current
             If Not CurrentRow Is Nothing AndAlso TypeOf CurrentRow.Row Is ProjectDS.ErrorSurfaceRow Then
-                Dim frm As New frmErrorCalculation2(m_pArcMap, DirectCast(CurrentRow.Row, ProjectDS.ErrorSurfaceRow))
+                Dim frm As New frmErrorCalculation2(DirectCast(CurrentRow.Row, ProjectDS.ErrorSurfaceRow))
                 frm.ShowDialog()
             End If
 

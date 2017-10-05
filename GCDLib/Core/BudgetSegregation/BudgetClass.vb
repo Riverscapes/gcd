@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports System.Xml
+Imports System.Windows.Forms.DataVisualization.Charting
 
 Namespace Core.BudgetSegregation
 
@@ -132,17 +133,7 @@ Namespace Core.BudgetSegregation
 
             _SegregationRaster = WorkspaceManager.GetTempRaster("Seg").ToString
 
-            'get concurrent extent and cell resolution
-            Dim CellResolution As Double
-            Dim ExtentLeft As Double
-            Dim ExtentBottom As Double
-            Dim ExtentRight As Double
-            Dim ExtentTop As Double
-            'Raster.GetRasterProperties(_DoDSource, CellResolution, ExtentLeft, ExtentBottom, ExtentRight, ExtentTop)
-            'Dim d As New Concurrency.DEMInfoClass(_DoDSource, 4)
-
-            Dim gRaster As New GISDataStructures.RasterDirect(_DoDSource)
-            gRaster.GetRasterProperties(CellResolution, ExtentLeft, ExtentBottom, ExtentRight, ExtentTop)
+            Dim gRaster As New GISDataStructures.Raster(_DoDSource)
 
             Dim ExtentRectangle As String = gRaster.Extent.Rectangle
             '
@@ -152,7 +143,7 @@ Namespace Core.BudgetSegregation
             '
             ' Coonvert the polygon mask layer to raster (using the orthogonality information from the DoD)
             '
-            Dim gMask As New GISDataStructures.PolygonDataSource(_MaskCopy.FullName)
+            Dim gMask As New GISDataStructures.Vector(_MaskCopy.FullName)
             GP.Conversion.PolygonToRaster_conversion(gMask, _ClassFieldName, _SegregationRaster, gRaster)
             '
             ' PGB 24 Jul 2013 - In ArcGIS 10.1 the conversion does not seem to preserve the map projection. Apply the projection of the
@@ -176,7 +167,7 @@ Namespace Core.BudgetSegregation
         Public Function GetBudgetSegregationDirectoryPath() As String
             'Get GetChangeDetectionDirectoryPath
             'Dim ChangeDetectionDirectoryPath As String = GCDProject.ProjectManager.OutputManager.GetChangeDetectionDirectoryPath(_NewSurveyName, _OldSurveyName, _DoDName)
-            Dim BudgetSegregationDirectoryPath As String = GCDProject.ProjectManager.OutputManager.GetBudgetSegreationDirectoryPath(GCD.GCDProject.ProjectManager.OutputManager.GetDoDOutputFolder(_DoDName), _MaskFilename, _Field)
+            Dim BudgetSegregationDirectoryPath As String = GCDProject.ProjectManager.OutputManager.GetBudgetSegreationDirectoryPath(GCDProject.ProjectManager.OutputManager.GetDoDOutputFolder(_DoDName), _MaskFilename, _Field)
             Return BudgetSegregationDirectoryPath
         End Function
 
@@ -212,10 +203,10 @@ Namespace Core.BudgetSegregation
             maskValues = maskValues.TrimEnd(",")
 
             'Save csvs
-            Dim gDoDSource As New GISDataStructures.RasterDirect(_DoDSource)
-            Dim gSegregatedRaster As New GISDataStructures.RasterDirect(_SegregationRaster)
+            Dim gDoDSource As New GISDataStructures.Raster(_DoDSource)
+            Dim gSegregatedRaster As New GISDataStructures.Raster(_SegregationRaster)
 
-            If Not gDoDSource.IsConcurrent(gSegregatedRaster.Extent) Then
+            If Not gDoDSource.Extent.IsConcurrent(gSegregatedRaster.Extent) Then
                 Throw New Exception("Input layers are not concurrent")
             End If
 
@@ -235,8 +226,8 @@ Namespace Core.BudgetSegregation
             End If
 
             ' New method for calculating and writing mask values.
-            If Not GCDCore.CalculateAndWriteMaskHistograms(_DoDSource, _SegregationRaster, maskValues, sMaskIndicesAndCSVFilePath, GCD.GCDProject.ProjectManager.GCDNARCError.ErrorString) = GCDCoreOutputCodes.PROCESS_OK Then
-                Throw New Exception(GCD.GCDProject.ProjectManager.GCDNARCError.ErrorString.ToString)
+            If Not External.GCDCore.CalculateAndWriteMaskHistograms(_DoDSource, _SegregationRaster, maskValues, sMaskIndicesAndCSVFilePath, GCDProject.ProjectManager.GCDNARCError.ErrorString) = External.GCDCoreOutputCodes.PROCESS_OK Then
+                Throw New Exception(GCDProject.ProjectManager.GCDNARCError.ErrorString.ToString)
             End If
 
             'add to ClassLegend csv string
@@ -262,7 +253,7 @@ Namespace Core.BudgetSegregation
             For Each kvp As KeyValuePair(Of String, BudgetSegregationOutputsClass.MaskOutputClass) In _output.MaskOutputs
                 MaskLabel = kvp.Key
                 'Dim ExportStatsData As New ChangeDetection.StatsDataClass(_RawHistSource, _output.MaskOutputs(MaskLabel).csvFilename)
-                Dim ExportStatsData As New GCD.ChangeDetection.DoDResultHistograms(_RawHistSource, _output.MaskOutputs(MaskLabel).csvFilename)
+                Dim ExportStatsData As New ChangeDetection.DoDResultHistograms(_RawHistSource, _output.MaskOutputs(MaskLabel).csvFilename)
 
                 If TypeOf xmlresults Is Xml.XmlTextWriter Then
                     xmlresults.WriteStartElement(MaskLabel)
@@ -270,9 +261,9 @@ Namespace Core.BudgetSegregation
                     xmlresults.WriteEndElement()
                 End If
 
-                Dim c As New ZedGraph.ZedGraphControl
+                Dim c As New Chart
                 'Dim c As New Windows.Forms.DataVisualization.Charting.Chart
-                Dim ExportHistogramViewer As New DoDHistogramViewerClass(c, GISDataStructures.GetLinearUnitsAsString(gDoDSource.LinearUnits))
+                Dim ExportHistogramViewer As New Core.Visualization.DoDHistogramViewerClass(c, gDoDSource.LinearUnits)
                 ExportHistogramViewer.ExportCharts(ExportStatsData, gDoDSource.LinearUnits, _output.MaskOutputs(MaskLabel).AreaChartPath, _output.MaskOutputs(MaskLabel).VolumeChartPath, nChartWidth, nChartHeight)
             Next
 
@@ -296,7 +287,7 @@ Namespace Core.BudgetSegregation
             'ExportPieChartViewer.ExportCharts(output.PieCharts.PercentageTotalVolumePiePath, nChartWidth, nChartHeight)
 
             'export summaries
-            ExportMaskStats.ExportSummaries(sExcelTemplateFolder, output.MaskOutputs, GISDataStructures.GetLinearUnitsAsString(gDoDSource.LinearUnits))
+            ExportMaskStats.ExportSummaries(sExcelTemplateFolder, output.MaskOutputs, gDoDSource.LinearUnits)
             '
             ' PGB 24 Apr 2012. 
             ' Export one, combined summary for all classes

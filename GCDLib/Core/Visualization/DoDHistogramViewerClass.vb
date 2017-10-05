@@ -7,7 +7,7 @@ Namespace Core.Visualization
         Private _ZedGraph As Charting.Chart
         'Private _ThresholdedHist As Dictionary(Of Double, Double)
         'Private _RawHist As Dictionary(Of Double, Double)
-        Private m_sUnits As String
+        Private m_eUnits As naru.math.LinearUnitClass
 
         'Public Property Hist1 As Dictionary(Of Double, Double)
         '    Get
@@ -40,15 +40,15 @@ Namespace Core.Visualization
         'End Property
 
 
-        Public Sub New(ByVal Zedgraph As Charting.Chart, ByVal sUnits As String)
+        Public Sub New(ByVal Zedgraph As Charting.Chart, ByVal eUnits As naru.math.LinearUnitClass)
             _ZedGraph = Zedgraph
-            m_sUnits = sUnits
+            m_eUnits = eUnits
         End Sub
 
         Public Sub refresh(ByVal dRawHistogram As Dictionary(Of Double, Double),
                            ByVal dThresholdedHistogram As Dictionary(Of Double, Double),
                            ByVal bArea As Boolean,
-                           ByVal eUnits As naru.math.NumberFormatting.LinearUnits)
+                           ByVal eUnits As naru.math.LinearUnitClass)
 
 
             'setup pane
@@ -147,14 +147,14 @@ Namespace Core.Visualization
 
             'Save histograms
             Dim myZedGraphControl As New Charting.Chart
-            Dim myHistogramViewer As New DoDHistogramViewerClass(myZedGraphControl, theUnits.LinearUnit)
-            myHistogramViewer.refresh(changeHisto.m_RawAreaHist, changeHisto.m_ThresholdedAreaHist, True, theUnits.LinearUnit)
+            Dim myHistogramViewer As New DoDHistogramViewerClass(myZedGraphControl, theUnits)
+            myHistogramViewer.refresh(changeHisto.m_RawAreaHist, changeHisto.m_ThresholdedAreaHist, True, theUnits)
             myHistogramViewer.Save(AreaGraphPath, ChartWidth, ChartHeight)
 
             'myHistogramViewer.Hist2 = StatsData.m_RawVolumeHist
             'myHistogramViewer.Hist1 = StatsData.m_ThresholdedVolumeHist
             'myHistogramViewer.yLabel = "Volume " & GISDataStructures.GetLinearUnitsAsString(eLinearUnits, True, 3)
-            myHistogramViewer.refresh(changeHisto.m_RawVolumeHist, changeHisto.m_ThresholdedVolumeHist, False, theUnits.LinearUnit)
+            myHistogramViewer.refresh(changeHisto.m_RawVolumeHist, changeHisto.m_ThresholdedVolumeHist, False, theUnits)
             myHistogramViewer.Save(VolumeGraphPath, ChartWidth, ChartHeight)
 
         End Sub

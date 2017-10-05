@@ -6,4 +6,4 @@
 * Search for all occurances of `TODO`
 * review all commented out code
 * remove all unused `imports/using` statements
-
+* XML and HTML text writers converted to DOM manipulation

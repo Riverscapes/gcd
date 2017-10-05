@@ -1,11 +1,11 @@
-﻿Namespace GISCode.GCD.ChangeDetection
+﻿Namespace Core.ChangeDetection
 
     ''' <summary>
     ''' Loads change detection statistics from the project dataset
     ''' </summary>
     ''' <remarks></remarks>
     Public Class ChangeStatsFromDoDRow
-        Inherits GISCode.GCD.ChangeDetection.ChangeStats
+        Inherits ChangeStats
 
         Private m_rDoD As ProjectDS.DoDsRow
 
@@ -44,7 +44,7 @@
     End Class
 
     Public Class ChangeStatsFromBSMaskRow
-        Inherits GISCode.GCD.ChangeDetection.ChangeStats
+        Inherits ChangeStats
 
         Private m_rMaskRow As ProjectDS.BSMasksRow
 
@@ -71,8 +71,6 @@
             VolumeErosion_Error = m_rMaskRow.VolumeErosionError
             VolumeDeposition_Error = m_rMaskRow.VolumeDepositionError
         End Sub
-
-       
 
     End Class
 

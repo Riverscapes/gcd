@@ -78,10 +78,13 @@
     <Compile Include="Core\ChangeDetection\ChangeDetectionProperties.vb" />
     <Compile Include="Core\ChangeDetection\ChangeStats.vb" />
     <Compile Include="Core\ChangeDetection\ChangeStatsCalculator.vb" />
+    <Compile Include="Core\ChangeDetection\ChangeStatsFromDoDRow.vb" />
+    <Compile Include="Core\ChangeDetection\CoherenceProperties.vb" />
     <Compile Include="Core\ChangeDetection\DoDResultHistograms.vb" />
     <Compile Include="Core\ChangeDetection\DoDResultSet.vb" />
     <Compile Include="Core\ChangeDetection\HistogramStats.vb" />
     <Compile Include="Core\ExceptionHelper.vb" />
+    <Compile Include="Core\RasterPyramidManager.vb" />
     <Compile Include="Core\TopCAT\Stats.vb" />
     <Compile Include="Core\TopCAT\WindowsManagement.vb" />
     <Compile Include="Core\Visualization\DoDHistogramViewerClass.vb" />
@@ -126,6 +129,68 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="UI\BudgetSegregation\frmBudgetSegProperties.Designer.vb">
+      <DependentUpon>frmBudgetSegProperties.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\BudgetSegregation\frmBudgetSegProperties.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\BudgetSegregation\frmBudgetSegResults.Designer.vb">
+      <DependentUpon>frmBudgetSegResults.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\BudgetSegregation\frmBudgetSegResults.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\BudgetSegregation\MaskStatsViewerClass.vb" />
+    <Compile Include="UI\ChangeDetection\ucChangeBars.Designer.vb">
+      <DependentUpon>ucChangeBars.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ChangeDetection\ucChangeBars.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\ChangeDetection\ucDoDHistogram.Designer.vb">
+      <DependentUpon>ucDoDHistogram.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ChangeDetection\ucDoDHistogram.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\ChangeDetection\ucDoDProperties.Designer.vb">
+      <DependentUpon>ucDoDProperties.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ChangeDetection\ucDoDProperties.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\ChangeDetection\DoDSummaryDisplayOptions.vb" />
+    <Compile Include="UI\ChangeDetection\frmDoDSummaryProperties.Designer.vb">
+      <DependentUpon>frmDoDSummaryProperties.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ChangeDetection\frmDoDSummaryProperties.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\ChangeDetection\frmCoherenceProperties.Designer.vb">
+      <DependentUpon>frmCoherenceProperties.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ChangeDetection\frmCoherenceProperties.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\ChangeDetection\frmDoDProperties.Designer.vb">
+      <DependentUpon>frmDoDProperties.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ChangeDetection\frmDoDProperties.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\ChangeDetection\frmDoDResults.Designer.vb">
+      <DependentUpon>frmDoDResults.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ChangeDetection\frmDoDResults.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\ChangeDetection\ucDoDSummary.Designer.vb">
+      <DependentUpon>ucDoDSummary.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ChangeDetection\ucDoDSummary.vb">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UI\Project\frmProjectProperties.Designer.vb">
       <DependentUpon>frmProjectProperties.vb</DependentUpon>
@@ -212,6 +277,36 @@
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\BudgetSegregation\frmBudgetSegProperties.resx">
+      <DependentUpon>frmBudgetSegProperties.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\BudgetSegregation\frmBudgetSegResults.resx">
+      <DependentUpon>frmBudgetSegResults.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ChangeDetection\ucChangeBars.resx">
+      <DependentUpon>ucChangeBars.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ChangeDetection\ucDoDHistogram.resx">
+      <DependentUpon>ucDoDHistogram.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ChangeDetection\ucDoDProperties.resx">
+      <DependentUpon>ucDoDProperties.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ChangeDetection\frmDoDSummaryProperties.resx">
+      <DependentUpon>frmDoDSummaryProperties.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ChangeDetection\frmCoherenceProperties.resx">
+      <DependentUpon>frmCoherenceProperties.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ChangeDetection\frmDoDProperties.resx">
+      <DependentUpon>frmDoDProperties.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ChangeDetection\frmDoDResults.resx">
+      <DependentUpon>frmDoDResults.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ChangeDetection\ucDoDSummary.resx">
+      <DependentUpon>ucDoDSummary.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Project\frmProjectProperties.resx">
       <DependentUpon>frmProjectProperties.vb</DependentUpon>

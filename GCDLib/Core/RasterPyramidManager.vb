@@ -1,4 +1,4 @@
-﻿Namespace GISCode.GCD
+﻿Namespace Core
 
     Public Class RasterPyramidManager
 
@@ -137,14 +137,14 @@
 
         End Function
 
-        Public Shared Sub PerformRasterPyramids(ePyramidRasterType As GCD.RasterPyramidManager.PyramidRasterTypes, sRasterPath As String)
+        Public Shared Sub PerformRasterPyramids(ePyramidRasterType As RasterPyramidManager.PyramidRasterTypes, sRasterPath As String)
 
-            If GISCode.GCD.RasterPyramidManager.AutomaticallyBuildPyramids(ePyramidRasterType) Then
+            If RasterPyramidManager.AutomaticallyBuildPyramids(ePyramidRasterType) Then
                 If GISDataStructures.Raster.Exists(sRasterPath) Then
-                    Dim eResult As UInteger = GCDCore.BuildPyramids(sRasterPath, GCD.GCDProject.ProjectManagerUI.GCDNARCError.ErrorString)
-                    If eResult <> RasterManager.RasterManagerOutputCodes.PROCESS_OK Then
+                    Dim eResult As UInteger = External.GCDCore.BuildPyramids(sRasterPath, GCDProject.ProjectManagerUI.GCDNARCError.ErrorString)
+                    If eResult <> External.RasterManager.RasterManagerOutputCodes.PROCESS_OK Then
                         Dim ex As New Exception("Error building raster pyramids. This is a non-essential process and the GCD project is unaffected.")
-                        ex.Data("GCDCore Error") = GCD.GCDProject.ProjectManagerUI.GCDNARCError.ErrorString
+                        ex.Data("GCDCore Error") = GCDProject.ProjectManagerUI.GCDNARCError.ErrorString
                         ex.Data("Raster") = sRasterPath
                         ex.Data("Return code") = eResult.ToString
                         Throw ex
