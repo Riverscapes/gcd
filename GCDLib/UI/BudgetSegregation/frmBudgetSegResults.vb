@@ -65,7 +65,7 @@ Namespace UI.BudgetSegregation
 
                         Dim theStats As New Core.ChangeDetection.ChangeStatsFromBSMaskRow(rMask)
                         Dim theDoDProps As Core.ChangeDetection.ChangeDetectionProperties = Core.ChangeDetection.ChangeDetectionProperties.CreateFromDoDRow(rMask.BudgetSegregationsRow.DoDsRow)
-                        Dim theHistoStats As New Core.ChangeDetection.DoDResultHistograms(GCDProject.ProjectManager.GetAbsolutePath(rMask.CSVFileName))
+                        Dim theHistoStats As New Core.ChangeDetection.DoDResultHistograms(GCDProject.ProjectManagerBase.GetAbsolutePath(rMask.CSVFileName))
                         Dim theResultSet As New Core.ChangeDetection.DoDResultSet(theStats, theHistoStats, theDoDProps)
                         ucSummary.DoDResultSet = theResultSet
                         Exit For
@@ -89,17 +89,17 @@ Namespace UI.BudgetSegregation
 
                         Dim cdProperties As Core.ChangeDetection.ChangeDetectionProperties
                         Dim rDoD As ProjectDS.DoDsRow = aMask.BudgetSegregationsRow.DoDsRow
-                        Dim sRawDod As String = GCDProject.ProjectManager.GetAbsolutePath(rDoD.RawDoDPath)
-                        Dim sThrDoD As String = GCDProject.ProjectManager.GetAbsolutePath(rDoD.ThreshDoDPath)
+                        Dim sRawDod As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rDoD.RawDoDPath)
+                        Dim sThrDoD As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rDoD.ThreshDoDPath)
                         Dim gRawDoD As New GISDataStructures.Raster(sRawDod)
                         If rDoD.TypeMinLOD Then
                             cdProperties = New Core.ChangeDetection.ChangeDetectionPropertiesMinLoD(sRawDod, sThrDoD, rDoD.Threshold, gRawDoD.CellSize, gRawDoD.LinearUnits)
                         ElseIf rDoD.TypePropagated Then
-                            Dim sPropErr As String = GCDProject.ProjectManager.GetAbsolutePath(rDoD.PropagatedErrorRasterPath)
+                            Dim sPropErr As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rDoD.PropagatedErrorRasterPath)
                             cdProperties = New Core.ChangeDetection.ChangeDetectionPropertiesPropagated(sRawDod, sThrDoD, sPropErr, gRawDoD.CellSize, gRawDoD.LinearUnits)
                         Else
 
-                            Dim sPropErr As String = GCDProject.ProjectManager.GetAbsolutePath(rDoD.PropagatedErrorRasterPath)
+                            Dim sPropErr As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rDoD.PropagatedErrorRasterPath)
 
                             Dim sProbabilityRaster As String = String.Empty
                             If Not rDoD.IsProbabilityRasterNull Then
@@ -129,8 +129,8 @@ Namespace UI.BudgetSegregation
                             cdProperties = New Core.ChangeDetection.ChangeDetectionPropertiesProbabilistic(sRawDod, sThrDoD, sPropErr, sProbabilityRaster, sSpatialCoErosionRaster, sSpatialCoDepositionRaster, sConditionalProbRaster, sPosteriorRaster, rDoD.Threshold, rDoD.Filter, rDoD.Bayesian, gRawDoD.CellSize, gRawDoD.LinearUnits)
                         End If
 
-                        Dim sRawCSV As String = GCDProject.ProjectManager.GetAbsolutePath(rDoD.ThreshHistPath)
-                        Dim sThrCSV As String = GCDProject.ProjectManager.GetAbsolutePath(aMask.CSVFileName)
+                        Dim sRawCSV As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rDoD.ThreshHistPath)
+                        Dim sThrCSV As String = GCDProject.ProjectManagerBase.GetAbsolutePath(aMask.CSVFileName)
                         Dim histo As New Core.ChangeDetection.DoDResultHistograms(sRawCSV, sThrCSV)
 
                         Dim dod As New Core.ChangeDetection.DoDResultSet(chngStats, histo, cdProperties)
@@ -139,7 +139,7 @@ Namespace UI.BudgetSegregation
                         ucHistogram.RefreshHistogram()
 
                         ' Update the elevation change bar chart control
-                        ucBars.Initialize(chngStats, cdProperties.Units.LinearUnit)
+                        ucBars.Initialize(chngStats, cdProperties.Units)
 
                         Exit For
                     End If
@@ -154,7 +154,7 @@ Namespace UI.BudgetSegregation
 
         Private Sub cmdBrowse_Click(sender As System.Object, e As System.EventArgs) Handles cmdBrowse.Click
 
-            Dim sFolder As String = GCDProject.ProjectManager.GetAbsolutePath(m_rBS.OutputFolder)
+            Dim sFolder As String = GCDProject.ProjectManagerBase.GetAbsolutePath(m_rBS.OutputFolder)
             If IO.Directory.Exists(sFolder) Then
                 Process.Start("explorer.exe", sFolder)
             Else
@@ -173,13 +173,15 @@ Namespace UI.BudgetSegregation
 
 
             Dim sPath As String = cms.SourceControl.Text
-            sPath = GCDProject.ProjectManager.GetAbsolutePath(sPath)
+            sPath = GCDProject.ProjectManagerBase.GetAbsolutePath(sPath)
             If Not String.IsNullOrEmpty(sPath) Then
                 If GISDataStructures.Vector.Exists(sPath) Then
 
                     Try
                         Dim gPolygon As GISDataStructures.Vector = New GISDataStructures.Vector(sPath)
-                        GCDProject.ProjectManagerUI.ArcMapManager.AddBSMaskVector(gPolygon, m_rBS)
+                        ' TODO 
+                        Throw New Exception("not implemented")
+                        'GCDProject.ProjectManagerUI.ArcMapManager.AddBSMaskVector(gPolygon, m_rBS)
 
                     Catch ex As Exception
                         'Pass

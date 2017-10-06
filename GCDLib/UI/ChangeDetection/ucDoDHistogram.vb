@@ -42,10 +42,10 @@ Namespace UI.ChangeDetection
             ' Needed for Visual Studio Designer to work when the object is not created yet.
             If TypeOf m_DoDResultSet Is DoDResultSet Then
                 If m_UserSelectedUnits Is Nothing Then
-                    m_HistogramViewer = New DoDHistogramViewerClass(zGraph, DoDResultSet.DoDProperties.Units.ToString)
+                    m_HistogramViewer = New DoDHistogramViewerClass(zGraph, DoDResultSet.DoDProperties.Units)
                     RefreshHistogram()
                 Else
-                    m_HistogramViewer = New DoDHistogramViewerClass(zGraph, m_UserSelectedUnits.DoDProperties.Units.ToString)
+                    m_HistogramViewer = New DoDHistogramViewerClass(zGraph, m_UserSelectedUnits.DoDProperties.Units)
                     RefreshHistogram()
                 End If
             End If

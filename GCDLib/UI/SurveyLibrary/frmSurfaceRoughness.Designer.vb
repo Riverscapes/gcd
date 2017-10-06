@@ -26,7 +26,7 @@
             Me.btnCancel = New System.Windows.Forms.Button()
             Me.btnOK = New System.Windows.Forms.Button()
             Me.btnHelp = New System.Windows.Forms.Button()
-            Me.ucToPCAT_Inputs = New GCDAddIn.TopCAT.ucToPCAT_Inputs()
+            Me.ucToPCAT_Inputs = New UI.TopCAT.ucToPCAT_Inputs()
             Me.SuspendLayout()
             '
             'btnCancel

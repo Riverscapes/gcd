@@ -56,7 +56,7 @@
 
             ' Threshold the raster
             Dim eResult As External.GCDCore.GCDCoreOutputCodes
-            sThreshDodPath = GCDProject.ProjectManager.OutputManager.GetDoDThresholdPath(Name, Folder.FullName)
+            sThreshDodPath = GCDProject.ProjectManagerBase.OutputManager.GetDoDThresholdPath(Name, Folder.FullName)
             eResult = External.GCDCore.ThresholdDoDPropErr(sRawDoDPath, sPropagatedErrorRaster, sThreshDodPath, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
 
             ' Check that the raster exists
@@ -69,21 +69,21 @@
                 Throw New Exception("Error calculating the raw DEM of difference raster.", ex)
             End If
 
-            sThreshHistPath = GCDProject.ProjectManager.OutputManager.GetCsvThresholdPath(Name, Folder.FullName)
+            sThreshHistPath = GCDProject.ProjectManagerBase.OutputManager.GetCsvThresholdPath(Name, Folder.FullName)
             If Not External.GCDCore.CalculateAndWriteDoDHistogram(sThreshDodPath, sThreshHistPath, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString) = External.GCDCoreOutputCodes.PROCESS_OK Then
                 Throw New Exception(GCDProject.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
             End If
 
             Dim gRawDoD As New GISDataStructures.Raster(sRawDoDPath)
 
-            Dim dodProp As New ChangeDetectionPropertiesPropagated(sRawDoDPath, sThreshDodPath, sPropagatedErrorRaster, gRawDoD.CellSize, naru.math.NumberFormatting.GetLinearUnitsFromESRI(gRawDoD.LinearUnits))
+            Dim dodProp As New ChangeDetectionPropertiesPropagated(sRawDoDPath, sThreshDodPath, sPropagatedErrorRaster, gRawDoD.CellSize, gRawDoD.LinearUnits)
             Dim theChangeStats = New ChangeStatsCalculator(dodProp)
             sSummaryXMLPath = GenerateSummaryXML(theChangeStats)
 
             Dim theHistograms As New DoDResultHistograms(sRawHistPath, sThreshHistPath)
 
-            theChangeStats.GenerateChangeBarGraphicFiles(GCDProject.ProjectManager.OutputManager.GetChangeDetectionFiguresFolder(Folder.FullName, True), dodProp.Units.LinearUnit, ChartWidth, ChartHeight)
-            GenerateHistogramGraphicFiles(theHistograms, dodProp.Units.LinearUnit)
+            theChangeStats.GenerateChangeBarGraphicFiles(GCDProject.ProjectManagerBase.OutputManager.GetChangeDetectionFiguresFolder(Folder.FullName, True), dodProp.Units, ChartWidth, ChartHeight)
+            GenerateHistogramGraphicFiles(theHistograms, dodProp.Units)
 
             Dim dodResults As New DoDResultSet(theChangeStats, theHistograms, dodProp)
             Return dodResults
@@ -98,7 +98,7 @@
         ''' DoD removing any cells that have a value less than the propogated error.</remarks>
         Protected Function GeneratePropagatedErrorRaster() As String
 
-            Dim sPropagatedErrorPath As String = GCDProject.ProjectManager.OutputManager.GetPropagatedErrorPath(Name, Folder.FullName)
+            Dim sPropagatedErrorPath As String = GCDProject.ProjectManagerBase.OutputManager.GetPropagatedErrorPath(Name, Folder.FullName)
             Try
                 If Not External.RasterManager.RootSumSquares(AnalysisNewError.FullPath, AnalysisOldError.FullPath, sPropagatedErrorPath, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString) = External.RasterManagerOutputCodes.PROCESS_OK Then
                     Throw New Exception(GCDProject.ProjectManagerBase.GCDNARCError.ErrorString.ToString)

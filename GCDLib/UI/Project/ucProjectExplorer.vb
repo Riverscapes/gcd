@@ -265,7 +265,7 @@ Namespace UI.Project
                                 End If
 
                                 If nodMask Is Nothing Then
-                                    Dim sTag As String = GCDNodeTypes.BudgetSegregationMask.ToString & "_bs_" & FileSystem.RemoveDangerousCharacters(rBS.PolygonMask) & "_dod_" & rDoD.DoDID
+                                    Dim sTag As String = GCDNodeTypes.BudgetSegregationMask.ToString & "_bs_" & naru.os.File.RemoveDangerousCharacters(rBS.PolygonMask) & "_dod_" & rDoD.DoDID
                                     nodMask = nodBSGroup.Nodes.Add(sTag, sMaskDict(sPolygonMask), GCDNodeTypes.BudgetSegregationMask)
                                     nodMask.SelectedImageIndex = nodMask.ImageIndex
                                     nodMask.Tag = sTag
@@ -544,7 +544,7 @@ Namespace UI.Project
                     LoadTree(GCDNodeTypes.DEMSurvey.ToString & "_" & nDEMSurveyID.ToString)
 
                     If My.Settings.AddOutputLayersToMap Then
-                        Core.GCDProject.ProjectManagerUI.ArcMapManager.AddSurvey(demRow)
+                        GCDProject.ProjectManagerUI.ArcMapManager.AddSurvey(demRow)
                     End If
 
                     Dim SurveyForm As New UI.SurveyLibrary.frmDEMSurveyProperties(demRow.DEMSurveyID)
@@ -596,7 +596,9 @@ Namespace UI.Project
                         Dim rDEMSurvey As ProjectDS.DEMSurveyRow = GCDProject.ProjectManager.ds.DEMSurvey.FindByDEMSurveyID(nParentID)
                         If TypeOf rDEMSurvey Is ProjectDS.DEMSurveyRow Then
                             For Each rAssoc As ProjectDS.AssociatedSurfaceRow In rDEMSurvey.GetAssociatedSurfaceRows
-                                GCDProject.ProjectManagerUI.ArcMapManager.AddAssociatedSurface(rAssoc)
+                                ' TODO 
+                                Throw New Exception("not implemented")
+                                '      GCDProject.ProjectManagerUI.ArcMapManager.AddAssociatedSurface(rAssoc)
                             Next
                         End If
                     End If
@@ -649,7 +651,9 @@ Namespace UI.Project
                         If TypeOf rDEMSurvey Is ProjectDS.DEMSurveyRow Then
                             For Each rAssoc As ProjectDS.AssociatedSurfaceRow In rDEMSurvey.GetAssociatedSurfaceRows
                                 If rAssoc.AssociatedSurfaceID = nID Then
-                                    GCDProject.ProjectManagerUI.ArcMapManager.AddAssociatedSurface(rAssoc)
+                                    ' TODO 
+                                    Throw New Exception("not implemented")
+                                    '    GCDProject.ProjectManagerUI.ArcMapManager.AddAssociatedSurface(rAssoc)
                                     Exit For
                                 End If
                             Next
@@ -714,7 +718,9 @@ Namespace UI.Project
                         Dim rError As ProjectDS.ErrorSurfaceRow = frmDEMSurveyProperties.SpecifyErrorSurface(rDEMSurvey)
                         If TypeOf rError Is ProjectDS.ErrorSurfaceRow Then
                             If My.Settings.AddOutputLayersToMap Then
-                                Core.GCDProject.ProjectManagerUI.ArcMapManager.AddErrSurface(rError)
+                                ' TODO 
+                                Throw New Exception("not implemented")
+                                'Core.GCDProject.ProjectManagerUI.ArcMapManager.AddErrSurface(rError)
                             End If
                             LoadTree(GCDNodeTypes.ErrorSurface.ToString & "_" & rError.ErrorSurfaceID.ToString)
                         End If
@@ -736,7 +742,9 @@ Namespace UI.Project
                         Dim rDEMSurvey As ProjectDS.DEMSurveyRow = GCDProject.ProjectManagerBase.ds.DEMSurvey.FindByDEMSurveyID(nParentID)
                         If TypeOf rDEMSurvey Is ProjectDS.DEMSurveyRow Then
                             For Each rError As ProjectDS.ErrorSurfaceRow In rDEMSurvey.GetErrorSurfaceRows
-                                GCDProject.ProjectManagerUI.ArcMapManager.AddErrSurface(rError)
+                                ' TODO 
+                                Throw New Exception("not implemented")
+                                ' GCDProject.ProjectManagerUI.ArcMapManager.AddErrSurface(rError)
                             Next
                         End If
                     End If
@@ -786,7 +794,9 @@ Namespace UI.Project
                         If TypeOf rDEMSurvey Is ProjectDS.DEMSurveyRow Then
                             For Each rError As ProjectDS.ErrorSurfaceRow In rDEMSurvey.GetErrorSurfaceRows
                                 If rError.ErrorSurfaceID = nID Then
-                                    GCDProject.ProjectManagerUI.ArcMapManager.AddErrSurface(rError)
+                                    ' TODO 
+                                    Throw New Exception("not implemented")
+                                    ' GCDProject.ProjectManagerUI.ArcMapManager.AddErrSurface(rError)
                                     Exit For
                                 End If
                             Next
@@ -817,38 +827,41 @@ Namespace UI.Project
         End Sub
 
         Private Sub ToolStripMenuItem2_Click(sender As System.Object, e As System.EventArgs) Handles ToolStripMenuItem2.Click
-            Try
-                Dim rProject As ProjectDS.ProjectRow = GCDProject.ProjectManagerBase.CurrentProject
 
-                'TODO: Insert the GetSortedSurveyRowsMethod
-                If TypeOf rProject Is ProjectDS.ProjectRow Then
+            'TODO entire function contents commented out
+            Throw New Exception("not implemented")
+            'Try
+            '    Dim rProject As ProjectDS.ProjectRow = GCDProject.ProjectManagerBase.CurrentProject
 
-                    'Store DEM Survey Rows in an Ienumerable then loop over
-                    Dim sortedSurveys As System.Linq.IOrderedEnumerable(Of ProjectDS.DEMSurveyRow) = GetSortedSurveyRows(rProject, m_eSortBy)
-                    For Each rDEM As ProjectDS.DEMSurveyRow In sortedSurveys.Reverse()
-                        GCDProject.ProjectManagerUI.ArcMapManager.AddDEM(rDEM)
+            '    'TODO: Insert the GetSortedSurveyRowsMethod
+            '    If TypeOf rProject Is ProjectDS.ProjectRow Then
 
-                        For Each rAssoc As ProjectDS.AssociatedSurfaceRow In rDEM.GetAssociatedSurfaceRows
-                            GCDProject.ProjectManagerUI.ArcMapManager.AddAssociatedSurface(rAssoc)
-                        Next
+            '        'Store DEM Survey Rows in an Ienumerable then loop over
+            '        Dim sortedSurveys As System.Linq.IOrderedEnumerable(Of ProjectDS.DEMSurveyRow) = GetSortedSurveyRows(rProject, m_eSortBy)
+            '        For Each rDEM As ProjectDS.DEMSurveyRow In sortedSurveys.Reverse()
+            '            GCDProject.ProjectManagerUI.ArcMapManager.AddDEM(rDEM)
 
-                        For Each rError As ProjectDS.ErrorSurfaceRow In rDEM.GetErrorSurfaceRows
-                            GCDProject.ProjectManagerUI.ArcMapManager.AddErrSurface(rError)
-                        Next
-                    Next
+            '            For Each rAssoc As ProjectDS.AssociatedSurfaceRow In rDEM.GetAssociatedSurfaceRows
+            '                GCDProject.ProjectManagerUI.ArcMapManager.AddAssociatedSurface(rAssoc)
+            '            Next
 
-                    For Each rAOI As ProjectDS.AOIsRow In rProject.GetAOIsRows
-                        GCDProject.ProjectManagerUI.ArcMapManager.AddAOI(rAOI)
-                    Next
+            '            For Each rError As ProjectDS.ErrorSurfaceRow In rDEM.GetErrorSurfaceRows
+            '                GCDProject.ProjectManagerUI.ArcMapManager.AddErrSurface(rError)
+            '            Next
+            '        Next
 
-                    For Each rDoD As ProjectDS.DoDsRow In rProject.GetDoDsRows
-                        GCDProject.ProjectManagerUI.ArcMapManager.AddDoD(rDoD)
-                    Next
-                End If
+            '        For Each rAOI As ProjectDS.AOIsRow In rProject.GetAOIsRows
+            '            GCDProject.ProjectManagerUI.ArcMapManager.AddAOI(rAOI)
+            '        Next
 
-            Catch ex As Exception
-                ExceptionHelper.HandleException(ex)
-            End Try
+            '        For Each rDoD As ProjectDS.DoDsRow In rProject.GetDoDsRows
+            '            GCDProject.ProjectManagerUI.ArcMapManager.AddDoD(rDoD)
+            '        Next
+            '    End If
+
+            'Catch ex As Exception
+            '    ExceptionHelper.HandleException(ex)
+            'End Try
 
         End Sub
 
@@ -903,7 +916,9 @@ Namespace UI.Project
                         Dim nID As Integer = GetNodeID(selNode)
                         Dim rDEMSurvey As ProjectDS.DEMSurveyRow = GCDProject.ProjectManager.ds.DEMSurvey.FindByDEMSurveyID(nID)
                         If TypeOf rDEMSurvey Is ProjectDS.DEMSurveyRow Then
-                            GCDProject.ProjectManagerUI.ArcMapManager.AddDEM(rDEMSurvey)
+                            ' TODO 
+                            Throw New Exception("not implemented")
+                            '  GCDProject.ProjectManagerUI.ArcMapManager.AddDEM(rDEMSurvey)
                         End If
                     End If
                 End If
@@ -981,11 +996,15 @@ Namespace UI.Project
                     Dim sortedSurveys As System.Linq.IOrderedEnumerable(Of ProjectDS.DEMSurveyRow) = GetSortedSurveyRows(rProject, m_eSortBy)
 
                     For Each rDEMSurvey As ProjectDS.DEMSurveyRow In sortedSurveys.Reverse()
-                        GCDProject.ProjectManagerUI.ArcMapManager.AddDEM(rDEMSurvey)
+                        ' TODO 
+                        Throw New Exception("not implemented")
+                        '  GCDProject.ProjectManagerUI.ArcMapManager.AddDEM(rDEMSurvey)
                     Next
 
                     For Each rAOI As ProjectDS.AOIsRow In rProject.GetAOIsRows
-                        GCDProject.ProjectManagerUI.ArcMapManager.AddAOI(rAOI)
+                        ' TODO 
+                        Throw New Exception("not implemented")
+                        '  GCDProject.ProjectManagerUI.ArcMapManager.AddAOI(rAOI)
                     Next
                 End If
 
@@ -1055,7 +1074,9 @@ Namespace UI.Project
                     Dim eType As GCDNodeTypes = GetNodeType(selNode)
                     If eType = GCDNodeTypes.ChangeDetectionGroup Then
                         For Each rDoD As ProjectDS.DoDsRow In GCDProject.ProjectManagerBase.CurrentProject.GetDoDsRows
-                            GCDProject.ProjectManagerUI.ArcMapManager.AddDoD(rDoD)
+                            ' TODO 
+                            Throw New Exception("not implemented")
+                            '   GCDProject.ProjectManagerUI.ArcMapManager.AddDoD(rDoD)
                         Next
                     End If
                 End If
@@ -1080,7 +1101,9 @@ Namespace UI.Project
                         Dim nID As Integer = GetNodeID(selNode)
                         Dim rDod As ProjectDS.DoDsRow = GCDProject.ProjectManager.ds.DoDs.FindByDoDID(nID)
                         If TypeOf rDod Is ProjectDS.DoDsRow Then
-                            GCDProject.ProjectManagerUI.ArcMapManager.AddDoD(rDod)
+                            ' TODO 
+                            Throw New Exception("not implemented")
+                            '  GCDProject.ProjectManagerUI.ArcMapManager.AddDoD(rDod)
                         End If
                     End If
                 End If
@@ -1101,7 +1124,9 @@ Namespace UI.Project
                         Dim nID As Integer = GetNodeID(selNode)
                         Dim rDod As ProjectDS.DoDsRow = GCDProject.ProjectManager.ds.DoDs.FindByDoDID(nID)
                         If TypeOf rDod Is ProjectDS.DoDsRow Then
-                            GCDProject.ProjectManagerUI.ArcMapManager.AddDoD(rDod, False)
+                            ' TODO 
+                            Throw New Exception("not implemented")
+                            '  GCDProject.ProjectManagerUI.ArcMapManager.AddDoD(rDod, False)
                         End If
                     End If
                 End If
@@ -1146,110 +1171,116 @@ Namespace UI.Project
 
         Private Sub DeleteDoD(ByVal rDoD As ProjectDS.DoDsRow)
 
-            If Not TypeOf rDoD Is ProjectDS.DoDsRow Then
-                Exit Sub
-            End If
+            'TODO entire contents commented out
+            Throw New Exception("not implemented")
+
+            'If Not TypeOf rDoD Is ProjectDS.DoDsRow Then
+            '    Exit Sub
+            'End If
 
 
-            Dim response As MsgBoxResult = MsgBox("Are you sure you want to remove the selected change detection?  Note: this will remove the change detection from the GCD Project (*.gcd) file and also delete the copy of the raster in the GCD project folder.", MsgBoxStyle.YesNo Or MsgBoxStyle.Question, My.Resources.ApplicationNameLong)
-            If response = MsgBoxResult.Yes Then
+            'Dim response As MsgBoxResult = MsgBox("Are you sure you want to remove the selected change detection?  Note: this will remove the change detection from the GCD Project (*.gcd) file and also delete the copy of the raster in the GCD project folder.", MsgBoxStyle.YesNo Or MsgBoxStyle.Question, My.Resources.ApplicationNameLong)
+            'If response = MsgBoxResult.Yes Then
 
-                Dim pMXDoc As ESRI.ArcGIS.ArcMapUI.IMxDocument = DirectCast(My.ThisApplication, ESRI.ArcGIS.Framework.IApplication).Document
-                Dim pMap As ESRI.ArcGIS.Carto.IMap = pMXDoc.FocusMap
-                Dim projectName As String = rDoD.Name
+            '    Dim pMXDoc As ESRI.ArcGIS.ArcMapUI.IMxDocument = DirectCast(My.ThisApplication, ESRI.ArcGIS.Framework.IApplication).Document
+            '    Dim pMap As ESRI.ArcGIS.Carto.IMap = pMXDoc.FocusMap
+            '    Dim projectName As String = rDoD.Name
 
-                ' Both raw and thresholded DoD rasters can be in the map. Make a list and remove both.
-                Dim lDoDSource As New List(Of String)
-                lDoDSource.Add(GCDProject.ProjectManager.GetAbsolutePath(rDoD.RawDoDPath))
-                lDoDSource.Add(GCDProject.ProjectManager.GetAbsolutePath(rDoD.ThreshDoDPath))
+            '    ' Both raw and thresholded DoD rasters can be in the map. Make a list and remove both.
+            '    Dim lDoDSource As New List(Of String)
+            '    lDoDSource.Add(GCDProject.ProjectManagerBase.GetAbsolutePath(rDoD.RawDoDPath))
+            '    lDoDSource.Add(GCDProject.ProjectManagerBase.GetAbsolutePath(rDoD.ThreshDoDPath))
 
-                For Each sDoDSource As String In lDoDSource
-                    'New code to remove project layer from map if in map
-                    Dim enumLayer As ESRI.ArcGIS.Carto.IEnumLayer = pMap.Layers
-                    Dim pLayer As ESRI.ArcGIS.Carto.ILayer = enumLayer.Next()
+            '    For Each sDoDSource As String In lDoDSource
+            '        'New code to remove project layer from map if in map
+            '        Dim enumLayer As ESRI.ArcGIS.Carto.IEnumLayer = pMap.Layers
+            '        Dim pLayer As ESRI.ArcGIS.Carto.ILayer = enumLayer.Next()
 
-                    While pLayer IsNot Nothing
-                        If TypeOf pLayer Is ESRI.ArcGIS.Carto.RasterLayer Then
-                            If String.Compare(sDoDSource, DirectCast(pLayer, ESRI.ArcGIS.Carto.RasterLayer).FilePath, True) = 0 Then
-                                pMap.DeleteLayer(pLayer)
-                                System.Runtime.InteropServices.Marshal.ReleaseComObject(pLayer)
-                                pLayer = Nothing
-                                Exit While
-                            End If
-                        End If
-                        pLayer = enumLayer.Next()
-                    End While
-                Next
+            '        While pLayer IsNot Nothing
+            '            If TypeOf pLayer Is ESRI.ArcGIS.Carto.RasterLayer Then
+            '                If String.Compare(sDoDSource, DirectCast(pLayer, ESRI.ArcGIS.Carto.RasterLayer).FilePath, True) = 0 Then
+            '                    pMap.DeleteLayer(pLayer)
+            '                    System.Runtime.InteropServices.Marshal.ReleaseComObject(pLayer)
+            '                    pLayer = Nothing
+            '                    Exit While
+            '                End If
+            '            End If
+            '            pLayer = enumLayer.Next()
+            '        End While
+            '    Next
 
-                Try
-                    'DeleteSurveyFiles(IO.Path.GetDirectoryName(CurrentRow.Item("Source")))
-                    'IO.Directory.Delete(IO.Path.GetDirectoryName(CurrentRow.Item("Source")), True)
-                    DeleteSurveyFiles(IO.Path.GetDirectoryName(lDoDSource(0)))
-                    IO.Directory.Delete(IO.Path.GetDirectoryName(lDoDSource(0)), True)
-                Catch ex As Exception
-                    ExceptionHelper.HandleException(ex, "The GCD survey files failed to delete. Some of the files associated with this survey still exist.")
-                    'Dim ex2 As New Exception("The GCD survey files failed to delete. Some of the files associated with this survey still exist.", ex)
-                    'ex2.Data.Add("Project Name: ", projectName)
-                    'Throw ex2
-                Finally
-                    rDoD.Delete()
-                    GCDProject.ProjectManager.save()
-                End Try
+            '    Try
+            '        'DeleteSurveyFiles(IO.Path.GetDirectoryName(CurrentRow.Item("Source")))
+            '        'IO.Directory.Delete(IO.Path.GetDirectoryName(CurrentRow.Item("Source")), True)
+            '        DeleteSurveyFiles(IO.Path.GetDirectoryName(lDoDSource(0)))
+            '        IO.Directory.Delete(IO.Path.GetDirectoryName(lDoDSource(0)), True)
+            '    Catch ex As Exception
+            '        ExceptionHelper.HandleException(ex, "The GCD survey files failed to delete. Some of the files associated with this survey still exist.")
+            '        'Dim ex2 As New Exception("The GCD survey files failed to delete. Some of the files associated with this survey still exist.", ex)
+            '        'ex2.Data.Add("Project Name: ", projectName)
+            '        'Throw ex2
+            '    Finally
+            '        rDoD.Delete()
+            '        GCDProject.ProjectManager.save()
+            '    End Try
 
-            End If
+            'End If
         End Sub
 
 #End Region
 
         Private Sub DeleteDEMSurvey(ByVal rDEMSurvey As ProjectDS.DEMSurveyRow)
 
-            If Not TypeOf rDEMSurvey Is ProjectDS.DEMSurveyRow Then
-                Exit Sub
-            End If
+            'TODO
+            Throw New Exception("not implemented")
+
+            'If Not TypeOf rDEMSurvey Is ProjectDS.DEMSurveyRow Then
+            '    Exit Sub
+            'End If
 
 
-            Dim response As MsgBoxResult = MsgBox("Are you sure you want to remove the selected survey? Note this removes ALL FILES associated with this survey from the map and the project: digital elevation models, hillshades, associated surfaces, and error surfaces.", MsgBoxStyle.YesNo Or MsgBoxStyle.Question, My.Resources.ApplicationNameLong)
-            If response = MsgBoxResult.Yes Then
+            'Dim response As MsgBoxResult = MsgBox("Are you sure you want to remove the selected survey? Note this removes ALL FILES associated with this survey from the map and the project: digital elevation models, hillshades, associated surfaces, and error surfaces.", MsgBoxStyle.YesNo Or MsgBoxStyle.Question, My.Resources.ApplicationNameLong)
+            'If response = MsgBoxResult.Yes Then
 
-                Dim pMXDoc As ESRI.ArcGIS.ArcMapUI.IMxDocument = DirectCast(My.ThisApplication, ESRI.ArcGIS.Framework.IApplication).Document
-                Dim pMap As ESRI.ArcGIS.Carto.IMap = pMXDoc.FocusMap
-                Dim projectName As String = rDEMSurvey.Name
-                Dim pSurveySource As String = GCDProject.ProjectManager.GetAbsolutePath(rDEMSurvey.Source)
+            '    Dim pMXDoc As ESRI.ArcGIS.ArcMapUI.IMxDocument = DirectCast(My.ThisApplication, ESRI.ArcGIS.Framework.IApplication).Document
+            '    Dim pMap As ESRI.ArcGIS.Carto.IMap = pMXDoc.FocusMap
+            '    Dim projectName As String = rDEMSurvey.Name
+            '    Dim pSurveySource As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rDEMSurvey.Source)
 
-                'New code to remove project layer from map if in map
-                Dim enumLayer As ESRI.ArcGIS.Carto.IEnumLayer = pMap.Layers
-                Dim pLayer As ESRI.ArcGIS.Carto.ILayer = enumLayer.Next()
+            '    'New code to remove project layer from map if in map
+            '    Dim enumLayer As ESRI.ArcGIS.Carto.IEnumLayer = pMap.Layers
+            '    Dim pLayer As ESRI.ArcGIS.Carto.ILayer = enumLayer.Next()
 
-                While pLayer IsNot Nothing
-                    If String.Compare(projectName, pLayer.Name, True) = 0 Then
-                        pMap.DeleteLayer(pLayer)
-                        System.Runtime.InteropServices.Marshal.ReleaseComObject(pLayer)
-                        pLayer = Nothing
-                        Exit While
-                    End If
-                    pLayer = enumLayer.Next()
-                End While
+            '    While pLayer IsNot Nothing
+            '        If String.Compare(projectName, pLayer.Name, True) = 0 Then
+            '            pMap.DeleteLayer(pLayer)
+            '            System.Runtime.InteropServices.Marshal.ReleaseComObject(pLayer)
+            '            pLayer = Nothing
+            '            Exit While
+            '        End If
+            '        pLayer = enumLayer.Next()
+            '    End While
 
-                Try
+            '    Try
 
-                    DeleteSurveyFiles(IO.Path.GetDirectoryName(pSurveySource))
-                    For Each sSubFolder As String In IO.Directory.GetDirectories(IO.Path.GetDirectoryName(pSurveySource))
-                        Try
-                            IO.Directory.Delete(sSubFolder, True)
-                        Catch ex As Exception
-                            'Do Nothing because if should just be a esri lock file if it can't be deleted
-                            Debug.Print(ex.Message)
-                        End Try
-                    Next
+            '        DeleteSurveyFiles(IO.Path.GetDirectoryName(pSurveySource))
+            '        For Each sSubFolder As String In IO.Directory.GetDirectories(IO.Path.GetDirectoryName(pSurveySource))
+            '            Try
+            '                IO.Directory.Delete(sSubFolder, True)
+            '            Catch ex As Exception
+            '                'Do Nothing because if should just be a esri lock file if it can't be deleted
+            '                Debug.Print(ex.Message)
+            '            End Try
+            '        Next
 
-                Catch ex As Exception
-                    ExceptionHelper.HandleException(ex, "Some of the folders associated with this survey still exist because an ESRI lock file cannot be deleted while current ArcMap session is still running.")
-                Finally
-                    rDEMSurvey.Delete()
-                    GCDProject.ProjectManagerBase.save()
-                End Try
+            '    Catch ex As Exception
+            '        ExceptionHelper.HandleException(ex, "Some of the folders associated with this survey still exist because an ESRI lock file cannot be deleted while current ArcMap session is still running.")
+            '    Finally
+            '        rDEMSurvey.Delete()
+            '        GCDProject.ProjectManagerBase.save()
+            '    End Try
 
-            End If
+            'End If
         End Sub
 
         Private Sub DeleteSurveyFiles(ByVal sFolder As String)
@@ -1262,24 +1293,26 @@ Namespace UI.Project
                 Exit Sub
             End If
 
+            'TODO loop below commented out
+            Throw New Exception("not implemented")
             'Code written to replace the commented out code below that was not working - Hensleigh 12/10/2013
-            Dim pWorkspaceFactory As ESRI.ArcGIS.Geodatabase.IWorkspaceFactory = ArcMap.GetWorkspaceFactory(GISDataStructures.GISDataStorageTypes.RasterFile)
-            Dim pWorkspace As ESRI.ArcGIS.Geodatabase.IWorkspace = pWorkspaceFactory.OpenFromFile(sFolder, 0)
-            Dim pEnumerateDataset As ESRI.ArcGIS.Geodatabase.IEnumDataset = pWorkspace.Datasets(ESRI.ArcGIS.Geodatabase.esriDatasetType.esriDTRasterDataset)
-            Dim pDataset As ESRI.ArcGIS.Geodatabase.IDataset = pEnumerateDataset.Next
-            Do While TypeOf pDataset Is ESRI.ArcGIS.Geodatabase.IDataset
-                Try
-                    If pDataset.CanDelete() Then
-                        pDataset.Delete()
-                    End If
-                Catch ex As Exception
-                    Debug.Print(ex.Message)
-                Finally
-                    pDataset = pEnumerateDataset.Next
-                End Try
+            'Dim pWorkspaceFactory As ESRI.ArcGIS.Geodatabase.IWorkspaceFactory = ArcMap.GetWorkspaceFactory(GISDataStructures.GISDataStorageTypes.RasterFile)
+            'Dim pWorkspace As ESRI.ArcGIS.Geodatabase.IWorkspace = pWorkspaceFactory.OpenFromFile(sFolder, 0)
+            'Dim pEnumerateDataset As ESRI.ArcGIS.Geodatabase.IEnumDataset = pWorkspace.Datasets(ESRI.ArcGIS.Geodatabase.esriDatasetType.esriDTRasterDataset)
+            'Dim pDataset As ESRI.ArcGIS.Geodatabase.IDataset = pEnumerateDataset.Next
+            'Do While TypeOf pDataset Is ESRI.ArcGIS.Geodatabase.IDataset
+            '    Try
+            '        If pDataset.CanDelete() Then
+            '            pDataset.Delete()
+            '        End If
+            '    Catch ex As Exception
+            '        Debug.Print(ex.Message)
+            '    Finally
+            '        pDataset = pEnumerateDataset.Next
+            '    End Try
 
-            Loop
-            pWorkspace = Nothing
+            'Loop
+            'pWorkspace = Nothing
 
             For Each sSubFolder As String In IO.Directory.GetDirectories(sFolder)
                 DeleteSurveyFiles(sSubFolder)
@@ -1402,58 +1435,61 @@ Namespace UI.Project
 
         Private Sub btnAddToMap_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnAddToMap.Click
 
-            Try
-                Dim nodSelected As TreeNode = treProject.SelectedNode
-                If Not TypeOf nodSelected Is TreeNode Then
-                    Exit Sub
-                End If
+            'TODO: entire function contents commented out
+            Throw New Exception("not implemented")
 
-                Dim eType As GCDNodeTypes = GetNodeType(nodSelected)
-                Dim nID As Integer = GetNodeID(nodSelected)
+            'Try
+            '    Dim nodSelected As TreeNode = treProject.SelectedNode
+            '    If Not TypeOf nodSelected Is TreeNode Then
+            '        Exit Sub
+            '    End If
 
-                Select Case eType
-                    Case GCDNodeTypes.InputsGroup
-                        For Each rDEMSurvey As ProjectDS.DEMSurveyRow In GCDProject.ProjectManager.CurrentProject.GetDEMSurveyRows
-                            GCDProject.ProjectManagerUI.ArcMapManager.AddDEM(rDEMSurvey)
-                            For Each rAssoc As ProjectDS.AssociatedSurfaceRow In rDEMSurvey.GetAssociatedSurfaceRows
-                                GCDProject.ProjectManagerUI.ArcMapManager.AddAssociatedSurface(rAssoc)
-                            Next
+            '    Dim eType As GCDNodeTypes = GetNodeType(nodSelected)
+            '    Dim nID As Integer = GetNodeID(nodSelected)
 
-                            For Each rError As ProjectDS.ErrorSurfaceRow In rDEMSurvey.GetErrorSurfaceRows
-                                GCDProject.ProjectManagerUI.ArcMapManager.AddErrSurface(rError)
-                            Next
-                        Next
+            '    Select Case eType
+            '        Case GCDNodeTypes.InputsGroup
+            '            For Each rDEMSurvey As ProjectDS.DEMSurveyRow In GCDProject.ProjectManager.CurrentProject.GetDEMSurveyRows
+            '                GCDProject.ProjectManagerUI.ArcMapManager.AddDEM(rDEMSurvey)
+            '                For Each rAssoc As ProjectDS.AssociatedSurfaceRow In rDEMSurvey.GetAssociatedSurfaceRows
+            '                    GCDProject.ProjectManagerUI.ArcMapManager.AddAssociatedSurface(rAssoc)
+            '                Next
 
-                    Case GCDNodeTypes.DEMSurvey
-                        Dim rDEMSurvey As ProjectDS.DEMSurveyRow = GCDProject.ProjectManager.ds.DEMSurvey.FindByDEMSurveyID(nID)
-                        GCDProject.ProjectManagerUI.ArcMapManager.AddDEM(rDEMSurvey)
+            '                For Each rError As ProjectDS.ErrorSurfaceRow In rDEMSurvey.GetErrorSurfaceRows
+            '                    GCDProject.ProjectManagerUI.ArcMapManager.AddErrSurface(rError)
+            '                Next
+            '            Next
 
-                    Case GCDNodeTypes.AssociatedSurface, GCDNodeTypes.AssociatedSurfaceGroup
-                        Dim nDEMSurveyID As Integer = GetNodeID(nodSelected.Parent.Parent)
-                        Dim rDEMSurvey As ProjectDS.DEMSurveyRow = GCDProject.ProjectManager.ds.DEMSurvey.FindByDEMSurveyID(nDEMSurveyID)
-                        For Each rAssoc As ProjectDS.AssociatedSurfaceRow In rDEMSurvey.GetAssociatedSurfaceRows
-                            If nID = -1 OrElse rAssoc.AssociatedSurfaceID = nID Then
-                                GCDProject.ProjectManagerUI.ArcMapManager.AddAssociatedSurface(rAssoc)
-                            End If
-                        Next
+            '        Case GCDNodeTypes.DEMSurvey
+            '            Dim rDEMSurvey As ProjectDS.DEMSurveyRow = GCDProject.ProjectManager.ds.DEMSurvey.FindByDEMSurveyID(nID)
+            '            GCDProject.ProjectManagerUI.ArcMapManager.AddDEM(rDEMSurvey)
 
-                    Case GCDNodeTypes.ErrorSurface, GCDNodeTypes.ErrorSurfaceGroup
-                        Dim nDEMSurveyID As Integer = GetNodeID(nodSelected.Parent.Parent)
-                        Dim rDEMSurvey As ProjectDS.DEMSurveyRow = GCDProject.ProjectManager.ds.DEMSurvey.FindByDEMSurveyID(nDEMSurveyID)
-                        For Each rError As ProjectDS.ErrorSurfaceRow In rDEMSurvey.GetErrorSurfaceRows
-                            If nID = -1 OrElse rError.ErrorSurfaceID = nID Then
-                                GCDProject.ProjectManagerUI.ArcMapManager.AddErrSurface(rError)
-                            End If
-                        Next
+            '        Case GCDNodeTypes.AssociatedSurface, GCDNodeTypes.AssociatedSurfaceGroup
+            '            Dim nDEMSurveyID As Integer = GetNodeID(nodSelected.Parent.Parent)
+            '            Dim rDEMSurvey As ProjectDS.DEMSurveyRow = GCDProject.ProjectManager.ds.DEMSurvey.FindByDEMSurveyID(nDEMSurveyID)
+            '            For Each rAssoc As ProjectDS.AssociatedSurfaceRow In rDEMSurvey.GetAssociatedSurfaceRows
+            '                If nID = -1 OrElse rAssoc.AssociatedSurfaceID = nID Then
+            '                    GCDProject.ProjectManagerUI.ArcMapManager.AddAssociatedSurface(rAssoc)
+            '                End If
+            '            Next
 
-                    Case GCDNodeTypes.DoD
-                        For Each rDoD As ProjectDS.DoDsRow In GCDProject.ProjectManager.ds.DoDs.Rows
-                        Next
-                End Select
+            '        Case GCDNodeTypes.ErrorSurface, GCDNodeTypes.ErrorSurfaceGroup
+            '            Dim nDEMSurveyID As Integer = GetNodeID(nodSelected.Parent.Parent)
+            '            Dim rDEMSurvey As ProjectDS.DEMSurveyRow = GCDProject.ProjectManager.ds.DEMSurvey.FindByDEMSurveyID(nDEMSurveyID)
+            '            For Each rError As ProjectDS.ErrorSurfaceRow In rDEMSurvey.GetErrorSurfaceRows
+            '                If nID = -1 OrElse rError.ErrorSurfaceID = nID Then
+            '                    GCDProject.ProjectManagerUI.ArcMapManager.AddErrSurface(rError)
+            '                End If
+            '            Next
 
-            Catch ex As Exception
-                ExceptionHelper.HandleException(ex)
-            End Try
+            '        Case GCDNodeTypes.DoD
+            '            For Each rDoD As ProjectDS.DoDsRow In GCDProject.ProjectManager.ds.DoDs.Rows
+            '            Next
+            '    End Select
+
+            'Catch ex As Exception
+            '    ExceptionHelper.HandleException(ex)
+            'End Try
 
         End Sub
 
@@ -1482,145 +1518,148 @@ Namespace UI.Project
         DateAddedDescendingToolStripMenuItem.Click,
         DateAddedAscendingToolStripMenuItem.Click
 
-            'Get the name of the menu item that was clicked
-            Dim pMenuItem As ToolStripMenuItem = CType(sender, ToolStripMenuItem)
-            Dim pParentMenuItem As ToolStripMenuItem = CType(pMenuItem.OwnerItem, ToolStripMenuItem)
+            'TODO entire function contents commented out
+            Throw New Exception("not implemented")
+
+            ''Get the name of the menu item that was clicked
+            'Dim pMenuItem As ToolStripMenuItem = CType(sender, ToolStripMenuItem)
+            'Dim pParentMenuItem As ToolStripMenuItem = CType(pMenuItem.OwnerItem, ToolStripMenuItem)
 
 
-            'Change the image of the selected tag to a Check mark
-            pMenuItem.Image = My.Resources.Check
-            pParentMenuItem.Image = My.Resources.Check
+            ''Change the image of the selected tag to a Check mark
+            'pMenuItem.Image = My.Resources.Check
+            'pParentMenuItem.Image = My.Resources.Check
 
-            'Set other menu item images to nothing
-            For Each pTempMenuItem As ToolStripMenuItem In pMenuItem.Owner.Items
-                If Not String.Compare(pTempMenuItem.Text, pMenuItem.Text) = 0 Then
-                    pTempMenuItem.Image = Nothing
-                End If
-            Next
+            ''Set other menu item images to nothing
+            'For Each pTempMenuItem As ToolStripMenuItem In pMenuItem.Owner.Items
+            '    If Not String.Compare(pTempMenuItem.Text, pMenuItem.Text) = 0 Then
+            '        pTempMenuItem.Image = Nothing
+            '    End If
+            'Next
 
-            RefreshMenuStripImages(pParentMenuItem)
-
-
-            'Assign the proper enumeration value to the member sort by member variable
-            If String.Compare(pParentMenuItem.Text, "Name") = 0 Then
-                If String.Compare(pMenuItem.Text, "Ascending") = 0 Then
-                    m_eSortBy = SortSurveyBy.NameAsc
-                ElseIf String.Compare(pMenuItem.Text, "Descending") = 0 Then
-                    m_eSortBy = SortSurveyBy.NameDsc
-                End If
-            ElseIf String.Compare(pParentMenuItem.Text, "Survey date") = 0 Then
-                If String.Compare(pMenuItem.Text, "Ascending") = 0 Then
-                    m_eSortBy = SortSurveyBy.SurveyDateAsc
-                ElseIf String.Compare(pMenuItem.Text, "Descending") = 0 Then
-                    m_eSortBy = SortSurveyBy.SurveyDateDsc
-                End If
-            ElseIf String.Compare(pParentMenuItem.Text, "Date added") = 0 Then
-                If String.Compare(pMenuItem.Text, "Ascending") = 0 Then
-                    m_eSortBy = SortSurveyBy.DEMSurveyID_Asc
-                ElseIf String.Compare(pMenuItem.Text, "Descending") = 0 Then
-                    m_eSortBy = SortSurveyBy.DEMSurveyID_Dsc
-                End If
-            Else
-                Throw New Exception("Unsupported sorting order selected.")
-            End If
-
-            'Load the tree using the sort by variable
-            LoadTree(Nothing, m_eSortBy)
-
-            Try
-                Dim rProject As ProjectDS.ProjectRow = GCDProject.ProjectManager.CurrentProject
-                If TypeOf rProject Is ProjectDS.ProjectRow Then
-
-                    'Loop over the survey rows in the order provided by the m_eSortBy
-                    'For Each rDEM As ProjectDS.DEMSurveyRow In rProject.GetDEMSurveyRows.OrderByDescending(Function(pKey As ProjectDS.DEMSurveyRow) pKey.Item(m_eSortBy.ToString()))
-                    'Store DEM Survey Rows in an Ienumerable then loop over
-                    Dim sortedSurveys As System.Linq.IOrderedEnumerable(Of ProjectDS.DEMSurveyRow) = GetSortedSurveyRows(rProject, m_eSortBy)
+            'RefreshMenuStripImages(pParentMenuItem)
 
 
-                    ' DEM survyes
-                    'For Each rSurveys As ProjectDS.DEMSurveyRow In rProject.GetDEMSurveyRows.OrderBy(Function(pKey As ProjectDS.DEMSurveyRow) pKey.Item(eSortSurveyBy.ToString))
-                    If sortedSurveys Is Nothing Then
-                        Exit Sub
-                    End If
+            ''Assign the proper enumeration value to the member sort by member variable
+            'If String.Compare(pParentMenuItem.Text, "Name") = 0 Then
+            '    If String.Compare(pMenuItem.Text, "Ascending") = 0 Then
+            '        m_eSortBy = SortSurveyBy.NameAsc
+            '    ElseIf String.Compare(pMenuItem.Text, "Descending") = 0 Then
+            '        m_eSortBy = SortSurveyBy.NameDsc
+            '    End If
+            'ElseIf String.Compare(pParentMenuItem.Text, "Survey date") = 0 Then
+            '    If String.Compare(pMenuItem.Text, "Ascending") = 0 Then
+            '        m_eSortBy = SortSurveyBy.SurveyDateAsc
+            '    ElseIf String.Compare(pMenuItem.Text, "Descending") = 0 Then
+            '        m_eSortBy = SortSurveyBy.SurveyDateDsc
+            '    End If
+            'ElseIf String.Compare(pParentMenuItem.Text, "Date added") = 0 Then
+            '    If String.Compare(pMenuItem.Text, "Ascending") = 0 Then
+            '        m_eSortBy = SortSurveyBy.DEMSurveyID_Asc
+            '    ElseIf String.Compare(pMenuItem.Text, "Descending") = 0 Then
+            '        m_eSortBy = SortSurveyBy.DEMSurveyID_Dsc
+            '    End If
+            'Else
+            '    Throw New Exception("Unsupported sorting order selected.")
+            'End If
 
-                    For Each rDEM In sortedSurveys.Reverse()
+            ''Load the tree using the sort by variable
+            'LoadTree(Nothing, m_eSortBy)
 
-                        'Test to see if the group layer for the survey is in the map
-                        Dim pTest As ESRI.ArcGIS.Carto.ILayer = ArcMap.GetLayerByName(rDEM.Name, My.ThisApplication, ArcMap.eEsriLayerType.Esri_GroupLayer)
+            'Try
+            '    Dim rProject As ProjectDS.ProjectRow = GCDProject.ProjectManager.CurrentProject
+            '    If TypeOf rProject Is ProjectDS.ProjectRow Then
 
-                        'If it is in map then we will apply methods to add it in the order that the ProjectExplorerUC is now ordered in
-                        If pTest IsNot Nothing Then
+            '        'Loop over the survey rows in the order provided by the m_eSortBy
+            '        'For Each rDEM As ProjectDS.DEMSurveyRow In rProject.GetDEMSurveyRows.OrderByDescending(Function(pKey As ProjectDS.DEMSurveyRow) pKey.Item(m_eSortBy.ToString()))
+            '        'Store DEM Survey Rows in an Ienumerable then loop over
+            '        Dim sortedSurveys As System.Linq.IOrderedEnumerable(Of ProjectDS.DEMSurveyRow) = GetSortedSurveyRows(rProject, m_eSortBy)
 
-                            'The survey group layer is in the map so get the group variable
-                            Dim pSurveyGroupLayer As ESRI.ArcGIS.Carto.IGroupLayer = ArcMap.GetGroupLayer(My.ThisApplication, rDEM.Name, False)
 
-                            'Check to see if associated surfaces and/or error surfaces are in the map for that survey
-                            Dim bAddAssociatedSurfaces = ArcMap.SubGroupLayerExists(My.ThisApplication, "Associated Surfaces", pSurveyGroupLayer)
-                            Dim bAddErrorSurfaces = ArcMap.SubGroupLayerExists(My.ThisApplication, "Error Surfaces", pSurveyGroupLayer)
+            '        ' DEM survyes
+            '        'For Each rSurveys As ProjectDS.DEMSurveyRow In rProject.GetDEMSurveyRows.OrderBy(Function(pKey As ProjectDS.DEMSurveyRow) pKey.Item(eSortSurveyBy.ToString))
+            '        If sortedSurveys Is Nothing Then
+            '            Exit Sub
+            '        End If
 
-                            'Create empty layer variable to be used and empty list of associated surface rows
-                            Dim pLayer As ESRI.ArcGIS.Carto.ILayer = Nothing
-                            Dim lAssocLayers As List(Of ProjectDS.AssociatedSurfaceRow) = New List(Of ProjectDS.AssociatedSurfaceRow)
+            '        For Each rDEM In sortedSurveys.Reverse()
 
-                            'Associated surfaces were in the map for this survey
-                            If bAddAssociatedSurfaces Then
-                                For Each rAssoc As ProjectDS.AssociatedSurfaceRow In rDEM.GetAssociatedSurfaceRows
+            '            'Test to see if the group layer for the survey is in the map
+            '            Dim pTest As ESRI.ArcGIS.Carto.ILayer = ArcMap.GetLayerByName(rDEM.Name, My.ThisApplication, ArcMap.eEsriLayerType.Esri_GroupLayer)
 
-                                    'Get path of associated surface source path, get group layer, and check for presence of associated surface in associated surface sub layer of survey layer
-                                    Dim sPath As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rAssoc.Source)
-                                    Dim pAssocGroupLayer As ESRI.ArcGIS.Carto.IGroupLayer = ArcMap.GetGroupLayer(My.ThisApplication, "Associated Surfaces", pSurveyGroupLayer)
-                                    pLayer = GCDProject.ProjectManagerUI.ArcMapManager.IsLayerInGroupLayer(sPath, pAssocGroupLayer)
-                                    If pLayer IsNot Nothing Then
-                                        'Add associated surface row to list to be used later
-                                        lAssocLayers.Add(rAssoc)
-                                    End If
-                                Next
-                            End If
+            '            'If it is in map then we will apply methods to add it in the order that the ProjectExplorerUC is now ordered in
+            '            If pTest IsNot Nothing Then
 
-                            'Create  empty list of error surface rows
-                            Dim lErrorLayers As List(Of ProjectDS.ErrorSurfaceRow) = New List(Of ProjectDS.ErrorSurfaceRow)
+            '                'The survey group layer is in the map so get the group variable
+            '                Dim pSurveyGroupLayer As ESRI.ArcGIS.Carto.IGroupLayer = ArcMap.GetGroupLayer(My.ThisApplication, rDEM.Name, False)
 
-                            'Error surfaces were in the map for this survey
-                            If bAddErrorSurfaces Then
-                                For Each rError As ProjectDS.ErrorSurfaceRow In rDEM.GetErrorSurfaceRows
+            '                'Check to see if associated surfaces and/or error surfaces are in the map for that survey
+            '                Dim bAddAssociatedSurfaces = ArcMap.SubGroupLayerExists(My.ThisApplication, "Associated Surfaces", pSurveyGroupLayer)
+            '                Dim bAddErrorSurfaces = ArcMap.SubGroupLayerExists(My.ThisApplication, "Error Surfaces", pSurveyGroupLayer)
 
-                                    'Get path of error surface source path, get group layer, and check for presence of error surface in error surface sub layer of survey layer
-                                    Dim sPath As String = GCDProject.ProjectManager.GetAbsolutePath(rError.Source)
-                                    Dim pErrorGroupLayer As ESRI.ArcGIS.Carto.IGroupLayer = ArcMap.GetGroupLayer(My.ThisApplication, "Error Surfaces", pSurveyGroupLayer)
-                                    pLayer = GCDProject.ProjectManagerUI.ArcMapManager.IsLayerInGroupLayer(sPath, pErrorGroupLayer)
-                                    If pLayer IsNot Nothing Then
-                                        'Add error surface row to list to be used later
-                                        lErrorLayers.Add(rError)
-                                    End If
-                                Next
-                            End If
+            '                'Create empty layer variable to be used and empty list of associated surface rows
+            '                Dim pLayer As ESRI.ArcGIS.Carto.ILayer = Nothing
+            '                Dim lAssocLayers As List(Of ProjectDS.AssociatedSurfaceRow) = New List(Of ProjectDS.AssociatedSurfaceRow)
 
-                            'Remove group layer as it will be placed in new sort order
-                            ArcMap.RemoveGroupLayer(My.ThisApplication, pSurveyGroupLayer.Name)
+            '                'Associated surfaces were in the map for this survey
+            '                If bAddAssociatedSurfaces Then
+            '                    For Each rAssoc As ProjectDS.AssociatedSurfaceRow In rDEM.GetAssociatedSurfaceRows
 
-                            'Add DEM in the order new order that is created by loop with OrderByDescending
-                            GCDProject.ProjectManagerUI.ArcMapManager.AddDEM(rDEM)
+            '                        'Get path of associated surface source path, get group layer, and check for presence of associated surface in associated surface sub layer of survey layer
+            '                        Dim sPath As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rAssoc.Source)
+            '                        Dim pAssocGroupLayer As ESRI.ArcGIS.Carto.IGroupLayer = ArcMap.GetGroupLayer(My.ThisApplication, "Associated Surfaces", pSurveyGroupLayer)
+            '                        pLayer = GCDProject.ProjectManagerUI.ArcMapManager.IsLayerInGroupLayer(sPath, pAssocGroupLayer)
+            '                        If pLayer IsNot Nothing Then
+            '                            'Add associated surface row to list to be used later
+            '                            lAssocLayers.Add(rAssoc)
+            '                        End If
+            '                    Next
+            '                End If
 
-                            'Add all associated surfaces to group layer that were previously in map
-                            If lAssocLayers.Count > 0 Then
-                                For Each rAssoc As ProjectDS.AssociatedSurfaceRow In lAssocLayers
-                                    GCDProject.ProjectManagerUI.ArcMapManager.AddAssociatedSurface(rAssoc)
-                                Next
-                            End If
+            '                'Create  empty list of error surface rows
+            '                Dim lErrorLayers As List(Of ProjectDS.ErrorSurfaceRow) = New List(Of ProjectDS.ErrorSurfaceRow)
 
-                            'Add all error surfaces to group layer that were previously in map
-                            If lErrorLayers.Count > 0 Then
-                                For Each rError As ProjectDS.ErrorSurfaceRow In lErrorLayers
-                                    GCDProject.ProjectManagerUI.ArcMapManager.AddErrSurface(rError)
-                                Next
-                            End If
-                        End If
-                    Next
+            '                'Error surfaces were in the map for this survey
+            '                If bAddErrorSurfaces Then
+            '                    For Each rError As ProjectDS.ErrorSurfaceRow In rDEM.GetErrorSurfaceRows
 
-                End If
-            Catch ex As Exception
-                ExceptionHelper.HandleException(ex)
-            End Try
+            '                        'Get path of error surface source path, get group layer, and check for presence of error surface in error surface sub layer of survey layer
+            '                        Dim sPath As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rError.Source)
+            '                        Dim pErrorGroupLayer As ESRI.ArcGIS.Carto.IGroupLayer = ArcMap.GetGroupLayer(My.ThisApplication, "Error Surfaces", pSurveyGroupLayer)
+            '                        pLayer = GCDProject.ProjectManagerUI.ArcMapManager.IsLayerInGroupLayer(sPath, pErrorGroupLayer)
+            '                        If pLayer IsNot Nothing Then
+            '                            'Add error surface row to list to be used later
+            '                            lErrorLayers.Add(rError)
+            '                        End If
+            '                    Next
+            '                End If
+
+            '                'Remove group layer as it will be placed in new sort order
+            '                ArcMap.RemoveGroupLayer(My.ThisApplication, pSurveyGroupLayer.Name)
+
+            '                'Add DEM in the order new order that is created by loop with OrderByDescending
+            '                GCDProject.ProjectManagerUI.ArcMapManager.AddDEM(rDEM)
+
+            '                'Add all associated surfaces to group layer that were previously in map
+            '                If lAssocLayers.Count > 0 Then
+            '                    For Each rAssoc As ProjectDS.AssociatedSurfaceRow In lAssocLayers
+            '                        GCDProject.ProjectManagerUI.ArcMapManager.AddAssociatedSurface(rAssoc)
+            '                    Next
+            '                End If
+
+            '                'Add all error surfaces to group layer that were previously in map
+            '                If lErrorLayers.Count > 0 Then
+            '                    For Each rError As ProjectDS.ErrorSurfaceRow In lErrorLayers
+            '                        GCDProject.ProjectManagerUI.ArcMapManager.AddErrSurface(rError)
+            '                    Next
+            '                End If
+            '            End If
+            '        Next
+
+            '    End If
+            'Catch ex As Exception
+            '    ExceptionHelper.HandleException(ex)
+            'End Try
 
         End Sub
 
@@ -1681,7 +1720,7 @@ Namespace UI.Project
                         Dim nID As Integer = GetNodeID(selNode)
                         Dim rDod As ProjectDS.DoDsRow = GCDProject.ProjectManager.ds.DoDs.FindByDoDID(nID)
                         If TypeOf rDod Is ProjectDS.DoDsRow Then
-                            Dim sFolder As String = GCDProject.ProjectManager.OutputManager.GetDoDOutputFolder(rDod.Name)
+                            Dim sFolder As String = GCDProject.ProjectManagerBase.OutputManager.GetDoDOutputFolder(rDod.Name)
                             If IO.Directory.Exists(sFolder) Then
                                 If sFolder.Contains(" ") Then
                                     sFolder = """" & sFolder & """"
@@ -1721,7 +1760,9 @@ Namespace UI.Project
                 Dim rProject As ProjectDS.ProjectRow = GCDProject.ProjectManager.CurrentProject
                 If TypeOf rProject Is ProjectDS.ProjectRow Then
                     For Each rAOI As ProjectDS.AOIsRow In rProject.GetAOIsRows
-                        GCDProject.ProjectManagerUI.ArcMapManager.AddAOI(rAOI)
+                        ' TODO 
+                        Throw New Exception("not implemented")
+                        '     GCDProject.ProjectManagerUI.ArcMapManager.AddAOI(rAOI)
                     Next
                 End If
             Catch ex As Exception
@@ -1784,7 +1825,9 @@ Namespace UI.Project
                         Dim nID As Integer = GetNodeID(selNode)
                         For Each rAOI As ProjectDS.AOIsRow In GCDProject.ProjectManager.CurrentProject.GetAOIsRows
                             If rAOI.AOIID = nID Then
-                                GCDProject.ProjectManagerUI.ArcMapManager.AddAOI(rAOI)
+                                ' TODO 
+                                Throw New Exception("not implemented")
+                                '  GCDProject.ProjectManagerUI.ArcMapManager.AddAOI(rAOI)
                                 Exit Sub
                             End If
                         Next
@@ -1858,7 +1901,9 @@ Namespace UI.Project
                                         For Each aDoDRow As ProjectDS.DoDsRow In GCDProject.ProjectManager.ds.DoDs
                                             If String.Compare(aDoDRow.NewSurveyName, sNewDEMName, True) = 0 Then
                                                 If String.Compare(aDoDRow.OldSurveyName, sOldDEMName, True) = 0 Then
-                                                    GCDProject.ProjectManagerUI.ArcMapManager.AddDoD(aDoDRow)
+                                                    ' TODO 
+                                                    Throw New Exception("not implemented")
+                                                    '  GCDProject.ProjectManagerUI.ArcMapManager.AddDoD(aDoDRow)
                                                 End If
                                             End If
                                         Next
@@ -1897,7 +1942,9 @@ Namespace UI.Project
                 If TypeOf rProject Is ProjectDS.ProjectRow Then
                     For Each rDEM As ProjectDS.DEMSurveyRow In sortedSurveys.Reverse()
                         'For Each rDEM As ProjectDS.DEMSurveyRow In rProject.GetDEMSurveyRows
-                        GCDProject.ProjectManagerUI.ArcMapManager.AddDEM(rDEM)
+                        ' TODO 
+                        Throw New Exception("not implemented")
+                        ' GCDProject.ProjectManagerUI.ArcMapManager.AddDEM(rDEM)
                     Next
                 End If
             Catch ex As Exception
@@ -1944,7 +1991,7 @@ Namespace UI.Project
 
                     For Each rBS As ProjectDS.BudgetSegregationsRow In GCDProject.ProjectManager.ds.BudgetSegregations
                         If rBS.BudgetID = nID Then
-                            Dim sPath As String = GCDProject.ProjectManager.GetAbsolutePath(rBS.OutputFolder)
+                            Dim sPath As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rBS.OutputFolder)
                             If IO.Directory.Exists(sPath) Then
                                 Process.Start("explorer.exe", sPath)
                                 Exit For

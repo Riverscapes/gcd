@@ -1,5 +1,5 @@
 ﻿
-Namespace TopCAT
+Namespace UI.TopCAT
 
     Public Class ucToPCAT_Inputs
 
@@ -15,7 +15,9 @@ Namespace TopCAT
         Private Sub btn_RawPointCloud_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_RawPointCloud.Click
 
             'Error_NotSpaceDelimited.Clear()
-            WindowsFormAssistant.OpenFileDialog("Raw Point Cloud", txtBox_RawPointCloudFile)
+            'TODO: figure out where James' windows assistant fits in to NARU?
+            Throw New Exception("not implemented")
+            'WindowsFormAssistant.OpenFileDialog("Raw Point Cloud", txtBox_RawPointCloudFile)
             'ToPCAT_Assistant.CheckIfToPCAT_Ready(txtBox_RawPointCloudFile.Text, btn_Run, ucInputsWindow.btn_RawPointCloud)
 
         End Sub
@@ -50,17 +52,19 @@ Namespace TopCAT
 
         Public Function ValidateUserControl() As Boolean
 
-            If String.IsNullOrEmpty(txtBox_RawPointCloudFile.Text) Then
-                MsgBox("Please select a point cloud to process.", MsgBoxStyle.OkOnly, "No Raw Point Cloud Selected")
-                Return False
-            ElseIf Not IO.File.Exists(txtBox_RawPointCloudFile.Text) Then
-                MsgBox("The file you have chosen to process does not exists. Please select an existing file.", MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
-                Return False
-            ElseIf Not ToPCAT_Assistant.CheckIfToPCAT_Ready(txtBox_RawPointCloudFile.Text) Then
-                MsgBox("This file does not appear to be space delimited and cannot be processed by ToPCAT." & vbCrLf & vbCrLf & _
-                       "Use ToPCAT Prep Tool to make file ready to be processed by ToPCAT.", MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
-                Return False
-            End If
+            ' TODO: include TopCAT assistant
+            Throw New Exception("Not implemented")
+            'If String.IsNullOrEmpty(txtBox_RawPointCloudFile.Text) Then
+            '    MsgBox("Please select a point cloud to process.", MsgBoxStyle.OkOnly, "No Raw Point Cloud Selected")
+            '    Return False
+            'ElseIf Not IO.File.Exists(txtBox_RawPointCloudFile.Text) Then
+            '    MsgBox("The file you have chosen to process does not exists. Please select an existing file.", MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
+            '    Return False
+            'ElseIf Not ToPCAT_Assistant.CheckIfToPCAT_Ready(txtBox_RawPointCloudFile.Text) Then
+            '    MsgBox("This file does not appear to be space delimited and cannot be processed by ToPCAT." & vbCrLf & vbCrLf & _
+            '           "Use ToPCAT Prep Tool to make file ready to be processed by ToPCAT.", MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
+            '    Return False
+            'End If
 
             Return True
 

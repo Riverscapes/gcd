@@ -30,7 +30,7 @@
             Me.Label3 = New System.Windows.Forms.Label()
             Me.txtName = New System.Windows.Forms.TextBox()
             Me.ProjectBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-            Me.ProjectDSOld = New GCDAddIn.ProjectDS()
+            Me.ProjectDSOld = New ProjectDS()
             Me.txtDescription = New System.Windows.Forms.TextBox()
             Me.btnBrowseOutput = New System.Windows.Forms.Button()
             Me.txtDirectory = New System.Windows.Forms.TextBox()

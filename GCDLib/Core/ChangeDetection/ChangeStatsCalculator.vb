@@ -337,7 +337,7 @@ Namespace Core.ChangeDetection
                 objReader = New System.IO.StreamReader(TemplateFile)
             Catch ex As System.IO.IOException
                 'need to limit the length of the file to display properly
-                Dim TrimmedFilename As String = FileSystem.TrimFilename(TemplateFile, 80)
+                Dim TrimmedFilename As String = naru.os.File.TrimFilename(TemplateFile, 80)
                 ex.Data("UIMessage") = "Could not access the file '" & TrimmedFilename & "' because it is being used by another program."
                 Throw
             End Try

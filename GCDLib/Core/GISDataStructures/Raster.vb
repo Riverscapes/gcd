@@ -176,6 +176,24 @@ Namespace Core.GISDataStructures
 
         End Function
 
+        Public Shared Function BuildRasterPath(sDirectory As String, sFileName As String) As System.IO.FileInfo
+
+            If (String.IsNullOrEmpty(sDirectory) OrElse Not System.IO.Directory.Exists(sDirectory)) Then
+                Throw New ArgumentNullException("sDirectory", "Invalid directory")
+            End If
+
+            If (String.IsNullOrEmpty(sFileName)) Then
+                Throw New ArgumentNullException(sFileName, "Invalid file name")
+            End If
+
+            Dim sPath As String = naru.os.File.RemoveDangerousCharacters(sFileName)
+            sPath = System.IO.Path.Combine(sDirectory, sPath)
+            sPath = System.IO.Path.ChangeExtension(sPath, "tif")
+            Return New System.IO.FileInfo(sPath)
+
+        End Function
+
+
     End Class
 
 End Namespace

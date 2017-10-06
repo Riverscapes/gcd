@@ -66,6 +66,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\GCDArcMapManager.vb" />
     <Compile Include="Core\BudgetSegregation\BSResultSet.vb" />
     <Compile Include="Core\BudgetSegregation\BudgetClass.vb" />
     <Compile Include="Core\BudgetSegregation\BudgetSegregationEngine.vb" />
@@ -114,7 +115,6 @@
     <Compile Include="Core\External\GCDCoreDLL.vb" />
     <Compile Include="Core\External\NARCError.vb" />
     <Compile Include="Core\External\RasterManager.vb" />
-    <Compile Include="Core\FileSystem.vb" />
     <Compile Include="Core\GCDProject\ProjectDS.vb">
       <DependentUpon>ProjectDS.xsd</DependentUpon>
     </Compile>
@@ -289,6 +289,12 @@
     <Compile Include="UI\SurveyLibrary\frmDEMSurveyProperties.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="UI\TopCAT\ucToPCAT_Inputs.Designer.vb">
+      <DependentUpon>ucToPCAT_Inputs.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\TopCAT\ucToPCAT_Inputs.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="UI\UtilityForms\frmInformation.Designer.vb">
       <DependentUpon>frmInformation.vb</DependentUpon>
     </Compile>
@@ -399,6 +405,9 @@
     <EmbeddedResource Include="UI\SurveyLibrary\frmDEMSurveyProperties.resx">
       <DependentUpon>frmDEMSurveyProperties.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\TopCAT\ucToPCAT_Inputs.resx">
+      <DependentUpon>ucToPCAT_Inputs.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\UtilityForms\frmInformation.resx">
       <DependentUpon>frmInformation.vb</DependentUpon>
     </EmbeddedResource>
@@ -417,7 +426,6 @@
     <None Include="Core\ErrorCalculation\FIS\FISLibrary.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>FISLibrary.Designer.vb</LastGenOutput>
-      <SubType>Designer</SubType>
     </None>
     <None Include="Core\ErrorCalculation\FIS\FISLibrary.xss">
       <DependentUpon>FISLibrary.xsd</DependentUpon>
@@ -461,7 +469,26 @@
       <Name>naru</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Core\ExcelTemplates\BudgetSegregationSummaryTemplate.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Core\ExcelTemplates\ClassSummary.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Core\ExcelTemplates\ClassSummary_Layout.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Core\ExcelTemplates\GCDSummary.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Core\ExcelTemplates\SummaryTemplate.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Options\SurveyTypes.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Add.png" />
   </ItemGroup>

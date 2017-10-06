@@ -30,7 +30,7 @@ Namespace UI.ErrorCalculation
 
             ' Load all the FIS rule files in the library to the combobox
             ' (Need to do this before the try/catch below that loads the error surface data
-            For Each rFIS As FISLibrary.FISTableRow In Core.GCDProject.ProjectManagerUI.fisds.FISTable
+            For Each rFIS As GCDLib.FISLibrary.FISTableRow In Core.GCDProject.ProjectManagerUI.fisds.FISTable
                 cboFIS.Items.Add(New naru.db.NamedObject(rFIS.FISID, rFIS.Name))
             Next
             cboFIS.ValueMember = "ID"
@@ -167,7 +167,7 @@ Namespace UI.ErrorCalculation
                             ' Find the local path of the FIS rule file based on the library on this machine. Note
                             ' could be imported project from another machine.
                             Dim sFISFuleFilePath As String = String.Empty
-                            For Each rFISRuleFile As FISLibrary.FISTableRow In Core.GCDProject.ProjectManager.fisds.FISTable.Rows
+                            For Each rFISRuleFile As GCDLib.FISLibrary.FISTableRow In Core.GCDProject.ProjectManager.fisds.FISTable.Rows
                                 If String.Compare(rFISRuleFile.Name, sFISName, True) = 0 Then
                                     sFISFuleFilePath = rFISRuleFile.Path
                                     Exit For
@@ -212,27 +212,30 @@ Namespace UI.ErrorCalculation
                             Throw ex
                         End If
 
-                        Dim pCursor As IFeatureCursor = gMethodMask.FeatureClass.Search(Nothing, True)
-                        Dim pFeature As IFeature = pCursor.NextFeature
-                        Dim sValue As String
+                        ' TODO: commented out loop over featurees below
+                        Throw New Exception("not implemented")
 
-                        While TypeOf pFeature Is IFeature
-                            If Not IsDBNull(pFeature.Value(nIdentifierFld)) Then
-                                sValue = pFeature.Value(nIdentifierFld)
+                        'Dim pCursor As IFeatureCursor = gMethodMask.FeatureClass.Search(Nothing, True)
+                        'Dim pFeature As IFeature = pCursor.NextFeature
+                        'Dim sValue As String
 
-                                ' Attempt to get the error value from the survey types data grid
-                                Dim fErrorValue As Double = 0
-                                If Not m_rDEMSurvey.IsSingleMethodTypeNull Then
-                                    fErrorValue = GetDefaultErrorValue(sValue)
-                                End If
+                        'While TypeOf pFeature Is IFeature
+                        '    If Not IsDBNull(pFeature.Value(nIdentifierFld)) Then
+                        '        sValue = pFeature.Value(nIdentifierFld)
 
-                                ' Add a single survey method, unfiorm error value as default
-                                m_dErrorCalculationProperties(sValue) = New ErrorCalculation.ErrorCalcPropertiesUniform(sValue, fErrorValue)
-                            End If
-                            pFeature = pCursor.NextFeature
-                        End While
-                        Runtime.InteropServices.Marshal.ReleaseComObject(pCursor)
-                        pCursor = Nothing
+                        '        ' Attempt to get the error value from the survey types data grid
+                        '        Dim fErrorValue As Double = 0
+                        '        If Not m_rDEMSurvey.IsSingleMethodTypeNull Then
+                        '            fErrorValue = GetDefaultErrorValue(sValue)
+                        '        End If
+
+                        '        ' Add a single survey method, unfiorm error value as default
+                        '        m_dErrorCalculationProperties(sValue) = New ErrorCalcPropertiesUniform(sValue, fErrorValue)
+                        '    End If
+                        '    pFeature = pCursor.NextFeature
+                        'End While
+                        'Runtime.InteropServices.Marshal.ReleaseComObject(pCursor)
+                        'pCursor = Nothing
                     End If
                 End If
             End If
@@ -438,7 +441,7 @@ Namespace UI.ErrorCalculation
             If rdoFIS.Checked Then
                 If TypeOf cboFIS.SelectedItem Is naru.db.NamedObject Then
                     Dim l As naru.db.NamedObject = cboFIS.SelectedItem
-                    For Each rFIS As FISLibrary.FISTableRow In Core.GCDProject.ProjectManagerUI.fisds.FISTable
+                    For Each rFIS As GCDLib.FISLibrary.FISTableRow In Core.GCDProject.ProjectManagerUI.fisds.FISTable
                         If l.ID = rFIS.FISID Then
                             ' This is the FIS selected in the combo box
                             Dim theFISRuleFile As New FIS.FISRuleFile(rFIS.Path)
@@ -526,7 +529,7 @@ Namespace UI.ErrorCalculation
                         Next
 
                         ' Find the matching fis library file
-                        For Each rFIS As FISLibrary.FISTableRow In Core.GCDProject.ProjectManager.fisds.FISTable
+                        For Each rFIS As GCDLib.FISLibrary.FISTableRow In Core.GCDProject.ProjectManager.fisds.FISTable
                             If String.Compare(rFIS.Name, cboFIS.Text, True) = 0 Then
                                 m_dErrorCalculationProperties(sSurveyMethod) = New ErrorCalcPropertiesFIS(sSurveyMethod, rFIS.FISID, rFIS.Path, dInputs)
                                 Exit For
@@ -702,7 +705,9 @@ Namespace UI.ErrorCalculation
                     errEngine.CreateErrorSurfaceRaster()
 
                     If My.Settings.AddOutputLayersToMap Then
-                        Core.GCDProject.ProjectManagerUI.ArcMapManager.AddErrSurface(m_rErrorSurface)
+                        ' TODO 
+                        Throw New Exception("not implemented")
+                        'Core.GCDProject.ProjectManagerUI.ArcMapManager.AddErrSurface(m_rErrorSurface)
                     End If
                 Catch ex As Exception
                     DialogResult = DialogResult.None

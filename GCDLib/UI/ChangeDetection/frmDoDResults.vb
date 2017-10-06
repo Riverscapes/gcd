@@ -31,7 +31,9 @@
         Private Sub cmdAddToMap_Click(sender As System.Object, e As System.EventArgs) Handles cmdAddToMap.Click
 
             If TypeOf m_rDoD Is ProjectDS.DoDsRow Then
-                Core.GCDProject.ProjectManagerUI.ArcMapManager.AddDoD(m_rDoD)
+                ' TODO 
+                Throw New Exception("not implemented")
+                'Core.GCDProject.ProjectManagerUI.ArcMapManager.AddDoD(m_rDoD)
             Else
                 MsgBox("The DoD member row is Null or empty.", MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
             End If

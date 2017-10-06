@@ -1,11 +1,10 @@
-﻿Namespace TopCAT
-
-    <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿Namespace UI.TopCAT
+    <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
     Partial Class ucToPCAT_Inputs
         Inherits System.Windows.Forms.UserControl
 
         'UserControl overrides dispose to clean up the component list.
-        <System.Diagnostics.DebuggerNonUserCode()> _
+        <System.Diagnostics.DebuggerNonUserCode()>
         Protected Overrides Sub Dispose(ByVal disposing As Boolean)
             Try
                 If disposing AndAlso components IsNot Nothing Then
@@ -22,7 +21,7 @@
         'NOTE: The following procedure is required by the Windows Form Designer
         'It can be modified using the Windows Form Designer.  
         'Do not modify it using the code editor.
-        <System.Diagnostics.DebuggerStepThrough()> _
+        <System.Diagnostics.DebuggerStepThrough()>
         Private Sub InitializeComponent()
             Me.components = New System.ComponentModel.Container()
             Me.GroupBox1 = New System.Windows.Forms.GroupBox()
@@ -97,7 +96,7 @@
             'btn_RawPointCloud
             '
             Me.btn_RawPointCloud.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-            Me.btn_RawPointCloud.Image = Global.GCDAddIn.My.Resources.Resources.BrowseFolder
+            Me.btn_RawPointCloud.Image = My.Resources.Resources.BrowseFolder
             Me.btn_RawPointCloud.Location = New System.Drawing.Point(510, 22)
             Me.btn_RawPointCloud.Name = "btn_RawPointCloud"
             Me.btn_RawPointCloud.Size = New System.Drawing.Size(23, 23)
@@ -238,7 +237,7 @@
             '
             'btn_DetrendedOptionsInfo
             '
-            Me.btn_DetrendedOptionsInfo.Image = Global.GCDAddIn.My.Resources.Resources.Help
+            Me.btn_DetrendedOptionsInfo.Image = My.Resources.Resources.Help
             Me.btn_DetrendedOptionsInfo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
             Me.btn_DetrendedOptionsInfo.Location = New System.Drawing.Point(166, 10)
             Me.btn_DetrendedOptionsInfo.Name = "btn_DetrendedOptionsInfo"

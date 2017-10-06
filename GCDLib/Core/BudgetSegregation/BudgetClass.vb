@@ -144,12 +144,14 @@ Namespace Core.BudgetSegregation
             ' Coonvert the polygon mask layer to raster (using the orthogonality information from the DoD)
             '
             Dim gMask As New GISDataStructures.Vector(_MaskCopy.FullName)
-            GP.Conversion.PolygonToRaster_conversion(gMask, _ClassFieldName, _SegregationRaster, gRaster)
+            Throw New NotImplementedException
+            'GP.Conversion.PolygonToRaster_conversion(gMask, _ClassFieldName, _SegregationRaster, gRaster)
             '
             ' PGB 24 Jul 2013 - In ArcGIS 10.1 the conversion does not seem to preserve the map projection. Apply the projection of the
             ' polygons to the segregation raster to be sure.
             '
-            GP.DataManagement.DefineProjection(_SegregationRaster, gRaster.SpatialReference)
+            Throw New NotImplementedException
+            'GP.DataManagement.DefineProjection(_SegregationRaster, gRaster.SpatialReference)
             '
             ' Now ensure it is concurrent
             '
@@ -167,7 +169,7 @@ Namespace Core.BudgetSegregation
         Public Function GetBudgetSegregationDirectoryPath() As String
             'Get GetChangeDetectionDirectoryPath
             'Dim ChangeDetectionDirectoryPath As String = GCDProject.ProjectManager.OutputManager.GetChangeDetectionDirectoryPath(_NewSurveyName, _OldSurveyName, _DoDName)
-            Dim BudgetSegregationDirectoryPath As String = GCDProject.ProjectManager.OutputManager.GetBudgetSegreationDirectoryPath(GCDProject.ProjectManager.OutputManager.GetDoDOutputFolder(_DoDName), _MaskFilename, _Field)
+            Dim BudgetSegregationDirectoryPath As String = GCDProject.ProjectManagerBase.OutputManager.GetBudgetSegreationDirectoryPath(GCDProject.ProjectManagerBase.OutputManager.GetDoDOutputFolder(_DoDName), _MaskFilename, _Field)
             Return BudgetSegregationDirectoryPath
         End Function
 
@@ -292,7 +294,7 @@ Namespace Core.BudgetSegregation
             ' PGB 24 Apr 2012. 
             ' Export one, combined summary for all classes
             '
-            ExportMaskStats.ExportClassSummary(sExcelTemplateFolder, output.ClassSummaryPath, output.MaskOutputs, GISDataStructures.GetLinearUnitsAsString(gDoDSource.LinearUnits))
+            ExportMaskStats.ExportClassSummary(sExcelTemplateFolder, output.ClassSummaryPath, output.MaskOutputs, gDoDSource.LinearUnits)
 
             GC.Collect()
             'Gdal.GDALDestroyDriverManager()
@@ -301,8 +303,7 @@ Namespace Core.BudgetSegregation
         End Sub
 
         Private Function GetLabels() As Dictionary(Of String, Integer)
-            'Dim m_pMaskFeature As IFeatureClass
-            Dim pFeature As IFeature
+
             Dim pValue As String
             Dim nClass As Integer = 1
             Dim MaskLabels As New Dictionary(Of String, Integer)
@@ -310,7 +311,7 @@ Namespace Core.BudgetSegregation
             ' Copy shapefile
             '
             _MaskCopy = New FileInfo(WorkspaceManager.GetTempShapeFile("Mask"))
-            GISCode.GP.DataManagement.CopyFeatures(_Mask, _MaskCopy)
+            GISDataStructures.Vector.CopyShapeFile(_Mask, _MaskCopy.FullName)
             '
             ' Add class field
             '
@@ -318,8 +319,7 @@ Namespace Core.BudgetSegregation
             _ClassFieldName = "Class"
             Dim nCount As Integer = 0
 
-            Dim gMaskCopy As New GISDataStructures.PolygonDataSource(_MaskCopy.FullName)
-            '            m_pMaskFeature = ShapeFile.OpenShapefile(_MaskCopy.Name, _MaskCopy.DirectoryName)
+            Dim gMaskCopy As New GISDataStructures.Vector(_MaskCopy.FullName)
 
             Do
                 If nCount = 0 Then
@@ -330,42 +330,46 @@ Namespace Core.BudgetSegregation
                 nCount = nCount + 1
             Loop While gMaskCopy.FindField(_ClassFieldName) > -1 And nCount < 9999
 
-            'GISCode.GP.DataManagement.AddField(_MaskCopy, _ClassFieldName, "SHORT")
-            gMaskCopy.AddField(_ClassFieldName, esriFieldType.esriFieldTypeSmallInteger)
+            gMaskCopy.AddField(_ClassFieldName, GISDataStructures.FieldTypes.IntField)
 
             'open shapefile
             'm_pMaskFeature = ShapeFile.OpenShapefile(_MaskCopy.Name, _MaskCopy.DirectoryName)
-            If TypeOf gMaskCopy.FeatureClass Is IFeatureClass Then
 
-                'get field index
-                Dim nIdentifierFld As Integer = gMaskCopy.FindField(_Field)
-                If nIdentifierFld < 0 Then
-                    Throw New Exception("Budget segregation: Survey method identifier field does not exist in shapefile.")
-                End If
 
-                'get class index
-                Dim nClassFld As Integer = gMaskCopy.FindField(_ClassFieldName)
-                If nClassFld < 0 Then
-                    Throw New Exception("Budget segregation: Class field does not exist in shapefile.")
-                End If
 
-                'loop over all features
-                Dim pCursor As IFeatureCursor = gMaskCopy.FeatureClass.Search(Nothing, True)
-                pFeature = pCursor.NextFeature
-                While pFeature IsNot Nothing
-                    pValue = pFeature.Value(nIdentifierFld)
+            'TODO
+            Throw New Exception("following loop commented out")
+            'If TypeOf gMaskCopy.FeatureClass Is IFeatureClass Then
 
-                    'if new value, add to existing methods
-                    If Not MaskLabels.ContainsKey(pValue) Then
-                        MaskLabels.Add(pValue, nClass)
-                        nClass = nClass + 1
-                    End If
+            '    'get field index
+            '    Dim nIdentifierFld As Integer = gMaskCopy.FindField(_Field)
+            '    If nIdentifierFld < 0 Then
+            '        Throw New Exception("Budget segregation: Survey method identifier field does not exist in shapefile.")
+            '    End If
 
-                    pFeature.Value(nClassFld) = MaskLabels(pValue)
-                    pFeature.Store()
-                    pFeature = pCursor.NextFeature
-                End While
-            End If
+            '    'get class index
+            '    Dim nClassFld As Integer = gMaskCopy.FindField(_ClassFieldName)
+            '    If nClassFld < 0 Then
+            '        Throw New Exception("Budget segregation: Class field does not exist in shapefile.")
+            '    End If
+
+            '    'loop over all features
+            '    Dim pCursor As IFeatureCursor = gMaskCopy.FeatureClass.Search(Nothing, True)
+            '    pFeature = pCursor.NextFeature
+            '    While pFeature IsNot Nothing
+            '        pValue = pFeature.Value(nIdentifierFld)
+
+            '        'if new value, add to existing methods
+            '        If Not MaskLabels.ContainsKey(pValue) Then
+            '            MaskLabels.Add(pValue, nClass)
+            '            nClass = nClass + 1
+            '        End If
+
+            '        pFeature.Value(nClassFld) = MaskLabels(pValue)
+            '        pFeature.Store()
+            '        pFeature = pCursor.NextFeature
+            '    End While
+            'End If
             Return MaskLabels
         End Function
 

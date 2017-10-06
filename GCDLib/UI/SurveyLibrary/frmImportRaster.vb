@@ -201,7 +201,9 @@ Namespace UI.SurveyLibrary
 
             'Add Rasters if standalone tool
             If m_ePurpose = ImportRasterPurposes.StandaloneTool And My.Settings.AddOutputLayersToMap = True Then
-                ucRaster.AddToMap()
+                ' TODO 
+                Throw New Exception("not implemented")
+                'ucRaster.AddToMap()
             End If
 
         End Sub
@@ -540,7 +542,9 @@ Namespace UI.SurveyLibrary
                                     End If
 
                                     gResult = New GISDataStructures.Raster(txtRasterPath.Text)
-                                    GP.DataManagement.DefineProjection(gResult, pSR)
+                                    ' TODO
+                                    Throw New NotImplementedException()
+                                    'GP.DataManagement.DefineProjection(gResult, pSR)
 
                                     ' This method will check to see if pyrmaids are need and then build if necessary.
                                     PerformRasterPyramids(m_ePurpose, txtRasterPath.Text)
@@ -608,7 +612,9 @@ Namespace UI.SurveyLibrary
         End Function
 
         Private Sub cmdAddToMap_Click(sender As Object, e As System.EventArgs)
-            ucRaster.AddSelectedItemToArcMap()
+            ' TODO 
+            Throw New Exception("not implemented")
+            'ucRaster.AddSelectedItemToArcMap()
         End Sub
 
         Private Sub txtName_TextChanged(sender As Object, e As System.EventArgs) Handles txtName.TextChanged
@@ -812,7 +818,7 @@ Namespace UI.SurveyLibrary
         End Sub
 
         Private Sub cmdSave_Click(sender As System.Object, e As System.EventArgs) Handles cmdSave.Click
-            naru.ui.Textbox.BrowseSaveRaster(txtRasterPath, "Output Raster", FileSystem.RemoveDangerousCharacters(txtName.Text))
+            naru.ui.Textbox.BrowseSaveRaster(txtRasterPath, "Output Raster", naru.os.File.RemoveDangerousCharacters(txtName.Text))
         End Sub
 
         Private Sub valPrecision_ValueChanged(sender As Object, e As System.EventArgs) Handles valPrecision.ValueChanged

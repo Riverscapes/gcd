@@ -117,7 +117,9 @@ Namespace UI.ChangeDetection
 
                 For Each aDEMSurvey In m_rDoD.ProjectRow.GetDEMSurveyRows
                     If String.Compare(sItemName, aDEMSurvey.Name, True) = 0 Then
-                        Core.GCDProject.ProjectManagerUI.ArcMapManager.AddDEM(aDEMSurvey)
+                        ' TODO 
+                        Throw New Exception("not implemented")
+                        '  Core.GCDProject.ProjectManagerUI.ArcMapManager.AddDEM(aDEMSurvey)
                         Exit Sub
                     End If
                 Next
@@ -134,7 +136,9 @@ Namespace UI.ChangeDetection
                 For Each aDEMSurvey In m_rDoD.ProjectRow.GetDEMSurveyRows
                     For Each anErrorSurface In aDEMSurvey.GetErrorSurfaceRows
                         If String.Compare(anErrorSurface.Name, sItemName, True) = 0 Then
-                            Core.GCDProject.ProjectManagerUI.ArcMapManager.AddErrSurface(anErrorSurface)
+                            ' TODO 
+                            Throw New Exception("not implemented")
+                            'Core.GCDProject.ProjectManagerUI.ArcMapManager.AddErrSurface(anErrorSurface)
                             Exit Sub
                         End If
                     Next
@@ -149,16 +153,24 @@ Namespace UI.ChangeDetection
                         Select Case sFileName
 
                             Case "PropErr"
-                                Core.GCDProject.ProjectManagerUI.ArcMapManager.AddPropErr(m_rDoD)
+                                ' TODO 
+                                Throw New Exception("not implemented")
+                                ' Core.GCDProject.ProjectManagerUI.ArcMapManager.AddPropErr(m_rDoD)
 
                             Case "priorProb"
-                                Core.GCDProject.ProjectManagerUI.ArcMapManager.AddProbabilityRaster(m_rDoD, m_rDoD.ProbabilityRaster)
+                                ' TODO 
+                                Throw New Exception("not implemented")
+                                '  Core.GCDProject.ProjectManagerUI.ArcMapManager.AddProbabilityRaster(m_rDoD, m_rDoD.ProbabilityRaster)
 
                             Case "nbrErosion"
-                                Core.GCDProject.ProjectManagerUI.ArcMapManager.AddProbabilityRaster(m_rDoD, m_rDoD.SpatialCoErosionRaster)
+                                ' TODO 
+                                Throw New Exception("not implemented")
+                                ' Core.GCDProject.ProjectManagerUI.ArcMapManager.AddProbabilityRaster(m_rDoD, m_rDoD.SpatialCoErosionRaster)
 
                             Case "nbrDeposition"
-                                Core.GCDProject.ProjectManagerUI.ArcMapManager.AddProbabilityRaster(m_rDoD, m_rDoD.SpatialCoDepositionRaster)
+                                ' TODO 
+                                Throw New Exception("not implemented")
+                                '  Core.GCDProject.ProjectManagerUI.ArcMapManager.AddProbabilityRaster(m_rDoD, m_rDoD.SpatialCoDepositionRaster)
 
                         End Select
                     End If

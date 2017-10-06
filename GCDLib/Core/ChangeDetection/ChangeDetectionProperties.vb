@@ -78,8 +78,8 @@ Namespace Core.ChangeDetection
         ''' <remarks></remarks>
         Public Shared Function CreateFromDoDRow(rDoD As ProjectDS.DoDsRow) As ChangeDetectionProperties
 
-            Dim sRawDoDPath As String = GCDProject.ProjectManager.GetAbsolutePath(rDoD.RawDoDPath)
-            Dim sThrDoDPath As String = GCDProject.ProjectManager.GetAbsolutePath(rDoD.ThreshDoDPath)
+            Dim sRawDoDPath As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rDoD.RawDoDPath)
+            Dim sThrDoDPath As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rDoD.ThreshDoDPath)
             Dim gRawDoDPath As New GISDataStructures.Raster(sRawDoDPath)
 
             Dim dodProps As ChangeDetectionProperties = Nothing
@@ -88,7 +88,7 @@ Namespace Core.ChangeDetection
             Else
                 Dim sPropErrPath As String = String.Empty
                 If Not rDoD.IsPropagatedErrorRasterPathNull Then
-                    sPropErrPath = GCDProject.ProjectManager.GetAbsolutePath(rDoD.PropagatedErrorRasterPath)
+                    sPropErrPath = GCDProject.ProjectManagerBase.GetAbsolutePath(rDoD.PropagatedErrorRasterPath)
                 Else
                     Dim ex As New Exception("The DoD project dataset record is missing its propagated error raster.")
                     ex.Data("DoD Name") = rDoD.Name

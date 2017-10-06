@@ -30,7 +30,7 @@ Namespace UI.Project
 
 
             If Core.WorkspaceManager.WorkspacePath.Contains(" ") Then
-                MessageBox.Show(String.Format("The specified temp workspace directory contains spaces ({0}). You must specify a temp workspace that does not contain spaces or punctuation characters in the GCD Options before you create or open a GCD project.", WorkspaceManager.WorkspacePath), My.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                MessageBox.Show(String.Format("The specified temp workspace directory contains spaces ({0}). You must specify a temp workspace that does not contain spaces or punctuation characters in the GCD Options before you create or open a GCD project.", Core.WorkspaceManager.WorkspacePath), My.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Warning)
                 Me.Close()
             Else
                 If Not System.IO.Directory.Exists(Core.WorkspaceManager.WorkspacePath) Then
@@ -134,8 +134,8 @@ Namespace UI.Project
             If Not String.IsNullOrEmpty(txtName.Text) Then
                 If Not String.IsNullOrEmpty(txtDirectory.Text) Then
                     If IO.Directory.Exists(txtDirectory.Text) Then
-                        sGCDPath = IO.Path.Combine(txtDirectory.Text, Core.FileSystem.RemoveDangerousCharacters(txtName.Text))
-                        sGCDPath = IO.Path.Combine(sGCDPath, Core.FileSystem.RemoveDangerousCharacters(txtName.Text))
+                        sGCDPath = IO.Path.Combine(txtDirectory.Text, naru.os.File.RemoveDangerousCharacters(txtName.Text))
+                        sGCDPath = IO.Path.Combine(sGCDPath, naru.os.File.RemoveDangerousCharacters(txtName.Text))
                         sGCDPath = IO.Path.ChangeExtension(sGCDPath, "gcd")
                     End If
                 End If
@@ -165,14 +165,16 @@ Namespace UI.Project
             '
             Try
                 If DisplayMode = DisplayModes.Create Then
-                    Core.GCDProject.ProjectManagerUI.FilePath = txtGCDPath.Text
+                    Core.GCDProject.ProjectManagerBase.FilePath = txtGCDPath.Text
                     'ProjectManagerUI.ds.Project.AddProjectRow(txtName.Text, txtDescription.Text, txtDirectory.Text, Now, System.Reflection.Assembly.GetExecutingAssembly.GetName.Version.ToString, valPrecision.Value, DirectCast(cboDisplayUnits.SelectedItem, LinearUnitClass).LinearUnit.ToString)
-                    Core.GCDProject.ProjectManagerUI.ds.Project.AddProjectRow(txtName.Text, txtDescription.Text, txtDirectory.Text, Now, System.Reflection.Assembly.GetExecutingAssembly.GetName.Version.ToString, valPrecision.Value, Nothing, Nothing, GCD.GCDProject.ProjectManager.ProjectTypes.AddIn.ToString())
+                    Core.GCDProject.ProjectManagerBase.ds.Project.AddProjectRow(txtName.Text, txtDescription.Text, txtDirectory.Text, Now, System.Reflection.Assembly.GetExecutingAssembly.GetName.Version.ToString, valPrecision.Value, Nothing, Nothing, Core.GCDProject.ProjectManager.ProjectTypes.AddIn.ToString())
                     Try
-                        Dim gcd As GCDExtension = GCDExtension.GetGCDExtension(My.ThisApplication)
-                        If TypeOf gcd Is GCDExtension Then
-                            gcd.SetCurrentProject(txtName.Text, txtGCDPath.Text)
-                        End If
+                        ' TODO: was the following extension operation necessary? Surely the name and file can exist on the project manager and aren't need on the extension?
+                        Throw New Exception("check code is not needed")
+                        'Dim gcd As GCDExtension = GCDExtension.GetGCDExtension(My.ThisApplication)
+                        'If TypeOf gcd Is GCDExtension Then
+                        '    gcd.SetCurrentProject(txtName.Text, txtGCDPath.Text)
+                        'End If
 
                         ' Remember this folder so that the next time "open project" is used it defaults to the location of this project
                         My.Settings.LastUsedProjectFolder = IO.Path.GetDirectoryName(txtGCDPath.Text)

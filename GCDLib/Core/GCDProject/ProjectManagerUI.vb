@@ -6,8 +6,8 @@ Namespace Core.GCDProject
     Public Class ProjectManagerUI
         Inherits ProjectManager
 
-        Private Shared m_GCDArcMapManager As GCD.GCDArcMapManager
         Protected Shared m_PyramidManager As RasterPyramidManager
+        Protected Shared m_GCDArcMapManager As GCDArcMapManager
 
         Public Shared ReadOnly Property ArcMapManager As GCDArcMapManager
             Get
@@ -34,7 +34,7 @@ Namespace Core.GCDProject
                                     ColourErosion,
                                     ColourDeposition)
 
-            m_GCDArcMapManager = New GCDArcMapManager(pArcMap)
+            'm_GCDArcMapManager = New GCDArcMapManager(pArcMap)
             m_PyramidManager = New RasterPyramidManager(sAutomaticPyramids)
 
         End Sub

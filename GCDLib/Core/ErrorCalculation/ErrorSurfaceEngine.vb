@@ -242,7 +242,7 @@ Namespace Core.ErrorCalculation
 
                     Dim AssociatedSurface As ProjectDS.AssociatedSurfaceRow = GCDProject.ProjectManager.ds.AssociatedSurface.Select(sSQL).First
 
-                    sInputs &= FISInput.FISInput & ";" & GCDProject.ProjectManager.GetAbsolutePath(AssociatedSurface.Source) & ";"
+                    sInputs &= FISInput.FISInput & ";" & GCDProject.ProjectManagerBase.GetAbsolutePath(AssociatedSurface.Source) & ";"
                 End If
             Next
             If sInputs.Length > 0 Then
@@ -275,6 +275,7 @@ Namespace Core.ErrorCalculation
                 End If
 
                 If bClipToMask Then
+                    Throw New NotImplementedException
                     GP.SpatialAnalyst.Raster_Calculator("""" & sFullFISRaster & """ * """ & gReferenceRaster.FullPath & """", sOutputRasterPath, gReferenceRaster)
                 End If
             Catch ex As Exception
@@ -306,14 +307,17 @@ Namespace Core.ErrorCalculation
             Dim gResult As GISDataStructures.Raster = Nothing
             Try
                 Dim sTempRaster As String = WorkspaceManager.GetTempRaster("Mask")
-                GP.Conversion.PolygonToRaster_conversion(gMaskFeatures, "FID", sTempRaster, gDEM)
+                Throw New NotImplementedException
+                '  GP.Conversion.PolygonToRaster_conversion(gMaskFeatures, "FID", sTempRaster, gDEM)
 
                 ' The conversion does not assign a projection. do so now.
-                GP.DataManagement.DefineProjection(sTempRaster, gDEM.SpatialReference)
+                Throw New NotImplementedException
+                ' GP.DataManagement.DefineProjection(sTempRaster, gDEM.SpatialReference)
 
                 ' The output value of the raster is the FID. Because there's typically just one feature this has
                 ' a value of zero. We need a value of 1.
-                GP.SpatialAnalyst.Raster_Calculator("""" & sTempRaster & """ >= 0", sOutputRasterMaskPath, gDEM)
+                Throw New NotImplementedException
+                'GP.SpatialAnalyst.Raster_Calculator("""" & sTempRaster & """ >= 0", sOutputRasterMaskPath, gDEM)
                 gResult = New GISDataStructures.Raster(sOutputRasterMaskPath)
             Catch ex As Exception
                 Dim ex2 As New Exception("Error creating raster mask for survey method", ex)

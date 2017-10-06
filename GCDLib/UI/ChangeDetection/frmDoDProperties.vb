@@ -146,8 +146,8 @@ Namespace UI.ChangeDetection
                     cdEngine = New Core.ChangeDetection.ChangeDetectionEngineMinLOD(txtName.Text, txtOutputFolder.Text, gNewDEM, gOldDEM, gAOI, valMinLodThreshold.Value, My.Settings.ChartWidth, My.Settings.ChartHeight)
                 Else
                     ' Propagated or probabilistic. Use the error surfaces
-                    Dim gNewError As New GISDataStructures.Raster(GCDProject.ProjectManager.GetAbsolutePath(GetErrorRow(cboNewDEM, cboNewError).Source))
-                    Dim gOldError As New GISDataStructures.Raster(GCDProject.ProjectManager.GetAbsolutePath(GetErrorRow(cboOldDEM, cboOldError).Source))
+                    Dim gNewError As New GISDataStructures.Raster(GCDProject.ProjectManagerBase.GetAbsolutePath(GetErrorRow(cboNewDEM, cboNewError).Source))
+                    Dim gOldError As New GISDataStructures.Raster(GCDProject.ProjectManagerBase.GetAbsolutePath(GetErrorRow(cboOldDEM, cboOldError).Source))
 
                     If rdoPropagated.Checked Then
                         cdEngine = New Core.ChangeDetection.ChangeDetectionEnginePropProb(txtName.Text, txtOutputFolder.Text, gNewDEM, gOldDEM, gNewError, gOldError, gAOI, My.Settings.ChartHeight, My.Settings.ChartWidth)
@@ -188,11 +188,13 @@ Namespace UI.ChangeDetection
                     End If
 
                     If IO.File.Exists(sThreshDodPath) Then
-                        GP.DataManagement.DefineProjection(sThreshDodPath, pSR)
+                        Throw New NotImplementedException
+                        'GP.DataManagement.DefineProjection(sThreshDodPath, pSR)
                     End If
 
                     If IO.File.Exists(sRawDoDPath) Then
-                        GP.DataManagement.DefineProjection(sRawDoDPath, pSR)
+                        Throw New NotImplementedException
+                        ' GP.DataManagement.DefineProjection(sRawDoDPath, pSR)
                     End If
 
                     If Not rdoMinLOD.Checked Then
@@ -200,7 +202,8 @@ Namespace UI.ChangeDetection
                         Dim sPropErrPath As String = IO.Path.Combine(txtOutputFolder.Text, "PropErr.tif")
 
                         If IO.File.Exists(sPropErrPath) Then
-                            GP.DataManagement.DefineProjection(sPropErrPath, pSR)
+                            Throw New NotImplementedException
+                            ' GP.DataManagement.DefineProjection(sPropErrPath, pSR)
                         End If
 
                         If rdoProbabilistic.Checked Then
@@ -208,7 +211,8 @@ Namespace UI.ChangeDetection
                             Dim sPriorProbPath As String = IO.Path.Combine(txtOutputFolder.Text, "PriorProb.tif")
 
                             If IO.File.Exists(sPriorProbPath) Then
-                                GP.DataManagement.DefineProjection(sPriorProbPath, pSR)
+                                Throw New NotImplementedException
+                                ' GP.DataManagement.DefineProjection(sPriorProbPath, pSR)
                             End If
 
                         End If
@@ -314,7 +318,9 @@ Namespace UI.ChangeDetection
                 ' Try and add the DoD to the map
                 If My.Settings.AddOutputLayersToMap Then
                     Try
-                        GCDProject.ProjectManagerUI.ArcMapManager.AddDoD(m_rDoD)
+                        ' TODO 
+                        Throw New Exception("not implemented")
+                        'GCDProject.ProjectManagerUI.ArcMapManager.AddDoD(m_rDoD)
                     Catch ex As Exception
                         ' Do nothing. Failing to add the to map is not serious.
                     End Try
@@ -450,13 +456,13 @@ Namespace UI.ChangeDetection
                 Exit Sub
             End If
 
-            Dim sAnalysisName As String = FileSystem.RemoveDangerousCharacters(cboNewDEM.Text)
+            Dim sAnalysisName As String = naru.os.File.RemoveDangerousCharacters(cboNewDEM.Text)
             If Not String.IsNullOrEmpty(sAnalysisName) Then
                 sAnalysisName &= "_"
             End If
 
             If Not String.IsNullOrEmpty(cboOldDEM.Text) Then
-                sAnalysisName &= FileSystem.RemoveDangerousCharacters(cboOldDEM.Text)
+                sAnalysisName &= naru.os.File.RemoveDangerousCharacters(cboOldDEM.Text)
             End If
 
             If rdoMinLOD.Checked Then
@@ -534,7 +540,7 @@ Namespace UI.ChangeDetection
                 If String.IsNullOrEmpty(txtName.Text) Then
                     txtOutputFolder.Text = String.Empty
                 Else
-                    txtOutputFolder.Text = GCDProject.ProjectManager.OutputManager.GetDoDOutputFolder(txtName.Text)
+                    txtOutputFolder.Text = GCDProject.ProjectManagerBase.OutputManager.GetDoDOutputFolder(txtName.Text)
                 End If
             Catch ex As Exception
 

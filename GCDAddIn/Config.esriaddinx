@@ -12,11 +12,203 @@
   </Targets>
   <AddIn language="CLR" library="GCDAddIn.dll" namespace="GCDAddIn">
     <ArcMap>
+      <Commands>
+        <Button id="GCD_AddIn_ToolbarExplorerButton" class="MainMenuDockableProjectExplorerButton" onDemand="false" message="The GCD Project Explorer is the main interface for creating, managing and displaying data within a GCD project. It is a dockable window within ArcMap that contains an interactive hierarchy of contents of a GCD project." caption="" tip="Open the GCD Project Explorer Dockable Window" category="GCD" image="Resources\GCD.png" />
+
+        <!-- Menu -->
+        <Button id="GCD_AddIn_NewProjectButton" class="NewProjectButton" message="GCD Projects are workspaces for your data. They store DEM surveys, their associated surfaces as well as any change detection analyses that you perform. A GCD project exists in a dedicated folder that contains a *.gcd project file and copies of all your spatial data." caption="New GCD Project..." tip="Create a new GCD Project" category="GCD" image="Resources\NewProject.png" />
+        <Button id="GCD_AddIn_OpenProjectButton" class="OpenProjectButton" message="Browse and select an existing GCD project file (*.gcd) in a GCD project folder." caption="Open GCD Project..." tip="Open an existing GCD Project" category="GCD" image="Resources\OpenProject.png" />
+        <Button id="GCD_AddIn_CloseProjectButton" class="CloseProjectButton" onDemand="false" message="Close the current GCD project and hide the GCD project explorer dockable window. This will not delete any data or remove any layers from ArcMap." caption="Close GCD project" tip="Close the current GCD project" category="GCD" image="" />
+        <Button id="GCD_AddIn_DockableProjectExplorerButton" class="DockableProjectExplorerButton" onDemand="false" message="The GCD Project Explorer is the main interface for creating, managing and displaying data within a GCD project. It is a dockable window within ArcMap that contains an interactive hierarchy of contents of a GCD project." caption="GCD Project Explorer" tip="Open the GCD Project Explorer Dockable Window" category="GCD" image="Resources\DEMSurvey.png" />
+        <Button id="GCD_AddIn_ProjectPropertiesButton" class="ProjectPropertiesButton"  onDemand="false" message="Edit the properties for the current GCD project." caption="Project Properties" tip="Edit the properties of the current GCD project" category="GCD" image="Resources\Options.png" />
+        <Button id="GCDAddIn_ExploreProjectButton" class="ExploreProjectButton"  onDemand="false" message="Open Windows Explorer at the current GCD project folder location." caption="Browse GCD Project Folder" category="GCD" image="Resources\BrowseFolder.png" />
+        <Button id="GCD_AddIn_GCDReportButton" class="ReportButton"  onDemand="false" message="A GCD report describes the full workflow of all analysis steps performed since the project was created. Each DEM Survey, associated and error surface is described, together with all the change detection analyses." caption="GCD Report" tip="Generate a GCD report for the current project." category="GCD" image="Resources\Report.png" />
+
+        <!-- Options Menu-->
+        <Button id="GCD_AddIn_OptionsButton" class="OptionsButton" message="Manage GCD Options" caption="Options" tip="Manage GCD Options" category="GCD" image="Resources\Options.png" />
+        <Button id="GCD_AddIn_FISLibraryButton" class="FISLibraryButton" message="Manage FIS files associated with the GCD" caption="FIS Library" tip="Add, edit and remove FIS files." category="GCD" image="Resources\FISLibrary.png" />
+
+        <!-- Data Preparation Menu -->
+        <!--<Button id="GCD_AddIn_SurveyLibraryButton" class="SurveyLibraryButton"  onDemand="false" message="Open the GCD Project Explorer" caption="Survey Library" category="GCD" image="Images\SurveyLibrary.png" />
+        -->
+        <Button id="GCD_AddIn_CleanRasterButton" class="DataPreparation.btnCleanRaster" message="Clean a raster to fix cell extent and divisibility issues" caption="Clean Raster" category="GCD" image="Resources\CleanRaster.png" />
+        <Button id="GCD_AddIn_ConcaveHull" class="ConcaveHullButton" message="Create a bounding polygon around a set of survey points." caption="Creating Bounding Polygon" category="GCD" image="Resources\ConcaveHull.png"/>
+        <!--Survey Preparation Sub-Menu-->
+        <Button id ="GCD_AddIn_RawPointCloudToFeatureClass" class ="PointCloudToFcButton" message ="Convert a x,y,z delimted text file to a point feature class" caption ="Create Point Feature Class" category="GCD" image=""/>
+        <Button id ="GCD_AddIn_SurveyMaskCreatorButton" class ="SurveyMaskCreatorButton" message="Takes in a space delimited x y z file and creates an accurate survey extent" caption="Create Survey Extent Polygon" category="GCD"/>
+        <Button id ="GCD_AddIn_FcToDEM_TIN" class="FcToDEM_TIN_Button" message="Convert a point feature class to a DEM and/or TIN" caption ="Create DEM and/or TIN" category="GCD" image=""/>
+
+        <Button id="GCD_AddIn_AddDEM_Survey" class="AddDEM_SurveyButton" message ="Add DEM Survey to the project explorer" caption ="Add DEM Survey to the project explorer" category="GCD" image="Resources\Add.png"/>
+        <!-- ToPCAT Sub-menu -->
+        <Button id="GCD_AddIn_TopCATPrepButton" class ="ToPCATPrepButton" message ="Prepare raw point cloud file to be used in ToPCAT" caption= "ToPCAT Preperation" category="GCD" image="Resources\TopCat.png" />
+        <Button id="GCD_AddIn_TopCAT" class ="ToPCATButton" message ="Runs ToPCAT point cloud decimation" caption= "ToPCAT Point Cloud Decimation" category="GCD" image="Resources\TopCat.png" />
+
+        <!-- Analysis Menu-->
+        <!-- FIS Development Tools-->
+
+        <!-- Uncertainty Analysis Sub-Menu-->
+        <!-- Uncertainty - FIS Development Sub sub menu-->
+        <Button id="GCD_AddIn_FIS_DevelopmentAssistant" class="FIS_DevelopmentAssistantButton" message="Aids in the creation of a Fuzzy Inference System" caption="FIS Development Assistant (BETA)" category="GCD" image="Resources\FISLibrary.png"/>
+        <!-- Uncertainty - Point Cloud Based Analysis Sub sub menu-->
+        <Button id="GCD_AddIn_CoincidentPointsButton" class="CoincidentPointsToolButton"  message="Finds coincident points within a text based point cloud file" caption="Coincident Points Tool (BETA)" category="GCD" image="Resources\CoincidentPoints.png"/>
+        <Button id="GCD_AddIn_ToPCAT_DetrendedStandardDeviationButton" class="ToPCAT_DetrendedStandardDeviationButton" message="" caption="ToPCAT Detrended Standard Deviation" category="GCD" image="Resources\TopCat.png"/>
+        <!-- Uncertainty - Raster Based  Analysis Sub sub menu-->
+        <Button id="GCD_AddIn_FIS_ErrorSurfaceButton" class="FIS_ErrorSurfaceButton" message="Create FIS error raster surface" caption="Create FIS Error Surface" category="GCD" image="Resources\FISLibrary.png"/>
+        <Button id="GCD_AddIn_InterpolationErrorSurfaceButton" class="InterpolationErrorSurfaceButton" message="Creates an interpolation error surface" caption="Create Interpolation Error Surface (BETA)" category="GCD" image=""/>
+
+        <!-- Roughness Analysis Sub-Menu-->
+        <Button id="GCD_AddIn_SimpleToPCAT_RoughnessButton" class="SimpleToPCAT_RoughnessButton" message="Create surface roughness raster from a point cloud" caption ="Simple ToPCAT Roughness (BETA)" category="GCD" image="Resources\Roughness.png"/>
+        <!--
+        <Button id="GCD_AddIn_MultiResolutionToPCAT_Button" class="MultiResolutionToPCAT_Button" message="Create a multi-resolution roughness raster from a point cloud" caption ="Multi-Resolution ToPCAT Roughness" category="GCD" image=""/>
+        -->
+        <Button id="GCD_AddIn_RoughnessModelerButton" class="RoughnessModelerButton" message="" caption="Bootstrap Roughness Modeler" category="GCD" image=""/>
+        <Button id= "GCD_AddIn_GrainSizeDistributionEstimatorButton" class="GrainSizeDistributionEstimatorButton" message="" caption="Grain Size Distribution Estimator" category="GCD" image=""/>
+
+        <Button id="GCD_AddIn_DoDButton" class="DodButton"  onDemand="false" message="Perform a New GCD Change Detection" caption="Add Change Detection" category="GCD" image="Resources\GCD.png" />
+        <Button id="GCD_AddIn_ReservoirButton" class="ReservoirLibraryButton"  onDemand="false" message="Manage GCD Reservoirs" caption="Reservoir" category="GCD" image="Resources\Reservoir.png" />
+        <Button id="GCD_AddIn_BudgetSegregationButton" class="BudgetSegregationButton"  onDemand="false" message="Perform a GCD Budget Segregation" caption="Budget Segregation" category="GCD" image="Resources\BudgetSeg.png" />
+
+        <!-- Help Menu-->
+        <Button id="GCD_AddIn_AboutButton" class="AboutButton" message="Provides information about the version, authors and funding for the Geomorphic Change Detection (GCD)." caption="About GCD" tip="Information About the GCD" category="GCD" image="Resources\GCD.png" />
+        <Button id="GCD_AddIn_OnlineHelp" class="OnlineHelpButton" message="Open the GCD Online Help" caption="Online GCD 6 Help" category="GCD" image="Resources\Help.png" />
+        <Button id="GCD_AddIn_WebSite" class="WebSiteButton" message="Open the GCD Software Web Site" caption="GCD Web Site" category="GCD" image="Resources\Help.png" />
+        <Button id="GCD_AddIn_Forum" class="ForumButton" message="Open the GCD Online Forum" caption="GCD Forum" category="GCD" image="Resources\Help.png" />
+      </Commands>
       <DockableWindows>
-        <DockableWindow id="North_Arrow_Research_GCDAddIn_ucDockableWindow" class="ucDockableWindow+AddinImpl" caption="My Dockable Window" image="Images\ucDockableWindow.png">
+        <DockableWindow id="GCD_AddIn_DockableProjectExplorer" class="DockableProjectExplorer+AddinImpl" caption="GCD Project Explorer" image="resources\GCD.png">
           <InitialPlacement height="300" width="300" state="pinned" position="left" />
         </DockableWindow>
       </DockableWindows>
+      <Menus>
+        <Menu caption="Project" isRootMenu="true" id="GCD_AddIn_ProjectMenu">
+          <Items>
+            <Button refID="GCD_AddIn_NewProjectButton" />
+            <Button refID="GCD_AddIn_OpenProjectButton" />
+            <Button refID="GCD_AddIn_CloseProjectButton" />
+            <Button refID="GCD_AddIn_DockableProjectExplorerButton" />
+            <Button refID="GCD_AddIn_ProjectPropertiesButton" separator="" />
+            <Button refID="GCDAddIn_ExploreProjectButton" />
+            <Button refID="GCD_AddIn_GCDReportButton" separator="true" />
+          </Items>
+        </Menu>
+        <Menu caption="Data Preparation" isRootMenu="false" id="GCD_AddIn_DataPreparationMenu">
+          <Items>
+            <Button refID="GCD_AddIn_CleanRasterButton" separator="true" />
+            <Button refID="GCD_AddIn_ConcaveHull"  />
+            <Menu refID="GCD_AddIn_SurveyPreparationMenu" separator="true"/>
+            <Button refID ="GCD_AddIn_AddDEM_Survey" separator="true"/>
+            <Menu refID ="GCD_AddIn_ToPCATMenu" separator ="true"/>
+          </Items>
+        </Menu>
+        <Menu caption="Analysis" isRootMenu="false" id="GCD_AddIn_GCDAnalysisMenu">
+          <Items>
+            <Menu refID="GCD_AddIn_UncertaintyAnalysisMenu"/>
+            <Menu refID="GCD_AddIn_RoughnessAnalysisMenu"/>
+            <Menu refID="GCD_AddIn_GeomorphicChangeDetection"/>
+            <!--
+            <Button refID="GCD_AddIn_ReservoirButton" separator="true" />
+            -->
+          </Items>
+        </Menu>
+        <Menu caption="Customize" isRootMenu="false" id="GCD_AddIn_CustomizeMenu">
+          <Items>
+            <Button refID="GCD_AddIn_OptionsButton" />
+            <Button refID="GCD_AddIn_FISLibraryButton" />
+          </Items>
+        </Menu>
+        <Menu caption="Help" isRootMenu="false" id="GCD_AddIn_HelpMenu">
+          <Items>
+            <Button refID="GCD_AddIn_OnlineHelp" />
+            <Button refID="GCD_AddIn_WebSite" />
+            <Button refID="GCD_AddIn_AboutButton" />
+          </Items>
+        </Menu>
+        <!-- Sub Menus-->
+        <!-- Data Preparation Sub Menu-->
+        <Menu caption="Survey Preparation (BETA)" isRootMenu="false" id="GCD_AddIn_SurveyPreparationMenu">
+          <Items>
+            <Button refID="GCD_AddIn_RawPointCloudToFeatureClass"/>
+            <Button refID="GCD_AddIn_SurveyMaskCreatorButton"/>
+            <Button refID="GCD_AddIn_FcToDEM_TIN"/>
+          </Items>
+        </Menu>
+        <!-- ToPCAT Sub Menu-->
+        <Menu caption="ToPCAT" isRootMenu="false" id="GCD_AddIn_ToPCATMenu">
+          <Items>
+            <Button refID ="GCD_AddIn_TopCATPrepButton" separator="true"/>
+            <Button refID ="GCD_AddIn_TopCAT"/>
+          </Items>
+        </Menu>
+
+        <!-- Uncertainty Analysis Menu-->
+        <Menu caption ="Uncertainty Analysis (BETA)" isRootMenu="false" id="GCD_AddIn_UncertaintyAnalysisMenu">
+          <Items>
+            <Menu refID="GCD_AddIn_FIS_DevelopmentMenu"/>
+            <Menu refID="GCD_AddIn_PointCloudBasedUncertaintyMenu"/>
+            <Menu refID="GCD_AddIn_RasterBasedUncertaintyMenu"/>
+          </Items>
+        </Menu>
+        <!-- Roughness Analysis Menu -->
+        <Menu caption ="Roughness Analysis (BETA)" isRootMenu ="false" id ="GCD_AddIn_RoughnessAnalysisMenu">
+          <Items>
+            <Button refID="GCD_AddIn_SimpleToPCAT_RoughnessButton"/>
+            <Button refID="GCD_AddIn_MultiResolutionToPCAT_Button"/>
+            <Button refID="GCD_AddIn_RoughnessModelerButton"/>
+            <Button refID="GCD_AddIn_GrainSizeDistributionEstimatorButton"/>
+          </Items>
+        </Menu>
+        <!-- GCD Analysis Menu-->
+        <Menu caption ="Geomorphic Change Detection" isRootMenu="false" id="GCD_AddIn_GeomorphicChangeDetection">
+          <Items>
+            <Button refID="GCD_AddIn_DoDButton" />
+            <Button refID="GCD_AddIn_BudgetSegregationButton" />
+          </Items>
+        </Menu>
+        <!-- Sub sub Menus-->
+        <!-- Uncertainty - FIS Development Menu-->
+        <Menu caption ="FIS Development Tools" isRootMenu="false" id="GCD_AddIn_FIS_DevelopmentMenu">
+          <Items>
+            <Button refID="GCD_AddIn_FIS_DevelopmentAssistant"/>
+          </Items>
+        </Menu>
+        <!-- Uncertainty - Point Cloud Based Menu-->
+        <Menu caption ="Point Cloud Based" isRootMenu="false" id="GCD_AddIn_PointCloudBasedUncertaintyMenu">
+          <Items>
+            <Button refID="GCD_AddIn_CoincidentPointsButton"/>
+            <Button refID="GCD_AddIn_ToPCAT_DetrendedStandardDeviationButton"/>
+          </Items>
+        </Menu>
+        <!-- Uncertainty - Raster Based Menu-->
+        <Menu caption="Raster Based" isRootMenu="false" id ="GCD_AddIn_RasterBasedUncertaintyMenu">
+          <Items>
+            <Button refID="GCD_AddIn_FIS_ErrorSurfaceButton"/>
+            <Button refID="GCD_AddIn_InterpolationErrorSurfaceButton"/>
+          </Items>
+        </Menu>
+      </Menus>
+      <Toolbars>
+        <Toolbar caption="Geomorphic Change Detection" showInitially="true" id="GCD_AddIn_Toolbar">
+          <Items>
+            <Button refID="GCD_AddIn_ToolbarExplorerButton" />
+            <Menu refID="GCD_AddIn_ProjectMenu" separator="true" />
+            <Menu refID="GCD_AddIn_DataPreparationMenu" />
+            <Menu refID="GCD_AddIn_GCDAnalysisMenu" />
+            <Menu refID="GCD_AddIn_CustomizeMenu" />
+            <Menu refID="GCD_AddIn_HelpMenu" />
+          </Items>
+        </Toolbar>
+      </Toolbars>
+      <Extensions>
+        <Extension id="GCD_AddIn_Extension" class="GCDExtension" productName="Geomorphic Change Detection (GCD)" showInExtensionDialog="true" autoLoad="true">
+          <Description>
+            The GCD software was developed primarily for morphological sediment budgeting in rivers.
+            The volumetric change in storage is calculated from the difference in surface elevations from digital elevation models (DEMs)
+            derived from repeat topographic surveys. GCD provides a suite of tools for quantifying those uncertainties independently in each DEM and propagating them through to the DEM of difference.
+            The program also provides ways for segregating the best estimates of change spatially using different types of masks.
+            The overall suite of tools is more generically applicable to many different spatial change detection problems.
+          </Description>
+        </Extension>
+      </Extensions>
     </ArcMap>
   </AddIn>
 </ESRI.Configuration>

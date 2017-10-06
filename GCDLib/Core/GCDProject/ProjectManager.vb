@@ -104,7 +104,7 @@ Namespace Core.GCDProject
             'Saves added fis to the add-in folder so it can be permentaley stored
             'Dim sExecutingAssemblyFolder = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location)
             'If IO.Directory.Exists(sExecutingAssemblyFolder) Then
-            '    'sExecutingAssemblyFolder = IO.Path.Combine(sExecutingAssemblyFolder, GISCode.FileSystem.RemoveDangerousCharacters(My.Resources.ApplicationNameShort))
+            '    'sExecutingAssemblyFolder = IO.Path.Combine(sExecutingAssemblyFolder, naru.os.File.RemoveDangerousCharacters(My.Resources.ApplicationNameShort))
             '    Dim fispath = IO.Path.Combine(sExecutingAssemblyFolder, "FISLibrary")
             '    Dim sFISLibraryPath = IO.Path.Combine(fispath, "FISLibraryXML.xml")
             '    m_FISLibraryDS.WriteXml(sFISLibraryPath)

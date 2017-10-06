@@ -42,7 +42,7 @@ Namespace Core.BudgetSegregation
         ''' then inserted the same way as the budget summary except that just the value is inserted into
         ''' just the first occurance of each tag (because the copying the repeat tags means there are
         ''' multiple copies of each tag.)</remarks>
-        Public Sub ExportClassSummary(sTemplateFolder As String, sClassSummaryPath As String, ByVal MaskOutputs As Dictionary(Of String, BudgetSegregationOutputsClass.MaskOutputClass), sDisplayUnits As String)
+        Public Sub ExportClassSummary(sTemplateFolder As String, sClassSummaryPath As String, ByVal MaskOutputs As Dictionary(Of String, BudgetSegregationOutputsClass.MaskOutputClass), eDisplayUnits As naru.math.LinearUnitClass)
 
             If Not IO.Directory.Exists(sTemplateFolder) Then
                 Dim ex As New Exception("The template folder does not exist")
@@ -66,14 +66,14 @@ Namespace Core.BudgetSegregation
                 objReader = New System.IO.StreamReader(TemplateFile)
             Catch ex As System.IO.IOException
                 'need to limit the length of the file to display properly
-                Dim TrimmedFilename As String = FileSystem.TrimFilename(TemplateFile, 80)
+                Dim TrimmedFilename As String = naru.os.File.TrimFilename(TemplateFile, 80)
                 ex.Data("UIMessage") = "Could not access the file '" & TrimmedFilename & "' because it is being used by another program."
                 Throw ex
             End Try
             Dim TemplateText As String = objReader.ReadToEnd()
             objReader.Close()
             Dim OutputText As StringBuilder = New StringBuilder(TemplateText)
-            OutputText.Replace("[LinearUnits]", sDisplayUnits)
+            OutputText.Replace("[LinearUnits]", eDisplayUnits.GetUnitsAsString)
             '
             ' Duplicate the repeat statements
             '
@@ -132,7 +132,7 @@ Namespace Core.BudgetSegregation
             ' Create the acutal file, then stream the content at the file and close it out.
             '
             If Not String.IsNullOrEmpty(sClassSummaryPath) Then
-                'Dim sClassSummaryFile As String = GISCode.FileSystem.RemoveDangerousCharacters("ClassSummary")
+                'Dim sClassSummaryFile As String = naru.os.File.RemoveDangerousCharacters("ClassSummary")
                 'sClassSummaryFile = IO.Path.Combine(IO.Path.GetDirectoryName(sClassSummaryPath), sClassSummaryFile)
                 'sClassSummaryFile = IO.Path.ChangeExtension(sClassSummaryFile, "xml")
 
@@ -176,7 +176,7 @@ Namespace Core.BudgetSegregation
         Private Sub ExportMaskStat(sExcelTemplateFolder As String, ByVal StatsData As ChangeDetection.ChangeStats, ByVal SummaryPath As String, eUnits As naru.math.LinearUnitClass)
 
             ' PGB 15 Jan 2014. Each class now gets its own copy of the new GCD SummaryXML file.
-            StatsData.ExportSummary(sDisplayUnits, eUnits, SummaryPath)
+            StatsData.ExportSummary(eUnits, eUnits, SummaryPath)
         End Sub
 
         Private Sub WriteCell(ByRef Template As StringBuilder, ByVal tag As String, ByVal value As Double, Optional ByVal format As String = "")

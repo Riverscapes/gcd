@@ -79,9 +79,7 @@
 
             'Changed to provide a more descriptive name than mask - Hensleigh 4/24/2014
             Dim sPolygonMask As String = GISDataStructures.Vector.GetNewSafeName(sOutputFolder, IO.Path.GetFileNameWithoutExtension(gInputPolygonMask.FullPath) & "_" & sMaskField)
-            Dim gPolygonFL As ESRI.ArcGIS.Carto.IFeatureLayer = GP.DataManagement.MakeFeatureLayer(gInputPolygonMask.FeatureClass, WorkspaceManager.GetRandomString)
-            GISCode.GP.DataManagement.CopyFeatures(gPolygonFL, sPolygonMask)
-            m_gPolygonMask = New GISDataStructures.Vector(sPolygonMask)
+            m_gPolygonMask = gInputPolygonMask.CopyShapeFile(sPolygonMask)
 
             ' Build the dictionary of budget classes. This method also writes the 
             ' class indexes to the shapefile in an integer field.
@@ -105,8 +103,10 @@
             ' Solution... Convert it using ESRI (for now) to temp location but then use GDAL to copy it
             ' With precise size.
             Dim sTempMask As String = WorkspaceManager.GetTempRaster("TempMask")
-            GP.Conversion.PolygonToRaster_conversion(m_gPolygonMask, m_sClassField, sTempMask, gDoDRaw)
-            GP.DataManagement.DefineProjection(sTempMask, gDoDRaw.SpatialReference)
+            Throw New NotImplementedException
+            '  GP.Conversion.PolygonToRaster_conversion(m_gPolygonMask, m_sClassField, sTempMask, gDoDRaw)
+            Throw New NotImplementedException
+            '  GP.DataManagement.DefineProjection(sTempMask, gDoDRaw.SpatialReference)
 
             ' Now copy to the desired location
             Dim sMaskRaster As String = Core.GISDataStructures.Raster.GetNewSafeName(sOutputFolder, "Mask")
@@ -133,7 +133,7 @@
             End If
 
             For Each kvMask As KeyValuePair(Of String, BudgetSegregation.BudgetSegregationOutputsClass.MaskOutputClass) In bsOutputs.MaskOutputs
-                Dim sSafeMaskName As String = FileSystem.RemoveDangerousCharacters(kvMask.Value.MaskValue)
+                Dim sSafeMaskName As String = naru.os.File.RemoveDangerousCharacters(kvMask.Value.MaskValue)
                 Debug.WriteLine(String.Format("Budget Segregation Class with value {0} and safe name '{1}'.", kvMask.Value.MaskValue, sSafeMaskName))
                 Dim maskOutputClass As BudgetSegregationOutputsClass.MaskOutputClass = bsOutputs.MaskOutputs(kvMask.Key)
                 '
@@ -180,8 +180,8 @@
 
                 ' Export the change statistics XML file.
                 Dim sSummaryXMLPath As String = IO.Path.Combine(m_dOutputFolder.FullName, "c" & maskOutputClass.MaskValue.ToString("000") & "_summary.xml")
-                DirectCast(maskOutputClass.ChangeStats, ChangeDetection.ChangeStatsCalculator).ExportSummary(GCDProject.ProjectManager.ExcelTemplatesFolder.FullName,
-                                                                                                               naru.math.NumberFormatting.GetUnitsAsString(DoD.Units.LinearUnit),
+                DirectCast(maskOutputClass.ChangeStats, ChangeDetection.ChangeStatsCalculator).ExportSummary(GCDProject.ProjectManagerBase.ExcelTemplatesFolder.FullName,
+                                                                                                               DoD.Units,
                                                                                                                  sSummaryXMLPath)
 
                 ' Write the thresholded histogram CSV file. Then load it as a DoD result histogram
@@ -191,13 +191,13 @@
                 ' Export the histogram graphics
                 'Dim c As New Windows.Forms.DataVisualization.Charting.Chart
                 Dim c As New System.Windows.Forms.DataVisualization.Charting.Chart
-                Dim ExportHistogramViewer As New Core.Visualization.DoDHistogramViewerClass(c, DoD.Units.ToString)
+                Dim ExportHistogramViewer As New Core.Visualization.DoDHistogramViewerClass(c, DoD.Units)
 
                 IO.Directory.CreateDirectory(IO.Path.GetDirectoryName(maskOutputClass.AreaChartPath))
                 ExportHistogramViewer.ExportCharts(ExportStatsData, gDoDRaw.LinearUnits, maskOutputClass.AreaChartPath, maskOutputClass.VolumeChartPath, nChartWidth, nChartHeight)
 
                 Dim cbViewer As New Core.Visualization.ElevationChangeBarViewer(c, gDoDRaw.LinearUnits.GetUnitsAsString)
-                DirectCast(maskOutputClass.ChangeStats, ChangeDetection.ChangeStatsCalculator).GenerateChangeBarGraphicFiles(GCDProject.ProjectManager.OutputManager.GetChangeDetectionFiguresFolder(sOutputFolder, True), DoD.Units.LinearUnit, m_fChartWidth, m_fChartHeight, "c" & maskOutputClass.MaskValue.ToString("000"))
+                DirectCast(maskOutputClass.ChangeStats, ChangeDetection.ChangeStatsCalculator).GenerateChangeBarGraphicFiles(GCDProject.ProjectManagerBase.OutputManager.GetChangeDetectionFiguresFolder(sOutputFolder, True), DoD.Units, m_fChartWidth, m_fChartHeight, "c" & maskOutputClass.MaskValue.ToString("000"))
 
                 ' Append this class to the legend file
                 sbClassLegend.AppendLine(maskOutputClass.MaskValue & "," & kvMask.Key)
@@ -264,20 +264,18 @@
                     m_sClassField &= nCount.ToString
                 End If
 
-                If m_gPolygonMask.GISDataStorageType <> GISDataStructures.GISDataStorageTypes.FileGeodatase Then
-                    If sMaskField.Length > 10 Then
-                        Dim ex As New Exception("The class field length has exceeded 10 characters.")
-                        ex.Data("Class field") = m_sClassField
-                        ex.Data("Mask field") = m_sMaskField
-                        ex.Data("Polygon feature class") = m_gPolygonMask.FullPath
-                        Throw ex
-                    End If
+                If sMaskField.Length > 10 Then
+                    Dim ex As New Exception("The class field length has exceeded 10 characters.")
+                    ex.Data("Class field") = m_sClassField
+                    ex.Data("Mask field") = m_sMaskField
+                    ex.Data("Polygon feature class") = m_gPolygonMask.FullPath
+                    Throw ex
                 End If
 
                 nCount += 1
             Loop While m_gPolygonMask.FindField(m_sClassField) > -1
 
-            Dim nClasskFieldIndex As Integer = m_gPolygonMask.AddField(m_sClassField, ESRI.ArcGIS.Geodatabase.esriFieldType.esriFieldTypeInteger)
+            Dim nClasskFieldIndex As Integer = m_gPolygonMask.AddField(m_sClassField, GISDataStructures.FieldTypes.IntField)
             If nClasskFieldIndex < 0 Then
                 Dim ex As New Exception("Budget segregation class field does not exist in feature class.")
                 ex.Data("Class field") = m_sClassField
@@ -294,6 +292,9 @@
                 ex.Data("Polygon feature class") = m_gPolygonMask.FullPath
                 Throw ex
             End If
+
+            'TODO
+            Throw New NotImplementedException()
             '
             ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
             ' Loop over all features in the polygon feature class. Read their **mask**
@@ -301,24 +302,24 @@
             ' with the next class ID. Then write the class ID to each feature.
             Dim nClass As Integer = 1
             Dim dMaskClassValues As New Dictionary(Of String, Integer)(StringComparer.InvariantCultureIgnoreCase)
-            Dim pCursor As ESRI.ArcGIS.Geodatabase.IFeatureCursor = m_gPolygonMask.FeatureClass.Search(Nothing, True)
-            Dim pFeature As ESRI.ArcGIS.Geodatabase.IFeature = pCursor.NextFeature
-            While TypeOf pFeature Is ESRI.ArcGIS.Geodatabase.IFeature
-                If Not IsDBNull(pFeature.Value(nMaskFieldIndex)) Then
-                    Dim sMaskValue As String = pFeature.Value(nMaskFieldIndex)
+            'Dim pCursor As ESRI.ArcGIS.Geodatabase.IFeatureCursor = m_gPolygonMask.FeatureClass.Search(Nothing, True)
+            'Dim pFeature As ESRI.ArcGIS.Geodatabase.IFeature = pCursor.NextFeature
+            'While TypeOf pFeature Is ESRI.ArcGIS.Geodatabase.IFeature
+            '    If Not IsDBNull(pFeature.Value(nMaskFieldIndex)) Then
+            '        Dim sMaskValue As String = pFeature.Value(nMaskFieldIndex)
 
-                    'if new value, add to existing mask values
-                    If Not dMaskClassValues.ContainsKey(sMaskValue) Then
-                        dMaskClassValues.Add(sMaskValue, nClass)
-                        nClass = nClass + 1
-                    End If
-                    pFeature.Value(nClasskFieldIndex) = dMaskClassValues(sMaskValue)
-                    pFeature.Store()
-                    pFeature = pCursor.NextFeature
-                End If
-            End While
-            Runtime.InteropServices.Marshal.ReleaseComObject(pCursor)
-            pCursor = Nothing
+            '        'if new value, add to existing mask values
+            '        If Not dMaskClassValues.ContainsKey(sMaskValue) Then
+            '            dMaskClassValues.Add(sMaskValue, nClass)
+            '            nClass = nClass + 1
+            '        End If
+            '        pFeature.Value(nClasskFieldIndex) = dMaskClassValues(sMaskValue)
+            '        pFeature.Store()
+            '        pFeature = pCursor.NextFeature
+            '    End If
+            'End While
+            'Runtime.InteropServices.Marshal.ReleaseComObject(pCursor)
+            'pCursor = Nothing
 
             Return dMaskClassValues
 

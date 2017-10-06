@@ -57,7 +57,7 @@ Namespace UI.BudgetSegregation
                     If aDoD.DoDID = DirectCast(cboDoD.SelectedItem, naru.db.NamedObject).ID Then
                         rDoD = aDoD
                         'New place to create budget segregation folder
-                        Dim sBS_Folder As String = GCDProject.ProjectManager.OutputManager.CreateBudgetSegFolder(rDoD.Name)
+                        Dim sBS_Folder As String = GCDProject.ProjectManagerBase.OutputManager.CreateBudgetSegFolder(rDoD.Name)
                         If IO.Directory.Exists(sBS_Folder) Then
                             IO.Directory.CreateDirectory(IO.Path.Combine(sBS_Folder, "Figs"))
                         End If
@@ -156,28 +156,28 @@ Namespace UI.BudgetSegregation
                     Next
 
                     If TypeOf rDoD Is ProjectDS.DoDsRow Then
-                        Dim sDoDPath As String = GCDProject.ProjectManager.GetAbsolutePath(rDoD.RawDoDPath)
+                        Dim sDoDPath As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rDoD.RawDoDPath)
                         If GISDataStructures.Raster.Exists(sDoDPath) Then
                             Dim gDoD As New GISDataStructures.Raster(sDoDPath)
 
                             ' Confirm that the polygon mask has a spatial reference.
                             Dim bMissingSpatialReference As Boolean = True
                             If TypeOf ucPolygon.SelectedItem.SpatialReference Is ESRI.ArcGIS.Geometry.ISpatialReference Then
-                                bMissingSpatialReference = ucPolygon.SelectedItem.SpatialReference.Name.ToLower.Contains("unknown")
+                                bMissingSpatialReference = ucPolygon.SelectedItem.SpatialReference.ToLower.Contains("unknown")
                             End If
 
                             If bMissingSpatialReference Then
                                 MsgBox("The selected feature class appears to be missing a spatial reference. All GCD inputs must possess a spatial reference and it must be the same spatial reference for all datasets in a GCD project." &
-                              " If the selected feature class exists in the same coordinate system, " & gDoD.SpatialReference.Name.ToString & ", but the coordinate system has not yet been defined for the feature class." &
-                              " Use the ArcToolbox 'Define Projection' geoprocessing tool in the 'Data Management -> Projection & Transformations' Toolbox to correct the problem with the selected datasets by defining the coordinate system as:" & vbCrLf & vbCrLf & gDoD.SpatialReference.Name.ToString & vbCrLf & vbCrLf & "Then try using it with the GCD again.", MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
+                              " If the selected feature class exists in the same coordinate system, " & gDoD.SpatialReference & ", but the coordinate system has not yet been defined for the feature class." &
+                              " Use the ArcToolbox 'Define Projection' geoprocessing tool in the 'Data Management -> Projection & Transformations' Toolbox to correct the problem with the selected datasets by defining the coordinate system as:" & vbCrLf & vbCrLf & gDoD.SpatialReference & vbCrLf & vbCrLf & "Then try using it with the GCD again.", MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
                                 Return False
                             Else
                                 If Not gDoD.CheckSpatialReferenceMatches(ucPolygon.SelectedItem.SpatialReference) Then
 
-                                    MsgBox("The coordinate system of the selected feature class:" & vbCrLf & vbCrLf & ucPolygon.SelectedItem.SpatialReference.Name.ToString & vbCrLf & vbCrLf & "does not match that of the GCD project:" & vbCrLf & vbCrLf & gDoD.SpatialReference.Name.ToString & vbCrLf & vbCrLf &
+                                    MsgBox("The coordinate system of the selected feature class:" & vbCrLf & vbCrLf & ucPolygon.SelectedItem.SpatialReference & vbCrLf & vbCrLf & "does not match that of the GCD project:" & vbCrLf & vbCrLf & gDoD.SpatialReference & vbCrLf & vbCrLf &
                      "All datasets within a GCD project must have the identical coordinate system. However, small discrepencies in coordinate system names might cause the two coordinate systems to appear different. " &
                      "If you believe that the selected dataset does in fact possess the same coordinate system as the GCD project then use the ArcToolbox 'Define Projection' geoprocessing tool in the " &
-                     "'Data Management -> Projection & Transformations' Toolbox to correct the problem with the selected dataset by defining the coordinate system as:" & vbCrLf & vbCrLf & gDoD.SpatialReference.Name.ToString & vbCrLf & vbCrLf & "Then try importing it into the GCD again.", MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
+                     "'Data Management -> Projection & Transformations' Toolbox to correct the problem with the selected dataset by defining the coordinate system as:" & vbCrLf & vbCrLf & gDoD.SpatialReference & vbCrLf & vbCrLf & "Then try importing it into the GCD again.", MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
                                     Return False
                                 End If
                             End If
@@ -244,7 +244,7 @@ Namespace UI.BudgetSegregation
 
         Private Sub UpdateOutputFolder(ByVal sDoDName As String)
 
-            txtOutputFolder.Text = GCDProject.ProjectManager.OutputManager.GetBudgetSegreationDirectoryPath(sDoDName)
+            txtOutputFolder.Text = GCDProject.ProjectManagerBase.OutputManager.GetBudgetSegreationDirectoryPath(sDoDName)
 
         End Sub
 
@@ -262,7 +262,7 @@ Namespace UI.BudgetSegregation
                             If nDoDID > 0 Then
                                 For Each rDoD As ProjectDS.DoDsRow In GCDProject.ProjectManager.CurrentProject.GetDoDsRows
                                     If nDoDID = rDoD.DoDID Then
-                                        txtOutputFolder.Text = GCDProject.ProjectManager.OutputManager.GetBudgetSegreationDirectoryPath(rDoD.Name)
+                                        txtOutputFolder.Text = GCDProject.ProjectManagerBase.OutputManager.GetBudgetSegreationDirectoryPath(rDoD.Name)
                                         'txtOutputFolder.Text = GCD.GCDProject.ProjectManager.OutputManager.CreateBudgetSegFolder(rDoD.Name, sPolygonPath, cboField.Text)
                                         Exit For
                                     End If

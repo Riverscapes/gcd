@@ -10,6 +10,8 @@ Namespace UI.SurveyLibrary
             SlopePercent
             SlopeDegree
             Roughness
+            PointQuality3D
+            InterpolationError
         End Enum
 
 #Region "Members"
@@ -78,6 +80,15 @@ Namespace UI.SurveyLibrary
             ttpTooltip.SetToolTip(btnSlopeDegree, "Calculate a slope raster - in degrees - from the DEM survey.")
             ttpTooltip.SetToolTip(btnDensity, "Calculate a point density raster from the DEM Survey. You will be presented with options for the point density calculation.")
             ttpTooltip.SetToolTip(btnRoughness, "Calculate a surface roughness raster from space delimited point cloud file.")
+
+            cboType.Items.Clear()
+            cboType.Items.Add(New naru.db.NamedObject(AssociatedSurfaceMethods.PointDensity, "Point Density"))
+            cboType.Items.Add(New naru.db.NamedObject(AssociatedSurfaceMethods.SlopeDegree, "Slope (Degrees)"))
+            cboType.Items.Add(New naru.db.NamedObject(AssociatedSurfaceMethods.SlopePercent, "Slope (Percent)"))
+            cboType.Items.Add(New naru.db.NamedObject(AssociatedSurfaceMethods.Roughness, "Roughness"))
+            cboType.Items.Add(New naru.db.NamedObject(AssociatedSurfaceMethods.PointQuality3D, "3D Point Quality"))
+            cboType.Items.Add(New naru.db.NamedObject(AssociatedSurfaceMethods.InterpolationError, "Interpolation Error"))
+            cboType.Items.Add(New naru.db.NamedObject(AssociatedSurfaceMethods.Browse, "Unknown"))
 
             cboType.SelectedIndex = 0
             Dim dr As DataRowView '= AssociatedSurfaceBindingSource.Current
@@ -158,7 +169,9 @@ Namespace UI.SurveyLibrary
                     GCDProject.ProjectManagerBase.save()
 
                     If My.Settings.AddOutputLayersToMap Then
-                        GCDProject.ProjectManagerUI.ArcMapManager.AddAssociatedSurface(assocRow)
+                        ' TODO: implement this up in AddIn
+                        Throw New Exception("not implemented")
+                        'GCDProject.ProjectManagerUI.ArcMapManager.AddAssociatedSurface(assocRow)
                     End If
 
                 Catch ex As Exception
@@ -199,10 +212,13 @@ Namespace UI.SurveyLibrary
 
                             Case AssociatedSurfaceMethods.PointDensity
                                 Dim sTemp As String = WorkspaceManager.GetTempRaster("PDensity.tif")
-                                GP.SpatialAnalyst.PointDensity(m_frmPointDensity.ucPointCloud.SelectedItem, gDEMRaster, sTemp, m_frmPointDensity.Neighborhood, "SQUARE_MAP_UNITS")
+                                ' TODO: Call ArcGIS point density tool
+                                Throw New Exception("Not implemented")
+                                'GP.SpatialAnalyst.PointDensity(m_frmPointDensity.ucPointCloud.SelectedItem, gDEMRaster, sTemp, m_frmPointDensity.Neighborhood, "SQUARE_MAP_UNITS")
 
                                 ' Need to mask the raster so that it has the same NoData extent as the DEM
-                                GP.SpatialAnalyst.Con(gDEMRaster.FullPath, sTemp, "", txtProjectRaster.Text, """VALUE"" > 0")
+                                Throw New Exception("not implemented")
+                                'GP.SpatialAnalyst.Con(gDEMRaster.FullPath, sTemp, "", txtProjectRaster.Text, """VALUE"" > 0")
 
                             Case AssociatedSurfaceMethods.Roughness
                                 m_SurfaceRoughnessForm.CalculateRoughness(txtProjectRaster.Text, gDEMRaster)
@@ -240,35 +256,6 @@ Namespace UI.SurveyLibrary
                 Me.DialogResult = System.Windows.Forms.DialogResult.None
             End Try
         End Sub
-
-
-        'This code may be depracated as we now are using GetSymbologyLayerFile() from ArcMapGCD
-        Private Function GetSurfaceType() As GISCode.ArcMap.RasterLayerTypes
-
-            Dim eType As GISCode.ArcMap.RasterLayerTypes = Nothing
-
-            Dim sType As String = cboType.SelectedItem.ToString
-            If sType.ToLower.Contains("percent") Then
-                eType = GISCode.ArcMap.RasterLayerTypes.SlopePercentRise
-            ElseIf sType.ToLower.Contains("degrees") Then
-                eType = ArcMap.RasterLayerTypes.SlopeDegrees
-            ElseIf sType.ToLower.Contains("density") Then
-                eType = GISCode.ArcMap.RasterLayerTypes.PointDensity
-            ElseIf sType.ToLower.Contains("error") Then
-                eType = GISCode.ArcMap.RasterLayerTypes.ErrorSurfaces
-            ElseIf sType.ToLower.Contains("3d point quality") Then
-                eType = GISCode.ArcMap.RasterLayerTypes.PointQuality
-            ElseIf sType.ToLower.Contains("roughness") Then
-                eType = GISCode.ArcMap.RasterLayerTypes.Roughness
-            ElseIf sType.ToLower.Contains("interpolation error") Then
-                eType = ArcMap.RasterLayerTypes.InterpolationError
-            Else
-                eType = ArcMap.RasterLayerTypes.Undefined
-            End If
-
-            Return eType
-
-        End Function
 
         Private Function ValidateForm() As Boolean
 

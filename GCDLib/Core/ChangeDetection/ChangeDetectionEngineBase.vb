@@ -148,11 +148,14 @@
 
                 ' Mask the rasters using the specified AOI
                 Dim sAOIRaster As String = WorkspaceManager.GetTempRaster("AOI")
-                GP.Conversion.PolygonToRaster_conversion(m_gAOI, m_gAOI.OIDFieldName, sAOIRaster, m_gOriginalNewDEM)
+                Throw New NotImplementedException
+                'GP.Conversion.PolygonToRaster_conversion(m_gAOI, m_gAOI.OIDFieldName, sAOIRaster, m_gOriginalNewDEM)
                 Debug.Print("AOI raster produced at:" & sAOIRaster)
 
-                GP.SpatialAnalyst.SetNull(sAOIRaster, m_gOriginalNewDEM.FullPath, sNewDEM, """VALUE"" IS NULL")
-                GP.SpatialAnalyst.SetNull(sAOIRaster, m_gOriginalOldDEM.FullPath, sOldDEM, """VALUE"" IS NULL")
+                Throw New NotImplementedException
+                ' GP.SpatialAnalyst.SetNull(sAOIRaster, m_gOriginalNewDEM.FullPath, sNewDEM, """VALUE"" IS NULL")
+                Throw New NotImplementedException
+                '  GP.SpatialAnalyst.SetNull(sAOIRaster, m_gOriginalOldDEM.FullPath, sOldDEM, """VALUE"" IS NULL")
             Else
                 If m_gOriginalNewDEM.Extent.IsConcurrent(m_gOriginalOldDEM.Extent) Then
                     ' Rasters already concurrent. Simply use in situ
@@ -240,7 +243,7 @@
                     Throw New Exception("There was an error calculating the raw DoD. All values are zero in raw DoD.")
                 End If
 
-                sRawHistogram = GCDProject.ProjectManager.OutputManager.GetCsvRawPath(IO.Path.GetDirectoryName(sRawDoDPath), Name)
+                sRawHistogram = GCDProject.ProjectManagerBase.OutputManager.GetCsvRawPath(IO.Path.GetDirectoryName(sRawDoDPath), Name)
                 eResult = External.CalculateAndWriteDoDHistogramWithBins(sRawDoDPath, sRawHistogram, m_nNumBins, m_nMinimumBin, m_fBinSize, m_fBinIncrement, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
                 If eResult <> External.GCDCoreOutputCodes.PROCESS_OK Then
                     Dim ex As New Exception(GCDProject.ProjectManagerBase.GCDNARCError.ErrorString.ToString)

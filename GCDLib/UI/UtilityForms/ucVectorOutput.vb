@@ -105,53 +105,55 @@ Namespace UI.UtilityForms
                 End If
             End If
 
-            If Not IsValidPath Then
-                MsgBox("The output path is not a valid GIS path name.", MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
-                Return False
-            End If
+            ' TODO how best to handle this in file world!
+            Throw New Exception("not handled")
+            'If Not IsValidPath Then
+            '    MsgBox("The output path is not a valid GIS path name.", MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
+            '    Return False
+            'End If
 
             Return True
 
         End Function
 
-        Public Overrides ReadOnly Property IsValidPath() As Boolean
-            Get
-                Dim bValid As Boolean = False
-                Dim sFullPath As String = FullPath()
-                Dim sWorkspace As String = GISDataStructures.GISDataSource.GetWorkspacePath(sFullPath)
-                If String.IsNullOrEmpty(sWorkspace) Then
-                    bValid = False
-                Else
-                    'If GISDataStructures.IsFileGeodatabase(sFullPath) Then
-                    '    If GISCode.GISDataStructures.FileGeodatabase.Exists(sWorkspace) Then
-                    '        If String.IsNullOrEmpty(IO.Path.GetFileNameWithoutExtension(sFullPath)) Then
-                    '            bValid = False
-                    '        Else
-                    '            bValid = String.IsNullOrEmpty(IO.Path.GetExtension(sFullPath))
-                    '        End If
-                    '    Else
-                    '        bValid = False
-                    '    End If
-                    'Else
-                    If IO.Directory.Exists(sWorkspace) Then
-                        If String.IsNullOrEmpty(IO.Path.GetFileNameWithoutExtension(sFullPath)) Then
-                            bValid = False
-                        Else
-                            Dim sExt As String = IO.Path.GetExtension(sFullPath)
-                            If String.IsNullOrEmpty(sExt) Then
-                                bValid = False
-                            Else
-                                bValid = String.Compare(sExt, ".shp", True) = 0
-                            End If
-                        End If
-                    Else
-                        bValid = False
-                    End If
-                End If
-                'End If
-                Return bValid
-            End Get
-        End Property
+        'Public Overrides ReadOnly Property IsValidPath() As Boolean
+        '    Get
+        '        Dim bValid As Boolean = False
+        '        Dim sFullPath As String = FullPath()
+        '        Dim sWorkspace As String = GISDataStructures.GISDataSource.GetWorkspacePath(sFullPath)
+        '        If String.IsNullOrEmpty(sWorkspace) Then
+        '            bValid = False
+        '        Else
+        '            'If GISDataStructures.IsFileGeodatabase(sFullPath) Then
+        '            '    If GISCode.GISDataStructures.FileGeodatabase.Exists(sWorkspace) Then
+        '            '        If String.IsNullOrEmpty(IO.Path.GetFileNameWithoutExtension(sFullPath)) Then
+        '            '            bValid = False
+        '            '        Else
+        '            '            bValid = String.IsNullOrEmpty(IO.Path.GetExtension(sFullPath))
+        '            '        End If
+        '            '    Else
+        '            '        bValid = False
+        '            '    End If
+        '            'Else
+        '            If IO.Directory.Exists(sWorkspace) Then
+        '                If String.IsNullOrEmpty(IO.Path.GetFileNameWithoutExtension(sFullPath)) Then
+        '                    bValid = False
+        '                Else
+        '                    Dim sExt As String = IO.Path.GetExtension(sFullPath)
+        '                    If String.IsNullOrEmpty(sExt) Then
+        '                        bValid = False
+        '                    Else
+        '                        bValid = String.Compare(sExt, ".shp", True) = 0
+        '                    End If
+        '                End If
+        '            Else
+        '                bValid = False
+        '            End If
+        '        End If
+        '        'End If
+        '        Return bValid
+        '    End Get
+        'End Property
 
     End Class
 End Namespace

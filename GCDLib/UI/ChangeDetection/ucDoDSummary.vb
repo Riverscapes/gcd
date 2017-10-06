@@ -426,7 +426,7 @@ Namespace UI.ChangeDetection
 
     Private Sub cmdProperties_Click(sender As System.Object, e As System.EventArgs) Handles cmdProperties.Click
 
-            Dim frmOptions As New frmDoDSummaryProperties(DoDResultSet.DoDProperties.Units.LinearUnit, m_Options)
+            Dim frmOptions As New frmDoDSummaryProperties(DoDResultSet.DoDProperties.Units, m_Options)
             If frmOptions.ShowDialog = DialogResult.OK Then
             m_Options = frmOptions.Options
             RefreshGridView()

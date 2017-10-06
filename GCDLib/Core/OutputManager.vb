@@ -46,14 +46,14 @@ Namespace Core
         End Function
 
         Public Function DEMSurveyFolder(sSurveyName As String) As String
-            sSurveyName = FileSystem.RemoveDangerousCharacters(sSurveyName)
+            sSurveyName = naru.os.File.RemoveDangerousCharacters(sSurveyName)
             Return IO.Path.Combine(IO.Path.Combine(GCDProjectFolder, m_sInputsFolder), sSurveyName)
         End Function
 
         Public Function AssociatedSurfaceFolder(sSurveyName As String, sAssociatedSurfaceName As String) As String
             Dim sRasterPath As String = DEMSurveyFolder(sSurveyName)
             sRasterPath = IO.Path.Combine(sRasterPath, m_sAssociatedSurfacesFolder)
-            sAssociatedSurfaceName = FileSystem.RemoveDangerousCharacters(sAssociatedSurfaceName)
+            sAssociatedSurfaceName = naru.os.File.RemoveDangerousCharacters(sAssociatedSurfaceName)
             sRasterPath = IO.Path.Combine(sRasterPath, sAssociatedSurfaceName)
             Return sRasterPath
         End Function
@@ -61,7 +61,7 @@ Namespace Core
         Public Function ErrorSurfaceFolder(sSurveyName As String, sErrorSurfaceName As String) As String
             Dim sRasterPath As String = DEMSurveyFolder(sSurveyName)
             sRasterPath = IO.Path.Combine(sRasterPath, m_sErrorCalculationsFolder)
-            sErrorSurfaceName = FileSystem.RemoveDangerousCharacters(sErrorSurfaceName)
+            sErrorSurfaceName = naru.os.File.RemoveDangerousCharacters(sErrorSurfaceName)
             sRasterPath = IO.Path.Combine(sRasterPath, sErrorSurfaceName)
             Return sRasterPath
         End Function
@@ -69,7 +69,7 @@ Namespace Core
         Public Function ErrorSurfaceMethodFolder(sSurveyName As String, sErrorSurfaceName As String, sMethodName As String) As String
             Dim sRasterPath As String = ErrorSurfaceFolder(sSurveyName, sErrorSurfaceName)
             sRasterPath = IO.Path.Combine(sRasterPath, m_sErrorSurfaceMethodsFolder)
-            sRasterPath = IO.Path.Combine(sRasterPath, FileSystem.RemoveDangerousCharacters(sMethodName).Replace(" ", ""))
+            sRasterPath = IO.Path.Combine(sRasterPath, naru.os.File.RemoveDangerousCharacters(sMethodName).Replace(" ", ""))
             Return sRasterPath
         End Function
 
@@ -80,7 +80,7 @@ Namespace Core
         End Function
 
         Public Function AOIFolder(sAOIName As String, Optional bCreateIfMissing As Boolean = False) As String
-            sAOIName = FileSystem.RemoveDangerousCharacters(sAOIName)
+            sAOIName = naru.os.File.RemoveDangerousCharacters(sAOIName)
             Dim sFolder As String = IO.Path.Combine(GCDProjectFolder, m_sAOIFolder)
             If bCreateIfMissing Then
                 IO.Directory.CreateDirectory(sFolder)
@@ -125,8 +125,8 @@ Namespace Core
             'Dim sBSFolder As String = IO.Path.Combine(sDoDFolder, m_sBudgetSegregationFolder)
             Dim sDoDFolder As String = String.Empty
             Dim sBSFolder As String = String.Empty
-            Dim sSafeMaskName As String = FileSystem.RemoveDangerousCharacters(IO.Path.GetFileNameWithoutExtension(sPolgonMaskFilePath)).Replace(" ", "")
-            Dim sSafeMaskField As String = FileSystem.RemoveDangerousCharacters(sField).Replace(" ", "")
+            Dim sSafeMaskName As String = naru.os.File.RemoveDangerousCharacters(IO.Path.GetFileNameWithoutExtension(sPolgonMaskFilePath)).Replace(" ", "")
+            Dim sSafeMaskField As String = naru.os.File.RemoveDangerousCharacters(sField).Replace(" ", "")
 
             'Dim sBudgetSegregationDirectorPath As String = IO.Path.Combine(ChangeDetectionDirectoryPath, m_sBudgetSegregationFolder)
             Dim nFolderIndex As Integer = 0
@@ -193,8 +193,8 @@ Namespace Core
             'Old Code
             '
             'Dim sDoDFolder As String = Me.GetDoDOutputFolder(sDoDName, bCreateIfMissing)
-            'Dim sSafeMaskName As String = GISCode.FileSystem.RemoveDangerousCharacters(IO.Path.GetFileNameWithoutExtension(sPolgonMaskFilePath)).Replace(" ", "")
-            'Dim sSafeMaskField As String = GISCode.FileSystem.RemoveDangerousCharacters(sField).Replace(" ", "")
+            'Dim sSafeMaskName As String = naru.os.File.RemoveDangerousCharacters(IO.Path.GetFileNameWithoutExtension(sPolgonMaskFilePath)).Replace(" ", "")
+            'Dim sSafeMaskField As String = naru.os.File.RemoveDangerousCharacters(sField).Replace(" ", "")
 
             'Dim sBSFolder As String = IO.Path.Combine(sDoDFolder, m_sBudgetSegregationFolder)
             'If bCreateIfMissing Then
@@ -219,7 +219,7 @@ Namespace Core
 
             Dim sDoDFolder As String = String.Empty
 
-            For Each rDoD As ProjectDS.DoDsRow In GCD.GCDProject.ProjectManager.CurrentProject.GetDoDsRows
+            For Each rDoD As ProjectDS.DoDsRow In GCDProject.ProjectManagerBase.CurrentProject.GetDoDsRows
                 If String.Compare(sDoDName, rDoD.Name, True) = 0 Then
                     sDoDFolder = IO.Path.Combine(GCDProjectFolder(), IO.Path.GetDirectoryName(rDoD.RawDoDPath))
                     If Not IO.Directory.Exists(sDoDFolder) Then
@@ -250,30 +250,20 @@ Namespace Core
 #Region "Raster Paths"
 
         Public Function DEMSurveyRasterPath(ByVal sSurveyName As String) As String
-            Dim sRasterPath As String = DEMSurveyFolder(sSurveyName)
-            'IO.Directory.CreateDirectory(sRasterPath)
-            sRasterPath = IO.Path.Combine(sRasterPath, GISCode.FileSystem.RemoveDangerousCharacters(sSurveyName)) ' GISCode.GISDataStructures.Raster.GetNewSafeName(sRasterPath, m_eRasterType, sSurveyName)
-            sRasterPath = IO.Path.ChangeExtension(sRasterPath, GISDataStructures.Raster.GetRasterExtension(m_eRasterType))
-            Return sRasterPath
+            Return GISDataStructures.Raster.BuildRasterPath(DEMSurveyFolder(sSurveyName), sSurveyName).FullName
         End Function
 
         Public Function DEMSurveyHillShadeRasterPath(ByVal sSurveyName As String) As String
-            Dim sRasterPath As String = DEMSurveyFolder(sSurveyName)
-            sRasterPath = IO.Path.Combine(sRasterPath, GISCode.FileSystem.RemoveDangerousCharacters(sSurveyName & m_sDEMSurveyHillshadeSuffix))
-            sRasterPath = IO.Path.ChangeExtension(sRasterPath, GISDataStructures.Raster.GetRasterExtension(m_eRasterType))
-            Return sRasterPath
+            Return GISDataStructures.Raster.BuildRasterPath(DEMSurveyFolder(sSurveyName), sSurveyName & m_sDEMSurveyHillshadeSuffix).FullName
         End Function
 
         Public Function AssociatedSurfaceRasterPath(ByVal sSurveyName As String, ByVal sAssociatedSurface As String) As String
-            Dim sRasterPath As String = AssociatedSurfaceFolder(sSurveyName, sAssociatedSurface)
-            sRasterPath = IO.Path.Combine(sRasterPath, GISCode.FileSystem.RemoveDangerousCharacters(sAssociatedSurface)) ' GISCode.GISDataStructures.Raster.GetNewSafeName(sRasterPath, m_eRasterType, sAssociatedSurface)
-            sRasterPath = IO.Path.ChangeExtension(sRasterPath, GISDataStructures.Raster.GetRasterExtension(m_eRasterType))
-            Return sRasterPath
+            Return GISDataStructures.Raster.BuildRasterPath(AssociatedSurfaceFolder(sSurveyName, sAssociatedSurface), sAssociatedSurface).FullName
         End Function
 
         Public Function ErrorSurfaceRasterPath(ByVal sSurveyName As String, ByVal sErrorSurfaceName As String, Optional ByVal bCreateWorkspace As Boolean = True) As String
 
-            Dim sSafeName As String = GISCode.FileSystem.RemoveDangerousCharacters(sErrorSurfaceName)
+            Dim sSafeName As String = naru.os.File.RemoveDangerousCharacters(sErrorSurfaceName)
             Dim sWorkspace As String = ErrorSurfaceFolder(sSurveyName, sSafeName)
             Dim sRasterPath As String
 
@@ -284,8 +274,7 @@ Namespace Core
                     IO.Directory.CreateDirectory(sWorkspace)
                     sRasterPath = GISDataStructures.Raster.GetNewSafeName(sWorkspace, sSafeName)
                 Else
-                    sRasterPath = IO.Path.Combine(sWorkspace, GISCode.FileSystem.RemoveDangerousCharacters(sSafeName))
-                    sRasterPath = IO.Path.ChangeExtension(sRasterPath, GISDataStructures.Raster.GetRasterExtension(m_eRasterType))
+                    sRasterPath = GISDataStructures.Raster.BuildRasterPath(sWorkspace, sSafeName).FullName
                 End If
             End If
 
@@ -296,24 +285,22 @@ Namespace Core
         Public Function DEMSurveyMethodMaskPath(ByVal sSurveyName As String) As String
 
             Dim sMaskPath As String = DEMSurveyMethodMaskFolder(sSurveyName)
-            Dim sFeatureClassName As String = GISCode.FileSystem.RemoveDangerousCharacters(sSurveyName) & m_sErrorSurfaceMethodMask
+            Dim sFeatureClassName As String = naru.os.File.RemoveDangerousCharacters(sSurveyName) & m_sErrorSurfaceMethodMask
 
             If IO.Directory.Exists(sMaskPath) Then
-                sMaskPath = GISDataStructures.VectorDataSource.GetNewSafeName(sMaskPath, sFeatureClassName)
+                sMaskPath = GISDataStructures.Vector.GetNewSafeName(sMaskPath, sFeatureClassName)
             Else
                 sMaskPath = IO.Path.Combine(sMaskPath, sFeatureClassName)
             End If
 
-            If Not GISDataStructures.IsFileGeodatabase(sMaskPath) Then
-                sMaskPath = IO.Path.ChangeExtension(sMaskPath, "shp")
-            End If
+            sMaskPath = IO.Path.ChangeExtension(sMaskPath, "shp")
 
             Return sMaskPath
 
         End Function
 
         Public Function AOIFeatureClassPath(ByVal sAOIName As String) As String
-            Dim sAOISafe As String = GISCode.FileSystem.RemoveDangerousCharacters(sAOIName).Replace(" ", "")
+            Dim sAOISafe As String = naru.os.File.RemoveDangerousCharacters(sAOIName).Replace(" ", "")
             sAOISafe = IO.Path.Combine(AOIFolder(sAOISafe), sAOISafe)
             sAOISafe = IO.Path.ChangeExtension(sAOISafe, "shp")
             Return sAOISafe
@@ -332,7 +319,7 @@ Namespace Core
         '    End If
 
         '    'Survey directory
-        '    Dim sSafeSurveyName As String = GISCode.FileSystem.RemoveDangerousCharacters(sSurveyName)
+        '    Dim sSafeSurveyName As String = naru.os.File.RemoveDangerousCharacters(sSurveyName)
         '    Dim surveyDirectoryPath As String = IO.Path.Combine(inputsDirectoryPath, sSafeSurveyName)
         '    If Not IO.Directory.Exists(surveyDirectoryPath) Then
         '        IO.Directory.CreateDirectory(surveyDirectoryPath)
@@ -345,7 +332,7 @@ Namespace Core
         '    End If
 
         '    'ErrorSurfaceName directory
-        '    Dim sSafeErrorName As String = GISCode.FileSystem.RemoveDangerousCharacters(sErrorName)
+        '    Dim sSafeErrorName As String = naru.os.File.RemoveDangerousCharacters(sErrorName)
         '    Dim ErrorNameDirectoryPath As String = IO.Path.Combine(ErrorSurfacesDirectoryPath, sSafeErrorName)
         '    If Not IO.Directory.Exists(ErrorNameDirectoryPath) Then
         '        IO.Directory.CreateDirectory(ErrorNameDirectoryPath)
@@ -368,7 +355,7 @@ Namespace Core
         '    End If
 
         '    'Survey directory
-        '    Dim sSafeSurveyName As String = GISCode.FileSystem.RemoveDangerousCharacters(sSurveyName)
+        '    Dim sSafeSurveyName As String = naru.os.File.RemoveDangerousCharacters(sSurveyName)
         '    Dim surveyDirectoryPath As String = IO.Path.Combine(inputsDirectoryPath, sSafeSurveyName)
         '    If Not IO.Directory.Exists(surveyDirectoryPath) Then
         '        IO.Directory.CreateDirectory(surveyDirectoryPath)
@@ -381,14 +368,14 @@ Namespace Core
         '    End If
 
         '    'ErrorSurfaceName directory
-        '    Dim sSafeErrorName As String = GISCode.FileSystem.RemoveDangerousCharacters(sErrorName)
+        '    Dim sSafeErrorName As String = naru.os.File.RemoveDangerousCharacters(sErrorName)
         '    Dim ErrorNameDirectoryPath As String = IO.Path.Combine(ErrorSurfacesDirectoryPath, sSafeErrorName)
         '    If Not IO.Directory.Exists(ErrorNameDirectoryPath) Then
         '        IO.Directory.CreateDirectory(ErrorNameDirectoryPath)
         '    End If
 
         '    'MethodName directory
-        '    Dim sSafeMethodName As String = GISCode.FileSystem.RemoveDangerousCharacters(sMethod)
+        '    Dim sSafeMethodName As String = naru.os.File.RemoveDangerousCharacters(sMethod)
         '    Dim sMethodNameDirectory As String = IO.Path.Combine(ErrorNameDirectoryPath, sSafeMethodName)
         '    If Not IO.Directory.Exists(sMethodNameDirectory) Then
         '        IO.Directory.CreateDirectory(sMethodNameDirectory)
@@ -402,7 +389,7 @@ Namespace Core
         'End Function
 
         'Public Function GetDoDThresholdPath(sFolder As String, ByVal sDoDName As String) As String
-        '    Dim safeDoDName As String = GISCode.FileSystem.RemoveDangerousCharacters(sDoDName)
+        '    Dim safeDoDName As String = naru.os.File.RemoveDangerousCharacters(sDoDName)
         '    'get DoD output path
         '    Dim dodDirectoryPath As String = GetDoDOutputPath(sFolder, sDoDName)
         '    'generate error name
@@ -411,7 +398,7 @@ Namespace Core
         'End Function
 
         'Public Function GetCsvThresholdPath(sFolder As String, ByVal sDoDName As String) As String
-        '    Dim safeDoDName As String = GISCode.FileSystem.RemoveDangerousCharacters(sDoDName)
+        '    Dim safeDoDName As String = naru.os.File.RemoveDangerousCharacters(sDoDName)
         '    'get DoD output path
         '    Dim dodDirectoryPath As String = GetDoDOutputPath(sFolder, sDoDName)
         '    'generate error name
@@ -420,7 +407,7 @@ Namespace Core
         'End Function
 
         'Public Function GetPropagatedErrorPath(sFolder As String, sDoDName As String) As String
-        '    Dim safeDoDName As String = GISCode.FileSystem.RemoveDangerousCharacters(sDoDName)
+        '    Dim safeDoDName As String = naru.os.File.RemoveDangerousCharacters(sDoDName)
         '    'get DoD output path
         '    Dim dodDirectoryPath As String = GetDoDOutputPath(sFolder, sDoDName)
         '    'generate error name
@@ -429,7 +416,7 @@ Namespace Core
         'End Function
 
         'Public Function GetCsvRawPath(sFolder As String, ByVal sDoDName As String) As String
-        '    Dim safeDoDName As String = GISCode.FileSystem.RemoveDangerousCharacters(sDoDName)
+        '    Dim safeDoDName As String = naru.os.File.RemoveDangerousCharacters(sDoDName)
         '    'get DoD output path
         '    Dim dodDirectoryPath As String = GetDoDOutputPath(sFolder, sDoDName)
         '    'generate error name
@@ -438,7 +425,7 @@ Namespace Core
         'End Function
 
         'Public Function GetDoDRawPath(sFolder As String, ByVal sDoDName As String) As String
-        '    Dim safeDoDName As String = GISCode.FileSystem.RemoveDangerousCharacters(sDoDName)
+        '    Dim safeDoDName As String = naru.os.File.RemoveDangerousCharacters(sDoDName)
         '    'get DoD output path
         '    Dim dodDirectoryPath As String = GetDoDOutputPath(sFolder, sDoDName)
         '    'generate error name
@@ -461,7 +448,7 @@ Namespace Core
         '    End If
 
         '    'setup folder for dods
-        '    Dim safeDoDName As String = GISCode.FileSystem.RemoveDangerousCharacters(sDoDName)
+        '    Dim safeDoDName As String = naru.os.File.RemoveDangerousCharacters(sDoDName)
         '    Dim dodDirectoryPath As String = IO.Path.Combine(dodsDirectoryPath, safeDoDName)
         '    If Not IO.Directory.Exists(dodDirectoryPath) Then
         '        IO.Directory.CreateDirectory(dodDirectoryPath)
@@ -477,12 +464,12 @@ Namespace Core
         'Public Function GetChangeDetectionDirectoryPath(ByVal NewSurveyName As String, OldSurveyName As String, ByVal sDoDName As String) As String
         '    'structure: Analyses/ChangeDetection/Dods_NewSurveyName-OldSurveyName/DoDName
 
-        '    Dim safeDoDName As String = GISCode.FileSystem.RemoveDangerousCharacters(sDoDName)
+        '    Dim safeDoDName As String = naru.os.File.RemoveDangerousCharacters(sDoDName)
         '    Dim sDoDFolder As String = GetDoDOutputFolder(safeDoDName)
 
         '    'setup folder for dods directory
         '    Dim DoDsDirectoryName As String = "DoDs_" & NewSurveyName & "-" & OldSurveyName
-        '    Dim SafeDoDsDirectoryName As String = GISCode.FileSystem.RemoveDangerousCharacters(DoDsDirectoryName)
+        '    Dim SafeDoDsDirectoryName As String = naru.os.File.RemoveDangerousCharacters(DoDsDirectoryName)
         '    Dim DoDsDirectoryPath As String = IO.Path.Combine(ChangeDetectionDirectoryPath, SafeDoDsDirectoryName)
         '    If Not IO.Directory.Exists(DoDsDirectoryPath) Then
         '        IO.Directory.CreateDirectory(DoDsDirectoryPath)
@@ -524,7 +511,7 @@ Namespace Core
             End If
 
             'Survey directory
-            Dim sSafeSurveyName As String = FileSystem.RemoveDangerousCharacters(sSurveyName)
+            Dim sSafeSurveyName As String = naru.os.File.RemoveDangerousCharacters(sSurveyName)
             Dim surveyDirectoryPath As String = IO.Path.Combine(inputsDirectoryPath, sSafeSurveyName)
             If Not IO.Directory.Exists(surveyDirectoryPath) Then
                 IO.Directory.CreateDirectory(surveyDirectoryPath)
@@ -552,7 +539,7 @@ Namespace Core
             End If
 
             'Survey directory
-            Dim sSafeSurveyName As String = FileSystem.RemoveDangerousCharacters(sSurveyName)
+            Dim sSafeSurveyName As String = naru.os.File.RemoveDangerousCharacters(sSurveyName)
             Dim surveyDirectoryPath As String = IO.Path.Combine(inputsDirectoryPath, sSafeSurveyName)
             If Not IO.Directory.Exists(surveyDirectoryPath) Then
                 IO.Directory.CreateDirectory(surveyDirectoryPath)
@@ -580,7 +567,7 @@ Namespace Core
             End If
 
             'Survey directory
-            Dim sSafeSurveyName As String = FileSystem.RemoveDangerousCharacters(sSurveyName)
+            Dim sSafeSurveyName As String = naru.os.File.RemoveDangerousCharacters(sSurveyName)
             Dim surveyDirectoryPath As String = IO.Path.Combine(inputsDirectoryPath, sSafeSurveyName)
             If Not IO.Directory.Exists(surveyDirectoryPath) Then
                 IO.Directory.CreateDirectory(surveyDirectoryPath)
@@ -602,7 +589,7 @@ Namespace Core
             End If
 
             'Survey directory
-            Dim sSafeSurveyName As String = FileSystem.RemoveDangerousCharacters(sSurveyName)
+            Dim sSafeSurveyName As String = naru.os.File.RemoveDangerousCharacters(sSurveyName)
             Dim surveyDirectoryPath As String = IO.Path.Combine(inputsDirectoryPath, sSafeSurveyName)
             If Not IO.Directory.Exists(surveyDirectoryPath) Then
                 IO.Directory.CreateDirectory(surveyDirectoryPath)
@@ -635,8 +622,7 @@ Namespace Core
                     IO.Directory.CreateDirectory(sWorkspace)
                     sFullPath = GISDataStructures.Raster.GetNewSafeName(sWorkspace, sMethod.Replace(" ", ""))
                 Else
-                    sFullPath = IO.Path.Combine(sWorkspace, sMethod)
-                    sFullPath = IO.Path.ChangeExtension(sFullPath, GISCode.GISDataStructures.Raster.GetRasterExtension(m_eRasterType))
+                    sFullPath = GISDataStructures.Raster.BuildRasterPath(sWorkspace, sMethod).FullName
                 End If
             End If
 
@@ -663,8 +649,7 @@ Namespace Core
                     IO.Directory.CreateDirectory(sWorkspace)
                     sFullPath = GISDataStructures.Raster.GetNewSafeName(sWorkspace, sMethod.Replace(" ", "") & m_sErrorSurfaceMethodMask)
                 Else
-                    sFullPath = IO.Path.Combine(sWorkspace, sMethod)
-                    sFullPath = IO.Path.ChangeExtension(sFullPath, GISCode.GISDataStructures.Raster.GetRasterExtension(GISCode.GISDataStructures.Raster.GetDefaultRasterType))
+                    sFullPath = GISDataStructures.Raster.BuildRasterPath(sWorkspace, sMethod).FullName
                 End If
             End If
 
@@ -682,7 +667,7 @@ Namespace Core
             End If
 
             'Survey directory
-            Dim sSafeSurveyName As String = FileSystem.RemoveDangerousCharacters(sSurveyName)
+            Dim sSafeSurveyName As String = naru.os.File.RemoveDangerousCharacters(sSurveyName)
             Dim surveyDirectoryPath As String = IO.Path.Combine(inputsDirectoryPath, sSafeSurveyName)
             If Not IO.Directory.Exists(surveyDirectoryPath) Then
                 CreateDirectory(surveyDirectoryPath)
@@ -695,7 +680,7 @@ Namespace Core
             End If
 
             'Associated Surface directory
-            Dim SafeAssociatedSurfaceName As String = FileSystem.RemoveDangerousCharacters(AssociatedSurfaceName)
+            Dim SafeAssociatedSurfaceName As String = naru.os.File.RemoveDangerousCharacters(AssociatedSurfaceName)
             Dim AssociatedSurfaceNameDirectoryPath As String = IO.Path.Combine(AssociatedSurfacesDirectoryPath, SafeAssociatedSurfaceName)
             If Not IO.Directory.Exists(AssociatedSurfaceNameDirectoryPath) Then
                 CreateDirectory(AssociatedSurfaceNameDirectoryPath)
@@ -754,14 +739,14 @@ Namespace Core
                 CreateDirectory(BudgetSegregationDirectoryPath)
             End If
             'MaskFileName directory
-            Dim SafeMaskFileName As String = FileSystem.RemoveDangerousCharacters(MaskFilename)
+            Dim SafeMaskFileName As String = naru.os.File.RemoveDangerousCharacters(MaskFilename)
             Dim MaskFileNameDirectoryPath As String = IO.Path.Combine(BudgetSegregationDirectoryPath, SafeMaskFileName)
             If Not IO.Directory.Exists(MaskFileNameDirectoryPath) Then
                 CreateDirectory(MaskFileNameDirectoryPath)
             End If
 
             'MaskFileName directory
-            Dim SafeFieldname As String = FileSystem.RemoveDangerousCharacters(Fieldname)
+            Dim SafeFieldname As String = naru.os.File.RemoveDangerousCharacters(Fieldname)
             Dim FieldnameDirectoryPath As String = IO.Path.Combine(MaskFileNameDirectoryPath, SafeFieldname)
             If Not IO.Directory.Exists(FieldnameDirectoryPath) Then
                 CreateDirectory(FieldnameDirectoryPath)
@@ -780,19 +765,21 @@ Namespace Core
                 dodDirectoryPath = sFolder
             End If
 
-            Dim dodThresholdPath As String = GISDataStructures.Raster.GetNewSafeName(dodDirectoryPath, GISCode.GISDataStructures.Raster.RasterTypes.TIFF, "dodThresh", 12)
+            Dim dodThresholdPath As String = GISDataStructures.Raster.BuildRasterPath(dodDirectoryPath, "dodThresh").FullName
+
             Return dodThresholdPath
         End Function
 
         Public Function GetCsvThresholdPath(ByVal sDoDName As String, Optional ByVal sFolder As String = "") As String
-            Dim safeDoDName As String = "thresholded" 'GISCode.FileSystem.RemoveDangerousCharacters(sDoDName)
+            Dim safeDoDName As String = "thresholded" 'naru.os.File.RemoveDangerousCharacters(sDoDName)
             Dim dodDirectoryPath As String
             If String.IsNullOrEmpty(sFolder) OrElse Not IO.Directory.Exists(sFolder) Then
                 dodDirectoryPath = GetDoDOutputFolder(sDoDName, True)
             Else
                 dodDirectoryPath = sFolder
             End If
-            Dim csvThresholdPath As String = FileSystem.GetNewSafeFileName(dodDirectoryPath, safeDoDName, "csv")
+            Dim csvThresholdPath As String = naru.os.File.GetNewSafeName(dodDirectoryPath, safeDoDName, "csv").FullName
+
             Return csvThresholdPath
         End Function
 
@@ -803,13 +790,13 @@ Namespace Core
             Else
                 dodDirectoryPath = sFolder
             End If
-            Dim sPropErrRaster As String = GISDataStructures.Raster.GetNewSafeName(dodDirectoryPath, GISCode.GISDataStructures.Raster.RasterTypes.TIFF, "PropErr", 12)
+            Dim sPropErrRaster As String = GISDataStructures.Raster.BuildRasterPath(dodDirectoryPath, "PropErr").FullName
             Return sPropErrRaster
         End Function
 
         Public Function GetCsvRawPath(ByVal sDoDFolder As String, ByVal sDoDName As String) As String
             'Dim dodDirectoryPath As String = GetDoDOutputFolder(sDoDName)
-            Dim csvThresholdPath As String = FileSystem.GetNewSafeFileName(sDoDFolder, "raw", "csv")
+            Dim csvThresholdPath As String = naru.os.File.GetNewSafeName(sDoDFolder, "raw", "csv").FullName
             Return csvThresholdPath
         End Function
 
@@ -821,7 +808,7 @@ Namespace Core
             Else
                 dodDirectoryPath = sFolder
             End If
-            Dim sOutput As String = FileSystem.GetNewSafeFileName(dodDirectoryPath, "Summary", "xml")
+            Dim sOutput As String = naru.os.File.GetNewSafeName(dodDirectoryPath, "Summary", "xml").FullName
             Return sOutput
         End Function
 
@@ -832,7 +819,7 @@ Namespace Core
             Else
                 dodDirectoryPath = sFolder
             End If
-            Dim pngThresholdPath As String = FileSystem.GetNewSafeFileName(dodDirectoryPath, "raw", "png")
+            Dim pngThresholdPath As String = naru.os.File.GetNewSafeName(dodDirectoryPath, "raw", "png").FullName
             Return pngThresholdPath
         End Function
 
@@ -848,7 +835,7 @@ Namespace Core
             sDoDRawPath = IO.Path.ChangeExtension(sDoDRawPath, "tif")
             If IO.Directory.Exists(dodDirectoryPath) Then
                 If IO.File.Exists(sDoDRawPath) Then
-                    sDoDRawPath = GISDataStructures.Raster.GetNewSafeName(dodDirectoryPath, GISCode.GISDataStructures.Raster.RasterTypes.TIFF, IO.Path.GetFileNameWithoutExtension(sDoDRawPath), 12)
+                    sDoDRawPath = GISDataStructures.Raster.GetNewSafeName(dodDirectoryPath, IO.Path.GetFileNameWithoutExtension(sDoDRawPath))
                 End If
             End If
             Return sDoDRawPath
@@ -871,7 +858,7 @@ Namespace Core
             Dim nFolderIndex As Integer = 0
 
             ' Check if the DoD already exists and if so then get the established folder path
-            For Each rDoD As ProjectDS.DoDsRow In GCD.GCDProject.ProjectManager.CurrentProject.GetDoDsRows
+            For Each rDoD As ProjectDS.DoDsRow In GCDProject.ProjectManager.CurrentProject.GetDoDsRows
                 If String.Compare(sDoDName, rDoD.Name, True) = 0 Then
                     sDoDFolder = IO.Path.Combine(GCDProjectFolder, rDoD.OutputFolder)
                     If Not IO.Directory.Exists(sDoDFolder) Then
@@ -919,7 +906,7 @@ Namespace Core
         End Function
 
         Private Function GetSafeDoDName(ByVal sOriginalName As String) As String
-            Return GISCode.FileSystem.RemoveDangerousCharacters(sOriginalName)
+            Return naru.os.File.RemoveDangerousCharacters(sOriginalName)
         End Function
 
 #End Region
@@ -934,7 +921,7 @@ Namespace Core
         '    End If
 
         '    'Survey directory
-        '    Dim sSafeSurveyName As String = GISCode.FileSystem.RemoveDangerousCharacters(sSurveyName)
+        '    Dim sSafeSurveyName As String = naru.os.File.RemoveDangerousCharacters(sSurveyName)
         '    Dim surveyDirectoryPath As String = IO.Path.Combine(inputsDirectoryPath, sSafeSurveyName)
         '    If Not IO.Directory.Exists(surveyDirectoryPath) Then
         '        IO.Directory.CreateDirectory(surveyDirectoryPath)
@@ -947,7 +934,7 @@ Namespace Core
         '    End If
 
         '    'ErrorSurfaceName directory
-        '    Dim sSafeErrorName As String = GISCode.FileSystem.RemoveDangerousCharacters(sErrorName)
+        '    Dim sSafeErrorName As String = naru.os.File.RemoveDangerousCharacters(sErrorName)
         '    Dim ErrorNameDirectoryPath As String = IO.Path.Combine(ErrorSurfacesDirectoryPath, sSafeErrorName)
         '    If Not IO.Directory.Exists(ErrorNameDirectoryPath) Then
         '        IO.Directory.CreateDirectory(ErrorNameDirectoryPath)
@@ -964,7 +951,7 @@ Namespace Core
         'Public Function GetChangeDetectionDirectoryPath(ByVal NewSurveyName As String, OldSurveyName As String, ByVal sDoDName As String) As String
         '    'structure: Analyses/ChangeDetection/Dods_NewSurveyName-OldSurveyName/DoDName
 
-        '    Dim safeDoDName As String = GISCode.FileSystem.RemoveDangerousCharacters(sDoDName)
+        '    Dim safeDoDName As String = naru.os.File.RemoveDangerousCharacters(sDoDName)
 
         '    'setup folder for analysis
         '    Dim analysisDirectoryPath As String = IO.Path.Combine(GCDProjectFolder, "Analyses")
@@ -980,7 +967,7 @@ Namespace Core
 
         '    'setup folder for dods directory
         '    Dim DoDsDirectoryName As String = "DoDs_" & NewSurveyName & "-" & OldSurveyName
-        '    Dim SafeDoDsDirectoryName As String = GISCode.FileSystem.RemoveDangerousCharacters(DoDsDirectoryName)
+        '    Dim SafeDoDsDirectoryName As String = naru.os.File.RemoveDangerousCharacters(DoDsDirectoryName)
         '    Dim DoDsDirectoryPath As String = IO.Path.Combine(ChangeDetectionDirectoryPath, SafeDoDsDirectoryName)
         '    If Not IO.Directory.Exists(DoDsDirectoryPath) Then
         '        IO.Directory.CreateDirectory(DoDsDirectoryPath)
@@ -1005,7 +992,7 @@ Namespace Core
             End If
 
             'Survey directory
-            Dim sSafeSurveyName As String = FileSystem.RemoveDangerousCharacters(sSurveyName)
+            Dim sSafeSurveyName As String = naru.os.File.RemoveDangerousCharacters(sSurveyName)
             Dim surveyDirectoryPath As String = IO.Path.Combine(inputsDirectoryPath, sSafeSurveyName)
             If Not IO.Directory.Exists(surveyDirectoryPath) Then
                 IO.Directory.CreateDirectory(surveyDirectoryPath)
@@ -1018,7 +1005,7 @@ Namespace Core
             End If
 
             'ErrorSurfaceName directory
-            Dim sSafeErrorName As String = FileSystem.RemoveDangerousCharacters(sErrorName)
+            Dim sSafeErrorName As String = naru.os.File.RemoveDangerousCharacters(sErrorName)
             Dim ErrorNameDirectoryPath As String = IO.Path.Combine(ErrorSurfacesDirectoryPath, sSafeErrorName)
             If Not IO.Directory.Exists(ErrorNameDirectoryPath) Then
                 IO.Directory.CreateDirectory(ErrorNameDirectoryPath)
@@ -1027,7 +1014,7 @@ Namespace Core
             ' PGB 14 Sep 2011 - trying to avoid these characters now and use io.path.combine instread
             'errorCalcDirectoryPath &= IO.Path.DirectorySeparatorChar
             'generate error name
-            Dim errorCalcPath As String = GISDataStructures.Raster.GetNewSafeName(ErrorNameDirectoryPath, GISCode.GISDataStructures.Raster.GetDefaultRasterType(), sErrorName, 12)
+            Dim errorCalcPath As String = GISDataStructures.Raster.BuildRasterPath(ErrorNameDirectoryPath, sErrorName).FullName
             Return errorCalcPath
         End Function
 
@@ -1041,7 +1028,7 @@ Namespace Core
             End If
 
             'Survey directory
-            Dim sSafeSurveyName As String = FileSystem.RemoveDangerousCharacters(sSurveyName)
+            Dim sSafeSurveyName As String = naru.os.File.RemoveDangerousCharacters(sSurveyName)
             Dim surveyDirectoryPath As String = IO.Path.Combine(inputsDirectoryPath, sSafeSurveyName)
             If Not IO.Directory.Exists(surveyDirectoryPath) Then
                 CreateDirectory(surveyDirectoryPath)
@@ -1054,7 +1041,7 @@ Namespace Core
             End If
 
             'Associated Surface directory
-            Dim SafeAssociatedSurfaceName As String = FileSystem.RemoveDangerousCharacters(AssociatedSurfaceName)
+            Dim SafeAssociatedSurfaceName As String = naru.os.File.RemoveDangerousCharacters(AssociatedSurfaceName)
             Dim AssociatedSurfaceNameDirectoryPath As String = IO.Path.Combine(AssociatedSurfacesDirectoryPath, SafeAssociatedSurfaceName)
             If Not IO.Directory.Exists(AssociatedSurfaceNameDirectoryPath) Then
                 CreateDirectory(AssociatedSurfaceNameDirectoryPath)
@@ -1085,7 +1072,7 @@ Namespace Core
 
             'Dim sExtension As String = GISCode.Raster.GetRasterType(My.Settings.DefaultRasterFormat)
             'Dim eType As GISDataStructures.Raster.RasterTypes = Me.GetDefaultRasterTyp
-            Dim sRasterPath As String = GISDataStructures.Raster.GetNewSafeName(sSurfacesDirectoryPath, GISCode.GISDataStructures.Raster.GetDefaultRasterType, sWaterSurfaceName) ' GISCode.FileSystem.RemoveDangerousCharacters(sWaterSurfaceName)
+            Dim sRasterPath As String = GISDataStructures.Raster.BuildRasterPath(sSurfacesDirectoryPath, sWaterSurfaceName).FullName
             'sRasterPath = IO.Path.Combine(sSurfacesDirectoryPath, sRasterPath)
             'sRasterPath = IO.Path.ChangeExtension(sRasterPath, GISCode.Raster.GetRasterExtension(sExtension))
 
@@ -1098,7 +1085,7 @@ Namespace Core
             Dim sReservoirPath As String
             Dim sTopfolder As String = GetReservoirParentFolder()
 
-            sReservoirPath = IO.Path.Combine(sTopfolder, FileSystem.RemoveDangerousCharacters(sDEMName) & "_" & FileSystem.RemoveDangerousCharacters(sWaterSurfaceName))
+            sReservoirPath = IO.Path.Combine(sTopfolder, naru.os.File.RemoveDangerousCharacters(sDEMName) & "_" & naru.os.File.RemoveDangerousCharacters(sWaterSurfaceName))
             If Not IO.Directory.Exists(sReservoirPath) Then
                 CreateDirectory(sReservoirPath)
             End If

@@ -28,7 +28,7 @@ Namespace Core.ChangeDetection
                 readFile = New StreamReader(CsvFilePath)
             Catch ex As IOException
                 'need to limit the length of the file to display properly
-                Dim TrimmedFilename As String = FileSystem.TrimFilename(CsvFilePath, 80)
+                Dim TrimmedFilename As String = naru.os.File.TrimFilename(CsvFilePath, 80)
 
                 ex.Data("UIMessage") = "Could not access the file '" & TrimmedFilename & "' because it is being used by another program."
                 Throw ex
