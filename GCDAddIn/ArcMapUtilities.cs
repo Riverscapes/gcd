@@ -348,6 +348,9 @@ namespace GCDAddIn
         /// <remarks>PGB 9 Sep 2011.</remarks>
         public static System.IO.DirectoryInfo GetWorkspacePath(string sFullPath)
         {
+            if (string.IsNullOrEmpty(sFullPath))
+                return null;
+
             string sWorkspacePath = string.Empty;
 
             switch (GetWorkspaceType(sFullPath))

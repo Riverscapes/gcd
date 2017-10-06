@@ -94,14 +94,14 @@ Namespace UI.UtilityForms
 
         End Sub
 
-        Protected Overrides Sub Browse()
+        'Protected Overrides Sub Browse()
 
-            Try
-                naru.ui.Textbox.BrowseOpenVector(txtPath, naru.ui.UIHelpers.WrapMessageWithNoun("Select a", Noun, " Feature Class"))
-            Catch ex As Exception
-                ExceptionHelper.HandleException(ex, "Error browsing for vector input dataset.")
-            End Try
-        End Sub
+        '    Try
+        '        naru.ui.Textbox.BrowseOpenVector(txtPath, naru.ui.UIHelpers.WrapMessageWithNoun("Select a", Noun, " Feature Class"))
+        '    Catch ex As Exception
+        '        ExceptionHelper.HandleException(ex, "Error browsing for vector input dataset.")
+        '    End Try
+        'End Sub
 
         Public Overrides Function Validate() As Boolean
 

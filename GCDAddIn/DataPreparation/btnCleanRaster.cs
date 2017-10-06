@@ -1,4 +1,5 @@
 ﻿using System;
+using static GCD.GCDLib.UI.UtilityForms.InputUCSelectedItemChangedEventArgs;
 
 namespace GCDAddIn.DataPreparation
 {
@@ -6,7 +7,10 @@ namespace GCDAddIn.DataPreparation
     {
         protected override void OnClick()
         {
-            GCD.GCDLib.UI.SurveyLibrary.frmImportRaster frm = new GCD.GCDLib.UI.SurveyLibrary.frmImportRaster(null, null, GCD.GCDLib.UI.SurveyLibrary.frmImportRaster.ImportRasterPurposes.StandaloneTool, "Raster");
+            GCD.GCDLib.UI.SurveyLibrary.frmImportRaster frm = new GCD.GCDLib.UI.SurveyLibrary.frmImportRaster();
+
+            frm.ucRaster.BrowseRaster += BrowseRaster;
+
             try
             {
                 if (frm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
@@ -27,6 +31,17 @@ namespace GCDAddIn.DataPreparation
             }
 
             ArcMap.Application.CurrentTool = null;
+        }
+
+        private void BrowseRaster(object sender, BrowseLayerEventArgs e)
+        {
+            System.IO.DirectoryInfo diWorkspace = ArcMapUtilities.GetWorkspacePath(e.ExistingPath);
+            string sDataset = System.IO.Path.GetFileNameWithoutExtension(e.ExistingPath);
+            GCD.GCDLib.Core.GISDataStructures.Raster selectedRaster = ArcMapBrowse.BrowseOpenRaster(e.FormTitle, ref diWorkspace, sDataset);
+            if (!(selectedRaster == null))
+            {
+                ((System.Windows.Forms.TextBox)sender).Text = selectedRaster.FullPath;
+            }
         }
 
         protected override void OnUpdate()

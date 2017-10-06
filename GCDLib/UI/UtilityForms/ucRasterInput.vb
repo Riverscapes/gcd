@@ -1,18 +1,20 @@
-﻿Namespace UI.UtilityForms
+﻿Imports GCD.GCDLib.UI.UtilityForms.InputUCSelectedItemChangedEventArgs
+
+Namespace UI.UtilityForms
 
     Public Class ucRasterInput
         Inherits ucInputBase
 
-#Region "Methods"
+        Public Event BrowseRaster(txtPath As System.Windows.Forms.TextBox, e As BrowseLayerEventArgs)
 
-        Private Sub RasterInputUC_Load(sender As Object, e As System.EventArgs) Handles Me.Load
+        Public Event RasterSelected(e As BrowseLayerEventArgs)
 
-        End Sub
 
-        Protected Overrides Sub Browse()
+        Public Sub cmdBrowseRaster_Click(sender As Object, e As EventArgs) Handles cmdBrowse.Click
 
             Try
-                naru.ui.Textbox.BrowseOpenRaster(txtPath, naru.ui.UIHelpers.WrapMessageWithNoun("Browse and Select a", Noun, "Raster"))
+                RaiseEvent BrowseRaster(txtPath, New BrowseLayerEventArgs(naru.ui.UIHelpers.WrapMessageWithNoun("Browse and Select a", Noun, "Raster"), Core.GISDataStructures.BrowseGISTypes.Raster, MyBase.txtPath.Text))
+                'naru.ui.Textbox.BrowseOpenRaster(txtPath, naru.ui.UIHelpers.WrapMessageWithNoun("Browse and Select a", Noun, "Raster"))
 
             Catch ex As Exception
                 Core.ExceptionHelper.HandleException(ex, "Error browsing to raster.")
@@ -31,8 +33,9 @@
 
         End Function
 
-#End Region
+
 
     End Class
+
 End Namespace
 

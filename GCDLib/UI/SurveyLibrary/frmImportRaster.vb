@@ -1,5 +1,6 @@
 ﻿Imports GCD.GCDLib.Core
 Imports System.Windows.Forms
+Imports System.ComponentModel
 
 Namespace UI.SurveyLibrary
 
@@ -86,6 +87,22 @@ Namespace UI.SurveyLibrary
             ucRaster.Initialize(sNoun)
         End Sub
 
+        ''' <summary>
+        ''' Launch the raster import in standalone mode for cleaning rasters
+        ''' </summary>
+        Public Sub New()
+
+            ' This call is required by the designer.
+            InitializeComponent()
+            m_gReferenceRaster = Nothing
+            m_ePurpose = ImportRasterPurposes.StandaloneTool
+            m_DEMSurveyRow = Nothing
+            m_RasterDirects = New Dictionary(Of String, String)
+
+            ucRaster.Initialize(String.Empty)
+        End Sub
+
+
         Private Sub ImportRasterForm_Load(sender As Object, e As System.EventArgs) Handles Me.Load
 
             SetupToolTips()
@@ -156,7 +173,7 @@ Namespace UI.SurveyLibrary
                 Me.Text = "Clean Raster"
                 grpProjectRaaster.Text = "Clean Raster"
                 cmdOK.Text = "Create Clean Raster"
-                lblRasterPath.Text = "Output path:"
+                lblRasterPath.Text = "Output path"
                 lblName.Visible = False
                 txtName.Visible = False
 
@@ -612,12 +629,6 @@ Namespace UI.SurveyLibrary
             Return gResult
 
         End Function
-
-        Private Sub cmdAddToMap_Click(sender As Object, e As System.EventArgs)
-            ' TODO 
-            Throw New Exception("not implemented")
-            'ucRaster.AddSelectedItemToArcMap()
-        End Sub
 
         Private Sub txtName_TextChanged(sender As Object, e As System.EventArgs) Handles txtName.TextChanged
             UpdateRasterPath()

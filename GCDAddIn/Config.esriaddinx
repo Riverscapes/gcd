@@ -31,7 +31,7 @@
         <!-- Data Preparation Menu -->
         <!--<Button id="GCD_AddIn_SurveyLibraryButton" class="SurveyLibraryButton"  onDemand="false" message="Open the GCD Project Explorer" caption="Survey Library" category="GCD" image="Images\SurveyLibrary.png" />
         -->
-        <Button id="GCD_AddIn_CleanRasterButton" class="DataPreparation.btnCleanRaster" message="Clean a raster to fix cell extent and divisibility issues" caption="Clean Raster" category="GCD" image="Resources\CleanRaster.png" />
+        <Button id="GCD_AddIn_CleanRasterButton" class="GCDAddIn.DataPreparation.btnCleanRaster" message="Clean a raster to fix cell extent and divisibility issues" caption="Clean Raster" category="GCD" image="Resources\CleanRaster.png" />
         <Button id="GCD_AddIn_ConcaveHull" class="ConcaveHullButton" message="Create a bounding polygon around a set of survey points." caption="Creating Bounding Polygon" category="GCD" image="Resources\ConcaveHull.png"/>
         <!--Survey Preparation Sub-Menu-->
         <Button id ="GCD_AddIn_RawPointCloudToFeatureClass" class ="PointCloudToFcButton" message ="Convert a x,y,z delimted text file to a point feature class" caption ="Create Point Feature Class" category="GCD" image=""/>

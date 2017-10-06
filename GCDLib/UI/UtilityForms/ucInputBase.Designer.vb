@@ -75,8 +75,8 @@
         End Sub
         Friend WithEvents cmdBrowse As System.Windows.Forms.Button
         Friend WithEvents tTip As System.Windows.Forms.ToolTip
-        Friend WithEvents txtPath As System.Windows.Forms.TextBox
         Friend WithEvents cmdGISBrowse As System.Windows.Forms.Button
+        Protected WithEvents txtPath As System.Windows.Forms.TextBox
     End Class
 
 End Namespace

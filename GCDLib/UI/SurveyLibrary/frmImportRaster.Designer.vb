@@ -47,7 +47,7 @@
             Me.txtOrigHeight = New System.Windows.Forms.TextBox()
             Me.txtTop = New System.Windows.Forms.TextBox()
             Me.Label11 = New System.Windows.Forms.Label()
-            Me.ucRaster = New UI.UtilityForms.ucRasterInput()
+            Me.ucRaster = New GCD.GCDLib.UI.UtilityForms.ucRasterInput()
             Me.grpProjectRaaster = New System.Windows.Forms.GroupBox()
             Me.cmdHelpPrecision = New System.Windows.Forms.Button()
             Me.Label1 = New System.Windows.Forms.Label()
@@ -89,11 +89,11 @@
             'lblName
             '
             Me.lblName.AutoSize = True
-            Me.lblName.Location = New System.Drawing.Point(20, 13)
+            Me.lblName.Location = New System.Drawing.Point(71, 13)
             Me.lblName.Name = "lblName"
-            Me.lblName.Size = New System.Drawing.Size(38, 13)
+            Me.lblName.Size = New System.Drawing.Size(35, 13)
             Me.lblName.TabIndex = 0
-            Me.lblName.Text = "Name:"
+            Me.lblName.Text = "Name"
             '
             'txtName
             '
@@ -105,20 +105,20 @@
             'Label2
             '
             Me.Label2.AutoSize = True
-            Me.Label2.Location = New System.Drawing.Point(8, 25)
+            Me.Label2.Location = New System.Drawing.Point(24, 25)
             Me.Label2.Name = "Label2"
-            Me.Label2.Size = New System.Drawing.Size(74, 13)
+            Me.Label2.Size = New System.Drawing.Size(71, 13)
             Me.Label2.TabIndex = 0
-            Me.Label2.Text = "Original raster:"
+            Me.Label2.Text = "Original raster"
             '
             'lblRasterPath
             '
             Me.lblRasterPath.AutoSize = True
             Me.lblRasterPath.Location = New System.Drawing.Point(8, 25)
             Me.lblRasterPath.Name = "lblRasterPath"
-            Me.lblRasterPath.Size = New System.Drawing.Size(96, 13)
+            Me.lblRasterPath.Size = New System.Drawing.Size(93, 13)
             Me.lblRasterPath.TabIndex = 0
-            Me.lblRasterPath.Text = "Project raster path:"
+            Me.lblRasterPath.Text = "Project raster path"
             '
             'txtRasterPath
             '
@@ -163,9 +163,9 @@
             Me.Label12.AutoSize = True
             Me.Label12.Location = New System.Drawing.Point(434, 113)
             Me.Label12.Name = "Label12"
-            Me.Label12.Size = New System.Drawing.Size(75, 13)
+            Me.Label12.Size = New System.Drawing.Size(72, 13)
             Me.Label12.TabIndex = 18
-            Me.Label12.Text = "Cell resolution:"
+            Me.Label12.Text = "Cell resolution"
             '
             'txtOrigCellSize
             '
@@ -188,9 +188,9 @@
             Me.Label4.AutoSize = True
             Me.Label4.Location = New System.Drawing.Point(332, 60)
             Me.Label4.Name = "Label4"
-            Me.Label4.Size = New System.Drawing.Size(37, 13)
+            Me.Label4.Size = New System.Drawing.Size(34, 13)
             Me.Label4.TabIndex = 10
-            Me.Label4.Text = "Rows:"
+            Me.Label4.Text = "Rows"
             '
             'txtBottom
             '
@@ -204,18 +204,18 @@
             Me.Label5.AutoSize = True
             Me.Label5.Location = New System.Drawing.Point(459, 60)
             Me.Label5.Name = "Label5"
-            Me.Label5.Size = New System.Drawing.Size(50, 13)
+            Me.Label5.Size = New System.Drawing.Size(47, 13)
             Me.Label5.TabIndex = 14
-            Me.Label5.Text = "Columns:"
+            Me.Label5.Text = "Columns"
             '
             'Label8
             '
             Me.Label8.AutoSize = True
             Me.Label8.Location = New System.Drawing.Point(61, 130)
             Me.Label8.Name = "Label8"
-            Me.Label8.Size = New System.Drawing.Size(43, 13)
+            Me.Label8.Size = New System.Drawing.Size(40, 13)
             Me.Label8.TabIndex = 8
-            Me.Label8.Text = "Bottom:"
+            Me.Label8.Text = "Bottom"
             '
             'txtOrigCols
             '
@@ -237,18 +237,18 @@
             Me.Label7.AutoSize = True
             Me.Label7.Location = New System.Drawing.Point(331, 87)
             Me.Label7.Name = "Label7"
-            Me.Label7.Size = New System.Drawing.Size(38, 13)
+            Me.Label7.Size = New System.Drawing.Size(35, 13)
             Me.Label7.TabIndex = 12
-            Me.Label7.Text = "Width:"
+            Me.Label7.Text = "Width"
             '
             'Label9
             '
             Me.Label9.AutoSize = True
             Me.Label9.Location = New System.Drawing.Point(75, 60)
             Me.Label9.Name = "Label9"
-            Me.Label9.Size = New System.Drawing.Size(29, 13)
+            Me.Label9.Size = New System.Drawing.Size(26, 13)
             Me.Label9.TabIndex = 4
-            Me.Label9.Text = "Top:"
+            Me.Label9.Text = "Top"
             '
             'txtOrigWidth
             '
@@ -270,18 +270,18 @@
             Me.Label6.AutoSize = True
             Me.Label6.Location = New System.Drawing.Point(468, 87)
             Me.Label6.Name = "Label6"
-            Me.Label6.Size = New System.Drawing.Size(41, 13)
+            Me.Label6.Size = New System.Drawing.Size(38, 13)
             Me.Label6.TabIndex = 16
-            Me.Label6.Text = "Height:"
+            Me.Label6.Text = "Height"
             '
             'Label10
             '
             Me.Label10.AutoSize = True
             Me.Label10.Location = New System.Drawing.Point(163, 95)
             Me.Label10.Name = "Label10"
-            Me.Label10.Size = New System.Drawing.Size(35, 13)
+            Me.Label10.Size = New System.Drawing.Size(32, 13)
             Me.Label10.TabIndex = 6
-            Me.Label10.Text = "Right:"
+            Me.Label10.Text = "Right"
             '
             'txtOrigHeight
             '
@@ -303,9 +303,9 @@
             Me.Label11.AutoSize = True
             Me.Label11.Location = New System.Drawing.Point(8, 95)
             Me.Label11.Name = "Label11"
-            Me.Label11.Size = New System.Drawing.Size(28, 13)
+            Me.Label11.Size = New System.Drawing.Size(25, 13)
             Me.Label11.TabIndex = 2
-            Me.Label11.Text = "Left:"
+            Me.Label11.Text = "Left"
             '
             'ucRaster
             '
@@ -354,7 +354,7 @@
             '
             Me.cmdHelpPrecision.FlatAppearance.BorderSize = 0
             Me.cmdHelpPrecision.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-            Me.cmdHelpPrecision.Image = My.Resources.Resources.Help
+            Me.cmdHelpPrecision.Image = Global.GCD.GCDLib.My.Resources.Resources.Help
             Me.cmdHelpPrecision.Location = New System.Drawing.Point(343, 129)
             Me.cmdHelpPrecision.Name = "cmdHelpPrecision"
             Me.cmdHelpPrecision.Size = New System.Drawing.Size(23, 23)
@@ -366,9 +366,9 @@
             Me.Label1.AutoSize = True
             Me.Label1.Location = New System.Drawing.Point(260, 161)
             Me.Label1.Name = "Label1"
-            Me.Label1.Size = New System.Drawing.Size(106, 13)
+            Me.Label1.Size = New System.Drawing.Size(103, 13)
             Me.Label1.TabIndex = 25
-            Me.Label1.Text = "Interpolation method:"
+            Me.Label1.Text = "Interpolation method"
             '
             'cboMethod
             '
@@ -381,7 +381,7 @@
             '
             'cmdSave
             '
-            Me.cmdSave.Image = My.Resources.Resources.SaveGIS
+            Me.cmdSave.Image = Global.GCD.GCDLib.My.Resources.Resources.SaveGIS
             Me.cmdSave.Location = New System.Drawing.Point(569, 20)
             Me.cmdSave.Name = "cmdSave"
             Me.cmdSave.Size = New System.Drawing.Size(23, 23)
@@ -433,56 +433,56 @@
             'lblPrecision
             '
             Me.lblPrecision.AutoSize = True
-            Me.lblPrecision.Location = New System.Drawing.Point(364, 134)
+            Me.lblPrecision.Location = New System.Drawing.Point(368, 134)
             Me.lblPrecision.Name = "lblPrecision"
-            Me.lblPrecision.Size = New System.Drawing.Size(141, 13)
+            Me.lblPrecision.Size = New System.Drawing.Size(138, 13)
             Me.lblPrecision.TabIndex = 20
-            Me.lblPrecision.Text = "Horizontal decimal precision:"
+            Me.lblPrecision.Text = "Horizontal decimal precision"
             '
             'Label17
             '
             Me.Label17.AutoSize = True
             Me.Label17.Location = New System.Drawing.Point(459, 55)
             Me.Label17.Name = "Label17"
-            Me.Label17.Size = New System.Drawing.Size(50, 13)
+            Me.Label17.Size = New System.Drawing.Size(47, 13)
             Me.Label17.TabIndex = 14
-            Me.Label17.Text = "Columns:"
+            Me.Label17.Text = "Columns"
             '
             'Label18
             '
             Me.Label18.AutoSize = True
             Me.Label18.Location = New System.Drawing.Point(61, 125)
             Me.Label18.Name = "Label18"
-            Me.Label18.Size = New System.Drawing.Size(43, 13)
+            Me.Label18.Size = New System.Drawing.Size(40, 13)
             Me.Label18.TabIndex = 8
-            Me.Label18.Text = "Bottom:"
+            Me.Label18.Text = "Bottom"
             '
             'lblCellResolution
             '
             Me.lblCellResolution.AutoSize = True
-            Me.lblCellResolution.Location = New System.Drawing.Point(433, 108)
+            Me.lblCellResolution.Location = New System.Drawing.Point(434, 108)
             Me.lblCellResolution.Name = "lblCellResolution"
-            Me.lblCellResolution.Size = New System.Drawing.Size(75, 13)
+            Me.lblCellResolution.Size = New System.Drawing.Size(72, 13)
             Me.lblCellResolution.TabIndex = 18
-            Me.lblCellResolution.Text = "Cell resolution:"
+            Me.lblCellResolution.Text = "Cell resolution"
             '
             'Label19
             '
             Me.Label19.AutoSize = True
             Me.Label19.Location = New System.Drawing.Point(75, 55)
             Me.Label19.Name = "Label19"
-            Me.Label19.Size = New System.Drawing.Size(29, 13)
+            Me.Label19.Size = New System.Drawing.Size(26, 13)
             Me.Label19.TabIndex = 4
-            Me.Label19.Text = "Top:"
+            Me.Label19.Text = "Top"
             '
             'Label20
             '
             Me.Label20.AutoSize = True
             Me.Label20.Location = New System.Drawing.Point(163, 90)
             Me.Label20.Name = "Label20"
-            Me.Label20.Size = New System.Drawing.Size(35, 13)
+            Me.Label20.Size = New System.Drawing.Size(32, 13)
             Me.Label20.TabIndex = 6
-            Me.Label20.Text = "Right:"
+            Me.Label20.Text = "Right"
             '
             'txtProjRows
             '
@@ -497,9 +497,9 @@
             Me.Label21.AutoSize = True
             Me.Label21.Location = New System.Drawing.Point(8, 90)
             Me.Label21.Name = "Label21"
-            Me.Label21.Size = New System.Drawing.Size(28, 13)
+            Me.Label21.Size = New System.Drawing.Size(25, 13)
             Me.Label21.TabIndex = 2
-            Me.Label21.Text = "Left:"
+            Me.Label21.Text = "Left"
             '
             'txtProjCols
             '
@@ -514,9 +514,9 @@
             Me.Label14.AutoSize = True
             Me.Label14.Location = New System.Drawing.Point(332, 55)
             Me.Label14.Name = "Label14"
-            Me.Label14.Size = New System.Drawing.Size(37, 13)
+            Me.Label14.Size = New System.Drawing.Size(34, 13)
             Me.Label14.TabIndex = 10
-            Me.Label14.Text = "Rows:"
+            Me.Label14.Text = "Rows"
             '
             'txtProjHeight
             '
@@ -531,18 +531,18 @@
             Me.Label16.AutoSize = True
             Me.Label16.Location = New System.Drawing.Point(468, 82)
             Me.Label16.Name = "Label16"
-            Me.Label16.Size = New System.Drawing.Size(41, 13)
+            Me.Label16.Size = New System.Drawing.Size(38, 13)
             Me.Label16.TabIndex = 16
-            Me.Label16.Text = "Height:"
+            Me.Label16.Text = "Height"
             '
             'Label15
             '
             Me.Label15.AutoSize = True
             Me.Label15.Location = New System.Drawing.Point(331, 82)
             Me.Label15.Name = "Label15"
-            Me.Label15.Size = New System.Drawing.Size(38, 13)
+            Me.Label15.Size = New System.Drawing.Size(35, 13)
             Me.Label15.TabIndex = 12
-            Me.Label15.Text = "Width:"
+            Me.Label15.Text = "Width"
             '
             'txtProjWidth
             '
@@ -584,7 +584,7 @@
             Me.cmdCancel.Text = "Cancel"
             Me.cmdCancel.UseVisualStyleBackColor = True
             '
-            'ImportRasterForm
+            'frmImportRaster
             '
             Me.AcceptButton = Me.cmdOK
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -601,7 +601,7 @@
             Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
             Me.MaximizeBox = False
             Me.MinimizeBox = False
-            Me.Name = "ImportRasterForm"
+            Me.Name = "frmImportRaster"
             Me.ShowIcon = False
             Me.Text = "Import Raster"
             Me.grpOriginalRaster.ResumeLayout(False)
@@ -621,7 +621,6 @@
         Friend WithEvents lblName As System.Windows.Forms.Label
         Friend WithEvents txtName As System.Windows.Forms.TextBox
         Friend WithEvents Label2 As System.Windows.Forms.Label
-        Friend WithEvents ucRaster As UI.UtilityForms.ucRasterInput
         Friend WithEvents lblRasterPath As System.Windows.Forms.Label
         Friend WithEvents txtRasterPath As System.Windows.Forms.TextBox
         Friend WithEvents grpOriginalRaster As System.Windows.Forms.GroupBox
@@ -671,6 +670,7 @@
         Friend WithEvents Label1 As System.Windows.Forms.Label
         Friend WithEvents cboMethod As System.Windows.Forms.ComboBox
         Friend WithEvents cmdHelpPrecision As System.Windows.Forms.Button
+        Public WithEvents ucRaster As UtilityForms.ucRasterInput
     End Class
 
 End Namespace

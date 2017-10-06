@@ -34,52 +34,18 @@
 
 #Region "Methods"
 
-        Private Sub cmdBrowse_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdBrowse.Click
-
-            If String.IsNullOrEmpty(Noun) Then
-                Throw New Exception("You must provide the ""noun"" for this vector input user control before using the browse event")
-            End If
-
-            Browse()
-
-        End Sub
-
         Public Sub Initialize(ByVal sNoun As String)
             Noun = sNoun
         End Sub
 
-        Protected MustOverride Sub Browse()
-
         Public MustOverride Shadows Function Validate() As Boolean
 
-        'Public Function AddSelectedItemToArcMap() As ESRI.ArcGIS.Carto.IFeatureLayer
+        Public Sub txtPath_TextChanged(sender As Object, e As EventArgs) Handles txtPath.TextChanged
+            If Not Validate() Then
+                txtPath.Text = String.Empty
+            End If
+        End Sub
 
-        '    If Not TypeOf m_pArcMap Is ESRI.ArcGIS.Framework.IApplication Then
-        '        Throw New Exception("You must provide the pointer to the ArcMAp application before this control loads")
-        '    End If
-
-        '    Dim pFLayer As ESRI.ArcGIS.Carto.IFeatureLayer = Nothing
-        '    Dim gVector As GISDataStructures.VectorDataSource = SelectedItem
-        '    If TypeOf gVector Is GISDataStructures.VectorDataSource Then
-        '        pFLayer = gVector.AddToMap(ArcMap)
-        '    End If
-
-        '    Return pFLayer
-
-        'End Function
-
-        'Public Function AddToMap() As ESRI.ArcGIS.Carto.ILayer
-
-        '    Dim pLayer As ESRI.ArcGIS.Carto.ILayer = Nothing
-        '    If TypeOf ArcMap Is IApplication Then
-        '        If TypeOf SelectedItem Is GISDataStructures.GISDataSource Then
-        '            pLayer = SelectedItem.AddToMap(ArcMap)
-        '        End If
-        '    End If
-
-        '    Return pLayer
-
-        'End Function
 
         ''' <summary>
         ''' Specify the item that will be added to the dropdown and selected in the dropdown
@@ -163,6 +129,39 @@
         Public Sub New(ByVal sFullPath As String)
             m_sFullPath = sFullPath
         End Sub
+
+        Public Class BrowseLayerEventArgs
+            Inherits System.EventArgs
+
+            Private m_sFormTitle As String
+            Private m_eBrowseType As Core.GISDataStructures.BrowseGISTypes
+            Private m_sExistingPath As String
+
+            Public ReadOnly Property FormTitle As String
+                Get
+                    Return m_sFormTitle
+                End Get
+            End Property
+
+            Public ReadOnly Property BrowseType As Core.GISDataStructures.BrowseGISTypes
+                Get
+                    Return m_eBrowseType
+                End Get
+            End Property
+
+            Public ReadOnly Property ExistingPath As String
+                Get
+                    Return m_sExistingPath
+                End Get
+            End Property
+
+            Public Sub New(sFormTitle As String, eBrowseType As Core.GISDataStructures.BrowseGISTypes, Optional sExistingPath As String = "")
+                m_sFormTitle = sFormTitle
+                m_eBrowseType = eBrowseType
+                m_sExistingPath = sExistingPath
+            End Sub
+
+        End Class
 
     End Class
 
