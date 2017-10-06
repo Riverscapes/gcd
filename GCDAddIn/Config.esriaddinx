@@ -198,9 +198,8 @@
           </Items>
         </Toolbar>
       </Toolbars>
-      <!--
       <Extensions>
-        <Extension id="GCD_AddIn_Extension" class="GCDExtension" productName="Geomorphic Change Detection (GCD)" showInExtensionDialog="true" autoLoad="true">
+        <Extension id="GCD_AddIn_Extension" class="GCDAddIn.GCDExtension" productName="Geomorphic Change Detection (GCD)" showInExtensionDialog="true" autoLoad="true">
           <Description>
             The GCD software was developed primarily for morphological sediment budgeting in rivers.
             The volumetric change in storage is calculated from the difference in surface elevations from digital elevation models (DEMs)
@@ -210,7 +209,6 @@
           </Description>
         </Extension>
       </Extensions>
-      -->
     </ArcMap>
   </AddIn>
 </ESRI.Configuration>
