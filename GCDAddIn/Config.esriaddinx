@@ -198,6 +198,7 @@
           </Items>
         </Toolbar>
       </Toolbars>
+      <!--
       <Extensions>
         <Extension id="GCD_AddIn_Extension" class="GCDExtension" productName="Geomorphic Change Detection (GCD)" showInExtensionDialog="true" autoLoad="true">
           <Description>
@@ -209,6 +210,7 @@
           </Description>
         </Extension>
       </Extensions>
+      -->
     </ArcMap>
   </AddIn>
 </ESRI.Configuration>
