@@ -181,12 +181,6 @@ Namespace UI.ChangeDetection
                 ' the resultant raster. So assume that the output project is identical to the
                 ' input project and simply use the geoprocessing routine to define it.
                 Try
-
-                    Dim pSR As ESRI.ArcGIS.Geometry.ISpatialReference = Nothing
-                    If TypeOf gNewDEM Is GISDataStructures.Raster Then
-                        pSR = gNewDEM.SpatialReference
-                    End If
-
                     If IO.File.Exists(sThreshDodPath) Then
                         Throw New NotImplementedException
                         'GP.DataManagement.DefineProjection(sThreshDodPath, pSR)

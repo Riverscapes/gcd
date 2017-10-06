@@ -4,7 +4,7 @@ Namespace Core.BudgetSegregation
 
     Public Class MaskStatsClass
         Private _MaskStats As New Dictionary(Of String, ChangeDetection.ChangeStats)
-        Private _TotalStats As New ChangeDetection.ChangeStats
+        Private _TotalStats As ChangeDetection.ChangeStats
 
         Public ReadOnly Property TotalStats As ChangeDetection.ChangeStats
             Get
@@ -176,7 +176,8 @@ Namespace Core.BudgetSegregation
         Private Sub ExportMaskStat(sExcelTemplateFolder As String, ByVal StatsData As ChangeDetection.ChangeStats, ByVal SummaryPath As String, eUnits As naru.math.LinearUnitClass)
 
             ' PGB 15 Jan 2014. Each class now gets its own copy of the new GCD SummaryXML file.
-            StatsData.ExportSummary(eUnits, eUnits, SummaryPath)
+            Throw New NotImplementedException
+            'StatsData.ExportSummary(eUnits, eUnits, SummaryPath)
         End Sub
 
         Private Sub WriteCell(ByRef Template As StringBuilder, ByVal tag As String, ByVal value As Double, Optional ByVal format As String = "")

@@ -74,7 +74,7 @@ Namespace UI.SurveyLibrary
             End Get
         End Property
 
-        Public Sub New(gReferenceRaster As Core.GISDataStructures.Raster, ByRef demSurveyRow As ProjectDS.DEMSurveyRow, ePurpose As ImportRasterPurposes, sNoun As String)
+        Public Sub New(gReferenceRaster As Core.GISDataStructures.Raster, demSurveyRow As ProjectDS.DEMSurveyRow, ePurpose As ImportRasterPurposes, sNoun As String)
 
             ' This call is required by the designer.
             InitializeComponent()
@@ -224,9 +224,10 @@ Namespace UI.SurveyLibrary
                 End If
 
                 Dim bMissingSpatialReference As Boolean = True
-                If TypeOf ucRaster.SelectedItem.SpatialReference Is ESRI.ArcGIS.Geometry.ISpatialReference Then
-                    bMissingSpatialReference = ucRaster.SelectedItem.SpatialReference.ToLower.Contains("unknown")
-                End If
+                Throw New NotImplementedException
+                'If TypeOf ucRaster.SelectedItem.SpatialReference Is ESRI.ArcGIS.Geometry.ISpatialReference Then
+                bMissingSpatialReference = ucRaster.SelectedItem.SpatialReference.ToLower.Contains("unknown")
+                ' End If
 
                 If bMissingSpatialReference Then
                     MsgBox("The selected raster appears to be missing a spatial reference. All GCD rasters must possess a spatial reference and it must be the same spatial reference for all rasters in a GCD project." &
@@ -534,16 +535,17 @@ Namespace UI.SurveyLibrary
                                     ' the resultant raster. So assume that the output project is identical to the
                                     ' input project and simply use the geoprocessing routine to define it.
 
-                                    Dim pSR As ESRI.ArcGIS.Geometry.ISpatialReference = Nothing
-                                    If TypeOf m_gReferenceRaster Is GISDataStructures.Raster Then
-                                        pSR = m_gReferenceRaster.SpatialReference
-                                    Else
-                                        pSR = ucRaster.SelectedItem.SpatialReference
-                                    End If
-
-                                    gResult = New GISDataStructures.Raster(txtRasterPath.Text)
                                     ' TODO
                                     Throw New NotImplementedException()
+                                    'Dim pSR As ESRI.ArcGIS.Geometry.ISpatialReference = Nothing
+                                    'If TypeOf m_gReferenceRaster Is GISDataStructures.Raster Then
+                                    '    pSR = m_gReferenceRaster.SpatialReference
+                                    'Else
+                                    '    pSR = ucRaster.SelectedItem.SpatialReference
+                                    'End If
+
+                                    'gResult = New GISDataStructures.Raster(txtRasterPath.Text)
+
                                     'GP.DataManagement.DefineProjection(gResult, pSR)
 
                                     ' This method will check to see if pyrmaids are need and then build if necessary.

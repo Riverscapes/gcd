@@ -276,7 +276,7 @@ Namespace Core.ErrorCalculation
 
                 If bClipToMask Then
                     Throw New NotImplementedException
-                    GP.SpatialAnalyst.Raster_Calculator("""" & sFullFISRaster & """ * """ & gReferenceRaster.FullPath & """", sOutputRasterPath, gReferenceRaster)
+                    'GP.SpatialAnalyst.Raster_Calculator("""" & sFullFISRaster & """ * """ & gReferenceRaster.FullPath & """", sOutputRasterPath, gReferenceRaster)
                 End If
             Catch ex As Exception
                 Dim ex2 As New Exception("Error generating FIS error surface raster", ex)

@@ -6,24 +6,24 @@ namespace GCDAddIn.DataPreparation
     {
         protected override void OnClick()
         {
-            ImportRasterForm frm = new ImportRasterForm(My.ArcMap.Application, null, null, ImportRasterForm.ImportRasterPurposes.StandaloneTool, "Raster");
+            GCD.GCDLib.UI.SurveyLibrary.frmImportRaster frm = new GCD.GCDLib.UI.SurveyLibrary.frmImportRaster(null, null, GCD.GCDLib.UI.SurveyLibrary.frmImportRaster.ImportRasterPurposes.StandaloneTool, "Raster");
             try
             {
-                if (frm.ShowDialog() == Windows.Forms.DialogResult.OK)
+                if (frm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
-                    GISDataStructures.RasterDirect gOutput = frm.ProcessRaster;
-                    if (gOutput is GISDataStructures.RasterDirect)
+                    GCD.GCDLib.Core.GISDataStructures.Raster gOutput = frm.ProcessRaster();
+                    if (gOutput is GCD.GCDLib.Core.GISDataStructures.Raster)
                     {
-                        if (My.Settings.AddOutputLayersToMap)
+                        if (GCD.GCDLib.My.MySettings.Default.AddOutputLayersToMap)
                         {
-                            gOutput.AddToMap(My.ThisApplication);
+                            ArcMapUtilities.AddToMap(gOutput.FilePath);
                         }
                     }
                 }
             }
             catch (Exception ex)
             {
-                ExceptionUI.HandleException(ex);
+                naru.error.ExceptionUI.HandleException(ex);
             }
 
             ArcMap.Application.CurrentTool = null;

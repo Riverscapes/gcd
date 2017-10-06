@@ -162,9 +162,9 @@ Namespace UI.BudgetSegregation
 
                             ' Confirm that the polygon mask has a spatial reference.
                             Dim bMissingSpatialReference As Boolean = True
-                            If TypeOf ucPolygon.SelectedItem.SpatialReference Is ESRI.ArcGIS.Geometry.ISpatialReference Then
-                                bMissingSpatialReference = ucPolygon.SelectedItem.SpatialReference.ToLower.Contains("unknown")
-                            End If
+                            'If TypeOf ucPolygon.SelectedItem.SpatialReference Is ESRI.ArcGIS.Geometry.ISpatialReference Then
+                            bMissingSpatialReference = ucPolygon.SelectedItem.SpatialReference.ToLower.Contains("unknown")
+                            'End If
 
                             If bMissingSpatialReference Then
                                 MsgBox("The selected feature class appears to be missing a spatial reference. All GCD inputs must possess a spatial reference and it must be the same spatial reference for all datasets in a GCD project." &

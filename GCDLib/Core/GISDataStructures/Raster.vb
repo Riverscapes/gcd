@@ -58,6 +58,20 @@ Namespace Core.GISDataStructures
             End Get
         End Property
 
+        Public ReadOnly Property Maximum As Double
+            Get
+                Throw New NotImplementedException
+                Return 0
+            End Get
+        End Property
+
+        Public ReadOnly Property Minimum As Double
+            Get
+                Throw New NotImplementedException
+                Return 0
+            End Get
+        End Property
+
         Public ReadOnly Property HasNoDataValue As Boolean
             Get
                 'TODO: needs implementation from GDAL

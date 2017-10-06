@@ -57,10 +57,11 @@ Namespace UI.UtilityForms
                 End If
             End If
 
-            If Not IsValidPath Then
-                MsgBox("The output path is not a valid GIS path name.", MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
-                Return False
-            End If
+            Throw New NotFiniteNumberException
+            'If Not IsValidPath Then
+            '    MsgBox("The output path is not a valid GIS path name.", MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
+            '    Return False
+            'End If
 
             Return True
 

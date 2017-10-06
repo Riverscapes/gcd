@@ -352,7 +352,8 @@ Namespace UI.SurveyLibrary
                 Dim sFolder As String = String.Empty
 
                 ' browse and see if the user selects a new polygon feature class.
-                Dim gNewMask As GISDataStructures.Vector = GISDataStructures.Vector.BrowseOpen("DEM Survey Method Polygon Mask", sFolder, sName, GISDataStructures.BrowseGISTypes.Polygon, Me.Handle)
+                Throw New NotImplementedException
+                Dim gNewMask As GISDataStructures.Vector '= GISDataStructures.Vector.BrowseOpen("DEM Survey Method Polygon Mask", sFolder, sName, GISDataStructures.BrowseGISTypes.Polygon, Me.Handle)
                 If Not TypeOf gNewMask Is GISDataStructures.Vector Then
                     Exit Sub
                 End If

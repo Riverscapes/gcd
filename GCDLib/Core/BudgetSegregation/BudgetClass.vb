@@ -384,7 +384,9 @@ Namespace Core.BudgetSegregation
                 Dim MaskOutput As BudgetSegregationOutputsClass.MaskOutputClass = kvp.Value
                 Dim MaskName As String = kvp.Key
                 Dim MaskCsvPath As String = MaskOutput.csvFilename
-                Dim StatsData As New ChangeDetection.StatsDataClass(MaskCsvPath)
+
+                Throw New NotImplementedException
+                Dim StatsData As ChangeDetection.ChangeStats '(ChangeDetection.StatsDataClass(MaskCsvPath)
 
                 MasksStats.TotalStats.AreaErosion_Thresholded += StatsData.AreaErosion_Thresholded
                 MasksStats.TotalStats.AreaDeposition_Thresholded += StatsData.AreaDeposition_Thresholded
