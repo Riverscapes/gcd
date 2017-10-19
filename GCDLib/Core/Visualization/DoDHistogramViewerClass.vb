@@ -7,7 +7,7 @@ Namespace Core.Visualization
         Private _ZedGraph As Charting.Chart
         'Private _ThresholdedHist As Dictionary(Of Double, Double)
         'Private _RawHist As Dictionary(Of Double, Double)
-        Private m_eUnits As naru.math.LinearUnitClass
+        Private m_eUnits As UnitsNet.Units.LengthUnit
 
         'Public Property Hist1 As Dictionary(Of Double, Double)
         '    Get
@@ -40,7 +40,7 @@ Namespace Core.Visualization
         'End Property
 
 
-        Public Sub New(ByVal Zedgraph As Charting.Chart, ByVal eUnits As naru.math.LinearUnitClass)
+        Public Sub New(ByVal Zedgraph As Charting.Chart, ByVal eUnits As UnitsNet.Units.LengthUnit)
             _ZedGraph = Zedgraph
             m_eUnits = eUnits
         End Sub
@@ -48,7 +48,7 @@ Namespace Core.Visualization
         Public Sub refresh(ByVal dRawHistogram As Dictionary(Of Double, Double),
                            ByVal dThresholdedHistogram As Dictionary(Of Double, Double),
                            ByVal bArea As Boolean,
-                           ByVal eUnits As naru.math.LinearUnitClass)
+                           ByVal eUnits As UnitsNet.Units.LengthUnit)
 
 
             'setup pane
@@ -133,7 +133,7 @@ Namespace Core.Visualization
             '_ZedGraph.Refresh()
         End Sub
 
-        Public Sub ExportCharts(ByVal changeHisto As Core.ChangeDetection.DoDResultHistograms, ByVal theUnits As naru.math.LinearUnitClass, ByVal AreaGraphPath As String, ByVal VolumeGraphPath As String, ByVal ChartWidth As Integer, ByVal ChartHeight As Integer)
+        Public Sub ExportCharts(ByVal changeHisto As Core.ChangeDetection.DoDResultHistograms, ByVal theUnits As UnitsNet.Units.LengthUnit, ByVal AreaGraphPath As String, ByVal VolumeGraphPath As String, ByVal ChartWidth As Integer, ByVal ChartHeight As Integer)
 
             If Not IO.Directory.Exists(IO.Path.GetDirectoryName(AreaGraphPath)) Then
                 Dim ex As New Exception("The output folder for the GCD area graph does not exist.")

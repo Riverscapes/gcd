@@ -4,7 +4,7 @@
 
         Private m_DoDInfo As ChangeDetection.ChangeDetectionProperties
 
-        Private m_gPolygonMask As GISDataStructures.Vector
+        Private m_gPolygonMask As RasterWranglerLib.Vector
         Private m_sMaskField As String ' This is the string field containing the BS class
         Private m_sClassField As String ' This is an integer representing the BS class
         Private m_dOutputFolder As IO.DirectoryInfo
@@ -35,7 +35,7 @@
 
         End Sub
 
-        Public Function Calculate(gInputPolygonMask As GISDataStructures.Vector, sMaskField As String, nChartWidth As Integer, nChartHeight As Integer, bDeleteIntermediateRasters As Boolean) As BudgetSegregationOutputsClass
+        Public Function Calculate(gInputPolygonMask As RasterWranglerLib.Vector, sMaskField As String, nChartWidth As Integer, nChartHeight As Integer, bDeleteIntermediateRasters As Boolean) As BudgetSegregationOutputsClass
 
             ' 1. Build Dictionary of Mask Labels
             ' 2. Loop through each mask
@@ -45,7 +45,7 @@
             ' 6. Produce graphics for the DoDs
 
 
-            Dim gDoDRaw As New GISDataStructures.Raster(DoD.RawDoD)
+            Dim gDoDRaw As New RasterWranglerLib.Raster(DoD.RawDoD)
             If gInputPolygonMask.CheckSpatialReferenceMatches(gDoDRaw.SpatialReference) Then
                 If String.IsNullOrEmpty(sMaskField) Then
                     Dim ex As New Exception("The mask field cannot be null or empty.")
@@ -75,10 +75,10 @@
             'Dim sOutputFolder As String = GCD.GCDProject.ProjectManager.OutputManager.CreateBudgetSegFolder(DoD.RawDoD, IO.Path.GetFileNameWithoutExtension(gInputPolygonMask.FullPath), sMaskField)
             Dim sOutputFolder = m_dOutputFolder.FullName
             ' Copy Polygon features to the output folder
-            'Dim sPolygonMask As String = GISDataStructures.VectorDataSource.GetNewSafeName(sOutputFolder, "Mask")
+            'Dim sPolygonMask As String = RasterWranglerLib.VectorDataSource.GetNewSafeName(sOutputFolder, "Mask")
 
             'Changed to provide a more descriptive name than mask - Hensleigh 4/24/2014
-            Dim sPolygonMask As String = GISDataStructures.Vector.GetNewSafeName(sOutputFolder, IO.Path.GetFileNameWithoutExtension(gInputPolygonMask.FullPath) & "_" & sMaskField)
+            Dim sPolygonMask As String = RasterWranglerLib.Vector.GetNewSafeName(sOutputFolder, IO.Path.GetFileNameWithoutExtension(gInputPolygonMask.FullPath) & "_" & sMaskField)
             m_gPolygonMask = gInputPolygonMask.CopyShapeFile(sPolygonMask)
 
             ' Build the dictionary of budget classes. This method also writes the 
@@ -109,11 +109,11 @@
             '  GP.DataManagement.DefineProjection(sTempMask, gDoDRaw.SpatialReference)
 
             ' Now copy to the desired location
-            Dim sMaskRaster As String = Core.GISDataStructures.Raster.GetNewSafeName(sOutputFolder, "Mask")
+            Dim sMaskRaster As String = Core.RasterWranglerLib.Raster.GetNewSafeName(sOutputFolder, "Mask")
             If Not External.RasterManager.Copy(sTempMask, sMaskRaster, gDoDRaw.CellSize, gDoDRaw.Extent.Left, gDoDRaw.Extent.Top, gDoDRaw.Rows, gDoDRaw.Columns, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString) = External.RasterManager.RasterManagerOutputCodes.PROCESS_OK Then
                 Throw New Exception(GCDProject.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
             End If
-            Dim gMaskRaster As New GISDataStructures.Raster(sMaskRaster)
+            Dim gMaskRaster As New RasterWranglerLib.Raster(sMaskRaster)
 
             Dim bsOutputs As New BudgetSegregationOutputsClass(sOutputFolder, dMaskClasses, m_gPolygonMask.FullPath)
 
@@ -207,9 +207,9 @@
                 '
                 If bDeleteIntermediateRasters Then
                     GC.Collect()
-                    GISDataStructures.Raster.DeleteRaster(sPositiveMask)
-                    GISDataStructures.Raster.DeleteRaster(sMaskRaw)
-                    GISDataStructures.Raster.DeleteRaster(sMaskThr)
+                    RasterWranglerLib.Raster.DeleteRaster(sPositiveMask)
+                    RasterWranglerLib.Raster.DeleteRaster(sMaskRaw)
+                    RasterWranglerLib.Raster.DeleteRaster(sMaskThr)
                 End If
             Next
             'maskHistograms.Dispose()

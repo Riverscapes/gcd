@@ -5,7 +5,7 @@ Namespace UI.UtilityForms
     Public Class ucRasterOutput
         Inherits ucOutputBase
 
-        Private m_eDefaultRasterType As GISDataStructures.RasterTypes
+        Private m_eDefaultRasterType As RasterWranglerLib.Raster.RasterDriver
 
         Protected Overrides Function Browse() As String
 
@@ -31,7 +31,7 @@ Namespace UI.UtilityForms
             Return sFullPath
         End Function
 
-        Public Shadows Sub Initialize(ByVal sNoun As String, ByVal sInitialDatasetName As String, ByVal eType As GISDataStructures.RasterTypes)
+        Public Shadows Sub Initialize(ByVal sNoun As String, ByVal sInitialDatasetName As String, ByVal eType As RasterWranglerLib.Raster.RasterDriver)
             MyBase.Initialize(sNoun, sInitialDatasetName)
             m_eDefaultRasterType = eType
         End Sub
@@ -44,10 +44,11 @@ Namespace UI.UtilityForms
                 Return False
             End If
 
-            If GISDataStructures.Raster.Exists(txtOutput.Text) Then
+            If RasterWranglerLib.GISDataset.GISDatasetExists(txtOutput.Text) Then
                 If MsgBox("The " & Noun & " raster already exists. Do you wish to overwrite it?", MsgBoxStyle.YesNo Or MsgBoxStyle.DefaultButton2 Or MsgBoxStyle.Question, My.Resources.ApplicationNameLong) = MsgBoxResult.Yes Then
                     Try
-                        GISDataStructures.Raster.DeleteRaster(txtOutput.Text)
+                        Dim gRaster As New RasterWranglerLib.Raster(txtOutput.Text)
+                        gRaster.Delete()
                     Catch ex As Exception
                         ExceptionHelper.HandleException(ex, "Error attempting to delete the existing raster")
                         Return False

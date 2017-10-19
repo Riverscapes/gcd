@@ -27,38 +27,38 @@ Namespace UI.ChangeDetection
 
             txtUnitsOriginal.Text = m_eOriginalUnits.GetUnitsAsString()
 
-            AddUnitsToCombo(NumberFormatting.LinearUnits.mm)
-            AddUnitsToCombo(NumberFormatting.LinearUnits.cm)
-            AddUnitsToCombo(NumberFormatting.LinearUnits.m)
-            AddUnitsToCombo(NumberFormatting.LinearUnits.km)
-            AddUnitsToCombo(NumberFormatting.LinearUnits.inch)
-            AddUnitsToCombo(NumberFormatting.LinearUnits.ft)
-            AddUnitsToCombo(NumberFormatting.LinearUnits.yard)
-            AddUnitsToCombo(NumberFormatting.LinearUnits.mile)
+            AddUnitsToCombo(UnitsNet.Units.LengthUnit.Millimeter)
+            AddUnitsToCombo(UnitsNet.Units.LengthUnit.Centimeter)
+            AddUnitsToCombo(UnitsNet.Units.LengthUnit.Meter)
+            AddUnitsToCombo(UnitsNet.Units.LengthUnit.Kilometer)
+            AddUnitsToCombo(UnitsNet.Units.LengthUnit.Inch)
+            AddUnitsToCombo(UnitsNet.Units.LengthUnit.Foot)
+            AddUnitsToCombo(UnitsNet.Units.LengthUnit.Yard)
+            AddUnitsToCombo(UnitsNet.Units.LengthUnit.Mile)
 
-            AddUnitsToCombo(NumberFormatting.AreaUnits.sqmm)
-            AddUnitsToCombo(NumberFormatting.AreaUnits.sqcm)
-            AddUnitsToCombo(NumberFormatting.AreaUnits.sqm)
-            AddUnitsToCombo(NumberFormatting.AreaUnits.sqkm)
-            AddUnitsToCombo(NumberFormatting.AreaUnits.sqin)
-            AddUnitsToCombo(NumberFormatting.AreaUnits.sqft)
-            AddUnitsToCombo(NumberFormatting.AreaUnits.sqyd)
-            AddUnitsToCombo(NumberFormatting.AreaUnits.sqmi)
-            AddUnitsToCombo(NumberFormatting.AreaUnits.hectare)
-            AddUnitsToCombo(NumberFormatting.AreaUnits.acre)
+            AddUnitsToCombo(UnitsNet.Units.AreaUnit.SquareMillimeter)
+            AddUnitsToCombo(UnitsNet.Units.AreaUnit.SquareCentimeter)
+            AddUnitsToCombo(UnitsNet.Units.AreaUnit.SquareMeter)
+            AddUnitsToCombo(UnitsNet.Units.AreaUnit.SquareKilometer)
+            AddUnitsToCombo(UnitsNet.Units.AreaUnit.SquareInch)
+            AddUnitsToCombo(UnitsNet.Units.AreaUnit.SquareFoot)
+            AddUnitsToCombo(UnitsNet.Units.AreaUnit.SquareYard)
+            AddUnitsToCombo(UnitsNet.Units.AreaUnit.SquareMile)
+            AddUnitsToCombo(UnitsNet.Units.AreaUnit.Hectare)
+            AddUnitsToCombo(UnitsNet.Units.AreaUnit.Acre)
 
-            AddUnitsToCombo(NumberFormatting.VolumeUnits.mm3)
-            AddUnitsToCombo(NumberFormatting.VolumeUnits.cm3)
-            AddUnitsToCombo(NumberFormatting.VolumeUnits.cupsUS)
-            AddUnitsToCombo(NumberFormatting.VolumeUnits.litres)
-            AddUnitsToCombo(NumberFormatting.VolumeUnits.m3)
-            AddUnitsToCombo(NumberFormatting.VolumeUnits.inch3)
-            AddUnitsToCombo(NumberFormatting.VolumeUnits.feet3)
-            AddUnitsToCombo(NumberFormatting.VolumeUnits.gallons)
-            AddUnitsToCombo(NumberFormatting.VolumeUnits.yard3)
-            AddUnitsToCombo(NumberFormatting.VolumeUnits.acrefeet)
-            AddUnitsToCombo(NumberFormatting.VolumeUnits.mi3)
-            AddUnitsToCombo(NumberFormatting.VolumeUnits.km3)
+            AddUnitsToCombo(UnitsNet.Units.VolumeUnit.CubicMillimeter)
+            AddUnitsToCombo(UnitsNet.Units.VolumeUnit.CubicCentimeter)
+            AddUnitsToCombo(UnitsNet.Units.VolumeUnit.MetricCup)
+            AddUnitsToCombo(UnitsNet.Units.VolumeUnit.Liter)
+            AddUnitsToCombo(UnitsNet.Units.VolumeUnit.CubicMeter)
+            AddUnitsToCombo(UnitsNet.Units.VolumeUnit.CubicInch)
+            AddUnitsToCombo(UnitsNet.Units.VolumeUnit.CubicFoot)
+            AddUnitsToCombo(UnitsNet.Units.VolumeUnit.UsGallon)
+            AddUnitsToCombo(UnitsNet.Units.VolumeUnit.CubicYard)
+            AddUnitsToCombo(UnitsNet.Units.VolumeUnit.acrefeet)
+            AddUnitsToCombo(UnitsNet.Units.VolumeUnit.CubicMile)
+            AddUnitsToCombo(UnitsNet.Units.VolumeUnit.CubicKilometer)
 
             NumericUpDown1.Value = m_Options.m_nPrecision
 
@@ -105,24 +105,24 @@ Namespace UI.ChangeDetection
 
         End Sub
 
-        Private Sub AddUnitsToCombo(eUnit As NumberFormatting.LinearUnits)
-            Dim i As Integer = cboLinear.Items.Add(New LinearComboItem(NumberFormatting.GetUnitsAsString(eUnit), eUnit))
+        Private Sub AddUnitsToCombo(eUnit As UnitsNet.Units.LengthUnit)
+            Dim i As Integer = cboLinear.Items.Add(New LinearComboItem(eUnit.ToString(), eUnit))
             If eUnit = m_Options.LinearUnits Then
                 cboLinear.SelectedIndex = i
             End If
         End Sub
 
-        Private Sub AddUnitsToCombo(eUnit As NumberFormatting.AreaUnits)
+        Private Sub AddUnitsToCombo(eUnit As UnitsNet.Units.AreaUnit)
 
-            Dim i As Integer = cboArea.Items.Add(New AreaComboItem(NumberFormatting.GetUnitsAsString(eUnit), eUnit))
+            Dim i As Integer = cboArea.Items.Add(New AreaComboItem(eUnit.ToString, eUnit))
             If eUnit = m_Options.AreaUnits Then
                 cboArea.SelectedIndex = i
             End If
         End Sub
 
-        Private Sub AddUnitsToCombo(eUnit As NumberFormatting.VolumeUnits)
+        Private Sub AddUnitsToCombo(eUnit As UnitsNet.Units.VolumeUnit)
 
-            Dim i As Integer = cboVolume.Items.Add(New VolumeComboItem(NumberFormatting.GetUnitsAsString(eUnit), eUnit))
+            Dim i As Integer = cboVolume.Items.Add(New VolumeComboItem(eUnit.ToString, eUnit))
             If eUnit = m_Options.VolumeUnits Then
                 cboVolume.SelectedIndex = i
             End If
@@ -151,15 +151,15 @@ Namespace UI.ChangeDetection
         Private Class LinearComboItem
             Inherits UnitComboItem
 
-            Private m_eUnit As NumberFormatting.LinearUnits
+            Private m_eUnit As UnitsNet.Units.LengthUnit
 
-            Public ReadOnly Property Units As NumberFormatting.LinearUnits
+            Public ReadOnly Property Units As UnitsNet.Units.LengthUnit
                 Get
                     Return m_eUnit
                 End Get
             End Property
 
-            Public Sub New(sName As String, eUnit As NumberFormatting.LinearUnits)
+            Public Sub New(sName As String, eUnit As UnitsNet.Units.LengthUnit)
                 MyBase.New(sName)
 
                 m_eUnit = eUnit
@@ -173,15 +173,15 @@ Namespace UI.ChangeDetection
         Private Class AreaComboItem
             Inherits UnitComboItem
 
-            Private m_eUnit As NumberFormatting.AreaUnits
+            Private m_eUnit As UnitsNet.Units.AreaUnit
 
-            Public ReadOnly Property Units As NumberFormatting.AreaUnits
+            Public ReadOnly Property Units As UnitsNet.Units.AreaUnit
                 Get
                     Return m_eUnit
                 End Get
             End Property
 
-            Public Sub New(sName As String, eUnit As NumberFormatting.AreaUnits)
+            Public Sub New(sName As String, eUnit As UnitsNet.Units.AreaUnit)
                 MyBase.New(sName)
 
                 m_eUnit = eUnit
@@ -195,15 +195,15 @@ Namespace UI.ChangeDetection
         Private Class VolumeComboItem
             Inherits UnitComboItem
 
-            Private m_eUnit As NumberFormatting.VolumeUnits
+            Private m_eUnit As UnitsNet.Units.VolumeUnit
 
-            Public ReadOnly Property Units As NumberFormatting.VolumeUnits
+            Public ReadOnly Property Units As UnitsNet.Units.VolumeUnit
                 Get
                     Return m_eUnit
                 End Get
             End Property
 
-            Public Sub New(sName As String, eUnit As NumberFormatting.VolumeUnits)
+            Public Sub New(sName As String, eUnit As UnitsNet.Units.VolumeUnit)
                 MyBase.New(sName)
 
                 m_eUnit = eUnit

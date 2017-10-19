@@ -133,7 +133,7 @@ Namespace Core.BudgetSegregation
 
             _SegregationRaster = WorkspaceManager.GetTempRaster("Seg").ToString
 
-            Dim gRaster As New GISDataStructures.Raster(_DoDSource)
+            Dim gRaster As New RasterWranglerLib.Raster(_DoDSource)
 
             Dim ExtentRectangle As String = gRaster.Extent.Rectangle
             '
@@ -143,7 +143,7 @@ Namespace Core.BudgetSegregation
             '
             ' Coonvert the polygon mask layer to raster (using the orthogonality information from the DoD)
             '
-            Dim gMask As New GISDataStructures.Vector(_MaskCopy.FullName)
+            Dim gMask As New RasterWranglerLib.Vector(_MaskCopy.FullName)
             Throw New NotImplementedException
             'GP.Conversion.PolygonToRaster_conversion(gMask, _ClassFieldName, _SegregationRaster, gRaster)
             '
@@ -205,8 +205,8 @@ Namespace Core.BudgetSegregation
             maskValues = maskValues.TrimEnd(",")
 
             'Save csvs
-            Dim gDoDSource As New GISDataStructures.Raster(_DoDSource)
-            Dim gSegregatedRaster As New GISDataStructures.Raster(_SegregationRaster)
+            Dim gDoDSource As New RasterWranglerLib.Raster(_DoDSource)
+            Dim gSegregatedRaster As New RasterWranglerLib.Raster(_SegregationRaster)
 
             If Not gDoDSource.Extent.IsConcurrent(gSegregatedRaster.Extent) Then
                 Throw New Exception("Input layers are not concurrent")
@@ -250,7 +250,7 @@ Namespace Core.BudgetSegregation
 
             'export histograms
             'For Each MaskOutput As BudgetSegregationOutputsClass.MaskOutputClass In output.MaskOutputs.Values
-            'Dim gDODSource As New GISDataStructures.Raster(_DoDSource)
+            'Dim gDODSource As New RasterWranglerLib.Raster(_DoDSource)
 
             For Each kvp As KeyValuePair(Of String, BudgetSegregationOutputsClass.MaskOutputClass) In _output.MaskOutputs
                 MaskLabel = kvp.Key
@@ -311,7 +311,7 @@ Namespace Core.BudgetSegregation
             ' Copy shapefile
             '
             _MaskCopy = New FileInfo(WorkspaceManager.GetTempShapeFile("Mask"))
-            GISDataStructures.Vector.CopyShapeFile(_Mask, _MaskCopy.FullName)
+            RasterWranglerLib.Vector.CopyShapeFile(_Mask, _MaskCopy.FullName)
             '
             ' Add class field
             '
@@ -319,7 +319,7 @@ Namespace Core.BudgetSegregation
             _ClassFieldName = "Class"
             Dim nCount As Integer = 0
 
-            Dim gMaskCopy As New GISDataStructures.Vector(_MaskCopy.FullName)
+            Dim gMaskCopy As New RasterWranglerLib.Vector(_MaskCopy.FullName)
 
             Do
                 If nCount = 0 Then

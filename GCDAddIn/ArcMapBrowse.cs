@@ -6,7 +6,7 @@ namespace GCDAddIn
 {
     public struct ArcMapBrowse
     {
-        public static GCD.GCDLib.Core.GISDataStructures.Raster BrowseOpenRaster(string sFormTitle, ref System.IO.DirectoryInfo diWorkspace, string sName = "")
+        public static RasterWranglerLib.Raster BrowseOpenRaster(string sFormTitle, ref System.IO.DirectoryInfo diWorkspace, string sName = "")
         {
             IGxDialog pGxDialog = new GxDialog();
             IGxObjectFilter pRasterFilter = new GxFilterRasterDatasets();
@@ -24,7 +24,7 @@ namespace GCDAddIn
                 pGxDialog.set_StartingLocation(diWorkspace.FullName);
             }
 
-            GCD.GCDLib.Core.GISDataStructures.Raster rResult = null;
+            RasterWranglerLib.Raster rResult = null;
             try
             {
                 if (pGxDialog.DoModalOpen(0, out pEnumGx))
@@ -34,7 +34,7 @@ namespace GCDAddIn
                     sName = pGxObject.Name;
                     diWorkspace = sFile.Directory;
 
-                    rResult = new GCD.GCDLib.Core.GISDataStructures.Raster(pGxObject.FullName);
+                    rResult = new RasterWranglerLib.Raster(pGxObject.FullName);
                 }
             }
             catch (Exception ex)

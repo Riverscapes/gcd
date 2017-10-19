@@ -22,7 +22,7 @@ Namespace Core.GCDProject
         End Property
 
         Public Sub New(ByVal sFISDatasetPath As String, ByVal sSurveyTypesDatasetPath As String,
-                     ByVal eDefaultRasterType As GISDataStructures.RasterTypes,
+                     ByVal eDefaultRasterType As RasterWranglerLib.Raster.RasterDriver,
                      ByVal sResourcesFolder As String,
                      ByVal sExcelTemplateFolder As String,
                      ByVal ColourErosion As System.Drawing.Color,
@@ -60,7 +60,7 @@ Namespace Core.GCDProject
             Dim lItemsToRemove As New List(Of ProjectDS.DEMSurveyRow)
             For Each rDEM As ProjectDS.DEMSurveyRow In rProject.GetDEMSurveyRows
                 Dim sPath As String = GetAbsolutePath(rDEM.Source)
-                If Not Core.GISDataStructures.Raster.Exists(sPath) Then
+                If Not RasterWranglerLib.GISDataset.GISDatasetExists(sPath) Then
                     lItemsToRemove.Add(rDEM)
                 End If
             Next
@@ -109,7 +109,7 @@ Namespace Core.GCDProject
                     save()
                 End If
                 Dim sPath As String = GetAbsolutePath(rAssoc.Source)
-                If Not Core.GISDataStructures.Raster.Exists(sPath) Then
+                If Not RasterWranglerLib.GISDataset.GISDatasetExists(sPath) Then
                     lItemsToRemove.Add(rAssoc)
                 End If
             Next
@@ -139,7 +139,7 @@ Namespace Core.GCDProject
                     lItemsToRemove.Add(rError)
                 Else
                     Dim sPath As String = GetAbsolutePath(rError.Source)
-                    If Not Core.GISDataStructures.Raster.Exists(sPath) Then
+                    If Not RasterWranglerLib.GISDataset.GISDatasetExists(sPath) Then
                         lItemsToRemove.Add(rError)
                     End If
                 End If
@@ -168,7 +168,7 @@ Namespace Core.GCDProject
             For Each rDoD As ProjectDS.DoDsRow In ds.DoDs.Rows
                 Dim sPathDoDRaw As String = GetAbsolutePath(rDoD.RawDoDPath)
                 Dim sPathDoDThresh As String = GetAbsolutePath(rDoD.ThreshDoDPath)
-                If Not Core.GISDataStructures.Raster.Exists(sPathDoDRaw) Or Not GISDataStructures.Raster.Exists(sPathDoDThresh) Then
+                If Not RasterWranglerLib.GISDataset.GISDatasetExists(sPathDoDRaw) Or Not RasterWranglerLib.GISDataset.GISDatasetExists(sPathDoDThresh) Then
                     lItemsToRemove.Add(rDoD)
                 End If
             Next

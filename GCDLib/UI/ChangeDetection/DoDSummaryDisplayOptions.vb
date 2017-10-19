@@ -10,9 +10,9 @@ Namespace UI.ChangeDetection
             SpecificGroups
         End Enum
 
-        Private m_eLinearUnits As LinearUnits
-        Private m_eAreaUnits As AreaUnits
-        Private m_eVolumeUnits As VolumeUnits
+        Private m_eLinearUnits As UnitsNet.Units.LengthUnit
+        Private m_eAreaUnits As UnitsNet.Units.AreaUnit
+        Private m_eVolumeUnits As UnitsNet.Units.VolumeUnit
         Public m_nPrecision As Integer
 
         Public m_eRowGroups As RowGroups
@@ -26,47 +26,37 @@ Namespace UI.ChangeDetection
         Public m_bColsPMError As Boolean
         Public m_bColsPCError As Boolean
 
-        Public Property LinearUnits As naru.math.NumberFormatting.LinearUnits
+        Public Property LinearUnits As UnitsNet.Units.LengthUnit
             Get
                 Return m_eLinearUnits
             End Get
-            Set(value As naru.math.NumberFormatting.LinearUnits)
+            Set(value As UnitsNet.Units.LengthUnit)
                 m_eLinearUnits = value
             End Set
         End Property
 
-        Public Property AreaUnits As naru.math.NumberFormatting.AreaUnits
+        Public Property AreaUnits As UnitsNet.Units.AreaUnit
             Get
-                Return naru.math.NumberFormatting.GetAreaUnitsRaw(m_eLinearUnits)
+                Throw New NotImplementedException("Waiting to hear back from UnitsNet author on how best to do this.")
+                Return UnitsNet.Units.AreaUnit.SquareMeter
             End Get
-            Set(value As naru.math.NumberFormatting.AreaUnits)
+            Set(value As UnitsNet.Units.AreaUnit)
                 m_eAreaUnits = value
             End Set
 
         End Property
 
-        Public ReadOnly Property AreaUnitsAsString As naru.math.NumberFormatting.AreaUnits
+        Public Property VolumeUnits As UnitsNet.Units.VolumeUnit
             Get
-                Return naru.math.NumberFormatting.GetUnitsAsString(AreaUnits)
+                Throw New NotImplementedException("Waiting to hear back from UnitsNet author on how best to do this.")
+                Return UnitsNet.Units.VolumeUnit.CubicMeter
             End Get
-        End Property
-
-        Public Property VolumeUnits As naru.math.NumberFormatting.VolumeUnits
-            Get
-                Return naru.math.NumberFormatting.GetVolumeUnitsRaw(m_eLinearUnits)
-            End Get
-            Set(value As naru.math.NumberFormatting.VolumeUnits)
+            Set(value As UnitsNet.Units.VolumeUnit)
                 m_eVolumeUnits = value
             End Set
         End Property
 
-        Public ReadOnly Property VolumeUnitsAsString As naru.math.NumberFormatting.AreaUnits
-            Get
-                Return naru.math.NumberFormatting.GetUnitsAsString(VolumeUnits)
-            End Get
-        End Property
-
-        Public Sub New(eOriginalUnits As LinearUnits)
+        Public Sub New(eOriginalUnits As UnitsNet.Units.LengthUnit)
 
             m_eLinearUnits = eOriginalUnits
 

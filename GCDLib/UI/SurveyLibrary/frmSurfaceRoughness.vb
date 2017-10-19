@@ -14,7 +14,7 @@ Namespace UI.SurveyLibrary
 
         End Sub
 
-        Public Function CalculateRoughness(ByVal sOutputPath As String, ByRef gDEMRaster As Core.GISDataStructures.Raster) As Boolean
+        Public Function CalculateRoughness(ByVal sOutputPath As String, ByRef gDEMRaster As Core.RasterWranglerLib.Raster) As Boolean
 
             'Create dedicated folder in temp workspace
             Dim bResult As Boolean
@@ -75,7 +75,7 @@ Namespace UI.SurveyLibrary
             '    Try
 
             '        Dim pSR As ESRI.ArcGIS.Geometry.ISpatialReference = Nothing
-            '        If TypeOf gDEMRaster Is GISDataStructures.RasterDirect Then
+            '        If TypeOf gDEMRaster Is RasterWranglerLib.RasterDirect Then
             '            pSR = gDEMRaster.SpatialReference
             '        End If
 

@@ -1,5 +1,4 @@
 ﻿using System;
-using static GCD.GCDLib.UI.UtilityForms.InputUCSelectedItemChangedEventArgs;
 
 namespace GCDAddIn.DataPreparation
 {
@@ -10,13 +9,14 @@ namespace GCDAddIn.DataPreparation
             GCD.GCDLib.UI.SurveyLibrary.frmImportRaster frm = new GCD.GCDLib.UI.SurveyLibrary.frmImportRaster();
 
             frm.ucRaster.BrowseRaster += BrowseRaster;
+            frm.ucRaster.SelectRasterFromArcMap += SelectRasterFromArcMap;
 
             try
             {
                 if (frm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
-                    GCD.GCDLib.Core.GISDataStructures.Raster gOutput = frm.ProcessRaster();
-                    if (gOutput is GCD.GCDLib.Core.GISDataStructures.Raster)
+                    GCD.GCDLib.Core.RasterWranglerLib.Raster gOutput = frm.ProcessRaster();
+                    if (gOutput is GCD.GCDLib.Core.RasterWranglerLib.Raster)
                     {
                         if (GCD.GCDLib.My.MySettings.Default.AddOutputLayersToMap)
                         {
@@ -33,14 +33,30 @@ namespace GCDAddIn.DataPreparation
             ArcMap.Application.CurrentTool = null;
         }
 
-        private void BrowseRaster(object sender, BrowseLayerEventArgs e)
+        private void BrowseRaster(object sender, naru.ui.PathEventArgs e)
         {
-            System.IO.DirectoryInfo diWorkspace = ArcMapUtilities.GetWorkspacePath(e.ExistingPath);
-            string sDataset = System.IO.Path.GetFileNameWithoutExtension(e.ExistingPath);
-            GCD.GCDLib.Core.GISDataStructures.Raster selectedRaster = ArcMapBrowse.BrowseOpenRaster(e.FormTitle, ref diWorkspace, sDataset);
+            System.IO.DirectoryInfo diWorkspace = ArcMapUtilities.GetWorkspacePath(e.Path.FullName);
+            string sDataset = System.IO.Path.GetFileNameWithoutExtension(e.Path.FullName);
+            GCD.GCDLib.Core.RasterWranglerLib.Raster selectedRaster = ArcMapBrowse.BrowseOpenRaster(e.FormTitle, ref diWorkspace, sDataset);
             if (!(selectedRaster == null))
             {
                 ((System.Windows.Forms.TextBox)sender).Text = selectedRaster.FullPath;
+            }
+        }
+
+        private void SelectRasterFromArcMap(object sender, naru.ui.PathEventArgs e)
+        {
+            try
+            {
+                frmLayerSelector frm = new frmLayerSelector(GCD.GCDLib.Core.GISDataStructures.BrowseGISTypes.Raster);
+                if (frm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    ((System.Windows.Forms.TextBox)sender).Text = frm.SelectedLayer.FullPath;
+                }
+            }
+            catch (Exception ex)
+            {
+                naru.error.ExceptionUI.HandleException(ex);
             }
         }
 

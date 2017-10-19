@@ -26,7 +26,7 @@ Namespace UI.SurveyLibrary
             None
         End Enum
 
-        Private m_gReferenceRaster As Core.GISDataStructures.Raster
+        Private m_gReferenceRaster As Core.RasterWranglerLib.Raster
         Private m_ePurpose As ImportRasterPurposes
         Private m_DEMSurveyRow As ProjectDS.DEMSurveyRow
         Private m_OriginalExtent As Core.GISDataStructures.ExtentRectangle
@@ -75,7 +75,7 @@ Namespace UI.SurveyLibrary
             End Get
         End Property
 
-        Public Sub New(gReferenceRaster As Core.GISDataStructures.Raster, demSurveyRow As ProjectDS.DEMSurveyRow, ePurpose As ImportRasterPurposes, sNoun As String)
+        Public Sub New(gReferenceRaster As Core.RasterWranglerLib.Raster, demSurveyRow As ProjectDS.DEMSurveyRow, ePurpose As ImportRasterPurposes, sNoun As String)
 
             ' This call is required by the designer.
             InitializeComponent()
@@ -84,7 +84,7 @@ Namespace UI.SurveyLibrary
             m_DEMSurveyRow = demSurveyRow
             m_RasterDirects = New Dictionary(Of String, String)
 
-            ucRaster.Initialize(sNoun)
+            'ucRaster.Initialize(sNoun)
         End Sub
 
         ''' <summary>
@@ -99,7 +99,7 @@ Namespace UI.SurveyLibrary
             m_DEMSurveyRow = Nothing
             m_RasterDirects = New Dictionary(Of String, String)
 
-            ucRaster.Initialize(String.Empty)
+            'ucRaster.Initialize(String.Empty)
         End Sub
 
 
@@ -190,7 +190,7 @@ Namespace UI.SurveyLibrary
                 cmdSave.Visible = False
 
                 If m_ePurpose = ImportRasterPurposes.DEMSurvey Then
-                    If TypeOf m_gReferenceRaster Is Core.GISDataStructures.Raster Then
+                    If TypeOf m_gReferenceRaster Is Core.RasterWranglerLib.Raster Then
                         ' there is already at least one DEM in the project. Disable cell size.
                         valCellSize.Enabled = False
                     Else
@@ -200,7 +200,7 @@ Namespace UI.SurveyLibrary
                 End If
             End If
             OriginalRasterChanged()
-            AddHandler ucRaster.SelectedItemChanged, AddressOf OnRasterChanged
+            AddHandler ucRaster.PathChanged, AddressOf OnRasterChanged
         End Sub
 
         Private Sub SetupToolTips()
@@ -214,7 +214,7 @@ Namespace UI.SurveyLibrary
                 Exit Sub
             End If
 
-            ucRaster.PreSelect(ucRaster.SelectedItem)
+            'ucRaster.PreSelect(ucRaster.SelectedItem)
 
             'Add Rasters if standalone tool
             If m_ePurpose = ImportRasterPurposes.StandaloneTool And My.Settings.AddOutputLayersToMap = True Then
@@ -233,8 +233,8 @@ Namespace UI.SurveyLibrary
                 Return False
             End If
 
-            If TypeOf ucRaster.SelectedItem Is GISDataStructures.Raster Then
-                Dim r As GISDataStructures.Raster = ucRaster.SelectedItem
+            If TypeOf ucRaster.SelectedItem Is RasterWranglerLib.Raster Then
+                Dim r As RasterWranglerLib.Raster = ucRaster.SelectedItem
                 If Not r.HasNoDataValue Then
                     MsgBox("The raster is missing a NoDataValue. You  must set the NoDataValue before you can use this raster with GCD.", MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
                     Return False
@@ -252,7 +252,7 @@ Namespace UI.SurveyLibrary
                             " Use the ArcToolbox 'Define Projection' geoprocessing tool in the 'Data Management -> Projection & Transformations' Toolbox to correct the problem with the selected raster by defining the coordinate system as:" & vbCrLf & vbCrLf & m_gReferenceRaster.SpatialReference.ToString & vbCrLf & vbCrLf & "Then try importing it into the GCD again.", MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
                     Return False
                 Else
-                    If TypeOf m_gReferenceRaster Is GISDataStructures.Raster Then
+                    If TypeOf m_gReferenceRaster Is RasterWranglerLib.Raster Then
                         If Not m_gReferenceRaster.CheckSpatialReferenceMatches(ucRaster.SelectedItem.SpatialReference) Then
                             MsgBox("The coordinate system of the selected raster:" & vbCrLf & vbCrLf & ucRaster.SelectedItem.SpatialReference.ToString & vbCrLf & vbCrLf & "does not match that of the GCD project:" & vbCrLf & vbCrLf & m_gReferenceRaster.SpatialReference.ToString & "." & vbCrLf & vbCrLf &
                                "All rasters within a GCD project must have the identical coordinate system. However, small discrepencies in coordinate system names might cause the two coordinate systems to appear different. " &
@@ -325,7 +325,7 @@ Namespace UI.SurveyLibrary
             If (m_ePurpose = ImportRasterPurposes.DEMSurvey AndAlso valPrecision.Enabled = False) Or (m_ePurpose = ImportRasterPurposes.AssociatedSurface) Or (m_ePurpose = ImportRasterPurposes.ErrorCalculation) Then
                 'If the project units have not yet been written to 
                 If Not GCDProject.ProjectManagerBase.CurrentProject.DisplayUnits Is Nothing Then
-                    If TypeOf ucRaster.SelectedItem Is GISDataStructures.Raster Then
+                    If TypeOf ucRaster.SelectedItem Is RasterWranglerLib.Raster Then
                         If Not String.Compare(ucRaster.SelectedItem.LinearUnits.GetUnitsAsString, GCDProject.ProjectManager.CurrentProject.DisplayUnits) = 0 Then
                             MsgBox(String.Format("The linear units of the selected raster {0} does not match the linear units {1} of the GCD Project." & vbCrLf & vbCrLf & "Please select a raster that has the same linear units as the GCD Project.",
                                              ucRaster.SelectedItem.LinearUnits, GCDProject.ProjectManagerBase.CurrentProject.DisplayUnits), MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
@@ -339,7 +339,7 @@ Namespace UI.SurveyLibrary
 
         End Function
 
-        Private Sub OnRasterChanged(ByVal snder As Object, ByVal e As UI.UtilityForms.InputUCSelectedItemChangedEventArgs) Handles ucRaster.SelectedItemChanged
+        Private Sub OnRasterChanged(ByVal sender As Object, ByVal e As naru.ui.PathEventArgs) Handles ucRaster.PathChanged
 
             Try
                 OriginalRasterChanged()
@@ -355,8 +355,8 @@ Namespace UI.SurveyLibrary
             ' orthogonal extent of the selected raster. Convert it to a GDAL raster first
             ' (if its not already) then "orthogonalize" it's extent.
             '
-            If TypeOf ucRaster.SelectedItem Is GISDataStructures.Raster Then
-                Dim gOriginalRaster As GISDataStructures.Raster = Nothing
+            If TypeOf ucRaster.SelectedItem Is RasterWranglerLib.Raster Then
+                Dim gOriginalRaster As RasterWranglerLib.Raster = Nothing
                 If GetSafeOriginalRaster(gOriginalRaster) Then
 
                     If valPrecision.Enabled Then
@@ -392,7 +392,7 @@ Namespace UI.SurveyLibrary
                     txtOrigCellSize.Text = gOriginalRaster.CellSize.ToString
                     UpdateOriginalRasterExtentFormatting()
 
-                    If Not (TypeOf m_gReferenceRaster Is GISDataStructures.Raster AndAlso m_ePurpose <> ImportRasterPurposes.DEMSurvey) Then
+                    If Not (TypeOf m_gReferenceRaster Is RasterWranglerLib.Raster AndAlso m_ePurpose <> ImportRasterPurposes.DEMSurvey) Then
                         valCellSize.Value = Math.Max(Math.Round(gOriginalRaster.CellSize, valCellSize.DecimalPlaces), valCellSize.Minimum)
                         If valPrecision.Value < 1 Then
                             valCellSize.Value = Math.Max(valCellSize.Value, 1)
@@ -413,7 +413,7 @@ Namespace UI.SurveyLibrary
             ' surface or error surface mode. When in DEM Survey mode, the reference raster
             ' is just for matching spatial reference.
 
-            If TypeOf m_gReferenceRaster Is GISDataStructures.Raster AndAlso (m_ePurpose <> ImportRasterPurposes.DEMSurvey OrElse m_ePurpose = ImportRasterPurposes.StandaloneTool) Then
+            If TypeOf m_gReferenceRaster Is RasterWranglerLib.Raster AndAlso (m_ePurpose <> ImportRasterPurposes.DEMSurvey OrElse m_ePurpose = ImportRasterPurposes.StandaloneTool) Then
                 Dim fCellSize As Decimal = Math.Round(m_gReferenceRaster.CellSize, valCellSize.DecimalPlaces)
                 valCellSize.Maximum = fCellSize
                 valCellSize.Value = fCellSize
@@ -440,7 +440,7 @@ Namespace UI.SurveyLibrary
                 UpdateOutputExtent()
 
                 'This case deals with when importing a raster and switching between rasters in combobox need mechanism to update to current raster
-            ElseIf TypeOf m_gReferenceRaster Is GISDataStructures.Raster AndAlso (m_ePurpose = ImportRasterPurposes.DEMSurvey OrElse m_ePurpose = ImportRasterPurposes.StandaloneTool) Then
+            ElseIf TypeOf m_gReferenceRaster Is RasterWranglerLib.Raster AndAlso (m_ePurpose = ImportRasterPurposes.DEMSurvey OrElse m_ePurpose = ImportRasterPurposes.StandaloneTool) Then
                 UpdateOutputExtent()
             Else
                 RequiresResampling()
@@ -468,15 +468,15 @@ Namespace UI.SurveyLibrary
         ''' copy. That way the user can change raster selection quickly without a lag
         ''' as rasters are copied repeatedly. It also keeps the number of temp rasters
         ''' down.</remarks>
-        Private Function GetSafeOriginalRaster(ByRef gRasterDirect As Core.GISDataStructures.Raster) As Boolean
+        Private Function GetSafeOriginalRaster(ByRef gRasterDirect As Core.RasterWranglerLib.Raster) As Boolean
 
             gRasterDirect = Nothing
-            If TypeOf ucRaster.SelectedItem Is Core.GISDataStructures.Raster Then
+            If TypeOf ucRaster.SelectedItem Is Core.RasterWranglerLib.Raster Then
                 Dim sGDALRasterPath As String = ucRaster.SelectedItem.FullPath
-                gRasterDirect = New Core.GISDataStructures.Raster(sGDALRasterPath)
+                gRasterDirect = New Core.RasterWranglerLib.Raster(sGDALRasterPath)
             End If
 
-            Return TypeOf gRasterDirect Is Core.GISDataStructures.Raster
+            Return TypeOf gRasterDirect Is Core.RasterWranglerLib.Raster
 
         End Function
 
@@ -490,7 +490,7 @@ Namespace UI.SurveyLibrary
 
                 Dim sRasterPath As String = String.Empty
                 If Not String.IsNullOrEmpty(txtName.Text) Then
-                    If TypeOf ucRaster.SelectedItem Is GISDataStructures.Raster Then
+                    If TypeOf ucRaster.SelectedItem Is RasterWranglerLib.Raster Then
                         ' Get the appropriate raster path depending on the purpose of this window (DEM, associated surface, error surface)
 
                         Select Case m_ePurpose
@@ -514,20 +514,20 @@ Namespace UI.SurveyLibrary
             End Try
         End Sub
 
-        Public Function ProcessRaster() As Core.GISDataStructures.Raster
+        Public Function ProcessRaster() As Core.RasterWranglerLib.Raster
 
             Cursor.Current = Cursors.WaitCursor
-            Dim gResult As Core.GISDataStructures.Raster = Nothing
+            Dim gResult As Core.RasterWranglerLib.Raster = Nothing
             If Not String.IsNullOrEmpty(txtRasterPath.Text) Then
-                If GISDataStructures.Raster.Exists(txtRasterPath.Text) Then
+                If RasterWranglerLib.Raster.Exists(txtRasterPath.Text) Then
                     Dim ex As New Exception("The raster path already exists.")
                     ex.Data.Add("Raster path", txtRasterPath.Text)
                     Throw ex
                 Else
-                    Dim gRaster As Core.GISDataStructures.Raster = Nothing
+                    Dim gRaster As Core.RasterWranglerLib.Raster = Nothing
                     If GetSafeOriginalRaster(gRaster) Then
 
-                        Dim sWorkspace As String = GISDataStructures.Raster.GetWorkspacePath(txtRasterPath.Text)
+                        Dim sWorkspace As String = RasterWranglerLib.Raster.GetWorkspacePath(txtRasterPath.Text)
                         Dim theDir As IO.DirectoryInfo = IO.Directory.CreateDirectory(sWorkspace)
                         If theDir.Exists Then
 
@@ -555,13 +555,13 @@ Namespace UI.SurveyLibrary
                                     ' TODO
                                     Throw New NotImplementedException()
                                     'Dim pSR As ESRI.ArcGIS.Geometry.ISpatialReference = Nothing
-                                    'If TypeOf m_gReferenceRaster Is GISDataStructures.Raster Then
+                                    'If TypeOf m_gReferenceRaster Is RasterWranglerLib.Raster Then
                                     '    pSR = m_gReferenceRaster.SpatialReference
                                     'Else
                                     '    pSR = ucRaster.SelectedItem.SpatialReference
                                     'End If
 
-                                    'gResult = New GISDataStructures.Raster(txtRasterPath.Text)
+                                    'gResult = New RasterWranglerLib.Raster(txtRasterPath.Text)
 
                                     'GP.DataManagement.DefineProjection(gResult, pSR)
 
@@ -718,8 +718,8 @@ Namespace UI.SurveyLibrary
             valLeft.ForeColor = Drawing.Color.Black
             valBottom.ForeColor = Drawing.Color.Black
             valRight.ForeColor = Drawing.Color.Black
-            If TypeOf ucRaster.SelectedItem Is GISDataStructures.Raster Then
-                Dim gRaster As GISDataStructures.Raster = Nothing
+            If TypeOf ucRaster.SelectedItem Is RasterWranglerLib.Raster Then
+                Dim gRaster As RasterWranglerLib.Raster = Nothing
                 If GetSafeOriginalRaster(gRaster) Then
 
                     If valTop.Value = MakeDivisible(gRaster.Extent.Top, valCellSize.Value, CInt(valPrecision.Value), RoundingDirection.Up) Then valTop.ForeColor = Drawing.Color.DarkGreen
@@ -788,7 +788,7 @@ Namespace UI.SurveyLibrary
 
             Dim bResult As Boolean = True
             Dim fOldCellSize As Double
-            Dim gOriginalRaster As Core.GISDataStructures.Raster = Nothing
+            Dim gOriginalRaster As Core.RasterWranglerLib.Raster = Nothing
             If GetSafeOriginalRaster(gOriginalRaster) Then
                 fOldCellSize = Math.Round(gOriginalRaster.CellSize, 5)
                 Dim fNewCellSize As Double = Math.Round(valCellSize.Value, CInt(valPrecision.Value))

@@ -250,15 +250,15 @@ Namespace Core
 #Region "Raster Paths"
 
         Public Function DEMSurveyRasterPath(ByVal sSurveyName As String) As String
-            Return GISDataStructures.Raster.BuildRasterPath(DEMSurveyFolder(sSurveyName), sSurveyName).FullName
+            Return RasterWranglerLib.Raster.BuildRasterPath(DEMSurveyFolder(sSurveyName), sSurveyName).FullName
         End Function
 
         Public Function DEMSurveyHillShadeRasterPath(ByVal sSurveyName As String) As String
-            Return GISDataStructures.Raster.BuildRasterPath(DEMSurveyFolder(sSurveyName), sSurveyName & m_sDEMSurveyHillshadeSuffix).FullName
+            Return RasterWranglerLib.Raster.BuildRasterPath(DEMSurveyFolder(sSurveyName), sSurveyName & m_sDEMSurveyHillshadeSuffix).FullName
         End Function
 
         Public Function AssociatedSurfaceRasterPath(ByVal sSurveyName As String, ByVal sAssociatedSurface As String) As String
-            Return GISDataStructures.Raster.BuildRasterPath(AssociatedSurfaceFolder(sSurveyName, sAssociatedSurface), sAssociatedSurface).FullName
+            Return RasterWranglerLib.Raster.BuildRasterPath(AssociatedSurfaceFolder(sSurveyName, sAssociatedSurface), sAssociatedSurface).FullName
         End Function
 
         Public Function ErrorSurfaceRasterPath(ByVal sSurveyName As String, ByVal sErrorSurfaceName As String, Optional ByVal bCreateWorkspace As Boolean = True) As String
@@ -268,13 +268,13 @@ Namespace Core
             Dim sRasterPath As String
 
             If IO.Directory.Exists(sWorkspace) Then
-                sRasterPath = GISDataStructures.Raster.GetNewSafeName(sWorkspace, sSafeName)
+                sRasterPath = RasterWranglerLib.Raster.GetNewSafeName(sWorkspace, sSafeName)
             Else
                 If bCreateWorkspace Then
                     IO.Directory.CreateDirectory(sWorkspace)
-                    sRasterPath = GISDataStructures.Raster.GetNewSafeName(sWorkspace, sSafeName)
+                    sRasterPath = RasterWranglerLib.Raster.GetNewSafeName(sWorkspace, sSafeName)
                 Else
-                    sRasterPath = GISDataStructures.Raster.BuildRasterPath(sWorkspace, sSafeName).FullName
+                    sRasterPath = RasterWranglerLib.Raster.BuildRasterPath(sWorkspace, sSafeName).FullName
                 End If
             End If
 
@@ -288,7 +288,7 @@ Namespace Core
             Dim sFeatureClassName As String = naru.os.File.RemoveDangerousCharacters(sSurveyName) & m_sErrorSurfaceMethodMask
 
             If IO.Directory.Exists(sMaskPath) Then
-                sMaskPath = GISDataStructures.Vector.GetNewSafeName(sMaskPath, sFeatureClassName)
+                sMaskPath = RasterWranglerLib.Vector.GetNewSafeName(sMaskPath, sFeatureClassName)
             Else
                 sMaskPath = IO.Path.Combine(sMaskPath, sFeatureClassName)
             End If
@@ -341,7 +341,7 @@ Namespace Core
         '    ' PGB 14 Sep 2011 - trying to avoid these characters now and use io.path.combine instread
         '    'errorCalcDirectoryPath &= IO.Path.DirectorySeparatorChar
         '    'generate error name
-        '    Dim errorCalcPath As String = GISCode.GISDataStructures.Raster.GetNewSafeName(ErrorNameDirectoryPath, RasterType, sErrorName, 12)
+        '    Dim errorCalcPath As String = GISCode.RasterWranglerLib.Raster.GetNewSafeName(ErrorNameDirectoryPath, RasterType, sErrorName, 12)
         '    Return errorCalcPath
         'End Function
 
@@ -384,7 +384,7 @@ Namespace Core
         '    ' PGB 14 Sep 2011 - trying to avoid these characters now and use io.path.combine instread
         '    'errorCalcDirectoryPath &= IO.Path.DirectorySeparatorChar
         '    'generate error name
-        '    Dim sMethodErrorSurfacePath As String = GISDataStructures.Raster.GetNewSafeName(sMethodNameDirectory, RasterType, sMethod, 12)
+        '    Dim sMethodErrorSurfacePath As String = RasterWranglerLib.Raster.GetNewSafeName(sMethodNameDirectory, RasterType, sMethod, 12)
         '    Return sMethodErrorSurfacePath
         'End Function
 
@@ -393,7 +393,7 @@ Namespace Core
         '    'get DoD output path
         '    Dim dodDirectoryPath As String = GetDoDOutputPath(sFolder, sDoDName)
         '    'generate error name
-        '    Dim dodThresholdPath As String = GISDataStructures.Raster.GetNewSafeName(dodDirectoryPath, RasterType, safeDoDName, 12)
+        '    Dim dodThresholdPath As String = RasterWranglerLib.Raster.GetNewSafeName(dodDirectoryPath, RasterType, safeDoDName, 12)
         '    Return dodThresholdPath
         'End Function
 
@@ -411,7 +411,7 @@ Namespace Core
         '    'get DoD output path
         '    Dim dodDirectoryPath As String = GetDoDOutputPath(sFolder, sDoDName)
         '    'generate error name
-        '    Dim dodThresholdPath As String = GISDataStructures.Raster.GetNewSafeName(dodDirectoryPath, RasterType, safeDoDName, 12)
+        '    Dim dodThresholdPath As String = RasterWranglerLib.Raster.GetNewSafeName(dodDirectoryPath, RasterType, safeDoDName, 12)
         '    Return dodThresholdPath
         'End Function
 
@@ -429,7 +429,7 @@ Namespace Core
         '    'get DoD output path
         '    Dim dodDirectoryPath As String = GetDoDOutputPath(sFolder, sDoDName)
         '    'generate error name
-        '    Dim csvThresholdPath As String = GISDataStructures.Raster.GetNewSafeName(dodDirectoryPath, RasterType, "dod", 12)
+        '    Dim csvThresholdPath As String = RasterWranglerLib.Raster.GetNewSafeName(dodDirectoryPath, RasterType, "dod", 12)
         '    Return csvThresholdPath
         'End Function
 
@@ -616,13 +616,13 @@ Namespace Core
 
             Dim sFullPath As String
             If IO.Directory.Exists(sWorkspace) Then
-                sFullPath = GISDataStructures.Raster.GetNewSafeName(sWorkspace, sMethod.Replace(" ", ""))
+                sFullPath = RasterWranglerLib.Raster.GetNewSafeName(sWorkspace, sMethod.Replace(" ", ""))
             Else
                 If bCreateWorkspace Then
                     IO.Directory.CreateDirectory(sWorkspace)
-                    sFullPath = GISDataStructures.Raster.GetNewSafeName(sWorkspace, sMethod.Replace(" ", ""))
+                    sFullPath = RasterWranglerLib.Raster.GetNewSafeName(sWorkspace, sMethod.Replace(" ", ""))
                 Else
-                    sFullPath = GISDataStructures.Raster.BuildRasterPath(sWorkspace, sMethod).FullName
+                    sFullPath = RasterWranglerLib.Raster.BuildRasterPath(sWorkspace, sMethod).FullName
                 End If
             End If
 
@@ -643,13 +643,13 @@ Namespace Core
             Dim sWorkspace As String = ErrorSurfaceMethodFolder(sSurveyName, sErrorName, sMethod)
             Dim sFullPath As String
             If IO.Directory.Exists(sWorkspace) Then
-                sFullPath = GISDataStructures.Raster.GetNewSafeName(sWorkspace, sMethod.Replace(" ", "") & m_sErrorSurfaceMethodMask)
+                sFullPath = RasterWranglerLib.Raster.GetNewSafeName(sWorkspace, sMethod.Replace(" ", "") & m_sErrorSurfaceMethodMask)
             Else
                 If bCreateWorkspace Then
                     IO.Directory.CreateDirectory(sWorkspace)
-                    sFullPath = GISDataStructures.Raster.GetNewSafeName(sWorkspace, sMethod.Replace(" ", "") & m_sErrorSurfaceMethodMask)
+                    sFullPath = RasterWranglerLib.Raster.GetNewSafeName(sWorkspace, sMethod.Replace(" ", "") & m_sErrorSurfaceMethodMask)
                 Else
-                    sFullPath = GISDataStructures.Raster.BuildRasterPath(sWorkspace, sMethod).FullName
+                    sFullPath = RasterWranglerLib.Raster.BuildRasterPath(sWorkspace, sMethod).FullName
                 End If
             End If
 
@@ -765,7 +765,7 @@ Namespace Core
                 dodDirectoryPath = sFolder
             End If
 
-            Dim dodThresholdPath As String = GISDataStructures.Raster.BuildRasterPath(dodDirectoryPath, "dodThresh").FullName
+            Dim dodThresholdPath As String = RasterWranglerLib.Raster.BuildRasterPath(dodDirectoryPath, "dodThresh").FullName
 
             Return dodThresholdPath
         End Function
@@ -790,7 +790,7 @@ Namespace Core
             Else
                 dodDirectoryPath = sFolder
             End If
-            Dim sPropErrRaster As String = GISDataStructures.Raster.BuildRasterPath(dodDirectoryPath, "PropErr").FullName
+            Dim sPropErrRaster As String = RasterWranglerLib.Raster.BuildRasterPath(dodDirectoryPath, "PropErr").FullName
             Return sPropErrRaster
         End Function
 
@@ -835,7 +835,7 @@ Namespace Core
             sDoDRawPath = IO.Path.ChangeExtension(sDoDRawPath, "tif")
             If IO.Directory.Exists(dodDirectoryPath) Then
                 If IO.File.Exists(sDoDRawPath) Then
-                    sDoDRawPath = GISDataStructures.Raster.GetNewSafeName(dodDirectoryPath, IO.Path.GetFileNameWithoutExtension(sDoDRawPath))
+                    sDoDRawPath = RasterWranglerLib.Raster.GetNewSafeName(dodDirectoryPath, IO.Path.GetFileNameWithoutExtension(sDoDRawPath))
                 End If
             End If
             Return sDoDRawPath
@@ -943,7 +943,7 @@ Namespace Core
         '    ' PGB 14 Sep 2011 - trying to avoid these characters now and use io.path.combine instread
         '    'errorCalcDirectoryPath &= IO.Path.DirectorySeparatorChar
         '    'generate error name
-        '    Dim errorCalcPath As String = GetNewSafeNameRaster(ErrorNameDirectoryPath, GISCode.GISDataStructures.Raster.GetDefaultRasterType(), sErrorName, 12)
+        '    Dim errorCalcPath As String = GetNewSafeNameRaster(ErrorNameDirectoryPath, GISCode.RasterWranglerLib.Raster.GetDefaultRasterType(), sErrorName, 12)
         '    Return errorCalcPath
         'End Function
 
@@ -1014,7 +1014,7 @@ Namespace Core
             ' PGB 14 Sep 2011 - trying to avoid these characters now and use io.path.combine instread
             'errorCalcDirectoryPath &= IO.Path.DirectorySeparatorChar
             'generate error name
-            Dim errorCalcPath As String = GISDataStructures.Raster.BuildRasterPath(ErrorNameDirectoryPath, sErrorName).FullName
+            Dim errorCalcPath As String = RasterWranglerLib.Raster.BuildRasterPath(ErrorNameDirectoryPath, sErrorName).FullName
             Return errorCalcPath
         End Function
 
@@ -1071,8 +1071,8 @@ Namespace Core
             End If
 
             'Dim sExtension As String = GISCode.Raster.GetRasterType(My.Settings.DefaultRasterFormat)
-            'Dim eType As GISDataStructures.Raster.RasterTypes = Me.GetDefaultRasterTyp
-            Dim sRasterPath As String = GISDataStructures.Raster.BuildRasterPath(sSurfacesDirectoryPath, sWaterSurfaceName).FullName
+            'Dim eType As RasterWranglerLib.Raster.RasterTypes = Me.GetDefaultRasterTyp
+            Dim sRasterPath As String = RasterWranglerLib.Raster.BuildRasterPath(sSurfacesDirectoryPath, sWaterSurfaceName).FullName
             'sRasterPath = IO.Path.Combine(sSurfacesDirectoryPath, sRasterPath)
             'sRasterPath = IO.Path.ChangeExtension(sRasterPath, GISCode.Raster.GetRasterExtension(sExtension))
 

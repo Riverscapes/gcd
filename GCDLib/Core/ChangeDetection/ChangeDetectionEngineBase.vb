@@ -13,14 +13,14 @@
 
         ' These are the original survey DEMs. May be non-concurrent and 
         ' not masked to the AOI
-        Private m_gOriginalNewDEM As GISDataStructures.Raster
-        Private m_gOriginalOldDEM As GISDataStructures.Raster
+        Private m_gOriginalNewDEM As RasterWranglerLib.Raster
+        Private m_gOriginalOldDEM As RasterWranglerLib.Raster
 
         ' These are concurrent and masked to the AOI
-        Private m_gAnalysisNewDEM As GISDataStructures.Raster
-        Private m_gAnalysisOldDEM As GISDataStructures.Raster
+        Private m_gAnalysisNewDEM As RasterWranglerLib.Raster
+        Private m_gAnalysisOldDEM As RasterWranglerLib.Raster
 
-        Private m_gAOI As GISDataStructures.Vector
+        Private m_gAOI As RasterWranglerLib.Vector
 
         ' This is a polymorphic class. Call calculate and it will calculate
         ' the statistics different ways depending on the type instantiated.
@@ -48,31 +48,31 @@
             End Get
         End Property
 
-        Public ReadOnly Property OriginalNewDEM As GISDataStructures.Raster
+        Public ReadOnly Property OriginalNewDEM As RasterWranglerLib.Raster
             Get
                 Return m_gOriginalNewDEM
             End Get
         End Property
 
-        Public ReadOnly Property OriginalOldDEM As GISDataStructures.Raster
+        Public ReadOnly Property OriginalOldDEM As RasterWranglerLib.Raster
             Get
                 Return m_gOriginalOldDEM
             End Get
         End Property
 
-        Public ReadOnly Property AOI As GISDataStructures.Vector
+        Public ReadOnly Property AOI As RasterWranglerLib.Vector
             Get
                 Return m_gAOI
             End Get
         End Property
 
-        Public ReadOnly Property AnalysisNewDEM As GISDataStructures.Raster
+        Public ReadOnly Property AnalysisNewDEM As RasterWranglerLib.Raster
             Get
                 Return m_gAnalysisNewDEM
             End Get
         End Property
 
-        Public ReadOnly Property AnalysisOldDEM As GISDataStructures.Raster
+        Public ReadOnly Property AnalysisOldDEM As RasterWranglerLib.Raster
             Get
                 Return m_gAnalysisOldDEM
             End Get
@@ -92,8 +92,8 @@
 
 #End Region
 
-        Public Sub New(ByVal sName As String, ByVal sFolder As String, ByVal gNewDEM As GISDataStructures.Raster, ByVal gOldDEM As GISDataStructures.Raster,
-                       ByVal gAOI As GISDataStructures.Vector, ByVal fChartHeight As Integer, ByVal fChartWidth As Integer)
+        Public Sub New(ByVal sName As String, ByVal sFolder As String, ByVal gNewDEM As RasterWranglerLib.Raster, ByVal gOldDEM As RasterWranglerLib.Raster,
+                       ByVal gAOI As RasterWranglerLib.Vector, ByVal fChartHeight As Integer, ByVal fChartWidth As Integer)
 
             If String.IsNullOrEmpty(sName) Then
                 Throw New ArgumentNullException("sName", "The change detection analysis name cannot be empty.")
@@ -114,10 +114,10 @@
 
             If Not gNewDEM.Extent.HasOverlap(gOldDEM.Extent) Then
                 Dim ex As New Exception("The two rasters do not overlap.")
-                ex.Data("New DEM Path") = gNewDEM.FullPath
-                ex.Data("New DEM Extent") = gNewDEM.Extent.Rectangle
-                ex.Data("Old DEM Path") = gOldDEM.FullPath
-                ex.Data("Old DEM Extent") = gOldDEM.Extent
+                ex.Data("New DEM Path") = gNewDEM.filepath
+                ex.Data("New DEM Extent") = gNewDEM.Extent.ToString()
+                ex.Data("Old DEM Path") = gOldDEM.filepath
+                ex.Data("Old DEM Extent") = gOldDEM.Extent.ToString()
             End If
 
             m_gOriginalNewDEM = gNewDEM
@@ -137,14 +137,15 @@
         ''' </summary>
         ''' <remarks>Should be overridden for Propagated and Probalistic so that the error
         ''' rasters can also be made concurrent with the DEMs.</remarks>
-        Protected Function GenerateAnalysisRasters() As GISDataStructures.ExtentRectangle
+        Protected Function GenerateAnalysisRasters() As RasterWranglerLib.ExtentRectangle
 
             Debug.Print("Generating analysis DEM rasters")
 
-            Dim sNewDEM As String = WorkspaceManager.GetTempRaster("NewDEM")
-            Dim sOldDEM As String = WorkspaceManager.GetTempRaster("OldDEM")
 
-            If TypeOf m_gAOI Is GISDataStructures.Vector Then
+            m_gAnalysisNewDEM = Nothing
+            m_gAnalysisOldDEM = Nothing
+
+            If TypeOf m_gAOI Is RasterWranglerLib.Vector Then
 
                 ' Mask the rasters using the specified AOI
                 Dim sAOIRaster As String = WorkspaceManager.GetTempRaster("AOI")
@@ -157,62 +158,42 @@
                 Throw New NotImplementedException
                 '  GP.SpatialAnalyst.SetNull(sAOIRaster, m_gOriginalOldDEM.FullPath, sOldDEM, """VALUE"" IS NULL")
             Else
+
                 If m_gOriginalNewDEM.Extent.IsConcurrent(m_gOriginalOldDEM.Extent) Then
                     ' Rasters already concurrent. Simply use in situ
-                    sNewDEM = m_gOriginalNewDEM.FullPath
-                    sOldDEM = m_gOriginalOldDEM.FullPath
+                    m_gAnalysisNewDEM = New RasterWranglerLib.Raster(m_gOriginalNewDEM.filepath)
+                    m_gAnalysisOldDEM = New RasterWranglerLib.Raster(m_gOriginalOldDEM.filepath)
                 Else
-                    ' Make original rasters concurrent
-                    Dim theUnionExtent As GISDataStructures.ExtentRectangle = m_gOriginalNewDEM.Extent
-                    theUnionExtent.Union(m_gOriginalOldDEM.Extent)
+                    Dim sNewDEM As String = WorkspaceManager.GetTempRaster("NewDEM")
+                    Dim sOldDEM As String = WorkspaceManager.GetTempRaster("OldDEM")
 
-                    Dim nP As Integer = GCDProject.ProjectManagerBase.CurrentProject.Precision
-                    Dim nCols As Integer = (theUnionExtent.Right - theUnionExtent.Left) / m_gOriginalNewDEM.CellSize
-                    Dim nRows As Integer = (theUnionExtent.Top - theUnionExtent.Bottom) / m_gOriginalNewDEM.CellSize
+                    ' Make copies of the original rasters that are concurrent
+                    Dim theUnionExtent As RasterWranglerLib.ExtentRectangle = m_gOriginalNewDEM.Extent.Union(m_gOriginalOldDEM.Extent)
 
-                    Dim fCellSize As Double = Math.Round(m_gOriginalNewDEM.CellSize, nP)
-                    'Adding Chr(34) which is double quotes to make Python syntax correct for raster calculator
-                    'GP.SpatialAnalyst.Raster_Calculator(Chr(34) & m_gOriginalNewDEM.FullPath & Chr(34), sNewDEM, theUnionExtent.Rectangle, m_gOriginalNewDEM.CellSize)
-                    'GP.SpatialAnalyst.Raster_Calculator(Chr(34) & m_gOriginalOldDEM.FullPath & Chr(34), sOldDEM, theUnionExtent.Rectangle, m_gOriginalOldDEM.CellSize)
-
-                    If Not External.Copy(m_gOriginalNewDEM.FullPath, sNewDEM, fCellSize, Math.Round(theUnionExtent.Left, nP), Math.Round(theUnionExtent.Top, nP),
-                                              nRows, nCols, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString) = External.RasterManagerOutputCodes.PROCESS_OK Then
-                        Throw New Exception(GCDProject.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
-                    End If
-                    If Not External.Copy(m_gOriginalOldDEM.FullPath, sOldDEM, fCellSize, Math.Round(theUnionExtent.Left, nP), Math.Round(theUnionExtent.Top, nP),
-                                              nRows, nCols, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString) = External.RasterManagerOutputCodes.PROCESS_OK Then
-                        Throw New Exception(GCDProject.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
-                    End If
+                    m_gAnalysisNewDEM = RasterWranglerLib.RasterOperators.RasterCopy.ExtendedCopy(m_gOriginalNewDEM, sNewDEM, theUnionExtent)
+                    m_gAnalysisOldDEM = RasterWranglerLib.RasterOperators.RasterCopy.ExtendedCopy(m_gOriginalOldDEM, sOldDEM, theUnionExtent)
                 End If
             End If
 
-            Dim gTempNew As New GISDataStructures.Raster(sNewDEM)
-            Dim gTempOld As New GISDataStructures.Raster(sOldDEM)
+            Debug.Print("Analysis New DEM produced at: " & m_gAnalysisNewDEM.filepath)
+            Debug.Print("Analysis Old DEM produced at: " & m_gAnalysisOldDEM.filepath)
+            Debug.Print("Analysis extent: " & m_gAnalysisNewDEM.Extent.ToString)
 
             ' Final check
-            If Not gTempNew.Extent.IsConcurrent(gTempOld.Extent) Then
+            If Not m_gAnalysisNewDEM.Extent.IsConcurrent(m_gAnalysisOldDEM.Extent) Then
                 Dim ex As New Exception("Failed to make analysis rasters concurrent.")
-                ex.Data("Original New DEM Path") = m_gOriginalNewDEM.FullPath
-                ex.Data("Original New DEM Extent") = m_gOriginalNewDEM.Extent.Rectangle
-                ex.Data("Original Old DEM Path") = m_gOriginalOldDEM.FullPath
-                ex.Data("Original Old DEM Extent") = m_gOriginalOldDEM.Extent.Rectangle
-                ex.Data("Analysis New DEM Path") = m_gAnalysisNewDEM.FullPath
-                ex.Data("AnalysisNew DEM Extent") = m_gAnalysisNewDEM.Extent.Rectangle
-                ex.Data("AnalysisOld DEM Path") = m_gAnalysisOldDEM.FullPath
-                ex.Data("AnalysisOld DEM Extent") = m_gAnalysisOldDEM.Extent.Rectangle
+                ex.Data("Original New DEM Path") = m_gOriginalNewDEM.filepath
+                ex.Data("Original New DEM Extent") = m_gOriginalNewDEM.Extent.ToString
+                ex.Data("Original Old DEM Path") = m_gOriginalOldDEM.filepath
+                ex.Data("Original Old DEM Extent") = m_gOriginalOldDEM.Extent.ToString
+                ex.Data("Analysis New DEM Path") = m_gAnalysisNewDEM.filepath
+                ex.Data("AnalysisNew DEM Extent") = m_gAnalysisNewDEM.Extent.ToString
+                ex.Data("AnalysisOld DEM Path") = m_gAnalysisOldDEM.filepath
+                ex.Data("AnalysisOld DEM Extent") = m_gAnalysisOldDEM.Extent.ToString
                 Throw ex
             End If
 
-            m_gAnalysisNewDEM = New GISDataStructures.Raster(sNewDEM)
-            Debug.Print("Analysis New DEM produced at: " & m_gAnalysisNewDEM.FullPath)
-
-            m_gAnalysisOldDEM = New GISDataStructures.Raster(sOldDEM)
-            Debug.Print("Analysis Old DEM produced at: " & m_gAnalysisOldDEM.FullPath)
-
-            Dim gAnalysisExtent As GISDataStructures.ExtentRectangle = m_gAnalysisNewDEM.Extent
-            Debug.Print("Analysis extent: " & gAnalysisExtent.Rectangle)
-
-            Return gAnalysisExtent
+            Return m_gAnalysisNewDEM.Extent
 
         End Function
 
@@ -221,7 +202,7 @@
             Try
                 sRawDoDPath = Core.GCDProject.ProjectManager.OutputManager.GetDoDRawPath(Name, m_dAnalysisFolder.FullName)
 
-                Dim eResult As External.GCDCoreOutputCodes = External.DoDRaw(AnalysisNewDEM.FullPath, AnalysisOldDEM.FullPath, sRawDoDPath,
+                Dim eResult As External.GCDCoreOutputCodes = External.DoDRaw(AnalysisNewDEM.filepath, AnalysisOldDEM.filepath, sRawDoDPath,
                                                            GCDProject.ProjectManagerBase.OutputManager.OutputDriver, GCDProject.ProjectManagerBase.OutputManager.NoData,
                                                           GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
 
@@ -237,11 +218,11 @@
                     Throw New Exception("The raw DoD raster file does noth exist.")
                 End If
 
-                'Checks to make sure the histogram is not zeros which causes a non-descript "writing to corrupt memory" exception
-                Dim rawDoDRaster As New GISDataStructures.Raster(sRawDoDPath)
-                If rawDoDRaster.Minimum = rawDoDRaster.Maximum Then
-                    Throw New Exception("There was an error calculating the raw DoD. All values are zero in raw DoD.")
-                End If
+                ''Checks to make sure the histogram is not zeros which causes a non-descript "writing to corrupt memory" exception
+                'Dim rawDoDRaster As New RasterWranglerLib.Raster(sRawDoDPath)
+                'If rawDoDRaster.Minimum = rawDoDRaster.Maximum Then
+                '    Throw New Exception("There was an error calculating the raw DoD. All values are zero in raw DoD.")
+                'End If
 
                 sRawHistogram = GCDProject.ProjectManagerBase.OutputManager.GetCsvRawPath(IO.Path.GetDirectoryName(sRawDoDPath), Name)
                 eResult = External.CalculateAndWriteDoDHistogramWithBins(sRawDoDPath, sRawHistogram, m_nNumBins, m_nMinimumBin, m_fBinSize, m_fBinIncrement, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
@@ -263,12 +244,12 @@
         Protected Function GenerateSummaryXML(theChangeStats As ChangeDetection.ChangeStatsCalculator) As String
 
             Dim sSummaryXMLPath As String = GCDProject.ProjectManagerBase.OutputManager.GetGCDSummaryXMLPath(Name, m_dAnalysisFolder.FullName)
-            theChangeStats.ExportSummary(GCDProject.ProjectManagerBase.ExcelTemplatesFolder.FullName, AnalysisNewDEM.LinearUnits, sSummaryXMLPath)
+            theChangeStats.ExportSummary(GCDProject.ProjectManagerBase.ExcelTemplatesFolder.FullName, AnalysisNewDEM.VerticalUnits, sSummaryXMLPath)
             Return sSummaryXMLPath
 
         End Function
 
-        Protected Sub GenerateHistogramGraphicFiles(histStats As DoDResultHistograms, ByVal eLinearUnit As naru.math.LinearUnitClass)
+        Protected Sub GenerateHistogramGraphicFiles(histStats As DoDResultHistograms, ByVal eLinearUnit As UnitsNet.Units.LengthUnit)
 
             'Save Histograms & Create Figs subfolder - Hensleigh 4/24/2014
             Dim sFiguresFolder As String = GCDProject.ProjectManagerBase.OutputManager.GetChangeDetectionFiguresFolder(m_dAnalysisFolder.FullName, True)

@@ -11,8 +11,8 @@
             End Get
         End Property
 
-        Public Sub New(ByVal sName As String, ByVal sFolder As String, ByVal gNewDEM As GISDataStructures.Raster, ByVal gOldDEM As GISDataStructures.Raster,
-                       ByVal gAOI As GISDataStructures.Vector, ByVal fThreshold As Double, ByVal fChartWidth As Integer, ByVal fChartHeight As Integer)
+        Public Sub New(ByVal sName As String, ByVal sFolder As String, ByVal gNewDEM As RasterWranglerLib.Raster, ByVal gOldDEM As RasterWranglerLib.Raster,
+                       ByVal gAOI As RasterWranglerLib.Vector, ByVal fThreshold As Double, ByVal fChartWidth As Integer, ByVal fChartHeight As Integer)
             MyBase.New(sName, sFolder, gNewDEM, gOldDEM, gAOI, fChartHeight, fChartWidth)
 
             m_fThreshold = fThreshold
@@ -46,7 +46,7 @@
                 Throw New Exception("Error calculating and writing the raw DEM histogram.", ex)
             End If
 
-            Dim gRawDoD As New GISDataStructures.Raster(sRawDoDPath)
+            Dim gRawDoD As New RasterWranglerLib.Raster(sRawDoDPath)
             Dim dodProps As New ChangeDetectionPropertiesMinLoD(sRawDoDPath, sThreshDodPath, Threshold, gRawDoD.CellSize, gRawDoD.LinearUnits)
             Dim theChangeStats As New ChangeStatsCalculator(dodProps)
             sSummaryXMLPath = GenerateSummaryXML(theChangeStats)

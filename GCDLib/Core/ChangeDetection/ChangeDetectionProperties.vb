@@ -11,7 +11,7 @@ Namespace Core.ChangeDetection
 
         Private m_sRawDoD As String
         Private m_sThresholdedDoD As String
-        Private m_eLinearUnits As naru.math.LinearUnitClass
+        Private m_eLinearUnits As UnitsNet.Units.LengthUnit
         Private m_fCellSize As Double
 
 #Region "Properties"
@@ -34,7 +34,7 @@ Namespace Core.ChangeDetection
             End Get
         End Property
 
-        Public ReadOnly Property Units As naru.math.LinearUnitClass
+        Public ReadOnly Property Units As UnitsNet.Units.LengthUnit
             Get
                 Return m_eLinearUnits
             End Get
@@ -59,7 +59,7 @@ Namespace Core.ChangeDetection
         ''' Unfortunately this trickles back up to inherited classes, but at least those classes can obtain the
         ''' cell size and linear units from the original raw DoD which is never deleted during a budget set loop.
         ''' </remarks>
-        Public Sub New(sRawDoD As String, sThresholdedDoD As String, fCellSize As Double, eLinearUnits As naru.math.LinearUnitClass)
+        Public Sub New(sRawDoD As String, sThresholdedDoD As String, fCellSize As Double, eLinearUnits As UnitsNet.Units.LengthUnit)
 
             m_sRawDoD = sRawDoD
             m_sThresholdedDoD = sThresholdedDoD
@@ -80,7 +80,7 @@ Namespace Core.ChangeDetection
 
             Dim sRawDoDPath As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rDoD.RawDoDPath)
             Dim sThrDoDPath As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rDoD.ThreshDoDPath)
-            Dim gRawDoDPath As New GISDataStructures.Raster(sRawDoDPath)
+            Dim gRawDoDPath As New RasterWranglerLib.Raster(sRawDoDPath)
 
             Dim dodProps As ChangeDetectionProperties = Nothing
             If rDoD.TypeMinLOD Then
@@ -149,7 +149,7 @@ Namespace Core.ChangeDetection
             End Get
         End Property
 
-        Public Sub New(sRawDoD As String, sThresholdedDoD As String, fThreshold As Double, fCellSize As Double, eLinearUnits As naru.math.LinearUnitClass)
+        Public Sub New(sRawDoD As String, sThresholdedDoD As String, fThreshold As Double, fCellSize As Double, eLinearUnits As UnitsNet.Units.LengthUnit)
             MyBase.New(sRawDoD, sThresholdedDoD, fCellSize, eLinearUnits)
 
             m_fThreshold = fThreshold
@@ -168,7 +168,7 @@ Namespace Core.ChangeDetection
             End Get
         End Property
 
-        Public Sub New(sRawDoD As String, sThresholdedDoD As String, sPropagatedErrorRaster As String, fCellSize As Double, eLinearUnits As naru.math.LinearUnitClass)
+        Public Sub New(sRawDoD As String, sThresholdedDoD As String, sPropagatedErrorRaster As String, fCellSize As Double, eLinearUnits As UnitsNet.Units.LengthUnit)
             MyBase.New(sRawDoD, sThresholdedDoD, fCellSize, eLinearUnits)
 
             m_sPropagatedErrorRaster = sPropagatedErrorRaster
@@ -246,7 +246,7 @@ Namespace Core.ChangeDetection
 
 
         Public Sub New(sRawDoD As String, sThresholdedDod As String, sPropagatedErrorRaster As String, sProbabilityRaster As String, sSpatialCoErosionRaster As String, sSpatialCoDepositionRaster As String, sConditionalProbabilityRaster As String, sPosteriorRaster As String, fConfidenceLevel As Double, nFilter As Integer, bBayesianUpdating As Boolean,
-                       fCellSize As Double, eLinearUnits As naru.math.LinearUnitClass)
+                       fCellSize As Double, eLinearUnits As UnitsNet.Units.LengthUnit)
             MyBase.New(sRawDoD, sThresholdedDod, sPropagatedErrorRaster, fCellSize, eLinearUnits)
 
             m_fConfidenceLevel = fConfidenceLevel

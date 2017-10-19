@@ -3,9 +3,9 @@ Namespace UI.SurveyLibrary
 
     Public Class frmPointDensity
 
-        Private m_eLinearUnits As naru.math.LinearUnitClass
+        Private m_eLinearUnits As UnitsNet.Units.LengthUnit
 
-        Public Sub New(eLinearUnits As naru.math.LinearUnitClass)
+        Public Sub New(eLinearUnits As UnitsNet.Units.LengthUnit)
 
             InitializeComponent()
 

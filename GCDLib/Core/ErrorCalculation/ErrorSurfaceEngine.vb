@@ -15,9 +15,9 @@ Namespace Core.ErrorCalculation
         Public Const MultipleErrorType As String = "Multiple"
         Public Const AssociatedsurfaceErrorType As String = "Associated Surface"
 
-        Private ReadOnly Property DEMRaster As GISDataStructures.Raster
+        Private ReadOnly Property DEMRaster As RasterWranglerLib.Raster
             Get
-                Dim gDEMRaster As New GISDataStructures.Raster(GCDProject.ProjectManagerBase.GetAbsolutePath(m_ErrorSurfaceRow.DEMSurveyRow.Source))
+                Dim gDEMRaster As New RasterWranglerLib.Raster(GCDProject.ProjectManagerBase.GetAbsolutePath(m_ErrorSurfaceRow.DEMSurveyRow.Source))
                 Return gDEMRaster
             End Get
         End Property
@@ -26,11 +26,11 @@ Namespace Core.ErrorCalculation
             m_ErrorSurfaceRow = errorSurfaceRow
         End Sub
 
-        Public Function CreateErrorSurfaceRaster() As GISDataStructures.Raster
+        Public Function CreateErrorSurfaceRaster() As RasterWranglerLib.Raster
 
             ' Create the name for the final error surface raster
             Dim sErrorSurfaceRasterPath As String = GCDProject.ProjectManagerBase.OutputManager.ErrorSurfaceRasterPath(m_ErrorSurfaceRow.DEMSurveyRow.Name, m_ErrorSurfaceRow.Name, True)
-            Dim gErrorSurface As GISDataStructures.Raster = Nothing
+            Dim gErrorSurface As RasterWranglerLib.Raster = Nothing
 
             Select Case m_ErrorSurfaceRow.Type
                 Case UniformErrorString
@@ -58,7 +58,7 @@ Namespace Core.ErrorCalculation
                     Throw ex
             End Select
 
-            gErrorSurface = New GISDataStructures.Raster(sErrorSurfaceRasterPath)
+            gErrorSurface = New RasterWranglerLib.Raster(sErrorSurfaceRasterPath)
             m_ErrorSurfaceRow.Source = GCDProject.ProjectManagerBase.GetRelativePath(sErrorSurfaceRasterPath)
             GCDProject.ProjectManagerBase.save()
 
@@ -80,7 +80,7 @@ Namespace Core.ErrorCalculation
                 Dim sMethodRaster As String = GCDProject.ProjectManagerBase.OutputManager.ErrorSurfarceMethodRasterPath(m_ErrorSurfaceRow.DEMSurveyRow.Name, m_ErrorSurfaceRow.Name, aMethod.Method, True)
 
                 Dim sMethodMask As String = GCDProject.ProjectManagerBase.OutputManager.ErrorSurfarceMethodRasterMaskPath(m_ErrorSurfaceRow.DEMSurveyRow.Name, m_ErrorSurfaceRow.Name, aMethod.Method, True)
-                Dim gMaskRaster As GISDataStructures.Raster = CreateRasterMask(aMethod.Method, sMethodMask)
+                Dim gMaskRaster As RasterWranglerLib.Raster = CreateRasterMask(aMethod.Method, sMethodMask)
 
                 Select Case aMethod.ErrorType
 
@@ -107,7 +107,7 @@ Namespace Core.ErrorCalculation
             Next
 
             If Not String.IsNullOrEmpty(sAllMethodRasters) Then
-                Dim gDEM As New GISDataStructures.Raster(GCDProject.ProjectManagerBase.GetAbsolutePath(m_ErrorSurfaceRow.DEMSurveyRow.Source))
+                Dim gDEM As New RasterWranglerLib.Raster(GCDProject.ProjectManagerBase.GetAbsolutePath(m_ErrorSurfaceRow.DEMSurveyRow.Source))
 
                 Dim sMosaicWithoutMask As String = WorkspaceManager.GetTempRaster("Mosaic")
                 ' Call the Raster Manager mosaic function to blend the rasters together.
@@ -142,9 +142,9 @@ Namespace Core.ErrorCalculation
 
         End Sub
 
-        Private Function CreateUniformErrorSurface(fErrorValue As Double, gRasterMask As GISDataStructures.Raster, sOutputRasterPath As String) As GISDataStructures.Raster
+        Private Function CreateUniformErrorSurface(fErrorValue As Double, gRasterMask As RasterWranglerLib.Raster, sOutputRasterPath As String) As RasterWranglerLib.Raster
 
-            Dim gErrorSurface As GISDataStructures.Raster = Nothing
+            Dim gErrorSurface As RasterWranglerLib.Raster = Nothing
 
             Try
                 ' Do the conditional geoprocessing.
@@ -156,7 +156,7 @@ Namespace Core.ErrorCalculation
                     Throw ex
                 End If
 
-                gErrorSurface = New GISDataStructures.Raster(sOutputRasterPath)
+                gErrorSurface = New RasterWranglerLib.Raster(sOutputRasterPath)
 
             Catch ex As Exception
                 Dim ex2 As New Exception("Error producing the error surface raster.", ex)
@@ -181,9 +181,9 @@ Namespace Core.ErrorCalculation
         ''' <remarks>Simply copy the associated surface to the desired output location for the error surface.
         ''' Note that the associated surface should already be concurrent with the DEM
         '''</remarks>
-        Private Function CreateAssociatedErrorSurface(sAssociatedSurfacePath As String, gRasterMask As GISDataStructures.Raster, sOutputRasterPath As String) As GISDataStructures.Raster
+        Private Function CreateAssociatedErrorSurface(sAssociatedSurfacePath As String, gRasterMask As RasterWranglerLib.Raster, sOutputRasterPath As String) As RasterWranglerLib.Raster
 
-            Dim gErrorSurface As GISDataStructures.Raster = Nothing
+            Dim gErrorSurface As RasterWranglerLib.Raster = Nothing
 
             Try
                 Dim eResult As External.RasterManagerOutputCodes = External.Mask(sAssociatedSurfacePath, gRasterMask.FullPath, sOutputRasterPath, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
@@ -193,7 +193,7 @@ Namespace Core.ErrorCalculation
                     Throw ex
                 End If
 
-                gErrorSurface = New GISDataStructures.Raster(sOutputRasterPath)
+                gErrorSurface = New RasterWranglerLib.Raster(sOutputRasterPath)
 
             Catch ex As Exception
                 Dim ex2 As New Exception("Error producing the error surface raster.", ex)
@@ -208,7 +208,7 @@ Namespace Core.ErrorCalculation
 
         End Function
 
-        Private Sub CreateFISErrorSurface(sFISRuleDefinitionFileName As String, gReferenceRaster As GISDataStructures.Raster, sOutputRasterPath As String, bClipToMask As Boolean)
+        Private Sub CreateFISErrorSurface(sFISRuleDefinitionFileName As String, gReferenceRaster As RasterWranglerLib.Raster, sOutputRasterPath As String, bClipToMask As Boolean)
 
             ' Find the local path of the FIS rule file based on the library on this machine. Note
             ' could be imported project from another machine.
@@ -296,15 +296,15 @@ Namespace Core.ErrorCalculation
         ''' So you need to project the output raster using the spatial reference from the DEM.
         ''' Also, later in this process this mask will be multiplied by the FIS raster to mask
         ''' it. So the value of the mask needs to be 1, not zero.</remarks>
-        Private Function CreateRasterMask(ByVal sMethodName As String, ByVal sOutputRasterMaskPath As String) As GISDataStructures.Raster
+        Private Function CreateRasterMask(ByVal sMethodName As String, ByVal sOutputRasterMaskPath As String) As RasterWranglerLib.Raster
 
             ' Copy features for just this method name (e.g. "total station")
             Dim OutShapefile As String = WorkspaceManager.GetTempShapeFile("Mask")
             Dim WhereClause As String = """" & m_ErrorSurfaceRow.DEMSurveyRow.MethodMaskField & """ = '" & sMethodName & "'"
-            Dim gMaskFeatures As GISDataStructures.Vector = CopyFeatures(GCDProject.ProjectManagerBase.GetAbsolutePath(m_ErrorSurfaceRow.DEMSurveyRow.MethodMask), OutShapefile, WhereClause)
+            Dim gMaskFeatures As RasterWranglerLib.Vector = CopyFeatures(GCDProject.ProjectManagerBase.GetAbsolutePath(m_ErrorSurfaceRow.DEMSurveyRow.MethodMask), OutShapefile, WhereClause)
 
-            Dim gDEM As New GISDataStructures.Raster(GCDProject.ProjectManagerBase.GetAbsolutePath(m_ErrorSurfaceRow.DEMSurveyRow.Source))
-            Dim gResult As GISDataStructures.Raster = Nothing
+            Dim gDEM As New RasterWranglerLib.Raster(GCDProject.ProjectManagerBase.GetAbsolutePath(m_ErrorSurfaceRow.DEMSurveyRow.Source))
+            Dim gResult As RasterWranglerLib.Raster = Nothing
             Try
                 Dim sTempRaster As String = WorkspaceManager.GetTempRaster("Mask")
                 Throw New NotImplementedException
@@ -318,7 +318,7 @@ Namespace Core.ErrorCalculation
                 ' a value of zero. We need a value of 1.
                 Throw New NotImplementedException
                 'GP.SpatialAnalyst.Raster_Calculator("""" & sTempRaster & """ >= 0", sOutputRasterMaskPath, gDEM)
-                gResult = New GISDataStructures.Raster(sOutputRasterMaskPath)
+                gResult = New RasterWranglerLib.Raster(sOutputRasterMaskPath)
             Catch ex As Exception
                 Dim ex2 As New Exception("Error creating raster mask for survey method", ex)
                 ex2.Data.Add("Survey Method", sMethodName)
@@ -336,13 +336,13 @@ Namespace Core.ErrorCalculation
         ''' <param name="sOutputFeatureClass">Output polygon feature class</param>
         ''' <param name="sWhereClause">SQL Where clause to select just the feautres needed</param>
         ''' <remarks></remarks>
-        Private Function CopyFeatures(sMaskFeatureClass As String, sOutputFeatureClass As String, Optional sWhereClause As String = "") As GISDataStructures.Vector
+        Private Function CopyFeatures(sMaskFeatureClass As String, sOutputFeatureClass As String, Optional sWhereClause As String = "") As RasterWranglerLib.Vector
 
             ' TODO implement
             Throw New Exception("Not implemented")
 
-            'Dim gPolygonMask As New GISDataStructures.Vector(sMaskFeatureClass)
-            'Dim gOutput As GISDataStructures.Vector = GISDataStructures.Vector.CreateFeatureClass(sOutputFeatureClass, GISDataStructures.BasicGISTypes.Polygon, False, gPolygonMask.SpatialReference)
+            'Dim gPolygonMask As New RasterWranglerLib.Vector(sMaskFeatureClass)
+            'Dim gOutput As RasterWranglerLib.Vector = RasterWranglerLib.Vector.CreateFeatureClass(sOutputFeatureClass, GISDataStructures.BasicGISTypes.Polygon, False, gPolygonMask.SpatialReference)
 
             'Dim pFBuffer As ESRI.ArcGIS.Geodatabase.IFeatureBuffer = gOutput.FeatureClass.CreateFeatureBuffer
             'Dim pFOutputCursor As IFeatureCursor = gOutput.FeatureClass.Insert(True)
@@ -381,7 +381,7 @@ Namespace Core.ErrorCalculation
             'System.Runtime.InteropServices.Marshal.ReleaseComObject(pFBuffer)
             'System.Runtime.InteropServices.Marshal.ReleaseComObject(pFOutputCursor)
 
-            'Dim gResult As New GISDataStructures.Vector(sOutputFeatureClass)
+            'Dim gResult As New RasterWranglerLib.Vector(sOutputFeatureClass)
             'Return gResult
 
         End Function

@@ -149,7 +149,7 @@ Namespace UI.SurveyLibrary
                     'Dim eType As ArcMap.RasterLayerTypes = GISCode.GCD.GCDArcMapManager.GetAssociatedSurfaceType(assocRow)
                     'Dim symbologyFile As String = GISCode.GCD.GCDArcMapManager.GetSymbologyLayerFile(eType)
                     'Dim sSource As String = dr.Item("Source")
-                    'Dim gRaster As New GISDataStructures.Raster(sSource)
+                    'Dim gRaster As New RasterWranglerLib.Raster(sSource)
                     'If String.Compare(assocRow.Type, cboType.Text, False) = 0 Then
                     '    gRaster.ApplySymbology(symbologyFile)
                     '    Dim pMXDoc As ESRI.ArcGIS.ArcMapUI.IMxDocument = m_pArcMap.Document
@@ -201,7 +201,7 @@ Namespace UI.SurveyLibrary
                     AssociatedSurfaceMethods.PointDensity,
                     AssociatedSurfaceMethods.Roughness
 
-                        Dim gDEMRaster As Core.GISDataStructures.Raster = GetDEMSurveyRaster()
+                        Dim gDEMRaster As Core.RasterWranglerLib.Raster = GetDEMSurveyRaster()
 
                         Select Case m_eMethod
                             Case AssociatedSurfaceMethods.SlopeDegree
@@ -238,7 +238,7 @@ Namespace UI.SurveyLibrary
             Catch ex As Exception
 
                 ' Something went wrong. Check if the raster exists and safely attempt to clean it up if it does.
-                If GISDataStructures.Raster.Exists(txtProjectRaster.Text) Then
+                If RasterWranglerLib.Raster.Exists(txtProjectRaster.Text) Then
                     Try
                         External.Delete(txtProjectRaster.Text, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
                     Catch ex2 As Exception
@@ -279,7 +279,7 @@ Namespace UI.SurveyLibrary
             Else
                 Dim dr As DataRowView '= AssociatedSurfaceBindingSource.Current
                 If dr.IsNew Then
-                    If GISDataStructures.Raster.Exists(txtProjectRaster.Text) Then
+                    If RasterWranglerLib.Raster.Exists(txtProjectRaster.Text) Then
                         MsgBox("The associated surface project raster path already exists. Changing the name of the associated surface will change the raster path.", MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
                         Return False
                     End If
@@ -319,7 +319,7 @@ Namespace UI.SurveyLibrary
 
             If Not TypeOf m_ImportForm Is frmImportRaster Then
                 Dim gAssocRow As ProjectDS.AssociatedSurfaceRow '= DirectCast(AssociatedSurfaceBindingSource.Current, DataRowView).Row
-                Dim gDEMSurveyRaster As New Core.GISDataStructures.Raster(GCDProject.ProjectManagerBase.GetAbsolutePath(gAssocRow.DEMSurveyRow.Source))
+                Dim gDEMSurveyRaster As New Core.RasterWranglerLib.Raster(GCDProject.ProjectManagerBase.GetAbsolutePath(gAssocRow.DEMSurveyRow.Source))
                 m_ImportForm = New frmImportRaster(gDEMSurveyRaster, gAssocRow.DEMSurveyRow, frmImportRaster.ImportRasterPurposes.AssociatedSurface, "Associated Surface")
             End If
 
@@ -383,14 +383,14 @@ Namespace UI.SurveyLibrary
 
         End Sub
 
-        Private Function GetDEMSurveyRaster() As Core.GISDataStructures.Raster
+        Private Function GetDEMSurveyRaster() As Core.RasterWranglerLib.Raster
 
-            Dim gResult As Core.GISDataStructures.Raster = Nothing
+            Dim gResult As Core.RasterWranglerLib.Raster = Nothing
             Dim dr As DataRowView ' = AssociatedSurfaceBindingSource.Current
             Dim assocRow As ProjectDS.AssociatedSurfaceRow = dr.Row
             Dim demRow As ProjectDS.DEMSurveyRow = assocRow.DEMSurveyRow
             If GISDataStructures.GISDataSource.Exists(GCDProject.ProjectManagerBase.GetAbsolutePath(demRow.Source)) Then
-                gResult = New Core.GISDataStructures.Raster(GCDProject.ProjectManagerBase.GetAbsolutePath(demRow.Source))
+                gResult = New Core.RasterWranglerLib.Raster(GCDProject.ProjectManagerBase.GetAbsolutePath(demRow.Source))
             Else
                 Dim ex As New Exception("The DEM Survey raster does not exist.")
                 ex.Data.Add("DEM Survey Raster Path", demRow.Source)
@@ -403,7 +403,7 @@ Namespace UI.SurveyLibrary
         Private Sub btnDensity_Click(sender As System.Object, e As System.EventArgs) Handles btnDensity.Click
 
             If m_frmPointDensity Is Nothing Then
-                Dim gDEMSurveyRaster As GISDataStructures.Raster = GetDEMSurveyRaster()
+                Dim gDEMSurveyRaster As RasterWranglerLib.Raster = GetDEMSurveyRaster()
                 m_frmPointDensity = New frmPointDensity(gDEMSurveyRaster.LinearUnits)
             End If
 
@@ -430,9 +430,9 @@ Namespace UI.SurveyLibrary
             End If
         End Sub
 
-        Private Function CalculatePointDensity(sDEM As String, sPointCloud As String, fSampleDistance As Double, sOutputRaster As String, gReferenceRaster As GISDataStructures.Raster) As GISDataStructures.Raster
+        Private Function CalculatePointDensity(sDEM As String, sPointCloud As String, fSampleDistance As Double, sOutputRaster As String, gReferenceRaster As RasterWranglerLib.Raster) As RasterWranglerLib.Raster
 
-            Dim gResult As Core.GISDataStructures.Raster = Nothing
+            Dim gResult As Core.RasterWranglerLib.Raster = Nothing
             Try
 
             Catch ex As Exception
@@ -441,7 +441,7 @@ Namespace UI.SurveyLibrary
                 ex2.Data.Add("Point Cloud", sPointCloud)
                 ex2.Data.Add("Sample Distance", fSampleDistance)
                 ex2.Data.Add("Output raster", sOutputRaster)
-                If TypeOf gReferenceRaster Is Core.GISDataStructures.Raster Then
+                If TypeOf gReferenceRaster Is Core.RasterWranglerLib.Raster Then
                     ex2.Data.Add("Reference raster", gReferenceRaster.FullPath)
                 End If
                 Throw ex2
@@ -463,7 +463,7 @@ Namespace UI.SurveyLibrary
         Private Sub btnRoughness_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnRoughness.Click
 
             If m_SurfaceRoughnessForm Is Nothing Then
-                Dim gDEMSurveyRaster As Core.GISDataStructures.Raster = GetDEMSurveyRaster()
+                Dim gDEMSurveyRaster As Core.RasterWranglerLib.Raster = GetDEMSurveyRaster()
                 Dim dReferenceResolution As Double = Math.Abs(gDEMSurveyRaster.CellWidth)
                 m_SurfaceRoughnessForm = New frmSurfaceRoughness(dReferenceResolution)
             End If

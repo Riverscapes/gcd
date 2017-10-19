@@ -8,10 +8,10 @@ using ESRI.ArcGIS.ADF.CATIDs;
 
 namespace GCDAddIn
 {
-    [Guid("9d0ca38b-bffd-4a79-8c76-4fa079138c5b")]
+    [Guid("9e24eb35-d4c0-4aaf-80a3-455553156c27")]
     [ClassInterface(ClassInterfaceType.None)]
-    [ProgId("GCDAddIn.GCDExtension")]
-    public class GCDExtension : IExtension
+    [ProgId("GCDAddIn.ApplicationExtension1")]
+    public class ApplicationExtension1 : IExtension
     {
         #region COM Registration Function(s)
         [ComRegisterFunction()]
@@ -74,24 +74,15 @@ namespace GCDAddIn
             get
             {
                 //TODO: Modify string to uniquely identify extension
-                return "GCDExtension";
+                return "ApplicationExtension1";
             }
         }
 
         public void Shutdown()
         {
-            m_application = null;
+            //TODO: Clean up resources
 
-            // Destroy  GDAL. This is now done once at the close of the extension.
-            try
-            {
-                GCD.GCDLib.Core.External.RasterManager.DestroyGDAL();
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine("WARNING: Failed to destroy GDAL.");
-                System.Diagnostics.Debug.WriteLine(ex.Message);
-            }
+            m_application = null;
         }
 
         public void Startup(ref object initializationData)
@@ -100,14 +91,7 @@ namespace GCDAddIn
             if (m_application == null)
                 return;
 
-            try
-            {
-                GCD.GCDLib.Core.External.RasterManager.RegisterGDAL();
-            }
-            catch (Exception ex)
-            {
-                naru.error.ExceptionUI.HandleException(ex);
-            }
+            System.Windows.Forms.MessageBox.Show("hi");
         }
 
         #endregion

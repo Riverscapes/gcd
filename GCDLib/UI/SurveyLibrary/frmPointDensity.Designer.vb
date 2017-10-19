@@ -135,7 +135,6 @@
             Me.ucPointCloud.BrowseType = Core.GISDataStructures.BrowseVectorTypes.Point
             Me.ucPointCloud.Location = New System.Drawing.Point(110, 11)
             Me.ucPointCloud.Name = "ucPointCloud"
-            Me.ucPointCloud.Noun = ""
             Me.ucPointCloud.Size = New System.Drawing.Size(360, 25)
             Me.ucPointCloud.TabIndex = 1
             '

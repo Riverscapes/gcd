@@ -6,13 +6,13 @@ Namespace UI.ChangeDetection
 
         Private m_chngStats As ChangeStats
         Private m_Viewer As ElevationChangeBarViewer
-        Private m_eUnits As naru.math.LinearUnitClass
+        Private m_eUnits As UnitsNet.Units.LengthUnit
 
         Public Sub New()
 
             ' This call is required by the designer.
             InitializeComponent()
-            m_eUnits = New naru.math.LinearUnitClass(naru.math.NumberFormatting.LinearUnits.m)
+            m_eUnits = New UnitsNet.Units.LengthUnit(UnitsNet.Units.LengthUnit.m)
 
             ' Add any initialization after the InitializeComponent() call.
 
@@ -29,7 +29,7 @@ Namespace UI.ChangeDetection
 
         End Sub
 
-        Public Sub Initialize(chngStats As ChangeStats, eUnits As naru.math.LinearUnitClass)
+        Public Sub Initialize(chngStats As ChangeStats, eUnits As UnitsNet.Units.LengthUnit)
             m_chngStats = chngStats
             m_eUnits = eUnits
 

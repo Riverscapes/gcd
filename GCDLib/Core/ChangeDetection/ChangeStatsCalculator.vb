@@ -129,7 +129,7 @@ Namespace Core.ChangeDetection
         '    ' Test that the thresholded DoD and the propagated Error have real values.
         '    ' Note that these rasters might be masked for BS and so there might not be coincident
         '    ' areas within the mask and the thresholded DoD.
-        '    Dim gThreshDoD As New GISDataStructures.Raster(dodProps.ThresholdedDoD)
+        '    Dim gThreshDoD As New RasterWranglerLib.Raster(dodProps.ThresholdedDoD)
         '    If Math.Abs(gThreshDoD.Maximum) = Double.MaxValue Then
         '        m_fVolumeErosion_Error = 0
         '        m_fVolumeDeposition_Error = 0
@@ -324,7 +324,7 @@ Namespace Core.ChangeDetection
         ''' <param name="eUnits">Units of measurement for the statistics. e.g. "ft"</param>
         ''' <param name="sOutputPath">Full path to the output XML path where the GCD Summary stats XML file should be generated</param>
         ''' <remarks></remarks>
-        Public Sub ExportSummary(sExcelTemplateFolder As String, eUnits As naru.math.LinearUnitClass, ByVal sOutputPath As String)
+        Public Sub ExportSummary(sExcelTemplateFolder As String, eUnits As UnitsNet.Units.LengthUnit, ByVal sOutputPath As String)
 
             Dim TemplateFile As String = IO.Path.Combine(sExcelTemplateFolder, "GCDSummary.xml")
             If Not IO.File.Exists(TemplateFile) Then
@@ -371,7 +371,7 @@ Namespace Core.ChangeDetection
 
         End Sub
 
-        Public Sub GenerateChangeBarGraphicFiles(ByVal sFiguresFolder As String, ByVal eLinearUnit As naru.math.LinearUnitClass, ByVal fChartWidth As Double, ByVal fChartHeight As Double, Optional ByVal sFilePrefix As String = "")
+        Public Sub GenerateChangeBarGraphicFiles(ByVal sFiguresFolder As String, ByVal eLinearUnit As UnitsNet.Units.LengthUnit, ByVal fChartWidth As Double, ByVal fChartHeight As Double, Optional ByVal sFilePrefix As String = "")
 
             Dim nDPI As Integer = 300
             Dim chtControl As New System.Windows.Forms.DataVisualization.Charting.Chart

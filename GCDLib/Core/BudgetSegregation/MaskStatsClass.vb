@@ -18,7 +18,7 @@ Namespace Core.BudgetSegregation
             End Get
         End Property
 
-        Public Sub ExportSummaries(sExcelTemplatefolder As String, ByVal MaskOutputs As Dictionary(Of String, BudgetSegregationOutputsClass.MaskOutputClass), eUnits As naru.math.LinearUnitClass)
+        Public Sub ExportSummaries(sExcelTemplatefolder As String, ByVal MaskOutputs As Dictionary(Of String, BudgetSegregationOutputsClass.MaskOutputClass), eUnits As UnitsNet.Units.LengthUnit)
 
             For Each kvp As KeyValuePair(Of String, BudgetSegregationOutputsClass.MaskOutputClass) In MaskOutputs
                 Dim MaskName As String = kvp.Key
@@ -42,7 +42,7 @@ Namespace Core.BudgetSegregation
         ''' then inserted the same way as the budget summary except that just the value is inserted into
         ''' just the first occurance of each tag (because the copying the repeat tags means there are
         ''' multiple copies of each tag.)</remarks>
-        Public Sub ExportClassSummary(sTemplateFolder As String, sClassSummaryPath As String, ByVal MaskOutputs As Dictionary(Of String, BudgetSegregationOutputsClass.MaskOutputClass), eDisplayUnits As naru.math.LinearUnitClass)
+        Public Sub ExportClassSummary(sTemplateFolder As String, sClassSummaryPath As String, ByVal MaskOutputs As Dictionary(Of String, BudgetSegregationOutputsClass.MaskOutputClass), eDisplayUnits As UnitsNet.Units.LengthUnit)
 
             If Not IO.Directory.Exists(sTemplateFolder) Then
                 Dim ex As New Exception("The template folder does not exist")
@@ -73,7 +73,7 @@ Namespace Core.BudgetSegregation
             Dim TemplateText As String = objReader.ReadToEnd()
             objReader.Close()
             Dim OutputText As StringBuilder = New StringBuilder(TemplateText)
-            OutputText.Replace("[LinearUnits]", eDisplayUnits.GetUnitsAsString)
+            OutputText.Replace("[LinearUnits]", UnitsNet.Length.GetAbbreviation(eDisplayUnits))
             '
             ' Duplicate the repeat statements
             '
@@ -173,7 +173,7 @@ Namespace Core.BudgetSegregation
             Return sText
         End Function
 
-        Private Sub ExportMaskStat(sExcelTemplateFolder As String, ByVal StatsData As ChangeDetection.ChangeStats, ByVal SummaryPath As String, eUnits As naru.math.LinearUnitClass)
+        Private Sub ExportMaskStat(sExcelTemplateFolder As String, ByVal StatsData As ChangeDetection.ChangeStats, ByVal SummaryPath As String, eUnits As UnitsNet.Units.LengthUnit)
 
             ' PGB 15 Jan 2014. Each class now gets its own copy of the new GCD SummaryXML file.
             Throw New NotImplementedException

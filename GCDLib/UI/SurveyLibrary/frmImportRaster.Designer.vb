@@ -311,7 +311,6 @@
             '
             Me.ucRaster.Location = New System.Drawing.Point(101, 19)
             Me.ucRaster.Name = "ucRaster"
-            Me.ucRaster.Noun = ""
             Me.ucRaster.Size = New System.Drawing.Size(491, 25)
             Me.ucRaster.TabIndex = 1
             '

@@ -30,7 +30,7 @@ Namespace Core.GCDProject
 
         Protected Shared m_GCDNARCError As External.NARCError
 
-        Protected Shared m_eDefaultRasterType As GISDataStructures.RasterTypes
+        Protected Shared m_eDefaultRasterType As RasterWranglerLib.Raster.RasterDriver
 
         Public Shared ReadOnly Property GCDNARCError As External.NARCError
             Get
@@ -137,7 +137,7 @@ Namespace Core.GCDProject
             End Get
         End Property
 
-        Public Shared ReadOnly Property DefaultRasterType As GISDataStructures.RasterTypes
+        Public Shared ReadOnly Property DefaultRasterType As RasterWranglerLib.Raster.RasterDriver
             Get
                 Return m_eDefaultRasterType
             End Get
@@ -154,16 +154,16 @@ Namespace Core.GCDProject
             End Get
         End Property
 
-        Public Shared ReadOnly Property DisplayUnits As naru.math.NumberFormatting.LinearUnits
+        Public Shared ReadOnly Property DisplayUnits As UnitsNet.Units.LengthUnit
             Get
                 If Not IsDBNull(GCDProject.ProjectManager.CurrentProject.DisplayUnits) Then
-                    Return naru.math.NumberFormatting.GetLinearUnitsFromString(GCDProject.ProjectManager.CurrentProject.DisplayUnits)
+                    Return DirectCast([Enum].Parse(GetType(UnitsNet.Units.LengthUnit), "Male"), UnitsNet.Units.LengthUnit)
                 End If
                 Return Nothing
             End Get
         End Property
 
-        Public Sub New(ByVal eDefaultRasterType As GISDataStructures.RasterTypes,
+        Public Sub New(ByVal eDefaultRasterType As RasterWranglerLib.Raster.RasterDriver,
                 ByVal sResourcesFolder As String,
                 ByVal sExcelTempateFolder As String,
                 ByVal ColourErosion As System.Drawing.Color,

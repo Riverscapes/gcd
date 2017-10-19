@@ -27,7 +27,7 @@
             Me.cmdBrowse = New System.Windows.Forms.Button()
             Me.tTip = New System.Windows.Forms.ToolTip(Me.components)
             Me.txtPath = New System.Windows.Forms.TextBox()
-            Me.cmdGISBrowse = New System.Windows.Forms.Button()
+            Me.cmdSelectLayerFromArcMap = New System.Windows.Forms.Button()
             Me.SuspendLayout()
             '
             'cmdBrowse
@@ -52,19 +52,19 @@
             '
             'cmdGISBrowse
             '
-            Me.cmdGISBrowse.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-            Me.cmdGISBrowse.Image = Global.GCD.GCDLib.My.Resources.Resources.AddToMap
-            Me.cmdGISBrowse.Location = New System.Drawing.Point(297, 0)
-            Me.cmdGISBrowse.Name = "cmdGISBrowse"
-            Me.cmdGISBrowse.Size = New System.Drawing.Size(23, 23)
-            Me.cmdGISBrowse.TabIndex = 3
-            Me.cmdGISBrowse.UseVisualStyleBackColor = True
+            Me.cmdSelectLayerFromArcMap.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Me.cmdSelectLayerFromArcMap.Image = Global.GCD.GCDLib.My.Resources.Resources.AddToMap
+            Me.cmdSelectLayerFromArcMap.Location = New System.Drawing.Point(297, 0)
+            Me.cmdSelectLayerFromArcMap.Name = "cmdGISBrowse"
+            Me.cmdSelectLayerFromArcMap.Size = New System.Drawing.Size(23, 23)
+            Me.cmdSelectLayerFromArcMap.TabIndex = 3
+            Me.cmdSelectLayerFromArcMap.UseVisualStyleBackColor = True
             '
             'ucInputBase
             '
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-            Me.Controls.Add(Me.cmdGISBrowse)
+            Me.Controls.Add(Me.cmdSelectLayerFromArcMap)
             Me.Controls.Add(Me.txtPath)
             Me.Controls.Add(Me.cmdBrowse)
             Me.Name = "ucInputBase"
@@ -75,8 +75,8 @@
         End Sub
         Friend WithEvents cmdBrowse As System.Windows.Forms.Button
         Friend WithEvents tTip As System.Windows.Forms.ToolTip
-        Friend WithEvents cmdGISBrowse As System.Windows.Forms.Button
         Protected WithEvents txtPath As System.Windows.Forms.TextBox
+        Public WithEvents cmdSelectLayerFromArcMap As System.Windows.Forms.Button
     End Class
 
 End Namespace

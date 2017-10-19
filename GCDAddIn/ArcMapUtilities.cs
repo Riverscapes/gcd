@@ -106,7 +106,7 @@ namespace GCDAddIn
         {
             if (!fiFullPath.Exists)
                 return null;
-            
+
             for (int i = 0; i <= ArcMap.Document.FocusMap.LayerCount - 1; i++)
             {
                 ILayer pLayer = ArcMap.Document.FocusMap.Layer[i];
@@ -257,27 +257,45 @@ namespace GCDAddIn
             return pResultLayer;
         }
 
-        public static System.IO.FileInfo GetPathFromFeatureLayer(IFeatureLayer pFL)
+        public static FileSystemInfo GetPathFromLayer(ILayer pL)
         {
-            //check if featureclass is nothing (this can happen if the underlying file has been deleted but the layer is still in the TOC - FP Sep 10 2014
-            if (pFL == null || !(pFL is IGeoFeatureLayer) || pFL.FeatureClass == null)
+            if (pL == null || pL is ICompositeLayer)
             {
                 return null;
             }
 
-            string sPath = ((IDataset)pFL.FeatureClass).Workspace.PathName;
-            if (pFL.FeatureClass.FeatureDataset is IFeatureDataset)
+            FileSystemInfo siResult = null;
+            if (pL is IFeatureLayer)
             {
-                sPath = Path.Combine(sPath, pFL.FeatureClass.FeatureDataset.Name);
-            }
-            sPath = Path.Combine(sPath, ((IDataset)pFL.FeatureClass).Name);
+                IFeatureLayer pFL = (IFeatureLayer)pL;
 
-            if (((IDataset)pFL.FeatureClass).Workspace.Type == esriWorkspaceType.esriFileSystemWorkspace)
+                //check if featureclass is nothing (this can happen if the underlying file has been deleted but the layer is still in the TOC - FP Sep 10 2014
+                if (pFL.FeatureClass != null)
+                {
+                    string sPath = ((IDataset)pFL.FeatureClass).Workspace.PathName;
+                    if (pFL.FeatureClass.FeatureDataset is IFeatureDataset)
+                    {
+                        sPath = Path.Combine(sPath, pFL.FeatureClass.FeatureDataset.Name);
+                    }
+                    sPath = Path.Combine(sPath, ((IDataset)pFL.FeatureClass).Name);
+
+                    if (((IDataset)pFL.FeatureClass).Workspace.Type == esriWorkspaceType.esriFileSystemWorkspace)
+                    {
+                        sPath = Path.ChangeExtension(sPath, "shp");
+                    }
+                }
+            }
+            else if (pL is IRasterLayer)
             {
-                sPath = Path.ChangeExtension(sPath, "shp");
+                siResult = new FileInfo(((IRasterLayer)pL).FilePath);
             }
-
-            return new System.IO.FileInfo(sPath);
+            else if (pL is ITinLayer)
+            {
+                IDataset pDS = (IDataset)pL;
+                siResult = new DirectoryInfo(System.IO.Path.Combine(pDS.Workspace.PathName, pDS.Name));
+            }
+            
+            return siResult;
         }
 
         /// <summary>

@@ -136,7 +136,7 @@ Namespace UI.BudgetSegregation
                 Next
             End If
 
-            If TypeOf ucPolygon.SelectedItem Is GISDataStructures.Vector Then
+            If TypeOf ucPolygon.SelectedItem Is RasterWranglerLib.Vector Then
 
                 If ucPolygon.SelectedItem.FeatureCount < 1 Then
                     MsgBox("The polygon mask feature class is empty and contains no features. You must choose a polygon feature class with at least one feature.", MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
@@ -157,8 +157,8 @@ Namespace UI.BudgetSegregation
 
                     If TypeOf rDoD Is ProjectDS.DoDsRow Then
                         Dim sDoDPath As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rDoD.RawDoDPath)
-                        If GISDataStructures.Raster.Exists(sDoDPath) Then
-                            Dim gDoD As New GISDataStructures.Raster(sDoDPath)
+                        If RasterWranglerLib.Raster.Exists(sDoDPath) Then
+                            Dim gDoD As New RasterWranglerLib.Raster(sDoDPath)
 
                             ' Confirm that the polygon mask has a spatial reference.
                             Dim bMissingSpatialReference As Boolean = True
@@ -253,7 +253,7 @@ Namespace UI.BudgetSegregation
             txtOutputFolder.Text = String.Empty
             If Not String.IsNullOrEmpty(txtName.Text) Then
 
-                If TypeOf ucPolygon.SelectedItem Is GISDataStructures.Vector Then
+                If TypeOf ucPolygon.SelectedItem Is RasterWranglerLib.Vector Then
                     Dim sPolygonPath As String = ucPolygon.SelectedItem.FullPath
 
                     If Not String.IsNullOrEmpty(cboField.Text) Then
@@ -274,8 +274,8 @@ Namespace UI.BudgetSegregation
             End If
         End Sub
 
-        Private Sub PolygonChanged(ByVal sender As Object, ByVal e As UI.UtilityForms.InputUCSelectedItemChangedEventArgs) Handles ucPolygon.SelectedItemChanged
-            If TypeOf ucPolygon.SelectedItem Is GISDataStructures.Vector Then
+        Private Sub PolygonChanged(ByVal sender As Object, ByVal e As naru.ui.PathEventArgs) Handles ucPolygon.PathChanged
+            If TypeOf ucPolygon.SelectedItem Is RasterWranglerLib.Vector Then
                 ' TODO: Figure solution to following line
                 'ucPolygon.SelectedItem.FillComboWithFields(cboField, "Mask", ESRI.ArcGIS.Geodatabase.esriFieldType.esriFieldTypeString, True)
             End If

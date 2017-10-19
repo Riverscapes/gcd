@@ -16,7 +16,7 @@
         <Button id="GCD_AddIn_ToolbarExplorerButton" class="MainMenuDockableProjectExplorerButton" onDemand="false" message="The GCD Project Explorer is the main interface for creating, managing and displaying data within a GCD project. It is a dockable window within ArcMap that contains an interactive hierarchy of contents of a GCD project." caption="" tip="Open the GCD Project Explorer Dockable Window" category="GCD" image="Resources\GCD.png" />
 
         <!-- Menu -->
-        <Button id="GCD_AddIn_NewProjectButton" class="NewProjectButton" message="GCD Projects are workspaces for your data. They store DEM surveys, their associated surfaces as well as any change detection analyses that you perform. A GCD project exists in a dedicated folder that contains a *.gcd project file and copies of all your spatial data." caption="New GCD Project..." tip="Create a new GCD Project" category="GCD" image="Resources\NewProject.png" />
+        <Button id="GCD_AddIn_NewProjectButton" class="GCDAddIn.Project.btnTestProjectExplorer" message="GCD Projects are workspaces for your data. They store DEM surveys, their associated surfaces as well as any change detection analyses that you perform. A GCD project exists in a dedicated folder that contains a *.gcd project file and copies of all your spatial data." caption="New GCD Project..." tip="Create a new GCD Project" category="GCD" image="Resources\NewProject.png" />
         <Button id="GCD_AddIn_OpenProjectButton" class="OpenProjectButton" message="Browse and select an existing GCD project file (*.gcd) in a GCD project folder." caption="Open GCD Project..." tip="Open an existing GCD Project" category="GCD" image="Resources\OpenProject.png" />
         <Button id="GCD_AddIn_CloseProjectButton" class="CloseProjectButton" onDemand="false" message="Close the current GCD project and hide the GCD project explorer dockable window. This will not delete any data or remove any layers from ArcMap." caption="Close GCD project" tip="Close the current GCD project" category="GCD" image="" />
         <Button id="GCD_AddIn_DockableProjectExplorerButton" class="DockableProjectExplorerButton" onDemand="false" message="The GCD Project Explorer is the main interface for creating, managing and displaying data within a GCD project. It is a dockable window within ArcMap that contains an interactive hierarchy of contents of a GCD project." caption="GCD Project Explorer" tip="Open the GCD Project Explorer Dockable Window" category="GCD" image="Resources\DEMSurvey.png" />
@@ -75,7 +75,7 @@
         <Button id="GCD_AddIn_Forum" class="ForumButton" message="Open the GCD Online Forum" caption="GCD Forum" category="GCD" image="Resources\Help.png" />
       </Commands>
       <DockableWindows>
-        <DockableWindow id="GCD_AddIn_DockableProjectExplorer" class="DockableProjectExplorer+AddinImpl" caption="GCD Project Explorer" image="resources\GCD.png">
+        <DockableWindow id="GCD_ucProjectManager" class="GCDAddIn.ucProjectManager+AddinImpl" caption="GCD Project Explorer" image="resources\GCD.png">
           <InitialPlacement height="300" width="300" state="pinned" position="left" />
         </DockableWindow>
       </DockableWindows>
@@ -199,14 +199,8 @@
         </Toolbar>
       </Toolbars>
       <Extensions>
-        <Extension id="GCD_AddIn_Extension" class="GCDAddIn.GCDExtension" productName="Geomorphic Change Detection (GCD)" showInExtensionDialog="true" autoLoad="true">
-          <Description>
-            The GCD software was developed primarily for morphological sediment budgeting in rivers.
-            The volumetric change in storage is calculated from the difference in surface elevations from digital elevation models (DEMs)
-            derived from repeat topographic surveys. GCD provides a suite of tools for quantifying those uncertainties independently in each DEM and propagating them through to the DEM of difference.
-            The program also provides ways for segregating the best estimates of change spatially using different types of masks.
-            The overall suite of tools is more generically applicable to many different spatial change detection problems.
-          </Description>
+        <Extension autoLoad="true" id="test" productName="GCD" class="GCDAddIn.ApplicationExtension1">
+          <Description>test</Description>
         </Extension>
       </Extensions>
     </ArcMap>

@@ -3,11 +3,28 @@
 Namespace UI.UtilityForms
 
     Public Class ucVectorInput
-        Inherits ucInputBase
+        Inherits naru.ui.ucInput
 
-        Private m_GeometryType As GISDataStructures.BrowseVectorTypes
+        Private m_GeometryType As RasterWranglerLib.GDalGeometryType.SimpleTypes
+        Private m_sNoun As String
 
 #Region "Properties"
+
+        Public ReadOnly Property Noun As String
+            Get
+                Return m_sNoun
+            End Get
+        End Property
+
+        Public ReadOnly Property SelectedItem As RasterWranglerLib.Vector
+            Get
+                If TypeOf Path Is System.IO.FileInfo Then
+                    Return New RasterWranglerLib.Vector(Path.FullName)
+                Else
+                    Return Nothing
+                End If
+            End Get
+        End Property
 
         Public Property BrowseType As GISDataStructures.BrowseVectorTypes
             Get
@@ -85,8 +102,8 @@ Namespace UI.UtilityForms
         ''' <param name="sNoun"></param>
         ''' <param name="eBrowseType"></param>
         ''' <remarks></remarks>
-        Public Shadows Sub Initialize(ByVal sNoun As String, ByVal eBrowseType As GISDataStructures.BrowseVectorTypes)
-            Noun = sNoun
+        Public Shadows Sub Initialize(ByVal sNoun As String, ByVal eBrowseType As RasterWranglerLib.GDalGeometryType.SimpleTypes)
+            m_sNoun = sNoun
             BrowseType = eBrowseType
         End Sub
 
@@ -103,20 +120,20 @@ Namespace UI.UtilityForms
         '    End Try
         'End Sub
 
-        Public Overrides Function Validate() As Boolean
+        'Public Overrides Function Validate() As Boolean
 
-            If (String.IsNullOrEmpty(txtPath.Text) OrElse Not System.IO.File.Exists(txtPath.Text)) Then
-                System.Windows.Forms.MessageBox.Show(naru.ui.UIHelpers.WrapMessageWithNoun("Please select a", Noun, " feature class to continue."), My.Resources.ApplicationNameLong, System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information)
-                Return False
-            End If
+        '    If (String.IsNullOrEmpty(txtPath.Text) OrElse Not System.IO.File.Exists(txtPath.Text)) Then
+        '        System.Windows.Forms.MessageBox.Show(naru.ui.UIHelpers.WrapMessageWithNoun("Please select a", Noun, " feature class to continue."), My.Resources.ApplicationNameLong, System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information)
+        '        Return False
+        '    End If
 
-            Return True
+        '    Return True
 
-        End Function
+        'End Function
 
-        Public Shadows Function SelectedItem() As GISDataStructures.Vector
-            Return DirectCast(MyBase.SelectedItem, GISDataStructures.Vector)
-        End Function
+        'Public Shadows Function SelectedItem() As RasterWranglerLib.Vector
+        '    Return DirectCast(MyBase.SelectedItem, RasterWranglerLib.Vector)
+        'End Function
 
 #End Region
 

@@ -43,8 +43,8 @@ Namespace UI.SurveyLibrary
                 ' Select the method mask field
                 If demRow.MultiMethod Then
                     Dim sMaskPath As String = Core.GCDProject.ProjectManager.GetAbsolutePath(txtMask.Text)
-                    If Core.GISDataStructures.Vector.Exists(sMaskPath) Then
-                        Dim gMask As New Core.GISDataStructures.Vector(sMaskPath)
+                    If Core.RasterWranglerLib.Vector.Exists(sMaskPath) Then
+                        Dim gMask As New Core.RasterWranglerLib.Vector(sMaskPath)
                         gMask.FillComboWithFields(cboIdentify, "Method", GISDataStructures.FieldTypes.StringField, True)
                         For i As Integer = 0 To cboIdentify.Items.Count - 1
                             If String.Compare(cboIdentify.Items(i).ToString, demRow.MethodMaskField, True) = 0 Then
@@ -221,7 +221,7 @@ Namespace UI.SurveyLibrary
                 Dim sRasterPath As String = String.Empty
                 If Not String.IsNullOrEmpty(txtName.Text) Then
                     If TypeOf m_ImportRasterform Is frmImportRaster Then
-                        If TypeOf m_ImportRasterform.ucRaster.SelectedItem Is GISDataStructures.Raster Then
+                        If TypeOf m_ImportRasterform.ucRaster.SelectedItem Is RasterWranglerLib.Raster Then
                             sRasterPath = GCDProject.ProjectManagerBase.OutputManager.DEMSurveyRasterPath(txtName.Text)
                         End If
                     End If
@@ -328,14 +328,14 @@ Namespace UI.SurveyLibrary
 
 
 
-            'If GISDataStructures.Raster.Exists(txtRasterPath.Text) Then
+            'If RasterWranglerLib.Raster.Exists(txtRasterPath.Text) Then
             '    Dim sHillShade As String = GCD.GCDProject.ProjectManager.OutputManager.DEMSurveyHillShadeRasterPath(txtName.Text)
-            '    If GISDataStructures.Raster.Exists(sHillShade) Then
-            '        Dim gHillShade As New GISDataStructures.Raster(sHillShade)
+            '    If RasterWranglerLib.Raster.Exists(sHillShade) Then
+            '        Dim gHillShade As New RasterWranglerLib.Raster(sHillShade)
             '        gHillShade.AddToMap(m_pArcMap, txtName.Text & " HS", txtName.Text)
             '    End If
 
-            '    Dim gRasterGDAL As New GISDataStructures.RasterGDAL(txtRasterPath.Text)
+            '    Dim gRasterGDAL As New RasterWranglerLib.RasterGDAL(txtRasterPath.Text)
             '    gRasterGDAL.AddToMap(m_pArcMap, txtDate.Name, txtName.Text)
             'End If
 
@@ -353,8 +353,8 @@ Namespace UI.SurveyLibrary
 
                 ' browse and see if the user selects a new polygon feature class.
                 Throw New NotImplementedException
-                Dim gNewMask As GISDataStructures.Vector '= GISDataStructures.Vector.BrowseOpen("DEM Survey Method Polygon Mask", sFolder, sName, GISDataStructures.BrowseGISTypes.Polygon, Me.Handle)
-                If Not TypeOf gNewMask Is GISDataStructures.Vector Then
+                Dim gNewMask As RasterWranglerLib.Vector '= RasterWranglerLib.Vector.BrowseOpen("DEM Survey Method Polygon Mask", sFolder, sName, GISDataStructures.BrowseGISTypes.Polygon, Me.Handle)
+                If Not TypeOf gNewMask Is RasterWranglerLib.Vector Then
                     Exit Sub
                 End If
 
@@ -366,12 +366,12 @@ Namespace UI.SurveyLibrary
                     Exit Sub
                 End If
 
-                If TypeOf gNewMask Is GISDataStructures.Vector Then
+                If TypeOf gNewMask Is RasterWranglerLib.Vector Then
 
                     ' Check that the new mask has the same spatial reference as the DEM survey.
                     Dim dr As DataRowView = DEMSurveyBindingSource.Current
                     Dim demRow As ProjectDS.DEMSurveyRow = dr.Row
-                    Dim gDEM As New GISDataStructures.Raster(GCDProject.ProjectManagerBase.GetAbsolutePath(demRow.Source))
+                    Dim gDEM As New RasterWranglerLib.Raster(GCDProject.ProjectManagerBase.GetAbsolutePath(demRow.Source))
                     If Not gDEM.CheckSpatialReferenceMatches(gNewMask.SpatialReference) Then
                         MsgBox("The spatial reference of the selected polygon feature class does not match that of the DEM survey raster (" & gDEM.SpatialReference & ").", MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
                         Exit Sub
@@ -417,7 +417,7 @@ Namespace UI.SurveyLibrary
                         ExceptionHelper.HandleException(ex)
                     Else
                         Try
-                            gNewMask = GISDataStructures.Vector.CopyShapeFile(gNewMask.FullPath, sMethodMask)
+                            gNewMask = RasterWranglerLib.Vector.CopyShapeFile(gNewMask.FullPath, sMethodMask)
 
                             ' Poplulate the method mask dropdown with the string fields from the feature class
                             gNewMask.FillComboWithFields(cboIdentify, "Method", GISDataStructures.FieldTypes.StringField)
@@ -447,9 +447,9 @@ Namespace UI.SurveyLibrary
 
             Dim sMaskPath As String = GCDProject.ProjectManagerBase.GetAbsolutePath(txtMask.Text)
             If GISDataStructures.GISDataSource.Exists(sMaskPath) Then
-                Dim sWorkspace As String = GISDataStructures.Vector.GetWorkspacePath(sMaskPath)
+                Dim sWorkspace As String = RasterWranglerLib.Vector.GetWorkspacePath(sMaskPath)
                 Try
-                    GISDataStructures.Raster.DeleteRaster(sMaskPath)
+                    RasterWranglerLib.Raster.DeleteRaster(sMaskPath)
                     txtMask.Text = String.Empty
                     cboIdentify.Items.Clear()
                 Catch ex As Exception
@@ -484,11 +484,11 @@ Namespace UI.SurveyLibrary
         Private Sub LoadRasterProperties()
 
             Dim sAbsolutePath As String = GCDProject.ProjectManagerBase.GetAbsolutePath(txtRasterPath.Text)
-            If Not GISDataStructures.Raster.Exists(sAbsolutePath) Then
+            If Not RasterWranglerLib.Raster.Exists(sAbsolutePath) Then
                 Exit Sub
             End If
 
-            Dim gRaster As New GISDataStructures.Raster(sAbsolutePath)
+            Dim gRaster As New RasterWranglerLib.Raster(sAbsolutePath)
             Dim demRow As ProjectDS.DEMSurveyRow = DirectCast(DEMSurveyBindingSource.Current, DataRowView).Row
 
             Dim sRasterProperties As String = "-- GCD Raster Properties --"
@@ -676,9 +676,9 @@ Namespace UI.SurveyLibrary
                 End Try
 
                 If bContinue Then
-                    If GISDataStructures.Raster.Exists(GCDProject.ProjectManager.GetAbsolutePath(rAssoc.Source)) Then
+                    If RasterWranglerLib.Raster.Exists(GCDProject.ProjectManager.GetAbsolutePath(rAssoc.Source)) Then
                         Try
-                            GISDataStructures.Raster.DeleteRaster(sPath)
+                            RasterWranglerLib.Raster.DeleteRaster(sPath)
                         Catch ex As Exception
                             Dim ex2 As New Exception("Error deleting the associated surface raster file and directory.", ex)
                             ex2.Data.Add("Raster Path", sPath)
@@ -689,7 +689,7 @@ Namespace UI.SurveyLibrary
                 End If
 
                 Try
-                    IO.Directory.Delete(GISDataStructures.Raster.GetWorkspacePath(GCDProject.ProjectManager.GetAbsolutePath(rAssoc.Source)))
+                    IO.Directory.Delete(RasterWranglerLib.Raster.GetWorkspacePath(GCDProject.ProjectManager.GetAbsolutePath(rAssoc.Source)))
                 Catch ex As Exception
                     ' do nothing
                 End Try
@@ -730,15 +730,15 @@ Namespace UI.SurveyLibrary
         Public Shared Function SpecifyErrorSurface(rDEM As ProjectDS.DEMSurveyRow) As ProjectDS.ErrorSurfaceRow
 
             Dim rError As ProjectDS.ErrorSurfaceRow = Nothing
-            Dim gDEM As New Core.GISDataStructures.Raster(Core.GCDProject.ProjectManager.GetAbsolutePath(rDEM.Source))
+            Dim gDEM As New Core.RasterWranglerLib.Raster(Core.GCDProject.ProjectManager.GetAbsolutePath(rDEM.Source))
             Dim frm As New frmImportRaster(gDEM, rDEM, frmImportRaster.ImportRasterPurposes.ErrorCalculation, "Error Surface")
             If frm.ShowDialog = System.Windows.Forms.DialogResult.OK Then
-                Dim gRaster As GISDataStructures.Raster = Nothing
+                Dim gRaster As RasterWranglerLib.Raster = Nothing
                 Try
                     gRaster = frm.ProcessRaster
                 Catch ex As Exception
                     Try
-                        GISDataStructures.Raster.DeleteRaster(Core.GISDataStructures.Raster.GetWorkspacePath(frm.txtRasterPath.Text))
+                        RasterWranglerLib.Raster.DeleteRaster(Core.RasterWranglerLib.Raster.GetWorkspacePath(frm.txtRasterPath.Text))
                     Catch ex2 As Exception
                         ' do nothing
                     End Try
@@ -746,7 +746,7 @@ Namespace UI.SurveyLibrary
                     ExceptionHelper.HandleException(ex, "An error occurred attempting to import the error surface into the GCD project. No information has been saved to the GCD project file but you should check the GCD project folder to determine if any remains of the raster remain.")
                 End Try
 
-                If TypeOf gRaster Is GISDataStructures.Raster Then
+                If TypeOf gRaster Is RasterWranglerLib.Raster Then
                     Try
                         Dim sRasterPath As String = Core.GCDProject.ProjectManager.GetRelativePath(frm.txtRasterPath.Text)
                         rError = GCDProject.ProjectManager.ds.ErrorSurface.AddErrorSurfaceRow(frm.txtName.Text, "Imported Raster", sRasterPath, rDEM)
@@ -761,7 +761,7 @@ Namespace UI.SurveyLibrary
                     Catch ex As Exception
                         Dim bRasterExists As Boolean = True
                         Try
-                            GISDataStructures.Raster.DeleteRaster(frm.txtRasterPath.Text)
+                            RasterWranglerLib.Raster.DeleteRaster(frm.txtRasterPath.Text)
                             bRasterExists = False
                         Catch ex2 As Exception
                             bRasterExists = True
@@ -844,9 +844,9 @@ Namespace UI.SurveyLibrary
 
                 If bContinue Then
                     If Not rError.IsSourceNull Then
-                        If GISDataStructures.Raster.Exists(Core.GCDProject.ProjectManager.GetAbsolutePath(rError.Source)) Then
+                        If RasterWranglerLib.Raster.Exists(Core.GCDProject.ProjectManager.GetAbsolutePath(rError.Source)) Then
                             Try
-                                Core.GISDataStructures.Raster.DeleteRaster(sPath)
+                                Core.RasterWranglerLib.Raster.DeleteRaster(sPath)
                             Catch ex As Exception
                                 Core.ExceptionHelper.HandleException(ex, "Failed to delete the error surface raster.")
                                 bContinue = False
@@ -857,7 +857,7 @@ Namespace UI.SurveyLibrary
 
                 If bContinue Then
                     Try
-                        IO.Directory.Delete(GISDataStructures.Raster.GetWorkspacePath(Core.GCDProject.ProjectManager.GetAbsolutePath(rError.Source)))
+                        IO.Directory.Delete(RasterWranglerLib.Raster.GetWorkspacePath(Core.GCDProject.ProjectManager.GetAbsolutePath(rError.Source)))
                     Catch ex As Exception
                         ' do nothing
                     End Try

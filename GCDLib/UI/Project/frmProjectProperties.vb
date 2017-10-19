@@ -48,14 +48,14 @@ Namespace UI.Project
             ttpTooltip.SetToolTip(cboDisplayUnits, "The default units for displaying and outputting change detection results.")
             ttpTooltip.SetToolTip(valPrecision, "The number of decimal places used to round raster cell coordinates when determining divisible raster extents.")
 
-            cboDisplayUnits.Items.Add(New naru.math.LinearUnitClass("millimeters (mm)", naru.math.NumberFormatting.LinearUnits.mm))
-            cboDisplayUnits.Items.Add(New naru.math.LinearUnitClass("centimeters (cm)", naru.math.NumberFormatting.LinearUnits.cm))
-            Dim i As Integer = cboDisplayUnits.Items.Add(New naru.math.LinearUnitClass("meters (m)", naru.math.NumberFormatting.LinearUnits.m))
-            cboDisplayUnits.Items.Add(New naru.math.LinearUnitClass("kilometers (km)", naru.math.NumberFormatting.LinearUnits.km))
-            cboDisplayUnits.Items.Add(New naru.math.LinearUnitClass("inches (in)", naru.math.NumberFormatting.LinearUnits.inch))
-            cboDisplayUnits.Items.Add(New naru.math.LinearUnitClass("feet (ft)", naru.math.NumberFormatting.LinearUnits.ft))
-            cboDisplayUnits.Items.Add(New naru.math.LinearUnitClass("yards (yd)", naru.math.NumberFormatting.LinearUnits.yard))
-            cboDisplayUnits.Items.Add(New naru.math.LinearUnitClass("miles (mi)", naru.math.NumberFormatting.LinearUnits.mile))
+            cboDisplayUnits.Items.Add(New UnitsNet.Units.LengthUnit("millimeters (mm)", UnitsNet.Units.LengthUnit.mm))
+            cboDisplayUnits.Items.Add(New UnitsNet.Units.LengthUnit("centimeters (cm)", UnitsNet.Units.LengthUnit.cm))
+            Dim i As Integer = cboDisplayUnits.Items.Add(New UnitsNet.Units.LengthUnit("meters (m)", UnitsNet.Units.LengthUnit.m))
+            cboDisplayUnits.Items.Add(New UnitsNet.Units.LengthUnit("kilometers (km)", UnitsNet.Units.LengthUnit.km))
+            cboDisplayUnits.Items.Add(New UnitsNet.Units.LengthUnit("inches (in)", UnitsNet.Units.LengthUnit.inch))
+            cboDisplayUnits.Items.Add(New UnitsNet.Units.LengthUnit("feet (ft)", UnitsNet.Units.LengthUnit.ft))
+            cboDisplayUnits.Items.Add(New UnitsNet.Units.LengthUnit("yards (yd)", UnitsNet.Units.LengthUnit.yard))
+            cboDisplayUnits.Items.Add(New UnitsNet.Units.LengthUnit("miles (mi)", UnitsNet.Units.LengthUnit.mile))
             cboDisplayUnits.SelectedIndex = i
 
             If DisplayMode = DisplayModes.Create Then

@@ -3,33 +3,33 @@
     Public Class ChangeDetectionEnginePropProb
         Inherits ChangeDetectionEngineBase
 
-        Private m_gOriginalNewError As GISDataStructures.Raster
-        Private m_gOriginalOldError As GISDataStructures.Raster
+        Private m_gOriginalNewError As RasterWranglerLib.Raster
+        Private m_gOriginalOldError As RasterWranglerLib.Raster
 
-        Private m_gAnalysisNewError As GISDataStructures.Raster
-        Private m_gAnalysisOldError As GISDataStructures.Raster
+        Private m_gAnalysisNewError As RasterWranglerLib.Raster
+        Private m_gAnalysisOldError As RasterWranglerLib.Raster
 
 #Region "Properties"
 
-        Public ReadOnly Property OriginalNewError As GISDataStructures.Raster
+        Public ReadOnly Property OriginalNewError As RasterWranglerLib.Raster
             Get
                 Return m_gOriginalNewError
             End Get
         End Property
 
-        Public ReadOnly Property OriginalOldError As GISDataStructures.Raster
+        Public ReadOnly Property OriginalOldError As RasterWranglerLib.Raster
             Get
                 Return m_gOriginalOldError
             End Get
         End Property
 
-        Public ReadOnly Property AnalysisNewError As GISDataStructures.Raster
+        Public ReadOnly Property AnalysisNewError As RasterWranglerLib.Raster
             Get
                 Return m_gAnalysisNewError
             End Get
         End Property
 
-        Public ReadOnly Property AnalysisOldError As GISDataStructures.Raster
+        Public ReadOnly Property AnalysisOldError As RasterWranglerLib.Raster
             Get
                 Return m_gAnalysisOldError
             End Get
@@ -37,9 +37,9 @@
 
 #End Region
 
-        Public Sub New(ByVal sName As String, ByVal sFolder As String, ByVal gNewDEM As GISDataStructures.Raster, ByVal gOldDEM As GISDataStructures.Raster,
-                       ByVal gNewError As GISDataStructures.Raster, ByVal gOldError As GISDataStructures.Raster,
-                       ByVal gAOI As GISDataStructures.Vector, ByVal fChartHeight As Integer, ByVal fChartWidth As Integer)
+        Public Sub New(ByVal sName As String, ByVal sFolder As String, ByVal gNewDEM As RasterWranglerLib.Raster, ByVal gOldDEM As RasterWranglerLib.Raster,
+                       ByVal gNewError As RasterWranglerLib.Raster, ByVal gOldError As RasterWranglerLib.Raster,
+                       ByVal gAOI As RasterWranglerLib.Vector, ByVal fChartHeight As Integer, ByVal fChartWidth As Integer)
             MyBase.New(sName, sFolder, gNewDEM, gOldDEM, gAOI, fChartHeight, fChartWidth)
 
             m_gOriginalNewError = gNewError
@@ -74,7 +74,7 @@
                 Throw New Exception(GCDProject.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
             End If
 
-            Dim gRawDoD As New GISDataStructures.Raster(sRawDoDPath)
+            Dim gRawDoD As New RasterWranglerLib.Raster(sRawDoDPath)
 
             Dim dodProp As New ChangeDetectionPropertiesPropagated(sRawDoDPath, sThreshDodPath, sPropagatedErrorRaster, gRawDoD.CellSize, gRawDoD.LinearUnits)
             Dim theChangeStats = New ChangeStatsCalculator(dodProp)
@@ -152,8 +152,8 @@
                 ' GP.SpatialAnalyst.Raster_Calculator(Chr(34) & m_gOriginalOldError.FullPath & Chr(34), sOldError, theAnalysisExtent.Rectangle, m_gOriginalOldError.CellSize)
             End If
 
-            m_gAnalysisNewError = New GISDataStructures.Raster(sNewError)
-            m_gAnalysisOldError = New GISDataStructures.Raster(sOldError)
+            m_gAnalysisNewError = New RasterWranglerLib.Raster(sNewError)
+            m_gAnalysisOldError = New RasterWranglerLib.Raster(sOldError)
 
             Return theAnalysisExtent
 
