@@ -247,6 +247,19 @@ namespace GCDConsoleLib
             Dispose();
         }
 
+        /// <summary>
+        /// Deletion
+        /// </summary>
+        /// <param name="sFilepath"></param>
+        public static void Delete(string sFilepath)
+        {
+            Raster toDelete = new Raster(sFilepath);
+            toDelete.Delete();
+        }
+
+        /// <summary>
+        /// Delete a Raster
+        /// </summary>
         public override void Delete()
         {
             Open();

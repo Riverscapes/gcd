@@ -10,8 +10,8 @@ namespace GCDConsoleLib
         private static string _driverstring = "ESRI Shapefile";
         private Driver _drv;
         private DataSource _ds;
-        public Dictionary<long, Feature> Features;
-        public Dictionary<string, FieldDefn> Fields;
+        public Dictionary<long, VectorFeature> Features;
+        public Dictionary<string, VectorField> Fields;
         public string FIDColumn;
         public string LayerName { get; private set; }
 
@@ -21,8 +21,8 @@ namespace GCDConsoleLib
         /// <param name="sFilename"></param>
         public Vector(string sFilename) : base(sFilename)
         {
-            Features = new Dictionary<long, Feature>();
-            Fields = new Dictionary<string, FieldDefn>();
+            Features = new Dictionary<long, VectorFeature>();
+            Fields = new Dictionary<string, VectorField>();
 
             _load();
         }
@@ -90,6 +90,20 @@ namespace GCDConsoleLib
             }
         }
 
+
+        /// <summary>
+        /// Deletion
+        /// </summary>
+        /// <param name="sFilepath"></param>
+        public static void Delete(string sFilepath)
+        {
+            Vector toDelete = new Vector(sFilepath);
+            toDelete.Delete();
+        }
+
+        /// <summary>
+        /// Deletion methods for vectors
+        /// </summary>
         public override void Delete()
         {
             Dispose();
@@ -112,7 +126,7 @@ namespace GCDConsoleLib
             Feature mFeat = mLayer.GetNextFeature();
             while (mFeat != null)
             {
-                Features.Add(mFeat.GetFID(), mFeat);
+                Features.Add(mFeat.GetFID(), new VectorFeature(ref mFeat));
                 mFeat = mLayer.GetNextFeature();
             }
 
@@ -122,7 +136,7 @@ namespace GCDConsoleLib
             for (int fldId = 0; fldId < iFldCnt; fldId++)
             {
                 FieldDefn mFldDef = mFeatDfn.GetFieldDefn(fldId);
-                Fields.Add(mFldDef.GetName(), mFldDef);
+                Fields.Add(mFldDef.GetName(), new VectorField(ref mFldDef));
             }
 
             // Spatial ref is way harder than it needs to be:

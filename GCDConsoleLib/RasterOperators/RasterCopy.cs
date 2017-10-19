@@ -4,32 +4,40 @@ using UnitsNet.Units;
 
 namespace GCDConsoleLib.RasterOperators
 {
-    public class RasterCopy : BaseOpertator
+    public class RasterCopy : BaseOperator
     {
-        private Raster _oldRaster;
         private ExtentRectangle _newRect;
         private Projection _newProj;
         private LengthUnit _newVUnit;
 
         public static Raster ExtendedCopy(ref Raster rInput, string sOutputRaster)
         {
-            RasterCopy myCopy = new RasterCopy(ref rInput, sOutputRaster, rInput.Extent, rInput.Proj, rInput.VerticalUnits);
+            Raster rOutputRaster = new Raster(sOutputRaster);
+            RasterCopy myCopy = new RasterCopy(ref rInput,ref rOutputRaster, rInput.Extent, rInput.Proj, rInput.VerticalUnits);
             return myCopy.RunCellByCellOp();
         }
 
         public static Raster ExtendedCopy(ref Raster rInput, string sOutputRaster, ExtentRectangle newRect)
         {
-            RasterCopy myCopy = new RasterCopy(ref rInput, sOutputRaster, newRect, rInput.Proj, rInput.VerticalUnits);
+            Raster rOutputRaster = new Raster(sOutputRaster);
+            RasterCopy myCopy = new RasterCopy(ref rInput, ref rOutputRaster, newRect, rInput.Proj, rInput.VerticalUnits);
             return myCopy.RunCellByCellOp();
         }
 
         public static Raster ExtendedCopy(ref Raster rInput, string sOutputRaster, ExtentRectangle newRect, Projection newProj, LengthUnit newVUnit)
         {
-            RasterCopy myCopy = new RasterCopy(ref rInput, sOutputRaster, newRect,  newProj,  newVUnit);
+            Raster rOutputRaster = new Raster(sOutputRaster);
+            RasterCopy myCopy = new RasterCopy(ref rInput, ref rOutputRaster, newRect,  newProj,  newVUnit);
             return myCopy.RunCellByCellOp();
         }
 
-           
+        /// This one's mainly for testing purposes
+        public static Raster ExtendedCopy(ref Raster rInput, ref Raster rOutputRaster, ExtentRectangle newRect, Projection newProj, LengthUnit newVUnit)
+        {
+            RasterCopy myCopy = new RasterCopy(ref rInput, ref rOutputRaster, newRect, newProj, newVUnit);
+            return myCopy.RunCellByCellOp();
+        }
+
         /// <summary>
         /// We protect our constructor because we don't really want people using it
         /// </summary>
@@ -38,7 +46,7 @@ namespace GCDConsoleLib.RasterOperators
         /// <param name="newRect"></param>
         /// <param name="newProj"></param>
         /// <param name="newVUnit"></param>
-        protected RasterCopy(ref Raster rInput, string sOutputRaster, ExtentRectangle newRect, Projection newProj, LengthUnit newVUnit) : base(ref rInput, sOutputRaster)
+        protected RasterCopy(ref Raster rInput, ref Raster rOutputRaster, ExtentRectangle newRect, Projection newProj, LengthUnit newVUnit) : base(ref rInput, ref rOutputRaster)
         {
             __opinit(newRect, newProj, newVUnit);
         }

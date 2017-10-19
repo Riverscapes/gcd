@@ -1,9 +1,10 @@
 ﻿using System;
+using GCDConsoleLib;
 using System.Collections.Generic;
 
 namespace GCDConsoleLib.RasterOperators
 {
-    public class RasterMath : BaseOpertator
+    public class RasterMath : BaseOperator
     {
         public enum MathOpType : byte { Addition, Subtraction, Division, Multipication };
         private bool _scalar;
@@ -19,12 +20,27 @@ namespace GCDConsoleLib.RasterOperators
         /// <returns></returns>
         public static Raster Add(ref Raster rInput, double dOperand, string sOutputRaster)
         {
-            RasterMath mathOp = new RasterMath(MathOpType.Addition, ref rInput, dOperand, sOutputRaster);
+            Raster rOutput = new Raster(sOutputRaster);
+            RasterMath mathOp = new RasterMath(MathOpType.Addition, ref rInput, dOperand, ref rOutput);
             return mathOp.RunCellByCellOp();
         }
         public static Raster Add(ref Raster rInputA, ref Raster rInputB, string sOutputRaster)
         {
-            RasterMath mathOp = new RasterMath(MathOpType.Addition, ref rInputA, ref rInputB, sOutputRaster);
+            Raster rOutput = new Raster(sOutputRaster);
+            RasterMath mathOp = new RasterMath(MathOpType.Addition, ref rInputA, ref rInputB, ref rOutput);
+            return mathOp.RunCellByCellOp();
+        }
+
+
+        // These are mainly for testing
+        public static Raster Add(ref Raster rInput, double dOperand, ref Raster rOutputRaster)
+        {
+            RasterMath mathOp = new RasterMath(MathOpType.Addition, ref rInput, dOperand, ref rOutputRaster);
+            return mathOp.RunCellByCellOp();
+        }
+        public static Raster Add(ref Raster rInputA, ref Raster rInputB, ref Raster rOutputRaster)
+        {
+            RasterMath mathOp = new RasterMath(MathOpType.Addition, ref rInputA, ref rInputB, ref rOutputRaster);
             return mathOp.RunCellByCellOp();
         }
 
@@ -35,14 +51,14 @@ namespace GCDConsoleLib.RasterOperators
         /// <param name="rInput"></param>
         /// <param name="dOperand"></param>
         /// <param name="sOutputRaster"></param>
-        protected RasterMath(MathOpType otType, ref Raster rInput, double dOperand, string sOutputRaster) : base(ref rInput, sOutputRaster)
+        protected RasterMath(MathOpType otType, ref Raster rInput, double dOperand, ref Raster rOutputRaster) : base(ref rInput, ref rOutputRaster)
         {
             _type = otType;
             _scalar = true;
             _operand = dOperand;
         }
 
-        protected RasterMath(MathOpType otType, ref Raster rInputA, ref Raster rInputB, string sOutputRaster) : base(ref rInputA, ref rInputB, sOutputRaster)
+        protected RasterMath(MathOpType otType, ref Raster rInputA, ref Raster rInputB, ref Raster rOutputRaster) : base(ref rInputA, ref rInputB, ref rOutputRaster)
         {
             _type = otType;
             _scalar = false;

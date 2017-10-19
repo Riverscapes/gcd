@@ -28,7 +28,6 @@ namespace GCDConsoleLib
         public abstract void Delete();
         public abstract void Dispose();
 
-
         /// <summary>
         /// Load a dataset from a filepath
         /// </summary>

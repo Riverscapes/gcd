@@ -4,7 +4,7 @@ using GCDConsoleLib.Common.Extensons;
 
 namespace GCDConsoleLib
 {
-    public abstract class BaseOpertator
+    public abstract class BaseOperator
     {
         protected readonly List<Raster> _rasters;
         protected ExtentRectangle _ExtentIterWindow;
@@ -21,10 +21,10 @@ namespace GCDConsoleLib
         /// Simple case for initializing a single raster
         /// </summary>
         /// <param name="rRaster"></param>
-        protected BaseOpertator(ref Raster rRaster, string sOutputRaster, ExtentRectangle newRect = null)
+        protected BaseOperator(ref Raster rRaster, ref Raster rOutputRaster, ExtentRectangle newRect = null)
         {
             _rasters = new List<Raster> { rRaster };
-            _init(sOutputRaster, newRect);
+            _init(rOutputRaster, newRect);
         }
 
         /// <summary>
@@ -32,31 +32,30 @@ namespace GCDConsoleLib
         /// </summary>
         /// <param name="rRasterA"></param>
         /// <param name="rRasterB"></param>
-        protected BaseOpertator(ref Raster rRasterA, ref Raster rRasterB, string sOutputRaster, ExtentRectangle newRect = null)
+        protected BaseOperator(ref Raster rRasterA, ref Raster rRasterB, ref Raster rOutputRaster, ExtentRectangle newRect = null)
         {
             _rasters = new List<Raster> { rRasterA, rRasterB };
-            _init(sOutputRaster, newRect);
+            _init(rOutputRaster, newRect);
         }
 
         /// <summary>
         /// Initialize a bunch of rasters
         /// </summary>
         /// <param name="rRasters"></param>
-        protected BaseOpertator(List<Raster> rRasters, string sOutputRaster, ExtentRectangle newRect = null)
+        protected BaseOperator(List<Raster> rRasters, ref Raster rOutputRaster, ExtentRectangle newRect = null)
         {
             _rasters = new List<Raster>(rRasters.Count);
             foreach (Raster rRa in rRasters)
             {
                 _rasters.Add(rRa);
             }
-            _init(sOutputRaster, newRect);
+            _init(rOutputRaster, newRect);
         }
-
 
         /// <summary>
         /// Here's where we choose our chunk size. We'll keep it simple for now.
         /// </summary>
-        private void _init(string soutputRaster, ExtentRectangle newExt = null)
+        private void _init(Raster rOutRaster, ExtentRectangle newExt = null)
         {
             _nodataval = _rasters[0].NodataVal;
 
@@ -94,12 +93,8 @@ namespace GCDConsoleLib
             Raster firstRaster = _rasters[0];
             // Now that we have our rasters tested and a unioned extent
 
-            // Make sure we create the same kind of object:
-            // https://stackoverflow.com/questions/15614316/pass-arguments-as-well-as-string-into-activator-createinstance
-            //var args = new object[] { firstRaster, _ExtentIterWindow, _outputrasterpath };
-            //_outputRaster = (Raster)Activator.CreateInstance(firstRaster.GetType(), args);
-
-            _outputRaster = new Raster(ref firstRaster, _ExtentIterWindow, _outputrasterpath);
+            _outputRaster = rOutRaster;
+            _outputRaster.Extent = _ExtentIterWindow;
             // Open our output for writing
             _outputRaster.Open(true);
         }
