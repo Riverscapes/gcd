@@ -33,22 +33,19 @@ Namespace Core
 
         End Function
 
-        Public Shared Sub Initialize(diWorkspacePath As DirectoryInfo)
+        Public Shared Sub Initialize()
 
-            If Not TypeOf diWorkspacePath Is IO.DirectoryInfo Then
-                Throw New ArgumentNullException("dWorkspacePath")
+            Dim sPath As String = String.Empty
+            If String.IsNullOrEmpty(My.Settings.TempWorkspace) OrElse Not System.IO.Directory.Exists(My.Settings.TempWorkspace) Then
+                sPath = GetDefaultWorkspace(My.Resources.ApplicationNameShort)
+            Else
+                ' During AddIn startup, must set the workspace path on the workspace manager
+                ' object. This bypasses validation. The workspace path will be validated
+                ' (with UI warnings) during new/open project. For now, just set the workspace.
+                sPath = My.Settings.TempWorkspace
             End If
 
-            If Not diWorkspacePath.Exists Then
-                Try
-                    diWorkspacePath.Create()
-                    m_diWorkspacePath = diWorkspacePath
-                Catch ex As System.Exception
-                    Dim ex2 As New Exception("Error in Workspace.Initialize() creating new workspace folder", ex)
-                    ex2.Data.Add("Workspace path", diWorkspacePath.FullName)
-                    Throw ex2
-                End Try
-            End If
+            SetWorkspacePath(sPath)
 
         End Sub
 
@@ -214,88 +211,24 @@ Namespace Core
         ''' Discovered on Steve Fortneys laptop.</remarks>
         Public Shared Function SetWorkspacePath(sPath As String) As String
 
-            m_diWorkspacePath = New System.IO.DirectoryInfo(sPath)
             If String.IsNullOrEmpty(sPath) OrElse Not System.IO.Directory.Exists(sPath) Then
                 Dim ex As New Exception("The specified temp workspace directory is null or does not exist. Go to GCD Options and set the temp workspace to a valid folder.")
                 ex.Data("Path") = sPath
                 Throw ex
             End If
 
-            Return m_diWorkspacePath.FullName
-
-        End Function
-
-        Public Shared Function SetWorkspacePathDefault(sApplicationShort As String) As String
-
-            'Dim ApplicationDataFolder As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
-            Dim diPath As New DirectoryInfo(GetDefaultWorkspace(sApplicationShort)) 'IO.Path.Combine(IO.Path.Combine(ApplicationDataFolder, sManufacturer), sApplicationShort))
-
-            If Not diPath.Exists Then
-                Directory.CreateDirectory(diPath.FullName)
-            End If
-
-            If diPath.Exists Then
-                m_diWorkspacePath = diPath
-            End If
+            m_diWorkspacePath = New System.IO.DirectoryInfo(sPath)
+            My.Settings.TempWorkspace = sPath
+            My.Settings.Save()
 
             Return m_diWorkspacePath.FullName
 
         End Function
 
-        Public Shared Function GetRandomString(Optional ByVal size As Integer = 8, Optional ByVal lowerCase As Boolean = True) As String
-            Dim builder As New StringBuilder()
-            Dim random As New Random()
-            Dim ch As Char
-            Dim i As Integer
-            For i = 0 To size - 1
-                ch = Convert.ToChar(Convert.ToInt32((26 * random.NextDouble() + 65)))
-                builder.Append(ch)
-            Next
-            If lowerCase Then
-                'For some reason a "[" is sometimes inserted - so this replaces it with a "N"
-                'Need to look into this more
-                If builder.ToString.Contains("[") Then
-                    builder.Replace("[", "N")
-                End If
-                Return builder.ToString().ToLower()
-            End If
+        Public Shared Function SetWorkspacePathDefault() As String
 
-            If builder.ToString.Contains("[") Then
-                builder.Replace("[", "N")
-            End If
-
-            Return builder.ToString()
-
-            'Delay the end of the function for a specified number of ms so that this string is not regenerated with
-            'multiple runs of the GetRandomString function since the random seed value is time dependent
-            Threading.Thread.Sleep(1000)
-        End Function
-
-        ''' <summary>
-        ''' Gets a folder path that does not already exist
-        ''' </summary>
-        ''' <param name="sRootName">Seed name for the folder. Leave blank and the name "Temp" is used</param>
-        ''' <returns>Full absolute path to the new folder that is guaranteed not to exist</returns>
-        ''' <remarks></remarks>
-        Public Shared Function GetSafeDirectoryPath(sRootName As String)
-
-            If String.IsNullOrEmpty(sRootName) Then
-                sRootName = "Temp"
-            End If
-
-            Dim i As Integer = 0
-
-            Dim sSafeFolder As String = sRootName
-            Dim sPath As String
-            Do
-                If i > 0 Then
-                    sSafeFolder = sRootName & i.ToString
-                End If
-                sPath = IO.Path.Combine(WorkspacePath, sSafeFolder)
-                i = i + 1
-            Loop While IO.Directory.Exists(sPath)
-
-            Return sPath
+            Dim sPath As String = GetDefaultWorkspace(My.Resources.ApplicationNameShort)
+            Return SetWorkspacePath(sPath)
 
         End Function
 

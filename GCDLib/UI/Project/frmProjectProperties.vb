@@ -23,19 +23,19 @@ Namespace UI.Project
             m_eDisplayMode = eMode
         End Sub
 
-
 #Region "Events"
 
         Private Sub CreateNewProjectForm_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
-
             If Core.WorkspaceManager.WorkspacePath.Contains(" ") Then
                 MessageBox.Show(String.Format("The specified temp workspace directory contains spaces ({0}). You must specify a temp workspace that does not contain spaces or punctuation characters in the GCD Options before you create or open a GCD project.", Core.WorkspaceManager.WorkspacePath), My.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Warning)
-                Me.Close()
+                DialogResult = DialogResult.Abort
+                Return
             Else
-                If Not System.IO.Directory.Exists(Core.WorkspaceManager.WorkspacePath) Then
+                If Not IO.Directory.Exists(Core.WorkspaceManager.WorkspacePath) Then
                     MessageBox.Show("The temporary workspace directory does not exist. Change the temporary workspace path in GCD Options before creating or opening a GCD project.", My.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information)
-                    Me.Close()
+                    DialogResult = DialogResult.Abort
+                    Return
                 End If
             End If
 
@@ -60,8 +60,7 @@ Namespace UI.Project
             If DisplayMode = DisplayModes.Create Then
                 Me.Text = "Create New " & Me.Text
 
-                ' Default the directory to the parent folder of the last
-                ' project used.
+                ' Default the directory to the parent folder of the last project used.
                 If Not String.IsNullOrEmpty(My.Settings.LastUsedProjectFolder) Then
                     Dim sDir As String = IO.Path.GetDirectoryName(My.Settings.LastUsedProjectFolder)
                     If IO.Directory.Exists(sDir) Then
@@ -71,10 +70,10 @@ Namespace UI.Project
             Else
                 Me.Text = Me.Text & " Properties"
 
-                Dim theProjectRow As ProjectDS.ProjectRow = Core.GCDProject.ProjectManager.CurrentProject
+                Dim theProjectRow As ProjectDS.ProjectRow = Core.GCDProject.ProjectManagerBase.CurrentProject
                 txtName.Text = theProjectRow.Name
                 txtDirectory.Text = theProjectRow.OutputDirectory
-                txtGCDPath.Text = Core.GCDProject.ProjectManager.FilePath
+                txtGCDPath.Text = Core.GCDProject.ProjectManagerBase.FilePath
                 txtDescription.Text = theProjectRow.Description
                 valPrecision.Value = theProjectRow.Precision
 
@@ -104,30 +103,24 @@ Namespace UI.Project
 
             Dim dFolder As New IO.DirectoryInfo(txtDirectory.Text)
             If dFolder.Exists Then
-                Dim diar1 As IO.FileInfo() = dFolder.GetFiles()
-                Dim dra As IO.FileInfo
-
-                'list the names of all files in the specified directory
-                For Each dra In diar1
-                    If String.Compare(dra.Extension, ".gcd", True) = 0 Then
-
-                        MsgBox("The selected folder already contains another GCD project." & vbNewLine &
-                            "Each GCD project must be created in a separate folder.", MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
-                        Exit Sub
-                    End If
-                Next
+                ' Folder with GCD projects already in them are not allowed
+                If dFolder.GetFiles("*.gcd", IO.SearchOption.TopDirectoryOnly).Count > 0 Then
+                    MessageBox.Show("The selected folder already contains another GCD project." & vbNewLine &
+                        "Each GCD project must be created in a separate folder.", My.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    Exit Sub
+                End If
 
                 If String.IsNullOrEmpty(txtName.Text) Then
                     txtName.Text = IO.Path.GetFileName(txtDirectory.Text)
                     btnOK.Focus()
                 End If
             Else
-                MsgBox("The selected folder does not exist. The project folder must exist before the project is created.", MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
+                MessageBox.Show("The selected folder does not exist. The project folder must exist before the project is created.", My.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information)
             End If
 
         End Sub
 
-        Private Sub UpdateGCDPath()
+        Private Sub UpdateGCDPath(sender As Object, e As System.EventArgs) Handles txtName.TextChanged, txtDirectory.TextChanged
 
             Dim sGCDPath As String = String.Empty
             If Not String.IsNullOrEmpty(txtName.Text) Then
@@ -153,54 +146,34 @@ Namespace UI.Project
         Private Sub btnOK_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnOK.Click
 
             If Not ValidateForm() Then
-                Me.DialogResult = System.Windows.Forms.DialogResult.None
+                Me.DialogResult = DialogResult.None
                 Exit Sub
             End If
 
-            IO.Directory.CreateDirectory(IO.Path.GetDirectoryName(txtGCDPath.Text))
-            My.Settings.LastUsedProjectFolder = txtDirectory.Text
-            My.Settings.Save()
-            '
-            '
             Try
+                My.Settings.LastUsedProjectFolder = IO.Path.GetDirectoryName(txtGCDPath.Text)
+                My.Settings.Save()
+
                 If DisplayMode = DisplayModes.Create Then
+                    ' Creating a new project
+                    IO.Directory.CreateDirectory(IO.Path.GetDirectoryName(txtGCDPath.Text))
                     Core.GCDProject.ProjectManagerBase.FilePath = txtGCDPath.Text
-                    'ProjectManagerUI.ds.Project.AddProjectRow(txtName.Text, txtDescription.Text, txtDirectory.Text, Now, System.Reflection.Assembly.GetExecutingAssembly.GetName.Version.ToString, valPrecision.Value, DirectCast(cboDisplayUnits.SelectedItem, UnitsNet.Units.LengthUnit).LinearUnit.ToString)
                     Core.GCDProject.ProjectManagerBase.ds.Project.AddProjectRow(txtName.Text, txtDescription.Text, txtDirectory.Text, Now, System.Reflection.Assembly.GetExecutingAssembly.GetName.Version.ToString, valPrecision.Value, Nothing, Nothing, Core.GCDProject.ProjectManager.ProjectTypes.AddIn.ToString())
-                    Try
-                        ' TODO: was the following extension operation necessary? Surely the name and file can exist on the project manager and aren't need on the extension?
-                        Throw New Exception("check code is not needed")
-                        'Dim gcd As GCDExtension = GCDExtension.GetGCDExtension(My.ThisApplication)
-                        'If TypeOf gcd Is GCDExtension Then
-                        '    gcd.SetCurrentProject(txtName.Text, txtGCDPath.Text)
-                        'End If
-
-                        ' Remember this folder so that the next time "open project" is used it defaults to the location of this project
-                        My.Settings.LastUsedProjectFolder = IO.Path.GetDirectoryName(txtGCDPath.Text)
-                        My.Settings.Save()
-
-                    Catch ex As Exception
-                        ex.Data.Add("Project Name", txtName.Text)
-                        ex.Data.Add("XML File", txtGCDPath.Text)
-                        ex.Data.Add("Directory", txtDirectory.Text)
-                        Core.ExceptionHelper.HandleException(ex, "An error occured while updating the extension with the latest project")
-                    End Try
 
                 Else
                     ' Editing properties of existing project
-                    Dim theProjectRow As ProjectDS.ProjectRow = Core.GCDProject.ProjectManager.CurrentProject
+                    Dim theProjectRow As ProjectDS.ProjectRow = Core.GCDProject.ProjectManagerBase.CurrentProject
                     theProjectRow.Name = txtName.Text
                     theProjectRow.Description = txtDescription.Text
-                    'theProjectRow.DisplayUnits = DirectCast(cboDisplayUnits.SelectedItem, UnitsNet.Units.LengthUnit).LinearUnit.ToString
                 End If
 
-                Core.GCDProject.ProjectManager.save()
+                Core.GCDProject.ProjectManagerBase.save()
 
             Catch ex As Exception
-                ex.Data.Add("Project Name", txtName.Text)
-                ex.Data.Add("XML File", txtGCDPath.Text)
-                ex.Data.Add("Directory", txtDirectory.Text)
-                Core.ExceptionHelper.HandleException(ex, "An error occured while trying to save the information")
+                ex.Data("Project Name") = txtName.Text
+                ex.Data("XML File") = txtGCDPath.Text
+                ex.Data("Directory") = txtDirectory.Text
+                naru.error.ExceptionUI.HandleException(ex, "An error occured while trying to save the information")
             End Try
 
         End Sub
@@ -208,16 +181,16 @@ Namespace UI.Project
         Private Function ValidateForm() As Boolean
 
             If String.IsNullOrEmpty(txtName.Text) Then
-                MsgBox("Please enter a name for the new project.", MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
+                MessageBox.Show("Please enter a name for the new project.", My.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information)
                 Return False
             End If
 
             If String.IsNullOrEmpty(txtDirectory.Text.Length) Then
-                MsgBox("Please select an output directory.", MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
+                MessageBox.Show("Please select an output directory.", My.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information)
                 Return False
             Else
                 If Not IO.Directory.Exists(txtDirectory.Text) Then
-                    MsgBox("The parent directory must be valid, existing directory.", MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
+                    MessageBox.Show("The parent directory must be valid, existing directory.", My.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information)
                     Return False
                 End If
             End If
@@ -225,7 +198,7 @@ Namespace UI.Project
             ' Only check if the file exists when creating a new one.
             If DisplayMode = DisplayModes.Create Then
                 If IO.File.Exists(txtGCDPath.Text) Then
-                    MsgBox("There already appears to be a GCD project at the specified path. Change the project name or pick a different parent directory.", MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
+                    MessageBox.Show("There already appears to be a GCD project at the specified path. Change the project name or pick a different parent directory.", My.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information)
                     Return False
                 End If
             End If
@@ -243,12 +216,6 @@ Namespace UI.Project
         End Sub
 
 #End Region
-
-        Private Sub txtName_TextChanged(sender As Object, e As System.EventArgs) Handles _
-        txtName.TextChanged, txtDirectory.TextChanged
-
-            UpdateGCDPath()
-        End Sub
 
         Private Sub cmdHelpPrecision_Click(sender As System.Object, e As System.EventArgs) Handles cmdHelpPrecision.Click
             Dim frm As New UtilityForms.frmInformation
