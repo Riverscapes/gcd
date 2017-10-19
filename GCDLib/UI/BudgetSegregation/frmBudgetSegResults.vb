@@ -1,5 +1,5 @@
 ﻿Imports System.Windows.Forms
-Imports GCD.GCDLib.Core
+Imports GCDLib.Core
 
 Namespace UI.BudgetSegregation
 
@@ -93,10 +93,10 @@ Namespace UI.BudgetSegregation
                         Dim sThrDoD As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rDoD.ThreshDoDPath)
                         Dim gRawDoD As New GCDConsoleLib.Raster(sRawDod)
                         If rDoD.TypeMinLOD Then
-                            cdProperties = New Core.ChangeDetection.ChangeDetectionPropertiesMinLoD(sRawDod, sThrDoD, rDoD.Threshold, gRawDoD.CellSize, gRawDoD.LinearUnits)
+                            cdProperties = New Core.ChangeDetection.ChangeDetectionPropertiesMinLoD(sRawDod, sThrDoD, rDoD.Threshold, gRawDoD.Extent.CellWidth, gRawDoD.VerticalUnits)
                         ElseIf rDoD.TypePropagated Then
                             Dim sPropErr As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rDoD.PropagatedErrorRasterPath)
-                            cdProperties = New Core.ChangeDetection.ChangeDetectionPropertiesPropagated(sRawDod, sThrDoD, sPropErr, gRawDoD.CellSize, gRawDoD.LinearUnits)
+                            cdProperties = New Core.ChangeDetection.ChangeDetectionPropertiesPropagated(sRawDod, sThrDoD, sPropErr, gRawDoD.Extent.CellWidth, gRawDoD.VerticalUnits)
                         Else
 
                             Dim sPropErr As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rDoD.PropagatedErrorRasterPath)
@@ -126,7 +126,7 @@ Namespace UI.BudgetSegregation
                                 sPosteriorRaster = rDoD.PosteriorRaster
                             End If
 
-                            cdProperties = New Core.ChangeDetection.ChangeDetectionPropertiesProbabilistic(sRawDod, sThrDoD, sPropErr, sProbabilityRaster, sSpatialCoErosionRaster, sSpatialCoDepositionRaster, sConditionalProbRaster, sPosteriorRaster, rDoD.Threshold, rDoD.Filter, rDoD.Bayesian, gRawDoD.CellSize, gRawDoD.LinearUnits)
+                            cdProperties = New Core.ChangeDetection.ChangeDetectionPropertiesProbabilistic(sRawDod, sThrDoD, sPropErr, sProbabilityRaster, sSpatialCoErosionRaster, sSpatialCoDepositionRaster, sConditionalProbRaster, sPosteriorRaster, rDoD.Threshold, rDoD.Filter, rDoD.Bayesian, gRawDoD.Extent.CellWidth, gRawDoD.VerticalUnits)
                         End If
 
                         Dim sRawCSV As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rDoD.ThreshHistPath)
@@ -175,7 +175,7 @@ Namespace UI.BudgetSegregation
             Dim sPath As String = cms.SourceControl.Text
             sPath = GCDProject.ProjectManagerBase.GetAbsolutePath(sPath)
             If Not String.IsNullOrEmpty(sPath) Then
-                If GCDConsoleLib.Vector.Exists(sPath) Then
+                If GCDConsoleLib.GISDataset.FileExists(sPath) Then
 
                     Try
                         Dim gPolygon As GCDConsoleLib.Vector = New GCDConsoleLib.Vector(sPath)

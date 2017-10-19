@@ -48,15 +48,14 @@ Namespace UI.Project
             ttpTooltip.SetToolTip(cboDisplayUnits, "The default units for displaying and outputting change detection results.")
             ttpTooltip.SetToolTip(valPrecision, "The number of decimal places used to round raster cell coordinates when determining divisible raster extents.")
 
-            cboDisplayUnits.Items.Add(New UnitsNet.Units.LengthUnit("millimeters (mm)", UnitsNet.Units.LengthUnit.mm))
-            cboDisplayUnits.Items.Add(New UnitsNet.Units.LengthUnit("centimeters (cm)", UnitsNet.Units.LengthUnit.cm))
-            Dim i As Integer = cboDisplayUnits.Items.Add(New UnitsNet.Units.LengthUnit("meters (m)", UnitsNet.Units.LengthUnit.m))
-            cboDisplayUnits.Items.Add(New UnitsNet.Units.LengthUnit("kilometers (km)", UnitsNet.Units.LengthUnit.km))
-            cboDisplayUnits.Items.Add(New UnitsNet.Units.LengthUnit("inches (in)", UnitsNet.Units.LengthUnit.inch))
-            cboDisplayUnits.Items.Add(New UnitsNet.Units.LengthUnit("feet (ft)", UnitsNet.Units.LengthUnit.ft))
-            cboDisplayUnits.Items.Add(New UnitsNet.Units.LengthUnit("yards (yd)", UnitsNet.Units.LengthUnit.yard))
-            cboDisplayUnits.Items.Add(New UnitsNet.Units.LengthUnit("miles (mi)", UnitsNet.Units.LengthUnit.mile))
-            cboDisplayUnits.SelectedIndex = i
+            cboDisplayUnits.Items.Add(New naru.db.NamedObject(UnitsNet.Units.LengthUnit.Millimeter, UnitsNet.Length.GetAbbreviation(UnitsNet.Units.LengthUnit.Millimeter)))
+            cboDisplayUnits.Items.Add(New naru.db.NamedObject(UnitsNet.Units.LengthUnit.Centimeter, UnitsNet.Length.GetAbbreviation(UnitsNet.Units.LengthUnit.Centimeter)))
+            cboDisplayUnits.SelectedIndex = cboDisplayUnits.Items.Add(New naru.db.NamedObject(UnitsNet.Units.LengthUnit.Meter, UnitsNet.Length.GetAbbreviation(UnitsNet.Units.LengthUnit.Meter)))
+            cboDisplayUnits.Items.Add(New naru.db.NamedObject(UnitsNet.Units.LengthUnit.Kilometer, UnitsNet.Length.GetAbbreviation(UnitsNet.Units.LengthUnit.Kilometer)))
+            cboDisplayUnits.Items.Add(New naru.db.NamedObject(UnitsNet.Units.LengthUnit.Inch, UnitsNet.Length.GetAbbreviation(UnitsNet.Units.LengthUnit.Inch)))
+            cboDisplayUnits.Items.Add(New naru.db.NamedObject(UnitsNet.Units.LengthUnit.Foot, UnitsNet.Length.GetAbbreviation(UnitsNet.Units.LengthUnit.Foot)))
+            cboDisplayUnits.Items.Add(New naru.db.NamedObject(UnitsNet.Units.LengthUnit.Yard, UnitsNet.Length.GetAbbreviation(UnitsNet.Units.LengthUnit.Yard)))
+            cboDisplayUnits.Items.Add(New naru.db.NamedObject(UnitsNet.Units.LengthUnit.Mile, UnitsNet.Length.GetAbbreviation(UnitsNet.Units.LengthUnit.Mile)))
 
             If DisplayMode = DisplayModes.Create Then
                 Me.Text = "Create New " & Me.Text

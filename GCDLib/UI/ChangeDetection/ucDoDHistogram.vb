@@ -1,5 +1,5 @@
-﻿Imports GCD.GCDLib.Core.ChangeDetection
-Imports GCD.GCDLib.Core.Visualization
+﻿Imports GCDLib.Core.ChangeDetection
+Imports GCDLib.Core.Visualization
 Imports System.Windows.Forms
 
 Namespace UI.ChangeDetection

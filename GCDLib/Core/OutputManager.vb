@@ -250,35 +250,27 @@ Namespace Core
 #Region "Raster Paths"
 
         Public Function DEMSurveyRasterPath(ByVal sSurveyName As String) As String
-            Return GCDConsoleLib.Raster.BuildRasterPath(DEMSurveyFolder(sSurveyName), sSurveyName).FullName
+            Return naru.os.File.GetNewSafeName(DEMSurveyFolder(sSurveyName), sSurveyName, GCDProject.ProjectManagerBase.RasterExtension).FullName
         End Function
 
         Public Function DEMSurveyHillShadeRasterPath(ByVal sSurveyName As String) As String
-            Return GCDConsoleLib.Raster.BuildRasterPath(DEMSurveyFolder(sSurveyName), sSurveyName & m_sDEMSurveyHillshadeSuffix).FullName
+            Return naru.os.File.GetNewSafeName(DEMSurveyFolder(sSurveyName), sSurveyName & m_sDEMSurveyHillshadeSuffix, GCDProject.ProjectManagerBase.RasterExtension).FullName
         End Function
 
         Public Function AssociatedSurfaceRasterPath(ByVal sSurveyName As String, ByVal sAssociatedSurface As String) As String
-            Return GCDConsoleLib.Raster.BuildRasterPath(AssociatedSurfaceFolder(sSurveyName, sAssociatedSurface), sAssociatedSurface).FullName
+            Return naru.os.File.GetNewSafeName(AssociatedSurfaceFolder(sSurveyName, sAssociatedSurface), sAssociatedSurface, GCDProject.ProjectManagerBase.RasterExtension).FullName
         End Function
 
         Public Function ErrorSurfaceRasterPath(ByVal sSurveyName As String, ByVal sErrorSurfaceName As String, Optional ByVal bCreateWorkspace As Boolean = True) As String
 
             Dim sSafeName As String = naru.os.File.RemoveDangerousCharacters(sErrorSurfaceName)
             Dim sWorkspace As String = ErrorSurfaceFolder(sSurveyName, sSafeName)
-            Dim sRasterPath As String
 
-            If IO.Directory.Exists(sWorkspace) Then
-                sRasterPath = GCDConsoleLib.Raster.GetNewSafeName(sWorkspace, sSafeName)
-            Else
-                If bCreateWorkspace Then
-                    IO.Directory.CreateDirectory(sWorkspace)
-                    sRasterPath = GCDConsoleLib.Raster.GetNewSafeName(sWorkspace, sSafeName)
-                Else
-                    sRasterPath = GCDConsoleLib.Raster.BuildRasterPath(sWorkspace, sSafeName).FullName
-                End If
+            If Not IO.Directory.Exists(sWorkspace) AndAlso bCreateWorkspace Then
+                IO.Directory.CreateDirectory(sWorkspace)
             End If
 
-            Return sRasterPath
+            Return naru.os.File.GetNewSafeName(sWorkspace, sSafeName, GCDProject.ProjectManagerBase.RasterExtension).FullName
 
         End Function
 
@@ -287,15 +279,7 @@ Namespace Core
             Dim sMaskPath As String = DEMSurveyMethodMaskFolder(sSurveyName)
             Dim sFeatureClassName As String = naru.os.File.RemoveDangerousCharacters(sSurveyName) & m_sErrorSurfaceMethodMask
 
-            If IO.Directory.Exists(sMaskPath) Then
-                sMaskPath = GCDConsoleLib.Vector.GetNewSafeName(sMaskPath, sFeatureClassName)
-            Else
-                sMaskPath = IO.Path.Combine(sMaskPath, sFeatureClassName)
-            End If
-
-            sMaskPath = IO.Path.ChangeExtension(sMaskPath, "shp")
-
-            Return sMaskPath
+            Return naru.os.File.GetNewSafeName(sMaskPath, sFeatureClassName, "shp").FullName
 
         End Function
 
@@ -614,19 +598,12 @@ Namespace Core
 
             Dim sWorkspace As String = ErrorSurfaceMethodFolder(sSurveyName, sErrorName, sMethod)
 
-            Dim sFullPath As String
-            If IO.Directory.Exists(sWorkspace) Then
-                sFullPath = GCDConsoleLib.Raster.GetNewSafeName(sWorkspace, sMethod.Replace(" ", ""))
-            Else
-                If bCreateWorkspace Then
-                    IO.Directory.CreateDirectory(sWorkspace)
-                    sFullPath = GCDConsoleLib.Raster.GetNewSafeName(sWorkspace, sMethod.Replace(" ", ""))
-                Else
-                    sFullPath = GCDConsoleLib.Raster.BuildRasterPath(sWorkspace, sMethod).FullName
-                End If
+            If Not IO.Directory.Exists(sWorkspace) AndAlso bCreateWorkspace Then
+                IO.Directory.CreateDirectory(sWorkspace)
             End If
 
-            Return sFullPath
+            Return naru.os.File.GetNewSafeName(sWorkspace, sMethod.Replace(" ", ""), GCDProject.ProjectManagerBase.RasterExtension).FullName
+
         End Function
 
         ''' <summary>
@@ -641,19 +618,11 @@ Namespace Core
         Public Function ErrorSurfarceMethodRasterMaskPath(ByVal sSurveyName As String, ByVal sErrorName As String, ByVal sMethod As String, Optional ByVal bCreateWorkspace As Boolean = True) As String
 
             Dim sWorkspace As String = ErrorSurfaceMethodFolder(sSurveyName, sErrorName, sMethod)
-            Dim sFullPath As String
-            If IO.Directory.Exists(sWorkspace) Then
-                sFullPath = GCDConsoleLib.Raster.GetNewSafeName(sWorkspace, sMethod.Replace(" ", "") & m_sErrorSurfaceMethodMask)
-            Else
-                If bCreateWorkspace Then
-                    IO.Directory.CreateDirectory(sWorkspace)
-                    sFullPath = GCDConsoleLib.Raster.GetNewSafeName(sWorkspace, sMethod.Replace(" ", "") & m_sErrorSurfaceMethodMask)
-                Else
-                    sFullPath = GCDConsoleLib.Raster.BuildRasterPath(sWorkspace, sMethod).FullName
-                End If
+            If Not IO.Directory.Exists(sWorkspace) AndAlso bCreateWorkspace Then
+                IO.Directory.CreateDirectory(sWorkspace)
             End If
 
-            Return sFullPath
+            Return naru.os.File.GetNewSafeName(sWorkspace, sMethod.Replace(" ", "") & m_sErrorSurfaceMethodMask, GCDProject.ProjectManagerBase.RasterExtension).FullName
 
         End Function
 
@@ -765,9 +734,8 @@ Namespace Core
                 dodDirectoryPath = sFolder
             End If
 
-            Dim dodThresholdPath As String = GCDConsoleLib.Raster.BuildRasterPath(dodDirectoryPath, "dodThresh").FullName
+            Return naru.os.File.GetNewSafeName(dodDirectoryPath, "dodThresh", GCDProject.ProjectManagerBase.RasterExtension).FullName
 
-            Return dodThresholdPath
         End Function
 
         Public Function GetCsvThresholdPath(ByVal sDoDName As String, Optional ByVal sFolder As String = "") As String
@@ -790,7 +758,7 @@ Namespace Core
             Else
                 dodDirectoryPath = sFolder
             End If
-            Dim sPropErrRaster As String = GCDConsoleLib.Raster.BuildRasterPath(dodDirectoryPath, "PropErr").FullName
+            Dim sPropErrRaster As String = naru.os.File.GetNewSafeName(dodDirectoryPath, "PropErr", GCDProject.ProjectManagerBase.RasterExtension).FullName
             Return sPropErrRaster
         End Function
 
@@ -835,7 +803,7 @@ Namespace Core
             sDoDRawPath = IO.Path.ChangeExtension(sDoDRawPath, "tif")
             If IO.Directory.Exists(dodDirectoryPath) Then
                 If IO.File.Exists(sDoDRawPath) Then
-                    sDoDRawPath = GCDConsoleLib.Raster.GetNewSafeName(dodDirectoryPath, IO.Path.GetFileNameWithoutExtension(sDoDRawPath))
+                    sDoDRawPath = naru.os.File.GetNewSafeName(dodDirectoryPath, IO.Path.GetFileNameWithoutExtension(sDoDRawPath), GCDProject.ProjectManagerBase.RasterExtension).FullName
                 End If
             End If
             Return sDoDRawPath
@@ -1014,7 +982,7 @@ Namespace Core
             ' PGB 14 Sep 2011 - trying to avoid these characters now and use io.path.combine instread
             'errorCalcDirectoryPath &= IO.Path.DirectorySeparatorChar
             'generate error name
-            Dim errorCalcPath As String = GCDConsoleLib.Raster.BuildRasterPath(ErrorNameDirectoryPath, sErrorName).FullName
+            Dim errorCalcPath As String = naru.os.File.GetNewSafeName(ErrorNameDirectoryPath, sErrorName, GCDProject.ProjectManagerBase.RasterExtension).FullName
             Return errorCalcPath
         End Function
 
@@ -1072,7 +1040,7 @@ Namespace Core
 
             'Dim sExtension As String = GISCode.Raster.GetRasterType(My.Settings.DefaultRasterFormat)
             'Dim eType As GCDConsoleLib.Raster.RasterTypes = Me.GetDefaultRasterTyp
-            Dim sRasterPath As String = GCDConsoleLib.Raster.BuildRasterPath(sSurfacesDirectoryPath, sWaterSurfaceName).FullName
+            Dim sRasterPath As String = naru.os.File.GetNewSafeName(sSurfacesDirectoryPath, sWaterSurfaceName, GCDProject.ProjectManagerBase.RasterExtension).FullName
             'sRasterPath = IO.Path.Combine(sSurfacesDirectoryPath, sRasterPath)
             'sRasterPath = IO.Path.ChangeExtension(sRasterPath, GISCode.Raster.GetRasterExtension(sExtension))
 

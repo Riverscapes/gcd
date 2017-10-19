@@ -32,6 +32,20 @@ Namespace Core.GCDProject
 
         Protected Shared m_eDefaultRasterType As GCDConsoleLib.Raster.RasterDriver
 
+        Public Shared ReadOnly Property RasterExtension As String
+            Get
+                Select Case m_eDefaultRasterType
+                    Case GCDConsoleLib.Raster.RasterDriver.GTiff
+                        Return "tif"
+                    Case GCDConsoleLib.Raster.RasterDriver.HFA
+                        Return "img"
+                    Case Else
+                        Throw New NotImplementedException(String.Format("Unhandled raster driver type {0}", m_eDefaultRasterType))
+                End Select
+            End Get
+        End Property
+
+
         Public Shared ReadOnly Property GCDNARCError As External.NARCError
             Get
                 Return m_GCDNARCError

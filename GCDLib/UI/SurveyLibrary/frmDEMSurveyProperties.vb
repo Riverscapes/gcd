@@ -1,4 +1,4 @@
-﻿Imports GCD.GCDLib.Core
+﻿Imports GCDLib.Core
 Imports System.Windows.Forms
 
 Namespace UI.SurveyLibrary
@@ -43,7 +43,7 @@ Namespace UI.SurveyLibrary
                 ' Select the method mask field
                 If demRow.MultiMethod Then
                     Dim sMaskPath As String = Core.GCDProject.ProjectManager.GetAbsolutePath(txtMask.Text)
-                    If GCDConsoleLib.Vector.Exists(sMaskPath) Then
+                    If GCDConsoleLib.GISDataset.FileExists(sMaskPath) Then
                         Dim gMask As New GCDConsoleLib.Vector(sMaskPath)
                         gMask.FillComboWithFields(cboIdentify, "Method", GISDataStructures.FieldTypes.StringField, True)
                         For i As Integer = 0 To cboIdentify.Items.Count - 1
@@ -360,7 +360,7 @@ Namespace UI.SurveyLibrary
 
                 ' Check if the user has browsed to the same mask. In which case do nothing except reload the fields
                 ' (just in case they are doing this for a reason.
-                Dim sTempPath As String = GCDProject.ProjectManager.GetRelativePath(gNewMask.FullPath)
+                Dim sTempPath As String = GCDProject.ProjectManager.GetRelativePath(gNewMask.FilePath)
                 If String.Compare(sTempPath, txtMask.Text, True) = 0 Then
                     gNewMask.FillComboWithFields(cboIdentify, "Method", GISDataStructures.FieldTypes.StringField, True)
                     Exit Sub
@@ -371,14 +371,14 @@ Namespace UI.SurveyLibrary
                     ' Check that the new mask has the same spatial reference as the DEM survey.
                     Dim dr As DataRowView = DEMSurveyBindingSource.Current
                     Dim demRow As ProjectDS.DEMSurveyRow = dr.Row
-                    Dim gDEM As New GCDConsoleLib.Raster(GCDProject.ProjectManagerBase.GetAbsolutePath(demRow.Source))
-                    If Not gDEM.CheckSpatialReferenceMatches(gNewMask.SpatialReference) Then
-                        MsgBox("The spatial reference of the selected polygon feature class does not match that of the DEM survey raster (" & gDEM.SpatialReference & ").", MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
+                    Dim gDEM As New GCDConsoleLib.Raster(Core.GCDProject.ProjectManagerBase.GetAbsolutePath(demRow.Source))
+                    If Not gDEM.Proj.IsSame(gNewMask.Proj) Then
+                        MsgBox("The spatial reference of the selected polygon feature class does not match that of the DEM survey raster (" & gDEM.Proj.PrettyWkt & ").", MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
                         Exit Sub
                     End If
 
                     ' Check that the new mask has at least one feature
-                    If gNewMask.FeatureCount < 1 Then
+                    If gNewMask.Features.Count < 1 Then
                         MsgBox("The polygon feature class is empty and contains no features.", MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
                         Exit Sub
                     End If
@@ -402,7 +402,7 @@ Namespace UI.SurveyLibrary
 
                     Dim sMethodMask As String = GCDProject.ProjectManagerBase.OutputManager.DEMSurveyMethodMaskPath(txtName.Text)
                     Try
-                        IO.Directory.CreateDirectory(GISDataStructures.GISDataSource.GetWorkspacePath(sMethodMask))
+                        IO.Directory.CreateDirectory(System.IO.Path.GetDirectoryName(sMethodMask))
                     Catch ex As Exception
                         Dim ex2 As New Exception("Error attempting to create the directory for the DEM Survey method mask.")
                         ex2.Data.Add("Method Mask Folder", sMethodMask)
@@ -410,14 +410,15 @@ Namespace UI.SurveyLibrary
                         Exit Sub
                     End Try
 
-                    If GISDataStructures.GISDataSource.Exists(sMethodMask) Then
+                    If GCDConsoleLib.GISDataset.FileExists(sMethodMask) Then
                         Dim ex As New Exception("The polygon mask feature class already exists.")
-                        ex.Data.Add("Original Mask", gNewMask.FullPath)
+                        ex.Data.Add("Original Mask", gNewMask.FilePath)
                         ex.Data.Add("GCD Project Mask", sMethodMask)
                         ExceptionHelper.HandleException(ex)
                     Else
                         Try
-                            gNewMask = GCDConsoleLib.Vector.CopyShapeFile(gNewMask.FullPath, sMethodMask)
+                            gNewMask.Copy(sMethodMask)
+                            gNewMask = New GCDConsoleLib.Vector(sMethodMask)
 
                             ' Poplulate the method mask dropdown with the string fields from the feature class
                             gNewMask.FillComboWithFields(cboIdentify, "Method", GISDataStructures.FieldTypes.StringField)
@@ -425,7 +426,7 @@ Namespace UI.SurveyLibrary
 
                         Catch ex As Exception
                             Dim ex2 As New Exception("Error attempting to copy the method mask feature class into the GCD project folder.", ex)
-                            ex2.Data.Add("Original Path", gNewMask.FullPath)
+                            ex2.Data.Add("Original Path", gNewMask.FilePath)
                             ex2.Data.Add("GCD Project Path", sMethodMask)
                             ExceptionHelper.HandleException(ex2)
                             Exit Sub
@@ -446,8 +447,8 @@ Namespace UI.SurveyLibrary
         Private Sub DeleteExistingMaskFeatureClass()
 
             Dim sMaskPath As String = GCDProject.ProjectManagerBase.GetAbsolutePath(txtMask.Text)
-            If GISDataStructures.GISDataSource.Exists(sMaskPath) Then
-                Dim sWorkspace As String = GCDConsoleLib.Vector.GetWorkspacePath(sMaskPath)
+            If GCDConsoleLib.GISDataset.FileExists(sMaskPath) Then
+                Dim sWorkspace As String = System.IO.Path.GetDirectoryName(sMaskPath)
                 Try
                     GCDConsoleLib.Raster.DeleteRaster(sMaskPath)
                     txtMask.Text = String.Empty
@@ -484,7 +485,7 @@ Namespace UI.SurveyLibrary
         Private Sub LoadRasterProperties()
 
             Dim sAbsolutePath As String = GCDProject.ProjectManagerBase.GetAbsolutePath(txtRasterPath.Text)
-            If Not GCDConsoleLib.Raster.Exists(sAbsolutePath) Then
+            If Not GCDConsoleLib.GISDataset.FileExists(sAbsolutePath) Then
                 Exit Sub
             End If
 
@@ -497,13 +498,13 @@ Namespace UI.SurveyLibrary
             sRasterProperties &= vbNewLine & "Right: " & gRaster.Extent.Right.ToString("#,##0.#")
             sRasterProperties &= vbNewLine & "Bottom: " & gRaster.Extent.Bottom.ToString("#,##0.#")
             sRasterProperties &= vbNewLine
-            sRasterProperties &= vbNewLine & "Cell size: " & Math.Round(gRaster.CellSize, CInt(GCDProject.ProjectManager.CurrentProject.Precision)).ToString
+            sRasterProperties &= vbNewLine & "Cell size: " & Math.Round(gRaster.Extent.CellWidth, CInt(GCDProject.ProjectManager.CurrentProject.Precision)).ToString
             sRasterProperties &= vbNewLine
             sRasterProperties &= vbNewLine & "Width: " & (gRaster.Extent.Right - gRaster.Extent.Left).ToString("#,##0.#")
             sRasterProperties &= vbNewLine & "Height: " & (gRaster.Extent.Top - gRaster.Extent.Bottom).ToString("#,##0.#")
             sRasterProperties &= vbNewLine
-            sRasterProperties &= vbNewLine & "Rows: " & gRaster.Rows.ToString("#,##0")
-            sRasterProperties &= vbNewLine & "Columns: " & gRaster.Columns.ToString("#,##0")
+            sRasterProperties &= vbNewLine & "Rows: " & gRaster.Extent.rows.ToString("#,##0")
+            sRasterProperties &= vbNewLine & "Columns: " & gRaster.Extent.cols.ToString("#,##0")
             sRasterProperties &= vbNewLine & vbNewLine
             sRasterProperties &= "-- Original Raster Properties --"
             sRasterProperties &= vbNewLine & "Left: " & demRow.OriginalExtentLeft.ToString '("#,##0.#")
@@ -676,7 +677,7 @@ Namespace UI.SurveyLibrary
                 End Try
 
                 If bContinue Then
-                    If GCDConsoleLib.Raster.Exists(GCDProject.ProjectManager.GetAbsolutePath(rAssoc.Source)) Then
+                    If GCDConsoleLib.GISDataset.FileExists(GCDProject.ProjectManager.GetAbsolutePath(rAssoc.Source)) Then
                         Try
                             GCDConsoleLib.Raster.DeleteRaster(sPath)
                         Catch ex As Exception
@@ -844,7 +845,7 @@ Namespace UI.SurveyLibrary
 
                 If bContinue Then
                     If Not rError.IsSourceNull Then
-                        If GCDConsoleLib.Raster.Exists(Core.GCDProject.ProjectManager.GetAbsolutePath(rError.Source)) Then
+                        If GCDConsoleLib.GISDataset.FileExists(Core.GCDProject.ProjectManager.GetAbsolutePath(rError.Source)) Then
                             Try
                                 GCDConsoleLib.Raster.DeleteRaster(sPath)
                             Catch ex As Exception

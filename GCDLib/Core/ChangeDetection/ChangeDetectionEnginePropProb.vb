@@ -76,7 +76,7 @@
 
             Dim gRawDoD As New GCDConsoleLib.Raster(sRawDoDPath)
 
-            Dim dodProp As New ChangeDetectionPropertiesPropagated(sRawDoDPath, sThreshDodPath, sPropagatedErrorRaster, gRawDoD.CellSize, gRawDoD.LinearUnits)
+            Dim dodProp As New ChangeDetectionPropertiesPropagated(sRawDoDPath, sThreshDodPath, sPropagatedErrorRaster, gRawDoD.Extent.CellWidth, gRawDoD.VerticalUnits)
             Dim theChangeStats = New ChangeStatsCalculator(dodProp)
             sSummaryXMLPath = GenerateSummaryXML(theChangeStats)
 

@@ -25,7 +25,7 @@ Namespace UI.ChangeDetection
 
         Private Sub DoDSummaryPropertiesForm_Load(sender As Object, e As System.EventArgs) Handles Me.Load
 
-            txtUnitsOriginal.Text = m_eOriginalUnits.GetUnitsAsString()
+            txtUnitsOriginal.Text = UnitsNet.Length.GetAbbreviation(m_eOriginalUnits)
 
             AddUnitsToCombo(UnitsNet.Units.LengthUnit.Millimeter)
             AddUnitsToCombo(UnitsNet.Units.LengthUnit.Centimeter)

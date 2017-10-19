@@ -19,9 +19,7 @@ Namespace Core
 
         Public Shared Function GetTempRaster(sRootName As String) As String
 
-            Dim sResult As String
-            sResult = GCDConsoleLib.Raster.GetNewSafeName(m_diWorkspacePath.FullName, sRootName)
-            Return sResult
+            Return naru.os.File.GetNewSafeName(m_diWorkspacePath.FullName, sRootName, "tif").FullName
 
         End Function
 
@@ -30,9 +28,8 @@ Namespace Core
             If String.IsNullOrEmpty(sRootName) Then
                 Throw New ArgumentNullException("sRootName")
             End If
-            sRootName = IO.Path.ChangeExtension(sRootName, ".shp")
-            Dim sResult As String = GCDConsoleLib.Vector.GetNewSafeName(m_diWorkspacePath.FullName, sRootName)
-            Return sResult
+
+            Return naru.os.File.GetNewSafeName(m_diWorkspacePath.FullName, System.IO.Path.ChangeExtension(sRootName, ""), "shp").FullName
 
         End Function
 

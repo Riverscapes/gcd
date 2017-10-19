@@ -1,4 +1,4 @@
-﻿Imports GCD.GCDLib.Core
+﻿Imports GCDLib.Core
 
 Namespace UI.UtilityForms
 

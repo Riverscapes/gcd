@@ -1,4 +1,4 @@
-﻿Imports GCD.GCDLib.Core.ErrorCalculation
+﻿Imports GCDLib.Core.ErrorCalculation
 Imports System.Windows.Forms
 
 Namespace UI.ErrorCalculation
@@ -83,7 +83,7 @@ Namespace UI.ErrorCalculation
                 ' Safely retrieve the spatial units of the DEM
                 Dim sDEMPath As String = Core.GCDProject.ProjectManagerBase.GetAbsolutePath(m_rDEMSurvey.Source)
                 Dim gDEM As New GCDConsoleLib.Raster(sDEMPath)
-                rdoUniform.Text = rdoUniform.Text & " " & gDEM.LinearUnits.GetUnitsAsString(True)
+                rdoUniform.Text = String.Format("{0} ({1})", rdoUniform.Text, UnitsNet.Length.GetAbbreviation(gDEM.VerticalUnits))
             Catch ex As Exception
                 ' Don't show an error in release mode
                 Debug.Assert(False, "Error retrieving linear units from DEM")
@@ -207,7 +207,7 @@ Namespace UI.ErrorCalculation
                         Dim nIdentifierFld As Integer = gMethodMask.FindField(m_rDEMSurvey.MethodMaskField)
                         If nIdentifierFld < 0 Then
                             Dim ex As New Exception("Unable to find method mask field in mask polygon feature class")
-                            ex.Data("Feature Class") = gMethodMask.FullPath
+                            ex.Data("Feature Class") = gMethodMask.FilePath
                             ex.Data("Field") = m_rDEMSurvey.MethodMaskField
                             Throw ex
                         End If

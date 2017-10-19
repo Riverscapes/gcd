@@ -1,4 +1,4 @@
-﻿Imports GCD.GCDLib.Core
+﻿Imports GCDLib.Core
 
 Namespace UI.SurveyLibrary
 
@@ -404,7 +404,7 @@ Namespace UI.SurveyLibrary
 
             If m_frmPointDensity Is Nothing Then
                 Dim gDEMSurveyRaster As GCDConsoleLib.Raster = GetDEMSurveyRaster()
-                m_frmPointDensity = New frmPointDensity(gDEMSurveyRaster.LinearUnits)
+                m_frmPointDensity = New frmPointDensity(gDEMSurveyRaster.VerticalUnits)
             End If
 
             If m_frmPointDensity.ShowDialog = System.Windows.Forms.DialogResult.OK Then

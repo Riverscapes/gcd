@@ -1,7 +1,7 @@
 ﻿Imports System.Windows.Forms
 Imports System.Drawing
-Imports GCD.GCDLib.UI.SurveyLibrary
-Imports GCD.GCDLib.Core
+Imports GCDLib.UI.SurveyLibrary
+Imports GCDLib.Core
 
 Namespace UI.Project
 
@@ -536,7 +536,7 @@ Namespace UI.Project
                     "[Undefined]", "", "", Core.GCDProject.ProjectManager.CurrentProject, True, False, "", frmImport.valCellSize.Value,
                     frmImport.valLeft.Value, frmImport.valBottom.Value, frmImport.valRight.Value, frmImport.valTop.Value,
                     frmImport.OriginalExtent.Left, frmImport.OriginalExtent.Bottom, frmImport.OriginalExtent.Right, frmImport.OriginalExtent.Top,
-                    frmImport.ucRaster.SelectedItem.FullPath, System.Net.Dns.GetHostName, frmImport.valCellSize.Value, Nothing, Nothing, Nothing, Nothing, Nothing)
+                    frmImport.ucRaster.SelectedItem.FilePath, System.Net.Dns.GetHostName, frmImport.valCellSize.Value, Nothing, Nothing, Nothing, Nothing, Nothing)
                     Core.GCDProject.ProjectManager.save()
 
                     nDEMSurveyID = demRow.DEMSurveyID

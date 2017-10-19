@@ -54,7 +54,7 @@ Namespace Core.ChangeDetection
             Dim sSpatialCoErosionRaster As String = ""
 
             ' Create the prior probability raster
-            sPriorProbRaster = GCDConsoleLib.Raster.GetNewSafeName(Folder.FullName & IO.Path.DirectorySeparatorChar, "priorProb")
+            sPriorProbRaster = naru.os.File.GetNewSafeName(Folder.FullName, "priorprob", GCDProject.ProjectManagerBase.RasterExtension).FullName
             If Not External.CreatePriorProbabilityRaster(sRawDoDPath, AnalysisNewError.FilePath, AnalysisOldError.FilePath, sPriorProbRaster,
                                                     GCDProject.ProjectManager.OutputManager.OutputDriver,
                                                     GCDProject.ProjectManager.OutputManager.NoData,
@@ -65,10 +65,10 @@ Namespace Core.ChangeDetection
 
             If TypeOf SpatialCoherenceProperties Is CoherenceProperties Then
 
-                sPosteriorRaster = GCDConsoleLib.Raster.GetNewSafeName(Folder.FullName & IO.Path.DirectorySeparatorChar, "postProb")
-                sConditionalRaster = GCDConsoleLib.Raster.GetNewSafeName(Folder.FullName & IO.Path.DirectorySeparatorChar, "condProb")
-                sSpatialCoErosionRaster = GCDConsoleLib.Raster.GetNewSafeName(Folder.FullName & IO.Path.DirectorySeparatorChar, "nbrErosion")
-                sSpatialCoDepositionRaster = GCDConsoleLib.Raster.GetNewSafeName(Folder.FullName & IO.Path.DirectorySeparatorChar, "nbrDeposition")
+                sPosteriorRaster = naru.os.File.GetNewSafeName(Folder.FullName, "postProb", GCDProject.ProjectManagerBase.RasterExtension).FullName
+                sConditionalRaster = naru.os.File.GetNewSafeName(Folder.FullName, "condProb", GCDProject.ProjectManagerBase.RasterExtension).FullName
+                sSpatialCoErosionRaster = naru.os.File.GetNewSafeName(Folder.FullName, "nbrErosion", GCDProject.ProjectManagerBase.RasterExtension).FullName
+                sSpatialCoDepositionRaster = naru.os.File.GetNewSafeName(Folder.FullName, "nbrDeposition", GCDProject.ProjectManagerBase.RasterExtension).FullName
 
                 If Not External.ThresholdDoDProbWithSpatialCoherence(sRawDoDPath, sThreshDodPath, AnalysisNewError.FilePath, AnalysisOldError.FilePath,
                                                             sPriorProbRaster, sPosteriorRaster, sConditionalRaster, sSpatialCoErosionRaster, sSpatialCoDepositionRaster,

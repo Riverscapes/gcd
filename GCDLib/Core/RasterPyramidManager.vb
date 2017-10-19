@@ -140,7 +140,7 @@
         Public Shared Sub PerformRasterPyramids(ePyramidRasterType As RasterPyramidManager.PyramidRasterTypes, sRasterPath As String)
 
             If RasterPyramidManager.AutomaticallyBuildPyramids(ePyramidRasterType) Then
-                If GCDConsoleLib.Raster.Exists(sRasterPath) Then
+                If GCDConsoleLib.GISDataset.FileExists(sRasterPath) Then
                     Dim eResult As UInteger = External.GCDCore.BuildPyramids(sRasterPath, GCDProject.ProjectManagerUI.GCDNARCError.ErrorString)
                     If eResult <> External.RasterManager.RasterManagerOutputCodes.PROCESS_OK Then
                         Dim ex As New Exception("Error building raster pyramids. This is a non-essential process and the GCD project is unaffected.")

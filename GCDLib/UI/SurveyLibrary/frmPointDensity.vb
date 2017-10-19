@@ -11,7 +11,7 @@ Namespace UI.SurveyLibrary
 
             m_eLinearUnits = eLinearUnits
 
-            ucPointCloud.Initialize("Point Cloud", Core.GISDataStructures.BrowseVectorTypes.Point)
+            ucPointCloud.Initialize("Point Cloud", GCDConsoleLib.GDalGeometryType.SimpleTypes.Point)
 
         End Sub
 
@@ -23,7 +23,7 @@ Namespace UI.SurveyLibrary
             cboNeighbourhood.Items.Add("Rectangle")
             cboNeighbourhood.SelectedIndex = 1
 
-            lblDistance.Text = lblDistance.Text.Substring(0, lblDistance.Text.Length - 1) & " " & m_eLinearUnits.GetUnitsAsString & ":"
+            lblDistance.Text = String.Format("{0} {1}:", lblDistance.Text.Substring(0, lblDistance.Text.Length - 1), UnitsNet.Length.GetAbbreviation(m_eLinearUnits))
 
         End Sub
 

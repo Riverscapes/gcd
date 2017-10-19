@@ -46,23 +46,23 @@
 
 
             Dim gDoDRaw As New GCDConsoleLib.Raster(DoD.RawDoD)
-            If gInputPolygonMask.CheckSpatialReferenceMatches(gDoDRaw.SpatialReference) Then
+            If gInputPolygonMask.Proj.IsSame(gDoDRaw.Proj) Then
                 If String.IsNullOrEmpty(sMaskField) Then
                     Dim ex As New Exception("The mask field cannot be null or empty.")
-                    ex.Data("Polygon Mask") = gInputPolygonMask.FullPath
+                    ex.Data("Polygon Mask") = gInputPolygonMask.FilePath
                     Throw ex
                 Else
                     If gInputPolygonMask.FindField(sMaskField) < 0 Then
                         Dim ex As New Exception("The field '" & sMaskField & "' does not exist in the polygon mask feature class.")
-                        ex.Data("Polygon Mask") = gInputPolygonMask.FullPath
+                        ex.Data("Polygon Mask") = gInputPolygonMask.FilePath
                         ex.Data("Mask field") = sMaskField
                         Throw ex
                     End If
                 End If
             Else
                 Dim ex As New Exception("The spatial reference of the polygon mask does not match that of the DoD raster. All data within a GCD project must share identical spatial references.")
-                ex.Data("Polygon spatial reference") = gInputPolygonMask.SpatialReference
-                ex.Data("DoD spatial reference") = gDoDRaw.SpatialReference
+                ex.Data("Polygon spatial reference") = gInputPolygonMask.Proj.PrettyWkt
+                ex.Data("DoD spatial reference") = gDoDRaw.Proj.PrettyWkt
                 Throw ex
             End If
 
@@ -78,7 +78,7 @@
             'Dim sPolygonMask As String = GCDConsoleLib.VectorDataSource.GetNewSafeName(sOutputFolder, "Mask")
 
             'Changed to provide a more descriptive name than mask - Hensleigh 4/24/2014
-            Dim sPolygonMask As String = GCDConsoleLib.Vector.GetNewSafeName(sOutputFolder, IO.Path.GetFileNameWithoutExtension(gInputPolygonMask.FullPath) & "_" & sMaskField)
+            Dim sPolygonMask As String = GCDConsoleLib.Vector.GetNewSafeName(sOutputFolder, IO.Path.GetFileNameWithoutExtension(gInputPolygonMask.FilePath) & "_" & sMaskField)
             m_gPolygonMask = gInputPolygonMask.CopyShapeFile(sPolygonMask)
 
             ' Build the dictionary of budget classes. This method also writes the 
@@ -109,13 +109,13 @@
             '  GP.DataManagement.DefineProjection(sTempMask, gDoDRaw.SpatialReference)
 
             ' Now copy to the desired location
-            Dim sMaskRaster As String = GCDConsoleLib.Raster.GetNewSafeName(sOutputFolder, "Mask")
-            If Not External.RasterManager.Copy(sTempMask, sMaskRaster, gDoDRaw.CellSize, gDoDRaw.Extent.Left, gDoDRaw.Extent.Top, gDoDRaw.Rows, gDoDRaw.Columns, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString) = External.RasterManager.RasterManagerOutputCodes.PROCESS_OK Then
+            Dim sMaskRaster As String = naru.os.File.GetNewSafeName(sOutputFolder, "Mask", GCDProject.ProjectManagerBase.RasterExtension).FullName
+            If Not External.RasterManager.Copy(sTempMask, sMaskRaster, gDoDRaw.HorizontalPrecision, gDoDRaw.Extent.Left, gDoDRaw.Extent.Top, gDoDRaw.Rows, gDoDRaw.Columns, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString) = External.RasterManager.RasterManagerOutputCodes.PROCESS_OK Then
                 Throw New Exception(GCDProject.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
             End If
             Dim gMaskRaster As New GCDConsoleLib.Raster(sMaskRaster)
 
-            Dim bsOutputs As New BudgetSegregationOutputsClass(sOutputFolder, dMaskClasses, m_gPolygonMask.FullPath)
+            Dim bsOutputs As New BudgetSegregationOutputsClass(sOutputFolder, dMaskClasses, m_gPolygonMask.FilePath)
 
             ' Open the mask legend CSV file ready to store a line for each mask class
             Dim sbClassLegend As New System.Text.StringBuilder
@@ -157,7 +157,7 @@
                 ' for the whole raster. Then use the attributes of this full DoD combined
                 ' with the newly created masked DoDs for the new BS change stats for this mask.
                 If TypeOf DoD Is ChangeDetection.ChangeDetectionPropertiesMinLoD Then
-                    Dim BSDoD As New ChangeDetection.ChangeDetectionPropertiesMinLoD(sMaskRaw, sMaskThr, DirectCast(DoD, ChangeDetection.ChangeDetectionPropertiesMinLoD).Threshold, gDoDRaw.CellSize, gDoDRaw.LinearUnits)
+                    Dim BSDoD As New ChangeDetection.ChangeDetectionPropertiesMinLoD(sMaskRaw, sMaskThr, DirectCast(DoD, ChangeDetection.ChangeDetectionPropertiesMinLoD).Threshold, gDoDRaw.Extent.CellWidth, gDoDRaw.VerticalUnits)
                     maskOutputClass.ChangeStats = New ChangeDetection.ChangeStatsCalculator(BSDoD)
                 Else
                     ' PGB - 8 Apr 2015 - Need to check type against probabilistic first because the 
@@ -167,10 +167,10 @@
                     ' 
                     If TypeOf DoD Is ChangeDetection.ChangeDetectionPropertiesProbabilistic Then
                         Dim FullDoD As ChangeDetection.ChangeDetectionPropertiesProbabilistic = DirectCast(DoD, ChangeDetection.ChangeDetectionPropertiesProbabilistic)
-                        Dim BSDoD As New ChangeDetection.ChangeDetectionPropertiesProbabilistic(sMaskRaw, sMaskThr, FullDoD.PropagatedErrorRaster, FullDoD.ProbabilityRaster, FullDoD.SpatialCoErosionRaster, FullDoD.SpatialCoDepositionRaster, FullDoD.ConditionalRaster, FullDoD.PosteriorRaster, FullDoD.ConfidenceLevel, FullDoD.SpatialCoherenceFilter, FullDoD.BayesianUpdating, gDoDRaw.CellSize, gDoDRaw.LinearUnits)
+                        Dim BSDoD As New ChangeDetection.ChangeDetectionPropertiesProbabilistic(sMaskRaw, sMaskThr, FullDoD.PropagatedErrorRaster, FullDoD.ProbabilityRaster, FullDoD.SpatialCoErosionRaster, FullDoD.SpatialCoDepositionRaster, FullDoD.ConditionalRaster, FullDoD.PosteriorRaster, FullDoD.ConfidenceLevel, FullDoD.SpatialCoherenceFilter, FullDoD.BayesianUpdating, gDoDRaw.Extent.CellWidth, gDoDRaw.VerticalUnits)
                         maskOutputClass.ChangeStats = New ChangeDetection.ChangeStatsCalculator(BSDoD)
                     ElseIf TypeOf DoD Is ChangeDetection.ChangeDetectionPropertiesPropagated Then
-                        Dim BSDoD As New ChangeDetection.ChangeDetectionPropertiesPropagated(sMaskRaw, sMaskThr, DirectCast(DoD, ChangeDetection.ChangeDetectionPropertiesPropagated).PropagatedErrorRaster, gDoDRaw.CellSize, gDoDRaw.LinearUnits)
+                        Dim BSDoD As New ChangeDetection.ChangeDetectionPropertiesPropagated(sMaskRaw, sMaskThr, DirectCast(DoD, ChangeDetection.ChangeDetectionPropertiesPropagated).PropagatedErrorRaster, gDoDRaw.Extent.CellWidth, gDoDRaw.VerticalUnits)
                         maskOutputClass.ChangeStats = New ChangeDetection.ChangeStatsCalculator(BSDoD)
                     Else
                         Dim ex As New Exception("Unhandled change detection type.")
@@ -194,9 +194,9 @@
                 Dim ExportHistogramViewer As New Core.Visualization.DoDHistogramViewerClass(c, DoD.Units)
 
                 IO.Directory.CreateDirectory(IO.Path.GetDirectoryName(maskOutputClass.AreaChartPath))
-                ExportHistogramViewer.ExportCharts(ExportStatsData, gDoDRaw.LinearUnits, maskOutputClass.AreaChartPath, maskOutputClass.VolumeChartPath, nChartWidth, nChartHeight)
+                ExportHistogramViewer.ExportCharts(ExportStatsData, gDoDRaw.VerticalUnits, maskOutputClass.AreaChartPath, maskOutputClass.VolumeChartPath, nChartWidth, nChartHeight)
 
-                Dim cbViewer As New Core.Visualization.ElevationChangeBarViewer(c, gDoDRaw.LinearUnits.GetUnitsAsString)
+                Dim cbViewer As New Core.Visualization.ElevationChangeBarViewer(c, UnitsNet.Length.GetAbbreviation(gDoDRaw.VerticalUnits))
                 DirectCast(maskOutputClass.ChangeStats, ChangeDetection.ChangeStatsCalculator).GenerateChangeBarGraphicFiles(GCDProject.ProjectManagerBase.OutputManager.GetChangeDetectionFiguresFolder(sOutputFolder, True), DoD.Units, m_fChartWidth, m_fChartHeight, "c" & maskOutputClass.MaskValue.ToString("000"))
 
                 ' Append this class to the legend file
@@ -207,16 +207,13 @@
                 '
                 If bDeleteIntermediateRasters Then
                     GC.Collect()
+
                     GCDConsoleLib.Raster.DeleteRaster(sPositiveMask)
                     GCDConsoleLib.Raster.DeleteRaster(sMaskRaw)
                     GCDConsoleLib.Raster.DeleteRaster(sMaskThr)
                 End If
             Next
             'maskHistograms.Dispose()
-
-
-
-
 
             ' Save and close the class legend CSV file
             Dim ClassLegendFile As New IO.StreamWriter(bsOutputs.ClassLegendPath)
@@ -268,7 +265,7 @@
                     Dim ex As New Exception("The class field length has exceeded 10 characters.")
                     ex.Data("Class field") = m_sClassField
                     ex.Data("Mask field") = m_sMaskField
-                    ex.Data("Polygon feature class") = m_gPolygonMask.FullPath
+                    ex.Data("Polygon feature class") = m_gPolygonMask.FilePath
                     Throw ex
                 End If
 
@@ -280,7 +277,7 @@
                 Dim ex As New Exception("Budget segregation class field does not exist in feature class.")
                 ex.Data("Class field") = m_sClassField
                 ex.Data("Mask Field") = m_sMaskField
-                ex.Data("Polygon feature class") = m_gPolygonMask.FullPath
+                ex.Data("Polygon feature class") = m_gPolygonMask.FilePath
                 Throw ex
             End If
 
@@ -289,7 +286,7 @@
                 Dim ex As New Exception("Budget segregation mask field does not exist in feature class.")
                 ex.Data("Class field") = m_sClassField
                 ex.Data("Mask Field") = m_sMaskField
-                ex.Data("Polygon feature class") = m_gPolygonMask.FullPath
+                ex.Data("Polygon feature class") = m_gPolygonMask.FilePath
                 Throw ex
             End If
 

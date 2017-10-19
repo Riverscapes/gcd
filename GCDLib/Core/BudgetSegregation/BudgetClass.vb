@@ -135,7 +135,7 @@ Namespace Core.BudgetSegregation
 
             Dim gRaster As New GCDConsoleLib.Raster(_DoDSource)
 
-            Dim ExtentRectangle As String = gRaster.Extent.Rectangle
+            Dim ExtentRectangle As String = gRaster.Extent.ToString
             '
             ' Must call this before the conversion of the mask to raster, because it makes a copy of the mask feature class.
             '
@@ -265,8 +265,8 @@ Namespace Core.BudgetSegregation
 
                 Dim c As New Chart
                 'Dim c As New Windows.Forms.DataVisualization.Charting.Chart
-                Dim ExportHistogramViewer As New Core.Visualization.DoDHistogramViewerClass(c, gDoDSource.LinearUnits)
-                ExportHistogramViewer.ExportCharts(ExportStatsData, gDoDSource.LinearUnits, _output.MaskOutputs(MaskLabel).AreaChartPath, _output.MaskOutputs(MaskLabel).VolumeChartPath, nChartWidth, nChartHeight)
+                Dim ExportHistogramViewer As New Core.Visualization.DoDHistogramViewerClass(c, gDoDSource.VerticalUnits)
+                ExportHistogramViewer.ExportCharts(ExportStatsData, gDoDSource.VerticalUnits, _output.MaskOutputs(MaskLabel).AreaChartPath, _output.MaskOutputs(MaskLabel).VolumeChartPath, nChartWidth, nChartHeight)
             Next
 
             'export pie charts
@@ -289,12 +289,12 @@ Namespace Core.BudgetSegregation
             'ExportPieChartViewer.ExportCharts(output.PieCharts.PercentageTotalVolumePiePath, nChartWidth, nChartHeight)
 
             'export summaries
-            ExportMaskStats.ExportSummaries(sExcelTemplateFolder, output.MaskOutputs, gDoDSource.LinearUnits)
+            ExportMaskStats.ExportSummaries(sExcelTemplateFolder, output.MaskOutputs, gDoDSource.VerticalUnits)
             '
             ' PGB 24 Apr 2012. 
             ' Export one, combined summary for all classes
             '
-            ExportMaskStats.ExportClassSummary(sExcelTemplateFolder, output.ClassSummaryPath, output.MaskOutputs, gDoDSource.LinearUnits)
+            ExportMaskStats.ExportClassSummary(sExcelTemplateFolder, output.ClassSummaryPath, output.MaskOutputs, gDoDSource.VerticalUnits)
 
             GC.Collect()
             'Gdal.GDALDestroyDriverManager()
@@ -310,16 +310,16 @@ Namespace Core.BudgetSegregation
             '
             ' Copy shapefile
             '
+            Dim gMask As New GCDConsoleLib.Vector(_Mask)
             _MaskCopy = New FileInfo(WorkspaceManager.GetTempShapeFile("Mask"))
-            GCDConsoleLib.Vector.CopyShapeFile(_Mask, _MaskCopy.FullName)
+            gMask.Copy(_MaskCopy.FullName)
+            Dim gMaskCopy As New GCDConsoleLib.Vector(_MaskCopy.FullName)
             '
             ' Add class field
             '
             Dim RootFieldName = "Class"
             _ClassFieldName = "Class"
             Dim nCount As Integer = 0
-
-            Dim gMaskCopy As New GCDConsoleLib.Vector(_MaskCopy.FullName)
 
             Do
                 If nCount = 0 Then
@@ -328,7 +328,7 @@ Namespace Core.BudgetSegregation
                     _ClassFieldName = RootFieldName & nCount
                 End If
                 nCount = nCount + 1
-            Loop While gMaskCopy.FindField(_ClassFieldName) > -1 And nCount < 9999
+            Loop While gMaskCopy.Fields.ContainsKey(_ClassFieldName) And nCount < 9999
 
             gMaskCopy.AddField(_ClassFieldName, GISDataStructures.FieldTypes.IntField)
 

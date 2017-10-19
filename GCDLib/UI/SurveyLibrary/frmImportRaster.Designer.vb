@@ -47,7 +47,7 @@
             Me.txtOrigHeight = New System.Windows.Forms.TextBox()
             Me.txtTop = New System.Windows.Forms.TextBox()
             Me.Label11 = New System.Windows.Forms.Label()
-            Me.ucRaster = New GCD.GCDLib.UI.UtilityForms.ucRasterInput()
+            Me.ucRaster = New GCDLib.UI.UtilityForms.ucRasterInput()
             Me.grpProjectRaaster = New System.Windows.Forms.GroupBox()
             Me.cmdHelpPrecision = New System.Windows.Forms.Button()
             Me.Label1 = New System.Windows.Forms.Label()
@@ -353,7 +353,7 @@
             '
             Me.cmdHelpPrecision.FlatAppearance.BorderSize = 0
             Me.cmdHelpPrecision.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-            Me.cmdHelpPrecision.Image = Global.GCD.GCDLib.My.Resources.Resources.Help
+            Me.cmdHelpPrecision.Image = My.Resources.Resources.Help
             Me.cmdHelpPrecision.Location = New System.Drawing.Point(343, 129)
             Me.cmdHelpPrecision.Name = "cmdHelpPrecision"
             Me.cmdHelpPrecision.Size = New System.Drawing.Size(23, 23)
@@ -380,7 +380,7 @@
             '
             'cmdSave
             '
-            Me.cmdSave.Image = Global.GCD.GCDLib.My.Resources.Resources.SaveGIS
+            Me.cmdSave.Image = My.Resources.Resources.SaveGIS
             Me.cmdSave.Location = New System.Drawing.Point(569, 20)
             Me.cmdSave.Name = "cmdSave"
             Me.cmdSave.Size = New System.Drawing.Size(23, 23)

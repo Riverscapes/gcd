@@ -1,5 +1,5 @@
 ﻿Imports System.Xml
-Imports GCD.GCDLib.Core.External.ExternalLibs
+Imports GCDLib.Core.External.ExternalLibs
 
 Namespace Core.ChangeDetection
 

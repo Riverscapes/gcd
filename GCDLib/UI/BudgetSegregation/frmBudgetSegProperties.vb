@@ -1,4 +1,4 @@
-﻿Imports GCD.GCDLib.Core
+﻿Imports GCDLib.Core
 Imports System.Windows.Forms
 
 Namespace UI.BudgetSegregation
@@ -21,7 +21,7 @@ Namespace UI.BudgetSegregation
             InitializeComponent()
             m_nDoDID = rDoD.DoDID
 
-            ucPolygon.Initialize("Budget Segregation Polygon Mask", Core.GISDataStructures.BrowseVectorTypes.Polygon)
+            ucPolygon.Initialize("Budget Segregation Polygon Mask", GCDConsoleLib.GDalGeometryType.SimpleTypes.Polygon)
         End Sub
 
         Private Sub BudgetSegPropertiesForm_Load(sender As Object, e As System.EventArgs) Handles Me.Load
@@ -157,27 +157,27 @@ Namespace UI.BudgetSegregation
 
                     If TypeOf rDoD Is ProjectDS.DoDsRow Then
                         Dim sDoDPath As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rDoD.RawDoDPath)
-                        If GCDConsoleLib.Raster.Exists(sDoDPath) Then
+                        If GCDConsoleLib.GISDataset.FileExists(sDoDPath) Then
                             Dim gDoD As New GCDConsoleLib.Raster(sDoDPath)
 
                             ' Confirm that the polygon mask has a spatial reference.
                             Dim bMissingSpatialReference As Boolean = True
                             'If TypeOf ucPolygon.SelectedItem.SpatialReference Is ESRI.ArcGIS.Geometry.ISpatialReference Then
-                            bMissingSpatialReference = ucPolygon.SelectedItem.SpatialReference.ToLower.Contains("unknown")
+                            bMissingSpatialReference = ucPolygon.SelectedItem.Proj.PrettyWkt.ToLower.Contains("unknown")
                             'End If
 
                             If bMissingSpatialReference Then
                                 MsgBox("The selected feature class appears to be missing a spatial reference. All GCD inputs must possess a spatial reference and it must be the same spatial reference for all datasets in a GCD project." &
-                              " If the selected feature class exists in the same coordinate system, " & gDoD.SpatialReference & ", but the coordinate system has not yet been defined for the feature class." &
-                              " Use the ArcToolbox 'Define Projection' geoprocessing tool in the 'Data Management -> Projection & Transformations' Toolbox to correct the problem with the selected datasets by defining the coordinate system as:" & vbCrLf & vbCrLf & gDoD.SpatialReference & vbCrLf & vbCrLf & "Then try using it with the GCD again.", MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
+                              " If the selected feature class exists in the same coordinate system, " & gDoD.Proj.PrettyWkt & ", but the coordinate system has not yet been defined for the feature class." &
+                              " Use the ArcToolbox 'Define Projection' geoprocessing tool in the 'Data Management -> Projection & Transformations' Toolbox to correct the problem with the selected datasets by defining the coordinate system as:" & vbCrLf & vbCrLf & gDoD.Proj.PrettyWkt & vbCrLf & vbCrLf & "Then try using it with the GCD again.", MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
                                 Return False
                             Else
-                                If Not gDoD.CheckSpatialReferenceMatches(ucPolygon.SelectedItem.SpatialReference) Then
+                                If Not gDoD.Proj.IsSame(ucPolygon.SelectedItem.Proj) Then
 
-                                    MsgBox("The coordinate system of the selected feature class:" & vbCrLf & vbCrLf & ucPolygon.SelectedItem.SpatialReference & vbCrLf & vbCrLf & "does not match that of the GCD project:" & vbCrLf & vbCrLf & gDoD.SpatialReference & vbCrLf & vbCrLf &
+                                    MsgBox("The coordinate system of the selected feature class:" & vbCrLf & vbCrLf & ucPolygon.SelectedItem.Proj.PrettyWkt & vbCrLf & vbCrLf & "does not match that of the GCD project:" & vbCrLf & vbCrLf & gDoD.Proj.PrettyWkt & vbCrLf & vbCrLf &
                      "All datasets within a GCD project must have the identical coordinate system. However, small discrepencies in coordinate system names might cause the two coordinate systems to appear different. " &
                      "If you believe that the selected dataset does in fact possess the same coordinate system as the GCD project then use the ArcToolbox 'Define Projection' geoprocessing tool in the " &
-                     "'Data Management -> Projection & Transformations' Toolbox to correct the problem with the selected dataset by defining the coordinate system as:" & vbCrLf & vbCrLf & gDoD.SpatialReference & vbCrLf & vbCrLf & "Then try importing it into the GCD again.", MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
+                     "'Data Management -> Projection & Transformations' Toolbox to correct the problem with the selected dataset by defining the coordinate system as:" & vbCrLf & vbCrLf & gDoD.Proj.PrettyWkt & vbCrLf & vbCrLf & "Then try importing it into the GCD again.", MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
                                     Return False
                                 End If
                             End If
@@ -254,7 +254,7 @@ Namespace UI.BudgetSegregation
             If Not String.IsNullOrEmpty(txtName.Text) Then
 
                 If TypeOf ucPolygon.SelectedItem Is GCDConsoleLib.Vector Then
-                    Dim sPolygonPath As String = ucPolygon.SelectedItem.FullPath
+                    Dim sPolygonPath As String = ucPolygon.SelectedItem.FilePath
 
                     If Not String.IsNullOrEmpty(cboField.Text) Then
                         If TypeOf cboDoD.SelectedItem Is naru.db.NamedObject Then

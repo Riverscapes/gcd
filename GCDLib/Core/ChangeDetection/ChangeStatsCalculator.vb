@@ -1,4 +1,4 @@
-﻿Imports GCD.GCDLib.Core.Visualization
+﻿Imports GCDLib.Core.Visualization
 
 Namespace Core.ChangeDetection
 
@@ -348,7 +348,7 @@ Namespace Core.ChangeDetection
             ' PGB 3 Mar 2012
             ' Need to dynamically put the units in the summary XML.
             '
-            OutputText.Replace("[LinearUnits]", eUnits.GetUnitsAsString)
+            OutputText.Replace("[LinearUnits]", UnitsNet.Length.GetAbbreviation(eUnits))
 
             OutputText.Replace("[TotalAreaOfErosionRaw]", AreaErosion_Raw)
             OutputText.Replace("[TotalAreaOfErosionThresholded]", AreaErosion_Thresholded)

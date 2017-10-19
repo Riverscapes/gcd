@@ -1,5 +1,5 @@
 ﻿Imports System.Windows.Forms
-Imports GCD.GCDLib.Core
+Imports GCDLib.Core
 
 Namespace UI.ChangeDetection
 

@@ -1,5 +1,5 @@
-﻿Imports GCD.GCDLib.Core.ChangeDetection
-Imports GCD.GCDLib.Core.Visualization
+﻿Imports GCDLib.Core.ChangeDetection
+Imports GCDLib.Core.Visualization
 
 Namespace UI.ChangeDetection
     Public Class ucChangeBars
@@ -12,7 +12,7 @@ Namespace UI.ChangeDetection
 
             ' This call is required by the designer.
             InitializeComponent()
-            m_eUnits = New UnitsNet.Units.LengthUnit(UnitsNet.Units.LengthUnit.m)
+            m_eUnits = UnitsNet.Units.LengthUnit.Meter
 
             ' Add any initialization after the InitializeComponent() call.
 

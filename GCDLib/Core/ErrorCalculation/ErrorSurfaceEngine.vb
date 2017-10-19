@@ -123,14 +123,14 @@ Namespace Core.ErrorCalculation
                 End If
 
                 Try
-                    eResult = External.Mask(sMosaicWithoutMask, gDEM.FullPath, sOutputRasterPath, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
+                    eResult = External.Mask(sMosaicWithoutMask, gDEM.FilePath, sOutputRasterPath, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
                     If eResult <> External.RasterManagerOutputCodes.PROCESS_OK Then
                         Dim exInner As New Exception(GCDProject.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
                         Throw New Exception("Error masking mosaic output", exInner)
                     End If
                 Catch ex As Exception
                     ex.Data("Input raster") = sMosaicWithoutMask
-                    ex.Data("Mask raster") = gDEM.FullPath
+                    ex.Data("Mask raster") = gDEM.FilePath
                     ex.Data("Output raster") = sOutputRasterPath
                     Throw
                 End Try
@@ -148,7 +148,7 @@ Namespace Core.ErrorCalculation
 
             Try
                 ' Do the conditional geoprocessing.
-                Dim eResult As External.GCDCoreOutputCodes = External.UniformError(gRasterMask.FullPath, sOutputRasterPath, fErrorValue, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
+                Dim eResult As External.GCDCoreOutputCodes = External.UniformError(gRasterMask.FilePath, sOutputRasterPath, fErrorValue, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
                 If eResult <> External.GCDCoreOutputCodes.PROCESS_OK Then
                     Dim exInner As New Exception(GCDProject.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
                     Dim ex As New Exception("Error producing uniform error surface.", exInner)
@@ -186,7 +186,7 @@ Namespace Core.ErrorCalculation
             Dim gErrorSurface As GCDConsoleLib.Raster = Nothing
 
             Try
-                Dim eResult As External.RasterManagerOutputCodes = External.Mask(sAssociatedSurfacePath, gRasterMask.FullPath, sOutputRasterPath, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
+                Dim eResult As External.RasterManagerOutputCodes = External.Mask(sAssociatedSurfacePath, gRasterMask.FilePath, sOutputRasterPath, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
                 If eResult <> External.GCDCoreOutputCodes.PROCESS_OK Then
                     Dim ex As New Exception("Error producing associated error surface.")
                     ex.Data("raster manager return code") = eResult.ToString
@@ -263,7 +263,7 @@ Namespace Core.ErrorCalculation
                 End If
 
                 Dim eResult As External.GCDCoreOutputCodes
-                eResult = External.CreateFISError(DEMRaster.FullPath, sFISFuleFilePath, sInputs, sFullFISRaster,
+                eResult = External.CreateFISError(DEMRaster.FilePath, sFISFuleFilePath, sInputs, sFullFISRaster,
                                                     GCDProject.ProjectManagerBase.OutputManager.OutputDriver,
                                                     GCDProject.ProjectManagerBase.OutputManager.NoData, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
 
@@ -281,7 +281,7 @@ Namespace Core.ErrorCalculation
             Catch ex As Exception
                 Dim ex2 As New Exception("Error generating FIS error surface raster", ex)
                 ex2.Data.Add("OutputPath", sOutputRasterPath)
-                ex2.Data.Add("Reference Mask", gReferenceRaster.FullPath)
+                ex2.Data.Add("Reference Mask", gReferenceRaster.FilePath)
                 Throw ex2
             End Try
 

@@ -162,7 +162,6 @@
             '
             'ucPolygon
             '
-            Me.ucPolygon.BrowseType = Core.GISDataStructures.BrowseVectorTypes.Point
             Me.ucPolygon.Location = New System.Drawing.Point(120, 21)
             Me.ucPolygon.Name = "ucPolygon"
             Me.ucPolygon.Size = New System.Drawing.Size(355, 25)

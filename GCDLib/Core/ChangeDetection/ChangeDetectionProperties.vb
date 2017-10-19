@@ -84,7 +84,7 @@ Namespace Core.ChangeDetection
 
             Dim dodProps As ChangeDetectionProperties = Nothing
             If rDoD.TypeMinLOD Then
-                dodProps = New ChangeDetectionPropertiesMinLoD(sRawDoDPath, sThrDoDPath, rDoD.Threshold, gRawDoDPath.CellSize, gRawDoDPath.LinearUnits)
+                dodProps = New ChangeDetectionPropertiesMinLoD(sRawDoDPath, sThrDoDPath, rDoD.Threshold, gRawDoDPath.Extent.CellWidth, gRawDoDPath.VerticalUnits)
             Else
                 Dim sPropErrPath As String = String.Empty
                 If Not rDoD.IsPropagatedErrorRasterPathNull Then
@@ -96,7 +96,7 @@ Namespace Core.ChangeDetection
                 End If
 
                 If rDoD.TypePropagated Then
-                    dodProps = New ChangeDetection.ChangeDetectionPropertiesPropagated(sRawDoDPath, sThrDoDPath, sPropErrPath, gRawDoDPath.CellSize, gRawDoDPath.LinearUnits)
+                    dodProps = New ChangeDetection.ChangeDetectionPropertiesPropagated(sRawDoDPath, sThrDoDPath, sPropErrPath, gRawDoDPath.Extent.CellWidth, gRawDoDPath.VerticalUnits)
                 ElseIf rDoD.TypeProbabilistic Then
 
 
@@ -125,7 +125,7 @@ Namespace Core.ChangeDetection
                         sPosteriorRaster = rDoD.PosteriorRaster
                     End If
 
-                    dodProps = New ChangeDetectionPropertiesProbabilistic(sRawDoDPath, sThrDoDPath, sPropErrPath, sProbabilityRaster, sSpatialCoErosionRaster, sSpatialCoDepositionraster, sConditionalProbRaster, sPosteriorRaster, rDoD.Threshold, rDoD.Filter, rDoD.Bayesian, gRawDoDPath.CellSize, gRawDoDPath.LinearUnits)
+                    dodProps = New ChangeDetectionPropertiesProbabilistic(sRawDoDPath, sThrDoDPath, sPropErrPath, sProbabilityRaster, sSpatialCoErosionRaster, sSpatialCoDepositionraster, sConditionalProbRaster, sPosteriorRaster, rDoD.Threshold, rDoD.Filter, rDoD.Bayesian, gRawDoDPath.Extent.CellWidth, gRawDoDPath.VerticalUnits)
                 Else
                     Throw New Exception("Unhandled DoD type.")
                 End If
