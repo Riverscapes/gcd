@@ -108,7 +108,7 @@
     <Compile Include="ExtentRectangleTests.cs" />
     <Compile Include="GISDatasetTests.cs" />
     <Compile Include="ProjectionTests.cs" />
-    <Compile Include="RasterOperators\BaseOpertatorTests.cs" />
+    <Compile Include="RasterOperators\BaseOperatorTests.cs" />
     <Compile Include="RasterOperators\RasterCopyTests.cs" />
     <Compile Include="RasterOperators\RasterMathTests.cs" />
     <Compile Include="RasterTests.cs" />

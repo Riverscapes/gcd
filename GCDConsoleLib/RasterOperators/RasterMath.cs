@@ -22,13 +22,13 @@ namespace GCDConsoleLib.RasterOperators
         {
             Raster rOutput = new Raster(sOutputRaster);
             RasterMath mathOp = new RasterMath(MathOpType.Addition, ref rInput, dOperand, ref rOutput);
-            return mathOp.RunCellByCellOp();
+            return mathOp.RunOp();
         }
         public static Raster Add(ref Raster rInputA, ref Raster rInputB, string sOutputRaster)
         {
             Raster rOutput = new Raster(sOutputRaster);
             RasterMath mathOp = new RasterMath(MathOpType.Addition, ref rInputA, ref rInputB, ref rOutput);
-            return mathOp.RunCellByCellOp();
+            return mathOp.RunOp();
         }
 
 
@@ -36,12 +36,12 @@ namespace GCDConsoleLib.RasterOperators
         public static Raster Add(ref Raster rInput, double dOperand, ref Raster rOutputRaster)
         {
             RasterMath mathOp = new RasterMath(MathOpType.Addition, ref rInput, dOperand, ref rOutputRaster);
-            return mathOp.RunCellByCellOp();
+            return mathOp.RunOp();
         }
         public static Raster Add(ref Raster rInputA, ref Raster rInputB, ref Raster rOutputRaster)
         {
             RasterMath mathOp = new RasterMath(MathOpType.Addition, ref rInputA, ref rInputB, ref rOutputRaster);
-            return mathOp.RunCellByCellOp();
+            return mathOp.RunOp();
         }
 
         /// <summary>
@@ -51,20 +51,22 @@ namespace GCDConsoleLib.RasterOperators
         /// <param name="rInput"></param>
         /// <param name="dOperand"></param>
         /// <param name="sOutputRaster"></param>
-        protected RasterMath(MathOpType otType, ref Raster rInput, double dOperand, ref Raster rOutputRaster) : base(ref rInput, ref rOutputRaster)
+        protected RasterMath(MathOpType otType, ref Raster rInput, double dOperand, ref Raster rOutputRaster) :
+            base(ref rInput, ref rOutputRaster, BaseOperator.OpTypes.CELL)
         {
             _type = otType;
             _scalar = true;
             _operand = dOperand;
         }
 
-        protected RasterMath(MathOpType otType, ref Raster rInputA, ref Raster rInputB, ref Raster rOutputRaster) : base(ref rInputA, ref rInputB, ref rOutputRaster)
+        protected RasterMath(MathOpType otType, ref Raster rInputA, ref Raster rInputB, ref Raster rOutputRaster) :
+            base(ref rInputA, ref rInputB, ref rOutputRaster, BaseOperator.OpTypes.CELL)
         {
             _type = otType;
             _scalar = false;
         }
 
-        protected override double CellOp(ref List<double[]> data, int id)
+        protected override double OpCell(ref List<double[]> data, int id)
         {
             double val = 0;
             if (_scalar)
@@ -120,10 +122,15 @@ namespace GCDConsoleLib.RasterOperators
             return val;
         }
 
-        protected override double[] ChunkOp(ref List<double[]> data)
+        // We have to implement these but we don't use them
+        protected override void OpChunk(ref List<double[]> data, ref double[] outChunk)
         {
-            //We don't use this for math. Everything is cell-wise
             throw new NotImplementedException();
         }
+        protected override double OpOverlap(ref List<double[]> data)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }
