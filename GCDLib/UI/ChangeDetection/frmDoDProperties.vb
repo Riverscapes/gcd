@@ -132,13 +132,13 @@ Namespace UI.ChangeDetection
             Try
                 System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor
 
-                Dim gNewDEM As New Core.RasterWranglerLib.Raster(Core.GCDProject.ProjectManager.GetAbsolutePath(GetDEMRow(cboNewDEM).Source))
-                Dim gOldDEM As New Core.RasterWranglerLib.Raster(Core.GCDProject.ProjectManager.GetAbsolutePath(GetDEMRow(cboOldDEM).Source))
+                Dim gNewDEM As New Core.GCDConsoleLib.Raster(Core.GCDProject.ProjectManager.GetAbsolutePath(GetDEMRow(cboNewDEM).Source))
+                Dim gOldDEM As New Core.GCDConsoleLib.Raster(Core.GCDProject.ProjectManager.GetAbsolutePath(GetDEMRow(cboOldDEM).Source))
 
-                Dim gAOI As Core.RasterWranglerLib.Vector = Nothing
+                Dim gAOI As Core.GCDConsoleLib.Vector = Nothing
                 Dim rAOI As ProjectDS.AOIsRow = GetAOIRow()
                 If TypeOf rAOI Is ProjectDS.AOIsRow Then
-                    gAOI = New Core.RasterWranglerLib.Vector(Core.GCDProject.ProjectManager.GetAbsolutePath(rAOI.Source))
+                    gAOI = New Core.GCDConsoleLib.Vector(Core.GCDProject.ProjectManager.GetAbsolutePath(rAOI.Source))
                 End If
 
                 Dim cdEngine As Core.ChangeDetection.ChangeDetectionEngineBase = Nothing
@@ -146,8 +146,8 @@ Namespace UI.ChangeDetection
                     cdEngine = New Core.ChangeDetection.ChangeDetectionEngineMinLOD(txtName.Text, txtOutputFolder.Text, gNewDEM, gOldDEM, gAOI, valMinLodThreshold.Value, My.Settings.ChartWidth, My.Settings.ChartHeight)
                 Else
                     ' Propagated or probabilistic. Use the error surfaces
-                    Dim gNewError As New RasterWranglerLib.Raster(GCDProject.ProjectManagerBase.GetAbsolutePath(GetErrorRow(cboNewDEM, cboNewError).Source))
-                    Dim gOldError As New RasterWranglerLib.Raster(GCDProject.ProjectManagerBase.GetAbsolutePath(GetErrorRow(cboOldDEM, cboOldError).Source))
+                    Dim gNewError As New GCDConsoleLib.Raster(GCDProject.ProjectManagerBase.GetAbsolutePath(GetErrorRow(cboNewDEM, cboNewError).Source))
+                    Dim gOldError As New GCDConsoleLib.Raster(GCDProject.ProjectManagerBase.GetAbsolutePath(GetErrorRow(cboOldDEM, cboOldError).Source))
 
                     If rdoPropagated.Checked Then
                         cdEngine = New Core.ChangeDetection.ChangeDetectionEnginePropProb(txtName.Text, txtOutputFolder.Text, gNewDEM, gOldDEM, gNewError, gOldError, gAOI, My.Settings.ChartHeight, My.Settings.ChartWidth)

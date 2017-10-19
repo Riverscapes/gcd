@@ -21,10 +21,10 @@ Namespace UI.UtilityForms
 
         'Public Event RasterSelected(e As naru)
 
-        Public ReadOnly Property SelectedItem As RasterWranglerLib.Raster
+        Public ReadOnly Property SelectedItem As GCDConsoleLib.Raster
             Get
                 If TypeOf Path Is System.IO.FileInfo Then
-                    Return New RasterWranglerLib.Raster(Path.FullName)
+                    Return New GCDConsoleLib.Raster(Path.FullName)
                 Else
                     Return Nothing
                 End If
@@ -57,7 +57,7 @@ Namespace UI.UtilityForms
 
         'Public Overrides Function Validate() As Boolean
 
-        '    If Not TypeOf SelectedItem Is Core.RasterWranglerLib.Raster Then
+        '    If Not TypeOf SelectedItem Is Core.GCDConsoleLib.Raster Then
         '        System.Windows.Forms.MessageBox.Show(naru.ui.UIHelpers.WrapMessageWithNoun("Please select a", Noun, " to continue."), My.Resources.ApplicationNameLong, System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information)
         '        Return False
         '    End If

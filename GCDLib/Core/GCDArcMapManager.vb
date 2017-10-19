@@ -135,13 +135,13 @@ Namespace Core
         '        Dim fDEMTransparency As Double = -1
         '        Dim pSurveyLyr As IGroupLayer = AddSurveyGroupLayer(demRow)
         '        Dim sHillShadePath As String = GCD.GCDProject.ProjectManager.OutputManager.DEMSurveyHillShadeRasterPath(demRow.Name)
-        '        If RasterWranglerLib.Raster.Exists(sHillShadePath) Then
+        '        If GCDConsoleLib.Raster.Exists(sHillShadePath) Then
         '            AddToMapRaster(sHillShadePath, demRow.Name & " HillShade", pSurveyLyr)
         '            fDEMTransparency = m_fDefaultDEMTransparency
         '            'pSurveyLyr.Expanded = False
         '        End If
 
-        '        Dim sSymbology As String = RasterWranglerLib.RasterGCD.GetSymbologyLayerFile(ArcMap.RasterLayerTypes.DEM)
+        '        Dim sSymbology As String = GCDConsoleLib.RasterGCD.GetSymbologyLayerFile(ArcMap.RasterLayerTypes.DEM)
         '        Dim sRasterPath As String = GCD.GCDProject.ProjectManager.GetAbsolutePath(demRow.Source)
         '        Dim pDEMLyr As IRasterLayer = AddToMapRaster(sRasterPath, demRow.Name, pSurveyLyr, sSymbology, fDEMTransparency)
 
@@ -182,7 +182,7 @@ Namespace Core
         '        Dim pAssocGrpLyr As IGroupLayer = AddAssociatedSurfaceGroupLayer(assocRow.DEMSurveyRow)
         '        Dim eType As ArcMap.RasterLayerTypes = ProjectDS.GetAssociatedSurfaceType(assocRow)
         '        Dim sRasterPath As String = GCD.GCDProject.ProjectManager.GetAbsolutePath(assocRow.Source)
-        '        Dim gAssociatedRaster As RasterWranglerLib.Raster = New RasterWranglerLib.Raster(sRasterPath)
+        '        Dim gAssociatedRaster As GCDConsoleLib.Raster = New GCDConsoleLib.Raster(sRasterPath)
         '        Dim sHeader As String = GetLayerHeader(assocRow)
         '        Dim dTransparency As Double = -1
         '        If My.Settings.TransparencyAssociatedLayers Then
@@ -246,7 +246,7 @@ Namespace Core
 
         '        ElseIf eType = ArcMap.RasterLayerTypes.Roughness Then
 
-        '            'Dim sSymbology As String = RasterWranglerLib.RasterGCD.GetSymbologyLayerFile(eType)
+        '            'Dim sSymbology As String = GCDConsoleLib.RasterGCD.GetSymbologyLayerFile(eType)
         '            'Dim pAssocLyr As IRasterLayer = AddToMapRaster(sRasterPath, assocRow.Name, pAssocGrpLyr, sSymbology, dTransparency, sHeader)
         '            Dim rasterRenderer As IRasterRenderer = GCD.RasterSymbolization.CreateRoughnessColorRamp(gAssociatedRaster)
         '            Dim pAssocLyr As ILayer = AddRasterLayer(m_pArcMap.Document, gAssociatedRaster, rasterRenderer, assocRow.Name, pAssocGrpLyr, sHeader, dTransparency)
@@ -260,7 +260,7 @@ Namespace Core
 
         '        ElseIf eType = ArcMap.RasterLayerTypes.SlopePercentRise Then
 
-        '            'Dim sSymbology As String = RasterWranglerLib.RasterGCD.GetSymbologyLayerFile(eType)
+        '            'Dim sSymbology As String = GCDConsoleLib.RasterGCD.GetSymbologyLayerFile(eType)
         '            'Dim pAssocLyr As IRasterLayer = AddToMapRaster(sRasterPath, assocRow.Name, pAssocGrpLyr, sSymbology, dTransparency, sHeader)
         '            Dim rasterRenderer As IRasterRenderer = GCD.RasterSymbolization.CreateSlopePrecentRiseColorRamp(gAssociatedRaster)
         '            Dim pAssocLyr As ILayer = AddRasterLayer(m_pArcMap.Document, gAssociatedRaster, rasterRenderer, assocRow.Name, pAssocGrpLyr, sHeader, dTransparency)
@@ -268,7 +268,7 @@ Namespace Core
 
         '        ElseIf eType <> GISCode.ArcMap.RasterLayerTypes.Undefined Then
 
-        '            Dim sSymbology As String = RasterWranglerLib.RasterGCD.GetSymbologyLayerFile(eType)
+        '            Dim sSymbology As String = GCDConsoleLib.RasterGCD.GetSymbologyLayerFile(eType)
         '            Dim pAssocLyr As IRasterLayer = AddToMapRaster(sRasterPath, assocRow.Name, pAssocGrpLyr, sSymbology, dTransparency, sHeader)
         '            Return pAssocLyr
 
@@ -295,7 +295,7 @@ Namespace Core
 
         '        Dim pErrGrpLyr As IGroupLayer = AddErrorSurfacesGroupLayer(errRow.DEMSurveyRow)
         '        Dim sRasterPath As String = GCD.GCDProject.ProjectManager.GetAbsolutePath(errRow.Source)
-        '        Dim gErrRaster As RasterWranglerLib.Raster = New RasterWranglerLib.Raster(sRasterPath)
+        '        Dim gErrRaster As GCDConsoleLib.Raster = New GCDConsoleLib.Raster(sRasterPath)
         '        Dim sHeader As String = "Error (" & errRow.DEMSurveyRow.ProjectRow.DisplayUnits & ")"
 
         '        Dim dTransparency As Double = -1
@@ -357,13 +357,13 @@ Namespace Core
         '        End If
 
         '        Dim pAnalGrpLayer As IGroupLayer = AddAnalysesGroupLayer(dodRow.ProjectRow)
-        '        Dim sSymbology As String = RasterWranglerLib.RasterGCD.GetSymbologyLayerFile(ArcMap.RasterLayerTypes.DoD)
+        '        Dim sSymbology As String = GCDConsoleLib.RasterGCD.GetSymbologyLayerFile(ArcMap.RasterLayerTypes.DoD)
         '        Dim dTransparency As Double = -1
         '        If My.Settings.TransparencyAnalysesLayers Then
         '            dTransparency = My.Settings.AutoTransparencyValue
         '        End If
 
-        '        Dim gDoDRaster As RasterWranglerLib.Raster = New RasterWranglerLib.Raster(sRasterPath)
+        '        Dim gDoDRaster As GCDConsoleLib.Raster = New GCDConsoleLib.Raster(sRasterPath)
         '        Dim rasterRenderer As IRasterRenderer = GISCode.GCD.RasterSymbolization.CreateDoDClassifyRenderer(gDoDRaster, 20)
         '        Dim sHeader As String = "Elevation Difference (" & dodRow.ProjectRow.DisplayUnits & ")"
         '        Dim pDoDLyr As ILayer = AddRasterLayer(m_pArcMap.Document, gDoDRaster, rasterRenderer, sLayerName, pAnalGrpLayer, sHeader, dTransparency)
@@ -379,12 +379,12 @@ Namespace Core
         '    ''' <returns></returns>
         '    ''' <remarks>Added by Philip on 11 Dec 2013 for adding temporary DoDs that have not been
         '    ''' added to the GCD project yet</remarks>
-        '    Public Function AddDoDTemp(theProjectRow As ProjectDS.ProjectRow, gRaster As RasterWranglerLib.RasterDirect, sName As String) As IRasterLayer
+        '    Public Function AddDoDTemp(theProjectRow As ProjectDS.ProjectRow, gRaster As GCDConsoleLib.RasterDirect, sName As String) As IRasterLayer
 
         '        RemoveDoDPreviewFromTOC(theProjectRow)
 
         '        Dim pAnalGrpLayer As IGroupLayer = AddAnalysesGroupLayer(theProjectRow)
-        '        Dim sSymbology As String = RasterWranglerLib.RasterGCD.GetSymbologyLayerFile(ArcMap.RasterLayerTypes.DoD)
+        '        Dim sSymbology As String = GCDConsoleLib.RasterGCD.GetSymbologyLayerFile(ArcMap.RasterLayerTypes.DoD)
         '        Dim pDoDLyr As IRasterLayer = AddToMapRaster(gRaster.FullPath, sName, pAnalGrpLayer, sSymbology)
         '        Return pDoDLyr
 
@@ -394,7 +394,7 @@ Namespace Core
 
         '        Dim pAnalGrpLayer As IGroupLayer = AddAnalysesGroupLayer(dodRow.ProjectRow)
         '        Dim sRasterPath As String = GCD.GCDProject.ProjectManager.GetAbsolutePath(dodRow.PropagatedErrorRasterPath)
-        '        Dim gPropErrRaster As RasterWranglerLib.Raster = New RasterWranglerLib.Raster(sRasterPath)
+        '        Dim gPropErrRaster As GCDConsoleLib.Raster = New GCDConsoleLib.Raster(sRasterPath)
         '        Dim sLyrName As String = dodRow.Name & "_" & IO.Path.GetFileNameWithoutExtension(dodRow.PropagatedErrorRasterPath)
         '        Dim sHeader As String = "Error (" & dodRow.ProjectRow.DisplayUnits & ")"
 
@@ -420,7 +420,7 @@ Namespace Core
 
         '        Dim pAnalGrpLayer As IGroupLayer = AddAnalysesGroupLayer(dodRow.ProjectRow)
         '        Dim sRasterPath As String = GCD.GCDProject.ProjectManager.GetAbsolutePath(sProbabilityRasterPath)
-        '        Dim gProbabilityRaster As RasterWranglerLib.Raster = New RasterWranglerLib.Raster(sRasterPath)
+        '        Dim gProbabilityRaster As GCDConsoleLib.Raster = New GCDConsoleLib.Raster(sRasterPath)
         '        Dim sFileName As String = IO.Path.GetFileNameWithoutExtension(sProbabilityRasterPath)
         '        Dim sLyrName As String = dodRow.Name & "_" & sFileName
 
@@ -476,7 +476,7 @@ Namespace Core
 
         '        ' PGB - 14 Oct 2014 - Need to gracefully handle when the raster doesn't exist on the
         '        ' file system. Pretty fundamental that this is handled here and also by calling methods
-        '        If Not RasterWranglerLib.Raster.Exists(sSource) Then
+        '        If Not GCDConsoleLib.Raster.Exists(sSource) Then
         '            Return Nothing
         '        End If
         '        '
@@ -506,7 +506,7 @@ Namespace Core
         '        ' RASTER
         '        '
         '        'TODO: Potentially will have to change this if problems calculating statistics
-        '        Dim gRaster As New RasterWranglerLib.Raster(sSource)
+        '        Dim gRaster As New GCDConsoleLib.Raster(sSource)
         '        gRaster.CalculateStatistics()
         '        If String.IsNullOrEmpty(sSymbologyLayerFile) Then
         '            pResultLayer = gRaster.RasterLayer
@@ -604,7 +604,7 @@ Namespace Core
         '        'gxFile.Path = sSymbologyLayerFile
 
         '        Dim pWSF As ESRI.ArcGIS.Geodatabase.IWorkspaceFactory = ArcMap.GetWorkspaceFactory(GISDataStructures.GISDataStorageTypes.ShapeFile)
-        '        Dim pWS As ESRI.ArcGIS.Geodatabase.IFeatureWorkspace = pWSF.OpenFromFile(RasterWranglerLib.VectorDataSource.GetWorkspacePath(sSource), 0)
+        '        Dim pWS As ESRI.ArcGIS.Geodatabase.IFeatureWorkspace = pWSF.OpenFromFile(GCDConsoleLib.VectorDataSource.GetWorkspacePath(sSource), 0)
         '        Dim pFC As ESRI.ArcGIS.Geodatabase.IFeatureClass = pWS.OpenFeatureClass(IO.Path.GetFileNameWithoutExtension(sSource))
         '        pResultLayer = New FeatureLayer
         '        pResultLayer.FeatureClass = pFC
@@ -810,7 +810,7 @@ Namespace Core
         '    End Sub
 
         '    Private Function AddRasterLayer(ByVal pMXDoc As ESRI.ArcGIS.ArcMapUI.IMxDocument,
-        '                                    ByVal gRaster As RasterWranglerLib.Raster,
+        '                                    ByVal gRaster As GCDConsoleLib.Raster,
         '                                    ByVal rasterRenderer As ESRI.ArcGIS.Carto.IRasterRenderer,
         '                                    sRasterName As String, pGrpLyr As IGroupLayer,
         '                                    Optional ByVal sHeader As String = Nothing,
@@ -990,7 +990,7 @@ Namespace Core
         '    '            If tempEType = eType Then
 
         '    '                Dim sTempRasterPath As String = GCD.GCDProject.ProjectManager.GetAbsolutePath(rAssoc.Source)
-        '    '                Dim gTempRaster As RasterWranglerLib.Raster = New RasterWranglerLib.Raster(sTempRasterPath)
+        '    '                Dim gTempRaster As GCDConsoleLib.Raster = New GCDConsoleLib.Raster(sTempRasterPath)
 
         '    '                If gTempRaster.Maximum > rasterCollectionMax Then
         '    '                    rasterCollectionMax = gTempRaster.Maximum

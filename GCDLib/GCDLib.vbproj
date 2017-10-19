@@ -457,9 +457,9 @@
       <Project>{1f496953-a809-4086-990b-884a5077bdc4}</Project>
       <Name>naru</Name>
     </ProjectReference>
-    <ProjectReference Include="..\RasterWrangler\RasterWranglerLib\RasterWranglerLib.csproj">
+    <ProjectReference Include="..\GCDConsole\GCDConsoleLib\GCDConsoleLib.csproj">
       <Project>{7a2e617d-37e5-4b2d-9981-df519b496a60}</Project>
-      <Name>RasterWranglerLib</Name>
+      <Name>GCDConsoleLib</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

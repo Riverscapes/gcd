@@ -20,7 +20,7 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "GCDLib", "GCDLib\GCDLib.vbp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "naru", "naru\naru.csproj", "{1F496953-A809-4086-990B-884A5077BDC4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RasterWranglerLib", "RasterWrangler\RasterWranglerLib\RasterWranglerLib.csproj", "{7A2E617D-37E5-4B2D-9981-DF519B496A60}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GCDConsoleLib", "GCDConsole\GCDConsoleLib\GCDConsoleLib.csproj", "{7A2E617D-37E5-4B2D-9981-DF519B496A60}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

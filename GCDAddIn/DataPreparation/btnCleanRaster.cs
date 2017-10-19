@@ -15,8 +15,8 @@ namespace GCDAddIn.DataPreparation
             {
                 if (frm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
-                    GCD.GCDLib.Core.RasterWranglerLib.Raster gOutput = frm.ProcessRaster();
-                    if (gOutput is GCD.GCDLib.Core.RasterWranglerLib.Raster)
+                    GCD.GCDLib.Core.GCDConsoleLib.Raster gOutput = frm.ProcessRaster();
+                    if (gOutput is GCD.GCDLib.Core.GCDConsoleLib.Raster)
                     {
                         if (GCD.GCDLib.My.MySettings.Default.AddOutputLayersToMap)
                         {
@@ -37,7 +37,7 @@ namespace GCDAddIn.DataPreparation
         {
             System.IO.DirectoryInfo diWorkspace = ArcMapUtilities.GetWorkspacePath(e.Path.FullName);
             string sDataset = System.IO.Path.GetFileNameWithoutExtension(e.Path.FullName);
-            GCD.GCDLib.Core.RasterWranglerLib.Raster selectedRaster = ArcMapBrowse.BrowseOpenRaster(e.FormTitle, ref diWorkspace, sDataset);
+            GCD.GCDLib.Core.GCDConsoleLib.Raster selectedRaster = ArcMapBrowse.BrowseOpenRaster(e.FormTitle, ref diWorkspace, sDataset);
             if (!(selectedRaster == null))
             {
                 ((System.Windows.Forms.TextBox)sender).Text = selectedRaster.FullPath;

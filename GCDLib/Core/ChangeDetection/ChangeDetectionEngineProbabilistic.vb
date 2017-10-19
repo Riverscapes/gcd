@@ -20,9 +20,9 @@ Namespace Core.ChangeDetection
         End Property
 
         Public Sub New(ByVal sName As String, ByVal sFolder As String,
-                       ByVal gNewDEM As RasterWranglerLib.Raster, ByVal gOldDEM As RasterWranglerLib.Raster,
-                       ByVal gNewError As RasterWranglerLib.Raster, ByVal gOldError As RasterWranglerLib.Raster,
-                       ByVal gAOI As RasterWranglerLib.Vector,
+                       ByVal gNewDEM As GCDConsoleLib.Raster, ByVal gOldDEM As GCDConsoleLib.Raster,
+                       ByVal gNewError As GCDConsoleLib.Raster, ByVal gOldError As GCDConsoleLib.Raster,
+                       ByVal gAOI As GCDConsoleLib.Vector,
                        ByVal fThreshold As Double, ByVal fChartHeight As Integer, ByVal fChartWidth As Integer, Optional ByVal spatCoherence As CoherenceProperties = Nothing)
 
             ' Call the base class constructor to instantiate common members.
@@ -54,7 +54,7 @@ Namespace Core.ChangeDetection
             Dim sSpatialCoErosionRaster As String = ""
 
             ' Create the prior probability raster
-            sPriorProbRaster = RasterWranglerLib.Raster.GetNewSafeName(Folder.FullName & IO.Path.DirectorySeparatorChar, "priorProb")
+            sPriorProbRaster = GCDConsoleLib.Raster.GetNewSafeName(Folder.FullName & IO.Path.DirectorySeparatorChar, "priorProb")
             If Not External.CreatePriorProbabilityRaster(sRawDoDPath, AnalysisNewError.FullPath, AnalysisOldError.FullPath, sPriorProbRaster,
                                                     GCDProject.ProjectManager.OutputManager.OutputDriver,
                                                     GCDProject.ProjectManager.OutputManager.NoData,
@@ -65,10 +65,10 @@ Namespace Core.ChangeDetection
 
             If TypeOf SpatialCoherenceProperties Is CoherenceProperties Then
 
-                sPosteriorRaster = RasterWranglerLib.Raster.GetNewSafeName(Folder.FullName & IO.Path.DirectorySeparatorChar, "postProb")
-                sConditionalRaster = RasterWranglerLib.Raster.GetNewSafeName(Folder.FullName & IO.Path.DirectorySeparatorChar, "condProb")
-                sSpatialCoErosionRaster = RasterWranglerLib.Raster.GetNewSafeName(Folder.FullName & IO.Path.DirectorySeparatorChar, "nbrErosion")
-                sSpatialCoDepositionRaster = RasterWranglerLib.Raster.GetNewSafeName(Folder.FullName & IO.Path.DirectorySeparatorChar, "nbrDeposition")
+                sPosteriorRaster = GCDConsoleLib.Raster.GetNewSafeName(Folder.FullName & IO.Path.DirectorySeparatorChar, "postProb")
+                sConditionalRaster = GCDConsoleLib.Raster.GetNewSafeName(Folder.FullName & IO.Path.DirectorySeparatorChar, "condProb")
+                sSpatialCoErosionRaster = GCDConsoleLib.Raster.GetNewSafeName(Folder.FullName & IO.Path.DirectorySeparatorChar, "nbrErosion")
+                sSpatialCoDepositionRaster = GCDConsoleLib.Raster.GetNewSafeName(Folder.FullName & IO.Path.DirectorySeparatorChar, "nbrDeposition")
 
                 If Not External.ThresholdDoDProbWithSpatialCoherence(sRawDoDPath, sThreshDodPath, AnalysisNewError.FullPath, AnalysisOldError.FullPath,
                                                             sPriorProbRaster, sPosteriorRaster, sConditionalRaster, sSpatialCoErosionRaster, sSpatialCoDepositionRaster,
@@ -99,7 +99,7 @@ Namespace Core.ChangeDetection
                 End Try
             End If
 
-            Dim gDoDRaw As New RasterWranglerLib.Raster(sRawDoDPath)
+            Dim gDoDRaw As New GCDConsoleLib.Raster(sRawDoDPath)
 
             Dim sPropErrRaster As String = GeneratePropagatedErrorRaster()
             Dim dodProp As New ChangeDetectionPropertiesProbabilistic(sRawDoDPath, sThreshDodPath, sPropErrRaster, sPriorProbRaster, sSpatialCoErosionRaster, sSpatialCoDepositionRaster, sConditionalRaster, sPosteriorRaster, Threshold, -1, False, gDoDRaw.CellSize, gDoDRaw.LinearUnits)

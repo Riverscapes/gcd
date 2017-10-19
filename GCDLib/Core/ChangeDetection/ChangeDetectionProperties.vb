@@ -80,7 +80,7 @@ Namespace Core.ChangeDetection
 
             Dim sRawDoDPath As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rDoD.RawDoDPath)
             Dim sThrDoDPath As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rDoD.ThreshDoDPath)
-            Dim gRawDoDPath As New RasterWranglerLib.Raster(sRawDoDPath)
+            Dim gRawDoDPath As New GCDConsoleLib.Raster(sRawDoDPath)
 
             Dim dodProps As ChangeDetectionProperties = Nothing
             If rDoD.TypeMinLOD Then

@@ -45,7 +45,7 @@ namespace GCDStandalone
             //                                  sUnits, sSpatialReference,
             //                                  theError);
 
-            RasterWranglerLib.Raster r = new RasterWranglerLib.Raster(sFullPath);
+            GCDConsoleLib.Raster r = new GCDConsoleLib.Raster(sFullPath);
 
             System.Diagnostics.Debug.Print("hi");
 

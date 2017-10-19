@@ -146,7 +146,7 @@ Namespace UI.ChangeDetection
             Else
                 Dim sPath As String = cms.SourceControl.Text
                 If Not String.IsNullOrEmpty(sPath) Then
-                    If RasterWranglerLib.GISDataset.GISDatasetExists(sPath) Then
+                    If GCDConsoleLib.GISDataset.GISDatasetExists(sPath) Then
                         'GISCode.ArcMap.AddToMap(My.ThisApplication, sPath, IO.Path.GetFileNameWithoutExtension(sPath), GISDataStructures.BasicGISTypes.Raster)
                         Dim sFileName As String = IO.Path.GetFileNameWithoutExtension(sPath)
 

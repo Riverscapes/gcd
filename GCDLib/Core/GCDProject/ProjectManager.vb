@@ -130,7 +130,7 @@ Namespace Core.GCDProject
 
         Public Sub New(ByVal sFISDatasetPath As String, ByVal sResourcesFolder As String, ByVal sExcelTemplateFolder As String,
                        ByVal sSurveyTypesDatasetPath As String,
-                       ByVal eDefaultRasterType As RasterWranglerLib.Raster.RasterDriver,
+                       ByVal eDefaultRasterType As GCDConsoleLib.Raster.RasterDriver,
                        ByVal ColourErosion As System.Drawing.Color,
                        ByVal ColourDeposition As System.Drawing.Color)
 

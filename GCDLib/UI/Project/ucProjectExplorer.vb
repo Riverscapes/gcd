@@ -518,17 +518,17 @@ Namespace UI.Project
         Public Function AddDEMSurvey() As Integer
 
             Dim nDEMSurveyID As Integer = 0
-            Dim gReferenceRaster As RasterWranglerLib.Raster = Nothing
+            Dim gReferenceRaster As GCDConsoleLib.Raster = Nothing
 
             If Core.GCDProject.ProjectManager.ds.DEMSurvey.Rows.Count > 0 Then
                 Dim sRasterPath As String = Core.GCDProject.ProjectManager.GetAbsolutePath(Core.GCDProject.ProjectManager.ds.DEMSurvey.Item(0).Source)
-                gReferenceRaster = New RasterWranglerLib.Raster(sRasterPath)
+                gReferenceRaster = New GCDConsoleLib.Raster(sRasterPath)
             End If
             Dim frmImport As New UI.SurveyLibrary.frmImportRaster(gReferenceRaster, Nothing, frmImportRaster.ImportRasterPurposes.DEMSurvey, "DEM Survey")
             If frmImport.ShowDialog = System.Windows.Forms.DialogResult.OK Then
 
-                Dim gRaster As RasterWranglerLib.Raster = frmImport.ProcessRaster
-                If TypeOf gRaster Is RasterWranglerLib.Raster Then
+                Dim gRaster As GCDConsoleLib.Raster = frmImport.ProcessRaster
+                If TypeOf gRaster Is GCDConsoleLib.Raster Then
 
                     Dim sRelativeRasterPath As String = Core.GCDProject.ProjectManager.GetRelativePath(frmImport.txtRasterPath.Text)
 

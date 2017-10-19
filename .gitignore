@@ -1,7 +1,6 @@
-naru/
-gcd-addin-dlls/
-
-
+naru
+gcd-addin-dlls
+extlib
 
 
 ## Ignore Visual Studio temporary files, build results, and

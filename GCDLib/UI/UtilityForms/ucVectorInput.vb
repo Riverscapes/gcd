@@ -5,7 +5,7 @@ Namespace UI.UtilityForms
     Public Class ucVectorInput
         Inherits naru.ui.ucInput
 
-        Private m_GeometryType As RasterWranglerLib.GDalGeometryType.SimpleTypes
+        Private m_GeometryType As GCDConsoleLib.GDalGeometryType.SimpleTypes
         Private m_sNoun As String
 
 #Region "Properties"
@@ -16,10 +16,10 @@ Namespace UI.UtilityForms
             End Get
         End Property
 
-        Public ReadOnly Property SelectedItem As RasterWranglerLib.Vector
+        Public ReadOnly Property SelectedItem As GCDConsoleLib.Vector
             Get
                 If TypeOf Path Is System.IO.FileInfo Then
-                    Return New RasterWranglerLib.Vector(Path.FullName)
+                    Return New GCDConsoleLib.Vector(Path.FullName)
                 Else
                     Return Nothing
                 End If
@@ -102,7 +102,7 @@ Namespace UI.UtilityForms
         ''' <param name="sNoun"></param>
         ''' <param name="eBrowseType"></param>
         ''' <remarks></remarks>
-        Public Shadows Sub Initialize(ByVal sNoun As String, ByVal eBrowseType As RasterWranglerLib.GDalGeometryType.SimpleTypes)
+        Public Shadows Sub Initialize(ByVal sNoun As String, ByVal eBrowseType As GCDConsoleLib.GDalGeometryType.SimpleTypes)
             m_sNoun = sNoun
             BrowseType = eBrowseType
         End Sub
@@ -131,8 +131,8 @@ Namespace UI.UtilityForms
 
         'End Function
 
-        'Public Shadows Function SelectedItem() As RasterWranglerLib.Vector
-        '    Return DirectCast(MyBase.SelectedItem, RasterWranglerLib.Vector)
+        'Public Shadows Function SelectedItem() As GCDConsoleLib.Vector
+        '    Return DirectCast(MyBase.SelectedItem, GCDConsoleLib.Vector)
         'End Function
 
 #End Region

@@ -91,7 +91,7 @@ Namespace UI.BudgetSegregation
                         Dim rDoD As ProjectDS.DoDsRow = aMask.BudgetSegregationsRow.DoDsRow
                         Dim sRawDod As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rDoD.RawDoDPath)
                         Dim sThrDoD As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rDoD.ThreshDoDPath)
-                        Dim gRawDoD As New RasterWranglerLib.Raster(sRawDod)
+                        Dim gRawDoD As New GCDConsoleLib.Raster(sRawDod)
                         If rDoD.TypeMinLOD Then
                             cdProperties = New Core.ChangeDetection.ChangeDetectionPropertiesMinLoD(sRawDod, sThrDoD, rDoD.Threshold, gRawDoD.CellSize, gRawDoD.LinearUnits)
                         ElseIf rDoD.TypePropagated Then
@@ -175,10 +175,10 @@ Namespace UI.BudgetSegregation
             Dim sPath As String = cms.SourceControl.Text
             sPath = GCDProject.ProjectManagerBase.GetAbsolutePath(sPath)
             If Not String.IsNullOrEmpty(sPath) Then
-                If RasterWranglerLib.Vector.Exists(sPath) Then
+                If GCDConsoleLib.Vector.Exists(sPath) Then
 
                     Try
-                        Dim gPolygon As RasterWranglerLib.Vector = New RasterWranglerLib.Vector(sPath)
+                        Dim gPolygon As GCDConsoleLib.Vector = New GCDConsoleLib.Vector(sPath)
                         ' TODO 
                         Throw New Exception("not implemented")
                         'GCDProject.ProjectManagerUI.ArcMapManager.AddBSMaskVector(gPolygon, m_rBS)

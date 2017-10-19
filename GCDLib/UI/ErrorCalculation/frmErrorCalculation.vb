@@ -82,7 +82,7 @@ Namespace UI.ErrorCalculation
             Try
                 ' Safely retrieve the spatial units of the DEM
                 Dim sDEMPath As String = Core.GCDProject.ProjectManagerBase.GetAbsolutePath(m_rDEMSurvey.Source)
-                Dim gDEM As New Core.RasterWranglerLib.Raster(sDEMPath)
+                Dim gDEM As New Core.GCDConsoleLib.Raster(sDEMPath)
                 rdoUniform.Text = rdoUniform.Text & " " & gDEM.LinearUnits.GetUnitsAsString(True)
             Catch ex As Exception
                 ' Don't show an error in release mode
@@ -203,7 +203,7 @@ Namespace UI.ErrorCalculation
                         Throw New Exception("Multi method DEM with no method mask field defined.")
                     Else
                         Dim sMethodMask As String = Core.GCDProject.ProjectManagerBase.GetAbsolutePath(m_rDEMSurvey.MethodMask)
-                        Dim gMethodMask As New Core.RasterWranglerLib.Vector(sMethodMask)
+                        Dim gMethodMask As New Core.GCDConsoleLib.Vector(sMethodMask)
                         Dim nIdentifierFld As Integer = gMethodMask.FindField(m_rDEMSurvey.MethodMaskField)
                         If nIdentifierFld < 0 Then
                             Dim ex As New Exception("Unable to find method mask field in mask polygon feature class")

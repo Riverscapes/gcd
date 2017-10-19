@@ -13,14 +13,14 @@
 
         ' These are the original survey DEMs. May be non-concurrent and 
         ' not masked to the AOI
-        Private m_gOriginalNewDEM As RasterWranglerLib.Raster
-        Private m_gOriginalOldDEM As RasterWranglerLib.Raster
+        Private m_gOriginalNewDEM As GCDConsoleLib.Raster
+        Private m_gOriginalOldDEM As GCDConsoleLib.Raster
 
         ' These are concurrent and masked to the AOI
-        Private m_gAnalysisNewDEM As RasterWranglerLib.Raster
-        Private m_gAnalysisOldDEM As RasterWranglerLib.Raster
+        Private m_gAnalysisNewDEM As GCDConsoleLib.Raster
+        Private m_gAnalysisOldDEM As GCDConsoleLib.Raster
 
-        Private m_gAOI As RasterWranglerLib.Vector
+        Private m_gAOI As GCDConsoleLib.Vector
 
         ' This is a polymorphic class. Call calculate and it will calculate
         ' the statistics different ways depending on the type instantiated.
@@ -48,31 +48,31 @@
             End Get
         End Property
 
-        Public ReadOnly Property OriginalNewDEM As RasterWranglerLib.Raster
+        Public ReadOnly Property OriginalNewDEM As GCDConsoleLib.Raster
             Get
                 Return m_gOriginalNewDEM
             End Get
         End Property
 
-        Public ReadOnly Property OriginalOldDEM As RasterWranglerLib.Raster
+        Public ReadOnly Property OriginalOldDEM As GCDConsoleLib.Raster
             Get
                 Return m_gOriginalOldDEM
             End Get
         End Property
 
-        Public ReadOnly Property AOI As RasterWranglerLib.Vector
+        Public ReadOnly Property AOI As GCDConsoleLib.Vector
             Get
                 Return m_gAOI
             End Get
         End Property
 
-        Public ReadOnly Property AnalysisNewDEM As RasterWranglerLib.Raster
+        Public ReadOnly Property AnalysisNewDEM As GCDConsoleLib.Raster
             Get
                 Return m_gAnalysisNewDEM
             End Get
         End Property
 
-        Public ReadOnly Property AnalysisOldDEM As RasterWranglerLib.Raster
+        Public ReadOnly Property AnalysisOldDEM As GCDConsoleLib.Raster
             Get
                 Return m_gAnalysisOldDEM
             End Get
@@ -92,8 +92,8 @@
 
 #End Region
 
-        Public Sub New(ByVal sName As String, ByVal sFolder As String, ByVal gNewDEM As RasterWranglerLib.Raster, ByVal gOldDEM As RasterWranglerLib.Raster,
-                       ByVal gAOI As RasterWranglerLib.Vector, ByVal fChartHeight As Integer, ByVal fChartWidth As Integer)
+        Public Sub New(ByVal sName As String, ByVal sFolder As String, ByVal gNewDEM As GCDConsoleLib.Raster, ByVal gOldDEM As GCDConsoleLib.Raster,
+                       ByVal gAOI As GCDConsoleLib.Vector, ByVal fChartHeight As Integer, ByVal fChartWidth As Integer)
 
             If String.IsNullOrEmpty(sName) Then
                 Throw New ArgumentNullException("sName", "The change detection analysis name cannot be empty.")
@@ -137,7 +137,7 @@
         ''' </summary>
         ''' <remarks>Should be overridden for Propagated and Probalistic so that the error
         ''' rasters can also be made concurrent with the DEMs.</remarks>
-        Protected Function GenerateAnalysisRasters() As RasterWranglerLib.ExtentRectangle
+        Protected Function GenerateAnalysisRasters() As GCDConsoleLib.ExtentRectangle
 
             Debug.Print("Generating analysis DEM rasters")
 
@@ -145,7 +145,7 @@
             m_gAnalysisNewDEM = Nothing
             m_gAnalysisOldDEM = Nothing
 
-            If TypeOf m_gAOI Is RasterWranglerLib.Vector Then
+            If TypeOf m_gAOI Is GCDConsoleLib.Vector Then
 
                 ' Mask the rasters using the specified AOI
                 Dim sAOIRaster As String = WorkspaceManager.GetTempRaster("AOI")
@@ -161,17 +161,17 @@
 
                 If m_gOriginalNewDEM.Extent.IsConcurrent(m_gOriginalOldDEM.Extent) Then
                     ' Rasters already concurrent. Simply use in situ
-                    m_gAnalysisNewDEM = New RasterWranglerLib.Raster(m_gOriginalNewDEM.filepath)
-                    m_gAnalysisOldDEM = New RasterWranglerLib.Raster(m_gOriginalOldDEM.filepath)
+                    m_gAnalysisNewDEM = New GCDConsoleLib.Raster(m_gOriginalNewDEM.filepath)
+                    m_gAnalysisOldDEM = New GCDConsoleLib.Raster(m_gOriginalOldDEM.filepath)
                 Else
                     Dim sNewDEM As String = WorkspaceManager.GetTempRaster("NewDEM")
                     Dim sOldDEM As String = WorkspaceManager.GetTempRaster("OldDEM")
 
                     ' Make copies of the original rasters that are concurrent
-                    Dim theUnionExtent As RasterWranglerLib.ExtentRectangle = m_gOriginalNewDEM.Extent.Union(m_gOriginalOldDEM.Extent)
+                    Dim theUnionExtent As GCDConsoleLib.ExtentRectangle = m_gOriginalNewDEM.Extent.Union(m_gOriginalOldDEM.Extent)
 
-                    m_gAnalysisNewDEM = RasterWranglerLib.RasterOperators.RasterCopy.ExtendedCopy(m_gOriginalNewDEM, sNewDEM, theUnionExtent)
-                    m_gAnalysisOldDEM = RasterWranglerLib.RasterOperators.RasterCopy.ExtendedCopy(m_gOriginalOldDEM, sOldDEM, theUnionExtent)
+                    m_gAnalysisNewDEM = GCDConsoleLib.RasterOperators.RasterCopy.ExtendedCopy(m_gOriginalNewDEM, sNewDEM, theUnionExtent)
+                    m_gAnalysisOldDEM = GCDConsoleLib.RasterOperators.RasterCopy.ExtendedCopy(m_gOriginalOldDEM, sOldDEM, theUnionExtent)
                 End If
             End If
 
@@ -219,7 +219,7 @@
                 End If
 
                 ''Checks to make sure the histogram is not zeros which causes a non-descript "writing to corrupt memory" exception
-                'Dim rawDoDRaster As New RasterWranglerLib.Raster(sRawDoDPath)
+                'Dim rawDoDRaster As New GCDConsoleLib.Raster(sRawDoDPath)
                 'If rawDoDRaster.Minimum = rawDoDRaster.Maximum Then
                 '    Throw New Exception("There was an error calculating the raw DoD. All values are zero in raw DoD.")
                 'End If

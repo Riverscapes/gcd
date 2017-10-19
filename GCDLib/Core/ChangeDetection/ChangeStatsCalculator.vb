@@ -129,7 +129,7 @@ Namespace Core.ChangeDetection
         '    ' Test that the thresholded DoD and the propagated Error have real values.
         '    ' Note that these rasters might be masked for BS and so there might not be coincident
         '    ' areas within the mask and the thresholded DoD.
-        '    Dim gThreshDoD As New RasterWranglerLib.Raster(dodProps.ThresholdedDoD)
+        '    Dim gThreshDoD As New GCDConsoleLib.Raster(dodProps.ThresholdedDoD)
         '    If Math.Abs(gThreshDoD.Maximum) = Double.MaxValue Then
         '        m_fVolumeErosion_Error = 0
         '        m_fVolumeDeposition_Error = 0

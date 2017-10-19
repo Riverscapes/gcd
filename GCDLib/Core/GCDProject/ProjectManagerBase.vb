@@ -30,7 +30,7 @@ Namespace Core.GCDProject
 
         Protected Shared m_GCDNARCError As External.NARCError
 
-        Protected Shared m_eDefaultRasterType As RasterWranglerLib.Raster.RasterDriver
+        Protected Shared m_eDefaultRasterType As GCDConsoleLib.Raster.RasterDriver
 
         Public Shared ReadOnly Property GCDNARCError As External.NARCError
             Get
@@ -137,7 +137,7 @@ Namespace Core.GCDProject
             End Get
         End Property
 
-        Public Shared ReadOnly Property DefaultRasterType As RasterWranglerLib.Raster.RasterDriver
+        Public Shared ReadOnly Property DefaultRasterType As GCDConsoleLib.Raster.RasterDriver
             Get
                 Return m_eDefaultRasterType
             End Get
@@ -163,7 +163,7 @@ Namespace Core.GCDProject
             End Get
         End Property
 
-        Public Sub New(ByVal eDefaultRasterType As RasterWranglerLib.Raster.RasterDriver,
+        Public Sub New(ByVal eDefaultRasterType As GCDConsoleLib.Raster.RasterDriver,
                 ByVal sResourcesFolder As String,
                 ByVal sExcelTempateFolder As String,
                 ByVal ColourErosion As System.Drawing.Color,
