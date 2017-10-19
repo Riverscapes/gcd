@@ -31,7 +31,7 @@ namespace GCDStandalone
                 GCDLib.UI.Project.frmProjectProperties frm = new GCDLib.UI.Project.frmProjectProperties(GCDLib.UI.Project.frmProjectProperties.DisplayModes.Create);
                 if (frm.ShowDialog() == DialogResult.OK)
                 {
-                    // TODO open project.
+                   ucProjectExplorer1.cmdRefresh_Click(sender, e);
                 }
             }
             catch(Exception ex)

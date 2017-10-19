@@ -1493,8 +1493,7 @@ Namespace UI.Project
 
         End Sub
 
-        Private Sub cmdRefresh_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles _
-        cmdRefresh.Click
+        Public Sub cmdRefresh_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdRefresh.Click
 
             Dim sSortBy As String = sender.ToString
 
