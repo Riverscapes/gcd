@@ -138,7 +138,7 @@ Namespace UI.BudgetSegregation
 
             If TypeOf ucPolygon.SelectedItem Is GCDConsoleLib.Vector Then
 
-                If ucPolygon.SelectedItem.FeatureCount < 1 Then
+                If ucPolygon.SelectedItem.Features.Count < 1 Then
                     MsgBox("The polygon mask feature class is empty and contains no features. You must choose a polygon feature class with at least one feature.", MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
                     Return False
                 End If

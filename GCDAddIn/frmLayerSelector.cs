@@ -13,20 +13,20 @@ namespace GCDAddIn
 {
     public partial class frmLayerSelector : Form
     {
-        public GCD.GCDLib.Core.GISDataStructures.BrowseGISTypes BrowseType { get; internal set; }
+        public ArcMapBrowse.BrowseGISTypes BrowseType { get; internal set; }
 
-        public GCD.GCDLib.Core.GISDataStructures.GISDataSource SelectedLayer
+        public GCDConsoleLib.GISDataset SelectedLayer
         {
             get
             {
-                if (lstLayers.SelectedItem is GCD.GCDLib.Core.GISDataStructures.GISDataSource)
-                    return (GCD.GCDLib.Core.GISDataStructures.GISDataSource)lstLayers.SelectedItem;
+                if (lstLayers.SelectedItem is GCDConsoleLib.GISDataset)
+                    return (GCDConsoleLib.GISDataset)lstLayers.SelectedItem;
                 else
                     return null;
             }
         }
 
-        public frmLayerSelector(GCD.GCDLib.Core.GISDataStructures.BrowseGISTypes eBrowseType)
+        public frmLayerSelector(ArcMapBrowse.BrowseGISTypes eBrowseType)
         {
             InitializeComponent();
             BrowseType = eBrowseType;
@@ -53,8 +53,8 @@ namespace GCDAddIn
                 ILayer pLayer = ArcMap.Document.FocusMap.Layer[i];
                 if (!(pLayer is ICompositeLayer))
                 {
-                    GCD.GCDLib.Core.GISDataStructures.BrowseGISTypes eBrowseType = GetBrowseType(ref pLayer);
-                    if (BrowseType == GCD.GCDLib.Core.GISDataStructures.BrowseGISTypes.Any || eBrowseType == BrowseType)
+                    ArcMapBrowse.BrowseGISTypes eBrowseType = GetBrowseType(ref pLayer);
+                    if (BrowseType == ArcMapBrowse.BrowseGISTypes.Any || eBrowseType == BrowseType)
                     {
                         lstLayers.Items.Add(new LayerInfo(pLayer.Name, ArcMapUtilities.GetPathFromLayer(pLayer), eBrowseType));
                     }
@@ -62,7 +62,7 @@ namespace GCDAddIn
             }
         }
 
-        private GCD.GCDLib.Core.GISDataStructures.BrowseGISTypes GetBrowseType(ref ESRI.ArcGIS.Carto.ILayer pLayer)
+        private ArcMapBrowse.BrowseGISTypes GetBrowseType(ref ESRI.ArcGIS.Carto.ILayer pLayer)
         {
             if (pLayer is IGeoFeatureLayer)
             {
@@ -71,36 +71,36 @@ namespace GCDAddIn
                 {
                     case ESRI.ArcGIS.Geometry.esriGeometryType.esriGeometryPoint:
                     case ESRI.ArcGIS.Geometry.esriGeometryType.esriGeometryMultipoint:
-                        return GCD.GCDLib.Core.GISDataStructures.BrowseGISTypes.Point;
+                        return ArcMapBrowse.BrowseGISTypes.Point;
 
                     case ESRI.ArcGIS.Geometry.esriGeometryType.esriGeometryLine:
                     case ESRI.ArcGIS.Geometry.esriGeometryType.esriGeometryPolyline:
-                        return GCD.GCDLib.Core.GISDataStructures.BrowseGISTypes.Line;
+                        return ArcMapBrowse.BrowseGISTypes.Line;
 
                     case ESRI.ArcGIS.Geometry.esriGeometryType.esriGeometryPolygon:
-                        return GCD.GCDLib.Core.GISDataStructures.BrowseGISTypes.Polygon;
+                        return ArcMapBrowse.BrowseGISTypes.Polygon;
 
                     default:
-                        return GCD.GCDLib.Core.GISDataStructures.BrowseGISTypes.Any;
+                        return ArcMapBrowse.BrowseGISTypes.Any;
                 }
             }
             else if (pLayer is IRasterLayer)
             {
-                return GCD.GCDLib.Core.GISDataStructures.BrowseGISTypes.Raster;
+                return ArcMapBrowse.BrowseGISTypes.Raster;
             }
             else if (pLayer is ITinLayer)
             {
-                return GCD.GCDLib.Core.GISDataStructures.BrowseGISTypes.TIN;
+                return ArcMapBrowse.BrowseGISTypes.TIN;
             }
             else
-                return GCD.GCDLib.Core.GISDataStructures.BrowseGISTypes.Any;
+                return ArcMapBrowse.BrowseGISTypes.Any;
         }
 
         private void cmdOK_Click(object sender, EventArgs e)
         {
             if (lstLayers.SelectedItems.Count != 1)
             {
-                MessageBox.Show("You must select one and only one layer to continue.", GCD.GCDLib.My.Resources.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("You must select one and only one layer to continue.", GCDLib.My.Resources.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 DialogResult = DialogResult.None;
             }
         }
@@ -109,14 +109,14 @@ namespace GCDAddIn
         {
             public string Name { get; internal set; }
             public System.IO.FileSystemInfo FullPath { get; internal set; }
-            public GCD.GCDLib.Core.GISDataStructures.BrowseGISTypes BrowseType { get; internal set; }
+            public ArcMapBrowse.BrowseGISTypes BrowseType { get; internal set; }
 
             public override string ToString()
             {
                 return Name;
             }
 
-            public LayerInfo(string sName, System.IO.FileSystemInfo siFullPath, GCD.GCDLib.Core.GISDataStructures.BrowseGISTypes eBrowseType)
+            public LayerInfo(string sName, System.IO.FileSystemInfo siFullPath, ArcMapBrowse.BrowseGISTypes eBrowseType)
             {
                 Name = sName;
                 FullPath = siFullPath;

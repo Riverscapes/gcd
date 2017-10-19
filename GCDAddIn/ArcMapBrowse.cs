@@ -6,6 +6,26 @@ namespace GCDAddIn
 {
     public struct ArcMapBrowse
     {
+        public enum BrowseGISTypes
+        {
+            Point,
+            Line,
+            Polygon,
+            Raster,
+            TIN,
+            Any
+        };
+
+        public enum GISDataStorageTypes
+        {
+             RasterFile,
+            ShapeFile,
+            FileGeodatase,
+            CAD,
+            PersonalGeodatabase,
+            TIN
+        };
+
         public static GCDConsoleLib.Raster BrowseOpenRaster(string sFormTitle, ref System.IO.DirectoryInfo diWorkspace, string sName = "")
         {
             IGxDialog pGxDialog = new GxDialog();

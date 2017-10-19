@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GCDAddIn
 {
-    class ucProjectManager : GCD.GCDLib.UI.Project.ucProjectExplorer
+    class ucProjectManager : GCDLib.UI.Project.ucProjectExplorer
     {
         public ucProjectManager(object hook) : base()
         {

@@ -6,7 +6,7 @@ namespace GCDAddIn.DataPreparation
     {
         protected override void OnClick()
         {
-            GCD.GCDLib.UI.SurveyLibrary.frmImportRaster frm = new GCD.GCDLib.UI.SurveyLibrary.frmImportRaster();
+            GCDLib.UI.SurveyLibrary.frmImportRaster frm = new GCDLib.UI.SurveyLibrary.frmImportRaster();
 
             frm.ucRaster.BrowseRaster += BrowseRaster;
             frm.ucRaster.SelectRasterFromArcMap += SelectRasterFromArcMap;
@@ -15,12 +15,12 @@ namespace GCDAddIn.DataPreparation
             {
                 if (frm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
-                   GCD. GCD.GCDLib.GCDConsoleLib.Raster gOutput = frm.ProcessRaster();
-                    if (gOutput is GCD.GCDLib.GCDConsoleLib.Raster)
+                    GCDConsoleLib.Raster gOutput = frm.ProcessRaster();
+                    if (gOutput is GCDConsoleLib.Raster)
                     {
-                        if (GCD.GCDLib.My.MySettings.Default.AddOutputLayersToMap)
+                        if (GCDLib.My.MySettings.Default.AddOutputLayersToMap)
                         {
-                            ArcMapUtilities.AddToMap(gOutput.FilePath);
+                            ArcMapUtilities.AddToMap(new System.IO.FileInfo(gOutput.FilePath));
                         }
                     }
                 }
@@ -37,10 +37,10 @@ namespace GCDAddIn.DataPreparation
         {
             System.IO.DirectoryInfo diWorkspace = ArcMapUtilities.GetWorkspacePath(e.Path.FullName);
             string sDataset = System.IO.Path.GetFileNameWithoutExtension(e.Path.FullName);
-          gcd  GCDConsoleLib.Raster selectedRaster = ArcMapBrowse.BrowseOpenRaster(e.FormTitle, ref diWorkspace, sDataset);
+            GCDConsoleLib.Raster selectedRaster = ArcMapBrowse.BrowseOpenRaster(e.FormTitle, ref diWorkspace, sDataset);
             if (!(selectedRaster == null))
             {
-                ((System.Windows.Forms.TextBox)sender).Text = selectedRaster.FullPath;
+                ((System.Windows.Forms.TextBox)sender).Text = selectedRaster.FilePath;
             }
         }
 
@@ -48,10 +48,10 @@ namespace GCDAddIn.DataPreparation
         {
             try
             {
-                frmLayerSelector frm = new frmLayerSelector(GCD.GCDLib.Core.GISDataStructures.BrowseGISTypes.Raster);
+                frmLayerSelector frm = new frmLayerSelector( ArcMapBrowse.BrowseGISTypes.Raster);
                 if (frm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
-                    ((System.Windows.Forms.TextBox)sender).Text = frm.SelectedLayer.FullPath;
+                    ((System.Windows.Forms.TextBox)sender).Text = frm.SelectedLayer.FilePath;
                 }
             }
             catch (Exception ex)

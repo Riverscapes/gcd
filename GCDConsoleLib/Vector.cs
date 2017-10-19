@@ -151,7 +151,7 @@ namespace GCDConsoleLib
             }
         }
 
-        public void AddField(string sName, GDalFieldType fType, int? precision)
+        public int AddField(string sName, GDalFieldType fType, int? precision)
         {
             Open();
             Layer mLayer = _ds.GetLayerByIndex(0);
@@ -160,7 +160,10 @@ namespace GCDConsoleLib
             {
                 fDef.SetPrecision((int)precision);
             }
-            mLayer.CreateField(fDef, 0); // 0 => Approx ok
+
+            Fields.Add(fDef.GetName(), new VectorField(ref fDef));
+            
+            return mLayer.CreateField(fDef, 0); // 0 => Approx ok
         }
 
     }

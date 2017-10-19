@@ -235,10 +235,12 @@ Namespace UI.SurveyLibrary
 
             If TypeOf ucRaster.SelectedItem Is GCDConsoleLib.Raster Then
                 Dim r As GCDConsoleLib.Raster = ucRaster.SelectedItem
-                If Not r.HasNoDataValue Then
-                    MsgBox("The raster is missing a NoDataValue. You  must set the NoDataValue before you can use this raster with GCD.", MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
-                    Return False
-                End If
+
+                Throw New NotImplementedException("Decide how to handle rasters that don't have a no data value")
+                'If Not r.HasNoDataValue Then
+                '    MsgBox("The raster is missing a NoDataValue. You  must set the NoDataValue before you can use this raster with GCD.", MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
+                '    Return False
+                'End If
 
                 Dim bMissingSpatialReference As Boolean = True
                 Throw New NotImplementedException

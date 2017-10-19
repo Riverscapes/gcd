@@ -33,7 +33,7 @@
             this.dataPreparationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.ucProjectExplorer1 = new GCD.GCDLib.UI.Project.ucProjectExplorer();
+            this.ucProjectExplorer1 = new GCDLib.UI.Project.ucProjectExplorer();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -108,7 +108,7 @@
         private System.Windows.Forms.ToolStripMenuItem dataPreparationToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.StatusStrip statusStrip1;
-        private GCD.GCDLib.UI.Project.ucProjectExplorer ucProjectExplorer1;
+        private GCDLib.UI.Project.ucProjectExplorer ucProjectExplorer1;
     }
 }
 

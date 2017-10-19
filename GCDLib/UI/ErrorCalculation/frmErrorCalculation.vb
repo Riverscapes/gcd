@@ -204,17 +204,19 @@ Namespace UI.ErrorCalculation
                     Else
                         Dim sMethodMask As String = Core.GCDProject.ProjectManagerBase.GetAbsolutePath(m_rDEMSurvey.MethodMask)
                         Dim gMethodMask As New GCDConsoleLib.Vector(sMethodMask)
-                        Dim nIdentifierFld As Integer = gMethodMask.FindField(m_rDEMSurvey.MethodMaskField)
-                        If nIdentifierFld < 0 Then
+
+                        If gMethodMask.Fields.ContainsKey(m_rDEMSurvey.MethodMaskField) Then
                             Dim ex As New Exception("Unable to find method mask field in mask polygon feature class")
                             ex.Data("Feature Class") = gMethodMask.FilePath
                             ex.Data("Field") = m_rDEMSurvey.MethodMaskField
                             Throw ex
                         End If
 
+
                         ' TODO: commented out loop over featurees below
                         Throw New Exception("not implemented")
 
+                        'Dim nIdentifierFld As Integer = 
                         'Dim pCursor As IFeatureCursor = gMethodMask.FeatureClass.Search(Nothing, True)
                         'Dim pFeature As IFeature = pCursor.NextFeature
                         'Dim sValue As String

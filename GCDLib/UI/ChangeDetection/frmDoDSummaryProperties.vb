@@ -56,9 +56,11 @@ Namespace UI.ChangeDetection
             AddUnitsToCombo(UnitsNet.Units.VolumeUnit.CubicFoot)
             AddUnitsToCombo(UnitsNet.Units.VolumeUnit.UsGallon)
             AddUnitsToCombo(UnitsNet.Units.VolumeUnit.CubicYard)
-            AddUnitsToCombo(UnitsNet.Units.VolumeUnit.acrefeet)
             AddUnitsToCombo(UnitsNet.Units.VolumeUnit.CubicMile)
             AddUnitsToCombo(UnitsNet.Units.VolumeUnit.CubicKilometer)
+
+            ' TODO need Acre feet
+            'AddUnitsToCombo(UnitsNet.Units.VolumeUnit.acrefeet)
 
             NumericUpDown1.Value = m_Options.m_nPrecision
 

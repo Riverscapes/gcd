@@ -52,6 +52,10 @@ namespace GCDConsoleLib
 
         // Equivalence operators
         public bool Equals(GDalFieldType otherType) { return _origType == otherType._origType; }
+
+        public static GDalFieldType IntField { get { return new GDalFieldType(FieldType.OFTInteger); } }
+        public static GDalFieldType RealField {  get { return new GDalFieldType(FieldType.OFTReal); } }
+        public static GDalFieldType StringField { get { return new GDalFieldType(FieldType.OFTString); } }        
     }
 
     /// <summary>

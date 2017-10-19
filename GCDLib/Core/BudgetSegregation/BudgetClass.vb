@@ -330,7 +330,7 @@ Namespace Core.BudgetSegregation
                 nCount = nCount + 1
             Loop While gMaskCopy.Fields.ContainsKey(_ClassFieldName) And nCount < 9999
 
-            gMaskCopy.AddField(_ClassFieldName, GISDataStructures.FieldTypes.IntField)
+            gMaskCopy.AddField(_ClassFieldName, GCDConsoleLib.GDalFieldType.IntField, Nothing)
 
             'open shapefile
             'm_pMaskFeature = ShapeFile.OpenShapefile(_MaskCopy.Name, _MaskCopy.DirectoryName)

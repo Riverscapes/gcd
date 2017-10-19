@@ -191,7 +191,7 @@ Namespace UI.SurveyLibrary
 
             Try
                 ' Make sure that the destination folder exists where the associated surface will be output
-                Dim sWorkspacePath As String = GISDataStructures.GISDataSource.GetWorkspacePath(txtProjectRaster.Text)
+                Dim sWorkspacePath As String = System.IO.Path.GetDirectoryName(txtProjectRaster.Text)
                 IO.Directory.CreateDirectory(sWorkspacePath)
 
                 ' Create the slope surface or point density rasters

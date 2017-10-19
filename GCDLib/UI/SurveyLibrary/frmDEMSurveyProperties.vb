@@ -45,13 +45,8 @@ Namespace UI.SurveyLibrary
                     Dim sMaskPath As String = Core.GCDProject.ProjectManager.GetAbsolutePath(txtMask.Text)
                     If GCDConsoleLib.GISDataset.FileExists(sMaskPath) Then
                         Dim gMask As New GCDConsoleLib.Vector(sMaskPath)
-                        gMask.FillComboWithFields(cboIdentify, "Method", GISDataStructures.FieldTypes.StringField, True)
-                        For i As Integer = 0 To cboIdentify.Items.Count - 1
-                            If String.Compare(cboIdentify.Items(i).ToString, demRow.MethodMaskField, True) = 0 Then
-                                cboIdentify.SelectedIndex = i
-                                Exit For
-                            End If
-                        Next
+                        cboIdentify.Items.AddRange(gMask.Fields.Values.Where(Function(s As GCDConsoleLib.VectorField) s.Type.Equals(GCDConsoleLib.GDalFieldType.StringField)))
+                        cboIdentify.Text = demRow.MethodMaskField
                     End If
                 Else
                     For i As Integer = 0 To cboSingle.Items.Count - 1
@@ -362,7 +357,8 @@ Namespace UI.SurveyLibrary
                 ' (just in case they are doing this for a reason.
                 Dim sTempPath As String = GCDProject.ProjectManager.GetRelativePath(gNewMask.FilePath)
                 If String.Compare(sTempPath, txtMask.Text, True) = 0 Then
-                    gNewMask.FillComboWithFields(cboIdentify, "Method", GISDataStructures.FieldTypes.StringField, True)
+                    cboIdentify.Items.AddRange(gNewMask.Fields.Values.Where(Function(s As GCDConsoleLib.VectorField) s.Type.Equals(GCDConsoleLib.GDalFieldType.StringField)))
+                    cboIdentify.Text = "Method"
                     Exit Sub
                 End If
 
@@ -385,8 +381,8 @@ Namespace UI.SurveyLibrary
 
                     ' Check that the new mask has at least one string field
                     Dim bContainsAtLeastOneStringField As Boolean = False
-                    For i As Integer = 0 To gNewMask.Fields.Count - 1
-                        If gNewMask.FieldType(i) = GISDataStructures.FieldTypes.StringField Then
+                    For Each aField As GCDConsoleLib.VectorField In gNewMask.Fields.Values
+                        If aField.Type.Equals(GCDConsoleLib.GDalFieldType.StringField) Then
                             bContainsAtLeastOneStringField = True
                             Exit For
                         End If
@@ -421,7 +417,7 @@ Namespace UI.SurveyLibrary
                             gNewMask = New GCDConsoleLib.Vector(sMethodMask)
 
                             ' Poplulate the method mask dropdown with the string fields from the feature class
-                            gNewMask.FillComboWithFields(cboIdentify, "Method", GISDataStructures.FieldTypes.StringField)
+                            cboIdentify.Items.AddRange(gNewMask.Fields.Values.Where(Function(s As GCDConsoleLib.VectorField) s.Type.Equals(GCDConsoleLib.GDalFieldType.StringField)))
                             txtMask.Text = GCDProject.ProjectManager.GetRelativePath(sMethodMask)
 
                         Catch ex As Exception
@@ -450,7 +446,7 @@ Namespace UI.SurveyLibrary
             If GCDConsoleLib.GISDataset.FileExists(sMaskPath) Then
                 Dim sWorkspace As String = System.IO.Path.GetDirectoryName(sMaskPath)
                 Try
-                    GCDConsoleLib.Raster.DeleteRaster(sMaskPath)
+                    GCDConsoleLib.Raster.Delete(sMaskPath)
                     txtMask.Text = String.Empty
                     cboIdentify.Items.Clear()
                 Catch ex As Exception
@@ -679,7 +675,7 @@ Namespace UI.SurveyLibrary
                 If bContinue Then
                     If GCDConsoleLib.GISDataset.FileExists(GCDProject.ProjectManager.GetAbsolutePath(rAssoc.Source)) Then
                         Try
-                            GCDConsoleLib.Raster.DeleteRaster(sPath)
+                            GCDConsoleLib.Raster.Delete(sPath)
                         Catch ex As Exception
                             Dim ex2 As New Exception("Error deleting the associated surface raster file and directory.", ex)
                             ex2.Data.Add("Raster Path", sPath)
@@ -690,7 +686,7 @@ Namespace UI.SurveyLibrary
                 End If
 
                 Try
-                    IO.Directory.Delete(GCDConsoleLib.Raster.GetWorkspacePath(GCDProject.ProjectManager.GetAbsolutePath(rAssoc.Source)))
+                    GCDConsoleLib.Raster.Delete(GCDProject.ProjectManager.GetAbsolutePath(rAssoc.Source))
                 Catch ex As Exception
                     ' do nothing
                 End Try
@@ -739,7 +735,7 @@ Namespace UI.SurveyLibrary
                     gRaster = frm.ProcessRaster
                 Catch ex As Exception
                     Try
-                        GCDConsoleLib.Raster.DeleteRaster(GCDConsoleLib.Raster.GetWorkspacePath(frm.txtRasterPath.Text))
+                        System.IO.Directory.Delete(System.IO.Path.GetDirectoryName(frm.txtRasterPath.Text))
                     Catch ex2 As Exception
                         ' do nothing
                     End Try
@@ -762,7 +758,7 @@ Namespace UI.SurveyLibrary
                     Catch ex As Exception
                         Dim bRasterExists As Boolean = True
                         Try
-                            GCDConsoleLib.Raster.DeleteRaster(frm.txtRasterPath.Text)
+                            GCDConsoleLib.Raster.Delete(frm.txtRasterPath.Text)
                             bRasterExists = False
                         Catch ex2 As Exception
                             bRasterExists = True
@@ -847,7 +843,7 @@ Namespace UI.SurveyLibrary
                     If Not rError.IsSourceNull Then
                         If GCDConsoleLib.GISDataset.FileExists(Core.GCDProject.ProjectManager.GetAbsolutePath(rError.Source)) Then
                             Try
-                                GCDConsoleLib.Raster.DeleteRaster(sPath)
+                                GCDConsoleLib.Raster.Delete(sPath)
                             Catch ex As Exception
                                 Core.ExceptionHelper.HandleException(ex, "Failed to delete the error surface raster.")
                                 bContinue = False
@@ -858,7 +854,7 @@ Namespace UI.SurveyLibrary
 
                 If bContinue Then
                     Try
-                        IO.Directory.Delete(GCDConsoleLib.Raster.GetWorkspacePath(Core.GCDProject.ProjectManager.GetAbsolutePath(rError.Source)))
+                        IO.Directory.Delete(System.IO.Path.GetDirectoryName(Core.GCDProject.ProjectManager.GetAbsolutePath(rError.Source)))
                     Catch ex As Exception
                         ' do nothing
                     End Try

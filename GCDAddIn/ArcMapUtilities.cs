@@ -4,7 +4,6 @@ using ESRI.ArcGIS.Carto;
 using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.DataSourcesRaster;
-using GCD.GCDLib.Core.GISDataStructures;
 using System.IO;
 
 namespace GCDAddIn
@@ -41,18 +40,18 @@ namespace GCDAddIn
                 throw ex;
             }
 
-            GISDataStorageTypes eStorageType = GetWorkspaceType(fiFullPath.FullName);
+           ArcMapBrowse.GISDataStorageTypes eStorageType = GetWorkspaceType(fiFullPath.FullName);
             IWorkspace pWorkspace = GetWorkspace(fiFullPath);
 
             switch (eStorageType)
             {
-                case GISDataStorageTypes.RasterFile:
+                case ArcMapBrowse.GISDataStorageTypes.RasterFile:
                     IRasterDataset pRDS = ((IRasterWorkspace)pWorkspace).OpenRasterDataset(fiFullPath.Name);
                     IRasterLayer pRLResult = new RasterLayer();
                     pRLResult.CreateFromDataset(pRDS);
                     break;
 
-                case GISDataStorageTypes.CAD:
+                case ArcMapBrowse.GISDataStorageTypes.CAD:
                     string sFile = Path.GetFileName(Path.GetDirectoryName(fiFullPath.FullName));
                     string sFC = sFile + ":" + Path.GetFileName(fiFullPath.FullName);
                     IFeatureClass pFC = ((IFeatureWorkspace)pWorkspace).OpenFeatureClass(sFC);
@@ -60,13 +59,13 @@ namespace GCDAddIn
                     ((IFeatureLayer)pResultLayer).FeatureClass = pFC;
                     break;
 
-                case GISDataStorageTypes.ShapeFile:
+                case ArcMapBrowse.GISDataStorageTypes.ShapeFile:
                     IFeatureClass pShapeFile = ((IFeatureWorkspace)pWorkspace).OpenFeatureClass(fiFullPath.FullName);
                     pResultLayer = new FeatureLayer();
                     ((IFeatureLayer)pResultLayer).FeatureClass = pShapeFile;
                     break;
 
-                case GISDataStorageTypes.TIN:
+                case ArcMapBrowse.GISDataStorageTypes.TIN:
                     ITin pTIN = ((ITinWorkspace)pWorkspace).OpenTin(fiFullPath.FullName);
                     pResultLayer = new TinLayer();
                     ((ITinLayer)pResultLayer).Dataset = pTIN;
@@ -294,7 +293,7 @@ namespace GCDAddIn
                 IDataset pDS = (IDataset)pL;
                 siResult = new DirectoryInfo(System.IO.Path.Combine(pDS.Workspace.PathName, pDS.Name));
             }
-            
+
             return siResult;
         }
 
@@ -307,7 +306,7 @@ namespace GCDAddIn
         /// Do not call "New" to create this singleton classes.
         /// http://forums.esri.com/Thread.asp?c=93&f=993&t=178686"
         /// </remarks>
-        public static IWorkspaceFactory GetWorkspaceFactory(GISDataStorageTypes eGISStorageType)
+        public static IWorkspaceFactory GetWorkspaceFactory(ArcMapBrowse.GISDataStorageTypes eGISStorageType)
         {
             Type aType = null;
             IWorkspaceFactory pWSFact = null;
@@ -316,22 +315,22 @@ namespace GCDAddIn
             {
                 switch (eGISStorageType)
                 {
-                    case GISDataStorageTypes.RasterFile:
+                    case ArcMapBrowse.GISDataStorageTypes.RasterFile:
                         aType = Type.GetTypeFromProgID("esriDataSourcesRaster.RasterWorkspaceFactory");
                         break;
-                    case GISDataStorageTypes.ShapeFile:
+                    case ArcMapBrowse.GISDataStorageTypes.ShapeFile:
                         aType = Type.GetTypeFromProgID("esriDataSourcesFile.ShapefileWorkspaceFactory");
                         break;
-                    case GISDataStorageTypes.FileGeodatase:
+                    case ArcMapBrowse.GISDataStorageTypes.FileGeodatase:
                         aType = Type.GetTypeFromProgID("esriDataSourcesGDB.FileGDBWorkspaceFactory");
                         break;
-                    case GISDataStorageTypes.CAD:
+                    case ArcMapBrowse.GISDataStorageTypes.CAD:
                         aType = Type.GetTypeFromProgID("esriDataSourcesFile.CadWorkspaceFactory");
                         break;
-                    case GISDataStorageTypes.PersonalGeodatabase:
+                    case ArcMapBrowse.GISDataStorageTypes.PersonalGeodatabase:
                         aType = Type.GetTypeFromProgID("esriDataSourcesGDB.AccessWorkspaceFactory");
                         break;
-                    case GISDataStorageTypes.TIN:
+                    case ArcMapBrowse.GISDataStorageTypes.TIN:
                         aType = Type.GetTypeFromProgID("esriDataSourcesFile.TinWorkspaceFactory");
                         break;
                     default:
@@ -352,7 +351,7 @@ namespace GCDAddIn
 
         public static IWorkspace GetWorkspace(System.IO.FileSystemInfo fiFullPath)
         {
-            GISDataStorageTypes eType = GetWorkspaceType(fiFullPath.FullName);
+            ArcMapBrowse.GISDataStorageTypes eType = GetWorkspaceType(fiFullPath.FullName);
             IWorkspaceFactory pWSFact = GetWorkspaceFactory(eType);
             System.IO.DirectoryInfo fiWorkspace = GetWorkspacePath(fiFullPath.FullName);
             return pWSFact.OpenFromFile(fiWorkspace.FullName, ArcMap.Application.hWnd);
@@ -373,11 +372,11 @@ namespace GCDAddIn
 
             switch (GetWorkspaceType(sFullPath))
             {
-                case GISDataStorageTypes.FileGeodatase:
+                case ArcMapBrowse.GISDataStorageTypes.FileGeodatase:
                     int index = sFullPath.ToLower().LastIndexOf(".gdb");
                     sWorkspacePath = sFullPath.Substring(0, index + 4);
                     break;
-                case GISDataStorageTypes.CAD:
+                case ArcMapBrowse.GISDataStorageTypes.CAD:
                     index = sFullPath.ToLower().LastIndexOf(".dxf");
                     sWorkspacePath = Path.GetDirectoryName(sFullPath.Substring(0, index));
                     break;
@@ -396,35 +395,35 @@ namespace GCDAddIn
         /// <remarks>Note that the path that comes in may or may not have a dataset name on the end. So it
         /// may be the path to a directory, or end with .gdb if a file geodatabase or may have a slash and
         /// then the dataset name on the end.</remarks>
-        public static GISDataStorageTypes GetWorkspaceType(string sFullPath)
+        public static ArcMapBrowse.GISDataStorageTypes GetWorkspaceType(string sFullPath)
         {
             if (sFullPath.ToLower().Contains(".gdb"))
             {
-                return GISDataStorageTypes.FileGeodatase;
+                return ArcMapBrowse.GISDataStorageTypes.FileGeodatase;
             }
             else
             {
                 if (System.IO.Directory.Exists(sFullPath))
                 {
-                    return GISDataStorageTypes.RasterFile; // ESRI GRID (folder)
+                    return ArcMapBrowse.GISDataStorageTypes.RasterFile; // ESRI GRID (folder)
                 }
                 else
                 {
                     if (sFullPath.ToLower().Contains(".dxf"))
                     {
-                        return GISDataStorageTypes.CAD;
+                        return ArcMapBrowse.GISDataStorageTypes.CAD;
                     }
                     else if (sFullPath.ToLower().Contains(".tif"))
                     {
-                        return GISDataStorageTypes.RasterFile;
+                        return ArcMapBrowse.GISDataStorageTypes.RasterFile;
                     }
                     else if (sFullPath.ToLower().Contains(".img"))
                     {
-                        return GISDataStorageTypes.RasterFile;
+                        return ArcMapBrowse.GISDataStorageTypes.RasterFile;
                     }
                     else
                     {
-                        return GISDataStorageTypes.ShapeFile;
+                        return ArcMapBrowse.GISDataStorageTypes.ShapeFile;
                     }
                 }
             }

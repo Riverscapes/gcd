@@ -52,7 +52,7 @@
                     ex.Data("Polygon Mask") = gInputPolygonMask.FilePath
                     Throw ex
                 Else
-                    If gInputPolygonMask.FindField(sMaskField) < 0 Then
+                    If Not gInputPolygonMask.Fields.ContainsKey(sMaskField) Then
                         Dim ex As New Exception("The field '" & sMaskField & "' does not exist in the polygon mask feature class.")
                         ex.Data("Polygon Mask") = gInputPolygonMask.FilePath
                         ex.Data("Mask field") = sMaskField
@@ -78,8 +78,9 @@
             'Dim sPolygonMask As String = GCDConsoleLib.VectorDataSource.GetNewSafeName(sOutputFolder, "Mask")
 
             'Changed to provide a more descriptive name than mask - Hensleigh 4/24/2014
-            Dim sPolygonMask As String = GCDConsoleLib.Vector.GetNewSafeName(sOutputFolder, IO.Path.GetFileNameWithoutExtension(gInputPolygonMask.FilePath) & "_" & sMaskField)
-            m_gPolygonMask = gInputPolygonMask.CopyShapeFile(sPolygonMask)
+            Dim sPolygonMask As String = naru.os.File.GetNewSafeName(sOutputFolder, IO.Path.GetFileNameWithoutExtension(gInputPolygonMask.FilePath) & "_" & sMaskField, "shp").FullName
+            gInputPolygonMask.Copy(sPolygonMask)
+            m_gPolygonMask = New GCDConsoleLib.Vector(sPolygonMask)
 
             ' Build the dictionary of budget classes. This method also writes the 
             ' class indexes to the shapefile in an integer field.
@@ -103,6 +104,7 @@
             ' Solution... Convert it using ESRI (for now) to temp location but then use GDAL to copy it
             ' With precise size.
             Dim sTempMask As String = WorkspaceManager.GetTempRaster("TempMask")
+
             Throw New NotImplementedException
             '  GP.Conversion.PolygonToRaster_conversion(m_gPolygonMask, m_sClassField, sTempMask, gDoDRaw)
             Throw New NotImplementedException
@@ -110,9 +112,9 @@
 
             ' Now copy to the desired location
             Dim sMaskRaster As String = naru.os.File.GetNewSafeName(sOutputFolder, "Mask", GCDProject.ProjectManagerBase.RasterExtension).FullName
-            If Not External.RasterManager.Copy(sTempMask, sMaskRaster, gDoDRaw.HorizontalPrecision, gDoDRaw.Extent.Left, gDoDRaw.Extent.Top, gDoDRaw.Rows, gDoDRaw.Columns, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString) = External.RasterManager.RasterManagerOutputCodes.PROCESS_OK Then
-                Throw New Exception(GCDProject.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
-            End If
+            'If Not External.RasterManager.Copy(sTempMask, sMaskRaster, gDoDRaw.HorizontalPrecision, gDoDRaw.Extent.Left, gDoDRaw.Extent.Top, gDoDRaw.Rows, gDoDRaw.Columns, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString) = External.RasterManager.RasterManagerOutputCodes.PROCESS_OK Then
+            '    Throw New Exception(GCDProject.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
+            'End If
             Dim gMaskRaster As New GCDConsoleLib.Raster(sMaskRaster)
 
             Dim bsOutputs As New BudgetSegregationOutputsClass(sOutputFolder, dMaskClasses, m_gPolygonMask.FilePath)
@@ -208,9 +210,9 @@
                 If bDeleteIntermediateRasters Then
                     GC.Collect()
 
-                    GCDConsoleLib.Raster.DeleteRaster(sPositiveMask)
-                    GCDConsoleLib.Raster.DeleteRaster(sMaskRaw)
-                    GCDConsoleLib.Raster.DeleteRaster(sMaskThr)
+                    GCDConsoleLib.Raster.Delete(sPositiveMask)
+                    GCDConsoleLib.Raster.Delete(sMaskRaw)
+                    GCDConsoleLib.Raster.Delete(sMaskThr)
                 End If
             Next
             'maskHistograms.Dispose()
@@ -270,9 +272,9 @@
                 End If
 
                 nCount += 1
-            Loop While m_gPolygonMask.FindField(m_sClassField) > -1
+            Loop While m_gPolygonMask.Fields.ContainsKey(m_sClassField)
 
-            Dim nClasskFieldIndex As Integer = m_gPolygonMask.AddField(m_sClassField, GISDataStructures.FieldTypes.IntField)
+            Dim nClasskFieldIndex As Integer = m_gPolygonMask.AddField(m_sClassField, GCDConsoleLib.GDalFieldType.IntField, Nothing)
             If nClasskFieldIndex < 0 Then
                 Dim ex As New Exception("Budget segregation class field does not exist in feature class.")
                 ex.Data("Class field") = m_sClassField
@@ -281,7 +283,7 @@
                 Throw ex
             End If
 
-            Dim nMaskFieldIndex As Integer = m_gPolygonMask.FindField(sMaskField)
+            Dim nMaskFieldIndex As Integer = m_gPolygonMask.Fields.ContainsKey(sMaskField)
             If nMaskFieldIndex < 0 Then
                 Dim ex As New Exception("Budget segregation mask field does not exist in feature class.")
                 ex.Data("Class field") = m_sClassField
