@@ -24,7 +24,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GCDConsole", "GCDConsole", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GCDConsoleLib", "GCDConsoleLib\GCDConsoleLib.csproj", "{7A2E617D-37E5-4B2D-9981-DF519B496A60}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GCDConsoleTest", "Test\GCDConsoleTest\GCDConsoleTest.csproj", "{C48420B8-7F3A-43C4-BD44-0B89F95ED4BB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GCDConsoleTest", "GCDConsoleTest\GCDConsoleTest.csproj", "{C48420B8-7F3A-43C4-BD44-0B89F95ED4BB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

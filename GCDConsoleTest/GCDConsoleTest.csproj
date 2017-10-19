@@ -119,7 +119,7 @@
     <Compile Include="VectorTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\GCDConsoleLib\GCDConsoleLib.csproj">
+    <ProjectReference Include="..\GCDConsoleLib\GCDConsoleLib.csproj">
       <Project>{7a2e617d-37e5-4b2d-9981-df519b496a60}</Project>
       <Name>GCDConsoleLib</Name>
     </ProjectReference>
