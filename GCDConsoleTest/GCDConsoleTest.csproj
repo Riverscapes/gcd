@@ -73,20 +73,20 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="gdalconst_csharp">
-      <HintPath>..\..\..\RasterWrangler\extlib\GDAL221\csharp\gdalconst_csharp.dll</HintPath>
+      <HintPath>..\extlib\GDAL221\csharp\gdalconst_csharp.dll</HintPath>
     </Reference>
     <Reference Include="gdal_csharp">
-      <HintPath>..\..\..\RasterWrangler\extlib\GDAL221\csharp\gdal_csharp.dll</HintPath>
+      <HintPath>..\extlib\GDAL221\csharp\gdal_csharp.dll</HintPath>
     </Reference>
     <Reference Include="ogr_csharp">
-      <HintPath>..\..\..\RasterWrangler\extlib\GDAL221\csharp\ogr_csharp.dll</HintPath>
+      <HintPath>..\extlib\GDAL221\csharp\ogr_csharp.dll</HintPath>
     </Reference>
     <Reference Include="osr_csharp">
-      <HintPath>..\..\..\RasterWrangler\extlib\GDAL221\csharp\osr_csharp.dll</HintPath>
+      <HintPath>..\extlib\GDAL221\csharp\osr_csharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="UnitsNet, Version=3.77.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\UnitsNet.3.77.0\lib\net35\UnitsNet.dll</HintPath>
+      <HintPath>..\packages\UnitsNet.3.77.0\lib\net35\UnitsNet.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
