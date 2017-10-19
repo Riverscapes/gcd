@@ -55,7 +55,7 @@ Namespace Core.ChangeDetection
 
             ' Create the prior probability raster
             sPriorProbRaster = GCDConsoleLib.Raster.GetNewSafeName(Folder.FullName & IO.Path.DirectorySeparatorChar, "priorProb")
-            If Not External.CreatePriorProbabilityRaster(sRawDoDPath, AnalysisNewError.FullPath, AnalysisOldError.FullPath, sPriorProbRaster,
+            If Not External.CreatePriorProbabilityRaster(sRawDoDPath, AnalysisNewError.FilePath, AnalysisOldError.FilePath, sPriorProbRaster,
                                                     GCDProject.ProjectManager.OutputManager.OutputDriver,
                                                     GCDProject.ProjectManager.OutputManager.NoData,
                                                    GCDProject.ProjectManager.GCDNARCError.ErrorString) = External.GCDCoreOutputCodes.PROCESS_OK Then
@@ -70,7 +70,7 @@ Namespace Core.ChangeDetection
                 sSpatialCoErosionRaster = GCDConsoleLib.Raster.GetNewSafeName(Folder.FullName & IO.Path.DirectorySeparatorChar, "nbrErosion")
                 sSpatialCoDepositionRaster = GCDConsoleLib.Raster.GetNewSafeName(Folder.FullName & IO.Path.DirectorySeparatorChar, "nbrDeposition")
 
-                If Not External.ThresholdDoDProbWithSpatialCoherence(sRawDoDPath, sThreshDodPath, AnalysisNewError.FullPath, AnalysisOldError.FullPath,
+                If Not External.ThresholdDoDProbWithSpatialCoherence(sRawDoDPath, sThreshDodPath, AnalysisNewError.FilePath, AnalysisOldError.FilePath,
                                                             sPriorProbRaster, sPosteriorRaster, sConditionalRaster, sSpatialCoErosionRaster, sSpatialCoDepositionRaster,
                                                              GCDProject.ProjectManager.OutputManager.OutputDriver, GCDProject.ProjectManager.OutputManager.NoData,
                                                              SpatialCoherenceProperties.MovingWindowWidth, SpatialCoherenceProperties.MovingWindowHeight, Threshold,
@@ -83,7 +83,7 @@ Namespace Core.ChangeDetection
                 End If
 
             Else
-                If Not External.ThresholdDoDProbability(sRawDoDPath, sThreshDodPath, AnalysisNewError.FullPath, AnalysisOldError.FullPath, sPriorProbRaster,
+                If Not External.ThresholdDoDProbability(sRawDoDPath, sThreshDodPath, AnalysisNewError.FilePath, AnalysisOldError.FilePath, sPriorProbRaster,
                                                     GCDProject.ProjectManager.OutputManager.OutputDriver, GCDProject.ProjectManager.OutputManager.NoData,
                                                     Threshold, GCDProject.ProjectManager.GCDNARCError.ErrorString) = External.GCDCoreOutputCodes.PROCESS_OK Then
                     Throw New Exception(GCDProject.ProjectManager.GCDNARCError.ErrorString.ToString)
@@ -102,7 +102,7 @@ Namespace Core.ChangeDetection
             Dim gDoDRaw As New GCDConsoleLib.Raster(sRawDoDPath)
 
             Dim sPropErrRaster As String = GeneratePropagatedErrorRaster()
-            Dim dodProp As New ChangeDetectionPropertiesProbabilistic(sRawDoDPath, sThreshDodPath, sPropErrRaster, sPriorProbRaster, sSpatialCoErosionRaster, sSpatialCoDepositionRaster, sConditionalRaster, sPosteriorRaster, Threshold, -1, False, gDoDRaw.CellSize, gDoDRaw.LinearUnits)
+            Dim dodProp As New ChangeDetectionPropertiesProbabilistic(sRawDoDPath, sThreshDodPath, sPropErrRaster, sPriorProbRaster, sSpatialCoErosionRaster, sSpatialCoDepositionRaster, sConditionalRaster, sPosteriorRaster, Threshold, -1, False, gDoDRaw.Extent.CellWidth, gDoDRaw.VerticalUnits)
             Dim theChangeStats As New ChangeStatsCalculator(dodProp)
             sSummaryXMLPath = GenerateSummaryXML(theChangeStats)
 

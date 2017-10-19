@@ -1,4 +1,4 @@
-﻿namespace RGCDConsoleib.Common.Extensons
+﻿namespace GCDConsoleLib.Common.Extensons
 {
     public static class ArrayExtensions
     {

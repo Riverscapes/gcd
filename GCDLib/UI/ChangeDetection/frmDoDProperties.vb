@@ -132,13 +132,13 @@ Namespace UI.ChangeDetection
             Try
                 System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor
 
-                Dim gNewDEM As New Core.GCDConsoleLib.Raster(Core.GCDProject.ProjectManager.GetAbsolutePath(GetDEMRow(cboNewDEM).Source))
-                Dim gOldDEM As New Core.GCDConsoleLib.Raster(Core.GCDProject.ProjectManager.GetAbsolutePath(GetDEMRow(cboOldDEM).Source))
+                Dim gNewDEM As New GCDConsoleLib.Raster(Core.GCDProject.ProjectManager.GetAbsolutePath(GetDEMRow(cboNewDEM).Source))
+                Dim gOldDEM As New GCDConsoleLib.Raster(Core.GCDProject.ProjectManager.GetAbsolutePath(GetDEMRow(cboOldDEM).Source))
 
-                Dim gAOI As Core.GCDConsoleLib.Vector = Nothing
+                Dim gAOI As GCDConsoleLib.Vector = Nothing
                 Dim rAOI As ProjectDS.AOIsRow = GetAOIRow()
                 If TypeOf rAOI Is ProjectDS.AOIsRow Then
-                    gAOI = New Core.GCDConsoleLib.Vector(Core.GCDProject.ProjectManager.GetAbsolutePath(rAOI.Source))
+                    gAOI = New GCDConsoleLib.Vector(Core.GCDProject.ProjectManager.GetAbsolutePath(rAOI.Source))
                 End If
 
                 Dim cdEngine As Core.ChangeDetection.ChangeDetectionEngineBase = Nothing

@@ -4,7 +4,7 @@ Namespace UI.ChangeDetection
 
     Public Class frmDoDSummaryProperties
 
-        Private m_eOriginalUnits As LinearUnitClass
+        Private m_eOriginalUnits As UnitsNet.Units.LengthUnit
         Private m_Options As DoDSummaryDisplayOptions
 
         Public ReadOnly Property Options As DoDSummaryDisplayOptions
@@ -13,7 +13,7 @@ Namespace UI.ChangeDetection
             End Get
         End Property
 
-        Public Sub New(eOriginalUnits As LinearUnitClass, theOptions As DoDSummaryDisplayOptions)
+        Public Sub New(eOriginalUnits As UnitsNet.Units.LengthUnit, theOptions As DoDSummaryDisplayOptions)
 
             ' This call is required by the designer
             InitializeComponent()

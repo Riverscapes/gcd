@@ -166,7 +166,7 @@ Namespace UI.Project
             Try
                 If DisplayMode = DisplayModes.Create Then
                     Core.GCDProject.ProjectManagerBase.FilePath = txtGCDPath.Text
-                    'ProjectManagerUI.ds.Project.AddProjectRow(txtName.Text, txtDescription.Text, txtDirectory.Text, Now, System.Reflection.Assembly.GetExecutingAssembly.GetName.Version.ToString, valPrecision.Value, DirectCast(cboDisplayUnits.SelectedItem, LinearUnitClass).LinearUnit.ToString)
+                    'ProjectManagerUI.ds.Project.AddProjectRow(txtName.Text, txtDescription.Text, txtDirectory.Text, Now, System.Reflection.Assembly.GetExecutingAssembly.GetName.Version.ToString, valPrecision.Value, DirectCast(cboDisplayUnits.SelectedItem, UnitsNet.Units.LengthUnit).LinearUnit.ToString)
                     Core.GCDProject.ProjectManagerBase.ds.Project.AddProjectRow(txtName.Text, txtDescription.Text, txtDirectory.Text, Now, System.Reflection.Assembly.GetExecutingAssembly.GetName.Version.ToString, valPrecision.Value, Nothing, Nothing, Core.GCDProject.ProjectManager.ProjectTypes.AddIn.ToString())
                     Try
                         ' TODO: was the following extension operation necessary? Surely the name and file can exist on the project manager and aren't need on the extension?
@@ -192,7 +192,7 @@ Namespace UI.Project
                     Dim theProjectRow As ProjectDS.ProjectRow = Core.GCDProject.ProjectManager.CurrentProject
                     theProjectRow.Name = txtName.Text
                     theProjectRow.Description = txtDescription.Text
-                    'theProjectRow.DisplayUnits = DirectCast(cboDisplayUnits.SelectedItem, LinearUnitClass).LinearUnit.ToString
+                    'theProjectRow.DisplayUnits = DirectCast(cboDisplayUnits.SelectedItem, UnitsNet.Units.LengthUnit).LinearUnit.ToString
                 End If
 
                 Core.GCDProject.ProjectManager.save()

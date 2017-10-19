@@ -57,7 +57,7 @@ Namespace UI.UtilityForms
 
         'Public Overrides Function Validate() As Boolean
 
-        '    If Not TypeOf SelectedItem Is Core.GCDConsoleLib.Raster Then
+        '    If Not TypeOf SelectedItem Is GCDConsoleLib.Raster Then
         '        System.Windows.Forms.MessageBox.Show(naru.ui.UIHelpers.WrapMessageWithNoun("Please select a", Noun, " to continue."), My.Resources.ApplicationNameLong, System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information)
         '        Return False
         '    End If

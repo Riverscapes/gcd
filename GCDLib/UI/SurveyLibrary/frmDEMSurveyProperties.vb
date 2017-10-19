@@ -43,8 +43,8 @@ Namespace UI.SurveyLibrary
                 ' Select the method mask field
                 If demRow.MultiMethod Then
                     Dim sMaskPath As String = Core.GCDProject.ProjectManager.GetAbsolutePath(txtMask.Text)
-                    If Core.GCDConsoleLib.Vector.Exists(sMaskPath) Then
-                        Dim gMask As New Core.GCDConsoleLib.Vector(sMaskPath)
+                    If GCDConsoleLib.Vector.Exists(sMaskPath) Then
+                        Dim gMask As New GCDConsoleLib.Vector(sMaskPath)
                         gMask.FillComboWithFields(cboIdentify, "Method", GISDataStructures.FieldTypes.StringField, True)
                         For i As Integer = 0 To cboIdentify.Items.Count - 1
                             If String.Compare(cboIdentify.Items(i).ToString, demRow.MethodMaskField, True) = 0 Then
@@ -730,7 +730,7 @@ Namespace UI.SurveyLibrary
         Public Shared Function SpecifyErrorSurface(rDEM As ProjectDS.DEMSurveyRow) As ProjectDS.ErrorSurfaceRow
 
             Dim rError As ProjectDS.ErrorSurfaceRow = Nothing
-            Dim gDEM As New Core.GCDConsoleLib.Raster(Core.GCDProject.ProjectManager.GetAbsolutePath(rDEM.Source))
+            Dim gDEM As New GCDConsoleLib.Raster(Core.GCDProject.ProjectManager.GetAbsolutePath(rDEM.Source))
             Dim frm As New frmImportRaster(gDEM, rDEM, frmImportRaster.ImportRasterPurposes.ErrorCalculation, "Error Surface")
             If frm.ShowDialog = System.Windows.Forms.DialogResult.OK Then
                 Dim gRaster As GCDConsoleLib.Raster = Nothing
@@ -738,7 +738,7 @@ Namespace UI.SurveyLibrary
                     gRaster = frm.ProcessRaster
                 Catch ex As Exception
                     Try
-                        GCDConsoleLib.Raster.DeleteRaster(Core.GCDConsoleLib.Raster.GetWorkspacePath(frm.txtRasterPath.Text))
+                        GCDConsoleLib.Raster.DeleteRaster(GCDConsoleLib.Raster.GetWorkspacePath(frm.txtRasterPath.Text))
                     Catch ex2 As Exception
                         ' do nothing
                     End Try
@@ -846,7 +846,7 @@ Namespace UI.SurveyLibrary
                     If Not rError.IsSourceNull Then
                         If GCDConsoleLib.Raster.Exists(Core.GCDProject.ProjectManager.GetAbsolutePath(rError.Source)) Then
                             Try
-                                Core.GCDConsoleLib.Raster.DeleteRaster(sPath)
+                                GCDConsoleLib.Raster.DeleteRaster(sPath)
                             Catch ex As Exception
                                 Core.ExceptionHelper.HandleException(ex, "Failed to delete the error surface raster.")
                                 bContinue = False

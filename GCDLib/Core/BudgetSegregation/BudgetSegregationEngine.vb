@@ -109,7 +109,7 @@
             '  GP.DataManagement.DefineProjection(sTempMask, gDoDRaw.SpatialReference)
 
             ' Now copy to the desired location
-            Dim sMaskRaster As String = Core.GCDConsoleLib.Raster.GetNewSafeName(sOutputFolder, "Mask")
+            Dim sMaskRaster As String = GCDConsoleLib.Raster.GetNewSafeName(sOutputFolder, "Mask")
             If Not External.RasterManager.Copy(sTempMask, sMaskRaster, gDoDRaw.CellSize, gDoDRaw.Extent.Left, gDoDRaw.Extent.Top, gDoDRaw.Rows, gDoDRaw.Columns, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString) = External.RasterManager.RasterManagerOutputCodes.PROCESS_OK Then
                 Throw New Exception(GCDProject.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
             End If

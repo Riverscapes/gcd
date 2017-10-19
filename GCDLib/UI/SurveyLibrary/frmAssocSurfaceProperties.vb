@@ -201,14 +201,14 @@ Namespace UI.SurveyLibrary
                     AssociatedSurfaceMethods.PointDensity,
                     AssociatedSurfaceMethods.Roughness
 
-                        Dim gDEMRaster As Core.GCDConsoleLib.Raster = GetDEMSurveyRaster()
+                        Dim gDEMRaster As GCDConsoleLib.Raster = GetDEMSurveyRaster()
 
                         Select Case m_eMethod
                             Case AssociatedSurfaceMethods.SlopeDegree
-                                External.CreateSlope(gDEMRaster.FullPath, txtProjectRaster.Text, External.RasterManager.SlopeTypes.Degrees, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
+                                External.CreateSlope(gDEMRaster.FilePath, txtProjectRaster.Text, External.RasterManager.SlopeTypes.Degrees, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
 
                             Case AssociatedSurfaceMethods.SlopePercent
-                                External.CreateSlope(gDEMRaster.FullPath, txtProjectRaster.Text, External.RasterManager.SlopeTypes.Percent, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
+                                External.CreateSlope(gDEMRaster.FilePath, txtProjectRaster.Text, External.RasterManager.SlopeTypes.Percent, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
 
                             Case AssociatedSurfaceMethods.PointDensity
                                 Dim sTemp As String = WorkspaceManager.GetTempRaster("PDensity.tif")
@@ -238,7 +238,7 @@ Namespace UI.SurveyLibrary
             Catch ex As Exception
 
                 ' Something went wrong. Check if the raster exists and safely attempt to clean it up if it does.
-                If GCDConsoleLib.Raster.Exists(txtProjectRaster.Text) Then
+                If GCDConsoleLib.GISDataset.FileExists(txtProjectRaster.Text) Then
                     Try
                         External.Delete(txtProjectRaster.Text, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
                     Catch ex2 As Exception
@@ -279,7 +279,7 @@ Namespace UI.SurveyLibrary
             Else
                 Dim dr As DataRowView '= AssociatedSurfaceBindingSource.Current
                 If dr.IsNew Then
-                    If GCDConsoleLib.Raster.Exists(txtProjectRaster.Text) Then
+                    If GCDConsoleLib.GISDataset.FileExists(txtProjectRaster.Text) Then
                         MsgBox("The associated surface project raster path already exists. Changing the name of the associated surface will change the raster path.", MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
                         Return False
                     End If
@@ -319,14 +319,14 @@ Namespace UI.SurveyLibrary
 
             If Not TypeOf m_ImportForm Is frmImportRaster Then
                 Dim gAssocRow As ProjectDS.AssociatedSurfaceRow '= DirectCast(AssociatedSurfaceBindingSource.Current, DataRowView).Row
-                Dim gDEMSurveyRaster As New Core.GCDConsoleLib.Raster(GCDProject.ProjectManagerBase.GetAbsolutePath(gAssocRow.DEMSurveyRow.Source))
+                Dim gDEMSurveyRaster As New GCDConsoleLib.Raster(GCDProject.ProjectManagerBase.GetAbsolutePath(gAssocRow.DEMSurveyRow.Source))
                 m_ImportForm = New frmImportRaster(gDEMSurveyRaster, gAssocRow.DEMSurveyRow, frmImportRaster.ImportRasterPurposes.AssociatedSurface, "Associated Surface")
             End If
 
             m_ImportForm.txtName.Text = txtName.Text
             If m_ImportForm.ShowDialog = System.Windows.Forms.DialogResult.OK Then
                 txtName.Text = m_ImportForm.txtName.Text
-                txtOriginalRaster.Text = m_ImportForm.ucRaster.SelectedItem.FullPath
+                txtOriginalRaster.Text = m_ImportForm.ucRaster.SelectedItem.FilePath
             End If
 
         End Sub
@@ -383,14 +383,14 @@ Namespace UI.SurveyLibrary
 
         End Sub
 
-        Private Function GetDEMSurveyRaster() As Core.GCDConsoleLib.Raster
+        Private Function GetDEMSurveyRaster() As GCDConsoleLib.Raster
 
-            Dim gResult As Core.GCDConsoleLib.Raster = Nothing
+            Dim gResult As GCDConsoleLib.Raster = Nothing
             Dim dr As DataRowView ' = AssociatedSurfaceBindingSource.Current
             Dim assocRow As ProjectDS.AssociatedSurfaceRow = dr.Row
             Dim demRow As ProjectDS.DEMSurveyRow = assocRow.DEMSurveyRow
-            If GISDataStructures.GISDataSource.Exists(GCDProject.ProjectManagerBase.GetAbsolutePath(demRow.Source)) Then
-                gResult = New Core.GCDConsoleLib.Raster(GCDProject.ProjectManagerBase.GetAbsolutePath(demRow.Source))
+            If GCDConsoleLib.GISDataset.FileExists(GCDProject.ProjectManagerBase.GetAbsolutePath(demRow.Source)) Then
+                gResult = New GCDConsoleLib.Raster(GCDProject.ProjectManagerBase.GetAbsolutePath(demRow.Source))
             Else
                 Dim ex As New Exception("The DEM Survey raster does not exist.")
                 ex.Data.Add("DEM Survey Raster Path", demRow.Source)
@@ -426,13 +426,13 @@ Namespace UI.SurveyLibrary
                     End If
                 Next
 
-                txtOriginalRaster.Text = m_frmPointDensity.ucPointCloud.SelectedItem.FullPath
+                txtOriginalRaster.Text = m_frmPointDensity.ucPointCloud.SelectedItem.FilePath
             End If
         End Sub
 
         Private Function CalculatePointDensity(sDEM As String, sPointCloud As String, fSampleDistance As Double, sOutputRaster As String, gReferenceRaster As GCDConsoleLib.Raster) As GCDConsoleLib.Raster
 
-            Dim gResult As Core.GCDConsoleLib.Raster = Nothing
+            Dim gResult As GCDConsoleLib.Raster = Nothing
             Try
 
             Catch ex As Exception
@@ -441,8 +441,8 @@ Namespace UI.SurveyLibrary
                 ex2.Data.Add("Point Cloud", sPointCloud)
                 ex2.Data.Add("Sample Distance", fSampleDistance)
                 ex2.Data.Add("Output raster", sOutputRaster)
-                If TypeOf gReferenceRaster Is Core.GCDConsoleLib.Raster Then
-                    ex2.Data.Add("Reference raster", gReferenceRaster.FullPath)
+                If TypeOf gReferenceRaster Is GCDConsoleLib.Raster Then
+                    ex2.Data.Add("Reference raster", gReferenceRaster.FilePath)
                 End If
                 Throw ex2
             End Try
@@ -463,8 +463,8 @@ Namespace UI.SurveyLibrary
         Private Sub btnRoughness_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnRoughness.Click
 
             If m_SurfaceRoughnessForm Is Nothing Then
-                Dim gDEMSurveyRaster As Core.GCDConsoleLib.Raster = GetDEMSurveyRaster()
-                Dim dReferenceResolution As Double = Math.Abs(gDEMSurveyRaster.CellWidth)
+                Dim gDEMSurveyRaster As GCDConsoleLib.Raster = GetDEMSurveyRaster()
+                Dim dReferenceResolution As Double = Math.Abs(gDEMSurveyRaster.Extent.CellWidth)
                 m_SurfaceRoughnessForm = New frmSurfaceRoughness(dReferenceResolution)
             End If
 

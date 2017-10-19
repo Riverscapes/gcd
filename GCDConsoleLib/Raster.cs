@@ -143,8 +143,8 @@ namespace GCDConsoleLib
         /// <param name="leaveopen"></param>
         public override void Create(bool leaveopen = false)
         {
-            if (File.Exists(filepath))
-                Gdal.Unlink(filepath);
+            if (File.Exists(FilePath))
+                Gdal.Unlink(FilePath);
 
             List<string> creationOpts = new List<string>();
 
@@ -160,7 +160,7 @@ namespace GCDConsoleLib
 
             Driver driverobj = Gdal.GetDriverByName(Enum.GetName(typeof(RasterDriver), driver));
 
-            dataset = driverobj.Create(filepath, Extent.cols, Extent.rows, 1, Datatype._origType, creationOpts.ToArray());
+            dataset = driverobj.Create(FilePath, Extent.cols, Extent.rows, 1, Datatype._origType, creationOpts.ToArray());
             dataset.SetGeoTransform(Extent.Transform);
             dataset.SetProjection(Proj.OriginalString);
             Band band = dataset.GetRasterBand(1);
@@ -186,21 +186,21 @@ namespace GCDConsoleLib
             if (write) permission = Access.GA_Update;
 
             // Make sure we have permission to do what we want to do
-            if (Utility.FileHelpers.IsFileLocked(filepath, permission))
-                throw new IOException(String.Format("File `{0}` was locked for `{}` operation", filepath, Enum.GetName(typeof(Access), permission)));
+            if (Utility.FileHelpers.IsFileLocked(FilePath, permission))
+                throw new IOException(String.Format("File `{0}` was locked for `{}` operation", FilePath, Enum.GetName(typeof(Access), permission)));
 
             GdalConfiguration.ConfigureGdal();
-            if (File.Exists(filepath))
+            if (File.Exists(FilePath))
             {
-                dataset = Gdal.Open(filepath, permission);
+                dataset = Gdal.Open(FilePath, permission);
                 if (dataset == null)
                 {
-                    throw new ArgumentException("Can't open " + filepath);
+                    throw new ArgumentException("Can't open " + FilePath);
                 }
             }
             else
             {
-                throw new FileNotFoundException("Could not find dataset to open", filepath);
+                throw new FileNotFoundException("Could not find dataset to open", FilePath);
             }
         }
 
@@ -242,7 +242,7 @@ namespace GCDConsoleLib
         public override void Copy(string destPath)
         {
             Open();
-            dataset.GetDriver().CopyFiles(destPath, filepath);
+            dataset.GetDriver().CopyFiles(destPath, FilePath);
             //dataset.GetDriver().CreateCopy(destPath, dataset, 1, null, null, null);
             Dispose();
         }
@@ -252,7 +252,7 @@ namespace GCDConsoleLib
             Open();
             Driver drv = dataset.GetDriver();
             Dispose();
-            drv.Delete(filepath);
+            drv.Delete(FilePath);
             drv.Dispose();
         }
 

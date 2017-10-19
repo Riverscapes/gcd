@@ -114,9 +114,9 @@
 
             If Not gNewDEM.Extent.HasOverlap(gOldDEM.Extent) Then
                 Dim ex As New Exception("The two rasters do not overlap.")
-                ex.Data("New DEM Path") = gNewDEM.filepath
+                ex.Data("New DEM Path") = gNewDEM.FilePath
                 ex.Data("New DEM Extent") = gNewDEM.Extent.ToString()
-                ex.Data("Old DEM Path") = gOldDEM.filepath
+                ex.Data("Old DEM Path") = gOldDEM.FilePath
                 ex.Data("Old DEM Extent") = gOldDEM.Extent.ToString()
             End If
 
@@ -161,8 +161,8 @@
 
                 If m_gOriginalNewDEM.Extent.IsConcurrent(m_gOriginalOldDEM.Extent) Then
                     ' Rasters already concurrent. Simply use in situ
-                    m_gAnalysisNewDEM = New GCDConsoleLib.Raster(m_gOriginalNewDEM.filepath)
-                    m_gAnalysisOldDEM = New GCDConsoleLib.Raster(m_gOriginalOldDEM.filepath)
+                    m_gAnalysisNewDEM = New GCDConsoleLib.Raster(m_gOriginalNewDEM.FilePath)
+                    m_gAnalysisOldDEM = New GCDConsoleLib.Raster(m_gOriginalOldDEM.FilePath)
                 Else
                     Dim sNewDEM As String = WorkspaceManager.GetTempRaster("NewDEM")
                     Dim sOldDEM As String = WorkspaceManager.GetTempRaster("OldDEM")
@@ -175,20 +175,20 @@
                 End If
             End If
 
-            Debug.Print("Analysis New DEM produced at: " & m_gAnalysisNewDEM.filepath)
-            Debug.Print("Analysis Old DEM produced at: " & m_gAnalysisOldDEM.filepath)
+            Debug.Print("Analysis New DEM produced at: " & m_gAnalysisNewDEM.FilePath)
+            Debug.Print("Analysis Old DEM produced at: " & m_gAnalysisOldDEM.FilePath)
             Debug.Print("Analysis extent: " & m_gAnalysisNewDEM.Extent.ToString)
 
             ' Final check
             If Not m_gAnalysisNewDEM.Extent.IsConcurrent(m_gAnalysisOldDEM.Extent) Then
                 Dim ex As New Exception("Failed to make analysis rasters concurrent.")
-                ex.Data("Original New DEM Path") = m_gOriginalNewDEM.filepath
+                ex.Data("Original New DEM Path") = m_gOriginalNewDEM.FilePath
                 ex.Data("Original New DEM Extent") = m_gOriginalNewDEM.Extent.ToString
-                ex.Data("Original Old DEM Path") = m_gOriginalOldDEM.filepath
+                ex.Data("Original Old DEM Path") = m_gOriginalOldDEM.FilePath
                 ex.Data("Original Old DEM Extent") = m_gOriginalOldDEM.Extent.ToString
-                ex.Data("Analysis New DEM Path") = m_gAnalysisNewDEM.filepath
+                ex.Data("Analysis New DEM Path") = m_gAnalysisNewDEM.FilePath
                 ex.Data("AnalysisNew DEM Extent") = m_gAnalysisNewDEM.Extent.ToString
-                ex.Data("AnalysisOld DEM Path") = m_gAnalysisOldDEM.filepath
+                ex.Data("AnalysisOld DEM Path") = m_gAnalysisOldDEM.FilePath
                 ex.Data("AnalysisOld DEM Extent") = m_gAnalysisOldDEM.Extent.ToString
                 Throw ex
             End If
@@ -202,7 +202,7 @@
             Try
                 sRawDoDPath = Core.GCDProject.ProjectManager.OutputManager.GetDoDRawPath(Name, m_dAnalysisFolder.FullName)
 
-                Dim eResult As External.GCDCoreOutputCodes = External.DoDRaw(AnalysisNewDEM.filepath, AnalysisOldDEM.filepath, sRawDoDPath,
+                Dim eResult As External.GCDCoreOutputCodes = External.DoDRaw(AnalysisNewDEM.FilePath, AnalysisOldDEM.FilePath, sRawDoDPath,
                                                            GCDProject.ProjectManagerBase.OutputManager.OutputDriver, GCDProject.ProjectManagerBase.OutputManager.NoData,
                                                           GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
 

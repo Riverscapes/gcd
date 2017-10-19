@@ -14,7 +14,7 @@ Namespace UI.SurveyLibrary
 
         End Sub
 
-        Public Function CalculateRoughness(ByVal sOutputPath As String, ByRef gDEMRaster As Core.GCDConsoleLib.Raster) As Boolean
+        Public Function CalculateRoughness(ByVal sOutputPath As String, ByRef gDEMRaster As GCDConsoleLib.Raster) As Boolean
 
             'Create dedicated folder in temp workspace
             Dim bResult As Boolean

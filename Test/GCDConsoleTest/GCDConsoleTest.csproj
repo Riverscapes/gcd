@@ -72,25 +72,21 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="gdalconst_csharp, Version=1.0.5387.28601, Culture=neutral, PublicKeyToken=db5a52b08dc5b321, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\extlib\GDAL221\csharp\gdalconst_csharp.dll</HintPath>
+    <Reference Include="gdalconst_csharp">
+      <HintPath>..\..\..\RasterWrangler\extlib\GDAL221\csharp\gdalconst_csharp.dll</HintPath>
     </Reference>
-    <Reference Include="gdal_csharp, Version=1.0.5387.28601, Culture=neutral, PublicKeyToken=db5a52b08dc5b321, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\extlib\GDAL221\csharp\gdal_csharp.dll</HintPath>
+    <Reference Include="gdal_csharp">
+      <HintPath>..\..\..\RasterWrangler\extlib\GDAL221\csharp\gdal_csharp.dll</HintPath>
     </Reference>
-    <Reference Include="ogr_csharp, Version=1.0.5387.28600, Culture=neutral, PublicKeyToken=db5a52b08dc5b321, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\extlib\GDAL221\csharp\ogr_csharp.dll</HintPath>
+    <Reference Include="ogr_csharp">
+      <HintPath>..\..\..\RasterWrangler\extlib\GDAL221\csharp\ogr_csharp.dll</HintPath>
     </Reference>
-    <Reference Include="osr_csharp, Version=1.0.5387.28600, Culture=neutral, PublicKeyToken=db5a52b08dc5b321, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\extlib\GDAL221\csharp\osr_csharp.dll</HintPath>
+    <Reference Include="osr_csharp">
+      <HintPath>..\..\..\RasterWrangler\extlib\GDAL221\csharp\osr_csharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="UnitsNet, Version=3.77.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UnitsNet.3.77.0\lib\net35\UnitsNet.dll</HintPath>
+      <HintPath>..\..\packages\UnitsNet.3.77.0\lib\net35\UnitsNet.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
@@ -123,12 +119,11 @@
     <Compile Include="VectorTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GCDConsoleLib\GCDConsoleLib.csproj">
-      <Project>{7A2E617D-37E5-4B2D-9981-DF519B496A60}</Project>
+    <ProjectReference Include="..\..\GCDConsoleLib\GCDConsoleLib.csproj">
+      <Project>{7a2e617d-37e5-4b2d-9981-df519b496a60}</Project>
       <Name>GCDConsoleLib</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />

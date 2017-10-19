@@ -100,15 +100,15 @@
 
             Dim sPropagatedErrorPath As String = GCDProject.ProjectManagerBase.OutputManager.GetPropagatedErrorPath(Name, Folder.FullName)
             Try
-                If Not External.RasterManager.RootSumSquares(AnalysisNewError.FullPath, AnalysisOldError.FullPath, sPropagatedErrorPath, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString) = External.RasterManagerOutputCodes.PROCESS_OK Then
+                If Not External.RasterManager.RootSumSquares(AnalysisNewError.filepath, AnalysisOldError.filepath, sPropagatedErrorPath, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString) = External.RasterManagerOutputCodes.PROCESS_OK Then
                     Throw New Exception(GCDProject.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
                 End If
             Catch ex As Exception
                 Dim ex2 As New Exception("Error generating propagated error raster.", ex)
                 ex2.Data("DoD Name") = Name
                 ex2.Data("DoD Folder") = Folder.FullName
-                ex2.Data("New Error") = AnalysisNewError.FullPath
-                ex2.Data("Old Error") = AnalysisOldError.FullPath
+                ex2.Data("New Error") = AnalysisNewError.filepath
+                ex2.Data("Old Error") = AnalysisOldError.filepath
                 ex2.Data("Propagated Error") = sPropagatedErrorPath
                 Throw ex2
             End Try
@@ -117,12 +117,12 @@
 
         End Function
 
-        Protected Shadows Function GenerateAnalysisRasters() As GISDataStructures.ExtentRectangle
+        Protected Shadows Function GenerateAnalysisRasters() As GCDConsoleLib.ExtentRectangle
 
             Debug.Print("Generating analysis error rasters.")
 
             ' Clip the DEM rasters to either the AOI or each other as concurrent rasters
-            Dim theAnalysisExtent As GISDataStructures.ExtentRectangle = MyBase.GenerateAnalysisRasters
+            Dim theAnalysisExtent As GCDConsoleLib.ExtentRectangle = MyBase.GenerateAnalysisRasters
 
             Dim sNewError As String = WorkspaceManager.GetTempRaster("NewError")
             Dim sOldError As String = WorkspaceManager.GetTempRaster("OldError")
@@ -130,11 +130,11 @@
             ' Now make the error rasters concurrent to the DEM rasters
             If m_gOriginalNewError.Extent.IsConcurrent(AnalysisNewDEM.Extent) Then
                 ' Already concurrent. Use error in situ
-                sNewError = m_gOriginalNewError.FullPath
+                sNewError = m_gOriginalNewError.filepath
             Else
                 ' Clip error raster to extent
-                If Not External.RasterManager.Copy(m_gOriginalNewError.FullPath, sNewError, AnalysisNewDEM.CellSize, theAnalysisExtent.Left, theAnalysisExtent.Top,
-                                          AnalysisNewDEM.Rows, AnalysisNewDEM.Columns, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString) = External.RasterManagerOutputCodes.PROCESS_OK Then
+                If Not External.RasterManager.Copy(m_gOriginalNewError.filepath, sNewError, AnalysisNewDEM.Extent.CellHeight, theAnalysisExtent.Left, theAnalysisExtent.Top,
+                                          AnalysisNewDEM.Extent.rows, AnalysisNewDEM.Extent.cols, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString) = External.RasterManagerOutputCodes.PROCESS_OK Then
                     Throw New Exception(GCDProject.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
                 End If
                 'GP.SpatialAnalyst.Raster_Calculator(Chr(34) & m_gOriginalNewError.FullPath & Chr(34), sNewError, theAnalysisExtent.Rectangle, m_gOriginalNewError.CellSize)
@@ -142,11 +142,11 @@
 
             If m_gOriginalOldError.Extent.IsConcurrent(AnalysisNewDEM.Extent) Then
                 ' Already concurrent. Use error in situ
-                sOldError = m_gOriginalOldError.FullPath
+                sOldError = m_gOriginalOldError.filepath
             Else
                 ' Clip error raster to extent
-                If Not External.RasterManager.Copy(m_gOriginalOldError.FullPath, sOldError, AnalysisOldDEM.CellSize, theAnalysisExtent.Left, theAnalysisExtent.Top,
-                                          AnalysisOldDEM.Rows, AnalysisOldDEM.Columns, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString) = External.RasterManagerOutputCodes.PROCESS_OK Then
+                If Not External.RasterManager.Copy(m_gOriginalOldError.filepath, sOldError, AnalysisOldDEM.Extent.CellHeight, theAnalysisExtent.Left, theAnalysisExtent.Top,
+                                          AnalysisOldDEM.Extent.rows, AnalysisOldDEM.Extent.cols, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString) = External.RasterManagerOutputCodes.PROCESS_OK Then
                     Throw New Exception(GCDProject.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
                 End If
                 ' GP.SpatialAnalyst.Raster_Calculator(Chr(34) & m_gOriginalOldError.FullPath & Chr(34), sOldError, theAnalysisExtent.Rectangle, m_gOriginalOldError.CellSize)

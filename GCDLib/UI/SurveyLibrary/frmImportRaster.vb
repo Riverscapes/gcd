@@ -26,10 +26,10 @@ Namespace UI.SurveyLibrary
             None
         End Enum
 
-        Private m_gReferenceRaster As Core.GCDConsoleLib.Raster
+        Private m_gReferenceRaster As GCDConsoleLib.Raster
         Private m_ePurpose As ImportRasterPurposes
         Private m_DEMSurveyRow As ProjectDS.DEMSurveyRow
-        Private m_OriginalExtent As Core.GISDataStructures.ExtentRectangle
+        Private m_OriginalExtent As GCDConsoleLib.ExtentRectangle
         Private m_sRasterMetaData As String ' not populated until the action of importing.
 
         Private m_nNoInterpolationIndex As Integer
@@ -48,7 +48,7 @@ Namespace UI.SurveyLibrary
         ''' </remarks>
         Private m_RasterDirects As Dictionary(Of String, String)
 
-        Public ReadOnly Property OriginalExtent As Core.GISDataStructures.ExtentRectangle
+        Public ReadOnly Property OriginalExtent As GCDConsoleLib.ExtentRectangle
             Get
                 Return m_OriginalExtent
             End Get
@@ -75,7 +75,7 @@ Namespace UI.SurveyLibrary
             End Get
         End Property
 
-        Public Sub New(gReferenceRaster As Core.GCDConsoleLib.Raster, demSurveyRow As ProjectDS.DEMSurveyRow, ePurpose As ImportRasterPurposes, sNoun As String)
+        Public Sub New(gReferenceRaster As GCDConsoleLib.Raster, demSurveyRow As ProjectDS.DEMSurveyRow, ePurpose As ImportRasterPurposes, sNoun As String)
 
             ' This call is required by the designer.
             InitializeComponent()
@@ -190,7 +190,7 @@ Namespace UI.SurveyLibrary
                 cmdSave.Visible = False
 
                 If m_ePurpose = ImportRasterPurposes.DEMSurvey Then
-                    If TypeOf m_gReferenceRaster Is Core.GCDConsoleLib.Raster Then
+                    If TypeOf m_gReferenceRaster Is GCDConsoleLib.Raster Then
                         ' there is already at least one DEM in the project. Disable cell size.
                         valCellSize.Enabled = False
                     Else
@@ -243,18 +243,18 @@ Namespace UI.SurveyLibrary
                 Dim bMissingSpatialReference As Boolean = True
                 Throw New NotImplementedException
                 'If TypeOf ucRaster.SelectedItem.SpatialReference Is ESRI.ArcGIS.Geometry.ISpatialReference Then
-                bMissingSpatialReference = ucRaster.SelectedItem.SpatialReference.ToLower.Contains("unknown")
+                bMissingSpatialReference = ucRaster.SelectedItem.Proj.PrettyWkt.ToLower.Contains("unknown")
                 ' End If
 
                 If bMissingSpatialReference Then
                     MsgBox("The selected raster appears to be missing a spatial reference. All GCD rasters must possess a spatial reference and it must be the same spatial reference for all rasters in a GCD project." &
-                            " If the selected raster exists in the same coordinate system, " & m_gReferenceRaster.SpatialReference & ", but the coordinate system has not yet been defined for the raster." &
+                            " If the selected raster exists in the same coordinate system, " & m_gReferenceRaster.Proj.PrettyWkt & ", but the coordinate system has not yet been defined for the raster." &
                             " Use the ArcToolbox 'Define Projection' geoprocessing tool in the 'Data Management -> Projection & Transformations' Toolbox to correct the problem with the selected raster by defining the coordinate system as:" & vbCrLf & vbCrLf & m_gReferenceRaster.SpatialReference.ToString & vbCrLf & vbCrLf & "Then try importing it into the GCD again.", MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
                     Return False
                 Else
                     If TypeOf m_gReferenceRaster Is GCDConsoleLib.Raster Then
-                        If Not m_gReferenceRaster.CheckSpatialReferenceMatches(ucRaster.SelectedItem.SpatialReference) Then
-                            MsgBox("The coordinate system of the selected raster:" & vbCrLf & vbCrLf & ucRaster.SelectedItem.SpatialReference.ToString & vbCrLf & vbCrLf & "does not match that of the GCD project:" & vbCrLf & vbCrLf & m_gReferenceRaster.SpatialReference.ToString & "." & vbCrLf & vbCrLf &
+                        If Not m_gReferenceRaster.Proj.IsSame(ucRaster.SelectedItem.Proj) Then
+                            MsgBox("The coordinate system of the selected raster:" & vbCrLf & vbCrLf & ucRaster.SelectedItem.Proj.PrettyWkt & vbCrLf & vbCrLf & "does not match that of the GCD project:" & vbCrLf & vbCrLf & m_gReferenceRaster.SpatialReference.ToString & "." & vbCrLf & vbCrLf &
                                "All rasters within a GCD project must have the identical coordinate system. However, small discrepencies in coordinate system names might cause the two coordinate systems to appear different. " &
                                "If you believe that the selected raster does in fact possess the same coordinate system as the GCD project then use the ArcToolbox 'Define Projection' geoprocessing tool in the " &
                                "'Data Management -> Projection & Transformations' Toolbox to correct the problem with the selected raster by defining the coordinate system as:" & vbCrLf & vbCrLf & m_gReferenceRaster.SpatialReference & vbCrLf & vbCrLf & "Then try importing it into the GCD again.", MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
@@ -275,7 +275,7 @@ Namespace UI.SurveyLibrary
                 End If
                 Return False
             Else
-                If GISDataStructures.GISDataSource.Exists(txtRasterPath.Text) Then
+                If GCDConsoleLib.GISDataset.FileExists(txtRasterPath.Text) Then
                     MsgBox("The project raster path already exists. Try using a different name for the raster.", MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
                     Return False
                 Else
@@ -468,15 +468,15 @@ Namespace UI.SurveyLibrary
         ''' copy. That way the user can change raster selection quickly without a lag
         ''' as rasters are copied repeatedly. It also keeps the number of temp rasters
         ''' down.</remarks>
-        Private Function GetSafeOriginalRaster(ByRef gRasterDirect As Core.GCDConsoleLib.Raster) As Boolean
+        Private Function GetSafeOriginalRaster(ByRef gRasterDirect As GCDConsoleLib.Raster) As Boolean
 
             gRasterDirect = Nothing
-            If TypeOf ucRaster.SelectedItem Is Core.GCDConsoleLib.Raster Then
+            If TypeOf ucRaster.SelectedItem Is GCDConsoleLib.Raster Then
                 Dim sGDALRasterPath As String = ucRaster.SelectedItem.FullPath
-                gRasterDirect = New Core.GCDConsoleLib.Raster(sGDALRasterPath)
+                gRasterDirect = New GCDConsoleLib.Raster(sGDALRasterPath)
             End If
 
-            Return TypeOf gRasterDirect Is Core.GCDConsoleLib.Raster
+            Return TypeOf gRasterDirect Is GCDConsoleLib.Raster
 
         End Function
 
@@ -514,17 +514,17 @@ Namespace UI.SurveyLibrary
             End Try
         End Sub
 
-        Public Function ProcessRaster() As Core.GCDConsoleLib.Raster
+        Public Function ProcessRaster() As GCDConsoleLib.Raster
 
             Cursor.Current = Cursors.WaitCursor
-            Dim gResult As Core.GCDConsoleLib.Raster = Nothing
+            Dim gResult As GCDConsoleLib.Raster = Nothing
             If Not String.IsNullOrEmpty(txtRasterPath.Text) Then
                 If GCDConsoleLib.Raster.Exists(txtRasterPath.Text) Then
                     Dim ex As New Exception("The raster path already exists.")
                     ex.Data.Add("Raster path", txtRasterPath.Text)
                     Throw ex
                 Else
-                    Dim gRaster As Core.GCDConsoleLib.Raster = Nothing
+                    Dim gRaster As GCDConsoleLib.Raster = Nothing
                     If GetSafeOriginalRaster(gRaster) Then
 
                         Dim sWorkspace As String = GCDConsoleLib.Raster.GetWorkspacePath(txtRasterPath.Text)
@@ -788,7 +788,7 @@ Namespace UI.SurveyLibrary
 
             Dim bResult As Boolean = True
             Dim fOldCellSize As Double
-            Dim gOriginalRaster As Core.GCDConsoleLib.Raster = Nothing
+            Dim gOriginalRaster As GCDConsoleLib.Raster = Nothing
             If GetSafeOriginalRaster(gOriginalRaster) Then
                 fOldCellSize = Math.Round(gOriginalRaster.CellSize, 5)
                 Dim fNewCellSize As Double = Math.Round(valCellSize.Value, CInt(valPrecision.Value))

@@ -35,7 +35,7 @@
             End If
 
             ' Check that the raster exists
-            If Not GISDataStructures.GISDataSource.Exists(sThreshDodPath) Then
+            If Not GCDConsoleLib.GISDataset.FileExists(sThreshDodPath) Then
                 Throw New Exception("The thresholded DoD raster file does noth exist.")
             End If
 
@@ -47,7 +47,7 @@
             End If
 
             Dim gRawDoD As New GCDConsoleLib.Raster(sRawDoDPath)
-            Dim dodProps As New ChangeDetectionPropertiesMinLoD(sRawDoDPath, sThreshDodPath, Threshold, gRawDoD.CellSize, gRawDoD.LinearUnits)
+            Dim dodProps As New ChangeDetectionPropertiesMinLoD(sRawDoDPath, sThreshDodPath, Threshold, gRawDoD.Extent.CellHeight, gRawDoD.VerticalUnits)
             Dim theChangeStats As New ChangeStatsCalculator(dodProps)
             sSummaryXMLPath = GenerateSummaryXML(theChangeStats)
 

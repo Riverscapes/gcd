@@ -2,6 +2,7 @@
 using OSGeo.GDAL;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using GCDConsoleLib.Common.Extensons;
+using GCDConsoleLib;
 
 namespace GCDConsoleLib.Tests.Utility
 {

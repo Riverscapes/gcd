@@ -44,7 +44,7 @@ Namespace UI.UtilityForms
                 Return False
             End If
 
-            If GCDConsoleLib.GISDataset.GISDatasetExists(txtOutput.Text) Then
+            If GCDConsoleLib.GISDataset.FileExists(txtOutput.Text) Then
                 If MsgBox("The " & Noun & " raster already exists. Do you wish to overwrite it?", MsgBoxStyle.YesNo Or MsgBoxStyle.DefaultButton2 Or MsgBoxStyle.Question, My.Resources.ApplicationNameLong) = MsgBoxResult.Yes Then
                     Try
                         Dim gRaster As New GCDConsoleLib.Raster(txtOutput.Text)
