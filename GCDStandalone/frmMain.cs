@@ -30,20 +30,24 @@ namespace GCDStandalone
                 naru.error.ExceptionUI.HandleException(ex, "Error initializing temporary workspace.");
             }
 
-            UpdateMenuItemStatus(menuStrip1.Items);
+            ucProjectExplorer1.ProjectTreeNodeSelectionChange += UpdateMenusAndToolstrips;
+            UpdateMenusAndToolstrips(sender, e);
         }
 
         private void ProjectProperties_Click(object sender, EventArgs e)
         {
             try
             {
-                GCDLib.UI.Project.frmProjectProperties frm = new GCDLib.UI.Project.frmProjectProperties(string.Compare(((ToolStripMenuItem)sender).Name, "projectPropertiesToolStripMenuItem", true) == 0);
+                bool bEditMode = string.Compare(((ToolStripItem)sender).Name, "projectPropertiesToolStripMenuItem", true) == 0 ||
+                        string.Compare(((ToolStripItem)sender).Name, "tsiProjectProperties", true) == 0;
+
+                GCDLib.UI.Project.frmProjectProperties frm = new GCDLib.UI.Project.frmProjectProperties(!bEditMode);
                 if (frm.ShowDialog() == DialogResult.OK)
                 {
                     ucProjectExplorer1.cmdRefresh_Click(sender, e);
                 }
 
-                UpdateMenuItemStatus(menuStrip1.Items);
+                UpdateMenusAndToolstrips(sender, e);
             }
             catch (Exception ex)
             {
@@ -102,7 +106,7 @@ namespace GCDStandalone
                 }
             }
 
-            UpdateMenuItemStatus(menuStrip1.Items);
+            UpdateMenusAndToolstrips(sender, e);
         }
 
         private void browseGCDProjectFolderToolStripMenuItem_Click(object sender, EventArgs e)
@@ -118,46 +122,57 @@ namespace GCDStandalone
             this.Close();
         }
 
+        private void UpdateMenusAndToolstrips(object sender, EventArgs e)
+        {
+            UpdateMenuItemStatus(toolStrip1.Items);
+            UpdateMenuItemStatus(menuStrip1.Items);
+        }
+
         private void UpdateMenuItemStatus(ToolStripItemCollection aMenu)
         {
             foreach (ToolStripItem subMenu in aMenu)
             {
-                if (subMenu is ToolStripMenuItem)
+                // Skip over separators etc
+                if (!(subMenu is ToolStripMenuItem || subMenu is ToolStripButton))
+                    continue;
+
+                if ((subMenu is ToolStripMenuItem && ((ToolStripMenuItem)subMenu).HasDropDownItems)) // if subMenu has children
                 {
-                    if (((ToolStripMenuItem)subMenu).HasDropDownItems) // if subMenu has children
+                    switch (subMenu.Name)
                     {
-                        switch (subMenu.Name)
-                        {
-                            // Skip top level menus
-                            case "analysisToolStripMenuItem":
-                            case "dataPreparationToolStripMenuItem":
-                            case "customizeToolStripMenuItem":
-                            case "helpToolStripMenuItem1":
-                                return;
+                        // Skip top level menus
+                        case "analysisToolStripMenuItem":
+                        case "dataPreparationToolStripMenuItem":
+                        case "customizeToolStripMenuItem":
+                        case "helpToolStripMenuItem1":
+                            return;
 
-                            default:
-                                UpdateMenuItemStatus(((ToolStripMenuItem)subMenu).DropDownItems); // Call recursive Method.
-                                break;
-                        }
-                    }
-                    else
-                    {
-                        switch (subMenu.Name)
-                        {
-                            // Skip specific menu items here
-                            case "newGCDProjectToolStripMenuItem":
-                            case "openGCDProjectToolStripMenuItem":
-                            case "exitToolStripMenuItem":
-                            case "customizeToolStripMenuItem":
-                                break; // do nothing. Always enabled.
-
-                            default:
-                                subMenu.Enabled = !string.IsNullOrEmpty(GCDLib.Core.GCDProject.ProjectManagerBase.FilePath);
-                                break;
-                        }
+                        default:
+                            UpdateMenuItemStatus(((ToolStripMenuItem)subMenu).DropDownItems); // Call recursive Method.
+                            break;
                     }
                 }
+                else
+                {
+                    switch (subMenu.Name)
+                    {
+                        // Skip specific menu items here
+                        case "newGCDProjectToolStripMenuItem":
+                        case "openGCDProjectToolStripMenuItem":
+                        case "exitToolStripMenuItem":
+                        case "customizeToolStripMenuItem":
+                            break; // do nothing. Always enabled.
 
+                        // Skip specific tool strip items here
+                        case "tsiNewProject":
+                        case "tsiOpenProject":
+                            break;
+
+                        default:
+                            subMenu.Enabled = !string.IsNullOrEmpty(GCDLib.Core.GCDProject.ProjectManagerBase.FilePath);
+                            break;
+                    }
+                }
             }
 
             // Now update the tool status strip
@@ -179,9 +194,9 @@ namespace GCDStandalone
             try
             {
                 GCDLib.UI.About.frmAbout frm = new GCDLib.UI.About.frmAbout();
-                frm.ShowDialog();    
+                frm.ShowDialog();
             }
-            catch( Exception ex)
+            catch (Exception ex)
             {
                 naru.error.ExceptionUI.HandleException(ex);
             }
@@ -194,7 +209,7 @@ namespace GCDStandalone
                 GCDLib.UI.Options.frmOptions frm = new GCDLib.UI.Options.frmOptions();
                 frm.ShowDialog();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 naru.error.ExceptionUI.HandleException(ex);
             }
@@ -207,7 +222,7 @@ namespace GCDStandalone
                 GCDLib.UI.SurveyLibrary.frmImportRaster frm = new GCDLib.UI.SurveyLibrary.frmImportRaster();
                 frm.ShowDialog();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 naru.error.ExceptionUI.HandleException(ex);
             }
@@ -220,7 +235,21 @@ namespace GCDStandalone
                 GCDLib.UI.FISLibrary.frmFISLibrary frm = new GCDLib.UI.FISLibrary.frmFISLibrary();
                 frm.ShowDialog();
             }
-            catch(Exception ex)
+            catch (Exception ex)
+            {
+                naru.error.ExceptionUI.HandleException(ex);
+            }
+        }
+
+        private void closeGCDProjectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                GCDLib.Core.GCDProject.ProjectManagerBase.FilePath = string.Empty;
+                ucProjectExplorer1.cmdRefresh_Click(sender, e);
+                UpdateMenusAndToolstrips(sender, e);
+            }
+            catch (Exception ex)
             {
                 naru.error.ExceptionUI.HandleException(ex);
             }

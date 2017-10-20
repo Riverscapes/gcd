@@ -27,11 +27,6 @@
             Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(ucProjectExplorer))
             Me.treProject = New System.Windows.Forms.TreeView()
             Me.imgTreeImageList = New System.Windows.Forms.ImageList(Me.components)
-            Me.btnCopy = New System.Windows.Forms.Button()
-            Me.btnAddToMap = New System.Windows.Forms.Button()
-            Me.btnDelete = New System.Windows.Forms.Button()
-            Me.btnProperties = New System.Windows.Forms.Button()
-            Me.btnAdd = New System.Windows.Forms.Button()
             Me.cmsProject = New System.Windows.Forms.ContextMenuStrip(Me.components)
             Me.EditGCDProjectPropertiesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem()
@@ -89,7 +84,6 @@
             Me.DateAddedToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.DateAddedAscendingToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.DateAddedDescendingToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-            Me.cmdRefresh = New System.Windows.Forms.Button()
             Me.cmsAOIGroup = New System.Windows.Forms.ContextMenuStrip(Me.components)
             Me.AddAOIToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.AddAllAOIsToTheMapToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -102,7 +96,6 @@
             Me.cmsDEMSurveyPair = New System.Windows.Forms.ContextMenuStrip(Me.components)
             Me.AddChangeDetectionToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
             Me.AddAllChangeDetectionsToTheMapToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-            Me.btnHelp = New System.Windows.Forms.Button()
             Me.tTip = New System.Windows.Forms.ToolTip(Me.components)
             Me.cmsBSGroup = New System.Windows.Forms.ContextMenuStrip(Me.components)
             Me.AddBudgetSegregationToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
@@ -131,17 +124,15 @@
             '
             'treProject
             '
-            Me.treProject.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Me.treProject.Dock = System.Windows.Forms.DockStyle.Fill
             Me.treProject.ImageIndex = 0
             Me.treProject.ImageList = Me.imgTreeImageList
-            Me.treProject.Location = New System.Drawing.Point(3, 32)
+            Me.treProject.Location = New System.Drawing.Point(0, 0)
             Me.treProject.Name = "treProject"
             Me.treProject.SelectedImageIndex = 0
             Me.treProject.ShowNodeToolTips = True
             Me.treProject.ShowRootLines = False
-            Me.treProject.Size = New System.Drawing.Size(690, 628)
+            Me.treProject.Size = New System.Drawing.Size(696, 663)
             Me.treProject.TabIndex = 0
             '
             'imgTreeImageList
@@ -165,55 +156,6 @@
             Me.imgTreeImageList.Images.SetKeyName(14, "BrowseFolder.png")
             Me.imgTreeImageList.Images.SetKeyName(15, "ConcaveHull.png")
             Me.imgTreeImageList.Images.SetKeyName(16, "BudgetSeg.png")
-            '
-            'btnCopy
-            '
-            Me.btnCopy.Enabled = False
-            Me.btnCopy.Image = Global.GCDLib.My.Resources.Resources.Copy
-            Me.btnCopy.Location = New System.Drawing.Point(143, 3)
-            Me.btnCopy.Name = "btnCopy"
-            Me.btnCopy.Size = New System.Drawing.Size(29, 23)
-            Me.btnCopy.TabIndex = 8
-            Me.btnCopy.UseVisualStyleBackColor = True
-            '
-            'btnAddToMap
-            '
-            Me.btnAddToMap.Enabled = False
-            Me.btnAddToMap.Image = Global.GCDLib.My.Resources.Resources.AddToMap
-            Me.btnAddToMap.Location = New System.Drawing.Point(108, 3)
-            Me.btnAddToMap.Name = "btnAddToMap"
-            Me.btnAddToMap.Size = New System.Drawing.Size(29, 23)
-            Me.btnAddToMap.TabIndex = 9
-            Me.btnAddToMap.UseVisualStyleBackColor = True
-            '
-            'btnDelete
-            '
-            Me.btnDelete.Enabled = False
-            Me.btnDelete.Image = Global.GCDLib.My.Resources.Resources.Delete
-            Me.btnDelete.Location = New System.Drawing.Point(73, 3)
-            Me.btnDelete.Name = "btnDelete"
-            Me.btnDelete.Size = New System.Drawing.Size(29, 23)
-            Me.btnDelete.TabIndex = 7
-            Me.btnDelete.UseVisualStyleBackColor = True
-            '
-            'btnProperties
-            '
-            Me.btnProperties.Enabled = False
-            Me.btnProperties.Image = Global.GCDLib.My.Resources.Resources.Settings
-            Me.btnProperties.Location = New System.Drawing.Point(38, 3)
-            Me.btnProperties.Name = "btnProperties"
-            Me.btnProperties.Size = New System.Drawing.Size(29, 23)
-            Me.btnProperties.TabIndex = 6
-            Me.btnProperties.UseVisualStyleBackColor = True
-            '
-            'btnAdd
-            '
-            Me.btnAdd.Image = Global.GCDLib.My.Resources.Resources.Add
-            Me.btnAdd.Location = New System.Drawing.Point(3, 3)
-            Me.btnAdd.Name = "btnAdd"
-            Me.btnAdd.Size = New System.Drawing.Size(29, 23)
-            Me.btnAdd.TabIndex = 5
-            Me.btnAdd.UseVisualStyleBackColor = True
             '
             'cmsProject
             '
@@ -358,7 +300,7 @@
             '
             Me.cmsInputsGroup.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AddDEMSurveyToolStripMenuItem, Me.AddAllDEMSurveysToTheMapToolStripMenuItem})
             Me.cmsInputsGroup.Name = "cmsInputsGroup"
-            Me.cmsInputsGroup.Size = New System.Drawing.Size(297, 70)
+            Me.cmsInputsGroup.Size = New System.Drawing.Size(297, 48)
             '
             'AddDEMSurveyToolStripMenuItem
             '
@@ -592,16 +534,6 @@
             Me.DateAddedDescendingToolStripMenuItem.Size = New System.Drawing.Size(136, 22)
             Me.DateAddedDescendingToolStripMenuItem.Text = "Descending"
             '
-            'cmdRefresh
-            '
-            Me.cmdRefresh.Image = Global.GCDLib.My.Resources.Resources.refresh
-            Me.cmdRefresh.Location = New System.Drawing.Point(213, 3)
-            Me.cmdRefresh.Name = "cmdRefresh"
-            Me.cmdRefresh.Size = New System.Drawing.Size(29, 23)
-            Me.cmdRefresh.TabIndex = 10
-            Me.cmdRefresh.UseVisualStyleBackColor = True
-            Me.cmdRefresh.Visible = False
-            '
             'cmsAOIGroup
             '
             Me.cmsAOIGroup.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AddAOIToolStripMenuItem, Me.AddAllAOIsToTheMapToolStripMenuItem})
@@ -681,15 +613,6 @@
             Me.AddAllChangeDetectionsToTheMapToolStripMenuItem.Size = New System.Drawing.Size(423, 22)
             Me.AddAllChangeDetectionsToTheMapToolStripMenuItem.Text = "Add All Change Detections (With These DEM Surveys) To The Map"
             '
-            'btnHelp
-            '
-            Me.btnHelp.Image = Global.GCDLib.My.Resources.Resources.Help
-            Me.btnHelp.Location = New System.Drawing.Point(178, 3)
-            Me.btnHelp.Name = "btnHelp"
-            Me.btnHelp.Size = New System.Drawing.Size(29, 23)
-            Me.btnHelp.TabIndex = 14
-            Me.btnHelp.UseVisualStyleBackColor = True
-            '
             'cmsBSGroup
             '
             Me.cmsBSGroup.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AddBudgetSegregationToolStripMenuItem1})
@@ -746,13 +669,6 @@
             '
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-            Me.Controls.Add(Me.btnHelp)
-            Me.Controls.Add(Me.cmdRefresh)
-            Me.Controls.Add(Me.btnCopy)
-            Me.Controls.Add(Me.btnAddToMap)
-            Me.Controls.Add(Me.btnDelete)
-            Me.Controls.Add(Me.btnProperties)
-            Me.Controls.Add(Me.btnAdd)
             Me.Controls.Add(Me.treProject)
             Me.Name = "ucProjectExplorer"
             Me.Size = New System.Drawing.Size(696, 663)
@@ -774,12 +690,6 @@
             Me.ResumeLayout(False)
 
         End Sub
-        Friend WithEvents treProject As System.Windows.Forms.TreeView
-        Friend WithEvents btnCopy As System.Windows.Forms.Button
-        Friend WithEvents btnAddToMap As System.Windows.Forms.Button
-        Friend WithEvents btnDelete As System.Windows.Forms.Button
-        Friend WithEvents btnProperties As System.Windows.Forms.Button
-        Friend WithEvents btnAdd As System.Windows.Forms.Button
         Friend WithEvents imgTreeImageList As System.Windows.Forms.ImageList
         Friend WithEvents cmsProject As System.Windows.Forms.ContextMenuStrip
         Friend WithEvents ToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
@@ -820,7 +730,6 @@
         Friend WithEvents cmsSurveysGroup As System.Windows.Forms.ContextMenuStrip
         Friend WithEvents AddDEMSurveyToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
         Friend WithEvents AddAllDEMSurveysToTheMapToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents cmdRefresh As System.Windows.Forms.Button
         Friend WithEvents ExploreChangeDetectionFolderToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
         Friend WithEvents ExploreGCDProjectFolderToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
         Friend WithEvents cmsAOIGroup As System.Windows.Forms.ContextMenuStrip
@@ -835,7 +744,6 @@
         Friend WithEvents cmsDEMSurveyPair As System.Windows.Forms.ContextMenuStrip
         Friend WithEvents AddChangeDetectionToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
         Friend WithEvents AddAllChangeDetectionsToTheMapToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents btnHelp As System.Windows.Forms.Button
         Friend WithEvents tTip As System.Windows.Forms.ToolTip
         Friend WithEvents ToolStripSeparator5 As System.Windows.Forms.ToolStripSeparator
         Friend WithEvents AddBudgetSegregationToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
@@ -861,6 +769,6 @@
         Friend WithEvents SurveyDateDescendingToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
         Friend WithEvents DateAddedAscendingToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
         Friend WithEvents DateAddedDescendingToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-
+        Friend WithEvents treProject As System.Windows.Forms.TreeView
     End Class
 End Namespace

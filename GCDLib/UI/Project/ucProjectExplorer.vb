@@ -7,6 +7,8 @@ Namespace UI.Project
 
     Public Class ucProjectExplorer
 
+        Public Event ProjectTreeNodeSelectionChange(sender As Object, e As EventArgs)
+
         Private Const m_sGroupInputs As String = "Inputs"
         Private Const m_sAssocSurfaces As String = "Associated Surfaces"
         Private Const m_sErrorSurfaces As String = "Error Surfaces"
@@ -51,18 +53,6 @@ Namespace UI.Project
         End Property
 
         Private Sub ProjectExplorerUC_Load(sender As Object, e As System.EventArgs) Handles Me.Load
-
-            tTip.SetToolTip(btnAdd, "Add to the GCD Project.")
-            tTip.SetToolTip(btnProperties, "Edit the properties of the selected object.")
-            tTip.SetToolTip(btnDelete, "Delete the selected object from the GCD project.")
-            tTip.SetToolTip(btnAddToMap, "Add the selected item (and it's children) to the current ArcMap document.")
-            tTip.SetToolTip(btnCopy, "Create a new copy of the selected object.")
-            tTip.SetToolTip(btnHelp, "Get help of the GCD Project Explorer.")
-
-            '#If DEBUG Then
-            cmdRefresh.Visible = True
-            '#End If
-
             LoadTree()
         End Sub
 
@@ -85,8 +75,6 @@ Namespace UI.Project
             If TypeOf dr Is ProjectDS.ProjectRow Then
                 LoadTree(treProject, dr, False, sSelectedNodeTag, eSortSurveyBy)
             End If
-
-            UpdateButtons()
 
         End Sub
 
@@ -300,14 +288,6 @@ Namespace UI.Project
             End Try
         End Sub
 
-        Private Sub treProject_AfterSelect(sender As Object, e As System.Windows.Forms.TreeViewEventArgs) Handles treProject.AfterSelect
-            UpdateButtons()
-        End Sub
-
-        Private Sub treProject_BeforeCollapse(sender As Object, e As System.Windows.Forms.TreeViewCancelEventArgs) Handles treProject.BeforeCollapse
-            'e.Cancel = True
-        End Sub
-
         Private Sub treProject_DoubleClick(sender As Object, e As System.EventArgs) Handles treProject.DoubleClick
 
             Try
@@ -422,27 +402,6 @@ Namespace UI.Project
             Return sortedSurveys
 
         End Function
-
-        Private Sub UpdateButtons()
-
-            btnAdd.Enabled = False
-            btnProperties.Enabled = False
-            btnDelete.Enabled = False
-            btnCopy.Enabled = False
-            btnAddToMap.Enabled = False
-
-            Dim nodSelected As TreeNode = treProject.SelectedNode
-            If TypeOf nodSelected Is TreeNode Then
-                Dim eType As GCDNodeTypes = GetNodeType(nodSelected)
-
-                btnAdd.Enabled = Not (eType = GCDNodeTypes.Project OrElse eType = GCDNodeTypes.ChangeDetectionGroup OrElse eType = GCDNodeTypes.ErrorSurface OrElse eType = GCDNodeTypes.AssociatedSurface OrElse eType = GCDNodeTypes.DEMSurvey)
-                btnProperties.Enabled = (eType = GCDNodeTypes.DEMSurvey OrElse eType = GCDNodeTypes.AssociatedSurface OrElse eType = GCDNodeTypes.ErrorSurface OrElse eType = GCDNodeTypes.Project)
-                btnDelete.Enabled = btnProperties.Enabled
-                btnAddToMap.Enabled = (eType = GCDNodeTypes.DEMSurvey OrElse eType = GCDNodeTypes.ErrorSurface OrElse eType = GCDNodeTypes.AssociatedSurface OrElse eType = GCDNodeTypes.DoD)
-                'btnAddToMap.Enabled = Not (eType = GCDNodeTypes.SummaryXML)
-            End If
-
-        End Sub
 
         Private Function GetNodeID(aNode As TreeNode) As Integer
 
@@ -569,7 +528,7 @@ Namespace UI.Project
                     LoadTree(GCDNodeTypes.DEMSurvey.ToString & "_" & nDEMSurveyID.ToString)
 
                 End If
-                UpdateButtons()
+
                 LoadTree(GCDNodeTypes.DEMSurvey.ToString & "_" & nDEMSurveyID.ToString)
             End If
 
@@ -1334,7 +1293,7 @@ Namespace UI.Project
 
         End Sub
 
-        Private Sub btnDelete_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnDelete.Click,
+        Private Sub btnDelete_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles _
         DeleteAssociatedSurfaceToolStripMenuItem.Click,
         DeleteErrorSurfaceToolStripMenuItem.Click,
         DeleteDEMSurveyToolStripMenuItem.Click,
@@ -1395,7 +1354,7 @@ Namespace UI.Project
 
 #Region "Properties Button"
 
-        Private Sub btnProperties_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnProperties.Click
+        Private Sub btnProperties_Click(ByVal sender As Object, ByVal e As System.EventArgs)
 
             Try
                 Dim nodSelected As TreeNode = treProject.SelectedNode
@@ -1447,7 +1406,7 @@ Namespace UI.Project
 
 #End Region
 
-        Private Sub btnAddToMap_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnAddToMap.Click
+        Private Sub btnAddToMap_Click(ByVal sender As Object, ByVal e As System.EventArgs)
 
             'TODO: entire function contents commented out
             Throw New Exception("not implemented")
@@ -1507,7 +1466,7 @@ Namespace UI.Project
 
         End Sub
 
-        Public Sub cmdRefresh_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdRefresh.Click
+        Public Sub cmdRefresh_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
 
             Dim sSortBy As String = sender.ToString
 
@@ -1932,7 +1891,7 @@ Namespace UI.Project
 
         End Sub
 
-        Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnHelp.Click
+        Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
 
             Try
                 Process.Start(My.Resources.HelpBaseURL & "gcd-command-reference/gcd-project-explorer")
@@ -2022,7 +1981,7 @@ Namespace UI.Project
             End Try
         End Sub
 
-        Private Sub btnAdd_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnAdd.Click
+        Private Sub btnAdd_Click(ByVal sender As Object, ByVal e As System.EventArgs)
 
             Try
                 Dim nodSelected As TreeNode = treProject.SelectedNode
@@ -2138,6 +2097,9 @@ Namespace UI.Project
             End Try
         End Sub
 
+        Private Sub treProject_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles treProject.AfterSelect
+            RaiseEvent ProjectTreeNodeSelectionChange(sender, e)
+        End Sub
     End Class
 
 End Namespace
