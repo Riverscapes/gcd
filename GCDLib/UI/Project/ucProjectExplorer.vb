@@ -170,21 +170,21 @@ Namespace UI.Project
                 nodInputs.Expand()
                 nodSurveysGroup.Expand()
 
-                Dim nodAOIGroup As TreeNode = nodInputs.Nodes.Add(GCDNodeTypes.AOIGroup.ToString, "Areas of Interest", GCDNodeTypes.AOIGroup)
-                nodAOIGroup.Tag = GCDNodeTypes.AOIGroup.ToString
-                nodAOIGroup.SelectedImageIndex = nodAOIGroup.ImageIndex
-                If nodAOIGroup.Tag = sSelectedNodeTag Then tre.SelectedNode = nodAOIGroup
-                nodAOIGroup.Expand()
+                'Dim nodAOIGroup As TreeNode = nodInputs.Nodes.Add(GCDNodeTypes.AOIGroup.ToString, "Areas of Interest", GCDNodeTypes.AOIGroup)
+                'nodAOIGroup.Tag = GCDNodeTypes.AOIGroup.ToString
+                'nodAOIGroup.SelectedImageIndex = nodAOIGroup.ImageIndex
+                'If nodAOIGroup.Tag = sSelectedNodeTag Then tre.SelectedNode = nodAOIGroup
+                'nodAOIGroup.Expand()
 
-                Dim bAOI As Boolean = False
-                For Each rAOI As ProjectDS.AOIsRow In rProject.GetAOIsRows
-                    Dim nodAOI As TreeNode = nodAOIGroup.Nodes.Add(GCDNodeTypes.AOI.ToString, rAOI.Name, GCDNodeTypes.AOI)
-                    nodAOI.Tag = GCDNodeTypes.AOI.ToString & "_" & rAOI.AOIID.ToString
-                    nodAOI.SelectedImageIndex = nodAOI.ImageIndex
-                    If nodAOI.Tag = sSelectedNodeTag Then tre.SelectedNode = nodAOI
-                    bAOI = True
-                Next
-                nodAOIGroup.Expand()
+                'Dim bAOI As Boolean = False
+                'For Each rAOI As ProjectDS.AOIsRow In rProject.GetAOIsRows
+                '    Dim nodAOI As TreeNode = nodAOIGroup.Nodes.Add(GCDNodeTypes.AOI.ToString, rAOI.Name, GCDNodeTypes.AOI)
+                '    nodAOI.Tag = GCDNodeTypes.AOI.ToString & "_" & rAOI.AOIID.ToString
+                '    nodAOI.SelectedImageIndex = nodAOI.ImageIndex
+                '    If nodAOI.Tag = sSelectedNodeTag Then tre.SelectedNode = nodAOI
+                '    bAOI = True
+                'Next
+                'nodAOIGroup.Expand()
 
                 Dim AnalNode As TreeNode = nodProject.Nodes.Add(GCDNodeTypes.AnalysesGroup.ToString, "Analyses", GCDNodeTypes.AnalysesGroup)
                 AnalNode.Tag = GCDNodeTypes.AnalysesGroup.ToString

@@ -122,6 +122,9 @@ Namespace Core.GCDProject
 
         Public Shared ReadOnly Property OutputManager As OutputManager
             Get
+                If m_OutputManager Is Nothing Then
+                    m_OutputManager = New OutputManager()
+                End If
                 Return m_OutputManager
             End Get
         End Property

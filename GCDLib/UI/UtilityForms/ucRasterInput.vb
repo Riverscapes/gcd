@@ -6,16 +6,20 @@ Namespace UI.UtilityForms
 
         Private m_sNoun As String
 
-        Public ReadOnly Property Noun As String
+        Public Property Noun As String
             Get
                 Return m_sNoun
             End Get
+            Set(value As String)
+                m_sNoun = value
+            End Set
         End Property
 
         Public Event BrowseRaster(txtPath As System.Windows.Forms.TextBox, e As naru.ui.PathEventArgs)
         Public Event SelectRasterFromArcMap(txtPath As System.Windows.Forms.TextBox, e As naru.ui.PathEventArgs)
 
-        Public Shadows Sub Initialize(sNoun As String, fiPath As System.IO.FileInfo, bRequiredInput As Boolean)
+        Public Shadows Sub Initialize(sNoun As String, fiPath As IO.FileInfo, bRequiredInput As Boolean)
+            MyBase.Initialize(fiPath, bRequiredInput)
             m_sNoun = sNoun
         End Sub
 
@@ -35,8 +39,11 @@ Namespace UI.UtilityForms
         Public Sub cmdBrowseRaster_Click(sender As Object, e As naru.ui.PathEventArgs) Handles MyBase.BrowseFile
 
             Try
-                RaiseEvent BrowseRaster(sender, e)
-                'naru.ui.Textbox.BrowseOpenRaster(txtPath, naru.ui.UIHelpers.WrapMessageWithNoun("Browse and Select a", Noun, "Raster"))
+                If Reflection.Assembly.GetEntryAssembly().FullName.ToLower().Contains("arcmap") Then
+                    RaiseEvent BrowseRaster(sender, e)
+                Else
+                    naru.ui.Textbox.BrowseOpenRaster(txtPath, naru.ui.UIHelpers.WrapMessageWithNoun("Browse and Select a", Noun, "Raster"))
+                End If
 
             Catch ex As Exception
                 naru.error.ExceptionUI.HandleException(ex, "Error browsing to raster")

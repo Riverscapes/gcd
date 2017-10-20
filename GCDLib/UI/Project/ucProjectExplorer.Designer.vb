@@ -169,7 +169,7 @@
             'btnCopy
             '
             Me.btnCopy.Enabled = False
-            Me.btnCopy.Image = My.Resources.Resources.Copy
+            Me.btnCopy.Image = Global.GCDLib.My.Resources.Resources.Copy
             Me.btnCopy.Location = New System.Drawing.Point(143, 3)
             Me.btnCopy.Name = "btnCopy"
             Me.btnCopy.Size = New System.Drawing.Size(29, 23)
@@ -179,7 +179,7 @@
             'btnAddToMap
             '
             Me.btnAddToMap.Enabled = False
-            Me.btnAddToMap.Image = My.Resources.Resources.AddToMap
+            Me.btnAddToMap.Image = Global.GCDLib.My.Resources.Resources.AddToMap
             Me.btnAddToMap.Location = New System.Drawing.Point(108, 3)
             Me.btnAddToMap.Name = "btnAddToMap"
             Me.btnAddToMap.Size = New System.Drawing.Size(29, 23)
@@ -189,7 +189,7 @@
             'btnDelete
             '
             Me.btnDelete.Enabled = False
-            Me.btnDelete.Image = My.Resources.Resources.Delete
+            Me.btnDelete.Image = Global.GCDLib.My.Resources.Resources.Delete
             Me.btnDelete.Location = New System.Drawing.Point(73, 3)
             Me.btnDelete.Name = "btnDelete"
             Me.btnDelete.Size = New System.Drawing.Size(29, 23)
@@ -199,7 +199,7 @@
             'btnProperties
             '
             Me.btnProperties.Enabled = False
-            Me.btnProperties.Image = My.Resources.Resources.Settings
+            Me.btnProperties.Image = Global.GCDLib.My.Resources.Resources.Settings
             Me.btnProperties.Location = New System.Drawing.Point(38, 3)
             Me.btnProperties.Name = "btnProperties"
             Me.btnProperties.Size = New System.Drawing.Size(29, 23)
@@ -208,7 +208,7 @@
             '
             'btnAdd
             '
-            Me.btnAdd.Image = My.Resources.Resources.Add
+            Me.btnAdd.Image = Global.GCDLib.My.Resources.Resources.Add
             Me.btnAdd.Location = New System.Drawing.Point(3, 3)
             Me.btnAdd.Name = "btnAdd"
             Me.btnAdd.Size = New System.Drawing.Size(29, 23)
@@ -223,21 +223,21 @@
             '
             'EditGCDProjectPropertiesToolStripMenuItem
             '
-            Me.EditGCDProjectPropertiesToolStripMenuItem.Image = My.Resources.Resources.Settings
+            Me.EditGCDProjectPropertiesToolStripMenuItem.Image = Global.GCDLib.My.Resources.Resources.Settings
             Me.EditGCDProjectPropertiesToolStripMenuItem.Name = "EditGCDProjectPropertiesToolStripMenuItem"
             Me.EditGCDProjectPropertiesToolStripMenuItem.Size = New System.Drawing.Size(230, 22)
             Me.EditGCDProjectPropertiesToolStripMenuItem.Text = "Edit GCD Project Properties"
             '
             'ToolStripMenuItem2
             '
-            Me.ToolStripMenuItem2.Image = My.Resources.Resources.AddToMap
+            Me.ToolStripMenuItem2.Image = Global.GCDLib.My.Resources.Resources.AddToMap
             Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
             Me.ToolStripMenuItem2.Size = New System.Drawing.Size(230, 22)
             Me.ToolStripMenuItem2.Text = "Add Entire Project to the Map"
             '
             'ExploreGCDProjectFolderToolStripMenuItem
             '
-            Me.ExploreGCDProjectFolderToolStripMenuItem.Image = My.Resources.Resources.BrowseFolder
+            Me.ExploreGCDProjectFolderToolStripMenuItem.Image = Global.GCDLib.My.Resources.Resources.BrowseFolder
             Me.ExploreGCDProjectFolderToolStripMenuItem.Name = "ExploreGCDProjectFolderToolStripMenuItem"
             Me.ExploreGCDProjectFolderToolStripMenuItem.Size = New System.Drawing.Size(230, 22)
             Me.ExploreGCDProjectFolderToolStripMenuItem.Text = "Explore GCD Project Folder"
@@ -249,10 +249,10 @@
             '
             'ToolStripMenuItem1
             '
-            Me.ToolStripMenuItem1.Image = My.Resources.Resources.Add
+            Me.ToolStripMenuItem1.Image = Global.GCDLib.My.Resources.Resources.Add
             Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
             Me.ToolStripMenuItem1.Size = New System.Drawing.Size(230, 22)
-            Me.ToolStripMenuItem1.Text = "Add DEM Survey"
+            Me.ToolStripMenuItem1.Text = "Specify DEM Survey"
             '
             'cmsDEMSurvey
             '
@@ -262,21 +262,21 @@
             '
             'EditDEMSurveyProperatieToolStripMenuItem
             '
-            Me.EditDEMSurveyProperatieToolStripMenuItem.Image = My.Resources.Resources.Settings
+            Me.EditDEMSurveyProperatieToolStripMenuItem.Image = Global.GCDLib.My.Resources.Resources.Settings
             Me.EditDEMSurveyProperatieToolStripMenuItem.Name = "EditDEMSurveyProperatieToolStripMenuItem"
             Me.EditDEMSurveyProperatieToolStripMenuItem.Size = New System.Drawing.Size(216, 22)
             Me.EditDEMSurveyProperatieToolStripMenuItem.Text = "Edit DEM Survey Properties"
             '
             'AddToMapToolStripMenuItem
             '
-            Me.AddToMapToolStripMenuItem.Image = My.Resources.Resources.AddToMap
+            Me.AddToMapToolStripMenuItem.Image = Global.GCDLib.My.Resources.Resources.AddToMap
             Me.AddToMapToolStripMenuItem.Name = "AddToMapToolStripMenuItem"
             Me.AddToMapToolStripMenuItem.Size = New System.Drawing.Size(216, 22)
             Me.AddToMapToolStripMenuItem.Text = "Add to Map"
             '
             'DeleteDEMSurveyToolStripMenuItem
             '
-            Me.DeleteDEMSurveyToolStripMenuItem.Image = My.Resources.Resources.Delete
+            Me.DeleteDEMSurveyToolStripMenuItem.Image = Global.GCDLib.My.Resources.Resources.Delete
             Me.DeleteDEMSurveyToolStripMenuItem.Name = "DeleteDEMSurveyToolStripMenuItem"
             Me.DeleteDEMSurveyToolStripMenuItem.Size = New System.Drawing.Size(216, 22)
             Me.DeleteDEMSurveyToolStripMenuItem.Text = "Delete DEM Survey"
@@ -288,21 +288,21 @@
             '
             'AddAssociatedSurfaceToolStripMenuItem
             '
-            Me.AddAssociatedSurfaceToolStripMenuItem.Image = My.Resources.Resources.Add
+            Me.AddAssociatedSurfaceToolStripMenuItem.Image = Global.GCDLib.My.Resources.Resources.Add
             Me.AddAssociatedSurfaceToolStripMenuItem.Name = "AddAssociatedSurfaceToolStripMenuItem"
             Me.AddAssociatedSurfaceToolStripMenuItem.Size = New System.Drawing.Size(216, 22)
             Me.AddAssociatedSurfaceToolStripMenuItem.Text = "Add Associated Surface"
             '
             'AddErrorSurfaceToolStripMenuItem
             '
-            Me.AddErrorSurfaceToolStripMenuItem.Image = My.Resources.Resources.Add
+            Me.AddErrorSurfaceToolStripMenuItem.Image = Global.GCDLib.My.Resources.Resources.Add
             Me.AddErrorSurfaceToolStripMenuItem.Name = "AddErrorSurfaceToolStripMenuItem"
             Me.AddErrorSurfaceToolStripMenuItem.Size = New System.Drawing.Size(216, 22)
             Me.AddErrorSurfaceToolStripMenuItem.Text = "Specify Error Surface"
             '
             'DeriveErrorSurfaceToolStripMenuItem1
             '
-            Me.DeriveErrorSurfaceToolStripMenuItem1.Image = My.Resources.Resources.sigma
+            Me.DeriveErrorSurfaceToolStripMenuItem1.Image = Global.GCDLib.My.Resources.Resources.sigma
             Me.DeriveErrorSurfaceToolStripMenuItem1.Name = "DeriveErrorSurfaceToolStripMenuItem1"
             Me.DeriveErrorSurfaceToolStripMenuItem1.Size = New System.Drawing.Size(216, 22)
             Me.DeriveErrorSurfaceToolStripMenuItem1.Text = "Derive Error Surface"
@@ -315,21 +315,21 @@
             '
             'EditPropertiesToolStripMenuItem
             '
-            Me.EditPropertiesToolStripMenuItem.Image = My.Resources.Resources.Settings
+            Me.EditPropertiesToolStripMenuItem.Image = Global.GCDLib.My.Resources.Resources.Settings
             Me.EditPropertiesToolStripMenuItem.Name = "EditPropertiesToolStripMenuItem"
             Me.EditPropertiesToolStripMenuItem.Size = New System.Drawing.Size(252, 22)
             Me.EditPropertiesToolStripMenuItem.Text = "Edit Associated Surface Properties"
             '
             'AddToMapToolStripMenuItem1
             '
-            Me.AddToMapToolStripMenuItem1.Image = My.Resources.Resources.AddToMap
+            Me.AddToMapToolStripMenuItem1.Image = Global.GCDLib.My.Resources.Resources.AddToMap
             Me.AddToMapToolStripMenuItem1.Name = "AddToMapToolStripMenuItem1"
             Me.AddToMapToolStripMenuItem1.Size = New System.Drawing.Size(252, 22)
             Me.AddToMapToolStripMenuItem1.Text = "Add Associated Surface to Map"
             '
             'DeleteAssociatedSurfaceToolStripMenuItem
             '
-            Me.DeleteAssociatedSurfaceToolStripMenuItem.Image = My.Resources.Resources.Delete
+            Me.DeleteAssociatedSurfaceToolStripMenuItem.Image = Global.GCDLib.My.Resources.Resources.Delete
             Me.DeleteAssociatedSurfaceToolStripMenuItem.Name = "DeleteAssociatedSurfaceToolStripMenuItem"
             Me.DeleteAssociatedSurfaceToolStripMenuItem.Size = New System.Drawing.Size(252, 22)
             Me.DeleteAssociatedSurfaceToolStripMenuItem.Text = "Delete Associated Surface"
@@ -342,14 +342,14 @@
             '
             'AddAssociatedSurfaceToolStripMenuItem1
             '
-            Me.AddAssociatedSurfaceToolStripMenuItem1.Image = My.Resources.Resources.Add
+            Me.AddAssociatedSurfaceToolStripMenuItem1.Image = Global.GCDLib.My.Resources.Resources.Add
             Me.AddAssociatedSurfaceToolStripMenuItem1.Name = "AddAssociatedSurfaceToolStripMenuItem1"
             Me.AddAssociatedSurfaceToolStripMenuItem1.Size = New System.Drawing.Size(281, 22)
             Me.AddAssociatedSurfaceToolStripMenuItem1.Text = "Add Associated Surface"
             '
             'AddAllAssociatedSurfacesToTheMapToolStripMenuItem
             '
-            Me.AddAllAssociatedSurfacesToTheMapToolStripMenuItem.Image = My.Resources.Resources.AddToMap
+            Me.AddAllAssociatedSurfacesToTheMapToolStripMenuItem.Image = Global.GCDLib.My.Resources.Resources.AddToMap
             Me.AddAllAssociatedSurfacesToTheMapToolStripMenuItem.Name = "AddAllAssociatedSurfacesToTheMapToolStripMenuItem"
             Me.AddAllAssociatedSurfacesToTheMapToolStripMenuItem.Size = New System.Drawing.Size(281, 22)
             Me.AddAllAssociatedSurfacesToTheMapToolStripMenuItem.Text = "Add All Associated Surfaces to the Map"
@@ -358,18 +358,18 @@
             '
             Me.cmsInputsGroup.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AddDEMSurveyToolStripMenuItem, Me.AddAllDEMSurveysToTheMapToolStripMenuItem})
             Me.cmsInputsGroup.Name = "cmsInputsGroup"
-            Me.cmsInputsGroup.Size = New System.Drawing.Size(297, 48)
+            Me.cmsInputsGroup.Size = New System.Drawing.Size(297, 70)
             '
             'AddDEMSurveyToolStripMenuItem
             '
-            Me.AddDEMSurveyToolStripMenuItem.Image = My.Resources.Resources.Add
+            Me.AddDEMSurveyToolStripMenuItem.Image = Global.GCDLib.My.Resources.Resources.Add
             Me.AddDEMSurveyToolStripMenuItem.Name = "AddDEMSurveyToolStripMenuItem"
             Me.AddDEMSurveyToolStripMenuItem.Size = New System.Drawing.Size(296, 22)
-            Me.AddDEMSurveyToolStripMenuItem.Text = "Add DEM Survey"
+            Me.AddDEMSurveyToolStripMenuItem.Text = "Specify DEM Survey"
             '
             'AddAllDEMSurveysToTheMapToolStripMenuItem
             '
-            Me.AddAllDEMSurveysToTheMapToolStripMenuItem.Image = My.Resources.Resources.AddToMap
+            Me.AddAllDEMSurveysToTheMapToolStripMenuItem.Image = Global.GCDLib.My.Resources.Resources.AddToMap
             Me.AddAllDEMSurveysToTheMapToolStripMenuItem.Name = "AddAllDEMSurveysToTheMapToolStripMenuItem"
             Me.AddAllDEMSurveysToTheMapToolStripMenuItem.Size = New System.Drawing.Size(296, 22)
             Me.AddAllDEMSurveysToTheMapToolStripMenuItem.Text = "Add All DEM Surveys and AOIs to the Map"
@@ -382,21 +382,21 @@
             '
             'AddErrorSurfaceToolStripMenuItem1
             '
-            Me.AddErrorSurfaceToolStripMenuItem1.Image = My.Resources.Resources.Add
+            Me.AddErrorSurfaceToolStripMenuItem1.Image = Global.GCDLib.My.Resources.Resources.Add
             Me.AddErrorSurfaceToolStripMenuItem1.Name = "AddErrorSurfaceToolStripMenuItem1"
             Me.AddErrorSurfaceToolStripMenuItem1.Size = New System.Drawing.Size(249, 22)
             Me.AddErrorSurfaceToolStripMenuItem1.Text = "Specify Error Surface"
             '
             'DeriveErrorSurfaceToolStripMenuItem
             '
-            Me.DeriveErrorSurfaceToolStripMenuItem.Image = My.Resources.Resources.sigma
+            Me.DeriveErrorSurfaceToolStripMenuItem.Image = Global.GCDLib.My.Resources.Resources.sigma
             Me.DeriveErrorSurfaceToolStripMenuItem.Name = "DeriveErrorSurfaceToolStripMenuItem"
             Me.DeriveErrorSurfaceToolStripMenuItem.Size = New System.Drawing.Size(249, 22)
             Me.DeriveErrorSurfaceToolStripMenuItem.Text = "Derive Error Surface"
             '
             'AddErrorSurfaceToMapToolStripMenuItem
             '
-            Me.AddErrorSurfaceToMapToolStripMenuItem.Image = My.Resources.Resources.AddToMap
+            Me.AddErrorSurfaceToMapToolStripMenuItem.Image = Global.GCDLib.My.Resources.Resources.AddToMap
             Me.AddErrorSurfaceToMapToolStripMenuItem.Name = "AddErrorSurfaceToMapToolStripMenuItem"
             Me.AddErrorSurfaceToMapToolStripMenuItem.Size = New System.Drawing.Size(249, 22)
             Me.AddErrorSurfaceToMapToolStripMenuItem.Text = "Add All Error Surfaces to the Map"
@@ -405,25 +405,25 @@
             '
             Me.cmsErrorSurface.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.EditErrorSurfacePropertiesToolStripMenuItem, Me.AddErrorSurfaceToMapToolStripMenuItem1, Me.DeleteErrorSurfaceToolStripMenuItem, Me.ToolStripSeparator3})
             Me.cmsErrorSurface.Name = "cmsErrorSurface"
-            Me.cmsErrorSurface.Size = New System.Drawing.Size(221, 98)
+            Me.cmsErrorSurface.Size = New System.Drawing.Size(221, 76)
             '
             'EditErrorSurfacePropertiesToolStripMenuItem
             '
-            Me.EditErrorSurfacePropertiesToolStripMenuItem.Image = My.Resources.Resources.Settings
+            Me.EditErrorSurfacePropertiesToolStripMenuItem.Image = Global.GCDLib.My.Resources.Resources.Settings
             Me.EditErrorSurfacePropertiesToolStripMenuItem.Name = "EditErrorSurfacePropertiesToolStripMenuItem"
             Me.EditErrorSurfacePropertiesToolStripMenuItem.Size = New System.Drawing.Size(220, 22)
             Me.EditErrorSurfacePropertiesToolStripMenuItem.Text = "Edit Error Surface Properties"
             '
             'AddErrorSurfaceToMapToolStripMenuItem1
             '
-            Me.AddErrorSurfaceToMapToolStripMenuItem1.Image = My.Resources.Resources.AddToMap
+            Me.AddErrorSurfaceToMapToolStripMenuItem1.Image = Global.GCDLib.My.Resources.Resources.AddToMap
             Me.AddErrorSurfaceToMapToolStripMenuItem1.Name = "AddErrorSurfaceToMapToolStripMenuItem1"
             Me.AddErrorSurfaceToMapToolStripMenuItem1.Size = New System.Drawing.Size(220, 22)
             Me.AddErrorSurfaceToMapToolStripMenuItem1.Text = "Add Error Surface to Map"
             '
             'DeleteErrorSurfaceToolStripMenuItem
             '
-            Me.DeleteErrorSurfaceToolStripMenuItem.Image = My.Resources.Resources.Delete
+            Me.DeleteErrorSurfaceToolStripMenuItem.Image = Global.GCDLib.My.Resources.Resources.Delete
             Me.DeleteErrorSurfaceToolStripMenuItem.Name = "DeleteErrorSurfaceToolStripMenuItem"
             Me.DeleteErrorSurfaceToolStripMenuItem.Size = New System.Drawing.Size(220, 22)
             Me.DeleteErrorSurfaceToolStripMenuItem.Text = "Delete Error Surface"
@@ -441,14 +441,14 @@
             '
             'AddChangeDetectionToolStripMenuItem
             '
-            Me.AddChangeDetectionToolStripMenuItem.Image = My.Resources.Resources.Add
+            Me.AddChangeDetectionToolStripMenuItem.Image = Global.GCDLib.My.Resources.Resources.Add
             Me.AddChangeDetectionToolStripMenuItem.Name = "AddChangeDetectionToolStripMenuItem"
             Me.AddChangeDetectionToolStripMenuItem.Size = New System.Drawing.Size(321, 22)
             Me.AddChangeDetectionToolStripMenuItem.Text = "Add Change Detection"
             '
             'AddAllChangeDetectionAnalysesToTheMapToolStripMenuItem
             '
-            Me.AddAllChangeDetectionAnalysesToTheMapToolStripMenuItem.Image = My.Resources.Resources.AddToMap
+            Me.AddAllChangeDetectionAnalysesToTheMapToolStripMenuItem.Image = Global.GCDLib.My.Resources.Resources.AddToMap
             Me.AddAllChangeDetectionAnalysesToTheMapToolStripMenuItem.Name = "AddAllChangeDetectionAnalysesToTheMapToolStripMenuItem"
             Me.AddAllChangeDetectionAnalysesToTheMapToolStripMenuItem.Size = New System.Drawing.Size(321, 22)
             Me.AddAllChangeDetectionAnalysesToTheMapToolStripMenuItem.Text = "Add All Change Detection Analyses to the Map"
@@ -461,35 +461,35 @@
             '
             'ViewChangeDetectionResultsToolStripMenuItem
             '
-            Me.ViewChangeDetectionResultsToolStripMenuItem.Image = My.Resources.Resources.GCD
+            Me.ViewChangeDetectionResultsToolStripMenuItem.Image = Global.GCDLib.My.Resources.Resources.GCD
             Me.ViewChangeDetectionResultsToolStripMenuItem.Name = "ViewChangeDetectionResultsToolStripMenuItem"
             Me.ViewChangeDetectionResultsToolStripMenuItem.Size = New System.Drawing.Size(324, 22)
             Me.ViewChangeDetectionResultsToolStripMenuItem.Text = "View Change Detection Results"
             '
             'AddChangeDetectionToTheMapToolStripMenuItem
             '
-            Me.AddChangeDetectionToTheMapToolStripMenuItem.Image = My.Resources.Resources.AddToMap
+            Me.AddChangeDetectionToTheMapToolStripMenuItem.Image = Global.GCDLib.My.Resources.Resources.AddToMap
             Me.AddChangeDetectionToTheMapToolStripMenuItem.Name = "AddChangeDetectionToTheMapToolStripMenuItem"
             Me.AddChangeDetectionToTheMapToolStripMenuItem.Size = New System.Drawing.Size(324, 22)
             Me.AddChangeDetectionToTheMapToolStripMenuItem.Text = "Add Thresholded Change Detection to the Map"
             '
             'AddRawChangeDetectionToTheMapToolStripMenuItem
             '
-            Me.AddRawChangeDetectionToTheMapToolStripMenuItem.Image = My.Resources.Resources.AddToMap
+            Me.AddRawChangeDetectionToTheMapToolStripMenuItem.Image = Global.GCDLib.My.Resources.Resources.AddToMap
             Me.AddRawChangeDetectionToTheMapToolStripMenuItem.Name = "AddRawChangeDetectionToTheMapToolStripMenuItem"
             Me.AddRawChangeDetectionToTheMapToolStripMenuItem.Size = New System.Drawing.Size(324, 22)
             Me.AddRawChangeDetectionToTheMapToolStripMenuItem.Text = "Add Raw Change Detection to the Map"
             '
             'ExploreChangeDetectionFolderToolStripMenuItem
             '
-            Me.ExploreChangeDetectionFolderToolStripMenuItem.Image = My.Resources.Resources.BrowseFolder
+            Me.ExploreChangeDetectionFolderToolStripMenuItem.Image = Global.GCDLib.My.Resources.Resources.BrowseFolder
             Me.ExploreChangeDetectionFolderToolStripMenuItem.Name = "ExploreChangeDetectionFolderToolStripMenuItem"
             Me.ExploreChangeDetectionFolderToolStripMenuItem.Size = New System.Drawing.Size(324, 22)
             Me.ExploreChangeDetectionFolderToolStripMenuItem.Text = "Explore Change Detection Folder"
             '
             'DeleteChangeDetectionToolStripMenuItem
             '
-            Me.DeleteChangeDetectionToolStripMenuItem.Image = My.Resources.Resources.Delete
+            Me.DeleteChangeDetectionToolStripMenuItem.Image = Global.GCDLib.My.Resources.Resources.Delete
             Me.DeleteChangeDetectionToolStripMenuItem.Name = "DeleteChangeDetectionToolStripMenuItem"
             Me.DeleteChangeDetectionToolStripMenuItem.Size = New System.Drawing.Size(324, 22)
             Me.DeleteChangeDetectionToolStripMenuItem.Text = "Delete Change Detection"
@@ -501,7 +501,7 @@
             '
             'AddBudgetSegregationToolStripMenuItem
             '
-            Me.AddBudgetSegregationToolStripMenuItem.Image = My.Resources.Resources.Add
+            Me.AddBudgetSegregationToolStripMenuItem.Image = Global.GCDLib.My.Resources.Resources.Add
             Me.AddBudgetSegregationToolStripMenuItem.Name = "AddBudgetSegregationToolStripMenuItem"
             Me.AddBudgetSegregationToolStripMenuItem.Size = New System.Drawing.Size(324, 22)
             Me.AddBudgetSegregationToolStripMenuItem.Text = "Add Budget Segregation"
@@ -514,14 +514,14 @@
             '
             'AddDEMSurveyToolStripMenuItem1
             '
-            Me.AddDEMSurveyToolStripMenuItem1.Image = My.Resources.Resources.Add
+            Me.AddDEMSurveyToolStripMenuItem1.Image = Global.GCDLib.My.Resources.Resources.Add
             Me.AddDEMSurveyToolStripMenuItem1.Name = "AddDEMSurveyToolStripMenuItem1"
             Me.AddDEMSurveyToolStripMenuItem1.Size = New System.Drawing.Size(245, 22)
             Me.AddDEMSurveyToolStripMenuItem1.Text = "Add DEM Survey"
             '
             'AddAllDEMSurveysToTheMapToolStripMenuItem1
             '
-            Me.AddAllDEMSurveysToTheMapToolStripMenuItem1.Image = My.Resources.Resources.AddToMap
+            Me.AddAllDEMSurveysToTheMapToolStripMenuItem1.Image = Global.GCDLib.My.Resources.Resources.AddToMap
             Me.AddAllDEMSurveysToTheMapToolStripMenuItem1.Name = "AddAllDEMSurveysToTheMapToolStripMenuItem1"
             Me.AddAllDEMSurveysToTheMapToolStripMenuItem1.Size = New System.Drawing.Size(245, 22)
             Me.AddAllDEMSurveysToTheMapToolStripMenuItem1.Text = "Add All DEM Surveys to the Map"
@@ -529,7 +529,7 @@
             'SortByToolStripMenuItem
             '
             Me.SortByToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NameToolStripMenuItem, Me.SurveyDateToolStripMenuItem, Me.DateAddedToolStripMenuItem})
-            Me.SortByToolStripMenuItem.Image = My.Resources.Resources.alphabetical
+            Me.SortByToolStripMenuItem.Image = Global.GCDLib.My.Resources.Resources.alphabetical
             Me.SortByToolStripMenuItem.Name = "SortByToolStripMenuItem"
             Me.SortByToolStripMenuItem.Size = New System.Drawing.Size(245, 22)
             Me.SortByToolStripMenuItem.Text = "Sort by:"
@@ -544,13 +544,13 @@
             'NameAscendingToolStripMenuItem
             '
             Me.NameAscendingToolStripMenuItem.Name = "NameAscendingToolStripMenuItem"
-            Me.NameAscendingToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+            Me.NameAscendingToolStripMenuItem.Size = New System.Drawing.Size(136, 22)
             Me.NameAscendingToolStripMenuItem.Text = "Ascending"
             '
             'NameDescendingToolStripMenuItem
             '
             Me.NameDescendingToolStripMenuItem.Name = "NameDescendingToolStripMenuItem"
-            Me.NameDescendingToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+            Me.NameDescendingToolStripMenuItem.Size = New System.Drawing.Size(136, 22)
             Me.NameDescendingToolStripMenuItem.Text = "Descending"
             '
             'SurveyDateToolStripMenuItem
@@ -563,19 +563,19 @@
             'SurveyDateAscendingToolStripMenuItem
             '
             Me.SurveyDateAscendingToolStripMenuItem.Name = "SurveyDateAscendingToolStripMenuItem"
-            Me.SurveyDateAscendingToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+            Me.SurveyDateAscendingToolStripMenuItem.Size = New System.Drawing.Size(136, 22)
             Me.SurveyDateAscendingToolStripMenuItem.Text = "Ascending"
             '
             'SurveyDateDescendingToolStripMenuItem
             '
             Me.SurveyDateDescendingToolStripMenuItem.Name = "SurveyDateDescendingToolStripMenuItem"
-            Me.SurveyDateDescendingToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+            Me.SurveyDateDescendingToolStripMenuItem.Size = New System.Drawing.Size(136, 22)
             Me.SurveyDateDescendingToolStripMenuItem.Text = "Descending"
             '
             'DateAddedToolStripMenuItem
             '
             Me.DateAddedToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DateAddedAscendingToolStripMenuItem, Me.DateAddedDescendingToolStripMenuItem})
-            Me.DateAddedToolStripMenuItem.Image = My.Resources.Resources.Check
+            Me.DateAddedToolStripMenuItem.Image = Global.GCDLib.My.Resources.Resources.Check
             Me.DateAddedToolStripMenuItem.Name = "DateAddedToolStripMenuItem"
             Me.DateAddedToolStripMenuItem.Size = New System.Drawing.Size(135, 22)
             Me.DateAddedToolStripMenuItem.Text = "Date added"
@@ -583,18 +583,18 @@
             'DateAddedAscendingToolStripMenuItem
             '
             Me.DateAddedAscendingToolStripMenuItem.Name = "DateAddedAscendingToolStripMenuItem"
-            Me.DateAddedAscendingToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+            Me.DateAddedAscendingToolStripMenuItem.Size = New System.Drawing.Size(136, 22)
             Me.DateAddedAscendingToolStripMenuItem.Text = "Ascending"
             '
             'DateAddedDescendingToolStripMenuItem
             '
             Me.DateAddedDescendingToolStripMenuItem.Name = "DateAddedDescendingToolStripMenuItem"
-            Me.DateAddedDescendingToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+            Me.DateAddedDescendingToolStripMenuItem.Size = New System.Drawing.Size(136, 22)
             Me.DateAddedDescendingToolStripMenuItem.Text = "Descending"
             '
             'cmdRefresh
             '
-            Me.cmdRefresh.Image = My.Resources.Resources.refresh
+            Me.cmdRefresh.Image = Global.GCDLib.My.Resources.Resources.refresh
             Me.cmdRefresh.Location = New System.Drawing.Point(213, 3)
             Me.cmdRefresh.Name = "cmdRefresh"
             Me.cmdRefresh.Size = New System.Drawing.Size(29, 23)
@@ -610,14 +610,14 @@
             '
             'AddAOIToolStripMenuItem
             '
-            Me.AddAOIToolStripMenuItem.Image = My.Resources.Resources.Add
+            Me.AddAOIToolStripMenuItem.Image = Global.GCDLib.My.Resources.Resources.Add
             Me.AddAOIToolStripMenuItem.Name = "AddAOIToolStripMenuItem"
             Me.AddAOIToolStripMenuItem.Size = New System.Drawing.Size(202, 22)
             Me.AddAOIToolStripMenuItem.Text = "Add AOI"
             '
             'AddAllAOIsToTheMapToolStripMenuItem
             '
-            Me.AddAllAOIsToTheMapToolStripMenuItem.Image = My.Resources.Resources.AddToMap
+            Me.AddAllAOIsToTheMapToolStripMenuItem.Image = Global.GCDLib.My.Resources.Resources.AddToMap
             Me.AddAllAOIsToTheMapToolStripMenuItem.Name = "AddAllAOIsToTheMapToolStripMenuItem"
             Me.AddAllAOIsToTheMapToolStripMenuItem.Size = New System.Drawing.Size(202, 22)
             Me.AddAllAOIsToTheMapToolStripMenuItem.Text = "Add All AOIs to the Map"
@@ -630,21 +630,21 @@
             '
             'AddAOIToolStripMenuItem1
             '
-            Me.AddAOIToolStripMenuItem1.Image = My.Resources.Resources.Add
+            Me.AddAOIToolStripMenuItem1.Image = Global.GCDLib.My.Resources.Resources.Add
             Me.AddAOIToolStripMenuItem1.Name = "AddAOIToolStripMenuItem1"
             Me.AddAOIToolStripMenuItem1.Size = New System.Drawing.Size(173, 22)
             Me.AddAOIToolStripMenuItem1.Text = "Add AOI"
             '
             'EditAOIPropertiesToolStripMenuItem
             '
-            Me.EditAOIPropertiesToolStripMenuItem.Image = My.Resources.Resources.Settings
+            Me.EditAOIPropertiesToolStripMenuItem.Image = Global.GCDLib.My.Resources.Resources.Settings
             Me.EditAOIPropertiesToolStripMenuItem.Name = "EditAOIPropertiesToolStripMenuItem"
             Me.EditAOIPropertiesToolStripMenuItem.Size = New System.Drawing.Size(173, 22)
             Me.EditAOIPropertiesToolStripMenuItem.Text = "Edit AOI Properties"
             '
             'AddToMapToolStripMenuItem2
             '
-            Me.AddToMapToolStripMenuItem2.Image = My.Resources.Resources.AddToMap
+            Me.AddToMapToolStripMenuItem2.Image = Global.GCDLib.My.Resources.Resources.AddToMap
             Me.AddToMapToolStripMenuItem2.Name = "AddToMapToolStripMenuItem2"
             Me.AddToMapToolStripMenuItem2.Size = New System.Drawing.Size(173, 22)
             Me.AddToMapToolStripMenuItem2.Text = "Add To Map"
@@ -656,7 +656,7 @@
             '
             'DeleteAOIToolStripMenuItem
             '
-            Me.DeleteAOIToolStripMenuItem.Image = My.Resources.Resources.Delete
+            Me.DeleteAOIToolStripMenuItem.Image = Global.GCDLib.My.Resources.Resources.Delete
             Me.DeleteAOIToolStripMenuItem.Name = "DeleteAOIToolStripMenuItem"
             Me.DeleteAOIToolStripMenuItem.Size = New System.Drawing.Size(173, 22)
             Me.DeleteAOIToolStripMenuItem.Text = "Delete AOI"
@@ -665,25 +665,25 @@
             '
             Me.cmsDEMSurveyPair.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AddChangeDetectionToolStripMenuItem1, Me.AddAllChangeDetectionsToTheMapToolStripMenuItem})
             Me.cmsDEMSurveyPair.Name = "cmsDEMSurveyPair"
-            Me.cmsDEMSurveyPair.Size = New System.Drawing.Size(425, 48)
+            Me.cmsDEMSurveyPair.Size = New System.Drawing.Size(424, 48)
             '
             'AddChangeDetectionToolStripMenuItem1
             '
-            Me.AddChangeDetectionToolStripMenuItem1.Image = My.Resources.Resources.Add
+            Me.AddChangeDetectionToolStripMenuItem1.Image = Global.GCDLib.My.Resources.Resources.Add
             Me.AddChangeDetectionToolStripMenuItem1.Name = "AddChangeDetectionToolStripMenuItem1"
-            Me.AddChangeDetectionToolStripMenuItem1.Size = New System.Drawing.Size(424, 22)
+            Me.AddChangeDetectionToolStripMenuItem1.Size = New System.Drawing.Size(423, 22)
             Me.AddChangeDetectionToolStripMenuItem1.Text = "Add Change Detection (With These DEM Surveys)"
             '
             'AddAllChangeDetectionsToTheMapToolStripMenuItem
             '
-            Me.AddAllChangeDetectionsToTheMapToolStripMenuItem.Image = My.Resources.Resources.AddToMap
+            Me.AddAllChangeDetectionsToTheMapToolStripMenuItem.Image = Global.GCDLib.My.Resources.Resources.AddToMap
             Me.AddAllChangeDetectionsToTheMapToolStripMenuItem.Name = "AddAllChangeDetectionsToTheMapToolStripMenuItem"
-            Me.AddAllChangeDetectionsToTheMapToolStripMenuItem.Size = New System.Drawing.Size(424, 22)
+            Me.AddAllChangeDetectionsToTheMapToolStripMenuItem.Size = New System.Drawing.Size(423, 22)
             Me.AddAllChangeDetectionsToTheMapToolStripMenuItem.Text = "Add All Change Detections (With These DEM Surveys) To The Map"
             '
             'btnHelp
             '
-            Me.btnHelp.Image = My.Resources.Resources.Help
+            Me.btnHelp.Image = Global.GCDLib.My.Resources.Resources.Help
             Me.btnHelp.Location = New System.Drawing.Point(178, 3)
             Me.btnHelp.Name = "btnHelp"
             Me.btnHelp.Size = New System.Drawing.Size(29, 23)
@@ -698,7 +698,7 @@
             '
             'AddBudgetSegregationToolStripMenuItem1
             '
-            Me.AddBudgetSegregationToolStripMenuItem1.Image = My.Resources.Resources.Add
+            Me.AddBudgetSegregationToolStripMenuItem1.Image = Global.GCDLib.My.Resources.Resources.Add
             Me.AddBudgetSegregationToolStripMenuItem1.Name = "AddBudgetSegregationToolStripMenuItem1"
             Me.AddBudgetSegregationToolStripMenuItem1.Size = New System.Drawing.Size(203, 22)
             Me.AddBudgetSegregationToolStripMenuItem1.Text = "Add Budget Segregation"
@@ -711,14 +711,14 @@
             '
             'BudgetSegregationPropertiesToolStripMenuItem
             '
-            Me.BudgetSegregationPropertiesToolStripMenuItem.Image = My.Resources.Resources.BudgetSeg
+            Me.BudgetSegregationPropertiesToolStripMenuItem.Image = Global.GCDLib.My.Resources.Resources.BudgetSeg
             Me.BudgetSegregationPropertiesToolStripMenuItem.Name = "BudgetSegregationPropertiesToolStripMenuItem"
             Me.BudgetSegregationPropertiesToolStripMenuItem.Size = New System.Drawing.Size(255, 22)
             Me.BudgetSegregationPropertiesToolStripMenuItem.Text = "View Budget Segregation Results"
             '
             'BrowseBudgetSegregationFolderToolStripMenuItem
             '
-            Me.BrowseBudgetSegregationFolderToolStripMenuItem.Image = My.Resources.Resources.BrowseFolder
+            Me.BrowseBudgetSegregationFolderToolStripMenuItem.Image = Global.GCDLib.My.Resources.Resources.BrowseFolder
             Me.BrowseBudgetSegregationFolderToolStripMenuItem.Name = "BrowseBudgetSegregationFolderToolStripMenuItem"
             Me.BrowseBudgetSegregationFolderToolStripMenuItem.Size = New System.Drawing.Size(255, 22)
             Me.BrowseBudgetSegregationFolderToolStripMenuItem.Text = "Browse Budget Segregation Folder"
@@ -730,19 +730,19 @@
             '
             'AddBudgetSegregationToolStripMenuItem2
             '
-            Me.AddBudgetSegregationToolStripMenuItem2.Image = My.Resources.Resources.Add
+            Me.AddBudgetSegregationToolStripMenuItem2.Image = Global.GCDLib.My.Resources.Resources.Add
             Me.AddBudgetSegregationToolStripMenuItem2.Name = "AddBudgetSegregationToolStripMenuItem2"
             Me.AddBudgetSegregationToolStripMenuItem2.Size = New System.Drawing.Size(255, 22)
             Me.AddBudgetSegregationToolStripMenuItem2.Text = "Add Budget Segregation"
             '
             'DeleteBudgetSegregationToolStripMenuItem
             '
-            Me.DeleteBudgetSegregationToolStripMenuItem.Image = My.Resources.Resources.Delete
+            Me.DeleteBudgetSegregationToolStripMenuItem.Image = Global.GCDLib.My.Resources.Resources.Delete
             Me.DeleteBudgetSegregationToolStripMenuItem.Name = "DeleteBudgetSegregationToolStripMenuItem"
             Me.DeleteBudgetSegregationToolStripMenuItem.Size = New System.Drawing.Size(255, 22)
             Me.DeleteBudgetSegregationToolStripMenuItem.Text = "Delete Budget Segregation"
             '
-            'ProjectExplorerUC
+            'ucProjectExplorer
             '
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -754,7 +754,7 @@
             Me.Controls.Add(Me.btnProperties)
             Me.Controls.Add(Me.btnAdd)
             Me.Controls.Add(Me.treProject)
-            Me.Name = "ProjectExplorerUC"
+            Me.Name = "ucProjectExplorer"
             Me.Size = New System.Drawing.Size(696, 663)
             Me.cmsProject.ResumeLayout(False)
             Me.cmsDEMSurvey.ResumeLayout(False)

@@ -83,8 +83,7 @@ Namespace UI.SurveyLibrary
             m_ePurpose = ePurpose
             m_DEMSurveyRow = demSurveyRow
             m_RasterDirects = New Dictionary(Of String, String)
-
-            'ucRaster.Initialize(sNoun)
+            ucRaster.Noun = sNoun
         End Sub
 
         ''' <summary>
@@ -99,7 +98,6 @@ Namespace UI.SurveyLibrary
             m_DEMSurveyRow = Nothing
             m_RasterDirects = New Dictionary(Of String, String)
 
-            'ucRaster.Initialize(String.Empty)
         End Sub
 
 
@@ -402,7 +400,7 @@ Namespace UI.SurveyLibrary
                     End If
 
                     If String.IsNullOrEmpty(txtName.Text) Then
-                        txtName.Text = ucRaster.SelectedItem.FilePath
+                        txtName.Text = IO.Path.GetFileNameWithoutExtension(ucRaster.SelectedItem.FilePath)
                     Else
                         UpdateRasterPath()
                     End If
@@ -497,13 +495,13 @@ Namespace UI.SurveyLibrary
 
                         Select Case m_ePurpose
                             Case ImportRasterPurposes.DEMSurvey
-                                sRasterPath = Core.GCDProject.ProjectManager.OutputManager.DEMSurveyRasterPath(txtName.Text)
+                                sRasterPath = GCDProject.ProjectManagerBase.OutputManager.DEMSurveyRasterPath(txtName.Text)
 
                             Case ImportRasterPurposes.AssociatedSurface
-                                sRasterPath = Core.GCDProject.ProjectManager.OutputManager.AssociatedSurfaceRasterPath(m_DEMSurveyRow.Name, txtName.Text)
+                                sRasterPath = GCDProject.ProjectManagerBase.OutputManager.AssociatedSurfaceRasterPath(m_DEMSurveyRow.Name, txtName.Text)
 
                             Case ImportRasterPurposes.ErrorCalculation
-                                sRasterPath = Core.GCDProject.ProjectManager.OutputManager.ErrorSurfaceRasterPath(m_DEMSurveyRow.Name, txtName.Text)
+                                sRasterPath = GCDProject.ProjectManagerBase.OutputManager.ErrorSurfaceRasterPath(m_DEMSurveyRow.Name, txtName.Text)
 
                             Case Else
                                 MsgBox("Unhandled import raster purpose: " & m_ePurpose.ToString, MsgBoxStyle.Exclamation, My.Resources.ApplicationNameLong)
