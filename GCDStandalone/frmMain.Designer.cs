@@ -36,8 +36,10 @@
             this.closeGCDProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.projectPropertiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.browseGCDProjectFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataPreparationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cleanRasterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.analysisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.customizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -47,10 +49,10 @@
             this.gCDWebSiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutGCDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.tssProjectPath = new System.Windows.Forms.ToolStripStatusLabel();
             this.ucProjectExplorer1 = new GCDLib.UI.Project.ucProjectExplorer();
-            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -58,7 +60,6 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.projectToolStripMenuItem,
             this.dataPreparationToolStripMenuItem,
-            this.helpToolStripMenuItem,
             this.analysisToolStripMenuItem,
             this.customizeToolStripMenuItem,
             this.helpToolStripMenuItem1});
@@ -88,7 +89,7 @@
             this.newGCDProjectToolStripMenuItem.Name = "newGCDProjectToolStripMenuItem";
             this.newGCDProjectToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
             this.newGCDProjectToolStripMenuItem.Text = "New GCD Project...";
-            this.newGCDProjectToolStripMenuItem.Click += new System.EventHandler(this.newGCDProjectToolStripMenuItem_Click);
+            this.newGCDProjectToolStripMenuItem.Click += new System.EventHandler(this.ProjectProperties_Click);
             // 
             // openGCDProjectToolStripMenuItem
             // 
@@ -110,7 +111,7 @@
             this.projectPropertiesToolStripMenuItem.Name = "projectPropertiesToolStripMenuItem";
             this.projectPropertiesToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
             this.projectPropertiesToolStripMenuItem.Text = "Project Properties";
-            this.projectPropertiesToolStripMenuItem.Click += new System.EventHandler(this.projectPropertiesToolStripMenuItem_Click);
+            this.projectPropertiesToolStripMenuItem.Click += new System.EventHandler(this.ProjectProperties_Click);
             // 
             // browseGCDProjectFolderToolStripMenuItem
             // 
@@ -120,17 +121,33 @@
             this.browseGCDProjectFolderToolStripMenuItem.Text = "Browse GCD Project Folder";
             this.browseGCDProjectFolderToolStripMenuItem.Click += new System.EventHandler(this.browseGCDProjectFolderToolStripMenuItem_Click);
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(212, 6);
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
+            this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
             // dataPreparationToolStripMenuItem
             // 
+            this.dataPreparationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cleanRasterToolStripMenuItem});
             this.dataPreparationToolStripMenuItem.Name = "dataPreparationToolStripMenuItem";
             this.dataPreparationToolStripMenuItem.Size = new System.Drawing.Size(107, 20);
             this.dataPreparationToolStripMenuItem.Text = "Data Preparation";
             // 
-            // helpToolStripMenuItem
+            // cleanRasterToolStripMenuItem
             // 
-            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-            this.helpToolStripMenuItem.Text = "Help";
+            this.cleanRasterToolStripMenuItem.Image = global::GCDStandalone.Properties.Resources.CleanRaster;
+            this.cleanRasterToolStripMenuItem.Name = "cleanRasterToolStripMenuItem";
+            this.cleanRasterToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.cleanRasterToolStripMenuItem.Text = "Clean Raster...";
+            this.cleanRasterToolStripMenuItem.Click += new System.EventHandler(this.cleanRasterToolStripMenuItem_Click);
             // 
             // analysisToolStripMenuItem
             // 
@@ -151,15 +168,17 @@
             // 
             this.optionsToolStripMenuItem.Image = global::GCDStandalone.Properties.Resources.Settings;
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.optionsToolStripMenuItem.Text = "Options";
+            this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
             // 
             // fISLibraryToolStripMenuItem
             // 
             this.fISLibraryToolStripMenuItem.Image = global::GCDStandalone.Properties.Resources.FISLibrary;
             this.fISLibraryToolStripMenuItem.Name = "fISLibraryToolStripMenuItem";
-            this.fISLibraryToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.fISLibraryToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.fISLibraryToolStripMenuItem.Text = "FIS Library";
+            this.fISLibraryToolStripMenuItem.Click += new System.EventHandler(this.fISLibraryToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem1
             // 
@@ -177,6 +196,7 @@
             this.onlineGCDHelpToolStripMenuItem.Name = "onlineGCDHelpToolStripMenuItem";
             this.onlineGCDHelpToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.onlineGCDHelpToolStripMenuItem.Text = "Online GCD Help";
+            this.onlineGCDHelpToolStripMenuItem.Click += new System.EventHandler(this.onlineGCDHelpToolStripMenuItem_Click);
             // 
             // gCDWebSiteToolStripMenuItem
             // 
@@ -184,6 +204,7 @@
             this.gCDWebSiteToolStripMenuItem.Name = "gCDWebSiteToolStripMenuItem";
             this.gCDWebSiteToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.gCDWebSiteToolStripMenuItem.Text = "GCD Web Site";
+            this.gCDWebSiteToolStripMenuItem.Click += new System.EventHandler(this.gCDWebSiteToolStripMenuItem_Click);
             // 
             // aboutGCDToolStripMenuItem
             // 
@@ -191,14 +212,23 @@
             this.aboutGCDToolStripMenuItem.Name = "aboutGCDToolStripMenuItem";
             this.aboutGCDToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.aboutGCDToolStripMenuItem.Text = "About GCD";
+            this.aboutGCDToolStripMenuItem.Click += new System.EventHandler(this.aboutGCDToolStripMenuItem_Click);
             // 
             // statusStrip1
             // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tssProjectPath});
             this.statusStrip1.Location = new System.Drawing.Point(0, 239);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(541, 22);
             this.statusStrip1.TabIndex = 2;
             this.statusStrip1.Text = "statusStrip1";
+            // 
+            // tssProjectPath
+            // 
+            this.tssProjectPath.Name = "tssProjectPath";
+            this.tssProjectPath.Size = new System.Drawing.Size(118, 17);
+            this.tssProjectPath.Text = "toolStripStatusLabel1";
             // 
             // ucProjectExplorer1
             // 
@@ -207,18 +237,6 @@
             this.ucProjectExplorer1.Name = "ucProjectExplorer1";
             this.ucProjectExplorer1.Size = new System.Drawing.Size(541, 215);
             this.ucProjectExplorer1.TabIndex = 3;
-            // 
-            // exitToolStripMenuItem
-            // 
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
-            this.exitToolStripMenuItem.Text = "Exit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(212, 6);
             // 
             // frmMain
             // 
@@ -235,6 +253,8 @@
             this.Load += new System.EventHandler(this.frmMain_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -245,7 +265,6 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem projectToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem dataPreparationToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private GCDLib.UI.Project.ucProjectExplorer ucProjectExplorer1;
         private System.Windows.Forms.ToolStripMenuItem newGCDProjectToolStripMenuItem;
@@ -263,6 +282,8 @@
         private System.Windows.Forms.ToolStripMenuItem fISLibraryToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripStatusLabel tssProjectPath;
+        private System.Windows.Forms.ToolStripMenuItem cleanRasterToolStripMenuItem;
     }
 }
 

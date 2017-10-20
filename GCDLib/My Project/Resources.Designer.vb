@@ -328,6 +328,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to http://gcd.joewheaton.org/.
+        '''</summary>
+        Public ReadOnly Property GCDWebSiteURL() As String
+            Get
+                Return ResourceManager.GetString("GCDWebSiteURL", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
         Public ReadOnly Property Help() As System.Drawing.Bitmap
@@ -338,7 +347,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to .
+        '''  Looks up a localized string similar to http://gcd6help.joewheaton.org/.
         '''</summary>
         Public ReadOnly Property HelpBaseURL() As String
             Get
@@ -413,6 +422,15 @@ Namespace My.Resources
             Get
                 Dim obj As Object = ResourceManager.GetObject("Options", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to http://joewheaton.org.
+        '''</summary>
+        Public ReadOnly Property PeopleJoeWheatonURL() As String
+            Get
+                Return ResourceManager.GetString("PeopleJoeWheatonURL", resourceCulture)
             End Get
         End Property
         

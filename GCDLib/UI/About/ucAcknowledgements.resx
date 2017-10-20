@@ -112,34 +112,12 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="OpenProject" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\OpenProject.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="FISLibrary" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\FISLibrary.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="NewProject" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\NewProject.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="BrowseFolder" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\BrowseFolder.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="GCD" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\GCD.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Help" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Help.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Settings" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Settings.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="CleanRaster" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\CleanRaster.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="lnkjDevelopers.Text" xml:space="preserve">
+    <value>The GCD Software was originally developed by Joe Wheaton (Utah State University Department of Watershed Sciences) and James Brasington (Queen Mary University). The newest version of the GCD is currently under development by North Arrow Research and ET-AL. The current development team consists of Philip Bailey (North Arrow Research), James Hensleigh (USU), Matt Reimer (North Arrow Research),  and Joe Wheaton (USU). Nick Ochoski (ESSA) and Frank Poulsen (ESSA) were instrumental in the initial development of GCD 5. ESSA Technologies generously invested in kind donations of development time in GCD 5 development.  Chris Garrard (USU RSGIS Lab) was the primary developer of GCD 4.</value>
   </data>
 </root>

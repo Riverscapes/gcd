@@ -197,7 +197,7 @@
     <value>..\Resources\Help.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="HelpBaseURL" xml:space="preserve">
-    <value />
+    <value>http://gcd6help.joewheaton.org/</value>
   </data>
   <data name="Histogram" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Histogram.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -288,5 +288,11 @@
   </data>
   <data name="ApplicationNameShort" xml:space="preserve">
     <value>GCD</value>
+  </data>
+  <data name="GCDWebSiteURL" xml:space="preserve">
+    <value>http://gcd.joewheaton.org/</value>
+  </data>
+  <data name="PeopleJoeWheatonURL" xml:space="preserve">
+    <value>http://joewheaton.org</value>
   </data>
 </root>

@@ -818,7 +818,7 @@ Namespace UI.Project
 
         Private Sub EditGCDProjectPropertiesToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles EditGCDProjectPropertiesToolStripMenuItem.Click
 
-            Dim frm As New frmProjectProperties(frmProjectProperties.DisplayModes.Edit)
+            Dim frm As New frmProjectProperties(False)
             Try
                 frm.ShowDialog()
             Catch ex As Exception
@@ -1395,7 +1395,7 @@ Namespace UI.Project
                 Select Case eType
 
                     Case GCDNodeTypes.Project
-                        frm = New frmProjectProperties(frmProjectProperties.DisplayModes.Edit)
+                        frm = New frmProjectProperties(True)
 
                     Case GCDNodeTypes.DEMSurvey
                         frm = New frmDEMSurveyProperties(nID)

@@ -12,7 +12,7 @@ Namespace UI.Options
         ''' 
         ''' </summary>
         ''' <param name="sArcMapDisplayUnits">The current linear display units of the current ArcMap map data frame</param>
-        Public Sub New(sArcMapDisplayUnits)
+        Public Sub New(Optional sArcMapDisplayUnits = "")
             ' This call is required by the Windows Form Designer.
             InitializeComponent()
 

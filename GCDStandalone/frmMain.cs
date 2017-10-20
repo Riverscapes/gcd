@@ -29,17 +29,21 @@ namespace GCDStandalone
             {
                 naru.error.ExceptionUI.HandleException(ex, "Error initializing temporary workspace.");
             }
+
+            UpdateMenuItemStatus(menuStrip1.Items);
         }
 
-        private void newGCDProjectToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ProjectProperties_Click(object sender, EventArgs e)
         {
             try
             {
-                GCDLib.UI.Project.frmProjectProperties frm = new GCDLib.UI.Project.frmProjectProperties(GCDLib.UI.Project.frmProjectProperties.DisplayModes.Create);
+                GCDLib.UI.Project.frmProjectProperties frm = new GCDLib.UI.Project.frmProjectProperties(string.Compare(((ToolStripMenuItem)sender).Name, "projectPropertiesToolStripMenuItem", true) == 0);
                 if (frm.ShowDialog() == DialogResult.OK)
                 {
                     ucProjectExplorer1.cmdRefresh_Click(sender, e);
                 }
+
+                UpdateMenuItemStatus(menuStrip1.Items);
             }
             catch (Exception ex)
             {
@@ -97,24 +101,129 @@ namespace GCDStandalone
                     MessageBox.Show(string.Format("Error reading the GCD project file '{0}'. Ensure that the file is a valid GCD project file with valid and complete XML contents.", f.FileName), GCDLib.My.Resources.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
-        }
 
-        private void projectPropertiesToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
+            UpdateMenuItemStatus(menuStrip1.Items);
         }
 
         private void browseGCDProjectFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(GCDLib.Core.GCDProject.ProjectManagerBase.FilePath) && System.IO.File.Exists(GCDLib.Core.GCDProject.ProjectManagerBase.FilePath))
             {
-                System.Diagnostics.Process.Start(System.IO.Path.GetDirectoryName( GCDLib.Core.GCDProject.ProjectManagerBase.FilePath));
+                System.Diagnostics.Process.Start(System.IO.Path.GetDirectoryName(GCDLib.Core.GCDProject.ProjectManagerBase.FilePath));
             }
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void UpdateMenuItemStatus(ToolStripItemCollection aMenu)
+        {
+            foreach (ToolStripItem subMenu in aMenu)
+            {
+                if (subMenu is ToolStripMenuItem)
+                {
+                    if (((ToolStripMenuItem)subMenu).HasDropDownItems) // if subMenu has children
+                    {
+                        switch (subMenu.Name)
+                        {
+                            // Skip top level menus
+                            case "analysisToolStripMenuItem":
+                            case "dataPreparationToolStripMenuItem":
+                            case "customizeToolStripMenuItem":
+                            case "helpToolStripMenuItem1":
+                                return;
+
+                            default:
+                                UpdateMenuItemStatus(((ToolStripMenuItem)subMenu).DropDownItems); // Call recursive Method.
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        switch (subMenu.Name)
+                        {
+                            // Skip specific menu items here
+                            case "newGCDProjectToolStripMenuItem":
+                            case "openGCDProjectToolStripMenuItem":
+                            case "exitToolStripMenuItem":
+                            case "customizeToolStripMenuItem":
+                                break; // do nothing. Always enabled.
+
+                            default:
+                                subMenu.Enabled = !string.IsNullOrEmpty(GCDLib.Core.GCDProject.ProjectManagerBase.FilePath);
+                                break;
+                        }
+                    }
+                }
+
+            }
+
+            // Now update the tool status strip
+            tssProjectPath.Text = GCDLib.Core.GCDProject.ProjectManagerBase.FilePath;
+        }
+
+        private void onlineGCDHelpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(GCDLib.My.Resources.Resources.HelpBaseURL);
+        }
+
+        private void gCDWebSiteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(GCDLib.My.Resources.Resources.GCDWebSiteURL);
+        }
+
+        private void aboutGCDToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                GCDLib.UI.About.frmAbout frm = new GCDLib.UI.About.frmAbout();
+                frm.ShowDialog();    
+            }
+            catch( Exception ex)
+            {
+                naru.error.ExceptionUI.HandleException(ex);
+            }
+        }
+
+        private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                GCDLib.UI.Options.frmOptions frm = new GCDLib.UI.Options.frmOptions();
+                frm.ShowDialog();
+            }
+            catch(Exception ex)
+            {
+                naru.error.ExceptionUI.HandleException(ex);
+            }
+        }
+
+        private void cleanRasterToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                GCDLib.UI.SurveyLibrary.frmImportRaster frm = new GCDLib.UI.SurveyLibrary.frmImportRaster();
+                frm.ShowDialog();
+            }
+            catch(Exception ex)
+            {
+                naru.error.ExceptionUI.HandleException(ex);
+            }
+        }
+
+        private void fISLibraryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                GCDLib.UI.FISLibrary.frmFISLibrary frm = new GCDLib.UI.FISLibrary.frmFISLibrary();
+                frm.ShowDialog();
+            }
+            catch(Exception ex)
+            {
+                naru.error.ExceptionUI.HandleException(ex);
+            }
         }
     }
 }

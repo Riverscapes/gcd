@@ -134,6 +134,7 @@
       <Link>RasterManagerGCD.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\CleanRaster.png" />
     <None Include="Resources\FISLibrary.png" />
     <None Include="Resources\GCD.png" />
     <None Include="Resources\Help.png" />

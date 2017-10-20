@@ -1,23 +1,4 @@
-﻿#Region "Code Comments"
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-'       Author: Philip Bailey, Nick Ochoski, & Frank Poulsen
-'               ESSA Software Ltd.
-'               1765 W 8th Avenue
-'               Vancouver, BC, Canada V6J 5C6
-'     
-'     Copyright: (C) 2011 by ESSA technologies Ltd.
-'                This software is subject to copyright protection under the       
-'                laws of Canada and other countries.
-'
-'  Date Created: 14 January 2011
-'
-'   Description: 
-'
-#End Region
-
-#Region "Imports"
-Imports System.IO
-#End Region
+﻿Imports System.IO
 
 Namespace Core.GCDProject
 

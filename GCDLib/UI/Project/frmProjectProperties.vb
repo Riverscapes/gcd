@@ -4,23 +4,12 @@ Namespace UI.Project
 
     Public Class frmProjectProperties
 
-        Public Enum DisplayModes
-            Edit
-            Create
-        End Enum
+        Private m_bCreateMode As Boolean
 
-        Private m_eDisplayMode As DisplayModes
-
-        Public ReadOnly Property DisplayMode As DisplayModes
-            Get
-                Return m_eDisplayMode
-            End Get
-        End Property
-
-        Public Sub New(eMode As DisplayModes)
+        Public Sub New(bCreateMode As Boolean)
             ' This call is required by the Windows Form Designer.
             InitializeComponent()
-            m_eDisplayMode = eMode
+            m_bCreateMode = bCreateMode
         End Sub
 
 #Region "Events"
@@ -57,7 +46,7 @@ Namespace UI.Project
             cboDisplayUnits.Items.Add(New naru.db.NamedObject(UnitsNet.Units.LengthUnit.Yard, UnitsNet.Length.GetAbbreviation(UnitsNet.Units.LengthUnit.Yard)))
             cboDisplayUnits.Items.Add(New naru.db.NamedObject(UnitsNet.Units.LengthUnit.Mile, UnitsNet.Length.GetAbbreviation(UnitsNet.Units.LengthUnit.Mile)))
 
-            If DisplayMode = DisplayModes.Create Then
+            If m_bCreateMode Then
                 Me.Text = "Create New " & Me.Text
 
                 ' Default the directory to the parent folder of the last project used.
@@ -154,7 +143,7 @@ Namespace UI.Project
                 My.Settings.LastUsedProjectFolder = IO.Path.GetDirectoryName(txtGCDPath.Text)
                 My.Settings.Save()
 
-                If DisplayMode = DisplayModes.Create Then
+                If m_bCreateMode Then
                     ' Creating a new project
                     IO.Directory.CreateDirectory(IO.Path.GetDirectoryName(txtGCDPath.Text))
                     Core.GCDProject.ProjectManagerBase.FilePath = txtGCDPath.Text
@@ -196,7 +185,7 @@ Namespace UI.Project
             End If
 
             ' Only check if the file exists when creating a new one.
-            If DisplayMode = DisplayModes.Create Then
+            If m_bCreateMode Then
                 If IO.File.Exists(txtGCDPath.Text) Then
                     MessageBox.Show("There already appears to be a GCD project at the specified path. Change the project name or pick a different parent directory.", My.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information)
                     Return False
@@ -208,9 +197,9 @@ Namespace UI.Project
         End Function
 
         Private Sub btnHelp_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnHelp.Click
-            If m_eDisplayMode = DisplayModes.Create Then
+            If m_bCreateMode Then
                 Process.Start(My.Resources.HelpBaseURL & "gcd-command-reference/project-menu/new-project")
-            ElseIf m_eDisplayMode = DisplayModes.Edit Then
+            Else
                 Process.Start(My.Resources.HelpBaseURL & "gcd-command-reference/gcd-project-explorer/project-context-menu/edit-gcd-project-properties")
             End If
         End Sub
