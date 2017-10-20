@@ -20,6 +20,9 @@ namespace GCDConsoleLib
         public GdalDataType Datatype { get; private set; }
         public ExtentRectangle Extent;
         private double? _nodataval;
+
+        public bool HasNodata { get { return _nodataval == null; } }
+
         public double NodataVal
         {
             get
@@ -202,6 +205,39 @@ namespace GCDConsoleLib
             {
                 throw new FileNotFoundException("Could not find dataset to open", FilePath);
             }
+        }
+
+        /// <summary>
+        /// Just a quick check to see if two rasters are equivalent in terms of meta data
+        /// </summary>
+        /// <param name=""></param>
+        /// <returns></returns>
+        public bool IsMetaSame(ref Raster Raster2)
+        {
+            Raster me = this;
+            bool bIsSame = true;
+
+            try { ValidateSameMeta(ref me, ref Raster2);  }
+            catch (ArgumentException)  {  bIsSame = false; }
+
+            return bIsSame;
+        }
+         
+        /// <summary>
+        /// We're just going to scream if any of our inputs are in the wrong format
+        /// </summary>
+        public static void ValidateSameMeta(ref Raster rR1, ref Raster rR2)
+        {
+            if (rR1.Extent.CellHeight != rR2.Extent.CellHeight)
+                throw new ArgumentException("Cellheights do not match");
+            if (rR1.Extent.CellWidth != rR2.Extent.CellWidth)
+                throw new ArgumentException("Cellwidths do not match");
+            if (!rR1.IsDivisible() || !rR2.Extent.IsDivisible())
+                throw new ArgumentException("Both raster extents must be divisible");
+            if (!rR1.Proj.IsSame(ref rR2.Proj))
+                throw new ArgumentException("Raster Projections do not match match");
+            if (rR1.VerticalUnits != rR2.VerticalUnits)
+                throw new ArgumentException(String.Format("Both rasters must have the same vertical units: `{0}` vs. `{1}`", rR1.VerticalUnits, rR2.VerticalUnits));
         }
 
         /// <summary>

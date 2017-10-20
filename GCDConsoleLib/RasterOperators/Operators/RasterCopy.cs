@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnitsNet.Units;
+using GCDConsoleLib.Operators.Base;
 
 namespace GCDConsoleLib.RasterOperators
 {

@@ -88,14 +88,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataTypes.cs" />
-    <Compile Include="RasterOperators\RasterCopy.cs" />
+    <Compile Include="RasterOperators\CellByCellOperator.cs" />
+    <Compile Include="RasterOperators\Operators\RasterCopy.cs" />
+    <Compile Include="RasterOperators\WindowOverlapOperator.cs" />
     <Compile Include="Utility\Conversion.cs" />
     <Compile Include="Utility\FileIO.cs" />
     <Compile Include="Utility\GdalConfiguration.cs" />
     <Compile Include="GISDataset.cs" />
     <Compile Include="ExtentRectangle.cs" />
     <Compile Include="Projection.cs" />
-    <Compile Include="RasterOperators\RasterMath.cs" />
+    <Compile Include="RasterOperators\Operators\RasterMath.cs" />
     <Compile Include="RasterOperators\BaseOperator.cs" />
     <Compile Include="Vector.cs" />
     <Compile Include="Raster.cs" />

@@ -2,8 +2,19 @@
 using System.Collections.Generic;
 using GCDConsoleLib.Common.Extensons;
 
-namespace GCDConsoleLib
+namespace GCDConsoleLib.Operators.Base
 {
+    /// <summary>
+    /// 
+    /// This is the very base class for raster operation.IN GENERAL YOU SHOULD NOT USE THIS DIRECTLY
+    /// 
+    /// If you want to implement a new operator you should inherit a subclass of this one.
+    /// 
+    /// See:
+    ///   * CellByCellOperator.cs
+    ///   * WindowOverlapOperator.cs
+    ///   
+    /// </summary>
     public abstract class BaseOperator
     {
         protected readonly List<Raster> _rasters;
@@ -39,24 +50,27 @@ namespace GCDConsoleLib
         private void _init(Raster rOutRaster)
         {
             bDone = false;
-            Raster r = _rasters[0];
-            ExtentRectangle tmpRect = r.Extent;
-            // Add each raster to the union extent window
-            foreach (Raster rRa in _rasters) { tmpRect = r.Extent.Union(ref rRa.Extent); }
+            Raster r0 = _rasters[0];
+            ExtentRectangle tmpRect = r0.Extent;
 
-            // Now make sure our rasters are open for business
-            foreach (Raster rRa in _rasters) { rRa.Open(); }
+            // Validate our each raster, Add each raster to the union extent window and open it for business
+            foreach (Raster rN in _rasters)
+            {
+                Raster rR = rN;
+                Raster.ValidateSameMeta(ref r0, ref rR);
+                tmpRect = r0.Extent.Union(ref rN.Extent);
+                rN.Open();
+            }
 
-            // Make sure all our rasters follow the rules
-            _validateInputs();
-
-            // Now that we have our rasters tested and a unioned extent
+            // Now that we have our rasters tested and a unioned extent we can set the operation extent
             SetOpExtent(tmpRect);
 
+            // Finally, set up our output raster and make sure it's open for writing
             _outputRaster = rOutRaster;
             _outputRaster.Extent = _opExtent;
             // Open our output for writing
             _outputRaster.Open(true);
+
         }
 
         /// <summary>
@@ -74,27 +88,6 @@ namespace GCDConsoleLib
             if (_opExtent.rows < chunkYsize) chunkYsize = _opExtent.rows;
             _chunkWindow = new ExtentRectangle(_opExtent.Top, _opExtent.Left, _opExtent.CellHeight, _opExtent.CellWidth, chunkYsize, chunkXsize);
 
-        }
-
-        /// <summary>
-        /// We're just going to scream if any of our inputs are in the wrong format
-        /// </summary>
-        private void _validateInputs()
-        {
-            Raster rRef = _rasters[0];
-            foreach (Raster rTest in _rasters)
-            {
-                if (_opExtent.CellHeight != rTest.Extent.CellHeight)
-                    throw new NotSupportedException("Cellheights do not match");
-                if (_opExtent.CellWidth != rTest.Extent.CellWidth)
-                    throw new NotSupportedException("Cellwidths do not match");
-                if (!_opExtent.IsDivisible() || !rTest.Extent.IsDivisible())
-                    throw new NotSupportedException("Both raster extents must be divisible");
-                if (!rRef.Proj.IsSame(ref rTest.Proj))
-                    throw new NotSupportedException("Raster Projections do not match match");
-                if (rRef.VerticalUnits != rTest.VerticalUnits)
-                    throw new NotSupportedException(String.Format("Both rasters must have the same vertical units: `{0}` vs. `{1}`", rRef.VerticalUnits, rTest.VerticalUnits));
-            }
         }
 
         /// <summary>
@@ -194,97 +187,6 @@ namespace GCDConsoleLib
         }
     }
 
-    public abstract class CellByCellOperator : BaseOperator
-    {
-        public CellByCellOperator(List<Raster> rRasters, ref Raster rOutputRaster) :
-            base(rRasters, ref rOutputRaster)
-        {
-        }
 
-        protected abstract double CellOp(ref List<double[]> data, int id);
-
-        protected override void ChunkOp(ref List<double[]> data, ref double[] outChunk)
-        {
-            for (int id = 0; id < data[0].Length; id++)
-            {
-                outChunk[id] = CellOp(ref data, id);
-            }
-        }
-    }
-
-    /// <summary>
-    /// The overlap operator works by operating over a moving window
-    /// </summary>
-    public abstract class WindowOverlapOperator : BaseOperator
-    {
-        private int _bufferCells;
-        private int BufferLength { get { return 1 + (2 * _bufferCells); } }
-        private int BufferCellNum { get { return (int)Math.Pow(BufferLength, 2); } }
-        private List<List<double[]>> _chunkCache;
-        private int _cacheIdx;
-        public WindowOverlapOperator(List<Raster> rRasters, ref Raster rOutputRaster, int bufferCells) :
-            base(rRasters, ref rOutputRaster)
-        {
-            _bufferCells = bufferCells;
-            _chunkCache = new List<List<double[]>>(BufferLength);
-        }
-
-        protected abstract double CellOp(ref List<double[]> data, int id);
-
-        /// <summary>
-        /// First time through we need to setup the buffer properly
-        /// </summary>
-        /// <param name="data"></param>
-        private void firstTime(ref List<double[]> data)
-        {   
-            // Fill the rows above the extent with nodatavals
-            double[] inputchunk = new double[_chunkWindow.cols * _chunkWindow.rows];
-            inputchunk.Fill(OpNoDataVal);
-            for (int idx = 0; idx < _bufferCells; idx++)
-                _chunkCache.Add(null);
-
-            // starting cache id is always in the middle
-            _cacheIdx = _bufferCells;
-            _chunkCache.Add(data);
-            // Now try to fill the end of the window
-            while (_chunkCache.Count < BufferLength)
-            {
-                GetChunk(ref data);
-                _chunkCache.Add(data);
-            }
-            // Put our index right in the middle
-            _cacheIdx = _bufferCells;
-        }
-
-        private void IdxIncrement() {_cacheIdx = (_cacheIdx + 1) % (BufferLength); }
-
-        protected override void ChunkOp(ref List<double[]> data, ref double[] outChunk)
-        {
-            /**
-             *  0  1  2
-             *  3  4  5
-             *  6  7  8
-             */
-            if (_chunkCache.Count == 0)
-                firstTime(ref data);
-            else
-            {
-                IdxIncrement();
-                _chunkCache[_cacheIdx] = data;
-            }
-            double[] dWindow = new double[BufferCellNum];
-
-            for (int id = 0; id < data[0].Length; id++)
-            {
-                for (int wId = 0; wId < BufferCellNum; wId++)
-                {
-                    int col = wId % BufferLength;
-                    int row = (wId - (wId % BufferLength)) / BufferLength;
-                    if (id < col || (id)
-                }
-                outChunk[id] = CellOp(ref data, id);
-            }
-        }
-    }
 
 }
