@@ -46,6 +46,34 @@
 
 
         /// <summary>
+        /// Slice a 2D segment out of a 1D array and return a 1D array
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="dstData"></param>
+        /// <param name="srcData"></param>
+        /// <param name="sliceSizeR0"></param>
+        /// <param name="sliceSizeR1"></param>
+        /// <param name="srcSizeR0"></param>
+        /// <param name="srcSizeR1"></param>
+        /// <param name="offsetR0"></param>
+        /// <param name="offsetR1"></param>
+        /// <returns></returns>
+        public static T[] Slice<T>(this T[] srcData,
+                        int srcSizeR0, int srcSizeR1,
+                        int sliceSizeR0, int sliceSizeR1,
+                        int offsetR0, int offsetR1)
+        {
+            T[] ret = new T[sliceSizeR0 * sliceSizeR1];
+
+            for (int srcIdR0 = 0; srcIdR0 < srcSizeR0; srcIdR0++)
+                for (int srcIdR1 = 0; srcIdR1 < srcSizeR1; srcIdR1++)
+                    ret[(srcIdR0 + offsetR0) * (srcSizeR1) + (srcIdR1 + offsetR1)] = srcData[srcIdR0 * srcSizeR1 + srcIdR1];
+
+            return ret;
+        }
+
+
+        /// <summary>
         /// Place or "plunk" smaller data into a bigger 1D
         /// </summary>
         /// <typeparam name="T"></typeparam>
@@ -90,20 +118,19 @@
         /// <param name="srcSizeR1"></param>
         /// <param name="offsetR0"></param>
         /// <param name="offsetR1"></param>
-        public static void Plunk<T>(this T[] dstData, ref T[] srcData, 
-            int dstSizeR0, int dstSizeR1, 
-            int srcSizeR0, int srcSizeR1, 
+        public static void Plunk<T>(this T[] dstData, ref T[] srcData,
+            int dstSizeR0, int dstSizeR1,
+            int srcSizeR0, int srcSizeR1,
             int offsetR0, int offsetR1)
         {
             for (int srcIdR0 = 0; srcIdR0 < srcSizeR0; srcIdR0++)
             {
                 for (int srcIdR1 = 0; srcIdR1 < srcSizeR1; srcIdR1++)
                 {
-                    dstData[(srcIdR0+offsetR0)*(srcSizeR1) + (srcIdR1+offsetR1)] = srcData[srcIdR0 * srcSizeR1 + srcIdR1];
+                    dstData[(srcIdR0 + offsetR0) * (srcSizeR1) + (srcIdR1 + offsetR1)] = srcData[srcIdR0 * srcSizeR1 + srcIdR1];
                 }
             }
         }
-
 
         /// <summary>
         /// Make a 2D array from a 1D array 

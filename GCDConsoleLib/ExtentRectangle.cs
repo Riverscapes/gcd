@@ -134,6 +134,11 @@ namespace GCDConsoleLib
             return new ExtentRectangle(newTop, newLeft, CellHeight, CellWidth, newRows, newCols);
         }
 
+        public ExtentRectangle Buffer(int fCells)
+        {
+            return Buffer(Math.Abs(fCells * CellHeight));
+        }
+
         /// <summary>
         /// Simple ToString method to output "Left Bottom Right Top"
         /// </summary>
@@ -143,6 +148,18 @@ namespace GCDConsoleLib
             return String.Format("{0} {1} {2} {3}", Left, Bottom, Right, Top);
         }
 
+        /// <summary>
+        /// Get a tuple representing row translation between two 
+        /// </summary>
+        /// <param name="rExtent1"></param>
+        /// <param name="rExtent2"></param>
+        /// <returns>(colT, rowT)</returns>
+        public Tuple<int, int> GetTopCornerTranslation(ref ExtentRectangle rExtent2)
+        {
+            int colT = (int)((Left - rExtent2.Left) / CellWidth);
+            int rowT = (int)((Top - rExtent2.Top) / CellHeight);
+            return new Tuple<int, int>(colT, rowT);
+        }
 
         /// <summary>
         /// Union this rectangle with another

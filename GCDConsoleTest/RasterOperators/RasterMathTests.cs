@@ -15,6 +15,7 @@ namespace GCDConsoleLib.RasterOperators.Tests
             Raster Raster2 = new FakeRaster<int>(new int[,] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 } });
             Raster rOutput = new FakeRaster<int>(new int[,] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 } });
 
+
             Raster Result = RasterOperators.RasterMath.Add(ref Raster1, 4, ref rOutput);
 
             Assert.Fail();

@@ -14,7 +14,7 @@ namespace GCDConsoleLib.RasterOperators.Tests
             Raster Raster1 = new FakeRaster<int>(new int[,] { { 1, 2, 3, 4 }, { 5, 6, 7, 8 }, { 9, 10, 11, 12 } });
             Raster rOutput = new FakeRaster<int>(new int[,] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 } });
 
-            Raster Result = RasterOperators.RasterCopy.ExtendedCopy(ref Raster1, ref rOutput, Raster1.Extent, Raster1.Proj, Raster1.VerticalUnits);
+            Raster Result = RasterOperators.RasterCopy.ExtendedCopy(ref Raster1, ref rOutput, Raster1.Extent);
             Assert.Fail();
         }
 
