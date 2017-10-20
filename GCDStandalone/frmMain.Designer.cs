@@ -168,7 +168,7 @@
             // 
             this.optionsToolStripMenuItem.Image = global::GCDStandalone.Properties.Resources.Settings;
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
             this.optionsToolStripMenuItem.Text = "Options";
             this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
             // 
@@ -176,7 +176,7 @@
             // 
             this.fISLibraryToolStripMenuItem.Image = global::GCDStandalone.Properties.Resources.FISLibrary;
             this.fISLibraryToolStripMenuItem.Name = "fISLibraryToolStripMenuItem";
-            this.fISLibraryToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.fISLibraryToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
             this.fISLibraryToolStripMenuItem.Text = "FIS Library";
             this.fISLibraryToolStripMenuItem.Click += new System.EventHandler(this.fISLibraryToolStripMenuItem_Click);
             // 
@@ -226,9 +226,11 @@
             // 
             // tssProjectPath
             // 
+            this.tssProjectPath.DoubleClickEnabled = true;
             this.tssProjectPath.Name = "tssProjectPath";
             this.tssProjectPath.Size = new System.Drawing.Size(118, 17);
             this.tssProjectPath.Text = "toolStripStatusLabel1";
+            this.tssProjectPath.DoubleClick += new System.EventHandler(this.browseGCDProjectFolderToolStripMenuItem_Click);
             // 
             // ucProjectExplorer1
             // 
