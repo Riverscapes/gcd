@@ -7,9 +7,8 @@ namespace GCDConsoleLib.Internal.Operators
 {
     public class RasterMath<T> : CellByCellOperator<T>
     {
-        public enum MathOpType : byte { Addition, Subtraction, Division, Multipication };
         private bool _scalar;
-        private MathOpType _type;
+        private RasterOperators.MathOpType _type;
         private T _operand;
 
         /// <summary>
@@ -19,7 +18,7 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="rInput"></param>
         /// <param name="dOperand"></param>
         /// <param name="sOutputRaster"></param>
-        protected RasterMath(MathOpType otType, ref Raster rInput, T dOperand, ref Raster rOutputRaster) :
+        internal RasterMath(RasterOperators.MathOpType otType, ref Raster rInput, T dOperand, ref Raster rOutputRaster) :
             base(new List<Raster> { rInput }, ref rOutputRaster)
         {
             _type = otType;
@@ -27,7 +26,7 @@ namespace GCDConsoleLib.Internal.Operators
             _operand = dOperand;
         }
 
-        protected RasterMath(MathOpType otType, ref Raster rInputA, ref Raster rInputB, ref Raster rOutputRaster) :
+        internal RasterMath(RasterOperators.MathOpType otType, ref Raster rInputA, ref Raster rInputB, ref Raster rOutputRaster) :
             base(new List<Raster> { rInputA, rInputB }, ref rOutputRaster)
         {
             _type = otType;
@@ -48,16 +47,16 @@ namespace GCDConsoleLib.Internal.Operators
                 {
                     switch (_type)
                     {
-                        case MathOpType.Addition:
+                        case RasterOperators.MathOpType.Addition:
                             val = Add(data[0][id],_operand);
                             break;
-                        case MathOpType.Subtraction:
+                        case RasterOperators.MathOpType.Subtraction:
                             val = Subtract(data[0][id], _operand);
                             break;
-                        case MathOpType.Multipication:
+                        case RasterOperators.MathOpType.Multipication:
                             val = Multiply(data[0][id], _operand);
                             break;
-                        case MathOpType.Division:
+                        case RasterOperators.MathOpType.Division:
                             val = Divide(data[0][id], _operand);
                             break;
                     }
@@ -69,16 +68,16 @@ namespace GCDConsoleLib.Internal.Operators
                 {
                     switch (_type)
                     {
-                        case MathOpType.Addition:
+                        case RasterOperators.MathOpType.Addition:
                             val = Add(data[0][id], data[1][id]);
                             break;
-                        case MathOpType.Subtraction:
+                        case RasterOperators.MathOpType.Subtraction:
                             val = Subtract(data[0][id], data[1][id]);
                             break;
-                        case MathOpType.Multipication:
+                        case RasterOperators.MathOpType.Multipication:
                             val = Multiply(data[0][id], data[1][id]);
                             break;
-                        case MathOpType.Division:
+                        case RasterOperators.MathOpType.Division:
                             val = Divide(data[0][id], data[1][id]);
                             break;
                     }
