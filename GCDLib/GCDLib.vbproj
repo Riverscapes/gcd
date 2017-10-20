@@ -88,7 +88,6 @@
     <Compile Include="Core\ChangeDetection\CoherenceProperties.vb" />
     <Compile Include="Core\ChangeDetection\DoDResultHistograms.vb" />
     <Compile Include="Core\ChangeDetection\DoDResultSet.vb" />
-    <Compile Include="Core\ChangeDetection\HistogramStats.vb" />
     <Compile Include="Core\ErrorCalculation\ErrorCalcProperties.vb" />
     <Compile Include="Core\ErrorCalculation\ErrorSurfaceEngine.vb" />
     <Compile Include="Core\ErrorCalculation\FIS\FISLibrary.Designer.vb">

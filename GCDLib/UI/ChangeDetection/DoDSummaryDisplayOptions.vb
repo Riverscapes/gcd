@@ -37,7 +37,8 @@ Namespace UI.ChangeDetection
 
         Public Property AreaUnits As UnitsNet.Units.AreaUnit
             Get
-                Throw New NotImplementedException("Waiting to hear back from UnitsNet author on how best to do this.")
+                ' TODO:  Waiting to hear back from UnitsNet author on how best to do this.
+                ' Throw New NotImplementedException("Waiting to hear back from UnitsNet author on how best to do this.")
                 Return UnitsNet.Units.AreaUnit.SquareMeter
             End Get
             Set(value As UnitsNet.Units.AreaUnit)
@@ -48,7 +49,8 @@ Namespace UI.ChangeDetection
 
         Public Property VolumeUnits As UnitsNet.Units.VolumeUnit
             Get
-                Throw New NotImplementedException("Waiting to hear back from UnitsNet author on how best to do this.")
+                ' TODO:  Waiting to hear back from UnitsNet author on how best to do this.
+                ' Throw New NotImplementedException("Waiting to hear back from UnitsNet author on how best to do this.")
                 Return UnitsNet.Units.VolumeUnit.CubicMeter
             End Get
             Set(value As UnitsNet.Units.VolumeUnit)

@@ -1,10 +1,14 @@
-﻿Imports ESRI.ArcGIS.Geometry
-Imports System.Windows.Forms.DataVisualization
+﻿Imports System.Windows.Forms.DataVisualization
 
 Namespace Core.Visualization
 
     Public Class DoDHistogramViewerClass
-        Private _ZedGraph As Charting.Chart
+
+        Private Const EROSION As String = "Erosion"
+        Private Const DEPOSITION As String = "Deposition"
+        Private Const RAW As String = "Raw"
+
+        Private m_Chart As Charting.Chart
         'Private _ThresholdedHist As Dictionary(Of Double, Double)
         'Private _RawHist As Dictionary(Of Double, Double)
         Private m_eUnits As UnitsNet.Units.LengthUnit
@@ -40,15 +44,36 @@ Namespace Core.Visualization
         'End Property
 
 
-        Public Sub New(ByVal Zedgraph As Charting.Chart, ByVal eUnits As UnitsNet.Units.LengthUnit)
-            _ZedGraph = Zedgraph
+        Public Sub New(ByRef cht As Charting.Chart, ByVal eUnits As UnitsNet.Units.LengthUnit)
+            m_Chart = cht
             m_eUnits = eUnits
+
+            m_Chart.ChartAreas.Clear()
+            m_Chart.ChartAreas.Add(New Charting.ChartArea())
+
+            m_Chart.Series.Clear()
+            m_Chart.Palette = Nothing
+            m_Chart.Legends.Clear()
+
+            Dim seriesDefs = New Dictionary(Of String, System.Drawing.Color) From {{EROSION, Drawing.Color.Red}, {DEPOSITION, Drawing.Color.Blue}, {RAW, Drawing.Color.LightGray}}
+            For Each aDef As KeyValuePair(Of String, Drawing.Color) In seriesDefs
+                Dim series As Charting.Series = m_Chart.Series.Add(aDef.Key)
+                series.ChartType = Charting.SeriesChartType.Column
+                series.Color = aDef.Value
+                series.ChartArea = m_Chart.ChartAreas.First().Name
+            Next
+
         End Sub
 
         Public Sub refresh(ByVal dRawHistogram As Dictionary(Of Double, Double),
                            ByVal dThresholdedHistogram As Dictionary(Of Double, Double),
                            ByVal bArea As Boolean,
                            ByVal eUnits As UnitsNet.Units.LengthUnit)
+
+            m_Chart.Series.FindByName(EROSION).Points.DataBindY(dRawHistogram.Values.Where(Function(s As Double) s >= 0).ToList())
+
+            m_Chart.Series.FindByName(DEPOSITION).Points.DataBindY(dRawHistogram.Values.Where(Function(s As Double) s < 0).ToList())
+            m_Chart.Series.FindByName(RAW).Points.DataBindY(dThresholdedHistogram.Values)
 
 
             'setup pane
@@ -88,7 +113,7 @@ Namespace Core.Visualization
             'Dim ErosionThresholdedData As New ZedGraph.PointPairList
             'Dim DepositionThresholdedData As New ZedGraph.PointPairList
             'For Each kv As KeyValuePair(Of Double, Double) In dThresholdedHistogram
-            '    If kv.Key < 0 Then
+            '    If kv.Key <0 Then
             '        If kv.Value > 0 Then
             '            ErosionThresholdedData.Add(kv.Key, kv.Value)
             '        End If
@@ -160,7 +185,7 @@ Namespace Core.Visualization
         End Sub
 
         Public Sub Save(ByVal GraphPath As String, ByVal ChartWidth As Integer, ByVal ChartHeight As Integer)
-            _ZedGraph.SaveImage(GraphPath, Charting.ChartImageFormat.Png)
+            m_Chart.SaveImage(GraphPath, Charting.ChartImageFormat.Png)
         End Sub
     End Class
 

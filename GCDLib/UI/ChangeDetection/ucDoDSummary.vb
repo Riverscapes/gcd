@@ -124,8 +124,9 @@ Namespace UI.ChangeDetection
             aRow.Cells(5).Style.Font = New Drawing.Font(grdData.Font, Drawing.FontStyle.Bold)
             aRow.Cells(5).Style.Alignment = DataGridViewContentAlignment.MiddleCenter
 
+            ' TODO: Waiting to hear back from UnitsNet developer how to do this dimensionality change
             Dim eAreaUnitsNotImplemented As UnitsNet.Units.AreaUnit = UnitsNet.Units.AreaUnit.SquareMeter
-            Throw New NotImplementedException("Waiting to hear back from UnitsNet developer how to do this dimensionality change")
+            ' Throw New NotImplementedException("Waiting to hear back from UnitsNet developer how to do this dimensionality change")
 
             ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
             'Area of erosion header
@@ -212,7 +213,8 @@ Namespace UI.ChangeDetection
             End If
 
             Dim eVolUnitsNotImplemented As UnitsNet.Units.VolumeUnit = UnitsNet.Units.VolumeUnit.CubicMeter
-            Throw New NotImplementedException("Waiting to hear back from UnitsNet developer how to do this dimensionality change")
+            ' TODO: Waiting to hear back from UnitsNet developer how to do this dimensionality change
+            ' Throw New NotImplementedException("Waiting to hear back from UnitsNet developer how to do this dimensionality change")
 
             If m_Options.m_eRowGroups = DoDSummaryDisplayOptions.RowGroups.ShowAll OrElse
                 (m_Options.m_eRowGroups = DoDSummaryDisplayOptions.RowGroups.SpecificGroups AndAlso m_Options.m_bRowsVolumetric) Then

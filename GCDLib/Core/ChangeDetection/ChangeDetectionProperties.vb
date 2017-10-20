@@ -125,7 +125,7 @@ Namespace Core.ChangeDetection
                         sPosteriorRaster = rDoD.PosteriorRaster
                     End If
 
-                    dodProps = New ChangeDetectionPropertiesProbabilistic(sRawDoDPath, sThrDoDPath, sPropErrPath, sProbabilityRaster, sSpatialCoErosionRaster, sSpatialCoDepositionraster, sConditionalProbRaster, sPosteriorRaster, rDoD.Threshold, rDoD.Filter, rDoD.Bayesian, gRawDoDPath.Extent.CellWidth, gRawDoDPath.VerticalUnits)
+                    dodProps = New ChangeDetectionPropertiesProbabilistic(sRawDoDPath, sThrDoDPath, sPropErrPath, sProbabilityRaster, sSpatialCoErosionRaster, sSpatialCoDepositionraster, sConditionalProbRaster, sPosteriorRaster, rDoD.Threshold, rDoD.Filter, rDoD.Bayesian, gRawDoDPath.Extent.CellWidth, gRawDoDPath.Proj.LinearUnit)
                 Else
                     Throw New Exception("Unhandled DoD type.")
                 End If
