@@ -2,27 +2,27 @@
 using System.Collections.Generic;
 using GCDConsoleLib.Common.Extensons;
 
-namespace GCDConsoleLib.Operators.Base
+namespace GCDConsoleLib.Internal
 {
     /// <summary>
     /// The overlap operator works by operating over a moving window
     /// </summary>
-    public abstract class WindowOverlapOperator : BaseOperator
+    public abstract class WindowOverlapOperator<T> : BaseOperator<T>
     {
         private int _bufferCells;
         private int BufferLength { get { return 1 + (2 * _bufferCells); } }
         private int BufferCellNum { get { return (int)Math.Pow(BufferLength, 2); } }
 
-        private List<List<double[]>> _chunkCache;
-        List<double[]> dWindow; // this is our nxn window over which we are doing our masth
+        private List<List<T[]>> _chunkCache;
+        List<T[]> dWindow; // this is our nxn window over which we are doing our masth
         private int _cacheIdx;
 
         public WindowOverlapOperator(List<Raster> rRasters, ref Raster rOutputRaster, int bufferCells) :
-            base(rRasters, ref rOutputRaster)
+            base(rRasters, rOutputRaster)
         {
-            dWindow = new List<double[]>();
+            dWindow = new List<T[]>();
             _bufferCells = bufferCells;
-            _chunkCache = new List<List<double[]>>(BufferLength);
+            _chunkCache = new List<List<T[]>>(BufferLength);
         }
 
         /// <summary>
@@ -37,17 +37,17 @@ namespace GCDConsoleLib.Operators.Base
         /// <param name="data"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        protected abstract double WindowOp(ref List<double[]> data, int id);
+        protected abstract T WindowOp(ref List<T[]> data, int id);
 
         /// <summary>
         /// First time through we need to setup the buffer properly
         /// </summary>
         /// <param name="data"></param>
-        private void firstTime(ref List<double[]> data)
+        private void firstTime(ref List<T[]> data)
         {
             // Fill the rows above the extent with nodatavals
-            double[] inputchunk = new double[_chunkWindow.cols * _chunkWindow.rows];
-            inputchunk.Fill(OpNoDataVal);
+            T[] inputchunk = new T[_chunkWindow.cols * _chunkWindow.rows];
+            inputchunk.Fill(OpNodataVal);
             for (int idx = 0; idx < _bufferCells; idx++)
                 _chunkCache.Add(null);
 
@@ -65,7 +65,7 @@ namespace GCDConsoleLib.Operators.Base
         }
 
 
-        protected override void ChunkOp(ref List<double[]> data, ref double[] outChunk)
+        protected override void ChunkOp(ref List<T[]> data, ref T[] outChunk)
         {
             /** Don't forget the numbering scheme:
              *  0  1  2  or   0  1  2  3  4
@@ -96,7 +96,7 @@ namespace GCDConsoleLib.Operators.Base
                     if (id < col || (id) > _chunkWindow.cols)
                         // Set Nodata For each layer we care about:
                         for (int dId = 0; dId < data.Count; dId++)
-                            dWindow[dId][wId] = OpNoDataVal;
+                            dWindow[dId][wId] = OpNodataVal;
                     else
                         // Set Nodata for each layer we care about:
                         for (int dId = 0; dId < _chunkCache.Count; dId++)

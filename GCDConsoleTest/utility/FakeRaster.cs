@@ -2,7 +2,7 @@
 using OSGeo.GDAL;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using GCDConsoleLib.Common.Extensons;
-using GCDConsoleLib;
+using GCDConsoleLib.Internal;
 
 namespace GCDConsoleLib.Tests.Utility
 {
@@ -16,11 +16,13 @@ namespace GCDConsoleLib.Tests.Utility
         public T[,] _outputGrid;
         public T FakeNodataVal;
 
+        public RasterInternals<T> _fakeGuts;
+
         public FakeRaster() : base(0, 0, -0.1m, 0.1m, 100, 100, Single.MinValue, Raster.RasterDriver.GTiff, floatType, fakeproj, fakeunit)
         {
             _inputgrid = new T[100, 100];
             _outputGrid = new T[100, 100];
-            _outputGrid.Fill<T>(NodataConvert);
+            _outputGrid.Fill<T>(_fakeGuts.NodataVal);
         }
 
         public FakeRaster(T[,] grid) : base(0, 0, -0.1m, 0.1m, grid.GetLength(1), grid.GetLength(0),
@@ -28,15 +30,25 @@ namespace GCDConsoleLib.Tests.Utility
         {
             _inputgrid = grid;
             _outputGrid = new T[grid.GetLength(0), grid.GetLength(1)];
-            _outputGrid.Fill<T>(NodataConvert);
+            _outputGrid.Fill<T>(_fakeGuts.NodataVal);
+        }
+
+        public FakeRaster(int Top, int Left, decimal cellHeight, decimal cellWidth, T[,] grid) : base(0, 0, -0.1m, 0.1m, grid.GetLength(1), grid.GetLength(0),
+            Single.MinValue, Raster.RasterDriver.GTiff, floatType, fakeproj, fakeunit)
+        {
+            _inputgrid = grid;
+            Extent = new ExtentRectangle(Top, Left, cellHeight, cellWidth, grid.GetLength(0), grid.GetLength(1));
+            _outputGrid = new T[grid.GetLength(0), grid.GetLength(1)];
+            _outputGrid.Fill<T>(_fakeGuts.NodataVal);
         }
 
         public FakeRaster(decimal fTop, decimal fLeft, decimal dCellHeight, decimal dCellWidth, int rows, int cols, GdalDataType eDataType) : base(fTop, fLeft, dCellHeight, dCellWidth, rows, cols, Single.MinValue, RasterDriver.GTiff, eDataType, "My Fake Projection", "m")
         {
             _inputgrid = new T[cols, rows];
             _outputGrid = new T[cols, rows];
-            _inputgrid.Fill<T>(NodataConvert);
-            _outputGrid.Fill<T>(NodataConvert);
+            _inputgrid.Fill<T>(_fakeGuts.NodataVal);
+            _outputGrid.Fill<T>(_fakeGuts.NodataVal);
+            _fakeGuts = RasterGuts as RasterInternals<T>;
         }
 
         public FakeRaster(decimal fTop, decimal fLeft, decimal dCellHeight, decimal dCellWidth, double fNoData,
@@ -45,25 +57,7 @@ namespace GCDConsoleLib.Tests.Utility
         {
             _inputgrid = grid;
             _outputGrid = new T[grid.GetLength(0), grid.GetLength(1)];
-            _outputGrid.Fill<T>(NodataConvert);
-        }
-
-        private T NodataConvert
-        {
-            get
-            {
-                double nodata = (double)base.NodataVal;
-                T returnVal = (T)Convert.ChangeType(-9999, typeof(T));
-                try
-                {
-                    returnVal = (T)Convert.ChangeType(nodata, typeof(T));
-                }
-                catch (Exception)
-                {
-                    //Do nothing.
-                }
-                return returnVal;
-            }
+            _outputGrid.Fill<T>(_fakeGuts.NodataVal);
         }
 
         /// <summary>
@@ -146,7 +140,7 @@ namespace GCDConsoleLib.Tests.Utility
             Assert.AreEqual(frInit1.Extent.Bottom, -10);
             Assert.AreEqual(frInit1.Extent.Left, 0);
             Assert.AreEqual(frInit1.Extent.Right, 10);
-            Assert.AreEqual(frInit1.NodataVal, Single.MinValue);
+            Assert.AreEqual(frInit1._fakeGuts.NodataVal, Single.MinValue);
             Assert.AreEqual(frInit1.driver, Raster.RasterDriver.GTiff);
             Assert.AreEqual(frInit1.Proj.OriginalString, FakeRaster<double>.fakeproj);
             Assert.AreEqual(frInit1.VerticalUnits.ToString(), FakeRaster<double>.fakeunit);
@@ -160,7 +154,7 @@ namespace GCDConsoleLib.Tests.Utility
             Assert.AreEqual(frInit2.Extent.Bottom, -0.4);
             Assert.AreEqual(frInit2.Extent.Left, 0);
             Assert.AreEqual(frInit2.Extent.Right, 0.5);
-            Assert.AreEqual(frInit2.NodataVal, Single.MinValue);
+            Assert.AreEqual(frInit2._fakeGuts.NodataVal, Single.MinValue);
             Assert.AreEqual(frInit2.driver, Raster.RasterDriver.GTiff);
             Assert.AreEqual(frInit2.Proj.OriginalString, FakeRaster<double>.fakeproj);
             Assert.AreEqual(frInit2.VerticalUnits.ToString(), FakeRaster<double>.fakeunit);
@@ -176,7 +170,7 @@ namespace GCDConsoleLib.Tests.Utility
             Assert.AreEqual(frInit3.Extent.Bottom, 9.5);
             Assert.AreEqual(frInit3.Extent.Left, 11.5);
             Assert.AreEqual(frInit3.Extent.Right, 13);
-            Assert.AreEqual(frInit3.NodataVal, -999.9);
+            Assert.AreEqual(frInit2._fakeGuts.NodataVal, Single.MinValue);
             Assert.AreEqual(frInit3.driver, Raster.RasterDriver.HFA);
             Assert.AreEqual(frInit3.Proj.OriginalString, myFakeProj);
             Assert.AreEqual(frInit3.VerticalUnits.ToString(), FakeRaster<double>.fakeunit);

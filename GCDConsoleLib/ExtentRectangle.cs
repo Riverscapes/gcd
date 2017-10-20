@@ -43,7 +43,7 @@ namespace GCDConsoleLib
         /// Load this rectangle from an already-open dataset
         /// </summary>
         /// <param name="dSet"></param>
-        public ExtentRectangle(ref Dataset dSet)
+        public ExtentRectangle(Dataset dSet)
         {
             Band rBand = dSet.GetRasterBand(1);
             double[] tr = new double[6];

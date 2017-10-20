@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 
-
-namespace GCDConsoleLib.Operators.Base
+namespace GCDConsoleLib.Internal
 {
-    public abstract class CellByCellOperator : BaseOperator
+    public abstract class CellByCellOperator<T> : BaseOperator<T>
     {
+        /// <summary>
+        /// Just a simple pass-through constructor
+        /// </summary>
+        /// <param name="rRasters"></param>
+        /// <param name="rOutputRaster"></param>
         public CellByCellOperator(List<Raster> rRasters, ref Raster rOutputRaster) :
-            base(rRasters, ref rOutputRaster)
-        {
-        }
+            base(rRasters, rOutputRaster) {}
 
         /// <summary>
         /// The individual operators must implement this.
@@ -17,9 +19,14 @@ namespace GCDConsoleLib.Operators.Base
         /// <param name="data"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        protected abstract double CellOp(ref List<double[]> data, int id);
+        protected abstract T CellOp(ref List<T[]> data, int id);
 
-        protected override void ChunkOp(ref List<double[]> data, ref double[] outChunk)
+        /// <summary>
+        /// This is how we loop over a chunk
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="outChunk"></param>
+        protected override void ChunkOp(ref List<T[]> data, ref T[] outChunk)
         {
             for (int id = 0; id < data[0].Length; id++)
             {

@@ -1,37 +1,16 @@
 ﻿using System;
 using GCDConsoleLib;
 using System.Collections.Generic;
-using GCDConsoleLib.Operators.Base;
+using GCDConsoleLib.Internal;
 
-namespace GCDConsoleLib.RasterOperators
+namespace GCDConsoleLib.Internal.Operators
 {
-    public class RasterMath : CellByCellOperator
+    public class RasterMath<T> : CellByCellOperator<T>
     {
         public enum MathOpType : byte { Addition, Subtraction, Division, Multipication };
         private bool _scalar;
         private MathOpType _type;
-        private double _operand;
-
-        /// <summary>
-        /// HEre are our public functions
-        /// </summary>
-        /// <param name="rInput"></param>
-        /// <param name="dOperand"></param>
-        /// <param name="sOutputRaster"></param>
-        /// <returns></returns>
-        public static Raster Add(ref Raster rInput, double dOperand, string sOutputRaster)
-        {
-            Raster rOutput = new Raster(sOutputRaster);
-            RasterMath mathOp = new RasterMath(MathOpType.Addition, ref rInput, dOperand, ref rOutput);
-            return mathOp.Run();
-        }
-        public static Raster Add(ref Raster rInputA, ref Raster rInputB, string sOutputRaster)
-        {
-            Raster rOutput = new Raster(sOutputRaster);
-            RasterMath mathOp = new RasterMath(MathOpType.Addition, ref rInputA, ref rInputB, ref rOutput);
-            return mathOp.Run();
-        }
-
+        private T _operand;
 
         /// <summary>
         /// We protect the constructors because we don't really want anyone using them.
@@ -40,7 +19,7 @@ namespace GCDConsoleLib.RasterOperators
         /// <param name="rInput"></param>
         /// <param name="dOperand"></param>
         /// <param name="sOutputRaster"></param>
-        protected RasterMath(MathOpType otType, ref Raster rInput, double dOperand, ref Raster rOutputRaster) :
+        protected RasterMath(MathOpType otType, ref Raster rInput, T dOperand, ref Raster rOutputRaster) :
             base(new List<Raster> { rInput }, ref rOutputRaster)
         {
             _type = otType;
@@ -55,49 +34,52 @@ namespace GCDConsoleLib.RasterOperators
             _scalar = false;
         }
 
-        protected override double CellOp(ref List<double[]> data, int id)
+        public static dynamic Add(dynamic a, dynamic b) { return a + b; }
+        public static dynamic Subtract(dynamic a, dynamic b) { return a - b; }
+        public static dynamic Multiply(dynamic a, dynamic b) { return a * b; }
+        public static dynamic Divide(dynamic a, dynamic b) { return a / b; }
+
+        protected override T CellOp(ref List<T[]> data, int id)
         {
-            double val = 0;
+            T val = OpNodataVal;
             if (_scalar)
             {
-                if (data[0][id] == OpNoDataVal) val = (double)OpNoDataVal;
-                else
+                if (!data[0][id].Equals(OpNodataVal))
                 {
                     switch (_type)
                     {
                         case MathOpType.Addition:
-                            val = data[0][id] + _operand;
+                            val = Add(data[0][id],_operand);
                             break;
                         case MathOpType.Subtraction:
-                            val = data[0][id] - _operand;
+                            val = Subtract(data[0][id], _operand);
                             break;
                         case MathOpType.Multipication:
-                            val = data[0][id] * _operand;
+                            val = Multiply(data[0][id], _operand);
                             break;
                         case MathOpType.Division:
-                            val = data[0][id] / _operand;
+                            val = Divide(data[0][id], _operand);
                             break;
                     }
                 }
             }
             else
             {
-                if (data[0][id] == OpNoDataVal || data[1][id] == OpNoDataVal) val = (double)OpNoDataVal;
-                else
+                if (!data[0][id].Equals(OpNodataVal) && !data[1][id].Equals(OpNodataVal))
                 {
                     switch (_type)
                     {
                         case MathOpType.Addition:
-                            val = data[0][id] + data[1][id];
+                            val = Add(data[0][id], data[1][id]);
                             break;
                         case MathOpType.Subtraction:
-                            val = data[0][id] - data[1][id];
+                            val = Subtract(data[0][id], data[1][id]);
                             break;
                         case MathOpType.Multipication:
-                            val = data[0][id] * data[1][id];
+                            val = Multiply(data[0][id], data[1][id]);
                             break;
                         case MathOpType.Division:
-                            val = data[0][id] / data[1][id];
+                            val = Divide(data[0][id], data[1][id]);
                             break;
                     }
                 }

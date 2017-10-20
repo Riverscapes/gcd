@@ -109,8 +109,6 @@
     <Compile Include="GISDatasetTests.cs" />
     <Compile Include="ProjectionTests.cs" />
     <Compile Include="RasterOperators\BaseOperatorTests.cs" />
-    <Compile Include="RasterOperators\RasterCopyTests.cs" />
-    <Compile Include="RasterOperators\RasterMathTests.cs" />
     <Compile Include="RasterTests.cs" />
     <Compile Include="utility\ArrayExtensionsTests.cs" />
     <Compile Include="utility\TempDir.cs" />

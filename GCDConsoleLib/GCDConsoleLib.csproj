@@ -88,7 +88,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataTypes.cs" />
+    <Compile Include="RasterInternals.cs" />
     <Compile Include="RasterOperators\CellByCellOperator.cs" />
+    <Compile Include="RasterOperators\Interfaces.cs" />
     <Compile Include="RasterOperators\Operators\RasterCopy.cs" />
     <Compile Include="RasterOperators\WindowOverlapOperator.cs" />
     <Compile Include="Utility\Conversion.cs" />
@@ -99,6 +101,7 @@
     <Compile Include="Projection.cs" />
     <Compile Include="RasterOperators\Operators\RasterMath.cs" />
     <Compile Include="RasterOperators\BaseOperator.cs" />
+    <Compile Include="Utility\Generics.cs" />
     <Compile Include="Vector.cs" />
     <Compile Include="Raster.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

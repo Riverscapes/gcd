@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using GCDConsoleLib.Common.Extensons;
 
-namespace GCDConsoleLib.Operators.Base
+namespace GCDConsoleLib.Internal
 {
     /// <summary>
     /// 
@@ -15,16 +15,18 @@ namespace GCDConsoleLib.Operators.Base
     ///   * WindowOverlapOperator.cs
     ///   
     /// </summary>
-    public abstract class BaseOperator
+    public abstract class BaseOperator<T>
     {
         protected readonly List<Raster> _rasters;
         protected ExtentRectangle _opExtent;
         protected ExtentRectangle _chunkWindow;
-        private Raster _outputRaster;
-
-        protected double OpNoDataVal { get { return _rasters[0].NodataVal; } }
-        private string _outputrasterpath;
+        protected T OpNodataVal;
         protected Boolean bDone;
+
+        private Raster _outputRaster;
+        private List<RasterInternals<T>> _rasterguts;
+        private string _outputrasterpath;
+        private RasterInternals<T> _outputRasterGuts;
 
         /// <summary>
         /// Initialize a bunch of rasters
@@ -32,14 +34,17 @@ namespace GCDConsoleLib.Operators.Base
         /// <param name="rRasters"></param>
         /// <param name="rOutputRaster"></param>
         /// <param name="newRect"></param>
-        protected BaseOperator(List<Raster> rRasters, ref Raster rOutputRaster)
+        protected BaseOperator(List<Raster> rRasters, Raster rOutputRaster)
         {
             _rasters = new List<Raster>(rRasters.Count);
+            _rasterguts = new List<RasterInternals<T>>(rRasters.Count);
             foreach (Raster rRa in rRasters)
             {
                 _rasters.Add(rRa);
+                _rasterguts.Add(rRa.RasterGuts as RasterInternals<T>);
             }
             _init(rOutputRaster);
+
         }
 
         /// <summary>
@@ -52,6 +57,7 @@ namespace GCDConsoleLib.Operators.Base
             bDone = false;
             Raster r0 = _rasters[0];
             ExtentRectangle tmpRect = r0.Extent;
+            OpNodataVal = _rasterguts[0].NodataVal;
 
             // Validate our each raster, Add each raster to the union extent window and open it for business
             foreach (Raster rN in _rasters)
@@ -68,6 +74,7 @@ namespace GCDConsoleLib.Operators.Base
             // Finally, set up our output raster and make sure it's open for writing
             _outputRaster = rOutRaster;
             _outputRaster.Extent = _opExtent;
+            _outputRasterGuts = _outputRaster.RasterGuts as RasterInternals<T>;
             // Open our output for writing
             _outputRaster.Open(true);
 
@@ -117,25 +124,25 @@ namespace GCDConsoleLib.Operators.Base
         /// NOTE: for now a chunk goes across the whole extent to make the math easier
         /// </summary>
         /// <returns></returns>
-        public void GetChunk(ref List<double[]> data)
+        public void GetChunk(ref List<T[]> data)
         {
             for (int idx = 0; idx < _rasters.Count; idx++)
             {
                 Raster rRa = _rasters[idx];
 
                 // Set up an array with nodatavals to be populated (or not)
-                double[] inputchunk = new double[_chunkWindow.cols * _chunkWindow.rows];
-                inputchunk.Fill(OpNoDataVal);
+                T[] inputchunk = new T[_chunkWindow.cols * _chunkWindow.rows];
+                inputchunk.Fill(OpNodataVal);
 
                 // Make sure there's some data to read, otherwise return the filled nodata values from above
                 ExtentRectangle _interrect = _chunkWindow.Intersect(ref rRa.Extent);
                 if (_interrect.rows > 0 && _interrect.cols > 0)
                 {
-                    double[] readChunk = new double[_chunkWindow.rows * _chunkWindow.cols];
+                    T[] readChunk = new T[_chunkWindow.rows * _chunkWindow.cols];
 
                     // Get the (col,row) offsets
                     Tuple<int, int> offset = _interrect.GetTopCornerTranslation(ref _chunkWindow);
-                    rRa.Read(offset.Item2, offset.Item1, _interrect.cols, _interrect.rows, ref readChunk);
+                    _rasterguts[idx].Read(offset.Item2, offset.Item1, _interrect.cols, _interrect.rows, ref readChunk);
                     inputchunk.Plunk(ref readChunk, _chunkWindow.cols, _chunkWindow.rows, _interrect.cols, _interrect.rows, offset.Item2, offset.Item1);
                 }
 
@@ -148,18 +155,18 @@ namespace GCDConsoleLib.Operators.Base
         /// <summary>
         /// Run an operation over every cell individually
         /// </summary>
-        protected Raster Run()
+        public Raster Run()
         {
-            List<double[]> data = new List<double[]>(_rasters.Count);
+            List<T[]> data = new List<T[]>(_rasters.Count);
             while (!bDone)
             {
                 GetChunk(ref data);
-                double[] outChunk = new double[_chunkWindow.rows * _chunkWindow.cols];
+                T[] outChunk = new T[_chunkWindow.rows * _chunkWindow.cols];
                 ChunkOp(ref data, ref outChunk);
                 // Get the (col,row) offsets
                 Tuple<int, int> offset = _chunkWindow.GetTopCornerTranslation(ref _opExtent);
                 // Write this window tot he file
-                _outputRaster.Write(offset.Item2, offset.Item1, _chunkWindow.cols, _chunkWindow.rows, ref outChunk);
+                _outputRasterGuts.Write(offset.Item2, offset.Item1, _chunkWindow.cols, _chunkWindow.rows, ref outChunk);
             }
             Cleanup();
             return _outputRaster;
@@ -170,7 +177,7 @@ namespace GCDConsoleLib.Operators.Base
         /// </summary>
         /// <param name="data"></param>
         /// <param name="outChunk"></param>
-        protected abstract void ChunkOp(ref List<double[]> data, ref double[] outChunk);
+        protected abstract void ChunkOp(ref List<T[]> data, ref T[] outChunk);
 
         /// <summary>
         /// Make sure this class leaves nothing behind and builds statistics before disappearing forever
