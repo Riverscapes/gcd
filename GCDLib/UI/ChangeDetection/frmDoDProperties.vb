@@ -467,7 +467,7 @@ Namespace UI.ChangeDetection
                 sAnalysisName &= " Prob " & valConfidence.Value.ToString("#0.00")
             End If
 
-            txtName.Text = sAnalysisName
+            txtName.Text = sAnalysisName.Trim()
 
         End Sub
 
