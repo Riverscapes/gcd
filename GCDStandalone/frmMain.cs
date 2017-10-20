@@ -106,14 +106,15 @@ namespace GCDStandalone
 
         private void browseGCDProjectFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            if (!string.IsNullOrEmpty(GCDLib.Core.GCDProject.ProjectManagerBase.FilePath) && System.IO.File.Exists(GCDLib.Core.GCDProject.ProjectManagerBase.FilePath))
+            {
+                System.Diagnostics.Process.Start(System.IO.Path.GetDirectoryName( GCDLib.Core.GCDProject.ProjectManagerBase.FilePath));
+            }
         }
 
-        //[System.Runtime.InteropServices.DllImport("RasterManagerGCD.dll")]
-        //public static extern void RegisterGDAL();
-
-        //[System.Runtime.InteropServices.DllImport("RasterManagerGCD.dll")]
-        //public static extern int GetRasterProperties(string sFullPath, ref double fCellHeight, ref double fCellWidth, ref double fLeft, ref double fTop, ref int nRows, ref int nCols, ref double fNoData, ref int nHasNoData, ref int nDataType,
-        //System.Text.StringBuilder sUnits, System.Text.StringBuilder sSpatialReference, System.Text.StringBuilder sError);
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
