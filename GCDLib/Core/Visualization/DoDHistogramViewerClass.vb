@@ -13,35 +13,55 @@ Namespace Core.Visualization
         'Private _RawHist As Dictionary(Of Double, Double)
         Private m_eUnits As UnitsNet.Units.LengthUnit
 
-        'Public Property Hist1 As Dictionary(Of Double, Double)
-        '    Get
-        '        Return _ThresholdedHist
-        '    End Get
-        '    Set(ByVal value As Dictionary(Of Double, Double))
-        '        _ThresholdedHist = value
-        '    End Set
-        'End Property
 
+        Private Class HistogramData
+            Private m_elevation As Double
+            Private m_erosion As Double
+            Private m_deposition As Double
+            Private m_raw As Double
 
-        'Public Property Hist2 As Dictionary(Of Double, Double)
-        '    Get
-        '        Return _RawHist
-        '    End Get
-        '    Set(ByVal value As Dictionary(Of Double, Double))
-        '        _RawHist = value
-        '    End Set
-        'End Property
+            Public Property Elevation As Double
+                Get
+                    Return m_elevation
+                End Get
+                Set(value As Double)
+                    m_elevation = value
+                End Set
+            End Property
 
-        'Public Property yLabel As String
-        '    Get
-        '        Dim Pane1 As ZedGraph.GraphPane = _ZedGraph.GraphPane
-        '        Return Pane1.YAxis.Title.Text
-        '    End Get
-        '    Set(ByVal value As String)
-        '        Dim Pane1 As ZedGraph.GraphPane = _ZedGraph.GraphPane
-        '        Pane1.YAxis.Title.Text = value
-        '    End Set
-        'End Property
+            Public Property Deposition As Double
+                Get
+                    Return m_deposition
+                End Get
+                Set(value As Double)
+                    m_deposition = value
+                End Set
+            End Property
+
+            Public Property Erosion As Double
+                Get
+                    Return m_erosion
+                End Get
+                Set(value As Double)
+                    m_erosion = value
+                End Set
+            End Property
+
+            Public Property Raw As Double
+                Get
+                    Return m_raw
+                End Get
+                Set(value As Double)
+                    m_raw = value
+                End Set
+            End Property
+
+            Public Sub New(fElevation As Double)
+                m_elevation = fElevation
+                m_erosion = 0
+                m_deposition = 0
+            End Sub
+        End Class
 
 
         Public Sub New(ByRef cht As Charting.Chart, ByVal eUnits As UnitsNet.Units.LengthUnit)
@@ -55,7 +75,7 @@ Namespace Core.Visualization
             m_Chart.Palette = Nothing
             m_Chart.Legends.Clear()
 
-            Dim seriesDefs = New Dictionary(Of String, System.Drawing.Color) From {{EROSION, Drawing.Color.Red}, {DEPOSITION, Drawing.Color.Blue}, {RAW, Drawing.Color.LightGray}}
+            Dim seriesDefs = New Dictionary(Of String, System.Drawing.Color) From {{RAW, Drawing.Color.LightGray}, {EROSION, Drawing.Color.Red}, {DEPOSITION, Drawing.Color.Blue}}
             For Each aDef As KeyValuePair(Of String, Drawing.Color) In seriesDefs
                 Dim series As Charting.Series = m_Chart.Series.Add(aDef.Key)
                 series.ChartType = Charting.SeriesChartType.Column
@@ -70,10 +90,36 @@ Namespace Core.Visualization
                            ByVal bArea As Boolean,
                            ByVal eUnits As UnitsNet.Units.LengthUnit)
 
-            m_Chart.Series.FindByName(EROSION).Points.DataBindY(dRawHistogram.Values.Where(Function(s As Double) s >= 0).ToList())
+            Dim histoData As New SortedDictionary(Of Double, HistogramData)
 
-            m_Chart.Series.FindByName(DEPOSITION).Points.DataBindY(dRawHistogram.Values.Where(Function(s As Double) s < 0).ToList())
-            m_Chart.Series.FindByName(RAW).Points.DataBindY(dThresholdedHistogram.Values)
+            For Each item As KeyValuePair(Of Double, Double) In dThresholdedHistogram
+                If Not histoData.ContainsKey(item.Key) Then
+                    histoData(item.Key) = New HistogramData(item.Key)
+                End If
+
+                If item.Key < 0 Then
+                    histoData(item.Key).Erosion = item.Value
+                Else
+                    histoData(item.Key).Deposition = item.Value
+                End If
+            Next
+
+            For Each item As KeyValuePair(Of Double, Double) In dRawHistogram
+                If Not histoData.ContainsKey(item.Key) Then
+                    histoData(item.Key) = New HistogramData(item.Key)
+                End If
+
+                histoData(item.Key).raw = item.Value
+            Next
+
+            Dim histoList As New List(Of HistogramData)(histoData.Values)
+
+            m_Chart.Series.FindByName(EROSION).Points.DataBindXY(histoList, "elevation", histoList, "erosion")
+            m_Chart.Series.FindByName(DEPOSITION).Points.DataBindXY(histoList, "elevation", histoList, "deposition")
+            m_Chart.Series.FindByName(RAW).Points.DataBindXY(histoList, "elevation", histoList, "raw")
+
+            'm_Chart.Series.FindByName(DEPOSITION).Points.DataBindY(dRawHistogram.Values.Where(Function(s As Double) s < 0).ToList())
+            'm_Chart.Series.FindByName(RAW).Points.DataBindY(dThresholdedHistogram.Values)
 
 
             'setup pane
