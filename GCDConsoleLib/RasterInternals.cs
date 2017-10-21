@@ -13,14 +13,14 @@ namespace GCDConsoleLib.Internal
     public interface IRasterGuts
     {
         Dataset ds { get; }
-        double? origNodataVal { get; }
+        double? origNodataVal { get; set; }
         GdalDataType Datatype { get; }
         void CreateDS(Raster.RasterDriver driver, string filepath, ExtentRectangle theExtent, Projection proj, GdalDataType theType);
 
+        void LoadNodataVal();
         bool IsOpen { get; }
-        void OpenDS(string filepath, bool write = false);
+        void OpenDS(bool write = false);
         void Dispose();
-
     }
 
     /// <summary>
@@ -35,14 +35,22 @@ namespace GCDConsoleLib.Internal
     public class RasterInternals<T> : IRasterGuts, IDisposable
     {
         Type internalType;
-        public Dataset ds { get { return ds; } private set { ds = value; } }
+        public Dataset ds { get; private set; }
         public GdalDataType Datatype { get; private set; }
+        private string FilePath;
 
-        public double? origNodataVal { get; private set; }
+        public double? origNodataVal { get; set; }
         public bool HasNodata { get { return origNodataVal == null; } }
         public bool IsOpen { get { return ds != null; } }
 
-        public void OpenDS(string filepath, bool write = false)
+        public RasterInternals(string sFilepath, GdalDataType rType)
+        {
+            FilePath = sFilepath;
+            internalType = typeof(T);
+            Datatype = rType;
+        }
+
+        public void OpenDS(bool write = false)
         {
             // Check if we're already open
             if (IsOpen) return;
@@ -51,19 +59,28 @@ namespace GCDConsoleLib.Internal
             if (write) permission = Access.GA_Update;
 
             // Make sure we have permission to do what we want to do
-            if (Utility.FileHelpers.IsFileLocked(filepath, permission))
-                throw new IOException(String.Format("File `{0}` was locked for `{}` operation", filepath, Enum.GetName(typeof(Access), permission)));
+            if (Utility.FileHelpers.IsFileLocked(FilePath, permission))
+                throw new IOException(String.Format("File `{0}` was locked for `{}` operation", FilePath, Enum.GetName(typeof(Access), permission)));
 
             GdalConfiguration.ConfigureGdal();
-            if (File.Exists(filepath))
+            if (File.Exists(FilePath))
             {
-                ds = Gdal.Open(filepath, permission);
+                ds = Gdal.Open(FilePath, permission);
                 if (ds == null)
-                    throw new ArgumentException("Can't open " + filepath);
+                    throw new ArgumentException("Can't open " + FilePath);
             }
             else
-                throw new FileNotFoundException("Could not find dataset to open", filepath);
+                throw new FileNotFoundException("Could not find dataset to open", FilePath);
+        }
 
+        public void LoadNodataVal()
+        {
+            OpenDS();
+            int hasndval;
+            double nodatval;
+            Band rBand1 = ds.GetRasterBand(1);
+            rBand1.GetNoDataValue(out nodatval, out hasndval);
+            origNodataVal = nodatval;
         }
 
         public void CreateDS(Raster.RasterDriver driver, string filepath, ExtentRectangle theExtent, Projection proj, GdalDataType theType)
@@ -86,13 +103,6 @@ namespace GCDConsoleLib.Internal
             Band band = ds.GetRasterBand(1);
             if (HasNodata)
                 band.SetNoDataValue((double)origNodataVal);
-        }
-
-        public RasterInternals(double? nodataval, GdalDataType rType)
-        {
-            origNodataVal = nodataval;
-            internalType = typeof(T);
-            Datatype = rType;
         }
 
         public T NodataVal

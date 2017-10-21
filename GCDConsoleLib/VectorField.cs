@@ -13,7 +13,7 @@ namespace GCDConsoleLib
         public VectorField(ref FieldDefn fieldDef)
         {
             _fieldDef = fieldDef;
-            Type = new GDalFieldType(_fieldDef.GetType());
+            Type = new GDalFieldType(_fieldDef.GetFieldType());
         }
     }
 }

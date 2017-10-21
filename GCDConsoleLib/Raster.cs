@@ -16,6 +16,7 @@ namespace GCDConsoleLib
 
         public IRasterGuts RasterGuts;
         public RasterDriver driver;
+
         // We store the following in the guts since they are used there a lot
         public GdalDataType Datatype { get { return RasterGuts.Datatype; } }
         public double? origNodataVal { get { return RasterGuts.origNodataVal; } }
@@ -67,30 +68,61 @@ namespace GCDConsoleLib
         /// <param name="sfilepath"></param>
         public Raster(string sfilepath) : base(sfilepath)
         {
-            _load();
-        }
+            GdalDataType theDataType = peekType(sfilepath);
+            _InitGuts(theDataType);
 
-        /// <summary>
-        /// Load the Raster properties from a file
-        /// </summary>
-        private void _load()
-        {
+            // we need to explcitly ask it to load the nodatavalue from the file
+            RasterGuts.LoadNodataVal();
+
             Open();
             Band rBand1 = RasterGuts.ds.GetRasterBand(1);
             string proj = RasterGuts.ds.GetProjection();
 
-            int hasndval;
-            double nodatval;
-            rBand1.GetNoDataValue(out nodatval, out hasndval);
             string sDriver = RasterGuts.ds.GetDriver().ShortName;
             ExtentRectangle theExtent = new ExtentRectangle(RasterGuts.ds);
-            GdalDataType theDataType = new GdalDataType(rBand1.DataType);
 
-            _Init(_str2driver(sDriver), rBand1.GetUnitType(), proj, theDataType, origNodataVal, theExtent);
+            _Init(_str2driver(sDriver), rBand1.GetUnitType(), proj, theDataType, RasterGuts.origNodataVal, theExtent);
             // Remember to clean things up afterwards
             Dispose();
         }
 
+        /// <summary>
+        /// To get around the chicken & Egg problem we have a peek method to check what
+        /// kind of thing the dataset is
+        /// </summary>
+        /// <param name="sFilepath"></param>
+        /// <returns></returns>
+        public static GdalDataType peekType(string sFilepath)
+        {
+
+            GdalDataType returnVal;
+
+            // Load has to peek at what kind of thing the raster is
+            Access permission = Access.GA_ReadOnly;
+
+            // Make sure we have permission to do what we want to do
+            if (Utility.FileHelpers.IsFileLocked(sFilepath, permission))
+                throw new IOException(String.Format("File `{0}` was locked for `{}` operation", sFilepath, Enum.GetName(typeof(Access), permission)));
+            GdalConfiguration.ConfigureGdal();
+            if (File.Exists(sFilepath))
+            {
+                Dataset ds = Gdal.Open(sFilepath, permission);
+                if (ds == null)
+                    throw new ArgumentException("Can't open " + sFilepath);
+                Band rBand1 = ds.GetRasterBand(1);
+                returnVal = new GdalDataType(rBand1.DataType);
+                rBand1.Dispose();
+                ds.Dispose();
+            }
+            else
+                throw new FileNotFoundException("Could not find dataset to open", sFilepath);
+            
+            return returnVal;
+        }
+
+        /// <summary>
+        /// Compute the statistics of this raster
+        /// </summary>
         public void ComputeStatistics()
         {
             Open();
@@ -111,22 +143,30 @@ namespace GCDConsoleLib
         {
             Proj = new Projection(sProjection);
             if (sUnits != "")
-            {
                 VerticalUnits = Length.ParseUnit(sUnits);
-            }
+
             _Init(rdDriver, VerticalUnits, Proj, dType, dNodata, theExtent);
         }
         protected void _Init(RasterDriver rdDriver, LengthUnit lUnits, Projection proj,
             GdalDataType dType, double? dNodata, ExtentRectangle theExtent)
         {
+            _InitGuts(dType);
             Proj = proj;
             VerticalUnits = lUnits;
             driver = rdDriver;
+        }
+
+        /// <summary>
+        /// The guts are generically typed <T> so it's really tricky to instantiate them correctly
+        /// </summary>
+        /// <param name="dType"></param>
+        private void _InitGuts(GdalDataType dType)
+        {
             // This is regrettable but it's the only way to get 
-            if (Datatype.CSType == typeof(int)) { RasterGuts = new RasterInternals<int>(dNodata, new GdalDataType(dType)); }
-            else if (Datatype.CSType == typeof(double)) { RasterGuts = new RasterInternals<double>(dNodata, new GdalDataType(dType)); }
-            else if (Datatype.CSType == typeof(Single)) { RasterGuts = new RasterInternals<Single>(dNodata, new GdalDataType(dType)); }
-            else if (Datatype.CSType == typeof(byte)) { RasterGuts = new RasterInternals<byte>(dNodata, new GdalDataType(dType)); }
+            if (dType.CSType == typeof(int)) { RasterGuts = new RasterInternals<int>(FilePath, dType); }
+            else if (dType.CSType == typeof(double)) { RasterGuts = new RasterInternals<double>(FilePath, dType); }
+            else if (dType.CSType == typeof(Single)) { RasterGuts = new RasterInternals<Single>(FilePath, dType); }
+            else if (dType.CSType == typeof(byte)) { RasterGuts = new RasterInternals<byte>(FilePath, dType); }
         }
 
         /// <summary>
@@ -149,7 +189,18 @@ namespace GCDConsoleLib
         /// </summary>
         public override void Open(bool write = false)
         {
-            RasterGuts.OpenDS(FilePath, write);
+            // Check if we're already open
+            if (IsOpen) return;
+
+            Access permission = Access.GA_ReadOnly;
+            if (write) permission = Access.GA_Update;
+
+            // Make sure we have permission to do what we want to do
+            if (Utility.FileHelpers.IsFileLocked(FilePath, permission))
+                throw new IOException(String.Format("File `{0}` was locked for `{}` operation", FilePath, Enum.GetName(typeof(Access), permission)));
+
+            GdalConfiguration.ConfigureGdal();
+            RasterGuts.OpenDS(write);
         }
 
         /// <summary>
