@@ -1,5 +1,4 @@
-﻿Imports naru.math
-Imports System.Windows.Forms.DataVisualization.Charting
+﻿Imports System.Windows.Forms.DataVisualization
 
 Namespace Core.Visualization
 
@@ -11,14 +10,39 @@ Namespace Core.Visualization
             Vertical
         End Enum
 
-        Private m_chtControl As Chart
+        Private Enum SeriesType
+            Erosion
+            Depositon
+            Net
+        End Enum
+
+        Private m_chtControl As Charting.Chart
         'Private _ThresholdedHist As Dictionary(Of Double, Double)
         'Private _RawHist As Dictionary(Of Double, Double)
         Private m_eLinearUnits As UnitsNet.Units.LengthUnit
 
-        Public Sub New(ByRef chtControl As Chart, eLinearUnits As UnitsNet.Units.LengthUnit)
+        Public Sub New(ByRef chtControl As Charting.Chart, eLinearUnits As UnitsNet.Units.LengthUnit)
             m_chtControl = chtControl
             m_eLinearUnits = eLinearUnits
+
+            chtControl.ChartAreas.Clear()
+            chtControl.Series.Clear()
+
+            chtControl.ChartAreas.Add("ElevationChangeBars")
+            chtControl.Legends.Clear()
+
+            With chtControl.ChartAreas(0).AxisX
+                .MajorGrid.Enabled = False
+                .MajorTickMark.Enabled = False
+            End With
+
+            With chtControl.ChartAreas(0).AxisY
+                .MinorTickMark.Enabled = True
+                .MajorGrid.LineColor = Drawing.Color.LightSlateGray
+                .MinorGrid.Enabled = True
+                .MinorGrid.LineColor = Drawing.Color.LightGray
+            End With
+
         End Sub
 
         Public Sub Refresh(fErosion As Double, fDeposition As Double, eUnits As UnitsNet.Units.LengthUnit, eType As BarTypes, bAbsolute As Boolean)
@@ -33,146 +57,95 @@ Namespace Core.Visualization
 
         Private Sub Refresh(fErosion As Double, fDeposition As Double, fNet As Double, fErosionError As Double, fDepositionError As Double, fNetError As Double, eUnits As UnitsNet.Units.LengthUnit, bShowErrorBars As Boolean, bShowNet As Boolean, eType As BarTypes, bAbsolute As Boolean)
 
-            'If Not TypeOf _ZedGraph Is ZedGraph.ZedGraphControl Then
-            '    Exit Sub
-            'End If
+            m_chtControl.Series.Clear()
 
-            ''setup pane
-            'Dim Pane1 As ZedGraph.GraphPane = _ZedGraph.GraphPane
-            'Pane1.Title.IsVisible = False
-            'Pane1.Legend.IsVisible = False
-            'Pane1.Border.IsVisible = False
-            'Pane1.CurveList.Clear()
-            'Pane1.BarSettings.Type = ZedGraph.BarType.Overlay
-            'Pane1.BarSettings.MinClusterGap = 0.5
+            If bAbsolute Then
+                ' Bars should have their correct sign. Erosion should be negative
+                ' but the number stored in the project is always positive.
+                fErosion = -1 * fErosion
+            Else
+                fNet = Math.Abs(fNet)
+            End If
 
-            ''Set up gridlines to the plot
-            'Pane1.XAxis.MajorGrid.IsVisible = False
-            'Pane1.YAxis.MajorGrid.IsVisible = True
-            'Pane1.YAxis.MajorGrid.Color = System.Drawing.Color.Gray
-            'Pane1.XAxis.Title.IsVisible = False
+            Dim sYAxisLabel As String = String.Empty
+            Select Case eType
+                Case BarTypes.Area
+                    sYAxisLabel = String.Format("Area ({0}²)", UnitsNet.Length.GetAbbreviation(eUnits))
+                Case BarTypes.Volume
+                    sYAxisLabel = String.Format("Volume ({0}³)", UnitsNet.Length.GetAbbreviation(eUnits))
+                Case BarTypes.Vertical
+                    sYAxisLabel = String.Format("Elevation ({0})", UnitsNet.Length.GetAbbreviation(eUnits))
+            End Select
+            m_chtControl.ChartAreas(0).AxisY.Title = sYAxisLabel
 
-            ''Stop zedgraph from detecting magnitude
-            'Pane1.YAxis.Scale.MagAuto = False
+            Dim dSeries As New Dictionary(Of String, Drawing.Color) From {{"Erosion", Drawing.Color.Red}, {"Depsotion", Drawing.Color.Blue}}
+            If bShowNet Then
+                dSeries.Add("Net", Drawing.Color.Black)
+            End If
 
-            'Dim fDisplayErosion As Double = fErosion
-            'Dim fDisplayNet As Double = fNet
-            'If bAbsolute Then
-            '    ' Bars should have their correct sign. Erosion should be negative
-            '    ' but the number stored in the project is always positive.
-            '    fDisplayErosion = -1 * fDisplayErosion
-            'Else
-            '    fDisplayNet = Math.Abs(fNet)
-            'End If
+            Dim errSeries As Charting.Series = m_chtControl.Series.Add("erosion")
+            errSeries.Color = Drawing.Color.Red
+            errSeries.ChartArea = m_chtControl.ChartAreas.First.Name
+            errSeries.ChartType = Charting.SeriesChartType.StackedColumn
+            errSeries.Points.AddXY(GetXAxisLabel(eType, SeriesType.Erosion), fErosion)
+            errSeries.Points.AddXY(GetXAxisLabel(eType, SeriesType.Depositon), 0)
 
-            'If bShowErrorBars Then
-            '    Dim dErosionError As New ZedGraph.PointPairList
-            '    dErosionError.Add(1, fDisplayErosion + fErosionError, fDisplayErosion - fErosionError)
-            '    dErosionError.Add(2, fDeposition + fDepositionError, fDeposition - fDepositionError)
-            '    Debug.Write(fDeposition - fDepositionError)
+            Dim depSeries As Charting.Series = m_chtControl.Series.Add("deposition")
+            depSeries.Color = Drawing.Color.Blue
+            depSeries.ChartArea = m_chtControl.ChartAreas.First.Name
+            depSeries.ChartType = Charting.SeriesChartType.StackedColumn
+            depSeries.Points.AddXY(GetXAxisLabel(eType, SeriesType.Erosion), 0)
+            depSeries.Points.AddXY(GetXAxisLabel(eType, SeriesType.Depositon), fDeposition)
 
-            '    If bShowNet Then
-            '        dErosionError.Add(3, fDisplayNet + fNetError, fDisplayNet - fNetError)
-            '    End If
+            If bShowNet Then
+                Dim netSeries As Charting.Series = m_chtControl.Series.Add("net")
+                netSeries.Color = IIf(fNet >= 0, Drawing.Color.Blue, Drawing.Color.Red)
+                netSeries.ChartArea = m_chtControl.ChartAreas.First.Name
+                netSeries.Points.AddXY(GetXAxisLabel(eType, SeriesType.Erosion), 0)
+                netSeries.Points.AddXY(GetXAxisLabel(eType, SeriesType.Depositon), 0)
+                netSeries.Points.AddXY(GetXAxisLabel(eType, SeriesType.Net), fNet)
 
-            '    Dim barError As ZedGraph.ErrorBarItem = Pane1.AddErrorBar("error", dErosionError, System.Drawing.Color.Black)
-            '    barError.Bar.PenWidth = 2.0F
-            '    barError.Bar.Symbol.Size = 10
-            'End If
+                errSeries.Points.AddXY(GetXAxisLabel(eType, SeriesType.Net), 0)
+                depSeries.Points.AddXY(GetXAxisLabel(eType, SeriesType.Net), 0)
+            End If
 
-            ''Prepare thresholded data
-            'Dim fErosionData As New List(Of Double)
-            'Dim fErosionData2 As New ZedGraph.PointPairList
-            'fErosionData2.Add(0, fDisplayErosion)
-            'fErosionData2.Add(1, 0)
+            m_chtControl.ChartAreas(0).RecalculateAxesScale()
+            m_chtControl.AlignDataPointsByAxisLabel()
 
-
-            'fErosionData.Add(fDisplayErosion)
-            ''fErosionData.Add(0)
-            'If bShowNet Then
-            '    ' fErosionData.Add(0)
-            '    fErosionData2.Add(2, 0)
-            'End If
-
-            'Dim fDepositionData2 As New ZedGraph.PointPairList
-            'fDepositionData2.Add(0, 0)
-            'fDepositionData2.Add(1, fDeposition)
-
-            'If bShowNet Then
-            '    fDepositionData2.Add(2, 0)
-            'End If
-
-            '' Create  erosion bars (red)
-            'Dim barErosion As ZedGraph.BarItem
-            'barErosion = Pane1.AddBar("Erosion", {0}, fErosionData.ToArray, GCD.GCDProject.ProjectManager.ColourErosion)
-            'barErosion.Bar.Fill.Type = ZedGraph.FillType.Solid
-            'barErosion.Bar.Border.IsVisible = False
-
-            '' Create deposition bars (blue)
-            'Dim barDeposition As ZedGraph.BarItem
-            'barDeposition = Pane1.AddBar("Deposition", fDepositionData2, GCD.GCDProject.ProjectManager.ColourDeposition)
-            'barDeposition.Bar.Fill.Type = ZedGraph.FillType.Solid
-            'barDeposition.Bar.Border.IsVisible = False
-
-            'If bShowNet Then
-            '    'Create net bars (blue when depositional and red when erosional)
-            '    Dim fNetData2 As New ZedGraph.PointPairList
-            '    fNetData2.Add(0, 0)
-            '    fNetData2.Add(1, 0)
-            '    fNetData2.Add(2, fDisplayNet)
-
-            '    Dim cNetcolour As Drawing.Color = Drawing.Color.DarkGreen
-            '    If fDeposition > fErosion Then
-            '        cNetcolour = GCD.GCDProject.ProjectManager.ColourDeposition
-            '    Else
-            '        cNetcolour = GCD.GCDProject.ProjectManager.ColourErosion
-            '    End If
-
-            '    Dim barNet As ZedGraph.BarItem = Pane1.AddBar("Net", fNetData2, cNetcolour)
-            '    barNet.Bar.Fill = New ZedGraph.Fill(cNetcolour)
-            '    barNet.Bar.Border.IsVisible = False
-            'End If
-
-
-            'Dim sLabels As String() = {}
-            'If bShowNet Then
-            '    Select Case eType
-            '        Case BarTypes.Area
-            '            Throw New Exception("Should not be possible")
-            '        Case BarTypes.Volume
-            '            sLabels = {"Total" & vbNewLine & "Volume of" & vbNewLine & "Erosion", "Total" & vbNewLine & "Volume of" & vbNewLine & "Deposition", "Total" & vbNewLine & "Net Volume" & vbNewLine & "Difference"}
-            '            Pane1.YAxis.Title.Text = "Volume " & NumberFormatting.GetUnitsAsString(eUnits, True, 3)
-            '            Pane1.YAxis.Scale.Format = "#,#"
-
-            '        Case BarTypes.Vertical
-            '            'sLabels = {"Average", "Next", "Next"}
-            '            sLabels = {"Average" & vbNewLine & "Depth Of" & vbNewLine & "Erosion", "Average" & vbNewLine & "Depth Of" & vbNewLine & "Deposition", "Avg. Total" & vbNewLine & "Thickness" & vbNewLine & "Difference"}
-            '            Pane1.YAxis.Title.Text = "Elevation " & NumberFormatting.GetUnitsAsString(eUnits, True, 1)
-            '            Pane1.YAxis.Scale.Format = "#,##0.00"
-
-            '    End Select
-            'Else
-            '    Select Case eType
-            '        Case BarTypes.Area
-            '            sLabels = {"Total" & vbNewLine & "Area of" & vbNewLine & "Erosion", "Total" & vbNewLine & "Area of" & vbNewLine & "Deposition"}
-            '            Pane1.YAxis.Title.Text = "Area " & NumberFormatting.GetUnitsAsString(eUnits, True, 2)
-            '            Pane1.YAxis.Scale.Format = "#,#"
-
-            '        Case Else
-            '            Throw New Exception("Should not be possible")
-            '    End Select
-
-            'End If
-            'Pane1.XAxis.Type = ZedGraph.AxisType.Text
-            'Pane1.XAxis.Scale.TextLabels = sLabels
-            'Pane1.XAxis.MajorTic.IsBetweenLabels = True
-
-            '_ZedGraph.AxisChange()
-            '_ZedGraph.Refresh()
         End Sub
 
+        Private Function GetXAxisLabel(eBarType As BarTypes, eSeriesType As SeriesType)
+
+            Dim sBarType As String = String.Empty
+            Select Case eBarType
+                Case BarTypes.Area
+                    sBarType = "Total\nArea"
+                Case BarTypes.Volume
+                    sBarType = "Total\nVolume"
+                Case BarTypes.Vertical
+                    sBarType = "Average\nDepth"
+            End Select
+
+            Dim sSeriesType As String = String.Empty
+            Select Case eSeriesType
+                Case SeriesType.Erosion
+                    sSeriesType = "Erosion"
+                Case SeriesType.Depositon
+                    sSeriesType = "Deposition"
+                Case SeriesType.Net
+                    If eBarType = BarTypes.Volume Then
+                        Return String.Format("Total{0}Net Volume{0}Difference", Environment.NewLine)
+                    ElseIf eBarType = BarTypes.Vertical Then
+                        Return String.Format("Avg. Total{0}Thickness{0}Difference", Environment.NewLine)
+                    End If
+            End Select
+
+            Return String.Format("{1} of{0}{2}", Environment.NewLine, sBarType, sSeriesType)
+
+        End Function
+
         Public Sub Save(sFilePath As String, nChartWidth As Integer, nChartHeight As Integer, nDPI As Integer)
-            m_chtControl.SaveImage(sFilePath, ChartImageFormat.Png)
+            m_chtControl.SaveImage(sFilePath, Charting.ChartImageFormat.Png)
         End Sub
 
     End Class
