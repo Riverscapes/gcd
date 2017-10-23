@@ -61,11 +61,11 @@ Namespace UI.ChangeDetection
             cmdRefresh.Visible = True
 #End If
 
-            ' Needed for Visual Studio Designer to work when the object is not created yet.
-            If TypeOf m_DoDResultSet Is DoDResultSet Then
-                m_Options = New DoDSummaryDisplayOptions(m_DoDResultSet.DoDProperties.Units)
-                RefreshGridView()
-            End If
+            '' Needed for Visual Studio Designer to work when the object is not created yet.
+            'If TypeOf m_DoDResultSet Is DoDResultSet Then
+            '    m_Options = New DoDSummaryDisplayOptions(m_DoDResultSet.DoDProperties.Units)
+            '    RefreshGridView()
+            'End If
         End Sub
 
         Private Sub RefreshGridView()

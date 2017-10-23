@@ -26,26 +26,25 @@
             Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmDoDResults))
             Me.cmdOK = New System.Windows.Forms.Button()
             Me.cmdHelp = New System.Windows.Forms.Button()
-            Me.tabProperties = New System.Windows.Forms.TabControl()
-            Me.TabPage1 = New System.Windows.Forms.TabPage()
-            Me.ucSummary = New ucDoDSummary()
-            Me.tbpElevationChangeDistribution = New System.Windows.Forms.TabPage()
-            Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
-            Me.ucHistogram = New UI.ChangeDetection.ucDoDHistogram
-            Me.ucBars = New UI.ChangeDetection.ucChangeBars()
-            Me.TabPage3 = New System.Windows.Forms.TabPage()
-            Me.ucProperties = New UI.ChangeDetection.ucDoDProperties()
-            Me.TabPage4 = New System.Windows.Forms.TabPage()
             Me.txtDoDName = New System.Windows.Forms.TextBox()
             Me.Label6 = New System.Windows.Forms.Label()
             Me.cmdAddToMap = New System.Windows.Forms.Button()
             Me.cmdBrowse = New System.Windows.Forms.Button()
             Me.cmdHistogram = New System.Windows.Forms.Button()
-            Me.tabProperties.SuspendLayout()
-            Me.TabPage1.SuspendLayout()
+            Me.TabPage3 = New System.Windows.Forms.TabPage()
+            Me.ucProperties = New GCDLib.UI.ChangeDetection.ucDoDProperties()
+            Me.tbpElevationChangeDistribution = New System.Windows.Forms.TabPage()
+            Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
+            Me.ucBars = New GCDLib.UI.ChangeDetection.ucChangeBars()
+            Me.ucHistogram = New GCDLib.UI.ChangeDetection.ucDoDHistogram()
+            Me.TabPage1 = New System.Windows.Forms.TabPage()
+            Me.ucSummary = New GCDLib.UI.ChangeDetection.ucDoDSummary()
+            Me.tabProperties = New System.Windows.Forms.TabControl()
+            Me.TabPage3.SuspendLayout()
             Me.tbpElevationChangeDistribution.SuspendLayout()
             Me.TableLayoutPanel1.SuspendLayout()
-            Me.TabPage3.SuspendLayout()
+            Me.TabPage1.SuspendLayout()
+            Me.tabProperties.SuspendLayout()
             Me.SuspendLayout()
             '
             'cmdOK
@@ -69,40 +68,73 @@
             Me.cmdHelp.Text = "Help"
             Me.cmdHelp.UseVisualStyleBackColor = True
             '
-            'tabProperties
+            'txtDoDName
             '
-            Me.tabProperties.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
+            Me.txtDoDName.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-            Me.tabProperties.Controls.Add(Me.TabPage1)
-            Me.tabProperties.Controls.Add(Me.tbpElevationChangeDistribution)
-            Me.tabProperties.Controls.Add(Me.TabPage3)
-            Me.tabProperties.Controls.Add(Me.TabPage4)
-            Me.tabProperties.Location = New System.Drawing.Point(7, 48)
-            Me.tabProperties.Name = "tabProperties"
-            Me.tabProperties.SelectedIndex = 0
-            Me.tabProperties.Size = New System.Drawing.Size(681, 437)
-            Me.tabProperties.TabIndex = 0
+            Me.txtDoDName.Location = New System.Drawing.Point(75, 12)
+            Me.txtDoDName.Name = "txtDoDName"
+            Me.txtDoDName.ReadOnly = True
+            Me.txtDoDName.Size = New System.Drawing.Size(526, 20)
+            Me.txtDoDName.TabIndex = 3
             '
-            'TabPage1
+            'Label6
             '
-            Me.TabPage1.Controls.Add(Me.ucSummary)
-            Me.TabPage1.Location = New System.Drawing.Point(4, 22)
-            Me.TabPage1.Name = "TabPage1"
-            Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-            Me.TabPage1.Size = New System.Drawing.Size(673, 411)
-            Me.TabPage1.TabIndex = 0
-            Me.TabPage1.Text = "Tabular Results"
-            Me.TabPage1.UseVisualStyleBackColor = True
+            Me.Label6.AutoSize = True
+            Me.Label6.Location = New System.Drawing.Point(14, 16)
+            Me.Label6.Name = "Label6"
+            Me.Label6.Size = New System.Drawing.Size(38, 13)
+            Me.Label6.TabIndex = 2
+            Me.Label6.Text = "Name:"
             '
-            'ucSummary
+            'cmdAddToMap
             '
-            Me.ucSummary.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.ucSummary.DoDResultSet = Nothing
-            Me.ucSummary.Location = New System.Drawing.Point(3, 3)
-            Me.ucSummary.Name = "ucSummary"
-            Me.ucSummary.Size = New System.Drawing.Size(667, 405)
-            Me.ucSummary.TabIndex = 0
+            Me.cmdAddToMap.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Me.cmdAddToMap.Image = Global.GCDLib.My.Resources.Resources.AddToMap
+            Me.cmdAddToMap.Location = New System.Drawing.Point(609, 11)
+            Me.cmdAddToMap.Name = "cmdAddToMap"
+            Me.cmdAddToMap.Size = New System.Drawing.Size(23, 23)
+            Me.cmdAddToMap.TabIndex = 5
+            Me.cmdAddToMap.UseVisualStyleBackColor = True
+            '
+            'cmdBrowse
+            '
+            Me.cmdBrowse.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Me.cmdBrowse.Image = Global.GCDLib.My.Resources.Resources.BrowseFolder
+            Me.cmdBrowse.Location = New System.Drawing.Point(638, 11)
+            Me.cmdBrowse.Name = "cmdBrowse"
+            Me.cmdBrowse.Size = New System.Drawing.Size(23, 23)
+            Me.cmdBrowse.TabIndex = 6
+            Me.cmdBrowse.UseVisualStyleBackColor = True
+            '
+            'cmdHistogram
+            '
+            Me.cmdHistogram.Location = New System.Drawing.Point(665, 11)
+            Me.cmdHistogram.Name = "cmdHistogram"
+            Me.cmdHistogram.Size = New System.Drawing.Size(23, 23)
+            Me.cmdHistogram.TabIndex = 7
+            Me.cmdHistogram.UseVisualStyleBackColor = True
+            Me.cmdHistogram.Visible = False
+            '
+            'TabPage3
+            '
+            Me.TabPage3.Controls.Add(Me.ucProperties)
+            Me.TabPage3.Location = New System.Drawing.Point(4, 22)
+            Me.TabPage3.Name = "TabPage3"
+            Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
+            Me.TabPage3.Size = New System.Drawing.Size(673, 411)
+            Me.TabPage3.TabIndex = 2
+            Me.TabPage3.Text = "Analysis Inputs"
+            Me.TabPage3.UseVisualStyleBackColor = True
+            '
+            'ucProperties
+            '
+            Me.ucProperties.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.ucProperties.DoDRow = Nothing
+            Me.ucProperties.Location = New System.Drawing.Point(3, 3)
+            Me.ucProperties.Name = "ucProperties"
+            Me.ucProperties.Size = New System.Drawing.Size(667, 405)
+            Me.ucProperties.TabIndex = 0
             '
             'tbpElevationChangeDistribution
             '
@@ -130,6 +162,14 @@
             Me.TableLayoutPanel1.Size = New System.Drawing.Size(667, 405)
             Me.TableLayoutPanel1.TabIndex = 1
             '
+            'ucBars
+            '
+            Me.ucBars.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.ucBars.Location = New System.Drawing.Point(499, 3)
+            Me.ucBars.Name = "ucBars"
+            Me.ucBars.Size = New System.Drawing.Size(165, 399)
+            Me.ucBars.TabIndex = 1
+            '
             'ucHistogram
             '
             Me.ucHistogram.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
@@ -141,91 +181,41 @@
             Me.ucHistogram.TabIndex = 0
             Me.ucHistogram.UserSelectedUnits = Nothing
             '
-            'ucBars
+            'TabPage1
             '
-            Me.ucBars.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.ucBars.Location = New System.Drawing.Point(499, 3)
-            Me.ucBars.Name = "ucBars"
-            Me.ucBars.Size = New System.Drawing.Size(165, 399)
-            Me.ucBars.TabIndex = 1
+            Me.TabPage1.Controls.Add(Me.ucSummary)
+            Me.TabPage1.Location = New System.Drawing.Point(4, 22)
+            Me.TabPage1.Name = "TabPage1"
+            Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
+            Me.TabPage1.Size = New System.Drawing.Size(673, 411)
+            Me.TabPage1.TabIndex = 0
+            Me.TabPage1.Text = "Tabular Results"
+            Me.TabPage1.UseVisualStyleBackColor = True
             '
-            'TabPage3
+            'ucSummary
             '
-            Me.TabPage3.Controls.Add(Me.ucProperties)
-            Me.TabPage3.Location = New System.Drawing.Point(4, 22)
-            Me.TabPage3.Name = "TabPage3"
-            Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
-            Me.TabPage3.Size = New System.Drawing.Size(673, 411)
-            Me.TabPage3.TabIndex = 2
-            Me.TabPage3.Text = "Analysis Inputs"
-            Me.TabPage3.UseVisualStyleBackColor = True
+            Me.ucSummary.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.ucSummary.DoDResultSet = Nothing
+            Me.ucSummary.Location = New System.Drawing.Point(3, 3)
+            Me.ucSummary.Name = "ucSummary"
+            Me.ucSummary.Size = New System.Drawing.Size(667, 405)
+            Me.ucSummary.TabIndex = 0
             '
-            'ucProperties
+            'tabProperties
             '
-            Me.ucProperties.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.ucProperties.DoDRow = Nothing
-            Me.ucProperties.Location = New System.Drawing.Point(3, 3)
-            Me.ucProperties.Name = "ucProperties"
-            Me.ucProperties.Size = New System.Drawing.Size(667, 405)
-            Me.ucProperties.TabIndex = 0
-            '
-            'TabPage4
-            '
-            Me.TabPage4.Location = New System.Drawing.Point(4, 22)
-            Me.TabPage4.Name = "TabPage4"
-            Me.TabPage4.Padding = New System.Windows.Forms.Padding(3)
-            Me.TabPage4.Size = New System.Drawing.Size(673, 411)
-            Me.TabPage4.TabIndex = 3
-            Me.TabPage4.Text = "Report"
-            Me.TabPage4.UseVisualStyleBackColor = True
-            '
-            'txtDoDName
-            '
-            Me.txtDoDName.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Me.tabProperties.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-            Me.txtDoDName.Location = New System.Drawing.Point(75, 12)
-            Me.txtDoDName.Name = "txtDoDName"
-            Me.txtDoDName.ReadOnly = True
-            Me.txtDoDName.Size = New System.Drawing.Size(526, 20)
-            Me.txtDoDName.TabIndex = 3
+            Me.tabProperties.Controls.Add(Me.TabPage1)
+            Me.tabProperties.Controls.Add(Me.tbpElevationChangeDistribution)
+            Me.tabProperties.Controls.Add(Me.TabPage3)
+            Me.tabProperties.Location = New System.Drawing.Point(7, 48)
+            Me.tabProperties.Name = "tabProperties"
+            Me.tabProperties.SelectedIndex = 0
+            Me.tabProperties.Size = New System.Drawing.Size(681, 437)
+            Me.tabProperties.TabIndex = 0
             '
-            'Label6
-            '
-            Me.Label6.AutoSize = True
-            Me.Label6.Location = New System.Drawing.Point(14, 16)
-            Me.Label6.Name = "Label6"
-            Me.Label6.Size = New System.Drawing.Size(38, 13)
-            Me.Label6.TabIndex = 2
-            Me.Label6.Text = "Name:"
-            '
-            'cmdAddToMap
-            '
-            Me.cmdAddToMap.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-            Me.cmdAddToMap.Location = New System.Drawing.Point(609, 11)
-            Me.cmdAddToMap.Name = "cmdAddToMap"
-            Me.cmdAddToMap.Size = New System.Drawing.Size(23, 23)
-            Me.cmdAddToMap.TabIndex = 5
-            Me.cmdAddToMap.UseVisualStyleBackColor = True
-            '
-            'cmdBrowse
-            '
-            Me.cmdBrowse.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-            Me.cmdBrowse.Location = New System.Drawing.Point(638, 11)
-            Me.cmdBrowse.Name = "cmdBrowse"
-            Me.cmdBrowse.Size = New System.Drawing.Size(23, 23)
-            Me.cmdBrowse.TabIndex = 6
-            Me.cmdBrowse.UseVisualStyleBackColor = True
-            '
-            'cmdHistogram
-            '
-            Me.cmdHistogram.Location = New System.Drawing.Point(665, 11)
-            Me.cmdHistogram.Name = "cmdHistogram"
-            Me.cmdHistogram.Size = New System.Drawing.Size(23, 23)
-            Me.cmdHistogram.TabIndex = 7
-            Me.cmdHistogram.UseVisualStyleBackColor = True
-            Me.cmdHistogram.Visible = False
-            '
-            'DoDResultsForm
+            'frmDoDResults
             '
             Me.AcceptButton = Me.cmdOK
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -242,33 +232,32 @@
             Me.Controls.Add(Me.cmdOK)
             Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
             Me.MinimumSize = New System.Drawing.Size(300, 200)
-            Me.Name = "DoDResultsForm"
+            Me.Name = "frmDoDResults"
             Me.Text = "Change Detection Results"
-            Me.tabProperties.ResumeLayout(False)
-            Me.TabPage1.ResumeLayout(False)
+            Me.TabPage3.ResumeLayout(False)
             Me.tbpElevationChangeDistribution.ResumeLayout(False)
             Me.TableLayoutPanel1.ResumeLayout(False)
-            Me.TabPage3.ResumeLayout(False)
+            Me.TabPage1.ResumeLayout(False)
+            Me.tabProperties.ResumeLayout(False)
             Me.ResumeLayout(False)
             Me.PerformLayout()
 
         End Sub
         Friend WithEvents cmdOK As System.Windows.Forms.Button
         Friend WithEvents cmdHelp As System.Windows.Forms.Button
-        Friend WithEvents tabProperties As System.Windows.Forms.TabControl
-        Friend WithEvents TabPage1 As System.Windows.Forms.TabPage
-        Friend WithEvents tbpElevationChangeDistribution As System.Windows.Forms.TabPage
-        Friend WithEvents TabPage3 As System.Windows.Forms.TabPage
         Friend WithEvents txtDoDName As System.Windows.Forms.TextBox
         Friend WithEvents Label6 As System.Windows.Forms.Label
         Friend WithEvents cmdAddToMap As System.Windows.Forms.Button
         Friend WithEvents cmdBrowse As System.Windows.Forms.Button
-        Friend WithEvents TabPage4 As System.Windows.Forms.TabPage
-        Friend WithEvents ucSummary As ucDoDSummary
-        Friend WithEvents ucHistogram As UI.ChangeDetection.ucDoDHistogram
-        Friend WithEvents ucProperties As UI.ChangeDetection.ucDoDProperties
-        Friend WithEvents TableLayoutPanel1 As System.Windows.Forms.TableLayoutPanel
-        Friend WithEvents ucBars As UI.ChangeDetection.ucChangeBars
         Friend WithEvents cmdHistogram As System.Windows.Forms.Button
+        Friend WithEvents TabPage3 As System.Windows.Forms.TabPage
+        Friend WithEvents ucProperties As ucDoDProperties
+        Friend WithEvents tbpElevationChangeDistribution As System.Windows.Forms.TabPage
+        Friend WithEvents TableLayoutPanel1 As System.Windows.Forms.TableLayoutPanel
+        Friend WithEvents ucHistogram As ucDoDHistogram
+        Friend WithEvents ucBars As ucChangeBars
+        Friend WithEvents TabPage1 As System.Windows.Forms.TabPage
+        Friend WithEvents ucSummary As ucDoDSummary
+        Friend WithEvents tabProperties As System.Windows.Forms.TabControl
     End Class
 End Namespace

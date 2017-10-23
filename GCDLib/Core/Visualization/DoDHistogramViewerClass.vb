@@ -81,6 +81,11 @@ Namespace Core.Visualization
                 series.ChartType = Charting.SeriesChartType.Column
                 series.Color = aDef.Value
                 series.ChartArea = m_Chart.ChartAreas.First().Name
+
+                If series.Name = RAW Then
+                    series.YAxisType = Charting.AxisType.Secondary
+                End If
+
             Next
 
         End Sub

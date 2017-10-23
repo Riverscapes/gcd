@@ -1,9 +1,6 @@
 ﻿Namespace UI.ChangeDetection
     Public Class frmDoDResults
 
-        'Private m_pArcMap As ESRI.ArcGIS.Framework.IApplication
-        'Private m_rDoD As ProjectDS.DoDsRow
-
         Private m_rDoD As ProjectDS.DoDsRow
 
         Public Sub New(ByRef dodResult As Core.ChangeDetection.DoDResultSet, rDoD As ProjectDS.DoDsRow)
@@ -11,7 +8,6 @@
             InitializeComponent()
 
             m_rDoD = rDoD
-            'm_pArcMap = pArcMap
             ucHistogram.DoDResultSet = dodResult
             'm_rDoD = rDoD
             ucSummary.DoDResultSet = dodResult
@@ -23,8 +19,7 @@
             txtDoDName.Text = m_rDoD.Name
             ucBars.Initialize(ucHistogram.DoDResultSet.ChangeStats, ucSummary.Options.LinearUnits)
 
-            'Hide Report tab for now
-            tabProperties.TabPages.Remove(TabPage4)
+
 
         End Sub
 
