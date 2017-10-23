@@ -262,7 +262,7 @@ namespace GCDConsoleLib.Utility
         }
 
 
-        public VolumeUnit AreaUnit2VolumeUnit(AreaUnit aUnit)
+        public static VolumeUnit AreaUnit2VolumeUnit(AreaUnit aUnit)
         {
             VolumeUnit retVal;
             switch (aUnit)
@@ -300,7 +300,7 @@ namespace GCDConsoleLib.Utility
             return retVal;
         }
 
-        public AreaUnit VolumeUnit2AreaUnit(VolumeUnit vUnit)
+        public static AreaUnit VolumeUnit2AreaUnit(VolumeUnit vUnit)
         {
             AreaUnit retVal;
             switch (vUnit)
@@ -338,7 +338,7 @@ namespace GCDConsoleLib.Utility
             return retVal;
         }
 
-        public LengthUnit AreaUnit2LengthUnit(AreaUnit lUnit)
+        public static LengthUnit AreaUnit2LengthUnit(AreaUnit lUnit)
         {
             LengthUnit retVal;
             switch (lUnit)
@@ -376,7 +376,7 @@ namespace GCDConsoleLib.Utility
             return retVal;
         }
 
-        public AreaUnit LengthUnit2AreaUnit(LengthUnit aUnit)
+        public static AreaUnit LengthUnit2AreaUnit(LengthUnit aUnit)
         {
             AreaUnit retVal;
             switch (aUnit)
@@ -414,7 +414,7 @@ namespace GCDConsoleLib.Utility
             return retVal;
         }
 
-        public VolumeUnit LengthUnit2VolumeUnit(LengthUnit lUnit)
+        public static VolumeUnit LengthUnit2VolumeUnit(LengthUnit lUnit)
         {
             VolumeUnit retVal;
             switch (lUnit)
@@ -452,7 +452,7 @@ namespace GCDConsoleLib.Utility
             return retVal;
         }
 
-        public LengthUnit LengthUnit2VolumeUnit(VolumeUnit vUnit)
+        public static LengthUnit LengthUnit2VolumeUnit(VolumeUnit vUnit)
         {
             LengthUnit retVal;
             switch (vUnit)
