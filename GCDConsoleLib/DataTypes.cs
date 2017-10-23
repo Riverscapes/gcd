@@ -24,7 +24,7 @@ namespace GCDConsoleLib
         public GdalDataType(DataType origType) { _origType = origType; }
         public GdalDataType(GdalDataType origType) { _origType = origType._origType; }
         public GdalDataType(ref Raster rRaster) { _origType = rRaster.Datatype._origType; }
-        public GdalDataType(Type csType) { _origType = Conversion.TypeToDatatype(csType); }
+        public GdalDataType(Type csType) { _origType = Conversion.CSharpTypeToDataType(csType); }
 
         // Equivalence Operators
         public bool Equals(GdalDataType otherType) { return _origType == otherType._origType; }

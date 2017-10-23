@@ -17,7 +17,7 @@ namespace GCDConsoleLib.Internal
         GdalDataType Datatype { get; }
         void CreateDS(Raster.RasterDriver driver, string filepath, ExtentRectangle theExtent, Projection proj, GdalDataType theType);
 
-        void LoadNodataVal();
+        void LoadGuts();
         bool IsOpen { get; }
         void OpenDS(bool write = false);
         void Dispose();
@@ -34,7 +34,6 @@ namespace GCDConsoleLib.Internal
 
     public class RasterInternals<T> : IRasterGuts, IDisposable
     {
-        Type internalType;
         public Dataset ds { get; private set; }
         public GdalDataType Datatype { get; private set; }
         private string FilePath;
@@ -43,11 +42,15 @@ namespace GCDConsoleLib.Internal
         public bool HasNodata { get { return origNodataVal == null; } }
         public bool IsOpen { get { return ds != null; } }
 
-        public RasterInternals(string sFilepath, GdalDataType rType)
+        public RasterInternals(string sFilepath)
         {
             FilePath = sFilepath;
-            internalType = typeof(T);
-            Datatype = rType;
+        }
+
+        public RasterInternals(string sFilepath, double? Nodata)
+        {
+            FilePath = sFilepath;
+            origNodataVal = Nodata;
         }
 
         public void OpenDS(bool write = false)
@@ -73,12 +76,13 @@ namespace GCDConsoleLib.Internal
                 throw new FileNotFoundException("Could not find dataset to open", FilePath);
         }
 
-        public void LoadNodataVal()
+        public void LoadGuts()
         {
             OpenDS();
             int hasndval;
             double nodatval;
             Band rBand1 = ds.GetRasterBand(1);
+            Datatype = new GdalDataType(rBand1.DataType);
             rBand1.GetNoDataValue(out nodatval, out hasndval);
             origNodataVal = nodatval;
         }
@@ -121,25 +125,31 @@ namespace GCDConsoleLib.Internal
 
         public void Read(int xOff, int yOff, int xSize, int ySize, ref T[] buffer)
         {
-            if (internalType == typeof(double))
+            if (typeof(T) != Datatype.CSType)
+                throw new Exception("Internal Type does not match raster type. Read not possible");
+
+            if (Datatype.CSType == typeof(double))
                 ds.GetRasterBand(1).ReadRaster(xOff, yOff, xSize, ySize, buffer as double[], xSize, ySize, 0, 0);
-            else if (internalType == typeof(Single))
+            else if (Datatype.CSType == typeof(Single))
                 ds.GetRasterBand(1).ReadRaster(xOff, yOff, xSize, ySize, buffer as Single[], xSize, ySize, 0, 0);
-            else if (internalType == typeof(int))
+            else if (Datatype.CSType == typeof(int))
                 ds.GetRasterBand(1).ReadRaster(xOff, yOff, xSize, ySize, buffer as int[], xSize, ySize, 0, 0);
-            else if (internalType == typeof(byte))
+            else if (Datatype.CSType == typeof(byte))
                 ds.GetRasterBand(1).ReadRaster(xOff, yOff, xSize, ySize, buffer as byte[], xSize, ySize, 0, 0);
         }
 
         public void Write(int xOff, int yOff, int xSize, int ySize, ref T[] buffer)
         {
-            if (internalType == typeof(double))
+            if (typeof(T) != Datatype.CSType)
+                throw new Exception("Internal Type does not match raster type. Write not possible");
+
+            if (Datatype.CSType == typeof(double))
                 ds.GetRasterBand(1).WriteRaster(xOff, yOff, xSize, ySize, buffer as double[], xSize, ySize, 0, 0);
-            else if (internalType == typeof(Single))
+            else if (Datatype.CSType == typeof(Single))
                 ds.GetRasterBand(1).WriteRaster(xOff, yOff, xSize, ySize, buffer as Single[], xSize, ySize, 0, 0);
-            else if (internalType == typeof(int))
+            else if (Datatype.CSType == typeof(int))
                 ds.GetRasterBand(1).WriteRaster(xOff, yOff, xSize, ySize, buffer as int[], xSize, ySize, 0, 0);
-            else if (internalType == typeof(byte))
+            else if (Datatype.CSType == typeof(byte))
                 ds.GetRasterBand(1).WriteRaster(xOff, yOff, xSize, ySize, buffer as byte[], xSize, ySize, 0, 0);
         }
 
@@ -150,15 +160,18 @@ namespace GCDConsoleLib.Internal
         /// <returns></returns>
         private T minValue()
         {
+            if (typeof(T) != Datatype.CSType)
+                throw new Exception("Internal Type does not match raster type. Minimum type is not possible.");
+
             T val;
-            if (internalType == typeof(int))
+            if (Datatype.CSType == typeof(int))
                 val = (T)TypeDescriptor.GetConverter(typeof(T)).ConvertFrom(int.MinValue);
-            else if (internalType == typeof(double))
+            else if (Datatype.CSType == typeof(double))
                 // NOTE: SINGLE VALUE HERE IS NOT A TYPO. ------------------v
                 val = (T)TypeDescriptor.GetConverter(typeof(T)).ConvertFrom(Single.MinValue);
-            else if (internalType == typeof(Single))
+            else if (Datatype.CSType == typeof(Single))
                 val = (T)TypeDescriptor.GetConverter(typeof(T)).ConvertFrom(Single.MinValue);
-            else if (internalType == typeof(byte))
+            else if (Datatype.CSType == typeof(byte))
                 val = (T)TypeDescriptor.GetConverter(typeof(T)).ConvertFrom(byte.MinValue);
             else
                 throw new NotSupportedException("Type conversion problem");

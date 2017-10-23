@@ -15,14 +15,14 @@ namespace GCDConsoleLib.Tests
         [TestMethod()]
         public void RasterInitTest()
         {
-            Raster rTemplaetRaster = new Raster(TestHelpers.GetTestRasterPath("AngledSlopey950-980E.tif"));
-            Assert.IsFalse(rTemplaetRaster.IsOpen);
-            Assert.IsTrue(rTemplaetRaster.Datatype.Equals(FakeRaster<Single>.floatType));
-            Assert.IsNull(rTemplaetRaster.RasterGuts.ds);
+            Raster rTemplateRaster = new Raster(TestHelpers.GetTestRasterPath("AngledSlopey950-980E.tif"));
+            Assert.IsFalse(rTemplateRaster.IsOpen);
+            Assert.IsTrue(rTemplateRaster.Datatype.Equals(FakeRaster<Single>.floatType));
+            Assert.IsNull(rTemplateRaster.RasterGuts.ds);
         }
 
         [TestMethod()]
-        public void RasterCopyTest()
+        public void BasicRasterDSCopyTest()
         {
             using (Utility.ITempDir tmp = Utility.TempDir.Create())
             {

@@ -96,7 +96,7 @@ namespace GCDConsoleLib.Utility
             }
             return theType;
         }
-        public static DataType TypeToDatatype(Type theType)
+        public static DataType CSharpTypeToDataType(Type theType)
         {
             DataType dType = OSGeo.GDAL.DataType.GDT_Float32;
             if (theType == typeof(Byte))
