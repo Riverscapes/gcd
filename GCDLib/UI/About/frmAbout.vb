@@ -6,8 +6,13 @@
 
             Panel2.Controls.Add(New ucAcknowledgements)
 
+            Dim sProduct As String = "Standalone"
+            If Reflection.Assembly.GetEntryAssembly().FullName.ToLower().Contains("arcmap") Then
+                sProduct = "Addin"
+            End If
+
             Dim ass As System.Reflection.Assembly = System.Reflection.Assembly.GetExecutingAssembly
-            lblVersion.Text = ass.GetName.Version.ToString
+            lblVersion.Text = String.Format("{0} {1}", sProduct, ass.GetName.Version)
 
             Try
                 'lblRMVersion.Text = RasterManager.GetFileVersion().FileVersion.ToString()
