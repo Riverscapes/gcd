@@ -867,7 +867,7 @@ Namespace UI.Project
                     If eType = GCDNodeTypes.DEMSurvey Then
                         Dim nID As Integer = GetNodeID(selNode)
                         If nID >= 0 Then
-                            Dim frm As New frmAssocSurfaceProperties(nID)
+                            Dim frm As New frmDEMSurveyProperties(nID)
                             If frm.ShowDialog() = DialogResult.OK Then
                                 LoadTree(selNode.Tag)
                             End If

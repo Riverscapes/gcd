@@ -341,6 +341,30 @@ Namespace My
                 Me("TempWorkspace") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("192, 0, 0")>  _
+        Public Property Erosion() As Global.System.Drawing.Color
+            Get
+                Return CType(Me("Erosion"),Global.System.Drawing.Color)
+            End Get
+            Set
+                Me("Erosion") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("27, 63, 139")>  _
+        Public Property Depsoition() As Global.System.Drawing.Color
+            Get
+                Return CType(Me("Depsoition"),Global.System.Drawing.Color)
+            End Get
+            Set
+                Me("Depsoition") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

@@ -170,8 +170,9 @@
                     ' Make copies of the original rasters that are concurrent
                     Dim theUnionExtent As GCDConsoleLib.ExtentRectangle = m_gOriginalNewDEM.Extent.Union(m_gOriginalOldDEM.Extent)
 
-                    m_gAnalysisNewDEM = GCDConsoleLib.RasterOperators.RasterCopy.ExtendedCopy(m_gOriginalNewDEM, sNewDEM, theUnionExtent)
-                    m_gAnalysisOldDEM = GCDConsoleLib.RasterOperators.RasterCopy.ExtendedCopy(m_gOriginalOldDEM, sOldDEM, theUnionExtent)
+                    Throw New NotImplementedException("commented out while Matt fixes raster operators")
+                    'm_gAnalysisNewDEM = GCDConsoleLib.Internal..RasterOperators.RasterCopy.ExtendedCopy(m_gOriginalNewDEM, sNewDEM, theUnionExtent)
+                    'm_gAnalysisOldDEM = GCDConsoleLib.RasterOperators.RasterCopy.ExtendedCopy(m_gOriginalOldDEM, sOldDEM, theUnionExtent)
                 End If
             End If
 

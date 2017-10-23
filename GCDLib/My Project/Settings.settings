@@ -74,5 +74,11 @@
     <Setting Name="TempWorkspace" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="Erosion" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">192, 0, 0</Value>
+    </Setting>
+    <Setting Name="Depsoition" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">27, 63, 139</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

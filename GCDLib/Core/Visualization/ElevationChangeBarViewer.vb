@@ -78,7 +78,7 @@ Namespace Core.Visualization
             End Select
             m_chtControl.ChartAreas(0).AxisY.Title = sYAxisLabel
 
-            Dim dSeries As New Dictionary(Of String, Drawing.Color) From {{"Erosion", Drawing.Color.Red}, {"Depsotion", Drawing.Color.Blue}}
+            Dim dSeries As New Dictionary(Of String, Drawing.Color) From {{"Erosion", My.Settings.Erosion}, {"Depsotion", My.Settings.Depsoition}}
             If bShowNet Then
                 dSeries.Add("Net", Drawing.Color.Black)
             End If

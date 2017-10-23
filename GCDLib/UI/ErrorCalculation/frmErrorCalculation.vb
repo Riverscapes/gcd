@@ -83,7 +83,7 @@ Namespace UI.ErrorCalculation
                 ' Safely retrieve the spatial units of the DEM
                 Dim sDEMPath As String = Core.GCDProject.ProjectManagerBase.GetAbsolutePath(m_rDEMSurvey.Source)
                 Dim gDEM As New GCDConsoleLib.Raster(sDEMPath)
-                rdoUniform.Text = String.Format("{0} ({1})", rdoUniform.Text, UnitsNet.Length.GetAbbreviation(gDEM.VerticalUnits))
+                rdoUniform.Text = String.Format("{0} ({1})", rdoUniform.Text, UnitsNet.Length.GetAbbreviation(gDEM.Proj.LinearUnit))
             Catch ex As Exception
                 ' Don't show an error in release mode
                 Debug.Assert(False, "Error retrieving linear units from DEM")
@@ -574,7 +574,7 @@ Namespace UI.ErrorCalculation
 
         Private Function ValidateForm() As Boolean
 
-            If (String.IsNullOrEmpty(txtName.Text)) Then
+            If (String.IsNullOrEmpty(txtName.Text.Trim())) Then
                 MessageBox.Show("You must provide a unique name for the error surface.", My.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information)
                 Return False
             Else

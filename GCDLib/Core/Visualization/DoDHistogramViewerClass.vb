@@ -75,7 +75,7 @@ Namespace Core.Visualization
             m_Chart.Palette = Nothing
             m_Chart.Legends.Clear()
 
-            Dim seriesDefs = New Dictionary(Of String, System.Drawing.Color) From {{EROSION, Drawing.Color.Red}, {DEPOSITION, Drawing.Color.Blue}, {RAW, Drawing.Color.LightGray}}
+            Dim seriesDefs = New Dictionary(Of String, System.Drawing.Color) From {{EROSION, My.Settings.Erosion}, {DEPOSITION, My.Settings.Depsoition}, {RAW, Drawing.Color.LightGray}}
             For Each aDef As KeyValuePair(Of String, Drawing.Color) In seriesDefs
                 Dim series As Charting.Series = m_Chart.Series.Add(aDef.Key)
                 series.ChartType = Charting.SeriesChartType.StackedColumn
