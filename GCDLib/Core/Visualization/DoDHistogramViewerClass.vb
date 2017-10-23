@@ -75,18 +75,29 @@ Namespace Core.Visualization
             m_Chart.Palette = Nothing
             m_Chart.Legends.Clear()
 
-            Dim seriesDefs = New Dictionary(Of String, System.Drawing.Color) From {{RAW, Drawing.Color.LightGray}, {EROSION, Drawing.Color.Red}, {DEPOSITION, Drawing.Color.Blue}}
+            Dim seriesDefs = New Dictionary(Of String, System.Drawing.Color) From {{EROSION, Drawing.Color.Red}, {DEPOSITION, Drawing.Color.Blue}, {RAW, Drawing.Color.LightGray}}
             For Each aDef As KeyValuePair(Of String, Drawing.Color) In seriesDefs
                 Dim series As Charting.Series = m_Chart.Series.Add(aDef.Key)
-                series.ChartType = Charting.SeriesChartType.Column
+                series.ChartType = Charting.SeriesChartType.StackedColumn
                 series.Color = aDef.Value
                 series.ChartArea = m_Chart.ChartAreas.First().Name
 
-                If series.Name = RAW Then
-                    series.YAxisType = Charting.AxisType.Secondary
-                End If
+                'If series.Name = RAW Then
+                '    series.YAxisType = Charting.AxisType.Secondary
+                'End If
 
             Next
+
+            With m_Chart.ChartAreas(0).AxisX
+                .Title = String.Format("Elevation Change ({0})", eUnits)
+                .MajorGrid.LineColor = Drawing.Color.LightSlateGray
+                .MinorTickMark.Enabled = True
+            End With
+
+            With m_Chart.ChartAreas(0).AxisY
+                .MajorGrid.LineColor = Drawing.Color.LightSlateGray
+                .MinorTickMark.Enabled = True
+            End With
 
         End Sub
 
@@ -114,7 +125,15 @@ Namespace Core.Visualization
                     histoData(item.Key) = New HistogramData(item.Key)
                 End If
 
-                histoData(item.Key).raw = item.Value
+                If item.Key < 0 Then
+                    If item.Value > histoData(item.Key).Erosion Then
+                        histoData(item.Key).Raw = item.Value - histoData(item.Key).Erosion
+                    End If
+                Else
+                    If item.Value > histoData(item.Key).Deposition Then
+                        histoData(item.Key).Raw = item.Value - histoData(item.Key).Deposition
+                    End If
+                End If
             Next
 
             Dim histoList As New List(Of HistogramData)(histoData.Values)
@@ -123,90 +142,12 @@ Namespace Core.Visualization
             m_Chart.Series.FindByName(DEPOSITION).Points.DataBindXY(histoList, "elevation", histoList, "deposition")
             m_Chart.Series.FindByName(RAW).Points.DataBindXY(histoList, "elevation", histoList, "raw")
 
-            'm_Chart.Series.FindByName(DEPOSITION).Points.DataBindY(dRawHistogram.Values.Where(Function(s As Double) s < 0).ToList())
-            'm_Chart.Series.FindByName(RAW).Points.DataBindY(dThresholdedHistogram.Values)
+            If bArea Then
+                m_Chart.ChartAreas(0).AxisY.Title = String.Format("Area ({0}²)", UnitsNet.Length.GetAbbreviation(eUnits))
+            Else
+                m_Chart.ChartAreas(0).AxisY.Title = String.Format("Volume ({0}³)", UnitsNet.Length.GetAbbreviation(eUnits))
+            End If
 
-
-            'setup pane
-            'Dim Pane1 As Charting.ChartArea = _ZedGraph.ChartAreas(0)
-            'Pane1.Title.IsVisible = False
-            'Pane1.Legend.IsVisible = False
-            'Pane1.Border.IsVisible = False
-            'Pane1.CurveList.Clear()
-
-            ''Set up gridlines to the plot
-            'Pane1.XAxis.MajorGrid.IsVisible = True
-            'Pane1.XAxis.MajorGrid.Color = Drawing.Color.Gray
-            'Pane1.YAxis.MajorGrid.IsVisible = True
-            'Pane1.YAxis.MajorGrid.Color = Drawing.Color.Gray
-
-            'Pane1.XAxis.Scale.MaxGrace = 0
-            'Pane1.XAxis.Scale.MinGrace = 0
-
-            ''Stop zedgraph from detecting magnitude
-            'Pane1.YAxis.Scale.MagAuto = False
-            'Pane1.YAxis.Scale.Format = "#,#"
-
-            ''TODO change eUnits to what the user has selected in the summary options panel
-            'Pane1.XAxis.Title.Text = "Elevation Change" & naru.math.NumberFormatting.GetUnitsAsString(eUnits, True)
-
-            ''Get proper label and subscripted units for y-axis
-            'If bArea Then
-            '    Pane1.YAxis.Title.Text = "Area " & naru.math.NumberFormatting.GetUnitsAsString(eUnits, True, 2)
-            'Else
-            '    Pane1.YAxis.Title.Text = "Volume " & naru.math.NumberFormatting.GetUnitsAsString(eUnits, True, 3)
-            'End If
-
-            'Pane1.BarSettings.MinClusterGap = 0
-            'Pane1.BarSettings.Type = ZedGraph.BarType.Overlay
-
-            ''Prepare thresholded data
-            'Dim ErosionThresholdedData As New ZedGraph.PointPairList
-            'Dim DepositionThresholdedData As New ZedGraph.PointPairList
-            'For Each kv As KeyValuePair(Of Double, Double) In dThresholdedHistogram
-            '    If kv.Key <0 Then
-            '        If kv.Value > 0 Then
-            '            ErosionThresholdedData.Add(kv.Key, kv.Value)
-            '        End If
-            '    Else
-            '        If kv.Value > 0 Then
-            '            DepositionThresholdedData.Add(kv.Key, kv.Value)
-            '        End If
-            '    End If
-            'Next
-
-            ''Create  erosion thresholded bars (red)
-            'Dim ErosionThresholdedBars As ZedGraph.BarItem
-            'ErosionThresholdedBars = Pane1.AddBar("ErosionThresholded", ErosionThresholdedData, Drawing.Color.DarkBlue)
-            ''ErosionThresholdedBars.Bar.Fill = New ZedGraph.Fill(Drawing.Color.FromArgb(&HFFFF2222), Drawing.Color.FromArgb(&HFF885555), 270)
-            'ErosionThresholdedBars.Bar.Fill = New ZedGraph.Fill(GCD.GCDProject.ProjectManager.ColourErosion)
-            'ErosionThresholdedBars.Bar.Border.IsVisible = True
-            'ErosionThresholdedBars.Bar.Border.Color = Drawing.Color.White
-
-            ''Create deposition thresholded bars (blue)
-            'Dim DepositionThresholdedBars As ZedGraph.BarItem
-            'DepositionThresholdedBars = Pane1.AddBar("DepositionThresholded", DepositionThresholdedData, Drawing.Color.DarkRed)
-            ''DepositionThresholdedBars.Bar.Fill = New ZedGraph.Fill(Drawing.Color.FromArgb(&HFF2222FF), Drawing.Color.FromArgb(&HFF555588), 270)
-            'DepositionThresholdedBars.Bar.Fill = New ZedGraph.Fill(GCD.GCDProject.ProjectManager.ColourDeposition)
-            'DepositionThresholdedBars.Bar.Border.IsVisible = True
-            'DepositionThresholdedBars.Bar.Border.Color = Drawing.Color.White
-
-            ''Prepare raw data
-            'Dim RawData As New ZedGraph.PointPairList
-            'For Each kv As KeyValuePair(Of Double, Double) In dRawHistogram
-            '    If kv.Value > 0 Then
-            '        RawData.Add(kv.Key, kv.Value)
-            '    End If
-            'Next
-
-            ''Create raw bars
-            'Dim RawBArs As ZedGraph.BarItem
-            'RawBArs = Pane1.AddBar("Histogram 2", RawData, Drawing.Color.Azure)
-            'RawBArs.Bar.Fill = New ZedGraph.Fill(Drawing.Color.FromArgb(&HFFAAAAAA))
-            'RawBArs.Bar.Border.IsVisible = True
-
-            '_ZedGraph.AxisChange()
-            '_ZedGraph.Refresh()
         End Sub
 
         Public Sub ExportCharts(ByVal changeHisto As Core.ChangeDetection.DoDResultHistograms, ByVal theUnits As UnitsNet.Units.LengthUnit, ByVal AreaGraphPath As String, ByVal VolumeGraphPath As String, ByVal ChartWidth As Integer, ByVal ChartHeight As Integer)
