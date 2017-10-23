@@ -45,6 +45,7 @@ namespace GCDConsoleLib.Internal
         public RasterInternals(string sFilepath)
         {
             FilePath = sFilepath;
+            Datatype = new GdalDataType(typeof(T));
         }
 
         public RasterInternals(string sFilepath, double? Nodata)
@@ -153,6 +154,10 @@ namespace GCDConsoleLib.Internal
                 ds.GetRasterBand(1).WriteRaster(xOff, yOff, xSize, ySize, buffer as byte[], xSize, ySize, 0, 0);
         }
 
+        public static T ConvertValue<U>(U value) where U : IConvertible
+        {
+            return (T)Convert.ChangeType(value, typeof(T));
+        }
 
         /// <summary>
         /// Return an appropriate min value
@@ -165,14 +170,14 @@ namespace GCDConsoleLib.Internal
 
             T val;
             if (Datatype.CSType == typeof(int))
-                val = (T)TypeDescriptor.GetConverter(typeof(T)).ConvertFrom(int.MinValue);
+                val = (T)ConvertValue<int>(int.MinValue);
             else if (Datatype.CSType == typeof(double))
-                // NOTE: SINGLE VALUE HERE IS NOT A TYPO. ------------------v
-                val = (T)TypeDescriptor.GetConverter(typeof(T)).ConvertFrom(Single.MinValue);
+                // NOTE: SINGLE VALUE HERE IS NOT A TYPO.
+                val = (T)ConvertValue<Single>(Single.MinValue);
             else if (Datatype.CSType == typeof(Single))
-                val = (T)TypeDescriptor.GetConverter(typeof(T)).ConvertFrom(Single.MinValue);
+                val = (T)ConvertValue<Single>(Single.MinValue);
             else if (Datatype.CSType == typeof(byte))
-                val = (T)TypeDescriptor.GetConverter(typeof(T)).ConvertFrom(byte.MinValue);
+                val = (T)ConvertValue<byte>(byte.MinValue);
             else
                 throw new NotSupportedException("Type conversion problem");
 

@@ -141,6 +141,7 @@ namespace GCDConsoleLib
         protected void _Init(RasterDriver rdDriver, LengthUnit lUnits, Projection proj,
             ExtentRectangle theExtent)
         {
+            Extent = theExtent;
             Proj = proj;
             VerticalUnits = lUnits;
             driver = rdDriver;
