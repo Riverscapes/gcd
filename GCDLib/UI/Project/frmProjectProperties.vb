@@ -69,7 +69,7 @@ Namespace UI.Project
                 ' Select the appropriate linear units
                 If Not String.IsNullOrEmpty(theProjectRow.DisplayUnits) Then
                     For j As Integer = 0 To cboDisplayUnits.Items.Count - 1
-                        If String.Compare(cboDisplayUnits.Items(j).LinearUnit.ToString, theProjectRow.DisplayUnits, True) = 0 Then
+                        If String.Compare(cboDisplayUnits.Items(j).ToString, theProjectRow.DisplayUnits, True) = 0 Then
                             cboDisplayUnits.SelectedIndex = j
                         End If
                     Next
