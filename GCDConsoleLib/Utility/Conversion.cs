@@ -454,7 +454,7 @@ namespace GCDConsoleLib.Utility
 
         public LengthUnit LengthUnit2VolumeUnit(VolumeUnit vUnit)
         {
-            VolumeUnit retVal;
+            LengthUnit retVal;
             switch (vUnit)
             {
                 case (VolumeUnit.CubicInch):
