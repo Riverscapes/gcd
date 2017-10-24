@@ -27,9 +27,11 @@ namespace GCDConsoleLib.Internal
     /// This is a typed interface that we use to get the nodataval
     /// </summary>
     /// <typeparam name="TResult"></typeparam>
-    public interface IRasterGuts<TResult>
+    public interface IRasterGuts<T>
     {
-        TResult NodataVal { get; }
+        T NodataVal { get; }
+        void Read(int xOff, int yOff, int xSize, int ySize, ref T[] buffer);
+        void Write(int xOff, int yOff, int xSize, int ySize, ref T[] buffer);
     }
 
     public class RasterInternals<T> : IRasterGuts, IDisposable
