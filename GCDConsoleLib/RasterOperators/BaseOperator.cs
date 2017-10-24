@@ -57,7 +57,9 @@ namespace GCDConsoleLib.Internal
             bDone = false;
             Raster r0 = _rasters[0];
             ExtentRectangle tmpRect = r0.Extent;
-            OpNodataVal = _rasterguts[0].NodataVal;
+
+            if (typeof(T) == typeof(Single))
+                OpNodataVal = (T)System.ComponentModel.TypeDescriptor.GetConverter(typeof(T)).ConvertFrom(_rasters[0].RasterGuts.NodataValSingle);
 
             // Validate our each raster, Add each raster to the union extent window and open it for business
             foreach (Raster rN in _rasters)
@@ -142,7 +144,11 @@ namespace GCDConsoleLib.Internal
 
                     // Get the (col,row) offsets
                     Tuple<int, int> offset = _interrect.GetTopCornerTranslation(ref _chunkWindow);
-                    _rasterguts[idx].Read(offset.Item2, offset.Item1, _interrect.cols, _interrect.rows, ref readChunk);
+
+
+                    if (typeof(T) == typeof(Single))
+                        _rasterguts[idx].Read(offset.Item2, offset.Item1, _interrect.cols, _interrect.rows, ref readChunk);
+
                     inputchunk.Plunk(ref readChunk, _chunkWindow.cols, _chunkWindow.rows, _interrect.cols, _interrect.rows, offset.Item2, offset.Item1);
                 }
 

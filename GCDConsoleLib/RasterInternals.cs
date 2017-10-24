@@ -21,6 +21,10 @@ namespace GCDConsoleLib.Internal
         bool IsOpen { get; }
         void OpenDS(bool write = false);
         void Dispose();
+
+        void Read(int xOff, int yOff, int xSize, int ySize, ref Single[] buffer);
+
+        Single NodataValSingle { get; }
     }
 
     /// <summary>
@@ -125,6 +129,23 @@ namespace GCDConsoleLib.Internal
             }
         }
 
+        public Single NodataValSingle
+        {
+            get
+            {
+                Single retval;
+                if (origNodataVal != null)
+                    retval = (Single)TypeDescriptor.GetConverter(typeof(Single)).ConvertFrom(origNodataVal);
+                else
+                    retval = Single.MinValue;
+                return retval;
+            }
+        }
+
+        public void Read(int xOff, int yOff, int xSize, int ySize, ref Single[] buffer)
+        {
+            ds.GetRasterBand(1).ReadRaster(xOff, yOff, xSize, ySize, buffer, xSize, ySize, 0, 0);
+        }
 
         public void Read(int xOff, int yOff, int xSize, int ySize, ref T[] buffer)
         {
