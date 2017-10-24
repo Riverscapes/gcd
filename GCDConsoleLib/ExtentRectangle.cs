@@ -125,11 +125,11 @@ namespace GCDConsoleLib
             }
             else
             {
-                newTop = Top + (vSign * fDistance);
+                newTop = Top - (vSign * fDistance);
                 newLeft = Left - (hSign * fDistance);
 
-                newRows = rows + (int)(vSign * fDistance / CellHeight);
-                newCols = cols + (int)(hSign * fDistance / CellWidth);
+                newRows = rows + (int)(2 * vSign * fDistance / CellHeight);
+                newCols = cols + (int)(2 * hSign * fDistance / CellWidth);
             }
             return new ExtentRectangle(newTop, newLeft, CellHeight, CellWidth, newRows, newCols);
         }
@@ -206,13 +206,13 @@ namespace GCDConsoleLib
             decimal newright, newleft, newtop, newbottom;
             if (CellHeight > 0)
             {
-                newtop = Math.Min(Top, rect.Top);
-                newbottom = Math.Max(Bottom, rect.Bottom);
+                newtop = Math.Max(Top, rect.Top);
+                newbottom = Math.Min(Bottom, rect.Bottom);
             }
             else
             {
-                newtop = Math.Max(Top, rect.Top);
-                newbottom = Math.Min(Bottom, rect.Bottom);
+                newtop = Math.Min(Top, rect.Top);
+                newbottom = Math.Max(Bottom, rect.Bottom);
             }
             if (CellWidth > 0)
             {

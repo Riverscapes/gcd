@@ -44,16 +44,16 @@ namespace GCDConsoleLib
         /// <param name="rTemplate"></param>
         /// <param name="sFilename"></param>
         /// <param name="leaveopen"></param>
-        protected Raster(ref Raster rTemplate, string sFilename, bool leaveopen = false) : base(sFilename)
+        public Raster(ref Raster rTemplate, string sFilename, bool leaveopen = false) : base(sFilename)
         {
             ExtentRectangle theExtent = new ExtentRectangle(ref rTemplate.Extent);
             _Init(RasterDriver.GTiff, rTemplate.VerticalUnits, rTemplate.Proj, rTemplate.Datatype, theExtent, rTemplate.origNodataVal);
-            Create(leaveopen);
         }
-
-        public static Raster CreateRaster(ref Raster rTemplate, string sFilename, bool leaveopen = false)
+        // This is mainly for testing purposes
+        public Raster(ref Raster rTemplate) : base("")
         {
-            return new Raster(ref rTemplate, sFilename, leaveopen);
+            ExtentRectangle theExtent = new ExtentRectangle(ref rTemplate.Extent);
+            _Init(RasterDriver.GTiff, rTemplate.VerticalUnits, rTemplate.Proj, rTemplate.Datatype, theExtent, rTemplate.origNodataVal);
         }
 
         /// <summary>
@@ -63,14 +63,9 @@ namespace GCDConsoleLib
         /// <param name="rExtent"></param>
         /// <param name="sFilename"></param>
         /// <param name="leaveopen"></param>
-        protected Raster(ref Raster rTemplate, ExtentRectangle rExtent, string sFilename, bool leaveopen = false) : base(sFilename)
+        public Raster(ref Raster rTemplate, ExtentRectangle rExtent, string sFilename, bool leaveopen = false) : base(sFilename)
         {
             _Init(rTemplate.driver, rTemplate.VerticalUnits, rTemplate.Proj, rTemplate.Datatype, rExtent, rTemplate.origNodataVal);
-        }
-
-        public static Raster CreateRaster(ref Raster rTemplate, ExtentRectangle rExtent, string sFilename, bool leaveopen = false)
-        {
-            return new Raster(ref rTemplate, rExtent, sFilename, leaveopen);
         }
 
         /// <summary>
@@ -87,21 +82,14 @@ namespace GCDConsoleLib
         /// <param name="eDataType"></param>
         /// <param name="psProjection"></param>
         /// <param name="psUnit"></param>
-        protected Raster(decimal fTop, decimal fLeft, decimal dCellHeight, decimal dCellWidth, int nRows, int nCols,
+        public Raster(decimal fTop, decimal fLeft, decimal dCellHeight, decimal dCellWidth, int nRows, int nCols,
                double? dNoData, RasterDriver psDriver, GdalDataType dType,
                string psProjection, string psUnit, bool leaveopen = false) : base("")
         {
             ExtentRectangle theExtent = new ExtentRectangle(fTop, fLeft, dCellHeight, dCellWidth, nRows, nCols);
             _Init(psDriver, UnitFromString(psUnit), new Projection(psProjection), dType, theExtent, dNoData);
-            Create(leaveopen);
         }
 
-        public static Raster CreateRaster(decimal fTop, decimal fLeft, decimal dCellHeight, decimal dCellWidth, int nRows, int nCols,
-               double? dNoData, RasterDriver psDriver, GdalDataType dType,
-               string psProjection, string psUnit, bool leaveopen = false)
-        {
-            return new Raster(fTop, fLeft, dCellHeight, dCellWidth, nRows, nCols, dNoData, psDriver, dType, psProjection, psUnit, leaveopen);
-        }
 
         /// <summary>
         /// Load all relevant settings from a file
@@ -227,6 +215,8 @@ namespace GCDConsoleLib
                 // File does not exist but there is no directory to put it in.
                 else if (!File.Exists(FilePath) && !Directory.Exists(fInfo.DirectoryName))
                      throw new IOException(String.Format("File `{0}` could not be created because the directory `{1}`is not present", FilePath, fInfo.DirectoryName));
+                else
+                    Create();
             }
             else
             {
@@ -366,7 +356,7 @@ namespace GCDConsoleLib
         /// </summary>
         public virtual void ComputeStatistics()
         {
-            Open();
+            Open(true);
             double min, max, mean, std;
             ds.GetRasterBand(1).ComputeStatistics(false, out min, out max, out mean, out std, null, null);
         }
@@ -483,7 +473,7 @@ namespace GCDConsoleLib
         /// <param name="buffer"></param>
         public virtual void Read<T>(int xOff, int yOff, int xSize, int ySize, ref T[] buffer)
         {
-            Open(true);
+            Open();
             if (typeof(T) == typeof(Single))
                 ds.GetRasterBand(1).ReadRaster(xOff, yOff, xSize, ySize, buffer as Single[], xSize, ySize, 0, 0);
             else if (typeof(T) == typeof(Double))

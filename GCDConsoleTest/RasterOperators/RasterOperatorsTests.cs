@@ -19,6 +19,7 @@ namespace GCDConsoleLib.Tests
                 Raster rTemplateRaster = new Raster(TestHelpers.GetTestRasterPath("AngledSlopey950-980E.tif"));
                 ExtentRectangle newExtReal = rTemplateRaster.Extent.Buffer(5);
                 RasterOperators.ExtendedCopy(ref rTemplateRaster, Path.Combine(tmp.Name, "ExtendedCopyRasterTest.tif"), newExtReal);
+                Assert.Fail();
             }
 
             Raster Raster1 = new FakeRaster<int>(10, 20, -1, 1, new int[,] { { 1, 2, 3, 4 }, { 5, 6, 7, 8 }, { 9, 10, 11, 12 } });

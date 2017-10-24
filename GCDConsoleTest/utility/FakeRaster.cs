@@ -33,6 +33,13 @@ namespace GCDConsoleLib.Tests.Utility
             _outputGrid.Fill<U>(NodataValue<U>());
         }
 
+        // This special case is for taking the outputs of a real raster into a fake one.
+        public FakeRaster(ref Raster rRef) : base(ref rRef)
+        {
+            _inputgrid = new U[rRef.Extent.rows, rRef.Extent.cols];
+            _outputGrid = new U[rRef.Extent.rows, rRef.Extent.cols];
+        }
+
         public FakeRaster(int Top, int Left, decimal cellHeight, decimal cellWidth, U[,] grid) : 
             base(0, 0, -0.1m, 0.1m, grid.GetLength(1), grid.GetLength(0),
              Conversion.MinValueDouble<U>(), Raster.RasterDriver.GTiff, floatType, fakeproj, fakeunit)

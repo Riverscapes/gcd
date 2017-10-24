@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using GCDConsoleLib.Tests.Utility;
 using GCDConsoleLib.Utility;
 using GCDConsoleLib.Common.Extensons;
+using System.IO;
+using GCDConsoleLib.Tests;
 
 namespace GCDConsoleLib.Internal.Tests
 {
@@ -17,6 +19,11 @@ namespace GCDConsoleLib.Internal.Tests
         class TestOp<T> : BaseOperator<T>
         {
             public TestOp(List<Raster> rRasters, ref FakeRaster<T> rOutput) : base(rRasters, rOutput)
+            {
+                Assert.AreEqual(rRasters.Count, _rasters.Count);
+                Assert.IsFalse(OpDone);
+            }
+            public TestOp(List<Raster> rRasters, ref FakeRaster<T> rOutput, ExtentRectangle newExtent) : base(rRasters, rOutput, newExtent)
             {
                 Assert.AreEqual(rRasters.Count, _rasters.Count);
                 Assert.IsFalse(OpDone);
@@ -53,6 +60,69 @@ namespace GCDConsoleLib.Internal.Tests
             TestOp<int> theTest = new TestOp<int>(new List<Raster> { Raster1, Raster2 }, ref rOutput);
             theTest.TestRun();
             CollectionAssert.AreEqual(rOutput._outputGrid, rExpected);
+        }
+
+        [TestMethod()]
+        public void BaseInitTestReal()
+        {
+            // First try it with a real file
+            using (ITempDir tmp = TempDir.Create())
+            {
+                Raster rTemplateRaster = new Raster(TestHelpers.GetTestRasterPath("AngledSlopey950-980E.tif"));
+                FakeRaster<Single> rOut = new FakeRaster<Single>(ref rTemplateRaster);
+                TestOp<float> theTest = new TestOp<float>(new List<Raster> { rTemplateRaster }, ref rOut);
+
+                // before we set the new extent
+                Assert.AreEqual(theTest.InExtent.ToString(), "-9979 -10029.0 -9969.0 -10019");
+                Assert.AreEqual(theTest.OpExtent.ToString(), "-9979 -10029.0 -9969.0 -10019");
+                Assert.AreEqual(theTest.ChunkWindow.ToString(), "-9979 -10020.0 -9969.0 -10019");
+                Assert.IsFalse(theTest.OpDone);
+
+                // Now get the first chunk
+                theTest.nextChunk();
+                Assert.AreEqual(theTest.InExtent.ToString(), "-9979 -10029.0 -9969.0 -10019");
+                Assert.AreEqual(theTest.OpExtent.ToString(), "-9979 -10029.0 -9969.0 -10019");
+                Assert.AreEqual(theTest.ChunkWindow.ToString(), "-9979 -10021.0 -9969.0 -10020");
+                Assert.IsFalse(theTest.OpDone);
+
+                // Get to the end somehow. This raster is only 100 rows tall so 100 nexts should be 
+                // well past the end
+                int counter = 0;
+                while (!theTest.OpDone && counter < 100)
+                {
+                    counter++;
+                    theTest.nextChunk();
+                }
+                Assert.AreEqual(theTest.ChunkWindow.ToString(), "-9979 -10029.0 -9969.0 -10029");
+                Assert.IsTrue(theTest.OpDone);
+
+
+                // Now let's try with a different extent
+                TestOp<float> theTest2 = new TestOp<float>(new List<Raster> { rTemplateRaster }, ref rOut, rTemplateRaster.Extent.Buffer(100));
+                Assert.AreEqual(theTest2.InExtent.ToString(), "-9979 -10029.0 -9969.0 -10019");
+                Assert.AreEqual(theTest2.OpExtent.ToString(), "-9989 -10059.0 -9959.0 -10029");
+                Assert.AreEqual(theTest2.ChunkWindow.ToString(), "-9989 -10030.0 -9959.0 -10029");
+                Assert.IsFalse(theTest2.OpDone);
+
+                // Now get the first chunk
+                theTest2.nextChunk();
+                Assert.AreEqual(theTest2.InExtent.ToString(), "-9979 -10029.0 -9969.0 -10019");
+                Assert.AreEqual(theTest2.OpExtent.ToString(), "-9989 -10059.0 -9959.0 -10029");
+                Assert.AreEqual(theTest2.ChunkWindow.ToString(), "-9989 -10031.0 -9959.0 -10030");
+                Assert.IsFalse(theTest2.OpDone);
+
+                // Get to the end somehow. This raster is only 200 rows tall so 100 nexts should be 
+                // well past the end
+                counter = 0;
+                while (!theTest2.OpDone && counter < 100)
+                {
+                    counter++;
+                    theTest2.nextChunk();
+                }
+                Assert.AreEqual(theTest2.ChunkWindow.ToString(), "-9989 -10059.0 -9959.0 -10059");
+                Assert.IsTrue(theTest2.OpDone);
+
+            }
         }
 
 
