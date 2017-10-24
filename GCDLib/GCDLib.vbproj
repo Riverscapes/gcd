@@ -71,6 +71,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\ErrorCalculation\FIS\FISLibraryItem.vb" />
     <Compile Include="Core\GCDArcMapManager.vb" />
     <Compile Include="Core\BudgetSegregation\BSResultSet.vb" />
     <Compile Include="Core\BudgetSegregation\BudgetClass.vb" />
@@ -90,14 +91,6 @@
     <Compile Include="Core\ChangeDetection\DoDResultSet.vb" />
     <Compile Include="Core\ErrorCalculation\ErrorCalcProperties.vb" />
     <Compile Include="Core\ErrorCalculation\ErrorSurfaceEngine.vb" />
-    <Compile Include="Core\ErrorCalculation\FIS\FISLibrary.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>FISLibrary.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Core\ErrorCalculation\FIS\FISLibrary.vb">
-      <DependentUpon>FISLibrary.xsd</DependentUpon>
-    </Compile>
     <Compile Include="Core\ErrorCalculation\FIS\FISRuleFile.vb" />
     <Compile Include="Core\ExceptionHelper.vb" />
     <Compile Include="Core\GCDProject\ProjectDS1.Designer.vb">
@@ -105,11 +98,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ProjectDS.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Core\GCDProject\SurveyTypes.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SurveyTypes.xsd</DependentUpon>
-    </Compile>
+    <Compile Include="Core\GCDProject\SurveyType.vb" />
     <Compile Include="Core\RasterPyramidManager.vb" />
     <Compile Include="Core\TopCAT\Stats.vb" />
     <Compile Include="Core\TopCAT\WindowsManagement.vb" />
@@ -122,7 +111,6 @@
     <Compile Include="Core\GCDProject\ProjectDS.vb">
       <DependentUpon>ProjectDS.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Core\GCDProject\ProjectManager.vb" />
     <Compile Include="Core\GCDProject\ProjectManagerBase.vb" />
     <Compile Include="Core\GCDProject\ProjectManagerUI.vb" />
     <Compile Include="Core\GCDProject\SurveyDateTime.vb" />
@@ -426,16 +414,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Core\ErrorCalculation\FIS\FISLibrary.xsc">
-      <DependentUpon>FISLibrary.xsd</DependentUpon>
-    </None>
-    <None Include="Core\ErrorCalculation\FIS\FISLibrary.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>FISLibrary.Designer.vb</LastGenOutput>
-    </None>
-    <None Include="Core\ErrorCalculation\FIS\FISLibrary.xss">
-      <DependentUpon>FISLibrary.xsd</DependentUpon>
-    </None>
     <None Include="Core\GCDProject\ProjectDS.xsc">
       <DependentUpon>ProjectDS.xsd</DependentUpon>
     </None>
@@ -447,17 +425,6 @@
     <None Include="Core\GCDProject\ProjectDS.xss">
       <DependentUpon>ProjectDS.xsd</DependentUpon>
       <SubType>Designer</SubType>
-    </None>
-    <None Include="Core\GCDProject\SurveyTypes.xsc">
-      <DependentUpon>SurveyTypes.xsd</DependentUpon>
-    </None>
-    <None Include="Core\GCDProject\SurveyTypes.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>SurveyTypes.Designer.vb</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Core\GCDProject\SurveyTypes.xss">
-      <DependentUpon>SurveyTypes.xsd</DependentUpon>
     </None>
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
@@ -480,19 +447,22 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Core\ExcelTemplates\BudgetSegregationSummaryTemplate.xml">
+    <Content Include="Deploy\ExcelTemplates\BudgetSegregationSummaryTemplate.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Core\ExcelTemplates\ClassSummary.xml">
+    <Content Include="Deploy\ExcelTemplates\ClassSummary.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Core\ExcelTemplates\ClassSummary_Layout.xml">
+    <Content Include="Deploy\ExcelTemplates\ClassSummary_Layout.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Core\ExcelTemplates\GCDSummary.xml">
+    <Content Include="Deploy\ExcelTemplates\GCDSummary.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Core\ExcelTemplates\SummaryTemplate.xml">
+    <Content Include="Deploy\ExcelTemplates\SummaryTemplate.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Deploy\SurveyTypes.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="UI\Options\SurveyTypes.xml">

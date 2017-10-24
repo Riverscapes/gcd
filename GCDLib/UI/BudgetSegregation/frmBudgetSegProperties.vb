@@ -27,7 +27,7 @@ Namespace UI.BudgetSegregation
         Private Sub BudgetSegPropertiesForm_Load(sender As Object, e As System.EventArgs) Handles Me.Load
 
             Dim nSelIndex As Integer = 0
-            For Each rDoD As ProjectDS.DoDsRow In GCDProject.ProjectManager.CurrentProject.GetDoDsRows
+            For Each rDoD As ProjectDS.DoDsRow In GCDProject.ProjectManagerBase.CurrentProject.GetDoDsRows
                 Dim nIndex As Integer = cboDoD.Items.Add(New naru.db.NamedObject(rDoD.DoDID, rDoD.Name))
                 If rDoD.DoDID = m_nDoDID Then
                     nSelIndex = nIndex
@@ -53,7 +53,7 @@ Namespace UI.BudgetSegregation
                 Cursor.Current = Cursors.WaitCursor
 
                 Dim rDoD As ProjectDS.DoDsRow = Nothing
-                For Each aDoD As ProjectDS.DoDsRow In GCDProject.ProjectManager.CurrentProject.GetDoDsRows
+                For Each aDoD As ProjectDS.DoDsRow In GCDProject.ProjectManagerBase.CurrentProject.GetDoDsRows
                     If aDoD.DoDID = DirectCast(cboDoD.SelectedItem, naru.db.NamedObject).ID Then
                         rDoD = aDoD
                         'New place to create budget segregation folder
@@ -76,14 +76,14 @@ Namespace UI.BudgetSegregation
                 m_bsOutputs = bs.Calculate(ucPolygon.SelectedItem, cboField.Text, My.Settings.ChartWidth, My.Settings.ChartHeight, True)
                 Cursor.Current = Cursors.WaitCursor
 
-                Dim sRelativeFolder As String = GCDProject.ProjectManager.GetRelativePath(txtOutputFolder.Text)
-                Dim sPCDepositionVolPie As String = GCDProject.ProjectManager.GetRelativePath(m_bsOutputs.PieCharts.PercentageTotalDepositionVolumePiePath)
-                Dim sPCErosionVolPie As String = GCDProject.ProjectManager.GetRelativePath(m_bsOutputs.PieCharts.PercentageTotalErosionVolumePiePath)
-                Dim sPCTotalVolPie As String = GCDProject.ProjectManager.GetRelativePath(m_bsOutputs.PieCharts.PercentageTotalVolumePiePath)
-                Dim sClassLegend As String = GCDProject.ProjectManager.GetRelativePath(m_bsOutputs.ClassLegendPath)
-                Dim sClassSummary As String = GCDProject.ProjectManager.GetRelativePath(m_bsOutputs.ClassSummaryPath)
+                Dim sRelativeFolder As String = GCDProject.ProjectManagerBase.GetRelativePath(txtOutputFolder.Text)
+                Dim sPCDepositionVolPie As String = GCDProject.ProjectManagerBase.GetRelativePath(m_bsOutputs.PieCharts.PercentageTotalDepositionVolumePiePath)
+                Dim sPCErosionVolPie As String = GCDProject.ProjectManagerBase.GetRelativePath(m_bsOutputs.PieCharts.PercentageTotalErosionVolumePiePath)
+                Dim sPCTotalVolPie As String = GCDProject.ProjectManagerBase.GetRelativePath(m_bsOutputs.PieCharts.PercentageTotalVolumePiePath)
+                Dim sClassLegend As String = GCDProject.ProjectManagerBase.GetRelativePath(m_bsOutputs.ClassLegendPath)
+                Dim sClassSummary As String = GCDProject.ProjectManagerBase.GetRelativePath(m_bsOutputs.ClassSummaryPath)
 
-                Dim bsRow As ProjectDS.BudgetSegregationsRow = GCDProject.ProjectManager.ds.BudgetSegregations.AddBudgetSegregationsRow(rDoD, txtName.Text, m_bsOutputs.PolygonMask, cboField.Text, sRelativeFolder,
+                Dim bsRow As ProjectDS.BudgetSegregationsRow = GCDProject.ProjectManagerBase.ds.BudgetSegregations.AddBudgetSegregationsRow(rDoD, txtName.Text, m_bsOutputs.PolygonMask, cboField.Text, sRelativeFolder,
                                                            sPCDepositionVolPie, sPCErosionVolPie, sPCTotalVolPie, sClassLegend, sClassSummary)
 
                 For Each sMaskName As String In m_bsOutputs.MaskOutputs.Keys
@@ -91,12 +91,12 @@ Namespace UI.BudgetSegregation
 
                     Dim aMask As Core.BudgetSegregation.BudgetSegregationOutputsClass.MaskOutputClass = m_bsOutputs.MaskOutputs(sMaskName)
 
-                    Dim sMaskCSV As String = GCDProject.ProjectManager.GetRelativePath(aMask.csvFilename)
-                    Dim sSummaryFile As String = GCDProject.ProjectManager.GetRelativePath(aMask.SummaryPath)
-                    Dim sAreaHistPath As String = GCDProject.ProjectManager.GetRelativePath(aMask.AreaChartPath)
-                    Dim sVolHistPath As String = GCDProject.ProjectManager.GetRelativePath(aMask.VolumeChartPath)
+                    Dim sMaskCSV As String = GCDProject.ProjectManagerBase.GetRelativePath(aMask.csvFilename)
+                    Dim sSummaryFile As String = GCDProject.ProjectManagerBase.GetRelativePath(aMask.SummaryPath)
+                    Dim sAreaHistPath As String = GCDProject.ProjectManagerBase.GetRelativePath(aMask.AreaChartPath)
+                    Dim sVolHistPath As String = GCDProject.ProjectManagerBase.GetRelativePath(aMask.VolumeChartPath)
 
-                    GCDProject.ProjectManager.ds.BSMasks.AddBSMasksRow(bsRow, aMask.MaskValue, sMaskName,
+                    GCDProject.ProjectManagerBase.ds.BSMasks.AddBSMasksRow(bsRow, aMask.MaskValue, sMaskName,
                                                                        aMask.ChangeStats.AreaErosion_Raw, aMask.ChangeStats.AreaDeposition_Raw,
                                                                        aMask.ChangeStats.AreaErosion_Thresholded, aMask.ChangeStats.AreaDeposition_Thresholded,
                                                                        aMask.ChangeStats.VolumeErosion_Raw, aMask.ChangeStats.VolumeDeposition_Raw,
@@ -105,7 +105,7 @@ Namespace UI.BudgetSegregation
                                                                        sAreaHistPath, sVolHistPath, sSummaryFile, sMaskCSV)
                 Next
 
-                GCDProject.ProjectManager.save()
+                GCDProject.ProjectManagerBase.save()
 
                 m_nBSID = bsRow.BudgetID
             Catch ex As Exception
@@ -123,7 +123,7 @@ Namespace UI.BudgetSegregation
                 MsgBox("Please enter a name for the budget segregation analysis.", MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
                 Return Nothing
             Else
-                For Each rDoD As ProjectDS.DoDsRow In GCDProject.ProjectManager.ds.DoDs
+                For Each rDoD As ProjectDS.DoDsRow In GCDProject.ProjectManagerBase.ds.DoDs
                     ' Budget Seg Names are unique to a DoD.
                     If rDoD.DoDID = m_nDoDID Then
                         For Each rBS As ProjectDS.BudgetSegregationsRow In rDoD.GetBudgetSegregationsRows
@@ -147,7 +147,7 @@ Namespace UI.BudgetSegregation
                     Dim nDoD As Integer = DirectCast(cboDoD.SelectedItem, naru.db.NamedObject).ID
                     Dim rDoD As ProjectDS.DoDsRow = Nothing
                     Dim bDoDExists As Boolean = False
-                    For Each rItem As ProjectDS.DoDsRow In GCDProject.ProjectManager.ds.DoDs
+                    For Each rItem As ProjectDS.DoDsRow In GCDProject.ProjectManagerBase.ds.DoDs
                         If rItem.DoDID = nDoD Then
                             rDoD = rItem
                             bDoDExists = True
@@ -210,7 +210,7 @@ Namespace UI.BudgetSegregation
             If TypeOf cboDoD.SelectedItem Is naru.db.NamedObject Then
                 Dim nDoDID As Integer = DirectCast(cboDoD.SelectedItem, naru.db.NamedObject).ID
                 If nDoDID > 0 Then
-                    For Each rDoD As ProjectDS.DoDsRow In GCDProject.ProjectManager.CurrentProject.GetDoDsRows
+                    For Each rDoD As ProjectDS.DoDsRow In GCDProject.ProjectManagerBase.CurrentProject.GetDoDsRows
                         If rDoD.DoDID = nDoDID Then
                             txtNewDEM.Text = rDoD.NewSurveyName
                             txtOldDEM.Text = rDoD.OldSurveyName
@@ -218,7 +218,7 @@ Namespace UI.BudgetSegregation
                             If rDoD.TypeMinLOD Then
                                 txtUncertaintyAnalysis.Text = "Minimum Level of Detection"
                                 If Not rDoD.IsThresholdNull Then
-                                    txtUncertaintyAnalysis.Text &= ", Threshold at " & rDoD.Threshold.ToString("#.00") & GCDProject.ProjectManager.CurrentProject.DisplayUnits
+                                    txtUncertaintyAnalysis.Text &= ", Threshold at " & rDoD.Threshold.ToString("#.00") & GCDProject.ProjectManagerBase.CurrentProject.DisplayUnits
                                 End If
                             ElseIf rDoD.TypePropagated Then
                                 txtUncertaintyAnalysis.Text = "Propagated Error"
@@ -260,10 +260,10 @@ Namespace UI.BudgetSegregation
                         If TypeOf cboDoD.SelectedItem Is naru.db.NamedObject Then
                             Dim nDoDID As Integer = DirectCast(cboDoD.SelectedItem, naru.db.NamedObject).ID
                             If nDoDID > 0 Then
-                                For Each rDoD As ProjectDS.DoDsRow In GCDProject.ProjectManager.CurrentProject.GetDoDsRows
+                                For Each rDoD As ProjectDS.DoDsRow In GCDProject.ProjectManagerBase.CurrentProject.GetDoDsRows
                                     If nDoDID = rDoD.DoDID Then
                                         txtOutputFolder.Text = GCDProject.ProjectManagerBase.OutputManager.GetBudgetSegreationDirectoryPath(rDoD.Name)
-                                        'txtOutputFolder.Text = GCD.GCDProject.ProjectManager.OutputManager.CreateBudgetSegFolder(rDoD.Name, sPolygonPath, cboField.Text)
+                                        'txtOutputFolder.Text = GCD.GCDProject.ProjectManagerBase.OutputManager.CreateBudgetSegFolder(rDoD.Name, sPolygonPath, cboField.Text)
                                         Exit For
                                     End If
                                 Next

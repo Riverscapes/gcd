@@ -63,7 +63,7 @@ Namespace Core
 
         '        ' should only be one project in the dataset, but loop just to be sure
         '        Dim pProjectGrpLyr As IGroupLayer = Nothing
-        '        For Each projRow In GCD.GCDProject.ProjectManager.ds.Project
+        '        For Each projRow In GCD.GCDProject.ProjectManagerBase.ds.Project
         '            pProjectGrpLyr = AddProjectGroupLayer(projRow)
 
         '            For Each demRow As ProjectDS.DEMSurveyRow In projRow.GetDEMSurveyRows
@@ -72,7 +72,7 @@ Namespace Core
         '                AddSurvey(demRow)
         '            Next
 
-        '            For Each dodRow As ProjectDS.DoDsRow In GCD.GCDProject.ProjectManager.ds.DoDs
+        '            For Each dodRow As ProjectDS.DoDsRow In GCD.GCDProject.ProjectManagerBase.ds.DoDs
         '                AddDoD(dodRow)
         '            Next
         '        Next
@@ -134,7 +134,7 @@ Namespace Core
 
         '        Dim fDEMTransparency As Double = -1
         '        Dim pSurveyLyr As IGroupLayer = AddSurveyGroupLayer(demRow)
-        '        Dim sHillShadePath As String = GCD.GCDProject.ProjectManager.OutputManager.DEMSurveyHillShadeRasterPath(demRow.Name)
+        '        Dim sHillShadePath As String = GCD.GCDProject.ProjectManagerBase.OutputManager.DEMSurveyHillShadeRasterPath(demRow.Name)
         '        If GCDConsoleLib.Raster.Exists(sHillShadePath) Then
         '            AddToMapRaster(sHillShadePath, demRow.Name & " HillShade", pSurveyLyr)
         '            fDEMTransparency = m_fDefaultDEMTransparency
@@ -142,7 +142,7 @@ Namespace Core
         '        End If
 
         '        Dim sSymbology As String = GCDConsoleLib.RasterGCD.GetSymbologyLayerFile(ArcMap.RasterLayerTypes.DEM)
-        '        Dim sRasterPath As String = GCD.GCDProject.ProjectManager.GetAbsolutePath(demRow.Source)
+        '        Dim sRasterPath As String = GCD.GCDProject.ProjectManagerBase.GetAbsolutePath(demRow.Source)
         '        Dim pDEMLyr As IRasterLayer = AddToMapRaster(sRasterPath, demRow.Name, pSurveyLyr, sSymbology, fDEMTransparency)
 
         '        'Collapse the Hillshade legend in the TOC
@@ -181,7 +181,7 @@ Namespace Core
 
         '        Dim pAssocGrpLyr As IGroupLayer = AddAssociatedSurfaceGroupLayer(assocRow.DEMSurveyRow)
         '        Dim eType As ArcMap.RasterLayerTypes = ProjectDS.GetAssociatedSurfaceType(assocRow)
-        '        Dim sRasterPath As String = GCD.GCDProject.ProjectManager.GetAbsolutePath(assocRow.Source)
+        '        Dim sRasterPath As String = GCD.GCDProject.ProjectManagerBase.GetAbsolutePath(assocRow.Source)
         '        Dim gAssociatedRaster As GCDConsoleLib.Raster = New GCDConsoleLib.Raster(sRasterPath)
         '        Dim sHeader As String = GetLayerHeader(assocRow)
         '        Dim dTransparency As Double = -1
@@ -239,7 +239,7 @@ Namespace Core
         '        ElseIf eType = ArcMap.RasterLayerTypes.GrainSizeStatistic Then
 
         '            'TODO: Currently this only works from a CHaMP perspective as these rasters are created with z as mm, symbology needs to be implemented for other units
-        '            Dim eUnits As NumberFormatting.LinearUnits = NumberFormatting.GetLinearUnitsFromString(GCD.GCDProject.ProjectManager.DisplayUnits.ToString())
+        '            Dim eUnits As NumberFormatting.LinearUnits = NumberFormatting.GetLinearUnitsFromString(GCD.GCDProject.ProjectManagerBase.DisplayUnits.ToString())
         '            Dim rasterRenderer As IRasterRenderer = GCD.RasterSymbolization.CreateGrainSizeStatisticColorRamp(gAssociatedRaster, eUnits)
         '            Dim pAssocLyr As ILayer = AddRasterLayer(m_pArcMap.Document, gAssociatedRaster, rasterRenderer, assocRow.Name, pAssocGrpLyr, sHeader, dTransparency)
         '            Return pAssocLyr
@@ -294,7 +294,7 @@ Namespace Core
         '    Public Function AddErrSurface(errRow As ProjectDS.ErrorSurfaceRow) As IRasterLayer
 
         '        Dim pErrGrpLyr As IGroupLayer = AddErrorSurfacesGroupLayer(errRow.DEMSurveyRow)
-        '        Dim sRasterPath As String = GCD.GCDProject.ProjectManager.GetAbsolutePath(errRow.Source)
+        '        Dim sRasterPath As String = GCD.GCDProject.ProjectManagerBase.GetAbsolutePath(errRow.Source)
         '        Dim gErrRaster As GCDConsoleLib.Raster = New GCDConsoleLib.Raster(sRasterPath)
         '        Dim sHeader As String = "Error (" & errRow.DEMSurveyRow.ProjectRow.DisplayUnits & ")"
 
@@ -330,7 +330,7 @@ Namespace Core
         '    Public Function AddAOI(rAOI As ProjectDS.AOIsRow) As IFeatureLayer
 
         '        Dim pAOIGrpLyr As IGroupLayer = AddAOIGroupLayer(rAOI.ProjectRow)
-        '        Dim sFullPath As String = GCD.GCDProject.ProjectManager.GetAbsolutePath(rAOI.Source)
+        '        Dim sFullPath As String = GCD.GCDProject.ProjectManagerBase.GetAbsolutePath(rAOI.Source)
         '        Dim pAOILyr As IFeatureLayer = AddToMapVector(sFullPath, rAOI.Name, pAOIGrpLyr)
         '        Return pAOILyr
 
@@ -349,10 +349,10 @@ Namespace Core
         '        Dim sRasterPath As String
         '        Dim sLayerName As String = dodRow.Name
         '        If bThresholded Then
-        '            sRasterPath = GCD.GCDProject.ProjectManager.GetAbsolutePath(dodRow.ThreshDoDPath)
+        '            sRasterPath = GCD.GCDProject.ProjectManagerBase.GetAbsolutePath(dodRow.ThreshDoDPath)
         '            sLayerName &= " (Thresholded)"
         '        Else
-        '            sRasterPath = GCD.GCDProject.ProjectManager.GetAbsolutePath(dodRow.RawDoDPath)
+        '            sRasterPath = GCD.GCDProject.ProjectManagerBase.GetAbsolutePath(dodRow.RawDoDPath)
         '            sLayerName &= " (Raw)"
         '        End If
 
@@ -393,7 +393,7 @@ Namespace Core
         '    Public Function AddPropErr(dodRow As ProjectDS.DoDsRow) As IRasterLayer
 
         '        Dim pAnalGrpLayer As IGroupLayer = AddAnalysesGroupLayer(dodRow.ProjectRow)
-        '        Dim sRasterPath As String = GCD.GCDProject.ProjectManager.GetAbsolutePath(dodRow.PropagatedErrorRasterPath)
+        '        Dim sRasterPath As String = GCD.GCDProject.ProjectManagerBase.GetAbsolutePath(dodRow.PropagatedErrorRasterPath)
         '        Dim gPropErrRaster As GCDConsoleLib.Raster = New GCDConsoleLib.Raster(sRasterPath)
         '        Dim sLyrName As String = dodRow.Name & "_" & IO.Path.GetFileNameWithoutExtension(dodRow.PropagatedErrorRasterPath)
         '        Dim sHeader As String = "Error (" & dodRow.ProjectRow.DisplayUnits & ")"
@@ -419,7 +419,7 @@ Namespace Core
         '    Public Function AddProbabilityRaster(dodRow As ProjectDS.DoDsRow, sProbabilityRasterPath As String) As IRasterLayer
 
         '        Dim pAnalGrpLayer As IGroupLayer = AddAnalysesGroupLayer(dodRow.ProjectRow)
-        '        Dim sRasterPath As String = GCD.GCDProject.ProjectManager.GetAbsolutePath(sProbabilityRasterPath)
+        '        Dim sRasterPath As String = GCD.GCDProject.ProjectManagerBase.GetAbsolutePath(sProbabilityRasterPath)
         '        Dim gProbabilityRaster As GCDConsoleLib.Raster = New GCDConsoleLib.Raster(sRasterPath)
         '        Dim sFileName As String = IO.Path.GetFileNameWithoutExtension(sProbabilityRasterPath)
         '        Dim sLyrName As String = dodRow.Name & "_" & sFileName
@@ -787,7 +787,7 @@ Namespace Core
         '    ''' <remarks>If user changes the name of the project layer this will not work</remarks>
         '    Public Shared Sub RemoveProjectFromTOC()
 
-        '        Dim projectName As String = GCD.GCDProject.ProjectManager.CurrentProject.Name
+        '        Dim projectName As String = GCD.GCDProject.ProjectManagerBase.CurrentProject.Name
         '        Dim pMXDoc As ESRI.ArcGIS.ArcMapUI.IMxDocument = DirectCast(My.ThisApplication, ESRI.ArcGIS.Framework.IApplication).Document
         '        Dim pMap As ESRI.ArcGIS.Carto.IMap = pMXDoc.FocusMap
 
@@ -989,7 +989,7 @@ Namespace Core
 
         '    '            If tempEType = eType Then
 
-        '    '                Dim sTempRasterPath As String = GCD.GCDProject.ProjectManager.GetAbsolutePath(rAssoc.Source)
+        '    '                Dim sTempRasterPath As String = GCD.GCDProject.ProjectManagerBase.GetAbsolutePath(rAssoc.Source)
         '    '                Dim gTempRaster As GCDConsoleLib.Raster = New GCDConsoleLib.Raster(sTempRasterPath)
 
         '    '                If gTempRaster.Maximum > rasterCollectionMax Then

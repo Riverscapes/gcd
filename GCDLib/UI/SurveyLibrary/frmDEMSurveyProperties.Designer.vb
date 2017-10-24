@@ -63,7 +63,6 @@
             Me.txtMask = New System.Windows.Forms.TextBox()
             Me.cboSingle = New System.Windows.Forms.ComboBox()
             Me.SurveyTypesBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-            Me.SurveyTypes = New SurveyTypes()
             Me.btnBrowseMask = New System.Windows.Forms.Button()
             Me.cmdAddToMap = New System.Windows.Forms.Button()
             Me.cboIdentify = New System.Windows.Forms.ComboBox()
@@ -92,7 +91,6 @@
             Me.GroupBox2.SuspendLayout()
             Me.GroupBox1.SuspendLayout()
             CType(Me.SurveyTypesBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(Me.SurveyTypes, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.tabControl.SuspendLayout()
             Me.SuspendLayout()
             '
@@ -453,12 +451,6 @@
             '
             Me.SurveyTypesBindingSource.AllowNew = False
             Me.SurveyTypesBindingSource.DataMember = "SurveyTypes"
-            Me.SurveyTypesBindingSource.DataSource = Me.SurveyTypes
-            '
-            'SurveyTypes
-            '
-            Me.SurveyTypes.DataSetName = "SurveyTypes"
-            Me.SurveyTypes.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
             '
             'btnBrowseMask
             '
@@ -651,7 +643,6 @@
             Me.GroupBox1.ResumeLayout(False)
             Me.GroupBox1.PerformLayout()
             CType(Me.SurveyTypesBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(Me.SurveyTypes, System.ComponentModel.ISupportInitialize).EndInit()
             Me.tabControl.ResumeLayout(False)
             Me.ResumeLayout(False)
             Me.PerformLayout()
@@ -701,7 +692,6 @@
         Friend WithEvents tabControl As System.Windows.Forms.TabControl
         Friend WithEvents txtProperties As System.Windows.Forms.TextBox
         Friend WithEvents SurveyTypesBindingSource As System.Windows.Forms.BindingSource
-        Friend WithEvents SurveyTypes As SurveyTypes
         Friend WithEvents txtMask As System.Windows.Forms.TextBox
         Friend WithEvents btnCalculateError As System.Windows.Forms.Button
         Friend WithEvents txtFolder As System.Windows.Forms.TextBox

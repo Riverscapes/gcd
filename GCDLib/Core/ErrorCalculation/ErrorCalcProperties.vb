@@ -76,22 +76,15 @@
             End Get
         End Property
 
-        Public ReadOnly Property FISID As Integer
-            Get
-                Return m_nFISID
-            End Get
-        End Property
-
         Public ReadOnly Property FISInputs As Dictionary(Of String, Integer)
             Get
                 Return m_dFISInputs
             End Get
         End Property
 
-        Public Sub New(sSurveyMethod As String, nFISID As Integer, sFISRuleFilePath As String, dFISInputs As Dictionary(Of String, Integer))
+        Public Sub New(sSurveyMethod As String, sFISRuleFilePath As String, dFISInputs As Dictionary(Of String, Integer))
             MyBase.New(sSurveyMethod, "FIS Error")
 
-            m_nFISID = nFISID
             m_sFISRuleFilePath = sFISRuleFilePath
 
             If dFISInputs Is Nothing Then

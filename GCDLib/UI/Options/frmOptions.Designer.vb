@@ -54,7 +54,6 @@
             Me.ErrorDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.TypeIDDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.SurveyTypesBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-            Me.SurveyTypes = New SurveyTypes()
             Me.btnDeleteSurveyType = New System.Windows.Forms.Button()
             Me.btnSettingsSurveyType = New System.Windows.Forms.Button()
             Me.btnAddSurveyType = New System.Windows.Forms.Button()
@@ -97,7 +96,6 @@
             CType(Me.nbrError, System.ComponentModel.ISupportInitialize).BeginInit()
             CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
             CType(Me.SurveyTypesBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(Me.SurveyTypes, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.TabPage3.SuspendLayout()
             Me.grbTransparencyLayer.SuspendLayout()
             CType(Me.nudTransparency, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -422,12 +420,6 @@
             '
             Me.SurveyTypesBindingSource.AllowNew = True
             Me.SurveyTypesBindingSource.DataMember = "SurveyTypes"
-            Me.SurveyTypesBindingSource.DataSource = Me.SurveyTypes
-            '
-            'SurveyTypes
-            '
-            Me.SurveyTypes.DataSetName = "SurveyTypes"
-            Me.SurveyTypes.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
             '
             'btnDeleteSurveyType
             '
@@ -837,7 +829,6 @@
             CType(Me.nbrError, System.ComponentModel.ISupportInitialize).EndInit()
             CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
             CType(Me.SurveyTypesBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(Me.SurveyTypes, System.ComponentModel.ISupportInitialize).EndInit()
             Me.TabPage3.ResumeLayout(False)
             Me.TabPage3.PerformLayout()
             Me.grbTransparencyLayer.ResumeLayout(False)
@@ -876,7 +867,6 @@
         Friend WithEvents Label1 As System.Windows.Forms.Label
         Friend WithEvents ttpTooltip As System.Windows.Forms.ToolTip
         Friend WithEvents SurveyTypesBindingSource As System.Windows.Forms.BindingSource
-        Friend WithEvents SurveyTypes As SurveyTypes
         Friend WithEvents DataGridView1 As System.Windows.Forms.DataGridView
         Friend WithEvents txtSurveyType As System.Windows.Forms.TextBox
         Friend WithEvents nbrError As System.Windows.Forms.NumericUpDown

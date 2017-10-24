@@ -14,6 +14,8 @@ Namespace UI.ErrorCalculation
         ' This dictionary stores the definitions of the error surface properties for each survey method polygon
         Private m_dErrorCalculationProperties As Dictionary(Of String, ErrorCalcPropertiesBase)
 
+        Private m_dSurveyTypes As Dictionary(Of String, Core.GCDProject.SurveyType)
+
         Private Sub frmErrorCalculation2_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
             tTip.SetToolTip(txtName, "The name for the error surface. The name must be unique for the DEM survey.")
@@ -28,14 +30,13 @@ Namespace UI.ErrorCalculation
             grdErrorProperties.AllowUserToResizeRows = False
             grdFISInputs.AllowUserToResizeRows = False
 
+            m_dSurveyTypes = GCDLib.Core.GCDProject.ProjectManagerBase.SurveyTypes
+
             ' Load all the FIS rule files in the library to the combobox
             ' (Need to do this before the try/catch below that loads the error surface data
-            For Each rFIS As GCDLib.FISLibrary.FISTableRow In Core.GCDProject.ProjectManagerUI.fisds.FISTable
-                cboFIS.Items.Add(New naru.db.NamedObject(rFIS.FISID, rFIS.Name))
+            For Each fis As FIS.FISLibraryItem In Core.GCDProject.ProjectManagerUI.FISLibrary
+                cboFIS.Items.Add(fis)
             Next
-            cboFIS.ValueMember = "ID"
-            cboFIS.DisplayMember = "Name"
-
 
             If TypeOf m_rErrorSurface Is ProjectDS.ErrorSurfaceRow Then
                 ' Existing error surface. Disable editing.
@@ -167,15 +168,14 @@ Namespace UI.ErrorCalculation
                             ' Find the local path of the FIS rule file based on the library on this machine. Note
                             ' could be imported project from another machine.
                             Dim sFISFuleFilePath As String = String.Empty
-                            For Each rFISRuleFile As GCDLib.FISLibrary.FISTableRow In Core.GCDProject.ProjectManager.fisds.FISTable.Rows
-                                If String.Compare(rFISRuleFile.Name, sFISName, True) = 0 Then
-                                    sFISFuleFilePath = rFISRuleFile.Path
+                            For Each fis As FIS.FISLibraryItem In cboFIS.Items
+                                If String.Compare(fis.FilePath, sFISName, True) = 0 Then
+                                    sFISFuleFilePath = fis.FilePath
                                     Exit For
                                 End If
                             Next
 
-                            m_dErrorCalculationProperties.Add(rProperties.Method, New ErrorCalcPropertiesFIS(rProperties.Method, nFISID, sFISFuleFilePath, dFISInputs))
-
+                            m_dErrorCalculationProperties.Add(rProperties.Method, New ErrorCalcPropertiesFIS(rProperties.Method, sFISFuleFilePath, dFISInputs))
                     End Select
                 Next
             Else
@@ -271,14 +271,11 @@ Namespace UI.ErrorCalculation
         ''' <remarks></remarks>
         Private Function GetDefaultErrorValue(sMethod As String) As Double
 
-            Dim fValue As Double = 0
-            Dim dRows As SurveyTypes.SurveyTypesRow() = Core.GCDProject.ProjectManager.surveyds._SurveyTypes.Select("Name = '" & sMethod & "'")
-            If dRows.Count > 0 Then
-                Dim r As SurveyTypes.SurveyTypesRow = dRows(0)
-                Double.TryParse(r._Error, fValue)
+            If m_dSurveyTypes.ContainsKey(sMethod) Then
+                Return m_dSurveyTypes(sMethod).ErrorValue
+            Else
+                Return 0
             End If
-
-            Return fValue
 
         End Function
 
@@ -441,44 +438,34 @@ Namespace UI.ErrorCalculation
             grdFISInputs.Rows.Clear()
 
             If rdoFIS.Checked Then
-                If TypeOf cboFIS.SelectedItem Is naru.db.NamedObject Then
-                    Dim l As naru.db.NamedObject = cboFIS.SelectedItem
-                    For Each rFIS As GCDLib.FISLibrary.FISTableRow In Core.GCDProject.ProjectManagerUI.fisds.FISTable
-                        If l.ID = rFIS.FISID Then
-                            ' This is the FIS selected in the combo box
-                            Dim theFISRuleFile As New FIS.FISRuleFile(rFIS.Path)
+                Dim theFISRuleFile As New FIS.FISRuleFile(DirectCast(cboFIS.SelectedItem, FIS.FISLibraryItem).FilePath)
 
-                            ' Loop over all the inputs defined for the FIS
-                            For Each sInput As String In theFISRuleFile.FISInputs
-                                Dim nRow As Integer = grdFISInputs.Rows.Add
-                                grdFISInputs.Rows(nRow).Cells(0).Value = sInput
+                ' Loop over all the inputs defined for the FIS
+                For Each sInput As String In theFISRuleFile.FISInputs
+                    Dim nRow As Integer = grdFISInputs.Rows.Add
+                    grdFISInputs.Rows(nRow).Cells(0).Value = sInput
 
-                                ' Get the selected error properties row
-                                Dim lErr As DataGridViewSelectedRowCollection = grdErrorProperties.SelectedRows
-                                If lErr.Count = 1 Then
-                                    Dim errProps As ErrorCalcPropertiesBase = m_dErrorCalculationProperties(lErr(0).Cells(0).Value)
+                    ' Get the selected error properties row
+                    Dim lErr As DataGridViewSelectedRowCollection = grdErrorProperties.SelectedRows
+                    If lErr.Count = 1 Then
+                        Dim errProps As ErrorCalcPropertiesBase = m_dErrorCalculationProperties(lErr(0).Cells(0).Value)
 
-                                    ' Only proceed if the error surface definition is a FIS
-                                    If TypeOf errProps Is ErrorCalcPropertiesFIS Then
-                                        Dim fisProps As ErrorCalcPropertiesFIS = errProps
+                        ' Only proceed if the error surface definition is a FIS
+                        If TypeOf errProps Is ErrorCalcPropertiesFIS Then
+                            Dim fisProps As ErrorCalcPropertiesFIS = errProps
 
-                                        ' loop over all the defined FIS inputs for the error surface
-                                        For Each sDefinedInput As String In fisProps.FISInputs.Keys
-                                            If String.Compare(sInput, sDefinedInput, True) = 0 Then
-                                                ' this is a FIS input that has a definition already
-                                                grdFISInputs.Rows(nRow).Cells(1).Value = fisProps.FISInputs(sDefinedInput)
-                                            End If
-                                        Next
-                                    End If
-
+                            ' loop over all the defined FIS inputs for the error surface
+                            For Each sDefinedInput As String In fisProps.FISInputs.Keys
+                                If String.Compare(sInput, sDefinedInput, True) = 0 Then
+                                    ' this is a FIS input that has a definition already
+                                    grdFISInputs.Rows(nRow).Cells(1).Value = fisProps.FISInputs(sDefinedInput)
                                 End If
                             Next
-
-                            ' Do not continue looking for FIS files
-                            Exit For
                         End If
-                    Next
-                End If
+
+                    End If
+                Next
+
             End If
 
         End Sub
@@ -531,12 +518,7 @@ Namespace UI.ErrorCalculation
                         Next
 
                         ' Find the matching fis library file
-                        For Each rFIS As GCDLib.FISLibrary.FISTableRow In Core.GCDProject.ProjectManager.fisds.FISTable
-                            If String.Compare(rFIS.Name, cboFIS.Text, True) = 0 Then
-                                m_dErrorCalculationProperties(sSurveyMethod) = New ErrorCalcPropertiesFIS(sSurveyMethod, rFIS.FISID, rFIS.Path, dInputs)
-                                Exit For
-                            End If
-                        Next
+                        m_dErrorCalculationProperties(sSurveyMethod) = New ErrorCalcPropertiesFIS(sSurveyMethod, DirectCast(cboFIS.SelectedItem, FIS.FISLibraryItem).FilePath, dInputs)
                     End If
                 End If
 
@@ -748,7 +730,7 @@ Namespace UI.ErrorCalculation
             For Each sFISInput As String In errProps.FISInputs.Keys
                 For Each rAssoc As ProjectDS.AssociatedSurfaceRow In m_rDEMSurvey.GetAssociatedSurfaceRows
                     If rAssoc.AssociatedSurfaceID = errProps.FISInputs(sFISInput) Then
-                        sInputs &= sFISInput & ";" & Core.GCDProject.ProjectManager.GetAbsolutePath(rAssoc.Source) & ";"
+                        sInputs &= String.Format("{0};{1}", sFISInput, Core.GCDProject.ProjectManagerBase.GetAbsolutePath(rAssoc.Source))
                         Exit For
                     End If
                 Next

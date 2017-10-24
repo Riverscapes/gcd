@@ -213,9 +213,9 @@ Namespace Core.ErrorCalculation
             ' Find the local path of the FIS rule file based on the library on this machine. Note
             ' could be imported project from another machine.
             Dim sFISFuleFilePath As String = String.Empty
-            For Each aFISRuleFile As FISLibrary.FISTableRow In GCDProject.ProjectManager.fisds.FISTable.Rows
-                If String.Compare(aFISRuleFile.Name, sFISRuleDefinitionFileName, True) = 0 Then
-                    sFISFuleFilePath = aFISRuleFile.Path
+            For Each fis As GCDLib.Core.ErrorCalculation.FIS.FISLibraryItem In GCDProject.ProjectManagerUI.FISLibrary
+                If String.Compare(fis.Name, sFISRuleDefinitionFileName, True) = 0 Then
+                    sFISFuleFilePath = fis.FilePath
                     Exit For
                 End If
             Next
@@ -237,10 +237,10 @@ Namespace Core.ErrorCalculation
                 ' New muti-method FIS check. Make sure that the FIS input is for this FIS file
                 If String.Compare(FISInput.FIS, sFISFuleFilePath, True) = 0 OrElse String.Compare(FISInput.FIS, IO.Path.GetFileNameWithoutExtension(sFISFuleFilePath)) = 0 Then
 
-                    Dim sSQL As String = GCDProject.ProjectManager.ds.AssociatedSurface.DEMSurveyIDColumn.ColumnName & "=" & m_ErrorSurfaceRow.DEMSurveyRow.DEMSurveyID
-                    sSQL &= " AND " & GCDProject.ProjectManager.ds.AssociatedSurface.NameColumn.ColumnName & "='" & FISInput.AssociatedSurface & "'"
+                    Dim sSQL As String = GCDProject.ProjectManagerBase.ds.AssociatedSurface.DEMSurveyIDColumn.ColumnName & "=" & m_ErrorSurfaceRow.DEMSurveyRow.DEMSurveyID
+                    sSQL &= " AND " & GCDProject.ProjectManagerBase.ds.AssociatedSurface.NameColumn.ColumnName & "='" & FISInput.AssociatedSurface & "'"
 
-                    Dim AssociatedSurface As ProjectDS.AssociatedSurfaceRow = GCDProject.ProjectManager.ds.AssociatedSurface.Select(sSQL).First
+                    Dim AssociatedSurface As ProjectDS.AssociatedSurfaceRow = GCDProject.ProjectManagerBase.ds.AssociatedSurface.Select(sSQL).First
 
                     sInputs &= FISInput.FISInput & ";" & GCDProject.ProjectManagerBase.GetAbsolutePath(AssociatedSurface.Source) & ";"
                 End If

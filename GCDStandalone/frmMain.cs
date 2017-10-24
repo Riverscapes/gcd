@@ -24,6 +24,7 @@ namespace GCDStandalone
             try
             {
                 GCDLib.Core.WorkspaceManager.Initialize();
+                new GCDLib.Core.GCDProject.ProjectManagerUI(GCDConsoleLib.Raster.RasterDriver.GTiff, "true");
             }
             catch (Exception ex)
             {

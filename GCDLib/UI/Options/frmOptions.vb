@@ -20,9 +20,6 @@ Namespace UI.Options
         End Sub
 
         Private Sub OptionsForm_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-
-            'binding source for the survey types dataset and associated XML
-            SurveyTypesBindingSource.DataSource = Core.GCDProject.ProjectManager.surveyds
             '
             ' New method to upgrade the GCD user configuration settings
             '
@@ -262,21 +259,23 @@ Namespace UI.Options
 
         Private Sub btnDeleteSurveyType_Click(sender As System.Object, e As System.EventArgs) Handles btnDeleteSurveyType.Click
 
-            Dim CurrentRow As DataRowView = SurveyTypesBindingSource.Current
-            If TypeOf CurrentRow Is DataRowView Then
-                If TypeOf CurrentRow.Row Is SurveyTypes.SurveyTypesRow Then
-                    Dim surveytype As SurveyTypes.SurveyTypesRow = CurrentRow.Row
-                    Dim sMessage As String = "Are you sure you want to remove the survey type '" & surveytype.Name & "' and its corresponding error value?"
-                    Dim response As MsgBoxResult = MsgBox(sMessage, MsgBoxStyle.YesNo Or MsgBoxStyle.Question, My.Resources.ApplicationNameLong)
-                    If response = MsgBoxResult.Yes Then
-                        If Not CurrentRow Is Nothing Then
-                            'Delete the selected item from the dataset and write this new information to the XML file at the specified location
-                            SurveyTypesBindingSource.RemoveCurrent()
-                            Core.GCDProject.ProjectManager.saveSurveyTypes()
-                        End If
-                    End If
-                End If
-            End If
+            Throw New NotImplementedException
+
+            'Dim CurrentRow As DataRowView = SurveyTypesBindingSource.Current
+            'If TypeOf CurrentRow Is DataRowView Then
+            '    If TypeOf CurrentRow.Row Is SurveyTypes.SurveyTypesRow Then
+            '        Dim surveytype As SurveyTypes.SurveyTypesRow = CurrentRow.Row
+            '        Dim sMessage As String = "Are you sure you want to remove the survey type '" & surveytype.Name & "' and its corresponding error value?"
+            '        Dim response As MsgBoxResult = MsgBox(sMessage, MsgBoxStyle.YesNo Or MsgBoxStyle.Question, My.Resources.ApplicationNameLong)
+            '        If response = MsgBoxResult.Yes Then
+            '            If Not CurrentRow Is Nothing Then
+            '                'Delete the selected item from the dataset and write this new information to the XML file at the specified location
+            '                SurveyTypesBindingSource.RemoveCurrent()
+            '                Core.GCDProject.ProjectManagerBase.saveSurveyTypes()
+            '            End If
+            '        End If
+            '    End If
+            'End If
 
         End Sub
 
@@ -300,8 +299,9 @@ Namespace UI.Options
                 CurrentRow("Name") = txtSurveyType.Text
                 CurrentRow("Error") = nbrError.Text
 
-                SurveyTypesBindingSource.EndEdit()
-                Core.GCDProject.ProjectManager.saveSurveyTypes()
+                Throw New NotImplementedException
+                'SurveyTypesBindingSource.EndEdit()
+                'Core.GCDProject.ProjectManagerBase.saveSurveyTypes()
 
                 txtSurveyType.Text = ""
                 'nbrError.Value = nbrError.Minimum

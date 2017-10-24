@@ -201,7 +201,7 @@
         Protected Function CalculateRawDoD(ByRef sRawDoDPath As String, ByRef sRawHistogram As String) As String
 
             Try
-                sRawDoDPath = Core.GCDProject.ProjectManager.OutputManager.GetDoDRawPath(Name, m_dAnalysisFolder.FullName)
+                sRawDoDPath = Core.GCDProject.ProjectManagerBase.OutputManager.GetDoDRawPath(Name, m_dAnalysisFolder.FullName)
 
                 Dim eResult As External.GCDCoreOutputCodes = External.DoDRaw(AnalysisNewDEM.FilePath, AnalysisOldDEM.FilePath, sRawDoDPath,
                                                            GCDProject.ProjectManagerBase.OutputManager.OutputDriver, GCDProject.ProjectManagerBase.OutputManager.NoData,

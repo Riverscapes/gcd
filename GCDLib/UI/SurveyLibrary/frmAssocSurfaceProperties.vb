@@ -56,7 +56,7 @@ Namespace UI.SurveyLibrary
             ''m_nDEMSurveyID = nSurveyID
             'If nSurfaceID = 0 Then
             '    ' assign the DEM Survey ID to this surface.
-            '    'Dim demRow As ProjectDS.DEMSurveyRow = GCD.GCDProject.ProjectManager.ds.DEMSurvey.FindByDEMSurveyID(nSurveyID)
+            '    'Dim demRow As ProjectDS.DEMSurveyRow = GCD.GCDProject.ProjectManagerBase.ds.DEMSurvey.FindByDEMSurveyID(nSurveyID)
             '    Dim cr As DataRowView = AssociatedSurfaceBindingSource.AddNew
             '    DirectCast(cr.Row, ProjectDS.AssociatedSurfaceRow).DEMSurveyID = nSurveyID
             'Else
@@ -162,7 +162,7 @@ Namespace UI.SurveyLibrary
                     assocRow.Type = cboType.Text
                     assocRow.Name = txtName.Text
                     If dr.IsNew Then
-                        assocRow.Source = Core.GCDProject.ProjectManager.GetRelativePath(txtProjectRaster.Text)
+                        assocRow.Source = Core.GCDProject.ProjectManagerBase.GetRelativePath(txtProjectRaster.Text)
                         assocRow.OriginalSource = txtProjectRaster.Text
                     End If
                     'AssociatedSurfaceBindingSource.EndEdit()
@@ -456,7 +456,7 @@ Namespace UI.SurveyLibrary
             Dim dr As DataRowView ' = AssociatedSurfaceBindingSource.Current
             If dr.IsNew Then
                 Dim assocRow As ProjectDS.AssociatedSurfaceRow = dr.Row
-                txtProjectRaster.Text = Core.GCDProject.ProjectManager.OutputManager.AssociatedSurfaceRasterPath(assocRow.DEMSurveyRow.Name, txtName.Text)
+                txtProjectRaster.Text = Core.GCDProject.ProjectManagerBase.OutputManager.AssociatedSurfaceRasterPath(assocRow.DEMSurveyRow.Name, txtName.Text)
             End If
         End Sub
 

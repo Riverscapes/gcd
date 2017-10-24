@@ -326,7 +326,7 @@ Namespace UI.SurveyLibrary
                 'If the project units have not yet been written to 
                 If Not GCDProject.ProjectManagerBase.CurrentProject.DisplayUnits Is Nothing Then
                     If TypeOf ucRaster.SelectedItem Is GCDConsoleLib.Raster Then
-                        If ucRaster.SelectedItem.VerticalUnits <> GCDProject.ProjectManager.CurrentProject.DisplayUnits Then
+                        If ucRaster.SelectedItem.VerticalUnits <> GCDProject.ProjectManagerBase.CurrentProject.DisplayUnits Then
                             MsgBox(String.Format("The linear units of the selected raster {0} does not match the linear units {1} of the GCD Project." & vbCrLf & vbCrLf & "Please select a raster that has the same linear units as the GCD Project.",
                                              ucRaster.SelectedItem.VerticalUnits, GCDProject.ProjectManagerBase.CurrentProject.DisplayUnits), MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
                             Return False

@@ -147,7 +147,7 @@ Namespace UI.Project
                     ' Creating a new project
                     IO.Directory.CreateDirectory(IO.Path.GetDirectoryName(txtGCDPath.Text))
                     Core.GCDProject.ProjectManagerBase.FilePath = txtGCDPath.Text
-                    Core.GCDProject.ProjectManagerBase.ds.Project.AddProjectRow(txtName.Text, txtDescription.Text, txtDirectory.Text, Now, System.Reflection.Assembly.GetExecutingAssembly.GetName.Version.ToString, valPrecision.Value, Nothing, Nothing, Core.GCDProject.ProjectManager.ProjectTypes.AddIn.ToString())
+                    Core.GCDProject.ProjectManagerBase.ds.Project.AddProjectRow(txtName.Text, txtDescription.Text, txtDirectory.Text, Now, System.Reflection.Assembly.GetExecutingAssembly.GetName.Version.ToString, valPrecision.Value, Nothing, Nothing, String.Empty)
 
                 Else
                     ' Editing properties of existing project

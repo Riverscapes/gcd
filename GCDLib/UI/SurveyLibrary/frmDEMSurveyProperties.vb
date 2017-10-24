@@ -22,10 +22,9 @@ Namespace UI.SurveyLibrary
         Private Sub SurveyPropertiesForm_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
             SetToolTips()
-            SurveyTypesBindingSource.DataSource = Core.GCDProject.ProjectManager.surveyds
-            DEMSurveyBindingSource.DataSource = Core.GCDProject.ProjectManager.ds
-            DEMSurfaceBindingSource.DataSource = Core.GCDProject.ProjectManager.ds
-            ErrorTableBindingSource.DataSource = Core.GCDProject.ProjectManager.ds
+            DEMSurveyBindingSource.DataSource = Core.GCDProject.ProjectManagerBase.ds
+            DEMSurfaceBindingSource.DataSource = Core.GCDProject.ProjectManagerBase.ds
+            ErrorTableBindingSource.DataSource = Core.GCDProject.ProjectManagerBase.ds
 
             If m_DEMSurveyID < 1 Then
                 'DEMSurveyBindingSource.AddNew()
@@ -36,13 +35,13 @@ Namespace UI.SurveyLibrary
                 txtName.Text = demRow.Name
                 txtRasterPath.Text = demRow.Source
                 txtMask.Text = demRow.MethodMask
-                txtFolder.Text = Core.GCDProject.ProjectManager.OutputManager.DEMSurveyFolder(demRow.Name)
+                txtFolder.Text = Core.GCDProject.ProjectManagerBase.OutputManager.DEMSurveyFolder(demRow.Name)
                 rdoSingle.Checked = demRow.SingleMethod
                 rdoMulti.Checked = demRow.MultiMethod
 
                 ' Select the method mask field
                 If demRow.MultiMethod Then
-                    Dim sMaskPath As String = Core.GCDProject.ProjectManager.GetAbsolutePath(txtMask.Text)
+                    Dim sMaskPath As String = Core.GCDProject.ProjectManagerBase.GetAbsolutePath(txtMask.Text)
                     If GCDConsoleLib.GISDataset.FileExists(sMaskPath) Then
                         Dim gMask As New GCDConsoleLib.Vector(sMaskPath)
                         cboIdentify.Items.AddRange(gMask.Fields.Values.Where(Function(s As GCDConsoleLib.VectorField) s.Type.Equals(GCDConsoleLib.GDalFieldType.StringField)))
@@ -298,7 +297,7 @@ Namespace UI.SurveyLibrary
             End If
 
             DEMSurfaceBindingSource.EndEdit()
-            GCDProject.ProjectManager.save()
+            GCDProject.ProjectManagerBase.save()
 
             'TODO: call here to update the ProjectExplorer Tree
             'ProjectExplorerUC.LoadTree(ProjectExplorerUC.GCDNodeTypes.DEMSurvey.ToString)
@@ -324,7 +323,7 @@ Namespace UI.SurveyLibrary
 
 
             'If GCDConsoleLib.Raster.Exists(txtRasterPath.Text) Then
-            '    Dim sHillShade As String = GCD.GCDProject.ProjectManager.OutputManager.DEMSurveyHillShadeRasterPath(txtName.Text)
+            '    Dim sHillShade As String = GCD.GCDProject.ProjectManagerBase.OutputManager.DEMSurveyHillShadeRasterPath(txtName.Text)
             '    If GCDConsoleLib.Raster.Exists(sHillShade) Then
             '        Dim gHillShade As New GCDConsoleLib.Raster(sHillShade)
             '        gHillShade.AddToMap(m_pArcMap, txtName.Text & " HS", txtName.Text)
@@ -355,7 +354,7 @@ Namespace UI.SurveyLibrary
 
                 ' Check if the user has browsed to the same mask. In which case do nothing except reload the fields
                 ' (just in case they are doing this for a reason.
-                Dim sTempPath As String = GCDProject.ProjectManager.GetRelativePath(gNewMask.FilePath)
+                Dim sTempPath As String = GCDProject.ProjectManagerBase.GetRelativePath(gNewMask.FilePath)
                 If String.Compare(sTempPath, txtMask.Text, True) = 0 Then
                     cboIdentify.Items.AddRange(gNewMask.Fields.Values.Where(Function(s As GCDConsoleLib.VectorField) s.Type.Equals(GCDConsoleLib.GDalFieldType.StringField)))
                     cboIdentify.Text = "Method"
@@ -418,7 +417,7 @@ Namespace UI.SurveyLibrary
 
                             ' Poplulate the method mask dropdown with the string fields from the feature class
                             cboIdentify.Items.AddRange(gNewMask.Fields.Values.Where(Function(s As GCDConsoleLib.VectorField) s.Type.Equals(GCDConsoleLib.GDalFieldType.StringField)))
-                            txtMask.Text = GCDProject.ProjectManager.GetRelativePath(sMethodMask)
+                            txtMask.Text = GCDProject.ProjectManagerBase.GetRelativePath(sMethodMask)
 
                         Catch ex As Exception
                             Dim ex2 As New Exception("Error attempting to copy the method mask feature class into the GCD project folder.", ex)
@@ -494,7 +493,7 @@ Namespace UI.SurveyLibrary
             sRasterProperties &= vbNewLine & "Right: " & gRaster.Extent.Right.ToString("#,##0.#")
             sRasterProperties &= vbNewLine & "Bottom: " & gRaster.Extent.Bottom.ToString("#,##0.#")
             sRasterProperties &= vbNewLine
-            sRasterProperties &= vbNewLine & "Cell size: " & Math.Round(gRaster.Extent.CellWidth, CInt(GCDProject.ProjectManager.CurrentProject.Precision)).ToString
+            sRasterProperties &= vbNewLine & "Cell size: " & Math.Round(gRaster.Extent.CellWidth, CInt(GCDProject.ProjectManagerBase.CurrentProject.Precision)).ToString
             sRasterProperties &= vbNewLine
             sRasterProperties &= vbNewLine & "Width: " & (gRaster.Extent.Right - gRaster.Extent.Left).ToString("#,##0.#")
             sRasterProperties &= vbNewLine & "Height: " & (gRaster.Extent.Top - gRaster.Extent.Bottom).ToString("#,##0.#")
@@ -540,7 +539,7 @@ Namespace UI.SurveyLibrary
             If Not CurrentRow Is Nothing Then
 
                 DEMSurveyBindingSource.EndEdit()
-                GCDProject.ProjectManager.save()
+                GCDProject.ProjectManagerBase.save()
 
                 Dim CurrentSurfaceRow As DataRowView = DEMSurfaceBindingSource.Current
                 If TypeOf CurrentSurfaceRow Is DataRowView AndAlso TypeOf CurrentSurfaceRow.Row Is ProjectDS.AssociatedSurfaceRow Then
@@ -673,7 +672,7 @@ Namespace UI.SurveyLibrary
                 End Try
 
                 If bContinue Then
-                    If GCDConsoleLib.GISDataset.FileExists(GCDProject.ProjectManager.GetAbsolutePath(rAssoc.Source)) Then
+                    If GCDConsoleLib.GISDataset.FileExists(GCDProject.ProjectManagerBase.GetAbsolutePath(rAssoc.Source)) Then
                         Try
                             GCDConsoleLib.Raster.Delete(sPath)
                         Catch ex As Exception
@@ -686,7 +685,7 @@ Namespace UI.SurveyLibrary
                 End If
 
                 Try
-                    GCDConsoleLib.Raster.Delete(GCDProject.ProjectManager.GetAbsolutePath(rAssoc.Source))
+                    GCDConsoleLib.Raster.Delete(GCDProject.ProjectManagerBase.GetAbsolutePath(rAssoc.Source))
                 Catch ex As Exception
                     ' do nothing
                 End Try
@@ -694,7 +693,7 @@ Namespace UI.SurveyLibrary
                 If bContinue Then
                     Try
                         rAssoc.Delete()
-                        GCDProject.ProjectManager.save()
+                        GCDProject.ProjectManagerBase.save()
                     Catch ex As Exception
                         ExceptionHelper.HandleException(ex, "The raster file was deleted, but an error occurred removing the surface from the GCD project file. This will be fixed automatically by closing and opening ArcMap if Validate Project is selected from the options menu")
                     End Try
@@ -715,7 +714,7 @@ Namespace UI.SurveyLibrary
             End If
 
             Try
-                Dim demRow As ProjectDS.DEMSurveyRow = GCDProject.ProjectManager.ds.DEMSurvey.FindByDEMSurveyID(m_DEMSurveyID)
+                Dim demRow As ProjectDS.DEMSurveyRow = GCDProject.ProjectManagerBase.ds.DEMSurvey.FindByDEMSurveyID(m_DEMSurveyID)
                 DEMSurveyBindingSource.EndEdit()
                 SpecifyErrorSurface(demRow)
             Catch ex As Exception
@@ -727,7 +726,7 @@ Namespace UI.SurveyLibrary
         Public Shared Function SpecifyErrorSurface(rDEM As ProjectDS.DEMSurveyRow) As ProjectDS.ErrorSurfaceRow
 
             Dim rError As ProjectDS.ErrorSurfaceRow = Nothing
-            Dim gDEM As New GCDConsoleLib.Raster(Core.GCDProject.ProjectManager.GetAbsolutePath(rDEM.Source))
+            Dim gDEM As New GCDConsoleLib.Raster(Core.GCDProject.ProjectManagerBase.GetAbsolutePath(rDEM.Source))
             Dim frm As New frmImportRaster(gDEM, rDEM, frmImportRaster.ImportRasterPurposes.ErrorCalculation, "Error Surface")
             If frm.ShowDialog = System.Windows.Forms.DialogResult.OK Then
                 Dim gRaster As GCDConsoleLib.Raster = Nothing
@@ -745,9 +744,9 @@ Namespace UI.SurveyLibrary
 
                 If TypeOf gRaster Is GCDConsoleLib.Raster Then
                     Try
-                        Dim sRasterPath As String = Core.GCDProject.ProjectManager.GetRelativePath(frm.txtRasterPath.Text)
-                        rError = GCDProject.ProjectManager.ds.ErrorSurface.AddErrorSurfaceRow(frm.txtName.Text, "Imported Raster", sRasterPath, rDEM)
-                        GCDProject.ProjectManager.save()
+                        Dim sRasterPath As String = Core.GCDProject.ProjectManagerBase.GetRelativePath(frm.txtRasterPath.Text)
+                        rError = GCDProject.ProjectManagerBase.ds.ErrorSurface.AddErrorSurfaceRow(frm.txtName.Text, "Imported Raster", sRasterPath, rDEM)
+                        GCDProject.ProjectManagerBase.save()
 
                         If My.Settings.AddOutputLayersToMap Then
 
@@ -827,7 +826,7 @@ Namespace UI.SurveyLibrary
 
             Dim response As MsgBoxResult = MsgBox("Are you sure you want to delete the selected error surface from the GCD project? This will also delete the raster associated with this error surface.", MsgBoxStyle.YesNo Or MsgBoxStyle.Question, My.Resources.ApplicationNameLong)
             If response = MsgBoxResult.Yes Then
-                Dim sPath As String = Core.GCDProject.ProjectManager.GetAbsolutePath(rError.Source.ToString)
+                Dim sPath As String = Core.GCDProject.ProjectManagerBase.GetAbsolutePath(rError.Source.ToString)
                 Dim bContinue As Boolean = True
 
                 Try
@@ -841,7 +840,7 @@ Namespace UI.SurveyLibrary
 
                 If bContinue Then
                     If Not rError.IsSourceNull Then
-                        If GCDConsoleLib.GISDataset.FileExists(Core.GCDProject.ProjectManager.GetAbsolutePath(rError.Source)) Then
+                        If GCDConsoleLib.GISDataset.FileExists(GCDProject.ProjectManagerBase.GetAbsolutePath(rError.Source)) Then
                             Try
                                 GCDConsoleLib.Raster.Delete(sPath)
                             Catch ex As Exception
@@ -854,7 +853,7 @@ Namespace UI.SurveyLibrary
 
                 If bContinue Then
                     Try
-                        IO.Directory.Delete(System.IO.Path.GetDirectoryName(Core.GCDProject.ProjectManager.GetAbsolutePath(rError.Source)))
+                        IO.Directory.Delete(System.IO.Path.GetDirectoryName(GCDProject.ProjectManagerBase.GetAbsolutePath(rError.Source)))
                     Catch ex As Exception
                         ' do nothing
                     End Try
@@ -863,7 +862,7 @@ Namespace UI.SurveyLibrary
                 If bContinue Then
                     Try
                         rError.Delete()
-                        Core.GCDProject.ProjectManager.save()
+                        Core.GCDProject.ProjectManagerBase.save()
                     Catch ex As Exception
                         ExceptionHelper.HandleException(ex, "The raster file was deleted, but an error occurred removing the surface from the GCD project file. This will be fixed automatically by closing and opening ArcMap if Validate Project is selected from the options menu")
                     End Try

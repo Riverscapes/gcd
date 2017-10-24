@@ -34,12 +34,10 @@
             Me.NameDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.PathDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.FISTableBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-            Me.FISLibrary = New GCDLib.FISLibrary()
             Me.ttpTooltip = New System.Windows.Forms.ToolTip(Me.components)
             Me.btnFISRepo = New System.Windows.Forms.Button()
             CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
             CType(Me.FISTableBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(Me.FISLibrary, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.SuspendLayout()
             '
             'btnAddFIS
@@ -130,16 +128,6 @@
             Me.PathDataGridViewTextBoxColumn.Name = "PathDataGridViewTextBoxColumn"
             Me.PathDataGridViewTextBoxColumn.ReadOnly = True
             '
-            'FISTableBindingSource
-            '
-            Me.FISTableBindingSource.DataMember = "FISTable"
-            Me.FISTableBindingSource.DataSource = Me.FISLibrary
-            '
-            'FISLibrary
-            '
-            Me.FISLibrary.DataSetName = "FISLibrary"
-            Me.FISLibrary.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
-            '
             'btnFISRepo
             '
             Me.btnFISRepo.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -169,7 +157,6 @@
             Me.Text = "Fuzzy Inference System Library"
             CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
             CType(Me.FISTableBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(Me.FISLibrary, System.ComponentModel.ISupportInitialize).EndInit()
             Me.ResumeLayout(False)
 
         End Sub
@@ -180,7 +167,6 @@
         Friend WithEvents btnClose As System.Windows.Forms.Button
         Friend WithEvents DataGridView1 As System.Windows.Forms.DataGridView
         Friend WithEvents FISTableBindingSource As System.Windows.Forms.BindingSource
-        Friend WithEvents FISLibrary As GCDLib.FISLibrary
         Friend WithEvents ttpTooltip As System.Windows.Forms.ToolTip
         Friend WithEvents NameDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents PathDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn

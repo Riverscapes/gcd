@@ -78,7 +78,7 @@ Namespace UI.ChangeDetection
 
             Try
                 EnableDisableControls()
-                For Each rDEMSurvey As ProjectDS.DEMSurveyRow In Core.GCDProject.ProjectManager.CurrentProject.GetDEMSurveyRows
+                For Each rDEMSurvey As ProjectDS.DEMSurveyRow In Core.GCDProject.ProjectManagerBase.CurrentProject.GetDEMSurveyRows
                     Dim nIndex As Integer
 
                     nIndex = cboNewDEM.Items.Add(New naru.db.NamedObject(rDEMSurvey.DEMSurveyID, rDEMSurvey.Name))
@@ -92,7 +92,7 @@ Namespace UI.ChangeDetection
                     End If
                 Next
 
-                Dim sUnits As String = Core.GCDProject.ProjectManager.CurrentProject.DisplayUnits
+                Dim sUnits As String = Core.GCDProject.ProjectManagerBase.CurrentProject.DisplayUnits
                 If Not String.IsNullOrEmpty(sUnits) Then
                     lblMinLodThreshold.Text = lblMinLodThreshold.Text.Replace("()", "(" & sUnits & ")")
                 End If
@@ -110,7 +110,7 @@ Namespace UI.ChangeDetection
                 End If
 
                 ' Load AOIs
-                For Each rAOI As ProjectDS.AOIsRow In Core.GCDProject.ProjectManager.CurrentProject.GetAOIsRows
+                For Each rAOI As ProjectDS.AOIsRow In Core.GCDProject.ProjectManagerBase.CurrentProject.GetAOIsRows
                     lstAOI.Items.Add(New naru.db.NamedObject(rAOI.AOIID, rAOI.Name))
                 Next
 
@@ -132,13 +132,13 @@ Namespace UI.ChangeDetection
             Try
                 System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor
 
-                Dim gNewDEM As New GCDConsoleLib.Raster(Core.GCDProject.ProjectManager.GetAbsolutePath(GetDEMRow(cboNewDEM).Source))
-                Dim gOldDEM As New GCDConsoleLib.Raster(Core.GCDProject.ProjectManager.GetAbsolutePath(GetDEMRow(cboOldDEM).Source))
+                Dim gNewDEM As New GCDConsoleLib.Raster(Core.GCDProject.ProjectManagerBase.GetAbsolutePath(GetDEMRow(cboNewDEM).Source))
+                Dim gOldDEM As New GCDConsoleLib.Raster(Core.GCDProject.ProjectManagerBase.GetAbsolutePath(GetDEMRow(cboOldDEM).Source))
 
                 Dim gAOI As GCDConsoleLib.Vector = Nothing
                 Dim rAOI As ProjectDS.AOIsRow = GetAOIRow()
                 If TypeOf rAOI Is ProjectDS.AOIsRow Then
-                    gAOI = New GCDConsoleLib.Vector(Core.GCDProject.ProjectManager.GetAbsolutePath(rAOI.Source))
+                    gAOI = New GCDConsoleLib.Vector(Core.GCDProject.ProjectManagerBase.GetAbsolutePath(rAOI.Source))
                 End If
 
                 Dim cdEngine As Core.ChangeDetection.ChangeDetectionEngineBase = Nothing
@@ -257,11 +257,11 @@ Namespace UI.ChangeDetection
                     End If
 
                     ' Make relative paths for storing in the project.
-                    sProbabilityRaster = GCDProject.ProjectManager.GetRelativePath(dodProp.ProbabilityRaster)
-                    sSpatialCoErosionRaster = GCDProject.ProjectManager.GetRelativePath(dodProp.SpatialCoErosionRaster)
-                    sSpatialCoDepositionRaster = GCDProject.ProjectManager.GetRelativePath(dodProp.SpatialCoDepositionRaster)
-                    sConditionalRaster = GCDProject.ProjectManager.GetRelativePath(dodProp.ConditionalRaster)
-                    sPosterior = GCDProject.ProjectManager.GetRelativePath(dodProp.PosteriorRaster)
+                    sProbabilityRaster = GCDProject.ProjectManagerBase.GetRelativePath(dodProp.ProbabilityRaster)
+                    sSpatialCoErosionRaster = GCDProject.ProjectManagerBase.GetRelativePath(dodProp.SpatialCoErosionRaster)
+                    sSpatialCoDepositionRaster = GCDProject.ProjectManagerBase.GetRelativePath(dodProp.SpatialCoDepositionRaster)
+                    sConditionalRaster = GCDProject.ProjectManagerBase.GetRelativePath(dodProp.ConditionalRaster)
+                    sPosterior = GCDProject.ProjectManagerBase.GetRelativePath(dodProp.PosteriorRaster)
                 End If
 
                 If TypeOf m_DoDResultSet.DoDProperties Is Core.ChangeDetection.ChangeDetectionPropertiesPropagated Then
@@ -274,7 +274,7 @@ Namespace UI.ChangeDetection
                         End If
 
                         ' Make the path relative
-                        sPropagatedError = GCDProject.ProjectManager.GetRelativePath(sPropagatedError)
+                        sPropagatedError = GCDProject.ProjectManagerBase.GetRelativePath(sPropagatedError)
                     End If
                 End If
 
@@ -306,7 +306,7 @@ Namespace UI.ChangeDetection
                                                              , m_DoDResultSet.ChangeStats.VolumeErosion_Error, m_DoDResultSet.ChangeStats.VolumeDeposition_Error, sPropagatedError _
                                                              , sProbabilityRaster, sConditionalRaster, sPosterior, sSpatialCoDepositionRaster, sSpatialCoErosionRaster)
 
-                GCDProject.ProjectManager.save()
+                GCDProject.ProjectManagerBase.save()
                 Cursor.Current = Cursors.Default
 
                 ' Try and add the DoD to the map
@@ -507,7 +507,7 @@ Namespace UI.ChangeDetection
             Dim rResult As ProjectDS.AOIsRow = Nothing
             'Dim lItem As GISCode.ListItem = cboAOI.SelectedItem
             'If TypeOf lItem Is GISCode.ListItem Then
-            '    For Each rAOI As ProjectDS.AOIsRow In GCD.GCDProject.ProjectManager.CurrentProject.GetAOIsRows
+            '    For Each rAOI As ProjectDS.AOIsRow In GCD.GCDProject.ProjectManagerBase.CurrentProject.GetAOIsRows
             '        If rAOI.AOIID = lItem.ID Then
             '            rResult = rAOI
             '            Exit For

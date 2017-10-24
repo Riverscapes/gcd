@@ -80,7 +80,7 @@ Namespace UI.ChangeDetection
                     End If
 
                     If Not m_rDoD.IsConditionalProbRasterNull Then
-                        'txtConditionalRaster.Text = GCD.GCDProject.ProjectManager.GetAbsolutePath(m_rDoD.ConditionalProbRaster)
+                        'txtConditionalRaster.Text = GCD.GCDProject.ProjectManagerBase.GetAbsolutePath(m_rDoD.ConditionalProbRaster)
                     End If
 
                     If Not m_rDoD.IsPosteriorRasterNull AndAlso Not String.IsNullOrEmpty(m_rDoD.PosteriorRaster) Then

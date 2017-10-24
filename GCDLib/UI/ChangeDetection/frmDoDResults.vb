@@ -37,7 +37,7 @@
         Private Sub cmdBrowse_Click(sender As System.Object, e As System.EventArgs) Handles cmdBrowse.Click
 
             If TypeOf m_rDoD Is ProjectDS.DoDsRow Then
-                Dim sFolder As String = Core.GCDProject.ProjectManagerBase.GetAbsolutePath(m_rDoD.OutputFolder) ' GCD.GCDProject.ProjectManager.OutputManager.GetDoDOutputFolder(m_rDoD.Name)
+                Dim sFolder As String = Core.GCDProject.ProjectManagerBase.GetAbsolutePath(m_rDoD.OutputFolder) ' GCD.GCDProject.ProjectManagerBase.OutputManager.GetDoDOutputFolder(m_rDoD.Name)
                 If IO.Directory.Exists(sFolder) Then
                     Process.Start("explorer.exe", sFolder)
                 Else
@@ -60,10 +60,10 @@
 
         Private Sub cmdHistogram_Click(sender As System.Object, e As System.EventArgs) Handles cmdHistogram.Click
             'Try
-            '    Dim sRawDod As String = GCD.GCDProject.ProjectManager.GetAbsolutePath(m_rDoD.RawDoDPath)
-            '    Dim sThreshDoD As String = GCD.GCDProject.ProjectManager.GetAbsolutePath(m_rDoD.ThreshDoDPath)
-            '    Dim sRawHist As String = GCD.GCDProject.ProjectManager.GetAbsolutePath(m_rDoD.RawHistPath)
-            '    Dim sThrHist As String = GCD.GCDProject.ProjectManager.GetAbsolutePath(m_rDoD.ThreshHistPath)
+            '    Dim sRawDod As String = GCD.GCDProject.ProjectManagerBase.GetAbsolutePath(m_rDoD.RawDoDPath)
+            '    Dim sThreshDoD As String = GCD.GCDProject.ProjectManagerBase.GetAbsolutePath(m_rDoD.ThreshDoDPath)
+            '    Dim sRawHist As String = GCD.GCDProject.ProjectManagerBase.GetAbsolutePath(m_rDoD.RawHistPath)
+            '    Dim sThrHist As String = GCD.GCDProject.ProjectManagerBase.GetAbsolutePath(m_rDoD.ThreshHistPath)
             '    Dim frm As New HistogramConfigForm(sRawDod, sThreshDoD, sRawHist, sThrHist)
             '    If frm.ShowDialog = Windows.Forms.DialogResult.OK Then
             '        ucHistogram.RefreshHistogram()

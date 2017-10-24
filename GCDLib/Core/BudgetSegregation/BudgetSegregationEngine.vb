@@ -70,9 +70,9 @@
             ' Perform the budget segregation
             '
             ' Determine the path where the BS will be stored.
-            'Dim sOutputFolder As String = GCD.GCDProject.ProjectManager.OutputManager.GetBudgetSegreationDirectoryPath(GISDataStructures.GetWorkspacePath(DoD.RawDoD), IO.Path.GetFileNameWithoutExtension(gInputPolygonMask.FullPath), sMaskField)
+            'Dim sOutputFolder As String = GCD.GCDProject.ProjectManagerBase.OutputManager.GetBudgetSegreationDirectoryPath(GISDataStructures.GetWorkspacePath(DoD.RawDoD), IO.Path.GetFileNameWithoutExtension(gInputPolygonMask.FullPath), sMaskField)
 
-            'Dim sOutputFolder As String = GCD.GCDProject.ProjectManager.OutputManager.CreateBudgetSegFolder(DoD.RawDoD, IO.Path.GetFileNameWithoutExtension(gInputPolygonMask.FullPath), sMaskField)
+            'Dim sOutputFolder As String = GCD.GCDProject.ProjectManagerBase.OutputManager.CreateBudgetSegFolder(DoD.RawDoD, IO.Path.GetFileNameWithoutExtension(gInputPolygonMask.FullPath), sMaskField)
             Dim sOutputFolder = m_dOutputFolder.FullName
             ' Copy Polygon features to the output folder
             'Dim sPolygonMask As String = GCDConsoleLib.VectorDataSource.GetNewSafeName(sOutputFolder, "Mask")
@@ -243,8 +243,8 @@
             'ExportPieChartViewer.ExportCharts(bsOutputs.PieCharts.PercentageTotalVolumePiePath, nChartWidth, nChartHeight)
 
             '' Export summaries and the GCD summary XML
-            'ExportMaskStats.ExportSummaries(GCD.GCDProject.ProjectManager.ExcelTemplatesFolder, bsOutputs.MaskOutputs, GISDataStructures.GetLinearUnitsAsString(gDODSource.LinearUnits))
-            'ExportMaskStats.ExportClassSummary(GCD.GCDProject.ProjectManager.ExcelTemplatesFolder.FullName, bsOutputs.ClassSummaryPath, bsOutputs.MaskOutputs, Units)
+            'ExportMaskStats.ExportSummaries(GCD.GCDProject.ProjectManagerBase.ExcelTemplatesFolder, bsOutputs.MaskOutputs, GISDataStructures.GetLinearUnitsAsString(gDODSource.LinearUnits))
+            'ExportMaskStats.ExportClassSummary(GCD.GCDProject.ProjectManagerBase.ExcelTemplatesFolder.FullName, bsOutputs.ClassSummaryPath, bsOutputs.MaskOutputs, Units)
 
             Return bsOutputs
 

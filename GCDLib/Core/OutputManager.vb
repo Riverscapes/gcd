@@ -42,7 +42,7 @@ Namespace Core
 #Region "Folder Paths"
 
         Public Function GCDProjectFolder() As String
-            Return IO.Path.GetDirectoryName(GCDProject.ProjectManager.FilePath)
+            Return IO.Path.GetDirectoryName(GCDProject.ProjectManagerBase.FilePath)
         End Function
 
         Public Function DEMSurveyFolder(sSurveyName As String) As String
@@ -131,7 +131,7 @@ Namespace Core
             'Dim sBudgetSegregationDirectorPath As String = IO.Path.Combine(ChangeDetectionDirectoryPath, m_sBudgetSegregationFolder)
             Dim nFolderIndex As Integer = 0
 
-            For Each rDoD As ProjectDS.DoDsRow In Core.GCDProject.ProjectManager.CurrentProject.GetDoDsRows
+            For Each rDoD As ProjectDS.DoDsRow In Core.GCDProject.ProjectManagerBase.CurrentProject.GetDoDsRows
                 If String.Compare(sDoDName, rDoD.Name, True) = 0 Then
                     sDoDFolder = IO.Path.Combine(GCDProjectFolder(), IO.Path.GetDirectoryName(rDoD.RawDoDPath))
                     If Not IO.Directory.Exists(sDoDFolder) Then
@@ -826,7 +826,7 @@ Namespace Core
             Dim nFolderIndex As Integer = 0
 
             ' Check if the DoD already exists and if so then get the established folder path
-            For Each rDoD As ProjectDS.DoDsRow In GCDProject.ProjectManager.CurrentProject.GetDoDsRows
+            For Each rDoD As ProjectDS.DoDsRow In GCDProject.ProjectManagerBase.CurrentProject.GetDoDsRows
                 If String.Compare(sDoDName, rDoD.Name, True) = 0 Then
                     sDoDFolder = IO.Path.Combine(GCDProjectFolder, rDoD.OutputFolder)
                     If Not IO.Directory.Exists(sDoDFolder) Then

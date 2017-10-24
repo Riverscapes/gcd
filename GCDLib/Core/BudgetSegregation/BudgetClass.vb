@@ -168,7 +168,7 @@ Namespace Core.BudgetSegregation
 
         Public Function GetBudgetSegregationDirectoryPath() As String
             'Get GetChangeDetectionDirectoryPath
-            'Dim ChangeDetectionDirectoryPath As String = GCDProject.ProjectManager.OutputManager.GetChangeDetectionDirectoryPath(_NewSurveyName, _OldSurveyName, _DoDName)
+            'Dim ChangeDetectionDirectoryPath As String = GCDProject.ProjectManagerBase.OutputManager.GetChangeDetectionDirectoryPath(_NewSurveyName, _OldSurveyName, _DoDName)
             Dim BudgetSegregationDirectoryPath As String = GCDProject.ProjectManagerBase.OutputManager.GetBudgetSegreationDirectoryPath(GCDProject.ProjectManagerBase.OutputManager.GetDoDOutputFolder(_DoDName), _MaskFilename, _Field)
             Return BudgetSegregationDirectoryPath
         End Function

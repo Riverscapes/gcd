@@ -27,7 +27,6 @@
             Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmAddFIS))
             Me.txtFISFile = New System.Windows.Forms.TextBox()
             Me.FISTableBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-            Me.FISLibrary = New GCDLib.FISLibrary()
             Me.txtName = New System.Windows.Forms.TextBox()
             Me.btnOK = New System.Windows.Forms.Button()
             Me.btnHelp = New System.Windows.Forms.Button()
@@ -36,7 +35,6 @@
             Me.Label2 = New System.Windows.Forms.Label()
             Me.btnBrowseFIS = New System.Windows.Forms.Button()
             CType(Me.FISTableBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(Me.FISLibrary, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.SuspendLayout()
             '
             'txtFISFile
@@ -54,12 +52,6 @@
             'FISTableBindingSource
             '
             Me.FISTableBindingSource.DataMember = "FISTable"
-            Me.FISTableBindingSource.DataSource = Me.FISLibrary
-            '
-            'FISLibrary
-            '
-            Me.FISLibrary.DataSetName = "FISLibrary"
-            Me.FISLibrary.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
             '
             'txtName
             '
@@ -152,7 +144,6 @@
             Me.Name = "AddFISForm"
             Me.Text = "Add FIS Library File"
             CType(Me.FISTableBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(Me.FISLibrary, System.ComponentModel.ISupportInitialize).EndInit()
             Me.ResumeLayout(False)
             Me.PerformLayout()
 
@@ -165,7 +156,6 @@
         Friend WithEvents Label1 As System.Windows.Forms.Label
         Friend WithEvents Label2 As System.Windows.Forms.Label
         Friend WithEvents btnBrowseFIS As System.Windows.Forms.Button
-        Friend WithEvents FISLibrary As GCDLib.FISLibrary
         Friend WithEvents FISTableBindingSource As System.Windows.Forms.BindingSource
     End Class
 End Namespace

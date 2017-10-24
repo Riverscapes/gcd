@@ -4,16 +4,10 @@ Imports System.Windows.Forms
 Namespace Core.GCDProject
 
     Public Class ProjectManagerUI
-        Inherits ProjectManager
+        Inherits ProjectManagerBase
 
         Protected Shared m_PyramidManager As RasterPyramidManager
-        Protected Shared m_GCDArcMapManager As GCDArcMapManager
-
-        Public Shared ReadOnly Property ArcMapManager As GCDArcMapManager
-            Get
-                Return m_GCDArcMapManager
-            End Get
-        End Property
+        Private Shared m_FISLibrary As FileInfo
 
         Public Shared ReadOnly Property PyramidManager As RasterPyramidManager
             Get
@@ -21,33 +15,46 @@ Namespace Core.GCDProject
             End Get
         End Property
 
-        Public Sub New(ByVal sFISDatasetPath As String, ByVal sSurveyTypesDatasetPath As String,
-                     ByVal eDefaultRasterType As GCDConsoleLib.Raster.RasterDriver,
-                     ByVal sResourcesFolder As String,
-                     ByVal sExcelTemplateFolder As String,
-                     ByVal ColourErosion As System.Drawing.Color,
-                     ByVal ColourDeposition As System.Drawing.Color,
-                     ByVal sAutomaticPyramids As String)
+        Public Shared Property FISLibrary As List(Of ErrorCalculation.FIS.FISLibraryItem)
+            Get
+                If m_FISLibrary.Exists Then
+                    Return ErrorCalculation.FIS.FISLibraryItem.Load(m_FISLibrary)
+                Else
+                    Return New List(Of ErrorCalculation.FIS.FISLibraryItem)
+                End If
+            End Get
+            Set(value As List(Of ErrorCalculation.FIS.FISLibraryItem))
+                ErrorCalculation.FIS.FISLibraryItem.Save(m_FISLibrary, value)
+            End Set
+        End Property
 
-            MyBase.New(sFISDatasetPath, sResourcesFolder, sExcelTemplateFolder, sSurveyTypesDatasetPath,
-                                    eDefaultRasterType,
-                                    ColourErosion,
-                                    ColourDeposition)
+        Private Shared ReadOnly Property ApplicationFolder As String
+            Get
+                Return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "GCD")
+            End Get
+        End Property
 
-            'm_GCDArcMapManager = New GCDArcMapManager(pArcMap)
+        Public Sub New(ByVal eDefaultRasterType As GCDConsoleLib.Raster.RasterDriver, ByVal sAutomaticPyramids As String)
+            MyBase.New(ApplicationFolder, My.Settings.Erosion, My.Settings.Depsoition, eDefaultRasterType)
+
+            ' Copy all the deployment folders and files into the user's AppData folder
+            CopyResourceFolder("Deploy")
+
             m_PyramidManager = New RasterPyramidManager(sAutomaticPyramids)
+            m_FISLibrary = New FileInfo(Path.Combine(Environment.SpecialFolder.ApplicationData, "FISLibrary.xml"))
 
         End Sub
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="bRemoveMissingrasters"></param>
+        ''' <returns>True if the GCD project has been altered during the validation process</returns>
         Public Shared Function Validate(Optional bRemoveMissingrasters As Boolean = False) As Boolean
-            If My.Settings.ValidateProjectOnLoad Then
-                Dim bEditedGCDFile As Boolean = ValidateProjectRastersExist(True)
-                'This code cleans the project of empty folders which were not fully deleted due to inability to remove esri locks even after the file has successfully been deleted and removed from GCD xml
-                CleanProjectFolderStructure(True)
-            End If
-        End Function
 
-        Private Shared Function ValidateProjectRastersExist(Optional ByVal bRemoveMissingRasters As Boolean = False) As Boolean
+            If Not My.Settings.ValidateProjectOnLoad Then
+                Return False
+            End If
 
             Dim bEditedGCDFile As Boolean = False
             Dim sOutputMessages As New Text.StringBuilder
@@ -66,11 +73,11 @@ Namespace Core.GCDProject
             Next
 
             'Pass bEditedGCDFile as a reference argument between these 3 methods 
-            bEditedGCDFile = ValidateAssociatedSurfaces(sOutputMessages, bEditedGCDFile, bRemoveMissingRasters)
-            bEditedGCDFile = ValidateErrorSurfaces(sOutputMessages, bEditedGCDFile, bRemoveMissingRasters)
-            bEditedGCDFile = ValidateDoDAnalysisSurfaces(rProject, sOutputMessages, bEditedGCDFile, bRemoveMissingRasters)
+            bEditedGCDFile = ValidateAssociatedSurfaces(sOutputMessages, bEditedGCDFile, bRemoveMissingrasters)
+            bEditedGCDFile = ValidateErrorSurfaces(sOutputMessages, bEditedGCDFile, bRemoveMissingrasters)
+            bEditedGCDFile = ValidateDoDAnalysisSurfaces(rProject, sOutputMessages, bEditedGCDFile, bRemoveMissingrasters)
 
-            If bRemoveMissingRasters Then
+            If bRemoveMissingrasters Then
 
                 CheckCopyStatusOfGCDProject(FilePath, bEditedGCDFile, lItemsToRemove.Count)
 
@@ -92,8 +99,13 @@ Namespace Core.GCDProject
 
             Return bEditedGCDFile
 
-        End Function
+            ' This code cleans the project of empty folders which were not fully deleted due to inability to remove
+            ' ESRI locks even after the file has successfully been deleted And removed from GCD xml
+            CleanProjectFolderStructure(True)
 
+            Return bEditedGCDFile
+
+        End Function
 
         Private Shared Function ValidateAssociatedSurfaces(ByRef sOutputMessages As Text.StringBuilder, ByRef bEditedGCDFile As Boolean, Optional ByVal bRemoveMissingRasters As Boolean = False) As Boolean
 
@@ -257,6 +269,102 @@ Namespace Core.GCDProject
                 Debug.Write(sMessage.ToString)
             End If
         End Sub
+
+        Private Function CopyResourceFolder(sFolderName As String) As String
+
+            Dim sDestinationFolder As String = ApplicationFolder
+
+            'New Code to test this may not be what you intend though
+            If String.Compare(sFolderName, "Reources\FIS", True) = 0 Then
+
+                sDestinationFolder = IO.Path.Combine(sDestinationFolder, sFolderName)
+                Dim sExecutingAssemblyFolder = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location)
+                Dim sOriginalFolder As String = IO.Path.Combine(sExecutingAssemblyFolder, sFolderName)
+
+                If IO.Directory.Exists(IO.Path.GetDirectoryName(sDestinationFolder)) Then
+                    CopyDirectory(sOriginalFolder, sDestinationFolder)
+                ElseIf Not IO.Directory.Exists(IO.Path.GetDirectoryName(sDestinationFolder)) Then
+                    IO.Directory.CreateDirectory(sDestinationFolder)
+                    Debug.WriteLine("Copying AddIn Folder """ & sOriginalFolder & """ to """ & sDestinationFolder & """")
+                    CopyDirectory(sOriginalFolder, sDestinationFolder)
+                End If
+            Else
+                Directory.CreateDirectory(sDestinationFolder)
+                Dim sOriginalFolder As String = IO.Path.Combine(Path.GetDirectoryName(Reflection.Assembly.GetExecutingAssembly().Location), sFolderName)
+                sDestinationFolder = Path.Combine(sDestinationFolder, Path.GetFileNameWithoutExtension(sFolderName))
+                Debug.WriteLine("Copying AddIn Folder """ & sOriginalFolder & """ to """ & sDestinationFolder & """")
+                CopyDirectory(sOriginalFolder, sDestinationFolder)
+            End If
+
+            Return sDestinationFolder
+
+        End Function
+
+        Private Sub CopyDirectory(ByVal sourcePath As String, ByVal destPath As String)
+
+            If Not IO.Directory.Exists(destPath) Then
+                Try
+                    Dim dFolder As IO.DirectoryInfo = IO.Directory.CreateDirectory(destPath)
+                    If Not dFolder.Exists Then
+                        Dim ex As New Exception("Failed to create directory.")
+                        ex.Data("Directory") = destPath
+                        Throw ex
+                    End If
+                Catch ex As IO.DirectoryNotFoundException
+                    Dim ex2 As New Exception("The specified path is invalid (for example, it is on an unmapped drive).", ex)
+                    Throw ex2
+
+                Catch ex As IO.IOException
+                    Dim ex2 As New Exception("The directory specified by path is a file or the network name is not known.", ex)
+                    Throw ex2
+
+                Catch ex As UnauthorizedAccessException
+                    Dim ex2 As New Exception("The caller does not have the required permission.", ex)
+                    Throw ex2
+
+                Catch ex As ArgumentNullException
+                    Dim ex2 As New Exception("Path is Nothing.", ex)
+                    Throw ex2
+
+                Catch ex As ArgumentException
+                    Dim ex2 As New Exception("The path is a zero-length string, contains only white space, or contains one or more invalid characters. You can query for invalid characters by using the GetInvalidPathChars method or path is prefixed with, or contains, only a colon character (:).", ex)
+                    Throw ex2
+
+                Catch ex As PlatformNotSupportedException
+                    Dim ex2 As New Exception("The specified path, file name, or both exceed the system-defined maximum length. For example, on Windows-based platforms, paths must be less than 248 characters and file names must be less than 260 characters.", ex)
+                    Throw ex2
+
+                Catch ex As NotSupportedException
+                    Dim ex2 As New Exception("path contains a colon character (:) that is not part of a drive label (""C:\"").", ex)
+                    Throw ex2
+
+                Catch ex As Exception
+                    Dim ex2 As New Exception("Failed to create directory.")
+                    ex2.Data("Directory") = destPath
+                    Throw ex2
+                End Try
+            End If
+
+            For Each file1 As String In IO.Directory.GetFiles(sourcePath)
+                Dim dest As String = IO.Path.Combine(destPath, IO.Path.GetFileName(file1))
+                If IO.File.Exists(file1) Then
+                    If String.Compare("FISLibraryXML.xml", IO.Path.GetFileName(file1)) = 0 Then
+                        If Not IO.File.Exists(dest) Then
+                            IO.File.Copy(file1, dest, True)
+                        End If
+                    Else
+                        IO.File.Copy(file1, dest, True)  ' Added True here to force the an overwrite 
+                    End If
+                End If
+            Next
+
+            ' Use directly the sourcePath passed in, not the parent of that path
+            For Each dir1 As String In IO.Directory.GetDirectories(sourcePath)
+                Dim destdir As String = IO.Path.Combine(destPath, IO.Path.GetFileName(dir1))
+                CopyDirectory(dir1, destdir)
+            Next
+        End Sub
+
     End Class
 
 End Namespace

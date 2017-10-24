@@ -3,8 +3,7 @@
     Public Class frmAddFIS
 
         Private Sub AddFISForm_Load(sender As Object, e As System.EventArgs) Handles Me.Load
-            FISTableBindingSource.DataSource = Core.GCDProject.ProjectManager.fisds
-            FISTableBindingSource.AddNew()
+
         End Sub
 
         Private Sub btnOK_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnOK.Click
@@ -37,13 +36,8 @@
                     Exit Sub
                 End Try
 
-                Dim CurrentRow As DataRowView = FISTableBindingSource.Current
-
-                CurrentRow("Name") = txtName.Text
-                CurrentRow("Path") = txtFISFile.Text
-
-                FISTableBindingSource.EndEdit()
-                Core.GCDProject.ProjectManager.saveFIS()
+                ' old binding source code removed here
+                Throw New NotImplementedException()
 
             Catch ex As Exception
                 If ex.Message.ToString.ToLower.Contains("name") Then

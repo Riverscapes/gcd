@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<SurveyTypes>
+    <SurveyType>
+        <Name>[Undefined]</Name>
+        <Error>0.00</Error>
+    </SurveyType>
+    <SurveyType>
+        <Name>Total Station</Name>
+        <Error>0.04</Error>
+    </SurveyType>
+    <SurveyType>
+        <Name>rtkGPS</Name>
+        <Error>0.06</Error>
+    </SurveyType>
+    <SurveyType>
+        <Name>LiDAR</Name>
+        <Error>0.15</Error>
+    </SurveyType>
+    <SurveyType>
+        <Name>Single Beam Sonar</Name>
+        <Error>0.10</Error>
+    </SurveyType>
+    <SurveyType>
+        <Name>Multi Beam Sonar</Name>
+        <Error>0.03</Error>
+    </SurveyType>
+    <SurveyType>
+        <Name>TLS</Name>
+        <Error>0.03</Error>
+    </SurveyType>
+    <SurveyType>
+        <Name>Bathymetric LiDAR</Name>
+        <Error>0.18</Error>
+    </SurveyType>
+    <SurveyType>
+        <Name>Photogrammetry</Name>
+        <Error>0.12</Error>
+    </SurveyType>
+</SurveyTypes>

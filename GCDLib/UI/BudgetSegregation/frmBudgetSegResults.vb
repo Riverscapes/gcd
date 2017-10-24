@@ -12,7 +12,7 @@ Namespace UI.BudgetSegregation
             ' This call is required by the designer.
             InitializeComponent()
 
-            For Each rBS As ProjectDS.BudgetSegregationsRow In GCDProject.ProjectManager.ds.BudgetSegregations
+            For Each rBS As ProjectDS.BudgetSegregationsRow In GCDProject.ProjectManagerBase.ds.BudgetSegregations
                 If rBS.BudgetID = nBSID Then
                     m_rBS = rBS
                     Exit Sub
