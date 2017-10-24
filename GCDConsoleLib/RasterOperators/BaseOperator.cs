@@ -17,16 +17,18 @@ namespace GCDConsoleLib.Internal
     /// </summary>
     public abstract class BaseOperator<T>
     {
+        public ExtentRectangle ChunkWindow;
+        public Boolean OpDone;
+
         protected readonly List<Raster> _rasters;
         protected ExtentRectangle _opExtent;
-        protected ExtentRectangle _chunkWindow;
         protected T OpNodataVal;
-        protected Boolean bDone;
+
+
+        private T[] _buffer;
 
         private Raster _outputRaster;
-        private List<RasterInternals<T>> _rasterguts;
         private string _outputrasterpath;
-        private RasterInternals<T> _outputRasterGuts;
 
         /// <summary>
         /// Initialize a bunch of rasters
@@ -37,11 +39,9 @@ namespace GCDConsoleLib.Internal
         protected BaseOperator(List<Raster> rRasters, Raster rOutputRaster)
         {
             _rasters = new List<Raster>(rRasters.Count);
-            _rasterguts = new List<RasterInternals<T>>(rRasters.Count);
             foreach (Raster rRa in rRasters)
             {
                 _rasters.Add(rRa);
-                _rasterguts.Add(rRa.RasterGuts as RasterInternals<T>);
             }
             _init(rOutputRaster);
 
@@ -54,12 +54,18 @@ namespace GCDConsoleLib.Internal
         /// <param name="newExt"></param>
         private void _init(Raster rOutRaster)
         {
-            bDone = false;
+            OpDone = false;
             Raster r0 = _rasters[0];
             ExtentRectangle tmpRect = r0.Extent;
 
             if (typeof(T) == typeof(Single))
-                OpNodataVal = (T)System.ComponentModel.TypeDescriptor.GetConverter(typeof(T)).ConvertFrom(_rasters[0].RasterGuts.NodataValSingle);
+                OpNodataVal = (T)Convert.ChangeType(_rasters[0].NodataValue<Single>(), typeof(T));
+            else if (typeof(T) == typeof(Double))
+                OpNodataVal = (T)Convert.ChangeType(_rasters[0].NodataValue<Double>(), typeof(T));
+            else if (typeof(T) == typeof(int))
+                OpNodataVal = (T)Convert.ChangeType(_rasters[0].NodataValue<int>(), typeof(T));
+            else if (typeof(T) == typeof(Byte))
+                OpNodataVal = (T)Convert.ChangeType(_rasters[0].NodataValue<Byte>(), typeof(T));
 
             // Validate our each raster, Add each raster to the union extent window and open it for business
             foreach (Raster rN in _rasters)
@@ -73,10 +79,11 @@ namespace GCDConsoleLib.Internal
             // Now that we have our rasters tested and a unioned extent we can set the operation extent
             SetOpExtent(tmpRect);
 
+            _buffer = new T[ChunkWindow.rows * ChunkWindow.cols];
+
             // Finally, set up our output raster and make sure it's open for writing
             _outputRaster = rOutRaster;
             _outputRaster.Extent = _opExtent;
-            _outputRasterGuts = _outputRaster.RasterGuts as RasterInternals<T>;
             // Open our output for writing
             _outputRaster.Open(true);
 
@@ -95,7 +102,7 @@ namespace GCDConsoleLib.Internal
             int chunkYsize = 10;
 
             if (_opExtent.rows < chunkYsize) chunkYsize = _opExtent.rows;
-            _chunkWindow = new ExtentRectangle(_opExtent.Top, _opExtent.Left, _opExtent.CellHeight, _opExtent.CellWidth, chunkYsize, chunkXsize);
+            ChunkWindow = new ExtentRectangle(_opExtent.Top, _opExtent.Left, _opExtent.CellHeight, _opExtent.CellWidth, chunkYsize, chunkXsize);
 
         }
 
@@ -105,20 +112,20 @@ namespace GCDConsoleLib.Internal
         /// <returns></returns>
         public void nextChunk()
         {
-            if (_chunkWindow.Top < _opExtent.Bottom)
+            if (ChunkWindow.Top < _opExtent.Bottom)
             {
                 // Advance the chunk
-                _chunkWindow.Top = _chunkWindow.Top + (_chunkWindow.rows * _chunkWindow.CellHeight);
+                ChunkWindow.Top = ChunkWindow.Top + (ChunkWindow.rows * ChunkWindow.CellHeight);
 
                 // If we've fallen off the bottom of the intended extent then we need to shorten the chunk
-                if (_chunkWindow.Bottom < _opExtent.Bottom)
+                if (ChunkWindow.Bottom < _opExtent.Bottom)
                 {
-                    _chunkWindow.rows = (int)((_chunkWindow.Top - _opExtent.Bottom) / _chunkWindow.CellHeight);
+                    ChunkWindow.rows = (int)((ChunkWindow.Top - _opExtent.Bottom) / ChunkWindow.CellHeight);
                 }
-                bDone = false;
+                OpDone = false;
             }
             else
-                bDone = true;
+                OpDone = true;
         }
 
         /// <summary>
@@ -133,23 +140,19 @@ namespace GCDConsoleLib.Internal
                 Raster rRa = _rasters[idx];
 
                 // Set up an array with nodatavals to be populated (or not)
-                T[] inputchunk = new T[_chunkWindow.cols * _chunkWindow.rows];
+                T[] inputchunk = new T[ChunkWindow.cols * ChunkWindow.rows];
                 inputchunk.Fill(OpNodataVal);
 
                 // Make sure there's some data to read, otherwise return the filled nodata values from above
-                ExtentRectangle _interrect = _chunkWindow.Intersect(ref rRa.Extent);
+                ExtentRectangle _interrect = ChunkWindow.Intersect(ref rRa.Extent);
                 if (_interrect.rows > 0 && _interrect.cols > 0)
                 {
-                    T[] readChunk = new T[_chunkWindow.rows * _chunkWindow.cols];
-
                     // Get the (col,row) offsets
-                    Tuple<int, int> offset = _interrect.GetTopCornerTranslation(ref _chunkWindow);
+                    Tuple<int, int> offset = _interrect.GetTopCornerTranslation(ref ChunkWindow);
 
+                    _rasters[idx].Read(offset.Item2, offset.Item1, _interrect.cols, _interrect.rows, ref _buffer);
 
-                    if (typeof(T) == typeof(Single))
-                        _rasterguts[idx].Read(offset.Item2, offset.Item1, _interrect.cols, _interrect.rows, ref readChunk);
-
-                    inputchunk.Plunk(ref readChunk, _chunkWindow.cols, _chunkWindow.rows, _interrect.cols, _interrect.rows, offset.Item2, offset.Item1);
+                    inputchunk.Plunk(ref _buffer, ChunkWindow.cols, ChunkWindow.rows, _interrect.cols, _interrect.rows, offset.Item2, offset.Item1);
                 }
 
                 data.Add(inputchunk);
@@ -164,15 +167,14 @@ namespace GCDConsoleLib.Internal
         public Raster Run()
         {
             List<T[]> data = new List<T[]>(_rasters.Count);
-            while (!bDone)
+            while (!OpDone)
             {
                 GetChunk(ref data);
-                T[] outChunk = new T[_chunkWindow.rows * _chunkWindow.cols];
-                ChunkOp(ref data, ref outChunk);
+                ChunkOp(ref data, ref _buffer);
                 // Get the (col,row) offsets
-                Tuple<int, int> offset = _chunkWindow.GetTopCornerTranslation(ref _opExtent);
+                Tuple<int, int> offset = ChunkWindow.GetTopCornerTranslation(ref _opExtent);
                 // Write this window tot he file
-                _outputRasterGuts.Write(offset.Item2, offset.Item1, _chunkWindow.cols, _chunkWindow.rows, ref outChunk);
+                _outputRaster.Write(offset.Item2, offset.Item1, ChunkWindow.cols, ChunkWindow.rows, ref _buffer);
             }
             Cleanup();
             return _outputRaster;

@@ -5,6 +5,8 @@ using OSGeo.GDAL;
 using UnitsNet;
 using UnitsNet.Units;
 using GCDConsoleLib.Internal;
+using System.ComponentModel;
+
 namespace GCDConsoleLib
 {
     public class Raster : GISDataset
@@ -12,38 +14,67 @@ namespace GCDConsoleLib
         public enum RasterDriver : byte { GTiff, HFA }
         public LengthUnit VerticalUnits;
 
-        public ExtentRectangle Extent;
+        public double? origNodataVal { get; set; }
+        public bool HasNodata { get { return origNodataVal == null; } }
 
-        public IRasterGuts RasterGuts;
+        public ExtentRectangle Extent;
         public RasterDriver driver;
 
         // We store the following in the guts since they are used there a lot
-        public GdalDataType Datatype { get { return RasterGuts.Datatype; } }
-        public double? origNodataVal { get { return RasterGuts.origNodataVal; } }
-        public bool IsOpen { get { return RasterGuts.IsOpen; } }
+        protected Dataset ds { get; private set; }
+        public GdalDataType Datatype { get; private set; }
+        public bool IsOpen { get { return ds != null; } }
+        private bool _writepermission;
+
 
         /// <summary>
-        /// Constructor
+        /// Constructor for opening an existing Raster
+        /// </summary>
+        /// <param name="sfilepath"></param>
+        public Raster(string sfilepath) : base(sfilepath)
+        {
+            _initfromfile();
+            // Remember to clean things up afterwards
+            Dispose();
+        }
+
+        /// <summary>
+        /// Constructor to create a new raster file
         /// </summary>
         /// <param name="rTemplate"></param>
         /// <param name="sFilename"></param>
         /// <param name="leaveopen"></param>
-        public Raster(ref Raster rTemplate, string sFilename, bool leaveopen = false) : base(sFilename)
+        protected Raster(ref Raster rTemplate, string sFilename, bool leaveopen = false) : base(sFilename)
         {
-            _InitGuts(rTemplate.Datatype, rTemplate.origNodataVal);
             ExtentRectangle theExtent = new ExtentRectangle(ref rTemplate.Extent);
-            _Init(RasterDriver.GTiff, rTemplate.VerticalUnits, rTemplate.Proj, theExtent);
+            _Init(RasterDriver.GTiff, rTemplate.VerticalUnits, rTemplate.Proj, rTemplate.Datatype, theExtent, rTemplate.origNodataVal);
             Create(leaveopen);
         }
 
-        public Raster(ref Raster rTemplate, ExtentRectangle rExtent, string sFilename, bool leaveopen = false) : base(sFilename)
+        public static Raster CreateRaster(ref Raster rTemplate, string sFilename, bool leaveopen = false)
         {
-            _InitGuts(rTemplate.Datatype);
-            _Init(rTemplate.driver, rTemplate.VerticalUnits, rTemplate.Proj, rExtent);
+            return new Raster(ref rTemplate, sFilename, leaveopen);
         }
 
         /// <summary>
-        /// Explicit Constructore
+        /// This is a create constructor
+        /// </summary>
+        /// <param name="rTemplate"></param>
+        /// <param name="rExtent"></param>
+        /// <param name="sFilename"></param>
+        /// <param name="leaveopen"></param>
+        protected Raster(ref Raster rTemplate, ExtentRectangle rExtent, string sFilename, bool leaveopen = false) : base(sFilename)
+        {
+            _Init(rTemplate.driver, rTemplate.VerticalUnits, rTemplate.Proj, rTemplate.Datatype, rExtent, rTemplate.origNodataVal);
+        }
+
+        public static Raster CreateRaster(ref Raster rTemplate, ExtentRectangle rExtent, string sFilename, bool leaveopen = false)
+        {
+            return new Raster(ref rTemplate, rExtent, sFilename, leaveopen);
+        }
+
+        /// <summary>
+        /// Explicit Constructor to create a new raster
         /// </summary>
         /// <param name="fTop"></param>
         /// <param name="fLeft"></param>
@@ -56,117 +87,104 @@ namespace GCDConsoleLib
         /// <param name="eDataType"></param>
         /// <param name="psProjection"></param>
         /// <param name="psUnit"></param>
-        public Raster(decimal fTop, decimal fLeft, decimal dCellHeight, decimal dCellWidth, int nRows, int nCols,
-               double dNoData, RasterDriver psDriver, GdalDataType eDataType,
-               string psProjection, string psUnit) : base("")
+        protected Raster(decimal fTop, decimal fLeft, decimal dCellHeight, decimal dCellWidth, int nRows, int nCols,
+               double? dNoData, RasterDriver psDriver, GdalDataType dType,
+               string psProjection, string psUnit, bool leaveopen = false) : base("")
         {
             ExtentRectangle theExtent = new ExtentRectangle(fTop, fLeft, dCellHeight, dCellWidth, nRows, nCols);
-            _InitGuts(eDataType);
-            _Init(psDriver, psUnit, psProjection, theExtent);
+            _Init(psDriver, UnitFromString(psUnit), new Projection(psProjection), dType, theExtent, dNoData);
+            Create(leaveopen);
         }
 
-        /// <summary>
-        /// Constructor for opening an existing Raster
-        /// </summary>
-        /// <param name="sfilepath"></param>
-        public Raster(string sfilepath) : base(sfilepath)
+        public static Raster CreateRaster(decimal fTop, decimal fLeft, decimal dCellHeight, decimal dCellWidth, int nRows, int nCols,
+               double? dNoData, RasterDriver psDriver, GdalDataType dType,
+               string psProjection, string psUnit, bool leaveopen = false)
         {
-            GdalDataType theDataType = peekType(sfilepath);
-            _InitGuts(theDataType);
-
-            // we need to explcitly ask it to load the nodatavalue and type from the file
-            RasterGuts.LoadGuts();
-
-            Band rBand1 = RasterGuts.ds.GetRasterBand(1);
-            string proj = RasterGuts.ds.GetProjection();
-
-            string sDriver = RasterGuts.ds.GetDriver().ShortName;
-            ExtentRectangle theExtent = new ExtentRectangle(RasterGuts.ds);
-
-            _Init(_str2driver(sDriver), rBand1.GetUnitType(), proj, theExtent);
-            // Remember to clean things up afterwards
-            Dispose();
+            return new Raster(fTop, fLeft, dCellHeight, dCellWidth, nRows, nCols, dNoData, psDriver, dType, psProjection, psUnit, leaveopen);
         }
 
         /// <summary>
-        /// To get around the chicken & Egg problem we have a sneaky peek method to check what
-        /// kind of thing the dataset is
+        /// Load all relevant settings from a file
         /// </summary>
-        /// <param name="sFilepath"></param>
-        /// <returns></returns>
-        public static GdalDataType peekType(string sFilepath)
-        {
-            GdalDataType returnVal;
-            // The actual raster may not be a single but that doesn't matter for the sneaky peak.
-            RasterInternals<Byte> tempGuts = new RasterInternals<Byte>(sFilepath);
-
-            tempGuts.LoadGuts();
-
-            // this will get the REAL datatype
-            returnVal = tempGuts.Datatype;
-            
-            // Now let's unlock the file for future use.
-            tempGuts.Dispose();
-            tempGuts = null;
-            return returnVal;
-        }
-
-        /// <summary>
-        /// Compute the statistics of this raster
-        /// </summary>
-        public void ComputeStatistics()
+        private void _initfromfile()
         {
             Open();
-            double min, max, mean, std;
-            RasterGuts.ds.GetRasterBand(1).ComputeStatistics(false, out min, out max, out mean, out std, null, null);
+            Band rBand1 = ds.GetRasterBand(1);
+            GdalDataType dType = new GdalDataType(rBand1.DataType);
+
+            string sDriver = ds.GetDriver().ShortName;
+            ExtentRectangle theExtent = new ExtentRectangle(ds);
+
+            _Init(_str2driver(sDriver),
+                UnitFromString(rBand1.GetUnitType()),
+                new Projection(ds.GetProjection()),
+                dType, theExtent, GetNodataVal());
         }
 
         /// <summary>
         /// Initialization function
         /// </summary>
-        /// <param name="rdDriver"></param>
-        /// <param name="sUnits"></param>
-        /// <param name="sProjection"></param>
-        /// <param name="dType"></param>
-        /// <param name="dNodata"></param>
-        protected void _Init(RasterDriver rdDriver, string sUnits, string sProjection,
-             ExtentRectangle theExtent)
+        private void _Init(RasterDriver rdDriver, LengthUnit lUnits, Projection proj, GdalDataType dType,
+            ExtentRectangle theExtent, double? ndv)
         {
-            Proj = new Projection(sProjection);
-            if (sUnits != "")
-                VerticalUnits = Length.ParseUnit(sUnits);
-
-            _Init(rdDriver, VerticalUnits, Proj, theExtent);
-        }
-        protected void _Init(RasterDriver rdDriver, LengthUnit lUnits, Projection proj,
-            ExtentRectangle theExtent)
-        {
+            _writepermission = false;
+            origNodataVal = ndv;
+            Datatype = dType;
             Extent = theExtent;
             Proj = proj;
             VerticalUnits = lUnits;
             driver = rdDriver;
         }
 
-        /// <summary>
-        /// The guts are generically typed <T> so it's really tricky to instantiate them correctly
-        /// </summary>
-        /// <param name="dType"></param>
-        private void _InitGuts(GdalDataType dType)
+        public void CreateDS(Raster.RasterDriver driver, string filepath, ExtentRectangle theExtent, Projection proj, GdalDataType theType)
         {
-            // This is regrettable but it's the only way to get 
-            if (dType.CSType == typeof(int)) { RasterGuts = new RasterInternals<int>(FilePath); }
-            else if (dType.CSType == typeof(double)) { RasterGuts = new RasterInternals<double>(FilePath); }
-            else if (dType.CSType == typeof(Single)) { RasterGuts = new RasterInternals<Single>(FilePath); }
-            else if (dType.CSType == typeof(byte)) { RasterGuts = new RasterInternals<byte>(FilePath); }
+            List<string> creationOpts = new List<string>();
+            switch (driver)
+            {
+                case Raster.RasterDriver.GTiff:
+                    creationOpts.Add("COMPRESS=LZW");
+                    break;
+                case Raster.RasterDriver.HFA:
+                    creationOpts.Add("COMPRESS=PACKBITS");
+                    break;
+            }
+            Driver driverobj = Gdal.GetDriverByName(Enum.GetName(typeof(Raster.RasterDriver), driver));
+
+            ds = driverobj.Create(filepath, theExtent.cols, theExtent.rows, 1, theType._origType, creationOpts.ToArray());
+            ds.SetGeoTransform(theExtent.Transform);
+            ds.SetProjection(proj.OriginalString);
+            Band band = ds.GetRasterBand(1);
+            if (HasNodata)
+                band.SetNoDataValue((double)origNodataVal);
         }
 
-        private void _InitGuts(GdalDataType dType, double? nodata)
+        /// <summary>
+        /// Handy unit convertor
+        /// </summary>
+        /// <param name="sUnit"></param>
+        /// <returns></returns>
+        private LengthUnit UnitFromString(string sUnit)
         {
-            // This is regrettable but it's the only way to get 
-            if (dType.CSType == typeof(int)) { RasterGuts = new RasterInternals<int>(FilePath, nodata); }
-            else if (dType.CSType == typeof(double)) { RasterGuts = new RasterInternals<double>(FilePath, nodata); }
-            else if (dType.CSType == typeof(Single)) { RasterGuts = new RasterInternals<Single>(FilePath, nodata); }
-            else if (dType.CSType == typeof(byte)) { RasterGuts = new RasterInternals<byte>(FilePath, nodata); }
+            LengthUnit retUnit = LengthUnit.Undefined;
+            if (sUnit != "")
+                retUnit = Length.ParseUnit(sUnit);
+            return retUnit;
+        }
+
+        /// <summary>
+        /// Get the original double? nodatavalue from the rasterfile 
+        /// </summary>
+        /// <returns></returns>
+        private double? GetNodataVal()
+        {
+            Open();
+            int hasndval;
+            double nodatval;
+            ds.GetRasterBand(1).GetNoDataValue(out nodatval, out hasndval);
+            double? ndv = null;
+            if (hasndval == 1)
+                ndv = (double?)nodatval;
+            return ndv;
         }
 
         /// <summary>
@@ -178,7 +196,7 @@ namespace GCDConsoleLib
             if (File.Exists(FilePath))
                 Gdal.Unlink(FilePath);
 
-            RasterGuts.CreateDS(driver, FilePath, Extent, Proj, Datatype);
+            CreateDS(driver, FilePath, Extent, Proj, Datatype);
 
             if (!leaveopen)
                 Dispose();
@@ -189,7 +207,44 @@ namespace GCDConsoleLib
         /// </summary>
         public override void Open(bool write = false)
         {
-            RasterGuts.OpenDS(write);
+            // Check if we're already open and have the correct permissions
+            if (IsOpen && _writepermission.Equals(write)) return;
+
+            // Close the file so we can re-open it with the correct permissions
+            if (_writepermission == write) Dispose();
+
+            Access permission = Access.GA_ReadOnly;
+            if (write) permission = Access.GA_Update;
+            _writepermission = write;
+
+            // Make sure we have permission to do what we want to do
+            FileInfo fInfo = new FileInfo(FilePath);
+            if (write)
+            {
+                // File exists AND we can overwrite it
+                if (File.Exists(fInfo.FullName) && Utility.FileHelpers.IsFileLocked(fInfo.FullName, permission))
+                    throw new IOException(String.Format("File `{0}` was locked for `{1}` operation", FilePath, Enum.GetName(typeof(Access), permission)));
+                // File does not exist but there is no directory to put it in.
+                else if (!File.Exists(FilePath) && !Directory.Exists(fInfo.DirectoryName))
+                     throw new IOException(String.Format("File `{0}` could not be created because the directory `{1}`is not present", FilePath, fInfo.DirectoryName));
+            }
+            else
+            {
+                if (!File.Exists(fInfo.FullName) || Utility.FileHelpers.IsFileLocked(fInfo.FullName, permission))
+                    throw new IOException(String.Format("File `{0}` was locked for `{1}` operation", FilePath, Enum.GetName(typeof(Access), permission)));
+            }
+            if (Utility.FileHelpers.IsFileLocked(FilePath, permission))
+                throw new IOException(String.Format("File `{0}` was locked for `{}` operation", FilePath, Enum.GetName(typeof(Access), permission)));
+
+            GdalConfiguration.ConfigureGdal();
+            if (File.Exists(FilePath))
+            {
+                ds = Gdal.Open(FilePath, permission);
+                if (ds == null)
+                    throw new ArgumentException("Can't open " + FilePath);
+            }
+            else
+                throw new FileNotFoundException("Could not find dataset to open", FilePath);
         }
 
         /// <summary>
@@ -230,7 +285,11 @@ namespace GCDConsoleLib
         /// </summary>
         public override void Dispose()
         {
-            RasterGuts.Dispose();
+            if (ds != null)
+            {
+                ds.Dispose();
+                ds = null;
+            }
         }
 
         /// <summary>
@@ -259,7 +318,7 @@ namespace GCDConsoleLib
         public override void Copy(string destPath)
         {
             Open();
-            RasterGuts.ds.GetDriver().CopyFiles(destPath, FilePath);
+            ds.GetDriver().CopyFiles(destPath, FilePath);
             //dataset.GetDriver().CreateCopy(destPath, dataset, 1, null, null, null);
             Dispose();
         }
@@ -280,7 +339,7 @@ namespace GCDConsoleLib
         public override void Delete()
         {
             Open();
-            Driver drv = RasterGuts.ds.GetDriver();
+            Driver drv = ds.GetDriver();
             Dispose();
             drv.Delete(FilePath);
             drv.Dispose();
@@ -300,6 +359,16 @@ namespace GCDConsoleLib
                 newExtent.Union(ref raster.Extent);
             }
             return newExtent;
+        }
+
+        /// <summary>
+        /// Compute the statistics of this raster
+        /// </summary>
+        public virtual void ComputeStatistics()
+        {
+            Open();
+            double min, max, mean, std;
+            ds.GetRasterBand(1).ComputeStatistics(false, out min, out max, out mean, out std, null, null);
         }
 
         /// <summary>
@@ -361,6 +430,71 @@ namespace GCDConsoleLib
             get { return 0; }
         }
 
+        /**
+         * 
+         *   EVERYTHING BELOW HERE USES GENERICS. PROCEED WITH CAUTION
+         * 
+         */
+
+        public T NodataValue<T>()
+        {
+            T retval;
+            if (origNodataVal != null)
+                retval = (T)Convert.ChangeType(origNodataVal, typeof(T));
+            else
+            {
+                retval = Utility.Conversion.minValue<T>();
+            }
+            return retval;
+        }
+
+        /// <summary>
+        /// GDaL Write operation
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="xOff"></param>
+        /// <param name="yOff"></param>
+        /// <param name="xSize"></param>
+        /// <param name="ySize"></param>
+        /// <param name="buffer"></param>
+        public virtual void Write<T>(int xOff, int yOff, int xSize, int ySize, ref T[] buffer)
+        {
+            Open(true);
+            if (typeof(T) == typeof(Single))
+                ds.GetRasterBand(1).WriteRaster(xOff, yOff, xSize, ySize, buffer as Single[], xSize, ySize, 0, 0);
+            else if (typeof(T) == typeof(Double))
+                ds.GetRasterBand(1).WriteRaster(xOff, yOff, xSize, ySize, buffer as Double[], xSize, ySize, 0, 0);
+            else if (typeof(T) == typeof(int))
+                ds.GetRasterBand(1).WriteRaster(xOff, yOff, xSize, ySize, buffer as int[], xSize, ySize, 0, 0);
+            else if (typeof(T) == typeof(byte))
+                ds.GetRasterBand(1).WriteRaster(xOff, yOff, xSize, ySize, buffer as byte[], xSize, ySize, 0, 0);
+            else
+                throw new Exception("Unsupported type");
+        }
+
+        /// <summary>
+        /// GDaL Read Operation
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="xOff"></param>
+        /// <param name="yOff"></param>
+        /// <param name="xSize"></param>
+        /// <param name="ySize"></param>
+        /// <param name="buffer"></param>
+        public virtual void Read<T>(int xOff, int yOff, int xSize, int ySize, ref T[] buffer)
+        {
+            Open(true);
+            if (typeof(T) == typeof(Single))
+                ds.GetRasterBand(1).ReadRaster(xOff, yOff, xSize, ySize, buffer as Single[], xSize, ySize, 0, 0);
+            else if (typeof(T) == typeof(Double))
+                ds.GetRasterBand(1).ReadRaster(xOff, yOff, xSize, ySize, buffer as Double[], xSize, ySize, 0, 0);
+            else if (typeof(T) == typeof(int))
+                ds.GetRasterBand(1).ReadRaster(xOff, yOff, xSize, ySize, buffer as int[], xSize, ySize, 0, 0);
+            else if (typeof(T) == typeof(byte))
+                ds.GetRasterBand(1).ReadRaster(xOff, yOff, xSize, ySize, buffer as byte[], xSize, ySize, 0, 0);
+            else
+                throw new Exception("Unsupported type");
+        }
     }
 
 }

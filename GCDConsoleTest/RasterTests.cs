@@ -18,7 +18,7 @@ namespace GCDConsoleLib.Tests
             Raster rTemplateRaster = new Raster(TestHelpers.GetTestRasterPath("AngledSlopey950-980E.tif"));
             Assert.IsFalse(rTemplateRaster.IsOpen);
             Assert.IsTrue(rTemplateRaster.Datatype.Equals(FakeRaster<Single>.floatType));
-            Assert.IsNull(rTemplateRaster.RasterGuts.ds);
+            Assert.IsFalse(rTemplateRaster.IsOpen);
         }
 
         [TestMethod()]

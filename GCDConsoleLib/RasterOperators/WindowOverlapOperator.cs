@@ -46,7 +46,7 @@ namespace GCDConsoleLib.Internal
         private void firstTime(ref List<T[]> data)
         {
             // Fill the rows above the extent with nodatavals
-            T[] inputchunk = new T[_chunkWindow.cols * _chunkWindow.rows];
+            T[] inputchunk = new T[ChunkWindow.cols * ChunkWindow.rows];
             inputchunk.Fill(OpNodataVal);
             for (int idx = 0; idx < _bufferCells; idx++)
                 _chunkCache.Add(null);
@@ -93,7 +93,7 @@ namespace GCDConsoleLib.Internal
                 {
                     int col = wId % BufferLength;
                     int row = (wId - (wId % BufferLength)) / BufferLength;
-                    if (id < col || (id) > _chunkWindow.cols)
+                    if (id < col || (id) > ChunkWindow.cols)
                         // Set Nodata For each layer we care about:
                         for (int dId = 0; dId < data.Count; dId++)
                             dWindow[dId][wId] = OpNodataVal;

@@ -2,68 +2,65 @@
 using OSGeo.GDAL;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using GCDConsoleLib.Common.Extensons;
-using GCDConsoleLib.Internal;
+using GCDConsoleLib.Utility;
 
 namespace GCDConsoleLib.Tests.Utility
 {
-    public class FakeRaster<T> : Raster
+    public class FakeRaster<U> : Raster
     {
-        public static string fakeproj = "GEOGCS[\"NAD83\",DATUM[\"North_American_Datum_1983\",SPHEROID[\"GRS 1980\",6378137,298.257222101,AUTHORITY[\"EPSG\",\"7019\"]],AUTHORITY[\"EPSG\",\"6269\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIT[\"degree\",0.01745329251994328,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"4269\"]]";
+        public static string fakeproj = "GEOGCS[\"NAD83\",DATUM[\"North_American_Datum_1983\",SPHEROID[\"GRS 1980\",6378137,298.257222101,AUTHORITY[\"EPSG\",\"7019\"]],AUTHORITY[\"EPSG\",\"6269\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIU[\"degree\",0.01745329251994328,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"4269\"]]";
         public static string fakeunit = "m";
         public static GdalDataType floatType = new GdalDataType(DataType.GDT_Float32);
 
-        public T[,] _inputgrid;
-        public T[,] _outputGrid;
-        public T FakeNodataVal;
+        public U[,] _inputgrid;
+        public U[,] _outputGrid;
+        public U FakeNodataVal;
 
-        public RasterInternals<T> _fakeGuts;
-
-        public FakeRaster() : base(0, 0, -0.1m, 0.1m, 100, 100, Single.MinValue, Raster.RasterDriver.GTiff, floatType, fakeproj, fakeunit)
+        public FakeRaster() : base(0, 0, -0.1m, 0.1m, 100, 100, Conversion.MinValueDouble<U>(), 
+            Raster.RasterDriver.GTiff, floatType, fakeproj, fakeunit)
         {
-            _inputgrid = new T[100, 100];
-            _outputGrid = new T[100, 100];
-            _fakeGuts = new RasterInternals<T>("");
+            _inputgrid = new U[100, 100];
+            _outputGrid = new U[100, 100];
 
-            _outputGrid.Fill<T>(_fakeGuts.NodataVal);
+            _outputGrid.Fill<U>(NodataValue<U>());
         }
 
-        public FakeRaster(T[,] grid) : base(0, 0, -0.1m, 0.1m, grid.GetLength(1), grid.GetLength(0),
-            Single.MinValue, Raster.RasterDriver.GTiff, floatType, fakeproj, fakeunit)
+        public FakeRaster(U[,] grid) : base(0, 0, -0.1m, 0.1m, grid.GetLength(1), grid.GetLength(0),
+           Conversion.MinValueDouble<U>(), Raster.RasterDriver.GTiff, floatType, fakeproj, fakeunit)
         {
             _inputgrid = grid;
-            _outputGrid = new T[grid.GetLength(0), grid.GetLength(1)];
-            _fakeGuts = new RasterInternals<T>("");
-            _outputGrid.Fill<T>(_fakeGuts.NodataVal);
+            _outputGrid = new U[grid.GetLength(0), grid.GetLength(1)];
+            _outputGrid.Fill<U>(NodataValue<U>());
         }
 
-        public FakeRaster(int Top, int Left, decimal cellHeight, decimal cellWidth, T[,] grid) : base(0, 0, -0.1m, 0.1m, grid.GetLength(1), grid.GetLength(0),
-            Single.MinValue, Raster.RasterDriver.GTiff, floatType, fakeproj, fakeunit)
+        public FakeRaster(int Top, int Left, decimal cellHeight, decimal cellWidth, U[,] grid) : 
+            base(0, 0, -0.1m, 0.1m, grid.GetLength(1), grid.GetLength(0),
+             Conversion.MinValueDouble<U>(), Raster.RasterDriver.GTiff, floatType, fakeproj, fakeunit)
         {
             _inputgrid = grid;
             Extent = new ExtentRectangle(Top, Left, cellHeight, cellWidth, grid.GetLength(0), grid.GetLength(1));
-            _outputGrid = new T[grid.GetLength(0), grid.GetLength(1)];
-            _fakeGuts = new RasterInternals<T>("");
-            _outputGrid.Fill<T>(_fakeGuts.NodataVal);
+            _outputGrid = new U[grid.GetLength(0), grid.GetLength(1)];
+            _outputGrid.Fill<U>(NodataValue<U>());
         }
 
-        public FakeRaster(decimal fTop, decimal fLeft, decimal dCellHeight, decimal dCellWidth, int rows, int cols, GdalDataType eDataType) : base(fTop, fLeft, dCellHeight, dCellWidth, rows, cols, Single.MinValue, RasterDriver.GTiff, eDataType, "My Fake Projection", "m")
+        public FakeRaster(decimal fTop, decimal fLeft, decimal dCellHeight, decimal dCellWidth, int rows, int cols, 
+            GdalDataType eDataType) : base(fTop, fLeft, dCellHeight, dCellWidth, rows, cols, Single.MinValue,
+                RasterDriver.GTiff, eDataType, "My Fake Projection", "m")
         {
-            _inputgrid = new T[cols, rows];
-            _outputGrid = new T[cols, rows];
-            _fakeGuts = new RasterInternals<T>("");
-            _inputgrid.Fill<T>(_fakeGuts.NodataVal);
-            _outputGrid.Fill<T>(_fakeGuts.NodataVal);
-            _fakeGuts = RasterGuts as RasterInternals<T>;
+            _inputgrid = new U[cols, rows];
+            _outputGrid = new U[cols, rows];
+            _inputgrid.Fill<U>(NodataValue<U>());
+            _outputGrid.Fill<U>(NodataValue<U>());
         }
 
         public FakeRaster(decimal fTop, decimal fLeft, decimal dCellHeight, decimal dCellWidth, double fNoData,
                Raster.RasterDriver psDriver, GdalDataType eDataType, string psProjection, string psUnit,
-               T[,] grid) : base(fTop, fLeft, dCellHeight, dCellWidth, grid.GetLength(1), grid.GetLength(0), fNoData, psDriver, eDataType, psProjection, psUnit)
+               U[,] grid) : base(fTop, fLeft, dCellHeight, dCellWidth, grid.GetLength(1), grid.GetLength(0),
+                   fNoData, psDriver, eDataType, psProjection, psUnit)
         {
             _inputgrid = grid;
-            _outputGrid = new T[grid.GetLength(0), grid.GetLength(1)];
-            _fakeGuts = new RasterInternals<T>("");
-            _outputGrid.Fill<T>(_fakeGuts.NodataVal);
+            _outputGrid = new U[grid.GetLength(0), grid.GetLength(1)];
+            _outputGrid.Fill<U>(NodataValue<U>());
         }
 
         /// <summary>
@@ -74,13 +71,13 @@ namespace GCDConsoleLib.Tests.Utility
         /// <summary>
         /// Bypass file writing and fake a purely in-memory interface
         /// </summary>
-        public void Read(int xOff, int yOff, int xSize, int ySize, ref T[] buffer)
+        public override void Read<T>(int xOff, int yOff, int xSize, int ySize, ref T[] buffer)
         {
-            for (int y = 0; y < ySize; y++)
+            for (int r0 = 0; r0 < ySize; r0++)
             {
-                for (int x = 0; x < xSize; x++)
+                for (int r1 = 0; r1 < xSize; r1++)
                 {
-                    buffer[x + (y * xSize)] = _inputgrid[x + xOff, y + yOff];
+                    buffer[r1 + (r0 * xSize)] = (T)Convert.ChangeType(_inputgrid[r0 + yOff, r1 + xOff], typeof(T));
                 }
             }
         }
@@ -88,15 +85,20 @@ namespace GCDConsoleLib.Tests.Utility
         /// <summary>
         /// Bypass file writing and fake a purely in-memory interface
         /// </summary>
-        public void Write(int xOff, int yOff, int xSize, int ySize, ref T[] buffer)
+        public override void Write<T>(int xOff, int yOff, int xSize, int ySize, ref T[] buffer)
         {
-            for (int y = 0; y < ySize; y++)
+            for (int r0 = 0; r0 < ySize; r0++)
             {
-                for (int x = 0; x < xSize; x++)
+                for (int r1 = 0; r1 < xSize; r1++)
                 {
-                    _outputGrid[x + xOff, y + yOff] = buffer[x + (y * xSize)];
+                    _outputGrid[r0 + yOff,r1 + xOff] = (U)Convert.ChangeType(buffer[r1 + (r0 * xSize)], typeof(U));
                 }
             }
+        }
+
+        public override void ComputeStatistics()
+        {
+
         }
 
         /// <summary>
@@ -146,7 +148,7 @@ namespace GCDConsoleLib.Tests.Utility
             Assert.AreEqual(frInit1.Extent.Bottom, -10);
             Assert.AreEqual(frInit1.Extent.Left, 0);
             Assert.AreEqual(frInit1.Extent.Right, 10);
-            Assert.AreEqual(frInit1._fakeGuts.NodataVal, Single.MinValue);
+            Assert.AreEqual(frInit1.NodataValue<Single>(), Single.MinValue);
             Assert.AreEqual(frInit1.driver, Raster.RasterDriver.GTiff);
             Assert.AreEqual(frInit1.Proj.OriginalString, FakeRaster<double>.fakeproj);
             Assert.AreEqual(UnitsNet.Length.GetAbbreviation(frInit1.VerticalUnits), FakeRaster<double>.fakeunit);
@@ -161,7 +163,7 @@ namespace GCDConsoleLib.Tests.Utility
             Assert.AreEqual(frInit2.Extent.Bottom, -0.4m);
             Assert.AreEqual(frInit2.Extent.Left, 0);
             Assert.AreEqual(frInit2.Extent.Right, 0.5m);
-            Assert.AreEqual(frInit2._fakeGuts.NodataVal, Single.MinValue);
+            Assert.AreEqual(frInit2.NodataValue<Single>(), Single.MinValue);
             Assert.AreEqual(frInit2.driver, Raster.RasterDriver.GTiff);
             Assert.AreEqual(frInit2.Proj.OriginalString, FakeRaster<double>.fakeproj);
             Assert.AreEqual(UnitsNet.Length.GetAbbreviation(frInit2.VerticalUnits), FakeRaster<double>.fakeunit);
@@ -177,7 +179,7 @@ namespace GCDConsoleLib.Tests.Utility
             Assert.AreEqual(frInit3.Extent.Bottom, 9.5m);
             Assert.AreEqual(frInit3.Extent.Left, 11.5m);
             Assert.AreEqual(frInit3.Extent.Right, 13);
-            Assert.AreEqual(frInit2._fakeGuts.NodataVal, Single.MinValue);
+            Assert.AreEqual(frInit2.NodataValue<Single>(), Single.MinValue);
             Assert.AreEqual(frInit3.driver, Raster.RasterDriver.HFA);
             Assert.AreEqual(frInit3.Proj.OriginalString, myFakeProj);
             Assert.AreEqual(UnitsNet.Length.GetAbbreviation(frInit3.VerticalUnits), myFakeUnit);

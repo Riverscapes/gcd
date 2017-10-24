@@ -489,5 +489,29 @@ namespace GCDConsoleLib.Utility
             }
             return retVal;
         }
+
+        public static double? MinValueDouble<T>()
+        {
+            T minVal = minValue<T>();
+            return (double?)Convert.ChangeType(minVal, typeof(double));
+        }
+
+        public static T minValue<T>()
+        {
+            T retval;
+            // No Nodatavalue. Choose something appropriate please
+            if (typeof(T) == typeof(int))
+                retval = (T)Convert.ChangeType(int.MinValue, typeof(T));
+            else if (typeof(T) == typeof(double))
+                // NOTE: SINGLE VALUE HERE IS NOT A TYPO.
+                retval = (T)Convert.ChangeType(Single.MinValue, typeof(T));
+            else if (typeof(T) == typeof(Single))
+                retval = (T)Convert.ChangeType(Single.MinValue, typeof(T));
+            else if (typeof(T) == typeof(byte))
+                retval = (T)Convert.ChangeType(byte.MinValue, typeof(T));
+            else
+                throw new NotSupportedException("Type conversion problem");
+            return retval;
+        }
     }
 }

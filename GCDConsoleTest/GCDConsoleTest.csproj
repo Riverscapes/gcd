@@ -78,6 +78,7 @@
     <Reference Include="gdal_csharp">
       <HintPath>..\extlib\GDAL221\csharp\gdal_csharp.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="ogr_csharp">
       <HintPath>..\extlib\GDAL221\csharp\ogr_csharp.dll</HintPath>
     </Reference>
@@ -109,6 +110,7 @@
     <Compile Include="GISDatasetTests.cs" />
     <Compile Include="ProjectionTests.cs" />
     <Compile Include="RasterOperators\BaseOperatorTests.cs" />
+    <Compile Include="RasterOperators\RasterOperatorsTests.cs" />
     <Compile Include="RasterTests.cs" />
     <Compile Include="utility\ArrayExtensionsTests.cs" />
     <Compile Include="utility\TempDir.cs" />

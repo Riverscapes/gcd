@@ -2,7 +2,7 @@
 using GCDConsoleLib;
 using System.Collections.Generic;
 using GCDConsoleLib.Internal;
-
+using GCDConsoleLib.Utility;
 namespace GCDConsoleLib.Internal.Operators
 {
     public class RasterMath<T> : CellByCellOperator<T>
@@ -33,11 +33,6 @@ namespace GCDConsoleLib.Internal.Operators
             _scalar = false;
         }
 
-        public static dynamic Add(dynamic a, dynamic b) { return a + b; }
-        public static dynamic Subtract(dynamic a, dynamic b) { return a - b; }
-        public static dynamic Multiply(dynamic a, dynamic b) { return a * b; }
-        public static dynamic Divide(dynamic a, dynamic b) { return a / b; }
-
         protected override T CellOp(ref List<T[]> data, int id)
         {
             T val = OpNodataVal;
@@ -48,16 +43,16 @@ namespace GCDConsoleLib.Internal.Operators
                     switch (_type)
                     {
                         case RasterOperators.MathOpType.Addition:
-                            val = Add(data[0][id],_operand);
+                            val = Dynamics.Add(data[0][id],_operand);
                             break;
                         case RasterOperators.MathOpType.Subtraction:
-                            val = Subtract(data[0][id], _operand);
+                            val = Dynamics.Subtract(data[0][id], _operand);
                             break;
                         case RasterOperators.MathOpType.Multipication:
-                            val = Multiply(data[0][id], _operand);
+                            val = Dynamics.Multiply(data[0][id], _operand);
                             break;
                         case RasterOperators.MathOpType.Division:
-                            val = Divide(data[0][id], _operand);
+                            val = Dynamics.Divide(data[0][id], _operand);
                             break;
                     }
                 }
@@ -69,16 +64,16 @@ namespace GCDConsoleLib.Internal.Operators
                     switch (_type)
                     {
                         case RasterOperators.MathOpType.Addition:
-                            val = Add(data[0][id], data[1][id]);
+                            val = Dynamics.Add(data[0][id], data[1][id]);
                             break;
                         case RasterOperators.MathOpType.Subtraction:
-                            val = Subtract(data[0][id], data[1][id]);
+                            val = Dynamics.Subtract(data[0][id], data[1][id]);
                             break;
                         case RasterOperators.MathOpType.Multipication:
-                            val = Multiply(data[0][id], data[1][id]);
+                            val = Dynamics.Multiply(data[0][id], data[1][id]);
                             break;
                         case RasterOperators.MathOpType.Division:
-                            val = Divide(data[0][id], data[1][id]);
+                            val = Dynamics.Divide(data[0][id], data[1][id]);
                             break;
                     }
                 }
