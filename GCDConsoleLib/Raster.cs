@@ -15,7 +15,7 @@ namespace GCDConsoleLib
         public LengthUnit VerticalUnits;
 
         public double? origNodataVal { get; set; }
-        public bool HasNodata { get { return origNodataVal == null; } }
+        public bool HasNodata { get { return origNodataVal != null; } }
 
         public ExtentRectangle Extent;
         public RasterDriver driver;

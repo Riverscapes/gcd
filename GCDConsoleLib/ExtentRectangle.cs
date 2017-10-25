@@ -89,8 +89,8 @@ namespace GCDConsoleLib
         {
             if (dCellHeight == 0) { throw new ArgumentOutOfRangeException("CellHeight cannot be 0"); }
             else if (dCellWidth == 0) { throw new ArgumentOutOfRangeException("dCellWidth cannot be 0"); }
-            else if (nRows == 0) { throw new ArgumentOutOfRangeException("Raster Rows cannot be 0"); }
-            else if (nCols == 0) { throw new ArgumentOutOfRangeException("Raster Cols cannot be 0"); }
+            //else if (nRows == 0) { throw new ArgumentOutOfRangeException("Raster Rows cannot be 0"); }
+            //else if (nCols == 0) { throw new ArgumentOutOfRangeException("Raster Cols cannot be 0"); }
 
             _t = new double[6] { fLeft, dCellWidth, 0, fTop, 0, dCellHeight };
             cols = nCols;
@@ -149,7 +149,7 @@ namespace GCDConsoleLib
         }
 
         /// <summary>
-        /// Get a tuple representing row translation between two 
+        /// Get a tuple representing row translation between two Extentrectangles
         /// </summary>
         /// <param name="rExtent1"></param>
         /// <param name="rExtent2"></param>
@@ -228,8 +228,13 @@ namespace GCDConsoleLib
             int newcols = (int)((newright - newleft) / Math.Abs(CellWidth));
             int newrows = (int)((newtop - newbottom) / Math.Abs(CellHeight));
 
-            return new ExtentRectangle(newtop, newleft, CellHeight, CellWidth, newrows, newcols);
+            if (newrows <= 0 || newcols <= 0)
+            {
+                newrows = 0;
+                newcols = 0;
+            }
 
+            return new ExtentRectangle(newtop, newleft, CellHeight, CellWidth, newrows, newcols);
         }
 
         /// <summary>

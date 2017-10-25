@@ -23,8 +23,9 @@ namespace GCDConsoleLib.Internal.Tests
                 Assert.AreEqual(rRasters.Count, _rasters.Count);
                 Assert.IsFalse(OpDone);
             }
-            public TestOp(List<Raster> rRasters, ref FakeRaster<T> rOutput, ExtentRectangle newExtent) : base(rRasters, rOutput, newExtent)
+            public TestOp(List<Raster> rRasters, ref FakeRaster<T> rOutput, ExtentRectangle newExtent) : base(rRasters, rOutput)
             {
+                SetOpExtent(newExtent);
                 Assert.AreEqual(rRasters.Count, _rasters.Count);
                 Assert.IsFalse(OpDone);
             }

@@ -123,11 +123,11 @@
             int srcSizeR0, int srcSizeR1,
             int offsetR0, int offsetR1)
         {
-            for (int srcIdR0 = 0; srcIdR0 < srcSizeR0; srcIdR0++)
+            for (int idR0 = 0; idR0 < srcSizeR0; idR0++)
             {
-                for (int srcIdR1 = 0; srcIdR1 < srcSizeR1; srcIdR1++)
+                for (int idR1 = 0; idR1 < srcSizeR1; idR1++)
                 {
-                    dstData[(srcIdR0 + offsetR0) * (srcSizeR1) + (srcIdR1 + offsetR1)] = srcData[srcIdR0 * srcSizeR1 + srcIdR1];
+                    dstData[((idR0 + offsetR0) * (dstSizeR1)) + (idR1 + offsetR1)] = srcData[idR0 * srcSizeR1 + idR1];
                 }
             }
         }

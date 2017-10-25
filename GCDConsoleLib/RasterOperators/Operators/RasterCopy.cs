@@ -21,7 +21,10 @@ namespace GCDConsoleLib.Internal.Operators
         /// </summary>
         protected override T CellOp(ref List<T[]> data, int id)
         {
-            return data[0][id];
+            if (data[0][id].Equals(_rasternodatavals[0]))
+                return OpNodataVal;
+            else
+                return data[0][id];
         }
 
     }

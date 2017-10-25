@@ -38,7 +38,7 @@ namespace GCDConsoleLib.Internal.Operators
             T val = OpNodataVal;
             if (_scalar)
             {
-                if (!data[0][id].Equals(OpNodataVal))
+                if (!data[0][id].Equals(_rasternodatavals[0]))
                 {
                     switch (_type)
                     {
@@ -59,7 +59,7 @@ namespace GCDConsoleLib.Internal.Operators
             }
             else
             {
-                if (!data[0][id].Equals(OpNodataVal) && !data[1][id].Equals(OpNodataVal))
+                if (!data[0][id].Equals(_rasternodatavals[0]) && !data[1][id].Equals(_rasternodatavals[1]))
                 {
                     switch (_type)
                     {
