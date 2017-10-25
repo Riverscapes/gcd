@@ -30,13 +30,12 @@
             Me.Label6 = New System.Windows.Forms.Label()
             Me.cmdAddToMap = New System.Windows.Forms.Button()
             Me.cmdBrowse = New System.Windows.Forms.Button()
-            Me.cmdHistogram = New System.Windows.Forms.Button()
             Me.TabPage3 = New System.Windows.Forms.TabPage()
             Me.ucProperties = New GCDLib.UI.ChangeDetection.ucDoDProperties()
             Me.tbpElevationChangeDistribution = New System.Windows.Forms.TabPage()
             Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
-            Me.ucBars = New GCDLib.UI.ChangeDetection.ucChangeBars()
             Me.ucHistogram = New GCDLib.UI.ChangeDetection.ucDoDHistogram()
+            Me.ucBars = New GCDLib.UI.ChangeDetection.ucChangeBars()
             Me.TabPage1 = New System.Windows.Forms.TabPage()
             Me.ucSummary = New GCDLib.UI.ChangeDetection.ucDoDSummary()
             Me.tabProperties = New System.Windows.Forms.TabControl()
@@ -75,7 +74,7 @@
             Me.txtDoDName.Location = New System.Drawing.Point(75, 12)
             Me.txtDoDName.Name = "txtDoDName"
             Me.txtDoDName.ReadOnly = True
-            Me.txtDoDName.Size = New System.Drawing.Size(526, 20)
+            Me.txtDoDName.Size = New System.Drawing.Size(554, 20)
             Me.txtDoDName.TabIndex = 3
             '
             'Label6
@@ -91,7 +90,7 @@
             '
             Me.cmdAddToMap.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
             Me.cmdAddToMap.Image = Global.GCDLib.My.Resources.Resources.AddToMap
-            Me.cmdAddToMap.Location = New System.Drawing.Point(609, 11)
+            Me.cmdAddToMap.Location = New System.Drawing.Point(635, 11)
             Me.cmdAddToMap.Name = "cmdAddToMap"
             Me.cmdAddToMap.Size = New System.Drawing.Size(23, 23)
             Me.cmdAddToMap.TabIndex = 5
@@ -101,20 +100,11 @@
             '
             Me.cmdBrowse.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
             Me.cmdBrowse.Image = Global.GCDLib.My.Resources.Resources.BrowseFolder
-            Me.cmdBrowse.Location = New System.Drawing.Point(638, 11)
+            Me.cmdBrowse.Location = New System.Drawing.Point(665, 11)
             Me.cmdBrowse.Name = "cmdBrowse"
             Me.cmdBrowse.Size = New System.Drawing.Size(23, 23)
             Me.cmdBrowse.TabIndex = 6
             Me.cmdBrowse.UseVisualStyleBackColor = True
-            '
-            'cmdHistogram
-            '
-            Me.cmdHistogram.Location = New System.Drawing.Point(665, 11)
-            Me.cmdHistogram.Name = "cmdHistogram"
-            Me.cmdHistogram.Size = New System.Drawing.Size(23, 23)
-            Me.cmdHistogram.TabIndex = 7
-            Me.cmdHistogram.UseVisualStyleBackColor = True
-            Me.cmdHistogram.Visible = False
             '
             'TabPage3
             '
@@ -162,14 +152,6 @@
             Me.TableLayoutPanel1.Size = New System.Drawing.Size(667, 405)
             Me.TableLayoutPanel1.TabIndex = 1
             '
-            'ucBars
-            '
-            Me.ucBars.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.ucBars.Location = New System.Drawing.Point(499, 3)
-            Me.ucBars.Name = "ucBars"
-            Me.ucBars.Size = New System.Drawing.Size(165, 399)
-            Me.ucBars.TabIndex = 1
-            '
             'ucHistogram
             '
             Me.ucHistogram.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
@@ -180,6 +162,14 @@
             Me.ucHistogram.Size = New System.Drawing.Size(490, 399)
             Me.ucHistogram.TabIndex = 0
             Me.ucHistogram.UserSelectedUnits = Nothing
+            '
+            'ucBars
+            '
+            Me.ucBars.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.ucBars.Location = New System.Drawing.Point(499, 3)
+            Me.ucBars.Name = "ucBars"
+            Me.ucBars.Size = New System.Drawing.Size(165, 399)
+            Me.ucBars.TabIndex = 1
             '
             'TabPage1
             '
@@ -222,7 +212,6 @@
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
             Me.CancelButton = Me.cmdOK
             Me.ClientSize = New System.Drawing.Size(695, 530)
-            Me.Controls.Add(Me.cmdHistogram)
             Me.Controls.Add(Me.cmdBrowse)
             Me.Controls.Add(Me.cmdAddToMap)
             Me.Controls.Add(Me.txtDoDName)
@@ -249,7 +238,6 @@
         Friend WithEvents Label6 As System.Windows.Forms.Label
         Friend WithEvents cmdAddToMap As System.Windows.Forms.Button
         Friend WithEvents cmdBrowse As System.Windows.Forms.Button
-        Friend WithEvents cmdHistogram As System.Windows.Forms.Button
         Friend WithEvents TabPage3 As System.Windows.Forms.TabPage
         Friend WithEvents ucProperties As ucDoDProperties
         Friend WithEvents tbpElevationChangeDistribution As System.Windows.Forms.TabPage

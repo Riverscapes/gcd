@@ -16,19 +16,21 @@
         End Sub
 
         Private Sub DoDResultsForm_Load(sender As Object, e As System.EventArgs) Handles Me.Load
+
             txtDoDName.Text = m_rDoD.Name
+            If Not Core.GCDProject.ProjectManagerUI.IsArcMap Then
+                cmdAddToMap.Visible = False
+                txtDoDName.Width = cmdAddToMap.Right - txtDoDName.Left
+            End If
+
             ucBars.Initialize(ucHistogram.DoDResultSet.ChangeStats, ucSummary.Options.LinearUnits)
-
-
 
         End Sub
 
         Private Sub cmdAddToMap_Click(sender As System.Object, e As System.EventArgs) Handles cmdAddToMap.Click
 
             If TypeOf m_rDoD Is ProjectDS.DoDsRow Then
-                ' TODO 
-                Throw New Exception("not implemented")
-                'Core.GCDProject.ProjectManagerUI.ArcMapManager.AddDoD(m_rDoD)
+                Throw New Exception("Add to map not implemented")
             Else
                 MsgBox("The DoD member row is Null or empty.", MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
             End If
@@ -37,7 +39,7 @@
         Private Sub cmdBrowse_Click(sender As System.Object, e As System.EventArgs) Handles cmdBrowse.Click
 
             If TypeOf m_rDoD Is ProjectDS.DoDsRow Then
-                Dim sFolder As String = Core.GCDProject.ProjectManagerBase.GetAbsolutePath(m_rDoD.OutputFolder) ' GCD.GCDProject.ProjectManagerBase.OutputManager.GetDoDOutputFolder(m_rDoD.Name)
+                Dim sFolder As String = Core.GCDProject.ProjectManagerBase.GetAbsolutePath(m_rDoD.OutputFolder)
                 If IO.Directory.Exists(sFolder) Then
                     Process.Start("explorer.exe", sFolder)
                 Else
@@ -58,20 +60,6 @@
             Process.Start(My.Resources.HelpBaseURL & "gcd-command-reference/gcd-project-explorer/l-individual-change-detection-context-menu/i-view-change-detection-results")
         End Sub
 
-        Private Sub cmdHistogram_Click(sender As System.Object, e As System.EventArgs) Handles cmdHistogram.Click
-            'Try
-            '    Dim sRawDod As String = GCD.GCDProject.ProjectManagerBase.GetAbsolutePath(m_rDoD.RawDoDPath)
-            '    Dim sThreshDoD As String = GCD.GCDProject.ProjectManagerBase.GetAbsolutePath(m_rDoD.ThreshDoDPath)
-            '    Dim sRawHist As String = GCD.GCDProject.ProjectManagerBase.GetAbsolutePath(m_rDoD.RawHistPath)
-            '    Dim sThrHist As String = GCD.GCDProject.ProjectManagerBase.GetAbsolutePath(m_rDoD.ThreshHistPath)
-            '    Dim frm As New HistogramConfigForm(sRawDod, sThreshDoD, sRawHist, sThrHist)
-            '    If frm.ShowDialog = Windows.Forms.DialogResult.OK Then
-            '        ucHistogram.RefreshHistogram()
-            '    End If
-            'Catch ex As Exception
-            '    ExceptionUI.HandleException(ex)
-            'End Try
-        End Sub
-
     End Class
+
 End Namespace
