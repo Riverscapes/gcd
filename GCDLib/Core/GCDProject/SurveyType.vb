@@ -47,7 +47,7 @@ Namespace Core.GCDProject
             Dim dSurveyTypes As New Dictionary(Of String, SurveyType)
 
             Dim xmlDoc As New Xml.XmlDocument()
-            xmlDoc.LoadXml(filePath.FullName)
+            xmlDoc.Load(filePath.FullName)
 
             For Each nodType As Xml.XmlNode In xmlDoc.SelectNodes("SurveyTypes/SurveyType")
                 Dim sName As String = nodType.SelectSingleNode("Name").InnerText
