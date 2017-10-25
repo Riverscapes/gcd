@@ -12,6 +12,7 @@ Namespace UI.SurveyLibrary
 #Region "Survey Property Routines"
 
         Public Sub New(ByVal nSurveyID As Integer)
+
             ' This call is required by the Windows Form Designer.
             InitializeComponent()
 
@@ -60,7 +61,6 @@ Namespace UI.SurveyLibrary
             End If
 
             m_SurveyDateTime = New GCDProject.SurveyDateTime(demRow)
-
             lblDatetime.Text = m_SurveyDateTime.ToString
 
             DEMSurfaceBindingSource.Filter = "DEMSurveyID = " & m_DEMSurveyID
@@ -68,11 +68,14 @@ Namespace UI.SurveyLibrary
 
             UpdateControls()
             LoadRasterProperties()
+
         End Sub
 
         Private Sub InitControls()
 
-            cmdAddToMap.Visible = Core.GCDProject.ProjectManagerUI.IsArcMap
+            cmdAddDEMToMap.Visible = Core.GCDProject.ProjectManagerUI.IsArcMap
+            cmdAddAssocToMap.Visible = GCDProject.ProjectManagerUI.IsArcMap
+            cmdAddErrorToMap.Visible = GCDProject.ProjectManagerUI.IsArcMap
 
             'General Tooltips
             'ttpTooltip.SetToolTip(btnCancel, My.Resources.ttpCancel)
@@ -308,7 +311,7 @@ Namespace UI.SurveyLibrary
             'ProjectExplorerUC.LoadTree(ProjectExplorerUC.GCDNodeTypes.DEMSurvey.ToString)
         End Sub
 
-        Private Sub btnBrowseFile_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdAddToMap.Click
+        Private Sub btnBrowseFile_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdAddDEMToMap.Click
 
             Dim CurrentRow As DataRowView = DEMSurfaceBindingSource.Current
 
@@ -402,11 +405,11 @@ Namespace UI.SurveyLibrary
 
                     Dim sMethodMask As String = GCDProject.ProjectManagerBase.OutputManager.DEMSurveyMethodMaskPath(txtName.Text)
                     Try
-                        IO.Directory.CreateDirectory(System.IO.Path.GetDirectoryName(sMethodMask))
+                        IO.Directory.CreateDirectory(IO.Path.GetDirectoryName(sMethodMask))
                     Catch ex As Exception
                         Dim ex2 As New Exception("Error attempting to create the directory for the DEM Survey method mask.")
                         ex2.Data.Add("Method Mask Folder", sMethodMask)
-                        ExceptionHelper.HandleException(ex2)
+                        naru.error.ExceptionUI.HandleException(ex2)
                         Exit Sub
                     End Try
 
@@ -414,7 +417,7 @@ Namespace UI.SurveyLibrary
                         Dim ex As New Exception("The polygon mask feature class already exists.")
                         ex.Data.Add("Original Mask", gNewMask.FilePath)
                         ex.Data.Add("GCD Project Mask", sMethodMask)
-                        ExceptionHelper.HandleException(ex)
+                        naru.error.ExceptionUI.HandleException(ex)
                     Else
                         Try
                             gNewMask.Copy(sMethodMask)
@@ -428,7 +431,7 @@ Namespace UI.SurveyLibrary
                             Dim ex2 As New Exception("Error attempting to copy the method mask feature class into the GCD project folder.", ex)
                             ex2.Data.Add("Original Path", gNewMask.FilePath)
                             ex2.Data.Add("GCD Project Path", sMethodMask)
-                            ExceptionHelper.HandleException(ex2)
+                            naru.error.ExceptionUI.HandleException(ex2)
                             Exit Sub
                         End Try
                     End If
@@ -436,7 +439,7 @@ Namespace UI.SurveyLibrary
                 End If
 
             Catch ex As Exception
-                ExceptionHelper.HandleException(ex)
+                naru.error.ExceptionUI.HandleException(ex)
             End Try
         End Sub
 
@@ -448,13 +451,13 @@ Namespace UI.SurveyLibrary
 
             Dim sMaskPath As String = GCDProject.ProjectManagerBase.GetAbsolutePath(txtMask.Text)
             If GCDConsoleLib.GISDataset.FileExists(sMaskPath) Then
-                Dim sWorkspace As String = System.IO.Path.GetDirectoryName(sMaskPath)
+                Dim sWorkspace As String = IO.Path.GetDirectoryName(sMaskPath)
                 Try
                     GCDConsoleLib.Raster.Delete(sMaskPath)
                     txtMask.Text = String.Empty
                     cboIdentify.Items.Clear()
                 Catch ex As Exception
-                    ExceptionHelper.HandleException(ex, "Error deleting the existing DEM survey method mask polygon feature class. You can attempt to delete it using ArcCatalog and then try again to browse to a new method mask.")
+                    naru.error.ExceptionUI.HandleException(ex, "Error deleting the existing DEM survey method mask polygon feature class. You can attempt to delete it using ArcCatalog and then try again to browse to a new method mask.")
                     Exit Sub
                 End Try
 
@@ -498,7 +501,7 @@ Namespace UI.SurveyLibrary
             sRasterProperties &= vbNewLine & "Right: " & gRaster.Extent.Right.ToString("#,##0.#")
             sRasterProperties &= vbNewLine & "Bottom: " & gRaster.Extent.Bottom.ToString("#,##0.#")
             sRasterProperties &= vbNewLine
-            sRasterProperties &= vbNewLine & "Cell size: " & Math.Round(gRaster.Extent.CellWidth, CInt(GCDProject.ProjectManagerBase.CurrentProject.Precision)).ToString
+            sRasterProperties &= vbNewLine & "Cell size: " & gRaster.Extent.CellWidth
             sRasterProperties &= vbNewLine
             sRasterProperties &= vbNewLine & "Width: " & (gRaster.Extent.Right - gRaster.Extent.Left).ToString("#,##0.#")
             sRasterProperties &= vbNewLine & "Height: " & (gRaster.Extent.Top - gRaster.Extent.Bottom).ToString("#,##0.#")
@@ -507,10 +510,10 @@ Namespace UI.SurveyLibrary
             sRasterProperties &= vbNewLine & "Columns: " & gRaster.Extent.cols.ToString("#,##0")
             sRasterProperties &= vbNewLine & vbNewLine
             sRasterProperties &= "-- Original Raster Properties --"
-            sRasterProperties &= vbNewLine & "Left: " & demRow.OriginalExtentLeft.ToString '("#,##0.#")
-            sRasterProperties &= vbNewLine & "Top: " & demRow.OriginalExtentTop.ToString '("#,##0.#")
-            sRasterProperties &= vbNewLine & "Right: " & demRow.OriginalExtentRight.ToString '("#,##0.#")
-            sRasterProperties &= vbNewLine & "Bottom: " & demRow.OriginalExtentBottom.ToString '("#,##0.#")
+            sRasterProperties &= vbNewLine & "Left: " & demRow.OriginalExtentLeft.ToString
+            sRasterProperties &= vbNewLine & "Top: " & demRow.OriginalExtentTop.ToString
+            sRasterProperties &= vbNewLine & "Right: " & demRow.OriginalExtentRight.ToString
+            sRasterProperties &= vbNewLine & "Bottom: " & demRow.OriginalExtentBottom.ToString
             sRasterProperties &= vbNewLine
             sRasterProperties &= vbNewLine & "Cell size: " & demRow.OriginalCellSize.ToString
             sRasterProperties &= vbNewLine
@@ -556,7 +559,7 @@ Namespace UI.SurveyLibrary
 
         End Sub
 
-        Private Sub btnAddToMap_Click(sender As System.Object, e As System.EventArgs) Handles btnAddToMap.Click
+        Private Sub btnAddToMap_Click(sender As System.Object, e As System.EventArgs) Handles cmdAddAssocToMap.Click
 
             Dim CurrentRow As DataRowView = DEMSurfaceBindingSource.Current
 
@@ -598,7 +601,7 @@ Namespace UI.SurveyLibrary
                 Dim warnNothing = MessageBox.Show("You have not selected an associated surface to add to your Map's Table of Contents. An associated surface must exist and be selected to add it to your map.", "No Associated Surface Selected!", MessageBoxButtons.OK)
                 btnSettingsAssociatedSurface.Enabled = False
                 btnDeleteAssociatedSurface.Enabled = False
-                btnAddToMap.Enabled = False
+                cmdAddAssocToMap.Enabled = False
             End If
         End Sub
 
@@ -622,13 +625,13 @@ Namespace UI.SurveyLibrary
         End Sub
 
         Private Sub Associated_CellContentEnter(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles DEMSurfaceDataGridView.CellEnter
-            btnAddToMap.Enabled = True
+            cmdAddAssocToMap.Enabled = True
             btnDeleteAssociatedSurface.Enabled = True
             btnSettingsAssociatedSurface.Enabled = True
         End Sub
 
         Private Sub Associated_CellContentLeave(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles DEMSurfaceDataGridView.CellLeave
-            btnAddToMap.Enabled = False
+            cmdAddAssocToMap.Enabled = False
             btnDeleteAssociatedSurface.Enabled = False
             btnSettingsAssociatedSurface.Enabled = False
         End Sub
@@ -644,7 +647,7 @@ Namespace UI.SurveyLibrary
                 Dim warnNothing = MessageBox.Show("You have not selected an associated surface to view its settings. An associated surface must exist and be selected to view its properties.", "No Associated Surface Selected!", MessageBoxButtons.OK)
                 btnSettingsAssociatedSurface.Enabled = False
                 btnDeleteAssociatedSurface.Enabled = False
-                btnAddToMap.Enabled = False
+                cmdAddAssocToMap.Enabled = False
             End If
 
         End Sub
@@ -683,7 +686,7 @@ Namespace UI.SurveyLibrary
                         Catch ex As Exception
                             Dim ex2 As New Exception("Error deleting the associated surface raster file and directory.", ex)
                             ex2.Data.Add("Raster Path", sPath)
-                            ExceptionHelper.HandleException(ex2)
+                            naru.error.ExceptionUI.HandleException(ex2)
                             bContinue = False
                         End Try
                     End If
@@ -700,7 +703,7 @@ Namespace UI.SurveyLibrary
                         rAssoc.Delete()
                         GCDProject.ProjectManagerBase.save()
                     Catch ex As Exception
-                        ExceptionHelper.HandleException(ex, "The raster file was deleted, but an error occurred removing the surface from the GCD project file. This will be fixed automatically by closing and opening ArcMap if Validate Project is selected from the options menu")
+                        naru.error.ExceptionUI.HandleException(ex, "The raster file was deleted, but an error occurred removing the surface from the GCD project file. This will be fixed automatically by closing and opening ArcMap if Validate Project is selected from the options menu")
                     End Try
                 End If
 
@@ -723,7 +726,7 @@ Namespace UI.SurveyLibrary
                 DEMSurveyBindingSource.EndEdit()
                 SpecifyErrorSurface(demRow)
             Catch ex As Exception
-                ExceptionHelper.HandleException(ex)
+                naru.error.ExceptionUI.HandleException(ex)
             End Try
 
         End Sub
@@ -739,12 +742,12 @@ Namespace UI.SurveyLibrary
                     gRaster = frm.ProcessRaster
                 Catch ex As Exception
                     Try
-                        System.IO.Directory.Delete(System.IO.Path.GetDirectoryName(frm.txtRasterPath.Text))
+                        IO.Directory.Delete(IO.Path.GetDirectoryName(frm.txtRasterPath.Text))
                     Catch ex2 As Exception
                         ' do nothing
                     End Try
 
-                    ExceptionHelper.HandleException(ex, "An error occurred attempting to import the error surface into the GCD project. No information has been saved to the GCD project file but you should check the GCD project folder to determine if any remains of the raster remain.")
+                    naru.error.ExceptionUI.HandleException(ex, "An error occurred attempting to import the error surface into the GCD project. No information has been saved to the GCD project file but you should check the GCD project folder to determine if any remains of the raster remain.")
                 End Try
 
                 If TypeOf gRaster Is GCDConsoleLib.Raster Then
@@ -775,7 +778,7 @@ Namespace UI.SurveyLibrary
                             sMsg &= "The GCD project error surface raster was deleted."
                         End If
 
-                        ExceptionHelper.HandleException(ex, sMsg)
+                        naru.error.ExceptionUI.HandleException(ex, sMsg)
                     End Try
                 End If
             End If
@@ -797,13 +800,13 @@ Namespace UI.SurveyLibrary
         End Sub
 
         Private Sub Error_CellContentEnter(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles ErrorTableDataGridView.CellEnter
-            btnAddErrorToMap.Enabled = True
+            cmdAddErrorToMap.Enabled = True
             btnErrorDelete.Enabled = True
             btnErrorSettings.Enabled = True
         End Sub
 
         Private Sub Error_CellContentLeave(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles ErrorTableDataGridView.CellLeave
-            btnAddErrorToMap.Enabled = False
+            cmdAddErrorToMap.Enabled = False
             btnErrorDelete.Enabled = False
             btnErrorSettings.Enabled = False
         End Sub
@@ -858,7 +861,7 @@ Namespace UI.SurveyLibrary
 
                 If bContinue Then
                     Try
-                        IO.Directory.Delete(System.IO.Path.GetDirectoryName(GCDProject.ProjectManagerBase.GetAbsolutePath(rError.Source)))
+                        IO.Directory.Delete(IO.Path.GetDirectoryName(GCDProject.ProjectManagerBase.GetAbsolutePath(rError.Source)))
                     Catch ex As Exception
                         ' do nothing
                     End Try
@@ -869,7 +872,7 @@ Namespace UI.SurveyLibrary
                         rError.Delete()
                         Core.GCDProject.ProjectManagerBase.save()
                     Catch ex As Exception
-                        ExceptionHelper.HandleException(ex, "The raster file was deleted, but an error occurred removing the surface from the GCD project file. This will be fixed automatically by closing and opening ArcMap if Validate Project is selected from the options menu")
+                        naru.error.ExceptionUI.HandleException(ex, "The raster file was deleted, but an error occurred removing the surface from the GCD project file. This will be fixed automatically by closing and opening ArcMap if Validate Project is selected from the options menu")
                     End Try
                 End If
 
@@ -877,7 +880,7 @@ Namespace UI.SurveyLibrary
 
         End Sub
 
-        Private Sub btnAddErrorToMap_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnAddErrorToMap.Click
+        Private Sub btnAddErrorToMap_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdAddErrorToMap.Click
 
             Dim CurrentRow As DataRowView = Me.ErrorTableBindingSource.Current
             If Not CurrentRow Is Nothing AndAlso TypeOf CurrentRow.Row Is ProjectDS.ErrorSurfaceRow Then
@@ -889,7 +892,7 @@ Namespace UI.SurveyLibrary
                 Dim warnNothing = MessageBox.Show("You have not selected an error surface to add to your map. An error surface must exist and be selected to be added to the map.", "No Error Surface Selected!", MessageBoxButtons.OK)
                 btnErrorSettings.Enabled = False
                 btnErrorDelete.Enabled = False
-                btnAddErrorToMap.Enabled = False
+                cmdAddErrorToMap.Enabled = False
             End If
 
         End Sub
@@ -905,10 +908,6 @@ Namespace UI.SurveyLibrary
         End Sub
 
 #End Region
-
-        Private Sub btnHelp_Click(sender As Object, e As System.EventArgs)
-
-        End Sub
 
         Private Sub cmdDateTime_Click(sender As System.Object, e As System.EventArgs) Handles cmdDateTime.Click
 
