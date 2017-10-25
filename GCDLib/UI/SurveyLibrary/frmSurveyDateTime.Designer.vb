@@ -58,7 +58,7 @@
             '
             Me.cboYear.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
             Me.cboYear.FormattingEnabled = True
-            Me.cboYear.Location = New System.Drawing.Point(120, 16)
+            Me.cboYear.Location = New System.Drawing.Point(115, 16)
             Me.cboYear.Name = "cboYear"
             Me.cboYear.Size = New System.Drawing.Size(67, 21)
             Me.cboYear.TabIndex = 1
@@ -67,7 +67,7 @@
             '
             Me.cboMonth.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
             Me.cboMonth.FormattingEnabled = True
-            Me.cboMonth.Location = New System.Drawing.Point(197, 16)
+            Me.cboMonth.Location = New System.Drawing.Point(192, 16)
             Me.cboMonth.Name = "cboMonth"
             Me.cboMonth.Size = New System.Drawing.Size(48, 21)
             Me.cboMonth.TabIndex = 2
@@ -76,7 +76,7 @@
             '
             Me.cboDay.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
             Me.cboDay.FormattingEnabled = True
-            Me.cboDay.Location = New System.Drawing.Point(255, 16)
+            Me.cboDay.Location = New System.Drawing.Point(250, 16)
             Me.cboDay.Name = "cboDay"
             Me.cboDay.Size = New System.Drawing.Size(48, 21)
             Me.cboDay.TabIndex = 3
@@ -85,7 +85,7 @@
             '
             Me.cboMinute.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
             Me.cboMinute.FormattingEnabled = True
-            Me.cboMinute.Location = New System.Drawing.Point(175, 53)
+            Me.cboMinute.Location = New System.Drawing.Point(170, 53)
             Me.cboMinute.Name = "cboMinute"
             Me.cboMinute.Size = New System.Drawing.Size(48, 21)
             Me.cboMinute.TabIndex = 6
@@ -94,7 +94,7 @@
             '
             Me.cboHour.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
             Me.cboHour.FormattingEnabled = True
-            Me.cboHour.Location = New System.Drawing.Point(120, 53)
+            Me.cboHour.Location = New System.Drawing.Point(115, 53)
             Me.cboHour.Name = "cboHour"
             Me.cboHour.Size = New System.Drawing.Size(48, 21)
             Me.cboHour.TabIndex = 5
@@ -103,7 +103,7 @@
             '
             Me.cmdSave.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
             Me.cmdSave.DialogResult = System.Windows.Forms.DialogResult.OK
-            Me.cmdSave.Location = New System.Drawing.Point(177, 114)
+            Me.cmdSave.Location = New System.Drawing.Point(144, 87)
             Me.cmdSave.Name = "cmdSave"
             Me.cmdSave.Size = New System.Drawing.Size(75, 23)
             Me.cmdSave.TabIndex = 7
@@ -114,7 +114,7 @@
             '
             Me.cmdCancel.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
             Me.cmdCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel
-            Me.cmdCancel.Location = New System.Drawing.Point(258, 114)
+            Me.cmdCancel.Location = New System.Drawing.Point(225, 87)
             Me.cmdCancel.Name = "cmdCancel"
             Me.cmdCancel.Size = New System.Drawing.Size(75, 23)
             Me.cmdCancel.TabIndex = 8
@@ -127,7 +127,7 @@
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
             Me.CancelButton = Me.cmdCancel
-            Me.ClientSize = New System.Drawing.Size(345, 149)
+            Me.ClientSize = New System.Drawing.Size(312, 122)
             Me.Controls.Add(Me.cmdCancel)
             Me.Controls.Add(Me.cmdSave)
             Me.Controls.Add(Me.cboMinute)
