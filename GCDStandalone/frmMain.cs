@@ -24,11 +24,20 @@ namespace GCDStandalone
             try
             {
                 GCDLib.Core.WorkspaceManager.Initialize();
-                new GCDLib.Core.GCDProject.ProjectManagerUI(GCDConsoleLib.Raster.RasterDriver.GTiff, "true");
             }
             catch (Exception ex)
             {
                 naru.error.ExceptionUI.HandleException(ex, "Error initializing temporary workspace.");
+            }
+
+            try
+            {
+                GCDLib.Core.GCDProject.ProjectManagerUI.CopyDeployFolder();
+                new GCDLib.Core.GCDProject.ProjectManagerUI(GCDConsoleLib.Raster.RasterDriver.GTiff, "true");
+            }
+            catch(Exception ex)
+            {
+                naru.error.ExceptionUI.HandleException(ex, "Error setting up application files.");
             }
 
             ucProjectExplorer1.ProjectTreeNodeSelectionChange += UpdateMenusAndToolstrips;

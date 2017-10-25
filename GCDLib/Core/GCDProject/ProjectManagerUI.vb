@@ -37,9 +37,6 @@ Namespace Core.GCDProject
         Public Sub New(ByVal eDefaultRasterType As GCDConsoleLib.Raster.RasterDriver, ByVal sAutomaticPyramids As String)
             MyBase.New(ApplicationFolder, My.Settings.Erosion, My.Settings.Depsoition, eDefaultRasterType)
 
-            ' Copy all the deployment folders and files into the user's AppData folder
-            CopyResourceFolder("Deploy")
-
             m_PyramidManager = New RasterPyramidManager(sAutomaticPyramids)
             m_FISLibrary = New FileInfo(Path.Combine(Environment.SpecialFolder.ApplicationData, "FISLibrary.xml"))
 
@@ -270,11 +267,12 @@ Namespace Core.GCDProject
             End If
         End Sub
 
-        Private Function CopyResourceFolder(sFolderName As String) As String
+        Public Shared Sub CopyDeployFolder()
 
             Dim sDestinationFolder As String = ApplicationFolder
 
             'New Code to test this may not be what you intend though
+            Dim sFolderName As String = "Deploy"
             If String.Compare(sFolderName, "Reources\FIS", True) = 0 Then
 
                 sDestinationFolder = IO.Path.Combine(sDestinationFolder, sFolderName)
@@ -290,17 +288,15 @@ Namespace Core.GCDProject
                 End If
             Else
                 Directory.CreateDirectory(sDestinationFolder)
-                Dim sOriginalFolder As String = IO.Path.Combine(Path.GetDirectoryName(Reflection.Assembly.GetExecutingAssembly().Location), sFolderName)
-                sDestinationFolder = Path.Combine(sDestinationFolder, Path.GetFileNameWithoutExtension(sFolderName))
+                Dim sOriginalFolder As String = IO.Path.Combine(Path.GetDirectoryName(Reflection.Assembly.GetExecutingAssembly().Location), "Deploy")
+                'sDestinationFolder = Path.Combine(sDestinationFolder, Path.GetFileNameWithoutExtension(sFolderName))
                 Debug.WriteLine("Copying AddIn Folder """ & sOriginalFolder & """ to """ & sDestinationFolder & """")
-                CopyDirectory(sOriginalFolder, sDestinationFolder)
+                CopyDirectory(sOriginalFolder, ApplicationFolder)
             End If
 
-            Return sDestinationFolder
+        End Sub
 
-        End Function
-
-        Private Sub CopyDirectory(ByVal sourcePath As String, ByVal destPath As String)
+        Private Shared Sub CopyDirectory(ByVal sourcePath As String, ByVal destPath As String)
 
             If Not IO.Directory.Exists(destPath) Then
                 Try
