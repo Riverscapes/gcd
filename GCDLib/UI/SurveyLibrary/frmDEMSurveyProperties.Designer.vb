@@ -25,14 +25,14 @@
         <System.Diagnostics.DebuggerStepThrough()>
         Private Sub InitializeComponent()
             Me.components = New System.ComponentModel.Container()
-            Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-            Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-            Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
             Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmDEMSurveyProperties))
             Me.btnCancel = New System.Windows.Forms.Button()
             Me.btnOK = New System.Windows.Forms.Button()
             Me.DEMSurveyBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-            Me.DesignProjectDS = New ProjectDS()
+            Me.DesignProjectDS = New GCDLib.ProjectDS()
             Me.DEMSurfaceBindingSource = New System.Windows.Forms.BindingSource(Me.components)
             Me.ErrorTableBindingSource = New System.Windows.Forms.BindingSource(Me.components)
             Me.btnHlp = New System.Windows.Forms.Button()
@@ -62,7 +62,6 @@
             Me.GroupBox1 = New System.Windows.Forms.GroupBox()
             Me.txtMask = New System.Windows.Forms.TextBox()
             Me.cboSingle = New System.Windows.Forms.ComboBox()
-            Me.SurveyTypesBindingSource = New System.Windows.Forms.BindingSource(Me.components)
             Me.btnBrowseMask = New System.Windows.Forms.Button()
             Me.cmdAddToMap = New System.Windows.Forms.Button()
             Me.cboIdentify = New System.Windows.Forms.ComboBox()
@@ -90,7 +89,6 @@
             Me.pgeSurvey.SuspendLayout()
             Me.GroupBox2.SuspendLayout()
             Me.GroupBox1.SuspendLayout()
-            CType(Me.SurveyTypesBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.tabControl.SuspendLayout()
             Me.SuspendLayout()
             '
@@ -164,7 +162,7 @@
             '
             'btnCalculateError
             '
-            Me.btnCalculateError.Image = My.Resources.Resources.sigma
+            Me.btnCalculateError.Image = Global.GCDLib.My.Resources.Resources.sigma
             Me.btnCalculateError.Location = New System.Drawing.Point(40, 6)
             Me.btnCalculateError.Name = "btnCalculateError"
             Me.btnCalculateError.Size = New System.Drawing.Size(29, 23)
@@ -174,7 +172,7 @@
             'btnAddErrorToMap
             '
             Me.btnAddErrorToMap.Enabled = False
-            Me.btnAddErrorToMap.Image = My.Resources.Resources.AddToMap
+            Me.btnAddErrorToMap.Image = Global.GCDLib.My.Resources.Resources.AddToMap
             Me.btnAddErrorToMap.Location = New System.Drawing.Point(144, 6)
             Me.btnAddErrorToMap.Name = "btnAddErrorToMap"
             Me.btnAddErrorToMap.Size = New System.Drawing.Size(29, 23)
@@ -226,7 +224,7 @@
             'btnErrorDelete
             '
             Me.btnErrorDelete.Enabled = False
-            Me.btnErrorDelete.Image = My.Resources.Resources.Delete
+            Me.btnErrorDelete.Image = Global.GCDLib.My.Resources.Resources.Delete
             Me.btnErrorDelete.Location = New System.Drawing.Point(74, 6)
             Me.btnErrorDelete.Name = "btnErrorDelete"
             Me.btnErrorDelete.Size = New System.Drawing.Size(29, 23)
@@ -236,7 +234,7 @@
             'btnErrorSettings
             '
             Me.btnErrorSettings.Enabled = False
-            Me.btnErrorSettings.Image = My.Resources.Resources.Settings
+            Me.btnErrorSettings.Image = Global.GCDLib.My.Resources.Resources.Settings
             Me.btnErrorSettings.Location = New System.Drawing.Point(109, 6)
             Me.btnErrorSettings.Name = "btnErrorSettings"
             Me.btnErrorSettings.Size = New System.Drawing.Size(29, 23)
@@ -245,7 +243,7 @@
             '
             'btnAddError
             '
-            Me.btnAddError.Image = My.Resources.Resources.Add
+            Me.btnAddError.Image = Global.GCDLib.My.Resources.Resources.Add
             Me.btnAddError.Location = New System.Drawing.Point(6, 6)
             Me.btnAddError.Name = "btnAddError"
             Me.btnAddError.Size = New System.Drawing.Size(29, 23)
@@ -274,37 +272,37 @@
             Me.DEMSurfaceDataGridView.AllowUserToDeleteRows = False
             Me.DEMSurfaceDataGridView.AutoGenerateColumns = False
             Me.DEMSurfaceDataGridView.BackgroundColor = System.Drawing.SystemColors.Control
-            DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-            DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-            DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-            DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText
-            DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-            DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-            DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-            Me.DEMSurfaceDataGridView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+            DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+            DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
+            DataGridViewCellStyle4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+            DataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText
+            DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
+            DataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+            DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+            Me.DEMSurfaceDataGridView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
             Me.DEMSurfaceDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
             Me.DEMSurfaceDataGridView.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn3, Me.DataGridViewTextBoxColumn4, Me.DataGridViewTextBoxColumn5})
             Me.DEMSurfaceDataGridView.DataSource = Me.DEMSurfaceBindingSource
-            DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-            DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
-            DataGridViewCellStyle2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-            DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText
-            DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-            DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-            DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-            Me.DEMSurfaceDataGridView.DefaultCellStyle = DataGridViewCellStyle2
+            DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+            DataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window
+            DataGridViewCellStyle5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+            DataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText
+            DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
+            DataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+            DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+            Me.DEMSurfaceDataGridView.DefaultCellStyle = DataGridViewCellStyle5
             Me.DEMSurfaceDataGridView.Location = New System.Drawing.Point(3, 35)
             Me.DEMSurfaceDataGridView.MultiSelect = False
             Me.DEMSurfaceDataGridView.Name = "DEMSurfaceDataGridView"
             Me.DEMSurfaceDataGridView.ReadOnly = True
-            DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-            DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
-            DataGridViewCellStyle3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-            DataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText
-            DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-            DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-            DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-            Me.DEMSurfaceDataGridView.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
+            DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+            DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
+            DataGridViewCellStyle6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+            DataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText
+            DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
+            DataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+            DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+            Me.DEMSurfaceDataGridView.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
             Me.DEMSurfaceDataGridView.RowHeadersVisible = False
             Me.DEMSurfaceDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
             Me.DEMSurfaceDataGridView.Size = New System.Drawing.Size(593, 425)
@@ -336,7 +334,7 @@
             '
             'btnAddAssociatedSurface
             '
-            Me.btnAddAssociatedSurface.Image = My.Resources.Resources.Add
+            Me.btnAddAssociatedSurface.Image = Global.GCDLib.My.Resources.Resources.Add
             Me.btnAddAssociatedSurface.Location = New System.Drawing.Point(3, 6)
             Me.btnAddAssociatedSurface.Name = "btnAddAssociatedSurface"
             Me.btnAddAssociatedSurface.Size = New System.Drawing.Size(29, 23)
@@ -346,7 +344,7 @@
             'btnAddToMap
             '
             Me.btnAddToMap.Enabled = False
-            Me.btnAddToMap.Image = My.Resources.Resources.AddToMap
+            Me.btnAddToMap.Image = Global.GCDLib.My.Resources.Resources.AddToMap
             Me.btnAddToMap.Location = New System.Drawing.Point(108, 6)
             Me.btnAddToMap.Name = "btnAddToMap"
             Me.btnAddToMap.Size = New System.Drawing.Size(29, 23)
@@ -356,7 +354,7 @@
             'btnDeleteAssociatedSurface
             '
             Me.btnDeleteAssociatedSurface.Enabled = False
-            Me.btnDeleteAssociatedSurface.Image = My.Resources.Resources.Delete
+            Me.btnDeleteAssociatedSurface.Image = Global.GCDLib.My.Resources.Resources.Delete
             Me.btnDeleteAssociatedSurface.Location = New System.Drawing.Point(73, 6)
             Me.btnDeleteAssociatedSurface.Name = "btnDeleteAssociatedSurface"
             Me.btnDeleteAssociatedSurface.Size = New System.Drawing.Size(29, 23)
@@ -366,7 +364,7 @@
             'btnSettingsAssociatedSurface
             '
             Me.btnSettingsAssociatedSurface.Enabled = False
-            Me.btnSettingsAssociatedSurface.Image = My.Resources.Resources.Settings
+            Me.btnSettingsAssociatedSurface.Image = Global.GCDLib.My.Resources.Resources.Settings
             Me.btnSettingsAssociatedSurface.Location = New System.Drawing.Point(38, 6)
             Me.btnSettingsAssociatedSurface.Name = "btnSettingsAssociatedSurface"
             Me.btnSettingsAssociatedSurface.Size = New System.Drawing.Size(29, 23)
@@ -437,8 +435,6 @@
             '
             'cboSingle
             '
-            Me.cboSingle.DataSource = Me.SurveyTypesBindingSource
-            Me.cboSingle.DisplayMember = "Name"
             Me.cboSingle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
             Me.cboSingle.FormattingEnabled = True
             Me.cboSingle.Location = New System.Drawing.Point(41, 80)
@@ -447,15 +443,10 @@
             Me.cboSingle.TabIndex = 5
             Me.cboSingle.ValueMember = "Name"
             '
-            'SurveyTypesBindingSource
-            '
-            Me.SurveyTypesBindingSource.AllowNew = False
-            Me.SurveyTypesBindingSource.DataMember = "SurveyTypes"
-            '
             'btnBrowseMask
             '
             Me.btnBrowseMask.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-            Me.btnBrowseMask.Image = My.Resources.Resources.BrowseFolder
+            Me.btnBrowseMask.Image = Global.GCDLib.My.Resources.Resources.BrowseFolder
             Me.btnBrowseMask.Location = New System.Drawing.Point(530, 143)
             Me.btnBrowseMask.Name = "btnBrowseMask"
             Me.btnBrowseMask.Size = New System.Drawing.Size(29, 23)
@@ -465,7 +456,7 @@
             'cmdAddToMap
             '
             Me.cmdAddToMap.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-            Me.cmdAddToMap.Image = My.Resources.AddToMap
+            Me.cmdAddToMap.Image = Global.GCDLib.My.Resources.Resources.AddToMap
             Me.cmdAddToMap.Location = New System.Drawing.Point(530, 25)
             Me.cmdAddToMap.Name = "cmdAddToMap"
             Me.cmdAddToMap.Size = New System.Drawing.Size(29, 23)
@@ -605,7 +596,7 @@
             Me.lblDatetime.TabIndex = 3
             Me.lblDatetime.Text = "10 Dec 2012 23:59"
             '
-            'SurveyPropertiesForm
+            'frmDEMSurveyProperties
             '
             Me.AcceptButton = Me.btnOK
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -627,7 +618,7 @@
             Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
             Me.MaximizeBox = False
             Me.MinimizeBox = False
-            Me.Name = "SurveyPropertiesForm"
+            Me.Name = "frmDEMSurveyProperties"
             Me.Text = "DEM Survey Properties"
             CType(Me.DEMSurveyBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
             CType(Me.DesignProjectDS, System.ComponentModel.ISupportInitialize).EndInit()
@@ -642,7 +633,6 @@
             Me.GroupBox2.PerformLayout()
             Me.GroupBox1.ResumeLayout(False)
             Me.GroupBox1.PerformLayout()
-            CType(Me.SurveyTypesBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
             Me.tabControl.ResumeLayout(False)
             Me.ResumeLayout(False)
             Me.PerformLayout()
@@ -691,7 +681,6 @@
         Friend WithEvents Label1 As System.Windows.Forms.Label
         Friend WithEvents tabControl As System.Windows.Forms.TabControl
         Friend WithEvents txtProperties As System.Windows.Forms.TextBox
-        Friend WithEvents SurveyTypesBindingSource As System.Windows.Forms.BindingSource
         Friend WithEvents txtMask As System.Windows.Forms.TextBox
         Friend WithEvents btnCalculateError As System.Windows.Forms.Button
         Friend WithEvents txtFolder As System.Windows.Forms.TextBox

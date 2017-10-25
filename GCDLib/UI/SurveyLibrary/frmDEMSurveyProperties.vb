@@ -14,6 +14,11 @@ Namespace UI.SurveyLibrary
         Public Sub New(ByVal nSurveyID As Integer)
             ' This call is required by the Windows Form Designer.
             InitializeComponent()
+
+            If nSurveyID < 1 Then
+                Throw New Exception("This form does not allow new DEM Surveys.")
+            End If
+
             m_DEMSurveyID = nSurveyID
             m_ImportRasterform = Nothing
             m_SurveyDateTime = New Core.GCDProject.SurveyDateTime
@@ -21,43 +26,40 @@ Namespace UI.SurveyLibrary
 
         Private Sub SurveyPropertiesForm_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
-            SetToolTips()
-            DEMSurveyBindingSource.DataSource = Core.GCDProject.ProjectManagerBase.ds
-            DEMSurfaceBindingSource.DataSource = Core.GCDProject.ProjectManagerBase.ds
-            ErrorTableBindingSource.DataSource = Core.GCDProject.ProjectManagerBase.ds
+            InitControls()
+            cboSingle.Items.AddRange(GCDProject.ProjectManagerBase.SurveyTypes.Values.ToArray())
 
-            If m_DEMSurveyID < 1 Then
-                'DEMSurveyBindingSource.AddNew()
-                Throw New Exception("This form does not allow new DEM Surveys.")
-            Else
-                DEMSurveyBindingSource.Filter = "DEMSurveyID = " & m_DEMSurveyID
-                Dim demRow As ProjectDS.DEMSurveyRow = DirectCast(DEMSurveyBindingSource.Current, DataRowView).Row
-                txtName.Text = demRow.Name
-                txtRasterPath.Text = demRow.Source
-                txtMask.Text = demRow.MethodMask
-                txtFolder.Text = Core.GCDProject.ProjectManagerBase.OutputManager.DEMSurveyFolder(demRow.Name)
-                rdoSingle.Checked = demRow.SingleMethod
-                rdoMulti.Checked = demRow.MultiMethod
+            DEMSurveyBindingSource.DataSource = GCDProject.ProjectManagerBase.ds
+            DEMSurfaceBindingSource.DataSource = GCDProject.ProjectManagerBase.ds
+            ErrorTableBindingSource.DataSource = GCDProject.ProjectManagerBase.ds
 
-                ' Select the method mask field
-                If demRow.MultiMethod Then
-                    Dim sMaskPath As String = Core.GCDProject.ProjectManagerBase.GetAbsolutePath(txtMask.Text)
-                    If GCDConsoleLib.GISDataset.FileExists(sMaskPath) Then
-                        Dim gMask As New GCDConsoleLib.Vector(sMaskPath)
-                        cboIdentify.Items.AddRange(gMask.Fields.Values.Where(Function(s As GCDConsoleLib.VectorField) s.Type.Equals(GCDConsoleLib.GDalFieldType.StringField)))
-                        cboIdentify.Text = demRow.MethodMaskField
-                    End If
-                Else
-                    For i As Integer = 0 To cboSingle.Items.Count - 1
-                        If String.Compare(DirectCast(cboSingle.Items(i), DataRowView).Item("Name"), demRow.SingleMethodType, True) = 0 Then
-                            cboSingle.SelectedIndex = i
-                            Exit For
-                        End If
-                    Next
+            DEMSurveyBindingSource.Filter = "DEMSurveyID = " & m_DEMSurveyID
+            Dim demRow As ProjectDS.DEMSurveyRow = DirectCast(DEMSurveyBindingSource.Current, DataRowView).Row
+            txtName.Text = demRow.Name
+            txtRasterPath.Text = demRow.Source
+            txtMask.Text = demRow.MethodMask
+            txtFolder.Text = GCDProject.ProjectManagerBase.OutputManager.DEMSurveyFolder(demRow.Name)
+            rdoSingle.Checked = demRow.SingleMethod
+            rdoMulti.Checked = demRow.MultiMethod
+
+            ' Select the method mask field
+            If demRow.MultiMethod Then
+                Dim sMaskPath As String = GCDProject.ProjectManagerBase.GetAbsolutePath(txtMask.Text)
+                If GCDConsoleLib.GISDataset.FileExists(sMaskPath) Then
+                    Dim gMask As New GCDConsoleLib.Vector(sMaskPath)
+                    cboIdentify.Items.AddRange(gMask.Fields.Values.Where(Function(s As GCDConsoleLib.VectorField) s.Type.Equals(GCDConsoleLib.GDalFieldType.StringField)))
+                    cboIdentify.Text = demRow.MethodMaskField
                 End If
-
-                m_SurveyDateTime = New Core.GCDProject.SurveyDateTime(demRow)
+            Else
+                For i As Integer = 0 To cboSingle.Items.Count - 1
+                    If String.Compare(DirectCast(cboSingle.Items(i), GCDProject.SurveyType).Name, demRow.SingleMethodType, True) = 0 Then
+                        cboSingle.SelectedIndex = i
+                        Exit For
+                    End If
+                Next
             End If
+
+            m_SurveyDateTime = New GCDProject.SurveyDateTime(demRow)
 
             lblDatetime.Text = m_SurveyDateTime.ToString
 
@@ -68,7 +70,10 @@ Namespace UI.SurveyLibrary
             LoadRasterProperties()
         End Sub
 
-        Private Sub SetToolTips()
+        Private Sub InitControls()
+
+            cmdAddToMap.Visible = Core.GCDProject.ProjectManagerUI.IsArcMap
+
             'General Tooltips
             'ttpTooltip.SetToolTip(btnCancel, My.Resources.ttpCancel)
             'ttpTooltip.SetToolTip(btnHelp, My.Resources.ttpHelp)
@@ -105,10 +110,10 @@ Namespace UI.SurveyLibrary
 
         Private Function ValidateForm() As Boolean
 
-            For Each aDEM As ProjectDS.DEMSurveyRow In Core.GCDProject.ProjectManagerUI.ds.DEMSurvey
+            For Each aDEM As ProjectDS.DEMSurveyRow In GCDProject.ProjectManagerBase.ds.DEMSurvey
                 If aDEM.DEMSurveyID <> m_DEMSurveyID Then
                     If String.Compare(aDEM.Name, txtName.Text, True) = 0 Then
-                        System.Windows.Forms.MessageBox.Show(String.Format("Ther is already another DEM survey in this project with the name '{0}'. Each DEM Survey must have a unique name.", txtName.Text))
+                        MessageBox.Show(String.Format("Ther is already another DEM survey in this project with the name '{0}'. Each DEM Survey must have a unique name.", txtName.Text))
                         Return False
                     End If
                 End If

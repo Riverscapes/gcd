@@ -46,12 +46,6 @@ Namespace UI.Project
             DEMSurveyID_Dsc
         End Enum
 
-        Private ReadOnly Property IsStandaloneMode As Boolean
-            Get
-                Return Not Reflection.Assembly.GetEntryAssembly().FullName.ToLower().Contains("arcmap")
-            End Get
-        End Property
-
         Private Sub ProjectExplorerUC_Load(sender As Object, e As System.EventArgs) Handles Me.Load
             LoadTree()
         End Sub
@@ -470,7 +464,7 @@ Namespace UI.Project
                         If TypeOf cms Is ContextMenuStrip Then
 
                             ' Hide any GIS related menu items in standalone mode
-                            If IsStandaloneMode Then
+                            If Not Core.GCDProject.ProjectManagerUI.IsArcMap Then
                                 For Each item As ToolStripItem In cms.Items
                                     item.Visible = Not item.Text.ToLower().Contains("map")
                                 Next

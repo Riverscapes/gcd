@@ -9,6 +9,12 @@ Namespace Core.GCDProject
         Protected Shared m_PyramidManager As RasterPyramidManager
         Private Shared m_FISLibrary As FileInfo
 
+        Public Shared ReadOnly Property IsArcMap As Boolean
+            Get
+                Return Reflection.Assembly.GetEntryAssembly().FullName.ToLower().Contains("arcmap")
+            End Get
+        End Property
+
         Public Shared ReadOnly Property PyramidManager As RasterPyramidManager
             Get
                 Return m_PyramidManager
