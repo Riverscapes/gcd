@@ -48,11 +48,11 @@
             'Label1
             '
             Me.Label1.AutoSize = True
-            Me.Label1.Location = New System.Drawing.Point(12, 16)
+            Me.Label1.Location = New System.Drawing.Point(73, 16)
             Me.Label1.Name = "Label1"
-            Me.Label1.Size = New System.Drawing.Size(38, 13)
+            Me.Label1.Size = New System.Drawing.Size(35, 13)
             Me.Label1.TabIndex = 0
-            Me.Label1.Text = "Name:"
+            Me.Label1.Text = "Name"
             '
             'txtName
             '
@@ -66,11 +66,11 @@
             'Label2
             '
             Me.Label2.AutoSize = True
-            Me.Label2.Location = New System.Drawing.Point(12, 102)
+            Me.Label2.Location = New System.Drawing.Point(77, 102)
             Me.Label2.Name = "Label2"
-            Me.Label2.Size = New System.Drawing.Size(34, 13)
+            Me.Label2.Size = New System.Drawing.Size(31, 13)
             Me.Label2.TabIndex = 11
-            Me.Label2.Text = "Type:"
+            Me.Label2.Text = "Type"
             '
             'cboType
             '
@@ -97,11 +97,11 @@
             'Label3
             '
             Me.Label3.AutoSize = True
-            Me.Label3.Location = New System.Drawing.Point(12, 44)
+            Me.Label3.Location = New System.Drawing.Point(31, 44)
             Me.Label3.Name = "Label3"
-            Me.Label3.Size = New System.Drawing.Size(80, 13)
+            Me.Label3.Size = New System.Drawing.Size(77, 13)
             Me.Label3.TabIndex = 2
-            Me.Label3.Text = "Original source:"
+            Me.Label3.Text = "Original source"
             '
             'btnHelp
             '
@@ -149,7 +149,7 @@
             'btnSlopePercent
             '
             Me.btnSlopePercent.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-            Me.btnSlopePercent.Image = My.Resources.Resources.SlopePercent
+            Me.btnSlopePercent.Image = Global.GCDLib.My.Resources.Resources.SlopePercent
             Me.btnSlopePercent.Location = New System.Drawing.Point(515, 39)
             Me.btnSlopePercent.Name = "btnSlopePercent"
             Me.btnSlopePercent.Size = New System.Drawing.Size(25, 22)
@@ -159,7 +159,7 @@
             'btnDensity
             '
             Me.btnDensity.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-            Me.btnDensity.Image = My.Resources.Resources.PointDensity
+            Me.btnDensity.Image = Global.GCDLib.My.Resources.Resources.PointDensity
             Me.btnDensity.Location = New System.Drawing.Point(544, 39)
             Me.btnDensity.Name = "btnDensity"
             Me.btnDensity.Size = New System.Drawing.Size(25, 22)
@@ -180,15 +180,15 @@
             'Label4
             '
             Me.Label4.AutoSize = True
-            Me.Label4.Location = New System.Drawing.Point(12, 73)
+            Me.Label4.Location = New System.Drawing.Point(15, 73)
             Me.Label4.Name = "Label4"
-            Me.Label4.Size = New System.Drawing.Size(96, 13)
+            Me.Label4.Size = New System.Drawing.Size(93, 13)
             Me.Label4.TabIndex = 9
-            Me.Label4.Text = "Project raster path:"
+            Me.Label4.Text = "Project raster path"
             '
             'btnRoughness
             '
-            Me.btnRoughness.Image = My.Resources.Resources.Roughness
+            Me.btnRoughness.Image = Global.GCDLib.My.Resources.Resources.Roughness
             Me.btnRoughness.Location = New System.Drawing.Point(573, 39)
             Me.btnRoughness.Name = "btnRoughness"
             Me.btnRoughness.Size = New System.Drawing.Size(25, 22)
@@ -198,14 +198,14 @@
             'btnSlopeDegree
             '
             Me.btnSlopeDegree.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-            Me.btnSlopeDegree.Image = My.Resources.Resources.SlopeDegree
+            Me.btnSlopeDegree.Image = Global.GCDLib.My.Resources.Resources.SlopeDegree
             Me.btnSlopeDegree.Location = New System.Drawing.Point(486, 39)
             Me.btnSlopeDegree.Name = "btnSlopeDegree"
             Me.btnSlopeDegree.Size = New System.Drawing.Size(25, 22)
             Me.btnSlopeDegree.TabIndex = 5
             Me.btnSlopeDegree.UseVisualStyleBackColor = True
             '
-            'SurfacePropertiesForm
+            'frmAssocSurfaceProperties
             '
             Me.AcceptButton = Me.btnOK
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -233,7 +233,7 @@
             Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
             Me.MaximizeBox = False
             Me.MinimizeBox = False
-            Me.Name = "SurfacePropertiesForm"
+            Me.Name = "frmAssocSurfaceProperties"
             Me.Text = "Associated Surface Properties"
             Me.ResumeLayout(False)
             Me.PerformLayout()

@@ -69,11 +69,11 @@ Partial Public Class ProjectDS
     
     Private relationFK_Project_AOIs As Global.System.Data.DataRelation
     
-    Private relationFK_ErrorTable_Reservoir As Global.System.Data.DataRelation
+    Private relationWaterSurfaces_Reservoir As Global.System.Data.DataRelation
     
     Private relationFK_DEMSurvey_Reservoir As Global.System.Data.DataRelation
     
-    Private relationWaterSurfaces_Reservoir As Global.System.Data.DataRelation
+    Private relationFK_ErrorTable_Reservoir As Global.System.Data.DataRelation
     
     Private relationFK_ReservoirAnalysis_Reservoir As Global.System.Data.DataRelation
     
@@ -517,9 +517,9 @@ Partial Public Class ProjectDS
         Me.relationFK_DoDs_BudgetSegregations = Me.Relations("FK_DoDs_BudgetSegregations")
         Me.relationFK_BudgetSegregations_BSMasks = Me.Relations("FK_BudgetSegregations_BSMasks")
         Me.relationFK_Project_AOIs = Me.Relations("FK_Project_AOIs")
-        Me.relationFK_ErrorTable_Reservoir = Me.Relations("FK_ErrorTable_Reservoir")
-        Me.relationFK_DEMSurvey_Reservoir = Me.Relations("FK_DEMSurvey_Reservoir")
         Me.relationWaterSurfaces_Reservoir = Me.Relations("WaterSurfaces_Reservoir")
+        Me.relationFK_DEMSurvey_Reservoir = Me.Relations("FK_DEMSurvey_Reservoir")
+        Me.relationFK_ErrorTable_Reservoir = Me.Relations("FK_ErrorTable_Reservoir")
         Me.relationFK_ReservoirAnalysis_Reservoir = Me.Relations("FK_ReservoirAnalysis_Reservoir")
     End Sub
     
@@ -603,7 +603,7 @@ Partial Public Class ProjectDS
         fkc.AcceptRejectRule = Global.System.Data.AcceptRejectRule.None
         fkc.DeleteRule = Global.System.Data.Rule.Cascade
         fkc.UpdateRule = Global.System.Data.Rule.Cascade
-        fkc = New Global.System.Data.ForeignKeyConstraint("FK_ErrorTable_Reservoir", New Global.System.Data.DataColumn() {Me.tableErrorSurface.ErrorSurfaceIDColumn}, New Global.System.Data.DataColumn() {Me.tableReservoirAnalysis.ErrorIDColumn})
+        fkc = New Global.System.Data.ForeignKeyConstraint("WaterSurfaces_Reservoir", New Global.System.Data.DataColumn() {Me.tableWaterSurfaces.WaterSurfaceIDColumn}, New Global.System.Data.DataColumn() {Me.tableReservoirAnalysis.WaterSurfaceIDColumn})
         Me.tableReservoirAnalysis.Constraints.Add(fkc)
         fkc.AcceptRejectRule = Global.System.Data.AcceptRejectRule.None
         fkc.DeleteRule = Global.System.Data.Rule.Cascade
@@ -613,7 +613,7 @@ Partial Public Class ProjectDS
         fkc.AcceptRejectRule = Global.System.Data.AcceptRejectRule.None
         fkc.DeleteRule = Global.System.Data.Rule.Cascade
         fkc.UpdateRule = Global.System.Data.Rule.Cascade
-        fkc = New Global.System.Data.ForeignKeyConstraint("WaterSurfaces_Reservoir", New Global.System.Data.DataColumn() {Me.tableWaterSurfaces.WaterSurfaceIDColumn}, New Global.System.Data.DataColumn() {Me.tableReservoirAnalysis.WaterSurfaceIDColumn})
+        fkc = New Global.System.Data.ForeignKeyConstraint("FK_ErrorTable_Reservoir", New Global.System.Data.DataColumn() {Me.tableErrorSurface.ErrorSurfaceIDColumn}, New Global.System.Data.DataColumn() {Me.tableReservoirAnalysis.ErrorIDColumn})
         Me.tableReservoirAnalysis.Constraints.Add(fkc)
         fkc.AcceptRejectRule = Global.System.Data.AcceptRejectRule.None
         fkc.DeleteRule = Global.System.Data.Rule.Cascade
@@ -650,12 +650,12 @@ Partial Public Class ProjectDS
         Me.relationFK_Project_AOIs = New Global.System.Data.DataRelation("FK_Project_AOIs", New Global.System.Data.DataColumn() {Me.tableProject.ProjectIDColumn}, New Global.System.Data.DataColumn() {Me.tableAOIs.ProjectIDColumn}, false)
         Me.relationFK_Project_AOIs.Nested = true
         Me.Relations.Add(Me.relationFK_Project_AOIs)
-        Me.relationFK_ErrorTable_Reservoir = New Global.System.Data.DataRelation("FK_ErrorTable_Reservoir", New Global.System.Data.DataColumn() {Me.tableErrorSurface.ErrorSurfaceIDColumn}, New Global.System.Data.DataColumn() {Me.tableReservoirAnalysis.ErrorIDColumn}, false)
-        Me.Relations.Add(Me.relationFK_ErrorTable_Reservoir)
-        Me.relationFK_DEMSurvey_Reservoir = New Global.System.Data.DataRelation("FK_DEMSurvey_Reservoir", New Global.System.Data.DataColumn() {Me.tableDEMSurvey.DEMSurveyIDColumn}, New Global.System.Data.DataColumn() {Me.tableReservoirAnalysis.DEMSurveyIDColumn}, false)
-        Me.Relations.Add(Me.relationFK_DEMSurvey_Reservoir)
         Me.relationWaterSurfaces_Reservoir = New Global.System.Data.DataRelation("WaterSurfaces_Reservoir", New Global.System.Data.DataColumn() {Me.tableWaterSurfaces.WaterSurfaceIDColumn}, New Global.System.Data.DataColumn() {Me.tableReservoirAnalysis.WaterSurfaceIDColumn}, false)
         Me.Relations.Add(Me.relationWaterSurfaces_Reservoir)
+        Me.relationFK_DEMSurvey_Reservoir = New Global.System.Data.DataRelation("FK_DEMSurvey_Reservoir", New Global.System.Data.DataColumn() {Me.tableDEMSurvey.DEMSurveyIDColumn}, New Global.System.Data.DataColumn() {Me.tableReservoirAnalysis.DEMSurveyIDColumn}, false)
+        Me.Relations.Add(Me.relationFK_DEMSurvey_Reservoir)
+        Me.relationFK_ErrorTable_Reservoir = New Global.System.Data.DataRelation("FK_ErrorTable_Reservoir", New Global.System.Data.DataColumn() {Me.tableErrorSurface.ErrorSurfaceIDColumn}, New Global.System.Data.DataColumn() {Me.tableReservoirAnalysis.ErrorIDColumn}, false)
+        Me.Relations.Add(Me.relationFK_ErrorTable_Reservoir)
         Me.relationFK_ReservoirAnalysis_Reservoir = New Global.System.Data.DataRelation("FK_ReservoirAnalysis_Reservoir", New Global.System.Data.DataColumn() {Me.tableReservoirAnalysis.ReservoirAnalysisIDColumn}, New Global.System.Data.DataColumn() {Me.tableReservoir.ReservoirAnalysisIDColumn}, false)
         Me.Relations.Add(Me.relationFK_ReservoirAnalysis_Reservoir)
     End Sub
@@ -2011,6 +2011,12 @@ Partial Public Class ProjectDS
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Function FindByAssociatedSurfaceID(ByVal AssociatedSurfaceID As Integer) As AssociatedSurfaceRow
+            Return CType(Me.Rows.Find(New Object() {AssociatedSurfaceID}),AssociatedSurfaceRow)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Overrides Function Clone() As Global.System.Data.DataTable
             Dim cln As AssociatedSurfaceDataTable = CType(MyBase.Clone,AssociatedSurfaceDataTable)
             cln.InitVars
@@ -2049,7 +2055,7 @@ Partial Public Class ProjectDS
             MyBase.Columns.Add(Me.columnType)
             Me.columnOriginalSource = New Global.System.Data.DataColumn("OriginalSource", GetType(String), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnOriginalSource)
-            Me.Constraints.Add(New Global.System.Data.UniqueConstraint("Constraint1", New Global.System.Data.DataColumn() {Me.columnAssociatedSurfaceID}, false))
+            Me.Constraints.Add(New Global.System.Data.UniqueConstraint("Constraint1", New Global.System.Data.DataColumn() {Me.columnAssociatedSurfaceID}, true))
             Me.columnAssociatedSurfaceID.AutoIncrement = true
             Me.columnAssociatedSurfaceID.AutoIncrementSeed = 1
             Me.columnAssociatedSurfaceID.AllowDBNull = false
@@ -9899,12 +9905,12 @@ Partial Public Class ProjectDS
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property ErrorTableRow() As ErrorSurfaceRow
+        Public Property WaterSurfacesRow() As WaterSurfacesRow
             Get
-                Return CType(Me.GetParentRow(Me.Table.ParentRelations("FK_ErrorTable_Reservoir")),ErrorSurfaceRow)
+                Return CType(Me.GetParentRow(Me.Table.ParentRelations("WaterSurfaces_Reservoir")),WaterSurfacesRow)
             End Get
             Set
-                Me.SetParentRow(value, Me.Table.ParentRelations("FK_ErrorTable_Reservoir"))
+                Me.SetParentRow(value, Me.Table.ParentRelations("WaterSurfaces_Reservoir"))
             End Set
         End Property
         
@@ -9921,12 +9927,12 @@ Partial Public Class ProjectDS
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property WaterSurfacesRow() As WaterSurfacesRow
+        Public Property ErrorTableRow() As ErrorSurfaceRow
             Get
-                Return CType(Me.GetParentRow(Me.Table.ParentRelations("WaterSurfaces_Reservoir")),WaterSurfacesRow)
+                Return CType(Me.GetParentRow(Me.Table.ParentRelations("FK_ErrorTable_Reservoir")),ErrorSurfaceRow)
             End Get
             Set
-                Me.SetParentRow(value, Me.Table.ParentRelations("WaterSurfaces_Reservoir"))
+                Me.SetParentRow(value, Me.Table.ParentRelations("FK_ErrorTable_Reservoir"))
             End Set
         End Property
         

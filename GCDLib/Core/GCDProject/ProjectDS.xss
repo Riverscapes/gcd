@@ -153,15 +153,19 @@
         </Point>
       </RoutePoints>
     </Connector>
-    <Connector ID="DesignRelation:WaterSurfaces_Reservoir" ZOrder="20" LineWidth="11">
+    <Connector ID="DesignRelation:FK_ErrorTable_Reservoir" ZOrder="17" LineWidth="11">
       <RoutePoints>
         <Point>
-          <X>927</X>
-          <Y>457</Y>
+          <X>589</X>
+          <Y>456</Y>
         </Point>
         <Point>
-          <X>837</X>
-          <Y>457</Y>
+          <X>589</X>
+          <Y>433</Y>
+        </Point>
+        <Point>
+          <X>670</X>
+          <Y>433</Y>
         </Point>
       </RoutePoints>
     </Connector>
@@ -177,19 +181,15 @@
         </Point>
       </RoutePoints>
     </Connector>
-    <Connector ID="DesignRelation:FK_ErrorTable_Reservoir" ZOrder="17" LineWidth="11">
+    <Connector ID="DesignRelation:WaterSurfaces_Reservoir" ZOrder="20" LineWidth="11">
       <RoutePoints>
         <Point>
-          <X>589</X>
-          <Y>456</Y>
+          <X>927</X>
+          <Y>457</Y>
         </Point>
         <Point>
-          <X>589</X>
-          <Y>433</Y>
-        </Point>
-        <Point>
-          <X>670</X>
-          <Y>433</Y>
+          <X>837</X>
+          <Y>457</Y>
         </Point>
       </RoutePoints>
     </Connector>
