@@ -6,7 +6,7 @@ Namespace Core.BudgetSegregation
         Private m_DodProps As ChangeDetection.DoDResult
         Private m_MaskResults As Dictionary(Of String, MaskResult)
 
-        Private m_pieCharts As BudgetSegregation.BudgetSegregationOutputsClass.PieChartOutputs
+        Private m_pieCharts As BudgetSegregationOutputsClass.PieChartOutputs
         Private m_dMaskOutputs As New Dictionary(Of String, BudgetSegregationOutputsClass.MaskOutputClass)
         Private m_sClassLegendPath As String
         Private m_sClassSummaryPath As String ' Class summary XML file that combines all budget summaries into one file.
@@ -27,7 +27,7 @@ Namespace Core.BudgetSegregation
 
         Private m_sMaskName As String
         Private m_nMaskValue As Integer
-        Private m_changeStats As ChangeDetection.ChangeStats
+        Private m_changeStats As GCDConsoleLib.DoDStats
 
         Public ReadOnly Property Name As String
             Get
@@ -41,13 +41,13 @@ Namespace Core.BudgetSegregation
             End Get
         End Property
 
-        Public ReadOnly Property ChangeStats As ChangeDetection.ChangeStats
+        Public ReadOnly Property ChangeStats As GCDConsoleLib.DoDStats
             Get
                 Return m_changeStats
             End Get
         End Property
 
-        Public Sub New(sMaskName As String, nMaskValue As Integer, chStats As ChangeDetection.ChangeStats)
+        Public Sub New(sMaskName As String, nMaskValue As Integer, ByRef chStats As GCDConsoleLib.DoDStats)
             m_sMaskName = sMaskName
             m_nMaskValue = nMaskValue
             m_changeStats = chStats

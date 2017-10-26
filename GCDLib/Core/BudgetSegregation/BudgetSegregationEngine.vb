@@ -130,7 +130,7 @@
                 sMaskIndicesAndCSVPaths &= bsOutputs.MaskOutputs(sMaskName).MaskValue & ";" & bsOutputs.MaskOutputs(sMaskName).csvFilename & ";"
             Next
             sMaskIndicesAndCSVPaths = sMaskIndicesAndCSVPaths.Substring(0, sMaskIndicesAndCSVPaths.Length - 1)
-            If Not External.GCDCore.CalculateAndWriteMaskHistograms(DoD.ThresholdedDoD, sMaskRaster, sMaskIDList, sMaskIndicesAndCSVPaths, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString) = External.GCDCoreOutputCodes.PROCESS_OK Then
+            If Not External.GCDCore.CalculateAndWriteMaskHistograms(DoD.ThresholdedDoD.FullName, sMaskRaster, sMaskIDList, sMaskIndicesAndCSVPaths, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString) = External.GCDCoreOutputCodes.PROCESS_OK Then
                 Throw New Exception(GCDProject.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
             End If
 
@@ -149,18 +149,18 @@
                 ' Mask the raw and thresholded DoDs to create a pair of rasters that just have values
                 ' for the valid areas for the current Mask
                 Dim sMaskRaw As String = WorkspaceManager.GetTempRaster("MR_" & sSafeMaskName)
-                External.RasterManager.Mask(DoD.RawDoD, sPositiveMask, sMaskRaw, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
+                External.RasterManager.Mask(DoD.RawDoD.FullName, sPositiveMask, sMaskRaw, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
 
                 Dim sMaskThr As String = WorkspaceManager.GetTempRaster("MT_" & sSafeMaskName)
-                External.RasterManager.Mask(DoD.ThresholdedDoD, sPositiveMask, sMaskThr, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
+                External.RasterManager.Mask(DoD.ThresholdedDoD.FullName, sPositiveMask, sMaskThr, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
 
                 ' Need to create a new ChangeStats for the new masked out DoD rasters.
                 ' First build a new DoD Properties depending on the type of the full DoD
                 ' for the whole raster. Then use the attributes of this full DoD combined
                 ' with the newly created masked DoDs for the new BS change stats for this mask.
                 If TypeOf DoD Is ChangeDetection.DoDResultMinLoD Then
-                    Dim BSDoD As New ChangeDetection.DoDResultMinLoD(sMaskRaw, sMaskThr, DirectCast(DoD, ChangeDetection.DoDResultMinLoD).Threshold, gDoDRaw.Extent.CellWidth, gDoDRaw.VerticalUnits)
-                    maskOutputClass.ChangeStats = New ChangeDetection.ChangeStatsCalculator(BSDoD)
+                    Dim BSDoD As New ChangeDetection.DoDResultMinLoD(sMaskRaw, DoD.RawHistogram.FullName, sMaskThr, maskOutputClass.csvFilename, DirectCast(DoD, ChangeDetection.DoDResultMinLoD).Threshold, gDoDRaw.Extent.CellWidth, gDoDRaw.VerticalUnits)
+                    maskOutputClass.ChangeStats = BSDoD.ChangeStats
                 Else
                     ' PGB - 8 Apr 2015 - Need to check type against probabilistic first because the 
                     ' probabilistic class is **inherited** from the propagated. Hence the type will
@@ -168,23 +168,23 @@
                     ' restrictive check first.
                     ' 
                     If TypeOf DoD Is ChangeDetection.DoDResultProbabilisitic Then
+
+                        Throw New NotImplementedException("Need a way of calculating the stats for a budget class without having masked rasters on disk")
                         Dim FullDoD As ChangeDetection.DoDResultProbabilisitic = DirectCast(DoD, ChangeDetection.DoDResultProbabilisitic)
-                        Dim BSDoD As New ChangeDetection.DoDResultProbabilisitic(sMaskRaw, sMaskThr, FullDoD.PropagatedErrorRaster, FullDoD.ProbabilityRaster, FullDoD.SpatialCoErosionRaster, FullDoD.SpatialCoDepositionRaster, FullDoD.ConditionalRaster, FullDoD.PosteriorRaster, FullDoD.ConfidenceLevel, FullDoD.SpatialCoherenceFilter, FullDoD.BayesianUpdating, gDoDRaw.Extent.CellWidth, gDoDRaw.VerticalUnits)
-                        maskOutputClass.ChangeStats = New ChangeDetection.ChangeStatsCalculator(BSDoD)
+                        'Dim BSDoD As New ChangeDetection.DoDResultProbabilisitic(sMaskRaw, DoD.RawHistogram.FullName, sMaskThr, FullDoD.PropagatedErrorRaster, FullDoD.ProbabilityRaster, FullDoD.SpatialCoErosionRaster, FullDoD.SpatialCoDepositionRaster, FullDoD.ConditionalRaster, FullDoD.PosteriorRaster, FullDoD.ConfidenceLevel, FullDoD.SpatialCoherenceFilter, FullDoD.BayesianUpdating, gDoDRaw.Extent.CellWidth, gDoDRaw.VerticalUnits)
+                        'maskOutputClass.ChangeStats = BSDoD.ChangeStats
+
                     ElseIf TypeOf DoD Is ChangeDetection.DoDResultPropagated Then
-                        Dim BSDoD As New ChangeDetection.DoDResultPropagated(sMaskRaw, sMaskThr, DirectCast(DoD, ChangeDetection.DoDResultPropagated).PropagatedErrorRaster, gDoDRaw.Extent.CellWidth, gDoDRaw.VerticalUnits)
-                        maskOutputClass.ChangeStats = New ChangeDetection.ChangeStatsCalculator(BSDoD)
-                    Else
-                        Dim ex As New Exception("Unhandled change detection type.")
-                        Throw ex
+                        Throw New NotImplementedException("Need a way of calculating the stats for a budget class without having masked rasters on disk")
+
+                        'Dim BSDoD As New ChangeDetection.DoDResultPropagated(sMaskRaw, DoD.RawHistogram.FullName, sMaskThr, DirectCast(DoD, ChangeDetection.DoDResultPropagated).PropagatedErrorRaster, gDoDRaw.Extent.CellWidth, gDoDRaw.VerticalUnits)
+                        'maskOutputClass.ChangeStats = BSDoD.ChangeStats
                     End If
                 End If
 
                 ' Export the change statistics XML file.
                 Dim sSummaryXMLPath As String = IO.Path.Combine(m_dOutputFolder.FullName, "c" & maskOutputClass.MaskValue.ToString("000") & "_summary.xml")
-                DirectCast(maskOutputClass.ChangeStats, ChangeDetection.ChangeStatsCalculator).ExportSummary(GCDProject.ProjectManagerBase.ExcelTemplatesFolder.FullName,
-                                                                                                               DoD.Units,
-                                                                                                                 sSummaryXMLPath)
+                ChangeDetection.ChangeDetectionEngineBase.GenerateSummaryXML(maskOutputClass.ChangeStats, sSummaryXMLPath, DoD.Units)
 
                 ' Export the histogram graphics
                 IO.Directory.CreateDirectory(IO.Path.GetDirectoryName(maskOutputClass.AreaChartPath))

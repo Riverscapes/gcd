@@ -34,7 +34,7 @@ Namespace UI.BudgetSegregation
             Dim aRow As DataGridViewRow
             Dim nIndex As Integer
             Dim cell As DataGridViewCell
-            Dim stats As Core.ChangeDetection.ChangeStats = _MaskStats.MaskStats(_MaskName)
+            Dim stats As GCDConsoleLib.DoDStats = _MaskStats.MaskStats(_MaskName)
 
             'Area of erosion header
             nIndex = _grdDetails.Rows.Add(1)

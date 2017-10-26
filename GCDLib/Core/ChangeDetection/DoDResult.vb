@@ -126,9 +126,10 @@
             Dim lUnits As UnitsNet.Units.LengthUnit = gRawDoDPath.Proj.LinearUnit
             Dim cellWidth As Double = Convert.ToDouble(gRawDoDPath.Extent.CellWidth)
 
-            Dim dodProps As DoDResult = Nothing
+            Dim dodResult As DoDResult = Nothing
             If rDoD.TypeMinLOD Then
-                dodProps = New DoDResultMinLoD(rawDoDPath, rawHistoPath, thrDoDPath, thrHistoPath, rDoD.Threshold, cellWidth, lUnits)
+
+                dodResult = New DoDResultMinLoD(rawDoDPath, rawHistoPath, thrDoDPath, thrHistoPath, rDoD.Threshold, cellWidth, lUnits)
             Else
                 Dim sPropErrPath As String = String.Empty
                 If Not rDoD.IsPropagatedErrorRasterPathNull Then
@@ -140,7 +141,7 @@
                 End If
 
                 If rDoD.TypePropagated Then
-                    dodProps = New DoDResultPropagated(rawDoDPath, rawHistoPath, thrDoDPath, thrHistoPath, sPropErrPath, cellWidth, lUnits)
+                    dodResult = New DoDResultPropagated(rawDoDPath, rawHistoPath, thrDoDPath, thrHistoPath, sPropErrPath, cellWidth, lUnits)
 
                 ElseIf rDoD.TypeProbabilistic Then
 
@@ -150,13 +151,13 @@
                     Dim sConditionalProbRaster As String = If(rDoD.IsConditionalProbRasterNull, String.Empty, rDoD.ConditionalProbRaster)
                     Dim sPosteriorRaster As String = If(rDoD.IsPosteriorRasterNull, String.Empty, rDoD.PosteriorRaster)
 
-                    dodProps = New DoDResultProbabilisitic(rawDoDPath, rawHistoPath, thrDoDPath, thrHistoPath, sPropErrPath, sProbabilityRaster, sSpatialCoErosionRaster, sSpatialCoDepositionraster, sConditionalProbRaster, sPosteriorRaster, rDoD.Threshold, rDoD.Filter, rDoD.Bayesian, gRawDoDPath.Extent.CellWidth, gRawDoDPath.Proj.LinearUnit)
+                    dodResult = New DoDResultProbabilisitic(rawDoDPath, rawHistoPath, thrDoDPath, thrHistoPath, sPropErrPath, sProbabilityRaster, sSpatialCoErosionRaster, sSpatialCoDepositionraster, sConditionalProbRaster, sPosteriorRaster, rDoD.Threshold, rDoD.Filter, rDoD.Bayesian, gRawDoDPath.Extent.CellWidth, gRawDoDPath.Proj.LinearUnit)
                 Else
                     Throw New Exception("Unhandled DoD type.")
                 End If
             End If
 
-            Return dodProps
+            Return dodResult
 
         End Function
 
@@ -177,9 +178,14 @@
             MyBase.New(rawDoD, rawHisto, thrDoD, threshHisto, fCellSize, eLinearUnits)
 
             m_fThreshold = fThreshold
-
-            ' Build the change statistics
             m_ChangeStats = GCDConsoleLib.RasterOperators.GetStatsMinLoD(rawDoD, thrDoD, fThreshold)
+        End Sub
+
+        Public Sub New(ByRef changeStats As GCDConsoleLib.DoDStats, rawDoD As String, rawHisto As String, thrDoD As String, threshHisto As String, fThreshold As Double, fCellSize As Double, eLinearUnits As UnitsNet.Units.LengthUnit)
+            MyBase.New(rawDoD, rawHisto, thrDoD, threshHisto, fCellSize, eLinearUnits)
+
+            m_fThreshold = fThreshold
+            m_ChangeStats = changeStats
         End Sub
 
     End Class
@@ -199,9 +205,14 @@
             MyBase.New(rawDoD, rawHisto, thrDoD, threshHisto, fCellSize, eLinearUnits)
 
             m_sPropagatedErrorRaster = sPropErrorRaster
-
-            ' Build the change statistics
             m_ChangeStats = GCDConsoleLib.RasterOperators.GetStatsPropagated(rawDoD, thrDoD, sPropErrorRaster)
+        End Sub
+
+        Public Sub New(ByRef changeStats As GCDConsoleLib.DoDStats, rawDoD As String, rawHisto As String, thrDoD As String, threshHisto As String, sPropErrorRaster As String, fCellSize As Double, eLinearUnits As UnitsNet.Units.LengthUnit)
+            MyBase.New(rawDoD, rawHisto, thrDoD, threshHisto, fCellSize, eLinearUnits)
+
+            m_sPropagatedErrorRaster = sPropErrorRaster
+            m_ChangeStats = changeStats
         End Sub
 
     End Class
@@ -283,6 +294,23 @@
 
             ' Build the change statistics
             m_ChangeStats = GCDConsoleLib.RasterOperators.GetStatsProbalistic(rawDoD, thrDoD, propErrorRaster)
+        End Sub
+
+        Public Sub New(ByRef changeStats As GCDConsoleLib.DoDStats, rawDoD As String, rawHisto As String, thrDoD As String, thrHisto As String, propErrorRaster As String, sProbabilityRaster As String, sSpatialCoErosionRaster As String, sSpatialCoDepositionRaster As String, sConditionalProbabilityRaster As String, sPosteriorRaster As String, fConfidenceLevel As Double, nFilter As Integer, bBayesianUpdating As Boolean,
+                   fCellSize As Double, eLinearUnits As UnitsNet.Units.LengthUnit)
+            MyBase.New(rawDoD, rawHisto, thrDoD, thrHisto, propErrorRaster, fCellSize, eLinearUnits)
+
+            m_fConfidenceLevel = fConfidenceLevel
+            m_nSpatialCoherenceFilter = nFilter
+            m_bBayesianUpdating = bBayesianUpdating
+
+            m_sProbabilityRaster = sProbabilityRaster
+            m_sSpatialCoErosionRaster = sSpatialCoErosionRaster
+            m_sSpatialCoDepositionRaster = sSpatialCoDepositionRaster
+            m_sConditionalProbabilityRaster = sConditionalProbabilityRaster
+            m_PosteriorRaster = sPosteriorRaster
+
+            m_ChangeStats = changeStats
         End Sub
 
     End Class

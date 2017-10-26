@@ -114,7 +114,6 @@
             Me.ucSummary.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-            Me.ucSummary.DoDResultSet = Nothing
             Me.ucSummary.Location = New System.Drawing.Point(8, 39)
             Me.ucSummary.Name = "ucSummary"
             Me.ucSummary.Size = New System.Drawing.Size(640, 362)
@@ -200,12 +199,10 @@
             Me.ucHistogram.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
             Me.TableLayoutPanel1.SetColumnSpan(Me.ucHistogram, 2)
             Me.ucHistogram.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.ucHistogram.DoDResultSet = Nothing
             Me.ucHistogram.Location = New System.Drawing.Point(3, 28)
             Me.ucHistogram.Name = "ucHistogram"
             Me.ucHistogram.Size = New System.Drawing.Size(495, 370)
             Me.ucHistogram.TabIndex = 4
-            Me.ucHistogram.UserSelectedUnits = Nothing
             '
             'TabPage3
             '

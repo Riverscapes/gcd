@@ -155,7 +155,8 @@ Namespace Core.ChangeDetection
             ' Call the polymorphic method to threshold the DoD depending on the thresholding method
             Dim dodResults As DoDResultPropagated = ThresholdRawDoD(sRawDoDPath, sRawHistPath)
 
-            GenerateSummaryXML(dodResults.ChangeStats)
+            Dim summaryXMLPath As String = GCDProject.ProjectManagerBase.OutputManager.GetGCDSummaryXMLPath(Name, m_dAnalysisFolder.FullName)
+            GenerateSummaryXML(dodResults.ChangeStats, summaryXMLPath, LinearUnits)
             GenerateChangeBarGraphicFiles(dodResults.ChangeStats, m_fChartWidth, m_fChartHeight)
             GenerateHistogramGraphicFiles(sRawHistPath, sThreshHistPath, m_fChartWidth, m_fChartHeight)
 
@@ -274,10 +275,15 @@ Namespace Core.ChangeDetection
 
         End Function
 
-        Protected Function GenerateSummaryXML(ByRef changeStats As GCDConsoleLib.DoDStats) As String
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="changeStats"></param>
+        ''' <returns></returns>
+        ''' <remarks>This method is needed by budget segregation as well</remarks>
+        Public Shared Function GenerateSummaryXML(ByRef changeStats As GCDConsoleLib.DoDStats, outputPath As String, linearUnits As UnitsNet.Units.LengthUnit) As String
 
             Dim templatePath As String = IO.Path.Combine(GCDProject.ProjectManagerBase.ExcelTemplatesFolder.FullName, "GCDSummary.xml")
-            Dim outputPath As String = GCDProject.ProjectManagerBase.OutputManager.GetGCDSummaryXMLPath(Name, m_dAnalysisFolder.FullName)
             Dim outputText As Text.StringBuilder
 
             Try
@@ -290,7 +296,7 @@ Namespace Core.ChangeDetection
                 Throw ex2
             End Try
 
-            outputText.Replace("[LinearUnits]", UnitsNet.Length.GetAbbreviation(LinearUnits))
+            outputText.Replace("[LinearUnits]", UnitsNet.Length.GetAbbreviation(linearUnits))
 
             outputText.Replace("[TotalAreaOfErosionRaw]", changeStats.AreaErosion_Raw)
             outputText.Replace("[TotalAreaOfErosionThresholded]", changeStats.AreaErosion_Thresholded)

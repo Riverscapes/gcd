@@ -385,23 +385,29 @@ Namespace Core.BudgetSegregation
                 Dim MaskName As String = kvp.Key
                 Dim MaskCsvPath As String = MaskOutput.csvFilename
 
-                Throw New NotImplementedException
-                Dim StatsData As ChangeDetection.ChangeStats '(ChangeDetection.StatsDataClass(MaskCsvPath)
+                Throw New NotImplementedException("Need to load change stats from BS masked rasters")
+                ' TODO This was never really implemented properly. The code below used to load the
+                ' change detection stats from the histograms instead of the DoD rasters because 
+                ' budget segregation doesn't actually produce separate rasters for each class
+                ' from which to calculate the statistics. So the old GCD code used to cheat and calculate
+                ' the stats from the budget histograms instead.
+                '
+                ' The new code should read the stats from the unmasked raw and thresholded rasters
+                ' but pass in a mask so that the stats on refer to the masked area.
+                '
+                'Dim StatsData As New ChangeDetection.StatsDataClass(MaskCsvPath)
+                Dim StatsData As GCDConsoleLib.DoDStats
 
                 MasksStats.TotalStats.AreaErosion_Thresholded += StatsData.AreaErosion_Thresholded
                 MasksStats.TotalStats.AreaDeposition_Thresholded += StatsData.AreaDeposition_Thresholded
                 MasksStats.TotalStats.VolumeErosion_Thresholded += StatsData.VolumeErosion_Thresholded
                 MasksStats.TotalStats.VolumeDeposition_Thresholded += StatsData.VolumeDeposition_Thresholded
 
-                ' PGB 14 Jan 2014. I think that these will reflect the mask classes by virtue of the erosion
-                ' and deposition accumulated above. i.e. the Total and Net Volume of Difference is derived from
-                ' the erosion and deposition values.
-                'MasksStats.TotalStats.VolumeOfDifference_Thresholded += StatsData.VolumeOfDifference_Thresholded
-                'MasksStats.TotalStats.NetVolumeOfDifference_Thresholded += StatsData.NetVolumeOfDifference_Thresholded
-
                 MasksStats.MaskStats.Add(MaskName, StatsData)
             Next
+
             Return MasksStats
+
         End Function
 
     End Class

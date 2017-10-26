@@ -3,16 +3,16 @@
 Namespace Core.BudgetSegregation
 
     Public Class MaskStatsClass
-        Private _MaskStats As New Dictionary(Of String, ChangeDetection.ChangeStats)
-        Private _TotalStats As ChangeDetection.ChangeStats
+        Private _MaskStats As New Dictionary(Of String, GCDConsoleLib.DoDStats)
+        Private _TotalStats As GCDConsoleLib.DoDStats
 
-        Public ReadOnly Property TotalStats As ChangeDetection.ChangeStats
+        Public ReadOnly Property TotalStats As GCDConsoleLib.DoDStats
             Get
                 Return _TotalStats
             End Get
         End Property
 
-        Public ReadOnly Property MaskStats As Dictionary(Of String, ChangeDetection.ChangeStats)
+        Public ReadOnly Property MaskStats As Dictionary(Of String, GCDConsoleLib.DoDStats)
             Get
                 Return _MaskStats
             End Get
@@ -24,7 +24,7 @@ Namespace Core.BudgetSegregation
                 Dim MaskName As String = kvp.Key
                 Dim MaskOutput As BudgetSegregationOutputsClass.MaskOutputClass = kvp.Value
                 Dim SummaryPath As String = MaskOutput.SummaryPath
-                Dim MaskStat As ChangeDetection.ChangeStats = _MaskStats(MaskName)
+                Dim MaskStat As GCDConsoleLib.DoDStats = _MaskStats(MaskName)
                 ExportMaskStat(sExcelTemplatefolder, MaskStat, SummaryPath, eUnits)
             Next
 
@@ -83,7 +83,7 @@ Namespace Core.BudgetSegregation
             For Each kvp As KeyValuePair(Of String, BudgetSegregationOutputsClass.MaskOutputClass) In MaskOutputs
                 Dim MaskName As String = kvp.Key
                 Dim MaskOutput As BudgetSegregationOutputsClass.MaskOutputClass = kvp.Value
-                Dim MaskStat As ChangeDetection.ChangeStats = _MaskStats(MaskName)
+                Dim MaskStat As GCDConsoleLib.DoDStats = _MaskStats(MaskName)
 
                 Dim nIndex As Integer = OutputText.ToString.IndexOf("[CLASS_NAME]")
                 OutputText.Replace("[CLASS_NAME]", MaskName, nIndex, "[CLASS_NAME]".Length)
@@ -173,7 +173,7 @@ Namespace Core.BudgetSegregation
             Return sText
         End Function
 
-        Private Sub ExportMaskStat(sExcelTemplateFolder As String, ByVal StatsData As ChangeDetection.ChangeStats, ByVal SummaryPath As String, eUnits As UnitsNet.Units.LengthUnit)
+        Private Sub ExportMaskStat(sExcelTemplateFolder As String, ByRef changeStats As GCDConsoleLib.DoDStats, ByVal SummaryPath As String, eUnits As UnitsNet.Units.LengthUnit)
 
             ' PGB 15 Jan 2014. Each class now gets its own copy of the new GCD SummaryXML file.
             Throw New NotImplementedException

@@ -17,14 +17,16 @@ namespace GCDConsoleLib
 
         public readonly double AreaErosion_Raw;
         public readonly double AreaDeposition_Raw;
-        public readonly double AreaErosion_Thresholded;
-        public readonly double AreaDeposition_Thresholded;
-
         public readonly double VolumeErosion_Raw;
         public readonly double VolumeDeposition_Raw;
-        public readonly double VolumeErosion_Thresholded;
 
-        public readonly double VolumeDeposition_Thresholded;
+        // The following members need to be writeable so that budget segregation
+        // can accumulate the total stats across all classes
+        public double AreaErosion_Thresholded { get; set; }
+        public double AreaDeposition_Thresholded { get; set; }
+        public double VolumeErosion_Thresholded { get; set; }
+        public double VolumeDeposition_Thresholded { get; set; }
+
         public readonly double VolumeErosion_Error;
         public readonly double VolumeDeposition_Error;
 

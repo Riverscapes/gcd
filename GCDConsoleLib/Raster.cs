@@ -39,6 +39,17 @@ namespace GCDConsoleLib
         }
 
         /// <summary>
+        /// Constructor for opening an existing Raster
+        /// </summary>
+        /// <param name="sfilepath"></param>
+        public Raster(System.IO.FileInfo filepath) : base(filepath.FullName)
+        {
+            _initfromfile();
+            // Remember to clean things up afterwards
+            Dispose();
+        }
+
+        /// <summary>
         /// Constructor to create a new raster file
         /// </summary>
         /// <param name="rTemplate"></param>

@@ -64,10 +64,12 @@ Namespace UI.BudgetSegregation
                 For Each rMask As ProjectDS.BSMasksRow In m_rBS.GetBSMasksRows
                     If rMask.MaskID = nMaskID Then
 
-                        Dim theStats As New Core.ChangeDetection.ChangeStatsFromBSMaskRow(rMask)
+                        Dim theStats As New Core.ChangeDetection.DoDStatsFromRow(rMask)
                         Dim theDoDProps As Core.ChangeDetection.DoDResult = Core.ChangeDetection.DoDResult.CreateFromDoDRow(rMask.BudgetSegregationsRow.DoDsRow)
-                        Dim theResultSet As New Core.ChangeDetection.DoDResultSet(theStats, theDoDProps, GCDProject.ProjectManagerBase.GetAbsolutePath(rMask.BudgetSegregationsRow.DoDsRow.RawHistPath), GCDProject.ProjectManagerBase.GetAbsolutePath(rMask.CSVFileName))
-                        ucSummary.Refresh(theResultSet, m_Options)
+
+                        Throw New NotImplementedException("Need a way to get the stats from a budget class without masked rasters on disk")
+                        'Dim theResultSet As New Core.ChangeDetection.DoDResultSet(theStats, theDoDProps, GCDProject.ProjectManagerBase.GetAbsolutePath(rMask.BudgetSegregationsRow.DoDsRow.RawHistPath), GCDProject.ProjectManagerBase.GetAbsolutePath(rMask.CSVFileName))
+                        'ucSummary.RefreshDisplay(theResultSet, m_Options)
                         Exit For
                     End If
                 Next
@@ -84,58 +86,11 @@ Namespace UI.BudgetSegregation
                 Dim lItem As naru.db.NamedObject = cboECDClass.SelectedItem
                 For Each aMask As ProjectDS.BSMasksRow In m_rBS.GetBSMasksRows
                     If aMask.MaskID = lItem.ID Then
-
-                        Dim chngStats As New Core.ChangeDetection.ChangeStatsFromBSMaskRow(aMask)
-
-                        Dim cdProperties As Core.ChangeDetection.DoDResult
-                        Dim rDoD As ProjectDS.DoDsRow = aMask.BudgetSegregationsRow.DoDsRow
-                        Dim sRawDod As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rDoD.RawDoDPath)
-                        Dim sThrDoD As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rDoD.ThreshDoDPath)
-                        Dim gRawDoD As New GCDConsoleLib.Raster(sRawDod)
-                        If rDoD.TypeMinLOD Then
-                            cdProperties = New Core.ChangeDetection.DoDResultMinLoD(sRawDod, sThrDoD, rDoD.Threshold, gRawDoD.Extent.CellWidth, gRawDoD.VerticalUnits)
-                        ElseIf rDoD.TypePropagated Then
-                            Dim sPropErr As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rDoD.PropagatedErrorRasterPath)
-                            cdProperties = New Core.ChangeDetection.DoDResultPropagated(sRawDod, sThrDoD, sPropErr, gRawDoD.Extent.CellWidth, gRawDoD.VerticalUnits)
-                        Else
-
-                            Dim sPropErr As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rDoD.PropagatedErrorRasterPath)
-
-                            Dim sProbabilityRaster As String = String.Empty
-                            If Not rDoD.IsProbabilityRasterNull Then
-                                sProbabilityRaster = rDoD.ProbabilityRaster
-                            End If
-
-                            Dim sSpatialCoErosionRaster As String = String.Empty
-                            If Not rDoD.IsSpatialCoErosionRasterNull Then
-                                sSpatialCoErosionRaster = rDoD.SpatialCoErosionRaster
-                            End If
-
-                            Dim sSpatialCoDepositionRaster As String = String.Empty
-                            If Not rDoD.IsSpatialCoDepositionRasterNull Then
-                                sSpatialCoDepositionRaster = rDoD.SpatialCoDepositionRaster
-                            End If
-
-                            Dim sConditionalProbRaster As String = String.Empty
-                            If Not rDoD.IsConditionalProbRasterNull Then
-                                sConditionalProbRaster = rDoD.ConditionalProbRaster
-                            End If
-
-                            Dim sPosteriorRaster As String = String.Empty
-                            If Not rDoD.IsPosteriorRasterNull Then
-                                sPosteriorRaster = rDoD.PosteriorRaster
-                            End If
-
-                            cdProperties = New Core.ChangeDetection.DoDResultProbabilisitic(sRawDod, sThrDoD, sPropErr, sProbabilityRaster, sSpatialCoErosionRaster, sSpatialCoDepositionRaster, sConditionalProbRaster, sPosteriorRaster, rDoD.Threshold, rDoD.Filter, rDoD.Bayesian, gRawDoD.Extent.CellWidth, gRawDoD.VerticalUnits)
-                        End If
-
-                        Dim sRawCSV As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rDoD.ThreshHistPath)
-                        Dim sThrCSV As String = GCDProject.ProjectManagerBase.GetAbsolutePath(aMask.CSVFileName)
-                        ucHistogram.LoadHistograms(sRawCSV, sThrCSV, cdProperties.Units)
+                        Dim dodResult As Core.ChangeDetection.DoDResult = Core.ChangeDetection.DoDResult.CreateFromDoDRow(aMask.BudgetSegregationsRow.DoDsRow)
+                        ucHistogram.LoadHistograms(dodResult.RawHistogram, dodResult.ThresholdedHistogram, dodResult.Units)
 
                         ' Update the elevation change bar chart control
-                        ucBars.Initialize(chngStats, cdProperties.Units)
-
+                        ucBars.Initialize(dodResult.ChangeStats, dodResult.Units)
                         Exit For
                     End If
                 Next

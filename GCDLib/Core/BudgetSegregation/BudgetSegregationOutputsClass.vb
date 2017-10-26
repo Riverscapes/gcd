@@ -93,7 +93,11 @@ Namespace Core.BudgetSegregation
 
                 Dim MaskOutput As New MaskOutputClass(rMask.MaskValue, AreaChartPath, VolumeChartPath, csvFilename, SummaryPath)
 
-                MaskOutput.ChangeStats = New ChangeDetection.ChangeStatsFromBSMaskRow(rMask)
+                MaskOutput.ChangeStats = New GCDConsoleLib.DoDStats(rBS.DoDsRow.CellArea, rMask.AreaErosionRaw, rMask.AreaDepositionRaw,
+                                                                    rMask.AreaErosionThresholded, rMask.AreaDepositionThresholded,
+                                                                    rMask.VolumeErosionRaw, rMask.VolumeErosionThresholded,
+                                                                    rMask.VolumeErosionThresholded, rMask.VolumeDepositionThresholded,
+                                                                    rMask.VolumeErosionError, rMask.VolumeDepositionError)
 
                 m_dMaskOutputs.Add(rMask.MaskName, MaskOutput)
             Next
@@ -143,7 +147,7 @@ Namespace Core.BudgetSegregation
             Private m_sClassValue As Integer
             Private m_sSummaryXMLPath As String
 
-            Private m_changeStats As ChangeDetection.ChangeStats
+            Private m_changeStats As GCDConsoleLib.DoDStats
             Private m_DoDProps As ChangeDetection.DoDResult
 
 #Region "Properties"
@@ -178,11 +182,11 @@ Namespace Core.BudgetSegregation
                 End Get
             End Property
 
-            Public Property ChangeStats As ChangeDetection.ChangeStats
+            Public Property ChangeStats As GCDConsoleLib.DoDStats
                 Get
                     Return m_changeStats
                 End Get
-                Set(value As ChangeDetection.ChangeStats)
+                Set(value As GCDConsoleLib.DoDStats)
                     m_changeStats = value
                 End Set
             End Property

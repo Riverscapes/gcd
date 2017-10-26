@@ -1114,21 +1114,15 @@ Namespace UI.Project
                         Dim nID As Integer = GetNodeID(selNode)
                         Dim rDoD As ProjectDS.DoDsRow = GCDProject.ProjectManagerBase.ds.DoDs.FindByDoDID(nID)
                         If TypeOf rDoD Is ProjectDS.DoDsRow Then
-
-                            Dim changeStats As New Core.ChangeDetection.ChangeStatsFromDoDRow(rDoD)
-                            Dim sRawHistoStats As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rDoD.RawHistPath)
-                            Dim sThrHistoStats As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rDoD.ThreshHistPath)
-
-                            Dim dodProp As Core.ChangeDetection.DoDResult = Core.ChangeDetection.DoDResult.CreateFromDoDRow(rDoD)
-                            Dim dodResults As New Core.ChangeDetection.DoDResultSet(changeStats, dodProp, sRawHistoStats, sThrHistoStats)
-                            Dim frm As New ChangeDetection.frmDoDResults(rDoD.Name, dodResults)
+                            Dim dodResult As Core.ChangeDetection.DoDResult = Core.ChangeDetection.DoDResult.CreateFromDoDRow(rDoD)
+                            Dim frm As New ChangeDetection.frmDoDResults(rDoD.Name, dodResult)
                             frm.ShowDialog()
                         End If
                     End If
                 End If
 
             Catch ex As Exception
-                ExceptionHelper.HandleException(ex)
+                naru.error.ExceptionUI.HandleException(ex)
             End Try
 
         End Sub
