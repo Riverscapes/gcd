@@ -5,6 +5,7 @@
         ' Raw histogram data
         Private m_Raw As Dictionary(Of Double, ElevationChangeDataPoint)
         Private m_Thresholded As Dictionary(Of Double, ElevationChangeDataPoint)
+
         Private m_LinearDataUnits As UnitsNet.Units.LengthUnit
 
         Public Function GetAreaDisplayValues(eLinearUnits As UnitsNet.Units.LengthUnit, eAreaUnits As UnitsNet.Units.AreaUnit)
@@ -36,7 +37,7 @@
                     End If
 
                     If bArea Then
-                        lDisplayData(item.Key).Raw = Math.Max(0, item.Value.AreaErosion(eAreaUnits) - lDisplayData(item.Key).Erosion)
+                        lDisplayData(item.Key).Raw = Math.Max(0, UnitsNet.Area.From(item.Value.AreaErosion(eAreaUnits) - lDisplayData(item.Key).Erosion)
                     Else
                         lDisplayData(item.Key).Raw = Math.Max(0, item.Value.VolumeErosion(eAreaUnits) - lDisplayData(item.Key).Erosion)
                     End If

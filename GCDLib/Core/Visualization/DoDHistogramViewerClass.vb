@@ -11,10 +11,6 @@ Namespace Core.Visualization
         Private m_Chart As Charting.Chart
         Private m_HistogramData As ChangeDetection.DoDResultHistograms
 
-        Public Sub SetHistogramUnits(bArea As Boolean, linearDisplayUnits As UnitsNet.Units.LengthUnit, areaDisplayUnits As UnitsNet.Units.AreaUnit, volumesDisplayUnits As UnitsNet.Units.VolumeUnit)
-            Refresh(bArea, linearDisplayUnits, areaDisplayUnits, volumesDisplayUnits)
-        End Sub
-
         ''' <summary>
         ''' Call this constructor from non-UI code that simply wants to generate histogram plot image files
         ''' </summary>
@@ -63,11 +59,17 @@ Namespace Core.Visualization
                 .MinorTickMark.Enabled = True
             End With
 
+            Refresh(True, linearDataUnits, GCDConsoleLib.Utility.Conversion.LengthUnit2AreaUnit(linearDataUnits), GCDConsoleLib.Utility.Conversion.LengthUnit2VolumeUnit(linearDataUnits))
+
         End Sub
 
-        Public Sub Refresh(bArea As Boolean)
-            Refresh(bArea)
+        Public Sub SetHistogramUnits(bArea As Boolean, linearDisplayUnits As UnitsNet.Units.LengthUnit, areaDisplayUnits As UnitsNet.Units.AreaUnit, volumesDisplayUnits As UnitsNet.Units.VolumeUnit)
+            Refresh(bArea, linearDisplayUnits, areaDisplayUnits, volumesDisplayUnits)
         End Sub
+
+        'Public Sub Refresh(bArea As Boolean)
+        '    Refresh(bArea)
+        'End Sub
 
         Private Sub Refresh(ByVal bArea As Boolean, ByVal linearDisplayUnits As UnitsNet.Units.LengthUnit, areaDisplayUnits As UnitsNet.Units.AreaUnit, volumeDisplayUnits As UnitsNet.Units.VolumeUnit)
 
