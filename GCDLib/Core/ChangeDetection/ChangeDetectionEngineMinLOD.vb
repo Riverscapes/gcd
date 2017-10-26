@@ -51,13 +51,10 @@
             Dim theChangeStats As New ChangeStatsCalculator(dodProps)
             sSummaryXMLPath = GenerateSummaryXML(theChangeStats)
 
-            Dim dodHistos As New DoDResultHistograms(sRawHistPath, sThreshHistPath)
-            Dim dodResultSet As New DoDResultSet(theChangeStats, dodHistos, dodProps)
-
             theChangeStats.GenerateChangeBarGraphicFiles(GCDProject.ProjectManagerBase.OutputManager.GetChangeDetectionFiguresFolder(Folder.FullName, True), dodProps.Units, ChartHeight, ChartWidth)
-            GenerateHistogramGraphicFiles(dodHistos, dodProps.Units)
+            GenerateHistogramGraphicFiles(sRawHistPath, sThreshHistPath, dodProps.Units)
 
-            Return dodResultSet
+            Return New DoDResultSet(theChangeStats, dodProps, sRawHistPath, sThreshHistPath)
 
         End Function
 

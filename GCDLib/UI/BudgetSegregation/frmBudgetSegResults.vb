@@ -6,6 +6,7 @@ Namespace UI.BudgetSegregation
     Public Class frmBudgetSegResults
 
         Private m_rBS As ProjectDS.BudgetSegregationsRow
+        Private m_Options As UI.ChangeDetection.DoDSummaryDisplayOptions
 
         Public Sub New(nBSID As Integer)
 
@@ -65,9 +66,8 @@ Namespace UI.BudgetSegregation
 
                         Dim theStats As New Core.ChangeDetection.ChangeStatsFromBSMaskRow(rMask)
                         Dim theDoDProps As Core.ChangeDetection.ChangeDetectionProperties = Core.ChangeDetection.ChangeDetectionProperties.CreateFromDoDRow(rMask.BudgetSegregationsRow.DoDsRow)
-                        Dim theHistoStats As New Core.ChangeDetection.DoDResultHistograms(GCDProject.ProjectManagerBase.GetAbsolutePath(rMask.CSVFileName))
-                        Dim theResultSet As New Core.ChangeDetection.DoDResultSet(theStats, theHistoStats, theDoDProps)
-                        ucSummary.DoDResultSet = theResultSet
+                        Dim theResultSet As New Core.ChangeDetection.DoDResultSet(theStats, theDoDProps, GCDProject.ProjectManagerBase.GetAbsolutePath(rMask.BudgetSegregationsRow.DoDsRow.RawHistPath), GCDProject.ProjectManagerBase.GetAbsolutePath(rMask.CSVFileName))
+                        ucSummary.Refresh(theResultSet, m_Options)
                         Exit For
                     End If
                 Next
@@ -131,12 +131,7 @@ Namespace UI.BudgetSegregation
 
                         Dim sRawCSV As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rDoD.ThreshHistPath)
                         Dim sThrCSV As String = GCDProject.ProjectManagerBase.GetAbsolutePath(aMask.CSVFileName)
-                        Dim histo As New Core.ChangeDetection.DoDResultHistograms(sRawCSV, sThrCSV)
-
-                        Dim dod As New Core.ChangeDetection.DoDResultSet(chngStats, histo, cdProperties)
-
-                        ucHistogram.DoDResultSet = dod
-                        ucHistogram.RefreshHistogram()
+                        ucHistogram.LoadHistograms(sRawCSV, sThrCSV, cdProperties.Units)
 
                         ' Update the elevation change bar chart control
                         ucBars.Initialize(chngStats, cdProperties.Units)

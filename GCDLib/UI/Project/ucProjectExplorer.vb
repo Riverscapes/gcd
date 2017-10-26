@@ -1023,7 +1023,7 @@ Namespace UI.Project
                         LoadTree(sTag)
 
                         ' Now show the results form for this new DoD Calculation
-                        Dim frmResults As New ChangeDetection.frmDoDResults(frmDoDCalculation.DoDResults, frmDoDCalculation.DoDRow)
+                        Dim frmResults As New ChangeDetection.frmDoDResults(frmDoDCalculation.DoDRow.Name, frmDoDCalculation.DoDResults)
                         frmResults.ShowDialog()
                     End If
                 End If
@@ -1119,14 +1119,10 @@ Namespace UI.Project
                             Dim sRawHistoStats As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rDoD.RawHistPath)
                             Dim sThrHistoStats As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rDoD.ThreshHistPath)
 
-                            Dim changeHistos As New Core.ChangeDetection.DoDResultHistograms(sRawHistoStats, sThrHistoStats)
                             Dim dodProp As Core.ChangeDetection.ChangeDetectionProperties = Core.ChangeDetection.ChangeDetectionProperties.CreateFromDoDRow(rDoD)
-                            Dim rResults As New Core.ChangeDetection.DoDResultSet(changeStats, changeHistos, dodProp)
-                            Dim frm As New ChangeDetection.frmDoDResults(rResults, rDoD)
-                            If frm.ShowDialog() = DialogResult.OK Then
-                                ' Don't need to reload the tree here. Nothing changed.
-                                ' LoadTree(selNode.Tag)
-                            End If
+                            Dim dodResults As New Core.ChangeDetection.DoDResultSet(changeStats, dodProp, sRawHistoStats, sThrHistoStats)
+                            Dim frm As New ChangeDetection.frmDoDResults(rDoD.Name, dodResults)
+                            frm.ShowDialog()
                         End If
                     End If
                 End If

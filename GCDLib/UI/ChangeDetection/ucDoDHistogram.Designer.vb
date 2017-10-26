@@ -23,11 +23,10 @@
         'Do not modify it using the code editor.
         <System.Diagnostics.DebuggerStepThrough()>
         Private Sub InitializeComponent()
-            Me.components = New System.ComponentModel.Container()
             Me.rdoArea = New System.Windows.Forms.RadioButton()
             Me.rdoVolume = New System.Windows.Forms.RadioButton()
-            Me.cmdRefresh = New System.Windows.Forms.Button()
-            Me.zGraph = New System.Windows.Forms.DataVisualization.Charting.Chart
+            Me.zGraph = New System.Windows.Forms.DataVisualization.Charting.Chart()
+            CType(Me.zGraph, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.SuspendLayout()
             '
             'rdoArea
@@ -52,16 +51,6 @@
             Me.rdoVolume.Text = "Volume"
             Me.rdoVolume.UseVisualStyleBackColor = True
             '
-            'cmdRefresh
-            '
-            Me.cmdRefresh.Image = My.Resources.Resources.refresh
-            Me.cmdRefresh.Location = New System.Drawing.Point(472, 3)
-            Me.cmdRefresh.Name = "cmdRefresh"
-            Me.cmdRefresh.Size = New System.Drawing.Size(23, 23)
-            Me.cmdRefresh.TabIndex = 2
-            Me.cmdRefresh.UseVisualStyleBackColor = True
-            Me.cmdRefresh.Visible = False
-            '
             'zGraph
             '
             Me.zGraph.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
@@ -72,7 +61,7 @@
             Me.zGraph.Size = New System.Drawing.Size(500, 365)
             Me.zGraph.TabIndex = 3
             '
-            'DoDHistogramUC
+            'ucDoDHistogram
             '
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -80,16 +69,15 @@
             Me.Controls.Add(Me.zGraph)
             Me.Controls.Add(Me.rdoVolume)
             Me.Controls.Add(Me.rdoArea)
-            Me.Controls.Add(Me.cmdRefresh)
-            Me.Name = "DoDHistogramUC"
+            Me.Name = "ucDoDHistogram"
             Me.Size = New System.Drawing.Size(503, 400)
+            CType(Me.zGraph, System.ComponentModel.ISupportInitialize).EndInit()
             Me.ResumeLayout(False)
             Me.PerformLayout()
 
         End Sub
         Friend WithEvents rdoArea As System.Windows.Forms.RadioButton
         Friend WithEvents rdoVolume As System.Windows.Forms.RadioButton
-        Friend WithEvents cmdRefresh As System.Windows.Forms.Button
         Friend WithEvents zGraph As System.Windows.Forms.DataVisualization.Charting.Chart
 
     End Class

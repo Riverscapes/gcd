@@ -9,65 +9,35 @@ Namespace Core.Visualization
         Private Const RAW As String = "Raw"
 
         Private m_Chart As Charting.Chart
-        'Private _ThresholdedHist As Dictionary(Of Double, Double)
-        'Private _RawHist As Dictionary(Of Double, Double)
-        Private m_eUnits As UnitsNet.Units.LengthUnit
+        Private m_HistogramData As ChangeDetection.DoDResultHistograms
 
+        Public Sub SetHistogramUnits(bArea As Boolean, linearDisplayUnits As UnitsNet.Units.LengthUnit, areaDisplayUnits As UnitsNet.Units.AreaUnit, volumesDisplayUnits As UnitsNet.Units.VolumeUnit)
+            Refresh(bArea, linearDisplayUnits, areaDisplayUnits, volumesDisplayUnits)
+        End Sub
 
-        Private Class HistogramData
-            Private m_elevation As Double
-            Private m_erosion As Double
-            Private m_deposition As Double
-            Private m_raw As Double
+        ''' <summary>
+        ''' Call this constructor from non-UI code that simply wants to generate histogram plot image files
+        ''' </summary>
+        Public Sub New(sRawHistogram As String, sThreshHistogram As String, linearDataUnits As UnitsNet.Units.LengthUnit)
+            m_Chart = New Charting.Chart
+            Init(sRawHistogram, sThreshHistogram, linearDataUnits)
+        End Sub
 
-            Public Property Elevation As Double
-                Get
-                    Return m_elevation
-                End Get
-                Set(value As Double)
-                    m_elevation = value
-                End Set
-            End Property
-
-            Public Property Deposition As Double
-                Get
-                    Return m_deposition
-                End Get
-                Set(value As Double)
-                    m_deposition = value
-                End Set
-            End Property
-
-            Public Property Erosion As Double
-                Get
-                    Return m_erosion
-                End Get
-                Set(value As Double)
-                    m_erosion = value
-                End Set
-            End Property
-
-            Public Property Raw As Double
-                Get
-                    Return m_raw
-                End Get
-                Set(value As Double)
-                    m_raw = value
-                End Set
-            End Property
-
-            Public Sub New(fElevation As Double)
-                m_elevation = fElevation
-                m_erosion = 0
-                m_deposition = 0
-            End Sub
-        End Class
-
-
-        Public Sub New(ByRef cht As Charting.Chart, ByVal eUnits As UnitsNet.Units.LengthUnit)
+        ''' <summary>
+        ''' Constructor for UI code to pass in a chart on a user interface form
+        ''' </summary>
+        ''' <param name="cht"></param>
+        Public Sub New(ByRef cht As Charting.Chart, sRawHistogram As String, sThreshHistogram As String, linearDataUnits As UnitsNet.Units.LengthUnit)
             m_Chart = cht
-            m_eUnits = eUnits
+            Init(sRawHistogram, sThreshHistogram, linearDataUnits)
+        End Sub
 
+        Private Sub Init(sRawHistogram As String, sThreshHistogram As String, linearDataUnits As UnitsNet.Units.LengthUnit)
+
+            ' Load the data for both the raw and thresholded histograms
+            m_HistogramData = New ChangeDetection.DoDResultHistograms(sRawHistogram, sThreshHistogram, linearDataUnits)
+
+            ' Proceed and do the one-time chart preparation
             m_Chart.ChartAreas.Clear()
             m_Chart.ChartAreas.Add(New Charting.ChartArea())
 
@@ -81,15 +51,9 @@ Namespace Core.Visualization
                 series.ChartType = Charting.SeriesChartType.StackedColumn
                 series.Color = aDef.Value
                 series.ChartArea = m_Chart.ChartAreas.First().Name
-
-                'If series.Name = RAW Then
-                '    series.YAxisType = Charting.AxisType.Secondary
-                'End If
-
             Next
 
             With m_Chart.ChartAreas(0).AxisX
-                .Title = String.Format("Elevation Change ({0})", eUnits)
                 .MajorGrid.LineColor = Drawing.Color.LightSlateGray
                 .MinorTickMark.Enabled = True
             End With
@@ -101,56 +65,37 @@ Namespace Core.Visualization
 
         End Sub
 
-        Public Sub refresh(ByVal dRawHistogram As Dictionary(Of Double, Double),
-                           ByVal dThresholdedHistogram As Dictionary(Of Double, Double),
-                           ByVal bArea As Boolean,
-                           ByVal eUnits As UnitsNet.Units.LengthUnit)
+        Public Sub Refresh(bArea As Boolean)
+            Refresh(bArea)
+        End Sub
 
-            Dim histoData As New SortedDictionary(Of Double, HistogramData)
+        Private Sub Refresh(ByVal bArea As Boolean, ByVal linearDisplayUnits As UnitsNet.Units.LengthUnit, areaDisplayUnits As UnitsNet.Units.AreaUnit, volumeDisplayUnits As UnitsNet.Units.VolumeUnit)
 
-            For Each item As KeyValuePair(Of Double, Double) In dThresholdedHistogram
-                If Not histoData.ContainsKey(item.Key) Then
-                    histoData(item.Key) = New HistogramData(item.Key)
-                End If
-
-                If item.Key < 0 Then
-                    histoData(item.Key).Erosion = item.Value
-                Else
-                    histoData(item.Key).Deposition = item.Value
-                End If
-            Next
-
-            For Each item As KeyValuePair(Of Double, Double) In dRawHistogram
-                If Not histoData.ContainsKey(item.Key) Then
-                    histoData(item.Key) = New HistogramData(item.Key)
-                End If
-
-                If item.Key < 0 Then
-                    If item.Value > histoData(item.Key).Erosion Then
-                        histoData(item.Key).Raw = item.Value - histoData(item.Key).Erosion
-                    End If
-                Else
-                    If item.Value > histoData(item.Key).Deposition Then
-                        histoData(item.Key).Raw = item.Value - histoData(item.Key).Deposition
-                    End If
-                End If
-            Next
-
-            Dim histoList As New List(Of HistogramData)(histoData.Values)
-
-            m_Chart.Series.FindByName(EROSION).Points.DataBindXY(histoList, "elevation", histoList, "erosion")
-            m_Chart.Series.FindByName(DEPOSITION).Points.DataBindXY(histoList, "elevation", histoList, "deposition")
-            m_Chart.Series.FindByName(RAW).Points.DataBindXY(histoList, "elevation", histoList, "raw")
+            Dim histoData As List(Of HistogramDisplayDataPoint) = Nothing
 
             If bArea Then
-                m_Chart.ChartAreas(0).AxisY.Title = String.Format("Area ({0}²)", UnitsNet.Length.GetAbbreviation(eUnits))
+                histoData = m_HistogramData.GetAreaDisplayValues(linearDisplayUnits, areaDisplayUnits)
             Else
-                m_Chart.ChartAreas(0).AxisY.Title = String.Format("Volume ({0}³)", UnitsNet.Length.GetAbbreviation(eUnits))
+                histoData = m_HistogramData.GetVolumeDisplayValues(linearDisplayUnits, volumeDisplayUnits)
             End If
+
+            m_Chart.Series.FindByName(EROSION).Points.DataBindXY(histoData, "elevation", histoData, "erosion")
+            m_Chart.Series.FindByName(DEPOSITION).Points.DataBindXY(histoData, "elevation", histoData, "deposition")
+            m_Chart.Series.FindByName(RAW).Points.DataBindXY(histoData, "elevation", histoData, "raw")
+
+            With m_Chart.ChartAreas(0)
+                .AxisX.Title = String.Format("Elevation Change ({0})", linearDisplayUnits)
+
+                If bArea Then
+                    .AxisY.Title = String.Format("Area ({0}²)", UnitsNet.Area.GetAbbreviation(areaDisplayUnits))
+                Else
+                    .AxisY.Title = String.Format("Volume ({0}³)", UnitsNet.Volume.GetAbbreviation(volumeDisplayUnits))
+                End If
+            End With
 
         End Sub
 
-        Public Sub ExportCharts(ByVal changeHisto As Core.ChangeDetection.DoDResultHistograms, ByVal theUnits As UnitsNet.Units.LengthUnit, ByVal AreaGraphPath As String, ByVal VolumeGraphPath As String, ByVal ChartWidth As Integer, ByVal ChartHeight As Integer)
+        Public Sub ExportCharts(ByVal AreaGraphPath As String, ByVal VolumeGraphPath As String, ByVal ChartWidth As Integer, ByVal ChartHeight As Integer)
 
             If Not IO.Directory.Exists(IO.Path.GetDirectoryName(AreaGraphPath)) Then
                 Dim ex As New Exception("The output folder for the GCD area graph does not exist.")
@@ -162,23 +107,14 @@ Namespace Core.Visualization
                 ex.Data("volume Graph Path") = VolumeGraphPath
             End If
 
-            'Save histograms
-            Dim myZedGraphControl As New Charting.Chart
-            Dim myHistogramViewer As New DoDHistogramViewerClass(myZedGraphControl, theUnits)
-            myHistogramViewer.refresh(changeHisto.m_RawAreaHist, changeHisto.m_ThresholdedAreaHist, True, theUnits)
-            myHistogramViewer.Save(AreaGraphPath, ChartWidth, ChartHeight)
+            Refresh(True)
+            m_Chart.SaveImage(AreaGraphPath, Charting.ChartImageFormat.Png)
 
-            'myHistogramViewer.Hist2 = StatsData.m_RawVolumeHist
-            'myHistogramViewer.Hist1 = StatsData.m_ThresholdedVolumeHist
-            'myHistogramViewer.yLabel = "Volume " & GISDataStructures.GetLinearUnitsAsString(eLinearUnits, True, 3)
-            myHistogramViewer.refresh(changeHisto.m_RawVolumeHist, changeHisto.m_ThresholdedVolumeHist, False, theUnits)
-            myHistogramViewer.Save(VolumeGraphPath, ChartWidth, ChartHeight)
+            Refresh(False)
+            m_Chart.SaveImage(VolumeGraphPath, Charting.ChartImageFormat.Png)
 
         End Sub
 
-        Public Sub Save(ByVal GraphPath As String, ByVal ChartWidth As Integer, ByVal ChartHeight As Integer)
-            m_Chart.SaveImage(GraphPath, Charting.ChartImageFormat.Png)
-        End Sub
     End Class
 
 End Namespace

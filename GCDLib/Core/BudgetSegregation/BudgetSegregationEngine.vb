@@ -186,20 +186,14 @@
                                                                                                                DoD.Units,
                                                                                                                  sSummaryXMLPath)
 
-                ' Write the thresholded histogram CSV file. Then load it as a DoD result histogram
-                'maskHistograms.writeCSV(maskOutputClass.MaskValue, maskOutputClass.csvFilename)
-                Dim ExportStatsData As New ChangeDetection.DoDResultHistograms(maskOutputClass.csvFilename)
-
                 ' Export the histogram graphics
-                'Dim c As New Windows.Forms.DataVisualization.Charting.Chart
-                Dim c As New System.Windows.Forms.DataVisualization.Charting.Chart
-                Dim ExportHistogramViewer As New Core.Visualization.DoDHistogramViewerClass(c, DoD.Units)
-
                 IO.Directory.CreateDirectory(IO.Path.GetDirectoryName(maskOutputClass.AreaChartPath))
-                ExportHistogramViewer.ExportCharts(ExportStatsData, gDoDRaw.VerticalUnits, maskOutputClass.AreaChartPath, maskOutputClass.VolumeChartPath, nChartWidth, nChartHeight)
+                Dim ExportHistogramViewer As New Visualization.DoDHistogramViewerClass(Nothing, maskOutputClass.csvFilename, DoD.Units)
+                ExportHistogramViewer.ExportCharts(maskOutputClass.AreaChartPath, maskOutputClass.VolumeChartPath, nChartWidth, nChartHeight)
 
-                Dim cbViewer As New Core.Visualization.ElevationChangeBarViewer(c, UnitsNet.Length.GetAbbreviation(gDoDRaw.VerticalUnits))
-                DirectCast(maskOutputClass.ChangeStats, ChangeDetection.ChangeStatsCalculator).GenerateChangeBarGraphicFiles(GCDProject.ProjectManagerBase.OutputManager.GetChangeDetectionFiguresFolder(sOutputFolder, True), DoD.Units, m_fChartWidth, m_fChartHeight, "c" & maskOutputClass.MaskValue.ToString("000"))
+                Throw New NotImplementedException
+                'Dim cbViewer As New Core.Visualization.ElevationChangeBarViewer(c, UnitsNet.Length.GetAbbreviation(gDoDRaw.VerticalUnits))
+                'DirectCast(maskOutputClass.ChangeStats, ChangeDetection.ChangeStatsCalculator).GenerateChangeBarGraphicFiles(GCDProject.ProjectManagerBase.OutputManager.GetChangeDetectionFiguresFolder(sOutputFolder, True), DoD.Units, m_fChartWidth, m_fChartHeight, "c" & maskOutputClass.MaskValue.ToString("000"))
 
                 ' Append this class to the legend file
                 sbClassLegend.AppendLine(maskOutputClass.MaskValue & "," & kvMask.Key)

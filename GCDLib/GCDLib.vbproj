@@ -71,6 +71,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\ChangeDetection\ElevationChangeDataPoint.vb" />
     <Compile Include="Core\ErrorCalculation\FIS\FISLibraryItem.vb" />
     <Compile Include="Core\GCDArcMapManager.vb" />
     <Compile Include="Core\BudgetSegregation\BSResultSet.vb" />
@@ -115,6 +116,7 @@
     <Compile Include="Core\GCDProject\ProjectManagerUI.vb" />
     <Compile Include="Core\GCDProject\SurveyDateTime.vb" />
     <Compile Include="Core\OutputManager.vb" />
+    <Compile Include="Core\Visualization\HistogramDisplayData.vb" />
     <Compile Include="Core\WorkspaceManager.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

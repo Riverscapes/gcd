@@ -33,10 +33,10 @@ Namespace UI.ChangeDetection
             m_chngStats = chngStats
             m_eUnits = eUnits
 
-            RefreshBars()
+            RefreshBars(eUnits, GCDConsoleLib.Utility.Conversion.LengthUnit2AreaUnit(eUnits), GCDConsoleLib.Utility.Conversion.LengthUnit2VolumeUnit(eUnits))
         End Sub
 
-        Private Sub RefreshBars()
+        Private Sub RefreshBars(linearDisplayUnits As UnitsNet.Units.LengthUnit, areaDisplayUnits As UnitsNet.Units.AreaUnit, volumeDisplayUnits As UnitsNet.Units.VolumeUnit)
 
             If TypeOf m_chngStats Is ChangeStats Then
                 If TypeOf cboType.SelectedItem Is naru.db.NamedObject Then
@@ -73,11 +73,11 @@ Namespace UI.ChangeDetection
         End Sub
 
         Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As System.EventArgs) Handles cboType.SelectedIndexChanged
-            RefreshBars()
+            RefreshBars(m_eUnits, GCDConsoleLib.Utility.Conversion.LengthUnit2AreaUnit(m_eUnits), GCDConsoleLib.Utility.Conversion.LengthUnit2VolumeUnit(m_eUnits))
         End Sub
 
         Private Sub rdoAbsolute_CheckedChanged(sender As Object, e As System.EventArgs) Handles rdoAbsolute.CheckedChanged
-            RefreshBars()
+            RefreshBars(m_eUnits, GCDConsoleLib.Utility.Conversion.LengthUnit2AreaUnit(m_eUnits), GCDConsoleLib.Utility.Conversion.LengthUnit2VolumeUnit(m_eUnits))
         End Sub
     End Class
 End Namespace

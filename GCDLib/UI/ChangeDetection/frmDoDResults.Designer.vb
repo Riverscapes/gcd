@@ -39,6 +39,7 @@
             Me.TabPage1 = New System.Windows.Forms.TabPage()
             Me.ucSummary = New GCDLib.UI.ChangeDetection.ucDoDSummary()
             Me.tabProperties = New System.Windows.Forms.TabControl()
+            Me.cmdSettings = New System.Windows.Forms.Button()
             Me.TabPage3.SuspendLayout()
             Me.tbpElevationChangeDistribution.SuspendLayout()
             Me.TableLayoutPanel1.SuspendLayout()
@@ -53,7 +54,7 @@
             Me.cmdOK.Location = New System.Drawing.Point(608, 495)
             Me.cmdOK.Name = "cmdOK"
             Me.cmdOK.Size = New System.Drawing.Size(75, 23)
-            Me.cmdOK.TabIndex = 1
+            Me.cmdOK.TabIndex = 6
             Me.cmdOK.Text = "Close"
             Me.cmdOK.UseVisualStyleBackColor = True
             '
@@ -63,7 +64,7 @@
             Me.cmdHelp.Location = New System.Drawing.Point(11, 495)
             Me.cmdHelp.Name = "cmdHelp"
             Me.cmdHelp.Size = New System.Drawing.Size(75, 23)
-            Me.cmdHelp.TabIndex = 2
+            Me.cmdHelp.TabIndex = 7
             Me.cmdHelp.Text = "Help"
             Me.cmdHelp.UseVisualStyleBackColor = True
             '
@@ -71,29 +72,29 @@
             '
             Me.txtDoDName.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-            Me.txtDoDName.Location = New System.Drawing.Point(75, 12)
+            Me.txtDoDName.Location = New System.Drawing.Point(48, 12)
             Me.txtDoDName.Name = "txtDoDName"
             Me.txtDoDName.ReadOnly = True
-            Me.txtDoDName.Size = New System.Drawing.Size(554, 20)
-            Me.txtDoDName.TabIndex = 3
+            Me.txtDoDName.Size = New System.Drawing.Size(556, 20)
+            Me.txtDoDName.TabIndex = 1
             '
             'Label6
             '
             Me.Label6.AutoSize = True
-            Me.Label6.Location = New System.Drawing.Point(14, 16)
+            Me.Label6.Location = New System.Drawing.Point(7, 16)
             Me.Label6.Name = "Label6"
-            Me.Label6.Size = New System.Drawing.Size(38, 13)
-            Me.Label6.TabIndex = 2
-            Me.Label6.Text = "Name:"
+            Me.Label6.Size = New System.Drawing.Size(35, 13)
+            Me.Label6.TabIndex = 0
+            Me.Label6.Text = "Name"
             '
             'cmdAddToMap
             '
             Me.cmdAddToMap.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
             Me.cmdAddToMap.Image = Global.GCDLib.My.Resources.Resources.AddToMap
-            Me.cmdAddToMap.Location = New System.Drawing.Point(635, 11)
+            Me.cmdAddToMap.Location = New System.Drawing.Point(610, 11)
             Me.cmdAddToMap.Name = "cmdAddToMap"
             Me.cmdAddToMap.Size = New System.Drawing.Size(23, 23)
-            Me.cmdAddToMap.TabIndex = 5
+            Me.cmdAddToMap.TabIndex = 2
             Me.cmdAddToMap.UseVisualStyleBackColor = True
             '
             'cmdBrowse
@@ -103,7 +104,7 @@
             Me.cmdBrowse.Location = New System.Drawing.Point(665, 11)
             Me.cmdBrowse.Name = "cmdBrowse"
             Me.cmdBrowse.Size = New System.Drawing.Size(23, 23)
-            Me.cmdBrowse.TabIndex = 6
+            Me.cmdBrowse.TabIndex = 4
             Me.cmdBrowse.UseVisualStyleBackColor = True
             '
             'TabPage3
@@ -156,12 +157,10 @@
             '
             Me.ucHistogram.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
             Me.ucHistogram.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.ucHistogram.DoDResultSet = Nothing
             Me.ucHistogram.Location = New System.Drawing.Point(3, 3)
             Me.ucHistogram.Name = "ucHistogram"
             Me.ucHistogram.Size = New System.Drawing.Size(490, 399)
             Me.ucHistogram.TabIndex = 0
-            Me.ucHistogram.UserSelectedUnits = Nothing
             '
             'ucBars
             '
@@ -185,7 +184,6 @@
             'ucSummary
             '
             Me.ucSummary.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.ucSummary.DoDResultSet = Nothing
             Me.ucSummary.Location = New System.Drawing.Point(3, 3)
             Me.ucSummary.Name = "ucSummary"
             Me.ucSummary.Size = New System.Drawing.Size(667, 405)
@@ -203,7 +201,16 @@
             Me.tabProperties.Name = "tabProperties"
             Me.tabProperties.SelectedIndex = 0
             Me.tabProperties.Size = New System.Drawing.Size(681, 437)
-            Me.tabProperties.TabIndex = 0
+            Me.tabProperties.TabIndex = 5
+            '
+            'cmdSettings
+            '
+            Me.cmdSettings.Image = Global.GCDLib.My.Resources.Resources.Settings
+            Me.cmdSettings.Location = New System.Drawing.Point(637, 11)
+            Me.cmdSettings.Name = "cmdSettings"
+            Me.cmdSettings.Size = New System.Drawing.Size(23, 23)
+            Me.cmdSettings.TabIndex = 3
+            Me.cmdSettings.UseVisualStyleBackColor = True
             '
             'frmDoDResults
             '
@@ -212,6 +219,7 @@
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
             Me.CancelButton = Me.cmdOK
             Me.ClientSize = New System.Drawing.Size(695, 530)
+            Me.Controls.Add(Me.cmdSettings)
             Me.Controls.Add(Me.cmdBrowse)
             Me.Controls.Add(Me.cmdAddToMap)
             Me.Controls.Add(Me.txtDoDName)
@@ -247,5 +255,6 @@
         Friend WithEvents TabPage1 As System.Windows.Forms.TabPage
         Friend WithEvents ucSummary As ucDoDSummary
         Friend WithEvents tabProperties As System.Windows.Forms.TabControl
+        Friend WithEvents cmdSettings As System.Windows.Forms.Button
     End Class
 End Namespace

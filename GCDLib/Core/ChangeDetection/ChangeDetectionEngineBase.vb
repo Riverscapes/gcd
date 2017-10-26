@@ -250,16 +250,14 @@
 
         End Function
 
-        Protected Sub GenerateHistogramGraphicFiles(histStats As DoDResultHistograms, ByVal eLinearUnit As UnitsNet.Units.LengthUnit)
+        Protected Sub GenerateHistogramGraphicFiles(rawHistogramPath As String, threshHistogramPath As String, ByVal eLinearUnit As UnitsNet.Units.LengthUnit)
 
-            'Save Histograms & Create Figs subfolder - Hensleigh 4/24/2014
             Dim sFiguresFolder As String = GCDProject.ProjectManagerBase.OutputManager.GetChangeDetectionFiguresFolder(m_dAnalysisFolder.FullName, True)
-            Dim zedGraph As New System.Windows.Forms.DataVisualization.Charting.Chart
             Dim areaHistPath As String = IO.Path.Combine(sFiguresFolder, "Histogram_Area" & ".png")
             Dim volhistPath As String = IO.Path.Combine(sFiguresFolder, "Histogram_Volume" & ".png")
-            Dim ExportHistogramViewer As New Visualization.DoDHistogramViewerClass(zedGraph, eLinearUnit)
-            ExportHistogramViewer.ExportCharts(histStats, eLinearUnit, areaHistPath, volhistPath, 600, 600)
 
+            Dim ExportHistogramViewer As New Visualization.DoDHistogramViewerClass(rawHistogramPath, threshHistogramPath, eLinearUnit)
+            ExportHistogramViewer.ExportCharts(areaHistPath, volhistPath, 600, 600)
         End Sub
 
     End Class

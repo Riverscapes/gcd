@@ -5,7 +5,7 @@ Namespace Core.ChangeDetection
     ''' <summary>
     ''' Represents a completed change detection analysis, the raw and thresholded rasters
     ''' </summary>
-    ''' <remarks>You cannot create and instance of this class. You have to create one
+    ''' <remarks>You cannot create an instance of this class. You have to create one
     ''' of the inherited classes.</remarks>
     Public MustInherit Class ChangeDetectionProperties
 
@@ -40,6 +40,17 @@ Namespace Core.ChangeDetection
             End Get
         End Property
 
+        Public ReadOnly Property AreaUnits As UnitsNet.Units.AreaUnit
+            Get
+                Return GCDConsoleLib.Utility.Conversion.LengthUnit2AreaUnit(Units)
+            End Get
+        End Property
+
+        Public ReadOnly Property VolumeUnits As UnitsNet.Units.VolumeUnit
+            Get
+                Return GCDConsoleLib.Utility.Conversion.LengthUnit2VolumeUnit(Units)
+            End Get
+        End Property
 #End Region
 
         ''' <summary>
