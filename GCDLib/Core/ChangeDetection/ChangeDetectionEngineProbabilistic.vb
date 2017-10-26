@@ -37,14 +37,12 @@ Namespace Core.ChangeDetection
 
         End Sub
 
-        Public Overrides Function Calculate(ByRef sRawDoDPath As String, ByRef sThreshDodPath As String, ByRef sRawHistPath As String, ByRef sThreshHistPath As String, ByRef sSummaryXMLPath As String) As DoDResultSet
+        Protected Overrides Function ThresholdRawDoD(rawDoDPath As String, rawHistPath As String) As DoDResult
 
-            GenerateAnalysisRasters()
+            Dim propErrorRaster As String = GeneratePropagatedErrorRaster()
 
-            ' Calculate the raw DoD
-            CalculateRawDoD(sRawDoDPath, sRawHistPath)
-            sThreshDodPath = GCDProject.ProjectManagerBase.OutputManager.GetDoDThresholdPath(Name, IO.Path.GetDirectoryName(sRawDoDPath))
-            sThreshHistPath = GCDProject.ProjectManagerBase.OutputManager.GetCsvThresholdPath(Name, IO.Path.GetDirectoryName(sRawDoDPath))
+            Dim thrDodPath As String = GCDProject.ProjectManagerBase.OutputManager.GetDoDThresholdPath(Name, IO.Path.GetDirectoryName(rawDoDPath))
+            Dim thrHistPath As String = GCDProject.ProjectManagerBase.OutputManager.GetCsvThresholdPath(Name, IO.Path.GetDirectoryName(rawDoDPath))
 
             Dim sPosteriorRaster As String = ""
             Dim sConditionalRaster As String = ""
@@ -55,13 +53,12 @@ Namespace Core.ChangeDetection
 
             ' Create the prior probability raster
             sPriorProbRaster = naru.os.File.GetNewSafeName(Folder.FullName, "priorprob", GCDProject.ProjectManagerBase.RasterExtension).FullName
-            If Not External.CreatePriorProbabilityRaster(sRawDoDPath, AnalysisNewError.FilePath, AnalysisOldError.FilePath, sPriorProbRaster,
+            External.CreatePriorProbabilityRaster(rawDoDPath, AnalysisNewError.FilePath, AnalysisOldError.FilePath, sPriorProbRaster,
                                                     GCDProject.ProjectManagerBase.OutputManager.OutputDriver,
                                                     GCDProject.ProjectManagerBase.OutputManager.NoData,
-                                                   GCDProject.ProjectManagerBase.GCDNARCError.ErrorString) = External.GCDCoreOutputCodes.PROCESS_OK Then
-                Throw New Exception(GCDProject.ProjectManagerBase.GCDNARCError.ToString)
+                                                   GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
 
-            End If
+
 
             If TypeOf SpatialCoherenceProperties Is CoherenceProperties Then
 
@@ -70,53 +67,27 @@ Namespace Core.ChangeDetection
                 sSpatialCoErosionRaster = naru.os.File.GetNewSafeName(Folder.FullName, "nbrErosion", GCDProject.ProjectManagerBase.RasterExtension).FullName
                 sSpatialCoDepositionRaster = naru.os.File.GetNewSafeName(Folder.FullName, "nbrDeposition", GCDProject.ProjectManagerBase.RasterExtension).FullName
 
-                If Not External.ThresholdDoDProbWithSpatialCoherence(sRawDoDPath, sThreshDodPath, AnalysisNewError.FilePath, AnalysisOldError.FilePath,
+                External.ThresholdDoDProbWithSpatialCoherence(rawDoDPath, thrDodPath, AnalysisNewError.FilePath, AnalysisOldError.FilePath,
                                                             sPriorProbRaster, sPosteriorRaster, sConditionalRaster, sSpatialCoErosionRaster, sSpatialCoDepositionRaster,
                                                              GCDProject.ProjectManagerBase.OutputManager.OutputDriver, GCDProject.ProjectManagerBase.OutputManager.NoData,
                                                              SpatialCoherenceProperties.MovingWindowWidth, SpatialCoherenceProperties.MovingWindowHeight, Threshold,
-                                                             GCDProject.ProjectManagerBase.GCDNARCError.ErrorString) = External.GCDCoreOutputCodes.PROCESS_OK Then
-                    Throw New Exception(GCDProject.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
-                End If
+                                                             GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
 
-                If Not External.CalculateAndWriteDoDHistogram(sThreshDodPath, sThreshHistPath, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString) = External.GCDCoreOutputCodes.PROCESS_OK Then
-                    Throw New Exception(GCDProject.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
-                End If
+
+                External.CalculateAndWriteDoDHistogram(thrDodPath, thrHistPath, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
 
             Else
-                If Not External.ThresholdDoDProbability(sRawDoDPath, sThreshDodPath, AnalysisNewError.FilePath, AnalysisOldError.FilePath, sPriorProbRaster,
+                External.ThresholdDoDProbability(rawDoDPath, thrHistPath, AnalysisNewError.FilePath, AnalysisOldError.FilePath, sPriorProbRaster,
                                                     GCDProject.ProjectManagerBase.OutputManager.OutputDriver, GCDProject.ProjectManagerBase.OutputManager.NoData,
-                                                    Threshold, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString) = External.GCDCoreOutputCodes.PROCESS_OK Then
-                    Throw New Exception(GCDProject.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
-                End If
+                                                    Threshold, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
 
-                Try
-                    If Not External.CalculateAndWriteDoDHistogramWithSpecifiedBins(sThreshDodPath, sThreshHistPath, m_nNumBins, m_nMinimumBin, m_fBinSize,
-                                                                                     m_fBinIncrement, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString) = External.GCDCoreOutputCodes.PROCESS_OK Then
-                        Throw New Exception(GCDProject.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
-                    End If
-                Catch ex As Exception
-                    Debug.WriteLine("Warning thresholded histogram failed to write to: " & sThreshHistPath)
-                End Try
+                External.CalculateAndWriteDoDHistogramWithSpecifiedBins(thrDodPath, thrHistPath, m_nNumBins, m_nMinimumBin, m_fBinSize,
+                                                                                     m_fBinIncrement, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
             End If
 
-            Dim gDoDRaw As New GCDConsoleLib.Raster(sRawDoDPath)
-
-            Dim sPropErrRaster As String = GeneratePropagatedErrorRaster()
-            Dim dodProp As New ChangeDetectionPropertiesProbabilistic(sRawDoDPath, sThreshDodPath, sPropErrRaster, sPriorProbRaster, sSpatialCoErosionRaster, sSpatialCoDepositionRaster, sConditionalRaster, sPosteriorRaster, Threshold, -1, False, gDoDRaw.Extent.CellWidth, gDoDRaw.VerticalUnits)
-            Dim theChangeStats As New ChangeStatsCalculator(dodProp)
-            sSummaryXMLPath = GenerateSummaryXML(theChangeStats)
-
-            Dim theHistograms As New DoDResultHistograms(sRawHistPath, sThreshHistPath)
-
-            theChangeStats.GenerateChangeBarGraphicFiles(GCDProject.ProjectManagerBase.OutputManager.GetChangeDetectionFiguresFolder(Folder.FullName, True), dodProp.Units, ChartWidth, ChartHeight)
-            GenerateHistogramGraphicFiles(theHistograms, dodProp.Units)
-
-            Dim dodResults As New DoDResultSet(theChangeStats, theHistograms, dodProp)
-
-            Return dodResults
+            Return New DoDResultPropagated(rawDoDPath, rawHistPath, thrDodPath, thrHistPath, propErrorRaster, CellSize, LinearUnits)
 
         End Function
-
     End Class
 
 End Namespace

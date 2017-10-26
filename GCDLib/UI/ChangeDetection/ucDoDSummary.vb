@@ -22,7 +22,7 @@ Namespace UI.ChangeDetection
 
         End Sub
 
-        Public Sub Refresh(ByRef dodResultSet As Core.ChangeDetection.DoDResultSet, ByRef options As UI.ChangeDetection.DoDSummaryDisplayOptions)
+        Public Sub RefreshDisplay(ByRef dodResultSet As Core.ChangeDetection.DoDResult, ByRef options As UI.ChangeDetection.DoDSummaryDisplayOptions)
 
             ' Build the string formatting based on the precision in the pop-up properties form
             Dim sFormat As String = "#,##0"
@@ -240,10 +240,10 @@ Namespace UI.ChangeDetection
                 aRow = grdData.Rows(nIndex)
                 aRow.Cells(0).Value = "Average Depth of Erosion (" & UnitsNet.Length.GetAbbreviation(options.LinearUnits) & ")"
                 aRow.Cells(0).ToolTipText = "The average depth of erosion (erosion volume dividied by erosion area)"
-                aRow.Cells(1).Value = UnitsNet.Length.From(dodResultSet.ChangeStats.AverageDepthErosion_Raw, dodResultSet.DoDProperties.Units).As(options.LinearUnits).ToString(sFormat)
-                aRow.Cells(2).Value = UnitsNet.Length.From(dodResultSet.ChangeStats.AverageDepthErosion_Thresholded, dodResultSet.DoDProperties.Units).As(options.LinearUnits).ToString(sFormat)
+                aRow.Cells(1).Value = UnitsNet.Length.From(dodResultSet.ChangeStats.AverageDepthErosion_Raw, dodResultSet.Units).As(options.LinearUnits).ToString(sFormat)
+                aRow.Cells(2).Value = UnitsNet.Length.From(dodResultSet.ChangeStats.AverageDepthErosion_Thresholded, dodResultSet.Units).As(options.LinearUnits).ToString(sFormat)
                 aRow.Cells(3).Value = "±"
-                aRow.Cells(4).Value = UnitsNet.Length.From(dodResultSet.ChangeStats.AverageDepthErosion_Error, dodResultSet.DoDProperties.Units).As(options.LinearUnits).ToString(sFormat)
+                aRow.Cells(4).Value = UnitsNet.Length.From(dodResultSet.ChangeStats.AverageDepthErosion_Error, dodResultSet.Units).As(options.LinearUnits).ToString(sFormat)
                 aRow.Cells(5).Value = dodResultSet.ChangeStats.AverageDepthErosion_Percent.ToString(sFormat)
 
                 ' Average Depth of Deposition
@@ -251,10 +251,10 @@ Namespace UI.ChangeDetection
                 aRow = grdData.Rows(nIndex)
                 aRow.Cells(0).Value = "Average Depth of Deposition (" & UnitsNet.Length.GetAbbreviation(options.LinearUnits) & ")"
                 aRow.Cells(0).ToolTipText = "The average depth of deposition (deposition volume dividied by deposition area)"
-                aRow.Cells(1).Value = UnitsNet.Length.From(dodResultSet.ChangeStats.AverageDepthDeposition_Raw, dodResultSet.DoDProperties.Units).As(options.LinearUnits).ToString(sFormat)
-                aRow.Cells(2).Value = UnitsNet.Length.From(dodResultSet.ChangeStats.AverageDepthDeposition_Thresholded, dodResultSet.DoDProperties.Units).As(options.LinearUnits).ToString(sFormat)
+                aRow.Cells(1).Value = UnitsNet.Length.From(dodResultSet.ChangeStats.AverageDepthDeposition_Raw, dodResultSet.Units).As(options.LinearUnits).ToString(sFormat)
+                aRow.Cells(2).Value = UnitsNet.Length.From(dodResultSet.ChangeStats.AverageDepthDeposition_Thresholded, dodResultSet.Units).As(options.LinearUnits).ToString(sFormat)
                 aRow.Cells(3).Value = "±"
-                aRow.Cells(4).Value = UnitsNet.Length.From(dodResultSet.ChangeStats.AverageDepthDeposition_Error, dodResultSet.DoDProperties.Units).As(options.LinearUnits).ToString(sFormat)
+                aRow.Cells(4).Value = UnitsNet.Length.From(dodResultSet.ChangeStats.AverageDepthDeposition_Error, dodResultSet.Units).As(options.LinearUnits).ToString(sFormat)
                 aRow.Cells(5).Value = dodResultSet.ChangeStats.AverageDepthDeposition_Percent.ToString(sFormat)
 
                 ' Average Total Thickness of Difference for AOI
@@ -262,10 +262,10 @@ Namespace UI.ChangeDetection
                 aRow = grdData.Rows(nIndex)
                 aRow.Cells(0).Value = "Average Total Thickness of Difference (" & UnitsNet.Length.GetAbbreviation(options.LinearUnits) & ") for Area of Interest"
                 aRow.Cells(0).ToolTipText = "The total volume of difference divided by the area of interest (a measure of total turnover thickness in the analysis area)"
-                aRow.Cells(1).Value = UnitsNet.Length.From(dodResultSet.ChangeStats.AverageThicknessOfDifferenceAOI_Raw, dodResultSet.DoDProperties.Units).As(options.LinearUnits).ToString(sFormat)
-                aRow.Cells(2).Value = UnitsNet.Length.From(dodResultSet.ChangeStats.AverageThicknessOfDifferenceAOI_Thresholded, dodResultSet.DoDProperties.Units).As(options.LinearUnits).ToString(sFormat)
+                aRow.Cells(1).Value = UnitsNet.Length.From(dodResultSet.ChangeStats.AverageThicknessOfDifferenceAOI_Raw, dodResultSet.Units).As(options.LinearUnits).ToString(sFormat)
+                aRow.Cells(2).Value = UnitsNet.Length.From(dodResultSet.ChangeStats.AverageThicknessOfDifferenceAOI_Thresholded, dodResultSet.Units).As(options.LinearUnits).ToString(sFormat)
                 aRow.Cells(3).Value = "±"
-                aRow.Cells(4).Value = UnitsNet.Length.From(dodResultSet.ChangeStats.AverageThicknessOfDifferenceAOI_Error, dodResultSet.DoDProperties.Units).As(options.LinearUnits).ToString(sFormat)
+                aRow.Cells(4).Value = UnitsNet.Length.From(dodResultSet.ChangeStats.AverageThicknessOfDifferenceAOI_Error, dodResultSet.Units).As(options.LinearUnits).ToString(sFormat)
                 aRow.Cells(5).Value = dodResultSet.ChangeStats.AverageThicknessOfDifferenceAOI_Percent.ToString(sFormat)
             End If
 
@@ -278,10 +278,10 @@ Namespace UI.ChangeDetection
                 aRow = grdData.Rows(nIndex)
                 aRow.Cells(0).Value = "Average Net Thickness of Difference (" & UnitsNet.Area.GetAbbreviation(options.LinearUnits) & ") for Area of Interest"
                 aRow.Cells(0).ToolTipText = "The total net volume of difference dividied by the area of interest (a measure of resulting net change within the analysis area)"
-                aRow.Cells(1).Value = UnitsNet.Length.From(dodResultSet.ChangeStats.AverageNetThicknessofDifferenceAOI_Raw, dodResultSet.DoDProperties.Units).As(options.LinearUnits).ToString(sFormat)
-                aRow.Cells(2).Value = UnitsNet.Length.From(dodResultSet.ChangeStats.AverageNetThicknessOfDifferenceAOI_Thresholded, dodResultSet.DoDProperties.Units).As(options.LinearUnits).ToString(sFormat)
+                aRow.Cells(1).Value = UnitsNet.Length.From(dodResultSet.ChangeStats.AverageNetThicknessofDifferenceAOI_Raw, dodResultSet.Units).As(options.LinearUnits).ToString(sFormat)
+                aRow.Cells(2).Value = UnitsNet.Length.From(dodResultSet.ChangeStats.AverageNetThicknessOfDifferenceAOI_Thresholded, dodResultSet.Units).As(options.LinearUnits).ToString(sFormat)
                 aRow.Cells(3).Value = "±"
-                aRow.Cells(4).Value = UnitsNet.Length.From(dodResultSet.ChangeStats.AverageNetThicknessOfDifferenceAOI_Error, dodResultSet.DoDProperties.Units).As(options.LinearUnits).ToString(sFormat)
+                aRow.Cells(4).Value = UnitsNet.Length.From(dodResultSet.ChangeStats.AverageNetThicknessOfDifferenceAOI_Error, dodResultSet.Units).As(options.LinearUnits).ToString(sFormat)
                 aRow.Cells(5).Value = dodResultSet.ChangeStats.AverageNetThicknessOfDifferenceAOI_Percent.ToString(sFormat)
             End If
 
@@ -295,9 +295,9 @@ Namespace UI.ChangeDetection
                 aRow.Cells(0).ToolTipText = "The total volume of difference divided by the total area of detectable change (a measure of total turnover thickness where there was detectable change)"
                 aRow.Cells(1).Value = "NA"
                 aRow.Cells(1).Style.BackColor = Drawing.Color.LightGray
-                aRow.Cells(2).Value = UnitsNet.Length.From(dodResultSet.ChangeStats.AverageThicknessOfDifferenceADC_Thresholded, dodResultSet.DoDProperties.Units).As(options.LinearUnits).ToString(sFormat)
+                aRow.Cells(2).Value = UnitsNet.Length.From(dodResultSet.ChangeStats.AverageThicknessOfDifferenceADC_Thresholded, dodResultSet.Units).As(options.LinearUnits).ToString(sFormat)
                 aRow.Cells(3).Value = "±"
-                aRow.Cells(4).Value = UnitsNet.Length.From(dodResultSet.ChangeStats.AverageThicknessOfDifferenceADC_Error, dodResultSet.DoDProperties.Units).As(options.LinearUnits).ToString(sFormat)
+                aRow.Cells(4).Value = UnitsNet.Length.From(dodResultSet.ChangeStats.AverageThicknessOfDifferenceADC_Error, dodResultSet.Units).As(options.LinearUnits).ToString(sFormat)
                 aRow.Cells(5).Value = dodResultSet.ChangeStats.AverageThicknessOfDifferenceADC_Percent.ToString(sFormat)
             End If
 
@@ -312,9 +312,9 @@ Namespace UI.ChangeDetection
                 aRow.Cells(0).ToolTipText = "The total net volume of difference dividied by the total area of detectable change (a measure of resulting net change where the was detectable change)"
                 aRow.Cells(1).Value = "NA"
                 aRow.Cells(1).Style.BackColor = Drawing.Color.LightGray
-                aRow.Cells(2).Value = UnitsNet.Length.From(dodResultSet.ChangeStats.AverageNetThicknessOfDifferenceADC_Thresholded, dodResultSet.DoDProperties.Units).As(options.LinearUnits).ToString(sFormat)
+                aRow.Cells(2).Value = UnitsNet.Length.From(dodResultSet.ChangeStats.AverageNetThicknessOfDifferenceADC_Thresholded, dodResultSet.Units).As(options.LinearUnits).ToString(sFormat)
                 aRow.Cells(3).Value = "±"
-                aRow.Cells(4).Value = UnitsNet.Length.From(dodResultSet.ChangeStats.AverageNetThicknessOfDifferenceADC_Error, dodResultSet.DoDProperties.Units).As(options.LinearUnits).ToString(sFormat)
+                aRow.Cells(4).Value = UnitsNet.Length.From(dodResultSet.ChangeStats.AverageNetThicknessOfDifferenceADC_Error, dodResultSet.Units).As(options.LinearUnits).ToString(sFormat)
                 aRow.Cells(5).Value = dodResultSet.ChangeStats.AverageNetThicknessOfDifferenceADC_Percent.ToString(sFormat)
             End If
 

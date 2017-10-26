@@ -18,43 +18,18 @@
             m_fThreshold = fThreshold
         End Sub
 
-        Public Overrides Function Calculate(ByRef sRawDoDPath As String, ByRef sThreshDodPath As String, ByRef sRawHistPath As String, ByRef sThreshHistPath As String, ByRef sSummaryXMLPath As String) As DoDResultSet
+        Protected Overrides Function ThresholdRawDoD(rawDoDPath As String, rawHistPath As String) As DoDResult
 
-            GenerateAnalysisRasters()
+            ' Threshold the raster
+            Dim thrDoDPath As String = GCDProject.ProjectManagerBase.OutputManager.GetDoDThresholdPath(Name, Folder.FullName)
+            External.ThresholdDoDMinLoD(rawDoDPath, thrDoDPath, m_fThreshold, GCDProject.ProjectManagerBase.OutputManager.OutputDriver,
+                GCDProject.ProjectManagerBase.OutputManager.NoData, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
 
-            CalculateRawDoD(sRawDoDPath, sRawHistPath)
-            sThreshDodPath = GCDProject.ProjectManagerBase.OutputManager.GetDoDThresholdPath(Name, Folder.FullName)
+            ' Generate the thresholded histograms
+            Dim thrHistPath As String = GCDProject.ProjectManagerBase.OutputManager.GetCsvThresholdPath(Name, Folder.FullName)
+            External.CalculateAndWriteDoDHistogram(thrDoDPath, thrHistPath, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
 
-            Dim eResult As External.GCDCoreOutputCodes
-            eResult = External.ThresholdDoDMinLoD(sRawDoDPath, sThreshDodPath, m_fThreshold, GCDProject.ProjectManagerBase.OutputManager.OutputDriver,
-                                                                              GCDProject.ProjectManagerBase.OutputManager.NoData, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
-
-            If eResult <> External.GCDCoreOutputCodes.PROCESS_OK Then
-                Dim ex As New Exception(GCDProject.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
-                Throw New Exception("Error calculating the raw DEM of difference raster.", ex)
-            End If
-
-            ' Check that the raster exists
-            If Not GCDConsoleLib.GISDataset.FileExists(sThreshDodPath) Then
-                Throw New Exception("The thresholded DoD raster file does noth exist.")
-            End If
-
-            sThreshHistPath = GCDProject.ProjectManagerBase.OutputManager.GetCsvThresholdPath(Name, Folder.FullName)
-            eResult = External.CalculateAndWriteDoDHistogram(sThreshDodPath, sThreshHistPath, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
-            If eResult <> External.GCDCoreOutputCodes.PROCESS_OK Then
-                Dim ex As New Exception(GCDProject.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
-                Throw New Exception("Error calculating and writing the raw DEM histogram.", ex)
-            End If
-
-            Dim gRawDoD As New GCDConsoleLib.Raster(sRawDoDPath)
-            Dim dodProps As New ChangeDetectionPropertiesMinLoD(sRawDoDPath, sThreshDodPath, Threshold, gRawDoD.Extent.CellHeight, gRawDoD.VerticalUnits)
-            Dim theChangeStats As New ChangeStatsCalculator(dodProps)
-            sSummaryXMLPath = GenerateSummaryXML(theChangeStats)
-
-            theChangeStats.GenerateChangeBarGraphicFiles(GCDProject.ProjectManagerBase.OutputManager.GetChangeDetectionFiguresFolder(Folder.FullName, True), dodProps.Units, ChartHeight, ChartWidth)
-            GenerateHistogramGraphicFiles(sRawHistPath, sThreshHistPath, dodProps.Units)
-
-            Return New DoDResultSet(theChangeStats, dodProps, sRawHistPath, sThreshHistPath)
+            Return New DoDResultMinLoD(rawDoDPath, rawHistPath, thrDoDPath, thrHistPath, m_fThreshold, CellSize, LinearUnits)
 
         End Function
 

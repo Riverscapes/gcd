@@ -6,7 +6,7 @@
     ''' <remarks></remarks>
     Public Class DoDResultSet
 
-        Private m_dodProps As ChangeDetectionProperties
+        Private m_dodProps As DoDResult
         Private m_ChangeStats As ChangeDetection.ChangeStats
         Private m_RawHistogramPath As String
         Private m_ThreshHistogramPath As String
@@ -31,7 +31,7 @@
             End Get
         End Property
 
-        Public ReadOnly Property DoDProperties As ChangeDetectionProperties
+        Public ReadOnly Property DoDProperties As DoDResult
             Get
                 Return m_dodProps
             End Get
@@ -39,7 +39,7 @@
 
 #End Region
 
-        Public Sub New(ByRef theChangeStats As ChangeStats, dodProps As ChangeDetectionProperties, rawHistogramPath As String, threshHistogramPath As String)
+        Public Sub New(ByRef theChangeStats As ChangeStats, dodProps As DoDResult, rawHistogramPath As String, threshHistogramPath As String)
             m_ChangeStats = theChangeStats
             m_dodProps = dodProps
             m_RawHistogramPath = rawHistogramPath

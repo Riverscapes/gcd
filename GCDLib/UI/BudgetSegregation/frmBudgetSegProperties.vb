@@ -71,7 +71,7 @@ Namespace UI.BudgetSegregation
                     Throw ex
                 End If
 
-                Dim dodProps As Core.ChangeDetection.ChangeDetectionProperties = Core.ChangeDetection.ChangeDetectionProperties.CreateFromDoDRow(rDoD)
+                Dim dodProps As Core.ChangeDetection.DoDResult = Core.ChangeDetection.DoDResult.CreateFromDoDRow(rDoD)
                 Dim bs As New Core.BudgetSegregation.BudgetSegregationEngine(dodProps, New IO.DirectoryInfo(txtOutputFolder.Text), My.Settings.ChartHeight, My.Settings.ChartWidth)
                 m_bsOutputs = bs.Calculate(ucPolygon.SelectedItem, cboField.Text, My.Settings.ChartWidth, My.Settings.ChartHeight, True)
                 Cursor.Current = Cursors.WaitCursor

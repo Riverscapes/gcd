@@ -11,7 +11,7 @@ Namespace Core.ChangeDetection
     ''' ChangeStatsCalculator classes (and it's child classes for each DoD type).
     ''' You need to inherit this class either using the calculator classes or the
     ''' class that can load these data from a DoD row in the project dataset.</remarks>
-    Public MustInherit Class ChangeStats
+    Public Class ChangeStats
 
         Private m_fCellArea As Double
 
@@ -27,6 +27,91 @@ Namespace Core.ChangeDetection
 
         Protected m_fVolumeErosion_Error As Double
         Protected m_fVolumeDeposition_Error As Double
+
+        ''' <summary>
+        ''' Create GCD statistics from a GCD ProjectDS dataset row in the DoD table
+        ''' </summary>
+        ''' <param name="rDod">DoD row from GCD ProjectDS dataset</param>
+        ''' <remarks>Only set the primary values. All the other statistics are derived
+        ''' from these.</remarks>
+        Public Sub New(rDod As ProjectDS.DoDsRow)
+
+            CellArea = rDod.CellArea
+
+            AreaErosion_Raw = rDod.AreaErosionRaw
+            AreaDeposition_Raw = rDod.AreaDepositonRaw
+            AreaErosion_Thresholded = rDod.AreaErosionThresholded
+            AreaDeposition_Thresholded = rDod.AreaDepositionThresholded
+
+            VolumeErosion_Raw = rDod.VolumeErosionRaw
+            VolumeDeposition_Raw = rDod.VolumeDepositionRaw
+            VolumeErosion_Thresholded = rDod.VolumeErosionThresholded
+            VolumeDeposition_Thresholded = rDod.VolumeDepositionThresholded
+
+            VolumeErosion_Error = rDod.VolumeErosionError
+            VolumeDeposition_Error = rDod.VolumeDepositionError
+
+        End Sub
+
+        Public Sub New(rBSMaskRow As ProjectDS.BSMasksRow)
+
+            CellArea = rBSMaskRow.BudgetSegregationsRow.DoDsRow.CellArea
+
+            AreaErosion_Raw = rBSMaskRow.AreaErosionRaw
+            AreaDeposition_Raw = rBSMaskRow.AreaDepositionRaw
+            AreaErosion_Thresholded = rBSMaskRow.AreaErosionThresholded
+            AreaDeposition_Thresholded = rBSMaskRow.AreaDepositionThresholded
+
+            VolumeErosion_Raw = rBSMaskRow.VolumeErosionRaw
+            VolumeDeposition_Raw = rBSMaskRow.VolumeDepositionRaw
+            VolumeErosion_Thresholded = rBSMaskRow.VolumeErosionThresholded
+            VolumeDeposition_Thresholded = rBSMaskRow.VolumeDepositionThresholded
+
+            VolumeErosion_Error = rBSMaskRow.VolumeErosionError
+            VolumeDeposition_Error = rBSMaskRow.VolumeDepositionError
+        End Sub
+
+        Public Sub New(rawDoD As String, thrDoD As String, fThreshold As Double)
+
+            Dim fAreaErosionRaw As Double
+            Dim fAreaDepositonRaw As Double
+            Dim fAreaErosionThr As Double
+            Dim fAreaDepositionThr As Double
+            Dim fVolErosionRaw As Double
+            Dim fVolDepositionRaw As Double
+            Dim fVolErosionThr As Double
+            Dim fVolDepositionThr As Double
+            Dim fVolErosionErr As Double
+            Dim fVolDepositonErr As Double
+
+            Debug.WriteLine("Getting DoD statistics for MinLoD thresholding:")
+            Debug.WriteLine("        Raw: " & dodProps.RawDoD)
+            Debug.WriteLine("Thresholded: " & dodProps.ThresholdedDoD)
+
+            GetDoDMinLoDStats(dodProps.RawDoD, dodProps.Threshold,
+                            fAreaErosionRaw, fAreaDepositonRaw,
+                            fAreaErosionThr, fAreaDepositionThr,
+                            fVolErosionRaw, fVolDepositionRaw,
+                            fVolErosionThr, fVolDepositionThr,
+                            fVolErosionErr, fVolDepositonErr,
+                            GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
+
+            AreaErosion_Raw = fAreaErosionRaw
+            AreaDeposition_Raw = fAreaDepositonRaw
+            AreaErosion_Thresholded = fAreaErosionThr
+            AreaDeposition_Thresholded = fAreaDepositionThr
+
+            VolumeErosion_Raw = fVolErosionRaw
+            VolumeDeposition_Raw = fVolDepositionRaw
+            VolumeErosion_Thresholded = fVolErosionThr
+            VolumeDeposition_Thresholded = fVolDepositionThr
+
+            VolumeErosion_Error = fVolErosionErr
+            VolumeDeposition_Error = fVolDepositonErr
+
+            CellArea = dodProps.CellSize ^ 2
+
+        End Sub
 
 #Region "Properties"
 
@@ -451,6 +536,8 @@ Namespace Core.ChangeDetection
 
 #End Region
 
+#Region "Output Helpers"
+
         Public Function GetSummaryStatsAsHTML(ByVal sFormat As String, ByVal eLinearUnit As UnitsNet.Units.LengthUnit) As String
 
             Dim sHTML As New Text.StringBuilder
@@ -799,6 +886,9 @@ Namespace Core.ChangeDetection
             Next
 
         End Sub
+
+#End Region
+
     End Class
 
 End Namespace

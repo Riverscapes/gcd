@@ -2,7 +2,7 @@
 
     Public Class BudgetSegregationEngine
 
-        Private m_DoDInfo As ChangeDetection.ChangeDetectionProperties
+        Private m_DoDInfo As ChangeDetection.DoDResult
 
         Private m_gPolygonMask As GCDConsoleLib.Vector
         Private m_sMaskField As String ' This is the string field containing the BS class
@@ -12,13 +12,13 @@
         Private m_fChartHeight As Integer
         Private m_fChartWidth As Integer
 
-        Public ReadOnly Property DoD As ChangeDetection.ChangeDetectionProperties
+        Public ReadOnly Property DoD As ChangeDetection.DoDResult
             Get
                 Return m_DoDInfo
             End Get
         End Property
 
-        Public Sub New(ByVal dodInfo As ChangeDetection.ChangeDetectionProperties, ByVal dOutputFolder As IO.DirectoryInfo, ByVal fChartHeight As Integer, ByVal fChartWidth As Integer)
+        Public Sub New(ByVal dodInfo As ChangeDetection.DoDResult, ByVal dOutputFolder As IO.DirectoryInfo, ByVal fChartHeight As Integer, ByVal fChartWidth As Integer)
 
             m_DoDInfo = dodInfo
             m_dOutputFolder = dOutputFolder
@@ -158,8 +158,8 @@
                 ' First build a new DoD Properties depending on the type of the full DoD
                 ' for the whole raster. Then use the attributes of this full DoD combined
                 ' with the newly created masked DoDs for the new BS change stats for this mask.
-                If TypeOf DoD Is ChangeDetection.ChangeDetectionPropertiesMinLoD Then
-                    Dim BSDoD As New ChangeDetection.ChangeDetectionPropertiesMinLoD(sMaskRaw, sMaskThr, DirectCast(DoD, ChangeDetection.ChangeDetectionPropertiesMinLoD).Threshold, gDoDRaw.Extent.CellWidth, gDoDRaw.VerticalUnits)
+                If TypeOf DoD Is ChangeDetection.DoDResultMinLoD Then
+                    Dim BSDoD As New ChangeDetection.DoDResultMinLoD(sMaskRaw, sMaskThr, DirectCast(DoD, ChangeDetection.DoDResultMinLoD).Threshold, gDoDRaw.Extent.CellWidth, gDoDRaw.VerticalUnits)
                     maskOutputClass.ChangeStats = New ChangeDetection.ChangeStatsCalculator(BSDoD)
                 Else
                     ' PGB - 8 Apr 2015 - Need to check type against probabilistic first because the 
@@ -167,12 +167,12 @@
                     ' always be propagated, even when it is probabilistic. i.e. perform the more
                     ' restrictive check first.
                     ' 
-                    If TypeOf DoD Is ChangeDetection.ChangeDetectionPropertiesProbabilistic Then
-                        Dim FullDoD As ChangeDetection.ChangeDetectionPropertiesProbabilistic = DirectCast(DoD, ChangeDetection.ChangeDetectionPropertiesProbabilistic)
-                        Dim BSDoD As New ChangeDetection.ChangeDetectionPropertiesProbabilistic(sMaskRaw, sMaskThr, FullDoD.PropagatedErrorRaster, FullDoD.ProbabilityRaster, FullDoD.SpatialCoErosionRaster, FullDoD.SpatialCoDepositionRaster, FullDoD.ConditionalRaster, FullDoD.PosteriorRaster, FullDoD.ConfidenceLevel, FullDoD.SpatialCoherenceFilter, FullDoD.BayesianUpdating, gDoDRaw.Extent.CellWidth, gDoDRaw.VerticalUnits)
+                    If TypeOf DoD Is ChangeDetection.DoDResultProbabilisitic Then
+                        Dim FullDoD As ChangeDetection.DoDResultProbabilisitic = DirectCast(DoD, ChangeDetection.DoDResultProbabilisitic)
+                        Dim BSDoD As New ChangeDetection.DoDResultProbabilisitic(sMaskRaw, sMaskThr, FullDoD.PropagatedErrorRaster, FullDoD.ProbabilityRaster, FullDoD.SpatialCoErosionRaster, FullDoD.SpatialCoDepositionRaster, FullDoD.ConditionalRaster, FullDoD.PosteriorRaster, FullDoD.ConfidenceLevel, FullDoD.SpatialCoherenceFilter, FullDoD.BayesianUpdating, gDoDRaw.Extent.CellWidth, gDoDRaw.VerticalUnits)
                         maskOutputClass.ChangeStats = New ChangeDetection.ChangeStatsCalculator(BSDoD)
-                    ElseIf TypeOf DoD Is ChangeDetection.ChangeDetectionPropertiesPropagated Then
-                        Dim BSDoD As New ChangeDetection.ChangeDetectionPropertiesPropagated(sMaskRaw, sMaskThr, DirectCast(DoD, ChangeDetection.ChangeDetectionPropertiesPropagated).PropagatedErrorRaster, gDoDRaw.Extent.CellWidth, gDoDRaw.VerticalUnits)
+                    ElseIf TypeOf DoD Is ChangeDetection.DoDResultPropagated Then
+                        Dim BSDoD As New ChangeDetection.DoDResultPropagated(sMaskRaw, sMaskThr, DirectCast(DoD, ChangeDetection.DoDResultPropagated).PropagatedErrorRaster, gDoDRaw.Extent.CellWidth, gDoDRaw.VerticalUnits)
                         maskOutputClass.ChangeStats = New ChangeDetection.ChangeStatsCalculator(BSDoD)
                     Else
                         Dim ex As New Exception("Unhandled change detection type.")

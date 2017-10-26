@@ -21,9 +21,19 @@ Namespace Core.Visualization
         'Private _RawHist As Dictionary(Of Double, Double)
         Private m_eLinearUnits As UnitsNet.Units.LengthUnit
 
+        Public Sub New(eLinearUnits As UnitsNet.Units.LengthUnit)
+            m_chtControl = New Charting.Chart()
+            Init(m_chtControl, eLinearUnits)
+        End Sub
+
         Public Sub New(ByRef chtControl As Charting.Chart, eLinearUnits As UnitsNet.Units.LengthUnit)
-            m_chtControl = chtControl
+            Init(chtControl, eLinearUnits)
+        End Sub
+
+        Private Sub Init(ByRef chtControl As Charting.Chart, eLinearUnits As UnitsNet.Units.LengthUnit)
+
             m_eLinearUnits = eLinearUnits
+            m_chtControl = chtControl
 
             chtControl.ChartAreas.Clear()
             chtControl.Series.Clear()
@@ -144,7 +154,7 @@ Namespace Core.Visualization
 
         End Function
 
-        Public Sub Save(sFilePath As String, nChartWidth As Integer, nChartHeight As Integer, nDPI As Integer)
+        Public Sub Save(sFilePath As String, nChartWidth As Integer, nChartHeight As Integer)
             m_chtControl.SaveImage(sFilePath, Charting.ChartImageFormat.Png)
         End Sub
 

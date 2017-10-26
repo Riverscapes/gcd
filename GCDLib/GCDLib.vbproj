@@ -71,7 +71,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\ChangeDetection\ElevationChangeDataPoint.vb" />
+    <Compile Include="Core\Visualization\ElevationChangeDataPoint.vb" />
     <Compile Include="Core\ErrorCalculation\FIS\FISLibraryItem.vb" />
     <Compile Include="Core\GCDArcMapManager.vb" />
     <Compile Include="Core\BudgetSegregation\BSResultSet.vb" />
@@ -83,13 +83,8 @@
     <Compile Include="Core\ChangeDetection\ChangeDetectionEngineMinLOD.vb" />
     <Compile Include="Core\ChangeDetection\ChangeDetectionEngineProbabilistic.vb" />
     <Compile Include="Core\ChangeDetection\ChangeDetectionEnginePropProb.vb" />
-    <Compile Include="Core\ChangeDetection\ChangeDetectionProperties.vb" />
-    <Compile Include="Core\ChangeDetection\ChangeStats.vb" />
-    <Compile Include="Core\ChangeDetection\ChangeStatsCalculator.vb" />
-    <Compile Include="Core\ChangeDetection\ChangeStatsFromDoDRow.vb" />
+    <Compile Include="Core\ChangeDetection\DoDResult.vb" />
     <Compile Include="Core\ChangeDetection\CoherenceProperties.vb" />
-    <Compile Include="Core\ChangeDetection\DoDResultHistograms.vb" />
-    <Compile Include="Core\ChangeDetection\DoDResultSet.vb" />
     <Compile Include="Core\ErrorCalculation\ErrorCalcProperties.vb" />
     <Compile Include="Core\ErrorCalculation\ErrorSurfaceEngine.vb" />
     <Compile Include="Core\ErrorCalculation\FIS\FISRuleFile.vb" />

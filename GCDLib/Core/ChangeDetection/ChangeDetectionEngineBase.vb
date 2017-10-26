@@ -1,4 +1,6 @@
-﻿Namespace Core.ChangeDetection
+﻿Imports GCDLib.Core.Visualization
+
+Namespace Core.ChangeDetection
 
     Public Enum UncertaintyTypes
         MinLoD
@@ -90,6 +92,18 @@
             End Get
         End Property
 
+        Protected ReadOnly Property LinearUnits As UnitsNet.Units.LengthUnit
+            Get
+                Return OriginalNewDEM.Proj.LinearUnit
+            End Get
+        End Property
+
+        Protected ReadOnly Property CellSize As Double
+            Get
+                Return Convert.ToDouble(OriginalNewDEM.Extent.CellWidth)
+            End Get
+        End Property
+
 #End Region
 
         Public Sub New(ByVal sName As String, ByVal sFolder As String, ByVal gNewDEM As GCDConsoleLib.Raster, ByVal gOldDEM As GCDConsoleLib.Raster,
@@ -130,7 +144,26 @@
 
         End Sub
 
-        Public MustOverride Function Calculate(ByRef sRawDoDPath As String, ByRef sThreshDodPath As String, ByRef sRawHistPath As String, ByRef sThreshHistPath As String, ByRef sSummaryXMLPath As String) As DoDResultSet
+        Public Function Calculate(ByRef sRawDoDPath As String, ByRef sThreshDodPath As String, ByRef sRawHistPath As String, ByRef sThreshHistPath As String, ByRef sSummaryXMLPath As String) As DoDResult
+
+            ' Generate concurrent rasters for analysis
+            GenerateAnalysisRasters()
+
+            ' Difference the rasters to produce the raw DoD and also the raw histogram
+            CalculateRawDoD(sRawDoDPath, sRawHistPath)
+
+            ' Call the polymorphic method to threshold the DoD depending on the thresholding method
+            Dim dodResults As DoDResultPropagated = ThresholdRawDoD(sRawDoDPath, sRawHistPath)
+
+            GenerateSummaryXML(dodResults.ChangeStats)
+            GenerateChangeBarGraphicFiles(dodResults.ChangeStats, m_fChartWidth, m_fChartHeight)
+            GenerateHistogramGraphicFiles(sRawHistPath, sThreshHistPath, m_fChartWidth, m_fChartHeight)
+
+            Return dodResults
+
+        End Function
+
+        Protected MustOverride Function ThresholdRawDoD(rawDodPath As String, rawHistoPath As String) As DoDResult
 
         ''' <summary>
         ''' Makes new copies of the original DEM rasters that are clipped either to the AOI or concurrent to each other.
@@ -140,7 +173,6 @@
         Protected Function GenerateAnalysisRasters() As GCDConsoleLib.ExtentRectangle
 
             Debug.Print("Generating analysis DEM rasters")
-
 
             m_gAnalysisNewDEM = Nothing
             m_gAnalysisOldDEM = Nothing
@@ -242,22 +274,95 @@
 
         End Function
 
-        Protected Function GenerateSummaryXML(theChangeStats As ChangeDetection.ChangeStatsCalculator) As String
+        Protected Function GenerateSummaryXML(ByRef changeStats As GCDConsoleLib.DoDStats) As String
 
-            Dim sSummaryXMLPath As String = GCDProject.ProjectManagerBase.OutputManager.GetGCDSummaryXMLPath(Name, m_dAnalysisFolder.FullName)
-            theChangeStats.ExportSummary(GCDProject.ProjectManagerBase.ExcelTemplatesFolder.FullName, AnalysisNewDEM.VerticalUnits, sSummaryXMLPath)
-            Return sSummaryXMLPath
+            Dim templatePath As String = IO.Path.Combine(GCDProject.ProjectManagerBase.ExcelTemplatesFolder.FullName, "GCDSummary.xml")
+            Dim outputPath As String = GCDProject.ProjectManagerBase.OutputManager.GetGCDSummaryXMLPath(Name, m_dAnalysisFolder.FullName)
+            Dim outputText As Text.StringBuilder
+
+            Try
+                Using objReader As New System.IO.StreamReader(templatePath)
+                    outputText = New Text.StringBuilder(objReader.ReadToEnd())
+                End Using
+            Catch ex As Exception
+                Dim ex2 As New Exception("Error reading the GCD summary XML template file", ex)
+                ex.Data("Excel Template Path") = templatePath
+                Throw ex2
+            End Try
+
+            outputText.Replace("[LinearUnits]", UnitsNet.Length.GetAbbreviation(LinearUnits))
+
+            outputText.Replace("[TotalAreaOfErosionRaw]", changeStats.AreaErosion_Raw)
+            outputText.Replace("[TotalAreaOfErosionThresholded]", changeStats.AreaErosion_Thresholded)
+
+            outputText.Replace("[TotalAreaOfDepositionRaw]", changeStats.AreaDeposition_Raw)
+            outputText.Replace("[TotalAreaOfDepositionThresholded]", changeStats.AreaDeposition_Thresholded)
+
+            outputText.Replace("[TotalVolumeOfErosionRaw]", changeStats.VolumeErosion_Raw)
+            outputText.Replace("[TotalVolumeOfErosionThresholded]", changeStats.VolumeErosion_Thresholded)
+            outputText.Replace("[ErrorVolumeOfErosion]", changeStats.VolumeErosion_Error)
+
+            outputText.Replace("[TotalVolumeOfDepositionRaw]", changeStats.VolumeDeposition_Raw)
+            outputText.Replace("[TotalVolumeOfDepositionThresholded]", changeStats.VolumeDeposition_Thresholded)
+            outputText.Replace("[ErrorVolumeOfDeposition]", changeStats.VolumeDeposition_Error)
+
+            Try
+                Using objWriter As New IO.StreamWriter(outputPath)
+                    objWriter.Write(outputText)
+                End Using
+            Catch ex As Exception
+                Dim ex2 As New Exception("Error writing the GCD summary XML template file", ex)
+                ex.Data("Excel Template Path") = templatePath
+                Throw ex2
+            End Try
+
+            Return outputPath
 
         End Function
 
-        Protected Sub GenerateHistogramGraphicFiles(rawHistogramPath As String, threshHistogramPath As String, ByVal eLinearUnit As UnitsNet.Units.LengthUnit)
+        Private Function GetFiguresFolder(bCreateIfMissing As Boolean) As String
+            Return GCDProject.ProjectManagerBase.OutputManager.GetChangeDetectionFiguresFolder(m_dAnalysisFolder.FullName, bCreateIfMissing)
+        End Function
 
-            Dim sFiguresFolder As String = GCDProject.ProjectManagerBase.OutputManager.GetChangeDetectionFiguresFolder(m_dAnalysisFolder.FullName, True)
-            Dim areaHistPath As String = IO.Path.Combine(sFiguresFolder, "Histogram_Area" & ".png")
-            Dim volhistPath As String = IO.Path.Combine(sFiguresFolder, "Histogram_Volume" & ".png")
+        Protected Sub GenerateHistogramGraphicFiles(rawHistogramPath As String, threshHistogramPath As String, ByVal fChartWidth As Double, ByVal fChartHeight As Double)
 
-            Dim ExportHistogramViewer As New Visualization.DoDHistogramViewerClass(rawHistogramPath, threshHistogramPath, eLinearUnit)
-            ExportHistogramViewer.ExportCharts(areaHistPath, volhistPath, 600, 600)
+            Dim sFiguresFolder As String = GetFiguresFolder(True)
+            Dim areaHistPath As String = IO.Path.Combine(sFiguresFolder, "Histogram_Area.png")
+            Dim volhistPath As String = IO.Path.Combine(sFiguresFolder, "Histogram_Volume.png")
+
+            Dim ExportHistogramViewer As New Visualization.DoDHistogramViewerClass(rawHistogramPath, threshHistogramPath, LinearUnits)
+            ExportHistogramViewer.ExportCharts(areaHistPath, volhistPath, fChartWidth, fChartHeight)
+        End Sub
+
+        Protected Sub GenerateChangeBarGraphicFiles(ByRef changeStats As GCDConsoleLib.DoDStats, ByVal fChartWidth As Double, ByVal fChartHeight As Double, Optional ByVal sFilePrefix As String = "")
+
+            Dim barViewer As New Visualization.ElevationChangeBarViewer(LinearUnits)
+            Dim sFiguresFolder As String = GetFiguresFolder(True)
+
+            If Not String.IsNullOrEmpty(sFilePrefix) Then
+                If Not sFilePrefix.EndsWith("_") Then
+                    sFilePrefix &= "_"
+                End If
+            End If
+
+            barViewer.Refresh(changeStats.AreaErosion_Thresholded, changeStats.AreaDeposition_Thresholded, LinearUnits, Visualization.ElevationChangeBarViewer.BarTypes.Area, True)
+            barViewer.Save(IO.Path.Combine(sFiguresFolder, sFilePrefix & "ChangeBars_AreaAbsolute.png"), fChartWidth, fChartHeight)
+
+            barViewer.Refresh(changeStats.AreaErosion_Thresholded, changeStats.AreaDeposition_Thresholded, LinearUnits, Visualization.ElevationChangeBarViewer.BarTypes.Area, False)
+            barViewer.Save(IO.Path.Combine(sFiguresFolder, sFilePrefix & "ChangeBars_AreaRelative.png"), fChartWidth, fChartHeight)
+
+            barViewer.Refresh(changeStats.VolumeErosion_Thresholded, changeStats.VolumeDeposition_Thresholded, changeStats.NetVolumeOfDifference_Thresholded, changeStats.VolumeErosion_Error, changeStats.VolumeDeposition_Error, changeStats.NetVolumeOfDifference_Error, LinearUnits, ElevationChangeBarViewer.BarTypes.Volume, True)
+            barViewer.Save(IO.Path.Combine(sFiguresFolder, sFilePrefix & "ChangeBars_VolumeAbsolute.png"), fChartWidth, fChartHeight)
+
+            barViewer.Refresh(changeStats.VolumeErosion_Thresholded, changeStats.VolumeDeposition_Thresholded, changeStats.NetVolumeOfDifference_Thresholded, changeStats.VolumeErosion_Error, changeStats.VolumeDeposition_Error, changeStats.NetVolumeOfDifference_Error, LinearUnits, ElevationChangeBarViewer.BarTypes.Volume, False)
+            barViewer.Save(IO.Path.Combine(sFiguresFolder, sFilePrefix & "ChangeBars_VolumeRelative.png"), fChartWidth, fChartHeight)
+
+            barViewer.Refresh(changeStats.AverageDepthErosion_Thresholded, changeStats.AverageDepthDeposition_Thresholded, changeStats.AverageNetThicknessOfDifferenceADC_Thresholded, changeStats.AverageDepthErosion_Error, changeStats.AverageDepthDeposition_Error, changeStats.AverageThicknessOfDifferenceADC_Error, LinearUnits, ElevationChangeBarViewer.BarTypes.Vertical, True)
+            barViewer.Save(IO.Path.Combine(sFiguresFolder, sFilePrefix & "ChangeBars_DepthAbsolute.png"), fChartWidth, fChartHeight)
+
+            barViewer.Refresh(changeStats.AverageDepthErosion_Thresholded, changeStats.AverageDepthDeposition_Thresholded, changeStats.AverageNetThicknessOfDifferenceADC_Thresholded, changeStats.AverageDepthErosion_Error, changeStats.AverageDepthDeposition_Error, changeStats.AverageThicknessOfDifferenceADC_Error, LinearUnits, ElevationChangeBarViewer.BarTypes.Vertical, False)
+            barViewer.Save(IO.Path.Combine(sFiguresFolder, sFilePrefix & "ChangeBars_DepthRelative.png"), fChartWidth, fChartHeight)
+
         End Sub
 
     End Class

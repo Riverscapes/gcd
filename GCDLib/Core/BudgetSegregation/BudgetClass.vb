@@ -255,7 +255,7 @@ Namespace Core.BudgetSegregation
             For Each kvp As KeyValuePair(Of String, BudgetSegregationOutputsClass.MaskOutputClass) In _output.MaskOutputs
                 MaskLabel = kvp.Key
                 'Dim ExportStatsData As New ChangeDetection.StatsDataClass(_RawHistSource, _output.MaskOutputs(MaskLabel).csvFilename)
-                Dim ExportStatsData As New ChangeDetection.DoDResultHistograms(_RawHistSource, _output.MaskOutputs(MaskLabel).csvFilename)
+                'Dim ExportStatsData As New ChangeDetection.DoDResultHistograms(_RawHistSource, _output.MaskOutputs(MaskLabel).csvFilename)
 
                 If TypeOf xmlresults Is Xml.XmlTextWriter Then
                     xmlresults.WriteStartElement(MaskLabel)
@@ -265,8 +265,8 @@ Namespace Core.BudgetSegregation
 
                 Dim c As New Chart
                 'Dim c As New Windows.Forms.DataVisualization.Charting.Chart
-                Dim ExportHistogramViewer As New Core.Visualization.DoDHistogramViewerClass(c, gDoDSource.VerticalUnits)
-                ExportHistogramViewer.ExportCharts(ExportStatsData, gDoDSource.VerticalUnits, _output.MaskOutputs(MaskLabel).AreaChartPath, _output.MaskOutputs(MaskLabel).VolumeChartPath, nChartWidth, nChartHeight)
+                Dim ExportHistogramViewer As New Core.Visualization.DoDHistogramViewerClass(_RawHistSource, _output.MaskOutputs(MaskLabel).csvFilename, gDoDSource.Proj.LinearUnit)
+                ExportHistogramViewer.ExportCharts(_output.MaskOutputs(MaskLabel).AreaChartPath, _output.MaskOutputs(MaskLabel).VolumeChartPath, nChartWidth, nChartHeight)
             Next
 
             'export pie charts

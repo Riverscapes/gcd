@@ -1119,7 +1119,7 @@ Namespace UI.Project
                             Dim sRawHistoStats As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rDoD.RawHistPath)
                             Dim sThrHistoStats As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rDoD.ThreshHistPath)
 
-                            Dim dodProp As Core.ChangeDetection.ChangeDetectionProperties = Core.ChangeDetection.ChangeDetectionProperties.CreateFromDoDRow(rDoD)
+                            Dim dodProp As Core.ChangeDetection.DoDResult = Core.ChangeDetection.DoDResult.CreateFromDoDRow(rDoD)
                             Dim dodResults As New Core.ChangeDetection.DoDResultSet(changeStats, dodProp, sRawHistoStats, sThrHistoStats)
                             Dim frm As New ChangeDetection.frmDoDResults(rDoD.Name, dodResults)
                             frm.ShowDialog()

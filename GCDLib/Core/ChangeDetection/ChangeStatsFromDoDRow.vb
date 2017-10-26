@@ -9,12 +9,6 @@
 
         Private m_rDoD As ProjectDS.DoDsRow
 
-        Public ReadOnly Property DoDRow As ProjectDS.DoDsRow
-            Get
-                Return m_rDoD
-            End Get
-        End Property
-
         ''' <summary>
         ''' Create GCD statistics from a GCD ProjectDS dataset row in the DoD table
         ''' </summary>

@@ -3,7 +3,7 @@ Namespace Core.BudgetSegregation
 
     Public Class BSResultSet
 
-        Private m_DodProps As ChangeDetection.ChangeDetectionProperties
+        Private m_DodProps As ChangeDetection.DoDResult
         Private m_MaskResults As Dictionary(Of String, MaskResult)
 
         Private m_pieCharts As BudgetSegregation.BudgetSegregationOutputsClass.PieChartOutputs
@@ -17,7 +17,7 @@ Namespace Core.BudgetSegregation
             End Get
         End Property
 
-        Public Sub New(dodProps As ChangeDetection.ChangeDetectionProperties)
+        Public Sub New(dodProps As ChangeDetection.DoDResult)
             m_DodProps = dodProps
         End Sub
 

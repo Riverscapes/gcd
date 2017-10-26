@@ -48,13 +48,47 @@ namespace GCDConsoleLib
             });
         }
 
+        /// <summary>
+        /// Retrieve the Change Statistics from a pair of DoD rasters that were thresholded using minimum level of detection
+        /// </summary>
+        /// <param name="rawDoD">Raw DoD Raster Path</param>
+        /// <param name="thrDoD">Thresholded DoD Raster Path</param>
+        /// <param name="minLoD">Minimum Level of Detection</param>
+        /// <returns></returns>
+        public static DoDStats GetStatsMinLoD(string rawDoD, string thrDoD, double minLoD)
+        {
+            throw new NotImplementedException("See old public C method GetDoDMinLoDStats()");
 
+            return new DoDStats(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        }
 
+        /// <summary>
+        /// Retrieve the Change Statistics from a pair of DoD rasters that were thresholded using a propagated error raster
+        /// </summary>
+        /// <param name="rawDoD">Raw DoD Raster Path</param>
+        /// <param name="thrDoD">Thresholded DoD Raster Path</param>
+        /// <param name="propErrRaster">Propagated Error Raster Path</param>
+        /// <returns></returns>
+        public static DoDStats GetStatsPropagated(string rawDoD, string thrDoD, string propErrRaster)
+        {
+            throw new NotImplementedException("See old public C method GetDoDPropStats()");
 
+            return new DoDStats(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        }
 
+        /// <summary>
+        /// Retrieve the Change Statistics from a pair of DoD rasters that were thresholded using a probabilistic thresholding
+        /// </summary>
+        /// <param name="rawDoD">Raw DoD Raster Path</param>
+        /// <param name="thrDoD">Thresholded DoD Raster Path</param>
+        /// <param name="propErrRaster">Propagated Error Raster Path</param>
+        /// <returns></returns>
+        public static DoDStats GetStatsProbalistic(string rawDoD, string thrDoD, string propErrRaster)
+        {
+            throw new NotImplementedException("See old public C method GetDoDPropStats()");
 
-
-
+            return new DoDStats(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        }
 
         ////////////////////////////////////    EVERYTHING BELOW HERE IS PRIVATE
 

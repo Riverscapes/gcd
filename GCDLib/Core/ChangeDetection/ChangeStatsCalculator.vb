@@ -143,7 +143,7 @@ Namespace Core.ChangeDetection
 
         'End Sub
 
-        Public Sub New(ByRef dodProps As ChangeDetection.ChangeDetectionPropertiesMinLoD)
+        Public Sub New(ByRef dodProps As ChangeDetection.DoDResultMinLoD)
 
             Dim fAreaErosionRaw As Double
             Dim fAreaDepositonRaw As Double
@@ -185,7 +185,7 @@ Namespace Core.ChangeDetection
 
         End Sub
 
-        Public Sub New(ByRef dodProps As ChangeDetection.ChangeDetectionPropertiesPropagated)
+        Public Sub New(ByRef dodProps As ChangeDetection.DoDResultPropagated)
 
             Dim fAreaErosionRaw As Double
             Dim fAreaDepositonRaw As Double
@@ -199,11 +199,11 @@ Namespace Core.ChangeDetection
             Dim fVolDepositonErr As Double
 
             Debug.WriteLine("Getting DoD statistics for propagated error thresholding:")
-            Debug.WriteLine("        Raw: " & dodProps.RawDoD)
-            Debug.WriteLine("Thresholded: " & dodProps.ThresholdedDoD)
+            Debug.WriteLine("        Raw: " & dodProps.RawDoD.FullName)
+            Debug.WriteLine("Thresholded: " & dodProps.ThresholdedDoD.FullName)
             Debug.WriteLine(" Propagated: " & dodProps.PropagatedErrorRaster)
 
-            GetDoDPropStats(dodProps.RawDoD, dodProps.PropagatedErrorRaster,
+            GetDoDPropStats(dodProps.RawDoD.FullName, dodProps.PropagatedErrorRaster,
                             fAreaErosionRaw, fAreaDepositonRaw,
                             fAreaErosionThr, fAreaDepositionThr,
                             fVolErosionRaw, fVolDepositionRaw,
@@ -228,7 +228,7 @@ Namespace Core.ChangeDetection
 
         End Sub
 
-        Public Sub New(ByRef dodProps As ChangeDetection.ChangeDetectionPropertiesProbabilistic)
+        Public Sub New(ByRef dodProps As ChangeDetection.DoDResultProbabilisitic)
 
             Dim fAreaErosionRaw As Double
             Dim fAreaDepositonRaw As Double
@@ -271,52 +271,6 @@ Namespace Core.ChangeDetection
             CellArea = dodProps.CellSize ^ 2
 
         End Sub
-
-        'Private Sub CalculateStatistics(ByRef dodProps As ChangeDetection.ChangeDetectionProperties)
-        '    '
-        '    ' This should not be possible. You can only calculate change statistics for
-        '    ' one of the three change detection types.
-        '    Throw New Exception("Invalid use of change statistics class. Cannot calculate statistics for base class GCd.ChangeDetection.ChangeDetectionProperties")
-
-        'End Sub
-        ' ''' <summary>
-        ' ''' Calculates the basic area and volume statistics. Use the Con Statement to select either erosion or deposition cells.
-        ' ''' </summary>
-        ' ''' <param name="sRasterPath">DoD Raster Path (can be either raw or thresholded)</param>
-        ' ''' <param name="sConStatement">""Value"" &lt; 0" for erosion and """Value"" &gt; 0" for deposition</param>
-        ' ''' <param name="fCellArea">Area of one cell</param>
-        ' ''' <param name="fArea">Output value of the area of cells that meet the condition of the Con Statement</param>
-        ' ''' <param name="fVolume">Output value of the volume of cells that meet the condition of the Con Statement</param>
-        ' ''' <remarks></remarks>
-        'Private Sub CalculateAreaAndVolume(sRasterPath As String, sConStatement As String, fCellArea As Double, ByRef fArea As Double, ByRef fVolume As Double)
-
-        '    fArea = 0
-        '    fVolume = 0
-
-        '    Dim sZoneRaster As String = WorkspaceManager.GetTempRaster("TempStats")
-        '    GP.SpatialAnalyst.Con_sa(sRasterPath, "1", "0", New IO.FileInfo(sZoneRaster), sConStatement)
-
-        '    Dim pWS As ESRI.ArcGIS.Geodatabase.IWorkspace = GISDataStructures.GetWorkspace(WorkspaceManager.WorkspacePath & IO.Path.DirectorySeparatorChar, GISDataStructures.GISDataStorageTypes.ShapeFile)
-        '    Dim sStatistics As String = GISCode.Table.GetSafeName(pWS, "ChangeStats")
-
-        '    GP.SpatialAnalyst.ZonalStatisticsAsTable(sZoneRaster, "Value", sRasterPath, sStatistics, "ALL")
-        '    Dim pTable As ESRI.ArcGIS.Geodatabase.ITable = GISCode.Table.OpenDBFTable(sStatistics)
-
-        '    Dim dicSum As Dictionary(Of Integer, Double) = GISCode.Table.GetValuesFromTable(pTable, "Value", "SUM")
-        '    Dim dicArea As Dictionary(Of Integer, Double) = GISCode.Table.GetValuesFromTable(pTable, "Value", "AREA")
-
-        '    If dicArea.ContainsKey(1) Then
-        '        fArea = dicArea(1)
-        '        If dicSum.ContainsKey(1) Then
-        '            ' Need to do abs because the sum of values is negative when erosion
-        '            fVolume = Math.Abs(dicSum(1)) * CellArea
-        '        End If
-        '    End If
-
-        '    Runtime.InteropServices.Marshal.ReleaseComObject(pTable)
-        '    Runtime.InteropServices.Marshal.ReleaseComObject(pWS)
-
-        'End Sub
 
         ''' <summary>
         ''' Write the statistics to a new copy of the GCDSummary.xml spreadsheet XML file.

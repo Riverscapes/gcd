@@ -1,30 +1,45 @@
-﻿Imports naru.math.NumberFormatting
-
-Namespace Core.ChangeDetection
+﻿Namespace Core.ChangeDetection
 
     ''' <summary>
     ''' Represents a completed change detection analysis, the raw and thresholded rasters
     ''' </summary>
     ''' <remarks>You cannot create an instance of this class. You have to create one
     ''' of the inherited classes.</remarks>
-    Public MustInherit Class ChangeDetectionProperties
+    Public MustInherit Class DoDResult
 
-        Private m_sRawDoD As String
-        Private m_sThresholdedDoD As String
+        Private m_RawDoD As IO.FileInfo
+        Private m_RawHistogram As IO.FileInfo
+
+        Private m_ThrDoD As IO.FileInfo
+        Private m_ThrHistogram As IO.FileInfo
+
         Private m_eLinearUnits As UnitsNet.Units.LengthUnit
         Private m_fCellSize As Double
+        Protected m_ChangeStats As GCDConsoleLib.DoDStats
 
 #Region "Properties"
 
-        Public ReadOnly Property RawDoD As String
+        Public ReadOnly Property RawDoD As IO.FileInfo
             Get
-                Return m_sRawDoD
+                Return m_RawDoD
             End Get
         End Property
 
-        Public ReadOnly Property ThresholdedDoD As String
+        Public ReadOnly Property RawHistogram As IO.FileInfo
             Get
-                Return m_sThresholdedDoD
+                Return m_RawHistogram
+            End Get
+        End Property
+
+        Public ReadOnly Property ThresholdedDoD As IO.FileInfo
+            Get
+                Return m_ThrDoD
+            End Get
+        End Property
+
+        Public ReadOnly Property ThresholdedHistogram As IO.FileInfo
+            Get
+                Return m_ThrHistogram
             End Get
         End Property
 
@@ -51,6 +66,13 @@ Namespace Core.ChangeDetection
                 Return GCDConsoleLib.Utility.Conversion.LengthUnit2VolumeUnit(Units)
             End Get
         End Property
+
+        Public ReadOnly Property ChangeStats As GCDConsoleLib.DoDStats
+            Get
+                Return m_ChangeStats
+            End Get
+        End Property
+
 #End Region
 
         ''' <summary>
@@ -70,12 +92,18 @@ Namespace Core.ChangeDetection
         ''' Unfortunately this trickles back up to inherited classes, but at least those classes can obtain the
         ''' cell size and linear units from the original raw DoD which is never deleted during a budget set loop.
         ''' </remarks>
-        Public Sub New(sRawDoD As String, sThresholdedDoD As String, fCellSize As Double, eLinearUnits As UnitsNet.Units.LengthUnit)
+        Public Sub New(sRawDoD As String, sRawHistogram As String, sThresholdedDoD As String, sThreshHistogram As String, fCellSize As Double, eLinearUnits As UnitsNet.Units.LengthUnit)
 
-            m_sRawDoD = sRawDoD
-            m_sThresholdedDoD = sThresholdedDoD
+            m_RawDoD = New IO.FileInfo(sRawDoD)
+            m_RawHistogram = New IO.FileInfo(sRawHistogram)
+
+            m_ThrDoD = New IO.FileInfo(sThresholdedDoD)
+            m_ThrHistogram = New IO.FileInfo(sThreshHistogram)
+
             m_fCellSize = fCellSize
             m_eLinearUnits = eLinearUnits
+
+            Throw New NotImplementedException("need to load change stats here")
 
         End Sub
 
@@ -87,15 +115,20 @@ Namespace Core.ChangeDetection
         ''' type (MinLod, Propagated or Probabilistic) depending on the information in the project
         ''' dataset row.</returns>
         ''' <remarks></remarks>
-        Public Shared Function CreateFromDoDRow(rDoD As ProjectDS.DoDsRow) As ChangeDetectionProperties
+        Public Shared Function CreateFromDoDRow(rDoD As ProjectDS.DoDsRow) As DoDResult
 
-            Dim sRawDoDPath As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rDoD.RawDoDPath)
-            Dim sThrDoDPath As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rDoD.ThreshDoDPath)
-            Dim gRawDoDPath As New GCDConsoleLib.Raster(sRawDoDPath)
+            Dim rawDoDPath As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rDoD.RawDoDPath)
+            Dim rawHistoPath As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rDoD.RawHistPath)
+            Dim thrDoDPath As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rDoD.ThreshDoDPath)
+            Dim thrHistoPath As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rDoD.ThreshHistPath)
 
-            Dim dodProps As ChangeDetectionProperties = Nothing
+            Dim gRawDoDPath As New GCDConsoleLib.Raster(rawDoDPath)
+            Dim lUnits As UnitsNet.Units.LengthUnit = gRawDoDPath.Proj.LinearUnit
+            Dim cellWidth As Double = Convert.ToDouble(gRawDoDPath.Extent.CellWidth)
+
+            Dim dodProps As DoDResult = Nothing
             If rDoD.TypeMinLOD Then
-                dodProps = New ChangeDetectionPropertiesMinLoD(sRawDoDPath, sThrDoDPath, rDoD.Threshold, gRawDoDPath.Extent.CellWidth, gRawDoDPath.VerticalUnits)
+                dodProps = New DoDResultMinLoD(rawDoDPath, rawHistoPath, thrDoDPath, thrHistoPath, rDoD.Threshold, cellWidth, lUnits)
             Else
                 Dim sPropErrPath As String = String.Empty
                 If Not rDoD.IsPropagatedErrorRasterPathNull Then
@@ -107,36 +140,17 @@ Namespace Core.ChangeDetection
                 End If
 
                 If rDoD.TypePropagated Then
-                    dodProps = New ChangeDetection.ChangeDetectionPropertiesPropagated(sRawDoDPath, sThrDoDPath, sPropErrPath, gRawDoDPath.Extent.CellWidth, gRawDoDPath.VerticalUnits)
+                    dodProps = New DoDResultPropagated(rawDoDPath, rawHistoPath, thrDoDPath, thrHistoPath, sPropErrPath, cellWidth, lUnits)
+
                 ElseIf rDoD.TypeProbabilistic Then
 
+                    Dim sProbabilityRaster As String = If(rDoD.IsProbabilityRasterNull, String.Empty, rDoD.ProbabilityRaster)
+                    Dim sSpatialCoErosionRaster As String = If(rDoD.IsSpatialCoErosionRasterNull, String.Empty, rDoD.SpatialCoErosionRaster)
+                    Dim sSpatialCoDepositionraster As String = If(rDoD.IsSpatialCoDepositionRasterNull, String.Empty, rDoD.SpatialCoDepositionRaster)
+                    Dim sConditionalProbRaster As String = If(rDoD.IsConditionalProbRasterNull, String.Empty, rDoD.ConditionalProbRaster)
+                    Dim sPosteriorRaster As String = If(rDoD.IsPosteriorRasterNull, String.Empty, rDoD.PosteriorRaster)
 
-                    Dim sProbabilityRaster As String = String.Empty
-                    If Not rDoD.IsProbabilityRasterNull Then
-                        sProbabilityRaster = rDoD.ProbabilityRaster
-                    End If
-
-                    Dim sSpatialCoErosionRaster As String = String.Empty
-                    If Not rDoD.IsSpatialCoErosionRasterNull Then
-                        sSpatialCoErosionRaster = rDoD.SpatialCoErosionRaster
-                    End If
-
-                    Dim sSpatialCoDepositionraster As String = String.Empty
-                    If Not rDoD.IsSpatialCoDepositionRasterNull Then
-                        sSpatialCoDepositionraster = rDoD.SpatialCoDepositionRaster
-                    End If
-
-                    Dim sConditionalProbRaster As String = String.Empty
-                    If Not rDoD.IsConditionalProbRasterNull Then
-                        sConditionalProbRaster = rDoD.ConditionalProbRaster
-                    End If
-
-                    Dim sPosteriorRaster As String = String.Empty
-                    If Not rDoD.IsPosteriorRasterNull Then
-                        sPosteriorRaster = rDoD.PosteriorRaster
-                    End If
-
-                    dodProps = New ChangeDetectionPropertiesProbabilistic(sRawDoDPath, sThrDoDPath, sPropErrPath, sProbabilityRaster, sSpatialCoErosionRaster, sSpatialCoDepositionraster, sConditionalProbRaster, sPosteriorRaster, rDoD.Threshold, rDoD.Filter, rDoD.Bayesian, gRawDoDPath.Extent.CellWidth, gRawDoDPath.Proj.LinearUnit)
+                    dodProps = New DoDResultProbabilisitic(rawDoDPath, rawHistoPath, thrDoDPath, thrHistoPath, sPropErrPath, sProbabilityRaster, sSpatialCoErosionRaster, sSpatialCoDepositionraster, sConditionalProbRaster, sPosteriorRaster, rDoD.Threshold, rDoD.Filter, rDoD.Bayesian, gRawDoDPath.Extent.CellWidth, gRawDoDPath.Proj.LinearUnit)
                 Else
                     Throw New Exception("Unhandled DoD type.")
                 End If
@@ -148,9 +162,8 @@ Namespace Core.ChangeDetection
 
     End Class
 
-
-    Public Class ChangeDetectionPropertiesMinLoD
-        Inherits ChangeDetectionProperties
+    Public Class DoDResultMinLoD
+        Inherits DoDResult
 
         Private m_fThreshold As Double
 
@@ -160,16 +173,19 @@ Namespace Core.ChangeDetection
             End Get
         End Property
 
-        Public Sub New(sRawDoD As String, sThresholdedDoD As String, fThreshold As Double, fCellSize As Double, eLinearUnits As UnitsNet.Units.LengthUnit)
-            MyBase.New(sRawDoD, sThresholdedDoD, fCellSize, eLinearUnits)
+        Public Sub New(rawDoD As String, rawHisto As String, thrDoD As String, threshHisto As String, fThreshold As Double, fCellSize As Double, eLinearUnits As UnitsNet.Units.LengthUnit)
+            MyBase.New(rawDoD, rawHisto, thrDoD, threshHisto, fCellSize, eLinearUnits)
 
             m_fThreshold = fThreshold
+
+            ' Build the change statistics
+            m_ChangeStats = GCDConsoleLib.RasterOperators.GetStatsMinLoD(rawDoD, thrDoD, fThreshold)
         End Sub
 
     End Class
 
-    Public Class ChangeDetectionPropertiesPropagated
-        Inherits ChangeDetectionProperties
+    Public Class DoDResultPropagated
+        Inherits DoDResult
 
         Private m_sPropagatedErrorRaster As String
 
@@ -179,19 +195,21 @@ Namespace Core.ChangeDetection
             End Get
         End Property
 
-        Public Sub New(sRawDoD As String, sThresholdedDoD As String, sPropagatedErrorRaster As String, fCellSize As Double, eLinearUnits As UnitsNet.Units.LengthUnit)
-            MyBase.New(sRawDoD, sThresholdedDoD, fCellSize, eLinearUnits)
+        Public Sub New(rawDoD As String, rawHisto As String, thrDoD As String, threshHisto As String, sPropErrorRaster As String, fCellSize As Double, eLinearUnits As UnitsNet.Units.LengthUnit)
+            MyBase.New(rawDoD, rawHisto, thrDoD, threshHisto, fCellSize, eLinearUnits)
 
-            m_sPropagatedErrorRaster = sPropagatedErrorRaster
+            m_sPropagatedErrorRaster = sPropErrorRaster
+
+            ' Build the change statistics
+            m_ChangeStats = GCDConsoleLib.RasterOperators.GetStatsPropagated(rawDoD, thrDoD, sPropErrorRaster)
         End Sub
 
     End Class
 
-    Public Class ChangeDetectionPropertiesProbabilistic
-        Inherits ChangeDetectionPropertiesPropagated
+    Public Class DoDResultProbabilisitic
+        Inherits DoDResultPropagated
 
         Private m_fConfidenceLevel As Double
-        'Private m_SpatialCoherenceProperties As CoherenceProperties
         Private m_nSpatialCoherenceFilter As Integer
         Private m_bBayesianUpdating As Boolean
 
@@ -218,12 +236,6 @@ Namespace Core.ChangeDetection
                 Return m_bBayesianUpdating
             End Get
         End Property
-
-        'Public ReadOnly Property SpatialCoherenceProperties As CoherenceProperties
-        '    Get
-        '        Return m_SpatialCoherenceProperties
-        '    End Get
-        'End Property
 
         Public ReadOnly Property ProbabilityRaster As String
             Get
@@ -255,13 +267,11 @@ Namespace Core.ChangeDetection
             End Get
         End Property
 
-
-        Public Sub New(sRawDoD As String, sThresholdedDod As String, sPropagatedErrorRaster As String, sProbabilityRaster As String, sSpatialCoErosionRaster As String, sSpatialCoDepositionRaster As String, sConditionalProbabilityRaster As String, sPosteriorRaster As String, fConfidenceLevel As Double, nFilter As Integer, bBayesianUpdating As Boolean,
+        Public Sub New(rawDoD As String, rawHisto As String, thrDoD As String, thrHisto As String, propErrorRaster As String, sProbabilityRaster As String, sSpatialCoErosionRaster As String, sSpatialCoDepositionRaster As String, sConditionalProbabilityRaster As String, sPosteriorRaster As String, fConfidenceLevel As Double, nFilter As Integer, bBayesianUpdating As Boolean,
                        fCellSize As Double, eLinearUnits As UnitsNet.Units.LengthUnit)
-            MyBase.New(sRawDoD, sThresholdedDod, sPropagatedErrorRaster, fCellSize, eLinearUnits)
+            MyBase.New(rawDoD, rawHisto, thrDoD, thrHisto, propErrorRaster, fCellSize, eLinearUnits)
 
             m_fConfidenceLevel = fConfidenceLevel
-            'm_SpatialCoherenceProperties = SpatialCoherenceProps
             m_nSpatialCoherenceFilter = nFilter
             m_bBayesianUpdating = bBayesianUpdating
 
@@ -270,6 +280,9 @@ Namespace Core.ChangeDetection
             m_sSpatialCoDepositionRaster = sSpatialCoDepositionRaster
             m_sConditionalProbabilityRaster = sConditionalProbabilityRaster
             m_PosteriorRaster = sPosteriorRaster
+
+            ' Build the change statistics
+            m_ChangeStats = GCDConsoleLib.RasterOperators.GetStatsProbalistic(rawDoD, thrDoD, propErrorRaster)
         End Sub
 
     End Class

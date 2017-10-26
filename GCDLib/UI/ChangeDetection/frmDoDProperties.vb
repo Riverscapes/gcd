@@ -9,11 +9,10 @@ Namespace UI.ChangeDetection
         Private m_bUserEditedName As Boolean
         Private m_frmSpatialCoherence As frmCoherenceProperties
 
-        '
         ' These are the results of the analysis. They are not populated until
         ' the user clicks OK and the change detection completes successfully.
         Private m_rDoD As ProjectDS.DoDsRow
-        Private m_DoDResultSet As Core.ChangeDetection.DoDResultSet
+        Private m_DoDResult As Core.ChangeDetection.DoDResult
 
         ' Initial DEM Surveys to select. (User right clicked on a pair of DEMs
         ' in the project explorer and chose to add a new DoD for the same DEMs.
@@ -31,9 +30,9 @@ Namespace UI.ChangeDetection
             End Get
         End Property
 
-        Public ReadOnly Property DoDResults As Core.ChangeDetection.DoDResultSet
+        Public ReadOnly Property DoDResults As Core.ChangeDetection.DoDResult
             Get
-                Return m_DoDResultSet
+                Return m_DoDResult
             End Get
         End Property
 
@@ -48,7 +47,7 @@ Namespace UI.ChangeDetection
 
             m_frmSpatialCoherence = New frmCoherenceProperties
             m_rDoD = Nothing
-            m_DoDResultSet = Nothing
+            m_DoDResult = Nothing
 
             m_nInitialNewDEMSurveyID = 0
             m_nInitialOldDEMSurveyID = 0
@@ -66,7 +65,7 @@ Namespace UI.ChangeDetection
 
             m_frmSpatialCoherence = New frmCoherenceProperties
             m_rDoD = Nothing
-            m_DoDResultSet = Nothing
+            m_DoDResult = Nothing
 
             m_nInitialNewDEMSurveyID = nNewDEMSurveyID
             m_nInitialOldDEMSurveyID = nOldDEMSurveyID
@@ -74,7 +73,6 @@ Namespace UI.ChangeDetection
         End Sub
 
         Private Sub DoDPropertiesForm_Load(sender As Object, e As System.EventArgs) Handles Me.Load
-
 
             Try
                 EnableDisableControls()
@@ -174,7 +172,7 @@ Namespace UI.ChangeDetection
                 Dim sPosterior As String = String.Empty
 
                 Cursor.Current = Cursors.WaitCursor
-                m_DoDResultSet = cdEngine.Calculate(sRawDoDPath, sThreshDodPath, sRawHistPath, sThreshHistPath, sSummaryXMLPath)
+                m_DoDResult = cdEngine.Calculate(sRawDoDPath, sThreshDodPath, sRawHistPath, sThreshHistPath, sSummaryXMLPath)
                 Cursor.Current = Cursors.WaitCursor
                 '
                 ' Temporary fix. The change detection routine seems to be messing up the projection on 
@@ -229,43 +227,43 @@ Namespace UI.ChangeDetection
                     RasterPyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.DoDThresholded, sThreshDodPath)
                 End If
 
-                If TypeOf m_DoDResultSet.DoDProperties Is Core.ChangeDetection.ChangeDetectionPropertiesProbabilistic Then
-                    Dim dodProp As Core.ChangeDetection.ChangeDetectionPropertiesProbabilistic = m_DoDResultSet.DoDProperties
+                If TypeOf m_DoDResult Is Core.ChangeDetection.DoDResultProbabilisitic Then
+                    Dim dodProb As Core.ChangeDetection.DoDResultProbabilisitic = DirectCast(m_DoDResult, Core.ChangeDetection.DoDResultProbabilisitic)
 
                     ' Probability Raster pyramids
                     If RasterPyramidManager.AutomaticallyBuildPyramids(RasterPyramidManager.PyramidRasterTypes.ProbabilityRasters) Then
 
-                        If Not String.IsNullOrEmpty(dodProp.ProbabilityRaster) Then
-                            RasterPyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.ProbabilityRasters, dodProp.ProbabilityRaster)
+                        If Not String.IsNullOrEmpty(dodProb.ProbabilityRaster) Then
+                            RasterPyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.ProbabilityRasters, dodProb.ProbabilityRaster)
                         End If
 
-                        If Not String.IsNullOrEmpty(dodProp.SpatialCoErosionRaster) Then
-                            RasterPyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.ProbabilityRasters, dodProp.SpatialCoErosionRaster)
+                        If Not String.IsNullOrEmpty(dodProb.SpatialCoErosionRaster) Then
+                            RasterPyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.ProbabilityRasters, dodProb.SpatialCoErosionRaster)
                         End If
 
-                        If Not String.IsNullOrEmpty(dodProp.SpatialCoDepositionRaster) Then
-                            RasterPyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.ProbabilityRasters, dodProp.SpatialCoDepositionRaster)
+                        If Not String.IsNullOrEmpty(dodProb.SpatialCoDepositionRaster) Then
+                            RasterPyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.ProbabilityRasters, dodProb.SpatialCoDepositionRaster)
                         End If
 
-                        If Not String.IsNullOrEmpty(dodProp.ConditionalRaster) Then
-                            RasterPyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.ProbabilityRasters, dodProp.ConditionalRaster)
+                        If Not String.IsNullOrEmpty(dodProb.ConditionalRaster) Then
+                            RasterPyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.ProbabilityRasters, dodProb.ConditionalRaster)
                         End If
 
-                        If Not String.IsNullOrEmpty(dodProp.PosteriorRaster) Then
-                            RasterPyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.ProbabilityRasters, dodProp.PosteriorRaster)
+                        If Not String.IsNullOrEmpty(dodProb.PosteriorRaster) Then
+                            RasterPyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.ProbabilityRasters, dodProb.PosteriorRaster)
                         End If
                     End If
 
                     ' Make relative paths for storing in the project.
-                    sProbabilityRaster = GCDProject.ProjectManagerBase.GetRelativePath(dodProp.ProbabilityRaster)
-                    sSpatialCoErosionRaster = GCDProject.ProjectManagerBase.GetRelativePath(dodProp.SpatialCoErosionRaster)
-                    sSpatialCoDepositionRaster = GCDProject.ProjectManagerBase.GetRelativePath(dodProp.SpatialCoDepositionRaster)
-                    sConditionalRaster = GCDProject.ProjectManagerBase.GetRelativePath(dodProp.ConditionalRaster)
-                    sPosterior = GCDProject.ProjectManagerBase.GetRelativePath(dodProp.PosteriorRaster)
+                    sProbabilityRaster = GCDProject.ProjectManagerBase.GetRelativePath(dodProb.ProbabilityRaster)
+                    sSpatialCoErosionRaster = GCDProject.ProjectManagerBase.GetRelativePath(dodProb.SpatialCoErosionRaster)
+                    sSpatialCoDepositionRaster = GCDProject.ProjectManagerBase.GetRelativePath(dodProb.SpatialCoDepositionRaster)
+                    sConditionalRaster = GCDProject.ProjectManagerBase.GetRelativePath(dodProb.ConditionalRaster)
+                    sPosterior = GCDProject.ProjectManagerBase.GetRelativePath(dodProb.PosteriorRaster)
                 End If
 
-                If TypeOf m_DoDResultSet.DoDProperties Is Core.ChangeDetection.ChangeDetectionPropertiesPropagated Then
-                    sPropagatedError = DirectCast(m_DoDResultSet.DoDProperties, Core.ChangeDetection.ChangeDetectionPropertiesPropagated).PropagatedErrorRaster
+                If TypeOf m_DoDResult Is Core.ChangeDetection.DoDResultPropagated Then
+                    sPropagatedError = DirectCast(m_DoDResult, Core.ChangeDetection.DoDResultPropagated).PropagatedErrorRaster
 
                     ' Propagated Raster pyrmads
                     If Not String.IsNullOrEmpty(sPropagatedError) Then
@@ -298,12 +296,12 @@ Namespace UI.ChangeDetection
                                                              , GCDProject.ProjectManagerBase.GetRelativePath(sRawHistPath) _
                                                              , GCDProject.ProjectManagerBase.GetRelativePath(sThreshHistPath) _
                                                              , GCDProject.ProjectManagerBase.GetRelativePath(sSummaryXMLPath) _
-                                                             , m_DoDResultSet.ChangeStats.CellArea _
-                                                             , m_DoDResultSet.ChangeStats.AreaErosion_Raw, m_DoDResultSet.ChangeStats.AreaDeposition_Raw _
-                                                             , m_DoDResultSet.ChangeStats.AreaErosion_Thresholded, m_DoDResultSet.ChangeStats.AreaDeposition_Thresholded _
-                                                             , m_DoDResultSet.ChangeStats.VolumeErosion_Raw, m_DoDResultSet.ChangeStats.VolumeDeposition_Raw _
-                                                             , m_DoDResultSet.ChangeStats.VolumeErosion_Thresholded, m_DoDResultSet.ChangeStats.VolumeDeposition_Thresholded _
-                                                             , m_DoDResultSet.ChangeStats.VolumeErosion_Error, m_DoDResultSet.ChangeStats.VolumeDeposition_Error, sPropagatedError _
+                                                             , m_DoDResult.ChangeStats.CellArea _
+                                                             , m_DoDResult.ChangeStats.AreaErosion_Raw, m_DoDResult.ChangeStats.AreaDeposition_Raw _
+                                                             , m_DoDResult.ChangeStats.AreaErosion_Thresholded, m_DoDResult.ChangeStats.AreaDeposition_Thresholded _
+                                                             , m_DoDResult.ChangeStats.VolumeErosion_Raw, m_DoDResult.ChangeStats.VolumeDeposition_Raw _
+                                                             , m_DoDResult.ChangeStats.VolumeErosion_Thresholded, m_DoDResult.ChangeStats.VolumeDeposition_Thresholded _
+                                                             , m_DoDResult.ChangeStats.VolumeErosion_Error, m_DoDResult.ChangeStats.VolumeDeposition_Error, sPropagatedError _
                                                              , sProbabilityRaster, sConditionalRaster, sPosterior, sSpatialCoDepositionRaster, sSpatialCoErosionRaster)
 
                 GCDProject.ProjectManagerBase.save()

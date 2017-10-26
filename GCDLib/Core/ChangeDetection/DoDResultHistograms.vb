@@ -74,8 +74,6 @@
         ''' Loads a histogram from a CSV
         ''' </summary>
         ''' <param name="csvFilePath">Input path to CSV file</param>
-        ''' <param name="areaHist">Return variable for area histogram</param>
-        ''' <param name="volumeHist">Return variable for volumehistogram</param>
         ''' <remarks></remarks>
         Private Sub LoadHistogram(ByVal csvFilePath As String, ByRef values As Dictionary(Of Double, ElevationChangeDataPoint), linearDataUnits As UnitsNet.Units.LengthUnit)
 

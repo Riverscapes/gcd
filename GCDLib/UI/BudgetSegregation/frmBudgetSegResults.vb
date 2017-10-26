@@ -65,7 +65,7 @@ Namespace UI.BudgetSegregation
                     If rMask.MaskID = nMaskID Then
 
                         Dim theStats As New Core.ChangeDetection.ChangeStatsFromBSMaskRow(rMask)
-                        Dim theDoDProps As Core.ChangeDetection.ChangeDetectionProperties = Core.ChangeDetection.ChangeDetectionProperties.CreateFromDoDRow(rMask.BudgetSegregationsRow.DoDsRow)
+                        Dim theDoDProps As Core.ChangeDetection.DoDResult = Core.ChangeDetection.DoDResult.CreateFromDoDRow(rMask.BudgetSegregationsRow.DoDsRow)
                         Dim theResultSet As New Core.ChangeDetection.DoDResultSet(theStats, theDoDProps, GCDProject.ProjectManagerBase.GetAbsolutePath(rMask.BudgetSegregationsRow.DoDsRow.RawHistPath), GCDProject.ProjectManagerBase.GetAbsolutePath(rMask.CSVFileName))
                         ucSummary.Refresh(theResultSet, m_Options)
                         Exit For
@@ -87,16 +87,16 @@ Namespace UI.BudgetSegregation
 
                         Dim chngStats As New Core.ChangeDetection.ChangeStatsFromBSMaskRow(aMask)
 
-                        Dim cdProperties As Core.ChangeDetection.ChangeDetectionProperties
+                        Dim cdProperties As Core.ChangeDetection.DoDResult
                         Dim rDoD As ProjectDS.DoDsRow = aMask.BudgetSegregationsRow.DoDsRow
                         Dim sRawDod As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rDoD.RawDoDPath)
                         Dim sThrDoD As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rDoD.ThreshDoDPath)
                         Dim gRawDoD As New GCDConsoleLib.Raster(sRawDod)
                         If rDoD.TypeMinLOD Then
-                            cdProperties = New Core.ChangeDetection.ChangeDetectionPropertiesMinLoD(sRawDod, sThrDoD, rDoD.Threshold, gRawDoD.Extent.CellWidth, gRawDoD.VerticalUnits)
+                            cdProperties = New Core.ChangeDetection.DoDResultMinLoD(sRawDod, sThrDoD, rDoD.Threshold, gRawDoD.Extent.CellWidth, gRawDoD.VerticalUnits)
                         ElseIf rDoD.TypePropagated Then
                             Dim sPropErr As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rDoD.PropagatedErrorRasterPath)
-                            cdProperties = New Core.ChangeDetection.ChangeDetectionPropertiesPropagated(sRawDod, sThrDoD, sPropErr, gRawDoD.Extent.CellWidth, gRawDoD.VerticalUnits)
+                            cdProperties = New Core.ChangeDetection.DoDResultPropagated(sRawDod, sThrDoD, sPropErr, gRawDoD.Extent.CellWidth, gRawDoD.VerticalUnits)
                         Else
 
                             Dim sPropErr As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rDoD.PropagatedErrorRasterPath)
@@ -126,7 +126,7 @@ Namespace UI.BudgetSegregation
                                 sPosteriorRaster = rDoD.PosteriorRaster
                             End If
 
-                            cdProperties = New Core.ChangeDetection.ChangeDetectionPropertiesProbabilistic(sRawDod, sThrDoD, sPropErr, sProbabilityRaster, sSpatialCoErosionRaster, sSpatialCoDepositionRaster, sConditionalProbRaster, sPosteriorRaster, rDoD.Threshold, rDoD.Filter, rDoD.Bayesian, gRawDoD.Extent.CellWidth, gRawDoD.VerticalUnits)
+                            cdProperties = New Core.ChangeDetection.DoDResultProbabilisitic(sRawDod, sThrDoD, sPropErr, sProbabilityRaster, sSpatialCoErosionRaster, sSpatialCoDepositionRaster, sConditionalProbRaster, sPosteriorRaster, rDoD.Threshold, rDoD.Filter, rDoD.Bayesian, gRawDoD.Extent.CellWidth, gRawDoD.VerticalUnits)
                         End If
 
                         Dim sRawCSV As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rDoD.ThreshHistPath)

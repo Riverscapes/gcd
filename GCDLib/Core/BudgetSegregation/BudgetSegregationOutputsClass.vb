@@ -144,7 +144,7 @@ Namespace Core.BudgetSegregation
             Private m_sSummaryXMLPath As String
 
             Private m_changeStats As ChangeDetection.ChangeStats
-            Private m_DoDProps As ChangeDetection.ChangeDetectionProperties
+            Private m_DoDProps As ChangeDetection.DoDResult
 
 #Region "Properties"
 
@@ -187,11 +187,11 @@ Namespace Core.BudgetSegregation
                 End Set
             End Property
 
-            Public Property DoDProps As ChangeDetection.ChangeDetectionProperties
+            Public Property DoDProps As ChangeDetection.DoDResult
                 Get
                     Return m_DoDProps
                 End Get
-                Set(value As ChangeDetection.ChangeDetectionProperties)
+                Set(value As ChangeDetection.DoDResult)
                     m_DoDProps = value
                 End Set
             End Property

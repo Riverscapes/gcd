@@ -6,14 +6,14 @@
         ''' </summary>
         ''' <remarks>This is passed to the pop-up form </remarks>
         Private m_Options As DoDSummaryDisplayOptions
-        Private m_DoDResultSet As Core.ChangeDetection.DoDResultSet
+        Private m_DoDResult As Core.ChangeDetection.DoDResult
 
-        Public Sub New(sDoDName As String, ByRef dodResult As Core.ChangeDetection.DoDResultSet)
+        Public Sub New(sDoDName As String, ByRef dodResult As Core.ChangeDetection.DoDResult)
 
             InitializeComponent()
 
-            m_DoDResultSet = dodResult
-            m_Options = New DoDSummaryDisplayOptions(dodResult.DoDProperties.Units)
+            m_DoDResult = dodResult
+            m_Options = New DoDSummaryDisplayOptions(dodResult.Units)
             txtDoDName.Text = sDoDName
         End Sub
 
@@ -24,8 +24,8 @@
                 txtDoDName.Width = cmdAddToMap.Right - txtDoDName.Left
             End If
 
-            ucBars.Initialize(m_DoDResultSet.ChangeStats, m_DoDResultSet.DoDProperties.Units)
-            ucHistogram.LoadHistograms(m_DoDResultSet.RawHistogramPath, m_DoDResultSet.ThreshHistogramPath, m_DoDResultSet.DoDProperties.Units)
+            ucBars.Initialize(m_DoDResult.ChangeStats, m_DoDResult.Units)
+            ucHistogram.LoadHistograms(m_DoDResult.RawHistogram, m_DoDResult.ThresholdedHistogram, m_DoDResult.Units)
 
         End Sub
 
@@ -37,7 +37,7 @@
 
         Private Sub cmdBrowse_Click(sender As System.Object, e As System.EventArgs) Handles cmdBrowse.Click
 
-            Dim sFolder As String = Core.GCDProject.ProjectManagerBase.GetAbsolutePath(m_DoDResultSet.DoDProperties.RawDoD)
+            Dim sFolder As String = IO.Path.GetDirectoryName(Core.GCDProject.ProjectManagerBase.GetAbsolutePath(m_DoDResult.RawDoD.FullName))
             If IO.Directory.Exists(sFolder) Then
                 Process.Start("explorer.exe", sFolder)
             End If
@@ -45,9 +45,9 @@
 
         Private Sub cmdSettings_Click(sender As Object, e As EventArgs) Handles cmdSettings.Click
             Try
-                Dim frm As New frmDoDSummaryProperties(m_DoDResultSet.DoDProperties.Units, m_Options)
+                Dim frm As New frmDoDSummaryProperties(m_DoDResult.Units, m_Options)
                 If frm.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
-                    ucSummary.Refresh(m_DoDResultSet, m_Options)
+                    ucSummary.RefreshDisplay(m_DoDResult, m_Options)
                     ucHistogram.SetHistogramUnits(m_Options)
                     ucBars.Refresh()
                 End If
