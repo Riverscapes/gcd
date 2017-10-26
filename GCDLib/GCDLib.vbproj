@@ -71,7 +71,6 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\ChangeDetection\DoDStatsFromRow.vb" />
     <Compile Include="Core\Visualization\ElevationChangeDataPoint.vb" />
     <Compile Include="Core\ErrorCalculation\FIS\FISLibraryItem.vb" />
     <Compile Include="Core\GCDArcMapManager.vb" />

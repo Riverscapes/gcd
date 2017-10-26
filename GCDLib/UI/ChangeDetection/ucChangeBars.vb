@@ -12,7 +12,7 @@ Namespace UI.ChangeDetection
 
             ' This call is required by the designer.
             InitializeComponent()
-            m_eUnits = UnitsNet.Units.LengthUnit.Meter
+            m_eUnits = UnitsNet.Units.LengthUnit.Undefined
 
             ' Add any initialization after the InitializeComponent() call.
 
@@ -25,6 +25,10 @@ Namespace UI.ChangeDetection
             cboType.Items.Add(New naru.db.NamedObject(ElevationChangeBarViewer.BarTypes.Area, "Areal"))
             cboType.Items.Add(New naru.db.NamedObject(ElevationChangeBarViewer.BarTypes.Volume, "Volumetric"))
             cboType.Items.Add(New naru.db.NamedObject(ElevationChangeBarViewer.BarTypes.Vertical, "Vertical Averages"))
+
+            ' Add these handlers here so that everything is initialized properly before they fire
+            AddHandler rdoAbsolute.CheckedChanged, AddressOf RefreshBarsEvent
+            AddHandler cboType.SelectedIndexChanged, AddressOf RefreshBarsEvent
             cboType.SelectedIndex = 0
 
         End Sub
@@ -34,6 +38,11 @@ Namespace UI.ChangeDetection
             m_eUnits = eUnits
 
             RefreshBars(eUnits, GCDConsoleLib.Utility.Conversion.LengthUnit2AreaUnit(eUnits), GCDConsoleLib.Utility.Conversion.LengthUnit2VolumeUnit(eUnits))
+        End Sub
+
+        Private Sub RefreshBarsEvent(sender As Object, e As EventArgs)
+
+            RefreshBars(m_eUnits, GCDConsoleLib.Utility.Conversion.LengthUnit2AreaUnit(m_eUnits), GCDConsoleLib.Utility.Conversion.LengthUnit2VolumeUnit(m_eUnits))
         End Sub
 
         Private Sub RefreshBars(linearDisplayUnits As UnitsNet.Units.LengthUnit, areaDisplayUnits As UnitsNet.Units.AreaUnit, volumeDisplayUnits As UnitsNet.Units.VolumeUnit)
@@ -68,12 +77,6 @@ Namespace UI.ChangeDetection
 
         End Sub
 
-        Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As System.EventArgs) Handles cboType.SelectedIndexChanged
-            RefreshBars(m_eUnits, GCDConsoleLib.Utility.Conversion.LengthUnit2AreaUnit(m_eUnits), GCDConsoleLib.Utility.Conversion.LengthUnit2VolumeUnit(m_eUnits))
-        End Sub
-
-        Private Sub rdoAbsolute_CheckedChanged(sender As Object, e As System.EventArgs) Handles rdoAbsolute.CheckedChanged
-            RefreshBars(m_eUnits, GCDConsoleLib.Utility.Conversion.LengthUnit2AreaUnit(m_eUnits), GCDConsoleLib.Utility.Conversion.LengthUnit2VolumeUnit(m_eUnits))
-        End Sub
     End Class
+
 End Namespace

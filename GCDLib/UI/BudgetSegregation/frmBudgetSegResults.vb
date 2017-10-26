@@ -64,8 +64,7 @@ Namespace UI.BudgetSegregation
                 For Each rMask As ProjectDS.BSMasksRow In m_rBS.GetBSMasksRows
                     If rMask.MaskID = nMaskID Then
 
-                        Dim theStats As New Core.ChangeDetection.DoDStatsFromRow(rMask)
-                        Dim theDoDProps As Core.ChangeDetection.DoDResult = Core.ChangeDetection.DoDResult.CreateFromDoDRow(rMask.BudgetSegregationsRow.DoDsRow)
+                        Dim dodResult As Core.ChangeDetection.DoDResult = Core.ChangeDetection.DoDResult.CreateFromDoDRow(rMask.BudgetSegregationsRow.DoDsRow)
 
                         Throw New NotImplementedException("Need a way to get the stats from a budget class without masked rasters on disk")
                         'Dim theResultSet As New Core.ChangeDetection.DoDResultSet(theStats, theDoDProps, GCDProject.ProjectManagerBase.GetAbsolutePath(rMask.BudgetSegregationsRow.DoDsRow.RawHistPath), GCDProject.ProjectManagerBase.GetAbsolutePath(rMask.CSVFileName))
