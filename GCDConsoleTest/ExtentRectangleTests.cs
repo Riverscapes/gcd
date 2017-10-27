@@ -59,6 +59,8 @@ namespace GCDConsoleLib.Tests
             ExtentRectangle rC1 = new ExtentRectangle(2, 7, -1, 1, 100, 100);
             ExtentRectangle rD1 = new ExtentRectangle(4.1m, 6.0m, -1, 1, 100, 100);
 
+            Assert.AreEqual(rA1.MaxArrID, 9999);
+
             // Positive Tests
             Assert.IsTrue(rA1.IsOrthogonal(ref rA1));
             Assert.IsTrue(rA1.IsOrthogonal(ref rB1) && rB1.IsOrthogonal(ref rA1));
@@ -92,7 +94,7 @@ namespace GCDConsoleLib.Tests
             Assert.IsFalse(rNotDivisible3.IsDivisible());
 
             // Positive Test for floating point weirdness
-            ExtentRectangle rDivisible4 = new ExtentRectangle(5.0999999999999999999999999999999999999999999m, 6.1m ,-0.1m, 0.1m, 100, 100);
+            ExtentRectangle rDivisible4 = new ExtentRectangle(5.0999999999999999999999999999999999999999999m, 6.1m, -0.1m, 0.1m, 100, 100);
             Assert.IsTrue(rDivisible4.IsDivisible());
 
             // Negative Test for floating point weirdness
@@ -219,5 +221,57 @@ namespace GCDConsoleLib.Tests
             // Some negative tests
             Assert.IsFalse(eA1.HasOverlap(ref eNoOverlap));
         }
+
+
+        [TestMethod()]
+        public void RowCol2IdTest()
+        {
+            ExtentRectangle rTest1 = new ExtentRectangle(5, 6, -1, 1, 100, 100);
+            Assert.AreEqual(rTest1.RowCol2Id(2, 3), 102);
+            Assert.AreEqual(rTest1.RowCol2Id(1, 1), 0);
+            Assert.AreEqual(rTest1.RowCol2Id(1, 2), 1);
+            Assert.AreEqual(rTest1.RowCol2Id(2, 1), 100);
+            Assert.AreEqual(rTest1.RowCol2Id(100, 100), 9999);
+        }
+
+        [TestMethod()]
+        public void Id2RowColTest()
+        {
+            ExtentRectangle rTest1 = new ExtentRectangle(5, 6, -1, 1, 100, 100);
+            Assert.AreEqual(rTest1.Id2RowCol(102), new Tuple<int, int>(2, 3));
+            Assert.AreEqual(rTest1.Id2RowCol(0), new Tuple<int, int>(1, 1));
+            Assert.AreEqual(rTest1.Id2RowCol(1), new Tuple<int, int>(1, 2));
+            Assert.AreEqual(rTest1.Id2RowCol(100), new Tuple<int, int>(2, 1));
+            Assert.AreEqual(rTest1.Id2RowCol(9999), new Tuple<int, int>(100, 100));
+        }
+
+        [TestMethod()]
+        public void relIdTest()
+        {
+            ExtentRectangle rTest1 = new ExtentRectangle(5, 6, -1, 1, 100, 100);
+            ExtentRectangle rTest2 = new ExtentRectangle(1, 1, -1, 1, 50, 50);
+
+            Assert.AreEqual(rTest1.relId(0, ref rTest1), 0);
+            Assert.AreEqual(rTest1.relId(0, ref rTest2), -1); //246?
+            Assert.AreEqual(rTest2.relId(0, ref rTest1), -1);
+            Assert.AreEqual(rTest2.relId(0, ref rTest2), 0);
+
+            Assert.AreEqual(rTest1.relId(1, ref rTest1), 1);
+            Assert.AreEqual(rTest1.relId(1, ref rTest2), -1);
+            Assert.AreEqual(rTest2.relId(1, ref rTest1), -1);
+            Assert.AreEqual(rTest2.relId(1, ref rTest2), 1);
+
+            Assert.AreEqual(rTest1.relId(100, ref rTest1), 100);
+            Assert.AreEqual(rTest1.relId(100, ref rTest2), -1);
+            Assert.AreEqual(rTest2.relId(100, ref rTest1), -1);
+            Assert.AreEqual(rTest2.relId(100, ref rTest2), 100);
+
+            Assert.AreEqual(rTest1.relId(9999, ref rTest1), 9999);
+            Assert.AreEqual(rTest1.relId(9999, ref rTest2), -1);
+            Assert.AreEqual(rTest1.relId(9999, ref rTest1), -1);
+            Assert.AreEqual(rTest1.relId(9999, ref rTest2), -1);
+        }
+        
+
     }
 }

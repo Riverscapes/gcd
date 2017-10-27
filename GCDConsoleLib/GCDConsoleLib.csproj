@@ -89,7 +89,7 @@
   <ItemGroup>
     <Compile Include="DataTypes.cs" />
     <Compile Include="DoDStats.cs" />
-    <Compile Include="HistogramBin.cs" />
+    <Compile Include="Histogram.cs" />
     <Compile Include="RasterOperators\CellByCellOperator.cs" />
     <Compile Include="RasterOperators\Interfaces.cs" />
     <Compile Include="RasterOperators\Operators\RasterCopy.cs" />

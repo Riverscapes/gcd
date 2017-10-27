@@ -9,9 +9,10 @@ namespace GCDConsoleLib.Internal
     /// </summary>
     public abstract class WindowOverlapOperator<T> : BaseOperator<T>
     {
-        private int _bufferCells;
-        private int BufferLength { get { return 1 + (2 * _bufferCells); } }
-        private int BufferCellNum { get { return (int)Math.Pow(BufferLength, 2); } }
+        protected int _bufferCells;
+        protected int BufferLength { get { return 1 + (2 * _bufferCells); } }
+        protected int BufferCellNum { get { return (int)Math.Pow(BufferLength, 2); } }
+        protected int BufferCenterID { get { return BufferLength * _bufferCells + _bufferCells;  } }
 
         private List<List<T[]>> _chunkCache;
         List<T[]> dWindow; // this is our nxn window over which we are doing our masth
@@ -37,7 +38,9 @@ namespace GCDConsoleLib.Internal
         /// <param name="data"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        protected abstract T WindowOp(ref List<T[]> data, int id);
+        protected abstract T WindowOp(ref List<T[]> data);
+
+
 
         /// <summary>
         /// First time through we need to setup the buffer properly
@@ -103,7 +106,7 @@ namespace GCDConsoleLib.Internal
                             dWindow[dId][wId] = data[dId][id];
                 }
                 // Now call the cell op on this chunk
-                outChunk[id] = WindowOp(ref data, id);
+                outChunk[id] = WindowOp(ref data);
             }
         }
     }

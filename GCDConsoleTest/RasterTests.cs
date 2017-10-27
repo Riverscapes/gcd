@@ -19,6 +19,8 @@ namespace GCDConsoleLib.Tests
             Assert.IsFalse(rTemplateRaster.IsOpen);
             Assert.IsTrue(rTemplateRaster.Datatype.Equals(FakeRaster<Single>.floatType));
             Assert.IsFalse(rTemplateRaster.IsOpen);
+            rTemplateRaster = null;
+            Assert.Fail();
         }
 
         [TestMethod()]

@@ -257,11 +257,58 @@ namespace GCDConsoleLib
         public bool IsConcurrent(ref ExtentRectangle otherExtent)
         {
             return CellWidth == otherExtent.CellWidth &&
-                CellHeight == otherExtent.CellHeight && 
+                CellHeight == otherExtent.CellHeight &&
                 Left == otherExtent.Left &&
                 Right == otherExtent.Right &&
                 Top == otherExtent.Top &&
                 Bottom == otherExtent.Bottom;
+        }
+
+        /// <summary>
+        /// Convert a row and col value to an array index
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="col"></param>
+        /// <returns></returns>
+        public int RowCol2Id(int row, int col)
+        {
+            return (row - 1) * rows + (col - 1);
+        }
+
+        public int MaxArrID
+        {
+            get
+            {
+                return rows * cols - 1;
+            }
+        }
+
+        /// <summary>
+        /// Convert an array index to a row,col tuple
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Tuple<int, int> Id2RowCol(int id)
+        {
+            int row = (int)Math.Floor((decimal)(id / rows));
+            int col = id - (row * rows);
+            return new Tuple<int, int>(row + 1, col + 1);
+        }
+
+        /// <summary>
+        /// Translate the 1D array index into another rectangle's 1D array index
+        /// </summary>
+        /// <param name="origid"></param>
+        /// <param name="otherExtent"></param>
+        /// <returns>the transformed ID, -1 if it's not valid</returns>
+        public int relId(int origid, ref ExtentRectangle otherExtent)
+        {
+            Tuple<int, int> origrowcol = Id2RowCol(origid);
+            Tuple<int, int> offset = GetTopCornerTranslation(ref otherExtent);
+            int newInd = (origrowcol.Item1 + offset.Item1 -1 ) * otherExtent.rows + (origrowcol.Item2 + offset.Item2-1);
+            if (newInd < 0 || newInd > MaxArrID)
+                newInd = -1;
+            return newInd;
         }
 
         /// <summary>

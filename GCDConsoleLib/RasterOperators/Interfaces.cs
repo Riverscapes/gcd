@@ -180,7 +180,7 @@ namespace GCDConsoleLib
         /// We need to discuss how those bins are defined. Ideally the first and last bin would
         /// contain zero cell count, so that the caller has confidence that the histogram has
         /// captured the full range of the raster values.</remarks>
-        public static Dictionary<double, HistogramBin> BinRaster(ref Raster rInput, int numberofBins)
+        public static Histogram BinRaster(ref Raster rInput, int numberofBins)
         {
             throw new NotImplementedException();
             return null;
