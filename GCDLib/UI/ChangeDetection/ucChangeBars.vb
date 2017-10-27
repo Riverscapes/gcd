@@ -36,8 +36,6 @@ Namespace UI.ChangeDetection
         Public Sub Initialize(chngStats As GCDConsoleLib.DoDStats, eUnits As UnitsNet.Units.LengthUnit)
             m_chngStats = chngStats
             m_eUnits = eUnits
-
-            RefreshBars(eUnits, GCDConsoleLib.Utility.Conversion.LengthUnit2AreaUnit(eUnits), GCDConsoleLib.Utility.Conversion.LengthUnit2VolumeUnit(eUnits))
         End Sub
 
         Private Sub RefreshBarsEvent(sender As Object, e As EventArgs)

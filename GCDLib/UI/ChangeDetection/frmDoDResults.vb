@@ -26,6 +26,7 @@
 
             ucBars.Initialize(m_DoDResult.ChangeStats, m_DoDResult.Units)
             ucHistogram.LoadHistograms(m_DoDResult.RawHistogram, m_DoDResult.ThresholdedHistogram, m_DoDResult.Units)
+            ucSummary.RefreshDisplay(m_DoDResult, m_Options)
 
         End Sub
 

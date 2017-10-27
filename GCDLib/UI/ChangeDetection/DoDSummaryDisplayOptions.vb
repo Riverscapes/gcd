@@ -37,9 +37,7 @@ Namespace UI.ChangeDetection
 
         Public Property AreaUnits As UnitsNet.Units.AreaUnit
             Get
-                ' TODO:  Waiting to hear back from UnitsNet author on how best to do this.
-                ' Throw New NotImplementedException("Waiting to hear back from UnitsNet author on how best to do this.")
-                Return UnitsNet.Units.AreaUnit.SquareMeter
+                Return m_eAreaUnits
             End Get
             Set(value As UnitsNet.Units.AreaUnit)
                 m_eAreaUnits = value
@@ -49,9 +47,7 @@ Namespace UI.ChangeDetection
 
         Public Property VolumeUnits As UnitsNet.Units.VolumeUnit
             Get
-                ' TODO:  Waiting to hear back from UnitsNet author on how best to do this.
-                ' Throw New NotImplementedException("Waiting to hear back from UnitsNet author on how best to do this.")
-                Return UnitsNet.Units.VolumeUnit.CubicMeter
+                Return m_eVolumeUnits
             End Get
             Set(value As UnitsNet.Units.VolumeUnit)
                 m_eVolumeUnits = value
@@ -61,6 +57,8 @@ Namespace UI.ChangeDetection
         Public Sub New(eOriginalUnits As UnitsNet.Units.LengthUnit)
 
             m_eLinearUnits = eOriginalUnits
+            m_eAreaUnits = GCDConsoleLib.Utility.Conversion.LengthUnit2AreaUnit(eOriginalUnits)
+            m_eVolumeUnits = GCDConsoleLib.Utility.Conversion.LengthUnit2VolumeUnit(eOriginalUnits)
 
             m_nPrecision = 2
 

@@ -94,14 +94,14 @@ Namespace Core.Visualization
             End If
 
             Dim errSeries As Charting.Series = m_chtControl.Series.Add("erosion")
-            errSeries.Color = Drawing.Color.Red
+            errSeries.Color = My.Settings.Erosion
             errSeries.ChartArea = m_chtControl.ChartAreas.First.Name
             errSeries.ChartType = Charting.SeriesChartType.StackedColumn
             errSeries.Points.AddXY(GetXAxisLabel(eType, SeriesType.Erosion), fErosion)
             errSeries.Points.AddXY(GetXAxisLabel(eType, SeriesType.Depositon), 0)
 
             Dim depSeries As Charting.Series = m_chtControl.Series.Add("deposition")
-            depSeries.Color = Drawing.Color.Blue
+            depSeries.Color = My.Settings.Depsoition
             depSeries.ChartArea = m_chtControl.ChartAreas.First.Name
             depSeries.ChartType = Charting.SeriesChartType.StackedColumn
             depSeries.Points.AddXY(GetXAxisLabel(eType, SeriesType.Erosion), 0)
@@ -109,7 +109,7 @@ Namespace Core.Visualization
 
             If bShowNet Then
                 Dim netSeries As Charting.Series = m_chtControl.Series.Add("net")
-                netSeries.Color = IIf(fNet >= 0, Drawing.Color.Blue, Drawing.Color.Red)
+                netSeries.Color = IIf(fNet >= 0, My.Settings.Depsoition, My.Settings.Erosion)
                 netSeries.ChartArea = m_chtControl.ChartAreas.First.Name
                 netSeries.Points.AddXY(GetXAxisLabel(eType, SeriesType.Erosion), 0)
                 netSeries.Points.AddXY(GetXAxisLabel(eType, SeriesType.Depositon), 0)

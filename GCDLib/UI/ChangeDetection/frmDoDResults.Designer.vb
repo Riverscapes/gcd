@@ -205,6 +205,7 @@
             '
             'cmdSettings
             '
+            Me.cmdSettings.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
             Me.cmdSettings.Image = Global.GCDLib.My.Resources.Resources.Settings
             Me.cmdSettings.Location = New System.Drawing.Point(637, 11)
             Me.cmdSettings.Name = "cmdSettings"

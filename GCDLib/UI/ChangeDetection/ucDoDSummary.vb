@@ -22,7 +22,7 @@ Namespace UI.ChangeDetection
 
         End Sub
 
-        Public Sub RefreshDisplay(ByRef dodResultSet As Core.ChangeDetection.DoDResult, ByRef options As UI.ChangeDetection.DoDSummaryDisplayOptions)
+        Public Sub RefreshDisplay(ByRef dodResultSet As DoDResult, ByRef options As DoDSummaryDisplayOptions)
 
             ' Build the string formatting based on the precision in the pop-up properties form
             Dim sFormat As String = "#,##0"
@@ -71,10 +71,6 @@ Namespace UI.ChangeDetection
             aRow.Cells(5).Style.Font = New Drawing.Font(grdData.Font, Drawing.FontStyle.Bold)
             aRow.Cells(5).Style.Alignment = DataGridViewContentAlignment.MiddleCenter
 
-            ' TODO: Waiting to hear back from UnitsNet developer how to do this dimensionality change
-            Dim eAreaUnitsNotImplemented As UnitsNet.Units.AreaUnit = UnitsNet.Units.AreaUnit.SquareMeter
-            ' Throw New NotImplementedException("Waiting to hear back from UnitsNet developer how to do this dimensionality change")
-
             ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
             'Area of erosion header
             If options.m_eRowGroups = DoDSummaryDisplayOptions.RowGroups.ShowAll OrElse
@@ -91,8 +87,8 @@ Namespace UI.ChangeDetection
                 aRow = grdData.Rows(nIndex)
                 aRow.Cells(0).Value = "Total Area of Erosion (" & UnitsNet.Area.GetAbbreviation(options.AreaUnits) & ")" 'the superscript 2 is ALT+0178
                 aRow.Cells(0).ToolTipText = "The amount of area experiencing erosion"
-                aRow.Cells(1).Value = UnitsNet.Area.From(dodResultSet.ChangeStats.AreaErosion_Raw, eAreaUnitsNotImplemented).As(options.AreaUnits).ToString(sFormat)
-                aRow.Cells(2).Value = UnitsNet.Area.From(dodResultSet.ChangeStats.AreaErosion_Thresholded, eAreaUnitsNotImplemented).As(options.AreaUnits).ToString(sFormat)
+                aRow.Cells(1).Value = UnitsNet.Area.From(dodResultSet.ChangeStats.AreaErosion_Raw, dodResultSet.AreaUnits).As(options.AreaUnits).ToString(sFormat)
+                aRow.Cells(2).Value = UnitsNet.Area.From(dodResultSet.ChangeStats.AreaErosion_Thresholded, dodResultSet.AreaUnits).As(options.AreaUnits).ToString(sFormat)
                 aRow.Cells(3).Style.BackColor = Drawing.Color.LightGray
                 aRow.Cells(4).Style.BackColor = Drawing.Color.LightGray
                 aRow.Cells(5).Style.BackColor = Drawing.Color.LightGray
@@ -102,8 +98,8 @@ Namespace UI.ChangeDetection
                 aRow = grdData.Rows(nIndex)
                 aRow.Cells(0).Value = "Total Area of Deposition (" & UnitsNet.Area.GetAbbreviation(options.AreaUnits) & ")"
                 aRow.Cells(0).ToolTipText = "The amount of area experiencing deposition"
-                aRow.Cells(1).Value = UnitsNet.Area.From(dodResultSet.ChangeStats.AreaDeposition_Raw, eAreaUnitsNotImplemented).As(options.AreaUnits).ToString(sFormat)
-                aRow.Cells(2).Value = UnitsNet.Area.From(dodResultSet.ChangeStats.AreaDeposition_Thresholded, eAreaUnitsNotImplemented).As(options.AreaUnits).ToString(sFormat)
+                aRow.Cells(1).Value = UnitsNet.Area.From(dodResultSet.ChangeStats.AreaDeposition_Raw, dodResultSet.AreaUnits).As(options.AreaUnits).ToString(sFormat)
+                aRow.Cells(2).Value = UnitsNet.Area.From(dodResultSet.ChangeStats.AreaDeposition_Thresholded, dodResultSet.AreaUnits).As(options.AreaUnits).ToString(sFormat)
                 aRow.Cells(3).Style.BackColor = Drawing.Color.LightGray
                 aRow.Cells(4).Style.BackColor = Drawing.Color.LightGray
                 aRow.Cells(5).Style.BackColor = Drawing.Color.LightGray
@@ -114,7 +110,7 @@ Namespace UI.ChangeDetection
                 aRow.Cells(0).Value = "Total Area of Detectable Change (" & UnitsNet.Area.GetAbbreviation(options.AreaUnits) & ")"
                 aRow.Cells(0).ToolTipText = "The sum of areas experiencing detectable erosion and deposition"
                 aRow.Cells(1).Value = "NA"
-                aRow.Cells(2).Value = UnitsNet.Area.From(dodResultSet.ChangeStats.AreaDetectableChange_Thresholded, eAreaUnitsNotImplemented).As(options.AreaUnits).ToString(sFormat)
+                aRow.Cells(2).Value = UnitsNet.Area.From(dodResultSet.ChangeStats.AreaDetectableChange_Thresholded, dodResultSet.AreaUnits).As(options.AreaUnits).ToString(sFormat)
                 aRow.Cells(3).Style.BackColor = Drawing.Color.LightGray
                 aRow.Cells(4).Style.BackColor = Drawing.Color.LightGray
                 aRow.Cells(5).Style.BackColor = Drawing.Color.LightGray
@@ -124,7 +120,7 @@ Namespace UI.ChangeDetection
                 aRow = grdData.Rows(nIndex)
                 aRow.Cells(0).Value = "Total Area of Interest (" & UnitsNet.Area.GetAbbreviation(options.AreaUnits) & ")"
                 aRow.Cells(0).ToolTipText = "The total amount of area under analysis (including detectable and undetectable)"
-                aRow.Cells(1).Value = UnitsNet.Area.From(dodResultSet.ChangeStats.AreaOfInterest_Raw, eAreaUnitsNotImplemented).As(options.AreaUnits).ToString(sFormat)
+                aRow.Cells(1).Value = UnitsNet.Area.From(dodResultSet.ChangeStats.AreaOfInterest_Raw, dodResultSet.AreaUnits).As(options.AreaUnits).ToString(sFormat)
                 aRow.Cells(2).Value = "NA"
                 aRow.Cells(2).Style.BackColor = Drawing.Color.LightGray
                 aRow.Cells(3).Style.BackColor = Drawing.Color.LightGray
@@ -159,23 +155,18 @@ Namespace UI.ChangeDetection
                 cell.Style.Font = New Drawing.Font(grdData.Font, Drawing.FontStyle.Bold)
             End If
 
-            Dim eVolUnitsNotImplemented As UnitsNet.Units.VolumeUnit = UnitsNet.Units.VolumeUnit.CubicMeter
-            ' TODO: Waiting to hear back from UnitsNet developer how to do this dimensionality change
-            ' Throw New NotImplementedException("Waiting to hear back from UnitsNet developer how to do this dimensionality change")
-
             If options.m_eRowGroups = DoDSummaryDisplayOptions.RowGroups.ShowAll OrElse
                 (options.m_eRowGroups = DoDSummaryDisplayOptions.RowGroups.SpecificGroups AndAlso options.m_bRowsVolumetric) Then
-
 
                 'Volume of erosion
                 nIndex = grdData.Rows.Add(1)
                 aRow = grdData.Rows(nIndex)
                 aRow.Cells(0).Value = "Total Volume of Erosion (" & UnitsNet.Volume.GetAbbreviation(options.VolumeUnits) & ")" 'the superscript 3 is ALT+0179
                 aRow.Cells(0).ToolTipText = "On a cell-by-cell basis, the DoD erosion depth multiplied by cell area and summed"
-                aRow.Cells(1).Value = UnitsNet.Volume.From(dodResultSet.ChangeStats.VolumeErosion_Raw, eVolUnitsNotImplemented).As(options.VolumeUnits).ToString(sFormat)
-                aRow.Cells(2).Value = UnitsNet.Volume.From(dodResultSet.ChangeStats.VolumeErosion_Thresholded, eVolUnitsNotImplemented).As(options.VolumeUnits).ToString(sFormat)
+                aRow.Cells(1).Value = UnitsNet.Volume.From(dodResultSet.ChangeStats.VolumeErosion_Raw, dodResultSet.VolumeUnits).As(options.VolumeUnits).ToString(sFormat)
+                aRow.Cells(2).Value = UnitsNet.Volume.From(dodResultSet.ChangeStats.VolumeErosion_Thresholded, dodResultSet.VolumeUnits).As(options.VolumeUnits).ToString(sFormat)
                 aRow.Cells(3).Value = "±"
-                aRow.Cells(4).Value = UnitsNet.Volume.From(dodResultSet.ChangeStats.VolumeErosion_Error, eVolUnitsNotImplemented).As(options.VolumeUnits).ToString(sFormat)
+                aRow.Cells(4).Value = UnitsNet.Volume.From(dodResultSet.ChangeStats.VolumeErosion_Error, dodResultSet.VolumeUnits).As(options.VolumeUnits).ToString(sFormat)
                 aRow.Cells(5).Value = dodResultSet.ChangeStats.VolumeOfErosion_Percent.ToString(sFormat)
 
                 'Volume of deposition
@@ -183,10 +174,10 @@ Namespace UI.ChangeDetection
                 aRow = grdData.Rows(nIndex)
                 aRow.Cells(0).Value = "Total Volume of Deposition (" & UnitsNet.Volume.GetAbbreviation(options.VolumeUnits) & ")"
                 aRow.Cells(0).ToolTipText = "On a cell-by-cell basis, the DoD deposition depth multiplied by cell area and summed"
-                aRow.Cells(1).Value = UnitsNet.Volume.From(dodResultSet.ChangeStats.VolumeDeposition_Raw, eVolUnitsNotImplemented).As(options.VolumeUnits).ToString(sFormat)
-                aRow.Cells(2).Value = UnitsNet.Volume.From(dodResultSet.ChangeStats.VolumeDeposition_Thresholded, eVolUnitsNotImplemented).As(options.VolumeUnits).ToString(sFormat)
+                aRow.Cells(1).Value = UnitsNet.Volume.From(dodResultSet.ChangeStats.VolumeDeposition_Raw, dodResultSet.VolumeUnits).As(options.VolumeUnits).ToString(sFormat)
+                aRow.Cells(2).Value = UnitsNet.Volume.From(dodResultSet.ChangeStats.VolumeDeposition_Thresholded, dodResultSet.VolumeUnits).As(options.VolumeUnits).ToString(sFormat)
                 aRow.Cells(3).Value = "±"
-                aRow.Cells(4).Value = UnitsNet.Volume.From(dodResultSet.ChangeStats.VolumeDeposition_Error, eVolUnitsNotImplemented).As(options.VolumeUnits).ToString(sFormat)
+                aRow.Cells(4).Value = UnitsNet.Volume.From(dodResultSet.ChangeStats.VolumeDeposition_Error, dodResultSet.VolumeUnits).As(options.VolumeUnits).ToString(sFormat)
                 aRow.Cells(5).Value = dodResultSet.ChangeStats.VolumeOfDeposition_Percent.ToString(sFormat)
 
                 'Total volume of difference
@@ -194,10 +185,10 @@ Namespace UI.ChangeDetection
                 aRow = grdData.Rows(nIndex)
                 aRow.Cells(0).Value = "Total Volume of Difference (" & UnitsNet.Volume.GetAbbreviation(options.VolumeUnits) & ")"
                 aRow.Cells(0).ToolTipText = "The sum of erosion and deposition volumes (a measure of total turnover)"
-                aRow.Cells(1).Value = UnitsNet.Volume.From(dodResultSet.ChangeStats.VolumeOfDifference_Raw, eVolUnitsNotImplemented).As(options.VolumeUnits).ToString(sFormat)
-                aRow.Cells(2).Value = UnitsNet.Volume.From(dodResultSet.ChangeStats.VolumeOfDifference_Thresholded, eVolUnitsNotImplemented).As(options.VolumeUnits).ToString(sFormat)
+                aRow.Cells(1).Value = UnitsNet.Volume.From(dodResultSet.ChangeStats.VolumeOfDifference_Raw, dodResultSet.VolumeUnits).As(options.VolumeUnits).ToString(sFormat)
+                aRow.Cells(2).Value = UnitsNet.Volume.From(dodResultSet.ChangeStats.VolumeOfDifference_Thresholded, dodResultSet.VolumeUnits).As(options.VolumeUnits).ToString(sFormat)
                 aRow.Cells(3).Value = "±"
-                aRow.Cells(4).Value = UnitsNet.Volume.From(dodResultSet.ChangeStats.VolumeOfDifference_Error, eVolUnitsNotImplemented).As(options.VolumeUnits).ToString(sFormat)
+                aRow.Cells(4).Value = UnitsNet.Volume.From(dodResultSet.ChangeStats.VolumeOfDifference_Error, dodResultSet.VolumeUnits).As(options.VolumeUnits).ToString(sFormat)
                 aRow.Cells(5).Value = dodResultSet.ChangeStats.VolumeOfDifference_Percent.ToString(sFormat)
             End If
 
@@ -210,10 +201,10 @@ Namespace UI.ChangeDetection
                 aRow = grdData.Rows(nIndex)
                 aRow.Cells(0).Value = "Total Net Volume Difference (" & UnitsNet.Volume.GetAbbreviation(options.VolumeUnits) & ")"
                 aRow.Cells(0).ToolTipText = "The net difference of erosion and depostion volumes (i.e. deposition minus erosion)"
-                aRow.Cells(1).Value = UnitsNet.Volume.From(dodResultSet.ChangeStats.NetVolumeOfDifference_Raw, eVolUnitsNotImplemented).As(options.VolumeUnits).ToString(sFormat)
-                aRow.Cells(2).Value = UnitsNet.Volume.From(dodResultSet.ChangeStats.NetVolumeOfDifference_Thresholded, eVolUnitsNotImplemented).As(options.VolumeUnits).ToString(sFormat)
+                aRow.Cells(1).Value = UnitsNet.Volume.From(dodResultSet.ChangeStats.NetVolumeOfDifference_Raw, dodResultSet.VolumeUnits).As(options.VolumeUnits).ToString(sFormat)
+                aRow.Cells(2).Value = UnitsNet.Volume.From(dodResultSet.ChangeStats.NetVolumeOfDifference_Thresholded, dodResultSet.VolumeUnits).As(options.VolumeUnits).ToString(sFormat)
                 aRow.Cells(3).Value = "±"
-                aRow.Cells(4).Value = UnitsNet.Volume.From(dodResultSet.ChangeStats.NetVolumeOfDifference_Error, eVolUnitsNotImplemented).As(options.VolumeUnits).ToString(sFormat)
+                aRow.Cells(4).Value = UnitsNet.Volume.From(dodResultSet.ChangeStats.NetVolumeOfDifference_Error, dodResultSet.VolumeUnits).As(options.VolumeUnits).ToString(sFormat)
                 aRow.Cells(5).Value = dodResultSet.ChangeStats.NetVolumeOfDifference_Percent.ToString(sFormat)
             End If
             '
