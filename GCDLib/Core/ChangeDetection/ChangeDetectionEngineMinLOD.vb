@@ -1,4 +1,6 @@
-﻿Namespace Core.ChangeDetection
+﻿Imports GCDConsoleLib
+
+Namespace Core.ChangeDetection
 
     Public Class ChangeDetectionEngineMinLOD
         Inherits ChangeDetectionEngineBase
@@ -18,20 +20,23 @@
             m_fThreshold = fThreshold
         End Sub
 
-        Protected Overrides Function ThresholdRawDoD(rawDoDPath As String, rawHistPath As String) As DoDResult
+        Protected Overrides Function ThresholdRawDoD(ByRef rawDoD As Raster, thrDoDPath As IO.FileInfo) As Raster
 
-            ' Threshold the raster
-            Dim thrDoDPath As String = Project.ProjectManagerBase.OutputManager.GetDoDThresholdPath(Name, Folder.FullName)
-            External.ThresholdDoDMinLoD(rawDoDPath, thrDoDPath, m_fThreshold, Project.ProjectManagerBase.OutputManager.OutputDriver,
-                Project.ProjectManagerBase.OutputManager.NoData, Project.ProjectManagerBase.GCDNARCError.ErrorString)
-
-            ' Generate the thresholded histograms
-            Dim thrHistPath As String = Project.ProjectManagerBase.OutputManager.GetCsvThresholdPath(Name, Folder.FullName)
-            External.CalculateAndWriteDoDHistogram(thrDoDPath, thrHistPath, Project.ProjectManagerBase.GCDNARCError.ErrorString)
-
-            Return New DoDResultMinLoD(rawDoDPath, rawHistPath, thrDoDPath, thrHistPath, m_fThreshold, CellSize, LinearUnits)
+            Return RasterOperators.SetNullLessThan(rawDoD, Threshold, thrDoDPath)
 
         End Function
+
+        Protected Overrides Function CalculateChangeStats(ByRef rawDoD As Raster, ByRef thrDoD As Raster) As DoDStats
+
+            Return RasterOperators.GetStatsMinLoD(rawDoD, thrDoD, Threshold)
+
+        End Function
+
+        Protected Overrides Function GetDoDResult(ByRef changeStats As DoDStats, rawDoDPath As IO.FileInfo, thrDoDPath As IO.FileInfo, rawDoDHist As IO.FileInfo, thrDoDHist As IO.FileInfo, eUnits As UnitsNet.Units.LengthUnit) As DoDResult
+            Return New DoDResultMinLoD(changeStats, rawDoDPath, rawDoDHist, thrDoDPath, thrDoDHist, Threshold)
+        End Function
+
+
 
     End Class
 

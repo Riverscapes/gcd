@@ -59,7 +59,7 @@
             Dim thrHistPath As String = Project.ProjectManagerBase.OutputManager.GetCsvThresholdPath(Name, Folder.FullName)
             External.CalculateAndWriteDoDHistogram(thrDoDPath, thrHistPath, Project.ProjectManagerBase.GCDNARCError.ErrorString)
 
-            Return New DoDResultPropagated(rawDoDPath, rawHistPath, thrDoDPath, thrHistPath, propErrorRaster, CellSize, LinearUnits)
+            Return New DoDResultPropagated(rawDoDPath, rawHistPath, thrDoDPath, thrHistPath, propErrorRaster, LinearUnits)
 
         End Function
 

@@ -178,22 +178,19 @@ Namespace UI.SurveyLibrary
                     AssociatedSurfaceMethods.PointDensity,
                     AssociatedSurfaceMethods.Roughness
 
+                        Dim gDEMRaster As GCDConsoleLib.Raster = DEMSurveyRaster
 
                         Select Case m_eMethod
                             Case AssociatedSurfaceMethods.SlopeDegree
-                                External.CreateSlope(DEMSurveyRasterPath, txtProjectRaster.Text, External.RasterManager.SlopeTypes.Degrees, Core.Project.ProjectManagerBase.GCDNARCError.ErrorString)
+                                GCDConsoleLib.RasterOperators.SlopeDegrees(gDEMRaster, txtProjectRaster.Text)
 
                             Case AssociatedSurfaceMethods.SlopePercent
-                                External.CreateSlope(DEMSurveyRasterPath, txtProjectRaster.Text, External.RasterManager.SlopeTypes.Percent, Core.Project.ProjectManagerBase.GCDNARCError.ErrorString)
+                                GCDConsoleLib.RasterOperators.SlopePercent(gDEMRaster, txtProjectRaster.Text)
 
                             Case AssociatedSurfaceMethods.PointDensity
-                                Dim sTemp As String = WorkspaceManager.GetTempRaster("PDensity.tif")
-                                Throw New Exception("Point Density not implemented within GCDConsoleLib.")
-                                'GP.SpatialAnalyst.PointDensity(m_frmPointDensity.ucPointCloud.SelectedItem, gDEMRaster, sTemp, m_frmPointDensity.Neighborhood, "SQUARE_MAP_UNITS")
-                                'GP.SpatialAnalyst.Con(gDEMRaster.FullPath, sTemp, "", txtProjectRaster.Text, """VALUE"" > 0")
+                                GCDConsoleLib.RasterOperators.PointDensity(gDEMRaster, m_frmPointDensity.ucPointCloud.SelectedItem, txtProjectRaster.Text, GCDConsoleLib.RasterOperators.KernelShapes.Square, "4")
 
                             Case AssociatedSurfaceMethods.Roughness
-                                Dim gDEMRaster As GCDConsoleLib.Raster = DEMSurveyRaster
                                 m_SurfaceRoughnessForm.CalculateRoughness(txtProjectRaster.Text, gDEMRaster)
 
                         End Select

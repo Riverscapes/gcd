@@ -31,13 +31,6 @@ Namespace Core.Project
 
         Private Shared m_fiSurveyTypes As System.IO.FileInfo
 
-        Private Shared m_GCDNARCError As External.NARCError
-        Public Shared ReadOnly Property GCDNARCError As External.NARCError
-            Get
-                Return m_GCDNARCError
-            End Get
-        End Property
-
 #Region "Properties"
 
         Public Shared ReadOnly Property RasterExtension As String

@@ -1,4 +1,5 @@
 ﻿Imports GCDLib.Core.Visualization
+Imports GCDConsoleLib
 
 Namespace Core.ChangeDetection
 
@@ -13,16 +14,9 @@ Namespace Core.ChangeDetection
         Private m_sAnalysisName As String
         Private m_dAnalysisFolder As IO.DirectoryInfo
 
-        ' These are the original survey DEMs. May be non-concurrent and 
-        ' not masked to the AOI
+        ' These are the original survey DEMs. May be non-concurrent
         Private m_gOriginalNewDEM As GCDConsoleLib.Raster
         Private m_gOriginalOldDEM As GCDConsoleLib.Raster
-
-        ' These are concurrent and masked to the AOI
-        Private m_gAnalysisNewDEM As GCDConsoleLib.Raster
-        Private m_gAnalysisOldDEM As GCDConsoleLib.Raster
-
-        Private m_gAOI As GCDConsoleLib.Vector
 
         ' This is a polymorphic class. Call calculate and it will calculate
         ' the statistics different ways depending on the type instantiated.
@@ -62,24 +56,6 @@ Namespace Core.ChangeDetection
             End Get
         End Property
 
-        Public ReadOnly Property AOI As GCDConsoleLib.Vector
-            Get
-                Return m_gAOI
-            End Get
-        End Property
-
-        Public ReadOnly Property AnalysisNewDEM As GCDConsoleLib.Raster
-            Get
-                Return m_gAnalysisNewDEM
-            End Get
-        End Property
-
-        Public ReadOnly Property AnalysisOldDEM As GCDConsoleLib.Raster
-            Get
-                Return m_gAnalysisOldDEM
-            End Get
-        End Property
-
         Protected ReadOnly Property ChartHeight As Integer
             Get
                 Return m_fChartHeight
@@ -98,16 +74,10 @@ Namespace Core.ChangeDetection
             End Get
         End Property
 
-        Protected ReadOnly Property CellSize As Double
-            Get
-                Return Convert.ToDouble(OriginalNewDEM.Extent.CellWidth)
-            End Get
-        End Property
-
 #End Region
 
-        Public Sub New(ByVal sName As String, ByVal sFolder As String, ByVal gNewDEM As GCDConsoleLib.Raster, ByVal gOldDEM As GCDConsoleLib.Raster,
-                       ByVal gAOI As GCDConsoleLib.Vector, ByVal fChartHeight As Integer, ByVal fChartWidth As Integer)
+        Public Sub New(ByVal sName As String, ByVal sFolder As String, ByVal gNewDEM As Raster, ByVal gOldDEM As Raster,
+                       ByVal fChartHeight As Integer, ByVal fChartWidth As Integer)
 
             If String.IsNullOrEmpty(sName) Then
                 Throw New ArgumentNullException("sName", "The change detection analysis name cannot be empty.")
@@ -125,7 +95,6 @@ Namespace Core.ChangeDetection
             End If
             m_dAnalysisFolder = New IO.DirectoryInfo(sFolder)
 
-
             If Not gNewDEM.Extent.HasOverlap(gOldDEM.Extent) Then
                 Dim ex As New Exception("The two rasters do not overlap.")
                 ex.Data("New DEM Path") = gNewDEM.FilePath
@@ -137,34 +106,55 @@ Namespace Core.ChangeDetection
             m_gOriginalNewDEM = gNewDEM
             m_gOriginalOldDEM = gOldDEM
 
-            m_gAOI = gAOI
-
             m_fChartHeight = fChartHeight
             m_fChartWidth = fChartWidth
 
         End Sub
 
-        Public Function Calculate(ByRef sRawDoDPath As String, ByRef sThreshDodPath As String, ByRef sRawHistPath As String, ByRef sThreshHistPath As String, ByRef sSummaryXMLPath As String) As DoDResult
+        Public Function Calculate(rawDoDPath As IO.FileInfo, ByRef thrDodPath As IO.FileInfo, ByRef rawHistPath As IO.FileInfo, ByRef thrHistPath As IO.FileInfo,
+                                  ByRef summaryXMLPath As IO.FileInfo, numberHistogramBins As Integer) As DoDResult
 
-            ' Generate concurrent rasters for analysis
-            GenerateAnalysisRasters()
+            ' Substrat the new and old rasters to produce the raw DoD
+            Dim rawDoD As Raster = RasterOperators.Subtract(m_gOriginalNewDEM, m_gOriginalOldDEM, rawDoDPath)
 
-            ' Difference the rasters to produce the raw DoD and also the raw histogram
-            CalculateRawDoD(sRawDoDPath, sRawHistPath)
+            ' Calculate the raw histogram
+            Dim rawHisto As Dictionary(Of Double, HistogramBin) = RasterOperators.BinRaster(rawDoD, numberHistogramBins)
+
+            ' Write the raw histogram
+            HistogramBin.WriteHistogram(rawHisto, rawHistPath)
 
             ' Call the polymorphic method to threshold the DoD depending on the thresholding method
-            Dim dodResults As DoDResultPropagated = ThresholdRawDoD(sRawDoDPath, sRawHistPath)
+            Dim thrDoD As Raster = ThresholdRawDoD(rawDoD, thrDodPath)
 
-            Dim summaryXMLPath As String = Project.ProjectManagerBase.OutputManager.GetGCDSummaryXMLPath(Name, m_dAnalysisFolder.FullName)
-            GenerateSummaryXML(dodResults.ChangeStats, summaryXMLPath, LinearUnits)
-            GenerateChangeBarGraphicFiles(dodResults.ChangeStats, m_fChartWidth, m_fChartHeight)
-            GenerateHistogramGraphicFiles(sRawHistPath, sThreshHistPath, m_fChartWidth, m_fChartHeight)
+            ' Calculate the thresholded histogram
+            Dim thrHisto As Dictionary(Of Double, HistogramBin) = RasterOperators.BinRaster(thrDoD, numberHistogramBins)
+
+            ' Write the thresholded histogram
+            HistogramBin.WriteHistogram(thrHisto, thrHistPath)
+
+            ' Calculate the change statistics and write the output files
+            Dim changeStats = CalculateChangeStats(rawDoD, thrDoD)
+            GenerateSummaryXML(changeStats, summaryXMLPath, LinearUnits)
+            GenerateChangeBarGraphicFiles(changeStats, m_fChartWidth, m_fChartHeight)
+            GenerateHistogramGraphicFiles(rawHistPath, thrHistPath, m_fChartWidth, m_fChartHeight)
+
+
+            Return New DoDResultMinLoD(rawDoDPath, rawHistPath, thrDodPath, thrHistPath, m_fThreshold, LinearUnits)
+
+
+
+
+
 
             Return dodResults
 
         End Function
 
-        Protected MustOverride Function ThresholdRawDoD(rawDodPath As String, rawHistoPath As String) As DoDResult
+        Protected MustOverride Function ThresholdRawDoD(ByRef rawDoD As Raster, thrDoDPath As IO.FileInfo) As Raster
+
+        Protected MustOverride Function CalculateChangeStats(ByRef rawDoD As Raster, ByRef thrDoD As Raster) As DoDStats
+
+        Protected MustOverride Function GetDoDResult(rawDoDPath As IO.FileInfo, thrDoDPath As IO.FileInfo, rawDoDHist As IO.FileInfo, thrDoDHist As IO.FileInfo, eUnits As UnitsNet.Units.LengthUnit) As DoDResult
 
         ''' <summary>
         ''' Makes new copies of the original DEM rasters that are clipped either to the AOI or concurrent to each other.
@@ -234,29 +224,8 @@ Namespace Core.ChangeDetection
         Protected Function CalculateRawDoD(ByRef sRawDoDPath As String, ByRef sRawHistogram As String) As String
 
             Try
-                sRawDoDPath = Core.Project.ProjectManagerBase.OutputManager.GetDoDRawPath(Name, m_dAnalysisFolder.FullName)
+                sRawDoDPath = Project.ProjectManagerBase.OutputManager.GetDoDRawPath(Name, m_dAnalysisFolder.FullName)
 
-                Dim eResult As External.GCDCoreOutputCodes = External.DoDRaw(AnalysisNewDEM.FilePath, AnalysisOldDEM.FilePath, sRawDoDPath,
-                                                           Project.ProjectManagerBase.OutputManager.OutputDriver, Project.ProjectManagerBase.OutputManager.NoData,
-                                                          Project.ProjectManagerBase.GCDNARCError.ErrorString)
-
-                If eResult <> External.GCDCoreOutputCodes.PROCESS_OK Then
-
-                    Dim ex As New Exception(Project.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
-                    Throw New Exception("Error calculating the raw DEM of difference raster", ex)
-
-                End If
-
-                ' Check that the raster exists
-                If Not System.IO.File.Exists(sRawDoDPath) Then
-                    Throw New Exception("The raw DoD raster file does noth exist.")
-                End If
-
-                ''Checks to make sure the histogram is not zeros which causes a non-descript "writing to corrupt memory" exception
-                'Dim rawDoDRaster As New GCDConsoleLib.Raster(sRawDoDPath)
-                'If rawDoDRaster.Minimum = rawDoDRaster.Maximum Then
-                '    Throw New Exception("There was an error calculating the raw DoD. All values are zero in raw DoD.")
-                'End If
 
                 sRawHistogram = Project.ProjectManagerBase.OutputManager.GetCsvRawPath(IO.Path.GetDirectoryName(sRawDoDPath), Name)
                 eResult = External.CalculateAndWriteDoDHistogramWithBins(sRawDoDPath, sRawHistogram, m_nNumBins, m_nMinimumBin, m_fBinSize, m_fBinIncrement, Project.ProjectManagerBase.GCDNARCError.ErrorString)
@@ -281,7 +250,7 @@ Namespace Core.ChangeDetection
         ''' <param name="changeStats"></param>
         ''' <returns></returns>
         ''' <remarks>This method is needed by budget segregation as well</remarks>
-        Public Shared Function GenerateSummaryXML(ByRef changeStats As GCDConsoleLib.DoDStats, outputPath As String, linearUnits As UnitsNet.Units.LengthUnit) As String
+        Public Shared Function GenerateSummaryXML(ByRef changeStats As DoDStats, outputPath As IO.FileInfo, linearUnits As UnitsNet.Units.LengthUnit) As String
 
             Dim templatePath As String = IO.Path.Combine(Project.ProjectManagerBase.ExcelTemplatesFolder.FullName, "GCDSummary.xml")
             Dim outputText As Text.StringBuilder
@@ -330,13 +299,13 @@ Namespace Core.ChangeDetection
             Return Project.ProjectManagerBase.OutputManager.GetChangeDetectionFiguresFolder(m_dAnalysisFolder.FullName, bCreateIfMissing)
         End Function
 
-        Protected Sub GenerateHistogramGraphicFiles(rawHistogramPath As String, threshHistogramPath As String, ByVal fChartWidth As Double, ByVal fChartHeight As Double)
+        Protected Sub GenerateHistogramGraphicFiles(rawHistogramPath As IO.FileInfo, threshHistogramPath As IO.FileInfo, ByVal fChartWidth As Double, ByVal fChartHeight As Double)
 
             Dim sFiguresFolder As String = GetFiguresFolder(True)
             Dim areaHistPath As String = IO.Path.Combine(sFiguresFolder, "Histogram_Area.png")
             Dim volhistPath As String = IO.Path.Combine(sFiguresFolder, "Histogram_Volume.png")
 
-            Dim ExportHistogramViewer As New Visualization.DoDHistogramViewerClass(rawHistogramPath, threshHistogramPath, LinearUnits)
+            Dim ExportHistogramViewer As New DoDHistogramViewerClass(rawHistogramPath, threshHistogramPath, LinearUnits)
             ExportHistogramViewer.ExportCharts(areaHistPath, volhistPath, fChartWidth, fChartHeight)
         End Sub
 

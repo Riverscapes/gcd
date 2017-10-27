@@ -34,17 +34,13 @@ Namespace Core.ErrorCalculation
 
             Select Case m_ErrorSurfaceRow.Type
                 Case UniformErrorString
-                    gErrorSurface = CreateUniformErrorSurface(m_ErrorSurfaceRow.GetMultiErrorPropertiesRows.First._Error, DEMRaster, sErrorSurfaceRasterPath)
+                    gErrorSurface = GCDConsoleLib.RasterOperators.Uniform(DEMRaster, sErrorSurfaceRasterPath, m_ErrorSurfaceRow.GetMultiErrorPropertiesRows.First._Error)
 
                 Case AssociatedsurfaceErrorType
-                    ' Find the associated surface on which the error raster should be based.
-                    For Each rAssoc As ProjectDS.AssociatedSurfaceRow In m_ErrorSurfaceRow.DEMSurveyRow.GetAssociatedSurfaceRows
-                        If rAssoc.AssociatedSurfaceID = m_ErrorSurfaceRow.GetMultiErrorPropertiesRows.First.AssociatedSurfaceID Then
-                            Dim sAssocPath As String = Project.ProjectManagerBase.GetAbsolutePath(rAssoc.Source)
-                            gErrorSurface = CreateAssociatedErrorSurface(sAssocPath, DEMRaster, sErrorSurfaceRasterPath)
-                            Exit For
-                        End If
-                    Next
+                    ' Find the associated surface on which the error raster should be based and copy it into location so that it only has values where DEM has values.
+                    Dim rAssoc As ProjectDS.AssociatedSurfaceRow = m_ErrorSurfaceRow.DEMSurveyRow.GetAssociatedSurfaceRows.First(Function(s) s.AssociatedSurfaceID = m_ErrorSurfaceRow.GetMultiErrorPropertiesRows.First.AssociatedSurfaceID)
+                    Dim gAssoc As New GCDConsoleLib.Raster(Project.ProjectManagerBase.GetAbsolutePath(rAssoc.Source))
+                    gErrorSurface = GCDConsoleLib.RasterOperators.Mask(gAssoc, DEMRaster, sErrorSurfaceRasterPath)
 
                 Case FISErrorType
                     CreateFISErrorSurface(m_ErrorSurfaceRow.GetFISInputsRows.First.FIS, DEMRaster, sErrorSurfaceRasterPath, False)
@@ -73,8 +69,8 @@ Namespace Core.ErrorCalculation
 
         Private Sub CreateMultiMethodErrorSurface(sOutputRasterPath As String)
 
-            ' String to hold a concatenation of each of the survey method error rasters
-            Dim sAllMethodRasters As String = String.Empty
+            ' List of individual method rasters
+            Dim methodRasters As New List(Of String)
 
             For Each aMethod As ProjectDS.MultiErrorPropertiesRow In m_ErrorSurfaceRow.GetMultiErrorPropertiesRows
                 Dim sMethodRaster As String = Project.ProjectManagerBase.OutputManager.ErrorSurfarceMethodRasterPath(m_ErrorSurfaceRow.DEMSurveyRow.Name, m_ErrorSurfaceRow.Name, aMethod.Method, True)
@@ -85,128 +81,41 @@ Namespace Core.ErrorCalculation
                 Select Case aMethod.ErrorType
 
                     Case UniformErrorString
-                        CreateUniformErrorSurface(aMethod._Error, gMaskRaster, sMethodRaster)
+                        GCDConsoleLib.RasterOperators.Uniform(gMaskRaster, sMethodRaster, aMethod._Error)
 
                     Case AssociatedsurfaceErrorType
 
-                        ' Find the associated surface on which the error raster should be based.
-                        For Each rAssoc As ProjectDS.AssociatedSurfaceRow In m_ErrorSurfaceRow.DEMSurveyRow.GetAssociatedSurfaceRows
-                            If rAssoc.AssociatedSurfaceID = m_ErrorSurfaceRow.GetMultiErrorPropertiesRows.First.AssociatedSurfaceID Then
-                                Dim sAssocPath As String = Project.ProjectManagerBase.GetAbsolutePath(rAssoc.Source)
-                                CreateAssociatedErrorSurface(sAssocPath, gMaskRaster, sMethodRaster)
-                                Exit For
-                            End If
-                        Next
+                        ' Find the associated surface on which the error raster should be based and copy it into location to ensure values only where DEM has values
+                        Dim rAssoc As ProjectDS.AssociatedSurfaceRow = m_ErrorSurfaceRow.DEMSurveyRow.GetAssociatedSurfaceRows.First(Function(s As ProjectDS.AssociatedSurfaceRow) s.AssociatedSurfaceID = m_ErrorSurfaceRow.GetMultiErrorPropertiesRows.First.AssociatedSurfaceID)
+                        Dim gAssoc As New GCDConsoleLib.Raster(Project.ProjectManagerBase.GetAbsolutePath(rAssoc.Source))
+                        GCDConsoleLib.RasterOperators.Mask(gAssoc, gMaskRaster, sMethodRaster)
 
                     Case Else
                         ' FIS. the error type field contains the name of the FIS rule file to be used.
                         CreateFISErrorSurface(aMethod.ErrorType, gMaskRaster, sMethodRaster, True)
 
                 End Select
-                sAllMethodRasters &= sMethodRaster & ";"
+
+                methodRasters.Add(sMethodRaster)
             Next
 
-            If Not String.IsNullOrEmpty(sAllMethodRasters) Then
-                Dim gDEM As New GCDConsoleLib.Raster(Project.ProjectManagerBase.GetAbsolutePath(m_ErrorSurfaceRow.DEMSurveyRow.Source))
-
-                Dim sMosaicWithoutMask As String = WorkspaceManager.GetTempRaster("Mosaic")
-                ' Call the Raster Manager mosaic function to blend the rasters together.
-                Debug.Print(sAllMethodRasters)
-                Dim eResult As External.RasterManagerOutputCodes = External.RasterManager.Mosaic(sAllMethodRasters, sMosaicWithoutMask, Project.ProjectManagerBase.GCDNARCError.ErrorString)
-                If eResult <> External.RasterManagerOutputCodes.PROCESS_OK Then
-                    Dim exInner As New Exception(Project.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
-                    Dim ex As New Exception("Error mosaicing the raster.", exInner)
-                    ex.Data("Input rasters") = sAllMethodRasters
-                    ex.Data("Output raster") = sOutputRasterPath
-                    ex.Data("Error Message") = Project.ProjectManagerBase.GCDNARCError.ErrorString.ToString
-                    Throw ex
-                End If
-
-                Try
-                    eResult = External.Mask(sMosaicWithoutMask, gDEM.FilePath, sOutputRasterPath, Project.ProjectManagerBase.GCDNARCError.ErrorString)
-                    If eResult <> External.RasterManagerOutputCodes.PROCESS_OK Then
-                        Dim exInner As New Exception(Project.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
-                        Throw New Exception("Error masking mosaic output", exInner)
-                    End If
-                Catch ex As Exception
-                    ex.Data("Input raster") = sMosaicWithoutMask
-                    ex.Data("Mask raster") = gDEM.FilePath
-                    ex.Data("Output raster") = sOutputRasterPath
-                    Throw
-                End Try
-
-                ' Update the GCD project with the path to the output raster
-                m_ErrorSurfaceRow.Source = Project.ProjectManagerBase.GetRelativePath(sOutputRasterPath)
-                m_ErrorSurfaceRow.Type = MultipleErrorType
+            If methodRasters.Count < 1 Then
+                Return
             End If
 
+            ' Call the Raster Manager mosaic function to blend the rasters together.
+            Dim sMosaicWithoutMask As String = WorkspaceManager.GetTempRaster("Mosaic")
+            Dim gUnmasked As GCDConsoleLib.Raster = GCDConsoleLib.RasterOperators.Mosaic(methodRasters, sMosaicWithoutMask)
+
+            ' Mask the result so there are only values where the DEM has values
+            Dim gDEM As New GCDConsoleLib.Raster(Project.ProjectManagerBase.GetAbsolutePath(m_ErrorSurfaceRow.DEMSurveyRow.Source))
+            GCDConsoleLib.RasterOperators.Mask(gUnmasked, gDEM, sOutputRasterPath)
+
+            ' Update the GCD project with the path to the output raster
+            m_ErrorSurfaceRow.Source = Project.ProjectManagerBase.GetRelativePath(sOutputRasterPath)
+            m_ErrorSurfaceRow.Type = MultipleErrorType
+
         End Sub
-
-        Private Function CreateUniformErrorSurface(fErrorValue As Double, gRasterMask As GCDConsoleLib.Raster, sOutputRasterPath As String) As GCDConsoleLib.Raster
-
-            Dim gErrorSurface As GCDConsoleLib.Raster = Nothing
-
-            Try
-                ' Do the conditional geoprocessing.
-                Dim eResult As External.GCDCoreOutputCodes = External.UniformError(gRasterMask.FilePath, sOutputRasterPath, fErrorValue, Project.ProjectManagerBase.GCDNARCError.ErrorString)
-                If eResult <> External.GCDCoreOutputCodes.PROCESS_OK Then
-                    Dim exInner As New Exception(Project.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
-                    Dim ex As New Exception("Error producing uniform error surface.", exInner)
-                    ex.Data("GCD Core return code") = eResult.ToString
-                    Throw ex
-                End If
-
-                gErrorSurface = New GCDConsoleLib.Raster(sOutputRasterPath)
-
-            Catch ex As Exception
-                Dim ex2 As New Exception("Error producing the error surface raster.", ex)
-                ex2.Data("Error Surface Name") = m_ErrorSurfaceRow.Name
-                ex2.Data("DEM Raster") = m_ErrorSurfaceRow.DEMSurveyRow.Source
-                ex2.Data("Error Surface Raster Path") = sOutputRasterPath
-                ex2.Data("Error Surface Value") = fErrorValue.ToString
-                Throw ex2
-            End Try
-
-            Return gErrorSurface
-
-        End Function
-
-        ''' <summary>
-        ''' Create an error surface by copying an associated surface raster
-        ''' </summary>
-        ''' <param name="sAssociatedSurfacePath"></param>
-        ''' <param name="gRasterMask"></param>
-        ''' <param name="sOutputRasterPath"></param>
-        ''' <returns></returns>
-        ''' <remarks>Simply copy the associated surface to the desired output location for the error surface.
-        ''' Note that the associated surface should already be concurrent with the DEM
-        '''</remarks>
-        Private Function CreateAssociatedErrorSurface(sAssociatedSurfacePath As String, gRasterMask As GCDConsoleLib.Raster, sOutputRasterPath As String) As GCDConsoleLib.Raster
-
-            Dim gErrorSurface As GCDConsoleLib.Raster = Nothing
-
-            Try
-                Dim eResult As External.RasterManagerOutputCodes = External.Mask(sAssociatedSurfacePath, gRasterMask.FilePath, sOutputRasterPath, Project.ProjectManagerBase.GCDNARCError.ErrorString)
-                If eResult <> External.GCDCoreOutputCodes.PROCESS_OK Then
-                    Dim ex As New Exception("Error producing associated error surface.")
-                    ex.Data("raster manager return code") = eResult.ToString
-                    Throw ex
-                End If
-
-                gErrorSurface = New GCDConsoleLib.Raster(sOutputRasterPath)
-
-            Catch ex As Exception
-                Dim ex2 As New Exception("Error producing the error surface raster.", ex)
-                ex2.Data("Error Surface Name") = m_ErrorSurfaceRow.Name
-                ex2.Data("DEM Raster") = m_ErrorSurfaceRow.DEMSurveyRow.Source
-                ex2.Data("Error Surface Raster Path") = sOutputRasterPath
-                ex2.Data("Associated surface raster path") = sAssociatedSurfacePath
-                Throw ex2
-            End Try
-
-            Return gErrorSurface
-
-        End Function
 
         Private Sub CreateFISErrorSurface(sFISRuleDefinitionFileName As String, gReferenceRaster As GCDConsoleLib.Raster, sOutputRasterPath As String, bClipToMask As Boolean)
 
@@ -231,7 +140,7 @@ Namespace Core.ErrorCalculation
             End If
 
             ' Setup FIS inputs. One for each associated surface input
-            Dim sInputs As String = ""
+            Dim fisInputs As New Dictionary(Of String, String)
             For Each FISInput As ProjectDS.FISInputsRow In m_ErrorSurfaceRow.GetFISInputsRows
 
                 ' New muti-method FIS check. Make sure that the FIS input is for this FIS file
@@ -241,42 +150,18 @@ Namespace Core.ErrorCalculation
                     sSQL &= " AND " & Project.ProjectManagerBase.ds.AssociatedSurface.NameColumn.ColumnName & "='" & FISInput.AssociatedSurface & "'"
 
                     Dim AssociatedSurface As ProjectDS.AssociatedSurfaceRow = Project.ProjectManagerBase.ds.AssociatedSurface.Select(sSQL).First
-
-                    sInputs &= FISInput.FISInput & ";" & Project.ProjectManagerBase.GetAbsolutePath(AssociatedSurface.Source) & ";"
+                    FISInput(FISInput.FISInput) = Project.ProjectManagerBase.GetAbsolutePath(AssociatedSurface.Source)
                 End If
             Next
-            If sInputs.Length > 0 Then
-                sInputs = sInputs.Substring(0, sInputs.Length - 1)
-            Else
-                Throw New Exception("No FIS inputs to process.")
-            End If
 
             Try
                 ' When this method is being used for a multi-method error surface the reference
-                ' raster is a mask (with cell value 1). Otherwise the reference raster is the full
-                ' DEM
-                Dim sFullFISRaster As String
-                If bClipToMask Then
-                    sFullFISRaster = WorkspaceManager.GetTempRaster("FIS")
-                Else
-                    sFullFISRaster = sOutputRasterPath
-                End If
-
-                Dim eResult As External.GCDCoreOutputCodes
-                eResult = External.CreateFISError(DEMRaster.FilePath, sFISFuleFilePath, sInputs, sFullFISRaster,
-                                                    Project.ProjectManagerBase.OutputManager.OutputDriver,
-                                                    Project.ProjectManagerBase.OutputManager.NoData, Project.ProjectManagerBase.GCDNARCError.ErrorString)
-
-                If eResult <> External.GCDCoreOutputCodes.PROCESS_OK Then
-                    Dim exInner As New Exception(Project.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
-                    Dim ex As New Exception("Error generating FIS error raster.", exInner)
-                    ex.Data("Error Code") = eResult.ToString
-                    Throw ex
-                End If
+                ' raster is a mask (with cell value 1). Otherwise the reference raster is the full DEM
+                Dim sFullFISRaster As String = If(bClipToMask, WorkspaceManager.GetTempRaster("FIS"), sOutputRasterPath)
+                Dim gFISRaster As GCDConsoleLib.Raster = GCDConsoleLib.RasterOperators.FISRaster(fisInputs, sFISFuleFilePath, DEMRaster, sFullFISRaster)
 
                 If bClipToMask Then
-                    Throw New NotImplementedException
-                    'GP.SpatialAnalyst.Raster_Calculator("""" & sFullFISRaster & """ * """ & gReferenceRaster.FullPath & """", sOutputRasterPath, gReferenceRaster)
+                    GCDConsoleLib.RasterOperators.Multiply(gFISRaster, gReferenceRaster, sOutputRasterPath)
                 End If
             Catch ex As Exception
                 Dim ex2 As New Exception("Error generating FIS error surface raster", ex)

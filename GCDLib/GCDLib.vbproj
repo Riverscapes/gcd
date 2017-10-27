@@ -99,10 +99,6 @@
     <Compile Include="Core\TopCAT\WindowsManagement.vb" />
     <Compile Include="Core\Visualization\DoDHistogramViewerClass.vb" />
     <Compile Include="Core\Visualization\ElevationChangeBarViewer.vb" />
-    <Compile Include="Core\External\ExternalLibs.vb" />
-    <Compile Include="Core\External\GCDCoreDLL.vb" />
-    <Compile Include="Core\External\NARCError.vb" />
-    <Compile Include="Core\External\RasterManager.vb" />
     <Compile Include="Core\Project\ProjectDS.vb">
       <DependentUpon>ProjectDS.xsd</DependentUpon>
     </Compile>

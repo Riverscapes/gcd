@@ -14,7 +14,7 @@
         Private m_ThrHistogram As IO.FileInfo
 
         Private m_eLinearUnits As UnitsNet.Units.LengthUnit
-        Private m_fCellSize As Double
+        'Private m_fCellSize As Double
         Protected m_ChangeStats As GCDConsoleLib.DoDStats
 
 #Region "Properties"
@@ -43,11 +43,11 @@
             End Get
         End Property
 
-        Public ReadOnly Property CellSize As Double
-            Get
-                Return m_fCellSize
-            End Get
-        End Property
+        'Public ReadOnly Property CellSize As Double
+        '    Get
+        '        Return m_fCellSize
+        '    End Get
+        'End Property
 
         Public ReadOnly Property Units As UnitsNet.Units.LengthUnit
             Get
@@ -92,7 +92,7 @@
         ''' Unfortunately this trickles back up to inherited classes, but at least those classes can obtain the
         ''' cell size and linear units from the original raw DoD which is never deleted during a budget set loop.
         ''' </remarks>
-        Public Sub New(sRawDoD As String, sRawHistogram As String, sThresholdedDoD As String, sThreshHistogram As String, fCellSize As Double, eLinearUnits As UnitsNet.Units.LengthUnit)
+        Public Sub New(sRawDoD As String, sRawHistogram As String, sThresholdedDoD As String, sThreshHistogram As String, eLinearUnits As UnitsNet.Units.LengthUnit) ' , fCellSize As Double
 
             m_RawDoD = New IO.FileInfo(sRawDoD)
             m_RawHistogram = New IO.FileInfo(sRawHistogram)
@@ -100,7 +100,7 @@
             m_ThrDoD = New IO.FileInfo(sThresholdedDoD)
             m_ThrHistogram = New IO.FileInfo(sThreshHistogram)
 
-            m_fCellSize = fCellSize
+            'm_fCellSize = fCellSize
             m_eLinearUnits = eLinearUnits
 
         End Sub
@@ -188,15 +188,8 @@
             End Get
         End Property
 
-        Public Sub New(rawDoD As String, rawHisto As String, thrDoD As String, threshHisto As String, fThreshold As Double, fCellSize As Double, eLinearUnits As UnitsNet.Units.LengthUnit)
-            MyBase.New(rawDoD, rawHisto, thrDoD, threshHisto, fCellSize, eLinearUnits)
-
-            m_fThreshold = fThreshold
-            m_ChangeStats = GCDConsoleLib.RasterOperators.GetStatsMinLoD(rawDoD, thrDoD, fThreshold)
-        End Sub
-
-        Public Sub New(ByRef changeStats As GCDConsoleLib.DoDStats, rawDoD As String, rawHisto As String, thrDoD As String, threshHisto As String, fThreshold As Double, fCellSize As Double, eLinearUnits As UnitsNet.Units.LengthUnit)
-            MyBase.New(rawDoD, rawHisto, thrDoD, threshHisto, fCellSize, eLinearUnits)
+        Public Sub New(ByRef changeStats As GCDConsoleLib.DoDStats, rawDoD As String, rawHisto As String, thrDoD As String, threshHisto As String, fThreshold As Double, eLinearUnits As UnitsNet.Units.LengthUnit)
+            MyBase.New(rawDoD, rawHisto, thrDoD, threshHisto, eLinearUnits)
 
             m_fThreshold = fThreshold
             m_ChangeStats = changeStats
@@ -215,15 +208,8 @@
             End Get
         End Property
 
-        Public Sub New(rawDoD As String, rawHisto As String, thrDoD As String, threshHisto As String, sPropErrorRaster As String, fCellSize As Double, eLinearUnits As UnitsNet.Units.LengthUnit)
-            MyBase.New(rawDoD, rawHisto, thrDoD, threshHisto, fCellSize, eLinearUnits)
-
-            m_sPropagatedErrorRaster = sPropErrorRaster
-            m_ChangeStats = GCDConsoleLib.RasterOperators.GetStatsPropagated(rawDoD, thrDoD, sPropErrorRaster)
-        End Sub
-
-        Public Sub New(ByRef changeStats As GCDConsoleLib.DoDStats, rawDoD As String, rawHisto As String, thrDoD As String, threshHisto As String, sPropErrorRaster As String, fCellSize As Double, eLinearUnits As UnitsNet.Units.LengthUnit)
-            MyBase.New(rawDoD, rawHisto, thrDoD, threshHisto, fCellSize, eLinearUnits)
+        Public Sub New(ByRef changeStats As GCDConsoleLib.DoDStats, rawDoD As String, rawHisto As String, thrDoD As String, threshHisto As String, sPropErrorRaster As String, eLinearUnits As UnitsNet.Units.LengthUnit)
+            MyBase.New(rawDoD, rawHisto, thrDoD, threshHisto, eLinearUnits)
 
             m_sPropagatedErrorRaster = sPropErrorRaster
             m_ChangeStats = changeStats
@@ -292,27 +278,9 @@
             End Get
         End Property
 
-        Public Sub New(rawDoD As String, rawHisto As String, thrDoD As String, thrHisto As String, propErrorRaster As String, sProbabilityRaster As String, sSpatialCoErosionRaster As String, sSpatialCoDepositionRaster As String, sConditionalProbabilityRaster As String, sPosteriorRaster As String, fConfidenceLevel As Double, nFilter As Integer, bBayesianUpdating As Boolean,
-                       fCellSize As Double, eLinearUnits As UnitsNet.Units.LengthUnit)
-            MyBase.New(rawDoD, rawHisto, thrDoD, thrHisto, propErrorRaster, fCellSize, eLinearUnits)
-
-            m_fConfidenceLevel = fConfidenceLevel
-            m_nSpatialCoherenceFilter = nFilter
-            m_bBayesianUpdating = bBayesianUpdating
-
-            m_sProbabilityRaster = sProbabilityRaster
-            m_sSpatialCoErosionRaster = sSpatialCoErosionRaster
-            m_sSpatialCoDepositionRaster = sSpatialCoDepositionRaster
-            m_sConditionalProbabilityRaster = sConditionalProbabilityRaster
-            m_PosteriorRaster = sPosteriorRaster
-
-            ' Build the change statistics
-            m_ChangeStats = GCDConsoleLib.RasterOperators.GetStatsProbalistic(rawDoD, thrDoD, propErrorRaster)
-        End Sub
-
         Public Sub New(ByRef changeStats As GCDConsoleLib.DoDStats, rawDoD As String, rawHisto As String, thrDoD As String, thrHisto As String, propErrorRaster As String, sProbabilityRaster As String, sSpatialCoErosionRaster As String, sSpatialCoDepositionRaster As String, sConditionalProbabilityRaster As String, sPosteriorRaster As String, fConfidenceLevel As Double, nFilter As Integer, bBayesianUpdating As Boolean,
-                   fCellSize As Double, eLinearUnits As UnitsNet.Units.LengthUnit)
-            MyBase.New(changeStats, rawDoD, rawHisto, thrDoD, thrHisto, propErrorRaster, fCellSize, eLinearUnits)
+                   eLinearUnits As UnitsNet.Units.LengthUnit)
+            MyBase.New(changeStats, rawDoD, rawHisto, thrDoD, thrHisto, propErrorRaster, eLinearUnits)
 
             m_fConfidenceLevel = fConfidenceLevel
             m_nSpatialCoherenceFilter = nFilter

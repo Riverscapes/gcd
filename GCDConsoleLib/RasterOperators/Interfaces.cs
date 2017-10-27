@@ -48,6 +48,13 @@ namespace GCDConsoleLib
             });
         }
 
+        public static Raster Multiply(ref Raster rInputA, ref Raster rInputB, string sOutputRaster)
+        {
+            return (Raster)GenericRunner(typeof(RasterCopy<>), rInputA.Datatype.CSType, new object[] {
+                MathOpType.Multipication, rInputA, rInputB, new Raster(ref rInputA, sOutputRaster)
+            });
+        }
+
         /// <summary>
         /// Retrieve the Change Statistics from a pair of DoD rasters that were thresholded using minimum level of detection
         /// </summary>
@@ -55,7 +62,7 @@ namespace GCDConsoleLib
         /// <param name="thrDoD">Thresholded DoD Raster Path</param>
         /// <param name="minLoD">Minimum Level of Detection</param>
         /// <returns></returns>
-        public static DoDStats GetStatsMinLoD(string rawDoD, string thrDoD, double minLoD)
+        public static DoDStats GetStatsMinLoD(ref Raster rawDoD, ref Raster thrDoD, double minLoD)
         {
             throw new NotImplementedException("See old public C method GetDoDMinLoDStats()");
 
@@ -89,6 +96,106 @@ namespace GCDConsoleLib
 
             return new DoDStats(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
         }
+
+        public static Raster BilinearResample(ref Raster rInput, string sOutputRaster, ExtentRectangle newRect)
+        {
+            throw new NotImplementedException();
+            return null;
+        }
+
+        public static Raster Hillshade(ref Raster rInput, string sOutputRaster)
+        {
+            throw new NotImplementedException();
+            return null;
+        }
+
+        public static Raster SlopePercent(ref Raster rInput, string sOutputRaster)
+        {
+            throw new NotImplementedException();
+            return null;
+        }
+
+        public static Raster SlopeDegrees(ref Raster rInput, string sOutputRaster)
+        {
+            throw new NotImplementedException();
+            return null;
+        }
+
+        public enum KernelShapes
+        {
+            Square,
+            Circle
+        }
+
+        public static Raster PointDensity(ref Raster rInput, ref Vector vPointCloud, string sOutputRaster, KernelShapes eKernel, double fSize)
+        {
+            throw new NotImplementedException();
+            return null;
+        }
+
+        public static Raster Uniform(ref Raster rInput, string sOutputRaster, double fValue)
+        {
+            throw new NotImplementedException();
+            return null;
+        }
+
+        public static Raster Mosaic(ref List<string> sInputs, string sOutputRaster)
+        {
+            throw new NotImplementedException();
+            return null;
+        }
+
+        public static Raster Mask(ref Raster rUnmasked, ref Raster rMask, string sOutputRaster)
+        {
+            throw new NotImplementedException();
+            return null;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fisInputs">Key is FIS input name, value is corresponding raster path</param>
+        /// <param name="sFISRuleFile">Path to FIS rule file (*.fis)</param>
+        /// <param name="rReference"></param>
+        /// <param name="sOutputRaster"></param>
+        /// <returns></returns>
+        public static Raster FISRaster(ref Dictionary<string, string> fisInputs, string sFISRuleFile, ref Raster rReference, string sOutputRaster)
+        {
+            throw new NotImplementedException();
+            return null;
+        }
+
+        public static Raster Subtract(ref Raster raster1, ref Raster raster2, System.IO.FileInfo sOutputRaster)
+        {
+            throw new NotImplementedException();
+            return null;
+        }
+
+        /// <summary>
+        /// Default histogram generator
+        /// </summary>
+        /// <param name="rInput"></param>
+        /// <returns></returns>
+        /// <remarks>The goal of this operation is to bin raster values into a set number of bins.
+        /// We need to discuss how those bins are defined. Ideally the first and last bin would
+        /// contain zero cell count, so that the caller has confidence that the histogram has
+        /// captured the full range of the raster values.</remarks>
+        public static Dictionary<double, HistogramBin> BinRaster(ref Raster rInput, int numberofBins)
+        {
+            throw new NotImplementedException();
+            return null;
+        }
+        
+        public static Raster SetNullLessThan(ref Raster rInput, double fThreshold, System.IO.FileInfo sOutputRaster)
+        {
+            throw new NotImplementedException();
+            return null;
+        }
+
+        
+
+
+
 
         ////////////////////////////////////    EVERYTHING BELOW HERE IS PRIVATE
 
