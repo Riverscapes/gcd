@@ -155,7 +155,7 @@ Namespace Core.ChangeDetection
             ' Call the polymorphic method to threshold the DoD depending on the thresholding method
             Dim dodResults As DoDResultPropagated = ThresholdRawDoD(sRawDoDPath, sRawHistPath)
 
-            Dim summaryXMLPath As String = GCDProject.ProjectManagerBase.OutputManager.GetGCDSummaryXMLPath(Name, m_dAnalysisFolder.FullName)
+            Dim summaryXMLPath As String = Project.ProjectManagerBase.OutputManager.GetGCDSummaryXMLPath(Name, m_dAnalysisFolder.FullName)
             GenerateSummaryXML(dodResults.ChangeStats, summaryXMLPath, LinearUnits)
             GenerateChangeBarGraphicFiles(dodResults.ChangeStats, m_fChartWidth, m_fChartHeight)
             GenerateHistogramGraphicFiles(sRawHistPath, sThreshHistPath, m_fChartWidth, m_fChartHeight)
@@ -234,15 +234,15 @@ Namespace Core.ChangeDetection
         Protected Function CalculateRawDoD(ByRef sRawDoDPath As String, ByRef sRawHistogram As String) As String
 
             Try
-                sRawDoDPath = Core.GCDProject.ProjectManagerBase.OutputManager.GetDoDRawPath(Name, m_dAnalysisFolder.FullName)
+                sRawDoDPath = Core.Project.ProjectManagerBase.OutputManager.GetDoDRawPath(Name, m_dAnalysisFolder.FullName)
 
                 Dim eResult As External.GCDCoreOutputCodes = External.DoDRaw(AnalysisNewDEM.FilePath, AnalysisOldDEM.FilePath, sRawDoDPath,
-                                                           GCDProject.ProjectManagerBase.OutputManager.OutputDriver, GCDProject.ProjectManagerBase.OutputManager.NoData,
-                                                          GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
+                                                           Project.ProjectManagerBase.OutputManager.OutputDriver, Project.ProjectManagerBase.OutputManager.NoData,
+                                                          Project.ProjectManagerBase.GCDNARCError.ErrorString)
 
                 If eResult <> External.GCDCoreOutputCodes.PROCESS_OK Then
 
-                    Dim ex As New Exception(GCDProject.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
+                    Dim ex As New Exception(Project.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
                     Throw New Exception("Error calculating the raw DEM of difference raster", ex)
 
                 End If
@@ -258,10 +258,10 @@ Namespace Core.ChangeDetection
                 '    Throw New Exception("There was an error calculating the raw DoD. All values are zero in raw DoD.")
                 'End If
 
-                sRawHistogram = GCDProject.ProjectManagerBase.OutputManager.GetCsvRawPath(IO.Path.GetDirectoryName(sRawDoDPath), Name)
-                eResult = External.CalculateAndWriteDoDHistogramWithBins(sRawDoDPath, sRawHistogram, m_nNumBins, m_nMinimumBin, m_fBinSize, m_fBinIncrement, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
+                sRawHistogram = Project.ProjectManagerBase.OutputManager.GetCsvRawPath(IO.Path.GetDirectoryName(sRawDoDPath), Name)
+                eResult = External.CalculateAndWriteDoDHistogramWithBins(sRawDoDPath, sRawHistogram, m_nNumBins, m_nMinimumBin, m_fBinSize, m_fBinIncrement, Project.ProjectManagerBase.GCDNARCError.ErrorString)
                 If eResult <> External.GCDCoreOutputCodes.PROCESS_OK Then
-                    Dim ex As New Exception(GCDProject.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
+                    Dim ex As New Exception(Project.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
                     Throw New Exception("Error calculating and writing the raw DEM histogram.", ex)
                 End If
 
@@ -283,7 +283,7 @@ Namespace Core.ChangeDetection
         ''' <remarks>This method is needed by budget segregation as well</remarks>
         Public Shared Function GenerateSummaryXML(ByRef changeStats As GCDConsoleLib.DoDStats, outputPath As String, linearUnits As UnitsNet.Units.LengthUnit) As String
 
-            Dim templatePath As String = IO.Path.Combine(GCDProject.ProjectManagerBase.ExcelTemplatesFolder.FullName, "GCDSummary.xml")
+            Dim templatePath As String = IO.Path.Combine(Project.ProjectManagerBase.ExcelTemplatesFolder.FullName, "GCDSummary.xml")
             Dim outputText As Text.StringBuilder
 
             Try
@@ -327,7 +327,7 @@ Namespace Core.ChangeDetection
         End Function
 
         Private Function GetFiguresFolder(bCreateIfMissing As Boolean) As String
-            Return GCDProject.ProjectManagerBase.OutputManager.GetChangeDetectionFiguresFolder(m_dAnalysisFolder.FullName, bCreateIfMissing)
+            Return Project.ProjectManagerBase.OutputManager.GetChangeDetectionFiguresFolder(m_dAnalysisFolder.FullName, bCreateIfMissing)
         End Function
 
         Protected Sub GenerateHistogramGraphicFiles(rawHistogramPath As String, threshHistogramPath As String, ByVal fChartWidth As Double, ByVal fChartHeight As Double)

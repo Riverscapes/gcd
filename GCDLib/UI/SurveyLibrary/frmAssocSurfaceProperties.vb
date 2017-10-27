@@ -34,13 +34,13 @@ Namespace UI.SurveyLibrary
 
         Private ReadOnly Property DEMSurvey As ProjectDS.DEMSurveyRow
             Get
-                Return GCDProject.ProjectManagerBase.ds.DEMSurvey.FindByDEMSurveyID(m_nSurveyID)
+                Return Core.Project.ProjectManagerBase.ds.DEMSurvey.FindByDEMSurveyID(m_nSurveyID)
             End Get
         End Property
 
         Private ReadOnly Property DEMSurveyRasterPath As String
             Get
-                Return GCDProject.ProjectManagerBase.GetAbsolutePath(DEMSurvey.Source)
+                Return Core.Project.ProjectManagerBase.GetAbsolutePath(DEMSurvey.Source)
             End Get
         End Property
 
@@ -82,7 +82,7 @@ Namespace UI.SurveyLibrary
             cboType.SelectedIndex = cboType.Items.Add(New naru.db.NamedObject(AssociatedSurfaceMethods.Browse, "Unknown"))
 
             If SurfaceID > 0 Then
-                Dim assocRow As ProjectDS.AssociatedSurfaceRow = GCDProject.ProjectManagerBase.ds.AssociatedSurface.Rows.Find(SurfaceID)
+                Dim assocRow As ProjectDS.AssociatedSurfaceRow = Core.Project.ProjectManagerBase.ds.AssociatedSurface.Rows.Find(SurfaceID)
                 txtName.Text = assocRow.Name
                 If Not assocRow.IsOriginalSourceNull Then
                     txtOriginalRaster.Text = assocRow.OriginalSource
@@ -110,7 +110,7 @@ Namespace UI.SurveyLibrary
         Private Function GetAssociatedSurfaceType(nSurfaceID) As AssociatedSurfaceMethods
 
             If nSurfaceID > 0 Then
-                Dim assocRow As ProjectDS.AssociatedSurfaceRow = GCDProject.ProjectManagerBase.ds.AssociatedSurface.Rows.Find(SurfaceID)
+                Dim assocRow As ProjectDS.AssociatedSurfaceRow = Core.Project.ProjectManagerBase.ds.AssociatedSurface.Rows.Find(SurfaceID)
                 For Each item As naru.db.NamedObject In cboType.Items
                     If String.Compare(item.Name, assocRow.Type, True) = 0 Then
                         Return DirectCast(Convert.ToInt32(item.ID), AssociatedSurfaceMethods)
@@ -141,17 +141,17 @@ Namespace UI.SurveyLibrary
                         Return
                     End If
 
-                    assocRow = GCDProject.ProjectManagerBase.ds.AssociatedSurface.NewRow()
-                    assocRow.Source = Core.GCDProject.ProjectManagerBase.GetRelativePath(txtProjectRaster.Text)
+                    assocRow = Core.Project.ProjectManagerBase.ds.AssociatedSurface.NewRow()
+                    assocRow.Source = Core.Project.ProjectManagerBase.GetRelativePath(txtProjectRaster.Text)
                     assocRow.OriginalSource = txtProjectRaster.Text
                 Else
-                    assocRow = GCDProject.ProjectManagerBase.ds.AssociatedSurface.Rows.Find(SurfaceID)
+                    assocRow = Core.Project.ProjectManagerBase.ds.AssociatedSurface.Rows.Find(SurfaceID)
                     eOriginalType = GetAssociatedSurfaceType(SurfaceID)
                 End If
 
                 assocRow.Type = cboType.Text
                 assocRow.Name = txtName.Text
-                GCDProject.ProjectManagerBase.save()
+                Core.Project.ProjectManagerBase.save()
 
             Catch ex As Exception
                 naru.error.ExceptionUI.HandleException(ex, "The associated surface failed to save to the GCD project file. The associated surface raster still exists.")
@@ -181,10 +181,10 @@ Namespace UI.SurveyLibrary
 
                         Select Case m_eMethod
                             Case AssociatedSurfaceMethods.SlopeDegree
-                                External.CreateSlope(DEMSurveyRasterPath, txtProjectRaster.Text, External.RasterManager.SlopeTypes.Degrees, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
+                                External.CreateSlope(DEMSurveyRasterPath, txtProjectRaster.Text, External.RasterManager.SlopeTypes.Degrees, Core.Project.ProjectManagerBase.GCDNARCError.ErrorString)
 
                             Case AssociatedSurfaceMethods.SlopePercent
-                                External.CreateSlope(DEMSurveyRasterPath, txtProjectRaster.Text, External.RasterManager.SlopeTypes.Percent, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
+                                External.CreateSlope(DEMSurveyRasterPath, txtProjectRaster.Text, External.RasterManager.SlopeTypes.Percent, Core.Project.ProjectManagerBase.GCDNARCError.ErrorString)
 
                             Case AssociatedSurfaceMethods.PointDensity
                                 Dim sTemp As String = WorkspaceManager.GetTempRaster("PDensity.tif")
@@ -343,7 +343,7 @@ Namespace UI.SurveyLibrary
         Private Sub txtName_TextChanged(sender As Object, e As System.EventArgs) Handles txtName.TextChanged
 
             If m_nSurfaceID < 1 Then
-                txtProjectRaster.Text = GCDProject.ProjectManagerBase.OutputManager.AssociatedSurfaceRasterPath(DEMSurvey.Name, txtName.Text)
+                txtProjectRaster.Text = Core.Project.ProjectManagerBase.OutputManager.AssociatedSurfaceRasterPath(DEMSurvey.Name, txtName.Text)
             End If
 
         End Sub

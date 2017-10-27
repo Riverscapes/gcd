@@ -115,10 +115,10 @@
         ''' <remarks></remarks>
         Public Shared Function CreateFromDoDRow(rDoD As ProjectDS.DoDsRow) As DoDResult
 
-            Dim rawDoDPath As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rDoD.RawDoDPath)
-            Dim rawHistoPath As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rDoD.RawHistPath)
-            Dim thrDoDPath As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rDoD.ThreshDoDPath)
-            Dim thrHistoPath As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rDoD.ThreshHistPath)
+            Dim rawDoDPath As String = Project.ProjectManagerBase.GetAbsolutePath(rDoD.RawDoDPath)
+            Dim rawHistoPath As String = Project.ProjectManagerBase.GetAbsolutePath(rDoD.RawHistPath)
+            Dim thrDoDPath As String = Project.ProjectManagerBase.GetAbsolutePath(rDoD.ThreshDoDPath)
+            Dim thrHistoPath As String = Project.ProjectManagerBase.GetAbsolutePath(rDoD.ThreshHistPath)
 
             Dim gRawDoDPath As New GCDConsoleLib.Raster(rawDoDPath)
             Dim lUnits As UnitsNet.Units.LengthUnit = gRawDoDPath.Proj.LinearUnit
@@ -131,7 +131,7 @@
             Else
                 Dim sPropErrPath As String = String.Empty
                 If Not rDoD.IsPropagatedErrorRasterPathNull Then
-                    sPropErrPath = GCDProject.ProjectManagerBase.GetAbsolutePath(rDoD.PropagatedErrorRasterPath)
+                    sPropErrPath = Project.ProjectManagerBase.GetAbsolutePath(rDoD.PropagatedErrorRasterPath)
                 Else
                     Dim ex As New Exception("The DoD project dataset record is missing its propagated error raster.")
                     ex.Data("DoD Name") = rDoD.Name

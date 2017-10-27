@@ -57,7 +57,7 @@ Namespace UI.ChangeDetection
 
                 If m_rDoD.TypePropagated OrElse m_rDoD.TypeProbabilistic Then
                     If Not m_rDoD.IsPropagatedErrorRasterPathNull Then
-                        txtPropErr.Text = Core.GCDProject.ProjectManagerBase.GetAbsolutePath(m_rDoD.PropagatedErrorRasterPath)
+                        txtPropErr.Text = Core.Project.ProjectManagerBase.GetAbsolutePath(m_rDoD.PropagatedErrorRasterPath)
                     End If
                 End If
 
@@ -68,15 +68,15 @@ Namespace UI.ChangeDetection
                     End If
 
                     If Not m_rDoD.IsProbabilityRasterNull Then
-                        txtProbabilityRaster.Text = Core.GCDProject.ProjectManagerBase.GetAbsolutePath(m_rDoD.ProbabilityRaster)
+                        txtProbabilityRaster.Text = Core.Project.ProjectManagerBase.GetAbsolutePath(m_rDoD.ProbabilityRaster)
                     End If
 
                     If Not m_rDoD.IsSpatialCoErosionRasterNull AndAlso Not String.IsNullOrEmpty(m_rDoD.SpatialCoErosionRaster) Then
-                        txtErosionalSpatialCoherenceRaster.Text = Core.GCDProject.ProjectManagerBase.GetAbsolutePath(m_rDoD.SpatialCoErosionRaster)
+                        txtErosionalSpatialCoherenceRaster.Text = Core.Project.ProjectManagerBase.GetAbsolutePath(m_rDoD.SpatialCoErosionRaster)
                     End If
 
                     If Not m_rDoD.IsSpatialCoDepositionRasterNull AndAlso Not String.IsNullOrEmpty(m_rDoD.SpatialCoDepositionRaster) Then
-                        txtDepositionSpatialCoherenceRaster.Text = Core.GCDProject.ProjectManagerBase.GetAbsolutePath(m_rDoD.SpatialCoDepositionRaster)
+                        txtDepositionSpatialCoherenceRaster.Text = Core.Project.ProjectManagerBase.GetAbsolutePath(m_rDoD.SpatialCoDepositionRaster)
                     End If
 
                     If Not m_rDoD.IsConditionalProbRasterNull Then
@@ -84,7 +84,7 @@ Namespace UI.ChangeDetection
                     End If
 
                     If Not m_rDoD.IsPosteriorRasterNull AndAlso Not String.IsNullOrEmpty(m_rDoD.PosteriorRaster) Then
-                        txtPosteriorRaster.Text = Core.GCDProject.ProjectManagerBase.GetAbsolutePath(m_rDoD.PosteriorRaster)
+                        txtPosteriorRaster.Text = Core.Project.ProjectManagerBase.GetAbsolutePath(m_rDoD.PosteriorRaster)
                     End If
 
                     If Not m_rDoD.IsBayesianNull AndAlso m_rDoD.Bayesian Then

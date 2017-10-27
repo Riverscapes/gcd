@@ -32,8 +32,8 @@ namespace GCDStandalone
 
             try
             {
-                GCDLib.Core.GCDProject.ProjectManagerUI.CopyDeployFolder();
-                new GCDLib.Core.GCDProject.ProjectManagerUI(GCDConsoleLib.Raster.RasterDriver.GTiff, "true");
+                GCDLib.Core.Project.ProjectManagerUI.CopyDeployFolder();
+                new GCDLib.Core.Project.ProjectManagerUI(GCDConsoleLib.Raster.RasterDriver.GTiff, "true");
             }
             catch(Exception ex)
             {
@@ -94,13 +94,13 @@ namespace GCDStandalone
                 {
                     // Set the project file path first (which will attempt to read the XML file and throw an error if anything goes wrong)
                     // Then set the settings if the read was successful.
-                    GCDLib.Core.GCDProject.ProjectManagerBase.FilePath = f.FileName;
+                    GCDLib.Core.Project.ProjectManagerBase.FilePath = f.FileName;
                     GCDLib.My.MySettings.Default.LastUsedProjectFolder = System.IO.Path.GetDirectoryName(f.FileName);
                     GCDLib.My.MySettings.Default.Save();
 
                     try
                     {
-                        GCDLib.Core.GCDProject.ProjectManagerUI.Validate();
+                        GCDLib.Core.Project.ProjectManagerUI.Validate();
                     }
                     catch (Exception ex)
                     {
@@ -121,9 +121,9 @@ namespace GCDStandalone
 
         private void browseGCDProjectFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(GCDLib.Core.GCDProject.ProjectManagerBase.FilePath) && System.IO.File.Exists(GCDLib.Core.GCDProject.ProjectManagerBase.FilePath))
+            if (!string.IsNullOrEmpty(GCDLib.Core.Project.ProjectManagerBase.FilePath) && System.IO.File.Exists(GCDLib.Core.Project.ProjectManagerBase.FilePath))
             {
-                System.Diagnostics.Process.Start(System.IO.Path.GetDirectoryName(GCDLib.Core.GCDProject.ProjectManagerBase.FilePath));
+                System.Diagnostics.Process.Start(System.IO.Path.GetDirectoryName(GCDLib.Core.Project.ProjectManagerBase.FilePath));
             }
         }
 
@@ -179,14 +179,14 @@ namespace GCDStandalone
                             break;
 
                         default:
-                            subMenu.Enabled = !string.IsNullOrEmpty(GCDLib.Core.GCDProject.ProjectManagerBase.FilePath);
+                            subMenu.Enabled = !string.IsNullOrEmpty(GCDLib.Core.Project.ProjectManagerBase.FilePath);
                             break;
                     }
                 }
             }
 
             // Now update the tool status strip
-            tssProjectPath.Text = GCDLib.Core.GCDProject.ProjectManagerBase.FilePath;
+            tssProjectPath.Text = GCDLib.Core.Project.ProjectManagerBase.FilePath;
         }
 
         private void onlineGCDHelpToolStripMenuItem_Click(object sender, EventArgs e)
@@ -255,7 +255,7 @@ namespace GCDStandalone
         {
             try
             {
-                GCDLib.Core.GCDProject.ProjectManagerBase.FilePath = string.Empty;
+                GCDLib.Core.Project.ProjectManagerBase.FilePath = string.Empty;
                 ucProjectExplorer1.cmdRefresh_Click(sender, e);
                 UpdateMenusAndToolstrips(sender, e);
             }

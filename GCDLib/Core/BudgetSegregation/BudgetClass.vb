@@ -169,7 +169,7 @@ Namespace Core.BudgetSegregation
         Public Function GetBudgetSegregationDirectoryPath() As String
             'Get GetChangeDetectionDirectoryPath
             'Dim ChangeDetectionDirectoryPath As String = GCDProject.ProjectManagerBase.OutputManager.GetChangeDetectionDirectoryPath(_NewSurveyName, _OldSurveyName, _DoDName)
-            Dim BudgetSegregationDirectoryPath As String = GCDProject.ProjectManagerBase.OutputManager.GetBudgetSegreationDirectoryPath(GCDProject.ProjectManagerBase.OutputManager.GetDoDOutputFolder(_DoDName), _MaskFilename, _Field)
+            Dim BudgetSegregationDirectoryPath As String = Project.ProjectManagerBase.OutputManager.GetBudgetSegreationDirectoryPath(Project.ProjectManagerBase.OutputManager.GetDoDOutputFolder(_DoDName), _MaskFilename, _Field)
             Return BudgetSegregationDirectoryPath
         End Function
 
@@ -228,8 +228,8 @@ Namespace Core.BudgetSegregation
             End If
 
             ' New method for calculating and writing mask values.
-            If Not External.GCDCore.CalculateAndWriteMaskHistograms(_DoDSource, _SegregationRaster, maskValues, sMaskIndicesAndCSVFilePath, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString) = External.GCDCoreOutputCodes.PROCESS_OK Then
-                Throw New Exception(GCDProject.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
+            If Not External.GCDCore.CalculateAndWriteMaskHistograms(_DoDSource, _SegregationRaster, maskValues, sMaskIndicesAndCSVFilePath, Project.ProjectManagerBase.GCDNARCError.ErrorString) = External.GCDCoreOutputCodes.PROCESS_OK Then
+                Throw New Exception(Project.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
             End If
 
             'add to ClassLegend csv string

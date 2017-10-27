@@ -73,7 +73,6 @@
   <ItemGroup>
     <Compile Include="Core\Visualization\ElevationChangeDataPoint.vb" />
     <Compile Include="Core\ErrorCalculation\FIS\FISLibraryItem.vb" />
-    <Compile Include="Core\GCDArcMapManager.vb" />
     <Compile Include="Core\BudgetSegregation\BSResultSet.vb" />
     <Compile Include="Core\BudgetSegregation\BudgetClass.vb" />
     <Compile Include="Core\BudgetSegregation\BudgetSegregationEngine.vb" />
@@ -89,12 +88,12 @@
     <Compile Include="Core\ErrorCalculation\ErrorSurfaceEngine.vb" />
     <Compile Include="Core\ErrorCalculation\FIS\FISRuleFile.vb" />
     <Compile Include="Core\ExceptionHelper.vb" />
-    <Compile Include="Core\GCDProject\ProjectDS1.Designer.vb">
+    <Compile Include="Core\Project\ProjectDS1.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ProjectDS.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Core\GCDProject\SurveyType.vb" />
+    <Compile Include="Core\Project\SurveyType.vb" />
     <Compile Include="Core\RasterPyramidManager.vb" />
     <Compile Include="Core\TopCAT\Stats.vb" />
     <Compile Include="Core\TopCAT\WindowsManagement.vb" />
@@ -104,12 +103,12 @@
     <Compile Include="Core\External\GCDCoreDLL.vb" />
     <Compile Include="Core\External\NARCError.vb" />
     <Compile Include="Core\External\RasterManager.vb" />
-    <Compile Include="Core\GCDProject\ProjectDS.vb">
+    <Compile Include="Core\Project\ProjectDS.vb">
       <DependentUpon>ProjectDS.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Core\GCDProject\ProjectManagerBase.vb" />
-    <Compile Include="Core\GCDProject\ProjectManagerUI.vb" />
-    <Compile Include="Core\GCDProject\SurveyDateTime.vb" />
+    <Compile Include="Core\Project\ProjectManagerBase.vb" />
+    <Compile Include="Core\Project\ProjectManagerUI.vb" />
+    <Compile Include="Core\Project\SurveyDateTime.vb" />
     <Compile Include="Core\OutputManager.vb" />
     <Compile Include="Core\Visualization\HistogramDisplayData.vb" />
     <Compile Include="Core\WorkspaceManager.vb" />
@@ -411,15 +410,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Core\GCDProject\ProjectDS.xsc">
+    <None Include="Core\Project\ProjectDS.xsc">
       <DependentUpon>ProjectDS.xsd</DependentUpon>
     </None>
-    <None Include="Core\GCDProject\ProjectDS.xsd">
+    <None Include="Core\Project\ProjectDS.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>ProjectDS1.Designer.vb</LastGenOutput>
       <SubType>Designer</SubType>
     </None>
-    <None Include="Core\GCDProject\ProjectDS.xss">
+    <None Include="Core\Project\ProjectDS.xss">
       <DependentUpon>ProjectDS.xsd</DependentUpon>
       <SubType>Designer</SubType>
     </None>

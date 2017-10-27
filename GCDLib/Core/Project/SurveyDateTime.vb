@@ -1,4 +1,4 @@
-﻿Namespace Core.GCDProject
+﻿Namespace Core.Project
     Public Class SurveyDateTime
         Implements IComparable(Of SurveyDateTime)
 

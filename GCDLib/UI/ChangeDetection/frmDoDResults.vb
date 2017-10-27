@@ -21,7 +21,7 @@
 
         Private Sub DoDResultsForm_Load(sender As Object, e As System.EventArgs) Handles Me.Load
 
-            If Not Core.GCDProject.ProjectManagerUI.IsArcMap Then
+            If Not Core.Project.ProjectManagerUI.IsArcMap Then
                 cmdAddToMap.Visible = False
                 txtDoDName.Width = cmdAddToMap.Right - txtDoDName.Left
             End If
@@ -40,7 +40,7 @@
 
         Private Sub cmdBrowse_Click(sender As System.Object, e As System.EventArgs) Handles cmdBrowse.Click
 
-            Dim sFolder As String = IO.Path.GetDirectoryName(Core.GCDProject.ProjectManagerBase.GetAbsolutePath(m_DoDResult.RawDoD.FullName))
+            Dim sFolder As String = IO.Path.GetDirectoryName(Core.Project.ProjectManagerBase.GetAbsolutePath(m_DoDResult.RawDoD.FullName))
             If IO.Directory.Exists(sFolder) Then
                 Process.Start("explorer.exe", sFolder)
             End If

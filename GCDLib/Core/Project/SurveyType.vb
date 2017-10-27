@@ -1,5 +1,5 @@
 ﻿
-Namespace Core.GCDProject
+Namespace Core.Project
 
     Public Class SurveyType
 

@@ -59,10 +59,10 @@ Namespace UI.Project
             Else
                 Me.Text = Me.Text & " Properties"
 
-                Dim theProjectRow As ProjectDS.ProjectRow = Core.GCDProject.ProjectManagerBase.CurrentProject
+                Dim theProjectRow As ProjectDS.ProjectRow = Core.Project.ProjectManagerBase.CurrentProject
                 txtName.Text = theProjectRow.Name
                 txtDirectory.Text = theProjectRow.OutputDirectory
-                txtGCDPath.Text = Core.GCDProject.ProjectManagerBase.FilePath
+                txtGCDPath.Text = Core.Project.ProjectManagerBase.FilePath
                 txtDescription.Text = theProjectRow.Description
                 valPrecision.Value = theProjectRow.Precision
 
@@ -146,17 +146,17 @@ Namespace UI.Project
                 If m_bCreateMode Then
                     ' Creating a new project
                     IO.Directory.CreateDirectory(IO.Path.GetDirectoryName(txtGCDPath.Text))
-                    Core.GCDProject.ProjectManagerBase.FilePath = txtGCDPath.Text
-                    Core.GCDProject.ProjectManagerBase.ds.Project.AddProjectRow(txtName.Text, txtDescription.Text, txtDirectory.Text, Now, System.Reflection.Assembly.GetExecutingAssembly.GetName.Version.ToString, valPrecision.Value, Nothing, Nothing, String.Empty)
+                    Core.Project.ProjectManagerBase.FilePath = txtGCDPath.Text
+                    Core.Project.ProjectManagerBase.ds.Project.AddProjectRow(txtName.Text, txtDescription.Text, txtDirectory.Text, Now, System.Reflection.Assembly.GetExecutingAssembly.GetName.Version.ToString, valPrecision.Value, Nothing, Nothing, String.Empty)
 
                 Else
                     ' Editing properties of existing project
-                    Dim theProjectRow As ProjectDS.ProjectRow = Core.GCDProject.ProjectManagerBase.CurrentProject
+                    Dim theProjectRow As ProjectDS.ProjectRow = Core.Project.ProjectManagerBase.CurrentProject
                     theProjectRow.Name = txtName.Text
                     theProjectRow.Description = txtDescription.Text
                 End If
 
-                Core.GCDProject.ProjectManagerBase.save()
+                Core.Project.ProjectManagerBase.save()
 
             Catch ex As Exception
                 ex.Data("Project Name") = txtName.Text

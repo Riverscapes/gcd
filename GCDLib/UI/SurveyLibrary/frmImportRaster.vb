@@ -116,8 +116,8 @@ Namespace UI.SurveyLibrary
             valCellSize.Maximum = 1000 ' This needs to be changed to a larger value or else rasters with cell sizes greater than 1 will cause an error to be thrown. Perhaps 1000 is more appropriate?
             valCellSize.Value = 1
 
-            If m_ePurpose <> ImportRasterPurposes.StandaloneTool AndAlso Not (GCDProject.ProjectManagerBase.ds Is Nothing) Then
-                valPrecision.Value = GCDProject.ProjectManagerBase.CurrentProject.Precision.ToString
+            If m_ePurpose <> ImportRasterPurposes.StandaloneTool AndAlso Not (Core.Project.ProjectManagerBase.ds Is Nothing) Then
+                valPrecision.Value = Core.Project.ProjectManagerBase.CurrentProject.Precision.ToString
             End If
 
             valTop.ReadOnly = Not (m_ePurpose = ImportRasterPurposes.DEMSurvey OrElse m_ePurpose = ImportRasterPurposes.StandaloneTool)
@@ -324,11 +324,11 @@ Namespace UI.SurveyLibrary
 
             If (m_ePurpose = ImportRasterPurposes.DEMSurvey AndAlso valPrecision.Enabled = False) Or (m_ePurpose = ImportRasterPurposes.AssociatedSurface) Or (m_ePurpose = ImportRasterPurposes.ErrorCalculation) Then
                 'If the project units have not yet been written to 
-                If Not GCDProject.ProjectManagerBase.CurrentProject.DisplayUnits Is Nothing Then
+                If Not Core.Project.ProjectManagerBase.CurrentProject.DisplayUnits Is Nothing Then
                     If TypeOf ucRaster.SelectedItem Is GCDConsoleLib.Raster Then
-                        If ucRaster.SelectedItem.VerticalUnits <> GCDProject.ProjectManagerBase.CurrentProject.DisplayUnits Then
+                        If ucRaster.SelectedItem.VerticalUnits <> Core.Project.ProjectManagerBase.CurrentProject.DisplayUnits Then
                             MsgBox(String.Format("The linear units of the selected raster {0} does not match the linear units {1} of the GCD Project." & vbCrLf & vbCrLf & "Please select a raster that has the same linear units as the GCD Project.",
-                                             ucRaster.SelectedItem.VerticalUnits, GCDProject.ProjectManagerBase.CurrentProject.DisplayUnits), MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
+                                             ucRaster.SelectedItem.VerticalUnits, Core.Project.ProjectManagerBase.CurrentProject.DisplayUnits), MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
                             Return False
                         End If
                     End If
@@ -495,13 +495,13 @@ Namespace UI.SurveyLibrary
 
                         Select Case m_ePurpose
                             Case ImportRasterPurposes.DEMSurvey
-                                sRasterPath = GCDProject.ProjectManagerBase.OutputManager.DEMSurveyRasterPath(txtName.Text)
+                                sRasterPath = Core.Project.ProjectManagerBase.OutputManager.DEMSurveyRasterPath(txtName.Text)
 
                             Case ImportRasterPurposes.AssociatedSurface
-                                sRasterPath = GCDProject.ProjectManagerBase.OutputManager.AssociatedSurfaceRasterPath(m_DEMSurveyRow.Name, txtName.Text)
+                                sRasterPath = Core.Project.ProjectManagerBase.OutputManager.AssociatedSurfaceRasterPath(m_DEMSurveyRow.Name, txtName.Text)
 
                             Case ImportRasterPurposes.ErrorCalculation
-                                sRasterPath = GCDProject.ProjectManagerBase.OutputManager.ErrorSurfaceRasterPath(m_DEMSurveyRow.Name, txtName.Text)
+                                sRasterPath = Core.Project.ProjectManagerBase.OutputManager.ErrorSurfaceRasterPath(m_DEMSurveyRow.Name, txtName.Text)
 
                             Case Else
                                 MsgBox("Unhandled import raster purpose: " & m_ePurpose.ToString, MsgBoxStyle.Exclamation, My.Resources.ApplicationNameLong)
@@ -539,9 +539,9 @@ Namespace UI.SurveyLibrary
                                 ' Call the bilinear interpolation routine in the C++ raster manager DLL
                                 Debug.WriteLine("Resampling:" & vbTab & valCellSize.Value.ToString & vbTab & valTop.Value.ToString & vbTab & valLeft.Value & vbTab & nRows.ToString & vbTab & nCols.ToString)
                                 eResult = Core.External.RasterManager.BiLinearResample(gRaster.FilePath, txtRasterPath.Text, valCellSize.Value, valLeft.Value, valTop.Value, nRows, nCols,
-                                                                     GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
+                                                                     Core.Project.ProjectManagerBase.GCDNARCError.ErrorString)
                             Else
-                                eResult = External.RasterManager.Copy(gRaster.FilePath, txtRasterPath.Text, valCellSize.Value, valLeft.Value, valTop.Value, nRows, nCols, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
+                                eResult = External.RasterManager.Copy(gRaster.FilePath, txtRasterPath.Text, valCellSize.Value, valLeft.Value, valTop.Value, nRows, nCols, Core.Project.ProjectManagerBase.GCDNARCError.ErrorString)
                                 Debug.WriteLine("Copying raster:" & vbTab & valTop.Value.ToString & vbTab & valLeft.Value & vbTab & nRows.ToString & vbTab & nCols.ToString & vbTab & valCellSize.Value)
                             End If
 
@@ -572,18 +572,18 @@ Namespace UI.SurveyLibrary
                                     If m_ePurpose = ImportRasterPurposes.DEMSurvey AndAlso valPrecision.Enabled Then
                                         Try
                                             'If the project units have not yet been written to 
-                                            If GCDProject.ProjectManagerBase.CurrentProject.DisplayUnits Is Nothing Then
-                                                GCDProject.ProjectManagerBase.CurrentProject.DisplayUnits = gRaster.VerticalUnits
+                                            If Core.Project.ProjectManagerBase.CurrentProject.DisplayUnits Is Nothing Then
+                                                Core.Project.ProjectManagerBase.CurrentProject.DisplayUnits = gRaster.VerticalUnits
                                             End If
 
                                             'If the coordinate system has not yet been written to 
-                                            If GCDProject.ProjectManagerBase.CurrentProject.CoordinateSystem Is Nothing Then
+                                            If Core.Project.ProjectManagerBase.CurrentProject.CoordinateSystem Is Nothing Then
                                                 Dim sCoordinateSystem As String = gRaster.Proj.Wkt
-                                                GCDProject.ProjectManagerBase.CurrentProject.CoordinateSystem = sCoordinateSystem
+                                                Core.Project.ProjectManagerBase.CurrentProject.CoordinateSystem = sCoordinateSystem
                                             End If
 
-                                            GCDProject.ProjectManagerBase.CurrentProject.Precision = CInt(valPrecision.Value)
-                                            GCDProject.ProjectManagerBase.save()
+                                            Core.Project.ProjectManagerBase.CurrentProject.Precision = CInt(valPrecision.Value)
+                                            Core.Project.ProjectManagerBase.save()
                                         Catch ex As Exception
                                             MsgBox("Failed to save the new precision to the GCD project.", MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
                                         End Try
@@ -593,8 +593,8 @@ Namespace UI.SurveyLibrary
 
                                 If m_ePurpose = ImportRasterPurposes.DEMSurvey Then
                                     ' Now try the hillshade for DEM Surveys
-                                    Dim sHillshadePath As String = GCDProject.ProjectManagerBase.OutputManager.DEMSurveyHillShadeRasterPath(txtName.Text)
-                                    External.CreateHillshade(gResult.FilePath, sHillshadePath, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
+                                    Dim sHillshadePath As String = Core.Project.ProjectManagerBase.OutputManager.DEMSurveyHillShadeRasterPath(txtName.Text)
+                                    External.CreateHillshade(gResult.FilePath, sHillshadePath, Core.Project.ProjectManagerBase.GCDNARCError.ErrorString)
                                     RasterPyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.Hillshade, sHillshadePath)
                                 End If
                             Else
@@ -607,7 +607,7 @@ Namespace UI.SurveyLibrary
                                     ' Do nothing.
                                 End Try
 
-                                Dim exInner As New Exception(GCDProject.ProjectManagerUI.GCDNARCError.ErrorString.ToString)
+                                Dim exInner As New Exception(Core.Project.ProjectManagerUI.GCDNARCError.ErrorString.ToString)
                                 Dim ex As New Exception("The copy raster routine in Raster Manager DLL failed. ", exInner)
                                 ex.Data("Input raster") = gRaster.FilePath
                                 ex.Data("Project raster") = txtRasterPath.Text

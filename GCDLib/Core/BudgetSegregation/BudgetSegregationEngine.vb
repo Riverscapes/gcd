@@ -111,7 +111,7 @@
             '  GP.DataManagement.DefineProjection(sTempMask, gDoDRaw.SpatialReference)
 
             ' Now copy to the desired location
-            Dim sMaskRaster As String = naru.os.File.GetNewSafeName(sOutputFolder, "Mask", GCDProject.ProjectManagerBase.RasterExtension).FullName
+            Dim sMaskRaster As String = naru.os.File.GetNewSafeName(sOutputFolder, "Mask", Project.ProjectManagerBase.RasterExtension).FullName
             'If Not External.RasterManager.Copy(sTempMask, sMaskRaster, gDoDRaw.HorizontalPrecision, gDoDRaw.Extent.Left, gDoDRaw.Extent.Top, gDoDRaw.Rows, gDoDRaw.Columns, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString) = External.RasterManager.RasterManagerOutputCodes.PROCESS_OK Then
             '    Throw New Exception(GCDProject.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
             'End If
@@ -130,8 +130,8 @@
                 sMaskIndicesAndCSVPaths &= bsOutputs.MaskOutputs(sMaskName).MaskValue & ";" & bsOutputs.MaskOutputs(sMaskName).csvFilename & ";"
             Next
             sMaskIndicesAndCSVPaths = sMaskIndicesAndCSVPaths.Substring(0, sMaskIndicesAndCSVPaths.Length - 1)
-            If Not External.GCDCore.CalculateAndWriteMaskHistograms(DoD.ThresholdedDoD.FullName, sMaskRaster, sMaskIDList, sMaskIndicesAndCSVPaths, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString) = External.GCDCoreOutputCodes.PROCESS_OK Then
-                Throw New Exception(GCDProject.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
+            If Not External.GCDCore.CalculateAndWriteMaskHistograms(DoD.ThresholdedDoD.FullName, sMaskRaster, sMaskIDList, sMaskIndicesAndCSVPaths, Project.ProjectManagerBase.GCDNARCError.ErrorString) = External.GCDCoreOutputCodes.PROCESS_OK Then
+                Throw New Exception(Project.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
             End If
 
             For Each kvMask As KeyValuePair(Of String, BudgetSegregation.BudgetSegregationOutputsClass.MaskOutputClass) In bsOutputs.MaskOutputs
@@ -143,16 +143,16 @@
                 ' This version of RasterMan MaskValue **retains** cells in the mask that possess the argument value.
                 '
                 Dim sPositiveMask As String = WorkspaceManager.GetTempRaster("PMask_" & sSafeMaskName)
-                External.RasterManager.MaskValue(sMaskRaster, sPositiveMask, Convert.ToDouble(kvMask.Value.MaskValue), GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
+                External.RasterManager.MaskValue(sMaskRaster, sPositiveMask, Convert.ToDouble(kvMask.Value.MaskValue), Project.ProjectManagerBase.GCDNARCError.ErrorString)
                 '
                 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
                 ' Mask the raw and thresholded DoDs to create a pair of rasters that just have values
                 ' for the valid areas for the current Mask
                 Dim sMaskRaw As String = WorkspaceManager.GetTempRaster("MR_" & sSafeMaskName)
-                External.RasterManager.Mask(DoD.RawDoD.FullName, sPositiveMask, sMaskRaw, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
+                External.RasterManager.Mask(DoD.RawDoD.FullName, sPositiveMask, sMaskRaw, Project.ProjectManagerBase.GCDNARCError.ErrorString)
 
                 Dim sMaskThr As String = WorkspaceManager.GetTempRaster("MT_" & sSafeMaskName)
-                External.RasterManager.Mask(DoD.ThresholdedDoD.FullName, sPositiveMask, sMaskThr, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
+                External.RasterManager.Mask(DoD.ThresholdedDoD.FullName, sPositiveMask, sMaskThr, Project.ProjectManagerBase.GCDNARCError.ErrorString)
 
                 ' Need to create a new ChangeStats for the new masked out DoD rasters.
                 ' First build a new DoD Properties depending on the type of the full DoD

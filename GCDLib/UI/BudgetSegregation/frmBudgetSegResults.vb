@@ -13,7 +13,7 @@ Namespace UI.BudgetSegregation
             ' This call is required by the designer.
             InitializeComponent()
 
-            For Each rBS As ProjectDS.BudgetSegregationsRow In GCDProject.ProjectManagerBase.ds.BudgetSegregations
+            For Each rBS As ProjectDS.BudgetSegregationsRow In Core.Project.ProjectManagerBase.ds.BudgetSegregations
                 If rBS.BudgetID = nBSID Then
                     m_rBS = rBS
                     Exit Sub
@@ -22,7 +22,7 @@ Namespace UI.BudgetSegregation
 
             If TypeOf m_rBS Is ProjectDS.BudgetSegregationsRow Then
 
-                Dim sOutputFolder As String = GCDProject.ProjectManagerBase.GetAbsolutePath(m_rBS.OutputFolder)
+                Dim sOutputFolder As String = Core.Project.ProjectManagerBase.GetAbsolutePath(m_rBS.OutputFolder)
 
                 Dim bsOutputs As New Core.BudgetSegregation.BudgetSegregationOutputsClass(m_rBS)
 
@@ -103,7 +103,7 @@ Namespace UI.BudgetSegregation
 
         Private Sub cmdBrowse_Click(sender As System.Object, e As System.EventArgs) Handles cmdBrowse.Click
 
-            Dim sFolder As String = GCDProject.ProjectManagerBase.GetAbsolutePath(m_rBS.OutputFolder)
+            Dim sFolder As String = Core.Project.ProjectManagerBase.GetAbsolutePath(m_rBS.OutputFolder)
             If IO.Directory.Exists(sFolder) Then
                 Process.Start("explorer.exe", sFolder)
             Else
@@ -122,7 +122,7 @@ Namespace UI.BudgetSegregation
 
 
             Dim sPath As String = cms.SourceControl.Text
-            sPath = GCDProject.ProjectManagerBase.GetAbsolutePath(sPath)
+            sPath = Core.Project.ProjectManagerBase.GetAbsolutePath(sPath)
             If Not String.IsNullOrEmpty(sPath) Then
                 If GCDConsoleLib.GISDataset.FileExists(sPath) Then
 

@@ -52,12 +52,12 @@
             Dim propErrorRaster As String = GeneratePropagatedErrorRaster()
 
             ' Threshold the raster
-            Dim thrDoDPath As String = GCDProject.ProjectManagerBase.OutputManager.GetDoDThresholdPath(Name, Folder.FullName)
-            External.ThresholdDoDPropErr(rawDoDPath, propErrorRaster, thrDoDPath, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
+            Dim thrDoDPath As String = Project.ProjectManagerBase.OutputManager.GetDoDThresholdPath(Name, Folder.FullName)
+            External.ThresholdDoDPropErr(rawDoDPath, propErrorRaster, thrDoDPath, Project.ProjectManagerBase.GCDNARCError.ErrorString)
 
             ' Generate the thresholded histograms
-            Dim thrHistPath As String = GCDProject.ProjectManagerBase.OutputManager.GetCsvThresholdPath(Name, Folder.FullName)
-            External.CalculateAndWriteDoDHistogram(thrDoDPath, thrHistPath, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
+            Dim thrHistPath As String = Project.ProjectManagerBase.OutputManager.GetCsvThresholdPath(Name, Folder.FullName)
+            External.CalculateAndWriteDoDHistogram(thrDoDPath, thrHistPath, Project.ProjectManagerBase.GCDNARCError.ErrorString)
 
             Return New DoDResultPropagated(rawDoDPath, rawHistPath, thrDoDPath, thrHistPath, propErrorRaster, CellSize, LinearUnits)
 
@@ -71,10 +71,10 @@
         ''' DoD removing any cells that have a value less than the propogated error.</remarks>
         Protected Function GeneratePropagatedErrorRaster() As String
 
-            Dim sPropagatedErrorPath As String = GCDProject.ProjectManagerBase.OutputManager.GetPropagatedErrorPath(Name, Folder.FullName)
+            Dim sPropagatedErrorPath As String = Project.ProjectManagerBase.OutputManager.GetPropagatedErrorPath(Name, Folder.FullName)
             Try
-                If Not External.RasterManager.RootSumSquares(AnalysisNewError.filepath, AnalysisOldError.filepath, sPropagatedErrorPath, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString) = External.RasterManagerOutputCodes.PROCESS_OK Then
-                    Throw New Exception(GCDProject.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
+                If Not External.RasterManager.RootSumSquares(AnalysisNewError.filepath, AnalysisOldError.filepath, sPropagatedErrorPath, Project.ProjectManagerBase.GCDNARCError.ErrorString) = External.RasterManagerOutputCodes.PROCESS_OK Then
+                    Throw New Exception(Project.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
                 End If
             Catch ex As Exception
                 Dim ex2 As New Exception("Error generating propagated error raster.", ex)
@@ -107,8 +107,8 @@
             Else
                 ' Clip error raster to extent
                 If Not External.RasterManager.Copy(m_gOriginalNewError.filepath, sNewError, AnalysisNewDEM.Extent.CellHeight, theAnalysisExtent.Left, theAnalysisExtent.Top,
-                                          AnalysisNewDEM.Extent.rows, AnalysisNewDEM.Extent.cols, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString) = External.RasterManagerOutputCodes.PROCESS_OK Then
-                    Throw New Exception(GCDProject.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
+                                          AnalysisNewDEM.Extent.rows, AnalysisNewDEM.Extent.cols, Project.ProjectManagerBase.GCDNARCError.ErrorString) = External.RasterManagerOutputCodes.PROCESS_OK Then
+                    Throw New Exception(Project.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
                 End If
                 'GP.SpatialAnalyst.Raster_Calculator(Chr(34) & m_gOriginalNewError.FullPath & Chr(34), sNewError, theAnalysisExtent.Rectangle, m_gOriginalNewError.CellSize)
             End If
@@ -119,8 +119,8 @@
             Else
                 ' Clip error raster to extent
                 If Not External.RasterManager.Copy(m_gOriginalOldError.filepath, sOldError, AnalysisOldDEM.Extent.CellHeight, theAnalysisExtent.Left, theAnalysisExtent.Top,
-                                          AnalysisOldDEM.Extent.rows, AnalysisOldDEM.Extent.cols, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString) = External.RasterManagerOutputCodes.PROCESS_OK Then
-                    Throw New Exception(GCDProject.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
+                                          AnalysisOldDEM.Extent.rows, AnalysisOldDEM.Extent.cols, Project.ProjectManagerBase.GCDNARCError.ErrorString) = External.RasterManagerOutputCodes.PROCESS_OK Then
+                    Throw New Exception(Project.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
                 End If
                 ' GP.SpatialAnalyst.Raster_Calculator(Chr(34) & m_gOriginalOldError.FullPath & Chr(34), sOldError, theAnalysisExtent.Rectangle, m_gOriginalOldError.CellSize)
             End If

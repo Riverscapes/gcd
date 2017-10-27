@@ -77,19 +77,19 @@ Namespace Core.BudgetSegregation
 
         Public Sub New(rBS As ProjectDS.BudgetSegregationsRow)
 
-            Dim sPCDepositionVolumePiePath As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rBS.PCDepositoonVolPie)
-            Dim sPCErosionVolumePiePath As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rBS.PCErosionVolPie)
-            Dim sPCVolumePiePath As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rBS.PCTotalVolPie)
+            Dim sPCDepositionVolumePiePath As String = Project.ProjectManagerBase.GetAbsolutePath(rBS.PCDepositoonVolPie)
+            Dim sPCErosionVolumePiePath As String = Project.ProjectManagerBase.GetAbsolutePath(rBS.PCErosionVolPie)
+            Dim sPCVolumePiePath As String = Project.ProjectManagerBase.GetAbsolutePath(rBS.PCTotalVolPie)
 
             m_pieCharts = New PieChartOutputs(sPCDepositionVolumePiePath, sPCErosionVolumePiePath, sPCVolumePiePath)
 
             m_dMaskOutputs = New Dictionary(Of String, MaskOutputClass)
             For Each rMask As ProjectDS.BSMasksRow In rBS.GetBSMasksRows
 
-                Dim AreaChartPath As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rMask.AreaChartPath)
-                Dim VolumeChartPath As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rMask.VolumeChartPath)
-                Dim csvFilename As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rMask.CSVFileName)
-                Dim SummaryPath As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rMask.SummaryXMLPath)
+                Dim AreaChartPath As String = Project.ProjectManagerBase.GetAbsolutePath(rMask.AreaChartPath)
+                Dim VolumeChartPath As String = Project.ProjectManagerBase.GetAbsolutePath(rMask.VolumeChartPath)
+                Dim csvFilename As String = Project.ProjectManagerBase.GetAbsolutePath(rMask.CSVFileName)
+                Dim SummaryPath As String = Project.ProjectManagerBase.GetAbsolutePath(rMask.SummaryXMLPath)
 
                 Dim MaskOutput As New MaskOutputClass(rMask.MaskValue, AreaChartPath, VolumeChartPath, csvFilename, SummaryPath)
 
@@ -102,8 +102,8 @@ Namespace Core.BudgetSegregation
                 m_dMaskOutputs.Add(rMask.MaskName, MaskOutput)
             Next
 
-            m_sClassLegendPath = GCDProject.ProjectManagerBase.GetAbsolutePath(rBS.ClassLegendPath)
-            m_sClassSummaryPath = GCDProject.ProjectManagerBase.GetAbsolutePath(rBS.ClassSummaryPath)
+            m_sClassLegendPath = Project.ProjectManagerBase.GetAbsolutePath(rBS.ClassLegendPath)
+            m_sClassSummaryPath = Project.ProjectManagerBase.GetAbsolutePath(rBS.ClassSummaryPath)
 
         End Sub
 

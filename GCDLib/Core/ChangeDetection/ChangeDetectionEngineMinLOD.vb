@@ -21,13 +21,13 @@
         Protected Overrides Function ThresholdRawDoD(rawDoDPath As String, rawHistPath As String) As DoDResult
 
             ' Threshold the raster
-            Dim thrDoDPath As String = GCDProject.ProjectManagerBase.OutputManager.GetDoDThresholdPath(Name, Folder.FullName)
-            External.ThresholdDoDMinLoD(rawDoDPath, thrDoDPath, m_fThreshold, GCDProject.ProjectManagerBase.OutputManager.OutputDriver,
-                GCDProject.ProjectManagerBase.OutputManager.NoData, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
+            Dim thrDoDPath As String = Project.ProjectManagerBase.OutputManager.GetDoDThresholdPath(Name, Folder.FullName)
+            External.ThresholdDoDMinLoD(rawDoDPath, thrDoDPath, m_fThreshold, Project.ProjectManagerBase.OutputManager.OutputDriver,
+                Project.ProjectManagerBase.OutputManager.NoData, Project.ProjectManagerBase.GCDNARCError.ErrorString)
 
             ' Generate the thresholded histograms
-            Dim thrHistPath As String = GCDProject.ProjectManagerBase.OutputManager.GetCsvThresholdPath(Name, Folder.FullName)
-            External.CalculateAndWriteDoDHistogram(thrDoDPath, thrHistPath, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
+            Dim thrHistPath As String = Project.ProjectManagerBase.OutputManager.GetCsvThresholdPath(Name, Folder.FullName)
+            External.CalculateAndWriteDoDHistogram(thrDoDPath, thrHistPath, Project.ProjectManagerBase.GCDNARCError.ErrorString)
 
             Return New DoDResultMinLoD(rawDoDPath, rawHistPath, thrDoDPath, thrHistPath, m_fThreshold, CellSize, LinearUnits)
 

@@ -76,7 +76,7 @@ Namespace UI.ChangeDetection
 
             Try
                 EnableDisableControls()
-                For Each rDEMSurvey As ProjectDS.DEMSurveyRow In Core.GCDProject.ProjectManagerBase.CurrentProject.GetDEMSurveyRows
+                For Each rDEMSurvey As ProjectDS.DEMSurveyRow In Core.Project.ProjectManagerBase.CurrentProject.GetDEMSurveyRows
                     Dim nIndex As Integer
 
                     nIndex = cboNewDEM.Items.Add(New naru.db.NamedObject(rDEMSurvey.DEMSurveyID, rDEMSurvey.Name))
@@ -90,7 +90,7 @@ Namespace UI.ChangeDetection
                     End If
                 Next
 
-                Dim sUnits As String = Core.GCDProject.ProjectManagerBase.CurrentProject.DisplayUnits
+                Dim sUnits As String = Core.Project.ProjectManagerBase.CurrentProject.DisplayUnits
                 If Not String.IsNullOrEmpty(sUnits) Then
                     lblMinLodThreshold.Text = lblMinLodThreshold.Text.Replace("()", "(" & sUnits & ")")
                 End If
@@ -108,7 +108,7 @@ Namespace UI.ChangeDetection
                 End If
 
                 ' Load AOIs
-                For Each rAOI As ProjectDS.AOIsRow In Core.GCDProject.ProjectManagerBase.CurrentProject.GetAOIsRows
+                For Each rAOI As ProjectDS.AOIsRow In Core.Project.ProjectManagerBase.CurrentProject.GetAOIsRows
                     lstAOI.Items.Add(New naru.db.NamedObject(rAOI.AOIID, rAOI.Name))
                 Next
 
@@ -130,13 +130,13 @@ Namespace UI.ChangeDetection
             Try
                 System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor
 
-                Dim gNewDEM As New GCDConsoleLib.Raster(Core.GCDProject.ProjectManagerBase.GetAbsolutePath(GetDEMRow(cboNewDEM).Source))
-                Dim gOldDEM As New GCDConsoleLib.Raster(Core.GCDProject.ProjectManagerBase.GetAbsolutePath(GetDEMRow(cboOldDEM).Source))
+                Dim gNewDEM As New GCDConsoleLib.Raster(Core.Project.ProjectManagerBase.GetAbsolutePath(GetDEMRow(cboNewDEM).Source))
+                Dim gOldDEM As New GCDConsoleLib.Raster(Core.Project.ProjectManagerBase.GetAbsolutePath(GetDEMRow(cboOldDEM).Source))
 
                 Dim gAOI As GCDConsoleLib.Vector = Nothing
                 Dim rAOI As ProjectDS.AOIsRow = GetAOIRow()
                 If TypeOf rAOI Is ProjectDS.AOIsRow Then
-                    gAOI = New GCDConsoleLib.Vector(Core.GCDProject.ProjectManagerBase.GetAbsolutePath(rAOI.Source))
+                    gAOI = New GCDConsoleLib.Vector(Core.Project.ProjectManagerBase.GetAbsolutePath(rAOI.Source))
                 End If
 
                 Dim cdEngine As Core.ChangeDetection.ChangeDetectionEngineBase = Nothing
@@ -144,8 +144,8 @@ Namespace UI.ChangeDetection
                     cdEngine = New Core.ChangeDetection.ChangeDetectionEngineMinLOD(txtName.Text, txtOutputFolder.Text, gNewDEM, gOldDEM, gAOI, valMinLodThreshold.Value, My.Settings.ChartWidth, My.Settings.ChartHeight)
                 Else
                     ' Propagated or probabilistic. Use the error surfaces
-                    Dim gNewError As New GCDConsoleLib.Raster(GCDProject.ProjectManagerBase.GetAbsolutePath(GetErrorRow(cboNewDEM, cboNewError).Source))
-                    Dim gOldError As New GCDConsoleLib.Raster(GCDProject.ProjectManagerBase.GetAbsolutePath(GetErrorRow(cboOldDEM, cboOldError).Source))
+                    Dim gNewError As New GCDConsoleLib.Raster(Core.Project.ProjectManagerBase.GetAbsolutePath(GetErrorRow(cboNewDEM, cboNewError).Source))
+                    Dim gOldError As New GCDConsoleLib.Raster(Core.Project.ProjectManagerBase.GetAbsolutePath(GetErrorRow(cboOldDEM, cboOldError).Source))
 
                     If rdoPropagated.Checked Then
                         cdEngine = New Core.ChangeDetection.ChangeDetectionEnginePropProb(txtName.Text, txtOutputFolder.Text, gNewDEM, gOldDEM, gNewError, gOldError, gAOI, My.Settings.ChartHeight, My.Settings.ChartWidth)
@@ -255,11 +255,11 @@ Namespace UI.ChangeDetection
                     End If
 
                     ' Make relative paths for storing in the project.
-                    sProbabilityRaster = GCDProject.ProjectManagerBase.GetRelativePath(dodProb.ProbabilityRaster)
-                    sSpatialCoErosionRaster = GCDProject.ProjectManagerBase.GetRelativePath(dodProb.SpatialCoErosionRaster)
-                    sSpatialCoDepositionRaster = GCDProject.ProjectManagerBase.GetRelativePath(dodProb.SpatialCoDepositionRaster)
-                    sConditionalRaster = GCDProject.ProjectManagerBase.GetRelativePath(dodProb.ConditionalRaster)
-                    sPosterior = GCDProject.ProjectManagerBase.GetRelativePath(dodProb.PosteriorRaster)
+                    sProbabilityRaster = Core.Project.ProjectManagerBase.GetRelativePath(dodProb.ProbabilityRaster)
+                    sSpatialCoErosionRaster = Core.Project.ProjectManagerBase.GetRelativePath(dodProb.SpatialCoErosionRaster)
+                    sSpatialCoDepositionRaster = Core.Project.ProjectManagerBase.GetRelativePath(dodProb.SpatialCoDepositionRaster)
+                    sConditionalRaster = Core.Project.ProjectManagerBase.GetRelativePath(dodProb.ConditionalRaster)
+                    sPosterior = Core.Project.ProjectManagerBase.GetRelativePath(dodProb.PosteriorRaster)
                 End If
 
                 If TypeOf m_DoDResult Is Core.ChangeDetection.DoDResultPropagated Then
@@ -272,7 +272,7 @@ Namespace UI.ChangeDetection
                         End If
 
                         ' Make the path relative
-                        sPropagatedError = GCDProject.ProjectManagerBase.GetRelativePath(sPropagatedError)
+                        sPropagatedError = Core.Project.ProjectManagerBase.GetRelativePath(sPropagatedError)
                     End If
                 End If
 
@@ -283,19 +283,19 @@ Namespace UI.ChangeDetection
                     fThreshold = valConfidence.Value
                 End If
 
-                Dim sRelativeOutputFolder As String = GCDProject.ProjectManagerBase.GetRelativePath(txtOutputFolder.Text)
+                Dim sRelativeOutputFolder As String = Core.Project.ProjectManagerBase.GetRelativePath(txtOutputFolder.Text)
 
                 ' Now save the DoD to the project dataset.
-                m_rDoD = GCDProject.ProjectManagerBase.ds.DoDs.AddDoDsRow(txtName.Text, sRelativeOutputFolder, cboNewDEM.Text, cboOldDEM.Text,
-                                                             GCDProject.ProjectManagerBase.CurrentProject, cboNewError.Text, cboOldError.Text _
+                m_rDoD = Core.Project.ProjectManagerBase.ds.DoDs.AddDoDsRow(txtName.Text, sRelativeOutputFolder, cboNewDEM.Text, cboOldDEM.Text,
+                                                             Core.Project.ProjectManagerBase.CurrentProject, cboNewError.Text, cboOldError.Text _
                                                              , rdoMinLOD.Checked, rdoPropagated.Checked, rdoProbabilistic.Checked _
                                                              , fThreshold, chkBayesian.Checked, m_frmSpatialCoherence.FilterSize _
                                                              , m_frmSpatialCoherence.PercentLess, m_frmSpatialCoherence.PercentGreater _
-                                                             , GCDProject.ProjectManagerBase.GetRelativePath(sRawDoDPath) _
-                                                             , GCDProject.ProjectManagerBase.GetRelativePath(sThreshDodPath) _
-                                                             , GCDProject.ProjectManagerBase.GetRelativePath(sRawHistPath) _
-                                                             , GCDProject.ProjectManagerBase.GetRelativePath(sThreshHistPath) _
-                                                             , GCDProject.ProjectManagerBase.GetRelativePath(sSummaryXMLPath) _
+                                                             , Core.Project.ProjectManagerBase.GetRelativePath(sRawDoDPath) _
+                                                             , Core.Project.ProjectManagerBase.GetRelativePath(sThreshDodPath) _
+                                                             , Core.Project.ProjectManagerBase.GetRelativePath(sRawHistPath) _
+                                                             , Core.Project.ProjectManagerBase.GetRelativePath(sThreshHistPath) _
+                                                             , Core.Project.ProjectManagerBase.GetRelativePath(sSummaryXMLPath) _
                                                              , m_DoDResult.ChangeStats.CellArea _
                                                              , m_DoDResult.ChangeStats.AreaErosion_Raw, m_DoDResult.ChangeStats.AreaDeposition_Raw _
                                                              , m_DoDResult.ChangeStats.AreaErosion_Thresholded, m_DoDResult.ChangeStats.AreaDeposition_Thresholded _
@@ -304,7 +304,7 @@ Namespace UI.ChangeDetection
                                                              , m_DoDResult.ChangeStats.VolumeErosion_Error, m_DoDResult.ChangeStats.VolumeDeposition_Error, sPropagatedError _
                                                              , sProbabilityRaster, sConditionalRaster, sPosterior, sSpatialCoDepositionRaster, sSpatialCoErosionRaster)
 
-                GCDProject.ProjectManagerBase.save()
+                Core.Project.ProjectManagerBase.save()
                 Cursor.Current = Cursors.Default
 
                 ' Try and add the DoD to the map
@@ -476,7 +476,7 @@ Namespace UI.ChangeDetection
             Dim rResult As ProjectDS.DEMSurveyRow = Nothing
             Dim lItem As naru.db.NamedObject = cbo.SelectedItem
             If TypeOf lItem Is naru.db.NamedObject Then
-                rResult = GCDProject.ProjectManagerBase.ds.DEMSurvey.FindByDEMSurveyID(lItem.ID)
+                rResult = Core.Project.ProjectManagerBase.ds.DEMSurvey.FindByDEMSurveyID(lItem.ID)
             End If
 
             Return rResult
@@ -532,7 +532,7 @@ Namespace UI.ChangeDetection
                 If String.IsNullOrEmpty(txtName.Text) Then
                     txtOutputFolder.Text = String.Empty
                 Else
-                    txtOutputFolder.Text = GCDProject.ProjectManagerBase.OutputManager.GetDoDOutputFolder(txtName.Text)
+                    txtOutputFolder.Text = Core.Project.ProjectManagerBase.OutputManager.GetDoDOutputFolder(txtName.Text)
                 End If
             Catch ex As Exception
 

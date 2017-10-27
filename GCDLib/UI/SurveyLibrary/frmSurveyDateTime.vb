@@ -5,19 +5,19 @@ Namespace UI.SurveyLibrary
 
     Public Class frmSurveyDateTime
 
-        Private m_dateTime As Core.GCDProject.SurveyDateTime
+        Private m_dateTime As Core.Project.SurveyDateTime
 
         Public Sub New()
             ' This call is required by the designer.
             InitializeComponent()
-            m_dateTime = New Core.GCDProject.SurveyDateTime
+            m_dateTime = New Core.Project.SurveyDateTime
         End Sub
 
-        Public Property SurveyDateTime As Core.GCDProject.SurveyDateTime
+        Public Property SurveyDateTime As Core.Project.SurveyDateTime
             Get
                 Return m_dateTime
             End Get
-            Set(value As Core.GCDProject.SurveyDateTime)
+            Set(value As Core.Project.SurveyDateTime)
                 m_dateTime = value
             End Set
         End Property
@@ -98,7 +98,7 @@ Namespace UI.SurveyLibrary
                 Exit Sub
             End If
 
-            m_dateTime = New Core.GCDProject.SurveyDateTime
+            m_dateTime = New Core.Project.SurveyDateTime
             m_dateTime.Year = DirectCast(cboYear.SelectedItem, NamedObject).ID
             m_dateTime.Month = DirectCast(cboMonth.SelectedItem, NamedObject).ID
             m_dateTime.Day = DirectCast(cboDay.SelectedItem, NamedObject).ID

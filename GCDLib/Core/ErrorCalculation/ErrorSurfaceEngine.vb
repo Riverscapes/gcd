@@ -17,7 +17,7 @@ Namespace Core.ErrorCalculation
 
         Private ReadOnly Property DEMRaster As GCDConsoleLib.Raster
             Get
-                Dim gDEMRaster As New GCDConsoleLib.Raster(GCDProject.ProjectManagerBase.GetAbsolutePath(m_ErrorSurfaceRow.DEMSurveyRow.Source))
+                Dim gDEMRaster As New GCDConsoleLib.Raster(Project.ProjectManagerBase.GetAbsolutePath(m_ErrorSurfaceRow.DEMSurveyRow.Source))
                 Return gDEMRaster
             End Get
         End Property
@@ -29,7 +29,7 @@ Namespace Core.ErrorCalculation
         Public Function CreateErrorSurfaceRaster() As GCDConsoleLib.Raster
 
             ' Create the name for the final error surface raster
-            Dim sErrorSurfaceRasterPath As String = GCDProject.ProjectManagerBase.OutputManager.ErrorSurfaceRasterPath(m_ErrorSurfaceRow.DEMSurveyRow.Name, m_ErrorSurfaceRow.Name, True)
+            Dim sErrorSurfaceRasterPath As String = Project.ProjectManagerBase.OutputManager.ErrorSurfaceRasterPath(m_ErrorSurfaceRow.DEMSurveyRow.Name, m_ErrorSurfaceRow.Name, True)
             Dim gErrorSurface As GCDConsoleLib.Raster = Nothing
 
             Select Case m_ErrorSurfaceRow.Type
@@ -40,7 +40,7 @@ Namespace Core.ErrorCalculation
                     ' Find the associated surface on which the error raster should be based.
                     For Each rAssoc As ProjectDS.AssociatedSurfaceRow In m_ErrorSurfaceRow.DEMSurveyRow.GetAssociatedSurfaceRows
                         If rAssoc.AssociatedSurfaceID = m_ErrorSurfaceRow.GetMultiErrorPropertiesRows.First.AssociatedSurfaceID Then
-                            Dim sAssocPath As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rAssoc.Source)
+                            Dim sAssocPath As String = Project.ProjectManagerBase.GetAbsolutePath(rAssoc.Source)
                             gErrorSurface = CreateAssociatedErrorSurface(sAssocPath, DEMRaster, sErrorSurfaceRasterPath)
                             Exit For
                         End If
@@ -59,8 +59,8 @@ Namespace Core.ErrorCalculation
             End Select
 
             gErrorSurface = New GCDConsoleLib.Raster(sErrorSurfaceRasterPath)
-            m_ErrorSurfaceRow.Source = GCDProject.ProjectManagerBase.GetRelativePath(sErrorSurfaceRasterPath)
-            GCDProject.ProjectManagerBase.save()
+            m_ErrorSurfaceRow.Source = Project.ProjectManagerBase.GetRelativePath(sErrorSurfaceRasterPath)
+            Project.ProjectManagerBase.save()
 
             ' Build raster pyramids
             If RasterPyramidManager.AutomaticallyBuildPyramids(RasterPyramidManager.PyramidRasterTypes.ErrorSurfaces) Then
@@ -77,9 +77,9 @@ Namespace Core.ErrorCalculation
             Dim sAllMethodRasters As String = String.Empty
 
             For Each aMethod As ProjectDS.MultiErrorPropertiesRow In m_ErrorSurfaceRow.GetMultiErrorPropertiesRows
-                Dim sMethodRaster As String = GCDProject.ProjectManagerBase.OutputManager.ErrorSurfarceMethodRasterPath(m_ErrorSurfaceRow.DEMSurveyRow.Name, m_ErrorSurfaceRow.Name, aMethod.Method, True)
+                Dim sMethodRaster As String = Project.ProjectManagerBase.OutputManager.ErrorSurfarceMethodRasterPath(m_ErrorSurfaceRow.DEMSurveyRow.Name, m_ErrorSurfaceRow.Name, aMethod.Method, True)
 
-                Dim sMethodMask As String = GCDProject.ProjectManagerBase.OutputManager.ErrorSurfarceMethodRasterMaskPath(m_ErrorSurfaceRow.DEMSurveyRow.Name, m_ErrorSurfaceRow.Name, aMethod.Method, True)
+                Dim sMethodMask As String = Project.ProjectManagerBase.OutputManager.ErrorSurfarceMethodRasterMaskPath(m_ErrorSurfaceRow.DEMSurveyRow.Name, m_ErrorSurfaceRow.Name, aMethod.Method, True)
                 Dim gMaskRaster As GCDConsoleLib.Raster = CreateRasterMask(aMethod.Method, sMethodMask)
 
                 Select Case aMethod.ErrorType
@@ -92,7 +92,7 @@ Namespace Core.ErrorCalculation
                         ' Find the associated surface on which the error raster should be based.
                         For Each rAssoc As ProjectDS.AssociatedSurfaceRow In m_ErrorSurfaceRow.DEMSurveyRow.GetAssociatedSurfaceRows
                             If rAssoc.AssociatedSurfaceID = m_ErrorSurfaceRow.GetMultiErrorPropertiesRows.First.AssociatedSurfaceID Then
-                                Dim sAssocPath As String = GCDProject.ProjectManagerBase.GetAbsolutePath(rAssoc.Source)
+                                Dim sAssocPath As String = Project.ProjectManagerBase.GetAbsolutePath(rAssoc.Source)
                                 CreateAssociatedErrorSurface(sAssocPath, gMaskRaster, sMethodRaster)
                                 Exit For
                             End If
@@ -107,25 +107,25 @@ Namespace Core.ErrorCalculation
             Next
 
             If Not String.IsNullOrEmpty(sAllMethodRasters) Then
-                Dim gDEM As New GCDConsoleLib.Raster(GCDProject.ProjectManagerBase.GetAbsolutePath(m_ErrorSurfaceRow.DEMSurveyRow.Source))
+                Dim gDEM As New GCDConsoleLib.Raster(Project.ProjectManagerBase.GetAbsolutePath(m_ErrorSurfaceRow.DEMSurveyRow.Source))
 
                 Dim sMosaicWithoutMask As String = WorkspaceManager.GetTempRaster("Mosaic")
                 ' Call the Raster Manager mosaic function to blend the rasters together.
                 Debug.Print(sAllMethodRasters)
-                Dim eResult As External.RasterManagerOutputCodes = External.RasterManager.Mosaic(sAllMethodRasters, sMosaicWithoutMask, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
+                Dim eResult As External.RasterManagerOutputCodes = External.RasterManager.Mosaic(sAllMethodRasters, sMosaicWithoutMask, Project.ProjectManagerBase.GCDNARCError.ErrorString)
                 If eResult <> External.RasterManagerOutputCodes.PROCESS_OK Then
-                    Dim exInner As New Exception(GCDProject.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
+                    Dim exInner As New Exception(Project.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
                     Dim ex As New Exception("Error mosaicing the raster.", exInner)
                     ex.Data("Input rasters") = sAllMethodRasters
                     ex.Data("Output raster") = sOutputRasterPath
-                    ex.Data("Error Message") = GCDProject.ProjectManagerBase.GCDNARCError.ErrorString.ToString
+                    ex.Data("Error Message") = Project.ProjectManagerBase.GCDNARCError.ErrorString.ToString
                     Throw ex
                 End If
 
                 Try
-                    eResult = External.Mask(sMosaicWithoutMask, gDEM.FilePath, sOutputRasterPath, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
+                    eResult = External.Mask(sMosaicWithoutMask, gDEM.FilePath, sOutputRasterPath, Project.ProjectManagerBase.GCDNARCError.ErrorString)
                     If eResult <> External.RasterManagerOutputCodes.PROCESS_OK Then
-                        Dim exInner As New Exception(GCDProject.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
+                        Dim exInner As New Exception(Project.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
                         Throw New Exception("Error masking mosaic output", exInner)
                     End If
                 Catch ex As Exception
@@ -136,7 +136,7 @@ Namespace Core.ErrorCalculation
                 End Try
 
                 ' Update the GCD project with the path to the output raster
-                m_ErrorSurfaceRow.Source = GCDProject.ProjectManagerBase.GetRelativePath(sOutputRasterPath)
+                m_ErrorSurfaceRow.Source = Project.ProjectManagerBase.GetRelativePath(sOutputRasterPath)
                 m_ErrorSurfaceRow.Type = MultipleErrorType
             End If
 
@@ -148,9 +148,9 @@ Namespace Core.ErrorCalculation
 
             Try
                 ' Do the conditional geoprocessing.
-                Dim eResult As External.GCDCoreOutputCodes = External.UniformError(gRasterMask.FilePath, sOutputRasterPath, fErrorValue, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
+                Dim eResult As External.GCDCoreOutputCodes = External.UniformError(gRasterMask.FilePath, sOutputRasterPath, fErrorValue, Project.ProjectManagerBase.GCDNARCError.ErrorString)
                 If eResult <> External.GCDCoreOutputCodes.PROCESS_OK Then
-                    Dim exInner As New Exception(GCDProject.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
+                    Dim exInner As New Exception(Project.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
                     Dim ex As New Exception("Error producing uniform error surface.", exInner)
                     ex.Data("GCD Core return code") = eResult.ToString
                     Throw ex
@@ -186,7 +186,7 @@ Namespace Core.ErrorCalculation
             Dim gErrorSurface As GCDConsoleLib.Raster = Nothing
 
             Try
-                Dim eResult As External.RasterManagerOutputCodes = External.Mask(sAssociatedSurfacePath, gRasterMask.FilePath, sOutputRasterPath, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
+                Dim eResult As External.RasterManagerOutputCodes = External.Mask(sAssociatedSurfacePath, gRasterMask.FilePath, sOutputRasterPath, Project.ProjectManagerBase.GCDNARCError.ErrorString)
                 If eResult <> External.GCDCoreOutputCodes.PROCESS_OK Then
                     Dim ex As New Exception("Error producing associated error surface.")
                     ex.Data("raster manager return code") = eResult.ToString
@@ -213,7 +213,7 @@ Namespace Core.ErrorCalculation
             ' Find the local path of the FIS rule file based on the library on this machine. Note
             ' could be imported project from another machine.
             Dim sFISFuleFilePath As String = String.Empty
-            For Each fis As GCDLib.Core.ErrorCalculation.FIS.FISLibraryItem In GCDProject.ProjectManagerUI.FISLibrary
+            For Each fis As GCDLib.Core.ErrorCalculation.FIS.FISLibraryItem In Project.ProjectManagerUI.FISLibrary
                 If String.Compare(fis.Name, sFISRuleDefinitionFileName, True) = 0 Then
                     sFISFuleFilePath = fis.FilePath
                     Exit For
@@ -237,12 +237,12 @@ Namespace Core.ErrorCalculation
                 ' New muti-method FIS check. Make sure that the FIS input is for this FIS file
                 If String.Compare(FISInput.FIS, sFISFuleFilePath, True) = 0 OrElse String.Compare(FISInput.FIS, IO.Path.GetFileNameWithoutExtension(sFISFuleFilePath)) = 0 Then
 
-                    Dim sSQL As String = GCDProject.ProjectManagerBase.ds.AssociatedSurface.DEMSurveyIDColumn.ColumnName & "=" & m_ErrorSurfaceRow.DEMSurveyRow.DEMSurveyID
-                    sSQL &= " AND " & GCDProject.ProjectManagerBase.ds.AssociatedSurface.NameColumn.ColumnName & "='" & FISInput.AssociatedSurface & "'"
+                    Dim sSQL As String = Project.ProjectManagerBase.ds.AssociatedSurface.DEMSurveyIDColumn.ColumnName & "=" & m_ErrorSurfaceRow.DEMSurveyRow.DEMSurveyID
+                    sSQL &= " AND " & Project.ProjectManagerBase.ds.AssociatedSurface.NameColumn.ColumnName & "='" & FISInput.AssociatedSurface & "'"
 
-                    Dim AssociatedSurface As ProjectDS.AssociatedSurfaceRow = GCDProject.ProjectManagerBase.ds.AssociatedSurface.Select(sSQL).First
+                    Dim AssociatedSurface As ProjectDS.AssociatedSurfaceRow = Project.ProjectManagerBase.ds.AssociatedSurface.Select(sSQL).First
 
-                    sInputs &= FISInput.FISInput & ";" & GCDProject.ProjectManagerBase.GetAbsolutePath(AssociatedSurface.Source) & ";"
+                    sInputs &= FISInput.FISInput & ";" & Project.ProjectManagerBase.GetAbsolutePath(AssociatedSurface.Source) & ";"
                 End If
             Next
             If sInputs.Length > 0 Then
@@ -264,11 +264,11 @@ Namespace Core.ErrorCalculation
 
                 Dim eResult As External.GCDCoreOutputCodes
                 eResult = External.CreateFISError(DEMRaster.FilePath, sFISFuleFilePath, sInputs, sFullFISRaster,
-                                                    GCDProject.ProjectManagerBase.OutputManager.OutputDriver,
-                                                    GCDProject.ProjectManagerBase.OutputManager.NoData, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
+                                                    Project.ProjectManagerBase.OutputManager.OutputDriver,
+                                                    Project.ProjectManagerBase.OutputManager.NoData, Project.ProjectManagerBase.GCDNARCError.ErrorString)
 
                 If eResult <> External.GCDCoreOutputCodes.PROCESS_OK Then
-                    Dim exInner As New Exception(GCDProject.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
+                    Dim exInner As New Exception(Project.ProjectManagerBase.GCDNARCError.ErrorString.ToString)
                     Dim ex As New Exception("Error generating FIS error raster.", exInner)
                     ex.Data("Error Code") = eResult.ToString
                     Throw ex
@@ -301,9 +301,9 @@ Namespace Core.ErrorCalculation
             ' Copy features for just this method name (e.g. "total station")
             Dim OutShapefile As String = WorkspaceManager.GetTempShapeFile("Mask")
             Dim WhereClause As String = """" & m_ErrorSurfaceRow.DEMSurveyRow.MethodMaskField & """ = '" & sMethodName & "'"
-            Dim gMaskFeatures As GCDConsoleLib.Vector = CopyFeatures(GCDProject.ProjectManagerBase.GetAbsolutePath(m_ErrorSurfaceRow.DEMSurveyRow.MethodMask), OutShapefile, WhereClause)
+            Dim gMaskFeatures As GCDConsoleLib.Vector = CopyFeatures(Project.ProjectManagerBase.GetAbsolutePath(m_ErrorSurfaceRow.DEMSurveyRow.MethodMask), OutShapefile, WhereClause)
 
-            Dim gDEM As New GCDConsoleLib.Raster(GCDProject.ProjectManagerBase.GetAbsolutePath(m_ErrorSurfaceRow.DEMSurveyRow.Source))
+            Dim gDEM As New GCDConsoleLib.Raster(Project.ProjectManagerBase.GetAbsolutePath(m_ErrorSurfaceRow.DEMSurveyRow.Source))
             Dim gResult As GCDConsoleLib.Raster = Nothing
             Try
                 Dim sTempRaster As String = WorkspaceManager.GetTempRaster("Mask")

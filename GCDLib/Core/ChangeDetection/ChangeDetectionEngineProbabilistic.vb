@@ -41,8 +41,8 @@ Namespace Core.ChangeDetection
 
             Dim propErrorRaster As String = GeneratePropagatedErrorRaster()
 
-            Dim thrDodPath As String = GCDProject.ProjectManagerBase.OutputManager.GetDoDThresholdPath(Name, IO.Path.GetDirectoryName(rawDoDPath))
-            Dim thrHistPath As String = GCDProject.ProjectManagerBase.OutputManager.GetCsvThresholdPath(Name, IO.Path.GetDirectoryName(rawDoDPath))
+            Dim thrDodPath As String = Project.ProjectManagerBase.OutputManager.GetDoDThresholdPath(Name, IO.Path.GetDirectoryName(rawDoDPath))
+            Dim thrHistPath As String = Project.ProjectManagerBase.OutputManager.GetCsvThresholdPath(Name, IO.Path.GetDirectoryName(rawDoDPath))
 
             Dim sPosteriorRaster As String = ""
             Dim sConditionalRaster As String = ""
@@ -52,37 +52,37 @@ Namespace Core.ChangeDetection
             Dim sSpatialCoErosionRaster As String = ""
 
             ' Create the prior probability raster
-            sPriorProbRaster = naru.os.File.GetNewSafeName(Folder.FullName, "priorprob", GCDProject.ProjectManagerBase.RasterExtension).FullName
+            sPriorProbRaster = naru.os.File.GetNewSafeName(Folder.FullName, "priorprob", Project.ProjectManagerBase.RasterExtension).FullName
             External.CreatePriorProbabilityRaster(rawDoDPath, AnalysisNewError.FilePath, AnalysisOldError.FilePath, sPriorProbRaster,
-                                                    GCDProject.ProjectManagerBase.OutputManager.OutputDriver,
-                                                    GCDProject.ProjectManagerBase.OutputManager.NoData,
-                                                   GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
+                                                    Project.ProjectManagerBase.OutputManager.OutputDriver,
+                                                    Project.ProjectManagerBase.OutputManager.NoData,
+                                                   Project.ProjectManagerBase.GCDNARCError.ErrorString)
 
 
 
             If TypeOf SpatialCoherenceProperties Is CoherenceProperties Then
 
-                sPosteriorRaster = naru.os.File.GetNewSafeName(Folder.FullName, "postProb", GCDProject.ProjectManagerBase.RasterExtension).FullName
-                sConditionalRaster = naru.os.File.GetNewSafeName(Folder.FullName, "condProb", GCDProject.ProjectManagerBase.RasterExtension).FullName
-                sSpatialCoErosionRaster = naru.os.File.GetNewSafeName(Folder.FullName, "nbrErosion", GCDProject.ProjectManagerBase.RasterExtension).FullName
-                sSpatialCoDepositionRaster = naru.os.File.GetNewSafeName(Folder.FullName, "nbrDeposition", GCDProject.ProjectManagerBase.RasterExtension).FullName
+                sPosteriorRaster = naru.os.File.GetNewSafeName(Folder.FullName, "postProb", Project.ProjectManagerBase.RasterExtension).FullName
+                sConditionalRaster = naru.os.File.GetNewSafeName(Folder.FullName, "condProb", Project.ProjectManagerBase.RasterExtension).FullName
+                sSpatialCoErosionRaster = naru.os.File.GetNewSafeName(Folder.FullName, "nbrErosion", Project.ProjectManagerBase.RasterExtension).FullName
+                sSpatialCoDepositionRaster = naru.os.File.GetNewSafeName(Folder.FullName, "nbrDeposition", Project.ProjectManagerBase.RasterExtension).FullName
 
                 External.ThresholdDoDProbWithSpatialCoherence(rawDoDPath, thrDodPath, AnalysisNewError.FilePath, AnalysisOldError.FilePath,
                                                             sPriorProbRaster, sPosteriorRaster, sConditionalRaster, sSpatialCoErosionRaster, sSpatialCoDepositionRaster,
-                                                             GCDProject.ProjectManagerBase.OutputManager.OutputDriver, GCDProject.ProjectManagerBase.OutputManager.NoData,
+                                                             Project.ProjectManagerBase.OutputManager.OutputDriver, Project.ProjectManagerBase.OutputManager.NoData,
                                                              SpatialCoherenceProperties.MovingWindowWidth, SpatialCoherenceProperties.MovingWindowHeight, Threshold,
-                                                             GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
+                                                             Project.ProjectManagerBase.GCDNARCError.ErrorString)
 
 
-                External.CalculateAndWriteDoDHistogram(thrDodPath, thrHistPath, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
+                External.CalculateAndWriteDoDHistogram(thrDodPath, thrHistPath, Project.ProjectManagerBase.GCDNARCError.ErrorString)
 
             Else
                 External.ThresholdDoDProbability(rawDoDPath, thrHistPath, AnalysisNewError.FilePath, AnalysisOldError.FilePath, sPriorProbRaster,
-                                                    GCDProject.ProjectManagerBase.OutputManager.OutputDriver, GCDProject.ProjectManagerBase.OutputManager.NoData,
-                                                    Threshold, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
+                                                    Project.ProjectManagerBase.OutputManager.OutputDriver, Project.ProjectManagerBase.OutputManager.NoData,
+                                                    Threshold, Project.ProjectManagerBase.GCDNARCError.ErrorString)
 
                 External.CalculateAndWriteDoDHistogramWithSpecifiedBins(thrDodPath, thrHistPath, m_nNumBins, m_nMinimumBin, m_fBinSize,
-                                                                                     m_fBinIncrement, GCDProject.ProjectManagerBase.GCDNARCError.ErrorString)
+                                                                                     m_fBinIncrement, Project.ProjectManagerBase.GCDNARCError.ErrorString)
             End If
 
             Return New DoDResultPropagated(rawDoDPath, rawHistPath, thrDodPath, thrHistPath, propErrorRaster, CellSize, LinearUnits)

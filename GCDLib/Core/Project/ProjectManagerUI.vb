@@ -1,7 +1,7 @@
 ﻿Imports System.IO
 Imports System.Windows.Forms
 
-Namespace Core.GCDProject
+Namespace Core.Project
 
     Public Class ProjectManagerUI
         Inherits ProjectManagerBase

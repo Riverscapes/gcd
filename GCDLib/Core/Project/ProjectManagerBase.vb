@@ -1,6 +1,6 @@
 ﻿Imports System.IO
 
-Namespace Core.GCDProject
+Namespace Core.Project
 
     ''' <summary>
     ''' 

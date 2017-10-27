@@ -14,7 +14,7 @@ Namespace UI.ErrorCalculation
         ' This dictionary stores the definitions of the error surface properties for each survey method polygon
         Private m_dErrorCalculationProperties As Dictionary(Of String, ErrorCalcPropertiesBase)
 
-        Private m_dSurveyTypes As Dictionary(Of String, Core.GCDProject.SurveyType)
+        Private m_dSurveyTypes As Dictionary(Of String, Core.Project.SurveyType)
 
         Private Sub frmErrorCalculation2_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
@@ -30,11 +30,11 @@ Namespace UI.ErrorCalculation
             grdErrorProperties.AllowUserToResizeRows = False
             grdFISInputs.AllowUserToResizeRows = False
 
-            m_dSurveyTypes = GCDLib.Core.GCDProject.ProjectManagerBase.SurveyTypes
+            m_dSurveyTypes = GCDLib.Core.Project.ProjectManagerBase.SurveyTypes
 
             ' Load all the FIS rule files in the library to the combobox
             ' (Need to do this before the try/catch below that loads the error surface data
-            For Each fis As FIS.FISLibraryItem In Core.GCDProject.ProjectManagerUI.FISLibrary
+            For Each fis As FIS.FISLibraryItem In Core.Project.ProjectManagerUI.FISLibrary
                 cboFIS.Items.Add(fis)
             Next
 
@@ -82,7 +82,7 @@ Namespace UI.ErrorCalculation
 
             Try
                 ' Safely retrieve the spatial units of the DEM
-                Dim sDEMPath As String = Core.GCDProject.ProjectManagerBase.GetAbsolutePath(m_rDEMSurvey.Source)
+                Dim sDEMPath As String = Core.Project.ProjectManagerBase.GetAbsolutePath(m_rDEMSurvey.Source)
                 Dim gDEM As New GCDConsoleLib.Raster(sDEMPath)
                 rdoUniform.Text = String.Format("{0} ({1})", rdoUniform.Text, UnitsNet.Length.GetAbbreviation(gDEM.Proj.LinearUnit))
             Catch ex As Exception
@@ -202,7 +202,7 @@ Namespace UI.ErrorCalculation
                     If m_rDEMSurvey.IsMethodMaskFieldNull Then
                         Throw New Exception("Multi method DEM with no method mask field defined.")
                     Else
-                        Dim sMethodMask As String = Core.GCDProject.ProjectManagerBase.GetAbsolutePath(m_rDEMSurvey.MethodMask)
+                        Dim sMethodMask As String = Core.Project.ProjectManagerBase.GetAbsolutePath(m_rDEMSurvey.MethodMask)
                         Dim gMethodMask As New GCDConsoleLib.Vector(sMethodMask)
 
                         If gMethodMask.Fields.ContainsKey(m_rDEMSurvey.MethodMaskField) Then
@@ -543,8 +543,8 @@ Namespace UI.ErrorCalculation
             Else
                 Dim sRasterPath As String = String.Empty
                 If Not String.IsNullOrEmpty(txtName.Text) Then
-                    sRasterPath = Core.GCDProject.ProjectManagerBase.OutputManager.ErrorSurfaceRasterPath(m_rDEMSurvey.Name, txtName.Text, False)
-                    sRasterPath = Core.GCDProject.ProjectManagerBase.GetRelativePath(sRasterPath)
+                    sRasterPath = Core.Project.ProjectManagerBase.OutputManager.ErrorSurfaceRasterPath(m_rDEMSurvey.Name, txtName.Text, False)
+                    sRasterPath = Core.Project.ProjectManagerBase.GetRelativePath(sRasterPath)
                 End If
                 txtRasterPath.Text = sRasterPath
             End If
@@ -639,12 +639,12 @@ Namespace UI.ErrorCalculation
                 m_rErrorSurface.Name = txtName.Text
             Else
                 ' New error surface. Save it to the database
-                m_rErrorSurface = Core.GCDProject.ProjectManagerBase.ds.ErrorSurface.NewErrorSurfaceRow
+                m_rErrorSurface = Core.Project.ProjectManagerBase.ds.ErrorSurface.NewErrorSurfaceRow
                 m_rErrorSurface.Name = txtName.Text
                 m_rErrorSurface.DEMSurveyRow = m_rDEMSurvey
                 m_rErrorSurface.Source = txtRasterPath.Text
                 m_rErrorSurface.Type = ErrorSurfaceType
-                Core.GCDProject.ProjectManagerBase.ds.ErrorSurface.AddErrorSurfaceRow(m_rErrorSurface)
+                Core.Project.ProjectManagerBase.ds.ErrorSurface.AddErrorSurfaceRow(m_rErrorSurface)
 
                 ' Add all the survey methods to the database
                 For Each sSurveyMethod As String In m_dErrorCalculationProperties.Keys
@@ -666,7 +666,7 @@ Namespace UI.ErrorCalculation
                         sErrorType = DirectCast(m_dErrorCalculationProperties(sSurveyMethod), ErrorCalcPropertiesFIS).FISRuleName
                     End If
 
-                    Core.GCDProject.ProjectManagerBase.ds.MultiErrorProperties.AddMultiErrorPropertiesRow(sSurveyMethod, fError, m_rErrorSurface, sErrorType, nAssociatedSurfaceID) ' m_dErrorCalculationProperties(sSurveyMethod).ErrorType)
+                    Core.Project.ProjectManagerBase.ds.MultiErrorProperties.AddMultiErrorPropertiesRow(sSurveyMethod, fError, m_rErrorSurface, sErrorType, nAssociatedSurfaceID) ' m_dErrorCalculationProperties(sSurveyMethod).ErrorType)
 
                     ' Now add all the FIS inputs to the FIS table
                     If TypeOf m_dErrorCalculationProperties(sSurveyMethod) Is ErrorCalcPropertiesFIS Then
@@ -675,7 +675,7 @@ Namespace UI.ErrorCalculation
                             ' Now find the associated surface for this input
                             For Each rAssoc As ProjectDS.AssociatedSurfaceRow In m_rDEMSurvey.GetAssociatedSurfaceRows
                                 If rAssoc.AssociatedSurfaceID = errProps.FISInputs(sInput) Then
-                                    Core.GCDProject.ProjectManagerBase.ds.FISInputs.AddFISInputsRow(m_rErrorSurface, sInput, rAssoc.Name, errProps.FISRuleName)
+                                    Core.Project.ProjectManagerBase.ds.FISInputs.AddFISInputsRow(m_rErrorSurface, sInput, rAssoc.Name, errProps.FISRuleName)
                                     Exit For
                                 End If
                             Next
@@ -696,7 +696,7 @@ Namespace UI.ErrorCalculation
                 Catch ex As Exception
                     DialogResult = DialogResult.None
                     Cursor.Current = Cursors.Default
-                    Core.GCDProject.ProjectManagerBase.ds.ErrorSurface.RemoveErrorSurfaceRow(m_rErrorSurface)
+                    Core.Project.ProjectManagerBase.ds.ErrorSurface.RemoveErrorSurfaceRow(m_rErrorSurface)
                     Dim ex2 As New Exception("Error generating error surface raster. No changes were made to the GCD project.", ex)
                     naru.error.ExceptionUI.HandleException(ex2)
                     Exit Sub
@@ -705,7 +705,7 @@ Namespace UI.ErrorCalculation
 
             ' Now save the GCD project
             Try
-                Core.GCDProject.ProjectManagerBase.save()
+                Core.Project.ProjectManagerBase.save()
             Catch ex As Exception
                 DialogResult = DialogResult.None
                 Cursor.Current = Cursors.Default
@@ -730,7 +730,7 @@ Namespace UI.ErrorCalculation
             For Each sFISInput As String In errProps.FISInputs.Keys
                 For Each rAssoc As ProjectDS.AssociatedSurfaceRow In m_rDEMSurvey.GetAssociatedSurfaceRows
                     If rAssoc.AssociatedSurfaceID = errProps.FISInputs(sFISInput) Then
-                        sInputs &= String.Format("{0};{1}", sFISInput, Core.GCDProject.ProjectManagerBase.GetAbsolutePath(rAssoc.Source))
+                        sInputs &= String.Format("{0};{1}", sFISInput, Core.Project.ProjectManagerBase.GetAbsolutePath(rAssoc.Source))
                         Exit For
                     End If
                 Next
