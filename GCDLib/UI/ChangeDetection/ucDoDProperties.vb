@@ -178,10 +178,6 @@ Namespace UI.ChangeDetection
             End If
         End Sub
 
-        Private Sub Button1_Click(sender As System.Object, e As System.EventArgs) Handles Button1.Click
-            MsgBox("Copy DoD not yet implemented.", MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
-        End Sub
-
         Private Sub PropertiesToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles PropertiesToolStripMenuItem.Click
             MsgBox("Properties not yet implemented", MsgBoxStyle.Information, My.Resources.ApplicationNameLong)
         End Sub

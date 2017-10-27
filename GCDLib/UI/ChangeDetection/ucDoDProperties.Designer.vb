@@ -27,11 +27,13 @@
             Me.Label1 = New System.Windows.Forms.Label()
             Me.GroupBox1 = New System.Windows.Forms.GroupBox()
             Me.txtNewError = New System.Windows.Forms.TextBox()
+            Me.cmsBasicRaster = New System.Windows.Forms.ContextMenuStrip(Me.components)
+            Me.AddToMapToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+            Me.Label2 = New System.Windows.Forms.Label()
+            Me.txtNewDEM = New System.Windows.Forms.TextBox()
             Me.cmsRaster = New System.Windows.Forms.ContextMenuStrip(Me.components)
             Me.PropertiesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.AddToMapToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-            Me.Label2 = New System.Windows.Forms.Label()
-            Me.txtNewDEM = New System.Windows.Forms.TextBox()
             Me.GroupBox2 = New System.Windows.Forms.GroupBox()
             Me.txtOldError = New System.Windows.Forms.TextBox()
             Me.Label3 = New System.Windows.Forms.Label()
@@ -43,7 +45,6 @@
             Me.txtType = New System.Windows.Forms.TextBox()
             Me.Label5 = New System.Windows.Forms.Label()
             Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
-            Me.Button1 = New System.Windows.Forms.Button()
             Me.grpProbabilistic = New System.Windows.Forms.GroupBox()
             Me.txtDepositionSpatialCoherenceRaster = New System.Windows.Forms.TextBox()
             Me.Label12 = New System.Windows.Forms.Label()
@@ -62,16 +63,14 @@
             Me.grpPropagated = New System.Windows.Forms.GroupBox()
             Me.txtPropErr = New System.Windows.Forms.TextBox()
             Me.Label11 = New System.Windows.Forms.Label()
-            Me.cmsBasicRaster = New System.Windows.Forms.ContextMenuStrip(Me.components)
-            Me.AddToMapToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
             Me.GroupBox1.SuspendLayout()
+            Me.cmsBasicRaster.SuspendLayout()
             Me.cmsRaster.SuspendLayout()
             Me.GroupBox2.SuspendLayout()
             Me.GroupBox3.SuspendLayout()
             Me.TableLayoutPanel1.SuspendLayout()
             Me.grpProbabilistic.SuspendLayout()
             Me.grpPropagated.SuspendLayout()
-            Me.cmsBasicRaster.SuspendLayout()
             Me.SuspendLayout()
             '
             'Label1
@@ -90,7 +89,7 @@
             Me.GroupBox1.Controls.Add(Me.txtNewDEM)
             Me.GroupBox1.Controls.Add(Me.Label1)
             Me.GroupBox1.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.GroupBox1.Location = New System.Drawing.Point(3, 33)
+            Me.GroupBox1.Location = New System.Drawing.Point(3, 3)
             Me.GroupBox1.Name = "GroupBox1"
             Me.GroupBox1.Size = New System.Drawing.Size(244, 74)
             Me.GroupBox1.TabIndex = 1
@@ -100,7 +99,7 @@
             'txtNewError
             '
             Me.txtNewError.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-                Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
             Me.txtNewError.ContextMenuStrip = Me.cmsBasicRaster
             Me.txtNewError.Location = New System.Drawing.Point(71, 46)
             Me.txtNewError.Name = "txtNewError"
@@ -108,25 +107,18 @@
             Me.txtNewError.Size = New System.Drawing.Size(163, 20)
             Me.txtNewError.TabIndex = 3
             '
-            'cmsRaster
+            'cmsBasicRaster
             '
-            Me.cmsRaster.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PropertiesToolStripMenuItem, Me.AddToMapToolStripMenuItem})
-            Me.cmsRaster.Name = "cmsRaster"
-            Me.cmsRaster.Size = New System.Drawing.Size(138, 48)
+            Me.cmsBasicRaster.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AddToMapToolStripMenuItem1})
+            Me.cmsBasicRaster.Name = "cmsBasicRaster"
+            Me.cmsBasicRaster.Size = New System.Drawing.Size(138, 26)
             '
-            'PropertiesToolStripMenuItem
+            'AddToMapToolStripMenuItem1
             '
-            Me.PropertiesToolStripMenuItem.Image = My.Resources.Resources.Settings
-            Me.PropertiesToolStripMenuItem.Name = "PropertiesToolStripMenuItem"
-            Me.PropertiesToolStripMenuItem.Size = New System.Drawing.Size(137, 22)
-            Me.PropertiesToolStripMenuItem.Text = "Properties"
-            '
-            'AddToMapToolStripMenuItem
-            '
-            Me.AddToMapToolStripMenuItem.Image = My.Resources.Resources.AddToMap
-            Me.AddToMapToolStripMenuItem.Name = "AddToMapToolStripMenuItem"
-            Me.AddToMapToolStripMenuItem.Size = New System.Drawing.Size(137, 22)
-            Me.AddToMapToolStripMenuItem.Text = "Add to Map"
+            Me.AddToMapToolStripMenuItem1.Image = Global.GCDLib.My.Resources.Resources.AddToMap
+            Me.AddToMapToolStripMenuItem1.Name = "AddToMapToolStripMenuItem1"
+            Me.AddToMapToolStripMenuItem1.Size = New System.Drawing.Size(137, 22)
+            Me.AddToMapToolStripMenuItem1.Text = "Add to Map"
             '
             'Label2
             '
@@ -140,13 +132,33 @@
             'txtNewDEM
             '
             Me.txtNewDEM.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-                Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
             Me.txtNewDEM.ContextMenuStrip = Me.cmsRaster
             Me.txtNewDEM.Location = New System.Drawing.Point(72, 20)
             Me.txtNewDEM.Name = "txtNewDEM"
             Me.txtNewDEM.ReadOnly = True
             Me.txtNewDEM.Size = New System.Drawing.Size(163, 20)
             Me.txtNewDEM.TabIndex = 1
+            '
+            'cmsRaster
+            '
+            Me.cmsRaster.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PropertiesToolStripMenuItem, Me.AddToMapToolStripMenuItem})
+            Me.cmsRaster.Name = "cmsRaster"
+            Me.cmsRaster.Size = New System.Drawing.Size(138, 48)
+            '
+            'PropertiesToolStripMenuItem
+            '
+            Me.PropertiesToolStripMenuItem.Image = Global.GCDLib.My.Resources.Resources.Settings
+            Me.PropertiesToolStripMenuItem.Name = "PropertiesToolStripMenuItem"
+            Me.PropertiesToolStripMenuItem.Size = New System.Drawing.Size(137, 22)
+            Me.PropertiesToolStripMenuItem.Text = "Properties"
+            '
+            'AddToMapToolStripMenuItem
+            '
+            Me.AddToMapToolStripMenuItem.Image = Global.GCDLib.My.Resources.Resources.AddToMap
+            Me.AddToMapToolStripMenuItem.Name = "AddToMapToolStripMenuItem"
+            Me.AddToMapToolStripMenuItem.Size = New System.Drawing.Size(137, 22)
+            Me.AddToMapToolStripMenuItem.Text = "Add to Map"
             '
             'GroupBox2
             '
@@ -155,7 +167,7 @@
             Me.GroupBox2.Controls.Add(Me.txtOldDEM)
             Me.GroupBox2.Controls.Add(Me.Label4)
             Me.GroupBox2.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.GroupBox2.Location = New System.Drawing.Point(253, 33)
+            Me.GroupBox2.Location = New System.Drawing.Point(253, 3)
             Me.GroupBox2.Name = "GroupBox2"
             Me.GroupBox2.Size = New System.Drawing.Size(244, 74)
             Me.GroupBox2.TabIndex = 2
@@ -165,7 +177,7 @@
             'txtOldError
             '
             Me.txtOldError.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-                Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
             Me.txtOldError.ContextMenuStrip = Me.cmsBasicRaster
             Me.txtOldError.Location = New System.Drawing.Point(71, 46)
             Me.txtOldError.Name = "txtOldError"
@@ -185,7 +197,7 @@
             'txtOldDEM
             '
             Me.txtOldDEM.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-                Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
             Me.txtOldDEM.ContextMenuStrip = Me.cmsRaster
             Me.txtOldDEM.Location = New System.Drawing.Point(71, 20)
             Me.txtOldDEM.Name = "txtOldDEM"
@@ -205,12 +217,12 @@
             'GroupBox3
             '
             Me.GroupBox3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-                Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
             Me.GroupBox3.Controls.Add(Me.txtThreshold)
             Me.GroupBox3.Controls.Add(Me.lblThreshold)
             Me.GroupBox3.Controls.Add(Me.txtType)
             Me.GroupBox3.Controls.Add(Me.Label5)
-            Me.GroupBox3.Location = New System.Drawing.Point(3, 113)
+            Me.GroupBox3.Location = New System.Drawing.Point(3, 83)
             Me.GroupBox3.Name = "GroupBox3"
             Me.GroupBox3.Size = New System.Drawing.Size(244, 74)
             Me.GroupBox3.TabIndex = 3
@@ -220,7 +232,7 @@
             'txtThreshold
             '
             Me.txtThreshold.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-                Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
             Me.txtThreshold.Location = New System.Drawing.Point(72, 46)
             Me.txtThreshold.Name = "txtThreshold"
             Me.txtThreshold.ReadOnly = True
@@ -239,7 +251,7 @@
             'txtType
             '
             Me.txtType.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-                Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
             Me.txtType.Location = New System.Drawing.Point(72, 20)
             Me.txtType.Name = "txtType"
             Me.txtType.ReadOnly = True
@@ -260,31 +272,20 @@
             Me.TableLayoutPanel1.ColumnCount = 2
             Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
             Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-            Me.TableLayoutPanel1.Controls.Add(Me.GroupBox1, 0, 1)
-            Me.TableLayoutPanel1.Controls.Add(Me.GroupBox2, 1, 1)
-            Me.TableLayoutPanel1.Controls.Add(Me.GroupBox3, 0, 2)
-            Me.TableLayoutPanel1.Controls.Add(Me.Button1, 0, 0)
-            Me.TableLayoutPanel1.Controls.Add(Me.grpProbabilistic, 0, 3)
-            Me.TableLayoutPanel1.Controls.Add(Me.grpPropagated, 1, 2)
+            Me.TableLayoutPanel1.Controls.Add(Me.GroupBox1, 0, 0)
+            Me.TableLayoutPanel1.Controls.Add(Me.GroupBox2, 1, 0)
+            Me.TableLayoutPanel1.Controls.Add(Me.GroupBox3, 0, 1)
+            Me.TableLayoutPanel1.Controls.Add(Me.grpProbabilistic, 0, 2)
+            Me.TableLayoutPanel1.Controls.Add(Me.grpPropagated, 1, 1)
             Me.TableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
             Me.TableLayoutPanel1.Location = New System.Drawing.Point(0, 0)
             Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
-            Me.TableLayoutPanel1.RowCount = 4
-            Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+            Me.TableLayoutPanel1.RowCount = 3
             Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80.0!))
             Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80.0!))
             Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle())
             Me.TableLayoutPanel1.Size = New System.Drawing.Size(500, 472)
             Me.TableLayoutPanel1.TabIndex = 5
-            '
-            'Button1
-            '
-            Me.Button1.Image = My.Resources.Resources.Copy
-            Me.Button1.Location = New System.Drawing.Point(3, 3)
-            Me.Button1.Name = "Button1"
-            Me.Button1.Size = New System.Drawing.Size(23, 23)
-            Me.Button1.TabIndex = 0
-            Me.Button1.UseVisualStyleBackColor = True
             '
             'grpProbabilistic
             '
@@ -304,9 +305,9 @@
             Me.grpProbabilistic.Controls.Add(Me.txtProbabilityRaster)
             Me.grpProbabilistic.Controls.Add(Me.Label7)
             Me.grpProbabilistic.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.grpProbabilistic.Location = New System.Drawing.Point(3, 193)
+            Me.grpProbabilistic.Location = New System.Drawing.Point(3, 163)
             Me.grpProbabilistic.Name = "grpProbabilistic"
-            Me.grpProbabilistic.Size = New System.Drawing.Size(494, 276)
+            Me.grpProbabilistic.Size = New System.Drawing.Size(494, 306)
             Me.grpProbabilistic.TabIndex = 4
             Me.grpProbabilistic.TabStop = False
             Me.grpProbabilistic.Text = "Probabilistic Uncertainty Properties"
@@ -315,7 +316,7 @@
             'txtDepositionSpatialCoherenceRaster
             '
             Me.txtDepositionSpatialCoherenceRaster.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-                Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
             Me.txtDepositionSpatialCoherenceRaster.ContextMenuStrip = Me.cmsBasicRaster
             Me.txtDepositionSpatialCoherenceRaster.Location = New System.Drawing.Point(106, 154)
             Me.txtDepositionSpatialCoherenceRaster.Name = "txtDepositionSpatialCoherenceRaster"
@@ -334,7 +335,7 @@
             'txtPosteriorRaster
             '
             Me.txtPosteriorRaster.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-                Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
             Me.txtPosteriorRaster.ContextMenuStrip = Me.cmsBasicRaster
             Me.txtPosteriorRaster.Location = New System.Drawing.Point(106, 244)
             Me.txtPosteriorRaster.Name = "txtPosteriorRaster"
@@ -353,7 +354,7 @@
             'txtConditionalRaster
             '
             Me.txtConditionalRaster.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-                Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
             Me.txtConditionalRaster.ContextMenuStrip = Me.cmsBasicRaster
             Me.txtConditionalRaster.Location = New System.Drawing.Point(106, 199)
             Me.txtConditionalRaster.Name = "txtConditionalRaster"
@@ -372,7 +373,7 @@
             'txtErosionalSpatialCoherenceRaster
             '
             Me.txtErosionalSpatialCoherenceRaster.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-                Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
             Me.txtErosionalSpatialCoherenceRaster.ContextMenuStrip = Me.cmsBasicRaster
             Me.txtErosionalSpatialCoherenceRaster.Location = New System.Drawing.Point(106, 109)
             Me.txtErosionalSpatialCoherenceRaster.Name = "txtErosionalSpatialCoherenceRaster"
@@ -391,7 +392,7 @@
             'txtBayesian
             '
             Me.txtBayesian.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-                Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
             Me.txtBayesian.Location = New System.Drawing.Point(106, 52)
             Me.txtBayesian.Name = "txtBayesian"
             Me.txtBayesian.ReadOnly = True
@@ -401,7 +402,7 @@
             'txtConfidence
             '
             Me.txtConfidence.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-                Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
             Me.txtConfidence.Location = New System.Drawing.Point(106, 29)
             Me.txtConfidence.Name = "txtConfidence"
             Me.txtConfidence.ReadOnly = True
@@ -429,7 +430,7 @@
             'txtProbabilityRaster
             '
             Me.txtProbabilityRaster.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-                Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
             Me.txtProbabilityRaster.ContextMenuStrip = Me.cmsBasicRaster
             Me.txtProbabilityRaster.Location = New System.Drawing.Point(106, 75)
             Me.txtProbabilityRaster.Name = "txtProbabilityRaster"
@@ -451,7 +452,7 @@
             Me.grpPropagated.Controls.Add(Me.txtPropErr)
             Me.grpPropagated.Controls.Add(Me.Label11)
             Me.grpPropagated.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.grpPropagated.Location = New System.Drawing.Point(253, 113)
+            Me.grpPropagated.Location = New System.Drawing.Point(253, 83)
             Me.grpPropagated.Name = "grpPropagated"
             Me.grpPropagated.Size = New System.Drawing.Size(244, 74)
             Me.grpPropagated.TabIndex = 5
@@ -462,7 +463,7 @@
             'txtPropErr
             '
             Me.txtPropErr.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-                Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
             Me.txtPropErr.ContextMenuStrip = Me.cmsBasicRaster
             Me.txtPropErr.Location = New System.Drawing.Point(82, 25)
             Me.txtPropErr.Name = "txtPropErr"
@@ -478,28 +479,16 @@
             Me.Label11.TabIndex = 4
             Me.Label11.Text = "Propagated error:"
             '
-            'cmsBasicRaster
-            '
-            Me.cmsBasicRaster.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AddToMapToolStripMenuItem1})
-            Me.cmsBasicRaster.Name = "cmsBasicRaster"
-            Me.cmsBasicRaster.Size = New System.Drawing.Size(138, 26)
-            '
-            'AddToMapToolStripMenuItem1
-            '
-            Me.AddToMapToolStripMenuItem1.Image = My.Resources.Resources.AddToMap
-            Me.AddToMapToolStripMenuItem1.Name = "AddToMapToolStripMenuItem1"
-            Me.AddToMapToolStripMenuItem1.Size = New System.Drawing.Size(137, 22)
-            Me.AddToMapToolStripMenuItem1.Text = "Add to Map"
-            '
-            'DodPropertiesUC
+            'ucDoDProperties
             '
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
             Me.Controls.Add(Me.TableLayoutPanel1)
-            Me.Name = "DodPropertiesUC"
+            Me.Name = "ucDoDProperties"
             Me.Size = New System.Drawing.Size(500, 472)
             Me.GroupBox1.ResumeLayout(False)
             Me.GroupBox1.PerformLayout()
+            Me.cmsBasicRaster.ResumeLayout(False)
             Me.cmsRaster.ResumeLayout(False)
             Me.GroupBox2.ResumeLayout(False)
             Me.GroupBox2.PerformLayout()
@@ -510,7 +499,6 @@
             Me.grpProbabilistic.PerformLayout()
             Me.grpPropagated.ResumeLayout(False)
             Me.grpPropagated.PerformLayout()
-            Me.cmsBasicRaster.ResumeLayout(False)
             Me.ResumeLayout(False)
 
         End Sub
@@ -532,7 +520,6 @@
         Friend WithEvents cmsRaster As System.Windows.Forms.ContextMenuStrip
         Friend WithEvents AddToMapToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
         Friend WithEvents TableLayoutPanel1 As System.Windows.Forms.TableLayoutPanel
-        Friend WithEvents Button1 As System.Windows.Forms.Button
         Friend WithEvents PropertiesToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
         Friend WithEvents grpProbabilistic As System.Windows.Forms.GroupBox
         Friend WithEvents txtPosteriorRaster As System.Windows.Forms.TextBox

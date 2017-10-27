@@ -1023,7 +1023,7 @@ Namespace UI.Project
                         LoadTree(sTag)
 
                         ' Now show the results form for this new DoD Calculation
-                        Dim frmResults As New ChangeDetection.frmDoDResults(frmDoDCalculation.DoDRow.Name, frmDoDCalculation.DoDResults)
+                        Dim frmResults As New ChangeDetection.frmDoDResults(frmDoDCalculation.DoDRow, frmDoDCalculation.DoDResults)
                         frmResults.ShowDialog()
                     End If
                 End If
@@ -1115,7 +1115,7 @@ Namespace UI.Project
                         Dim rDoD As ProjectDS.DoDsRow = GCDProject.ProjectManagerBase.ds.DoDs.FindByDoDID(nID)
                         If TypeOf rDoD Is ProjectDS.DoDsRow Then
                             Dim dodResult As Core.ChangeDetection.DoDResult = Core.ChangeDetection.DoDResult.CreateFromDoDRow(rDoD)
-                            Dim frm As New ChangeDetection.frmDoDResults(rDoD.Name, dodResult)
+                            Dim frm As New ChangeDetection.frmDoDResults(rDoD, dodResult)
                             frm.ShowDialog()
                         End If
                     End If

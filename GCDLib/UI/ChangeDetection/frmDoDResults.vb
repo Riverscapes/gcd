@@ -8,13 +8,15 @@
         Private m_Options As DoDSummaryDisplayOptions
         Private m_DoDResult As Core.ChangeDetection.DoDResult
 
-        Public Sub New(sDoDName As String, ByRef dodResult As Core.ChangeDetection.DoDResult)
+        Public Sub New(rDoD As ProjectDS.DoDsRow, ByRef dodResult As Core.ChangeDetection.DoDResult)
 
             InitializeComponent()
 
             m_DoDResult = dodResult
             m_Options = New DoDSummaryDisplayOptions(dodResult.Units)
-            txtDoDName.Text = sDoDName
+            txtDoDName.Text = rDoD.Name
+            ucProperties.DoDRow = rDoD
+
         End Sub
 
         Private Sub DoDResultsForm_Load(sender As Object, e As System.EventArgs) Handles Me.Load
