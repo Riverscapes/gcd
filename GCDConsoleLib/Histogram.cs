@@ -12,9 +12,9 @@ namespace GCDConsoleLib
     /// </summary>
     public class Histogram
     {
-        private List<double> counts;
-        private List<double> binlefts;
-        private List<double> binSums;
+        private List<int> _dlcounts;
+        private List<double> _dlbinlefts;
+        private List<double> _dlbinSums;
 
         // Private since these are unitless and we don't want anyone using them
         private double _cellHeight;
@@ -24,7 +24,7 @@ namespace GCDConsoleLib
         public LengthUnit VerticalUnit;
         public LengthUnit HorizontalUnit;
 
-        public int BinCount { get { return counts.Count; } }
+        public int Count { get { return _dlcounts.Count; } }
         public Length BinWidth { get { return Length.From(_binWidth, VerticalUnit);  } }
 
         /// <summary>
@@ -84,19 +84,22 @@ namespace GCDConsoleLib
         {
             _cellWidth = cellWidth;
             _cellHeight = cellHeight;
+            _binWidth = width;
             VerticalUnit = vUnit;
             HorizontalUnit = hUnit;
 
             // Must be a multiple of 2. Add a bin
             if (bins % 2 == 1) bins++;
 
-            counts = new List<double>();
-            binlefts = new List<double>();
+            _dlcounts = new List<int>();
+            _dlbinlefts = new List<double>();
+            _dlbinSums = new List<double>();
 
-            for (int i = 0; i < bins; i++)
+            for (int bid = 0; bid < bins; bid++)
             {
-                counts.Add(0);
-                binlefts.Add(width * (i - (bins / 2)));
+                _dlcounts.Add(0);
+                _dlbinlefts.Add(width * (bid - (bins / 2)));
+                _dlbinSums.Add(0);
             }
         }
 
@@ -105,42 +108,49 @@ namespace GCDConsoleLib
         /// </summary>
         /// <param name="val"></param>
         /// <returns></returns>
-        public int BinId(double val)
+        public int BinId(Length val)
         {
-            int binind;
-            for (binind = 0; binind < val; binind++) ;
-            return binind;
+            double dVal = val.As(VerticalUnit);
+            int bid = -1;
+            if (dVal >= _dlbinlefts[0])
+            {  
+                for (bid = 0; bid < _dlcounts.Count && _dlbinlefts[bid] + _binWidth < dVal; bid++) ;
+                // Error condition
+                if (bid >= _dlcounts.Count)
+                    bid = -1;
+            }
+            return bid;
         }
 
         /// <summary>
         /// Add a value to the bin
         /// </summary>
         /// <param name="val"></param>
-        public void binVal(double val)
+        public void AddBinVal(double val)
         {
-            int idx;
-            for (idx = 0; idx < val; idx++) ;
-            counts[idx]++;
-            binSums[idx] += val;
+            int bid;
+            for (bid = 0; _dlbinlefts[bid]+_binWidth < val; bid++) ;
+            _dlcounts[bid]++;
+            _dlbinSums[bid] += val;
         }
 
         /// <summary>
         /// These are helpful functions to figure stuff out.
         /// </summary>
         public int FirstBinId { get { return 0; } }
-        public int LastBinId { get { return binlefts.Count - 1; } }
+        public int LastBinId { get { return _dlbinlefts.Count - 1; } }
 
-        public double BinLower(double val) { return BinLower(BinId(val)); }
-        public double BinLower(int id) { return binlefts[id]; }
+        public Length BinLower(Length val) { return BinLower(BinId(val)); }
+        public Length BinLower(int id) { return Length.From(_dlbinlefts[id], VerticalUnit); }
 
-        public double BinUpper(double val) { return BinUpper(BinId(val)); }
-        public double BinUpper(int id) { return binlefts[id] + _binWidth; }
+        public Length BinUpper(Length val) { return BinUpper(BinId(val)); }
+        public Length BinUpper(int id) { return Length.From(_dlbinlefts[id] + _binWidth, VerticalUnit); }
 
-        public double BinCentre(double val) { return BinCentre(BinId(val)); }
-        public double BinCentre(int id) { return binlefts[id] + _binWidth / 2; }
+        public Length BinCentre(Length val) { return BinCentre(BinId(val)); }
+        public Length BinCentre(int id) { return Length.From(_dlbinlefts[id] + _binWidth / 2, VerticalUnit); }
 
-        public double HistogramLower { get { return binlefts[0]; } }
-        public double HistogramUpper { get { return binlefts.Last() + _binWidth; } }
+        public Length HistogramLower { get { return Length.From(_dlbinlefts[0], VerticalUnit); } }
+        public Length HistogramUpper { get { return Length.From(_dlbinlefts.Last() + _binWidth, VerticalUnit); } }
 
         /// <summary>
         /// Get the bin Area in Area units
@@ -149,27 +159,37 @@ namespace GCDConsoleLib
         {
             get
             {
-                return Area.From((_cellHeight * _cellWidth), Conversion.LengthUnit2AreaUnit(HorizontalUnit));
+                return Area.From((Math.Abs(_cellHeight) * Math.Abs(_cellWidth)), Conversion.LengthUnit2AreaUnit(HorizontalUnit));
             }
         }
 
         /// <summary>
-        /// BinSum just returns the bi
+        /// Return the sum of values (used to make the volume) in length units
         /// </summary>
-        /// <param name="binId"></param>
+        /// <param name="bid"></param>
         /// <returns></returns>
-        private Length BinSum(int binId){
-            return Length.From(binSums[binId], VerticalUnit);
+        private Length BinSum(int bid){
+            return Length.From(_dlbinSums[bid], VerticalUnit);
         }
 
         /// <summary>
-        /// Get the Volume in volumetric units
+        /// Get the Volume of one bin in volumetric units
         /// </summary>
-        /// <param name="binId"></param>
+        /// <param name="bid"></param>
         /// <returns></returns>
-        public Volume BinVolume(int binId)
+        public Volume BinVolume(int bid)
         {
-            return Volume.FromCubicMeters(BinArea.SquareMeters * BinSum(binId).Meters);
+            return Volume.FromCubicMeters(BinArea.SquareMeters * BinSum(bid).Meters);
+        }
+
+        /// <summary>
+        /// Return a count at a given bin
+        /// </summary>
+        /// <param name="bid"></param>
+        /// <returns></returns>
+        public int BinCount(int bid)
+        {
+            return _dlcounts[bid];
         }
 
         /// <summary>
@@ -183,9 +203,9 @@ namespace GCDConsoleLib
                 stream.WriteLine(String.Format("Cell Height, Cell Width, Vertical Unit, Horizontal", VerticalUnit.ToString(), HorizontalUnit.ToString()));
                 stream.WriteLine(String.Format("{0},{1},{2},{3}", _cellHeight, _cellWidth, VerticalUnit.ToString(), HorizontalUnit.ToString()));
                 stream.WriteLine("Bin Lower,Bin Upper,Bin Centre,Area,Volume,Cell Count");
-                for (int bid = 0; bid < counts.Count; bid++)
+                for (int bid = 0; bid < _dlcounts.Count; bid++)
                 {
-                    string binstr = string.Format("{0},{1},{2},{3},{4},{5}", BinLower(bid), BinUpper(bid), BinCentre(bid), BinArea, BinVolume(bid), counts[bid]);
+                    string binstr = string.Format("{0},{1},{2},{3},{4},{5}", BinLower(bid), BinUpper(bid), BinCentre(bid), BinArea, BinVolume(bid), _dlcounts[bid]);
                     stream.WriteLine(binstr);
                 }
             }

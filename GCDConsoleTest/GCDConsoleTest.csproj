@@ -108,6 +108,7 @@
   <ItemGroup>
     <Compile Include="ExtentRectangleTests.cs" />
     <Compile Include="GISDatasetTests.cs" />
+    <Compile Include="HistogramTests.cs" />
     <Compile Include="ProjectionTests.cs" />
     <Compile Include="RasterOperators\BaseOperatorTests.cs" />
     <Compile Include="RasterOperators\CellByCellOperatorTests.cs" />
