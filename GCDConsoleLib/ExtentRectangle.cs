@@ -292,7 +292,7 @@ namespace GCDConsoleLib
         {
             int row = (int)Math.Floor((decimal)(id / rows));
             int col = id - (row * rows);
-            return new Tuple<int, int>(row + 1, col + 1);
+            return new Tuple<int, int>(col + 1, row + 1);
         }
 
         /// <summary>
@@ -301,13 +301,18 @@ namespace GCDConsoleLib
         /// <param name="origid"></param>
         /// <param name="otherExtent"></param>
         /// <returns>the transformed ID, -1 if it's not valid</returns>
-        public int relId(int origid, ref ExtentRectangle otherExtent)
+        public int RelativeId(int origid, ref ExtentRectangle otherExtent)
         {
-            Tuple<int, int> origrowcol = Id2RowCol(origid);
-            Tuple<int, int> offset = GetTopCornerTranslation(ref otherExtent);
-            int newInd = (origrowcol.Item1 + offset.Item1 -1 ) * otherExtent.rows + (origrowcol.Item2 + offset.Item2-1);
-            if (newInd < 0 || newInd > MaxArrID)
+            Tuple<int, int> origColRow = Id2RowCol(origid);
+            Tuple<int, int> offsetColRow = GetTopCornerTranslation(ref otherExtent);
+            int newInd;
+            int newRow = origColRow.Item2 + offsetColRow.Item2;
+            int newCol = origColRow.Item1 + offsetColRow.Item1;
+            if (newCol <= 0 || newRow <= 0 || newCol > otherExtent.cols || newRow > otherExtent.rows)
                 newInd = -1;
+            else
+                newInd = (newRow - 1) * otherExtent.cols + (newCol) - 1;
+
             return newInd;
         }
 

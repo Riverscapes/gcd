@@ -34,7 +34,14 @@ namespace GCDConsoleLib
         /// <param name="sFilepath"></param>
         public GISDataset(string sFilepath)
         {
-            GISFileInfo = new FileInfo(sFilepath);
+            try
+            {
+                GISFileInfo = new FileInfo(sFilepath);
+            }
+            catch(ArgumentException e)
+            {
+                Console.WriteLine(String.Format("Invalid path detected: {0}",e.Message));
+            }
         }
 
     }

@@ -123,7 +123,7 @@ namespace GCDConsoleLib.Tests
         [TestMethod()]
         public void WriteFileTest()
         {
-            Assert.Fail();
+            Assert.Inconclusive();
         }
     }
 }

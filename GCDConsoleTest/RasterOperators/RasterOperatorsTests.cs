@@ -37,7 +37,7 @@ namespace GCDConsoleLib.Tests
         [TestMethod()]
         public void AddTest()
         {
-            Assert.Fail();
+            Assert.Inconclusive();
         }
 
     }

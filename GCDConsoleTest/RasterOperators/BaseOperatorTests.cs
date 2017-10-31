@@ -45,7 +45,7 @@ namespace GCDConsoleLib.Internal.Tests
                     outChunk[idx] = val;
                 }
             }
-            public void TestRun() { Run(); }
+            public void TestRunWithOutput() { RunWithOutput(); }
         }
 
 
@@ -59,7 +59,7 @@ namespace GCDConsoleLib.Internal.Tests
             FakeRaster<int> rOutput = new FakeRaster<int>(0, 0, -1, 1, new int[,] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 } });
 
             TestOp<int> theTest = new TestOp<int>(new List<Raster> { Raster1, Raster2 }, ref rOutput);
-            theTest.TestRun();
+            theTest.TestRunWithOutput();
             CollectionAssert.AreEqual(rOutput._outputGrid, rExpected);
         }
 
@@ -153,7 +153,8 @@ namespace GCDConsoleLib.Internal.Tests
 
             TestOp<int> theTest = new TestOp<int>(new List<Raster> { Raster1 }, ref rOutput);
 
-            List<int[]> data = new List<int[]> { };
+            List<int[]> data = new List<int[]>() { new int[theTest.ChunkWindow.cols * theTest.ChunkWindow.rows] };
+
             theTest.GetChunk(ref data);
             CollectionAssert.AreEqual(data[0], Raster1._inputgrid.Make1DArray<int>());
         }

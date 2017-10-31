@@ -246,30 +246,35 @@ namespace GCDConsoleLib.Tests
         }
 
         [TestMethod()]
-        public void relIdTest()
+        public void RelativeId()
         {
-            ExtentRectangle rTest1 = new ExtentRectangle(5, 6, -1, 1, 100, 100);
-            ExtentRectangle rTest2 = new ExtentRectangle(1, 1, -1, 1, 50, 50);
+            ExtentRectangle rTest1 = new ExtentRectangle(4, 6, -1, 1, 10, 10);
+            ExtentRectangle rTest2 = new ExtentRectangle(5, 3, -1, 1, 8, 8);
 
-            Assert.AreEqual(rTest1.relId(0, ref rTest1), 0);
-            Assert.AreEqual(rTest1.relId(0, ref rTest2), -1); //246?
-            Assert.AreEqual(rTest2.relId(0, ref rTest1), -1);
-            Assert.AreEqual(rTest2.relId(0, ref rTest2), 0);
+            Assert.AreEqual(rTest1.RelativeId(0, ref rTest1), 0);
+            Assert.AreEqual(rTest1.RelativeId(0, ref rTest2), 11);
+            Assert.AreEqual(rTest2.RelativeId(0, ref rTest1), -1);
+            Assert.AreEqual(rTest2.RelativeId(0, ref rTest2), 0);
 
-            Assert.AreEqual(rTest1.relId(1, ref rTest1), 1);
-            Assert.AreEqual(rTest1.relId(1, ref rTest2), -1);
-            Assert.AreEqual(rTest2.relId(1, ref rTest1), -1);
-            Assert.AreEqual(rTest2.relId(1, ref rTest2), 1);
+            Assert.AreEqual(rTest1.RelativeId(1, ref rTest1), 1);
+            Assert.AreEqual(rTest1.RelativeId(1, ref rTest2), 12);
+            Assert.AreEqual(rTest2.RelativeId(1, ref rTest1), -1);
+            Assert.AreEqual(rTest2.RelativeId(1, ref rTest2), 1);
 
-            Assert.AreEqual(rTest1.relId(100, ref rTest1), 100);
-            Assert.AreEqual(rTest1.relId(100, ref rTest2), -1);
-            Assert.AreEqual(rTest2.relId(100, ref rTest1), -1);
-            Assert.AreEqual(rTest2.relId(100, ref rTest2), 100);
+            Assert.AreEqual(rTest1.RelativeId(24, ref rTest1), 24);
+            Assert.AreEqual(rTest1.RelativeId(24, ref rTest2), 31);
+            Assert.AreEqual(rTest2.RelativeId(24, ref rTest1), -1);
+            Assert.AreEqual(rTest2.RelativeId(24, ref rTest2), 24);
 
-            Assert.AreEqual(rTest1.relId(9999, ref rTest1), 9999);
-            Assert.AreEqual(rTest1.relId(9999, ref rTest2), -1);
-            Assert.AreEqual(rTest1.relId(9999, ref rTest1), -1);
-            Assert.AreEqual(rTest1.relId(9999, ref rTest2), -1);
+            Assert.AreEqual(rTest1.RelativeId(25, ref rTest1), 25);
+            Assert.AreEqual(rTest1.RelativeId(25, ref rTest2), -1);
+            Assert.AreEqual(rTest2.RelativeId(25, ref rTest1), -1);
+            Assert.AreEqual(rTest2.RelativeId(25, ref rTest2), 25);
+
+            Assert.AreEqual(rTest1.RelativeId(99, ref rTest1), 99);
+            Assert.AreEqual(rTest1.RelativeId(99, ref rTest2), -1);
+            Assert.AreEqual(rTest2.RelativeId(99, ref rTest1), -1);
+            Assert.AreEqual(rTest2.RelativeId(99, ref rTest2), -1);
         }
         
 

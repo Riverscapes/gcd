@@ -44,7 +44,7 @@ namespace GCDConsoleLib.Internal.Tests
         [TestMethod()]
         public void WindowOverlapOperatorTest()
         {
-            Assert.Fail();
+            Assert.Inconclusive();
         }
     }
 }
