@@ -18,16 +18,16 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="rInput"></param>
         /// <param name="dOperand"></param>
         /// <param name="sOutputRaster"></param>
-        internal RasterMath(RasterOperators.MathOpType otType, ref Raster rInput, T dOperand, ref Raster rOutputRaster) :
-            base(new List<Raster> { rInput }, ref rOutputRaster)
+        internal RasterMath(RasterOperators.MathOpType otType, ref Raster rInput, T dOperand, Raster rOutputRaster) :
+            base(new List<Raster> { rInput }, rOutputRaster)
         {
             _type = otType;
             _scalar = true;
             _operand = dOperand;
         }
 
-        internal RasterMath(RasterOperators.MathOpType otType, ref Raster rInputA, ref Raster rInputB, ref Raster rOutputRaster) :
-            base(new List<Raster> { rInputA, rInputB }, ref rOutputRaster)
+        internal RasterMath(RasterOperators.MathOpType otType, ref Raster rInputA, ref Raster rInputB, Raster rOutputRaster) :
+            base(new List<Raster> { rInputA, rInputB }, rOutputRaster)
         {
             _type = otType;
             _scalar = false;

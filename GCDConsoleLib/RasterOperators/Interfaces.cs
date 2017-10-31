@@ -13,21 +13,21 @@ namespace GCDConsoleLib
         /// </summary>
         public static Raster ExtendedCopy(ref Raster rInput, string sOutputRaster)
         {
-            return (Raster)GenericRunner(typeof(RasterCopy<>), rInput.Datatype.CSType, new object[] {
+            return (Raster)GenericRunWithOutput(typeof(RasterCopy<>), rInput.Datatype.CSType, new object[] {
                 rInput, new Raster(ref rInput, sOutputRaster), rInput.Extent
             });
         }
 
         public static Raster ExtendedCopy(ref Raster rInput, string sOutputRaster, ExtentRectangle newRect)
         {
-            return (Raster)GenericRunner(typeof(RasterCopy<>), rInput.Datatype.CSType, new object[] {
+            return (Raster)GenericRunWithOutput(typeof(RasterCopy<>), rInput.Datatype.CSType, new object[] {
                 rInput, new Raster(ref rInput, sOutputRaster), newRect
             });
         }
 
         public static Raster ExtendedCopy(ref Raster rInput, ref Raster rOutputRaster, ExtentRectangle newRect)
         {
-            return (Raster)GenericRunner(typeof(RasterCopy<>), rInput.Datatype.CSType, new object[] {
+            return (Raster)GenericRunWithOutput(typeof(RasterCopy<>), rInput.Datatype.CSType, new object[] {
                 rInput, rOutputRaster, newRect
             });
         }
@@ -37,20 +37,20 @@ namespace GCDConsoleLib
         /// </summary>
         public static Raster Add<T>(ref Raster rInput, T dOperand, string sOutputRaster)
         {
-            return (Raster)GenericRunner(typeof(RasterCopy<>), rInput.Datatype.CSType, new object[] {
+            return (Raster)GenericRunWithOutput(typeof(RasterCopy<>), rInput.Datatype.CSType, new object[] {
                 MathOpType.Addition, rInput, dOperand, new Raster(ref rInput, sOutputRaster)
             });
         }
         public static Raster Add(ref Raster rInputA, ref Raster rInputB, string sOutputRaster)
         {
-            return (Raster)GenericRunner(typeof(RasterCopy<>), rInputA.Datatype.CSType, new object[] {
+            return (Raster)GenericRunWithOutput(typeof(RasterCopy<>), rInputA.Datatype.CSType, new object[] {
                 MathOpType.Addition, rInputA, rInputB, new Raster(ref rInputA, sOutputRaster)
             });
         }
 
         public static Raster Multiply(ref Raster rInputA, ref Raster rInputB, string sOutputRaster)
         {
-            return (Raster)GenericRunner(typeof(RasterCopy<>), rInputA.Datatype.CSType, new object[] {
+            return (Raster)GenericRunWithOutput(typeof(RasterCopy<>), rInputA.Datatype.CSType, new object[] {
                 MathOpType.Multipication, rInputA, rInputB, new Raster(ref rInputA, sOutputRaster)
             });
         }
@@ -65,7 +65,6 @@ namespace GCDConsoleLib
         public static DoDStats GetStatsMinLoD(ref Raster rawDoD, ref Raster thrDoD, double minLoD)
         {
             throw new NotImplementedException("See old public C method GetDoDMinLoDStats()");
-
             return new DoDStats(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
         }
 
@@ -79,7 +78,6 @@ namespace GCDConsoleLib
         public static DoDStats GetStatsPropagated(string rawDoD, string thrDoD, string propErrRaster)
         {
             throw new NotImplementedException("See old public C method GetDoDPropStats()");
-
             return new DoDStats(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
         }
 
@@ -182,17 +180,29 @@ namespace GCDConsoleLib
         /// captured the full range of the raster values.</remarks>
         public static Histogram BinRaster(ref Raster rInput, int numberofBins)
         {
-            throw new NotImplementedException();
-            return null;
-        }
-        
-        public static Raster SetNullLessThan(ref Raster rInput, double fThreshold, System.IO.FileInfo sOutputRaster)
-        {
-            throw new NotImplementedException();
-            return null;
+            CreateHistogram histOp = new CreateHistogram(ref rInput, numberofBins);
+            histOp.Run();
+            return histOp.theHistogram;
         }
 
-        
+        public enum ThresholdOps
+        {
+            LessThan, GreaterThan, LessThanOrEqual, GreaterThanOrEqual,
+        }
+
+        public static Raster SetNull(ref Raster rInput, ThresholdOps fThresholdOp, 
+            Single fThreshold, System.IO.FileInfo sOutputRaster)
+        {
+            RasterThreshold threshOp = new RasterThreshold(ref rInput, fThresholdOp, fThreshold);
+            return threshOp.RunWithOutput();
+        }
+
+        public static Raster SetNull(ref Raster rInput, ThresholdOps fBottomOp, Single fBottom, ThresholdOps fTopOp, Single fTop, System.IO.FileInfo sOutputRaster)
+        {
+            RasterThreshold threshOp = new RasterThreshold(ref rInput, fBottomOp, fBottom, fTopOp, fTop);
+            return threshOp.RunWithOutput();
+        }
+
 
 
 
@@ -222,14 +232,21 @@ namespace GCDConsoleLib
         /// <param name="innerType"></param>
         /// <param name="args"></param>
         /// <returns></returns>
-        private static object GenericRunner(Type generic, Type innerType, params object[] args)
+        private static object GenericRun(Type generic, Type innerType, params object[] args)
         {
             object myGenericClass = MakeGenericType(generic, innerType, args);
             MethodInfo method = myGenericClass.GetType().GetMethod("Run",
                 BindingFlags.Public | BindingFlags.Instance);
+            method.Invoke(myGenericClass, null);
+            return myGenericClass;
+        }
+        private static object GenericRunWithOutput(Type generic, Type innerType, params object[] args)
+        {
+            object myGenericClass = MakeGenericType(generic, innerType, args);
+            MethodInfo method = myGenericClass.GetType().GetMethod("RunWithOutput",
+                BindingFlags.Public | BindingFlags.Instance);
             return method.Invoke(myGenericClass, null);
         }
-
 
     }
 

@@ -103,10 +103,10 @@ namespace GCDConsoleLib.Tests.Utility
             }
         }
 
-        public override void ComputeStatistics()
+        public override void ComputeStatistics(bool bForce = false)
         {
-
         }
+
 
         /// <summary>
         /// Opening a dataset is generic so we do it here.

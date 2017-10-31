@@ -10,7 +10,7 @@ namespace GCDConsoleLib.Internal
         /// </summary>
         /// <param name="rRasters"></param>
         /// <param name="rOutputRaster"></param>
-        public CellByCellOperator(List<Raster> rRasters, ref Raster rOutputRaster) :
+        public CellByCellOperator(List<Raster> rRasters, Raster rOutputRaster=null) :
             base(rRasters, rOutputRaster) {}
 
         /// <summary>

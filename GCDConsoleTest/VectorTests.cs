@@ -20,7 +20,7 @@ namespace GCDConsoleLib.Tests
             Assert.IsTrue(rVector.Features.Count > 0);
             Assert.IsTrue(rVector.Fields.Count > 0);
             Assert.AreEqual(rVector.LayerName, "StressTest");
-            Assert.AreEqual(rVector.FilePath, sFilepath);
+            Assert.AreEqual(rVector.GISFileInfo, sFilepath);
             Assert.IsNotNull(rVector.Proj);
         }
 

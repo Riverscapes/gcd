@@ -13,6 +13,7 @@ namespace GCDConsoleLib
     {
         public enum RasterDriver : byte { GTiff, HFA }
         public LengthUnit VerticalUnits;
+        public bool bComputedStatistics { get; private set; }
 
         public double? origNodataVal { get; set; }
         public bool HasNodata { get { return origNodataVal != null; } }
@@ -135,7 +136,7 @@ namespace GCDConsoleLib
             driver = rdDriver;
         }
 
-        public void CreateDS(Raster.RasterDriver driver, string filepath, ExtentRectangle theExtent, Projection proj, GdalDataType theType)
+        public void CreateDS(Raster.RasterDriver driver, FileInfo finfo, ExtentRectangle theExtent, Projection proj, GdalDataType theType)
         {
             List<string> creationOpts = new List<string>();
             switch (driver)
@@ -149,7 +150,7 @@ namespace GCDConsoleLib
             }
             Driver driverobj = Gdal.GetDriverByName(Enum.GetName(typeof(Raster.RasterDriver), driver));
 
-            ds = driverobj.Create(filepath, theExtent.cols, theExtent.rows, 1, theType._origType, creationOpts.ToArray());
+            ds = driverobj.Create(finfo.FullName, theExtent.cols, theExtent.rows, 1, theType._origType, creationOpts.ToArray());
             ds.SetGeoTransform(theExtent.Transform);
             ds.SetProjection(proj.OriginalString);
             Band band = ds.GetRasterBand(1);
@@ -192,10 +193,10 @@ namespace GCDConsoleLib
         /// <param name="leaveopen"></param>
         public override void Create(bool leaveopen = false)
         {
-            if (File.Exists(FilePath))
-                Gdal.Unlink(FilePath);
+            if (GISFileInfo.Exists)
+                Gdal.Unlink(GISFileInfo.FullName);
 
-            CreateDS(driver, FilePath, Extent, Proj, Datatype);
+            CreateDS(driver, GISFileInfo, Extent, Proj, Datatype);
 
             if (!leaveopen)
                 Dispose();
@@ -216,36 +217,34 @@ namespace GCDConsoleLib
             if (write) permission = Access.GA_Update;
             _writepermission = write;
 
-            // Make sure we have permission to do what we want to do
-            FileInfo fInfo = new FileInfo(FilePath);
             if (write)
             {
                 // File exists AND we can overwrite it
-                if (File.Exists(fInfo.FullName) && Utility.FileHelpers.IsFileLocked(fInfo.FullName, permission))
-                    throw new IOException(String.Format("File `{0}` was locked for `{1}` operation", FilePath, Enum.GetName(typeof(Access), permission)));
+                if (GISFileInfo.Exists && Utility.FileHelpers.IsFileLocked(GISFileInfo.FullName, permission))
+                    throw new IOException(String.Format("File `{0}` was locked for `{1}` operation", GISFileInfo, Enum.GetName(typeof(Access), permission)));
                 // File does not exist but there is no directory to put it in.
-                else if (!File.Exists(FilePath) && !Directory.Exists(fInfo.DirectoryName))
-                     throw new IOException(String.Format("File `{0}` could not be created because the directory `{1}`is not present", FilePath, fInfo.DirectoryName));
+                else if (!GISFileInfo.Exists && !Directory.Exists(GISFileInfo.DirectoryName))
+                    throw new IOException(String.Format("File `{0}` could not be created because the directory `{1}`is not present", GISFileInfo, GISFileInfo.DirectoryName));
                 else
                     Create();
             }
             else
             {
-                if (!File.Exists(fInfo.FullName) || Utility.FileHelpers.IsFileLocked(fInfo.FullName, permission))
-                    throw new IOException(String.Format("File `{0}` was locked for `{1}` operation", FilePath, Enum.GetName(typeof(Access), permission)));
+                if (!GISFileInfo.Exists || Utility.FileHelpers.IsFileLocked(GISFileInfo.FullName, permission))
+                    throw new IOException(String.Format("File `{0}` was locked for `{1}` operation", GISFileInfo, Enum.GetName(typeof(Access), permission)));
             }
-            if (Utility.FileHelpers.IsFileLocked(FilePath, permission))
-                throw new IOException(String.Format("File `{0}` was locked for `{}` operation", FilePath, Enum.GetName(typeof(Access), permission)));
+            if (Utility.FileHelpers.IsFileLocked(GISFileInfo.FullName, permission))
+                throw new IOException(String.Format("File `{0}` was locked for `{}` operation", GISFileInfo, Enum.GetName(typeof(Access), permission)));
 
             GdalConfiguration.ConfigureGdal();
-            if (File.Exists(FilePath))
+            if (GISFileInfo.Exists)
             {
-                ds = Gdal.Open(FilePath, permission);
+                ds = Gdal.Open(GISFileInfo.FullName, permission);
                 if (ds == null)
-                    throw new ArgumentException("Can't open " + FilePath);
+                    throw new ArgumentException("Can't open " + GISFileInfo);
             }
             else
-                throw new FileNotFoundException("Could not find dataset to open", FilePath);
+                throw new FileNotFoundException("Could not find dataset to open", GISFileInfo.FullName);
         }
 
         /// <summary>
@@ -319,7 +318,7 @@ namespace GCDConsoleLib
         public override void Copy(string destPath)
         {
             Open();
-            ds.GetDriver().CopyFiles(destPath, FilePath);
+            ds.GetDriver().CopyFiles(destPath, GISFileInfo.FullName);
             //dataset.GetDriver().CreateCopy(destPath, dataset, 1, null, null, null);
             Dispose();
         }
@@ -342,7 +341,7 @@ namespace GCDConsoleLib
             Open();
             Driver drv = ds.GetDriver();
             Dispose();
-            drv.Delete(FilePath);
+            drv.Delete(GISFileInfo.FullName);
             drv.Dispose();
         }
 
@@ -363,13 +362,35 @@ namespace GCDConsoleLib
         }
 
         /// <summary>
-        /// Compute the statistics of this raster
+        /// Compute the statistics of this raster (if we haven't already)
         /// </summary>
-        public virtual void ComputeStatistics()
+        public virtual void ComputeStatistics(bool bForce = false)
         {
-            Open(true);
-            double min, max, mean, std;
-            ds.GetRasterBand(1).ComputeStatistics(false, out min, out max, out mean, out std, null, null);
+            if (bForce || !bComputedStatistics)
+            {
+                Open(true);
+                double min, max, mean, std;
+                ds.GetRasterBand(1).ComputeStatistics(false, out min, out max, out mean, out std, null, null);
+                bComputedStatistics = true;
+            }
+        }
+
+        /// <summary>
+        /// Get Statistics. Does not calculate them first.
+        /// </summary>
+        /// <returns></returns>
+        public Dictionary<string, decimal> GetStatistics()
+        {
+            Open();
+            double dMin, dMax, dMean, dStdDev;
+            ds.GetRasterBand(1).GetStatistics(0, 1, out dMin, out dMax, out dMean, out dStdDev);
+            Dictionary<string, decimal> output = new Dictionary<string, decimal>()  {
+                {"min", (decimal)dMin},
+                {"max", (decimal)dMax},
+                {"mean", (decimal)dMean},
+                {"stddev", (decimal)dStdDev}
+            };
+            return output;
         }
 
         /// <summary>

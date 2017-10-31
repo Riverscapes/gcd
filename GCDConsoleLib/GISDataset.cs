@@ -7,16 +7,16 @@ namespace GCDConsoleLib
 
     public abstract class GISDataset : IDisposable
     {
-        public string FilePath { get; internal set; }
+        public FileInfo GISFileInfo { get; internal set; }
         public Projection Proj;
 
         public static bool FileExists(string fullPath)
         {
-            return !String.IsNullOrEmpty(fullPath) && System.IO.File.Exists(fullPath);
+            return !String.IsNullOrEmpty(fullPath) && File.Exists(fullPath);
         }
         public bool FileExists()
         {
-            return !String.IsNullOrEmpty(FilePath) && System.IO.File.Exists(FilePath);
+            return GISFileInfo !=null && GISFileInfo.Exists;
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace GCDConsoleLib
         /// <param name="sFilepath"></param>
         public GISDataset(string sFilepath)
         {
-            FilePath = sFilepath;
+            GISFileInfo = new FileInfo(sFilepath);
         }
 
     }

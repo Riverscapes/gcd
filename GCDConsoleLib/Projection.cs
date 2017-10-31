@@ -12,7 +12,7 @@ namespace GCDConsoleLib
         public enum ImportType : byte { WKT, USGS, EPSG }
         public string OriginalString;
         public SpatialReference mSRef;
-        public LengthUnit LinearUnit;
+        public LengthUnit HorizontalUnit;
         public decimal LinearUnitConversionToM;
         public string LinearUnits;
 
@@ -52,11 +52,11 @@ namespace GCDConsoleLib
 
         private void _Init()
         {
-            LinearUnit = LengthUnit.Meter;
+            HorizontalUnit = LengthUnit.Meter;
             LinearUnitConversionToM = 0;
             try
             {
-                LinearUnit =  Length.ParseUnit(mSRef.GetLinearUnitsName()); ;
+                HorizontalUnit =  Length.ParseUnit(mSRef.GetLinearUnitsName()); ;
                 mSRef.AutoIdentifyEPSG();
             }
             catch (Exception e) {

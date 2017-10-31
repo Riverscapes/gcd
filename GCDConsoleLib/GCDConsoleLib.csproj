@@ -92,7 +92,9 @@
     <Compile Include="Histogram.cs" />
     <Compile Include="RasterOperators\CellByCellOperator.cs" />
     <Compile Include="RasterOperators\Interfaces.cs" />
+    <Compile Include="RasterOperators\Operators\CreateHistogram.cs" />
     <Compile Include="RasterOperators\Operators\RasterCopy.cs" />
+    <Compile Include="RasterOperators\Operators\RasterThreshold.cs" />
     <Compile Include="RasterOperators\WindowOverlapOperator.cs" />
     <Compile Include="Utility\Conversion.cs" />
     <Compile Include="Utility\dynamics.cs" />

@@ -27,7 +27,6 @@ namespace GCDConsoleLib.Internal
         protected T OpNodataVal;
 
         private Raster _outputRaster;
-        private string _outputrasterpath;
 
         /// <summary>
         /// Initialize a bunch of rasters
@@ -35,14 +34,13 @@ namespace GCDConsoleLib.Internal
         /// <param name="rRasters"></param>
         /// <param name="rOutputRaster"></param>
         /// <param name="newRect"></param>
-        protected BaseOperator(List<Raster> rRasters, Raster rOutputRaster)
+        protected BaseOperator(List<Raster> rRasters, Raster rOutputRaster = null)
         {
             _rasters = new List<Raster>(rRasters.Count);
             _rasternodatavals = new List<T>(rRasters.Count);
             _init(rRasters, rOutputRaster);
             // Now that we have our rasters tested and a unioned extent we can set the operation extent
             SetOpExtent(InExtent);
-
         }
 
         /// <summary>
@@ -81,7 +79,8 @@ namespace GCDConsoleLib.Internal
             }
 
             // Finally, set up our output raster and make sure it's open for writing
-            _outputRaster = rOutRaster;
+            if (rOutRaster == null)
+                _outputRaster = rOutRaster;
         }
 
         /// <summary>
@@ -99,7 +98,8 @@ namespace GCDConsoleLib.Internal
             if (OpExtent.rows < chunkYsize) chunkYsize = OpExtent.rows;
             ChunkWindow = new ExtentRectangle(OpExtent.Top, OpExtent.Left, OpExtent.CellHeight, OpExtent.CellWidth, chunkYsize, chunkXsize);
 
-            _outputRaster.Extent = OpExtent;
+            if (_outputRaster != null)
+                _outputRaster.Extent = OpExtent;
         }
 
         /// <summary>
@@ -145,7 +145,7 @@ namespace GCDConsoleLib.Internal
                 ExtentRectangle _interSectRect = rRa.Extent.Intersect(ref ChunkWindow);
 
                 // Make sure there's some data to read, otherwise return the filled nodata values from above
-                if (_interSectRect.rows > 0 && _interSectRect.cols >0)
+                if (_interSectRect.rows > 0 && _interSectRect.cols > 0)
                 {
                     T[] _buffer = new T[_interSectRect.rows * _interSectRect.cols];
 
@@ -159,14 +159,14 @@ namespace GCDConsoleLib.Internal
                         ChunkWindow.rows, ChunkWindow.cols,
                         _interSectRect.rows, _interSectRect.cols,
                         offChunk.Item2, offChunk.Item1);
-                } 
+                }
             }
         }
 
         /// <summary>
         /// Run an operation over every cell individually
         /// </summary>
-        public Raster Run()
+        public void Run()
         {
             List<T[]> data = new List<T[]>(_rasters.Count);
 
@@ -179,14 +179,24 @@ namespace GCDConsoleLib.Internal
             {
                 GetChunk(ref data);
                 ChunkOp(ref data, ref _buffer);
-                // Get the (col,row) offsets
-                Tuple<int, int> offset = ChunkWindow.GetTopCornerTranslation(ref OpExtent);
-                // Write this window tot he file
-                _outputRaster.Write(offset.Item1, offset.Item2, ChunkWindow.cols, ChunkWindow.rows, ref _buffer);
+
+                if (_outputRaster != null)
+                {             
+                    // Get the (col,row) offsets
+                    Tuple<int, int> offset = ChunkWindow.GetTopCornerTranslation(ref OpExtent);
+                    // Write this window tot he file
+                    _outputRaster.Write(offset.Item1, offset.Item2, ChunkWindow.cols, ChunkWindow.rows, ref _buffer);
+                }
                 // We always increment to the next one
                 nextChunk();
             }
             Cleanup();
+
+        }
+
+        public Raster RunWithOutput()
+        {
+            Run();
             return _outputRaster;
         }
 
@@ -207,8 +217,11 @@ namespace GCDConsoleLib.Internal
                 if (!rRa.IsOpen)
                     rRa.Dispose();
             }
-            _outputRaster.ComputeStatistics();
-            _outputRaster.Dispose();
+            if (_outputRaster != null)
+            {
+                _outputRaster.ComputeStatistics();
+                _outputRaster.Dispose();
+            }
         }
     }
 

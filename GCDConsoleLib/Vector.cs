@@ -38,8 +38,8 @@ namespace GCDConsoleLib
         /// <param name="leaveopen"></param>
         public override void Create(bool leaveopen = true)
         {
-            if (File.Exists(FilePath))
-                OSGeo.GDAL.Gdal.Unlink(FilePath);
+            if (File.Exists(GISFileInfo))
+                OSGeo.GDAL.Gdal.Unlink(GISFileInfo);
 
             List<string> creationOpts = new List<string>();
 
@@ -86,7 +86,7 @@ namespace GCDConsoleLib
             if (_ds == null)
             {
                 _drv = Ogr.GetDriverByName(_driverstring);
-                _ds = _drv.Open(FilePath, 0); // 0 => Read-only
+                _ds = _drv.Open(GISFileInfo, 0); // 0 => Read-only
             }
         }
 
@@ -109,7 +109,7 @@ namespace GCDConsoleLib
             Dispose();
             // We need a separate copy of the driver so we can delete it from the outside.
             Driver drv = Ogr.GetDriverByName(_driverstring);
-            drv.DeleteDataSource(FilePath);
+            drv.DeleteDataSource(GISFileInfo);
             drv.Dispose();
         }
 

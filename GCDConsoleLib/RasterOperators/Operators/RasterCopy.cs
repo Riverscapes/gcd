@@ -10,8 +10,8 @@ namespace GCDConsoleLib.Internal.Operators
         /// <summary>
         /// Pass-through constructure
         /// </summary>
-        public RasterCopy(ref Raster rInput, ref Raster rOutputRaster, ExtentRectangle newRect) :
-            base(new List<Raster> { rInput }, ref rOutputRaster)
+        public RasterCopy(ref Raster rInput, Raster rOutputRaster, ExtentRectangle newRect) :
+            base(new List<Raster> { rInput }, rOutputRaster)
         {
             SetOpExtent(newRect);
         }
