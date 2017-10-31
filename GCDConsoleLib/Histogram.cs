@@ -25,7 +25,7 @@ namespace GCDConsoleLib
         public LengthUnit HorizontalUnit;
 
         public int Count { get { return _dlcounts.Count; } }
-        public Length BinWidth { get { return Length.From((double)_binWidth, VerticalUnit);  } }
+        public Length BinWidth { get { return Length.From((double)_binWidth, VerticalUnit); } }
 
         /// <summary>
         /// When we know the # of bins and the width of the bin
@@ -50,7 +50,7 @@ namespace GCDConsoleLib
         {
             rRa.ComputeStatistics();
             Dictionary<string, decimal> stats = rRa.GetStatistics();
-            decimal width  = Math.Abs(stats["max"] - stats["min"]) / bins;
+            decimal width = Math.Abs(stats["max"] - stats["min"]) / bins;
             _init(bins, width, rRa.Extent.CellHeight, rRa.Extent.CellWidth, rRa.VerticalUnits, rRa.Proj.HorizontalUnit);
         }
 
@@ -124,15 +124,7 @@ namespace GCDConsoleLib
         public int BinId(Length val)
         {
             decimal dVal = (decimal)val.As(VerticalUnit);
-            int bid = -1;
-            if (dVal >= _dlbinlefts[0])
-            {  
-                for (bid = 0; bid < _dlcounts.Count && _dlbinlefts[bid] + _binWidth < dVal; bid++) ;
-                // Error condition
-                if (bid >= _dlcounts.Count)
-                    bid = -1;
-            }
-            return bid;
+            return _binId(dVal);
         }
 
         /// <summary>
@@ -141,11 +133,34 @@ namespace GCDConsoleLib
         /// <param name="val"></param>
         public void AddBinVal(double val)
         {
-            int bid;
             decimal decVal = (decimal)val;
-            for (bid = 0; _dlbinlefts[bid]+_binWidth < decVal; bid++) ;
+            int bid = _binId(decVal);
+
+            // Out of bounds is not allowed
+            if (bid < 0)
+                throw new ArgumentOutOfRangeException("Trying to bin a value outside the histogram range");
+
             _dlcounts[bid]++;
             _dlbinSums[bid] += decVal;
+        }
+
+        /// <summary>
+        /// NEed to make sure this logic is consistent
+        /// </summary>
+        /// <param name="val"></param>
+        /// <returns></returns>
+        private int _binId(decimal val)
+        {
+            int bid;
+
+            if (val < _dlbinlefts[0] || val > _dlbinlefts[_dlbinlefts.Count - 1]+ _binWidth)
+                bid = -1;
+            // Top value is an exception and goes in the topmost bin
+            else if (val == _dlbinlefts[_dlbinlefts.Count-1] + _binWidth)
+                bid = _dlcounts.Count - 1;
+            else
+                for (bid = 0; val >= _dlbinlefts[bid] + _binWidth && bid < _dlcounts.Count - 1; bid++) ;
+            return bid;
         }
 
         /// <summary>
@@ -161,7 +176,7 @@ namespace GCDConsoleLib
         public Length BinUpper(int id) { return Length.From((double)(_dlbinlefts[id] + _binWidth), VerticalUnit); }
 
         public Length BinCentre(Length val) { return BinCentre(BinId(val)); }
-        public Length BinCentre(int id) { return Length.From((double)(_dlbinlefts[id] + _binWidth) / 2, VerticalUnit); }
+        public Length BinCentre(int id) { return Length.From((double)(_dlbinlefts[id] + _binWidth / 2), VerticalUnit); }
 
         public Length HistogramLower { get { return Length.From((double)_dlbinlefts[0], VerticalUnit); } }
         public Length HistogramUpper { get { return Length.From((double)(_dlbinlefts.Last() + _binWidth), VerticalUnit); } }
@@ -182,7 +197,8 @@ namespace GCDConsoleLib
         /// </summary>
         /// <param name="bid"></param>
         /// <returns></returns>
-        private Length BinSum(int bid){
+        private Length BinSum(int bid)
+        {
             return Length.From((double)_dlbinSums[bid], VerticalUnit);
         }
 

@@ -20,7 +20,7 @@ namespace GCDConsoleLib.Tests
             LengthUnit hUnit = LengthUnit.Meter;
             Histogram rTest1 = new Histogram(20, 1, -0.1m, 0.1m, vUnit, hUnit);
 
-            Assert.AreEqual(rTest1.BinArea.SquareMeters, (0.1 * 0.1));
+            Assert.AreEqual(rTest1.BinArea.SquareMeters, (double)(0.1m * 0.1m));
             Assert.AreEqual(rTest1.FirstBinId, 0);
             Assert.AreEqual(rTest1.LastBinId, 19);
             Assert.AreEqual(rTest1.HistogramLower.Meters, Length.From(-10.0,LengthUnit.Foot).Meters);
@@ -31,7 +31,7 @@ namespace GCDConsoleLib.Tests
 
             // Now let's try one with uneven bins
             Histogram rTest2 = new Histogram(19, 1, -0.1m, 0.1m, LengthUnit.Foot, LengthUnit.Meter);
-            Assert.AreEqual(rTest2.BinArea.SquareMeters, (0.1 * 0.1));
+            Assert.AreEqual(rTest2.BinArea.SquareMeters, (double)(0.1m * 0.1m));
             Assert.AreEqual(rTest2.FirstBinId, 0);
             Assert.AreEqual(rTest2.LastBinId, 19);
             Assert.AreEqual(rTest2.HistogramLower.Meters, Length.From(-10.0, LengthUnit.Foot).Meters);
@@ -48,17 +48,17 @@ namespace GCDConsoleLib.Tests
             LengthUnit vUnit = LengthUnit.Foot;
             LengthUnit hUnit = LengthUnit.Meter;
             Histogram rTest1 = new Histogram(20, 1, -0.1m, 0.1m, vUnit, hUnit);
-
+            // Values fall to the right into bins: binLeft <= val < binRight
             Assert.AreEqual(rTest1.BinId(Length.From(-10.1,vUnit)), -1);
             Assert.AreEqual(rTest1.BinId(Length.From(-10, vUnit)), 0);
             Assert.AreEqual(rTest1.BinId(Length.From(-9.999, vUnit)), 0);
 
             Assert.AreEqual(rTest1.BinId(Length.From(-5.1, vUnit)), 4);
-            Assert.AreEqual(rTest1.BinId(Length.From(-5, vUnit)), 4);
+            Assert.AreEqual(rTest1.BinId(Length.From(-5, vUnit)), 5);
             Assert.AreEqual(rTest1.BinId(Length.From(-4.9, vUnit)), 5);
 
             Assert.AreEqual(rTest1.BinId(Length.From(-0.1, vUnit)), 9);
-            Assert.AreEqual(rTest1.BinId(Length.From(0, vUnit)), 9);
+            Assert.AreEqual(rTest1.BinId(Length.From(0, vUnit)), 10);
             Assert.AreEqual(rTest1.BinId(Length.From(0.1, vUnit)), 10);
 
             Assert.AreEqual(rTest1.BinId(Length.From(10.1, vUnit)), -1);
@@ -107,15 +107,53 @@ namespace GCDConsoleLib.Tests
 
             //Add some fake values into the mix
             for (int i = 0; i < 20; i++)
-                rTest1.AddBinVal((double)i);
+                rTest1.AddBinVal((double)i-9.9);
 
-            double CellAreaM2 = rTest1.BinArea.SquareMeters;
+            decimal CellAreaM2 = (decimal)rTest1.BinArea.SquareMeters;
             // Now test the values
             for (int i = 0; i < 20; i++)
             {
-                double iVolm = Length.From((double)i, LengthUnit.Foot).Meters;
-                Assert.AreEqual(rTest1.BinVolume(i).CubicMeters, iVolm * CellAreaM2);
+                decimal iVolm = (decimal)Length.From((double)i-9.9, LengthUnit.Foot).Meters;
+                Assert.AreEqual((decimal)rTest1.BinVolume(i).CubicMeters, iVolm * CellAreaM2);
                 Assert.AreEqual(rTest1.BinCount(i), 1);
+            }
+
+        }
+
+
+        [TestMethod()]
+        public void BinValsTest2()
+        {
+            LengthUnit vUnit = LengthUnit.Foot;
+            LengthUnit hUnit = LengthUnit.Meter;
+            Histogram rTest1 = new Histogram(4, 1, -0.1m, 0.1m, vUnit, hUnit);
+
+            // Let's get our integers out of the way
+            rTest1.AddBinVal(-2);
+            Assert.AreEqual(rTest1.BinCount(0), 1);
+            rTest1.AddBinVal(-1);
+            Assert.AreEqual(rTest1.BinCount(1), 1);
+            rTest1.AddBinVal(0);
+            Assert.AreEqual(rTest1.BinCount(2), 1);
+            rTest1.AddBinVal(1);
+            Assert.AreEqual(rTest1.BinCount(3), 1);
+            // Make sure the last value falls backward
+            rTest1.AddBinVal(2);
+            Assert.AreEqual(rTest1.BinCount(3), 2);
+
+            // Now make sure everything that is supposed to fail does.
+            List<double> badVals = new List<double>() { 3, -2.0000001, 2.0000011 };
+            foreach (double val in badVals)
+            {
+                try
+                {
+                    rTest1.AddBinVal(val);
+                    Assert.Fail();
+                }
+                catch (Exception e)
+                {
+                    Assert.IsInstanceOfType(e, typeof(ArgumentOutOfRangeException));
+                }
             }
 
         }
