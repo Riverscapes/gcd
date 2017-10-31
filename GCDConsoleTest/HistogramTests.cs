@@ -18,7 +18,7 @@ namespace GCDConsoleLib.Tests
         {
             LengthUnit vUnit = LengthUnit.Foot;
             LengthUnit hUnit = LengthUnit.Meter;
-            Histogram rTest1 = new Histogram(20, 1, -0.1, 0.1, vUnit, hUnit);
+            Histogram rTest1 = new Histogram(20, 1, -0.1m, 0.1m, vUnit, hUnit);
 
             Assert.AreEqual(rTest1.BinArea.SquareMeters, (0.1 * 0.1));
             Assert.AreEqual(rTest1.FirstBinId, 0);
@@ -30,7 +30,7 @@ namespace GCDConsoleLib.Tests
             Assert.AreEqual(rTest1.Count, 20);
 
             // Now let's try one with uneven bins
-            Histogram rTest2 = new Histogram(19, 1, -0.1, 0.1, LengthUnit.Foot, LengthUnit.Meter);
+            Histogram rTest2 = new Histogram(19, 1, -0.1m, 0.1m, LengthUnit.Foot, LengthUnit.Meter);
             Assert.AreEqual(rTest2.BinArea.SquareMeters, (0.1 * 0.1));
             Assert.AreEqual(rTest2.FirstBinId, 0);
             Assert.AreEqual(rTest2.LastBinId, 19);
@@ -47,7 +47,7 @@ namespace GCDConsoleLib.Tests
         {
             LengthUnit vUnit = LengthUnit.Foot;
             LengthUnit hUnit = LengthUnit.Meter;
-            Histogram rTest1 = new Histogram(20, 1, -0.1, 0.1, vUnit, hUnit);
+            Histogram rTest1 = new Histogram(20, 1, -0.1m, 0.1m, vUnit, hUnit);
 
             Assert.AreEqual(rTest1.BinId(Length.From(-10.1,vUnit)), -1);
             Assert.AreEqual(rTest1.BinId(Length.From(-10, vUnit)), 0);
@@ -71,7 +71,7 @@ namespace GCDConsoleLib.Tests
         {
             LengthUnit vUnit = LengthUnit.Foot;
             LengthUnit hUnit = LengthUnit.Meter;
-            Histogram rTest1 = new Histogram(20, 1, -0.1, 0.1, vUnit, hUnit);
+            Histogram rTest1 = new Histogram(20, 1, -0.1m, 0.1m, vUnit, hUnit);
             Assert.AreEqual(rTest1.BinLower(0).As(vUnit), -10);
             Assert.AreEqual(rTest1.BinLower(19).As(vUnit), 9);
 
@@ -82,7 +82,7 @@ namespace GCDConsoleLib.Tests
         {
             LengthUnit vUnit = LengthUnit.Foot;
             LengthUnit hUnit = LengthUnit.Meter;
-            Histogram rTest1 = new Histogram(20, 1, -0.1, 0.1, vUnit, hUnit);
+            Histogram rTest1 = new Histogram(20, 1, -0.1m, 0.1m, vUnit, hUnit);
             Assert.AreEqual(rTest1.BinUpper(0).As(vUnit), -9);
             Assert.AreEqual(rTest1.BinUpper(19).As(vUnit), 10);
         }
@@ -93,7 +93,7 @@ namespace GCDConsoleLib.Tests
         {
             LengthUnit vUnit = LengthUnit.Foot;
             LengthUnit hUnit = LengthUnit.Meter;
-            Histogram rTest1 = new Histogram(20, 1, -0.1, 0.1, vUnit, hUnit);
+            Histogram rTest1 = new Histogram(20, 1, -0.1m, 0.1m, vUnit, hUnit);
             Assert.AreEqual(rTest1.BinCentre(0).As(vUnit), -9.5);
             Assert.AreEqual(rTest1.BinCentre(19).As(vUnit), 9.5);
         }
@@ -103,7 +103,7 @@ namespace GCDConsoleLib.Tests
         {
             LengthUnit vUnit = LengthUnit.Foot;
             LengthUnit hUnit = LengthUnit.Meter;
-            Histogram rTest1 = new Histogram(20, 1, -0.1, 0.1, vUnit, hUnit);
+            Histogram rTest1 = new Histogram(20, 1, -0.1m, 0.1m, vUnit, hUnit);
 
             //Add some fake values into the mix
             for (int i = 0; i < 20; i++)
