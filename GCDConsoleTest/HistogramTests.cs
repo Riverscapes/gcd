@@ -5,8 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UnitsNet;
-using UnitsNet.Units;
 
 namespace GCDConsoleLib.Tests
 {
@@ -16,28 +14,20 @@ namespace GCDConsoleLib.Tests
         [TestMethod()]
         public void HistogramTest()
         {
-            LengthUnit vUnit = LengthUnit.Foot;
-            LengthUnit hUnit = LengthUnit.Meter;
-            Histogram rTest1 = new Histogram(20, 1, -0.1m, 0.1m, vUnit, hUnit);
+            Histogram rTest1 = new Histogram(20, 1);
 
-            Assert.AreEqual(rTest1.BinArea.SquareMeters, (double)(0.1m * 0.1m));
             Assert.AreEqual(rTest1.FirstBinId, 0);
             Assert.AreEqual(rTest1.LastBinId, 19);
-            Assert.AreEqual(rTest1.HistogramLower.Meters, Length.From(-10.0,LengthUnit.Foot).Meters);
-            Assert.AreEqual(rTest1.HistogramUpper.Meters, Length.From(10.0, LengthUnit.Foot).Meters);
-            Assert.AreEqual(rTest1.HorizontalUnit, hUnit);
-            Assert.AreEqual(rTest1.VerticalUnit, vUnit);
+            Assert.AreEqual(rTest1.HistogramLower, -10.0);
+            Assert.AreEqual(rTest1.HistogramUpper, 10.0);
             Assert.AreEqual(rTest1.Count, 20);
 
             // Now let's try one with uneven bins
-            Histogram rTest2 = new Histogram(19, 1, -0.1m, 0.1m, LengthUnit.Foot, LengthUnit.Meter);
-            Assert.AreEqual(rTest2.BinArea.SquareMeters, (double)(0.1m * 0.1m));
+            Histogram rTest2 = new Histogram(19, 1);
             Assert.AreEqual(rTest2.FirstBinId, 0);
             Assert.AreEqual(rTest2.LastBinId, 19);
-            Assert.AreEqual(rTest2.HistogramLower.Meters, Length.From(-10.0, LengthUnit.Foot).Meters);
-            Assert.AreEqual(rTest2.HistogramUpper.Meters, Length.From(10.0, LengthUnit.Foot).Meters);
-            Assert.AreEqual(rTest2.HorizontalUnit, hUnit);
-            Assert.AreEqual(rTest2.VerticalUnit, vUnit);
+            Assert.AreEqual(rTest2.HistogramLower, -10.0);
+            Assert.AreEqual(rTest2.HistogramUpper, 10.0);
             Assert.AreEqual(rTest1.Count, 20);
 
         }
@@ -45,76 +35,63 @@ namespace GCDConsoleLib.Tests
         [TestMethod()]
         public void BinIdTest()
         {
-            LengthUnit vUnit = LengthUnit.Foot;
-            LengthUnit hUnit = LengthUnit.Meter;
-            Histogram rTest1 = new Histogram(20, 1, -0.1m, 0.1m, vUnit, hUnit);
+            Histogram rTest1 = new Histogram(20, 1);
             // Values fall to the right into bins: binLeft <= val < binRight
-            Assert.AreEqual(rTest1.BinId(Length.From(-10.1,vUnit)), -1);
-            Assert.AreEqual(rTest1.BinId(Length.From(-10, vUnit)), 0);
-            Assert.AreEqual(rTest1.BinId(Length.From(-9.999, vUnit)), 0);
+            Assert.AreEqual(rTest1.BinId(-10.1), -1);
+            Assert.AreEqual(rTest1.BinId(-10), 0);
+            Assert.AreEqual(rTest1.BinId(-9.999), 0);
 
-            Assert.AreEqual(rTest1.BinId(Length.From(-5.1, vUnit)), 4);
-            Assert.AreEqual(rTest1.BinId(Length.From(-5, vUnit)), 5);
-            Assert.AreEqual(rTest1.BinId(Length.From(-4.9, vUnit)), 5);
+            Assert.AreEqual(rTest1.BinId(-5.1), 4);
+            Assert.AreEqual(rTest1.BinId(-5), 5);
+            Assert.AreEqual(rTest1.BinId(-4.9), 5);
 
-            Assert.AreEqual(rTest1.BinId(Length.From(-0.1, vUnit)), 9);
-            Assert.AreEqual(rTest1.BinId(Length.From(0, vUnit)), 10);
-            Assert.AreEqual(rTest1.BinId(Length.From(0.1, vUnit)), 10);
+            Assert.AreEqual(rTest1.BinId(-0.1), 9);
+            Assert.AreEqual(rTest1.BinId(0), 10);
+            Assert.AreEqual(rTest1.BinId(0.1), 10);
 
-            Assert.AreEqual(rTest1.BinId(Length.From(10.1, vUnit)), -1);
-            Assert.AreEqual(rTest1.BinId(Length.From(10, vUnit)), 19);
-            Assert.AreEqual(rTest1.BinId(Length.From(9.999, vUnit)), 19);
+            Assert.AreEqual(rTest1.BinId(10.1), -1);
+            Assert.AreEqual(rTest1.BinId(10), 19);
+            Assert.AreEqual(rTest1.BinId(9.999), 19);
         }
 
         [TestMethod()]
         public void BinLowerTest()
         {
-            LengthUnit vUnit = LengthUnit.Foot;
-            LengthUnit hUnit = LengthUnit.Meter;
-            Histogram rTest1 = new Histogram(20, 1, -0.1m, 0.1m, vUnit, hUnit);
-            Assert.AreEqual(rTest1.BinLower(0).As(vUnit), -10);
-            Assert.AreEqual(rTest1.BinLower(19).As(vUnit), 9);
+            Histogram rTest1 = new Histogram(20, 1);
+            Assert.AreEqual(rTest1.BinLower(0), -10);
+            Assert.AreEqual(rTest1.BinLower(19), 9);
 
         }
 
         [TestMethod()]
         public void BinUpperTest()
         {
-            LengthUnit vUnit = LengthUnit.Foot;
-            LengthUnit hUnit = LengthUnit.Meter;
-            Histogram rTest1 = new Histogram(20, 1, -0.1m, 0.1m, vUnit, hUnit);
-            Assert.AreEqual(rTest1.BinUpper(0).As(vUnit), -9);
-            Assert.AreEqual(rTest1.BinUpper(19).As(vUnit), 10);
+            Histogram rTest1 = new Histogram(20, 1);
+            Assert.AreEqual(rTest1.BinUpper(0), -9);
+            Assert.AreEqual(rTest1.BinUpper(19), 10);
         }
 
 
         [TestMethod()]
         public void BinCentreTest()
         {
-            LengthUnit vUnit = LengthUnit.Foot;
-            LengthUnit hUnit = LengthUnit.Meter;
-            Histogram rTest1 = new Histogram(20, 1, -0.1m, 0.1m, vUnit, hUnit);
-            Assert.AreEqual(rTest1.BinCentre(0).As(vUnit), -9.5);
-            Assert.AreEqual(rTest1.BinCentre(19).As(vUnit), 9.5);
+            Histogram rTest1 = new Histogram(20, 1);
+            Assert.AreEqual(rTest1.BinCentre(0), -9.5);
+            Assert.AreEqual(rTest1.BinCentre(19), 9.5);
         }
 
         [TestMethod()]
         public void BinValsTest()
         {
-            LengthUnit vUnit = LengthUnit.Foot;
-            LengthUnit hUnit = LengthUnit.Meter;
-            Histogram rTest1 = new Histogram(20, 1, -0.1m, 0.1m, vUnit, hUnit);
+            Histogram rTest1 = new Histogram(20, 1);
 
             //Add some fake values into the mix
             for (int i = 0; i < 20; i++)
-                rTest1.AddBinVal((double)i-9.9);
+                rTest1.AddBinVal((double)i - 9.9);
 
-            decimal CellAreaM2 = (decimal)rTest1.BinArea.SquareMeters;
             // Now test the values
             for (int i = 0; i < 20; i++)
             {
-                decimal iVolm = (decimal)Length.From((double)i-9.9, LengthUnit.Foot).Meters;
-                Assert.AreEqual((decimal)rTest1.BinVolume(i).CubicMeters, iVolm * CellAreaM2);
                 Assert.AreEqual(rTest1.BinCount(i), 1);
             }
 
@@ -124,9 +101,7 @@ namespace GCDConsoleLib.Tests
         [TestMethod()]
         public void BinValsTest2()
         {
-            LengthUnit vUnit = LengthUnit.Foot;
-            LengthUnit hUnit = LengthUnit.Meter;
-            Histogram rTest1 = new Histogram(4, 1, -0.1m, 0.1m, vUnit, hUnit);
+            Histogram rTest1 = new Histogram(4, 1);
 
             // Let's get our integers out of the way
             rTest1.AddBinVal(-2);
@@ -162,6 +137,58 @@ namespace GCDConsoleLib.Tests
         public void WriteFileTest()
         {
             Assert.Inconclusive();
+        }
+
+        [TestMethod()]
+        public void GetNearestFiveOrderWidthTest()
+        {
+            Assert.AreEqual(Histogram.GetNearestFiveOrderWidth(0.1m), 0.1m);
+            Assert.AreEqual(Histogram.GetNearestFiveOrderWidth(0.11m), 0.1m);
+            Assert.AreEqual(Histogram.GetNearestFiveOrderWidth(0.2m), 0.1m);
+            Assert.AreEqual(Histogram.GetNearestFiveOrderWidth(0.1000000001m), 0.1m);
+            Assert.AreEqual(Histogram.GetNearestFiveOrderWidth(0.0900000000m), 0.1m);
+            Assert.AreEqual(Histogram.GetNearestFiveOrderWidth(0.0800000000m), 0.1m);
+
+            Assert.AreEqual(Histogram.GetNearestFiveOrderWidth(0.5m), 0.5m);
+            Assert.AreEqual(Histogram.GetNearestFiveOrderWidth(0.49999999m), 0.5m);
+            Assert.AreEqual(Histogram.GetNearestFiveOrderWidth(0.500000001m), 0.5m);
+            Assert.AreEqual(Histogram.GetNearestFiveOrderWidth(0.432342352352m), 0.5m);
+
+            Assert.AreEqual(Histogram.GetNearestFiveOrderWidth(1.49m), 1m);
+            Assert.AreEqual(Histogram.GetNearestFiveOrderWidth(1.0m), 1m);
+            Assert.AreEqual(Histogram.GetNearestFiveOrderWidth(1.234523451m), 1.0m);
+            Assert.AreEqual(Histogram.GetNearestFiveOrderWidth(0.756m), 1.0m);
+
+            Assert.AreEqual(Histogram.GetNearestFiveOrderWidth(50.500234234m), 50m);
+            Assert.AreEqual(Histogram.GetNearestFiveOrderWidth(64.500234234m), 50m);
+            Assert.AreEqual(Histogram.GetNearestFiveOrderWidth(80), 100m);
+
+            Assert.AreEqual(Histogram.GetNearestFiveOrderWidth(120), 100m);
+            Assert.AreEqual(Histogram.GetNearestFiveOrderWidth(124), 100m);
+            Assert.AreEqual(Histogram.GetNearestFiveOrderWidth(125), 100m);
+
+            Assert.AreEqual(Histogram.GetNearestFiveOrderWidth(250), 100m);
+            Assert.AreEqual(Histogram.GetNearestFiveOrderWidth(300), 500m);
+            Assert.AreEqual(Histogram.GetNearestFiveOrderWidth(500), 500m);
+            Assert.AreEqual(Histogram.GetNearestFiveOrderWidth(749), 500m);
+
+        }
+
+        [TestMethod()]
+        public void GetCleanBinsTest()
+        {
+            Tuple<int, decimal> t1 = Histogram.GetCleanBins(10, 1, -1);
+            Assert.AreEqual(t1.Item1, 20);
+            Assert.AreEqual(t1.Item2, 0.1m);
+
+            Tuple<int, decimal> t2 = Histogram.GetCleanBins(10, 1.1m, -1);
+            Assert.AreEqual(t2.Item1, 22);
+            Assert.AreEqual(t2.Item2, 0.1m);
+
+            Tuple<int, decimal> t3 = Histogram.GetCleanBins(9, 1.1m, -1);
+            Assert.AreEqual(t3.Item1, 22);
+            Assert.AreEqual(t3.Item2, 0.1m);
+
         }
     }
 }
