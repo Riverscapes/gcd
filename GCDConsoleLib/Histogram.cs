@@ -3,6 +3,8 @@ using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using GCDConsoleLib.Utility;
+using UnitsNet;
+using UnitsNet.Units;
 
 namespace GCDConsoleLib
 {
@@ -99,48 +101,44 @@ namespace GCDConsoleLib
         /// This constructor loads a Histogram from a file.
         /// </summary>
         /// <param name="outputPath"></param>
-        //public Histogram(FileInfo histPath)
-        //{
-        //    if (!histPath.Exists)
-        //        throw new FileNotFoundException("Histogram file could not be found", histPath.FullName);
+        public Histogram(FileInfo histPath)
+        {
+            if (!histPath.Exists)
+                throw new FileNotFoundException("Histogram file could not be found", histPath.FullName);
 
-        //    List<string[]> sLines = new List<string[]>();
-        //    using (var reader = new StreamReader(histPath.FullName))
-        //    {
-        //        while (!reader.EndOfStream)
-        //        {
-        //            string line = reader.ReadLine();
-        //            sLines.Add(line.Split(','));
-        //        }
-        //    }
-        //    if (sLines.Count < 4)
-        //        throw new FileLoadException("Histogram file did not have the correct number of lines", histPath.FullName);
+            List<string[]> sLines = new List<string[]>();
+            using (var reader = new StreamReader(histPath.FullName))
+            {
+                while (!reader.EndOfStream)
+                {
+                    string line = reader.ReadLine();
+                    sLines.Add(line.Split(','));
+                }
+            }
+            if (sLines.Count < 2)
+                throw new FileLoadException("Histogram file did not have the correct number of lines", histPath.FullName);
 
-        //    decimal width, cellHeight, cellWidth;
-        //    LengthUnit vUnit, hUnit;
-        //    try
-        //    {
-        //        width = Convert.ToDecimal(sLines[3][1]) - Convert.ToDecimal(sLines[3][0]);
-        //        cellHeight = Convert.ToDecimal(sLines[1][0]);
-        //        cellWidth = Convert.ToDecimal(sLines[1][1]);
-        //        vUnit = Length.ParseUnit(sLines[1][2]);
-        //        hUnit = Length.ParseUnit(sLines[1][3]);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        throw new FileLoadException("Error loading histogram metadata", e);
-        //    }
+            decimal width;
+            try
+            {
+                width = Convert.ToDecimal(sLines[3][1]) - Convert.ToDecimal(sLines[3][0]);
+            }
+            catch (Exception e)
+            {
+                throw new FileLoadException("Error loading histogram bin width", e);
+            }
 
-        //    _init(sLines.Count - 3, width, cellHeight, cellWidth, vUnit, hUnit);
+            // Initialize the histogram with the right number of bins
+            _init(sLines.Count - 1, width);
 
-        //    // We start on line 4 with the histogram
-        //    for (int lid = 3; lid < sLines.Count; lid++)
-        //    {
-        //        _dlcounts[lid] = Convert.ToInt32(sLines[lid][5]);
-        //        _dlbinlefts[lid] = Convert.ToDecimal(sLines[lid][0]);
-        //        _dlbinVols[lid] = Convert.ToDecimal(sLines[lid][4]);
-        //    }            
-        //}
+            // We start on line 1 with the histogram and fill the values we need from that
+            for (int lid = 0; lid < sLines.Count-1; lid++)
+            {
+                BinCounts[lid] = Convert.ToInt32(sLines[lid+1][5]);
+                BinLefts[lid] = Convert.ToDecimal(sLines[lid+1][0]);
+                BinSums[lid] = Convert.ToDecimal(sLines[lid+1][6]);
+            }
+        }
 
         private void _init(int bins, decimal width)
         {
@@ -196,8 +194,6 @@ namespace GCDConsoleLib
             BinSums[bid] += (decimal)val;
         }
 
-
-
         /// <summary>
         /// These are helpful functions to figure stuff out.
         /// </summary>
@@ -218,15 +214,11 @@ namespace GCDConsoleLib
 
         /// <summary>
         /// Get the bin Area in Area units
-        /// TODO: MOVE THIS OUT OF THIS PROJECT. IT NEEDS UNITS
         /// </summary>
-        //public Area BinArea
-        //{
-        //    get
-        //    {
-        //        return Area.From((double)(Math.Abs(_cellHeight) * Math.Abs(_cellWidth)), Conversion.LengthUnit2AreaUnit(HorizontalUnit));
-        //    }
-        //}
+        public static Area BinArea(decimal cellHeight, decimal cellWidth, LengthUnit hUnit)
+        {
+            return Area.From((double)(Math.Abs(cellHeight) * Math.Abs(cellWidth)), Conversion.LengthUnit2AreaUnit(hUnit));
+        }
 
         /// <summary>
         /// Return the sum of values (used to make the volume) in length units
@@ -240,14 +232,14 @@ namespace GCDConsoleLib
 
         /// <summary>
         /// Get the Volume of one bin in volumetric units
-        /// TODO: MOVE THIS OUT OF THIS PROJECT. IT NEEDs UNITS
         /// </summary>
         /// <param name="bid"></param>
         /// <returns></returns>
-        //public Volume BinVolume(int bid)
-        //{
-        //    return Volume.FromCubicMeters(BinArea.SquareMeters * BinSum(bid).Meters);
-        //}
+        public Volume BinVolume(int bid, decimal cellHeight, decimal cellWidth, LengthUnit hUnit, LengthUnit vUnit)
+        {
+            Area binArea = BinArea(cellHeight, cellWidth, hUnit);
+            return Volume.FromCubicMeters(binArea.SquareMeters * Length.From((double)BinSum(bid), vUnit).Meters);
+        }
 
         /// <summary>
         /// Return a count at a given bin
@@ -264,20 +256,23 @@ namespace GCDConsoleLib
         /// </summary>
         /// <param name="outputPath"></param>
         /// This is no longer here MOVE IT TO THE PRESENTATION LAYER
-        //public void WriteFile(string outputPath)
-        //{
-        //    using (System.IO.StreamWriter stream = new System.IO.StreamWriter(outputPath))
-        //    {
-        //        stream.WriteLine(String.Format("Cell Height, Cell Width, Vertical Unit, Horizontal", VerticalUnit.ToString(), HorizontalUnit.ToString()));
-        //        stream.WriteLine(String.Format("{0},{1},{2},{3}", _cellHeight, _cellWidth, VerticalUnit.ToString(), HorizontalUnit.ToString()));
-        //        stream.WriteLine("Bin Lower,Bin Upper,Bin Centre,Area,Volume,Cell Count");
-        //        for (int bid = 0; bid < _dlcounts.Count; bid++)
-        //        {
-        //            string binstr = string.Format("{0},{1},{2},{3},{4},{5}", BinLower(bid), BinUpper(bid), BinCentre(bid), BinArea, BinVolume(bid), _dlcounts[bid]);
-        //            stream.WriteLine(binstr);
-        //        }
-        //    }
-        //}
+        public void WriteFile(FileInfo outputFile, decimal cellHeight, decimal cellWidth, 
+            LengthUnit hUnit, LengthUnit vUnit, VolumeUnit volUnit, AreaUnit areaUnit)
+        {
+            using (System.IO.StreamWriter stream = new System.IO.StreamWriter(outputFile.FullName))
+            {
+                stream.WriteLine(String.Format("Bin Lower,Bin Upper,Bin Centre,Area({0}),Volume({1}),Cell Count,Cell Sum({2})",  areaUnit.ToString(), volUnit.ToString(), vUnit.ToString()));
+                double area = BinArea(cellHeight, cellWidth, hUnit).As(areaUnit);
+                for (int bid = 0; bid < BinCounts.Count; bid++)
+                {
+                    double vol = BinVolume(bid, cellHeight, cellWidth, hUnit, vUnit).As(volUnit);
+                    string binstr = string.Format("{0},{1},{2},{3},{4},{5},{6}", 
+                        BinLower(bid), BinUpper(bid), BinCentre(bid),
+                        area, vol, BinCounts[bid], BinSums[bid]);
+                    stream.WriteLine(binstr);
+                }
+            }
+        }
 
     }
 

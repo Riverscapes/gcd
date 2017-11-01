@@ -2,9 +2,10 @@
 using GCDConsoleLib;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using UnitsNet;
+using UnitsNet.Units;
+using GCDConsoleLib.Tests.Utility;
+using System.IO;
 
 namespace GCDConsoleLib.Tests
 {
@@ -18,16 +19,16 @@ namespace GCDConsoleLib.Tests
 
             Assert.AreEqual(rTest1.FirstBinId, 0);
             Assert.AreEqual(rTest1.LastBinId, 19);
-            Assert.AreEqual(rTest1.HistogramLower, -10.0);
-            Assert.AreEqual(rTest1.HistogramUpper, 10.0);
+            Assert.AreEqual(rTest1.HistogramLower, -10.0m);
+            Assert.AreEqual(rTest1.HistogramUpper, 10.0m);
             Assert.AreEqual(rTest1.Count, 20);
 
             // Now let's try one with uneven bins
             Histogram rTest2 = new Histogram(19, 1);
             Assert.AreEqual(rTest2.FirstBinId, 0);
             Assert.AreEqual(rTest2.LastBinId, 19);
-            Assert.AreEqual(rTest2.HistogramLower, -10.0);
-            Assert.AreEqual(rTest2.HistogramUpper, 10.0);
+            Assert.AreEqual(rTest2.HistogramLower, -10.0m);
+            Assert.AreEqual(rTest2.HistogramUpper, 10.0m);
             Assert.AreEqual(rTest1.Count, 20);
 
         }
@@ -76,8 +77,8 @@ namespace GCDConsoleLib.Tests
         public void BinCentreTest()
         {
             Histogram rTest1 = new Histogram(20, 1);
-            Assert.AreEqual(rTest1.BinCentre(0), -9.5);
-            Assert.AreEqual(rTest1.BinCentre(19), 9.5);
+            Assert.AreEqual(rTest1.BinCentre(0), -9.5m);
+            Assert.AreEqual(rTest1.BinCentre(19), 9.5m);
         }
 
         [TestMethod()]
@@ -134,12 +135,6 @@ namespace GCDConsoleLib.Tests
         }
 
         [TestMethod()]
-        public void WriteFileTest()
-        {
-            Assert.Inconclusive();
-        }
-
-        [TestMethod()]
         public void GetNearestFiveOrderWidthTest()
         {
             Assert.AreEqual(Histogram.GetNearestFiveOrderWidth(0.1m), 0.1m);
@@ -190,5 +185,73 @@ namespace GCDConsoleLib.Tests
             Assert.AreEqual(t3.Item2, 0.1m);
 
         }
+
+        [TestMethod()]
+        public void BinAreaTest()
+        {
+            Assert.AreEqual(Histogram.BinArea(0.3m, 0.2m, LengthUnit.Meter).SquareMeters, 0.2 * 0.3);
+            Assert.AreEqual(Histogram.BinArea(-0.3m, 0.2m, LengthUnit.Meter).SquareMeters, 0.2 * 0.3);
+            Assert.AreEqual(Histogram.BinArea(-0.3m, -0.2m, LengthUnit.Meter).SquareMeters, 0.2 * 0.3);
+            Assert.AreEqual(Histogram.BinArea(-0.3m, -0.2m, LengthUnit.Meter).SquareFeet, Area.From((0.2 * 0.3), AreaUnit.SquareMeter).SquareFeet);
+        }
+
+        [TestMethod()]
+        public void BinVolumeTest()
+        {
+            Histogram rTest1 = new Histogram(20, 1);
+
+            //Add some fake values into the mix
+            for (int i = 0; i < 20; i++)
+                rTest1.AddBinVal((double)i - 9.9);
+
+            // Make sure our unit conversions are working
+            decimal cH = -0.2m;
+            decimal cW = 0.3m;
+
+            for (int i = 0; i < 20; i++)
+            {
+                // Length(m) X Width(m) X Height(ft)
+                double manualvolume = Histogram.BinArea(cH, cW, LengthUnit.Meter).SquareMeters * Length.FromFeet(i - 9.9).Meters;
+                Assert.AreEqual(rTest1.BinVolume(i, cH, cW, LengthUnit.Meter, LengthUnit.Foot).CubicMeters, manualvolume, 0.0000001);
+            }
+
+        }
+
+        [TestMethod()]
+        public void ReadWriteFileTest()
+        {
+            // Write to a file then read it to see if we get the same thing
+            Histogram rTest1 = new Histogram(20, 1);
+
+            //Add some fake values into the mix
+            for (int i = 0; i < 20; i++)
+                rTest1.AddBinVal(i - 9.9);
+
+            // First try it with a real file
+            using (ITempDir tmp = TempDir.Create())
+            {
+                FileInfo fPath = new FileInfo(Path.Combine(tmp.Name, "myHistogram.csv"));
+                rTest1.WriteFile(fPath, -0.1m, 0.1m, LengthUnit.Meter, LengthUnit.Meter, VolumeUnit.CubicMeter, AreaUnit.SquareMeter);
+                Histogram rTestRead = new Histogram(fPath);
+
+                // Make sure the two histograms have the same edges and width
+                Assert.AreEqual(rTest1.Count, rTest1.Count);
+                Assert.AreEqual(rTest1.HistogramLower, rTest1.HistogramLower);
+                Assert.AreEqual(rTest1.HistogramUpper, rTest1.HistogramUpper);
+                Assert.AreEqual(rTest1.BinWidth, rTest1.BinWidth);
+
+                // Now go bin-by-bin to make sure we end up with the same numbers everywhere
+                for (int bid =0; bid< rTestRead.Count; bid++)
+                {
+                    Assert.AreEqual(rTest1.BinCounts[bid], rTestRead.BinCounts[bid]);
+                    Assert.AreEqual(rTest1.BinSums[bid], rTestRead.BinSums[bid]);
+                    Assert.AreEqual(rTest1.BinLefts[bid], rTestRead.BinLefts[bid]);
+                }
+
+            }
+        }
     }
+
+
+
 }
