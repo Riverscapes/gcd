@@ -1,0 +1,511 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0808238E-1257-4D67-9D92-FFD785095062}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>GCDUserInterface</RootNamespace>
+    <AssemblyName>GCDUserInterface</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>Windows</MyType>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>GCDUserInterface.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>GCDUserInterface.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="UnitsNet, Version=3.77.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\UnitsNet.3.77.0\lib\net35\UnitsNet.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="GCDCore.Project" />
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+    <Import Include="System.Threading.Tasks" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="About\frmAbout.Designer.vb">
+      <DependentUpon>frmAbout.vb</DependentUpon>
+    </Compile>
+    <Compile Include="About\frmAbout.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="About\ucAcknowledgements.Designer.vb">
+      <DependentUpon>ucAcknowledgements.vb</DependentUpon>
+    </Compile>
+    <Compile Include="About\ucAcknowledgements.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ChangeDetection\DoDSummaryDisplayOptions.vb" />
+    <Compile Include="ChangeDetection\frmCoherenceProperties.Designer.vb">
+      <DependentUpon>frmCoherenceProperties.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ChangeDetection\frmCoherenceProperties.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChangeDetection\frmDoDProperties.Designer.vb">
+      <DependentUpon>frmDoDProperties.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ChangeDetection\frmDoDProperties.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChangeDetection\frmDoDResults.Designer.vb">
+      <DependentUpon>frmDoDResults.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ChangeDetection\frmDoDResults.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChangeDetection\frmDoDSummaryProperties.Designer.vb">
+      <DependentUpon>frmDoDSummaryProperties.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ChangeDetection\frmDoDSummaryProperties.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChangeDetection\ucChangeBars.Designer.vb">
+      <DependentUpon>ucChangeBars.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ChangeDetection\ucChangeBars.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ChangeDetection\ucDoDHistogram.Designer.vb">
+      <DependentUpon>ucDoDHistogram.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ChangeDetection\ucDoDHistogram.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ChangeDetection\ucDoDProperties.Designer.vb">
+      <DependentUpon>ucDoDProperties.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ChangeDetection\ucDoDProperties.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ChangeDetection\ucDoDSummary.Designer.vb">
+      <DependentUpon>ucDoDSummary.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ChangeDetection\ucDoDSummary.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ErrorCalculation\frmErrorCalculation.Designer.vb">
+      <DependentUpon>frmErrorCalculation.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ErrorCalculation\frmErrorCalculation.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FISLibrary\frmAddFIS.Designer.vb">
+      <DependentUpon>frmAddFIS.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FISLibrary\frmAddFIS.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FISLibrary\frmEditFIS.Designer.vb">
+      <DependentUpon>frmEditFIS.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FISLibrary\frmEditFIS.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FISLibrary\frmFISLibrary.Designer.vb">
+      <DependentUpon>frmFISLibrary.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FISLibrary\frmFISLibrary.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Options\frmOptions.Designer.vb">
+      <DependentUpon>frmOptions.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Options\frmOptions.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Project\frmProjectProperties.Designer.vb">
+      <DependentUpon>frmProjectProperties.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Project\frmProjectProperties.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Project\ucProjectExplorer.Designer.vb">
+      <DependentUpon>ucProjectExplorer.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Project\ucProjectExplorer.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SurveyLibrary\frmAssocSurfaceProperties.Designer.vb">
+      <DependentUpon>frmAssocSurfaceProperties.vb</DependentUpon>
+    </Compile>
+    <Compile Include="SurveyLibrary\frmAssocSurfaceProperties.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SurveyLibrary\frmDEMSurveyProperties.Designer.vb">
+      <DependentUpon>frmDEMSurveyProperties.vb</DependentUpon>
+    </Compile>
+    <Compile Include="SurveyLibrary\frmDEMSurveyProperties.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SurveyLibrary\frmImportRaster.Designer.vb">
+      <DependentUpon>frmImportRaster.vb</DependentUpon>
+    </Compile>
+    <Compile Include="SurveyLibrary\frmImportRaster.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SurveyLibrary\frmPointDensity.Designer.vb">
+      <DependentUpon>frmPointDensity.vb</DependentUpon>
+    </Compile>
+    <Compile Include="SurveyLibrary\frmPointDensity.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SurveyLibrary\frmSurveyDateTime.Designer.vb">
+      <DependentUpon>frmSurveyDateTime.vb</DependentUpon>
+    </Compile>
+    <Compile Include="SurveyLibrary\frmSurveyDateTime.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UtilityForms\frmInformation.Designer.vb">
+      <DependentUpon>frmInformation.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UtilityForms\frmInformation.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UtilityForms\ucOutputBase.Designer.vb">
+      <DependentUpon>ucOutputBase.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UtilityForms\ucOutputBase.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UtilityForms\ucRasterInput.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UtilityForms\ucRasterOutput.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UtilityForms\ucVectorInput.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="About\frmAbout.resx">
+      <DependentUpon>frmAbout.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="About\ucAcknowledgements.resx">
+      <DependentUpon>ucAcknowledgements.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ChangeDetection\frmCoherenceProperties.resx">
+      <DependentUpon>frmCoherenceProperties.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ChangeDetection\frmDoDProperties.resx">
+      <DependentUpon>frmDoDProperties.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ChangeDetection\frmDoDResults.resx">
+      <DependentUpon>frmDoDResults.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ChangeDetection\frmDoDSummaryProperties.resx">
+      <DependentUpon>frmDoDSummaryProperties.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ChangeDetection\ucChangeBars.resx">
+      <DependentUpon>ucChangeBars.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ChangeDetection\ucDoDHistogram.resx">
+      <DependentUpon>ucDoDHistogram.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ChangeDetection\ucDoDProperties.resx">
+      <DependentUpon>ucDoDProperties.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ChangeDetection\ucDoDSummary.resx">
+      <DependentUpon>ucDoDSummary.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ErrorCalculation\frmErrorCalculation.resx">
+      <DependentUpon>frmErrorCalculation.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FISLibrary\frmAddFIS.resx">
+      <DependentUpon>frmAddFIS.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FISLibrary\frmEditFIS.resx">
+      <DependentUpon>frmEditFIS.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FISLibrary\frmFISLibrary.resx">
+      <DependentUpon>frmFISLibrary.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Options\frmOptions.resx">
+      <DependentUpon>frmOptions.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Project\frmProjectProperties.resx">
+      <DependentUpon>frmProjectProperties.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Project\ucProjectExplorer.resx">
+      <DependentUpon>ucProjectExplorer.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SurveyLibrary\frmAssocSurfaceProperties.resx">
+      <DependentUpon>frmAssocSurfaceProperties.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SurveyLibrary\frmDEMSurveyProperties.resx">
+      <DependentUpon>frmDEMSurveyProperties.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SurveyLibrary\frmImportRaster.resx">
+      <DependentUpon>frmImportRaster.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SurveyLibrary\frmPointDensity.resx">
+      <DependentUpon>frmPointDensity.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SurveyLibrary\frmSurveyDateTime.resx">
+      <DependentUpon>frmSurveyDateTime.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UtilityForms\frmInformation.resx">
+      <DependentUpon>frmInformation.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UtilityForms\ucOutputBase.resx">
+      <DependentUpon>ucOutputBase.vb</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GCDConsoleLib\GCDConsoleLib.csproj">
+      <Project>{7a2e617d-37e5-4b2d-9981-df519b496a60}</Project>
+      <Name>GCDConsoleLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GCDCore\GCDCore.csproj">
+      <Project>{a96761f4-635e-478c-8eae-0623ade309c7}</Project>
+      <Name>GCDCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\naru\naru.csproj">
+      <Project>{1f496953-a809-4086-990b-884a5077bdc4}</Project>
+      <Name>naru</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AddToMap.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\alphabetical.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AOI.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AssociatedSurfaces.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BrowseFolder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BudgetSeg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\chart.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Check.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CleanRaster.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CoincidentPoints.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ConcaveHull.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Copy.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CurrentFunders.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CurrentFunders2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Delta.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DEMSurvey.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Developers.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DoD_Logo.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Excel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\FISLibrary.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GCD.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GCD_SplashLogo_200.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Help.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Histogram.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ICRRR_Logo_100.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\IdahoPower.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\IdahoPower_63height.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\NewProject.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OpenProject.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Options.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PointDensity.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\polygon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PreviousFunders.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\print.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\refresh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Report.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Reservoir.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Roughness.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SaveGIS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SelectAll.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SelectNone.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Settings.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sigma.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SlopeDegree.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SlopePercent.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TopCat.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\USGS.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\USUlogo.bmp" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
