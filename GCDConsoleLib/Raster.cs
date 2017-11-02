@@ -32,18 +32,7 @@ namespace GCDConsoleLib
         /// Constructor for opening an existing Raster
         /// </summary>
         /// <param name="sfilepath"></param>
-        public Raster(string sfilepath) : base(sfilepath)
-        {
-            _initfromfile();
-            // Remember to clean things up afterwards
-            Dispose();
-        }
-
-        /// <summary>
-        /// Constructor for opening an existing Raster
-        /// </summary>
-        /// <param name="sfilepath"></param>
-        public Raster(System.IO.FileInfo filepath) : base(filepath.FullName)
+        public Raster(FileInfo sfilepath) : base(sfilepath)
         {
             _initfromfile();
             // Remember to clean things up afterwards
@@ -56,13 +45,26 @@ namespace GCDConsoleLib
         /// <param name="rTemplate"></param>
         /// <param name="sFilename"></param>
         /// <param name="leaveopen"></param>
-        public Raster(ref Raster rTemplate, string sFilename, bool leaveopen = false) : base(sFilename)
+        public Raster(ref Raster rTemplate, FileInfo sFilename, bool leaveopen = false) : base(sFilename)
         {
             ExtentRectangle theExtent = new ExtentRectangle(ref rTemplate.Extent);
             _Init(RasterDriver.GTiff, rTemplate.VerticalUnits, rTemplate.Proj, rTemplate.Datatype, theExtent, rTemplate.origNodataVal);
         }
+
+        /// <summary>
+        /// Sometimes we want to create a raster with all properties the same as a template except DataType (think Hillshade)
+        /// </summary>
+        /// <param name="rTemplate"></param>
+        /// <param name="sFilename"></param>
+        /// <param name="leaveopen"></param>
+        public Raster(ref Raster rTemplate, FileInfo sFilename, GdalDataType dType, bool leaveopen = false) : base(sFilename)
+        {
+            ExtentRectangle theExtent = new ExtentRectangle(ref rTemplate.Extent);
+            _Init(RasterDriver.GTiff, rTemplate.VerticalUnits, rTemplate.Proj, dType, theExtent, rTemplate.origNodataVal);
+        }
+
         // This is mainly for testing purposes
-        public Raster(ref Raster rTemplate) : base("")
+        public Raster(ref Raster rTemplate) : base()
         {
             ExtentRectangle theExtent = new ExtentRectangle(ref rTemplate.Extent);
             _Init(RasterDriver.GTiff, rTemplate.VerticalUnits, rTemplate.Proj, rTemplate.Datatype, theExtent, rTemplate.origNodataVal);
@@ -75,7 +77,7 @@ namespace GCDConsoleLib
         /// <param name="rExtent"></param>
         /// <param name="sFilename"></param>
         /// <param name="leaveopen"></param>
-        public Raster(ref Raster rTemplate, ExtentRectangle rExtent, string sFilename, bool leaveopen = false) : base(sFilename)
+        public Raster(ref Raster rTemplate, ExtentRectangle rExtent, FileInfo sFilename, bool leaveopen = false) : base(sFilename)
         {
             _Init(rTemplate.driver, rTemplate.VerticalUnits, rTemplate.Proj, rTemplate.Datatype, rExtent, rTemplate.origNodataVal);
         }
@@ -96,7 +98,7 @@ namespace GCDConsoleLib
         /// <param name="psUnit"></param>
         public Raster(decimal fTop, decimal fLeft, decimal dCellHeight, decimal dCellWidth, int nRows, int nCols,
                double? dNoData, RasterDriver psDriver, GdalDataType dType,
-               string psProjection, string psUnit, bool leaveopen = false) : base("")
+               string psProjection, string psUnit, bool leaveopen = false) : base()
         {
             ExtentRectangle theExtent = new ExtentRectangle(fTop, fLeft, dCellHeight, dCellWidth, nRows, nCols);
             _Init(psDriver, UnitFromString(psUnit), new Projection(psProjection), dType, theExtent, dNoData);
@@ -197,7 +199,7 @@ namespace GCDConsoleLib
                 Gdal.Unlink(GISFileInfo.FullName);
 
             CreateDS(driver, GISFileInfo, Extent, Proj, Datatype);
-            GISFileInfo.Refresh();
+            RefreshFileInfo();
             if (!leaveopen)
                 Dispose();
         }
@@ -289,6 +291,7 @@ namespace GCDConsoleLib
             {
                 ds.Dispose();
                 ds = null;
+                RefreshFileInfo();
             }
         }
 
@@ -315,11 +318,10 @@ namespace GCDConsoleLib
         /// Really simple copy functionality
         /// </summary>
         /// <param name="destPath"></param>
-        public override void Copy(string destPath)
+        public override void Copy(FileInfo destPath)
         {
             Open();
-            ds.GetDriver().CopyFiles(destPath, GISFileInfo.FullName);
-            //dataset.GetDriver().CreateCopy(destPath, dataset, 1, null, null, null);
+            ds.GetDriver().CopyFiles(destPath.FullName, GISFileInfo.FullName);
             Dispose();
         }
 
@@ -327,10 +329,11 @@ namespace GCDConsoleLib
         /// Deletion
         /// </summary>
         /// <param name="sFilepath"></param>
-        public static void Delete(string sFilepath)
+        public static void Delete(FileInfo sFilepath)
         {
             Raster toDelete = new Raster(sFilepath);
             toDelete.Delete();
+            toDelete.RefreshFileInfo();
         }
 
         /// <summary>

@@ -69,7 +69,7 @@ namespace GCDConsoleLib.Internal.Tests
             // First try it with a real file
             using (ITempDir tmp = TempDir.Create())
             {
-                Raster rTemplateRaster = new Raster(TestHelpers.GetTestRasterPath("AngledSlopey950-980E.tif"));
+                Raster rTemplateRaster = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("AngledSlopey950-980E.tif")));
                 FakeRaster<Single> rOut = new FakeRaster<Single>(ref rTemplateRaster);
                 TestOp<float> theTest = new TestOp<float>(new List<Raster> { rTemplateRaster }, ref rOut);
 

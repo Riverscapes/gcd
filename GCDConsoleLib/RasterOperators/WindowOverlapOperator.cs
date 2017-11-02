@@ -56,10 +56,10 @@ namespace GCDConsoleLib.Internal
         /// <summary>
         /// WindowOp must be implemented by the operation. It takes an (nxn) double[] and spits back a single number
         /// </summary>
-        /// <param name="data"></param>
+        /// <param name="windowData"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        protected abstract T WindowOp(ref List<T[]> data);
+        protected abstract T WindowOp(ref List<T[]> windowData);
 
         private List<T[]> NoDataChunkList()
         {

@@ -4,8 +4,7 @@ using GCDConsoleLib.Internal;
 
 namespace GCDConsoleLib.Internal.Operators
 {
-
-    public class RasterThreshold : CellByCellOperator<Single>
+    public class Threshold : CellByCellOperator<Single>
     {
         private RasterOperators.ThresholdOps _botOp;
         private Single _botNum;
@@ -16,7 +15,7 @@ namespace GCDConsoleLib.Internal.Operators
         /// <summary>
         /// Pass-through constructure
         /// </summary>
-        public RasterThreshold(ref Raster rInput, RasterOperators.ThresholdOps tOp,
+        public Threshold(ref Raster rInput, RasterOperators.ThresholdOps tOp,
             Single fThresh) :
             base(new List<Raster> { rInput })
         {
@@ -24,7 +23,7 @@ namespace GCDConsoleLib.Internal.Operators
             _botNum = fThresh;
             bTwoOps = false;
         }
-        public RasterThreshold(ref Raster rInput,
+        public Threshold(ref Raster rInput,
             RasterOperators.ThresholdOps tBottomOp, Single fBottomThresh,
             RasterOperators.ThresholdOps tTopOp, Single fTopThresh) :
             base(new List<Raster> { rInput })

@@ -19,7 +19,7 @@ namespace GCDConsoleLib
         /// Construct a vector by opening up a file on disk and reading it.
         /// </summary>
         /// <param name="sFilename"></param>
-        public Vector(string sFilename) : base(sFilename)
+        public Vector(FileInfo sFilename) : base(sFilename)
         {
             Features = new Dictionary<long, VectorFeature>();
             Fields = new Dictionary<string, VectorField>();
@@ -71,10 +71,10 @@ namespace GCDConsoleLib
             }
         }
 
-        public override void Copy(string destPath)
+        public override void Copy(FileInfo destPath)
         {
             Open();
-            DataSource _cpyDs = _drv.CopyDataSource(_ds, destPath, null);
+            DataSource _cpyDs = _drv.CopyDataSource(_ds, destPath.FullName, null);
             _cpyDs.Dispose();
             Dispose();
         }
@@ -95,7 +95,7 @@ namespace GCDConsoleLib
         /// Deletion
         /// </summary>
         /// <param name="sFilepath"></param>
-        public static void Delete(string sFilepath)
+        public static void Delete(FileInfo sFilepath)
         {
             Vector toDelete = new Vector(sFilepath);
             toDelete.Delete();

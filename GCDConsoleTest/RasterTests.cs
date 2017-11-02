@@ -15,7 +15,7 @@ namespace GCDConsoleLib.Tests
         [TestMethod()]
         public void RasterInitTest()
         {
-            Raster rTemplateRaster = new Raster(TestHelpers.GetTestRasterPath("Slopey980-950.tif"));
+            Raster rTemplateRaster = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("Slopey980-950.tif")));
             Assert.IsFalse(rTemplateRaster.IsOpen);
             Assert.IsTrue(rTemplateRaster.Datatype.Equals(FakeRaster<Single>.floatType));
             Assert.IsFalse(rTemplateRaster.IsOpen);
@@ -27,8 +27,8 @@ namespace GCDConsoleLib.Tests
         {
             using (Utility.ITempDir tmp = Utility.TempDir.Create())
             {
-                Raster rTemplaetRaster = new Raster(TestHelpers.GetTestRasterPath("SinWave950-980.tif"));
-                rTemplaetRaster.Copy(Path.Combine(tmp.Name, "CopyRasterTest.tif"));
+                Raster rTemplaetRaster = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("SinWave950-980.tif")));
+                rTemplaetRaster.Copy(new FileInfo(Path.Combine(tmp.Name, "CopyRasterTest.tif")));
 
                 // Make sure we're good.
                 Assert.IsTrue(File.Exists(Path.Combine(tmp.Name, "CopyRasterTest.tif")));
@@ -45,19 +45,19 @@ namespace GCDConsoleLib.Tests
         {
             using (Utility.ITempDir tmp = Utility.TempDir.Create())
             {
-                string sSourceRater = TestHelpers.GetTestRasterPath("const990.tif");
-                string sDeletePath = Path.Combine(tmp.Name, "DeleteRasterTest.tif");
+                FileInfo sSourceRater = new FileInfo(TestHelpers.GetTestRasterPath("const990.tif"));
+                FileInfo sDeletePath = new FileInfo(Path.Combine(tmp.Name, "DeleteRasterTest.tif"));
 
                 Raster rRaster = new Raster(sSourceRater);
                 rRaster.Copy(sDeletePath);
                 // Make sure our setup worked                
-                Assert.IsTrue(File.Exists(sDeletePath));
+                Assert.IsTrue(sDeletePath.Exists);
 
                 Raster rDeleteRaster = new Raster(sDeletePath);
                 rDeleteRaster.Delete();
 
                 // Make sure we're good.
-                Assert.IsFalse(File.Exists(sDeletePath));
+                Assert.IsFalse(sDeletePath.Exists);
                 Assert.IsFalse(File.Exists(Path.Combine(tmp.Name, "DeleteRasterTest.tif.aux.xml")));
                 Assert.IsFalse(File.Exists(Path.Combine(tmp.Name, "DeleteRasterTest.tif.ovr")));
                 rRaster.Dispose();

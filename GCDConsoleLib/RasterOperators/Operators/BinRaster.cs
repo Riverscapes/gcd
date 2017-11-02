@@ -5,14 +5,14 @@ using GCDConsoleLib.Internal;
 namespace GCDConsoleLib.Internal.Operators
 {
 
-    public class CreateHistogram : CellByCellOperator<double>
+    public class BinRaster : CellByCellOperator<double>
     {
         public Histogram theHistogram;
 
         /// <summary>
         /// Pass-through constructure
         /// </summary>
-        public CreateHistogram(ref Raster rInput, int numBins) :
+        public BinRaster(ref Raster rInput, int numBins) :
             base(new List<Raster> { rInput })
         {
             theHistogram = new Histogram(numBins, ref rInput);

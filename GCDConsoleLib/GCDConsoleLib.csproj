@@ -93,9 +93,13 @@
     <Compile Include="Histogram.cs" />
     <Compile Include="RasterOperators\CellByCellOperator.cs" />
     <Compile Include="RasterOperators\Interfaces.cs" />
-    <Compile Include="RasterOperators\Operators\CreateHistogram.cs" />
-    <Compile Include="RasterOperators\Operators\RasterCopy.cs" />
-    <Compile Include="RasterOperators\Operators\RasterThreshold.cs" />
+    <Compile Include="RasterOperators\Operators\Hillshade.cs" />
+    <Compile Include="RasterOperators\Operators\BinRaster.cs" />
+    <Compile Include="RasterOperators\Operators\Mask.cs" />
+    <Compile Include="RasterOperators\Operators\ExtendedCopy.cs" />
+    <Compile Include="RasterOperators\Operators\Mosaic.cs" />
+    <Compile Include="RasterOperators\Operators\Threshold.cs" />
+    <Compile Include="RasterOperators\Operators\Slope.cs" />
     <Compile Include="RasterOperators\WindowOverlapOperator.cs" />
     <Compile Include="Utility\Conversion.cs" />
     <Compile Include="Utility\dynamics.cs" />

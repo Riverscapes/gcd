@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using OSGeo.GDAL;
+using System.IO;
 
 namespace GCDConsoleLib
 {
@@ -56,7 +57,7 @@ namespace GCDConsoleLib
         /// Load this rectangle from a file on disk
         /// </summary>
         /// <param name="sFilePath"></param>
-        public ExtentRectangle(string sFilePath)
+        public ExtentRectangle(FileInfo sFilePath)
         {
             Raster temp = new Raster(sFilePath);
             _Init(temp.Extent.Top, temp.Extent.Left, temp.Extent.CellHeight, temp.Extent.CellWidth, temp.Extent.rows, temp.Extent.cols);

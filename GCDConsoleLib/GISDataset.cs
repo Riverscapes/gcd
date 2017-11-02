@@ -10,9 +10,9 @@ namespace GCDConsoleLib
         public FileInfo GISFileInfo { get; internal set; }
         public Projection Proj;
 
-        public static bool FileExists(string fullPath)
+        public static bool FileExists(FileInfo fullPath)
         {
-            return !String.IsNullOrEmpty(fullPath) && File.Exists(fullPath);
+            return !String.IsNullOrEmpty(fullPath.FullName) && fullPath.Exists;
         }
         public bool FileExists()
         {
@@ -24,24 +24,24 @@ namespace GCDConsoleLib
         /// </summary>
         public abstract void Create(bool leaveopen);
         public abstract void Open(bool write = false);
-        public abstract void Copy(string destPath);
+        public abstract void Copy(FileInfo destPath);
         public abstract void Delete();
         public abstract void Dispose();
+
+        public void RefreshFileInfo()
+        {
+            GISFileInfo.Refresh();
+        }
+
+        public GISDataset(){}
 
         /// <summary>
         /// Load a dataset from a filepath
         /// </summary>
         /// <param name="sFilepath"></param>
-        public GISDataset(string sFilepath)
+        public GISDataset(FileInfo sFilepath)
         {
-            try
-            {
-                GISFileInfo = new FileInfo(sFilepath);
-            }
-            catch(ArgumentException e)
-            {
-                Console.WriteLine(String.Format("Invalid path detected: {0}",e.Message));
-            }
+            GISFileInfo = sFilepath;
         }
 
     }
