@@ -70,7 +70,7 @@ namespace GCDCore.ChangeDetection
             FileInfo thrHistoPath = Project.ProjectManagerBase.GetAbsolutePath(rDoD.ThreshHistPath);
 
             GCDConsoleLib.Raster gRawDoDPath = new GCDConsoleLib.Raster(rawDoDPath);
-            UnitsNet.Units.LengthUnit lUnits = gRawDoDPath.Proj.LinearUnit;
+            UnitsNet.Units.LengthUnit lUnits = gRawDoDPath.Proj.HorizontalUnit;
             double cellWidth = Convert.ToDouble(gRawDoDPath.Extent.CellWidth);
             GCDConsoleLib.DoDStats changeStats = CreateStatsFromRow(rDoD);
 
@@ -106,7 +106,7 @@ namespace GCDCore.ChangeDetection
                     FileInfo sPosteriorRaster = rDoD.IsPosteriorRasterNull() ? null : Project.ProjectManagerBase.GetAbsolutePath(rDoD.PosteriorRaster);
 
                     dodResult = new DoDResultProbabilisitic(ref changeStats, rawDoDPath, rawHistoPath, thrDoDPath, thrHistoPath, sPropErrPath, sProbabilityRaster, sSpatialCoErosionRaster, sSpatialCoDepositionraster, sConditionalProbRaster,
-                    sPosteriorRaster, rDoD.Threshold, rDoD.Filter, rDoD.Bayesian, gRawDoDPath.Proj.LinearUnit);
+                    sPosteriorRaster, rDoD.Threshold, rDoD.Filter, rDoD.Bayesian, gRawDoDPath.Proj.HorizontalUnit);
                 }
             }
 

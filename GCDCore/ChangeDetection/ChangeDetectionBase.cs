@@ -16,7 +16,7 @@ namespace GCDCore.ChangeDetection
 
         protected UnitsNet.Units.LengthUnit LinearUnits
         {
-            get { return NewDEM.Proj.LinearUnit; }
+            get { return NewDEM.Proj.HorizontalUnit; }
         }
 
         private DirectoryInfo FiguresFolder
@@ -31,9 +31,9 @@ namespace GCDCore.ChangeDetection
             if (!gNewDEM.Extent.HasOverlap(ref gOldDEM.Extent))
             {
                 Exception ex = new Exception("The two rasters do not overlap.");
-                ex.Data["New DEM Path"] = gNewDEM.FilePath;
+                ex.Data["New DEM Path"] = gNewDEM.GISFileInfo;
                 ex.Data["New DEM Extent"] = gNewDEM.Extent.ToString();
-                ex.Data["Old DEM Path"] = gOldDEM.FilePath;
+                ex.Data["Old DEM Path"] = gOldDEM.GISFileInfo;
                 ex.Data["Old DEM Extent"] = gOldDEM.Extent.ToString();
             }
 
@@ -56,10 +56,10 @@ namespace GCDCore.ChangeDetection
             Project.ProjectManagerUI.PyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.DoDRaw, rawDoDPath);
 
             // Calculate the raw histogram
-            Dictionary<double, HistogramBin> rawHisto = RasterOperators.BinRaster(ref rawDoD, DEFAULTHISTOGRAMNUMBER);
+            Histogram rawHisto = RasterOperators.BinRaster(ref rawDoD, DEFAULTHISTOGRAMNUMBER);
 
             // Write the raw histogram
-            HistogramBin.WriteHistogram(ref rawHisto, rawHstPath);
+            WriteHistogram(ref rawHisto, rawHstPath);
 
             // Call the polymorphic method to threshold the DoD depending on the thresholding method
             Raster thrDoD = ThresholdRawDoD(ref rawDoD, thrDoDPath);
@@ -68,13 +68,13 @@ namespace GCDCore.ChangeDetection
             Project.ProjectManagerUI.PyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.DoDThresholded, thrDoDPath);
 
             // Calculate the thresholded histogram
-            Dictionary<double, HistogramBin> thrHisto = RasterOperators.BinRaster(ref thrDoD, DEFAULTHISTOGRAMNUMBER);
+            Histogram thrHisto = RasterOperators.BinRaster(ref thrDoD, DEFAULTHISTOGRAMNUMBER);
 
             // Write the thresholded histogram
-            HistogramBin.WriteHistogram(ref thrHisto, thrHstPath);
+            WriteHistogram(ref thrHisto, thrHstPath);
 
             // Calculate the change statistics and write the output files
-            GCDConsoleLib.DoDStats changeStats = CalculateChangeStats(ref rawDoD, ref thrDoD);
+            DoDStats changeStats = CalculateChangeStats(ref rawDoD, ref thrDoD);
             GenerateSummaryXML(ref changeStats, sumXMLPath, LinearUnits);
             GenerateChangeBarGraphicFiles(ref changeStats, 0, 0);
             GenerateHistogramGraphicFiles(ref rawHisto, ref thrHisto, 0, 0);
@@ -87,6 +87,17 @@ namespace GCDCore.ChangeDetection
         protected abstract DoDStats CalculateChangeStats(ref Raster rawDoD, ref Raster thrDoD);
 
         protected abstract DoDResult GetDoDResult(ref DoDStats changeStats, FileInfo rawDoDPath, FileInfo thrDoDPath, FileInfo rawHist, FileInfo thrHist, UnitsNet.Units.LengthUnit eUnits);
+
+        protected void WriteHistogram(ref Histogram histo, FileInfo outputFile)
+        {
+            histo.WriteFile(outputFile,
+                NewDEM.Extent.CellHeight,
+                NewDEM.Extent.CellWidth,
+                NewDEM.Proj.HorizontalUnit,
+                NewDEM.Proj.HorizontalUnit,
+                GCDConsoleLib.Utility.Conversion.LengthUnit2VolumeUnit(NewDEM.Proj.HorizontalUnit),
+                GCDConsoleLib.Utility.Conversion.LengthUnit2AreaUnit(NewDEM.Proj.HorizontalUnit));
+        }
 
         /// <summary>
         /// 
@@ -144,15 +155,15 @@ namespace GCDCore.ChangeDetection
             }
         }
 
-        protected void GenerateHistogramGraphicFiles(ref Dictionary<double, HistogramBin> rawHisto, ref Dictionary<double, HistogramBin> thrHisto, int fChartWidth, int fChartHeight)
+        protected void GenerateHistogramGraphicFiles(ref Histogram rawHisto, ref Histogram thrHisto, int fChartWidth, int fChartHeight)
         {
             FiguresFolder.Create();
 
             string areaHistPath = Path.Combine(FiguresFolder.FullName, "Histogram_Area.png");
             string volhistPath = Path.Combine(FiguresFolder.FullName, "Histogram_Volume.png");
 
-            DoDHistogramViewerClass ExportHistogramViewer = new DoDHistogramViewerClass(ref rawHisto, ref thrHisto, LinearUnits);
-            ExportHistogramViewer.ExportCharts(areaHistPath, volhistPath, fChartWidth, fChartHeight);
+            //DoDHistogramViewerClass ExportHistogramViewer = new DoDHistogramViewerClass(ref rawHisto, ref thrHisto, LinearUnits);
+            //ExportHistogramViewer.ExportCharts(areaHistPath, volhistPath, fChartWidth, fChartHeight);
         }
 
         protected void GenerateChangeBarGraphicFiles(ref GCDConsoleLib.DoDStats changeStats, int fChartWidth, int fChartHeight, string sFilePrefix = "")

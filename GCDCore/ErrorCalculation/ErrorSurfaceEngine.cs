@@ -187,7 +187,7 @@ namespace GCDCore.ErrorCalculation
             {
                 Exception ex2 = new Exception("Error generating FIS error surface raster", ex);
                 ex2.Data.Add("OutputPath", outputRasterPath);
-                ex2.Data.Add("Reference Mask", gReferenceRaster.FilePath);
+                ex2.Data.Add("Reference Mask", gReferenceRaster.GISFileInfo.FullName);
                 throw ex2;
             }
         }

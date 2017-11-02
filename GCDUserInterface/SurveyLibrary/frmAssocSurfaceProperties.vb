@@ -273,7 +273,7 @@ Namespace SurveyLibrary
             m_ImportForm.txtName.Text = txtName.Text
             If m_ImportForm.ShowDialog = System.Windows.Forms.DialogResult.OK Then
                 txtName.Text = m_ImportForm.txtName.Text
-                txtOriginalRaster.Text = m_ImportForm.ucRaster.SelectedItem.FilePath
+                txtOriginalRaster.Text = m_ImportForm.ucRaster.SelectedItem.GISFileInfo.FullName
             End If
 
         End Sub
@@ -310,7 +310,7 @@ Namespace SurveyLibrary
         Private Sub btnDensity_Click(sender As System.Object, e As System.EventArgs) Handles btnDensity.Click
 
             If m_frmPointDensity Is Nothing Then
-                m_frmPointDensity = New frmPointDensity(DEMSurveyRaster.Proj.LinearUnit)
+                m_frmPointDensity = New frmPointDensity(DEMSurveyRaster.Proj.HorizontalUnit)
             End If
 
             If m_frmPointDensity.ShowDialog = System.Windows.Forms.DialogResult.OK Then
@@ -332,7 +332,7 @@ Namespace SurveyLibrary
                     End If
                 Next
 
-                txtOriginalRaster.Text = m_frmPointDensity.ucPointCloud.SelectedItem.FilePath
+                txtOriginalRaster.Text = m_frmPointDensity.ucPointCloud.SelectedItem.GISFileInfo.FullName
             End If
         End Sub
 

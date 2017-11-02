@@ -19,8 +19,7 @@ namespace GCDCore.ChangeDetection
         protected override Raster ThresholdRawDoD(ref Raster rawDoD, FileInfo thrDoDPath)
         {
             PropagatedErrRaster = GeneratePropagatedErrorRaster();
-            Raster thrDoD = RasterOperators.SetNullLessThan(ref rawDoD, ref PropagatedErrRaster, thrDoDPath.FullName);
-
+            Raster thrDoD = RasterOperators.SetNull(ref rawDoD, RasterOperators.ThresholdOps.LessThan, ref PropagatedErrRaster, thrDoDPath);
             return thrDoD;
         }
 
@@ -31,7 +30,7 @@ namespace GCDCore.ChangeDetection
 
         protected override DoDResult GetDoDResult(ref DoDStats changeStats, FileInfo rawDoDPath, FileInfo thrDoDPath, FileInfo rawHist, FileInfo thrHist, UnitsNet.Units.LengthUnit eUnits)
         {
-            return new DoDResultPropagated(ref changeStats, rawDoDPath, rawHist, thrDoDPath, thrHist, new FileInfo(PropagatedErrRaster.FilePath), eUnits);
+            return new DoDResultPropagated(ref changeStats, rawDoDPath, rawHist, thrDoDPath, thrHist, PropagatedErrRaster.GISFileInfo, eUnits);
         }
 
         /// <summary>
@@ -43,7 +42,7 @@ namespace GCDCore.ChangeDetection
         protected Raster GeneratePropagatedErrorRaster()
         {
             FileInfo propErrPath = Project.ProjectManagerBase.OutputManager.PropagatedErrorPath(AnalysisFolder);
-            Raster propErr = RasterOperators.RootSumSquares(ref NewError, ref OldError, propErrPath.FullName);
+            Raster propErr = RasterOperators.RootSumSquares(ref NewError, ref OldError, propErrPath);
 
             // Build Pyramids
             Project.ProjectManagerUI.PyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.PropagatedError, propErrPath);

@@ -5,9 +5,9 @@ namespace GCDCore.ChangeDetection
 {
     public class ChangeDetectionEngineMinLoD : ChangeDetectionEngineBase
     {
-        public double Threshold { get; internal set; }
+        public float Threshold { get; internal set; }
 
-        public ChangeDetectionEngineMinLoD(DirectoryInfo folder, Raster gNewDEM, Raster gOldDEM, double fThreshold)
+        public ChangeDetectionEngineMinLoD(DirectoryInfo folder, Raster gNewDEM, Raster gOldDEM, float fThreshold)
             : base(folder, ref gNewDEM, ref gOldDEM)
         {
 
@@ -23,7 +23,7 @@ namespace GCDCore.ChangeDetection
         /// <remarks>Let the base class build the pyramids for the thresholded raster</remarks>
         protected override Raster ThresholdRawDoD(ref Raster rawDoD, FileInfo thrDoDPath)
         {
-            return RasterOperators.SetNullLessThan(ref rawDoD, Threshold, thrDoDPath.FullName);
+            return RasterOperators.SetNull(ref rawDoD, RasterOperators.ThresholdOps.LessThan, Threshold, thrDoDPath);
         }
 
         protected override DoDStats CalculateChangeStats(ref Raster rawDoD, ref Raster thrDoD)

@@ -500,7 +500,7 @@ Namespace Project
                     "[Undefined]", "", "", ProjectManagerBase.CurrentProject, True, False, "", frmImport.valCellSize.Value,
                     frmImport.valLeft.Value, frmImport.valBottom.Value, frmImport.valRight.Value, frmImport.valTop.Value,
                     frmImport.OriginalExtent.Left, frmImport.OriginalExtent.Bottom, frmImport.OriginalExtent.Right, frmImport.OriginalExtent.Top,
-                    frmImport.ucRaster.SelectedItem.FilePath, System.Net.Dns.GetHostName, frmImport.valCellSize.Value, Nothing, Nothing, Nothing, Nothing, Nothing)
+                    frmImport.ucRaster.SelectedItem.GISFileInfo.FullName, System.Net.Dns.GetHostName, frmImport.valCellSize.Value, Nothing, Nothing, Nothing, Nothing, Nothing)
                     ProjectManagerBase.save()
 
                     nDEMSurveyID = demRow.DEMSurveyID

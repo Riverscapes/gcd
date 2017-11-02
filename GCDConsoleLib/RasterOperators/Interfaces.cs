@@ -170,6 +170,13 @@ namespace GCDConsoleLib
             return null;
         }
 
+        public static Raster RootSumSquares(ref Raster raster1, ref Raster raster2, System.IO.FileInfo sOutputRaster)
+        {
+            throw new NotImplementedException();
+            return null;
+        }
+
+
         /// <summary>
         /// Default histogram generator
         /// </summary>
@@ -191,11 +198,16 @@ namespace GCDConsoleLib
             LessThan, GreaterThan, LessThanOrEqual, GreaterThanOrEqual,
         }
 
-        public static Raster SetNull(ref Raster rInput, ThresholdOps fThresholdOp, 
+        public static Raster SetNull(ref Raster rInput, ThresholdOps fThresholdOp,
             Single fThreshold, System.IO.FileInfo sOutputRaster)
         {
             RasterThreshold threshOp = new RasterThreshold(ref rInput, fThresholdOp, fThreshold);
             return threshOp.RunWithOutput();
+        }
+
+        public static Raster SetNull(ref Raster rInput, ThresholdOps fThresholdOp, ref Raster rThreshold, System.IO.FileInfo sOutputRaster)
+        {
+            throw new NotImplementedException("threshold is defined by a raster instead of constant.");
         }
 
         public static Raster SetNull(ref Raster rInput, ThresholdOps fBottomOp, Single fBottom, ThresholdOps fTopOp, Single fTop, System.IO.FileInfo sOutputRaster)

@@ -20,7 +20,7 @@ namespace GCDAddIn.DataPreparation
                     {
                         if (GCDCore.Properties.Settings.Default.AddOutputLayersToMap)
                         {
-                            ArcMapUtilities.AddToMap(new System.IO.FileInfo(gOutput.FilePath));
+                            ArcMapUtilities.AddToMap(new System.IO.FileInfo(gOutput.GISFileInfo.FullName));
                         }
                     }
                 }
@@ -40,7 +40,7 @@ namespace GCDAddIn.DataPreparation
             GCDConsoleLib.Raster selectedRaster = ArcMapBrowse.BrowseOpenRaster(e.FormTitle, ref diWorkspace, sDataset);
             if (!(selectedRaster == null))
             {
-                ((System.Windows.Forms.TextBox)sender).Text = selectedRaster.FilePath;
+                ((System.Windows.Forms.TextBox)sender).Text = selectedRaster.GISFileInfo.FullName;
             }
         }
 
@@ -51,7 +51,7 @@ namespace GCDAddIn.DataPreparation
                 frmLayerSelector frm = new frmLayerSelector( ArcMapBrowse.BrowseGISTypes.Raster);
                 if (frm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
-                    ((System.Windows.Forms.TextBox)sender).Text = frm.SelectedLayer.FilePath;
+                    ((System.Windows.Forms.TextBox)sender).Text = frm.SelectedLayer.GISFileInfo.FullName;
                 }
             }
             catch (Exception ex)

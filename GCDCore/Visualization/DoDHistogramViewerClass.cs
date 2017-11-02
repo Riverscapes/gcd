@@ -5,6 +5,7 @@ using System.Windows.Forms.DataVisualization.Charting;
 using UnitsNet.Units;
 using System.IO;
 using System.Drawing;
+using GCDConsoleLib;
 
 namespace GCDCore.Visualization
 {
@@ -33,7 +34,7 @@ namespace GCDCore.Visualization
         /// <summary>
         /// Call this constructor from non-UI code that simply wants to generate histogram plot image files
         /// </summary>
-        public DoDHistogramViewerClass(ref Dictionary<double, GCDConsoleLib.HistogramBin> rawHisto, ref Dictionary<double, GCDConsoleLib.HistogramBin> thrHisto, UnitsNet.Units.LengthUnit linearDataUnits)
+        public DoDHistogramViewerClass(ref Histogram rawHisto, ref Histogram thrHisto, UnitsNet.Units.LengthUnit linearDataUnits)
         {
             m_Chart = new Chart();
             Init(ref rawHisto, ref thrHisto, linearDataUnits);
@@ -50,12 +51,12 @@ namespace GCDCore.Visualization
             GCDConsoleLib.Raster rawDoD = new GCDConsoleLib.Raster(rawDodPath);
             GCDConsoleLib.Raster thrDoD = new GCDConsoleLib.Raster(thrDoDPath);
 
-            Dictionary<double, GCDConsoleLib.HistogramBin> rawHisto = GCDConsoleLib.RasterOperators.BinRaster(ref rawDoD, m_nHistogramBins);
-            Dictionary<double, GCDConsoleLib.HistogramBin> thrHisto = GCDConsoleLib.RasterOperators.BinRaster(ref thrDoD, m_nHistogramBins);
+            Histogram rawHisto = RasterOperators.BinRaster(ref rawDoD, m_nHistogramBins);
+            Histogram thrHisto = RasterOperators.BinRaster(ref thrDoD, m_nHistogramBins);
             Init(ref rawHisto, ref thrHisto, linearDataUnits);
         }
 
-        private void Init(ref Dictionary<double, GCDConsoleLib.HistogramBin> rawHisto, ref Dictionary<double, GCDConsoleLib.HistogramBin> thrHiso, LengthUnit linearDataUnits)
+        private void Init(ref Histogram rawHisto, ref Histogram thrHiso, LengthUnit linearDataUnits)
         {
             // Load the data for both the raw and thresholded histograms
 

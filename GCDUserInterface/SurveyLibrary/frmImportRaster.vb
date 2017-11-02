@@ -400,7 +400,7 @@ Namespace SurveyLibrary
                     End If
 
                     If String.IsNullOrEmpty(txtName.Text) Then
-                        txtName.Text = IO.Path.GetFileNameWithoutExtension(ucRaster.SelectedItem.FilePath)
+                        txtName.Text = IO.Path.GetFileNameWithoutExtension(ucRaster.SelectedItem.GISFileInfo.FullName)
                     Else
                         UpdateRasterPath()
                     End If
@@ -472,7 +472,7 @@ Namespace SurveyLibrary
 
             gRasterDirect = Nothing
             If TypeOf ucRaster.SelectedItem Is GCDConsoleLib.Raster Then
-                Dim sGDALRasterPath As String = ucRaster.SelectedItem.FilePath
+                Dim sGDALRasterPath As String = ucRaster.SelectedItem.GISFileInfo.FullName
                 gRasterDirect = New GCDConsoleLib.Raster(sGDALRasterPath)
             End If
 

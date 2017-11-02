@@ -83,7 +83,7 @@ Namespace ErrorCalculation
             Try
                 ' Safely retrieve the spatial units of the DEM
                 Dim gDEM As New GCDConsoleLib.Raster(ProjectManagerBase.GetAbsolutePath(m_rDEMSurvey.Source))
-                rdoUniform.Text = String.Format("{0} ({1})", rdoUniform.Text, UnitsNet.Length.GetAbbreviation(gDEM.Proj.LinearUnit))
+                rdoUniform.Text = String.Format("{0} ({1})", rdoUniform.Text, UnitsNet.Length.GetAbbreviation(gDEM.Proj.HorizontalUnit))
             Catch ex As Exception
                 ' Don't show an error in release mode
                 Debug.Assert(False, "Error retrieving linear units from DEM")
@@ -201,11 +201,11 @@ Namespace ErrorCalculation
                     If m_rDEMSurvey.IsMethodMaskFieldNull Then
                         Throw New Exception("Multi method DEM with no method mask field defined.")
                     Else
-                        Dim gMethodMask As New GCDConsoleLib.Vector(ProjectManagerBase.GetAbsolutePath(m_rDEMSurvey.MethodMask))
+                        Dim gMethodMask As New GCDConsoleLib.Vector(ProjectManagerBase.GetAbsolutePath(m_rDEMSurvey.MethodMask).FullName)
 
                         If gMethodMask.Fields.ContainsKey(m_rDEMSurvey.MethodMaskField) Then
                             Dim ex As New Exception("Unable to find method mask field in mask polygon feature class")
-                            ex.Data("Feature Class") = gMethodMask.FilePath
+                            ex.Data("Feature Class") = gMethodMask.GISFileInfo.FullName
                             ex.Data("Field") = m_rDEMSurvey.MethodMaskField
                             Throw ex
                         End If

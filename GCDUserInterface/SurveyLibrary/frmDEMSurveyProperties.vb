@@ -46,7 +46,7 @@ Namespace SurveyLibrary
             If demRow.MultiMethod Then
                 Dim sMaskPath As IO.FileInfo = ProjectManagerBase.GetAbsolutePath(txtMask.Text)
                 If sMaskPath.Exists Then
-                    Dim gMask As New GCDConsoleLib.Vector(sMaskPath)
+                    Dim gMask As New GCDConsoleLib.Vector(sMaskPath.FullName)
                     cboIdentify.Items.AddRange(gMask.Fields.Values.Where(Function(s As GCDConsoleLib.VectorField) s.Type.Equals(GCDConsoleLib.GDalFieldType.StringField)))
                     cboIdentify.Text = demRow.MethodMaskField
                 End If
@@ -361,7 +361,7 @@ Namespace SurveyLibrary
 
                 ' Check if the user has browsed to the same mask. In which case do nothing except reload the fields
                 ' (just in case they are doing this for a reason.
-                Dim sTempPath As String = ProjectManagerBase.GetRelativePath(gNewMask.FilePath)
+                Dim sTempPath As String = ProjectManagerBase.GetRelativePath(gNewMask.GISFileInfo)
                 If String.Compare(sTempPath, txtMask.Text, True) = 0 Then
                     cboIdentify.Items.AddRange(gNewMask.Fields.Values.Where(Function(s As GCDConsoleLib.VectorField) s.Type.Equals(GCDConsoleLib.GDalFieldType.StringField)))
                     cboIdentify.Text = "Method"
@@ -414,7 +414,7 @@ Namespace SurveyLibrary
 
                     If GCDConsoleLib.GISDataset.FileExists(sMethodMask) Then
                         Dim ex As New Exception("The polygon mask feature class already exists.")
-                        ex.Data.Add("Original Mask", gNewMask.FilePath)
+                        ex.Data.Add("Original Mask", gNewMask.GISFileInfo.FullName)
                         ex.Data.Add("GCD Project Mask", sMethodMask)
                         naru.error.ExceptionUI.HandleException(ex)
                     Else
@@ -428,7 +428,7 @@ Namespace SurveyLibrary
 
                         Catch ex As Exception
                             Dim ex2 As New Exception("Error attempting to copy the method mask feature class into the GCD project folder.", ex)
-                            ex2.Data.Add("Original Path", gNewMask.FilePath)
+                            ex2.Data.Add("Original Path", gNewMask.GISFileInfo.FullName)
                             ex2.Data.Add("GCD Project Path", sMethodMask)
                             naru.error.ExceptionUI.HandleException(ex2)
                             Exit Sub

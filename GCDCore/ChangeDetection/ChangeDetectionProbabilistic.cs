@@ -84,7 +84,7 @@ namespace GCDCore.ChangeDetection
                 nFilter = SpatialCoherence.MovingWindowDimensions;
             }
 
-            return new DoDResultProbabilisitic(ref changeStats, rawDoDPath, rawHist, thrDoDPath, thrHist, new FileInfo(PropagatedErrRaster.FilePath), m_PriorProbRaster, m_SpatialCoErosionRaster, m_SpatialCoDepositionRaster, m_ConditionalRaster,
+            return new DoDResultProbabilisitic(ref changeStats, rawDoDPath, rawHist, thrDoDPath, thrHist, PropagatedErrRaster.GISFileInfo, m_PriorProbRaster, m_SpatialCoErosionRaster, m_SpatialCoDepositionRaster, m_ConditionalRaster,
             m_PosteriorRaster, Threshold, nFilter, bBayesian, eUnits);
         }
     }
