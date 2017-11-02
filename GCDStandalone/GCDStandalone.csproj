@@ -124,9 +124,13 @@
       <Project>{7a2e617d-37e5-4b2d-9981-df519b496a60}</Project>
       <Name>GCDConsoleLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GCDLib\GCDLib.vbproj">
-      <Project>{71E635EF-24B4-4802-9CBC-CA08B45E1014}</Project>
-      <Name>GCDLib</Name>
+    <ProjectReference Include="..\GCDCore\GCDCore.csproj">
+      <Project>{a96761f4-635e-478c-8eae-0623ade309c7}</Project>
+      <Name>GCDCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GCDUserInterface\GCDUserInterface.vbproj">
+      <Project>{0808238e-1257-4d67-9d92-ffd785095062}</Project>
+      <Name>GCDUserInterface</Name>
     </ProjectReference>
     <ProjectReference Include="..\naru\naru.csproj">
       <Project>{1f496953-a809-4086-990b-884a5077bdc4}</Project>
