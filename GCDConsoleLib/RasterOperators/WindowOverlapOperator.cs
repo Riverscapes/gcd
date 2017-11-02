@@ -12,18 +12,26 @@ namespace GCDConsoleLib.Internal
         protected int _bufferCells;
         protected int BufferLength { get { return 1 + (2 * _bufferCells); } }
         protected int BufferCellNum { get { return (int)Math.Pow(BufferLength, 2); } }
-        protected int BufferCenterID { get { return BufferLength * _bufferCells + _bufferCells;  } }
+        protected int BufferCenterID { get { return BufferLength * _bufferCells + _bufferCells; } }
+
+        public ExtentRectangle WinExtent;
 
         private List<List<T[]>> _chunkCache;
         List<T[]> dWindow; // this is our nxn window over which we are doing our masth
         private int _cacheIdx;
 
-        public WindowOverlapOperator(List<Raster> rRasters, ref Raster rOutputRaster, int bufferCells) :
+        public WindowOverlapOperator(List<Raster> rRasters, int bufferCells, Raster rOutputRaster = null) :
             base(rRasters, rOutputRaster)
         {
-            dWindow = new List<T[]>();
             _bufferCells = bufferCells;
             _chunkCache = new List<List<T[]>>(BufferLength);
+
+            dWindow = new List<T[]>();
+            foreach (Raster rN in _rasters)
+                dWindow.Add(new T[BufferCellNum]);
+
+            WinExtent = new ExtentRectangle(ChunkWindow.Top - OpExtent.CellHeight, ChunkWindow.Left - OpExtent.CellWidth, OpExtent.CellHeight, OpExtent.CellWidth, BufferLength, BufferLength);
+
         }
 
         /// <summary>
@@ -31,6 +39,7 @@ namespace GCDConsoleLib.Internal
         /// </summary>
         private void IdxIncrement() { _cacheIdx = (_cacheIdx + 1) % (BufferLength); }
 
+        private int IdxTranslate(int num) { return (_cacheIdx + num) % (BufferLength); }
 
         /// <summary>
         /// WindowOp must be implemented by the operation. It takes an (nxn) double[] and spits back a single number
@@ -39,8 +48,6 @@ namespace GCDConsoleLib.Internal
         /// <param name="id"></param>
         /// <returns></returns>
         protected abstract T WindowOp(ref List<T[]> data);
-
-
 
         /// <summary>
         /// First time through we need to setup the buffer properly
@@ -52,21 +59,27 @@ namespace GCDConsoleLib.Internal
             T[] inputchunk = new T[ChunkWindow.cols * ChunkWindow.rows];
             inputchunk.Fill(OpNodataVal);
             for (int idx = 0; idx < _bufferCells; idx++)
-                _chunkCache.Add(null);
+            {
+                List<T[]> inputChunkList = new List<T[]>();
+                for (int did = 0; did < _rasters.Count; did++)
+                {
+                    inputChunkList.Add(inputchunk);
+                }
+                _chunkCache.Add(inputChunkList);
+            }
 
             // starting cache id is always in the middle
-            _cacheIdx = _bufferCells;
             _chunkCache.Add(data);
             // Now try to fill the end of the window
             while (_chunkCache.Count < BufferLength)
             {
+                nextChunk();
                 GetChunk(ref data);
                 _chunkCache.Add(data);
             }
             // Put our index right in the middle
             _cacheIdx = _bufferCells;
         }
-
 
         protected override void ChunkOp(ref List<T[]> data, ref T[] outChunk)
         {
@@ -77,6 +90,9 @@ namespace GCDConsoleLib.Internal
              *                15 16 17 18 19
              *                20 21 22 23 24
              */
+            // Initialize the Window properly
+            WinExtent.Left = ChunkWindow.Left - ChunkWindow.CellWidth;
+            WinExtent.Top = ChunkWindow.Top - ChunkWindow.CellHeight;
 
             // First time around we need to set up the cache properly and force the look-ahead forward
             if (_chunkCache.Count == 0)
@@ -91,22 +107,27 @@ namespace GCDConsoleLib.Internal
             // Loop over the Chunk (line) 
             for (int id = 0; id < outChunk.GetLength(0); id++)
             {
-                // Loop over the cells in the window (see numbering scheme in the comments above)
+                // Move the window by one cell
+                WinExtent.Left += ChunkWindow.CellWidth;
+                // Now loop over cells in the window
                 for (int wId = 0; wId < BufferCellNum; wId++)
                 {
-                    int col = wId % BufferLength;
-                    int row = (wId - (wId % BufferLength)) / BufferLength;
-                    if (id < col || (id) > ChunkWindow.cols)
-                        // Set Nodata For each layer we care about:
-                        for (int dId = 0; dId < data.Count; dId++)
+                    // Get the rowcol translation of this window id
+                    Tuple<int, int> rowcol = WinExtent.Id2RowCol(wId);
+                    // The row of the window tells us which cache to use
+                    int cacheNum = IdxTranslate(rowcol.Item1 - _bufferCells);
+
+                    for (int dId = 0; dId < data.Count; dId++)
+                    {
+                        // Edge cases to the left and right of the chunk data become nodata 
+                        // (top and bottom are handled by pre-filling the cache)
+                        if ((id == 0 && rowcol.Item2 == 0) || (id == ChunkWindow.rows - 1 && rowcol.Item2 == WinExtent.rows - 1))
                             dWindow[dId][wId] = OpNodataVal;
-                    else
-                        // Set Nodata for each layer we care about:
-                        for (int dId = 0; dId < _chunkCache.Count; dId++)
-                            dWindow[dId][wId] = data[dId][id];
+                        else
+                            dWindow[dId][wId] = _chunkCache[cacheNum][dId][id];
+                    }
                 }
-                // Now call the cell op on this chunk
-                outChunk[id] = WindowOp(ref data);
+                outChunk[id] = WindowOp(ref dWindow);
             }
         }
     }
