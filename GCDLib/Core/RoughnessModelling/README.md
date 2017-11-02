@@ -1,2 +1,0 @@
-# Grain Size Distribution Calculator
- 
