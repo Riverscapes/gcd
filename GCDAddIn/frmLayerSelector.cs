@@ -100,7 +100,7 @@ namespace GCDAddIn
         {
             if (lstLayers.SelectedItems.Count != 1)
             {
-                MessageBox.Show("You must select one and only one layer to continue.", GCDLib.My.Resources.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("You must select one and only one layer to continue.", GCDCore.Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 DialogResult = DialogResult.None;
             }
         }

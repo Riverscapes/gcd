@@ -6,7 +6,7 @@ namespace GCDAddIn.DataPreparation
     {
         protected override void OnClick()
         {
-            GCDLib.UI.SurveyLibrary.frmImportRaster frm = new GCDLib.UI.SurveyLibrary.frmImportRaster();
+            GCDUserInterface.SurveyLibrary.frmImportRaster frm = new GCDUserInterface.SurveyLibrary.frmImportRaster();
 
             frm.ucRaster.BrowseRaster += BrowseRaster;
             frm.ucRaster.SelectRasterFromArcMap += SelectRasterFromArcMap;
@@ -18,7 +18,7 @@ namespace GCDAddIn.DataPreparation
                     GCDConsoleLib.Raster gOutput = frm.ProcessRaster();
                     if (gOutput is GCDConsoleLib.Raster)
                     {
-                        if (GCDLib.My.MySettings.Default.AddOutputLayersToMap)
+                        if (GCDCore.Properties.Settings.Default.AddOutputLayersToMap)
                         {
                             ArcMapUtilities.AddToMap(new System.IO.FileInfo(gOutput.FilePath));
                         }
