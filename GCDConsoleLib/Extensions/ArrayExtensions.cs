@@ -1,4 +1,7 @@
-﻿namespace GCDConsoleLib.Common.Extensons
+﻿using System;
+using System.Diagnostics;
+
+namespace GCDConsoleLib.Common.Extensons
 {
     public static class ArrayExtensions
     {
@@ -190,6 +193,7 @@
             }
         }
 
+       
         /// <summary>
         ///  Fill a 2D array with a value
         /// </summary>
@@ -205,6 +209,23 @@
                     originalArray[idR0, idR1] = with;
                 }
             }
+        }
+
+        public static void DebugPrintGrid<T>(this T[,] grid, T nodataval)
+        {
+            Debug.WriteLine("[");
+            for (int i = 0; i < grid.GetLength(0); i++)
+            {
+                for (int j = 0; j < grid.GetLength(1); j++)
+                {
+                    if (grid[i, j].Equals(nodataval))
+                        Debug.Write(string.Format("--\t", grid[i, j]));
+                    else
+                        Debug.Write(string.Format("{0}\t", grid[i, j]));
+                }
+                Debug.Write(Environment.NewLine);
+            }
+            Debug.WriteLine("]");
         }
 
     }

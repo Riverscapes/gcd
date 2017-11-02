@@ -237,12 +237,12 @@ namespace GCDConsoleLib.Tests
         [TestMethod()]
         public void Id2RowColTest()
         {
-            ExtentRectangle rTest1 = new ExtentRectangle(5, 6, -1, 1, 100, 100);
-            Assert.AreEqual(rTest1.Id2RowCol(102), new Tuple<int, int>(2, 3));
+            ExtentRectangle rTest1 = new ExtentRectangle(5, 6, -1, 1, 100, 50);
+            Assert.AreEqual(rTest1.Id2RowCol(52), new Tuple<int, int>(2, 3));
             Assert.AreEqual(rTest1.Id2RowCol(0), new Tuple<int, int>(1, 1));
             Assert.AreEqual(rTest1.Id2RowCol(1), new Tuple<int, int>(1, 2));
-            Assert.AreEqual(rTest1.Id2RowCol(100), new Tuple<int, int>(2, 1));
-            Assert.AreEqual(rTest1.Id2RowCol(9999), new Tuple<int, int>(100, 100));
+            Assert.AreEqual(rTest1.Id2RowCol(100), new Tuple<int, int>(3, 1));
+            Assert.AreEqual(rTest1.Id2RowCol(4999), new Tuple<int, int>(100, 50));
         }
 
         [TestMethod()]
@@ -276,7 +276,6 @@ namespace GCDConsoleLib.Tests
             Assert.AreEqual(rTest2.RelativeId(99, ref rTest1), -1);
             Assert.AreEqual(rTest2.RelativeId(99, ref rTest2), -1);
         }
-        
 
     }
 }

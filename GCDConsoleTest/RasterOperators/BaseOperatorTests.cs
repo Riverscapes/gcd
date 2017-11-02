@@ -76,14 +76,14 @@ namespace GCDConsoleLib.Internal.Tests
                 // before we set the new extent
                 Assert.AreEqual(theTest.InExtent.ToString(), "-9979 -10029.0 -9969.0 -10019");
                 Assert.AreEqual(theTest.OpExtent.ToString(), "-9979 -10029.0 -9969.0 -10019");
-                Assert.AreEqual(theTest.ChunkWindow.ToString(), "-9979 -10020.0 -9969.0 -10019");
+                Assert.AreEqual(theTest.ChunkExtent.ToString(), "-9979 -10020.0 -9969.0 -10019");
                 Assert.IsFalse(theTest.OpDone);
 
                 // Now get the first chunk
                 theTest.nextChunk();
                 Assert.AreEqual(theTest.InExtent.ToString(), "-9979 -10029.0 -9969.0 -10019");
                 Assert.AreEqual(theTest.OpExtent.ToString(), "-9979 -10029.0 -9969.0 -10019");
-                Assert.AreEqual(theTest.ChunkWindow.ToString(), "-9979 -10021.0 -9969.0 -10020");
+                Assert.AreEqual(theTest.ChunkExtent.ToString(), "-9979 -10021.0 -9969.0 -10020");
                 Assert.IsFalse(theTest.OpDone);
 
                 // Get to the end somehow. This raster is only 100 rows tall so 100 nexts should be 
@@ -94,7 +94,7 @@ namespace GCDConsoleLib.Internal.Tests
                     counter++;
                     theTest.nextChunk();
                 }
-                Assert.AreEqual(theTest.ChunkWindow.ToString(), "-9979 -10029.0 -9969.0 -10029");
+                Assert.AreEqual(theTest.ChunkExtent.ToString(), "-9979 -10029.0 -9969.0 -10029");
                 Assert.IsTrue(theTest.OpDone);
 
 
@@ -102,14 +102,14 @@ namespace GCDConsoleLib.Internal.Tests
                 TestOp<float> theTest2 = new TestOp<float>(new List<Raster> { rTemplateRaster }, ref rOut, rTemplateRaster.Extent.Buffer(100));
                 Assert.AreEqual(theTest2.InExtent.ToString(), "-9979 -10029.0 -9969.0 -10019");
                 Assert.AreEqual(theTest2.OpExtent.ToString(), "-9989 -10059.0 -9959.0 -10029");
-                Assert.AreEqual(theTest2.ChunkWindow.ToString(), "-9989 -10030.0 -9959.0 -10029");
+                Assert.AreEqual(theTest2.ChunkExtent.ToString(), "-9989 -10030.0 -9959.0 -10029");
                 Assert.IsFalse(theTest2.OpDone);
 
                 // Now get the first chunk
                 theTest2.nextChunk();
                 Assert.AreEqual(theTest2.InExtent.ToString(), "-9979 -10029.0 -9969.0 -10019");
                 Assert.AreEqual(theTest2.OpExtent.ToString(), "-9989 -10059.0 -9959.0 -10029");
-                Assert.AreEqual(theTest2.ChunkWindow.ToString(), "-9989 -10031.0 -9959.0 -10030");
+                Assert.AreEqual(theTest2.ChunkExtent.ToString(), "-9989 -10031.0 -9959.0 -10030");
                 Assert.IsFalse(theTest2.OpDone);
 
                 // Get to the end somehow. This raster is only 200 rows tall so 100 nexts should be 
@@ -120,7 +120,7 @@ namespace GCDConsoleLib.Internal.Tests
                     counter++;
                     theTest2.nextChunk();
                 }
-                Assert.AreEqual(theTest2.ChunkWindow.ToString(), "-9989 -10059.0 -9959.0 -10059");
+                Assert.AreEqual(theTest2.ChunkExtent.ToString(), "-9989 -10059.0 -9959.0 -10059");
                 Assert.IsTrue(theTest2.OpDone);
 
             }
@@ -134,12 +134,12 @@ namespace GCDConsoleLib.Internal.Tests
             FakeRaster<int> rOutput = new FakeRaster<int>(10, 20, -1, 1, new int[,] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 } });
 
             TestOp<int> theTest = new TestOp<int>(new List<Raster> { Raster1 }, ref rOutput);
-            Assert.AreEqual(theTest.ChunkWindow.Top, 10);
-            Assert.AreEqual(theTest.ChunkWindow.Left, 20);
-            Assert.AreEqual(theTest.ChunkWindow.rows, 3);
-            Assert.AreEqual(theTest.ChunkWindow.cols, 4);
-            Assert.AreEqual(theTest.ChunkWindow.CellHeight, -1);
-            Assert.AreEqual(theTest.ChunkWindow.CellWidth, 1);
+            Assert.AreEqual(theTest.ChunkExtent.Top, 10);
+            Assert.AreEqual(theTest.ChunkExtent.Left, 20);
+            Assert.AreEqual(theTest.ChunkExtent.rows, 3);
+            Assert.AreEqual(theTest.ChunkExtent.cols, 4);
+            Assert.AreEqual(theTest.ChunkExtent.CellHeight, -1);
+            Assert.AreEqual(theTest.ChunkExtent.CellWidth, 1);
 
             theTest.nextChunk();
             Assert.IsTrue(theTest.OpDone);
@@ -153,7 +153,7 @@ namespace GCDConsoleLib.Internal.Tests
 
             TestOp<int> theTest = new TestOp<int>(new List<Raster> { Raster1 }, ref rOutput);
 
-            List<int[]> data = new List<int[]>() { new int[theTest.ChunkWindow.cols * theTest.ChunkWindow.rows] };
+            List<int[]> data = new List<int[]>() { new int[theTest.ChunkExtent.cols * theTest.ChunkExtent.rows] };
 
             theTest.GetChunk(ref data);
             CollectionAssert.AreEqual(data[0], Raster1._inputgrid.Make1DArray<int>());

@@ -27,8 +27,8 @@ namespace GCDConsoleLib.Internal.Tests
         protected override T CellOp(ref List<T[]> data, int id)
         {
             // Calculate the real 1D index of this cell 
-            int idR0 = (int)((ChunkWindow.Top - OpExtent.Top) / OpExtent.CellHeight);
-            int idR1 = (int)((ChunkWindow.Left - OpExtent.Left) / OpExtent.CellWidth);
+            int idR0 = (int)((ChunkExtent.Top - OpExtent.Top) / OpExtent.CellHeight);
+            int idR1 = (int)((ChunkExtent.Left - OpExtent.Left) / OpExtent.CellWidth);
 
             //int realid = (idR0 * dstSizeR1 + (idR1 + offsetR1);
             //for (int did = 0; did < data.Count; did++)

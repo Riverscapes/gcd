@@ -9,12 +9,12 @@ namespace GCDConsoleLib.Internal
     /// </summary>
     public abstract class WindowOverlapOperator<T> : BaseOperator<T>
     {
-        protected int _bufferCells;
-        protected int BufferLength { get { return 1 + (2 * _bufferCells); } }
+        protected int BufferCells;
+        protected int BufferLength { get { return 1 + (2 * BufferCells); } }
         protected int BufferCellNum { get { return (int)Math.Pow(BufferLength, 2); } }
-        protected int BufferCenterID { get { return BufferLength * _bufferCells + _bufferCells; } }
-
-        public ExtentRectangle WinExtent;
+        protected int BufferCenterID { get { return BufferLength * BufferCells + BufferCells; } }
+        protected decimal OriginalOpBottom { get; private set; }
+        public ExtentRectangle WindowExtent;
 
         private List<List<T[]>> _chunkCache;
         List<T[]> dWindow; // this is our nxn window over which we are doing our masth
@@ -23,23 +23,35 @@ namespace GCDConsoleLib.Internal
         public WindowOverlapOperator(List<Raster> rRasters, int bufferCells, Raster rOutputRaster = null) :
             base(rRasters, rOutputRaster)
         {
-            _bufferCells = bufferCells;
+            BufferCells = bufferCells;
             _chunkCache = new List<List<T[]>>(BufferLength);
 
             dWindow = new List<T[]>();
             foreach (Raster rN in _rasters)
                 dWindow.Add(new T[BufferCellNum]);
 
-            WinExtent = new ExtentRectangle(ChunkWindow.Top - OpExtent.CellHeight, ChunkWindow.Left - OpExtent.CellWidth, OpExtent.CellHeight, OpExtent.CellWidth, BufferLength, BufferLength);
+            // 1 is the convention for windowed mode for good reason
+            ChunkExtent.rows = 1;
+            ChunkExtent.cols = OpExtent.cols;
+
+            // We add rows to the end so the operation goes over the end of the file
+            OriginalOpBottom = OpExtent.Bottom;
+            OpExtent.rows += BufferCells;
+            WindowExtent = new ExtentRectangle(ChunkExtent.Top - OpExtent.CellHeight, ChunkExtent.Left - OpExtent.CellWidth, OpExtent.CellHeight, OpExtent.CellWidth, BufferLength, BufferLength);
 
         }
 
         /// <summary>
         /// We need a reliable way to increment our rolling buffer pointer
         /// </summary>
-        private void IdxIncrement() { _cacheIdx = (_cacheIdx + 1) % (BufferLength); }
+        private void IdxIncrement() { _cacheIdx = (_cacheIdx + 1) % BufferLength; }
 
-        private int IdxTranslate(int num) { return (_cacheIdx + num) % (BufferLength); }
+        /// <summary>
+        /// Convert a window row to a cache id so we can figure out which cache line to draw from 
+        /// </summary>
+        /// <param name="row"></param>
+        /// <returns></returns>
+        private int Row2CacheId(int row) { return (_cacheIdx + (row - 1) - BufferCells + BufferLength) % BufferLength; }
 
         /// <summary>
         /// WindowOp must be implemented by the operation. It takes an (nxn) double[] and spits back a single number
@@ -49,6 +61,18 @@ namespace GCDConsoleLib.Internal
         /// <returns></returns>
         protected abstract T WindowOp(ref List<T[]> data);
 
+        private List<T[]> NoDataChunkList()
+        {
+            T[] inputchunk = new T[ChunkExtent.rows * ChunkExtent.cols];
+            inputchunk.Fill(OpNodataVal);
+            List<T[]> inputChunkList = new List<T[]>();
+            for (int did = 0; did < _rasters.Count; did++)
+            {
+                inputChunkList.Add(inputchunk);
+            }
+            return inputChunkList;
+        }
+
         /// <summary>
         /// First time through we need to setup the buffer properly
         /// </summary>
@@ -56,29 +80,22 @@ namespace GCDConsoleLib.Internal
         private void firstTime(ref List<T[]> data)
         {
             // Fill the rows above the extent with nodatavals
-            T[] inputchunk = new T[ChunkWindow.cols * ChunkWindow.rows];
-            inputchunk.Fill(OpNodataVal);
-            for (int idx = 0; idx < _bufferCells; idx++)
-            {
-                List<T[]> inputChunkList = new List<T[]>();
-                for (int did = 0; did < _rasters.Count; did++)
-                {
-                    inputChunkList.Add(inputchunk);
-                }
-                _chunkCache.Add(inputChunkList);
-            }
+            // 1 row is the convention for this chunksize
+            for (int idx = 0; idx < BufferCells; idx++)
+                _chunkCache.Add(NoDataChunkList());
 
             // starting cache id is always in the middle
-            _chunkCache.Add(data);
+            _chunkCache.Add(data.Clone<T[]>());
+
             // Now try to fill the end of the window
             while (_chunkCache.Count < BufferLength)
             {
                 nextChunk();
                 GetChunk(ref data);
-                _chunkCache.Add(data);
+                _chunkCache.Add(data.Clone<T[]>());
             }
             // Put our index right in the middle
-            _cacheIdx = _bufferCells;
+            _cacheIdx = BufferCells;
         }
 
         protected override void ChunkOp(ref List<T[]> data, ref T[] outChunk)
@@ -91,45 +108,65 @@ namespace GCDConsoleLib.Internal
              *                20 21 22 23 24
              */
             // Initialize the Window properly
-            WinExtent.Left = ChunkWindow.Left - ChunkWindow.CellWidth;
-            WinExtent.Top = ChunkWindow.Top - ChunkWindow.CellHeight;
+            WindowExtent.Left = ChunkExtent.Left - ChunkExtent.CellWidth;
+            WindowExtent.Top = ChunkExtent.Top - ChunkExtent.CellHeight;
 
             // First time around we need to set up the cache properly and force the look-ahead forward
             if (_chunkCache.Count == 0)
                 firstTime(ref data);
+            // When we get to the end of the file we need to pad with nodata values at the bottom
+            //else if (ChunkExtent.Top > OriginalOpBottom)
+            else if ((ChunkExtent.Top * ChunkExtent.CellHeight) >= (OriginalOpBottom * ChunkExtent.CellHeight))
+            {
+                IdxIncrement();
+                _chunkCache[Row2CacheId(BufferLength)] = NoDataChunkList();
+            }
             else
             {
                 // Put our data into the right place in the rolling cache
                 IdxIncrement();
-                _chunkCache[_cacheIdx] = data;
+                _chunkCache[Row2CacheId(BufferLength)] = data.Clone<T[]>();
             }
 
-            // Loop over the Chunk (line) 
+            // Loop over the cells in the Chunk (line) 
             for (int id = 0; id < outChunk.GetLength(0); id++)
             {
-                // Move the window by one cell
-                WinExtent.Left += ChunkWindow.CellWidth;
                 // Now loop over cells in the window
                 for (int wId = 0; wId < BufferCellNum; wId++)
                 {
                     // Get the rowcol translation of this window id
-                    Tuple<int, int> rowcol = WinExtent.Id2RowCol(wId);
+                    Tuple<int, int> winRowCol = WindowExtent.Id2RowCol(wId);
                     // The row of the window tells us which cache to use
-                    int cacheNum = IdxTranslate(rowcol.Item1 - _bufferCells);
-
+                    int cacheNum = Row2CacheId(winRowCol.Item1);
+                    // This is the column ID of the cache column in window coordinates 
+                    int wid2cid = id + (winRowCol.Item2-1) - BufferCells;
+                    // Now loop over all the data values (number of rasters)
                     for (int dId = 0; dId < data.Count; dId++)
                     {
                         // Edge cases to the left and right of the chunk data become nodata 
                         // (top and bottom are handled by pre-filling the cache)
-                        if ((id == 0 && rowcol.Item2 == 0) || (id == ChunkWindow.rows - 1 && rowcol.Item2 == WinExtent.rows - 1))
+                        if (wid2cid < 0 || wid2cid >= ChunkExtent.cols)
                             dWindow[dId][wId] = OpNodataVal;
                         else
-                            dWindow[dId][wId] = _chunkCache[cacheNum][dId][id];
+                            dWindow[dId][wId] = _chunkCache[cacheNum][dId][wid2cid];
                     }
                 }
+                // DEBUG TEST
+                //dWindow[0].Make2DArray(BufferLength, BufferLength).DebugPrintGrid(OpNodataVal);
                 outChunk[id] = WindowOp(ref dWindow);
+                // Move the window by one cell to the right
+                WindowExtent.Left += ChunkExtent.CellWidth;
             }
         }
+
+
+
+        public new Raster RunWithOutput()
+        {
+            Run(- BufferCells);
+            return _outputRaster;
+        }
+
     }
 
 }

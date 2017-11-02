@@ -154,11 +154,11 @@ namespace GCDConsoleLib
         /// <param name="rExtent1"></param>
         /// <param name="rExtent2"></param>
         /// <returns>(colT, rowT)</returns>
-        public Tuple<int, int> GetTopCornerTranslation(ref ExtentRectangle rExtent2)
+        public Tuple<int, int> GetTopCornerTranslationRowCol(ref ExtentRectangle rExtent2)
         {
             int colT = (int)((Left - rExtent2.Left) / CellWidth);
             int rowT = (int)((Top - rExtent2.Top) / CellHeight);
-            return new Tuple<int, int>(colT, rowT);
+            return new Tuple<int, int>(rowT, colT);
         }
 
         /// <summary>
@@ -290,9 +290,9 @@ namespace GCDConsoleLib
         /// <returns></returns>
         public Tuple<int, int> Id2RowCol(int id)
         {
-            int row = (int)Math.Floor((decimal)(id / rows));
-            int col = id - (row * rows);
-            return new Tuple<int, int>(col + 1, row + 1);
+            int rowId = (int)Math.Floor((decimal)(id / cols));
+            int colId = id - (rowId * cols);
+            return new Tuple<int, int>(rowId + 1, colId + 1);
         }
 
         /// <summary>
@@ -303,11 +303,11 @@ namespace GCDConsoleLib
         /// <returns>the transformed ID, -1 if it's not valid</returns>
         public int RelativeId(int origid, ref ExtentRectangle otherExtent)
         {
-            Tuple<int, int> origColRow = Id2RowCol(origid);
-            Tuple<int, int> offsetColRow = GetTopCornerTranslation(ref otherExtent);
+            Tuple<int, int> origRowCol = Id2RowCol(origid);
+            Tuple<int, int> offsetRowCol = GetTopCornerTranslationRowCol(ref otherExtent);
             int newInd;
-            int newRow = origColRow.Item2 + offsetColRow.Item2;
-            int newCol = origColRow.Item1 + offsetColRow.Item1;
+            int newRow = origRowCol.Item1 + offsetRowCol.Item1;
+            int newCol = origRowCol.Item2 + offsetRowCol.Item2;
             if (newCol <= 0 || newRow <= 0 || newCol > otherExtent.cols || newRow > otherExtent.rows)
                 newInd = -1;
             else

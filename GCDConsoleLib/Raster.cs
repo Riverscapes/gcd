@@ -197,7 +197,7 @@ namespace GCDConsoleLib
                 Gdal.Unlink(GISFileInfo.FullName);
 
             CreateDS(driver, GISFileInfo, Extent, Proj, Datatype);
-
+            GISFileInfo.Refresh();
             if (!leaveopen)
                 Dispose();
         }

@@ -1,8 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using GCDConsoleLib;
-using System;
-using System.Collections.Generic;
 using GCDConsoleLib.Tests.Utility;
+using GCDConsoleLib.Common.Extensons;
 using System.IO;
 
 namespace GCDConsoleLib.Tests
@@ -27,11 +26,12 @@ namespace GCDConsoleLib.Tests
             }
 
             Raster Raster1 = new FakeRaster<int>(10, 20, -1, 1, new int[,] { { 1, 2, 3, 4 }, { 5, 6, 7, 8 }, { 9, 10, 11, 12 } });
-            Raster rOutput = new FakeRaster<int>(10, 20, -1, 1, new int[,] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 } });
+            int[,] outgrid = new int[7, 8];
+            outgrid.Fill(-999);
+            Raster rOutput = new FakeRaster<int>(10, 20, -1, 1, outgrid);
+
             ExtentRectangle newExt = Raster1.Extent.Buffer(2);
             RasterOperators.ExtendedCopy(ref Raster1, ref rOutput, new ExtentRectangle(ref newExt));
-
-            Assert.Fail();
         }
 
         [TestMethod()]
