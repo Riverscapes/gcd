@@ -75,9 +75,10 @@ namespace GCDConsoleLib
         /// <param name="thrDoD">Thresholded DoD Raster Path</param>
         /// <param name="propErrRaster">Propagated Error Raster Path</param>
         /// <returns></returns>
-        public static DoDStats GetStatsPropagated(string rawDoD, string thrDoD, string propErrRaster)
+        public static DoDStats GetStatsPropagated(ref Raster rawDoD, ref Raster thrDoD, ref Raster propErrRaster)
         {
             throw new NotImplementedException("See old public C method GetDoDPropStats()");
+
             return new DoDStats(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
         }
 
@@ -88,7 +89,7 @@ namespace GCDConsoleLib
         /// <param name="thrDoD">Thresholded DoD Raster Path</param>
         /// <param name="propErrRaster">Propagated Error Raster Path</param>
         /// <returns></returns>
-        public static DoDStats GetStatsProbalistic(string rawDoD, string thrDoD, string propErrRaster)
+        public static DoDStats GetStatsProbalistic(ref Raster rawDoD, ref Raster thrDoD, ref Raster propErrRaster)
         {
             throw new NotImplementedException("See old public C method GetDoDPropStats()");
 
@@ -137,7 +138,7 @@ namespace GCDConsoleLib
             return null;
         }
 
-        public static Raster Mosaic(ref List<string> sInputs, string sOutputRaster)
+        public static Raster Mosaic(ref List<System.IO.FileInfo> sInputs, string sOutputRaster)
         {
             throw new NotImplementedException();
             return null;
@@ -203,9 +204,34 @@ namespace GCDConsoleLib
             return threshOp.RunWithOutput();
         }
 
+        public static Raster CreatePriorProbabilityRaster(ref Raster rawDoD, ref Raster newError, ref Raster oldError, string sOutputRaster)
+        {
+            throw new NotImplementedException();
+            return null;
+        }
 
+        public static Raster ThresholdDoDProbWithSpatialCoherence(ref Raster rawDoD, string thrDoDPath, ref Raster newError, ref Raster OldError,
+                                                            string sPriorProbRaster,
+                                                            string sPosteriorRaster,
+                                                            string sConditionalRaster,
+                                                            string sSpatialCoErosionRaster,
+                                                            string sSpatialCoDepositionRaster,
+                                                             int nMovingWindowWidth, int nMovingWindowHeight, double fThreshold)
+        {
+            throw new NotImplementedException();
+            return null;
+        }
 
+        public static Raster ThresholdDoDProbability(ref Raster rawDoD, string thrHistPath, ref Raster newError, ref Raster oldError, string sPriorProbRaster, double fThreshold)
+        {
+            throw new NotImplementedException();
+            return null;
+        }
 
+        public static void BuildPyramids(System.IO.FileInfo rInput)
+        {
+            throw new NotImplementedException();
+        }
 
         ////////////////////////////////////    EVERYTHING BELOW HERE IS PRIVATE
 
