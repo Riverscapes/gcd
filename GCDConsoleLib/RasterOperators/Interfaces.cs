@@ -138,10 +138,10 @@ namespace GCDConsoleLib
             return null;
         }
 
-        public static Raster Uniform(ref Raster rInput, string sOutputRaster, double fValue)
+        public static Raster Uniform<T>(ref Raster rInput, FileInfo sOutputRaster, T value)
         {
-            throw new NotImplementedException();
-            return null;
+            UniformRaster<T> theUniformOp = new UniformRaster<T>(ref rInput, new Raster(ref rInput, sOutputRaster), value);
+            return theUniformOp.RunWithOutput();
         }
 
         public static Raster Mosaic(ref List<System.IO.FileInfo> sInputs, FileInfo sOutputRaster)
@@ -187,8 +187,8 @@ namespace GCDConsoleLib
 
         public static Raster RootSumSquares(ref Raster raster1, ref Raster raster2, System.IO.FileInfo sOutputRaster)
         {
-            throw new NotImplementedException();
-            return null;
+            RootSumSquare theUniformOp = new RootSumSquare(ref raster1, ref raster2, new Raster(ref raster1, sOutputRaster));
+            return theUniformOp.RunWithOutput();
         }
 
 
@@ -259,6 +259,11 @@ namespace GCDConsoleLib
         {
             throw new NotImplementedException();
         }
+
+
+
+
+
 
         ////////////////////////////////////    EVERYTHING BELOW HERE IS PRIVATE
 
