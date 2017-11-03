@@ -6,7 +6,7 @@ using GCDConsoleLib.Internal.Operators;
 using System.IO;
 using UnitsNet;
 using UnitsNet.Units;
-using GCDConsoleLib.GCD.Stats;
+using GCDConsoleLib.GCD;
 
 namespace GCDConsoleLib
 {
@@ -68,10 +68,12 @@ namespace GCDConsoleLib
         /// <param name="thrDoD">Thresholded DoD Raster Path</param>
         /// <param name="minLoD">Minimum Level of Detection</param>
         /// <returns></returns>
-        public static DoDStats GetStatsMinLoD(ref Raster rawDoD, ref Raster thrDoD, double minLoD)
+        public static DoDStats GetStatsMinLoD(ref Raster rawDoD, ref Raster thrDoD, float minLoD,
+             Area cellArea, UnitGroup units)
         {
-            throw new NotImplementedException("See old public C method GetDoDMinLoDStats()");
-            return new DoDStats(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+            GetDodMinLodStats theStatsOp = new GetDodMinLodStats(ref rawDoD, ref thrDoD, minLoD, new DoDStats(cellArea, units));
+            theStatsOp.Run();
+            return theStatsOp.Stats;
         }
 
         /// <summary>
@@ -81,13 +83,13 @@ namespace GCDConsoleLib
         /// <param name="thrDoD">Thresholded DoD Raster Path</param>
         /// <param name="propErrRaster">Propagated Error Raster Path</param>
         /// <returns></returns>
-        public static DoDPropStats GetStatsPropagated(ref Raster rawDoD, ref Raster thrDoD, ref Raster propErrRaster,
-            Area cellArea, LengthUnit vUnit)
+        public static DoDStats GetStatsPropagated(ref Raster rawDoD, ref Raster thrDoD, ref Raster propErrRaster,
+            Area cellArea, UnitGroup units)
         {
-            GetDoDPropStats theStatsOp = new GetDoDPropStats(ref rawDoD, ref thrDoD, 2.3f, new DoDPropStats(cellArea, vUnit));
+            GetDoDPropStats theStatsOp = new GetDoDPropStats(ref rawDoD, ref thrDoD, new DoDStats(cellArea, units));
             theStatsOp.Run();
             return theStatsOp.Stats;
-       }
+        }
 
         /// <summary>
         /// Retrieve the Change Statistics from a pair of DoD rasters that were thresholded using a probabilistic thresholding
@@ -96,11 +98,21 @@ namespace GCDConsoleLib
         /// <param name="thrDoD">Thresholded DoD Raster Path</param>
         /// <param name="propErrRaster">Propagated Error Raster Path</param>
         /// <returns></returns>
-        public static DoDStats GetStatsProbalistic(ref Raster rawDoD, ref Raster thrDoD, ref Raster propErrRaster)
+        public static DoDStats GetStatsProbalistic(ref Raster rawDoD, ref Raster thrDoD, ref Raster propErrRaster,
+            Area cellArea, UnitGroup units)
         {
-            throw new NotImplementedException("See old public C method GetDoDPropStats()");
+            GetChangeStats raw = new GetChangeStats(ref rawDoD, new DoDStats(cellArea, units));
+            GetChangeStats thr = new GetChangeStats(ref thrDoD, new DoDStats(cellArea, units));
+            GetChangeStats err = new GetChangeStats(ref propErrRaster, ref thrDoD, new DoDStats(cellArea, units));
 
-            return new DoDStats(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+            return new GCD.DoDStats(
+                raw.Stats.ErosionRaw.GetArea(cellArea), raw.Stats.DepositionRaw.GetArea(cellArea),
+                thr.Stats.ErosionRaw.GetArea(cellArea), thr.Stats.DepositionRaw.GetArea(cellArea),
+                raw.Stats.ErosionRaw.GetVolume(cellArea, units.VertUnit), raw.Stats.DepositionRaw.GetVolume(cellArea, units.VertUnit),
+                raw.Stats.ErosionRaw.GetVolume(cellArea, units.VertUnit), raw.Stats.DepositionRaw.GetVolume(cellArea, units.VertUnit),
+                err.Stats.ErosionRaw.GetVolume(cellArea, units.VertUnit), raw.Stats.DepositionRaw.GetVolume(cellArea, units.VertUnit),
+                cellArea, units
+                );
         }
 
         public static Raster BilinearResample(ref Raster rInput, string sOutputRaster, ExtentRectangle newRect)

@@ -2,6 +2,8 @@
 using System.Diagnostics;
 using OSGeo.GDAL;
 using System.IO;
+using UnitsNet;
+using GCDConsoleLib.GCD;
 
 namespace GCDConsoleLib
 {
@@ -431,6 +433,14 @@ namespace GCDConsoleLib
 
         public decimal Height { get { return (rows * Math.Abs(CellHeight)); } }
         public decimal Width { get { return (cols * Math.Abs(CellWidth)); } }
+
+        /// <summary>
+        /// Get the bin Area in Area units
+        /// </summary>
+        public Area CellArea(UnitGroup units)
+        {
+            return Area.From((double)(Math.Abs(CellHeight) * Math.Abs(CellWidth)), units.ArUnit);
+        }
 
     }
 }

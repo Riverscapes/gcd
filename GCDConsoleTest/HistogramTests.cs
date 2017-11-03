@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnitsNet;
 using UnitsNet.Units;
 using GCDConsoleLib.Tests.Utility;
+using GCDConsoleLib.GCD;
 using System.IO;
 
 namespace GCDConsoleLib.Tests
@@ -187,15 +188,6 @@ namespace GCDConsoleLib.Tests
         }
 
         [TestMethod()]
-        public void BinAreaTest()
-        {
-            Assert.AreEqual(Histogram.BinArea(0.3m, 0.2m, LengthUnit.Meter).SquareMeters, 0.2 * 0.3);
-            Assert.AreEqual(Histogram.BinArea(-0.3m, 0.2m, LengthUnit.Meter).SquareMeters, 0.2 * 0.3);
-            Assert.AreEqual(Histogram.BinArea(-0.3m, -0.2m, LengthUnit.Meter).SquareMeters, 0.2 * 0.3);
-            Assert.AreEqual(Histogram.BinArea(-0.3m, -0.2m, LengthUnit.Meter).SquareFeet, Area.From((0.2 * 0.3), AreaUnit.SquareMeter).SquareFeet);
-        }
-
-        [TestMethod()]
         public void BinVolumeTest()
         {
             Histogram rTest1 = new Histogram(20, 1);
@@ -208,11 +200,14 @@ namespace GCDConsoleLib.Tests
             decimal cH = -0.2m;
             decimal cW = 0.3m;
 
+            UnitGroup ug = new UnitGroup(VolumeUnit.CubicMeter, AreaUnit.SquareMeter, LengthUnit.Meter, LengthUnit.Meter);
+            Area cellArea = Area.From((double)(cH * cW), ug.ArUnit);
+
             for (int i = 0; i < 20; i++)
             {
                 // Length(m) X Width(m) X Height(ft)
-                double manualvolume = Histogram.BinArea(cH, cW, LengthUnit.Meter).SquareMeters * Length.FromFeet(i - 9.9).Meters;
-                Assert.AreEqual(rTest1.BinVolume(i, cH, cW, LengthUnit.Meter, LengthUnit.Foot).CubicMeters, manualvolume, 0.0000001);
+                double manualvolume = cellArea.SquareMeters * Length.FromFeet(i - 9.9).Meters;
+                Assert.AreEqual(rTest1.BinVolume(i, cellArea, ug).CubicMeters, manualvolume, 0.0000001);
             }
 
         }
@@ -230,8 +225,10 @@ namespace GCDConsoleLib.Tests
             // First try it with a real file
             using (ITempDir tmp = TempDir.Create())
             {
+                UnitGroup ug = new UnitGroup(VolumeUnit.CubicMeter, AreaUnit.SquareMeter, LengthUnit.Meter, LengthUnit.Meter);
+                Area cellArea = Area.From(0.2 * 0.3, ug.ArUnit);
                 FileInfo fPath = new FileInfo(Path.Combine(tmp.Name, "myHistogram.csv"));
-                rTest1.WriteFile(fPath, -0.1m, 0.1m, LengthUnit.Meter, LengthUnit.Meter, VolumeUnit.CubicMeter, AreaUnit.SquareMeter);
+                rTest1.WriteFile(fPath, cellArea, ug);
                 Histogram rTestRead = new Histogram(fPath);
 
                 // Make sure the two histograms have the same edges and width

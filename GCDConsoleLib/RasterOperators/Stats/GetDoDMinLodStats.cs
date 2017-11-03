@@ -1,43 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using GCDConsoleLib.Internal;
-using UnitsNet;
-using UnitsNet.Units;
+using GCDConsoleLib.GCD;
 
 namespace GCDConsoleLib.Internal.Operators
 {
 
-    public class DodMinLodStats : CellByCellOperator<float>
+    public class GetDodMinLodStats : CellByCellOperator<float>
     {
-
-        private float fCountErosionRaw, fCountDepositonRaw, fCountErosionThr, fCountDepositionThr, 
-            fSumErosionRaw, fSumDepositionRaw, fSumErosionThr, fSumDepositionThr, fSumErosionErr, 
-            fSumDepositonErr, fDoDValue;
+        public DoDStats Stats;
+        private float fDoDValue;
         private float _thresh;
-        private int nRawErosionCount, nRawDepositionCount, nThrErosionCount, nThrDepositionCount;
         /// <summary>
         /// Pass-through constructure
         /// </summary>
-        public DodMinLodStats(ref Raster rInput1, ref Raster rInput2, Raster rOutputRaster, float thresh) :
-            base(new List<Raster> { rInput1, rInput2 }, rOutputRaster)
+        public GetDodMinLodStats(ref Raster rawDoD, ref Raster thrDoD, 
+            float thresh, DoDStats theStats) :
+            base(new List<Raster> { rawDoD, thrDoD })
         {
-            fCountErosionRaw = 0;
-            fCountDepositonRaw = 0;
-            fCountErosionThr = 0;
-            fCountDepositionThr = 0;
-            fSumErosionRaw = 0;
-            fSumDepositionRaw = 0;
-            fSumErosionThr = 0;
-            fSumDepositionThr = 0;
-            fSumErosionErr = 0;
-            fSumDepositonErr = 0;
-
+            Stats = theStats;
             _thresh = thresh;
-
-            nRawErosionCount = 0;
-            nRawDepositionCount = 0;
-            nThrErosionCount = 0;
-            nThrDepositionCount = 0;
         }
 
         /// <summary>
@@ -52,14 +34,13 @@ namespace GCDConsoleLib.Internal.Operators
                 if (fDoDValue > 0)
                 {
                     // Raw Deposition
-                    fSumDepositionRaw += fDoDValue;
-                    nRawDepositionCount += 1;
+                    Stats.DepositionRaw.AddToSumAndIncrementCounter(fDoDValue);
 
+                    // Thresholded Deposition
                     if (fDoDValue > _thresh)
                     {
-                        // Thresholded Deposition
-                        fSumDepositionThr += fDoDValue;
-                        nThrDepositionCount += 1;
+                        Stats.DepositionThr.AddToSumAndIncrementCounter(fDoDValue);
+                        Stats.DepositionErr.AddToSumAndIncrementCounter(fDoDValue * _thresh);
                     }
                 }
 
@@ -67,14 +48,13 @@ namespace GCDConsoleLib.Internal.Operators
                 if (fDoDValue < 0)
                 {
                     // Raw Erosion
-                    fSumErosionRaw += fDoDValue * -1;
-                    nRawErosionCount += 1;
+                    Stats.ErosionRaw.AddToSumAndIncrementCounter(fDoDValue * -1);
 
+                    // Thresholded Erosion
                     if (fDoDValue < (_thresh * -1))
                     {
-                        // Thresholded Erosion
-                        fSumErosionThr += fDoDValue * -1;
-                        nThrErosionCount += 1;
+                        Stats.ErosionThr.AddToSumAndIncrementCounter(fDoDValue * -1);
+                        Stats.ErosionErr.AddToSumAndIncrementCounter(fDoDValue * _thresh);
                     }
                 }
             }

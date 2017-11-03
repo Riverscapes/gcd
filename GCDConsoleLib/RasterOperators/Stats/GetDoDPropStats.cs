@@ -1,24 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using GCDConsoleLib.Internal;
-using GCDConsoleLib.GCD.Stats;
+using GCDConsoleLib.GCD;
 
 namespace GCDConsoleLib.Internal.Operators
 {
 
     public class GetDoDPropStats : CellByCellOperator<float>
     {
-        public DoDPropStats Stats;
+        public DoDStats Stats;
         public float fDoDValue, fPropErr;
-        private float _thresh;
 
         /// <summary>
         /// Pass-through constructure
         /// </summary>
-        public GetDoDPropStats(ref Raster rDod, ref Raster rErr, float thresh, DoDPropStats theStats) :
+        public GetDoDPropStats(ref Raster rDod, ref Raster rErr, DoDStats theStats) :
             base(new List<Raster> { rDod, rErr })
         {
-            _thresh = thresh;
             Stats = theStats;
         }
 
@@ -28,6 +26,8 @@ namespace GCDConsoleLib.Internal.Operators
         protected override float CellOp(ref List<float[]> data, int id)
         {
             fDoDValue = data[0][id];
+            fPropErr = data[1][id];
+
             if (fDoDValue != _rasternodatavals[0])
             {
                 // Deposition
@@ -58,7 +58,7 @@ namespace GCDConsoleLib.Internal.Operators
                 }
             }
 
-            // We need to return something
+            // We need to return something. Doesn't matter what
             return 0;
         }
 

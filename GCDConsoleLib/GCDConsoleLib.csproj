@@ -88,10 +88,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataTypes.cs" />
-    <Compile Include="DoDStats.cs" />
+    <Compile Include="GCD\DoDStats.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
-    <Compile Include="GCD\Stats\ChangeStats.cs" />
-    <Compile Include="GCD\Stats\DoDPropStats.cs" />
+    <Compile Include="GCD\DoDStatsMath.cs" />
+    <Compile Include="GCD\GCDAreaVolume.cs" />
+    <Compile Include="GCD\UnitGroup.cs" />
     <Compile Include="Histogram.cs" />
     <Compile Include="RasterOperators\CellByCellOperator.cs" />
     <Compile Include="RasterOperators\Interfaces.cs" />

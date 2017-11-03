@@ -5,6 +5,7 @@ using System.Linq;
 using GCDConsoleLib.Utility;
 using UnitsNet;
 using UnitsNet.Units;
+using GCDConsoleLib.GCD;
 
 namespace GCDConsoleLib
 {
@@ -140,6 +141,11 @@ namespace GCDConsoleLib
             }
         }
 
+        /// <summary>
+        /// Initialize this histogram with the right number of bins
+        /// </summary>
+        /// <param name="bins"></param>
+        /// <param name="width"></param>
         private void _init(int bins, decimal width)
         {
             BinWidth = width;
@@ -213,14 +219,6 @@ namespace GCDConsoleLib
         public decimal HistogramUpper { get { return BinLefts.Last() + BinWidth; } }
 
         /// <summary>
-        /// Get the bin Area in Area units
-        /// </summary>
-        public static Area BinArea(decimal cellHeight, decimal cellWidth, LengthUnit hUnit)
-        {
-            return Area.From((double)(Math.Abs(cellHeight) * Math.Abs(cellWidth)), Conversion.LengthUnit2AreaUnit(hUnit));
-        }
-
-        /// <summary>
         /// Return the sum of values (used to make the volume) in length units
         /// </summary>
         /// <param name="bid"></param>
@@ -235,10 +233,9 @@ namespace GCDConsoleLib
         /// </summary>
         /// <param name="bid"></param>
         /// <returns></returns>
-        public Volume BinVolume(int bid, decimal cellHeight, decimal cellWidth, LengthUnit hUnit, LengthUnit vUnit)
+        public Volume BinVolume(int bid, Area cellArea, UnitGroup units)
         {
-            Area binArea = BinArea(cellHeight, cellWidth, hUnit);
-            return Volume.FromCubicMeters(binArea.SquareMeters * Length.From((double)BinSum(bid), vUnit).Meters);
+            return Volume.FromCubicMeters(cellArea.SquareMeters * Length.From((double)BinSum(bid), units.VertUnit).Meters);
         }
 
         /// <summary>
@@ -256,19 +253,17 @@ namespace GCDConsoleLib
         /// </summary>
         /// <param name="outputPath"></param>
         /// This is no longer here MOVE IT TO THE PRESENTATION LAYER
-        public void WriteFile(FileInfo outputFile, decimal cellHeight, decimal cellWidth, 
-            LengthUnit hUnit, LengthUnit vUnit, VolumeUnit volUnit, AreaUnit areaUnit)
+        public void WriteFile(FileInfo outputFile, Area cellArea, UnitGroup units)
         {
             using (System.IO.StreamWriter stream = new System.IO.StreamWriter(outputFile.FullName))
             {
-                stream.WriteLine(String.Format("Bin Lower,Bin Upper,Bin Centre,Area({0}),Volume({1}),Cell Count,Cell Sum({2})",  areaUnit.ToString(), volUnit.ToString(), vUnit.ToString()));
-                double area = BinArea(cellHeight, cellWidth, hUnit).As(areaUnit);
+                stream.WriteLine(String.Format("Bin Lower,Bin Upper,Bin Centre,Area({0}),Volume({1}),Cell Count,Cell Sum({2})", units.ArUnit, units.VolUnit, units.VertUnit));
                 for (int bid = 0; bid < BinCounts.Count; bid++)
                 {
-                    double vol = BinVolume(bid, cellHeight, cellWidth, hUnit, vUnit).As(volUnit);
+                    double vol = BinVolume(bid, cellArea, units).As(units.VolUnit);
                     string binstr = string.Format("{0},{1},{2},{3},{4},{5},{6}", 
                         BinLower(bid), BinUpper(bid), BinCentre(bid),
-                        area, vol, BinCounts[bid], BinSums[bid]);
+                        cellArea, vol, BinCounts[bid], BinSums[bid]);
                     stream.WriteLine(binstr);
                 }
             }

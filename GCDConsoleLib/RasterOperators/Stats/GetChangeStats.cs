@@ -1,24 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
 using GCDConsoleLib.Internal;
+using GCDConsoleLib.GCD;
 
 namespace GCDConsoleLib.Internal.Operators
 {
 
-    public class ChangeStats : CellByCellOperator<float>
+    public class GetChangeStats : CellByCellOperator<float>
     {
 
-        private float fCountErosion, fCountDeposition, fSumErosion, fSumDeposition, fDoDValue;
+        public DoDStats Stats;
+        private bool bHasErrRaster;
+        float fRVal, fMask;
+
         /// <summary>
         /// Pass-through constructure
         /// </summary>
-        public ChangeStats(ref Raster rInput1, ref Raster rInput2, Raster rOutputRaster) :
-            base(new List<Raster> { rInput1, rInput2 }, rOutputRaster)
+        public GetChangeStats(ref Raster rInput, DoDStats theStats) :
+            base(new List<Raster> { rInput })
         {
-            fCountErosion = 0;
-            fCountDeposition = 0;
-            fSumErosion = 0;
-            fSumDeposition = 0;
+            Stats = theStats;
+            bHasErrRaster = false;
+        }
+
+        public GetChangeStats(ref Raster rInput, ref Raster rPropError, DoDStats theStats) :
+            base(new List<Raster> { rInput, rPropError })
+        {
+            Stats = theStats;
+            bHasErrRaster = true;
         }
 
 
@@ -27,24 +36,33 @@ namespace GCDConsoleLib.Internal.Operators
         /// </summary>
         protected override float CellOp(ref List<float[]> data, int id)
         {
-            fDoDValue = data[0][id];
-            if (fDoDValue != _rasternodatavals[0])
+            if (data.Count == 1 && data[0][id] != _rasternodatavals[0])
             {
+                fRVal = data[0][id];
                 // Deposition
-                if (fDoDValue > 0)
-                {
-                    fSumDeposition += fDoDValue;
-                    fCountDeposition++;
-                }
-
+                if (fRVal > 0)
+                    Stats.DepositionRaw.AddToSumAndIncrementCounter(fRVal);
                 // Erosion
-                if (fDoDValue < 0)
+                else if (fRVal < 0)
+                    Stats.ErosionRaw.AddToSumAndIncrementCounter(fRVal * -1);
+            }
+            // If we have a mask then use it.
+            else if (data.Count == 2 && data[1][id] != _rasternodatavals[1])
+            {
+                fRVal = data[0][id];
+                fMask = data[1][id];
+                if (fRVal > 0)
                 {
-                    fSumErosion += (fDoDValue * -1);
-                    fCountErosion++;
+                    // Deposition
+                    if (fMask != _rasternodatavals[1])
+                        Stats.DepositionRaw.AddToSumAndIncrementCounter(fRVal);
+                    // Erosion
+                    else if (fMask < 0)
+                        Stats.ErosionRaw.AddToSumAndIncrementCounter(fRVal);
                 }
             }
-            // We need to return something
+
+            // We need to return something. Doesn't matter what
             return 0;
         }
 
