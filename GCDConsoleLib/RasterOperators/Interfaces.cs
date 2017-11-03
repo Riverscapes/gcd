@@ -4,6 +4,9 @@ using System.Reflection;
 using System.Linq;
 using GCDConsoleLib.Internal.Operators;
 using System.IO;
+using UnitsNet;
+using UnitsNet.Units;
+using GCDConsoleLib.GCD.Stats;
 
 namespace GCDConsoleLib
 {
@@ -78,12 +81,13 @@ namespace GCDConsoleLib
         /// <param name="thrDoD">Thresholded DoD Raster Path</param>
         /// <param name="propErrRaster">Propagated Error Raster Path</param>
         /// <returns></returns>
-        public static DoDStats GetStatsPropagated(ref Raster rawDoD, ref Raster thrDoD, ref Raster propErrRaster)
+        public static DoDPropStats GetStatsPropagated(ref Raster rawDoD, ref Raster thrDoD, ref Raster propErrRaster,
+            Area cellArea, LengthUnit vUnit)
         {
-            throw new NotImplementedException("See old public C method GetDoDPropStats()");
-
-            return new DoDStats(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-        }
+            GetDoDPropStats theStatsOp = new GetDoDPropStats(ref rawDoD, ref thrDoD, 2.3f, new DoDPropStats(cellArea, vUnit));
+            theStatsOp.Run();
+            return theStatsOp.Stats;
+       }
 
         /// <summary>
         /// Retrieve the Change Statistics from a pair of DoD rasters that were thresholded using a probabilistic thresholding

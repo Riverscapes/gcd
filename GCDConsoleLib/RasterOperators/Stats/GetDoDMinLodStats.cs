@@ -7,30 +7,30 @@ using UnitsNet.Units;
 namespace GCDConsoleLib.Internal.Operators
 {
 
-    public class MinLodStats : CellByCellOperator<float>
+    public class DodMinLodStats : CellByCellOperator<float>
     {
 
-        private float fAreaErosionRaw, fAreaDepositonRaw, fAreaErosionThr, fAreaDepositionThr, 
-            fVolErosionRaw, fVolDepositionRaw, fVolErosionThr, fVolDepositionThr, fVolErosionErr, 
-            fVolDepositonErr, fDoDValue;
+        private float fCountErosionRaw, fCountDepositonRaw, fCountErosionThr, fCountDepositionThr, 
+            fSumErosionRaw, fSumDepositionRaw, fSumErosionThr, fSumDepositionThr, fSumErosionErr, 
+            fSumDepositonErr, fDoDValue;
         private float _thresh;
         private int nRawErosionCount, nRawDepositionCount, nThrErosionCount, nThrDepositionCount;
         /// <summary>
         /// Pass-through constructure
         /// </summary>
-        public MinLodStats(ref Raster rInput1, ref Raster rInput2, Raster rOutputRaster, float thresh) :
+        public DodMinLodStats(ref Raster rInput1, ref Raster rInput2, Raster rOutputRaster, float thresh) :
             base(new List<Raster> { rInput1, rInput2 }, rOutputRaster)
         {
-            fAreaErosionRaw = 0;
-            fAreaDepositonRaw = 0;
-            fAreaErosionThr = 0;
-            fAreaDepositionThr = 0;
-            fVolErosionRaw = 0;
-            fVolDepositionRaw = 0;
-            fVolErosionThr = 0;
-            fVolDepositionThr = 0;
-            fVolErosionErr = 0;
-            fVolDepositonErr = 0;
+            fCountErosionRaw = 0;
+            fCountDepositonRaw = 0;
+            fCountErosionThr = 0;
+            fCountDepositionThr = 0;
+            fSumErosionRaw = 0;
+            fSumDepositionRaw = 0;
+            fSumErosionThr = 0;
+            fSumDepositionThr = 0;
+            fSumErosionErr = 0;
+            fSumDepositonErr = 0;
 
             _thresh = thresh;
 
@@ -38,16 +38,6 @@ namespace GCDConsoleLib.Internal.Operators
             nRawDepositionCount = 0;
             nThrErosionCount = 0;
             nThrDepositionCount = 0;
-        }
-
-        public Dictionary<string, float> ChangeStats(Area cellArea, LengthUnit vUnit, VolumeUnit volUnit)
-        {
-            Dictionary<string, float> retVal = new Dictionary<string, float>() {
-                { "AreaErosion", 0 },
-                { "AreaDeposition", 0 },
-                { "VolumeErosion", 0 },
-                { "VolumeDeposition", 0 } };
-            return retVal;
         }
 
         /// <summary>
@@ -62,13 +52,13 @@ namespace GCDConsoleLib.Internal.Operators
                 if (fDoDValue > 0)
                 {
                     // Raw Deposition
-                    fVolDepositionRaw += fDoDValue;
+                    fSumDepositionRaw += fDoDValue;
                     nRawDepositionCount += 1;
 
                     if (fDoDValue > _thresh)
                     {
                         // Thresholded Deposition
-                        fVolDepositionThr += fDoDValue;
+                        fSumDepositionThr += fDoDValue;
                         nThrDepositionCount += 1;
                     }
                 }
@@ -77,13 +67,13 @@ namespace GCDConsoleLib.Internal.Operators
                 if (fDoDValue < 0)
                 {
                     // Raw Erosion
-                    fVolErosionRaw += fDoDValue * -1;
+                    fSumErosionRaw += fDoDValue * -1;
                     nRawErosionCount += 1;
 
                     if (fDoDValue < (_thresh * -1))
                     {
                         // Thresholded Erosion
-                        fVolErosionThr += fDoDValue * -1;
+                        fSumErosionThr += fDoDValue * -1;
                         nThrErosionCount += 1;
                     }
                 }

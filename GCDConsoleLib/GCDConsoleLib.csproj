@@ -90,12 +90,14 @@
     <Compile Include="DataTypes.cs" />
     <Compile Include="DoDStats.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
+    <Compile Include="GCD\Stats\ChangeStats.cs" />
+    <Compile Include="GCD\Stats\DoDPropStats.cs" />
     <Compile Include="Histogram.cs" />
     <Compile Include="RasterOperators\CellByCellOperator.cs" />
     <Compile Include="RasterOperators\Interfaces.cs" />
-    <Compile Include="RasterOperators\Stats\ChangeStats.cs" />
-    <Compile Include="RasterOperators\Stats\DoDPropStats.cs" />
-    <Compile Include="RasterOperators\Stats\MinLodStats.cs" />
+    <Compile Include="RasterOperators\Stats\GetChangeStats.cs" />
+    <Compile Include="RasterOperators\Stats\GetDoDPropStats.cs" />
+    <Compile Include="RasterOperators\Stats\GetDoDMinLodStats.cs" />
     <Compile Include="RasterOperators\Operators\Hillshade.cs" />
     <Compile Include="RasterOperators\Operators\BinRaster.cs" />
     <Compile Include="RasterOperators\Operators\Mask.cs" />
@@ -256,6 +258,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

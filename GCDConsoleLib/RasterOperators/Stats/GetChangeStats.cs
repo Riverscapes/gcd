@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using GCDConsoleLib.Internal;
-using UnitsNet;
-using UnitsNet.Units;
 
 namespace GCDConsoleLib.Internal.Operators
 {
@@ -23,15 +21,6 @@ namespace GCDConsoleLib.Internal.Operators
             fSumDeposition = 0;
         }
 
-        public Dictionary<string, float> GetChangeStats(Area cellArea, LengthUnit vUnit, VolumeUnit volUnit)
-        {
-            Dictionary<string, float> retVal = new Dictionary<string, float>() {
-                { "AreaErosion", 0 },
-                { "AreaDeposition", 0 },
-                { "VolumeErosion", 0 },
-                { "VolumeDeposition", 0 } };
-            return retVal;
-        }
 
         /// <summary>
         /// This is the actual implementation of the cell-by-cell logic
