@@ -379,6 +379,37 @@ namespace GCDConsoleLib
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="method">"NEAREST", "GAUSS", "CUBIC", "AVERAGE", "MODE", "AVERAGE_MAGPHASE" or "NONE" </param>
+        public void BuildPyramids(string method)
+        {
+            Open(true);
+            List<int> pyramids = new List<int>();
+            int res;
+
+            // Determine how many pyramids to build. There might be a better way to do this..
+            if (Extent.rows > Extent.cols)
+                res = Extent.rows / 32;
+            else
+                res = Extent.cols / 32;
+
+            for (int i = 2; i < res; i = i * 2)
+                pyramids.Add(i);
+
+            int[] overviews = new int[pyramids.Count]; // { 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768, 65536 
+            for (int j = 0; j < pyramids.Count; j++)
+            {
+                overviews[j] = pyramids[j];
+            }
+
+            if (ds.BuildOverviews(method, overviews, null, null) == (int)CPLErr.CE_Failure)
+                throw new InvalidDataException("Pyramids could not be built for this dataset");
+
+        }
+
+
+        /// <summary>
         /// Get Statistics. Does not calculate them first.
         /// </summary>
         /// <returns></returns>

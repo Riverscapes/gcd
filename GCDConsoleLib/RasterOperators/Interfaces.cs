@@ -273,7 +273,8 @@ namespace GCDConsoleLib
 
         public static void BuildPyramids(System.IO.FileInfo rInput)
         {
-            throw new NotImplementedException();
+            Raster rRa = new Raster(rInput);
+            rRa.BuildPyramids("AVERAGE");
         }
 
 
