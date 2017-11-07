@@ -10,7 +10,6 @@ namespace GCDConsoleLib.Internal.Operators
     {
 
         public DoDStats Stats;
-        private bool bHasErrRaster;
         float fRVal, fMask;
 
         /// <summary>
@@ -20,14 +19,12 @@ namespace GCDConsoleLib.Internal.Operators
             base(new List<Raster> { rInput })
         {
             Stats = theStats;
-            bHasErrRaster = false;
         }
 
         public GetChangeStats(ref Raster rInput, ref Raster rPropError, DoDStats theStats) :
             base(new List<Raster> { rInput, rPropError })
         {
             Stats = theStats;
-            bHasErrRaster = true;
         }
 
 

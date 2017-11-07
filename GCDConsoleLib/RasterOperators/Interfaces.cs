@@ -188,10 +188,23 @@ namespace GCDConsoleLib
         /// <param name="rReference"></param>
         /// <param name="sOutputRaster"></param>
         /// <returns></returns>
-        public static Raster FISRaster(ref Dictionary<string, string> fisInputs, string sFISRuleFile, ref Raster rReference, string sOutputRaster)
+        public static Raster FISRaster(Dictionary<string, FileInfo> fisInputs, FileInfo sFISRuleFile, ref Raster rReference, FileInfo sOutputRaster)
         {
+            List<string> rFisInputNames = new List<string>();
+            List<Raster> rFisInputRasters = new List<Raster>();
+
+            // Load up our input rasters
+            foreach (KeyValuePair<string, FileInfo> inp in fisInputs)
+            {
+                rFisInputNames.Add(inp.Key);
+                rFisInputRasters.Add(new Raster(inp.Value));
+            }
+
+            Raster outputRaster = new Raster(ref rReference, sOutputRaster, new GdalDataType(typeof(float)));
+            FISRaster theSlopeOp = new FISRaster(rFisInputNames, rFisInputRasters, sFISRuleFile, outputRaster);
+
             throw new NotImplementedException();
-            return null;
+            return theSlopeOp.RunWithOutput();
         }
 
         public static Raster Subtract(ref Raster raster1, ref Raster raster2, System.IO.FileInfo sOutputRaster)
@@ -230,7 +243,7 @@ namespace GCDConsoleLib
         }
 
         public static Raster SetNull(ref Raster rInput, ThresholdOps fThresholdOp,
-            Single fThreshold, System.IO.FileInfo sOutputRaster)
+            Single fThreshold, FileInfo sOutputRaster)
         {
             Threshold threshOp = new Threshold(ref rInput, fThresholdOp, fThreshold);
             return threshOp.RunWithOutput();

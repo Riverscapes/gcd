@@ -88,6 +88,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataTypes.cs" />
+    <Compile Include="FIS\FIS.cs" />
+    <Compile Include="FIS\MemberFunction.cs" />
+    <Compile Include="FIS\MemberFunctionSet.cs" />
+    <Compile Include="FIS\Rule.cs" />
+    <Compile Include="FIS\RuleSet.cs" />
     <Compile Include="GCD\DoDStats.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="GCD\DoDStatsMath.cs" />
@@ -96,6 +101,7 @@
     <Compile Include="Histogram.cs" />
     <Compile Include="RasterOperators\CellByCellOperator.cs" />
     <Compile Include="RasterOperators\Interfaces.cs" />
+    <Compile Include="RasterOperators\Operators\FISRaster.cs" />
     <Compile Include="RasterOperators\Stats\GetChangeStats.cs" />
     <Compile Include="RasterOperators\Stats\GetDoDPropStats.cs" />
     <Compile Include="RasterOperators\Stats\GetDoDMinLodStats.cs" />
