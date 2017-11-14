@@ -88,7 +88,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataTypes.cs" />
+    <Compile Include="FIS\Defuzzify.cs" />
     <Compile Include="FIS\FIS.cs" />
+    <Compile Include="FIS\FISMath.cs" />
     <Compile Include="FIS\MemberFunction.cs" />
     <Compile Include="FIS\MemberFunctionSet.cs" />
     <Compile Include="FIS\Rule.cs" />

@@ -1,27 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GCDConsoleLib.FIS
 {
     class RuleSet
     {
-        private int _nInputs_, _nRules;
-        List<MemberFunctionSet> _inputs;
-        Dictionary<String, int> _indices;
-        MemberFunctionSet _output;
-        String _outputName;
-        String _msg;
+        private List<MemberFunctionSet> _inputs;
+        private Dictionary<String, int> _indices;
+        private MemberFunctionSet _output;
+        private String _outputName;
+        private String _msg;
 
-        List<Rule> rules_;
-        List<List<double>> fuzzyInputs_;
+        private List<Rule> rules_;
+        private List<List<double>> fuzzyInputs_;
 
         public RuleSet()
         {
         }
+
 
         /// <summary>
         /// 
@@ -35,6 +32,22 @@ namespace GCDConsoleLib.FIS
                               FISAggregator aggregator, FISDefuzzifier defuzzifier)
         {
         }
+
+        bool addMFToRule(Rule rule, int i, String name)
+        {
+            if (!_inputs[i].Indices.ContainsKey(name))
+                throw new ArgumentException("There is no membership function named '" + name + "'.");
+            else
+            {
+                if (name != null && "NULL" != name)
+                {
+                    rule.Inputs.Add(i);
+                    rule.MFSInd.Add(_inputs[i].Indices[name]);
+                }
+                return true;
+            }
+        }
+
 
         /// <summary>
         /// 
@@ -104,31 +117,18 @@ namespace GCDConsoleLib.FIS
         }
 
         /// <summary>
-        /// 
+        /// Get the name of the input variable at the specified index.
         /// </summary>
         /// <param name="i"></param>
         /// <returns></returns>
         public String getInputName(int i)
         {
+            foreach (KeyValuePair<String, int> it in _indices)
+            {
+                if (it.Value == i)
+                    return it.Key;
+            }
             return "";
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public String getMsg()
-        {
-            return "";
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public int numInputs()
-        {
-            return 0;
         }
 
         /// <summary>
@@ -142,14 +142,28 @@ namespace GCDConsoleLib.FIS
         }
 
         /// <summary>
-        /// 
+        /// Add a set of membership functions that make up an input variable.
+        /// Unlike addInputMFSet, this assumes allows the user to choose the index of the input set, but that
+        /// index must already exist.
         /// </summary>
-        /// <param name="index"></param>
-        /// <param name="name"></param>
-        /// <param name="mfs"></param>
-        /// <returns></returns>
+        /// <param name="index">The index of the input variable. The FISRuleSet must already know that there are at least that many variables (it does not automatically increment).</param>
+        /// <param name="name">The name of the input variable. Cannot contain spaces.</param>
+        /// <param name="mfs">The membership function set.</param>
+        /// <returns>True of the set could be added, false otherwise</returns>
         public bool setInputMFSet(int index, String name, MemberFunctionSet mfs)
         {
+    //        if (0 > index || nInputs_ <= index)
+    //            return setError("Invalid index for input: " + stringify(index));
+    //        else if ((indices_.end() != indices_.find(name)) && (indices_[name] != index))
+    //            return setError("The name '" + std::string(name) + "' is already in use.");
+    //        else if (std::string::npos != std::string(name).find(' '))
+    //    return setError("Invalid name '" + std::string(name) + "'. Spaces are not allowed.");
+    //else {
+    //            inputs_[index] = mfs;
+    //            indices_[name] = index;
+    //            return true;
+    //        }
+
             return true;
         }
 
@@ -159,6 +173,16 @@ namespace GCDConsoleLib.FIS
         /// <returns></returns>
         public bool valid()
         {
+            if (_inputs.Count == 0)
+                //"No FIS inputs."
+                return false;
+            else if (rules_.Count == 0)
+                //"No FIS rules."
+                return false;
+            for (int i = 0; i < _inputs.Count; i++)
+                if (!_inputs[i].valid())
+                    //"Invalid input number " + stringify(i) + "."
+                    return false;
             return true;
         }
 
