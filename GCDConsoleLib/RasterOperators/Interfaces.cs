@@ -77,11 +77,30 @@ namespace GCDConsoleLib
         }
 
         /// <summary>
+        /// Retrieve the segregated Change Statistics from a pair of DoD rasters that were thresholded using minimum level of detection
+        /// </summary>
+        /// <param name="rawDoD">Raw DoD Raster Path</param>
+        /// <param name="thrDoD">Thresholded DoD Raster Path</param>
+        /// <param name="minLoD">Minimum Level of Detection</param>
+        /// <param name="PolygonMask">Vector layer containing the mask polygons</param>
+        /// <param name="FieldName">Name of the field in the PolygonMask that contains the distinguishing property on which to group statistics</param>
+        /// <returns></returns>
+        public static Dictionary<string, DoDStats> GetStatsMinLoD(ref Raster rawDoD, ref Raster thrDoD, float minLoD,
+            ref Vector PolygonMask, string FieldName,
+             Area cellArea, UnitGroup units)
+        {
+            throw new NotImplementedException();
+            return null;
+        }
+
+        /// <summary>
         /// Retrieve the Change Statistics from a pair of DoD rasters that were thresholded using a propagated error raster
         /// </summary>
         /// <param name="rawDoD">Raw DoD Raster Path</param>
         /// <param name="thrDoD">Thresholded DoD Raster Path</param>
         /// <param name="propErrRaster">Propagated Error Raster Path</param>
+        /// <param name="PolygonMask">Vector layer containing the mask polygons</param>
+        /// <param name="FieldName">Name of the field in the PolygonMask that contains the distinguishing property on which to group statistics</param>
         /// <returns></returns>
         public static DoDStats GetStatsPropagated(ref Raster rawDoD, ref Raster thrDoD, ref Raster propErrRaster,
             Area cellArea, UnitGroup units)
@@ -89,6 +108,21 @@ namespace GCDConsoleLib
             GetDoDPropStats theStatsOp = new GetDoDPropStats(ref rawDoD, ref thrDoD, new DoDStats(cellArea, units));
             theStatsOp.Run();
             return theStatsOp.Stats;
+        }
+
+        /// <summary>
+        /// Retrieve the segragated Change Statistics from a pair of DoD rasters that were thresholded using a propagated error raster
+        /// </summary>
+        /// <param name="rawDoD">Raw DoD Raster Path</param>
+        /// <param name="thrDoD">Thresholded DoD Raster Path</param>
+        /// <param name="propErrRaster">Propagated Error Raster Path</param>
+        /// <returns></returns>
+        public static Dictionary<string, DoDStats> GetStatsPropagated(ref Raster rawDoD, ref Raster thrDoD, ref Raster propErrRaster,
+          ref Vector PolygonMask, string FieldName,
+          Area cellArea, UnitGroup units)
+        {
+            throw new NotImplementedException();
+            return null;
         }
 
         /// <summary>
@@ -113,6 +147,23 @@ namespace GCDConsoleLib
                 err.Stats.ErosionRaw.GetVolume(cellArea, units.VertUnit), raw.Stats.DepositionRaw.GetVolume(cellArea, units.VertUnit),
                 cellArea, units
                 );
+        }
+
+        /// <summary>
+        /// Retrieve the Change Statistics from a pair of DoD rasters that were thresholded using a probabilistic thresholding
+        /// </summary>
+        /// <param name="rawDoD">Raw DoD Raster Path</param>
+        /// <param name="thrDoD">Thresholded DoD Raster Path</param>
+        /// <param name="propErrRaster">Propagated Error Raster Path</param>
+        /// <param name="PolygonMask">Vector layer containing the mask polygons</param>
+        /// <param name="FieldName">Name of the field in the PolygonMask that contains the distinguishing property on which to group statistics</param>
+        /// <returns></returns>
+        public static Dictionary<string, DoDStats> GetStatsProbalistic(ref Raster rawDoD, ref Raster thrDoD, ref Raster propErrRaster,
+            ref Vector PolygonMask, string FieldName,
+            Area cellArea, UnitGroup units)
+        {
+            throw new NotImplementedException();
+            return null;
         }
 
         public static Raster BilinearResample(ref Raster rInput, string sOutputRaster, ExtentRectangle newRect)
@@ -209,7 +260,7 @@ namespace GCDConsoleLib
 
         public static Raster Subtract(ref Raster raster1, ref Raster raster2, System.IO.FileInfo sOutputRaster)
         {
-            return (Raster)GenericRunWithOutput(typeof(ExtendedCopy<>), raster1.Datatype.CSType, new object[] {
+            return (Raster)GenericRunWithOutput(typeof(RasterMath<>), raster1.Datatype.CSType, new object[] {
                 MathOpType.Subtraction, raster1, raster2, new Raster(ref raster1, sOutputRaster)
             });
         }
