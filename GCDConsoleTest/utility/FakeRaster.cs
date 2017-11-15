@@ -51,7 +51,7 @@ namespace GCDConsoleLib.Tests.Utility
         }
 
         public FakeRaster(decimal fTop, decimal fLeft, decimal dCellHeight, decimal dCellWidth, int rows, int cols, 
-            GdalDataType eDataType) : base(fTop, fLeft, dCellHeight, dCellWidth, rows, cols, Single.MinValue,
+            GdalDataType eDataType) : base(fTop, fLeft, dCellHeight, dCellWidth, rows, cols, float.MinValue,
                 RasterDriver.GTiff, eDataType, "My Fake Projection", "m")
         {
             _inputgrid = new U[cols, rows];
@@ -138,7 +138,7 @@ namespace GCDConsoleLib.Tests.Utility
                 { 11, 12, 13, 14 },
                 { 15, 16, 17, 18 } };
 
-            Single[,] singlArr = new Single[5, 4] {
+            float[,] singlArr = new float[5, 4] {
                 { -1.1f, 0.0f, 1.0f, 2.0f },
                 { 3, 4, 5, 6 },
                 { 7, 8, 9, 10 },
@@ -155,7 +155,7 @@ namespace GCDConsoleLib.Tests.Utility
             Assert.AreEqual(frInit1.Extent.Bottom, -10);
             Assert.AreEqual(frInit1.Extent.Left, 0);
             Assert.AreEqual(frInit1.Extent.Right, 10);
-            Assert.AreEqual(frInit1.NodataValue<Single>(), Single.MinValue);
+            Assert.AreEqual(frInit1.NodataValue<float>(), float.MinValue);
             Assert.AreEqual(frInit1.driver, Raster.RasterDriver.GTiff);
             Assert.AreEqual(frInit1.Proj.OriginalString, FakeRaster<double>.fakeproj);
             Assert.AreEqual(UnitsNet.Length.GetAbbreviation(frInit1.VerticalUnits), FakeRaster<double>.fakeunit);
@@ -170,14 +170,14 @@ namespace GCDConsoleLib.Tests.Utility
             Assert.AreEqual(frInit2.Extent.Bottom, -0.4m);
             Assert.AreEqual(frInit2.Extent.Left, 0);
             Assert.AreEqual(frInit2.Extent.Right, 0.5m);
-            Assert.AreEqual(frInit2.NodataValue<Single>(), Single.MinValue);
+            Assert.AreEqual(frInit2.NodataValue<float>(), float.MinValue);
             Assert.AreEqual(frInit2.driver, Raster.RasterDriver.GTiff);
             Assert.AreEqual(frInit2.Proj.OriginalString, FakeRaster<double>.fakeproj);
             Assert.AreEqual(UnitsNet.Length.GetAbbreviation(frInit2.VerticalUnits), FakeRaster<double>.fakeunit);
 
             string myFakeProj = "My Fake Proj";
             string myFakeUnit = "ft";
-            FakeRaster<Single> frInit3 = new FakeRaster<Single>(10.3m, 11.5m, -0.2m, 0.3m, -999.9, Raster.RasterDriver.HFA, FakeRaster<Single>.floatType, myFakeProj, myFakeUnit, singlArr);
+            FakeRaster<float> frInit3 = new FakeRaster<float>(10.3m, 11.5m, -0.2m, 0.3m, -999.9, Raster.RasterDriver.HFA, FakeRaster<float>.floatType, myFakeProj, myFakeUnit, singlArr);
             Assert.AreEqual(frInit3.Extent.rows, 4);
             Assert.AreEqual(frInit3.Extent.cols, 5);
             Assert.AreEqual(frInit3.Extent.CellHeight, -0.2m);
@@ -186,7 +186,7 @@ namespace GCDConsoleLib.Tests.Utility
             Assert.AreEqual(frInit3.Extent.Bottom, 9.5m);
             Assert.AreEqual(frInit3.Extent.Left, 11.5m);
             Assert.AreEqual(frInit3.Extent.Right, 13);
-            Assert.AreEqual(frInit2.NodataValue<Single>(), Single.MinValue);
+            Assert.AreEqual(frInit2.NodataValue<float>(), float.MinValue);
             Assert.AreEqual(frInit3.driver, Raster.RasterDriver.HFA);
             Assert.AreEqual(frInit3.Proj.OriginalString, myFakeProj);
             Assert.AreEqual(UnitsNet.Length.GetAbbreviation(frInit3.VerticalUnits), myFakeUnit);
@@ -198,14 +198,14 @@ namespace GCDConsoleLib.Tests.Utility
             Assert.AreEqual(frInt._outputGrid[0, 0], int.MinValue);
 
             FakeRaster<double> frDouble = new FakeRaster<double>(dblArr);
-            Assert.IsInstanceOfType(frDouble._inputgrid, typeof(Double[,]));
+            Assert.IsInstanceOfType(frDouble._inputgrid, typeof(double[,]));
             CollectionAssert.AreEqual(frDouble._inputgrid, dblArr);
-            Assert.AreEqual(frDouble._outputGrid[0, 0], Single.MinValue);
+            Assert.AreEqual(frDouble._outputGrid[0, 0], float.MinValue);
 
-            FakeRaster<Single> frSingle = new FakeRaster<Single>(singlArr);
-            Assert.IsInstanceOfType(frSingle._inputgrid, typeof(Single[,]));
-            CollectionAssert.AreEqual(frSingle._inputgrid, singlArr);
-            Assert.AreEqual(frSingle._outputGrid[0, 0], Single.MinValue);
+            FakeRaster<float> frfloat = new FakeRaster<float>(singlArr);
+            Assert.IsInstanceOfType(frfloat._inputgrid, typeof(float[,]));
+            CollectionAssert.AreEqual(frfloat._inputgrid, singlArr);
+            Assert.AreEqual(frfloat._outputGrid[0, 0], float.MinValue);
 
         }
     }

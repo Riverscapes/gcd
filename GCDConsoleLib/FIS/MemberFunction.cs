@@ -29,9 +29,9 @@ namespace GCDConsoleLib.FIS
             Coords = new List<KeyValuePair<double, double>>();
             yMax = dyMax;
             if ((yMax <= 0) || (yMax > 1))
-                throw new ArgumentException(String.Format("Invalid yMax of {0}. It must be between 0 and 1.", yMax));
+                throw new ArgumentException(string.Format("Invalid yMax of {0}. It must be between 0 and 1.", yMax));
             else if ((x1 > x2) || (x2 > x3))
-                throw new ArgumentException(String.Format("Membership function vertices ({0} {1} {2}) must be in ascending order.", x1, x2, x3));
+                throw new ArgumentException(string.Format("Membership function vertices ({0} {1} {2}) must be in ascending order.", x1, x2, x3));
             else
             {
                 Coords.Add(new KeyValuePair<double, double>(x1, 0));
@@ -55,9 +55,9 @@ namespace GCDConsoleLib.FIS
             Coords = new List<KeyValuePair<double, double>>();
             yMax = dyMax;
             if ((yMax <= 0) || (yMax > 1))
-                throw new ArgumentException(String.Format("Invalid yMax of {0}. It must be between 0 and 1.", yMax));
+                throw new ArgumentException(string.Format("Invalid yMax of {0}. It must be between 0 and 1.", yMax));
             else if ((x1 > x2) || (x2 >= x3) || (x3 > x4))
-                throw new ArgumentException(String.Format("Membership function vertices ({0} {1} {2} {3}) must be in ascending order.", x1, x2, x3, x4));
+                throw new ArgumentException(string.Format("Membership function vertices ({0} {1} {2} {3}) must be in ascending order.", x1, x2, x3, x4));
             else
             {
                 Coords.Add(new KeyValuePair<double, double>(x1, 0));

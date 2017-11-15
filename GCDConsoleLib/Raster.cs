@@ -223,20 +223,20 @@ namespace GCDConsoleLib
             {
                 // File exists AND we can overwrite it
                 if (GISFileInfo.Exists && Utility.FileHelpers.IsFileLocked(GISFileInfo.FullName, permission))
-                    throw new IOException(String.Format("File `{0}` was locked for `{1}` operation", GISFileInfo, Enum.GetName(typeof(Access), permission)));
+                    throw new IOException(string.Format("File `{0}` was locked for `{1}` operation", GISFileInfo, Enum.GetName(typeof(Access), permission)));
                 // File does not exist but there is no directory to put it in.
                 else if (!GISFileInfo.Exists && !Directory.Exists(GISFileInfo.DirectoryName))
-                    throw new IOException(String.Format("File `{0}` could not be created because the directory `{1}`is not present", GISFileInfo, GISFileInfo.DirectoryName));
+                    throw new IOException(string.Format("File `{0}` could not be created because the directory `{1}`is not present", GISFileInfo, GISFileInfo.DirectoryName));
                 else
                     Create();
             }
             else
             {
                 if (!GISFileInfo.Exists || Utility.FileHelpers.IsFileLocked(GISFileInfo.FullName, permission))
-                    throw new IOException(String.Format("File `{0}` was locked for `{1}` operation", GISFileInfo, Enum.GetName(typeof(Access), permission)));
+                    throw new IOException(string.Format("File `{0}` was locked for `{1}` operation", GISFileInfo, Enum.GetName(typeof(Access), permission)));
             }
             if (Utility.FileHelpers.IsFileLocked(GISFileInfo.FullName, permission))
-                throw new IOException(String.Format("File `{0}` was locked for `{}` operation", GISFileInfo, Enum.GetName(typeof(Access), permission)));
+                throw new IOException(string.Format("File `{0}` was locked for `{}` operation", GISFileInfo, Enum.GetName(typeof(Access), permission)));
 
             GdalConfiguration.ConfigureGdal();
             if (GISFileInfo.Exists)
@@ -279,7 +279,7 @@ namespace GCDConsoleLib
             if (!rR1.Proj.IsSame(ref rR2.Proj))
                 throw new ArgumentException("Raster Projections do not match match");
             if (rR1.VerticalUnits != rR2.VerticalUnits)
-                throw new ArgumentException(String.Format("Both rasters must have the same vertical units: `{0}` vs. `{1}`", rR1.VerticalUnits, rR2.VerticalUnits));
+                throw new ArgumentException(string.Format("Both rasters must have the same vertical units: `{0}` vs. `{1}`", rR1.VerticalUnits, rR2.VerticalUnits));
         }
 
         /// <summary>
@@ -458,7 +458,7 @@ namespace GCDConsoleLib
             // We need to make two conversions to make sure this is the right thing
             if (!dType.Equivalent(Datatype))
             {
-                throw new InvalidDataException(String.Format("You are trying operate on a '{0}' raster using '{1}'. This is not allowed.", Datatype.TypeName, dType.TypeName));
+                throw new InvalidDataException(string.Format("You are trying operate on a '{0}' raster using '{1}'. This is not allowed.", Datatype.TypeName, dType.TypeName));
             }
         }
 
@@ -516,10 +516,10 @@ namespace GCDConsoleLib
         public virtual void Write<T>(int xOff, int yOff, int xSize, int ySize, ref T[] buffer)
         {
             Open(true);
-            if (typeof(T) == typeof(Single))
-                ds.GetRasterBand(1).WriteRaster(xOff, yOff, xSize, ySize, buffer as Single[], xSize, ySize, 0, 0);
-            else if (typeof(T) == typeof(Double))
-                ds.GetRasterBand(1).WriteRaster(xOff, yOff, xSize, ySize, buffer as Double[], xSize, ySize, 0, 0);
+            if (typeof(T) == typeof(float))
+                ds.GetRasterBand(1).WriteRaster(xOff, yOff, xSize, ySize, buffer as float[], xSize, ySize, 0, 0);
+            else if (typeof(T) == typeof(double))
+                ds.GetRasterBand(1).WriteRaster(xOff, yOff, xSize, ySize, buffer as double[], xSize, ySize, 0, 0);
             else if (typeof(T) == typeof(int))
                 ds.GetRasterBand(1).WriteRaster(xOff, yOff, xSize, ySize, buffer as int[], xSize, ySize, 0, 0);
             else if (typeof(T) == typeof(byte))
@@ -540,10 +540,10 @@ namespace GCDConsoleLib
         public virtual void Read<T>(int xOff, int yOff, int xSize, int ySize, ref T[] buffer)
         {
             Open();
-            if (typeof(T) == typeof(Single))
-                ds.GetRasterBand(1).ReadRaster(xOff, yOff, xSize, ySize, buffer as Single[], xSize, ySize, 0, 0);
-            else if (typeof(T) == typeof(Double))
-                ds.GetRasterBand(1).ReadRaster(xOff, yOff, xSize, ySize, buffer as Double[], xSize, ySize, 0, 0);
+            if (typeof(T) == typeof(float))
+                ds.GetRasterBand(1).ReadRaster(xOff, yOff, xSize, ySize, buffer as float[], xSize, ySize, 0, 0);
+            else if (typeof(T) == typeof(double))
+                ds.GetRasterBand(1).ReadRaster(xOff, yOff, xSize, ySize, buffer as double[], xSize, ySize, 0, 0);
             else if (typeof(T) == typeof(int))
                 ds.GetRasterBand(1).ReadRaster(xOff, yOff, xSize, ySize, buffer as int[], xSize, ySize, 0, 0);
             else if (typeof(T) == typeof(byte))

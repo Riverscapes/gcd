@@ -60,14 +60,14 @@ namespace GCDConsoleLib.Internal
             Raster r0 = _rasters[0];
             InExtent = r0.Extent;
 
-            if (typeof(T) == typeof(Single))
-                OpNodataVal = (T)Convert.ChangeType(_rasters[0].NodataValue<Single>(), typeof(T));
-            else if (typeof(T) == typeof(Double))
-                OpNodataVal = (T)Convert.ChangeType(_rasters[0].NodataValue<Double>(), typeof(T));
+            if (typeof(T) == typeof(float))
+                OpNodataVal = (T)Convert.ChangeType(_rasters[0].NodataValue<float>(), typeof(T));
+            else if (typeof(T) == typeof(double))
+                OpNodataVal = (T)Convert.ChangeType(_rasters[0].NodataValue<double>(), typeof(T));
             else if (typeof(T) == typeof(int))
                 OpNodataVal = (T)Convert.ChangeType(_rasters[0].NodataValue<int>(), typeof(T));
-            else if (typeof(T) == typeof(Byte))
-                OpNodataVal = (T)Convert.ChangeType(_rasters[0].NodataValue<Byte>(), typeof(T));
+            else if (typeof(T) == typeof(byte))
+                OpNodataVal = (T)Convert.ChangeType(_rasters[0].NodataValue<byte>(), typeof(T));
 
             // Validate our each raster, Add each raster to the union extent window and open it for business
             foreach (Raster rN in _rasters)

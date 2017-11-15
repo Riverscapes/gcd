@@ -56,7 +56,7 @@ namespace GCDConsoleLib.Utility
         }
         public static Type DataTypeToType(DataType dType)
         {
-            Type theType = typeof(Single);
+            Type theType = typeof(float);
             switch (dType)
             {
                 case DataType.GDT_Byte:
@@ -75,10 +75,10 @@ namespace GCDConsoleLib.Utility
                     theType = typeof(Int32);
                     break;
                 case DataType.GDT_Float32:
-                    theType = typeof(Single);
+                    theType = typeof(float);
                     break;
                 case DataType.GDT_Float64:
-                    theType = typeof(Double);
+                    theType = typeof(double);
                     break;
                 // We don't support complex types
                 //case DataType.GDT_CInt16:
@@ -122,11 +122,11 @@ namespace GCDConsoleLib.Utility
             //{
             //    dType = DataType.GDT_Int32;
             //}
-            else if (theType == typeof(Single))
+            else if (theType == typeof(float))
             {
                 dType = DataType.GDT_Float32;
             }
-            else if (theType == typeof(Double))
+            else if (theType == typeof(double))
             {
                 dType = DataType.GDT_Float64;
             }
@@ -244,11 +244,11 @@ namespace GCDConsoleLib.Utility
                 dFType = FieldType.OFTStringList;
             }
 
-            else if (theType == typeof(double) || theType == typeof(Single))
+            else if (theType == typeof(double) || theType == typeof(float))
             {
                 dFType = FieldType.OFTReal;
             }
-            else if (theType == typeof(List<double>) || theType == typeof(List<Single>))
+            else if (theType == typeof(List<double>) || theType == typeof(List<float>))
             {
                 dFType = FieldType.OFTRealList;
             }
@@ -504,9 +504,9 @@ namespace GCDConsoleLib.Utility
                 retval = (T)Convert.ChangeType(int.MinValue, typeof(T));
             else if (typeof(T) == typeof(double))
                 // NOTE: SINGLE VALUE HERE IS NOT A TYPO.
-                retval = (T)Convert.ChangeType(Single.MinValue, typeof(T));
-            else if (typeof(T) == typeof(Single))
-                retval = (T)Convert.ChangeType(Single.MinValue, typeof(T));
+                retval = (T)Convert.ChangeType(float.MinValue, typeof(T));
+            else if (typeof(T) == typeof(float))
+                retval = (T)Convert.ChangeType(float.MinValue, typeof(T));
             else if (typeof(T) == typeof(byte))
                 retval = (T)Convert.ChangeType(byte.MinValue, typeof(T));
             else

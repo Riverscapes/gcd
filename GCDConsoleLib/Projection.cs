@@ -45,7 +45,7 @@ namespace GCDConsoleLib
             catch (Exception e)
             {
                 Debug.WriteLine(e.Message);
-                throw new IndexOutOfRangeException(String.Format("Could not find the EPSG:{0} in the lookup table.", iEPSG));
+                throw new IndexOutOfRangeException(string.Format("Could not find the EPSG:{0} in the lookup table.", iEPSG));
             }
             _Init();
         }

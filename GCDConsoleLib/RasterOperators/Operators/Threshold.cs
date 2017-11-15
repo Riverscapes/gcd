@@ -4,19 +4,19 @@ using GCDConsoleLib.Internal;
 
 namespace GCDConsoleLib.Internal.Operators
 {
-    public class Threshold : CellByCellOperator<Single>
+    public class Threshold : CellByCellOperator<float>
     {
         private RasterOperators.ThresholdOps _botOp;
-        private Single _botNum;
+        private float _botNum;
         private RasterOperators.ThresholdOps _topOp;
-        private Single _topNum;
+        private float _topNum;
         private bool bTwoOps;
 
         /// <summary>
         /// Pass-through constructure
         /// </summary>
         public Threshold(ref Raster rInput, RasterOperators.ThresholdOps tOp,
-            Single fThresh) :
+            float fThresh) :
             base(new List<Raster> { rInput })
         {
             _botOp = tOp;
@@ -24,8 +24,8 @@ namespace GCDConsoleLib.Internal.Operators
             bTwoOps = false;
         }
         public Threshold(ref Raster rInput,
-            RasterOperators.ThresholdOps tBottomOp, Single fBottomThresh,
-            RasterOperators.ThresholdOps tTopOp, Single fTopThresh) :
+            RasterOperators.ThresholdOps tBottomOp, float fBottomThresh,
+            RasterOperators.ThresholdOps tTopOp, float fTopThresh) :
             base(new List<Raster> { rInput })
         {
             if (tBottomOp == RasterOperators.ThresholdOps.LessThan ||
@@ -41,13 +41,13 @@ namespace GCDConsoleLib.Internal.Operators
             bTwoOps = true;
         }
 
-        protected override Single CellOp(ref List<Single[]> data, int id)
+        protected override float CellOp(ref List<float[]> data, int id)
         {
             // Get out quick if we can
             if (data[0][id] == _rasternodatavals[0])
                 return _rasternodatavals[0];
 
-            Single val = data[0][id];
+            float val = data[0][id];
             if (bTwoOps)
             {
                 if (

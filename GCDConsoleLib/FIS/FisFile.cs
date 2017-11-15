@@ -27,84 +27,6 @@ namespace GCDConsoleLib.FIS
         }
 
         /// <summary>
-        /// Parse a Matlab Fuzzy Toolbox .fis file for a rule set.
-        /// </summary>
-        /// <param name="fn">The filename of the file to parse.</param>
-        /// <returns></returns>
-        public void parseFile()
-        {
-            bool systemOK = false;
-            bool inputOK = false;
-            bool outputOK = false;
-            bool rulesOK = false;
-
-            if (!fn.Exists)
-                throw new FileNotFoundException("Histogram file could not be found", fn.FullName);
-
-            List<string> sLines = new List<string>();
-            using (var reader = new StreamReader(fn.FullName))
-            {
-                while (!reader.EndOfStream)
-                    sLines.Add(reader.ReadLine());
-            }
-            FISFileSection currSection = FISFileSection.NONE;
-
-            // Store each section in its own dictionary list
-            Dictionary<FISFileSection, List<string>> sectionLines = new Dictionary<FISFileSection, List<string>>() {
-                { FISFileSection.SYSTEM, new List<string>() },
-                { FISFileSection.INPUT, new List<string>() },
-                { FISFileSection.OUTPUT, new List<string>() },
-                { FISFileSection.RULES, new List<string>() },
-                { FISFileSection.NONE, new List<string>() }
-            };
-
-            foreach (string line in sLines)
-            {
-                if (line.Substring(0, 8) == "[System]")
-                {
-                    systemOK = true;
-                    currSection = FISFileSection.SYSTEM;
-                }
-                else if (line.Substring(0, 6) == "[Input")
-                {
-                    inputOK = true;
-                    currSection = FISFileSection.INPUT;
-                }
-                else if (line.Substring(0, 7) == "[Output")
-                {
-                    outputOK = true;
-                    currSection = FISFileSection.OUTPUT;
-                }
-                else if (line.Substring(0, 7) == "[Rules]")
-                {
-                    rulesOK = true;
-                    currSection = FISFileSection.RULES;
-                }
-                else if (line.Trim().Length > 0)
-                {
-                    sectionLines[currSection].Add(line);
-                }
-            }
-
-            if (!systemOK)
-                throw new Exception("No [System] section in: " + fn.FullName);
-            else if (!inputOK)
-                throw new Exception("No [Input] section in: " + fn.FullName);
-            else if (!outputOK)
-                throw new Exception("No [Output] section in: " + fn.FullName);
-            else if (!rulesOK)
-                throw new Exception("No [Rules] section inL " + fn.FullName);
-
-            parseSystem(sectionLines[FISFileSection.SYSTEM]);
-            parseInputOutput(sectionLines[FISFileSection.INPUT], true, 999);
-            parseInputOutput(sectionLines[FISFileSection.OUTPUT], false, 999);
-            parseRules(sectionLines[FISFileSection.RULES]);
-
-        }
-
-
-
-        /// <summary>
         /// 
         /// </summary>
         private void parseInputOutput(List<string> sLines, bool isInput, int inputNum)
@@ -214,6 +136,87 @@ namespace GCDConsoleLib.FIS
             // Initialize our new ruleset
             ruleset = new RuleSet(andOp, orOp, imp, agg, defuzz);
         }
+
+
+
+        /// <summary>
+        /// Parse a Matlab Fuzzy Toolbox .fis file for a rule set.
+        /// </summary>
+        /// <param name="fn">The filename of the file to parse.</param>
+        /// <returns></returns>
+        public void parseFile()
+        {
+            bool systemOK = false;
+            bool inputOK = false;
+            bool outputOK = false;
+            bool rulesOK = false;
+
+            if (!fn.Exists)
+                throw new FileNotFoundException("Histogram file could not be found", fn.FullName);
+
+            List<string> sLines = new List<string>();
+            using (var reader = new StreamReader(fn.FullName))
+            {
+                while (!reader.EndOfStream)
+                    sLines.Add(reader.ReadLine());
+            }
+            FISFileSection currSection = FISFileSection.NONE;
+
+            // Store each section in its own dictionary list
+            Dictionary<FISFileSection, List<string>> sectionLines = new Dictionary<FISFileSection, List<string>>() {
+                { FISFileSection.SYSTEM, new List<string>() },
+                { FISFileSection.OUTPUT, new List<string>() },
+                { FISFileSection.RULES, new List<string>() },
+                { FISFileSection.NONE, new List<string>() }
+            };
+
+            // Inputs gets its own 
+            List<List<string>> Inputs = new List<List<string>>();
+
+            foreach (string line in sLines)
+            {
+                if (line.Substring(0, 8) == "[System]")
+                {
+                    systemOK = true;
+                    currSection = FISFileSection.SYSTEM;
+                }
+                else if (line.Substring(0, 6) == "[Input")
+                {
+                    inputOK = true;
+                    currSection = FISFileSection.INPUT;
+                }
+                else if (line.Substring(0, 7) == "[Output")
+                {
+                    outputOK = true;
+                    currSection = FISFileSection.OUTPUT;
+                }
+                else if (line.Substring(0, 7) == "[Rules]")
+                {
+                    rulesOK = true;
+                    currSection = FISFileSection.RULES;
+                }
+                else if (line.Trim().Length > 0)
+                {
+                    sectionLines[currSection].Add(line);
+                }
+            }
+
+            if (!systemOK)
+                throw new Exception("No [System] section in: " + fn.FullName);
+            else if (!inputOK)
+                throw new Exception("No [Input] section in: " + fn.FullName);
+            else if (!outputOK)
+                throw new Exception("No [Output] section in: " + fn.FullName);
+            else if (!rulesOK)
+                throw new Exception("No [Rules] section inL " + fn.FullName);
+
+            parseSystem(sectionLines[FISFileSection.SYSTEM]);
+            parseInputOutput(sectionLines[FISFileSection.INPUT], true, 999);
+            parseInputOutput(sectionLines[FISFileSection.OUTPUT], false, 999);
+            parseRules(sectionLines[FISFileSection.RULES]);
+
+        }
+
 
 
     }

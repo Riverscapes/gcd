@@ -70,7 +70,7 @@ namespace GCDConsoleLib.Internal.Tests
             using (ITempDir tmp = TempDir.Create())
             {
                 Raster rTemplateRaster = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("AngledSlopey950-980E.tif")));
-                FakeRaster<Single> rOut = new FakeRaster<Single>(ref rTemplateRaster);
+                FakeRaster<float> rOut = new FakeRaster<float>(ref rTemplateRaster);
                 TestOp<float> theTest = new TestOp<float>(new List<Raster> { rTemplateRaster }, ref rOut);
 
                 // before we set the new extent

@@ -65,9 +65,9 @@ namespace GCDConsoleLib.FIS
         public void addInputMFSet(String sName, MemberFunctionSet mfs)
         {
             if (_indices.ContainsKey(sName))
-                throw new ArgumentException(String.Format("The name '{0}' is already in use.", sName));
+                throw new ArgumentException(string.Format("The name '{0}' is already in use.", sName));
             else if (sName.Contains(" "))
-                throw new ArgumentException(String.Format("Invalid name '{0}'. Spaces are not allowed.", sName));
+                throw new ArgumentException(string.Format("Invalid name '{0}'. Spaces are not allowed.", sName));
             else
             {
                 _inputs.Add(mfs);
@@ -101,7 +101,7 @@ namespace GCDConsoleLib.FIS
             if (weight < 0 || weight > 1)
                 throw new ArgumentException("The weight must be between 0 and 1.");
             else if (!_output.Indices.ContainsKey(sOut))
-                throw new ArgumentException(String.Format("There is no output membership function named '{0}'.", sOut));
+                throw new ArgumentException(string.Format("There is no output membership function named '{0}'.", sOut));
             else
             {
                 String name = sInputs;
@@ -269,11 +269,11 @@ namespace GCDConsoleLib.FIS
         public void setInputMFSet(int index, String sName, MemberFunctionSet mfs)
         {
             if (0 > index || _inputs.Count <= index)
-                throw new ArgumentException(String.Format("Invalid index for input: {0}", index));
+                throw new ArgumentException(string.Format("Invalid index for input: {0}", index));
             else if (_indices.ContainsKey(sName))
-                throw new ArgumentException(String.Format("The name '{0}' is already in use.", sName));
+                throw new ArgumentException(string.Format("The name '{0}' is already in use.", sName));
             else if (sName.Contains(" "))
-                throw new ArgumentException(String.Format("Invalid name '{0}'. Spaces are not allowed.", sName));
+                throw new ArgumentException(string.Format("Invalid name '{0}'. Spaces are not allowed.", sName));
             else
             {
                 _inputs[index] = mfs;

@@ -148,7 +148,7 @@ namespace GCDConsoleLib
         /// <returns></returns>
         public override string ToString()
         {
-            return String.Format("{0} {1} {2} {3}", Left, Bottom, Right, Top);
+            return string.Format("{0} {1} {2} {3}", Left, Bottom, Right, Top);
         }
 
         /// <summary>

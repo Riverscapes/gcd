@@ -243,7 +243,7 @@ namespace GCDConsoleLib
         }
 
         public static Raster SetNull(ref Raster rInput, ThresholdOps fThresholdOp,
-            Single fThreshold, FileInfo sOutputRaster)
+            float fThreshold, FileInfo sOutputRaster)
         {
             Threshold threshOp = new Threshold(ref rInput, fThresholdOp, fThreshold);
             return threshOp.RunWithOutput();
@@ -254,7 +254,7 @@ namespace GCDConsoleLib
             throw new NotImplementedException("threshold is defined by a raster instead of constant.");
         }
 
-        public static Raster SetNull(ref Raster rInput, ThresholdOps fBottomOp, Single fBottom, ThresholdOps fTopOp, Single fTop, System.IO.FileInfo sOutputRaster)
+        public static Raster SetNull(ref Raster rInput, ThresholdOps fBottomOp, float fBottom, ThresholdOps fTopOp, float fTop, System.IO.FileInfo sOutputRaster)
         {
             Threshold threshOp = new Threshold(ref rInput, fBottomOp, fBottom, fTopOp, fTop);
             return threshOp.RunWithOutput();

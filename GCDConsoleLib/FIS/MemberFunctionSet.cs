@@ -38,11 +38,11 @@ namespace GCDConsoleLib.FIS
             if (0 == mf.Length)
                 throw new ArgumentException("The membership function cannot be added to the set because it has no vertices.");
             else if ((mf.Coords[0].Key < _min) || (mf.Coords[mf.Length - 1].Key > _max))
-                throw new ArgumentException(String.Format("Membership function bounds ({0} {1}) do not fit in the set range ({2}) for this object.", mf.Coords[0].Key, mf.Coords[mf.Length - 1].Key, _min));
+                throw new ArgumentException(string.Format("Membership function bounds ({0} {1}) do not fit in the set range ({2}) for this object.", mf.Coords[0].Key, mf.Coords[mf.Length - 1].Key, _min));
             else if (Indices.ContainsKey(sName))
-                throw new ArgumentException(String.Format("The name '{0}' is already in use.", sName));
+                throw new ArgumentException(string.Format("The name '{0}' is already in use.", sName));
             else if (sName.Contains(" "))
-                throw new ArgumentException(String.Format("Invalid name '{0}'. Spaces are not allowed.", sName));
+                throw new ArgumentException(string.Format("Invalid name '{0}'. Spaces are not allowed.", sName));
             else
             {
                 _mfs.Add(mf);
@@ -63,11 +63,11 @@ namespace GCDConsoleLib.FIS
         public void addTriangleMF(string sName, double x1, double x2, double x3, double yMax)
         {
             if ((x1 < _min) || (x3 > _max))
-                throw new ArgumentException(String.Format("Membership function bounds ({0} {1}) do not fit in the set range ({2} {3}) for this object.", x1, x3, _min, _max));
+                throw new ArgumentException(string.Format("Membership function bounds ({0} {1}) do not fit in the set range ({2} {3}) for this object.", x1, x3, _min, _max));
             else if (Indices.ContainsKey(sName))
-                throw new ArgumentException(String.Format("The name '{0}' is already in use.", sName));
+                throw new ArgumentException(string.Format("The name '{0}' is already in use.", sName));
             else if (sName.Contains(" "))
-                throw new ArgumentException(String.Format("Invalid name '{0}'. Spaces are not allowed.", sName));
+                throw new ArgumentException(string.Format("Invalid name '{0}'. Spaces are not allowed.", sName));
             else
             {
                 _mfs.Add(new MemberFunction(x1, x2, x3, yMax));
@@ -89,11 +89,11 @@ namespace GCDConsoleLib.FIS
         public void addTrapezoidMF(String sName, double x1, double x2, double x3, double x4, double yMax = 1)
         {
             if ((x1 < _min) || (x4 > _max))
-                throw new ArgumentException(String.Format("Membership function bounds ({0} {1}) do not fit in the set range ({2} {3}) for this object.", x1, x4, _min, _max));
+                throw new ArgumentException(string.Format("Membership function bounds ({0} {1}) do not fit in the set range ({2} {3}) for this object.", x1, x4, _min, _max));
             else if (Indices.ContainsKey(sName))
-                throw new ArgumentException(String.Format("The name '{0}' is already in use.", sName));
+                throw new ArgumentException(string.Format("The name '{0}' is already in use.", sName));
             else if (sName.Contains(" "))
-                throw new ArgumentException(String.Format("Invalid name '{0}'. Spaces are not allowed.", sName));
+                throw new ArgumentException(string.Format("Invalid name '{0}'. Spaces are not allowed.", sName));
             else
             {
                 _mfs.Add(new MemberFunction(x1, x2, x3, x4, yMax));

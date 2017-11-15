@@ -257,7 +257,7 @@ namespace GCDConsoleLib
         {
             using (System.IO.StreamWriter stream = new System.IO.StreamWriter(outputFile.FullName))
             {
-                stream.WriteLine(String.Format("Bin Lower,Bin Upper,Bin Centre,Area({0}),Volume({1}),Cell Count,Cell Sum({2})", units.ArUnit, units.VolUnit, units.VertUnit));
+                stream.WriteLine(string.Format("Bin Lower,Bin Upper,Bin Centre,Area({0}),Volume({1}),Cell Count,Cell Sum({2})", units.ArUnit, units.VolUnit, units.VertUnit));
                 for (int bid = 0; bid < BinCounts.Count; bid++)
                 {
                     double vol = BinVolume(bid, cellArea, units).As(units.VolUnit);
