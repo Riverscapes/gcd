@@ -27,9 +27,10 @@ namespace GCDConsoleLib.Internal.Operators
             }
 
             // Load the FIS rule file
-            FIS.RuleSet theRuleSet = new FIS.RuleSet();
-            theRuleSet.parseFile(fisFile);
 
+            FIS.FisFile theFisFile = new FIS.FisFile(fisFile);
+
+            FIS.RuleSet theRuleSet = theFisFile.ruleset;
             //// Confirm that the number of inputs specified matches the number in the rule file
             //if (theRuleSet.numInputs() != (int)dFISVals.size())
             //    return GCD::INCORRECT_NUMBER_FIS_INPUTS;

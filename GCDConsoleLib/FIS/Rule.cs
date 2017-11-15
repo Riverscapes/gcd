@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace GCDConsoleLib.FIS
 {
-    class Rule
+    public class Rule
     {
         public List<int> Inputs;
         public List<int> MFSInd;
