@@ -8,12 +8,12 @@ namespace GCDConsoleLib.FIS
         public List<int> Inputs;
         public List<int> MFSInd;
         public List<int> MFSNot;
-        private int _weight;
+        public double Weight;
         public MemberFunction Output;
 
         public Rule()
         {
-            _weight = 1;
+            Weight = 1;
         }
 
         /// <summary>

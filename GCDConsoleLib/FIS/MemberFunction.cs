@@ -8,11 +8,7 @@ namespace GCDConsoleLib.FIS
         public List<KeyValuePair<double, double>> Coords;
         public Dictionary<String, int> Indices;
 
-        private double _min, _max;
-        private List<MemberFunction> _mfs;
-
-        private String _msg;
-        private double yMax;
+        public double yMax;
 
         public MemberFunction()
         {
@@ -137,7 +133,7 @@ namespace GCDConsoleLib.FIS
         /// <summary>
         /// Check if a membership function is valid.
         /// </summary>
-        public bool valid { get { return Coords.Count > 0; } }
+        public bool Valid { get { return Coords.Count > 0; } }
 
         /// <summary>
         /// Simple Property

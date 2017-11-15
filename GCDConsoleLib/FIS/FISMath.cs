@@ -6,15 +6,16 @@ using System.Threading.Tasks;
 
 namespace GCDConsoleLib.FIS
 {
-    static class FISMath
+    public static class FISOperators
     {
+
         /// <summary>
         /// The Maximum OR fuzzy operator
         /// </summary>
         /// <param name="n1"></param>
         /// <param name="n2"></param>
         /// <returns></returns>
-        static double Max(double n1, double n2)
+        public static double Max(double n1, double n2)
         {
             return Math.Max(n1, n2);
         }
@@ -25,7 +26,7 @@ namespace GCDConsoleLib.FIS
         /// <param name="n1"></param>
         /// <param name="n2"></param>
         /// <returns></returns>
-        static double Min(double n1, double n2)
+        public static double Min(double n1, double n2)
         {
             return Math.Min(n1, n2);
         }
@@ -36,7 +37,7 @@ namespace GCDConsoleLib.FIS
         /// <param name="n1"></param>
         /// <param name="n2"></param>
         /// <returns></returns>
-        static double ProbOr(double n1, double n2)
+        public static double ProbOr(double n1, double n2)
         {
             return n1 + n2 - n1 * n2;
         }
@@ -47,7 +48,7 @@ namespace GCDConsoleLib.FIS
         /// <param name="n1"></param>
         /// <param name="n2"></param>
         /// <returns></returns>
-        static double Product(double n1, double n2)
+        public static double Product(double n1, double n2)
         {
             return n1 * n2;
         }
@@ -66,7 +67,7 @@ namespace GCDConsoleLib.FIS
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        static Tuple<double, double, bool> IntersectLines(double ax1, double ay1, double ax2, double ay2, double bx1, double by1,
+        public static Tuple<double, double, bool> IntersectLines(double ax1, double ay1, double ax2, double ay2, double bx1, double by1,
                        double bx2, double by2)
         {
             double x = ax1;

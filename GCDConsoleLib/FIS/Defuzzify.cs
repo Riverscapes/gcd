@@ -1,8 +1,7 @@
 ﻿namespace GCDConsoleLib.FIS
 {
-    static class Defuzzify
+    public static class Defuzzify
     {
-
         /// <summary>
         /// Defuzzify a membership function using the Centroid method
         /// 
@@ -12,7 +11,7 @@
         /// </summary>
         /// <param name="mf"></param>
         /// <returns></returns>
-        static double DefuzzCentroid(ref MemberFunction mf)
+        public static double DefuzzCentroid(ref MemberFunction mf)
         {
             double sum_moment_area = 0;
             double sum_area = 0;
@@ -67,7 +66,7 @@
         /// </summary>
         /// <param name="mf"></param>
         /// <returns></returns>
-        static double FISDefuzzBisect(ref MemberFunction mf)
+        public static double FISDefuzzBisect(ref MemberFunction mf)
         {
             double area = 0;
 
@@ -123,7 +122,7 @@
         /// </summary>
         /// <param name="mf"></param>
         /// <returns></returns>
-        static double FISDefuzzMidMax(ref MemberFunction mf)
+        public static double FISDefuzzMidMax(ref MemberFunction mf)
         {
             double minX = mf.Coords[0].Key;
             double maxX = mf.Coords[0].Key;
@@ -149,7 +148,7 @@
         /// </summary>
         /// <param name="mf"></param>
         /// <returns></returns>
-        static double FISDefuzzLargeMax(ref MemberFunction mf)
+        public static double FISDefuzzLargeMax(ref MemberFunction mf)
         {
             double x = mf.Coords[0].Key;
             double y = mf.Coords[0].Value;
@@ -170,7 +169,7 @@
         /// </summary>
         /// <param name="mf"></param>
         /// <returns></returns>
-        static double FISDefuzzSmallMax(ref MemberFunction mf)
+        public static double FISDefuzzSmallMax(ref MemberFunction mf)
         {
             double x = mf.Coords[0].Key;
             double y = mf.Coords[0].Value;
