@@ -37,6 +37,7 @@ namespace GCDCore.ChangeDetection
                 ex.Data["New DEM Extent"] = gNewDEM.Extent.ToString();
                 ex.Data["Old DEM Path"] = gOldDEM.GISFileInfo;
                 ex.Data["Old DEM Extent"] = gOldDEM.Extent.ToString();
+                throw ex;
             }
 
             NewDEM = gNewDEM;
@@ -50,6 +51,8 @@ namespace GCDCore.ChangeDetection
             FileInfo rawHstPath = Project.ProjectManagerBase.OutputManager.RawHistPath(AnalysisFolder);
             FileInfo thrHstPath = Project.ProjectManagerBase.OutputManager.ThrHistPath(AnalysisFolder);
             FileInfo sumXMLPath = Project.ProjectManagerBase.OutputManager.SummaryXMLPath(AnalysisFolder);
+
+            AnalysisFolder.Create();
 
             // Subtract the new and old rasters to produce the raw DoD
             Raster rawDoD = RasterOperators.Subtract(ref NewDEM, ref OldDEM, rawDoDPath);

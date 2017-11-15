@@ -42,7 +42,7 @@ namespace GCDCore.Project
 
         public static GCDConsoleLib.GCD.UnitGroup Units { get; internal set; }
         public static UnitsNet.Area CellArea { get; internal set; }
-        
+
         #region "Properties"
 
         public static string RasterExtension
@@ -194,6 +194,9 @@ namespace GCDCore.Project
                 throw ex;
             }
 
+            // Temporary properties until the new project file is available
+            CellArea = new UnitsNet.Area(0.1);
+            Units = new GCDConsoleLib.GCD.UnitGroup(UnitsNet.Units.VolumeUnit.CubicMeter, UnitsNet.Units.AreaUnit.SquareMeter, UnitsNet.Units.LengthUnit.Meter, UnitsNet.Units.LengthUnit.Meter);
         }
 
         public static string GetRelativePath(FileInfo FullPath)

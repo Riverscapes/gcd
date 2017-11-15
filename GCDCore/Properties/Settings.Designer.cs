@@ -25,6 +25,7 @@ namespace GCDCore.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("192, 0, 0")]
         public global::System.Drawing.Color Erosion {
             get {
                 return ((global::System.Drawing.Color)(this["Erosion"]));
@@ -36,6 +37,7 @@ namespace GCDCore.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("27, 63, 139")]
         public global::System.Drawing.Color Deposition {
             get {
                 return ((global::System.Drawing.Color)(this["Deposition"]));

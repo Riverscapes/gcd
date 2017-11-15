@@ -3,10 +3,10 @@
   <Profiles />
   <Settings>
     <Setting Name="Erosion" Type="System.Drawing.Color" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">192, 0, 0</Value>
     </Setting>
     <Setting Name="Deposition" Type="System.Drawing.Color" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">27, 63, 139</Value>
     </Setting>
     <Setting Name="ValidateProjectOnLoad" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
