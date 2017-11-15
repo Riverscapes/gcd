@@ -43,20 +43,27 @@ namespace GCDConsoleLib
         /// </summary>
         public static Raster Add<T>(ref Raster rInput, T dOperand, FileInfo sOutputRaster)
         {
-            return (Raster)GenericRunWithOutput(typeof(ExtendedCopy<>), rInput.Datatype.CSType, new object[] {
+            return (Raster)GenericRunWithOutput(typeof(RasterMath<T>), rInput.Datatype.CSType, new object[] {
                 MathOpType.Addition, rInput, dOperand, new Raster(ref rInput, sOutputRaster)
             });
         }
         public static Raster Add(ref Raster rInputA, ref Raster rInputB, FileInfo sOutputRaster)
         {
-            return (Raster)GenericRunWithOutput(typeof(ExtendedCopy<>), rInputA.Datatype.CSType, new object[] {
+            return (Raster)GenericRunWithOutput(typeof(RasterMath<>), rInputA.Datatype.CSType, new object[] {
                 MathOpType.Addition, rInputA, rInputB, new Raster(ref rInputA, sOutputRaster)
+            });
+        }
+
+        public static Raster Subtract(ref Raster rInputA, ref Raster rInputB, System.IO.FileInfo sOutputRaster)
+        {
+            return (Raster)GenericRunWithOutput(typeof(RasterMath<>), rInputA.Datatype.CSType, new object[] {
+                MathOpType.Subtraction, rInputA, rInputB, new Raster(ref rInputA, sOutputRaster)
             });
         }
 
         public static Raster Multiply(ref Raster rInputA, ref Raster rInputB, FileInfo sOutputRaster)
         {
-            return (Raster)GenericRunWithOutput(typeof(ExtendedCopy<>), rInputA.Datatype.CSType, new object[] {
+            return (Raster)GenericRunWithOutput(typeof(RasterMath<>), rInputA.Datatype.CSType, new object[] {
                 MathOpType.Multipication, rInputA, rInputB, new Raster(ref rInputA, sOutputRaster)
             });
         }
@@ -256,13 +263,6 @@ namespace GCDConsoleLib
 
             throw new NotImplementedException();
             return theSlopeOp.RunWithOutput();
-        }
-
-        public static Raster Subtract(ref Raster raster1, ref Raster raster2, System.IO.FileInfo sOutputRaster)
-        {
-            return (Raster)GenericRunWithOutput(typeof(RasterMath<>), raster1.Datatype.CSType, new object[] {
-                MathOpType.Subtraction, raster1, raster2, new Raster(ref raster1, sOutputRaster)
-            });
         }
 
         public static Raster RootSumSquares(ref Raster raster1, ref Raster raster2, System.IO.FileInfo sOutputRaster)

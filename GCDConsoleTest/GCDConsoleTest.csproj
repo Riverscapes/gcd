@@ -112,6 +112,7 @@
     <Compile Include="ProjectionTests.cs" />
     <Compile Include="RasterOperators\BaseOperatorTests.cs" />
     <Compile Include="RasterOperators\CellByCellOperatorTests.cs" />
+    <Compile Include="RasterOperators\Operators\ExtendedCopyTests.cs" />
     <Compile Include="RasterOperators\RasterOperatorsTests.cs" />
     <Compile Include="RasterOperators\WindowOverlapOperatorTests.cs" />
     <Compile Include="RasterTests.cs" />
