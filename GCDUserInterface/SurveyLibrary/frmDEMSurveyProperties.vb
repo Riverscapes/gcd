@@ -46,7 +46,7 @@ Namespace SurveyLibrary
             If demRow.MultiMethod Then
                 Dim sMaskPath As IO.FileInfo = ProjectManagerBase.GetAbsolutePath(txtMask.Text)
                 If sMaskPath.Exists Then
-                    Dim gMask As New GCDConsoleLib.Vector(sMaskPath.FullName)
+                    Dim gMask As New GCDConsoleLib.Vector(sMaskPath)
                     cboIdentify.Items.AddRange(gMask.Fields.Values.Where(Function(s As GCDConsoleLib.VectorField) s.Type.Equals(GCDConsoleLib.GDalFieldType.StringField)))
                     cboIdentify.Text = demRow.MethodMaskField
                 End If
@@ -402,34 +402,34 @@ Namespace SurveyLibrary
                     ' Attempt to delete any existing mask feature class
                     DeleteExistingMaskFeatureClass()
 
-                    Dim sMethodMask As String = ProjectManagerBase.OutputManager.DEMSurveyMethodMaskPath(txtName.Text)
+                    Dim methodMask As IO.FileInfo = ProjectManagerBase.OutputManager.DEMSurveyMethodMaskPath(txtName.Text)
                     Try
-                        IO.Directory.CreateDirectory(IO.Path.GetDirectoryName(sMethodMask))
+                        methodMask.Directory.Create()
                     Catch ex As Exception
                         Dim ex2 As New Exception("Error attempting to create the directory for the DEM Survey method mask.")
-                        ex2.Data.Add("Method Mask Folder", sMethodMask)
+                        ex2.Data.Add("Method Mask Folder", methodMask)
                         naru.error.ExceptionUI.HandleException(ex2)
                         Exit Sub
                     End Try
 
-                    If GCDConsoleLib.GISDataset.FileExists(sMethodMask) Then
+                    If GCDConsoleLib.GISDataset.FileExists(methodMask) Then
                         Dim ex As New Exception("The polygon mask feature class already exists.")
                         ex.Data.Add("Original Mask", gNewMask.GISFileInfo.FullName)
-                        ex.Data.Add("GCD Project Mask", sMethodMask)
+                        ex.Data.Add("GCD Project Mask", methodMask)
                         naru.error.ExceptionUI.HandleException(ex)
                     Else
                         Try
-                            gNewMask.Copy(sMethodMask)
-                            gNewMask = New GCDConsoleLib.Vector(sMethodMask)
+                            gNewMask.Copy(methodMask)
+                            gNewMask = New GCDConsoleLib.Vector(methodMask)
 
                             ' Poplulate the method mask dropdown with the string fields from the feature class
                             cboIdentify.Items.AddRange(gNewMask.Fields.Values.Where(Function(s As GCDConsoleLib.VectorField) s.Type.Equals(GCDConsoleLib.GDalFieldType.StringField)))
-                            txtMask.Text = ProjectManagerBase.GetRelativePath(sMethodMask)
+                            txtMask.Text = ProjectManagerBase.GetRelativePath(methodMask)
 
                         Catch ex As Exception
                             Dim ex2 As New Exception("Error attempting to copy the method mask feature class into the GCD project folder.", ex)
                             ex2.Data.Add("Original Path", gNewMask.GISFileInfo.FullName)
-                            ex2.Data.Add("GCD Project Path", sMethodMask)
+                            ex2.Data.Add("GCD Project Path", methodMask)
                             naru.error.ExceptionUI.HandleException(ex2)
                             Exit Sub
                         End Try
@@ -448,11 +448,11 @@ Namespace SurveyLibrary
         ''' <remarks>Called from choosing a new feature class or from setting the survey type to single.</remarks>
         Private Sub DeleteExistingMaskFeatureClass()
 
-            Dim sMaskPath As IO.FileInfo = ProjectManagerBase.GetAbsolutePath(txtMask.Text)
-            If sMaskPath.Exists Then
-                Dim sWorkspace As String = sMaskPath.Directory.FullName
+            Dim maskPath As IO.FileInfo = ProjectManagerBase.GetAbsolutePath(txtMask.Text)
+            If maskPath.Exists Then
+                Dim sWorkspace As String = maskPath.Directory.FullName
                 Try
-                    GCDConsoleLib.Raster.Delete(sMaskPath.FullName)
+                    GCDConsoleLib.Raster.Delete(maskPath)
                     txtMask.Text = String.Empty
                     cboIdentify.Items.Clear()
                 Catch ex As Exception
@@ -680,7 +680,7 @@ Namespace SurveyLibrary
                 If bContinue Then
                     If ProjectManagerBase.GetAbsolutePath(rAssoc.Source).Exists Then
                         Try
-                            GCDConsoleLib.Raster.Delete(sPath.FullName)
+                            GCDConsoleLib.Raster.Delete(sPath)
                         Catch ex As Exception
                             Dim ex2 As New Exception("Error deleting the associated surface raster file and directory.", ex)
                             ex2.Data.Add("Raster Path", sPath)
@@ -691,7 +691,7 @@ Namespace SurveyLibrary
                 End If
 
             Try
-                    GCDConsoleLib.Raster.Delete(ProjectManagerBase.GetAbsolutePath(rAssoc.Source).FullName)
+                    GCDConsoleLib.Raster.Delete(ProjectManagerBase.GetAbsolutePath(rAssoc.Source))
                 Catch ex As Exception
                 ' do nothing
             End Try
@@ -763,7 +763,7 @@ Namespace SurveyLibrary
                     Catch ex As Exception
                         Dim bRasterExists As Boolean = True
                         Try
-                            GCDConsoleLib.Raster.Delete(frm.txtRasterPath.Text)
+                            GCDConsoleLib.Raster.Delete(New IO.FileInfo(frm.txtRasterPath.Text))
                             bRasterExists = False
                         Catch ex2 As Exception
                             bRasterExists = True
@@ -848,7 +848,7 @@ Namespace SurveyLibrary
                     If Not rError.IsSourceNull Then
                         If ProjectManagerBase.GetAbsolutePath(rError.Source).Exists Then
                             Try
-                                GCDConsoleLib.Raster.Delete(sPath.FullName)
+                                GCDConsoleLib.Raster.Delete(sPath)
                             Catch ex As Exception
                                 naru.error.ExceptionUI.HandleException(ex, "Failed to delete the error surface raster.")
                                 bContinue = False

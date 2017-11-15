@@ -201,7 +201,7 @@ Namespace ErrorCalculation
                     If m_rDEMSurvey.IsMethodMaskFieldNull Then
                         Throw New Exception("Multi method DEM with no method mask field defined.")
                     Else
-                        Dim gMethodMask As New GCDConsoleLib.Vector(ProjectManagerBase.GetAbsolutePath(m_rDEMSurvey.MethodMask).FullName)
+                        Dim gMethodMask As New GCDConsoleLib.Vector(ProjectManagerBase.GetAbsolutePath(m_rDEMSurvey.MethodMask))
 
                         If gMethodMask.Fields.ContainsKey(m_rDEMSurvey.MethodMaskField) Then
                             Dim ex As New Exception("Unable to find method mask field in mask polygon feature class")

@@ -70,6 +70,11 @@ namespace GCDConsoleLib.GCD
             Count =(int)( theArea.SquareMeters / cellArea.SquareMeters);
         }
 
+        public double GetAreaValue(Area cellArea, UnitsNet.Units.AreaUnit outputUnits)
+        {
+            return GetArea(cellArea).As(outputUnits);
+        }
+
         /// <summary>
         /// Get the actual volume value
         /// </summary>

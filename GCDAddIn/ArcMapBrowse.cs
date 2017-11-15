@@ -18,7 +18,7 @@ namespace GCDAddIn
 
         public enum GISDataStorageTypes
         {
-             RasterFile,
+            RasterFile,
             ShapeFile,
             FileGeodatase,
             CAD,
@@ -54,7 +54,7 @@ namespace GCDAddIn
                     sName = pGxObject.Name;
                     diWorkspace = sFile.Directory;
 
-                    rResult = new GCDConsoleLib.Raster(pGxObject.FullName);
+                    rResult = new GCDConsoleLib.Raster(new System.IO.FileInfo(pGxObject.FullName));
                 }
             }
             catch (Exception ex)

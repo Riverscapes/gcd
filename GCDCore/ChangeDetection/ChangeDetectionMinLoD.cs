@@ -1,4 +1,5 @@
 ﻿using GCDConsoleLib;
+using GCDConsoleLib.GCD;
 using System.IO;
 
 namespace GCDCore.ChangeDetection
@@ -26,9 +27,9 @@ namespace GCDCore.ChangeDetection
             return RasterOperators.SetNull(ref rawDoD, RasterOperators.ThresholdOps.LessThan, Threshold, thrDoDPath);
         }
 
-        protected override DoDStats CalculateChangeStats(ref Raster rawDoD, ref Raster thrDoD)
+        protected override DoDStats CalculateChangeStats(ref Raster rawDoD, ref Raster thrDoD, UnitsNet.Area cellArea, UnitGroup units)
         {
-            return RasterOperators.GetStatsMinLoD(ref rawDoD, ref thrDoD, Threshold);
+            return RasterOperators.GetStatsMinLoD(ref rawDoD, ref thrDoD, Threshold, cellArea, units);
         }
 
         protected override DoDResult GetDoDResult(ref DoDStats changeStats, FileInfo rawDoDPath, FileInfo thrDoDPath, FileInfo rawHistoPath, FileInfo thrHistoPath, UnitsNet.Units.LengthUnit eUnits)

@@ -4,7 +4,7 @@ Imports GCDCore.Visualization
 Namespace ChangeDetection
     Public Class ucChangeBars
 
-        Private m_chngStats As GCDConsoleLib.DoDStats
+        Private m_chngStats As GCDConsoleLib.GCD.DoDStats
         Private m_Viewer As ElevationChangeBarViewer
         Private m_eUnits As UnitsNet.Units.LengthUnit
 
@@ -33,7 +33,7 @@ Namespace ChangeDetection
 
         End Sub
 
-        Public Sub Initialize(chngStats As GCDConsoleLib.DoDStats, eUnits As UnitsNet.Units.LengthUnit)
+        Public Sub Initialize(chngStats As GCDConsoleLib.GCD.DoDStats, eUnits As UnitsNet.Units.LengthUnit)
             m_chngStats = chngStats
             m_eUnits = eUnits
         End Sub
@@ -47,28 +47,30 @@ Namespace ChangeDetection
 
             Dim eType As ElevationChangeBarViewer.BarTypes = DirectCast(Convert.ToInt32(DirectCast(cboType.SelectedItem, naru.db.NamedObject).ID), ElevationChangeBarViewer.BarTypes)
 
+            Dim ca As UnitsNet.Area = GCDCore.Project.ProjectManagerBase.CellArea
+
             Select Case eType
                 Case ElevationChangeBarViewer.BarTypes.Area
-                    m_Viewer.Refresh(m_chngStats.AreaErosion_Thresholded,
-                                     m_chngStats.AreaDeposition_Thresholded,
+                    m_Viewer.Refresh(m_chngStats.ErosionThr.GetArea(ca).As(areaDisplayUnits),
+                                     m_chngStats.DepositionThr.GetArea(ca).As(areaDisplayUnits),
                                      m_eUnits, eType, rdoAbsolute.Checked)
 
                 Case ElevationChangeBarViewer.BarTypes.Volume
-                    m_Viewer.Refresh(m_chngStats.VolumeErosion_Thresholded,
-                                     m_chngStats.VolumeDeposition_Thresholded,
-                                     m_chngStats.NetVolumeOfDifference_Thresholded,
-                                     m_chngStats.VolumeErosion_Error,
-                                     m_chngStats.VolumeDeposition_Error,
-                                     m_chngStats.NetVolumeOfDifference_Error,
+                    m_Viewer.Refresh(m_chngStats.ErosionThr.GetVolume(ca, m_eUnits).As(volumeDisplayUnits),
+                                     m_chngStats.DepositionThr.GetVolume(ca, m_eUnits).As(volumeDisplayUnits),
+                                     m_chngStats.NetVolumeOfDifference_Thresholded.As(volumeDisplayUnits),
+                                     m_chngStats.ErosionErr.GetVolume(ca, m_eUnits).As(volumeDisplayUnits),
+                                     m_chngStats.DepositionErr.GetVolume(ca, m_eUnits).As(volumeDisplayUnits),
+                                     m_chngStats.NetVolumeOfDifference_Error.As(volumeDisplayUnits),
                                      m_eUnits, eType, rdoAbsolute.Checked)
 
                 Case ElevationChangeBarViewer.BarTypes.Vertical
-                    m_Viewer.Refresh(m_chngStats.AverageDepthErosion_Thresholded,
-                                     m_chngStats.AverageDepthDeposition_Thresholded,
-                                     m_chngStats.AverageThicknessOfDifferenceADC_Thresholded,
-                                     m_chngStats.AverageThicknessOfDifferenceADC_Error,
-                                     m_chngStats.AverageDepthErosion_Error,
-                                     m_chngStats.AverageNetThicknessOfDifferenceADC_Error,
+                    m_Viewer.Refresh(m_chngStats.AverageDepthErosion_Thresholded.As(linearDisplayUnits),
+                                     m_chngStats.AverageDepthDeposition_Thresholded.As(linearDisplayUnits),
+                                     m_chngStats.AverageThicknessOfDifferenceADC_Thresholded.As(linearDisplayUnits),
+                                     m_chngStats.AverageThicknessOfDifferenceADC_Error.As(linearDisplayUnits),
+                                     m_chngStats.AverageDepthErosion_Error.As(linearDisplayUnits),
+                                     m_chngStats.AverageNetThicknessOfDifferenceADC_Error.As(linearDisplayUnits),
                                      m_eUnits, eType, rdoAbsolute.Checked)
 
             End Select

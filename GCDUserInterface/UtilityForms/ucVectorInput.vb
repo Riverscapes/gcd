@@ -19,7 +19,7 @@ Namespace UtilityForms
         Public ReadOnly Property SelectedItem As GCDConsoleLib.Vector
             Get
                 If TypeOf Path Is System.IO.FileInfo Then
-                    Return New GCDConsoleLib.Vector(Path.FullName)
+                    Return New GCDConsoleLib.Vector(Path)
                 Else
                     Return Nothing
                 End If

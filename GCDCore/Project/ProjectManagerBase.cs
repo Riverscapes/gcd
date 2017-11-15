@@ -40,6 +40,9 @@ namespace GCDCore.Project
 
         private static FileInfo m_fiSurveyTypes;
 
+        public static GCDConsoleLib.GCD.UnitGroup Units { get; internal set; }
+        public static UnitsNet.Area CellArea { get; internal set; }
+        
         #region "Properties"
 
         public static string RasterExtension

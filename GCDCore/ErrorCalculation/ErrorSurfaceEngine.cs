@@ -35,7 +35,7 @@ namespace GCDCore.ErrorCalculation
             {
                 case UniformErrorString:
                     double fError = double.Parse(m_ErrorSurfaceRow.GetMultiErrorPropertiesRows().First<Project.ProjectDS.MultiErrorPropertiesRow>()._Error);
-                    gErrorSurface = GCDConsoleLib.RasterOperators.Uniform(ref DEMRaster, errSurfaceRasterPath.FullName, fError);
+                    gErrorSurface = GCDConsoleLib.RasterOperators.Uniform(ref DEMRaster, errSurfaceRasterPath, fError);
                     break;
 
                 case AssociatedsurfaceErrorType:
@@ -46,7 +46,7 @@ namespace GCDCore.ErrorCalculation
                     Project.ProjectDS.AssociatedSurfaceRow rAssoc = assocRows.Where<Project.ProjectDS.AssociatedSurfaceRow>(x => x.AssociatedSurfaceID == errorAssoc.AssociatedSurfaceID).First();
 
                     GCDConsoleLib.Raster gAssoc = new GCDConsoleLib.Raster(Project.ProjectManagerBase.GetAbsolutePath(rAssoc.Source));
-                    gErrorSurface = GCDConsoleLib.RasterOperators.Mask(ref gAssoc, ref DEMRaster, errSurfaceRasterPath.FullName);
+                    gErrorSurface = GCDConsoleLib.RasterOperators.Mask(ref gAssoc, ref DEMRaster, errSurfaceRasterPath);
                     break;
 
                 case FISErrorType:
@@ -91,7 +91,7 @@ namespace GCDCore.ErrorCalculation
                 switch (aMethod.ErrorType)
                 {
                     case UniformErrorString:
-                        GCDConsoleLib.RasterOperators.Uniform(ref gMaskRaster, sMethodRaster.FullName, double.Parse(aMethod._Error));
+                        GCDConsoleLib.RasterOperators.Uniform(ref gMaskRaster, sMethodRaster, double.Parse(aMethod._Error));
                         break;
 
                     case AssociatedsurfaceErrorType:
@@ -99,7 +99,7 @@ namespace GCDCore.ErrorCalculation
                         // Find the associated surface on which the error raster should be based and copy it into location to ensure values only where DEM has values
                         Project.ProjectDS.AssociatedSurfaceRow rAssoc = m_ErrorSurfaceRow.DEMSurveyRow.GetAssociatedSurfaceRows().First((Project.ProjectDS.AssociatedSurfaceRow s) => s.AssociatedSurfaceID == m_ErrorSurfaceRow.GetMultiErrorPropertiesRows().First<Project.ProjectDS.MultiErrorPropertiesRow>().AssociatedSurfaceID);
                         GCDConsoleLib.Raster gAssoc = new GCDConsoleLib.Raster(Project.ProjectManagerBase.GetAbsolutePath(rAssoc.Source));
-                        GCDConsoleLib.RasterOperators.Mask(ref gAssoc, ref gMaskRaster, sMethodRaster.FullName);
+                        GCDConsoleLib.RasterOperators.Mask(ref gAssoc, ref gMaskRaster, sMethodRaster);
                         break;
 
                     default:
@@ -118,11 +118,11 @@ namespace GCDCore.ErrorCalculation
 
             // Call the Raster Manager mosaic function to blend the rasters together.
             string sMosaicWithoutMask = WorkspaceManager.GetTempRaster("Mosaic");
-            GCDConsoleLib.Raster gUnmasked = GCDConsoleLib.RasterOperators.Mosaic(ref methodRasters, sMosaicWithoutMask);
+            GCDConsoleLib.Raster gUnmasked = GCDConsoleLib.RasterOperators.Mosaic(ref methodRasters, new FileInfo(sMosaicWithoutMask));
 
             // Mask the result so there are only values where the DEM has values
             GCDConsoleLib.Raster gDEM = new GCDConsoleLib.Raster(Project.ProjectManagerBase.GetAbsolutePath(m_ErrorSurfaceRow.DEMSurveyRow.Source));
-            GCDConsoleLib.RasterOperators.Mask(ref gUnmasked, ref gDEM, outputRasterPath.FullName);
+            GCDConsoleLib.RasterOperators.Mask(ref gUnmasked, ref gDEM, outputRasterPath);
 
             // Update the GCD project with the path to the output raster
             m_ErrorSurfaceRow.Source = Project.ProjectManagerBase.GetRelativePath(outputRasterPath);
@@ -133,41 +133,41 @@ namespace GCDCore.ErrorCalculation
         {
             // Find the local path of the FIS rule file based on the library on this machine. Note
             // could be imported project from another machine.
-            string sFISFuleFilePath = string.Empty;
+            FileInfo fisRuleFilePath = null;
             foreach (FIS.FISLibraryItem fis in Project.ProjectManagerUI.FISLibrary)
             {
                 if (string.Compare(fis.Name, sFISRuleDefinitionFileName, true) == 0)
                 {
-                    sFISFuleFilePath = fis.FilePath.ToString();
+                    fisRuleFilePath = fis.FilePath;
                     break;
                 }
             }
 
-            if (string.IsNullOrEmpty(sFISFuleFilePath))
+            if (fisRuleFilePath == null)
             {
                 throw new Exception("The FIS rule file specified in the error surface calculation does not exist in the FIS Library.");
             }
 
-            if (!File.Exists(sFISFuleFilePath))
+            if (!fisRuleFilePath.Exists)
             {
                 Exception ex = new Exception("The FIS rule file specified in the FIS Library does not exist on this computer.");
-                ex.Data["FIS Rule Path"] = sFISFuleFilePath;
+                ex.Data["FIS Rule Path"] = fisRuleFilePath.FullName;
                 throw ex;
             }
 
             // Setup FIS inputs. One for each associated surface input
-            Dictionary<string, string> fisInputs = new Dictionary<string, string>();
+            Dictionary<string, FileInfo> fisInputs = new Dictionary<string, FileInfo>();
 
             foreach (Project.ProjectDS.FISInputsRow FISInput in m_ErrorSurfaceRow.GetFISInputsRows())
             {
                 // New muti-method FIS check. Make sure that the FIS input is for this FIS file
-                if (string.Compare(FISInput.FIS, sFISFuleFilePath, true) == 0 || string.Compare(FISInput.FIS, Path.GetFileNameWithoutExtension(sFISFuleFilePath)) == 0)
+                if (string.Compare(FISInput.FIS, fisRuleFilePath.FullName, true) == 0 || string.Compare(FISInput.FIS, Path.GetFileNameWithoutExtension(fisRuleFilePath.FullName)) == 0)
                 {
                     string sSQL = Project.ProjectManagerBase.ds.AssociatedSurface.DEMSurveyIDColumn.ColumnName + "=" + m_ErrorSurfaceRow.DEMSurveyRow.DEMSurveyID;
                     sSQL += " AND " + Project.ProjectManagerBase.ds.AssociatedSurface.NameColumn.ColumnName + "='" + FISInput.AssociatedSurface + "'";
 
                     Project.ProjectDS.AssociatedSurfaceRow rAssoc = (Project.ProjectDS.AssociatedSurfaceRow)Project.ProjectManagerBase.ds.AssociatedSurface.Select(sSQL).First();
-                    FISInput[FISInput.FISInput] = Project.ProjectManagerBase.GetAbsolutePath(rAssoc.Source);
+                    fisInputs[FISInput.FISInput] = Project.ProjectManagerBase.GetAbsolutePath(rAssoc.Source);
                 }
             }
 
@@ -176,11 +176,11 @@ namespace GCDCore.ErrorCalculation
                 // When this method is being used for a multi-method error surface the reference
                 // raster is a mask (with cell value 1). Otherwise the reference raster is the full DEM
                 string sFullFISRaster = bClipToMask ? WorkspaceManager.GetTempRaster("FIS") : outputRasterPath.FullName;
-                GCDConsoleLib.Raster gFISRaster = GCDConsoleLib.RasterOperators.FISRaster(ref fisInputs, sFISFuleFilePath, ref DEMRaster, sFullFISRaster);
+                GCDConsoleLib.Raster gFISRaster = GCDConsoleLib.RasterOperators.FISRaster(fisInputs, fisRuleFilePath, ref DEMRaster, new FileInfo(sFullFISRaster));
 
                 if (bClipToMask)
                 {
-                    GCDConsoleLib.RasterOperators.Multiply(ref gFISRaster, ref gReferenceRaster, outputRasterPath.FullName);
+                    GCDConsoleLib.RasterOperators.Multiply(ref gFISRaster, ref gReferenceRaster, outputRasterPath);
                 }
             }
             catch (Exception ex)

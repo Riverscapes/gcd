@@ -44,10 +44,10 @@ Namespace UtilityForms
                 Return False
             End If
 
-            If GCDConsoleLib.GISDataset.FileExists(txtOutput.Text) Then
+            If System.IO.File.Exists(txtOutput.Text) Then
                 If MsgBox("The " & Noun & " raster already exists. Do you wish to overwrite it?", MsgBoxStyle.YesNo Or MsgBoxStyle.DefaultButton2 Or MsgBoxStyle.Question, GCDCore.Properties.Resources.ApplicationNameLong) = MsgBoxResult.Yes Then
                     Try
-                        Dim gRaster As New GCDConsoleLib.Raster(txtOutput.Text)
+                        Dim gRaster As New GCDConsoleLib.Raster(New IO.FileInfo(txtOutput.Text))
                         gRaster.Delete()
                     Catch ex As Exception
                         naru.error.ExceptionUI.HandleException(ex, "Error attempting to delete the existing raster")

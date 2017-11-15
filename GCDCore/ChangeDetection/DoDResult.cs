@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using GCDConsoleLib.GCD;
 
 namespace GCDCore.ChangeDetection
 {
@@ -15,8 +16,8 @@ namespace GCDCore.ChangeDetection
         public FileInfo ThrDoD { get; internal set; }
         public FileInfo ThrHistogram { get; internal set; }
         public UnitsNet.Units.LengthUnit LinearUnits { get; internal set; }
-        public GCDConsoleLib.DoDStats ChangeStats { get; internal set; }
-        
+        public DoDStats ChangeStats { get; internal set; }
+
         public UnitsNet.Units.AreaUnit AreaUnits
         {
             get { return GCDConsoleLib.Utility.Conversion.LengthUnit2AreaUnit(LinearUnits); }
@@ -26,7 +27,7 @@ namespace GCDCore.ChangeDetection
         {
             get { return GCDConsoleLib.Utility.Conversion.LengthUnit2VolumeUnit(LinearUnits); }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -44,7 +45,7 @@ namespace GCDCore.ChangeDetection
         /// Unfortunately this trickles back up to inherited classes, but at least those classes can obtain the
         /// cell size and linear units from the original raw DoD which is never deleted during a budget set loop.
         /// </remarks>
-        public DoDResult(GCDConsoleLib.DoDStats changeStats, FileInfo rawDoD, FileInfo thrDoD, FileInfo rawHist, FileInfo thrHist, UnitsNet.Units.LengthUnit eLinearUnits)
+        public DoDResult(DoDStats changeStats, FileInfo rawDoD, FileInfo thrDoD, FileInfo rawHist, FileInfo thrHist, UnitsNet.Units.LengthUnit eLinearUnits)
         {
             ChangeStats = changeStats;
             RawDoD = rawDoD;
@@ -72,7 +73,7 @@ namespace GCDCore.ChangeDetection
             GCDConsoleLib.Raster gRawDoDPath = new GCDConsoleLib.Raster(rawDoDPath);
             UnitsNet.Units.LengthUnit lUnits = gRawDoDPath.Proj.HorizontalUnit;
             double cellWidth = Convert.ToDouble(gRawDoDPath.Extent.CellWidth);
-            GCDConsoleLib.DoDStats changeStats = CreateStatsFromRow(rDoD);
+            DoDStats changeStats = CreateStatsFromRow(rDoD);
 
             DoDResult dodResult = null;
             if (rDoD.TypeMinLOD)
@@ -96,7 +97,7 @@ namespace GCDCore.ChangeDetection
                 if (rDoD.TypePropagated)
                 {
                     dodResult = new DoDResultPropagated(ref changeStats, rawDoDPath, rawHistoPath, thrDoDPath, thrHistoPath, sPropErrPath, lUnits);
-               }
+                }
                 else if (rDoD.TypeProbabilistic)
                 {
                     FileInfo sProbabilityRaster = rDoD.IsProbabilityRasterNull() ? null : Project.ProjectManagerBase.GetAbsolutePath(rDoD.ProbabilityRaster);
@@ -113,24 +114,60 @@ namespace GCDCore.ChangeDetection
             return dodResult;
         }
 
-        public static GCDConsoleLib.DoDStats CreateStatsFromRow(Project.ProjectDS.DoDsRow rDoDRow)
+        public static DoDStats CreateStatsFromRow(Project.ProjectDS.DoDsRow dodRow)
         {
-            return new GCDConsoleLib.DoDStats(rDoDRow.CellArea, rDoDRow.AreaErosionRaw, rDoDRow.AreaDepositonRaw, rDoDRow.AreaErosionThresholded, rDoDRow.AreaDepositionThresholded, rDoDRow.VolumeErosionRaw, rDoDRow.VolumeDepositionRaw, rDoDRow.VolumeErosionThresholded, rDoDRow.VolumeDepositionThresholded, rDoDRow.VolumeErosionError,
-            rDoDRow.VolumeDepositionError);
+            UnitsNet.Area areaErosionRaw = UnitsNet.Area.From(dodRow.AreaErosionRaw, Project.ProjectManagerBase.Units.ArUnit);
+            UnitsNet.Area areaDepositRaw = UnitsNet.Area.From(dodRow.AreaDepositonRaw, Project.ProjectManagerBase.Units.ArUnit);
+            UnitsNet.Area areaErosionThr = UnitsNet.Area.From(dodRow.AreaErosionThresholded, Project.ProjectManagerBase.Units.ArUnit);
+            UnitsNet.Area areaDepositThr = UnitsNet.Area.From(dodRow.AreaDepositionThresholded, Project.ProjectManagerBase.Units.ArUnit);
+
+            UnitsNet.Volume volErosionRaw = UnitsNet.Volume.From(dodRow.VolumeErosionRaw, Project.ProjectManagerBase.Units.VolUnit);
+            UnitsNet.Volume volDepositRaw = UnitsNet.Volume.From(dodRow.VolumeDepositionRaw, Project.ProjectManagerBase.Units.VolUnit);
+            UnitsNet.Volume volErosionThr = UnitsNet.Volume.From(dodRow.VolumeErosionThresholded, Project.ProjectManagerBase.Units.VolUnit);
+            UnitsNet.Volume volDepositThr = UnitsNet.Volume.From(dodRow.VolumeDepositionThresholded, Project.ProjectManagerBase.Units.VolUnit);
+
+            UnitsNet.Volume volErosionErr = UnitsNet.Volume.From(dodRow.VolumeErosionError, Project.ProjectManagerBase.Units.VolUnit);
+            UnitsNet.Volume volDepositErr = UnitsNet.Volume.From(dodRow.VolumeDepositionError, Project.ProjectManagerBase.Units.VolUnit);
+
+            return new DoDStats(areaErosionRaw, areaDepositRaw,
+                areaErosionThr, areaDepositThr,
+                volErosionRaw, volDepositRaw,
+                volErosionThr, volDepositThr,
+                volErosionErr, volDepositErr,
+                Project.ProjectManagerBase.CellArea,
+                Project.ProjectManagerBase.Units);
         }
 
-        public static GCDConsoleLib.DoDStats CreateStatsFromRow(Project.ProjectDS.BSMasksRow rBSMaskRow)
+        public static DoDStats CreateStatsFromRow(Project.ProjectDS.BSMasksRow dodRow)
         {
-            return new GCDConsoleLib.DoDStats(rBSMaskRow.BudgetSegregationsRow.DoDsRow.CellArea, rBSMaskRow.AreaErosionRaw, rBSMaskRow.AreaDepositionRaw, rBSMaskRow.AreaErosionThresholded, rBSMaskRow.AreaDepositionThresholded, rBSMaskRow.VolumeErosionRaw, rBSMaskRow.VolumeDepositionRaw, rBSMaskRow.VolumeErosionThresholded, rBSMaskRow.VolumeDepositionThresholded, rBSMaskRow.VolumeErosionError,
-            rBSMaskRow.VolumeDepositionError);
+            UnitsNet.Area areaErosionRaw = UnitsNet.Area.From(dodRow.AreaErosionRaw, Project.ProjectManagerBase.Units.ArUnit);
+            UnitsNet.Area areaDepositRaw = UnitsNet.Area.From(dodRow.AreaDepositionRaw, Project.ProjectManagerBase.Units.ArUnit);
+            UnitsNet.Area areaErosionThr = UnitsNet.Area.From(dodRow.AreaErosionThresholded, Project.ProjectManagerBase.Units.ArUnit);
+            UnitsNet.Area areaDepositThr = UnitsNet.Area.From(dodRow.AreaDepositionThresholded, Project.ProjectManagerBase.Units.ArUnit);
+
+            UnitsNet.Volume volErosionRaw = UnitsNet.Volume.From(dodRow.VolumeErosionRaw, Project.ProjectManagerBase.Units.VolUnit);
+            UnitsNet.Volume volDepositRaw = UnitsNet.Volume.From(dodRow.VolumeDepositionRaw, Project.ProjectManagerBase.Units.VolUnit);
+            UnitsNet.Volume volErosionThr = UnitsNet.Volume.From(dodRow.VolumeErosionThresholded, Project.ProjectManagerBase.Units.VolUnit);
+            UnitsNet.Volume volDepositThr = UnitsNet.Volume.From(dodRow.VolumeDepositionThresholded, Project.ProjectManagerBase.Units.VolUnit);
+
+            UnitsNet.Volume volErosionErr = UnitsNet.Volume.From(dodRow.VolumeErosionError, Project.ProjectManagerBase.Units.VolUnit);
+            UnitsNet.Volume volDepositErr = UnitsNet.Volume.From(dodRow.VolumeDepositionError, Project.ProjectManagerBase.Units.VolUnit);
+
+            return new DoDStats(areaErosionRaw, areaDepositRaw,
+                areaErosionThr, areaDepositThr,
+                volErosionRaw, volDepositRaw,
+                volErosionThr, volDepositThr,
+                volErosionErr, volDepositErr,
+                Project.ProjectManagerBase.CellArea,
+                Project.ProjectManagerBase.Units);
         }
     }
 
     public class DoDResultMinLoD : DoDResult
     {
         public readonly double Threshold;
-        
-        public DoDResultMinLoD(ref GCDConsoleLib.DoDStats changeStats, FileInfo rawDoD, FileInfo thrDoD, FileInfo rawHist, FileInfo thrHist, double fThreshold, UnitsNet.Units.LengthUnit eLinearUnits) : base(changeStats, rawDoD, thrDoD, rawHist, thrHist, eLinearUnits)
+
+        public DoDResultMinLoD(ref DoDStats changeStats, FileInfo rawDoD, FileInfo thrDoD, FileInfo rawHist, FileInfo thrHist, double fThreshold, UnitsNet.Units.LengthUnit eLinearUnits) : base(changeStats, rawDoD, thrDoD, rawHist, thrHist, eLinearUnits)
         {
             Threshold = fThreshold;
         }
@@ -140,7 +177,7 @@ namespace GCDCore.ChangeDetection
     {
         public readonly FileInfo PropErrRaster;
 
-        public DoDResultPropagated(ref GCDConsoleLib.DoDStats changeStats, FileInfo rawDoD, FileInfo rawHisto, FileInfo thrDoD, FileInfo threshHisto, FileInfo propErrorRaster, UnitsNet.Units.LengthUnit eLinearUnits) 
+        public DoDResultPropagated(ref DoDStats changeStats, FileInfo rawDoD, FileInfo rawHisto, FileInfo thrDoD, FileInfo threshHisto, FileInfo propErrorRaster, UnitsNet.Units.LengthUnit eLinearUnits)
             : base(changeStats, rawDoD, rawHisto, thrDoD, threshHisto, eLinearUnits)
         {
             PropErrRaster = propErrorRaster;
@@ -158,9 +195,9 @@ namespace GCDCore.ChangeDetection
         public readonly FileInfo ConditionalProbabilityRaster;
         public readonly FileInfo PosteriorRaster;
 
-        public DoDResultProbabilisitic(ref GCDConsoleLib.DoDStats changeStats, FileInfo rawDoD, FileInfo rawHisto, FileInfo thrDoD, FileInfo thrHisto, FileInfo propErrorRaster, FileInfo sProbabilityRaster, FileInfo sSpatialCoErosionRaster, FileInfo sSpatialCoDepositionRaster, FileInfo sConditionalProbabilityRaster,
+        public DoDResultProbabilisitic(ref DoDStats changeStats, FileInfo rawDoD, FileInfo rawHisto, FileInfo thrDoD, FileInfo thrHisto, FileInfo propErrorRaster, FileInfo sProbabilityRaster, FileInfo sSpatialCoErosionRaster, FileInfo sSpatialCoDepositionRaster, FileInfo sConditionalProbabilityRaster,
 
-        FileInfo sPosteriorRaster, double fConfidenceLevel, int nFilter, bool bBayesianUpdating, UnitsNet.Units.LengthUnit eLinearUnits) 
+        FileInfo sPosteriorRaster, double fConfidenceLevel, int nFilter, bool bBayesianUpdating, UnitsNet.Units.LengthUnit eLinearUnits)
             : base(ref changeStats, rawDoD, rawHisto, thrDoD, thrHisto, propErrorRaster, eLinearUnits)
         {
             ConfidenceLevel = fConfidenceLevel;

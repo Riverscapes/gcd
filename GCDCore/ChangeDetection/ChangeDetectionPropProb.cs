@@ -1,4 +1,5 @@
 ﻿using GCDConsoleLib;
+using GCDConsoleLib.GCD;
 using System.IO;
 
 namespace GCDCore.ChangeDetection
@@ -23,9 +24,9 @@ namespace GCDCore.ChangeDetection
             return thrDoD;
         }
 
-        protected override DoDStats CalculateChangeStats(ref Raster rawDoD, ref Raster thrDoD)
+        protected override DoDStats CalculateChangeStats(ref Raster rawDoD, ref Raster thrDoD, UnitsNet.Area cellArea, UnitGroup units)
         {
-            return RasterOperators.GetStatsPropagated(ref rawDoD, ref thrDoD, ref PropagatedErrRaster);
+            return RasterOperators.GetStatsPropagated(ref rawDoD, ref thrDoD, ref PropagatedErrRaster, cellArea, units);
         }
 
         protected override DoDResult GetDoDResult(ref DoDStats changeStats, FileInfo rawDoDPath, FileInfo thrDoDPath, FileInfo rawHist, FileInfo thrHist, UnitsNet.Units.LengthUnit eUnits)

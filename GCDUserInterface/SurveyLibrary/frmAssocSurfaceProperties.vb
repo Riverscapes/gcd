@@ -164,11 +164,13 @@ Namespace SurveyLibrary
         Private Function ImportRaster() As Boolean
 
             Dim bRasterImportSuccessful = False
+            Dim fiOutput As New IO.FileInfo(txtProjectRaster.Text)
 
             Try
                 ' Make sure that the destination folder exists where the associated surface will be output
                 Dim sWorkspacePath As String = IO.Path.GetDirectoryName(txtProjectRaster.Text)
                 IO.Directory.CreateDirectory(sWorkspacePath)
+
 
                 ' Create the slope surface or point density rasters
                 Select Case m_eMethod
@@ -181,10 +183,10 @@ Namespace SurveyLibrary
 
                         Select Case m_eMethod
                             Case AssociatedSurfaceMethods.SlopeDegree
-                                GCDConsoleLib.RasterOperators.SlopeDegrees(gDEMRaster, txtProjectRaster.Text)
+                                GCDConsoleLib.RasterOperators.SlopeDegrees(gDEMRaster, fiOutput)
 
                             Case AssociatedSurfaceMethods.SlopePercent
-                                GCDConsoleLib.RasterOperators.SlopePercent(gDEMRaster, txtProjectRaster.Text)
+                                GCDConsoleLib.RasterOperators.SlopePercent(gDEMRaster, fiOutput)
 
                             Case AssociatedSurfaceMethods.PointDensity
                                 GCDConsoleLib.RasterOperators.PointDensity(gDEMRaster, m_frmPointDensity.ucPointCloud.SelectedItem, txtProjectRaster.Text, GCDConsoleLib.RasterOperators.KernelShapes.Square, "4")
@@ -196,7 +198,7 @@ Namespace SurveyLibrary
 
                         ' Build raster pyramids
                         If ProjectManagerUI.PyramidManager.AutomaticallyBuildPyramids(GCDCore.RasterPyramidManager.PyramidRasterTypes.AssociatedSurfaces) Then
-                            ProjectManagerUI.PyramidManager.PerformRasterPyramids(GCDCore.RasterPyramidManager.PyramidRasterTypes.AssociatedSurfaces, New IO.FileInfo(txtProjectRaster.Text))
+                            ProjectManagerUI.PyramidManager.PerformRasterPyramids(GCDCore.RasterPyramidManager.PyramidRasterTypes.AssociatedSurfaces, fiOutput)
                         End If
 
                     Case Else
@@ -208,9 +210,9 @@ Namespace SurveyLibrary
 
             Catch ex As Exception
                 ' Something went wrong. Check if the raster exists and safely attempt to clean it up if it does.
-                If GCDConsoleLib.GISDataset.FileExists(txtProjectRaster.Text) Then
+                If fiOutput.Exists Then
                     Try
-                        GCDConsoleLib.Raster.Delete(txtProjectRaster.Text)
+                        GCDConsoleLib.Raster.Delete(fiOutput)
                     Catch ex2 As Exception
                         Debug.Print("ERROR attempting to delete associated surface raster after an error during its creation")
                         Debug.Print(ex.Message)
@@ -247,7 +249,7 @@ Namespace SurveyLibrary
                 End If
             Else
                 If m_nSurfaceID < 1 Then
-                    If GCDConsoleLib.GISDataset.FileExists(txtProjectRaster.Text) Then
+                    If System.IO.File.Exists(txtProjectRaster.Text) Then
                         MsgBox("The associated surface project raster path already exists. Changing the name of the associated surface will change the raster path.", MsgBoxStyle.Information, GCDCore.Properties.Resources.ApplicationNameLong)
                         Return False
                     End If

@@ -154,7 +154,7 @@ Namespace ChangeDetection
                     End If
                 End If
 
-                m_DoDResult = cdEngine.Calculate(True)
+                m_DoDResult = cdEngine.Calculate(True, ProjectManagerBase.CellArea, ProjectManagerBase.Units)
 
                 Dim rDoD As ProjectDS.DoDsRow = ProjectManagerBase.ds.DoDs.NewDoDsRow()
                 rDoD.ProjectRow = ProjectManagerBase.CurrentProject
@@ -165,17 +165,17 @@ Namespace ChangeDetection
                 rDoD.TypeMinLOD = rdoMinLOD.Checked
                 rDoD.TypePropagated = rdoPropagated.Checked
                 rDoD.TypeProbabilistic = rdoProbabilistic.Checked
-                rDoD.CellArea = m_DoDResult.ChangeStats.CellArea
-                rDoD.AreaErosionRaw = m_DoDResult.ChangeStats.AreaErosion_Raw
-                rDoD.AreaDepositonRaw = m_DoDResult.ChangeStats.AreaDeposition_Raw
-                rDoD.AreaErosionThresholded = m_DoDResult.ChangeStats.AreaErosion_Thresholded
-                rDoD.AreaDepositionThresholded = m_DoDResult.ChangeStats.AreaDeposition_Thresholded
-                rDoD.VolumeErosionRaw = m_DoDResult.ChangeStats.VolumeErosion_Raw
-                rDoD.VolumeDepositionRaw = m_DoDResult.ChangeStats.VolumeDeposition_Raw
-                rDoD.VolumeErosionThresholded = m_DoDResult.ChangeStats.VolumeErosion_Thresholded
-                rDoD.VolumeDepositionThresholded = m_DoDResult.ChangeStats.VolumeDeposition_Thresholded
-                rDoD.VolumeErosionError = m_DoDResult.ChangeStats.VolumeErosion_Error
-                rDoD.VolumeDepositionError = m_DoDResult.ChangeStats.VolumeDeposition_Error
+                rDoD.CellArea = ProjectManagerBase.CellArea.As(ProjectManagerBase.Units.ArUnit)
+                rDoD.AreaErosionRaw = m_DoDResult.ChangeStats.ErosionRaw.GetArea(ProjectManagerBase.CellArea).As(ProjectManagerBase.Units.ArUnit)
+                rDoD.AreaDepositonRaw = m_DoDResult.ChangeStats.DepositionRaw.GetArea(ProjectManagerBase.CellArea).As(ProjectManagerBase.Units.ArUnit)
+                rDoD.AreaErosionThresholded = m_DoDResult.ChangeStats.ErosionThr.GetArea(ProjectManagerBase.CellArea).As(ProjectManagerBase.Units.ArUnit)
+                rDoD.AreaDepositionThresholded = m_DoDResult.ChangeStats.DepositionThr.GetArea(ProjectManagerBase.CellArea).As(ProjectManagerBase.Units.ArUnit)
+                rDoD.VolumeErosionRaw = m_DoDResult.ChangeStats.ErosionRaw.GetVolume(ProjectManagerBase.CellArea, ProjectManagerBase.Units.VertUnit).As(ProjectManagerBase.Units.VolUnit)
+                rDoD.VolumeDepositionRaw = m_DoDResult.ChangeStats.DepositionRaw.GetVolume(ProjectManagerBase.CellArea, ProjectManagerBase.Units.VertUnit).As(ProjectManagerBase.Units.VolUnit)
+                rDoD.VolumeErosionThresholded = m_DoDResult.ChangeStats.ErosionThr.GetVolume(ProjectManagerBase.CellArea, ProjectManagerBase.Units.VertUnit).As(ProjectManagerBase.Units.VolUnit)
+                rDoD.VolumeDepositionThresholded = m_DoDResult.ChangeStats.DepositionThr.GetVolume(ProjectManagerBase.CellArea, ProjectManagerBase.Units.VertUnit).As(ProjectManagerBase.Units.VolUnit)
+                rDoD.VolumeErosionError = m_DoDResult.ChangeStats.ErosionErr.GetVolume(ProjectManagerBase.CellArea, ProjectManagerBase.Units.VertUnit).As(ProjectManagerBase.Units.VolUnit)
+                rDoD.VolumeDepositionError = m_DoDResult.ChangeStats.DepositionErr.GetVolume(ProjectManagerBase.CellArea, ProjectManagerBase.Units.VertUnit).As(ProjectManagerBase.Units.VolUnit)
 
                 If TypeOf m_DoDResult Is DoDResultMinLoD Then
                     rDoD.Threshold = DirectCast(m_DoDResult, DoDResultMinLoD).Threshold

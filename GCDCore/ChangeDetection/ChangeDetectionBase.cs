@@ -2,7 +2,9 @@
 using System.IO;
 using System.Collections.Generic;
 using GCDConsoleLib;
+using GCDConsoleLib.GCD;
 using GCDCore.Visualization;
+using System.Globalization;
 
 namespace GCDCore.ChangeDetection
 {
@@ -41,7 +43,7 @@ namespace GCDCore.ChangeDetection
             OldDEM = gOldDEM;
         }
 
-        public DoDResult Calculate(bool bBuildPyramids)
+        public DoDResult Calculate(bool bBuildPyramids, UnitsNet.Area cellArea, UnitGroup units)
         {
             FileInfo rawDoDPath = Project.ProjectManagerBase.OutputManager.RawDoDPath(AnalysisFolder);
             FileInfo thrDoDPath = Project.ProjectManagerBase.OutputManager.ThrDoDPath(AnalysisFolder);
@@ -74,7 +76,7 @@ namespace GCDCore.ChangeDetection
             WriteHistogram(ref thrHisto, thrHstPath);
 
             // Calculate the change statistics and write the output files
-            DoDStats changeStats = CalculateChangeStats(ref rawDoD, ref thrDoD);
+            DoDStats changeStats = CalculateChangeStats(ref rawDoD, ref thrDoD, cellArea, units);
             GenerateSummaryXML(ref changeStats, sumXMLPath, LinearUnits);
             GenerateChangeBarGraphicFiles(ref changeStats, 0, 0);
             GenerateHistogramGraphicFiles(ref rawHisto, ref thrHisto, 0, 0);
@@ -84,19 +86,13 @@ namespace GCDCore.ChangeDetection
 
         protected abstract Raster ThresholdRawDoD(ref Raster rawDoD, FileInfo thrDoDPath);
 
-        protected abstract DoDStats CalculateChangeStats(ref Raster rawDoD, ref Raster thrDoD);
+        protected abstract DoDStats CalculateChangeStats(ref Raster rawDoD, ref Raster thrDoD, UnitsNet.Area cellArea, UnitGroup units);
 
         protected abstract DoDResult GetDoDResult(ref DoDStats changeStats, FileInfo rawDoDPath, FileInfo thrDoDPath, FileInfo rawHist, FileInfo thrHist, UnitsNet.Units.LengthUnit eUnits);
 
         protected void WriteHistogram(ref Histogram histo, FileInfo outputFile)
         {
-            histo.WriteFile(outputFile,
-                NewDEM.Extent.CellHeight,
-                NewDEM.Extent.CellWidth,
-                NewDEM.Proj.HorizontalUnit,
-                NewDEM.Proj.HorizontalUnit,
-                GCDConsoleLib.Utility.Conversion.LengthUnit2VolumeUnit(NewDEM.Proj.HorizontalUnit),
-                GCDConsoleLib.Utility.Conversion.LengthUnit2AreaUnit(NewDEM.Proj.HorizontalUnit));
+            histo.WriteFile(outputFile, Project.ProjectManagerBase.CellArea, Project.ProjectManagerBase.Units);
         }
 
         /// <summary>
@@ -124,21 +120,27 @@ namespace GCDCore.ChangeDetection
                 throw ex2;
             }
 
+            UnitsNet.Area ca = Project.ProjectManagerBase.CellArea;
+            UnitsNet.Units.LengthUnit lu = Project.ProjectManagerBase.Units.VertUnit;
+            UnitsNet.Units.AreaUnit au = Project.ProjectManagerBase.Units.ArUnit;
+            UnitsNet.Units.VolumeUnit vu = Project.ProjectManagerBase.Units.VolUnit;
+
+
             outputText.Replace("[LinearUnits]", UnitsNet.Length.GetAbbreviation(linearUnits));
 
-            outputText.Replace("[TotalAreaOfErosionRaw]", changeStats.AreaErosion_Raw.ToString());
-            outputText.Replace("[TotalAreaOfErosionThresholded]", changeStats.AreaErosion_Thresholded.ToString());
+            outputText.Replace("[TotalAreaOfErosionRaw]", changeStats.ErosionRaw.GetArea(ca).As(au).ToString(CultureInfo.InvariantCulture));
+            outputText.Replace("[TotalAreaOfErosionThresholded]", changeStats.ErosionThr.GetArea(ca).As(au).ToString(CultureInfo.InvariantCulture));
 
-            outputText.Replace("[TotalAreaOfDepositionRaw]", changeStats.AreaDeposition_Raw.ToString());
-            outputText.Replace("[TotalAreaOfDepositionThresholded]", changeStats.AreaDeposition_Thresholded.ToString());
+            outputText.Replace("[TotalAreaOfDepositionRaw]", changeStats.DepositionRaw.GetArea(ca).As(au).ToString(CultureInfo.InvariantCulture));
+            outputText.Replace("[TotalAreaOfDepositionThresholded]", changeStats.DepositionThr.GetArea(ca).As(au).ToString(CultureInfo.InvariantCulture));
 
-            outputText.Replace("[TotalVolumeOfErosionRaw]", changeStats.VolumeErosion_Raw.ToString());
-            outputText.Replace("[TotalVolumeOfErosionThresholded]", changeStats.VolumeErosion_Thresholded.ToString());
-            outputText.Replace("[ErrorVolumeOfErosion]", changeStats.VolumeErosion_Error.ToString());
+            outputText.Replace("[TotalVolumeOfErosionRaw]", changeStats.ErosionRaw.GetVolume(ca, lu).As(vu).ToString(CultureInfo.InvariantCulture));
+            outputText.Replace("[TotalVolumeOfErosionThresholded]", changeStats.ErosionThr.GetVolume(ca, lu).As(vu).ToString(CultureInfo.InvariantCulture));
+            outputText.Replace("[ErrorVolumeOfErosion]", changeStats.ErosionErr.GetVolume(ca, lu).As(vu).ToString(CultureInfo.InvariantCulture));
 
-            outputText.Replace("[TotalVolumeOfDepositionRaw]", changeStats.VolumeDeposition_Raw.ToString());
-            outputText.Replace("[TotalVolumeOfDepositionThresholded]", changeStats.VolumeDeposition_Thresholded.ToString());
-            outputText.Replace("[ErrorVolumeOfDeposition]", changeStats.VolumeDeposition_Error.ToString());
+            outputText.Replace("[TotalVolumeOfDepositionRaw]", changeStats.DepositionRaw.GetVolume(ca, lu).As(vu).ToString(CultureInfo.InvariantCulture));
+            outputText.Replace("[TotalVolumeOfDepositionThresholded]", changeStats.DepositionThr.GetVolume(ca, lu).As(vu).ToString(CultureInfo.InvariantCulture));
+            outputText.Replace("[ErrorVolumeOfDeposition]", changeStats.DepositionErr.GetVolume(ca, lu).As(vu).ToString(CultureInfo.InvariantCulture));
 
             try
             {
@@ -166,7 +168,7 @@ namespace GCDCore.ChangeDetection
             //ExportHistogramViewer.ExportCharts(areaHistPath, volhistPath, fChartWidth, fChartHeight);
         }
 
-        protected void GenerateChangeBarGraphicFiles(ref GCDConsoleLib.DoDStats changeStats, int fChartWidth, int fChartHeight, string sFilePrefix = "")
+        protected void GenerateChangeBarGraphicFiles(ref DoDStats stats, int fChartWidth, int fChartHeight, string sFilePrefix = "")
         {
             Visualization.ElevationChangeBarViewer barViewer = new Visualization.ElevationChangeBarViewer(LinearUnits);
 
@@ -180,22 +182,55 @@ namespace GCDCore.ChangeDetection
 
             FiguresFolder.Create();
 
-            barViewer.Refresh(changeStats.AreaErosion_Thresholded, changeStats.AreaDeposition_Thresholded, LinearUnits, Visualization.ElevationChangeBarViewer.BarTypes.Area, true);
+            UnitsNet.Area ca = GCDCore.Project.ProjectManagerBase.CellArea;
+            UnitsNet.Units.LengthUnit lu = Project.ProjectManagerBase.Units.VertUnit;
+            UnitsNet.Units.AreaUnit au = Project.ProjectManagerBase.Units.ArUnit;
+            UnitsNet.Units.VolumeUnit vu = Project.ProjectManagerBase.Units.VolUnit;
+
+            barViewer.Refresh(
+                stats.ErosionThr.GetArea(ca).As(au),
+                stats.DepositionThr.GetArea(ca).As(au), LinearUnits, ElevationChangeBarViewer.BarTypes.Area, true);
             barViewer.Save(Path.Combine(FiguresFolder.FullName, sFilePrefix + "ChangeBars_AreaAbsolute.png"), fChartWidth, fChartHeight);
 
-            barViewer.Refresh(changeStats.AreaErosion_Thresholded, changeStats.AreaDeposition_Thresholded, LinearUnits, Visualization.ElevationChangeBarViewer.BarTypes.Area, false);
+            barViewer.Refresh(
+                stats.ErosionThr.GetArea(ca).As(au),
+                stats.DepositionThr.GetArea(ca).As(au), LinearUnits, ElevationChangeBarViewer.BarTypes.Area, false);
             barViewer.Save(Path.Combine(FiguresFolder.FullName, sFilePrefix + "ChangeBars_AreaRelative.png"), fChartWidth, fChartHeight);
 
-            barViewer.Refresh(changeStats.VolumeErosion_Thresholded, changeStats.VolumeDeposition_Thresholded, changeStats.NetVolumeOfDifference_Thresholded, changeStats.VolumeErosion_Error, changeStats.VolumeDeposition_Error, changeStats.NetVolumeOfDifference_Error, LinearUnits, ElevationChangeBarViewer.BarTypes.Volume, true);
+            barViewer.Refresh(
+                stats.ErosionThr.GetVolume(ca, lu).As(vu),
+                stats.DepositionThr.GetVolume(ca, lu).As(vu),
+                stats.NetVolumeOfDifference_Thresholded.As(vu),
+                stats.ErosionErr.GetVolume(ca, lu).As(vu),
+                stats.DepositionErr.GetVolume(ca, lu).As(vu),
+                stats.NetVolumeOfDifference_Error.As(vu), LinearUnits, ElevationChangeBarViewer.BarTypes.Volume, true);
             barViewer.Save(Path.Combine(FiguresFolder.FullName, sFilePrefix + "ChangeBars_VolumeAbsolute.png"), fChartWidth, fChartHeight);
 
-            barViewer.Refresh(changeStats.VolumeErosion_Thresholded, changeStats.VolumeDeposition_Thresholded, changeStats.NetVolumeOfDifference_Thresholded, changeStats.VolumeErosion_Error, changeStats.VolumeDeposition_Error, changeStats.NetVolumeOfDifference_Error, LinearUnits, ElevationChangeBarViewer.BarTypes.Volume, false);
+            barViewer.Refresh(
+                stats.ErosionThr.GetVolume(ca, lu).As(vu),
+                stats.DepositionThr.GetVolume(ca, lu).As(vu),
+                stats.NetVolumeOfDifference_Thresholded.As(vu),
+                stats.ErosionErr.GetVolume(ca, lu).As(vu),
+                stats.DepositionErr.GetVolume(ca, lu).As(vu),
+                stats.NetVolumeOfDifference_Error.As(vu), LinearUnits, ElevationChangeBarViewer.BarTypes.Volume, false);
             barViewer.Save(Path.Combine(FiguresFolder.FullName, sFilePrefix + "ChangeBars_VolumeRelative.png"), fChartWidth, fChartHeight);
 
-            barViewer.Refresh(changeStats.AverageDepthErosion_Thresholded, changeStats.AverageDepthDeposition_Thresholded, changeStats.AverageNetThicknessOfDifferenceADC_Thresholded, changeStats.AverageDepthErosion_Error, changeStats.AverageDepthDeposition_Error, changeStats.AverageThicknessOfDifferenceADC_Error, LinearUnits, ElevationChangeBarViewer.BarTypes.Vertical, true);
+            barViewer.Refresh(
+                stats.AverageDepthErosion_Thresholded.As(lu),
+                stats.AverageDepthDeposition_Thresholded.As(lu),
+                stats.AverageNetThicknessOfDifferenceADC_Thresholded.As(lu),
+                stats.AverageDepthErosion_Error.As(lu),
+                stats.AverageDepthDeposition_Error.As(lu),
+                stats.AverageThicknessOfDifferenceADC_Error.As(lu), LinearUnits, ElevationChangeBarViewer.BarTypes.Vertical, true);
             barViewer.Save(Path.Combine(FiguresFolder.FullName, sFilePrefix + "ChangeBars_DepthAbsolute.png"), fChartWidth, fChartHeight);
 
-            barViewer.Refresh(changeStats.AverageDepthErosion_Thresholded, changeStats.AverageDepthDeposition_Thresholded, changeStats.AverageNetThicknessOfDifferenceADC_Thresholded, changeStats.AverageDepthErosion_Error, changeStats.AverageDepthDeposition_Error, changeStats.AverageThicknessOfDifferenceADC_Error, LinearUnits, ElevationChangeBarViewer.BarTypes.Vertical, false);
+            barViewer.Refresh(
+                stats.AverageDepthErosion_Thresholded.As(lu),
+                stats.AverageDepthDeposition_Thresholded.As(lu),
+                stats.AverageNetThicknessOfDifferenceADC_Thresholded.As(lu),
+                stats.AverageDepthErosion_Error.As(lu),
+                stats.AverageDepthDeposition_Error.As(lu),
+                stats.AverageThicknessOfDifferenceADC_Error.As(lu), LinearUnits, ElevationChangeBarViewer.BarTypes.Vertical, false);
             barViewer.Save(Path.Combine(FiguresFolder.FullName, sFilePrefix + "ChangeBars_DepthRelative.png"), fChartWidth, fChartHeight);
         }
     }

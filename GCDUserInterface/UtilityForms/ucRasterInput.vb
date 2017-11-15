@@ -28,7 +28,7 @@ Namespace UtilityForms
         Public ReadOnly Property SelectedItem As GCDConsoleLib.Raster
             Get
                 If TypeOf Path Is System.IO.FileInfo Then
-                    Return New GCDConsoleLib.Raster(Path.FullName)
+                    Return New GCDConsoleLib.Raster(Path)
                 Else
                     Return Nothing
                 End If

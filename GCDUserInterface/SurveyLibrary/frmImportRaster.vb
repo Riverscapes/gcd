@@ -275,7 +275,7 @@ Namespace SurveyLibrary
                 End If
                 Return False
             Else
-                If GCDConsoleLib.GISDataset.FileExists(txtRasterPath.Text) Then
+                If System.IO.File.Exists(txtRasterPath.Text) Then
                     MsgBox("The project raster path already exists. Try using a different name for the raster.", MsgBoxStyle.Information, GCDCore.Properties.Resources.ApplicationNameLong)
                     Return False
                 Else
@@ -472,8 +472,7 @@ Namespace SurveyLibrary
 
             gRasterDirect = Nothing
             If TypeOf ucRaster.SelectedItem Is GCDConsoleLib.Raster Then
-                Dim sGDALRasterPath As String = ucRaster.SelectedItem.GISFileInfo.FullName
-                gRasterDirect = New GCDConsoleLib.Raster(sGDALRasterPath)
+                gRasterDirect = New GCDConsoleLib.Raster(ucRaster.SelectedItem.GISFileInfo)
             End If
 
             Return TypeOf gRasterDirect Is GCDConsoleLib.Raster
@@ -518,7 +517,7 @@ Namespace SurveyLibrary
 
             Dim gResult As GCDConsoleLib.Raster = Nothing
             If Not String.IsNullOrEmpty(txtRasterPath.Text) Then
-                If GCDConsoleLib.GISDataset.FileExists(txtRasterPath.Text) Then
+                If IO.File.Exists(txtRasterPath.Text) Then
                     Dim ex As New Exception("The raster path already exists.")
                     ex.Data.Add("Raster path", txtRasterPath.Text)
                     Throw ex
@@ -539,7 +538,7 @@ Namespace SurveyLibrary
                                 GCDConsoleLib.RasterOperators.BilinearResample(gRaster, txtRasterPath.Text, outputExtent)
                                 Debug.WriteLine("Bilinear resample:" & outputExtent.ToString)
                             Else
-                                GCDConsoleLib.RasterOperators.ExtendedCopy(gRaster, txtRasterPath.Text, outputExtent)
+                                GCDConsoleLib.RasterOperators.ExtendedCopy(gRaster, New IO.FileInfo(txtRasterPath.Text), outputExtent)
                                 Debug.WriteLine("Copying raster:" & outputExtent.ToString)
                             End If
 
@@ -571,7 +570,7 @@ Namespace SurveyLibrary
                                 If m_ePurpose = ImportRasterPurposes.DEMSurvey Then
                                     ' Now try the hillshade for DEM Surveys
                                     Dim sHillshadePath As IO.FileInfo = ProjectManagerBase.OutputManager.DEMSurveyHillShadeRasterPath(txtName.Text)
-                                    GCDConsoleLib.RasterOperators.Hillshade(gResult, sHillshadePath.FullName)
+                                    GCDConsoleLib.RasterOperators.Hillshade(gResult, sHillshadePath)
                                     ProjectManagerUI.PyramidManager.PerformRasterPyramids(GCDCore.RasterPyramidManager.PyramidRasterTypes.Hillshade, sHillshadePath)
                                 End If
                             End If
