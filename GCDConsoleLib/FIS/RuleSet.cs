@@ -6,15 +6,14 @@ namespace GCDConsoleLib.FIS
 {
     public class RuleSet
     {
-        private List<MemberFunctionSet> _inputs;
+        public List<MemberFunctionSet> _inputs;
         private Dictionary<String, int> _indices;
-        private MemberFunctionSet _output;
+        public MemberFunctionSet Output;
         private String _outputName;
 
-        private List<Rule> rules_;
+        public List<Rule> Rules;
         private List<List<double>> fuzzyInputs_;
 
-        private FISOperator _operator;
         private FISOperatorAnd _andOp;
         private FISOperatorOr _orOp;
         private FISImplicator _implicator;
@@ -82,7 +81,7 @@ namespace GCDConsoleLib.FIS
         /// <param name="mfs"></param>
         public void addOutputMFSet(String sName, MemberFunctionSet mfs)
         {
-            _output = mfs;
+            Output = mfs;
             _outputName = sName;
         }
 
@@ -100,7 +99,7 @@ namespace GCDConsoleLib.FIS
         {
             if (weight < 0 || weight > 1)
                 throw new ArgumentException("The weight must be between 0 and 1.");
-            else if (!_output.Indices.ContainsKey(sOut))
+            else if (!Output.Indices.ContainsKey(sOut))
                 throw new ArgumentException(string.Format("There is no output membership function named '{0}'.", sOut));
             else
             {
@@ -109,9 +108,9 @@ namespace GCDConsoleLib.FIS
                 Rule rule = new Rule();
 
                 rule.Weight = weight;
-                rule.Output = _output._mfs[_output.Indices[sOut]];
+                rule.Output = Output._mfs[Output.Indices[sOut]];
 
-                _operator = op;
+                rule.Operator = op;
 
                 string[] InputsSubStr = sInputs.Split(); // no arg == space
 
@@ -125,7 +124,7 @@ namespace GCDConsoleLib.FIS
                         addMFToRule(rule, i, name);
                     }
                 }
-                rules_.Add(rule);
+                Rules.Add(rule);
             }
         }
 
@@ -149,9 +148,9 @@ namespace GCDConsoleLib.FIS
             MemberFunction aggMf = new MemberFunction();
 
             // Loop over the rules and run the aggregator and implicators for each.
-            for (int r = 0; r < rules_.Count; r++)
+            for (int r = 0; r < Rules.Count; r++)
             {
-                Rule rule = rules_[r];
+                Rule rule = Rules[r];
                 double impValue = getFuzzyVal(rule, 0);
                 // Loop over rule items (probably same as number of inputs but not
                 // if some are 0 value
@@ -159,7 +158,7 @@ namespace GCDConsoleLib.FIS
                 {
                     // For now this is "and" or "or"
                     double fuzzyInput = getFuzzyVal(rule, i);
-                    impValue = RuleOperator(impValue, fuzzyInput);
+                    impValue = RuleOperator(rule, impValue, fuzzyInput);
                 }
                 ImplicatorOp(ref rule.Output, ref impMf, impValue, rule.Weight);
                 AggregatorOp(ref impMf, ref aggMf);
@@ -205,13 +204,13 @@ namespace GCDConsoleLib.FIS
                 }
                 if (ok)
                 {
-                    for (int r = 0; r < rules_.Count; r++)
+                    for (int r = 0; r < Rules.Count; r++)
                     {
-                        rule = rules_[r];
+                        rule = Rules[r];
                         // This is where the NOT calculation happens.
                         impValue = fuzzyInputs_[rule.Inputs[0]][rule.MFSInd[0]];
                         for (int m = 1; m < rule.Inputs.Count; m++)
-                            impValue = RuleOperator(impValue, fuzzyInputs_[rule.Inputs[m]][rule.MFSInd[m]]);
+                            impValue = RuleOperator(rule, impValue, fuzzyInputs_[rule.Inputs[m]][rule.MFSInd[m]]);
                         ImplicatorOp(ref rule.Output, ref impMf, impValue, rule.Weight);
                         AggregatorOp(ref impMf, ref aggMf);
                     }
@@ -228,13 +227,13 @@ namespace GCDConsoleLib.FIS
                     for (int j = 0; j < _inputs[i]._mfs.Count; j++)
                         fuzzyInputs_[i][j] = _inputs[i]._mfs[j].fuzzify(v);
                 }
-                for (int r = 0; r < rules_.Count; r++)
+                for (int r = 0; r < Rules.Count; r++)
                 {
-                    rule = rules_[r];
+                    rule = Rules[r];
                     // This is where the NOT calculation happens.
                     impValue = fuzzyInputs_[rule.Inputs[0]][rule.MFSInd[0]];
                     for (int m = 1; m < rule.Inputs.Count; m++)
-                        impValue = RuleOperator(impValue, fuzzyInputs_[rule.Inputs[m]][rule.MFSInd[m]]);
+                        impValue = RuleOperator(rule, impValue, fuzzyInputs_[rule.Inputs[m]][rule.MFSInd[m]]);
                     ImplicatorOp(ref rule.Output, ref impMf, impValue, rule.Weight);
                     AggregatorOp(ref impMf, ref aggMf);
                 }
@@ -290,7 +289,7 @@ namespace GCDConsoleLib.FIS
             if (_inputs.Count == 0)
                 //"No FIS inputs."
                 return false;
-            else if (rules_.Count == 0)
+            else if (Rules.Count == 0)
                 //"No FIS rules."
                 return false;
             for (int i = 0; i < _inputs.Count; i++)
@@ -318,26 +317,6 @@ namespace GCDConsoleLib.FIS
                 fuzzyInput = yMax - fuzzyInput;
             }
             return fuzzyInput;
-        }
-
-
-        /// <summary>
-        /// Choose between and and or operations
-        /// </summary>
-        /// <param name="d1"></param>
-        /// <param name="d2"></param>
-        /// <returns></returns>
-        private double RuleOperator(double d1, double d2)
-        {
-            switch (_operator)
-            {
-                case FISOperator.FISOp_And:
-                    return OrOp(d1, d2);
-                case FISOperator.FISOp_Or:
-                    return AndOp(d1, d2);
-                default:
-                    throw new ArgumentException("Invalid operator");
-            }
         }
 
         /// <summary>
@@ -379,13 +358,32 @@ namespace GCDConsoleLib.FIS
         }
 
         /// <summary>
+        /// Choose between and and or operations
+        /// </summary>
+        /// <param name="d1"></param>
+        /// <param name="d2"></param>
+        /// <returns></returns>
+        private double RuleOperator(Rule theRule, double d1, double d2)
+        {
+            switch (theRule.Operator)
+            {
+                case FISOperator.FISOp_And:
+                    return OrOp(d1, d2);
+                case FISOperator.FISOp_Or:
+                    return AndOp(d1, d2);
+                default:
+                    throw new ArgumentException("Invalid operator");
+            }
+        }
+
+        /// <summary>
         /// Generalized Implicator
         /// </summary>
         /// <param name="inMf"></param>
         /// <param name="outMf"></param>
         /// <param name="n"></param>
         /// <param name="weight"></param>
-        private void ImplicatorOp(ref MemberFunction inMf,
+        public void ImplicatorOp(ref MemberFunction inMf,
             ref MemberFunction outMf,
             double n, double weight)
         {

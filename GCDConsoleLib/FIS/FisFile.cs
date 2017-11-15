@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace GCDConsoleLib.FIS
 {
@@ -13,30 +14,244 @@ namespace GCDConsoleLib.FIS
 
         public RuleSet ruleset;
 
+        private Dictionary<FISFileSection, List<List<string>>> SectionLines;
+
+        static private Dictionary<FISFileSection, Regex> regexes = new Dictionary<FISFileSection, Regex>() {
+                { FISFileSection.SYSTEM, new Regex(@"\[system\]", RegexOptions.IgnoreCase) },
+                { FISFileSection.OUTPUT, new Regex(@"\[output[0-9]+\]", RegexOptions.IgnoreCase) },
+                { FISFileSection.INPUT, new Regex(@"\[input[0-9]+\]", RegexOptions.IgnoreCase) },
+                { FISFileSection.RULES, new Regex(@"\[rules\]", RegexOptions.IgnoreCase) },
+                { FISFileSection.NONE, new Regex(@"\[system\]", RegexOptions.IgnoreCase) }
+            };
+
         /// <summary>
         /// Constructor and loader all in one
         /// </summary>
         /// <param name="inputFn"></param>
         public FisFile(FileInfo inputFn)
         {
-            fn = inputFn;
             _numInputs = 0;
             _numOutputs = 0;
             _numRules = 0;
-            parseFile();
+
+            // Store each section in its own dictionary list
+            Dictionary<FISFileSection, List<List<string>>> sectionLines = new Dictionary<FISFileSection, List<List<string>>>() {
+                { FISFileSection.SYSTEM, new List<List<string>>() },
+                { FISFileSection.OUTPUT, new List<List<string>>() },
+                { FISFileSection.RULES, new List<List<string>>() },
+                { FISFileSection.NONE, new List<List<string>>() },
+            };
+
+            parseFile(inputFn);
+            parseSystem(sectionLines[FISFileSection.SYSTEM][0]);
+
+            // Inputs and outputs can have multiple
+            foreach (List<string> input in sectionLines[FISFileSection.INPUT])
+                parseInputOutput(input, true);
+
+            foreach (List<string> output in sectionLines[FISFileSection.OUTPUT])
+                parseInputOutput(output, false);
+
+            parseRules(sectionLines[FISFileSection.RULES][0]);
+        }
+
+        /// <summary>
+        /// We often have the pattern: "[0 0 0.09 0.17]" that needs parsing
+        /// </summary>
+        private List<double> RangeSquareBrackets(string input)
+        {
+            List<double> output = new List<double>();
+            string[] sRanges = input.Trim().Substring(1, input.Length - 2).Split();
+            for (int idx = 0; idx < sRanges.Length; idx++)
+            {
+                double tryval;
+                if (!double.TryParse(sRanges[idx], out tryval))
+                    throw new Exception("Error parsing double");
+                output.Add(tryval);
+            }
+            return output;
         }
 
         /// <summary>
         /// 
         /// </summary>
-        private void parseInputOutput(List<string> sLines, bool isInput, int inputNum)
+        private void parseInputOutput(List<string> sLines, bool isInput)
         {
-            // TODO: do a thing here.
+            string name = "";
+            double low = 0;
+            double high = 0;
+            int numMfs = 0;
+            int index = 0;
+
+            Dictionary<string, MemberFunction> mfs = new Dictionary<string, MemberFunction>();
+
+            foreach (string line in sLines)
+            {
+                // First let's see if we can figure out what input index we have
+                if (regexes[FISFileSection.INPUT].IsMatch(line))
+                {
+                    //[Input1] needs to be a number
+                    string lineTrimmed = line.Trim();
+
+                    if (!int.TryParse(lineTrimmed.Substring(6, lineTrimmed.Length - 7), out index))
+                        throw new Exception("Could not extract input/output index: " + line);
+                }
+                else
+                {
+                    string[] sLSplit = line.Split('=');
+                    sLSplit[0] = sLSplit[0].ToLower();
+
+                    // Example: Name='Depth'
+                    if (sLSplit[0] == "name")
+                        name = sLSplit[1];
+
+                    // Example: Range=[0 4]
+                    else if (sLSplit[0] == "range")
+                    {
+                        List<double> sRanges = RangeSquareBrackets(sLSplit[1]);
+
+                        if (sRanges.Count != 2)
+                            throw new Exception("Wrong number of ranges: " + line);
+
+                        low = sRanges[0];
+                        high = sRanges[1];
+                    }
+
+                    // Example: NumMFs=4
+                    else if (sLSplit[0] == "nummfs")
+                    {
+                        if (!int.TryParse(sLSplit[1], out numMfs))
+                            throw new Exception("Could not parse number of member functions: " + line);
+                    }
+
+                    // Example: MF2='Moderate':'trapmf',[0.09 0.17 0.32 0.46]
+                    else if (sLSplit[0].StartsWith("mf"))
+                    {
+                        int mfnum;
+                        int.TryParse(sLSplit[0].Substring(2), out mfnum);
+                        if (mfnum != mfs.Count + 1)
+                            throw new Exception("Wrong number of memberfunctions: " + line);
+
+                        string[] mflinesplit = sLSplit[1].Split(',');
+                        string[] mflinesplitsplit = mflinesplit[0].Split(':');
+                        string mfname = mflinesplitsplit[0].Replace("'", "");
+                        string mftype = mflinesplitsplit[1].Replace("'", "");
+
+                        if (mfs.ContainsKey(mfname))
+                            throw new Exception("Duplicate MF name detected: " + line);
+
+                        List<double> vertices = RangeSquareBrackets(mflinesplit[1]);
+
+                        switch (mftype)
+                        {
+                            case "trapmf":
+                                if (vertices.Count != 4)
+                                    throw new Exception("Wrong number of vertices: " + line);
+                                mfs[mfname] = new MemberFunction(vertices[0], vertices[1], vertices[2], vertices[3], 1);
+                                break;
+                            case "trimf":
+                                if (vertices.Count != 3)
+                                    throw new Exception("Wrong number of vertices: " + line);
+                                mfs[mfname] = new MemberFunction(vertices[0], vertices[1], vertices[2], 1);
+                                break;
+                            default:
+                                throw new Exception("Unsupported MF type: " + line);
+                        }
+                    }
+                }
+            }
+
+            // Now try to create a memberfunction set from all our parsed functions
+            MemberFunctionSet mfSet = new MemberFunctionSet(low, high);
+            foreach (KeyValuePair<string, MemberFunction> mfkvp in mfs)
+                mfSet.addMF(mfkvp.Key, mfkvp.Value);
+
+            if (isInput)
+                ruleset.setInputMFSet(index, name, mfSet);
+            else
+                ruleset.addOutputMFSet(name, mfSet);
         }
 
+
+        /// <summary>
+        /// Parse the rules
+        /// </summary>
+        /// <param name="sLines"></param>
         private void parseRules(List<string> sLines)
         {
-            // TODO:  do another thing here.
+            foreach (string line in sLines)
+                // Match everything except the first line
+                if (!regexes[FISFileSection.RULES].IsMatch(line))
+                    ParseAddRuleString(line);
+        }
+
+        /// <summary>
+        /// Here's what a rule looks like: 2 1 4, 1 (1) : 1
+        /// INPUT INPUT INPUT, (OUTOUT) : OPERATOR
+        /// 
+        /// 
+        /// This is the version that the machine deals with. The first column in this structure 
+        /// corresponds to the input variable, the second column corresponds to the output variable,
+        /// the third column displays the weight applied to each rule, and the fourth column is 
+        /// shorthand that indicates whether this is an OR (2) rule or an AND (1) rule. 
+        /// The numbers in the first two columns refer to the index number of the membership function.
+        /// A literal interpretation of rule 1 is: "If input 1 is MF1 (the first membership function 
+        /// associated with input 1) then output 1 should be MF1 (the first membership function 
+        /// associated with output 1) with the weight 1." Since there is only one input for this 
+        /// system, the AND connective implied by the 1 in the last column is of no consequence.
+        /// </summary>
+        /// <param name="ruleString"></param>
+        /// <returns></returns>
+        private void ParseAddRuleString(string ruleString)
+        {
+            Rule theRule = new Rule();
+            // 2 1 4, 1 (1) <==> 1
+            string[] rsSplit1 = ruleString.Split(':');
+
+
+            // Now let's figure out the operator for this rule
+            int op;
+            if (!int.TryParse(rsSplit1[1].Trim(), out op))
+                throw new Exception("could not parse the operator out of the rule: " + ruleString);
+
+            switch (op)
+            {
+                case 1:
+                    theRule.Operator = FISOperator.FISOp_And;
+                    break;
+                case 2:
+                    theRule.Operator = FISOperator.FISOp_Or;
+                    break;
+                default:
+                    throw new Exception("could not parse the operator out of the rule: " + ruleString);
+            }
+
+            // 2 1 4 <==> 1 (1)
+            string[] rsSplit2 = rsSplit1[0].Split(',');
+            string[] mfIndStr = rsSplit2[0].Trim().Split();
+            // 1 <==> (1)
+            string[] rsSplit3 = rsSplit2[1].Trim().Split();
+
+            // There is only ever one output for this case
+            theRule.Output = ruleset.Output;
+
+            // Now figure out the weight of this Rule
+            string trimmedWeight = rsSplit3[1].Trim();
+            if (!double.TryParse(trimmedWeight.Substring(1, trimmedWeight.Length-2), out theRule.Weight))
+                throw new Exception("Could not parse the weight: " + ruleString);
+
+            // Now, finally we're ready to look at inputs.
+            List<int> mfIndeces = new List<int>();
+            for (int idx = 1; idx <= mfIndStr.Length; idx++)
+            {
+                int mfInd;
+                if (!int.TryParse(mfIndStr[idx].Trim(), out mfInd))
+                    throw new Exception("Error parsing rule: " + ruleString);
+                theRule.addMf(idx, mfInd);
+            }
+
+            // Last step: push the rule onto the stack
+            ruleset.Rules.Add(theRule);
         }
 
         /// <summary>
@@ -53,8 +268,8 @@ namespace GCDConsoleLib.FIS
 
             foreach (string line in sLines)
             {
-                String lowerLine = line.ToLower();
-                string[] sLSplit = lowerLine.Split('=');
+                string[] sLSplit = line.Split('=');
+                sLSplit[0] = sLSplit[0].ToLower();
 
                 switch (sLSplit[0])
                 {
@@ -119,7 +334,6 @@ namespace GCDConsoleLib.FIS
                             throw new Exception("Unsupported DefuzzMethod: " + line);
                         break;
                 }
-
             }
 
             if (andOp == FISOperatorAnd.FISOpAnd_None)
@@ -144,60 +358,63 @@ namespace GCDConsoleLib.FIS
         /// </summary>
         /// <param name="fn">The filename of the file to parse.</param>
         /// <returns></returns>
-        public void parseFile()
+        public void parseFile(FileInfo inputFn)
         {
             bool systemOK = false;
             bool inputOK = false;
             bool outputOK = false;
             bool rulesOK = false;
 
-            if (!fn.Exists)
-                throw new FileNotFoundException("Histogram file could not be found", fn.FullName);
+            if (!inputFn.Exists)
+                throw new FileNotFoundException("Histogram file could not be found", inputFn.FullName);
 
             List<string> sLines = new List<string>();
-            using (var reader = new StreamReader(fn.FullName))
+            using (var reader = new StreamReader(inputFn.FullName))
             {
                 while (!reader.EndOfStream)
                     sLines.Add(reader.ReadLine());
             }
             FISFileSection currSection = FISFileSection.NONE;
-
-            // Store each section in its own dictionary list
-            Dictionary<FISFileSection, List<string>> sectionLines = new Dictionary<FISFileSection, List<string>>() {
-                { FISFileSection.SYSTEM, new List<string>() },
-                { FISFileSection.OUTPUT, new List<string>() },
-                { FISFileSection.RULES, new List<string>() },
-                { FISFileSection.NONE, new List<string>() }
-            };
+            FISFileSection newSection = FISFileSection.NONE;
 
             // Inputs gets its own 
-            List<List<string>> Inputs = new List<List<string>>();
+            List<string> currSectionList = new List<string>();
 
             foreach (string line in sLines)
             {
-                if (line.Substring(0, 8) == "[System]")
+                if (regexes[FISFileSection.SYSTEM].IsMatch(line))
                 {
                     systemOK = true;
-                    currSection = FISFileSection.SYSTEM;
+                    newSection = FISFileSection.SYSTEM;
                 }
-                else if (line.Substring(0, 6) == "[Input")
+                else if (regexes[FISFileSection.INPUT].IsMatch(line))
                 {
                     inputOK = true;
-                    currSection = FISFileSection.INPUT;
+                    newSection = FISFileSection.INPUT;
                 }
-                else if (line.Substring(0, 7) == "[Output")
+                else if (regexes[FISFileSection.OUTPUT].IsMatch(line))
                 {
                     outputOK = true;
-                    currSection = FISFileSection.OUTPUT;
+                    newSection = FISFileSection.OUTPUT;
                 }
-                else if (line.Substring(0, 7) == "[Rules]")
+                else if (regexes[FISFileSection.RULES].IsMatch(line))
                 {
                     rulesOK = true;
-                    currSection = FISFileSection.RULES;
+                    newSection = FISFileSection.RULES;
                 }
-                else if (line.Trim().Length > 0)
+                // If a section change has been requested then store the current section
+                // and move on to the new one
+                if (newSection != currSection)
                 {
-                    sectionLines[currSection].Add(line);
+                    SectionLines[currSection].Add(currSectionList);
+                    currSectionList = new List<string>();
+                    currSection = newSection;
+                }
+
+                // We ignore blank lines
+                if (line.Trim().Length > 0)
+                {
+                    currSectionList.Add(line);
                 }
             }
 
@@ -209,15 +426,7 @@ namespace GCDConsoleLib.FIS
                 throw new Exception("No [Output] section in: " + fn.FullName);
             else if (!rulesOK)
                 throw new Exception("No [Rules] section inL " + fn.FullName);
-
-            parseSystem(sectionLines[FISFileSection.SYSTEM]);
-            parseInputOutput(sectionLines[FISFileSection.INPUT], true, 999);
-            parseInputOutput(sectionLines[FISFileSection.OUTPUT], false, 999);
-            parseRules(sectionLines[FISFileSection.RULES]);
-
         }
-
-
 
     }
 }

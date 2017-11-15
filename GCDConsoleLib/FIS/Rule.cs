@@ -16,6 +16,8 @@ namespace GCDConsoleLib.FIS
             Weight = 1;
         }
 
+        public FISOperator Operator;
+
         /// <summary>
         /// 
         /// </summary>
@@ -42,5 +44,6 @@ namespace GCDConsoleLib.FIS
                 MFSNot.Add(0);
             }
         }
+
     }
 }
