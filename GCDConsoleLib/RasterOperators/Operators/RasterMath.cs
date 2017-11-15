@@ -9,6 +9,7 @@ namespace GCDConsoleLib.Internal.Operators
     {
         private bool _scalar;
         private RasterOperators.MathOpType _type;
+        private double _origOperand;
         private T _operand;
 
         /// <summary>
@@ -18,12 +19,13 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="rInput"></param>
         /// <param name="dOperand"></param>
         /// <param name="sOutputRaster"></param>
-        public RasterMath(RasterOperators.MathOpType otType, ref Raster rInput, T dOperand, 
+        public RasterMath(RasterOperators.MathOpType otType, ref Raster rInput, double dOperand, 
             Raster rOutputRaster) : base(new List<Raster> { rInput }, rOutputRaster)
         {
             _type = otType;
             _scalar = true;
-            _operand = dOperand;
+            _origOperand = dOperand;
+            _operand = (T)Convert.ChangeType(dOperand, typeof(T));
         }
 
         public RasterMath(RasterOperators.MathOpType otType, ref Raster rInputA, 

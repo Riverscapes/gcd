@@ -495,7 +495,7 @@ namespace GCDConsoleLib.Utility
             T minVal = minValue<T>();
             return (double?)Convert.ChangeType(minVal, typeof(double));
         }
-
+        
         public static T minValue<T>()
         {
             T retval;

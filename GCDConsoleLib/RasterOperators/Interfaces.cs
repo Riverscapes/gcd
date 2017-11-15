@@ -39,14 +39,34 @@ namespace GCDConsoleLib
         }
 
         /// <summary>
-        /// Raster Math
+        /// Raster Math: 1 raster and one operand (double)
         /// </summary>
-        public static Raster Add<T>(ref Raster rInput, T dOperand, FileInfo sOutputRaster)
+        public static Raster Add(ref Raster rInput, double dOperand, FileInfo sOutputRaster)
         {
-            return (Raster)GenericRunWithOutput(typeof(RasterMath<T>), rInput.Datatype.CSType, new object[] {
+            return (Raster)GenericRunWithOutput(typeof(RasterMath<>), rInput.Datatype.CSType, new object[] {
                 MathOpType.Addition, rInput, dOperand, new Raster(ref rInput, sOutputRaster)
             });
         }
+        public static Raster Subtract(ref Raster rInput, double dOperand, FileInfo sOutputRaster)
+        {
+            return (Raster)GenericRunWithOutput(typeof(RasterMath<>), rInput.Datatype.CSType, new object[] {
+                MathOpType.Subtraction, rInput, dOperand, new Raster(ref rInput, sOutputRaster)
+            });
+        }
+        public static Raster Multiply(ref Raster rInput, double dOperand, FileInfo sOutputRaster)
+        {
+            return (Raster)GenericRunWithOutput(typeof(RasterMath<>), rInput.Datatype.CSType, new object[] {
+                MathOpType.Multipication, rInput, dOperand, new Raster(ref rInput, sOutputRaster)
+            });
+        }
+        public static Raster Divide(ref Raster rInput,double dOperand, FileInfo sOutputRaster)
+        {
+            return (Raster)GenericRunWithOutput(typeof(RasterMath<>), rInput.Datatype.CSType, new object[] {
+                MathOpType.Division, rInput, dOperand, new Raster(ref rInput, sOutputRaster)
+            });
+        }
+
+
         public static Raster Add(ref Raster rInputA, ref Raster rInputB, FileInfo sOutputRaster)
         {
             return (Raster)GenericRunWithOutput(typeof(RasterMath<>), rInputA.Datatype.CSType, new object[] {
@@ -67,6 +87,13 @@ namespace GCDConsoleLib
                 MathOpType.Multipication, rInputA, rInputB, new Raster(ref rInputA, sOutputRaster)
             });
         }
+        public static Raster Divide(ref Raster rInputA, ref Raster rInputB, FileInfo sOutputRaster)
+        {
+            return (Raster)GenericRunWithOutput(typeof(RasterMath<>), rInputA.Datatype.CSType, new object[] {
+                MathOpType.Division, rInputA, rInputB, new Raster(ref rInputA, sOutputRaster)
+            });
+        }
+
 
         /// <summary>
         /// Retrieve the Change Statistics from a pair of DoD rasters that were thresholded using minimum level of detection

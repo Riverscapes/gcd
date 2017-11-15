@@ -46,12 +46,18 @@ namespace GCDConsoleLib.Tests
                 Raster rTempl = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("const900.tif")));
                 Raster rTemp2 = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("const950.tif")));
 
-                //Raster rTemplateAddOutput1 = RasterOperators.Add(ref rTempl, 2.0, new FileInfo(Path.Combine(tmp.Name, "RasterAddOperand.tif")));
-                Raster rTemplateAddOutput2 = RasterOperators.Add(ref rTempl, ref rTemp2, new FileInfo(Path.Combine(tmp.Name, "RasterAddRaster.tif")));
+                Raster rAdd1 = RasterOperators.Add(ref rTempl, 2.1, new FileInfo(Path.Combine(tmp.Name, "RasterAddOperand.tif")));
+                Raster rAdd2 = RasterOperators.Add(ref rTempl, ref rTemp2, new FileInfo(Path.Combine(tmp.Name, "RasterAddRaster.tif")));
 
-                //Raster rTemplateOutput1 = RasterOperators.Subtract(ref rTempl, 2.0, new FileInfo(Path.Combine(tmp.Name, "RasterSubtractOperand.tif")));
-                Raster rTemplateSubtractOutput2 = RasterOperators.Subtract(ref rTempl, ref rTemp2, new FileInfo(Path.Combine(tmp.Name, "RasterSubtractRaster.tif")));
+                Raster rSub1 = RasterOperators.Subtract(ref rTempl, 2.1, new FileInfo(Path.Combine(tmp.Name, "RasterSubtractOperand.tif")));
+                Raster rSub2 = RasterOperators.Subtract(ref rTempl, ref rTemp2, new FileInfo(Path.Combine(tmp.Name, "RasterSubtractRaster.tif")));
 
+                Raster rMult1 = RasterOperators.Subtract(ref rTempl, 2.1, new FileInfo(Path.Combine(tmp.Name, "RasterMultiplyOperand.tif")));
+                Raster rMult2 = RasterOperators.Multiply(ref rTempl, ref rTemp2, new FileInfo(Path.Combine(tmp.Name, "RasterMultiplyRaster.tif")));
+
+                Raster rDiv1 = RasterOperators.Subtract(ref rTempl, 2.1, new FileInfo(Path.Combine(tmp.Name, "RasterDivideOperand.tif")));
+                Raster rDiv2 = RasterOperators.Divide(ref rTempl, ref rTemp2, new FileInfo(Path.Combine(tmp.Name, "RasterDivideRaster.tif")));
+                Assert.Fail();
             }
         }
 
