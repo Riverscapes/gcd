@@ -10,7 +10,13 @@ namespace GCDConsoleLib.Internal.Operators
     {
         public DoDStats Stats;
         private bool bSeg;
-        protected List<float> _nodata;
+        private List<float> _nodata;
+
+        // If we do budget seg we need the following
+        private bool isBudgSeg;
+        private Dictionary<string, DoDStats> SegStats;
+        private Vector _polymask;
+        private string _fieldname;
 
         /// <summary>
         /// Pass-through constructure
@@ -36,17 +42,54 @@ namespace GCDConsoleLib.Internal.Operators
             bSeg = false;
         }
 
+        /// <summary>
+        /// Pass-through constructor
+        /// </summary>
+        public GetChangeStats(Raster rInput, DoDStats theStats, Vector PolygonMask, string FieldName) :
+            base(new List<Raster> { rInput })
+        {
+            SegStats = new Dictionary<string, DoDStats>();
+            _polymask = PolygonMask;
+            _fieldname = FieldName;
+        }
 
         /// <summary>
         /// This is the actual implementation of the cell-by-cell logic
         /// </summary>
         protected override float CellOp(List<float[]> data, int id)
         {
-            CellChangeCalc(data, id, Stats);
+            if (bSeg)
+                BudgetSegCellOp(data, id);
+            else
+                CellChangeCalc(data, id, Stats);
+
             // We need to return something. Doesn't matter what
             return 0;
         }
 
+        /// <summary>
+        /// The budget seggregator looks to see if a cell is inside any of the features
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="id"></param>
+        private void BudgetSegCellOp(List<float[]> data, int id)
+        {
+            Tuple<decimal, decimal> ptcoords = ChunkExtent.Id2YX(id);
+            List<string> shapes = _polymask.ShapesContainPoint((double)ptcoords.Item2, (double)ptcoords.Item1, _fieldname);
+            if (shapes.Count > 0)
+            {
+                foreach (string shp in shapes)
+                {
+                    if (!SegStats.ContainsKey(shp))
+                        SegStats[shp] = new DoDStats(Stats);
+
+                    DoDStats myStats = SegStats[shp];
+
+                    CellChangeCalc(data, id, myStats);
+                }
+
+            }
+        }
 
         /// <summary>
         /// We separate out the calc op so we can call it from elsewhere (like the seggregation function)

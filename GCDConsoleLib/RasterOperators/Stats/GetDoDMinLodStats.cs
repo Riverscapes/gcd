@@ -27,6 +27,20 @@ namespace GCDConsoleLib.Internal.Operators
         /// </summary>
         protected override float CellOp(List<float[]> data, int id)
         {
+            CellChangeCalc(data, id, Stats);
+            // We need to return something
+            return 0;
+        }
+
+        /// <summary>
+        /// We separate out the calc op so we can call it from elsewhere (like the seggregation function)
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="id"></param>
+        /// <param name="stats"></param>
+        /// <param name="nodata"></param>
+        public void CellChangeCalc(List<float[]> data, int id, DoDStats stats)
+        {
             fDoDValue = data[0][id];
             if (fDoDValue != _rasternodatavals[0])
             {
@@ -34,13 +48,13 @@ namespace GCDConsoleLib.Internal.Operators
                 if (fDoDValue > 0)
                 {
                     // Raw Deposition
-                    Stats.DepositionRaw.AddToSumAndIncrementCounter(fDoDValue);
+                    stats.DepositionRaw.AddToSumAndIncrementCounter(fDoDValue);
 
                     // Thresholded Deposition
                     if (fDoDValue > _thresh)
                     {
-                        Stats.DepositionThr.AddToSumAndIncrementCounter(fDoDValue);
-                        Stats.DepositionErr.AddToSumAndIncrementCounter(fDoDValue * _thresh);
+                        stats.DepositionThr.AddToSumAndIncrementCounter(fDoDValue);
+                        stats.DepositionErr.AddToSumAndIncrementCounter(fDoDValue * _thresh);
                     }
                 }
 
@@ -48,18 +62,16 @@ namespace GCDConsoleLib.Internal.Operators
                 if (fDoDValue < 0)
                 {
                     // Raw Erosion
-                    Stats.ErosionRaw.AddToSumAndIncrementCounter(fDoDValue * -1);
+                    stats.ErosionRaw.AddToSumAndIncrementCounter(fDoDValue * -1);
 
                     // Thresholded Erosion
                     if (fDoDValue < (_thresh * -1))
                     {
-                        Stats.ErosionThr.AddToSumAndIncrementCounter(fDoDValue * -1);
-                        Stats.ErosionErr.AddToSumAndIncrementCounter(fDoDValue * _thresh);
+                        stats.ErosionThr.AddToSumAndIncrementCounter(fDoDValue * -1);
+                        stats.ErosionErr.AddToSumAndIncrementCounter(fDoDValue * _thresh);
                     }
                 }
             }
-            // We need to return something
-            return 0;
         }
 
     }

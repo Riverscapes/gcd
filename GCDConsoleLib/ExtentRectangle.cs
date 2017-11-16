@@ -299,6 +299,19 @@ namespace GCDConsoleLib
         }
 
         /// <summary>
+        /// NOTE: THIS RETURNS CELL CENTERS
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Tuple<decimal,decimal> Id2YX(int id)
+        {
+            Tuple<int, int> rowcol = Id2RowCol(id);
+            decimal rowY = Top + (CellHeight * rowcol.Item1) + CellHeight/2;
+            decimal rowX = Left + (CellWidth * rowcol.Item2) + CellWidth/2;
+            return new Tuple<decimal, decimal>(rowcol.Item1, rowcol.Item2);
+        }
+
+        /// <summary>
         /// Translate the 1D array index into another rectangle's 1D array index
         /// </summary>
         /// <param name="origid"></param>
