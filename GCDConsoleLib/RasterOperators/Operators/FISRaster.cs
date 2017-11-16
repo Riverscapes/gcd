@@ -41,7 +41,7 @@ namespace GCDConsoleLib.Internal.Operators
         /// <summary>
         /// This is the actual implementation of the cell-by-cell logic
         /// </summary>
-        protected override float CellOp(ref List<float[]> data, int id)
+        protected override float CellOp(List<float[]> data, int id)
         {
             // We need to return something. Doesn't matter what
             return 0;

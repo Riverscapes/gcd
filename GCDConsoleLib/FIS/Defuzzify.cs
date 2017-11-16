@@ -11,7 +11,7 @@
         /// </summary>
         /// <param name="mf"></param>
         /// <returns></returns>
-        public static double DefuzzCentroid(ref MemberFunction mf)
+        public static double DefuzzCentroid(MemberFunction mf)
         {
             double sum_moment_area = 0;
             double sum_area = 0;
@@ -66,7 +66,7 @@
         /// </summary>
         /// <param name="mf"></param>
         /// <returns></returns>
-        public static double FISDefuzzBisect(ref MemberFunction mf)
+        public static double FISDefuzzBisect(MemberFunction mf)
         {
             double area = 0;
 
@@ -122,7 +122,7 @@
         /// </summary>
         /// <param name="mf"></param>
         /// <returns></returns>
-        public static double FISDefuzzMidMax(ref MemberFunction mf)
+        public static double FISDefuzzMidMax(MemberFunction mf)
         {
             double minX = mf.Coords[0].Key;
             double maxX = mf.Coords[0].Key;
@@ -148,7 +148,7 @@
         /// </summary>
         /// <param name="mf"></param>
         /// <returns></returns>
-        public static double FISDefuzzLargeMax(ref MemberFunction mf)
+        public static double FISDefuzzLargeMax(MemberFunction mf)
         {
             double x = mf.Coords[0].Key;
             double y = mf.Coords[0].Value;
@@ -169,7 +169,7 @@
         /// </summary>
         /// <param name="mf"></param>
         /// <returns></returns>
-        public static double FISDefuzzSmallMax(ref MemberFunction mf)
+        public static double FISDefuzzSmallMax(MemberFunction mf)
         {
             double x = mf.Coords[0].Key;
             double y = mf.Coords[0].Value;

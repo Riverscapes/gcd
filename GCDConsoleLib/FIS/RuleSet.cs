@@ -160,13 +160,13 @@ namespace GCDConsoleLib.FIS
                     double fuzzyInput = getFuzzyVal(rule, i);
                     impValue = RuleOperator(rule, impValue, fuzzyInput);
                 }
-                ImplicatorOp(ref rule.Output, ref impMf, impValue, rule.Weight);
-                AggregatorOp(ref impMf, ref aggMf);
+                ImplicatorOp(rule.Output, impMf, impValue, rule.Weight);
+                AggregatorOp(impMf, aggMf);
             }
 
             // The defuzzifier is where composite shape gets reduced
             // to a single number
-            return DefuzzifierOp(ref aggMf);
+            return DefuzzifierOp(aggMf);
         }
 
         /// <summary>
@@ -211,10 +211,10 @@ namespace GCDConsoleLib.FIS
                         impValue = fuzzyInputs_[rule.Inputs[0]][rule.MFSInd[0]];
                         for (int m = 1; m < rule.Inputs.Count; m++)
                             impValue = RuleOperator(rule, impValue, fuzzyInputs_[rule.Inputs[m]][rule.MFSInd[m]]);
-                        ImplicatorOp(ref rule.Output, ref impMf, impValue, rule.Weight);
-                        AggregatorOp(ref impMf, ref aggMf);
+                        ImplicatorOp(rule.Output, impMf, impValue, rule.Weight);
+                        AggregatorOp(impMf, aggMf);
                     }
-                    return DefuzzifierOp(ref aggMf);
+                    return DefuzzifierOp(aggMf);
                 }
                 else
                     return noData;
@@ -234,10 +234,10 @@ namespace GCDConsoleLib.FIS
                     impValue = fuzzyInputs_[rule.Inputs[0]][rule.MFSInd[0]];
                     for (int m = 1; m < rule.Inputs.Count; m++)
                         impValue = RuleOperator(rule, impValue, fuzzyInputs_[rule.Inputs[m]][rule.MFSInd[m]]);
-                    ImplicatorOp(ref rule.Output, ref impMf, impValue, rule.Weight);
-                    AggregatorOp(ref impMf, ref aggMf);
+                    ImplicatorOp(rule.Output, impMf, impValue, rule.Weight);
+                    AggregatorOp(impMf, aggMf);
                 }
-                return DefuzzifierOp(ref aggMf);
+                return DefuzzifierOp(aggMf);
             }
         }
 
@@ -383,8 +383,8 @@ namespace GCDConsoleLib.FIS
         /// <param name="outMf"></param>
         /// <param name="n"></param>
         /// <param name="weight"></param>
-        public void ImplicatorOp(ref MemberFunction inMf,
-            ref MemberFunction outMf,
+        public void ImplicatorOp(MemberFunction inMf,
+            MemberFunction outMf,
             double n, double weight)
         {
             switch (_implicator)
@@ -403,7 +403,7 @@ namespace GCDConsoleLib.FIS
         /// </summary>
         /// <param name="inMf"></param>
         /// <param name="outMf"></param>
-        private void AggregatorOp(ref MemberFunction inMf, ref MemberFunction outMf)
+        private void AggregatorOp(MemberFunction inMf, MemberFunction outMf)
         {
             switch (_aggregator)
             {
@@ -421,20 +421,20 @@ namespace GCDConsoleLib.FIS
         /// Generalized Defizzifier
         /// </summary>
         /// <param name="mf"></param>
-        private double DefuzzifierOp(ref MemberFunction mf)
+        private double DefuzzifierOp(MemberFunction mf)
         {
             switch (_defuzzifier)
             {
                 case FISDefuzzifier.FISDefuzz_Bisect:
-                    return Defuzzify.FISDefuzzBisect(ref mf);
+                    return Defuzzify.FISDefuzzBisect(mf);
                 case FISDefuzzifier.FISDefuzz_Centroid:
-                    return Defuzzify.DefuzzCentroid(ref mf);
+                    return Defuzzify.DefuzzCentroid(mf);
                 case FISDefuzzifier.FISDefuzz_LargeMax:
-                    return Defuzzify.FISDefuzzLargeMax(ref mf);
+                    return Defuzzify.FISDefuzzLargeMax(mf);
                 case FISDefuzzifier.FISDefuzz_MidMax:
-                    return Defuzzify.FISDefuzzMidMax(ref mf);
+                    return Defuzzify.FISDefuzzMidMax(mf);
                 case FISDefuzzifier.FISDefuzz_SmallMax:
-                    return Defuzzify.FISDefuzzSmallMax(ref mf);
+                    return Defuzzify.FISDefuzzSmallMax(mf);
                 default:
                     throw new ArgumentException("Invalid operator");
             }

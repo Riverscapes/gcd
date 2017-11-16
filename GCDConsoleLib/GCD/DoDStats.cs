@@ -37,6 +37,18 @@ namespace GCDConsoleLib.GCD
             DepositionErr = new GCDAreaVolume();
         }
 
+        public DoDStats(DoDStats oldStats)
+        {
+            StatsUnits = oldStats.StatsUnits;
+            CellArea = oldStats.CellArea;
+            ErosionRaw = new GCDAreaVolume();
+            DepositionRaw = new GCDAreaVolume();
+            ErosionThr = new GCDAreaVolume();
+            DepositionThr = new GCDAreaVolume();
+            ErosionErr = new GCDAreaVolume();
+            DepositionErr = new GCDAreaVolume();
+        }
+
         /// <summary>
         /// Create this object from nothing more than numbers and units. There are a lot of each.
         /// </summary>

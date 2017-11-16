@@ -10,14 +10,14 @@ namespace GCDConsoleLib.Internal.Operators
         /// <summary>
         /// Pass-through constructure
         /// </summary>
-        public Mask(ref Raster rUnMasked, ref Raster rMask, Raster rOutputRaster) :
+        public Mask(Raster rUnMasked, Raster rMask, Raster rOutputRaster) :
             base(new List<Raster> { rUnMasked, rMask }, rOutputRaster)
         { }
 
         /// <summary>
         /// This is the actual implementation of the cell-by-cell logic
         /// </summary>
-        protected override T CellOp(ref List<T[]> data, int id)
+        protected override T CellOp(List<T[]> data, int id)
         {
             if (data[1][id].Equals(_rasternodatavals[1]))
                 return OpNodataVal;

@@ -12,19 +12,19 @@ namespace GCDConsoleLib.Internal.Tests
     [TestClass()]
     class TestCBCOp<T> : CellByCellOperator<T>
     {
-        public TestCBCOp(List<Raster> rRasters, ref Raster rOutput) : base(rRasters, rOutput)
+        public TestCBCOp(List<Raster> rRasters, Raster rOutput) : base(rRasters, rOutput)
         {
             Assert.AreEqual(rRasters.Count, _rasters.Count);
             Assert.IsFalse(OpDone);
         }
-        public TestCBCOp(List<Raster> rRasters, ref Raster rOutput, ExtentRectangle newExtent) : base(rRasters, rOutput)
+        public TestCBCOp(List<Raster> rRasters, Raster rOutput, ExtentRectangle newExtent) : base(rRasters, rOutput)
         {
             SetOpExtent(newExtent);
             Assert.AreEqual(rRasters.Count, _rasters.Count);
             Assert.IsFalse(OpDone);
         }
 
-        protected override T CellOp(ref List<T[]> data, int id)
+        protected override T CellOp(List<T[]> data, int id)
         {
             // Calculate the real 1D index of this cell 
             int idR0 = (int)((ChunkExtent.Top - OpExtent.Top) / OpExtent.CellHeight);
@@ -52,7 +52,7 @@ namespace GCDConsoleLib.Internal.Tests
             FakeRaster<int> Raster2 = new FakeRaster<int>(0, 0, -1, 1, new int[,] { { 1, 0, 0, 1 }, { 0, 1, 1, 0 }, { 0, 2, 0, 0 } });
             int[,] rExpected = new int[,] { { 2, 2, 3, 5 }, { 5, 7, 8, 8 }, { 9, 12, 11, 12 } };
             Raster rOutput = new FakeRaster<int>(0, 0, -1, 1, new int[,] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 } });
-            TestCBCOp<int> theTest = new TestCBCOp<int>(new List<Raster> { Raster1, Raster2 }, ref rOutput);
+            TestCBCOp<int> theTest = new TestCBCOp<int>(new List<Raster> { Raster1, Raster2 }, rOutput);
             theTest.Run();
             //CollectionAssert.AreEqual(rOutput._outputGrid, rExpected);
         }

@@ -148,7 +148,7 @@ namespace GCDConsoleLib.FIS
         /// <param name="outMf">The membership function to hold the output.</param>
         /// <param name="n">The antecedent to reshape the membership function with.</param>
         /// <param name="weight">The weight of the rule.</param>
-        void ImpMin(ref MemberFunction inMf, ref MemberFunction outMf, double n, double weight)
+        void ImpMin(MemberFunction inMf, MemberFunction outMf, double n, double weight)
         {
             outMf.clear();
             outMf.Coords.Add(new KeyValuePair<double, double>(inMf.Coords[0].Key, inMf.Coords[0].Value * weight));
@@ -186,7 +186,7 @@ namespace GCDConsoleLib.FIS
         /// <param name="outMf">The membership function to hold the output.</param>
         /// <param name="n">The antecedent to reshape the membership function with.</param>
         /// <param name="weight">The weight of the rule.</param>
-        void ImpProduct(ref MemberFunction inMf, ref MemberFunction outMf, double n, double weight)
+        void ImpProduct(MemberFunction inMf, MemberFunction outMf, double n, double weight)
         {
             outMf.clear();
             for (int i = 0; i < inMf.Length; i++)
@@ -200,7 +200,7 @@ namespace GCDConsoleLib.FIS
         /// </summary>
         /// <param name="inMf">One of the membership functions to aggregate.</param>
         /// <param name="outMf">The other membership function to aggregate.</param>
-        static MemberFunction AggMax(ref MemberFunction mfA, ref MemberFunction MfB)
+        static MemberFunction AggMax(MemberFunction mfA, MemberFunction MfB)
         {
             MemberFunction retBVal;
             if (0 == MfB.Length)

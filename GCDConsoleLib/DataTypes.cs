@@ -23,7 +23,7 @@ namespace GCDConsoleLib
         // Constructors to and from various types
         public GdalDataType(DataType origType) { _origType = origType; }
         public GdalDataType(GdalDataType origType) { _origType = origType._origType; }
-        public GdalDataType(ref Raster rRaster) { _origType = rRaster.Datatype._origType; }
+        public GdalDataType(Raster rRaster) { _origType = rRaster.Datatype._origType; }
         public GdalDataType(Type csType) { _origType = Conversion.CSharpTypeToDataType(csType); }
 
         // Equivalence Operators

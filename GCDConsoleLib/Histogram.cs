@@ -40,7 +40,7 @@ namespace GCDConsoleLib
         /// </summary>
         /// <param name="bins"></param>
         /// <param name="rRa"></param>
-        public Histogram(int bins, ref Raster rRa)
+        public Histogram(int bins, Raster rRa)
         {
             rRa.ComputeStatistics();
             Dictionary<string, decimal> stats = rRa.GetStatistics();

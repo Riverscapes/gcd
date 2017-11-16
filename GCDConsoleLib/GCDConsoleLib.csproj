@@ -106,6 +106,7 @@
     <Compile Include="RasterOperators\Interfaces.cs" />
     <Compile Include="RasterOperators\Operators\FISRaster.cs" />
     <Compile Include="RasterOperators\Stats\GetChangeStats.cs" />
+    <Compile Include="RasterOperators\Stats\GetChangeStatsSeg.cs" />
     <Compile Include="RasterOperators\Stats\GetDoDPropStats.cs" />
     <Compile Include="RasterOperators\Stats\GetDoDMinLodStats.cs" />
     <Compile Include="RasterOperators\Operators\Hillshade.cs" />

@@ -70,7 +70,7 @@ namespace GCDConsoleLib
         /// </summary>
         /// <param name="otherProj"></param>
         /// <returns></returns>
-        public bool IsSame(ref Projection otherProj)
+        public bool IsSame(Projection otherProj)
         {
             bool bSame = false;
             try

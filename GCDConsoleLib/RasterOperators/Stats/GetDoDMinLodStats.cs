@@ -14,7 +14,7 @@ namespace GCDConsoleLib.Internal.Operators
         /// <summary>
         /// Pass-through constructure
         /// </summary>
-        public GetDodMinLodStats(ref Raster rawDoD, ref Raster thrDoD, 
+        public GetDodMinLodStats(Raster rawDoD, Raster thrDoD, 
             float thresh, DoDStats theStats) :
             base(new List<Raster> { rawDoD, thrDoD })
         {
@@ -25,7 +25,7 @@ namespace GCDConsoleLib.Internal.Operators
         /// <summary>
         /// This is the actual implementation of the cell-by-cell logic
         /// </summary>
-        protected override float CellOp(ref List<float[]> data, int id)
+        protected override float CellOp(List<float[]> data, int id)
         {
             fDoDValue = data[0][id];
             if (fDoDValue != _rasternodatavals[0])

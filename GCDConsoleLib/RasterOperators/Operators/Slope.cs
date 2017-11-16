@@ -11,7 +11,7 @@ namespace GCDConsoleLib.Internal.Operators
         public enum SlopeType: byte { Percent, Degrees};
         private SlopeType _slopetype;
 
-        public Slope(ref Raster rInput, Raster rOutputRaster, SlopeType theType) :
+        public Slope(Raster rInput, Raster rOutputRaster, SlopeType theType) :
             base(new List<Raster> { rInput }, 1, rOutputRaster)
         {
             _slopetype = theType;
@@ -19,7 +19,7 @@ namespace GCDConsoleLib.Internal.Operators
             cellHeight = (float)Math.Abs(OpExtent.CellHeight);
         }
 
-        public float CalculateSlope(ref float[] fElev)
+        public float CalculateSlope(float[] fElev)
         {
             dzdx = ((fElev[2] - fElev[0]) + ((2 * fElev[5]) - (2 * fElev[3])) + (fElev[8] - fElev[6])) / (8 * cellWidth);
             dzdy = ((fElev[0] - fElev[6]) + ((2 * fElev[1]) - (2 * fElev[7])) + (fElev[2] - fElev[8])) / (8 * cellHeight);
@@ -29,7 +29,7 @@ namespace GCDConsoleLib.Internal.Operators
             return riseRun;
         }
 
-        protected override float WindowOp(ref List<float[]> wd)
+        protected override float WindowOp(List<float[]> wd)
         {
             _buff = wd[0];
             // If anything is nodataval just return that and skip everything else
@@ -37,7 +37,7 @@ namespace GCDConsoleLib.Internal.Operators
                 if (wd[0][k].Equals(OpNodataVal))
                     return OpNodataVal;
 
-            theSlope = CalculateSlope(ref _buff);
+            theSlope = CalculateSlope(_buff);
 
             switch (_slopetype)
             {

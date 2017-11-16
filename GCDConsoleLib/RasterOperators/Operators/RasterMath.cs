@@ -19,7 +19,7 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="rInput"></param>
         /// <param name="dOperand"></param>
         /// <param name="sOutputRaster"></param>
-        public RasterMath(RasterOperators.MathOpType otType, ref Raster rInput, double dOperand, 
+        public RasterMath(RasterOperators.MathOpType otType, Raster rInput, double dOperand, 
             Raster rOutputRaster) : base(new List<Raster> { rInput }, rOutputRaster)
         {
             _type = otType;
@@ -28,15 +28,15 @@ namespace GCDConsoleLib.Internal.Operators
             _operand = (T)Convert.ChangeType(dOperand, typeof(T));
         }
 
-        public RasterMath(RasterOperators.MathOpType otType, ref Raster rInputA, 
-            ref Raster rInputB, Raster rOutputRaster) :
+        public RasterMath(RasterOperators.MathOpType otType, Raster rInputA, 
+            Raster rInputB, Raster rOutputRaster) :
             base(new List<Raster> { rInputA, rInputB }, rOutputRaster)
         {
             _type = otType;
             _scalar = false;
         }
 
-        protected override T CellOp(ref List<T[]> data, int id)
+        protected override T CellOp(List<T[]> data, int id)
         {
             T val = OpNodataVal;
             if (_scalar)

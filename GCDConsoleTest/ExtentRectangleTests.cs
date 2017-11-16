@@ -62,12 +62,12 @@ namespace GCDConsoleLib.Tests
             Assert.AreEqual(rA1.MaxArrID, 9999);
 
             // Positive Tests
-            Assert.IsTrue(rA1.IsOrthogonal(ref rA1));
-            Assert.IsTrue(rA1.IsOrthogonal(ref rB1) && rB1.IsOrthogonal(ref rA1));
-            Assert.IsTrue(rA1.IsOrthogonal(ref rC1) && rC1.IsOrthogonal(ref rA1));
+            Assert.IsTrue(rA1.IsOrthogonal(rA1));
+            Assert.IsTrue(rA1.IsOrthogonal(rB1) && rB1.IsOrthogonal(rA1));
+            Assert.IsTrue(rA1.IsOrthogonal(rC1) && rC1.IsOrthogonal(rA1));
 
             // Negative Tests
-            Assert.IsFalse(rA1.IsOrthogonal(ref rD1) || rD1.IsOrthogonal(ref rA1));
+            Assert.IsFalse(rA1.IsOrthogonal(rD1) || rD1.IsOrthogonal(rA1));
         }
 
         [TestMethod()]
@@ -211,15 +211,15 @@ namespace GCDConsoleLib.Tests
             ExtentRectangle eNoOverlap = new ExtentRectangle(5.1m, 6.4m, 0.1m, 0.2m, 100, 100);
 
             // Some positive Tests
-            Assert.IsTrue(eA1.HasOverlap(ref eA1));
-            Assert.IsTrue(eA1.HasOverlap(ref eInside));
-            Assert.IsTrue(eA1.HasOverlap(ref eOverlap1));
+            Assert.IsTrue(eA1.HasOverlap(eA1));
+            Assert.IsTrue(eA1.HasOverlap(eInside));
+            Assert.IsTrue(eA1.HasOverlap(eOverlap1));
 
             // Some border cases
-            Assert.IsFalse(eA1.HasOverlap(ref eEdgesOverlap));
+            Assert.IsFalse(eA1.HasOverlap(eEdgesOverlap));
 
             // Some negative tests
-            Assert.IsFalse(eA1.HasOverlap(ref eNoOverlap));
+            Assert.IsFalse(eA1.HasOverlap(eNoOverlap));
         }
 
 
@@ -251,30 +251,30 @@ namespace GCDConsoleLib.Tests
             ExtentRectangle rTest1 = new ExtentRectangle(4, 6, -1, 1, 10, 10);
             ExtentRectangle rTest2 = new ExtentRectangle(5, 3, -1, 1, 8, 8);
 
-            Assert.AreEqual(rTest1.RelativeId(0, ref rTest1), 0);
-            Assert.AreEqual(rTest1.RelativeId(0, ref rTest2), 11);
-            Assert.AreEqual(rTest2.RelativeId(0, ref rTest1), -1);
-            Assert.AreEqual(rTest2.RelativeId(0, ref rTest2), 0);
+            Assert.AreEqual(rTest1.RelativeId(0, rTest1), 0);
+            Assert.AreEqual(rTest1.RelativeId(0, rTest2), 11);
+            Assert.AreEqual(rTest2.RelativeId(0, rTest1), -1);
+            Assert.AreEqual(rTest2.RelativeId(0, rTest2), 0);
 
-            Assert.AreEqual(rTest1.RelativeId(1, ref rTest1), 1);
-            Assert.AreEqual(rTest1.RelativeId(1, ref rTest2), 12);
-            Assert.AreEqual(rTest2.RelativeId(1, ref rTest1), -1);
-            Assert.AreEqual(rTest2.RelativeId(1, ref rTest2), 1);
+            Assert.AreEqual(rTest1.RelativeId(1, rTest1), 1);
+            Assert.AreEqual(rTest1.RelativeId(1, rTest2), 12);
+            Assert.AreEqual(rTest2.RelativeId(1, rTest1), -1);
+            Assert.AreEqual(rTest2.RelativeId(1, rTest2), 1);
 
-            Assert.AreEqual(rTest1.RelativeId(24, ref rTest1), 24);
-            Assert.AreEqual(rTest1.RelativeId(24, ref rTest2), 31);
-            Assert.AreEqual(rTest2.RelativeId(24, ref rTest1), -1);
-            Assert.AreEqual(rTest2.RelativeId(24, ref rTest2), 24);
+            Assert.AreEqual(rTest1.RelativeId(24, rTest1), 24);
+            Assert.AreEqual(rTest1.RelativeId(24, rTest2), 31);
+            Assert.AreEqual(rTest2.RelativeId(24, rTest1), -1);
+            Assert.AreEqual(rTest2.RelativeId(24, rTest2), 24);
 
-            Assert.AreEqual(rTest1.RelativeId(25, ref rTest1), 25);
-            Assert.AreEqual(rTest1.RelativeId(25, ref rTest2), -1);
-            Assert.AreEqual(rTest2.RelativeId(25, ref rTest1), -1);
-            Assert.AreEqual(rTest2.RelativeId(25, ref rTest2), 25);
+            Assert.AreEqual(rTest1.RelativeId(25, rTest1), 25);
+            Assert.AreEqual(rTest1.RelativeId(25, rTest2), -1);
+            Assert.AreEqual(rTest2.RelativeId(25, rTest1), -1);
+            Assert.AreEqual(rTest2.RelativeId(25, rTest2), 25);
 
-            Assert.AreEqual(rTest1.RelativeId(99, ref rTest1), 99);
-            Assert.AreEqual(rTest1.RelativeId(99, ref rTest2), -1);
-            Assert.AreEqual(rTest2.RelativeId(99, ref rTest1), -1);
-            Assert.AreEqual(rTest2.RelativeId(99, ref rTest2), -1);
+            Assert.AreEqual(rTest1.RelativeId(99, rTest1), 99);
+            Assert.AreEqual(rTest1.RelativeId(99, rTest2), -1);
+            Assert.AreEqual(rTest2.RelativeId(99, rTest1), -1);
+            Assert.AreEqual(rTest2.RelativeId(99, rTest2), -1);
         }
 
     }

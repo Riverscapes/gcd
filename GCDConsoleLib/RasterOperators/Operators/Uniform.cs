@@ -11,7 +11,7 @@ namespace GCDConsoleLib.Internal.Operators
         /// <summary>
         /// Pass-through constructure
         /// </summary>
-        public UniformRaster(ref Raster rInput, Raster rOutputRaster, T val) :
+        public UniformRaster(Raster rInput, Raster rOutputRaster, T val) :
             base(new List<Raster> { rInput }, rOutputRaster)
         {
            _val = val;
@@ -20,7 +20,7 @@ namespace GCDConsoleLib.Internal.Operators
         /// <summary>
         /// This is the actual implementation of the cell-by-cell logic
         /// </summary>
-        protected override T CellOp(ref List<T[]> data, int id)
+        protected override T CellOp(List<T[]> data, int id)
         {
             return _val;
         }

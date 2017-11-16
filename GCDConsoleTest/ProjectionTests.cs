@@ -38,11 +38,11 @@ namespace GCDConsoleLib.Tests
             Projection pWKTTest3 = new Projection(sWKTTest3);
 
             // Positive Test
-            Assert.IsTrue(pWKTTest1.IsSame(ref pWKTTest2));
-            Assert.IsTrue(pWKTTest1.IsSame(ref pWKTTest3));
+            Assert.IsTrue(pWKTTest1.IsSame(pWKTTest2));
+            Assert.IsTrue(pWKTTest1.IsSame(pWKTTest3));
 
             // Negative Test
-            Assert.IsFalse(pWKTTest1.IsSame(ref junk));
+            Assert.IsFalse(pWKTTest1.IsSame(junk));
         }
 
         [TestMethod()]
@@ -70,11 +70,11 @@ namespace GCDConsoleLib.Tests
 
 
             // Positive Test
-            Assert.IsTrue(pWKT1.IsSame(ref pWKT2));
-            Assert.IsTrue(pWKT1.IsSame(ref pWKT3));
+            Assert.IsTrue(pWKT1.IsSame(pWKT2));
+            Assert.IsTrue(pWKT1.IsSame(pWKT3));
 
             // Negative Test
-            Assert.IsFalse(pWKT1.IsSame(ref junk));
+            Assert.IsFalse(pWKT1.IsSame(junk));
 
         }
     }

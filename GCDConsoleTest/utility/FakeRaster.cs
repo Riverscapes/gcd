@@ -34,7 +34,7 @@ namespace GCDConsoleLib.Tests.Utility
         }
 
         // This special case is for taking the outputs of a real raster into a fake one.
-        public FakeRaster(ref Raster rRef) : base(ref rRef)
+        public FakeRaster(Raster rRef) : base(rRef)
         {
             _inputgrid = new U[rRef.Extent.rows, rRef.Extent.cols];
             _outputGrid = new U[rRef.Extent.rows, rRef.Extent.cols];
@@ -78,7 +78,7 @@ namespace GCDConsoleLib.Tests.Utility
         /// <summary>
         /// Bypass file writing and fake a purely in-memory interface
         /// </summary>
-        public override void Read<T>(int xOff, int yOff, int xSize, int ySize, ref T[] buffer)
+        public override void Read<T>(int xOff, int yOff, int xSize, int ySize, T[] buffer)
         {
             for (int r0 = 0; r0 < ySize; r0++)
             {
@@ -92,7 +92,7 @@ namespace GCDConsoleLib.Tests.Utility
         /// <summary>
         /// Bypass file writing and fake a purely in-memory interface
         /// </summary>
-        public override void Write<T>(int xOff, int yOff, int xSize, int ySize, ref T[] buffer)
+        public override void Write<T>(int xOff, int yOff, int xSize, int ySize, T[] buffer)
         {
             for (int r0 = 0; r0 < ySize; r0++)
             {

@@ -71,6 +71,10 @@ namespace GCDConsoleLib
             }
         }
 
+        /// <summary>
+        /// Copy the vector somewhere else
+        /// </summary>
+        /// <param name="destPath"></param>
         public override void Copy(FileInfo destPath)
         {
             Open();
@@ -79,6 +83,10 @@ namespace GCDConsoleLib
             Dispose();
         }
 
+        /// <summary>
+        /// Open the vector file
+        /// </summary>
+        /// <param name="write"></param>
         public override void Open(bool write = false)
         {
             // Register GDal and get the driver objects
@@ -90,6 +98,34 @@ namespace GCDConsoleLib
             }
         }
 
+        /// <summary>
+        /// Is a point inside a feature?
+        /// </summary>
+        /// <returns></returns>
+        public List<string> ShapesContainPoint(double x, double y, string fieldName)
+        {
+            if (!Fields.ContainsKey(fieldName))
+                throw new ArgumentException("Field Not found: " + fieldName);
+
+            Open();
+            List<string> retVal = new List<string>();
+            Layer mLayer = _ds.GetLayerByIndex(0);
+
+            Geometry pt = new Geometry(wkbGeometryType.wkbPoint);
+            pt.AddPoint(0, 0, 0);
+
+            Feature mFeat = mLayer.GetNextFeature();
+            while (mFeat != null)
+            {
+                if (mFeat.GetGeometryRef().Contains(pt))
+                {
+                    string fieldStr = mFeat.GetFieldAsString(fieldName);
+                    if (retVal.Contains(fieldStr))
+                        retVal.Add(fieldStr);
+                }        
+            }
+            return retVal;
+        }
 
         /// <summary>
         /// Deletion
@@ -126,7 +162,7 @@ namespace GCDConsoleLib
             Feature mFeat = mLayer.GetNextFeature();
             while (mFeat != null)
             {
-                Features.Add(mFeat.GetFID(), new VectorFeature(ref mFeat));
+                Features.Add(mFeat.GetFID(), new VectorFeature(mFeat));
                 mFeat = mLayer.GetNextFeature();
             }
 
@@ -136,10 +172,10 @@ namespace GCDConsoleLib
             for (int fldId = 0; fldId < iFldCnt; fldId++)
             {
                 FieldDefn mFldDef = mFeatDfn.GetFieldDefn(fldId);
-                Fields.Add(mFldDef.GetName(), new VectorField(ref mFldDef));
+                Fields.Add(mFldDef.GetName(), new VectorField(mFldDef));
             }
 
-            // Spatial ref is way harder than it needs to be:
+            // Spatial is way harder than it needs to be:
             OSGeo.OSR.SpatialReference sRef = mLayer.GetSpatialRef();
             string sRefstring = "";
             sRef.ExportToWkt(out sRefstring);
@@ -161,7 +197,7 @@ namespace GCDConsoleLib
                 fDef.SetPrecision((int)precision);
             }
 
-            Fields.Add(fDef.GetName(), new VectorField(ref fDef));
+            Fields.Add(fDef.GetName(), new VectorField(fDef));
             
             return mLayer.CreateField(fDef, 0); // 0 => Approx ok
         }

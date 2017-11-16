@@ -14,7 +14,7 @@ namespace GCDConsoleLib.Internal.Operators
         /// <summary>
         /// Pass-through constructure
         /// </summary>
-        public GetDoDPropStats(ref Raster rDod, ref Raster rErr, DoDStats theStats) :
+        public GetDoDPropStats(Raster rDod, Raster rErr, DoDStats theStats) :
             base(new List<Raster> { rDod, rErr })
         {
             Stats = theStats;
@@ -23,7 +23,7 @@ namespace GCDConsoleLib.Internal.Operators
         /// <summary>
         /// This is the actual implementation of the cell-by-cell logic
         /// </summary>
-        protected override float CellOp(ref List<float[]> data, int id)
+        protected override float CellOp(List<float[]> data, int id)
         {
             fDoDValue = data[0][id];
             fPropErr = data[1][id];
@@ -49,10 +49,10 @@ namespace GCDConsoleLib.Internal.Operators
                     // Raw Erosion
                     Stats.ErosionRaw.AddToSumAndIncrementCounter(fDoDValue - 1);
 
-                    if (fDoDValue < (fPropErr  -1))
+                    if (fDoDValue < (fPropErr - 1))
                     {
                         // Thresholded Erosion
-                        Stats.ErosionThr.AddToSumAndIncrementCounter(fDoDValue * - 1);
+                        Stats.ErosionThr.AddToSumAndIncrementCounter(fDoDValue * -1);
                         Stats.ErosionErr.AddToSumAndIncrementCounter(fPropErr);
                     }
                 }

@@ -8,7 +8,7 @@ namespace GCDConsoleLib.Internal.Operators
     {
         private double azimuth, zFactor, altDeg, zenDeg, zenRad, azimuthMath, azimuthRad, aspectRad;
 
-        public Hillshade(ref Raster rInput, Raster rOutputRaster) :
+        public Hillshade(Raster rInput, Raster rOutputRaster) :
             base(new List<Raster> { rInput }, 1, rOutputRaster)
         { }
 
@@ -28,7 +28,7 @@ namespace GCDConsoleLib.Internal.Operators
             azimuthRad = azimuthMath * Math.PI / 180;
         }
 
-        protected override float WindowOp(ref List<float[]> wd)
+        protected override float WindowOp(List<float[]> wd)
         {
             // Don't calculate if we have nodatas in the mix
             for (int k = 0; k < BufferCellNum; k++)

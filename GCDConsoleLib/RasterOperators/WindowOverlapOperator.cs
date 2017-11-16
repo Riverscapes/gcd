@@ -59,7 +59,7 @@ namespace GCDConsoleLib.Internal
         /// <param name="windowData"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        protected abstract T WindowOp(ref List<T[]> windowData);
+        protected abstract T WindowOp(List<T[]> windowData);
 
         private List<T[]> NoDataChunkList()
         {
@@ -77,7 +77,7 @@ namespace GCDConsoleLib.Internal
         /// First time through we need to setup the buffer properly
         /// </summary>
         /// <param name="data"></param>
-        private void firstTime(ref List<T[]> data)
+        private void firstTime(List<T[]> data)
         {
             // Fill the rows above the extent with nodatavals
             // 1 row is the convention for this chunksize
@@ -91,14 +91,14 @@ namespace GCDConsoleLib.Internal
             while (_chunkCache.Count < BufferLength)
             {
                 nextChunk();
-                GetChunk(ref data);
+                GetChunk(data);
                 _chunkCache.Add(data.Clone<T[]>());
             }
             // Put our index right in the middle
             _cacheIdx = BufferCells;
         }
 
-        protected override void ChunkOp(ref List<T[]> data, ref T[] outChunk)
+        protected override void ChunkOp(List<T[]> data, T[] outChunk)
         {
             /** Don't forget the numbering scheme:
              *  0  1  2  or   0  1  2  3  4
@@ -113,7 +113,7 @@ namespace GCDConsoleLib.Internal
 
             // First time around we need to set up the cache properly and force the look-ahead forward
             if (_chunkCache.Count == 0)
-                firstTime(ref data);
+                firstTime(data);
             // When we get to the end of the file we need to pad with nodata values at the bottom
             //else if (ChunkExtent.Top > OriginalOpBottom)
             else if ((ChunkExtent.Top * ChunkExtent.CellHeight) >= (OriginalOpBottom * ChunkExtent.CellHeight))
@@ -153,7 +153,7 @@ namespace GCDConsoleLib.Internal
                 }
                 // DEBUG TEST
                 //dWindow[0].Make2DArray(BufferLength, BufferLength).DebugPrintGrid(OpNodataVal);
-                outChunk[id] = WindowOp(ref dWindow);
+                outChunk[id] = WindowOp(dWindow);
                 // Move the window by one cell to the right
                 WindowExtent.Left += ChunkExtent.CellWidth;
             }

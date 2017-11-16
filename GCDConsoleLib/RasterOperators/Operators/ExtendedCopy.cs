@@ -10,7 +10,7 @@ namespace GCDConsoleLib.Internal.Operators
         /// <summary>
         /// Pass-through constructure
         /// </summary>
-        public ExtendedCopy(ref Raster rInput, Raster rOutputRaster, ExtentRectangle newRect) :
+        public ExtendedCopy(Raster rInput, Raster rOutputRaster, ExtentRectangle newRect) :
             base(new List<Raster> { rInput }, rOutputRaster)
         {
             SetOpExtent(newRect);
@@ -19,7 +19,7 @@ namespace GCDConsoleLib.Internal.Operators
         /// <summary>
         /// This is the actual implementation of the cell-by-cell logic
         /// </summary>
-        protected override T CellOp(ref List<T[]> data, int id)
+        protected override T CellOp(List<T[]> data, int id)
         {
             if (data[0][id].Equals(_rasternodatavals[0]))
                 return OpNodataVal;

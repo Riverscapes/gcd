@@ -10,7 +10,7 @@ namespace GCDConsoleLib
         public GDalFieldType Type;
 
         private FieldDefn _fieldDef;
-        public VectorField(ref FieldDefn fieldDef)
+        public VectorField(FieldDefn fieldDef)
         {
             _fieldDef = fieldDef;
             Type = new GDalFieldType(_fieldDef.GetFieldType());

@@ -45,9 +45,9 @@ namespace GCDConsoleLib
         /// <param name="rTemplate"></param>
         /// <param name="sFilename"></param>
         /// <param name="leaveopen"></param>
-        public Raster(ref Raster rTemplate, FileInfo sFilename, bool leaveopen = false) : base(sFilename)
+        public Raster(Raster rTemplate, FileInfo sFilename, bool leaveopen = false) : base(sFilename)
         {
-            ExtentRectangle theExtent = new ExtentRectangle(ref rTemplate.Extent);
+            ExtentRectangle theExtent = new ExtentRectangle(rTemplate.Extent);
             _Init(RasterDriver.GTiff, rTemplate.VerticalUnits, rTemplate.Proj, rTemplate.Datatype, theExtent, rTemplate.origNodataVal);
         }
 
@@ -57,16 +57,16 @@ namespace GCDConsoleLib
         /// <param name="rTemplate"></param>
         /// <param name="sFilename"></param>
         /// <param name="leaveopen"></param>
-        public Raster(ref Raster rTemplate, FileInfo sFilename, GdalDataType dType, bool leaveopen = false) : base(sFilename)
+        public Raster(Raster rTemplate, FileInfo sFilename, GdalDataType dType, bool leaveopen = false) : base(sFilename)
         {
-            ExtentRectangle theExtent = new ExtentRectangle(ref rTemplate.Extent);
+            ExtentRectangle theExtent = new ExtentRectangle(rTemplate.Extent);
             _Init(RasterDriver.GTiff, rTemplate.VerticalUnits, rTemplate.Proj, dType, theExtent, rTemplate.origNodataVal);
         }
 
         // This is mainly for testing purposes
-        public Raster(ref Raster rTemplate) : base()
+        public Raster(Raster rTemplate) : base()
         {
-            ExtentRectangle theExtent = new ExtentRectangle(ref rTemplate.Extent);
+            ExtentRectangle theExtent = new ExtentRectangle(rTemplate.Extent);
             _Init(RasterDriver.GTiff, rTemplate.VerticalUnits, rTemplate.Proj, rTemplate.Datatype, theExtent, rTemplate.origNodataVal);
         }
 
@@ -77,7 +77,7 @@ namespace GCDConsoleLib
         /// <param name="rExtent"></param>
         /// <param name="sFilename"></param>
         /// <param name="leaveopen"></param>
-        public Raster(ref Raster rTemplate, ExtentRectangle rExtent, FileInfo sFilename, bool leaveopen = false) : base(sFilename)
+        public Raster(Raster rTemplate, ExtentRectangle rExtent, FileInfo sFilename, bool leaveopen = false) : base(sFilename)
         {
             _Init(rTemplate.driver, rTemplate.VerticalUnits, rTemplate.Proj, rTemplate.Datatype, rExtent, rTemplate.origNodataVal);
         }
@@ -254,12 +254,12 @@ namespace GCDConsoleLib
         /// </summary>
         /// <param name=""></param>
         /// <returns></returns>
-        public bool IsMetaSame(ref Raster Raster2)
+        public bool IsMetaSame(Raster Raster2)
         {
             Raster me = this;
             bool bIsSame = true;
 
-            try { ValidateSameMeta(ref me, ref Raster2); }
+            try { ValidateSameMeta(me, Raster2); }
             catch (ArgumentException) { bIsSame = false; }
 
             return bIsSame;
@@ -268,7 +268,7 @@ namespace GCDConsoleLib
         /// <summary>
         /// We're just going to scream if any of our inputs are in the wrong format
         /// </summary>
-        public static void ValidateSameMeta(ref Raster rR1, ref Raster rR2)
+        public static void ValidateSameMeta(Raster rR1, Raster rR2)
         {
             if (rR1.Extent.CellHeight != rR2.Extent.CellHeight)
                 throw new ArgumentException("Cellheights do not match");
@@ -276,7 +276,7 @@ namespace GCDConsoleLib
                 throw new ArgumentException("Cellwidths do not match");
             if (!rR1.IsDivisible() || !rR2.Extent.IsDivisible())
                 throw new ArgumentException("Both raster extents must be divisible");
-            if (!rR1.Proj.IsSame(ref rR2.Proj))
+            if (!rR1.Proj.IsSame(rR2.Proj))
                 throw new ArgumentException("Raster Projections do not match match");
             if (rR1.VerticalUnits != rR2.VerticalUnits)
                 throw new ArgumentException(string.Format("Both rasters must have the same vertical units: `{0}` vs. `{1}`", rR1.VerticalUnits, rR2.VerticalUnits));
@@ -359,7 +359,7 @@ namespace GCDConsoleLib
 
             foreach (Raster raster in rasters)
             {
-                newExtent.Union(ref raster.Extent);
+                newExtent.Union(raster.Extent);
             }
             return newExtent;
         }
@@ -465,17 +465,17 @@ namespace GCDConsoleLib
         /// <summary>
         /// Just some helper convenience methods:
         /// </summary>
-        public bool IsConcurrent(ref Raster otherRaster)
+        public bool IsConcurrent(Raster otherRaster)
         {
-            return Extent.IsConcurrent(ref otherRaster.Extent);
+            return Extent.IsConcurrent(otherRaster.Extent);
         }
         public bool IsDivisible()
         {
             return Extent.IsDivisible();
         }
-        public bool IsOrthogonal(ref Raster otherRaster)
+        public bool IsOrthogonal(Raster otherRaster)
         {
-            return Extent.IsOrthogonal(ref otherRaster.Extent);
+            return Extent.IsOrthogonal(otherRaster.Extent);
         }
         public int VerticalPrecision
         {
@@ -513,7 +513,7 @@ namespace GCDConsoleLib
         /// <param name="xSize"></param>
         /// <param name="ySize"></param>
         /// <param name="buffer"></param>
-        public virtual void Write<T>(int xOff, int yOff, int xSize, int ySize, ref T[] buffer)
+        public virtual void Write<T>(int xOff, int yOff, int xSize, int ySize, T[] buffer)
         {
             Open(true);
             if (typeof(T) == typeof(float))
@@ -537,7 +537,7 @@ namespace GCDConsoleLib
         /// <param name="xSize"></param>
         /// <param name="ySize"></param>
         /// <param name="buffer"></param>
-        public virtual void Read<T>(int xOff, int yOff, int xSize, int ySize, ref T[] buffer)
+        public virtual void Read<T>(int xOff, int yOff, int xSize, int ySize, T[] buffer)
         {
             Open();
             if (typeof(T) == typeof(float))

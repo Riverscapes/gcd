@@ -5,7 +5,7 @@ namespace GCDConsoleLib
     public class VectorFeature
     {
         public Feature _feat;
-        public VectorFeature(ref Feature featDef)
+        public VectorFeature(Feature featDef)
         {
             _feat = featDef;
         }

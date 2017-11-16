@@ -20,12 +20,12 @@ namespace GCDConsoleLib.Tests
             {
                 Raster rTempl = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("AngledSlopey950-980E.tif")));
                 ExtentRectangle newExtReal = rTempl.Extent.Buffer(15);
-                Raster rTemplateOutput = RasterOperators.ExtendedCopy(ref rTempl, new FileInfo(Path.Combine(tmp.Name, "ExtendedCopyRasterTestBuffer.tif")), newExtReal);
+                Raster rTemplateOutput = RasterOperators.ExtendedCopy(rTempl, new FileInfo(Path.Combine(tmp.Name, "ExtendedCopyRasterTestBuffer.tif")), newExtReal);
 
                 ExtentRectangle newExtReal2 = rTempl.Extent.Buffer(5);
                 newExtReal2.rows = (int)newExtReal2.rows / 2;
                 newExtReal2.cols = (int)newExtReal2.cols / 3;
-                Raster rTemplateOutput2 = RasterOperators.ExtendedCopy(ref rTempl, new FileInfo(Path.Combine(tmp.Name, "ExtendedCopyRasterTestSlice.tif")), newExtReal2);
+                Raster rTemplateOutput2 = RasterOperators.ExtendedCopy(rTempl, new FileInfo(Path.Combine(tmp.Name, "ExtendedCopyRasterTestSlice.tif")), newExtReal2);
             }
 
             Raster Raster1 = new FakeRaster<int>(10, 20, -1, 1, new int[,] { { 1, 2, 3, 4 }, { 5, 6, 7, 8 }, { 9, 10, 11, 12 } });
@@ -34,7 +34,7 @@ namespace GCDConsoleLib.Tests
             Raster rOutput = new FakeRaster<int>(10, 20, -1, 1, outgrid);
 
             ExtentRectangle newExt = Raster1.Extent.Buffer(2);
-            RasterOperators.ExtendedCopy(ref Raster1, ref rOutput, new ExtentRectangle(ref newExt));
+            RasterOperators.ExtendedCopy(Raster1, rOutput, new ExtentRectangle(newExt));
         }
 
         [TestMethod()]
@@ -46,17 +46,17 @@ namespace GCDConsoleLib.Tests
                 Raster rTempl = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("const900.tif")));
                 Raster rTemp2 = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("const950.tif")));
 
-                Raster rAdd1 = RasterOperators.Add(ref rTempl, 2.1, new FileInfo(Path.Combine(tmp.Name, "RasterAddOperand.tif")));
-                Raster rAdd2 = RasterOperators.Add(ref rTempl, ref rTemp2, new FileInfo(Path.Combine(tmp.Name, "RasterAddRaster.tif")));
+                Raster rAdd1 = RasterOperators.Add(rTempl, 2.1, new FileInfo(Path.Combine(tmp.Name, "RasterAddOperand.tif")));
+                Raster rAdd2 = RasterOperators.Add(rTempl, rTemp2, new FileInfo(Path.Combine(tmp.Name, "RasterAddRaster.tif")));
 
-                Raster rSub1 = RasterOperators.Subtract(ref rTempl, 2.1, new FileInfo(Path.Combine(tmp.Name, "RasterSubtractOperand.tif")));
-                Raster rSub2 = RasterOperators.Subtract(ref rTempl, ref rTemp2, new FileInfo(Path.Combine(tmp.Name, "RasterSubtractRaster.tif")));
+                Raster rSub1 = RasterOperators.Subtract(rTempl, 2.1, new FileInfo(Path.Combine(tmp.Name, "RasterSubtractOperand.tif")));
+                Raster rSub2 = RasterOperators.Subtract(rTempl, rTemp2, new FileInfo(Path.Combine(tmp.Name, "RasterSubtractRaster.tif")));
 
-                Raster rMult1 = RasterOperators.Subtract(ref rTempl, 2.1, new FileInfo(Path.Combine(tmp.Name, "RasterMultiplyOperand.tif")));
-                Raster rMult2 = RasterOperators.Multiply(ref rTempl, ref rTemp2, new FileInfo(Path.Combine(tmp.Name, "RasterMultiplyRaster.tif")));
+                Raster rMult1 = RasterOperators.Subtract(rTempl, 2.1, new FileInfo(Path.Combine(tmp.Name, "RasterMultiplyOperand.tif")));
+                Raster rMult2 = RasterOperators.Multiply(rTempl, rTemp2, new FileInfo(Path.Combine(tmp.Name, "RasterMultiplyRaster.tif")));
 
-                Raster rDiv1 = RasterOperators.Subtract(ref rTempl, 2.1, new FileInfo(Path.Combine(tmp.Name, "RasterDivideOperand.tif")));
-                Raster rDiv2 = RasterOperators.Divide(ref rTempl, ref rTemp2, new FileInfo(Path.Combine(tmp.Name, "RasterDivideRaster.tif")));
+                Raster rDiv1 = RasterOperators.Subtract(rTempl, 2.1, new FileInfo(Path.Combine(tmp.Name, "RasterDivideOperand.tif")));
+                Raster rDiv2 = RasterOperators.Divide(rTempl, rTemp2, new FileInfo(Path.Combine(tmp.Name, "RasterDivideRaster.tif")));
                 Assert.Fail();
             }
         }

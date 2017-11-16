@@ -37,7 +37,7 @@ namespace GCDConsoleLib
         /// Copy constructor
         /// </summary>
         /// <param name="orig"></param>
-        public ExtentRectangle(ref ExtentRectangle orig)
+        public ExtentRectangle(ExtentRectangle orig)
         {
             _Init(orig.Top, orig.Left, orig.CellHeight, orig.CellWidth, orig.rows, orig.cols);
         }
@@ -157,7 +157,7 @@ namespace GCDConsoleLib
         /// <param name="rExtent1"></param>
         /// <param name="rExtent2"></param>
         /// <returns>(colT, rowT)</returns>
-        public Tuple<int, int> GetTopCornerTranslationRowCol(ref ExtentRectangle rExtent2)
+        public Tuple<int, int> GetTopCornerTranslationRowCol(ExtentRectangle rExtent2)
         {
             int colT = (int)((Left - rExtent2.Left) / CellWidth);
             int rowT = (int)((Top - rExtent2.Top) / CellHeight);
@@ -169,7 +169,7 @@ namespace GCDConsoleLib
         /// </summary>
         /// <param name="rect"></param>
         /// <returns></returns>
-        public ExtentRectangle Union(ref ExtentRectangle rect)
+        public ExtentRectangle Union(ExtentRectangle rect)
         {
             decimal newright, newleft, newtop, newbottom;
             if (CellHeight > 0)
@@ -204,7 +204,7 @@ namespace GCDConsoleLib
         /// </summary>
         /// <param name="rect"></param>
         /// <returns></returns>
-        public ExtentRectangle Intersect(ref ExtentRectangle rect)
+        public ExtentRectangle Intersect(ExtentRectangle rect)
         {
             decimal newright, newleft, newtop, newbottom;
             if (CellHeight > 0)
@@ -245,7 +245,7 @@ namespace GCDConsoleLib
         /// </summary>
         /// <param name="rect"></param>
         /// <returns></returns>
-        public Tuple<int, int> GetTranslation(ref ExtentRectangle rect)
+        public Tuple<int, int> GetTranslation(ExtentRectangle rect)
         {
             int ydiff = (int)(rect.Top - Top / Math.Abs(CellHeight));
             int xdiff = (int)(rect.Left - Left / Math.Abs(CellWidth));
@@ -257,7 +257,7 @@ namespace GCDConsoleLib
         /// </summary>
         /// <param name="otherExtent"></param>
         /// <returns></returns>
-        public bool IsConcurrent(ref ExtentRectangle otherExtent)
+        public bool IsConcurrent(ExtentRectangle otherExtent)
         {
             return CellWidth == otherExtent.CellWidth &&
                 CellHeight == otherExtent.CellHeight &&
@@ -304,10 +304,10 @@ namespace GCDConsoleLib
         /// <param name="origid"></param>
         /// <param name="otherExtent"></param>
         /// <returns>the transformed ID, -1 if it's not valid</returns>
-        public int RelativeId(int origid, ref ExtentRectangle otherExtent)
+        public int RelativeId(int origid, ExtentRectangle otherExtent)
         {
             Tuple<int, int> origRowCol = Id2RowCol(origid);
-            Tuple<int, int> offsetRowCol = GetTopCornerTranslationRowCol(ref otherExtent);
+            Tuple<int, int> offsetRowCol = GetTopCornerTranslationRowCol(otherExtent);
             int newInd;
             int newRow = origRowCol.Item1 + offsetRowCol.Item1;
             int newCol = origRowCol.Item2 + offsetRowCol.Item2;
@@ -324,7 +324,7 @@ namespace GCDConsoleLib
         /// </summary>
         /// <param name="otherExtent"></param>
         /// <returns></returns>
-        public bool IsOrthogonal(ref ExtentRectangle otherExtent)
+        public bool IsOrthogonal(ExtentRectangle otherExtent)
         {
             return IsDivisible() && otherExtent.IsDivisible();
         }
@@ -370,7 +370,7 @@ namespace GCDConsoleLib
         }
 
 
-        public bool HasOverlap(ref ExtentRectangle otherExtent)
+        public bool HasOverlap(ExtentRectangle otherExtent)
         {
             // TODO: TEST THIS THOROUGHLY, ESPECIALLY -/+ widht heights
             decimal ulx = Math.Max(this.Left, otherExtent.Left);

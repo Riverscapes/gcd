@@ -12,13 +12,13 @@ namespace GCDConsoleLib.Internal.Operators
         /// <summary>
         /// Pass-through constructure
         /// </summary>
-        public BinRaster(ref Raster rInput, int numBins) :
+        public BinRaster(Raster rInput, int numBins) :
             base(new List<Raster> { rInput })
         {
-            theHistogram = new Histogram(numBins, ref rInput);
+            theHistogram = new Histogram(numBins, rInput);
         }
 
-        protected override double CellOp(ref List<double[]> data, int id)
+        protected override double CellOp(List<double[]> data, int id)
         {
             if (!data[0][id].Equals(_rasternodatavals[0]))
                 theHistogram.AddBinVal(data[0][id]);

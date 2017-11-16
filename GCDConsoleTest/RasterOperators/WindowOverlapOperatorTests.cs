@@ -19,7 +19,7 @@ namespace GCDConsoleLib.Internal.Tests
             Assert.AreEqual(rRasters.Count, _rasters.Count);
             Assert.IsFalse(OpDone);
         }
-        protected override T WindowOp(ref List<T[]> windowData)
+        protected override T WindowOp(List<T[]> windowData)
         {
             // We just return the middle cell for testing
             return windowData[0][BufferCenterID];

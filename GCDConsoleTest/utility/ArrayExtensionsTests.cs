@@ -63,7 +63,7 @@ namespace GCDConsoleLib.Common.Extensons.Tests
             int[] plunkArr = new int[] { 1, 2, 3 };
             int[] expected = new int[] { 0, 0, 0, 1, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
-            intArr.Plunk(ref plunkArr, 3);
+            intArr.Plunk(plunkArr, 3);
             CollectionAssert.AreEqual(intArr, expected);
         }
 
@@ -74,7 +74,7 @@ namespace GCDConsoleLib.Common.Extensons.Tests
             int[,] plunkArr = new int[,] { { 1, 1 }, { 2, 2 } };
             int[,] expected = new int[,] { { 0, 0, 0, 0 }, { 0, 0, 1, 1 }, { 0, 0, 2, 2 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 } };
 
-            intArr.Plunk(ref plunkArr, 1, 2);
+            intArr.Plunk(plunkArr, 1, 2);
             CollectionAssert.AreEqual(intArr, expected);
         }
 
@@ -88,7 +88,7 @@ namespace GCDConsoleLib.Common.Extensons.Tests
             int[] intArrFlat = intArr.Make1DArray();
             int[] plunkArrFlat = intArr.Make1DArray();
             int[] exectedFlat = intArr.Make1DArray();
-            intArrFlat.Plunk(ref plunkArrFlat, intArr.GetLength(0), intArr.GetLength(1), plunkArr.GetLength(0), plunkArr.GetLength(1), 1, 2);
+            intArrFlat.Plunk(plunkArrFlat, intArr.GetLength(0), intArr.GetLength(1), plunkArr.GetLength(0), plunkArr.GetLength(1), 1, 2);
 
             CollectionAssert.AreEqual(intArrFlat, exectedFlat);
         }

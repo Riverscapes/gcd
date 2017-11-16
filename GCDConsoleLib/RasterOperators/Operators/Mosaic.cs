@@ -9,14 +9,14 @@ namespace GCDConsoleLib.Internal.Operators
         /// <summary>
         /// Pass-through constructure
         /// </summary>
-        public Mosaic(ref Raster rInput, Raster rOutputRaster, ExtentRectangle newRect) :
+        public Mosaic(Raster rInput, Raster rOutputRaster, ExtentRectangle newRect) :
             base(new List<Raster> { rInput }, rOutputRaster)
         { }
 
         /// <summary>
         /// This is the actual implementation of the cell-by-cell logic
         /// </summary>
-        protected override T CellOp(ref List<T[]> data, int id)
+        protected override T CellOp(List<T[]> data, int id)
         {
             for (int did = 0; did < data.Count; did++)
             {

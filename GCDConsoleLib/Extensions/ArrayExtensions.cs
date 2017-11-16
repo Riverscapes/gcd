@@ -82,7 +82,7 @@ namespace GCDConsoleLib.Common.Extensons
         /// <typeparam name="T"></typeparam>
         /// <param name="srcData"></param>
         /// <param name="offset"></param>
-        public static void Plunk<T>(this T[] dstData, ref T[] srcData, int offset)
+        public static void Plunk<T>(this T[] dstData, T[] srcData, int offset)
         {
             for (int srcId = 0; srcId < srcData.Length; srcId++)
             {
@@ -98,7 +98,7 @@ namespace GCDConsoleLib.Common.Extensons
         /// <param name="srcData"></param>
         /// <param name="OffsetR0"></param>
         /// <param name="OffsetR1"></param>
-        public static void Plunk<T>(this T[,] dstData, ref T[,] srcData, int OffsetR0, int OffsetR1)
+        public static void Plunk<T>(this T[,] dstData, T[,] srcData, int OffsetR0, int OffsetR1)
         {
             for (int srcIdR0 = 0; srcIdR0 < srcData.GetLength(0); srcIdR0++)
             {
@@ -121,7 +121,7 @@ namespace GCDConsoleLib.Common.Extensons
         /// <param name="srcSizeR1"></param>
         /// <param name="offsetR0"></param>
         /// <param name="offsetR1"></param>
-        public static void Plunk<T>(this T[] dstData, ref T[] srcData,
+        public static void Plunk<T>(this T[] dstData, T[] srcData,
             int dstSizeR0, int dstSizeR1,
             int srcSizeR0, int srcSizeR1,
             int offsetR0, int offsetR1)

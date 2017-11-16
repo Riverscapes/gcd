@@ -11,14 +11,14 @@ namespace GCDConsoleLib.Internal.Operators
         /// <summary>
         /// Pass-through constructure
         /// </summary>
-        public RootSumSquare(ref Raster rInput1, ref Raster rInput2, Raster rOutputRaster) :
+        public RootSumSquare(Raster rInput1, Raster rInput2, Raster rOutputRaster) :
             base(new List<Raster> { rInput1, rInput2 }, rOutputRaster)
         { }
 
         /// <summary>
         /// This is the actual implementation of the cell-by-cell logic
         /// </summary>
-        protected override float CellOp(ref List<float[]> data, int id)
+        protected override float CellOp(List<float[]> data, int id)
         {
             if (data[0][id] == _rasternodatavals[0] ||
                  data[1][id] == _rasternodatavals[1])

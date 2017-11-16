@@ -73,8 +73,8 @@ namespace GCDConsoleLib.Internal
             foreach (Raster rN in _rasters)
             {
                 Raster rR = rN;
-                Raster.ValidateSameMeta(ref r0, ref rR);
-                InExtent = InExtent.Union(ref rN.Extent);
+                Raster.ValidateSameMeta(r0, rR);
+                InExtent = InExtent.Union(rN.Extent);
                 rN.Open();
             }
 
@@ -131,7 +131,7 @@ namespace GCDConsoleLib.Internal
         /// NOTE: for now a chunk goes across the whole extent to make the math easier
         /// </summary>
         /// <returns></returns>
-        public void GetChunk(ref List<T[]> data)
+        public void GetChunk(List<T[]> data)
         {
             for (int idx = 0; idx < _rasters.Count; idx++)
             {
@@ -141,7 +141,7 @@ namespace GCDConsoleLib.Internal
                 // NOTE: if this is slow we can revisit
                 data[idx].Fill(OpNodataVal);
 
-                ExtentRectangle _interSectRect = rRa.Extent.Intersect(ref ChunkExtent);
+                ExtentRectangle _interSectRect = rRa.Extent.Intersect(ChunkExtent);
 
                 // Make sure there's some data to read, otherwise return the filled nodata values from above
                 if (_interSectRect.rows > 0 && _interSectRect.cols > 0)
@@ -149,12 +149,12 @@ namespace GCDConsoleLib.Internal
                     T[] _buffer = new T[_interSectRect.rows * _interSectRect.cols];
 
                     // Find the offset between the intersection and rRa
-                    Tuple<int, int> offrRa = _interSectRect.GetTopCornerTranslationRowCol(ref rRa.Extent);
-                    _rasters[idx].Read(offrRa.Item2, offrRa.Item1, _interSectRect.cols, _interSectRect.rows, ref _buffer);
+                    Tuple<int, int> offrRa = _interSectRect.GetTopCornerTranslationRowCol(rRa.Extent);
+                    _rasters[idx].Read(offrRa.Item2, offrRa.Item1, _interSectRect.cols, _interSectRect.rows, _buffer);
 
                     // Find the offset between the intersection and the chunkwindow
-                    Tuple<int, int> offChunk = _interSectRect.GetTopCornerTranslationRowCol(ref ChunkExtent);
-                    data[idx].Plunk(ref _buffer,
+                    Tuple<int, int> offChunk = _interSectRect.GetTopCornerTranslationRowCol(ChunkExtent);
+                    data[idx].Plunk(_buffer,
                         ChunkExtent.rows, ChunkExtent.cols,
                         _interSectRect.rows, _interSectRect.cols,
                         offChunk.Item1, offChunk.Item2);
@@ -176,16 +176,16 @@ namespace GCDConsoleLib.Internal
             T[] outBuffer = new T[ChunkExtent.cols * ChunkExtent.rows];
             while (!OpDone)
             {
-                GetChunk(ref data);
-                ChunkOp(ref data, ref outBuffer);
+                GetChunk(data);
+                ChunkOp(data, outBuffer);
 
                 if (_outputRaster != null)
                 {             
                     // Get the (col,row) offsets
-                    Tuple<int, int> offset = ChunkExtent.GetTopCornerTranslationRowCol(ref OpExtent);
+                    Tuple<int, int> offset = ChunkExtent.GetTopCornerTranslationRowCol(OpExtent);
                     // Write this window tot he file
                     // it goes (colNum, rowNum, COLS, ROWS, buffer);
-                    _outputRaster.Write(offset.Item2, offset.Item1 + vOffset, ChunkExtent.cols, ChunkExtent.rows, ref outBuffer);
+                    _outputRaster.Write(offset.Item2, offset.Item1 + vOffset, ChunkExtent.cols, ChunkExtent.rows, outBuffer);
                 }
                 // We always increment to the next one
                 nextChunk();
@@ -205,7 +205,7 @@ namespace GCDConsoleLib.Internal
         /// </summary>
         /// <param name="data"></param>
         /// <param name="outChunk"></param>
-        protected abstract void ChunkOp(ref List<T[]> data, ref T[] outChunk);
+        protected abstract void ChunkOp(List<T[]> data, T[] outChunk);
 
         /// <summary>
         /// Make sure this class leaves nothing behind and builds statistics before disappearing forever
