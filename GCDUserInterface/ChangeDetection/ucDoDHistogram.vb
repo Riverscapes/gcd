@@ -10,12 +10,12 @@ Namespace ChangeDetection
             m_HistogramViewer.SetChartType(rdoArea.Checked)
         End Sub
 
-        Public Sub SetHistogramUnits(ByRef options As DoDSummaryDisplayOptions)
-            m_HistogramViewer.RefreshDisplay(rdoArea.Checked, options.LinearUnits, options.AreaUnits, options.VolumeUnits)
+        Public Sub SetHistogramUnits(displayUnits As GCDConsoleLib.GCD.UnitGroup)
+            m_HistogramViewer.UpdateDisplay(rdoArea.Checked, displayUnits)
         End Sub
 
-        Public Sub LoadHistograms(rawHistogram As IO.FileInfo, thrHistogram As IO.FileInfo, linearDataUnits As UnitsNet.Units.LengthUnit)
-            m_HistogramViewer = New DoDHistogramViewerClass(chtData, rawHistogram, thrHistogram, linearDataUnits)
+        Public Sub LoadHistograms(rawHistogram As GCDConsoleLib.Histogram, thrHistogram As GCDConsoleLib.Histogram)
+            m_HistogramViewer = New DoDHistogramViewerClass(rawHistogram, thrHistogram, ProjectManagerBase.Units)
         End Sub
 
     End Class

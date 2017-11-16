@@ -121,7 +121,6 @@
             'ucProperties
             '
             Me.ucProperties.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.ucProperties.DoDRow = Nothing
             Me.ucProperties.Location = New System.Drawing.Point(3, 3)
             Me.ucProperties.Name = "ucProperties"
             Me.ucProperties.Size = New System.Drawing.Size(667, 405)

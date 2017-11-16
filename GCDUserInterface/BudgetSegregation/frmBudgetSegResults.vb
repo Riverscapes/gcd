@@ -5,7 +5,7 @@ Namespace UI.BudgetSegregation
 
     Public Class frmBudgetSegResults
 
-        Private m_rBS As ProjectDS.BudgetSegregationsRow
+        Private ResultSet As GCDCore.BudgetSegregation.BSResultSet
         Private m_Options As ChangeDetection.DoDSummaryDisplayOptions
 
         Public Sub New(nBSID As Integer)
@@ -15,12 +15,14 @@ Namespace UI.BudgetSegregation
 
             For Each rBS As ProjectDS.BudgetSegregationsRow In ProjectManagerBase.ds.BudgetSegregations
                 If rBS.BudgetID = nBSID Then
-                    m_rBS = rBS
-                    Exit Sub
+                    ResultSet = New GCDCore.BudgetSegregation.BSResultSet(rBS)
+                    ucProperties.Initialize(rBS.DoDsRow)
+                    txtName.Text = rBS.Name
+                    Exit For
                 End If
             Next
 
-            If Not TypeOf m_rBS Is ProjectDS.BudgetSegregationsRow Then
+            If ResultSet Is Nothing Then
                 Dim ex As New Exception("Failed to find budget segregation.")
                 ex.Data("Budget Seg ID") = nBSID
                 Throw ex
@@ -30,21 +32,16 @@ Namespace UI.BudgetSegregation
 
         Private Sub BudgetSegResultsForm_Load(sender As Object, e As System.EventArgs) Handles Me.Load
 
-            For Each rMask As ProjectDS.BSMasksRow In m_rBS.GetBSMasksRows
-                cboSummaryClass.Items.Add(New naru.db.NamedObject(rMask.MaskID, rMask.MaskName))
-                cboECDClass.Items.Add(New naru.db.NamedObject(rMask.MaskID, rMask.MaskName))
-            Next
+            cboSummaryClass.DataSource = ResultSet.ClassResults.Keys
+            cboECDClass.DataSource = ResultSet.ClassResults.Keys
 
             If cboSummaryClass.Items.Count > 0 Then
                 cboSummaryClass.SelectedIndex = 0
                 cboECDClass.SelectedIndex = 0
             End If
 
-            ucProperties.DoDRow = m_rBS.DoDsRow
-            txtName.Text = m_rBS.Name
-
-            txtPolygonMask.Text = m_rBS.PolygonMask
-            txtField.Text = m_rBS.Field
+            txtPolygonMask.Text = ProjectManagerBase.GetRelativePath(ResultSet.PolygonMask.FullName)
+            txtField.Text = ResultSet.FieldName
 
             'Hide Report tab for now
             tabMain.TabPages.Remove(TabPage4)
@@ -53,60 +50,38 @@ Namespace UI.BudgetSegregation
 
         Private Sub cboSummaryClass_SelectedIndexChanged(sender As Object, e As System.EventArgs) Handles cboSummaryClass.SelectedIndexChanged
 
-            If TypeOf cboSummaryClass.SelectedItem Is naru.db.NamedObject Then
-                Dim nMaskID As Integer = DirectCast(cboSummaryClass.SelectedItem, naru.db.NamedObject).ID
-                For Each rMask As ProjectDS.BSMasksRow In m_rBS.GetBSMasksRows
-                    If rMask.MaskID = nMaskID Then
+            Dim classResult As GCDCore.BudgetSegregation.BSResult = ResultSet.ClassResults(cboSummaryClass.SelectedItem.ToString())
+            ucSummary.RefreshDisplay(classResult.ChangeStats, m_Options)
 
-                        Dim dodResult As GCDCore.ChangeDetection.DoDResult = GCDCore.ChangeDetection.DoDResult.CreateFromDoDRow(rMask.BudgetSegregationsRow.DoDsRow)
-
-                        Throw New NotImplementedException("Need a way to get the stats from a budget class without masked rasters on disk")
-                        'Dim theResultSet As New Core.ChangeDetection.DoDResultSet(theStats, theDoDProps, GCDProject.ProjectManagerBase.GetAbsolutePath(rMask.BudgetSegregationsRow.DoDsRow.RawHistPath), GCDProject.ProjectManagerBase.GetAbsolutePath(rMask.CSVFileName))
-                        'ucSummary.RefreshDisplay(theResultSet, m_Options)
-                        Exit For
-                    End If
-                Next
-
-                ' synchronize the two dropdown lists
-                cboECDClass.SelectedIndex = cboSummaryClass.SelectedIndex
-            End If
+            ' syncronize the two dropdown lits
+            cboECDClass.SelectedIndex = cboSummaryClass.SelectedIndex
 
         End Sub
 
         Private Sub cboECDClass_SelectedIndexChanged(sender As Object, e As System.EventArgs) Handles cboECDClass.SelectedIndexChanged
 
-            If TypeOf cboECDClass.SelectedItem Is naru.db.NamedObject Then
-                Dim lItem As naru.db.NamedObject = cboECDClass.SelectedItem
-                For Each aMask As ProjectDS.BSMasksRow In m_rBS.GetBSMasksRows
-                    If aMask.MaskID = lItem.ID Then
-                        Dim dodResult As Core.ChangeDetection.DoDResult = Core.ChangeDetection.DoDResult.CreateFromDoDRow(aMask.BudgetSegregationsRow.DoDsRow)
-                        ucHistogram.LoadHistograms(dodResult.RawHistogram, dodResult.ThresholdedHistogram, dodResult.Units)
+            Dim classResult As GCDCore.BudgetSegregation.BSResult = ResultSet.ClassResults(cboECDClass.SelectedItem.ToString())
+            ucHistogram.LoadHistograms(classResult.RawHistogram, classResult.ThrHistogram)
 
-                        ' Update the elevation change bar chart control
-                        ucBars.Initialize(dodResult.ChangeStats, dodResult.Units)
-                        Exit For
-                    End If
-                Next
+            ' Update the elevation change bar chart control
+            ucBars.ChangeStats = classResult.ChangeStats
 
-                ' syncronize the two dropdown lits
-                cboSummaryClass.SelectedIndex = cboECDClass.SelectedIndex
-
-            End If
+            ' syncronize the two dropdown lits
+            cboSummaryClass.SelectedIndex = cboECDClass.SelectedIndex
 
         End Sub
 
         Private Sub cmdBrowse_Click(sender As System.Object, e As System.EventArgs) Handles cmdBrowse.Click
 
-            Dim sFolder As String = Core.Project.ProjectManagerBase.GetAbsolutePath(m_rBS.OutputFolder)
-            If IO.Directory.Exists(sFolder) Then
-                Process.Start("explorer.exe", sFolder)
+            If ResultSet.Folder.Exists Then
+                Process.Start("explorer.exe", ResultSet.Folder.FullName)
             Else
-                MsgBox("The budget segregation folder does not exist: " & sFolder.ToString, MsgBoxStyle.Information, GCDCore.Properties.Resources.ApplicationNameLong)
+                MsgBox("The budget segregation folder does not exist: " & ResultSet.Folder.FullName, MsgBoxStyle.Information, GCDCore.Properties.Resources.ApplicationNameLong)
             End If
         End Sub
 
         Private Sub cmdHelp_Click(sender As System.Object, e As System.EventArgs) Handles cmdHelp.Click
-            Process.Start(My.Resources.HelpBaseURL & "gcd-command-reference/gcd-project-explorer/n-individual-budget-segregation-context-menu/i-view-budget-segregation-results")
+            Process.Start(GCDCore.Properties.Resources.HelpBaseURL & "gcd-command-reference/gcd-project-explorer/n-individual-budget-segregation-context-menu/i-view-budget-segregation-results")
         End Sub
 
         Private Sub AddToMapToolStripMenuItem1_Click(sender As System.Object, e As System.EventArgs) Handles AddToMapToolStripMenuItem1.Click
@@ -114,23 +89,15 @@ Namespace UI.BudgetSegregation
             Dim myItem As ToolStripMenuItem = CType(sender, ToolStripMenuItem)
             Dim cms As ContextMenuStrip = CType(myItem.Owner, ContextMenuStrip)
 
-
-            Dim sPath As String = cms.SourceControl.Text
-            sPath = Core.Project.ProjectManagerBase.GetAbsolutePath(sPath)
-            If Not String.IsNullOrEmpty(sPath) Then
-                If GCDConsoleLib.GISDataset.FileExists(sPath) Then
-
-                    Try
-                        Dim gPolygon As GCDConsoleLib.Vector = New GCDConsoleLib.Vector(sPath)
-                        ' TODO 
-                        Throw New Exception("not implemented")
-                        'GCDProject.ProjectManagerUI.ArcMapManager.AddBSMaskVector(gPolygon, m_rBS)
-
-                    Catch ex As Exception
-                        'Pass
-                    End Try
-
-                End If
+            Dim path As IO.FileInfo = ProjectManagerBase.GetAbsolutePath(cms.SourceControl.Text)
+            If path.Exists Then
+                Try
+                    Dim gPolygon As GCDConsoleLib.Vector = New GCDConsoleLib.Vector(path)
+                    Throw New NotImplementedException("not implemented")
+                    'GCDProject.ProjectManagerUI.ArcMapManager.AddBSMaskVector(gPolygon, m_rBS)
+                Catch ex As Exception
+                    'Pass
+                End Try
             End If
 
         End Sub

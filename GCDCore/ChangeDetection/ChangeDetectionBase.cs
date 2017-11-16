@@ -13,10 +13,10 @@ namespace GCDCore.ChangeDetection
         protected Raster NewDEM;
         protected Raster OldDEM;
 
-        public ChangeDetectionEngineBase(DirectoryInfo folder, ref Raster gNewDEM, ref Raster gOldDEM)
-            : base(folder, gNewDEM.Proj.HorizontalUnit)
+        public ChangeDetectionEngineBase(DirectoryInfo folder, Raster gNewDEM, Raster gOldDEM)
+            : base(folder)
         {
-            if (!gNewDEM.Extent.HasOverlap(ref gOldDEM.Extent))
+            if (!gNewDEM.Extent.HasOverlap(gOldDEM.Extent))
             {
                 Exception ex = new Exception("The two rasters do not overlap.");
                 ex.Data["New DEM Path"] = gNewDEM.GISFileInfo;
@@ -41,42 +41,42 @@ namespace GCDCore.ChangeDetection
             AnalysisFolder.Create();
 
             // Subtract the new and old rasters to produce the raw DoD
-            Raster rawDoD = RasterOperators.Subtract(ref NewDEM, ref OldDEM, rawDoDPath);
+            Raster rawDoD = RasterOperators.Subtract(NewDEM, OldDEM, rawDoDPath);
 
             // Build pyraminds
             Project.ProjectManagerUI.PyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.DoDRaw, rawDoDPath);
 
             // Calculate the raw histogram
-            Histogram rawHisto = RasterOperators.BinRaster(ref rawDoD, DEFAULTHISTOGRAMNUMBER);
+            Histogram rawHisto = RasterOperators.BinRaster(rawDoD, DEFAULTHISTOGRAMNUMBER);
 
             // Write the raw histogram
             WriteHistogram(ref rawHisto, rawHstPath);
 
             // Call the polymorphic method to threshold the DoD depending on the thresholding method
-            Raster thrDoD = ThresholdRawDoD(ref rawDoD, thrDoDPath);
+            Raster thrDoD = ThresholdRawDoD(rawDoD, thrDoDPath);
 
             // Build pyraminds
             Project.ProjectManagerUI.PyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.DoDThresholded, thrDoDPath);
 
             // Calculate the thresholded histogram
-            Histogram thrHisto = RasterOperators.BinRaster(ref thrDoD, DEFAULTHISTOGRAMNUMBER);
+            Histogram thrHisto = RasterOperators.BinRaster(thrDoD, DEFAULTHISTOGRAMNUMBER);
 
             // Write the thresholded histogram
             WriteHistogram(ref thrHisto, thrHstPath);
 
             // Calculate the change statistics and write the output files
-            DoDStats changeStats = CalculateChangeStats(ref rawDoD, ref thrDoD, cellArea, units);
-            GenerateSummaryXML(changeStats, sumXMLPath, LinearUnits);
+            DoDStats changeStats = CalculateChangeStats(rawDoD, thrDoD, cellArea, units);
+            GenerateSummaryXML(changeStats, sumXMLPath);
             GenerateChangeBarGraphicFiles(changeStats, 0, 0);
             GenerateHistogramGraphicFiles(ref rawHisto, ref thrHisto, 0, 0);
 
-            return GetDoDResult(ref changeStats, rawDoDPath, thrDoDPath, rawHstPath, thrHstPath, LinearUnits);
+            return GetDoDResult(changeStats, rawDoDPath, thrDoDPath, rawHstPath, rawHisto, thrHstPath, thrHisto, units);
         }
 
-        protected abstract Raster ThresholdRawDoD(ref Raster rawDoD, FileInfo thrDoDPath);
+        protected abstract Raster ThresholdRawDoD(Raster rawDoD, FileInfo thrDoDPath);
 
-        protected abstract DoDStats CalculateChangeStats(ref Raster rawDoD, ref Raster thrDoD, UnitsNet.Area cellArea, UnitGroup units);
+        protected abstract DoDStats CalculateChangeStats(Raster rawDoD, Raster thrDoD, UnitsNet.Area cellArea, UnitGroup units);
 
-        protected abstract DoDResult GetDoDResult(ref DoDStats changeStats, FileInfo rawDoDPath, FileInfo thrDoDPath, FileInfo rawHist, FileInfo thrHist, UnitsNet.Units.LengthUnit eUnits);
+        protected abstract DoDResult GetDoDResult(DoDStats changeStats, FileInfo rawDoDPath, FileInfo thrDoDPath, FileInfo rawHistPath, Histogram rawHist, FileInfo thrHistPath, Histogram thrHist, UnitGroup units);
     }
 }

@@ -1,6 +1,4 @@
-﻿Imports naru.math.NumberFormatting
-
-Namespace ChangeDetection
+﻿Namespace ChangeDetection
 
     Public Class DoDSummaryDisplayOptions
 
@@ -10,9 +8,7 @@ Namespace ChangeDetection
             SpecificGroups
         End Enum
 
-        Private m_eLinearUnits As UnitsNet.Units.LengthUnit
-        Private m_eAreaUnits As UnitsNet.Units.AreaUnit
-        Private m_eVolumeUnits As UnitsNet.Units.VolumeUnit
+        Private m_Units As GCDConsoleLib.GCD.UnitGroup
         Public m_nPrecision As Integer
 
         Public m_eRowGroups As RowGroups
@@ -26,40 +22,43 @@ Namespace ChangeDetection
         Public m_bColsPMError As Boolean
         Public m_bColsPCError As Boolean
 
+        Public ReadOnly Property Units As GCDConsoleLib.GCD.UnitGroup
+            Get
+                Return m_Units
+            End Get
+        End Property
+
         Public Property LinearUnits As UnitsNet.Units.LengthUnit
             Get
-                Return m_eLinearUnits
+                Return m_Units.VertUnit
             End Get
             Set(value As UnitsNet.Units.LengthUnit)
-                m_eLinearUnits = value
+                m_Units = New GCDConsoleLib.GCD.UnitGroup(m_Units.VolUnit, m_Units.ArUnit, value, m_Units.HorizUnit)
             End Set
         End Property
 
         Public Property AreaUnits As UnitsNet.Units.AreaUnit
             Get
-                Return m_eAreaUnits
+                Return m_Units.ArUnit
             End Get
             Set(value As UnitsNet.Units.AreaUnit)
-                m_eAreaUnits = value
+                m_Units = New GCDConsoleLib.GCD.UnitGroup(m_Units.VolUnit, value, m_Units.VertUnit, m_Units.HorizUnit)
             End Set
 
         End Property
 
         Public Property VolumeUnits As UnitsNet.Units.VolumeUnit
             Get
-                Return m_eVolumeUnits
+                Return m_Units.VolUnit
             End Get
             Set(value As UnitsNet.Units.VolumeUnit)
-                m_eVolumeUnits = value
+                m_Units = New GCDConsoleLib.GCD.UnitGroup(value, m_Units.ArUnit, m_Units.VertUnit, m_Units.HorizUnit)
             End Set
         End Property
 
-        Public Sub New(eOriginalUnits As UnitsNet.Units.LengthUnit)
+        Public Sub New(dataUnits As GCDConsoleLib.GCD.UnitGroup)
 
-            m_eLinearUnits = eOriginalUnits
-            m_eAreaUnits = GCDConsoleLib.Utility.Conversion.LengthUnit2AreaUnit(eOriginalUnits)
-            m_eVolumeUnits = GCDConsoleLib.Utility.Conversion.LengthUnit2VolumeUnit(eOriginalUnits)
-
+            m_Units = dataUnits
             m_nPrecision = 2
 
             m_eRowGroups = RowGroups.ShowAll

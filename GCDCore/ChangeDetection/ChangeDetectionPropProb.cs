@@ -10,28 +10,28 @@ namespace GCDCore.ChangeDetection
         protected Raster OldError;
         public Raster PropagatedErrRaster;
 
-        public ChangeDetectionEnginePropProb(DirectoryInfo folder, ref Raster gNewDEM, ref Raster gOldDEM, ref Raster gNewError, ref Raster gOldError)
-            : base(folder, ref gNewDEM, ref gOldDEM)
+        public ChangeDetectionEnginePropProb(DirectoryInfo folder, Raster gNewDEM, Raster gOldDEM, Raster gNewError, Raster gOldError)
+            : base(folder, gNewDEM, gOldDEM)
         {
             NewError = gNewError;
             OldError = gOldError;
         }
 
-        protected override Raster ThresholdRawDoD(ref Raster rawDoD, FileInfo thrDoDPath)
+        protected override Raster ThresholdRawDoD(Raster rawDoD, FileInfo thrDoDPath)
         {
             PropagatedErrRaster = GeneratePropagatedErrorRaster();
-            Raster thrDoD = RasterOperators.SetNull(ref rawDoD, RasterOperators.ThresholdOps.LessThan, ref PropagatedErrRaster, thrDoDPath);
+            Raster thrDoD = RasterOperators.SetNull(rawDoD, RasterOperators.ThresholdOps.LessThan, PropagatedErrRaster, thrDoDPath);
             return thrDoD;
         }
 
-        protected override DoDStats CalculateChangeStats(ref Raster rawDoD, ref Raster thrDoD, UnitsNet.Area cellArea, UnitGroup units)
+        protected override DoDStats CalculateChangeStats(Raster rawDoD, Raster thrDoD, UnitsNet.Area cellArea, UnitGroup units)
         {
-            return RasterOperators.GetStatsPropagated(ref rawDoD, ref thrDoD, ref PropagatedErrRaster, cellArea, units);
+            return RasterOperators.GetStatsPropagated(rawDoD, thrDoD, PropagatedErrRaster, cellArea, units);
         }
 
-        protected override DoDResult GetDoDResult(ref DoDStats changeStats, FileInfo rawDoDPath, FileInfo thrDoDPath, FileInfo rawHist, FileInfo thrHist, UnitsNet.Units.LengthUnit eUnits)
+        protected override DoDResult GetDoDResult(DoDStats changeStats, FileInfo rawDoDPath, FileInfo thrDoDPath, FileInfo rawHistPath, Histogram rawHist, FileInfo thrHistPath, Histogram thrHist, UnitGroup units)
         {
-            return new DoDResultPropagated(ref changeStats, rawDoDPath, rawHist, thrDoDPath, thrHist, PropagatedErrRaster.GISFileInfo, eUnits);
+            return new DoDResultPropagated(changeStats, rawDoDPath, rawHistPath, thrDoDPath, thrHistPath, PropagatedErrRaster.GISFileInfo, units);
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace GCDCore.ChangeDetection
         protected Raster GeneratePropagatedErrorRaster()
         {
             FileInfo propErrPath = Project.ProjectManagerBase.OutputManager.PropagatedErrorPath(AnalysisFolder);
-            Raster propErr = RasterOperators.RootSumSquares(ref NewError, ref OldError, propErrPath);
+            Raster propErr = RasterOperators.RootSumSquares(NewError, OldError, propErrPath);
 
             // Build Pyramids
             Project.ProjectManagerUI.PyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.PropagatedError, propErrPath);

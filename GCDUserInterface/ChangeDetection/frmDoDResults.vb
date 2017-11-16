@@ -15,9 +15,9 @@ Namespace ChangeDetection
             InitializeComponent()
 
             m_DoDResult = dodResult
-            m_Options = New DoDSummaryDisplayOptions(dodResult.LinearUnits)
+            m_Options = New DoDSummaryDisplayOptions(ProjectManagerBase.Units)
             txtDoDName.Text = rDoD.Name
-            ucProperties.DoDRow = rDoD
+            ucProperties.Initialize(rDoD)
 
         End Sub
 
@@ -28,9 +28,9 @@ Namespace ChangeDetection
                 txtDoDName.Width = cmdAddToMap.Right - txtDoDName.Left
             End If
 
-            ucBars.Initialize(m_DoDResult.ChangeStats, m_DoDResult.LinearUnits)
-            ucHistogram.LoadHistograms(m_DoDResult.RawHistogram, m_DoDResult.ThrHistogram, m_DoDResult.LinearUnits)
-            ucSummary.RefreshDisplay(m_DoDResult, m_Options)
+            ucBars.ChangeStats = m_DoDResult.ChangeStats
+            ucHistogram.LoadHistograms(m_DoDResult.RawHistogram, m_DoDResult.ThrHistogram)
+            ucSummary.RefreshDisplay(m_DoDResult.ChangeStats, m_Options)
 
         End Sub
 
@@ -46,10 +46,10 @@ Namespace ChangeDetection
 
         Private Sub cmdSettings_Click(sender As Object, e As EventArgs) Handles cmdSettings.Click
             Try
-                Dim frm As New frmDoDSummaryProperties(m_DoDResult.LinearUnits, m_Options)
+                Dim frm As New frmDoDSummaryProperties(m_Options)
                 If frm.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
-                    ucSummary.RefreshDisplay(m_DoDResult, m_Options)
-                    ucHistogram.SetHistogramUnits(m_Options)
+                    ucSummary.RefreshDisplay(m_DoDResult.ChangeStats, m_Options)
+                    ucHistogram.SetHistogramUnits(m_Options.Units)
                     ucBars.Refresh()
                 End If
 

@@ -26,21 +26,19 @@ namespace GCDCore.Visualization
         //Private _ThresholdedHist As Dictionary(Of Double, Double)
         //Private _RawHist As Dictionary(Of Double, Double)
 
-        private UnitsNet.Units.LengthUnit m_eLinearUnits;
-        public ElevationChangeBarViewer(UnitsNet.Units.LengthUnit eLinearUnits)
+        public ElevationChangeBarViewer()
         {
             m_chtControl = new Chart();
-            Init(ref m_chtControl, eLinearUnits);
+            Init(ref m_chtControl);
         }
 
-        public ElevationChangeBarViewer(ref Chart chtControl, UnitsNet.Units.LengthUnit eLinearUnits)
+        public ElevationChangeBarViewer(ref Chart chtControl)
         {
-            Init(ref chtControl, eLinearUnits);
+            Init(ref chtControl);
         }
 
-        private void Init(ref Chart chtControl, UnitsNet.Units.LengthUnit eLinearUnits)
+        private void Init(ref Chart chtControl)
         {
-            m_eLinearUnits = eLinearUnits;
             m_chtControl = chtControl;
 
             chtControl.ChartAreas.Clear();
@@ -60,19 +58,19 @@ namespace GCDCore.Visualization
             _with2.MinorGrid.LineColor = Color.LightGray;
         }
 
-        public void Refresh(double fErosion, double fDeposition, UnitsNet.Units.LengthUnit eUnits, BarTypes eType, bool bAbsolute)
+        public void Refresh(double fErosion, double fDeposition, string sDisplayUnitsAbbreviation, BarTypes eType, bool bAbsolute)
         {
-            Refresh(fErosion, fDeposition, 0, 0, 0, 0, eUnits, false, false, eType,
+            Refresh(fErosion, fDeposition, 0, 0, 0, 0, sDisplayUnitsAbbreviation, false, false, eType, bAbsolute);
+        }
+
+        public void Refresh(double fErosion, double fDeposition, double fNet, double fErosionError, double fDepositionError, double fNetError, string sDisplayUnitsAbbreviation, BarTypes eType, bool bAbsolute)
+        {
+            Refresh(fErosion, fDeposition, fNet, fErosionError, fDepositionError, fNetError, sDisplayUnitsAbbreviation, true, true, eType,
             bAbsolute);
         }
 
-        public void Refresh(double fErosion, double fDeposition, double fNet, double fErosionError, double fDepositionError, double fNetError, UnitsNet.Units.LengthUnit eUnits, BarTypes eType, bool bAbsolute)
-        {
-            Refresh(fErosion, fDeposition, fNet, fErosionError, fDepositionError, fNetError, eUnits, true, true, eType,
-            bAbsolute);
-        }
-
-        private void Refresh(double fErosion, double fDeposition, double fNet, double fErosionError, double fDepositionError, double fNetError, UnitsNet.Units.LengthUnit eUnits, bool bShowErrorBars, bool bShowNet, BarTypes eType,
+        private void Refresh(double fErosion, double fDeposition, double fNet, double fErosionError, double fDepositionError, double fNetError, 
+            string sDisplayUnitsAbbreviation, bool bShowErrorBars, bool bShowNet, BarTypes eType,
 
         bool bAbsolute)
         {
@@ -93,13 +91,13 @@ namespace GCDCore.Visualization
             switch (eType)
             {
                 case BarTypes.Area:
-                    sYAxisLabel = string.Format("Area ({0}²)", UnitsNet.Length.GetAbbreviation(eUnits));
+                    sYAxisLabel = string.Format("Area ({0}²)", sDisplayUnitsAbbreviation);
                     break;
                 case BarTypes.Volume:
-                    sYAxisLabel = string.Format("Volume ({0}³)", UnitsNet.Length.GetAbbreviation(eUnits));
+                    sYAxisLabel = string.Format("Volume ({0}³)", sDisplayUnitsAbbreviation);
                     break;
                 case BarTypes.Vertical:
-                    sYAxisLabel = string.Format("Elevation ({0})", UnitsNet.Length.GetAbbreviation(eUnits));
+                    sYAxisLabel = string.Format("Elevation ({0})", sDisplayUnitsAbbreviation);
                     break;
             }
             m_chtControl.ChartAreas[0].AxisY.Title = sYAxisLabel;

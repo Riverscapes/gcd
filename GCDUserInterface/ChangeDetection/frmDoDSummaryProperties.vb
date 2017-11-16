@@ -4,7 +4,6 @@ Namespace ChangeDetection
 
     Public Class frmDoDSummaryProperties
 
-        Private m_eOriginalUnits As UnitsNet.Units.LengthUnit
         Private m_Options As DoDSummaryDisplayOptions
 
         Public ReadOnly Property Options As DoDSummaryDisplayOptions
@@ -13,19 +12,16 @@ Namespace ChangeDetection
             End Get
         End Property
 
-        Public Sub New(eOriginalUnits As UnitsNet.Units.LengthUnit, theOptions As DoDSummaryDisplayOptions)
+        Public Sub New(theOptions As DoDSummaryDisplayOptions)
 
             ' This call is required by the designer
             InitializeComponent()
 
-            m_eOriginalUnits = eOriginalUnits
             m_Options = theOptions
 
         End Sub
 
         Private Sub DoDSummaryPropertiesForm_Load(sender As Object, e As System.EventArgs) Handles Me.Load
-
-            txtUnitsOriginal.Text = UnitsNet.Length.GetAbbreviation(m_eOriginalUnits)
 
             AddUnitsToCombo(UnitsNet.Units.LengthUnit.Millimeter)
             AddUnitsToCombo(UnitsNet.Units.LengthUnit.Centimeter)
@@ -85,8 +81,7 @@ Namespace ChangeDetection
 
         End Sub
 
-        Private Sub rdoRows_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles _
-        rdoRowsSpecific.CheckedChanged
+        Private Sub rdoRows_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles rdoRowsSpecific.CheckedChanged
 
             UpdateControls()
         End Sub

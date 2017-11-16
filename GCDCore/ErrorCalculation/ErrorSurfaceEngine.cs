@@ -35,7 +35,7 @@ namespace GCDCore.ErrorCalculation
             {
                 case UniformErrorString:
                     double fError = double.Parse(m_ErrorSurfaceRow.GetMultiErrorPropertiesRows().First<Project.ProjectDS.MultiErrorPropertiesRow>()._Error);
-                    gErrorSurface = GCDConsoleLib.RasterOperators.Uniform(ref DEMRaster, errSurfaceRasterPath, fError);
+                    gErrorSurface = GCDConsoleLib.RasterOperators.Uniform( DEMRaster, errSurfaceRasterPath, fError);
                     break;
 
                 case AssociatedsurfaceErrorType:
@@ -46,7 +46,7 @@ namespace GCDCore.ErrorCalculation
                     Project.ProjectDS.AssociatedSurfaceRow rAssoc = assocRows.Where<Project.ProjectDS.AssociatedSurfaceRow>(x => x.AssociatedSurfaceID == errorAssoc.AssociatedSurfaceID).First();
 
                     GCDConsoleLib.Raster gAssoc = new GCDConsoleLib.Raster(Project.ProjectManagerBase.GetAbsolutePath(rAssoc.Source));
-                    gErrorSurface = GCDConsoleLib.RasterOperators.Mask(ref gAssoc, ref DEMRaster, errSurfaceRasterPath);
+                    gErrorSurface = GCDConsoleLib.RasterOperators.Mask( gAssoc,  DEMRaster, errSurfaceRasterPath);
                     break;
 
                 case FISErrorType:
@@ -91,7 +91,7 @@ namespace GCDCore.ErrorCalculation
                 switch (aMethod.ErrorType)
                 {
                     case UniformErrorString:
-                        GCDConsoleLib.RasterOperators.Uniform(ref gMaskRaster, sMethodRaster, double.Parse(aMethod._Error));
+                        GCDConsoleLib.RasterOperators.Uniform( gMaskRaster, sMethodRaster, double.Parse(aMethod._Error));
                         break;
 
                     case AssociatedsurfaceErrorType:
@@ -99,7 +99,7 @@ namespace GCDCore.ErrorCalculation
                         // Find the associated surface on which the error raster should be based and copy it into location to ensure values only where DEM has values
                         Project.ProjectDS.AssociatedSurfaceRow rAssoc = m_ErrorSurfaceRow.DEMSurveyRow.GetAssociatedSurfaceRows().First((Project.ProjectDS.AssociatedSurfaceRow s) => s.AssociatedSurfaceID == m_ErrorSurfaceRow.GetMultiErrorPropertiesRows().First<Project.ProjectDS.MultiErrorPropertiesRow>().AssociatedSurfaceID);
                         GCDConsoleLib.Raster gAssoc = new GCDConsoleLib.Raster(Project.ProjectManagerBase.GetAbsolutePath(rAssoc.Source));
-                        GCDConsoleLib.RasterOperators.Mask(ref gAssoc, ref gMaskRaster, sMethodRaster);
+                        GCDConsoleLib.RasterOperators.Mask( gAssoc,  gMaskRaster, sMethodRaster);
                         break;
 
                     default:
@@ -118,11 +118,11 @@ namespace GCDCore.ErrorCalculation
 
             // Call the Raster Manager mosaic function to blend the rasters together.
             string sMosaicWithoutMask = WorkspaceManager.GetTempRaster("Mosaic");
-            GCDConsoleLib.Raster gUnmasked = GCDConsoleLib.RasterOperators.Mosaic(ref methodRasters, new FileInfo(sMosaicWithoutMask));
+            GCDConsoleLib.Raster gUnmasked = GCDConsoleLib.RasterOperators.Mosaic( methodRasters, new FileInfo(sMosaicWithoutMask));
 
             // Mask the result so there are only values where the DEM has values
             GCDConsoleLib.Raster gDEM = new GCDConsoleLib.Raster(Project.ProjectManagerBase.GetAbsolutePath(m_ErrorSurfaceRow.DEMSurveyRow.Source));
-            GCDConsoleLib.RasterOperators.Mask(ref gUnmasked, ref gDEM, outputRasterPath);
+            GCDConsoleLib.RasterOperators.Mask( gUnmasked,  gDEM, outputRasterPath);
 
             // Update the GCD project with the path to the output raster
             m_ErrorSurfaceRow.Source = Project.ProjectManagerBase.GetRelativePath(outputRasterPath);
@@ -176,11 +176,11 @@ namespace GCDCore.ErrorCalculation
                 // When this method is being used for a multi-method error surface the reference
                 // raster is a mask (with cell value 1). Otherwise the reference raster is the full DEM
                 string sFullFISRaster = bClipToMask ? WorkspaceManager.GetTempRaster("FIS") : outputRasterPath.FullName;
-                GCDConsoleLib.Raster gFISRaster = GCDConsoleLib.RasterOperators.FISRaster(fisInputs, fisRuleFilePath, ref DEMRaster, new FileInfo(sFullFISRaster));
+                GCDConsoleLib.Raster gFISRaster = GCDConsoleLib.RasterOperators.FISRaster(fisInputs, fisRuleFilePath,  DEMRaster, new FileInfo(sFullFISRaster));
 
                 if (bClipToMask)
                 {
-                    GCDConsoleLib.RasterOperators.Multiply(ref gFISRaster, ref gReferenceRaster, outputRasterPath);
+                    GCDConsoleLib.RasterOperators.Multiply( gFISRaster,  gReferenceRaster, outputRasterPath);
                 }
             }
             catch (Exception ex)

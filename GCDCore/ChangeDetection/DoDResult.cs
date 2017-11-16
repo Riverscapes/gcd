@@ -12,20 +12,37 @@ namespace GCDCore.ChangeDetection
     public abstract class DoDResult
     {
         public FileInfo RawDoD { get; internal set; }
-        public FileInfo RawHistogram { get; internal set; }
+        public FileInfo RawHistogramPath { get; internal set; }
         public FileInfo ThrDoD { get; internal set; }
-        public FileInfo ThrHistogram { get; internal set; }
-        public UnitsNet.Units.LengthUnit LinearUnits { get; internal set; }
+        public FileInfo ThrHistogramPath { get; internal set; }
         public DoDStats ChangeStats { get; internal set; }
+        public UnitGroup Units { get; internal set; }
 
-        public UnitsNet.Units.AreaUnit AreaUnits
+        /// <summary>
+        /// Lazy loading of histograms
+        /// </summary>
+        private GCDConsoleLib.Histogram _RawHistogram;
+        public GCDConsoleLib.Histogram RawHistogram
         {
-            get { return GCDConsoleLib.Utility.Conversion.LengthUnit2AreaUnit(LinearUnits); }
+            get
+            {
+                if (_RawHistogram == null)
+                    _RawHistogram = new GCDConsoleLib.Histogram(RawHistogramPath);
+
+                return _RawHistogram;
+            }
         }
 
-        public UnitsNet.Units.VolumeUnit VolumeUnits
+        private GCDConsoleLib.Histogram _ThrHistogram;
+        public GCDConsoleLib.Histogram ThrHistogram
         {
-            get { return GCDConsoleLib.Utility.Conversion.LengthUnit2VolumeUnit(LinearUnits); }
+            get
+            {
+                if (_ThrHistogram == null)
+                    _ThrHistogram = new GCDConsoleLib.Histogram(ThrHistogramPath);
+
+                return _ThrHistogram;
+            }
         }
 
         /// <summary>
@@ -45,14 +62,26 @@ namespace GCDCore.ChangeDetection
         /// Unfortunately this trickles back up to inherited classes, but at least those classes can obtain the
         /// cell size and linear units from the original raw DoD which is never deleted during a budget set loop.
         /// </remarks>
-        public DoDResult(DoDStats changeStats, FileInfo rawDoD, FileInfo thrDoD, FileInfo rawHist, FileInfo thrHist, UnitsNet.Units.LengthUnit eLinearUnits)
+        public DoDResult(DoDStats changeStats, FileInfo rawDoD, FileInfo thrDoD, FileInfo rawHistPath, FileInfo thrHistPath, UnitGroup units)
+        {
+            Init(changeStats, rawDoD, thrDoD, rawHistPath, null, thrHistPath, null, units);
+        }
+
+        public DoDResult(DoDStats changeStats, FileInfo rawDoD, FileInfo thrDoD, GCDConsoleLib.Histogram rawHist, FileInfo rawHistPath, FileInfo thrHistPath, GCDConsoleLib.Histogram thrHist, UnitGroup units)
+        {
+            Init(changeStats, rawDoD, thrDoD, rawHistPath, rawHist, thrHistPath, thrHist, units);
+        }
+
+        private void Init(DoDStats changeStats, FileInfo rawDoD, FileInfo thrDoD, FileInfo rawHistPath, GCDConsoleLib.Histogram rawHist, FileInfo thrHistPath, GCDConsoleLib.Histogram thrHist, UnitGroup units)
         {
             ChangeStats = changeStats;
             RawDoD = rawDoD;
             ThrDoD = thrDoD;
-            RawHistogram = rawHist;
-            ThrHistogram = thrHist;
-            LinearUnits = eLinearUnits;
+            RawHistogramPath = rawHistPath;
+            ThrHistogramPath = thrHistPath;
+            Units = units;
+            _RawHistogram = rawHist;
+            _ThrHistogram = thrHist;
         }
 
         /// <summary>
@@ -70,15 +99,12 @@ namespace GCDCore.ChangeDetection
             FileInfo thrDoDPath = Project.ProjectManagerBase.GetAbsolutePath(rDoD.ThreshDoDPath);
             FileInfo thrHistoPath = Project.ProjectManagerBase.GetAbsolutePath(rDoD.ThreshHistPath);
 
-            GCDConsoleLib.Raster gRawDoDPath = new GCDConsoleLib.Raster(rawDoDPath);
-            UnitsNet.Units.LengthUnit lUnits = gRawDoDPath.Proj.HorizontalUnit;
-            double cellWidth = Convert.ToDouble(gRawDoDPath.Extent.CellWidth);
             DoDStats changeStats = CreateStatsFromRow(rDoD);
 
             DoDResult dodResult = null;
             if (rDoD.TypeMinLOD)
             {
-                dodResult = new DoDResultMinLoD(ref changeStats, rawDoDPath, rawHistoPath, thrDoDPath, thrHistoPath,Convert.ToSingle(rDoD.Threshold), lUnits);
+                dodResult = new DoDResultMinLoD(changeStats, rawDoDPath, rawHistoPath, thrDoDPath, thrHistoPath, Convert.ToSingle(rDoD.Threshold), Project.ProjectManagerBase.Units);
             }
             else
             {
@@ -96,7 +122,7 @@ namespace GCDCore.ChangeDetection
 
                 if (rDoD.TypePropagated)
                 {
-                    dodResult = new DoDResultPropagated(ref changeStats, rawDoDPath, rawHistoPath, thrDoDPath, thrHistoPath, sPropErrPath, lUnits);
+                    dodResult = new DoDResultPropagated(changeStats, rawDoDPath, rawHistoPath, thrDoDPath, thrHistoPath, sPropErrPath, Project.ProjectManagerBase.Units);
                 }
                 else if (rDoD.TypeProbabilistic)
                 {
@@ -107,7 +133,7 @@ namespace GCDCore.ChangeDetection
                     FileInfo sPosteriorRaster = rDoD.IsPosteriorRasterNull() ? null : Project.ProjectManagerBase.GetAbsolutePath(rDoD.PosteriorRaster);
 
                     dodResult = new DoDResultProbabilisitic(ref changeStats, rawDoDPath, rawHistoPath, thrDoDPath, thrHistoPath, sPropErrPath, sProbabilityRaster, sSpatialCoErosionRaster, sSpatialCoDepositionraster, sConditionalProbRaster,
-                    sPosteriorRaster, rDoD.Threshold, rDoD.Filter, rDoD.Bayesian, gRawDoDPath.Proj.HorizontalUnit);
+                    sPosteriorRaster, rDoD.Threshold, rDoD.Filter, rDoD.Bayesian, Project.ProjectManagerBase.Units);
                 }
             }
 
@@ -167,7 +193,8 @@ namespace GCDCore.ChangeDetection
     {
         public readonly float Threshold;
 
-        public DoDResultMinLoD(ref DoDStats changeStats, FileInfo rawDoD, FileInfo thrDoD, FileInfo rawHist, FileInfo thrHist, float fThreshold, UnitsNet.Units.LengthUnit eLinearUnits) : base(changeStats, rawDoD, thrDoD, rawHist, thrHist, eLinearUnits)
+        public DoDResultMinLoD(DoDStats changeStats, FileInfo rawDoD, FileInfo thrDoD, FileInfo rawHistPath, FileInfo thrHistPath, float fThreshold, UnitGroup units)
+            : base(changeStats, rawDoD, thrDoD, rawHistPath, thrHistPath, units)
         {
             Threshold = fThreshold;
         }
@@ -177,8 +204,8 @@ namespace GCDCore.ChangeDetection
     {
         public readonly FileInfo PropErrRaster;
 
-        public DoDResultPropagated(ref DoDStats changeStats, FileInfo rawDoD, FileInfo rawHisto, FileInfo thrDoD, FileInfo threshHisto, FileInfo propErrorRaster, UnitsNet.Units.LengthUnit eLinearUnits)
-            : base(changeStats, rawDoD, rawHisto, thrDoD, threshHisto, eLinearUnits)
+        public DoDResultPropagated(DoDStats changeStats, FileInfo rawDoD, FileInfo rawHisto, FileInfo thrDoD, FileInfo threshHisto, FileInfo propErrorRaster, UnitGroup units)
+            : base(changeStats, rawDoD, rawHisto, thrDoD, threshHisto, units)
         {
             PropErrRaster = propErrorRaster;
         }
@@ -195,10 +222,10 @@ namespace GCDCore.ChangeDetection
         public readonly FileInfo ConditionalProbabilityRaster;
         public readonly FileInfo PosteriorRaster;
 
-        public DoDResultProbabilisitic(ref DoDStats changeStats, FileInfo rawDoD, FileInfo rawHisto, FileInfo thrDoD, FileInfo thrHisto, FileInfo propErrorRaster, FileInfo sProbabilityRaster, FileInfo sSpatialCoErosionRaster, FileInfo sSpatialCoDepositionRaster, FileInfo sConditionalProbabilityRaster,
-
-        FileInfo sPosteriorRaster, double fConfidenceLevel, int nFilter, bool bBayesianUpdating, UnitsNet.Units.LengthUnit eLinearUnits)
-            : base(ref changeStats, rawDoD, rawHisto, thrDoD, thrHisto, propErrorRaster, eLinearUnits)
+        public DoDResultProbabilisitic(ref DoDStats changeStats, FileInfo rawDoD, FileInfo rawHisto, FileInfo thrDoD, FileInfo thrHisto, FileInfo propErrorRaster, FileInfo sProbabilityRaster,
+            FileInfo sSpatialCoErosionRaster, FileInfo sSpatialCoDepositionRaster, FileInfo sConditionalProbabilityRaster,
+            FileInfo sPosteriorRaster, double fConfidenceLevel, int nFilter, bool bBayesianUpdating, UnitGroup units)
+            : base(changeStats, rawDoD, rawHisto, thrDoD, thrHisto, propErrorRaster, units)
         {
             ConfidenceLevel = fConfidenceLevel;
             SpatialCoherenceFilter = nFilter;

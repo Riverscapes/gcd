@@ -9,7 +9,7 @@ namespace GCDCore.ChangeDetection
         public float Threshold { get; internal set; }
 
         public ChangeDetectionEngineMinLoD(DirectoryInfo folder, Raster gNewDEM, Raster gOldDEM, float fThreshold)
-            : base(folder, ref gNewDEM, ref gOldDEM)
+            : base(folder, gNewDEM, gOldDEM)
         {
 
             Threshold = fThreshold;
@@ -22,19 +22,19 @@ namespace GCDCore.ChangeDetection
         /// <param name="thrDoDPath"></param>
         /// <returns></returns>
         /// <remarks>Let the base class build the pyramids for the thresholded raster</remarks>
-        protected override Raster ThresholdRawDoD(ref Raster rawDoD, FileInfo thrDoDPath)
+        protected override Raster ThresholdRawDoD(Raster rawDoD, FileInfo thrDoDPath)
         {
-            return RasterOperators.SetNull(ref rawDoD, RasterOperators.ThresholdOps.LessThan, Threshold, thrDoDPath);
+            return RasterOperators.SetNull(rawDoD, RasterOperators.ThresholdOps.LessThan, Threshold, thrDoDPath);
         }
 
-        protected override DoDStats CalculateChangeStats(ref Raster rawDoD, ref Raster thrDoD, UnitsNet.Area cellArea, UnitGroup units)
+        protected override DoDStats CalculateChangeStats(Raster rawDoD, Raster thrDoD, UnitsNet.Area cellArea, UnitGroup units)
         {
-            return RasterOperators.GetStatsMinLoD(ref rawDoD, ref thrDoD, Threshold, cellArea, units);
+            return RasterOperators.GetStatsMinLoD(rawDoD, thrDoD, Threshold, cellArea, units);
         }
 
-        protected override DoDResult GetDoDResult(ref DoDStats changeStats, FileInfo rawDoDPath, FileInfo thrDoDPath, FileInfo rawHistoPath, FileInfo thrHistoPath, UnitsNet.Units.LengthUnit eUnits)
+        protected override DoDResult GetDoDResult(DoDStats changeStats, FileInfo rawDoDPath, FileInfo thrDoDPath, FileInfo rawHistoPath, Histogram rawHist, FileInfo thrHistoPath, Histogram thrHist, UnitGroup units)
         {
-            return new DoDResultMinLoD(ref changeStats, rawDoDPath, thrDoDPath, rawHistoPath, thrHistoPath, Threshold, eUnits);
+            return new DoDResultMinLoD(changeStats, rawDoDPath, thrDoDPath, rawHistoPath, thrHistoPath, Threshold, units);
         }
     }
 }

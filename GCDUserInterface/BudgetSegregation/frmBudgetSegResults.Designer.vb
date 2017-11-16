@@ -29,15 +29,15 @@
             Me.cmdHelp = New System.Windows.Forms.Button()
             Me.tabMain = New System.Windows.Forms.TabControl()
             Me.TabPage1 = New System.Windows.Forms.TabPage()
-            Me.ucSummary = New ChangeDetection.ucDoDSummary()
+            Me.ucSummary = New GCDUserInterface.ChangeDetection.ucDoDSummary()
             Me.cboSummaryClass = New System.Windows.Forms.ComboBox()
             Me.Label2 = New System.Windows.Forms.Label()
             Me.TabPage2 = New System.Windows.Forms.TabPage()
             Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
-            Me.ucBars = New ChangeDetection.ucChangeBars()
+            Me.ucBars = New GCDUserInterface.ChangeDetection.ucChangeBars()
             Me.Label5 = New System.Windows.Forms.Label()
             Me.cboECDClass = New System.Windows.Forms.ComboBox()
-            Me.ucHistogram = New ChangeDetection.ucDoDHistogram()
+            Me.ucHistogram = New GCDUserInterface.ChangeDetection.ucDoDHistogram()
             Me.TabPage3 = New System.Windows.Forms.TabPage()
             Me.grpBudgetSeg = New System.Windows.Forms.GroupBox()
             Me.txtField = New System.Windows.Forms.TextBox()
@@ -46,7 +46,7 @@
             Me.cmsBasicRaster = New System.Windows.Forms.ContextMenuStrip(Me.components)
             Me.AddToMapToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
             Me.Label3 = New System.Windows.Forms.Label()
-            Me.ucProperties = New ChangeDetection.ucDoDProperties()
+            Me.ucProperties = New GCDUserInterface.ChangeDetection.ucDoDProperties()
             Me.TabPage4 = New System.Windows.Forms.TabPage()
             Me.Label1 = New System.Windows.Forms.Label()
             Me.txtName = New System.Windows.Forms.TextBox()
@@ -263,7 +263,7 @@
             '
             'AddToMapToolStripMenuItem1
             '
-            Me.AddToMapToolStripMenuItem1.Image = My.Resources.Resources.AddToMap
+            Me.AddToMapToolStripMenuItem1.Image = Global.GCDUserInterface.My.Resources.Resources.AddToMap
             Me.AddToMapToolStripMenuItem1.Name = "AddToMapToolStripMenuItem1"
             Me.AddToMapToolStripMenuItem1.Size = New System.Drawing.Size(137, 22)
             Me.AddToMapToolStripMenuItem1.Text = "Add to Map"
@@ -279,7 +279,6 @@
             '
             'ucProperties
             '
-            Me.ucProperties.DoDRow = Nothing
             Me.ucProperties.Location = New System.Drawing.Point(6, 6)
             Me.ucProperties.Name = "ucProperties"
             Me.ucProperties.Size = New System.Drawing.Size(642, 206)
@@ -317,14 +316,14 @@
             'cmdBrowse
             '
             Me.cmdBrowse.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-            Me.cmdBrowse.Image = My.Resources.Resources.BrowseFolder
+            Me.cmdBrowse.Image = Global.GCDUserInterface.My.Resources.Resources.BrowseFolder
             Me.cmdBrowse.Location = New System.Drawing.Point(643, 9)
             Me.cmdBrowse.Name = "cmdBrowse"
             Me.cmdBrowse.Size = New System.Drawing.Size(23, 23)
             Me.cmdBrowse.TabIndex = 6
             Me.cmdBrowse.UseVisualStyleBackColor = True
             '
-            'BudgetSegResultsForm
+            'frmBudgetSegResults
             '
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -336,7 +335,7 @@
             Me.Controls.Add(Me.cmdHelp)
             Me.Controls.Add(Me.cmdCancel)
             Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-            Me.Name = "BudgetSegResultsForm"
+            Me.Name = "frmBudgetSegResults"
             Me.Text = "Budget Segregation Results"
             Me.tabMain.ResumeLayout(False)
             Me.TabPage1.ResumeLayout(False)

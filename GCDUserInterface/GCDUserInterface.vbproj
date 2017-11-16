@@ -101,7 +101,6 @@
     <Compile Include="BudgetSegregation\frmBudgetSegResults.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="BudgetSegregation\MaskStatsViewerClass.vb" />
     <Compile Include="ChangeDetection\DoDSummaryDisplayOptions.vb" />
     <Compile Include="ChangeDetection\frmCoherenceProperties.Designer.vb">
       <DependentUpon>frmCoherenceProperties.vb</DependentUpon>

@@ -4,17 +4,6 @@ Namespace ChangeDetection
 
     Public Class ucDoDProperties
 
-        Private m_rDoD As ProjectDS.DoDsRow
-
-        Public Property DoDRow As ProjectDS.DoDsRow
-            Get
-                Return m_rDoD
-            End Get
-            Set(value As ProjectDS.DoDsRow)
-                m_rDoD = value
-            End Set
-        End Property
-
         Private Sub DodPropertiesUC_Load(sender As Object, e As System.EventArgs) Handles Me.Load
 
             ' Make all textboxes have invisible border. Easier to keep border turned on
@@ -25,78 +14,81 @@ Namespace ChangeDetection
                 End If
             Next
 
-            If TypeOf m_rDoD Is ProjectDS.DoDsRow Then
-                txtNewDEM.Text = m_rDoD.NewSurveyName
-                txtNewError.Text = m_rDoD.NewErrorName
+        End Sub
 
-                txtOldDEM.Text = m_rDoD.OldSurveyName
-                txtOldError.Text = m_rDoD.OldErrorName
+        Public Sub Initialize(m_rDoD As ProjectDS.DoDsRow)
 
-                If m_rDoD.TypeMinLOD Then
-                    txtType.Text = "Minimum Level of Detection (MinLod)"
-                ElseIf m_rDoD.TypePropagated Then
-                    txtType.Text = "Propagated Error"
-                    grpPropagated.Visible = True
+            txtNewDEM.Text = m_rDoD.NewSurveyName
+            txtNewError.Text = m_rDoD.NewErrorName
 
-                ElseIf m_rDoD.TypeProbabilistic Then
-                    txtType.Text = "Probabilistic"
-                    grpProbabilistic.Visible = True
-                    grpPropagated.Visible = True
-                End If
+            txtOldDEM.Text = m_rDoD.OldSurveyName
+            txtOldError.Text = m_rDoD.OldErrorName
 
-                If m_rDoD.IsThresholdNull Then
-                    lblThreshold.Enabled = False
-                    txtThreshold.Enabled = False
-                Else
-                    If m_rDoD.TypeProbabilistic Then
-                        txtThreshold.Text = (100 * m_rDoD.Threshold).ToString("0") & "%"
-                    Else
-                        txtThreshold.Text = m_rDoD.Threshold.ToString("#,##0.00") & m_rDoD.ProjectRow.DisplayUnits
-                    End If
-                End If
+            If m_rDoD.TypeMinLOD Then
+                txtType.Text = "Minimum Level of Detection (MinLod)"
+            ElseIf m_rDoD.TypePropagated Then
+                txtType.Text = "Propagated Error"
+                grpPropagated.Visible = True
 
-                If m_rDoD.TypePropagated OrElse m_rDoD.TypeProbabilistic Then
-                    If Not m_rDoD.IsPropagatedErrorRasterPathNull Then
-                        txtPropErr.Text = ProjectManagerBase.GetAbsolutePath(m_rDoD.PropagatedErrorRasterPath).FullName
-                    End If
-                End If
+            ElseIf m_rDoD.TypeProbabilistic Then
+                txtType.Text = "Probabilistic"
+                grpProbabilistic.Visible = True
+                grpPropagated.Visible = True
+            End If
 
+            If m_rDoD.IsThresholdNull Then
+                lblThreshold.Enabled = False
+                txtThreshold.Enabled = False
+            Else
                 If m_rDoD.TypeProbabilistic Then
-
-                    If Not m_rDoD.IsThresholdNull Then
-                        txtConfidence.Text = txtThreshold.Text
-                    End If
-
-                    If Not m_rDoD.IsProbabilityRasterNull Then
-                        txtProbabilityRaster.Text = ProjectManagerBase.GetAbsolutePath(m_rDoD.ProbabilityRaster).FullName
-                    End If
-
-                    If Not m_rDoD.IsSpatialCoErosionRasterNull AndAlso Not String.IsNullOrEmpty(m_rDoD.SpatialCoErosionRaster) Then
-                        txtErosionalSpatialCoherenceRaster.Text = ProjectManagerBase.GetAbsolutePath(m_rDoD.SpatialCoErosionRaster).FullName
-                    End If
-
-                    If Not m_rDoD.IsSpatialCoDepositionRasterNull AndAlso Not String.IsNullOrEmpty(m_rDoD.SpatialCoDepositionRaster) Then
-                        txtDepositionSpatialCoherenceRaster.Text = ProjectManagerBase.GetAbsolutePath(m_rDoD.SpatialCoDepositionRaster).FullName
-                    End If
-
-                    If Not m_rDoD.IsConditionalProbRasterNull Then
-                        'txtConditionalRaster.Text = GCD.GCDProject.ProjectManagerBase.GetAbsolutePath(m_rDoD.ConditionalProbRaster)
-                    End If
-
-                    If Not m_rDoD.IsPosteriorRasterNull AndAlso Not String.IsNullOrEmpty(m_rDoD.PosteriorRaster) Then
-                        txtPosteriorRaster.Text = ProjectManagerBase.GetAbsolutePath(m_rDoD.PosteriorRaster).FullName
-                    End If
-
-                    If Not m_rDoD.IsBayesianNull AndAlso m_rDoD.Bayesian Then
-                        txtBayesian.Text = "Bayesian updating"
-                        If Not m_rDoD.IsFilterNull Then
-                            txtBayesian.Text &= " with filter size of " & m_rDoD.Filter.ToString & "x" & m_rDoD.Filter.ToString & " cells"
-                        End If
-                    Else
-                        txtBayesian.Text = "None"
-                    End If
+                    txtThreshold.Text = (100 * m_rDoD.Threshold).ToString("0") & "%"
+                Else
+                    txtThreshold.Text = m_rDoD.Threshold.ToString("#,##0.00") & m_rDoD.ProjectRow.DisplayUnits
                 End If
             End If
+
+            If m_rDoD.TypePropagated OrElse m_rDoD.TypeProbabilistic Then
+                If Not m_rDoD.IsPropagatedErrorRasterPathNull Then
+                    txtPropErr.Text = ProjectManagerBase.GetAbsolutePath(m_rDoD.PropagatedErrorRasterPath).FullName
+                End If
+            End If
+
+            If m_rDoD.TypeProbabilistic Then
+
+                If Not m_rDoD.IsThresholdNull Then
+                    txtConfidence.Text = txtThreshold.Text
+                End If
+
+                If Not m_rDoD.IsProbabilityRasterNull Then
+                    txtProbabilityRaster.Text = ProjectManagerBase.GetAbsolutePath(m_rDoD.ProbabilityRaster).FullName
+                End If
+
+                If Not m_rDoD.IsSpatialCoErosionRasterNull AndAlso Not String.IsNullOrEmpty(m_rDoD.SpatialCoErosionRaster) Then
+                    txtErosionalSpatialCoherenceRaster.Text = ProjectManagerBase.GetAbsolutePath(m_rDoD.SpatialCoErosionRaster).FullName
+                End If
+
+                If Not m_rDoD.IsSpatialCoDepositionRasterNull AndAlso Not String.IsNullOrEmpty(m_rDoD.SpatialCoDepositionRaster) Then
+                    txtDepositionSpatialCoherenceRaster.Text = ProjectManagerBase.GetAbsolutePath(m_rDoD.SpatialCoDepositionRaster).FullName
+                End If
+
+                If Not m_rDoD.IsConditionalProbRasterNull Then
+                    'txtConditionalRaster.Text = GCD.GCDProject.ProjectManagerBase.GetAbsolutePath(m_rDoD.ConditionalProbRaster)
+                End If
+
+                If Not m_rDoD.IsPosteriorRasterNull AndAlso Not String.IsNullOrEmpty(m_rDoD.PosteriorRaster) Then
+                    txtPosteriorRaster.Text = ProjectManagerBase.GetAbsolutePath(m_rDoD.PosteriorRaster).FullName
+                End If
+
+                If Not m_rDoD.IsBayesianNull AndAlso m_rDoD.Bayesian Then
+                    txtBayesian.Text = "Bayesian updating"
+                    If Not m_rDoD.IsFilterNull Then
+                        txtBayesian.Text &= " with filter size of " & m_rDoD.Filter.ToString & "x" & m_rDoD.Filter.ToString & " cells"
+                    End If
+                Else
+                    txtBayesian.Text = "None"
+                End If
+            End If
+
         End Sub
 
         Private Sub AddToMapToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles _
@@ -110,39 +102,37 @@ Namespace ChangeDetection
 
                 ' Get the new or old survey name
                 If cms.SourceControl.Name.ToLower.Contains("new") Then
-                    sItemName = m_rDoD.NewSurveyName
+                    sItemName = txtNewDEM.Text
                 Else
-                    sItemName = m_rDoD.OldSurveyName
+                    sItemName = txtOldDEM.Text
                 End If
 
-                For Each aDEMSurvey In m_rDoD.ProjectRow.GetDEMSurveyRows
-                    If String.Compare(sItemName, aDEMSurvey.Name, True) = 0 Then
-                        ' TODO 
-                        Throw New Exception("not implemented")
-                        '  Core.GCDProject.ProjectManagerUI.ArcMapManager.AddDEM(aDEMSurvey)
-                        Exit Sub
-                    End If
-                Next
+                Throw New NotImplementedException("add to map functionality commented out")
+                'For Each aDEMSurvey In m_rDoD.ProjectRow.GetDEMSurveyRows
+                '    If String.Compare(sItemName, aDEMSurvey.Name, True) = 0 Then
+                '        '  Core.GCDProject.ProjectManagerUI.ArcMapManager.AddDEM(aDEMSurvey)
+                '        Exit Sub
+                '    End If
+                'Next
 
             ElseIf cms.SourceControl.Name.ToLower.Contains("error") Then
 
                 ' Get the new or old error surface name
                 If cms.SourceControl.Name.ToLower.Contains("old") Then
-                    sItemName = m_rDoD.NewErrorName
+                    sItemName = txtNewError.Text
                 Else
-                    sItemName = m_rDoD.OldErrorName
+                    sItemName = txtOldError.Text
                 End If
 
-                For Each aDEMSurvey In m_rDoD.ProjectRow.GetDEMSurveyRows
-                    For Each anErrorSurface In aDEMSurvey.GetErrorSurfaceRows
-                        If String.Compare(anErrorSurface.Name, sItemName, True) = 0 Then
-                            ' TODO 
-                            Throw New Exception("not implemented")
-                            'Core.GCDProject.ProjectManagerUI.ArcMapManager.AddErrSurface(anErrorSurface)
-                            Exit Sub
-                        End If
-                    Next
-                Next
+                Throw New NotImplementedException("Add to map functionaility commented out")
+                'For Each aDEMSurvey In m_rDoD.ProjectRow.GetDEMSurveyRows
+                '    For Each anErrorSurface In aDEMSurvey.GetErrorSurfaceRows
+                '        If String.Compare(anErrorSurface.Name, sItemName, True) = 0 Then
+                '            'Core.GCDProject.ProjectManagerUI.ArcMapManager.AddErrSurface(anErrorSurface)
+                '            Exit Sub
+                '        End If
+                '    Next
+                'Next
             Else
                 Dim sPath As String = cms.SourceControl.Text
                 If Not String.IsNullOrEmpty(sPath) Then

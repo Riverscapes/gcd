@@ -72,7 +72,7 @@ Namespace UI.BudgetSegregation
                 End If
 
                 Dim dodProps As DoDResult = DoDResult.CreateFromDoDRow(rDoD)
-                Dim bs As New GCDCore.BudgetSegregation.BudgetSegregationEngine(New IO.DirectoryInfo(txtOutputFolder.Text), GCDCore.Project.ProjectManagerBase.Units.VertUnit)
+                Dim bs As New GCDCore.BudgetSegregation.BudgetSegregationEngine(New IO.DirectoryInfo(txtOutputFolder.Text))
                 m_bsOutputs = bs.Calculate(dodProps, ucPolygon.SelectedItem, cboField.Text)
                 Cursor.Current = Cursors.WaitCursor
 

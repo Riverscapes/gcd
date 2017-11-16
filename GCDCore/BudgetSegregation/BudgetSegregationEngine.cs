@@ -7,8 +7,8 @@ namespace GCDCore.BudgetSegregation
 {
     public class BudgetSegregationEngine : ChangeDetection.Engine
     {
-        public BudgetSegregationEngine(DirectoryInfo folder, UnitsNet.Units.LengthUnit units)
-            : base(folder, units)
+        public BudgetSegregationEngine(DirectoryInfo folder)
+            : base(folder)
         {
         }
 
@@ -29,7 +29,7 @@ namespace GCDCore.BudgetSegregation
             if (dod is ChangeDetection.DoDResultMinLoD)
             {
                 float threshold = ((ChangeDetection.DoDResultMinLoD)dod).Threshold;
-                results = RasterOperators.GetStatsMinLoD(ref rawDoD, ref thrDoD, threshold, ref Mask, fieldName, Project.ProjectManagerBase.CellArea, Project.ProjectManagerBase.Units);
+                results = RasterOperators.GetStatsMinLoD(rawDoD, thrDoD, threshold, Mask, fieldName, Project.ProjectManagerBase.CellArea, Project.ProjectManagerBase.Units);
             }
             else
             {
@@ -37,11 +37,11 @@ namespace GCDCore.BudgetSegregation
 
                 if (dod is ChangeDetection.DoDResultPropagated)
                 {
-                    results = RasterOperators.GetStatsPropagated(ref rawDoD, ref thrDoD, ref propErr, ref polygonMask, fieldName, Project.ProjectManagerBase.CellArea, Project.ProjectManagerBase.Units);
+                    results = RasterOperators.GetStatsPropagated(rawDoD, thrDoD, propErr, polygonMask, fieldName, Project.ProjectManagerBase.CellArea, Project.ProjectManagerBase.Units);
                 }
                 else
                 {
-                    results = RasterOperators.GetStatsProbalistic(ref rawDoD, ref thrDoD, ref propErr, ref polygonMask, fieldName, Project.ProjectManagerBase.CellArea, Project.ProjectManagerBase.Units);
+                    results = RasterOperators.GetStatsProbalistic(rawDoD, thrDoD, propErr, polygonMask, fieldName, Project.ProjectManagerBase.CellArea, Project.ProjectManagerBase.Units);
                 }
             }
 
@@ -63,7 +63,7 @@ namespace GCDCore.BudgetSegregation
                 BSResult classResult = new BSResult(AnalysisFolder, segClass.Key, classIndex, segClass.Value);
                 resultSet.ClassResults[segClass.Key] = classResult;
 
-                GenerateSummaryXML(segClass.Value, classResult.SummaryXMLPath, segClass.Value.StatsUnits.VertUnit);
+                GenerateSummaryXML(segClass.Value, classResult.SummaryXMLPath);
                 GenerateChangeBarGraphicFiles(segClass.Value, 600, 600, classResult.ClassFilePrefix);
 
                 Histogram rawHisto = rawHistos[segClass.Key];
