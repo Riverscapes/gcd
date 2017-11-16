@@ -57,6 +57,7 @@ namespace GCDConsoleLib.Tests
                 rDeleteRaster.Delete();
 
                 // Make sure we're good.
+                sDeletePath.Refresh();
                 Assert.IsFalse(sDeletePath.Exists);
                 Assert.IsFalse(File.Exists(Path.Combine(tmp.Name, "DeleteRasterTest.tif.aux.xml")));
                 Assert.IsFalse(File.Exists(Path.Combine(tmp.Name, "DeleteRasterTest.tif.ovr")));

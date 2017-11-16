@@ -97,7 +97,6 @@ namespace GCDConsoleLib.Internal.Tests
                 Assert.AreEqual(theTest.ChunkExtent.ToString(), "-9979 -10029.0 -9969.0 -10029");
                 Assert.IsTrue(theTest.OpDone);
 
-
                 // Now let's try with a different extent
                 TestOp<float> theTest2 = new TestOp<float>(new List<Raster> { rTemplateRaster }, rOut, rTemplateRaster.Extent.Buffer(100));
                 Assert.AreEqual(theTest2.InExtent.ToString(), "-9979 -10029.0 -9969.0 -10019");

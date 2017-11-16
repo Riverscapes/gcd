@@ -57,7 +57,6 @@ namespace GCDConsoleLib.Tests
 
                 Raster rDiv1 = RasterOperators.Subtract(rTempl, 2.1, new FileInfo(Path.Combine(tmp.Name, "RasterDivideOperand.tif")));
                 Raster rDiv2 = RasterOperators.Divide(rTempl, rTemp2, new FileInfo(Path.Combine(tmp.Name, "RasterDivideRaster.tif")));
-                Assert.Fail();
             }
         }
 

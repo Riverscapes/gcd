@@ -27,7 +27,7 @@ namespace GCDConsoleLib.Tests
             testFunc1(B, A);
             testFunc2(B, A);
 
-            Assert.Fail();
+            
         }
 
         public void testFunc1(Dictionary<string, List<string>> E, List<string> F)

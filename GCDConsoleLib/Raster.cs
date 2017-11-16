@@ -323,6 +323,7 @@ namespace GCDConsoleLib
             Open();
             ds.GetDriver().CopyFiles(destPath.FullName, GISFileInfo.FullName);
             Dispose();
+            RefreshFileInfo();
         }
 
         /// <summary>
