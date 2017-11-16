@@ -6,7 +6,7 @@ using GCDConsoleLib;
 using GCDConsoleLib.Utility;
 using GCDConsoleLib.Tests.Utility;
 
-namespace GCDConsoleLib.Tests
+namespace GCDConsoleLib.Tests   
 {
 
     [TestClass()]

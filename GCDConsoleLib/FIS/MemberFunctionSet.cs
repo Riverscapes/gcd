@@ -7,12 +7,15 @@ namespace GCDConsoleLib.FIS
     {
         private double _min, _max;
         public List<MemberFunction> _mfs;
+        public Dictionary<String, int> Indices;
 
         /// <summary>
         /// 
         /// </summary>
         public MemberFunctionSet() : base()
         {
+            Indices = new Dictionary<String, int>();
+            _mfs = new List<MemberFunction>();
         }
 
         /// <summary>
@@ -22,10 +25,12 @@ namespace GCDConsoleLib.FIS
         /// <param name="max"></param>
         public MemberFunctionSet(double min, double max)
         {
-            //_n(0), _min(min), _max(max), _msg(String)) {
-            //    if (min >= max)
-            //        throw new ArgumentException("Invalid range. Max must be greater than min.");
-            //}
+            _min = min;
+            _max = max;
+            Indices = new Dictionary<String, int>();
+            _mfs = new List<MemberFunction>();
+            if (min >= max)
+                throw new ArgumentException("Invalid range. Max must be greater than min.");
         }
 
         /// <summary>

@@ -88,6 +88,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataTypes.cs" />
+    <Compile Include="Extensions\Map.cs" />
     <Compile Include="FIS\Defuzzify.cs" />
     <Compile Include="FIS\FIS.cs" />
     <Compile Include="FIS\FisFile.cs" />

@@ -6,8 +6,6 @@ namespace GCDConsoleLib.FIS
     public class MemberFunction
     {
         public List<KeyValuePair<double, double>> Coords;
-        public Dictionary<String, int> Indices;
-
         public double yMax;
 
         public MemberFunction()

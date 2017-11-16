@@ -35,7 +35,7 @@ namespace GCDConsoleLib.FIS
             _numRules = 0;
 
             // Store each section in its own dictionary list
-            Dictionary<FISFileSection, List<List<string>>> sectionLines = new Dictionary<FISFileSection, List<List<string>>>() {
+            SectionLines = new Dictionary<FISFileSection, List<List<string>>>() {
                 { FISFileSection.SYSTEM, new List<List<string>>() },
                 { FISFileSection.OUTPUT, new List<List<string>>() },
                 { FISFileSection.RULES, new List<List<string>>() },
@@ -43,22 +43,22 @@ namespace GCDConsoleLib.FIS
             };
 
             parseFile(inputFn);
-            parseSystem(sectionLines[FISFileSection.SYSTEM][0]);
+            parseSystem(SectionLines[FISFileSection.SYSTEM][0]);
 
             // Inputs and outputs can have multiple
-            foreach (List<string> input in sectionLines[FISFileSection.INPUT])
+            foreach (List<string> input in SectionLines[FISFileSection.INPUT])
                 parseInputOutput(input, true);
 
-            foreach (List<string> output in sectionLines[FISFileSection.OUTPUT])
+            foreach (List<string> output in SectionLines[FISFileSection.OUTPUT])
                 parseInputOutput(output, false);
 
-            parseRules(sectionLines[FISFileSection.RULES][0]);
+            parseRules(SectionLines[FISFileSection.RULES][0]);
         }
 
         /// <summary>
         /// We often have the pattern: "[0 0 0.09 0.17]" that needs parsing
         /// </summary>
-        private List<double> RangeSquareBrackets(string input)
+        public static List<double> RangeSquareBrackets(string input)
         {
             List<double> output = new List<double>();
             string[] sRanges = input.Trim().Substring(1, input.Length - 2).Split();
@@ -103,7 +103,7 @@ namespace GCDConsoleLib.FIS
 
                     // Example: Name='Depth'
                     if (sLSplit[0] == "name")
-                        name = sLSplit[1];
+                        name = sLSplit[1].Replace("'", "");
 
                     // Example: Range=[0 4]
                     else if (sLSplit[0] == "range")
@@ -237,7 +237,7 @@ namespace GCDConsoleLib.FIS
 
             // Now figure out the weight of this Rule
             string trimmedWeight = rsSplit3[1].Trim();
-            if (!double.TryParse(trimmedWeight.Substring(1, trimmedWeight.Length-2), out theRule.Weight))
+            if (!double.TryParse(trimmedWeight.Substring(1, trimmedWeight.Length - 2), out theRule.Weight))
                 throw new Exception("Could not parse the weight: " + ruleString);
 
             // Now, finally we're ready to look at inputs.
@@ -245,7 +245,7 @@ namespace GCDConsoleLib.FIS
             for (int idx = 1; idx <= mfIndStr.Length; idx++)
             {
                 int mfInd;
-                if (!int.TryParse(mfIndStr[idx].Trim(), out mfInd))
+                if (!int.TryParse(mfIndStr[idx-1].Trim(), out mfInd))
                     throw new Exception("Error parsing rule: " + ruleString);
                 theRule.addMf(idx, mfInd);
             }
@@ -358,7 +358,7 @@ namespace GCDConsoleLib.FIS
         /// </summary>
         /// <param name="fn">The filename of the file to parse.</param>
         /// <returns></returns>
-        public void parseFile(FileInfo inputFn)
+        private void parseFile(FileInfo inputFn)
         {
             bool systemOK = false;
             bool inputOK = false;
@@ -382,30 +382,39 @@ namespace GCDConsoleLib.FIS
 
             foreach (string line in sLines)
             {
+                bool bNewSection = false;
                 if (regexes[FISFileSection.SYSTEM].IsMatch(line))
                 {
                     systemOK = true;
+                    bNewSection = true;
                     newSection = FISFileSection.SYSTEM;
                 }
                 else if (regexes[FISFileSection.INPUT].IsMatch(line))
                 {
                     inputOK = true;
+                    bNewSection = true;
                     newSection = FISFileSection.INPUT;
                 }
                 else if (regexes[FISFileSection.OUTPUT].IsMatch(line))
                 {
                     outputOK = true;
+                    bNewSection = true;
                     newSection = FISFileSection.OUTPUT;
                 }
                 else if (regexes[FISFileSection.RULES].IsMatch(line))
                 {
                     rulesOK = true;
+                    bNewSection = true;
                     newSection = FISFileSection.RULES;
                 }
+
                 // If a section change has been requested then store the current section
                 // and move on to the new one
-                if (newSection != currSection)
+                if (bNewSection)
                 {
+                    if (!SectionLines.ContainsKey(newSection))
+                        SectionLines[newSection] = new List<List<string>>();
+
                     SectionLines[currSection].Add(currSectionList);
                     currSectionList = new List<string>();
                     currSection = newSection;
@@ -413,18 +422,21 @@ namespace GCDConsoleLib.FIS
 
                 // We ignore blank lines
                 if (line.Trim().Length > 0)
-                {
                     currSectionList.Add(line);
-                }
             }
+            // Add the last thing in
+            SectionLines[currSection].Add(currSectionList);
 
-            if (!systemOK)
+            if (!systemOK || SectionLines[FISFileSection.SYSTEM].Count == 0)
                 throw new Exception("No [System] section in: " + fn.FullName);
-            else if (!inputOK)
+
+            else if (!inputOK || SectionLines[FISFileSection.INPUT].Count == 0)
                 throw new Exception("No [Input] section in: " + fn.FullName);
-            else if (!outputOK)
+
+            else if (!outputOK || SectionLines[FISFileSection.OUTPUT].Count == 0)
                 throw new Exception("No [Output] section in: " + fn.FullName);
-            else if (!rulesOK)
+
+            else if (!rulesOK || SectionLines[FISFileSection.RULES].Count == 0)
                 throw new Exception("No [Rules] section inL " + fn.FullName);
         }
 

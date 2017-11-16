@@ -18,6 +18,12 @@ namespace GCDConsoleLib.Tests
                 return Path.GetDirectoryName(executingAssemblyFile);
             }
         }
+        public static string GetTestRootPath(string rName)
+        {
+            string[] dirs = new string[] { AssemblyDir, @"TestData", rName };
+            return Path.Combine(dirs);
+        }
+
         public static string GetTestRasterPath(string rName)
         {
             string[] dirs = new string[] { AssemblyDir, @"TestData\rasters", rName };

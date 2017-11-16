@@ -1,18 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using GCDConsoleLib.Extensions;
 
 namespace GCDConsoleLib.FIS
 {
     public class RuleSet
     {
-        public List<MemberFunctionSet> _inputs;
-        private Dictionary<String, int> _indices;
-        public MemberFunctionSet Output;
-        private String _outputName;
+        public Dictionary<string, MemberFunctionSet> Inputs;
+        public Map<int, string> InputLookupMap;
 
+        public MemberFunctionSet Output;
         public List<Rule> Rules;
-        private List<List<double>> fuzzyInputs_;
+
+        public String OutputName;
+        private List<List<double>> _fuzzyInputs;
 
         private FISOperatorAnd _andOp;
         private FISOperatorOr _orOp;
@@ -22,6 +24,7 @@ namespace GCDConsoleLib.FIS
 
         public RuleSet()
         {
+            _init();
         }
 
         public RuleSet(FISOperatorAnd andOperator, FISOperatorOr orOperator, FISImplicator implicator,
@@ -32,6 +35,16 @@ namespace GCDConsoleLib.FIS
             _implicator = implicator;
             _aggregator = aggregator;
             _defuzzifier = defuzzifier;
+
+            _init();
+        }
+
+        private void _init()
+        {
+            _fuzzyInputs = new List<List<double>>();
+            Inputs = new Dictionary<string, MemberFunctionSet>();
+            InputLookupMap = new Map<int, string>();
+            Rules = new List<Rule>();
         }
 
         /// <summary>
@@ -43,14 +56,15 @@ namespace GCDConsoleLib.FIS
         /// <param name="sName">The name of the membership function</param>
         private void addMFToRule(Rule rule, int i, String sName)
         {
-            if (!_inputs[i].Indices.ContainsKey(sName))
+            string inputName = InputLookupMap.Forward[i];
+            if (!Inputs[inputName].Indices.ContainsKey(sName))
                 throw new ArgumentException("There is no membership function named '" + sName + "'.");
             else
             {
                 if (sName != null && "NULL" != sName)
                 {
                     rule.Inputs.Add(i);
-                    rule.MFSInd.Add(_inputs[i].Indices[sName]);
+                    rule.MFSInd.Add(Inputs[inputName].Indices[sName]);
                 }
             }
         }
@@ -63,14 +77,14 @@ namespace GCDConsoleLib.FIS
         /// <returns></returns>
         public void addInputMFSet(String sName, MemberFunctionSet mfs)
         {
-            if (_indices.ContainsKey(sName))
+            if (Inputs.ContainsKey(sName))
                 throw new ArgumentException(string.Format("The name '{0}' is already in use.", sName));
             else if (sName.Contains(" "))
                 throw new ArgumentException(string.Format("Invalid name '{0}'. Spaces are not allowed.", sName));
             else
             {
-                _inputs.Add(mfs);
-                _indices[sName] = _inputs.Count;
+                Inputs[sName] = mfs;
+                InputLookupMap.Add(Inputs.Count, sName);
             }
         }
 
@@ -82,7 +96,7 @@ namespace GCDConsoleLib.FIS
         public void addOutputMFSet(String sName, MemberFunctionSet mfs)
         {
             Output = mfs;
-            _outputName = sName;
+            OutputName = sName;
         }
 
         /// <summary>
@@ -114,7 +128,7 @@ namespace GCDConsoleLib.FIS
 
                 string[] InputsSubStr = sInputs.Split(); // no arg == space
 
-                for (int i = 0; i < _inputs.Count; i++)
+                for (int i = 0; i < Inputs.Count; i++)
                 {
                     if (i >= InputsSubStr.Length)
                         throw new ArgumentException("There are not enough membership functions provided for the rule.");
@@ -135,14 +149,17 @@ namespace GCDConsoleLib.FIS
         /// <returns></returns>
         public double calculate(List<double> lInputs)
         {
-            if (lInputs.Count != _inputs.Count)
+            if (lInputs.Count != Inputs.Count)
                 return -1;
 
             int idx, jdx;
 
-            for (idx = 0; idx < _inputs.Count; idx++)
-                for (jdx = 0; jdx < _inputs[idx].Length; jdx++)
-                    fuzzyInputs_[idx][jdx] = _inputs[idx]._mfs[jdx].fuzzify(lInputs[idx]);
+            for (idx = 0; idx < Inputs.Count; idx++)
+            {
+                string inputName = InputLookupMap.Forward[idx];
+                for (jdx = 0; jdx < Inputs[inputName].Length; jdx++)
+                    _fuzzyInputs[idx][jdx] = Inputs[inputName]._mfs[jdx].fuzzify(lInputs[idx]);
+            }
 
             MemberFunction impMf = new MemberFunction();
             MemberFunction aggMf = new MemberFunction();
@@ -191,7 +208,7 @@ namespace GCDConsoleLib.FIS
             if (checkNoData)
             {
                 bool ok = true;
-                for (int i = 0; i < _inputs.Count; i++)
+                for (int i = 0; i < Inputs.Count; i++)
                 {
                     v = dataArrays[i][n];
                     if (v == noDataValues[i])
@@ -199,8 +216,9 @@ namespace GCDConsoleLib.FIS
                         ok = false;
                         break;
                     }
-                    for (int j = 0; j < _inputs[i].Length; j++)
-                        fuzzyInputs_[i][j] = _inputs[i]._mfs[j].fuzzify(v);
+                    string inputName = InputLookupMap.Forward[i];
+                    for (int j = 0; j < Inputs[inputName].Length; j++)
+                        _fuzzyInputs[i][j] = Inputs[inputName]._mfs[j].fuzzify(v);
                 }
                 if (ok)
                 {
@@ -208,9 +226,9 @@ namespace GCDConsoleLib.FIS
                     {
                         rule = Rules[r];
                         // This is where the NOT calculation happens.
-                        impValue = fuzzyInputs_[rule.Inputs[0]][rule.MFSInd[0]];
+                        impValue = _fuzzyInputs[rule.Inputs[0]][rule.MFSInd[0]];
                         for (int m = 1; m < rule.Inputs.Count; m++)
-                            impValue = RuleOperator(rule, impValue, fuzzyInputs_[rule.Inputs[m]][rule.MFSInd[m]]);
+                            impValue = RuleOperator(rule, impValue, _fuzzyInputs[rule.Inputs[m]][rule.MFSInd[m]]);
                         ImplicatorOp(rule.Output, impMf, impValue, rule.Weight);
                         AggregatorOp(impMf, aggMf);
                     }
@@ -221,39 +239,25 @@ namespace GCDConsoleLib.FIS
             }
             else
             {
-                for (int i = 0; i < _inputs.Count; i++)
+                for (int i = 0; i < Inputs.Count; i++)
                 {
                     v = dataArrays[i][n];
-                    for (int j = 0; j < _inputs[i]._mfs.Count; j++)
-                        fuzzyInputs_[i][j] = _inputs[i]._mfs[j].fuzzify(v);
+                    string inputName = InputLookupMap.Forward[i];
+                    for (int j = 0; j < Inputs[inputName]._mfs.Count; j++)
+                        _fuzzyInputs[i][j] = Inputs[inputName]._mfs[j].fuzzify(v);
                 }
                 for (int r = 0; r < Rules.Count; r++)
                 {
                     rule = Rules[r];
                     // This is where the NOT calculation happens.
-                    impValue = fuzzyInputs_[rule.Inputs[0]][rule.MFSInd[0]];
+                    impValue = _fuzzyInputs[rule.Inputs[0]][rule.MFSInd[0]];
                     for (int m = 1; m < rule.Inputs.Count; m++)
-                        impValue = RuleOperator(rule, impValue, fuzzyInputs_[rule.Inputs[m]][rule.MFSInd[m]]);
+                        impValue = RuleOperator(rule, impValue, _fuzzyInputs[rule.Inputs[m]][rule.MFSInd[m]]);
                     ImplicatorOp(rule.Output, impMf, impValue, rule.Weight);
                     AggregatorOp(impMf, aggMf);
                 }
                 return DefuzzifierOp(aggMf);
             }
-        }
-
-        /// <summary>
-        /// Get the name of the input variable at the specified index.
-        /// </summary>
-        /// <param name="i"></param>
-        /// <returns></returns>
-        public String getInputName(int i)
-        {
-            foreach (KeyValuePair<String, int> it in _indices)
-            {
-                if (it.Value == i)
-                    return it.Key;
-            }
-            return "";
         }
 
         /// <summary>
@@ -267,16 +271,14 @@ namespace GCDConsoleLib.FIS
         /// <returns>True of the set could be added, false otherwise</returns>
         public void setInputMFSet(int index, String sName, MemberFunctionSet mfs)
         {
-            if (0 > index || _inputs.Count <= index)
-                throw new ArgumentException(string.Format("Invalid index for input: {0}", index));
-            else if (_indices.ContainsKey(sName))
+            if (Inputs.ContainsKey(sName))
                 throw new ArgumentException(string.Format("The name '{0}' is already in use.", sName));
             else if (sName.Contains(" "))
                 throw new ArgumentException(string.Format("Invalid name '{0}'. Spaces are not allowed.", sName));
             else
             {
-                _inputs[index] = mfs;
-                _indices[sName] = index;
+                Inputs[sName] = mfs;
+                InputLookupMap.Forward[index] = sName;
             }
         }
 
@@ -286,16 +288,19 @@ namespace GCDConsoleLib.FIS
         /// <returns></returns>
         public bool valid()
         {
-            if (_inputs.Count == 0)
+            if (Inputs.Count == 0)
                 //"No FIS inputs."
                 return false;
             else if (Rules.Count == 0)
                 //"No FIS rules."
                 return false;
-            for (int i = 0; i < _inputs.Count; i++)
-                if (!_inputs[i].valid())
+            for (int i = 0; i < Inputs.Count; i++)
+            {
+                string inputName = InputLookupMap.Forward[i];
+                if (!Inputs[inputName].valid())
                     //"Invalid input number " + stringify(i) + "."
                     return false;
+            }
             return true;
         }
 
@@ -309,11 +314,12 @@ namespace GCDConsoleLib.FIS
         {
             int inputInd = rule.Inputs[ruleItemInd];
             int mfsInd = rule.MFSInd[ruleItemInd];
-            double fuzzyInput = fuzzyInputs_[inputInd][mfsInd];
+            double fuzzyInput = _fuzzyInputs[inputInd][mfsInd];
 
             if (rule.MFSNot[ruleItemInd] == 1)
             {
-                double yMax = _inputs[inputInd]._mfs[mfsInd].yMax;
+                string inputName = InputLookupMap.Forward[inputInd];
+                double yMax = Inputs[inputName]._mfs[mfsInd].yMax;
                 fuzzyInput = yMax - fuzzyInput;
             }
             return fuzzyInput;

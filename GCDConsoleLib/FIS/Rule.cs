@@ -14,6 +14,9 @@ namespace GCDConsoleLib.FIS
         public Rule()
         {
             Weight = 1;
+            Inputs = new List<int>();
+            MFSInd = new List<int>();
+            MFSNot = new List<int>();
         }
 
         public FISOperator Operator;

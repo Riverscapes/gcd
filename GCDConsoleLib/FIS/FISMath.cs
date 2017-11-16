@@ -39,7 +39,7 @@ namespace GCDConsoleLib.FIS
         /// <returns></returns>
         public static double ProbOr(double n1, double n2)
         {
-            return n1 + n2 - n1 * n2;
+            return n1 + n2 - (n1 * n2);
         }
 
         /// <summary>
@@ -55,6 +55,7 @@ namespace GCDConsoleLib.FIS
 
         /// <summary>
         /// Figures out where two lines intersect and if the intersection is in the line segments.
+        /// NOTE: This doesn't seem to be in use anywhere
         /// </summary>
         /// <param name="ax1"></param>
         /// <param name="ay1"></param>
@@ -67,23 +68,46 @@ namespace GCDConsoleLib.FIS
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        public static Tuple<double, double, bool> IntersectLines(double ax1, double ay1, double ax2, double ay2, double bx1, double by1,
-                       double bx2, double by2)
+        public static Tuple<double, double, bool> IntersectLines(
+            double ax1, double ay1, double ax2, double ay2, 
+            double bx1, double by1, double bx2, double by2)
         {
             double x = ax1;
             double y = ay1;
+            double s, k;
             bool bIntersect;
             double aSlope = (ay2 - ay1) / (ax2 - ax1);
             double bSlope = (by2 - by1) / (bx2 - bx1);
+
             double aIntercept = ay1 - aSlope * ax1;
             double bIntercept = by1 - bSlope * bx1;
+
             if (aSlope == bSlope)
                 bIntersect = false;
             else
             {
-                x = (bIntercept - aIntercept) / (aSlope - bSlope);
-                y = aSlope * x + aIntercept;
-                if ((ax1 < x && x < ax2) && (bx1 < x && x < bx2))
+                // Deal with Inifinities
+                if  (double.IsNaN(aIntercept))
+                {
+                    s = bSlope;
+                    k = bIntercept;
+                    x = ax1;
+                }
+                else if (double.IsNaN(bIntercept))
+                {
+                    s = aSlope;
+                    k = aIntercept;
+                    x = bx1;
+                }
+                else
+                {
+                    s = aSlope;
+                    k = aIntercept;
+                    x = (bIntercept - aIntercept) / (aSlope-bSlope);
+                }
+                 
+                y = s * x + k;
+                if ((ax1 <= x && x <= ax2) && (bx1 <= x && x <= bx2))
                     bIntersect = true;
                 else
                     bIntersect = false;
