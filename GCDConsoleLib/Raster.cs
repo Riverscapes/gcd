@@ -382,7 +382,7 @@ namespace GCDConsoleLib
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="method">"NEAREST", "GAUSS", "CUBIC", "AVERAGE", "MODE", "AVERAGE_MAGPHASE" or "NONE" </param>
+        /// <param name="method">"nearest", "gauss", "cubic", "average", "mode", "average_magphase" or "none" </param>
         public void BuildPyramids(string method)
         {
             Open();

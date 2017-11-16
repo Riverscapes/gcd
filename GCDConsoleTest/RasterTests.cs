@@ -101,7 +101,7 @@ namespace GCDConsoleLib.Tests
                 Raster rTemplateOutput = RasterOperators.ExtendedCopy(rTempl, new FileInfo(Path.Combine(tmp.Name, "PyramidTest.tif")));
 
                 rTemplateOutput.BuildPyramids("average");
-                Assert.Fail();
+                Assert.IsTrue(File.Exists(Path.Combine(tmp.Name, "PyramidTest.tif.ovr")));
             }
         }
     }
