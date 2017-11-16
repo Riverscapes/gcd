@@ -18,6 +18,11 @@ namespace GCDConsoleLib.Extensions
             this.Reverse = new Indexer<T2, T1>(_reverse);
         }
 
+        /// <summary>
+        /// The indexer is an inner class that gets used to return the correct value
+        /// </summary>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
         public class Indexer<T3, T4>
         {
             private Dictionary<T3, T4> _dictionary;

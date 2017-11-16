@@ -6,7 +6,7 @@ using GCDConsoleLib;
 using GCDConsoleLib.Utility;
 using GCDConsoleLib.Tests.Utility;
 
-namespace GCDConsoleLib.Tests   
+namespace GCDConsoleLib.Tests
 {
 
     [TestClass()]
@@ -87,46 +87,22 @@ namespace GCDConsoleLib.Tests
         }
 
         [TestMethod()]
-        public void ReadTest1()
-        {
-            Assert.Inconclusive();
-        }
-
-        [TestMethod()]
-        public void ReadTest2()
-        {
-            Assert.Inconclusive();
-        }
-
-        [TestMethod()]
-        public void ReadTest3()
-        {
-            Assert.Inconclusive();
-        }
-
-        [TestMethod()]
         public void WriteTest()
         {
             Assert.Inconclusive();
         }
 
         [TestMethod()]
-        public void WriteTest1()
+        public void BuildPyramidsTest()
         {
-            Assert.Inconclusive();
-        }
+            using (ITempDir tmp = TempDir.Create())
+            {
+                Raster rTempl = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("AngledSlopey950-980E.tif")));
+                Raster rTemplateOutput = RasterOperators.ExtendedCopy(rTempl, new FileInfo(Path.Combine(tmp.Name, "PyramidTest.tif")));
 
-        [TestMethod()]
-        public void WriteTest2()
-        {
-            Assert.Inconclusive();
+                rTemplateOutput.BuildPyramids("average");
+                Assert.Fail();
+            }
         }
-
-        [TestMethod()]
-        public void WriteTest3()
-        {
-            Assert.Inconclusive();
-        }
-
     }
 }

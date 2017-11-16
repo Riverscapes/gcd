@@ -3,6 +3,9 @@ using GCDConsoleLib;
 using GCDConsoleLib.Tests.Utility;
 using GCDConsoleLib.Common.Extensons;
 using System.IO;
+using UnitsNet;
+using UnitsNet.Units;
+using GCDConsoleLib.GCD;
 
 namespace GCDConsoleLib.Tests
 {
@@ -60,29 +63,16 @@ namespace GCDConsoleLib.Tests
             }
         }
 
-        [TestMethod()]
-        public void ExtendedCopyTest1()
-        {
-            Assert.Inconclusive();
-        }
-
-        [TestMethod()]
-        public void ExtendedCopyTest2()
-        {
-            Assert.Inconclusive();
-        }
-
-        [TestMethod()]
-        public void ExtendedCopyTest3()
-        {
-            Assert.Inconclusive();
-        }
-
 
         [TestMethod()]
         public void GetStatsMinLoDTest()
         {
-            Assert.Inconclusive();
+            Raster rTempl = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("const900.tif")));
+            Raster rTemp2 = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("const950.tif")));
+
+            UnitGroup ug = new UnitGroup(VolumeUnit.CubicMeter, AreaUnit.SquareMeter, LengthUnit.Meter, LengthUnit.Meter);
+
+            DoDStats test = RasterOperators.GetStatsMinLoD(rTempl, rTemp2, 0.1f, Area.FromSquareMeters(1), ug);
         }
 
         [TestMethod()]

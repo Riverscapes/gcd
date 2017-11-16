@@ -385,26 +385,27 @@ namespace GCDConsoleLib
         /// <param name="method">"NEAREST", "GAUSS", "CUBIC", "AVERAGE", "MODE", "AVERAGE_MAGPHASE" or "NONE" </param>
         public void BuildPyramids(string method)
         {
-            Open(true);
-            List<int> pyramids = new List<int>();
-            int res;
+            Open();
+            int iPixelNum = Extent.rows * Extent.rows;
+            int iTopNum = 4096;
+            int iCurNum = iPixelNum / 4;
 
-            // Determine how many pyramids to build. There might be a better way to do this..
-            if (Extent.rows > Extent.cols)
-                res = Extent.rows / 32;
-            else
-                res = Extent.cols / 32;
+            int[] anLevels = new int[1024];
+            int nLevelCount = 0;
 
-            for (int i = 2; i < res; i = i * 2)
-                pyramids.Add(i);
-
-            int[] overviews = new int[pyramids.Count]; // { 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768, 65536 
-            for (int j = 0; j < pyramids.Count; j++)
+            do
             {
-                overviews[j] = pyramids[j];
-            }
+                anLevels[nLevelCount] = Convert.ToInt32(Math.Pow(2.0, nLevelCount + 2));
+                nLevelCount++;
+                iCurNum /= 4;
+            } while (iCurNum > iTopNum);
 
-            if (ds.BuildOverviews(method, overviews, null, null) == (int)CPLErr.CE_Failure)
+            int[] levels = new int[nLevelCount];
+
+            for (int a = 0; a < nLevelCount; a++)
+                levels[a] = anLevels[a];
+
+            if (ds.BuildOverviews(method, levels, null, null) == (int)CPLErr.CE_Failure)
                 throw new InvalidDataException("Pyramids could not be built for this dataset");
 
             Dispose();
