@@ -49,38 +49,6 @@ namespace GCDConsoleLib
             _init(newDims.Item1, newDims.Item2);
         }
 
-        public static Tuple<int, decimal> GetCleanBins(int origBins, decimal max, decimal min)
-        {
-            decimal oneSideDataWidth = Math.Max(Math.Abs(max), Math.Abs(min));
-            decimal startwidth = (oneSideDataWidth * 2) / origBins;
-
-            // First clean the width to the nearest 5 or 10 power
-            decimal newWidth = GetNearestFiveOrderWidth(startwidth);
-            // Now re-adjust the bins to match
-            int newBins = (int)Math.Ceiling((oneSideDataWidth * 2) / newWidth);
-
-            return new Tuple<int, decimal>(newBins, newWidth);
-        }
-
-        /// <summary>
-        /// Choose a clean division that is a muliple of 5 or 10
-        /// </summary>
-        /// <param name="val"></param>
-        /// <returns></returns>
-        public static decimal GetNearestFiveOrderWidth(decimal val)
-        {
-            int order = (int)Math.Round(Math.Log10((double)val));
-            decimal tener = (decimal)Math.Pow(10, order);
-
-            Dictionary<decimal, decimal> compares = new Dictionary<decimal, decimal>()
-            {
-                {tener, (decimal)Math.Abs(tener - val) },
-                {(tener/2), (decimal) Math.Abs((tener/2) - val) },
-                {(tener * 5),  (decimal)Math.Abs((tener * 5) - val) },
-            };
-            return compares.Aggregate((l, r) => l.Value < r.Value ? l : r).Key;
-        }
-
         /// <summary>
         /// When we know just the width of the bins, the max and the min
         /// </summary>
@@ -163,6 +131,38 @@ namespace GCDConsoleLib
                 BinLefts.Add(width * (bid - (bins / 2)));
                 BinSums.Add(0);
             }
+        }
+
+        public static Tuple<int, decimal> GetCleanBins(int origBins, decimal max, decimal min)
+        {
+            decimal oneSideDataWidth = Math.Max(Math.Abs(max), Math.Abs(min));
+            decimal startwidth = (oneSideDataWidth * 2) / origBins;
+
+            // First clean the width to the nearest 5 or 10 power
+            decimal newWidth = GetNearestFiveOrderWidth(startwidth);
+            // Now re-adjust the bins to match
+            int newBins = (int)Math.Ceiling((oneSideDataWidth * 2) / newWidth);
+
+            return new Tuple<int, decimal>(newBins, newWidth);
+        }
+
+        /// <summary>
+        /// Choose a clean division that is a muliple of 5 or 10
+        /// </summary>
+        /// <param name="val"></param>
+        /// <returns></returns>
+        public static decimal GetNearestFiveOrderWidth(decimal val)
+        {
+            int order = (int)Math.Round(Math.Log10((double)val));
+            decimal tener = (decimal)Math.Pow(10, order);
+
+            Dictionary<decimal, decimal> compares = new Dictionary<decimal, decimal>()
+            {
+                {tener, (decimal)Math.Abs(tener - val) },
+                {(tener/2), (decimal) Math.Abs((tener/2) - val) },
+                {(tener * 5),  (decimal)Math.Abs((tener * 5) - val) },
+            };
+            return compares.Aggregate((l, r) => l.Value < r.Value ? l : r).Key;
         }
 
         /// <summary>
