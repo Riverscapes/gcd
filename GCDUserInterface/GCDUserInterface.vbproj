@@ -83,6 +83,25 @@
     <Compile Include="About\ucAcknowledgements.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="BudgetSegregation\BudgetClassPieChartUC.Designer.vb">
+      <DependentUpon>BudgetClassPieChartUC.vb</DependentUpon>
+    </Compile>
+    <Compile Include="BudgetSegregation\BudgetClassPieChartUC.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="BudgetSegregation\frmBudgetSegProperties.Designer.vb">
+      <DependentUpon>frmBudgetSegProperties.vb</DependentUpon>
+    </Compile>
+    <Compile Include="BudgetSegregation\frmBudgetSegProperties.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BudgetSegregation\frmBudgetSegResults.Designer.vb">
+      <DependentUpon>frmBudgetSegResults.vb</DependentUpon>
+    </Compile>
+    <Compile Include="BudgetSegregation\frmBudgetSegResults.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BudgetSegregation\MaskStatsViewerClass.vb" />
     <Compile Include="ChangeDetection\DoDSummaryDisplayOptions.vb" />
     <Compile Include="ChangeDetection\frmCoherenceProperties.Designer.vb">
       <DependentUpon>frmCoherenceProperties.vb</DependentUpon>
@@ -247,6 +266,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="About\ucAcknowledgements.resx">
       <DependentUpon>ucAcknowledgements.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BudgetSegregation\BudgetClassPieChartUC.resx">
+      <DependentUpon>BudgetClassPieChartUC.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BudgetSegregation\frmBudgetSegProperties.resx">
+      <DependentUpon>frmBudgetSegProperties.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BudgetSegregation\frmBudgetSegResults.resx">
+      <DependentUpon>frmBudgetSegResults.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ChangeDetection\frmCoherenceProperties.resx">
       <DependentUpon>frmCoherenceProperties.vb</DependentUpon>

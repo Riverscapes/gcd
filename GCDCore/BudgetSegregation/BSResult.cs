@@ -11,7 +11,7 @@ namespace GCDCore.BudgetSegregation
     {
         public string ClassName { get; internal set; }
         public int ClassIndex { get; internal set; }
-        public GCDConsoleLib.GCD.DoDStats ChangeStatistics { get; internal set; }
+        public GCDConsoleLib.GCD.DoDStats ChangeStats { get; internal set; }
 
         public readonly FileInfo SummaryXMLPath;
         public readonly FileInfo RawHistogramPath;
@@ -23,7 +23,7 @@ namespace GCDCore.BudgetSegregation
         {
             ClassName = name;
             ClassIndex = classIndex;
-            ChangeStatistics = stats;
+            ChangeStats = stats;
 
             SummaryXMLPath = GetOutputPath(Folder, classIndex, "summary.xml");
             RawHistogramPath = GetOutputPath(Folder, classIndex, "raw.csv");

@@ -1,32 +1,26 @@
 ﻿Imports System.Windows.Forms
-Imports GCDLib.Core
+Imports GCDCore
 
 Namespace UI.BudgetSegregation
 
     Public Class frmBudgetSegResults
 
         Private m_rBS As ProjectDS.BudgetSegregationsRow
-        Private m_Options As UI.ChangeDetection.DoDSummaryDisplayOptions
+        Private m_Options As ChangeDetection.DoDSummaryDisplayOptions
 
         Public Sub New(nBSID As Integer)
 
             ' This call is required by the designer.
             InitializeComponent()
 
-            For Each rBS As ProjectDS.BudgetSegregationsRow In Core.Project.ProjectManagerBase.ds.BudgetSegregations
+            For Each rBS As ProjectDS.BudgetSegregationsRow In ProjectManagerBase.ds.BudgetSegregations
                 If rBS.BudgetID = nBSID Then
                     m_rBS = rBS
                     Exit Sub
                 End If
             Next
 
-            If TypeOf m_rBS Is ProjectDS.BudgetSegregationsRow Then
-
-                Dim sOutputFolder As String = Core.Project.ProjectManagerBase.GetAbsolutePath(m_rBS.OutputFolder)
-
-                Dim bsOutputs As New Core.BudgetSegregation.BudgetSegregationOutputsClass(m_rBS)
-
-            Else
+            If Not TypeOf m_rBS Is ProjectDS.BudgetSegregationsRow Then
                 Dim ex As New Exception("Failed to find budget segregation.")
                 ex.Data("Budget Seg ID") = nBSID
                 Throw ex
@@ -64,7 +58,7 @@ Namespace UI.BudgetSegregation
                 For Each rMask As ProjectDS.BSMasksRow In m_rBS.GetBSMasksRows
                     If rMask.MaskID = nMaskID Then
 
-                        Dim dodResult As Core.ChangeDetection.DoDResult = Core.ChangeDetection.DoDResult.CreateFromDoDRow(rMask.BudgetSegregationsRow.DoDsRow)
+                        Dim dodResult As GCDCore.ChangeDetection.DoDResult = GCDCore.ChangeDetection.DoDResult.CreateFromDoDRow(rMask.BudgetSegregationsRow.DoDsRow)
 
                         Throw New NotImplementedException("Need a way to get the stats from a budget class without masked rasters on disk")
                         'Dim theResultSet As New Core.ChangeDetection.DoDResultSet(theStats, theDoDProps, GCDProject.ProjectManagerBase.GetAbsolutePath(rMask.BudgetSegregationsRow.DoDsRow.RawHistPath), GCDProject.ProjectManagerBase.GetAbsolutePath(rMask.CSVFileName))

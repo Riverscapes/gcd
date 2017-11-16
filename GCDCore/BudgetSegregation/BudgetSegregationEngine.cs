@@ -12,7 +12,7 @@ namespace GCDCore.BudgetSegregation
         {
         }
 
-        public BSResultSet Calculate(ref ChangeDetection.DoDResult dod, DirectoryInfo folder, ref Vector polygonMask, string fieldName)
+        public BSResultSet Calculate(ref ChangeDetection.DoDResult dod, ref Vector polygonMask, string fieldName)
         {
             // Build the budget segregation result set object that will be returned. This determines paths
             BSResultSet resultSet = new BSResultSet(AnalysisFolder, fieldName);
@@ -75,9 +75,8 @@ namespace GCDCore.BudgetSegregation
                 classIndex++;
             }
 
-            // Write the class legend to file 
-            string legendPath = Path.Combine(folder.FullName, "ClassLegend.csv");
-            File.WriteAllText(legendPath, legendText.ToString());
+            // Write the class legend to file          
+            File.WriteAllText(resultSet.ClassLegendPath.FullName, legendText.ToString());
 
             return resultSet;
         }

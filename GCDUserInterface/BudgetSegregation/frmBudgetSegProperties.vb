@@ -6,7 +6,7 @@ Namespace UI.BudgetSegregation
     Public Class frmBudgetSegProperties
 
         Private m_nBSID As Integer
-        Private m_bsOutputs As BudgetSegregation.BudgetSegregationOutputsClass
+        Private m_bsOutputs As GCDCore.BudgetSegregation.BSResultSet
         Private m_nDoDID As Integer
 
         Public ReadOnly Property BSID As Integer
@@ -72,37 +72,44 @@ Namespace UI.BudgetSegregation
                 End If
 
                 Dim dodProps As DoDResult = DoDResult.CreateFromDoDRow(rDoD)
-                Dim bs As New BudgetSegregation.BudgetSegregationEngine(dodProps, New IO.DirectoryInfo(txtOutputFolder.Text), My.Settings.ChartHeight, My.Settings.ChartWidth)
-                m_bsOutputs = bs.Calculate(ucPolygon.SelectedItem, cboField.Text, My.Settings.ChartWidth, My.Settings.ChartHeight, True)
+                Dim bs As New GCDCore.BudgetSegregation.BudgetSegregationEngine(New IO.DirectoryInfo(txtOutputFolder.Text), GCDCore.Project.ProjectManagerBase.Units.VertUnit)
+                m_bsOutputs = bs.Calculate(dodProps, ucPolygon.SelectedItem, cboField.Text)
                 Cursor.Current = Cursors.WaitCursor
 
                 Dim sRelativeFolder As String = ProjectManagerBase.GetRelativePath(txtOutputFolder.Text)
-                Dim sPCDepositionVolPie As String = ProjectManagerBase.GetRelativePath(m_bsOutputs.PieCharts.PercentageTotalDepositionVolumePiePath)
-                Dim sPCErosionVolPie As String = ProjectManagerBase.GetRelativePath(m_bsOutputs.PieCharts.PercentageTotalErosionVolumePiePath)
-                Dim sPCTotalVolPie As String = ProjectManagerBase.GetRelativePath(m_bsOutputs.PieCharts.PercentageTotalVolumePiePath)
+                Dim sPCDepositionVolPie As String = ProjectManagerBase.GetRelativePath(String.Empty)
+                Dim sPCErosionVolPie As String = ProjectManagerBase.GetRelativePath(String.Empty)
+                Dim sPCTotalVolPie As String = ProjectManagerBase.GetRelativePath(String.Empty)
                 Dim sClassLegend As String = ProjectManagerBase.GetRelativePath(m_bsOutputs.ClassLegendPath)
-                Dim sClassSummary As String = ProjectManagerBase.GetRelativePath(m_bsOutputs.ClassSummaryPath)
+                Dim sClassSummary As String = ProjectManagerBase.GetRelativePath(m_bsOutputs.ClassSummaryXML)
+                Dim sPolygonMask As String = ProjectManagerBase.GetRelativePath(m_bsOutputs.PolygonMask)
 
-                Dim bsRow As ProjectDS.BudgetSegregationsRow = ProjectManagerBase.ds.BudgetSegregations.AddBudgetSegregationsRow(rDoD, txtName.Text, m_bsOutputs.PolygonMask, cboField.Text, sRelativeFolder,
+                Dim bsRow As ProjectDS.BudgetSegregationsRow = ProjectManagerBase.ds.BudgetSegregations.AddBudgetSegregationsRow(rDoD, txtName.Text, sPolygonMask, cboField.Text, sRelativeFolder,
                                                            sPCDepositionVolPie, sPCErosionVolPie, sPCTotalVolPie, sClassLegend, sClassSummary)
 
-                For Each sMaskName As String In m_bsOutputs.MaskOutputs.Keys
+                Dim ca As UnitsNet.Area = ProjectManagerBase.CellArea
+                Dim lu As UnitsNet.Units.LengthUnit = ProjectManagerBase.Units.VertUnit
+                Dim au As UnitsNet.Units.AreaUnit = ProjectManagerBase.Units.ArUnit
+                Dim vu As UnitsNet.Units.VolumeUnit = ProjectManagerBase.Units.VolUnit
+
+                For Each classResult As GCDCore.BudgetSegregation.BSResult In m_bsOutputs.ClassResults.Values
                     Cursor.Current = Cursors.WaitCursor
 
-                    Dim aMask As BudgetSegregation.BudgetSegregationOutputsClass.MaskOutputClass = m_bsOutputs.MaskOutputs(sMaskName)
+                    Dim sMaskCSV As String = ProjectManagerBase.GetRelativePath(classResult.RawHistogramPath)
+                    Dim sSummaryFile As String = ProjectManagerBase.GetRelativePath(classResult.SummaryXMLPath)
 
-                    Dim sMaskCSV As String = ProjectManagerBase.GetRelativePath(aMask.csvFilename)
-                    Dim sSummaryFile As String = ProjectManagerBase.GetRelativePath(aMask.SummaryPath)
-                    Dim sAreaHistPath As String = ProjectManagerBase.GetRelativePath(aMask.AreaChartPath)
-                    Dim sVolHistPath As String = ProjectManagerBase.GetRelativePath(aMask.VolumeChartPath)
-
-                    ProjectManagerBase.ds.BSMasks.AddBSMasksRow(bsRow, aMask.MaskValue, sMaskName,
-                                                                       aMask.ChangeStats.AreaErosion_Raw, aMask.ChangeStats.AreaDeposition_Raw,
-                                                                       aMask.ChangeStats.AreaErosion_Thresholded, aMask.ChangeStats.AreaDeposition_Thresholded,
-                                                                       aMask.ChangeStats.VolumeErosion_Raw, aMask.ChangeStats.VolumeDeposition_Raw,
-                                                                       aMask.ChangeStats.VolumeErosion_Thresholded, aMask.ChangeStats.VolumeDeposition_Thresholded,
-                                                                       aMask.ChangeStats.VolumeErosion_Error, aMask.ChangeStats.VolumeDeposition_Error,
-                                                                       sAreaHistPath, sVolHistPath, sSummaryFile, sMaskCSV)
+                    ProjectManagerBase.ds.BSMasks.AddBSMasksRow(bsRow, classResult.ClassIndex, classResult.ClassName,
+                                                                classResult.ChangeStats.ErosionRaw.GetArea(ca).As(au),
+                                                                classResult.ChangeStats.DepositionRaw.GetArea(ca).As(au),
+                                                                classResult.ChangeStats.ErosionThr.GetArea(ca).As(au),
+                                                                classResult.ChangeStats.DepositionThr.GetArea(ca).As(au),
+                                                                classResult.ChangeStats.ErosionRaw.GetVolume(ca, lu).As(vu),
+                                                                classResult.ChangeStats.DepositionRaw.GetVolume(ca, lu).As(vu),
+                                                                classResult.ChangeStats.ErosionThr.GetVolume(ca, lu).As(vu),
+                                                                classResult.ChangeStats.DepositionThr.GetVolume(ca, lu).As(vu),
+                                                                classResult.ChangeStats.ErosionErr.GetVolume(ca, lu).As(vu),
+                                                                classResult.ChangeStats.DepositionErr.GetVolume(ca, lu).As(vu),
+                                                                String.Empty, String.Empty, sSummaryFile, sMaskCSV)
                 Next
 
                 ProjectManagerBase.save()
@@ -156,9 +163,9 @@ Namespace UI.BudgetSegregation
                     Next
 
                     If TypeOf rDoD Is ProjectDS.DoDsRow Then
-                        Dim sDoDPath As String = ProjectManagerBase.GetAbsolutePath(rDoD.RawDoDPath).FullName
-                        If GCDConsoleLib.GISDataset.FileExists(sDoDPath) Then
-                            Dim gDoD As New GCDConsoleLib.Raster(sDoDPath)
+                        Dim rawDoDPath As IO.FileInfo = ProjectManagerBase.GetAbsolutePath(rDoD.RawDoDPath)
+                        If rawDoDPath.Exists Then
+                            Dim gDoD As New GCDConsoleLib.Raster(rawDoDPath)
 
                             ' Confirm that the polygon mask has a spatial reference.
                             Dim bMissingSpatialReference As Boolean = True
@@ -254,7 +261,7 @@ Namespace UI.BudgetSegregation
             If Not String.IsNullOrEmpty(txtName.Text) Then
 
                 If TypeOf ucPolygon.SelectedItem Is GCDConsoleLib.Vector Then
-                    Dim sPolygonPath As String = ucPolygon.SelectedItem.FilePath
+                    Dim polygonPath As IO.FileInfo = ucPolygon.SelectedItem.GISFileInfo
 
                     If Not String.IsNullOrEmpty(cboField.Text) Then
                         If TypeOf cboDoD.SelectedItem Is naru.db.NamedObject Then

@@ -29,15 +29,15 @@
             Me.cmdHelp = New System.Windows.Forms.Button()
             Me.tabMain = New System.Windows.Forms.TabControl()
             Me.TabPage1 = New System.Windows.Forms.TabPage()
-            Me.ucSummary = New UI.ChangeDetection.ucDoDSummary()
+            Me.ucSummary = New ChangeDetection.ucDoDSummary()
             Me.cboSummaryClass = New System.Windows.Forms.ComboBox()
             Me.Label2 = New System.Windows.Forms.Label()
             Me.TabPage2 = New System.Windows.Forms.TabPage()
             Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
-            Me.ucBars = New UI.ChangeDetection.ucChangeBars()
+            Me.ucBars = New ChangeDetection.ucChangeBars()
             Me.Label5 = New System.Windows.Forms.Label()
             Me.cboECDClass = New System.Windows.Forms.ComboBox()
-            Me.ucHistogram = New UI.ChangeDetection.ucDoDHistogram()
+            Me.ucHistogram = New ChangeDetection.ucDoDHistogram()
             Me.TabPage3 = New System.Windows.Forms.TabPage()
             Me.grpBudgetSeg = New System.Windows.Forms.GroupBox()
             Me.txtField = New System.Windows.Forms.TextBox()
@@ -46,7 +46,7 @@
             Me.cmsBasicRaster = New System.Windows.Forms.ContextMenuStrip(Me.components)
             Me.AddToMapToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
             Me.Label3 = New System.Windows.Forms.Label()
-            Me.ucProperties = New UI.ChangeDetection.ucDoDProperties()
+            Me.ucProperties = New ChangeDetection.ucDoDProperties()
             Me.TabPage4 = New System.Windows.Forms.TabPage()
             Me.Label1 = New System.Windows.Forms.Label()
             Me.txtName = New System.Windows.Forms.TextBox()
@@ -359,7 +359,7 @@
         Friend WithEvents TabPage2 As System.Windows.Forms.TabPage
         Friend WithEvents Label1 As System.Windows.Forms.Label
         Friend WithEvents txtName As System.Windows.Forms.TextBox
-        Friend WithEvents ucSummary As UI.ChangeDetection.ucDoDSummary
+        Friend WithEvents ucSummary As ChangeDetection.ucDoDSummary
         Friend WithEvents cboSummaryClass As System.Windows.Forms.ComboBox
         Friend WithEvents Label2 As System.Windows.Forms.Label
         Friend WithEvents TabPage3 As System.Windows.Forms.TabPage
@@ -369,11 +369,11 @@
         Friend WithEvents Label4 As System.Windows.Forms.Label
         Friend WithEvents txtPolygonMask As System.Windows.Forms.TextBox
         Friend WithEvents Label3 As System.Windows.Forms.Label
-        Friend WithEvents ucProperties As UI.ChangeDetection.ucDoDProperties
+        Friend WithEvents ucProperties As ChangeDetection.ucDoDProperties
         Friend WithEvents cboECDClass As System.Windows.Forms.ComboBox
         Friend WithEvents Label5 As System.Windows.Forms.Label
-        Friend WithEvents ucHistogram As UI.ChangeDetection.ucDoDHistogram
-        Friend WithEvents ucBars As UI.ChangeDetection.ucChangeBars
+        Friend WithEvents ucHistogram As ChangeDetection.ucDoDHistogram
+        Friend WithEvents ucBars As ChangeDetection.ucChangeBars
         Friend WithEvents TableLayoutPanel1 As System.Windows.Forms.TableLayoutPanel
         Friend WithEvents cmdBrowse As System.Windows.Forms.Button
         Friend WithEvents cmsBasicRaster As System.Windows.Forms.ContextMenuStrip
