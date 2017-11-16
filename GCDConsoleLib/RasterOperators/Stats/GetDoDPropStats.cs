@@ -11,6 +11,12 @@ namespace GCDConsoleLib.Internal.Operators
         public DoDStats Stats;
         public float fDoDValue, fPropErr;
 
+        // If we do budget seg we need the following
+        private bool isBudgSeg;
+        public Dictionary<string, DoDStats> SegStats;
+        private Vector _polymask;
+        private string _fieldname;
+
         /// <summary>
         /// Pass-through constructure
         /// </summary>
@@ -18,12 +24,66 @@ namespace GCDConsoleLib.Internal.Operators
             base(new List<Raster> { rDod, rErr })
         {
             Stats = theStats;
+            isBudgSeg = false;
+    }
+
+        /// <summary>
+        /// Budget Seggregation Constructor
+        /// </summary>
+        public GetDoDPropStats(Raster rDod, Raster rErr, DoDStats theStats, Vector PolygonMask,
+            string FieldName) :
+            base(new List<Raster> { rDod, rErr })
+        {
+            Stats = theStats;
+            isBudgSeg = true;
+            SegStats = new Dictionary<string, DoDStats>();
+            _polymask = PolygonMask;
+            _fieldname = FieldName;
         }
 
         /// <summary>
         /// This is the actual implementation of the cell-by-cell logic
         /// </summary>
         protected override float CellOp(List<float[]> data, int id)
+        {
+            if (isBudgSeg)
+                BudgetSegCellOp(data, id);
+            else
+                CellChangeCalc(data, id, Stats);
+
+            // We need to return something. Doesn't matter what
+            return 0;
+        }
+
+        /// <summary>
+        /// The budget seggregator looks to see if a cell is inside any of the features
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="id"></param>
+        private void BudgetSegCellOp(List<float[]> data, int id)
+        {
+            Tuple<decimal, decimal> ptcoords = ChunkExtent.Id2YX(id);
+            List<string> shapes = _polymask.ShapesContainPoint((double)ptcoords.Item2, (double)ptcoords.Item1, _fieldname);
+            if (shapes.Count > 0)
+            {
+                foreach (string fldVal in shapes)
+                {
+                    if (!SegStats.ContainsKey(fldVal))
+                        SegStats[fldVal] = new DoDStats(Stats);
+
+                    CellChangeCalc(data, id, SegStats[fldVal]);
+                }
+            }
+        }
+
+        /// <summary>
+        /// We separate out the calc op so we can call it from elsewhere (like the seggregation function)
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="id"></param>
+        /// <param name="stats"></param>
+        /// <param name="nodata"></param>
+        public void CellChangeCalc(List<float[]> data, int id, DoDStats stats)
         {
             fDoDValue = data[0][id];
             fPropErr = data[1][id];
@@ -34,33 +94,29 @@ namespace GCDConsoleLib.Internal.Operators
                 if (fDoDValue > 0)
                 {
                     // Raw Deposition
-                    Stats.DepositionRaw.AddToSumAndIncrementCounter(fDoDValue);
+                    stats.DepositionRaw.AddToSumAndIncrementCounter(fDoDValue);
 
                     if (fDoDValue > fPropErr)
                     {
                         // Thresholded Deposition
-                        Stats.DepositionThr.AddToSumAndIncrementCounter(fDoDValue);
-                        Stats.DepositionErr.AddToSumAndIncrementCounter(fPropErr);
+                        stats.DepositionThr.AddToSumAndIncrementCounter(fDoDValue);
+                        stats.DepositionErr.AddToSumAndIncrementCounter(fPropErr);
                     }
                 }
                 // Erosion
                 if (fDoDValue < 0)
                 {
                     // Raw Erosion
-                    Stats.ErosionRaw.AddToSumAndIncrementCounter(fDoDValue - 1);
+                    stats.ErosionRaw.AddToSumAndIncrementCounter(fDoDValue - 1);
 
                     if (fDoDValue < (fPropErr - 1))
                     {
                         // Thresholded Erosion
-                        Stats.ErosionThr.AddToSumAndIncrementCounter(fDoDValue * -1);
-                        Stats.ErosionErr.AddToSumAndIncrementCounter(fPropErr);
+                        stats.ErosionThr.AddToSumAndIncrementCounter(fDoDValue * -1);
+                        stats.ErosionErr.AddToSumAndIncrementCounter(fPropErr);
                     }
                 }
             }
-
-            // We need to return something. Doesn't matter what
-            return 0;
         }
-
     }
 }

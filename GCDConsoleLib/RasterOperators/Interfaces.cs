@@ -123,8 +123,9 @@ namespace GCDConsoleLib
             Vector PolygonMask, string FieldName,
              Area cellArea, UnitGroup units)
         {
-            throw new NotImplementedException();
-            return null;
+            GetDodMinLodStats theStatsOp = new GetDodMinLodStats(rawDoD, thrDoD, minLoD, new DoDStats(cellArea, units), PolygonMask, FieldName);
+            theStatsOp.Run();
+            return theStatsOp.SegStats;
         }
 
         /// <summary>
@@ -155,8 +156,9 @@ namespace GCDConsoleLib
           Vector PolygonMask, string FieldName,
           Area cellArea, UnitGroup units)
         {
-            throw new NotImplementedException();
-            return null;
+            GetDoDPropStats theStatsOp = new GetDoDPropStats(rawDoD, thrDoD, new DoDStats(cellArea, units), PolygonMask, FieldName);
+            theStatsOp.Run();
+            return theStatsOp.SegStats;
         }
 
         /// <summary>
@@ -192,12 +194,64 @@ namespace GCDConsoleLib
         /// <param name="PolygonMask">Vector layer containing the mask polygons</param>
         /// <param name="FieldName">Name of the field in the PolygonMask that contains the distinguishing property on which to group statistics</param>
         /// <returns></returns>
+        enum statsType : byte { raw, thr, err };
         public static Dictionary<string, DoDStats> GetStatsProbalistic(Raster rawDoD, Raster thrDoD, Raster propErrRaster,
             Vector PolygonMask, string FieldName,
             Area cellArea, UnitGroup units)
         {
-            throw new NotImplementedException();
-            return null;
+            GetChangeStats raw = new GetChangeStats(rawDoD, new DoDStats(cellArea, units), PolygonMask, FieldName);
+            GetChangeStats thr = new GetChangeStats(thrDoD, new DoDStats(cellArea, units), PolygonMask, FieldName);
+            GetChangeStats err = new GetChangeStats(propErrRaster, thrDoD, new DoDStats(cellArea, units), PolygonMask, FieldName);
+
+            // Create an empty stats object we will use wherever we need to
+            DoDStats empty = new DoDStats(cellArea, units);
+
+            // Now turn the dictionaries inside out [fieldvalue][raw/thr/err][DoDstats]
+            Dictionary<string, Dictionary<statsType, DoDStats>> statsflddic = new Dictionary<string, Dictionary<statsType, DoDStats>>();
+
+            foreach (KeyValuePair<string, DoDStats> kvp in raw.SegStats)
+                if (statsflddic.ContainsKey(kvp.Key))
+                    statsflddic[kvp.Key][statsType.raw] = kvp.Value;
+                else
+                    statsflddic[kvp.Key] = new Dictionary<statsType, DoDStats>() { { statsType.raw, kvp.Value } };
+
+            foreach (KeyValuePair<string, DoDStats> kvp in thr.SegStats)
+                if (statsflddic.ContainsKey(kvp.Key))
+                    statsflddic[kvp.Key][statsType.thr] = kvp.Value;
+                else
+                    statsflddic[kvp.Key] = new Dictionary<statsType, DoDStats>() { { statsType.thr, kvp.Value } };
+
+            foreach (KeyValuePair<string, DoDStats> kvp in err.SegStats)
+                if (statsflddic.ContainsKey(kvp.Key))
+                    statsflddic[kvp.Key][statsType.err] = kvp.Value;
+                else
+                    statsflddic[kvp.Key] = new Dictionary<statsType, DoDStats>() { { statsType.err, kvp.Value } };
+
+            // Now we're ready to combine things and return a dictionary of values
+            Dictionary<string, DoDStats> retVal = new Dictionary<string, DoDStats>();
+            foreach (KeyValuePair<string, Dictionary<statsType, DoDStats>> kvp in statsflddic)
+            {
+                // Now we need to fill in the blanks with an empty DoDstats object so we get 0's where 
+                // we expect them.
+                foreach (statsType tp in Enum.GetValues(typeof(statsType)))
+                    if (!kvp.Value.ContainsKey(tp))
+                        kvp.Value[tp] = empty;
+
+                retVal[kvp.Key] = new GCD.DoDStats(
+                            kvp.Value[statsType.raw].ErosionRaw.GetArea(cellArea),
+                            kvp.Value[statsType.raw].DepositionRaw.GetArea(cellArea),
+                            kvp.Value[statsType.thr].ErosionRaw.GetArea(cellArea),
+                            kvp.Value[statsType.thr].DepositionRaw.GetArea(cellArea),
+                            kvp.Value[statsType.raw].ErosionRaw.GetVolume(cellArea, units.VertUnit),
+                            kvp.Value[statsType.raw].DepositionRaw.GetVolume(cellArea, units.VertUnit),
+                            kvp.Value[statsType.raw].ErosionRaw.GetVolume(cellArea, units.VertUnit),
+                            kvp.Value[statsType.raw].DepositionRaw.GetVolume(cellArea, units.VertUnit),
+                            kvp.Value[statsType.err].ErosionRaw.GetVolume(cellArea, units.VertUnit),
+                            kvp.Value[statsType.raw].DepositionRaw.GetVolume(cellArea, units.VertUnit),
+                            cellArea, units);
+            }
+
+            return retVal;
         }
 
         public static Raster BilinearResample(Raster rInput, string sOutputRaster, ExtentRectangle newRect)
@@ -317,8 +371,9 @@ namespace GCDConsoleLib
 
         public static Dictionary<string, Histogram> BinRaster(ref Raster rInput, int numberofBins, ref Vector polygonMask, string FieldName)
         {
-            throw new NotImplementedException();
-            return null;
+            BinRaster histOp = new BinRaster(rInput, numberofBins, polygonMask, FieldName);
+            histOp.Run();
+            return histOp.SegHistograms;
         }
 
         public enum ThresholdOps
@@ -375,11 +430,7 @@ namespace GCDConsoleLib
         }
 
 
-
-
-
-
-        ////////////////////////////////////    EVERYTHING BELOW HERE IS PRIVATE
+        ////////////////////////////////////    EVERYTHING BELOW HERE IS PRIVATE ////////////////////////////////////
 
 
         /// <summary>

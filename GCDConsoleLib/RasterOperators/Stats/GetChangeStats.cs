@@ -9,12 +9,11 @@ namespace GCDConsoleLib.Internal.Operators
     public class GetChangeStats : CellByCellOperator<float>
     {
         public DoDStats Stats;
-        private bool bSeg;
         private List<float> _nodata;
 
         // If we do budget seg we need the following
         private bool isBudgSeg;
-        private Dictionary<string, DoDStats> SegStats;
+        public Dictionary<string, DoDStats> SegStats;
         private Vector _polymask;
         private string _fieldname;
 
@@ -25,7 +24,7 @@ namespace GCDConsoleLib.Internal.Operators
             base(new List<Raster> { rInput })
         {
             Stats = theStats;
-            bSeg = false;
+            isBudgSeg = false;
             _nodata = _rasternodatavals;
         }
 
@@ -39,15 +38,30 @@ namespace GCDConsoleLib.Internal.Operators
             base(new List<Raster> { rInput, rPropError })
         {
             Stats = theStats;
-            bSeg = false;
+            isBudgSeg = false;
         }
 
         /// <summary>
-        /// Pass-through constructor
+        /// Budget Seggregation constructor
         /// </summary>
         public GetChangeStats(Raster rInput, DoDStats theStats, Vector PolygonMask, string FieldName) :
             base(new List<Raster> { rInput })
         {
+            Stats = theStats;
+            isBudgSeg = true;
+            SegStats = new Dictionary<string, DoDStats>();
+            _polymask = PolygonMask;
+            _fieldname = FieldName;
+        }
+
+        /// <summary>
+        /// Budget Seggregation constructor
+        /// </summary>
+        public GetChangeStats(Raster rInput, Raster rPropError, DoDStats theStats, Vector PolygonMask, string FieldName) :
+           base(new List<Raster> { rInput, rPropError })
+        {
+            Stats = theStats;
+            isBudgSeg = true;
             SegStats = new Dictionary<string, DoDStats>();
             _polymask = PolygonMask;
             _fieldname = FieldName;
@@ -58,7 +72,7 @@ namespace GCDConsoleLib.Internal.Operators
         /// </summary>
         protected override float CellOp(List<float[]> data, int id)
         {
-            if (bSeg)
+            if (isBudgSeg)
                 BudgetSegCellOp(data, id);
             else
                 CellChangeCalc(data, id, Stats);
@@ -78,16 +92,13 @@ namespace GCDConsoleLib.Internal.Operators
             List<string> shapes = _polymask.ShapesContainPoint((double)ptcoords.Item2, (double)ptcoords.Item1, _fieldname);
             if (shapes.Count > 0)
             {
-                foreach (string shp in shapes)
+                foreach (string fldVal in shapes)
                 {
-                    if (!SegStats.ContainsKey(shp))
-                        SegStats[shp] = new DoDStats(Stats);
+                    if (!SegStats.ContainsKey(fldVal))
+                        SegStats[fldVal] = new DoDStats(Stats);
 
-                    DoDStats myStats = SegStats[shp];
-
-                    CellChangeCalc(data, id, myStats);
+                    CellChangeCalc(data, id, SegStats[fldVal]);
                 }
-
             }
         }
 
@@ -101,6 +112,8 @@ namespace GCDConsoleLib.Internal.Operators
         public void CellChangeCalc(List<float[]> data, int id, DoDStats stats)
         {
             float fRVal, fMask;
+
+            // If we don't have a mask to use then do it this way
             if (data.Count == 1 && data[0][id] != _rasternodatavals[0])
             {
                 fRVal = data[0][id];
@@ -111,6 +124,7 @@ namespace GCDConsoleLib.Internal.Operators
                 else if (fRVal< 0)
                     stats.ErosionRaw.AddToSumAndIncrementCounter(fRVal* -1);
             }
+
             // If we have a mask then use it.
             else if (data.Count == 2 && data[1][id] != _rasternodatavals[1])
             {
@@ -127,6 +141,5 @@ namespace GCDConsoleLib.Internal.Operators
                 }
             }
         }
-
     }
 }

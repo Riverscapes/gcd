@@ -11,6 +11,13 @@ namespace GCDConsoleLib.Internal.Operators
         public DoDStats Stats;
         private float fDoDValue;
         private float _thresh;
+
+        // If we do budget seg we need the following
+        private bool isBudgSeg;
+        public Dictionary<string, DoDStats> SegStats;
+        private Vector _polymask;
+        private string _fieldname;
+
         /// <summary>
         /// Pass-through constructure
         /// </summary>
@@ -22,14 +29,54 @@ namespace GCDConsoleLib.Internal.Operators
             _thresh = thresh;
         }
 
+
+        /// <summary>
+        /// Budget Seggregation constructor
+        /// </summary>
+        public GetDodMinLodStats(Raster rawDoD, Raster thrDoD,
+            float thresh, DoDStats theStats, Vector PolygonMask, string FieldName) :
+           base(new List<Raster> { rawDoD, thrDoD })
+        {
+            Stats = theStats;
+            _thresh = thresh;
+            SegStats = new Dictionary<string, DoDStats>();
+            _polymask = PolygonMask;
+            _fieldname = FieldName;
+        }
+
+
         /// <summary>
         /// This is the actual implementation of the cell-by-cell logic
         /// </summary>
         protected override float CellOp(List<float[]> data, int id)
         {
-            CellChangeCalc(data, id, Stats);
+            if (isBudgSeg)
+                BudgetSegCellOp(data, id);
+            else
+                CellChangeCalc(data, id, Stats);
             // We need to return something
             return 0;
+        }
+
+        /// <summary>
+        /// The budget seggregator looks to see if a cell is inside any of the features
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="id"></param>
+        private void BudgetSegCellOp(List<float[]> data, int id)
+        {
+            Tuple<decimal, decimal> ptcoords = ChunkExtent.Id2YX(id);
+            List<string> shapes = _polymask.ShapesContainPoint((double)ptcoords.Item2, (double)ptcoords.Item1, _fieldname);
+            if (shapes.Count > 0)
+            {
+                foreach (string fldVal in shapes)
+                {
+                    if (!SegStats.ContainsKey(fldVal))
+                        SegStats[fldVal] = new DoDStats(Stats);
+
+                    CellChangeCalc(data, id, SegStats[fldVal]);
+                }
+            }
         }
 
         /// <summary>
@@ -73,6 +120,5 @@ namespace GCDConsoleLib.Internal.Operators
                 }
             }
         }
-
     }
 }
