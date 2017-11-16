@@ -11,15 +11,13 @@ namespace GCDCore.Project
 {
     public class ProjectManagerUI : ProjectManagerBase
     {
-        protected static RasterPyramidManager m_PyramidManager;
-
         private static FileInfo m_FISLibrary;
         public static bool IsArcMap
         {
             get { return System.Reflection.Assembly.GetEntryAssembly().FullName.ToLower().Contains("arcmap"); }
         }
 
-        public static RasterPyramidManager PyramidManager { get; }
+        public static RasterPyramidManager PyramidManager { get; internal set; }
 
         public static List<ErrorCalculation.FIS.FISLibraryItem> FISLibrary
         {
@@ -44,7 +42,7 @@ namespace GCDCore.Project
 
         public ProjectManagerUI(GCDConsoleLib.Raster.RasterDriver eDefaultRasterType, string sAutomaticPyramids) : base(ApplicationFolder, Properties.Settings.Default.Erosion, Properties.Settings.Default.Deposition, eDefaultRasterType)
         {
-            m_PyramidManager = new RasterPyramidManager(sAutomaticPyramids);
+            PyramidManager = new RasterPyramidManager(sAutomaticPyramids);
             m_FISLibrary = new FileInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FISLibrary.xml"));
         }
 

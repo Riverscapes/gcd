@@ -407,6 +407,7 @@ namespace GCDConsoleLib
             if (ds.BuildOverviews(method, overviews, null, null) == (int)CPLErr.CE_Failure)
                 throw new InvalidDataException("Pyramids could not be built for this dataset");
 
+            Dispose();
         }
 
 

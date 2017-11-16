@@ -384,7 +384,7 @@ namespace GCDConsoleLib
         public static Raster SetNull(Raster rInput, ThresholdOps fThresholdOp,
             float fThreshold, FileInfo sOutputRaster)
         {
-            Threshold threshOp = new Threshold(rInput, fThresholdOp, fThreshold);
+            Threshold threshOp = new Threshold(rInput, fThresholdOp, fThreshold, new Raster(rInput, sOutputRaster));
             return threshOp.RunWithOutput();
         }
 
@@ -395,7 +395,7 @@ namespace GCDConsoleLib
 
         public static Raster SetNull(Raster rInput, ThresholdOps fBottomOp, float fBottom, ThresholdOps fTopOp, float fTop, System.IO.FileInfo sOutputRaster)
         {
-            Threshold threshOp = new Threshold(rInput, fBottomOp, fBottom, fTopOp, fTop);
+            Threshold threshOp = new Threshold(rInput, fBottomOp, fBottom, fTopOp, fTop, new Raster(rInput, sOutputRaster));
             return threshOp.RunWithOutput();
         }
 

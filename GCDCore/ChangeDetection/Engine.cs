@@ -148,12 +148,12 @@ namespace GCDCore.ChangeDetection
             barViewer.Save(Path.Combine(FiguresFolder.FullName, sFilePrefix + "ChangeBars_DepthRelative.png"), fChartWidth, fChartHeight);
         }
 
-        protected void WriteHistogram(ref Histogram histo, FileInfo outputFile)
+        protected void WriteHistogram( Histogram histo, FileInfo outputFile)
         {
             histo.WriteFile(outputFile, Project.ProjectManagerBase.CellArea, Project.ProjectManagerBase.Units);
         }
 
-        protected void GenerateHistogramGraphicFiles(ref Histogram rawHisto, ref Histogram thrHisto, int fChartWidth, int fChartHeight)
+        protected void GenerateHistogramGraphicFiles(Histogram rawHisto, Histogram thrHisto, int fChartWidth, int fChartHeight)
         {
             FiguresFolder.Create();
 

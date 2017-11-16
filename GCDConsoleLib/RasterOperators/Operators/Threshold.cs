@@ -16,8 +16,8 @@ namespace GCDConsoleLib.Internal.Operators
         /// Pass-through constructure
         /// </summary>
         public Threshold(Raster rInput, RasterOperators.ThresholdOps tOp,
-            float fThresh) :
-            base(new List<Raster> { rInput })
+            float fThresh, Raster rOutputRaster) :
+            base(new List<Raster> { rInput }, rOutputRaster)
         {
             _botOp = tOp;
             _botNum = fThresh;
@@ -25,8 +25,8 @@ namespace GCDConsoleLib.Internal.Operators
         }
         public Threshold(Raster rInput,
             RasterOperators.ThresholdOps tBottomOp, float fBottomThresh,
-            RasterOperators.ThresholdOps tTopOp, float fTopThresh) :
-            base(new List<Raster> { rInput })
+            RasterOperators.ThresholdOps tTopOp, float fTopThresh, Raster rOutputRaster) :
+            base(new List<Raster> { rInput }, rOutputRaster)
         {
             if (tBottomOp == RasterOperators.ThresholdOps.LessThan ||
                 tBottomOp == RasterOperators.ThresholdOps.LessThanOrEqual ||

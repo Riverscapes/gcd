@@ -50,25 +50,25 @@ namespace GCDCore.ChangeDetection
             Histogram rawHisto = RasterOperators.BinRaster(rawDoD, DEFAULTHISTOGRAMNUMBER);
 
             // Write the raw histogram
-            WriteHistogram(ref rawHisto, rawHstPath);
+            WriteHistogram(rawHisto, rawHstPath);
 
             // Call the polymorphic method to threshold the DoD depending on the thresholding method
             Raster thrDoD = ThresholdRawDoD(rawDoD, thrDoDPath);
 
             // Build pyraminds
-            Project.ProjectManagerUI.PyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.DoDThresholded, thrDoDPath);
+            //Project.ProjectManagerUI.PyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.DoDThresholded, thrDoDPath);
 
             // Calculate the thresholded histogram
             Histogram thrHisto = RasterOperators.BinRaster(thrDoD, DEFAULTHISTOGRAMNUMBER);
 
             // Write the thresholded histogram
-            WriteHistogram(ref thrHisto, thrHstPath);
+            WriteHistogram(thrHisto, thrHstPath);
 
             // Calculate the change statistics and write the output files
             DoDStats changeStats = CalculateChangeStats(rawDoD, thrDoD, cellArea, units);
             GenerateSummaryXML(changeStats, sumXMLPath);
             GenerateChangeBarGraphicFiles(changeStats, 0, 0);
-            GenerateHistogramGraphicFiles(ref rawHisto, ref thrHisto, 0, 0);
+            GenerateHistogramGraphicFiles(rawHisto, thrHisto, 0, 0);
 
             return GetDoDResult(changeStats, rawDoDPath, thrDoDPath, rawHstPath, rawHisto, thrHstPath, thrHisto, units);
         }

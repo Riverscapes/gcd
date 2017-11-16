@@ -69,8 +69,8 @@ namespace GCDCore.BudgetSegregation
                 Histogram rawHisto = rawHistos[segClass.Key];
                 Histogram thrHisto = thrHistos[segClass.Key];
 
-                WriteHistogram(ref rawHisto, classResult.RawHistogramPath);
-                WriteHistogram(ref thrHisto, classResult.ThrHistogramPath);
+                WriteHistogram(rawHisto, classResult.RawHistogramPath);
+                WriteHistogram(thrHisto, classResult.ThrHistogramPath);
 
                 classIndex++;
             }
