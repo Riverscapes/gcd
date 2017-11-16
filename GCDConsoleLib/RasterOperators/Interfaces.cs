@@ -315,6 +315,12 @@ namespace GCDConsoleLib
             return histOp.theHistogram;
         }
 
+        public static Dictionary<string, Histogram> BinRaster(ref Raster rInput, int numberofBins, ref Vector polygonMask, string FieldName)
+        {
+            throw new NotImplementedException();
+            return null;
+        }
+
         public enum ThresholdOps
         {
             LessThan, GreaterThan, LessThanOrEqual, GreaterThanOrEqual,

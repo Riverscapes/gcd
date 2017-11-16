@@ -47,12 +47,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BudgetSegregation\BSResultSet.cs" />
+    <Compile Include="BudgetSegregation\BudgetSegregationEngine.cs" />
+    <Compile Include="BudgetSegregation\BSResult.cs" />
     <Compile Include="ChangeDetection\ChangeDetectionBase.cs" />
     <Compile Include="ChangeDetection\ChangeDetectionMinLoD.cs" />
     <Compile Include="ChangeDetection\ChangeDetectionProbabilistic.cs" />
     <Compile Include="ChangeDetection\ChangeDetectionPropProb.cs" />
     <Compile Include="ChangeDetection\CoherenceProperties.cs" />
     <Compile Include="ChangeDetection\DoDResult.cs" />
+    <Compile Include="ChangeDetection\Engine.cs" />
     <Compile Include="ErrorCalculation\ErrorCalcProperties.cs" />
     <Compile Include="ErrorCalculation\ErrorSurfaceEngine.cs" />
     <Compile Include="ErrorCalculation\FIS\FISLibraryItem.cs" />

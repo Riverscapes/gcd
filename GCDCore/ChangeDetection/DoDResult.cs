@@ -78,7 +78,7 @@ namespace GCDCore.ChangeDetection
             DoDResult dodResult = null;
             if (rDoD.TypeMinLOD)
             {
-                dodResult = new DoDResultMinLoD(ref changeStats, rawDoDPath, rawHistoPath, thrDoDPath, thrHistoPath, rDoD.Threshold, lUnits);
+                dodResult = new DoDResultMinLoD(ref changeStats, rawDoDPath, rawHistoPath, thrDoDPath, thrHistoPath,Convert.ToSingle(rDoD.Threshold), lUnits);
             }
             else
             {
@@ -165,9 +165,9 @@ namespace GCDCore.ChangeDetection
 
     public class DoDResultMinLoD : DoDResult
     {
-        public readonly double Threshold;
+        public readonly float Threshold;
 
-        public DoDResultMinLoD(ref DoDStats changeStats, FileInfo rawDoD, FileInfo thrDoD, FileInfo rawHist, FileInfo thrHist, double fThreshold, UnitsNet.Units.LengthUnit eLinearUnits) : base(changeStats, rawDoD, thrDoD, rawHist, thrHist, eLinearUnits)
+        public DoDResultMinLoD(ref DoDStats changeStats, FileInfo rawDoD, FileInfo thrDoD, FileInfo rawHist, FileInfo thrHist, float fThreshold, UnitsNet.Units.LengthUnit eLinearUnits) : base(changeStats, rawDoD, thrDoD, rawHist, thrHist, eLinearUnits)
         {
             Threshold = fThreshold;
         }
