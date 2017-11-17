@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using GCDConsoleLib.Internal;
 
 namespace GCDConsoleLib.Internal.Operators
 {
@@ -9,7 +8,7 @@ namespace GCDConsoleLib.Internal.Operators
     {
 
         /// <summary>
-        /// Pass-through constructure
+        /// Pass-through constructor for RootSumSquares
         /// </summary>
         public RootSumSquare(Raster rInput1, Raster rInput2, Raster rOutputRaster) :
             base(new List<Raster> { rInput1, rInput2 }, rOutputRaster)

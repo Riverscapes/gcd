@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using GCDConsoleLib.Internal;
 
 namespace GCDConsoleLib.Internal.Operators
 {
@@ -13,8 +12,12 @@ namespace GCDConsoleLib.Internal.Operators
         private bool bTwoOps;
 
         /// <summary>
-        /// Pass-through constructure
+        /// Constructor
         /// </summary>
+        /// <param name="rInput"></param>
+        /// <param name="tOp"></param>
+        /// <param name="fThresh"></param>
+        /// <param name="rOutputRaster"></param>
         public Threshold(Raster rInput, RasterOperators.ThresholdOps tOp,
             float fThresh, Raster rOutputRaster) :
             base(new List<Raster> { rInput }, rOutputRaster)
@@ -23,6 +26,16 @@ namespace GCDConsoleLib.Internal.Operators
             _botNum = fThresh;
             bTwoOps = false;
         }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="rInput"></param>
+        /// <param name="tBottomOp"></param>
+        /// <param name="fBottomThresh"></param>
+        /// <param name="tTopOp"></param>
+        /// <param name="fTopThresh"></param>
+        /// <param name="rOutputRaster"></param>
         public Threshold(Raster rInput,
             RasterOperators.ThresholdOps tBottomOp, float fBottomThresh,
             RasterOperators.ThresholdOps tTopOp, float fTopThresh, Raster rOutputRaster) :
@@ -41,6 +54,12 @@ namespace GCDConsoleLib.Internal.Operators
             bTwoOps = true;
         }
 
+        /// <summary>
+        /// Here's where the actual thrreshold Operation happens
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
         protected override float CellOp(List<float[]> data, int id)
         {
             // Get out quick if we can
@@ -48,6 +67,7 @@ namespace GCDConsoleLib.Internal.Operators
                 return _rasternodatavals[0];
 
             float val = data[0][id];
+            // TwoOps means we're doing Greater than something AND less than something else
             if (bTwoOps)
             {
                 if (

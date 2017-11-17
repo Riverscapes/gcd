@@ -7,7 +7,7 @@ namespace GCDConsoleLib.Internal.Operators
     public class Mosaic<T> : CellByCellOperator<T>
     {
         /// <summary>
-        /// Pass-through constructure
+        /// Pass-through constructor
         /// </summary>
         public Mosaic(Raster rInput, Raster rOutputRaster, ExtentRectangle newRect) :
             base(new List<Raster> { rInput }, rOutputRaster)
@@ -19,10 +19,9 @@ namespace GCDConsoleLib.Internal.Operators
         protected override T CellOp(List<T[]> data, int id)
         {
             for (int did = 0; did < data.Count; did++)
-            {
                 if (!data[did][id].Equals(_rasternodatavals[did]))
                     return data[did][id];
-            }
+
             return OpNodataVal;
 
         }

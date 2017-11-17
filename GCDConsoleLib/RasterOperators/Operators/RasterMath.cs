@@ -1,7 +1,5 @@
 ﻿using System;
-using GCDConsoleLib;
 using System.Collections.Generic;
-using GCDConsoleLib.Internal;
 using GCDConsoleLib.Utility;
 namespace GCDConsoleLib.Internal.Operators
 {
@@ -13,7 +11,7 @@ namespace GCDConsoleLib.Internal.Operators
         private T _operand;
 
         /// <summary>
-        /// We protect the constructors because we don't really want anyone using them.
+        /// Pass-through constructor for Raster Math
         /// </summary>
         /// <param name="otType"></param>
         /// <param name="rInput"></param>

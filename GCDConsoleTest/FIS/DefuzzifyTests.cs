@@ -14,31 +14,31 @@ namespace GCDConsoleLib.FIS.Tests
         [TestMethod()]
         public void DefuzzCentroidTest()
         {
-            Assert.Fail();
+            Assert.Inconclusive();
         }
 
         [TestMethod()]
         public void FISDefuzzBisectTest()
         {
-            Assert.Fail();
+            Assert.Inconclusive();
         }
 
         [TestMethod()]
         public void FISDefuzzMidMaxTest()
         {
-            Assert.Fail();
+            Assert.Inconclusive();
         }
 
         [TestMethod()]
         public void FISDefuzzLargeMaxTest()
         {
-            Assert.Fail();
+            Assert.Inconclusive();
         }
 
         [TestMethod()]
         public void FISDefuzzSmallMaxTest()
         {
-            Assert.Fail();
+            Assert.Inconclusive();
         }
     }
 }

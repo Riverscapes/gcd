@@ -14,37 +14,37 @@ namespace GCDConsoleLib.FIS.Tests
         [TestMethod()]
         public void MemberFunctionSetTest()
         {
-            Assert.Fail();
+            Assert.Inconclusive();
         }
 
         [TestMethod()]
         public void MemberFunctionSetTest1()
         {
-            Assert.Fail();
+            Assert.Inconclusive();
         }
 
         [TestMethod()]
         public void addMFTest()
         {
-            Assert.Fail();
+            Assert.Inconclusive();
         }
 
         [TestMethod()]
         public void addTriangleMFTest()
         {
-            Assert.Fail();
+            Assert.Inconclusive();
         }
 
         [TestMethod()]
         public void addTrapezoidMFTest()
         {
-            Assert.Fail();
+            Assert.Inconclusive();
         }
 
         [TestMethod()]
         public void validTest()
         {
-            Assert.Fail();
+            Assert.Inconclusive();
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using GCDConsoleLib.Internal;
+﻿using System.Collections.Generic;
 
 namespace GCDConsoleLib.Internal.Operators
 {
@@ -8,7 +6,7 @@ namespace GCDConsoleLib.Internal.Operators
     {
 
         /// <summary>
-        /// Pass-through constructure
+        /// Pass-through constructor
         /// </summary>
         public Mask(Raster rUnMasked, Raster rMask, Raster rOutputRaster) :
             base(new List<Raster> { rUnMasked, rMask }, rOutputRaster)

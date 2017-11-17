@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using GCDConsoleLib.Internal;
+﻿using System.Collections.Generic;
 
 namespace GCDConsoleLib.Internal.Operators
 {
@@ -8,7 +6,7 @@ namespace GCDConsoleLib.Internal.Operators
     public class ExtendedCopy<T> : CellByCellOperator<T>
     {
         /// <summary>
-        /// Pass-through constructure
+        /// Pass-through constructor for Extended Copy
         /// </summary>
         public ExtendedCopy(Raster rInput, Raster rOutputRaster, ExtentRectangle newRect) :
             base(new List<Raster> { rInput }, rOutputRaster)

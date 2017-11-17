@@ -2,9 +2,6 @@
 using GCDConsoleLib.FIS;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GCDConsoleLib.FIS.Tests
 {
@@ -14,13 +11,13 @@ namespace GCDConsoleLib.FIS.Tests
         [TestMethod()]
         public void RuleTest()
         {
-            Assert.Fail();
+            Assert.Inconclusive();
         }
 
         [TestMethod()]
         public void addMfTest()
         {
-            Assert.Fail();
+            Assert.Inconclusive();
         }
     }
 }

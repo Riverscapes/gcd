@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using GCDConsoleLib.Internal;
 
 namespace GCDConsoleLib.Internal.Operators
 {
+    /// <summary>
+    /// Slope is a window-overlap function with a window size of (1) == 3x3 = 9 cells
+    /// </summary>
     class Slope : WindowOverlapOperator<float>
     {
         float dzdx, dzdy, dzxy, riseRun, cellWidth, cellHeight, retval, theSlope;
@@ -11,6 +13,12 @@ namespace GCDConsoleLib.Internal.Operators
         public enum SlopeType: byte { Percent, Degrees};
         private SlopeType _slopetype;
 
+        /// <summary>
+        /// Pass-through constructor
+        /// </summary>
+        /// <param name="rInput"></param>
+        /// <param name="rOutputRaster"></param>
+        /// <param name="theType"></param>
         public Slope(Raster rInput, Raster rOutputRaster, SlopeType theType) :
             base(new List<Raster> { rInput }, 1, rOutputRaster)
         {
@@ -19,6 +27,11 @@ namespace GCDConsoleLib.Internal.Operators
             cellHeight = (float)Math.Abs(OpExtent.CellHeight);
         }
 
+        /// <summary>
+        /// Handy convenience function for slope calculations
+        /// </summary>
+        /// <param name="fElev"></param>
+        /// <returns></returns>
         public float CalculateSlope(float[] fElev)
         {
             dzdx = ((fElev[2] - fElev[0]) + ((2 * fElev[5]) - (2 * fElev[3])) + (fElev[8] - fElev[6])) / (8 * cellWidth);
@@ -29,9 +42,15 @@ namespace GCDConsoleLib.Internal.Operators
             return riseRun;
         }
 
+        /// <summary>
+        /// Here's where the actual operation happens
+        /// </summary>
+        /// <param name="wd">Window Data. A list of float arrays</param>
+        /// <returns></returns>
         protected override float WindowOp(List<float[]> wd)
         {
             _buff = wd[0];
+
             // If anything is nodataval just return that and skip everything else
             for (int k = 0; k < BufferCellNum; k++)
                 if (wd[0][k].Equals(OpNodataVal))
@@ -49,7 +68,8 @@ namespace GCDConsoleLib.Internal.Operators
                     break;
             }
 
-            return 0;
+            // We are required to return something
+            return retval;
         }
 
     }

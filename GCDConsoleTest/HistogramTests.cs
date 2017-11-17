@@ -197,17 +197,17 @@ namespace GCDConsoleLib.Tests
                 rTest1.AddBinVal((double)i - 9.9);
 
             // Make sure our unit conversions are working
-            decimal cH = -0.2m;
-            decimal cW = 0.3m;
+            decimal cH = -0.2m; //Foots
+            decimal cW = 0.3m;  //Foots
 
-            UnitGroup ug = new UnitGroup(VolumeUnit.CubicMeter, AreaUnit.SquareMeter, LengthUnit.Meter, LengthUnit.Meter);
-            Area cellArea = Area.From((double)(cH * cW), ug.ArUnit);
+            UnitGroup ug = new UnitGroup(VolumeUnit.ImperialBeerBarrel, AreaUnit.SquareInch, LengthUnit.Foot, LengthUnit.Meter);
+            Area cellArea = Area.From((double)Math.Abs(cH * cW), AreaUnit.SquareFoot);
 
             for (int i = 0; i < 20; i++)
             {
                 // Length(m) X Width(m) X Height(ft)
-                double manualvolume = cellArea.SquareMeters * Length.FromFeet(i - 9.9).Meters;
-                Assert.AreEqual(rTest1.BinVolume(i, cellArea, ug).CubicMeters, manualvolume, 0.0000001);
+                double manualvolume = Volume.From(cellArea.SquareMeters * Length.FromFeet(i - 9.9).Meters, VolumeUnit.CubicMeter).ImperialBeerBarrels;
+                Assert.AreEqual(rTest1.BinVolume(i, cellArea, ug).As(ug.VolUnit), manualvolume, 0.0000001);
             }
 
         }

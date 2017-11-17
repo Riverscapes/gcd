@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using GCDConsoleLib.Internal;
 
 namespace GCDConsoleLib.Internal.Operators
 {
@@ -8,6 +7,11 @@ namespace GCDConsoleLib.Internal.Operators
     {
         private double azimuth, zFactor, altDeg, zenDeg, zenRad, azimuthMath, azimuthRad, aspectRad;
 
+        /// <summary>
+        /// Pass-through constructor for Hillshade
+        /// </summary>
+        /// <param name="rInput"></param>
+        /// <param name="rOutputRaster"></param>
         public Hillshade(Raster rInput, Raster rOutputRaster) :
             base(new List<Raster> { rInput }, 1, rOutputRaster)
         { }
@@ -43,24 +47,18 @@ namespace GCDConsoleLib.Internal.Operators
             {
                 aspectRad = Math.Atan2((double)dzdy, (dzdx * (-1)));
                 if (aspectRad < 0.0)
-                {
                     aspectRad = 2.0 * Math.PI + aspectRad;
-                }
             }
             else
             {
                 if (dzdy > 0.0)
-                {
                     aspectRad = Math.PI / 2.0;
-                }
                 else if (dzdy < 0.0)
-                {
                     aspectRad = 2.0 * Math.PI - Math.PI / 2.0;
-                }
-                else
-                {
-                    //                        aspectRad = aspectRad;
-                }
+                //else
+                //{
+                //    //aspectRad = aspectRad;
+                //}
             }
 
             return (float)Math.Round(254 * ((Math.Cos(zenRad) * Math.Cos(slopeRad)) + (Math.Sin(zenRad) * Math.Sin(slopeRad) * Math.Cos(azimuthRad - aspectRad)))) + 1;

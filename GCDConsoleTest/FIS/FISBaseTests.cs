@@ -14,31 +14,31 @@ namespace GCDConsoleLib.FIS.Tests
         [TestMethod()]
         public void FISBaseTest()
         {
-            Assert.Fail();
+            Assert.Inconclusive();
         }
 
         [TestMethod()]
         public void DisposeTest()
         {
-            Assert.Fail();
+            Assert.Inconclusive();
         }
 
         [TestMethod()]
         public void ProcessDataTest()
         {
-            Assert.Fail();
+            Assert.Inconclusive();
         }
 
         [TestMethod()]
         public void ReadDataTest()
         {
-            Assert.Fail();
+            Assert.Inconclusive();
         }
 
         [TestMethod()]
         public void WriteDataTest()
         {
-            Assert.Fail();
+            Assert.Inconclusive();
         }
     }
 }
