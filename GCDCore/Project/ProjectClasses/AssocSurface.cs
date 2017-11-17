@@ -1,21 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 
 namespace GCDCore.Project
 {
     public class AssocSurface : GCDProjectItem
     {
-        public readonly System.IO.FileInfo RasterPath;
+        public readonly ProjectRaster Raster;
         public string AssocSurfaceType { get; set; }
         public readonly DEMSurvey DEM;
 
-        public AssocSurface(string name, System.IO.FileInfo rasterPath, string sType, DEMSurvey dem)
+        public AssocSurface(string name, FileInfo rasterPath, string sType, DEMSurvey dem)
             : base(name)
         {
-            RasterPath = rasterPath;
+            Raster = new ProjectRaster(rasterPath);
             AssocSurfaceType = sType;
             DEM = dem;
         }

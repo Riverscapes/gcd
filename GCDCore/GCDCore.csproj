@@ -64,6 +64,7 @@
     <Compile Include="OutputManager.cs" />
     <Compile Include="Project\ProjectClasses\AssocSurface.cs" />
     <Compile Include="Project\ProjectClasses\BudgetSegregation.cs" />
+    <Compile Include="Project\ProjectClasses\BudgetSegregationClass.cs" />
     <Compile Include="Project\ProjectClasses\DEMSurvey.cs" />
     <Compile Include="Project\ProjectClasses\DoD.cs" />
     <Compile Include="Project\ProjectClasses\ErrorFISProperties.cs" />
@@ -71,7 +72,13 @@
     <Compile Include="Project\ProjectClasses\ErrorUniformProperties.cs" />
     <Compile Include="Project\ProjectClasses\GCDProject.cs" />
     <Compile Include="Project\ProjectClasses\GCDProjectItem.cs" />
+    <Compile Include="Project\ProjectClasses\ProjectRaster.cs" />
     <Compile Include="Project\ProjectDS.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProjectDS.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Project\ProjectDS1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ProjectDS.xsd</DependentUpon>

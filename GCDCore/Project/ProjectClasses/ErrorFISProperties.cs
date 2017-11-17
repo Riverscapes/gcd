@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 
 namespace GCDCore.Project
 {
@@ -10,10 +6,9 @@ namespace GCDCore.Project
     {
         public readonly AssocSurface AssocSurface;
         public readonly string FISInputName;
-        public readonly System.IO.FileInfo FISInputFile;
-        
-        public ErrorFISProperties(string name, AssocSurface assoc, string fisInputName,
-            System.IO.FileInfo fisInputFile)
+        public readonly FileInfo FISInputFile;
+
+        public ErrorFISProperties(string name, AssocSurface assoc, string fisInputName, FileInfo fisInputFile)
             : base(name)
         {
             AssocSurface = assoc;
