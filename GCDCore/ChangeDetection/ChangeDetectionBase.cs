@@ -56,7 +56,7 @@ namespace GCDCore.ChangeDetection
             Raster thrDoD = ThresholdRawDoD(rawDoD, thrDoDPath);
 
             // Build pyraminds
-            //Project.ProjectManagerUI.PyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.DoDThresholded, thrDoDPath);
+            Project.ProjectManagerUI.PyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.DoDThresholded, thrDoDPath);
 
             // Calculate the thresholded histogram
             Histogram thrHisto = RasterOperators.BinRaster(thrDoD, DEFAULTHISTOGRAMNUMBER);
