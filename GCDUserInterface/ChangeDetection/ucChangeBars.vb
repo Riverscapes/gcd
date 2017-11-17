@@ -60,6 +60,10 @@ Namespace ChangeDetection
 
         Private Sub RefreshBars(sender As Object, e As EventArgs)
 
+            If cboType.SelectedItem Is Nothing Then
+                Return
+            End If
+
             Dim eType As ElevationChangeBarViewer.BarTypes = DirectCast(Convert.ToInt32(DirectCast(cboType.SelectedItem, naru.db.NamedObject).ID), ElevationChangeBarViewer.BarTypes)
 
             Dim ca As UnitsNet.Area = GCDCore.Project.ProjectManagerBase.CellArea
