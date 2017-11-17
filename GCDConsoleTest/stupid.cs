@@ -25,9 +25,7 @@ namespace GCDConsoleLib.Tests
             B["other"].Add("thingB");
             A.Add("thingC");
             testFunc1(B, A);
-            testFunc2(B, A);
-
-            
+            testFunc2(B, A);            
         }
 
         public void testFunc1(Dictionary<string, List<string>> E, List<string> F)
