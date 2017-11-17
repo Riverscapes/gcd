@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using GCDConsoleLib.Utility;
+
 namespace GCDConsoleLib.Internal.Operators
 {
     public class RasterMath<T> : CellByCellOperator<T>

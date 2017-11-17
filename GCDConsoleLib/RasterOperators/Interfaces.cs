@@ -254,10 +254,11 @@ namespace GCDConsoleLib
             return retVal;
         }
 
-        public static Raster BilinearResample(Raster rInput, string sOutputRaster, ExtentRectangle newRect)
+        public static Raster BilinearResample(Raster rInput, decimal newCellHeight, decimal newCellWidth, FileInfo sOutputRaster )
         {
-            throw new NotImplementedException();
-            return null;
+            return (Raster)GenericRunWithOutput(typeof(BilinearResample<>), rInput.Datatype.CSType, new object[] {
+                rInput, newCellHeight, newCellWidth, new Raster(rInput, sOutputRaster)
+            });
         }
 
         public static Raster Hillshade(Raster rInput, FileInfo sOutputRaster)

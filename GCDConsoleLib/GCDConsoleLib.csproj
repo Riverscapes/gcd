@@ -106,6 +106,7 @@
     <Compile Include="Histogram.cs" />
     <Compile Include="RasterOperators\CellByCellOperator.cs" />
     <Compile Include="RasterOperators\Interfaces.cs" />
+    <Compile Include="RasterOperators\Operators\BilinearResample.cs" />
     <Compile Include="RasterOperators\Operators\FISRaster.cs" />
     <Compile Include="RasterOperators\Stats\GetChangeStats.cs" />
     <Compile Include="RasterOperators\Stats\GetDoDPropStats.cs" />
