@@ -19,10 +19,14 @@ Namespace ChangeDetection
         Public Sub Initialize(m_rDoD As ProjectDS.DoDsRow)
 
             txtNewDEM.Text = m_rDoD.NewSurveyName
-            txtNewError.Text = m_rDoD.NewErrorName
+            If Not m_rDoD.IsNewErrorNameNull Then
+                txtNewError.Text = m_rDoD.NewErrorName
+            End If
 
             txtOldDEM.Text = m_rDoD.OldSurveyName
-            txtOldError.Text = m_rDoD.OldErrorName
+            If Not m_rDoD.IsOldErrorNameNull Then
+                txtOldError.Text = m_rDoD.OldErrorName
+            End If
 
             If m_rDoD.TypeMinLOD Then
                 txtType.Text = "Minimum Level of Detection (MinLod)"

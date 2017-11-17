@@ -30,7 +30,7 @@ Namespace ChangeDetection
             End Get
         End Property
 
-        Public ReadOnly Property DoDResults As DoDResult
+        Public ReadOnly Property DoDResult As DoDResult
             Get
                 Return m_DoDResult
             End Get
@@ -156,54 +156,59 @@ Namespace ChangeDetection
 
                 m_DoDResult = cdEngine.Calculate(True, ProjectManagerBase.CellArea, ProjectManagerBase.Units)
 
-                Dim rDoD As ProjectDS.DoDsRow = ProjectManagerBase.ds.DoDs.NewDoDsRow()
-                rDoD.ProjectRow = ProjectManagerBase.CurrentProject
-                rDoD.Name = txtName.Text
-                rDoD.OutputFolder = ProjectManagerBase.GetRelativePath(dFolder.FullName)
-                rDoD.NewSurveyName = cboNewDEM.Text
-                rDoD.OldSurveyName = cboOldDEM.Text
-                rDoD.TypeMinLOD = rdoMinLOD.Checked
-                rDoD.TypePropagated = rdoPropagated.Checked
-                rDoD.TypeProbabilistic = rdoProbabilistic.Checked
-                rDoD.CellArea = ProjectManagerBase.CellArea.As(ProjectManagerBase.Units.ArUnit)
-                rDoD.AreaErosionRaw = m_DoDResult.ChangeStats.ErosionRaw.GetArea(ProjectManagerBase.CellArea).As(ProjectManagerBase.Units.ArUnit)
-                rDoD.AreaDepositonRaw = m_DoDResult.ChangeStats.DepositionRaw.GetArea(ProjectManagerBase.CellArea).As(ProjectManagerBase.Units.ArUnit)
-                rDoD.AreaErosionThresholded = m_DoDResult.ChangeStats.ErosionThr.GetArea(ProjectManagerBase.CellArea).As(ProjectManagerBase.Units.ArUnit)
-                rDoD.AreaDepositionThresholded = m_DoDResult.ChangeStats.DepositionThr.GetArea(ProjectManagerBase.CellArea).As(ProjectManagerBase.Units.ArUnit)
-                rDoD.VolumeErosionRaw = m_DoDResult.ChangeStats.ErosionRaw.GetVolume(ProjectManagerBase.CellArea, ProjectManagerBase.Units.VertUnit).As(ProjectManagerBase.Units.VolUnit)
-                rDoD.VolumeDepositionRaw = m_DoDResult.ChangeStats.DepositionRaw.GetVolume(ProjectManagerBase.CellArea, ProjectManagerBase.Units.VertUnit).As(ProjectManagerBase.Units.VolUnit)
-                rDoD.VolumeErosionThresholded = m_DoDResult.ChangeStats.ErosionThr.GetVolume(ProjectManagerBase.CellArea, ProjectManagerBase.Units.VertUnit).As(ProjectManagerBase.Units.VolUnit)
-                rDoD.VolumeDepositionThresholded = m_DoDResult.ChangeStats.DepositionThr.GetVolume(ProjectManagerBase.CellArea, ProjectManagerBase.Units.VertUnit).As(ProjectManagerBase.Units.VolUnit)
-                rDoD.VolumeErosionError = m_DoDResult.ChangeStats.ErosionErr.GetVolume(ProjectManagerBase.CellArea, ProjectManagerBase.Units.VertUnit).As(ProjectManagerBase.Units.VolUnit)
-                rDoD.VolumeDepositionError = m_DoDResult.ChangeStats.DepositionErr.GetVolume(ProjectManagerBase.CellArea, ProjectManagerBase.Units.VertUnit).As(ProjectManagerBase.Units.VolUnit)
+                m_rDoD = ProjectManagerBase.ds.DoDs.NewDoDsRow()
+                m_rDoD.ProjectRow = ProjectManagerBase.CurrentProject
+                m_rDoD.Name = txtName.Text
+                m_rDoD.OutputFolder = ProjectManagerBase.GetRelativePath(dFolder.FullName)
+                m_rDoD.NewSurveyName = cboNewDEM.Text
+                m_rDoD.OldSurveyName = cboOldDEM.Text
+                m_rDoD.RawDoDPath = ProjectManagerBase.GetRelativePath(m_DoDResult.RawDoD)
+                m_rDoD.ThreshDoDPath = ProjectManagerBase.GetRelativePath(m_DoDResult.ThrDoD)
+                m_rDoD.RawHistPath = ProjectManagerBase.GetRelativePath(m_DoDResult.RawHistogramPath)
+                m_rDoD.ThreshHistPath = ProjectManagerBase.GetRelativePath(m_DoDResult.ThrHistogramPath)
+                m_rDoD.TypeMinLOD = rdoMinLOD.Checked
+                m_rDoD.TypePropagated = rdoPropagated.Checked
+                m_rDoD.TypeProbabilistic = rdoProbabilistic.Checked
+                m_rDoD.CellArea = ProjectManagerBase.CellArea.As(ProjectManagerBase.Units.ArUnit)
+                m_rDoD.AreaErosionRaw = m_DoDResult.ChangeStats.ErosionRaw.GetArea(ProjectManagerBase.CellArea).As(ProjectManagerBase.Units.ArUnit)
+                m_rDoD.AreaDepositonRaw = m_DoDResult.ChangeStats.DepositionRaw.GetArea(ProjectManagerBase.CellArea).As(ProjectManagerBase.Units.ArUnit)
+                m_rDoD.AreaErosionThresholded = m_DoDResult.ChangeStats.ErosionThr.GetArea(ProjectManagerBase.CellArea).As(ProjectManagerBase.Units.ArUnit)
+                m_rDoD.AreaDepositionThresholded = m_DoDResult.ChangeStats.DepositionThr.GetArea(ProjectManagerBase.CellArea).As(ProjectManagerBase.Units.ArUnit)
+                m_rDoD.VolumeErosionRaw = m_DoDResult.ChangeStats.ErosionRaw.GetVolume(ProjectManagerBase.CellArea, ProjectManagerBase.Units.VertUnit).As(ProjectManagerBase.Units.VolUnit)
+                m_rDoD.VolumeDepositionRaw = m_DoDResult.ChangeStats.DepositionRaw.GetVolume(ProjectManagerBase.CellArea, ProjectManagerBase.Units.VertUnit).As(ProjectManagerBase.Units.VolUnit)
+                m_rDoD.VolumeErosionThresholded = m_DoDResult.ChangeStats.ErosionThr.GetVolume(ProjectManagerBase.CellArea, ProjectManagerBase.Units.VertUnit).As(ProjectManagerBase.Units.VolUnit)
+                m_rDoD.VolumeDepositionThresholded = m_DoDResult.ChangeStats.DepositionThr.GetVolume(ProjectManagerBase.CellArea, ProjectManagerBase.Units.VertUnit).As(ProjectManagerBase.Units.VolUnit)
+                m_rDoD.VolumeErosionError = m_DoDResult.ChangeStats.ErosionErr.GetVolume(ProjectManagerBase.CellArea, ProjectManagerBase.Units.VertUnit).As(ProjectManagerBase.Units.VolUnit)
+                m_rDoD.VolumeDepositionError = m_DoDResult.ChangeStats.DepositionErr.GetVolume(ProjectManagerBase.CellArea, ProjectManagerBase.Units.VertUnit).As(ProjectManagerBase.Units.VolUnit)
 
                 If TypeOf m_DoDResult Is DoDResultMinLoD Then
-                    rDoD.Threshold = DirectCast(m_DoDResult, DoDResultMinLoD).Threshold
+                    m_rDoD.Threshold = DirectCast(m_DoDResult, DoDResultMinLoD).Threshold
                 Else
                     If TypeOf m_DoDResult Is DoDResultPropagated Then
-                        rDoD.PropagatedErrorRasterPath = ProjectManagerBase.GetRelativePath(DirectCast(m_DoDResult, DoDResultPropagated).PropErrRaster)
+                        m_rDoD.PropagatedErrorRasterPath = ProjectManagerBase.GetRelativePath(DirectCast(m_DoDResult, DoDResultPropagated).PropErrRaster)
 
                         If TypeOf m_DoDResult Is DoDResultProbabilisitic Then
                             Dim res As DoDResultProbabilisitic = DirectCast(m_DoDResult, DoDResultProbabilisitic)
 
-                            rDoD.Threshold = res.ConfidenceLevel
-                            rDoD.ProbabilityRaster = ProjectManagerBase.GetRelativePath(res.ProbabilityRaster)
-                            rDoD.SpatialCoErosionRaster = ProjectManagerBase.GetRelativePath(res.SpatialCoErosionRaster)
-                            rDoD.SpatialCoDepositionRaster = ProjectManagerBase.GetRelativePath(res.SpatialCoDepositionRaster)
-                            rDoD.ConditionalProbRaster = ProjectManagerBase.GetRelativePath(res.ConditionalProbabilityRaster)
-                            rDoD.PosteriorRaster = ProjectManagerBase.GetRelativePath(res.PosteriorRaster)
-                            rDoD.Bayesian = chkBayesian.Checked
-                            rDoD.Filter = m_frmSpatialCoherence.FilterSize
-                            rDoD.PercentLess = m_frmSpatialCoherence.PercentLess
-                            rDoD.PercentMore = m_frmSpatialCoherence.PercentGreater
+                            m_rDoD.Threshold = res.ConfidenceLevel
+                            m_rDoD.ProbabilityRaster = ProjectManagerBase.GetRelativePath(res.ProbabilityRaster)
+                            m_rDoD.SpatialCoErosionRaster = ProjectManagerBase.GetRelativePath(res.SpatialCoErosionRaster)
+                            m_rDoD.SpatialCoDepositionRaster = ProjectManagerBase.GetRelativePath(res.SpatialCoDepositionRaster)
+                            m_rDoD.ConditionalProbRaster = ProjectManagerBase.GetRelativePath(res.ConditionalProbabilityRaster)
+                            m_rDoD.PosteriorRaster = ProjectManagerBase.GetRelativePath(res.PosteriorRaster)
+                            m_rDoD.Bayesian = chkBayesian.Checked
+                            m_rDoD.Filter = m_frmSpatialCoherence.FilterSize
+                            m_rDoD.PercentLess = m_frmSpatialCoherence.PercentLess
+                            m_rDoD.PercentMore = m_frmSpatialCoherence.PercentGreater
                         End If
                     End If
                 End If
 
-                ProjectManagerBase.ds.DoDs.AddDoDsRow(rDoD)
+                ProjectManagerBase.ds.DoDs.AddDoDsRow(m_rDoD)
                 ProjectManagerBase.save()
 
             Catch ex As Exception
+                m_rDoD = Nothing
                 naru.error.ExceptionUI.HandleException(ex)
             Finally
                 Cursor.Current = Cursors.Default
@@ -213,7 +218,7 @@ Namespace ChangeDetection
 
         Private Function ValidateForm() As Boolean
 
-            If String.IsNullOrEmpty(txtName.Text) Then
+            If String.IsNullOrEmpty(txtName.Text) OrElse String.IsNullOrEmpty(txtName.Text.Trim) Then
                 MsgBox("Please enter a name for the analysis.", MsgBoxStyle.Information, GCDCore.Properties.Resources.ApplicationNameLong)
                 Return False
             Else
@@ -221,6 +226,11 @@ Namespace ChangeDetection
                     MsgBox("An analysis folder with the same output path already exists. Please change the analysis name so that a different output folder will be used.", MsgBoxStyle.Information, GCDCore.Properties.Resources.ApplicationNameLong)
                     Return False
                 End If
+            End If
+
+            If TypeOf ProjectManagerBase.ds.DoDs.FirstOrDefault(Function(p As ProjectDS.DoDsRow) String.Compare(p.Name, txtName.Text, True) = 0) Is ProjectDS.DoDsRow Then
+                MsgBox("A change detection already exists with this name. Please choose a unique name.", MsgBoxStyle.Information, GCDCore.Properties.Resources.ApplicationNameLong)
+                Return False
             End If
 
             If TypeOf cboNewDEM.SelectedItem Is naru.db.NamedObject Then
@@ -249,13 +259,6 @@ Namespace ChangeDetection
                     Return False
                 End If
             End If
-
-            'If rdoAOI.Checked Then
-            '    If Not TypeOf cboAOI.SelectedItem Is GISCode.ListItem Then
-            '        MsgBox("Please select an AOI or choose to analyse the common area of the DEM Surveys.", MsgBoxStyle.Information, GCDCore.Properties.Resources.ApplicationNameLong)
-            '        Return False
-            '    End If
-            'End If
 
             Return True
 

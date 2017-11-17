@@ -1015,12 +1015,12 @@ Namespace Project
             Try
                 If frmDoDCalculation.ShowDialog() = DialogResult.OK Then
                     Dim sTag As String = String.Empty
-                    If TypeOf frmDoDCalculation.DoDRow Is ProjectDS.DoDsRow Then
+                    If TypeOf frmDoDCalculation.DoDResult Is GCDCore.ChangeDetection.DoDResult Then
                         sTag = GCDNodeTypes.DoD.ToString & "_" & frmDoDCalculation.DoDRow.DoDID.ToString
                         LoadTree(sTag)
 
                         ' Now show the results form for this new DoD Calculation
-                        Dim frmResults As New ChangeDetection.frmDoDResults(frmDoDCalculation.DoDRow, frmDoDCalculation.DoDResults)
+                        Dim frmResults As New ChangeDetection.frmDoDResults(frmDoDCalculation.DoDRow, frmDoDCalculation.DoDResult)
                         frmResults.ShowDialog()
                     End If
                 End If
@@ -1674,12 +1674,9 @@ Namespace Project
                         Dim nID As Integer = GetNodeID(selNode)
                         Dim rDod As ProjectDS.DoDsRow = ProjectManagerBase.ds.DoDs.FindByDoDID(nID)
                         If TypeOf rDod Is ProjectDS.DoDsRow Then
-                            Dim sFolder As String = ProjectManagerBase.OutputManager.GetDoDOutputFolder(rDod.Name)
-                            If IO.Directory.Exists(sFolder) Then
-                                If sFolder.Contains(" ") Then
-                                    sFolder = """" & sFolder & """"
-                                End If
-                                Process.Start("explorer.exe", sFolder)
+                            Dim folder As IO.FileInfo = ProjectManagerBase.GetAbsolutePath(rDod.OutputFolder)
+                            If folder.Exists Then
+                                Process.Start("explorer.exe", folder.FullName)
                             End If
 
                         End If

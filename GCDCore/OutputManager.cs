@@ -65,7 +65,7 @@ namespace GCDCore
         public string ErrorSurfaceFolder(string sSurveyName, string sErrorSurfaceName)
         {
             string sRasterPath = DEMSurveyFolder(sSurveyName);
-            sRasterPath =Path.Combine(sRasterPath, m_sErrorCalculationsFolder);
+            sRasterPath = Path.Combine(sRasterPath, m_sErrorCalculationsFolder);
             sErrorSurfaceName = naru.os.File.RemoveDangerousCharacters(sErrorSurfaceName);
             sRasterPath = Path.Combine(sRasterPath, sErrorSurfaceName);
             return sRasterPath;
@@ -819,21 +819,6 @@ namespace GCDCore
             return new FileInfo(Path.Combine(dodFilder.FullName, "summary.xml"));
         }
 
-        public string GetDoDPNGPlot(string sDoDName, string sFolder = "")
-        {
-            string dodDirectoryPath = null;
-            if (string.IsNullOrEmpty(sFolder) || !Directory.Exists(sFolder))
-            {
-                dodDirectoryPath = GetDoDOutputFolder(sDoDName, true);
-            }
-            else
-            {
-                dodDirectoryPath = sFolder;
-            }
-            string pngThresholdPath = naru.os.File.GetNewSafeName(dodDirectoryPath, "raw", "png").FullName;
-            return pngThresholdPath;
-        }
-
         /// <summary>
         /// Determine the output folder for a DoD Analysis
         /// </summary>
@@ -846,65 +831,35 @@ namespace GCDCore
         /// the value of True to ensure that the folder exists when it is time to create files in it.</remarks>
         public string GetDoDOutputFolder(string sDoDName, bool bCreateIfMissing = false)
         {
-
             string sDoDFolder = string.Empty;
             int nFolderIndex = 0;
 
-            // Check if the DoD already exists and if so then get the established folder path
-            foreach (Project.ProjectDS.DoDsRow rDoD in Project.ProjectManagerBase.CurrentProject.GetDoDsRows())
+            string sAnalysesFolder = Path.Combine(GCDProjectFolder(), m_sAnalysesFolder);
+            if (bCreateIfMissing && !Directory.Exists(sAnalysesFolder))
             {
-                if (string.Compare(sDoDName, rDoD.Name, true) == 0)
-                {
-                    sDoDFolder = Path.Combine(GCDProjectFolder(), rDoD.OutputFolder);
-                    if (!Directory.Exists(sDoDFolder))
-                    {
-                        Exception ex = new Exception("A DoD was found in the project but the associated folder was missing.");
-                        ex.Data["DoD Name"] = rDoD.Name;
-                        ex.Data["Folder Path"] = sDoDFolder;
-                        throw ex;
-                    }
-                }
-
-                if (nFolderIndex < rDoD.DoDID)
-                {
-                    nFolderIndex = rDoD.DoDID;
-                }
+                Directory.CreateDirectory(sAnalysesFolder);
             }
 
-            if (string.IsNullOrEmpty(sDoDFolder))
+            string sChangeDetectionFolder = Path.Combine(sAnalysesFolder, m_sChangeDetectionFolder);
+            if (bCreateIfMissing && !Directory.Exists(sChangeDetectionFolder))
             {
-                // The DoD was not found in the project. So Determine the DoD folder path
-                // by the next available folder index (greater than the max ID of DoD IDs in 
-                // the project and existing folder IDs.
+                Directory.CreateDirectory(sChangeDetectionFolder);
+            }
 
-                string sAnalysesFolder = Path.Combine(GCDProjectFolder(), m_sAnalysesFolder);
-                if (bCreateIfMissing && !Directory.Exists(sAnalysesFolder))
-                {
-                    Directory.CreateDirectory(sAnalysesFolder);
-                }
+            // By now nFolder index should hold an integer that represents either the max DoD ID or the 
+            // max folder integer suffix. Create the new DoD folder with the next biggest integer
+            do
+            {
+                nFolderIndex += 1;
+                sDoDFolder = Path.Combine(sChangeDetectionFolder, m_sDoDFolderPrefix + (nFolderIndex).ToString("0000"));
+            } while (Directory.Exists(sDoDFolder) && nFolderIndex < 9999);
 
-                string sChangeDetectionFolder = Path.Combine(sAnalysesFolder, m_sChangeDetectionFolder);
-                if (bCreateIfMissing && !Directory.Exists(sChangeDetectionFolder))
-                {
-                    Directory.CreateDirectory(sChangeDetectionFolder);
-                }
-
-                // By now nFolder index should hold an integer that represents either the max DoD ID or the 
-                // max folder integer suffix. Create the new DoD folder with the next biggest integer
-                do
-                {
-                    nFolderIndex += 1;
-                    sDoDFolder = Path.Combine(sChangeDetectionFolder, m_sDoDFolderPrefix + (nFolderIndex).ToString("0000"));
-                } while (Directory.Exists(sDoDFolder) && nFolderIndex < 9999);
-
-                if (bCreateIfMissing)
-                {
-                    Directory.CreateDirectory(sDoDFolder);
-                }
+            if (bCreateIfMissing)
+            {
+                Directory.CreateDirectory(sDoDFolder);
             }
 
             return sDoDFolder;
-
         }
 
         private string GetSafeDoDName(string sOriginalName)
