@@ -78,11 +78,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ProjectDS.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Project\ProjectDS1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ProjectDS.xsd</DependentUpon>
-    </Compile>
     <Compile Include="Project\ProjectManagerBase.cs" />
     <Compile Include="Project\ProjectManagerUI.cs" />
     <Compile Include="Project\SurveyDateTime.cs" />
