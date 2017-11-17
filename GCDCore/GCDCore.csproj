@@ -62,6 +62,15 @@
     <Compile Include="ErrorCalculation\FIS\FISLibraryItem.cs" />
     <Compile Include="ErrorCalculation\FIS\FISRuleFile.cs" />
     <Compile Include="OutputManager.cs" />
+    <Compile Include="Project\ProjectClasses\AssocSurface.cs" />
+    <Compile Include="Project\ProjectClasses\BudgetSegregation.cs" />
+    <Compile Include="Project\ProjectClasses\DEMSurvey.cs" />
+    <Compile Include="Project\ProjectClasses\DoD.cs" />
+    <Compile Include="Project\ProjectClasses\ErrorFISProperties.cs" />
+    <Compile Include="Project\ProjectClasses\ErrorSurface.cs" />
+    <Compile Include="Project\ProjectClasses\ErrorUniformProperties.cs" />
+    <Compile Include="Project\ProjectClasses\GCDProject.cs" />
+    <Compile Include="Project\ProjectClasses\GCDProjectItem.cs" />
     <Compile Include="Project\ProjectDS.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
