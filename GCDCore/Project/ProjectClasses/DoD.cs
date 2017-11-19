@@ -64,11 +64,11 @@ namespace GCDCore.Project
             nodDoD.AppendChild(xmlDoc.CreateElement("OldDEM")).InnerText = OldDEM.Name;
             nodDoD.AppendChild(xmlDoc.CreateElement("NewErrorSurface")).InnerText = NewErrorSurface.Name;
             nodDoD.AppendChild(xmlDoc.CreateElement("OldErrorSurface")).InnerText = OldErrorSurface.Name;
-            nodDoD.AppendChild(xmlDoc.CreateElement("RawDoD")).InnerText = RawDoD.RasterPath.FullName;
-            nodDoD.AppendChild(xmlDoc.CreateElement("ThrDoD")).InnerText = ThrDoD.RasterPath.FullName;
-            nodDoD.AppendChild(xmlDoc.CreateElement("RawHistogram")).InnerText = RawHistogram.FullName;
-            nodDoD.AppendChild(xmlDoc.CreateElement("ThrHistogram")).InnerText = ThrHistogram.FullName;
-            nodDoD.AppendChild(xmlDoc.CreateElement("SummaryXML")).InnerText = SummaryXML.FullName;
+            nodDoD.AppendChild(xmlDoc.CreateElement("RawDoD")).InnerText = ProjectManagerBase.GetRelativePath(RawDoD.RasterPath);
+            nodDoD.AppendChild(xmlDoc.CreateElement("ThrDoD")).InnerText = ProjectManagerBase.GetRelativePath(ThrDoD.RasterPath);
+            nodDoD.AppendChild(xmlDoc.CreateElement("RawHistogram")).InnerText = ProjectManagerBase.GetRelativePath(RawHistogram);
+            nodDoD.AppendChild(xmlDoc.CreateElement("ThrHistogram")).InnerText = ProjectManagerBase.GetRelativePath(ThrHistogram);
+            nodDoD.AppendChild(xmlDoc.CreateElement("SummaryXML")).InnerText = ProjectManagerBase.GetRelativePath(SummaryXML);
             nodDoD.AppendChild(xmlDoc.CreateElement("Threshold")).InnerText = Threshold.HasValue ? Threshold.ToString() : string.Empty;
             nodDoD.AppendChild(xmlDoc.CreateElement("ThresholdingMethod")).InnerText = ThresholdingMethod.ToString();
 

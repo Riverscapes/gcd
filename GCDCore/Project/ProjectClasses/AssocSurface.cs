@@ -22,7 +22,7 @@ namespace GCDCore.Project
             XmlNode nodAssoc = nodParent.AppendChild(xmlDoc.CreateElement("Assoc"));
             nodAssoc.AppendChild(xmlDoc.CreateElement("Name")).InnerText = Name;
             nodAssoc.AppendChild(xmlDoc.CreateElement("Type")).InnerText = AssocSurfaceType.ToString();
-            nodAssoc.AppendChild(xmlDoc.CreateElement("Path")).InnerText = string.Empty;
+            nodAssoc.AppendChild(xmlDoc.CreateElement("Path")).InnerText = ProjectManagerBase.GetRelativePath(Raster.RasterPath);
         }
     }
 }

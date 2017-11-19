@@ -24,9 +24,9 @@ namespace GCDCore.Project
         {
             XmlNode nodClass = nodParent.AppendChild(xmlDoc.CreateElement("Class"));
             nodClass.AppendChild(xmlDoc.CreateElement("Name")).InnerText = Name;
-            nodClass.AppendChild(xmlDoc.CreateElement("RawHistogram")).InnerText = RawHistogram.FullName;
-            nodClass.AppendChild(xmlDoc.CreateElement("ThrHistogram")).InnerText = ThrHistogram.FullName;
-            nodClass.AppendChild(xmlDoc.CreateElement("SummaryXML")).InnerText = SummaryXML.FullName;
+            nodClass.AppendChild(xmlDoc.CreateElement("RawHistogram")).InnerText = ProjectManagerBase.GetRelativePath(RawHistogram);
+            nodClass.AppendChild(xmlDoc.CreateElement("ThrHistogram")).InnerText = ProjectManagerBase.GetRelativePath(ThrHistogram);
+            nodClass.AppendChild(xmlDoc.CreateElement("SummaryXML")).InnerText = ProjectManagerBase.GetRelativePath(SummaryXML);
             DoD.SerializeDoDStatistics(xmlDoc, nodParent, Statistics);
         }
     }

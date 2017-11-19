@@ -29,6 +29,7 @@ namespace GCDCore.Project
         {
             XmlNode nodDEM = nodParent.AppendChild(xmlDoc.CreateElement("DEM"));
             nodDEM.AppendChild(xmlDoc.CreateElement("Name")).InnerText = Name;
+            nodDEM.AppendChild(xmlDoc.CreateElement("Raster")).InnerText = ProjectManagerBase.GetRelativePath(Raster.RasterPath);
 
             XmlNode nodSurveyDate = nodDEM.AppendChild(xmlDoc.CreateElement("SurveyDate"));
             nodSurveyDate.AppendChild(xmlDoc.CreateElement("Year")).InnerText = SurveyDate.Year > 0 ? SurveyDate.Year.ToString() : string.Empty;
@@ -40,7 +41,7 @@ namespace GCDCore.Project
             if (MethodMask != null)
             {
                 XmlNode nodMethodMask = nodDEM.AppendChild(xmlDoc.CreateElement("MethodMask"));
-                nodMethodMask.AppendChild(xmlDoc.CreateElement("Path")).InnerText = string.Empty;
+                nodMethodMask.AppendChild(xmlDoc.CreateElement("Path")).InnerText = ProjectManagerBase.GetRelativePath(MethodMask);
                 nodMethodMask.AppendChild(xmlDoc.CreateElement("Field")).InnerText = MethodMaskField;
             }
 

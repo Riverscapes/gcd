@@ -28,7 +28,7 @@ namespace GCDCore.Project
         {
             XmlNode nodError = nodParent.AppendChild(xmlDoc.CreateElement("ErrorSurface"));
             nodError.AppendChild(xmlDoc.CreateElement("Name")).InnerText = Name;
-            nodError.AppendChild(xmlDoc.CreateElement("Path")).InnerText = string.Empty;
+            nodError.AppendChild(xmlDoc.CreateElement("Path")).InnerText = ProjectManagerBase.GetRelativePath(Raster.RasterPath);
         }
     }
 }
