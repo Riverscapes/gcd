@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Xml;
 
 namespace GCDCore.Project
 {
@@ -29,6 +30,40 @@ namespace GCDCore.Project
 
             DEMSurveys = new Dictionary<string, DEMSurvey>();
             DoDs = new Dictionary<string, DoD>();
+        }
+
+        public void Save()
+        {
+            XmlDocument xmlDoc = new XmlDocument();
+            XmlNode nodProject = xmlDoc.CreateElement("Project");
+            xmlDoc.AppendChild(nodProject);
+
+            nodProject.AppendChild(xmlDoc.CreateElement("Name")).InnerText = Name;
+            nodProject.AppendChild(xmlDoc.CreateElement("DateTimeCreated")).InnerText = DateTimeCreated.ToString("o");
+            nodProject.AppendChild(xmlDoc.CreateElement("GCDVersion")).InnerText = GCDVersion;
+            nodProject.AppendChild(xmlDoc.CreateElement("Precision")).InnerText = Precision.ToString();
+
+            XmlNode nodUnits = nodProject.AppendChild(xmlDoc.CreateElement("Units"));
+            nodUnits.AppendChild(xmlDoc.CreateElement("HorizontalUnits")).InnerText = Units.HorizUnit.ToString();
+            nodUnits.AppendChild(xmlDoc.CreateElement("VerticalUnits")).InnerText = Units.VertUnit.ToString();
+            nodUnits.AppendChild(xmlDoc.CreateElement("AreaUnits")).InnerText = Units.ArUnit.ToString();
+            nodUnits.AppendChild(xmlDoc.CreateElement("VolumeUnits")).InnerText = Units.VolUnit.ToString();
+
+            if (DEMSurveys.Count > 0)
+            {
+                XmlNode nodDEMs = nodProject.AppendChild(xmlDoc.CreateElement("DEMSurveyrs"));
+                foreach (DEMSurvey dem in DEMSurveys.Values)
+                    dem.Serialize(xmlDoc, nodDEMs);
+            }
+
+            if (DoDs.Count > 0)
+            {
+                XmlNode nodDoDs = nodProject.AppendChild(xmlDoc.CreateElement("DoDs"));
+                foreach (DoD dod in DoDs.Values)
+                    dod.Serialize(xmlDoc, nodDoDs);
+            }
+
+            xmlDoc.Save(ProjectFile.FullName);
         }
     }
 }

@@ -6,7 +6,7 @@ namespace GCDCore.ChangeDetection
     {
         public readonly int MovingWindowDimensions;
         public readonly int InflectionA;
-        public int InflectionB;
+        public readonly int InflectionB;
 
         public int XMin { get { return Convert.ToInt32(Math.Floor((double)(MovingWindowDimensions ^ 2) * (InflectionA / 100))); } }
         public int XMax { get { return Convert.ToInt32(Math.Floor((double)(MovingWindowDimensions ^ 2) * (InflectionB / 100))); } }

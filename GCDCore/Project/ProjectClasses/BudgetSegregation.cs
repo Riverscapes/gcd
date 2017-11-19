@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using System.Collections.Generic;
-using System.Linq;
+using System.Xml;
 
 namespace GCDCore.Project
 {
@@ -17,6 +17,17 @@ namespace GCDCore.Project
             DoD = dod;
             Folder = folder;
             Classes = new Dictionary<string, BudgetSegregationClass>();
+        }
+
+        public void Serialize(XmlDocument xmlDoc, XmlNode nodParent)
+        {
+            XmlNode nodBS = nodParent.AppendChild(xmlDoc.CreateElement("BudgetSegregation"));
+            nodBS.AppendChild(xmlDoc.CreateElement("Name")).InnerText = Name;
+            nodBS.AppendChild(xmlDoc.CreateElement("Folder")).InnerText = Folder.FullName;
+
+            XmlNode nodClasses = nodParent.AppendChild(xmlDoc.CreateElement("Classes"));
+            foreach (BudgetSegregationClass segClass in Classes.Values)
+                segClass.Serialize(xmlDoc, nodBS);
         }
     }
 }

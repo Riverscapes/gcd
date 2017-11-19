@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Collections.Generic;
+using System.Xml;
 
 namespace GCDCore.Project
 {
@@ -21,6 +22,13 @@ namespace GCDCore.Project
 
             FISProperties = new Dictionary<string, ErrorFISProperties>();
             UniformProperties = new Dictionary<string, ErrorUniformProperties>();
+        }
+
+        public void Serialize(XmlDocument xmlDoc, XmlNode nodParent)
+        {
+            XmlNode nodError = nodParent.AppendChild(xmlDoc.CreateElement("ErrorSurface"));
+            nodError.AppendChild(xmlDoc.CreateElement("Name")).InnerText = Name;
+            nodError.AppendChild(xmlDoc.CreateElement("Path")).InnerText = string.Empty;
         }
     }
 }

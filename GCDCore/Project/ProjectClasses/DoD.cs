@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Collections.Generic;
 using GCDConsoleLib.GCD;
+using System.Xml;
 
 namespace GCDCore.Project
 {
@@ -52,6 +53,55 @@ namespace GCDCore.Project
             SpatCoProperties = props;
 
             BudgetSegregations = new Dictionary<string, BudgetSegregation>();
+        }
+
+        public void Serialize(XmlDocument xmlDoc, XmlNode nodParent)
+        {
+            XmlNode nodDoD = nodParent.AppendChild(xmlDoc.CreateElement("DoD"));
+            nodDoD.AppendChild(xmlDoc.CreateElement("Name")).InnerText = Name;
+            nodDoD.AppendChild(xmlDoc.CreateElement("Folder")).InnerText = Folder.FullName;
+            nodDoD.AppendChild(xmlDoc.CreateElement("NewDEM")).InnerText = NewDEM.Name;
+            nodDoD.AppendChild(xmlDoc.CreateElement("OldDEM")).InnerText = OldDEM.Name;
+            nodDoD.AppendChild(xmlDoc.CreateElement("NewErrorSurface")).InnerText = NewErrorSurface.Name;
+            nodDoD.AppendChild(xmlDoc.CreateElement("OldErrorSurface")).InnerText = OldErrorSurface.Name;
+            nodDoD.AppendChild(xmlDoc.CreateElement("RawDoD")).InnerText = RawDoD.RasterPath.FullName;
+            nodDoD.AppendChild(xmlDoc.CreateElement("ThrDoD")).InnerText = ThrDoD.RasterPath.FullName;
+            nodDoD.AppendChild(xmlDoc.CreateElement("RawHistogram")).InnerText = RawHistogram.FullName;
+            nodDoD.AppendChild(xmlDoc.CreateElement("ThrHistogram")).InnerText = ThrHistogram.FullName;
+            nodDoD.AppendChild(xmlDoc.CreateElement("SummaryXML")).InnerText = SummaryXML.FullName;
+            nodDoD.AppendChild(xmlDoc.CreateElement("Threshold")).InnerText = Threshold.HasValue ? Threshold.ToString() : string.Empty;
+            nodDoD.AppendChild(xmlDoc.CreateElement("ThresholdingMethod")).InnerText = ThresholdingMethod.ToString();
+
+            SerializeDoDStatistics(xmlDoc, nodDoD.AppendChild(xmlDoc.CreateElement("Statistics")), Statistics);
+
+            if (SpatCoProperties != null)
+            {
+                XmlNode nodSpatCo = nodDoD.AppendChild(xmlDoc.CreateElement("SpatialCoherence"));
+                nodSpatCo.AppendChild(xmlDoc.CreateElement("WindowSize")).InnerText = SpatCoProperties.MovingWindowDimensions.ToString();
+                nodSpatCo.AppendChild(xmlDoc.CreateElement("InflectionA")).InnerText = SpatCoProperties.InflectionA.ToString();
+                nodSpatCo.AppendChild(xmlDoc.CreateElement("InflectionB")).InnerText = SpatCoProperties.InflectionB.ToString();
+            }
+
+            XmlNode nodBS = nodParent.AppendChild(xmlDoc.CreateElement("BudgetSegregations"));
+            foreach (BudgetSegregation bs in BudgetSegregations.Values)
+                bs.Serialize(xmlDoc, nodBS);
+        }
+
+        public static void SerializeDoDStatistics(XmlDocument xmlDoc, XmlNode nodParent, DoDStats stats)
+        {
+            SerializeAreaVolume(xmlDoc, nodParent.AppendChild(xmlDoc.CreateElement("ErosionRaw")), stats.ErosionRaw, stats.StatsUnits, stats.CellArea);
+            SerializeAreaVolume(xmlDoc, nodParent.AppendChild(xmlDoc.CreateElement("ErosionThr")), stats.ErosionThr, stats.StatsUnits, stats.CellArea);
+            SerializeAreaVolume(xmlDoc, nodParent.AppendChild(xmlDoc.CreateElement("ErosionErr")), stats.ErosionErr, stats.StatsUnits, stats.CellArea);
+
+            SerializeAreaVolume(xmlDoc, nodParent.AppendChild(xmlDoc.CreateElement("DepositionRaw")), stats.DepositionRaw, stats.StatsUnits, stats.CellArea);
+            SerializeAreaVolume(xmlDoc, nodParent.AppendChild(xmlDoc.CreateElement("DepositionThr")), stats.DepositionThr, stats.StatsUnits, stats.CellArea);
+            SerializeAreaVolume(xmlDoc, nodParent.AppendChild(xmlDoc.CreateElement("DepositionErr")), stats.DepositionErr, stats.StatsUnits, stats.CellArea);
+        }
+
+        private static void SerializeAreaVolume(XmlDocument xmlDoc, XmlNode nodParent, GCDAreaVolume areaVol, UnitGroup units, UnitsNet.Area cellArea)
+        {
+            nodParent.AppendChild(xmlDoc.CreateElement("Area")).InnerText = areaVol.GetArea(cellArea).As(units.ArUnit).ToString();
+            nodParent.AppendChild(xmlDoc.CreateElement("Volume")).InnerText = areaVol.GetVolume(cellArea, units.VertUnit).As(units.VolUnit).ToString();
         }
     }
 }
