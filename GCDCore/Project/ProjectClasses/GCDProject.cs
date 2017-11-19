@@ -42,12 +42,13 @@ namespace GCDCore.Project
             nodProject.AppendChild(xmlDoc.CreateElement("DateTimeCreated")).InnerText = DateTimeCreated.ToString("o");
             nodProject.AppendChild(xmlDoc.CreateElement("GCDVersion")).InnerText = GCDVersion;
             nodProject.AppendChild(xmlDoc.CreateElement("Precision")).InnerText = Precision.ToString();
+            nodProject.AppendChild(xmlDoc.CreateElement("Description")).InnerText = Description;
 
             XmlNode nodUnits = nodProject.AppendChild(xmlDoc.CreateElement("Units"));
-            nodUnits.AppendChild(xmlDoc.CreateElement("HorizontalUnits")).InnerText = Units.HorizUnit.ToString();
-            nodUnits.AppendChild(xmlDoc.CreateElement("VerticalUnits")).InnerText = Units.VertUnit.ToString();
-            nodUnits.AppendChild(xmlDoc.CreateElement("AreaUnits")).InnerText = Units.ArUnit.ToString();
-            nodUnits.AppendChild(xmlDoc.CreateElement("VolumeUnits")).InnerText = Units.VolUnit.ToString();
+            nodUnits.AppendChild(xmlDoc.CreateElement("Horizontal")).InnerText = Units.HorizUnit.ToString();
+            nodUnits.AppendChild(xmlDoc.CreateElement("Vertical")).InnerText = Units.VertUnit.ToString();
+            nodUnits.AppendChild(xmlDoc.CreateElement("Area")).InnerText = Units.ArUnit.ToString();
+            nodUnits.AppendChild(xmlDoc.CreateElement("Volume")).InnerText = Units.VolUnit.ToString();
 
             if (DEMSurveys.Count > 0)
             {
@@ -64,6 +65,42 @@ namespace GCDCore.Project
             }
 
             xmlDoc.Save(ProjectFile.FullName);
+        }
+
+        public static GCDProject Load(FileInfo projectFile)
+        {
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.Load(projectFile.FullName);
+
+            XmlNode nodProject = xmlDoc.SelectSingleNode("Project");
+            string name = nodProject.SelectSingleNode("Name").InnerText;
+            string desc = nodProject.SelectSingleNode("Description").InnerText;
+            string gcdv = nodProject.SelectSingleNode("GCDVersion").InnerText;
+
+            DateTime dtCreated = DateTime.Parse(nodProject.SelectSingleNode("DateTimeCreated").InnerText);
+            int precision = int.Parse(nodProject.SelectSingleNode("Precision").InnerText);
+
+            UnitsNet.Units.LengthUnit horiz = (UnitsNet.Units.LengthUnit)Enum.Parse(typeof(UnitsNet.Units.LengthUnit), nodProject.SelectSingleNode("Units/Horizontal").InnerText);
+            UnitsNet.Units.LengthUnit vert = (UnitsNet.Units.LengthUnit)Enum.Parse(typeof(UnitsNet.Units.LengthUnit), nodProject.SelectSingleNode("Units/Vertical").InnerText);
+            UnitsNet.Units.AreaUnit area = (UnitsNet.Units.AreaUnit)Enum.Parse(typeof(UnitsNet.Units.AreaUnit), nodProject.SelectSingleNode("Units/Area").InnerText);
+            UnitsNet.Units.VolumeUnit vol = (UnitsNet.Units.VolumeUnit)Enum.Parse(typeof(UnitsNet.Units.VolumeUnit), nodProject.SelectSingleNode("Units/Volume").InnerText);
+            GCDConsoleLib.GCD.UnitGroup units = new GCDConsoleLib.GCD.UnitGroup(vol, area, vert, horiz);
+
+            GCDProject project = new GCDProject(name, desc, projectFile, dtCreated, gcdv, precision, units);
+
+            foreach (XmlNode nodDEM in nodProject.SelectNodes("DEMSurveys/DEM"))
+            {
+                DEMSurvey dem = DEMSurvey.Deserialize(nodDEM);
+                project.DEMSurveys[dem.Name] = dem;
+            }
+
+            foreach (XmlNode nodDoD in nodProject.SelectNodes("DoDs/DoD"))
+            {
+                DoD dod = DoD.Deserialize(nodDoD, project.DEMSurveys);
+                project.DoDs[dod.Name] = dod;
+            }
+
+            return project;
         }
     }
 }

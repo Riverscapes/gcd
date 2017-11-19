@@ -29,7 +29,7 @@ namespace GCDCore.Project
         {
             XmlNode nodDEM = nodParent.AppendChild(xmlDoc.CreateElement("DEM"));
             nodDEM.AppendChild(xmlDoc.CreateElement("Name")).InnerText = Name;
-            nodDEM.AppendChild(xmlDoc.CreateElement("Raster")).InnerText = ProjectManagerBase.GetRelativePath(Raster.RasterPath);
+            nodDEM.AppendChild(xmlDoc.CreateElement("Path")).InnerText = ProjectManagerBase.GetRelativePath(Raster.RasterPath);
 
             XmlNode nodSurveyDate = nodDEM.AppendChild(xmlDoc.CreateElement("SurveyDate"));
             nodSurveyDate.AppendChild(xmlDoc.CreateElement("Year")).InnerText = SurveyDate.Year > 0 ? SurveyDate.Year.ToString() : string.Empty;
@@ -58,6 +58,51 @@ namespace GCDCore.Project
                 foreach (ErrorSurface error in ErrorSurfaces.Values)
                     error.Serialize(xmlDoc, nodError);
             }
+        }
+
+        public static DEMSurvey Deserialize(XmlNode nodDEM)
+        {
+            string name = nodDEM.SelectSingleNode("Name").InnerText;
+            FileInfo path = ProjectManagerBase.GetAbsolutePath(nodDEM.SelectSingleNode("Path").InnerText);
+
+            SurveyDateTime surveyDT = new SurveyDateTime();
+            if (!string.IsNullOrEmpty(nodDEM.SelectSingleNode("SurveyDate/Year").InnerText))
+                surveyDT.Year = ushort.Parse(nodDEM.SelectSingleNode("SurveyDate/Year").InnerText);
+
+            if (!string.IsNullOrEmpty(nodDEM.SelectSingleNode("SurveyDate/Month").InnerText))
+                surveyDT.Month = byte.Parse(nodDEM.SelectSingleNode("SurveyDate/Month").InnerText);
+
+            if (!string.IsNullOrEmpty(nodDEM.SelectSingleNode("SurveyDate/Year").InnerText))
+                surveyDT.Day = byte.Parse(nodDEM.SelectSingleNode("SurveyDate/Day").InnerText);
+
+            if (!string.IsNullOrEmpty(nodDEM.SelectSingleNode("SurveyDate/Hour").InnerText))
+                surveyDT.Hour = short.Parse(nodDEM.SelectSingleNode("SurveyDate/Hour").InnerText);
+
+            if (!string.IsNullOrEmpty(nodDEM.SelectSingleNode("SurveyDate/Minute").InnerText))
+                surveyDT.Minute = short.Parse(nodDEM.SelectSingleNode("SurveyDate/Minute").InnerText);
+
+            DEMSurvey dem = new DEMSurvey(name, surveyDT, path);
+
+            XmlNode nodMethodMask = nodDEM.SelectSingleNode("MethodMask");
+            if (nodMethodMask is XmlNode)
+            {
+                dem.MethodMask = ProjectManagerBase.GetAbsolutePath(nodMethodMask.SelectSingleNode("Path").InnerText);
+                dem.MethodMaskField = nodMethodMask.SelectSingleNode("Field").InnerText;
+            }
+
+            foreach(XmlNode nodAssoc in nodDEM.SelectNodes("AssociatedSurfaces/AssociatedSurface"))
+            {
+                AssocSurface assoc = AssocSurface.Deserialize(nodAssoc, dem);
+                dem.AssocSurfaces[assoc.Name] = assoc;
+            }
+
+            foreach(XmlNode nodError in nodDEM.SelectNodes("ErrorSurfaces/ErrorSurface"))
+            {
+                ErrorSurface error = ErrorSurface.Deserialize(nodError, dem);
+                dem.ErrorSurfaces[error.Name] = error;
+            }
+
+            return dem;
         }
     }
 }

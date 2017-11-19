@@ -236,6 +236,11 @@ namespace GCDCore.Project
             return new FileInfo(sResult);
         }
 
+        public static DirectoryInfo GetAbsoluteDir(string sRelativeDir)
+        {
+            return new DirectoryInfo(Path.Combine(Path.GetDirectoryName(m_GCDProjectXMLFilePath), sRelativeDir));
+        }
+
         public static void CloseCurrentProject()
         {
             m_ProjectDS = null;

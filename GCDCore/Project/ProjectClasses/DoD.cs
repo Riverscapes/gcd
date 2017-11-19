@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using GCDConsoleLib.GCD;
 using System.Xml;
@@ -59,7 +60,7 @@ namespace GCDCore.Project
         {
             XmlNode nodDoD = nodParent.AppendChild(xmlDoc.CreateElement("DoD"));
             nodDoD.AppendChild(xmlDoc.CreateElement("Name")).InnerText = Name;
-            nodDoD.AppendChild(xmlDoc.CreateElement("Folder")).InnerText = Folder.FullName;
+            nodDoD.AppendChild(xmlDoc.CreateElement("Folder")).InnerText = ProjectManagerBase.GetRelativePath(Folder);
             nodDoD.AppendChild(xmlDoc.CreateElement("NewDEM")).InnerText = NewDEM.Name;
             nodDoD.AppendChild(xmlDoc.CreateElement("OldDEM")).InnerText = OldDEM.Name;
             nodDoD.AppendChild(xmlDoc.CreateElement("NewErrorSurface")).InnerText = NewErrorSurface.Name;
@@ -102,6 +103,87 @@ namespace GCDCore.Project
         {
             nodParent.AppendChild(xmlDoc.CreateElement("Area")).InnerText = areaVol.GetArea(cellArea).As(units.ArUnit).ToString();
             nodParent.AppendChild(xmlDoc.CreateElement("Volume")).InnerText = areaVol.GetVolume(cellArea, units.VertUnit).As(units.VolUnit).ToString();
+        }
+
+        public static DoD Deserialize(XmlNode nodDoD, Dictionary<string, DEMSurvey> DEMs)
+        {
+            string name = nodDoD.SelectSingleNode("Name").InnerText;
+            DirectoryInfo folder = ProjectManagerBase.GetAbsoluteDir(nodDoD.SelectSingleNode("Folder").InnerText);
+
+            DEMSurvey newDEM, oldDEM;
+            ErrorSurface newError, oldError;
+
+            DeserializeDEM(nodDoD, DEMs, out newDEM, out newError, "NewDEM", "NewError");
+            DeserializeDEM(nodDoD, DEMs, out oldDEM, out oldError, "OldDEM", "OldError");
+
+            double? Threshold = new double?();
+            if (!string.IsNullOrEmpty(nodDoD.SelectSingleNode("Threshold").InnerText))
+                Threshold = double.Parse(nodDoD.SelectSingleNode("Threshold").InnerText);
+
+            FileInfo rawDoD = ProjectManagerBase.GetAbsolutePath(nodDoD.SelectSingleNode("RawDoD").InnerText);
+            FileInfo thrDoD = ProjectManagerBase.GetAbsolutePath(nodDoD.SelectSingleNode("ThrDoD").InnerText);
+            FileInfo rawHis = ProjectManagerBase.GetAbsolutePath(nodDoD.SelectSingleNode("RawHistogram").InnerText);
+            FileInfo thrHis = ProjectManagerBase.GetAbsolutePath(nodDoD.SelectSingleNode("ThrHistogram").InnerText);
+            FileInfo summar = ProjectManagerBase.GetAbsolutePath(nodDoD.SelectSingleNode("SummaryXML").InnerText);
+
+            ThresholdingMethods method = (ThresholdingMethods)Enum.Parse(typeof(ThresholdingMethods), nodDoD.SelectSingleNode("ThresholdingMethod").InnerText);
+
+            DoDStats stats = DeserializeStatistics(nodDoD.SelectSingleNode("Statistics"));
+
+            ChangeDetection.CoherenceProperties props = null;
+            XmlNode nodSpatCo = nodDoD.SelectSingleNode("SpatialCoherence");
+            if (nodSpatCo is XmlNode)
+            {
+                int windowSize = int.Parse(nodSpatCo.SelectSingleNode("WindowSize").InnerText);
+                int inflectinA = int.Parse(nodSpatCo.SelectSingleNode("InflectionA").InnerText);
+                int inflectinB = int.Parse(nodSpatCo.SelectSingleNode("InflectionB").InnerText);
+                props = new ChangeDetection.CoherenceProperties(windowSize, inflectinA, inflectinB);
+            }
+
+            return new DoD(name, folder, newDEM, oldDEM, newError, oldError, Threshold, method, stats, props);
+        }
+
+        private static void DeserializeDEM(XmlNode nodDoD, Dictionary<string, DEMSurvey> DEMs, out DEMSurvey dem, out ErrorSurface error, string nodDEMName, string nodErrorName)
+        {
+            dem = null;
+            error = null;
+            string demName = nodDoD.SelectSingleNode(nodDEMName).InnerText;
+            if (DEMs.ContainsKey(demName))
+            {
+                dem = DEMs[demName];
+                string errorName = nodDoD.SelectSingleNode(nodErrorName).InnerText;
+                if (dem.ErrorSurfaces.ContainsKey(errorName))
+                {
+                    error = dem.ErrorSurfaces[errorName];
+                }
+            }
+        }
+
+        public static DoDStats DeserializeStatistics(XmlNode nodStatistics, UnitsNet.Area cellArea, UnitGroup units)
+        {
+            UnitsNet.Area AreaErosion_Raw = UnitsNet.Area.From(double.Parse(nodStatistics.SelectSingleNode("ErosionRaw/Area").InnerText), units.ArUnit);
+            UnitsNet.Area AreaDeposit_Raw = UnitsNet.Area.From(double.Parse(nodStatistics.SelectSingleNode("DepositionRaw/Area").InnerText), units.ArUnit);
+            UnitsNet.Area AreaErosion_Thr = UnitsNet.Area.From(double.Parse(nodStatistics.SelectSingleNode("ErosionThr/Area").InnerText), units.ArUnit);
+            UnitsNet.Area AreaDeposit_Thr = UnitsNet.Area.From(double.Parse(nodStatistics.SelectSingleNode("DepositionThr/Area").InnerText), units.ArUnit);
+
+            UnitsNet.Volume VolErosion_Raw = UnitsNet.Volume.From(double.Parse(nodStatistics.SelectSingleNode("ErosionRaw/Volume").InnerText), units.VolUnit);
+            UnitsNet.Volume VolDeposit_Raw = UnitsNet.Volume.From(double.Parse(nodStatistics.SelectSingleNode("DepositionRaw/Volume").InnerText), units.VolUnit);
+            UnitsNet.Volume VolErosion_Thr = UnitsNet.Volume.From(double.Parse(nodStatistics.SelectSingleNode("ErosionThr/Volume").InnerText), units.VolUnit);
+            UnitsNet.Volume VolDeposit_Thr = UnitsNet.Volume.From(double.Parse(nodStatistics.SelectSingleNode("DepositionThr/Volume").InnerText), units.VolUnit);
+
+            //       public DoDStats(Area AreaErosion_Raw, Area AreaDeposition_Raw, Area AreaErosion_Thresholded, Area AreaDeposition_Thresholded,
+            //Volume VolumeErosion_Raw, Volume VolumeDeposition_Raw, Volume VolumeErosion_Thresholded, Volume VolumeDeposition_Thresholded,
+            //Volume VolumeErosion_Error, Volume VolumeDeposition_Error,
+            //Area cellArea, UnitGroup sUnits)
+
+
+
+        }
+
+        private static UnitsNet.Area DeserializeArea(XmlNode nodParent, string nodName, UnitsNet.Units.AreaUnit unit)
+        {
+            double value = double.Parse(nodParent.SelectSingleNode(nodName).InnerText);
+            return UnitsNet.Area.From(value, unit);
         }
     }
 }

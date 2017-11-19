@@ -30,5 +30,18 @@ namespace GCDCore.Project
             nodError.AppendChild(xmlDoc.CreateElement("Name")).InnerText = Name;
             nodError.AppendChild(xmlDoc.CreateElement("Path")).InnerText = ProjectManagerBase.GetRelativePath(Raster.RasterPath);
         }
+
+        public static ErrorSurface Deserialize(XmlNode nodError, DEMSurvey dem)
+        {
+            string name = nodError.SelectSingleNode("Name").InnerText;
+            string type = nodError.SelectSingleNode("Type").InnerText;
+            FileInfo path = ProjectManagerBase.GetAbsolutePath(nodError.SelectSingleNode("Path").InnerText);
+
+            ErrorSurface err = new ErrorSurface(name, type, path, dem);
+
+            // TODO: load error properties
+
+            return err;
+        }
     }
 }
