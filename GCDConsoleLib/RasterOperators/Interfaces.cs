@@ -262,14 +262,6 @@ namespace GCDConsoleLib
             //});
         }
 
-
-        public static Raster BilinearResample(Raster rInput, decimal newCellHeight, decimal newCellWidth, FileInfo sOutputRaster )
-        {
-            return (Raster)GenericRunWithOutput(typeof(BilinearResample<>), rInput.Datatype.CSType, new object[] {
-                rInput, newCellHeight, newCellWidth, new Raster(rInput, sOutputRaster)
-            });
-        }
-
         public static Raster Hillshade(Raster rInput, FileInfo sOutputRaster)
         {
             Raster outputRaster = new Raster(rInput, sOutputRaster, new GdalDataType(OSGeo.GDAL.DataType.GDT_Int16));
