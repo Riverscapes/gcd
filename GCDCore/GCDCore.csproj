@@ -67,6 +67,7 @@
     <Compile Include="Project\ProjectClasses\BudgetSegregationClass.cs" />
     <Compile Include="Project\ProjectClasses\DEMSurvey.cs" />
     <Compile Include="Project\ProjectClasses\DoD.cs" />
+    <Compile Include="Project\ProjectClasses\DoDProbabilityRasters.cs" />
     <Compile Include="Project\ProjectClasses\ErrorSurface.cs" />
     <Compile Include="Project\ProjectClasses\ErrorSurfaceProperty.cs" />
     <Compile Include="Project\ProjectClasses\GCDProject.cs" />

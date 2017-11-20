@@ -14,8 +14,9 @@ namespace GCDCore.Project
         public readonly int Precision;
         public GCDConsoleLib.GCD.UnitGroup Units { get; set; }
 
-        public Dictionary<string, DEMSurvey> DEMSurveys { get; internal set; }
-        public Dictionary<string, DoD> DoDs { get; internal set; }
+        public readonly Dictionary<string, DEMSurvey> DEMSurveys;
+        public readonly Dictionary<string, DoD> DoDs;
+        public readonly Dictionary<string, string> MetaData;
 
         public GCDProject(string name, string description, FileInfo projectFile,
             DateTime dtCreated, string gcdVersion, int nPrecision, GCDConsoleLib.GCD.UnitGroup units)
@@ -30,6 +31,7 @@ namespace GCDCore.Project
 
             DEMSurveys = new Dictionary<string, DEMSurvey>();
             DoDs = new Dictionary<string, DoD>();
+            MetaData = new Dictionary<string, string>();
         }
 
         public void Save()
@@ -62,6 +64,17 @@ namespace GCDCore.Project
                 XmlNode nodDoDs = nodProject.AppendChild(xmlDoc.CreateElement("DoDs"));
                 foreach (DoD dod in DoDs.Values)
                     dod.Serialize(xmlDoc, nodDoDs);
+            }
+
+            if (MetaData.Count > 0)
+            {
+                XmlNode nodMetaData = nodProject.AppendChild(xmlDoc.CreateElement("MetaData"));
+                foreach(KeyValuePair<string, string> item in MetaData)
+                {
+                    XmlNode nodItem = nodMetaData.AppendChild(xmlDoc.CreateElement("Item"));
+                    nodItem.AppendChild(xmlDoc.CreateElement("Key")).InnerText = item.Key;
+                    nodItem.AppendChild(xmlDoc.CreateElement("Value")).InnerText = item.Value;
+                }
             }
 
             xmlDoc.Save(ProjectFile.FullName);
@@ -98,6 +111,11 @@ namespace GCDCore.Project
             {
                 DoD dod = DoD.Deserialize(nodDoD, project.DEMSurveys);
                 project.DoDs[dod.Name] = dod;
+            }
+
+            foreach (XmlNode nodItem in nodProject.SelectNodes("MetaData/Item"))
+            {
+                project.MetaData[nodItem.SelectSingleNode("Key").InnerText] = nodItem.SelectSingleNode("Value").InnerText;
             }
 
             return project;

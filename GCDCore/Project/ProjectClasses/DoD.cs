@@ -31,16 +31,58 @@ namespace GCDCore.Project
         public FileInfo SummaryXML { get; set; }
 
         public readonly double? Threshold;
-        public readonly ThresholdingMethods ThresholdingMethod;
 
         public readonly DoDStats Statistics;
-        public readonly ChangeDetection.CoherenceProperties SpatCoProperties;
+
+        public readonly ProjectRaster PropagatedError;
+        public readonly DoDProbabilityRasters ProbabilityRasters;
 
         public Dictionary<string, BudgetSegregation> BudgetSegregations { get; internal set; }
 
+        public ThresholdingMethods ThresholdingMethod
+        {
+            get
+            {
+                if (PropagatedError != null)
+                {
+                    if (ProbabilityRasters != null)
+                    {
+                        return ThresholdingMethods.Probabilistic;
+                    }
+                    else
+                    {
+                        return ThresholdingMethods.Propagated;
+                    }
+                }
+                else
+                {
+                    return ThresholdingMethods.MinLoD;
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Construct a MinLod DoD
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="folder"></param>
+        /// <param name="newDEM"></param>
+        /// <param name="oldDEM"></param>
+        /// <param name="threshold"></param>
+        public DoD(string name, DirectoryInfo folder, DEMSurvey newDEM, DEMSurvey oldDEM, double threshold, DoDStats stats)
+            : base(name)
+        {
+            Folder = folder;
+            NewDEM = newDEM;
+            OldDEM = oldDEM;
+            Threshold = new double?(threshold);
+            Statistics = stats;
+            BudgetSegregations = new Dictionary<string, BudgetSegregation>();
+        }
+
         public DoD(string name, DirectoryInfo folder, DEMSurvey newDEM, DEMSurvey oldDEM,
-            ErrorSurface newError, ErrorSurface oldError, double? threshold,
-            ThresholdingMethods method, DoDStats stats, ChangeDetection.CoherenceProperties props)
+            ErrorSurface newError, ErrorSurface oldError, FileInfo propErr, DoDStats stats)
             : base(name)
         {
             Folder = folder;
@@ -48,11 +90,25 @@ namespace GCDCore.Project
             OldDEM = oldDEM;
             NewErrorSurface = newError;
             OldErrorSurface = oldError;
-            Threshold = threshold;
-            ThresholdingMethod = method;
+            PropagatedError = new ProjectRaster(propErr);
             Statistics = stats;
-            SpatCoProperties = props;
+            BudgetSegregations = new Dictionary<string, BudgetSegregation>();
+        }
 
+        public DoD(string name, DirectoryInfo folder, DEMSurvey newDEM, DEMSurvey oldDEM,
+            ErrorSurface newError, ErrorSurface oldError, double threshold, DoDStats stats,
+            FileInfo propErr, DoDProbabilityRasters probRasters)
+            : base(name)
+        {
+            Folder = folder;
+            NewDEM = newDEM;
+            OldDEM = oldDEM;
+            NewErrorSurface = newError;
+            OldErrorSurface = oldError;
+            Threshold = new double?(threshold);
+            Statistics = stats;
+            PropagatedError = new ProjectRaster(propErr);
+            ProbabilityRasters = probRasters;
             BudgetSegregations = new Dictionary<string, BudgetSegregation>();
         }
 
@@ -75,13 +131,11 @@ namespace GCDCore.Project
 
             SerializeDoDStatistics(xmlDoc, nodDoD.AppendChild(xmlDoc.CreateElement("Statistics")), Statistics);
 
-            if (SpatCoProperties != null)
-            {
-                XmlNode nodSpatCo = nodDoD.AppendChild(xmlDoc.CreateElement("SpatialCoherence"));
-                nodSpatCo.AppendChild(xmlDoc.CreateElement("WindowSize")).InnerText = SpatCoProperties.MovingWindowDimensions.ToString();
-                nodSpatCo.AppendChild(xmlDoc.CreateElement("InflectionA")).InnerText = SpatCoProperties.InflectionA.ToString();
-                nodSpatCo.AppendChild(xmlDoc.CreateElement("InflectionB")).InnerText = SpatCoProperties.InflectionB.ToString();
-            }
+            if (PropagatedError != null)
+                nodDoD.AppendChild(xmlDoc.CreateElement("PropagatedError")).InnerText = ProjectManagerBase.GetRelativePath(PropagatedError.RasterPath);
+
+            if (ProbabilityRasters != null)
+                ProbabilityRasters.Serialize(xmlDoc, nodDoD);
 
             XmlNode nodBS = nodParent.AppendChild(xmlDoc.CreateElement("BudgetSegregations"));
             foreach (BudgetSegregation bs in BudgetSegregations.Values)
@@ -117,8 +171,8 @@ namespace GCDCore.Project
             DEMSurvey newDEM, oldDEM;
             ErrorSurface newError, oldError;
 
-            DeserializeDEM(nodDoD, DEMs, out newDEM, out newError, "NewDEM", "NewError");
-            DeserializeDEM(nodDoD, DEMs, out oldDEM, out oldError, "OldDEM", "OldError");
+            DeserializeDEMandError(nodDoD, DEMs, out newDEM, out newError, "NewDEM", "NewError");
+            DeserializeDEMandError(nodDoD, DEMs, out oldDEM, out oldError, "OldDEM", "OldError");
 
             double? Threshold = new double?();
             if (!string.IsNullOrEmpty(nodDoD.SelectSingleNode("Threshold").InnerText))
@@ -130,23 +184,36 @@ namespace GCDCore.Project
             FileInfo thrHis = ProjectManagerBase.GetAbsolutePath(nodDoD.SelectSingleNode("ThrHistogram").InnerText);
             FileInfo summar = ProjectManagerBase.GetAbsolutePath(nodDoD.SelectSingleNode("SummaryXML").InnerText);
 
-            ThresholdingMethods method = (ThresholdingMethods)Enum.Parse(typeof(ThresholdingMethods), nodDoD.SelectSingleNode("ThresholdingMethod").InnerText);
-
             DoDStats stats = DeserializeStatistics(nodDoD.SelectSingleNode("Statistics"), ProjectManagerBase.CellArea, ProjectManagerBase.Units);
 
-            ChangeDetection.CoherenceProperties props = null;
-            XmlNode nodSpatCo = nodDoD.SelectSingleNode("SpatialCoherence");
-            if (nodSpatCo is XmlNode)
+            FileInfo propErr = null;
+            XmlNode nodPropErr = nodDoD.SelectSingleNode("PropagatedError");
+            if (nodPropErr != null)
+                propErr = ProjectManagerBase.GetAbsolutePath(nodPropErr.InnerText);
+
+            DoDProbabilityRasters probRasters = null;
+            XmlNode nodProbRasters = nodDoD.SelectSingleNode("PriorProbability");
+            if (nodProbRasters != null)
+                probRasters = DoDProbabilityRasters.Deserialize(nodDoD);
+
+            DoD dod = null;
+            if (propErr == null)
             {
-                int windowSize = int.Parse(nodSpatCo.SelectSingleNode("WindowSize").InnerText);
-                int inflectinA = int.Parse(nodSpatCo.SelectSingleNode("InflectionA").InnerText);
-                int inflectinB = int.Parse(nodSpatCo.SelectSingleNode("InflectionB").InnerText);
-                props = new ChangeDetection.CoherenceProperties(windowSize, inflectinA, inflectinB);
+                dod = new DoD(name, folder, newDEM, oldDEM, Threshold.Value, stats);
             }
-
-            DoD dod = new DoD(name, folder, newDEM, oldDEM, newError, oldError, Threshold, method, stats, props);
-
-            foreach(XmlNode nodBS in nodDoD.SelectNodes("BudgetSegregations/BudgetSegregation"))
+            else
+            {
+                if (probRasters == null)
+                {
+                    dod = new DoD(name, folder, newDEM, oldDEM, newError, oldError, propErr, stats);
+                }
+                else
+                {
+                    dod = new DoD(name, folder, newDEM, oldDEM, newError, oldError, Threshold.Value, stats, propErr, probRasters);
+                }
+            }
+            
+            foreach (XmlNode nodBS in nodDoD.SelectNodes("BudgetSegregations/BudgetSegregation"))
             {
                 BudgetSegregation bs = BudgetSegregation.Deserialize(nodBS, dod);
                 dod.BudgetSegregations[bs.Name] = bs;
@@ -155,7 +222,7 @@ namespace GCDCore.Project
             return dod;
         }
 
-        private static void DeserializeDEM(XmlNode nodDoD, Dictionary<string, DEMSurvey> DEMs, out DEMSurvey dem, out ErrorSurface error, string nodDEMName, string nodErrorName)
+        private static void DeserializeDEMandError(XmlNode nodDoD, Dictionary<string, DEMSurvey> DEMs, out DEMSurvey dem, out ErrorSurface error, string nodDEMName, string nodErrorName)
         {
             dem = null;
             error = null;
