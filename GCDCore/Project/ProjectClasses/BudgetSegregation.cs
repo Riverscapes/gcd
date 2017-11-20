@@ -29,5 +29,21 @@ namespace GCDCore.Project
             foreach (BudgetSegregationClass segClass in Classes.Values)
                 segClass.Serialize(xmlDoc, nodBS);
         }
+
+        public static BudgetSegregation Deserialize(XmlNode nodBS, DoD dod)
+        {
+            string name = nodBS.SelectSingleNode("Name").InnerText;
+            DirectoryInfo folder = ProjectManagerBase.GetAbsoluteDir(nodBS.SelectSingleNode("Folder").InnerText);
+
+            BudgetSegregation bs = new BudgetSegregation(name, folder, dod);
+
+            foreach(XmlNode nodClass in nodBS.SelectNodes("Classes/Class"))
+            {
+                BudgetSegregationClass bsClass = BudgetSegregationClass.Deserialize(nodClass);
+                bs.Classes[bsClass.Name] = bsClass;
+            }
+
+            return bs;
+        }
     }
 }

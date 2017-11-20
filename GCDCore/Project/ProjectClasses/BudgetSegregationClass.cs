@@ -29,5 +29,17 @@ namespace GCDCore.Project
             nodClass.AppendChild(xmlDoc.CreateElement("SummaryXML")).InnerText = ProjectManagerBase.GetRelativePath(SummaryXML);
             DoD.SerializeDoDStatistics(xmlDoc, nodParent, Statistics);
         }
+
+        public static BudgetSegregationClass Deserialize(XmlNode nodClass)
+        {
+            string name = nodClass.SelectSingleNode("Name").InnerText;
+            FileInfo rawHist = ProjectManagerBase.GetAbsolutePath(nodClass.SelectSingleNode("RawHistogram").InnerText);
+            FileInfo thrHist = ProjectManagerBase.GetAbsolutePath(nodClass.SelectSingleNode("ThrHistogram").InnerText);
+            FileInfo summary = ProjectManagerBase.GetAbsolutePath(nodClass.SelectSingleNode("SummaryXML").InnerText);
+
+            DoDStats stats = DoD.DeserializeStatistics(nodClass.SelectSingleNode("Statistics"), ProjectManagerBase.CellArea, ProjectManagerBase.Units);
+
+            return new BudgetSegregationClass(name, stats, rawHist, thrHist, summary);
+        }
     }
 }

@@ -60,7 +60,7 @@ namespace GCDCore.Project
         {
             XmlNode nodDoD = nodParent.AppendChild(xmlDoc.CreateElement("DoD"));
             nodDoD.AppendChild(xmlDoc.CreateElement("Name")).InnerText = Name;
-            nodDoD.AppendChild(xmlDoc.CreateElement("Folder")).InnerText = ProjectManagerBase.GetRelativePath(Folder);
+            nodDoD.AppendChild(xmlDoc.CreateElement("Folder")).InnerText = ProjectManagerBase.GetRelativePath(Folder.FullName);
             nodDoD.AppendChild(xmlDoc.CreateElement("NewDEM")).InnerText = NewDEM.Name;
             nodDoD.AppendChild(xmlDoc.CreateElement("OldDEM")).InnerText = OldDEM.Name;
             nodDoD.AppendChild(xmlDoc.CreateElement("NewErrorSurface")).InnerText = NewErrorSurface.Name;
@@ -90,13 +90,17 @@ namespace GCDCore.Project
 
         public static void SerializeDoDStatistics(XmlDocument xmlDoc, XmlNode nodParent, DoDStats stats)
         {
-            SerializeAreaVolume(xmlDoc, nodParent.AppendChild(xmlDoc.CreateElement("ErosionRaw")), stats.ErosionRaw, stats.StatsUnits, stats.CellArea);
-            SerializeAreaVolume(xmlDoc, nodParent.AppendChild(xmlDoc.CreateElement("ErosionThr")), stats.ErosionThr, stats.StatsUnits, stats.CellArea);
-            SerializeAreaVolume(xmlDoc, nodParent.AppendChild(xmlDoc.CreateElement("ErosionErr")), stats.ErosionErr, stats.StatsUnits, stats.CellArea);
+            XmlNode nodErosion = nodParent.AppendChild(xmlDoc.CreateElement("Erosion"));
+            SerializeAreaVolume(xmlDoc, nodErosion.AppendChild(xmlDoc.CreateElement("Raw")), stats.ErosionRaw, stats.StatsUnits, stats.CellArea);
+            SerializeAreaVolume(xmlDoc, nodErosion.AppendChild(xmlDoc.CreateElement("Thresholded")), stats.ErosionThr, stats.StatsUnits, stats.CellArea);
+            nodErosion.AppendChild(xmlDoc.CreateElement("Error")).AppendChild(xmlDoc.CreateElement("Volume")).InnerText =
+                stats.ErosionErr.GetVolume(stats.CellArea, stats.StatsUnits.VertUnit).As(stats.StatsUnits.VolUnit).ToString();
 
-            SerializeAreaVolume(xmlDoc, nodParent.AppendChild(xmlDoc.CreateElement("DepositionRaw")), stats.DepositionRaw, stats.StatsUnits, stats.CellArea);
-            SerializeAreaVolume(xmlDoc, nodParent.AppendChild(xmlDoc.CreateElement("DepositionThr")), stats.DepositionThr, stats.StatsUnits, stats.CellArea);
-            SerializeAreaVolume(xmlDoc, nodParent.AppendChild(xmlDoc.CreateElement("DepositionErr")), stats.DepositionErr, stats.StatsUnits, stats.CellArea);
+            XmlNode nodDeposition = nodParent.AppendChild(xmlDoc.CreateElement("Deposition"));
+            SerializeAreaVolume(xmlDoc, nodDeposition.AppendChild(xmlDoc.CreateElement("Raw")), stats.DepositionRaw, stats.StatsUnits, stats.CellArea);
+            SerializeAreaVolume(xmlDoc, nodDeposition.AppendChild(xmlDoc.CreateElement("Thresholded")), stats.DepositionThr, stats.StatsUnits, stats.CellArea);
+            nodDeposition.AppendChild(xmlDoc.CreateElement("Error")).AppendChild(xmlDoc.CreateElement("Volume")).InnerText =
+                stats.DepositionErr.GetVolume(stats.CellArea, stats.StatsUnits.VertUnit).As(stats.StatsUnits.VolUnit).ToString();
         }
 
         private static void SerializeAreaVolume(XmlDocument xmlDoc, XmlNode nodParent, GCDAreaVolume areaVol, UnitGroup units, UnitsNet.Area cellArea)
@@ -128,7 +132,7 @@ namespace GCDCore.Project
 
             ThresholdingMethods method = (ThresholdingMethods)Enum.Parse(typeof(ThresholdingMethods), nodDoD.SelectSingleNode("ThresholdingMethod").InnerText);
 
-            DoDStats stats = DeserializeStatistics(nodDoD.SelectSingleNode("Statistics"));
+            DoDStats stats = DeserializeStatistics(nodDoD.SelectSingleNode("Statistics"), ProjectManagerBase.CellArea, ProjectManagerBase.Units);
 
             ChangeDetection.CoherenceProperties props = null;
             XmlNode nodSpatCo = nodDoD.SelectSingleNode("SpatialCoherence");
@@ -140,7 +144,15 @@ namespace GCDCore.Project
                 props = new ChangeDetection.CoherenceProperties(windowSize, inflectinA, inflectinB);
             }
 
-            return new DoD(name, folder, newDEM, oldDEM, newError, oldError, Threshold, method, stats, props);
+            DoD dod = new DoD(name, folder, newDEM, oldDEM, newError, oldError, Threshold, method, stats, props);
+
+            foreach(XmlNode nodBS in nodDoD.SelectNodes("BudgetSegregations/BudgetSegregation"))
+            {
+                BudgetSegregation bs = BudgetSegregation.Deserialize(nodBS, dod);
+                dod.BudgetSegregations[bs.Name] = bs;
+            }
+
+            return dod;
         }
 
         private static void DeserializeDEM(XmlNode nodDoD, Dictionary<string, DEMSurvey> DEMs, out DEMSurvey dem, out ErrorSurface error, string nodDEMName, string nodErrorName)
@@ -161,23 +173,24 @@ namespace GCDCore.Project
 
         public static DoDStats DeserializeStatistics(XmlNode nodStatistics, UnitsNet.Area cellArea, UnitGroup units)
         {
-            UnitsNet.Area AreaErosion_Raw = UnitsNet.Area.From(double.Parse(nodStatistics.SelectSingleNode("ErosionRaw/Area").InnerText), units.ArUnit);
-            UnitsNet.Area AreaDeposit_Raw = UnitsNet.Area.From(double.Parse(nodStatistics.SelectSingleNode("DepositionRaw/Area").InnerText), units.ArUnit);
+            UnitsNet.Area AreaErosion_Raw = UnitsNet.Area.From(double.Parse(nodStatistics.SelectSingleNode("Erosion/Raw/Area").InnerText), units.ArUnit);
+            UnitsNet.Area AreaDeposit_Raw = UnitsNet.Area.From(double.Parse(nodStatistics.SelectSingleNode("Deposition/Raw/Area").InnerText), units.ArUnit);
             UnitsNet.Area AreaErosion_Thr = UnitsNet.Area.From(double.Parse(nodStatistics.SelectSingleNode("ErosionThr/Area").InnerText), units.ArUnit);
-            UnitsNet.Area AreaDeposit_Thr = UnitsNet.Area.From(double.Parse(nodStatistics.SelectSingleNode("DepositionThr/Area").InnerText), units.ArUnit);
+            UnitsNet.Area AreaDeposit_Thr = UnitsNet.Area.From(double.Parse(nodStatistics.SelectSingleNode("Deposition/Thresholded/Area").InnerText), units.ArUnit);
 
-            UnitsNet.Volume VolErosion_Raw = UnitsNet.Volume.From(double.Parse(nodStatistics.SelectSingleNode("ErosionRaw/Volume").InnerText), units.VolUnit);
-            UnitsNet.Volume VolDeposit_Raw = UnitsNet.Volume.From(double.Parse(nodStatistics.SelectSingleNode("DepositionRaw/Volume").InnerText), units.VolUnit);
-            UnitsNet.Volume VolErosion_Thr = UnitsNet.Volume.From(double.Parse(nodStatistics.SelectSingleNode("ErosionThr/Volume").InnerText), units.VolUnit);
-            UnitsNet.Volume VolDeposit_Thr = UnitsNet.Volume.From(double.Parse(nodStatistics.SelectSingleNode("DepositionThr/Volume").InnerText), units.VolUnit);
+            UnitsNet.Volume VolErosion_Raw = UnitsNet.Volume.From(double.Parse(nodStatistics.SelectSingleNode("Erosion/Raw/Volume").InnerText), units.VolUnit);
+            UnitsNet.Volume VolDeposit_Raw = UnitsNet.Volume.From(double.Parse(nodStatistics.SelectSingleNode("Deposition/Raw/Volume").InnerText), units.VolUnit);
+            UnitsNet.Volume VolErosion_Thr = UnitsNet.Volume.From(double.Parse(nodStatistics.SelectSingleNode("Erosion/Thresholded/Volume").InnerText), units.VolUnit);
+            UnitsNet.Volume VolDeposit_Thr = UnitsNet.Volume.From(double.Parse(nodStatistics.SelectSingleNode("Deposition/Thresholded/Volume").InnerText), units.VolUnit);
 
-            //       public DoDStats(Area AreaErosion_Raw, Area AreaDeposition_Raw, Area AreaErosion_Thresholded, Area AreaDeposition_Thresholded,
-            //Volume VolumeErosion_Raw, Volume VolumeDeposition_Raw, Volume VolumeErosion_Thresholded, Volume VolumeDeposition_Thresholded,
-            //Volume VolumeErosion_Error, Volume VolumeDeposition_Error,
-            //Area cellArea, UnitGroup sUnits)
+            UnitsNet.Volume VolErosion_Err = UnitsNet.Volume.From(double.Parse(nodStatistics.SelectSingleNode("Erosion/Error/Volume").InnerText), units.VolUnit);
+            UnitsNet.Volume VolDeposit_Err = UnitsNet.Volume.From(double.Parse(nodStatistics.SelectSingleNode("Deposition/Error/Volume").InnerText), units.VolUnit);
 
-
-
+            return new DoDStats(
+                AreaErosion_Raw, AreaDeposit_Raw, AreaErosion_Thr, AreaDeposit_Thr,
+                VolErosion_Raw, VolDeposit_Raw, VolErosion_Thr, VolDeposit_Thr,
+                VolErosion_Err, VolDeposit_Err,
+                cellArea, units);
         }
 
         private static UnitsNet.Area DeserializeArea(XmlNode nodParent, string nodName, UnitsNet.Units.AreaUnit unit)
