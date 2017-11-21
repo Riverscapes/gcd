@@ -1,9 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using System;
-using OSGeo.GDAL;
-using GCDConsoleLib;
-using GCDConsoleLib.Utility;
 using GCDConsoleLib.Tests.Utility;
 
 namespace GCDConsoleLib.Tests
