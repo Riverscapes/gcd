@@ -102,10 +102,9 @@ namespace GCDConsoleLib
         /// <param name="thrDoD">Thresholded DoD Raster Path</param>
         /// <param name="minLoD">Minimum Level of Detection</param>
         /// <returns></returns>
-        public static DoDStats GetStatsMinLoD(Raster rawDoD, Raster thrDoD, float minLoD,
-             Area cellArea, UnitGroup units)
+        public static DoDStats GetStatsMinLoD(Raster rawDoD, Raster thrDoD, double minLoD, Area cellArea, UnitGroup units)
         {
-            GetDodMinLodStats theStatsOp = new GetDodMinLodStats(rawDoD, thrDoD, minLoD, new DoDStats(cellArea, units));
+            GetDodMinLodStats theStatsOp = new GetDodMinLodStats(rawDoD, thrDoD, (float) minLoD, new DoDStats(cellArea, units));
             theStatsOp.Run();
             return theStatsOp.Stats;
         }
@@ -119,11 +118,11 @@ namespace GCDConsoleLib
         /// <param name="PolygonMask">Vector layer containing the mask polygons</param>
         /// <param name="FieldName">Name of the field in the PolygonMask that contains the distinguishing property on which to group statistics</param>
         /// <returns></returns>
-        public static Dictionary<string, DoDStats> GetStatsMinLoD(Raster rawDoD, Raster thrDoD, float minLoD,
+        public static Dictionary<string, DoDStats> GetStatsMinLoD(Raster rawDoD, Raster thrDoD, double minLoD,
             Vector PolygonMask, string FieldName,
              Area cellArea, UnitGroup units)
         {
-            GetDodMinLodStats theStatsOp = new GetDodMinLodStats(rawDoD, thrDoD, minLoD, new DoDStats(cellArea, units), PolygonMask, FieldName);
+            GetDodMinLodStats theStatsOp = new GetDodMinLodStats(rawDoD, thrDoD, (float) minLoD, new DoDStats(cellArea, units), PolygonMask, FieldName);
             theStatsOp.Run();
             return theStatsOp.SegStats;
         }
@@ -254,6 +253,32 @@ namespace GCDConsoleLib
             return retVal;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="rawDEM"></param>
+        /// <param name="props"></param>
+        /// <param name="outputPath"></param>
+        /// <returns></returns>
+        public static Raster CreateErrorRaster(Raster rawDEM, ErrorRasterProperties props, FileInfo outputPath)
+        {
+            throw new NotImplementedException("single error raster case");
+            return null;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="rawDEM"></param>
+        /// <param name="props"></param>
+        /// <param name="outputPath"></param>
+        /// <returns></returns>
+        public static Dictionary<string, DoDStats> CreateErrorRaster(Raster rawDEM, Vector PolygonMask, string MaskFieldName, Dictionary<string, ErrorRasterProperties> props, FileInfo outputPath)
+        {
+            throw new NotImplementedException("multi-metho error raster case");
+            return null;
+        }
+
         public static Raster BilinearResample(Raster rInput, FileInfo sOutputRaster, ExtentRectangle outputExtent)
         {
             return (Raster)GenericRunWithOutput(typeof(BilinearResample<>), rInput.Datatype.CSType, new object[] {
@@ -370,7 +395,7 @@ namespace GCDConsoleLib
             return histOp.theHistogram;
         }
 
-        public static Dictionary<string, Histogram> BinRaster(ref Raster rInput, int numberofBins, ref Vector polygonMask, string FieldName)
+        public static Dictionary<string, Histogram> BinRaster(Raster rInput, int numberofBins, Vector polygonMask, string FieldName)
         {
             BinRaster histOp = new BinRaster(rInput, numberofBins, polygonMask, FieldName);
             histOp.Run();
