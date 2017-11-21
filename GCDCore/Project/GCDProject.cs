@@ -5,7 +5,7 @@ using System.Xml;
 
 namespace GCDCore.Project
 {
-    class GCDProject : GCDProjectItem
+    public class GCDProject : GCDProjectItem
     {
         public string Description { get; set; }
         public readonly FileInfo ProjectFile;
@@ -15,7 +15,7 @@ namespace GCDCore.Project
         public GCDConsoleLib.GCD.UnitGroup Units { get; set; }
 
         public readonly Dictionary<string, DEMSurvey> DEMSurveys;
-        public readonly Dictionary<string, DoD> DoDs;
+        public readonly Dictionary<string, DoDBase> DoDs;
         public readonly Dictionary<string, string> MetaData;
 
         public GCDProject(string name, string description, FileInfo projectFile,
@@ -30,8 +30,39 @@ namespace GCDCore.Project
             Units = units;
 
             DEMSurveys = new Dictionary<string, DEMSurvey>();
-            DoDs = new Dictionary<string, DoD>();
+            DoDs = new Dictionary<string, DoDBase>();
             MetaData = new Dictionary<string, string>();
+        }
+
+        public string GetRelativePath(FileInfo FullPath)
+        {
+            return GetRelativePath(FullPath.FullName);
+        }
+
+        public string GetRelativePath(string FullPath)
+        {
+            int nIndex = FullPath.ToLower().IndexOf(ProjectFile.DirectoryName.ToLower());
+            if (nIndex < 0)
+            {
+                Exception ex = new Exception("Unable to determine relative path.");
+                ex.Data["Project Directory"] = ProjectFile.DirectoryName;
+                ex.Data["File Path"] = FullPath;
+                throw ex;
+            }
+
+            string relativePath = FullPath.Substring(ProjectFile.FullName.Length, FullPath.Length - ProjectFile.DirectoryName.Length);
+            relativePath = relativePath.TrimStart(Path.DirectorySeparatorChar);
+            return relativePath;
+        }
+
+        public FileInfo GetAbsolutePath(string sRelativePath)
+        {
+            return new FileInfo(Path.Combine(ProjectFile.DirectoryName, sRelativePath));
+        }
+
+        public DirectoryInfo GetAbsoluteDir(string sRelativeDir)
+        {
+            return new DirectoryInfo(Path.Combine(ProjectFile.DirectoryName, sRelativeDir));
         }
 
         public void Save()
@@ -62,14 +93,14 @@ namespace GCDCore.Project
             if (DoDs.Count > 0)
             {
                 XmlNode nodDoDs = nodProject.AppendChild(xmlDoc.CreateElement("DoDs"));
-                foreach (DoD dod in DoDs.Values)
+                foreach (DoDBase dod in DoDs.Values)
                     dod.Serialize(xmlDoc, nodDoDs);
             }
 
             if (MetaData.Count > 0)
             {
                 XmlNode nodMetaData = nodProject.AppendChild(xmlDoc.CreateElement("MetaData"));
-                foreach(KeyValuePair<string, string> item in MetaData)
+                foreach (KeyValuePair<string, string> item in MetaData)
                 {
                     XmlNode nodItem = nodMetaData.AppendChild(xmlDoc.CreateElement("Item"));
                     nodItem.AppendChild(xmlDoc.CreateElement("Key")).InnerText = item.Key;
@@ -109,7 +140,7 @@ namespace GCDCore.Project
 
             foreach (XmlNode nodDoD in nodProject.SelectNodes("DoDs/DoD"))
             {
-                DoD dod = DoD.Deserialize(nodDoD, project.DEMSurveys);
+                DoDBase dod = DoDBase.Deserialize(nodDoD, project.DEMSurveys);
                 project.DoDs[dod.Name] = dod;
             }
 

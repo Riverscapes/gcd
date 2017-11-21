@@ -21,8 +21,7 @@ namespace GCDConsoleLib.Internal.Operators
         /// <summary>
         /// Pass-through constructure
         /// </summary>
-        public GetDodMinLodStats(Raster rawDoD, Raster thrDoD, 
-            float thresh, DoDStats theStats) :
+        public GetDodMinLodStats(Raster rawDoD, Raster thrDoD, float thresh, DoDStats theStats) :
             base(new List<Raster> { rawDoD, thrDoD })
         {
             Stats = theStats;

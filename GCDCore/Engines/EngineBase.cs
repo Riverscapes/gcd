@@ -5,17 +5,19 @@ using GCDCore.Visualization;
 using System.Globalization;
 using GCDConsoleLib;
 
-namespace GCDCore.ChangeDetection
+namespace GCDCore.Engines
 {
-    public abstract class Engine
+    public abstract class EngineBase
     {
         protected const int DEFAULTHISTOGRAMNUMBER = 100;
 
+        public readonly string Name;
         public readonly DirectoryInfo AnalysisFolder;
         protected DirectoryInfo FiguresFolder { get { return new DirectoryInfo(Path.Combine(AnalysisFolder.FullName, "Figures")); } }
 
-        public Engine(DirectoryInfo folder)
+        public EngineBase(string name, DirectoryInfo folder)
         {
+            Name = name;
             AnalysisFolder = folder;
         }
 

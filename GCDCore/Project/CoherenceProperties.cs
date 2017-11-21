@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GCDCore.ChangeDetection
+namespace GCDCore.Project
 {
     public class CoherenceProperties
     {

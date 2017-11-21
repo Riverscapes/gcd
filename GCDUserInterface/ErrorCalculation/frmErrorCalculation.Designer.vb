@@ -268,7 +268,7 @@
             Me.GroupBox2.TabStop = False
             Me.GroupBox2.Text = "Error Calculation Methods"
             '
-            'frmErrorCalculation2
+            'frmErrorCalculation
             '
             Me.AcceptButton = Me.btnOK
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -287,7 +287,7 @@
             Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
             Me.MaximizeBox = False
             Me.MinimizeBox = False
-            Me.Name = "frmErrorCalculation2"
+            Me.Name = "frmErrorCalculation"
             Me.Text = "Error Calculation Properties"
             CType(Me.grdErrorProperties, System.ComponentModel.ISupportInitialize).EndInit()
             Me.GroupBox1.ResumeLayout(False)

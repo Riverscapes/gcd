@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
+using GCDCore.Project;
+using GCDConsoleLib;
 
 namespace GCDCore.ErrorCalculation
 {
     public class ErrorSurfaceEngine
     {
-        private Project.ProjectDS.ErrorSurfaceRow m_ErrorSurfaceRow;
-
         private const int GDAL_NoDataValue = -9999;
         private const string GDAL_OutputDriver = "GTiff";
         public const string UniformErrorString = "Uniform Error";
@@ -17,19 +17,18 @@ namespace GCDCore.ErrorCalculation
 
         public const string AssociatedsurfaceErrorType = "Associated Surface";
 
-        private GCDConsoleLib.Raster DEMRaster;
+        public readonly DEMSurvey DEM;
 
-        public ErrorSurfaceEngine(Project.ProjectDS.ErrorSurfaceRow errorSurfaceRow)
+        public ErrorSurfaceEngine(DEMSurvey dem)
         {
-            m_ErrorSurfaceRow = errorSurfaceRow;
-            DEMRaster = new GCDConsoleLib.Raster(Project.ProjectManagerBase.GetAbsolutePath(m_ErrorSurfaceRow.DEMSurveyRow.Source));
+            DEM = dem;
         }
 
-        public GCDConsoleLib.Raster CreateErrorSurfaceRaster()
+        public ErrorSurface CreateErrorSurfaceRaster(string name, Dictionary<string, ErrorSurfaceProperty> errProps)
         {
             // Create the name for the final error surface raster
-            FileInfo errSurfaceRasterPath = Project.ProjectManagerBase.OutputManager.ErrorSurfaceRasterPath(m_ErrorSurfaceRow.DEMSurveyRow.Name, m_ErrorSurfaceRow.Name, true);
-            GCDConsoleLib.Raster gErrorSurface = null;
+            FileInfo errSurfaceRasterPath = ProjectManagerBase.OutputManager.ErrorSurfaceRasterPath(DEM.Name, name, true);
+            Raster gErrorSurface = null;
 
             switch (m_ErrorSurfaceRow.Type)
             {

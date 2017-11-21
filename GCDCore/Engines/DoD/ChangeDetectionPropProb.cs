@@ -1,20 +1,21 @@
 ﻿using GCDConsoleLib;
 using GCDConsoleLib.GCD;
 using System.IO;
+using GCDCore.Project;
 
-namespace GCDCore.ChangeDetection
+namespace GCDCore.Engines
 {
     public class ChangeDetectionEnginePropProb : ChangeDetectionEngineBase
     {
-        protected Raster NewError;
-        protected Raster OldError;
+        protected readonly ErrorSurface NewError;
+        protected readonly ErrorSurface OldError;
         public Raster PropagatedErrRaster;
 
-        public ChangeDetectionEnginePropProb(DirectoryInfo folder, Raster gNewDEM, Raster gOldDEM, Raster gNewError, Raster gOldError)
-            : base(folder, gNewDEM, gOldDEM)
+        public ChangeDetectionEnginePropProb(string name, DirectoryInfo folder, DEMSurvey newDEM, DEMSurvey oldDEM, ErrorSurface newError, ErrorSurface oldError)
+            : base(name, folder, newDEM, oldDEM)
         {
-            NewError = gNewError;
-            OldError = gOldError;
+            NewError = newError;
+            OldError = oldError;
         }
 
         protected override Raster ThresholdRawDoD(Raster rawDoD, FileInfo thrDoDPath)
@@ -28,10 +29,10 @@ namespace GCDCore.ChangeDetection
         {
             return RasterOperators.GetStatsPropagated(rawDoD, thrDoD, PropagatedErrRaster, cellArea, units);
         }
-
-        protected override DoDResult GetDoDResult(DoDStats changeStats, FileInfo rawDoDPath, FileInfo thrDoDPath, FileInfo rawHistPath, Histogram rawHist, FileInfo thrHistPath, Histogram thrHist, UnitGroup units)
+        
+        protected override DoDBase GetDoDResult(DoDStats changeStats, FileInfo rawDoDPath, FileInfo thrDoDPath, FileInfo rawHistPath, Histogram rawHist, FileInfo thrHistPath, Histogram thrHist)
         {
-            return new DoDResultPropagated(changeStats, rawDoDPath, rawHistPath, thrDoDPath, thrHistPath, PropagatedErrRaster.GISFileInfo, units);
+            return new DoDPropagated(Name, AnalysisFolder, NewDEM, OldDEM, NewError, OldError, PropagatedErrRaster.GISFileInfo, changeStats);
         }
 
         /// <summary>
@@ -43,7 +44,7 @@ namespace GCDCore.ChangeDetection
         protected Raster GeneratePropagatedErrorRaster()
         {
             FileInfo propErrPath = Project.ProjectManagerBase.OutputManager.PropagatedErrorPath(AnalysisFolder);
-            Raster propErr = RasterOperators.RootSumSquares(NewError, OldError, propErrPath);
+            Raster propErr = RasterOperators.RootSumSquares(NewError.Raster.Raster, OldError.Raster.Raster, propErrPath);
 
             // Build Pyramids
             Project.ProjectManagerUI.PyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.PropagatedError, propErrPath);

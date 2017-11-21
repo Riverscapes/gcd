@@ -10,7 +10,7 @@ namespace GCDCore.Project
 {
     public class DoDProbabilityRasters
     {
-        public readonly ChangeDetection.CoherenceProperties SpatialCoherence;
+        public readonly CoherenceProperties SpatialCoherence;
 
         public readonly ProjectRaster PriorProbability;
         public readonly ProjectRaster PosteriorProbability;
@@ -37,7 +37,7 @@ namespace GCDCore.Project
         /// <param name="spatCoEr"></param>
         /// <param name="spatCoDep"></param>
         /// <param name="SpatCo"></param>
-        public DoDProbabilityRasters(FileInfo priorProb, FileInfo postProb, FileInfo cond, FileInfo spatCoEr, FileInfo spatCoDep, ChangeDetection.CoherenceProperties SpatCo)
+        public DoDProbabilityRasters(FileInfo priorProb, FileInfo postProb, FileInfo cond, FileInfo spatCoEr, FileInfo spatCoDep, CoherenceProperties SpatCo)
         {
             PriorProbability = new ProjectRaster(priorProb);
             PosteriorProbability = new ProjectRaster(postProb);
@@ -84,14 +84,14 @@ namespace GCDCore.Project
             FileInfo SpatCoEr = DeserializeRaster(nodParent, "SpatialCoherenceErosion");
             FileInfo SpatCoDe = DeserializeRaster(nodParent, "SpatialCoherenceDeposition");
 
-            ChangeDetection.CoherenceProperties props = null;
+            CoherenceProperties props = null;
             XmlNode nodSpatCo = nodParent.SelectSingleNode("SpatialCoherence");
             if (nodSpatCo is XmlNode)
             {
                 int windowSize = int.Parse(nodSpatCo.SelectSingleNode("WindowSize").InnerText);
                 int inflectinA = int.Parse(nodSpatCo.SelectSingleNode("InflectionA").InnerText);
                 int inflectinB = int.Parse(nodSpatCo.SelectSingleNode("InflectionB").InnerText);
-                props = new ChangeDetection.CoherenceProperties(windowSize, inflectinA, inflectinB);
+                props = new CoherenceProperties(windowSize, inflectinA, inflectinB);
             }
 
             DoDProbabilityRasters result = null;

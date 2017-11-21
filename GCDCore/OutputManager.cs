@@ -5,6 +5,7 @@ namespace GCDCore
 {
     public class OutputManager
     {
+        public const string RasterExtension = "tif";
         private const string m_sInputsFolder = "inputs";
         private const string m_sAssociatedSurfacesFolder = "AssociatedSurfaces";
         private const string m_sBudgetSegregationFolder = "BS";

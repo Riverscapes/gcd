@@ -101,6 +101,7 @@
     <Compile Include="GCD\DoDStats.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="GCD\DoDStatsMath.cs" />
+    <Compile Include="GCD\ErrorRasterProperties.cs" />
     <Compile Include="GCD\GCDAreaVolume.cs" />
     <Compile Include="GCD\UnitGroup.cs" />
     <Compile Include="Histogram.cs" />

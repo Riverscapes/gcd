@@ -1,11 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Collections;
-using System.Data;
-using System.Diagnostics;
 using System.IO;
 
 namespace GCDCore.Project
@@ -19,238 +13,61 @@ namespace GCDCore.Project
     /// the desktop software.</remarks>
     public class ProjectManagerBase
     {
-        private static ProjectDS m_ProjectDS;
+        public GCDProject Project { get; internal set; }
+        public readonly DirectoryInfo ExcelTemplatesFolder;
+        public readonly DirectoryInfo ReportsFolder;
+        public readonly OutputManager OutputManager;
+        private readonly FileInfo SurveyTypesPath;
 
-        private static string m_GCDProjectXMLFilePath;
-
-        public static OutputManager OutputManager { get; internal set; }
-
-        // This is the folder that contains the Excel Templates
-        private const string EXCELTEMPLATESFOLDERNAME = "ExcelTemplates";
-
-        protected static DirectoryInfo m_dExcelTemplatesFolder;
-        // Colour for displaying erosion and deposition in charts
-        private static System.Drawing.Color ColourErosion { get; set; }
-        private static System.Drawing.Color ColourDeposition { get; set; }
-        private const string ReportsFolder = "ReportFiles";
-
-        private static DirectoryInfo m_dResourcesFolder;
-
-        protected static GCDConsoleLib.Raster.RasterDriver m_eDefaultRasterType;
-
-        private static FileInfo m_fiSurveyTypes;
-
-        public static GCDConsoleLib.GCD.UnitGroup Units { get; internal set; }
-        public static UnitsNet.Area CellArea { get; internal set; }
-
-        #region "Properties"
-
-        public static string RasterExtension
+        public Dictionary<string, SurveyType> SurveyTypes
         {
-            get
-            {
-                switch (m_eDefaultRasterType)
-                {
-                    case GCDConsoleLib.Raster.RasterDriver.GTiff:
-                        return "tif";
-                    case GCDConsoleLib.Raster.RasterDriver.HFA:
-                        return "img";
-                    default:
-                        throw new NotImplementedException(string.Format("Unhandled raster driver type {0}", m_eDefaultRasterType));
-                }
-            }
+            get { return SurveyType.Load(SurveyTypesPath); }
+            set { SurveyType.Save(SurveyTypesPath, value); }
         }
 
-        public static ProjectDS.ProjectRow CurrentProject
-        {
-            get
-            {
-                ProjectDS.ProjectRow rResult = null;
-                if (ds is ProjectDS)
-                {
-                    if (ds.Project is ProjectDS.ProjectDataTable)
-                    {
-                        if (ds.Project.Rows.Count > 0)
-                        {
-                            rResult = ds.Project.First<ProjectDS.ProjectRow>();
-                        }
-                    }
-                }
-
-                return rResult;
-            }
-        }
-
-        public static string FilePath
-        {
-            get { return m_GCDProjectXMLFilePath; }
-
-            set
-            {
-                // Store the new GCD project file path
-                m_GCDProjectXMLFilePath = value;
-
-                // Create a new project dataset
-                if (m_ProjectDS == null)
-                {
-                    m_ProjectDS = new ProjectDS();
-                }
-                m_ProjectDS.Clear();
-
-                // Attempt to read the GCD project
-                if (File.Exists(m_GCDProjectXMLFilePath))
-                {
-                    try
-                    {
-                        m_ProjectDS.ReadXml(m_GCDProjectXMLFilePath);
-                    }
-                    catch (Exception ex)
-                    {
-                        m_GCDProjectXMLFilePath = string.Empty;
-                        m_ProjectDS = null;
-                        Exception ex2 = new Exception("Error reading GCD project file.", ex);
-                        ex2.Data["GCD Project File"] = value;
-                        throw ex2;
-                    }
-                }
-            }
-        }
-
-        public static DirectoryInfo ReportResourcesFolder
-        {
-            get
-            {
-                DirectoryInfo dResourcesFolder = new DirectoryInfo(Path.Combine(m_dResourcesFolder.FullName, ReportsFolder));
-                return dResourcesFolder;
-            }
-        }
-
-        public static ProjectDS ds
-        {
-            get
-            {
-                if (m_ProjectDS == null)
-                {
-                    m_ProjectDS = new ProjectDS();
-                    if (!string.IsNullOrEmpty(FilePath))
-                    {
-                        m_ProjectDS.ReadXml(FilePath);
-                    }
-                }
-                return m_ProjectDS;
-            }
-        }
-
-        public static GCDConsoleLib.Raster.RasterDriver DefaultRasterType
-        {
-            get { return m_eDefaultRasterType; }
-        }
-
-        public static DirectoryInfo ExcelTemplatesFolder
-        {
-            get { return m_dExcelTemplatesFolder; }
-        }
-
-        public static UnitsNet.Units.LengthUnit DisplayUnits
-        {
-            get
-            {
-                if (CurrentProject.DisplayUnits != null)
-                {
-                    return (UnitsNet.Units.LengthUnit)Enum.Parse(typeof(UnitsNet.Units.LengthUnit), "Meter");
-                }
-                return UnitsNet.Units.LengthUnit.Undefined;
-            }
-        }
-
-        public static Dictionary<string, SurveyType> SurveyTypes
-        {
-            get { return SurveyType.Load(m_fiSurveyTypes); }
-            set { SurveyType.Save(m_fiSurveyTypes, value); }
-        }
-
-        #endregion
-
-        public ProjectManagerBase(string sResourcesFolder, System.Drawing.Color colErosion, System.Drawing.Color colDeposition, GCDConsoleLib.Raster.RasterDriver eDefaultRasterType)
+        public ProjectManagerBase(string sResourcesFolder)
         {
             OutputManager = new OutputManager();
-            ColourErosion = colErosion;
-            ColourDeposition = colDeposition;
-            m_eDefaultRasterType = eDefaultRasterType;
-
-            m_fiSurveyTypes = new FileInfo(Path.Combine(sResourcesFolder, "SurveyTypes.xml"));
-            if (!m_fiSurveyTypes.Exists)
+  
+            SurveyTypesPath = new FileInfo(Path.Combine(sResourcesFolder, "SurveyTypes.xml"));
+            if (!SurveyTypesPath.Exists)
             {
                 Exception ex = new Exception("The GCD Survey Types XML file does not exist.");
-                ex.Data["Survey Types XML File"] = m_fiSurveyTypes.FullName;
+                ex.Data["Survey Types XML File"] = SurveyTypesPath.FullName;
                 throw ex;
             }
 
-            m_dExcelTemplatesFolder = new DirectoryInfo(System.IO.Path.Combine(sResourcesFolder, EXCELTEMPLATESFOLDERNAME));
-            if (!m_dExcelTemplatesFolder.Exists)
+            ExcelTemplatesFolder = new DirectoryInfo(System.IO.Path.Combine(sResourcesFolder, "ExcelTemplates"));
+            if (!ExcelTemplatesFolder.Exists)
             {
                 Exception ex = new Exception("The GCD Excel template folder path does not exist.");
-                ex.Data["GCD Excel Template Path"] = m_dExcelTemplatesFolder.FullName;
+                ex.Data["GCD Excel Template Path"] = ExcelTemplatesFolder.FullName;
                 throw ex;
             }
 
-            // Temporary properties until the new project file is available
-            CellArea = new UnitsNet.Area(0.1);
-            Units = new GCDConsoleLib.GCD.UnitGroup(UnitsNet.Units.VolumeUnit.CubicMeter, UnitsNet.Units.AreaUnit.SquareMeter, UnitsNet.Units.LengthUnit.Meter, UnitsNet.Units.LengthUnit.Meter);
-        }
-
-        public static string GetRelativePath(FileInfo FullPath)
-        {
-            return GetRelativePath(FullPath.FullName);
-        }
-
-        public static string GetRelativePath(string sFullPath)
-        {
-            if (string.IsNullOrEmpty(m_GCDProjectXMLFilePath))
+            ReportsFolder = new DirectoryInfo(Path.Combine(sResourcesFolder, "ReportFiles"));
+            if (!ReportsFolder.Exists)
             {
-                throw new Exception("The project XML file path must be provided.");
+                Exception ex = new Exception("The GCD reports folder path does not exist.");
+                ex.Data["GCD Reports Path"] = ReportsFolder.FullName;
+                throw ex;
             }
-
-            string sProjectFolder = Path.GetDirectoryName(m_GCDProjectXMLFilePath);
-            int nIndex = sFullPath.ToLower().IndexOf(sProjectFolder.ToLower());
-
-            if (nIndex >= 0)
-            {
-                sFullPath = sFullPath.Substring(sProjectFolder.Length, sFullPath.Length - sProjectFolder.Length);
-                sFullPath = sFullPath.TrimStart(Path.DirectorySeparatorChar);
-            }
-
-            return sFullPath;
         }
 
-        public static FileInfo GetAbsolutePath(string sRelativePath)
+        public void OpenProject(FileInfo projectFile)
         {
-
-            if (string.IsNullOrEmpty(m_GCDProjectXMLFilePath))
-            {
-                throw new Exception("The project XML file path must be provided.");
-            }
-
-            string sProjectFolder = Path.GetDirectoryName(m_GCDProjectXMLFilePath);
-            string sResult = Path.Combine(sProjectFolder, sRelativePath);
-            return new FileInfo(sResult);
+            Project = GCDProject.Load(projectFile);
         }
 
-        public static DirectoryInfo GetAbsoluteDir(string sRelativeDir)
+        public void OpenProject(GCDProject project)
         {
-            return new DirectoryInfo(Path.Combine(Path.GetDirectoryName(m_GCDProjectXMLFilePath), sRelativeDir));
-        }
+            Project = project;
+        }      
 
-        public static void CloseCurrentProject()
+        public void CloseCurrentProject()
         {
-            m_ProjectDS = null;
-            m_GCDProjectXMLFilePath = string.Empty;
+            Project = null;
             GC.Collect();
-        }
-
-        public static void save()
-        {
-            m_ProjectDS.WriteXml(FilePath);
         }
     }
 }

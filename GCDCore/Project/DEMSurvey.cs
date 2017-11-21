@@ -9,8 +9,11 @@ namespace GCDCore.Project
         public SurveyDateTime SurveyDate { get; set; }
         public readonly ProjectRaster Raster;
 
-        public FileInfo MethodMask { get; set; }
-        public string MethodMaskField { get; set; }
+        public string SurveyMethod { get; set; } // Single survey methods
+        public bool IsSingleSurveyMethod { get { return string.IsNullOrEmpty(SurveyMethod); } }
+
+        public FileInfo MethodMask { get; set; } // Multi-method polygon ShapeFile
+        public string MethodMaskField { get; set; } // Multi-method field in ShapeFile
 
         public Dictionary<string, AssocSurface> AssocSurfaces { get; internal set; }
         public Dictionary<string, ErrorSurface> ErrorSurfaces { get; internal set; }
@@ -30,6 +33,7 @@ namespace GCDCore.Project
             XmlNode nodDEM = nodParent.AppendChild(xmlDoc.CreateElement("DEM"));
             nodDEM.AppendChild(xmlDoc.CreateElement("Name")).InnerText = Name;
             nodDEM.AppendChild(xmlDoc.CreateElement("Path")).InnerText = ProjectManagerBase.GetRelativePath(Raster.RasterPath);
+            nodDEM.AppendChild(xmlDoc.CreateElement("SurveyMethod")).InnerText = SurveyMethod;
 
             XmlNode nodSurveyDate = nodDEM.AppendChild(xmlDoc.CreateElement("SurveyDate"));
             nodSurveyDate.AppendChild(xmlDoc.CreateElement("Year")).InnerText = SurveyDate.Year > 0 ? SurveyDate.Year.ToString() : string.Empty;
@@ -83,6 +87,12 @@ namespace GCDCore.Project
 
             DEMSurvey dem = new DEMSurvey(name, surveyDT, path);
 
+            // Single survey method DEM surveys
+            XmlNode nodSurveyMethod = nodDEM.SelectSingleNode("SurveyMethod");
+            if (nodSurveyMethod is XmlNode)
+                dem.SurveyMethod = nodSurveyMethod.InnerText;
+
+            // Multi-method DEM surveys
             XmlNode nodMethodMask = nodDEM.SelectSingleNode("MethodMask");
             if (nodMethodMask is XmlNode)
             {
@@ -90,13 +100,13 @@ namespace GCDCore.Project
                 dem.MethodMaskField = nodMethodMask.SelectSingleNode("Field").InnerText;
             }
 
-            foreach(XmlNode nodAssoc in nodDEM.SelectNodes("AssociatedSurfaces/AssociatedSurface"))
+            foreach (XmlNode nodAssoc in nodDEM.SelectNodes("AssociatedSurfaces/AssociatedSurface"))
             {
                 AssocSurface assoc = AssocSurface.Deserialize(nodAssoc, dem);
                 dem.AssocSurfaces[assoc.Name] = assoc;
             }
 
-            foreach(XmlNode nodError in nodDEM.SelectNodes("ErrorSurfaces/ErrorSurface"))
+            foreach (XmlNode nodError in nodDEM.SelectNodes("ErrorSurfaces/ErrorSurface"))
             {
                 ErrorSurface error = ErrorSurface.Deserialize(nodError, dem);
                 dem.ErrorSurfaces[error.Name] = error;

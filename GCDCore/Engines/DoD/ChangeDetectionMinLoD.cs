@@ -1,17 +1,17 @@
 ﻿using GCDConsoleLib;
 using GCDConsoleLib.GCD;
 using System.IO;
+using GCDCore.Project;
 
-namespace GCDCore.ChangeDetection
+namespace GCDCore.Engines
 {
     public class ChangeDetectionEngineMinLoD : ChangeDetectionEngineBase
     {
         public float Threshold { get; internal set; }
 
-        public ChangeDetectionEngineMinLoD(DirectoryInfo folder, Raster gNewDEM, Raster gOldDEM, float fThreshold)
-            : base(folder, gNewDEM, gOldDEM)
+        public ChangeDetectionEngineMinLoD(DirectoryInfo folder, DEMSurvey NewDEM, DEMSurvey OldDEM, float fThreshold)
+            : base(folder, NewDEM, OldDEM)
         {
-
             Threshold = fThreshold;
         }
 
@@ -31,10 +31,10 @@ namespace GCDCore.ChangeDetection
         {
             return RasterOperators.GetStatsMinLoD(rawDoD, thrDoD, Threshold, cellArea, units);
         }
-
-        protected override DoDResult GetDoDResult(DoDStats changeStats, FileInfo rawDoDPath, FileInfo thrDoDPath, FileInfo rawHistoPath, Histogram rawHist, FileInfo thrHistoPath, Histogram thrHist, UnitGroup units)
+                
+        protected override DoDBase GetDoDResult(DoDStats changeStats, FileInfo rawDoDPath, FileInfo thrDoDPath, FileInfo rawHistoPath, Histogram rawHist, FileInfo thrHistoPath, Histogram thrHist)
         {
-            return new DoDResultMinLoD(changeStats, rawDoDPath, thrDoDPath, rawHistoPath, thrHistoPath, Threshold, units);
+            return new DoDMinLoD(Name, AnalysisFolder, NewDEM, OldDEM, Threshold, changeStats);
         }
     }
 }

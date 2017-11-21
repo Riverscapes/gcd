@@ -47,37 +47,33 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BudgetSegregation\BSResultSet.cs" />
-    <Compile Include="BudgetSegregation\BudgetSegregationEngine.cs" />
-    <Compile Include="BudgetSegregation\BSResult.cs" />
-    <Compile Include="ChangeDetection\ChangeDetectionBase.cs" />
-    <Compile Include="ChangeDetection\ChangeDetectionMinLoD.cs" />
-    <Compile Include="ChangeDetection\ChangeDetectionProbabilistic.cs" />
-    <Compile Include="ChangeDetection\ChangeDetectionPropProb.cs" />
-    <Compile Include="ChangeDetection\CoherenceProperties.cs" />
-    <Compile Include="ChangeDetection\DoDResult.cs" />
-    <Compile Include="ChangeDetection\Engine.cs" />
+    <Compile Include="Engines\BudgetSegregationEngine.cs" />
+    <Compile Include="Engines\DoD\ChangeDetectionBase.cs" />
+    <Compile Include="Engines\DoD\ChangeDetectionMinLoD.cs" />
+    <Compile Include="Engines\DoD\ChangeDetectionProbabilistic.cs" />
+    <Compile Include="Engines\DoD\ChangeDetectionPropProb.cs" />
+    <Compile Include="Engines\ErrorSurfaceEngine.cs" />
+    <Compile Include="Project\CoherenceProperties.cs" />
+    <Compile Include="Engines\EngineBase.cs" />
     <Compile Include="ErrorCalculation\ErrorCalcProperties.cs" />
-    <Compile Include="ErrorCalculation\ErrorSurfaceEngine.cs" />
     <Compile Include="ErrorCalculation\FIS\FISLibraryItem.cs" />
     <Compile Include="ErrorCalculation\FIS\FISRuleFile.cs" />
     <Compile Include="OutputManager.cs" />
-    <Compile Include="Project\ProjectClasses\AssocSurface.cs" />
-    <Compile Include="Project\ProjectClasses\BudgetSegregation.cs" />
-    <Compile Include="Project\ProjectClasses\BudgetSegregationClass.cs" />
-    <Compile Include="Project\ProjectClasses\DEMSurvey.cs" />
-    <Compile Include="Project\ProjectClasses\DoD.cs" />
-    <Compile Include="Project\ProjectClasses\DoDProbabilityRasters.cs" />
-    <Compile Include="Project\ProjectClasses\ErrorSurface.cs" />
-    <Compile Include="Project\ProjectClasses\ErrorSurfaceProperty.cs" />
-    <Compile Include="Project\ProjectClasses\GCDProject.cs" />
-    <Compile Include="Project\ProjectClasses\GCDProjectItem.cs" />
-    <Compile Include="Project\ProjectClasses\ProjectRaster.cs" />
-    <Compile Include="Project\ProjectDS.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ProjectDS.xsd</DependentUpon>
-    </Compile>
+    <Compile Include="Project\AssocSurface.cs" />
+    <Compile Include="Project\BudgetSegregation.cs" />
+    <Compile Include="Project\BudgetSegregationClass.cs" />
+    <Compile Include="Project\DEMSurvey.cs" />
+    <Compile Include="Project\DoDBase.cs" />
+    <Compile Include="Project\DoDMinLoD.cs" />
+    <Compile Include="Project\DoDProbabilistic.cs" />
+    <Compile Include="Project\DoDProbabilityRasters.cs" />
+    <Compile Include="Project\DoDPropagated.cs" />
+    <Compile Include="Project\ErrorSurface.cs" />
+    <Compile Include="Project\ErrorSurfaceProperty.cs" />
+    <Compile Include="Project\GCDProject.cs" />
+    <Compile Include="Project\GCDProjectItem.cs" />
+    <Compile Include="Project\ProjectHistogram.cs" />
+    <Compile Include="Project\ProjectRaster.cs" />
     <Compile Include="Project\ProjectManagerBase.cs" />
     <Compile Include="Project\ProjectManagerUI.cs" />
     <Compile Include="Project\SurveyDateTime.cs" />
@@ -113,17 +109,6 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-    <None Include="Project\ProjectDS.xsc">
-      <DependentUpon>ProjectDS.xsd</DependentUpon>
-    </None>
-    <None Include="Project\ProjectDS.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>ProjectDS.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Project\ProjectDS.xss">
-      <DependentUpon>ProjectDS.xsd</DependentUpon>
-    </None>
     <None Include="Properties\Settings.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -155,6 +140,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

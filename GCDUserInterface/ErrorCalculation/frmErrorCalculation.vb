@@ -1,20 +1,46 @@
 ﻿Imports GCDCore.ErrorCalculation
 Imports System.Windows.Forms
+Imports GCDCore.Project
 
 Namespace ErrorCalculation
 
     Public Class frmErrorCalculation
 
-        Private m_rDEMSurvey As ProjectDS.DEMSurveyRow
-        Private m_rErrorSurface As ProjectDS.ErrorSurfaceRow
+        Private DEM As DEMSurvey
+        Private m_ErrorSurface As ErrorSurface
 
         ' This text is used when the DEM survey is single method.
         Private Const m_sEntireDEMExtent As String = "Entire DEM Extent"
 
         ' This dictionary stores the definitions of the error surface properties for each survey method polygon
-        Private m_dErrorCalculationProperties As Dictionary(Of String, ErrorCalcPropertiesBase)
+        Private ErrorCalProps As Dictionary(Of String, ErrorSurfaceProperty)
 
-        Private m_dSurveyTypes As Dictionary(Of String, GCDCore.Project.SurveyType)
+        ''' <summary>
+        ''' Constructor to create a new error surface.
+        ''' </summary>
+        ''' <param name="dem">The DEM survey for which the error surface is being created</param>
+        ''' <remarks></remarks>
+        Public Sub New(dem As DEMSurvey)
+
+            ' This call is required by the designer.
+            InitializeComponent()
+
+            Me.DEM = dem
+        End Sub
+
+        ''' <summary>
+        ''' Constructor to view the properties of an existing error surface
+        ''' </summary>
+        ''' <param name="errSurface">The error surface to be viewed</param>
+        ''' <remarks></remarks>
+        Public Sub New(errSurface As ErrorSurface)
+
+            ' This call is required by the designer.
+            InitializeComponent()
+
+            DEM = errSurface.DEM
+            m_ErrorSurface = errSurface
+        End Sub
 
         Private Sub frmErrorCalculation2_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
@@ -30,7 +56,6 @@ Namespace ErrorCalculation
             grdErrorProperties.AllowUserToResizeRows = False
             grdFISInputs.AllowUserToResizeRows = False
 
-            m_dSurveyTypes = ProjectManagerBase.SurveyTypes
 
             ' Load all the FIS rule files in the library to the combobox
             ' (Need to do this before the try/catch below that loads the error surface data
@@ -38,10 +63,10 @@ Namespace ErrorCalculation
                 cboFIS.Items.Add(fis)
             Next
 
-            If TypeOf m_rErrorSurface Is ProjectDS.ErrorSurfaceRow Then
+            If TypeOf m_ErrorSurface Is ErrorSurface Then
                 ' Existing error surface. Disable editing.
-                txtName.Text = m_rErrorSurface.Name
-                txtRasterPath.Text = m_rErrorSurface.Source
+                txtName.Text = m_ErrorSurface.Name
+                txtRasterPath.Text = ProjectManagerBase.GetRelativePath(m_ErrorSurface.Raster.RasterPath)
                 btnOK.Text = "Save"
             End If
 
@@ -49,8 +74,6 @@ Namespace ErrorCalculation
                 ' Load the survey methods on the left and then populate the right side of the window.
                 LoadSurveyMethods()
                 LoadErrorCalculationMethods()
-
-                ' Need to force the right side of the form to update to reflect initial properties.
 
                 ' Need to force the error properties to update and reflect the contents of the left side of the form
                 UpdateGridWithErrorProperties(0)
@@ -61,62 +84,27 @@ Namespace ErrorCalculation
                 naru.error.ExceptionUI.HandleException(ex)
             End Try
 
-
             ' Load all the associated surfaces in the survey library to the grid combo box
-            ' Also load any error surfaces into the associated error surface combo box.
             Dim colCombo As DataGridViewComboBoxColumn = grdFISInputs.Columns(1)
-            For Each aSurface As ProjectDS.AssociatedSurfaceRow In m_rDEMSurvey.GetAssociatedSurfaceRows
-                colCombo.Items.Add(New naru.db.NamedObject(aSurface.AssociatedSurfaceID, aSurface.Name))
-
-                ' Also load any error surfaces into the associated error surface combo box.
-                'If String.Compare(aSurface.Type, "Error Surface", True) = 0 Then
-                cboAssociated.Items.Add(New naru.db.NamedObject(aSurface.AssociatedSurfaceID, aSurface.Name))
-                'End If
-            Next
-            colCombo.ValueMember = "ID"
+            colCombo.DataSource = DEM.AssocSurfaces.Values.AsEnumerable()
             colCombo.DisplayMember = "Name"
+
+            ' Also load any error surfaces into the associated error surface combo box.
+            cboAssociated.DataSource = DEM.AssocSurfaces.Values
 
             ' Disable the associated error surface option if in readonly mode or else
             ' there are no associated error surfaces for the DEM survey
-            rdoAssociated.Enabled = m_rErrorSurface Is Nothing AndAlso cboAssociated.Items.Count > 0
+            rdoAssociated.Enabled = m_ErrorSurface Is Nothing AndAlso cboAssociated.Items.Count > 0
+            rdoFIS.Enabled = m_ErrorSurface Is Nothing AndAlso DEM.AssocSurfaces.Count < 1
 
             Try
                 ' Safely retrieve the spatial units of the DEM
-                Dim gDEM As New GCDConsoleLib.Raster(ProjectManagerBase.GetAbsolutePath(m_rDEMSurvey.Source))
-                rdoUniform.Text = String.Format("{0} ({1})", rdoUniform.Text, UnitsNet.Length.GetAbbreviation(gDEM.Proj.HorizontalUnit))
+                rdoUniform.Text = String.Format("{0} ({1})", rdoUniform.Text, UnitsNet.Length.GetAbbreviation(ProjectManagerBase.Units.VertUnit))
             Catch ex As Exception
                 ' Don't show an error in release mode
                 Debug.Assert(False, "Error retrieving linear units from DEM")
             End Try
 
-        End Sub
-
-        ''' <summary>
-        ''' Use this constructor to create a new error surface.
-        ''' </summary>
-        ''' <param name="rDEMSurvey">The DEM survey for which the error surface is being created</param>
-        ''' <remarks></remarks>
-        Public Sub New(rDEMSurvey As ProjectDS.DEMSurveyRow)
-
-            ' This call is required by the designer.
-            InitializeComponent()
-
-            m_rDEMSurvey = rDEMSurvey
-            m_rErrorSurface = Nothing
-        End Sub
-
-        ''' <summary>
-        ''' Use this constructor to view the properties of an existing error surface
-        ''' </summary>
-        ''' <param name="rErrorSurface">The error surface to be viewed</param>
-        ''' <remarks></remarks>
-        Public Sub New(rErrorSurface As ProjectDS.ErrorSurfaceRow)
-
-            ' This call is required by the designer.
-            InitializeComponent()
-
-            m_rDEMSurvey = rErrorSurface.DEMSurveyRow
-            m_rErrorSurface = rErrorSurface
         End Sub
 
         ''' <summary>
@@ -126,58 +114,15 @@ Namespace ErrorCalculation
         Private Sub LoadSurveyMethods()
 
             ' Always create a new dictionary, which will clear any existing entries
-            m_dErrorCalculationProperties = New Dictionary(Of String, ErrorCalcPropertiesBase)
+            ErrorCalProps = New Dictionary(Of String, ErrorSurfaceProperty)
 
             ' Attempt to load the survey methods from an existing error surface if it exists
-            If TypeOf m_rErrorSurface Is ProjectDS.ErrorSurfaceRow Then
+            If m_ErrorSurface Is Nothing Then
 
-                ' Loop over all the error inputs in the project and load the dictionary from there
-                For Each rProperties As ProjectDS.MultiErrorPropertiesRow In m_rErrorSurface.GetMultiErrorPropertiesRows
-                    Select Case rProperties.ErrorType
+                If DEM.is.surveyMethod Then
 
-                        Case ErrorSurfaceEngine.UniformErrorString
-                            m_dErrorCalculationProperties.Add(rProperties.Method, New ErrorCalcPropertiesUniform(rProperties.Method, rProperties._Error))
+                End If
 
-                        Case ErrorSurfaceEngine.AssociatedsurfaceErrorType
-                            m_dErrorCalculationProperties.Add(rProperties.Method, New ErrorCalcPropertiesAssoc(rProperties.Method, rProperties.AssociatedSurfaceID))
-
-                        Case Else
-                            ' The type appears to be the name of the FIS file (weird)
-
-                            Dim dFISInputs As New Dictionary(Of String, Integer)
-                            Dim sFISName As String = String.Empty
-                            For Each rInput As ProjectDS.FISInputsRow In m_rErrorSurface.GetFISInputsRows
-
-                                ' Loop over all associated surface rows and get the one with the right name
-                                Dim nAssocID As Integer = 0
-                                For Each rAssoc As ProjectDS.AssociatedSurfaceRow In m_rDEMSurvey.GetAssociatedSurfaceRows
-                                    If String.Compare(rAssoc.Name, rInput.AssociatedSurface, True) = 0 Then
-                                        nAssocID = rAssoc.AssociatedSurfaceID
-                                        Exit For
-                                    End If
-                                Next
-
-                                dFISInputs.Add(rInput.FISInput, nAssocID)
-                                sFISName = rInput.FIS
-                            Next
-
-                            ' TODO Get the FIS input rule file ID from the name
-                            Dim nFISID As Integer = -1
-
-                            ' Find the local path of the FIS rule file based on the library on this machine. Note
-                            ' could be imported project from another machine.
-                            Dim sFISFuleFilePath As IO.FileInfo = Nothing
-                            For Each fis As FIS.FISLibraryItem In cboFIS.Items
-                                If String.Compare(fis.FilePath.FullName, sFISName, True) = 0 Then
-                                    sFISFuleFilePath = fis.FilePath
-                                    Exit For
-                                End If
-                            Next
-
-                            m_dErrorCalculationProperties.Add(rProperties.Method, New ErrorCalcPropertiesFIS(rProperties.Method, sFISFuleFilePath, dFISInputs))
-                    End Select
-                Next
-            Else
                 '
                 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
                 ' Now check that the dictionary contains all the correct elements. 
@@ -196,7 +141,7 @@ Namespace ErrorCalculation
                     End If
 
                     ' Add a single survey method, unfiorm error value as default
-                    m_dErrorCalculationProperties(sSurveyType) = New ErrorCalcPropertiesUniform(sSurveyType, fErrorValue)
+                    ErrorCalProps(sSurveyType) = New ErrorCalcPropertiesUniform(sSurveyType, fErrorValue)
                 Else
                     If m_rDEMSurvey.IsMethodMaskFieldNull Then
                         Throw New Exception("Multi method DEM with no method mask field defined.")
@@ -238,6 +183,60 @@ Namespace ErrorCalculation
                         'pCursor = Nothing
                     End If
                 End If
+
+            Else
+                ' The form should simply reference the existing error surface properties
+                ErrorCalProps = m_ErrorSurface.ErrorProperties
+            Else
+
+                ' Loop over all the error inputs in the project and load the dictionary from there
+                For Each rProperties As ProjectDS.MultiErrorPropertiesRow In m_rErrorSurface.GetMultiErrorPropertiesRows
+                    Select Case rProperties.ErrorType
+
+                        Case ErrorSurfaceEngine.UniformErrorString
+                            ErrorCalProps.Add(rProperties.Method, New ErrorCalcPropertiesUniform(rProperties.Method, rProperties._Error))
+
+                        Case ErrorSurfaceEngine.AssociatedsurfaceErrorType
+                            ErrorCalProps.Add(rProperties.Method, New ErrorCalcPropertiesAssoc(rProperties.Method, rProperties.AssociatedSurfaceID))
+
+                        Case Else
+                            ' The type appears to be the name of the FIS file (weird)
+
+                            Dim dFISInputs As New Dictionary(Of String, Integer)
+                            Dim sFISName As String = String.Empty
+                            For Each rInput As ProjectDS.FISInputsRow In m_rErrorSurface.GetFISInputsRows
+
+                                ' Loop over all associated surface rows and get the one with the right name
+                                Dim nAssocID As Integer = 0
+                                For Each rAssoc As ProjectDS.AssociatedSurfaceRow In m_rDEMSurvey.GetAssociatedSurfaceRows
+                                    If String.Compare(rAssoc.Name, rInput.AssociatedSurface, True) = 0 Then
+                                        nAssocID = rAssoc.AssociatedSurfaceID
+                                        Exit For
+                                    End If
+                                Next
+
+                                dFISInputs.Add(rInput.FISInput, nAssocID)
+                                sFISName = rInput.FIS
+                            Next
+
+                            ' TODO Get the FIS input rule file ID from the name
+                            Dim nFISID As Integer = -1
+
+                            ' Find the local path of the FIS rule file based on the library on this machine. Note
+                            ' could be imported project from another machine.
+                            Dim sFISFuleFilePath As IO.FileInfo = Nothing
+                            For Each fis As FIS.FISLibraryItem In cboFIS.Items
+                                If String.Compare(fis.FilePath.FullName, sFISName, True) = 0 Then
+                                    sFISFuleFilePath = fis.FilePath
+                                    Exit For
+                                End If
+                            Next
+
+                            ErrorCalProps.Add(rProperties.Method, New ErrorCalcPropertiesFIS(rProperties.Method, sFISFuleFilePath, dFISInputs))
+                    End Select
+                Next
+            Else
+
             End If
 
         End Sub
@@ -248,7 +247,7 @@ Namespace ErrorCalculation
         ''' <remarks></remarks>
         Private Sub LoadErrorCalculationMethods()
 
-            For Each errProps As ErrorCalcPropertiesBase In m_dErrorCalculationProperties.Values
+            For Each errProps As ErrorCalcPropertiesBase In ErrorCalProps.Values
                 Dim nMethodRow As Integer = grdErrorProperties.Rows.Add
                 grdErrorProperties.Rows(nMethodRow).Cells(0).Value = errProps.SurveyMethod
                 grdErrorProperties.Rows(nMethodRow).Cells(1).Value = errProps.ErrorType
@@ -269,8 +268,8 @@ Namespace ErrorCalculation
         ''' <remarks></remarks>
         Private Function GetDefaultErrorValue(sMethod As String) As Double
 
-            If m_dSurveyTypes.ContainsKey(sMethod) Then
-                Return m_dSurveyTypes(sMethod).ErrorValue
+            If ProjectManagerBase.SurveyTypes.ContainsKey(sMethod) Then
+                Return ProjectManagerBase.SurveyTypes(sMethod).ErrorValue
             Else
                 Return 0
             End If
@@ -320,10 +319,10 @@ Namespace ErrorCalculation
             'If nNewRow >= 0 Then
             Dim sMethod As String = grdErrorProperties.Rows(nNewRow).Cells(0).Value
             If Not String.IsNullOrEmpty(sMethod) Then
-                If m_dErrorCalculationProperties.ContainsKey(sMethod) Then
+                If ErrorCalProps.ContainsKey(sMethod) Then
 
                     ' Only proceed and load anything into the FIS inputs grid if the error surface for this survey method is a FIS
-                    Dim eErrorProperties As ErrorCalcPropertiesBase = m_dErrorCalculationProperties(sMethod)
+                    Dim eErrorProperties As ErrorCalcPropertiesBase = ErrorCalProps(sMethod)
                     If TypeOf eErrorProperties Is ErrorCalcPropertiesUniform Then
                         rdoUniform.Checked = True
                         valUniform.Value = DirectCast(eErrorProperties, ErrorCalcPropertiesUniform).UniformErrorValue
@@ -446,7 +445,7 @@ Namespace ErrorCalculation
                     ' Get the selected error properties row
                     Dim lErr As DataGridViewSelectedRowCollection = grdErrorProperties.SelectedRows
                     If lErr.Count = 1 Then
-                        Dim errProps As ErrorCalcPropertiesBase = m_dErrorCalculationProperties(lErr(0).Cells(0).Value)
+                        Dim errProps As ErrorCalcPropertiesBase = ErrorCalProps(lErr(0).Cells(0).Value)
 
                         ' Only proceed if the error surface definition is a FIS
                         If TypeOf errProps Is ErrorCalcPropertiesFIS Then
@@ -479,19 +478,19 @@ Namespace ErrorCalculation
             If r.Count = 1 Then
                 ' Save just the survey method that is selected in the left grid
                 Dim sSurveyMethod As String = r.Item(0).Cells(0).Value
-                If (m_dErrorCalculationProperties.ContainsKey(sSurveyMethod)) Then
+                If (ErrorCalProps.ContainsKey(sSurveyMethod)) Then
                     'Remove any existing properties for this survey method
-                    m_dErrorCalculationProperties.Remove(sSurveyMethod)
+                    ErrorCalProps.Remove(sSurveyMethod)
                 End If
 
                 If rdoUniform.Checked Then
                     ' Create a new Uniform error properties
-                    m_dErrorCalculationProperties(sSurveyMethod) = New ErrorCalcPropertiesUniform(sSurveyMethod, valUniform.Value)
+                    ErrorCalProps(sSurveyMethod) = New ErrorCalcPropertiesUniform(sSurveyMethod, valUniform.Value)
                 ElseIf rdoAssociated.Checked Then
 
                     If TypeOf cboAssociated.SelectedItem Is naru.db.NamedObject Then
                         ' Create a new associated surface error properties
-                        m_dErrorCalculationProperties(sSurveyMethod) = New ErrorCalcPropertiesAssoc(sSurveyMethod, DirectCast(cboAssociated.SelectedItem, naru.db.NamedObject).ID)
+                        ErrorCalProps(sSurveyMethod) = New ErrorCalcPropertiesAssoc(sSurveyMethod, DirectCast(cboAssociated.SelectedItem, naru.db.NamedObject).ID)
                     Else
                         MessageBox.Show("You must select an associated surface that contains the error values for this error surface.", GCDCore.Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information)
                         Return False
@@ -516,11 +515,11 @@ Namespace ErrorCalculation
                         Next
 
                         ' Find the matching fis library file
-                        m_dErrorCalculationProperties(sSurveyMethod) = New ErrorCalcPropertiesFIS(sSurveyMethod, DirectCast(cboFIS.SelectedItem, FIS.FISLibraryItem).FilePath, dInputs)
+                        ErrorCalProps(sSurveyMethod) = New ErrorCalcPropertiesFIS(sSurveyMethod, DirectCast(cboFIS.SelectedItem, FIS.FISLibraryItem).FilePath, dInputs)
                     End If
                 End If
 
-                r.Item(0).Cells(1).Value = m_dErrorCalculationProperties(sSurveyMethod).ErrorType
+                r.Item(0).Cells(1).Value = ErrorCalProps(sSurveyMethod).ErrorType
 
             End If
 
@@ -593,7 +592,7 @@ Namespace ErrorCalculation
                 Dim nUniCount As Integer = 0
                 Dim nAssoc As Integer = 0
 
-                For Each errProp As ErrorCalcPropertiesBase In m_dErrorCalculationProperties.Values
+                For Each errProp As ErrorCalcPropertiesBase In ErrorCalProps.Values
                     If TypeOf errProp Is ErrorCalcPropertiesUniform Then
                         nUniCount += 1
                     ElseIf TypeOf errProp Is ErrorCalcPropertiesAssoc Then
@@ -645,30 +644,30 @@ Namespace ErrorCalculation
                 ProjectManagerBase.ds.ErrorSurface.AddErrorSurfaceRow(m_rErrorSurface)
 
                 ' Add all the survey methods to the database
-                For Each sSurveyMethod As String In m_dErrorCalculationProperties.Keys
+                For Each sSurveyMethod As String In ErrorCalProps.Keys
                     Dim fError As Double = 0
                     Dim nAssociatedSurfaceID As Integer = 0
 
-                    If TypeOf m_dErrorCalculationProperties(sSurveyMethod) Is ErrorCalcPropertiesUniform Then
-                        fError = DirectCast(m_dErrorCalculationProperties(sSurveyMethod), ErrorCalcPropertiesUniform).UniformErrorValue
+                    If TypeOf ErrorCalProps(sSurveyMethod) Is ErrorCalcPropertiesUniform Then
+                        fError = DirectCast(ErrorCalProps(sSurveyMethod), ErrorCalcPropertiesUniform).UniformErrorValue
                     End If
 
-                    If TypeOf m_dErrorCalculationProperties(sSurveyMethod) Is ErrorCalcPropertiesAssoc Then
-                        nAssociatedSurfaceID = DirectCast(m_dErrorCalculationProperties(sSurveyMethod), ErrorCalcPropertiesAssoc).AssociatedSurfaceID
+                    If TypeOf ErrorCalProps(sSurveyMethod) Is ErrorCalcPropertiesAssoc Then
+                        nAssociatedSurfaceID = DirectCast(ErrorCalProps(sSurveyMethod), ErrorCalcPropertiesAssoc).AssociatedSurfaceID
                     End If
 
                     ' This error type appears to be not used when uniform, but when it's FIS it should be the name of the FIS rule
                     ' file
-                    Dim sErrorType As String = m_dErrorCalculationProperties(sSurveyMethod).ErrorType
-                    If TypeOf m_dErrorCalculationProperties(sSurveyMethod) Is ErrorCalcPropertiesFIS Then
-                        sErrorType = DirectCast(m_dErrorCalculationProperties(sSurveyMethod), ErrorCalcPropertiesFIS).FISRuleFilePath.FullName
+                    Dim sErrorType As String = ErrorCalProps(sSurveyMethod).ErrorType
+                    If TypeOf ErrorCalProps(sSurveyMethod) Is ErrorCalcPropertiesFIS Then
+                        sErrorType = DirectCast(ErrorCalProps(sSurveyMethod), ErrorCalcPropertiesFIS).FISRuleFilePath.FullName
                     End If
 
                     ProjectManagerBase.ds.MultiErrorProperties.AddMultiErrorPropertiesRow(sSurveyMethod, fError, m_rErrorSurface, sErrorType, nAssociatedSurfaceID) ' m_dErrorCalculationProperties(sSurveyMethod).ErrorType)
 
                     ' Now add all the FIS inputs to the FIS table
-                    If TypeOf m_dErrorCalculationProperties(sSurveyMethod) Is ErrorCalcPropertiesFIS Then
-                        Dim errProps As ErrorCalcPropertiesFIS = m_dErrorCalculationProperties(sSurveyMethod)
+                    If TypeOf ErrorCalProps(sSurveyMethod) Is ErrorCalcPropertiesFIS Then
+                        Dim errProps As ErrorCalcPropertiesFIS = ErrorCalProps(sSurveyMethod)
                         For Each sInput As String In errProps.FISInputs.Keys
                             ' Now find the associated surface for this input
                             For Each rAssoc As ProjectDS.AssociatedSurfaceRow In m_rDEMSurvey.GetAssociatedSurfaceRows
