@@ -256,10 +256,9 @@ namespace GCDConsoleLib
 
         public static Raster BilinearResample(Raster rInput, FileInfo sOutputRaster, ExtentRectangle outputExtent)
         {
-            throw new NotImplementedException("need to discuss the API for this method");
-            //return (Raster)GenericRunWithOutput(typeof(BilinearResample<>), rInput.Datatype.CSType, new object[] {
-            //    rInput, newCellHeight, newCellWidth, new Raster(rInput, sOutputRaster)
-            //});
+            return (Raster)GenericRunWithOutput(typeof(BilinearResample<>), rInput.Datatype.CSType, new object[] {
+                rInput, outputExtent, new Raster(rInput, sOutputRaster)
+            });
         }
 
         public static Raster Hillshade(Raster rInput, FileInfo sOutputRaster)

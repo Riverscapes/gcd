@@ -13,18 +13,14 @@ namespace GCDConsoleLib.Internal.Operators
         /// <summary>
         /// Pass-through constructor for Extended Copy
         /// </summary>
-        public BilinearResample(Raster rInput, decimal newCellHeight, decimal newCellWidth, Raster rOutputRaster) :
+        public BilinearResample(Raster rInput, ExtentRectangle newRect, Raster rOutputRaster) :
             base(new List<Raster> { rInput }, rOutputRaster)
         {
-            fy = (double)(rInput.Extent.CellHeight / newCellHeight);
-            fx = (double)(rInput.Extent.CellWidth / newCellWidth);
+            fy = (double)(rInput.Extent.CellHeight / newRect.CellHeight);
+            fx = (double)(rInput.Extent.CellWidth / newRect.CellWidth);
 
             int newRows = Convert.ToInt32(Math.Ceiling((double)(rInput.Extent.rows * fy)));
             int newCols = Convert.ToInt32(Math.Ceiling((double)(rInput.Extent.cols * fx)));
-
-            ExtentRectangle newRect = new ExtentRectangle(rInput.Extent.Top, rInput.Extent.Left,
-                newCellHeight, newCellWidth,
-                newRows, newCols);
 
             SetOpExtent(newRect);
         }
