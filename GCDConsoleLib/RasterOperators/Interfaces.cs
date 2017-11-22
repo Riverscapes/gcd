@@ -371,7 +371,6 @@ namespace GCDConsoleLib
             Raster outputRaster = new Raster(rReference, sOutputRaster, new GdalDataType(typeof(float)));
             FISRasterOp theSlopeOp = new FISRasterOp(rFISInputs, sFISRuleFile, outputRaster);
 
-            throw new NotImplementedException();
             return theSlopeOp.RunWithOutput();
         }
 

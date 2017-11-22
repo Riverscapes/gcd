@@ -7,22 +7,25 @@ namespace GCDConsoleLib.FIS
     {
         public List<int> Inputs;
         public List<int> MFSInd;
-        public List<int> MFSNot;
+        public List<bool> MFSNot;
+
         public double Weight;
         public MemberFunction Output;
+        public FISOperator Operator;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public Rule()
         {
             Weight = 1;
             Inputs = new List<int>();
             MFSInd = new List<int>();
-            MFSNot = new List<int>();
+            MFSNot = new List<bool>();
         }
 
-        public FISOperator Operator;
-
         /// <summary>
-        /// 
+        /// Add a member function to this rule
         /// </summary>
         /// <param name="inputIndex"></param>
         /// <param name="mfIndex"></param>
@@ -39,12 +42,12 @@ namespace GCDConsoleLib.FIS
             if (mfIndex < 0)
             {
                 MFSInd.Add(Math.Abs(mfIndex) - 1);
-                MFSNot.Add(1);
+                MFSNot.Add(true);
             }
             else
             {
                 MFSInd.Add(mfIndex - 1);
-                MFSNot.Add(0);
+                MFSNot.Add(false);
             }
         }
 

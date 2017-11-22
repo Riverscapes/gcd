@@ -7,7 +7,7 @@ namespace GCDConsoleLib.FIS
 {
     public class FisFile
     {
-        private FileInfo fn;
+        private FileInfo _fisFileInfo;
         private int _numInputs, _numOutputs, _numRules;
 
         enum FISFileSection { SYSTEM, INPUT, OUTPUT, RULES, NONE };
@@ -33,6 +33,7 @@ namespace GCDConsoleLib.FIS
             _numInputs = 0;
             _numOutputs = 0;
             _numRules = 0;
+            _fisFileInfo = inputFn;
 
             // Store each section in its own dictionary list
             SectionLines = new Dictionary<FISFileSection, List<List<string>>>() {
@@ -42,7 +43,7 @@ namespace GCDConsoleLib.FIS
                 { FISFileSection.NONE, new List<List<string>>() },
             };
 
-            parseFile(inputFn);
+            parseFile(_fisFileInfo);
             parseSystem(SectionLines[FISFileSection.SYSTEM][0]);
 
             // Inputs and outputs can have multiple
@@ -81,7 +82,7 @@ namespace GCDConsoleLib.FIS
             double low = 0;
             double high = 0;
             int numMfs = 0;
-            int index = 0;
+            int inputNum = 0; //starts at 1
 
             Dictionary<string, MemberFunction> mfs = new Dictionary<string, MemberFunction>();
 
@@ -93,7 +94,7 @@ namespace GCDConsoleLib.FIS
                     //[Input1] needs to be a number
                     string lineTrimmed = line.Trim();
 
-                    if (!int.TryParse(lineTrimmed.Substring(6, lineTrimmed.Length - 7), out index))
+                    if (!int.TryParse(lineTrimmed.Substring(6, lineTrimmed.Length - 7), out inputNum))
                         throw new Exception("Could not extract input/output index: " + line);
                 }
                 else
@@ -167,7 +168,7 @@ namespace GCDConsoleLib.FIS
                 mfSet.addMF(mfkvp.Key, mfkvp.Value);
 
             if (isInput)
-                ruleset.setInputMFSet(index, name, mfSet);
+                ruleset.setInputMFSet(inputNum -1, name, mfSet);
             else
                 ruleset.addOutputMFSet(name, mfSet);
         }
@@ -242,10 +243,10 @@ namespace GCDConsoleLib.FIS
 
             // Now, finally we're ready to look at inputs.
             List<int> mfIndeces = new List<int>();
-            for (int idx = 1; idx <= mfIndStr.Length; idx++)
+            for (int idx = 0; idx < mfIndStr.Length; idx++)
             {
                 int mfInd;
-                if (!int.TryParse(mfIndStr[idx-1].Trim(), out mfInd))
+                if (!int.TryParse(mfIndStr[idx].Trim(), out mfInd))
                     throw new Exception("Error parsing rule: " + ruleString);
                 theRule.addMf(idx, mfInd);
             }
@@ -428,16 +429,16 @@ namespace GCDConsoleLib.FIS
             SectionLines[currSection].Add(currSectionList);
 
             if (!systemOK || SectionLines[FISFileSection.SYSTEM].Count == 0)
-                throw new Exception("No [System] section in: " + fn.FullName);
+                throw new Exception("No [System] section in: " + _fisFileInfo.FullName);
 
             else if (!inputOK || SectionLines[FISFileSection.INPUT].Count == 0)
-                throw new Exception("No [Input] section in: " + fn.FullName);
+                throw new Exception("No [Input] section in: " + _fisFileInfo.FullName);
 
             else if (!outputOK || SectionLines[FISFileSection.OUTPUT].Count == 0)
-                throw new Exception("No [Output] section in: " + fn.FullName);
+                throw new Exception("No [Output] section in: " + _fisFileInfo.FullName);
 
             else if (!rulesOK || SectionLines[FISFileSection.RULES].Count == 0)
-                throw new Exception("No [Rules] section inL " + fn.FullName);
+                throw new Exception("No [Rules] section inL " + _fisFileInfo.FullName);
         }
 
     }

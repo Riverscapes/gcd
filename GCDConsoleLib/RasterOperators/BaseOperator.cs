@@ -53,6 +53,7 @@ namespace GCDConsoleLib.Internal
             _rasters = new List<Raster>(rRasters.Count);
             _rasternodatavals = new List<T>(rRasters.Count);
             _init(rRasters, rOutputRaster);
+
             // Now that we have our rasters tested and a unioned extent we can set the operation extent
             SetOpExtent(InExtent);
         }
@@ -183,7 +184,9 @@ namespace GCDConsoleLib.Internal
         public void Run(int vOffset = 0)
         {
             List<T[]> data = new List<T[]>(_rasters.Count);
-            ProgressEvent(this, 0);
+
+            ProgressEvent?.Invoke(this, 0);
+
             // Set up an array with nodatavals to be populated (or not)
             for (int idx = 0; idx < _rasters.Count; idx++)
                 data.Add(new T[ChunkExtent.cols * ChunkExtent.rows]);
@@ -192,7 +195,7 @@ namespace GCDConsoleLib.Internal
             while (!OpDone)
             {
                 GetChunk(data);
-                ProgressEvent(this, Progress);
+                ProgressEvent?.Invoke(this, Progress);
                 ChunkOp(data, outBuffer);
 
                 if (_outputRaster != null)
@@ -206,7 +209,8 @@ namespace GCDConsoleLib.Internal
                 // We always increment to the next one
                 nextChunk();
             }
-            ProgressEvent(this, 100);
+            ProgressEvent?.Invoke(this, 100);
+
             Cleanup();
 
         }

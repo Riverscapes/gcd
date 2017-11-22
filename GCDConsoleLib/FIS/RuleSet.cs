@@ -14,7 +14,6 @@ namespace GCDConsoleLib.FIS
         public List<Rule> Rules;
 
         public String OutputName;
-        private List<List<double>> _fuzzyInputs;
 
         private FISOperatorAnd _andOp;
         private FISOperatorOr _orOp;
@@ -41,7 +40,6 @@ namespace GCDConsoleLib.FIS
 
         private void _init()
         {
-            _fuzzyInputs = new List<List<double>>();
             Inputs = new Dictionary<string, MemberFunctionSet>();
             InputLookupMap = new Map<int, string>();
             Rules = new List<Rule>();
@@ -84,7 +82,7 @@ namespace GCDConsoleLib.FIS
             else
             {
                 Inputs[sName] = mfs;
-                InputLookupMap.Add(Inputs.Count, sName);
+                InputLookupMap.Add(Inputs.Count - 1, sName);
             }
         }
 
@@ -149,6 +147,7 @@ namespace GCDConsoleLib.FIS
         /// <returns></returns>
         public double calculate(List<double> lInputs)
         {
+            List<List<double>> _fuzzyInputs = new List<List<double>>();
             if (lInputs.Count != Inputs.Count)
                 return -1;
 
@@ -168,13 +167,13 @@ namespace GCDConsoleLib.FIS
             for (int r = 0; r < Rules.Count; r++)
             {
                 Rule rule = Rules[r];
-                double impValue = getFuzzyVal(rule, 0);
+                double impValue = getFuzzyVal(rule, 0, _fuzzyInputs);
                 // Loop over rule items (probably same as number of inputs but not
                 // if some are 0 value
                 for (int i = 1; i < rule.Inputs.Count; i++)
                 {
                     // For now this is "and" or "or"
-                    double fuzzyInput = getFuzzyVal(rule, i);
+                    double fuzzyInput = getFuzzyVal(rule, i, _fuzzyInputs);
                     impValue = RuleOperator(rule, impValue, fuzzyInput);
                 }
                 ImplicatorOp(rule.Output, impMf, impValue, rule.Weight);
@@ -197,14 +196,15 @@ namespace GCDConsoleLib.FIS
         /// <param name="noDataValues"></param>
         /// <param name="noData"></param>
         /// <returns></returns>
-        public double calculate(List<float[]> dataArrays, int n, bool checkNoData,
-                           List<float> noDataValues, float noData)
+        public double calculate(List<double[]> dataArrays, int n, bool checkNoData,
+                           List<double> noDataValues, double noData)
         {
+            List<List<double>> _fuzzyInputs = new List<List<double>>();
             MemberFunction impMf = new MemberFunction();
             MemberFunction aggMf = new MemberFunction();
             Rule rule;
             double impValue;
-            float v;
+            double v;
             if (checkNoData)
             {
                 bool ok = true;
@@ -217,8 +217,10 @@ namespace GCDConsoleLib.FIS
                         break;
                     }
                     string inputName = InputLookupMap.Forward[i];
-                    for (int j = 0; j < Inputs[inputName].Length; j++)
-                        _fuzzyInputs[i][j] = Inputs[inputName]._mfs[j].fuzzify(v);
+                    List<double> fuzzymflst = new List<double>();
+                    for (int j = 0; j < Inputs[inputName]._mfs.Count; j++)
+                        fuzzymflst.Add(Inputs[inputName]._mfs[j].fuzzify(v));
+                    _fuzzyInputs.Add(fuzzymflst);
                 }
                 if (ok)
                 {
@@ -310,13 +312,14 @@ namespace GCDConsoleLib.FIS
         /// <param name="rule"></param>
         /// <param name="ruleItemind"></param>
         /// <returns></returns>
-        public double getFuzzyVal(Rule rule, int ruleItemInd)
+        public double getFuzzyVal(Rule rule, int ruleItemInd, List<List<double>> fuzzyInputs)
         {
             int inputInd = rule.Inputs[ruleItemInd];
             int mfsInd = rule.MFSInd[ruleItemInd];
-            double fuzzyInput = _fuzzyInputs[inputInd][mfsInd];
+            double fuzzyInput = fuzzyInputs[inputInd][mfsInd];
 
-            if (rule.MFSNot[ruleItemInd] == 1)
+            // Apply the NOT operator if we need to
+            if (rule.MFSNot[ruleItemInd] == true)
             {
                 string inputName = InputLookupMap.Forward[inputInd];
                 double yMax = Inputs[inputName]._mfs[mfsInd].yMax;
@@ -396,9 +399,11 @@ namespace GCDConsoleLib.FIS
             switch (_implicator)
             {
                 case FISImplicator.FISImp_Min:
-                //return FISOperators.Min(d1, d2);
+                    FISOperators.ImpMin(inMf, outMf, n, weight);
+                    break;
                 case FISImplicator.FISImp_Product:
-                //return FISOperators.Product(d1, d2);
+                    FISOperators.ImpProduct(inMf, outMf, n, weight);
+                    break;
                 default:
                     throw new ArgumentException("Invalid operator");
             }

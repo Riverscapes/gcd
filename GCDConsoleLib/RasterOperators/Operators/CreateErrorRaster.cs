@@ -127,7 +127,7 @@ namespace GCDConsoleLib.Internal.Operators
 
                 // For FIS we have to do a whole thing...
                 case ErrorRasterProperties.ERPType.FIS:
-                    _fisops[propkey].FISOp(data, id);
+                    _fisops[propkey].FISCellOp(data, id);
                     break;
 
                 default:

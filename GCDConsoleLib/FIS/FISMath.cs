@@ -54,6 +54,54 @@ namespace GCDConsoleLib.FIS
         }
 
         /// <summary>
+        /// The minimum implicator
+        /// </summary>
+        /// <param name="inMf"></param>
+        /// <param name="outMf"></param>
+        /// <param name="n"></param>
+        /// <param name="weight"></param>
+        public static void ImpMin(MemberFunction inMf, MemberFunction outMf, 
+            double n, double weight)
+        {
+            outMf.clear();
+            outMf.Coords.Add(new KeyValuePair<double, double>(inMf.Coords[0].Key, inMf.Coords[0].Value * weight));
+
+            for (int i = 1; i < inMf.Coords.Count -1; i++)
+            {
+                if (inMf.Coords[i].Value > n)
+                {
+                    outMf.Coords.Add(new KeyValuePair<double, double>(inMf.getX(i - 1, i, n), n * weight));
+                    break;
+                }
+                else
+                    outMf.Coords.Add(new KeyValuePair<double, double>(inMf.Coords[i].Key, inMf.Coords[i].Value * weight));
+            }
+            for (int i = 0; i < inMf.Coords.Count; i++)
+            {
+                if (inMf.Coords[i].Value < n)
+                {
+                    outMf.Coords.Add(new KeyValuePair<double, double>(inMf.getX(i - 1, i, n), n * weight));
+                    outMf.Coords.Add(new KeyValuePair<double, double>(inMf.Coords[i].Key, inMf.Coords[i].Value * weight));
+                }
+            }
+        }
+
+        /// <summary>
+        /// The product Implicator
+        /// </summary>
+        /// <param name="inMf"></param>
+        /// <param name="outMf"></param>
+        /// <param name="n"></param>
+        /// <param name="weight"></param>
+        public static void ImpProduct(MemberFunction inMf, MemberFunction outMf,
+            double n, double weight)
+        {
+            outMf.clear();
+            for (int i = 0; i < inMf.Coords.Count; i++)
+                outMf.Coords.Add(new KeyValuePair<double, double>(inMf.Coords[i].Key, inMf.Coords[i].Value * n* weight));
+        }
+
+        /// <summary>
         /// Figures out where two lines intersect and if the intersection is in the line segments.
         /// NOTE: This doesn't seem to be in use anywhere
         /// </summary>
