@@ -18,6 +18,11 @@ namespace GCDConsoleLib.Internal.Tests
         [TestClass()]
         class TestOp<T> : BaseOperator<T>
         {
+            public TestOp(List<Raster> rRasters) : base(rRasters)
+            {
+                Assert.AreEqual(rRasters.Count, _rasters.Count);
+                Assert.IsFalse(OpDone);
+            }
             public TestOp(List<Raster> rRasters, FakeRaster<T> rOutput) : base(rRasters, rOutput)
             {
                 Assert.AreEqual(rRasters.Count, _rasters.Count);
@@ -61,6 +66,36 @@ namespace GCDConsoleLib.Internal.Tests
             TestOp<int> theTest = new TestOp<int>(new List<Raster> { Raster1, Raster2 }, rOutput);
             theTest.TestRunWithOutput();
             CollectionAssert.AreEqual(rOutput._outputGrid, rExpected);
+        }
+
+
+        delegate void Del(object sender, int e);
+
+        [TestMethod]
+        public void TestEventRaised()
+        {
+            // This is a test object to collect all the progress events
+            List<int> receivedEvents = new List<int>();
+
+            // Now we define an action to run when the progress event fires. Do tjis in whatever function
+            // You're calling Interface.cs from 
+            EventHandler<int> receivedEventsHandler = delegate(object sender, int e)  { receivedEvents.Add(e); };
+
+            ////////////////////////////////// <Interface.cs> ////////////////////////////////////////////
+
+            // Now we fake what's happening inside Interface.cs"
+            FakeRaster<int> Raster1 = new FakeRaster<int>(0, 0, -1, 1, new int[,] { { 1, 2, 3, 4 }, { 5, 6, 7, 8 }, { 9, 10, 11, 12 } });
+            TestOp<int> theTest = new TestOp<int>(new List<Raster> { Raster1 });
+
+            // Here's where the delegate is assigned to the 
+            theTest.ProgressEvent += receivedEventsHandler;
+
+            theTest.Run();
+            ////////////////////////////////// </Interface.cs> ////////////////////////////////////////////
+
+            // Now make sure our list contains the events (doesn't have to be a list. You could update a UI control instead)
+            CollectionAssert.Contains(receivedEvents, 0);
+            CollectionAssert.Contains(receivedEvents, 100);
         }
 
         [TestMethod()]

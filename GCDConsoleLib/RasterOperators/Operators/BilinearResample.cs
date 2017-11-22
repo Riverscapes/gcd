@@ -45,7 +45,7 @@ namespace GCDConsoleLib.Internal.Operators
         ///  We need to override the Run method because the input and output scales are different
         ///  
         /// </summary>
-        public new void Run(int vOffset = 0)
+        public void Run(int vOffset = 0)
         {
             int oldCols = _rasters[0].Extent.cols;
             int oldRows = _rasters[0].Extent.rows;

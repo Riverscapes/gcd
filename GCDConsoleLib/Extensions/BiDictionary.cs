@@ -20,14 +20,14 @@ namespace GCDConsoleLib.Extensions
         /// </summary>
         /// <typeparam name="T3"></typeparam>
         /// <typeparam name="T4"></typeparam>
-        public class Indexer<T3, T>
+        public class Indexer<T3, T4>
         {
-            private Dictionary<T3, T> _dictionary;
-            public Indexer(Dictionary<T3, T> dictionary)
+            private Dictionary<T3, T4> _dictionary;
+            public Indexer(Dictionary<T3, T4> dictionary)
             {
                 _dictionary = dictionary;
             }
-            public T this[T3 index]
+            public T4 this[T3 index]
             {
                 get { return _dictionary[index]; }
                 set { _dictionary[index] = value; }

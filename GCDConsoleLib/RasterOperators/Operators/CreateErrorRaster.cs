@@ -58,7 +58,7 @@ namespace GCDConsoleLib.Internal.Operators
             _assocRasters = new Dictionary<string, int>();
             _fisops = new Dictionary<string, FISRasterOp>();
 
-            foreach(KeyValuePair<string, ErrorRasterProperties> kvp in props)
+            foreach (KeyValuePair<string, ErrorRasterProperties> kvp in props)
             {
                 _props[kvp.Key] = kvp.Value;
                 if (kvp.Value.TheType == ErrorRasterProperties.ERPType.ASSOC)
@@ -91,6 +91,7 @@ namespace GCDConsoleLib.Internal.Operators
                 // Is this point in one (or more) of the shapes?
                 List<string> shapes = _polymask.ShapesContainPoint((double)ptcoords.Item1, (double)ptcoords.Item2, _fieldname);
 
+                // Now we need to decide what to do based on how many intersections we found.
                 if (shapes.Count == 1)
                     CellChangeCalc(shapes[0], data, id);
                 else if (shapes.Count > 1)
@@ -105,7 +106,6 @@ namespace GCDConsoleLib.Internal.Operators
             // We should never get this far
             return OpNodataVal;
         }
-
 
         /// <summary>
         /// Based on what kind of error we have, operate on the cell

@@ -159,9 +159,7 @@ namespace GCDConsoleLib.Internal
             }
         }
 
-
-
-        public new Raster RunWithOutput()
+        public Raster RunWithOutput()
         {
             Run(- BufferCells);
             return _outputRaster;

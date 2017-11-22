@@ -110,7 +110,7 @@ namespace GCDConsoleLib.FIS
         /// Check if a membership function is valid.
         /// </summary>
         /// <returns></returns>
-        public new bool valid()
+        public bool valid()
         {
             if (_mfs.Count == 0)
                 return false;

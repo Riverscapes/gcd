@@ -10,7 +10,7 @@ using GCDConsoleLib.GCD;
 
 namespace GCDConsoleLib
 {
-    public class RasterOperators
+    public static class RasterOperators
     {
         public enum MathOpType : byte { Addition, Subtraction, Division, Multipication };
 
@@ -74,7 +74,7 @@ namespace GCDConsoleLib
             });
         }
 
-        public static Raster Subtract(Raster rInputA, Raster rInputB, System.IO.FileInfo sOutputRaster)
+        public static Raster Subtract(Raster rInputA, Raster rInputB, FileInfo sOutputRaster)
         {
             return (Raster)GenericRunWithOutput(typeof(RasterMath<>), rInputA.Datatype.CSType, new object[] {
                 MathOpType.Subtraction, rInputA, rInputB, new Raster(rInputA, sOutputRaster)
@@ -261,7 +261,7 @@ namespace GCDConsoleLib
         /// <param name="props"></param>
         /// <param name="outputPath"></param>
         /// <returns></returns>
-        public static Raster CreateErrorRaster(Raster rawDEM, ErrorRasterProperties props, FileInfo sOutputRaster)
+        public static Raster CreateErrorRaster(Raster rawDEM, ErrorRasterProperties props, FileInfo sOutputRaster, EventHandler<int> progressHandler = null)
         {
             CreateErrorRaster theStatsOp = new CreateErrorRaster(rawDEM, props, new Raster(rawDEM, sOutputRaster));
             return theStatsOp.RunWithOutput();
@@ -275,9 +275,12 @@ namespace GCDConsoleLib
         /// <param name="outputPath"></param>
         /// <returns></returns>
         public static Raster CreateErrorRaster(Raster rawDEM, Vector PolygonMask, string MaskFieldName,
-            Dictionary<string, ErrorRasterProperties> props, FileInfo sOutputRaster)
+            Dictionary<string, ErrorRasterProperties> props, FileInfo sOutputRaster, EventHandler<int> progressHandler = null)
         {
+            //https://stackoverflow.com/questions/2560258/how-to-pass-an-event-to-a-method
             CreateErrorRaster theStatsOp = new CreateErrorRaster(rawDEM, PolygonMask, MaskFieldName, props, new Raster(rawDEM, sOutputRaster));
+            if (progressHandler != null)
+                theStatsOp.ProgressEvent += progressHandler;
             return theStatsOp.RunWithOutput();
         }
 

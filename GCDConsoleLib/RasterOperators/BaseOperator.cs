@@ -29,6 +29,8 @@ namespace GCDConsoleLib.Internal
 
         protected Raster _outputRaster;
 
+        public event EventHandler<int> ProgressEvent;
+
         /// <summary>
         /// Report back an integer between 0 and 100
         /// </summary>
@@ -181,7 +183,7 @@ namespace GCDConsoleLib.Internal
         public void Run(int vOffset = 0)
         {
             List<T[]> data = new List<T[]>(_rasters.Count);
-
+            ProgressEvent(this, 0);
             // Set up an array with nodatavals to be populated (or not)
             for (int idx = 0; idx < _rasters.Count; idx++)
                 data.Add(new T[ChunkExtent.cols * ChunkExtent.rows]);
@@ -190,6 +192,7 @@ namespace GCDConsoleLib.Internal
             while (!OpDone)
             {
                 GetChunk(data);
+                ProgressEvent(this, Progress);
                 ChunkOp(data, outBuffer);
 
                 if (_outputRaster != null)
@@ -203,13 +206,14 @@ namespace GCDConsoleLib.Internal
                 // We always increment to the next one
                 nextChunk();
             }
+            ProgressEvent(this, 100);
             Cleanup();
 
         }
 
-        public Raster RunWithOutput()
+        public Raster RunWithOutput(int vOffset = 0)
         {
-            Run();
+            Run(vOffset);
             return _outputRaster;
         }
 
