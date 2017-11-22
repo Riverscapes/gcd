@@ -16,83 +16,47 @@ Namespace ChangeDetection
 
         End Sub
 
-        Public Sub Initialize(m_rDoD As ProjectDS.DoDsRow)
+        Public Sub Initialize(dod As DoDBase)
 
-            txtNewDEM.Text = m_rDoD.NewSurveyName
-            If Not m_rDoD.IsNewErrorNameNull Then
-                txtNewError.Text = m_rDoD.NewErrorName
-            End If
+            txtNewDEM.Text = dod.NewDEM.Name
+            txtOldDEM.Text = dod.OldDEM.Name
 
-            txtOldDEM.Text = m_rDoD.OldSurveyName
-            If Not m_rDoD.IsOldErrorNameNull Then
-                txtOldError.Text = m_rDoD.OldErrorName
-            End If
-
-            If m_rDoD.TypeMinLOD Then
+            If TypeOf dod Is DoDMinLoD Then
                 txtType.Text = "Minimum Level of Detection (MinLod)"
-            ElseIf m_rDoD.TypePropagated Then
+                With DirectCast(dod, DoDMinLoD)
+                    txtThreshold.Text = .Threshold
+                    txtThreshold.Text = String.Format("{0:0.00}{1}", ProjectManager.Project.Units.VertUnit, UnitsNet.Length.GetAbbreviation(ProjectManager.Project.Units.VertUnit))
+                End With
+            Else
                 txtType.Text = "Propagated Error"
                 grpPropagated.Visible = True
 
-            ElseIf m_rDoD.TypeProbabilistic Then
-                txtType.Text = "Probabilistic"
-                grpProbabilistic.Visible = True
-                grpPropagated.Visible = True
-            End If
+                With DirectCast(dod, DoDPropagated)
+                    txtNewError.Text = .NewError.Name
+                    txtOldError.Text = .OldError.Name
+                    txtPropErr.Text = .PropagatedError.RelativePath
+                End With
 
-            If m_rDoD.IsThresholdNull Then
-                lblThreshold.Enabled = False
-                txtThreshold.Enabled = False
-            Else
-                If m_rDoD.TypeProbabilistic Then
-                    txtThreshold.Text = (100 * m_rDoD.Threshold).ToString("0") & "%"
-                Else
-                    txtThreshold.Text = m_rDoD.Threshold.ToString("#,##0.00") & m_rDoD.ProjectRow.DisplayUnits
+                If TypeOf dod Is DoDProbabilistic Then
+                    txtType.Text = "Probabilistic"
+                    grpProbabilistic.Visible = True
+                    grpPropagated.Visible = True
+
+                    With DirectCast(dod, DoDProbabilistic)
+                        txtConfidence.Text = (100 * .ConfidenceLevel).ToString("0") & "%"
+                        txtProbabilityRaster.Text = .PriorProbability.RelativePath
+                        txtBayesian.Text = "None"
+
+                        If TypeOf .SpatialCoherence Is GCDCore.Project.CoherenceProperties Then
+                            txtPosteriorRaster.Text = .PosteriorProbability.RelativePath
+                            txtConditionalRaster.Text = .ConditionalRaster.RelativePath
+                            txtErosionalSpatialCoherenceRaster.Text = .SpatialCoherenceErosion.RelativePath
+                            txtDepositionSpatialCoherenceRaster.Text = .SpatialCoherenceDeposition.RelativePath
+                            txtBayesian.Text = String.Format("Bayesian updating with filter size of {0} X {0} cells", .SpatialCoherence.MovingWindowDimensions)
+                        End If
+                    End With
                 End If
             End If
-
-            If m_rDoD.TypePropagated OrElse m_rDoD.TypeProbabilistic Then
-                If Not m_rDoD.IsPropagatedErrorRasterPathNull Then
-                    txtPropErr.Text = ProjectManagerBase.GetAbsolutePath(m_rDoD.PropagatedErrorRasterPath).FullName
-                End If
-            End If
-
-            If m_rDoD.TypeProbabilistic Then
-
-                If Not m_rDoD.IsThresholdNull Then
-                    txtConfidence.Text = txtThreshold.Text
-                End If
-
-                If Not m_rDoD.IsProbabilityRasterNull Then
-                    txtProbabilityRaster.Text = ProjectManagerBase.GetAbsolutePath(m_rDoD.ProbabilityRaster).FullName
-                End If
-
-                If Not m_rDoD.IsSpatialCoErosionRasterNull AndAlso Not String.IsNullOrEmpty(m_rDoD.SpatialCoErosionRaster) Then
-                    txtErosionalSpatialCoherenceRaster.Text = ProjectManagerBase.GetAbsolutePath(m_rDoD.SpatialCoErosionRaster).FullName
-                End If
-
-                If Not m_rDoD.IsSpatialCoDepositionRasterNull AndAlso Not String.IsNullOrEmpty(m_rDoD.SpatialCoDepositionRaster) Then
-                    txtDepositionSpatialCoherenceRaster.Text = ProjectManagerBase.GetAbsolutePath(m_rDoD.SpatialCoDepositionRaster).FullName
-                End If
-
-                If Not m_rDoD.IsConditionalProbRasterNull Then
-                    'txtConditionalRaster.Text = GCD.GCDProject.ProjectManagerBase.GetAbsolutePath(m_rDoD.ConditionalProbRaster)
-                End If
-
-                If Not m_rDoD.IsPosteriorRasterNull AndAlso Not String.IsNullOrEmpty(m_rDoD.PosteriorRaster) Then
-                    txtPosteriorRaster.Text = ProjectManagerBase.GetAbsolutePath(m_rDoD.PosteriorRaster).FullName
-                End If
-
-                If Not m_rDoD.IsBayesianNull AndAlso m_rDoD.Bayesian Then
-                    txtBayesian.Text = "Bayesian updating"
-                    If Not m_rDoD.IsFilterNull Then
-                        txtBayesian.Text &= " with filter size of " & m_rDoD.Filter.ToString & "x" & m_rDoD.Filter.ToString & " cells"
-                    End If
-                Else
-                    txtBayesian.Text = "None"
-                End If
-            End If
-
         End Sub
 
         Private Sub AddToMapToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles _

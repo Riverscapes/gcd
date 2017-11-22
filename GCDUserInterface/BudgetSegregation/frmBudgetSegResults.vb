@@ -1,47 +1,36 @@
 ﻿Imports System.Windows.Forms
-Imports GCDCore
+Imports GCDCore.Project
 
 Namespace UI.BudgetSegregation
 
     Public Class frmBudgetSegResults
 
-        Private ResultSet As GCDCore.BudgetSegregation.BSResultSet
+        Private BudgetSeg As GCDCore.Project.BudgetSegregation
         Private m_Options As ChangeDetection.DoDSummaryDisplayOptions
 
-        Public Sub New(nBSID As Integer)
+        Public Sub New(BS As GCDCore.Project.BudgetSegregation)
 
             ' This call is required by the designer.
             InitializeComponent()
 
-            For Each rBS As ProjectDS.BudgetSegregationsRow In ProjectManagerBase.ds.BudgetSegregations
-                If rBS.BudgetID = nBSID Then
-                    ResultSet = New GCDCore.BudgetSegregation.BSResultSet(rBS)
-                    ucProperties.Initialize(rBS.DoDsRow)
-                    txtName.Text = rBS.Name
-                    Exit For
-                End If
-            Next
-
-            If ResultSet Is Nothing Then
-                Dim ex As New Exception("Failed to find budget segregation.")
-                ex.Data("Budget Seg ID") = nBSID
-                Throw ex
-            End If
+            BudgetSeg = BS
+            ucProperties.Initialize(BudgetSeg.DoD)
 
         End Sub
 
         Private Sub BudgetSegResultsForm_Load(sender As Object, e As System.EventArgs) Handles Me.Load
 
-            cboSummaryClass.DataSource = ResultSet.ClassResults.Keys
-            cboECDClass.DataSource = ResultSet.ClassResults.Keys
+            txtName.Text = BudgetSeg.Name
+            cboSummaryClass.DataSource = BudgetSeg.Classes.Keys
+            cboECDClass.DataSource = BudgetSeg.Classes.Keys
 
             If cboSummaryClass.Items.Count > 0 Then
                 cboSummaryClass.SelectedIndex = 0
                 cboECDClass.SelectedIndex = 0
             End If
 
-            txtPolygonMask.Text = ProjectManagerBase.GetRelativePath(ResultSet.PolygonMask.FullName)
-            txtField.Text = ResultSet.FieldName
+            txtPolygonMask.Text = ProjectManager.Project.GetRelativePath(BudgetSeg.PolygonMask.FullName)
+            txtField.Text = BudgetSeg.MaskField
 
             'Hide Report tab for now
             tabMain.TabPages.Remove(TabPage4)
@@ -50,8 +39,8 @@ Namespace UI.BudgetSegregation
 
         Private Sub cboSummaryClass_SelectedIndexChanged(sender As Object, e As System.EventArgs) Handles cboSummaryClass.SelectedIndexChanged
 
-            Dim classResult As GCDCore.BudgetSegregation.BSResult = ResultSet.ClassResults(cboSummaryClass.SelectedItem.ToString())
-            ucSummary.RefreshDisplay(classResult.ChangeStats, m_Options)
+            Dim classResult As BudgetSegregationClass = BudgetSeg.Classes(cboSummaryClass.SelectedItem.ToString())
+            ucSummary.RefreshDisplay(classResult.Statistics, m_Options)
 
             ' syncronize the two dropdown lits
             cboECDClass.SelectedIndex = cboSummaryClass.SelectedIndex
@@ -60,11 +49,11 @@ Namespace UI.BudgetSegregation
 
         Private Sub cboECDClass_SelectedIndexChanged(sender As Object, e As System.EventArgs) Handles cboECDClass.SelectedIndexChanged
 
-            Dim classResult As GCDCore.BudgetSegregation.BSResult = ResultSet.ClassResults(cboECDClass.SelectedItem.ToString())
-            ucHistogram.LoadHistograms(classResult.RawHistogram, classResult.ThrHistogram)
+            Dim classResult As BudgetSegregationClass = BudgetSeg.Classes(cboECDClass.SelectedItem.ToString())
+            ucHistogram.LoadHistograms(classResult.Histograms.Raw.Data, classResult.Histograms.Thr.Data)
 
             ' Update the elevation change bar chart control
-            ucBars.ChangeStats = classResult.ChangeStats
+            ucBars.ChangeStats = classResult.Statistics
 
             ' syncronize the two dropdown lits
             cboSummaryClass.SelectedIndex = cboECDClass.SelectedIndex
@@ -73,10 +62,10 @@ Namespace UI.BudgetSegregation
 
         Private Sub cmdBrowse_Click(sender As System.Object, e As System.EventArgs) Handles cmdBrowse.Click
 
-            If ResultSet.Folder.Exists Then
-                Process.Start("explorer.exe", ResultSet.Folder.FullName)
+            If BudgetSeg.Folder.Exists Then
+                Process.Start("explorer.exe", BudgetSeg.Folder.FullName)
             Else
-                MsgBox("The budget segregation folder does not exist: " & ResultSet.Folder.FullName, MsgBoxStyle.Information, GCDCore.Properties.Resources.ApplicationNameLong)
+                MsgBox("The budget segregation folder does not exist: " & BudgetSeg.Folder.FullName, MsgBoxStyle.Information, GCDCore.Properties.Resources.ApplicationNameLong)
             End If
         End Sub
 
@@ -89,7 +78,7 @@ Namespace UI.BudgetSegregation
             Dim myItem As ToolStripMenuItem = CType(sender, ToolStripMenuItem)
             Dim cms As ContextMenuStrip = CType(myItem.Owner, ContextMenuStrip)
 
-            Dim path As IO.FileInfo = ProjectManagerBase.GetAbsolutePath(cms.SourceControl.Text)
+            Dim path As IO.FileInfo = ProjectManager.Project.GetAbsolutePath(cms.SourceControl.Text)
             If path.Exists Then
                 Try
                     Dim gPolygon As GCDConsoleLib.Vector = New GCDConsoleLib.Vector(path)

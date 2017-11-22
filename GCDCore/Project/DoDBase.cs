@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
+using GCDConsoleLib;
 using GCDConsoleLib.GCD;
 using System.Xml;
 
@@ -15,35 +16,73 @@ namespace GCDCore.Project
         public ProjectRaster RawDoD { get; set; }
         public ProjectRaster ThrDoD { get; set; }
 
-        public FileInfo RawHistogram { get; set; }
-        public FileInfo ThrHistogram { get; set; }
+        public HistogramPair Histograms { get; set; }
         public FileInfo SummaryXML { get; set; }
         public readonly DoDStats Statistics;
 
         public Dictionary<string, BudgetSegregation> BudgetSegregations { get; internal set; }
 
-        public DoDBase(string name, DirectoryInfo folder, DEMSurvey newDEM, DEMSurvey oldDEM, DoDStats stats)
+        public DoDBase(string name, DirectoryInfo folder, DEMSurvey newDEM, DEMSurvey oldDEM, Raster rawDoD, Raster thrDoD, HistogramPair histograms, DoDStats stats)
             : base(name)
         {
             Folder = folder;
             NewDEM = newDEM;
             OldDEM = oldDEM;
+            RawDoD = new ProjectRaster(rawDoD);
+            ThrDoD = new ProjectRaster(thrDoD);
+            Histograms = histograms;
             Statistics = stats;
             BudgetSegregations = new Dictionary<string, BudgetSegregation>();
+        }
+
+        public DoDBase(string name, DirectoryInfo folder, DEMSurvey newDEM, DEMSurvey oldDEM, FileInfo rawDoD, FileInfo thrDoD, HistogramPair histograms, DoDStats stats)
+                  : base(name)
+        {
+            Folder = folder;
+            NewDEM = newDEM;
+            OldDEM = oldDEM;
+            RawDoD = new ProjectRaster(rawDoD);
+            ThrDoD = new ProjectRaster(thrDoD);
+            Histograms = histograms;
+            Statistics = stats;
+            BudgetSegregations = new Dictionary<string, BudgetSegregation>();
+        }
+
+        public DoDBase(DoDBase dod)
+            : base(dod.Name)
+        {
+            Folder = dod.Folder;
+            NewDEM = dod.NewDEM;
+            OldDEM = dod.OldDEM;
+            RawDoD = dod.RawDoD;
+            ThrDoD = dod.ThrDoD;
+            Histograms = dod.Histograms;
+            Statistics = dod.Statistics;
+            BudgetSegregations = dod.BudgetSegregations;
+        }
+
+        public bool IsBudgetSegNameUnique(string name, BudgetSegregation ignore)
+        {
+            bool bUnique = true;
+            if (BudgetSegregations.ContainsKey(name))
+            {
+                bUnique = BudgetSegregations[name] != ignore;
+            }
+            return bUnique;
         }
 
         public XmlNode Serialize(XmlDocument xmlDoc, XmlNode nodParent)
         {
             XmlNode nodDoD = nodParent.AppendChild(xmlDoc.CreateElement("DoD"));
             nodDoD.AppendChild(xmlDoc.CreateElement("Name")).InnerText = Name;
-            nodDoD.AppendChild(xmlDoc.CreateElement("Folder")).InnerText = ProjectManagerBase.Project.GetRelativePath(Folder.FullName);
+            nodDoD.AppendChild(xmlDoc.CreateElement("Folder")).InnerText = ProjectManager.Project.GetRelativePath(Folder.FullName);
             nodDoD.AppendChild(xmlDoc.CreateElement("NewDEM")).InnerText = NewDEM.Name;
             nodDoD.AppendChild(xmlDoc.CreateElement("OldDEM")).InnerText = OldDEM.Name;
-            nodDoD.AppendChild(xmlDoc.CreateElement("RawDoD")).InnerText = ProjectManagerBase.GetRelativePath(RawDoD.RasterPath);
-            nodDoD.AppendChild(xmlDoc.CreateElement("ThrDoD")).InnerText = ProjectManagerBase.GetRelativePath(ThrDoD.RasterPath);
-            nodDoD.AppendChild(xmlDoc.CreateElement("RawHistogram")).InnerText = ProjectManagerBase.GetRelativePath(RawHistogram);
-            nodDoD.AppendChild(xmlDoc.CreateElement("ThrHistogram")).InnerText = ProjectManagerBase.GetRelativePath(ThrHistogram);
-            nodDoD.AppendChild(xmlDoc.CreateElement("SummaryXML")).InnerText = ProjectManagerBase.GetRelativePath(SummaryXML);
+            nodDoD.AppendChild(xmlDoc.CreateElement("RawDoD")).InnerText = ProjectManager.Project.GetRelativePath(RawDoD.RasterPath);
+            nodDoD.AppendChild(xmlDoc.CreateElement("ThrDoD")).InnerText = ProjectManager.Project.GetRelativePath(ThrDoD.RasterPath);
+            nodDoD.AppendChild(xmlDoc.CreateElement("RawHistogram")).InnerText = ProjectManager.Project.GetRelativePath(Histograms.Raw.Path);
+            nodDoD.AppendChild(xmlDoc.CreateElement("ThrHistogram")).InnerText = ProjectManager.Project.GetRelativePath(Histograms.Thr.Path);
+            nodDoD.AppendChild(xmlDoc.CreateElement("SummaryXML")).InnerText = ProjectManager.Project.GetRelativePath(SummaryXML);
 
             SerializeDoDStatistics(xmlDoc, nodDoD.AppendChild(xmlDoc.CreateElement("Statistics")), Statistics);
 
@@ -79,20 +118,20 @@ namespace GCDCore.Project
         public static DoDBase Deserialize(XmlNode nodDoD, Dictionary<string, DEMSurvey> DEMs)
         {
             string name = nodDoD.SelectSingleNode("Name").InnerText;
-            DirectoryInfo folder = ProjectManagerBase.GetAbsoluteDir(nodDoD.SelectSingleNode("Folder").InnerText);
+            DirectoryInfo folder = ProjectManager.Project.GetAbsoluteDir(nodDoD.SelectSingleNode("Folder").InnerText);
 
             DEMSurvey newDEM = DeserializeDEM(nodDoD, DEMs, "NewDEM");
             DEMSurvey oldDEM = DeserializeDEM(nodDoD, DEMs, "OldDEM");
 
-            FileInfo rawDoD = ProjectManagerBase.GetAbsolutePath(nodDoD.SelectSingleNode("RawDoD").InnerText);
-            FileInfo thrDoD = ProjectManagerBase.GetAbsolutePath(nodDoD.SelectSingleNode("ThrDoD").InnerText);
-            FileInfo rawHis = ProjectManagerBase.GetAbsolutePath(nodDoD.SelectSingleNode("RawHistogram").InnerText);
-            FileInfo thrHis = ProjectManagerBase.GetAbsolutePath(nodDoD.SelectSingleNode("ThrHistogram").InnerText);
-            FileInfo summar = ProjectManagerBase.GetAbsolutePath(nodDoD.SelectSingleNode("SummaryXML").InnerText);
+            FileInfo rawDoD = ProjectManager.Project.GetAbsolutePath(nodDoD.SelectSingleNode("RawDoD").InnerText);
+            FileInfo thrDoD = ProjectManager.Project.GetAbsolutePath(nodDoD.SelectSingleNode("ThrDoD").InnerText);
+            FileInfo rawHis = ProjectManager.Project.GetAbsolutePath(nodDoD.SelectSingleNode("RawHistogram").InnerText);
+            FileInfo thrHis = ProjectManager.Project.GetAbsolutePath(nodDoD.SelectSingleNode("ThrHistogram").InnerText);
+            FileInfo summar = ProjectManager.Project.GetAbsolutePath(nodDoD.SelectSingleNode("SummaryXML").InnerText);
 
-            DoDStats stats = DeserializeStatistics(nodDoD.SelectSingleNode("Statistics"), ProjectManagerBase.CellArea, ProjectManagerBase.Units);
+            DoDStats stats = DeserializeStatistics(nodDoD.SelectSingleNode("Statistics"), ProjectManager.Project.CellArea, ProjectManager.Project.Units);
 
-            DoDBase dod = new DoDBase(name, folder, newDEM, oldDEM, stats);
+            DoDBase dod = new DoDBase(name, folder, newDEM, oldDEM, rawDoD, thrDoD, new HistogramPair(rawHis, thrHis), stats);
 
             foreach (XmlNode nodBS in nodDoD.SelectNodes("BudgetSegregations/BudgetSegregation"))
             {

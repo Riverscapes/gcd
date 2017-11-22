@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Collections.Generic;
 using System.Xml;
+using System;
 
 namespace GCDCore.Project
 {
@@ -28,11 +29,131 @@ namespace GCDCore.Project
             ErrorSurfaces = new Dictionary<string, ErrorSurface>();
         }
 
+        public bool IsErrorNameUnique(string name, ErrorSurface ignore)
+        {
+            bool bUnique = true;
+            if (ErrorSurfaces.ContainsKey(name))
+            {
+                bUnique = ErrorSurfaces[name] != ignore;
+            }
+            return bUnique;
+        }
+
+        public bool IsAssocNameUnique(string name, AssocSurface ignore)
+        {
+            bool bUnique = true;
+            if (AssocSurfaces.ContainsKey(name))
+            {
+                bUnique = AssocSurfaces[name] != ignore;
+            }
+            return bUnique;
+        }
+
+        public void DeleteAssociatedSurface(AssocSurface assoc)
+        {
+            throw new NotImplementedException("delete associated surface not implemented");
+
+            //Dim sPath As IO.FileInfo = ProjectManager.GetAbsolutePath(rAssoc.Source)
+            //    Dim bContinue As Boolean = True
+
+            //    Try
+            //        'TODO
+            //        Throw New Exception("Not implemented")
+            //        ' RemoveAuxillaryLayersFromMap(sPath)
+            //    Catch ex As Exception
+            //        MsgBox("Error removing the associated surface from the ArcMap table of contents. Remove it manually And then try deleting the associated surface again.", MsgBoxStyle.Information, GCDCore.Properties.Resources.ApplicationNameLong)
+            //        bContinue = False
+            //    End Try
+
+            //    If bContinue Then
+            //        If ProjectManager.GetAbsolutePath(rAssoc.Source).Exists Then
+            //            Try
+            //                GCDConsoleLib.Raster.Delete(sPath)
+            //            Catch ex As Exception
+            //                Dim ex2 As New Exception("Error deleting the associated surface raster file And directory.", ex)
+            //                ex2.Data.Add("Raster Path", sPath)
+            //                naru.error.ExceptionUI.HandleException(ex2)
+            //                bContinue = False
+            //            End Try
+            //        End If
+            //    End If
+
+            //    Try
+            //        GCDConsoleLib.Raster.Delete(ProjectManager.GetAbsolutePath(rAssoc.Source))
+            //    Catch ex As Exception
+            //        ' do nothing
+            //    End Try
+
+            //    If bContinue Then
+            //        Try
+            //            rAssoc.Delete()
+            //            ProjectManager.save()
+            //        Catch ex As Exception
+            //            naru.error.ExceptionUI.HandleException(ex, "The raster file was deleted, but an error occurred removing the surface from the GCD project file. This will be fixed automatically by closing And opening ArcMap if Validate Project Is selected from the options menu")
+            //        End Try
+            //    End If
+        }
+
+        public void DeleteErrorSurface(ErrorSurface err)
+        {
+            throw new NotImplementedException("todo");
+
+            //If Not TypeOf rError Is ProjectDS.ErrorSurfaceRow Then
+            //    Exit Sub
+            //End If
+
+            //If response = MsgBoxResult.Yes Then
+            //    Dim sPath As IO.FileInfo = ProjectManager.GetAbsolutePath(rError.Source.ToString)
+            //    Dim bContinue As Boolean = True
+
+            //    Try
+            //        'TODO
+            //        Throw New Exception("Not implemented")
+            //        'RemoveAuxillaryLayersFromMap(sPath)
+            //    Catch ex As Exception
+            //        MsgBox("Error removing the error surface from the ArcMap table of contents. Remove it manually And then try deleting the error surface again.", MsgBoxStyle.Information, GCDCore.Properties.Resources.ApplicationNameLong)
+            //        bContinue = False
+            //    End Try
+
+            //    If bContinue Then
+            //        If Not rError.IsSourceNull Then
+            //            If ProjectManager.GetAbsolutePath(rError.Source).Exists Then
+            //                Try
+            //                    GCDConsoleLib.Raster.Delete(sPath)
+            //                Catch ex As Exception
+            //                    naru.error.ExceptionUI.HandleException(ex, "Failed to delete the error surface raster.")
+            //                    bContinue = False
+            //                End Try
+            //            End If
+            //        End If
+            //    End If
+
+            //    If bContinue Then
+            //        Try
+            //            ProjectManager.GetAbsolutePath(rError.Source).Directory.Delete()
+            //        Catch ex As Exception
+            //            ' do nothing
+            //        End Try
+            //    End If
+
+            //    If bContinue Then
+            //        Try
+            //            rError.Delete()
+            //            ProjectManager.save()
+            //        Catch ex As Exception
+            //            naru.error.ExceptionUI.HandleException(ex, "The raster file was deleted, but an error occurred removing the surface from the GCD project file. This will be fixed automatically by closing and opening ArcMap if Validate Project is selected from the options menu")
+            //        End Try
+            //    End If
+
+            //End If
+
+        }
+
         public void Serialize(XmlDocument xmlDoc, XmlNode nodParent)
         {
             XmlNode nodDEM = nodParent.AppendChild(xmlDoc.CreateElement("DEM"));
             nodDEM.AppendChild(xmlDoc.CreateElement("Name")).InnerText = Name;
-            nodDEM.AppendChild(xmlDoc.CreateElement("Path")).InnerText = ProjectManagerBase.GetRelativePath(Raster.RasterPath);
+            nodDEM.AppendChild(xmlDoc.CreateElement("Path")).InnerText = ProjectManager.Project.GetRelativePath(Raster.RasterPath);
             nodDEM.AppendChild(xmlDoc.CreateElement("SurveyMethod")).InnerText = SurveyMethod;
 
             XmlNode nodSurveyDate = nodDEM.AppendChild(xmlDoc.CreateElement("SurveyDate"));
@@ -45,7 +166,7 @@ namespace GCDCore.Project
             if (MethodMask != null)
             {
                 XmlNode nodMethodMask = nodDEM.AppendChild(xmlDoc.CreateElement("MethodMask"));
-                nodMethodMask.AppendChild(xmlDoc.CreateElement("Path")).InnerText = ProjectManagerBase.GetRelativePath(MethodMask);
+                nodMethodMask.AppendChild(xmlDoc.CreateElement("Path")).InnerText = ProjectManager.Project.GetRelativePath(MethodMask);
                 nodMethodMask.AppendChild(xmlDoc.CreateElement("Field")).InnerText = MethodMaskField;
             }
 
@@ -67,7 +188,7 @@ namespace GCDCore.Project
         public static DEMSurvey Deserialize(XmlNode nodDEM)
         {
             string name = nodDEM.SelectSingleNode("Name").InnerText;
-            FileInfo path = ProjectManagerBase.GetAbsolutePath(nodDEM.SelectSingleNode("Path").InnerText);
+            FileInfo path = ProjectManager.Project.GetAbsolutePath(nodDEM.SelectSingleNode("Path").InnerText);
 
             SurveyDateTime surveyDT = new SurveyDateTime();
             if (!string.IsNullOrEmpty(nodDEM.SelectSingleNode("SurveyDate/Year").InnerText))
@@ -96,7 +217,7 @@ namespace GCDCore.Project
             XmlNode nodMethodMask = nodDEM.SelectSingleNode("MethodMask");
             if (nodMethodMask is XmlNode)
             {
-                dem.MethodMask = ProjectManagerBase.GetAbsolutePath(nodMethodMask.SelectSingleNode("Path").InnerText);
+                dem.MethodMask = ProjectManager.Project.GetAbsolutePath(nodMethodMask.SelectSingleNode("Path").InnerText);
                 dem.MethodMaskField = nodMethodMask.SelectSingleNode("Field").InnerText;
             }
 

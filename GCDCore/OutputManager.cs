@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using GCDCore.Project;
 
 namespace GCDCore
 {
@@ -45,7 +46,7 @@ namespace GCDCore
 
         public string GCDProjectFolder()
         {
-            return Path.GetDirectoryName(Project.ProjectManagerBase.FilePath);
+            return Path.GetDirectoryName(ProjectManager.Project.ProjectFile.FullName);
         }
 
         public string DEMSurveyFolder(string sSurveyName)
@@ -103,185 +104,23 @@ namespace GCDCore
             return sFolder;
         }
 
-        public string CreateBudgetSegFolder(string sDoDName, bool bCreateIfMissing = false)
-        {
-            //New code Hensleigh 4/24/2014
-            string sBSFolder = string.Empty;
-            sBSFolder = GetBudgetSegreationDirectoryPath(sDoDName);
-
-            string sAnalysisFolder = Path.Combine(GCDProjectFolder(), m_sAnalysesFolder);
-            if (bCreateIfMissing && !Directory.Exists(sAnalysisFolder))
-            {
-                Directory.CreateDirectory(sAnalysisFolder);
-            }
-
-            string sChangeDetectionFolder = Path.Combine(sAnalysisFolder, m_sChangeDetectionFolder);
-            if (bCreateIfMissing && !Directory.Exists(sChangeDetectionFolder))
-            {
-                Directory.CreateDirectory(sChangeDetectionFolder);
-            }
-
-            if (!Directory.Exists(sBSFolder))
-            {
-                Directory.CreateDirectory(sBSFolder);
-            }
-
-            return sBSFolder;
-        }
-
-        public string CreateBudgetSegFolder(string sDoDName, string sPolgonMaskFilePath, string sField, bool bCreateIfMissing = false)
-        {
-            //New code Hensleigh 4/24/2014
-            //Dim sDoDFolder As String = Me.GetDoDOutputFolder(sDoDName, bCreateIfMissing)
-            //Dim sBSFolder As String = Path.Combine(sDoDFolder, m_sBudgetSegregationFolder)
-            string sDoDFolder = string.Empty;
-            string sBSFolder = string.Empty;
-            string sSafeMaskName = naru.os.File.RemoveDangerousCharacters(Path.GetFileNameWithoutExtension(sPolgonMaskFilePath)).Replace(" ", "");
-            string sSafeMaskField = naru.os.File.RemoveDangerousCharacters(sField).Replace(" ", "");
-
-            //Dim sBudgetSegregationDirectorPath As String = Path.Combine(ChangeDetectionDirectoryPath, m_sBudgetSegregationFolder)
-            int nFolderIndex = 0;
-
-            foreach (Project.ProjectDS.DoDsRow rDoD in Project.ProjectManagerBase.CurrentProject.GetDoDsRows())
-            {
-                if (string.Compare(sDoDName, rDoD.Name, true) == 0)
-                {
-                    sDoDFolder = Path.Combine(GCDProjectFolder(), Path.GetDirectoryName(rDoD.RawDoDPath));
-                    if (!Directory.Exists(sDoDFolder))
-                    {
-                        Exception ex = new Exception("A DoD was found in the project but the associated folder was missing.");
-                        ex.Data["DoD Name"] = rDoD.Name;
-                        ex.Data["Folder Path"] = sDoDFolder;
-                        throw ex;
-                    }
-
-                    foreach (Project.ProjectDS.BudgetSegregationsRow rBS in rDoD.GetBudgetSegregationsRows())
-                    {
-                        if (nFolderIndex < rBS.BudgetID)
-                        {
-                            nFolderIndex = rBS.BudgetID;
-                            break; // TODO: might not be correct. Was : Exit For
-                        }
-                    }
-                    break; // TODO: might not be correct. Was : Exit For
-                }
-            }
-
-            if (string.IsNullOrEmpty(sBSFolder))
-            {
-                //The DoD was not found in the project. So determine the DoD folder apth by the next
-                //available folder index (greater than the max ID or DoD IDs in the project and existing folders
-
-                string sAnalysisFolder = Path.Combine(GCDProjectFolder(), m_sAnalysesFolder);
-                if (bCreateIfMissing && !Directory.Exists(sAnalysisFolder))
-                {
-                    Directory.CreateDirectory(sAnalysisFolder);
-                }
-
-                string sChangeDetectionFolder = Path.Combine(sAnalysisFolder, m_sChangeDetectionFolder);
-                if (bCreateIfMissing && !Directory.Exists(sChangeDetectionFolder))
-                {
-                    Directory.CreateDirectory(sChangeDetectionFolder);
-                }
-
-                //Dim sDoD_BS_Folder As String = Path.Combine(sDoDFolder, m_sBudgetSegregationFolder)
-                //If Not Directory.Exists(sDoDFolder) Then
-                //    Directory.CreateDirectory(sDoD_BS_Folder)
-                //End If
-
-                //By now nFolder index should hold an integer that represents either the max BS ID or the
-                //max folder integer suffix. Create the new BS folder with the next biggest integer
-
-                do
-                {
-                    nFolderIndex += 1;
-                    sBSFolder = Path.Combine(sDoDFolder, m_sBudgetSegregationFolder + nFolderIndex.ToString("0000"));
-                } while (Directory.Exists(sBSFolder) && nFolderIndex < 9999);
-
-
-                if (!Directory.Exists(sBSFolder))
-                {
-                    Directory.CreateDirectory(sBSFolder);
-                }
-            }
-
-            return sBSFolder;
-
-            ///'''''''''''''''''''''''
-            //Old Code
-            //
-            //Dim sDoDFolder As String = Me.GetDoDOutputFolder(sDoDName, bCreateIfMissing)
-            //Dim sSafeMaskName As String = naru.os.File.RemoveDangerousCharacters(Path.GetFileNameWithoutExtension(sPolgonMaskFilePath)).Replace(" ", "")
-            //Dim sSafeMaskField As String = naru.os.File.RemoveDangerousCharacters(sField).Replace(" ", "")
-
-            //Dim sBSFolder As String = Path.Combine(sDoDFolder, m_sBudgetSegregationFolder)
-            //If bCreateIfMissing Then
-            //    Directory.CreateDirectory(sBSFolder)
-            //End If
-
-            //sBSFolder = Path.Combine(sBSFolder, sSafeMaskName)
-            //If bCreateIfMissing Then
-            //    Directory.CreateDirectory(sBSFolder)
-            //End If
-
-            //sBSFolder = Path.Combine(sBSFolder, sSafeMaskField)
-            //If bCreateIfMissing Then
-            //    Directory.CreateDirectory(sBSFolder)
-            //End If
-
-            //Return sBSFolder
-        }
-
-        private string GetBudgetSegregationBaseFolders(string sDoDName, ref int nFolderIndex)
-        {
-            string sDoDFolder = string.Empty;
-
-            foreach (Project.ProjectDS.DoDsRow rDoD in Project.ProjectManagerBase.CurrentProject.GetDoDsRows())
-            {
-                if (string.Compare(sDoDName, rDoD.Name, true) == 0)
-                {
-                    sDoDFolder = Path.Combine(GCDProjectFolder(), Path.GetDirectoryName(rDoD.RawDoDPath));
-                    if (!Directory.Exists(sDoDFolder))
-                    {
-                        Exception ex = new Exception("A DoD was found in the project but the associated folder was missing.");
-                        ex.Data["DoD Name"] = rDoD.Name;
-                        ex.Data["Folder Path"] = sDoDFolder;
-                        throw ex;
-                    }
-
-                    foreach (Project.ProjectDS.BudgetSegregationsRow rBS in rDoD.GetBudgetSegregationsRows())
-                    {
-                        if (nFolderIndex < rBS.BudgetID)
-                        {
-                            nFolderIndex = rBS.BudgetID;
-                            break; // TODO: might not be correct. Was : Exit For
-                        }
-                    }
-                    break; // TODO: might not be correct. Was : Exit For
-                }
-
-            }
-
-            return sDoDFolder;
-        }
-
         #endregion
 
         #region "Raster Paths"
 
         public FileInfo DEMSurveyRasterPath(string sSurveyName)
         {
-            return naru.os.File.GetNewSafeName(DEMSurveyFolder(sSurveyName), sSurveyName, Project.ProjectManagerBase.RasterExtension);
+            return naru.os.File.GetNewSafeName(DEMSurveyFolder(sSurveyName), sSurveyName, RasterExtension);
         }
 
         public FileInfo DEMSurveyHillShadeRasterPath(string sSurveyName)
         {
-            return naru.os.File.GetNewSafeName(DEMSurveyFolder(sSurveyName), sSurveyName + m_sDEMSurveyHillshadeSuffix, Project.ProjectManagerBase.RasterExtension);
+            return naru.os.File.GetNewSafeName(DEMSurveyFolder(sSurveyName), sSurveyName + m_sDEMSurveyHillshadeSuffix, RasterExtension);
         }
 
         public FileInfo AssociatedSurfaceRasterPath(string sSurveyName, string sAssociatedSurface)
         {
-            return naru.os.File.GetNewSafeName(AssociatedSurfaceFolder(sSurveyName, sAssociatedSurface), sAssociatedSurface, Project.ProjectManagerBase.RasterExtension);
+            return naru.os.File.GetNewSafeName(AssociatedSurfaceFolder(sSurveyName, sAssociatedSurface), sAssociatedSurface, RasterExtension);
         }
 
         public FileInfo ErrorSurfaceRasterPath(string sSurveyName, string sErrorSurfaceName, bool bCreateWorkspace = true)
@@ -294,7 +133,7 @@ namespace GCDCore
                 Directory.CreateDirectory(sWorkspace);
             }
 
-            return naru.os.File.GetNewSafeName(sWorkspace, sSafeName, Project.ProjectManagerBase.RasterExtension);
+            return naru.os.File.GetNewSafeName(sWorkspace, sSafeName, RasterExtension);
         }
 
         public FileInfo DEMSurveyMethodMaskPath(string sSurveyName)
@@ -317,7 +156,7 @@ namespace GCDCore
         private FileInfo BuildFixedRasterPath(DirectoryInfo folder, string RasterFileName)
         {
             string sPath = Path.Combine(folder.FullName, RasterFileName);
-            sPath = Path.ChangeExtension(sPath, Project.ProjectManagerBase.RasterExtension);
+            sPath = Path.ChangeExtension(sPath, RasterExtension);
             return new FileInfo(sPath);
         }
 
@@ -648,7 +487,7 @@ namespace GCDCore
                 Directory.CreateDirectory(sWorkspace);
             }
 
-            return naru.os.File.GetNewSafeName(sWorkspace, sMethod.Replace(" ", ""), Project.ProjectManagerBase.RasterExtension);
+            return naru.os.File.GetNewSafeName(sWorkspace, sMethod.Replace(" ", ""), RasterExtension);
 
         }
 
@@ -670,7 +509,7 @@ namespace GCDCore
                 Directory.CreateDirectory(sWorkspace);
             }
 
-            return naru.os.File.GetNewSafeName(sWorkspace, sMethod.Replace(" ", "") + m_sErrorSurfaceMethodMask, Project.ProjectManagerBase.RasterExtension);
+            return naru.os.File.GetNewSafeName(sWorkspace, sMethod.Replace(" ", "") + m_sErrorSurfaceMethodMask, RasterExtension);
 
         }
 
@@ -728,64 +567,28 @@ namespace GCDCore
             }
         }
 
-        public string GetBudgetSegreationDirectoryPath(string sDoDName)
+        public DirectoryInfo GetBudgetSegreationDirectoryPath(DirectoryInfo dodFolder, bool bCreate)
         {
+            DirectoryInfo bsGroupFolder = new DirectoryInfo(Path.Combine(dodFolder.FullName, m_sBudgetSegregationFolder));
 
-            //New code Hensleigh 4/24/2014
-            string sBSFolder = string.Empty;
-            int nFolderIndex = 0;
-            string sDoDFolder = GetBudgetSegregationBaseFolders(sDoDName, ref nFolderIndex);
-            string sAnalysisFolder = Path.Combine(GCDProjectFolder(), m_sAnalysesFolder);
-            string sChangeDetectionFolder = Path.Combine(sAnalysisFolder, m_sChangeDetectionFolder);
-            //Dim sDoD_BS_Folder As String = Path.Combine(sDoDFolder, m_sBudgetSegregationFolder)
+            if (!bsGroupFolder.Exists && bCreate)
+                bsGroupFolder.Create();
 
-            //By now nFolder index should hold an integer that represents either the max BS ID or the
-            //max folder integer suffix. Create the new BS folder with the next biggest integer
-
-            do
+            // Find unique folder on disk
+            int maxExisting = 0;
+            foreach (DirectoryInfo existingFolder in bsGroupFolder.GetDirectories("BS*", SearchOption.TopDirectoryOnly))
             {
-                nFolderIndex += 1;
-                sBSFolder = Path.Combine(sDoDFolder, m_sBudgetSegregationFolder + nFolderIndex.ToString("0000"));
-            } while (Directory.Exists(sBSFolder) && nFolderIndex < 9999);
-
-
-
-            return sBSFolder;
-
-        }
-
-        public string GetBudgetSegreationDirectoryPath(string ChangeDetectionDirectoryPath, string MaskFilename, string Fieldname)
-        {
-            //structure: Analyses/ChangeDetection/Dods_NewSurveyName-OldSurveyName/DoDName/BudgetSegregation/MaskFileName/FieldName
-
-
-            ///'''''''''''''''''''''''''''''''''''
-            //Old Code
-            //
-            //BudgetSegregation directory
-            string BudgetSegregationDirectoryPath = Path.Combine(ChangeDetectionDirectoryPath, m_sBudgetSegregationFolder);
-            if (!Directory.Exists(BudgetSegregationDirectoryPath))
-            {
-                CreateDirectory(BudgetSegregationDirectoryPath);
-            }
-            //MaskFileName directory
-            string SafeMaskFileName = naru.os.File.RemoveDangerousCharacters(MaskFilename);
-            string MaskFileNameDirectoryPath = Path.Combine(BudgetSegregationDirectoryPath, SafeMaskFileName);
-            if (!Directory.Exists(MaskFileNameDirectoryPath))
-            {
-                CreateDirectory(MaskFileNameDirectoryPath);
+                System.Text.RegularExpressions.Match match = System.Text.RegularExpressions.Regex.Match(existingFolder.FullName, "([0-9]*)$");
+                if (match.Groups.Count > 1)
+                {
+                    int folderSuffix = int.Parse(match.Groups[1].Value);
+                    if (folderSuffix > maxExisting)
+                        maxExisting = folderSuffix;
+                }
             }
 
-            //MaskFileName directory
-            string SafeFieldname = naru.os.File.RemoveDangerousCharacters(Fieldname);
-            string FieldnameDirectoryPath = Path.Combine(MaskFileNameDirectoryPath, SafeFieldname);
-            if (!Directory.Exists(FieldnameDirectoryPath))
-            {
-                CreateDirectory(FieldnameDirectoryPath);
-            }
-
-            return FieldnameDirectoryPath;
-        }
+            return new DirectoryInfo(Path.Combine(dodFolder.FullName, string.Format("BS{0:0000}", maxExisting + 1)));
+        }    
 
         #region "Change Detection"
 
@@ -978,7 +781,7 @@ namespace GCDCore
             // PGB 14 Sep 2011 - trying to avoid these characters now and use io.path.combine instread
             //errorCalcDirectoryPath &= Path.DirectorySeparatorChar
             //generate error name
-            string errorCalcPath = naru.os.File.GetNewSafeName(ErrorNameDirectoryPath, sErrorName, Project.ProjectManagerBase.RasterExtension).FullName;
+            string errorCalcPath = naru.os.File.GetNewSafeName(ErrorNameDirectoryPath, sErrorName, RasterExtension).FullName;
             return errorCalcPath;
         }
 
@@ -1042,7 +845,7 @@ namespace GCDCore
 
             //Dim sExtension As String = GISCode.Raster.GetRasterType(My.Settings.DefaultRasterFormat)
             //Dim eType As GCDConsoleLib.Raster.RasterTypes = Me.GetDefaultRasterTyp
-            string sRasterPath = naru.os.File.GetNewSafeName(sSurfacesDirectoryPath, sWaterSurfaceName, Project.ProjectManagerBase.RasterExtension).FullName;
+            string sRasterPath = naru.os.File.GetNewSafeName(sSurfacesDirectoryPath, sWaterSurfaceName, RasterExtension).FullName;
             //sRasterPath = Path.Combine(sSurfacesDirectoryPath, sRasterPath)
             //sRasterPath = Path.ChangeExtension(sRasterPath, GISCode.Raster.GetRasterExtension(sExtension))
 

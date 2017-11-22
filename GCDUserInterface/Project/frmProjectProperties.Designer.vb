@@ -29,8 +29,6 @@
             Me.Label2 = New System.Windows.Forms.Label()
             Me.Label3 = New System.Windows.Forms.Label()
             Me.txtName = New System.Windows.Forms.TextBox()
-            Me.ProjectBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-            Me.ProjectDSOld = New ProjectDS()
             Me.txtDescription = New System.Windows.Forms.TextBox()
             Me.btnBrowseOutput = New System.Windows.Forms.Button()
             Me.txtDirectory = New System.Windows.Forms.TextBox()
@@ -45,8 +43,6 @@
             Me.Label6 = New System.Windows.Forms.Label()
             Me.cboDisplayUnits = New System.Windows.Forms.ComboBox()
             Me.cmdHelpPrecision = New System.Windows.Forms.Button()
-            CType(Me.ProjectBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(Me.ProjectDSOld, System.ComponentModel.ISupportInitialize).BeginInit()
             CType(Me.valPrecision, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.SuspendLayout()
             '
@@ -79,26 +75,14 @@
             '
             'txtName
             '
-            Me.txtName.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.ProjectBindingSource, "Name", True))
             Me.txtName.Location = New System.Drawing.Point(124, 10)
             Me.txtName.Name = "txtName"
             Me.txtName.Size = New System.Drawing.Size(377, 20)
             Me.txtName.TabIndex = 1
             '
-            'ProjectBindingSource
-            '
-            Me.ProjectBindingSource.DataMember = "Project"
-            Me.ProjectBindingSource.DataSource = Me.ProjectDSOld
-            '
-            'ProjectDSOld
-            '
-            Me.ProjectDSOld.DataSetName = "ProjectDS"
-            Me.ProjectDSOld.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
-            '
             'txtDescription
             '
             Me.txtDescription.AcceptsReturn = True
-            Me.txtDescription.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.ProjectBindingSource, "Description", True))
             Me.txtDescription.Location = New System.Drawing.Point(124, 103)
             Me.txtDescription.Multiline = True
             Me.txtDescription.Name = "txtDescription"
@@ -117,7 +101,6 @@
             '
             'txtDirectory
             '
-            Me.txtDirectory.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.ProjectBindingSource, "OutputDirectory", True))
             Me.txtDirectory.Location = New System.Drawing.Point(124, 40)
             Me.txtDirectory.Name = "txtDirectory"
             Me.txtDirectory.Size = New System.Drawing.Size(348, 20)
@@ -158,7 +141,6 @@
             '
             'txtGCDPath
             '
-            Me.txtGCDPath.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.ProjectBindingSource, "Name", True))
             Me.txtGCDPath.Location = New System.Drawing.Point(124, 72)
             Me.txtGCDPath.Name = "txtGCDPath"
             Me.txtGCDPath.ReadOnly = True
@@ -257,8 +239,6 @@
             Me.MinimumSize = New System.Drawing.Size(520, 99)
             Me.Name = "ProjectPropertiesForm"
             Me.Text = "GCD Project"
-            CType(Me.ProjectBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(Me.ProjectDSOld, System.ComponentModel.ISupportInitialize).EndInit()
             CType(Me.valPrecision, System.ComponentModel.ISupportInitialize).EndInit()
             Me.ResumeLayout(False)
             Me.PerformLayout()
@@ -275,7 +255,6 @@
         Friend WithEvents btnHelp As System.Windows.Forms.Button
         Friend WithEvents btnBrowseOutput As System.Windows.Forms.Button
         Friend WithEvents ProjectBindingSource As System.Windows.Forms.BindingSource
-        Friend WithEvents ProjectDSOld As ProjectDS
         Friend WithEvents ttpTooltip As System.Windows.Forms.ToolTip
         Friend WithEvents txtGCDPath As System.Windows.Forms.TextBox
         Friend WithEvents Label4 As System.Windows.Forms.Label

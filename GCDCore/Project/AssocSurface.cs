@@ -22,15 +22,14 @@ namespace GCDCore.Project
             XmlNode nodAssoc = nodParent.AppendChild(xmlDoc.CreateElement("AssociatedSurface"));
             nodAssoc.AppendChild(xmlDoc.CreateElement("Name")).InnerText = Name;
             nodAssoc.AppendChild(xmlDoc.CreateElement("Type")).InnerText = AssocSurfaceType.ToString();
-            nodAssoc.AppendChild(xmlDoc.CreateElement("Path")).InnerText = ProjectManagerBase.GetRelativePath(Raster.RasterPath);
+            nodAssoc.AppendChild(xmlDoc.CreateElement("Path")).InnerText = ProjectManager.Project.GetRelativePath(Raster.RasterPath);
         }
 
         public static AssocSurface Deserialize(XmlNode nodAssoc, DEMSurvey dem)
         {
             string name = nodAssoc.SelectSingleNode("Name").InnerText;
-            FileInfo path = ProjectManagerBase.GetAbsolutePath(nodAssoc.SelectSingleNode("Path").InnerText);
+            FileInfo path = ProjectManager.Project.GetAbsolutePath(nodAssoc.SelectSingleNode("Path").InnerText);
             string type = nodAssoc.SelectSingleNode("Type").InnerText;
-
             return new AssocSurface(name, path, type, dem);
         }
     }

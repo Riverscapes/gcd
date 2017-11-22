@@ -57,10 +57,10 @@ namespace GCDCore.Project
         {
             XmlNode nodBS = nodParent.AppendChild(xmlDoc.CreateElement("BudgetSegregation"));
             nodBS.AppendChild(xmlDoc.CreateElement("Name")).InnerText = Name;
-            nodBS.AppendChild(xmlDoc.CreateElement("Folder")).InnerText = ProjectManagerBase.GetRelativePath(Folder.FullName);
-            nodBS.AppendChild(xmlDoc.CreateElement("PolygonMask")).InnerText = ProjectManagerBase.GetRelativePath(PolygonMask);
-            nodBS.AppendChild(xmlDoc.CreateElement("SummaryXML")).InnerText = ProjectManagerBase.GetRelativePath(SummaryXML);
-            nodBS.AppendChild(xmlDoc.CreateElement("ClassLegend")).InnerText = ProjectManagerBase.GetRelativePath(ClassLegend);
+            nodBS.AppendChild(xmlDoc.CreateElement("Folder")).InnerText = ProjectManager.Project.GetRelativePath(Folder.FullName);
+            nodBS.AppendChild(xmlDoc.CreateElement("PolygonMask")).InnerText = ProjectManager.Project.GetRelativePath(PolygonMask);
+            nodBS.AppendChild(xmlDoc.CreateElement("SummaryXML")).InnerText = ProjectManager.Project.GetRelativePath(SummaryXML);
+            nodBS.AppendChild(xmlDoc.CreateElement("ClassLegend")).InnerText = ProjectManager.Project.GetRelativePath(ClassLegend);
             nodBS.AppendChild(xmlDoc.CreateElement("MaskField")).InnerText = MaskField;
 
             XmlNode nodClasses = nodParent.AppendChild(xmlDoc.CreateElement("Classes"));
@@ -71,10 +71,10 @@ namespace GCDCore.Project
         public static BudgetSegregation Deserialize(XmlNode nodBS, DoDBase dod)
         {
             string name = nodBS.SelectSingleNode("Name").InnerText;
-            DirectoryInfo folder = ProjectManagerBase.GetAbsoluteDir(nodBS.SelectSingleNode("Folder").InnerText);
-            FileInfo polygonMask = ProjectManagerBase.GetAbsolutePath(nodBS.SelectSingleNode("PolygonMask").InnerText);
-            FileInfo summaryXML = ProjectManagerBase.GetAbsolutePath(nodBS.SelectSingleNode("SummaryXML").InnerText);
-            FileInfo classLegend = ProjectManagerBase.GetAbsolutePath(nodBS.SelectSingleNode("ClassLegend").InnerText);
+            DirectoryInfo folder = ProjectManager.Project.GetAbsoluteDir(nodBS.SelectSingleNode("Folder").InnerText);
+            FileInfo polygonMask = ProjectManager.Project.GetAbsolutePath(nodBS.SelectSingleNode("PolygonMask").InnerText);
+            FileInfo summaryXML = ProjectManager.Project.GetAbsolutePath(nodBS.SelectSingleNode("SummaryXML").InnerText);
+            FileInfo classLegend = ProjectManager.Project.GetAbsolutePath(nodBS.SelectSingleNode("ClassLegend").InnerText);
             string maskField = nodBS.SelectSingleNode("MaskField").InnerText;
 
             BudgetSegregation bs = new BudgetSegregation(name, folder, polygonMask, maskField, dod, summaryXML, classLegend);

@@ -29,7 +29,7 @@ namespace GCDCore.Engines
         /// <remarks>This method is needed by budget segregation as well</remarks>
         protected void GenerateSummaryXML(DoDStats changeStats, FileInfo outputPath)
         {
-            string templatePath = Path.Combine(Project.ProjectManagerBase.ExcelTemplatesFolder.FullName, "GCDSummary.xml");
+            string templatePath = Path.Combine(Project.ProjectManager.ExcelTemplatesFolder.FullName, "GCDSummary.xml");
             System.Text.StringBuilder outputText = default(System.Text.StringBuilder);
 
             try
@@ -46,13 +46,13 @@ namespace GCDCore.Engines
                 throw ex2;
             }
 
-            UnitsNet.Area ca = Project.ProjectManagerBase.CellArea;
-            UnitsNet.Units.LengthUnit lu = Project.ProjectManagerBase.Units.VertUnit;
-            UnitsNet.Units.AreaUnit au = Project.ProjectManagerBase.Units.ArUnit;
-            UnitsNet.Units.VolumeUnit vu = Project.ProjectManagerBase.Units.VolUnit;
+            UnitsNet.Area ca = Project.ProjectManager.Project.CellArea;
+            UnitsNet.Units.LengthUnit lu = Project.ProjectManager.Project.Units.VertUnit;
+            UnitsNet.Units.AreaUnit au = Project.ProjectManager.Project.Units.ArUnit;
+            UnitsNet.Units.VolumeUnit vu = Project.ProjectManager.Project.Units.VolUnit;
             string abbr = UnitsNet.Length.GetAbbreviation(lu);
 
-            outputText.Replace("[LinearUnits]",abbr);
+            outputText.Replace("[LinearUnits]", abbr);
 
             outputText.Replace("[TotalAreaOfErosionRaw]", changeStats.ErosionRaw.GetArea(ca).As(au).ToString(CultureInfo.InvariantCulture));
             outputText.Replace("[TotalAreaOfErosionThresholded]", changeStats.ErosionThr.GetArea(ca).As(au).ToString(CultureInfo.InvariantCulture));
@@ -97,10 +97,10 @@ namespace GCDCore.Engines
 
             FiguresFolder.Create();
 
-            UnitsNet.Area ca = GCDCore.Project.ProjectManagerBase.CellArea;
-            UnitsNet.Units.LengthUnit lu = Project.ProjectManagerBase.Units.VertUnit;
-            UnitsNet.Units.AreaUnit au = Project.ProjectManagerBase.Units.ArUnit;
-            UnitsNet.Units.VolumeUnit vu = Project.ProjectManagerBase.Units.VolUnit;
+            UnitsNet.Area ca = GCDCore.Project.ProjectManager.Project.CellArea;
+            UnitsNet.Units.LengthUnit lu = Project.ProjectManager.Project.Units.VertUnit;
+            UnitsNet.Units.AreaUnit au = Project.ProjectManager.Project.Units.ArUnit;
+            UnitsNet.Units.VolumeUnit vu = Project.ProjectManager.Project.Units.VolUnit;
             string abbr = UnitsNet.Length.GetAbbreviation(lu);
 
             barViewer.Refresh(
@@ -150,9 +150,9 @@ namespace GCDCore.Engines
             barViewer.Save(Path.Combine(FiguresFolder.FullName, sFilePrefix + "ChangeBars_DepthRelative.png"), fChartWidth, fChartHeight);
         }
 
-        protected void WriteHistogram( Histogram histo, FileInfo outputFile)
+        protected void WriteHistogram(Histogram histo, FileInfo outputFile)
         {
-            histo.WriteFile(outputFile, Project.ProjectManagerBase.CellArea, Project.ProjectManagerBase.Units);
+            histo.WriteFile(outputFile, Project.ProjectManager.Project.CellArea, Project.ProjectManager.Project.Units);
         }
 
         protected void GenerateHistogramGraphicFiles(Histogram rawHisto, Histogram thrHisto, int fChartWidth, int fChartHeight)

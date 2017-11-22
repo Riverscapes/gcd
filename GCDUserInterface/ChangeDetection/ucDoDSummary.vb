@@ -71,8 +71,8 @@ Namespace ChangeDetection
             aRow.Cells(5).Style.Font = New Drawing.Font(grdData.Font, Drawing.FontStyle.Bold)
             aRow.Cells(5).Style.Alignment = DataGridViewContentAlignment.MiddleCenter
 
-            Dim ca As UnitsNet.Area = ProjectManagerBase.CellArea
-            Dim vunit As UnitsNet.Units.LengthUnit = ProjectManagerBase.Units.VertUnit
+            Dim ca As UnitsNet.Area = ProjectManager.Project.CellArea
+            Dim vunit As UnitsNet.Units.LengthUnit = ProjectManager.Project.Units.VertUnit
 
             ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
             'Area of erosion header

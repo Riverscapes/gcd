@@ -59,21 +59,22 @@ Namespace Project
             Else
                 Me.Text = Me.Text & " Properties"
 
-                Dim theProjectRow As ProjectDS.ProjectRow = ProjectManagerBase.CurrentProject
-                txtName.Text = theProjectRow.Name
-                txtDirectory.Text = theProjectRow.OutputDirectory
-                txtGCDPath.Text = ProjectManagerBase.FilePath
-                txtDescription.Text = theProjectRow.Description
-                valPrecision.Value = theProjectRow.Precision
+                With ProjectManager.Project
+                    txtName.Text = .Name
+                    txtDirectory.Text = .ProjectFile.DirectoryName
+                    txtGCDPath.Text = .ProjectFile.FullName
+                    txtDescription.Text = .Description
+                    valPrecision.Value = .Precision
+                End With
 
-                ' Select the appropriate linear units
-                If Not String.IsNullOrEmpty(theProjectRow.DisplayUnits) Then
-                    For j As Integer = 0 To cboDisplayUnits.Items.Count - 1
-                        If String.Compare(cboDisplayUnits.Items(j).ToString, theProjectRow.DisplayUnits, True) = 0 Then
-                            cboDisplayUnits.SelectedIndex = j
-                        End If
-                    Next
-                End If
+                '' Select the appropriate linear units
+                'If Not String.IsNullOrEmpty(theProjectRow.DisplayUnits) Then
+                '    For j As Integer = 0 To cboDisplayUnits.Items.Count - 1
+                '        If String.Compare(cboDisplayUnits.Items(j).ToString, theProjectRow.DisplayUnits, True) = 0 Then
+                '            cboDisplayUnits.SelectedIndex = j
+                '        End If
+                '    Next
+                'End If
 
                 ' Adjust the controls to be read/write only for editing
                 txtName.ReadOnly = True
@@ -146,17 +147,19 @@ Namespace Project
                 If m_bCreateMode Then
                     ' Creating a new project
                     IO.Directory.CreateDirectory(IO.Path.GetDirectoryName(txtGCDPath.Text))
-                    ProjectManagerBase.FilePath = txtGCDPath.Text
-                    ProjectManagerBase.ds.Project.AddProjectRow(txtName.Text, txtDescription.Text, txtDirectory.Text, Now, System.Reflection.Assembly.GetExecutingAssembly.GetName.Version.ToString, valPrecision.Value, Nothing, Nothing, String.Empty)
+                    Dim projectFile As New System.IO.FileInfo(txtGCDPath.Text)
+
+                    Dim project As New GCDProject(txtName.Text, txtDescription.Text, projectFile, DateTime.Now,
+                                                  Reflection.Assembly.GetExecutingAssembly.GetName.Version.ToString, )
+
 
                 Else
                     ' Editing properties of existing project
-                    Dim theProjectRow As ProjectDS.ProjectRow = ProjectManagerBase.CurrentProject
-                    theProjectRow.Name = txtName.Text
-                    theProjectRow.Description = txtDescription.Text
+                    ProjectManager.Project.Name = txtName.Text
+                    ProjectManager.Project.Description = txtDescription.Text
                 End If
 
-                ProjectManagerBase.save()
+                ProjectManager.save()
 
             Catch ex As Exception
                 ex.Data("Project Name") = txtName.Text

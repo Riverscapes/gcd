@@ -6,26 +6,25 @@ namespace GCDCore.Project
 {
     public class BudgetSegregationClass : GCDProjectItem
     {
-        public readonly ProjectHistogram RawHistogram;
-        public readonly ProjectHistogram ThrHistogram;
+        public readonly HistogramPair Histograms;
         public readonly FileInfo SummaryXML;
         public readonly DoDStats Statistics;
 
-        public BudgetSegregationClass(string name, DirectoryInfo Folder, string filePrefix, DoDStats stats, GCDConsoleLib.Histogram rawHistogram, GCDConsoleLib.Histogram thrHistogram)
+        public BudgetSegregationClass(string name, DirectoryInfo Folder, string filePrefix, DoDStats stats, HistogramPair histograms, FileInfo summaryXML)
             : base(name)
         {
             Statistics = stats;
-            RawHistogram = new ProjectHistogram(new FileInfo(Path.Combine(Folder.FullName, string.Format("{0}_raw.csv", filePrefix))), rawHistogram);
-            ThrHistogram = new ProjectHistogram(new FileInfo(Path.Combine(Folder.FullName, string.Format("{0}_thr.csv", filePrefix))), thrHistogram);
-            SummaryXML = new FileInfo(Path.Combine(Folder.FullName, string.Format("{0}_summary.xml", filePrefix)));
+            Histograms = histograms;
+            //RawHistogram = new HistogramPair(new FileInfo(Path.Combine(Folder.FullName, string.Format("{0}_raw.csv", filePrefix))), rawHistogram);
+            //ThrHistogram = new HistogramPair(new FileInfo(Path.Combine(Folder.FullName, string.Format("{0}_thr.csv", filePrefix))), thrHistogram);
+            SummaryXML = summaryXML;
         }
 
-        public BudgetSegregationClass(string name, DoDStats stats, FileInfo rawHist, FileInfo thrHist, FileInfo summaryXML)
+        public BudgetSegregationClass(string name, DoDStats stats, HistogramPair histograms, FileInfo summaryXML)
             : base(name)
         {
             Statistics = stats;
-            RawHistogram = new ProjectHistogram(rawHist);
-            ThrHistogram = new ProjectHistogram(thrHist);
+            Histograms = histograms;
             SummaryXML = summaryXML;
         }
 
@@ -33,22 +32,22 @@ namespace GCDCore.Project
         {
             XmlNode nodClass = nodParent.AppendChild(xmlDoc.CreateElement("Class"));
             nodClass.AppendChild(xmlDoc.CreateElement("Name")).InnerText = Name;
-            nodClass.AppendChild(xmlDoc.CreateElement("RawHistogram")).InnerText = ProjectManagerBase.GetRelativePath(RawHistogram.Path);
-            nodClass.AppendChild(xmlDoc.CreateElement("ThrHistogram")).InnerText = ProjectManagerBase.GetRelativePath(ThrHistogram.Path);
-            nodClass.AppendChild(xmlDoc.CreateElement("SummaryXML")).InnerText = ProjectManagerBase.GetRelativePath(SummaryXML);
+            nodClass.AppendChild(xmlDoc.CreateElement("RawHistogram")).InnerText = ProjectManager.Project.GetRelativePath(Histograms.Raw.Path);
+            nodClass.AppendChild(xmlDoc.CreateElement("ThrHistogram")).InnerText = ProjectManager.Project.GetRelativePath(Histograms.Thr.Path);
+            nodClass.AppendChild(xmlDoc.CreateElement("SummaryXML")).InnerText = ProjectManager.Project.GetRelativePath(SummaryXML);
             DoDBase.SerializeDoDStatistics(xmlDoc, nodParent, Statistics);
         }
 
         public static BudgetSegregationClass Deserialize(XmlNode nodClass)
         {
             string name = nodClass.SelectSingleNode("Name").InnerText;
-            FileInfo rawHist = ProjectManagerBase.GetAbsolutePath(nodClass.SelectSingleNode("RawHistogram").InnerText);
-            FileInfo thrHist = ProjectManagerBase.GetAbsolutePath(nodClass.SelectSingleNode("ThrHistogram").InnerText);
-            FileInfo summary = ProjectManagerBase.GetAbsolutePath(nodClass.SelectSingleNode("SummaryXML").InnerText);
+            FileInfo rawHist = ProjectManager.Project.GetAbsolutePath(nodClass.SelectSingleNode("RawHistogram").InnerText);
+            FileInfo thrHist = ProjectManager.Project.GetAbsolutePath(nodClass.SelectSingleNode("ThrHistogram").InnerText);
+            FileInfo summary = ProjectManager.Project.GetAbsolutePath(nodClass.SelectSingleNode("SummaryXML").InnerText);
 
-            DoDStats stats = DoDBase.DeserializeStatistics(nodClass.SelectSingleNode("Statistics"), ProjectManagerBase.CellArea, ProjectManagerBase.Units);
+            DoDStats stats = DoDBase.DeserializeStatistics(nodClass.SelectSingleNode("Statistics"), ProjectManager.Project.CellArea, ProjectManager.Project.Units);
 
-            return new BudgetSegregationClass(name, stats, rawHist, thrHist, summary);
+            return new BudgetSegregationClass(name, stats, new HistogramPair(rawHist, thrHist), summary);
         }
     }
 }

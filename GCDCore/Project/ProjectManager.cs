@@ -11,24 +11,29 @@ namespace GCDCore.Project
     /// members needed by both console and UI applications. The GCD still uses the inherited
     /// GCDProjectManager class that has more members that are specific to
     /// the desktop software.</remarks>
-    public class ProjectManagerBase
+    public class ProjectManager
     {
-        public GCDProject Project { get; internal set; }
-        public readonly DirectoryInfo ExcelTemplatesFolder;
-        public readonly DirectoryInfo ReportsFolder;
-        public readonly OutputManager OutputManager;
-        private readonly FileInfo SurveyTypesPath;
+        public static GCDProject Project { get; internal set; }
+        public static DirectoryInfo ExcelTemplatesFolder { get; internal set; }
+        public static DirectoryInfo ReportsFolder { get; internal set; }
+        public static OutputManager OutputManager { get; internal set; }
+        public static RasterPyramidManager PyramidManager { get; internal set; }
+        private static FileInfo SurveyTypesPath { get; set; }
+        private static FileInfo FISLibraryPath { get; set; }
 
-        public Dictionary<string, SurveyType> SurveyTypes
+        public static bool IsArcMap { get { return System.Reflection.Assembly.GetEntryAssembly().FullName.ToLower().Contains("arcmap"); } }
+
+        public static Dictionary<string, SurveyType> SurveyTypes
         {
             get { return SurveyType.Load(SurveyTypesPath); }
             set { SurveyType.Save(SurveyTypesPath, value); }
         }
 
-        public ProjectManagerBase(string sResourcesFolder)
+        public static void Init(string sResourcesFolder, string sAutomaticPyramids)
         {
             OutputManager = new OutputManager();
-  
+            PyramidManager = new RasterPyramidManager(sAutomaticPyramids);
+
             SurveyTypesPath = new FileInfo(Path.Combine(sResourcesFolder, "SurveyTypes.xml"));
             if (!SurveyTypesPath.Exists)
             {
@@ -36,6 +41,9 @@ namespace GCDCore.Project
                 ex.Data["Survey Types XML File"] = SurveyTypesPath.FullName;
                 throw ex;
             }
+
+            // The FIS library doesn't need to exist
+            FISLibraryPath = new FileInfo(Path.Combine(sResourcesFolder, "FISLibrary.xml"));
 
             ExcelTemplatesFolder = new DirectoryInfo(System.IO.Path.Combine(sResourcesFolder, "ExcelTemplates"));
             if (!ExcelTemplatesFolder.Exists)
@@ -54,17 +62,33 @@ namespace GCDCore.Project
             }
         }
 
-        public void OpenProject(FileInfo projectFile)
+        public static List<ErrorCalculation.FIS.FISLibraryItem> FISLibrary
+        {
+            get
+            {
+                if (FISLibraryPath.Exists)
+                {
+                    return ErrorCalculation.FIS.FISLibraryItem.Load(FISLibraryPath);
+                }
+                else
+                {
+                    return new List<ErrorCalculation.FIS.FISLibraryItem>();
+                }
+            }
+            set { ErrorCalculation.FIS.FISLibraryItem.Save(FISLibraryPath, value); }
+        }
+
+        public static void OpenProject(FileInfo projectFile)
         {
             Project = GCDProject.Load(projectFile);
         }
 
-        public void OpenProject(GCDProject project)
+        public static void OpenProject(GCDProject project)
         {
             Project = project;
-        }      
+        }
 
-        public void CloseCurrentProject()
+        public static void CloseCurrentProject()
         {
             Project = null;
             GC.Collect();

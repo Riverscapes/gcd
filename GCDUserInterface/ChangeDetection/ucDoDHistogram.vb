@@ -15,7 +15,7 @@ Namespace ChangeDetection
         End Sub
 
         Public Sub LoadHistograms(rawHistogram As GCDConsoleLib.Histogram, thrHistogram As GCDConsoleLib.Histogram)
-            m_HistogramViewer = New DoDHistogramViewerClass(rawHistogram, thrHistogram, ProjectManagerBase.Units)
+            m_HistogramViewer = New DoDHistogramViewerClass(rawHistogram, thrHistogram, ProjectManager.Project.Units)
         End Sub
 
     End Class

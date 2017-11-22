@@ -2,9 +2,7 @@
 using System.IO;
 using System.Xml;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using GCDConsoleLib;
 using GCDConsoleLib.GCD;
 
 namespace GCDCore.Project
@@ -13,14 +11,32 @@ namespace GCDCore.Project
     {
         public readonly double Threshold;
 
-        public DoDMinLoD(string name, DirectoryInfo folder, DEMSurvey newDEM, DEMSurvey oldDEM, double threshold, DoDStats stats)
-            : base(name, folder, newDEM, oldDEM, stats)
+        /// <summary>
+        /// Constructor for change detection engine
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="folder"></param>
+        /// <param name="newDEM"></param>
+        /// <param name="oldDEM"></param>
+        /// <param name="rawDoD"></param>
+        /// <param name="thrDoD"></param>
+        /// <param name="rawHist"></param>
+        /// <param name="thrHist"></param>
+        /// <param name="threshold"></param>
+        /// <param name="stats"></param>
+        public DoDMinLoD(string name, DirectoryInfo folder, DEMSurvey newDEM, DEMSurvey oldDEM, Raster rawDoD, Raster thrDoD, HistogramPair histograms, double threshold, DoDStats stats)
+            : base(name, folder, newDEM, oldDEM, rawDoD, thrDoD, histograms, stats)
         {
             Threshold = threshold;
         }
 
+        /// <summary>
+        /// Constructor for XML deserialization
+        /// </summary>
+        /// <param name="dod"></param>
+        /// <param name="threshold"></param>
         public DoDMinLoD(DoDBase dod, double threshold)
-            : base(dod.Name, dod.Folder, dod.NewDEM, dod.OldDEM, dod.Statistics)
+            : base(dod)
         {
             Threshold = threshold;
         }

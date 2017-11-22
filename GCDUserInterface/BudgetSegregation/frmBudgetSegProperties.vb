@@ -1,44 +1,32 @@
 ﻿Imports System.Windows.Forms
-Imports GCDCore.ChangeDetection
+Imports GCDCore.Project
 
 Namespace UI.BudgetSegregation
 
     Public Class frmBudgetSegProperties
 
-        Private m_nBSID As Integer
-        Private m_bsOutputs As GCDCore.BudgetSegregation.BSResultSet
-        Private m_nDoDID As Integer
+        Private m_BudgetSeg As GCDCore.Project.BudgetSegregation
+        Private InitialDoD As DoDBase
 
-        Public ReadOnly Property BSID As Integer
+        Public ReadOnly Property BudgetSeg As GCDCore.Project.BudgetSegregation
             Get
-                Return m_nBSID
+                Return m_BudgetSeg
             End Get
         End Property
 
-        Public Sub New(rDoD As ProjectDS.DoDsRow)
+        Public Sub New(parentDoD As DoDBase)
 
             ' This call is required by the designer.
             InitializeComponent()
-            m_nDoDID = rDoD.DoDID
+            InitialDoD = parentDoD
 
             ucPolygon.Initialize("Budget Segregation Polygon Mask", GCDConsoleLib.GDalGeometryType.SimpleTypes.Polygon)
         End Sub
 
         Private Sub BudgetSegPropertiesForm_Load(sender As Object, e As System.EventArgs) Handles Me.Load
 
-            Dim nSelIndex As Integer = 0
-            For Each rDoD As ProjectDS.DoDsRow In ProjectManagerBase.CurrentProject.GetDoDsRows
-                Dim nIndex As Integer = cboDoD.Items.Add(New naru.db.NamedObject(rDoD.DoDID, rDoD.Name))
-                If rDoD.DoDID = m_nDoDID Then
-                    nSelIndex = nIndex
-                End If
-            Next
-
-            If cboDoD.Items.Count > 0 Then
-                If nSelIndex >= 0 Then
-                    cboDoD.SelectedIndex = nSelIndex
-                End If
-            End If
+            cboDoD.DataSource = ProjectManager.Project.DoDs.Values
+            cboDoD.SelectedItem = InitialDoD
 
         End Sub
 
@@ -52,72 +40,16 @@ Namespace UI.BudgetSegregation
             Try
                 Cursor.Current = Cursors.WaitCursor
 
-                Dim rDoD As ProjectDS.DoDsRow = Nothing
-                For Each aDoD As ProjectDS.DoDsRow In ProjectManagerBase.CurrentProject.GetDoDsRows
-                    If aDoD.DoDID = DirectCast(cboDoD.SelectedItem, naru.db.NamedObject).ID Then
-                        rDoD = aDoD
-                        'New place to create budget segregation folder
-                        Dim sBS_Folder As String = ProjectManagerBase.OutputManager.CreateBudgetSegFolder(rDoD.Name)
-                        If IO.Directory.Exists(sBS_Folder) Then
-                            IO.Directory.CreateDirectory(IO.Path.Combine(sBS_Folder, "Figs"))
-                        End If
-                        Exit For
-                    End If
-                Next
+                Dim dod As DoDBase = DirectCast(cboDoD.SelectedItem, DoDBase)
+                Dim bsFolder As IO.DirectoryInfo = ProjectManager.OutputManager.GetBudgetSegreationDirectoryPath(dod.Folder, True)
 
-                If Not TypeOf rDoD Is ProjectDS.DoDsRow Then
-                    Dim ex As New Exception("Unable to find DoD row in GCD project.")
-                    ex.Data("DoDID") = DirectCast(cboDoD.SelectedItem, naru.db.NamedObject).ID
-                    Throw ex
-                End If
+                Dim bsEngine As New GCDCore.Engines.BudgetSegregationEngine(txtName.Text, bsFolder)
+                m_BudgetSeg = bsEngine.Calculate(dod, ucPolygon.SelectedItem, cboField.Text)
 
-                Dim dodProps As DoDResult = DoDResult.CreateFromDoDRow(rDoD)
-                Dim bs As New GCDCore.BudgetSegregation.BudgetSegregationEngine(New IO.DirectoryInfo(txtOutputFolder.Text))
-                m_bsOutputs = bs.Calculate(dodProps, ucPolygon.SelectedItem, cboField.Text)
-                Cursor.Current = Cursors.WaitCursor
+                ProjectManager.Project.Save()
 
-                Dim sRelativeFolder As String = ProjectManagerBase.GetRelativePath(txtOutputFolder.Text)
-                Dim sPCDepositionVolPie As String = ProjectManagerBase.GetRelativePath(String.Empty)
-                Dim sPCErosionVolPie As String = ProjectManagerBase.GetRelativePath(String.Empty)
-                Dim sPCTotalVolPie As String = ProjectManagerBase.GetRelativePath(String.Empty)
-                Dim sClassLegend As String = ProjectManagerBase.GetRelativePath(m_bsOutputs.ClassLegendPath)
-                Dim sClassSummary As String = ProjectManagerBase.GetRelativePath(m_bsOutputs.ClassSummaryXML)
-                Dim sPolygonMask As String = ProjectManagerBase.GetRelativePath(m_bsOutputs.PolygonMask)
-
-                Dim bsRow As ProjectDS.BudgetSegregationsRow = ProjectManagerBase.ds.BudgetSegregations.AddBudgetSegregationsRow(rDoD, txtName.Text, sPolygonMask, cboField.Text, sRelativeFolder,
-                                                           sPCDepositionVolPie, sPCErosionVolPie, sPCTotalVolPie, sClassLegend, sClassSummary)
-
-                Dim ca As UnitsNet.Area = ProjectManagerBase.CellArea
-                Dim lu As UnitsNet.Units.LengthUnit = ProjectManagerBase.Units.VertUnit
-                Dim au As UnitsNet.Units.AreaUnit = ProjectManagerBase.Units.ArUnit
-                Dim vu As UnitsNet.Units.VolumeUnit = ProjectManagerBase.Units.VolUnit
-
-                For Each classResult As GCDCore.BudgetSegregation.BSResult In m_bsOutputs.ClassResults.Values
-                    Cursor.Current = Cursors.WaitCursor
-
-                    Dim sMaskCSV As String = ProjectManagerBase.GetRelativePath(classResult.RawHistogramPath)
-                    Dim sSummaryFile As String = ProjectManagerBase.GetRelativePath(classResult.SummaryXMLPath)
-
-                    ProjectManagerBase.ds.BSMasks.AddBSMasksRow(bsRow, classResult.ClassIndex, classResult.ClassName,
-                                                                classResult.ChangeStats.ErosionRaw.GetArea(ca).As(au),
-                                                                classResult.ChangeStats.DepositionRaw.GetArea(ca).As(au),
-                                                                classResult.ChangeStats.ErosionThr.GetArea(ca).As(au),
-                                                                classResult.ChangeStats.DepositionThr.GetArea(ca).As(au),
-                                                                classResult.ChangeStats.ErosionRaw.GetVolume(ca, lu).As(vu),
-                                                                classResult.ChangeStats.DepositionRaw.GetVolume(ca, lu).As(vu),
-                                                                classResult.ChangeStats.ErosionThr.GetVolume(ca, lu).As(vu),
-                                                                classResult.ChangeStats.DepositionThr.GetVolume(ca, lu).As(vu),
-                                                                classResult.ChangeStats.ErosionErr.GetVolume(ca, lu).As(vu),
-                                                                classResult.ChangeStats.DepositionErr.GetVolume(ca, lu).As(vu),
-                                                                String.Empty, String.Empty, sSummaryFile, sMaskCSV)
-                Next
-
-                ProjectManagerBase.save()
-
-                m_nBSID = bsRow.BudgetID
             Catch ex As Exception
                 naru.error.ExceptionUI.HandleException(ex)
-                m_nBSID = 0
             Finally
                 Cursor.Current = Cursors.Default
             End Try
@@ -126,21 +58,23 @@ Namespace UI.BudgetSegregation
 
         Private Function ValidateForm() As Boolean
 
+            ' Sanity check to avoid names with only empty spaces
+            txtName.Text = txtName.Text.Trim()
+
+            If Not TypeOf cboDoD.SelectedItem Is DoDBase Then
+                MessageBox.Show("Please choose a change detection analysis on which you want to base this budget segregation.", "Missing Change Detection", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Return False
+            End If
+
+
             If String.IsNullOrEmpty(txtName.Text) Then
                 MsgBox("Please enter a name for the budget segregation analysis.", MsgBoxStyle.Information, GCDCore.Properties.Resources.ApplicationNameLong)
                 Return Nothing
             Else
-                For Each rDoD As ProjectDS.DoDsRow In ProjectManagerBase.ds.DoDs
-                    ' Budget Seg Names are unique to a DoD.
-                    If rDoD.DoDID = m_nDoDID Then
-                        For Each rBS As ProjectDS.BudgetSegregationsRow In rDoD.GetBudgetSegregationsRows
-                            If String.Compare(rBS.Name, txtName.Text, True) = 0 Then
-                                MsgBox("Another budget segregation already uses the name '" & txtName.Text & "'. Please choose a unique name.", MsgBoxStyle.Information, GCDCore.Properties.Resources.ApplicationNameLong)
-                                Return False
-                            End If
-                        Next
-                    End If
-                Next
+                If Not DirectCast(cboDoD.SelectedItem, DoDBase).IsBudgetSegNameUnique(txtName.Text, Nothing) Then
+                    MsgBox("Another budget segregation already uses the name '" & txtName.Text & "'. Please choose a unique name.", MsgBoxStyle.Information, GCDCore.Properties.Resources.ApplicationNameLong)
+                    Return False
+                End If
             End If
 
             If TypeOf ucPolygon.SelectedItem Is GCDConsoleLib.Vector Then
@@ -150,53 +84,21 @@ Namespace UI.BudgetSegregation
                     Return False
                 End If
 
-                If TypeOf cboDoD.SelectedItem Is naru.db.NamedObject Then
-                    Dim nDoD As Integer = DirectCast(cboDoD.SelectedItem, naru.db.NamedObject).ID
-                    Dim rDoD As ProjectDS.DoDsRow = Nothing
-                    Dim bDoDExists As Boolean = False
-                    For Each rItem As ProjectDS.DoDsRow In ProjectManagerBase.ds.DoDs
-                        If rItem.DoDID = nDoD Then
-                            rDoD = rItem
-                            bDoDExists = True
-                            Exit For
-                        End If
-                    Next
+                Dim dod As DoDBase = DirectCast(cboDoD.SelectedItem, DoDBase)
 
-                    If TypeOf rDoD Is ProjectDS.DoDsRow Then
-                        Dim rawDoDPath As IO.FileInfo = ProjectManagerBase.GetAbsolutePath(rDoD.RawDoDPath)
-                        If rawDoDPath.Exists Then
-                            Dim gDoD As New GCDConsoleLib.Raster(rawDoDPath)
-
-                            ' Confirm that the polygon mask has a spatial reference.
-                            Dim bMissingSpatialReference As Boolean = True
-                            'If TypeOf ucPolygon.SelectedItem.SpatialReference Is ESRI.ArcGIS.Geometry.ISpatialReference Then
-                            bMissingSpatialReference = ucPolygon.SelectedItem.Proj.PrettyWkt.ToLower.Contains("unknown")
-                            'End If
-
-                            If bMissingSpatialReference Then
-                                MsgBox("The selected feature class appears to be missing a spatial reference. All GCD inputs must possess a spatial reference and it must be the same spatial reference for all datasets in a GCD project." &
-                              " If the selected feature class exists in the same coordinate system, " & gDoD.Proj.PrettyWkt & ", but the coordinate system has not yet been defined for the feature class." &
-                              " Use the ArcToolbox 'Define Projection' geoprocessing tool in the 'Data Management -> Projection & Transformations' Toolbox to correct the problem with the selected datasets by defining the coordinate system as:" & vbCrLf & vbCrLf & gDoD.Proj.PrettyWkt & vbCrLf & vbCrLf & "Then try using it with the GCD again.", MsgBoxStyle.Information, GCDCore.Properties.Resources.ApplicationNameLong)
-                                Return False
-                            Else
-                                If Not gDoD.Proj.IsSame(ucPolygon.SelectedItem.Proj) Then
-
-                                    MsgBox("The coordinate system of the selected feature class:" & vbCrLf & vbCrLf & ucPolygon.SelectedItem.Proj.PrettyWkt & vbCrLf & vbCrLf & "does not match that of the GCD project:" & vbCrLf & vbCrLf & gDoD.Proj.PrettyWkt & vbCrLf & vbCrLf &
-                     "All datasets within a GCD project must have the identical coordinate system. However, small discrepencies in coordinate system names might cause the two coordinate systems to appear different. " &
-                     "If you believe that the selected dataset does in fact possess the same coordinate system as the GCD project then use the ArcToolbox 'Define Projection' geoprocessing tool in the " &
-                     "'Data Management -> Projection & Transformations' Toolbox to correct the problem with the selected dataset by defining the coordinate system as:" & vbCrLf & vbCrLf & gDoD.Proj.PrettyWkt & vbCrLf & vbCrLf & "Then try importing it into the GCD again.", MsgBoxStyle.Information, GCDCore.Properties.Resources.ApplicationNameLong)
-                                    Return False
-                                End If
-                            End If
-                        Else
-                            MsgBox("The selected raw DoD raster cannot be found.", MsgBoxStyle.Information, GCDCore.Properties.Resources.ApplicationNameLong)
-                        End If
-                    Else
-                        MsgBox("The selected DoD cannot be found in the GCD project.", MsgBoxStyle.Information, GCDCore.Properties.Resources.ApplicationNameLong)
-                    End If
-                Else
-                    MsgBox("Please choose a change detection analysis on which you want to base this budget segregation.", MsgBoxStyle.Information, GCDCore.Properties.Resources.ApplicationNameLong)
+                If ucPolygon.SelectedItem.Proj.PrettyWkt.ToLower.Contains("unknown") Then
+                    MsgBox("The selected feature class appears to be missing a spatial reference. All GCD inputs must possess a spatial reference and it must be the same spatial reference for all datasets in a GCD project." &
+                      " If the selected feature class exists in the same coordinate system, " & dod.RawDoD.Raster.Proj.PrettyWkt & ", but the coordinate system has not yet been defined for the feature class." &
+                      " Use the ArcToolbox 'Define Projection' geoprocessing tool in the 'Data Management -> Projection & Transformations' Toolbox to correct the problem with the selected datasets by defining the coordinate system as:" & vbCrLf & vbCrLf & dod.RawDoD.Raster.Proj.PrettyWkt & vbCrLf & vbCrLf & "Then try using it with the GCD again.", MsgBoxStyle.Information, GCDCore.Properties.Resources.ApplicationNameLong)
                     Return False
+                Else
+                    If Not dod.RawDoD.Raster.Proj.IsSame(ucPolygon.SelectedItem.Proj) Then
+                        MsgBox("The coordinate system of the selected feature class:" & vbCrLf & vbCrLf & ucPolygon.SelectedItem.Proj.PrettyWkt & vbCrLf & vbCrLf & "does not match that of the GCD project:" & vbCrLf & vbCrLf & dod.RawDoD.Raster.Proj.PrettyWkt & vbCrLf & vbCrLf &
+                         "All datasets within a GCD project must have the identical coordinate system. However, small discrepencies in coordinate system names might cause the two coordinate systems to appear different. " &
+                         "If you believe that the selected dataset does in fact possess the same coordinate system as the GCD project then use the ArcToolbox 'Define Projection' geoprocessing tool in the " &
+                         "'Data Management -> Projection & Transformations' Toolbox to correct the problem with the selected dataset by defining the coordinate system as:" & vbCrLf & vbCrLf & dod.RawDoD.Raster.Proj.PrettyWkt & vbCrLf & vbCrLf & "Then try importing it into the GCD again.", MsgBoxStyle.Information, GCDCore.Properties.Resources.ApplicationNameLong)
+                        Return False
+                    End If
                 End If
             Else
                 MsgBox("Please choose a polygon mask on which you wish to base this budget segregation.", MsgBoxStyle.Information, GCDCore.Properties.Resources.ApplicationNameLong)
@@ -214,78 +116,36 @@ Namespace UI.BudgetSegregation
 
         Private Sub cboDoD_SelectedIndexChanged(sender As Object, e As System.EventArgs) Handles cboDoD.SelectedIndexChanged
 
-            If TypeOf cboDoD.SelectedItem Is naru.db.NamedObject Then
-                Dim nDoDID As Integer = DirectCast(cboDoD.SelectedItem, naru.db.NamedObject).ID
-                If nDoDID > 0 Then
-                    For Each rDoD As ProjectDS.DoDsRow In ProjectManagerBase.CurrentProject.GetDoDsRows
-                        If rDoD.DoDID = nDoDID Then
-                            txtNewDEM.Text = rDoD.NewSurveyName
-                            txtOldDEM.Text = rDoD.OldSurveyName
-
-                            If rDoD.TypeMinLOD Then
-                                txtUncertaintyAnalysis.Text = "Minimum Level of Detection"
-                                If Not rDoD.IsThresholdNull Then
-                                    txtUncertaintyAnalysis.Text &= ", Threshold at " & rDoD.Threshold.ToString("#.00") & ProjectManagerBase.CurrentProject.DisplayUnits
-                                End If
-                            ElseIf rDoD.TypePropagated Then
-                                txtUncertaintyAnalysis.Text = "Propagated Error"
-                            ElseIf rDoD.TypeProbabilistic Then
-                                txtUncertaintyAnalysis.Text = "Probabilistic"
-                                If Not rDoD.IsThresholdNull Then
-                                    txtUncertaintyAnalysis.Text &= ", Confidence level at " & (100 * rDoD.Threshold) & "%"
-                                End If
-                            End If
-                            UpdateOutputFolder(rDoD.Name)
-
-                            Exit For
-                        End If
-                    Next
-                End If
+            If Not TypeOf cboDoD.SelectedItem Is DoDBase Then
+                Return
             End If
-        End Sub
 
-        Private Sub txtName_TextChanged(sender As Object, e As System.EventArgs) Handles _
-        txtName.TextChanged, cboField.SelectedIndexChanged
+            Dim dod As DoDBase = DirectCast(cboDoD.SelectedItem, DoDBase)
 
-        End Sub
+            txtNewDEM.Text = dod.NewDEM.Name
+            txtOldDEM.Text = dod.OldDEM.Name
 
-        Private Sub UpdateOutputFolder(ByVal sDoDName As String)
-
-            txtOutputFolder.Text = ProjectManagerBase.OutputManager.GetBudgetSegreationDirectoryPath(sDoDName)
-
-        End Sub
-
-        Private Sub UpdateOutputFolder()
-
-            txtOutputFolder.Text = String.Empty
-            If Not String.IsNullOrEmpty(txtName.Text) Then
-
-                If TypeOf ucPolygon.SelectedItem Is GCDConsoleLib.Vector Then
-                    Dim polygonPath As IO.FileInfo = ucPolygon.SelectedItem.GISFileInfo
-
-                    If Not String.IsNullOrEmpty(cboField.Text) Then
-                        If TypeOf cboDoD.SelectedItem Is naru.db.NamedObject Then
-                            Dim nDoDID As Integer = DirectCast(cboDoD.SelectedItem, naru.db.NamedObject).ID
-                            If nDoDID > 0 Then
-                                For Each rDoD As ProjectDS.DoDsRow In ProjectManagerBase.CurrentProject.GetDoDsRows
-                                    If nDoDID = rDoD.DoDID Then
-                                        txtOutputFolder.Text = ProjectManagerBase.OutputManager.GetBudgetSegreationDirectoryPath(rDoD.Name)
-                                        'txtOutputFolder.Text = GCD.GCDProject.ProjectManagerBase.OutputManager.CreateBudgetSegFolder(rDoD.Name, sPolygonPath, cboField.Text)
-                                        Exit For
-                                    End If
-                                Next
-                            End If
-                        End If
-                    End If
-                End If
+            If TypeOf dod Is DoDMinLoD Then
+                txtUncertaintyAnalysis.Text = String.Format("Minimum Level of Detection at {0:#.00}{1}", DirectCast(dod, DoDMinLoD).Threshold, ProjectManager.Project.Units.VertUnit)
+            ElseIf TypeOf dod Is DoDPropagated Then
+                txtUncertaintyAnalysis.Text = "Propagated Error"
+            Else
+                txtUncertaintyAnalysis.Text = String.Format("Probabilistic at {0}% confidence level", DirectCast(dod, DoDProbabilistic).ConfidenceLevel * 100)
             End If
+
+            txtOutputFolder.Text = ProjectManager.Project.GetRelativePath(ProjectManager.OutputManager.GetBudgetSegreationDirectoryPath(dod.Folder, False).FullName)
+
         End Sub
 
         Private Sub PolygonChanged(ByVal sender As Object, ByVal e As naru.ui.PathEventArgs) Handles ucPolygon.PathChanged
-            If TypeOf ucPolygon.SelectedItem Is GCDConsoleLib.Vector Then
-                ' TODO: Figure solution to following line
-                'ucPolygon.SelectedItem.FillComboWithFields(cboField, "Mask", ESRI.ArcGIS.Geodatabase.esriFieldType.esriFieldTypeString, True)
+
+            cboField.Items.Clear()
+
+            If Not TypeOf ucPolygon.SelectedItem Is GCDConsoleLib.Vector Then
+                Return
             End If
+
+            cboField.DataSource = ucPolygon.SelectedItem.Fields.Values.Where(Function(p) p.Type.Equals(GCDConsoleLib.GDalFieldType.StringField))
 
             If cboField.Items.Count > 0 Then
                 cboField.SelectedIndex = 0

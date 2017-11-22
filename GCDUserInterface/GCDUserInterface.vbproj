@@ -150,12 +150,6 @@
     <Compile Include="ChangeDetection\ucDoDSummary.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ErrorCalculation\frmErrorCalculation.Designer.vb">
-      <DependentUpon>frmErrorCalculation.vb</DependentUpon>
-    </Compile>
-    <Compile Include="ErrorCalculation\frmErrorCalculation.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="FISLibrary\frmAddFIS.Designer.vb">
       <DependentUpon>frmAddFIS.vb</DependentUpon>
     </Compile>
@@ -201,6 +195,7 @@
     <Compile Include="Project\frmProjectProperties.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Project\ProjectTreeNode.vb" />
     <Compile Include="Project\ucProjectExplorer.Designer.vb">
       <DependentUpon>ucProjectExplorer.vb</DependentUpon>
     </Compile>
@@ -298,9 +293,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ChangeDetection\ucDoDSummary.resx">
       <DependentUpon>ucDoDSummary.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ErrorCalculation\frmErrorCalculation.resx">
-      <DependentUpon>frmErrorCalculation.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FISLibrary\frmAddFIS.resx">
       <DependentUpon>frmAddFIS.vb</DependentUpon>
@@ -526,6 +518,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\USUlogo.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ErrorCalculation\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

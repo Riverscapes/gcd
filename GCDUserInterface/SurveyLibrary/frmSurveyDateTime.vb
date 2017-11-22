@@ -5,21 +5,18 @@ Namespace SurveyLibrary
 
     Public Class frmSurveyDateTime
 
-        Private m_dateTime As GCDCore.Project.SurveyDateTime
+        Private m_dateTime As SurveyDateTime
 
-        Public Sub New()
+        Public Sub New(sdt As SurveyDateTime)
             ' This call is required by the designer.
             InitializeComponent()
-            m_dateTime = New GCDCore.Project.SurveyDateTime
+            m_dateTime = sdt
         End Sub
 
-        Public Property SurveyDateTime As GCDCore.Project.SurveyDateTime
+        Public ReadOnly Property SurveyDateTime As SurveyDateTime
             Get
                 Return m_dateTime
             End Get
-            Set(value As GCDCore.Project.SurveyDateTime)
-                m_dateTime = value
-            End Set
         End Property
 
         Private Sub frmSurveyDateTime_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load

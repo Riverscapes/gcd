@@ -88,7 +88,7 @@ namespace GCDStandalone
                 {
                     // Set the project file path first (which will attempt to read the XML file and throw an error if anything goes wrong)
                     // Then set the settings if the read was successful.
-                    GCDCore.Project.ProjectManagerBase.FilePath = f.FileName;
+                    GCDCore.Project.ProjectManager.FilePath = f.FileName;
                     GCDCore.Properties.Settings.Default.LastUsedProjectFolder = System.IO.Path.GetDirectoryName(f.FileName);
                     GCDCore.Properties.Settings.Default.Save();
 
@@ -115,9 +115,9 @@ namespace GCDStandalone
 
         private void browseGCDProjectFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(GCDCore.Project.ProjectManagerBase.FilePath) && System.IO.File.Exists(GCDCore.Project.ProjectManagerBase.FilePath))
+            if (!string.IsNullOrEmpty(GCDCore.Project.ProjectManager.FilePath) && System.IO.File.Exists(GCDCore.Project.ProjectManager.FilePath))
             {
-                System.Diagnostics.Process.Start(System.IO.Path.GetDirectoryName(GCDCore.Project.ProjectManagerBase.FilePath));
+                System.Diagnostics.Process.Start(System.IO.Path.GetDirectoryName(GCDCore.Project.ProjectManager.FilePath));
             }
         }
 
@@ -173,14 +173,14 @@ namespace GCDStandalone
                             break;
 
                         default:
-                            subMenu.Enabled = !string.IsNullOrEmpty(GCDCore.Project.ProjectManagerBase.FilePath);
+                            subMenu.Enabled = !string.IsNullOrEmpty(GCDCore.Project.ProjectManager.FilePath);
                             break;
                     }
                 }
             }
 
             // Now update the tool status strip
-            tssProjectPath.Text = GCDCore.Project.ProjectManagerBase.FilePath;
+            tssProjectPath.Text = GCDCore.Project.ProjectManager.FilePath;
         }
 
         private void onlineGCDHelpToolStripMenuItem_Click(object sender, EventArgs e)
@@ -249,7 +249,7 @@ namespace GCDStandalone
         {
             try
             {
-                GCDCore.Project.ProjectManagerBase.FilePath = string.Empty;
+                GCDCore.Project.ProjectManager.FilePath = string.Empty;
                 ucProjectExplorer1.cmdRefresh_Click(sender, e);
                 UpdateMenusAndToolstrips(sender, e);
             }

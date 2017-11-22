@@ -1,9 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 
 namespace GCDCore.Project
@@ -43,7 +40,7 @@ namespace GCDCore.Project
                 nodParent.AppendChild(xmlDoc.CreateElement("AssociatedSurface")).InnerText = AssociatedSurface.Name;
 
             if (FISRuleFile is FileInfo)
-                nodParent.AppendChild(xmlDoc.CreateElement("FISRuleFile")).InnerText = ProjectManagerBase.GetRelativePath(FISRuleFile);
+                nodParent.AppendChild(xmlDoc.CreateElement("FISRuleFile")).InnerText = ProjectManager.Project.GetRelativePath(FISRuleFile);
 
             if (FISInputs != null)
             {
@@ -79,7 +76,7 @@ namespace GCDCore.Project
             }
             else if (nodFIS is XmlNode)
             {
-                FileInfo fisRuleFile = ProjectManagerBase.GetAbsolutePath(nodFIS.SelectSingleNode("FISRuleFile").InnerText);
+                FileInfo fisRuleFile = ProjectManager.Project.GetAbsolutePath(nodFIS.SelectSingleNode("FISRuleFile").InnerText);
                 Dictionary<string, AssocSurface> inputs = new Dictionary<string, AssocSurface>();
 
                 foreach (XmlNode nodInput in nodFIS.SelectNodes("Inputs/Input"))

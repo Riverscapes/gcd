@@ -1,4 +1,5 @@
-﻿
+﻿Imports GCDCore.Project
+
 Namespace SurveyLibrary
 
     Public Class frmAssocSurfaceProperties
@@ -13,8 +14,8 @@ Namespace SurveyLibrary
             InterpolationError
         End Enum
 
-        Private m_nSurfaceID As Integer
-        Private m_nSurveyID As Integer
+        Private m_Assoc As AssocSurface
+        Private DEM As DEMSurvey
         Private m_frmPointDensity As frmPointDensity
         Private m_ImportForm As frmImportRaster
         'Private m_SurfaceRoughnessForm As frmSurfaceRoughness
@@ -25,38 +26,20 @@ Namespace SurveyLibrary
         ' is considered "Browsing".
         Private m_eMethod As AssociatedSurfaceMethods
 
-        Public ReadOnly Property SurfaceID As Integer
+        Public ReadOnly Property AssociatedSurface As AssocSurface
             Get
-                Return m_nSurfaceID
+                Return m_Assoc
             End Get
         End Property
 
-        Private ReadOnly Property DEMSurvey As ProjectDS.DEMSurveyRow
-            Get
-                Return ProjectManagerBase.ds.DEMSurvey.FindByDEMSurveyID(m_nSurveyID)
-            End Get
-        End Property
-
-        Private ReadOnly Property DEMSurveyRasterPath As IO.FileInfo
-            Get
-                Return ProjectManagerBase.GetAbsolutePath(DEMSurvey.Source)
-            End Get
-        End Property
-
-        Private ReadOnly Property DEMSurveyRaster As GCDConsoleLib.Raster
-            Get
-                Return New GCDConsoleLib.Raster(DEMSurveyRasterPath)
-            End Get
-        End Property
-
-        Public Sub New(ByVal nSurveyID As Integer, Optional ByVal nSurfaceID As Integer = 0)
+        Public Sub New(parentDEM As DEMSurvey, assoc As AssocSurface)
 
             ' This call is required by the Windows Form Designer.
             InitializeComponent()
 
             m_eMethod = AssociatedSurfaceMethods.Browse
-            m_nSurveyID = nSurveyID
-            m_nSurfaceID = nSurfaceID
+            DEM = parentDEM
+            m_Assoc = assoc
 
         End Sub
 
@@ -80,13 +63,9 @@ Namespace SurveyLibrary
             cboType.Items.Add(New naru.db.NamedObject(AssociatedSurfaceMethods.InterpolationError, "Interpolation Error"))
             cboType.SelectedIndex = cboType.Items.Add(New naru.db.NamedObject(AssociatedSurfaceMethods.Browse, "Unknown"))
 
-            If SurfaceID > 0 Then
-                Dim assocRow As ProjectDS.AssociatedSurfaceRow = ProjectManagerBase.ds.AssociatedSurface.Rows.Find(SurfaceID)
-                txtName.Text = assocRow.Name
-                If Not assocRow.IsOriginalSourceNull Then
-                    txtOriginalRaster.Text = assocRow.OriginalSource
-                End If
-                txtProjectRaster.Text = assocRow.Source
+            If Not m_Assoc Is Nothing Then
+                txtName.Text = m_Assoc.Name
+                txtProjectRaster.Text = m_Assoc.Raster.RelativePath
                 txtProjectRaster.ReadOnly = True
                 btnSlopePercent.Visible = False
                 btnDensity.Visible = False
@@ -96,7 +75,7 @@ Namespace SurveyLibrary
                 txtOriginalRaster.Width = txtName.Width
 
                 For i As Integer = 0 To cboType.Items.Count - 1
-                    If String.Compare(cboType.Items(i).ToString.Replace("(", "").Replace(")", ""), assocRow.Type, True) = 0 Then
+                    If String.Compare(cboType.Items(i).ToString.Replace("(", "").Replace(")", ""), m_Assoc.AssocSurfaceType, True) = 0 Then
                         cboType.SelectedIndex = i
                         Exit For
                     End If
@@ -108,10 +87,9 @@ Namespace SurveyLibrary
 
         Private Function GetAssociatedSurfaceType(nSurfaceID) As AssociatedSurfaceMethods
 
-            If nSurfaceID > 0 Then
-                Dim assocRow As ProjectDS.AssociatedSurfaceRow = ProjectManagerBase.ds.AssociatedSurface.Rows.Find(SurfaceID)
+            If TypeOf m_Assoc Is AssocSurface Then
                 For Each item As naru.db.NamedObject In cboType.Items
-                    If String.Compare(item.Name, assocRow.Type, True) = 0 Then
+                    If String.Compare(item.Name, m_Assoc.AssocSurfaceType, True) = 0 Then
                         Return DirectCast(Convert.ToInt32(item.ID), AssociatedSurfaceMethods)
                     End If
                 Next
@@ -130,27 +108,21 @@ Namespace SurveyLibrary
 
             Cursor = System.Windows.Forms.Cursors.WaitCursor
 
-            Dim assocRow As ProjectDS.AssociatedSurfaceRow
-            Dim eOriginalType As AssociatedSurfaceMethods
-
             Try
-                If m_nSurfaceID < 1 Then
+                If m_Assoc Is Nothing Then
                     If Not ImportRaster() Then
                         DialogResult = System.Windows.Forms.DialogResult.None
                         Return
                     End If
 
-                    assocRow = ProjectManagerBase.ds.AssociatedSurface.NewRow()
-                    assocRow.Source = ProjectManagerBase.GetRelativePath(txtProjectRaster.Text)
-                    assocRow.OriginalSource = txtProjectRaster.Text
+                    m_Assoc = New AssocSurface(txtName.Text.Trim(), ProjectManager.Project.GetAbsolutePath(txtProjectRaster.Text), cboType.Text, DEM)
+                    DEM.AssocSurfaces.Add(m_Assoc.Name, m_Assoc)
                 Else
-                    assocRow = ProjectManagerBase.ds.AssociatedSurface.Rows.Find(SurfaceID)
-                    eOriginalType = GetAssociatedSurfaceType(SurfaceID)
+                    m_Assoc.Name = txtName.Text.Trim()
+                    m_Assoc.AssocSurfaceType = cboType.Text
                 End If
 
-                assocRow.Type = cboType.Text
-                assocRow.Name = txtName.Text
-                ProjectManagerBase.save()
+                ProjectManager.Project.Save()
 
             Catch ex As Exception
                 naru.error.ExceptionUI.HandleException(ex, "The associated surface failed to save to the GCD project file. The associated surface raster still exists.")
@@ -179,17 +151,15 @@ Namespace SurveyLibrary
                     AssociatedSurfaceMethods.PointDensity,
                     AssociatedSurfaceMethods.Roughness
 
-                        Dim gDEMRaster As GCDConsoleLib.Raster = DEMSurveyRaster
-
                         Select Case m_eMethod
                             Case AssociatedSurfaceMethods.SlopeDegree
-                                GCDConsoleLib.RasterOperators.SlopeDegrees(gDEMRaster, fiOutput)
+                                GCDConsoleLib.RasterOperators.SlopeDegrees(DEM.Raster.Raster, fiOutput)
 
                             Case AssociatedSurfaceMethods.SlopePercent
-                                GCDConsoleLib.RasterOperators.SlopePercent(gDEMRaster, fiOutput)
+                                GCDConsoleLib.RasterOperators.SlopePercent(DEM.Raster.Raster, fiOutput)
 
                             Case AssociatedSurfaceMethods.PointDensity
-                                GCDConsoleLib.RasterOperators.PointDensity(gDEMRaster, m_frmPointDensity.ucPointCloud.SelectedItem, txtProjectRaster.Text, GCDConsoleLib.RasterOperators.KernelShapes.Square, "4")
+                                GCDConsoleLib.RasterOperators.PointDensity(DEM.Raster.Raster, m_frmPointDensity.ucPointCloud.SelectedItem, txtProjectRaster.Text, GCDConsoleLib.RasterOperators.KernelShapes.Square, "4")
 
                             Case AssociatedSurfaceMethods.Roughness
                                 'm_SurfaceRoughnessForm.CalculateRoughness(txtProjectRaster.Text, gDEMRaster)
@@ -197,8 +167,8 @@ Namespace SurveyLibrary
                         End Select
 
                         ' Build raster pyramids
-                        If ProjectManagerUI.PyramidManager.AutomaticallyBuildPyramids(GCDCore.RasterPyramidManager.PyramidRasterTypes.AssociatedSurfaces) Then
-                            ProjectManagerUI.PyramidManager.PerformRasterPyramids(GCDCore.RasterPyramidManager.PyramidRasterTypes.AssociatedSurfaces, fiOutput)
+                        If ProjectManager.PyramidManager.AutomaticallyBuildPyramids(GCDCore.RasterPyramidManager.PyramidRasterTypes.AssociatedSurfaces) Then
+                            ProjectManager.PyramidManager.PerformRasterPyramids(GCDCore.RasterPyramidManager.PyramidRasterTypes.AssociatedSurfaces, fiOutput)
                         End If
 
                     Case Else
@@ -226,20 +196,20 @@ Namespace SurveyLibrary
 
         Private Function ValidateForm() As Boolean
 
+            ' Safety check against names with only blank spaces
+            txtName.Text = txtName.Text.Trim()
+
             If String.IsNullOrEmpty(txtName.Text) Then
                 MsgBox("Please provide a name for the associated surface.", MsgBoxStyle.Information, GCDCore.Properties.Resources.ApplicationNameLong)
                 txtName.Focus()
                 Return False
             Else
-                For Each r As ProjectDS.AssociatedSurfaceRow In DEMSurvey.GetAssociatedSurfaceRows()
-                    If r.AssociatedSurfaceID <> m_nSurfaceID Then
-                        If String.Compare(r.Name, txtName.Text, True) = 0 Then
-                            MsgBox("The name '" & txtName.Text & "' is already in use by another associated surface within this survey. Please choose a unique name.", MsgBoxStyle.Exclamation, GCDCore.Properties.Resources.ApplicationNameLong)
-                            txtName.Select()
-                            Return False
-                        End If
-                    End If
-                Next
+                If Not DEM.IsAssocNameUnique(txtName.Text, m_Assoc) Then
+                    MsgBox("The name '" & txtName.Text & "' is already in use by another associated surface within this survey. Please choose a unique name.", MsgBoxStyle.Exclamation, GCDCore.Properties.Resources.ApplicationNameLong)
+                    txtName.Select()
+                    Return False
+                End If
+
             End If
 
             If String.IsNullOrEmpty(txtProjectRaster.Text) Then
@@ -248,11 +218,9 @@ Namespace SurveyLibrary
                     Return False
                 End If
             Else
-                If m_nSurfaceID < 1 Then
-                    If System.IO.File.Exists(txtProjectRaster.Text) Then
-                        MsgBox("The associated surface project raster path already exists. Changing the name of the associated surface will change the raster path.", MsgBoxStyle.Information, GCDCore.Properties.Resources.ApplicationNameLong)
-                        Return False
-                    End If
+                If m_Assoc Is Nothing AndAlso IO.File.Exists(txtProjectRaster.Text) Then
+                    MsgBox("The associated surface project raster path already exists. Changing the name of the associated surface will change the raster path.", MsgBoxStyle.Information, GCDCore.Properties.Resources.ApplicationNameLong)
+                    Return False
                 End If
             End If
 
@@ -269,7 +237,7 @@ Namespace SurveyLibrary
         Private Sub btnBrowse_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnBrowse.Click
 
             If Not TypeOf m_ImportForm Is frmImportRaster Then
-                m_ImportForm = New frmImportRaster(DEMSurveyRaster, DEMSurvey, frmImportRaster.ImportRasterPurposes.AssociatedSurface, "Associated Surface")
+                m_ImportForm = New frmImportRaster(DEM.Raster.Raster, DEM, frmImportRaster.ImportRasterPurposes.AssociatedSurface, "Associated Surface")
             End If
 
             m_ImportForm.txtName.Text = txtName.Text
@@ -303,7 +271,7 @@ Namespace SurveyLibrary
                 End If
             Next
 
-            txtOriginalRaster.Text = DEMSurveyRasterPath.FullName
+            txtOriginalRaster.Text = DEM.Raster.RasterPath.FullName
 
             System.Windows.Forms.MessageBox.Show("The slope raster will be generated after you click OK.", GCDCore.Properties.Resources.ApplicationNameLong, System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information)
 
@@ -312,7 +280,7 @@ Namespace SurveyLibrary
         Private Sub btnDensity_Click(sender As System.Object, e As System.EventArgs) Handles btnDensity.Click
 
             If m_frmPointDensity Is Nothing Then
-                m_frmPointDensity = New frmPointDensity(DEMSurveyRaster.Proj.HorizontalUnit)
+                m_frmPointDensity = New frmPointDensity(ProjectManager.Project.Units.VertUnit)
             End If
 
             If m_frmPointDensity.ShowDialog = System.Windows.Forms.DialogResult.OK Then
@@ -340,8 +308,8 @@ Namespace SurveyLibrary
 
         Private Sub txtName_TextChanged(sender As Object, e As System.EventArgs) Handles txtName.TextChanged
 
-            If m_nSurfaceID < 1 Then
-                txtProjectRaster.Text = ProjectManagerBase.OutputManager.AssociatedSurfaceRasterPath(DEMSurvey.Name, txtName.Text).FullName
+            If m_Assoc Is Nothing Then
+                txtProjectRaster.Text = ProjectManager.OutputManager.AssociatedSurfaceRasterPath(DEM.Name, txtName.Text).FullName
             End If
 
         End Sub

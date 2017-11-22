@@ -37,11 +37,11 @@ namespace GCDCore.Engines
             Raster thrDoD = null;
 
             // Create the prior probability raster
-            m_PriorProbRaster = new FileInfo(Path.ChangeExtension(Path.Combine(AnalysisFolder.FullName, "priorprob"), Project.ProjectManagerBase.RasterExtension));
+            m_PriorProbRaster = new FileInfo(Path.ChangeExtension(Path.Combine(AnalysisFolder.FullName, "priorprob"), OutputManager.RasterExtension));
             RasterOperators.CreatePriorProbabilityRaster(rawDoD, NewError.Raster.Raster, OldError.Raster.Raster, m_PriorProbRaster.FullName);
 
             // Build Pyramids
-            ProjectManagerUI.PyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.ProbabilityRasters, m_PriorProbRaster);
+            ProjectManager.PyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.ProbabilityRasters, m_PriorProbRaster);
 
             if (SpatialCoherence == null)
             {
@@ -49,20 +49,20 @@ namespace GCDCore.Engines
             }
             else
             {
-                m_PosteriorRaster = new FileInfo(Path.ChangeExtension(Path.Combine(AnalysisFolder.FullName, "postProb"), Project.ProjectManagerBase.RasterExtension));
-                m_ConditionalRaster = new FileInfo(Path.ChangeExtension(Path.Combine(AnalysisFolder.FullName, "condProb"), Project.ProjectManagerBase.RasterExtension));
-                m_SpatialCoErosionRaster = new FileInfo(Path.ChangeExtension(Path.Combine(AnalysisFolder.FullName, "nbrErosion"), Project.ProjectManagerBase.RasterExtension));
-                m_SpatialCoDepositionRaster = new FileInfo(Path.ChangeExtension(Path.Combine(AnalysisFolder.FullName, "nbrDeposition"), Project.ProjectManagerBase.RasterExtension));
+                m_PosteriorRaster = new FileInfo(Path.ChangeExtension(Path.Combine(AnalysisFolder.FullName, "postProb"), OutputManager.RasterExtension));
+                m_ConditionalRaster = new FileInfo(Path.ChangeExtension(Path.Combine(AnalysisFolder.FullName, "condProb"), OutputManager.RasterExtension));
+                m_SpatialCoErosionRaster = new FileInfo(Path.ChangeExtension(Path.Combine(AnalysisFolder.FullName, "nbrErosion"), OutputManager.RasterExtension));
+                m_SpatialCoDepositionRaster = new FileInfo(Path.ChangeExtension(Path.Combine(AnalysisFolder.FullName, "nbrDeposition"), OutputManager.RasterExtension));
 
                 thrDoD = RasterOperators.ThresholdDoDProbWithSpatialCoherence(rawDoD, thrDoDPath.FullName, NewError.Raster.Raster, OldError.Raster.Raster, m_PriorProbRaster.FullName,
                     m_PosteriorRaster.FullName, m_ConditionalRaster.FullName, m_SpatialCoErosionRaster.FullName, m_SpatialCoDepositionRaster.FullName,
                     SpatialCoherence.MovingWindowDimensions, SpatialCoherence.MovingWindowDimensions, Threshold);
 
                 // Build Pyramids
-                ProjectManagerUI.PyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.ProbabilityRasters, m_SpatialCoErosionRaster);
-                ProjectManagerUI.PyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.ProbabilityRasters, m_SpatialCoDepositionRaster);
-                ProjectManagerUI.PyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.ProbabilityRasters, m_ConditionalRaster);
-                ProjectManagerUI.PyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.ProbabilityRasters, m_PosteriorRaster);
+                ProjectManager.PyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.ProbabilityRasters, m_SpatialCoErosionRaster);
+                ProjectManager.PyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.ProbabilityRasters, m_SpatialCoDepositionRaster);
+                ProjectManager.PyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.ProbabilityRasters, m_ConditionalRaster);
+                ProjectManager.PyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.ProbabilityRasters, m_PosteriorRaster);
             }
 
             return thrDoD;
@@ -74,7 +74,7 @@ namespace GCDCore.Engines
             return RasterOperators.GetStatsProbalistic(rawDoD, thrDoD, propErr, cellArea, units);
         }
 
-        protected override DoDBase GetDoDResult(DoDStats changeStats, FileInfo rawDoDPath, FileInfo thrDoDPath, FileInfo rawHistPath, Histogram rawHist, FileInfo thrHistPath, Histogram thrHist)
+        protected override DoDBase GetDoDResult(DoDStats changeStats, Raster rawDoD, Raster thrDoD, HistogramPair histograms)
         {
             bool bBayesian = SpatialCoherence is CoherenceProperties;
             int nFilter = 0;
@@ -83,7 +83,7 @@ namespace GCDCore.Engines
                 nFilter = SpatialCoherence.MovingWindowDimensions;
             }
 
-            return new DoDProbabilistic(Name, AnalysisFolder, NewDEM, OldDEM, NewError, OldError,
+            return new DoDProbabilistic(Name, AnalysisFolder, NewDEM, OldDEM, histograms, rawDoD, thrDoD, NewError, OldError,
                 PropagatedErrRaster.GISFileInfo, m_PriorProbRaster, m_PosteriorRaster, m_ConditionalRaster, m_SpatialCoErosionRaster, m_SpatialCoDepositionRaster,
                 SpatialCoherence, Threshold, changeStats);
         }

@@ -29,10 +29,10 @@ namespace GCDCore.Engines
         {
             return RasterOperators.GetStatsPropagated(rawDoD, thrDoD, PropagatedErrRaster, cellArea, units);
         }
-        
-        protected override DoDBase GetDoDResult(DoDStats changeStats, FileInfo rawDoDPath, FileInfo thrDoDPath, FileInfo rawHistPath, Histogram rawHist, FileInfo thrHistPath, Histogram thrHist)
+
+        protected override DoDBase GetDoDResult(DoDStats changeStats, Raster rawDoD, Raster thrDoD, HistogramPair histograms)
         {
-            return new DoDPropagated(Name, AnalysisFolder, NewDEM, OldDEM, NewError, OldError, PropagatedErrRaster.GISFileInfo, changeStats);
+            return new DoDPropagated(Name, AnalysisFolder, NewDEM, OldDEM, rawDoD, thrDoD, histograms, NewError, OldError, PropagatedErrRaster.GISFileInfo, changeStats);
         }
 
         /// <summary>
@@ -43,11 +43,11 @@ namespace GCDCore.Engines
         /// DoD removing any cells that have a value less than the propogated error.</remarks>
         protected Raster GeneratePropagatedErrorRaster()
         {
-            FileInfo propErrPath = Project.ProjectManagerBase.OutputManager.PropagatedErrorPath(AnalysisFolder);
+            FileInfo propErrPath = ProjectManager.OutputManager.PropagatedErrorPath(AnalysisFolder);
             Raster propErr = RasterOperators.RootSumSquares(NewError.Raster.Raster, OldError.Raster.Raster, propErrPath);
 
             // Build Pyramids
-            Project.ProjectManagerUI.PyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.PropagatedError, propErrPath);
+            ProjectManager.PyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.PropagatedError, propErrPath);
 
             return propErr;
         }

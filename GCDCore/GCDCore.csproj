@@ -72,10 +72,9 @@
     <Compile Include="Project\ErrorSurfaceProperty.cs" />
     <Compile Include="Project\GCDProject.cs" />
     <Compile Include="Project\GCDProjectItem.cs" />
-    <Compile Include="Project\ProjectHistogram.cs" />
+    <Compile Include="Project\HistogramPair.cs" />
     <Compile Include="Project\ProjectRaster.cs" />
-    <Compile Include="Project\ProjectManagerBase.cs" />
-    <Compile Include="Project\ProjectManagerUI.cs" />
+    <Compile Include="Project\ProjectManager.cs" />
     <Compile Include="Project\SurveyDateTime.cs" />
     <Compile Include="Project\SurveyType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

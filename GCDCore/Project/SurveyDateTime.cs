@@ -91,34 +91,7 @@ namespace GCDCore.Project
             m_nHour = -1;
             m_nMin = -1;
         }
-
-        public SurveyDateTime(ref ProjectDS.DEMSurveyRow rDEMSurvey) : this()
-        {
-
-            // New survey data time fields
-            if (!rDEMSurvey.IsSurveyYearNull())
-            {
-                this.Year = rDEMSurvey.SurveyYear;
-                if (!rDEMSurvey.IsSurveyMonthNull())
-                {
-                    this.Month = rDEMSurvey.SurveyMonth;
-                    if (!rDEMSurvey.IsSurveyDayNull())
-                    {
-                        this.Day = rDEMSurvey.SurveyDay;
-                    }
-                }
-            }
-
-            if (!rDEMSurvey.IsSurveyHourNull())
-            {
-                this.Hour = rDEMSurvey.SurveyHour;
-                if (!rDEMSurvey.IsSurveyMinNull())
-                {
-                    this.Minute = rDEMSurvey.SurveyMin;
-                }
-            }
-        }
-
+     
         public override string ToString()
         {
 

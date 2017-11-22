@@ -66,7 +66,7 @@ Namespace ChangeDetection
 
             Dim eType As ElevationChangeBarViewer.BarTypes = DirectCast(Convert.ToInt32(DirectCast(cboType.SelectedItem, naru.db.NamedObject).ID), ElevationChangeBarViewer.BarTypes)
 
-            Dim ca As UnitsNet.Area = GCDCore.Project.ProjectManagerBase.CellArea
+            Dim ca As UnitsNet.Area = ProjectManager.Project.CellArea
 
             Select Case eType
                 Case ElevationChangeBarViewer.BarTypes.Area

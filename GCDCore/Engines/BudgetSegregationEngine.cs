@@ -9,15 +9,15 @@ namespace GCDCore.Engines
 {
     public class BudgetSegregationEngine : EngineBase
     {
-        public BudgetSegregationEngine(DirectoryInfo folder)
-            : base(folder)
+        public BudgetSegregationEngine(string name, DirectoryInfo folder)
+            : base(name, folder)
         {
         }
 
-        public BudgetSegregation Calculate(string name, DoDBase dod, ref Vector polygonMask, string fieldName)
+        public BudgetSegregation Calculate(DoDBase dod, ref Vector polygonMask, string fieldName)
         {
             // Build the budget segregation result set object that will be returned. This determines paths
-            BudgetSegregation bsResult = new BudgetSegregation(name, AnalysisFolder, fieldName, dod);
+            BudgetSegregation bsResult = new BudgetSegregation(Name, AnalysisFolder, fieldName, dod);
 
             // Copy the budget segregation mask ShapeFile into the folder
             polygonMask.Copy(bsResult.PolygonMask);
@@ -28,7 +28,7 @@ namespace GCDCore.Engines
 
             if (dod is DoDMinLoD)
             {
-                results = RasterOperators.GetStatsMinLoD(dod.RawDoD.Raster, dod.RawDoD.Raster, ((DoDMinLoD)dod).Threshold, Mask, fieldName, ProjectManagerBase.CellArea, Project.ProjectManagerBase.Units);
+                results = RasterOperators.GetStatsMinLoD(dod.RawDoD.Raster, dod.RawDoD.Raster, ((DoDMinLoD)dod).Threshold, Mask, fieldName, ProjectManager.Project.CellArea, Project.ProjectManager.Project.Units);
             }
             else
             {
@@ -36,11 +36,11 @@ namespace GCDCore.Engines
 
                 if (dod is DoDProbabilistic)
                 {
-                    results = RasterOperators.GetStatsProbalistic(dod.RawDoD.Raster, dod.ThrDoD.Raster, propErr, Mask, fieldName, ProjectManagerBase.CellArea, ProjectManagerBase.Units);
+                    results = RasterOperators.GetStatsProbalistic(dod.RawDoD.Raster, dod.ThrDoD.Raster, propErr, Mask, fieldName, ProjectManager.Project.CellArea, ProjectManager.Project.Units);
                 }
                 else
                 {
-                    results = RasterOperators.GetStatsPropagated(dod.RawDoD.Raster, dod.ThrDoD.Raster, propErr, Mask, fieldName, ProjectManagerBase.CellArea, ProjectManagerBase.Units);
+                    results = RasterOperators.GetStatsPropagated(dod.RawDoD.Raster, dod.ThrDoD.Raster, propErr, Mask, fieldName, ProjectManager.Project.CellArea, ProjectManager.Project.Units);
                 }
             }
 
@@ -60,15 +60,20 @@ namespace GCDCore.Engines
                 legendText.AppendLine(string.Format("{0},{1}", classIndex, segClass.Key));
 
                 string filePrefix = string.Format("c{0:000}", classIndex);
+                FileInfo sumaryXML = new FileInfo(Path.Combine(AnalysisFolder.FullName, string.Format("{0}_summary.xml", filePrefix)));
+                FileInfo rawHstPth = new FileInfo(Path.Combine(AnalysisFolder.FullName, string.Format("{0}_raw.csv", filePrefix)));
+                FileInfo thrHstPth = new FileInfo(Path.Combine(AnalysisFolder.FullName, string.Format("{0}_thr.csv", filePrefix)));
 
-                BudgetSegregationClass bsClass = new BudgetSegregationClass(segClass.Key, AnalysisFolder, filePrefix, segClass.Value, rawHistos[segClass.Key], thrHistos[segClass.Key]);
-                bsResult.Classes[segClass.Key] = bsClass;
-
-                GenerateSummaryXML(segClass.Value, bsClass.SummaryXML);
+                GenerateSummaryXML(segClass.Value, sumaryXML);
                 GenerateChangeBarGraphicFiles(segClass.Value, 600, 600, filePrefix);
 
-                WriteHistogram(rawHistos[segClass.Key], bsClass.RawHistogram.Path);
-                WriteHistogram(thrHistos[segClass.Key], bsClass.ThrHistogram.Path);
+                WriteHistogram(rawHistos[segClass.Key], rawHstPth);
+                WriteHistogram(thrHistos[segClass.Key], thrHstPth);
+
+                HistogramPair histograms = new HistogramPair(rawHistos[segClass.Key], rawHstPth, thrHistos[segClass.Key], thrHstPth);
+
+                BudgetSegregationClass bsClass = new BudgetSegregationClass(segClass.Key, AnalysisFolder, filePrefix, segClass.Value, histograms, sumaryXML);
+                bsResult.Classes[segClass.Key] = bsClass;
 
                 classIndex++;
             }

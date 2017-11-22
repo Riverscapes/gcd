@@ -29,13 +29,13 @@ namespace GCDCore.Engines
             OldDEM = oldDEM;
         }
 
-        public DoDBase Calculate(string DoDname, bool bBuildPyramids, UnitsNet.Area cellArea, UnitGroup units)
+        public DoDBase Calculate(bool bBuildPyramids, UnitsNet.Area cellArea, UnitGroup units)
         {
-            FileInfo rawDoDPath = ProjectManagerBase.OutputManager.RawDoDPath(AnalysisFolder);
-            FileInfo thrDoDPath = ProjectManagerBase.OutputManager.ThrDoDPath(AnalysisFolder);
-            FileInfo rawHstPath = ProjectManagerBase.OutputManager.RawHistPath(AnalysisFolder);
-            FileInfo thrHstPath = ProjectManagerBase.OutputManager.ThrHistPath(AnalysisFolder);
-            FileInfo sumXMLPath = ProjectManagerBase.OutputManager.SummaryXMLPath(AnalysisFolder);
+            FileInfo rawDoDPath = ProjectManager.OutputManager.RawDoDPath(AnalysisFolder);
+            FileInfo thrDoDPath = ProjectManager.OutputManager.ThrDoDPath(AnalysisFolder);
+            FileInfo rawHstPath = ProjectManager.OutputManager.RawHistPath(AnalysisFolder);
+            FileInfo thrHstPath = ProjectManager.OutputManager.ThrHistPath(AnalysisFolder);
+            FileInfo sumXMLPath = ProjectManager.OutputManager.SummaryXMLPath(AnalysisFolder);
 
             AnalysisFolder.Create();
 
@@ -43,7 +43,7 @@ namespace GCDCore.Engines
             Raster rawDoD = RasterOperators.Subtract(NewDEM.Raster.Raster, OldDEM.Raster.Raster, rawDoDPath);
 
             // Build pyraminds
-            ProjectManagerUI.PyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.DoDRaw, rawDoDPath);
+            ProjectManager.PyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.DoDRaw, rawDoDPath);
 
             // Calculate the raw histogram
             Histogram rawHisto = RasterOperators.BinRaster(rawDoD, DEFAULTHISTOGRAMNUMBER);
@@ -55,7 +55,7 @@ namespace GCDCore.Engines
             Raster thrDoD = ThresholdRawDoD(rawDoD, thrDoDPath);
 
             // Build pyraminds
-            ProjectManagerUI.PyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.DoDThresholded, thrDoDPath);
+            ProjectManager.PyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.DoDThresholded, thrDoDPath);
 
             // Calculate the thresholded histogram
             Histogram thrHisto = RasterOperators.BinRaster(thrDoD, DEFAULTHISTOGRAMNUMBER);
@@ -69,13 +69,13 @@ namespace GCDCore.Engines
             GenerateChangeBarGraphicFiles(changeStats, 0, 0);
             GenerateHistogramGraphicFiles(rawHisto, thrHisto, 0, 0);
 
-            return GetDoDResult(changeStats, rawDoDPath, thrDoDPath, rawHstPath, rawHisto, thrHstPath, thrHisto);
+            return GetDoDResult(changeStats, rawDoD, thrDoD, new HistogramPair(rawHisto, rawHstPath, thrHisto, thrHstPath));
         }
 
         protected abstract Raster ThresholdRawDoD(Raster rawDoD, FileInfo thrDoDPath);
 
         protected abstract DoDStats CalculateChangeStats(Raster rawDoD, Raster thrDoD, UnitsNet.Area cellArea, UnitGroup units);
 
-        protected abstract DoDBase GetDoDResult(DoDStats changeStats, FileInfo rawDoDPath, FileInfo thrDoDPath, FileInfo rawHistPath, Histogram rawHist, FileInfo thrHistPath, Histogram thrHist);
+        protected abstract DoDBase GetDoDResult(DoDStats changeStats, Raster rawDoD, Raster thrDoD, HistogramPair histograms);
     }
 }

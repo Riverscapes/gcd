@@ -1,10 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Xml;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GCDCore.Project
 {
@@ -26,7 +22,6 @@ namespace GCDCore.Project
         {
             PriorProbability = new ProjectRaster(priorProb);
         }
-
 
         /// <summary>
         /// Probabilistic thresholding rasters with spatial coherence
@@ -51,20 +46,20 @@ namespace GCDCore.Project
         public void Serialize(XmlDocument xmlDoc, XmlNode nodParent)
         {
             // Prior probability always exists, regardless of whether spatial coherence was used.
-            nodParent.AppendChild(xmlDoc.CreateElement("PriorProbability")).InnerText = ProjectManagerBase.GetRelativePath(PriorProbability.RasterPath);
+            nodParent.AppendChild(xmlDoc.CreateElement("PriorProbability")).InnerText = ProjectManager.Project.GetRelativePath(PriorProbability.RasterPath);
 
             // Remaining rasters only exist if spatial coherence was used.
             if (PosteriorProbability != null)
-                nodParent.AppendChild(xmlDoc.CreateElement("PosteriorProbability")).InnerText = ProjectManagerBase.GetRelativePath(PosteriorProbability.RasterPath);
+                nodParent.AppendChild(xmlDoc.CreateElement("PosteriorProbability")).InnerText = ProjectManager.Project.GetRelativePath(PosteriorProbability.RasterPath);
 
             if (ConditionalRaster != null)
-                nodParent.AppendChild(xmlDoc.CreateElement("ConditionalRaster")).InnerText = ProjectManagerBase.GetRelativePath(ConditionalRaster.RasterPath);
+                nodParent.AppendChild(xmlDoc.CreateElement("ConditionalRaster")).InnerText = ProjectManager.Project.GetRelativePath(ConditionalRaster.RasterPath);
 
             if (SpatialCoherenceErosion != null)
-                nodParent.AppendChild(xmlDoc.CreateElement("SpatialCoherenceErosion")).InnerText = ProjectManagerBase.GetRelativePath(SpatialCoherenceErosion.RasterPath);
+                nodParent.AppendChild(xmlDoc.CreateElement("SpatialCoherenceErosion")).InnerText = ProjectManager.Project.GetRelativePath(SpatialCoherenceErosion.RasterPath);
 
             if (SpatialCoherenceDeposition != null)
-                nodParent.AppendChild(xmlDoc.CreateElement("SpatialCoherenceDeposition")).InnerText = ProjectManagerBase.GetRelativePath(SpatialCoherenceDeposition.RasterPath);
+                nodParent.AppendChild(xmlDoc.CreateElement("SpatialCoherenceDeposition")).InnerText = ProjectManager.Project.GetRelativePath(SpatialCoherenceDeposition.RasterPath);
 
             if (SpatialCoherence != null)
             {
@@ -77,7 +72,7 @@ namespace GCDCore.Project
 
         public static DoDProbabilityRasters Deserialize(XmlNode nodParent)
         {
-            FileInfo priorProb = ProjectManagerBase.GetAbsolutePath(nodParent.SelectSingleNode("PriorProbability").InnerText);
+            FileInfo priorProb = ProjectManager.Project.GetAbsolutePath(nodParent.SelectSingleNode("PriorProbability").InnerText);
 
             FileInfo postProb = DeserializeRaster(nodParent, "PosteriorProbability");
             FileInfo CondRast = DeserializeRaster(nodParent, "ConditionalRaster");
@@ -112,7 +107,7 @@ namespace GCDCore.Project
             FileInfo result = null;
             XmlNode nodRaster = nodParent.SelectSingleNode(nodeName);
             if (nodRaster is XmlNode)
-                result = ProjectManagerBase.GetAbsolutePath(nodRaster.InnerText);
+                result = ProjectManager.Project.GetAbsolutePath(nodRaster.InnerText);
 
             return result;
         }

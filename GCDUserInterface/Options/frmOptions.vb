@@ -113,7 +113,7 @@ Namespace Options
             Try
                 lstPyramids.Items.Clear()
                 For Each eType As GCDCore.RasterPyramidManager.PyramidRasterTypes In [Enum].GetValues(GetType(GCDCore.RasterPyramidManager.PyramidRasterTypes))
-                    Dim bPyramids As Boolean = ProjectManagerUI.PyramidManager.AutomaticallyBuildPyramids(eType)
+                    Dim bPyramids As Boolean = ProjectManager.PyramidManager.AutomaticallyBuildPyramids(eType)
                     lstPyramids.Items.Add(New GCDCore.PyramidRasterTypeDisplay(eType), bPyramids)
                 Next
 
@@ -164,10 +164,10 @@ Namespace Options
 
             For i As Integer = 0 To lstPyramids.Items.Count - 1
                 Dim lItem As GCDCore.PyramidRasterTypeDisplay = lstPyramids.Items(i)
-                ProjectManagerUI.PyramidManager.SetAutomaticPyramidsForRasterType(lItem.RasterType, lstPyramids.CheckedIndices.Contains(i))
+                ProjectManager.PyramidManager.SetAutomaticPyramidsForRasterType(lItem.RasterType, lstPyramids.CheckedIndices.Contains(i))
             Next
 
-            GCDCore.Properties.Settings.Default.AutomaticPyramids = ProjectManagerUI.PyramidManager.GetPyramidSettingString
+            GCDCore.Properties.Settings.Default.AutomaticPyramids = ProjectManager.PyramidManager.GetPyramidSettingString
 
             'settings for accuracy, used for concurrency and orthogonality
             'GCDCore.Properties.Settings.Default.Precision = numPrecision.Value

@@ -7,7 +7,7 @@
             Panel2.Controls.Add(New ucAcknowledgements)
 
             Dim sProduct As String = "Standalone"
-            If ProjectManagerUI.IsArcMap Then
+            If ProjectManager.IsArcMap Then
                 sProduct = "Addin"
             End If
 

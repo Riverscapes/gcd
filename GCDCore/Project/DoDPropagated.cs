@@ -2,9 +2,7 @@
 using System.IO;
 using System.Xml;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using GCDConsoleLib;
 using GCDConsoleLib.GCD;
 
 namespace GCDCore.Project
@@ -15,9 +13,9 @@ namespace GCDCore.Project
         public readonly ErrorSurface NewError;
         public readonly ErrorSurface OldError;
 
-        public DoDPropagated(string name, DirectoryInfo folder, DEMSurvey newDEM, DEMSurvey oldDEM,
-            ErrorSurface newError, ErrorSurface oldError, FileInfo propErr, DoDStats stats)
-            : base(name, folder, newDEM, oldDEM, stats)
+        public DoDPropagated(string name, DirectoryInfo folder, DEMSurvey newDEM, DEMSurvey oldDEM, Raster rawDoD, Raster thrDoD,
+         HistogramPair histograms, ErrorSurface newError, ErrorSurface oldError, FileInfo propErr, DoDStats stats)
+            : base(name, folder, newDEM, oldDEM,rawDoD, thrDoD, histograms, stats)
         {
             NewError = newError;
             OldError = oldError;
@@ -25,7 +23,7 @@ namespace GCDCore.Project
         }
 
         public DoDPropagated(DoDBase dod, FileInfo propError, ErrorSurface newError, ErrorSurface oldError)
-            : base(dod.Name, dod.Folder, dod.NewDEM, dod.OldDEM,dod.Statistics)
+            : base(dod)
         {
             NewError = newError;
             OldError = oldError;
@@ -36,7 +34,7 @@ namespace GCDCore.Project
         {
             XmlNode nodDoD = base.Serialize(xmlDoc, nodParent);
             XmlNode nodStatistics = nodDoD.SelectSingleNode("Statistics");
-            nodDoD.InsertBefore(xmlDoc.CreateElement("PrograpatedError"), nodStatistics).InnerText = ProjectManagerBase.GetRelativePath(PropagatedError.RasterPath);
+            nodDoD.InsertBefore(xmlDoc.CreateElement("PrograpatedError"), nodStatistics).InnerText = ProjectManager.Project.GetRelativePath(PropagatedError.RasterPath);
             nodDoD.InsertBefore(xmlDoc.CreateElement("NewError"), nodStatistics).InnerText = NewError.Name;
             nodDoD.InsertBefore(xmlDoc.CreateElement("OldError"), nodStatistics).InnerText = OldError.Name;
             return nodDoD;
@@ -52,7 +50,7 @@ namespace GCDCore.Project
             FileInfo propErr = null;
             XmlNode nodPropErr = nodDoD.SelectSingleNode("PropagatedError");
             if (nodPropErr != null)
-                propErr = ProjectManagerBase.GetAbsolutePath(nodPropErr.InnerText);
+                propErr = ProjectManager.Project.GetAbsolutePath(nodPropErr.InnerText);
 
             return new DoDPropagated(partialDoD, propErr, newError, oldError);
         }

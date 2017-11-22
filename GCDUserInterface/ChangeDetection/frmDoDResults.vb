@@ -8,29 +8,29 @@ Namespace ChangeDetection
         ''' </summary>
         ''' <remarks>This is passed to the pop-up form </remarks>
         Private m_Options As DoDSummaryDisplayOptions
-        Private m_DoDResult As DoDResult
+        Private DoD As DoDBase
 
-        Public Sub New(rDoD As ProjectDS.DoDsRow, ByRef dodResult As DoDResult)
+        Public Sub New(dodItem As GCDCore.Project.DoDBase)
 
             InitializeComponent()
 
-            m_DoDResult = dodResult
-            m_Options = New DoDSummaryDisplayOptions(ProjectManagerBase.Units)
-            txtDoDName.Text = rDoD.Name
-            ucProperties.Initialize(rDoD)
+            DoD = dodItem
+            m_Options = New DoDSummaryDisplayOptions(ProjectManager.Project.Units)
+            txtDoDName.Text = DoD.Name
+            ucProperties.Initialize(DoD)
 
         End Sub
 
         Private Sub DoDResultsForm_Load(sender As Object, e As System.EventArgs) Handles Me.Load
 
-            If Not ProjectManagerUI.IsArcMap Then
+            If Not ProjectManager.IsArcMap Then
                 cmdAddToMap.Visible = False
                 txtDoDName.Width = cmdAddToMap.Right - txtDoDName.Left
             End If
 
-            ucBars.ChangeStats = m_DoDResult.ChangeStats
-            ucHistogram.LoadHistograms(m_DoDResult.RawHistogram, m_DoDResult.ThrHistogram)
-            ucSummary.RefreshDisplay(m_DoDResult.ChangeStats, m_Options)
+            ucBars.ChangeStats = DoD.Statistics
+            ucHistogram.LoadHistograms(DoD.Histograms.Raw.Data, DoD.Histograms.Thr.Data)
+            ucSummary.RefreshDisplay(DoD.Statistics, m_Options)
 
         End Sub
 
@@ -41,14 +41,14 @@ Namespace ChangeDetection
         End Sub
 
         Private Sub cmdBrowse_Click(sender As System.Object, e As System.EventArgs) Handles cmdBrowse.Click
-            Process.Start("explorer.exe", m_DoDResult.RawDoD.Directory.FullName)
+            Process.Start("explorer.exe", DoD.RawDoD.RasterPath.Directory.FullName)
         End Sub
 
         Private Sub cmdSettings_Click(sender As Object, e As EventArgs) Handles cmdSettings.Click
             Try
                 Dim frm As New frmDoDSummaryProperties(m_Options)
                 If frm.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
-                    ucSummary.RefreshDisplay(m_DoDResult.ChangeStats, m_Options)
+                    ucSummary.RefreshDisplay(DoD.Statistics, m_Options)
                     ucHistogram.SetHistogramUnits(m_Options.Units)
                     ucBars.Refresh()
                 End If

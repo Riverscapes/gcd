@@ -39,7 +39,7 @@ Namespace UtilityForms
         Public Sub cmdBrowseRaster_Click(sender As Object, e As naru.ui.PathEventArgs) Handles MyBase.BrowseFile
 
             Try
-                If ProjectManagerUI.IsArcMap Then
+                If ProjectManager.IsArcMap Then
                     RaiseEvent BrowseRaster(sender, e)
                 Else
                     naru.ui.Textbox.BrowseOpenRaster(txtPath, naru.ui.UIHelpers.WrapMessageWithNoun("Browse and Select a", Noun, "Raster"))

@@ -194,7 +194,7 @@ namespace GCDCore
         public PyramidRasterTypeDisplay(RasterPyramidManager.PyramidRasterTypes eRasterType)
         {
             m_eRasterType = eRasterType;
-            m_sName = Project.ProjectManagerUI.PyramidManager.GetRasterTypeName(eRasterType);
+            m_sName = Project.ProjectManager.PyramidManager.GetRasterTypeName(eRasterType);
         }
     }
 }

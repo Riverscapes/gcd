@@ -1,6 +1,6 @@
-﻿Imports GCDLib.Core
-Imports System.Windows.Forms
+﻿Imports System.Windows.Forms
 Imports System.ComponentModel
+Imports GCDCore.Project
 
 Namespace SurveyLibrary
 
@@ -28,7 +28,7 @@ Namespace SurveyLibrary
 
         Private m_gReferenceRaster As GCDConsoleLib.Raster
         Private m_ePurpose As ImportRasterPurposes
-        Private m_DEMSurveyRow As ProjectDS.DEMSurveyRow
+        Private m_DEM As DEMSurvey
         Private m_OriginalExtent As GCDConsoleLib.ExtentRectangle
         Private m_sRasterMetaData As String ' not populated until the action of importing.
 
@@ -75,13 +75,13 @@ Namespace SurveyLibrary
             End Get
         End Property
 
-        Public Sub New(gReferenceRaster As GCDConsoleLib.Raster, demSurveyRow As ProjectDS.DEMSurveyRow, ePurpose As ImportRasterPurposes, sNoun As String)
+        Public Sub New(gReferenceRaster As GCDConsoleLib.Raster, referenceDEM As DEMSurvey, ePurpose As ImportRasterPurposes, sNoun As String)
 
             ' This call is required by the designer.
             InitializeComponent()
             m_gReferenceRaster = gReferenceRaster
             m_ePurpose = ePurpose
-            m_DEMSurveyRow = demSurveyRow
+            m_DEM = referenceDEM
             m_RasterDirects = New Dictionary(Of String, String)
             ucRaster.Noun = sNoun
         End Sub
@@ -95,11 +95,9 @@ Namespace SurveyLibrary
             InitializeComponent()
             m_gReferenceRaster = Nothing
             m_ePurpose = ImportRasterPurposes.StandaloneTool
-            m_DEMSurveyRow = Nothing
             m_RasterDirects = New Dictionary(Of String, String)
 
         End Sub
-
 
         Private Sub ImportRasterForm_Load(sender As Object, e As System.EventArgs) Handles Me.Load
 
@@ -116,8 +114,8 @@ Namespace SurveyLibrary
             valCellSize.Maximum = 1000 ' This needs to be changed to a larger value or else rasters with cell sizes greater than 1 will cause an error to be thrown. Perhaps 1000 is more appropriate?
             valCellSize.Value = 1
 
-            If m_ePurpose <> ImportRasterPurposes.StandaloneTool AndAlso Not (ProjectManagerBase.ds Is Nothing) Then
-                valPrecision.Value = ProjectManagerBase.CurrentProject.Precision.ToString
+            If m_ePurpose <> ImportRasterPurposes.StandaloneTool AndAlso TypeOf ProjectManager.Project Is GCDCore.Project.GCDProject Then
+                valPrecision.Value = ProjectManager.Project.Precision
             End If
 
             valTop.ReadOnly = Not (m_ePurpose = ImportRasterPurposes.DEMSurvey OrElse m_ePurpose = ImportRasterPurposes.StandaloneTool)
@@ -323,16 +321,17 @@ Namespace SurveyLibrary
             End If
 
             If (m_ePurpose = ImportRasterPurposes.DEMSurvey AndAlso valPrecision.Enabled = False) Or (m_ePurpose = ImportRasterPurposes.AssociatedSurface) Or (m_ePurpose = ImportRasterPurposes.ErrorCalculation) Then
-                'If the project units have not yet been written to 
-                If Not ProjectManagerBase.CurrentProject.DisplayUnits Is Nothing Then
-                    If TypeOf ucRaster.SelectedItem Is GCDConsoleLib.Raster Then
-                        If ucRaster.SelectedItem.VerticalUnits <> ProjectManagerBase.CurrentProject.DisplayUnits Then
-                            MsgBox(String.Format("The linear units of the selected raster {0} does not match the linear units {1} of the GCD Project." & vbCrLf & vbCrLf & "Please select a raster that has the same linear units as the GCD Project.",
-                                             ucRaster.SelectedItem.VerticalUnits, ProjectManagerBase.CurrentProject.DisplayUnits), MsgBoxStyle.Information, GCDCore.Properties.Resources.ApplicationNameLong)
-                            Return False
-                        End If
-                    End If
-                End If
+                ' If the project units have not yet been written to 
+                Throw New NotImplementedException("Are we still doing this, or are we requiring the units to be set on the project already?")
+                'If Not ProjectManager.CurrentProject.DisplayUnits Is Nothing Then
+                '    If TypeOf ucRaster.SelectedItem Is GCDConsoleLib.Raster Then
+                '        If ucRaster.SelectedItem.VerticalUnits <> ProjectManager.CurrentProject.DisplayUnits Then
+                '            MsgBox(String.Format("The linear units of the selected raster {0} does not match the linear units {1} of the GCD Project." & vbCrLf & vbCrLf & "Please select a raster that has the same linear units as the GCD Project.",
+                '                             ucRaster.SelectedItem.VerticalUnits, ProjectManager.CurrentProject.DisplayUnits), MsgBoxStyle.Information, GCDCore.Properties.Resources.ApplicationNameLong)
+                '            Return False
+                '        End If
+                '    End If
+                'End If
             End If
 
             Return True
@@ -494,13 +493,13 @@ Namespace SurveyLibrary
 
                         Select Case m_ePurpose
                             Case ImportRasterPurposes.DEMSurvey
-                                sRasterPath = ProjectManagerBase.OutputManager.DEMSurveyRasterPath(txtName.Text)
+                                sRasterPath = ProjectManager.OutputManager.DEMSurveyRasterPath(txtName.Text)
 
                             Case ImportRasterPurposes.AssociatedSurface
-                                sRasterPath = ProjectManagerBase.OutputManager.AssociatedSurfaceRasterPath(m_DEMSurveyRow.Name, txtName.Text)
+                                sRasterPath = ProjectManager.OutputManager.AssociatedSurfaceRasterPath(m_DEM.Name, txtName.Text)
 
                             Case ImportRasterPurposes.ErrorCalculation
-                                sRasterPath = ProjectManagerBase.OutputManager.ErrorSurfaceRasterPath(m_DEMSurveyRow.Name, txtName.Text)
+                                sRasterPath = ProjectManager.OutputManager.ErrorSurfaceRasterPath(m_DEM.Name, txtName.Text)
 
                             Case Else
                                 MsgBox("Unhandled import raster purpose: " & m_ePurpose.ToString, MsgBoxStyle.Exclamation, GCDCore.Properties.Resources.ApplicationNameLong)
@@ -548,30 +547,32 @@ Namespace SurveyLibrary
 
                             ' Save the precision and the linear unit of the raster back to the GCD project
                             If m_ePurpose = ImportRasterPurposes.DEMSurvey AndAlso valPrecision.Enabled Then
-                                Try
-                                    'If the project units have not yet been written to 
-                                    If ProjectManagerBase.CurrentProject.DisplayUnits Is Nothing Then
-                                        ProjectManagerBase.CurrentProject.DisplayUnits = gRaster.VerticalUnits
-                                    End If
 
-                                    'If the coordinate system has not yet been written to 
-                                    If ProjectManagerBase.CurrentProject.CoordinateSystem Is Nothing Then
-                                        Dim sCoordinateSystem As String = gRaster.Proj.Wkt
-                                        ProjectManagerBase.CurrentProject.CoordinateSystem = sCoordinateSystem
-                                    End If
+                                Throw New NotImplementedException("Are we still doing this or relying on project to have these things already?")
+                                'Try
+                                '    'If the project units have not yet been written to 
+                                '    If ProjectManager.CurrentProject.DisplayUnits Is Nothing Then
+                                '        ProjectManager.CurrentProject.DisplayUnits = gRaster.VerticalUnits
+                                '    End If
 
-                                    ProjectManagerBase.CurrentProject.Precision = CInt(valPrecision.Value)
-                                    ProjectManagerBase.save()
-                                Catch ex As Exception
-                                    MsgBox("Failed to save the new precision to the GCD project.", MsgBoxStyle.Information, GCDCore.Properties.Resources.ApplicationNameLong)
-                                End Try
+                                '    'If the coordinate system has not yet been written to 
+                                '    If ProjectManager.CurrentProject.CoordinateSystem Is Nothing Then
+                                '        Dim sCoordinateSystem As String = gRaster.Proj.Wkt
+                                '        ProjectManager.CurrentProject.CoordinateSystem = sCoordinateSystem
+                                '    End If
+
+                                '    ProjectManager.CurrentProject.Precision = CInt(valPrecision.Value)
+                                '    ProjectManager.save()
+                                'Catch ex As Exception
+                                '    MsgBox("Failed to save the new precision to the GCD project.", MsgBoxStyle.Information, GCDCore.Properties.Resources.ApplicationNameLong)
+                                'End Try
 
 
                                 If m_ePurpose = ImportRasterPurposes.DEMSurvey Then
                                     ' Now try the hillshade for DEM Surveys
-                                    Dim sHillshadePath As IO.FileInfo = ProjectManagerBase.OutputManager.DEMSurveyHillShadeRasterPath(txtName.Text)
+                                    Dim sHillshadePath As IO.FileInfo = ProjectManager.OutputManager.DEMSurveyHillShadeRasterPath(txtName.Text)
                                     GCDConsoleLib.RasterOperators.Hillshade(gResult, sHillshadePath)
-                                    ProjectManagerUI.PyramidManager.PerformRasterPyramids(GCDCore.RasterPyramidManager.PyramidRasterTypes.Hillshade, sHillshadePath)
+                                    ProjectManager.PyramidManager.PerformRasterPyramids(GCDCore.RasterPyramidManager.PyramidRasterTypes.Hillshade, sHillshadePath)
                                 End If
                             End If
                         Else
@@ -827,7 +828,7 @@ Namespace SurveyLibrary
                     Debug.Assert(False, String.Format("The import raster purpose '{0}' does not have a corresponding raster pyramid build type.", m_ePurpose))
             End Select
 
-            ProjectManagerUI.PyramidManager.PerformRasterPyramids(ePyramidRasterType, sRasterPath)
+            ProjectManager.PyramidManager.PerformRasterPyramids(ePyramidRasterType, sRasterPath)
 
         End Sub
 
