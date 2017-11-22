@@ -26,6 +26,7 @@ namespace GCDConsoleLib.Internal.Operators
         {
             Stats = theStats;
             _thresh = thresh;
+            isBudgSeg = false;
         }
 
 
@@ -41,6 +42,7 @@ namespace GCDConsoleLib.Internal.Operators
             SegStats = new Dictionary<string, DoDStats>();
             _polymask = PolygonMask;
             _fieldname = FieldName;
+            isBudgSeg = true;
         }
 
 
@@ -49,6 +51,10 @@ namespace GCDConsoleLib.Internal.Operators
         /// </summary>
         protected override float CellOp(List<float[]> data, int id)
         {
+            // Speed things up by ignoring nodatas
+            if (data[0][id] == _rasternodatavals[0])
+                return 0;
+
             if (isBudgSeg)
                 BudgetSegCellOp(data, id);
             else
@@ -64,8 +70,8 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="id"></param>
         private void BudgetSegCellOp(List<float[]> data, int id)
         {
-            Tuple<decimal, decimal> ptcoords = ChunkExtent.Id2YX(id);
-            List<string> shapes = _polymask.ShapesContainPoint((double)ptcoords.Item2, (double)ptcoords.Item1, _fieldname);
+            Tuple<decimal, decimal> ptcoords = ChunkExtent.Id2XY(id);
+            List<string> shapes = _polymask.ShapesContainPoint((double)ptcoords.Item1, (double)ptcoords.Item2, _fieldname);
             if (shapes.Count > 0)
             {
                 foreach (string fldVal in shapes)
@@ -88,36 +94,35 @@ namespace GCDConsoleLib.Internal.Operators
         public void CellChangeCalc(List<float[]> data, int id, DoDStats stats)
         {
             fDoDValue = data[0][id];
-            if (fDoDValue != _rasternodatavals[0])
+
+            // Deposition
+            if (fDoDValue > 0)
             {
-                // Deposition
-                if (fDoDValue > 0)
+                // Raw Deposition
+                stats.DepositionRaw.AddToSumAndIncrementCounter(fDoDValue);
+
+                // Thresholded Deposition
+                if (fDoDValue > _thresh)
                 {
-                    // Raw Deposition
-                    stats.DepositionRaw.AddToSumAndIncrementCounter(fDoDValue);
-
-                    // Thresholded Deposition
-                    if (fDoDValue > _thresh)
-                    {
-                        stats.DepositionThr.AddToSumAndIncrementCounter(fDoDValue);
-                        stats.DepositionErr.AddToSumAndIncrementCounter(fDoDValue * _thresh);
-                    }
-                }
-
-                // Erosion
-                if (fDoDValue < 0)
-                {
-                    // Raw Erosion
-                    stats.ErosionRaw.AddToSumAndIncrementCounter(fDoDValue * -1);
-
-                    // Thresholded Erosion
-                    if (fDoDValue < (_thresh * -1))
-                    {
-                        stats.ErosionThr.AddToSumAndIncrementCounter(fDoDValue * -1);
-                        stats.ErosionErr.AddToSumAndIncrementCounter(fDoDValue * _thresh);
-                    }
+                    stats.DepositionThr.AddToSumAndIncrementCounter(fDoDValue);
+                    stats.DepositionErr.AddToSumAndIncrementCounter(fDoDValue * _thresh);
                 }
             }
+
+            // Erosion
+            if (fDoDValue < 0)
+            {
+                // Raw Erosion
+                stats.ErosionRaw.AddToSumAndIncrementCounter(fDoDValue * -1);
+
+                // Thresholded Erosion
+                if (fDoDValue < (_thresh * -1))
+                {
+                    stats.ErosionThr.AddToSumAndIncrementCounter(fDoDValue * -1);
+                    stats.ErosionErr.AddToSumAndIncrementCounter(fDoDValue * _thresh);
+                }
+            }
+
         }
     }
 }

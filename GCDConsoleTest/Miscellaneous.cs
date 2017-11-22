@@ -1,6 +1,5 @@
 ﻿
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using GCDConsoleLib;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -9,15 +8,15 @@ using System.Threading;
 namespace GCDConsoleLib.Tests
 {
     [TestClass()]
-    public class Stupidtests
+    public class MiscTests
     {
-        // 
+        // without refs
         public void testFunc1(Dictionary<string, List<string>> E, List<string> F)
         {
             E["other"].Add("testFunc1-1");
             F.Add("testFunc1-2");
         }
-
+        // With Refs
         public void testFunc2(ref Dictionary<string, List<string>> E, ref List<string> F)
         {
             E["other"].Add("testFunc2");
@@ -130,9 +129,7 @@ namespace GCDConsoleLib.Tests
             Assert.AreEqual(Convert.ToDouble(piDbl.ToString("R")), piDbl);
             Assert.AreEqual(Convert.ToSingle(piFlt.ToString("R")), piFlt);
             Assert.AreEqual(Convert.ToDecimal(piDec.ToString()), piDec);
-
         }
-
 
         /// Notes about Math.Round from https://msdn.microsoft.com/en-us/library/75ks3aby(v=vs.110).aspx
         /// 

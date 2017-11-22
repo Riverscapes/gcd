@@ -1,14 +1,14 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GCDConsoleLib.GCD
 {
     public class ErrorRasterProperties
     {
+        public enum ERPType { FIS, UNIFORM, ASSOC }
+
+        public readonly ERPType TheType;
         public readonly double? UniformValue;
         public readonly Raster AssociatedSurface;
 
@@ -18,17 +18,20 @@ namespace GCDConsoleLib.GCD
         public ErrorRasterProperties(double uniformValue)
         {
             UniformValue = new double?(uniformValue);
+            TheType = ERPType.UNIFORM;
         }
 
         public ErrorRasterProperties(Raster assoc)
         {
             AssociatedSurface = assoc;
+            TheType = ERPType.ASSOC;
         }
 
         public ErrorRasterProperties(FileInfo fisRuleFile, Dictionary<string, Raster> fisInputs)
         {
             FISRuleFile = fisRuleFile;
             FISInputs = fisInputs;
+            TheType = ERPType.FIS;
         }
     }
 }

@@ -1,20 +1,21 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Linq;
 using GCDConsoleLib.Internal;
 using GCDConsoleLib.GCD;
 
 namespace GCDConsoleLib.Internal.Operators
 {
 
-    public class FISRaster : CellByCellOperator<float>
+    public class FISRasterOp : CellByCellOperator<double>
     {
 
         /// <summary>
         /// Pass-through constructure
         /// </summary>
-        public FISRaster(List<string> inputNames, List<Raster> rInputs, FileInfo fisFile, Raster rOutput) :
-            base(rInputs, rOutput)
+        public FISRasterOp(Dictionary<string, Raster> rInputs, FileInfo fisFile, Raster rOutput) :
+            base(rInputs.Values.ToList(), rOutput)
         {
 
             for (int i = 0; i < rInputs.Count / 2; i++)
@@ -39,13 +40,34 @@ namespace GCDConsoleLib.Internal.Operators
         }
 
         /// <summary>
+        /// Sometimes we just want the op value
+        /// </summary>
+        /// <param name="rInputs"></param>
+        /// <param name="fisFile"></param>
+        public FISRasterOp(Dictionary<string, Raster> rInputs, FileInfo fisFile) :
+            base(rInputs.Values.ToList())
+        {
+
+        }
+
+        /// <summary>
         /// This is the actual implementation of the cell-by-cell logic
         /// </summary>
-        protected override float CellOp(List<float[]> data, int id)
+        protected override double CellOp(List<double[]> data, int id)
         {
             // We need to return something. Doesn't matter what
             return 0;
         }
 
+        /// <summary>
+        /// This is the actual fis logic. We store it here in case it's needed elsewhere
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public float FISOp(List<double[]> data, int id)
+        {
+            return 0;
+        }
     }
 }

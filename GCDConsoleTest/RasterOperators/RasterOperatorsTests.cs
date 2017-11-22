@@ -6,15 +6,18 @@ using System.IO;
 using UnitsNet;
 using UnitsNet.Units;
 using GCDConsoleLib.GCD;
+using System.Collections.Generic;
 
 namespace GCDConsoleLib.Tests
 {
+    /// <summary>
+    /// NOTE: WE ARE ONLY TESTING THE INTERFACE HERE. 
+    /// 
+    /// DO NOT TEST ANY VALUES PRODUCED HERE!!!!!!!
+    /// </summary>
     [TestClass()]
     public class RasterOperatorsTests
     {
-        /// <summary>
-        /// NOTE: WE ARE ONLY TESTING THE INTERFACE HERE. DO NOT TEST ANY VALUES PRODUCED HERE
-        /// </summary>
         [TestMethod()]
         public void ExtendedCopyTest()
         {
@@ -67,12 +70,15 @@ namespace GCDConsoleLib.Tests
         [TestMethod()]
         public void GetStatsMinLoDTest()
         {
-            Raster rTempl = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("const900.tif")));
-            Raster rTemp2 = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("const950.tif")));
+            Raster rRaw = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2005Dec_DEM\2005Dec_DEM.img")));
+            Raster rThresh = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2006Feb_DEM\2006Feb_DEM.img")));
 
             UnitGroup ug = new UnitGroup(VolumeUnit.CubicMeter, AreaUnit.SquareMeter, LengthUnit.Meter, LengthUnit.Meter);
+            DoDStats test = RasterOperators.GetStatsMinLoD(rRaw, rThresh, 73.0, Area.FromSquareMeters(1), ug);
 
-            DoDStats test = RasterOperators.GetStatsMinLoD(rTempl, rTemp2, 0.1f, Area.FromSquareMeters(1), ug);
+            // And now the budget seg case
+            Vector rPolyMask = new Vector(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\MethodMask_ForTesting.shp")));
+            Dictionary<string, DoDStats> testBudgetSeg = RasterOperators.GetStatsMinLoD(rRaw, rThresh, 73.0, rPolyMask, "Method", Area.FromSquareMeters(1), ug);
         }
 
         [TestMethod()]
@@ -142,12 +148,6 @@ namespace GCDConsoleLib.Tests
         }
 
         [TestMethod()]
-        public void SubtractTest()
-        {
-            Assert.Inconclusive();
-        }
-
-        [TestMethod()]
         public void RootSumSquaresTest()
         {
             Assert.Inconclusive();
@@ -161,18 +161,6 @@ namespace GCDConsoleLib.Tests
 
         [TestMethod()]
         public void SetNullTest()
-        {
-            Assert.Inconclusive();
-        }
-
-        [TestMethod()]
-        public void SetNullTest1()
-        {
-            Assert.Inconclusive();
-        }
-
-        [TestMethod()]
-        public void SetNullTest2()
         {
             Assert.Inconclusive();
         }
@@ -200,5 +188,20 @@ namespace GCDConsoleLib.Tests
         {
             Assert.Inconclusive();
         }
+
+        [TestMethod()]
+        public void CreateErrorRasterTest()
+        {
+            Raster rRaw = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2005Dec_DEM\2005Dec_DEM.img")));
+            Raster rThresh = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2006Feb_DEM\2006Feb_DEM.img")));
+
+            UnitGroup ug = new UnitGroup(VolumeUnit.CubicMeter, AreaUnit.SquareMeter, LengthUnit.Meter, LengthUnit.Meter);
+            DoDStats test = RasterOperators.GetStatsMinLoD(rRaw, rThresh, 73.0, Area.FromSquareMeters(1), ug);
+
+            // And now the budget seg case
+            Vector rPolyMask = new Vector(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\MethodMask_ForTesting.shp")));
+            Dictionary<string, DoDStats> testBudgetSeg = RasterOperators.GetStatsMinLoD(rRaw, rThresh, 73.0, rPolyMask, "Method", Area.FromSquareMeters(1), ug);
+        }
+
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using GCDConsoleLib.Common.Extensons;
+using System.Diagnostics;
 
 namespace GCDConsoleLib.Internal
 {
@@ -29,6 +30,17 @@ namespace GCDConsoleLib.Internal
         protected Raster _outputRaster;
 
         /// <summary>
+        /// Report back an integer between 0 and 100
+        /// </summary>
+        public int Progress
+        {
+            get
+            {
+                return (int)(100 * (ChunkExtent.Bottom - OpExtent.Top) / (OpExtent.Bottom - OpExtent.Top));
+            }
+        }
+
+        /// <summary>
         /// Initialize a bunch of rasters
         /// </summary>
         /// <param name="rRasters"></param>
@@ -43,6 +55,18 @@ namespace GCDConsoleLib.Internal
             SetOpExtent(InExtent);
         }
 
+        protected void AddInputRaster(Raster rInput)
+        {
+            if (_rasters.Count > 1)
+                Raster.ValidateSameMeta(_rasters[0], rInput);
+
+            _rasters.Add(rInput);
+            _rasternodatavals.Add(rInput.NodataValue<T>());
+
+            InExtent = InExtent.Union(rInput.Extent);
+            rInput.Open();
+        }
+
         /// <summary>
         /// Just a simple init function to put all the pieces we want in place
         /// </summary>
@@ -50,15 +74,11 @@ namespace GCDConsoleLib.Internal
         /// <param name="newExt"></param>
         private void _init(List<Raster> rRasters, Raster rOutRaster)
         {
-            foreach (Raster rRa in rRasters)
-            {
-                _rasters.Add(rRa);
-                _rasternodatavals.Add(rRa.NodataValue<T>());
-            }
-
             OpDone = false;
-            Raster r0 = _rasters[0];
-            InExtent = r0.Extent;
+            InExtent = rRasters[0].Extent;
+
+            foreach (Raster rRa in rRasters)
+                AddInputRaster(rRa);
 
             if (typeof(T) == typeof(float))
                 OpNodataVal = (T)Convert.ChangeType(_rasters[0].NodataValue<float>(), typeof(T));
@@ -68,15 +88,6 @@ namespace GCDConsoleLib.Internal
                 OpNodataVal = (T)Convert.ChangeType(_rasters[0].NodataValue<int>(), typeof(T));
             else if (typeof(T) == typeof(byte))
                 OpNodataVal = (T)Convert.ChangeType(_rasters[0].NodataValue<byte>(), typeof(T));
-
-            // Validate our each raster, Add each raster to the union extent window and open it for business
-            foreach (Raster rN in _rasters)
-            {
-                Raster rR = rN;
-                Raster.ValidateSameMeta(r0, rR);
-                InExtent = InExtent.Union(rN.Extent);
-                rN.Open();
-            }
 
             // Finally, set up our output raster and make sure it's open for writing
             if (rOutRaster != null)
@@ -124,6 +135,8 @@ namespace GCDConsoleLib.Internal
             }
             else
                 OpDone = true;
+
+            Debug.WriteLine(string.Format("Operation: {0}%", Progress));
         }
 
         /// <summary>
@@ -180,7 +193,7 @@ namespace GCDConsoleLib.Internal
                 ChunkOp(data, outBuffer);
 
                 if (_outputRaster != null)
-                {             
+                {
                     // Get the (col,row) offsets
                     Tuple<int, int> offset = ChunkExtent.GetTopCornerTranslationRowCol(OpExtent);
                     // Write this window tot he file

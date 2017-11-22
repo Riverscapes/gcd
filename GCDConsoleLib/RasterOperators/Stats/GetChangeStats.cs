@@ -72,6 +72,10 @@ namespace GCDConsoleLib.Internal.Operators
         /// </summary>
         protected override float CellOp(List<float[]> data, int id)
         {
+            // Speed things up by ignoring nodatas
+            if (data[0][id] == _rasternodatavals[0])
+                return 0;
+
             if (isBudgSeg)
                 BudgetSegCellOp(data, id);
             else
@@ -88,8 +92,8 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="id"></param>
         private void BudgetSegCellOp(List<float[]> data, int id)
         {
-            Tuple<decimal, decimal> ptcoords = ChunkExtent.Id2YX(id);
-            List<string> shapes = _polymask.ShapesContainPoint((double)ptcoords.Item2, (double)ptcoords.Item1, _fieldname);
+            Tuple<decimal, decimal> ptcoords = ChunkExtent.Id2XY(id);
+            List<string> shapes = _polymask.ShapesContainPoint((double)ptcoords.Item1, (double)ptcoords.Item2, _fieldname);
             if (shapes.Count > 0)
             {
                 foreach (string fldVal in shapes)

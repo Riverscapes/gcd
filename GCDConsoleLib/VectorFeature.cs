@@ -1,13 +1,16 @@
 ﻿using OSGeo.OGR;
+using System;
 
 namespace GCDConsoleLib
 {
     public class VectorFeature
     {
-        public Feature _feat;
+        public Feature Feat;
+
         public VectorFeature(Feature featDef)
         {
-            _feat = featDef;
+            Feat = featDef;
         }
+
     }
 }

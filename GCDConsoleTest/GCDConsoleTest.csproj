@@ -124,7 +124,7 @@
     <Compile Include="RasterOperators\RasterOperatorsTests.cs" />
     <Compile Include="RasterOperators\WindowOverlapOperatorTests.cs" />
     <Compile Include="RasterTests.cs" />
-    <Compile Include="stupid.cs" />
+    <Compile Include="Miscellaneous.cs" />
     <Compile Include="utility\ArrayExtensionsTests.cs" />
     <Compile Include="utility\TempDir.cs" />
     <Compile Include="utility\FakeRaster.cs" />

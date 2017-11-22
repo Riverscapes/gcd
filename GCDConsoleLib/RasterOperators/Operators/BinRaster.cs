@@ -58,8 +58,8 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="id"></param>
         private void BudgetSegCellOp(List<double[]> data, int id)
         {
-            Tuple<decimal, decimal> ptcoords = ChunkExtent.Id2YX(id);
-            List<string> shapes = _polymask.ShapesContainPoint((double)ptcoords.Item2, (double)ptcoords.Item1, _fieldname);
+            Tuple<decimal, decimal> ptcoords = ChunkExtent.Id2XY(id);
+            List<string> shapes = _polymask.ShapesContainPoint((double)ptcoords.Item1, (double)ptcoords.Item2, _fieldname);
             if (shapes.Count > 0)
             {
                 foreach (string fldVal in shapes)

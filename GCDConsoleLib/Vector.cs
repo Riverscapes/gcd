@@ -112,18 +112,14 @@ namespace GCDConsoleLib
             Layer mLayer = _ds.GetLayerByIndex(0);
 
             Geometry pt = new Geometry(wkbGeometryType.wkbPoint);
-            pt.AddPoint(0, 0, 0);
+            pt.AddPoint(x, y, 0);
 
-            Feature mFeat = mLayer.GetNextFeature();
-            while (mFeat != null)
+            foreach (KeyValuePair <long, VectorFeature> kvp in Features)
             {
-                if (mFeat.GetGeometryRef().Contains(pt))
-                {
-                    string fieldStr = mFeat.GetFieldAsString(fieldName);
-                    if (retVal.Contains(fieldStr))
-                        retVal.Add(fieldStr);
-                }        
+                if (kvp.Value.Feat.GetGeometryRef().Contains(pt))
+                    retVal.Add(kvp.Value.Feat.GetFieldAsString(fieldName));
             }
+
             return retVal;
         }
 

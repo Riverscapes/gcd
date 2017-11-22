@@ -104,7 +104,7 @@ namespace GCDConsoleLib
         /// <returns></returns>
         public static DoDStats GetStatsMinLoD(Raster rawDoD, Raster thrDoD, double minLoD, Area cellArea, UnitGroup units)
         {
-            GetDodMinLodStats theStatsOp = new GetDodMinLodStats(rawDoD, thrDoD, (float) minLoD, new DoDStats(cellArea, units));
+            GetDodMinLodStats theStatsOp = new GetDodMinLodStats(rawDoD, thrDoD, (float)minLoD, new DoDStats(cellArea, units));
             theStatsOp.Run();
             return theStatsOp.Stats;
         }
@@ -122,19 +122,18 @@ namespace GCDConsoleLib
             Vector PolygonMask, string FieldName,
              Area cellArea, UnitGroup units)
         {
-            GetDodMinLodStats theStatsOp = new GetDodMinLodStats(rawDoD, thrDoD, (float) minLoD, new DoDStats(cellArea, units), PolygonMask, FieldName);
+            GetDodMinLodStats theStatsOp = new GetDodMinLodStats(rawDoD, thrDoD, (float)minLoD, new DoDStats(cellArea, units), PolygonMask, FieldName);
             theStatsOp.Run();
             return theStatsOp.SegStats;
         }
 
+
         /// <summary>
-        /// Retrieve the Change Statistics from a pair of DoD rasters that were thresholded using a propagated error raster
+        /// Retrieve the segragated Change Statistics from a pair of DoD rasters that were thresholded using a propagated error raster
         /// </summary>
         /// <param name="rawDoD">Raw DoD Raster Path</param>
         /// <param name="thrDoD">Thresholded DoD Raster Path</param>
         /// <param name="propErrRaster">Propagated Error Raster Path</param>
-        /// <param name="PolygonMask">Vector layer containing the mask polygons</param>
-        /// <param name="FieldName">Name of the field in the PolygonMask that contains the distinguishing property on which to group statistics</param>
         /// <returns></returns>
         public static DoDStats GetStatsPropagated(Raster rawDoD, Raster thrDoD, Raster propErrRaster,
             Area cellArea, UnitGroup units)
@@ -145,11 +144,13 @@ namespace GCDConsoleLib
         }
 
         /// <summary>
-        /// Retrieve the segragated Change Statistics from a pair of DoD rasters that were thresholded using a propagated error raster
+        /// Retrieve the Change Statistics from a pair of DoD rasters that were thresholded using a propagated error raster
         /// </summary>
         /// <param name="rawDoD">Raw DoD Raster Path</param>
         /// <param name="thrDoD">Thresholded DoD Raster Path</param>
         /// <param name="propErrRaster">Propagated Error Raster Path</param>
+        /// <param name="PolygonMask">Vector layer containing the mask polygons</param>
+        /// <param name="FieldName">Name of the field in the PolygonMask that contains the distinguishing property on which to group statistics</param>
         /// <returns></returns>
         public static Dictionary<string, DoDStats> GetStatsPropagated(Raster rawDoD, Raster thrDoD, Raster propErrRaster,
           Vector PolygonMask, string FieldName,
@@ -254,29 +255,30 @@ namespace GCDConsoleLib
         }
 
         /// <summary>
-        /// 
+        /// Single method error calculation
         /// </summary>
         /// <param name="rawDEM"></param>
         /// <param name="props"></param>
         /// <param name="outputPath"></param>
         /// <returns></returns>
-        public static Raster CreateErrorRaster(Raster rawDEM, ErrorRasterProperties props, FileInfo outputPath)
+        public static Raster CreateErrorRaster(Raster rawDEM, ErrorRasterProperties props, FileInfo sOutputRaster)
         {
-            throw new NotImplementedException("single error raster case");
-            return null;
+            CreateErrorRaster theStatsOp = new CreateErrorRaster(rawDEM, props, new Raster(rawDEM, sOutputRaster));
+            return theStatsOp.RunWithOutput();
         }
 
         /// <summary>
-        /// 
+        /// Multimethod error calculation
         /// </summary>
         /// <param name="rawDEM"></param>
         /// <param name="props"></param>
         /// <param name="outputPath"></param>
         /// <returns></returns>
-        public static Dictionary<string, DoDStats> CreateErrorRaster(Raster rawDEM, Vector PolygonMask, string MaskFieldName, Dictionary<string, ErrorRasterProperties> props, FileInfo outputPath)
+        public static Raster CreateErrorRaster(Raster rawDEM, Vector PolygonMask, string MaskFieldName,
+            Dictionary<string, ErrorRasterProperties> props, FileInfo sOutputRaster)
         {
-            throw new NotImplementedException("multi-metho error raster case");
-            return null;
+            CreateErrorRaster theStatsOp = new CreateErrorRaster(rawDEM, PolygonMask, MaskFieldName, props, new Raster(rawDEM, sOutputRaster));
+            return theStatsOp.RunWithOutput();
         }
 
         public static Raster BilinearResample(Raster rInput, FileInfo sOutputRaster, ExtentRectangle outputExtent)
@@ -355,18 +357,16 @@ namespace GCDConsoleLib
         /// <returns></returns>
         public static Raster FISRaster(Dictionary<string, FileInfo> fisInputs, FileInfo sFISRuleFile, Raster rReference, FileInfo sOutputRaster)
         {
-            List<string> rFisInputNames = new List<string>();
-            List<Raster> rFisInputRasters = new List<Raster>();
+            Dictionary<string, Raster> rFISInputs = new Dictionary<string, Raster>();
 
             // Load up our input rasters
             foreach (KeyValuePair<string, FileInfo> inp in fisInputs)
             {
-                rFisInputNames.Add(inp.Key);
-                rFisInputRasters.Add(new Raster(inp.Value));
+                rFISInputs[inp.Key] = new Raster(inp.Value);
             }
 
             Raster outputRaster = new Raster(rReference, sOutputRaster, new GdalDataType(typeof(float)));
-            FISRaster theSlopeOp = new FISRaster(rFisInputNames, rFisInputRasters, sFISRuleFile, outputRaster);
+            FISRasterOp theSlopeOp = new FISRasterOp(rFISInputs, sFISRuleFile, outputRaster);
 
             throw new NotImplementedException();
             return theSlopeOp.RunWithOutput();
@@ -452,7 +452,7 @@ namespace GCDConsoleLib
         public static void BuildPyramids(System.IO.FileInfo rInput)
         {
             Raster rRa = new Raster(rInput);
-            rRa.BuildPyramids("AVERAGE");
+            rRa.BuildPyramids("average");
         }
 
 
