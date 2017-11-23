@@ -33,35 +33,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ESRI.ArcGIS.3DAnalyst, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="ESRI.ArcGIS.AxControls, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL" />
-    <Reference Include="ESRI.ArcGIS.Carto, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="ESRI.ArcGIS.Controls, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="ESRI.ArcGIS.Display, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="ESRI.ArcGIS.Geometry, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="ESRI.ArcGIS.GlobeCore, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="ESRI.ArcGIS.Output, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="ESRI.ArcGIS.System, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="ESRI.ArcGIS.SystemUI, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="ESRI.ArcGIS.Version, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86" />
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="stdole, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <EmbedInteropTypes>True</EmbedInteropTypes>
@@ -138,38 +109,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\gcd-addin-dlls\Release32_620\GCDCoreGCD.dll">
-      <Link>GCDCoreGCD.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\gcd-addin-dlls\Release32_620\gdal110.dll">
-      <Link>gdal110.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\gcd-addin-dlls\Release32_620\icudt54.dll">
-      <Link>icudt54.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\gcd-addin-dlls\Release32_620\icuin54.dll">
-      <Link>icuin54.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\gcd-addin-dlls\Release32_620\icuuc54.dll">
-      <Link>icuuc54.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\gcd-addin-dlls\Release32_620\Qt5Core.dll">
-      <Link>Qt5Core.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\gcd-addin-dlls\Release32_620\Qt5Xml.dll">
-      <Link>Qt5Xml.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\gcd-addin-dlls\Release32_620\RasterManagerGCD.dll">
-      <Link>RasterManagerGCD.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <None Include="Resources\CleanRaster.png" />
     <None Include="Resources\FISLibrary.png" />
     <None Include="Resources\GCD.png" />
