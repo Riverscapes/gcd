@@ -12,7 +12,7 @@ namespace GCDCore.Project
         public readonly FileInfo ProjectFile;
         public readonly DateTime DateTimeCreated;
         public readonly string GCDVersion;
-        public readonly UnitsNet.Area CellArea;
+        public UnitsNet.Area CellArea { get; set; }
         public GCDConsoleLib.GCD.UnitGroup Units { get; set; }
 
         public readonly Dictionary<string, DEMSurvey> DEMSurveys;
