@@ -415,6 +415,12 @@ Namespace Project
                 If TypeOf gRaster Is GCDConsoleLib.Raster Then
 
                     Dim dem As New DEMSurvey(frmImport.txtName.Text, Nothing, New IO.FileInfo(frmImport.txtRasterPath.Text))
+
+                    ' If this is the first DEM in the project then store the cell area on the project
+                    If ProjectManager.Project.DEMSurveys.Count = 0 Then
+                        ProjectManager.Project.CellArea = gRaster.Extent.CellArea(ProjectManager.Project.Units)
+                    End If
+
                     ProjectManager.Project.DEMSurveys.Add(dem.Name, dem)
                     ProjectManager.Project.Save()
 
