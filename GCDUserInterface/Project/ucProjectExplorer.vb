@@ -272,6 +272,10 @@ Namespace Project
 
         Private Function GetNodeType(aNode As TreeNode) As GCDNodeTypes
 
+            If TypeOf aNode.Tag Is ProjectTreeNode Then
+                Return DirectCast(aNode.Tag, ProjectTreeNode).NodeType
+            End If
+
             Dim sType As String = String.Empty
             If aNode.Tag.ToString.Contains("_") Then
                 Dim nIndexOfSeparator As Integer = aNode.Tag.ToString.IndexOf("_")

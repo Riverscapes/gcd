@@ -40,7 +40,14 @@ Namespace SurveyLibrary
                 End If
             End If
 
-            lblDatetime.Text = DEM.SurveyDate.ToString
+            ' Turn on handling survey method event handling (after setting control from project)
+            AddHandler rdoSingle.CheckedChanged, AddressOf rdoSingle_CheckedChanged
+
+            If DEM.SurveyDate Is Nothing Then
+                lblDatetime.Text = SurveyDateTime.NotSetString
+            Else
+                lblDatetime.Text = DEM.SurveyDate.ToString
+            End If
 
             UpdateControls()
             LoadRasterProperties()
@@ -203,7 +210,7 @@ Namespace SurveyLibrary
             End Try
         End Sub
 
-        Private Sub rdoSingle_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles rdoSingle.CheckedChanged
+        Private Sub rdoSingle_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
 
             If rdoSingle.Checked Then
                 Throw New NotImplementedException("Need to delete any existing polygon mask")

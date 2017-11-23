@@ -4,6 +4,8 @@ namespace GCDCore.Project
 {
     public class SurveyDateTime : IComparable<SurveyDateTime>
     {
+        public const string NotSetString = "Not Set";
+
         public ushort Year { get; set; }
         private byte m_nMonth;
 
@@ -136,7 +138,7 @@ namespace GCDCore.Project
             {
                 if (string.IsNullOrEmpty(sTime))
                 {
-                    sResult = "Not Set";
+                    sResult = NotSetString;
                 }
                 else
                 {
