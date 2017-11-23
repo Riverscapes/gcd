@@ -99,7 +99,7 @@ Namespace SurveyLibrary
             txtName.Text = txtName.Text.Trim
 
             If Not ProjectManager.Project.IsDEMNameUnique(txtName.Text, DEM) Then
-                MessageBox.Show(String.Format("Ther is already another DEM survey in this project with the name '{0}'. Each DEM Survey must have a unique name.", txtName.Text))
+                MessageBox.Show(String.Format("There is already another DEM survey in this project with the name '{0}'. Each DEM Survey must have a unique name.", txtName.Text))
                 txtName.Select()
                 Return False
             End If
