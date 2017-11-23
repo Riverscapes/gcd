@@ -34,17 +34,12 @@ Namespace Project
             ttpTooltip.SetToolTip(btnBrowseOutput, "Browse and select a parent directory for the GCD Project.")
             ttpTooltip.SetToolTip(txtGCDPath, "Read only folder and file name of the GCD Project file.")
             ttpTooltip.SetToolTip(txtDescription, "Information about the GCD project.")
-            ttpTooltip.SetToolTip(cboDisplayUnits, "The default units for displaying and outputting change detection results.")
-            ttpTooltip.SetToolTip(valPrecision, "The number of decimal places used to round raster cell coordinates when determining divisible raster extents.")
+            ttpTooltip.SetToolTip(cboHorizontalUnits, "The default units for displaying and outputting change detection results.")
 
-            cboDisplayUnits.Items.Add(New naru.db.NamedObject(UnitsNet.Units.LengthUnit.Millimeter, UnitsNet.Length.GetAbbreviation(UnitsNet.Units.LengthUnit.Millimeter)))
-            cboDisplayUnits.Items.Add(New naru.db.NamedObject(UnitsNet.Units.LengthUnit.Centimeter, UnitsNet.Length.GetAbbreviation(UnitsNet.Units.LengthUnit.Centimeter)))
-            cboDisplayUnits.SelectedIndex = cboDisplayUnits.Items.Add(New naru.db.NamedObject(UnitsNet.Units.LengthUnit.Meter, UnitsNet.Length.GetAbbreviation(UnitsNet.Units.LengthUnit.Meter)))
-            cboDisplayUnits.Items.Add(New naru.db.NamedObject(UnitsNet.Units.LengthUnit.Kilometer, UnitsNet.Length.GetAbbreviation(UnitsNet.Units.LengthUnit.Kilometer)))
-            cboDisplayUnits.Items.Add(New naru.db.NamedObject(UnitsNet.Units.LengthUnit.Inch, UnitsNet.Length.GetAbbreviation(UnitsNet.Units.LengthUnit.Inch)))
-            cboDisplayUnits.Items.Add(New naru.db.NamedObject(UnitsNet.Units.LengthUnit.Foot, UnitsNet.Length.GetAbbreviation(UnitsNet.Units.LengthUnit.Foot)))
-            cboDisplayUnits.Items.Add(New naru.db.NamedObject(UnitsNet.Units.LengthUnit.Yard, UnitsNet.Length.GetAbbreviation(UnitsNet.Units.LengthUnit.Yard)))
-            cboDisplayUnits.Items.Add(New naru.db.NamedObject(UnitsNet.Units.LengthUnit.Mile, UnitsNet.Length.GetAbbreviation(UnitsNet.Units.LengthUnit.Mile)))
+            cboHorizontalUnits.DataSource = GCDUnits.GCDLinearUnitsAsString()
+            cboVerticalUnits.DataSource = GCDUnits.GCDLinearUnitsAsString()
+            cboAreaUnits.DataSource = GCDUnits.GCDAreaUnitsAsString()
+            cboVolumeUnits.DataSource = GCDUnits.GCDVolumeUnitsAsString()
 
             If m_bCreateMode Then
                 Me.Text = "Create New " & Me.Text
@@ -56,6 +51,11 @@ Namespace Project
                         txtDirectory.Text = sDir
                     End If
                 End If
+
+                cboHorizontalUnits.SelectedItem = "Meter"
+                cboVerticalUnits.SelectedItem = "Meter"
+                cboAreaUnits.SelectedItem = "SquareMeter"
+                cboVolumeUnits.SelectedItem = "CubicMeter"
             Else
                 Me.Text = Me.Text & " Properties"
 
@@ -64,25 +64,28 @@ Namespace Project
                     txtDirectory.Text = .ProjectFile.DirectoryName
                     txtGCDPath.Text = .ProjectFile.FullName
                     txtDescription.Text = .Description
-                    valPrecision.Value = .Precision
-                End With
 
-                '' Select the appropriate linear units
-                'If Not String.IsNullOrEmpty(theProjectRow.DisplayUnits) Then
-                '    For j As Integer = 0 To cboDisplayUnits.Items.Count - 1
-                '        If String.Compare(cboDisplayUnits.Items(j).ToString, theProjectRow.DisplayUnits, True) = 0 Then
-                '            cboDisplayUnits.SelectedIndex = j
-                '        End If
-                '    Next
-                'End If
+                    cboHorizontalUnits.Text = .Units.HorizUnit.ToString()
+                    cboVerticalUnits.Text = .Units.VertUnit.ToString()
+                    cboAreaUnits.Text = .Units.ArUnit.ToString()
+                    cboVolumeUnits.Text = .Units.VolUnit.ToString()
+
+                    ' Only allow the units to be changed if no DEMs have been defined
+                    Dim demCount As Integer = .DEMSurveys.Count
+                    cboHorizontalUnits.Enabled = demCount = 0
+                    cboVerticalUnits.Enabled = demCount = 0
+                    cboAreaUnits.Enabled = demCount = 0
+                    cboVolumeUnits.Enabled = demCount = 0
+
+                End With
 
                 ' Adjust the controls to be read/write only for editing
                 txtName.ReadOnly = True
                 btnBrowseOutput.Visible = False
                 txtDirectory.Width = txtName.Width
                 txtDirectory.ReadOnly = True
-                valPrecision.Enabled = False
             End If
+
         End Sub
 
         Private Sub btnBrowseOutput_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnBrowseOutput.Click
@@ -148,20 +151,27 @@ Namespace Project
                     ' Creating a new project
                     IO.Directory.CreateDirectory(IO.Path.GetDirectoryName(txtGCDPath.Text))
                     Dim projectFile As New System.IO.FileInfo(txtGCDPath.Text)
+                    Dim units As GCDConsoleLib.GCD.UnitGroup = GetSelectedUnits()
 
                     Dim project As New GCDProject(txtName.Text, txtDescription.Text, projectFile, DateTime.Now,
-                                                  Reflection.Assembly.GetExecutingAssembly.GetName.Version.ToString, )
+                                                  Reflection.Assembly.GetExecutingAssembly.GetName.Version.ToString, UnitsNet.Area.From(0, units.ArUnit), units)
 
-
+                    ProjectManager.CreateProject(project)
                 Else
                     ' Editing properties of existing project
                     ProjectManager.Project.Name = txtName.Text
                     ProjectManager.Project.Description = txtDescription.Text
+
+                    ' only allowed to change the units if there are no DEMs
+                    If ProjectManager.Project.DEMSurveys.Count < 1 Then
+                        ProjectManager.Project.Units = GetSelectedUnits()
+                    End If
+
+                    ProjectManager.Project.Save()
                 End If
 
-                ProjectManager.save()
-
             Catch ex As Exception
+                DialogResult = DialogResult.None
                 ex.Data("Project Name") = txtName.Text
                 ex.Data("XML File") = txtGCDPath.Text
                 ex.Data("Directory") = txtDirectory.Text
@@ -170,19 +180,30 @@ Namespace Project
 
         End Sub
 
+        Private Function GetSelectedUnits() As GCDConsoleLib.GCD.UnitGroup
+            Return New GCDConsoleLib.GCD.UnitGroup(
+                        DirectCast([Enum].Parse(GetType(UnitsNet.Units.VolumeUnit), cboVolumeUnits.SelectedItem), UnitsNet.Units.VolumeUnit),
+                        DirectCast([Enum].Parse(GetType(UnitsNet.Units.AreaUnit), cboAreaUnits.SelectedItem), UnitsNet.Units.AreaUnit),
+                        DirectCast([Enum].Parse(GetType(UnitsNet.Units.LengthUnit), cboHorizontalUnits.SelectedItem), UnitsNet.Units.LengthUnit),
+                        DirectCast([Enum].Parse(GetType(UnitsNet.Units.LengthUnit), cboVerticalUnits.SelectedItem), UnitsNet.Units.LengthUnit))
+        End Function
+
         Private Function ValidateForm() As Boolean
 
             If String.IsNullOrEmpty(txtName.Text) Then
                 MessageBox.Show("Please enter a name for the new project.", GCDCore.Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information)
+                txtName.Select()
                 Return False
             End If
 
             If String.IsNullOrEmpty(txtDirectory.Text.Length) Then
                 MessageBox.Show("Please select an output directory.", GCDCore.Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information)
+                btnBrowseOutput.Select()
                 Return False
             Else
                 If Not IO.Directory.Exists(txtDirectory.Text) Then
                     MessageBox.Show("The parent directory must be valid, existing directory.", GCDCore.Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    btnBrowseOutput.Select()
                     Return False
                 End If
             End If
@@ -209,7 +230,7 @@ Namespace Project
 
 #End Region
 
-        Private Sub cmdHelpPrecision_Click(sender As System.Object, e As System.EventArgs) Handles cmdHelpPrecision.Click
+        Private Sub cmdHelpPrecision_Click(sender As System.Object, e As System.EventArgs)
             Dim frm As New UtilityForms.frmInformation
             frm.InitializeFixedDialog("Horizontal Decimal Precision", GCDCore.Properties.Resources.PrecisionHelp)
             frm.ShowDialog()

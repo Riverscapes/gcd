@@ -289,10 +289,10 @@ namespace GCDCore.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool AutomaticPyramids {
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string AutomaticPyramids {
             get {
-                return ((bool)(this["AutomaticPyramids"]));
+                return ((string)(this["AutomaticPyramids"]));
             }
             set {
                 this["AutomaticPyramids"] = value;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Windows.Forms;
+using GCDCore.Project;
 
 namespace GCDStandalone
 {
@@ -26,10 +27,10 @@ namespace GCDStandalone
 
             try
             {
-                GCDCore.Project.ProjectManagerUI.CopyDeployFolder();
-                new GCDCore.Project.ProjectManagerUI(GCDConsoleLib.Raster.RasterDriver.GTiff, "true");
+                ProjectManager.CopyDeployFolder();
+                ProjectManager.Init(GCDCore.Properties.Settings.Default.AutomaticPyramids);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 naru.error.ExceptionUI.HandleException(ex, "Error setting up application files.");
             }
@@ -88,13 +89,13 @@ namespace GCDStandalone
                 {
                     // Set the project file path first (which will attempt to read the XML file and throw an error if anything goes wrong)
                     // Then set the settings if the read was successful.
-                    GCDCore.Project.ProjectManager.FilePath = f.FileName;
+                    ProjectManager.OpenProject(new System.IO.FileInfo(f.FileName));
                     GCDCore.Properties.Settings.Default.LastUsedProjectFolder = System.IO.Path.GetDirectoryName(f.FileName);
                     GCDCore.Properties.Settings.Default.Save();
 
                     try
                     {
-                        GCDCore.Project.ProjectManagerUI.Validate();
+                        //GCDCore.Project.ProjectManager.Validate();
                     }
                     catch (Exception ex)
                     {
@@ -115,9 +116,9 @@ namespace GCDStandalone
 
         private void browseGCDProjectFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(GCDCore.Project.ProjectManager.FilePath) && System.IO.File.Exists(GCDCore.Project.ProjectManager.FilePath))
+            if (ProjectManager.Project is GCDProject)
             {
-                System.Diagnostics.Process.Start(System.IO.Path.GetDirectoryName(GCDCore.Project.ProjectManager.FilePath));
+                System.Diagnostics.Process.Start(ProjectManager.Project.ProjectFile.DirectoryName);
             }
         }
 
@@ -173,14 +174,14 @@ namespace GCDStandalone
                             break;
 
                         default:
-                            subMenu.Enabled = !string.IsNullOrEmpty(GCDCore.Project.ProjectManager.FilePath);
+                            subMenu.Enabled = ProjectManager.Project is GCDProject;
                             break;
                     }
                 }
             }
 
             // Now update the tool status strip
-            tssProjectPath.Text = GCDCore.Project.ProjectManager.FilePath;
+            tssProjectPath.Text = ProjectManager.Project is GCDProject ? ProjectManager.Project.ProjectFile.FullName : string.Empty;
         }
 
         private void onlineGCDHelpToolStripMenuItem_Click(object sender, EventArgs e)
@@ -249,7 +250,7 @@ namespace GCDStandalone
         {
             try
             {
-                GCDCore.Project.ProjectManager.FilePath = string.Empty;
+                ProjectManager.CloseCurrentProject();
                 ucProjectExplorer1.cmdRefresh_Click(sender, e);
                 UpdateMenusAndToolstrips(sender, e);
             }
