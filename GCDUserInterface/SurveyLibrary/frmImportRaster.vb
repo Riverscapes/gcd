@@ -222,51 +222,64 @@ Namespace SurveyLibrary
                 Return False
             End If
 
-            If TypeOf ucRaster.SelectedItem Is GCDConsoleLib.Raster Then
-                Dim r As GCDConsoleLib.Raster = ucRaster.SelectedItem
+            If Not TypeOf ucRaster.SelectedItem Is GCDConsoleLib.Raster Then
+                MsgBox("You must select a raster to import. Use the browse button if the raster you want is not already in the map and dropdown list.", MsgBoxStyle.Information, GCDCore.Properties.Resources.ApplicationNameLong)
+                Return False
+            End If
 
-                ' Safely get the projection of the reference raster
-                Dim RefRasterSpatRef As String = String.Empty
+            Dim r As GCDConsoleLib.Raster = ucRaster.SelectedItem
+
+            ' Safely get the projection of the reference raster
+            Dim RefRasterSpatRef As String = String.Empty
+            If TypeOf m_gReferenceRaster Is GCDConsoleLib.Raster Then
+                RefRasterSpatRef = m_gReferenceRaster.Proj.Wkt
+            End If
+
+            ' Verify that the raster has a spatial reference
+            If ucRaster.SelectedItem.Proj.PrettyWkt.ToLower.Contains("unknown") Then
+                MsgBox("The selected raster appears to be missing a spatial reference. All GCD rasters must possess a spatial reference and it must be the same spatial reference for all rasters in a GCD project." &
+                        " If the selected raster exists in the same coordinate system " & RefRasterSpatRef & ", but the coordinate system has not yet been defined for the raster" &
+                        " use the ArcToolbox 'Define Projection' geoprocessing tool in the 'Data Management -> Projection & Transformations' Toolbox to correct the problem with the selected raster by defining the coordinate system as:" &
+                        vbCrLf & vbCrLf & RefRasterSpatRef & vbCrLf & vbCrLf & "Then try importing it into the GCD again.", MsgBoxStyle.Information, GCDCore.Properties.Resources.ApplicationNameLong)
+                Return False
+            Else
                 If TypeOf m_gReferenceRaster Is GCDConsoleLib.Raster Then
-                    RefRasterSpatRef = m_gReferenceRaster.Proj.Wkt
+                    If Not m_gReferenceRaster.Proj.IsSame(ucRaster.SelectedItem.Proj) Then
+                        MsgBox("The coordinate system of the selected raster:" & vbCrLf & vbCrLf & ucRaster.SelectedItem.Proj.PrettyWkt & vbCrLf & vbCrLf & "does not match that of the GCD project:" &
+                               vbCrLf & vbCrLf & RefRasterSpatRef & vbCrLf & vbCrLf &
+                           "All rasters within a GCD project must have the identical coordinate system. However, small discrepencies in coordinate system names might cause the two coordinate systems to appear different. " &
+                           "If you believe that the selected raster does in fact possess the same coordinate system as the GCD project then use the ArcToolbox 'Define Projection' geoprocessing tool in the " &
+                           "'Data Management -> Projection & Transformations' Toolbox to correct the problem with the selected raster by defining the coordinate system as:" &
+                           vbCrLf & vbCrLf & RefRasterSpatRef & vbCrLf & vbCrLf & "Then try importing it into the GCD again.", MsgBoxStyle.Information, GCDCore.Properties.Resources.ApplicationNameLong)
+                        Return False
+                    End If
+                End If
+            End If
+
+            If m_ePurpose <> ImportRasterPurposes.StandaloneTool Then
+
+                ' Verify that the horizontal units match those of the project.
+                If ProjectManager.Project.Units.HorizUnit <> r.Proj.HorizontalUnit Then
+                    Dim msg As String = String.Format("The horizontal units of the raster ({0}) do not match those of the GCD project ({1}).", r.Proj.HorizontalUnit.ToString, ProjectManager.Project.Units.HorizUnit.ToString)
+                    If ProjectManager.Project.DEMSurveys.Count < 1 Then
+                        msg &= " You can change the GCD project horizontal units by canceling this form and opening the GCD project properties form."
+                    End If
+                    MessageBox.Show(msg, "HorizontalUnits Mismatch", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    Return False
                 End If
 
-                ' Verify that the raster has a spatial reference
-                If ucRaster.SelectedItem.Proj.PrettyWkt.ToLower.Contains("unknown") Then
-                    MsgBox("The selected raster appears to be missing a spatial reference. All GCD rasters must possess a spatial reference and it must be the same spatial reference for all rasters in a GCD project." &
-                            " If the selected raster exists in the same coordinate system " & RefRasterSpatRef & ", but the coordinate system has not yet been defined for the raster" &
-                            " use the ArcToolbox 'Define Projection' geoprocessing tool in the 'Data Management -> Projection & Transformations' Toolbox to correct the problem with the selected raster by defining the coordinate system as:" &
-                            vbCrLf & vbCrLf & RefRasterSpatRef & vbCrLf & vbCrLf & "Then try importing it into the GCD again.", MsgBoxStyle.Information, GCDCore.Properties.Resources.ApplicationNameLong)
-                    Return False
-                Else
-                    If TypeOf m_gReferenceRaster Is GCDConsoleLib.Raster Then
-                        If Not m_gReferenceRaster.Proj.IsSame(ucRaster.SelectedItem.Proj) Then
-                            MsgBox("The coordinate system of the selected raster:" & vbCrLf & vbCrLf & ucRaster.SelectedItem.Proj.PrettyWkt & vbCrLf & vbCrLf & "does not match that of the GCD project:" &
-                                   vbCrLf & vbCrLf & RefRasterSpatRef & vbCrLf & vbCrLf &
-                               "All rasters within a GCD project must have the identical coordinate system. However, small discrepencies in coordinate system names might cause the two coordinate systems to appear different. " &
-                               "If you believe that the selected raster does in fact possess the same coordinate system as the GCD project then use the ArcToolbox 'Define Projection' geoprocessing tool in the " &
-                               "'Data Management -> Projection & Transformations' Toolbox to correct the problem with the selected raster by defining the coordinate system as:" &
-                               vbCrLf & vbCrLf & RefRasterSpatRef & vbCrLf & vbCrLf & "Then try importing it into the GCD again.", MsgBoxStyle.Information, GCDCore.Properties.Resources.ApplicationNameLong)
+                ' Verify the optional vertical units for rasters that should share the project vertical units
+                If m_ePurpose = ImportRasterPurposes.DEMSurvey OrElse m_ePurpose = ImportRasterPurposes.ErrorCalculation Then
+                    If Not r.VerticalUnits = Nothing AndAlso r.VerticalUnits <> UnitsNet.Units.LengthUnit.Undefined Then
+                        If r.VerticalUnits <> ProjectManager.Project.Units.VertUnit Then
+                            MessageBox.Show(String.Format("The raster has different vertical units ({0}) than the GCD project ({1})." &
+                                                          " You must change the vertical units of the raster before it can be used within the GCD.",
+                                                          r.VerticalUnits.ToString, ProjectManager.Project.Units.VertUnit.ToString), "Vertical Units Mismatch",
+                                                          MessageBoxButtons.OK, MessageBoxIcon.Information)
                             Return False
                         End If
                     End If
                 End If
-
-                ' Verify that the horizontal units match those of the project.
-                If Not m_ePurpose = ImportRasterPurposes.StandaloneTool Then
-                    If ProjectManager.Project.Units.HorizUnit <> r.Proj.HorizontalUnit Then
-                        Dim msg As String = String.Format("The horizontal units of the raster ({0}) do not match those of the GCD project ({1}).", r.Proj.HorizontalUnit.ToString, ProjectManager.Project.Units.HorizUnit.ToString)
-                        If ProjectManager.Project.DEMSurveys.Count < 1 Then
-                            msg &= " You can change the GCD project horizontal units by canceling this form and opening the GCD project properties form."
-                        End If
-                        MessageBox.Show(msg, "HorizontalUnits Mismatch", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                        Return False
-                    End If
-                End If
-
-            Else
-                MsgBox("You must select a raster to import. Use the browse button if the raster you want is not already in the map and dropdown list.", MsgBoxStyle.Information, GCDCore.Properties.Resources.ApplicationNameLong)
-                Return False
             End If
 
             If String.IsNullOrEmpty(txtRasterPath.Text) Then
@@ -319,20 +332,6 @@ Namespace SurveyLibrary
                     MsgBox("The raster is orthogonal and divisible with the specified output. No interpolation is required. Select ""None"" in the interpolation method drop down.", MsgBoxStyle.Information, GCDCore.Properties.Resources.ApplicationNameLong)
                     Return False
                 End If
-            End If
-
-            If (m_ePurpose = ImportRasterPurposes.DEMSurvey AndAlso valPrecision.Enabled = False) Or (m_ePurpose = ImportRasterPurposes.AssociatedSurface) Or (m_ePurpose = ImportRasterPurposes.ErrorCalculation) Then
-                ' If the project units have not yet been written to 
-                Throw New NotImplementedException("Are we still doing this, or are we requiring the units to be set on the project already?")
-                'If Not ProjectManager.CurrentProject.DisplayUnits Is Nothing Then
-                '    If TypeOf ucRaster.SelectedItem Is GCDConsoleLib.Raster Then
-                '        If ucRaster.SelectedItem.VerticalUnits <> ProjectManager.CurrentProject.DisplayUnits Then
-                '            MsgBox(String.Format("The linear units of the selected raster {0} does not match the linear units {1} of the GCD Project." & vbCrLf & vbCrLf & "Please select a raster that has the same linear units as the GCD Project.",
-                '                             ucRaster.SelectedItem.VerticalUnits, ProjectManager.CurrentProject.DisplayUnits), MsgBoxStyle.Information, GCDCore.Properties.Resources.ApplicationNameLong)
-                '            Return False
-                '        End If
-                '    End If
-                'End If
             End If
 
             Return True
@@ -418,7 +417,7 @@ Namespace SurveyLibrary
             ' is just for matching spatial reference.
 
             If TypeOf m_gReferenceRaster Is GCDConsoleLib.Raster AndAlso (m_ePurpose <> ImportRasterPurposes.DEMSurvey OrElse m_ePurpose = ImportRasterPurposes.StandaloneTool) Then
-                Dim fCellSize As Decimal = Math.Round(m_gReferenceRaster.Extent.CellWidth, valCellSize.DecimalPlaces)
+                Dim fCellSize As Decimal = m_gReferenceRaster.Extent.CellWidth
                 valCellSize.Maximum = fCellSize
                 valCellSize.Value = fCellSize
 

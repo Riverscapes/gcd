@@ -63,6 +63,9 @@ Namespace SurveyLibrary
             cboType.Items.Add(New naru.db.NamedObject(AssociatedSurfaceMethods.InterpolationError, "Interpolation Error"))
             cboType.SelectedIndex = cboType.Items.Add(New naru.db.NamedObject(AssociatedSurfaceMethods.Browse, "Unknown"))
 
+            btnDensity.Enabled = ProjectManager.IsArcMap
+            btnRoughness.Enabled = ProjectManager.IsArcMap
+
             If Not m_Assoc Is Nothing Then
                 txtName.Text = m_Assoc.Name
                 txtProjectRaster.Text = m_Assoc.Raster.RelativePath
@@ -262,6 +265,8 @@ Namespace SurveyLibrary
             If String.IsNullOrEmpty(txtName.Text) Then
                 txtName.Text = String.Format("Slope {0}", IIf(m_eMethod = AssociatedSurfaceMethods.SlopeDegree, "Degrees", "Percent"))
             End If
+
+            m_eMethod = eType
 
             ' Select the appropriate type in the dropdown box
             For i As Integer = 0 To cboType.Items.Count - 1

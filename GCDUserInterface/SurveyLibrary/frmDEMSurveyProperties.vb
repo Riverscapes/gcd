@@ -29,8 +29,10 @@ Namespace SurveyLibrary
 
             If DEM.IsSingleSurveyMethod Then
                 ' Select the single survey method
-                If Not String.IsNullOrEmpty(DEM.SurveyMethod) Then
-                    cboSingle.SelectedItem = DEM.SurveyMethod
+                If String.IsNullOrEmpty(DEM.SurveyMethod) Then
+                    cboSingle.SelectedIndex = 0
+                Else
+                    cboSingle.Text = DEM.SurveyMethod
                 End If
             Else
                 ' Load the fields from the Polygon mask
