@@ -14,7 +14,7 @@ namespace GCDConsoleLib
 
         public string GetFieldAsString(string fieldName)
         {
-            return _feat.GetFieldAsString(fieldName);
+            return Feat.GetFieldAsString(fieldName);
         }
     }
 }
