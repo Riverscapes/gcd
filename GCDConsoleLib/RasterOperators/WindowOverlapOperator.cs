@@ -24,6 +24,7 @@ namespace GCDConsoleLib.Internal
             base(rRasters, rOutputRaster)
         {
             BufferCells = bufferCells;
+            _vOffset = -BufferCells;
             _chunkCache = new List<List<T[]>>(BufferLength);
 
             dWindow = new List<T[]>();
@@ -158,13 +159,6 @@ namespace GCDConsoleLib.Internal
                 WindowExtent.Left += ChunkExtent.CellWidth;
             }
         }
-
-        public Raster RunWithOutput()
-        {
-            Run(- BufferCells);
-            return _outputRaster;
-        }
-
     }
 
 }

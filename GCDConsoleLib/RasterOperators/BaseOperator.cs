@@ -28,6 +28,7 @@ namespace GCDConsoleLib.Internal
         protected T OpNodataVal;
 
         protected Raster _outputRaster;
+        protected int _vOffset;
 
         public event EventHandler<int> ProgressEvent;
 
@@ -53,7 +54,7 @@ namespace GCDConsoleLib.Internal
             _rasters = new List<Raster>(rRasters.Count);
             _rasternodatavals = new List<T>(rRasters.Count);
             _init(rRasters, rOutputRaster);
-
+            _vOffset = 0;
             // Now that we have our rasters tested and a unioned extent we can set the operation extent
             SetOpExtent(InExtent);
         }
@@ -181,7 +182,7 @@ namespace GCDConsoleLib.Internal
         /// <summary>
         /// Run an operation over every cell individually
         /// </summary>
-        public void Run(int vOffset = 0)
+        public void Run()
         {
             List<T[]> data = new List<T[]>(_rasters.Count);
 
@@ -204,7 +205,7 @@ namespace GCDConsoleLib.Internal
                     Tuple<int, int> offset = ChunkExtent.GetTopCornerTranslationRowCol(OpExtent);
                     // Write this window tot he file
                     // it goes (colNum, rowNum, COLS, ROWS, buffer);
-                    _outputRaster.Write(offset.Item2, offset.Item1 + vOffset, ChunkExtent.cols, ChunkExtent.rows, outBuffer);
+                    _outputRaster.Write(offset.Item2, offset.Item1 + _vOffset, ChunkExtent.cols, ChunkExtent.rows, outBuffer);
                 }
                 // We always increment to the next one
                 nextChunk();
@@ -215,9 +216,9 @@ namespace GCDConsoleLib.Internal
 
         }
 
-        public Raster RunWithOutput(int vOffset = 0)
+        public Raster RunWithOutput()
         {
-            Run(vOffset);
+            Run();
             return _outputRaster;
         }
 

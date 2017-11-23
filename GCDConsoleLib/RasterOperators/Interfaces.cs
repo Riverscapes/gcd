@@ -6,6 +6,7 @@ using GCDConsoleLib.Internal.Operators;
 using System.IO;
 using UnitsNet;
 using UnitsNet.Units;
+using System.Diagnostics;
 using GCDConsoleLib.GCD;
 
 namespace GCDConsoleLib
@@ -497,6 +498,7 @@ namespace GCDConsoleLib
             MethodInfo method = myGenericClass.GetType().GetMethod("RunWithOutput",
                 BindingFlags.Public | BindingFlags.Instance);
             return method.Invoke(myGenericClass, null);
+
         }
 
     }
