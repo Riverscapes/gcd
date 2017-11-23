@@ -31,6 +31,21 @@ namespace GCDConsoleLib.Internal.Operators
         /// Constructor
         /// </summary>
         /// <param name="rInput"></param>
+        /// <param name="tOp"></param>
+        /// <param name="rThresh"></param>
+        /// <param name="rOutputRaster"></param>
+        public Threshold(Raster rInput, RasterOperators.ThresholdOps tOp,
+            Raster rThresh, Raster rOutputRaster) :
+            base(new List<Raster> { rInput, rThresh }, rOutputRaster)
+        {
+            _botOp = tOp;
+            bTwoOps = false;
+        }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="rInput"></param>
         /// <param name="tBottomOp"></param>
         /// <param name="fBottomThresh"></param>
         /// <param name="tTopOp"></param>
@@ -70,23 +85,48 @@ namespace GCDConsoleLib.Internal.Operators
             // TwoOps means we're doing Greater than something AND less than something else
             if (bTwoOps)
             {
-                if (
-                _botOp == RasterOperators.ThresholdOps.GreaterThan && val > _botNum ||
-                _botOp == RasterOperators.ThresholdOps.GreaterThan && val >= _botNum ||
-                _topOp == RasterOperators.ThresholdOps.LessThan && val < _topNum ||
-                _botOp == RasterOperators.ThresholdOps.LessThanOrEqual && val <= _botNum
-                )
-                    val = _rasternodatavals[0];
+                if (_rasters.Count == 1)
+                {
+                    if (_botOp == RasterOperators.ThresholdOps.GreaterThan && val <= _botNum ||
+                        _botOp == RasterOperators.ThresholdOps.GreaterThanOrEqual && val < _botNum ||
+                        _topOp == RasterOperators.ThresholdOps.LessThan && val >= _topNum ||
+                        _topOp == RasterOperators.ThresholdOps.LessThanOrEqual && val > _topNum)
+                        val = _rasternodatavals[0];
+                }
+                else
+                {
+                    float botNum = data[1][id];
+                    float topNum = data[2][id];
+                    if (_botOp == RasterOperators.ThresholdOps.GreaterThan && val <= _botNum ||
+                        _botOp == RasterOperators.ThresholdOps.GreaterThanOrEqual && val < _botNum ||
+                        _topOp == RasterOperators.ThresholdOps.LessThan && val >= _topNum ||
+                        _topOp == RasterOperators.ThresholdOps.LessThanOrEqual && val < _topNum)
+                        val = _rasternodatavals[0];
+                }
             }
+            // One operation only means we're greater OR less than some value
             else
             {
-                if (
-                _topOp == RasterOperators.ThresholdOps.GreaterThan && data[0][id] > _botNum ||
-                _topOp == RasterOperators.ThresholdOps.GreaterThanOrEqual && data[0][id] >= _botNum ||
-                _topOp == RasterOperators.ThresholdOps.LessThan && data[0][id] < _botNum ||
-                _topOp == RasterOperators.ThresholdOps.LessThanOrEqual && data[0][id] <= _botNum
-                )
-                    val = _rasternodatavals[0];
+                // Compare the raster value to a constant
+                if (_rasters.Count == 1)
+                {
+                    if (_botOp == RasterOperators.ThresholdOps.GreaterThan && data[0][id] <= _botNum ||
+                        _botOp == RasterOperators.ThresholdOps.GreaterThanOrEqual && data[0][id] < _botNum ||
+                        _botOp == RasterOperators.ThresholdOps.LessThan && data[0][id] >= _botNum ||
+                        _botOp == RasterOperators.ThresholdOps.LessThanOrEqual && data[0][id] > _botNum)
+                        val = _rasternodatavals[0];
+                }
+                // This is a raster operation. Compare the first raster value to a second raster value
+                else
+                {
+                    float rBotNum = data[1][id];
+                    if (_botOp == RasterOperators.ThresholdOps.GreaterThan && data[0][id] <= rBotNum ||
+                        _botOp == RasterOperators.ThresholdOps.GreaterThanOrEqual && data[0][id] < rBotNum ||
+                        _botOp == RasterOperators.ThresholdOps.LessThan && data[0][id] >= rBotNum ||
+                        _botOp == RasterOperators.ThresholdOps.LessThanOrEqual && data[0][id] > rBotNum)
+                        val = _rasternodatavals[0];
+                }
+
             }
             return val;
         }

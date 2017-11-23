@@ -13,11 +13,16 @@ namespace GCDConsoleLib
 {
     public static class RasterOperators
     {
+        #region Math and Copy Operations --------------------------------------------------------------------------------
+
         public enum MathOpType : byte { Addition, Subtraction, Division, Multipication };
 
         /// <summary>
-        /// EXTENDED COPY
+        /// Copy a Raster
         /// </summary>
+        /// <param name="rInput"></param>
+        /// <param name="sOutputRaster"></param>
+        /// <returns></returns>
         public static Raster ExtendedCopy(Raster rInput, FileInfo sOutputRaster)
         {
             return (Raster)GenericRunWithOutput(typeof(ExtendedCopy<>), rInput.Datatype.CSType, new object[] {
@@ -25,6 +30,13 @@ namespace GCDConsoleLib
             });
         }
 
+        /// <summary>
+        /// Copy a raster by specifying a new extent
+        /// </summary>
+        /// <param name="rInput"></param>
+        /// <param name="sOutputRaster"></param>
+        /// <param name="newRect"></param>
+        /// <returns></returns>
         public static Raster ExtendedCopy(Raster rInput, FileInfo sOutputRaster, ExtentRectangle newRect)
         {
             return (Raster)GenericRunWithOutput(typeof(ExtendedCopy<>), rInput.Datatype.CSType, new object[] {
@@ -32,34 +44,55 @@ namespace GCDConsoleLib
             });
         }
 
-        public static Raster ExtendedCopy(Raster rInput, Raster rOutputRaster, ExtentRectangle newRect)
-        {
-            return (Raster)GenericRunWithOutput(typeof(ExtendedCopy<>), rInput.Datatype.CSType, new object[] {
-                rInput, rOutputRaster, newRect
-            });
-        }
-
         /// <summary>
-        /// Raster Math: 1 raster and one operand (double)
+        /// Add a value to a Raster
         /// </summary>
+        /// <param name="rInput"></param>
+        /// <param name="dOperand"></param>
+        /// <param name="sOutputRaster"></param>
+        /// <returns></returns>
         public static Raster Add(Raster rInput, double dOperand, FileInfo sOutputRaster)
         {
             return (Raster)GenericRunWithOutput(typeof(RasterMath<>), rInput.Datatype.CSType, new object[] {
                 MathOpType.Addition, rInput, dOperand, new Raster(rInput, sOutputRaster)
             });
         }
+
+        /// <summary>
+        /// Subtract a value from a Raster
+        /// </summary>
+        /// <param name="rInput"></param>
+        /// <param name="dOperand"></param>
+        /// <param name="sOutputRaster"></param>
+        /// <returns></returns>
         public static Raster Subtract(Raster rInput, double dOperand, FileInfo sOutputRaster)
         {
             return (Raster)GenericRunWithOutput(typeof(RasterMath<>), rInput.Datatype.CSType, new object[] {
                 MathOpType.Subtraction, rInput, dOperand, new Raster(rInput, sOutputRaster)
             });
         }
+
+        /// <summary>
+        /// Multiply a Raster and a Value
+        /// </summary>
+        /// <param name="rInput"></param>
+        /// <param name="dOperand"></param>
+        /// <param name="sOutputRaster"></param>
+        /// <returns></returns>
         public static Raster Multiply(Raster rInput, double dOperand, FileInfo sOutputRaster)
         {
             return (Raster)GenericRunWithOutput(typeof(RasterMath<>), rInput.Datatype.CSType, new object[] {
                 MathOpType.Multipication, rInput, dOperand, new Raster(rInput, sOutputRaster)
             });
         }
+
+        /// <summary>
+        /// Divide a Raster and a Value
+        /// </summary>
+        /// <param name="rInput"></param>
+        /// <param name="dOperand"></param>
+        /// <param name="sOutputRaster"></param>
+        /// <returns></returns>
         public static Raster Divide(Raster rInput, double dOperand, FileInfo sOutputRaster)
         {
             return (Raster)GenericRunWithOutput(typeof(RasterMath<>), rInput.Datatype.CSType, new object[] {
@@ -67,7 +100,13 @@ namespace GCDConsoleLib
             });
         }
 
-
+        /// <summary>
+        /// Add Two Rasters
+        /// </summary>
+        /// <param name="rInputA"></param>
+        /// <param name="rInputB"></param>
+        /// <param name="sOutputRaster"></param>
+        /// <returns></returns>
         public static Raster Add(Raster rInputA, Raster rInputB, FileInfo sOutputRaster)
         {
             return (Raster)GenericRunWithOutput(typeof(RasterMath<>), rInputA.Datatype.CSType, new object[] {
@@ -75,6 +114,13 @@ namespace GCDConsoleLib
             });
         }
 
+        /// <summary>
+        /// Substract two rasters
+        /// </summary>
+        /// <param name="rInputA"></param>
+        /// <param name="rInputB"></param>
+        /// <param name="sOutputRaster"></param>
+        /// <returns></returns>
         public static Raster Subtract(Raster rInputA, Raster rInputB, FileInfo sOutputRaster)
         {
             return (Raster)GenericRunWithOutput(typeof(RasterMath<>), rInputA.Datatype.CSType, new object[] {
@@ -82,12 +128,27 @@ namespace GCDConsoleLib
             });
         }
 
+        /// <summary>
+        /// Multiply two rasters
+        /// </summary>
+        /// <param name="rInputA"></param>
+        /// <param name="rInputB"></param>
+        /// <param name="sOutputRaster"></param>
+        /// <returns></returns>
         public static Raster Multiply(Raster rInputA, Raster rInputB, FileInfo sOutputRaster)
         {
             return (Raster)GenericRunWithOutput(typeof(RasterMath<>), rInputA.Datatype.CSType, new object[] {
                 MathOpType.Multipication, rInputA, rInputB, new Raster(rInputA, sOutputRaster)
             });
         }
+
+        /// <summary>
+        /// Divide two rasters
+        /// </summary>
+        /// <param name="rInputA"></param>
+        /// <param name="rInputB"></param>
+        /// <param name="sOutputRaster"></param>
+        /// <returns></returns>
         public static Raster Divide(Raster rInputA, Raster rInputB, FileInfo sOutputRaster)
         {
             return (Raster)GenericRunWithOutput(typeof(RasterMath<>), rInputA.Datatype.CSType, new object[] {
@@ -95,7 +156,75 @@ namespace GCDConsoleLib
             });
         }
 
+        /// <summary>
+        /// Create a BilinearReseample Raster
+        /// </summary>
+        /// <param name="rInput"></param>
+        /// <param name="sOutputRaster"></param>
+        /// <param name="outputExtent"></param>
+        /// <returns></returns>
+        public static Raster BilinearResample(Raster rInput, FileInfo sOutputRaster, ExtentRectangle outputExtent)
+        {
+            return (Raster)GenericRunWithOutput(typeof(BilinearResample<>), rInput.Datatype.CSType, new object[] {
+                rInput, outputExtent, new Raster(rInput, sOutputRaster)
+            });
+        }
 
+
+        /// <summary>
+        /// Create a Root Sum Squares Calculation Raster
+        /// </summary>
+        /// <param name="raster1"></param>
+        /// <param name="raster2"></param>
+        /// <param name="sOutputRaster"></param>
+        /// <returns></returns>
+        public static Raster RootSumSquares(Raster raster1, Raster raster2, FileInfo sOutputRaster)
+        {
+            RootSumSquare theUniformOp = new RootSumSquare(raster1, raster2, new Raster(raster1, sOutputRaster));
+            return theUniformOp.RunWithOutput();
+        }
+
+        #endregion
+
+        #region Raster Combination methods (Mosaic, Mask) --------------------------------------------------------------------------------
+
+        /// <summary>
+        /// Mosaic a list of Rasters into an output Raster
+        /// </summary>
+        /// <param name="sInputs"></param>
+        /// <param name="sOutputRaster"></param>
+        /// <returns></returns>
+        public static Raster Mosaic(List<FileInfo> sInputs, FileInfo sOutputRaster)
+        {
+            List<Raster> rlInputs = new List<Raster>();
+
+            foreach (FileInfo sRa in sInputs)
+                rlInputs.Add(new Raster(sRa));
+
+            Raster r0 = rlInputs[0];
+
+            return (Raster)GenericRunWithOutput(typeof(Mosaic<>), rlInputs[0].Datatype.CSType, new object[] {
+                rlInputs, new Raster( r0, sOutputRaster)
+            });
+        }
+
+        /// <summary>
+        /// Mask a raster with another raster
+        /// </summary>
+        /// <param name="rUnmasked"></param>
+        /// <param name="rMask"></param>
+        /// <param name="sOutputRaster"></param>
+        /// <returns></returns>
+        public static Raster Mask(Raster rUnmasked, Raster rMask, FileInfo sOutputRaster)
+        {
+            return (Raster)GenericRunWithOutput(typeof(Mask<>), rUnmasked.Datatype.CSType, new object[] {
+                rUnmasked, rMask, new Raster( rUnmasked, sOutputRaster)
+            });
+        }
+
+        #endregion
+
+        #region Statistics Calculation Operation (DoD stuff and Histogram Binning) --------------------------------------------------------------------------------
         /// <summary>
         /// Retrieve the Change Statistics from a pair of DoD rasters that were thresholded using minimum level of detection
         /// </summary>
@@ -255,6 +384,29 @@ namespace GCDConsoleLib
             return retVal;
         }
 
+
+        /// <summary>
+        /// Default histogram generator
+        /// </summary>
+        /// <param name="rInput"></param>
+        /// <returns></returns>
+        /// <remarks>The goal of this operation is to bin raster values into a set number of bins.
+        /// We need to discuss how those bins are defined. Ideally the first and last bin would
+        /// contain zero cell count, so that the caller has confidence that the histogram has
+        /// captured the full range of the raster values.</remarks>
+        public static Histogram BinRaster(Raster rInput, int numberofBins)
+        {
+            BinRaster histOp = new BinRaster(rInput, numberofBins);
+            histOp.Run();
+            return histOp.theHistogram;
+        }
+
+
+        #endregion  
+
+
+        #region Error Raster stuff --------------------------------------------------------------------------------
+
         /// <summary>
         /// Single method error calculation
         /// </summary>
@@ -265,6 +417,8 @@ namespace GCDConsoleLib
         public static Raster CreateErrorRaster(Raster rawDEM, ErrorRasterProperties props, FileInfo sOutputRaster, EventHandler<int> progressHandler = null)
         {
             CreateErrorRaster theStatsOp = new CreateErrorRaster(rawDEM, props, new Raster(rawDEM, sOutputRaster));
+            if (progressHandler != null)
+                theStatsOp.ProgressEvent += progressHandler;
             return theStatsOp.RunWithOutput();
         }
 
@@ -285,13 +439,29 @@ namespace GCDConsoleLib
             return theStatsOp.RunWithOutput();
         }
 
-        public static Raster BilinearResample(Raster rInput, FileInfo sOutputRaster, ExtentRectangle outputExtent)
+        /// <summary>
+        /// Generate a Uniform Raster
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="rInput"></param>
+        /// <param name="sOutputRaster"></param>
+        /// <param name="value">Value for the raster to be</param>
+        /// <returns></returns>
+        public static Raster Uniform<T>(Raster rInput, FileInfo sOutputRaster, T value)
         {
-            return (Raster)GenericRunWithOutput(typeof(BilinearResample<>), rInput.Datatype.CSType, new object[] {
-                rInput, outputExtent, new Raster(rInput, sOutputRaster)
-            });
+            UniformRaster<T> theUniformOp = new UniformRaster<T>(rInput, new Raster(rInput, sOutputRaster), value);
+            return theUniformOp.RunWithOutput();
         }
 
+        #endregion  
+
+
+        /// <summary>
+        /// Create a Hillshade raster
+        /// </summary>
+        /// <param name="rInput"></param>
+        /// <param name="sOutputRaster"></param>
+        /// <returns></returns>
         public static Raster Hillshade(Raster rInput, FileInfo sOutputRaster)
         {
             Raster outputRaster = new Raster(rInput, sOutputRaster, new GdalDataType(OSGeo.GDAL.DataType.GDT_Int16));
@@ -299,6 +469,12 @@ namespace GCDConsoleLib
             return theHSOp.RunWithOutput();
         }
 
+        /// <summary>
+        /// Create a Slope Raster
+        /// </summary>
+        /// <param name="rInput"></param>
+        /// <param name="sOutputRaster"></param>
+        /// <returns></returns>
         public static Raster SlopePercent(Raster rInput, FileInfo sOutputRaster)
         {
             Raster outputRaster = new Raster(rInput, sOutputRaster, new GdalDataType(typeof(float)));
@@ -306,6 +482,12 @@ namespace GCDConsoleLib
             return theSlopeOp.RunWithOutput();
         }
 
+        /// <summary>
+        /// Create a Slope Raster
+        /// </summary>
+        /// <param name="rInput"></param>
+        /// <param name="sOutputRaster"></param>
+        /// <returns></returns>
         public static Raster SlopeDegrees(Raster rInput, FileInfo sOutputRaster)
         {
             Raster outputRaster = new Raster(rInput, sOutputRaster, new GdalDataType(typeof(float)));
@@ -319,85 +501,57 @@ namespace GCDConsoleLib
             Circle
         }
 
+        /// <summary>
+        /// Create a point density Raster
+        /// </summary>
+        /// <param name="rInput"></param>
+        /// <param name="vPointCloud"></param>
+        /// <param name="sOutputRaster"></param>
+        /// <param name="eKernel"></param>
+        /// <param name="fSize"></param>
+        /// <returns></returns>
         public static Raster PointDensity(Raster rInput, Vector vPointCloud, string sOutputRaster, KernelShapes eKernel, double fSize)
         {
             throw new NotImplementedException();
             return null;
         }
 
-        public static Raster Uniform<T>(Raster rInput, FileInfo sOutputRaster, T value)
-        {
-            UniformRaster<T> theUniformOp = new UniformRaster<T>(rInput, new Raster(rInput, sOutputRaster), value);
-            return theUniformOp.RunWithOutput();
-        }
 
-        public static Raster Mosaic(List<System.IO.FileInfo> sInputs, FileInfo sOutputRaster)
-        {
-            List<Raster> rlInputs = new List<Raster>();
-
-            foreach (FileInfo sRa in sInputs)
-                rlInputs.Add(new Raster(sRa));
-            Raster r0 = rlInputs[0];
-
-            return (Raster)GenericRunWithOutput(typeof(Mosaic<>), rlInputs[0].Datatype.CSType, new object[] {
-                rlInputs, new Raster( r0, sOutputRaster)
-            });
-        }
-
-        public static Raster Mask(Raster rUnmasked, Raster rMask, FileInfo sOutputRaster)
-        {
-            return (Raster)GenericRunWithOutput(typeof(Mask<>), rUnmasked.Datatype.CSType, new object[] {
-                rUnmasked, rMask, new Raster( rUnmasked, sOutputRaster)
-            });
-        }
 
         /// <summary>
-        /// 
+        /// Create a FIS Raster
         /// </summary>
         /// <param name="fisInputs">Key is FIS input name, value is corresponding raster path</param>
         /// <param name="sFISRuleFile">Path to FIS rule file (*.fis)</param>
-        /// <param name="rReference"></param>
+        /// <param name="rReference">Reference Raster to use.</param>
         /// <param name="sOutputRaster"></param>
         /// <returns></returns>
-        public static Raster FISRaster(Dictionary<string, FileInfo> fisInputs, FileInfo sFISRuleFile, Raster rReference, FileInfo sOutputRaster)
+        public static Raster FISRaster(Dictionary<string, FileInfo> fisInputs, FileInfo sFISRuleFile,
+            Raster rReference, FileInfo sOutputRaster, EventHandler<int> progressHandler = null)
         {
             Dictionary<string, Raster> rFISInputs = new Dictionary<string, Raster>();
 
             // Load up our input rasters
             foreach (KeyValuePair<string, FileInfo> inp in fisInputs)
-            {
                 rFISInputs[inp.Key] = new Raster(inp.Value);
-            }
 
             Raster outputRaster = new Raster(rReference, sOutputRaster, new GdalDataType(typeof(float)));
             FISRasterOp theSlopeOp = new FISRasterOp(rFISInputs, sFISRuleFile, outputRaster);
 
+            if (progressHandler != null)
+                theSlopeOp.ProgressEvent += progressHandler;
+
             return theSlopeOp.RunWithOutput();
         }
 
-        public static Raster RootSumSquares(Raster raster1, Raster raster2, System.IO.FileInfo sOutputRaster)
-        {
-            RootSumSquare theUniformOp = new RootSumSquare(raster1, raster2, new Raster(raster1, sOutputRaster));
-            return theUniformOp.RunWithOutput();
-        }
-
-
         /// <summary>
-        /// Default histogram generator
+        /// Bin a Raster into a Histogram
         /// </summary>
         /// <param name="rInput"></param>
+        /// <param name="numberofBins"></param>
+        /// <param name="polygonMask"></param>
+        /// <param name="FieldName"></param>
         /// <returns></returns>
-        /// <remarks>The goal of this operation is to bin raster values into a set number of bins.
-        /// We need to discuss how those bins are defined. Ideally the first and last bin would
-        /// contain zero cell count, so that the caller has confidence that the histogram has
-        /// captured the full range of the raster values.</remarks>
-        public static Histogram BinRaster(Raster rInput, int numberofBins)
-        {
-            BinRaster histOp = new BinRaster(rInput, numberofBins);
-            histOp.Run();
-            return histOp.theHistogram;
-        }
-
         public static Dictionary<string, Histogram> BinRaster(Raster rInput, int numberofBins, Vector polygonMask, string FieldName)
         {
             BinRaster histOp = new BinRaster(rInput, numberofBins, polygonMask, FieldName);
@@ -405,11 +559,16 @@ namespace GCDConsoleLib
             return histOp.SegHistograms;
         }
 
-        public enum ThresholdOps
-        {
-            LessThan, GreaterThan, LessThanOrEqual, GreaterThanOrEqual,
-        }
+        public enum ThresholdOps { LessThan, GreaterThan, LessThanOrEqual, GreaterThanOrEqual }
 
+        /// <summary>
+        /// SetNull based on a requested method
+        /// </summary>
+        /// <param name="rInput"></param>
+        /// <param name="fThresholdOp">LessThan, GreaterThan, LessThanOrEqual, GreaterThanOrEqual</param>
+        /// <param name="fThreshold">Threshold Value</param>
+        /// <param name="sOutputRaster"></param>
+        /// <returns></returns>
         public static Raster SetNull(Raster rInput, ThresholdOps fThresholdOp,
             float fThreshold, FileInfo sOutputRaster)
         {
@@ -417,23 +576,66 @@ namespace GCDConsoleLib
             return threshOp.RunWithOutput();
         }
 
-        public static Raster SetNull(Raster rInput, ThresholdOps fThresholdOp, Raster rThreshold, System.IO.FileInfo sOutputRaster)
+        /// <summary>
+        /// SetNull based on a requested method
+        /// </summary>
+        /// <param name="rInput"></param>
+        /// <param name="fThresholdOp">LessThan, GreaterThan, LessThanOrEqual, GreaterThanOrEqual</param>
+        /// <param name="rThreshold"></param>
+        /// <param name="sOutputRaster"></param>
+        /// <returns></returns>
+        public static Raster SetNull(Raster rInput, ThresholdOps fThresholdOp, Raster rThreshold, FileInfo sOutputRaster)
         {
-            throw new NotImplementedException("threshold is defined by a raster instead of constant.");
+            Threshold threshOp = new Threshold(rInput, fThresholdOp, rThreshold, new Raster(rInput, sOutputRaster));
+            return threshOp.RunWithOutput();
         }
 
-        public static Raster SetNull(Raster rInput, ThresholdOps fBottomOp, float fBottom, ThresholdOps fTopOp, float fTop, System.IO.FileInfo sOutputRaster)
+        /// <summary>
+        /// SetNull based on a requested method
+        /// </summary>
+        /// <param name="rInput"></param>
+        /// <param name="fBottomOp"></param>
+        /// <param name="fBottom"></param>
+        /// <param name="fTopOp"></param>
+        /// <param name="fTop"></param>
+        /// <param name="sOutputRaster"></param>
+        /// <returns></returns>
+        public static Raster SetNull(Raster rInput, ThresholdOps fBottomOp, float fBottom, ThresholdOps fTopOp, float fTop, FileInfo sOutputRaster)
         {
             Threshold threshOp = new Threshold(rInput, fBottomOp, fBottom, fTopOp, fTop, new Raster(rInput, sOutputRaster));
             return threshOp.RunWithOutput();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="rawDoD"></param>
+        /// <param name="newError"></param>
+        /// <param name="oldError"></param>
+        /// <param name="sOutputRaster"></param>
+        /// <returns></returns>
         public static Raster CreatePriorProbabilityRaster(Raster rawDoD, Raster newError, Raster oldError, string sOutputRaster)
         {
             throw new NotImplementedException();
             return null;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="rawDoD"></param>
+        /// <param name="thrDoDPath"></param>
+        /// <param name="newError"></param>
+        /// <param name="OldError"></param>
+        /// <param name="sPriorProbRaster"></param>
+        /// <param name="sPosteriorRaster"></param>
+        /// <param name="sConditionalRaster"></param>
+        /// <param name="sSpatialCoErosionRaster"></param>
+        /// <param name="sSpatialCoDepositionRaster"></param>
+        /// <param name="nMovingWindowWidth"></param>
+        /// <param name="nMovingWindowHeight"></param>
+        /// <param name="fThreshold"></param>
+        /// <returns></returns>
         public static Raster ThresholdDoDProbWithSpatialCoherence(Raster rawDoD, string thrDoDPath, Raster newError, Raster OldError,
                                                             string sPriorProbRaster,
                                                             string sPosteriorRaster,
@@ -446,20 +648,34 @@ namespace GCDConsoleLib
             return null;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="rawDoD"></param>
+        /// <param name="thrHistPath"></param>
+        /// <param name="newError"></param>
+        /// <param name="oldError"></param>
+        /// <param name="sPriorProbRaster"></param>
+        /// <param name="fThreshold"></param>
+        /// <returns></returns>
         public static Raster ThresholdDoDProbability(Raster rawDoD, string thrHistPath, Raster newError, Raster oldError, string sPriorProbRaster, double fThreshold)
         {
             throw new NotImplementedException();
             return null;
         }
 
-        public static void BuildPyramids(System.IO.FileInfo rInput)
+        /// <summary>
+        /// Build the Pyramids for a raster
+        /// </summary>
+        /// <param name="rInput"></param>
+        public static void BuildPyramids(FileInfo rInput)
         {
             Raster rRa = new Raster(rInput);
             rRa.BuildPyramids("average");
         }
 
 
-        ////////////////////////////////////    EVERYTHING BELOW HERE IS PRIVATE ////////////////////////////////////
+        #region  ////////////////////////////////////    EVERYTHING BELOW HERE IS PRIVATE ////////////////////////////////////
 
 
         /// <summary>
@@ -501,6 +717,7 @@ namespace GCDConsoleLib
 
         }
 
+        #endregion  
     }
 
 }

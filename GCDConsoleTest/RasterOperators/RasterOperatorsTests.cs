@@ -40,7 +40,9 @@ namespace GCDConsoleLib.Tests
             Raster rOutput = new FakeRaster<int>(10, 20, -1, 1, outgrid);
 
             ExtentRectangle newExt = Raster1.Extent.Buffer(2);
-            RasterOperators.ExtendedCopy(Raster1, rOutput, new ExtentRectangle(newExt));
+            Internal.Operators.ExtendedCopy<int> copyOp = new Internal.Operators.ExtendedCopy<int>(Raster1, rOutput, new ExtentRectangle(newExt));
+            copyOp.RunWithOutput();
+
         }
 
         [TestMethod()]
