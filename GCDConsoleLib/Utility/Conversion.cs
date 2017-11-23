@@ -262,233 +262,233 @@ namespace GCDConsoleLib.Utility
         }
 
 
-        public static VolumeUnit AreaUnit2VolumeUnit(AreaUnit aUnit)
-        {
-            VolumeUnit retVal;
-            switch (aUnit)
-            {
-                case (AreaUnit.SquareInch):
-                    retVal = VolumeUnit.CubicInch;
-                    break;
-                case (AreaUnit.SquareFoot):
-                    retVal = VolumeUnit.CubicFoot;
-                    break;
-                case (AreaUnit.SquareMile):
-                    retVal = VolumeUnit.CubicMile;
-                    break;
-                case (AreaUnit.SquareDecimeter):
-                    retVal = VolumeUnit.CubicDecimeter;
-                    break;
-                case (AreaUnit.SquareMicrometer):
-                    retVal = VolumeUnit.CubicMicrometer;
-                    break;
-                case (AreaUnit.SquareMillimeter):
-                    retVal = VolumeUnit.CubicMillimeter;
-                    break;
-                case (AreaUnit.SquareCentimeter):
-                    retVal = VolumeUnit.CubicCentimeter;
-                    break;
-                case (AreaUnit.SquareMeter):
-                    retVal = VolumeUnit.CubicMeter;
-                    break;
-                case (AreaUnit.SquareKilometer):
-                    retVal = VolumeUnit.CubicKilometer;
-                    break;
-                default:
-                    throw new Exception("that unit conersion is not specified");                   
-            }
-            return retVal;
-        }
+        //public static VolumeUnit AreaUnit2VolumeUnit(AreaUnit aUnit)
+        //{
+        //    VolumeUnit retVal;
+        //    switch (aUnit)
+        //    {
+        //        case (AreaUnit.SquareInch):
+        //            retVal = VolumeUnit.CubicInch;
+        //            break;
+        //        case (AreaUnit.SquareFoot):
+        //            retVal = VolumeUnit.CubicFoot;
+        //            break;
+        //        case (AreaUnit.SquareMile):
+        //            retVal = VolumeUnit.CubicMile;
+        //            break;
+        //        case (AreaUnit.SquareDecimeter):
+        //            retVal = VolumeUnit.CubicDecimeter;
+        //            break;
+        //        case (AreaUnit.SquareMicrometer):
+        //            retVal = VolumeUnit.CubicMicrometer;
+        //            break;
+        //        case (AreaUnit.SquareMillimeter):
+        //            retVal = VolumeUnit.CubicMillimeter;
+        //            break;
+        //        case (AreaUnit.SquareCentimeter):
+        //            retVal = VolumeUnit.CubicCentimeter;
+        //            break;
+        //        case (AreaUnit.SquareMeter):
+        //            retVal = VolumeUnit.CubicMeter;
+        //            break;
+        //        case (AreaUnit.SquareKilometer):
+        //            retVal = VolumeUnit.CubicKilometer;
+        //            break;
+        //        default:
+        //            throw new Exception("that unit conersion is not specified");                   
+        //    }
+        //    return retVal;
+        //}
 
-        public static AreaUnit VolumeUnit2AreaUnit(VolumeUnit vUnit)
-        {
-            AreaUnit retVal;
-            switch (vUnit)
-            {
-                case (VolumeUnit.CubicInch):
-                    retVal = AreaUnit.SquareInch;
-                    break;
-                case (VolumeUnit.CubicFoot):
-                    retVal = AreaUnit.SquareFoot;
-                    break;
-                case (VolumeUnit.CubicMile):
-                    retVal = AreaUnit.SquareMile;
-                    break;
-                case (VolumeUnit.CubicDecimeter):
-                    retVal = AreaUnit.SquareDecimeter;
-                    break;
-                case (VolumeUnit.CubicMicrometer):
-                    retVal = AreaUnit.SquareMicrometer;
-                    break;
-                case (VolumeUnit.CubicMillimeter):
-                    retVal = AreaUnit.SquareMillimeter;
-                    break;
-                case (VolumeUnit.CubicCentimeter):
-                    retVal = AreaUnit.SquareCentimeter;
-                    break;
-                case (VolumeUnit.CubicMeter):
-                    retVal = AreaUnit.SquareMeter;
-                    break;
-                case (VolumeUnit.CubicKilometer):
-                    retVal = AreaUnit.SquareKilometer;
-                    break;
-                default:
-                    throw new Exception("that unit conersion is not specified");
-            }
-            return retVal;
-        }
+        //public static AreaUnit VolumeUnit2AreaUnit(VolumeUnit vUnit)
+        //{
+        //    AreaUnit retVal;
+        //    switch (vUnit)
+        //    {
+        //        case (VolumeUnit.CubicInch):
+        //            retVal = AreaUnit.SquareInch;
+        //            break;
+        //        case (VolumeUnit.CubicFoot):
+        //            retVal = AreaUnit.SquareFoot;
+        //            break;
+        //        case (VolumeUnit.CubicMile):
+        //            retVal = AreaUnit.SquareMile;
+        //            break;
+        //        case (VolumeUnit.CubicDecimeter):
+        //            retVal = AreaUnit.SquareDecimeter;
+        //            break;
+        //        case (VolumeUnit.CubicMicrometer):
+        //            retVal = AreaUnit.SquareMicrometer;
+        //            break;
+        //        case (VolumeUnit.CubicMillimeter):
+        //            retVal = AreaUnit.SquareMillimeter;
+        //            break;
+        //        case (VolumeUnit.CubicCentimeter):
+        //            retVal = AreaUnit.SquareCentimeter;
+        //            break;
+        //        case (VolumeUnit.CubicMeter):
+        //            retVal = AreaUnit.SquareMeter;
+        //            break;
+        //        case (VolumeUnit.CubicKilometer):
+        //            retVal = AreaUnit.SquareKilometer;
+        //            break;
+        //        default:
+        //            throw new Exception("that unit conersion is not specified");
+        //    }
+        //    return retVal;
+        //}
 
-        public static LengthUnit AreaUnit2LengthUnit(AreaUnit lUnit)
-        {
-            LengthUnit retVal;
-            switch (lUnit)
-            {
-                case (AreaUnit.SquareInch):
-                    retVal = LengthUnit.Inch;
-                    break;
-                case (AreaUnit.SquareFoot):
-                    retVal = LengthUnit.Foot;
-                    break;
-                case (AreaUnit.SquareMile):
-                    retVal = LengthUnit.Mile;
-                    break;
-                case (AreaUnit.SquareDecimeter):
-                    retVal = LengthUnit.Decimeter;
-                    break;
-                case (AreaUnit.SquareMicrometer):
-                    retVal = LengthUnit.Micrometer;
-                    break;
-                case (AreaUnit.SquareMillimeter):
-                    retVal = LengthUnit.Millimeter;
-                    break;
-                case (AreaUnit.SquareCentimeter):
-                    retVal = LengthUnit.Centimeter;
-                    break;
-                case (AreaUnit.SquareMeter):
-                    retVal = LengthUnit.Meter;
-                    break;
-                case (AreaUnit.SquareKilometer):
-                    retVal = LengthUnit.Kilometer;
-                    break;
-                default:
-                    throw new Exception("that unit conersion is not specified");
-            }
-            return retVal;
-        }
+        //public static LengthUnit AreaUnit2LengthUnit(AreaUnit lUnit)
+        //{
+        //    LengthUnit retVal;
+        //    switch (lUnit)
+        //    {
+        //        case (AreaUnit.SquareInch):
+        //            retVal = LengthUnit.Inch;
+        //            break;
+        //        case (AreaUnit.SquareFoot):
+        //            retVal = LengthUnit.Foot;
+        //            break;
+        //        case (AreaUnit.SquareMile):
+        //            retVal = LengthUnit.Mile;
+        //            break;
+        //        case (AreaUnit.SquareDecimeter):
+        //            retVal = LengthUnit.Decimeter;
+        //            break;
+        //        case (AreaUnit.SquareMicrometer):
+        //            retVal = LengthUnit.Micrometer;
+        //            break;
+        //        case (AreaUnit.SquareMillimeter):
+        //            retVal = LengthUnit.Millimeter;
+        //            break;
+        //        case (AreaUnit.SquareCentimeter):
+        //            retVal = LengthUnit.Centimeter;
+        //            break;
+        //        case (AreaUnit.SquareMeter):
+        //            retVal = LengthUnit.Meter;
+        //            break;
+        //        case (AreaUnit.SquareKilometer):
+        //            retVal = LengthUnit.Kilometer;
+        //            break;
+        //        default:
+        //            throw new Exception("that unit conersion is not specified");
+        //    }
+        //    return retVal;
+        //}
 
-        public static AreaUnit LengthUnit2AreaUnit(LengthUnit aUnit)
-        {
-            AreaUnit retVal;
-            switch (aUnit)
-            {
-                case (LengthUnit.Inch):
-                    retVal = AreaUnit.SquareInch;
-                    break;
-                case (LengthUnit.Foot):
-                    retVal = AreaUnit.SquareFoot;
-                    break;
-                case (LengthUnit.Mile):
-                    retVal = AreaUnit.SquareMile;
-                    break;
-                case (LengthUnit.Decimeter):
-                    retVal = AreaUnit.SquareDecimeter;
-                    break;
-                case (LengthUnit.Micrometer):
-                    retVal = AreaUnit.SquareMicrometer;
-                    break;
-                case (LengthUnit.Millimeter):
-                    retVal = AreaUnit.SquareMillimeter;
-                    break;
-                case (LengthUnit.Centimeter):
-                    retVal = AreaUnit.SquareCentimeter;
-                    break;
-                case (LengthUnit.Meter):
-                    retVal = AreaUnit.SquareMeter;
-                    break;
-                case (LengthUnit.Kilometer):
-                    retVal = AreaUnit.SquareKilometer;
-                    break;
-                default:
-                    throw new Exception("that unit conersion is not specified");
-            }
-            return retVal;
-        }
+        //public static AreaUnit LengthUnit2AreaUnit(LengthUnit aUnit)
+        //{
+        //    AreaUnit retVal;
+        //    switch (aUnit)
+        //    {
+        //        case (LengthUnit.Inch):
+        //            retVal = AreaUnit.SquareInch;
+        //            break;
+        //        case (LengthUnit.Foot):
+        //            retVal = AreaUnit.SquareFoot;
+        //            break;
+        //        case (LengthUnit.Mile):
+        //            retVal = AreaUnit.SquareMile;
+        //            break;
+        //        case (LengthUnit.Decimeter):
+        //            retVal = AreaUnit.SquareDecimeter;
+        //            break;
+        //        case (LengthUnit.Micrometer):
+        //            retVal = AreaUnit.SquareMicrometer;
+        //            break;
+        //        case (LengthUnit.Millimeter):
+        //            retVal = AreaUnit.SquareMillimeter;
+        //            break;
+        //        case (LengthUnit.Centimeter):
+        //            retVal = AreaUnit.SquareCentimeter;
+        //            break;
+        //        case (LengthUnit.Meter):
+        //            retVal = AreaUnit.SquareMeter;
+        //            break;
+        //        case (LengthUnit.Kilometer):
+        //            retVal = AreaUnit.SquareKilometer;
+        //            break;
+        //        default:
+        //            throw new Exception("that unit conersion is not specified");
+        //    }
+        //    return retVal;
+        //}
 
-        public static VolumeUnit LengthUnit2VolumeUnit(LengthUnit lUnit)
-        {
-            VolumeUnit retVal;
-            switch (lUnit)
-            {
-                case (LengthUnit.Inch):
-                    retVal = VolumeUnit.CubicInch;
-                    break;
-                case (LengthUnit.Foot):
-                    retVal = VolumeUnit.CubicFoot;
-                    break;
-                case (LengthUnit.Mile):
-                    retVal = VolumeUnit.CubicMile;
-                    break;
-                case (LengthUnit.Decimeter):
-                    retVal = VolumeUnit.CubicDecimeter;
-                    break;
-                case (LengthUnit.Micrometer):
-                    retVal = VolumeUnit.CubicMicrometer;
-                    break;
-                case (LengthUnit.Millimeter):
-                    retVal = VolumeUnit.CubicMillimeter;
-                    break;
-                case (LengthUnit.Centimeter):
-                    retVal = VolumeUnit.CubicCentimeter;
-                    break;
-                case (LengthUnit.Meter):
-                    retVal = VolumeUnit.CubicMeter;
-                    break;
-                case (LengthUnit.Kilometer):
-                    retVal = VolumeUnit.CubicKilometer;
-                    break;
-                default:
-                    throw new Exception("that unit conersion is not specified");
-            }
-            return retVal;
-        }
+        //public static VolumeUnit LengthUnit2VolumeUnit(LengthUnit lUnit)
+        //{
+        //    VolumeUnit retVal;
+        //    switch (lUnit)
+        //    {
+        //        case (LengthUnit.Inch):
+        //            retVal = VolumeUnit.CubicInch;
+        //            break;
+        //        case (LengthUnit.Foot):
+        //            retVal = VolumeUnit.CubicFoot;
+        //            break;
+        //        case (LengthUnit.Mile):
+        //            retVal = VolumeUnit.CubicMile;
+        //            break;
+        //        case (LengthUnit.Decimeter):
+        //            retVal = VolumeUnit.CubicDecimeter;
+        //            break;
+        //        case (LengthUnit.Micrometer):
+        //            retVal = VolumeUnit.CubicMicrometer;
+        //            break;
+        //        case (LengthUnit.Millimeter):
+        //            retVal = VolumeUnit.CubicMillimeter;
+        //            break;
+        //        case (LengthUnit.Centimeter):
+        //            retVal = VolumeUnit.CubicCentimeter;
+        //            break;
+        //        case (LengthUnit.Meter):
+        //            retVal = VolumeUnit.CubicMeter;
+        //            break;
+        //        case (LengthUnit.Kilometer):
+        //            retVal = VolumeUnit.CubicKilometer;
+        //            break;
+        //        default:
+        //            throw new Exception("that unit conersion is not specified");
+        //    }
+        //    return retVal;
+        //}
 
-        public static LengthUnit LengthUnit2VolumeUnit(VolumeUnit vUnit)
-        {
-            LengthUnit retVal;
-            switch (vUnit)
-            {
-                case (VolumeUnit.CubicInch):
-                    retVal = LengthUnit.Inch;
-                    break;
-                case (VolumeUnit.CubicFoot):
-                    retVal = LengthUnit.Foot;
-                    break;
-                case (VolumeUnit.CubicMile):
-                    retVal = LengthUnit.Mile;
-                    break;
-                case (VolumeUnit.CubicDecimeter):
-                    retVal = LengthUnit.Decimeter;
-                    break;
-                case (VolumeUnit.CubicMicrometer):
-                    retVal = LengthUnit.Micrometer;
-                    break;
-                case (VolumeUnit.CubicMillimeter):
-                    retVal = LengthUnit.Millimeter;
-                    break;
-                case (VolumeUnit.CubicCentimeter):
-                    retVal = LengthUnit.Centimeter;
-                    break;
-                case (VolumeUnit.CubicMeter):
-                    retVal = LengthUnit.Meter;
-                    break;
-                case (VolumeUnit.CubicKilometer):
-                    retVal = LengthUnit.Kilometer;
-                    break;
-                default:
-                    throw new Exception("that unit conersion is not specified");
-            }
-            return retVal;
-        }
+        //public static LengthUnit LengthUnit2VolumeUnit(VolumeUnit vUnit)
+        //{
+        //    LengthUnit retVal;
+        //    switch (vUnit)
+        //    {
+        //        case (VolumeUnit.CubicInch):
+        //            retVal = LengthUnit.Inch;
+        //            break;
+        //        case (VolumeUnit.CubicFoot):
+        //            retVal = LengthUnit.Foot;
+        //            break;
+        //        case (VolumeUnit.CubicMile):
+        //            retVal = LengthUnit.Mile;
+        //            break;
+        //        case (VolumeUnit.CubicDecimeter):
+        //            retVal = LengthUnit.Decimeter;
+        //            break;
+        //        case (VolumeUnit.CubicMicrometer):
+        //            retVal = LengthUnit.Micrometer;
+        //            break;
+        //        case (VolumeUnit.CubicMillimeter):
+        //            retVal = LengthUnit.Millimeter;
+        //            break;
+        //        case (VolumeUnit.CubicCentimeter):
+        //            retVal = LengthUnit.Centimeter;
+        //            break;
+        //        case (VolumeUnit.CubicMeter):
+        //            retVal = LengthUnit.Meter;
+        //            break;
+        //        case (VolumeUnit.CubicKilometer):
+        //            retVal = LengthUnit.Kilometer;
+        //            break;
+        //        default:
+        //            throw new Exception("that unit conersion is not specified");
+        //    }
+        //    return retVal;
+        //}
 
         public static double? MinValueDouble<T>()
         {

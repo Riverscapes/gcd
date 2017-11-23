@@ -104,7 +104,7 @@ namespace GCDConsoleLib
         /// <param name="eDataType"></param>
         /// <param name="psProjection"></param>
         /// <param name="psUnit"></param>
-        public Raster(decimal fTop, decimal fLeft, decimal dCellHeight, decimal dCellWidth, int nRows, int nCols,
+        public Raster(double fTop, double fLeft, double dCellHeight, double dCellWidth, int nRows, int nCols,
                double? dNoData, RasterDriver psDriver, GdalDataType dType,
                string psProjection, string psUnit, bool leaveopen = false) : base()
         {

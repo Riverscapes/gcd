@@ -87,9 +87,9 @@ namespace GCDConsoleLib.Internal.Operators
             // With multimethod errors we need to do some fancy footwork
             if (isMultiMethod)
             {
-                Tuple<decimal, decimal> ptcoords = ChunkExtent.Id2XY(id);
+                Tuple<double, double> ptcoords = ChunkExtent.Id2XY(id);
                 // Is this point in one (or more) of the shapes?
-                List<string> shapes = _polymask.ShapesContainPoint((double)ptcoords.Item1, (double)ptcoords.Item2, _fieldname);
+                List<string> shapes = _polymask.ShapesContainPoint(ptcoords.Item1, (double)ptcoords.Item2, _fieldname);
 
                 // Now we need to decide what to do based on how many intersections we found.
                 if (shapes.Count == 1)

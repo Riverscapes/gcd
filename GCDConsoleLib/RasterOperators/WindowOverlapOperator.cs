@@ -13,7 +13,7 @@ namespace GCDConsoleLib.Internal
         protected int BufferLength { get { return 1 + (2 * BufferCells); } }
         protected int BufferCellNum { get { return (int)Math.Pow(BufferLength, 2); } }
         protected int BufferCenterID { get { return BufferLength * BufferCells + BufferCells; } }
-        protected decimal OriginalOpBottom { get; private set; }
+        protected double OriginalOpBottom { get; private set; }
         public ExtentRectangle WindowExtent;
 
         private List<List<T[]>> _chunkCache;

@@ -55,9 +55,9 @@ namespace GCDConsoleLib.Tests
         public void IsOrthogonalTest()
         {
             ExtentRectangle rA1 = new ExtentRectangle(5, 6, -1, 1, 100, 100);
-            ExtentRectangle rB1 = new ExtentRectangle(1, 3.0m, -1, 1, 100, 100);
+            ExtentRectangle rB1 = new ExtentRectangle(1, 3.0, -1, 1, 100, 100);
             ExtentRectangle rC1 = new ExtentRectangle(2, 7, -1, 1, 100, 100);
-            ExtentRectangle rD1 = new ExtentRectangle(4.1m, 6.0m, -1, 1, 100, 100);
+            ExtentRectangle rD1 = new ExtentRectangle(4.1, 6.0, -1, 1, 100, 100);
 
             Assert.AreEqual(rA1.MaxArrID, 9999);
 
@@ -82,23 +82,23 @@ namespace GCDConsoleLib.Tests
             Assert.IsFalse(rNotDivisible1.IsDivisible());
 
             // Positive test
-            ExtentRectangle rDivisible2 = new ExtentRectangle(5.1m, 6.1m, -0.1m, 0.1m, 100, 100);
+            ExtentRectangle rDivisible2 = new ExtentRectangle(5.1, 6.1, -0.1, 0.1, 100, 100);
             Assert.IsTrue(rDivisible2.IsDivisible());
 
             //Negative Test
-            ExtentRectangle rNotDivisible2 = new ExtentRectangle(5.1m, 6.1m, -0.1m, 0.2m, 100, 100);
+            ExtentRectangle rNotDivisible2 = new ExtentRectangle(5.1, 6.1, -0.1, 0.2, 100, 100);
             Assert.IsFalse(rNotDivisible2.IsDivisible());
 
             //Negative Test
-            ExtentRectangle rNotDivisible3 = new ExtentRectangle(5.1m, 6.1m, -0.2m, 0.1m, 100, 100);
+            ExtentRectangle rNotDivisible3 = new ExtentRectangle(5.1, 6.1, -0.2, 0.1, 100, 100);
             Assert.IsFalse(rNotDivisible3.IsDivisible());
 
             // Positive Test for floating point weirdness
-            ExtentRectangle rDivisible4 = new ExtentRectangle(5.0999999999999999999999999999999999999999999m, 6.1m, -0.1m, 0.1m, 100, 100);
+            ExtentRectangle rDivisible4 = new ExtentRectangle(5.0999999999999999999999999999999999999999999, 6.1, -0.1, 0.1, 100, 100);
             Assert.IsTrue(rDivisible4.IsDivisible());
 
             // Negative Test for floating point weirdness
-            ExtentRectangle rNotDivisible4 = new ExtentRectangle(5.0999999999999999999999999999999999999999999m, 6.1m, -0.2m, 0.1m, 100, 100);
+            ExtentRectangle rNotDivisible4 = new ExtentRectangle(5.0999999999999999999999999999999999999999999, 6.1, -0.2, 0.1, 100, 100);
             Assert.IsFalse(rNotDivisible4.IsDivisible());
         }
 
@@ -108,7 +108,7 @@ namespace GCDConsoleLib.Tests
             ///
             /// Here's an already divisible raster. Make sure we don't change it.
             ///
-            ExtentRectangle eA1 = new ExtentRectangle(5.1m, 6.4m, 0.1m, 0.2m, 100, 100);
+            ExtentRectangle eA1 = new ExtentRectangle(5.1, 6.4, 0.1, 0.2, 100, 100);
 
             // This should do nothing
             ExtentRectangle eA1result = eA1.GetDivisibleExtent();
@@ -122,7 +122,7 @@ namespace GCDConsoleLib.Tests
             ///
             /// NEGStep 1: Negative Cell Height, Positive Cell Width
             ///
-            ExtentRectangle eNotDivisible = new ExtentRectangle(5.09m, 6.5m, -0.1m, 0.2m, 100, 100);
+            ExtentRectangle eNotDivisible = new ExtentRectangle(5.09, 6.5, -0.1, 0.2, 100, 100);
             Assert.IsFalse(eNotDivisible.IsDivisible());
 
             // Now Make it divisible in the right way
@@ -137,7 +137,7 @@ namespace GCDConsoleLib.Tests
             ///
             /// NEGStep 1: Negative Cell Height, Positive Cell Width
             ///
-            ExtentRectangle eNegStep1NonDivisible = new ExtentRectangle(5.09m, 6.39m, -0.1m, 0.2m, 100, 100);
+            ExtentRectangle eNegStep1NonDivisible = new ExtentRectangle(5.09, 6.39, -0.1, 0.2, 100, 100);
             Assert.IsFalse(eNegStep1NonDivisible.IsDivisible());
 
             //Now Make it divisible in the right way
@@ -152,7 +152,7 @@ namespace GCDConsoleLib.Tests
             ///
             /// NEGStep 2: Positive Cell Height, Negative Cell Width
             ///
-            ExtentRectangle eNegStep2NonDivisible = new ExtentRectangle(5.09m, 6.39m, 0.1m, -0.2m, 100, 100);
+            ExtentRectangle eNegStep2NonDivisible = new ExtentRectangle(5.09, 6.39, 0.1, -0.2, 100, 100);
             Assert.IsFalse(eNegStep2NonDivisible.IsDivisible());
 
             //Now Make it divisible in the right way
@@ -167,7 +167,7 @@ namespace GCDConsoleLib.Tests
             ///
             /// NegWorldNEGStep 1: Negative Coordinates, Negative Cell Height, Positive Cell Width
             ///
-            ExtentRectangle eNWNegStep1NonDivisible = new ExtentRectangle(-5.09m, -6.39m, -0.1m, 0.2m, 100, 100);
+            ExtentRectangle eNWNegStep1NonDivisible = new ExtentRectangle(-5.09, -6.39, -0.1, 0.2, 100, 100);
             Assert.IsFalse(eNWNegStep1NonDivisible.IsDivisible());
 
             //Now Make it divisible in the right way
@@ -182,7 +182,7 @@ namespace GCDConsoleLib.Tests
             ///
             /// NegWorldNEGStep 2: Negative Coordinates, Positive Cell Height, Negative Cell Width
             ///
-            ExtentRectangle eNWNegStep2NonDivisible = new ExtentRectangle(-5.09m, -6.39m, 0.1m, -0.2m, 100, 100);
+            ExtentRectangle eNWNegStep2NonDivisible = new ExtentRectangle(-5.09, -6.39, 0.1, -0.2, 100, 100);
             Assert.IsFalse(eNWNegStep2NonDivisible.IsDivisible());
 
             //Now Make it divisible in the right way
@@ -202,13 +202,13 @@ namespace GCDConsoleLib.Tests
             Assert.Inconclusive();
             // TODO: TEST THIS THOROUGHLY, ESPECIALLY -/+ widht heights
             Assert.Fail();
-            ExtentRectangle eA1 = new ExtentRectangle(5.1m, 6.4m, -0.1m, 0.2m, 100, 100);
-            ExtentRectangle eInside = new ExtentRectangle(3, 9m, -0.1m, 0.2m, 50, 50);
-            ExtentRectangle eOverlap1 = new ExtentRectangle(9.1m, 0.4m, -0.1m, 0.2m, 100, 100);
+            ExtentRectangle eA1 = new ExtentRectangle(5.1, 6.4, -0.1, 0.2, 100, 100);
+            ExtentRectangle eInside = new ExtentRectangle(3, 9, -0.1, 0.2, 50, 50);
+            ExtentRectangle eOverlap1 = new ExtentRectangle(9.1, 0.4, -0.1, 0.2, 100, 100);
 
-            ExtentRectangle eEdgesOverlap = new ExtentRectangle(5.1m, 6.4m, 0.1m, 0.2m, 100, 100);
+            ExtentRectangle eEdgesOverlap = new ExtentRectangle(5.1, 6.4, 0.1, 0.2, 100, 100);
 
-            ExtentRectangle eNoOverlap = new ExtentRectangle(5.1m, 6.4m, 0.1m, 0.2m, 100, 100);
+            ExtentRectangle eNoOverlap = new ExtentRectangle(5.1, 6.4, 0.1, 0.2, 100, 100);
 
             // Some positive Tests
             Assert.IsTrue(eA1.HasOverlap(eA1));
