@@ -79,8 +79,6 @@ Namespace Project
                     Dim demCount As Integer = .DEMSurveys.Count
                     cboHorizontalUnits.Enabled = demCount = 0
                     cboVerticalUnits.Enabled = demCount = 0
-                    cboAreaUnits.Enabled = demCount = 0
-                    cboVolumeUnits.Enabled = demCount = 0
 
                     ' Copy the project meta into the binding list
                     For Each kvp As KeyValuePair(Of String, String) In .MetaData

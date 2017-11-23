@@ -220,7 +220,7 @@
             Me.groGCDUnits.Size = New System.Drawing.Size(460, 76)
             Me.groGCDUnits.TabIndex = 1
             Me.groGCDUnits.TabStop = False
-            Me.groGCDUnits.Text = "GCD Units"
+            Me.groGCDUnits.Text = "GCD Display Units"
             '
             'cboVolumeUnits
             '
