@@ -398,6 +398,7 @@ namespace GCDConsoleLib
         {
             BinRaster histOp = new BinRaster(rInput, numberofBins);
             histOp.Run();
+            rInput.Dispose();
             return histOp.theHistogram;
         }
 

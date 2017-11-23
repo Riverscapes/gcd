@@ -20,13 +20,21 @@ namespace GCDConsoleLib.FIS.Tests
             Assert.AreEqual(test.ruleset.Inputs.Count, 3);
             Assert.AreEqual(test.ruleset.Inputs["Velocity"]._mfs.Count, 4);
 
-            CollectionAssert.AreEqual(test.ruleset.Inputs["Velocity"]._mfs[0].Coords,
-                new List<KeyValuePair<double, double>>() {
-                    new KeyValuePair<double,double>(0,0),
-                    new KeyValuePair<double,double>(0,1),
-                    new KeyValuePair<double,double>(0.08,1),
-                    new KeyValuePair<double,double>(0.14,0)
-                });
+            List<double[]> expected = new List<double[]>
+                {
+                    new double[] { 0, 0 },
+                    new double[] { 0, 1 },
+                    new double[] {0.08, 1 },
+                    new double[] { 0.14, 0 }
+                };
+
+            // Test the values
+            for (int i = 0; i < expected.Count; i++)
+            {
+                Assert.AreEqual(test.ruleset.Inputs["Velocity"]._mfs[0].Coords[i][0], expected[i][0]);
+                Assert.AreEqual(test.ruleset.Inputs["Velocity"]._mfs[0].Coords[i][1], expected[i][1]);
+            }
+
             Assert.AreEqual(test.ruleset.Outputs._mfs.Count, 4);
             Assert.AreEqual(test.ruleset.OutputName, "HabitatSuitablity");
         }

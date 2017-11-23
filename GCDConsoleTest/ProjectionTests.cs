@@ -21,6 +21,7 @@ namespace GCDConsoleLib.Tests
         [TestMethod()]
         public void ProjectionTestEPSG()
         {
+            Assert.Inconclusive();
             Projection sP1 = new Projection(4269);
         }
 

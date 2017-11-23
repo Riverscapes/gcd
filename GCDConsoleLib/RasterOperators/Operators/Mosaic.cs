@@ -9,8 +9,8 @@ namespace GCDConsoleLib.Internal.Operators
         /// <summary>
         /// Pass-through constructor
         /// </summary>
-        public Mosaic(Raster rInput, Raster rOutputRaster, ExtentRectangle newRect) :
-            base(new List<Raster> { rInput }, rOutputRaster)
+        public Mosaic(List<Raster> rlInputs, Raster rOutputRaster) :
+            base(rlInputs, rOutputRaster)
         { }
 
         /// <summary>

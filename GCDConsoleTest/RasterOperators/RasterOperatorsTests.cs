@@ -48,7 +48,6 @@ namespace GCDConsoleLib.Tests
         [TestMethod()]
         public void MathTest()
         {
-            // First try it with a real file
             using (ITempDir tmp = TempDir.Create())
             {
                 Raster rTempl = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("const900.tif")));
@@ -86,38 +85,63 @@ namespace GCDConsoleLib.Tests
         [TestMethod()]
         public void GetStatsPropagatedTest()
         {
-            Assert.Inconclusive();
+            Raster rRaw = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("const900.tif")));
+            Raster rThresh = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("const950.tif")));
+            Raster rErr = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("const980.tif")));
+
+            UnitGroup ug = new UnitGroup(VolumeUnit.CubicMeter, AreaUnit.SquareMeter, LengthUnit.Meter, LengthUnit.Meter);
+            DoDStats test = RasterOperators.GetStatsPropagated(rRaw, rThresh, rErr, Area.FromSquareMeters(1), ug);
+
+            // And now the budget seg case
+            Vector rPolyMask = new Vector(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\MethodMask_ForTesting.shp")));
+            Dictionary<string, DoDStats> testBudgetSeg = RasterOperators.GetStatsPropagated(rRaw, rThresh, rThresh, rPolyMask, "Method", Area.FromSquareMeters(1), ug);
+
         }
 
         [TestMethod()]
         public void GetStatsProbalisticTest()
         {
-            Assert.Inconclusive();
+            Raster rRaw = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("const900.tif")));
+            Raster rThresh = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("const950.tif")));
+            Raster rErr = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("const980.tif")));
+
+            UnitGroup ug = new UnitGroup(VolumeUnit.CubicMeter, AreaUnit.SquareMeter, LengthUnit.Meter, LengthUnit.Meter);
+            DoDStats test = RasterOperators.GetStatsProbalistic(rRaw, rThresh, rThresh, Area.FromSquareMeters(1), ug);
+
+            // And now the budget seg case
+            Vector rPolyMask = new Vector(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\MethodMask_ForTesting.shp")));
+            Dictionary<string, DoDStats> testBudgetSeg = RasterOperators.GetStatsProbalistic(rRaw, rThresh, rThresh, rPolyMask, "Method", Area.FromSquareMeters(1), ug);
+
         }
 
         [TestMethod()]
         public void BilinearResampleTest()
         {
-            Assert.Inconclusive();
+            using (ITempDir tmp = TempDir.Create())
+            {
+                Raster rTempl = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("AngledSlopey950-980E.tif")));
+                ExtentRectangle newExtReal = new ExtentRectangle(rTempl.Extent);
+                newExtReal.CellHeight = newExtReal.CellHeight * 2;
+                newExtReal.CellWidth = newExtReal.CellWidth * 2;
+
+                Raster rTemplateOutput = RasterOperators.BilinearResample(rTempl, new FileInfo(Path.Combine(tmp.Name, "BilinearResample.tif")), newExtReal);
+            }
+
         }
 
         [TestMethod()]
-        public void HillshadeTest()
+        public void SlopeHillshadeTest()
         {
-            Assert.Inconclusive();
+            using (ITempDir tmp = TempDir.Create())
+            {
+                Raster rTempl = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("SquareHill950-980.tif")));
+
+                Raster rTemplateOutput1 = RasterOperators.SlopeDegrees(rTempl, new FileInfo(Path.Combine(tmp.Name, "SlopeDegrees.tif")));
+                Raster rTemplateOutput2 = RasterOperators.SlopePercent(rTempl, new FileInfo(Path.Combine(tmp.Name, "SlopePercent.tif")));
+                Raster rTemplateOutput3 = RasterOperators.Hillshade(rTempl, new FileInfo(Path.Combine(tmp.Name, "Hillshade.tif")));
+            }
         }
 
-        [TestMethod()]
-        public void SlopePercentTest()
-        {
-            Assert.Inconclusive();
-        }
-
-        [TestMethod()]
-        public void SlopeDegreesTest()
-        {
-            Assert.Inconclusive();
-        }
 
         [TestMethod()]
         public void PointDensityTest()
@@ -128,25 +152,40 @@ namespace GCDConsoleLib.Tests
         [TestMethod()]
         public void UniformTest()
         {
-            Assert.Inconclusive();
+            using (ITempDir tmp = TempDir.Create())
+            {
+                Raster rTempl = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("AngledSlopey950-980E.tif")));
+                Raster rTemplateOutput1 = RasterOperators.Uniform<int>(rTempl, new FileInfo(Path.Combine(tmp.Name, "UniformTest.tif")), 7);
+            }
         }
 
         [TestMethod()]
         public void MosaicTest()
         {
-            Assert.Inconclusive();
+            using (ITempDir tmp = TempDir.Create())
+            {
+                List<FileInfo> theList = new List<FileInfo>() {
+                    new FileInfo(TestHelpers.GetTestRasterPath("const900.tif")),
+                    new FileInfo(TestHelpers.GetTestRasterPath("const950.tif"))
+                };
+                Raster rTemplateOutput2 = RasterOperators.Mosaic(theList, new FileInfo(Path.Combine(tmp.Name, "FISTest.tif")));
+            }
         }
 
         [TestMethod()]
         public void MaskTest()
         {
-            Assert.Inconclusive();
+            using (ITempDir tmp = TempDir.Create())
+            {
+                Raster rTempl = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("const900.tif")));
+                Raster rTemp2 = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("const950.tif")));
+                Raster rTemplateOutput2 = RasterOperators.Mask(rTempl, rTemp2, new FileInfo(Path.Combine(tmp.Name, "FISTest.tif")));
+            }
         }
 
         [TestMethod()]
         public void FISRasterTest()
         {
-            // First try it with a real file
             using (ITempDir tmp = TempDir.Create())
             {
                 FileInfo fisFile = new FileInfo(@"C:\code\gcd\extlib\TestData\FIS\FuzzyChinookJuvenile_03.fis");
@@ -160,26 +199,53 @@ namespace GCDConsoleLib.Tests
                 };
 
                 Raster rTemplateOutput2 = RasterOperators.FISRaster(inputDict, fisFile, reference, new FileInfo(Path.Combine(tmp.Name, "FISTest.tif")));
-                Assert.Fail();
             }
         }
 
         [TestMethod()]
         public void RootSumSquaresTest()
         {
-            Assert.Inconclusive();
+            using (ITempDir tmp = TempDir.Create())
+            {
+                Raster rTempl = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("const900.tif")));
+                Raster rTemp2 = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("const950.tif")));
+                Raster rTemplateOutput2 = RasterOperators.RootSumSquares(rTempl, rTemp2, new FileInfo(Path.Combine(tmp.Name, "FISTest.tif")));
+            }
         }
 
         [TestMethod()]
         public void BinRasterTest()
         {
-            Assert.Inconclusive();
+            using (ITempDir tmp = TempDir.Create())
+            {
+                Raster rTempl = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("AngledSlopey950-980E.tif")));
+                ExtentRectangle newExtReal = rTempl.Extent.Buffer(15);
+                Raster rTemplateOutput = RasterOperators.ExtendedCopy(rTempl, new FileInfo(Path.Combine(tmp.Name, "BinRasterTest.tif")), newExtReal);
+                Histogram theHisto = RasterOperators.BinRaster(rTemplateOutput, 10);
+            }
         }
 
         [TestMethod()]
         public void SetNullTest()
         {
-            Assert.Inconclusive();
+            using (ITempDir tmp = TempDir.Create())
+            {
+                Raster rTempl = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("const900.tif")));
+                Raster rTemp2 = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("const950.tif")));
+                
+                Raster rTemplateOutput1 = RasterOperators.SetNull(rTempl, RasterOperators.ThresholdOps.GreaterThan, 4, new FileInfo(Path.Combine(tmp.Name, "GreaterThan.tif")));
+                Raster rTemplateOutput2 = RasterOperators.SetNull(rTempl, RasterOperators.ThresholdOps.LessThan, 4, new FileInfo(Path.Combine(tmp.Name, "LessThan.tif")));
+                Raster rTemplateOutput3 = RasterOperators.SetNull(rTempl, RasterOperators.ThresholdOps.GreaterThanOrEqual, 4, new FileInfo(Path.Combine(tmp.Name, "GreaterThanOrEqual.tif")));
+                Raster rTemplateOutput4 = RasterOperators.SetNull(rTempl, RasterOperators.ThresholdOps.LessThanOrEqual, 4, new FileInfo(Path.Combine(tmp.Name, "LessThanOrEqual.tif")));
+
+                Raster rTemplateOutput5 = RasterOperators.SetNull(rTempl, RasterOperators.ThresholdOps.GreaterThan, rTemp2, new FileInfo(Path.Combine(tmp.Name, "RasterGreaterThan.tif")));
+                Raster rTemplateOutput6 = RasterOperators.SetNull(rTempl, RasterOperators.ThresholdOps.LessThan, rTemp2, new FileInfo(Path.Combine(tmp.Name, "RasterLessThan.tif")));
+                Raster rTemplateOutput7 = RasterOperators.SetNull(rTempl, RasterOperators.ThresholdOps.GreaterThanOrEqual, rTemp2, new FileInfo(Path.Combine(tmp.Name, "RasterGreaterThanOrEqual.tif")));
+                Raster rTemplateOutput8 = RasterOperators.SetNull(rTempl, RasterOperators.ThresholdOps.LessThanOrEqual, rTemp2, new FileInfo(Path.Combine(tmp.Name, "RasterLessThanOrEqual.tif")));
+
+
+                Raster rTemplateOutput9 = RasterOperators.SetNull(rTempl, RasterOperators.ThresholdOps.GreaterThan, 4, RasterOperators.ThresholdOps.LessThanOrEqual, 10, new FileInfo(Path.Combine(tmp.Name, "DoubleOp.tif")));
+            }
         }
 
         [TestMethod()]
@@ -203,7 +269,13 @@ namespace GCDConsoleLib.Tests
         [TestMethod()]
         public void BuildPyramidsTest()
         {
-            Assert.Inconclusive();
+            using (ITempDir tmp = TempDir.Create())
+            {
+                Raster rTempl = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("AngledSlopey950-980E.tif")));
+                ExtentRectangle newExtReal = rTempl.Extent.Buffer(15);
+                Raster rTemplateOutput = RasterOperators.ExtendedCopy(rTempl, new FileInfo(Path.Combine(tmp.Name, "PyramidTest.tif")), newExtReal);
+                RasterOperators.BuildPyramids(new FileInfo(Path.Combine(tmp.Name, "PyramidTest.tif")));
+            }
         }
 
         [TestMethod()]

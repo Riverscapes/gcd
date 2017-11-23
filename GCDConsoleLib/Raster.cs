@@ -49,6 +49,8 @@ namespace GCDConsoleLib
         {
             ExtentRectangle theExtent = new ExtentRectangle(rTemplate.Extent);
             _Init(RasterDriver.GTiff, rTemplate.VerticalUnits, rTemplate.Proj, rTemplate.Datatype, theExtent, rTemplate.origNodataVal);
+            if (!leaveopen)
+                Dispose();
         }
 
         /// <summary>
@@ -61,13 +63,17 @@ namespace GCDConsoleLib
         {
             ExtentRectangle theExtent = new ExtentRectangle(rTemplate.Extent);
             _Init(RasterDriver.GTiff, rTemplate.VerticalUnits, rTemplate.Proj, dType, theExtent, rTemplate.origNodataVal);
+            if (!leaveopen)
+                Dispose();
         }
 
         // This is mainly for testing purposes
-        public Raster(Raster rTemplate) : base()
+        public Raster(Raster rTemplate, bool leaveopen = false) : base()
         {
             ExtentRectangle theExtent = new ExtentRectangle(rTemplate.Extent);
             _Init(RasterDriver.GTiff, rTemplate.VerticalUnits, rTemplate.Proj, rTemplate.Datatype, theExtent, rTemplate.origNodataVal);
+            if (!leaveopen)
+                Dispose();
         }
 
         /// <summary>
@@ -80,6 +86,8 @@ namespace GCDConsoleLib
         public Raster(Raster rTemplate, ExtentRectangle rExtent, FileInfo sFilename, bool leaveopen = false) : base(sFilename)
         {
             _Init(rTemplate.driver, rTemplate.VerticalUnits, rTemplate.Proj, rTemplate.Datatype, rExtent, rTemplate.origNodataVal);
+            if (!leaveopen)
+                Dispose();
         }
 
         /// <summary>
@@ -102,6 +110,8 @@ namespace GCDConsoleLib
         {
             ExtentRectangle theExtent = new ExtentRectangle(fTop, fLeft, dCellHeight, dCellWidth, nRows, nCols);
             _Init(psDriver, UnitFromString(psUnit), new Projection(psProjection), dType, theExtent, dNoData);
+            if (!leaveopen)
+                Dispose();
         }
 
 
@@ -187,6 +197,7 @@ namespace GCDConsoleLib
             if (hasndval == 1)
                 ndv = (double?)nodatval;
             return ndv;
+
         }
 
         /// <summary>
@@ -374,7 +385,11 @@ namespace GCDConsoleLib
             {
                 Open(true);
                 double min, max, mean, std;
-                ds.GetRasterBand(1).ComputeStatistics(false, out min, out max, out mean, out std, null, null);
+                try
+                {
+                    ds.GetRasterBand(1).ComputeStatistics(false, out min, out max, out mean, out std, null, null);
+                }
+                catch { }
                 bComputedStatistics = true;
             }
         }
