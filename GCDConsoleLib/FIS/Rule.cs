@@ -10,8 +10,8 @@ namespace GCDConsoleLib.FIS
         public List<bool> MFSNot;
 
         public double Weight;
-        public MemberFunction Output;
         public FISOperator Operator;
+        public MemberFunction Output;
 
         /// <summary>
         /// Constructor

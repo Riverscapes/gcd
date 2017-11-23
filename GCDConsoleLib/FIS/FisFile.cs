@@ -206,6 +206,7 @@ namespace GCDConsoleLib.FIS
         private void ParseAddRuleString(string ruleString)
         {
             Rule theRule = new Rule();
+            int outNum;
             // 2 1 4, 1 (1) <==> 1
             string[] rsSplit1 = ruleString.Split(':');
 
@@ -233,8 +234,12 @@ namespace GCDConsoleLib.FIS
             // 1 <==> (1)
             string[] rsSplit3 = rsSplit2[1].Trim().Split();
 
+            // Now figure out the weight of this Rule
+            if (!int.TryParse(rsSplit3[0].Trim(), out outNum))
+                throw new Exception("Could not parse the weight: " + ruleString);
+
             // There is only ever one output for this case
-            theRule.Output = ruleset.Output;
+            theRule.Output = ruleset.Outputs._mfs[outNum -1];
 
             // Now figure out the weight of this Rule
             string trimmedWeight = rsSplit3[1].Trim();
@@ -245,10 +250,10 @@ namespace GCDConsoleLib.FIS
             List<int> mfIndeces = new List<int>();
             for (int idx = 0; idx < mfIndStr.Length; idx++)
             {
-                int mfInd;
-                if (!int.TryParse(mfIndStr[idx].Trim(), out mfInd))
+                int mfNum;
+                if (!int.TryParse(mfIndStr[idx].Trim(), out mfNum))
                     throw new Exception("Error parsing rule: " + ruleString);
-                theRule.addMf(idx, mfInd);
+                theRule.addMf(idx, mfNum);
             }
 
             // Last step: push the rule onto the stack

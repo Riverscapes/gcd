@@ -27,7 +27,7 @@ namespace GCDConsoleLib.FIS.Tests
                     new KeyValuePair<double,double>(0.08,1),
                     new KeyValuePair<double,double>(0.14,0)
                 });
-            Assert.AreEqual(test.ruleset.Output._mfs.Count, 4);
+            Assert.AreEqual(test.ruleset.Outputs._mfs.Count, 4);
             Assert.AreEqual(test.ruleset.OutputName, "HabitatSuitablity");
         }
 

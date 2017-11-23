@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GCDConsoleLib.Extensions
 {
-    public class BiDictionary<T1, T2, T>: IEnumerable
+    public class BiDictionary<T1, T2, T> : IEnumerable
     {
         private Dictionary<T1, T> _key1 = new Dictionary<T1, T>();
         private Dictionary<T2, T> _key2 = new Dictionary<T2, T>();
@@ -40,8 +41,8 @@ namespace GCDConsoleLib.Extensions
 
         public void Add(T1 t1, T2 t2, T val)
         {
-            _key1.Add(t1, val);
-            _key2.Add(t2, val);
+            _key1[t1] = val;
+            _key2[t2] = val;
         }
 
         public IEnumerator GetEnumerator()
@@ -49,7 +50,25 @@ namespace GCDConsoleLib.Extensions
             throw new NotImplementedException();
         }
 
+        public List<T1> Keys1 { get { return _key1.Keys.ToList(); } }
+        public List<T2> Keys2 { get { return _key2.Keys.ToList(); } }
+        public List<T> Values { get { return _key1.Values.ToList(); } }
+
         public Indexer<T1, T> ByKey1 { get; private set; }
         public Indexer<T2, T> ByKey2 { get; private set; }
+
+        public int Count { get { return _key1.Count;  } }
+
+        /// <summary>
+        /// Return the two indeces from a value
+        /// </summary>
+        /// <param name="val"></param>
+        /// <returns></returns>
+        public Tuple<T1, T2> GetIndecesByValue(T val)
+        {
+            return new Tuple<T1, T2>(
+                _key1.FirstOrDefault(x => x.Value.Equals(val)).Key,
+                _key2.FirstOrDefault(x => x.Value.Equals(val)).Key);
+        }
     }
 }

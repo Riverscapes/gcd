@@ -13,6 +13,14 @@ namespace GCDConsoleLib.FIS
             Coords = new List<KeyValuePair<double, double>>();
         }
 
+        public void Copy(MemberFunction mFunc)
+        {
+            Coords.Clear();
+            foreach (KeyValuePair<double, double> kvp in mFunc.Coords)
+                Coords.Add(kvp);
+            yMax = mFunc.yMax;
+        }
+
         /// <summary>
         /// Constructor, using a triangle membership function.
         /// The x coordinates must be in order from smallest to largest.The y values corresponding to x1 and

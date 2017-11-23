@@ -10,7 +10,8 @@ namespace GCDConsoleLib.FIS
         public Dictionary<string, MemberFunctionSet> Inputs;
         public Map<int, string> InputLookupMap;
 
-        public MemberFunctionSet Output;
+        // In GCD there is only ever one but FIS technically allows for more
+        public MemberFunctionSet Outputs;
         public List<Rule> Rules;
 
         public String OutputName;
@@ -93,7 +94,7 @@ namespace GCDConsoleLib.FIS
         /// <param name="mfs"></param>
         public void addOutputMFSet(String sName, MemberFunctionSet mfs)
         {
-            Output = mfs;
+            Outputs = mfs;
             OutputName = sName;
         }
 
@@ -111,7 +112,7 @@ namespace GCDConsoleLib.FIS
         {
             if (weight < 0 || weight > 1)
                 throw new ArgumentException("The weight must be between 0 and 1.");
-            else if (!Output.Indices.ContainsKey(sOut))
+            else if (!Outputs.Indices.ContainsKey(sOut))
                 throw new ArgumentException(string.Format("There is no output membership function named '{0}'.", sOut));
             else
             {
@@ -120,7 +121,7 @@ namespace GCDConsoleLib.FIS
                 Rule rule = new Rule();
 
                 rule.Weight = weight;
-                rule.Output = Output._mfs[Output.Indices[sOut]];
+                rule.Output = Outputs._mfs[Outputs.Indices[sOut]];
 
                 rule.Operator = op;
 
@@ -176,7 +177,7 @@ namespace GCDConsoleLib.FIS
                     double fuzzyInput = getFuzzyVal(rule, i, _fuzzyInputs);
                     impValue = RuleOperator(rule, impValue, fuzzyInput);
                 }
-                ImplicatorOp(rule.Output, impMf, impValue, rule.Weight);
+                impMf = ImplicatorOp(rule.Output, impValue, rule.Weight);
                 AggregatorOp(impMf, aggMf);
             }
 
@@ -231,7 +232,7 @@ namespace GCDConsoleLib.FIS
                         impValue = _fuzzyInputs[rule.Inputs[0]][rule.MFSInd[0]];
                         for (int m = 1; m < rule.Inputs.Count; m++)
                             impValue = RuleOperator(rule, impValue, _fuzzyInputs[rule.Inputs[m]][rule.MFSInd[m]]);
-                        ImplicatorOp(rule.Output, impMf, impValue, rule.Weight);
+                        impMf = ImplicatorOp(rule.Output, impValue, rule.Weight);
                         AggregatorOp(impMf, aggMf);
                     }
                     return DefuzzifierOp(aggMf);
@@ -255,7 +256,7 @@ namespace GCDConsoleLib.FIS
                     impValue = _fuzzyInputs[rule.Inputs[0]][rule.MFSInd[0]];
                     for (int m = 1; m < rule.Inputs.Count; m++)
                         impValue = RuleOperator(rule, impValue, _fuzzyInputs[rule.Inputs[m]][rule.MFSInd[m]]);
-                    ImplicatorOp(rule.Output, impMf, impValue, rule.Weight);
+                    impMf = ImplicatorOp(rule.Output, impValue, rule.Weight);
                     AggregatorOp(impMf, aggMf);
                 }
                 return DefuzzifierOp(aggMf);
@@ -392,18 +393,14 @@ namespace GCDConsoleLib.FIS
         /// <param name="outMf"></param>
         /// <param name="n"></param>
         /// <param name="weight"></param>
-        public void ImplicatorOp(MemberFunction inMf,
-            MemberFunction outMf,
-            double n, double weight)
+        public MemberFunction ImplicatorOp(MemberFunction inMf, double n, double weight)
         {
             switch (_implicator)
             {
                 case FISImplicator.FISImp_Min:
-                    FISOperators.ImpMin(inMf, outMf, n, weight);
-                    break;
+                    return FISOperators.ImpMin(inMf, n, weight);
                 case FISImplicator.FISImp_Product:
-                    FISOperators.ImpProduct(inMf, outMf, n, weight);
-                    break;
+                    return FISOperators.ImpProduct(inMf, n, weight);
                 default:
                     throw new ArgumentException("Invalid operator");
             }
@@ -419,9 +416,11 @@ namespace GCDConsoleLib.FIS
             switch (_aggregator)
             {
                 case FISAggregator.FISAgg_Max:
-                //return FISOperators.Min(d1, d2);
-                case FISAggregator.FISAgg_Probor:
-                //return FISOperators.Product(d1, d2);
+                    FISOperators.AggMax(inMf, outMf);
+                    break;
+                //case FISAggregator.FISAgg_Probor:
+                //    FISOperators.AggProbor(inMf, outMf);
+                //    break;
                 case FISAggregator.FISAgg_Sum:
                 default:
                     throw new ArgumentException("Invalid operator");
