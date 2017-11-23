@@ -154,9 +154,10 @@ namespace GCDCore.Project
             nodDEM.AppendChild(xmlDoc.CreateElement("Name")).InnerText = Name;
             nodDEM.AppendChild(xmlDoc.CreateElement("Path")).InnerText = ProjectManager.Project.GetRelativePath(Raster.RasterPath);
 
-            XmlNode nodSurveyMethod = nodDEM.AppendChild(xmlDoc.CreateElement("SurveyMethod"));
             if (!string.IsNullOrEmpty(SurveyMethod))
-                nodSurveyMethod.InnerText = SurveyMethod;
+            {
+                nodDEM.AppendChild(xmlDoc.CreateElement("SurveyMethod")).InnerText = SurveyMethod;
+            }
 
             if (SurveyDate != null)
             {
