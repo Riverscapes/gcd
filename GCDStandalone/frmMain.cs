@@ -37,6 +37,19 @@ namespace GCDStandalone
 
             ucProjectExplorer1.ProjectTreeNodeSelectionChange += UpdateMenusAndToolstrips;
             UpdateMenusAndToolstrips(sender, e);
+
+            if (Properties.Settings.Default.LoadLastProjectAtStart)
+            {
+                string lastGCD = GCDCore.Properties.Settings.Default.LastUsedProjectFolder;
+                if (!string.IsNullOrEmpty(lastGCD) && System.IO.Directory.Exists(lastGCD))
+                {
+                    string[] gcdFiles = System.IO.Directory.GetFiles(lastGCD, "*.gcd", System.IO.SearchOption.TopDirectoryOnly);
+                    if (gcdFiles.Length == 1)
+                    {
+                        OpenGCDProject(gcdFiles[0]);
+                    }
+                }
+            }
         }
 
         private void ProjectProperties_Click(object sender, EventArgs e)
@@ -87,23 +100,7 @@ namespace GCDStandalone
             {
                 try
                 {
-                    // Set the project file path first (which will attempt to read the XML file and throw an error if anything goes wrong)
-                    // Then set the settings if the read was successful.
-                    ProjectManager.OpenProject(new System.IO.FileInfo(f.FileName));
-                    GCDCore.Properties.Settings.Default.LastUsedProjectFolder = System.IO.Path.GetDirectoryName(f.FileName);
-                    GCDCore.Properties.Settings.Default.Save();
-
-                    try
-                    {
-                        //GCDCore.Project.ProjectManager.Validate();
-                    }
-                    catch (Exception ex)
-                    {
-                        throw new Exception("Error validating GCD project", ex);
-                    }
-
-                    ucProjectExplorer1.cmdRefresh_Click(sender, e);
-
+                    OpenGCDProject(f.FileName);
                 }
                 catch (Exception ex)
                 {
@@ -112,6 +109,26 @@ namespace GCDStandalone
             }
 
             UpdateMenusAndToolstrips(sender, e);
+        }
+
+        private void OpenGCDProject(string gcdProject)
+        {
+            // Set the project file path first (which will attempt to read the XML file and throw an error if anything goes wrong)
+            // Then set the settings if the read was successful.
+            ProjectManager.OpenProject(new System.IO.FileInfo(gcdProject));
+            GCDCore.Properties.Settings.Default.LastUsedProjectFolder = System.IO.Path.GetDirectoryName(gcdProject);
+            GCDCore.Properties.Settings.Default.Save();
+
+            try
+            {
+                //GCDCore.Project.ProjectManager.Validate();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error validating GCD project", ex);
+            }
+
+            ucProjectExplorer1.cmdRefresh_Click(null, null);
         }
 
         private void browseGCDProjectFolderToolStripMenuItem_Click(object sender, EventArgs e)
