@@ -26,6 +26,27 @@
             m_Item = theItem
         End Sub
 
+        Public Shared Operator =(node1 As ProjectTreeNode, node2 As ProjectTreeNode) As Boolean
+
+            If node1 Is Nothing AndAlso node2 Is Nothing Then
+                Return True
+            ElseIf node1 Is Nothing Then
+                Return False
+            ElseIf node2 Is Nothing Then
+                Return False
+            Else
+                If (node1.NodeType = node2.NodeType) Then
+                    Return node1.Item Is node2.Item
+                Else
+                    Return False
+                End If
+            End If
+        End Operator
+
+        Public Shared Operator <>(node1 As ProjectTreeNode, node2 As ProjectTreeNode) As Boolean
+            Return Not node1 = node2
+        End Operator
+
     End Class
 
 End Namespace
