@@ -7,17 +7,16 @@ namespace GCDCore.Project
 {
     public class DEMSurvey : GCDProjectItem
     {
-        public SurveyDateTime SurveyDate { get; set; }
         public readonly ProjectRaster Raster;
+        public readonly Dictionary<string, AssocSurface> AssocSurfaces;
+        public readonly Dictionary<string, ErrorSurface> ErrorSurfaces;
 
         public string SurveyMethod { get; set; } // Single survey methods
         public bool IsSingleSurveyMethod { get { return string.IsNullOrEmpty(SurveyMethod); } }
-
+        public SurveyDateTime SurveyDate { get; set; }
         public FileInfo MethodMask { get; set; } // Multi-method polygon ShapeFile
         public string MethodMaskField { get; set; } // Multi-method field in ShapeFile
 
-        public Dictionary<string, AssocSurface> AssocSurfaces { get; internal set; }
-        public Dictionary<string, ErrorSurface> ErrorSurfaces { get; internal set; }
 
         public DEMSurvey(string name, SurveyDateTime surveyDate, FileInfo rasterPath)
             : base(name)
@@ -154,14 +153,20 @@ namespace GCDCore.Project
             XmlNode nodDEM = nodParent.AppendChild(xmlDoc.CreateElement("DEM"));
             nodDEM.AppendChild(xmlDoc.CreateElement("Name")).InnerText = Name;
             nodDEM.AppendChild(xmlDoc.CreateElement("Path")).InnerText = ProjectManager.Project.GetRelativePath(Raster.RasterPath);
-            nodDEM.AppendChild(xmlDoc.CreateElement("SurveyMethod")).InnerText = SurveyMethod;
 
-            XmlNode nodSurveyDate = nodDEM.AppendChild(xmlDoc.CreateElement("SurveyDate"));
-            nodSurveyDate.AppendChild(xmlDoc.CreateElement("Year")).InnerText = SurveyDate.Year > 0 ? SurveyDate.Year.ToString() : string.Empty;
-            nodSurveyDate.AppendChild(xmlDoc.CreateElement("Month")).InnerText = SurveyDate.Month > 0 ? SurveyDate.Month.ToString() : string.Empty;
-            nodSurveyDate.AppendChild(xmlDoc.CreateElement("Day")).InnerText = SurveyDate.Day > 0 ? SurveyDate.Day.ToString() : string.Empty;
-            nodSurveyDate.AppendChild(xmlDoc.CreateElement("Hour")).InnerText = SurveyDate.Hour > -1 ? SurveyDate.Hour.ToString() : string.Empty;
-            nodSurveyDate.AppendChild(xmlDoc.CreateElement("Minute")).InnerText = SurveyDate.Minute > -1 ? SurveyDate.Minute.ToString() : string.Empty;
+            XmlNode nodSurveyMethod = nodDEM.AppendChild(xmlDoc.CreateElement("SurveyMethod"));
+            if (!string.IsNullOrEmpty(SurveyMethod))
+                nodSurveyMethod.InnerText = SurveyMethod;
+
+            if (SurveyDate != null)
+            {
+                XmlNode nodSurveyDate = nodDEM.AppendChild(xmlDoc.CreateElement("SurveyDate"));
+                nodSurveyDate.AppendChild(xmlDoc.CreateElement("Year")).InnerText = SurveyDate.Year > 0 ? SurveyDate.Year.ToString() : string.Empty;
+                nodSurveyDate.AppendChild(xmlDoc.CreateElement("Month")).InnerText = SurveyDate.Month > 0 ? SurveyDate.Month.ToString() : string.Empty;
+                nodSurveyDate.AppendChild(xmlDoc.CreateElement("Day")).InnerText = SurveyDate.Day > 0 ? SurveyDate.Day.ToString() : string.Empty;
+                nodSurveyDate.AppendChild(xmlDoc.CreateElement("Hour")).InnerText = SurveyDate.Hour > -1 ? SurveyDate.Hour.ToString() : string.Empty;
+                nodSurveyDate.AppendChild(xmlDoc.CreateElement("Minute")).InnerText = SurveyDate.Minute > -1 ? SurveyDate.Minute.ToString() : string.Empty;
+            }
 
             if (MethodMask != null)
             {
@@ -190,21 +195,26 @@ namespace GCDCore.Project
             string name = nodDEM.SelectSingleNode("Name").InnerText;
             FileInfo path = ProjectManager.Project.GetAbsolutePath(nodDEM.SelectSingleNode("Path").InnerText);
 
-            SurveyDateTime surveyDT = new SurveyDateTime();
-            if (!string.IsNullOrEmpty(nodDEM.SelectSingleNode("SurveyDate/Year").InnerText))
-                surveyDT.Year = ushort.Parse(nodDEM.SelectSingleNode("SurveyDate/Year").InnerText);
+            SurveyDateTime surveyDT = null;
+            XmlNode nodSurveyDate = nodDEM.SelectSingleNode("SurveyDate");
+            if (nodSurveyDate is XmlNode)
+            {
+                surveyDT = new SurveyDateTime();
+                if (!string.IsNullOrEmpty(nodDEM.SelectSingleNode("SurveyDate/Year").InnerText))
+                    surveyDT.Year = ushort.Parse(nodDEM.SelectSingleNode("SurveyDate/Year").InnerText);
 
-            if (!string.IsNullOrEmpty(nodDEM.SelectSingleNode("SurveyDate/Month").InnerText))
-                surveyDT.Month = byte.Parse(nodDEM.SelectSingleNode("SurveyDate/Month").InnerText);
+                if (!string.IsNullOrEmpty(nodDEM.SelectSingleNode("SurveyDate/Month").InnerText))
+                    surveyDT.Month = byte.Parse(nodDEM.SelectSingleNode("SurveyDate/Month").InnerText);
 
-            if (!string.IsNullOrEmpty(nodDEM.SelectSingleNode("SurveyDate/Year").InnerText))
-                surveyDT.Day = byte.Parse(nodDEM.SelectSingleNode("SurveyDate/Day").InnerText);
+                if (!string.IsNullOrEmpty(nodDEM.SelectSingleNode("SurveyDate/Year").InnerText))
+                    surveyDT.Day = byte.Parse(nodDEM.SelectSingleNode("SurveyDate/Day").InnerText);
 
-            if (!string.IsNullOrEmpty(nodDEM.SelectSingleNode("SurveyDate/Hour").InnerText))
-                surveyDT.Hour = short.Parse(nodDEM.SelectSingleNode("SurveyDate/Hour").InnerText);
+                if (!string.IsNullOrEmpty(nodDEM.SelectSingleNode("SurveyDate/Hour").InnerText))
+                    surveyDT.Hour = short.Parse(nodDEM.SelectSingleNode("SurveyDate/Hour").InnerText);
 
-            if (!string.IsNullOrEmpty(nodDEM.SelectSingleNode("SurveyDate/Minute").InnerText))
-                surveyDT.Minute = short.Parse(nodDEM.SelectSingleNode("SurveyDate/Minute").InnerText);
+                if (!string.IsNullOrEmpty(nodDEM.SelectSingleNode("SurveyDate/Minute").InnerText))
+                    surveyDT.Minute = short.Parse(nodDEM.SelectSingleNode("SurveyDate/Minute").InnerText);
+            }
 
             DEMSurvey dem = new DEMSurvey(name, surveyDT, path);
 

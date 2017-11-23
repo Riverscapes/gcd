@@ -51,7 +51,7 @@ namespace GCDCore.Project
                 throw ex;
             }
 
-            string relativePath = FullPath.Substring(ProjectFile.FullName.Length, FullPath.Length - ProjectFile.DirectoryName.Length);
+            string relativePath = FullPath.Substring(ProjectFile.DirectoryName.Length, FullPath.Length - ProjectFile.DirectoryName.Length);
             relativePath = relativePath.TrimStart(Path.DirectorySeparatorChar);
             return relativePath;
         }
@@ -203,7 +203,7 @@ namespace GCDCore.Project
 
             if (DEMSurveys.Count > 0)
             {
-                XmlNode nodDEMs = nodProject.AppendChild(xmlDoc.CreateElement("DEMSurveyrs"));
+                XmlNode nodDEMs = nodProject.AppendChild(xmlDoc.CreateElement("DEMSurveys"));
                 foreach (DEMSurvey dem in DEMSurveys.Values)
                     dem.Serialize(xmlDoc, nodDEMs);
             }
@@ -251,26 +251,26 @@ namespace GCDCore.Project
             if (!string.IsNullOrEmpty(nodCellArea.InnerText))
                 cellArea = UnitsNet.Area.From(double.Parse(nodCellArea.InnerText), area);
 
-            GCDProject project = new GCDProject(name, desc, projectFile, dtCreated, gcdv, cellArea, units);
+            ProjectManager.Project = new GCDProject(name, desc, projectFile, dtCreated, gcdv, cellArea, units);
 
             foreach (XmlNode nodDEM in nodProject.SelectNodes("DEMSurveys/DEM"))
             {
                 DEMSurvey dem = DEMSurvey.Deserialize(nodDEM);
-                project.DEMSurveys[dem.Name] = dem;
+                ProjectManager.Project.DEMSurveys[dem.Name] = dem;
             }
 
             foreach (XmlNode nodDoD in nodProject.SelectNodes("DoDs/DoD"))
             {
-                DoDBase dod = DoDBase.Deserialize(nodDoD, project.DEMSurveys);
-                project.DoDs[dod.Name] = dod;
+                DoDBase dod = DoDBase.Deserialize(nodDoD, ProjectManager.Project.DEMSurveys);
+                ProjectManager.Project.DoDs[dod.Name] = dod;
             }
 
             foreach (XmlNode nodItem in nodProject.SelectNodes("MetaData/Item"))
             {
-                project.MetaData[nodItem.SelectSingleNode("Key").InnerText] = nodItem.SelectSingleNode("Value").InnerText;
+                ProjectManager.Project.MetaData[nodItem.SelectSingleNode("Key").InnerText] = nodItem.SelectSingleNode("Value").InnerText;
             }
 
-            return project;
+            return ProjectManager.Project;
         }
     }
 }

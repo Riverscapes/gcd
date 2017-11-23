@@ -552,10 +552,10 @@ Namespace SurveyLibrary
                             Dim outputExtent As New GCDConsoleLib.ExtentRectangle(valTop.Value, valLeft.Value, cellHeight, valCellSize.Value, nRows, nCols)
 
                             If RequiresResampling() Then
-                                GCDConsoleLib.RasterOperators.BilinearResample(gRaster, New IO.FileInfo(txtRasterPath.Text), outputExtent)
+                                gResult = GCDConsoleLib.RasterOperators.BilinearResample(gRaster, New IO.FileInfo(txtRasterPath.Text), outputExtent)
                                 Debug.WriteLine("Bilinear resample:" & outputExtent.ToString)
                             Else
-                                GCDConsoleLib.RasterOperators.ExtendedCopy(gRaster, New IO.FileInfo(txtRasterPath.Text), outputExtent)
+                                gResult = GCDConsoleLib.RasterOperators.ExtendedCopy(gRaster, New IO.FileInfo(txtRasterPath.Text), outputExtent)
                                 Debug.WriteLine("Copying raster:" & outputExtent.ToString)
                             End If
 
