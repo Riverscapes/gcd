@@ -154,22 +154,12 @@ namespace GCDCore.Project
 
         public bool IsDEMNameUnique(string name, DEMSurvey ignore)
         {
-            bool bUnique = true;
-            if (DEMSurveys.ContainsKey(name))
-            {
-                bUnique = DEMSurveys[name] != ignore;
-            }
-            return bUnique;
+            return DEMSurveys.ContainsKey(name) ? DEMSurveys[name] == ignore : true;
         }
 
         public bool IsDoDNameUnique(string name, DoDBase ignore)
         {
-            bool bUnique = true;
-            if (DoDs.ContainsKey(name))
-            {
-                bUnique = DoDs[name] != ignore;
-            }
-            return bUnique;
+            return DoDs.ContainsKey(name) ? DoDs[name] == ignore : true;
         }
 
         public void Save()

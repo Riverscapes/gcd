@@ -63,12 +63,7 @@ namespace GCDCore.Project
 
         public bool IsBudgetSegNameUnique(string name, BudgetSegregation ignore)
         {
-            bool bUnique = true;
-            if (BudgetSegregations.ContainsKey(name))
-            {
-                bUnique = BudgetSegregations[name] != ignore;
-            }
-            return bUnique;
+            return BudgetSegregations.ContainsKey(name) ? BudgetSegregations[name] == ignore : true;
         }
 
         public XmlNode Serialize(XmlDocument xmlDoc, XmlNode nodParent)

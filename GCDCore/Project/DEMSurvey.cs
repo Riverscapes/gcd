@@ -30,22 +30,12 @@ namespace GCDCore.Project
 
         public bool IsErrorNameUnique(string name, ErrorSurface ignore)
         {
-            bool bUnique = true;
-            if (ErrorSurfaces.ContainsKey(name))
-            {
-                bUnique = ErrorSurfaces[name] != ignore;
-            }
-            return bUnique;
+            return ErrorSurfaces.ContainsKey(name) ? ErrorSurfaces[name] == ignore : true;            
         }
 
         public bool IsAssocNameUnique(string name, AssocSurface ignore)
         {
-            bool bUnique = true;
-            if (AssocSurfaces.ContainsKey(name))
-            {
-                bUnique = AssocSurfaces[name] != ignore;
-            }
-            return bUnique;
+            return AssocSurfaces.ContainsKey(name) ? AssocSurfaces[name] == ignore : true;
         }
 
         public void DeleteAssociatedSurface(AssocSurface assoc)
