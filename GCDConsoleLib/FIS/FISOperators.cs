@@ -62,26 +62,26 @@ namespace GCDConsoleLib.FIS
         public static MemberFunction ImpMin(MemberFunction inMf, double n, double weight)
         {
             MemberFunction outMf = new MemberFunction();
-            outMf.Coords.Add(new KeyValuePair<double, double>(inMf.Coords[0].Key, inMf.Coords[0].Value * weight));
+            outMf.Coords.Add(new double[] { inMf.Coords[0][0], inMf.Coords[0][1] * weight });
 
             int i;
             for (i = 1; i < inMf.Coords.Count - 1; i++)
             {
-                if (inMf.Coords[i].Value > n)
+                if (inMf.Coords[i][1] > n)
                 {
-                    outMf.Coords.Add(new KeyValuePair<double, double>(inMf.getX(i - 1, i, n), n * weight));
+                    outMf.Coords.Add(new double[] { inMf.getX(i - 1, i, n), n * weight });
                     break;
                 }
                 else
-                    outMf.Coords.Add(new KeyValuePair<double, double>(inMf.Coords[i].Key, inMf.Coords[i].Value * weight));
+                    outMf.Coords.Add(new double[] { inMf.Coords[i][0], inMf.Coords[i][1] * weight });
             }
             // Now let's continue and fill in the rest (thus the i=i)
-            for (i = i; i < inMf.Coords.Count; i++)
+            for (int j = i; j < inMf.Coords.Count; j++)
             {
-                if (inMf.Coords[i].Value < n)
+                if (inMf.Coords[j][1] < n)
                 {
-                    outMf.Coords.Add(new KeyValuePair<double, double>(inMf.getX(i - 1, i, n), n * weight));
-                    outMf.Coords.Add(new KeyValuePair<double, double>(inMf.Coords[i].Key, inMf.Coords[i].Value * weight));
+                    outMf.Coords.Add(new double[] { inMf.getX(j - 1, j, n), n * weight });
+                    outMf.Coords.Add(new double[] { inMf.Coords[j][0], inMf.Coords[j][1] * weight });
                 }
             }
             return outMf;
@@ -99,7 +99,7 @@ namespace GCDConsoleLib.FIS
         {
             MemberFunction outMf = new MemberFunction();
             for (int i = 0; i < inMf.Coords.Count; i++)
-                outMf.Coords.Add(new KeyValuePair<double, double>(inMf.Coords[i].Key, inMf.Coords[i].Value * n * weight));
+                outMf.Coords.Add(new double []{ inMf.Coords[i][0], inMf.Coords[i][1] * n * weight });
             return outMf;
         }
 
@@ -116,19 +116,19 @@ namespace GCDConsoleLib.FIS
             else
             {
                 // Key is X and Value is Y
-                Dictionary<double, double> coords = new Dictionary<double, double>();
+                SortedDictionary<double, double> coords = new SortedDictionary<double, double>();
 
-                foreach (KeyValuePair<double, double> inMfXY in inMf.Coords)
-                    if (coords.ContainsKey(inMfXY.Key))
-                        coords[inMfXY.Key] = Math.Max(coords[inMfXY.Key], Math.Max(inMfXY.Value, outMf.fuzzify(inMfXY.Key)));
+                foreach (double[] inMfXY in inMf.Coords)
+                    if (coords.ContainsKey(inMfXY[0]))
+                        coords[inMfXY[0]] = Math.Max(coords[inMfXY[0]], Math.Max(inMfXY[1], outMf.fuzzify(inMfXY[0])));
                     else
-                        coords[inMfXY.Key] = Math.Max(inMfXY.Value, outMf.fuzzify(inMfXY.Key));
+                        coords[inMfXY[0]] = Math.Max(inMfXY[1], outMf.fuzzify(inMfXY[0]));
 
-                foreach (KeyValuePair<double, double> outMfXY in outMf.Coords)
-                    if (coords.ContainsKey(outMfXY.Key))
-                        coords[outMfXY.Key] = Math.Max(coords[outMfXY.Key], Math.Max(inMf.fuzzify(outMfXY.Key), outMfXY.Value));
+                foreach (double[] outMfXY in outMf.Coords)
+                    if (coords.ContainsKey(outMfXY[0]))
+                        coords[outMfXY[0]] = Math.Max(coords[outMfXY[0]], Math.Max(inMf.fuzzify(outMfXY[0]), outMfXY[1]));
                     else
-                        coords[outMfXY.Key] = Math.Max(inMf.fuzzify(outMfXY.Key), outMfXY.Value);
+                        coords[outMfXY[0]] = Math.Max(inMf.fuzzify(outMfXY[0]), outMfXY[1]);
 
                 // Let's empty out the MF and build it up again
                 outMf.clear();
@@ -138,9 +138,9 @@ namespace GCDConsoleLib.FIS
                 {
                     for (int j = 1; j < outMf.Coords.Count; j++)
                     {
-                        Tuple<double, double, bool> intersect = IntersectLines(inMf.Coords[i - 1].Key, inMf.Coords[i - 1].Value,
-                            inMf.Coords[i].Key, inMf.Coords[i].Value, outMf.Coords[j - 1].Key,
-                            outMf.Coords[j - 1].Value, outMf.Coords[j].Key, outMf.Coords[j].Value);
+                        Tuple<double, double, bool> intersect = IntersectLines(inMf.Coords[i - 1][0], inMf.Coords[i - 1][1],
+                            inMf.Coords[i][0], inMf.Coords[i][1], outMf.Coords[j - 1][0],
+                            outMf.Coords[j - 1][1], outMf.Coords[j][0], outMf.Coords[j][1]);
                         // Is there an intersection?
                         if (intersect.Item3 == true)
                             if (coords.ContainsKey(intersect.Item1))
@@ -150,23 +150,21 @@ namespace GCDConsoleLib.FIS
                     }
                 }
 
-                // Now make a list of the X values in order
-                List<double> xs = coords.Keys.ToList();
-                xs.Sort();
-
-                // Now loop over all the keys by index (int)
-                for (int i = 0; i < xs.Count; i++)
+                int counter = 0;
+                foreach(KeyValuePair<double,double> kvp in coords)
                 {
-                    double x = xs[i];
+                    double x = kvp.Key;
                     // If the first value isn't zero then push a zero value onto the stack
-                    if (i == 0 && coords[x] != 0.0)
-                        outMf.Coords.Add(new KeyValuePair<double, double>(x, 0));
+                    if (counter == 0 && x != 0.0)
+                        outMf.Coords.Add(new double[] { x, 0 });
 
-                    outMf.Coords.Add(new KeyValuePair<double, double>(x, coords[x]));
+                    outMf.Coords.Add(new double[] { x, coords[x] });
+
+                    counter++;
 
                     // Push a zero onto the stack if the last value isn't zero
-                    if (i == coords.Count - 1 && coords[x] != 0.0)
-                        outMf.Coords.Add(new KeyValuePair<double, double>(x, 0));
+                    if (counter == coords.Count && coords[x] != 0.0)
+                        outMf.Coords.Add(new double[] { x, 0 });
                 }
 
             }

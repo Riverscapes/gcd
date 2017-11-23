@@ -436,7 +436,7 @@ namespace GCDConsoleLib.FIS
             switch (_defuzzifier)
             {
                 case FISDefuzzifier.FISDefuzz_Bisect:
-                    return Defuzzify.FISDefuzzBisect(mf);
+                    return Defuzzify.DefuzzBisect(mf);
                 case FISDefuzzifier.FISDefuzz_Centroid:
                     return Defuzzify.DefuzzCentroid(mf);
                 case FISDefuzzifier.FISDefuzz_LargeMax:

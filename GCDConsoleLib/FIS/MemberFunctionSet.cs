@@ -42,8 +42,8 @@ namespace GCDConsoleLib.FIS
         {
             if (0 == mf.Length)
                 throw new ArgumentException("The membership function cannot be added to the set because it has no vertices.");
-            else if ((mf.Coords[0].Key < _min) || (mf.Coords[mf.Length - 1].Key > _max))
-                throw new ArgumentException(string.Format("Membership function bounds ({0} {1}) do not fit in the set range ({2}) for this object.", mf.Coords[0].Key, mf.Coords[mf.Length - 1].Key, _min));
+            else if ((mf.Coords[0][0] < _min) || (mf.Coords[mf.Length - 1][0] > _max))
+                throw new ArgumentException(string.Format("Membership function bounds ({0} {1}) do not fit in the set range ({2}) for this object.", mf.Coords[0][0], mf.Coords[mf.Length - 1][0], _min));
             else if (Indices.ContainsKey(sName))
                 throw new ArgumentException(string.Format("The name '{0}' is already in use.", sName));
             else if (sName.Contains(" "))
