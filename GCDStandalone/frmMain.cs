@@ -273,6 +273,22 @@ namespace GCDStandalone
                     case Keys.N:
                         ProjectProperties_Click(newGCDProjectToolStripMenuItem, null);
                         break;
+
+                    case Keys.S:
+                        ucProjectExplorer1.AddDEMSurvey();
+                        break;
+                }
+            }
+
+            if (e.Alt)
+            {
+                switch (e.KeyCode)
+                {
+                    case Keys.Enter:
+                        // show project properties if a project is open
+                        if (ProjectManager.Project is GCDProject)
+                            ProjectProperties_Click(projectPropertiesToolStripMenuItem, null);
+                        break;
                 }
             }
         }
