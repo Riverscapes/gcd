@@ -159,7 +159,7 @@
             // 
             this.cleanRasterToolStripMenuItem.Image = global::GCDStandalone.Properties.Resources.CleanRaster;
             this.cleanRasterToolStripMenuItem.Name = "cleanRasterToolStripMenuItem";
-            this.cleanRasterToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.cleanRasterToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.cleanRasterToolStripMenuItem.Text = "Clean Raster...";
             this.cleanRasterToolStripMenuItem.Click += new System.EventHandler(this.cleanRasterToolStripMenuItem_Click);
             // 
@@ -323,7 +323,7 @@
             this.toolStripContainer1.ContentPanel.Controls.Add(this.tableLayoutPanel1);
             this.toolStripContainer1.ContentPanel.Controls.Add(this.toolStrip1);
             this.toolStripContainer1.ContentPanel.Controls.Add(this.menuStrip1);
-            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(907, 466);
+            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(907, 441);
             this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
             this.toolStripContainer1.Name = "toolStripContainer1";
@@ -341,8 +341,8 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(907, 417);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 417F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(907, 392);
             this.tableLayoutPanel1.TabIndex = 5;
             // 
             // frmMain
@@ -352,10 +352,12 @@
             this.ClientSize = new System.Drawing.Size(907, 488);
             this.Controls.Add(this.toolStripContainer1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip1;
             this.MinimumSize = new System.Drawing.Size(300, 300);
             this.Name = "frmMain";
             this.Load += new System.EventHandler(this.frmMain_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmMain_KeyDown);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);

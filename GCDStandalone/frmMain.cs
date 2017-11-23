@@ -259,5 +259,22 @@ namespace GCDStandalone
                 naru.error.ExceptionUI.HandleException(ex);
             }
         }
+
+        private void frmMain_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control)
+            {
+                switch (e.KeyCode)
+                {
+                    case Keys.O:
+                        openGCDProjectToolStripMenuItem_Click(null, null);
+                        break;
+
+                    case Keys.N:
+                        ProjectProperties_Click(newGCDProjectToolStripMenuItem, null);
+                        break;
+                }
+            }
+        }
     }
 }
