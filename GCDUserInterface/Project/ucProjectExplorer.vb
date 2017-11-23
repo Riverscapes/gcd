@@ -993,7 +993,7 @@ Namespace Project
 
         Public Sub cmdRefresh_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
 
-            Dim sSortBy As String = sender.ToString
+            'Dim sSortBy As String = sender.ToString
 
             'If String.Compare(sSortBy, "Name") = 0 Then
             '    m_eSortBy = SortSurveyBy.Name

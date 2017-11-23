@@ -41,25 +41,25 @@
             Me.cboHorizontalUnits = New System.Windows.Forms.ComboBox()
             Me.TabControl1 = New System.Windows.Forms.TabControl()
             Me.TabPage1 = New System.Windows.Forms.TabPage()
-            Me.TabPage2 = New System.Windows.Forms.TabPage()
-            Me.TabPage3 = New System.Windows.Forms.TabPage()
-            Me.grpRasterUnits = New System.Windows.Forms.GroupBox()
-            Me.cboVerticalUnits = New System.Windows.Forms.ComboBox()
-            Me.Label2 = New System.Windows.Forms.Label()
             Me.groGCDUnits = New System.Windows.Forms.GroupBox()
             Me.cboVolumeUnits = New System.Windows.Forms.ComboBox()
             Me.Label7 = New System.Windows.Forms.Label()
             Me.cboAreaUnits = New System.Windows.Forms.ComboBox()
             Me.Label8 = New System.Windows.Forms.Label()
+            Me.grpRasterUnits = New System.Windows.Forms.GroupBox()
+            Me.cboVerticalUnits = New System.Windows.Forms.ComboBox()
+            Me.Label2 = New System.Windows.Forms.Label()
+            Me.TabPage2 = New System.Windows.Forms.TabPage()
+            Me.TabPage3 = New System.Windows.Forms.TabPage()
             Me.grdMetaData = New System.Windows.Forms.DataGridView()
             Me.colKey = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.colValue = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.TabControl1.SuspendLayout()
             Me.TabPage1.SuspendLayout()
+            Me.groGCDUnits.SuspendLayout()
+            Me.grpRasterUnits.SuspendLayout()
             Me.TabPage2.SuspendLayout()
             Me.TabPage3.SuspendLayout()
-            Me.grpRasterUnits.SuspendLayout()
-            Me.groGCDUnits.SuspendLayout()
             CType(Me.grdMetaData, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.SuspendLayout()
             '
@@ -93,9 +93,10 @@
             Me.txtDescription.AcceptsReturn = True
             Me.txtDescription.Dock = System.Windows.Forms.DockStyle.Fill
             Me.txtDescription.Location = New System.Drawing.Point(3, 3)
+            Me.txtDescription.MaxLength = 1000
             Me.txtDescription.Multiline = True
             Me.txtDescription.Name = "txtDescription"
-            Me.txtDescription.Size = New System.Drawing.Size(614, 166)
+            Me.txtDescription.Size = New System.Drawing.Size(466, 166)
             Me.txtDescription.TabIndex = 8
             '
             'btnBrowseOutput
@@ -206,61 +207,6 @@
             Me.TabPage1.Text = "Units"
             Me.TabPage1.UseVisualStyleBackColor = True
             '
-            'TabPage2
-            '
-            Me.TabPage2.Controls.Add(Me.txtDescription)
-            Me.TabPage2.Location = New System.Drawing.Point(4, 22)
-            Me.TabPage2.Name = "TabPage2"
-            Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-            Me.TabPage2.Size = New System.Drawing.Size(620, 172)
-            Me.TabPage2.TabIndex = 1
-            Me.TabPage2.Text = "Description"
-            Me.TabPage2.UseVisualStyleBackColor = True
-            '
-            'TabPage3
-            '
-            Me.TabPage3.Controls.Add(Me.grdMetaData)
-            Me.TabPage3.Location = New System.Drawing.Point(4, 22)
-            Me.TabPage3.Name = "TabPage3"
-            Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
-            Me.TabPage3.Size = New System.Drawing.Size(620, 172)
-            Me.TabPage3.TabIndex = 2
-            Me.TabPage3.Text = "MetaData"
-            Me.TabPage3.UseVisualStyleBackColor = True
-            '
-            'grpRasterUnits
-            '
-            Me.grpRasterUnits.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-            Me.grpRasterUnits.Controls.Add(Me.cboVerticalUnits)
-            Me.grpRasterUnits.Controls.Add(Me.Label2)
-            Me.grpRasterUnits.Controls.Add(Me.cboHorizontalUnits)
-            Me.grpRasterUnits.Controls.Add(Me.Label6)
-            Me.grpRasterUnits.Location = New System.Drawing.Point(6, 6)
-            Me.grpRasterUnits.Name = "grpRasterUnits"
-            Me.grpRasterUnits.Size = New System.Drawing.Size(460, 76)
-            Me.grpRasterUnits.TabIndex = 0
-            Me.grpRasterUnits.TabStop = False
-            Me.grpRasterUnits.Text = "Raster Units"
-            '
-            'cboVerticalUnits
-            '
-            Me.cboVerticalUnits.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-            Me.cboVerticalUnits.FormattingEnabled = True
-            Me.cboVerticalUnits.Location = New System.Drawing.Point(65, 46)
-            Me.cboVerticalUnits.Name = "cboVerticalUnits"
-            Me.cboVerticalUnits.Size = New System.Drawing.Size(372, 21)
-            Me.cboVerticalUnits.TabIndex = 3
-            '
-            'Label2
-            '
-            Me.Label2.AutoSize = True
-            Me.Label2.Location = New System.Drawing.Point(18, 50)
-            Me.Label2.Name = "Label2"
-            Me.Label2.Size = New System.Drawing.Size(42, 13)
-            Me.Label2.TabIndex = 2
-            Me.Label2.Text = "Vertical"
-            '
             'groGCDUnits
             '
             Me.groGCDUnits.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
@@ -312,6 +258,61 @@
             Me.Label8.TabIndex = 0
             Me.Label8.Text = "Area"
             '
+            'grpRasterUnits
+            '
+            Me.grpRasterUnits.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Me.grpRasterUnits.Controls.Add(Me.cboVerticalUnits)
+            Me.grpRasterUnits.Controls.Add(Me.Label2)
+            Me.grpRasterUnits.Controls.Add(Me.cboHorizontalUnits)
+            Me.grpRasterUnits.Controls.Add(Me.Label6)
+            Me.grpRasterUnits.Location = New System.Drawing.Point(6, 6)
+            Me.grpRasterUnits.Name = "grpRasterUnits"
+            Me.grpRasterUnits.Size = New System.Drawing.Size(460, 76)
+            Me.grpRasterUnits.TabIndex = 0
+            Me.grpRasterUnits.TabStop = False
+            Me.grpRasterUnits.Text = "Raster Units"
+            '
+            'cboVerticalUnits
+            '
+            Me.cboVerticalUnits.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+            Me.cboVerticalUnits.FormattingEnabled = True
+            Me.cboVerticalUnits.Location = New System.Drawing.Point(65, 46)
+            Me.cboVerticalUnits.Name = "cboVerticalUnits"
+            Me.cboVerticalUnits.Size = New System.Drawing.Size(372, 21)
+            Me.cboVerticalUnits.TabIndex = 3
+            '
+            'Label2
+            '
+            Me.Label2.AutoSize = True
+            Me.Label2.Location = New System.Drawing.Point(18, 50)
+            Me.Label2.Name = "Label2"
+            Me.Label2.Size = New System.Drawing.Size(42, 13)
+            Me.Label2.TabIndex = 2
+            Me.Label2.Text = "Vertical"
+            '
+            'TabPage2
+            '
+            Me.TabPage2.Controls.Add(Me.txtDescription)
+            Me.TabPage2.Location = New System.Drawing.Point(4, 22)
+            Me.TabPage2.Name = "TabPage2"
+            Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
+            Me.TabPage2.Size = New System.Drawing.Size(472, 172)
+            Me.TabPage2.TabIndex = 1
+            Me.TabPage2.Text = "Description"
+            Me.TabPage2.UseVisualStyleBackColor = True
+            '
+            'TabPage3
+            '
+            Me.TabPage3.Controls.Add(Me.grdMetaData)
+            Me.TabPage3.Location = New System.Drawing.Point(4, 22)
+            Me.TabPage3.Name = "TabPage3"
+            Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
+            Me.TabPage3.Size = New System.Drawing.Size(472, 172)
+            Me.TabPage3.TabIndex = 2
+            Me.TabPage3.Text = "MetaData"
+            Me.TabPage3.UseVisualStyleBackColor = True
+            '
             'grdMetaData
             '
             Me.grdMetaData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
@@ -319,19 +320,23 @@
             Me.grdMetaData.Dock = System.Windows.Forms.DockStyle.Fill
             Me.grdMetaData.Location = New System.Drawing.Point(3, 3)
             Me.grdMetaData.Name = "grdMetaData"
-            Me.grdMetaData.Size = New System.Drawing.Size(614, 166)
+            Me.grdMetaData.Size = New System.Drawing.Size(466, 166)
             Me.grdMetaData.TabIndex = 0
             '
             'colKey
             '
+            Me.colKey.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
             Me.colKey.DataPropertyName = "Key"
             Me.colKey.HeaderText = "Key"
+            Me.colKey.MaxInputLength = 255
             Me.colKey.Name = "colKey"
             '
             'colValue
             '
+            Me.colValue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
             Me.colValue.DataPropertyName = "Value"
             Me.colValue.HeaderText = "Value"
+            Me.colValue.MaxInputLength = 255
             Me.colValue.Name = "colValue"
             '
             'frmProjectProperties
@@ -363,13 +368,13 @@
             Me.Text = "GCD Project"
             Me.TabControl1.ResumeLayout(False)
             Me.TabPage1.ResumeLayout(False)
+            Me.groGCDUnits.ResumeLayout(False)
+            Me.groGCDUnits.PerformLayout()
+            Me.grpRasterUnits.ResumeLayout(False)
+            Me.grpRasterUnits.PerformLayout()
             Me.TabPage2.ResumeLayout(False)
             Me.TabPage2.PerformLayout()
             Me.TabPage3.ResumeLayout(False)
-            Me.grpRasterUnits.ResumeLayout(False)
-            Me.grpRasterUnits.PerformLayout()
-            Me.groGCDUnits.ResumeLayout(False)
-            Me.groGCDUnits.PerformLayout()
             CType(Me.grdMetaData, System.ComponentModel.ISupportInitialize).EndInit()
             Me.ResumeLayout(False)
             Me.PerformLayout()
