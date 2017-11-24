@@ -49,8 +49,6 @@
             Me.cmdCancel = New System.Windows.Forms.Button()
             Me.cmdOK = New System.Windows.Forms.Button()
             Me.cmdHelp = New System.Windows.Forms.Button()
-            Me.GroupBox2 = New System.Windows.Forms.GroupBox()
-            Me.lstAOI = New System.Windows.Forms.CheckedListBox()
             Me.txtOutputFolder = New System.Windows.Forms.TextBox()
             Me.Label2 = New System.Windows.Forms.Label()
             Me.GroupBox1.SuspendLayout()
@@ -58,7 +56,6 @@
             CType(Me.valMinLodThreshold, System.ComponentModel.ISupportInitialize).BeginInit()
             CType(Me.valConfidence, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.GroupBox4.SuspendLayout()
-            Me.GroupBox2.SuspendLayout()
             Me.SuspendLayout()
             '
             'Label1
@@ -66,9 +63,9 @@
             Me.Label1.AutoSize = True
             Me.Label1.Location = New System.Drawing.Point(14, 30)
             Me.Label1.Name = "Label1"
-            Me.Label1.Size = New System.Drawing.Size(34, 13)
+            Me.Label1.Size = New System.Drawing.Size(31, 13)
             Me.Label1.TabIndex = 0
-            Me.Label1.Text = "DEM:"
+            Me.Label1.Text = "DEM"
             '
             'cboNewDEM
             '
@@ -93,9 +90,9 @@
             Me.lblNewError.AutoSize = True
             Me.lblNewError.Location = New System.Drawing.Point(16, 57)
             Me.lblNewError.Name = "lblNewError"
-            Me.lblNewError.Size = New System.Drawing.Size(32, 13)
+            Me.lblNewError.Size = New System.Drawing.Size(29, 13)
             Me.lblNewError.TabIndex = 2
-            Me.lblNewError.Text = "Error:"
+            Me.lblNewError.Text = "Error"
             '
             'GroupBox1
             '
@@ -121,7 +118,7 @@
             Me.GroupBox3.Controls.Add(Me.rdoProbabilistic)
             Me.GroupBox3.Controls.Add(Me.rdoPropagated)
             Me.GroupBox3.Controls.Add(Me.rdoMinLOD)
-            Me.GroupBox3.Location = New System.Drawing.Point(12, 286)
+            Me.GroupBox3.Location = New System.Drawing.Point(12, 173)
             Me.GroupBox3.Name = "GroupBox3"
             Me.GroupBox3.Size = New System.Drawing.Size(537, 177)
             Me.GroupBox3.TabIndex = 7
@@ -144,13 +141,13 @@
             Me.lblMinLodThreshold.AutoSize = True
             Me.lblMinLodThreshold.Location = New System.Drawing.Point(51, 47)
             Me.lblMinLodThreshold.Name = "lblMinLodThreshold"
-            Me.lblMinLodThreshold.Size = New System.Drawing.Size(66, 13)
+            Me.lblMinLodThreshold.Size = New System.Drawing.Size(63, 13)
             Me.lblMinLodThreshold.TabIndex = 1
-            Me.lblMinLodThreshold.Text = "Threshold ():"
+            Me.lblMinLodThreshold.Text = "Threshold ()"
             '
             'cmdBayesianProperties
             '
-            Me.cmdBayesianProperties.Image = My.Resources.Resources.Settings
+            Me.cmdBayesianProperties.Image = Global.GCDUserInterface.My.Resources.Resources.Settings
             Me.cmdBayesianProperties.Location = New System.Drawing.Point(189, 141)
             Me.cmdBayesianProperties.Name = "cmdBayesianProperties"
             Me.cmdBayesianProperties.Size = New System.Drawing.Size(23, 23)
@@ -162,9 +159,9 @@
             Me.chkBayesian.AutoSize = True
             Me.chkBayesian.Location = New System.Drawing.Point(51, 144)
             Me.chkBayesian.Name = "chkBayesian"
-            Me.chkBayesian.Size = New System.Drawing.Size(138, 17)
+            Me.chkBayesian.Size = New System.Drawing.Size(135, 17)
             Me.chkBayesian.TabIndex = 7
-            Me.chkBayesian.Text = "Use Bayesian updating:"
+            Me.chkBayesian.Text = "Use Bayesian updating"
             Me.chkBayesian.UseVisualStyleBackColor = True
             '
             'valConfidence
@@ -184,9 +181,9 @@
             Me.lblConfidence.AutoSize = True
             Me.lblConfidence.Location = New System.Drawing.Point(51, 116)
             Me.lblConfidence.Name = "lblConfidence"
-            Me.lblConfidence.Size = New System.Drawing.Size(113, 13)
+            Me.lblConfidence.Size = New System.Drawing.Size(110, 13)
             Me.lblConfidence.TabIndex = 5
-            Me.lblConfidence.Text = "Confidence level (0-1):"
+            Me.lblConfidence.Text = "Confidence level (0-1)"
             '
             'rdoProbabilistic
             '
@@ -225,9 +222,9 @@
             Me.Label5.AutoSize = True
             Me.Label5.Location = New System.Drawing.Point(12, 22)
             Me.Label5.Name = "Label5"
-            Me.Label5.Size = New System.Drawing.Size(77, 13)
+            Me.Label5.Size = New System.Drawing.Size(74, 13)
             Me.Label5.TabIndex = 0
-            Me.Label5.Text = "Analysis name:"
+            Me.Label5.Text = "Analysis name"
             '
             'txtName
             '
@@ -272,23 +269,24 @@
             Me.lblOldError.AutoSize = True
             Me.lblOldError.Location = New System.Drawing.Point(14, 57)
             Me.lblOldError.Name = "lblOldError"
-            Me.lblOldError.Size = New System.Drawing.Size(32, 13)
+            Me.lblOldError.Size = New System.Drawing.Size(29, 13)
             Me.lblOldError.TabIndex = 2
-            Me.lblOldError.Text = "Error:"
+            Me.lblOldError.Text = "Error"
             '
             'Label7
             '
             Me.Label7.AutoSize = True
             Me.Label7.Location = New System.Drawing.Point(12, 30)
             Me.Label7.Name = "Label7"
-            Me.Label7.Size = New System.Drawing.Size(34, 13)
+            Me.Label7.Size = New System.Drawing.Size(31, 13)
             Me.Label7.TabIndex = 0
-            Me.Label7.Text = "DEM:"
+            Me.Label7.Text = "DEM"
             '
             'cmdCancel
             '
+            Me.cmdCancel.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
             Me.cmdCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel
-            Me.cmdCancel.Location = New System.Drawing.Point(474, 475)
+            Me.cmdCancel.Location = New System.Drawing.Point(474, 358)
             Me.cmdCancel.Name = "cmdCancel"
             Me.cmdCancel.Size = New System.Drawing.Size(75, 23)
             Me.cmdCancel.TabIndex = 9
@@ -297,8 +295,9 @@
             '
             'cmdOK
             '
+            Me.cmdOK.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
             Me.cmdOK.DialogResult = System.Windows.Forms.DialogResult.OK
-            Me.cmdOK.Location = New System.Drawing.Point(393, 475)
+            Me.cmdOK.Location = New System.Drawing.Point(393, 358)
             Me.cmdOK.Name = "cmdOK"
             Me.cmdOK.Size = New System.Drawing.Size(75, 23)
             Me.cmdOK.TabIndex = 8
@@ -307,32 +306,13 @@
             '
             'cmdHelp
             '
-            Me.cmdHelp.Location = New System.Drawing.Point(12, 475)
+            Me.cmdHelp.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+            Me.cmdHelp.Location = New System.Drawing.Point(12, 358)
             Me.cmdHelp.Name = "cmdHelp"
             Me.cmdHelp.Size = New System.Drawing.Size(75, 23)
             Me.cmdHelp.TabIndex = 10
             Me.cmdHelp.Text = "Help"
             Me.cmdHelp.UseVisualStyleBackColor = True
-            '
-            'GroupBox2
-            '
-            Me.GroupBox2.Controls.Add(Me.lstAOI)
-            Me.GroupBox2.Location = New System.Drawing.Point(12, 175)
-            Me.GroupBox2.Name = "GroupBox2"
-            Me.GroupBox2.Size = New System.Drawing.Size(537, 103)
-            Me.GroupBox2.TabIndex = 6
-            Me.GroupBox2.TabStop = False
-            Me.GroupBox2.Text = "Spatial Extent of Analysis"
-            '
-            'lstAOI
-            '
-            Me.lstAOI.CheckOnClick = True
-            Me.lstAOI.Enabled = False
-            Me.lstAOI.FormattingEnabled = True
-            Me.lstAOI.Location = New System.Drawing.Point(17, 25)
-            Me.lstAOI.Name = "lstAOI"
-            Me.lstAOI.Size = New System.Drawing.Size(507, 64)
-            Me.lstAOI.TabIndex = 0
             '
             'txtOutputFolder
             '
@@ -347,20 +327,19 @@
             Me.Label2.AutoSize = True
             Me.Label2.Location = New System.Drawing.Point(12, 50)
             Me.Label2.Name = "Label2"
-            Me.Label2.Size = New System.Drawing.Size(71, 13)
+            Me.Label2.Size = New System.Drawing.Size(68, 13)
             Me.Label2.TabIndex = 2
-            Me.Label2.Text = "Output folder:"
+            Me.Label2.Text = "Output folder"
             '
-            'DoDPropertiesForm
+            'frmDoDProperties
             '
             Me.AcceptButton = Me.cmdOK
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
             Me.CancelButton = Me.cmdCancel
-            Me.ClientSize = New System.Drawing.Size(562, 512)
+            Me.ClientSize = New System.Drawing.Size(562, 395)
             Me.Controls.Add(Me.txtOutputFolder)
             Me.Controls.Add(Me.Label2)
-            Me.Controls.Add(Me.GroupBox2)
             Me.Controls.Add(Me.cmdHelp)
             Me.Controls.Add(Me.cmdOK)
             Me.Controls.Add(Me.cmdCancel)
@@ -373,7 +352,7 @@
             Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
             Me.MaximizeBox = False
             Me.MinimizeBox = False
-            Me.Name = "DoDPropertiesForm"
+            Me.Name = "frmDoDProperties"
             Me.Text = "Change Detection Configuration"
             Me.GroupBox1.ResumeLayout(False)
             Me.GroupBox1.PerformLayout()
@@ -383,7 +362,6 @@
             CType(Me.valConfidence, System.ComponentModel.ISupportInitialize).EndInit()
             Me.GroupBox4.ResumeLayout(False)
             Me.GroupBox4.PerformLayout()
-            Me.GroupBox2.ResumeLayout(False)
             Me.ResumeLayout(False)
             Me.PerformLayout()
 
@@ -411,11 +389,9 @@
         Friend WithEvents cmdCancel As System.Windows.Forms.Button
         Friend WithEvents cmdOK As System.Windows.Forms.Button
         Friend WithEvents cmdHelp As System.Windows.Forms.Button
-        Friend WithEvents GroupBox2 As System.Windows.Forms.GroupBox
         Friend WithEvents txtOutputFolder As System.Windows.Forms.TextBox
         Friend WithEvents Label2 As System.Windows.Forms.Label
         Friend WithEvents valMinLodThreshold As System.Windows.Forms.NumericUpDown
         Friend WithEvents lblMinLodThreshold As System.Windows.Forms.Label
-        Friend WithEvents lstAOI As System.Windows.Forms.CheckedListBox
     End Class
 End Namespace

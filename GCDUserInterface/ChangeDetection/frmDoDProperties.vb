@@ -55,8 +55,8 @@ Namespace ChangeDetection
 
         Private Sub DoDPropertiesForm_Load(sender As Object, e As System.EventArgs) Handles Me.Load
 
-            cboNewDEM.DataSource = ProjectManager.Project.DEMSurveys
-            cboOldDEM.DataSource = ProjectManager.Project.DEMSurveys
+            cboNewDEM.DataSource = ProjectManager.Project.DEMsSortByName(False)
+            cboOldDEM.DataSource = ProjectManager.Project.DEMsSortByName(False)
 
             If m_InitialNewDEM Is Nothing Then
                 ' There's no initial DEM so simply pick the first one
@@ -78,7 +78,7 @@ Namespace ChangeDetection
 
             EnableDisableControls()
 
-            lblMinLodThreshold.Text = String.Format("{0} ({1})", lblMinLodThreshold.Text, UnitsNet.Length.GetAbbreviation(ProjectManager.Project.Units.VertUnit))
+            lblMinLodThreshold.Text = String.Format("Threshold ({0})", UnitsNet.Length.GetAbbreviation(ProjectManager.Project.Units.VertUnit))
 
             If cboNewDEM.Items.Count > 0 AndAlso cboNewDEM.SelectedIndex < 0 Then
                 cboNewDEM.SelectedIndex = 0
@@ -154,7 +154,7 @@ Namespace ChangeDetection
 
             If TypeOf cboNewDEM.SelectedItem Is DEMSurvey Then
                 If TypeOf cboOldDEM.SelectedItem Is DEMSurvey Then
-                    If cboNewDEM.SelectedItem = cboOldDEM.SelectedItem Then
+                    If cboNewDEM.SelectedItem Is cboOldDEM.SelectedItem Then
                         MsgBox("Please choose two different DEM Surveys.", MsgBoxStyle.Information, GCDCore.Properties.Resources.ApplicationNameLong)
                         Return False
                     End If
@@ -214,9 +214,8 @@ Namespace ChangeDetection
 
         Private Sub cboNewDEM_SelectedIndexChanged(sender As Object, e As System.EventArgs) Handles cboNewDEM.SelectedIndexChanged
 
-            cboNewError.Items.Clear()
             If TypeOf cboNewDEM.SelectedItem Is DEMSurvey Then
-                cboNewError.DataSource = DirectCast(cboNewDEM.SelectedItem, DEMSurvey).ErrorSurfaces
+                cboNewError.DataSource = DirectCast(cboNewDEM.SelectedItem, DEMSurvey).ErrorSurfaces.Values.ToList()
 
                 If cboNewError.Items.Count = 1 Then
                     cboNewError.SelectedIndex = 0
@@ -229,9 +228,8 @@ Namespace ChangeDetection
 
         Private Sub cboOldDEM_SelectedIndexChanged(sender As Object, e As System.EventArgs) Handles cboOldDEM.SelectedIndexChanged
 
-            cboOldError.Items.Clear()
             If TypeOf cboOldDEM.SelectedItem Is DEMSurvey Then
-                cboOldError.DataSource = DirectCast(cboOldDEM.SelectedItem, DEMSurvey).ErrorSurfaces
+                cboOldError.DataSource = DirectCast(cboOldDEM.SelectedItem, DEMSurvey).ErrorSurfaces.Values.ToList()
 
                 If cboOldError.Items.Count = 1 Then
                     cboOldError.SelectedIndex = 0

@@ -74,7 +74,7 @@ namespace GCDCore.Engines
             return RasterOperators.GetStatsProbalistic(rawDoD, thrDoD, propErr, cellArea, units);
         }
 
-        protected override DoDBase GetDoDResult(DoDStats changeStats, Raster rawDoD, Raster thrDoD, HistogramPair histograms)
+        protected override DoDBase GetDoDResult(DoDStats changeStats, Raster rawDoD, Raster thrDoD, HistogramPair histograms, FileInfo summaryXML)
         {
             bool bBayesian = SpatialCoherence is CoherenceProperties;
             int nFilter = 0;
@@ -83,7 +83,7 @@ namespace GCDCore.Engines
                 nFilter = SpatialCoherence.MovingWindowDimensions;
             }
 
-            return new DoDProbabilistic(Name, AnalysisFolder, NewDEM, OldDEM, histograms, rawDoD, thrDoD, NewError, OldError,
+            return new DoDProbabilistic(Name, AnalysisFolder, NewDEM, OldDEM, histograms, summaryXML, rawDoD, thrDoD, NewError, OldError,
                 PropagatedErrRaster.GISFileInfo, m_PriorProbRaster, m_PosteriorRaster, m_ConditionalRaster, m_SpatialCoErosionRaster, m_SpatialCoDepositionRaster,
                 SpatialCoherence, Threshold, changeStats);
         }

@@ -14,8 +14,8 @@ namespace GCDCore.Project
         public readonly ErrorSurface OldError;
 
         public DoDPropagated(string name, DirectoryInfo folder, DEMSurvey newDEM, DEMSurvey oldDEM, Raster rawDoD, Raster thrDoD,
-         HistogramPair histograms, ErrorSurface newError, ErrorSurface oldError, FileInfo propErr, DoDStats stats)
-            : base(name, folder, newDEM, oldDEM,rawDoD, thrDoD, histograms, stats)
+         HistogramPair histograms, FileInfo summaryXML, ErrorSurface newError, ErrorSurface oldError, FileInfo propErr, DoDStats stats)
+            : base(name, folder, newDEM, oldDEM, rawDoD, thrDoD, histograms, summaryXML, stats)
         {
             NewError = newError;
             OldError = oldError;

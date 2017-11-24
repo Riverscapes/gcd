@@ -69,13 +69,13 @@ namespace GCDCore.Engines
             GenerateChangeBarGraphicFiles(changeStats, 0, 0);
             GenerateHistogramGraphicFiles(rawHisto, thrHisto, 0, 0);
 
-            return GetDoDResult(changeStats, rawDoD, thrDoD, new HistogramPair(rawHisto, rawHstPath, thrHisto, thrHstPath));
+            return GetDoDResult(changeStats, rawDoD, thrDoD, new HistogramPair(rawHisto, rawHstPath, thrHisto, thrHstPath), sumXMLPath);
         }
 
         protected abstract Raster ThresholdRawDoD(Raster rawDoD, FileInfo thrDoDPath);
 
         protected abstract DoDStats CalculateChangeStats(Raster rawDoD, Raster thrDoD, UnitsNet.Area cellArea, UnitGroup units);
 
-        protected abstract DoDBase GetDoDResult(DoDStats changeStats, Raster rawDoD, Raster thrDoD, HistogramPair histograms);
+        protected abstract DoDBase GetDoDResult(DoDStats changeStats, Raster rawDoD, Raster thrDoD, HistogramPair histograms, FileInfo summaryXML);
     }
 }

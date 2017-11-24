@@ -115,7 +115,7 @@ Namespace SurveyLibrary
             valCellSize.Value = 1
 
             If m_ePurpose <> ImportRasterPurposes.StandaloneTool AndAlso TypeOf ProjectManager.Project Is GCDCore.Project.GCDProject Then
-                valPrecision.Value = 0 ' ProjectManager.Project.Precision
+                valPrecision.Value = 2 ' ProjectManager.Project.Precision
             End If
 
             valTop.ReadOnly = Not (m_ePurpose = ImportRasterPurposes.DEMSurvey OrElse m_ePurpose = ImportRasterPurposes.StandaloneTool)

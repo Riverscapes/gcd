@@ -32,9 +32,9 @@ namespace GCDCore.Engines
             return RasterOperators.GetStatsMinLoD(rawDoD, thrDoD, Threshold, cellArea, units);
         }
 
-        protected override DoDBase GetDoDResult(DoDStats changeStats, Raster rawDoD, Raster thrDoD, HistogramPair histograms)
+        protected override DoDBase GetDoDResult(DoDStats changeStats, Raster rawDoD, Raster thrDoD, HistogramPair histograms, FileInfo summaryXML)
         {
-            return new DoDMinLoD(Name, AnalysisFolder, NewDEM, OldDEM, rawDoD, thrDoD, histograms, Threshold, changeStats);
+            return new DoDMinLoD(Name, AnalysisFolder, NewDEM, OldDEM, rawDoD, thrDoD, histograms, summaryXML, Threshold, changeStats);
         }
     }
 }

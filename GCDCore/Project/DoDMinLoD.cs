@@ -24,8 +24,8 @@ namespace GCDCore.Project
         /// <param name="thrHist"></param>
         /// <param name="threshold"></param>
         /// <param name="stats"></param>
-        public DoDMinLoD(string name, DirectoryInfo folder, DEMSurvey newDEM, DEMSurvey oldDEM, Raster rawDoD, Raster thrDoD, HistogramPair histograms, decimal threshold, DoDStats stats)
-            : base(name, folder, newDEM, oldDEM, rawDoD, thrDoD, histograms, stats)
+        public DoDMinLoD(string name, DirectoryInfo folder, DEMSurvey newDEM, DEMSurvey oldDEM, Raster rawDoD, Raster thrDoD, HistogramPair histograms, FileInfo summaryXML, decimal threshold, DoDStats stats)
+            : base(name, folder, newDEM, oldDEM, rawDoD, thrDoD, histograms, summaryXML, stats)
         {
             Threshold = threshold;
         }

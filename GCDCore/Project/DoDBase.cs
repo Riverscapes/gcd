@@ -22,7 +22,7 @@ namespace GCDCore.Project
 
         public Dictionary<string, BudgetSegregation> BudgetSegregations { get; internal set; }
 
-        public DoDBase(string name, DirectoryInfo folder, DEMSurvey newDEM, DEMSurvey oldDEM, Raster rawDoD, Raster thrDoD, HistogramPair histograms, DoDStats stats)
+        public DoDBase(string name, DirectoryInfo folder, DEMSurvey newDEM, DEMSurvey oldDEM, Raster rawDoD, Raster thrDoD, HistogramPair histograms, FileInfo summaryXML, DoDStats stats)
             : base(name)
         {
             Folder = folder;
@@ -31,11 +31,12 @@ namespace GCDCore.Project
             RawDoD = new ProjectRaster(rawDoD);
             ThrDoD = new ProjectRaster(thrDoD);
             Histograms = histograms;
+            SummaryXML = summaryXML;
             Statistics = stats;
             BudgetSegregations = new Dictionary<string, BudgetSegregation>();
         }
 
-        public DoDBase(string name, DirectoryInfo folder, DEMSurvey newDEM, DEMSurvey oldDEM, FileInfo rawDoD, FileInfo thrDoD, HistogramPair histograms, DoDStats stats)
+        public DoDBase(string name, DirectoryInfo folder, DEMSurvey newDEM, DEMSurvey oldDEM, FileInfo rawDoD, FileInfo thrDoD, HistogramPair histograms, FileInfo summaryXML, DoDStats stats)
                   : base(name)
         {
             Folder = folder;
@@ -44,6 +45,7 @@ namespace GCDCore.Project
             RawDoD = new ProjectRaster(rawDoD);
             ThrDoD = new ProjectRaster(thrDoD);
             Histograms = histograms;
+            SummaryXML = summaryXML;
             Statistics = stats;
             BudgetSegregations = new Dictionary<string, BudgetSegregation>();
         }
@@ -57,6 +59,7 @@ namespace GCDCore.Project
             RawDoD = dod.RawDoD;
             ThrDoD = dod.ThrDoD;
             Histograms = dod.Histograms;
+            SummaryXML = dod.SummaryXML;
             Statistics = dod.Statistics;
             BudgetSegregations = dod.BudgetSegregations;
         }
@@ -126,7 +129,7 @@ namespace GCDCore.Project
 
             DoDStats stats = DeserializeStatistics(nodDoD.SelectSingleNode("Statistics"), ProjectManager.Project.CellArea, ProjectManager.Project.Units);
 
-            DoDBase dod = new DoDBase(name, folder, newDEM, oldDEM, rawDoD, thrDoD, new HistogramPair(rawHis, thrHis), stats);
+            DoDBase dod = new DoDBase(name, folder, newDEM, oldDEM, rawDoD, thrDoD, new HistogramPair(rawHis, thrHis), summar, stats);
 
             foreach (XmlNode nodBS in nodDoD.SelectNodes("BudgetSegregations/BudgetSegregation"))
             {
