@@ -1,11 +1,18 @@
 ﻿using System;
 using OSGeo.GDAL;
 using OSGeo.OGR;
-using OSGeo.OSR;
 using GCDConsoleLib.Utility;
 
 namespace GCDConsoleLib
 {
+    /// =============================================================================================================
+    ///   NOTE: GDAL has a lot of types of things. We use these classes to move back and forth between:
+    ///      1. GDaL's types,
+    ///      2. Our enumerations of gdal's types
+    ///      3. The C# datatypes that are analogous to GDaL's types
+    /// =============================================================================================================
+
+
     /// <summary>
     /// Gdal Data Types are the type that is used by raster values
     /// </summary>
@@ -73,7 +80,7 @@ namespace GCDConsoleLib
         // Convertor Properties
         public string TypeName { get { return Enum.GetName(typeof(wkbGeometryType), _origType); } }
 
-        // 
+
         public bool isMulti { get { return TypeName.Contains("Multi"); } }
         public bool has25D { get { return TypeName.EndsWith("25D"); } }
         public bool hasM { get { return hasZM || TypeName.EndsWith("M"); } }
@@ -83,6 +90,7 @@ namespace GCDConsoleLib
         // Simple enumerators to help us get a sense of the different types
         public enum SimpleTypes { Unknown, Point, LineString, Polygon, TIN, Curve, Other }
 
+        // Get the SimpleType of this Geomtry type
         public SimpleTypes SimpleType { get
             {
                 SimpleTypes theType = SimpleTypes.Unknown;

@@ -243,6 +243,8 @@ namespace GCDConsoleLib
             }
             else
             {
+                if (!GISFileInfo.Exists)
+                    throw new IOException(string.Format("File not found: `{0}`", GISFileInfo, Enum.GetName(typeof(Access), permission)));
                 if (!GISFileInfo.Exists || Utility.FileHelpers.IsFileLocked(GISFileInfo.FullName, permission))
                     throw new IOException(string.Format("File `{0}` was locked for `{1}` operation", GISFileInfo, Enum.GetName(typeof(Access), permission)));
             }

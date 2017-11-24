@@ -115,7 +115,6 @@
     <Compile Include="FIS\MemberFunctionTests.cs" />
     <Compile Include="FIS\RuleSetTests.cs" />
     <Compile Include="FIS\RuleTests.cs" />
-    <Compile Include="GCD\DoDStatsTests.cs" />
     <Compile Include="GISDatasetTests.cs" />
     <Compile Include="HistogramTests.cs" />
     <Compile Include="ProjectionTests.cs" />
@@ -125,11 +124,12 @@
     <Compile Include="RasterOperators\WindowOverlapOperatorTests.cs" />
     <Compile Include="RasterTests.cs" />
     <Compile Include="Miscellaneous.cs" />
-    <Compile Include="utility\ArrayExtensionsTests.cs" />
-    <Compile Include="utility\TempDir.cs" />
-    <Compile Include="utility\FakeRaster.cs" />
+    <Compile Include="Utility\ArrayExtensionsTests.cs" />
+    <Compile Include="Utility\DynamicMathTests.cs" />
+    <Compile Include="Utility\TempDir.cs" />
+    <Compile Include="Utility\FakeRaster.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="utility\TestHelpers.cs" />
+    <Compile Include="Utility\TestHelpers.cs" />
     <Compile Include="VectorTests.cs" />
   </ItemGroup>
   <ItemGroup>

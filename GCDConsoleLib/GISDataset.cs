@@ -4,16 +4,14 @@ using OSGeo.GDAL;
 
 namespace GCDConsoleLib
 {
-
+    /// <summary>
+    /// The GISDataset class is the base below Raster and Vector
+    /// </summary>
     public abstract class GISDataset : IDisposable
     {
         public FileInfo GISFileInfo { get; internal set; }
         public Projection Proj;
 
-        public static bool FileExists(FileInfo fullPath)
-        {
-            return !String.IsNullOrEmpty(fullPath.FullName) && fullPath.Exists;
-        }
         public bool FileExists()
         {
             return GISFileInfo !=null && GISFileInfo.Exists;
@@ -28,21 +26,21 @@ namespace GCDConsoleLib
         public abstract void Delete();
         public abstract void Dispose();
 
-        public void RefreshFileInfo()
-        {
-            GISFileInfo.Refresh();
-        }
+        /// <summary>
+        /// FileInfo does not refresh until you tell it to. Use this when you create or destroy a file
+        /// </summary>
+        public void RefreshFileInfo(){  GISFileInfo.Refresh();  }
 
+        /// <summary>
+        /// Empty Constructor
+        /// </summary>
         public GISDataset(){}
 
         /// <summary>
         /// Load a dataset from a filepath
         /// </summary>
         /// <param name="sFilepath"></param>
-        public GISDataset(FileInfo sFilepath)
-        {
-            GISFileInfo = sFilepath;
-        }
+        public GISDataset(FileInfo sFilepath)  { GISFileInfo = sFilepath;  }
 
     }
 }

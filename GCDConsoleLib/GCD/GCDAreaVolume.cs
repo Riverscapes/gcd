@@ -7,6 +7,7 @@ namespace GCDConsoleLib.GCD
     public class GCDAreaVolume
     {
         public int Count { get; private set; }
+
         // _sum has an implied unit so we really don't want to expose it.
         // it is a double because the rasters get read as a double
         private double _sum { get; set; }
@@ -65,26 +66,35 @@ namespace GCDConsoleLib.GCD
         /// <param name="cellArea"></param>
         /// <returns></returns>
         public Area GetArea(Area cellArea) { return Count * cellArea; }
-        public void SetArea(Area theArea, Area cellArea)
-        {
-            Count =(int)( theArea.SquareMeters / cellArea.SquareMeters);
-        }
-
-        public double GetAreaValue(Area cellArea, UnitsNet.Units.AreaUnit outputUnits)
-        {
-            return GetArea(cellArea).As(outputUnits);
-        }
 
         /// <summary>
-        /// Get the actual volume value
+        /// Set the Area directly
+        /// </summary>
+        /// <param name="theArea"></param>
+        /// <param name="cellArea"></param>
+        public void SetArea(Area theArea, Area cellArea)  {  Count =(int)( theArea.SquareMeters / cellArea.SquareMeters); }
+
+        /// <summary>
+        /// Get the Area in whatever unit you want
+        /// </summary>
+        /// <param name="cellArea"></param>
+        /// <param name="outputUnits"></param>
+        /// <returns></returns>
+        public double GetAreaValue(Area cellArea, AreaUnit outputUnits) { return GetArea(cellArea).As(outputUnits); }
+
+        /// <summary>
+        /// Get the actual volume value in any unit you choose
         /// </summary>
         /// <param name="cellArea"></param>
         /// <param name="vUnit"></param>
         /// <returns></returns>
         public Volume GetVolume(Area cellArea, LengthUnit vUnit) { return Volume.FromCubicMeters(Length.From(_sum, vUnit).Meters * cellArea.SquareMeters); }
-        public void SetVolume(Volume vol, Area cellArea)
-        {
-            _sum = vol.CubicMeters / cellArea.SquareMeters;
-        }
+
+        /// <summary>
+        /// Set the volume directly
+        /// </summary>
+        /// <param name="vol"></param>
+        /// <param name="cellArea"></param>
+        public void SetVolume(Volume vol, Area cellArea) {  _sum = vol.CubicMeters / cellArea.SquareMeters;  }
     }
 }

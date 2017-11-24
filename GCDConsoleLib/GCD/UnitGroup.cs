@@ -11,6 +11,13 @@ namespace GCDConsoleLib.GCD
         public readonly LengthUnit VertUnit;
         public readonly LengthUnit HorizUnit;
 
+        /// <summary>
+        /// Constructor. These units are created together and passed around to make conversions easier
+        /// </summary>
+        /// <param name="volU"></param>
+        /// <param name="arU"></param>
+        /// <param name="vertU"></param>
+        /// <param name="horU"></param>
         public UnitGroup(VolumeUnit volU, AreaUnit arU, LengthUnit vertU, LengthUnit horU)
         {
             VolUnit = volU;

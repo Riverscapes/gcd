@@ -17,9 +17,8 @@ namespace GCDConsoleLib.Common.Extensons
         {
             T[] ret = new T[toId - fromId + 1];
             for (int srcId = fromId, dstId = 0; srcId <= toId; srcId++)
-            {
                 ret[dstId++] = source[srcId];
-            }
+
             return ret;
         }
 
@@ -38,12 +37,9 @@ namespace GCDConsoleLib.Common.Extensons
             T[,] ret = new T[toR0 - fromR0 + 1, toR1 - fromR1 + 1];
 
             for (int srcIdR0 = fromR0, dstIdR0 = 0; srcIdR0 <= toR0; srcIdR0++, dstIdR0++)
-            {
                 for (int srcIdR1 = fromR1, dstIdR1 = 0; srcIdR1 <= toR1; srcIdR1++, dstIdR1++)
-                {
                     ret[dstIdR0, dstIdR1] = source[srcIdR0, srcIdR1];
-                }
-            }
+
             return ret;
         }
 
@@ -101,12 +97,8 @@ namespace GCDConsoleLib.Common.Extensons
         public static void Plunk<T>(this T[,] dstData, T[,] srcData, int OffsetR0, int OffsetR1)
         {
             for (int srcIdR0 = 0; srcIdR0 < srcData.GetLength(0); srcIdR0++)
-            {
                 for (int srcIdR1 = 0; srcIdR1 < srcData.GetLength(1); srcIdR1++)
-                {
                     dstData[srcIdR0 + OffsetR0, srcIdR1 + OffsetR1] = srcData[srcIdR0, srcIdR1];
-                }
-            }
         }
 
         /// <summary>
@@ -127,12 +119,9 @@ namespace GCDConsoleLib.Common.Extensons
             int offsetR0, int offsetR1)
         {
             for (int idR0 = 0; idR0 < srcSizeR0; idR0++)
-            {
                 for (int idR1 = 0; idR1 < srcSizeR1; idR1++)
-                {
                     dstData[((idR0 + offsetR0) * (dstSizeR1)) + (idR1 + offsetR1)] = srcData[idR0 * srcSizeR1 + idR1];
-                }
-            }
+
         }
 
         /// <summary>
@@ -147,12 +136,9 @@ namespace GCDConsoleLib.Common.Extensons
         {
             T[,] output = new T[sizeR0, sizeR1];
             for (int idR0 = 0; idR0 < sizeR0; idR0++)
-            {
                 for (int idR1 = 0; idR1 < sizeR1; idR1++)
-                {
                     output[idR0, idR1] = input[idR0 * sizeR1 + idR1];
-                }
-            }
+
             return output;
         }
 
@@ -170,12 +156,9 @@ namespace GCDConsoleLib.Common.Extensons
             T[] output = new T[sizeR0 * sizeR1];
 
             for (int idR0 = 0; idR0 < sizeR0; idR0++)
-            {
                 for (int idR1 = 0; idR1 < sizeR1; idR1++)
-                {
                     output[idR0 * sizeR1 + idR1] = input[idR0, idR1];
-                }
-            }
+
             return output;
         }
 
@@ -188,9 +171,8 @@ namespace GCDConsoleLib.Common.Extensons
         public static void Fill<T>(this T[] originalArray, T with)
         {
             for (int i = 0; i < originalArray.Length; i++)
-            {
                 originalArray[i] = with;
-            }
+
         }
 
        
@@ -203,14 +185,17 @@ namespace GCDConsoleLib.Common.Extensons
         public static void Fill<T>(this T[,] originalArray, T with)
         {
             for (int idR1 = 0; idR1 < originalArray.GetLength(1); idR1++)
-            {
                 for (int idR0 = 0; idR0 < originalArray.GetLength(0); idR0++)
-                {
                     originalArray[idR0, idR1] = with;
-                }
-            }
+
         }
 
+        /// <summary>
+        /// Just a handy helper function to Debug print a grid for us.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="grid"></param>
+        /// <param name="nodataval"></param>
         public static void DebugPrintGrid<T>(this T[,] grid, T nodataval)
         {
             Debug.WriteLine("[");

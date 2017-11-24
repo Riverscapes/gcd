@@ -133,6 +133,14 @@ namespace GCDConsoleLib
             }
         }
 
+        /// <summary>
+        /// Get a set of bins that closely approximates the number asked for while tryng to put
+        /// the bin divisions in sensible places
+        /// </summary>
+        /// <param name="origBins"></param>
+        /// <param name="max"></param>
+        /// <param name="min"></param>
+        /// <returns></returns>
         public static Tuple<int, decimal> GetCleanBins(int origBins, decimal max, decimal min)
         {
             decimal oneSideDataWidth = Math.Max(Math.Abs(max), Math.Abs(min));

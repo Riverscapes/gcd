@@ -3,6 +3,11 @@ using OSGeo.OGR;
 
 namespace GCDConsoleLib
 {
+    /// <summary>
+    /// This is a simple abstraction on top of GDAL's FieldDefn
+    /// so that projects that use this class don't need to load 
+    /// GDAL explicitly
+    /// </summary>
     public class VectorField
     {
         public string Name { get { return _fieldDef.GetName(); } }

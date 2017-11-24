@@ -6,7 +6,8 @@ namespace GCDConsoleLib.Utility
     public struct FileHelpers
     {
         /// <summary>
-        /// 
+        /// Check if the file is locked. Return false if it is. 
+        /// Does not throw an exception
         /// </summary>
         /// <param name="file"></param>
         /// <param name="Access"></param>
@@ -36,6 +37,7 @@ namespace GCDConsoleLib.Utility
             //file is not locked
             return false;
         }
+
         /// <summary>
         /// Just a simple wrapper to use the GDAL file access enum
         /// </summary>
@@ -46,9 +48,8 @@ namespace GCDConsoleLib.Utility
         {
             FileAccess myAccess = FileAccess.Read;
             if (GdalAccess == Access.GA_Update)
-            {
                 myAccess = FileAccess.Write;
-            }
+
             return IsFileLocked(filepath, myAccess);
         }
 
