@@ -102,6 +102,127 @@
     <Compile Include="UserInterface\About\ucAcknowledgements.Designer.cs">
       <DependentUpon>ucAcknowledgements.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserInterface\BudgetSegregation\frmBudgetSegProperties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\BudgetSegregation\frmBudgetSegProperties.Designer.cs">
+      <DependentUpon>frmBudgetSegProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\BudgetSegregation\frmBudgetSegResults.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\BudgetSegregation\frmBudgetSegResults.Designer.cs">
+      <DependentUpon>frmBudgetSegResults.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\ChangeDetection\DoDSummaryDisplayOptions.cs" />
+    <Compile Include="UserInterface\ChangeDetection\frmCoherenceProperties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\ChangeDetection\frmCoherenceProperties.Designer.cs">
+      <DependentUpon>frmCoherenceProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\ChangeDetection\frmDoDProperties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\ChangeDetection\frmDoDProperties.Designer.cs">
+      <DependentUpon>frmDoDProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\ChangeDetection\frmDoDResults.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\ChangeDetection\frmDoDResults.Designer.cs">
+      <DependentUpon>frmDoDResults.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\ChangeDetection\frmDoDSummaryProperties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\ChangeDetection\frmDoDSummaryProperties.Designer.cs">
+      <DependentUpon>frmDoDSummaryProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\ChangeDetection\ucChangeBars.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserInterface\ChangeDetection\ucChangeBars.Designer.cs">
+      <DependentUpon>ucChangeBars.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\ChangeDetection\ucDoDHistogram.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserInterface\ChangeDetection\ucDoDHistogram.Designer.cs">
+      <DependentUpon>ucDoDHistogram.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\ChangeDetection\ucDoDProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserInterface\ChangeDetection\ucDoDProperties.Designer.cs">
+      <DependentUpon>ucDoDProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\ChangeDetection\ucDoDSummary.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserInterface\ChangeDetection\ucDoDSummary.Designer.cs">
+      <DependentUpon>ucDoDSummary.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\FISLibrary\frmAddFIS.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\FISLibrary\frmAddFIS.Designer.cs">
+      <DependentUpon>frmAddFIS.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\FISLibrary\frmEditFIS.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\FISLibrary\frmEditFIS.Designer.cs">
+      <DependentUpon>frmEditFIS.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\FISLibrary\frmFISLibrary.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\FISLibrary\frmFISLibrary.Designer.cs">
+      <DependentUpon>frmFISLibrary.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\frmOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\frmOptions.Designer.cs">
+      <DependentUpon>frmOptions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\Project\ucProjectExplorer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserInterface\Project\ucProjectExplorer.Designer.cs">
+      <DependentUpon>ucProjectExplorer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\SurveyLibrary\frmAssocSurfaceProperties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\SurveyLibrary\frmAssocSurfaceProperties.Designer.cs">
+      <DependentUpon>frmAssocSurfaceProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\SurveyLibrary\frmDEMSurveyProperties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\SurveyLibrary\frmDEMSurveyProperties.Designer.cs">
+      <DependentUpon>frmDEMSurveyProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\SurveyLibrary\frmImportRaster.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\SurveyLibrary\frmImportRaster.Designer.cs">
+      <DependentUpon>frmImportRaster.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\SurveyLibrary\frmPointDensity.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\SurveyLibrary\frmPointDensity.Designer.cs">
+      <DependentUpon>frmPointDensity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\SurveyLibrary\frmSurveyDateTime.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\SurveyLibrary\frmSurveyDateTime.Designer.cs">
+      <DependentUpon>frmSurveyDateTime.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserInterface\UtilityForms\frmInformation.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -115,6 +236,9 @@
       <DependentUpon>frmProjectProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\Project\ProjectTreeNode.cs" />
+    <Compile Include="UserInterface\UtilityForms\ucRasterInput.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="UserInterface\UtilityForms\ucVectorInput.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -223,6 +347,66 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\About\ucAcknowledgements.resx">
       <DependentUpon>ucAcknowledgements.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\BudgetSegregation\frmBudgetSegProperties.resx">
+      <DependentUpon>frmBudgetSegProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\BudgetSegregation\frmBudgetSegResults.resx">
+      <DependentUpon>frmBudgetSegResults.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\ChangeDetection\frmCoherenceProperties.resx">
+      <DependentUpon>frmCoherenceProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\ChangeDetection\frmDoDProperties.resx">
+      <DependentUpon>frmDoDProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\ChangeDetection\frmDoDResults.resx">
+      <DependentUpon>frmDoDResults.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\ChangeDetection\frmDoDSummaryProperties.resx">
+      <DependentUpon>frmDoDSummaryProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\ChangeDetection\ucChangeBars.resx">
+      <DependentUpon>ucChangeBars.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\ChangeDetection\ucDoDHistogram.resx">
+      <DependentUpon>ucDoDHistogram.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\ChangeDetection\ucDoDProperties.resx">
+      <DependentUpon>ucDoDProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\ChangeDetection\ucDoDSummary.resx">
+      <DependentUpon>ucDoDSummary.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\FISLibrary\frmAddFIS.resx">
+      <DependentUpon>frmAddFIS.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\FISLibrary\frmEditFIS.resx">
+      <DependentUpon>frmEditFIS.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\FISLibrary\frmFISLibrary.resx">
+      <DependentUpon>frmFISLibrary.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\frmOptions.resx">
+      <DependentUpon>frmOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\Project\ucProjectExplorer.resx">
+      <DependentUpon>ucProjectExplorer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\SurveyLibrary\frmAssocSurfaceProperties.resx">
+      <DependentUpon>frmAssocSurfaceProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\SurveyLibrary\frmDEMSurveyProperties.resx">
+      <DependentUpon>frmDEMSurveyProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\SurveyLibrary\frmImportRaster.resx">
+      <DependentUpon>frmImportRaster.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\SurveyLibrary\frmPointDensity.resx">
+      <DependentUpon>frmPointDensity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\SurveyLibrary\frmSurveyDateTime.resx">
+      <DependentUpon>frmSurveyDateTime.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\UtilityForms\frmInformation.resx">
       <DependentUpon>frmInformation.cs</DependentUpon>

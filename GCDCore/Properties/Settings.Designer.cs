@@ -241,10 +241,10 @@ namespace GCDCore.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool AutoTransparencyValue {
+        [global::System.Configuration.DefaultSettingValueAttribute("40")]
+        public int AutoTransparencyValue {
             get {
-                return ((bool)(this["AutoTransparencyValue"]));
+                return ((int)(this["AutoTransparencyValue"]));
             }
             set {
                 this["AutoTransparencyValue"] = value;

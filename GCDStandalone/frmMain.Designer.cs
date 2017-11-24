@@ -55,7 +55,7 @@
             this.tsiOpenProject = new System.Windows.Forms.ToolStripButton();
             this.tsiProjectProperties = new System.Windows.Forms.ToolStripButton();
             this.tsiBrowseProjectFolder = new System.Windows.Forms.ToolStripButton();
-            this.ucProjectExplorer1 = new GCDUserInterface.Project.ucProjectExplorer();
+            this.ucProjectExplorer1 = new GCDCore.UserInterface.Project.ucProjectExplorer();
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.menuStrip1.SuspendLayout();
@@ -381,7 +381,7 @@
         private System.Windows.Forms.ToolStripMenuItem projectToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem dataPreparationToolStripMenuItem;
         private System.Windows.Forms.StatusStrip statusStrip1;
-        private GCDUserInterface.Project.ucProjectExplorer ucProjectExplorer1;
+        private GCDCore.UserInterface.Project.ucProjectExplorer ucProjectExplorer1;
         private System.Windows.Forms.ToolStripMenuItem newGCDProjectToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openGCDProjectToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem closeGCDProjectToolStripMenuItem;

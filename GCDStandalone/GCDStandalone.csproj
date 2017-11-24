@@ -99,10 +99,6 @@
       <Project>{a96761f4-635e-478c-8eae-0623ade309c7}</Project>
       <Name>GCDCore</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GCDUserInterface\GCDUserInterface.vbproj">
-      <Project>{0808238e-1257-4d67-9d92-ffd785095062}</Project>
-      <Name>GCDUserInterface</Name>
-    </ProjectReference>
     <ProjectReference Include="..\naru\naru.csproj">
       <Project>{1f496953-a809-4086-990b-884a5077bdc4}</Project>
       <Name>naru</Name>

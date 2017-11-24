@@ -32,7 +32,7 @@ namespace GCDCore.Visualization
             Init(ref m_chtControl);
         }
 
-        public ElevationChangeBarViewer(ref Chart chtControl)
+        public ElevationChangeBarViewer(Chart chtControl)
         {
             Init(ref chtControl);
         }

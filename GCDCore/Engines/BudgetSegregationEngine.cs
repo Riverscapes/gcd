@@ -14,7 +14,7 @@ namespace GCDCore.Engines
         {
         }
 
-        public BudgetSegregation Calculate(DoDBase dod, ref Vector polygonMask, string fieldName)
+        public BudgetSegregation Calculate(DoDBase dod, Vector polygonMask, string fieldName)
         {
             // Build the budget segregation result set object that will be returned. This determines paths
             BudgetSegregation bsResult = new BudgetSegregation(Name, AnalysisFolder, fieldName, dod);

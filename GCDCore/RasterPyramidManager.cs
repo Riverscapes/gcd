@@ -116,7 +116,7 @@ namespace GCDCore
             }
         }
 
-        public object GetPyramidSettingString()
+        public string GetPyramidSettingString()
         {
             string sResult = string.Empty;
             foreach (PyramidRasterTypes eRasterType in PyramidTypes.Keys)

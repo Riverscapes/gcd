@@ -228,7 +228,7 @@ namespace GCDStandalone
         {
             try
             {
-                GCDUserInterface.Options.frmOptions frm = new GCDUserInterface.Options.frmOptions();
+                GCDCore.UserInterface.Options.frmOptions frm = new GCDCore.UserInterface.Options.frmOptions();
                 frm.ShowDialog();
             }
             catch (Exception ex)
@@ -241,7 +241,7 @@ namespace GCDStandalone
         {
             try
             {
-                GCDUserInterface.SurveyLibrary.frmImportRaster frm = new GCDUserInterface.SurveyLibrary.frmImportRaster();
+                GCDCore.UserInterface.SurveyLibrary.frmImportRaster frm = new GCDCore.UserInterface.SurveyLibrary.frmImportRaster();
                 frm.ShowDialog();
             }
             catch (Exception ex)
@@ -254,7 +254,7 @@ namespace GCDStandalone
         {
             try
             {
-                GCDUserInterface.FISLibrary.frmFISLibrary frm = new GCDUserInterface.FISLibrary.frmFISLibrary();
+                GCDCore.UserInterface.FISLibrary.frmFISLibrary frm = new GCDCore.UserInterface.FISLibrary.frmFISLibrary();
                 frm.ShowDialog();
             }
             catch (Exception ex)
