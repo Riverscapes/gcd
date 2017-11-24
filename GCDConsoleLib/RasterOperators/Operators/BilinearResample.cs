@@ -7,8 +7,8 @@ namespace GCDConsoleLib.Internal.Operators
 {
     class BilinearResample<T> : BaseOperator<T>
     {
-        double fy;
-        double fx;
+        decimal fy;
+        decimal fx;
 
         /// <summary>
         /// Pass-through constructor for Extended Copy
@@ -16,8 +16,8 @@ namespace GCDConsoleLib.Internal.Operators
         public BilinearResample(Raster rInput, ExtentRectangle newRect, Raster rOutputRaster) :
             base(new List<Raster> { rInput }, rOutputRaster)
         {
-            fy = (double)(rInput.Extent.CellHeight / newRect.CellHeight);
-            fx = (double)(rInput.Extent.CellWidth / newRect.CellWidth);
+            fy = rInput.Extent.CellHeight / newRect.CellHeight;
+            fx = rInput.Extent.CellWidth / newRect.CellWidth;
 
             int newRows = Convert.ToInt32(Math.Ceiling(rInput.Extent.rows * fy));
             int newCols = Convert.ToInt32(Math.Ceiling(rInput.Extent.cols * fx));
@@ -37,9 +37,9 @@ namespace GCDConsoleLib.Internal.Operators
         /// </summary>
         /// <param name="old"></param>
         /// <returns></returns>
-        public static int translateCoord(int num, double factor, int size)
+        public static int translateCoord(int num, decimal factor, int size)
         {
-            double f = num / factor;
+            decimal f = num / factor;
             int i1 = (int)(Math.Floor(f));
 
             // Special case where point is on upper bounds
@@ -104,11 +104,11 @@ namespace GCDConsoleLib.Internal.Operators
                         {
                             // Finally, here's the resample:
                             outBuffer[ncol] = (
-                                Dynamics.Multiply(vals[0], (ix2 - fx)) * (iy2 - fy)
-                                + Dynamics.Multiply(vals[1], (fx - ix1)) * (iy2 - fy)
-                                + Dynamics.Multiply(vals[2], (ix2 - fx)) * (fy - iy1)
-                                + Dynamics.Multiply(vals[3], (fx - ix1)) * (fy - iy1)) 
-                                / ((ix2 - ix1) * (iy2 - iy1));
+                                Dynamics.Multiply(vals[0], (T)Convert.ChangeType((ix2 - fx) * (iy2 - fy), typeof(T)))
+                                + Dynamics.Multiply(vals[1], (T)Convert.ChangeType((fx - ix1) * (iy2 - fy), typeof(T)))
+                                + Dynamics.Multiply(vals[2], (T)Convert.ChangeType((ix2 - fx) * (fy - iy1), typeof(T)))
+                                + Dynamics.Multiply(vals[3], (T)Convert.ChangeType((fx - ix1) * (fy - iy1), typeof(T)))
+                                / ((ix2 - ix1) * (iy2 - iy1)));
                         }
                     }
                 }
