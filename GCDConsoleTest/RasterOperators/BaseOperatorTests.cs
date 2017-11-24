@@ -109,16 +109,16 @@ namespace GCDConsoleLib.Internal.Tests
                 TestOp<float> theTest = new TestOp<float>(new List<Raster> { rTemplateRaster }, rOut);
 
                 // before we set the new extent
-                Assert.AreEqual(theTest.InExtent.ToString(), "-9979 -10029 -9969 -10019");
-                Assert.AreEqual(theTest.OpExtent.ToString(), "-9979 -10029 -9969 -10019");
-                Assert.AreEqual(theTest.ChunkExtent.ToString(), "-9979 -10020 -9969 -10019");
+                Assert.AreEqual(theTest.InExtent.ToString(), "-9979 -10029.0 -9969.0 -10019");
+                Assert.AreEqual(theTest.OpExtent.ToString(), "-9979 -10029.0 -9969.0 -10019");
+                Assert.AreEqual(theTest.ChunkExtent.ToString(), "-9979 -10020.0 -9969.0 -10019");
                 Assert.IsFalse(theTest.OpDone);
 
                 // Now get the first chunk
                 theTest.nextChunk();
-                Assert.AreEqual(theTest.InExtent.ToString(), "-9979 -10029 -9969 -10019");
-                Assert.AreEqual(theTest.OpExtent.ToString(), "-9979 -10029 -9969 -10019");
-                Assert.AreEqual(theTest.ChunkExtent.ToString(), "-9979 -10021 -9969 -10020");
+                Assert.AreEqual(theTest.InExtent.ToString(), "-9979 -10029.0 -9969.0 -10019");
+                Assert.AreEqual(theTest.OpExtent.ToString(), "-9979 -10029.0 -9969.0 -10019");
+                Assert.AreEqual(theTest.ChunkExtent.ToString(), "-9979 -10021.0 -9969.0 -10020");
                 Assert.IsFalse(theTest.OpDone);
 
                 // Get to the end somehow. This raster is only 100 rows tall so 100 nexts should be 
@@ -129,22 +129,22 @@ namespace GCDConsoleLib.Internal.Tests
                     counter++;
                     theTest.nextChunk();
                 }
-                Assert.AreEqual(theTest.ChunkExtent.ToString(), "-9979 -10029 -9969 -10029");
+                Assert.AreEqual(theTest.ChunkExtent.ToString(), "-9979 -10029.0 -9969.0 -10029");
                 Assert.IsTrue(theTest.OpDone);
 
                 // Now let's try with a different extent
                 int buffer = 100;
                 TestOp<float> theTest2 = new TestOp<float>(new List<Raster> { rTemplateRaster }, rOut, rTemplateRaster.Extent.Buffer(buffer));
-                Assert.AreEqual(theTest2.InExtent.ToString(), "-9979 -10029 -9969 -10019");
-                Assert.AreEqual(theTest2.OpExtent.ToString(), "-9989 -10039 -9959 -10009");
-                Assert.AreEqual(theTest2.ChunkExtent.ToString(), "-9989 -10010 -9959 -10009");
+                Assert.AreEqual(theTest2.InExtent.ToString(), "-9979 -10029.0 -9969.0 -10019");
+                Assert.AreEqual(theTest2.OpExtent.ToString(), "-9989 -10039.0 -9959.0 -10009");
+                Assert.AreEqual(theTest2.ChunkExtent.ToString(), "-9989 -10010.0 -9959.0 -10009");
                 Assert.IsFalse(theTest2.OpDone);
 
                 // Now get the first chunk
                 theTest2.nextChunk();
-                Assert.AreEqual(theTest2.InExtent.ToString(), "-9979 -10029 -9969 -10019");
-                Assert.AreEqual(theTest2.OpExtent.ToString(), "-9989 -10039 -9959 -10009");
-                Assert.AreEqual(theTest2.ChunkExtent.ToString(), "-9989 -10011 -9959 -10010");
+                Assert.AreEqual(theTest2.InExtent.ToString(), "-9979 -10029.0 -9969.0 -10019");
+                Assert.AreEqual(theTest2.OpExtent.ToString(), "-9989 -10039.0 -9959.0 -10009");
+                Assert.AreEqual(theTest2.ChunkExtent.ToString(), "-9989 -10011.0 -9959.0 -10010");
                 Assert.IsFalse(theTest2.OpDone);
 
                 // Get to the end somehow. This raster is only 200 rows tall so 100 nexts should be 
@@ -155,7 +155,7 @@ namespace GCDConsoleLib.Internal.Tests
                     counter++;
                     theTest2.nextChunk();
                 }
-                Assert.AreEqual(theTest2.ChunkExtent.ToString(), "-9989 -10039 -9959 -10039");
+                Assert.AreEqual(theTest2.ChunkExtent.ToString(), "-9989 -10039.0 -9959.0 -10039");
                 Assert.IsTrue(theTest2.OpDone);
 
             }
