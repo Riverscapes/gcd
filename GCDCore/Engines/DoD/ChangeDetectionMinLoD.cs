@@ -7,9 +7,9 @@ namespace GCDCore.Engines
 {
     public class ChangeDetectionEngineMinLoD : ChangeDetectionEngineBase
     {
-        public float Threshold { get; internal set; }
+        public decimal Threshold { get; internal set; }
 
-        public ChangeDetectionEngineMinLoD(string name, DirectoryInfo folder, DEMSurvey NewDEM, DEMSurvey OldDEM, float fThreshold)
+        public ChangeDetectionEngineMinLoD(string name, DirectoryInfo folder, DEMSurvey NewDEM, DEMSurvey OldDEM, decimal fThreshold)
             : base(name, folder, NewDEM, OldDEM)
         {
             Threshold = fThreshold;

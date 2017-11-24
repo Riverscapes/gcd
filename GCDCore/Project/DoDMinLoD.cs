@@ -9,7 +9,7 @@ namespace GCDCore.Project
 {
     public class DoDMinLoD : DoDBase
     {
-        public readonly double Threshold;
+        public readonly decimal Threshold;
 
         /// <summary>
         /// Constructor for change detection engine
@@ -24,7 +24,7 @@ namespace GCDCore.Project
         /// <param name="thrHist"></param>
         /// <param name="threshold"></param>
         /// <param name="stats"></param>
-        public DoDMinLoD(string name, DirectoryInfo folder, DEMSurvey newDEM, DEMSurvey oldDEM, Raster rawDoD, Raster thrDoD, HistogramPair histograms, double threshold, DoDStats stats)
+        public DoDMinLoD(string name, DirectoryInfo folder, DEMSurvey newDEM, DEMSurvey oldDEM, Raster rawDoD, Raster thrDoD, HistogramPair histograms, decimal threshold, DoDStats stats)
             : base(name, folder, newDEM, oldDEM, rawDoD, thrDoD, histograms, stats)
         {
             Threshold = threshold;
@@ -35,7 +35,7 @@ namespace GCDCore.Project
         /// </summary>
         /// <param name="dod"></param>
         /// <param name="threshold"></param>
-        public DoDMinLoD(DoDBase dod, double threshold)
+        public DoDMinLoD(DoDBase dod, decimal threshold)
             : base(dod)
         {
             Threshold = threshold;
@@ -50,7 +50,7 @@ namespace GCDCore.Project
         new public static DoDMinLoD Deserialize(XmlNode nodDoD, Dictionary<string, DEMSurvey> dems)
         {
             DoDBase partialDoD = DoDBase.Deserialize(nodDoD, dems);
-            double threshold = double.Parse(nodDoD.SelectSingleNode("Threshold").InnerText);
+            decimal threshold = decimal.Parse(nodDoD.SelectSingleNode("Threshold").InnerText);
             return new DoDMinLoD(partialDoD, threshold);
         }
     }

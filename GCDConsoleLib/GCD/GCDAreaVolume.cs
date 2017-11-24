@@ -8,8 +8,8 @@ namespace GCDConsoleLib.GCD
     {
         public int Count { get; private set; }
         // _sum has an implied unit so we really don't want to expose it.
-        // it is a float because the rasters get read as a float
-        private float _sum { get; set; }
+        // it is a double because the rasters get read as a double
+        private double _sum { get; set; }
 
         /// <summary>
         /// Initialize the Count and Sum to 0
@@ -29,7 +29,7 @@ namespace GCDConsoleLib.GCD
         /// <param name="sum"></param>
         /// <param name="cellArea"></param>
         /// <param name="vUnit"></param>
-        public GCDAreaVolume(int count, float sum)
+        public GCDAreaVolume(int count, double sum)
         {
             Count = count;
             _sum = sum;
@@ -45,7 +45,7 @@ namespace GCDConsoleLib.GCD
         /// Add to the Sum and increment the counter
         /// </summary>
         /// <param name="val"></param>
-        public void AddToSumAndIncrementCounter(float val) { _sum += val; Count++; }
+        public void AddToSumAndIncrementCounter(double val) { _sum += val; Count++; }
 
         /// <summary>
         /// Increment the Counter
@@ -57,7 +57,7 @@ namespace GCDConsoleLib.GCD
         /// Add to the sum 
         /// </summary>
         /// <param name="val"></param>
-        public void AddToSum(float val) { _sum += val; }
+        public void AddToSum(double val) { _sum += val; }
 
         /// <summary>
         /// Get the actual area value
@@ -84,7 +84,7 @@ namespace GCDConsoleLib.GCD
         public Volume GetVolume(Area cellArea, LengthUnit vUnit) { return Volume.FromCubicMeters(Length.From(_sum, vUnit).Meters * cellArea.SquareMeters); }
         public void SetVolume(Volume vol, Area cellArea)
         {
-            _sum = (float)(vol.CubicMeters / cellArea.SquareMeters);
+            _sum = vol.CubicMeters / cellArea.SquareMeters;
         }
     }
 }

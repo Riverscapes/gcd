@@ -9,7 +9,7 @@ namespace GCDCore.Project
 {
     public class DoDProbabilistic : DoDPropagated
     {
-        public readonly double ConfidenceLevel;
+        public readonly decimal ConfidenceLevel;
         public readonly CoherenceProperties SpatialCoherence;
 
         public readonly ProjectRaster PriorProbability;
@@ -31,7 +31,7 @@ namespace GCDCore.Project
             Raster rawDoD, Raster thrDoD,
             ErrorSurface newError, ErrorSurface oldError, FileInfo propErr, FileInfo priorProb,
             FileInfo postProb, FileInfo cond, FileInfo spatCoEr, FileInfo spatCoDep, CoherenceProperties spatCoProps,
-            double confidenceLevel, DoDStats stats)
+            decimal confidenceLevel, DoDStats stats)
             : base(name, folder, newDEM, oldDEM, rawDoD, thrDoD, histograms, newError, oldError, propErr, stats)
         {
             ConfidenceLevel = confidenceLevel;
@@ -43,14 +43,14 @@ namespace GCDCore.Project
             SpatialCoherence = spatCoProps;
         }
 
-        public DoDProbabilistic(DoDPropagated dod, FileInfo priorProb, double confidenceLevel)
+        public DoDProbabilistic(DoDPropagated dod, FileInfo priorProb, decimal confidenceLevel)
             : base(dod, dod.PropagatedError.RasterPath, dod.NewError, dod.OldError)
         {
             PriorProbability = new ProjectRaster(priorProb);
             ConfidenceLevel = confidenceLevel;
         }
 
-        public DoDProbabilistic(DoDPropagated dod, FileInfo priorProb, double confidenceLevel,
+        public DoDProbabilistic(DoDPropagated dod, FileInfo priorProb, decimal confidenceLevel,
             FileInfo postProb, FileInfo cond, FileInfo spatCoEr, FileInfo spatCoDep, CoherenceProperties spatCoProps)
        : base(dod, dod.PropagatedError.RasterPath, dod.NewError, dod.OldError)
         {
@@ -99,7 +99,7 @@ namespace GCDCore.Project
             DoDPropagated partialDoD = DoDPropagated.Deserialize(nodDoD, dems);
 
             FileInfo priorProb = ProjectManager.Project.GetAbsolutePath(nodDoD.SelectSingleNode("PriorProbability").InnerText);
-            double confidenceLevel = double.Parse(nodDoD.SelectSingleNode("ConfidenceLevel").InnerText);
+            decimal confidenceLevel = decimal.Parse(nodDoD.SelectSingleNode("ConfidenceLevel").InnerText);
 
             DoDProbabilistic dod;
             CoherenceProperties props = null;

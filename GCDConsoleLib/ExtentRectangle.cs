@@ -15,21 +15,21 @@ namespace GCDConsoleLib
 
         public ExtentRectangle()
         {
-            _Init(0, 0, 0.1, 0.1, 0, 0);
+            _Init(0, 0, 0.1m, 0.1m, 0, 0);
         }
 
         /// <summary>
         /// Explicit Constructor
         /// </summary>
-        /// <param name="fTop"></param>
-        /// <param name="fLeft"></param>
+        /// <param name="mTop"></param>
+        /// <param name="mLeft"></param>
         /// <param name="nRows"></param>
         /// <param name="nCols"></param>
-        /// <param name="dCellHeight"></param>
+        /// <param name="mCellHeight"></param>
         /// <param name="dCellWidth"></param>
-        public ExtentRectangle(double fTop, double fLeft, double dCellHeight, double dCellWidth, int nRows, int nCols)
+        public ExtentRectangle(decimal mTop, decimal mLeft, decimal mCellHeight, decimal mCellWidth, int nRows, int nCols)
         {
-            _Init(fTop, fLeft, dCellHeight, dCellWidth, nRows, nCols);
+            _Init(mTop, mLeft, mCellHeight, mCellWidth, nRows, nCols);
         }
 
 
@@ -46,13 +46,13 @@ namespace GCDConsoleLib
         /// Load this rectangle from an already-open dataset
         /// </summary>
         /// <param name="dSet"></param>
-        public ExtentRectangle(Dataset dSet)
+        internal ExtentRectangle(Dataset dSet)
         {
             Band rBand = dSet.GetRasterBand(1);
             double[] tr = new double[6];
             dSet.GetGeoTransform(tr);
 
-            _Init(tr[3], tr[0], tr[5], tr[1], rBand.YSize, rBand.XSize);
+            _Init((decimal)tr[3], (decimal)tr[0], (decimal)tr[5], (decimal)tr[1], rBand.YSize, rBand.XSize);
         }
 
         /// <summary>
@@ -68,24 +68,24 @@ namespace GCDConsoleLib
         /// <summary>
         /// Init function to help us deal with loading all the values in a consistent way.
         /// </summary>
-        /// <param name="fTop"></param>
-        /// <param name="fLeft"></param>
-        /// <param name="dCellHeight"></param>
-        /// <param name="dCellWidth"></param>
+        /// <param name="mTop"></param>
+        /// <param name="mLeft"></param>
+        /// <param name="mCellHeight"></param>
+        /// <param name="mCellWidth"></param>
         /// <param name="nRows"></param>
         /// <param name="nCols"></param>
-        private void _Init(double fTop, double fLeft, double dCellHeight, double dCellWidth, int nRows, int nCols)
+        private void _Init(decimal mTop, decimal mLeft, decimal mCellHeight, decimal mCellWidth, int nRows, int nCols)
         {
-            if (dCellHeight == 0) { throw new ArgumentOutOfRangeException("CellHeight cannot be 0"); }
-            else if (dCellWidth == 0) { throw new ArgumentOutOfRangeException("dCellWidth cannot be 0"); }
+            if (mCellHeight == 0) { throw new ArgumentOutOfRangeException("CellHeight cannot be 0"); }
+            else if (mCellWidth == 0) { throw new ArgumentOutOfRangeException("dCellWidth cannot be 0"); }
             //else if (nRows == 0) { throw new ArgumentOutOfRangeException("Raster Rows cannot be 0"); }
             //else if (nCols == 0) { throw new ArgumentOutOfRangeException("Raster Cols cannot be 0"); }
 
-            _t = new double[6] { fLeft, dCellWidth, 0, fTop, 0, dCellHeight };
+            _t = new double[6] { (double)mLeft, (double)mCellWidth, 0, (double)mTop, 0, (double)mCellHeight };
             cols = nCols;
             rows = nRows;
 
-            if ((Top * CellHeight) > (Bottom * CellHeight))
+            if ((Top * this.CellHeight) > (Bottom * this.CellHeight))
             {
                 throw new ArgumentOutOfRangeException("Top", Top, "The top coordinate cannot be less than or equal to the bottom");
             }
@@ -101,11 +101,11 @@ namespace GCDConsoleLib
         /// </summary>
         /// <param name="fDistance"></param>
         /// <returns></returns>
-        public ExtentRectangle Buffer(double fDistance)
+        public ExtentRectangle Buffer(decimal fDistance)
         {
-            double vSign = Math.Abs(CellHeight) / CellHeight;
-            double hSign = Math.Abs(CellWidth) / CellWidth;
-            double newTop, newLeft;
+            decimal vSign = Math.Abs(CellHeight) / CellHeight;
+            decimal hSign = Math.Abs(CellWidth) / CellWidth;
+            decimal newTop, newLeft;
             int newRows, newCols;
 
             if (fDistance <= 0)
@@ -157,7 +157,7 @@ namespace GCDConsoleLib
         /// <returns></returns>
         public ExtentRectangle Union(ExtentRectangle rect)
         {
-            double newright, newleft, newtop, newbottom;
+            decimal newright, newleft, newtop, newbottom;
             if (CellHeight > 0)
             {
                 newtop = Math.Max(Top, rect.Top);
@@ -192,7 +192,7 @@ namespace GCDConsoleLib
         /// <returns></returns>
         public ExtentRectangle Intersect(ExtentRectangle rect)
         {
-            double newright, newleft, newtop, newbottom;
+            decimal newright, newleft, newtop, newbottom;
             if (CellHeight > 0)
             {
                 newtop = Math.Max(Top, rect.Top);
@@ -289,12 +289,12 @@ namespace GCDConsoleLib
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Tuple<double,double> Id2XY(int id)
+        public Tuple<decimal, decimal> Id2XY(int id)
         {
             Tuple<int, int> rowcol = Id2RowCol(id);
-            double rowY = Top + (CellHeight * rowcol.Item1) + CellHeight/2;
-            double rowX = Left + (CellWidth * rowcol.Item2) + CellWidth/2;
-            return new Tuple<double, double>(rowX, rowY);
+            decimal rowY = Top + (CellHeight * rowcol.Item1) + CellHeight / 2;
+            decimal rowX = Left + (CellWidth * rowcol.Item2) + CellWidth / 2;
+            return new Tuple<decimal, decimal>(rowX, rowY);
         }
 
         /// <summary>
@@ -335,10 +335,9 @@ namespace GCDConsoleLib
         /// </summary>
         /// <param name="num"></param>
         /// <returns></returns>
-        private static double DivideModuloOne(double numA, double numB)
+        private static decimal DivideModuloOne(decimal numA, decimal numB)
         {
-            double div = Math.Round(numA / numB, 10);
-            return div - Math.Floor(div);
+            return (numA / numB) - Math.Floor(numA / numB);
         }
 
         /// <summary>
@@ -353,11 +352,15 @@ namespace GCDConsoleLib
                     DivideModuloOne(Right, CellWidth) == 0);
         }
 
+        /// <summary>
+        /// Return a new extent that is divisible
+        /// </summary>
+        /// <returns></returns>
         public ExtentRectangle GetDivisibleExtent()
         {
-            double newTop, newBottom, newLeft, newRight;
+            decimal newTop, newBottom, newLeft, newRight;
 
-            newTop = Math.Floor(Top / CellHeight) * CellHeight;
+            newTop = Math.Floor(Top / CellHeight) *CellHeight;
             newBottom = Math.Ceiling(Bottom / CellHeight) * CellHeight;
 
             newLeft = Math.Floor(Left / CellWidth) * CellWidth;
@@ -370,13 +373,18 @@ namespace GCDConsoleLib
         }
 
 
+        /// <summary>
+        /// Determine if two extents overlap
+        /// </summary>
+        /// <param name="otherExtent"></param>
+        /// <returns></returns>
         public bool HasOverlap(ExtentRectangle otherExtent)
         {
             // TODO: TEST THIS THOROUGHLY, ESPECIALLY -/+ widht heights
-            double ulx = Math.Max(this.Left, otherExtent.Left);
-            double uly = Math.Max(this.Bottom, otherExtent.Bottom);
-            double lrx = Math.Min(this.Right, otherExtent.Right);
-            double lry = Math.Min(this.Top, otherExtent.Top);
+            decimal ulx = Math.Max(Left, otherExtent.Left);
+            decimal uly = Math.Max(Bottom, otherExtent.Bottom);
+            decimal lrx = Math.Min(Right, otherExtent.Right);
+            decimal lry = Math.Min(Top, otherExtent.Top);
 
             return ulx <= lrx && uly <= lry;
         }
@@ -402,37 +410,37 @@ namespace GCDConsoleLib
             get { return _t; }
             set { _t = value; }
         }
-        public double Top
+        public decimal Top
         {
-            get { return (double)_t[3]; }
+            get { return (decimal)_t[3]; }
             set { _t[3] = (double)value; }
         }
-        public double Left
+        public decimal Left
         {
-            get { return (double)_t[0]; }
+            get { return (decimal)_t[0]; }
             set { _t[0] = (double)value; }
         }
-        public double Right
+        public decimal Right
         {
             get { return Left + (CellWidth * cols); }
         }
-        public double Bottom
+        public decimal Bottom
         {
             get { return Top + (CellHeight * rows); }
         }
-        public double CellWidth
+        public decimal CellWidth
         {
-            get { return (double)_t[1]; }
+            get { return (decimal)_t[1]; }
             set { _t[1] = (double)value; }
         }
-        public double CellHeight
+        public decimal CellHeight
         {
-            get { return (double)_t[5]; }
+            get { return (decimal)_t[5]; }
             set { _t[5] = (double)value; }
         }
 
-        public double Height { get { return (rows * Math.Abs(CellHeight)); } }
-        public double Width { get { return (cols * Math.Abs(CellWidth)); } }
+        public decimal Height { get { return (rows * Math.Abs(CellHeight)); } }
+        public decimal Width { get { return (cols * Math.Abs(CellWidth)); } }
 
         /// <summary>
         /// Get the bin Area in Area units
@@ -440,8 +448,8 @@ namespace GCDConsoleLib
         public Area CellArea(UnitGroup units)
         {
             // We have to be sure to read the Cell height and width as the horizontal units
-            double Lengthm = Length.From(Math.Abs(CellWidth), units.HorizUnit).Meters;
-            double Heightm = Length.From(Math.Abs(CellHeight), units.HorizUnit).Meters;
+            double Lengthm = Length.From(Math.Abs((double)CellWidth), units.HorizUnit).Meters;
+            double Heightm = Length.From(Math.Abs((double)CellHeight), units.HorizUnit).Meters;
             // Return a unitless Area from SquareMeters
             return Area.From(Lengthm * Heightm, UnitsNet.Units.AreaUnit.SquareMeter);
         }

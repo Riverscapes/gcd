@@ -19,10 +19,17 @@ namespace GCDConsoleLib.Internal.Operators
             fy = (double)(rInput.Extent.CellHeight / newRect.CellHeight);
             fx = (double)(rInput.Extent.CellWidth / newRect.CellWidth);
 
-            int newRows = Convert.ToInt32(Math.Ceiling((double)(rInput.Extent.rows * fy)));
-            int newCols = Convert.ToInt32(Math.Ceiling((double)(rInput.Extent.cols * fx)));
+            int newRows = Convert.ToInt32(Math.Ceiling(rInput.Extent.rows * fy));
+            int newCols = Convert.ToInt32(Math.Ceiling(rInput.Extent.cols * fx));
 
-            SetOpExtent(newRect);
+            ExtentRectangle newOpRect = rInput.Extent;
+            newOpRect.Left = newRect.Left;
+            newOpRect.Top = newRect.Top;
+
+            newOpRect.cols = Convert.ToInt32((newRect.Top - newRect.Bottom) / rInput.Extent.Width);
+            newOpRect.rows = Convert.ToInt32((newRect.Left - newRect.Right) / rInput.Extent.CellHeight);
+
+            SetOpExtent(newOpRect);
         }
 
         /// <summary>
@@ -45,7 +52,7 @@ namespace GCDConsoleLib.Internal.Operators
         ///  We need to override the Run method because the input and output scales are different
         ///  
         /// </summary>
-        public void Run(int vOffset = 0)
+        public new void Run()
         {
             int oldCols = _rasters[0].Extent.cols;
             int oldRows = _rasters[0].Extent.rows;
@@ -108,6 +115,12 @@ namespace GCDConsoleLib.Internal.Operators
                 _outputRaster.Write(0, nrow, ChunkExtent.cols, 1, outBuffer);
             }
             Cleanup();
+        }
+
+        public new Raster RunWithOutput()
+        {
+            Run();
+            return _outputRaster;
         }
 
         /// <summary>

@@ -53,16 +53,16 @@ namespace GCDConsoleLib.Tests
                 Raster rTempl = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("const900.tif")));
                 Raster rTemp2 = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("const950.tif")));
 
-                Raster rAdd1 = RasterOperators.Add(rTempl, 2.1, new FileInfo(Path.Combine(tmp.Name, "RasterAddOperand.tif")));
+                Raster rAdd1 = RasterOperators.Add(rTempl, 2.1m, new FileInfo(Path.Combine(tmp.Name, "RasterAddOperand.tif")));
                 Raster rAdd2 = RasterOperators.Add(rTempl, rTemp2, new FileInfo(Path.Combine(tmp.Name, "RasterAddRaster.tif")));
 
-                Raster rSub1 = RasterOperators.Subtract(rTempl, 2.1, new FileInfo(Path.Combine(tmp.Name, "RasterSubtractOperand.tif")));
+                Raster rSub1 = RasterOperators.Subtract(rTempl, 2.1m, new FileInfo(Path.Combine(tmp.Name, "RasterSubtractOperand.tif")));
                 Raster rSub2 = RasterOperators.Subtract(rTempl, rTemp2, new FileInfo(Path.Combine(tmp.Name, "RasterSubtractRaster.tif")));
 
-                Raster rMult1 = RasterOperators.Subtract(rTempl, 2.1, new FileInfo(Path.Combine(tmp.Name, "RasterMultiplyOperand.tif")));
+                Raster rMult1 = RasterOperators.Subtract(rTempl, 2.1m, new FileInfo(Path.Combine(tmp.Name, "RasterMultiplyOperand.tif")));
                 Raster rMult2 = RasterOperators.Multiply(rTempl, rTemp2, new FileInfo(Path.Combine(tmp.Name, "RasterMultiplyRaster.tif")));
 
-                Raster rDiv1 = RasterOperators.Subtract(rTempl, 2.1, new FileInfo(Path.Combine(tmp.Name, "RasterDivideOperand.tif")));
+                Raster rDiv1 = RasterOperators.Subtract(rTempl, 2.1m, new FileInfo(Path.Combine(tmp.Name, "RasterDivideOperand.tif")));
                 Raster rDiv2 = RasterOperators.Divide(rTempl, rTemp2, new FileInfo(Path.Combine(tmp.Name, "RasterDivideRaster.tif")));
             }
         }
@@ -75,11 +75,11 @@ namespace GCDConsoleLib.Tests
             Raster rThresh = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2006Feb_DEM\2006Feb_DEM.img")));
 
             UnitGroup ug = new UnitGroup(VolumeUnit.CubicMeter, AreaUnit.SquareMeter, LengthUnit.Meter, LengthUnit.Meter);
-            DoDStats test = RasterOperators.GetStatsMinLoD(rRaw, rThresh, 73.0, Area.FromSquareMeters(1), ug);
+            DoDStats test = RasterOperators.GetStatsMinLoD(rRaw, rThresh, 73.0m, Area.FromSquareMeters(1), ug);
 
             // And now the budget seg case
             Vector rPolyMask = new Vector(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\MethodMask_ForTesting.shp")));
-            Dictionary<string, DoDStats> testBudgetSeg = RasterOperators.GetStatsMinLoD(rRaw, rThresh, 73.0, rPolyMask, "Method", Area.FromSquareMeters(1), ug);
+            Dictionary<string, DoDStats> testBudgetSeg = RasterOperators.GetStatsMinLoD(rRaw, rThresh, 73.0m, rPolyMask, "Method", Area.FromSquareMeters(1), ug);
         }
 
         [TestMethod()]
@@ -267,7 +267,7 @@ namespace GCDConsoleLib.Tests
         }
 
         [TestMethod()]
-        public void BuildPyramidsTest()
+        public void BuildPyramidsInterfaceTest()
         {
             using (ITempDir tmp = TempDir.Create())
             {
@@ -285,11 +285,11 @@ namespace GCDConsoleLib.Tests
             Raster rThresh = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2006Feb_DEM\2006Feb_DEM.img")));
 
             UnitGroup ug = new UnitGroup(VolumeUnit.CubicMeter, AreaUnit.SquareMeter, LengthUnit.Meter, LengthUnit.Meter);
-            DoDStats test = RasterOperators.GetStatsMinLoD(rRaw, rThresh, 73.0, Area.FromSquareMeters(1), ug);
+            DoDStats test = RasterOperators.GetStatsMinLoD(rRaw, rThresh, 73.0m, Area.FromSquareMeters(1), ug);
 
             // And now the budget seg case
             Vector rPolyMask = new Vector(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\MethodMask_ForTesting.shp")));
-            Dictionary<string, DoDStats> testBudgetSeg = RasterOperators.GetStatsMinLoD(rRaw, rThresh, 73.0, rPolyMask, "Method", Area.FromSquareMeters(1), ug);
+            Dictionary<string, DoDStats> testBudgetSeg = RasterOperators.GetStatsMinLoD(rRaw, rThresh, 73.0m, rPolyMask, "Method", Area.FromSquareMeters(1), ug);
         }
 
     }

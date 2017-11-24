@@ -3,12 +3,12 @@ using System.Collections.Generic;
 
 namespace GCDConsoleLib.Internal.Operators
 {
-    public class Threshold : CellByCellOperator<float>
+    public class Threshold : CellByCellOperator<double>
     {
         private RasterOperators.ThresholdOps _botOp;
-        private float _botNum;
+        private double _botNum;
         private RasterOperators.ThresholdOps _topOp;
-        private float _topNum;
+        private double _topNum;
         private bool bTwoOps;
 
         /// <summary>
@@ -19,11 +19,11 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="fThresh"></param>
         /// <param name="rOutputRaster"></param>
         public Threshold(Raster rInput, RasterOperators.ThresholdOps tOp,
-            float fThresh, Raster rOutputRaster) :
+            decimal fThresh, Raster rOutputRaster) :
             base(new List<Raster> { rInput }, rOutputRaster)
         {
             _botOp = tOp;
-            _botNum = fThresh;
+            _botNum = (double)fThresh;
             bTwoOps = false;
         }
 
@@ -52,8 +52,8 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="fTopThresh"></param>
         /// <param name="rOutputRaster"></param>
         public Threshold(Raster rInput,
-            RasterOperators.ThresholdOps tBottomOp, float fBottomThresh,
-            RasterOperators.ThresholdOps tTopOp, float fTopThresh, Raster rOutputRaster) :
+            RasterOperators.ThresholdOps tBottomOp, decimal fBottomThresh,
+            RasterOperators.ThresholdOps tTopOp, decimal fTopThresh, Raster rOutputRaster) :
             base(new List<Raster> { rInput }, rOutputRaster)
         {
             if (tBottomOp == RasterOperators.ThresholdOps.LessThan ||
@@ -63,9 +63,9 @@ namespace GCDConsoleLib.Internal.Operators
                 throw new ArgumentOutOfRangeException("Invalid Operators chosen for thresholding");
 
             _botOp = tBottomOp;
-            _botNum = fBottomThresh;
+            _botNum = (double)fBottomThresh;
             _topOp = tTopOp;
-            _topNum = fTopThresh;
+            _topNum = (double)fTopThresh;
             bTwoOps = true;
         }
 
@@ -75,13 +75,13 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="data"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        protected override float CellOp(List<float[]> data, int id)
+        protected override double CellOp(List<double[]> data, int id)
         {
             // Get out quick if we can
             if (data[0][id] == _rasternodatavals[0])
                 return _rasternodatavals[0];
 
-            float val = data[0][id];
+            double val = data[0][id];
             // TwoOps means we're doing Greater than something AND less than something else
             if (bTwoOps)
             {
@@ -95,8 +95,8 @@ namespace GCDConsoleLib.Internal.Operators
                 }
                 else
                 {
-                    float botNum = data[1][id];
-                    float topNum = data[2][id];
+                    double botNum = data[1][id];
+                    double topNum = data[2][id];
                     if (_botOp == RasterOperators.ThresholdOps.GreaterThan && val <= _botNum ||
                         _botOp == RasterOperators.ThresholdOps.GreaterThanOrEqual && val < _botNum ||
                         _topOp == RasterOperators.ThresholdOps.LessThan && val >= _topNum ||
@@ -119,7 +119,7 @@ namespace GCDConsoleLib.Internal.Operators
                 // This is a raster operation. Compare the first raster value to a second raster value
                 else
                 {
-                    float rBotNum = data[1][id];
+                    double rBotNum = data[1][id];
                     if (_botOp == RasterOperators.ThresholdOps.GreaterThan && data[0][id] <= rBotNum ||
                         _botOp == RasterOperators.ThresholdOps.GreaterThanOrEqual && data[0][id] < rBotNum ||
                         _botOp == RasterOperators.ThresholdOps.LessThan && data[0][id] >= rBotNum ||

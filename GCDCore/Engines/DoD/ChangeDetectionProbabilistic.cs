@@ -7,7 +7,7 @@ namespace GCDCore.Engines
 {
     public class ChangeDetectionEngineProbabilistic : ChangeDetectionEnginePropProb
     {
-        public readonly double Threshold;
+        public readonly decimal Threshold;
         public readonly CoherenceProperties SpatialCoherence;
         private FileInfo m_PriorProbRaster;
         private FileInfo m_PosteriorRaster;
@@ -17,7 +17,7 @@ namespace GCDCore.Engines
         private FileInfo m_SpatialCoDepositionRaster;
 
         public ChangeDetectionEngineProbabilistic(string name, DirectoryInfo folder, DEMSurvey newDEM, DEMSurvey oldDEM, ErrorSurface newError, ErrorSurface oldError,
-            double fThreshold, CoherenceProperties spatCoherence = null)
+            decimal fThreshold, CoherenceProperties spatCoherence = null)
         : base(name, folder, newDEM, oldDEM, newError, oldError)
         {
             Threshold = fThreshold;

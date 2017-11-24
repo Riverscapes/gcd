@@ -6,11 +6,11 @@ using GCDConsoleLib.GCD;
 namespace GCDConsoleLib.Internal.Operators
 {
 
-    public class GetDodMinLodStats : CellByCellOperator<float>
+    public class GetDodMinLodStats : CellByCellOperator<double>
     {
         public DoDStats Stats;
-        private float fDoDValue;
-        private float _thresh;
+        private double fDoDValue;
+        private double _thresh;
 
         // If we do budget seg we need the following
         private bool isBudgSeg;
@@ -21,11 +21,11 @@ namespace GCDConsoleLib.Internal.Operators
         /// <summary>
         /// Pass-through constructure
         /// </summary>
-        public GetDodMinLodStats(Raster rawDoD, Raster thrDoD, float thresh, DoDStats theStats) :
+        public GetDodMinLodStats(Raster rawDoD, Raster thrDoD, decimal thresh, DoDStats theStats) :
             base(new List<Raster> { rawDoD, thrDoD })
         {
             Stats = theStats;
-            _thresh = thresh;
+            _thresh = (double)thresh;
             isBudgSeg = false;
         }
 
@@ -34,11 +34,11 @@ namespace GCDConsoleLib.Internal.Operators
         /// Budget Seggregation constructor
         /// </summary>
         public GetDodMinLodStats(Raster rawDoD, Raster thrDoD,
-            float thresh, DoDStats theStats, Vector PolygonMask, string FieldName) :
+            decimal thresh, DoDStats theStats, Vector PolygonMask, string FieldName) :
            base(new List<Raster> { rawDoD, thrDoD })
         {
             Stats = theStats;
-            _thresh = thresh;
+            _thresh = (double)thresh;
             SegStats = new Dictionary<string, DoDStats>();
             _polymask = PolygonMask;
             _fieldname = FieldName;
@@ -49,7 +49,7 @@ namespace GCDConsoleLib.Internal.Operators
         /// <summary>
         /// This is the actual implementation of the cell-by-cell logic
         /// </summary>
-        protected override float CellOp(List<float[]> data, int id)
+        protected override double CellOp(List<double[]> data, int id)
         {
             // Speed things up by ignoring nodatas
             if (data[0][id] == _rasternodatavals[0])
@@ -68,10 +68,10 @@ namespace GCDConsoleLib.Internal.Operators
         /// </summary>
         /// <param name="data"></param>
         /// <param name="id"></param>
-        private void BudgetSegCellOp(List<float[]> data, int id)
+        private void BudgetSegCellOp(List<double[]> data, int id)
         {
-            Tuple<double, double> ptcoords = ChunkExtent.Id2XY(id);
-            List<string> shapes = _polymask.ShapesContainPoint(ptcoords.Item1, (double)ptcoords.Item2, _fieldname);
+            Tuple<decimal, decimal> ptcoords = ChunkExtent.Id2XY(id);
+            List<string> shapes = _polymask.ShapesContainPoint((double)ptcoords.Item1, (double)ptcoords.Item2, _fieldname);
             if (shapes.Count > 0)
             {
                 foreach (string fldVal in shapes)
@@ -91,7 +91,7 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="id"></param>
         /// <param name="stats"></param>
         /// <param name="nodata"></param>
-        public void CellChangeCalc(List<float[]> data, int id, DoDStats stats)
+        public void CellChangeCalc(List<double[]> data, int id, DoDStats stats)
         {
             fDoDValue = data[0][id];
 

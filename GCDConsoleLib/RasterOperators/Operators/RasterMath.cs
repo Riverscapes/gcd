@@ -18,12 +18,12 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="rInput"></param>
         /// <param name="dOperand"></param>
         /// <param name="sOutputRaster"></param>
-        public RasterMath(RasterOperators.MathOpType otType, Raster rInput, double dOperand, 
+        public RasterMath(RasterOperators.MathOpType otType, Raster rInput, decimal dOperand, 
             Raster rOutputRaster) : base(new List<Raster> { rInput }, rOutputRaster)
         {
             _type = otType;
             _scalar = true;
-            _origOperand = dOperand;
+            _origOperand = (double)dOperand;
             _operand = (T)Convert.ChangeType(dOperand, typeof(T));
         }
 
