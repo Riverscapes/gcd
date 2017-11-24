@@ -68,10 +68,10 @@ namespace GCDCore.Engines
             return thrDoD;
         }
 
-        protected override DoDStats CalculateChangeStats(Raster rawDoD, Raster thrDoD, UnitsNet.Area cellArea, UnitGroup units)
+        protected override DoDStats CalculateChangeStats(Raster rawDoD, Raster thrDoD, UnitGroup units)
         {
             Raster propErr = PropagatedErrRaster;
-            return RasterOperators.GetStatsProbalistic(rawDoD, thrDoD, propErr, cellArea, units);
+            return RasterOperators.GetStatsProbalistic(rawDoD, thrDoD, propErr, units);
         }
 
         protected override DoDBase GetDoDResult(DoDStats changeStats, Raster rawDoD, Raster thrDoD, HistogramPair histograms, FileInfo summaryXML)

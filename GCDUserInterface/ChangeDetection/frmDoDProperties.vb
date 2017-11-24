@@ -118,7 +118,7 @@ Namespace ChangeDetection
 
                 End If
 
-                m_DoD = cdEngine.Calculate(True, ProjectManager.Project.CellArea, ProjectManager.Project.Units)
+                m_DoD = cdEngine.Calculate(True, ProjectManager.Project.Units)
 
                 ProjectManager.Project.DoDs(txtName.Name) = m_DoD
                 ProjectManager.Project.Save()

@@ -27,9 +27,9 @@ namespace GCDCore.Engines
             return RasterOperators.SetNull(rawDoD, RasterOperators.ThresholdOps.LessThan, Threshold, thrDoDPath);
         }
 
-        protected override DoDStats CalculateChangeStats(Raster rawDoD, Raster thrDoD, UnitsNet.Area cellArea, UnitGroup units)
+        protected override DoDStats CalculateChangeStats(Raster rawDoD, Raster thrDoD, UnitGroup units)
         {
-            return RasterOperators.GetStatsMinLoD(rawDoD, thrDoD, Threshold, cellArea, units);
+            return RasterOperators.GetStatsMinLoD(rawDoD, thrDoD, Threshold, units);
         }
 
         protected override DoDBase GetDoDResult(DoDStats changeStats, Raster rawDoD, Raster thrDoD, HistogramPair histograms, FileInfo summaryXML)

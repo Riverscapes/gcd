@@ -29,7 +29,7 @@ namespace GCDCore.Engines
             OldDEM = oldDEM;
         }
 
-        public DoDBase Calculate(bool bBuildPyramids, UnitsNet.Area cellArea, UnitGroup units)
+        public DoDBase Calculate(bool bBuildPyramids, UnitGroup units)
         {
             FileInfo rawDoDPath = ProjectManager.OutputManager.RawDoDPath(AnalysisFolder);
             FileInfo thrDoDPath = ProjectManager.OutputManager.ThrDoDPath(AnalysisFolder);
@@ -64,7 +64,7 @@ namespace GCDCore.Engines
             WriteHistogram(thrHisto, thrHstPath);
 
             // Calculate the change statistics and write the output files
-            DoDStats changeStats = CalculateChangeStats(rawDoD, thrDoD, cellArea, units);
+            DoDStats changeStats = CalculateChangeStats(rawDoD, thrDoD, units);
             GenerateSummaryXML(changeStats, sumXMLPath);
             GenerateChangeBarGraphicFiles(changeStats, 0, 0);
             GenerateHistogramGraphicFiles(rawHisto, thrHisto, 0, 0);
@@ -74,7 +74,7 @@ namespace GCDCore.Engines
 
         protected abstract Raster ThresholdRawDoD(Raster rawDoD, FileInfo thrDoDPath);
 
-        protected abstract DoDStats CalculateChangeStats(Raster rawDoD, Raster thrDoD, UnitsNet.Area cellArea, UnitGroup units);
+        protected abstract DoDStats CalculateChangeStats(Raster rawDoD, Raster thrDoD, UnitGroup units);
 
         protected abstract DoDBase GetDoDResult(DoDStats changeStats, Raster rawDoD, Raster thrDoD, HistogramPair histograms, FileInfo summaryXML);
     }

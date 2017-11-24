@@ -28,7 +28,7 @@ namespace GCDCore.Engines
 
             if (dod is DoDMinLoD)
             {
-                results = RasterOperators.GetStatsMinLoD(dod.RawDoD.Raster, dod.RawDoD.Raster, ((DoDMinLoD)dod).Threshold, Mask, fieldName, ProjectManager.Project.CellArea, Project.ProjectManager.Project.Units);
+                results = RasterOperators.GetStatsMinLoD(dod.RawDoD.Raster, dod.RawDoD.Raster, ((DoDMinLoD)dod).Threshold, Mask, fieldName, ProjectManager.Project.Units);
             }
             else
             {
@@ -36,11 +36,11 @@ namespace GCDCore.Engines
 
                 if (dod is DoDProbabilistic)
                 {
-                    results = RasterOperators.GetStatsProbalistic(dod.RawDoD.Raster, dod.ThrDoD.Raster, propErr, Mask, fieldName, ProjectManager.Project.CellArea, ProjectManager.Project.Units);
+                    results = RasterOperators.GetStatsProbalistic(dod.RawDoD.Raster, dod.ThrDoD.Raster, propErr, Mask, fieldName, ProjectManager.Project.Units);
                 }
                 else
                 {
-                    results = RasterOperators.GetStatsPropagated(dod.RawDoD.Raster, dod.ThrDoD.Raster, propErr, Mask, fieldName, ProjectManager.Project.CellArea, ProjectManager.Project.Units);
+                    results = RasterOperators.GetStatsPropagated(dod.RawDoD.Raster, dod.ThrDoD.Raster, propErr, Mask, fieldName, ProjectManager.Project.Units);
                 }
             }
 

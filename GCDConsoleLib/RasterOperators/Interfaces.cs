@@ -232,8 +232,9 @@ namespace GCDConsoleLib
         /// <param name="thrDoD">Thresholded DoD Raster Path</param>
         /// <param name="minLoD">Minimum Level of Detection</param>
         /// <returns></returns>
-        public static DoDStats GetStatsMinLoD(Raster rawDoD, Raster thrDoD, decimal minLoD, Area cellArea, UnitGroup units)
+        public static DoDStats GetStatsMinLoD(Raster rawDoD, Raster thrDoD, decimal minLoD, UnitGroup units)
         {
+            Area cellArea = rawDoD.Extent.CellArea(units);
             GetDodMinLodStats theStatsOp = new GetDodMinLodStats(rawDoD, thrDoD, minLoD, new DoDStats(cellArea, units));
             theStatsOp.Run();
             return theStatsOp.Stats;
@@ -249,9 +250,9 @@ namespace GCDConsoleLib
         /// <param name="FieldName">Name of the field in the PolygonMask that contains the distinguishing property on which to group statistics</param>
         /// <returns></returns>
         public static Dictionary<string, DoDStats> GetStatsMinLoD(Raster rawDoD, Raster thrDoD, decimal minLoD,
-            Vector PolygonMask, string FieldName,
-             Area cellArea, UnitGroup units)
+            Vector PolygonMask, string FieldName, UnitGroup units)
         {
+            Area cellArea = rawDoD.Extent.CellArea(units);
             GetDodMinLodStats theStatsOp = new GetDodMinLodStats(rawDoD, thrDoD, minLoD, new DoDStats(cellArea, units), PolygonMask, FieldName);
             theStatsOp.Run();
             return theStatsOp.SegStats;
@@ -265,9 +266,9 @@ namespace GCDConsoleLib
         /// <param name="thrDoD">Thresholded DoD Raster Path</param>
         /// <param name="propErrRaster">Propagated Error Raster Path</param>
         /// <returns></returns>
-        public static DoDStats GetStatsPropagated(Raster rawDoD, Raster thrDoD, Raster propErrRaster,
-            Area cellArea, UnitGroup units)
+        public static DoDStats GetStatsPropagated(Raster rawDoD, Raster thrDoD, Raster propErrRaster, UnitGroup units)
         {
+            Area cellArea = rawDoD.Extent.CellArea(units);
             GetDoDPropStats theStatsOp = new GetDoDPropStats(rawDoD, thrDoD, new DoDStats(cellArea, units));
             theStatsOp.Run();
             return theStatsOp.Stats;
@@ -283,9 +284,9 @@ namespace GCDConsoleLib
         /// <param name="FieldName">Name of the field in the PolygonMask that contains the distinguishing property on which to group statistics</param>
         /// <returns></returns>
         public static Dictionary<string, DoDStats> GetStatsPropagated(Raster rawDoD, Raster thrDoD, Raster propErrRaster,
-          Vector PolygonMask, string FieldName,
-          Area cellArea, UnitGroup units)
+          Vector PolygonMask, string FieldName, UnitGroup units)
         {
+            Area cellArea = rawDoD.Extent.CellArea(units);
             GetDoDPropStats theStatsOp = new GetDoDPropStats(rawDoD, thrDoD, new DoDStats(cellArea, units), PolygonMask, FieldName);
             theStatsOp.Run();
             return theStatsOp.SegStats;
@@ -298,9 +299,9 @@ namespace GCDConsoleLib
         /// <param name="thrDoD">Thresholded DoD Raster Path</param>
         /// <param name="propErrRaster">Propagated Error Raster Path</param>
         /// <returns></returns>
-        public static DoDStats GetStatsProbalistic(Raster rawDoD, Raster thrDoD, Raster propErrRaster,
-            Area cellArea, UnitGroup units)
+        public static DoDStats GetStatsProbalistic(Raster rawDoD, Raster thrDoD, Raster propErrRaster, UnitGroup units)
         {
+            Area cellArea = rawDoD.Extent.CellArea(units);
             GetChangeStats raw = new GetChangeStats(rawDoD, new DoDStats(cellArea, units));
             GetChangeStats thr = new GetChangeStats(thrDoD, new DoDStats(cellArea, units));
             GetChangeStats err = new GetChangeStats(propErrRaster, thrDoD, new DoDStats(cellArea, units));
@@ -326,9 +327,9 @@ namespace GCDConsoleLib
         /// <returns></returns>
         enum statsType : byte { raw, thr, err };
         public static Dictionary<string, DoDStats> GetStatsProbalistic(Raster rawDoD, Raster thrDoD, Raster propErrRaster,
-            Vector PolygonMask, string FieldName,
-            Area cellArea, UnitGroup units)
+            Vector PolygonMask, string FieldName, UnitGroup units)
         {
+            Area cellArea = rawDoD.Extent.CellArea(units);
             GetChangeStats raw = new GetChangeStats(rawDoD, new DoDStats(cellArea, units), PolygonMask, FieldName);
             GetChangeStats thr = new GetChangeStats(thrDoD, new DoDStats(cellArea, units), PolygonMask, FieldName);
             GetChangeStats err = new GetChangeStats(propErrRaster, thrDoD, new DoDStats(cellArea, units), PolygonMask, FieldName);
