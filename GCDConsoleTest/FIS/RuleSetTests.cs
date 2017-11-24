@@ -2,9 +2,6 @@
 using GCDConsoleLib.FIS;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GCDConsoleLib.FIS.Tests
 {
@@ -41,7 +38,7 @@ namespace GCDConsoleLib.FIS.Tests
         [TestMethod()]
         public void addInputMFSetTest()
         {
-            throw new NotImplementedException();
+            Assert.Inconclusive();
         }
 
         [TestMethod()]
@@ -53,43 +50,43 @@ namespace GCDConsoleLib.FIS.Tests
         [TestMethod()]
         public void addRuleTest()
         {
-            throw new NotImplementedException();
+            Assert.Inconclusive();
         }
 
         [TestMethod()]
         public void calculateTest()
         {
-            throw new NotImplementedException();
+            Assert.Inconclusive();
         }
 
         [TestMethod()]
         public void calculateTest1()
         {
-            throw new NotImplementedException();
+            Assert.Inconclusive();
         }
 
         [TestMethod()]
         public void setInputMFSetTest()
         {
-            throw new NotImplementedException();
+            Assert.Inconclusive();
         }
 
         [TestMethod()]
         public void validTest()
         {
-            throw new NotImplementedException();
+            Assert.Inconclusive();
         }
 
         [TestMethod()]
         public void getFuzzyValTest()
         {
-            throw new NotImplementedException();
+            Assert.Inconclusive();
         }
 
         [TestMethod()]
         public void ImplicatorOpTest()
         {
-            throw new NotImplementedException();
+            Assert.Inconclusive();
         }
     }
 }

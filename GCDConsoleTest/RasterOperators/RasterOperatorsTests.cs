@@ -75,11 +75,11 @@ namespace GCDConsoleLib.Tests
             Raster rThresh = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2006Feb_DEM\2006Feb_DEM.img")));
 
             UnitGroup ug = new UnitGroup(VolumeUnit.CubicMeter, AreaUnit.SquareMeter, LengthUnit.Meter, LengthUnit.Meter);
-            DoDStats test = RasterOperators.GetStatsMinLoD(rRaw, rThresh, 73.0m, Area.FromSquareMeters(1), ug);
+            DoDStats test = RasterOperators.GetStatsMinLoD(rRaw, rThresh, 73.0m, ug);
 
             // And now the budget seg case
             Vector rPolyMask = new Vector(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\MethodMask_ForTesting.shp")));
-            Dictionary<string, DoDStats> testBudgetSeg = RasterOperators.GetStatsMinLoD(rRaw, rThresh, 73.0m, rPolyMask, "Method", Area.FromSquareMeters(1), ug);
+            Dictionary<string, DoDStats> testBudgetSeg = RasterOperators.GetStatsMinLoD(rRaw, rThresh, 73.0m, rPolyMask, "Method", ug);
         }
 
         [TestMethod()]
@@ -90,11 +90,11 @@ namespace GCDConsoleLib.Tests
             Raster rErr = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("const980.tif")));
 
             UnitGroup ug = new UnitGroup(VolumeUnit.CubicMeter, AreaUnit.SquareMeter, LengthUnit.Meter, LengthUnit.Meter);
-            DoDStats test = RasterOperators.GetStatsPropagated(rRaw, rThresh, rErr, Area.FromSquareMeters(1), ug);
+            DoDStats test = RasterOperators.GetStatsPropagated(rRaw, rThresh, rErr, ug);
 
             // And now the budget seg case
             Vector rPolyMask = new Vector(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\MethodMask_ForTesting.shp")));
-            Dictionary<string, DoDStats> testBudgetSeg = RasterOperators.GetStatsPropagated(rRaw, rThresh, rThresh, rPolyMask, "Method", Area.FromSquareMeters(1), ug);
+            Dictionary<string, DoDStats> testBudgetSeg = RasterOperators.GetStatsPropagated(rRaw, rThresh, rThresh, rPolyMask, "Method", ug);
 
         }
 
@@ -106,11 +106,11 @@ namespace GCDConsoleLib.Tests
             Raster rErr = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("const980.tif")));
 
             UnitGroup ug = new UnitGroup(VolumeUnit.CubicMeter, AreaUnit.SquareMeter, LengthUnit.Meter, LengthUnit.Meter);
-            DoDStats test = RasterOperators.GetStatsProbalistic(rRaw, rThresh, rThresh, Area.FromSquareMeters(1), ug);
+            DoDStats test = RasterOperators.GetStatsProbalistic(rRaw, rThresh, rThresh, ug);
 
             // And now the budget seg case
             Vector rPolyMask = new Vector(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\MethodMask_ForTesting.shp")));
-            Dictionary<string, DoDStats> testBudgetSeg = RasterOperators.GetStatsProbalistic(rRaw, rThresh, rThresh, rPolyMask, "Method", Area.FromSquareMeters(1), ug);
+            Dictionary<string, DoDStats> testBudgetSeg = RasterOperators.GetStatsProbalistic(rRaw, rThresh, rThresh, rPolyMask, "Method", ug);
 
         }
 
@@ -285,11 +285,11 @@ namespace GCDConsoleLib.Tests
             Raster rThresh = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2006Feb_DEM\2006Feb_DEM.img")));
 
             UnitGroup ug = new UnitGroup(VolumeUnit.CubicMeter, AreaUnit.SquareMeter, LengthUnit.Meter, LengthUnit.Meter);
-            DoDStats test = RasterOperators.GetStatsMinLoD(rRaw, rThresh, 73.0m, Area.FromSquareMeters(1), ug);
+            DoDStats test = RasterOperators.GetStatsMinLoD(rRaw, rThresh, 73.0m,  ug);
 
             // And now the budget seg case
             Vector rPolyMask = new Vector(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\MethodMask_ForTesting.shp")));
-            Dictionary<string, DoDStats> testBudgetSeg = RasterOperators.GetStatsMinLoD(rRaw, rThresh, 73.0m, rPolyMask, "Method", Area.FromSquareMeters(1), ug);
+            Dictionary<string, DoDStats> testBudgetSeg = RasterOperators.GetStatsMinLoD(rRaw, rThresh, 73.0m, rPolyMask, "Method",  ug);
         }
 
     }

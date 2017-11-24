@@ -82,16 +82,12 @@ namespace GCDConsoleLib.FIS
                 throw new ArgumentException("No coordinates provided.");
 
             Coords = coords;
-
-            if (coords.Count == 0)
-                MaxY = 0;
-            else
+            MaxY = 0;
+            if (coords.Count > 0)
             {
-                double max = 0;
                 foreach (double[] coord in coords)
-                    if (coord[0] > max)
-                        max = coord[0];
-                MaxY = max;
+                    if (coord[1] > MaxY)
+                        MaxY = coord[1];
             }
         }
 
@@ -157,7 +153,7 @@ namespace GCDConsoleLib.FIS
             if (double.IsInfinity(slope) || slope == 0)
                 return Coords[v1][0];
             else
-                return  ((y - Coords[v1][1]) / slope) + Coords[v1][0];  /// y = y1 + (x - x1)*slope
+                return ((y - Coords[v1][1]) / slope) + Coords[v1][0];  /// y = y1 + (x - x1)*slope
         }
 
         /// <summary>
