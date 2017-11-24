@@ -59,7 +59,7 @@ namespace GCDStandalone
                 bool bEditMode = string.Compare(((ToolStripItem)sender).Name, "projectPropertiesToolStripMenuItem", true) == 0 ||
                         string.Compare(((ToolStripItem)sender).Name, "tsiProjectProperties", true) == 0;
 
-                GCDUserInterface.Project.frmProjectProperties frm = new GCDUserInterface.Project.frmProjectProperties(!bEditMode);
+                GCDCore.UserInterface.Project.frmProjectProperties frm = new GCDCore.UserInterface.Project.frmProjectProperties(!bEditMode);
                 if (frm.ShowDialog() == DialogResult.OK)
                 {
                     ucProjectExplorer1.cmdRefresh_Click(sender, e);
@@ -215,7 +215,7 @@ namespace GCDStandalone
         {
             try
             {
-                GCDUserInterface.About.frmAbout frm = new GCDUserInterface.About.frmAbout();
+                GCDCore.UserInterface.About.frmAbout frm = new GCDCore.UserInterface.About.frmAbout();
                 frm.ShowDialog();
             }
             catch (Exception ex)

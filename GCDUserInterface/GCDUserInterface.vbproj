@@ -71,18 +71,6 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="About\frmAbout.Designer.vb">
-      <DependentUpon>frmAbout.vb</DependentUpon>
-    </Compile>
-    <Compile Include="About\frmAbout.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="About\ucAcknowledgements.Designer.vb">
-      <DependentUpon>ucAcknowledgements.vb</DependentUpon>
-    </Compile>
-    <Compile Include="About\ucAcknowledgements.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="BudgetSegregation\BudgetClassPieChartUC.Designer.vb">
       <DependentUpon>BudgetClassPieChartUC.vb</DependentUpon>
     </Compile>
@@ -168,7 +156,6 @@
     <Compile Include="FISLibrary\frmFISLibrary.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GCDUnits.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -190,13 +177,6 @@
     <Compile Include="Options\frmOptions.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Project\frmProjectProperties.Designer.vb">
-      <DependentUpon>frmProjectProperties.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Project\frmProjectProperties.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Project\ProjectTreeNode.vb" />
     <Compile Include="Project\ucProjectExplorer.Designer.vb">
       <DependentUpon>ucProjectExplorer.vb</DependentUpon>
     </Compile>
@@ -256,12 +236,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="About\frmAbout.resx">
-      <DependentUpon>frmAbout.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="About\ucAcknowledgements.resx">
-      <DependentUpon>ucAcknowledgements.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="BudgetSegregation\BudgetClassPieChartUC.resx">
       <DependentUpon>BudgetClassPieChartUC.vb</DependentUpon>
     </EmbeddedResource>
@@ -312,9 +286,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Options\frmOptions.resx">
       <DependentUpon>frmOptions.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Project\frmProjectProperties.resx">
-      <DependentUpon>frmProjectProperties.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Project\ucProjectExplorer.resx">
       <DependentUpon>ucProjectExplorer.vb</DependentUpon>

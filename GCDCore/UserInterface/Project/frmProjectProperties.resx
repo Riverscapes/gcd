@@ -112,12 +112,59 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="lnkjDevelopers.Text" xml:space="preserve">
-    <value>The GCD Software was originally developed by Joe Wheaton (Utah State University Department of Watershed Sciences) and James Brasington (Queen Mary University). The newest version of the GCD is currently under development by North Arrow Research and ET-AL. The current development team consists of Philip Bailey (North Arrow Research), James Hensleigh (USU), Matt Reimer (North Arrow Research),  and Joe Wheaton (USU). Nick Ochoski (ESSA) and Frank Poulsen (ESSA) were instrumental in the initial development of GCD 5. ESSA Technologies generously invested in kind donations of development time in GCD 5 development.  Chris Garrard (USU RSGIS Lab) was the primary developer of GCD 4.</value>
+  <metadata name="colValue.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="colKey.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="colKey.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="ttpTooltip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="btnBrowseOutput.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6
+        JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAACXBIWXMAAA64AAAOuAFqQfVbAAABfUlE
+        QVQ4T8WP3SuDUQDG92/YXLnY5ZRcSCIfF8IuJKyooVDGUmtmsmYjW80sxHy2NGuTka8LikW2lJCxrBFx
+        Ixpp1Iaxx3verWm9dr2nfjen53eec1ipi9e9B/uCgQE5j1WShxSf7i3AmzkBch6rJA8pfQVsCPtNNPCP
+        ArdiGId6/iWmRWOZ1SbI8Us8rQwYMlkOUeWfx0mabbuOZt2igXVGjbkRBcZ1cga0bJ7W4P1hmhZvnX1Y
+        tQ4Dl6KkHC62YEwri8pGvQKvXhXuXAqs2fR4OVNSf+4ArmP4Wqgn1wHHlQjt5mNKUfLpOnBEZcOAFM/n
+        cjg3Bmk5ctUJXDQD7kbgpBZhVwWCO4X42MzCkpqL+vKMv38T+coZXQ1QL4CvjRKFwFEVvvdLEdzKQ2CF
+        h5uJNHQJ0iPxVRIiE9GzJYHPxI5zOsmGQ8/GsoqD+W4OTDJO4ioJkfX9Emh6xVBKW9HVLoSoqQYNAj6q
+        +cUoK8pFQU4msnlcJKymMCzWL4UneffeTdl6AAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAyJLY8NSe7jjUouI00J7SKNCevjzMnq5MyJqeXMiakmzEmoZ8yJ6KjMSadXwAAAAAaGB4BGhobAQAA
+        AAAZFRkCRDe3I09DyPZPQ8bONCqRLjUqkikzK4otMCiBMTAnezUuJ3Q5UEW3vUM5nlQAAAAAHBgcAQAA
+        AAAAAAAAAAAAADEqaQJuY9CtcWfT+2FarDUAAAAAFxQZARgVGgEAAAAAU0+CG3ZtyMwsJ0IhAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAABhn7RSJKK3f2Oh9OPDg4OAwAAAAAAAAAAAAAAAHBrl215c6eYGxccGBsa
+        HSUcGyAjGxUbBQAAAAAXERwFAAAAAWpnkAmxrObRtK/n62Fgcg4AAAAAAAAAAB0cIDMzMjnxIiElyB0d
+        IXAfHiK3Hh0imhcXHAkAAAAAExMTAQAAAAEAAAADzMrrb9XS8v/GxN9fFBQUAgAAAAA8Oj1DMzI31Rwc
+        IF0fHiLRHx0ioB4dIG0eHh4DHh4eAQAAAAAAAAABAAAAAcrJ1Rfz8vrt8e/2vw8PGAQAAAAA6NnVbU9K
+        TLUfHiKsHx4i3x8eIrIfHiLYHBwfLRISFwEAAAAAAAAAAQAAAAEAAAAD8efkmPLn5PjYzMkuRzk5A9a4
+        rq0lIydRHRwgZx8eIsgbGR0+Hh0hghYTFg8aGRsCAAAAAAAAAAAAAAABAAAAAtS/uC/iyL/+3MK5iMCN
+        fCS/koR8HBwfQh4dIXsaGRw1Ew8TDg4LFQMPDBECBQMNAQAAAAAAAAAAAAAAAQAAAAEAAAAD0aqdwM+n
+        muCfaFaZNy0tuB8eIqIfHiGkHx0hpB8eIqIfHiKgHx4joR0cIXMAAAAIAAAAAAAAAAAAAAABAAAAAr+L
+        eljAinj+qGNMtSAdHy4bGh0vGhodMBoZHTAaGR0wGhodLxsaHS8ZGRwiAAAABgAAAAAAAAAAAAAAAAAA
+        AAGgZVIMsGtU3q1pU2QVFBYRHx4iqB8eIqEbGh0yHx4irB8eIrMdHCBVAAAABAAAAAMAAAAAAAAAAAAA
+        AAAAAAABAAAAAZ9OM2CSSC8UHh0hSB8eIqkdHSFMHx4iqB8eIW0fHiGZEhIUBwAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAEAAAABAAAAARwbHg8fHiLGHx4ioB8eIt8eHCBFHx4iyh8eIogAAAABAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABGxkdFR0cICsfHiLKHRwgMx4dIU8eHCFFDgkOAgAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB8dImkfHiK2Hx4iaAcGBwEAAAABAAAAAAAA
+        AAAAAAAAABIAAAAXAAAJHwAABwIAAAYCAAACAQAAAgEAAAABAACAAQAAgAAAAMAAAADgAAAA4AMAAPAB
+        AAD8AQAA/wcAAA==
+</value>
   </data>
 </root>

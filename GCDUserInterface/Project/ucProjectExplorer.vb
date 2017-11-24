@@ -1,6 +1,8 @@
 ﻿Imports System.Windows.Forms
 Imports System.Drawing
 Imports GCDUserInterface.SurveyLibrary
+Imports GCDCore.UserInterface.Project
+Imports GCDCore.UserInterface.Project.ProjectTreeNode
 
 Namespace Project
 
@@ -14,27 +16,7 @@ Namespace Project
         Private Const m_sBudgetSegs As String = "Budget Segregations"
         Private Shared m_eSortBy As SortSurveyBy = SortSurveyBy.SurveyDateDsc
 
-        Public Enum GCDNodeTypes
-            Project
-            InputsGroup
-            SurveysGroup
-            DEMSurvey
-            AssociatedSurfaceGroup
-            AssociatedSurface
-            ErrorSurfaceGroup
-            ErrorSurface
-            AOIGroup
-            AOI
-            AnalysesGroup
-            ChangeDetectionGroup
-            ChangeDetectionDEMPair
-            DoD
-            BudgetSegregationGroup
-            BudgetSegregationMask
-            BudgetSegregation
-            ReservoirGroup
-            Reservoir
-        End Enum
+
 
         Public Enum SortSurveyBy
             NameAsc
@@ -255,6 +237,10 @@ Namespace Project
 
                         Case GCDNodeTypes.ErrorSurface
                             'frm = New ErrorCalculation.frmErrorCalculation()
+
+                        Case GCDNodeTypes.DoD
+                            Dim dod As DoDBase = DirectCast(tag.Item, DoDBase)
+                            frm = New ChangeDetection.frmDoDResults(dod)
 
                     End Select
 
@@ -648,7 +634,7 @@ Namespace Project
 
         Private Sub EditGCDProjectPropertiesToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles EditGCDProjectPropertiesToolStripMenuItem.Click
 
-            Dim frm As New frmProjectProperties(False)
+            Dim frm As New GCDCore.UserInterface.Project.frmProjectProperties(False)
             Try
                 frm.ShowDialog()
             Catch ex As Exception
@@ -966,7 +952,7 @@ Namespace Project
                 Select Case eType
 
                     Case GCDNodeTypes.Project
-                        frm = New frmProjectProperties(True)
+                        frm = New GCDCore.UserInterface.Project.frmProjectProperties(True)
 
                     Case GCDNodeTypes.DEMSurvey
                         Dim dem As DEMSurvey = DirectCast(DirectCast(nodSelected.Tag, ProjectTreeNode).Item, DEMSurvey)

@@ -53,6 +53,7 @@
     <Compile Include="Engines\DoD\ChangeDetectionProbabilistic.cs" />
     <Compile Include="Engines\DoD\ChangeDetectionPropProb.cs" />
     <Compile Include="Engines\ErrorSurfaceEngine.cs" />
+    <Compile Include="GCDUnits.cs" />
     <Compile Include="Project\CoherenceProperties.cs" />
     <Compile Include="Engines\EngineBase.cs" />
     <Compile Include="ErrorCalculation\ErrorCalcProperties.cs" />
@@ -89,6 +90,31 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="RasterPyramidManager.cs" />
+    <Compile Include="UserInterface\About\frmAbout.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\About\frmAbout.Designer.cs">
+      <DependentUpon>frmAbout.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\About\ucAcknowledgements.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserInterface\About\ucAcknowledgements.Designer.cs">
+      <DependentUpon>ucAcknowledgements.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\frmInformation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\frmInformation.Designer.cs">
+      <DependentUpon>frmInformation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\Project\frmProjectProperties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\Project\frmProjectProperties.Designer.cs">
+      <DependentUpon>frmProjectProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\Project\ProjectTreeNode.cs" />
     <Compile Include="Visualization\DoDHistogramViewerClass.cs" />
     <Compile Include="Visualization\ElevationChangeBarViewer.cs" />
     <Compile Include="Visualization\ElevationChangeDataPoint.cs" />
@@ -132,11 +158,74 @@
     <Content Include="Deploy\SurveyTypes.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\USUlogo.bmp" />
+    <None Include="Resources\USGS.bmp" />
+    <None Include="Resources\TopCat.png" />
+    <None Include="Resources\SlopePercent.png" />
+    <None Include="Resources\SlopeDegree.png" />
+    <None Include="Resources\sigma.png" />
+    <None Include="Resources\Settings.png" />
+    <None Include="Resources\SelectNone.png" />
+    <None Include="Resources\SelectAll.png" />
+    <None Include="Resources\SaveGIS.png" />
+    <None Include="Resources\Save.png" />
+    <None Include="Resources\Roughness.png" />
+    <None Include="Resources\Reservoir.png" />
+    <None Include="Resources\Report.png" />
+    <None Include="Resources\refresh.png" />
+    <None Include="Resources\print.png" />
+    <None Include="Resources\PreviousFunders.png" />
+    <None Include="Resources\polygon.png" />
+    <None Include="Resources\PointDensity.png" />
+    <None Include="Resources\Options.png" />
+    <None Include="Resources\OpenProject.png" />
+    <None Include="Resources\NewProject.png" />
+    <None Include="Resources\IdahoPower_63height.jpg" />
+    <None Include="Resources\IdahoPower.jpg" />
+    <None Include="Resources\ICRRR_Logo_100.gif" />
+    <None Include="Resources\Histogram.png" />
+    <None Include="Resources\Help.png" />
+    <None Include="Resources\GCD_SplashLogo_200.png" />
+    <None Include="Resources\GCD.png" />
+    <None Include="Resources\FISLibrary.png" />
+    <None Include="Resources\Excel.png" />
+    <None Include="Resources\DoD_Logo.jpg" />
+    <None Include="Resources\Developers.png" />
+    <None Include="Resources\DEMSurvey.png" />
+    <None Include="Resources\Delta.png" />
+    <None Include="Resources\Delete.png" />
+    <None Include="Resources\CurrentFunders2.png" />
+    <None Include="Resources\CurrentFunders.png" />
+    <None Include="Resources\Copy.png" />
+    <None Include="Resources\ConcaveHull.png" />
+    <None Include="Resources\CoincidentPoints.png" />
+    <None Include="Resources\CleanRaster.png" />
+    <None Include="Resources\Check.png" />
+    <None Include="Resources\chart.png" />
+    <None Include="Resources\BudgetSeg.png" />
+    <None Include="Resources\BrowseFolder.png" />
+    <None Include="Resources\AssociatedSurfaces.png" />
+    <None Include="Resources\AOI.png" />
+    <None Include="Resources\alphabetical.png" />
+    <None Include="Resources\AddToMap.png" />
+    <None Include="Resources\Add.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\About\frmAbout.resx">
+      <DependentUpon>frmAbout.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\About\ucAcknowledgements.resx">
+      <DependentUpon>ucAcknowledgements.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\frmInformation.resx">
+      <DependentUpon>frmInformation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\Project\frmProjectProperties.resx">
+      <DependentUpon>frmProjectProperties.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
