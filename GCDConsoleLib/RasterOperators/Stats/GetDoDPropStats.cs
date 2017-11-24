@@ -18,8 +18,11 @@ namespace GCDConsoleLib.Internal.Operators
         private string _fieldname;
 
         /// <summary>
-        /// Pass-through constructure
+        /// Constructor
         /// </summary>
+        /// <param name="rDod"></param>
+        /// <param name="rErr"></param>
+        /// <param name="theStats"></param>
         public GetDoDPropStats(Raster rDod, Raster rErr, DoDStats theStats) :
             base(new List<Raster> { rDod, rErr })
         {
@@ -30,6 +33,11 @@ namespace GCDConsoleLib.Internal.Operators
         /// <summary>
         /// Budget Seggregation Constructor
         /// </summary>
+        /// <param name="rDod"></param>
+        /// <param name="rErr"></param>
+        /// <param name="theStats"></param>
+        /// <param name="PolygonMask"></param>
+        /// <param name="FieldName"></param>
         public GetDoDPropStats(Raster rDod, Raster rErr, DoDStats theStats, Vector PolygonMask,
             string FieldName) :
             base(new List<Raster> { rDod, rErr })
@@ -44,6 +52,9 @@ namespace GCDConsoleLib.Internal.Operators
         /// <summary>
         /// This is the actual implementation of the cell-by-cell logic
         /// </summary>
+        /// <param name="data"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
         protected override float CellOp(List<float[]> data, int id)
         {
             // Speed things up by ignoring nodatas

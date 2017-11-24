@@ -37,6 +37,10 @@ namespace GCDConsoleLib.GCD
             DepositionErr = new GCDAreaVolume();
         }
 
+        /// <summary>
+        /// Copy Constructor
+        /// </summary>
+        /// <param name="oldStats"></param>
         public DoDStats(DoDStats oldStats)
         {
             StatsUnits = oldStats.StatsUnits;

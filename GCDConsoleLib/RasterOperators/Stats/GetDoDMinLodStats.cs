@@ -19,8 +19,12 @@ namespace GCDConsoleLib.Internal.Operators
         private string _fieldname;
 
         /// <summary>
-        /// Pass-through constructure
+        /// Constructor
         /// </summary>
+        /// <param name="rawDoD"></param>
+        /// <param name="thrDoD"></param>
+        /// <param name="thresh"></param>
+        /// <param name="theStats"></param>
         public GetDodMinLodStats(Raster rawDoD, Raster thrDoD, decimal thresh, DoDStats theStats) :
             base(new List<Raster> { rawDoD, thrDoD })
         {
@@ -33,6 +37,12 @@ namespace GCDConsoleLib.Internal.Operators
         /// <summary>
         /// Budget Seggregation constructor
         /// </summary>
+        /// <param name="rawDoD"></param>
+        /// <param name="thrDoD"></param>
+        /// <param name="thresh"></param>
+        /// <param name="theStats"></param>
+        /// <param name="PolygonMask"></param>
+        /// <param name="FieldName"></param>
         public GetDodMinLodStats(Raster rawDoD, Raster thrDoD,
             decimal thresh, DoDStats theStats, Vector PolygonMask, string FieldName) :
            base(new List<Raster> { rawDoD, thrDoD })
@@ -47,8 +57,11 @@ namespace GCDConsoleLib.Internal.Operators
 
 
         /// <summary>
-        /// This is the actual implementation of the cell-by-cell logic
+        ///  This is the actual implementation of the cell-by-cell logic
         /// </summary>
+        /// <param name="data"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
         protected override double CellOp(List<double[]> data, int id)
         {
             // Speed things up by ignoring nodatas

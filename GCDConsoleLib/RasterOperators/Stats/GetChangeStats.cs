@@ -18,8 +18,10 @@ namespace GCDConsoleLib.Internal.Operators
         private string _fieldname;
 
         /// <summary>
-        /// Pass-through constructure
+        /// Constructor
         /// </summary>
+        /// <param name="rInput"></param>
+        /// <param name="theStats"></param>
         public GetChangeStats(Raster rInput, DoDStats theStats) :
             base(new List<Raster> { rInput })
         {
@@ -44,6 +46,10 @@ namespace GCDConsoleLib.Internal.Operators
         /// <summary>
         /// Budget Seggregation constructor
         /// </summary>
+        /// <param name="rInput"></param>
+        /// <param name="theStats"></param>
+        /// <param name="PolygonMask"></param>
+        /// <param name="FieldName"></param>
         public GetChangeStats(Raster rInput, DoDStats theStats, Vector PolygonMask, string FieldName) :
             base(new List<Raster> { rInput })
         {
@@ -55,8 +61,13 @@ namespace GCDConsoleLib.Internal.Operators
         }
 
         /// <summary>
-        /// Budget Seggregation constructor
+        /// This is the Budget Seggregation with propError Constructor
         /// </summary>
+        /// <param name="rInput"></param>
+        /// <param name="rPropError"></param>
+        /// <param name="theStats"></param>
+        /// <param name="PolygonMask"></param>
+        /// <param name="FieldName"></param>
         public GetChangeStats(Raster rInput, Raster rPropError, DoDStats theStats, Vector PolygonMask, string FieldName) :
            base(new List<Raster> { rInput, rPropError })
         {
@@ -70,6 +81,9 @@ namespace GCDConsoleLib.Internal.Operators
         /// <summary>
         /// This is the actual implementation of the cell-by-cell logic
         /// </summary>
+        /// <param name="data"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
         protected override float CellOp(List<float[]> data, int id)
         {
             // Speed things up by ignoring nodatas

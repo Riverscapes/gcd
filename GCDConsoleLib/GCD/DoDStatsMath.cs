@@ -4,12 +4,15 @@ using UnitsNet;
 
 namespace GCDConsoleLib.GCD
 {
+    /// <summary>
+    /// NOTE: This partial class was split off from DoDStats because it was really verbose
+    /// </summary>
     public partial class DoDStats
     {
         // Areal Properties
         public Area AreaDetectableChange_Thresholded { get { return ErosionThr.GetArea(CellArea) + DepositionThr.GetArea(CellArea); } }
         public Area AreaOfInterest_Raw { get { return ErosionRaw.GetArea(CellArea) + DepositionRaw.GetArea(CellArea); } }
-        public double AreaPercentAreaInterestWithDetectableChange { get { return 100 * (AreaDetectableChange_Thresholded / AreaOfInterest_Raw); } }
+        public decimal AreaPercentAreaInterestWithDetectableChange { get { return 100 * SafeDivision(AreaDetectableChange_Thresholded, AreaOfInterest_Raw); } }
 
         // Volume Properties
         public Volume VolumeOfDifference_Raw { get { return ErosionRaw.GetVolume(CellArea, StatsUnits.VertUnit) + DepositionRaw.GetVolume(CellArea, StatsUnits.VertUnit); } }
@@ -22,62 +25,62 @@ namespace GCDConsoleLib.GCD
         {
             get
             {
-                // In order to do all the math on this we need to convert them to doubles and then back into their preferred unit.
-                double depErrCubMeter = DepositionErr.GetVolume(CellArea, StatsUnits.VertUnit).CubicMeters;
-                double erosionErrCubMeter = ErosionErr.GetVolume(CellArea, StatsUnits.VertUnit).CubicMeters;
-                return Volume.FromCubicMeters(Math.Sqrt(Math.Pow(depErrCubMeter, 2) + Math.Pow(erosionErrCubMeter, 2)));
+                // In order to do all the math on this we need to convert them to decimals and then back into their preferred unit.
+                decimal depErrCubMeter = (decimal)DepositionErr.GetVolume(CellArea, StatsUnits.VertUnit).CubicMeters;
+                decimal erosionErrCubMeter = (decimal)ErosionErr.GetVolume(CellArea, StatsUnits.VertUnit).CubicMeters;
+                return Volume.FromCubicMeters(Math.Sqrt(Math.Pow((double)depErrCubMeter, 2) + Math.Pow((double)erosionErrCubMeter, 2)));
             }
         }
 
-        public double VolumeOfErosion_Percent { get { return SafeDivision(ErosionErr.GetVolume(CellArea, StatsUnits.VertUnit), ErosionThr.GetVolume(CellArea, StatsUnits.VertUnit)) * 100; } }
-        public double VolumeOfDeposition_Percent { get { return SafeDivision(DepositionErr.GetVolume(CellArea, StatsUnits.VertUnit), DepositionThr.GetVolume(CellArea, StatsUnits.VertUnit)) * 100; } }
+        public decimal VolumeOfErosion_Percent { get { return SafeDivision(ErosionErr.GetVolume(CellArea, StatsUnits.VertUnit), ErosionThr.GetVolume(CellArea, StatsUnits.VertUnit)) * 100; } }
+        public decimal VolumeOfDeposition_Percent { get { return SafeDivision(DepositionErr.GetVolume(CellArea, StatsUnits.VertUnit), DepositionThr.GetVolume(CellArea, StatsUnits.VertUnit)) * 100; } }
 
-        public double VolumeOfDifference_Percent { get { return SafeDivision(VolumeOfDifference_Error, VolumeOfDifference_Thresholded) * 100; } }
-        public double NetVolumeOfDifference_Percent { get { return SafeDivision(NetVolumeOfDifference_Error, NetVolumeOfDifference_Thresholded) * 100; } }
+        public decimal VolumeOfDifference_Percent { get { return SafeDivision(VolumeOfDifference_Error, VolumeOfDifference_Thresholded) * 100; } }
+        public decimal NetVolumeOfDifference_Percent { get { return SafeDivision(NetVolumeOfDifference_Error, NetVolumeOfDifference_Thresholded) * 100; } }
 
         // Vertical Averages Erosion
-        public Length AverageDepthErosion_Raw { get { return SafeDivision(ErosionRaw.GetVolume(CellArea, StatsUnits.VertUnit), ErosionRaw.GetArea(CellArea), StatsUnits.VertUnit); } }
-        public Length AverageDepthErosion_Thresholded { get { return SafeDivision(ErosionThr.GetVolume(CellArea, StatsUnits.VertUnit), ErosionThr.GetArea(CellArea), StatsUnits.VertUnit); } }
-        public Length AverageDepthErosion_Error { get { return SafeDivision(ErosionErr.GetVolume(CellArea, StatsUnits.VertUnit), ErosionThr.GetArea(CellArea), StatsUnits.VertUnit); } }
-        public double AverageDepthErosion_Percent { get { return 100 * SafeDivision(AverageDepthErosion_Error, AverageDepthErosion_Thresholded); } }
+        public Length AverageDepthErosion_Raw { get { return SafeDivision(ErosionRaw.GetVolume(CellArea, StatsUnits.VertUnit), ErosionRaw.GetArea(CellArea)); } }
+        public Length AverageDepthErosion_Thresholded { get { return SafeDivision(ErosionThr.GetVolume(CellArea, StatsUnits.VertUnit), ErosionThr.GetArea(CellArea)); } }
+        public Length AverageDepthErosion_Error { get { return SafeDivision(ErosionErr.GetVolume(CellArea, StatsUnits.VertUnit), ErosionThr.GetArea(CellArea)); } }
+        public decimal AverageDepthErosion_Percent { get { return 100 * SafeDivision(AverageDepthErosion_Error, AverageDepthErosion_Thresholded); } }
 
         // Vertical Averages Deposition
-        public Length AverageDepthDeposition_Raw { get { return SafeDivision(DepositionRaw.GetVolume(CellArea, StatsUnits.VertUnit), DepositionRaw.GetArea(CellArea), StatsUnits.VertUnit); } }
-        public Length AverageDepthDeposition_Thresholded { get { return SafeDivision(DepositionThr.GetVolume(CellArea, StatsUnits.VertUnit), DepositionThr.GetArea(CellArea), StatsUnits.VertUnit); } }
-        public Length AverageDepthDeposition_Error { get { return SafeDivision(DepositionErr.GetVolume(CellArea, StatsUnits.VertUnit), DepositionThr.GetArea(CellArea), StatsUnits.VertUnit); } }
-        public double AverageDepthDeposition_Percent { get { return 100 * SafeDivision(AverageDepthDeposition_Error, AverageDepthDeposition_Thresholded); } }
+        public Length AverageDepthDeposition_Raw { get { return SafeDivision(DepositionRaw.GetVolume(CellArea, StatsUnits.VertUnit), DepositionRaw.GetArea(CellArea)); } }
+        public Length AverageDepthDeposition_Thresholded { get { return SafeDivision(DepositionThr.GetVolume(CellArea, StatsUnits.VertUnit), DepositionThr.GetArea(CellArea)); } }
+        public Length AverageDepthDeposition_Error { get { return SafeDivision(DepositionErr.GetVolume(CellArea, StatsUnits.VertUnit), DepositionThr.GetArea(CellArea)); } }
+        public decimal AverageDepthDeposition_Percent { get { return 100 * SafeDivision(AverageDepthDeposition_Error, AverageDepthDeposition_Thresholded); } }
 
         // Vertical Averages Total Thickness of Difference for AOI
-        public Length AverageThicknessOfDifferenceAOI_Raw { get { return SafeDivision(VolumeOfDifference_Raw, AreaOfInterest_Raw, StatsUnits.VertUnit); } }
-        public Length AverageThicknessOfDifferenceAOI_Thresholded { get { return SafeDivision(VolumeOfDifference_Thresholded, AreaOfInterest_Raw, StatsUnits.VertUnit); } }
-        public Length AverageThicknessOfDifferenceAOI_Error { get { return SafeDivision(VolumeOfDifference_Error, AreaOfInterest_Raw, StatsUnits.VertUnit); } }
-        public double AverageThicknessOfDifferenceAOI_Percent { get { return 100 * SafeDivision(AverageThicknessOfDifferenceAOI_Error, AverageThicknessOfDifferenceAOI_Thresholded); } }
+        public Length AverageThicknessOfDifferenceAOI_Raw { get { return SafeDivision(VolumeOfDifference_Raw, AreaOfInterest_Raw); } }
+        public Length AverageThicknessOfDifferenceAOI_Thresholded { get { return SafeDivision(VolumeOfDifference_Thresholded, AreaOfInterest_Raw); } }
+        public Length AverageThicknessOfDifferenceAOI_Error { get { return SafeDivision(VolumeOfDifference_Error, AreaOfInterest_Raw); } }
+        public decimal AverageThicknessOfDifferenceAOI_Percent { get { return 100 * SafeDivision(AverageThicknessOfDifferenceAOI_Error, AverageThicknessOfDifferenceAOI_Thresholded); } }
 
         // Vertical Averages **NET** Thickness of Difference for Area of Interest (AOI)
-        public Length AverageNetThicknessofDifferenceAOI_Raw { get { return SafeDivision(NetVolumeOfDifference_Raw, AreaOfInterest_Raw, StatsUnits.VertUnit); } }
-        public Length AverageNetThicknessOfDifferenceAOI_Thresholded { get { return SafeDivision(NetVolumeOfDifference_Thresholded, AreaOfInterest_Raw, StatsUnits.VertUnit); } }
-        public Length AverageNetThicknessOfDifferenceAOI_Error { get { return SafeDivision(NetVolumeOfDifference_Error, AreaOfInterest_Raw, StatsUnits.VertUnit); } }
-        public double AverageNetThicknessOfDifferenceAOI_Percent { get { return 100 * SafeDivision(AverageNetThicknessOfDifferenceAOI_Error, AverageNetThicknessOfDifferenceAOI_Thresholded); } }
+        public Length AverageNetThicknessofDifferenceAOI_Raw { get { return SafeDivision(NetVolumeOfDifference_Raw, AreaOfInterest_Raw); } }
+        public Length AverageNetThicknessOfDifferenceAOI_Thresholded { get { return SafeDivision(NetVolumeOfDifference_Thresholded, AreaOfInterest_Raw); } }
+        public Length AverageNetThicknessOfDifferenceAOI_Error { get { return SafeDivision(NetVolumeOfDifference_Error, AreaOfInterest_Raw); } }
+        public decimal AverageNetThicknessOfDifferenceAOI_Percent { get { return 100 * SafeDivision(AverageNetThicknessOfDifferenceAOI_Error, AverageNetThicknessOfDifferenceAOI_Thresholded); } }
 
         // Vertical Averages **Total** Thickness of Difference for Area of Detectable Change (ADC)
-        public Length AverageThicknessOfDifferenceADC_Thresholded { get { return SafeDivision(VolumeOfDifference_Thresholded, AreaDetectableChange_Thresholded, StatsUnits.VertUnit); } }
-        public Length AverageThicknessOfDifferenceADC_Error { get { return SafeDivision(VolumeOfDifference_Error, AreaDetectableChange_Thresholded, StatsUnits.VertUnit); } }
-        public double AverageThicknessOfDifferenceADC_Percent { get { return 100 * SafeDivision(AverageThicknessOfDifferenceADC_Error, AverageThicknessOfDifferenceADC_Thresholded); } }
+        public Length AverageThicknessOfDifferenceADC_Thresholded { get { return SafeDivision(VolumeOfDifference_Thresholded, AreaDetectableChange_Thresholded); } }
+        public Length AverageThicknessOfDifferenceADC_Error { get { return SafeDivision(VolumeOfDifference_Error, AreaDetectableChange_Thresholded); } }
+        public decimal AverageThicknessOfDifferenceADC_Percent { get { return 100 * SafeDivision(AverageThicknessOfDifferenceADC_Error, AverageThicknessOfDifferenceADC_Thresholded); } }
 
         // Vertical Averages **NET** Thickness of Difference for Area of Detecktable Change (ADC)
-        public Length AverageNetThicknessOfDifferenceADC_Thresholded { get { return SafeDivision(NetVolumeOfDifference_Thresholded, AreaDetectableChange_Thresholded, StatsUnits.VertUnit); } }
-        public Length AverageNetThicknessOfDifferenceADC_Error { get { return SafeDivision(NetVolumeOfDifference_Error, AreaDetectableChange_Thresholded, StatsUnits.VertUnit); } }
-        public double AverageNetThicknessOfDifferenceADC_Percent { get { return 100 * SafeDivision(AverageNetThicknessOfDifferenceADC_Error, AverageNetThicknessOfDifferenceADC_Thresholded); } }
+        public Length AverageNetThicknessOfDifferenceADC_Thresholded { get { return SafeDivision(NetVolumeOfDifference_Thresholded, AreaDetectableChange_Thresholded); } }
+        public Length AverageNetThicknessOfDifferenceADC_Error { get { return SafeDivision(NetVolumeOfDifference_Error, AreaDetectableChange_Thresholded); } }
+        public decimal AverageNetThicknessOfDifferenceADC_Percent { get { return 100 * SafeDivision(AverageNetThicknessOfDifferenceADC_Error, AverageNetThicknessOfDifferenceADC_Thresholded); } }
 
         // Percentages By Volume
-        public double PercentErosion_Raw { get { return 100 * SafeDivision(ErosionRaw.GetVolume(CellArea, StatsUnits.VertUnit), VolumeOfDifference_Raw); } }
-        public double PercentErosion_Thresholded { get { return 100 * SafeDivision(ErosionThr.GetVolume(CellArea, StatsUnits.VertUnit), VolumeOfDifference_Thresholded); } }
-        public double PercentDeposition_Raw { get { return 100 * SafeDivision(DepositionRaw.GetVolume(CellArea, StatsUnits.VertUnit), VolumeOfDifference_Raw); } }
-        public double PercentDeposition_Thresholded { get { return 100 * SafeDivision(DepositionThr.GetVolume(CellArea, StatsUnits.VertUnit), VolumeOfDifference_Thresholded); } }
-        public double PercentImbalance_Raw { get { return 100 * SafeDivision(NetVolumeOfDifference_Raw, (2 * VolumeOfDifference_Raw)); } }
-        public double PercentImbalance_Thresholded { get { return 100 * SafeDivision(NetVolumeOfDifference_Thresholded, (2 * VolumeOfDifference_Thresholded)); } }
-        public double NetToTotalVolumeRatio_Raw { get { return 100 * SafeDivision(NetVolumeOfDifference_Raw, VolumeOfDifference_Raw); } }
-        public double NetToTotalVolumeRatio_Thresholded { get { return 100 * SafeDivision(NetVolumeOfDifference_Thresholded, VolumeOfDifference_Thresholded); } }
+        public decimal PercentErosion_Raw { get { return 100 * SafeDivision(ErosionRaw.GetVolume(CellArea, StatsUnits.VertUnit), VolumeOfDifference_Raw); } }
+        public decimal PercentErosion_Thresholded { get { return 100 * SafeDivision(ErosionThr.GetVolume(CellArea, StatsUnits.VertUnit), VolumeOfDifference_Thresholded); } }
+        public decimal PercentDeposition_Raw { get { return 100 * SafeDivision(DepositionRaw.GetVolume(CellArea, StatsUnits.VertUnit), VolumeOfDifference_Raw); } }
+        public decimal PercentDeposition_Thresholded { get { return 100 * SafeDivision(DepositionThr.GetVolume(CellArea, StatsUnits.VertUnit), VolumeOfDifference_Thresholded); } }
+        public decimal PercentImbalance_Raw { get { return 100 * SafeDivision(NetVolumeOfDifference_Raw, (2 * VolumeOfDifference_Raw)); } }
+        public decimal PercentImbalance_Thresholded { get { return 100 * SafeDivision(NetVolumeOfDifference_Thresholded, (2 * VolumeOfDifference_Thresholded)); } }
+        public decimal NetToTotalVolumeRatio_Raw { get { return 100 * SafeDivision(NetVolumeOfDifference_Raw, VolumeOfDifference_Raw); } }
+        public decimal NetToTotalVolumeRatio_Thresholded { get { return 100 * SafeDivision(NetVolumeOfDifference_Thresholded, VolumeOfDifference_Thresholded); } }
 
         /// <summary>
         /// Return zero if we're ever dividing by zero
@@ -85,27 +88,11 @@ namespace GCDConsoleLib.GCD
         /// <param name="fNumerator"></param>
         /// <param name="fDenominator"></param>
         /// <returns></returns>
-        private double SafeDivision(double fNumerator, double fDenominator)
+        private static decimal SafeDivision(decimal fNumerator, decimal fDenominator)
         {
-            double val = 0;
+            decimal val = 0;
             if (fDenominator != 0)
                 val = fNumerator / fDenominator;
-            return val;
-        }
-
-        /// <summary>
-        /// Dividing two volumes
-        /// </summary>
-        /// <param name="fNumerator"></param>
-        /// <param name="fDenominator"></param>
-        /// <returns></returns>
-        private double SafeDivision(Volume vNum, Volume vDenom)
-        {
-            double val = 0;
-            double vNummmm = vNum.CubicMeters;
-            double vDenommm = vDenom.CubicMeters;
-            if (vNummmm != 0)
-                val = vNummmm / vDenommm;
             return val;
         }
 
@@ -115,14 +102,40 @@ namespace GCDConsoleLib.GCD
         /// <param name="vNum"></param>
         /// <param name="vDenom"></param>
         /// <returns></returns>
-        private double SafeDivision(Length vNum, Length vDenom)
+        public static decimal SafeDivision(Length vNum, Length vDenom)
         {
-            double val = 0;
-            double vNummmm = vNum.Meters;
-            double vDenommm = vDenom.Meters;
-            if (vNummmm != 0)
-                val = vNummmm / vDenommm;
-            return val;
+            decimal vNummmm = (decimal)vNum.Meters;
+            decimal vDenommm = (decimal)vDenom.Meters;
+
+            return SafeDivision(vNummmm, vDenommm);
+        }
+
+        /// <summary>
+        /// Dividing two volumes
+        /// </summary>
+        /// <param name="fNumerator"></param>
+        /// <param name="fDenominator"></param>
+        /// <returns></returns>
+        public static decimal SafeDivision(Volume vNum, Volume vDenom)
+        {
+            decimal vNummmm = (decimal)vNum.CubicMeters;
+            decimal vDenommm = (decimal)vDenom.CubicMeters;
+
+            return SafeDivision(vNummmm, vDenommm);
+        }
+
+        /// <summary>
+        /// Dividing two areas to get a fraction
+        /// </summary>
+        /// <param name="vNum"></param>
+        /// <param name="vDenom"></param>
+        /// <returns>decimal fraction</returns>
+        public static decimal SafeDivision(Area vNum, Area vDenom)
+        {
+            decimal vNummmm = (decimal)vNum.SquareMeters;
+            decimal vDenommm = (decimal)vDenom.SquareMeters;
+
+            return SafeDivision(vNummmm, vDenommm);
         }
 
         /// <summary>
@@ -130,31 +143,41 @@ namespace GCDConsoleLib.GCD
         /// </summary>
         /// <param name="vNum"></param>
         /// <param name="vDenom"></param>
-        /// <returns></returns>
-        private Length SafeDivision(Volume vNum, Area vDenom, LengthUnit lUnit)
+        /// <returns>UnitsNet Length object</returns>
+        public static Length SafeDivision(Volume vNum, Area vDenom)
         {
-            Length val = Length.From(0, lUnit);
-            double vNummmm = vNum.CubicMeters;
-            double vDenommm = vDenom.SquareMeters;
-            if (vNummmm != 0)
-                val = Length.From(vNummmm / vDenommm, lUnit);
-            return val;
+            decimal vNummmm = (decimal)vNum.CubicMeters;
+            decimal vDenommm = (decimal)vDenom.SquareMeters;
+
+            return Length.FromMeters((double)SafeDivision(vNummmm, vDenommm));
         }
 
         /// <summary>
-        /// Dividing two areas
+        /// Divide a Area by a Length to get a length
         /// </summary>
         /// <param name="vNum"></param>
         /// <param name="vDenom"></param>
-        /// <returns></returns>
-        private double SafeDivision(Area vNum, Area vDenom)
+        /// <returns>UnitsNet Length object</returns>
+        public static Length SafeDivision(Area vNum, Length vDenom)
         {
-            double val = 0;
-            double vNummmm = vNum.SquareMeters;
-            double vDenommm = vDenom.SquareMeters;
-            if (vNummmm != 0)
-                val = vNummmm / vDenommm;
-            return val;
+            decimal vNummmm = (decimal)vNum.SquareMeters;
+            decimal vDenommm = (decimal)vDenom.Meters;
+
+            return Length.FromMeters((double)SafeDivision(vNummmm, vDenommm));
+        }
+
+        /// <summary>
+        /// Divide a Volume by a Length to get an area
+        /// </summary>
+        /// <param name="vNum"></param>
+        /// <param name="vDenom"></param>
+        /// <returns>UnitsNet Length object</returns>
+        public static Area SafeDivision(Volume vNum, Length vDenom)
+        {
+            decimal vNummmm = (decimal)vNum.CubicMeters;
+            decimal vDenommm = (decimal)vDenom.Meters;
+
+            return Area.FromSquareMeters((double)SafeDivision(vNummmm, vDenommm));
         }
 
     }

@@ -115,6 +115,7 @@
     <Compile Include="FIS\MemberFunctionTests.cs" />
     <Compile Include="FIS\RuleSetTests.cs" />
     <Compile Include="FIS\RuleTests.cs" />
+    <Compile Include="GCD\DoDStatsTests.cs" />
     <Compile Include="GISDatasetTests.cs" />
     <Compile Include="HistogramTests.cs" />
     <Compile Include="ProjectionTests.cs" />
