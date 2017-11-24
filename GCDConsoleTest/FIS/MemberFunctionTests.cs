@@ -26,7 +26,7 @@ namespace GCDConsoleLib.FIS.Tests
             MemberFunction construct1 = new MemberFunction();
             Assert.AreEqual(construct1.MaxY, 0);
             testCoord(construct1.Coords, new List<double[]>());
-
+                
             // List Constructor
             MemberFunction construct2 = new MemberFunction(new List<double[]>(){
                 new double[2]{ 1,0},

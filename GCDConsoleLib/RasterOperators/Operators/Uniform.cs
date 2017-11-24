@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using GCDConsoleLib.Internal;
+﻿using System.Collections.Generic;
 
 namespace GCDConsoleLib.Internal.Operators
 {

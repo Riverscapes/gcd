@@ -1,9 +1,6 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Collections.Generic;
 using System.Linq;
-using GCDConsoleLib.Internal;
-using GCDConsoleLib.GCD;
 using GCDConsoleLib.FIS;
 
 namespace GCDConsoleLib.Internal.Operators
@@ -15,8 +12,11 @@ namespace GCDConsoleLib.Internal.Operators
         RuleSet _RuleSet;
 
         /// <summary>
-        /// Pass-through constructure
+        /// Constructor
         /// </summary>
+        /// <param name="rInputs"></param>
+        /// <param name="fisFile"></param>
+        /// <param name="rOutput"></param>
         public FISRasterOp(Dictionary<string, Raster> rInputs, FileInfo fisFile, Raster rOutput) :
             base(rInputs.Values.ToList(), rOutput)
         {
@@ -38,8 +38,11 @@ namespace GCDConsoleLib.Internal.Operators
         }
 
         /// <summary>
-        /// This is the actual implementation of the cell-by-cell logic
+        ///  This is the actual implementation of the cell-by-cell logic
         /// </summary>
+        /// <param name="data"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
         protected override double CellOp(List<double[]> data, int id)
         {
             return FISCellOp(data, id);

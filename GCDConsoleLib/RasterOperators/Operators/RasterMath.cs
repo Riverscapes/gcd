@@ -12,7 +12,7 @@ namespace GCDConsoleLib.Internal.Operators
         private T _operand;
 
         /// <summary>
-        /// Pass-through constructor for Raster Math
+        /// Pass-through constructor for Raster Math with a scalar operand
         /// </summary>
         /// <param name="otType"></param>
         /// <param name="rInput"></param>
@@ -27,6 +27,13 @@ namespace GCDConsoleLib.Internal.Operators
             _operand = (T)Convert.ChangeType(dOperand, typeof(T));
         }
 
+        /// <summary>
+        /// This second constructor is for when we use two rasters
+        /// </summary>
+        /// <param name="otType"></param>
+        /// <param name="rInputA"></param>
+        /// <param name="rInputB"></param>
+        /// <param name="rOutputRaster"></param>
         public RasterMath(RasterOperators.MathOpType otType, Raster rInputA, 
             Raster rInputB, Raster rOutputRaster) :
             base(new List<Raster> { rInputA, rInputB }, rOutputRaster)
@@ -35,6 +42,12 @@ namespace GCDConsoleLib.Internal.Operators
             _scalar = false;
         }
 
+        /// <summary>
+        /// The actual cell-by-cell operations
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
         protected override T CellOp(List<T[]> data, int id)
         {
             T val = OpNodataVal;
@@ -44,6 +57,7 @@ namespace GCDConsoleLib.Internal.Operators
                 {
                     switch (_type)
                     {
+                        // Choose your math operation
                         case RasterOperators.MathOpType.Addition:
                             val = DynamicMath.Add(data[0][id],_operand);
                             break;
@@ -65,6 +79,7 @@ namespace GCDConsoleLib.Internal.Operators
                 {
                     switch (_type)
                     {
+                        // Choose your math operation
                         case RasterOperators.MathOpType.Addition:
                             val = DynamicMath.Add(data[0][id], data[1][id]);
                             break;

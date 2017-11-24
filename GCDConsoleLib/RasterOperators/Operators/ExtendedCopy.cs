@@ -6,8 +6,11 @@ namespace GCDConsoleLib.Internal.Operators
     public class ExtendedCopy<T> : CellByCellOperator<T>
     {
         /// <summary>
-        /// Pass-through constructor for Extended Copy
+        /// Constructor
         /// </summary>
+        /// <param name="rInput"></param>
+        /// <param name="rOutputRaster"></param>
+        /// <param name="newRect"></param>
         public ExtendedCopy(Raster rInput, Raster rOutputRaster, ExtentRectangle newRect) :
             base(new List<Raster> { rInput }, rOutputRaster)
         {
@@ -15,8 +18,11 @@ namespace GCDConsoleLib.Internal.Operators
         }
 
         /// <summary>
-        /// This is the actual implementation of the cell-by-cell logic
+        /// The actual cell operation
         /// </summary>
+        /// <param name="data"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
         protected override T CellOp(List<T[]> data, int id)
         {
             if (data[0][id].Equals(_rasternodatavals[0]))

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace GCDConsoleLib.Internal.Operators
 {
+    /// <summary>
+    /// We do Hillshade as a float on purpose since we need it to be fast and accuracy is less important
+    /// </summary>
     class Hillshade : WindowOverlapOperator<float>
     {
         private double azimuth, zFactor, altDeg, zenDeg, zenRad, azimuthMath, azimuthRad, aspectRad;
@@ -16,6 +19,9 @@ namespace GCDConsoleLib.Internal.Operators
             base(new List<Raster> { rInput }, 1, rOutputRaster)
         { }
 
+        /// <summary>
+        /// Give us a sensible default for shadow direction etc.
+        /// </summary>
         private void SetDefaultVars()
         {
             //setup default and zenith variables
@@ -32,6 +38,11 @@ namespace GCDConsoleLib.Internal.Operators
             azimuthRad = azimuthMath * Math.PI / 180;
         }
 
+        /// <summary>
+        /// The actual window operation
+        /// </summary>
+        /// <param name="wd"></param>
+        /// <returns></returns>
         protected override float WindowOp(List<float[]> wd)
         {
             // Don't calculate if we have nodatas in the mix
@@ -39,13 +50,13 @@ namespace GCDConsoleLib.Internal.Operators
                 if (wd[0][k].Equals(OpNodataVal))
                     return OpNodataVal;
 
-            double dzdx = (double)((wd[0][2] + (2 * wd[0][5]) + wd[0][8]) - (wd[0][0] + (2 * wd[0][3]) + wd[0][6])) / (8 * (double)Math.Abs(WindowExtent.CellHeight));
-            double dzdy = (double)((wd[0][6] + (2 * wd[0][7]) + wd[0][8]) - (wd[0][0] + (2 * wd[0][1]) + wd[0][2])) / (8 * (double)Math.Abs(WindowExtent.CellHeight));
+            float dzdx = ((wd[0][2] + (2 * wd[0][5]) + wd[0][8]) - (wd[0][0] + (2 * wd[0][3]) + wd[0][6])) / (8 * (float)Math.Abs(WindowExtent.CellHeight));
+            float dzdy = ((wd[0][6] + (2 * wd[0][7]) + wd[0][8]) - (wd[0][0] + (2 * wd[0][1]) + wd[0][2])) / (8 * (float)Math.Abs(WindowExtent.CellHeight));
             double slopeRad = Math.Atan(zFactor * Math.Sqrt(Math.Pow(dzdx, 2.0) + Math.Pow(dzdy, 2.0)));
 
             if (dzdx != 0)
             {
-                aspectRad = Math.Atan2((double)dzdy, (dzdx * (-1)));
+                aspectRad = Math.Atan2(dzdy, (dzdx * (-1)));
                 if (aspectRad < 0.0)
                     aspectRad = 2.0 * Math.PI + aspectRad;
             }

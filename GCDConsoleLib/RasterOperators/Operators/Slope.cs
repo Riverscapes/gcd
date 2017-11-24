@@ -6,10 +6,10 @@ namespace GCDConsoleLib.Internal.Operators
     /// <summary>
     /// Slope is a window-overlap function with a window size of (1) == 3x3 = 9 cells
     /// </summary>
-    class Slope : WindowOverlapOperator<float>
+    class Slope : WindowOverlapOperator<double>
     {
-        float dzdx, dzdy, dzxy, riseRun, cellWidth, cellHeight, retval, theSlope;
-        float[] _buff;
+        double dzdx, dzdy, dzxy, riseRun, cellWidth, cellHeight, retval, theSlope;
+        double[] _buff;
         public enum SlopeType: byte { Percent, Degrees};
         private SlopeType _slopetype;
 
@@ -23,8 +23,8 @@ namespace GCDConsoleLib.Internal.Operators
             base(new List<Raster> { rInput }, 1, rOutputRaster)
         {
             _slopetype = theType;
-            cellWidth = (float)Math.Abs(OpExtent.CellWidth);
-            cellHeight = (float)Math.Abs(OpExtent.CellHeight);
+            cellWidth = (double)Math.Abs(OpExtent.CellWidth);
+            cellHeight = (double)Math.Abs(OpExtent.CellHeight);
         }
 
         /// <summary>
@@ -32,12 +32,12 @@ namespace GCDConsoleLib.Internal.Operators
         /// </summary>
         /// <param name="fElev"></param>
         /// <returns></returns>
-        public float CalculateSlope(float[] fElev)
+        public double CalculateSlope(double[] fElev)
         {
             dzdx = ((fElev[2] - fElev[0]) + ((2 * fElev[5]) - (2 * fElev[3])) + (fElev[8] - fElev[6])) / (8 * cellWidth);
             dzdy = ((fElev[0] - fElev[6]) + ((2 * fElev[1]) - (2 * fElev[7])) + (fElev[2] - fElev[8])) / (8 * cellHeight);
-            dzxy = (float)Math.Pow(dzdx, 2.0) + (float)Math.Pow(dzdy, 2.0);
-            riseRun = (float)Math.Pow(dzxy, 0.5);
+            dzxy = Math.Pow(dzdx, 2.0) + Math.Pow(dzdy, 2.0);
+            riseRun = Math.Pow(dzxy, 0.5);
 
             return riseRun;
         }
@@ -45,9 +45,9 @@ namespace GCDConsoleLib.Internal.Operators
         /// <summary>
         /// Here's where the actual operation happens
         /// </summary>
-        /// <param name="wd">Window Data. A list of float arrays</param>
+        /// <param name="wd">Window Data. A list of double arrays</param>
         /// <returns></returns>
-        protected override float WindowOp(List<float[]> wd)
+        protected override double WindowOp(List<double[]> wd)
         {
             _buff = wd[0];
 
@@ -61,7 +61,7 @@ namespace GCDConsoleLib.Internal.Operators
             switch (_slopetype)
             {
                 case SlopeType.Degrees:
-                    retval = (float)Math.Atan(riseRun) * (180 / (float)Math.PI);
+                    retval = Math.Atan(riseRun) * (180 / Math.PI);
                     break;
                 case SlopeType.Percent:
                     retval = riseRun * 100;

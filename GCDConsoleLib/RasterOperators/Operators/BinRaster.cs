@@ -16,8 +16,10 @@ namespace GCDConsoleLib.Internal.Operators
         private int _segNumBins;
 
         /// <summary>
-        /// Pass-through constructure
+        /// Constructor
         /// </summary>
+        /// <param name="rInput"></param>
+        /// <param name="numBins"></param>
         public BinRaster(Raster rInput, int numBins) :
             base(new List<Raster> { rInput })
         {
@@ -26,8 +28,12 @@ namespace GCDConsoleLib.Internal.Operators
         }
 
         /// <summary>
-        /// Budget Seggregation constructor
+        ///  Budget Seggregation constructor
         /// </summary>
+        /// <param name="rInput"></param>
+        /// <param name="numBins"></param>
+        /// <param name="PolygonMask"></param>
+        /// <param name="FieldName"></param>
         public BinRaster(Raster rInput, int numBins, Vector PolygonMask,
             string FieldName) :
             base(new List<Raster> { rInput })
@@ -37,18 +43,6 @@ namespace GCDConsoleLib.Internal.Operators
             _polymask = PolygonMask;
             _fieldname = FieldName;
             _segNumBins = numBins;
-        }
-
-        protected override double CellOp(List<double[]> data, int id)
-        {
-            if (!data[0][id].Equals(_rasternodatavals[0]))
-                if (isBudgSeg)
-                    BudgetSegCellOp(data, id);
-                else
-                    theHistogram.AddBinVal(data[0][id]);
-
-            // We need to return something. Doesn't matter what
-            return 0;
         }
 
         /// <summary>
@@ -71,6 +65,24 @@ namespace GCDConsoleLib.Internal.Operators
                 }
 
             }
+        }
+
+        /// <summary>
+        /// The actual op on the cell
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        protected override double CellOp(List<double[]> data, int id)
+        {
+            if (!data[0][id].Equals(_rasternodatavals[0]))
+                if (isBudgSeg)
+                    BudgetSegCellOp(data, id);
+                else
+                    theHistogram.AddBinVal(data[0][id]);
+
+            // We need to return something. Doesn't matter what
+            return 0;
         }
 
     }

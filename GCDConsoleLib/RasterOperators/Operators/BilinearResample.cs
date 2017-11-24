@@ -11,8 +11,11 @@ namespace GCDConsoleLib.Internal.Operators
         decimal fx;
 
         /// <summary>
-        /// Pass-through constructor for Extended Copy
+        /// Constructor
         /// </summary>
+        /// <param name="rInput"></param>
+        /// <param name="newRect"></param>
+        /// <param name="rOutputRaster"></param>
         public BilinearResample(Raster rInput, ExtentRectangle newRect, Raster rOutputRaster) :
             base(new List<Raster> { rInput }, rOutputRaster)
         {
@@ -33,9 +36,11 @@ namespace GCDConsoleLib.Internal.Operators
         }
 
         /// <summary>
-        /// We need a way to go back and forth between
+        /// We need a way to go back and forth between new cooords and old ones
         /// </summary>
-        /// <param name="old"></param>
+        /// <param name="num"></param>
+        /// <param name="factor"></param>
+        /// <param name="size"></param>
         /// <returns></returns>
         public static int translateCoord(int num, decimal factor, int size)
         {
@@ -49,8 +54,7 @@ namespace GCDConsoleLib.Internal.Operators
         }
 
         /// <summary>
-        ///  We need to override the Run method because the input and output scales are different
-        ///  
+        ///  We need to override the Run() method because the input and output scales are different
         /// </summary>
         public new void Run()
         {
@@ -119,6 +123,10 @@ namespace GCDConsoleLib.Internal.Operators
             Cleanup();
         }
 
+        /// <summary>
+        /// This ensures we use the right Run()
+        /// </summary>
+        /// <returns></returns>
         public new Raster RunWithOutput()
         {
             Run();

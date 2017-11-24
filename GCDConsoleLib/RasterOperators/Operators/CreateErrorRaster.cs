@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using GCDConsoleLib.Internal;
 using GCDConsoleLib.GCD;
 
 namespace GCDConsoleLib.Internal.Operators
@@ -73,6 +72,36 @@ namespace GCDConsoleLib.Internal.Operators
         }
 
         /// <summary>
+        /// Based on what kind of error we have, operate on the cell
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="id"></param>
+        /// <param name="stats"></param>
+        public double CellChangeCalc(string propkey, List<double[]> data, int id)
+        {
+            switch (_props[propkey].TheType)
+            {
+                // This is easy. Just return a value from the correct raster
+                case ErrorRasterProperties.ERPType.ASSOC:
+                    return data[_assocRasters[propkey]][id];
+
+                // This is easy. Just return a single value
+                case ErrorRasterProperties.ERPType.UNIFORM:
+                    return (double)_props[propkey].UniformValue;
+
+                // For FIS we have to do a whole thing...
+                case ErrorRasterProperties.ERPType.FIS:
+                    _fisops[propkey].FISCellOp(data, id);
+                    break;
+
+                default:
+                    throw new ArgumentException("Type not found");
+            }
+            // we should never get this far
+            return OpNodataVal;
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="data"></param>
@@ -107,35 +136,6 @@ namespace GCDConsoleLib.Internal.Operators
             return OpNodataVal;
         }
 
-        /// <summary>
-        /// Based on what kind of error we have, operate on the cell
-        /// </summary>
-        /// <param name="data"></param>
-        /// <param name="id"></param>
-        /// <param name="stats"></param>
-        public double CellChangeCalc(string propkey, List<double[]> data, int id)
-        {
-            switch (_props[propkey].TheType)
-            {
-                // This is easy. Just return a value from the correct raster
-                case ErrorRasterProperties.ERPType.ASSOC:
-                    return data[_assocRasters[propkey]][id];
-
-                // This is easy. Just return a single value
-                case ErrorRasterProperties.ERPType.UNIFORM:
-                    return (double)_props[propkey].UniformValue;
-
-                // For FIS we have to do a whole thing...
-                case ErrorRasterProperties.ERPType.FIS:
-                    _fisops[propkey].FISCellOp(data, id);
-                    break;
-
-                default:
-                    throw new ArgumentException("Type not found");
-            }
-            // we should never get this far
-            return OpNodataVal;
-        }
     }
 
 }

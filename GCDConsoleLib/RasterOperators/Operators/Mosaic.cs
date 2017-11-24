@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using GCDConsoleLib.Internal;
+﻿using System.Collections.Generic;
 
 namespace GCDConsoleLib.Internal.Operators
 {
     public class Mosaic<T> : CellByCellOperator<T>
     {
         /// <summary>
-        /// Pass-through constructor
+        /// Constructor
         /// </summary>
+        /// <param name="rlInputs"></param>
+        /// <param name="rOutputRaster"></param>
         public Mosaic(List<Raster> rlInputs, Raster rOutputRaster) :
             base(rlInputs, rOutputRaster)
         { }
@@ -16,6 +16,9 @@ namespace GCDConsoleLib.Internal.Operators
         /// <summary>
         /// This is the actual implementation of the cell-by-cell logic
         /// </summary>
+        /// <param name="data"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
         protected override T CellOp(List<T[]> data, int id)
         {
             for (int did = 0; did < data.Count; did++)
