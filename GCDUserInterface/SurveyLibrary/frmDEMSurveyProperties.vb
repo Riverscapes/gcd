@@ -7,6 +7,8 @@ Namespace SurveyLibrary
         Private DEM As DEMSurvey
         Private m_ImportRasterform As frmImportRaster
 
+        Private AssocSurfaceBindingList As System.ComponentModel.BindingList(Of AssocSurface)
+
 #Region "Survey Property Routines"
 
         Public Sub New(editDEM As DEMSurvey)
@@ -51,6 +53,10 @@ Namespace SurveyLibrary
                 lblDatetime.Text = DEM.SurveyDate.ToString
             End If
 
+            AssocSurfaceBindingList = New System.ComponentModel.BindingList(Of AssocSurface)(DEM.AssocSurfaces.Values.ToList())
+
+            grdAssocSurface.DataSource = AssocSurfaceBindingList
+
             UpdateControls()
             LoadRasterProperties()
 
@@ -61,6 +67,10 @@ Namespace SurveyLibrary
             cmdAddDEMToMap.Visible = ProjectManager.IsArcMap
             cmdAddAssocToMap.Visible = ProjectManager.IsArcMap
             cmdAddErrorToMap.Visible = ProjectManager.IsArcMap
+
+            grdAssocSurface.AllowUserToResizeRows = False
+            grdAssocSurface.Columns(0).AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+            grdAssocSurface.Columns(1).AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
 
             'General Tooltips
             'ttpTooltip.SetToolTip(btnCancel, My.Resources.ttpCancel)
@@ -299,7 +309,8 @@ Namespace SurveyLibrary
 
                 Dim SurfaceForm As New frmAssocSurfaceProperties(DEM, Nothing)
                 If SurfaceForm.ShowDialog() = DialogResult.OK Then
-                    Throw New NotImplementedException("Need to refresh data grid view")
+                    AssocSurfaceBindingList.Add(SurfaceForm.AssociatedSurface)
+                    AssocSurfaceBindingList.ResetBindings()
                 End If
             End If
 

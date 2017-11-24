@@ -67,6 +67,8 @@
             Me.Label4 = New System.Windows.Forms.Label()
             Me.cmdDateTime = New System.Windows.Forms.Button()
             Me.lblDatetime = New System.Windows.Forms.Label()
+            Me.colName = New System.Windows.Forms.DataGridViewTextBoxColumn()
+            Me.colType = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.pgeErrors.SuspendLayout()
             CType(Me.grdErrorSurfaces, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.pgeSurfaces.SuspendLayout()
@@ -206,6 +208,7 @@
             DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
             Me.grdAssocSurface.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
             Me.grdAssocSurface.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+            Me.grdAssocSurface.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colName, Me.colType})
             DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
             DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
             DataGridViewCellStyle2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -496,6 +499,20 @@
             Me.lblDatetime.TabIndex = 3
             Me.lblDatetime.Text = "10 Dec 2012 23:59"
             '
+            'colName
+            '
+            Me.colName.DataPropertyName = "Name"
+            Me.colName.HeaderText = "Name"
+            Me.colName.Name = "colName"
+            Me.colName.ReadOnly = True
+            '
+            'colType
+            '
+            Me.colType.DataPropertyName = "AssocSurfaceType"
+            Me.colType.HeaderText = "Type"
+            Me.colType.Name = "colType"
+            Me.colType.ReadOnly = True
+            '
             'frmDEMSurveyProperties
             '
             Me.AcceptButton = Me.btnOK
@@ -576,6 +593,8 @@
         Friend WithEvents Label4 As System.Windows.Forms.Label
         Friend WithEvents cmdDateTime As System.Windows.Forms.Button
         Friend WithEvents lblDatetime As System.Windows.Forms.Label
+        Friend WithEvents colName As System.Windows.Forms.DataGridViewTextBoxColumn
+        Friend WithEvents colType As System.Windows.Forms.DataGridViewTextBoxColumn
     End Class
 
 End Namespace

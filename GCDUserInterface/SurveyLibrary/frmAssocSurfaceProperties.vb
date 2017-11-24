@@ -77,12 +77,15 @@ Namespace SurveyLibrary
                 btnRoughness.Visible = False
                 txtOriginalRaster.Width = txtName.Width
 
-                For i As Integer = 0 To cboType.Items.Count - 1
-                    If String.Compare(cboType.Items(i).ToString.Replace("(", "").Replace(")", ""), m_Assoc.AssocSurfaceType, True) = 0 Then
-                        cboType.SelectedIndex = i
-                        Exit For
-                    End If
-                Next
+                cboType.Text = m_Assoc.AssocSurfaceType
+
+
+                'For i As Integer = 0 To cboType.Items.Count - 1
+                '    If String.Compare(cboType.Items(i).ToString.Replace("(", "").Replace(")", ""), m_Assoc.AssocSurfaceType, True) = 0 Then
+                '        cboType.SelectedIndex = i
+                '        Exit For
+                '    End If
+                'Next
                 cboType.Select()
             End If
 
