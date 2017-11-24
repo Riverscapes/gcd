@@ -198,5 +198,9 @@ namespace GCDConsoleLib
             return mLayer.CreateField(fDef, 0); // 0 => Approx ok
         }
 
+        protected override void _initfromfile()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

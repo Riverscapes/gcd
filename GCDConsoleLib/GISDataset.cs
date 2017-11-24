@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using OSGeo.GDAL;
 
 namespace GCDConsoleLib
 {
@@ -10,7 +9,19 @@ namespace GCDConsoleLib
     public abstract class GISDataset : IDisposable
     {
         public FileInfo GISFileInfo { get; internal set; }
-        public Projection Proj;
+
+        private Projection _proj;
+        public Projection Proj
+        {
+            get
+            {
+                if (_proj == null && GISFileInfo.Exists)
+                    _initfromfile();
+                return _proj;
+            }
+            protected set { _proj = value; }
+        }
+
 
         public bool FileExists()
         {
@@ -25,6 +36,7 @@ namespace GCDConsoleLib
         public abstract void Copy(FileInfo destPath);
         public abstract void Delete();
         public abstract void Dispose();
+        protected abstract void _initfromfile();
 
         /// <summary>
         /// FileInfo does not refresh until you tell it to. Use this when you create or destroy a file

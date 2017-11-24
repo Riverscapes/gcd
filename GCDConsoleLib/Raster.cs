@@ -4,8 +4,7 @@ using System.Collections.Generic;
 using OSGeo.GDAL;
 using UnitsNet;
 using UnitsNet.Units;
-using GCDConsoleLib.Internal;
-using System.ComponentModel;
+using System.Diagnostics;
 
 namespace GCDConsoleLib
 {
@@ -13,31 +12,70 @@ namespace GCDConsoleLib
     {
         public enum RasterDriver : byte { GTiff, HFA }
         public LengthUnit VerticalUnits;
-        public bool bComputedStatistics { get; private set; }
+        private bool _bComputedStatistics { get; set; }
 
-        public double? origNodataVal { get; set; }
+        private double? _origNodata;
+        public double? origNodataVal
+        {
+            get
+            {
+                if (!IsLoaded && GISFileInfo.Exists)
+                    _initfromfile();
+                return _origNodata;
+            }
+            set { _origNodata = value; }
+        }
         public bool HasNodata { get { return origNodataVal != null; } }
+        public bool IsOpen { get { return _ds != null; } }
+        public bool IsLoaded { get { return _extent != null; } }
 
-        public ExtentRectangle Extent;
-        public RasterDriver driver;
+        private GdalDataType _gdalDataType;
+        public GdalDataType Datatype
+        {
+            get
+            {
+                if (!IsLoaded && GISFileInfo.Exists)
+                    _initfromfile();
+                return _gdalDataType;
+            }
+            private set { _gdalDataType = value; }
+        }
+
+
+        private ExtentRectangle _extent;
+        public ExtentRectangle Extent
+        {
+            get
+            {
+                if (!IsLoaded && GISFileInfo.Exists)
+                    _initfromfile();
+                return _extent;
+            }
+            set { _extent = value; }
+        }
+
+        private RasterDriver _driver;
+        public RasterDriver driver
+        {
+            get
+            {
+                if (!IsLoaded && GISFileInfo.Exists)
+                    _initfromfile();
+                return _driver;
+            }
+            set { _driver = value; }
+        }
 
         // We store the following in the guts since they are used there a lot
-        protected Dataset ds { get; private set; }
-        public GdalDataType Datatype { get; private set; }
-        public bool IsOpen { get { return ds != null; } }
+        private Dataset _ds { get; set; }
         private bool _writepermission;
-
 
         /// <summary>
         /// Constructor for opening an existing Raster
         /// </summary>
-        /// <param name="sfilepath"></param>
-        public Raster(FileInfo sfilepath) : base(sfilepath)
-        {
-            _initfromfile();
-            // Remember to clean things up afterwards
-            Dispose();
-        }
+        /// <param name="sFileInfo"></param>
+        public Raster(FileInfo sFileInfo) : base(sFileInfo)
+        { }
 
         /// <summary>
         /// Constructor to create a new raster file
@@ -118,19 +156,24 @@ namespace GCDConsoleLib
         /// <summary>
         /// Load all relevant settings from a file
         /// </summary>
-        private void _initfromfile()
+        protected override void _initfromfile()
         {
+            bool leaveOpen = IsOpen;
             Open();
-            Band rBand1 = ds.GetRasterBand(1);
+
+            Band rBand1 = _ds.GetRasterBand(1);
             GdalDataType dType = new GdalDataType(rBand1.DataType);
 
-            string sDriver = ds.GetDriver().ShortName;
-            ExtentRectangle theExtent = new ExtentRectangle(ds);
+            string sDriver = _ds.GetDriver().ShortName;
+            ExtentRectangle theExtent = new ExtentRectangle(_ds);
 
             _Init(_str2driver(sDriver),
                 UnitFromString(rBand1.GetUnitType()),
-                new Projection(ds.GetProjection()),
+                new Projection(_ds.GetProjection()),
                 dType, theExtent, GetNodataVal());
+
+            if (!leaveOpen)
+                Dispose();
         }
 
         /// <summary>
@@ -162,10 +205,10 @@ namespace GCDConsoleLib
             }
             Driver driverobj = Gdal.GetDriverByName(Enum.GetName(typeof(Raster.RasterDriver), driver));
 
-            ds = driverobj.Create(finfo.FullName, theExtent.cols, theExtent.rows, 1, theType._origType, creationOpts.ToArray());
-            ds.SetGeoTransform(theExtent.Transform);
-            ds.SetProjection(proj.OriginalString);
-            Band band = ds.GetRasterBand(1);
+            _ds = driverobj.Create(finfo.FullName, theExtent.cols, theExtent.rows, 1, theType._origType, creationOpts.ToArray());
+            _ds.SetGeoTransform(theExtent.Transform);
+            _ds.SetProjection(proj.OriginalString);
+            Band band = _ds.GetRasterBand(1);
             if (HasNodata)
                 band.SetNoDataValue((double)origNodataVal);
         }
@@ -192,7 +235,7 @@ namespace GCDConsoleLib
             Open();
             int hasndval;
             double nodatval;
-            ds.GetRasterBand(1).GetNoDataValue(out nodatval, out hasndval);
+            _ds.GetRasterBand(1).GetNoDataValue(out nodatval, out hasndval);
             double? ndv = null;
             if (hasndval == 1)
                 ndv = (double?)nodatval;
@@ -254,8 +297,8 @@ namespace GCDConsoleLib
             GdalConfiguration.ConfigureGdal();
             if (GISFileInfo.Exists)
             {
-                ds = Gdal.Open(GISFileInfo.FullName, permission);
-                if (ds == null)
+                _ds = Gdal.Open(GISFileInfo.FullName, permission);
+                if (_ds == null)
                     throw new ArgumentException("Can't open " + GISFileInfo);
             }
             else
@@ -265,7 +308,7 @@ namespace GCDConsoleLib
         /// <summary>
         /// Just a quick check to see if two rasters are equivalent in terms of meta data
         /// </summary>
-        /// <param name=""></param>
+        /// <param name="Raster2"></param>
         /// <returns></returns>
         public bool IsMetaSame(Raster Raster2)
         {
@@ -279,8 +322,10 @@ namespace GCDConsoleLib
         }
 
         /// <summary>
-        /// We're just going to scream if any of our inputs are in the wrong format
+        ///  We're just going to scream if any of our inputs are in the wrong format
         /// </summary>
+        /// <param name="rR1"></param>
+        /// <param name="rR2"></param>
         public static void ValidateSameMeta(Raster rR1, Raster rR2)
         {
             if (rR1.Extent.CellHeight != rR2.Extent.CellHeight)
@@ -300,10 +345,10 @@ namespace GCDConsoleLib
         /// </summary>
         public override void Dispose()
         {
-            if (ds != null)
+            if (_ds != null)
             {
-                ds.Dispose();
-                ds = null;
+                _ds.Dispose();
+                _ds = null;
                 RefreshFileInfo();
             }
         }
@@ -334,7 +379,7 @@ namespace GCDConsoleLib
         public override void Copy(FileInfo destPath)
         {
             Open();
-            ds.GetDriver().CopyFiles(destPath.FullName, GISFileInfo.FullName);
+            _ds.GetDriver().CopyFiles(destPath.FullName, GISFileInfo.FullName);
             Dispose();
             RefreshFileInfo();
         }
@@ -356,7 +401,7 @@ namespace GCDConsoleLib
         public override void Delete()
         {
             Open();
-            Driver drv = ds.GetDriver();
+            Driver drv = _ds.GetDriver();
             Dispose();
             drv.Delete(GISFileInfo.FullName);
             drv.Dispose();
@@ -383,16 +428,16 @@ namespace GCDConsoleLib
         /// </summary>
         public virtual void ComputeStatistics(bool bForce = false)
         {
-            if (bForce || !bComputedStatistics)
+            if (bForce || !_bComputedStatistics)
             {
                 Open(true);
                 double min, max, mean, std;
                 try
                 {
-                    ds.GetRasterBand(1).ComputeStatistics(false, out min, out max, out mean, out std, null, null);
+                    _ds.GetRasterBand(1).ComputeStatistics(false, out min, out max, out mean, out std, null, null);
                 }
                 catch { }
-                bComputedStatistics = true;
+                _bComputedStatistics = true;
             }
         }
 
@@ -422,7 +467,7 @@ namespace GCDConsoleLib
             for (int a = 0; a < nLevelCount; a++)
                 levels[a] = anLevels[a];
 
-            if (ds.BuildOverviews(method, levels, null, null) == (int)CPLErr.CE_Failure)
+            if (_ds.BuildOverviews(method, levels, null, null) == (int)CPLErr.CE_Failure)
                 throw new InvalidDataException("Pyramids could not be built for this dataset");
 
             Dispose();
@@ -437,7 +482,7 @@ namespace GCDConsoleLib
         {
             Open();
             double dMin, dMax, dMean, dStdDev;
-            ds.GetRasterBand(1).GetStatistics(0, 1, out dMin, out dMax, out dMean, out dStdDev);
+            _ds.GetRasterBand(1).GetStatistics(0, 1, out dMin, out dMax, out dMean, out dStdDev);
             Dictionary<string, decimal> output = new Dictionary<string, decimal>()  {
                 {"min", (decimal)dMin},
                 {"max", (decimal)dMax},
@@ -537,13 +582,13 @@ namespace GCDConsoleLib
         {
             Open(true);
             if (typeof(T) == typeof(float))
-                ds.GetRasterBand(1).WriteRaster(xOff, yOff, xSize, ySize, buffer as float[], xSize, ySize, 0, 0);
+                _ds.GetRasterBand(1).WriteRaster(xOff, yOff, xSize, ySize, buffer as float[], xSize, ySize, 0, 0);
             else if (typeof(T) == typeof(double))
-                ds.GetRasterBand(1).WriteRaster(xOff, yOff, xSize, ySize, buffer as double[], xSize, ySize, 0, 0);
+                _ds.GetRasterBand(1).WriteRaster(xOff, yOff, xSize, ySize, buffer as double[], xSize, ySize, 0, 0);
             else if (typeof(T) == typeof(int))
-                ds.GetRasterBand(1).WriteRaster(xOff, yOff, xSize, ySize, buffer as int[], xSize, ySize, 0, 0);
+                _ds.GetRasterBand(1).WriteRaster(xOff, yOff, xSize, ySize, buffer as int[], xSize, ySize, 0, 0);
             else if (typeof(T) == typeof(byte))
-                ds.GetRasterBand(1).WriteRaster(xOff, yOff, xSize, ySize, buffer as byte[], xSize, ySize, 0, 0);
+                _ds.GetRasterBand(1).WriteRaster(xOff, yOff, xSize, ySize, buffer as byte[], xSize, ySize, 0, 0);
             else
                 throw new Exception("Unsupported type");
         }
@@ -561,13 +606,13 @@ namespace GCDConsoleLib
         {
             Open();
             if (typeof(T) == typeof(float))
-                ds.GetRasterBand(1).ReadRaster(xOff, yOff, xSize, ySize, buffer as float[], xSize, ySize, 0, 0);
+                _ds.GetRasterBand(1).ReadRaster(xOff, yOff, xSize, ySize, buffer as float[], xSize, ySize, 0, 0);
             else if (typeof(T) == typeof(double))
-                ds.GetRasterBand(1).ReadRaster(xOff, yOff, xSize, ySize, buffer as double[], xSize, ySize, 0, 0);
+                _ds.GetRasterBand(1).ReadRaster(xOff, yOff, xSize, ySize, buffer as double[], xSize, ySize, 0, 0);
             else if (typeof(T) == typeof(int))
-                ds.GetRasterBand(1).ReadRaster(xOff, yOff, xSize, ySize, buffer as int[], xSize, ySize, 0, 0);
+                _ds.GetRasterBand(1).ReadRaster(xOff, yOff, xSize, ySize, buffer as int[], xSize, ySize, 0, 0);
             else if (typeof(T) == typeof(byte))
-                ds.GetRasterBand(1).ReadRaster(xOff, yOff, xSize, ySize, buffer as byte[], xSize, ySize, 0, 0);
+                _ds.GetRasterBand(1).ReadRaster(xOff, yOff, xSize, ySize, buffer as byte[], xSize, ySize, 0, 0);
             else
                 throw new Exception("Unsupported type");
         }

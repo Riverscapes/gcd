@@ -16,7 +16,43 @@ namespace GCDConsoleLib.Tests
             Assert.IsFalse(rTemplateRaster.IsOpen);
             Assert.IsTrue(rTemplateRaster.Datatype.Equals(FakeRaster<float>.floatType));
             Assert.IsFalse(rTemplateRaster.IsOpen);
+        }
+
+        [TestMethod()]
+        public void RasterInitLazyTest()
+        {
+            Raster rTemplateRaster = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("Slopey980-950.tif")));
+            Assert.IsFalse(rTemplateRaster.IsOpen);
+            Assert.IsFalse(rTemplateRaster.IsLoaded);
+
+            // Now do somethign with the extent
+            double nodataval = (double)rTemplateRaster.origNodataVal;
+            Assert.IsFalse(rTemplateRaster.IsOpen);
+            Assert.IsTrue(rTemplateRaster.IsLoaded);
+
+            // Reset and try again
             rTemplateRaster = null;
+
+            rTemplateRaster = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("Slopey980-950.tif")));
+            Assert.IsFalse(rTemplateRaster.IsOpen);
+            Assert.IsFalse(rTemplateRaster.IsLoaded);
+
+            // Now do somethign with the extent
+            ExtentRectangle extrect = rTemplateRaster.Extent;
+            Assert.IsFalse(rTemplateRaster.IsOpen);
+            Assert.IsTrue(rTemplateRaster.IsLoaded);
+
+            // Reset and try again
+            rTemplateRaster = null;
+
+            rTemplateRaster = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("Slopey980-950.tif")));
+            Assert.IsFalse(rTemplateRaster.IsOpen);
+            Assert.IsFalse(rTemplateRaster.IsLoaded);
+
+            // Now do somethign with the extent
+            Projection proj = rTemplateRaster.Proj;
+            Assert.IsFalse(rTemplateRaster.IsOpen);
+            Assert.IsTrue(rTemplateRaster.IsLoaded);
         }
 
         [TestMethod()]
