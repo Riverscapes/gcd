@@ -213,25 +213,7 @@
     <Compile Include="SurveyLibrary\frmSurveyDateTime.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UtilityForms\frmInformation.Designer.vb">
-      <DependentUpon>frmInformation.vb</DependentUpon>
-    </Compile>
-    <Compile Include="UtilityForms\frmInformation.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UtilityForms\ucOutputBase.Designer.vb">
-      <DependentUpon>ucOutputBase.vb</DependentUpon>
-    </Compile>
-    <Compile Include="UtilityForms\ucOutputBase.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="UtilityForms\ucRasterInput.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UtilityForms\ucRasterOutput.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UtilityForms\ucVectorInput.vb">
       <SubType>UserControl</SubType>
     </Compile>
   </ItemGroup>
@@ -304,12 +286,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SurveyLibrary\frmSurveyDateTime.resx">
       <DependentUpon>frmSurveyDateTime.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UtilityForms\frmInformation.resx">
-      <DependentUpon>frmInformation.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UtilityForms\ucOutputBase.resx">
-      <DependentUpon>ucOutputBase.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

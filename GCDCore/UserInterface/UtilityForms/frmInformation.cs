@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace GCDCore.UserInterface
+namespace GCDCore.UserInterface.UtilityForms
 {
     public partial class frmInformation : Form
     {

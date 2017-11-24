@@ -785,7 +785,7 @@ Namespace SurveyLibrary
         End Sub
 
         Private Sub cmdHelpPrecision_Click(sender As System.Object, e As System.EventArgs) Handles cmdHelpPrecision.Click
-            Dim frm As New UtilityForms.frmInformation
+            Dim frm As New GCDCore.UserInterface.UtilityForms.frmInformation
             frm.InitializeFixedDialog("Horizontal Decimal Precision", GCDCore.Properties.Resources.PrecisionHelp)
             frm.ShowDialog()
         End Sub

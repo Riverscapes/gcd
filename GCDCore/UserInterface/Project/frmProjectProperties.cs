@@ -324,7 +324,7 @@ namespace GCDCore.UserInterface.Project
 
         private void cmdHelpPrecision_Click(System.Object sender, System.EventArgs e)
         {
-            frmInformation frm = new frmInformation();
+            UtilityForms.frmInformation frm = new UtilityForms.frmInformation();
             frm.InitializeFixedDialog("Horizontal Decimal Precision", GCDCore.Properties.Resources.PrecisionHelp);
             frm.ShowDialog();
         }

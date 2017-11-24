@@ -35,7 +35,7 @@
             Me.GroupBox1 = New System.Windows.Forms.GroupBox()
             Me.Label3 = New System.Windows.Forms.Label()
             Me.cboNeighbourhood = New System.Windows.Forms.ComboBox()
-            Me.ucPointCloud = New UtilityForms.ucVectorInput
+            Me.ucPointCloud = New GCDCore.UserInterface.UtilityForms.ucVectorInput
             CType(Me.valSampleDistance, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.GroupBox1.SuspendLayout()
             Me.SuspendLayout()
@@ -174,7 +174,7 @@
         Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
         Friend WithEvents Label3 As System.Windows.Forms.Label
         Friend WithEvents cboNeighbourhood As System.Windows.Forms.ComboBox
-        Friend WithEvents ucPointCloud As UtilityForms.ucVectorInput
+        Friend WithEvents ucPointCloud As GCDCore.UserInterface.UtilityForms.ucVectorInput
     End Class
 
 End Namespace

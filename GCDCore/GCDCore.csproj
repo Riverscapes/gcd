@@ -102,10 +102,10 @@
     <Compile Include="UserInterface\About\ucAcknowledgements.Designer.cs">
       <DependentUpon>ucAcknowledgements.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserInterface\frmInformation.cs">
+    <Compile Include="UserInterface\UtilityForms\frmInformation.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UserInterface\frmInformation.Designer.cs">
+    <Compile Include="UserInterface\UtilityForms\frmInformation.Designer.cs">
       <DependentUpon>frmInformation.cs</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\Project\frmProjectProperties.cs">
@@ -115,6 +115,9 @@
       <DependentUpon>frmProjectProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\Project\ProjectTreeNode.cs" />
+    <Compile Include="UserInterface\UtilityForms\ucVectorInput.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Visualization\DoDHistogramViewerClass.cs" />
     <Compile Include="Visualization\ElevationChangeBarViewer.cs" />
     <Compile Include="Visualization\ElevationChangeDataPoint.cs" />
@@ -221,7 +224,7 @@
     <EmbeddedResource Include="UserInterface\About\ucAcknowledgements.resx">
       <DependentUpon>ucAcknowledgements.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserInterface\frmInformation.resx">
+    <EmbeddedResource Include="UserInterface\UtilityForms\frmInformation.resx">
       <DependentUpon>frmInformation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\Project\frmProjectProperties.resx">

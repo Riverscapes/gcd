@@ -1,4 +1,4 @@
-﻿namespace GCDCore.UserInterface
+﻿namespace GCDCore.UserInterface.UtilityForms
 {
     partial class frmInformation
     {
