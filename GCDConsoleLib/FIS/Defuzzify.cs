@@ -98,7 +98,7 @@
         /// <param name="ptA"></param>
         /// <param name="ptB"></param>
         /// <returns></returns>
-        public static double Moment(double[] ptA, double [] ptB)
+        public static double Moment(double[] ptA, double[] ptB)
         {
             double x1 = ptA[0];
             double x2 = ptB[0];
@@ -136,12 +136,12 @@
             double[] areas = new double[mf.Length];
 
             // Find the area of each segment
-            for (int i = 0; i < mf.Length-1; i++)
+            for (int i = 0; i < mf.Length - 1; i++)
             {
                 double x1 = mf.Coords[i][0];
-                double x2 = mf.Coords[i+1][0];
+                double x2 = mf.Coords[i + 1][0];
                 double y1 = mf.Coords[i][1];
-                double y2 = mf.Coords[i+1][1];
+                double y2 = mf.Coords[i + 1][1];
                 areas[i] = 0.5 * (x2 - x1) * (y1 + y2);
                 areaTotal += areas[i];
             }
@@ -156,13 +156,13 @@
             // This is our accumulating area
             double tmpArea = 0;
 
-            for (int i = 0; i < mf.Length-1; i++)
+            for (int i = 0; i < mf.Length - 1; i++)
             {
                 // Get the area of this segment
                 m = areas[i];
-
+                x = xMax = mf.Coords[i][0];
                 // Add points in until we cross over to the haldway point
-                if (tmpArea + m < halfArea)
+                if (tmpArea + m <= halfArea)
                     tmpArea += m;
                 // Cut the distance in hald until we are reasonable close to the point we want
                 else
@@ -170,13 +170,12 @@
                     xMin = mf.Coords[i][0];
                     xMax = mf.Coords[i + 1][0];
                     yLast = mf.Coords[i][1];
-                    x = xMax;
                     while (halfArea - tmpArea > 0.000001)
                     {
-                        x = ((xMax - xMin) / 2) + xMin;
+                        x = xMin + ((xMax - xMin) / 2);
                         y = mf.fuzzify(x);
 
-                        m = 0.5 * (x - xMin) * (yLast + y);
+                        m = Area(new double[2] { xMin, yLast }, new double[2] { x, y });
 
                         if (tmpArea + m > halfArea)
                             xMax = x;
@@ -187,6 +186,7 @@
                             xMin = x;
                         }
                     }
+                    break;
                 }
             }
             return x;
@@ -216,7 +216,7 @@
                     maxX = mf.Coords[i][0];
                 }
             }
-            return (maxX - minX) / 2;
+            return minX + (maxX - minX) / 2;
         }
 
         /// <summary>
