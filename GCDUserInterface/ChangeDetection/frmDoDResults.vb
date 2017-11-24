@@ -19,6 +19,9 @@ Namespace ChangeDetection
             txtDoDName.Text = DoD.Name
             ucProperties.Initialize(DoD)
 
+            ' Select the tab control to make it easy for user to quickly pan results
+            tabProperties.Select()
+
         End Sub
 
         Private Sub DoDResultsForm_Load(sender As Object, e As System.EventArgs) Handles Me.Load

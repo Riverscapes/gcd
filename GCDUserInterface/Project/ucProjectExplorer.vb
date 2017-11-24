@@ -98,20 +98,20 @@ Namespace Project
                     Dim nodSurvey As TreeNode = nodSurveysGroup.Nodes.Add(GCDNodeTypes.DEMSurvey & "_" & dem.Name, dem.Name, GCDNodeTypes.DEMSurvey)
                     nodSurvey.Tag = New ProjectTreeNode(GCDNodeTypes.DEMSurvey, dem)
                     nodSurvey.SelectedImageIndex = nodSurvey.ImageIndex
-                    If nodSurvey.Tag = sSelectedNodeTag Then tre.SelectedNode = nodSurvey
+                    If nodSurvey.Tag.ToString = sSelectedNodeTag Then tre.SelectedNode = nodSurvey
                     Dim bExpandSurveyNode As Boolean = False
 
                     ' Associated surfaces
                     Dim nodAssocGroup As TreeNode = nodSurvey.Nodes.Add(GCDNodeTypes.AssociatedSurfaceGroup.ToString, m_sAssocSurfaces, GCDNodeTypes.AssociatedSurfaceGroup)
                     nodAssocGroup.Tag = GCDNodeTypes.AssociatedSurfaceGroup.ToString
                     nodAssocGroup.SelectedImageIndex = nodAssocGroup.ImageIndex
-                    If nodAssocGroup.Tag = sSelectedNodeTag Then tre.SelectedNode = nodAssocGroup
+                    If nodAssocGroup.Tag.ToString = sSelectedNodeTag Then tre.SelectedNode = nodAssocGroup
 
                     For Each assoc As AssocSurface In dem.AssocSurfaces.Values
                         Dim nodAssoc As TreeNode = nodAssocGroup.Nodes.Add(GCDNodeTypes.AssociatedSurface.ToString & "_" & assoc.Name, assoc.Name, GCDNodeTypes.AssociatedSurface)
                         nodAssoc.Tag = New ProjectTreeNode(GCDNodeTypes.AssociatedSurface, assoc)
                         nodAssoc.SelectedImageIndex = nodAssoc.ImageIndex
-                        If nodAssoc.Tag = sSelectedNodeTag Then tre.SelectedNode = nodAssoc
+                        If nodAssoc.Tag.ToString = sSelectedNodeTag Then tre.SelectedNode = nodAssoc
                         bExpandSurveyNode = True
                     Next
 
@@ -125,7 +125,7 @@ Namespace Project
                         Dim nodError As TreeNode = nodErrorGroup.Nodes.Add(GCDNodeTypes.ErrorSurface.ToString & "_" & errSurf.Name, errSurf.Name, GCDNodeTypes.ErrorSurface)
                         nodError.Tag = New ProjectTreeNode(GCDNodeTypes.ErrorSurface, errSurf)
                         nodError.SelectedImageIndex = nodError.ImageIndex
-                        If nodError.Tag = sSelectedNodeTag Then tre.SelectedNode = nodError
+                        If nodError.Tag.ToString = sSelectedNodeTag Then tre.SelectedNode = nodError
                         bExpandSurveyNode = True
                     Next
 

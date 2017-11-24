@@ -64,7 +64,7 @@ namespace GCDCore.Project
             SpatialCoherence = spatCoProps;
         }
 
-        new public void Serialize(XmlDocument xmlDoc, XmlNode nodParent)
+         public override XmlNode Serialize(XmlDocument xmlDoc, XmlNode nodParent)
         {
             XmlNode nodDod = base.Serialize(xmlDoc, nodParent);
             nodDod.InsertBefore(xmlDoc.CreateElement("ConfidenceLevel"), nodDod.SelectSingleNode("Statistics")).InnerText = ConfidenceLevel.ToString("R");
@@ -92,6 +92,8 @@ namespace GCDCore.Project
                 nodSpatCo.AppendChild(xmlDoc.CreateElement("InflectionA")).InnerText = SpatialCoherence.InflectionA.ToString();
                 nodSpatCo.AppendChild(xmlDoc.CreateElement("InflectionB")).InnerText = SpatialCoherence.InflectionB.ToString();
             }
+
+            return nodDod;
         }
 
         new public static DoDProbabilistic Deserialize(XmlNode nodDoD, Dictionary<string, DEMSurvey> dems)

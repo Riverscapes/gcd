@@ -69,7 +69,7 @@ namespace GCDCore.Project
             return BudgetSegregations.ContainsKey(name) ? BudgetSegregations[name] == ignore : true;
         }
 
-        public XmlNode Serialize(XmlDocument xmlDoc, XmlNode nodParent)
+        public virtual XmlNode Serialize(XmlDocument xmlDoc, XmlNode nodParent)
         {
             XmlNode nodDoD = nodParent.AppendChild(xmlDoc.CreateElement("DoD"));
             nodDoD.AppendChild(xmlDoc.CreateElement("Name")).InnerText = Name;
@@ -84,9 +84,12 @@ namespace GCDCore.Project
 
             SerializeDoDStatistics(xmlDoc, nodDoD.AppendChild(xmlDoc.CreateElement("Statistics")), Statistics);
 
-            XmlNode nodBS = nodParent.AppendChild(xmlDoc.CreateElement("BudgetSegregations"));
-            foreach (BudgetSegregation bs in BudgetSegregations.Values)
-                bs.Serialize(xmlDoc, nodBS);
+            if (BudgetSegregations.Count > 0)
+            {
+                XmlNode nodBS = nodParent.AppendChild(xmlDoc.CreateElement("BudgetSegregations"));
+                foreach (BudgetSegregation bs in BudgetSegregations.Values)
+                    bs.Serialize(xmlDoc, nodBS);
+            }
 
             // Return this so inherited classes can append to it.
             return nodDoD;
@@ -131,11 +134,13 @@ namespace GCDCore.Project
 
             DoDBase dod = new DoDBase(name, folder, newDEM, oldDEM, rawDoD, thrDoD, new HistogramPair(rawHis, thrHis), summar, stats);
 
-            foreach (XmlNode nodBS in nodDoD.SelectNodes("BudgetSegregations/BudgetSegregation"))
-            {
-                BudgetSegregation bs = BudgetSegregation.Deserialize(nodBS, dod);
-                dod.BudgetSegregations[bs.Name] = bs;
-            }
+            XmlNode nodBSes = nodDoD.SelectSingleNode("BudgetSegregations");
+            if (nodBSes is XmlNode)
+                foreach (XmlNode nodBS in nodBSes.SelectNodes("BudgetSegregation"))
+                {
+                    BudgetSegregation bs = BudgetSegregation.Deserialize(nodBS, dod);
+                    dod.BudgetSegregations[bs.Name] = bs;
+                }
 
             return dod;
         }
@@ -155,7 +160,7 @@ namespace GCDCore.Project
         {
             UnitsNet.Area AreaErosion_Raw = UnitsNet.Area.From(double.Parse(nodStatistics.SelectSingleNode("Erosion/Raw/Area").InnerText), units.ArUnit);
             UnitsNet.Area AreaDeposit_Raw = UnitsNet.Area.From(double.Parse(nodStatistics.SelectSingleNode("Deposition/Raw/Area").InnerText), units.ArUnit);
-            UnitsNet.Area AreaErosion_Thr = UnitsNet.Area.From(double.Parse(nodStatistics.SelectSingleNode("ErosionThr/Area").InnerText), units.ArUnit);
+            UnitsNet.Area AreaErosion_Thr = UnitsNet.Area.From(double.Parse(nodStatistics.SelectSingleNode("Erosion/Thresholded/Area").InnerText), units.ArUnit);
             UnitsNet.Area AreaDeposit_Thr = UnitsNet.Area.From(double.Parse(nodStatistics.SelectSingleNode("Deposition/Thresholded/Area").InnerText), units.ArUnit);
 
             UnitsNet.Volume VolErosion_Raw = UnitsNet.Volume.From(double.Parse(nodStatistics.SelectSingleNode("Erosion/Raw/Volume").InnerText), units.VolUnit);

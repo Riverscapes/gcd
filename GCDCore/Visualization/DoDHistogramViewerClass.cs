@@ -75,6 +75,9 @@ namespace GCDCore.Visualization
             _with2.MajorGrid.LineColor = Color.LightSlateGray;
             _with2.MinorTickMark.Enabled = true;
 
+            m_Raw = new Dictionary<double, ElevationChangeDataPoint>();
+            m_Thresholded = new Dictionary<double, ElevationChangeDataPoint>();
+
             UpdateDisplay(true, DataUnits);
         }
 

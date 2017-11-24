@@ -91,10 +91,10 @@ namespace GCDCore.Visualization
             switch (eType)
             {
                 case BarTypes.Area:
-                    sYAxisLabel = string.Format("Area ({0}²)", sDisplayUnitsAbbreviation);
+                    sYAxisLabel = string.Format("Area ({0})", sDisplayUnitsAbbreviation);
                     break;
                 case BarTypes.Volume:
-                    sYAxisLabel = string.Format("Volume ({0}³)", sDisplayUnitsAbbreviation);
+                    sYAxisLabel = string.Format("Volume ({0})", sDisplayUnitsAbbreviation);
                     break;
                 case BarTypes.Vertical:
                     sYAxisLabel = string.Format("Elevation ({0})", sDisplayUnitsAbbreviation);

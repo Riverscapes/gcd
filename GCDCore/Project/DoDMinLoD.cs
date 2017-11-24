@@ -41,10 +41,11 @@ namespace GCDCore.Project
             Threshold = threshold;
         }
 
-        new public void Serialize(XmlDocument xmlDoc, XmlNode nodParent)
+        public override XmlNode Serialize(XmlDocument xmlDoc, XmlNode nodParent)
         {
             XmlNode nodDoD = base.Serialize(xmlDoc, nodParent);
             nodDoD.InsertBefore(xmlDoc.CreateElement("Threshold"), nodDoD.SelectSingleNode("Statistics")).InnerText = Threshold.ToString();
+            return nodDoD;
         }
 
         new public static DoDMinLoD Deserialize(XmlNode nodDoD, Dictionary<string, DEMSurvey> dems)

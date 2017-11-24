@@ -24,8 +24,7 @@ Namespace ChangeDetection
             If TypeOf dod Is DoDMinLoD Then
                 txtType.Text = "Minimum Level of Detection (MinLod)"
                 With DirectCast(dod, DoDMinLoD)
-                    txtThreshold.Text = .Threshold
-                    txtThreshold.Text = String.Format("{0:0.00}{1}", ProjectManager.Project.Units.VertUnit, UnitsNet.Length.GetAbbreviation(ProjectManager.Project.Units.VertUnit))
+                    txtThreshold.Text = String.Format("{0:0.00}{1}", .Threshold, UnitsNet.Length.GetAbbreviation(ProjectManager.Project.Units.VertUnit))
                 End With
             Else
                 txtType.Text = "Propagated Error"

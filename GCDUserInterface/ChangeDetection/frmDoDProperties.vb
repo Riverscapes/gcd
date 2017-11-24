@@ -139,16 +139,19 @@ Namespace ChangeDetection
 
             If String.IsNullOrEmpty(txtName.Text) OrElse String.IsNullOrEmpty(txtName.Text.Trim) Then
                 MsgBox("Please enter a name for the analysis.", MsgBoxStyle.Information, GCDCore.Properties.Resources.ApplicationNameLong)
+                txtName.Select()
                 Return False
             End If
 
             If IO.Directory.Exists(txtOutputFolder.Text) Then
                 MsgBox("An analysis folder with the same output path already exists. Please change the analysis name so that a different output folder will be used.", MsgBoxStyle.Information, GCDCore.Properties.Resources.ApplicationNameLong)
+                txtName.Select()
                 Return False
             End If
 
             If Not ProjectManager.Project.IsDoDNameUnique(txtName.Text, Nothing) Then
                 MsgBox("A change detection already exists with this name. Please choose a unique name.", MsgBoxStyle.Information, GCDCore.Properties.Resources.ApplicationNameLong)
+                txtName.Select()
                 Return False
             End If
 

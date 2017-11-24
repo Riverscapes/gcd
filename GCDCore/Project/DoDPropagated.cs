@@ -30,7 +30,7 @@ namespace GCDCore.Project
             PropagatedError = new ProjectRaster(propError);
         }
 
-        new public XmlNode Serialize(XmlDocument xmlDoc, XmlNode nodParent)
+        public override XmlNode Serialize(XmlDocument xmlDoc, XmlNode nodParent)
         {
             XmlNode nodDoD = base.Serialize(xmlDoc, nodParent);
             XmlNode nodStatistics = nodDoD.SelectSingleNode("Statistics");
