@@ -236,7 +236,7 @@ namespace GCDConsoleLib.Internal
         {
             foreach (Raster rRa in _rasters)
             {
-                if (!rRa.IsOpen)
+                if (rRa.IsOpen)
                     rRa.Dispose();
             }
             if (_outputRaster != null)

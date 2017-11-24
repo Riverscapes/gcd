@@ -45,7 +45,7 @@ namespace GCDConsoleLib.Internal.Tests
                         if (val.Equals(OpNodataVal) || data[idd][idx].Equals(OpNodataVal))
                             val = OpNodataVal;
                         else
-                            val = Dynamics.Add(val, data[idd][idx]);
+                            val = DynamicMath.Add(val, data[idd][idx]);
                     }
                     outChunk[idx] = val;
                 }

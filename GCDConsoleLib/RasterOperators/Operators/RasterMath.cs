@@ -45,16 +45,16 @@ namespace GCDConsoleLib.Internal.Operators
                     switch (_type)
                     {
                         case RasterOperators.MathOpType.Addition:
-                            val = Dynamics.Add(data[0][id],_operand);
+                            val = DynamicMath.Add(data[0][id],_operand);
                             break;
                         case RasterOperators.MathOpType.Subtraction:
-                            val = Dynamics.Subtract(data[0][id], _operand);
+                            val = DynamicMath.Subtract(data[0][id], _operand);
                             break;
                         case RasterOperators.MathOpType.Multipication:
-                            val = Dynamics.Multiply(data[0][id], _operand);
+                            val = DynamicMath.Multiply(data[0][id], _operand);
                             break;
                         case RasterOperators.MathOpType.Division:
-                            val = Dynamics.Divide(data[0][id], _operand);
+                            val = DynamicMath.Divide(data[0][id], _operand);
                             break;
                     }
                 }
@@ -66,16 +66,16 @@ namespace GCDConsoleLib.Internal.Operators
                     switch (_type)
                     {
                         case RasterOperators.MathOpType.Addition:
-                            val = Dynamics.Add(data[0][id], data[1][id]);
+                            val = DynamicMath.Add(data[0][id], data[1][id]);
                             break;
                         case RasterOperators.MathOpType.Subtraction:
-                            val = Dynamics.Subtract(data[0][id], data[1][id]);
+                            val = DynamicMath.Subtract(data[0][id], data[1][id]);
                             break;
                         case RasterOperators.MathOpType.Multipication:
-                            val = Dynamics.Multiply(data[0][id], data[1][id]);
+                            val = DynamicMath.Multiply(data[0][id], data[1][id]);
                             break;
                         case RasterOperators.MathOpType.Division:
-                            val = Dynamics.Divide(data[0][id], data[1][id]);
+                            val = DynamicMath.Divide(data[0][id], data[1][id]);
                             break;
                     }
                 }

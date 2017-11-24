@@ -103,11 +103,13 @@ namespace GCDConsoleLib.Internal.Operators
                             && !vals[3].Equals(_rasternodatavals[0]))
                         {
                             // Finally, here's the resample:
+                            // The conversion here is unfortunate but since we don't know what kind of thing we're
+                            // dealing with before we load it, this needs to happen.
                             outBuffer[ncol] = (
-                                Dynamics.Multiply(vals[0], (T)Convert.ChangeType((ix2 - fx) * (iy2 - fy), typeof(T)))
-                                + Dynamics.Multiply(vals[1], (T)Convert.ChangeType((fx - ix1) * (iy2 - fy), typeof(T)))
-                                + Dynamics.Multiply(vals[2], (T)Convert.ChangeType((ix2 - fx) * (fy - iy1), typeof(T)))
-                                + Dynamics.Multiply(vals[3], (T)Convert.ChangeType((fx - ix1) * (fy - iy1), typeof(T)))
+                                DynamicMath.Multiply(vals[0], (T)Convert.ChangeType((ix2 - fx) * (iy2 - fy), typeof(T)))
+                                + DynamicMath.Multiply(vals[1], (T)Convert.ChangeType((fx - ix1) * (iy2 - fy), typeof(T)))
+                                + DynamicMath.Multiply(vals[2], (T)Convert.ChangeType((ix2 - fx) * (fy - iy1), typeof(T)))
+                                + DynamicMath.Multiply(vals[3], (T)Convert.ChangeType((fx - ix1) * (fy - iy1), typeof(T)))
                                 / ((ix2 - ix1) * (iy2 - iy1)));
                         }
                     }

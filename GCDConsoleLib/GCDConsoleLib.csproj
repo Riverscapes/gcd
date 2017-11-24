@@ -124,7 +124,7 @@
     <Compile Include="RasterOperators\Operators\Uniform.cs" />
     <Compile Include="RasterOperators\WindowOverlapOperator.cs" />
     <Compile Include="Utility\Conversion.cs" />
-    <Compile Include="Utility\dynamics.cs" />
+    <Compile Include="Utility\DynamicMath.cs" />
     <Compile Include="Utility\FileIO.cs" />
     <Compile Include="Utility\GdalConfiguration.cs" />
     <Compile Include="GISDataset.cs" />
