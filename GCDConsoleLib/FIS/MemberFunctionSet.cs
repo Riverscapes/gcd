@@ -3,10 +3,10 @@ using System.Collections.Generic;
 
 namespace GCDConsoleLib.FIS
 {
-    public class MemberFunctionSet : MemberFunction
+    public class MemberFunctionSet
     {
         private double _min, _max;
-        public List<MemberFunction> _mfs;
+        public List<MemberFunction> MFunctions;
         public Dictionary<String, int> Indices;
 
         /// <summary>
@@ -15,7 +15,9 @@ namespace GCDConsoleLib.FIS
         public MemberFunctionSet() : base()
         {
             Indices = new Dictionary<String, int>();
-            _mfs = new List<MemberFunction>();
+            MFunctions = new List<MemberFunction>();
+            _min = 0;
+            _max = 0;
         }
 
         /// <summary>
@@ -28,10 +30,32 @@ namespace GCDConsoleLib.FIS
             _min = min;
             _max = max;
             Indices = new Dictionary<String, int>();
-            _mfs = new List<MemberFunction>();
+            MFunctions = new List<MemberFunction>();
             if (min >= max)
                 throw new ArgumentException("Invalid range. Max must be greater than min.");
         }
+
+        /// <summary>
+        /// Check if a membership function is valid.
+        /// </summary>
+        /// <returns></returns>
+        public bool Valid
+        {
+            get
+            {
+                if (MFunctions.Count == 0)
+                    return false;
+                for (int i = 0; i < MFunctions.Count; i++)
+                    if (!MFunctions[i].Valid)
+                        return false;
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// Get the number of MemberFunctions in this set
+        /// </summary>
+        public int Count { get { return MFunctions.Count; } }
 
         /// <summary>
         /// Add a member function to the set.
@@ -50,8 +74,8 @@ namespace GCDConsoleLib.FIS
                 throw new ArgumentException(string.Format("Invalid name '{0}'. Spaces are not allowed.", sName));
             else
             {
-                _mfs.Add(mf);
-                Indices[sName] = _mfs.Count;
+                MFunctions.Add(mf);
+                Indices[sName] = MFunctions.Count -1;
             }
         }
 
@@ -75,8 +99,8 @@ namespace GCDConsoleLib.FIS
                 throw new ArgumentException(string.Format("Invalid name '{0}'. Spaces are not allowed.", sName));
             else
             {
-                _mfs.Add(new MemberFunction(x1, x2, x3, yMax));
-                Indices[sName] = _mfs.Count;
+                MFunctions.Add(new MemberFunction(x1, x2, x3, yMax));
+                Indices[sName] = MFunctions.Count -1;
             }
         }
 
@@ -101,25 +125,10 @@ namespace GCDConsoleLib.FIS
                 throw new ArgumentException(string.Format("Invalid name '{0}'. Spaces are not allowed.", sName));
             else
             {
-                _mfs.Add(new MemberFunction(x1, x2, x3, x4, yMax));
-                Indices[sName] = _mfs.Count;
+                MFunctions.Add(new MemberFunction(x1, x2, x3, x4, yMax));
+                Indices[sName] = MFunctions.Count -1;
             }
         }
-
-        /// <summary>
-        /// Check if a membership function is valid.
-        /// </summary>
-        /// <returns></returns>
-        public bool valid()
-        {
-            if (_mfs.Count == 0)
-                return false;
-            for (int i = 0; i < _mfs.Count; i++)
-                if (!_mfs[i].Valid)
-                    return false;
-            return true;
-        }
-
 
     }
 }

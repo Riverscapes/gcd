@@ -91,7 +91,6 @@
     <Compile Include="Extensions\BiDictionary.cs" />
     <Compile Include="Extensions\Map.cs" />
     <Compile Include="FIS\Defuzzify.cs" />
-    <Compile Include="FIS\FIS.cs" />
     <Compile Include="FIS\FisFile.cs" />
     <Compile Include="FIS\FISOperators.cs" />
     <Compile Include="FIS\MemberFunction.cs" />

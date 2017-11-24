@@ -239,7 +239,7 @@ namespace GCDConsoleLib.FIS
                 throw new Exception("Could not parse the weight: " + ruleString);
 
             // There is only ever one output for this case
-            theRule.Output = ruleset.Outputs._mfs[outNum -1];
+            theRule.Output = ruleset.Outputs.MFunctions[outNum -1];
 
             // Now figure out the weight of this Rule
             string trimmedWeight = rsSplit3[1].Trim();

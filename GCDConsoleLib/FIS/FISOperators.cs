@@ -69,7 +69,8 @@ namespace GCDConsoleLib.FIS
             {
                 if (inMf.Coords[i][1] > n)
                 {
-                    outMf.Coords.Add(new double[] { inMf.getX(i - 1, i, n), n * weight });
+                    // Note: passing the ideces in backwards is fine and tested
+                    outMf.Coords.Add(new double[] { inMf.getX(i, i - 1, n), n * weight });
                     break;
                 }
                 else
@@ -80,7 +81,8 @@ namespace GCDConsoleLib.FIS
             {
                 if (inMf.Coords[j][1] < n)
                 {
-                    outMf.Coords.Add(new double[] { inMf.getX(j - 1, j, n), n * weight });
+                    // Note: passing the ideces in backwards is fine and tested
+                    outMf.Coords.Add(new double[] { inMf.getX(j, j - 1, n), n * weight });
                     outMf.Coords.Add(new double[] { inMf.Coords[j][0], inMf.Coords[j][1] * weight });
                 }
             }
@@ -184,7 +186,7 @@ namespace GCDConsoleLib.FIS
         /// <param name="by2"></param>
         /// <param name="x"></param>
         /// <param name="y"></param>
-        /// <returns></returns>
+        /// <returns>Tuple (double x, double y, boolean intersect)</returns>
         public static Tuple<double, double, bool> IntersectLines(
             double ax1, double ay1, double ax2, double ay2,
             double bx1, double by1, double bx2, double by2)

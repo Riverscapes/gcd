@@ -18,7 +18,7 @@ namespace GCDConsoleLib.FIS.Tests
 
             Assert.AreEqual(test.ruleset.Rules.Count, 64);
             Assert.AreEqual(test.ruleset.Inputs.Count, 3);
-            Assert.AreEqual(test.ruleset.Inputs["Velocity"]._mfs.Count, 4);
+            Assert.AreEqual(test.ruleset.Inputs["Velocity"].MFunctions.Count, 4);
 
             List<double[]> expected = new List<double[]>
                 {
@@ -31,11 +31,11 @@ namespace GCDConsoleLib.FIS.Tests
             // Test the values
             for (int i = 0; i < expected.Count; i++)
             {
-                Assert.AreEqual(test.ruleset.Inputs["Velocity"]._mfs[0].Coords[i][0], expected[i][0]);
-                Assert.AreEqual(test.ruleset.Inputs["Velocity"]._mfs[0].Coords[i][1], expected[i][1]);
+                Assert.AreEqual(test.ruleset.Inputs["Velocity"].MFunctions[0].Coords[i][0], expected[i][0]);
+                Assert.AreEqual(test.ruleset.Inputs["Velocity"].MFunctions[0].Coords[i][1], expected[i][1]);
             }
 
-            Assert.AreEqual(test.ruleset.Outputs._mfs.Count, 4);
+            Assert.AreEqual(test.ruleset.Outputs.MFunctions.Count, 4);
             Assert.AreEqual(test.ruleset.OutputName, "HabitatSuitablity");
         }
 

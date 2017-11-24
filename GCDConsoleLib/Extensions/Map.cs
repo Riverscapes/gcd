@@ -43,6 +43,8 @@ namespace GCDConsoleLib.Extensions
             _reverse.Add(t2, t1);
         }
 
+        public int Count {get{ return _forward.Count; } }
+
         public Indexer<T1, T2> Forward { get; private set; }
         public Indexer<T2, T1> Reverse { get; private set; }
     }

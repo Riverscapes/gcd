@@ -109,7 +109,6 @@
     <Compile Include="Extensions\BiDictionaryTests.cs" />
     <Compile Include="ExtentRectangleTests.cs" />
     <Compile Include="FIS\DefuzzifyTests.cs" />
-    <Compile Include="FIS\FISBaseTests.cs" />
     <Compile Include="FIS\FisFileTests.cs" />
     <Compile Include="FIS\FISOperatorsTests.cs" />
     <Compile Include="FIS\MemberFunctionSetTests.cs" />

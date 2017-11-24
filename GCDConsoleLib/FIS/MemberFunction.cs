@@ -6,19 +6,15 @@ namespace GCDConsoleLib.FIS
     public class MemberFunction
     {
         public List<double[]> Coords;
-        public double yMax;
+        public double MaxY;
 
+        /// <summary>
+        /// Blank Constructor
+        /// </summary>
         public MemberFunction()
         {
             Coords = new List<double[]>();
-        }
-
-        public void Copy(MemberFunction mFunc)
-        {
-            Coords.Clear();
-            foreach (double[] coord in mFunc.Coords)
-                Coords.Add(coord);
-            yMax = mFunc.yMax;
+            MaxY = 0;
         }
 
         /// <summary>
@@ -33,15 +29,15 @@ namespace GCDConsoleLib.FIS
         public MemberFunction(double x1, double x2, double x3, double dyMax)
         {
             Coords = new List<double[]>();
-            yMax = dyMax;
-            if ((yMax <= 0) || (yMax > 1))
-                throw new ArgumentException(string.Format("Invalid yMax of {0}. It must be between 0 and 1.", yMax));
+            MaxY = dyMax;
+            if ((MaxY <= 0) || (MaxY > 1))
+                throw new ArgumentException(string.Format("Invalid yMax of {0}. It must be between 0 and 1.", MaxY));
             else if ((x1 > x2) || (x2 > x3))
                 throw new ArgumentException(string.Format("Membership function vertices ({0} {1} {2}) must be in ascending order.", x1, x2, x3));
             else
             {
                 Coords.Add(new double[2] { x1, 0 });
-                Coords.Add(new double[2] { x2, yMax });
+                Coords.Add(new double[2] { x2, MaxY });
                 Coords.Add(new double[2] { x3, 0 });
             }
         }
@@ -59,16 +55,16 @@ namespace GCDConsoleLib.FIS
         public MemberFunction(double x1, double x2, double x3, double x4, double dyMax)
         {
             Coords = new List<double[]>();
-            yMax = dyMax;
-            if ((yMax <= 0) || (yMax > 1))
-                throw new ArgumentException(string.Format("Invalid yMax of {0}. It must be between 0 and 1.", yMax));
+            MaxY = dyMax;
+            if ((MaxY <= 0) || (MaxY > 1))
+                throw new ArgumentException(string.Format("Invalid yMax of {0}. It must be between 0 and 1.", MaxY));
             else if ((x1 > x2) || (x2 >= x3) || (x3 > x4))
                 throw new ArgumentException(string.Format("Membership function vertices ({0} {1} {2} {3}) must be in ascending order.", x1, x2, x3, x4));
             else
             {
                 Coords.Add(new double[] { x1, 0 });
-                Coords.Add(new double[2] { x2, yMax });
-                Coords.Add(new double[2] { x3, yMax });
+                Coords.Add(new double[2] { x2, MaxY });
+                Coords.Add(new double[2] { x3, MaxY });
                 Coords.Add(new double[2] { x4, 0 });
             }
         }
@@ -84,7 +80,31 @@ namespace GCDConsoleLib.FIS
         {
             if (0 == coords.Count)
                 throw new ArgumentException("No coordinates provided.");
+
             Coords = coords;
+
+            if (coords.Count == 0)
+                MaxY = 0;
+            else
+            {
+                double max = 0;
+                foreach (double[] coord in coords)
+                    if (coord[0] > max)
+                        max = coord[0];
+                MaxY = max;
+            }
+        }
+
+        /// <summary>
+        /// Copy one member function into another
+        /// </summary>
+        /// <param name="mFunc"></param>
+        public void Copy(MemberFunction mFunc)
+        {
+            Coords.Clear();
+            foreach (double[] coord in mFunc.Coords)
+                Coords.Add(coord);
+            MaxY = mFunc.MaxY;
         }
 
         /// <summary>
@@ -93,6 +113,7 @@ namespace GCDConsoleLib.FIS
         public void clear()
         {
             Coords.Clear();
+            MaxY = 0;
         }
 
         /// <summary>
@@ -124,16 +145,19 @@ namespace GCDConsoleLib.FIS
 
         /// <summary>
         /// Computes the x coordinate that corresponds to a given y coordinate in between two vertices.
+        /// http://www.datadigitization.com/dagra-in-action/linear-interpolation-with-excel/
         /// </summary>
         /// <param name="v1">The index of the first vertex</param>
         /// <param name="v2">The index of the second vertex</param>
         /// <param name="y">The y coordinate</param>
-        /// <returns>The x coordinate</returns>
+        /// <returns>The x coordinate. Returns Coordss[v1][0] for vertical or horizontal</returns>
         public double getX(int v1, int v2, double y)
         {
-            return (Coords[v2][0] - Coords[v1][0])
-                / (Coords[v2][1] - Coords[v1][1])
-                * (y - Coords[v1][1]) + Coords[v1][0];
+            double slope = (Coords[v2][1] - Coords[v1][1]) / (Coords[v2][0] - Coords[v1][0]);
+            if (double.IsInfinity(slope) || slope == 0)
+                return Coords[v1][0];
+            else
+                return  ((y - Coords[v1][1]) / slope) + Coords[v1][0];  /// y = y1 + (x - x1)*slope
         }
 
         /// <summary>

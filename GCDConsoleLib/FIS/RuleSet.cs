@@ -1,10 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using GCDConsoleLib.Extensions;
 
 namespace GCDConsoleLib.FIS
 {
+    public enum FISOperatorAnd { FISOpAnd_Min, FISOpAnd_Product, FISOpAnd_None };
+    public enum FISOperatorOr { FISOpOr_Max, FISOpOr_Probor, FISOpOr_None };
+    public enum FISOperator { FISOp_And, FISOp_Or, FISOp_None };
+    public enum FISImplicator { FISImp_Min, FISImp_Product, FISImp_None };
+    public enum FISAggregator { FISAgg_Max, FISAgg_Probor, FISAgg_Sum, FISAgg_None };
+    public enum FISDefuzzifier
+    {
+        FISDefuzz_Centroid, FISDefuzz_Bisect, FISDefuzz_MidMax, FISDefuzz_LargeMax,
+        FISDefuzz_SmallMax, FISDefuzz_None
+    };
+
     public class RuleSet
     {
         public Dictionary<string, MemberFunctionSet> Inputs;
@@ -44,6 +54,8 @@ namespace GCDConsoleLib.FIS
             Inputs = new Dictionary<string, MemberFunctionSet>();
             InputLookupMap = new Map<int, string>();
             Rules = new List<Rule>();
+            Outputs = new MemberFunctionSet();
+            OutputName = "";
         }
 
         /// <summary>
@@ -121,7 +133,7 @@ namespace GCDConsoleLib.FIS
                 Rule rule = new Rule();
 
                 rule.Weight = weight;
-                rule.Output = Outputs._mfs[Outputs.Indices[sOut]];
+                rule.Output = Outputs.MFunctions[Outputs.Indices[sOut]];
 
                 rule.Operator = op;
 
@@ -157,8 +169,8 @@ namespace GCDConsoleLib.FIS
             for (idx = 0; idx < Inputs.Count; idx++)
             {
                 string inputName = InputLookupMap.Forward[idx];
-                for (jdx = 0; jdx < Inputs[inputName].Length; jdx++)
-                    _fuzzyInputs[idx][jdx] = Inputs[inputName]._mfs[jdx].fuzzify(lInputs[idx]);
+                for (jdx = 0; jdx < Inputs[inputName].Count; jdx++)
+                    _fuzzyInputs[idx][jdx] = Inputs[inputName].MFunctions[jdx].fuzzify(lInputs[idx]);
             }
 
             MemberFunction impMf = new MemberFunction();
@@ -219,8 +231,8 @@ namespace GCDConsoleLib.FIS
                     }
                     string inputName = InputLookupMap.Forward[i];
                     List<double> fuzzymflst = new List<double>();
-                    for (int j = 0; j < Inputs[inputName]._mfs.Count; j++)
-                        fuzzymflst.Add(Inputs[inputName]._mfs[j].fuzzify(v));
+                    for (int j = 0; j < Inputs[inputName].MFunctions.Count; j++)
+                        fuzzymflst.Add(Inputs[inputName].MFunctions[j].fuzzify(v));
                     _fuzzyInputs.Add(fuzzymflst);
                 }
                 if (ok)
@@ -246,8 +258,8 @@ namespace GCDConsoleLib.FIS
                 {
                     v = dataArrays[i][n];
                     string inputName = InputLookupMap.Forward[i];
-                    for (int j = 0; j < Inputs[inputName]._mfs.Count; j++)
-                        _fuzzyInputs[i][j] = Inputs[inputName]._mfs[j].fuzzify(v);
+                    for (int j = 0; j < Inputs[inputName].MFunctions.Count; j++)
+                        _fuzzyInputs[i][j] = Inputs[inputName].MFunctions[j].fuzzify(v);
                 }
                 for (int r = 0; r < Rules.Count; r++)
                 {
@@ -289,22 +301,25 @@ namespace GCDConsoleLib.FIS
         /// Check whether this ruleset follows the rules.
         /// </summary>
         /// <returns></returns>
-        public bool valid()
+        public bool Valid
         {
-            if (Inputs.Count == 0)
-                //"No FIS inputs."
-                return false;
-            else if (Rules.Count == 0)
-                //"No FIS rules."
-                return false;
-            for (int i = 0; i < Inputs.Count; i++)
+            get
             {
-                string inputName = InputLookupMap.Forward[i];
-                if (!Inputs[inputName].valid())
-                    //"Invalid input number " + stringify(i) + "."
+                if (Inputs.Count == 0)
+                    //"No FIS inputs."
                     return false;
+                else if (Rules.Count == 0)
+                    //"No FIS rules."
+                    return false;
+                for (int i = 0; i < Inputs.Count; i++)
+                {
+                    string inputName = InputLookupMap.Forward[i];
+                    if (!Inputs[inputName].Valid)
+                        //"Invalid input number " + stringify(i) + "."
+                        return false;
+                }
+                return true;
             }
-            return true;
         }
 
         /// <summary>
@@ -323,7 +338,7 @@ namespace GCDConsoleLib.FIS
             if (rule.MFSNot[ruleItemInd] == true)
             {
                 string inputName = InputLookupMap.Forward[inputInd];
-                double yMax = Inputs[inputName]._mfs[mfsInd].yMax;
+                double yMax = Inputs[inputName].MFunctions[mfsInd].MaxY;
                 fuzzyInput = yMax - fuzzyInput;
             }
             return fuzzyInput;
