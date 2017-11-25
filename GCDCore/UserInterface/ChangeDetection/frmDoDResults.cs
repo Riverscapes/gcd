@@ -6,30 +6,24 @@ namespace GCDCore.UserInterface.ChangeDetection
 {
 	public partial class frmDoDResults
 	{
-
 		/// <summary>
 		/// Stores the status of what columns, rows and units to use in the child user controls
 		/// </summary>
 		/// <remarks>This is passed to the pop-up form </remarks>
 		private DoDSummaryDisplayOptions m_Options;
-
 		private DoDBase DoD;
 
-		public frmDoDResults(GCDCore.Project.DoDBase dodItem)
+		public frmDoDResults(DoDBase dodItem)
 		{
-			Load += DoDResultsForm_Load;
 			InitializeComponent();
 
 			DoD = dodItem;
 			m_Options = new DoDSummaryDisplayOptions(ProjectManager.Project.Units);
-			txtDoDName.Text = DoD.Name;
 			ucProperties.Initialize(DoD);
 
 			// Select the tab control to make it easy for user to quickly pan results
 			tabProperties.Select();
-
 		}
-
 
 		private void DoDResultsForm_Load(object sender, System.EventArgs e)
 		{
@@ -38,12 +32,12 @@ namespace GCDCore.UserInterface.ChangeDetection
 				txtDoDName.Width = cmdAddToMap.Right - txtDoDName.Left;
 			}
 
-			ucBars.ChangeStats = DoD.Statistics;
+            txtDoDName.Text = DoD.Name;
+
+            ucBars.ChangeStats = DoD.Statistics;
 			ucHistogram.LoadHistograms(DoD.Histograms.Raw.Data, DoD.Histograms.Thr.Data);
 			ucSummary.RefreshDisplay(DoD.Statistics, ref m_Options);
-
 		}
-
 
 		private void cmdAddToMap_Click(System.Object sender, System.EventArgs e)
 		{

@@ -251,7 +251,14 @@ namespace GCDCore.Project
 
             foreach (XmlNode nodDoD in nodProject.SelectNodes("DoDs/DoD"))
             {
-                DoDBase dod = DoDBase.Deserialize(nodDoD, ProjectManager.Project.DEMSurveys);
+                DoDBase dod = null;
+                if (nodDoD.SelectSingleNode("Threshold") is XmlNode)
+                    dod = DoDMinLoD.Deserialize(nodDoD, ProjectManager.Project.DEMSurveys);
+                else if (nodDoD.SelectSingleNode("ConfidenceLevel") is XmlNode)
+                    dod = DoDProbabilistic.Deserialize(nodDoD, ProjectManager.Project.DEMSurveys);
+                else
+                    dod = DoDPropagated.Deserialize(nodDoD, ProjectManager.Project.DEMSurveys);
+
                 ProjectManager.Project.DoDs[dod.Name] = dod;
             }
 

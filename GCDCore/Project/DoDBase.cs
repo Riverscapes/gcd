@@ -116,7 +116,7 @@ namespace GCDCore.Project
             nodParent.AppendChild(xmlDoc.CreateElement("Volume")).InnerText = areaVol.GetVolume(cellArea, units.VertUnit).As(units.VolUnit).ToString("R");
         }
 
-        public static DoDBase Deserialize(XmlNode nodDoD, Dictionary<string, DEMSurvey> DEMs)
+        protected static DoDBase Deserialize(XmlNode nodDoD, Dictionary<string, DEMSurvey> DEMs)
         {
             string name = nodDoD.SelectSingleNode("Name").InnerText;
             DirectoryInfo folder = ProjectManager.Project.GetAbsoluteDir(nodDoD.SelectSingleNode("Folder").InnerText);

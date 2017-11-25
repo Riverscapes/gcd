@@ -39,12 +39,8 @@ namespace GCDCore.UserInterface.ChangeDetection
 			this.GroupBox1 = new System.Windows.Forms.GroupBox();
 			this.txtNewError = new System.Windows.Forms.TextBox();
 			this.cmsBasicRaster = new System.Windows.Forms.ContextMenuStrip(this.components);
-			this.AddToMapToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
 			this.Label2 = new System.Windows.Forms.Label();
 			this.txtNewDEM = new System.Windows.Forms.TextBox();
-			this.cmsRaster = new System.Windows.Forms.ContextMenuStrip(this.components);
-			this.PropertiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.AddToMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.GroupBox2 = new System.Windows.Forms.GroupBox();
 			this.txtOldError = new System.Windows.Forms.TextBox();
 			this.Label3 = new System.Windows.Forms.Label();
@@ -75,8 +71,6 @@ namespace GCDCore.UserInterface.ChangeDetection
 			this.txtPropErr = new System.Windows.Forms.TextBox();
 			this.Label11 = new System.Windows.Forms.Label();
 			this.GroupBox1.SuspendLayout();
-			this.cmsBasicRaster.SuspendLayout();
-			this.cmsRaster.SuspendLayout();
 			this.GroupBox2.SuspendLayout();
 			this.GroupBox3.SuspendLayout();
 			this.TableLayoutPanel1.SuspendLayout();
@@ -110,25 +104,11 @@ namespace GCDCore.UserInterface.ChangeDetection
 			//txtNewError
 			//
 			this.txtNewError.Anchor = (System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right);
-			this.txtNewError.ContextMenuStrip = this.cmsBasicRaster;
 			this.txtNewError.Location = new System.Drawing.Point(71, 46);
 			this.txtNewError.Name = "txtNewError";
 			this.txtNewError.ReadOnly = true;
 			this.txtNewError.Size = new System.Drawing.Size(163, 20);
 			this.txtNewError.TabIndex = 3;
-			//
-			//cmsBasicRaster
-			//
-			this.cmsBasicRaster.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { this.AddToMapToolStripMenuItem1 });
-			this.cmsBasicRaster.Name = "cmsBasicRaster";
-			this.cmsBasicRaster.Size = new System.Drawing.Size(138, 26);
-			//
-			//AddToMapToolStripMenuItem1
-			//
-			this.AddToMapToolStripMenuItem1.Image = Properties.Resources.AddToMap;
-			this.AddToMapToolStripMenuItem1.Name = "AddToMapToolStripMenuItem1";
-			this.AddToMapToolStripMenuItem1.Size = new System.Drawing.Size(137, 22);
-			this.AddToMapToolStripMenuItem1.Text = "Add to Map";
 			//
 			//Label2
 			//
@@ -142,35 +122,11 @@ namespace GCDCore.UserInterface.ChangeDetection
 			//txtNewDEM
 			//
 			this.txtNewDEM.Anchor = (System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right);
-			this.txtNewDEM.ContextMenuStrip = this.cmsRaster;
 			this.txtNewDEM.Location = new System.Drawing.Point(72, 20);
 			this.txtNewDEM.Name = "txtNewDEM";
 			this.txtNewDEM.ReadOnly = true;
 			this.txtNewDEM.Size = new System.Drawing.Size(163, 20);
 			this.txtNewDEM.TabIndex = 1;
-			//
-			//cmsRaster
-			//
-			this.cmsRaster.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-				this.PropertiesToolStripMenuItem,
-				this.AddToMapToolStripMenuItem
-			});
-			this.cmsRaster.Name = "cmsRaster";
-			this.cmsRaster.Size = new System.Drawing.Size(138, 48);
-			//
-			//PropertiesToolStripMenuItem
-			//
-			this.PropertiesToolStripMenuItem.Image = Properties.Resources.Settings;
-			this.PropertiesToolStripMenuItem.Name = "PropertiesToolStripMenuItem";
-			this.PropertiesToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
-			this.PropertiesToolStripMenuItem.Text = "Properties";
-			//
-			//AddToMapToolStripMenuItem
-			//
-			this.AddToMapToolStripMenuItem.Image = Properties.Resources.AddToMap;
-			this.AddToMapToolStripMenuItem.Name = "AddToMapToolStripMenuItem";
-			this.AddToMapToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
-			this.AddToMapToolStripMenuItem.Text = "Add to Map";
 			//
 			//GroupBox2
 			//
@@ -189,7 +145,6 @@ namespace GCDCore.UserInterface.ChangeDetection
 			//txtOldError
 			//
 			this.txtOldError.Anchor = (System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right);
-			this.txtOldError.ContextMenuStrip = this.cmsBasicRaster;
 			this.txtOldError.Location = new System.Drawing.Point(71, 46);
 			this.txtOldError.Name = "txtOldError";
 			this.txtOldError.ReadOnly = true;
@@ -208,7 +163,6 @@ namespace GCDCore.UserInterface.ChangeDetection
 			//txtOldDEM
 			//
 			this.txtOldDEM.Anchor = (System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right);
-			this.txtOldDEM.ContextMenuStrip = this.cmsRaster;
 			this.txtOldDEM.Location = new System.Drawing.Point(71, 20);
 			this.txtOldDEM.Name = "txtOldDEM";
 			this.txtOldDEM.ReadOnly = true;
@@ -487,8 +441,6 @@ namespace GCDCore.UserInterface.ChangeDetection
 			this.Size = new System.Drawing.Size(500, 472);
 			this.GroupBox1.ResumeLayout(false);
 			this.GroupBox1.PerformLayout();
-			this.cmsBasicRaster.ResumeLayout(false);
-			this.cmsRaster.ResumeLayout(false);
 			this.GroupBox2.ResumeLayout(false);
 			this.GroupBox2.PerformLayout();
 			this.GroupBox3.ResumeLayout(false);
