@@ -49,91 +49,73 @@ namespace GCDCore.UserInterface.Project
 
             if (ProjectManager.Project is GCDProject)
             {
-                LoadTree(treProject, ProjectManager.Project, false, sSelectedNodeTag, eSortSurveyBy);
+                LoadTree(treProject, false, sSelectedNodeTag, eSortSurveyBy);
             }
 
         }
 
-        public static void LoadTree(TreeView tre, GCDProject rProject, bool bCheckboxes, string sSelectedNodeTag = "", SortSurveyBy eSortSurveyBy = SortSurveyBy.SurveyDateDsc)
+        private TreeNode AddTreeNode(TreeNode nodParent, GCDNodeTypes eType, string displayText, object projectItem)
+        {
+            TreeNode newNode = null;
+            if (nodParent is TreeNode)
+            {
+                newNode = nodParent.Nodes.Add(displayText);
+            }
+            else
+            {
+                newNode = treProject.Nodes.Add(displayText);
+            }
+
+            newNode.ImageIndex = (int)eType;
+            newNode.SelectedImageIndex = (int)eType;
+            newNode.Tag = new ProjectTreeNode(eType, projectItem);
+            return newNode;
+        }
+
+        public void LoadTree(TreeView tre, bool bCheckboxes, string sSelectedNodeTag = "", SortSurveyBy eSortSurveyBy = SortSurveyBy.SurveyDateDsc)
         {
             try
             {
-                TreeNode nodProject = tre.Nodes.Add(GCDNodeTypes.Project.ToString(), rProject.Name, (int)GCDNodeTypes.Project, (int)GCDNodeTypes.Project);
-                nodProject.Tag = GCDNodeTypes.Project.ToString();
-                nodProject.SelectedImageIndex = nodProject.ImageIndex;
-                if (nodProject.Tag == sSelectedNodeTag)
-                    tre.SelectedNode = nodProject;
+                TreeNode nodProject = AddTreeNode(null, GCDNodeTypes.Project, ProjectManager.Project.Name, ProjectManager.Project);
+                TreeNode nodInputs = AddTreeNode(nodProject, GCDNodeTypes.InputsGroup, m_sGroupInputs, null);
+                TreeNode nodSurveys = AddTreeNode(nodInputs, GCDNodeTypes.SurveysGroup, "DEM Surveys", null);
 
-                TreeNode nodInputs = nodProject.Nodes.Add(GCDNodeTypes.InputsGroup.ToString(), m_sGroupInputs, (int)GCDNodeTypes.InputsGroup);
-                nodInputs.Tag = GCDNodeTypes.InputsGroup.ToString();
-                nodInputs.SelectedImageIndex = nodInputs.ImageIndex;
-                if (nodInputs.Tag == sSelectedNodeTag)
-                    tre.SelectedNode = nodInputs;
-
-                TreeNode nodSurveysGroup = nodInputs.Nodes.Add(GCDNodeTypes.SurveysGroup.ToString(), "DEM Surveys", (int)GCDNodeTypes.SurveysGroup);
-                nodSurveysGroup.Tag = GCDNodeTypes.SurveysGroup.ToString();
-                nodSurveysGroup.SelectedImageIndex = nodSurveysGroup.ImageIndex;
-                if (nodSurveysGroup.Tag == sSelectedNodeTag)
-                    tre.SelectedNode = nodSurveysGroup;
-
-                List<DEMSurvey> orderedSurveys = new List<DEMSurvey>();
+                // DEM Surveys
+                IEnumerable<DEMSurvey> orderedSurveys = new List<DEMSurvey>();
                 switch (eSortSurveyBy)
                 {
                     case SortSurveyBy.NameAsc:
-                        orderedSurveys = rProject.DEMsSortByName(true).ToList<DEMSurvey>();
+                        orderedSurveys = ProjectManager.Project.DEMsSortByName(true);
                         break;
                     case SortSurveyBy.NameDsc:
-                        orderedSurveys = rProject.DEMsSortByName(false).ToList<DEMSurvey>();
+                        orderedSurveys = ProjectManager.Project.DEMsSortByName(false);
                         break;
                     case SortSurveyBy.SurveyDateAsc:
-                        orderedSurveys = rProject.DEMsSortByDate(true).ToList<DEMSurvey>();
+                        orderedSurveys = ProjectManager.Project.DEMsSortByDate(true);
                         break;
                     case SortSurveyBy.SurveyDateDsc:
-                        orderedSurveys = rProject.DEMsSortByName(false).ToList<DEMSurvey>();
+                        orderedSurveys = ProjectManager.Project.DEMsSortByName(false);
                         break;
                 }
 
-
                 foreach (DEMSurvey dem in orderedSurveys)
                 {
-                    TreeNode nodSurvey = nodSurveysGroup.Nodes.Add(GCDNodeTypes.DEMSurvey + "_" + dem.Name, dem.Name, (int)GCDNodeTypes.DEMSurvey);
-                    nodSurvey.Tag = new ProjectTreeNode(GCDNodeTypes.DEMSurvey, dem);
-                    nodSurvey.SelectedImageIndex = nodSurvey.ImageIndex;
-                    if (nodSurvey.Tag.ToString() == sSelectedNodeTag)
-                        tre.SelectedNode = nodSurvey;
+                    TreeNode nodSurvey = AddTreeNode(nodSurveys, GCDNodeTypes.DEMSurvey, dem.Name, dem);
                     bool bExpandSurveyNode = false;
 
                     // Associated surfaces
-                    TreeNode nodAssocGroup = nodSurvey.Nodes.Add(GCDNodeTypes.AssociatedSurfaceGroup.ToString(), m_sAssocSurfaces, (int)GCDNodeTypes.AssociatedSurfaceGroup);
-                    nodAssocGroup.Tag = GCDNodeTypes.AssociatedSurfaceGroup.ToString();
-                    nodAssocGroup.SelectedImageIndex = nodAssocGroup.ImageIndex;
-                    if (nodAssocGroup.Tag.ToString() == sSelectedNodeTag)
-                        tre.SelectedNode = nodAssocGroup;
-
+                    TreeNode nodAssocGroup = AddTreeNode(nodSurvey, GCDNodeTypes.AssocGroup, m_sAssocSurfaces, null);
                     foreach (AssocSurface assoc in dem.AssocSurfaces.Values)
                     {
-                        TreeNode nodAssoc = nodAssocGroup.Nodes.Add(GCDNodeTypes.AssociatedSurface.ToString() + "_" + assoc.Name, assoc.Name, (int)GCDNodeTypes.AssociatedSurface);
-                        nodAssoc.Tag = new ProjectTreeNode(GCDNodeTypes.AssociatedSurface, assoc);
-                        nodAssoc.SelectedImageIndex = nodAssoc.ImageIndex;
-                        if (nodAssoc.Tag.ToString() == sSelectedNodeTag)
-                            tre.SelectedNode = nodAssoc;
+                        AddTreeNode(nodAssocGroup, GCDNodeTypes.AssociatedSurface, assoc.Name, assoc);
                         bExpandSurveyNode = true;
                     }
 
                     // Error surfaces
-                    TreeNode nodErrorGroup = nodSurvey.Nodes.Add(GCDNodeTypes.ErrorSurfaceGroup.ToString(), m_sErrorSurfaces, (int)GCDNodeTypes.ErrorSurfaceGroup);
-                    nodErrorGroup.Tag = GCDNodeTypes.ErrorSurfaceGroup.ToString();
-                    nodErrorGroup.SelectedImageIndex = nodErrorGroup.ImageIndex;
-                    if (nodErrorGroup.Tag == sSelectedNodeTag)
-                        tre.SelectedNode = nodErrorGroup;
-
+                    TreeNode nodErrorGroup = AddTreeNode(nodSurvey, GCDNodeTypes.ErrorSurfaceGroup, m_sErrorSurfaces, null);
                     foreach (ErrorSurface errSurf in dem.ErrorSurfaces.Values)
                     {
-                        TreeNode nodError = nodErrorGroup.Nodes.Add(GCDNodeTypes.ErrorSurface.ToString() + "_" + errSurf.Name, errSurf.Name, (int)GCDNodeTypes.ErrorSurface);
-                        nodError.Tag = new ProjectTreeNode(GCDNodeTypes.ErrorSurface, errSurf);
-                        nodError.SelectedImageIndex = nodError.ImageIndex;
-                        if (nodError.Tag.ToString() == sSelectedNodeTag)
-                            tre.SelectedNode = nodError;
+                        AddTreeNode(nodAssocGroup, GCDNodeTypes.ErrorSurface, errSurf.Name, errSurf);
                         bExpandSurveyNode = true;
                     }
 
@@ -142,25 +124,15 @@ namespace GCDCore.UserInterface.Project
                 }
 
                 nodInputs.Expand();
-                nodSurveysGroup.Expand();
+                nodSurveys.Expand();
 
-                TreeNode AnalNode = nodProject.Nodes.Add(GCDNodeTypes.AnalysesGroup.ToString(), "Analyses", (int)GCDNodeTypes.AnalysesGroup);
-                AnalNode.Tag = GCDNodeTypes.AnalysesGroup.ToString();
-                AnalNode.SelectedImageIndex = AnalNode.ImageIndex;
-                if (AnalNode.Tag == sSelectedNodeTag)
-                    tre.SelectedNode = AnalNode;
-
-                TreeNode CDNode = AnalNode.Nodes.Add(GCDNodeTypes.ChangeDetectionGroup.ToString(), "Change Detection", (int)GCDNodeTypes.ChangeDetectionGroup);
-                CDNode.Tag = GCDNodeTypes.ChangeDetectionGroup.ToString();
-                CDNode.SelectedImageIndex = CDNode.ImageIndex;
-                if (CDNode.Tag == sSelectedNodeTag)
-                    tre.SelectedNode = CDNode;
-                bool bExpandCDNode = false;
+                TreeNode AnalNode = AddTreeNode(nodProject, GCDNodeTypes.AnalysesGroup, "Analyses", null);
+                TreeNode ChDtNode = AddTreeNode(AnalNode, GCDNodeTypes.ChangeDetectionGroup, "Change Detection", null);
 
                 Dictionary<string, TreeNode> dDoD = new Dictionary<string, TreeNode>();
-                foreach (DoDBase rDoD in rProject.DoDs.Values)
+                foreach (DoDBase rDoD in ProjectManager.Project.DoDs.Values)
                 {
-                    CDNode.Expand();
+                    ChDtNode.Expand();
 
                     string sDEMPair = rDoD.NewDEM.Name + " - " + rDoD.OldDEM.Name;
                     TreeNode theParent = null;
@@ -172,28 +144,13 @@ namespace GCDCore.UserInterface.Project
                     else
                     {
                         // Create a new parent of DEM surveys for this DoD
-                        theParent = CDNode.Nodes.Add(sDEMPair, sDEMPair, (int)GCDNodeTypes.ChangeDetectionDEMPair);
-                        theParent.SelectedImageIndex = theParent.ImageIndex;
-                        theParent.Tag = GCDNodeTypes.ChangeDetectionDEMPair.ToString();
-                        theParent.Tag += "_" + rDoD.NewDEM.Name + "_" + rDoD.OldDEM.Name;
-
-                        dDoD.Add(sDEMPair, theParent);
+                        theParent = AddTreeNode(ChDtNode, GCDNodeTypes.ChangeDetectionDEMPair, sDEMPair, null);
+                        dDoD[sDEMPair] = theParent;
                     }
 
                     // Now create the actual DoD node under the node for the pair of DEMs
-                    TreeNode nodDoD = theParent.Nodes.Add(rDoD.Name, rDoD.Name, (int)GCDNodeTypes.DoD);
-                    nodDoD.SelectedImageIndex = nodDoD.ImageIndex;
-                    nodDoD.Tag = new ProjectTreeNode(GCDNodeTypes.DoD, rDoD);
+                    TreeNode nodDoD = AddTreeNode(theParent, GCDNodeTypes.DoD, rDoD.Name, rDoD);
                     theParent.Expand();
-
-                    // DoD Summary XML node
-                    //If Not rDoD.IsSummaryXMLPathNull Then
-                    //    If IO.File.Exists(rDoD.SummaryXMLPath) Then
-                    //        Dim nodSummary As TreeNode = nodDoD.Nodes.Add(GCDNodeTypes.SummaryXML.ToString & "_" & rDoD.DoDID.ToString, IO.Path.GetFileNameWithoutExtension(rDoD.SummaryXMLPath), GCDNodeTypes.SummaryXML)
-                    //        nodSummary.Tag = GCDNodeTypes.SummaryXML.ToString & "_" & rDoD.DoDID.ToString
-                    //        nodSummary.SelectedImageIndex = nodSummary.ImageIndex
-                    //    End If
-                    //End If
 
                     // Budget Segregation Group Node
                     TreeNode nodBSGroup = null;
@@ -213,39 +170,32 @@ namespace GCDCore.UserInterface.Project
 
                         foreach (GCDCore.Project.BudgetSegregation rBS in rDoD.BudgetSegregations.Values)
                         {
-
                             if (string.Compare(sPolygonMask, rBS.PolygonMask.FullName, true) == 0)
                             {
                                 if (!(nodBSGroup is TreeNode))
                                 {
-                                    nodBSGroup = nodDoD.Nodes.Add(GCDNodeTypes.BudgetSegregationGroup.ToString(), m_sBudgetSegs, (int)GCDNodeTypes.BudgetSegregationGroup);
-                                    nodBSGroup.Tag = GCDNodeTypes.BudgetSegregationGroup.ToString();
-                                    nodBSGroup.SelectedImageIndex = nodBSGroup.ImageIndex;
+                                    nodBSGroup = AddTreeNode(nodDoD, GCDNodeTypes.BudgetSegregationGroup, m_sBudgetSegs, null);
                                     nodBSGroup.Expand();
                                 }
 
                                 if (nodMask == null)
                                 {
-                                    string sTag = GCDNodeTypes.BudgetSegregationMask.ToString() + "_bs_" + naru.os.File.RemoveDangerousCharacters(rBS.PolygonMask.FullName) + "_dod_" + rDoD.Name;
-                                    nodMask = nodBSGroup.Nodes.Add(sTag, sMaskDict[sPolygonMask], (int)GCDNodeTypes.BudgetSegregationMask);
-                                    nodMask.SelectedImageIndex = nodMask.ImageIndex;
-                                    nodMask.Tag = sTag;
+                                    nodMask = AddTreeNode(nodBSGroup, GCDNodeTypes.BudgetSegregationMask, sMaskDict[sPolygonMask], null);
                                 }
 
                                 // Budget Segregation
-                                TreeNode nodBS = nodMask.Nodes.Add(GCDNodeTypes.BudgetSegregation.ToString() + "_" + rBS.Name.ToString(), rBS.Name, (int)GCDNodeTypes.BudgetSegregation);
-                                nodBS.Tag = new ProjectTreeNode(GCDNodeTypes.BudgetSegregation, rBS);
-                                nodBS.SelectedImageIndex = nodBS.ImageIndex;
+                                AddTreeNode(nodMask, GCDNodeTypes.BudgetSegregation, rBS.Name, rBS);
                             }
                         }
                     }
-
-                    bExpandCDNode = true;
+;
                     nodDoD.ExpandAll();
                 }
 
                 AnalNode.Expand();
-                CDNode.Expand();
+
+                if (ProjectManager.Project.DoDs.Count > 0)
+                    ChDtNode.Expand();
 
                 //nodProject.ExpandAll()
                 nodProject.Expand();
@@ -256,7 +206,6 @@ namespace GCDCore.UserInterface.Project
                 naru.error.ExceptionUI.HandleException(ex);
             }
         }
-
 
         private void treProject_DoubleClick(object sender, System.EventArgs e)
         {
@@ -344,8 +293,8 @@ namespace GCDCore.UserInterface.Project
                 case GCDNodeTypes.DEMSurvey:
                     eType = GCDNodeTypes.DEMSurvey;
                     break;
-                case GCDNodeTypes.AssociatedSurfaceGroup:
-                    eType = GCDNodeTypes.AssociatedSurfaceGroup;
+                case GCDNodeTypes.AssocGroup:
+                    eType = GCDNodeTypes.AssocGroup;
                     break;
                 case GCDNodeTypes.AssociatedSurface:
                     eType = GCDNodeTypes.AssociatedSurface;
@@ -415,106 +364,49 @@ namespace GCDCore.UserInterface.Project
 
         private void treProject_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            try
+
+            if (e.Button != MouseButtons.Right)
+                return;
+
+            TreeNode theNode = treProject.GetNodeAt(e.X, e.Y);
+            if (!(theNode is TreeNode))
+                return;
+
+
+            treProject.SelectedNode = theNode;
+            ContextMenuStrip cms = null;
+            switch (((ProjectTreeNode)theNode.Tag).NodeType)
             {
-                if (e.Button == System.Windows.Forms.MouseButtons.Right)
+                case GCDNodeTypes.Project: cms = cmsProject; break;
+                case GCDNodeTypes.InputsGroup: cms = cmsInputsGroup; break;
+                case GCDNodeTypes.SurveysGroup: cms = cmsSurveysGroup; break;
+                case GCDNodeTypes.DEMSurvey: cms = cmsDEMSurvey; break;
+                case GCDNodeTypes.AssocGroup: cms = cmsAssociatedSurfaceGroup; break;
+                case GCDNodeTypes.AssociatedSurface: cms = cmsAssociatedSurface; break;
+                case GCDNodeTypes.ErrorSurfaceGroup: cms = cmsErrorSurfacesGroup; break;
+                case GCDNodeTypes.ErrorSurface: cms = cmsErrorSurface; break;
+                case GCDNodeTypes.ChangeDetectionGroup: cms = cmsChangeDetectionGroup; break;
+                case GCDNodeTypes.DoD: cms = cmsChangeDetection; break;
+                case GCDNodeTypes.AOIGroup: cms = cmsAOIGroup; break;
+                case GCDNodeTypes.ChangeDetectionDEMPair: cms = cmsDEMSurveyPair; break;
+                case GCDNodeTypes.BudgetSegregationGroup: cms = cmsBSGroup; break;
+                case GCDNodeTypes.BudgetSegregation: cms = cmsBS; break;
+                case GCDNodeTypes.BudgetSegregationMask: cms = cmsBSGroup; break;
+            }
+
+            if (cms is ContextMenuStrip)
+            {
+                // Hide any GIS related menu items in standalone mode
+                if (!ProjectManager.IsArcMap)
                 {
-                    TreeNode theNode = treProject.GetNodeAt(e.X, e.Y);
-                    if (theNode is TreeNode)
+                    foreach (ToolStripItem item in cms.Items)
                     {
-                        treProject.SelectedNode = theNode;
-                        ContextMenuStrip cms = null;
-                        switch (GetNodeType(theNode))
-                        {
-
-                            case GCDNodeTypes.Project:
-                                cms = cmsProject;
-
-                                break;
-                            case GCDNodeTypes.InputsGroup:
-                                cms = cmsInputsGroup;
-
-                                break;
-                            case GCDNodeTypes.SurveysGroup:
-                                cms = cmsSurveysGroup;
-
-                                break;
-                            case GCDNodeTypes.DEMSurvey:
-                                cms = cmsDEMSurvey;
-
-                                break;
-                            case GCDNodeTypes.AssociatedSurfaceGroup:
-                                cms = cmsAssociatedSurfaceGroup;
-
-                                break;
-                            case GCDNodeTypes.AssociatedSurface:
-                                cms = cmsAssociatedSurface;
-
-                                break;
-                            case GCDNodeTypes.ErrorSurfaceGroup:
-                                cms = cmsErrorSurfacesGroup;
-
-                                break;
-                            case GCDNodeTypes.ErrorSurface:
-                                cms = cmsErrorSurface;
-
-                                break;
-                            case GCDNodeTypes.ChangeDetectionGroup:
-                                cms = cmsChangeDetectionGroup;
-
-                                break;
-                            case GCDNodeTypes.DoD:
-                                cms = cmsChangeDetection;
-
-                                break;
-                            //Case GCDNodeTypes.SummaryXML
-                            //    cms = cmsSummaryXML
-
-                            case GCDNodeTypes.AOIGroup:
-                                cms = cmsAOIGroup;
-                                break;
-                            case GCDNodeTypes.AOI:
-                                cms = cmsAOI;
-                                break;
-                            case GCDNodeTypes.ChangeDetectionDEMPair:
-                                cms = cmsDEMSurveyPair;
-                                break;
-                            case GCDNodeTypes.BudgetSegregationGroup:
-                                cms = cmsBSGroup;
-                                break;
-                            case GCDNodeTypes.BudgetSegregation:
-                                cms = cmsBS;
-                                break;
-                            case GCDNodeTypes.BudgetSegregationMask:
-                                cms = cmsBSGroup;
-
-                                break;
-                        }
-
-
-                        if (cms is ContextMenuStrip)
-                        {
-                            // Hide any GIS related menu items in standalone mode
-                            if (!ProjectManager.IsArcMap)
-                            {
-                                foreach (ToolStripItem item in cms.Items)
-                                {
-                                    item.Visible = !item.Text.ToLower().Contains("map");
-                                }
-                            }
-
-                            cms.Show(treProject, new Point(e.X, e.Y));
-                        }
+                        item.Visible = !item.Text.ToLower().Contains("map");
                     }
-
                 }
 
+                cms.Show(treProject, new Point(e.X, e.Y));
             }
-            catch (Exception ex)
-            {
-                naru.error.ExceptionUI.HandleException(ex);
-            }
-
         }
 
         public int AddDEMSurvey()
@@ -577,7 +469,7 @@ namespace GCDCore.UserInterface.Project
                 if (selNode is TreeNode)
                 {
                     GCDNodeTypes eType = GetNodeType(selNode);
-                    if (eType == GCDNodeTypes.AssociatedSurfaceGroup)
+                    if (eType == GCDNodeTypes.AssocGroup)
                     {
                         DEMSurvey dem = (DEMSurvey)((ProjectTreeNode)selNode.Parent.Tag).Item;
                         frmAssocSurfaceProperties frm = new frmAssocSurfaceProperties(dem, null);
@@ -603,7 +495,7 @@ namespace GCDCore.UserInterface.Project
                 if (selNode is TreeNode)
                 {
                     GCDNodeTypes eType = GetNodeType(selNode);
-                    if (eType == GCDNodeTypes.AssociatedSurfaceGroup)
+                    if (eType == GCDNodeTypes.AssocGroup)
                     {
                         DEMSurvey dem = (DEMSurvey)((ProjectTreeNode)selNode.Parent.Tag).Item;
                         foreach (AssocSurface assoc in dem.AssocSurfaces.Values)
@@ -1705,7 +1597,7 @@ namespace GCDCore.UserInterface.Project
                             AddDEMSurvey();
 
                             break;
-                        case GCDNodeTypes.AssociatedSurfaceGroup:
+                        case GCDNodeTypes.AssocGroup:
                             DEMSurvey DEM = (DEMSurvey)((ProjectTreeNode)nodSelected.Parent.Tag).Item;
                             frm = new frmAssocSurfaceProperties(DEM, null);
 

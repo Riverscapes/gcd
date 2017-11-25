@@ -8,7 +8,7 @@
             InputsGroup,
             SurveysGroup,
             DEMSurvey,
-            AssociatedSurfaceGroup,
+            AssocGroup,
             AssociatedSurface,
             ErrorSurfaceGroup,
             ErrorSurface,
