@@ -307,8 +307,8 @@ namespace GCDCore.UserInterface.SurveyLibrary
             sRasterProperties += Environment.NewLine + "Width: " + (_with1.Right - _with1.Left).ToString("#,##0.#");
             sRasterProperties += Environment.NewLine + "Height: " + (_with1.Top - _with1.Bottom).ToString("#,##0.#");
             sRasterProperties += Environment.NewLine;
-            sRasterProperties += Environment.NewLine + "Rows: " + _with1.rows.ToString("#,##0");
-            sRasterProperties += Environment.NewLine + "Columns: " + _with1.cols.ToString("#,##0");
+            sRasterProperties += Environment.NewLine + "Rows: " + _with1.Rows.ToString("#,##0");
+            sRasterProperties += Environment.NewLine + "Columns: " + _with1.Cols.ToString("#,##0");
 
             sRasterProperties += Environment.NewLine + Environment.NewLine;
             //sRasterProperties &= "-- Original Raster Properties --"
