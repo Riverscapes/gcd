@@ -13,7 +13,7 @@ namespace GCDCore.Project
         public readonly Dictionary<string, ErrorSurface> ErrorSurfaces;
 
         public string SurveyMethod { get; set; } // Single survey methods
-        public bool IsSingleSurveyMethod { get { return !string.IsNullOrEmpty(SurveyMethod); } }
+        public bool IsSingleSurveyMethod { get { return MethodMask == null; } }
         public SurveyDateTime SurveyDate { get; set; }
         public FileInfo MethodMask { get; set; } // Multi-method polygon ShapeFile
         public string MethodMaskField { get; set; } // Multi-method field in ShapeFile
@@ -31,7 +31,7 @@ namespace GCDCore.Project
 
         public bool IsErrorNameUnique(string name, ErrorSurface ignore)
         {
-            return ErrorSurfaces.ContainsKey(name) ? ErrorSurfaces[name] == ignore : true;            
+            return ErrorSurfaces.ContainsKey(name) ? ErrorSurfaces[name] == ignore : true;
         }
 
         public bool IsAssocNameUnique(string name, AssocSurface ignore)

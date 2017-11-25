@@ -224,9 +224,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             {
                 this.DialogResult = DialogResult.None;
             }
-
         }
-
 
         private void SaveDEMSurvey()
         {
@@ -234,7 +232,11 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
             if (rdoSingle.Checked)
             {
-                DEM.SurveyMethod = cboSingle.Text;
+                if (cboSingle.Text.ToLower().Contains("undefined"))
+                    DEM.SurveyMethod = string.Empty;
+                else
+                    DEM.SurveyMethod = cboSingle.Text;
+
                 DEM.MethodMask = null;
                 DEM.MethodMaskField = string.Empty;
             }
@@ -246,9 +248,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             }
 
             ProjectManager.Project.Save();
-
         }
-
 
         private void btnBrowseFile_Click(System.Object sender, System.EventArgs e)
         {
@@ -278,7 +278,10 @@ namespace GCDCore.UserInterface.SurveyLibrary
         {
             if (rdoSingle.Checked)
             {
-                throw new NotImplementedException("Need to delete any existing polygon mask");
+                if (DEM.MethodMask is FileInfo && DEM.MethodMask.Exists)
+                {
+                    throw new NotImplementedException("Need to delete any existing polygon mask");
+                }
             }
             UpdateControls();
         }
