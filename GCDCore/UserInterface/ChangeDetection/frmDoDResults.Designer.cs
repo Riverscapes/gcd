@@ -28,18 +28,17 @@ namespace GCDCore.UserInterface.ChangeDetection
         [System.Diagnostics.DebuggerStepThrough()]
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.cmdOK = new System.Windows.Forms.Button();
             this.txtDoDName = new System.Windows.Forms.TextBox();
             this.Label6 = new System.Windows.Forms.Label();
             this.TabPage3 = new System.Windows.Forms.TabPage();
-            this.ucProperties = new ChangeDetection.ucDoDProperties();
+            this.ucProperties = new GCDCore.UserInterface.ChangeDetection.ucDoDProperties();
             this.tbpElevationChangeDistribution = new System.Windows.Forms.TabPage();
             this.TableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.ucHistogram = new ChangeDetection.ucDoDHistogram();
-            this.ucBars = new ChangeDetection.ucChangeBars();
+            this.ucHistogram = new GCDCore.UserInterface.ChangeDetection.ucDoDHistogram();
+            this.ucBars = new GCDCore.UserInterface.ChangeDetection.ucChangeBars();
             this.TabPage1 = new System.Windows.Forms.TabPage();
-            this.ucSummary = new ChangeDetection.ucDoDSummary();
+            this.ucSummary = new GCDCore.UserInterface.ChangeDetection.ucDoDSummary();
             this.tabProperties = new System.Windows.Forms.TabControl();
             this.TabPage3.SuspendLayout();
             this.tbpElevationChangeDistribution.SuspendLayout();
@@ -47,10 +46,10 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.TabPage1.SuspendLayout();
             this.tabProperties.SuspendLayout();
             this.SuspendLayout();
-            //
-            //cmdOK
-            //
-            this.cmdOK.Anchor = (System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right);
+            // 
+            // cmdOK
+            // 
+            this.cmdOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cmdOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.cmdOK.Location = new System.Drawing.Point(608, 495);
             this.cmdOK.Name = "cmdOK";
@@ -58,27 +57,28 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.cmdOK.TabIndex = 6;
             this.cmdOK.Text = "Close";
             this.cmdOK.UseVisualStyleBackColor = true;
-            //
-            //txtDoDName
-            //
-            this.txtDoDName.Anchor = (System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right);
+            // 
+            // txtDoDName
+            // 
+            this.txtDoDName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtDoDName.Location = new System.Drawing.Point(48, 12);
             this.txtDoDName.Name = "txtDoDName";
             this.txtDoDName.ReadOnly = true;
             this.txtDoDName.Size = new System.Drawing.Size(556, 20);
             this.txtDoDName.TabIndex = 1;
-            //
-            //Label6
-            //
+            // 
+            // Label6
+            // 
             this.Label6.AutoSize = true;
             this.Label6.Location = new System.Drawing.Point(7, 16);
             this.Label6.Name = "Label6";
             this.Label6.Size = new System.Drawing.Size(35, 13);
             this.Label6.TabIndex = 0;
             this.Label6.Text = "Name";
-            //
-            //TabPage3
-            //
+            // 
+            // TabPage3
+            // 
             this.TabPage3.Controls.Add(this.ucProperties);
             this.TabPage3.Location = new System.Drawing.Point(4, 22);
             this.TabPage3.Name = "TabPage3";
@@ -87,17 +87,17 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.TabPage3.TabIndex = 2;
             this.TabPage3.Text = "Analysis Inputs";
             this.TabPage3.UseVisualStyleBackColor = true;
-            //
-            //ucProperties
-            //
+            // 
+            // ucProperties
+            // 
             this.ucProperties.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ucProperties.Location = new System.Drawing.Point(3, 3);
             this.ucProperties.Name = "ucProperties";
             this.ucProperties.Size = new System.Drawing.Size(667, 405);
             this.ucProperties.TabIndex = 0;
-            //
-            //tbpElevationChangeDistribution
-            //
+            // 
+            // tbpElevationChangeDistribution
+            // 
             this.tbpElevationChangeDistribution.Controls.Add(this.TableLayoutPanel1);
             this.tbpElevationChangeDistribution.Location = new System.Drawing.Point(4, 22);
             this.tbpElevationChangeDistribution.Name = "tbpElevationChangeDistribution";
@@ -106,41 +106,43 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.tbpElevationChangeDistribution.TabIndex = 1;
             this.tbpElevationChangeDistribution.Text = "Graphical Results";
             this.tbpElevationChangeDistribution.UseVisualStyleBackColor = true;
-            //
-            //TableLayoutPanel1
-            //
+            // 
+            // TableLayoutPanel1
+            // 
             this.TableLayoutPanel1.ColumnCount = 2;
-            this.TableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 74.51274f));
-            this.TableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.48726f));
+            this.TableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 74.51274F));
+            this.TableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.48726F));
             this.TableLayoutPanel1.Controls.Add(this.ucHistogram, 0, 0);
             this.TableLayoutPanel1.Controls.Add(this.ucBars, 1, 0);
             this.TableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.TableLayoutPanel1.Name = "TableLayoutPanel1";
             this.TableLayoutPanel1.RowCount = 1;
-            this.TableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50f));
+            this.TableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.TableLayoutPanel1.Size = new System.Drawing.Size(667, 405);
             this.TableLayoutPanel1.TabIndex = 1;
-            //
-            //ucHistogram
-            //
+            // 
+            // ucHistogram
+            // 
             this.ucHistogram.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ucHistogram.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ucHistogram.Location = new System.Drawing.Point(3, 3);
             this.ucHistogram.Name = "ucHistogram";
             this.ucHistogram.Size = new System.Drawing.Size(490, 399);
             this.ucHistogram.TabIndex = 0;
-            //
-            //ucBars
-            //
+            // 
+            // ucBars
+            // 
+            this.ucBars.ChangeStats = null;
+            this.ucBars.DisplayUnits = null;
             this.ucBars.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ucBars.Location = new System.Drawing.Point(499, 3);
             this.ucBars.Name = "ucBars";
             this.ucBars.Size = new System.Drawing.Size(165, 399);
             this.ucBars.TabIndex = 1;
-            //
-            //TabPage1
-            //
+            // 
+            // TabPage1
+            // 
             this.TabPage1.Controls.Add(this.ucSummary);
             this.TabPage1.Location = new System.Drawing.Point(4, 22);
             this.TabPage1.Name = "TabPage1";
@@ -149,18 +151,20 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.TabPage1.TabIndex = 0;
             this.TabPage1.Text = "Tabular Results";
             this.TabPage1.UseVisualStyleBackColor = true;
-            //
-            //ucSummary
-            //
+            // 
+            // ucSummary
+            // 
             this.ucSummary.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ucSummary.Location = new System.Drawing.Point(3, 3);
             this.ucSummary.Name = "ucSummary";
             this.ucSummary.Size = new System.Drawing.Size(667, 405);
             this.ucSummary.TabIndex = 0;
-            //
-            //tabProperties
-            //
-            this.tabProperties.Anchor = (System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right);
+            // 
+            // tabProperties
+            // 
+            this.tabProperties.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tabProperties.Controls.Add(this.TabPage1);
             this.tabProperties.Controls.Add(this.tbpElevationChangeDistribution);
             this.tabProperties.Controls.Add(this.TabPage3);
@@ -169,11 +173,11 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.tabProperties.SelectedIndex = 0;
             this.tabProperties.Size = new System.Drawing.Size(681, 437);
             this.tabProperties.TabIndex = 5;
-            //
-            //frmDoDResults
-            //
+            // 
+            // frmDoDResults
+            // 
             this.AcceptButton = this.cmdOK;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6f, 13f);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cmdOK;
             this.ClientSize = new System.Drawing.Size(695, 530);
@@ -184,6 +188,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.MinimumSize = new System.Drawing.Size(300, 200);
             this.Name = "frmDoDResults";
             this.Text = "Change Detection Results";
+            this.Load += new System.EventHandler(this.DoDResultsForm_Load);
             this.TabPage3.ResumeLayout(false);
             this.tbpElevationChangeDistribution.ResumeLayout(false);
             this.TableLayoutPanel1.ResumeLayout(false);

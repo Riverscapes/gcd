@@ -15,11 +15,13 @@ namespace GCDCore.UserInterface.ChangeDetection
 				// If this is the first time specifying the change stats then need to also set the units
 				// But set the units by setting the internal variable to avoid double call of RefreshBars()
 				bool bUseChangeStatsUnits = m_chngStats == null;
-				m_chngStats = value;
-				m_DisplayUnits = value.StatsUnits;
+                if (value != null)
+                {
+                    m_chngStats = value;
+                    m_DisplayUnits = value.StatsUnits;
 
-				RefreshBars(null, null);
-
+                    RefreshBars(null, null);
+                }
 			}
 		}
 

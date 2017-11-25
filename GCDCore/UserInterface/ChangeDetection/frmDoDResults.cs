@@ -28,8 +28,8 @@ namespace GCDCore.UserInterface.ChangeDetection
 		private void DoDResultsForm_Load(object sender, System.EventArgs e)
 		{
 			if (!ProjectManager.IsArcMap) {
-				cmdAddToMap.Visible = false;
-				txtDoDName.Width = cmdAddToMap.Right - txtDoDName.Left;
+				//cmdAddToMap.Visible = false;
+				//txtDoDName.Width = cmdAddToMap.Right - txtDoDName.Left;
 			}
 
             txtDoDName.Text = DoD.Name;
