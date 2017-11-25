@@ -82,7 +82,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             if ((m_Assoc != null))
             {
                 txtName.Text = m_Assoc.Name;
-                txtProjectRaster.Text = m_Assoc.Raster.RelativePath;
+                txtProjectRaster.Text = ProjectManager.Project.GetRelativePath(m_Assoc.Raster.GISFileInfo);
                 txtProjectRaster.ReadOnly = true;
                 btnSlopePercent.Visible = false;
                 btnDensity.Visible = false;
@@ -192,15 +192,15 @@ namespace GCDCore.UserInterface.SurveyLibrary
                         switch (m_eMethod)
                         {
                             case AssociatedSurfaceMethods.SlopeDegree:
-                                GCDConsoleLib.RasterOperators.SlopeDegrees(DEM.Raster.Raster, fiOutput);
+                                GCDConsoleLib.RasterOperators.SlopeDegrees(DEM.Raster, fiOutput);
 
                                 break;
                             case AssociatedSurfaceMethods.SlopePercent:
-                                GCDConsoleLib.RasterOperators.SlopePercent(DEM.Raster.Raster, fiOutput);
+                                GCDConsoleLib.RasterOperators.SlopePercent(DEM.Raster, fiOutput);
 
                                 break;
                             case AssociatedSurfaceMethods.PointDensity:
-                                GCDConsoleLib.RasterOperators.PointDensity(DEM.Raster.Raster, m_frmPointDensity.ucPointCloud.SelectedItem, txtProjectRaster.Text, GCDConsoleLib.RasterOperators.KernelShapes.Square, 4m);
+                                GCDConsoleLib.RasterOperators.PointDensity(DEM.Raster, m_frmPointDensity.ucPointCloud.SelectedItem, txtProjectRaster.Text, GCDConsoleLib.RasterOperators.KernelShapes.Square, 4m);
 
                                 break;
                             case AssociatedSurfaceMethods.Roughness:
@@ -302,7 +302,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
         {
             if (m_ImportForm == null)
             {
-                m_ImportForm = new frmImportRaster(DEM.Raster.Raster, DEM, frmImportRaster.ImportRasterPurposes.AssociatedSurface, "Associated Surface");
+                m_ImportForm = new frmImportRaster(DEM.Raster, DEM, frmImportRaster.ImportRasterPurposes.AssociatedSurface, "Associated Surface");
             }
 
             m_ImportForm.txtName.Text = txtName.Text;
@@ -345,7 +345,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
                 }
             }
 
-            txtOriginalRaster.Text = DEM.Raster.RasterPath.FullName;
+            txtOriginalRaster.Text = DEM.Raster.GISFileInfo.FullName;
 
             System.Windows.Forms.MessageBox.Show("The slope raster will be generated after you click OK.", GCDCore.Properties.Resources.ApplicationNameLong, System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information);
 

@@ -12,11 +12,11 @@ namespace GCDCore.Project
         public readonly decimal ConfidenceLevel;
         public readonly CoherenceProperties SpatialCoherence;
 
-        public readonly ProjectRaster PriorProbability;
-        public readonly ProjectRaster PosteriorProbability;
-        public readonly ProjectRaster ConditionalRaster;
-        public readonly ProjectRaster SpatialCoherenceErosion;
-        public readonly ProjectRaster SpatialCoherenceDeposition;
+        public readonly Raster PriorProbability;
+        public readonly Raster PosteriorProbability;
+        public readonly Raster ConditionalRaster;
+        public readonly Raster SpatialCoherenceErosion;
+        public readonly Raster SpatialCoherenceDeposition;
 
         //public DoDProbabilistic(string name, DirectoryInfo folder, DEMSurvey newDEM, DEMSurvey oldDEM, HistogramPair histograms,
         //    Raster rawDod, Raster thrDod,
@@ -35,32 +35,32 @@ namespace GCDCore.Project
             : base(name, folder, newDEM, oldDEM, rawDoD, thrDoD, histograms, summaryXML, newError, oldError, propErr, stats)
         {
             ConfidenceLevel = confidenceLevel;
-            PriorProbability = new ProjectRaster(priorProb);
-            PosteriorProbability = new ProjectRaster(postProb);
-            ConditionalRaster = new ProjectRaster(cond);
-            SpatialCoherenceErosion = new ProjectRaster(spatCoEr);
-            SpatialCoherenceDeposition = new ProjectRaster(spatCoDep);
+            PriorProbability = new Raster(priorProb);
+            PosteriorProbability = new Raster(postProb);
+            ConditionalRaster = new Raster(cond);
+            SpatialCoherenceErosion = new Raster(spatCoEr);
+            SpatialCoherenceDeposition = new Raster(spatCoDep);
             SpatialCoherence = spatCoProps;
         }
 
         public DoDProbabilistic(DoDPropagated dod, FileInfo priorProb, decimal confidenceLevel)
-            : base(dod, dod.PropagatedError.RasterPath, dod.NewError, dod.OldError)
+            : base(dod, dod.PropagatedError.GISFileInfo, dod.NewError, dod.OldError)
         {
-            PriorProbability = new ProjectRaster(priorProb);
+            PriorProbability = new Raster(priorProb);
             ConfidenceLevel = confidenceLevel;
         }
 
         public DoDProbabilistic(DoDPropagated dod, FileInfo priorProb, decimal confidenceLevel,
             FileInfo postProb, FileInfo cond, FileInfo spatCoEr, FileInfo spatCoDep, CoherenceProperties spatCoProps)
-       : base(dod, dod.PropagatedError.RasterPath, dod.NewError, dod.OldError)
+       : base(dod, dod.PropagatedError.GISFileInfo, dod.NewError, dod.OldError)
         {
-            PriorProbability = new ProjectRaster(priorProb);
+            PriorProbability = new Raster(priorProb);
             ConfidenceLevel = confidenceLevel;
 
-            PosteriorProbability = new ProjectRaster(postProb);
-            ConditionalRaster = new ProjectRaster(cond);
-            SpatialCoherenceErosion = new ProjectRaster(spatCoEr);
-            SpatialCoherenceDeposition = new ProjectRaster(spatCoDep);
+            PosteriorProbability = new Raster(postProb);
+            ConditionalRaster = new Raster(cond);
+            SpatialCoherenceErosion = new Raster(spatCoEr);
+            SpatialCoherenceDeposition = new Raster(spatCoDep);
             SpatialCoherence = spatCoProps;
         }
 
@@ -70,20 +70,20 @@ namespace GCDCore.Project
             nodDod.InsertBefore(xmlDoc.CreateElement("ConfidenceLevel"), nodDod.SelectSingleNode("Statistics")).InnerText = ConfidenceLevel.ToString("R");
 
             // Prior probability always exists, regardless of whether spatial coherence was used.
-            nodDod.AppendChild(xmlDoc.CreateElement("PriorProbability")).InnerText = ProjectManager.Project.GetRelativePath(PriorProbability.RasterPath);
+            nodDod.AppendChild(xmlDoc.CreateElement("PriorProbability")).InnerText = ProjectManager.Project.GetRelativePath(PriorProbability.GISFileInfo);
 
             // Remaining rasters only exist if spatial coherence was used.
             if (PosteriorProbability != null)
-                nodDod.AppendChild(xmlDoc.CreateElement("PosteriorProbability")).InnerText = ProjectManager.Project.GetRelativePath(PosteriorProbability.RasterPath);
+                nodDod.AppendChild(xmlDoc.CreateElement("PosteriorProbability")).InnerText = ProjectManager.Project.GetRelativePath(PosteriorProbability.GISFileInfo);
 
             if (ConditionalRaster != null)
-                nodDod.AppendChild(xmlDoc.CreateElement("ConditionalRaster")).InnerText = ProjectManager.Project.GetRelativePath(ConditionalRaster.RasterPath);
+                nodDod.AppendChild(xmlDoc.CreateElement("ConditionalRaster")).InnerText = ProjectManager.Project.GetRelativePath(ConditionalRaster.GISFileInfo);
 
             if (SpatialCoherenceErosion != null)
-                nodDod.AppendChild(xmlDoc.CreateElement("SpatialCoherenceErosion")).InnerText = ProjectManager.Project.GetRelativePath(SpatialCoherenceErosion.RasterPath);
+                nodDod.AppendChild(xmlDoc.CreateElement("SpatialCoherenceErosion")).InnerText = ProjectManager.Project.GetRelativePath(SpatialCoherenceErosion.GISFileInfo);
 
             if (SpatialCoherenceDeposition != null)
-                nodDod.AppendChild(xmlDoc.CreateElement("SpatialCoherenceDeposition")).InnerText = ProjectManager.Project.GetRelativePath(SpatialCoherenceDeposition.RasterPath);
+                nodDod.AppendChild(xmlDoc.CreateElement("SpatialCoherenceDeposition")).InnerText = ProjectManager.Project.GetRelativePath(SpatialCoherenceDeposition.GISFileInfo);
 
             if (SpatialCoherence != null)
             {

@@ -53,7 +53,7 @@ namespace GCDCore.UserInterface.ChangeDetection
 
 		private void cmdBrowse_Click(System.Object sender, System.EventArgs e)
 		{
-			Process.Start("explorer.exe", DoD.RawDoD.RasterPath.Directory.FullName);
+			Process.Start("explorer.exe", DoD.RawDoD.GISFileInfo.Directory.FullName);
 		}
 
 		private void cmdSettings_Click(object sender, EventArgs e)

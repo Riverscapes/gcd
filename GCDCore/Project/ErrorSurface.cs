@@ -1,12 +1,13 @@
 ﻿using System.IO;
 using System.Collections.Generic;
 using System.Xml;
+using GCDConsoleLib;
 
 namespace GCDCore.Project
 {
     public class ErrorSurface : GCDProjectItem
     {
-        public readonly ProjectRaster Raster;
+        public readonly Raster Raster;
         public readonly DEMSurvey DEM;
 
         public readonly Dictionary<string, ErrorSurfaceProperty> ErrorProperties;
@@ -20,7 +21,7 @@ namespace GCDCore.Project
         public ErrorSurface(string name, FileInfo rasterPath, DEMSurvey dem)
             : base(name)
         {
-            Raster = new ProjectRaster(rasterPath);
+            Raster = new Raster(rasterPath);
             DEM = dem;
 
             // Empty dictionary of properties
@@ -30,7 +31,7 @@ namespace GCDCore.Project
         public ErrorSurface(string name, FileInfo rasterPath, DEMSurvey dem, Dictionary<string, ErrorSurfaceProperty> errProperties)
             : base(name)
         {
-            Raster = new ProjectRaster(rasterPath);
+            Raster = new Raster(rasterPath);
             DEM = dem;
 
             ErrorProperties = errProperties;
@@ -40,7 +41,7 @@ namespace GCDCore.Project
         {
             XmlNode nodError = nodParent.AppendChild(xmlDoc.CreateElement("ErrorSurface"));
             nodError.AppendChild(xmlDoc.CreateElement("Name")).InnerText = Name;
-            nodError.AppendChild(xmlDoc.CreateElement("Path")).InnerText = ProjectManager.Project.GetRelativePath(Raster.RasterPath);
+            nodError.AppendChild(xmlDoc.CreateElement("Path")).InnerText = ProjectManager.Project.GetRelativePath(Raster.GISFileInfo);
 
             if (ErrorProperties != null)
             {

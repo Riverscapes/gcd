@@ -38,14 +38,14 @@ namespace GCDCore.Engines
 
             // Create the prior probability raster
             m_PriorProbRaster = new FileInfo(Path.ChangeExtension(Path.Combine(AnalysisFolder.FullName, "priorprob"), OutputManager.RasterExtension));
-            RasterOperators.CreatePriorProbabilityRaster(rawDoD, NewError.Raster.Raster, OldError.Raster.Raster, m_PriorProbRaster.FullName);
+            RasterOperators.CreatePriorProbabilityRaster(rawDoD, NewError.Raster, OldError.Raster, m_PriorProbRaster.FullName);
 
             // Build Pyramids
             ProjectManager.PyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.ProbabilityRasters, m_PriorProbRaster);
 
             if (SpatialCoherence == null)
             {
-                thrDoD = RasterOperators.ThresholdDoDProbability(rawDoD, thrDoDPath.FullName, NewError.Raster.Raster, OldError.Raster.Raster, m_PriorProbRaster.FullName, Threshold);
+                thrDoD = RasterOperators.ThresholdDoDProbability(rawDoD, thrDoDPath.FullName, NewError.Raster, OldError.Raster, m_PriorProbRaster.FullName, Threshold);
             }
             else
             {
@@ -54,7 +54,7 @@ namespace GCDCore.Engines
                 m_SpatialCoErosionRaster = new FileInfo(Path.ChangeExtension(Path.Combine(AnalysisFolder.FullName, "nbrErosion"), OutputManager.RasterExtension));
                 m_SpatialCoDepositionRaster = new FileInfo(Path.ChangeExtension(Path.Combine(AnalysisFolder.FullName, "nbrDeposition"), OutputManager.RasterExtension));
 
-                thrDoD = RasterOperators.ThresholdDoDProbWithSpatialCoherence(rawDoD, thrDoDPath.FullName, NewError.Raster.Raster, OldError.Raster.Raster, m_PriorProbRaster.FullName,
+                thrDoD = RasterOperators.ThresholdDoDProbWithSpatialCoherence(rawDoD, thrDoDPath.FullName, NewError.Raster, OldError.Raster, m_PriorProbRaster.FullName,
                     m_PosteriorRaster.FullName, m_ConditionalRaster.FullName, m_SpatialCoErosionRaster.FullName, m_SpatialCoDepositionRaster.FullName,
                     SpatialCoherence.MovingWindowDimensions, SpatialCoherence.MovingWindowDimensions, Threshold);
 

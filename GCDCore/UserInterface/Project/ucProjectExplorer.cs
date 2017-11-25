@@ -525,7 +525,7 @@ namespace GCDCore.UserInterface.Project
 
             if (ProjectManager.Project.DEMSurveys.Count > 0)
             {
-                gReferenceRaster = ProjectManager.Project.DEMSurveys.First().Value.Raster.Raster;
+                gReferenceRaster = ProjectManager.Project.DEMSurveys.First().Value.Raster;
             }
 
             SurveyLibrary.frmImportRaster frmImport = new SurveyLibrary.frmImportRaster(gReferenceRaster, null, frmImportRaster.ImportRasterPurposes.DEMSurvey, "DEM Survey");

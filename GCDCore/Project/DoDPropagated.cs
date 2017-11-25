@@ -9,7 +9,7 @@ namespace GCDCore.Project
 {
     public class DoDPropagated : DoDBase
     {
-        public readonly ProjectRaster PropagatedError;
+        public readonly Raster PropagatedError;
         public readonly ErrorSurface NewError;
         public readonly ErrorSurface OldError;
 
@@ -19,7 +19,7 @@ namespace GCDCore.Project
         {
             NewError = newError;
             OldError = oldError;
-            PropagatedError = new ProjectRaster(propErr);
+            PropagatedError = new Raster(propErr);
         }
 
         public DoDPropagated(DoDBase dod, FileInfo propError, ErrorSurface newError, ErrorSurface oldError)
@@ -27,14 +27,14 @@ namespace GCDCore.Project
         {
             NewError = newError;
             OldError = oldError;
-            PropagatedError = new ProjectRaster(propError);
+            PropagatedError = new Raster(propError);
         }
 
         public override XmlNode Serialize(XmlDocument xmlDoc, XmlNode nodParent)
         {
             XmlNode nodDoD = base.Serialize(xmlDoc, nodParent);
             XmlNode nodStatistics = nodDoD.SelectSingleNode("Statistics");
-            nodDoD.InsertBefore(xmlDoc.CreateElement("PrograpatedError"), nodStatistics).InnerText = ProjectManager.Project.GetRelativePath(PropagatedError.RasterPath);
+            nodDoD.InsertBefore(xmlDoc.CreateElement("PrograpatedError"), nodStatistics).InnerText = ProjectManager.Project.GetRelativePath(PropagatedError.GISFileInfo);
             nodDoD.InsertBefore(xmlDoc.CreateElement("NewError"), nodStatistics).InnerText = NewError.Name;
             nodDoD.InsertBefore(xmlDoc.CreateElement("OldError"), nodStatistics).InnerText = OldError.Name;
             return nodDoD;

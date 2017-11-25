@@ -13,8 +13,8 @@ namespace GCDCore.Project
         public readonly DEMSurvey NewDEM;
         public readonly DEMSurvey OldDEM;
 
-        public ProjectRaster RawDoD { get; set; }
-        public ProjectRaster ThrDoD { get; set; }
+        public Raster RawDoD { get; set; }
+        public Raster ThrDoD { get; set; }
 
         public HistogramPair Histograms { get; set; }
         public FileInfo SummaryXML { get; set; }
@@ -28,8 +28,8 @@ namespace GCDCore.Project
             Folder = folder;
             NewDEM = newDEM;
             OldDEM = oldDEM;
-            RawDoD = new ProjectRaster(rawDoD);
-            ThrDoD = new ProjectRaster(thrDoD);
+            RawDoD = new Raster(rawDoD);
+            ThrDoD = new Raster(thrDoD);
             Histograms = histograms;
             SummaryXML = summaryXML;
             Statistics = stats;
@@ -42,8 +42,8 @@ namespace GCDCore.Project
             Folder = folder;
             NewDEM = newDEM;
             OldDEM = oldDEM;
-            RawDoD = new ProjectRaster(rawDoD);
-            ThrDoD = new ProjectRaster(thrDoD);
+            RawDoD = new Raster(rawDoD);
+            ThrDoD = new Raster(thrDoD);
             Histograms = histograms;
             SummaryXML = summaryXML;
             Statistics = stats;
@@ -76,8 +76,8 @@ namespace GCDCore.Project
             nodDoD.AppendChild(xmlDoc.CreateElement("Folder")).InnerText = ProjectManager.Project.GetRelativePath(Folder.FullName);
             nodDoD.AppendChild(xmlDoc.CreateElement("NewDEM")).InnerText = NewDEM.Name;
             nodDoD.AppendChild(xmlDoc.CreateElement("OldDEM")).InnerText = OldDEM.Name;
-            nodDoD.AppendChild(xmlDoc.CreateElement("RawDoD")).InnerText = ProjectManager.Project.GetRelativePath(RawDoD.RasterPath);
-            nodDoD.AppendChild(xmlDoc.CreateElement("ThrDoD")).InnerText = ProjectManager.Project.GetRelativePath(ThrDoD.RasterPath);
+            nodDoD.AppendChild(xmlDoc.CreateElement("RawDoD")).InnerText = ProjectManager.Project.GetRelativePath(RawDoD.GISFileInfo);
+            nodDoD.AppendChild(xmlDoc.CreateElement("ThrDoD")).InnerText = ProjectManager.Project.GetRelativePath(ThrDoD.GISFileInfo);
             nodDoD.AppendChild(xmlDoc.CreateElement("RawHistogram")).InnerText = ProjectManager.Project.GetRelativePath(Histograms.Raw.Path);
             nodDoD.AppendChild(xmlDoc.CreateElement("ThrHistogram")).InnerText = ProjectManager.Project.GetRelativePath(Histograms.Thr.Path);
             nodDoD.AppendChild(xmlDoc.CreateElement("SummaryXML")).InnerText = ProjectManager.Project.GetRelativePath(SummaryXML);

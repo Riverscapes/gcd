@@ -35,9 +35,9 @@ namespace GCDCore.UserInterface.SurveyLibrary
             cboSingle.Items.AddRange(ProjectManager.SurveyTypes.Values.ToArray());
 
             txtName.Text = DEM.Name;
-            txtRasterPath.Text = DEM.Raster.RelativePath;
+            txtRasterPath.Text = ProjectManager.Project.GetRelativePath( DEM.Raster.GISFileInfo);
             txtMask.Text = DEM.MethodMaskField;
-            txtFolder.Text = DEM.Raster.RasterPath.DirectoryName;
+            txtFolder.Text = DEM.Raster.GISFileInfo.DirectoryName;
             rdoSingle.Checked = DEM.IsSingleSurveyMethod;
 
             if (DEM.IsSingleSurveyMethod)
@@ -293,7 +293,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
         {
             string sRasterProperties = "-- GCD Raster Properties --";
 
-            var _with1 = DEM.Raster.Raster.Extent;
+            var _with1 = DEM.Raster.Extent;
             sRasterProperties += Environment.NewLine + "Left: " + _with1.Left.ToString("#,##0.#");
             sRasterProperties += Environment.NewLine + "Top: " + _with1.Top.ToString("#,##0.#");
             sRasterProperties += Environment.NewLine + "Right: " + _with1.Right.ToString("#,##0.#");
@@ -323,7 +323,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             try
             {
                 // File Size
-                sRasterProperties += Environment.NewLine + "Raster file size: " + naru.os.File.GetFormattedFileSize(DEM.Raster.RasterPath);
+                sRasterProperties += Environment.NewLine + "Raster file size: " + naru.os.File.GetFormattedFileSize(DEM.Raster.GISFileInfo);
             }
             catch (Exception ex)
             {

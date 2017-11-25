@@ -1,18 +1,19 @@
 ﻿using System.IO;
 using System.Xml;
+using GCDConsoleLib;
 
 namespace GCDCore.Project
 {
     public class AssocSurface : GCDProjectItem
     {
-        public readonly ProjectRaster Raster;
+        public readonly Raster  Raster;
         public string AssocSurfaceType { get; set; }
         public readonly DEMSurvey DEM;
 
         public AssocSurface(string name, FileInfo rasterPath, string sType, DEMSurvey dem)
             : base(name)
         {
-            Raster = new ProjectRaster(rasterPath);
+            Raster = new Raster(rasterPath);
             AssocSurfaceType = sType;
             DEM = dem;
         }
@@ -22,7 +23,7 @@ namespace GCDCore.Project
             XmlNode nodAssoc = nodParent.AppendChild(xmlDoc.CreateElement("AssociatedSurface"));
             nodAssoc.AppendChild(xmlDoc.CreateElement("Name")).InnerText = Name;
             nodAssoc.AppendChild(xmlDoc.CreateElement("Type")).InnerText = AssocSurfaceType.ToString();
-            nodAssoc.AppendChild(xmlDoc.CreateElement("Path")).InnerText = ProjectManager.Project.GetRelativePath(Raster.RasterPath);
+            nodAssoc.AppendChild(xmlDoc.CreateElement("Path")).InnerText = ProjectManager.Project.GetRelativePath(Raster.GISFileInfo);
         }
 
         public static AssocSurface Deserialize(XmlNode nodAssoc, DEMSurvey dem)

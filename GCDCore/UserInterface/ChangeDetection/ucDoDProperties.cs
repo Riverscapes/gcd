@@ -35,10 +35,9 @@ namespace GCDCore.UserInterface.ChangeDetection
                 txtType.Text = "Propagated Error";
                 grpPropagated.Visible = true;
 
-                var _with2 = (DoDPropagated)dod;
-                txtNewError.Text = _with2.NewError.Name;
-                txtOldError.Text = _with2.OldError.Name;
-                txtPropErr.Text = _with2.PropagatedError.RelativePath;
+                txtNewError.Text = ((DoDPropagated)dod).NewError.Name;
+                txtOldError.Text = ((DoDPropagated)dod).OldError.Name;
+                txtPropErr.Text = ProjectManager.Project.GetRelativePath(((DoDPropagated)dod).PropagatedError.GISFileInfo);
 
                 if (dod is DoDProbabilistic)
                 {
@@ -47,17 +46,17 @@ namespace GCDCore.UserInterface.ChangeDetection
                     grpPropagated.Visible = true;
 
                     var _with3 = (DoDProbabilistic)dod;
-                    txtConfidence.Text = (100 * _with3.ConfidenceLevel).ToString("0") + "%";
-                    txtProbabilityRaster.Text = _with3.PriorProbability.RelativePath;
+                    txtConfidence.Text = (100 * ((DoDProbabilistic)dod).ConfidenceLevel).ToString("0") + "%";
+                    txtProbabilityRaster.Text = ProjectManager.Project.GetRelativePath(((DoDProbabilistic)dod).PriorProbability.GISFileInfo);
                     txtBayesian.Text = "None";
 
                     if (_with3.SpatialCoherence is GCDCore.Project.CoherenceProperties)
                     {
-                        txtPosteriorRaster.Text = _with3.PosteriorProbability.RelativePath;
-                        txtConditionalRaster.Text = _with3.ConditionalRaster.RelativePath;
-                        txtErosionalSpatialCoherenceRaster.Text = _with3.SpatialCoherenceErosion.RelativePath;
-                        txtDepositionSpatialCoherenceRaster.Text = _with3.SpatialCoherenceDeposition.RelativePath;
-                        txtBayesian.Text = string.Format("Bayesian updating with filter size of {0} X {0} cells", _with3.SpatialCoherence.MovingWindowDimensions);
+                        txtPosteriorRaster.Text = ProjectManager.Project.GetRelativePath(((DoDProbabilistic)dod).PosteriorProbability.GISFileInfo);
+                        txtConditionalRaster.Text = ProjectManager.Project.GetRelativePath(((DoDProbabilistic)dod).ConditionalRaster.GISFileInfo);
+                        txtErosionalSpatialCoherenceRaster.Text = ProjectManager.Project.GetRelativePath(((DoDProbabilistic)dod).SpatialCoherenceErosion.GISFileInfo);
+                        txtDepositionSpatialCoherenceRaster.Text = ProjectManager.Project.GetRelativePath(((DoDProbabilistic)dod).SpatialCoherenceDeposition.GISFileInfo);
+                        txtBayesian.Text = string.Format("Bayesian updating with filter size of {0} X {0} cells", ((DoDProbabilistic)dod).SpatialCoherence.MovingWindowDimensions);
                     }
                 }
             }

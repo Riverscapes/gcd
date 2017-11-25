@@ -44,7 +44,7 @@ namespace GCDCore.Engines
         protected Raster GeneratePropagatedErrorRaster()
         {
             FileInfo propErrPath = ProjectManager.OutputManager.PropagatedErrorPath(AnalysisFolder);
-            Raster propErr = RasterOperators.RootSumSquares(NewError.Raster.Raster, OldError.Raster.Raster, propErrPath);
+            Raster propErr = RasterOperators.RootSumSquares(NewError.Raster, OldError.Raster, propErrPath);
 
             // Build Pyramids
             ProjectManager.PyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.PropagatedError, propErrPath);

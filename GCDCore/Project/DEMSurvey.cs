@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Xml;
 using System;
+using GCDConsoleLib;
 
 namespace GCDCore.Project
 {
     public class DEMSurvey : GCDProjectItem
     {
-        public readonly ProjectRaster Raster;
+        public readonly Raster Raster;
         public readonly Dictionary<string, AssocSurface> AssocSurfaces;
         public readonly Dictionary<string, ErrorSurface> ErrorSurfaces;
 
@@ -22,7 +23,7 @@ namespace GCDCore.Project
             : base(name)
         {
             SurveyDate = surveyDate;
-            Raster = new ProjectRaster(rasterPath);
+            Raster = new Raster(rasterPath);
 
             AssocSurfaces = new Dictionary<string, AssocSurface>();
             ErrorSurfaces = new Dictionary<string, ErrorSurface>();
@@ -142,7 +143,7 @@ namespace GCDCore.Project
         {
             XmlNode nodDEM = nodParent.AppendChild(xmlDoc.CreateElement("DEM"));
             nodDEM.AppendChild(xmlDoc.CreateElement("Name")).InnerText = Name;
-            nodDEM.AppendChild(xmlDoc.CreateElement("Path")).InnerText = ProjectManager.Project.GetRelativePath(Raster.RasterPath);
+            nodDEM.AppendChild(xmlDoc.CreateElement("Path")).InnerText = ProjectManager.Project.GetRelativePath(Raster.GISFileInfo);
 
             if (!string.IsNullOrEmpty(SurveyMethod))
             {

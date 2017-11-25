@@ -138,7 +138,7 @@ namespace GCDCore.UserInterface.Project
 
         private void btnBrowseOutput_Click(System.Object sender, System.EventArgs e)
         {
-            if (naru.os.Folder.BrowseFolder(ref txtDirectory, "Select the GCD Project Parent Directory", GCDCore.Properties.Settings.Default.LastUsedProjectFolder) != DialogResult.OK)
+            if (naru.os.Folder.BrowseFolder(txtDirectory, "Select the GCD Project Parent Directory", GCDCore.Properties.Settings.Default.LastUsedProjectFolder) != DialogResult.OK)
             {
                 return;
             }

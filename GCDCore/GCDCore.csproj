@@ -67,14 +67,12 @@
     <Compile Include="Project\DoDBase.cs" />
     <Compile Include="Project\DoDMinLoD.cs" />
     <Compile Include="Project\DoDProbabilistic.cs" />
-    <Compile Include="Project\DoDProbabilityRasters.cs" />
     <Compile Include="Project\DoDPropagated.cs" />
     <Compile Include="Project\ErrorSurface.cs" />
     <Compile Include="Project\ErrorSurfaceProperty.cs" />
     <Compile Include="Project\GCDProject.cs" />
     <Compile Include="Project\GCDProjectItem.cs" />
     <Compile Include="Project\HistogramPair.cs" />
-    <Compile Include="Project\ProjectRaster.cs" />
     <Compile Include="Project\ProjectManager.cs" />
     <Compile Include="Project\SurveyDateTime.cs" />
     <Compile Include="Project\SurveyType.cs" />

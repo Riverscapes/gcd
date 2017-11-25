@@ -15,13 +15,13 @@ namespace GCDCore.Engines
         public ChangeDetectionEngineBase(string name, DirectoryInfo folder, DEMSurvey newDEM, DEMSurvey oldDEM)
             : base(name, folder)
         {
-            if (!newDEM.Raster.Raster.Extent.HasOverlap(oldDEM.Raster.Raster.Extent))
+            if (!newDEM.Raster.Extent.HasOverlap(oldDEM.Raster.Extent))
             {
                 Exception ex = new Exception("The two rasters do not overlap.");
-                ex.Data["New DEM Path"] = newDEM.Raster.RasterPath.ToString();
-                ex.Data["New DEM Extent"] = newDEM.Raster.Raster.Extent.ToString();
-                ex.Data["Old DEM Path"] = oldDEM.Raster.RasterPath.ToString();
-                ex.Data["Old DEM Extent"] = oldDEM.Raster.Raster.Extent.ToString();
+                ex.Data["New DEM Path"] = newDEM.Raster.GISFileInfo.ToString();
+                ex.Data["New DEM Extent"] = newDEM.Raster.Extent.ToString();
+                ex.Data["Old DEM Path"] = oldDEM.Raster.GISFileInfo.ToString();
+                ex.Data["Old DEM Extent"] = oldDEM.Raster.Extent.ToString();
                 throw ex;
             }
 
@@ -40,7 +40,7 @@ namespace GCDCore.Engines
             AnalysisFolder.Create();
 
             // Subtract the new and old rasters to produce the raw DoD
-            Raster rawDoD = RasterOperators.Subtract(NewDEM.Raster.Raster, OldDEM.Raster.Raster, rawDoDPath);
+            Raster rawDoD = RasterOperators.Subtract(NewDEM.Raster, OldDEM.Raster, rawDoDPath);
 
             // Build pyraminds
             ProjectManager.PyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.DoDRaw, rawDoDPath);
