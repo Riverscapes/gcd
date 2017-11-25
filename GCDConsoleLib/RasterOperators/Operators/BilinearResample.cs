@@ -22,15 +22,15 @@ namespace GCDConsoleLib.Internal.Operators
             fy = rInput.Extent.CellHeight / newRect.CellHeight;
             fx = rInput.Extent.CellWidth / newRect.CellWidth;
 
-            int newRows = Convert.ToInt32(Math.Ceiling(rInput.Extent.rows * fy));
-            int newCols = Convert.ToInt32(Math.Ceiling(rInput.Extent.cols * fx));
+            int newRows = Convert.ToInt32(Math.Ceiling(rInput.Extent.Rows * fy));
+            int newCols = Convert.ToInt32(Math.Ceiling(rInput.Extent.Cols * fx));
 
             ExtentRectangle newOpRect = rInput.Extent;
             newOpRect.Left = newRect.Left;
             newOpRect.Top = newRect.Top;
 
-            newOpRect.cols = Convert.ToInt32((newRect.Top - newRect.Bottom) / rInput.Extent.Width);
-            newOpRect.rows = Convert.ToInt32((newRect.Left - newRect.Right) / rInput.Extent.CellHeight);
+            newOpRect.Cols = Convert.ToInt32((newRect.Top - newRect.Bottom) / rInput.Extent.Width);
+            newOpRect.Rows = Convert.ToInt32((newRect.Left - newRect.Right) / rInput.Extent.CellHeight);
 
             SetOpExtent(newOpRect);
         }
@@ -58,25 +58,25 @@ namespace GCDConsoleLib.Internal.Operators
         /// </summary>
         public new void Run()
         {
-            int oldCols = _rasters[0].Extent.cols;
-            int oldRows = _rasters[0].Extent.rows;
+            int oldCols = _rasters[0].Extent.Cols;
+            int oldRows = _rasters[0].Extent.Rows;
 
-            T[] outBuffer = new T[OpExtent.cols];
-            List<T[]> indata = new List<T[]>() { new T[_rasters[0].Extent.cols], new T[_rasters[0].Extent.cols] };
+            T[] outBuffer = new T[OpExtent.Cols];
+            List<T[]> indata = new List<T[]>() { new T[_rasters[0].Extent.Cols], new T[_rasters[0].Extent.Cols] };
 
             // This is a two-line cycling buffer. Either array el 1 or array el 0 is the first row.
             int topBit = 0;
 
             int topBitRow = 0;
 
-            for (int nrow = 0; nrow < OpExtent.rows; nrow++)
+            for (int nrow = 0; nrow < OpExtent.Rows; nrow++)
             {
                 outBuffer.Fill(OpNodataVal);
-                for (int ncol = 0; ncol < OpExtent.cols; ncol++)
+                for (int ncol = 0; ncol < OpExtent.Cols; ncol++)
                 {
 
-                    int ix1 = translateCoord(ncol, fy, OpExtent.cols);
-                    int iy1 = translateCoord(nrow, fx, OpExtent.rows);
+                    int ix1 = translateCoord(ncol, fy, OpExtent.Cols);
+                    int iy1 = translateCoord(nrow, fx, OpExtent.Rows);
 
                     // Increment both by 1 to get 4 coords we need
                     int ix2 = ix1 + 1;
@@ -87,7 +87,7 @@ namespace GCDConsoleLib.Internal.Operators
                     {
                         topBit = (topBit + 1) % 2;
                         topBitRow += 1;
-                        _rasters[0].Read(0, iy2, _rasters[0].Extent.cols, 1, indata[topBit]);
+                        _rasters[0].Read(0, iy2, _rasters[0].Extent.Cols, 1, indata[topBit]);
                     }
 
                     // Test if we're within the raster midpoints
@@ -118,7 +118,7 @@ namespace GCDConsoleLib.Internal.Operators
                         }
                     }
                 }
-                _outputRaster.Write(0, nrow, ChunkExtent.cols, 1, outBuffer);
+                _outputRaster.Write(0, nrow, ChunkExtent.Cols, 1, outBuffer);
             }
             Cleanup();
         }

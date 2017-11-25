@@ -388,8 +388,8 @@ Namespace SurveyLibrary
                     txtBottom.Text = gOriginalRaster.Extent.Bottom.ToString
                     txtRight.Text = gOriginalRaster.Extent.Right.ToString
 
-                    txtOrigRows.Text = gOriginalRaster.Extent.rows.ToString("#,##0")
-                    txtOrigCols.Text = gOriginalRaster.Extent.cols.ToString("#,##0")
+                    txtOrigRows.Text = gOriginalRaster.Extent.Rows.ToString("#,##0")
+                    txtOrigCols.Text = gOriginalRaster.Extent.Cols.ToString("#,##0")
                     txtOrigWidth.Text = (gOriginalRaster.Extent.Right - gOriginalRaster.Extent.Left).ToString
                     txtOrigHeight.Text = (gOriginalRaster.Extent.Top - gOriginalRaster.Extent.Bottom).ToString
                     txtOrigCellSize.Text = gOriginalRaster.Extent.CellWidth.ToString

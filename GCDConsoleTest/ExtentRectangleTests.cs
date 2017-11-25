@@ -1,7 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using GCDConsoleLib;
 using System;
-using System.Collections.Generic;
+using System.IO;
+using GCDConsoleLib.GCD;
+using UnitsNet.Units;
 
 namespace GCDConsoleLib.Tests
 {
@@ -11,13 +13,85 @@ namespace GCDConsoleLib.Tests
         [TestMethod()]
         public void ExtentRectangleTest()
         {
-            Assert.Inconclusive();
+            ExtentRectangle rA2 = new ExtentRectangle(new FileInfo(TestHelpers.GetTestRasterPath("Slopey980-950.tif")));
+            Assert.AreEqual(rA2.Top, -10019.0m);
+            Assert.AreEqual(rA2.Bottom, -10029.0m);
+            Assert.AreEqual(rA2.Left, -9979.0m);
+            Assert.AreEqual(rA2.Right, -9969.0m);
+            Assert.AreEqual(rA2.Rows, 100);
+            Assert.AreEqual(rA2.Cols, 100);
+
+            Assert.AreEqual(rA2.CellHeight, -0.1m);
+            Assert.AreEqual(rA2.CellWidth, 0.1m);
+            Assert.AreEqual(rA2.Height, 10.0m);
+            Assert.AreEqual(rA2.Width, 10.0m);
+            Assert.AreEqual(rA2.MaxArrID, 9999);
+
+            CollectionAssert.AreEqual(rA2.Transform, new double[6] { -9979, 0.1, 0, -10019, 0, -0.1 });
+
+            // Now let's try a copy constructor
+            ExtentRectangle rA1 = new ExtentRectangle(rA2);
+            Assert.AreEqual(rA2.Top, rA1.Top);
+            Assert.AreEqual(rA2.Bottom, rA1.Bottom);
+            Assert.AreEqual(rA2.Left, rA1.Left);
+            Assert.AreEqual(rA2.Right, rA1.Right);
+            Assert.AreEqual(rA2.Rows, rA1.Rows);
+            Assert.AreEqual(rA2.Cols, rA1.Cols);
+
+            Assert.AreEqual(rA2.CellHeight, rA1.CellHeight);
+            Assert.AreEqual(rA2.CellWidth, rA1.CellWidth);
+            Assert.AreEqual(rA2.Height, rA1.Height);
+            Assert.AreEqual(rA2.Width, rA1.Width);
+            Assert.AreEqual(rA2.MaxArrID, rA1.MaxArrID);
+
+            // Now try the manual constructor
+            ExtentRectangle rA3 = new ExtentRectangle(5, 6, -1, 1, 100, 94);
+            Assert.AreEqual(rA3.Top, 5.0m);
+            Assert.AreEqual(rA3.Bottom, -95.0m);
+            Assert.AreEqual(rA3.Left, 6.0m);
+            Assert.AreEqual(rA3.Right, 100.0m);
+            Assert.AreEqual(rA3.Rows, 100);
+            Assert.AreEqual(rA3.Cols, 94);
+
+            Assert.AreEqual(rA3.CellHeight, -1m);
+            Assert.AreEqual(rA3.CellWidth, 1m);
+            Assert.AreEqual(rA3.Height, 100.0m);
+            Assert.AreEqual(rA3.Width, 94.0m);
+            Assert.AreEqual(rA3.MaxArrID, 9399);
         }
 
         [TestMethod()]
         public void BufferTest()
         {
-            ExtentRectangle rA1 = new ExtentRectangle(5, 6, -1, 1, 100, 100);
+            ExtentRectangle rOrig = new ExtentRectangle(20, 20, -1, 1, 20, 20);
+            ExtentRectangle rA1 = rOrig.Buffer(10.0m);
+            Assert.AreEqual(rA1.Top, 30.0m);
+            Assert.AreEqual(rA1.Bottom, -10.0m);
+            Assert.AreEqual(rA1.Left, 10.0m);
+            Assert.AreEqual(rA1.Right, 50.0m);
+            Assert.AreEqual(rA1.Rows, 40);
+            Assert.AreEqual(rA1.Cols, 40);
+
+            Assert.AreEqual(rA1.CellHeight, -1m);
+            Assert.AreEqual(rA1.CellWidth, 1m);
+            Assert.AreEqual(rA1.Height, 40.0m);
+            Assert.AreEqual(rA1.Width, 40.0m);
+            Assert.AreEqual(rA1.MaxArrID, 1599);
+
+            // we can do it by number of cells too
+            ExtentRectangle rA2 = rOrig.Buffer((int)11);
+            Assert.AreEqual(rA2.Top, 31.0m);
+            Assert.AreEqual(rA2.Bottom, -11.0m);
+            Assert.AreEqual(rA2.Left, 9.0m);
+            Assert.AreEqual(rA2.Right, 51.0m);
+            Assert.AreEqual(rA2.Rows, 42);
+            Assert.AreEqual(rA2.Cols, 42);
+
+            Assert.AreEqual(rA2.CellHeight, -1m);
+            Assert.AreEqual(rA2.CellWidth, 1m);
+            Assert.AreEqual(rA2.Height, 42.0m);
+            Assert.AreEqual(rA2.Width, 42.0m);
+            Assert.AreEqual(rA2.MaxArrID, 1763);
         }
 
         [TestMethod()]
@@ -30,25 +104,80 @@ namespace GCDConsoleLib.Tests
         [TestMethod()]
         public void UnionTest()
         {
-            Assert.Inconclusive();
+            ExtentRectangle rA1 = new ExtentRectangle(0, 0, -1, 1, 30, 30);
+            ExtentRectangle rA2 = new ExtentRectangle(20, 20, -1, 1, 30, 30);
+
+            ExtentRectangle rTest = rA1.Union(rA2);
+
+            Assert.AreEqual(rTest.Top, 20.0m);
+            Assert.AreEqual(rTest.Bottom, -30.0m);
+            Assert.AreEqual(rTest.Left, 0.0m);
+            Assert.AreEqual(rTest.Right, 50.0m);
+            Assert.AreEqual(rTest.Rows, 50);
+            Assert.AreEqual(rTest.Cols, 50);
+
+            Assert.AreEqual(rTest.CellHeight, -1m);
+            Assert.AreEqual(rTest.CellWidth, 1m);
+            Assert.AreEqual(rTest.Height, 50.0m);
+            Assert.AreEqual(rTest.Width, 50.0m);
+            Assert.AreEqual(rTest.MaxArrID, 2499);
+
         }
 
         [TestMethod()]
         public void IntersectTest()
         {
-            Assert.Inconclusive();
+            ExtentRectangle rA1 = new ExtentRectangle(0, 0, -1, 1, 30, 30);
+            ExtentRectangle rA2 = new ExtentRectangle(20, 20, -1, 1, 30, 30);
+
+            ExtentRectangle rTest = rA1.Intersect(rA2);
+
+            Assert.AreEqual(rTest.Top, 0.0m);
+            Assert.AreEqual(rTest.Bottom, -10.0m);
+            Assert.AreEqual(rTest.Left, 20.0m);
+            Assert.AreEqual(rTest.Right, 30.0m);
+            Assert.AreEqual(rTest.Rows, 10);
+            Assert.AreEqual(rTest.Cols, 10);
+
+            Assert.AreEqual(rTest.CellHeight, -1m);
+            Assert.AreEqual(rTest.CellWidth, 1m);
+            Assert.AreEqual(rTest.Height, 10.0m);
+            Assert.AreEqual(rTest.Width, 10.0m);
+            Assert.AreEqual(rTest.MaxArrID, 99);
         }
 
         [TestMethod()]
         public void GetTranslationTest()
         {
-            Assert.Inconclusive();
+            ExtentRectangle rA1 = new ExtentRectangle(0, 0, -1, 1, 30, 30);
+            ExtentRectangle rA2 = new ExtentRectangle(3, 2, -1, 1, 30, 30);
+
+            // Returns (x,y) ==> (col,row)
+            Tuple<int, int> tr1 = rA1.GetTranslation(rA2);
+            Tuple<int, int> tr2 = rA2.GetTranslation(rA1);
+
+            Assert.AreEqual(tr1.Item1, 2);
+            Assert.AreEqual(tr1.Item2, 3);
+
+            Assert.AreEqual(tr2.Item1, -tr1.Item1);
+            Assert.AreEqual(tr2.Item2, -tr1.Item2);
         }
 
         [TestMethod()]
         public void IsConcurrentTest()
         {
-            Assert.Inconclusive();
+            ExtentRectangle rA1 = new ExtentRectangle(5, 6, -1, 1, 100, 100);
+            ExtentRectangle rYES1 = new ExtentRectangle(5, 6, -1, 1, 100, 100);
+            ExtentRectangle rNo1 = new ExtentRectangle(4, 6, -1, 1, 100, 100);
+            ExtentRectangle rNo2 = new ExtentRectangle(5, 5, -1, 1, 100, 100);
+            ExtentRectangle rNo3 = new ExtentRectangle(5, 6, 1, 1, 100, 100);
+            ExtentRectangle rNo4 = new ExtentRectangle(5, 6, -1, -1, 100, 100);
+
+            Assert.IsTrue(rA1.IsConcurrent(rYES1));
+            Assert.IsFalse(rA1.IsConcurrent(rNo1));
+            Assert.IsFalse(rA1.IsConcurrent(rNo2));
+            Assert.IsFalse(rA1.IsConcurrent(rNo3));
+            Assert.IsFalse(rA1.IsConcurrent(rNo4));
         }
 
         [TestMethod()]
@@ -116,8 +245,8 @@ namespace GCDConsoleLib.Tests
             Assert.AreEqual(eA1result.Bottom, eA1.Bottom);
             Assert.AreEqual(eA1result.Left, eA1.Left);
             Assert.AreEqual(eA1result.Right, eA1.Right);
-            Assert.AreEqual(eA1result.rows, eA1.rows);
-            Assert.AreEqual(eA1result.cols, eA1.cols);
+            Assert.AreEqual(eA1result.Rows, eA1.Rows);
+            Assert.AreEqual(eA1result.Cols, eA1.Cols);
 
             ///
             /// NEGStep 1: Negative Cell Height, Positive Cell Width
@@ -131,8 +260,8 @@ namespace GCDConsoleLib.Tests
             Assert.AreEqual(eDivisible.Bottom, -5.0m);
             Assert.AreEqual(eDivisible.Left, 6.4m);
             Assert.AreEqual(eDivisible.Right, 26.6m);
-            Assert.AreEqual(eDivisible.rows, 101);
-            Assert.AreEqual(eDivisible.cols, 101);
+            Assert.AreEqual(eDivisible.Rows, 101);
+            Assert.AreEqual(eDivisible.Cols, 101);
 
             ///
             /// NEGStep 1: Negative Cell Height, Positive Cell Width
@@ -146,8 +275,8 @@ namespace GCDConsoleLib.Tests
             Assert.AreEqual(eNegStep1.Bottom, -5.0m);
             Assert.AreEqual(eNegStep1.Left, 6.2m);
             Assert.AreEqual(eNegStep1.Right, 26.4m);
-            Assert.AreEqual(eNegStep1.rows, 101);
-            Assert.AreEqual(eNegStep1.cols, 101);
+            Assert.AreEqual(eNegStep1.Rows, 101);
+            Assert.AreEqual(eNegStep1.Cols, 101);
 
             ///
             /// NEGStep 2: Positive Cell Height, Negative Cell Width
@@ -161,8 +290,8 @@ namespace GCDConsoleLib.Tests
             Assert.AreEqual(eNegStep2.Bottom, 15.1m);
             Assert.AreEqual(eNegStep2.Left, 6.4m);
             Assert.AreEqual(eNegStep2.Right, -13.8m);
-            Assert.AreEqual(eNegStep2.rows, 101);
-            Assert.AreEqual(eNegStep2.cols, 101);
+            Assert.AreEqual(eNegStep2.Rows, 101);
+            Assert.AreEqual(eNegStep2.Cols, 101);
 
             ///
             /// NegWorldNEGStep 1: Negative Coordinates, Negative Cell Height, Positive Cell Width
@@ -176,8 +305,8 @@ namespace GCDConsoleLib.Tests
             Assert.AreEqual(eNWNegStep1.Bottom, -15.1m);
             Assert.AreEqual(eNWNegStep1.Left, -6.4m);
             Assert.AreEqual(eNWNegStep1.Right, 13.8m);
-            Assert.AreEqual(eNWNegStep1.rows, 101);
-            Assert.AreEqual(eNWNegStep1.cols, 101);
+            Assert.AreEqual(eNWNegStep1.Rows, 101);
+            Assert.AreEqual(eNWNegStep1.Cols, 101);
 
             ///
             /// NegWorldNEGStep 2: Negative Coordinates, Positive Cell Height, Negative Cell Width
@@ -191,17 +320,15 @@ namespace GCDConsoleLib.Tests
             Assert.AreEqual(eNWNegStep2.Bottom, 5.0m);
             Assert.AreEqual(eNWNegStep2.Left, -6.2m);
             Assert.AreEqual(eNWNegStep2.Right, -26.4m);
-            Assert.AreEqual(eNWNegStep2.rows, 101);
-            Assert.AreEqual(eNWNegStep2.cols, 101);
+            Assert.AreEqual(eNWNegStep2.Rows, 101);
+            Assert.AreEqual(eNWNegStep2.Cols, 101);
 
         }
 
         [TestMethod()]
         public void HasOverlapTest()
         {
-            Assert.Inconclusive();
-            // TODO: TEST THIS THOROUGHLY, ESPECIALLY -/+ widht heights
-            Assert.Fail();
+            // TODO: TEST THIS THOROUGHLY, ESPECIALLY -/+ width heights
             ExtentRectangle eA1 = new ExtentRectangle(5.1m, 6.4m, -0.1m, 0.2m, 100, 100);
             ExtentRectangle eInside = new ExtentRectangle(3, 9, -0.1m, 0.2m, 50, 50);
             ExtentRectangle eOverlap1 = new ExtentRectangle(9.1m, 0.4m, -0.1m, 0.2m, 100, 100);
@@ -277,5 +404,12 @@ namespace GCDConsoleLib.Tests
             Assert.AreEqual(rTest2.RelativeId(99, rTest2), -1);
         }
 
+        [TestMethod()]
+        public void CellAreaTest()
+        {
+            UnitGroup ug = new UnitGroup(VolumeUnit.CubicMeter, AreaUnit.SquareMeter, LengthUnit.Meter, LengthUnit.Meter);
+            ExtentRectangle rA2 = new ExtentRectangle(new FileInfo(TestHelpers.GetTestRasterPath("Slopey980-950.tif")));
+            Assert.AreEqual(rA2.CellArea(ug).SquareMeters, 0.01, 0.000000000001);
+        }
     }
 }

@@ -32,12 +32,12 @@ namespace GCDConsoleLib.Internal
                 dWindow.Add(new T[BufferCellNum]);
 
             // 1 is the convention for windowed mode for good reason
-            ChunkExtent.rows = 1;
-            ChunkExtent.cols = OpExtent.cols;
+            ChunkExtent.Rows = 1;
+            ChunkExtent.Cols = OpExtent.Cols;
 
             // We add rows to the end so the operation goes over the end of the file
             OriginalOpBottom = OpExtent.Bottom;
-            OpExtent.rows += BufferCells;
+            OpExtent.Rows += BufferCells;
             WindowExtent = new ExtentRectangle(ChunkExtent.Top - OpExtent.CellHeight, ChunkExtent.Left - OpExtent.CellWidth, OpExtent.CellHeight, OpExtent.CellWidth, BufferLength, BufferLength);
 
         }
@@ -64,7 +64,7 @@ namespace GCDConsoleLib.Internal
 
         private List<T[]> NoDataChunkList()
         {
-            T[] inputchunk = new T[ChunkExtent.rows * ChunkExtent.cols];
+            T[] inputchunk = new T[ChunkExtent.Rows * ChunkExtent.Cols];
             inputchunk.Fill(OpNodataVal);
             List<T[]> inputChunkList = new List<T[]>();
             for (int did = 0; did < _rasters.Count; did++)
@@ -146,7 +146,7 @@ namespace GCDConsoleLib.Internal
                     {
                         // Edge cases to the left and right of the chunk data become nodata 
                         // (top and bottom are handled by pre-filling the cache)
-                        if (wid2cid < 0 || wid2cid >= ChunkExtent.cols)
+                        if (wid2cid < 0 || wid2cid >= ChunkExtent.Cols)
                             dWindow[dId][wId] = OpNodataVal;
                         else
                             dWindow[dId][wId] = _chunkCache[cacheNum][dId][wid2cid];

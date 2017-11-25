@@ -171,8 +171,8 @@ namespace GCDConsoleLib.Internal.Tests
             TestOp<int> theTest = new TestOp<int>(new List<Raster> { Raster1 }, rOutput);
             Assert.AreEqual(theTest.ChunkExtent.Top, 10);
             Assert.AreEqual(theTest.ChunkExtent.Left, 20);
-            Assert.AreEqual(theTest.ChunkExtent.rows, 3);
-            Assert.AreEqual(theTest.ChunkExtent.cols, 4);
+            Assert.AreEqual(theTest.ChunkExtent.Rows, 3);
+            Assert.AreEqual(theTest.ChunkExtent.Cols, 4);
             Assert.AreEqual(theTest.ChunkExtent.CellHeight, -1);
             Assert.AreEqual(theTest.ChunkExtent.CellWidth, 1);
 
@@ -188,7 +188,7 @@ namespace GCDConsoleLib.Internal.Tests
 
             TestOp<int> theTest = new TestOp<int>(new List<Raster> { Raster1 }, rOutput);
 
-            List<int[]> data = new List<int[]>() { new int[theTest.ChunkExtent.cols * theTest.ChunkExtent.rows] };
+            List<int[]> data = new List<int[]>() { new int[theTest.ChunkExtent.Cols * theTest.ChunkExtent.Rows] };
 
             theTest.GetChunk(data);
             CollectionAssert.AreEqual(data[0], Raster1._inputgrid.Make1DArray<int>());

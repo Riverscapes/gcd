@@ -107,10 +107,10 @@ namespace GCDConsoleLib.Internal
             OpExtent = newRect;
 
             // Now initialize our window rectangle
-            int chunkXsize = OpExtent.cols;
+            int chunkXsize = OpExtent.Cols;
             int chunkYsize = 10;
 
-            if (OpExtent.rows < chunkYsize) chunkYsize = OpExtent.rows;
+            if (OpExtent.Rows < chunkYsize) chunkYsize = OpExtent.Rows;
             ChunkExtent = new ExtentRectangle(OpExtent.Top, OpExtent.Left, OpExtent.CellHeight, OpExtent.CellWidth, chunkYsize, chunkXsize);
 
             if (_outputRaster != null)
@@ -127,13 +127,13 @@ namespace GCDConsoleLib.Internal
             if ((ChunkExtent.Top * ChunkExtent.CellHeight) < (OpExtent.Bottom * ChunkExtent.CellHeight))
             {
                 // Advance the chunk
-                ChunkExtent.Top = ChunkExtent.Top + (ChunkExtent.rows * ChunkExtent.CellHeight);
+                ChunkExtent.Top = ChunkExtent.Top + (ChunkExtent.Rows * ChunkExtent.CellHeight);
 
                 // If we've fallen off the bottom of the intended extent then we need to shorten the chunk
                 if ((ChunkExtent.Bottom * ChunkExtent.CellHeight) > (OpExtent.Bottom * ChunkExtent.CellHeight))
                 {
-                    ChunkExtent.rows = (int)((ChunkExtent.Top - OpExtent.Bottom) / ChunkExtent.CellHeight);
-                    if (ChunkExtent.rows <= 0)
+                    ChunkExtent.Rows = (int)((ChunkExtent.Top - OpExtent.Bottom) / ChunkExtent.CellHeight);
+                    if (ChunkExtent.Rows <= 0)
                         OpDone = true;
                 }
             }
@@ -161,19 +161,19 @@ namespace GCDConsoleLib.Internal
                 ExtentRectangle _interSectRect = rRa.Extent.Intersect(ChunkExtent);
 
                 // Make sure there's some data to read, otherwise return the filled nodata values from above
-                if (_interSectRect.rows > 0 && _interSectRect.cols > 0)
+                if (_interSectRect.Rows > 0 && _interSectRect.Cols > 0)
                 {
-                    T[] _buffer = new T[_interSectRect.rows * _interSectRect.cols];
+                    T[] _buffer = new T[_interSectRect.Rows * _interSectRect.Cols];
 
                     // Find the offset between the intersection and rRa
                     Tuple<int, int> offrRa = _interSectRect.GetTopCornerTranslationRowCol(rRa.Extent);
-                    _rasters[idx].Read(offrRa.Item2, offrRa.Item1, _interSectRect.cols, _interSectRect.rows, _buffer);
+                    _rasters[idx].Read(offrRa.Item2, offrRa.Item1, _interSectRect.Cols, _interSectRect.Rows, _buffer);
 
                     // Find the offset between the intersection and the chunkwindow
                     Tuple<int, int> offChunk = _interSectRect.GetTopCornerTranslationRowCol(ChunkExtent);
                     data[idx].Plunk(_buffer,
-                        ChunkExtent.rows, ChunkExtent.cols,
-                        _interSectRect.rows, _interSectRect.cols,
+                        ChunkExtent.Rows, ChunkExtent.Cols,
+                        _interSectRect.Rows, _interSectRect.Cols,
                         offChunk.Item1, offChunk.Item2);
                 }
             }
@@ -190,9 +190,9 @@ namespace GCDConsoleLib.Internal
 
             // Set up an array with nodatavals to be populated (or not)
             for (int idx = 0; idx < _rasters.Count; idx++)
-                data.Add(new T[ChunkExtent.cols * ChunkExtent.rows]);
+                data.Add(new T[ChunkExtent.Cols * ChunkExtent.Rows]);
 
-            T[] outBuffer = new T[ChunkExtent.cols * ChunkExtent.rows];
+            T[] outBuffer = new T[ChunkExtent.Cols * ChunkExtent.Rows];
             while (!OpDone)
             {
                 GetChunk(data);
@@ -205,7 +205,7 @@ namespace GCDConsoleLib.Internal
                     Tuple<int, int> offset = ChunkExtent.GetTopCornerTranslationRowCol(OpExtent);
                     // Write this window tot he file
                     // it goes (colNum, rowNum, COLS, ROWS, buffer);
-                    _outputRaster.Write(offset.Item2, offset.Item1 + _vOffset, ChunkExtent.cols, ChunkExtent.rows, outBuffer);
+                    _outputRaster.Write(offset.Item2, offset.Item1 + _vOffset, ChunkExtent.Cols, ChunkExtent.Rows, outBuffer);
                 }
                 // We always increment to the next one
                 nextChunk();

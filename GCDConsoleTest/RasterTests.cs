@@ -58,7 +58,7 @@ namespace GCDConsoleLib.Tests
         [TestMethod()]
         public void BasicRasterDSCopyTest()
         {
-            using (Utility.ITempDir tmp = Utility.TempDir.Create())
+            using (ITempDir tmp = TempDir.Create())
             {
                 Raster rTemplaetRaster = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("SinWave950-980.tif")));
                 rTemplaetRaster.Copy(new FileInfo(Path.Combine(tmp.Name, "CopyRasterTest.tif")));
@@ -76,7 +76,7 @@ namespace GCDConsoleLib.Tests
         [TestMethod()]
         public void RasterDeleteTest()
         {
-            using (Utility.ITempDir tmp = Utility.TempDir.Create())
+            using (ITempDir tmp = TempDir.Create())
             {
                 FileInfo sSourceRater = new FileInfo(TestHelpers.GetTestRasterPath("const990.tif"));
                 FileInfo sDeletePath = new FileInfo(Path.Combine(tmp.Name, "DeleteRasterTest.tif"));
@@ -104,25 +104,64 @@ namespace GCDConsoleLib.Tests
         [TestMethod()]
         public void RasterExtentExpandTest()
         {
-            Assert.Inconclusive();
+            // This is kind of too simple to test.
         }
 
-        [TestMethod()]
-        public void RasterUnDelimitTest()
-        {
-            Assert.Inconclusive();
-        }
 
         [TestMethod()]
         public void ReadTest()
         {
-            Assert.Inconclusive();
+            Raster rTempl = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("AngledSlopey950-980E.tif")));
+            rTempl.Open();
+
+            float[] fBuff = new float[1];
+            rTempl.Read(0, 0, 1, 1, fBuff);
+            Assert.AreEqual(fBuff[0], 964.85f);
+
+            double[] dBuff = new double[1];
+            rTempl.Read(0, 0, 1, 1, dBuff);
+            Assert.AreEqual(dBuff[0], 964.8499755859375);
+
+            int[] iBuff = new int[1];
+            rTempl.Read(0, 0, 1, 1, iBuff);
+            Assert.AreEqual(iBuff[0], 965);
         }
 
         [TestMethod()]
         public void WriteTest()
         {
-            Assert.Inconclusive();
+            Raster rTempl = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("SquareValley950-980.tif")));
+            using (ITempDir tmp = TempDir.Create())
+            {
+                Raster rOutput = new Raster(rTempl, new FileInfo(Path.Combine(tmp.Name, "ExtendedCopyRasterTestBuffer.tif")));
+                rTempl.Dispose();
+                rTempl = null;
+
+                rOutput.Open(true);
+
+                rOutput.Write(0, 0, 1, 1, new double[1] { 0.55 });
+                rOutput.Write(0, 1, 1, 1, new float[1] { 30.135f });
+                rOutput.Write(0, 2, 1, 1, new int[1] { 3 });
+                rOutput.Dispose();
+                rOutput = null;
+
+                Raster rTest = new Raster(new FileInfo(Path.Combine(tmp.Name, "ExtendedCopyRasterTestBuffer.tif")));
+
+                double[] dBuff = new double[1];
+                rTest.Read(0, 0, 1, 1, dBuff);
+                Assert.AreEqual(dBuff[0], 0.55, 0.000001);
+
+                float[] fBuff = new float[1];
+                rTest.Read(0, 1, 1, 1, fBuff);
+                Assert.AreEqual(fBuff[0], 30.135f);
+
+                int[] iBuff = new int[1];
+                rTest.Read(0, 2, 1, 1, iBuff);
+                Assert.AreEqual(iBuff[0], 3);
+
+                rTest.Dispose();
+                rTest = null;
+            }
         }
 
         [TestMethod()]
@@ -130,7 +169,7 @@ namespace GCDConsoleLib.Tests
         {
             using (ITempDir tmp = TempDir.Create())
             {
-                Raster rTempl = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("AngledSlopey950-980E.tif")));
+                Raster rTempl = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("SquareValley950-980.tif")));
                 Raster rTemplateOutput = RasterOperators.ExtendedCopy(rTempl, new FileInfo(Path.Combine(tmp.Name, "PyramidTest.tif")));
 
                 rTemplateOutput.BuildPyramids("average");

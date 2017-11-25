@@ -29,8 +29,8 @@ namespace GCDConsoleLib.Tests
                 Raster rTemplateOutput = RasterOperators.ExtendedCopy(rTempl, new FileInfo(Path.Combine(tmp.Name, "ExtendedCopyRasterTestBuffer.tif")), newExtReal);
 
                 ExtentRectangle newExtReal2 = rTempl.Extent.Buffer(5);
-                newExtReal2.rows = (int)newExtReal2.rows / 2;
-                newExtReal2.cols = (int)newExtReal2.cols / 3;
+                newExtReal2.Rows = (int)newExtReal2.Rows / 2;
+                newExtReal2.Cols = (int)newExtReal2.Cols / 3;
                 Raster rTemplateOutput2 = RasterOperators.ExtendedCopy(rTempl, new FileInfo(Path.Combine(tmp.Name, "ExtendedCopyRasterTestSlice.tif")), newExtReal2);
             }
 

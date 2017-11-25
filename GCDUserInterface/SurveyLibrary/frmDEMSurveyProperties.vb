@@ -249,8 +249,8 @@ Namespace SurveyLibrary
                 sRasterProperties &= vbNewLine & "Width: " & (.Right - .Left).ToString("#,##0.#")
                 sRasterProperties &= vbNewLine & "Height: " & (.Top - .Bottom).ToString("#,##0.#")
                 sRasterProperties &= vbNewLine
-                sRasterProperties &= vbNewLine & "Rows: " & .rows.ToString("#,##0")
-                sRasterProperties &= vbNewLine & "Columns: " & .cols.ToString("#,##0")
+                sRasterProperties &= vbNewLine & "Rows: " & .Rows.ToString("#,##0")
+                sRasterProperties &= vbNewLine & "Columns: " & .Cols.ToString("#,##0")
             End With
 
             sRasterProperties &= vbNewLine & vbNewLine

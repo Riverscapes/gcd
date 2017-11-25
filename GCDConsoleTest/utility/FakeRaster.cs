@@ -36,8 +36,8 @@ namespace GCDConsoleLib.Tests.Utility
         // This special case is for taking the outputs of a real raster into a fake one.
         public FakeRaster(Raster rRef) : base(rRef)
         {
-            _inputgrid = new U[rRef.Extent.rows, rRef.Extent.cols];
-            _outputGrid = new U[rRef.Extent.rows, rRef.Extent.cols];
+            _inputgrid = new U[rRef.Extent.Rows, rRef.Extent.Cols];
+            _outputGrid = new U[rRef.Extent.Rows, rRef.Extent.Cols];
         }
 
         public FakeRaster(int Top, int Left, decimal cellHeight, decimal cellWidth, U[,] grid) : 
@@ -147,8 +147,8 @@ namespace GCDConsoleLib.Tests.Utility
 
             // Basic Initialization
             FakeRaster<double> frInit1 = new FakeRaster<double>();
-            Assert.AreEqual(frInit1.Extent.rows, 100);
-            Assert.AreEqual(frInit1.Extent.cols, 100);
+            Assert.AreEqual(frInit1.Extent.Rows, 100);
+            Assert.AreEqual(frInit1.Extent.Cols, 100);
             Assert.AreEqual(frInit1.Extent.CellHeight, -0.1m);
             Assert.AreEqual(frInit1.Extent.CellWidth, 0.1m);
             Assert.AreEqual(frInit1.Extent.Top, 0);
@@ -162,8 +162,8 @@ namespace GCDConsoleLib.Tests.Utility
 
             
             FakeRaster<double> frInit2 = new FakeRaster<double>(dblArr);
-            Assert.AreEqual(frInit2.Extent.rows, 4);
-            Assert.AreEqual(frInit2.Extent.cols, 5);
+            Assert.AreEqual(frInit2.Extent.Rows, 4);
+            Assert.AreEqual(frInit2.Extent.Cols, 5);
             Assert.AreEqual(frInit2.Extent.CellHeight, -0.1m);
             Assert.AreEqual(frInit2.Extent.CellWidth, 0.1m);
             Assert.AreEqual(frInit2.Extent.Top, 0);
@@ -178,8 +178,8 @@ namespace GCDConsoleLib.Tests.Utility
             string myFakeProj = "My Fake Proj";
             string myFakeUnit = "ft";
             FakeRaster<float> frInit3 = new FakeRaster<float>(10.3m, 11.5m, -0.2m, 0.3m, -999.9, Raster.RasterDriver.HFA, FakeRaster<float>.floatType, myFakeProj, myFakeUnit, singlArr);
-            Assert.AreEqual(frInit3.Extent.rows, 4);
-            Assert.AreEqual(frInit3.Extent.cols, 5);
+            Assert.AreEqual(frInit3.Extent.Rows, 4);
+            Assert.AreEqual(frInit3.Extent.Cols, 5);
             Assert.AreEqual(frInit3.Extent.CellHeight, -0.2m);
             Assert.AreEqual(frInit3.Extent.CellWidth, 0.3m);
             Assert.AreEqual(frInit3.Extent.Top, 10.3m);

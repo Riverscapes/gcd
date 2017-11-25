@@ -205,7 +205,7 @@ namespace GCDConsoleLib
             }
             Driver driverobj = Gdal.GetDriverByName(Enum.GetName(typeof(Raster.RasterDriver), driver));
 
-            _ds = driverobj.Create(finfo.FullName, theExtent.cols, theExtent.rows, 1, theType._origType, creationOpts.ToArray());
+            _ds = driverobj.Create(finfo.FullName, theExtent.Cols, theExtent.Rows, 1, theType._origType, creationOpts.ToArray());
             _ds.SetGeoTransform(theExtent.Transform);
             _ds.SetProjection(proj.OriginalString);
             Band band = _ds.GetRasterBand(1);
@@ -417,9 +417,8 @@ namespace GCDConsoleLib
             ExtentRectangle newExtent = rasters[0].Extent;
 
             foreach (Raster raster in rasters)
-            {
                 newExtent.Union(raster.Extent);
-            }
+
             return newExtent;
         }
 
@@ -448,7 +447,7 @@ namespace GCDConsoleLib
         public void BuildPyramids(string method)
         {
             Open();
-            int iPixelNum = Extent.rows * Extent.rows;
+            int iPixelNum = Extent.Rows * Extent.Rows;
             int iTopNum = 4096;
             int iCurNum = iPixelNum / 4;
 
@@ -490,28 +489,6 @@ namespace GCDConsoleLib
                 {"stddev", (decimal)dStdDev}
             };
             return output;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sRastersString"></param>
-        /// <param name="bCheckExist"></param>
-        /// <param name="bCheckOrthogonal"></param>
-        /// <param name="bCheckConcurrent"></param>
-        /// <returns></returns>
-        public static List<string> RasterUnDelimit(string sRastersString, bool bCheckExist, bool bCheckOrthogonal, bool bCheckConcurrent)
-        {
-            throw new NotImplementedException("Coming soon(if I need it)");
-
-            //List<string> sRasters = new List<string>();
-            //string[] sRawSplit = sRastersString.Split(';');
-
-            //foreach (string teststring in sRawSplit)
-            //{
-            //    //if (System.)
-            //}
-            //return sRasters;
         }
 
         /// <summary>

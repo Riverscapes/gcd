@@ -9,14 +9,9 @@ namespace GCDConsoleLib
 {
     public class ExtentRectangle
     {
-        public int rows, cols;
+        public int Rows, Cols;
         // unused but necessary for transform;
         private double[] _t;
-
-        public ExtentRectangle()
-        {
-            _Init(0, 0, 0.1m, 0.1m, 0, 0);
-        }
 
         /// <summary>
         /// Explicit Constructor
@@ -39,7 +34,7 @@ namespace GCDConsoleLib
         /// <param name="orig"></param>
         public ExtentRectangle(ExtentRectangle orig)
         {
-            _Init(orig.Top, orig.Left, orig.CellHeight, orig.CellWidth, orig.rows, orig.cols);
+            _Init(orig.Top, orig.Left, orig.CellHeight, orig.CellWidth, orig.Rows, orig.Cols);
         }
 
         /// <summary>
@@ -62,7 +57,8 @@ namespace GCDConsoleLib
         public ExtentRectangle(FileInfo sFilePath)
         {
             Raster temp = new Raster(sFilePath);
-            _Init(temp.Extent.Top, temp.Extent.Left, temp.Extent.CellHeight, temp.Extent.CellWidth, temp.Extent.rows, temp.Extent.cols);
+            _Init(temp.Extent.Top, temp.Extent.Left, temp.Extent.CellHeight, temp.Extent.CellWidth, temp.Extent.Rows, temp.Extent.Cols);
+            temp.Dispose();
         }
 
         /// <summary>
@@ -82,8 +78,8 @@ namespace GCDConsoleLib
             //else if (nCols == 0) { throw new ArgumentOutOfRangeException("Raster Cols cannot be 0"); }
 
             _t = new double[6] { (double)mLeft, (double)mCellWidth, 0, (double)mTop, 0, (double)mCellHeight };
-            cols = nCols;
-            rows = nRows;
+            Cols = nCols;
+            Rows = nRows;
 
             if ((Top * this.CellHeight) > (Bottom * this.CellHeight))
             {
@@ -117,12 +113,17 @@ namespace GCDConsoleLib
                 newTop = Top - (vSign * fDistance);
                 newLeft = Left - (hSign * fDistance);
 
-                newRows = rows + (int)(2 * vSign * fDistance / CellHeight);
-                newCols = cols + (int)(2 * hSign * fDistance / CellWidth);
+                newRows = Rows + (int)(2 * vSign * fDistance / CellHeight);
+                newCols = Cols + (int)(2 * hSign * fDistance / CellWidth);
             }
             return new ExtentRectangle(newTop, newLeft, CellHeight, CellWidth, newRows, newCols);
         }
 
+        /// <summary>
+        /// Buffer the raster by a certain number of cells
+        /// </summary>
+        /// <param name="fCells"></param>
+        /// <returns></returns>
         public ExtentRectangle Buffer(int fCells)
         {
             return Buffer(Math.Abs(fCells * CellHeight));
@@ -160,23 +161,23 @@ namespace GCDConsoleLib
             decimal newright, newleft, newtop, newbottom;
             if (CellHeight > 0)
             {
-                newtop = Math.Max(Top, rect.Top);
+                newtop = Math.Min(Top, rect.Top);
                 newbottom = Math.Max(Bottom, rect.Bottom);
             }
             else
             {
-                newtop = Math.Min(Top, rect.Top);
+                newtop = Math.Max(Top, rect.Top);
                 newbottom = Math.Min(Bottom, rect.Bottom);
             }
             if (CellWidth > 0)
             {
                 newleft = Math.Min(Left, rect.Left);
-                newright = Math.Min(Right, rect.Right);
+                newright = Math.Max(Right, rect.Right);
             }
             else
             {
                 newleft = Math.Max(Left, rect.Left);
-                newright = Math.Max(Right, rect.Right);
+                newright = Math.Min(Right, rect.Right);
             }
 
             int newcols = (int)((newright - newleft) / Math.Abs(CellWidth));
@@ -230,7 +231,7 @@ namespace GCDConsoleLib
         /// Return (x,y) integer typle representing how shifted one rectangle is relative to this one
         /// </summary>
         /// <param name="rect"></param>
-        /// <returns></returns>
+        /// <returns>Tuple (x,y)</returns>
         public Tuple<int, int> GetTranslation(ExtentRectangle rect)
         {
             int ydiff = (int)(rect.Top - Top / Math.Abs(CellHeight));
@@ -261,14 +262,14 @@ namespace GCDConsoleLib
         /// <returns></returns>
         public int RowCol2Id(int row, int col)
         {
-            return (row - 1) * rows + (col - 1);
+            return (row - 1) * Rows + (col - 1);
         }
 
         public int MaxArrID
         {
             get
             {
-                return rows * cols - 1;
+                return Rows * Cols - 1;
             }
         }
 
@@ -279,8 +280,8 @@ namespace GCDConsoleLib
         /// <returns></returns>
         public Tuple<int, int> Id2RowCol(int id)
         {
-            int rowId = (int)Math.Floor((double)(id / cols));
-            int colId = id - (rowId * cols);
+            int rowId = (int)Math.Floor((double)(id / Cols));
+            int colId = id - (rowId * Cols);
             return new Tuple<int, int>(rowId + 1, colId + 1);
         }
 
@@ -310,10 +311,10 @@ namespace GCDConsoleLib
             int newInd;
             int newRow = origRowCol.Item1 + offsetRowCol.Item1;
             int newCol = origRowCol.Item2 + offsetRowCol.Item2;
-            if (newCol <= 0 || newRow <= 0 || newCol > otherExtent.cols || newRow > otherExtent.rows)
+            if (newCol <= 0 || newRow <= 0 || newCol > otherExtent.Cols || newRow > otherExtent.Rows)
                 newInd = -1;
             else
-                newInd = (newRow - 1) * otherExtent.cols + (newCol) - 1;
+                newInd = (newRow - 1) * otherExtent.Cols + (newCol) - 1;
 
             return newInd;
         }
@@ -422,11 +423,11 @@ namespace GCDConsoleLib
         }
         public decimal Right
         {
-            get { return Left + (CellWidth * cols); }
+            get { return Left + (CellWidth * Cols); }
         }
         public decimal Bottom
         {
-            get { return Top + (CellHeight * rows); }
+            get { return Top + (CellHeight * Rows); }
         }
         public decimal CellWidth
         {
@@ -439,8 +440,8 @@ namespace GCDConsoleLib
             set { _t[5] = (double)value; }
         }
 
-        public decimal Height { get { return (rows * Math.Abs(CellHeight)); } }
-        public decimal Width { get { return (cols * Math.Abs(CellWidth)); } }
+        public decimal Height { get { return (Rows * Math.Abs(CellHeight)); } }
+        public decimal Width { get { return (Cols * Math.Abs(CellWidth)); } }
 
         /// <summary>
         /// Get the bin Area in Area units
@@ -450,6 +451,7 @@ namespace GCDConsoleLib
             // We have to be sure to read the Cell height and width as the horizontal units
             double Lengthm = Length.From(Math.Abs((double)CellWidth), units.HorizUnit).Meters;
             double Heightm = Length.From(Math.Abs((double)CellHeight), units.HorizUnit).Meters;
+
             // Return a unitless Area from SquareMeters
             return Area.From(Lengthm * Heightm, UnitsNet.Units.AreaUnit.SquareMeter);
         }
