@@ -4,20 +4,15 @@ using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
+using System.ComponentModel;
+using System.Collections.Generic;
 
 namespace GCDCore.UserInterface.BudgetSegregation
 {
-    public partial class frmBudgetSegProperties
+    public partial class frmBudgetSegProperties : Form
     {
-
-        private GCDCore.Project.BudgetSegregation m_BudgetSeg;
-
+        public GCDCore.Project.BudgetSegregation BudgetSeg { get; internal set; }
         private DoDBase InitialDoD;
-        public GCDCore.Project.BudgetSegregation BudgetSeg
-        {
-            get { return m_BudgetSeg; }
-        }
-
 
         public frmBudgetSegProperties(DoDBase parentDoD)
         {
@@ -30,11 +25,9 @@ namespace GCDCore.UserInterface.BudgetSegregation
 
         private void frmBudgetSegProperties_Load(object sender, System.EventArgs e)
         {
-            cboDoD.DataSource = ProjectManager.Project.DoDs.Values;
+            cboDoD.DataSource = new BindingList<DoDBase>(ProjectManager.Project.DoDs.Values.ToList<DoDBase>());
             cboDoD.SelectedItem = InitialDoD;
-
         }
-
 
         private void cmdOK_Click(System.Object sender, System.EventArgs e)
         {
@@ -52,7 +45,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
                 System.IO.DirectoryInfo bsFolder = ProjectManager.OutputManager.GetBudgetSegreationDirectoryPath(dod.Folder, true);
 
                 GCDCore.Engines.BudgetSegregationEngine bsEngine = new GCDCore.Engines.BudgetSegregationEngine(txtName.Text, bsFolder);
-                m_BudgetSeg = bsEngine.Calculate(dod, (GCDConsoleLib.Vector)ucPolygon.SelectedItem, cboField.Text);
+                BudgetSeg = bsEngine.Calculate(dod, (GCDConsoleLib.Vector)ucPolygon.SelectedItem, cboField.Text);
 
                 ProjectManager.Project.Save();
 
@@ -151,7 +144,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
 
             if (dod is DoDMinLoD)
             {
-                txtUncertaintyAnalysis.Text = string.Format("Minimum Level of Detection at {0:#.00}{1}", ((DoDMinLoD)dod).Threshold, ProjectManager.Project.Units.VertUnit);
+                txtUncertaintyAnalysis.Text = string.Format("Minimum Level of Detection at {0:#0.00}{1}", ((DoDMinLoD)dod).Threshold, UnitsNet.Length.GetAbbreviation( ProjectManager.Project.Units.VertUnit));
             }
             else if (dod is DoDPropagated)
             {
@@ -163,15 +156,13 @@ namespace GCDCore.UserInterface.BudgetSegregation
             }
 
             txtOutputFolder.Text = ProjectManager.Project.GetRelativePath(ProjectManager.OutputManager.GetBudgetSegreationDirectoryPath(dod.Folder, false).FullName);
-
         }
-
 
         private void PolygonChanged(object sender, naru.ui.PathEventArgs e)
         {
             cboField.Items.Clear();
 
-            if (ucPolygon.SelectedItem ==null)
+            if (ucPolygon.SelectedItem == null)
             {
                 return;
             }
@@ -190,5 +181,4 @@ namespace GCDCore.UserInterface.BudgetSegregation
             Process.Start(GCDCore.Properties.Resources.HelpBaseURL + "gcd-command-reference/gcd-project-explorer/l-individual-change-detection-context-menu/v-add-budget-segregation");
         }
     }
-
 }

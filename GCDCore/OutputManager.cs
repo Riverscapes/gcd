@@ -576,14 +576,18 @@ namespace GCDCore
 
             // Find unique folder on disk
             int maxExisting = 0;
-            foreach (DirectoryInfo existingFolder in bsGroupFolder.GetDirectories("BS*", SearchOption.TopDirectoryOnly))
+
+            if (bsGroupFolder.Exists)
             {
-                System.Text.RegularExpressions.Match match = System.Text.RegularExpressions.Regex.Match(existingFolder.FullName, "([0-9]*)$");
-                if (match.Groups.Count > 1)
+                foreach (DirectoryInfo existingFolder in bsGroupFolder.GetDirectories("BS*", SearchOption.TopDirectoryOnly))
                 {
-                    int folderSuffix = int.Parse(match.Groups[1].Value);
-                    if (folderSuffix > maxExisting)
-                        maxExisting = folderSuffix;
+                    System.Text.RegularExpressions.Match match = System.Text.RegularExpressions.Regex.Match(existingFolder.FullName, "([0-9]*)$");
+                    if (match.Groups.Count > 1)
+                    {
+                        int folderSuffix = int.Parse(match.Groups[1].Value);
+                        if (folderSuffix > maxExisting)
+                            maxExisting = folderSuffix;
+                    }
                 }
             }
 
