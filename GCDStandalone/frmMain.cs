@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Windows.Forms;
 using GCDCore.Project;
+using System.Text.RegularExpressions;
 
 namespace GCDStandalone
 {
@@ -50,6 +51,54 @@ namespace GCDStandalone
                     }
                 }
             }
+
+            // Most recently used GCD projects
+            RefreshMRUItems();
+        }
+
+        private void RefreshMRUItems()
+        {
+            tsmiRecentGCDProjects.DropDownItems.Clear();
+            AppendMRUItem(GCDCore.Properties.Settings.Default.MRU1);
+            AppendMRUItem(GCDCore.Properties.Settings.Default.MRU2);
+            AppendMRUItem(GCDCore.Properties.Settings.Default.MRU3);
+            AppendMRUItem(GCDCore.Properties.Settings.Default.MRU4);
+            AppendMRUItem(GCDCore.Properties.Settings.Default.MRU5);
+            tsmiRecentGCDProjects.Enabled = tsmiRecentGCDProjects.DropDownItems.Count > 0;
+        }
+
+        private void AppendMRUItem(string gcdProjectFilePath)
+        {
+            // Abort if the GCD project file doesn't exist on this system.
+            if (string.IsNullOrEmpty(gcdProjectFilePath) || !System.IO.File.Exists(gcdProjectFilePath))
+                return;
+
+            // Abort if the file is already in the list
+            foreach (ToolStripMenuItem tsmiExisting in tsmiRecentGCDProjects.DropDownItems)
+            {
+                if (string.Compare(tsmiExisting.Tag.ToString(), gcdProjectFilePath, true) == 0)
+                {
+                    return;
+                }
+            }
+
+            ToolStripMenuItem tsmi = new ToolStripMenuItem(string.Format("{0}. {1}", tsmiRecentGCDProjects.DropDownItems.Count + 1, gcdProjectFilePath), null, MRUItem_Click);
+            tsmi.Tag = gcdProjectFilePath;
+            tsmiRecentGCDProjects.DropDownItems.Add(tsmi);
+        }
+
+        private void MRUItem_Click(object sender, EventArgs e)
+        {
+            Match theMatch = Regex.Match(((ToolStripMenuItem)sender).Text, "([0-9]). (.*)");
+            if (theMatch.Groups.Count == 3)
+            {
+                string path = theMatch.Groups[2].Value;
+                if (!string.IsNullOrEmpty(path) && System.IO.File.Exists(path))
+                {
+                    // Opening the project will reorder the MRU list and refresh the MRU itself.
+                    OpenGCDProject(path);
+                }
+            }
         }
 
         private void ProjectProperties_Click(object sender, EventArgs e)
@@ -62,7 +111,7 @@ namespace GCDStandalone
                 GCDCore.UserInterface.Project.frmProjectProperties frm = new GCDCore.UserInterface.Project.frmProjectProperties(!bEditMode);
                 if (frm.ShowDialog() == DialogResult.OK)
                 {
-                    ucProjectExplorer1.cmdRefresh_Click(sender, e);
+                    OpenGCDProject(ProjectManager.Project.ProjectFile.FullName);
                 }
 
                 UpdateMenusAndToolstrips(sender, e);
@@ -117,7 +166,31 @@ namespace GCDStandalone
             // Then set the settings if the read was successful.
             ProjectManager.OpenProject(new System.IO.FileInfo(gcdProject));
             GCDCore.Properties.Settings.Default.LastUsedProjectFolder = System.IO.Path.GetDirectoryName(gcdProject);
+
+            try
+            {
+                // Insert the new file at the start of the MRU and bump all other items;
+                GCDCore.Properties.Settings.Default.MRU5 = GCDCore.Properties.Settings.Default.MRU4;
+                GCDCore.Properties.Settings.Default.MRU4 = GCDCore.Properties.Settings.Default.MRU3;
+                GCDCore.Properties.Settings.Default.MRU3 = GCDCore.Properties.Settings.Default.MRU2;
+                GCDCore.Properties.Settings.Default.MRU2 = GCDCore.Properties.Settings.Default.MRU1;
+                GCDCore.Properties.Settings.Default.MRU1 = gcdProject;
+            }
+            catch (Exception ex)
+            {
+                // Something went wrong loading MRU list. Clear them all to start fresh
+                GCDCore.Properties.Settings.Default.MRU1 = string.Empty;
+                GCDCore.Properties.Settings.Default.MRU2 = string.Empty;
+                GCDCore.Properties.Settings.Default.MRU3 = string.Empty;
+                GCDCore.Properties.Settings.Default.MRU4 = string.Empty;
+                GCDCore.Properties.Settings.Default.MRU5 = string.Empty;
+            }
+
             GCDCore.Properties.Settings.Default.Save();
+            RefreshMRUItems();
+
+            // Now update the tool status strip
+            tssProjectPath.Text = ProjectManager.Project is GCDProject ? ProjectManager.Project.ProjectFile.FullName : string.Empty;
 
             try
             {
@@ -196,9 +269,6 @@ namespace GCDStandalone
                     }
                 }
             }
-
-            // Now update the tool status strip
-            tssProjectPath.Text = ProjectManager.Project is GCDProject ? ProjectManager.Project.ProjectFile.FullName : string.Empty;
         }
 
         private void onlineGCDHelpToolStripMenuItem_Click(object sender, EventArgs e)
@@ -270,6 +340,9 @@ namespace GCDStandalone
                 ProjectManager.CloseCurrentProject();
                 ucProjectExplorer1.cmdRefresh_Click(sender, e);
                 UpdateMenusAndToolstrips(sender, e);
+
+                // Now update the tool status strip
+                tssProjectPath.Text = string.Empty;
             }
             catch (Exception ex)
             {

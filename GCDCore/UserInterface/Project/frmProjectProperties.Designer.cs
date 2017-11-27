@@ -323,6 +323,7 @@
             this.txtDirectory.Size = new System.Drawing.Size(365, 20);
             this.txtDirectory.TabIndex = 14;
             this.txtDirectory.TabStop = false;
+            this.txtDirectory.TextChanged += new System.EventHandler(this.UpdateGCDPath);
             // 
             // Label3
             // 
@@ -339,6 +340,7 @@
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(394, 20);
             this.txtName.TabIndex = 12;
+            this.txtName.TextChanged += new System.EventHandler(this.UpdateGCDPath);
             // 
             // Label1
             // 

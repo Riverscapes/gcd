@@ -196,7 +196,6 @@ namespace GCDCore.UserInterface.Project
         /// <remarks>PGB - 5 May 2011
         /// Change this so that the XML file is created when the file is created. This is needed because 
         /// the XML file stores the name of the project, which is required now for the toolbar.</remarks>
-
         private void btnOK_Click(System.Object sender, System.EventArgs e)
         {
             if (!ValidateForm())

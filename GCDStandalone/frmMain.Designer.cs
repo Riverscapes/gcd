@@ -58,6 +58,7 @@
             this.ucProjectExplorer1 = new GCDCore.UserInterface.Project.ucProjectExplorer();
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.tsmiRecentGCDProjects = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -87,6 +88,7 @@
             this.projectToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.newGCDProjectToolStripMenuItem,
             this.openGCDProjectToolStripMenuItem,
+            this.tsmiRecentGCDProjects,
             this.closeGCDProjectToolStripMenuItem,
             this.projectPropertiesToolStripMenuItem,
             this.browseGCDProjectFolderToolStripMenuItem,
@@ -345,6 +347,12 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(907, 392);
             this.tableLayoutPanel1.TabIndex = 5;
             // 
+            // tsmiRecentGCDProjects
+            // 
+            this.tsmiRecentGCDProjects.Name = "tsmiRecentGCDProjects";
+            this.tsmiRecentGCDProjects.Size = new System.Drawing.Size(215, 22);
+            this.tsmiRecentGCDProjects.Text = "Recent GCD Projects";
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -406,6 +414,7 @@
         private System.Windows.Forms.ToolStripButton tsiBrowseProjectFolder;
         private System.Windows.Forms.ToolStripContainer toolStripContainer1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.ToolStripMenuItem tsmiRecentGCDProjects;
     }
 }
 

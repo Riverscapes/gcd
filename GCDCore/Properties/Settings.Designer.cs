@@ -322,5 +322,65 @@ namespace GCDCore.Properties {
                 this["AddOutputLayersToMap"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string MRU1 {
+            get {
+                return ((string)(this["MRU1"]));
+            }
+            set {
+                this["MRU1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string MRU2 {
+            get {
+                return ((string)(this["MRU2"]));
+            }
+            set {
+                this["MRU2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string MRU3 {
+            get {
+                return ((string)(this["MRU3"]));
+            }
+            set {
+                this["MRU3"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string MRU4 {
+            get {
+                return ((string)(this["MRU4"]));
+            }
+            set {
+                this["MRU4"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string MRU5 {
+            get {
+                return ((string)(this["MRU5"]));
+            }
+            set {
+                this["MRU5"] = value;
+            }
+        }
     }
 }
