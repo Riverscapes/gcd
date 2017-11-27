@@ -269,7 +269,7 @@
             this.tsiNewProject.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsiNewProject.Name = "tsiNewProject";
             this.tsiNewProject.Size = new System.Drawing.Size(23, 22);
-            this.tsiNewProject.Text = "tsiNewProject";
+            this.tsiNewProject.Text = "Create New GCD Project";
             this.tsiNewProject.Click += new System.EventHandler(this.ProjectProperties_Click);
             // 
             // tsiOpenProject
@@ -279,7 +279,7 @@
             this.tsiOpenProject.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsiOpenProject.Name = "tsiOpenProject";
             this.tsiOpenProject.Size = new System.Drawing.Size(23, 22);
-            this.tsiOpenProject.Text = "toolStripButton2";
+            this.tsiOpenProject.Text = "Open Existing GCD Project";
             this.tsiOpenProject.Click += new System.EventHandler(this.openGCDProjectToolStripMenuItem_Click);
             // 
             // tsiProjectProperties
@@ -289,7 +289,7 @@
             this.tsiProjectProperties.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsiProjectProperties.Name = "tsiProjectProperties";
             this.tsiProjectProperties.Size = new System.Drawing.Size(23, 22);
-            this.tsiProjectProperties.Text = "toolStripButton2";
+            this.tsiProjectProperties.Text = "GCD Project Properties";
             this.tsiProjectProperties.Click += new System.EventHandler(this.ProjectProperties_Click);
             // 
             // tsiBrowseProjectFolder
@@ -299,7 +299,7 @@
             this.tsiBrowseProjectFolder.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsiBrowseProjectFolder.Name = "tsiBrowseProjectFolder";
             this.tsiBrowseProjectFolder.Size = new System.Drawing.Size(23, 22);
-            this.tsiBrowseProjectFolder.Text = "toolStripButton2";
+            this.tsiBrowseProjectFolder.Text = "Browse GCD Project Folder";
             this.tsiBrowseProjectFolder.Click += new System.EventHandler(this.browseGCDProjectFolderToolStripMenuItem_Click);
             // 
             // ucProjectExplorer1
