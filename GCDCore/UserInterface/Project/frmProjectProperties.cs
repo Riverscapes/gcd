@@ -106,8 +106,6 @@ namespace GCDCore.UserInterface.Project
 
                 // Adjust the controls to be read/write only for editing
                 txtName.ReadOnly = true;
-                btnBrowseOutput.Visible = false;
-                txtDirectory.Width = txtName.Width;
                 txtDirectory.ReadOnly = true;
 
                 // Default focus to the OK button in edit mode
@@ -116,7 +114,6 @@ namespace GCDCore.UserInterface.Project
 
             // Bind the data grid to the binding list
             grdMetaData.DataSource = MetaData;
-
         }
 
         private void SetToolTips()
@@ -138,34 +135,40 @@ namespace GCDCore.UserInterface.Project
 
         private void btnBrowseOutput_Click(System.Object sender, System.EventArgs e)
         {
-            if (naru.os.Folder.BrowseFolder(txtDirectory, "Select the GCD Project Parent Directory", GCDCore.Properties.Settings.Default.LastUsedProjectFolder) != DialogResult.OK)
+            if (CreateMode)
             {
-                return;
-            }
-
-            DirectoryInfo dFolder = new DirectoryInfo(txtDirectory.Text);
-            if (dFolder.Exists)
-            {
-                // Folder with GCD projects already in them are not allowed
-                if (dFolder.GetFiles("*.gcd", SearchOption.TopDirectoryOnly).Count() > 0)
+                if (naru.os.Folder.BrowseFolder(txtDirectory, "Select the GCD Project Parent Directory", GCDCore.Properties.Settings.Default.LastUsedProjectFolder) != DialogResult.OK)
                 {
-                    MessageBox.Show("The selected folder already contains another GCD project.\nEach GCD project must be created in a separate folder.", GCDCore.Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
 
-                if (string.IsNullOrEmpty(txtName.Text))
+                DirectoryInfo dFolder = new DirectoryInfo(txtDirectory.Text);
+                if (dFolder.Exists)
                 {
-                    txtName.Text = Path.GetFileName(txtDirectory.Text);
-                    btnOK.Focus();
+                    // Folder with GCD projects already in them are not allowed
+                    if (dFolder.GetFiles("*.gcd", SearchOption.TopDirectoryOnly).Count() > 0)
+                    {
+                        MessageBox.Show("The selected folder already contains another GCD project.\nEach GCD project must be created in a separate folder.", GCDCore.Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
+
+                    if (string.IsNullOrEmpty(txtName.Text))
+                    {
+                        txtName.Text = Path.GetFileName(txtDirectory.Text);
+                        btnOK.Focus();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("The selected folder does not exist. The project folder must exist before the project is created.", GCDCore.Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             else
             {
-                MessageBox.Show("The selected folder does not exist. The project folder must exist before the project is created.", GCDCore.Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (!string.IsNullOrEmpty(txtDirectory.Text) && System.IO.Directory.Exists(txtDirectory.Text))
+                    System.Diagnostics.Process.Start(txtDirectory.Text);
             }
-
         }
-
 
         private void UpdateGCDPath(object sender, System.EventArgs e)
         {

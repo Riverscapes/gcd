@@ -281,6 +281,7 @@
             this.btnHelp.TabIndex = 21;
             this.btnHelp.Text = "Help";
             this.btnHelp.UseVisualStyleBackColor = true;
+            this.btnHelp.Click += new System.EventHandler(this.btnHelp_Click);
             // 
             // btnBrowseOutput
             // 
@@ -290,6 +291,7 @@
             this.btnBrowseOutput.Size = new System.Drawing.Size(23, 23);
             this.btnBrowseOutput.TabIndex = 15;
             this.btnBrowseOutput.UseVisualStyleBackColor = true;
+            this.btnBrowseOutput.Click += new System.EventHandler(this.btnBrowseOutput_Click);
             // 
             // btnOK
             // 
@@ -301,6 +303,7 @@
             this.btnOK.TabIndex = 19;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
+            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
             // btnCancel
             // 
