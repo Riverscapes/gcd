@@ -36,7 +36,7 @@ namespace GCDCore.UserInterface.ChangeDetection
 
             ucBars.ChangeStats = DoD.Statistics;
 			ucHistogram.LoadHistograms(DoD.Histograms.Raw.Data, DoD.Histograms.Thr.Data);
-			ucSummary.RefreshDisplay(DoD.Statistics, ref m_Options);
+			ucSummary.RefreshDisplay(DoD.Statistics, m_Options);
 		}
 
 		private void cmdAddToMap_Click(System.Object sender, System.EventArgs e)
@@ -54,8 +54,9 @@ namespace GCDCore.UserInterface.ChangeDetection
 		{
 			try {
 				frmDoDSummaryProperties frm = new frmDoDSummaryProperties(m_Options);
-				if (frm.ShowDialog() == System.Windows.Forms.DialogResult.OK) {
-					ucSummary.RefreshDisplay(DoD.Statistics, ref m_Options);
+				if (frm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+					ucSummary.RefreshDisplay(DoD.Statistics, m_Options);
 					ucHistogram.SetHistogramUnits(m_Options.Units);
 					ucBars.Refresh();
 				}

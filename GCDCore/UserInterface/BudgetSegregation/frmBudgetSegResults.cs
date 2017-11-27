@@ -42,7 +42,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
 		private void cboSummaryClass_SelectedIndexChanged(object sender, System.EventArgs e)
 		{
 			BudgetSegregationClass classResult = BudgetSeg.Classes[cboSummaryClass.SelectedItem.ToString()];
-			ucSummary.RefreshDisplay(classResult.Statistics, ref m_Options);
+			ucSummary.RefreshDisplay(classResult.Statistics, m_Options);
 
 			// syncronize the two dropdown lits
 			cboECDClass.SelectedIndex = cboSummaryClass.SelectedIndex;

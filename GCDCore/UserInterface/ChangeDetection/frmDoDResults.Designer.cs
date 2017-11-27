@@ -28,6 +28,7 @@ namespace GCDCore.UserInterface.ChangeDetection
         [System.Diagnostics.DebuggerStepThrough()]
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmDoDResults));
             this.cmdOK = new System.Windows.Forms.Button();
             this.txtDoDName = new System.Windows.Forms.TextBox();
             this.Label6 = new System.Windows.Forms.Label();
@@ -40,6 +41,10 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.TabPage1 = new System.Windows.Forms.TabPage();
             this.ucSummary = new GCDCore.UserInterface.ChangeDetection.ucDoDSummary();
             this.tabProperties = new System.Windows.Forms.TabControl();
+            this.cmdHelp = new System.Windows.Forms.Button();
+            this.cmdBrowse2 = new System.Windows.Forms.Button();
+            this.cmdProperties = new System.Windows.Forms.Button();
+            this.cmdAddToMap2 = new System.Windows.Forms.Button();
             this.TabPage3.SuspendLayout();
             this.tbpElevationChangeDistribution.SuspendLayout();
             this.TableLayoutPanel1.SuspendLayout();
@@ -65,7 +70,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.txtDoDName.Location = new System.Drawing.Point(48, 12);
             this.txtDoDName.Name = "txtDoDName";
             this.txtDoDName.ReadOnly = true;
-            this.txtDoDName.Size = new System.Drawing.Size(556, 20);
+            this.txtDoDName.Size = new System.Drawing.Size(550, 20);
             this.txtDoDName.TabIndex = 1;
             // 
             // Label6
@@ -83,7 +88,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.TabPage3.Location = new System.Drawing.Point(4, 22);
             this.TabPage3.Name = "TabPage3";
             this.TabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage3.Size = new System.Drawing.Size(673, 411);
+            this.TabPage3.Size = new System.Drawing.Size(1275, 411);
             this.TabPage3.TabIndex = 2;
             this.TabPage3.Text = "Analysis Inputs";
             this.TabPage3.UseVisualStyleBackColor = true;
@@ -93,7 +98,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.ucProperties.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ucProperties.Location = new System.Drawing.Point(3, 3);
             this.ucProperties.Name = "ucProperties";
-            this.ucProperties.Size = new System.Drawing.Size(667, 405);
+            this.ucProperties.Size = new System.Drawing.Size(1269, 405);
             this.ucProperties.TabIndex = 0;
             // 
             // tbpElevationChangeDistribution
@@ -102,7 +107,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.tbpElevationChangeDistribution.Location = new System.Drawing.Point(4, 22);
             this.tbpElevationChangeDistribution.Name = "tbpElevationChangeDistribution";
             this.tbpElevationChangeDistribution.Padding = new System.Windows.Forms.Padding(3);
-            this.tbpElevationChangeDistribution.Size = new System.Drawing.Size(673, 411);
+            this.tbpElevationChangeDistribution.Size = new System.Drawing.Size(1275, 411);
             this.tbpElevationChangeDistribution.TabIndex = 1;
             this.tbpElevationChangeDistribution.Text = "Graphical Results";
             this.tbpElevationChangeDistribution.UseVisualStyleBackColor = true;
@@ -147,7 +152,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.TabPage1.Location = new System.Drawing.Point(4, 22);
             this.TabPage1.Name = "TabPage1";
             this.TabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage1.Size = new System.Drawing.Size(673, 411);
+            this.TabPage1.Size = new System.Drawing.Size(668, 411);
             this.TabPage1.TabIndex = 0;
             this.TabPage1.Text = "Tabular Results";
             this.TabPage1.UseVisualStyleBackColor = true;
@@ -157,7 +162,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.ucSummary.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ucSummary.Location = new System.Drawing.Point(3, 3);
             this.ucSummary.Name = "ucSummary";
-            this.ucSummary.Size = new System.Drawing.Size(667, 405);
+            this.ucSummary.Size = new System.Drawing.Size(662, 405);
             this.ucSummary.TabIndex = 0;
             // 
             // tabProperties
@@ -171,8 +176,48 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.tabProperties.Location = new System.Drawing.Point(7, 48);
             this.tabProperties.Name = "tabProperties";
             this.tabProperties.SelectedIndex = 0;
-            this.tabProperties.Size = new System.Drawing.Size(681, 437);
+            this.tabProperties.Size = new System.Drawing.Size(676, 437);
             this.tabProperties.TabIndex = 5;
+            // 
+            // cmdHelp
+            // 
+            this.cmdHelp.Location = new System.Drawing.Point(7, 495);
+            this.cmdHelp.Name = "cmdHelp";
+            this.cmdHelp.Size = new System.Drawing.Size(75, 23);
+            this.cmdHelp.TabIndex = 7;
+            this.cmdHelp.Text = "Help";
+            this.cmdHelp.UseVisualStyleBackColor = true;
+            this.cmdHelp.Click += new System.EventHandler(this.cmdHelp_Click);
+            // 
+            // cmdBrowse2
+            // 
+            this.cmdBrowse2.Image = global::GCDCore.Properties.Resources.BrowseFolder;
+            this.cmdBrowse2.Location = new System.Drawing.Point(603, 11);
+            this.cmdBrowse2.Name = "cmdBrowse2";
+            this.cmdBrowse2.Size = new System.Drawing.Size(23, 23);
+            this.cmdBrowse2.TabIndex = 2;
+            this.cmdBrowse2.UseVisualStyleBackColor = true;
+            this.cmdBrowse2.Click += new System.EventHandler(this.cmdBrowse_Click);
+            // 
+            // cmdProperties
+            // 
+            this.cmdProperties.Image = global::GCDCore.Properties.Resources.Settings;
+            this.cmdProperties.Location = new System.Drawing.Point(632, 11);
+            this.cmdProperties.Name = "cmdProperties";
+            this.cmdProperties.Size = new System.Drawing.Size(23, 23);
+            this.cmdProperties.TabIndex = 3;
+            this.cmdProperties.UseVisualStyleBackColor = true;
+            this.cmdProperties.Click += new System.EventHandler(this.cmdSettings_Click);
+            // 
+            // cmdAddToMap2
+            // 
+            this.cmdAddToMap2.Image = global::GCDCore.Properties.Resources.AddToMap;
+            this.cmdAddToMap2.Location = new System.Drawing.Point(660, 11);
+            this.cmdAddToMap2.Name = "cmdAddToMap2";
+            this.cmdAddToMap2.Size = new System.Drawing.Size(23, 23);
+            this.cmdAddToMap2.TabIndex = 4;
+            this.cmdAddToMap2.UseVisualStyleBackColor = true;
+            this.cmdAddToMap2.Click += new System.EventHandler(this.cmdAddToMap_Click);
             // 
             // frmDoDResults
             // 
@@ -181,10 +226,15 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cmdOK;
             this.ClientSize = new System.Drawing.Size(695, 530);
+            this.Controls.Add(this.cmdAddToMap2);
+            this.Controls.Add(this.cmdProperties);
+            this.Controls.Add(this.cmdBrowse2);
+            this.Controls.Add(this.cmdHelp);
             this.Controls.Add(this.txtDoDName);
             this.Controls.Add(this.Label6);
             this.Controls.Add(this.tabProperties);
             this.Controls.Add(this.cmdOK);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(300, 200);
             this.Name = "frmDoDResults";
             this.Text = "Change Detection Results";
@@ -198,43 +248,14 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.PerformLayout();
 
         }
+
         internal System.Windows.Forms.Button cmdOK;
         internal System.Windows.Forms.TextBox txtDoDName;
         internal System.Windows.Forms.Label Label6;
         private System.Windows.Forms.Button withEventsField_cmdAddToMap;
-        internal System.Windows.Forms.Button cmdAddToMap
-        {
-            get { return withEventsField_cmdAddToMap; }
-            set
-            {
-                if (withEventsField_cmdAddToMap != null)
-                {
-                    withEventsField_cmdAddToMap.Click -= cmdAddToMap_Click;
-                }
-                withEventsField_cmdAddToMap = value;
-                if (withEventsField_cmdAddToMap != null)
-                {
-                    withEventsField_cmdAddToMap.Click += cmdAddToMap_Click;
-                }
-            }
-        }
+        internal System.Windows.Forms.Button cmdAddToMap;
         private System.Windows.Forms.Button withEventsField_cmdBrowse;
-        internal System.Windows.Forms.Button cmdBrowse
-        {
-            get { return withEventsField_cmdBrowse; }
-            set
-            {
-                if (withEventsField_cmdBrowse != null)
-                {
-                    withEventsField_cmdBrowse.Click -= cmdBrowse_Click;
-                }
-                withEventsField_cmdBrowse = value;
-                if (withEventsField_cmdBrowse != null)
-                {
-                    withEventsField_cmdBrowse.Click += cmdBrowse_Click;
-                }
-            }
-        }
+        internal System.Windows.Forms.Button cmdBrowse;
         internal System.Windows.Forms.TabPage TabPage3;
         internal ucDoDProperties ucProperties;
         internal System.Windows.Forms.TabPage tbpElevationChangeDistribution;
@@ -245,21 +266,10 @@ namespace GCDCore.UserInterface.ChangeDetection
         internal ucDoDSummary ucSummary;
         internal System.Windows.Forms.TabControl tabProperties;
         private System.Windows.Forms.Button withEventsField_cmdSettings;
-        internal System.Windows.Forms.Button cmdSettings
-        {
-            get { return withEventsField_cmdSettings; }
-            set
-            {
-                if (withEventsField_cmdSettings != null)
-                {
-                    withEventsField_cmdSettings.Click -= cmdSettings_Click;
-                }
-                withEventsField_cmdSettings = value;
-                if (withEventsField_cmdSettings != null)
-                {
-                    withEventsField_cmdSettings.Click += cmdSettings_Click;
-                }
-            }
-        }
+        internal System.Windows.Forms.Button cmdSettings;
+        private System.Windows.Forms.Button cmdHelp;
+        private System.Windows.Forms.Button cmdBrowse2;
+        private System.Windows.Forms.Button cmdProperties;
+        private System.Windows.Forms.Button cmdAddToMap2;
     }
 }

@@ -29,7 +29,7 @@ namespace GCDCore.UserInterface.ChangeDetection
 			grdData.Columns[5].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
 		}
 
-		public void RefreshDisplay(GCDConsoleLib.GCD.DoDStats dodStats, ref DoDSummaryDisplayOptions options)
+		public void RefreshDisplay(GCDConsoleLib.GCD.DoDStats dodStats, DoDSummaryDisplayOptions options)
 		{
 			// Build the string formatting based on the precision in the pop-up properties form
 			string sFormat = "#,##0";
