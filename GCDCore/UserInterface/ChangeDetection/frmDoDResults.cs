@@ -58,7 +58,7 @@ namespace GCDCore.UserInterface.ChangeDetection
                 {
 					ucSummary.RefreshDisplay(DoD.Statistics, m_Options);
 					ucHistogram.SetHistogramUnits(m_Options.Units);
-					ucBars.Refresh();
+                    ucBars.DisplayUnits = new GCDConsoleLib.GCD.UnitGroup(m_Options.VolumeUnits, m_Options.AreaUnits, m_Options.LinearUnits, m_Options.LinearUnits);
 				}
 
 			} catch (Exception ex) {
