@@ -225,16 +225,17 @@ namespace GCDCore.UserInterface.Project
                     {
                         case GCDNodeTypes.DEMSurvey:
                             frm = new frmDEMSurveyProperties((DEMSurvey)tag.Item);
-
                             break;
+
                         case GCDNodeTypes.AssociatedSurface:
                             AssocSurface assoc = (AssocSurface)tag.Item;
                             frm = new frmAssocSurfaceProperties(assoc.DEM, assoc);
+                            break;
 
-                            break;
                         case GCDNodeTypes.ErrorSurface:
+                            ErrorSurface err = (ErrorSurface)tag.Item;
+                            frm = new frmErrorSurfaceProperties(err.DEM, err);
                             break;
-                        //frm = New ErrorCalculation.frmErrorCalculation()
 
                         case GCDNodeTypes.DoD:
                             DoDBase dod = (DoDBase)tag.Item;
@@ -256,7 +257,6 @@ namespace GCDCore.UserInterface.Project
             {
                 naru.error.ExceptionUI.HandleException(ex);
             }
-
         }
 
         private GCDNodeTypes GetNodeType(TreeNode aNode)
@@ -281,70 +281,30 @@ namespace GCDCore.UserInterface.Project
             GCDNodeTypes eType = default(GCDNodeTypes);
             switch (eType)
             {
-                case GCDNodeTypes.Project:
-                    eType = GCDNodeTypes.Project;
-                    break;
-                case GCDNodeTypes.InputsGroup:
-                    eType = GCDNodeTypes.InputsGroup;
-                    break;
-                case GCDNodeTypes.SurveysGroup:
-                    eType = GCDNodeTypes.SurveysGroup;
-                    break;
-                case GCDNodeTypes.DEMSurvey:
-                    eType = GCDNodeTypes.DEMSurvey;
-                    break;
-                case GCDNodeTypes.AssocGroup:
-                    eType = GCDNodeTypes.AssocGroup;
-                    break;
-                case GCDNodeTypes.AssociatedSurface:
-                    eType = GCDNodeTypes.AssociatedSurface;
-                    break;
-                case GCDNodeTypes.ErrorSurfaceGroup:
-                    eType = GCDNodeTypes.ErrorSurfaceGroup;
-                    break;
-                case GCDNodeTypes.ErrorSurface:
-                    eType = GCDNodeTypes.ErrorSurface;
-                    break;
-                case GCDNodeTypes.AnalysesGroup:
-                    eType = GCDNodeTypes.AnalysesGroup;
-                    break;
-                case GCDNodeTypes.ChangeDetectionGroup:
-                    eType = GCDNodeTypes.ChangeDetectionGroup;
-                    break;
-                case GCDNodeTypes.ChangeDetectionDEMPair:
-                    eType = GCDNodeTypes.ChangeDetectionDEMPair;
-                    break;
-                case GCDNodeTypes.DoD:
-                    eType = GCDNodeTypes.DoD;
-                    break;
-                //Case GCDNodeTypes.SummaryXML : eType = GCDNodeTypes.SummaryXML
-                case GCDNodeTypes.BudgetSegregationGroup:
-                    eType = GCDNodeTypes.BudgetSegregationGroup;
-                    break;
-                case GCDNodeTypes.BudgetSegregationMask:
-                    eType = GCDNodeTypes.BudgetSegregationMask;
-                    break;
-                case GCDNodeTypes.BudgetSegregation:
-                    eType = GCDNodeTypes.BudgetSegregation;
-                    break;
-                case GCDNodeTypes.ReservoirGroup:
-                    eType = GCDNodeTypes.ReservoirGroup;
-                    break;
-                case GCDNodeTypes.Reservoir:
-                    eType = GCDNodeTypes.Reservoir;
-                    break;
-                case GCDNodeTypes.AOIGroup:
-                    eType = GCDNodeTypes.AOIGroup;
-                    break;
-                case GCDNodeTypes.AOI:
-                    eType = GCDNodeTypes.AOI;
-                    break;
+                case GCDNodeTypes.Project: eType = GCDNodeTypes.Project; break;
+                case GCDNodeTypes.InputsGroup: eType = GCDNodeTypes.InputsGroup; break;
+                case GCDNodeTypes.SurveysGroup: eType = GCDNodeTypes.SurveysGroup; break;
+                case GCDNodeTypes.DEMSurvey: eType = GCDNodeTypes.DEMSurvey; break;
+                case GCDNodeTypes.AssocGroup: eType = GCDNodeTypes.AssocGroup; break;
+                case GCDNodeTypes.AssociatedSurface: eType = GCDNodeTypes.AssociatedSurface; break;
+                case GCDNodeTypes.ErrorSurfaceGroup: eType = GCDNodeTypes.ErrorSurfaceGroup; break;
+                case GCDNodeTypes.ErrorSurface: eType = GCDNodeTypes.ErrorSurface; break;
+                case GCDNodeTypes.AnalysesGroup: eType = GCDNodeTypes.AnalysesGroup; break;
+                case GCDNodeTypes.ChangeDetectionGroup: eType = GCDNodeTypes.ChangeDetectionGroup; break;
+                case GCDNodeTypes.ChangeDetectionDEMPair: eType = GCDNodeTypes.ChangeDetectionDEMPair; break;
+                case GCDNodeTypes.DoD: eType = GCDNodeTypes.DoD; break;
+                case GCDNodeTypes.BudgetSegregationGroup: eType = GCDNodeTypes.BudgetSegregationGroup; break;
+                case GCDNodeTypes.BudgetSegregationMask: eType = GCDNodeTypes.BudgetSegregationMask; break;
+                case GCDNodeTypes.BudgetSegregation: eType = GCDNodeTypes.BudgetSegregation; break;
+                case GCDNodeTypes.ReservoirGroup: eType = GCDNodeTypes.ReservoirGroup; break;
+                case GCDNodeTypes.Reservoir: eType = GCDNodeTypes.Reservoir; break;
+                case GCDNodeTypes.AOIGroup: eType = GCDNodeTypes.AOIGroup; break;
+                case GCDNodeTypes.AOI: eType = GCDNodeTypes.AOI; break;
                 default:
                     throw new Exception("Unhandled tree node type");
             }
 
             return eType;
-
         }
 
         private int GetNodeID(TreeNode aNode)
@@ -358,13 +318,10 @@ namespace GCDCore.UserInterface.Project
             }
 
             return nID;
-
         }
-
 
         private void treProject_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-
             if (e.Button != MouseButtons.Right)
                 return;
 
@@ -587,12 +544,9 @@ namespace GCDCore.UserInterface.Project
                     }
 
                     DEMSurvey dem = (DEMSurvey)((ProjectTreeNode)nodDEM.Tag).Item;
-                    throw new NotImplementedException("derive error surface not implemeneted");
-                    //Dim frm As New ErrorCalculation.frmErrorCalculation(dem)
-                    //If frm.ShowDialog() = DialogResult.OK Then
-                    //        LoadTree(selNode.Tag)
-                    //    End If
-                    //End If
+                    frmErrorSurfaceProperties frm = new frmErrorSurfaceProperties(dem, null);
+                    if (frm.ShowDialog() == DialogResult.OK)
+                        LoadTree();
                 }
             }
             catch (Exception ex)
