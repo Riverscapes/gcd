@@ -9,6 +9,11 @@ namespace GCDCore.ErrorCalculation.FIS
         public readonly System.IO.FileInfo RuleFilePath;
         public readonly List<string> FISInputs;
 
+        public override string ToString()
+        {
+            return string.Format("{0} ({1} Inputs)", RuleFilePath.FullName, FISInputs.Count);
+        }
+
         public FISRuleFile(System.IO.FileInfo filePath)
         {
             if (!filePath.Exists)

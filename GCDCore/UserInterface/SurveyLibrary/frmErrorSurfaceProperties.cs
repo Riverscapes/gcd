@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using GCDCore.Project;
+using GCDCore.ErrorCalculation;
 
 namespace GCDCore.UserInterface.SurveyLibrary
 {
@@ -14,11 +15,11 @@ namespace GCDCore.UserInterface.SurveyLibrary
         public ErrorSurface ErrorSurf { get; internal set; }
 
         private const string m_sEntireDEMExtent = "Entire DEM Extent";
-    
+
         // This dictionary stores the definitions of the error surface properties for each survey method polygon
 
-        private Dictionary<string, ErrorCalculation.ErrorCalcPropertiesBase> ErrorCalcProps;
-   
+        private Dictionary<string, ErrorSurfaceProperty> ErrorCalcProps;
+
 
         public frmErrorSurfaceProperties(DEMSurvey dem, ErrorSurface errorSurf)
         {
@@ -43,16 +44,23 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
             // Load all the FIS rule files in the library to the combobox
             // (Need to do this before the try/catch below that loads the error surface data
-            foreach (FIS.FISLibraryItem fis in ProjectManager.FISLibrary)
-            {
-                cboFIS.Items.Add(fis);
-            }
+            cboFIS.DataSource = ProjectManager.FISLibrary;
+
+            // Prepare the associated surface dropdown with all surfaces from the dEM
+            cboAssociated.DataSource = new BindingList<AssocSurface>(DEM.AssocSurfaces.Values.ToList<AssocSurface>());
+            cboAssociated.SelectedItem = null;
+
+            // Load all the associated surfaces in the survey library to the grid combo box
+            DataGridViewComboBoxColumn colCombo = (DataGridViewComboBoxColumn)grdFISInputs.Columns[1];
+            colCombo.DataSource = DEM.AssocSurfaces.Values.AsEnumerable();
+            colCombo.DisplayMember = "Name";
 
             if (ErrorSurf is ErrorSurface)
             {
                 // Existing error surface. Disable editing.
                 txtName.Text = ErrorSurf.Name;
                 txtRasterPath.Text = ProjectManager.Project.GetRelativePath(ErrorSurf.Raster.GISFileInfo);
+                chkIsDefault.Checked = ErrorSurf.IsDefault;
                 btnOK.Text = "Save";
             }
 
@@ -72,14 +80,6 @@ namespace GCDCore.UserInterface.SurveyLibrary
             {
                 naru.error.ExceptionUI.HandleException(ex);
             }
-
-            // Load all the associated surfaces in the survey library to the grid combo box
-            DataGridViewComboBoxColumn colCombo = (DataGridViewComboBoxColumn)grdFISInputs.Columns[1];
-            colCombo.DataSource = DEM.AssocSurfaces.Values.AsEnumerable();
-            colCombo.DisplayMember = "Name";
-
-            // Also load any error surfaces into the associated error surface combo box.
-            cboAssociated.DataSource = DEM.AssocSurfaces.Values;
 
             // Disable the associated error surface option if in readonly mode or else
             // there are no associated error surfaces for the DEM survey
@@ -102,14 +102,12 @@ namespace GCDCore.UserInterface.SurveyLibrary
         /// Loads the survey methods into the member dictionary.
         /// </summary>
         /// <remarks>Note that another method is responsible for displaying the dictionary contents in the UI</remarks>
-
         private void LoadSurveyMethods()
         {
             // Always create a new dictionary, which will clear any existing entries
             ErrorCalcProps = new Dictionary<string, ErrorSurfaceProperty>();
 
             // Attempt to load the survey methods from an existing error surface if it exists
-
             if (ErrorSurf == null)
             {
                 if (DEM.IsSingleSurveyMethod)
@@ -143,7 +141,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             }
             else
             {
-                ErrorCalcProps = m_ErrorSurface.ErrorProperties;
+                ErrorCalcProps = ErrorSurf.ErrorProperties;
             }
         }
 
@@ -155,7 +153,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
         {
             foreach (ErrorSurfaceProperty errProps in ErrorCalcProps.Values)
             {
-                int nMethodRow = grdErrorProperties.Rows.Add;
+                int nMethodRow = grdErrorProperties.Rows.Add();
                 grdErrorProperties.Rows[nMethodRow].Cells[0].Value = errProps.Name;
 
                 if (errProps.UniformValue.HasValue)
@@ -231,12 +229,12 @@ namespace GCDCore.UserInterface.SurveyLibrary
                     if (prop.UniformValue.HasValue)
                     {
                         rdoUniform.Checked = true;
-                        valUniform.Value = prop.UniformValue.Value;
+                        valUniform.Value = (decimal)prop.UniformValue.Value;
 
                         cboFIS.SelectedIndex = -1;
                         cboAssociated.SelectedIndex = -1;
                     }
-                    else if (object.ReferenceEquals(prop.AssociatedSurface, AssociatedSurface))
+                    else if (prop.AssociatedSurface is AssocSurface)
                     {
                         rdoAssociated.Checked = true;
                         cboFIS.SelectedIndex = -1;
@@ -252,7 +250,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
                             if (string.Compare(((naru.db.NamedObject)cboFIS.Items[i]).Name, prop.FISRuleFile.FullName, true) == 0)
                             {
                                 cboFIS.SelectedIndex = i;
-                                break; // TODO: might not be correct. Was : Exit For
+                                break;
                             }
                         }
 
@@ -347,19 +345,19 @@ namespace GCDCore.UserInterface.SurveyLibrary
                 return;
             }
 
-            FIS.FISRuleFile theFISRuleFile = new FIS.FISRuleFile(((FIS.FISLibraryItem)cboFIS.SelectedItem).FilePath);
+            ErrorCalculation.FIS.FISRuleFile theFISRuleFile = new ErrorCalculation.FIS.FISRuleFile(((ErrorCalculation.FIS.FISLibraryItem)cboFIS.SelectedItem).FilePath);
 
             // Loop over all the inputs defined for the FIS
             foreach (string sInput in theFISRuleFile.FISInputs)
             {
-                int nRow = grdFISInputs.Rows.Add;
+                int nRow = grdFISInputs.Rows.Add();
                 grdFISInputs.Rows[nRow].Cells[0].Value = sInput;
 
                 // Get the selected error properties row
                 DataGridViewSelectedRowCollection lErr = grdErrorProperties.SelectedRows;
                 if (lErr.Count == 1)
                 {
-                    ErrorSurfaceProperty errProps = ErrorCalcProps(lErr[0].Cells[0].Value);
+                    ErrorSurfaceProperty errProps = ErrorCalcProps[lErr[0].Cells[0].Value.ToString()];
 
                     // Only proceed if the error surface definition is a FIS
                     if ((errProps.FISInputs != null))
@@ -370,13 +368,12 @@ namespace GCDCore.UserInterface.SurveyLibrary
                             if (string.Compare(sInput, sDefinedInput, true) == 0)
                             {
                                 // this is a FIS input that has a definition already
-                                grdFISInputs.Rows[nRow].Cells[1].Value = errProps.FISInputs[DefinedInput];
+                                grdFISInputs.Rows[nRow].Cells[1].Value = errProps.FISInputs[sDefinedInput];
                             }
                         }
                     }
                 }
             }
-
         }
 
         /// <summary>
@@ -399,7 +396,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             if (rdoUniform.Checked)
             {
                 // Create a new Uniform error properties
-                ErrorCalcProps[sSurveyMethod] = new ErrorSurfaceProperty(sSurveyMethod, valUniform.Value);
+                ErrorCalcProps[sSurveyMethod] = new ErrorSurfaceProperty(sSurveyMethod, (double)valUniform.Value);
                 sErrorType = "Uniform Error";
             }
             else if (rdoAssociated.Checked)
@@ -431,9 +428,9 @@ namespace GCDCore.UserInterface.SurveyLibrary
                     for (int i = 0; i <= grdFISInputs.Rows.Count - 1; i++)
                     {
                         DataGridViewComboBoxCell cboAssoc = (DataGridViewComboBoxCell)grdFISInputs.Rows[i].Cells[1];
-                        if (cboAssoc.Value > 0)
+                        if ((int)cboAssoc.Value > 0)
                         {
-                            dInputs.Add(grdFISInputs.Rows[i].Cells[0].Value, cboAssoc.Value);
+                            dInputs[grdFISInputs.Rows[i].Cells[0].Value.ToString()] = DEM.AssocSurfaces[cboAssoc.Value.ToString()];
                         }
                         else
                         {
@@ -443,7 +440,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
                     }
 
                     // Find the matching fis library file
-                    ErrorCalcProps[sSurveyMethod] = new ErrorSurfaceProperty(sSurveyMethod, ((FIS.FISLibraryItem)cboFIS.SelectedItem).FilePath, dInputs);
+                    ErrorCalcProps[sSurveyMethod] = new ErrorSurfaceProperty(sSurveyMethod, ((ErrorCalculation.FIS.FISLibraryItem)cboFIS.SelectedItem).FilePath, dInputs);
                     sErrorType = "FIS Error";
                 }
             }
@@ -459,12 +456,11 @@ namespace GCDCore.UserInterface.SurveyLibrary
         /// <param name="sender"></param>
         /// <param name="e"></param>
         /// <remarks></remarks>
-
         private void txtName_TextChanged(System.Object sender, System.EventArgs e)
         {
             if (ErrorSurf is ErrorSurface)
             {
-                txtRasterPath.Text = ProjectManager.Project.GetRelativePath(m_ErrorSurface.Raster.RasterPath);
+                txtRasterPath.Text = ProjectManager.Project.GetRelativePath(ErrorSurf.Raster.GISFileInfo);
             }
             else
             {
@@ -485,6 +481,8 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
         private bool ValidateForm()
         {
+            // Sanity check to avoid empty string names
+            txtName.Text = txtName.Text.Trim();
 
             if ((string.IsNullOrEmpty(txtName.Text.Trim())))
             {
@@ -523,101 +521,32 @@ namespace GCDCore.UserInterface.SurveyLibrary
             if (ErrorSurf is ErrorSurface)
             {
                 ErrorSurf.Name = txtName.Text;
+                ErrorSurf.IsDefault = chkIsDefault.Checked;
             }
             else
             {
                 // Create the new error surface object
+                ErrorSurf = new ErrorSurface(txtName.Text, new System.IO.FileInfo(txtRasterPath.Text), DEM, chkIsDefault.Checked, ErrorCalcProps);
 
-                ErrorSurf = new ErrorSurface(;
-                ErrorSurface.Name = txtName.Text;
-                ErrorSurf.DEMSurvey = DEM;
-                ErrorSurf.Source = txtRasterPath.Text;
-                ErrorSurf.Type = ErrorSurfaceType;
-                ProjectManager.ds.ErrorSurface.AddErrorSurfaceRow(ErrorSurf);
-
-                // Add all the survey methods to the database
-                foreach (string sSurveyMethod in ErrorCalcProps.Keys)
-                {
-                    double fError = 0;
-                    int nAssociatedSurfaceID = 0;
-
-                    if (ErrorCalcProps(sSurveyMethod) is ErrorCalcPropertiesUniform)
-                    {
-                        fError = ((ErrorCalcPropertiesUniform)ErrorCalcProps(sSurveyMethod)).UniformErrorValue;
-                    }
-
-                    if (ErrorCalcProps(sSurveyMethod) is ErrorCalcPropertiesAssoc)
-                    {
-                        nAssociatedSurfaceID = ((ErrorCalcPropertiesAssoc)ErrorCalcProps(sSurveyMethod)).AssociatedSurfaceID;
-                    }
-
-                    // This error type appears to be not used when uniform, but when it's FIS it should be the name of the FIS rule
-                    // file
-                    string sErrorType = ErrorCalcProps(sSurveyMethod).ErrorType;
-                    if (ErrorCalcProps(sSurveyMethod) is ErrorCalcPropertiesFIS)
-                    {
-                        sErrorType = ((ErrorCalcPropertiesFIS)ErrorCalcProps(sSurveyMethod)).FISRuleFilePath.FullName;
-                    }
-
-                    ProjectManager.ds.MultiErrorProperties.AddMultiErrorPropertiesRow(sSurveyMethod, fError, ErrorSurf, sErrorType, nAssociatedSurfaceID);
-                    // m_dErrorCalculationProperties(sSurveyMethod).ErrorType)
-
-                    // Now add all the FIS inputs to the FIS table
-                    if (ErrorCalcProps(sSurveyMethod) is ErrorCalcPropertiesFIS)
-                    {
-                        ErrorCalcPropertiesFIS errProps = ErrorCalcProps(sSurveyMethod);
-                        foreach (string sInput in errProps.FISInputs.Keys)
-                        {
-                            // Now find the associated surface for this input
-                            foreach (ProjectDS.AssociatedSurfaceRow rAssoc in m_rDEMSurvey.GetAssociatedSurfaceRows)
-                            {
-                                if (rAssoc.AssociatedSurfaceID == errProps.FISInputs(sInput))
-                                {
-                                    ProjectManager.ds.FISInputs.AddFISInputsRow(ErrorSurf, sInput, rAssoc.Name, errProps.FISRuleFilePath.FullName);
-                                    break; // TODO: might not be correct. Was : Exit For
-                                }
-                            }
-                        }
-                        //fError = DirectCast(m_dErrorCalculationProperties(sSurveyMethod), ErrorCalculation.ErrorCalcPropertiesUniform).UniformErrorValue
-                    }
-                }
                 // For new error surfaces, we now want to create the actual error raster
                 try
                 {
-                    ErrorSurfaceEngine errEngine = new ErrorSurfaceEngine(ErrorSurf);
-                    errEngine.CreateErrorSurfaceRaster();
+                    Engines.ErrorSurfaceEngine errEngine = new Engines.ErrorSurfaceEngine();
+                    errEngine.Calculate(ErrorSurf);
 
-                    //If My.Settings.AddOutputLayersToMap Then
-                    // TODO 
-                    throw new Exception("not implemented");
-                    //Core.GCDProject.ProjectManagerUI.ArcMapManager.AddErrSurface(ErrorSurf)
-                    //End If
+                    DEM.ErrorSurfaces[ErrorSurf.Name] = ErrorSurf;
                 }
                 catch (Exception ex)
                 {
                     DialogResult = DialogResult.None;
                     Cursor.Current = Cursors.Default;
-                    ProjectManager.ds.ErrorSurface.RemoveErrorSurfaceRow(ErrorSurf);
                     Exception ex2 = new Exception("Error generating error surface raster. No changes were made to the GCD project.", ex);
                     naru.error.ExceptionUI.HandleException(ex2);
                     return;
                 }
             }
 
-            // Now save the GCD project
-            try
-            {
-                ProjectManager.save();
-            }
-            catch (Exception ex)
-            {
-                DialogResult = DialogResult.None;
-                Cursor.Current = Cursors.Default;
-                Exception ex2 = new Exception("Error saving error surface properties to the GCD project.", ex);
-                naru.error.ExceptionUI.HandleException(ex2);
-                return;
-            }
-
+            ProjectManager.Project.Save();
             Cursor.Current = Cursors.Default;
         }
     }

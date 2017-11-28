@@ -12,6 +12,10 @@ namespace GCDCore.Engines
 {
     public struct ErrorSurfaceEngine
     {
+        public Raster Calculate(ErrorSurface errSurf)
+        {
+            return null;
+        }
         //public ErrorSurface CalculateSingleMethod(string name, DEMSurvey DEM, ErrorSurfaceProperty errProps)
         //{
         //    FileInfo errSurfaceRasterPath = ProjectManagerBase.OutputManager.ErrorSurfaceRasterPath(DEM.Name, name, true);

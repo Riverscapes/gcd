@@ -56,7 +56,6 @@
     <Compile Include="GCDUnits.cs" />
     <Compile Include="Project\CoherenceProperties.cs" />
     <Compile Include="Engines\EngineBase.cs" />
-    <Compile Include="ErrorCalculation\ErrorCalcProperties.cs" />
     <Compile Include="ErrorCalculation\FIS\FISLibraryItem.cs" />
     <Compile Include="ErrorCalculation\FIS\FISRuleFile.cs" />
     <Compile Include="OutputManager.cs" />

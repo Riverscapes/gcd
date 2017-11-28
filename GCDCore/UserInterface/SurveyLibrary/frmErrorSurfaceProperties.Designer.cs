@@ -52,6 +52,7 @@
             this.txtName = new System.Windows.Forms.TextBox();
             this.Label1 = new System.Windows.Forms.Label();
             this.txtRasterPath = new System.Windows.Forms.TextBox();
+            this.chkIsDefault = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.valUniform)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdFISInputs)).BeginInit();
             this.GroupBox2.SuspendLayout();
@@ -152,10 +153,10 @@
             // GroupBox2
             // 
             this.GroupBox2.Controls.Add(this.grdErrorProperties);
-            this.GroupBox2.Location = new System.Drawing.Point(17, 71);
+            this.GroupBox2.Location = new System.Drawing.Point(17, 106);
             this.GroupBox2.Name = "GroupBox2";
-            this.GroupBox2.Size = new System.Drawing.Size(372, 243);
-            this.GroupBox2.TabIndex = 13;
+            this.GroupBox2.Size = new System.Drawing.Size(372, 208);
+            this.GroupBox2.TabIndex = 5;
             this.GroupBox2.TabStop = false;
             this.GroupBox2.Text = "Error Calculation Methods";
             // 
@@ -174,7 +175,7 @@
             this.grdErrorProperties.Name = "grdErrorProperties";
             this.grdErrorProperties.RowHeadersVisible = false;
             this.grdErrorProperties.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.grdErrorProperties.Size = new System.Drawing.Size(355, 218);
+            this.grdErrorProperties.Size = new System.Drawing.Size(355, 180);
             this.grdErrorProperties.TabIndex = 0;
             // 
             // Method
@@ -206,7 +207,7 @@
             this.GroupBox1.Location = new System.Drawing.Point(406, 12);
             this.GroupBox1.Name = "GroupBox1";
             this.GroupBox1.Size = new System.Drawing.Size(453, 302);
-            this.GroupBox1.TabIndex = 14;
+            this.GroupBox1.TabIndex = 6;
             this.GroupBox1.TabStop = false;
             this.GroupBox1.Text = "Error Calculation Definition For Selected Survey Method";
             // 
@@ -217,7 +218,7 @@
             this.btnCancel.Location = new System.Drawing.Point(784, 328);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 16;
+            this.btnCancel.TabIndex = 8;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             // 
@@ -228,7 +229,7 @@
             this.btnOK.Location = new System.Drawing.Point(659, 328);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(119, 23);
-            this.btnOK.TabIndex = 15;
+            this.btnOK.TabIndex = 7;
             this.btnOK.Text = "Derive Error Surface";
             this.btnOK.UseVisualStyleBackColor = true;
             // 
@@ -239,7 +240,7 @@
             this.btnHelp.Location = new System.Drawing.Point(17, 328);
             this.btnHelp.Name = "btnHelp";
             this.btnHelp.Size = new System.Drawing.Size(75, 23);
-            this.btnHelp.TabIndex = 17;
+            this.btnHelp.TabIndex = 9;
             this.btnHelp.Text = "Help";
             this.btnHelp.UseVisualStyleBackColor = true;
             // 
@@ -249,7 +250,7 @@
             this.Label4.Location = new System.Drawing.Point(16, 41);
             this.Label4.Name = "Label4";
             this.Label4.Size = new System.Drawing.Size(72, 13);
-            this.Label4.TabIndex = 11;
+            this.Label4.TabIndex = 2;
             this.Label4.Text = "Project raster:";
             // 
             // txtName
@@ -258,7 +259,7 @@
             this.txtName.MaxLength = 255;
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(297, 20);
-            this.txtName.TabIndex = 10;
+            this.txtName.TabIndex = 1;
             // 
             // Label1
             // 
@@ -266,7 +267,7 @@
             this.Label1.Location = new System.Drawing.Point(50, 15);
             this.Label1.Name = "Label1";
             this.Label1.Size = new System.Drawing.Size(38, 13);
-            this.Label1.TabIndex = 9;
+            this.Label1.TabIndex = 0;
             this.Label1.Text = "Name:";
             // 
             // txtRasterPath
@@ -276,13 +277,24 @@
             this.txtRasterPath.Name = "txtRasterPath";
             this.txtRasterPath.ReadOnly = true;
             this.txtRasterPath.Size = new System.Drawing.Size(297, 20);
-            this.txtRasterPath.TabIndex = 12;
+            this.txtRasterPath.TabIndex = 3;
+            // 
+            // chkIsDefault
+            // 
+            this.chkIsDefault.AutoSize = true;
+            this.chkIsDefault.Location = new System.Drawing.Point(92, 69);
+            this.chkIsDefault.Name = "chkIsDefault";
+            this.chkIsDefault.Size = new System.Drawing.Size(183, 17);
+            this.chkIsDefault.TabIndex = 4;
+            this.chkIsDefault.Text = "Default error surface for this DEM";
+            this.chkIsDefault.UseVisualStyleBackColor = true;
             // 
             // frmErrorSurfaceProperties
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(874, 363);
+            this.Controls.Add(this.chkIsDefault);
             this.Controls.Add(this.GroupBox2);
             this.Controls.Add(this.GroupBox1);
             this.Controls.Add(this.btnCancel);
@@ -331,5 +343,6 @@
         internal System.Windows.Forms.TextBox txtName;
         internal System.Windows.Forms.Label Label1;
         internal System.Windows.Forms.TextBox txtRasterPath;
+        private System.Windows.Forms.CheckBox chkIsDefault;
     }
 }
