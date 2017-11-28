@@ -68,6 +68,7 @@
             this.cboFIS.Name = "cboFIS";
             this.cboFIS.Size = new System.Drawing.Size(282, 21);
             this.cboFIS.TabIndex = 5;
+            this.cboFIS.SelectedIndexChanged += new System.EventHandler(this.cboFIS_SelectedIndexChanged);
             // 
             // rdoFIS
             // 
@@ -99,6 +100,7 @@
             this.rdoUniform.TabStop = true;
             this.rdoUniform.Text = "Uniform error value";
             this.rdoUniform.UseVisualStyleBackColor = true;
+            this.rdoUniform.CheckedChanged += new System.EventHandler(this.rdoUniform_CheckedChanged);
             // 
             // AssociatedSurface
             // 
@@ -134,6 +136,7 @@
             this.rdoAssociated.TabStop = true;
             this.rdoAssociated.Text = "Associated error surface";
             this.rdoAssociated.UseVisualStyleBackColor = true;
+            this.rdoAssociated.CheckedChanged += new System.EventHandler(this.rdoUniform_CheckedChanged);
             // 
             // grdFISInputs
             // 
@@ -232,6 +235,7 @@
             this.btnOK.TabIndex = 7;
             this.btnOK.Text = "Derive Error Surface";
             this.btnOK.UseVisualStyleBackColor = true;
+            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
             // btnHelp
             // 
@@ -243,15 +247,16 @@
             this.btnHelp.TabIndex = 9;
             this.btnHelp.Text = "Help";
             this.btnHelp.UseVisualStyleBackColor = true;
+            this.btnHelp.Click += new System.EventHandler(this.btnHelp_Click);
             // 
             // Label4
             // 
             this.Label4.AutoSize = true;
-            this.Label4.Location = new System.Drawing.Point(16, 41);
+            this.Label4.Location = new System.Drawing.Point(19, 41);
             this.Label4.Name = "Label4";
-            this.Label4.Size = new System.Drawing.Size(72, 13);
+            this.Label4.Size = new System.Drawing.Size(69, 13);
             this.Label4.TabIndex = 2;
-            this.Label4.Text = "Project raster:";
+            this.Label4.Text = "Project raster";
             // 
             // txtName
             // 
@@ -260,15 +265,16 @@
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(297, 20);
             this.txtName.TabIndex = 1;
+            this.txtName.TextChanged += new System.EventHandler(this.txtName_TextChanged);
             // 
             // Label1
             // 
             this.Label1.AutoSize = true;
-            this.Label1.Location = new System.Drawing.Point(50, 15);
+            this.Label1.Location = new System.Drawing.Point(53, 15);
             this.Label1.Name = "Label1";
-            this.Label1.Size = new System.Drawing.Size(38, 13);
+            this.Label1.Size = new System.Drawing.Size(35, 13);
             this.Label1.TabIndex = 0;
-            this.Label1.Text = "Name:";
+            this.Label1.Text = "Name";
             // 
             // txtRasterPath
             // 

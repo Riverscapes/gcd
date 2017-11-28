@@ -13,6 +13,29 @@ namespace GCDCore.Project
         public readonly FileInfo FISRuleFile;
         public readonly Dictionary<string, AssocSurface> FISInputs;
 
+        /// <summary>
+        /// Return the error raster properties in the format needed by the raster processor
+        /// </summary>
+        public GCDConsoleLib.GCD.ErrorRasterProperties SingleErrorRasterProperty
+        {
+            get
+            {
+                if (UniformValue.HasValue)
+                    return new GCDConsoleLib.GCD.ErrorRasterProperties(UniformValue.Value);
+                else if (AssociatedSurface is AssocSurface)
+                    return new GCDConsoleLib.GCD.ErrorRasterProperties(AssociatedSurface.Raster);
+                else
+                {
+                    Dictionary<string, GCDConsoleLib.Raster> fisinputs = new Dictionary<string, GCDConsoleLib.Raster>();
+                    foreach (KeyValuePair<string, AssocSurface> kvp in FISInputs)
+                    {
+                        fisinputs[kvp.Key] = kvp.Value.Raster;
+                    }
+                    return new GCDConsoleLib.GCD.ErrorRasterProperties(FISRuleFile, fisinputs);
+                }
+            }
+        }
+
         public ErrorSurfaceProperty(string name, double uniformValue) : base(name)
         {
             UniformValue = new double?(uniformValue);

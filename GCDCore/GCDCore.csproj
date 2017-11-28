@@ -52,7 +52,6 @@
     <Compile Include="Engines\DoD\ChangeDetectionMinLoD.cs" />
     <Compile Include="Engines\DoD\ChangeDetectionProbabilistic.cs" />
     <Compile Include="Engines\DoD\ChangeDetectionPropProb.cs" />
-    <Compile Include="Engines\ErrorSurfaceEngine.cs" />
     <Compile Include="GCDUnits.cs" />
     <Compile Include="Project\CoherenceProperties.cs" />
     <Compile Include="Engines\EngineBase.cs" />

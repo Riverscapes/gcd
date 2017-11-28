@@ -5,7 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using GCDCore.Project;
-using GCDCore.ErrorCalculation;
+using GCDConsoleLib;
 
 namespace GCDCore.UserInterface.SurveyLibrary
 {
@@ -52,8 +52,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
             // Load all the associated surfaces in the survey library to the grid combo box
             DataGridViewComboBoxColumn colCombo = (DataGridViewComboBoxColumn)grdFISInputs.Columns[1];
-            colCombo.DataSource = DEM.AssocSurfaces.Values.AsEnumerable();
-            colCombo.DisplayMember = "Name";
+            colCombo.DataSource = new BindingList<AssocSurface>(DEM.AssocSurfaces.Values.ToList<AssocSurface>());
 
             if (ErrorSurf is ErrorSurface)
             {
@@ -75,6 +74,10 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
                 // Update which controls are enabled.
                 UpdateControls();
+
+                // The first error surface is always the default.
+                chkIsDefault.Checked = DEM.ErrorSurfaces.Count == 0;
+                chkIsDefault.Enabled = !chkIsDefault.Checked;
             }
             catch (Exception ex)
             {
@@ -498,25 +501,39 @@ namespace GCDCore.UserInterface.SurveyLibrary
                 }
             }
 
+            foreach (ErrorSurfaceProperty prop in ErrorCalcProps.Values)
+            {
+                if (prop.UniformValue.HasValue && prop.UniformValue.Value <= 0)
+                {
+                    string sMessage;
+                    if (ErrorCalcProps.Count == 1)
+                        sMessage = "The uniform error value must be greater than zero.";
+                    else
+                        sMessage = "The uniform error value for one or more regions are zero. All uniform error values must be greater than zero.";
+                    MessageBox.Show(sMessage, "Zero Uniform Error Value", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return false;
+                }
+            }
+
             return true;
         }
 
         private void btnOK_Click(object sender, System.EventArgs e)
         {
+                  // Need to save the current error properties first.
+            if (!SaveErrorProperties())
+            {
+                this.DialogResult = DialogResult.None;
+                return;
+            }
+
             if (!ValidateForm())
             {
                 this.DialogResult = DialogResult.None;
                 return;
             }
 
-            Cursor.Current = Cursors.WaitCursor;
-
-            // Need to save the current error properties first.
-            if (!SaveErrorProperties())
-            {
-                this.DialogResult = DialogResult.None;
-                return;
-            }
+            Cursor.Current = Cursors.WaitCursor; 
 
             if (ErrorSurf is ErrorSurface)
             {
@@ -525,24 +542,45 @@ namespace GCDCore.UserInterface.SurveyLibrary
             }
             else
             {
-                // Create the new error surface object
-                ErrorSurf = new ErrorSurface(txtName.Text, new System.IO.FileInfo(txtRasterPath.Text), DEM, chkIsDefault.Checked, ErrorCalcProps);
-
-                // For new error surfaces, we now want to create the actual error raster
                 try
                 {
-                    Engines.ErrorSurfaceEngine errEngine = new Engines.ErrorSurfaceEngine();
-                    errEngine.Calculate(ErrorSurf);
+                    // Create the new error surface object and the folder that will store the raster
+                    ErrorSurf = new ErrorSurface(txtName.Text, ProjectManager.Project.GetAbsolutePath(txtRasterPath.Text), DEM, chkIsDefault.Checked, ErrorCalcProps);
+                    ErrorSurf.Raster.GISFileInfo.Directory.Create();
 
+                    if (ErrorCalcProps.Count == 1 && ErrorCalcProps.ContainsKey(m_sEntireDEMExtent))
+                    {
+                        // Single method survey
+                        ErrorSurfaceProperty singleProp = ErrorCalcProps.Values.First<ErrorSurfaceProperty>();
+
+                        if (ErrorCalcProps[m_sEntireDEMExtent].AssociatedSurface is AssocSurface)
+                        {
+                            // Do nothing. Single method survey and the error surfce is simply pointing to an associated surface.
+                        }
+                        else
+                        {
+                            // Perform the single method error raster generation.
+                            RasterOperators.CreateErrorRaster(DEM.Raster, singleProp.SingleErrorRasterProperty, ErrorSurf.Raster.GISFileInfo);
+                        }
+                    }
+                    else
+                    {
+                        // Transform all the GCD project ErrorSurfaceProperty into the ErrorRasterProperty needed for raster processing
+                        Dictionary<string, GCDConsoleLib.GCD.ErrorRasterProperties> multiProps = new Dictionary<string, GCDConsoleLib.GCD.ErrorRasterProperties>();
+                        foreach (ErrorSurfaceProperty errProp in ErrorCalcProps.Values)
+                            multiProps[errProp.Name] = errProp.SingleErrorRasterProperty;
+
+                        // Multi-method error surface.
+                        Vector polygonMask = new Vector(DEM.MethodMask);
+                        RasterOperators.CreateErrorRaster(DEM.Raster, polygonMask, DEM.MethodMaskField, multiProps, ErrorSurf.Raster.GISFileInfo);
+                    }
+
+                    // Add the error surface to the project now that processing is complete
                     DEM.ErrorSurfaces[ErrorSurf.Name] = ErrorSurf;
                 }
                 catch (Exception ex)
                 {
-                    DialogResult = DialogResult.None;
-                    Cursor.Current = Cursors.Default;
-                    Exception ex2 = new Exception("Error generating error surface raster. No changes were made to the GCD project.", ex);
-                    naru.error.ExceptionUI.HandleException(ex2);
-                    return;
+                    naru.error.ExceptionUI.HandleException(ex);
                 }
             }
 
