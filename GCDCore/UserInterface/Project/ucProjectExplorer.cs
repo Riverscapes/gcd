@@ -115,7 +115,7 @@ namespace GCDCore.UserInterface.Project
                     TreeNode nodErrorGroup = AddTreeNode(nodSurvey, GCDNodeTypes.ErrorSurfaceGroup, m_sErrorSurfaces, null);
                     foreach (ErrorSurface errSurf in dem.ErrorSurfaces.Values)
                     {
-                        AddTreeNode(nodAssocGroup, GCDNodeTypes.ErrorSurface, errSurf.Name, errSurf);
+                        AddTreeNode(nodErrorGroup, GCDNodeTypes.ErrorSurface, errSurf.Name, errSurf);
                         bExpandSurveyNode = true;
                     }
 

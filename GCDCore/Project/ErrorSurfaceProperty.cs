@@ -83,7 +83,7 @@ namespace GCDCore.Project
 
             string name = nodProperty.SelectSingleNode("Name").InnerText;
 
-            XmlNode nodUni = nodProperty.SelectSingleNode("Uniform");
+            XmlNode nodUni = nodProperty.SelectSingleNode("UniformValue");
             XmlNode nodAss = nodProperty.SelectSingleNode("AssociatedSurface");
             XmlNode nodFIS = nodProperty.SelectSingleNode("FISRuleFile");
 
