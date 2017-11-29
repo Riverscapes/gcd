@@ -34,16 +34,12 @@ namespace GCDCore.UserInterface.ChangeDetection
 			}
 		}
 
-
 		public ucChangeBars()
 		{
-			Load += ChangeBarsUC_Load;
 			// This call is required by the designer.
 			InitializeComponent();
 			// Add any initialization after the InitializeComponent() call.
-
 		}
-
 
 		private void ChangeBarsUC_Load(object sender, System.EventArgs e)
 		{
@@ -57,13 +53,11 @@ namespace GCDCore.UserInterface.ChangeDetection
 			rdoAbsolute.CheckedChanged += RefreshBars;
 			cboType.SelectedIndexChanged += RefreshBars;
 			cboType.SelectedIndex = 0;
-
 		}
-
 
 		private void RefreshBars(object sender, EventArgs e)
 		{
-			if (cboType.SelectedItem == null) {
+			if (!(cboType.SelectedItem is naru.db.NamedObject) || ProjectManager.Project == null) {
 				return;
 			}
 
@@ -84,9 +78,6 @@ namespace GCDCore.UserInterface.ChangeDetection
 					m_Viewer.Refresh(m_chngStats.AverageDepthErosion_Thresholded.As(DisplayUnits.VertUnit), m_chngStats.AverageDepthDeposition_Thresholded.As(DisplayUnits.VertUnit), m_chngStats.AverageThicknessOfDifferenceADC_Thresholded.As(DisplayUnits.VertUnit), m_chngStats.AverageThicknessOfDifferenceADC_Error.As(DisplayUnits.VertUnit), m_chngStats.AverageDepthErosion_Error.As(DisplayUnits.VertUnit), m_chngStats.AverageNetThicknessOfDifferenceADC_Error.As(DisplayUnits.VertUnit), UnitsNet.Length.GetAbbreviation(DisplayUnits.VertUnit), eType, rdoAbsolute.Checked);
 					break;
 			}
-
 		}
-
 	}
-
 }
