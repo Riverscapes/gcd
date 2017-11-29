@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GCDConsoleTest", "GCDConsol
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GCDCore", "GCDCore\GCDCore.csproj", "{A96761F4-635E-478C-8EAE-0623ADE309C7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GCDCoreTests1", "GCDCoreTests1\GCDCoreTests1.csproj", "{B29465CD-9759-42BB-AE4D-55808C0B142B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,6 +101,18 @@ Global
 		{A96761F4-635E-478C-8EAE-0623ADE309C7}.Release|x64.Build.0 = Release|Any CPU
 		{A96761F4-635E-478C-8EAE-0623ADE309C7}.Release|x86.ActiveCfg = Release|Any CPU
 		{A96761F4-635E-478C-8EAE-0623ADE309C7}.Release|x86.Build.0 = Release|Any CPU
+		{B29465CD-9759-42BB-AE4D-55808C0B142B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B29465CD-9759-42BB-AE4D-55808C0B142B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B29465CD-9759-42BB-AE4D-55808C0B142B}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B29465CD-9759-42BB-AE4D-55808C0B142B}.Debug|x64.Build.0 = Debug|Any CPU
+		{B29465CD-9759-42BB-AE4D-55808C0B142B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B29465CD-9759-42BB-AE4D-55808C0B142B}.Debug|x86.Build.0 = Debug|Any CPU
+		{B29465CD-9759-42BB-AE4D-55808C0B142B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B29465CD-9759-42BB-AE4D-55808C0B142B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B29465CD-9759-42BB-AE4D-55808C0B142B}.Release|x64.ActiveCfg = Release|Any CPU
+		{B29465CD-9759-42BB-AE4D-55808C0B142B}.Release|x64.Build.0 = Release|Any CPU
+		{B29465CD-9759-42BB-AE4D-55808C0B142B}.Release|x86.ActiveCfg = Release|Any CPU
+		{B29465CD-9759-42BB-AE4D-55808C0B142B}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

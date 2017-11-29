@@ -65,6 +65,7 @@
             this.MinimizeBox = false;
             this.Name = "frmInformation";
             this.Text = "frmInformation";
+            this.Load += new System.EventHandler(this.InformationForm_Load);
             this.ResumeLayout(false);
 
         }

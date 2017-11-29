@@ -336,7 +336,7 @@ namespace GCDConsoleLib
         /// </summary>
         /// <param name="num"></param>
         /// <returns></returns>
-        private static decimal DivideModuloOne(decimal numA, decimal numB)
+        public static decimal DivideModuloOne(decimal numA, decimal numB)
         {
             return (numA / numB) - Math.Floor(numA / numB);
         }

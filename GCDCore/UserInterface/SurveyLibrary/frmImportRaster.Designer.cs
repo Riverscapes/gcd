@@ -51,7 +51,6 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.txtOrigHeight = new System.Windows.Forms.TextBox();
             this.txtTop = new System.Windows.Forms.TextBox();
             this.Label11 = new System.Windows.Forms.Label();
-            this.ucRaster = new GCDCore.UserInterface.UtilityForms.ucRasterInput();
             this.grpProjectRaaster = new System.Windows.Forms.GroupBox();
             this.cmdHelpPrecision = new System.Windows.Forms.Button();
             this.Label1 = new System.Windows.Forms.Label();
@@ -80,61 +79,63 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.cmdHelp = new System.Windows.Forms.Button();
             this.cmdOK = new System.Windows.Forms.Button();
             this.cmdCancel = new System.Windows.Forms.Button();
+            this.ucRaster = new GCDCore.UserInterface.UtilityForms.ucRasterInput();
             this.grpOriginalRaster.SuspendLayout();
             this.grpProjectRaaster.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)this.valPrecision).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)this.valCellSize).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)this.valBottom).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)this.valRight).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)this.valLeft).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)this.valTop).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.valPrecision)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.valCellSize)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.valBottom)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.valRight)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.valLeft)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.valTop)).BeginInit();
             this.SuspendLayout();
-            //
-            //lblName
-            //
+            // 
+            // lblName
+            // 
             this.lblName.AutoSize = true;
             this.lblName.Location = new System.Drawing.Point(71, 13);
             this.lblName.Name = "lblName";
             this.lblName.Size = new System.Drawing.Size(35, 13);
             this.lblName.TabIndex = 0;
             this.lblName.Text = "Name";
-            //
-            //txtName
-            //
+            // 
+            // txtName
+            // 
             this.txtName.Location = new System.Drawing.Point(113, 9);
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(491, 20);
             this.txtName.TabIndex = 1;
-            //
-            //Label2
-            //
+            this.txtName.TextChanged += new System.EventHandler(this.UpdateRasterPath);
+            // 
+            // Label2
+            // 
             this.Label2.AutoSize = true;
             this.Label2.Location = new System.Drawing.Point(24, 25);
             this.Label2.Name = "Label2";
             this.Label2.Size = new System.Drawing.Size(71, 13);
             this.Label2.TabIndex = 0;
             this.Label2.Text = "Original raster";
-            //
-            //lblRasterPath
-            //
+            // 
+            // lblRasterPath
+            // 
             this.lblRasterPath.AutoSize = true;
             this.lblRasterPath.Location = new System.Drawing.Point(8, 25);
             this.lblRasterPath.Name = "lblRasterPath";
             this.lblRasterPath.Size = new System.Drawing.Size(93, 13);
             this.lblRasterPath.TabIndex = 0;
             this.lblRasterPath.Text = "Project raster path";
-            //
-            //txtRasterPath
-            //
+            // 
+            // txtRasterPath
+            // 
             this.txtRasterPath.Location = new System.Drawing.Point(107, 21);
             this.txtRasterPath.Name = "txtRasterPath";
             this.txtRasterPath.ReadOnly = true;
             this.txtRasterPath.Size = new System.Drawing.Size(456, 20);
             this.txtRasterPath.TabIndex = 1;
             this.txtRasterPath.TabStop = false;
-            //
-            //grpOriginalRaster
-            //
+            // 
+            // grpOriginalRaster
+            // 
             this.grpOriginalRaster.Controls.Add(this.Label12);
             this.grpOriginalRaster.Controls.Add(this.txtOrigCellSize);
             this.grpOriginalRaster.Controls.Add(this.txtOrigRows);
@@ -161,165 +162,162 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.grpOriginalRaster.TabIndex = 2;
             this.grpOriginalRaster.TabStop = false;
             this.grpOriginalRaster.Text = "Original Raster";
-            //
-            //Label12
-            //
+            // 
+            // Label12
+            // 
             this.Label12.AutoSize = true;
             this.Label12.Location = new System.Drawing.Point(434, 113);
             this.Label12.Name = "Label12";
             this.Label12.Size = new System.Drawing.Size(72, 13);
             this.Label12.TabIndex = 18;
             this.Label12.Text = "Cell resolution";
-            //
-            //txtOrigCellSize
-            //
+            // 
+            // txtOrigCellSize
+            // 
             this.txtOrigCellSize.Location = new System.Drawing.Point(512, 109);
             this.txtOrigCellSize.Name = "txtOrigCellSize";
             this.txtOrigCellSize.ReadOnly = true;
             this.txtOrigCellSize.Size = new System.Drawing.Size(80, 20);
             this.txtOrigCellSize.TabIndex = 19;
-            //
-            //txtOrigRows
-            //
+            // 
+            // txtOrigRows
+            // 
             this.txtOrigRows.Location = new System.Drawing.Point(372, 56);
             this.txtOrigRows.Name = "txtOrigRows";
             this.txtOrigRows.ReadOnly = true;
             this.txtOrigRows.Size = new System.Drawing.Size(80, 20);
             this.txtOrigRows.TabIndex = 11;
-            //
-            //Label4
-            //
+            // 
+            // Label4
+            // 
             this.Label4.AutoSize = true;
             this.Label4.Location = new System.Drawing.Point(332, 60);
             this.Label4.Name = "Label4";
             this.Label4.Size = new System.Drawing.Size(34, 13);
             this.Label4.TabIndex = 10;
             this.Label4.Text = "Rows";
-            //
-            //txtBottom
-            //
+            // 
+            // txtBottom
+            // 
             this.txtBottom.Location = new System.Drawing.Point(107, 126);
             this.txtBottom.Name = "txtBottom";
             this.txtBottom.Size = new System.Drawing.Size(100, 20);
             this.txtBottom.TabIndex = 9;
-            //
-            //Label5
-            //
+            this.txtBottom.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OriginalExtentTextBoxes_KeyPress);
+            // 
+            // Label5
+            // 
             this.Label5.AutoSize = true;
             this.Label5.Location = new System.Drawing.Point(459, 60);
             this.Label5.Name = "Label5";
             this.Label5.Size = new System.Drawing.Size(47, 13);
             this.Label5.TabIndex = 14;
             this.Label5.Text = "Columns";
-            //
-            //Label8
-            //
+            // 
+            // Label8
+            // 
             this.Label8.AutoSize = true;
             this.Label8.Location = new System.Drawing.Point(61, 130);
             this.Label8.Name = "Label8";
             this.Label8.Size = new System.Drawing.Size(40, 13);
             this.Label8.TabIndex = 8;
             this.Label8.Text = "Bottom";
-            //
-            //txtOrigCols
-            //
+            // 
+            // txtOrigCols
+            // 
             this.txtOrigCols.Location = new System.Drawing.Point(512, 56);
             this.txtOrigCols.Name = "txtOrigCols";
             this.txtOrigCols.ReadOnly = true;
             this.txtOrigCols.Size = new System.Drawing.Size(80, 20);
             this.txtOrigCols.TabIndex = 15;
-            //
-            //txtLeft
-            //
+            // 
+            // txtLeft
+            // 
             this.txtLeft.Location = new System.Drawing.Point(39, 91);
             this.txtLeft.Name = "txtLeft";
             this.txtLeft.Size = new System.Drawing.Size(100, 20);
             this.txtLeft.TabIndex = 3;
-            //
-            //Label7
-            //
+            this.txtLeft.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OriginalExtentTextBoxes_KeyPress);
+            // 
+            // Label7
+            // 
             this.Label7.AutoSize = true;
             this.Label7.Location = new System.Drawing.Point(331, 87);
             this.Label7.Name = "Label7";
             this.Label7.Size = new System.Drawing.Size(35, 13);
             this.Label7.TabIndex = 12;
             this.Label7.Text = "Width";
-            //
-            //Label9
-            //
+            // 
+            // Label9
+            // 
             this.Label9.AutoSize = true;
             this.Label9.Location = new System.Drawing.Point(75, 60);
             this.Label9.Name = "Label9";
             this.Label9.Size = new System.Drawing.Size(26, 13);
             this.Label9.TabIndex = 4;
             this.Label9.Text = "Top";
-            //
-            //txtOrigWidth
-            //
+            // 
+            // txtOrigWidth
+            // 
             this.txtOrigWidth.Location = new System.Drawing.Point(372, 83);
             this.txtOrigWidth.Name = "txtOrigWidth";
             this.txtOrigWidth.ReadOnly = true;
             this.txtOrigWidth.Size = new System.Drawing.Size(80, 20);
             this.txtOrigWidth.TabIndex = 13;
-            //
-            //txtRight
-            //
+            // 
+            // txtRight
+            // 
             this.txtRight.Location = new System.Drawing.Point(200, 91);
             this.txtRight.Name = "txtRight";
             this.txtRight.Size = new System.Drawing.Size(100, 20);
             this.txtRight.TabIndex = 7;
-            //
-            //Label6
-            //
+            this.txtRight.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OriginalExtentTextBoxes_KeyPress);
+            // 
+            // Label6
+            // 
             this.Label6.AutoSize = true;
             this.Label6.Location = new System.Drawing.Point(468, 87);
             this.Label6.Name = "Label6";
             this.Label6.Size = new System.Drawing.Size(38, 13);
             this.Label6.TabIndex = 16;
             this.Label6.Text = "Height";
-            //
-            //Label10
-            //
+            // 
+            // Label10
+            // 
             this.Label10.AutoSize = true;
             this.Label10.Location = new System.Drawing.Point(163, 95);
             this.Label10.Name = "Label10";
             this.Label10.Size = new System.Drawing.Size(32, 13);
             this.Label10.TabIndex = 6;
             this.Label10.Text = "Right";
-            //
-            //txtOrigHeight
-            //
+            // 
+            // txtOrigHeight
+            // 
             this.txtOrigHeight.Location = new System.Drawing.Point(512, 83);
             this.txtOrigHeight.Name = "txtOrigHeight";
             this.txtOrigHeight.ReadOnly = true;
             this.txtOrigHeight.Size = new System.Drawing.Size(80, 20);
             this.txtOrigHeight.TabIndex = 17;
-            //
-            //txtTop
-            //
+            // 
+            // txtTop
+            // 
             this.txtTop.Location = new System.Drawing.Point(107, 56);
             this.txtTop.Name = "txtTop";
             this.txtTop.Size = new System.Drawing.Size(100, 20);
             this.txtTop.TabIndex = 5;
-            //
-            //Label11
-            //
+            this.txtTop.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OriginalExtentTextBoxes_KeyPress);
+            // 
+            // Label11
+            // 
             this.Label11.AutoSize = true;
             this.Label11.Location = new System.Drawing.Point(8, 95);
             this.Label11.Name = "Label11";
             this.Label11.Size = new System.Drawing.Size(25, 13);
             this.Label11.TabIndex = 2;
             this.Label11.Text = "Left";
-            //
-            //ucRaster
-            //
-            this.ucRaster.Location = new System.Drawing.Point(101, 19);
-            this.ucRaster.Name = "ucRaster";
-            this.ucRaster.Size = new System.Drawing.Size(491, 25);
-            this.ucRaster.TabIndex = 1;
-            //
-            //grpProjectRaaster
-            //
+            // 
+            // grpProjectRaaster
+            // 
             this.grpProjectRaaster.Controls.Add(this.cmdHelpPrecision);
             this.grpProjectRaaster.Controls.Add(this.Label1);
             this.grpProjectRaaster.Controls.Add(this.cboMethod);
@@ -352,222 +350,223 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.grpProjectRaaster.TabIndex = 3;
             this.grpProjectRaaster.TabStop = false;
             this.grpProjectRaaster.Text = "Project Raster";
-            //
-            //cmdHelpPrecision
-            //
+            // 
+            // cmdHelpPrecision
+            // 
             this.cmdHelpPrecision.FlatAppearance.BorderSize = 0;
             this.cmdHelpPrecision.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cmdHelpPrecision.Image = Properties.Resources.Help;
+            this.cmdHelpPrecision.Image = global::GCDCore.Properties.Resources.Help;
             this.cmdHelpPrecision.Location = new System.Drawing.Point(343, 129);
             this.cmdHelpPrecision.Name = "cmdHelpPrecision";
             this.cmdHelpPrecision.Size = new System.Drawing.Size(23, 23);
             this.cmdHelpPrecision.TabIndex = 26;
             this.cmdHelpPrecision.UseVisualStyleBackColor = true;
-            //
-            //Label1
-            //
+            this.cmdHelpPrecision.Click += new System.EventHandler(this.cmdHelpPrecision_Click);
+            // 
+            // Label1
+            // 
             this.Label1.AutoSize = true;
             this.Label1.Location = new System.Drawing.Point(260, 161);
             this.Label1.Name = "Label1";
             this.Label1.Size = new System.Drawing.Size(103, 13);
             this.Label1.TabIndex = 25;
             this.Label1.Text = "Interpolation method";
-            //
-            //cboMethod
-            //
+            // 
+            // cboMethod
+            // 
             this.cboMethod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboMethod.FormattingEnabled = true;
             this.cboMethod.Location = new System.Drawing.Point(372, 157);
             this.cboMethod.Name = "cboMethod";
             this.cboMethod.Size = new System.Drawing.Size(220, 21);
             this.cboMethod.TabIndex = 24;
-            //
-            //cmdSave
-            //
-            this.cmdSave.Image = Properties.Resources.SaveGIS;
+            // 
+            // cmdSave
+            // 
+            this.cmdSave.Image = global::GCDCore.Properties.Resources.SaveGIS;
             this.cmdSave.Location = new System.Drawing.Point(569, 20);
             this.cmdSave.Name = "cmdSave";
             this.cmdSave.Size = new System.Drawing.Size(23, 23);
             this.cmdSave.TabIndex = 23;
             this.cmdSave.UseVisualStyleBackColor = true;
-            //
-            //valPrecision
-            //
+            // 
+            // valPrecision
+            // 
             this.valPrecision.Location = new System.Drawing.Point(512, 130);
             this.valPrecision.Name = "valPrecision";
             this.valPrecision.Size = new System.Drawing.Size(80, 20);
             this.valPrecision.TabIndex = 22;
-            //
-            //valCellSize
-            //
+            // 
+            // valCellSize
+            // 
             this.valCellSize.Location = new System.Drawing.Point(512, 104);
             this.valCellSize.Name = "valCellSize";
             this.valCellSize.Size = new System.Drawing.Size(80, 20);
             this.valCellSize.TabIndex = 19;
-            //
-            //valBottom
-            //
+            // 
+            // valBottom
+            // 
             this.valBottom.Location = new System.Drawing.Point(107, 121);
             this.valBottom.Name = "valBottom";
             this.valBottom.Size = new System.Drawing.Size(100, 20);
             this.valBottom.TabIndex = 9;
-            //
-            //valRight
-            //
+            // 
+            // valRight
+            // 
             this.valRight.Location = new System.Drawing.Point(200, 86);
             this.valRight.Name = "valRight";
             this.valRight.Size = new System.Drawing.Size(100, 20);
             this.valRight.TabIndex = 7;
-            //
-            //valLeft
-            //
+            // 
+            // valLeft
+            // 
             this.valLeft.Location = new System.Drawing.Point(39, 86);
             this.valLeft.Name = "valLeft";
             this.valLeft.Size = new System.Drawing.Size(100, 20);
             this.valLeft.TabIndex = 3;
-            //
-            //valTop
-            //
+            // 
+            // valTop
+            // 
             this.valTop.Location = new System.Drawing.Point(107, 51);
             this.valTop.Name = "valTop";
             this.valTop.Size = new System.Drawing.Size(100, 20);
             this.valTop.TabIndex = 5;
-            //
-            //lblPrecision
-            //
+            // 
+            // lblPrecision
+            // 
             this.lblPrecision.AutoSize = true;
             this.lblPrecision.Location = new System.Drawing.Point(368, 134);
             this.lblPrecision.Name = "lblPrecision";
             this.lblPrecision.Size = new System.Drawing.Size(138, 13);
             this.lblPrecision.TabIndex = 20;
             this.lblPrecision.Text = "Horizontal decimal precision";
-            //
-            //Label17
-            //
+            // 
+            // Label17
+            // 
             this.Label17.AutoSize = true;
             this.Label17.Location = new System.Drawing.Point(459, 55);
             this.Label17.Name = "Label17";
             this.Label17.Size = new System.Drawing.Size(47, 13);
             this.Label17.TabIndex = 14;
             this.Label17.Text = "Columns";
-            //
-            //Label18
-            //
+            // 
+            // Label18
+            // 
             this.Label18.AutoSize = true;
             this.Label18.Location = new System.Drawing.Point(61, 125);
             this.Label18.Name = "Label18";
             this.Label18.Size = new System.Drawing.Size(40, 13);
             this.Label18.TabIndex = 8;
             this.Label18.Text = "Bottom";
-            //
-            //lblCellResolution
-            //
+            // 
+            // lblCellResolution
+            // 
             this.lblCellResolution.AutoSize = true;
             this.lblCellResolution.Location = new System.Drawing.Point(434, 108);
             this.lblCellResolution.Name = "lblCellResolution";
             this.lblCellResolution.Size = new System.Drawing.Size(72, 13);
             this.lblCellResolution.TabIndex = 18;
             this.lblCellResolution.Text = "Cell resolution";
-            //
-            //Label19
-            //
+            // 
+            // Label19
+            // 
             this.Label19.AutoSize = true;
             this.Label19.Location = new System.Drawing.Point(75, 55);
             this.Label19.Name = "Label19";
             this.Label19.Size = new System.Drawing.Size(26, 13);
             this.Label19.TabIndex = 4;
             this.Label19.Text = "Top";
-            //
-            //Label20
-            //
+            // 
+            // Label20
+            // 
             this.Label20.AutoSize = true;
             this.Label20.Location = new System.Drawing.Point(163, 90);
             this.Label20.Name = "Label20";
             this.Label20.Size = new System.Drawing.Size(32, 13);
             this.Label20.TabIndex = 6;
             this.Label20.Text = "Right";
-            //
-            //txtProjRows
-            //
+            // 
+            // txtProjRows
+            // 
             this.txtProjRows.Location = new System.Drawing.Point(372, 51);
             this.txtProjRows.Name = "txtProjRows";
             this.txtProjRows.ReadOnly = true;
             this.txtProjRows.Size = new System.Drawing.Size(80, 20);
             this.txtProjRows.TabIndex = 11;
-            //
-            //Label21
-            //
+            // 
+            // Label21
+            // 
             this.Label21.AutoSize = true;
             this.Label21.Location = new System.Drawing.Point(8, 90);
             this.Label21.Name = "Label21";
             this.Label21.Size = new System.Drawing.Size(25, 13);
             this.Label21.TabIndex = 2;
             this.Label21.Text = "Left";
-            //
-            //txtProjCols
-            //
+            // 
+            // txtProjCols
+            // 
             this.txtProjCols.Location = new System.Drawing.Point(512, 51);
             this.txtProjCols.Name = "txtProjCols";
             this.txtProjCols.ReadOnly = true;
             this.txtProjCols.Size = new System.Drawing.Size(80, 20);
             this.txtProjCols.TabIndex = 15;
-            //
-            //Label14
-            //
+            // 
+            // Label14
+            // 
             this.Label14.AutoSize = true;
             this.Label14.Location = new System.Drawing.Point(332, 55);
             this.Label14.Name = "Label14";
             this.Label14.Size = new System.Drawing.Size(34, 13);
             this.Label14.TabIndex = 10;
             this.Label14.Text = "Rows";
-            //
-            //txtProjHeight
-            //
+            // 
+            // txtProjHeight
+            // 
             this.txtProjHeight.Location = new System.Drawing.Point(512, 78);
             this.txtProjHeight.Name = "txtProjHeight";
             this.txtProjHeight.ReadOnly = true;
             this.txtProjHeight.Size = new System.Drawing.Size(80, 20);
             this.txtProjHeight.TabIndex = 17;
-            //
-            //Label16
-            //
+            // 
+            // Label16
+            // 
             this.Label16.AutoSize = true;
             this.Label16.Location = new System.Drawing.Point(468, 82);
             this.Label16.Name = "Label16";
             this.Label16.Size = new System.Drawing.Size(38, 13);
             this.Label16.TabIndex = 16;
             this.Label16.Text = "Height";
-            //
-            //Label15
-            //
+            // 
+            // Label15
+            // 
             this.Label15.AutoSize = true;
             this.Label15.Location = new System.Drawing.Point(331, 82);
             this.Label15.Name = "Label15";
             this.Label15.Size = new System.Drawing.Size(35, 13);
             this.Label15.TabIndex = 12;
             this.Label15.Text = "Width";
-            //
-            //txtProjWidth
-            //
+            // 
+            // txtProjWidth
+            // 
             this.txtProjWidth.Location = new System.Drawing.Point(372, 78);
             this.txtProjWidth.Name = "txtProjWidth";
             this.txtProjWidth.ReadOnly = true;
             this.txtProjWidth.Size = new System.Drawing.Size(80, 20);
             this.txtProjWidth.TabIndex = 13;
-            //
-            //cmdHelp
-            //
-            this.cmdHelp.Anchor = (System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left);
+            // 
+            // cmdHelp
+            // 
+            this.cmdHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.cmdHelp.Location = new System.Drawing.Point(11, 408);
             this.cmdHelp.Name = "cmdHelp";
             this.cmdHelp.Size = new System.Drawing.Size(75, 23);
             this.cmdHelp.TabIndex = 6;
             this.cmdHelp.Text = "Help";
             this.cmdHelp.UseVisualStyleBackColor = true;
-            //
-            //cmdOK
-            //
-            this.cmdOK.Anchor = (System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right);
+            // 
+            // cmdOK
+            // 
+            this.cmdOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cmdOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.cmdOK.Location = new System.Drawing.Point(419, 408);
             this.cmdOK.Name = "cmdOK";
@@ -575,10 +574,11 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.cmdOK.TabIndex = 4;
             this.cmdOK.Text = "Import";
             this.cmdOK.UseVisualStyleBackColor = true;
-            //
-            //cmdCancel
-            //
-            this.cmdCancel.Anchor = (System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right);
+            this.cmdOK.Click += new System.EventHandler(this.cmdOK_Click);
+            // 
+            // cmdCancel
+            // 
+            this.cmdCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cmdCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.cmdCancel.Location = new System.Drawing.Point(544, 408);
             this.cmdCancel.Name = "cmdCancel";
@@ -586,11 +586,19 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.cmdCancel.TabIndex = 5;
             this.cmdCancel.Text = "Cancel";
             this.cmdCancel.UseVisualStyleBackColor = true;
-            //
-            //frmImportRaster
-            //
+            // 
+            // ucRaster
+            // 
+            this.ucRaster.Location = new System.Drawing.Point(101, 19);
+            this.ucRaster.Name = "ucRaster";
+            this.ucRaster.Noun = null;
+            this.ucRaster.Size = new System.Drawing.Size(491, 25);
+            this.ucRaster.TabIndex = 1;
+            // 
+            // frmImportRaster
+            // 
             this.AcceptButton = this.cmdOK;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6f, 13f);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cmdCancel;
             this.ClientSize = new System.Drawing.Size(631, 443);
@@ -607,18 +615,20 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.Name = "frmImportRaster";
             this.ShowIcon = false;
             this.Text = "Import Raster";
+            this.Load += new System.EventHandler(this.ImportRasterForm_Load);
             this.grpOriginalRaster.ResumeLayout(false);
             this.grpOriginalRaster.PerformLayout();
             this.grpProjectRaaster.ResumeLayout(false);
             this.grpProjectRaaster.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)this.valPrecision).EndInit();
-            ((System.ComponentModel.ISupportInitialize)this.valCellSize).EndInit();
-            ((System.ComponentModel.ISupportInitialize)this.valBottom).EndInit();
-            ((System.ComponentModel.ISupportInitialize)this.valRight).EndInit();
-            ((System.ComponentModel.ISupportInitialize)this.valLeft).EndInit();
-            ((System.ComponentModel.ISupportInitialize)this.valTop).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.valPrecision)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.valCellSize)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.valBottom)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.valRight)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.valLeft)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.valTop)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
 
         internal System.Windows.Forms.TextBox txtName;

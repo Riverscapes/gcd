@@ -303,7 +303,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
         {
             if (m_ImportForm == null)
             {
-                m_ImportForm = new frmImportRaster(DEM.Raster, DEM, frmImportRaster.ImportRasterPurposes.AssociatedSurface, "Associated Surface");
+                m_ImportForm = new frmImportRaster(DEM, ExtentImporter.Purposes.AssociatedSurface, "Associated Surface");
             }
 
             m_ImportForm.txtName.Text = txtName.Text;

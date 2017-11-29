@@ -189,6 +189,7 @@
     <Compile Include="UserInterface\Project\ucProjectExplorer.Designer.cs">
       <DependentUpon>ucProjectExplorer.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserInterface\SurveyLibrary\ExtentImporter.cs" />
     <Compile Include="UserInterface\SurveyLibrary\frmAssocSurfaceProperties.cs">
       <SubType>Form</SubType>
     </Compile>

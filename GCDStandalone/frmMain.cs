@@ -311,7 +311,7 @@ namespace GCDStandalone
         {
             try
             {
-                GCDCore.UserInterface.SurveyLibrary.frmImportRaster frm = new GCDCore.UserInterface.SurveyLibrary.frmImportRaster();
+                GCDCore.UserInterface.SurveyLibrary.frmImportRaster frm = new GCDCore.UserInterface.SurveyLibrary.frmImportRaster(null, GCDCore.UserInterface.SurveyLibrary.ExtentImporter.Purposes.Standalone, string.Empty);
                 frm.ShowDialog();
             }
             catch (Exception ex)

@@ -366,26 +366,25 @@ namespace GCDCore.UserInterface.Project
             }
         }
 
-        public int AddDEMSurvey()
+        public DEMSurvey AddDEMSurvey()
         {
-
-            int nDEMSurveyID = 0;
-            GCDConsoleLib.Raster gReferenceRaster = null;
-
+            DEMSurvey referenceDEM = null;
+            ExtentImporter.Purposes ePurpose = ExtentImporter.Purposes.FirstDEM;
             if (ProjectManager.Project.DEMSurveys.Count > 0)
             {
-                gReferenceRaster = ProjectManager.Project.DEMSurveys.First().Value.Raster;
+                referenceDEM = ProjectManager.Project.DEMSurveys.First().Value;
+                ePurpose = ExtentImporter.Purposes.SubsequentDEM;
             }
 
-            SurveyLibrary.frmImportRaster frmImport = new SurveyLibrary.frmImportRaster(gReferenceRaster, null, frmImportRaster.ImportRasterPurposes.DEMSurvey, "DEM Survey");
-
+            frmImportRaster frmImport = new frmImportRaster(referenceDEM, ePurpose, "DEM Survey");
+            DEMSurvey demResult = null;
             if (frmImport.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 GCDConsoleLib.Raster gRaster = frmImport.ProcessRaster();
 
                 if (gRaster is GCDConsoleLib.Raster)
                 {
-                    DEMSurvey dem = new DEMSurvey(frmImport.txtName.Text, null, new System.IO.FileInfo(frmImport.txtRasterPath.Text));
+                    DEMSurvey dem = new DEMSurvey(frmImport.txtName.Text, null, ProjectManager.Project.GetAbsolutePath(frmImport.txtRasterPath.Text));
 
                     // If this is the first DEM in the project then store the cell area on the project
                     if (ProjectManager.Project.DEMSurveys.Count == 0)
@@ -396,23 +395,19 @@ namespace GCDCore.UserInterface.Project
                     ProjectManager.Project.DEMSurveys.Add(dem.Name, dem);
                     ProjectManager.Project.Save();
 
-                    LoadTree(GCDNodeTypes.DEMSurvey.ToString() + "_" + nDEMSurveyID.ToString());
-
-                    throw new NotImplementedException("Add newly created DEM to map");
+                    LoadTree();
 
                     frmDEMSurveyProperties frm = new frmDEMSurveyProperties(dem);
                     frm.ShowDialog();
 
                     // Load the tree again because the use may have added Assoc or error surfaces
                     // while the form was open (and since the tree was last loaded)
-                    LoadTree(GCDNodeTypes.DEMSurvey.ToString() + "_" + nDEMSurveyID.ToString());
                 }
 
-                LoadTree(GCDNodeTypes.DEMSurvey.ToString() + "_" + nDEMSurveyID.ToString());
+                LoadTree();
             }
 
-            return nDEMSurveyID;
-
+            return demResult;
         }
 
         #region "Associated Surface Group Menu Items"
@@ -730,13 +725,11 @@ namespace GCDCore.UserInterface.Project
         {
             try
             {
-                int nDEMSurveyID = AddDEMSurvey();
-                if (nDEMSurveyID > 0)
+                DEMSurvey dem = AddDEMSurvey();
+                if (dem is DEMSurvey)
                 {
-                    string sNodeTag = GCDNodeTypes.DEMSurvey.ToString() + "_" + nDEMSurveyID.ToString();
-                    LoadTree(sNodeTag);
+                    LoadTree();
                 }
-
             }
             catch (Exception ex)
             {

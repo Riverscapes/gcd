@@ -11,14 +11,6 @@ namespace GCDCore.UserInterface.SurveyLibrary
     public partial class frmImportRaster
     {
 
-        public enum ImportRasterPurposes
-        {
-            DEMSurvey,
-            AssociatedSurface,
-            ErrorCalculation,
-            StandaloneTool
-        }
-
         private enum RoundingDirection
         {
             Up,
@@ -34,121 +26,72 @@ namespace GCDCore.UserInterface.SurveyLibrary
             None
         }
 
-        private GCDConsoleLib.Raster m_gReferenceRaster;
-        private ImportRasterPurposes m_ePurpose;
-        private DEMSurvey m_DEM;
-        private GCDConsoleLib.ExtentRectangle m_OriginalExtent;
-        // not populated until the action of importing.
-        private string m_sRasterMetaData;
-
-
-        private int m_nNoInterpolationIndex;
-        /// <summary>
-        /// Dictionary of non-GDAL compliant rasters to their GDAL compliant pairs.
-        /// </summary>
-        /// <remarks>This form requires the use of GDAL compliant rasters. i.e. the
-        /// original raster cannot be in a file geodatabase. Each time the user browses
-        /// to or picks a new raster it needs to be copied to a GDAL compliant format
-        /// if it is not already. This can be time consuming. So this dictionary
-        /// keeps track of any non-GDAL compliant raster paths and the GDAL compliant
-        /// copy. That way the user can change raster selection quickly without a lag
-        /// as rasters are copied repeatedly. It also keeps the number of temp rasters
-        /// down.
-        /// </remarks>
-
-        private Dictionary<string, string> m_RasterDirects;
-        public GCDConsoleLib.ExtentRectangle OriginalExtent
-        {
-            get { return m_OriginalExtent; }
-        }
-
-        public string RasterMetaData
-        {
-            get { return m_sRasterMetaData; }
-        }
+        public readonly DEMSurvey ReferenceDEM;
+        public ExtentImporter ExtImporter { get; internal set; }
+        private readonly int NoInterpolationIndex; // the combobox index of the straight cell-wise copy
 
         public string StringFormat
         {
             get
             {
                 string sResult = "#,##0";
-                if (valPrecision is System.Windows.Forms.NumericUpDown)
+                if (valPrecision is NumericUpDown && valPrecision.Value > 0)
                 {
-                    for (int i = 1; i <= Convert.ToInt32(valPrecision.Value); i++)
-                    {
-                        if (i == 1)
-                        {
-                            sResult += ".";
-                        }
-                        sResult += "0";
-                    }
+                    sResult = string.Format("{0}.{1}", sResult, new string('0', (int)valPrecision.Value));
                 }
                 return sResult;
             }
         }
 
 
-        public frmImportRaster(GCDConsoleLib.Raster gReferenceRaster, DEMSurvey referenceDEM, ImportRasterPurposes ePurpose, string sNoun)
+        public frmImportRaster(DEMSurvey referenceDEM, ExtentImporter.Purposes ePurpose, string sNoun)
         {
-            Load += ImportRasterForm_Load;
             // This call is required by the designer.
             InitializeComponent();
-            m_gReferenceRaster = gReferenceRaster;
-            m_ePurpose = ePurpose;
-            m_DEM = referenceDEM;
-            m_RasterDirects = new Dictionary<string, string>();
+
+            if (referenceDEM is DEMSurvey)
+            {
+                ReferenceDEM = referenceDEM;
+                ExtImporter = new ExtentImporter(ePurpose, referenceDEM.Raster.Extent);
+            }
+            else
+            {
+                ExtImporter = new ExtentImporter(ePurpose);
+            }
+
             ucRaster.Noun = sNoun;
-        }
 
-        /// <summary>
-        /// Launch the raster import in standalone mode for cleaning rasters
-        /// </summary>
-
-        public frmImportRaster()
-        {
-            Load += ImportRasterForm_Load;
-            // This call is required by the designer.
-            InitializeComponent();
-            m_gReferenceRaster = null;
-            m_ePurpose = ImportRasterPurposes.StandaloneTool;
-            m_RasterDirects = new Dictionary<string, string>();
-
-        }
-
-
-        private void ImportRasterForm_Load(object sender, System.EventArgs e)
-        {
-            SetupToolTips();
-
+            // Fill the interpolation method in constructor so that selection index can be readonly
             cboMethod.Items.Add(new naru.db.NamedObject((long)ResamplingMethods.Bilinear, "Bilinear Interpolation"));
             cboMethod.Items.Add(new naru.db.NamedObject((long)ResamplingMethods.Cubic, "Cubic Convolution"));
             cboMethod.Items.Add(new naru.db.NamedObject((long)ResamplingMethods.NaturalNeighbours, "Natural Neighbours"));
             cboMethod.Items.Add(new naru.db.NamedObject((long)ResamplingMethods.NearestNeighbour, "Nearest Neighbour"));
-            m_nNoInterpolationIndex = cboMethod.Items.Add(new naru.db.NamedObject((long)ResamplingMethods.None, "None (straight cell-wise copy)"));
+            NoInterpolationIndex = cboMethod.Items.Add(new naru.db.NamedObject((long)ResamplingMethods.None, "None (straight cell-wise copy)"));
             cboMethod.SelectedIndex = 0;
+        }
 
-            valCellSize.Minimum = 0.01m;
-            valCellSize.Maximum = 1000;
+        private void ImportRasterForm_Load(object sender, EventArgs e)
+        {
+            SetupToolTips();
+
             // This needs to be changed to a larger value or else rasters with cell sizes greater than 1 will cause an error to be thrown. Perhaps 1000 is more appropriate?
+            valCellSize.Minimum = 0m;
+            valCellSize.Maximum = 1000;
             valCellSize.Value = 1;
 
-            if (m_ePurpose != ImportRasterPurposes.StandaloneTool && ProjectManager.Project is GCDCore.Project.GCDProject)
+            if (ExtImporter.Purpose != ExtentImporter.Purposes.Standalone)
             {
                 valPrecision.Value = 2;
                 // ProjectManager.Project.Precision
             }
 
-            valTop.ReadOnly = !(m_ePurpose == ImportRasterPurposes.DEMSurvey || m_ePurpose == ImportRasterPurposes.StandaloneTool);
-            valLeft.ReadOnly = valTop.ReadOnly;
-            valBottom.ReadOnly = valTop.ReadOnly;
-            valRight.ReadOnly = valTop.ReadOnly;
-            valCellSize.ReadOnly = valTop.ReadOnly;
-
-            valTop.Enabled = m_ePurpose == ImportRasterPurposes.DEMSurvey || m_ePurpose == ImportRasterPurposes.StandaloneTool;
+            valTop.Enabled = ExtImporter.IsOutputExtentEditable;
             valLeft.Enabled = valTop.Enabled;
             valBottom.Enabled = valTop.Enabled;
             valRight.Enabled = valTop.Enabled;
-            valCellSize.Enabled = valTop.Enabled;
+
+            valCellSize.Enabled = ExtImporter.Purpose == ExtentImporter.Purposes.Standalone || ExtImporter.Purpose == ExtentImporter.Purposes.FirstDEM;
+            valPrecision.Enabled = valCellSize.Enabled;
 
             valTop.Minimum = decimal.MinValue;
             valLeft.Minimum = decimal.MinValue;
@@ -183,10 +126,8 @@ namespace GCDCore.UserInterface.SurveyLibrary
             txtOrigHeight.Text = string.Empty;
             txtOrigWidth.Text = string.Empty;
 
-            valPrecision.Enabled = m_ePurpose == ImportRasterPurposes.StandaloneTool;
-            if (m_ePurpose == ImportRasterPurposes.StandaloneTool)
+            if (ExtImporter.Purpose == ExtentImporter.Purposes.Standalone)
             {
-                //lblPrecision.Text = "Precision:"
                 this.Text = "Clean Raster";
                 grpProjectRaaster.Text = "Clean Raster";
                 cmdOK.Text = "Create Clean Raster";
@@ -208,29 +149,37 @@ namespace GCDCore.UserInterface.SurveyLibrary
                 txtRasterPath.Width = txtName.Width;
                 cmdSave.Visible = false;
 
-                if (m_ePurpose == ImportRasterPurposes.DEMSurvey)
+                if (ExtImporter.Purpose == ExtentImporter.Purposes.AssociatedSurface)
                 {
-                    if (m_gReferenceRaster is GCDConsoleLib.Raster)
-                    {
-                        // there is already at least one DEM in the project. Disable cell size.
-                        valCellSize.Enabled = false;
-                    }
-                    else
-                    {
-                        // This is the first DEM survey. Let the user adjust the precision.
-                        valPrecision.Enabled = true;
-                    }
+                    valTop.Value = ExtImporter.OutputTop;
+                    valLeft.Value = ExtImporter.OutputLeft;
+                    valRight.Value = ExtImporter.OutputRight;
+                    valBottom.Value = ExtImporter.OutputBottom;
+                }
+
+                if (ExtImporter.Purpose == ExtentImporter.Purposes.AssociatedSurface || ExtImporter.Purpose == ExtentImporter.Purposes.SubsequentDEM)
+                {
+                    valCellSize.DecimalPlaces = ExtImporter.Precision;
+                    valTop.DecimalPlaces = ExtImporter.Precision;
+                    valLeft.DecimalPlaces = ExtImporter.Precision;
+                    valRight.DecimalPlaces = ExtImporter.Precision;
+                    valBottom.DecimalPlaces = ExtImporter.Precision;
+
+                    valCellSize.Value = ExtImporter.CellSize;
+                    valPrecision.Value = ExtImporter.Precision;
                 }
             }
-            OriginalRasterChanged();
-            ucRaster.PathChanged += OnRasterChanged;
-        }
 
+            UpdateOutputExtent();
+
+            //OriginalRasterChanged(sender, e);
+            ucRaster.PathChanged += OnRasterChanged;
+            valCellSize.ValueChanged += valCellSize_ValueChanged;
+        }
 
         private void SetupToolTips()
         {
         }
-
 
         private void cmdOK_Click(System.Object sender, System.EventArgs e)
         {
@@ -244,13 +193,13 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
         private bool ValidateForm()
         {
-
             // Sanity check to avoid names with only spaces
             txtName.Text = txtName.Text.Trim();
 
             if (string.IsNullOrEmpty(txtName.Text))
             {
                 MessageBox.Show("The raster name cannot be empty.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                txtName.Select();
                 return false;
             }
 
@@ -260,40 +209,47 @@ namespace GCDCore.UserInterface.SurveyLibrary
                 return false;
             }
 
-            GCDConsoleLib.Raster r = ucRaster.SelectedItem;
-
-            // Safely get the projection of the reference raster
-            string RefRasterSpatRef = string.Empty;
-            if (m_gReferenceRaster is GCDConsoleLib.Raster)
-            {
-                RefRasterSpatRef = m_gReferenceRaster.Proj.Wkt;
-            }
-
             // Verify that the raster has a spatial reference
-            if (ucRaster.SelectedItem.Proj.PrettyWkt.ToLower().Contains("unknown"))
+            if (ExtImporter.Purpose != ExtentImporter.Purposes.Standalone && ucRaster.SelectedItem.Proj.PrettyWkt.ToLower().Contains("unknown"))
             {
-                MessageBox.Show("The selected raster appears to be missing a spatial reference. All GCD rasters must possess a spatial reference and it must be the same spatial reference for all rasters in a GCD project." + " If the selected raster exists in the same coordinate system " + RefRasterSpatRef + ", but the coordinate system has not yet been defined for the raster" + " use the ArcToolbox 'Define Projection' geoprocessing tool in the 'Data Management -> Projection & Transformations' Toolbox to correct the problem with the selected raster by defining the coordinate system as:" + Environment.NewLine + Environment.NewLine + RefRasterSpatRef + Environment.NewLine + Environment.NewLine + "Then try importing it into the GCD again.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                string msg = "The selected raster appears to be missing a spatial reference. All GCD rasters must possess a spatial reference and it must be the same spatial reference for all rasters in a GCD project.";
+
+                if (ReferenceDEM is DEMSurvey)
+                {
+                    string wkt = ReferenceDEM.Raster.Proj.PrettyWkt;
+                    msg += " If the selected raster exists in the GCD project coordinate system (" + wkt + "), but the coordinate system has not yet been defined for the raster, then" +
+                    " use the ArcToolbox 'Define Projection' geoprocessing tool in the 'Data Management -> Projection & Transformations' Toolbox to correct the problem with the selected raster by defining the coordinate system as:" +
+                    Environment.NewLine + Environment.NewLine + wkt + Environment.NewLine + Environment.NewLine + "Then try importing it into the GCD again.";
+                }
+
+                MessageBox.Show(msg, Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return false;
             }
-            else
+
+            // Compare the reference DEM projection against the new raster
+            if (ReferenceDEM is DEMSurvey)
             {
-                if (m_gReferenceRaster is GCDConsoleLib.Raster)
+                string wkt = ReferenceDEM.Raster.Proj.PrettyWkt;
+                if (!ReferenceDEM.Raster.Proj.IsSame(ucRaster.SelectedItem.Proj))
                 {
-                    if (!m_gReferenceRaster.Proj.IsSame(ucRaster.SelectedItem.Proj))
-                    {
-                        MessageBox.Show("The coordinate system of the selected raster:" + Environment.NewLine + Environment.NewLine + ucRaster.SelectedItem.Proj.PrettyWkt + Environment.NewLine + Environment.NewLine + "does not match that of the GCD project:" + Environment.NewLine + Environment.NewLine + RefRasterSpatRef + Environment.NewLine + Environment.NewLine + "All rasters within a GCD project must have the identical coordinate system. However, small discrepencies in coordinate system names might cause the two coordinate systems to appear different. " + "If you believe that the selected raster does in fact possess the same coordinate system as the GCD project then use the ArcToolbox 'Define Projection' geoprocessing tool in the " + "'Data Management -> Projection & Transformations' Toolbox to correct the problem with the selected raster by defining the coordinate system as:" + Environment.NewLine + Environment.NewLine + RefRasterSpatRef + Environment.NewLine + Environment.NewLine + "Then try importing it into the GCD again.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        return false;
-                    }
+                    MessageBox.Show("The coordinate system of the selected raster:" + Environment.NewLine + Environment.NewLine + ucRaster.SelectedItem.Proj.PrettyWkt + Environment.NewLine + Environment.NewLine +
+                        "does not match that of the GCD project:" + Environment.NewLine + Environment.NewLine + wkt + Environment.NewLine + Environment.NewLine +
+                        "All rasters within a GCD project must have the identical coordinate system. However, small discrepencies in coordinate system names might cause the two coordinate systems to appear different. " +
+                        "If you believe that the selected raster does in fact possess the same coordinate system as the GCD project then use the ArcToolbox 'Define Projection' geoprocessing tool in the " +
+                        "'Data Management -> Projection & Transformations' Toolbox to correct the problem with the selected raster by defining the coordinate system as:"
+                        + Environment.NewLine + Environment.NewLine + wkt + Environment.NewLine + Environment.NewLine + "Then try importing it into the GCD again.",
+                        Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return false;
                 }
             }
 
-
-            if (m_ePurpose != ImportRasterPurposes.StandaloneTool)
+            // Importing rasters into GCD projects reuires some unit checks
+            if (ExtImporter.Purpose != ExtentImporter.Purposes.Standalone)
             {
                 // Verify that the horizontal units match those of the project.
-                if (ProjectManager.Project.Units.HorizUnit != r.Proj.HorizontalUnit)
+                if (ProjectManager.Project.Units.HorizUnit != ucRaster.SelectedItem.Proj.HorizontalUnit)
                 {
-                    string msg = string.Format("The horizontal units of the raster ({0}) do not match those of the GCD project ({1}).", r.Proj.HorizontalUnit.ToString(), ProjectManager.Project.Units.HorizUnit.ToString());
+                    string msg = string.Format("The horizontal units of the raster ({0}) do not match those of the GCD project ({1}).", ucRaster.SelectedItem.Proj.HorizontalUnit.ToString(), ProjectManager.Project.Units.HorizUnit.ToString());
                     if (ProjectManager.Project.DEMSurveys.Count < 1)
                     {
                         msg += " You can change the GCD project horizontal units by canceling this form and opening the GCD project properties form.";
@@ -302,14 +258,14 @@ namespace GCDCore.UserInterface.SurveyLibrary
                     return false;
                 }
 
-                // Verify the optional vertical units for rasters that should share the project vertical units
-                if (m_ePurpose == ImportRasterPurposes.DEMSurvey || m_ePurpose == ImportRasterPurposes.ErrorCalculation)
+                // Verify the optional vertical units (if they are specified) for rasters that should share the project vertical units
+                if (ExtImporter.Purpose == ExtentImporter.Purposes.FirstDEM || ExtImporter.Purpose == ExtentImporter.Purposes.SubsequentDEM)
                 {
-                    if (!(r.VerticalUnits == null) && r.VerticalUnits != UnitsNet.Units.LengthUnit.Undefined)
+                    if (ucRaster.SelectedItem.VerticalUnits != UnitsNet.Units.LengthUnit.Undefined)
                     {
-                        if (r.VerticalUnits != ProjectManager.Project.Units.VertUnit)
+                        if (ucRaster.SelectedItem.VerticalUnits != ProjectManager.Project.Units.VertUnit)
                         {
-                            MessageBox.Show(string.Format("The raster has different vertical units ({0}) than the GCD project ({1})." + " You must change the vertical units of the raster before it can be used within the GCD.", r.VerticalUnits.ToString(), ProjectManager.Project.Units.VertUnit.ToString()), "Vertical Units Mismatch", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            MessageBox.Show(string.Format("The raster has different vertical units ({0}) than the GCD project ({1})." + " You must change the vertical units of the raster before it can be used within the GCD.", ucRaster.SelectedItem.VerticalUnits.ToString(), ProjectManager.Project.Units.VertUnit.ToString()), "Vertical Units Mismatch", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             return false;
                         }
                     }
@@ -318,7 +274,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
             if (string.IsNullOrEmpty(txtRasterPath.Text))
             {
-                if (m_ePurpose == ImportRasterPurposes.StandaloneTool)
+                if (ExtImporter.Purpose == ExtentImporter.Purposes.Standalone)
                 {
                     MessageBox.Show("The output raster path cannot be empty. Click the Save button to specify an output raster path.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -365,7 +321,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             }
 
             ResamplingMethods eType = (ResamplingMethods)((naru.db.NamedObject)cboMethod.SelectedItem).ID;
-            if (RequiresResampling())
+            if (ExtImporter.RequiresResampling)
             {
                 if (eType != ResamplingMethods.Bilinear)
                 {
@@ -382,7 +338,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             }
             else
             {
-                if (cboMethod.SelectedIndex != m_nNoInterpolationIndex)
+                if (cboMethod.SelectedIndex != NoInterpolationIndex)
                 {
                     MessageBox.Show("The raster is orthogonal and divisible with the specified output. No interpolation is required. Select \"None\" in the interpolation method drop down.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return false;
@@ -390,16 +346,77 @@ namespace GCDCore.UserInterface.SurveyLibrary
             }
 
             return true;
-
         }
-
 
         private void OnRasterChanged(object sender, naru.ui.PathEventArgs e)
         {
+            if (ucRaster.SelectedItem == null)
+                return;
+
+            Debug.Print("Raster changed to " + ucRaster.SelectedItem.GISFileInfo.FullName);
+
             try
             {
                 Cursor = Cursors.WaitCursor;
-                OriginalRasterChanged();
+
+                ExtImporter.InputExtent = ucRaster.SelectedItem.Extent;
+
+                // There is no reference raster, or we are in DEM survey mode. So determine the
+                // orthogonal extent of the selected raster. Convert it to a GDAL raster first
+                // (if its not already) then "orthogonalize" it's extent.
+                if (valPrecision.Enabled)
+                {
+                    valPrecision.Value = ExtImporter.Precision;
+                    valCellSize.DecimalPlaces = ExtImporter.Precision;
+                    valTop.DecimalPlaces = ExtImporter.Precision;
+                    valLeft.DecimalPlaces = ExtImporter.Precision;
+                    valRight.DecimalPlaces = ExtImporter.Precision;
+                    valBottom.DecimalPlaces = ExtImporter.Precision;
+                }
+
+                //string sInputExtentFormat = "#,##0.0";
+                txtTop.Text = ExtImporter.InputExtent.Top.ToString();
+                txtLeft.Text = ExtImporter.InputExtent.Left.ToString();
+                txtBottom.Text = ExtImporter.InputExtent.Bottom.ToString();
+                txtRight.Text = ExtImporter.InputExtent.Right.ToString();
+
+                txtOrigRows.Text = ExtImporter.Output.Rows.ToString("#,##0");
+                txtOrigCols.Text = ExtImporter.Output.Cols.ToString("#,##0");
+                txtOrigWidth.Text = ExtImporter.Output.Width.ToString();
+                txtOrigHeight.Text = ExtImporter.Output.Height.ToString();
+                txtOrigCellSize.Text = ExtImporter.InputExtent.CellWidth.ToString();
+                UpdateOriginalRasterExtentFormatting();
+
+                valCellSize.Value = ExtImporter.CellSize;
+
+                if (string.IsNullOrEmpty(txtName.Text))
+                {
+                    txtName.Text = System.IO.Path.GetFileNameWithoutExtension(ucRaster.SelectedItem.GISFileInfo.FullName);
+                }
+                else
+                {
+                    UpdateRasterPath(sender, e);
+                }
+
+                // Turn off event firing
+                valTop.ValueChanged -= OutputTop_ValueChanged;
+                valLeft.ValueChanged -= OutputLeft_ValueChanged;
+                valRight.ValueChanged -= OutputRight_ValueChanged;
+                valBottom.ValueChanged -= OutputBottom_ValueChanged;
+
+                valTop.Value = ExtImporter.OutputTop;
+                valLeft.Value = ExtImporter.OutputLeft;
+                valRight.Value = ExtImporter.OutputRight;
+                valBottom.Value = ExtImporter.OutputBottom;
+
+                // Turn on event firing
+                valTop.ValueChanged += OutputTop_ValueChanged;
+                valLeft.ValueChanged += OutputLeft_ValueChanged;
+                valRight.ValueChanged += OutputRight_ValueChanged;
+                valBottom.ValueChanged += OutputBottom_ValueChanged;
+
+                UpdateOutputExtent();
+
                 cmdOK.Select();
             }
             catch (Exception ex)
@@ -410,213 +427,30 @@ namespace GCDCore.UserInterface.SurveyLibrary
             {
                 Cursor = Cursors.Default;
             }
-
         }
 
-        private void OriginalRasterChanged()
+        private void UpdateRasterPath(object sender, EventArgs e)
         {
-            //
-            // There is no reference raster, or we are in DEM survey mode. So determine the
-            // orthogonal extent of the selected raster. Convert it to a GDAL raster first
-            // (if its not already) then "orthogonalize" it's extent.
-            //
-            if (ucRaster.SelectedItem is GCDConsoleLib.Raster)
+            // Standalone tool browses to the output, and does not derive it from original raster.
+            if (ExtImporter.Purpose == ExtentImporter.Purposes.Standalone)
+                return;
+
+            txtRasterPath.Text = string.Empty;
+
+            if (string.IsNullOrEmpty(txtName.Text) || ucRaster.SelectedItem == null)
+                return;
+
+            // Get the appropriate raster path depending on the purpose of this window (DEM, associated surface, error surface)
+            switch (ExtImporter.Purpose)
             {
-                GCDConsoleLib.Raster gOriginalRaster = null;
+                case ExtentImporter.Purposes.FirstDEM:
+                case ExtentImporter.Purposes.SubsequentDEM:
+                    txtRasterPath.Text = ProjectManager.Project.GetRelativePath(ProjectManager.OutputManager.DEMSurveyRasterPath(txtName.Text));
+                    break;
 
-                if (GetSafeOriginalRaster(ref gOriginalRaster))
-                {
-                    if (valPrecision.Enabled)
-                    {
-                        //
-                        // Try to determine the appropriate precision from the input raster.
-                        // Keep increasing the original cell resolution by powers of ten until it
-                        // is a whole number. This is the appropriate "initial" precision for the
-                        // output until the user overrides it.
-                        //
-                        int nPrecision = 1;
-                        decimal fCellSize = gOriginalRaster.Extent.CellWidth;
-                        for (int i = 0; i <= 10; i++)
-                        {
-                            decimal fTest = fCellSize * (decimal)Math.Pow(10, i);
-                            fTest = Math.Round(fTest, 4);
-                            if (fTest % 1 == 0)
-                            {
-                                valPrecision.Value = Convert.ToDecimal(i);
-                                break; // TODO: might not be correct. Was : Exit For
-                            }
-                        }
-                    }
-
-                    m_OriginalExtent = gOriginalRaster.Extent;
-
-                    txtTop.Text = gOriginalRaster.Extent.Top.ToString();
-                    txtLeft.Text = gOriginalRaster.Extent.Left.ToString();
-                    txtBottom.Text = gOriginalRaster.Extent.Bottom.ToString();
-                    txtRight.Text = gOriginalRaster.Extent.Right.ToString();
-
-                    txtOrigRows.Text = gOriginalRaster.Extent.Rows.ToString("#,##0");
-                    txtOrigCols.Text = gOriginalRaster.Extent.Cols.ToString("#,##0");
-                    txtOrigWidth.Text = (gOriginalRaster.Extent.Right - gOriginalRaster.Extent.Left).ToString();
-                    txtOrigHeight.Text = (gOriginalRaster.Extent.Top - gOriginalRaster.Extent.Bottom).ToString();
-                    txtOrigCellSize.Text = gOriginalRaster.Extent.CellWidth.ToString();
-                    UpdateOriginalRasterExtentFormatting();
-
-                    if (!(m_gReferenceRaster is GCDConsoleLib.Raster && m_ePurpose != ImportRasterPurposes.DEMSurvey))
-                    {
-                        valCellSize.Value = Math.Max(Math.Round(gOriginalRaster.Extent.CellWidth, valCellSize.DecimalPlaces), valCellSize.Minimum);
-                        if (valPrecision.Value < 1)
-                        {
-                            valCellSize.Value = Math.Max(valCellSize.Value, 1);
-                        }
-                    }
-
-                    if (string.IsNullOrEmpty(txtName.Text))
-                    {
-                        txtName.Text = System.IO.Path.GetFileNameWithoutExtension(ucRaster.SelectedItem.GISFileInfo.FullName);
-                    }
-                    else
-                    {
-                        UpdateRasterPath();
-                    }
-                }
-
-            }
-
-            //
-            // Only use the reference raster for the orthogonal extent when in associated
-            // surface or error surface mode. When in DEM Survey mode, the reference raster
-            // is just for matching spatial reference.
-
-            if (m_gReferenceRaster is GCDConsoleLib.Raster && (m_ePurpose != ImportRasterPurposes.DEMSurvey || m_ePurpose == ImportRasterPurposes.StandaloneTool))
-            {
-                decimal fCellSize = m_gReferenceRaster.Extent.CellWidth;
-                valCellSize.Maximum = fCellSize;
-                valCellSize.Value = fCellSize;
-
-                valTop.Maximum = m_gReferenceRaster.Extent.Top;
-                valTop.Value = m_gReferenceRaster.Extent.Top;
-
-                valLeft.Maximum = m_gReferenceRaster.Extent.Left;
-                valLeft.Value = m_gReferenceRaster.Extent.Left;
-
-                valBottom.Maximum = m_gReferenceRaster.Extent.Bottom;
-                valBottom.Value = m_gReferenceRaster.Extent.Bottom;
-
-                valRight.Maximum = m_gReferenceRaster.Extent.Right;
-                valRight.Value = m_gReferenceRaster.Extent.Right;
-
-                // PGB - 24 Apr 2015 - When in associated surface mode we need to update the method
-                // dropdown to reflect where the raster being imported can be copied or is resampled.
-                RequiresResampling();
-
-                //This case deals with when using the Standalone tool and switching between rasters in combobox need mechanism to update to current raster
-                //Case also deals with when a GCD project is started and no raster has been added yet or in map, i.e. no reference raster and raster is added through browsing
-            }
-            else if (m_gReferenceRaster == null && (m_ePurpose == ImportRasterPurposes.StandaloneTool || m_ePurpose == ImportRasterPurposes.DEMSurvey))
-            {
-                UpdateOutputExtent();
-
-                //This case deals with when importing a raster and switching between rasters in combobox need mechanism to update to current raster
-            }
-            else if (m_gReferenceRaster is GCDConsoleLib.Raster && (m_ePurpose == ImportRasterPurposes.DEMSurvey || m_ePurpose == ImportRasterPurposes.StandaloneTool))
-            {
-                UpdateOutputExtent();
-            }
-            else
-            {
-                RequiresResampling();
-            }
-
-            string sFormat = "#,##0";
-            if (valCellSize.DecimalPlaces > 0)
-            {
-                sFormat += ".";
-                for (int i = 0; i <= valCellSize.DecimalPlaces - 1; i++)
-                {
-                    sFormat += "0";
-                }
-            }
-
-        }
-
-        /// <summary>
-        /// Get a GDAL raster for the selected raster in the dropdown list.
-        /// </summary>
-        /// <param name="gRasterDirect">Output GDAL raster for the selected item in the raster combo box.</param>
-        /// <remarks>>This form requires the use of GDAL compliant rasters. i.e. the
-        /// original raster cannot be in a file geodatabase. Each time the user browses
-        /// to or picks a new raster it needs to be copied to a GDAL compliant format
-        /// if it is not already. This can be time consuming. So this dictionary
-        /// keeps track of any non-GDAL compliant raster paths and the GDAL compliant
-        /// copy. That way the user can change raster selection quickly without a lag
-        /// as rasters are copied repeatedly. It also keeps the number of temp rasters
-        /// down.</remarks>
-        private bool GetSafeOriginalRaster(ref GCDConsoleLib.Raster gRasterDirect)
-        {
-
-            gRasterDirect = null;
-            if (ucRaster.SelectedItem is GCDConsoleLib.Raster)
-            {
-                gRasterDirect = new GCDConsoleLib.Raster(ucRaster.SelectedItem.GISFileInfo);
-            }
-
-            return gRasterDirect is GCDConsoleLib.Raster;
-
-        }
-
-
-        private void UpdateRasterPath()
-        {
-            try
-            {
-                // Standalone tool browses to the output, and does not derive it from original raster.
-                if (m_ePurpose == ImportRasterPurposes.StandaloneTool)
-                {
-                    return;
-                }
-
-                System.IO.FileInfo sRasterPath = null;
-                if (!string.IsNullOrEmpty(txtName.Text))
-                {
-                    if (ucRaster.SelectedItem is GCDConsoleLib.Raster)
-                    {
-                        // Get the appropriate raster path depending on the purpose of this window (DEM, associated surface, error surface)
-
-                        switch (m_ePurpose)
-                        {
-                            case ImportRasterPurposes.DEMSurvey:
-                                sRasterPath = ProjectManager.OutputManager.DEMSurveyRasterPath(txtName.Text);
-
-                                break;
-                            case ImportRasterPurposes.AssociatedSurface:
-                                sRasterPath = ProjectManager.OutputManager.AssociatedSurfaceRasterPath(m_DEM.Name, txtName.Text);
-
-                                break;
-                            case ImportRasterPurposes.ErrorCalculation:
-                                sRasterPath = ProjectManager.OutputManager.ErrorSurfaceRasterPath(m_DEM.Name, txtName.Text);
-
-                                break;
-                            default:
-                                MessageBox.Show("Unhandled import raster purpose: " + m_ePurpose.ToString(), Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                                break;
-                        }
-                    }
-                }
-
-                if (sRasterPath == null)
-                {
-                    txtRasterPath.Text = string.Empty;
-                }
-                else
-                {
-                    txtRasterPath.Text = sRasterPath.FullName;
-                }
-
-            }
-            catch (Exception ex)
-            {
-                naru.error.ExceptionUI.HandleException(ex);
+                case ExtentImporter.Purposes.AssociatedSurface:
+                    txtRasterPath.Text = ProjectManager.Project.GetRelativePath(ProjectManager.OutputManager.AssociatedSurfaceRasterPath(ReferenceDEM.Name, txtName.Text));
+                    break;
             }
         }
 
@@ -634,87 +468,41 @@ namespace GCDCore.UserInterface.SurveyLibrary
                 }
                 else
                 {
-                    GCDConsoleLib.Raster gRaster = null;
+                    System.IO.FileInfo fiOutput;
+                    if (ExtImporter.Purpose == ExtentImporter.Purposes.Standalone)
+                        fiOutput = new System.IO.FileInfo(txtRasterPath.Text);
+                    else
+                        fiOutput = ProjectManager.Project.GetAbsolutePath(txtRasterPath.Text);
 
-                    if (GetSafeOriginalRaster(ref gRaster))
+                    fiOutput.Directory.Create();
+
+                    // GCDConsoleLib.Raster gOrigRaster = new GCDConsoleLib.Raster(ucRaster.SelectedItem.GISFileInfo);
+
+                    if (ExtImporter.RequiresResampling)
                     {
-                        string sWorkspace = System.IO.Path.GetDirectoryName(txtRasterPath.Text);
-                        System.IO.DirectoryInfo theDir = System.IO.Directory.CreateDirectory(sWorkspace);
+                        gResult = GCDConsoleLib.RasterOperators.BilinearResample(ucRaster.SelectedItem, fiOutput, ExtImporter.Output);
+                        Debug.WriteLine("Bilinear resample:" + ExtImporter.Output.ToString());
+                    }
+                    else
+                    {
+                        gResult = GCDConsoleLib.RasterOperators.ExtendedCopy(ucRaster.SelectedItem, fiOutput, ExtImporter.Output);
+                        Debug.WriteLine("Copying raster:" + ExtImporter.Output.ToString());
+                    }
 
-                        if (theDir.Exists)
-                        {
-                            int nCols = Convert.ToInt32(txtProjCols.Text.Replace(",", ""));
-                            int nRows = Convert.ToInt32(txtProjRows.Text.Replace(",", ""));
+                    // This method will check to see if pyrmaids are need and then build if necessary.
+                    PerformRasterPyramids(new System.IO.FileInfo(txtRasterPath.Text));
 
-                            // Match the cell height of the final raster with that of the original raster
-                            decimal cellHeight = valCellSize.Value;
-                            GCDConsoleLib.Raster gOrigRaster = new GCDConsoleLib.Raster(ucRaster.SelectedItem.GISFileInfo);
-                            if (gOrigRaster.Extent.CellHeight < 0)
-                            {
-                                cellHeight = -cellHeight;
-                            }
-
-                            GCDConsoleLib.ExtentRectangle outputExtent = new GCDConsoleLib.ExtentRectangle(valTop.Value, valLeft.Value, cellHeight, valCellSize.Value, nRows, nCols);
-
-                            if (RequiresResampling())
-                            {
-                                gResult = GCDConsoleLib.RasterOperators.BilinearResample(gRaster, new System.IO.FileInfo(txtRasterPath.Text), outputExtent);
-                                Debug.WriteLine("Bilinear resample:" + outputExtent.ToString());
-                            }
-                            else
-                            {
-                                gResult = GCDConsoleLib.RasterOperators.ExtendedCopy(gRaster, new System.IO.FileInfo(txtRasterPath.Text), outputExtent);
-                                Debug.WriteLine("Copying raster:" + outputExtent.ToString());
-                            }
-
-                            // This method will check to see if pyrmaids are need and then build if necessary.
-                            PerformRasterPyramids(m_ePurpose, new System.IO.FileInfo(txtRasterPath.Text));
-
-                            if (m_ePurpose == ImportRasterPurposes.DEMSurvey)
-                            {
-                                // Now try the hillshade for DEM Surveys
-                                System.IO.FileInfo sHillshadePath = ProjectManager.OutputManager.DEMSurveyHillShadeRasterPath(txtName.Text);
-                                GCDConsoleLib.RasterOperators.Hillshade(gResult, sHillshadePath);
-                                ProjectManager.PyramidManager.PerformRasterPyramids(GCDCore.RasterPyramidManager.PyramidRasterTypes.Hillshade, sHillshadePath);
-                            }
-                        }
-                        else
-                        {
-                            Exception ex = new Exception("Failed to create raster workspace folder");
-                            ex.Data.Add("Raster Path", txtRasterPath.Text);
-                            ex.Data.Add("Workspace", sWorkspace);
-                            throw ex;
-                        }
+                    if (ExtImporter.Purpose == ExtentImporter.Purposes.FirstDEM || ExtImporter.Purpose == ExtentImporter.Purposes.SubsequentDEM)
+                    {
+                        // Now try the hillshade for DEM Surveys
+                        System.IO.FileInfo sHillshadePath = ProjectManager.OutputManager.DEMSurveyHillShadeRasterPath(txtName.Text);
+                        GCDConsoleLib.RasterOperators.Hillshade(gResult, sHillshadePath);
+                        ProjectManager.PyramidManager.PerformRasterPyramids(GCDCore.RasterPyramidManager.PyramidRasterTypes.Hillshade, sHillshadePath);
                     }
                 }
             }
 
             return gResult;
-
-        }
-
-        private void txtName_TextChanged(object sender, System.EventArgs e)
-        {
-            UpdateRasterPath();
-        }
-
-        private void valBuffeer_ValueChanged(object sender, System.EventArgs e)
-        {
-            OriginalRasterChanged();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        /// <remarks>Note that this can be triggered either by the user changing the value or by 
-        /// the code setting the value.</remarks>
-
-        private void valLeft_ValueChanged(object sender, System.EventArgs e)
-        {
-            UpdateOutputRowsColsHeightWidth();
-
         }
 
         /// <summary>
@@ -727,6 +515,8 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
         private void valCellSize_ValueChanged(object sender, System.EventArgs e)
         {
+            Debug.Print("Cell size changed");
+
             //valCellSize.Value = Math.Round(valCellSize.Value, CInt(valPrecision.Value))
 
             UpdateOutputExtent();
@@ -738,175 +528,79 @@ namespace GCDCore.UserInterface.SurveyLibrary
             valBottom.Increment = valCellSize.Value;
         }
 
+        #region Control Events
+
+        public void OutputLeft_ValueChanged(object sender, EventArgs e)
+        {
+            ExtImporter.OutputLeft = valLeft.Value;
+            UpdateOutputExtent();
+        }
+
+        public void OutputTop_ValueChanged(object sender, EventArgs e)
+        {
+            ExtImporter.OutputTop = valTop.Value;
+            UpdateOutputExtent();
+        }
+
+        public void OutputRight_ValueChanged(object sender, EventArgs e)
+        {
+            ExtImporter.OutputRight = valRight.Value;
+            UpdateOutputExtent();
+        }
+
+        public void OutputBottom_ValueChanged(object sender, EventArgs e)
+        {
+            ExtImporter.OutputBottom = valBottom.Value;
+            UpdateOutputExtent();
+        }
+
+        #endregion
 
         private void UpdateOutputExtent()
         {
-            try
-            {
-                if (m_OriginalExtent is GCDConsoleLib.ExtentRectangle)
-                {
-                    valTop.Minimum = decimal.MinValue;
-                    valLeft.Minimum = decimal.MinValue;
-                    valBottom.Minimum = decimal.MinValue;
-                    valRight.Minimum = decimal.MinValue;
+            Debug.Print("Updating output extent");
 
-                    valTop.Maximum = decimal.MaxValue;
-                    valLeft.Maximum = decimal.MaxValue;
-                    valBottom.Maximum = decimal.MaxValue;
-                    valRight.Maximum = decimal.MaxValue;
+            RequiresResampling();
 
-                    valLeft.Value = MakeDivisible(m_OriginalExtent.Left, valCellSize.Value, Convert.ToInt32(valPrecision.Value), RoundingDirection.Down);
-                    valBottom.Value = MakeDivisible(m_OriginalExtent.Bottom, valCellSize.Value, Convert.ToInt32(valPrecision.Value), RoundingDirection.Down);
-                    valRight.Value = MakeDivisible(m_OriginalExtent.Right, valCellSize.Value, Convert.ToInt32(valPrecision.Value), RoundingDirection.Up);
-                    valTop.Value = MakeDivisible(m_OriginalExtent.Top, valCellSize.Value, Convert.ToInt32(valPrecision.Value), RoundingDirection.Up);
-                    UpdateOriginalRasterExtentFormatting();
-                }
+            // Recalculate the size of the output extent
+            txtProjRows.Text = ExtImporter.Output.Rows.ToString("#,##0");
+            txtProjCols.Text = ExtImporter.Output.Cols.ToString("#,##0");
 
-                UpdateOutputRowsColsHeightWidth();
-                RequiresResampling();
-
-            }
-            catch (Exception ex)
-            {
-                naru.error.ExceptionUI.HandleException(ex);
-            }
-        }
-
-
-        private void UpdateOutputRowsColsHeightWidth()
-        {
-            Debug.Assert(valCellSize.Value > 0, "The cell size should never be zero.");
-
-            decimal fProjHeight = (valTop.Value - valBottom.Value);
-            decimal fProjWidth = (valRight.Value - valLeft.Value);
-            txtProjRows.Text = (fProjHeight / valCellSize.Value).ToString("#,##0");
-            txtProjCols.Text = (fProjWidth / valCellSize.Value).ToString("#,##0");
-            txtProjWidth.Text = fProjWidth.ToString();
-            txtProjHeight.Text = fProjHeight.ToString();
-
-            valTop.ForeColor = System.Drawing.Color.Black;
-            valLeft.ForeColor = System.Drawing.Color.Black;
-            valBottom.ForeColor = System.Drawing.Color.Black;
-            valRight.ForeColor = System.Drawing.Color.Black;
             if (ucRaster.SelectedItem is GCDConsoleLib.Raster)
             {
-                GCDConsoleLib.Raster gRaster = null;
+                UnitsNet.Units.LengthUnit hUnits = ucRaster.SelectedItem.Proj.HorizontalUnit;
+                txtProjWidth.Text = string.Format("{0}{1}", ExtImporter.Output.Width, UnitsNet.Length.GetAbbreviation(hUnits));
+                txtProjHeight.Text = string.Format("{0}{1}", ExtImporter.Output.Height, UnitsNet.Length.GetAbbreviation(hUnits));
 
-                if (GetSafeOriginalRaster(ref gRaster))
-                {
-                    if (valTop.Value == MakeDivisible(gRaster.Extent.Top, valCellSize.Value, Convert.ToInt32(valPrecision.Value), RoundingDirection.Up))
-                        valTop.ForeColor = System.Drawing.Color.DarkGreen;
-                    if (valLeft.Value == MakeDivisible(gRaster.Extent.Left, valCellSize.Value, Convert.ToInt32(valPrecision.Value), RoundingDirection.Down))
-                        valLeft.ForeColor = System.Drawing.Color.DarkGreen;
-                    if (valBottom.Value == MakeDivisible(gRaster.Extent.Bottom, valCellSize.Value, Convert.ToInt32(valPrecision.Value), RoundingDirection.Down))
-                        valBottom.ForeColor = System.Drawing.Color.DarkGreen;
-                    if (valRight.Value == MakeDivisible(gRaster.Extent.Right, valCellSize.Value, Convert.ToInt32(valPrecision.Value), RoundingDirection.Up))
-                        valRight.ForeColor = System.Drawing.Color.DarkGreen;
-
-                }
+                // Colour the numeric up down boxes based on whether they match the original extent
+                valTop.ForeColor = ucRaster.SelectedItem.Extent.Top == ExtImporter.OutputTop ? System.Drawing.Color.DarkGreen : System.Drawing.Color.Black;
+                valLeft.ForeColor = ucRaster.SelectedItem.Extent.Left == ExtImporter.OutputLeft ? System.Drawing.Color.DarkGreen : System.Drawing.Color.Black;
+                valRight.ForeColor = ucRaster.SelectedItem.Extent.Right == ExtImporter.OutputRight ? System.Drawing.Color.DarkGreen : System.Drawing.Color.Black;
+                valBottom.ForeColor = ucRaster.SelectedItem.Extent.Bottom == ExtImporter.OutputBottom ? System.Drawing.Color.DarkGreen : System.Drawing.Color.Black;
             }
-
         }
 
-        private decimal MakeDivisible(decimal fOriginalValue, decimal fCellSize, int nPrecision, RoundingDirection eRoundingDirection)
-        {
-
-            decimal fResult = 0;
-            if (fOriginalValue != 0 && fCellSize != 0)
-            {
-                fResult = fOriginalValue / fCellSize;
-                // (10 ^ nPrecision)
-                if (eRoundingDirection == RoundingDirection.Up)
-                {
-                    fResult = Math.Ceiling(fResult);
-                }
-                else
-                {
-                    fResult = Math.Floor(fResult);
-                }
-                fResult = fResult * fCellSize;
-            }
-            return fResult;
-
-        }
-
-
+        /// <summary>
+        /// Set the extent to red text if it is not divisible.     
+        /// </summary>
         private void UpdateOriginalRasterExtentFormatting()
         {
-            throw new NotImplementedException("commented");
+            Debug.Print("Updating original raster extent format");
 
-            //// Set the extent to red text if it is not divisible.
-            //if (m_OriginalExtent is GCDConsoleLib.ExtentRectangle && valCellSize.Value > 0)
-            //{
-            //    decimal fValue = Math.IEEERemainder(m_OriginalExtent.Left, valCellSize.Value);
-            //    fValue = Math.Round(Math.IEEERemainder(m_OriginalExtent.Left, valCellSize.Value), Convert.ToInt32(valPrecision.Value) + 1);
+            if (ExtImporter.InputExtent == null || valCellSize.Value <= 0)
+                return;
 
-            //    decimal fCellSize = Math.Max(Math.Round(valCellSize.Value, Convert.ToInt32(valPrecision.Value)), valCellSize.Minimum);
-            //    Debug.Assert(fCellSize > 0, "The cell size should not be zero.");
-
-            //    if (Math.Round(Math.IEEERemainder(m_OriginalExtent.Left, fCellSize), Convert.ToInt32(valPrecision.Value) + 1) != 0)
-            //    {
-            //        txtLeft.ForeColor = System.Drawing.Color.Red;
-            //    }
-            //    else
-            //    {
-            //        txtLeft.ForeColor = Control.DefaultForeColor;
-            //    }
-
-            //    if (Math.Round(Math.IEEERemainder(m_OriginalExtent.Top, fCellSize), Convert.ToInt32(valPrecision.Value) + 1) != 0)
-            //    {
-            //        txtTop.ForeColor = System.Drawing.Color.Red;
-            //    }
-            //    else
-            //    {
-            //        txtTop.ForeColor = Control.DefaultForeColor;
-            //    }
-
-            //    if (Math.Round(Math.IEEERemainder(m_OriginalExtent.Bottom, fCellSize), Convert.ToInt32(valPrecision.Value) + 1) != 0)
-            //    {
-            //        txtBottom.ForeColor = System.Drawing.Color.Red;
-            //    }
-            //    else
-            //    {
-            //        txtBottom.ForeColor = Control.DefaultForeColor;
-            //    }
-
-            //    if (Math.Round(Math.IEEERemainder(m_OriginalExtent.Right, fCellSize), Convert.ToInt32(valPrecision.Value) + 1) != 0)
-            //    {
-            //        txtRight.ForeColor = System.Drawing.Color.Red;
-            //    }
-            //    else
-            //    {
-            //        txtRight.ForeColor = Control.DefaultForeColor;
-            //    }
-            //}
+            txtTop.ForeColor = GCDConsoleLib.ExtentRectangle.DivideModuloOne(ExtImporter.InputExtent.Top, valCellSize.Value) == 0 ? Control.DefaultForeColor : System.Drawing.Color.Red;
+            txtLeft.ForeColor = GCDConsoleLib.ExtentRectangle.DivideModuloOne(ExtImporter.InputExtent.Left, valCellSize.Value) == 0 ? Control.DefaultForeColor : System.Drawing.Color.Red;
+            txtRight.ForeColor = GCDConsoleLib.ExtentRectangle.DivideModuloOne(ExtImporter.InputExtent.Right, valCellSize.Value) == 0 ? Control.DefaultForeColor : System.Drawing.Color.Red;
+            txtBottom.ForeColor = GCDConsoleLib.ExtentRectangle.DivideModuloOne(ExtImporter.InputExtent.Bottom, valCellSize.Value) == 0 ? Control.DefaultForeColor : System.Drawing.Color.Red;
         }
 
         private bool RequiresResampling()
         {
-
-            bool bResult = true;
-            GCDConsoleLib.Raster gOriginalRaster = null;
-            if (GetSafeOriginalRaster(ref gOriginalRaster))
-            {
-                bResult = !gOriginalRaster.IsDivisible();
-            }
-
-            if (cboMethod.Items.Count > m_nNoInterpolationIndex)
-            {
-                if (bResult)
-                {
-                    cboMethod.SelectedIndex = 0;
-                }
-                else
-                {
-                    cboMethod.SelectedIndex = m_nNoInterpolationIndex;
-                }
-            }
-            cboMethod.Enabled = bResult;
-
-            return bResult;
-
+            Debug.Print("Deterimining if resampling needed");
+            cboMethod.SelectedIndex = ExtImporter.RequiresResampling ? 0 : NoInterpolationIndex;
+            return ExtImporter.RequiresResampling;
         }
 
         /// <summary>
@@ -916,8 +610,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
         /// <param name="e"></param>
         /// <remarks>Cannot change forecolor of textboxes when they are readonly. So make them
         /// ReadOnly = False but skip any key pressing.</remarks>
-
-        private void txtLeft_KeyPress(object sender, System.Windows.Forms.KeyPressEventArgs e)
+        private void OriginalExtentTextBoxes_KeyPress(object sender, System.Windows.Forms.KeyPressEventArgs e)
         {
             e.Handled = true;
         }
@@ -942,63 +635,49 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
         private void cmdHelpPrecision_Click(System.Object sender, System.EventArgs e)
         {
-            GCDCore.UserInterface.UtilityForms.frmInformation frm = new GCDCore.UserInterface.UtilityForms.frmInformation();
-            frm.InitializeFixedDialog("Horizontal Decimal Precision", GCDCore.Properties.Resources.PrecisionHelp);
+            UtilityForms.frmInformation frm = new UtilityForms.frmInformation();
+            frm.InitializeFixedDialog("Horizontal Decimal Precision", Properties.Resources.PrecisionHelp);
             frm.ShowDialog();
         }
 
-
         private void cmdHelp_Click(System.Object sender, System.EventArgs e)
         {
-            switch (m_ePurpose)
+            switch (ExtImporter.Purpose)
             {
-                case ImportRasterPurposes.StandaloneTool:
+                case ExtentImporter.Purposes.Standalone:
                     Process.Start(GCDCore.Properties.Resources.HelpBaseURL + "gcd-command-reference/data-prep-menu/a-clean-raster-tool");
-
                     break;
-                case ImportRasterPurposes.DEMSurvey:
+
+                case ExtentImporter.Purposes.FirstDEM:
+                case ExtentImporter.Purposes.SubsequentDEM:
                     Process.Start(GCDCore.Properties.Resources.HelpBaseURL + "gcd-command-reference/data-prep-menu/d-add-dem-survey");
-
                     break;
-                case ImportRasterPurposes.AssociatedSurface:
+
+                case ExtentImporter.Purposes.AssociatedSurface:
                     Process.Start(GCDCore.Properties.Resources.HelpBaseURL + "gcd-command-reference/gcd-project-explorer/d-dem-context-menu/iv-add-associated-surface/1-loading-user-defined-associated-surface");
-
-                    break;
-                case ImportRasterPurposes.ErrorCalculation:
-                    Process.Start(GCDCore.Properties.Resources.HelpBaseURL + "gcd-command-reference/gcd-project-explorer/g-error-surfaces-context-menu/i-specify-error-surface");
-
                     break;
             }
         }
 
-
-        private void PerformRasterPyramids(ImportRasterPurposes ePurpose, System.IO.FileInfo sRasterPath)
+        private void PerformRasterPyramids(System.IO.FileInfo sRasterPath)
         {
-            GCDCore.RasterPyramidManager.PyramidRasterTypes ePyramidRasterType = default(GCDCore.RasterPyramidManager.PyramidRasterTypes);
-            switch (m_ePurpose)
+            RasterPyramidManager.PyramidRasterTypes ePyramidRasterType = default(RasterPyramidManager.PyramidRasterTypes);
+            switch (ExtImporter.Purpose)
             {
-                case ImportRasterPurposes.DEMSurvey:
-                    ePyramidRasterType = GCDCore.RasterPyramidManager.PyramidRasterTypes.DEM;
+                case ExtentImporter.Purposes.FirstDEM:
+                case ExtentImporter.Purposes.SubsequentDEM:
+                    ePyramidRasterType = RasterPyramidManager.PyramidRasterTypes.DEM;
                     break;
-                case ImportRasterPurposes.AssociatedSurface:
-                    ePyramidRasterType = GCDCore.RasterPyramidManager.PyramidRasterTypes.AssociatedSurfaces;
-                    break;
-                case ImportRasterPurposes.ErrorCalculation:
-                    ePyramidRasterType = GCDCore.RasterPyramidManager.PyramidRasterTypes.ErrorSurfaces;
-                    break;
-                case ImportRasterPurposes.StandaloneTool:
-                    return;
 
+                case ExtentImporter.Purposes.AssociatedSurface:
+                    ePyramidRasterType = RasterPyramidManager.PyramidRasterTypes.AssociatedSurfaces;
                     break;
-                default:
-                    Debug.Assert(false, string.Format("The import raster purpose '{0}' does not have a corresponding raster pyramid build type.", m_ePurpose));
-                    break;
+
+                case ExtentImporter.Purposes.Standalone:
+                    return;
             }
 
             ProjectManager.PyramidManager.PerformRasterPyramids(ePyramidRasterType, sRasterPath);
-
         }
-
     }
-
 }
