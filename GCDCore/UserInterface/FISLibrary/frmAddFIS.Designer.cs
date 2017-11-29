@@ -82,20 +82,22 @@ namespace GCDCore.UserInterface.FISLibrary
 			this.btnOK.TabIndex = 6;
 			this.btnOK.Text = "OK";
 			this.btnOK.UseVisualStyleBackColor = true;
-			//
-			//btnHelp
-			//
-			this.btnHelp.Anchor = (System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left);
+            this.btnOK.Click += btnOK_Click;
+            //
+            //btnHelp
+            //
+            this.btnHelp.Anchor = (System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left);
 			this.btnHelp.Location = new System.Drawing.Point(12, 83);
 			this.btnHelp.Name = "btnHelp";
 			this.btnHelp.Size = new System.Drawing.Size(75, 23);
 			this.btnHelp.TabIndex = 5;
 			this.btnHelp.Text = "Help";
 			this.btnHelp.UseVisualStyleBackColor = true;
-			//
-			//btnCancel
-			//
-			this.btnCancel.Anchor = (System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right);
+            this.btnHelp.Click += btnHelp_Click;
+            //
+            //btnCancel
+            //
+            this.btnCancel.Anchor = (System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right);
 			this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 			this.btnCancel.Location = new System.Drawing.Point(458, 79);
 			this.btnCancel.Name = "btnCancel";
@@ -131,10 +133,11 @@ namespace GCDCore.UserInterface.FISLibrary
 			this.btnBrowseFIS.Size = new System.Drawing.Size(29, 23);
 			this.btnBrowseFIS.TabIndex = 2;
 			this.btnBrowseFIS.UseVisualStyleBackColor = true;
-			//
-			//AddFISForm
-			//
-			this.AcceptButton = this.btnOK;
+            this.btnBrowseFIS.Click += btnBrowseFIS_Click;
+            //
+            //AddFISForm
+            //
+            this.AcceptButton = this.btnOK;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6f, 13f);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.btnCancel;
@@ -157,50 +160,15 @@ namespace GCDCore.UserInterface.FISLibrary
 			this.PerformLayout();
 
 		}
+
 		internal System.Windows.Forms.TextBox txtFISFile;
 		internal System.Windows.Forms.TextBox txtName;
-		private System.Windows.Forms.Button withEventsField_btnOK;
-		internal System.Windows.Forms.Button btnOK {
-			get { return withEventsField_btnOK; }
-			set {
-				if (withEventsField_btnOK != null) {
-					withEventsField_btnOK.Click -= btnOK_Click;
-				}
-				withEventsField_btnOK = value;
-				if (withEventsField_btnOK != null) {
-					withEventsField_btnOK.Click += btnOK_Click;
-				}
-			}
-		}
-		private System.Windows.Forms.Button withEventsField_btnHelp;
-		internal System.Windows.Forms.Button btnHelp {
-			get { return withEventsField_btnHelp; }
-			set {
-				if (withEventsField_btnHelp != null) {
-					withEventsField_btnHelp.Click -= btnHelp_Click;
-				}
-				withEventsField_btnHelp = value;
-				if (withEventsField_btnHelp != null) {
-					withEventsField_btnHelp.Click += btnHelp_Click;
-				}
-			}
-		}
+        internal System.Windows.Forms.Button btnOK;
+        internal System.Windows.Forms.Button btnHelp;
 		internal System.Windows.Forms.Button btnCancel;
 		internal System.Windows.Forms.Label Label1;
 		internal System.Windows.Forms.Label Label2;
-		private System.Windows.Forms.Button withEventsField_btnBrowseFIS;
-		internal System.Windows.Forms.Button btnBrowseFIS {
-			get { return withEventsField_btnBrowseFIS; }
-			set {
-				if (withEventsField_btnBrowseFIS != null) {
-					withEventsField_btnBrowseFIS.Click -= btnBrowseFIS_Click;
-				}
-				withEventsField_btnBrowseFIS = value;
-				if (withEventsField_btnBrowseFIS != null) {
-					withEventsField_btnBrowseFIS.Click += btnBrowseFIS_Click;
-				}
-			}
-		}
+        internal System.Windows.Forms.Button btnBrowseFIS;
 		internal System.Windows.Forms.BindingSource FISTableBindingSource;
 		public frmAddFIS()
 		{

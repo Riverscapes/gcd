@@ -98,10 +98,11 @@ namespace GCDCore.UserInterface.SurveyLibrary
 			this.btnOK.TabIndex = 3;
 			this.btnOK.Text = "OK";
 			this.btnOK.UseVisualStyleBackColor = true;
-			//
-			//btnHelp
-			//
-			this.btnHelp.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.btnOK.Click += btnOK_Click;
+            //
+            //btnHelp
+            //
+            this.btnHelp.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.btnHelp.Enabled = false;
 			this.btnHelp.Location = new System.Drawing.Point(12, 140);
 			this.btnHelp.Name = "btnHelp";
@@ -109,10 +110,11 @@ namespace GCDCore.UserInterface.SurveyLibrary
 			this.btnHelp.TabIndex = 5;
 			this.btnHelp.Text = "Help";
 			this.btnHelp.UseVisualStyleBackColor = true;
-			//
-			//GroupBox1
-			//
-			this.GroupBox1.Controls.Add(this.Label3);
+            this.btnHelp.Click += btnHelp_Click;
+            //
+            //GroupBox1
+            //
+            this.GroupBox1.Controls.Add(this.Label3);
 			this.GroupBox1.Controls.Add(this.cboNeighbourhood);
 			this.GroupBox1.Controls.Add(this.valSampleDistance);
 			this.GroupBox1.Controls.Add(this.lblDistance);
@@ -179,32 +181,8 @@ namespace GCDCore.UserInterface.SurveyLibrary
 		internal System.Windows.Forms.Label lblDistance;
 		internal System.Windows.Forms.NumericUpDown valSampleDistance;
 		internal System.Windows.Forms.Button btnCancel;
-		private System.Windows.Forms.Button withEventsField_btnOK;
-		internal System.Windows.Forms.Button btnOK {
-			get { return withEventsField_btnOK; }
-			set {
-				if (withEventsField_btnOK != null) {
-					withEventsField_btnOK.Click -= btnOK_Click;
-				}
-				withEventsField_btnOK = value;
-				if (withEventsField_btnOK != null) {
-					withEventsField_btnOK.Click += btnOK_Click;
-				}
-			}
-		}
-		private System.Windows.Forms.Button withEventsField_btnHelp;
-		internal System.Windows.Forms.Button btnHelp {
-			get { return withEventsField_btnHelp; }
-			set {
-				if (withEventsField_btnHelp != null) {
-					withEventsField_btnHelp.Click -= btnHelp_Click;
-				}
-				withEventsField_btnHelp = value;
-				if (withEventsField_btnHelp != null) {
-					withEventsField_btnHelp.Click += btnHelp_Click;
-				}
-			}
-		}
+        internal System.Windows.Forms.Button btnOK;
+        internal System.Windows.Forms.Button btnHelp;
 		internal System.Windows.Forms.ToolTip ttpToolTip;
 		internal System.Windows.Forms.GroupBox GroupBox1;
 		internal System.Windows.Forms.Label Label3;

@@ -73,19 +73,21 @@ namespace GCDCore.UserInterface.SurveyLibrary
 			this.cboYear.Name = "cboYear";
 			this.cboYear.Size = new System.Drawing.Size(67, 21);
 			this.cboYear.TabIndex = 1;
-			//
-			//cboMonth
-			//
-			this.cboMonth.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboYear.SelectedIndexChanged += cboYear_SelectedIndexChanged;
+            //
+            //cboMonth
+            //
+            this.cboMonth.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cboMonth.FormattingEnabled = true;
 			this.cboMonth.Location = new System.Drawing.Point(192, 16);
 			this.cboMonth.Name = "cboMonth";
 			this.cboMonth.Size = new System.Drawing.Size(48, 21);
 			this.cboMonth.TabIndex = 2;
-			//
-			//cboDay
-			//
-			this.cboDay.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboMonth.SelectedIndexChanged += cboYear_SelectedIndexChanged;
+            //
+            //cboDay
+            //
+            this.cboDay.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cboDay.FormattingEnabled = true;
 			this.cboDay.Location = new System.Drawing.Point(250, 16);
 			this.cboDay.Name = "cboDay";
@@ -120,10 +122,11 @@ namespace GCDCore.UserInterface.SurveyLibrary
 			this.cmdSave.TabIndex = 7;
 			this.cmdSave.Text = "Save";
 			this.cmdSave.UseVisualStyleBackColor = true;
-			//
-			//cmdCancel
-			//
-			this.cmdCancel.Anchor = (System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right);
+            this.cmdSave.Click += cmdSave_Click;
+            //
+            //cmdCancel
+            //
+            this.cmdCancel.Anchor = (System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right);
 			this.cmdCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 			this.cmdCancel.Location = new System.Drawing.Point(225, 87);
 			this.cmdCancel.Name = "cmdCancel";
@@ -159,48 +162,12 @@ namespace GCDCore.UserInterface.SurveyLibrary
 		}
 		internal System.Windows.Forms.Label Label1;
 		internal System.Windows.Forms.Label Label2;
-		private System.Windows.Forms.ComboBox withEventsField_cboYear;
-		internal System.Windows.Forms.ComboBox cboYear {
-			get { return withEventsField_cboYear; }
-			set {
-				if (withEventsField_cboYear != null) {
-					withEventsField_cboYear.SelectedIndexChanged -= cboYear_SelectedIndexChanged;
-				}
-				withEventsField_cboYear = value;
-				if (withEventsField_cboYear != null) {
-					withEventsField_cboYear.SelectedIndexChanged += cboYear_SelectedIndexChanged;
-				}
-			}
-		}
-		private System.Windows.Forms.ComboBox withEventsField_cboMonth;
-		internal System.Windows.Forms.ComboBox cboMonth {
-			get { return withEventsField_cboMonth; }
-			set {
-				if (withEventsField_cboMonth != null) {
-					withEventsField_cboMonth.SelectedIndexChanged -= cboYear_SelectedIndexChanged;
-				}
-				withEventsField_cboMonth = value;
-				if (withEventsField_cboMonth != null) {
-					withEventsField_cboMonth.SelectedIndexChanged += cboYear_SelectedIndexChanged;
-				}
-			}
-		}
+        internal System.Windows.Forms.ComboBox cboYear;
+        internal System.Windows.Forms.ComboBox cboMonth;
 		internal System.Windows.Forms.ComboBox cboDay;
 		internal System.Windows.Forms.ComboBox cboMinute;
 		internal System.Windows.Forms.ComboBox cboHour;
-		private System.Windows.Forms.Button withEventsField_cmdSave;
-		internal System.Windows.Forms.Button cmdSave {
-			get { return withEventsField_cmdSave; }
-			set {
-				if (withEventsField_cmdSave != null) {
-					withEventsField_cmdSave.Click -= cmdSave_Click;
-				}
-				withEventsField_cmdSave = value;
-				if (withEventsField_cmdSave != null) {
-					withEventsField_cmdSave.Click += cmdSave_Click;
-				}
-			}
-		}
+        internal System.Windows.Forms.Button cmdSave;
 		internal System.Windows.Forms.Button cmdCancel;
 		internal System.Windows.Forms.ToolTip tTip;
 	}

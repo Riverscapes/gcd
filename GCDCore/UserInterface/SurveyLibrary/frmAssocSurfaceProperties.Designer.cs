@@ -72,10 +72,11 @@ namespace GCDCore.UserInterface.SurveyLibrary
 			this.txtName.Name = "txtName";
 			this.txtName.Size = new System.Drawing.Size(483, 20);
 			this.txtName.TabIndex = 1;
-			//
-			//Label2
-			//
-			this.Label2.AutoSize = true;
+            this.txtName.TextChanged += txtName_TextChanged;
+            //
+            //Label2
+            //
+            this.Label2.AutoSize = true;
 			this.Label2.Location = new System.Drawing.Point(77, 102);
 			this.Label2.Name = "Label2";
 			this.Label2.Size = new System.Drawing.Size(31, 13);
@@ -111,10 +112,11 @@ namespace GCDCore.UserInterface.SurveyLibrary
 			this.btnBrowse.Size = new System.Drawing.Size(25, 22);
 			this.btnBrowse.TabIndex = 4;
 			this.btnBrowse.UseVisualStyleBackColor = true;
-			//
-			//Label3
-			//
-			this.Label3.AutoSize = true;
+            this.btnBrowse.Click += btnBrowse_Click;
+            //
+            //Label3
+            //
+            this.Label3.AutoSize = true;
 			this.Label3.Location = new System.Drawing.Point(31, 44);
 			this.Label3.Name = "Label3";
 			this.Label3.Size = new System.Drawing.Size(77, 13);
@@ -130,10 +132,11 @@ namespace GCDCore.UserInterface.SurveyLibrary
 			this.btnHelp.TabIndex = 15;
 			this.btnHelp.Text = "Help";
 			this.btnHelp.UseVisualStyleBackColor = true;
-			//
-			//btnOK
-			//
-			this.btnOK.Anchor = (System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right);
+            this.btnHelp.Click += btnHelp_Click;
+            //
+            //btnOK
+            //
+            this.btnOK.Anchor = (System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right);
 			this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.btnOK.Location = new System.Drawing.Point(432, 130);
 			this.btnOK.Name = "btnOK";
@@ -141,10 +144,11 @@ namespace GCDCore.UserInterface.SurveyLibrary
 			this.btnOK.TabIndex = 13;
 			this.btnOK.Text = "OK";
 			this.btnOK.UseVisualStyleBackColor = true;
-			//
-			//btnCancel
-			//
-			this.btnCancel.Anchor = (System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right);
+            this.btnOK.Click += btnOK_Click;
+            //
+            //btnCancel
+            //
+            this.btnCancel.Anchor = (System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right);
 			this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 			this.btnCancel.Location = new System.Drawing.Point(518, 130);
 			this.btnCancel.Name = "btnCancel";
@@ -172,20 +176,22 @@ namespace GCDCore.UserInterface.SurveyLibrary
 			this.btnSlopePercent.Size = new System.Drawing.Size(25, 22);
 			this.btnSlopePercent.TabIndex = 6;
 			this.btnSlopePercent.UseVisualStyleBackColor = true;
-			//
-			//btnDensity
-			//
-			this.btnDensity.Anchor = (System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
+            this.btnSlopePercent.Click += btnSlope_Click;
+            //
+            //btnDensity
+            //
+            this.btnDensity.Anchor = (System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
 			this.btnDensity.Image = Properties.Resources.PointDensity;
 			this.btnDensity.Location = new System.Drawing.Point(544, 39);
 			this.btnDensity.Name = "btnDensity";
 			this.btnDensity.Size = new System.Drawing.Size(25, 22);
 			this.btnDensity.TabIndex = 7;
 			this.btnDensity.UseVisualStyleBackColor = true;
-			//
-			//txtProjectRaster
-			//
-			this.txtProjectRaster.Anchor = (System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right);
+            this.btnDensity.Click += btnDensity_Click;
+            //
+            //txtProjectRaster
+            //
+            this.txtProjectRaster.Anchor = (System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right);
 			this.txtProjectRaster.Location = new System.Drawing.Point(115, 69);
 			this.txtProjectRaster.Name = "txtProjectRaster";
 			this.txtProjectRaster.ReadOnly = true;
@@ -210,20 +216,22 @@ namespace GCDCore.UserInterface.SurveyLibrary
 			this.btnRoughness.Size = new System.Drawing.Size(25, 22);
 			this.btnRoughness.TabIndex = 8;
 			this.btnRoughness.UseVisualStyleBackColor = true;
-			//
-			//btnSlopeDegree
-			//
-			this.btnSlopeDegree.Anchor = (System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
+            this.btnRoughness.Click += btnRoughness_Click;
+            //
+            //btnSlopeDegree
+            //
+            this.btnSlopeDegree.Anchor = (System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
 			this.btnSlopeDegree.Image = Properties.Resources.SlopeDegree;
 			this.btnSlopeDegree.Location = new System.Drawing.Point(486, 39);
 			this.btnSlopeDegree.Name = "btnSlopeDegree";
 			this.btnSlopeDegree.Size = new System.Drawing.Size(25, 22);
 			this.btnSlopeDegree.TabIndex = 5;
 			this.btnSlopeDegree.UseVisualStyleBackColor = true;
-			//
-			//frmAssocSurfaceProperties
-			//
-			this.AcceptButton = this.btnOK;
+            this.btnSlopeDegree.Click += btnSlopeDegree_Click;
+            //
+            //frmAssocSurfaceProperties
+            //
+            this.AcceptButton = this.btnOK;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6f, 13f);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.AutoSize = true;
@@ -256,118 +264,22 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
 		}
 		internal System.Windows.Forms.Label Label1;
-		private System.Windows.Forms.TextBox withEventsField_txtName;
-		internal System.Windows.Forms.TextBox txtName {
-			get { return withEventsField_txtName; }
-			set {
-				if (withEventsField_txtName != null) {
-					withEventsField_txtName.TextChanged -= txtName_TextChanged;
-				}
-				withEventsField_txtName = value;
-				if (withEventsField_txtName != null) {
-					withEventsField_txtName.TextChanged += txtName_TextChanged;
-				}
-			}
-		}
+        internal System.Windows.Forms.TextBox txtName;
 		internal System.Windows.Forms.Label Label2;
 		internal System.Windows.Forms.ComboBox cboType;
 		internal System.Windows.Forms.Label Label3;
-		private System.Windows.Forms.Button withEventsField_btnHelp;
-		internal System.Windows.Forms.Button btnHelp {
-			get { return withEventsField_btnHelp; }
-			set {
-				if (withEventsField_btnHelp != null) {
-					withEventsField_btnHelp.Click -= btnHelp_Click;
-				}
-				withEventsField_btnHelp = value;
-				if (withEventsField_btnHelp != null) {
-					withEventsField_btnHelp.Click += btnHelp_Click;
-				}
-			}
-		}
-		private System.Windows.Forms.Button withEventsField_btnOK;
-		internal System.Windows.Forms.Button btnOK {
-			get { return withEventsField_btnOK; }
-			set {
-				if (withEventsField_btnOK != null) {
-					withEventsField_btnOK.Click -= btnOK_Click;
-				}
-				withEventsField_btnOK = value;
-				if (withEventsField_btnOK != null) {
-					withEventsField_btnOK.Click += btnOK_Click;
-				}
-			}
-		}
+        internal System.Windows.Forms.Button btnHelp;
+        internal System.Windows.Forms.Button btnOK;
 		internal System.Windows.Forms.Button btnCancel;
-		private System.Windows.Forms.Button withEventsField_btnBrowse;
-		internal System.Windows.Forms.Button btnBrowse {
-			get { return withEventsField_btnBrowse; }
-			set {
-				if (withEventsField_btnBrowse != null) {
-					withEventsField_btnBrowse.Click -= btnBrowse_Click;
-				}
-				withEventsField_btnBrowse = value;
-				if (withEventsField_btnBrowse != null) {
-					withEventsField_btnBrowse.Click += btnBrowse_Click;
-				}
-			}
-		}
+        internal System.Windows.Forms.Button btnBrowse;
 		internal System.Windows.Forms.ToolTip ttpTooltip;
 		internal System.Windows.Forms.TextBox txtOriginalRaster;
-		private System.Windows.Forms.Button withEventsField_btnSlopePercent;
-		internal System.Windows.Forms.Button btnSlopePercent {
-			get { return withEventsField_btnSlopePercent; }
-			set {
-				if (withEventsField_btnSlopePercent != null) {
-					withEventsField_btnSlopePercent.Click -= btnSlope_Click;
-				}
-				withEventsField_btnSlopePercent = value;
-				if (withEventsField_btnSlopePercent != null) {
-					withEventsField_btnSlopePercent.Click += btnSlope_Click;
-				}
-			}
-		}
-		private System.Windows.Forms.Button withEventsField_btnDensity;
-		internal System.Windows.Forms.Button btnDensity {
-			get { return withEventsField_btnDensity; }
-			set {
-				if (withEventsField_btnDensity != null) {
-					withEventsField_btnDensity.Click -= btnDensity_Click;
-				}
-				withEventsField_btnDensity = value;
-				if (withEventsField_btnDensity != null) {
-					withEventsField_btnDensity.Click += btnDensity_Click;
-				}
-			}
-		}
+        internal System.Windows.Forms.Button btnSlopePercent;
+        internal System.Windows.Forms.Button btnDensity;
 		internal System.Windows.Forms.TextBox txtProjectRaster;
 		internal System.Windows.Forms.Label Label4;
-		private System.Windows.Forms.Button withEventsField_btnRoughness;
-		internal System.Windows.Forms.Button btnRoughness {
-			get { return withEventsField_btnRoughness; }
-			set {
-				if (withEventsField_btnRoughness != null) {
-					withEventsField_btnRoughness.Click -= btnRoughness_Click;
-				}
-				withEventsField_btnRoughness = value;
-				if (withEventsField_btnRoughness != null) {
-					withEventsField_btnRoughness.Click += btnRoughness_Click;
-				}
-			}
-		}
-		private System.Windows.Forms.Button withEventsField_btnSlopeDegree;
-		internal System.Windows.Forms.Button btnSlopeDegree {
-			get { return withEventsField_btnSlopeDegree; }
-			set {
-				if (withEventsField_btnSlopeDegree != null) {
-					withEventsField_btnSlopeDegree.Click -= btnSlopeDegree_Click;
-				}
-				withEventsField_btnSlopeDegree = value;
-				if (withEventsField_btnSlopeDegree != null) {
-					withEventsField_btnSlopeDegree.Click += btnSlopeDegree_Click;
-				}
-			}
-		}
+        internal System.Windows.Forms.Button btnRoughness;
+        internal System.Windows.Forms.Button btnSlopeDegree;
 	}
 
 }

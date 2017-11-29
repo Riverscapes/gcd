@@ -95,6 +95,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.btnOK.TabIndex = 7;
             this.btnOK.Text = "Save Survey and Close";
             this.btnOK.UseVisualStyleBackColor = true;
+            this.btnOK.Click += btnOK_Click;
             //
             //btnHlp
             //
@@ -105,6 +106,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.btnHlp.TabIndex = 9;
             this.btnHlp.Text = "Help";
             this.btnHlp.UseVisualStyleBackColor = true;
+            this.btnHlp.Click += btnHlp_Click;
             //
             //pgeErrors
             //
@@ -130,6 +132,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.btnCalculateError.Size = new System.Drawing.Size(29, 23);
             this.btnCalculateError.TabIndex = 5;
             this.btnCalculateError.UseVisualStyleBackColor = true;
+            this.btnCalculateError.Click += btnCalculateError_Click;
             //
             //cmdAddErrorToMap
             //
@@ -140,6 +143,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.cmdAddErrorToMap.Size = new System.Drawing.Size(29, 23);
             this.cmdAddErrorToMap.TabIndex = 3;
             this.cmdAddErrorToMap.UseVisualStyleBackColor = true;
+            this.cmdAddErrorToMap.Click += btnAddErrorToMap_Click;
             //
             //grdErrorSurfaces
             //
@@ -155,6 +159,9 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.grdErrorSurfaces.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.grdErrorSurfaces.Size = new System.Drawing.Size(593, 493);
             this.grdErrorSurfaces.TabIndex = 4;
+            this.grdErrorSurfaces.CellEnter += Error_CellContentEnter;
+            this.grdErrorSurfaces.CellLeave += Error_CellContentLeave;
+            this.grdErrorSurfaces.CellContentDoubleClick += Error_DoubleClick;
             //
             //btnErrorDelete
             //
@@ -165,6 +172,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.btnErrorDelete.Size = new System.Drawing.Size(29, 23);
             this.btnErrorDelete.TabIndex = 2;
             this.btnErrorDelete.UseVisualStyleBackColor = true;
+            this.btnErrorDelete.Click += btnDeleteErrorSurface_Click;
             //
             //btnErrorSettings
             //
@@ -175,6 +183,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.btnErrorSettings.Size = new System.Drawing.Size(29, 23);
             this.btnErrorSettings.TabIndex = 1;
             this.btnErrorSettings.UseVisualStyleBackColor = true;
+            this.btnErrorSettings.Click += btnErrorSurfaceSettings_Click;
             //
             //btnAddError
             //
@@ -184,6 +193,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.btnAddError.Size = new System.Drawing.Size(29, 23);
             this.btnAddError.TabIndex = 0;
             this.btnAddError.UseVisualStyleBackColor = true;
+            this.btnAddError.Click += btn_AddErrorSurface_Click;
             //
             //pgeSurfaces
             //
@@ -243,6 +253,9 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.grdAssocSurface.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.grdAssocSurface.Size = new System.Drawing.Size(593, 425);
             this.grdAssocSurface.TabIndex = 4;
+            this.grdAssocSurface.CellContentDoubleClick += ViewAssociatedSurface;
+            this.grdAssocSurface.CellEnter += Associated_CellContentEnter;
+            this.grdAssocSurface.CellLeave += Associated_CellContentLeave;
             //
             //btnAddAssociatedSurface
             //
@@ -252,6 +265,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.btnAddAssociatedSurface.Size = new System.Drawing.Size(29, 23);
             this.btnAddAssociatedSurface.TabIndex = 0;
             this.btnAddAssociatedSurface.UseVisualStyleBackColor = true;
+            this.btnAddAssociatedSurface.Click += btnAddAssociatedSurface_Click;
             //
             //cmdAddAssocToMap
             //
@@ -262,6 +276,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.cmdAddAssocToMap.Size = new System.Drawing.Size(29, 23);
             this.cmdAddAssocToMap.TabIndex = 3;
             this.cmdAddAssocToMap.UseVisualStyleBackColor = true;
+            this.cmdAddAssocToMap.Click += btnAddToMap_Click;
             //
             //btnDeleteAssociatedSurface
             //
@@ -272,6 +287,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.btnDeleteAssociatedSurface.Size = new System.Drawing.Size(29, 23);
             this.btnDeleteAssociatedSurface.TabIndex = 2;
             this.btnDeleteAssociatedSurface.UseVisualStyleBackColor = true;
+            this.btnDeleteAssociatedSurface.Click += btnDeleteAssociatedSurface_Click;
             //
             //btnSettingsAssociatedSurface
             //
@@ -282,6 +298,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.btnSettingsAssociatedSurface.Size = new System.Drawing.Size(29, 23);
             this.btnSettingsAssociatedSurface.TabIndex = 1;
             this.btnSettingsAssociatedSurface.UseVisualStyleBackColor = true;
+            this.btnSettingsAssociatedSurface.Click += ViewAssociatedSurface;
             //
             //pgeSurvey
             //
@@ -344,6 +361,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.txtMask.Size = new System.Drawing.Size(405, 20);
             this.txtMask.TabIndex = 8;
             this.txtMask.TabStop = false;
+            this.txtMask.TextChanged += txtMask_TextChanged;
             //
             //cboSingle
             //
@@ -365,6 +383,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.btnBrowseMask.Size = new System.Drawing.Size(29, 23);
             this.btnBrowseMask.TabIndex = 9;
             this.btnBrowseMask.UseVisualStyleBackColor = true;
+            this.btnBrowseMask.Click += btnBrowseMask_Click;
             //
             //cmdAddDEMToMap
             //
@@ -375,6 +394,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.cmdAddDEMToMap.Size = new System.Drawing.Size(29, 23);
             this.cmdAddDEMToMap.TabIndex = 2;
             this.cmdAddDEMToMap.UseVisualStyleBackColor = true;
+            this.cmdAddDEMToMap.Click += btnBrowseFile_Click;
             //
             //cboIdentify
             //
@@ -479,6 +499,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.txtFolder.ReadOnly = true;
             this.txtFolder.Size = new System.Drawing.Size(533, 20);
             this.txtFolder.TabIndex = 5;
+            this.txtFolder.DoubleClick += txtFolder_DoubleClick;
             //
             //Label4
             //
@@ -497,6 +518,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.cmdDateTime.TabIndex = 2;
             this.cmdDateTime.Text = "Survey Date/Time";
             this.cmdDateTime.UseVisualStyleBackColor = true;
+            this.cmdDateTime.Click += cmdDateTime_Click;
             //
             //lblDatetime
             //
@@ -557,265 +579,33 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.PerformLayout();
 
         }
-        private System.Windows.Forms.Button withEventsField_btnOK;
-        internal System.Windows.Forms.Button btnOK
-        {
-            get { return withEventsField_btnOK; }
-            set
-            {
-                if (withEventsField_btnOK != null)
-                {
-                    withEventsField_btnOK.Click -= btnOK_Click;
-                }
-                withEventsField_btnOK = value;
-                if (withEventsField_btnOK != null)
-                {
-                    withEventsField_btnOK.Click += btnOK_Click;
-                }
-            }
-        }
-        private System.Windows.Forms.Button withEventsField_btnHlp;
-        internal System.Windows.Forms.Button btnHlp
-        {
-            get { return withEventsField_btnHlp; }
-            set
-            {
-                if (withEventsField_btnHlp != null)
-                {
-                    withEventsField_btnHlp.Click -= btnHlp_Click;
-                }
-                withEventsField_btnHlp = value;
-                if (withEventsField_btnHlp != null)
-                {
-                    withEventsField_btnHlp.Click += btnHlp_Click;
-                }
-            }
-        }
+        internal System.Windows.Forms.Button btnOK;
+        internal System.Windows.Forms.Button btnHlp;
         internal System.Windows.Forms.ToolTip ttpTooltip;
         internal System.Windows.Forms.TabPage pgeErrors;
-        private System.Windows.Forms.Button withEventsField_cmdAddErrorToMap;
-        internal System.Windows.Forms.Button cmdAddErrorToMap
-        {
-            get { return withEventsField_cmdAddErrorToMap; }
-            set
-            {
-                if (withEventsField_cmdAddErrorToMap != null)
-                {
-                    withEventsField_cmdAddErrorToMap.Click -= btnAddErrorToMap_Click;
-                }
-                withEventsField_cmdAddErrorToMap = value;
-                if (withEventsField_cmdAddErrorToMap != null)
-                {
-                    withEventsField_cmdAddErrorToMap.Click += btnAddErrorToMap_Click;
-                }
-            }
-        }
-        private System.Windows.Forms.DataGridView withEventsField_grdErrorSurfaces;
-        internal System.Windows.Forms.DataGridView grdErrorSurfaces
-        {
-            get { return withEventsField_grdErrorSurfaces; }
-            set
-            {
-                if (withEventsField_grdErrorSurfaces != null)
-                {
-                    withEventsField_grdErrorSurfaces.CellEnter -= Error_CellContentEnter;
-                    withEventsField_grdErrorSurfaces.CellLeave -= Error_CellContentLeave;
-                    withEventsField_grdErrorSurfaces.CellContentDoubleClick -= Error_DoubleClick;
-                }
-                withEventsField_grdErrorSurfaces = value;
-                if (withEventsField_grdErrorSurfaces != null)
-                {
-                    withEventsField_grdErrorSurfaces.CellEnter += Error_CellContentEnter;
-                    withEventsField_grdErrorSurfaces.CellLeave += Error_CellContentLeave;
-                    withEventsField_grdErrorSurfaces.CellContentDoubleClick += Error_DoubleClick;
-                }
-            }
-        }
+        internal System.Windows.Forms.Button cmdAddErrorToMap;
+        internal System.Windows.Forms.DataGridView grdErrorSurfaces;
         internal System.Windows.Forms.DataGridViewTextBoxColumn DataGridViewTextBoxColumn7;
         internal System.Windows.Forms.DataGridViewTextBoxColumn DataGridViewTextBoxColumn8;
         internal System.Windows.Forms.DataGridViewTextBoxColumn DataGridViewTextBoxColumn9;
-        private System.Windows.Forms.Button withEventsField_btnErrorDelete;
-        internal System.Windows.Forms.Button btnErrorDelete
-        {
-            get { return withEventsField_btnErrorDelete; }
-            set
-            {
-                if (withEventsField_btnErrorDelete != null)
-                {
-                    withEventsField_btnErrorDelete.Click -= btnDeleteErrorSurface_Click;
-                }
-                withEventsField_btnErrorDelete = value;
-                if (withEventsField_btnErrorDelete != null)
-                {
-                    withEventsField_btnErrorDelete.Click += btnDeleteErrorSurface_Click;
-                }
-            }
-        }
-        private System.Windows.Forms.Button withEventsField_btnErrorSettings;
-        internal System.Windows.Forms.Button btnErrorSettings
-        {
-            get { return withEventsField_btnErrorSettings; }
-            set
-            {
-                if (withEventsField_btnErrorSettings != null)
-                {
-                    withEventsField_btnErrorSettings.Click -= btnErrorSurfaceSettings_Click;
-                }
-                withEventsField_btnErrorSettings = value;
-                if (withEventsField_btnErrorSettings != null)
-                {
-                    withEventsField_btnErrorSettings.Click += btnErrorSurfaceSettings_Click;
-                }
-            }
-        }
-        private System.Windows.Forms.Button withEventsField_btnAddError;
-        internal System.Windows.Forms.Button btnAddError
-        {
-            get { return withEventsField_btnAddError; }
-            set
-            {
-                if (withEventsField_btnAddError != null)
-                {
-                    withEventsField_btnAddError.Click -= btn_AddErrorSurface_Click;
-                }
-                withEventsField_btnAddError = value;
-                if (withEventsField_btnAddError != null)
-                {
-                    withEventsField_btnAddError.Click += btn_AddErrorSurface_Click;
-                }
-            }
-        }
+        internal System.Windows.Forms.Button btnErrorDelete;
+        internal System.Windows.Forms.Button btnErrorSettings;
+        internal System.Windows.Forms.Button btnAddError;
         internal System.Windows.Forms.TabPage pgeSurfaces;
-        private System.Windows.Forms.DataGridView withEventsField_grdAssocSurface;
-        internal System.Windows.Forms.DataGridView grdAssocSurface
-        {
-            get { return withEventsField_grdAssocSurface; }
-            set
-            {
-                if (withEventsField_grdAssocSurface != null)
-                {
-                    withEventsField_grdAssocSurface.CellContentDoubleClick -= ViewAssociatedSurface;
-                    withEventsField_grdAssocSurface.CellEnter -= Associated_CellContentEnter;
-                    withEventsField_grdAssocSurface.CellLeave -= Associated_CellContentLeave;
-                }
-                withEventsField_grdAssocSurface = value;
-                if (withEventsField_grdAssocSurface != null)
-                {
-                    withEventsField_grdAssocSurface.CellContentDoubleClick += ViewAssociatedSurface;
-                    withEventsField_grdAssocSurface.CellEnter += Associated_CellContentEnter;
-                    withEventsField_grdAssocSurface.CellLeave += Associated_CellContentLeave;
-                }
-            }
-        }
+        internal System.Windows.Forms.DataGridView grdAssocSurface;
         internal System.Windows.Forms.DataGridViewTextBoxColumn DataGridViewTextBoxColumn3;
         internal System.Windows.Forms.DataGridViewTextBoxColumn DataGridViewTextBoxColumn4;
         internal System.Windows.Forms.DataGridViewTextBoxColumn DataGridViewTextBoxColumn5;
-        private System.Windows.Forms.Button withEventsField_btnAddAssociatedSurface;
-        internal System.Windows.Forms.Button btnAddAssociatedSurface
-        {
-            get { return withEventsField_btnAddAssociatedSurface; }
-            set
-            {
-                if (withEventsField_btnAddAssociatedSurface != null)
-                {
-                    withEventsField_btnAddAssociatedSurface.Click -= btnAddAssociatedSurface_Click;
-                }
-                withEventsField_btnAddAssociatedSurface = value;
-                if (withEventsField_btnAddAssociatedSurface != null)
-                {
-                    withEventsField_btnAddAssociatedSurface.Click += btnAddAssociatedSurface_Click;
-                }
-            }
-        }
-        private System.Windows.Forms.Button withEventsField_cmdAddAssocToMap;
-        internal System.Windows.Forms.Button cmdAddAssocToMap
-        {
-            get { return withEventsField_cmdAddAssocToMap; }
-            set
-            {
-                if (withEventsField_cmdAddAssocToMap != null)
-                {
-                    withEventsField_cmdAddAssocToMap.Click -= btnAddToMap_Click;
-                }
-                withEventsField_cmdAddAssocToMap = value;
-                if (withEventsField_cmdAddAssocToMap != null)
-                {
-                    withEventsField_cmdAddAssocToMap.Click += btnAddToMap_Click;
-                }
-            }
-        }
-        private System.Windows.Forms.Button withEventsField_btnDeleteAssociatedSurface;
-        internal System.Windows.Forms.Button btnDeleteAssociatedSurface
-        {
-            get { return withEventsField_btnDeleteAssociatedSurface; }
-            set
-            {
-                if (withEventsField_btnDeleteAssociatedSurface != null)
-                {
-                    withEventsField_btnDeleteAssociatedSurface.Click -= btnDeleteAssociatedSurface_Click;
-                }
-                withEventsField_btnDeleteAssociatedSurface = value;
-                if (withEventsField_btnDeleteAssociatedSurface != null)
-                {
-                    withEventsField_btnDeleteAssociatedSurface.Click += btnDeleteAssociatedSurface_Click;
-                }
-            }
-        }
-        private System.Windows.Forms.Button withEventsField_btnSettingsAssociatedSurface;
-        internal System.Windows.Forms.Button btnSettingsAssociatedSurface
-        {
-            get { return withEventsField_btnSettingsAssociatedSurface; }
-            set
-            {
-                if (withEventsField_btnSettingsAssociatedSurface != null)
-                {
-                    withEventsField_btnSettingsAssociatedSurface.Click -= ViewAssociatedSurface;
-                }
-                withEventsField_btnSettingsAssociatedSurface = value;
-                if (withEventsField_btnSettingsAssociatedSurface != null)
-                {
-                    withEventsField_btnSettingsAssociatedSurface.Click += ViewAssociatedSurface;
-                }
-            }
-        }
+        internal System.Windows.Forms.Button btnAddAssociatedSurface;
+        internal System.Windows.Forms.Button cmdAddAssocToMap;
+        internal System.Windows.Forms.Button btnDeleteAssociatedSurface;
+        internal System.Windows.Forms.Button btnSettingsAssociatedSurface;
         internal System.Windows.Forms.TabPage pgeSurvey;
         internal System.Windows.Forms.GroupBox GroupBox2;
         internal System.Windows.Forms.GroupBox GroupBox1;
         internal System.Windows.Forms.ComboBox cboSingle;
-        private System.Windows.Forms.Button withEventsField_btnBrowseMask;
-        internal System.Windows.Forms.Button btnBrowseMask
-        {
-            get { return withEventsField_btnBrowseMask; }
-            set
-            {
-                if (withEventsField_btnBrowseMask != null)
-                {
-                    withEventsField_btnBrowseMask.Click -= btnBrowseMask_Click;
-                }
-                withEventsField_btnBrowseMask = value;
-                if (withEventsField_btnBrowseMask != null)
-                {
-                    withEventsField_btnBrowseMask.Click += btnBrowseMask_Click;
-                }
-            }
-        }
-        private System.Windows.Forms.Button withEventsField_cmdAddDEMToMap;
-        internal System.Windows.Forms.Button cmdAddDEMToMap
-        {
-            get { return withEventsField_cmdAddDEMToMap; }
-            set
-            {
-                if (withEventsField_cmdAddDEMToMap != null)
-                {
-                    withEventsField_cmdAddDEMToMap.Click -= btnBrowseFile_Click;
-                }
-                withEventsField_cmdAddDEMToMap = value;
-                if (withEventsField_cmdAddDEMToMap != null)
-                {
-                    withEventsField_cmdAddDEMToMap.Click += btnBrowseFile_Click;
-                }
-            }
-        }
+        internal System.Windows.Forms.Button btnBrowseMask;
+        internal System.Windows.Forms.Button cmdAddDEMToMap;
         internal System.Windows.Forms.ComboBox cboIdentify;
         internal System.Windows.Forms.Label Label5;
         internal System.Windows.Forms.Label Label6;
@@ -827,78 +617,13 @@ namespace GCDCore.UserInterface.SurveyLibrary
         internal System.Windows.Forms.Label Label1;
         internal System.Windows.Forms.TabControl tabControl;
         internal System.Windows.Forms.TextBox txtProperties;
-        private System.Windows.Forms.TextBox withEventsField_txtMask;
-        internal System.Windows.Forms.TextBox txtMask
-        {
-            get { return withEventsField_txtMask; }
-            set
-            {
-                if (withEventsField_txtMask != null)
-                {
-                    withEventsField_txtMask.TextChanged -= txtMask_TextChanged;
-                }
-                withEventsField_txtMask = value;
-                if (withEventsField_txtMask != null)
-                {
-                    withEventsField_txtMask.TextChanged += txtMask_TextChanged;
-                }
-            }
-        }
-        private System.Windows.Forms.Button withEventsField_btnCalculateError;
-        internal System.Windows.Forms.Button btnCalculateError
-        {
-            get { return withEventsField_btnCalculateError; }
-            set
-            {
-                if (withEventsField_btnCalculateError != null)
-                {
-                    withEventsField_btnCalculateError.Click -= btnCalculateError_Click;
-                }
-                withEventsField_btnCalculateError = value;
-                if (withEventsField_btnCalculateError != null)
-                {
-                    withEventsField_btnCalculateError.Click += btnCalculateError_Click;
-                }
-            }
-        }
-        private System.Windows.Forms.TextBox withEventsField_txtFolder;
-        internal System.Windows.Forms.TextBox txtFolder
-        {
-            get { return withEventsField_txtFolder; }
-            set
-            {
-                if (withEventsField_txtFolder != null)
-                {
-                    withEventsField_txtFolder.DoubleClick -= txtFolder_DoubleClick;
-                }
-                withEventsField_txtFolder = value;
-                if (withEventsField_txtFolder != null)
-                {
-                    withEventsField_txtFolder.DoubleClick += txtFolder_DoubleClick;
-                }
-            }
-        }
+        internal System.Windows.Forms.TextBox txtMask;
+        internal System.Windows.Forms.Button btnCalculateError;
+        internal System.Windows.Forms.TextBox txtFolder;
         internal System.Windows.Forms.Label Label4;
-        private System.Windows.Forms.Button withEventsField_cmdDateTime;
-        internal System.Windows.Forms.Button cmdDateTime
-        {
-            get { return withEventsField_cmdDateTime; }
-            set
-            {
-                if (withEventsField_cmdDateTime != null)
-                {
-                    withEventsField_cmdDateTime.Click -= cmdDateTime_Click;
-                }
-                withEventsField_cmdDateTime = value;
-                if (withEventsField_cmdDateTime != null)
-                {
-                    withEventsField_cmdDateTime.Click += cmdDateTime_Click;
-                }
-            }
-        }
+        internal System.Windows.Forms.Button cmdDateTime;
         internal System.Windows.Forms.Label lblDatetime;
         internal System.Windows.Forms.DataGridViewTextBoxColumn colName;
         internal System.Windows.Forms.DataGridViewTextBoxColumn colType;
     }
-
 }

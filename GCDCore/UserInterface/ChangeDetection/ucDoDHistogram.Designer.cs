@@ -61,10 +61,11 @@ namespace GCDCore.UserInterface.ChangeDetection
 			this.rdoVolume.TabIndex = 1;
 			this.rdoVolume.Text = "Volume";
 			this.rdoVolume.UseVisualStyleBackColor = true;
-			//
-			//chtData
-			//
-			this.chtData.Anchor = (System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right);
+            this.rdoVolume.CheckedChanged += rdoVolume_CheckedChanged;
+            //
+            //chtData
+            //
+            this.chtData.Anchor = (System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right);
 			this.chtData.Location = new System.Drawing.Point(0, 32);
 			this.chtData.Name = "chtData";
 			this.chtData.Size = new System.Drawing.Size(500, 365);
@@ -86,20 +87,7 @@ namespace GCDCore.UserInterface.ChangeDetection
 
 		}
 		internal System.Windows.Forms.RadioButton rdoArea;
-		private System.Windows.Forms.RadioButton withEventsField_rdoVolume;
-		internal System.Windows.Forms.RadioButton rdoVolume {
-			get { return withEventsField_rdoVolume; }
-			set {
-				if (withEventsField_rdoVolume != null) {
-					withEventsField_rdoVolume.CheckedChanged -= rdoVolume_CheckedChanged;
-				}
-				withEventsField_rdoVolume = value;
-				if (withEventsField_rdoVolume != null) {
-					withEventsField_rdoVolume.CheckedChanged += rdoVolume_CheckedChanged;
-				}
-			}
-		}
-
+        internal System.Windows.Forms.RadioButton rdoVolume;
 		internal System.Windows.Forms.DataVisualization.Charting.Chart chtData;
 	}
 }

@@ -50,38 +50,42 @@ namespace GCDCore.UserInterface.FISLibrary
 			this.btnAddFIS.Size = new System.Drawing.Size(29, 23);
 			this.btnAddFIS.TabIndex = 1;
 			this.btnAddFIS.UseVisualStyleBackColor = true;
-			//
-			//btnEditFIS
-			//
-			this.btnEditFIS.Image = Properties.Resources.Settings;
+            this.btnAddFIS.Click += btnAddFIS_Click;
+            //
+            //btnEditFIS
+            //
+            this.btnEditFIS.Image = Properties.Resources.Settings;
 			this.btnEditFIS.Location = new System.Drawing.Point(47, 12);
 			this.btnEditFIS.Name = "btnEditFIS";
 			this.btnEditFIS.Size = new System.Drawing.Size(29, 23);
 			this.btnEditFIS.TabIndex = 2;
 			this.btnEditFIS.UseVisualStyleBackColor = true;
-			//
-			//btnDeleteFIS
-			//
-			this.btnDeleteFIS.Image = Properties.Resources.Delete;
+            this.btnEditFIS.Click += btnEditFIS_Click;
+            //
+            //btnDeleteFIS
+            //
+            this.btnDeleteFIS.Image = Properties.Resources.Delete;
 			this.btnDeleteFIS.Location = new System.Drawing.Point(82, 12);
 			this.btnDeleteFIS.Name = "btnDeleteFIS";
 			this.btnDeleteFIS.Size = new System.Drawing.Size(29, 23);
 			this.btnDeleteFIS.TabIndex = 3;
 			this.btnDeleteFIS.UseVisualStyleBackColor = true;
-			//
-			//btnHelp
-			//
-			this.btnHelp.Anchor = (System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left);
+            this.btnDeleteFIS.Click += btnDeleteFIS_Click;
+            //
+            //btnHelp
+            //
+            this.btnHelp.Anchor = (System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left);
 			this.btnHelp.Location = new System.Drawing.Point(12, 227);
 			this.btnHelp.Name = "btnHelp";
 			this.btnHelp.Size = new System.Drawing.Size(75, 23);
 			this.btnHelp.TabIndex = 7;
 			this.btnHelp.Text = "Help";
 			this.btnHelp.UseVisualStyleBackColor = true;
-			//
-			//btnClose
-			//
-			this.btnClose.Anchor = (System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right);
+            this.btnHelp.Click += btnHelp_Click;
+            //
+            //btnClose
+            //
+            this.btnClose.Anchor = (System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right);
 			this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 			this.btnClose.Location = new System.Drawing.Point(647, 227);
 			this.btnClose.Name = "btnClose";
@@ -140,10 +144,11 @@ namespace GCDCore.UserInterface.FISLibrary
 			this.btnFISRepo.TabIndex = 10;
 			this.btnFISRepo.Text = "Visit ET-AL FIS Repository";
 			this.btnFISRepo.UseVisualStyleBackColor = true;
-			//
-			//FISLibraryForm
-			//
-			this.AutoScaleDimensions = new System.Drawing.SizeF(6f, 13f);
+            this.btnFISRepo.Click += btnFISRepo_Click;
+            //
+            //FISLibraryForm
+            //
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6f, 13f);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(734, 262);
 			this.Controls.Add(this.btnFISRepo);
@@ -163,76 +168,16 @@ namespace GCDCore.UserInterface.FISLibrary
 			this.ResumeLayout(false);
 
 		}
-		private System.Windows.Forms.Button withEventsField_btnAddFIS;
-		internal System.Windows.Forms.Button btnAddFIS {
-			get { return withEventsField_btnAddFIS; }
-			set {
-				if (withEventsField_btnAddFIS != null) {
-					withEventsField_btnAddFIS.Click -= btnAddFIS_Click;
-				}
-				withEventsField_btnAddFIS = value;
-				if (withEventsField_btnAddFIS != null) {
-					withEventsField_btnAddFIS.Click += btnAddFIS_Click;
-				}
-			}
-		}
-		private System.Windows.Forms.Button withEventsField_btnEditFIS;
-		internal System.Windows.Forms.Button btnEditFIS {
-			get { return withEventsField_btnEditFIS; }
-			set {
-				if (withEventsField_btnEditFIS != null) {
-					withEventsField_btnEditFIS.Click -= btnEditFIS_Click;
-				}
-				withEventsField_btnEditFIS = value;
-				if (withEventsField_btnEditFIS != null) {
-					withEventsField_btnEditFIS.Click += btnEditFIS_Click;
-				}
-			}
-		}
-		private System.Windows.Forms.Button withEventsField_btnDeleteFIS;
-		internal System.Windows.Forms.Button btnDeleteFIS {
-			get { return withEventsField_btnDeleteFIS; }
-			set {
-				if (withEventsField_btnDeleteFIS != null) {
-					withEventsField_btnDeleteFIS.Click -= btnDeleteFIS_Click;
-				}
-				withEventsField_btnDeleteFIS = value;
-				if (withEventsField_btnDeleteFIS != null) {
-					withEventsField_btnDeleteFIS.Click += btnDeleteFIS_Click;
-				}
-			}
-		}
-		private System.Windows.Forms.Button withEventsField_btnHelp;
-		internal System.Windows.Forms.Button btnHelp {
-			get { return withEventsField_btnHelp; }
-			set {
-				if (withEventsField_btnHelp != null) {
-					withEventsField_btnHelp.Click -= btnHelp_Click;
-				}
-				withEventsField_btnHelp = value;
-				if (withEventsField_btnHelp != null) {
-					withEventsField_btnHelp.Click += btnHelp_Click;
-				}
-			}
-		}
+        internal System.Windows.Forms.Button btnAddFIS;
+        internal System.Windows.Forms.Button btnEditFIS;
+        internal System.Windows.Forms.Button btnDeleteFIS;
+        internal System.Windows.Forms.Button btnHelp;
 		internal System.Windows.Forms.Button btnClose;
 		internal System.Windows.Forms.DataGridView DataGridView1;
 		internal System.Windows.Forms.BindingSource FISTableBindingSource;
 		internal System.Windows.Forms.ToolTip ttpTooltip;
 		internal System.Windows.Forms.DataGridViewTextBoxColumn NameDataGridViewTextBoxColumn;
 		internal System.Windows.Forms.DataGridViewTextBoxColumn PathDataGridViewTextBoxColumn;
-		private System.Windows.Forms.Button withEventsField_btnFISRepo;
-		internal System.Windows.Forms.Button btnFISRepo {
-			get { return withEventsField_btnFISRepo; }
-			set {
-				if (withEventsField_btnFISRepo != null) {
-					withEventsField_btnFISRepo.Click -= btnFISRepo_Click;
-				}
-				withEventsField_btnFISRepo = value;
-				if (withEventsField_btnFISRepo != null) {
-					withEventsField_btnFISRepo.Click += btnFISRepo_Click;
-				}
-			}
-		}
+        internal System.Windows.Forms.Button btnFISRepo;
 	}
 }

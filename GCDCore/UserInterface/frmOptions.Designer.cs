@@ -128,20 +128,22 @@ namespace GCDCore.UserInterface.Options
 			this.btnHelp.TabIndex = 2;
 			this.btnHelp.Text = "Help";
 			this.btnHelp.UseVisualStyleBackColor = true;
-			//
-			//btnClose
-			//
-			this.btnClose.Anchor = (System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right);
+            this.btnHelp.Click += btnHelp_Click;
+            //
+            //btnClose
+            //
+            this.btnClose.Anchor = (System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right);
 			this.btnClose.Location = new System.Drawing.Point(446, 328);
 			this.btnClose.Name = "btnClose";
 			this.btnClose.Size = new System.Drawing.Size(75, 23);
 			this.btnClose.TabIndex = 1;
 			this.btnClose.Text = "Close";
 			this.btnClose.UseVisualStyleBackColor = true;
-			//
-			//TabControl1
-			//
-			this.TabControl1.Anchor = (System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right);
+            this.btnClose.Click += btnOK_Click;
+            //
+            //TabControl1
+            //
+            this.TabControl1.Anchor = (System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right);
 			this.TabControl1.Controls.Add(this.TabPage1);
 			this.TabControl1.Controls.Add(this.TabPage2);
 			this.TabControl1.Controls.Add(this.TabPage3);
@@ -195,47 +197,52 @@ namespace GCDCore.UserInterface.Options
 			this.cmdDefault.TabIndex = 4;
 			this.cmdDefault.Text = "Use Default Workspace";
 			this.cmdDefault.UseVisualStyleBackColor = true;
-			//
-			//txtWorkspace
-			//
-			this.txtWorkspace.Anchor = (System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right);
+            this.cmdDefault.Click += cmdDefault_Click;
+            //
+            //txtWorkspace
+            //
+            this.txtWorkspace.Anchor = (System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right);
 			this.txtWorkspace.Location = new System.Drawing.Point(6, 19);
 			this.txtWorkspace.Name = "txtWorkspace";
 			this.txtWorkspace.ReadOnly = true;
 			this.txtWorkspace.Size = new System.Drawing.Size(436, 20);
 			this.txtWorkspace.TabIndex = 0;
-			//
-			//btnBrowse
-			//
-			this.btnBrowse.Anchor = (System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
+            this.txtWorkspace.TextChanged += txtWorkspace_TextChanged;
+            //
+            //btnBrowse
+            //
+            this.btnBrowse.Anchor = (System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
 			this.btnBrowse.Image = (System.Drawing.Image)resources.GetObject("btnBrowse.Image");
 			this.btnBrowse.Location = new System.Drawing.Point(448, 18);
 			this.btnBrowse.Name = "btnBrowse";
 			this.btnBrowse.Size = new System.Drawing.Size(29, 23);
 			this.btnBrowse.TabIndex = 1;
 			this.btnBrowse.UseVisualStyleBackColor = true;
-			//
-			//btnExploreWorkspace
-			//
-			this.btnExploreWorkspace.Location = new System.Drawing.Point(6, 45);
+            this.btnBrowse.Click += btnBrowseChangeWorkspace_Click;
+            //
+            //btnExploreWorkspace
+            //
+            this.btnExploreWorkspace.Location = new System.Drawing.Point(6, 45);
 			this.btnExploreWorkspace.Name = "btnExploreWorkspace";
 			this.btnExploreWorkspace.Size = new System.Drawing.Size(148, 23);
 			this.btnExploreWorkspace.TabIndex = 2;
 			this.btnExploreWorkspace.Text = "Open In Explorer";
 			this.btnExploreWorkspace.UseVisualStyleBackColor = true;
-			//
-			//btnClearWorkspace
-			//
-			this.btnClearWorkspace.Location = new System.Drawing.Point(167, 45);
+            this.btnExploreWorkspace.Click += btnExploreWorkspace_Click;
+            //
+            //btnClearWorkspace
+            //
+            this.btnClearWorkspace.Location = new System.Drawing.Point(167, 45);
 			this.btnClearWorkspace.Name = "btnClearWorkspace";
 			this.btnClearWorkspace.Size = new System.Drawing.Size(148, 23);
 			this.btnClearWorkspace.TabIndex = 3;
 			this.btnClearWorkspace.Text = "Clear Workspace";
 			this.btnClearWorkspace.UseVisualStyleBackColor = true;
-			//
-			//chkAutoLoadEtalFIS
-			//
-			this.chkAutoLoadEtalFIS.AutoSize = true;
+            this.btnClearWorkspace.Click += btnClearWorkspace_Click;
+            //
+            //chkAutoLoadEtalFIS
+            //
+            this.chkAutoLoadEtalFIS.AutoSize = true;
 			this.chkAutoLoadEtalFIS.Location = new System.Drawing.Point(11, 213);
 			this.chkAutoLoadEtalFIS.Margin = new System.Windows.Forms.Padding(2);
 			this.chkAutoLoadEtalFIS.Name = "chkAutoLoadEtalFIS";
@@ -455,10 +462,11 @@ namespace GCDCore.UserInterface.Options
 			this.btnDeleteSurveyType.Size = new System.Drawing.Size(29, 23);
 			this.btnDeleteSurveyType.TabIndex = 3;
 			this.btnDeleteSurveyType.UseVisualStyleBackColor = true;
-			//
-			//btnSettingsSurveyType
-			//
-			this.btnSettingsSurveyType.Image = Properties.Resources.Settings;
+            this.btnDeleteSurveyType.Click += btnDeleteSurveyType_Click;
+            //
+            //btnSettingsSurveyType
+            //
+            this.btnSettingsSurveyType.Image = Properties.Resources.Settings;
 			this.btnSettingsSurveyType.Location = new System.Drawing.Point(77, 7);
 			this.btnSettingsSurveyType.Name = "btnSettingsSurveyType";
 			this.btnSettingsSurveyType.Size = new System.Drawing.Size(29, 23);
@@ -474,10 +482,11 @@ namespace GCDCore.UserInterface.Options
 			this.btnAddSurveyType.Size = new System.Drawing.Size(29, 23);
 			this.btnAddSurveyType.TabIndex = 1;
 			this.btnAddSurveyType.UseVisualStyleBackColor = true;
-			//
-			//TabPage3
-			//
-			this.TabPage3.Controls.Add(this.grbTransparencyLayer);
+            this.btnAddSurveyType.Click += btnAddSurveyType_Click;
+            //
+            //TabPage3
+            //
+            this.TabPage3.Controls.Add(this.grbTransparencyLayer);
 			this.TabPage3.Controls.Add(this.chkAutoApplyTransparency);
 			this.TabPage3.Controls.Add(this.grbComparitiveLayers);
 			this.TabPage3.Controls.Add(this.chkComparativeSymbology);
@@ -596,10 +605,11 @@ namespace GCDCore.UserInterface.Options
 			this.chkAutoApplyTransparency.TabIndex = 8;
 			this.chkAutoApplyTransparency.Text = "Auto apply transparency";
 			this.chkAutoApplyTransparency.UseVisualStyleBackColor = true;
-			//
-			//grbComparitiveLayers
-			//
-			this.grbComparitiveLayers.Controls.Add(this.chkPointDensityComparative);
+            this.chkAutoApplyTransparency.CheckedChanged += chkAutoApplyTransparency_CheckedChanged;
+            //
+            //grbComparitiveLayers
+            //
+            this.grbComparitiveLayers.Controls.Add(this.chkPointDensityComparative);
 			this.grbComparitiveLayers.Controls.Add(this.chkDoDComparative);
 			this.grbComparitiveLayers.Controls.Add(this.chkFISErrorComparative);
 			this.grbComparitiveLayers.Controls.Add(this.chkInterpolationErrorComparative);
@@ -680,10 +690,11 @@ namespace GCDCore.UserInterface.Options
 			this.chkComparativeSymbology.TabIndex = 6;
 			this.chkComparativeSymbology.Text = "Apply comparative symbology";
 			this.chkComparativeSymbology.UseVisualStyleBackColor = true;
-			//
-			//cboLayer
-			//
-			this.cboLayer.Anchor = (System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right);
+            this.chkComparativeSymbology.CheckedChanged += chkComparativeSymbology_CheckedChanged;
+            //
+            //cboLayer
+            //
+            this.cboLayer.Anchor = (System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right);
 			this.cboLayer.Enabled = false;
 			this.cboLayer.FormattingEnabled = true;
 			this.cboLayer.Location = new System.Drawing.Point(48, 49);
@@ -856,10 +867,11 @@ namespace GCDCore.UserInterface.Options
 			this.lnkPyramidsHelp.TabStop = true;
 			this.lnkPyramidsHelp.Text = "Choose which GCD rasters automatically have pyramids built as they are created.";
 			this.lnkPyramidsHelp.UseCompatibleTextRendering = true;
-			//
-			//chkTempWorkspaceWarning
-			//
-			this.chkTempWorkspaceWarning.AutoSize = true;
+            this.lnkPyramidsHelp.LinkClicked += lnkPyramidsHelp_LinkClicked;
+            //
+            //chkTempWorkspaceWarning
+            //
+            this.chkTempWorkspaceWarning.AutoSize = true;
 			this.chkTempWorkspaceWarning.Location = new System.Drawing.Point(265, 126);
 			this.chkTempWorkspaceWarning.Name = "chkTempWorkspaceWarning";
 			this.chkTempWorkspaceWarning.Size = new System.Drawing.Size(226, 17);
@@ -908,103 +920,19 @@ namespace GCDCore.UserInterface.Options
 			this.ResumeLayout(false);
 
 		}
-		private System.Windows.Forms.Button withEventsField_btnHelp;
-		internal System.Windows.Forms.Button btnHelp {
-			get { return withEventsField_btnHelp; }
-			set {
-				if (withEventsField_btnHelp != null) {
-					withEventsField_btnHelp.Click -= btnHelp_Click;
-				}
-				withEventsField_btnHelp = value;
-				if (withEventsField_btnHelp != null) {
-					withEventsField_btnHelp.Click += btnHelp_Click;
-				}
-			}
-		}
-		private System.Windows.Forms.Button withEventsField_btnClose;
-		internal System.Windows.Forms.Button btnClose {
-			get { return withEventsField_btnClose; }
-			set {
-				if (withEventsField_btnClose != null) {
-					withEventsField_btnClose.Click -= btnOK_Click;
-				}
-				withEventsField_btnClose = value;
-				if (withEventsField_btnClose != null) {
-					withEventsField_btnClose.Click += btnOK_Click;
-				}
-			}
-		}
+        internal System.Windows.Forms.Button btnHelp;
+        internal System.Windows.Forms.Button btnClose;
 		internal System.Windows.Forms.TabControl TabControl1;
 		internal System.Windows.Forms.TabPage TabPage1;
-		private System.Windows.Forms.TextBox withEventsField_txtWorkspace;
-		internal System.Windows.Forms.TextBox txtWorkspace {
-			get { return withEventsField_txtWorkspace; }
-			set {
-				if (withEventsField_txtWorkspace != null) {
-					withEventsField_txtWorkspace.TextChanged -= txtWorkspace_TextChanged;
-				}
-				withEventsField_txtWorkspace = value;
-				if (withEventsField_txtWorkspace != null) {
-					withEventsField_txtWorkspace.TextChanged += txtWorkspace_TextChanged;
-				}
-			}
-		}
+        internal System.Windows.Forms.TextBox txtWorkspace;
 		internal System.Windows.Forms.CheckBox chkClearWorkspaceOnStartup;
-		private System.Windows.Forms.Button withEventsField_btnClearWorkspace;
-		internal System.Windows.Forms.Button btnClearWorkspace {
-			get { return withEventsField_btnClearWorkspace; }
-			set {
-				if (withEventsField_btnClearWorkspace != null) {
-					withEventsField_btnClearWorkspace.Click -= btnClearWorkspace_Click;
-				}
-				withEventsField_btnClearWorkspace = value;
-				if (withEventsField_btnClearWorkspace != null) {
-					withEventsField_btnClearWorkspace.Click += btnClearWorkspace_Click;
-				}
-			}
-		}
-		private System.Windows.Forms.Button withEventsField_btnBrowse;
-		internal System.Windows.Forms.Button btnBrowse {
-			get { return withEventsField_btnBrowse; }
-			set {
-				if (withEventsField_btnBrowse != null) {
-					withEventsField_btnBrowse.Click -= btnBrowseChangeWorkspace_Click;
-				}
-				withEventsField_btnBrowse = value;
-				if (withEventsField_btnBrowse != null) {
-					withEventsField_btnBrowse.Click += btnBrowseChangeWorkspace_Click;
-				}
-			}
-		}
+        internal System.Windows.Forms.Button btnClearWorkspace;
+        internal System.Windows.Forms.Button btnBrowse;
 		internal System.Windows.Forms.TabPage TabPage2;
 		internal System.Windows.Forms.TabPage TabPage3;
-		private System.Windows.Forms.Button withEventsField_btnAddSurveyType;
-		internal System.Windows.Forms.Button btnAddSurveyType {
-			get { return withEventsField_btnAddSurveyType; }
-			set {
-				if (withEventsField_btnAddSurveyType != null) {
-					withEventsField_btnAddSurveyType.Click -= btnAddSurveyType_Click;
-				}
-				withEventsField_btnAddSurveyType = value;
-				if (withEventsField_btnAddSurveyType != null) {
-					withEventsField_btnAddSurveyType.Click += btnAddSurveyType_Click;
-				}
-			}
-		}
+        internal System.Windows.Forms.Button btnAddSurveyType;
 		internal System.Windows.Forms.Button btnSettingsSurveyType;
-		private System.Windows.Forms.Button withEventsField_btnDeleteSurveyType;
-		internal System.Windows.Forms.Button btnDeleteSurveyType {
-			get { return withEventsField_btnDeleteSurveyType; }
-			set {
-				if (withEventsField_btnDeleteSurveyType != null) {
-					withEventsField_btnDeleteSurveyType.Click -= btnDeleteSurveyType_Click;
-				}
-				withEventsField_btnDeleteSurveyType = value;
-				if (withEventsField_btnDeleteSurveyType != null) {
-					withEventsField_btnDeleteSurveyType.Click += btnDeleteSurveyType_Click;
-				}
-			}
-		}
+        internal System.Windows.Forms.Button btnDeleteSurveyType;
 		internal System.Windows.Forms.Button btnSet;
 		internal System.Windows.Forms.Button btnSymReset;
 		internal System.Windows.Forms.ComboBox cboLayer;
@@ -1031,19 +959,7 @@ namespace GCDCore.UserInterface.Options
 		internal System.Windows.Forms.Label lblWidth;
 		internal System.Windows.Forms.NumericUpDown numChartHeight;
 		internal System.Windows.Forms.NumericUpDown numChartWidth;
-		private System.Windows.Forms.Button withEventsField_btnExploreWorkspace;
-		internal System.Windows.Forms.Button btnExploreWorkspace {
-			get { return withEventsField_btnExploreWorkspace; }
-			set {
-				if (withEventsField_btnExploreWorkspace != null) {
-					withEventsField_btnExploreWorkspace.Click -= btnExploreWorkspace_Click;
-				}
-				withEventsField_btnExploreWorkspace = value;
-				if (withEventsField_btnExploreWorkspace != null) {
-					withEventsField_btnExploreWorkspace.Click += btnExploreWorkspace_Click;
-				}
-			}
-		}
+        internal System.Windows.Forms.Button btnExploreWorkspace;
 		internal System.Windows.Forms.GroupBox GroupBox1;
 		internal System.Windows.Forms.CheckBox chkWarnAboutLongPaths;
 		internal System.Windows.Forms.CheckBox chkBoxValidateProjectOnLoad;
@@ -1054,66 +970,18 @@ namespace GCDCore.UserInterface.Options
 		internal System.Windows.Forms.CheckBox chkFISErrorComparative;
 		internal System.Windows.Forms.CheckBox chkInterpolationErrorComparative;
 		internal System.Windows.Forms.CheckBox chk3DPointQualityComparative;
-		private System.Windows.Forms.CheckBox withEventsField_chkComparativeSymbology;
-		internal System.Windows.Forms.CheckBox chkComparativeSymbology {
-			get { return withEventsField_chkComparativeSymbology; }
-			set {
-				if (withEventsField_chkComparativeSymbology != null) {
-					withEventsField_chkComparativeSymbology.CheckedChanged -= chkComparativeSymbology_CheckedChanged;
-				}
-				withEventsField_chkComparativeSymbology = value;
-				if (withEventsField_chkComparativeSymbology != null) {
-					withEventsField_chkComparativeSymbology.CheckedChanged += chkComparativeSymbology_CheckedChanged;
-				}
-			}
-		}
+        internal System.Windows.Forms.CheckBox chkComparativeSymbology;
 		internal System.Windows.Forms.GroupBox grbTransparencyLayer;
 		internal System.Windows.Forms.CheckBox chkAssociatedSurfacesTransparency;
-		private System.Windows.Forms.CheckBox withEventsField_chkAutoApplyTransparency;
-		internal System.Windows.Forms.CheckBox chkAutoApplyTransparency {
-			get { return withEventsField_chkAutoApplyTransparency; }
-			set {
-				if (withEventsField_chkAutoApplyTransparency != null) {
-					withEventsField_chkAutoApplyTransparency.CheckedChanged -= chkAutoApplyTransparency_CheckedChanged;
-				}
-				withEventsField_chkAutoApplyTransparency = value;
-				if (withEventsField_chkAutoApplyTransparency != null) {
-					withEventsField_chkAutoApplyTransparency.CheckedChanged += chkAutoApplyTransparency_CheckedChanged;
-				}
-			}
-		}
+        internal System.Windows.Forms.CheckBox chkAutoApplyTransparency;
 		internal System.Windows.Forms.CheckBox chkAnalysesTransparency;
 		internal System.Windows.Forms.Label Label7;
 		internal System.Windows.Forms.NumericUpDown nudTransparency;
 		internal System.Windows.Forms.CheckBox chkErrorSurfacesTransparency;
 		internal System.Windows.Forms.GroupBox GroupBox2;
-		private System.Windows.Forms.Button withEventsField_cmdDefault;
-		internal System.Windows.Forms.Button cmdDefault {
-			get { return withEventsField_cmdDefault; }
-			set {
-				if (withEventsField_cmdDefault != null) {
-					withEventsField_cmdDefault.Click -= cmdDefault_Click;
-				}
-				withEventsField_cmdDefault = value;
-				if (withEventsField_cmdDefault != null) {
-					withEventsField_cmdDefault.Click += cmdDefault_Click;
-				}
-			}
-		}
+        internal System.Windows.Forms.Button cmdDefault;
 		internal System.Windows.Forms.TabPage TabPage5;
-		private System.Windows.Forms.LinkLabel withEventsField_lnkPyramidsHelp;
-		internal System.Windows.Forms.LinkLabel lnkPyramidsHelp {
-			get { return withEventsField_lnkPyramidsHelp; }
-			set {
-				if (withEventsField_lnkPyramidsHelp != null) {
-					withEventsField_lnkPyramidsHelp.LinkClicked -= lnkPyramidsHelp_LinkClicked;
-				}
-				withEventsField_lnkPyramidsHelp = value;
-				if (withEventsField_lnkPyramidsHelp != null) {
-					withEventsField_lnkPyramidsHelp.LinkClicked += lnkPyramidsHelp_LinkClicked;
-				}
-			}
-		}
+        internal System.Windows.Forms.LinkLabel lnkPyramidsHelp;
 		internal System.Windows.Forms.CheckedListBox lstPyramids;
 		internal System.Windows.Forms.CheckBox chkTempWorkspaceWarning;
 	}
