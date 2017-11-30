@@ -1092,7 +1092,6 @@ namespace GCDCore.UserInterface.Project
 
         #endregion
 
-
         public void cmdRefresh_Click(System.Object sender, System.EventArgs e)
         {
             //Dim sSortBy As String = sender.ToString
@@ -1106,9 +1105,7 @@ namespace GCDCore.UserInterface.Project
             //End If
 
             LoadTree(null, m_eSortBy);
-
         }
-
 
         private void SortTOC_Click(System.Object sender, System.EventArgs e)
         {
@@ -1257,7 +1254,6 @@ namespace GCDCore.UserInterface.Project
 
         }
 
-
         private void RefreshMenuStripImages(ref ToolStripMenuItem pParentMenuItem)
         {
             //Set other parent menu items images to nothing
@@ -1278,38 +1274,6 @@ namespace GCDCore.UserInterface.Project
 
         }
 
-        //#Region "Summary XML Node"
-
-        //    Private Sub OpenInExcelToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs)
-
-        //        Try
-        //            Dim selNode As TreeNode = treProject.SelectedNode
-        //            If TypeOf selNode Is TreeNode Then
-        //                Dim eType As GCDNodeTypes = GetNodeType(selNode)
-        //                If eType = GCDNodeTypes.SummaryXML Then
-        //                    Dim nID As Integer = GetNodeID(selNode)
-        //                    Dim rDod As ProjectDS.DoDsRow = GCD.GCDProject.ProjectManagerBase.ds.DoDs.FindByDoDID(nID)
-        //                    If TypeOf rDod Is ProjectDS.DoDsRow Then
-        //                        If Not rDod.IsSummaryXMLPathNull Then
-        //                            Dim sPath As String = rDod.SummaryXMLPath
-        //                            If sPath.Contains(" ") Then
-        //                                sPath = """" & sPath & """"
-        //                            End If
-        //                            Process.Start("notepad.exe", sPath)
-        //                        End If
-        //                    End If
-        //                End If
-        //            End If
-
-        //        Catch ex As Exception
-        //            ExceptionUI.HandleException(ex)
-        //        End Try
-
-        //    End Sub
-
-        //#End Region
-
-
         private void ExploreChangeDetectionFolderToolStripMenuItem_Click(System.Object sender, System.EventArgs e)
         {
             try
@@ -1327,13 +1291,11 @@ namespace GCDCore.UserInterface.Project
                         }
                     }
                 }
-
             }
             catch (Exception ex)
             {
                 naru.error.ExceptionUI.HandleException(ex);
             }
-
         }
 
         private void ExploreGCDProjectFolderToolStripMenuItem_Click(System.Object sender, System.EventArgs e)
@@ -1348,44 +1310,23 @@ namespace GCDCore.UserInterface.Project
             }
         }
 
-
         private void AddChangeDetectionToolStripMenuItem1_Click(System.Object sender, System.EventArgs e)
         {
             try
             {
-                throw new NotImplementedException("add dod with same DEMs not implemented");
-                //Dim nodSelected As TreeNode = treProject.SelectedNode
+                TreeNode nodSelected = treProject.SelectedNode;
+                Debug.Assert(nodSelected.Nodes.Count > 0, "a pair of DEMs should only be in tree if there are child DoDs");
 
-                //If TypeOf nodSelected Is TreeNode Then
-                //    If GetNodeType(nodSelected) = GCDNodeTypes.ChangeDetectionDEMPair Then
-                //        Dim n1stUnderscore As Integer = nodSelected.Tag.ToString.IndexOf("_")
-                //        Dim n2ndUnderscore As Integer = nodSelected.Tag.ToString.LastIndexOf("_")
-
-                //        'Handles if the selected there are no dem in the selection tree because they have been deleted
-                //        If n1stUnderscore = -1 OrElse n2ndUnderscore = -1 Then
-                //            MsgBox("One or more of the selected DEM have been deleted and cannot be used in a change detection calculation.", MsgBoxStyle.Information, GCDCore.Properties.Resources.ApplicationNameLong)
-                //            Exit Sub
-                //        End If
-
-                //        Dim nNewDEMID, nOldDEMID As Integer
-
-                //        If Integer.TryParse(nodSelected.Tag.ToString.Substring(n1stUnderscore + 1, n2ndUnderscore - n1stUnderscore - 1), nNewDEMID) Then
-                //            If Integer.TryParse(nodSelected.Tag.ToString.Substring(n2ndUnderscore + 1, nodSelected.Tag.ToString.Length - n2ndUnderscore - 1), nOldDEMID) Then
-                //                Dim frmDoDCalculation As New ChangeDetection.frmDoDProperties(nNewDEMID, nOldDEMID)
-                //                DoChangeDetection(frmDoDCalculation)
-                //            End If
-                //        End If
-
-                //    End If
-                //End If
+                ProjectTreeNode dodTag = (ProjectTreeNode)nodSelected.Nodes[0].Tag;
+                DoDBase dod = (DoDBase) dodTag.Item;
+                ChangeDetection.frmDoDProperties frm = new ChangeDetection.frmDoDProperties(dod.NewDEM, dod.OldDEM);
+                DoChangeDetection(ref frm);                
             }
             catch (Exception ex)
             {
                 naru.error.ExceptionUI.HandleException(ex);
             }
-
         }
-
 
         private void AddAllChangeDetectionsToTheMapToolStripMenuItem_Click(System.Object sender, System.EventArgs e)
         {
@@ -1436,7 +1377,6 @@ namespace GCDCore.UserInterface.Project
 
         }
 
-
         private void Button1_Click(System.Object sender, System.EventArgs e)
         {
             try
@@ -1447,9 +1387,7 @@ namespace GCDCore.UserInterface.Project
             {
                 naru.error.ExceptionUI.HandleException(ex);
             }
-
         }
-
 
         private void AddAllDEMSurveysToTheMapToolStripMenuItem1_Click(System.Object sender, System.EventArgs e)
         {
@@ -1457,7 +1395,6 @@ namespace GCDCore.UserInterface.Project
             {
                 throw new Exception("Add all DEMs to the map");
             }
-
         }
 
         private void AddDEMSurveyToolStripMenuItem1_Click(System.Object sender, System.EventArgs e)
@@ -1469,15 +1406,12 @@ namespace GCDCore.UserInterface.Project
             catch (Exception ex)
             {
                 naru.error.ExceptionUI.HandleException(ex);
-            }
+           }
 
         }
 
-        //, _
         private void BudgetSegregationPropertiesToolStripMenuItem_Click(System.Object sender, System.EventArgs e)
         {
-            //AddBudgetSegregationToolStripMenuItem2.Click
-
             try
             {
                 TreeNode nodSelected = treProject.SelectedNode;
@@ -1519,7 +1453,6 @@ namespace GCDCore.UserInterface.Project
                 naru.error.ExceptionUI.HandleException(ex);
             }
         }
-
 
         private void btnAdd_Click(object sender, System.EventArgs e)
         {
