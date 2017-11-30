@@ -614,7 +614,8 @@ namespace GCDCore.UserInterface.Project
                     if (eType == GCDNodeTypes.ErrorSurface)
                     {
                         ErrorSurface errSurf = (ErrorSurface)((ProjectTreeNode)selNode.Tag).Item;
-                        frmDEMSurveyProperties.ViewErrorSurfaceProperties(errSurf);
+                        if (frmDEMSurveyProperties.ViewErrorSurfaceProperties(errSurf) == DialogResult.OK)
+                            LoadTree();
                     }
                 }
             }
