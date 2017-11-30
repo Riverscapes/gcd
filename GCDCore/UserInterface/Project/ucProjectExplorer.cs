@@ -1318,9 +1318,9 @@ namespace GCDCore.UserInterface.Project
                 Debug.Assert(nodSelected.Nodes.Count > 0, "a pair of DEMs should only be in tree if there are child DoDs");
 
                 ProjectTreeNode dodTag = (ProjectTreeNode)nodSelected.Nodes[0].Tag;
-                DoDBase dod = (DoDBase) dodTag.Item;
+                DoDBase dod = (DoDBase)dodTag.Item;
                 ChangeDetection.frmDoDProperties frm = new ChangeDetection.frmDoDProperties(dod.NewDEM, dod.OldDEM);
-                DoChangeDetection(ref frm);                
+                DoChangeDetection(ref frm);
             }
             catch (Exception ex)
             {
@@ -1406,7 +1406,7 @@ namespace GCDCore.UserInterface.Project
             catch (Exception ex)
             {
                 naru.error.ExceptionUI.HandleException(ex);
-           }
+            }
 
         }
 
@@ -1471,7 +1471,6 @@ namespace GCDCore.UserInterface.Project
                         case GCDNodeTypes.DEMSurvey:
                             AddDEMSurvey();
                             break;
-                        //frm = New frmSurveyProperties(My.ThisApplication, 0)
 
                         case GCDNodeTypes.SurveysGroup:
                             AddDEMSurvey();
@@ -1489,14 +1488,14 @@ namespace GCDCore.UserInterface.Project
                             break;
                         case GCDNodeTypes.ErrorSurfaceGroup:
                             DEMSurvey DEM3 = (DEMSurvey)((ProjectTreeNode)nodSelected.Parent.Tag).Item;
+                            frm = new frmErrorSurfaceProperties(DEM3, null);
                             break;
-                        //frm = New ErrorCalculation.frmErrorCalculation(rDEM)
 
                         case GCDNodeTypes.ErrorSurface:
                             DEMSurvey DEM4 = (DEMSurvey)((ProjectTreeNode)nodSelected.Parent.Parent.Tag).Item;
+                            frm = new frmErrorSurfaceProperties(DEM4, null);
                             break;
-                        //frm = New ErrorCalculation.frmErrorCalculation(rDEM)
-
+                    
                         case GCDNodeTypes.BudgetSegregationGroup:
                         case GCDNodeTypes.BudgetSegregation:
                             DoDBase DoD = (DoDBase)((ProjectTreeNode)nodSelected.Parent.Parent.Tag).Item;
