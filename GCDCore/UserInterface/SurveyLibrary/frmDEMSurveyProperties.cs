@@ -12,20 +12,18 @@ namespace GCDCore.UserInterface.SurveyLibrary
     public partial class frmDEMSurveyProperties
     {
         private DEMSurvey DEM;
-        private frmImportRaster m_ImportRasterform;
-
         private System.ComponentModel.BindingList<AssocSurface> AssocSurfaceBindingList;
+    
         #region "Survey Property Routines"
 
-
         public frmDEMSurveyProperties(DEMSurvey editDEM)
-        {
-            Load += SurveyPropertiesForm_Load;
+        {;
             // This call is required by the Windows Form Designer.
             InitializeComponent();
             DEM = editDEM;
-        }
 
+            ucDEMMask.PathChanged += OnMaskChanged;
+        }
 
         private void SurveyPropertiesForm_Load(System.Object sender, System.EventArgs e)
         {
@@ -34,7 +32,8 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
             txtName.Text = DEM.Name;
             txtRasterPath.Text = ProjectManager.Project.GetRelativePath(DEM.Raster.GISFileInfo);
-            txtMask.Text = DEM.MethodMaskField;
+
+            ucDEMMask.Initialize("DEM Survey Mask", GCDConsoleLib.GDalGeometryType.SimpleTypes.Polygon);
             txtFolder.Text = DEM.Raster.GISFileInfo.DirectoryName;
             rdoSingle.Checked = DEM.IsSingleSurveyMethod;
 
@@ -56,7 +55,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
                 if (DEM.MethodMask is FileInfo && DEM.MethodMask.Exists)
                 {
                     // This should fire the reloading of the mask field dropdown
-                    txtMask.Text = DEM.MethodMask.FullName;
+                    ucDEMMask.Initialize(DEM.MethodMask.FullName, true);
                 }
             }
 
@@ -78,7 +77,6 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
             UpdateControls();
             LoadRasterProperties();
-
         }
 
 
@@ -149,10 +147,10 @@ namespace GCDCore.UserInterface.SurveyLibrary
             }
             else
             {
-                if (string.IsNullOrEmpty(txtMask.Text))
+                if (ucDEMMask.SelectedItem == null)
                 {
-                    MessageBox.Show("You must select a survey mask feature class.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    btnBrowseMask.Select();
+                    MessageBox.Show("You must select a survey method mask polygon feature class, or designate the DEM as a single method survey.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    ucDEMMask.Select();
                     return false;
                 }
 
@@ -165,28 +163,25 @@ namespace GCDCore.UserInterface.SurveyLibrary
             }
 
             return true;
-
         }
 
-
-        private void txtMask_TextChanged(object sender, System.EventArgs e)
+        private void OnMaskChanged(object sender, EventArgs e)
         {
             cboIdentify.Items.Clear();
-            if (string.IsNullOrEmpty(txtMask.Text))
+            if (ucDEMMask.SelectedItem == null)
             {
                 return;
             }
 
-            GCDConsoleLib.Vector gMask = new GCDConsoleLib.Vector(DEM.MethodMask);
-            List<GCDConsoleLib.VectorField> stringFields = gMask.Fields.Values.Where(x => x.Type == GCDConsoleLib.GDalFieldType.StringField).ToList<GCDConsoleLib.VectorField>();
+            List<GCDConsoleLib.VectorField> stringFields = ucDEMMask.SelectedItem.Fields.Values.Where(x => x.Type.Equals(GCDConsoleLib.GDalFieldType.StringField)).ToList<GCDConsoleLib.VectorField>();
             cboIdentify.Items.AddRange(stringFields.ToArray());
             if (!string.IsNullOrEmpty(DEM.MethodMaskField) && cboIdentify.Items.Contains(DEM.MethodMaskField))
             {
                 cboIdentify.Text = DEM.MethodMaskField;
             }
-
+            else if (cboIdentify.Items.Count == 1)
+                cboIdentify.SelectedIndex = 0;
         }
-
 
         private void txtFolder_DoubleClick(object sender, System.EventArgs e)
         {
@@ -197,19 +192,14 @@ namespace GCDCore.UserInterface.SurveyLibrary
                     Process.Start("explorer.exe", txtFolder.Text);
                 }
             }
-
         }
-
 
         private void UpdateControls()
         {
             cboSingle.Enabled = rdoSingle.Checked;
-            txtMask.Enabled = rdoMulti.Checked;
+            ucDEMMask.Enabled = rdoMulti.Checked;
             cboIdentify.Enabled = rdoMulti.Checked;
-            btnBrowseMask.Enabled = rdoMulti.Checked;
-
         }
-
 
         private void btnOK_Click(System.Object sender, System.EventArgs e)
         {
@@ -241,7 +231,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             else
             {
                 DEM.SurveyMethod = string.Empty;
-                DEM.MethodMask = new System.IO.FileInfo(txtMask.Text);
+                DEM.MethodMask = ucDEMMask.SelectedItem.GISFileInfo;
                 DEM.MethodMaskField = cboIdentify.Text;
             }
 
@@ -262,6 +252,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
             try
             {
+
                 throw new NotImplementedException("browse for polygon mask. then set mask text. This should trigger field combo refresh.");
 
             }
@@ -579,5 +570,4 @@ namespace GCDCore.UserInterface.SurveyLibrary
             }
         }
     }
-
 }

@@ -57,9 +57,7 @@ namespace GCDCore.UserInterface.UtilityForms
             {
                 naru.error.ExceptionUI.HandleException(ex, "Error browsing to raster");
             }
-
         }
-
 
         public void cmdSelectRaster_Click(object sender, naru.ui.PathEventArgs e)
         {
@@ -75,8 +73,8 @@ namespace GCDCore.UserInterface.UtilityForms
             {
                 naru.error.ExceptionUI.HandleException(ex, "Error selecting raster from ArcMap");
             }
-
         }
+
         public ucRasterInput()
         {
             SelectLayer += cmdSelectRaster_Click;
@@ -93,8 +91,6 @@ namespace GCDCore.UserInterface.UtilityForms
         //    Return True
 
         //End Function
-
     }
-
 }
 

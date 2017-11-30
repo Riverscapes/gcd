@@ -14,6 +14,11 @@ namespace GCDConsoleLib
         public int Precision { get { return _fieldDef.GetPrecision(); } }
         public GDalFieldType Type;
 
+        public override string ToString()
+        {
+            return Name;
+        }
+
         private FieldDefn _fieldDef;
         public VectorField(FieldDefn fieldDef)
         {
