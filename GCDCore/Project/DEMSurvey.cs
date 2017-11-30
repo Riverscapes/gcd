@@ -153,11 +153,11 @@ namespace GCDCore.Project
             if (SurveyDate != null)
             {
                 XmlNode nodSurveyDate = nodDEM.AppendChild(xmlDoc.CreateElement("SurveyDate"));
-                nodSurveyDate.AppendChild(xmlDoc.CreateElement("Year")).InnerText = SurveyDate.Year > 0 ? SurveyDate.Year.ToString() : string.Empty;
-                nodSurveyDate.AppendChild(xmlDoc.CreateElement("Month")).InnerText = SurveyDate.Month > 0 ? SurveyDate.Month.ToString() : string.Empty;
-                nodSurveyDate.AppendChild(xmlDoc.CreateElement("Day")).InnerText = SurveyDate.Day > 0 ? SurveyDate.Day.ToString() : string.Empty;
-                nodSurveyDate.AppendChild(xmlDoc.CreateElement("Hour")).InnerText = SurveyDate.Hour > -1 ? SurveyDate.Hour.ToString() : string.Empty;
-                nodSurveyDate.AppendChild(xmlDoc.CreateElement("Minute")).InnerText = SurveyDate.Minute > -1 ? SurveyDate.Minute.ToString() : string.Empty;
+                naru.xml.XMLHelpers.AddNode(xmlDoc, nodSurveyDate, "Year", SurveyDate.Year > 0 ? SurveyDate.Year.ToString() : string.Empty);
+                naru.xml.XMLHelpers.AddNode(xmlDoc, nodSurveyDate, "Month", SurveyDate.Month > 0 ? SurveyDate.Month.ToString() : string.Empty);
+                naru.xml.XMLHelpers.AddNode(xmlDoc, nodSurveyDate, "Day", SurveyDate.Day > 0 ? SurveyDate.Day.ToString() : string.Empty);
+                naru.xml.XMLHelpers.AddNode(xmlDoc, nodSurveyDate, "Hour", SurveyDate.Hour > -1 ? SurveyDate.Hour.ToString() : string.Empty);
+                naru.xml.XMLHelpers.AddNode(xmlDoc, nodSurveyDate, "Minute", SurveyDate.Minute > -1 ? SurveyDate.Minute.ToString() : string.Empty);
             }
 
             if (MethodMask != null)
@@ -198,7 +198,7 @@ namespace GCDCore.Project
                 if (!string.IsNullOrEmpty(nodDEM.SelectSingleNode("SurveyDate/Month").InnerText))
                     surveyDT.Month = byte.Parse(nodDEM.SelectSingleNode("SurveyDate/Month").InnerText);
 
-                if (!string.IsNullOrEmpty(nodDEM.SelectSingleNode("SurveyDate/Year").InnerText))
+                if (!string.IsNullOrEmpty(nodDEM.SelectSingleNode("SurveyDate/Day").InnerText))
                     surveyDT.Day = byte.Parse(nodDEM.SelectSingleNode("SurveyDate/Day").InnerText);
 
                 if (!string.IsNullOrEmpty(nodDEM.SelectSingleNode("SurveyDate/Hour").InnerText))

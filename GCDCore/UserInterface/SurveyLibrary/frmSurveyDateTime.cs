@@ -5,25 +5,19 @@ using System.Windows.Forms;
 
 namespace GCDCore.UserInterface.SurveyLibrary
 {
-
     public partial class frmSurveyDateTime
     {
-
-
-        private SurveyDateTime m_dateTime;
+        public SurveyDateTime SurveyDateTime { get; internal set; }
         public frmSurveyDateTime(SurveyDateTime sdt)
         {
-            Load += frmSurveyDateTime_Load;
             // This call is required by the designer.
             InitializeComponent();
-            m_dateTime = sdt;
-        }
 
-        public SurveyDateTime SurveyDateTime
-        {
-            get { return m_dateTime; }
+            if (sdt == null)
+                SurveyDateTime = new SurveyDateTime();
+            else
+                SurveyDateTime = sdt;
         }
-
 
         private void frmSurveyDateTime_Load(System.Object sender, System.EventArgs e)
         {
@@ -34,7 +28,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             for (int nYear = 1970; nYear <= DateTime.Now.Year + 5; nYear++)
             {
                 nIndex = cboYear.Items.Add(new NamedObject(nYear, nYear.ToString()));
-                if (nYear == m_dateTime.Year)
+                if (nYear == SurveyDateTime.Year)
                 {
                     cboYear.SelectedIndex = nIndex;
                 }
@@ -46,7 +40,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             {
                 DateTime dt = new DateTime(1970, nMonth, 1);
                 nIndex = cboMonth.Items.Add(new NamedObject(nMonth, dt.ToString("MMM")));
-                if (nMonth == m_dateTime.Month)
+                if (nMonth == SurveyDateTime.Month)
                 {
                     cboMonth.SelectedIndex = nMonth;
                 }
@@ -55,14 +49,14 @@ namespace GCDCore.UserInterface.SurveyLibrary
             // Note that the days of the month are loaded repeatedly
             // when the year or month dropdowns change their selection
             // and that this is triggered by the lines of code above
-            ReLoadDaysOfMonth(m_dateTime.Day);
+            ReLoadDaysOfMonth(SurveyDateTime.Day);
 
             cboHour.Items.Add(new NamedObject(-1, "HH"));
             cboHour.SelectedIndex = 0;
             for (int nHour = 0; nHour <= 24; nHour++)
             {
                 nIndex = cboHour.Items.Add(new NamedObject(nHour, nHour.ToString("00")));
-                if (nHour == m_dateTime.Hour)
+                if (nHour == SurveyDateTime.Hour)
                 {
                     cboHour.SelectedIndex = nIndex;
                 }
@@ -73,17 +67,15 @@ namespace GCDCore.UserInterface.SurveyLibrary
             for (int nMin = 0; nMin <= 59; nMin++)
             {
                 nIndex = cboMinute.Items.Add(new NamedObject(nMin, nMin.ToString("00")));
-                if (nMin == m_dateTime.Minute)
+                if (nMin == SurveyDateTime.Minute)
                 {
                     cboMinute.SelectedIndex = nIndex;
                 }
             }
-
         }
 
         private bool ValidateForm()
         {
-
             if (((NamedObject)cboYear.SelectedItem).ID == 0 && ((NamedObject)cboMonth.SelectedItem).ID != 0)
             {
                 MessageBox.Show("You must select a year if you want to specify a month.", GCDCore.Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -103,9 +95,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             }
 
             return true;
-
         }
-
 
         private void cmdSave_Click(object sender, System.EventArgs e)
         {
@@ -115,14 +105,21 @@ namespace GCDCore.UserInterface.SurveyLibrary
                 return;
             }
 
-            m_dateTime = new GCDCore.Project.SurveyDateTime();
-            m_dateTime.Year = Convert.ToUInt16(((NamedObject)cboYear.SelectedItem).ID);
-            m_dateTime.Month = Convert.ToByte(((NamedObject)cboMonth.SelectedItem).ID);
-            m_dateTime.Day = Convert.ToByte(((NamedObject)cboDay.SelectedItem).ID);
+            if (cboYear.SelectedIndex == 0 && cboMonth.SelectedIndex == 0 && cboDay.SelectedIndex == 0 &&
+                cboHour.SelectedIndex == 0 && cboMinute.SelectedIndex == 0)
+            {
+                SurveyDateTime = null;
+            }
+            else
+            {
+                SurveyDateTime = new GCDCore.Project.SurveyDateTime();
+                SurveyDateTime.Year = Convert.ToUInt16(((NamedObject)cboYear.SelectedItem).ID);
+                SurveyDateTime.Month = Convert.ToByte(((NamedObject)cboMonth.SelectedItem).ID);
+                SurveyDateTime.Day = Convert.ToByte(((NamedObject)cboDay.SelectedItem).ID);
 
-            m_dateTime.Hour = Convert.ToInt16(((NamedObject)cboHour.SelectedItem).ID);
-            m_dateTime.Minute = Convert.ToInt16(((NamedObject)cboMinute.SelectedItem).ID);
-
+                SurveyDateTime.Hour = Convert.ToInt16(((NamedObject)cboHour.SelectedItem).ID);
+                SurveyDateTime.Minute = Convert.ToInt16(((NamedObject)cboMinute.SelectedItem).ID);
+            }
         }
 
         /// <summary>
@@ -131,7 +128,6 @@ namespace GCDCore.UserInterface.SurveyLibrary
         /// <param name="sender"></param>
         /// <param name="e"></param>
         /// <remarks></remarks>
-
         private void cboYear_SelectedIndexChanged(System.Object sender, System.EventArgs e)
         {
             int nCurrentDay = 0;
@@ -141,9 +137,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             }
 
             ReLoadDaysOfMonth(nCurrentDay);
-
         }
-
 
         private void ReLoadDaysOfMonth(int nSelectDay)
         {
@@ -177,5 +171,4 @@ namespace GCDCore.UserInterface.SurveyLibrary
             }
         }
     }
-
 }

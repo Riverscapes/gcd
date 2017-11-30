@@ -11,9 +11,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
 {
     public partial class frmDEMSurveyProperties
     {
-
         private DEMSurvey DEM;
-
         private frmImportRaster m_ImportRasterform;
 
         private System.ComponentModel.BindingList<AssocSurface> AssocSurfaceBindingList;
@@ -35,7 +33,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             cboSingle.Items.AddRange(ProjectManager.SurveyTypes.Values.ToArray());
 
             txtName.Text = DEM.Name;
-            txtRasterPath.Text = ProjectManager.Project.GetRelativePath( DEM.Raster.GISFileInfo);
+            txtRasterPath.Text = ProjectManager.Project.GetRelativePath(DEM.Raster.GISFileInfo);
             txtMask.Text = DEM.MethodMaskField;
             txtFolder.Text = DEM.Raster.GISFileInfo.DirectoryName;
             rdoSingle.Checked = DEM.IsSingleSurveyMethod;
@@ -574,7 +572,10 @@ namespace GCDCore.UserInterface.SurveyLibrary
             if (frm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 DEM.SurveyDate = frm.SurveyDateTime;
-                lblDatetime.Text = DEM.SurveyDate.ToString();
+                if (DEM.SurveyDate is SurveyDateTime)
+                    lblDatetime.Text = DEM.SurveyDate.ToString();
+                else
+                    lblDatetime.Text = SurveyDateTime.NotSetString;
             }
         }
     }
