@@ -230,7 +230,7 @@ namespace GCDCore.UserInterface.ChangeDetection
 		private void cboNewDEM_SelectedIndexChanged(object sender, System.EventArgs e)
 		{
 			if (cboNewDEM.SelectedItem is DEMSurvey) {
-				cboNewError.DataSource = ((DEMSurvey)cboNewDEM.SelectedItem).ErrorSurfaces.Values.ToList();
+				cboNewError.DataSource = ((DEMSurvey)cboNewDEM.SelectedItem).ErrorSurfaces;
 
 				if (cboNewError.Items.Count == 1) {
 					cboNewError.SelectedIndex = 0;
@@ -245,7 +245,7 @@ namespace GCDCore.UserInterface.ChangeDetection
 		private void cboOldDEM_SelectedIndexChanged(object sender, System.EventArgs e)
 		{
 			if (cboOldDEM.SelectedItem is DEMSurvey) {
-				cboOldError.DataSource = ((DEMSurvey)cboOldDEM.SelectedItem).ErrorSurfaces.Values.ToList();
+				cboOldError.DataSource = ((DEMSurvey)cboOldDEM.SelectedItem).ErrorSurfaces;
 
 				if (cboOldError.Items.Count == 1) {
 					cboOldError.SelectedIndex = 0;

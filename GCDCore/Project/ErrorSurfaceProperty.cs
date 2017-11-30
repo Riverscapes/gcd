@@ -2,6 +2,7 @@
 using System.IO;
 using System.Collections.Generic;
 using System.Xml;
+using System.Linq;
 
 namespace GCDCore.Project
 {
@@ -94,7 +95,7 @@ namespace GCDCore.Project
             }
             else if (nodAss is XmlNode)
             {
-                AssocSurface assoc = dem.AssocSurfaces[nodAss.InnerText];
+                AssocSurface assoc = dem.AssocSurfaces.First<AssocSurface>(x => string.Compare(nodAss.InnerText, x.Name, true) ==0);
                 result = new ErrorSurfaceProperty(name, assoc);
             }
             else if (nodFIS is XmlNode)
@@ -103,7 +104,7 @@ namespace GCDCore.Project
                 Dictionary<string, AssocSurface> inputs = new Dictionary<string, AssocSurface>();
 
                 foreach (XmlNode nodInput in nodFIS.SelectNodes("Inputs/Input"))
-                    inputs[nodInput.SelectSingleNode("Name").InnerText] = dem.AssocSurfaces[nodInput.SelectSingleNode("AssociatedSurface").InnerText];
+                    inputs[nodInput.SelectSingleNode("Name").InnerText] = dem.AssocSurfaces.First<AssocSurface>(x => string.Compare(nodInput.SelectSingleNode("AssociatedSurface").InnerText, x.Name, true) == 0);
 
                 result = new ErrorSurfaceProperty(name, fisRuleFile, inputs);
             }

@@ -16,10 +16,22 @@ namespace GCDCore.Project
             get { return _IsDefault; }
             set
             {
-                foreach (ErrorSurface errSurf in DEM.ErrorSurfaces.Values)
+                foreach (ErrorSurface errSurf in DEM.ErrorSurfaces)
                     errSurf.IsDefault = false;
 
                 _IsDefault = true;
+            }
+        }
+
+        // Certain user interface controls want to display which surface is the default
+        public string NameWithDefault
+        {
+            get
+            {
+                if (IsDefault)
+                    return string.Format("{0} (Default)", Name);
+                else
+                    return Name;
             }
         }
 
@@ -49,7 +61,7 @@ namespace GCDCore.Project
         {
             Raster = new Raster(rasterPath);
             DEM = dem;
-            _IsDefault = IsDefault;
+            _IsDefault = isDefault;
             ErrorProperties = errProperties;
         }
 

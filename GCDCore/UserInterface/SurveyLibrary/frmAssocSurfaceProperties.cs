@@ -146,7 +146,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
                     }
 
                     m_Assoc = new AssocSurface(txtName.Text.Trim(), ProjectManager.Project.GetAbsolutePath(txtProjectRaster.Text), cboType.Text, DEM);
-                    DEM.AssocSurfaces.Add(m_Assoc.Name, m_Assoc);
+                    DEM.AssocSurfaces.Add(m_Assoc);
                 }
                 else
                 {
@@ -166,12 +166,10 @@ namespace GCDCore.UserInterface.SurveyLibrary
             {
                 Cursor = System.Windows.Forms.Cursors.Default;
             }
-
         }
 
         private bool ImportRaster()
         {
-
             var bRasterImportSuccessful = false;
             System.IO.FileInfo fiOutput = new System.IO.FileInfo(txtProjectRaster.Text);
 
@@ -180,7 +178,6 @@ namespace GCDCore.UserInterface.SurveyLibrary
                 // Make sure that the destination folder exists where the associated surface will be output
                 string sWorkspacePath = System.IO.Path.GetDirectoryName(txtProjectRaster.Text);
                 System.IO.Directory.CreateDirectory(sWorkspacePath);
-
 
                 // Create the slope surface or point density rasters
                 switch (m_eMethod)
@@ -244,12 +241,10 @@ namespace GCDCore.UserInterface.SurveyLibrary
             }
 
             return bRasterImportSuccessful;
-
         }
 
         private bool ValidateForm()
         {
-
             // Safety check against names with only blank spaces
             txtName.Text = txtName.Text.Trim();
 
@@ -297,7 +292,6 @@ namespace GCDCore.UserInterface.SurveyLibrary
             return true;
 
         }
-
 
         private void btnBrowse_Click(System.Object sender, System.EventArgs e)
         {

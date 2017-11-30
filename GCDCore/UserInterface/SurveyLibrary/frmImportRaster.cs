@@ -451,6 +451,10 @@ namespace GCDCore.UserInterface.SurveyLibrary
                 case ExtentImporter.Purposes.AssociatedSurface:
                     txtRasterPath.Text = ProjectManager.Project.GetRelativePath(ProjectManager.OutputManager.AssociatedSurfaceRasterPath(ReferenceDEM.Name, txtName.Text));
                     break;
+
+                case ExtentImporter.Purposes.ErrorSurface:
+                    txtRasterPath.Text = ProjectManager.Project.GetRelativePath(ProjectManager.OutputManager.ErrorSurfaceRasterPath(ReferenceDEM.Name, txtName.Text));
+                    break;
             }
         }
 

@@ -2,6 +2,7 @@
 using System.IO;
 using System.Xml;
 using System.Collections.Generic;
+using System.Linq;
 using GCDConsoleLib;
 using GCDConsoleLib.GCD;
 
@@ -44,8 +45,8 @@ namespace GCDCore.Project
         {
             DoDBase partialDoD = DoDBase.Deserialize(nodDoD, dems);
 
-            ErrorSurface newError = DeserializeError(nodDoD, partialDoD.NewDEM.ErrorSurfaces, "NewError");
-            ErrorSurface oldError = DeserializeError(nodDoD, partialDoD.OldDEM.ErrorSurfaces, "OldError");
+            ErrorSurface newError = DeserializeError(nodDoD, partialDoD.NewDEM.ErrorSurfaces.ToList<ErrorSurface>(), "NewError");
+            ErrorSurface oldError = DeserializeError(nodDoD, partialDoD.OldDEM.ErrorSurfaces.ToList<ErrorSurface>(), "OldError");
 
             FileInfo propErr = null;
             XmlNode nodPropErr = nodDoD.SelectSingleNode("PropagatedError");
@@ -55,15 +56,10 @@ namespace GCDCore.Project
             return new DoDPropagated(partialDoD, propErr, newError, oldError);
         }
 
-        private static ErrorSurface DeserializeError(XmlNode nodDoD, Dictionary<string, ErrorSurface> ErrorSurfaces, string ErrorXMLNodeName)
+        private static ErrorSurface DeserializeError(XmlNode nodDoD, List<ErrorSurface> ErrorSurfaces, string ErrorXMLNodeName)
         {
             string errorName = nodDoD.SelectSingleNode(ErrorXMLNodeName).InnerText;
-            if (ErrorSurfaces.ContainsKey(errorName))
-            {
-                return ErrorSurfaces[errorName];
-            }
-            else
-                return null;
+            return ErrorSurfaces.First<ErrorSurface>(x => string.Compare(errorName, x.Name, true) == 0);
         }
     }
 }

@@ -14,7 +14,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
         public readonly DEMSurvey DEM;
         public ErrorSurface ErrorSurf { get; internal set; }
 
-        private const string m_sEntireDEMExtent = "Entire DEM Extent";
+        public const string m_sEntireDEMExtent = "Entire DEM Extent";
 
         // This dictionary stores the definitions of the error surface properties for each survey method polygon
 
@@ -47,12 +47,12 @@ namespace GCDCore.UserInterface.SurveyLibrary
             cboFIS.DataSource = ProjectManager.FISLibrary;
 
             // Prepare the associated surface dropdown with all surfaces from the dEM
-            cboAssociated.DataSource = new BindingList<AssocSurface>(DEM.AssocSurfaces.Values.ToList<AssocSurface>());
+            cboAssociated.DataSource = new BindingList<AssocSurface>(DEM.AssocSurfaces);
             cboAssociated.SelectedItem = null;
 
             // Load all the associated surfaces in the survey library to the grid combo box
             DataGridViewComboBoxColumn colCombo = (DataGridViewComboBoxColumn)grdFISInputs.Columns[1];
-            colCombo.DataSource = new BindingList<AssocSurface>(DEM.AssocSurfaces.Values.ToList<AssocSurface>());
+            colCombo.DataSource = new BindingList<AssocSurface>(DEM.AssocSurfaces);
 
             if (ErrorSurf is ErrorSurface)
             {
@@ -433,7 +433,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
                         DataGridViewComboBoxCell cboAssoc = (DataGridViewComboBoxCell)grdFISInputs.Rows[i].Cells[1];
                         if ((int)cboAssoc.Value > 0)
                         {
-                            dInputs[grdFISInputs.Rows[i].Cells[0].Value.ToString()] = DEM.AssocSurfaces[cboAssoc.Value.ToString()];
+                            dInputs[grdFISInputs.Rows[i].Cells[0].Value.ToString()] = (AssocSurface) cboAssoc.Value;
                         }
                         else
                         {
@@ -520,7 +520,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
         private void btnOK_Click(object sender, System.EventArgs e)
         {
-                  // Need to save the current error properties first.
+            // Need to save the current error properties first.
             if (!SaveErrorProperties())
             {
                 this.DialogResult = DialogResult.None;
@@ -533,7 +533,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
                 return;
             }
 
-            Cursor.Current = Cursors.WaitCursor; 
+            Cursor.Current = Cursors.WaitCursor;
 
             if (ErrorSurf is ErrorSurface)
             {
@@ -576,7 +576,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
                     }
 
                     // Add the error surface to the project now that processing is complete
-                    DEM.ErrorSurfaces[ErrorSurf.Name] = ErrorSurf;
+                    DEM.ErrorSurfaces.Add(ErrorSurf);
                 }
                 catch (Exception ex)
                 {

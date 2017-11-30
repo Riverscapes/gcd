@@ -1,5 +1,7 @@
 ﻿using System.IO;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using System.Xml;
 using System;
 using GCDConsoleLib;
@@ -9,8 +11,8 @@ namespace GCDCore.Project
     public class DEMSurvey : GCDProjectItem
     {
         public readonly Raster Raster;
-        public readonly Dictionary<string, AssocSurface> AssocSurfaces;
-        public readonly Dictionary<string, ErrorSurface> ErrorSurfaces;
+        public readonly naru.ui.SortableBindingList<AssocSurface> AssocSurfaces;
+        public readonly naru.ui.SortableBindingList<ErrorSurface> ErrorSurfaces;
 
         public string SurveyMethod { get; set; } // Single survey methods
         public bool IsSingleSurveyMethod { get { return MethodMask == null; } }
@@ -25,18 +27,18 @@ namespace GCDCore.Project
             SurveyDate = surveyDate;
             Raster = new Raster(rasterPath);
 
-            AssocSurfaces = new Dictionary<string, AssocSurface>();
-            ErrorSurfaces = new Dictionary<string, ErrorSurface>();
+            AssocSurfaces = new naru.ui.SortableBindingList<AssocSurface>();
+            ErrorSurfaces = new naru.ui.SortableBindingList<ErrorSurface>();
         }
 
         public bool IsErrorNameUnique(string name, ErrorSurface ignore)
         {
-            return ErrorSurfaces.ContainsKey(name) ? ErrorSurfaces[name] == ignore : true;
+            return ErrorSurfaces.Count<ErrorSurface>(x => string.Compare(name, x.Name, true) == 0) == 0;
         }
 
         public bool IsAssocNameUnique(string name, AssocSurface ignore)
         {
-            return AssocSurfaces.ContainsKey(name) ? AssocSurfaces[name] == ignore : true;
+            return AssocSurfaces.Count<AssocSurface>(x => string.Compare(name, x.Name, true) == 0) == 0;
         }
 
         public void DeleteAssociatedSurface(AssocSurface assoc)
@@ -170,14 +172,14 @@ namespace GCDCore.Project
             if (AssocSurfaces.Count > 0)
             {
                 XmlNode nodAssoc = nodDEM.AppendChild(xmlDoc.CreateElement("AssociatedSurfaces"));
-                foreach (AssocSurface assoc in AssocSurfaces.Values)
+                foreach (AssocSurface assoc in AssocSurfaces)
                     assoc.Serialize(xmlDoc, nodAssoc);
             }
 
             if (ErrorSurfaces.Count > 0)
             {
                 XmlNode nodError = nodDEM.AppendChild(xmlDoc.CreateElement("ErrorSurfaces"));
-                foreach (ErrorSurface error in ErrorSurfaces.Values)
+                foreach (ErrorSurface error in ErrorSurfaces)
                     error.Serialize(xmlDoc, nodError);
             }
         }
@@ -226,13 +228,13 @@ namespace GCDCore.Project
             foreach (XmlNode nodAssoc in nodDEM.SelectNodes("AssociatedSurfaces/AssociatedSurface"))
             {
                 AssocSurface assoc = AssocSurface.Deserialize(nodAssoc, dem);
-                dem.AssocSurfaces[assoc.Name] = assoc;
+                dem.AssocSurfaces.Add(assoc);
             }
 
             foreach (XmlNode nodError in nodDEM.SelectNodes("ErrorSurfaces/ErrorSurface"))
             {
                 ErrorSurface error = ErrorSurface.Deserialize(nodError, dem);
-                dem.ErrorSurfaces[error.Name] = error;
+                dem.ErrorSurfaces.Add(error);
             }
 
             return dem;

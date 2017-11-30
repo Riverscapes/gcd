@@ -12,13 +12,11 @@ namespace GCDCore.UserInterface.SurveyLibrary
     public partial class frmDEMSurveyProperties
     {
         private DEMSurvey DEM;
-        private System.ComponentModel.BindingList<AssocSurface> AssocSurfaceBindingList;
 
         #region "Survey Property Routines"
 
         public frmDEMSurveyProperties(DEMSurvey editDEM)
         {
-            ;
             // This call is required by the Windows Form Designer.
             InitializeComponent();
             DEM = editDEM;
@@ -63,23 +61,14 @@ namespace GCDCore.UserInterface.SurveyLibrary
             // Turn on handling survey method event handling (after setting control from project)
             rdoSingle.CheckedChanged += rdoSingle_CheckedChanged;
 
-            if (DEM.SurveyDate == null)
-            {
-                lblDatetime.Text = SurveyDateTime.NotSetString;
-            }
-            else
-            {
-                lblDatetime.Text = DEM.SurveyDate.ToString();
-            }
+            lblDatetime.Text = DEM.SurveyDate is SurveyDateTime ? DEM.SurveyDate.ToString() : SurveyDateTime.NotSetString;
 
-            AssocSurfaceBindingList = new System.ComponentModel.BindingList<AssocSurface>(DEM.AssocSurfaces.Values.ToList());
-
-            grdAssocSurface.DataSource = AssocSurfaceBindingList;
+            grdErrorSurfaces.DataSource = DEM.ErrorSurfaces;
+            grdAssocSurface.DataSource = DEM.AssocSurfaces;
 
             UpdateControls();
             LoadRasterProperties();
         }
-
 
         private void InitControls()
         {
@@ -87,9 +76,13 @@ namespace GCDCore.UserInterface.SurveyLibrary
             cmdAddAssocToMap.Visible = ProjectManager.IsArcMap;
             cmdAddErrorToMap.Visible = ProjectManager.IsArcMap;
 
+            grdAssocSurface.AutoGenerateColumns = false;
             grdAssocSurface.AllowUserToResizeRows = false;
             grdAssocSurface.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             grdAssocSurface.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
+            grdErrorSurfaces.AllowUserToResizeRows = false;
+            grdErrorSurfaces.AutoGenerateColumns = false;
 
             //General Tooltips
             //ttpTooltip.SetToolTip(btnCancel, My.Resources.ttpCancel)
@@ -127,7 +120,6 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
         private bool ValidateForm()
         {
-
             txtName.Text = txtName.Text.Trim();
 
             if (!ProjectManager.Project.IsDEMNameUnique(txtName.Text, DEM))
@@ -196,7 +188,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
                 maskPath.Directory.Create();
                 ucDEMMask.SelectedItem.Copy(maskPath);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 naru.error.ExceptionUI.HandleException(ex, "Error attempting to copy DEM mask into project at " + maskPath.FullName);
                 return;
@@ -272,31 +264,6 @@ namespace GCDCore.UserInterface.SurveyLibrary
             ProjectManager.Project.Save();
         }
 
-        private void btnBrowseFile_Click(System.Object sender, System.EventArgs e)
-        {
-            //TODO ArcMap manager in addin
-            throw new Exception("not implemented");
-
-        }
-
-
-        private void btnBrowseMask_Click(System.Object sender, System.EventArgs e)
-        {
-            rdoMulti.Checked = true;
-
-            try
-            {
-
-                throw new NotImplementedException("browse for polygon mask. then set mask text. This should trigger field combo refresh.");
-
-            }
-            catch (Exception ex)
-            {
-                naru.error.ExceptionUI.HandleException(ex);
-            }
-        }
-
-
         private void rdoSingle_CheckedChanged(System.Object sender, System.EventArgs e)
         {
             if (rdoSingle.Checked)
@@ -307,7 +274,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
                     {
                         GCDConsoleLib.Vector.Delete(ucDEMMask.SelectedItem.GISFileInfo);
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         naru.error.ExceptionUI.HandleException(ex, "Error attempting to delete DEM method mask at " + ucDEMMask.SelectedItem.GISFileInfo.FullName);
                     }
@@ -325,9 +292,8 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
         private void btnHlp_Click(System.Object sender, System.EventArgs e)
         {
-            Process.Start(GCDCore.Properties.Resources.HelpBaseURL + "gcd-command-reference/gcd-project-explorer/d-dem-context-menu/i-edit-dem-survey-properties");
+            Process.Start(Properties.Resources.HelpBaseURL + "gcd-command-reference/gcd-project-explorer/d-dem-context-menu/i-edit-dem-survey-properties");
         }
-
 
         private void LoadRasterProperties()
         {
@@ -371,13 +337,11 @@ namespace GCDCore.UserInterface.SurveyLibrary
             }
 
             txtProperties.Text = sRasterProperties;
-
         }
 
         #endregion
 
         #region "Associated Surface Events"
-
 
         private void ViewAssociatedSurface(System.Object sender, EventArgs e)
         {
@@ -386,20 +350,13 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
             AssocSurface assoc = (AssocSurface)grdAssocSurface.SelectedRows[0].DataBoundItem;
             frmAssocSurfaceProperties frm = new frmAssocSurfaceProperties(DEM, assoc);
-            if (frm.ShowDialog() == DialogResult.OK)
-            {
-                throw new NotImplementedException("Need to refresh data grid view");
-            }
-
+            frm.ShowDialog();
         }
-
 
         private void btnAddToMap_Click(System.Object sender, System.EventArgs e)
         {
             throw new NotImplementedException("add selected associated surface to map");
-
         }
-
 
         private void btnAddAssociatedSurface_Click(System.Object sender, System.EventArgs e)
         {
@@ -410,13 +367,8 @@ namespace GCDCore.UserInterface.SurveyLibrary
                 SaveDEMSurvey();
 
                 frmAssocSurfaceProperties SurfaceForm = new frmAssocSurfaceProperties(DEM, null);
-                if (SurfaceForm.ShowDialog() == DialogResult.OK)
-                {
-                    AssocSurfaceBindingList.Add(SurfaceForm.AssociatedSurface);
-                    AssocSurfaceBindingList.ResetBindings();
-                }
+                SurfaceForm.ShowDialog();
             }
-
         }
 
         private void Associated_CellContentEnter(System.Object sender, DataGridViewCellEventArgs e)
@@ -433,28 +385,30 @@ namespace GCDCore.UserInterface.SurveyLibrary
             btnSettingsAssociatedSurface.Enabled = false;
         }
 
-
         private void btnDeleteAssociatedSurface_Click(System.Object sender, System.EventArgs e)
         {
 
             if (MessageBox.Show("Are you sure you want to remove the selected associated surface from the GCD Project?" + " This will also delete the raster associated with this surface.", "Deleted associated surface?", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
             {
-                DEM.DeleteAssociatedSurface((AssocSurface)grdAssocSurface.SelectedRows[0].DataBoundItem);
+                try
+                {
+                    DEM.DeleteAssociatedSurface((AssocSurface)grdAssocSurface.SelectedRows[0].DataBoundItem);
+                }
+                catch (Exception ex)
+                {
+                    naru.error.ExceptionUI.HandleException(ex, "Error deleting associated surface.");
+                }
             }
-
         }
 
         #endregion
 
         #region "Error Calculation Events"
 
-
-        private void btn_AddErrorSurface_Click(System.Object sender, System.EventArgs e)
+        private void cmdSpecifyErrorSurface_Click(System.Object sender, System.EventArgs e)
         {
             if (!ValidateForm())
-            {
                 return;
-            }
 
             try
             {
@@ -466,83 +420,57 @@ namespace GCDCore.UserInterface.SurveyLibrary
             {
                 naru.error.ExceptionUI.HandleException(ex);
             }
-
         }
 
         public static ErrorSurface SpecifyErrorSurface(DEMSurvey dem)
         {
+            ErrorSurface errSurf = null;
+            frmImportRaster frm = new frmImportRaster(dem, ExtentImporter.Purposes.ErrorSurface, "Error Surface");
+            if (frm.ShowDialog() == DialogResult.OK)
+            {
+                GCDConsoleLib.Raster errRaster = frm.ProcessRaster();
 
-            throw new NotImplementedException("specify error surface");
+                // Create the associated surface
+                AssocSurface assoc = new AssocSurface(frm.txtName.Text, errRaster.GISFileInfo, "Error Surface", dem);
+                dem.AssocSurfaces.Add(assoc);
 
-            ErrorSurface errSurface = null;
-            //Dim gDEM As New GCDConsoleLib.Raster(ProjectManager.GetAbsolutePath(rDEM.Source))
+                // Create the error surface that points to the associated surface
+                ErrorSurfaceProperty errProps = new ErrorSurfaceProperty(frmErrorSurfaceProperties.m_sEntireDEMExtent, assoc);
+                errSurf = new ErrorSurface(assoc.Name, assoc.Raster.GISFileInfo, dem);
+                dem.ErrorSurfaces.Add(errSurf);
 
-            //Dim frm As New frmImportRaster(dem.Raster.Raster, rDEM, frmImportRaster.ImportRasterPurposes.ErrorCalculation, "Error Surface")
-
-            //If frm.ShowDialog = System.Windows.Forms.DialogResult.OK Then
-            //    Dim gRaster As GCDConsoleLib.Raster = Nothing
-            //    Try
-            //        gRaster = frm.ProcessRaster
-            //    Catch ex As Exception
-            //        Try
-            //            IO.Directory.Delete(IO.Path.GetDirectoryName(frm.txtRasterPath.Text))
-            //        Catch ex2 As Exception
-            //            ' do nothing
-            //        End Try
-
-            //        naru.error.ExceptionUI.HandleException(ex, "An error occurred attempting to import the error surface into the GCD project. No information has been saved to the GCD project file but you should check the GCD project folder to determine if any remains of the raster remain.")
-            //    End Try
-
-            //    If TypeOf gRaster Is GCDConsoleLib.Raster Then
-            //        Try
-            //            Dim errSurface As ErrorSurface = New ErrorSurface(frm.txtName.Text, gRaster.GISFileInfo, dem)
-            //            dem.ErrorSurfaces.Add(errSurface.Name, errSurface)
-            //            ProjectManager.Project.Save()
-
-            //            'If My.Settings.AddOutputLayersToMap Then
-            //            'TODO not implemented
-            //            Throw New Exception("Not implemented")
-            //            'GCDProject.ProjectManagerUI.ArcMapManager.AddErrSurface(rError)
-            //            'End If
-
-            //        Catch ex As Exception
-            //            Dim bRasterExists As Boolean = True
-            //            Try
-            //                GCDConsoleLib.Raster.Delete(New IO.FileInfo(frm.txtRasterPath.Text))
-            //                bRasterExists = False
-            //            Catch ex2 As Exception
-            //                bRasterExists = True
-            //            End Try
-
-            //            Dim sMsg As String = "Failed to save the error surface information to the GCD project file."
-            //            If bRasterExists Then
-            //                sMsg &= " The GCD project error surface raster still exists And should be deleted by hand."
-            //            Else
-            //                sMsg &= "The GCD project error surface raster was deleted."
-            //            End If
-
-            //            naru.error.ExceptionUI.HandleException(ex, sMsg)
-            //        End Try
-            //    End If
-            //End If
-
-            return errSurface;
-
+                ProjectManager.Project.Save();
+            }
+            return errSurf;
         }
 
-        private void btnCalculateError_Click(System.Object sender, System.EventArgs e)
+        public static ErrorSurface CalculateErrorSurface(DEMSurvey dem)
         {
-            //
-            // Only open the Error calculation form if the survey properties save successfully.
-            //
-            throw new NotImplementedException("todo");
-            //If ValidateForm() Then
-            //    SaveDEMSurvey()
-            //    Dim dr As DataRowView = DEMSurveyBindingSource.Current
-            //    Dim frm As New ErrorCalculation.frmErrorCalculation(DirectCast(dr.Row, ProjectDS.DEMSurveyRow))
-            //    frm.ShowDialog()
-            //End If
+            ErrorSurface errSurf = null;
+            frmErrorSurfaceProperties frm = new frmErrorSurfaceProperties(dem, null);
+            if (frm.ShowDialog() == DialogResult.OK)
+            {
+                errSurf = frm.ErrorSurf;
+            }
 
+            return errSurf;
+        }
+
+        private void cmdCalculateErrorSurface_Click(System.Object sender, System.EventArgs e)
+        {
+            if (ValidateForm())
+            {
+                try
+                {
+                    // Only open the Error calculation form if the survey properties save successfully.
+                    SaveDEMSurvey();
+                    CalculateErrorSurface(DEM);
+                }
+                catch (Exception ex)
+                {
+                    naru.error.ExceptionUI.HandleException(ex, "Error calculating error surface");
+                }
+            }
         }
 
         private void Error_CellContentEnter(System.Object sender, System.Windows.Forms.DataGridViewCellEventArgs e)
@@ -561,49 +489,48 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
         private void Error_DoubleClick(System.Object sender, System.Windows.Forms.DataGridViewCellEventArgs e)
         {
-            ViewErrorSettings();
+            try
+            {
+                ViewErrorSurfaceProperties((ErrorSurface)grdErrorSurfaces.SelectedRows[0].DataBoundItem);
+            }
+            catch (Exception ex)
+            {
+                naru.error.ExceptionUI.HandleException(ex, "Error viewing error surface properties.");
+            }
         }
 
         private void btnErrorSurfaceSettings_Click(System.Object sender, System.EventArgs e)
         {
-            ViewErrorSettings();
+            try
+            {
+                ViewErrorSurfaceProperties((ErrorSurface)grdErrorSurfaces.SelectedRows[0].DataBoundItem);
+            }
+            catch (Exception ex)
+            {
+                naru.error.ExceptionUI.HandleException(ex, "Error viewing error surface properties.");
+            }
         }
-
 
         private void btnDeleteErrorSurface_Click(System.Object sender, System.EventArgs e)
         {
-
             if (MessageBox.Show("Are you sure you want to delete the selected error surface from the GCD project?" + " This will also delete the raster associated with this error surface.", "Delete Error Surface", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
             {
                 DEM.DeleteErrorSurface((ErrorSurface)grdErrorSurfaces.SelectedRows[0].DataBoundItem);
-
             }
-
-
         }
-
 
         private void btnAddErrorToMap_Click(System.Object sender, System.EventArgs e)
         {
             throw new NotImplementedException("add error surface to map");
-
         }
 
-
-        private void ViewErrorSettings()
+        public static DialogResult ViewErrorSurfaceProperties(ErrorSurface errSurf)
         {
-            throw new NotImplementedException("edit error surface");
-
-            //Dim CurrentRow As DataRowView = Me.ErrorTableBindingSource.Current
-            //If Not CurrentRow Is Nothing AndAlso TypeOf CurrentRow.Row Is ProjectDS.ErrorSurfaceRow Then
-            //    Dim frm As New ErrorCalculation.frmErrorCalculation(DirectCast(CurrentRow.Row, ProjectDS.ErrorSurfaceRow))
-            //    frm.ShowDialog()
-            //End If
-
+            frmErrorSurfaceProperties frm = new frmErrorSurfaceProperties(errSurf.DEM, errSurf);
+            return frm.ShowDialog();
         }
 
         #endregion
-
 
         private void cmdDateTime_Click(System.Object sender, System.EventArgs e)
         {

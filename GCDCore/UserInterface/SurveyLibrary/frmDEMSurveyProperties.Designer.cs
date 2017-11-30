@@ -75,6 +75,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.Label4 = new System.Windows.Forms.Label();
             this.cmdDateTime = new System.Windows.Forms.Button();
             this.lblDatetime = new System.Windows.Forms.Label();
+            this.colErrName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pgeErrors.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdErrorSurfaces)).BeginInit();
             this.pgeSurfaces.SuspendLayout();
@@ -94,6 +95,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.btnOK.TabIndex = 7;
             this.btnOK.Text = "Save Survey and Close";
             this.btnOK.UseVisualStyleBackColor = true;
+            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
             // btnHlp
             // 
@@ -104,6 +106,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.btnHlp.TabIndex = 9;
             this.btnHlp.Text = "Help";
             this.btnHlp.UseVisualStyleBackColor = true;
+            this.btnHlp.Click += new System.EventHandler(this.btnHlp_Click);
             // 
             // pgeErrors
             // 
@@ -129,6 +132,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.btnCalculateError.Size = new System.Drawing.Size(29, 23);
             this.btnCalculateError.TabIndex = 5;
             this.btnCalculateError.UseVisualStyleBackColor = true;
+            this.btnCalculateError.Click += new System.EventHandler(this.cmdCalculateErrorSurface_Click);
             // 
             // cmdAddErrorToMap
             // 
@@ -139,13 +143,17 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.cmdAddErrorToMap.Size = new System.Drawing.Size(29, 23);
             this.cmdAddErrorToMap.TabIndex = 3;
             this.cmdAddErrorToMap.UseVisualStyleBackColor = true;
+            this.cmdAddErrorToMap.Click += new System.EventHandler(this.btnAddErrorToMap_Click);
             // 
             // grdErrorSurfaces
             // 
             this.grdErrorSurfaces.AllowUserToAddRows = false;
             this.grdErrorSurfaces.AllowUserToDeleteRows = false;
+            this.grdErrorSurfaces.AllowUserToResizeRows = false;
             this.grdErrorSurfaces.BackgroundColor = System.Drawing.SystemColors.Control;
             this.grdErrorSurfaces.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grdErrorSurfaces.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colErrName});
             this.grdErrorSurfaces.Location = new System.Drawing.Point(3, 35);
             this.grdErrorSurfaces.MultiSelect = false;
             this.grdErrorSurfaces.Name = "grdErrorSurfaces";
@@ -154,6 +162,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.grdErrorSurfaces.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.grdErrorSurfaces.Size = new System.Drawing.Size(593, 493);
             this.grdErrorSurfaces.TabIndex = 4;
+            this.grdErrorSurfaces.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Error_DoubleClick);
             // 
             // btnErrorDelete
             // 
@@ -164,6 +173,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.btnErrorDelete.Size = new System.Drawing.Size(29, 23);
             this.btnErrorDelete.TabIndex = 2;
             this.btnErrorDelete.UseVisualStyleBackColor = true;
+            this.btnErrorDelete.Click += new System.EventHandler(this.btnDeleteErrorSurface_Click);
             // 
             // btnErrorSettings
             // 
@@ -174,6 +184,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.btnErrorSettings.Size = new System.Drawing.Size(29, 23);
             this.btnErrorSettings.TabIndex = 1;
             this.btnErrorSettings.UseVisualStyleBackColor = true;
+            this.btnErrorSettings.Click += new System.EventHandler(this.btnErrorSurfaceSettings_Click);
             // 
             // btnAddError
             // 
@@ -183,6 +194,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.btnAddError.Size = new System.Drawing.Size(29, 23);
             this.btnAddError.TabIndex = 0;
             this.btnAddError.UseVisualStyleBackColor = true;
+            this.btnAddError.Click += new System.EventHandler(this.cmdSpecifyErrorSurface_Click);
             // 
             // pgeSurfaces
             // 
@@ -264,6 +276,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.btnAddAssociatedSurface.Size = new System.Drawing.Size(29, 23);
             this.btnAddAssociatedSurface.TabIndex = 0;
             this.btnAddAssociatedSurface.UseVisualStyleBackColor = true;
+            this.btnAddAssociatedSurface.Click += new System.EventHandler(this.btnAddAssociatedSurface_Click);
             // 
             // cmdAddAssocToMap
             // 
@@ -274,6 +287,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.cmdAddAssocToMap.Size = new System.Drawing.Size(29, 23);
             this.cmdAddAssocToMap.TabIndex = 3;
             this.cmdAddAssocToMap.UseVisualStyleBackColor = true;
+            this.cmdAddAssocToMap.Click += new System.EventHandler(this.btnAddToMap_Click);
             // 
             // btnDeleteAssociatedSurface
             // 
@@ -284,6 +298,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.btnDeleteAssociatedSurface.Size = new System.Drawing.Size(29, 23);
             this.btnDeleteAssociatedSurface.TabIndex = 2;
             this.btnDeleteAssociatedSurface.UseVisualStyleBackColor = true;
+            this.btnDeleteAssociatedSurface.Click += new System.EventHandler(this.btnDeleteAssociatedSurface_Click);
             // 
             // btnSettingsAssociatedSurface
             // 
@@ -294,6 +309,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.btnSettingsAssociatedSurface.Size = new System.Drawing.Size(29, 23);
             this.btnSettingsAssociatedSurface.TabIndex = 1;
             this.btnSettingsAssociatedSurface.UseVisualStyleBackColor = true;
+            this.btnSettingsAssociatedSurface.Click += new System.EventHandler(this.ViewAssociatedSurface);
             // 
             // pgeSurvey
             // 
@@ -498,6 +514,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.cmdDateTime.TabIndex = 2;
             this.cmdDateTime.Text = "Survey Date/Time";
             this.cmdDateTime.UseVisualStyleBackColor = true;
+            this.cmdDateTime.Click += new System.EventHandler(this.cmdDateTime_Click);
             // 
             // lblDatetime
             // 
@@ -507,6 +524,14 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.lblDatetime.Size = new System.Drawing.Size(99, 13);
             this.lblDatetime.TabIndex = 3;
             this.lblDatetime.Text = "10 Dec 2012 23:59";
+            // 
+            // colErrName
+            // 
+            this.colErrName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colErrName.DataPropertyName = "NameWithDefault";
+            this.colErrName.HeaderText = "Name";
+            this.colErrName.Name = "colErrName";
+            this.colErrName.ReadOnly = true;
             // 
             // frmDEMSurveyProperties
             // 
@@ -590,5 +615,6 @@ namespace GCDCore.UserInterface.SurveyLibrary
         internal System.Windows.Forms.DataGridViewTextBoxColumn colName;
         internal System.Windows.Forms.DataGridViewTextBoxColumn colType;
         private UtilityForms.ucVectorInput ucDEMMask;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colErrName;
     }
 }

@@ -105,7 +105,7 @@ namespace GCDCore.UserInterface.Project
 
                     // Associated surfaces
                     TreeNode nodAssocGroup = AddTreeNode(nodSurvey, GCDNodeTypes.AssocGroup, m_sAssocSurfaces, null);
-                    foreach (AssocSurface assoc in dem.AssocSurfaces.Values)
+                    foreach (AssocSurface assoc in dem.AssocSurfaces)
                     {
                         AddTreeNode(nodAssocGroup, GCDNodeTypes.AssociatedSurface, assoc.Name, assoc);
                         bExpandSurveyNode = true;
@@ -113,7 +113,7 @@ namespace GCDCore.UserInterface.Project
 
                     // Error surfaces
                     TreeNode nodErrorGroup = AddTreeNode(nodSurvey, GCDNodeTypes.ErrorSurfaceGroup, m_sErrorSurfaces, null);
-                    foreach (ErrorSurface errSurf in dem.ErrorSurfaces.Values)
+                    foreach (ErrorSurface errSurf in dem.ErrorSurfaces)
                     {
                         AddTreeNode(nodErrorGroup, GCDNodeTypes.ErrorSurface, errSurf.Name, errSurf);
                         bExpandSurveyNode = true;
@@ -450,7 +450,7 @@ namespace GCDCore.UserInterface.Project
                     if (eType == GCDNodeTypes.AssocGroup)
                     {
                         DEMSurvey dem = (DEMSurvey)((ProjectTreeNode)selNode.Parent.Tag).Item;
-                        foreach (AssocSurface assoc in dem.AssocSurfaces.Values)
+                        foreach (AssocSurface assoc in dem.AssocSurfaces)
                         {
                             throw new Exception("add all associated surfaes to map ");
                         }
@@ -539,8 +539,7 @@ namespace GCDCore.UserInterface.Project
                     }
 
                     DEMSurvey dem = (DEMSurvey)((ProjectTreeNode)nodDEM.Tag).Item;
-                    frmErrorSurfaceProperties frm = new frmErrorSurfaceProperties(dem, null);
-                    if (frm.ShowDialog() == DialogResult.OK)
+                    if (frmDEMSurveyProperties.CalculateErrorSurface(dem) is ErrorSurface)
                         LoadTree();
                 }
             }
@@ -565,12 +564,8 @@ namespace GCDCore.UserInterface.Project
                     }
 
                     DEMSurvey dem = (DEMSurvey)((ProjectTreeNode)nodDEM.Tag).Item;
-                    ErrorSurface errSurface = frmDEMSurveyProperties.SpecifyErrorSurface(dem);
-                    if (errSurface is ErrorSurface)
-                    {
-                        throw new Exception("add error surface to map not implemented");
+                    if (frmDEMSurveyProperties.SpecifyErrorSurface(dem) is ErrorSurface)
                         LoadTree();
-                    }
                 }
             }
             catch (Exception ex)
@@ -578,7 +573,6 @@ namespace GCDCore.UserInterface.Project
                 naru.error.ExceptionUI.HandleException(ex);
             }
         }
-
 
         private void AddErrorSurfaceToMapToolStripMenuItem_Click(System.Object sender, System.EventArgs e)
         {
@@ -591,7 +585,7 @@ namespace GCDCore.UserInterface.Project
                     if (eType == GCDNodeTypes.ErrorSurfaceGroup)
                     {
                         DEMSurvey dem = (DEMSurvey)((ProjectTreeNode)selNode.Parent.Tag).Item;
-                        foreach (ErrorSurface errSurf in dem.ErrorSurfaces.Values)
+                        foreach (ErrorSurface errSurf in dem.ErrorSurfaces)
                         {
                             throw new Exception("Add error surface to map not implemented");
                         }
@@ -620,11 +614,7 @@ namespace GCDCore.UserInterface.Project
                     if (eType == GCDNodeTypes.ErrorSurface)
                     {
                         ErrorSurface errSurf = (ErrorSurface)((ProjectTreeNode)selNode.Tag).Item;
-                        throw new NotImplementedException("Editing error surface not implemented");
-                        //Dim frm As New ErrorCalculation.frmErrorCalculation(errSurf)
-                        //If frm.ShowDialog() = DialogResult.OK Then
-                        //    LoadTree(selNode.Tag)
-                        //End If
+                        frmDEMSurveyProperties.ViewErrorSurfaceProperties(errSurf);
                     }
                 }
             }
@@ -633,7 +623,7 @@ namespace GCDCore.UserInterface.Project
                 naru.error.ExceptionUI.HandleException(ex);
             }
 
-        }
+       }
 
 
         private void AddErrorSurfaceToMapToolStripMenuItem1_Click(System.Object sender, System.EventArgs e)
@@ -659,7 +649,24 @@ namespace GCDCore.UserInterface.Project
 
         private void DeleteErrorSurfaceToolStripMenuItem_Click(System.Object sender, System.EventArgs e)
         {
-            //see btnDelete_Click
+            try
+            {
+                TreeNode selNode = treProject.SelectedNode;
+                if (selNode is TreeNode)
+                {
+                    GCDNodeTypes eType = GetNodeType(selNode);
+                    if (eType == GCDNodeTypes.ErrorSurface)
+                    {
+                        ErrorSurface errSurf = (ErrorSurface)((ProjectTreeNode)selNode.Tag).Item;
+                        errSurf.DEM.DeleteErrorSurface(errSurf);
+                        LoadTree();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                naru.error.ExceptionUI.HandleException(ex);
+            }
         }
 
         #endregion
@@ -1006,7 +1013,6 @@ namespace GCDCore.UserInterface.Project
         }
 
         #endregion
-
 
         private void btnDelete_Click(object sender, System.EventArgs e)
         {
@@ -1495,7 +1501,7 @@ namespace GCDCore.UserInterface.Project
                             DEMSurvey DEM4 = (DEMSurvey)((ProjectTreeNode)nodSelected.Parent.Parent.Tag).Item;
                             frm = new frmErrorSurfaceProperties(DEM4, null);
                             break;
-                    
+
                         case GCDNodeTypes.BudgetSegregationGroup:
                         case GCDNodeTypes.BudgetSegregation:
                             DoDBase DoD = (DoDBase)((ProjectTreeNode)nodSelected.Parent.Parent.Tag).Item;
