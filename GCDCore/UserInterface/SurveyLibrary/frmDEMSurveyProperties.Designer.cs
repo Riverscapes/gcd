@@ -396,7 +396,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             // Label6
             // 
             this.Label6.AutoSize = true;
-            this.Label6.Location = new System.Drawing.Point(41, 148);
+            this.Label6.Location = new System.Drawing.Point(77, 148);
             this.Label6.Name = "Label6";
             this.Label6.Size = new System.Drawing.Size(33, 13);
             this.Label6.TabIndex = 7;
@@ -484,11 +484,11 @@ namespace GCDCore.UserInterface.SurveyLibrary
             // Label4
             // 
             this.Label4.AutoSize = true;
-            this.Label4.Location = new System.Drawing.Point(12, 53);
+            this.Label4.Location = new System.Drawing.Point(45, 53);
             this.Label4.Name = "Label4";
-            this.Label4.Size = new System.Drawing.Size(39, 13);
+            this.Label4.Size = new System.Drawing.Size(36, 13);
             this.Label4.TabIndex = 4;
-            this.Label4.Text = "Folder:";
+            this.Label4.Text = "Folder";
             // 
             // cmdDateTime
             // 

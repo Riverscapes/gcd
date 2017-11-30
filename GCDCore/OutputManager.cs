@@ -138,10 +138,8 @@ namespace GCDCore
 
         public FileInfo DEMSurveyMethodMaskPath(string sSurveyName)
         {
-
             string sMaskPath = DEMSurveyMethodMaskFolder(sSurveyName);
             string sFeatureClassName = naru.os.File.RemoveDangerousCharacters(sSurveyName) + m_sErrorSurfaceMethodMask;
-
             return naru.os.File.GetNewSafeName(sMaskPath, sFeatureClassName, "shp");
         }
 

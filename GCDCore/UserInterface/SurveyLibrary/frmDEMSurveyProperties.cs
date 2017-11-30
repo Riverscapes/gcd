@@ -13,11 +13,12 @@ namespace GCDCore.UserInterface.SurveyLibrary
     {
         private DEMSurvey DEM;
         private System.ComponentModel.BindingList<AssocSurface> AssocSurfaceBindingList;
-    
+
         #region "Survey Property Routines"
 
         public frmDEMSurveyProperties(DEMSurvey editDEM)
-        {;
+        {
+            ;
             // This call is required by the Windows Form Designer.
             InitializeComponent();
             DEM = editDEM;
@@ -173,6 +174,39 @@ namespace GCDCore.UserInterface.SurveyLibrary
                 return;
             }
 
+            // Copy the newly selected polygon mask into project
+            FileInfo maskPath = ProjectManager.OutputManager.DEMSurveyMethodMaskPath(DEM.Name);
+
+            // Delete any existing mask
+            if (maskPath.Exists)
+            {
+                try
+                {
+                    GCDConsoleLib.Vector.Delete(maskPath);
+                }
+                catch (Exception ex)
+                {
+                    naru.error.ExceptionUI.HandleException(ex, "Error attempting to delete DEM mask at " + maskPath.FullName);
+                    return;
+                }
+            }
+
+            try
+            {
+                maskPath.Directory.Create();
+                ucDEMMask.SelectedItem.Copy(maskPath);
+            }
+            catch(Exception ex)
+            {
+                naru.error.ExceptionUI.HandleException(ex, "Error attempting to copy DEM mask into project at " + maskPath.FullName);
+                return;
+            }
+
+            // Disable event handling to avoid circular function calls
+            ucDEMMask.PathChanged -= OnMaskChanged;
+            ucDEMMask.Initialize(maskPath, true);
+            ucDEMMask.PathChanged += OnMaskChanged;
+
             List<GCDConsoleLib.VectorField> stringFields = ucDEMMask.SelectedItem.Fields.Values.Where(x => x.Type.Equals(GCDConsoleLib.GDalFieldType.StringField)).ToList<GCDConsoleLib.VectorField>();
             cboIdentify.Items.AddRange(stringFields.ToArray());
             if (!string.IsNullOrEmpty(DEM.MethodMaskField) && cboIdentify.Items.Contains(DEM.MethodMaskField))
@@ -267,9 +301,23 @@ namespace GCDCore.UserInterface.SurveyLibrary
         {
             if (rdoSingle.Checked)
             {
-                if (DEM.MethodMask is FileInfo && DEM.MethodMask.Exists)
+                if (ucDEMMask.SelectedItem is GCDConsoleLib.Vector)
                 {
-                    throw new NotImplementedException("Need to delete any existing polygon mask");
+                    try
+                    {
+                        GCDConsoleLib.Vector.Delete(ucDEMMask.SelectedItem.GISFileInfo);
+                    }
+                    catch(Exception ex)
+                    {
+                        naru.error.ExceptionUI.HandleException(ex, "Error attempting to delete DEM method mask at " + ucDEMMask.SelectedItem.GISFileInfo.FullName);
+                    }
+
+                    // proceed and unhook the DEM from the mask anyway.
+                    // Creating a new mask should use a new safe name anyway.
+                    ucDEMMask.PathChanged -= OnMaskChanged;
+                    ucDEMMask.ClearSelectedItem();
+                    ucDEMMask.PathChanged += OnMaskChanged;
+                    cboIdentify.Items.Clear();
                 }
             }
             UpdateControls();
