@@ -1,58 +1,35 @@
 using System.Windows.Forms;
 using System;
 using System.Diagnostics;
+using GCDCore.ErrorCalculation.FIS;
 
 namespace GCDCore.UserInterface.FISLibrary
 {
-
     public partial class frmAddFIS
     {
+        public FISLibraryItem FISItem { get; internal set; }
+
+        public frmAddFIS()
+        {
+            InitializeComponent();
+        }
 
 
         private void AddFISForm_Load(object sender, System.EventArgs e)
         {
         }
 
-
         private void btnOK_Click(System.Object sender, System.EventArgs e)
         {
+            if (!ValidateForm())
+            {
+                this.DialogResult = System.Windows.Forms.DialogResult.None;
+                return;
+            }
+
             try
             {
-                if (txtName.TextLength < 1)
-                {
-                    MessageBox.Show("Please enter a name for the FIS file.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    this.DialogResult = System.Windows.Forms.DialogResult.None;
-                    return;
-                }
-
-                if (txtFISFile.TextLength < 1)
-                {
-                    MessageBox.Show("Please select a FIS file.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    this.DialogResult = System.Windows.Forms.DialogResult.None;
-                    return;
-                }
-
-                if (!System.IO.File.Exists(txtFISFile.Text))
-                {
-                    System.Windows.Forms.MessageBox.Show("The FIS file does not exist.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    this.DialogResult = System.Windows.Forms.DialogResult.None;
-                    return;
-                }
-
-                try
-                {
-                    ErrorCalculation.FIS.FISRuleFile theFile = new ErrorCalculation.FIS.FISRuleFile(new System.IO.FileInfo(txtFISFile.Text));
-
-                }
-                catch (Exception ex)
-                {
-                    System.Windows.Forms.MessageBox.Show("The FIS file is invalid and/or badly formatted. Check that the formatting of the file contents match the MatLab fully inference toolbox specifications and try again.", GCDCore.Properties.Resources.ApplicationNameLong, System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information);
-                    this.DialogResult = System.Windows.Forms.DialogResult.None;
-                    return;
-                }
-
-                // old binding source code removed here
-                throw new NotImplementedException();
+                FISItem = new FISLibraryItem(txtName.Text, new System.IO.FileInfo(txtFISFile.Text));
             }
             catch (Exception ex)
             {
@@ -70,6 +47,39 @@ namespace GCDCore.UserInterface.FISLibrary
                 }
                 DialogResult = System.Windows.Forms.DialogResult.None;
             }
+        }
+
+        private bool ValidateForm()
+        {
+            if (txtName.TextLength < 1)
+            {
+                MessageBox.Show("Please enter a name for the FIS file.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return false;
+            }
+
+            if (txtFISFile.TextLength < 1)
+            {
+                MessageBox.Show("Please select a FIS file.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return false;
+            }
+
+            if (!System.IO.File.Exists(txtFISFile.Text))
+            {
+                System.Windows.Forms.MessageBox.Show("The FIS file does not exist.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return false;
+            }
+
+            try
+            {
+                ErrorCalculation.FIS.FISRuleFile theFile = new ErrorCalculation.FIS.FISRuleFile(new System.IO.FileInfo(txtFISFile.Text));
+            }
+            catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show("The FIS file is invalid and/or badly formatted. Check that the formatting of the file contents match the MatLab fully inference toolbox specifications and try again.", GCDCore.Properties.Resources.ApplicationNameLong, System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information);
+                return false;
+            }
+
+            return true;
         }
 
         private void btnBrowseFIS_Click(System.Object sender, System.EventArgs e)
@@ -94,7 +104,7 @@ namespace GCDCore.UserInterface.FISLibrary
 
         private void btnHelp_Click(System.Object sender, System.EventArgs e)
         {
-            Process.Start(GCDCore.Properties.Resources.HelpBaseURL + "gcd-command-reference/customize-menu/fis-library");
+            Process.Start(Properties.Resources.HelpBaseURL + "gcd-command-reference/customize-menu/fis-library");
         }
     }
 }

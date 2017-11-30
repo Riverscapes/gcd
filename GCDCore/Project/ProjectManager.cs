@@ -199,7 +199,10 @@ namespace GCDCore.Project
                     return new List<ErrorCalculation.FIS.FISLibraryItem>();
                 }
             }
-            set { ErrorCalculation.FIS.FISLibraryItem.Save(FISLibraryPath, value); }
+            set
+            {
+                ErrorCalculation.FIS.FISLibraryItem.Save(FISLibraryPath, value);
+            }
         }
 
         public static void CreateProject(GCDProject project)

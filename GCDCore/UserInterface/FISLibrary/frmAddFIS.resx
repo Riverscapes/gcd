@@ -112,29 +112,29 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="FISTableBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="FISTableBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>258, 17</value>
   </metadata>
-  <metadata name="FISLibrary.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>154, 17</value>
+  <metadata name="FISTableBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>258, 17</value>
   </metadata>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="btnBrowseFIS.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAlwSFlzAAAOuAAA
-        DrgBakH1WwAAAXxJREFUOE/FkskrhGEcx/0bZpwcHCk5SCLLQZaDZCnKUkbZUrJmsmamGEJ2msSELNkO
-        FCIzKSFbNERcREhD2fl433cYXktc5KnP5en5/L7fXz12dv92tlZn6O+q/oR4/2MpUTw+MMBFpwzx/lfy
-        naWH+xO9BCe1sJdOY2X+l8gGGtq0vJdtQzaS4APiQJks1rsWEh+PmiQm+iskRgwaultLaK9RU1+R9wlp
-        SGeLhsvDFkncMxYx1F0FmynfMt+rok6bY23QqFNzvlXMvknNcI+Os5VCYec02HnBrBLqR8NiKNdTXjSr
-        /W9Nc9NWubosi9O1PIyj5ZL8tJ0B64mwGg9Lkdybgrma9OFmzJW+Eidighzf9hblbaM11SI0wJwsiLGw
-        EMbDbABX455YBp3ZbbAnO8rhyZb6miyKG+OZmPUKG8tNCqZ1CgaKlXTkKtHnKOWpr7KuNBNNQTqFWUlk
-        p8aSkhBBXFQI4SF+BPp64O3ugpuzE7LUH3/QXz54BoUneffTtFxIAAAAAElFTkSuQmCC
+        iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6
+        JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAACXBIWXMAAA64AAAOuAFqQfVbAAABfUlE
+        QVQ4T8WP3SuDUQDG92/YXLnY5ZRcSCIfF8IuJKyooVDGUmtmsmYjW80sxHy2NGuTka8LikW2lJCxrBFx
+        Ixpp1Iaxx3verWm9dr2nfjen53eec1ipi9e9B/uCgQE5j1WShxSf7i3AmzkBch6rJA8pfQVsCPtNNPCP
+        ArdiGId6/iWmRWOZ1SbI8Us8rQwYMlkOUeWfx0mabbuOZt2igXVGjbkRBcZ1cga0bJ7W4P1hmhZvnX1Y
+        tQ4Dl6KkHC62YEwri8pGvQKvXhXuXAqs2fR4OVNSf+4ArmP4Wqgn1wHHlQjt5mNKUfLpOnBEZcOAFM/n
+        cjg3Bmk5ctUJXDQD7kbgpBZhVwWCO4X42MzCkpqL+vKMv38T+coZXQ1QL4CvjRKFwFEVvvdLEdzKQ2CF
+        h5uJNHQJ0iPxVRIiE9GzJYHPxI5zOsmGQ8/GsoqD+W4OTDJO4ioJkfX9Emh6xVBKW9HVLoSoqQYNAj6q
+        +cUoK8pFQU4msnlcJKymMCzWL4UneffeTdl6AAAAAElFTkSuQmCC
 </value>
   </data>
 </root>

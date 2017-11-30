@@ -325,7 +325,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             // Assign a name if the user hasn't already
             if (string.IsNullOrEmpty(txtName.Text))
             {
-                txtName.Text = string.Format("Slope {0}", (m_eMethod == AssociatedSurfaceMethods.SlopeDegree ? "Degrees" : "Percent"));
+                txtName.Text = string.Format("Slope {0}", (eType == AssociatedSurfaceMethods.SlopeDegree ? "Degrees" : "Percent"));
             }
 
             m_eMethod = eType;
@@ -333,10 +333,10 @@ namespace GCDCore.UserInterface.SurveyLibrary
             // Select the appropriate type in the dropdown box
             for (int i = 0; i <= cboType.Items.Count - 1; i++)
             {
-                if (((naru.db.NamedObject)cboType.Items[i]).ID == (long)m_eMethod)
+                if (((naru.db.NamedObject)cboType.Items[i]).ID == (long)eType)
                 {
                     cboType.SelectedIndex = i;
-                    break; // TODO: might not be correct. Was : Exit For
+                    break;
                 }
             }
 

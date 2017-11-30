@@ -36,6 +36,9 @@ namespace GCDStandalone
                 naru.error.ExceptionUI.HandleException(ex, "Error setting up application files.");
             }
 
+            // ensure this is empty in case there's no auto open project
+            tssProjectPath.Text = string.Empty;
+
             ucProjectExplorer1.ProjectTreeNodeSelectionChange += UpdateMenusAndToolstrips;
             UpdateMenusAndToolstrips(sender, e);
 

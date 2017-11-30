@@ -1,16 +1,29 @@
 using System;
 using System.Diagnostics;
 using System.Windows.Forms;
+using System.Linq;
+using GCDCore.ErrorCalculation.FIS;
 
 namespace GCDCore.UserInterface.FISLibrary
 {
     public partial class frmFISLibrary
     {
+        private naru.ui.SortableBindingList<GCDCore.ErrorCalculation.FIS.FISLibraryItem> FISList;
+
+        public frmFISLibrary()
+        {
+            InitializeComponent();
+        }
+
         private void btnAddFIS_Click(System.Object sender, System.EventArgs e)
         {
             frmAddFIS AddFISForm = new frmAddFIS();
-            AddFISForm.ShowDialog();
-
+            if (AddFISForm.ShowDialog() == DialogResult.OK)
+            {
+                FISList.Add(AddFISForm.FISItem);
+                GCDCore.Project.ProjectManager.FISLibrary = FISList.ToList<FISLibraryItem>();
+                grdFIS.Rows[grdFIS.Rows.Count - 1].Selected = true;
+            }
         }
 
         private void btnDeleteFIS_Click(System.Object sender, System.EventArgs e)
@@ -29,36 +42,30 @@ namespace GCDCore.UserInterface.FISLibrary
             ttpTooltip.SetToolTip(btnEditFIS, "Edit the selected FIS file.");
             ttpTooltip.SetToolTip(btnDeleteFIS, "Delete the selected FIS file.");
 
-            if (DataGridView1.Columns.Count == 2)
+            try
             {
-                DataGridView1.Columns[1].Width = DataGridView1.Width - DataGridView1.Columns[0].Width - 5;
+                FISList = new naru.ui.SortableBindingList<FISLibraryItem>(GCDCore.Project.ProjectManager.FISLibrary);
+                grdFIS.DataSource = FISList;
+            }
+            catch (Exception ex)
+            {
+                naru.error.ExceptionUI.HandleException(ex);
             }
 
-            //XMLHandling.XMLReadFIS(Me.FISLibrary)
-
+            UpdateControls(sender, e);
         }
 
+        private void UpdateControls(object sender, EventArgs e)
+        {
+            btnDeleteFIS.Enabled = grdFIS.SelectedRows.Count > 0;
+            btnEditFIS.Enabled = grdFIS.SelectedRows.Count > 0;
+        }
 
         private void btnEditFIS_Click(System.Object sender, System.EventArgs e)
         {
-            //Dim CurrentRow As DataRowView = FISTableBindingSource.Current
-            //If Not CurrentRow Is Nothing Then
-            //    If TypeOf CurrentRow.Row Is GCDLib.FISLibrary.FISTableRow Then
-            //        Dim fisRow As GCDLib.FISLibrary.FISTableRow = CurrentRow.Row
-            //        If IO.File.Exists(fisRow.Path) Then
-            //            Try
-            //                Dim frm As New frmEditFIS(fisRow.Path)
-            //                frm.ShowDialog()
-            //            Catch ex As Exception
-            //                Dim ex2 As New Exception("Error showing FIS form.", ex)
-            //                ex2.Data.Add("FIS Path", fisRow.Path)
-            //                Throw ex2
-            //            End Try
-            //        Else
-            //            MsgBox("The specified FIS file does not exist.", MsgBoxStyle.Exclamation, GCDCore.Properties.Resources.ApplicationNameLong)
-            //        End If
-            //    End If
-            //End If
+            FISLibraryItem item = (FISLibraryItem)grdFIS.SelectedRows[0].DataBoundItem;
+            frmEditFIS frm = new frmEditFIS(item.FilePath);
+            frm.ShowDialog();
         }
 
         private void btnHelp_Click(System.Object sender, System.EventArgs e)
@@ -70,10 +77,12 @@ namespace GCDCore.UserInterface.FISLibrary
         {
             Process.Start(GCDCore.Properties.Resources.FISRepositoryWebsite);
         }
-        public frmFISLibrary()
+
+        private void grdFIS_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            Load += FISLibraryForm_Load;
-            InitializeComponent();
+            FISLibraryItem item = (FISLibraryItem)grdFIS.SelectedRows[0].DataBoundItem;
+            frmEditFIS frm = new frmEditFIS(item.FilePath);
+            frm.ShowDialog();
         }
     }
 }
