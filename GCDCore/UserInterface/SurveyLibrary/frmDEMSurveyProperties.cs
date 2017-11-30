@@ -66,15 +66,15 @@ namespace GCDCore.UserInterface.SurveyLibrary
             grdErrorSurfaces.DataSource = DEM.ErrorSurfaces;
             grdAssocSurface.DataSource = DEM.AssocSurfaces;
 
-            UpdateControls();
+            UpdateControls(sender, e);
             LoadRasterProperties();
         }
 
         private void InitControls()
         {
             cmdAddDEMToMap.Visible = ProjectManager.IsArcMap;
-            cmdAddAssocToMap.Visible = ProjectManager.IsArcMap;
-            cmdAddErrorToMap.Visible = ProjectManager.IsArcMap;
+            cmdAssocAddToMap.Visible = ProjectManager.IsArcMap;
+            cmdErrorAddToMap.Visible = ProjectManager.IsArcMap;
 
             grdAssocSurface.AutoGenerateColumns = false;
             grdAssocSurface.AllowUserToResizeRows = false;
@@ -220,11 +220,19 @@ namespace GCDCore.UserInterface.SurveyLibrary
             }
         }
 
-        private void UpdateControls()
+        private void UpdateControls(object sender, EventArgs e)
         {
             cboSingle.Enabled = rdoSingle.Checked;
             ucDEMMask.Enabled = rdoMulti.Checked;
             cboIdentify.Enabled = rdoMulti.Checked;
+
+            cmdErrorProperties.Enabled = grdErrorSurfaces.SelectedRows.Count == 1;
+            cmdErrorDelete.Enabled = grdErrorSurfaces.SelectedRows.Count == 1;
+            cmdErrorAddToMap.Enabled = grdErrorSurfaces.SelectedRows.Count == 1;
+
+            cmdAssocDelete.Enabled = grdAssocSurface.SelectedRows.Count == 1;
+            cmdAssocProperties.Enabled = grdAssocSurface.SelectedRows.Count == 1;
+            cmdAssocAddToMap.Enabled = grdAssocSurface.SelectedRows.Count == 1;
         }
 
         private void btnOK_Click(System.Object sender, System.EventArgs e)
@@ -287,7 +295,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
                     cboIdentify.Items.Clear();
                 }
             }
-            UpdateControls();
+            UpdateControls(sender, e);
         }
 
         private void btnHlp_Click(System.Object sender, System.EventArgs e)
@@ -343,14 +351,20 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
         #region "Associated Surface Events"
 
-        private void ViewAssociatedSurface(System.Object sender, EventArgs e)
+        private void cmdEditAssocSurfaceProperties_Click(System.Object sender, EventArgs e)
+        {
+            if (ViewAssociatedSurface() == DialogResult.OK)
+                DEM.AssocSurfaces.ResetBindings();
+        }
+
+        private DialogResult ViewAssociatedSurface()
         {
             // Save DEM so that latest survey method is stored ready for associated use by surface 
             SaveDEMSurvey();
 
             AssocSurface assoc = (AssocSurface)grdAssocSurface.SelectedRows[0].DataBoundItem;
             frmAssocSurfaceProperties frm = new frmAssocSurfaceProperties(DEM, assoc);
-            frm.ShowDialog();
+            return frm.ShowDialog();
         }
 
         private void btnAddToMap_Click(System.Object sender, System.EventArgs e)
@@ -367,27 +381,15 @@ namespace GCDCore.UserInterface.SurveyLibrary
                 SaveDEMSurvey();
 
                 frmAssocSurfaceProperties SurfaceForm = new frmAssocSurfaceProperties(DEM, null);
-                SurfaceForm.ShowDialog();
+                if (SurfaceForm.ShowDialog() == DialogResult.OK)
+                {
+                    grdAssocSurface.Rows[grdAssocSurface.Rows.Count - 1].Selected = true;
+                }
             }
-        }
-
-        private void Associated_CellContentEnter(System.Object sender, DataGridViewCellEventArgs e)
-        {
-            cmdAddAssocToMap.Enabled = true;
-            btnDeleteAssociatedSurface.Enabled = true;
-            btnSettingsAssociatedSurface.Enabled = true;
-        }
-
-        private void Associated_CellContentLeave(System.Object sender, DataGridViewCellEventArgs e)
-        {
-            cmdAddAssocToMap.Enabled = false;
-            btnDeleteAssociatedSurface.Enabled = false;
-            btnSettingsAssociatedSurface.Enabled = false;
         }
 
         private void btnDeleteAssociatedSurface_Click(System.Object sender, System.EventArgs e)
         {
-
             if (MessageBox.Show("Are you sure you want to remove the selected associated surface from the GCD Project?" + " This will also delete the raster associated with this surface.", "Deleted associated surface?", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
             {
                 try
@@ -414,7 +416,10 @@ namespace GCDCore.UserInterface.SurveyLibrary
             {
                 // save the DEM survey information
                 SaveDEMSurvey();
-                SpecifyErrorSurface(DEM);
+                if (SpecifyErrorSurface(DEM) is ErrorSurface)
+                {
+                    grdErrorSurfaces.Rows[grdErrorSurfaces.Rows.Count - 1].Selected = true;
+                }
             }
             catch (Exception ex)
             {
@@ -435,8 +440,9 @@ namespace GCDCore.UserInterface.SurveyLibrary
                 dem.AssocSurfaces.Add(assoc);
 
                 // Create the error surface that points to the associated surface
-                ErrorSurfaceProperty errProps = new ErrorSurfaceProperty(frmErrorSurfaceProperties.m_sEntireDEMExtent, assoc);
-                errSurf = new ErrorSurface(assoc.Name, assoc.Raster.GISFileInfo, dem);
+                Dictionary<string, ErrorSurfaceProperty> dProps = new Dictionary<string, ErrorSurfaceProperty>();
+                dProps[frmErrorSurfaceProperties.m_sEntireDEMExtent] = new ErrorSurfaceProperty(frmErrorSurfaceProperties.m_sEntireDEMExtent, assoc);
+                errSurf = new ErrorSurface(assoc.Name, assoc.Raster.GISFileInfo, dem, dem.ErrorSurfaces.Count == 0, dProps);
                 dem.ErrorSurfaces.Add(errSurf);
 
                 ProjectManager.Project.Save();
@@ -464,7 +470,10 @@ namespace GCDCore.UserInterface.SurveyLibrary
                 {
                     // Only open the Error calculation form if the survey properties save successfully.
                     SaveDEMSurvey();
-                    CalculateErrorSurface(DEM);
+                    if (CalculateErrorSurface(DEM) is ErrorSurface)
+                    {
+                        grdErrorSurfaces.Rows[grdErrorSurfaces.Rows.Count - 1].Selected = true;
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -475,23 +484,26 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
         private void Error_CellContentEnter(System.Object sender, System.Windows.Forms.DataGridViewCellEventArgs e)
         {
-            cmdAddErrorToMap.Enabled = true;
-            btnErrorDelete.Enabled = true;
-            btnErrorSettings.Enabled = true;
+            cmdErrorAddToMap.Enabled = true;
+            cmdErrorDelete.Enabled = true;
+            cmdErrorProperties.Enabled = true;
         }
 
         private void Error_CellContentLeave(System.Object sender, System.Windows.Forms.DataGridViewCellEventArgs e)
         {
-            cmdAddErrorToMap.Enabled = false;
-            btnErrorDelete.Enabled = false;
-            btnErrorSettings.Enabled = false;
+            cmdErrorAddToMap.Enabled = false;
+            cmdErrorDelete.Enabled = false;
+            cmdErrorProperties.Enabled = false;
         }
 
         private void Error_DoubleClick(System.Object sender, System.Windows.Forms.DataGridViewCellEventArgs e)
         {
             try
             {
-                ViewErrorSurfaceProperties((ErrorSurface)grdErrorSurfaces.SelectedRows[0].DataBoundItem);
+                if (ViewErrorSurfaceProperties((ErrorSurface)grdErrorSurfaces.SelectedRows[0].DataBoundItem) == DialogResult.OK)
+                {
+                    DEM.ErrorSurfaces.ResetBindings();
+                }
             }
             catch (Exception ex)
             {
@@ -503,7 +515,10 @@ namespace GCDCore.UserInterface.SurveyLibrary
         {
             try
             {
-                ViewErrorSurfaceProperties((ErrorSurface)grdErrorSurfaces.SelectedRows[0].DataBoundItem);
+                if (ViewErrorSurfaceProperties((ErrorSurface)grdErrorSurfaces.SelectedRows[0].DataBoundItem) == DialogResult.OK)
+                {
+                    DEM.ErrorSurfaces.ResetBindings();
+                }
             }
             catch (Exception ex)
             {
@@ -543,6 +558,12 @@ namespace GCDCore.UserInterface.SurveyLibrary
                 else
                     lblDatetime.Text = SurveyDateTime.NotSetString;
             }
+        }
+
+        private void grdAssocSurface_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (ViewAssociatedSurface() == DialogResult.OK)
+                DEM.AssocSurfaces.ResetBindings();
         }
     }
 }

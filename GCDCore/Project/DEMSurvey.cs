@@ -33,12 +33,12 @@ namespace GCDCore.Project
 
         public bool IsErrorNameUnique(string name, ErrorSurface ignore)
         {
-            return ErrorSurfaces.Count<ErrorSurface>(x => string.Compare(name, x.Name, true) == 0) == 0;
+            return ErrorSurfaces.Count<ErrorSurface>(x => x!= ignore && string.Compare(name, x.Name, true) == 0) == 0;
         }
 
         public bool IsAssocNameUnique(string name, AssocSurface ignore)
         {
-            return AssocSurfaces.Count<AssocSurface>(x => string.Compare(name, x.Name, true) == 0) == 0;
+            return AssocSurfaces.Count<AssocSurface>(x => x!= ignore&& string.Compare(name, x.Name, true) == 0) == 0;
         }
 
         public void DeleteAssociatedSurface(AssocSurface assoc)

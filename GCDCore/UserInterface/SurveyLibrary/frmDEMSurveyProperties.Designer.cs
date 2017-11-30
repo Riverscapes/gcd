@@ -41,19 +41,20 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.ttpTooltip = new System.Windows.Forms.ToolTip(this.components);
             this.pgeErrors = new System.Windows.Forms.TabPage();
             this.btnCalculateError = new System.Windows.Forms.Button();
-            this.cmdAddErrorToMap = new System.Windows.Forms.Button();
+            this.cmdErrorAddToMap = new System.Windows.Forms.Button();
             this.grdErrorSurfaces = new System.Windows.Forms.DataGridView();
-            this.btnErrorDelete = new System.Windows.Forms.Button();
-            this.btnErrorSettings = new System.Windows.Forms.Button();
+            this.colErrName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cmdErrorDelete = new System.Windows.Forms.Button();
+            this.cmdErrorProperties = new System.Windows.Forms.Button();
             this.btnAddError = new System.Windows.Forms.Button();
             this.pgeSurfaces = new System.Windows.Forms.TabPage();
             this.grdAssocSurface = new System.Windows.Forms.DataGridView();
             this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnAddAssociatedSurface = new System.Windows.Forms.Button();
-            this.cmdAddAssocToMap = new System.Windows.Forms.Button();
-            this.btnDeleteAssociatedSurface = new System.Windows.Forms.Button();
-            this.btnSettingsAssociatedSurface = new System.Windows.Forms.Button();
+            this.cmdAssocAddToMap = new System.Windows.Forms.Button();
+            this.cmdAssocDelete = new System.Windows.Forms.Button();
+            this.cmdAssocProperties = new System.Windows.Forms.Button();
             this.pgeSurvey = new System.Windows.Forms.TabPage();
             this.GroupBox2 = new System.Windows.Forms.GroupBox();
             this.txtProperties = new System.Windows.Forms.TextBox();
@@ -75,7 +76,6 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.Label4 = new System.Windows.Forms.Label();
             this.cmdDateTime = new System.Windows.Forms.Button();
             this.lblDatetime = new System.Windows.Forms.Label();
-            this.colErrName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pgeErrors.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdErrorSurfaces)).BeginInit();
             this.pgeSurfaces.SuspendLayout();
@@ -111,10 +111,10 @@ namespace GCDCore.UserInterface.SurveyLibrary
             // pgeErrors
             // 
             this.pgeErrors.Controls.Add(this.btnCalculateError);
-            this.pgeErrors.Controls.Add(this.cmdAddErrorToMap);
+            this.pgeErrors.Controls.Add(this.cmdErrorAddToMap);
             this.pgeErrors.Controls.Add(this.grdErrorSurfaces);
-            this.pgeErrors.Controls.Add(this.btnErrorDelete);
-            this.pgeErrors.Controls.Add(this.btnErrorSettings);
+            this.pgeErrors.Controls.Add(this.cmdErrorDelete);
+            this.pgeErrors.Controls.Add(this.cmdErrorProperties);
             this.pgeErrors.Controls.Add(this.btnAddError);
             this.pgeErrors.Location = new System.Drawing.Point(4, 22);
             this.pgeErrors.Name = "pgeErrors";
@@ -134,22 +134,25 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.btnCalculateError.UseVisualStyleBackColor = true;
             this.btnCalculateError.Click += new System.EventHandler(this.cmdCalculateErrorSurface_Click);
             // 
-            // cmdAddErrorToMap
+            // cmdErrorAddToMap
             // 
-            this.cmdAddErrorToMap.Enabled = false;
-            this.cmdAddErrorToMap.Image = global::GCDCore.Properties.Resources.AddToMap;
-            this.cmdAddErrorToMap.Location = new System.Drawing.Point(144, 6);
-            this.cmdAddErrorToMap.Name = "cmdAddErrorToMap";
-            this.cmdAddErrorToMap.Size = new System.Drawing.Size(29, 23);
-            this.cmdAddErrorToMap.TabIndex = 3;
-            this.cmdAddErrorToMap.UseVisualStyleBackColor = true;
-            this.cmdAddErrorToMap.Click += new System.EventHandler(this.btnAddErrorToMap_Click);
+            this.cmdErrorAddToMap.Enabled = false;
+            this.cmdErrorAddToMap.Image = global::GCDCore.Properties.Resources.AddToMap;
+            this.cmdErrorAddToMap.Location = new System.Drawing.Point(144, 6);
+            this.cmdErrorAddToMap.Name = "cmdErrorAddToMap";
+            this.cmdErrorAddToMap.Size = new System.Drawing.Size(29, 23);
+            this.cmdErrorAddToMap.TabIndex = 3;
+            this.cmdErrorAddToMap.UseVisualStyleBackColor = true;
+            this.cmdErrorAddToMap.Click += new System.EventHandler(this.btnAddErrorToMap_Click);
             // 
             // grdErrorSurfaces
             // 
             this.grdErrorSurfaces.AllowUserToAddRows = false;
             this.grdErrorSurfaces.AllowUserToDeleteRows = false;
             this.grdErrorSurfaces.AllowUserToResizeRows = false;
+            this.grdErrorSurfaces.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.grdErrorSurfaces.BackgroundColor = System.Drawing.SystemColors.Control;
             this.grdErrorSurfaces.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grdErrorSurfaces.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -160,31 +163,40 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.grdErrorSurfaces.ReadOnly = true;
             this.grdErrorSurfaces.RowHeadersVisible = false;
             this.grdErrorSurfaces.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.grdErrorSurfaces.Size = new System.Drawing.Size(593, 493);
+            this.grdErrorSurfaces.Size = new System.Drawing.Size(593, 419);
             this.grdErrorSurfaces.TabIndex = 4;
             this.grdErrorSurfaces.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Error_DoubleClick);
+            this.grdErrorSurfaces.SelectionChanged += new System.EventHandler(this.UpdateControls);
             // 
-            // btnErrorDelete
+            // colErrName
             // 
-            this.btnErrorDelete.Enabled = false;
-            this.btnErrorDelete.Image = global::GCDCore.Properties.Resources.Delete;
-            this.btnErrorDelete.Location = new System.Drawing.Point(74, 6);
-            this.btnErrorDelete.Name = "btnErrorDelete";
-            this.btnErrorDelete.Size = new System.Drawing.Size(29, 23);
-            this.btnErrorDelete.TabIndex = 2;
-            this.btnErrorDelete.UseVisualStyleBackColor = true;
-            this.btnErrorDelete.Click += new System.EventHandler(this.btnDeleteErrorSurface_Click);
+            this.colErrName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colErrName.DataPropertyName = "NameWithDefault";
+            this.colErrName.HeaderText = "Name";
+            this.colErrName.Name = "colErrName";
+            this.colErrName.ReadOnly = true;
             // 
-            // btnErrorSettings
+            // cmdErrorDelete
             // 
-            this.btnErrorSettings.Enabled = false;
-            this.btnErrorSettings.Image = global::GCDCore.Properties.Resources.Settings;
-            this.btnErrorSettings.Location = new System.Drawing.Point(109, 6);
-            this.btnErrorSettings.Name = "btnErrorSettings";
-            this.btnErrorSettings.Size = new System.Drawing.Size(29, 23);
-            this.btnErrorSettings.TabIndex = 1;
-            this.btnErrorSettings.UseVisualStyleBackColor = true;
-            this.btnErrorSettings.Click += new System.EventHandler(this.btnErrorSurfaceSettings_Click);
+            this.cmdErrorDelete.Enabled = false;
+            this.cmdErrorDelete.Image = global::GCDCore.Properties.Resources.Delete;
+            this.cmdErrorDelete.Location = new System.Drawing.Point(74, 6);
+            this.cmdErrorDelete.Name = "cmdErrorDelete";
+            this.cmdErrorDelete.Size = new System.Drawing.Size(29, 23);
+            this.cmdErrorDelete.TabIndex = 2;
+            this.cmdErrorDelete.UseVisualStyleBackColor = true;
+            this.cmdErrorDelete.Click += new System.EventHandler(this.btnDeleteErrorSurface_Click);
+            // 
+            // cmdErrorProperties
+            // 
+            this.cmdErrorProperties.Enabled = false;
+            this.cmdErrorProperties.Image = global::GCDCore.Properties.Resources.Settings;
+            this.cmdErrorProperties.Location = new System.Drawing.Point(109, 6);
+            this.cmdErrorProperties.Name = "cmdErrorProperties";
+            this.cmdErrorProperties.Size = new System.Drawing.Size(29, 23);
+            this.cmdErrorProperties.TabIndex = 1;
+            this.cmdErrorProperties.UseVisualStyleBackColor = true;
+            this.cmdErrorProperties.Click += new System.EventHandler(this.btnErrorSurfaceSettings_Click);
             // 
             // btnAddError
             // 
@@ -201,9 +213,9 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.pgeSurfaces.AutoScroll = true;
             this.pgeSurfaces.Controls.Add(this.grdAssocSurface);
             this.pgeSurfaces.Controls.Add(this.btnAddAssociatedSurface);
-            this.pgeSurfaces.Controls.Add(this.cmdAddAssocToMap);
-            this.pgeSurfaces.Controls.Add(this.btnDeleteAssociatedSurface);
-            this.pgeSurfaces.Controls.Add(this.btnSettingsAssociatedSurface);
+            this.pgeSurfaces.Controls.Add(this.cmdAssocAddToMap);
+            this.pgeSurfaces.Controls.Add(this.cmdAssocDelete);
+            this.pgeSurfaces.Controls.Add(this.cmdAssocProperties);
             this.pgeSurfaces.Location = new System.Drawing.Point(4, 22);
             this.pgeSurfaces.Name = "pgeSurfaces";
             this.pgeSurfaces.Padding = new System.Windows.Forms.Padding(3);
@@ -253,6 +265,8 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.grdAssocSurface.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.grdAssocSurface.Size = new System.Drawing.Size(593, 425);
             this.grdAssocSurface.TabIndex = 4;
+            this.grdAssocSurface.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdAssocSurface_CellContentDoubleClick);
+            this.grdAssocSurface.SelectionChanged += new System.EventHandler(this.UpdateControls);
             // 
             // colName
             // 
@@ -278,38 +292,38 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.btnAddAssociatedSurface.UseVisualStyleBackColor = true;
             this.btnAddAssociatedSurface.Click += new System.EventHandler(this.btnAddAssociatedSurface_Click);
             // 
-            // cmdAddAssocToMap
+            // cmdAssocAddToMap
             // 
-            this.cmdAddAssocToMap.Enabled = false;
-            this.cmdAddAssocToMap.Image = global::GCDCore.Properties.Resources.AddToMap;
-            this.cmdAddAssocToMap.Location = new System.Drawing.Point(108, 6);
-            this.cmdAddAssocToMap.Name = "cmdAddAssocToMap";
-            this.cmdAddAssocToMap.Size = new System.Drawing.Size(29, 23);
-            this.cmdAddAssocToMap.TabIndex = 3;
-            this.cmdAddAssocToMap.UseVisualStyleBackColor = true;
-            this.cmdAddAssocToMap.Click += new System.EventHandler(this.btnAddToMap_Click);
+            this.cmdAssocAddToMap.Enabled = false;
+            this.cmdAssocAddToMap.Image = global::GCDCore.Properties.Resources.AddToMap;
+            this.cmdAssocAddToMap.Location = new System.Drawing.Point(108, 6);
+            this.cmdAssocAddToMap.Name = "cmdAssocAddToMap";
+            this.cmdAssocAddToMap.Size = new System.Drawing.Size(29, 23);
+            this.cmdAssocAddToMap.TabIndex = 3;
+            this.cmdAssocAddToMap.UseVisualStyleBackColor = true;
+            this.cmdAssocAddToMap.Click += new System.EventHandler(this.btnAddToMap_Click);
             // 
-            // btnDeleteAssociatedSurface
+            // cmdAssocDelete
             // 
-            this.btnDeleteAssociatedSurface.Enabled = false;
-            this.btnDeleteAssociatedSurface.Image = global::GCDCore.Properties.Resources.Delete;
-            this.btnDeleteAssociatedSurface.Location = new System.Drawing.Point(73, 6);
-            this.btnDeleteAssociatedSurface.Name = "btnDeleteAssociatedSurface";
-            this.btnDeleteAssociatedSurface.Size = new System.Drawing.Size(29, 23);
-            this.btnDeleteAssociatedSurface.TabIndex = 2;
-            this.btnDeleteAssociatedSurface.UseVisualStyleBackColor = true;
-            this.btnDeleteAssociatedSurface.Click += new System.EventHandler(this.btnDeleteAssociatedSurface_Click);
+            this.cmdAssocDelete.Enabled = false;
+            this.cmdAssocDelete.Image = global::GCDCore.Properties.Resources.Delete;
+            this.cmdAssocDelete.Location = new System.Drawing.Point(73, 6);
+            this.cmdAssocDelete.Name = "cmdAssocDelete";
+            this.cmdAssocDelete.Size = new System.Drawing.Size(29, 23);
+            this.cmdAssocDelete.TabIndex = 2;
+            this.cmdAssocDelete.UseVisualStyleBackColor = true;
+            this.cmdAssocDelete.Click += new System.EventHandler(this.btnDeleteAssociatedSurface_Click);
             // 
-            // btnSettingsAssociatedSurface
+            // cmdAssocProperties
             // 
-            this.btnSettingsAssociatedSurface.Enabled = false;
-            this.btnSettingsAssociatedSurface.Image = global::GCDCore.Properties.Resources.Settings;
-            this.btnSettingsAssociatedSurface.Location = new System.Drawing.Point(38, 6);
-            this.btnSettingsAssociatedSurface.Name = "btnSettingsAssociatedSurface";
-            this.btnSettingsAssociatedSurface.Size = new System.Drawing.Size(29, 23);
-            this.btnSettingsAssociatedSurface.TabIndex = 1;
-            this.btnSettingsAssociatedSurface.UseVisualStyleBackColor = true;
-            this.btnSettingsAssociatedSurface.Click += new System.EventHandler(this.ViewAssociatedSurface);
+            this.cmdAssocProperties.Enabled = false;
+            this.cmdAssocProperties.Image = global::GCDCore.Properties.Resources.Settings;
+            this.cmdAssocProperties.Location = new System.Drawing.Point(38, 6);
+            this.cmdAssocProperties.Name = "cmdAssocProperties";
+            this.cmdAssocProperties.Size = new System.Drawing.Size(29, 23);
+            this.cmdAssocProperties.TabIndex = 1;
+            this.cmdAssocProperties.UseVisualStyleBackColor = true;
+            this.cmdAssocProperties.Click += new System.EventHandler(this.cmdEditAssocSurfaceProperties_Click);
             // 
             // pgeSurvey
             // 
@@ -525,14 +539,6 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.lblDatetime.TabIndex = 3;
             this.lblDatetime.Text = "10 Dec 2012 23:59";
             // 
-            // colErrName
-            // 
-            this.colErrName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colErrName.DataPropertyName = "NameWithDefault";
-            this.colErrName.HeaderText = "Name";
-            this.colErrName.Name = "colErrName";
-            this.colErrName.ReadOnly = true;
-            // 
             // frmDEMSurveyProperties
             // 
             this.AcceptButton = this.btnOK;
@@ -574,13 +580,13 @@ namespace GCDCore.UserInterface.SurveyLibrary
         internal System.Windows.Forms.Button btnHlp;
         internal System.Windows.Forms.ToolTip ttpTooltip;
         internal System.Windows.Forms.TabPage pgeErrors;
-        internal System.Windows.Forms.Button cmdAddErrorToMap;
+        internal System.Windows.Forms.Button cmdErrorAddToMap;
         internal System.Windows.Forms.DataGridView grdErrorSurfaces;
         internal System.Windows.Forms.DataGridViewTextBoxColumn DataGridViewTextBoxColumn7;
         internal System.Windows.Forms.DataGridViewTextBoxColumn DataGridViewTextBoxColumn8;
         internal System.Windows.Forms.DataGridViewTextBoxColumn DataGridViewTextBoxColumn9;
-        internal System.Windows.Forms.Button btnErrorDelete;
-        internal System.Windows.Forms.Button btnErrorSettings;
+        internal System.Windows.Forms.Button cmdErrorDelete;
+        internal System.Windows.Forms.Button cmdErrorProperties;
         internal System.Windows.Forms.Button btnAddError;
         internal System.Windows.Forms.TabPage pgeSurfaces;
         internal System.Windows.Forms.DataGridView grdAssocSurface;
@@ -588,9 +594,9 @@ namespace GCDCore.UserInterface.SurveyLibrary
         internal System.Windows.Forms.DataGridViewTextBoxColumn DataGridViewTextBoxColumn4;
         internal System.Windows.Forms.DataGridViewTextBoxColumn DataGridViewTextBoxColumn5;
         internal System.Windows.Forms.Button btnAddAssociatedSurface;
-        internal System.Windows.Forms.Button cmdAddAssocToMap;
-        internal System.Windows.Forms.Button btnDeleteAssociatedSurface;
-        internal System.Windows.Forms.Button btnSettingsAssociatedSurface;
+        internal System.Windows.Forms.Button cmdAssocAddToMap;
+        internal System.Windows.Forms.Button cmdAssocDelete;
+        internal System.Windows.Forms.Button cmdAssocProperties;
         internal System.Windows.Forms.TabPage pgeSurvey;
         internal System.Windows.Forms.GroupBox GroupBox2;
         internal System.Windows.Forms.GroupBox GroupBox1;

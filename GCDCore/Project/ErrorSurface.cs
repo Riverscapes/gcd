@@ -17,7 +17,7 @@ namespace GCDCore.Project
             set
             {
                 foreach (ErrorSurface errSurf in DEM.ErrorSurfaces)
-                    errSurf.IsDefault = false;
+                    errSurf._IsDefault = false;
 
                 _IsDefault = true;
             }

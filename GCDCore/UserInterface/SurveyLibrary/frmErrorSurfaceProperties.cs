@@ -60,7 +60,14 @@ namespace GCDCore.UserInterface.SurveyLibrary
                 txtName.Text = ErrorSurf.Name;
                 txtRasterPath.Text = ProjectManager.Project.GetRelativePath(ErrorSurf.Raster.GISFileInfo);
                 chkIsDefault.Checked = ErrorSurf.IsDefault;
+                chkIsDefault.Enabled = !ErrorSurf.IsDefault; // cannot uncheck default... only set another surface as default
                 btnOK.Text = "Save";
+            }
+            else
+            {
+                // The first error surface is always the default.
+                chkIsDefault.Checked = DEM.ErrorSurfaces.Count == 0;
+                chkIsDefault.Enabled = !chkIsDefault.Checked;
             }
 
             try
@@ -75,9 +82,6 @@ namespace GCDCore.UserInterface.SurveyLibrary
                 // Update which controls are enabled.
                 UpdateControls();
 
-                // The first error surface is always the default.
-                chkIsDefault.Checked = DEM.ErrorSurfaces.Count == 0;
-                chkIsDefault.Enabled = !chkIsDefault.Checked;
             }
             catch (Exception ex)
             {
@@ -433,7 +437,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
                         DataGridViewComboBoxCell cboAssoc = (DataGridViewComboBoxCell)grdFISInputs.Rows[i].Cells[1];
                         if ((int)cboAssoc.Value > 0)
                         {
-                            dInputs[grdFISInputs.Rows[i].Cells[0].Value.ToString()] = (AssocSurface) cboAssoc.Value;
+                            dInputs[grdFISInputs.Rows[i].Cells[0].Value.ToString()] = (AssocSurface)cboAssoc.Value;
                         }
                         else
                         {
