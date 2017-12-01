@@ -124,6 +124,27 @@ namespace GCDConsoleLib
         }
 
         /// <summary>
+        /// Is a point inside a feature?
+        /// </summary>
+        /// <returns></returns>
+        public List<Geometry> PointsInExtent(ExtentRectangle ext)
+        {
+            Open();
+            List<Geometry> retVal = new List<Geometry>();
+            Layer mLayer = _ds.GetLayerByIndex(0);
+
+            Geometry pt = new Geometry(wkbGeometryType.wkbPoint);
+
+            foreach (KeyValuePair<long, VectorFeature> kvp in Features)
+            {
+                // only add values that are inside the rectangle
+            }
+
+            return retVal;
+        }
+
+
+        /// <summary>
         /// Deletion
         /// </summary>
         /// <param name="sFilepath"></param>

@@ -144,11 +144,11 @@ namespace GCDConsoleLib
         /// <param name="rExtent1"></param>
         /// <param name="rExtent2"></param>
         /// <returns>(colT, rowT)</returns>
-        public Tuple<int, int> GetTopCornerTranslationRowCol(ExtentRectangle rExtent2)
+        public int[] GetTopCornerTranslationRowCol(ExtentRectangle rExtent2)
         {
             int colT = (int)((Left - rExtent2.Left) / CellWidth);
             int rowT = (int)((Top - rExtent2.Top) / CellHeight);
-            return new Tuple<int, int>(rowT, colT);
+            return new int[2] { rowT, colT };
         }
 
         /// <summary>
@@ -232,11 +232,11 @@ namespace GCDConsoleLib
         /// </summary>
         /// <param name="rect"></param>
         /// <returns>Tuple (x,y)</returns>
-        public Tuple<int, int> GetTranslation(ExtentRectangle rect)
+        public int[] GetTranslation(ExtentRectangle rect)
         {
             int ydiff = (int)(rect.Top - Top / Math.Abs(CellHeight));
             int xdiff = (int)(rect.Left - Left / Math.Abs(CellWidth));
-            return new Tuple<int, int>(xdiff, ydiff);
+            return new int[2] { xdiff, ydiff };
         }
 
         /// <summary>
@@ -278,11 +278,11 @@ namespace GCDConsoleLib
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Tuple<int, int> Id2RowCol(int id)
+        public int[] Id2RowCol(int id)
         {
             int rowId = (int)Math.Floor((double)(id / Cols));
             int colId = id - (rowId * Cols);
-            return new Tuple<int, int>(rowId + 1, colId + 1);
+            return new int[2] { rowId + 1, colId + 1 };
         }
 
         /// <summary>
@@ -290,12 +290,12 @@ namespace GCDConsoleLib
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Tuple<decimal, decimal> Id2XY(int id)
+        public decimal[] Id2XY(int id)
         {
-            Tuple<int, int> rowcol = Id2RowCol(id);
-            decimal rowY = Top + (CellHeight * rowcol.Item1) + CellHeight / 2;
-            decimal rowX = Left + (CellWidth * rowcol.Item2) + CellWidth / 2;
-            return new Tuple<decimal, decimal>(rowX, rowY);
+            int[] rowcol = Id2RowCol(id);
+            decimal rowY = Top + (CellHeight * rowcol[0]) + CellHeight / 2;
+            decimal rowX = Left + (CellWidth * rowcol[1]) + CellWidth / 2;
+            return new decimal[2] { rowX, rowY };
         }
 
         /// <summary>
@@ -306,11 +306,11 @@ namespace GCDConsoleLib
         /// <returns>the transformed ID, -1 if it's not valid</returns>
         public int RelativeId(int origid, ExtentRectangle otherExtent)
         {
-            Tuple<int, int> origRowCol = Id2RowCol(origid);
-            Tuple<int, int> offsetRowCol = GetTopCornerTranslationRowCol(otherExtent);
+            int[] origRowCol = Id2RowCol(origid);
+            int[] offsetRowCol = GetTopCornerTranslationRowCol(otherExtent);
             int newInd;
-            int newRow = origRowCol.Item1 + offsetRowCol.Item1;
-            int newCol = origRowCol.Item2 + offsetRowCol.Item2;
+            int newRow = origRowCol[0] + offsetRowCol[0];
+            int newCol = origRowCol[1] + offsetRowCol[1];
             if (newCol <= 0 || newRow <= 0 || newCol > otherExtent.Cols || newRow > otherExtent.Rows)
                 newInd = -1;
             else

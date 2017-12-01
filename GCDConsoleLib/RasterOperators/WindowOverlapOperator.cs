@@ -136,11 +136,11 @@ namespace GCDConsoleLib.Internal
                 for (int wId = 0; wId < BufferCellNum; wId++)
                 {
                     // Get the rowcol translation of this window id
-                    Tuple<int, int> winRowCol = WindowExtent.Id2RowCol(wId);
+                    int[] winRowCol = WindowExtent.Id2RowCol(wId);
                     // The row of the window tells us which cache to use
-                    int cacheNum = Row2CacheId(winRowCol.Item1);
+                    int cacheNum = Row2CacheId(winRowCol[0]);
                     // This is the column ID of the cache column in window coordinates 
-                    int wid2cid = id + (winRowCol.Item2-1) - BufferCells;
+                    int wid2cid = id + (winRowCol[1]-1) - BufferCells;
                     // Now loop over all the data values (number of rasters)
                     for (int dId = 0; dId < data.Count; dId++)
                     {

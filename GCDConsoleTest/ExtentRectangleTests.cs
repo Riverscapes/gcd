@@ -153,14 +153,14 @@ namespace GCDConsoleLib.Tests
             ExtentRectangle rA2 = new ExtentRectangle(3, 2, -1, 1, 30, 30);
 
             // Returns (x,y) ==> (col,row)
-            Tuple<int, int> tr1 = rA1.GetTranslation(rA2);
-            Tuple<int, int> tr2 = rA2.GetTranslation(rA1);
+            int[] tr1 = rA1.GetTranslation(rA2);
+            int[] tr2 = rA2.GetTranslation(rA1);
 
-            Assert.AreEqual(tr1.Item1, 2);
-            Assert.AreEqual(tr1.Item2, 3);
+            Assert.AreEqual(tr1[0], 2);
+            Assert.AreEqual(tr1[1], 3);
 
-            Assert.AreEqual(tr2.Item1, -tr1.Item1);
-            Assert.AreEqual(tr2.Item2, -tr1.Item2);
+            Assert.AreEqual(tr2[0], -tr1[0]);
+            Assert.AreEqual(tr2[1], -tr1[1]);
         }
 
         [TestMethod()]

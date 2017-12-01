@@ -166,15 +166,15 @@ namespace GCDConsoleLib.Internal
                     T[] _buffer = new T[_interSectRect.Rows * _interSectRect.Cols];
 
                     // Find the offset between the intersection and rRa
-                    Tuple<int, int> offrRa = _interSectRect.GetTopCornerTranslationRowCol(rRa.Extent);
-                    _rasters[idx].Read(offrRa.Item2, offrRa.Item1, _interSectRect.Cols, _interSectRect.Rows, _buffer);
+                    int[] offrRa = _interSectRect.GetTopCornerTranslationRowCol(rRa.Extent);
+                    _rasters[idx].Read(offrRa[1], offrRa[0], _interSectRect.Cols, _interSectRect.Rows, _buffer);
 
                     // Find the offset between the intersection and the chunkwindow
-                    Tuple<int, int> offChunk = _interSectRect.GetTopCornerTranslationRowCol(ChunkExtent);
+                    int[] offChunk = _interSectRect.GetTopCornerTranslationRowCol(ChunkExtent);
                     data[idx].Plunk(_buffer,
                         ChunkExtent.Rows, ChunkExtent.Cols,
                         _interSectRect.Rows, _interSectRect.Cols,
-                        offChunk.Item1, offChunk.Item2);
+                        offChunk[0], offChunk[1]);
                 }
             }
         }
@@ -202,10 +202,10 @@ namespace GCDConsoleLib.Internal
                 if (_outputRaster != null)
                 {
                     // Get the (col,row) offsets
-                    Tuple<int, int> offset = ChunkExtent.GetTopCornerTranslationRowCol(OpExtent);
+                    int[] offset = ChunkExtent.GetTopCornerTranslationRowCol(OpExtent);
                     // Write this window tot he file
                     // it goes (colNum, rowNum, COLS, ROWS, buffer);
-                    _outputRaster.Write(offset.Item2, offset.Item1 + _vOffset, ChunkExtent.Cols, ChunkExtent.Rows, outBuffer);
+                    _outputRaster.Write(offset[1], offset[0] + _vOffset, ChunkExtent.Cols, ChunkExtent.Rows, outBuffer);
                 }
                 // We always increment to the next one
                 nextChunk();
