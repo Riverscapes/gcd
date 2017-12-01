@@ -17,9 +17,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
         public const string m_sEntireDEMExtent = "Entire DEM Extent";
 
         // This dictionary stores the definitions of the error surface properties for each survey method polygon
-
         private Dictionary<string, ErrorSurfaceProperty> ErrorCalcProps;
-
 
         public frmErrorSurfaceProperties(DEMSurvey dem, ErrorSurface errorSurf)
         {
@@ -52,7 +50,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
             // Load all the associated surfaces in the survey library to the grid combo box
             DataGridViewComboBoxColumn colCombo = (DataGridViewComboBoxColumn)grdFISInputs.Columns[1];
-            colCombo.DataSource = new BindingList<AssocSurface>(DEM.AssocSurfaces);
+            colCombo.DataSource = DEM.AssocSurfaces;
 
             if (ErrorSurf is ErrorSurface)
             {
@@ -435,7 +433,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
                     for (int i = 0; i <= grdFISInputs.Rows.Count - 1; i++)
                     {
                         DataGridViewComboBoxCell cboAssoc = (DataGridViewComboBoxCell)grdFISInputs.Rows[i].Cells[1];
-                        if ((int)cboAssoc.Value > 0)
+                        if (cboAssoc.Value != null)
                         {
                             dInputs[grdFISInputs.Rows[i].Cells[0].Value.ToString()] = (AssocSurface)cboAssoc.Value;
                         }
@@ -590,6 +588,11 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
             ProjectManager.Project.Save();
             Cursor.Current = Cursors.Default;
+        }
+
+        private void grdFISInputs_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            System.Diagnostics.Debug.Print(e.Exception.Message);
         }
     }
 }
