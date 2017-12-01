@@ -152,6 +152,7 @@
             this.grdFISInputs.RowHeadersVisible = false;
             this.grdFISInputs.Size = new System.Drawing.Size(409, 177);
             this.grdFISInputs.TabIndex = 6;
+            this.grdFISInputs.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.grdFISInputs_DataError);
             // 
             // GroupBox2
             // 
@@ -180,6 +181,8 @@
             this.grdErrorProperties.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.grdErrorProperties.Size = new System.Drawing.Size(355, 180);
             this.grdErrorProperties.TabIndex = 0;
+            this.grdErrorProperties.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdErrorProperties_CellClick);
+            this.grdErrorProperties.CellLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdErrorProperties_CellLeave);
             // 
             // Method
             // 
