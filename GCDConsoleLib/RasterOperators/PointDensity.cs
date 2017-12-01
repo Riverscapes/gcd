@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using GCDConsoleLib.Common.Extensons;
-using GCDConsoleLib.Utility;
 using OSGeo.OGR;
 
 namespace GCDConsoleLib.Internal.Operators
@@ -13,7 +11,8 @@ namespace GCDConsoleLib.Internal.Operators
         private RasterOperators.KernelShapes _kshape;
         private Vector _vinput;
         private double area;
-        private List<int[]> celloffsets;
+        private delegate bool insideOp(Geometry pt1, Geometry pt2);
+        private insideOp theOp;
 
         /// <summary>
         /// Constructor
@@ -32,69 +31,51 @@ namespace GCDConsoleLib.Internal.Operators
             switch (eKernel)
             {
                 case RasterOperators.KernelShapes.Circle:
+                    theOp = new insideOp(InsideRadius);
                     area = Math.PI * Math.Pow((double)fSize, 2);
                     break;
                 case RasterOperators.KernelShapes.Square:
+                    theOp = new insideOp(InsideSquare);
                     area = Math.Pow((double)fSize, 2);
                     break;
             }
         }
 
 
-        public bool InsideSquare(Geometry pt, decimal[] cidxy)
+        public bool InsideRadius(Geometry pt, Geometry pt2)
         {
             // do distnce vertically and then horizontally.
-            return true;
+            return pt.Distance(pt2) <= (double)_fsize;
         }
 
-        public bool InsideRadius(Geometry pt, decimal[] cidxy)
+        public bool InsideSquare(Geometry pt, Geometry pt2)
         {
-            // just do euclidean distance
-            return true;
+            return Math.Abs(pt.GetX(0) - pt2.GetX(0)) <= (double)_fsize && Math.Abs(pt.GetX(0) - pt2.GetY(1)) <= (double)_fsize;
         }
+
 
         protected override void ChunkOp(List<double[]> data, double[] outChunk)
         {
             // Get all the points in this chunk
             List<Geometry> retval = _vinput.PointsInExtent(ChunkExtent.Buffer(_fsize));
-            double outval = 0;
-
-            switch (_kshape)
+            for (int cid = 0; cid < data[0].Length; cid++)
             {
-                case RasterOperators.KernelShapes.Circle:
-                    bool bFoundCi = false;
-                    for (int cid = 0; cid < data[0].Length; cid++)
-                    {
-                        foreach (Geometry pt in retval)
-                        {
+                double outval = 0;
+                bool bFoundCi = false;
 
-                            if (InsideRadius(pt, ChunkExtent.Id2XY(cid)))
-                            {
-                                outval++;
-                                bFoundCi = true;
-                            }
-                        }
-                        if (bFoundCi) outChunk[cid] = outval / area;
-                        else outChunk[cid] = OpNodataVal;
-                    }
-                    break;
-                case RasterOperators.KernelShapes.Square:
-                    bool bFoundSq = false;
-                    for (int cid = 0; cid < data[0].Length; cid++)
+                foreach (Geometry pt in retval)
+                {
+                    Geometry pt2 = new Geometry(wkbGeometryType.wkbPoint);
+                    decimal[] cidxy = ChunkExtent.Id2XY(cid);
+                    pt2.AddPoint((double)cidxy[0], (double)cidxy[1], 0);
+                    if (InsideRadius(pt, pt2))
                     {
-                        foreach (Geometry pt in retval)
-                        {
-
-                            if (InsideRadius(pt, ChunkExtent.Id2XY(cid)))
-                            {
-                                outval++;
-                                bFoundSq = true;
-                            }
-                        }
-                        if (bFoundSq) outChunk[cid] = outval / area;
-                        else outChunk[cid] = OpNodataVal;
+                        outval++;
+                        bFoundCi = true;
                     }
-                    break;
+                }
+                if (bFoundCi) outChunk[cid] = outval / area;
+                else outChunk[cid] = OpNodataVal;
             }
         }
 
