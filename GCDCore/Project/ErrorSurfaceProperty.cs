@@ -8,11 +8,61 @@ namespace GCDCore.Project
 {
     public class ErrorSurfaceProperty : GCDProjectItem
     {
-        public readonly double? UniformValue;
-        public readonly AssocSurface AssociatedSurface;
+        private double? _UniformValue;
+        public double? UniformValue
+        {
+            get { return _UniformValue; }
+            set
+            {
+                _UniformValue = value;
+                _AssociatedSurface = null;
+                _FISRuleFile = null;
+                FISInputs = null;
+            }
+        }
 
-        public readonly FileInfo FISRuleFile;
-        public readonly Dictionary<string, AssocSurface> FISInputs;
+
+        private AssocSurface _AssociatedSurface;
+        public AssocSurface AssociatedSurface
+        {
+            get { return _AssociatedSurface; }
+            set
+            {
+                _AssociatedSurface = value;
+                _UniformValue = new double?();
+                _FISRuleFile = null;
+                FISInputs = null;
+            }
+        }
+
+        private FileInfo _FISRuleFile;
+        public FileInfo FISRuleFile
+        {
+            get { return _FISRuleFile; }
+            set
+            {
+                _FISRuleFile = value;
+                FISInputs = new naru.ui.SortableBindingList<FISInput>();
+                _UniformValue = new double?();
+                _AssociatedSurface = null;
+            }
+        }
+
+        public naru.ui.SortableBindingList<FISInput> FISInputs { get; internal set; }
+
+        public string ErrorType
+        {
+            get
+            {
+                if (UniformValue.HasValue)
+                    return "Uniform Error";
+                else if (AssociatedSurface is AssocSurface)
+                    return "Associated Surface";
+                else
+                    return "FIS Error";
+            }
+        }
+
 
         /// <summary>
         /// Return the error raster properties in the format needed by the raster processor
@@ -28,29 +78,27 @@ namespace GCDCore.Project
                 else
                 {
                     Dictionary<string, GCDConsoleLib.Raster> fisinputs = new Dictionary<string, GCDConsoleLib.Raster>();
-                    foreach (KeyValuePair<string, AssocSurface> kvp in FISInputs)
+                    foreach (FISInput input in FISInputs)
                     {
-                        fisinputs[kvp.Key] = kvp.Value.Raster;
+                        fisinputs[input.FISInputName] = input.AssociatedSurface.Raster;
                     }
                     return new GCDConsoleLib.GCD.ErrorRasterProperties(FISRuleFile, fisinputs);
                 }
             }
         }
 
-        public ErrorSurfaceProperty(string name, double uniformValue) : base(name)
+        /// <summary>
+        /// Default constructor needed for binding lists of this class to DataGridView
+        /// </summary>
+        public ErrorSurfaceProperty()
+            : base(string.Empty)
         {
-            UniformValue = new double?(uniformValue);
+
         }
 
-        public ErrorSurfaceProperty(string name, AssocSurface assoc) : base(name)
+        public ErrorSurfaceProperty(string name) : base(name)
         {
-            AssociatedSurface = assoc;
-        }
-
-        public ErrorSurfaceProperty(string name, FileInfo fisRuleFile, Dictionary<string, AssocSurface> fisInputs) : base(name)
-        {
-            FISRuleFile = fisRuleFile;
-            FISInputs = fisInputs;
+            UniformValue = 0;
         }
 
         public void Serialize(XmlDocument xmlDoc, XmlNode nodParent)
@@ -69,20 +117,18 @@ namespace GCDCore.Project
             if (FISInputs != null)
             {
                 XmlNode nodInputs = nodParent.AppendChild(xmlDoc.CreateElement("FISInputs"));
-                foreach (KeyValuePair<string, AssocSurface> input in FISInputs)
+                foreach (FISInput input in FISInputs)
                 {
                     XmlNode nodInput = nodInputs.AppendChild(xmlDoc.CreateElement("Input"));
-                    nodInput.AppendChild(xmlDoc.CreateElement("Name")).InnerText = input.Key;
-                    nodInput.AppendChild(xmlDoc.CreateElement("AssociatedSurface")).InnerText = input.Value.Name;
+                    nodInput.AppendChild(xmlDoc.CreateElement("Name")).InnerText = input.FISInputName;
+                    nodInput.AppendChild(xmlDoc.CreateElement("AssociatedSurface")).InnerText = input.AssociatedSurface.Name;
                 }
             }
         }
 
         public static ErrorSurfaceProperty Deserialize(XmlNode nodProperty, DEMSurvey dem)
         {
-            ErrorSurfaceProperty result = null;
-
-            string name = nodProperty.SelectSingleNode("Name").InnerText;
+            ErrorSurfaceProperty errProp = new ErrorSurfaceProperty(nodProperty.SelectSingleNode("Name").InnerText);
 
             XmlNode nodUni = nodProperty.SelectSingleNode("UniformValue");
             XmlNode nodAss = nodProperty.SelectSingleNode("AssociatedSurface");
@@ -91,25 +137,22 @@ namespace GCDCore.Project
             if (nodUni is XmlNode)
             {
                 double value = double.Parse(nodUni.InnerText);
-                result = new ErrorSurfaceProperty(name, value);
             }
             else if (nodAss is XmlNode)
             {
-                AssocSurface assoc = dem.AssocSurfaces.First<AssocSurface>(x => string.Compare(nodAss.InnerText, x.Name, true) ==0);
-                result = new ErrorSurfaceProperty(name, assoc);
+                errProp.AssociatedSurface = dem.AssocSurfaces.First<AssocSurface>(x => string.Compare(nodAss.InnerText, x.Name, true) == 0);
             }
             else if (nodFIS is XmlNode)
             {
-                FileInfo fisRuleFile = ProjectManager.Project.GetAbsolutePath(nodFIS.SelectSingleNode("FISRuleFile").InnerText);
-                Dictionary<string, AssocSurface> inputs = new Dictionary<string, AssocSurface>();
-
+                errProp.FISRuleFile = ProjectManager.Project.GetAbsolutePath(nodFIS.SelectSingleNode("FISRuleFile").InnerText);
                 foreach (XmlNode nodInput in nodFIS.SelectNodes("Inputs/Input"))
-                    inputs[nodInput.SelectSingleNode("Name").InnerText] = dem.AssocSurfaces.First<AssocSurface>(x => string.Compare(nodInput.SelectSingleNode("AssociatedSurface").InnerText, x.Name, true) == 0);
-
-                result = new ErrorSurfaceProperty(name, fisRuleFile, inputs);
+                {
+                    AssocSurface assoc = dem.AssocSurfaces.First<AssocSurface>(x => string.Compare(nodInput.SelectSingleNode("AssociatedSurface").InnerText, x.Name, true) == 0);
+                    errProp.FISInputs.Add(new FISInput(nodInput.SelectSingleNode("Name").InnerText, assoc));
+                }
             }
 
-            return result;
+            return errProp;
         }
     }
 }

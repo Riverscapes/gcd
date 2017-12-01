@@ -441,7 +441,8 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
                 // Create the error surface that points to the associated surface
                 Dictionary<string, ErrorSurfaceProperty> dProps = new Dictionary<string, ErrorSurfaceProperty>();
-                dProps[frmErrorSurfaceProperties.m_sEntireDEMExtent] = new ErrorSurfaceProperty(frmErrorSurfaceProperties.m_sEntireDEMExtent, assoc);
+                dProps[frmErrorSurfaceProperties.m_sEntireDEMExtent] = new ErrorSurfaceProperty(frmErrorSurfaceProperties.m_sEntireDEMExtent);
+                dProps[frmErrorSurfaceProperties.m_sEntireDEMExtent].AssociatedSurface = assoc;
                 errSurf = new ErrorSurface(assoc.Name, assoc.Raster.GISFileInfo, dem, dem.ErrorSurfaces.Count == 0, dProps);
                 dem.ErrorSurfaces.Add(errSurf);
 

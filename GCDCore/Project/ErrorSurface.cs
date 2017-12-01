@@ -9,6 +9,7 @@ namespace GCDCore.Project
     {
         public readonly Raster Raster;
         public readonly DEMSurvey DEM;
+        public readonly Dictionary<string, ErrorSurfaceProperty> ErrorProperties;
 
         private bool _IsDefault;
         public bool IsDefault
@@ -35,7 +36,6 @@ namespace GCDCore.Project
             }
         }
 
-        public readonly Dictionary<string, ErrorSurfaceProperty> ErrorProperties;
 
         /// <summary>
         /// Constructor for specifying error surface raster. i.e. has not error properties dictionary

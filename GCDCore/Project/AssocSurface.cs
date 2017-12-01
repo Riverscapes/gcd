@@ -9,7 +9,12 @@ namespace GCDCore.Project
         public readonly Raster  Raster;
         public string AssocSurfaceType { get; set; }
         public readonly DEMSurvey DEM;
-
+        
+        /// <summary>
+        /// Needed to support putting these items in a DataGridView combo column
+        /// </summary>
+        public AssocSurface This { get { return this; } }
+        
         public AssocSurface(string name, FileInfo rasterPath, string sType, DEMSurvey dem)
             : base(name)
         {

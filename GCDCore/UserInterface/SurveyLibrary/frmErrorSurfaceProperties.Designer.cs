@@ -35,15 +35,11 @@
             this.rdoFIS = new System.Windows.Forms.RadioButton();
             this.valUniform = new System.Windows.Forms.NumericUpDown();
             this.rdoUniform = new System.Windows.Forms.RadioButton();
-            this.AssociatedSurface = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.FISInput = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cboAssociated = new System.Windows.Forms.ComboBox();
             this.rdoAssociated = new System.Windows.Forms.RadioButton();
             this.grdFISInputs = new System.Windows.Forms.DataGridView();
             this.GroupBox2 = new System.Windows.Forms.GroupBox();
             this.grdErrorProperties = new System.Windows.Forms.DataGridView();
-            this.Method = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ErrorType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.GroupBox1 = new System.Windows.Forms.GroupBox();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
@@ -53,6 +49,10 @@
             this.Label1 = new System.Windows.Forms.Label();
             this.txtRasterPath = new System.Windows.Forms.TextBox();
             this.chkIsDefault = new System.Windows.Forms.CheckBox();
+            this.Method = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ErrorType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FISInput = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.AssociatedSurface = new System.Windows.Forms.DataGridViewComboBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.valUniform)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdFISInputs)).BeginInit();
             this.GroupBox2.SuspendLayout();
@@ -101,21 +101,6 @@
             this.rdoUniform.Text = "Uniform error value";
             this.rdoUniform.UseVisualStyleBackColor = true;
             this.rdoUniform.CheckedChanged += new System.EventHandler(this.rdoUniform_CheckedChanged);
-            // 
-            // AssociatedSurface
-            // 
-            this.AssociatedSurface.HeaderText = "Associated Surface";
-            this.AssociatedSurface.Name = "AssociatedSurface";
-            this.AssociatedSurface.Width = 200;
-            // 
-            // FISInput
-            // 
-            this.FISInput.HeaderText = "FIS Input";
-            this.FISInput.Name = "FISInput";
-            this.FISInput.ReadOnly = true;
-            this.FISInput.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.FISInput.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.FISInput.Width = 200;
             // 
             // cboAssociated
             // 
@@ -183,23 +168,6 @@
             this.grdErrorProperties.TabIndex = 0;
             this.grdErrorProperties.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdErrorProperties_CellClick);
             this.grdErrorProperties.CellLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdErrorProperties_CellLeave);
-            // 
-            // Method
-            // 
-            this.Method.HeaderText = "Survey Method";
-            this.Method.Name = "Method";
-            this.Method.ReadOnly = true;
-            this.Method.Width = 175;
-            // 
-            // ErrorType
-            // 
-            this.ErrorType.DataPropertyName = "ErrorType";
-            this.ErrorType.HeaderText = "Error Type";
-            this.ErrorType.Name = "ErrorType";
-            this.ErrorType.ReadOnly = true;
-            this.ErrorType.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.ErrorType.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.ErrorType.Width = 175;
             // 
             // GroupBox1
             // 
@@ -298,6 +266,41 @@
             this.chkIsDefault.Text = "Default error surface for this DEM";
             this.chkIsDefault.UseVisualStyleBackColor = true;
             // 
+            // Method
+            // 
+            this.Method.DataPropertyName = "Name";
+            this.Method.HeaderText = "Survey Method";
+            this.Method.Name = "Method";
+            this.Method.ReadOnly = true;
+            this.Method.Width = 175;
+            // 
+            // ErrorType
+            // 
+            this.ErrorType.DataPropertyName = "ErrorType";
+            this.ErrorType.HeaderText = "Error Type";
+            this.ErrorType.Name = "ErrorType";
+            this.ErrorType.ReadOnly = true;
+            this.ErrorType.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.ErrorType.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ErrorType.Width = 175;
+            // 
+            // FISInput
+            // 
+            this.FISInput.DataPropertyName = "FISInputName";
+            this.FISInput.HeaderText = "FIS Input";
+            this.FISInput.Name = "FISInput";
+            this.FISInput.ReadOnly = true;
+            this.FISInput.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.FISInput.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.FISInput.Width = 200;
+            // 
+            // AssociatedSurface
+            // 
+            this.AssociatedSurface.DataPropertyName = "AssociatedSurface";
+            this.AssociatedSurface.HeaderText = "Associated Surface";
+            this.AssociatedSurface.Name = "AssociatedSurface";
+            this.AssociatedSurface.Width = 200;
+            // 
             // frmErrorSurfaceProperties
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -335,15 +338,11 @@
         internal System.Windows.Forms.RadioButton rdoFIS;
         internal System.Windows.Forms.NumericUpDown valUniform;
         internal System.Windows.Forms.RadioButton rdoUniform;
-        internal System.Windows.Forms.DataGridViewComboBoxColumn AssociatedSurface;
-        internal System.Windows.Forms.DataGridViewTextBoxColumn FISInput;
         internal System.Windows.Forms.ComboBox cboAssociated;
         internal System.Windows.Forms.RadioButton rdoAssociated;
         internal System.Windows.Forms.DataGridView grdFISInputs;
         internal System.Windows.Forms.GroupBox GroupBox2;
         internal System.Windows.Forms.DataGridView grdErrorProperties;
-        internal System.Windows.Forms.DataGridViewTextBoxColumn Method;
-        internal System.Windows.Forms.DataGridViewTextBoxColumn ErrorType;
         internal System.Windows.Forms.GroupBox GroupBox1;
         internal System.Windows.Forms.Button btnCancel;
         internal System.Windows.Forms.Button btnOK;
@@ -353,5 +352,9 @@
         internal System.Windows.Forms.Label Label1;
         internal System.Windows.Forms.TextBox txtRasterPath;
         private System.Windows.Forms.CheckBox chkIsDefault;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Method;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ErrorType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn FISInput;
+        private System.Windows.Forms.DataGridViewComboBoxColumn AssociatedSurface;
     }
 }
