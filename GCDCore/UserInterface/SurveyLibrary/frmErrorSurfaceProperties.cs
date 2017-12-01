@@ -91,7 +91,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             // Disable the associated error surface option if in readonly mode or else
             // there are no associated error surfaces for the DEM survey
             rdoAssociated.Enabled = ErrorSurf == null && cboAssociated.Items.Count > 0;
-            rdoFIS.Enabled = ErrorSurf == null && DEM.AssocSurfaces.Count < 1;
+            rdoFIS.Enabled = !(ErrorSurf != null || DEM.AssocSurfaces.Count < 2);
 
             try
             {
