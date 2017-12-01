@@ -2,6 +2,7 @@ using System.Windows.Forms;
 using System;
 using System.Diagnostics;
 using GCDCore.ErrorCalculation.FIS;
+using System.Linq;
 
 namespace GCDCore.UserInterface.FISLibrary
 {
@@ -51,6 +52,9 @@ namespace GCDCore.UserInterface.FISLibrary
 
         private bool ValidateForm()
         {
+            // Santiy check to avoid empty string names
+            txtName.Text = txtName.Text.Trim();
+
             if (txtName.TextLength < 1)
             {
                 MessageBox.Show("Please enter a name for the FIS file.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -65,7 +69,20 @@ namespace GCDCore.UserInterface.FISLibrary
 
             if (!System.IO.File.Exists(txtFISFile.Text))
             {
-                System.Windows.Forms.MessageBox.Show("The FIS file does not exist.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("The FIS file does not exist.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return false;
+            }
+
+            if (GCDCore.Project.ProjectManager.FISLibrary.Count<FISLibraryItem>(x => string.Compare(x.Name, txtName.Text,true)==0) > 0)
+            {
+                MessageBox.Show("A FIS library item already exists with this name. Each FIS library item must have a unique name.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                txtName.Select();
+                return false;
+            }
+            
+            if (GCDCore.Project.ProjectManager.FISLibrary.Count<FISLibraryItem>(x => string.Compare(txtFISFile.Text, x.FilePathString,true)==0) > 0)
+            {
+                MessageBox.Show("A FIS library item already refers to this FIS rule file. Each FIS library item must refere to a different file.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return false;
             }
 
