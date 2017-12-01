@@ -427,7 +427,7 @@ namespace GCDCore.UserInterface.Project
                         frmAssocSurfaceProperties frm = new frmAssocSurfaceProperties(dem, null);
                         if (frm.ShowDialog() == DialogResult.OK)
                         {
-                            LoadTree(selNode.Tag.ToString());
+                            LoadTree();
                         }
                     }
                 }
