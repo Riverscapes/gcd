@@ -365,11 +365,11 @@ namespace GCDConsoleLib.Tests
         public void Id2RowColTest()
         {
             ExtentRectangle rTest1 = new ExtentRectangle(5, 6, -1, 1, 100, 50);
-            Assert.AreEqual(rTest1.Id2RowCol(52), new Tuple<int, int>(2, 3));
-            Assert.AreEqual(rTest1.Id2RowCol(0), new Tuple<int, int>(1, 1));
-            Assert.AreEqual(rTest1.Id2RowCol(1), new Tuple<int, int>(1, 2));
-            Assert.AreEqual(rTest1.Id2RowCol(100), new Tuple<int, int>(3, 1));
-            Assert.AreEqual(rTest1.Id2RowCol(4999), new Tuple<int, int>(100, 50));
+            CollectionAssert.AreEqual(rTest1.Id2RowCol(52), new int[2] { 2, 3 });
+            CollectionAssert.AreEqual(rTest1.Id2RowCol(0), new int[2] { 1, 1 });
+            CollectionAssert.AreEqual(rTest1.Id2RowCol(1), new int[2] { 1, 2 });
+            CollectionAssert.AreEqual(rTest1.Id2RowCol(100), new int[2] { 3, 1 });
+            CollectionAssert.AreEqual(rTest1.Id2RowCol(4999), new int[2] { 100, 50 });
         }
 
         [TestMethod()]

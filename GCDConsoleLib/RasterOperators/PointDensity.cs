@@ -4,7 +4,7 @@ using OSGeo.OGR;
 
 namespace GCDConsoleLib.Internal.Operators
 {
-    class PointDensity : BaseOperator<double>
+    public class PointDensity : BaseOperator<double>
     {
         private Raster _routput;
         private decimal _fsize;
