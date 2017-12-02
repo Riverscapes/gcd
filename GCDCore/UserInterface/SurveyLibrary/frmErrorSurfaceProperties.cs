@@ -20,6 +20,9 @@ namespace GCDCore.UserInterface.SurveyLibrary
         // This dictionary stores the definitions of the error surface properties for each survey method polygon
         private naru.ui.SortableBindingList<ErrorSurfaceProperty> ErrorCalcProps;
 
+        // The item bound to the selected row on the left grid
+        private ErrorSurfaceProperty SelectedErrProp { get { return (ErrorSurfaceProperty)grdErrorProperties.SelectedRows[0].DataBoundItem; } }
+
         public frmErrorSurfaceProperties(DEMSurvey dem, ErrorSurface errorSurf)
         {
             InitializeComponent();
@@ -60,8 +63,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             DataGridViewComboBoxColumn colCombo = (DataGridViewComboBoxColumn)grdFISInputs.Columns[1];
             colCombo.DataSource = new BindingList<AssocSurface>(DEM.AssocSurfaces);
             colCombo.DisplayMember = "Name";
-            colCombo.ValueMember = "This";
-            //colCombo.ValueType = Type.GetType("GCDCore.Project.AssocSurface");
+            colCombo.ValueMember = "This"; // needed to support binding column to complex object
 
             if (ErrorSurf is ErrorSurface)
             {
@@ -352,7 +354,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
         {
             grdFISInputs.DataSource = null;
 
-            if (cboFIS.SelectedItem == null)
+            if (!rdoFIS.Checked || cboFIS.SelectedItem == null)
                 return;
 
             FISRuleFile selectedFIS = new FISRuleFile(((FISLibraryItem)cboFIS.SelectedItem).FilePath);
@@ -628,6 +630,32 @@ namespace GCDCore.UserInterface.SurveyLibrary
         private void grdFISInputs_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
             System.Diagnostics.Debug.Print(e.Exception.Message);
+        }
+
+        private void grdErrorProperties_SelectionChanged(object sender, EventArgs e)
+        {
+            if (grdErrorProperties.SelectedRows.Count < 1)
+                return;
+
+            rdoUniform.Checked = SelectedErrProp.UniformValue.HasValue;
+            if (SelectedErrProp.UniformValue.HasValue)
+                valUniform.Value = (decimal)SelectedErrProp.UniformValue.Value;
+            else
+                valUniform.Value = 0;
+
+            cboAssociated.SelectedItem = SelectedErrProp.AssociatedSurface;
+
+            if (SelectedErrProp.FISRuleFile is System.IO.FileInfo)
+            {
+                if (ProjectManager.FISLibrary.Count<FISLibraryItem>(x => string.Compare(x.FilePath.FullName, SelectedErrProp.FISRuleFile.FullName, true) == 0) > 0)
+                {
+                    cboFIS.SelectedItem = ProjectManager.FISLibrary.First<FISLibraryItem>(x => string.Compare(x.FilePath.FullName, SelectedErrProp.FISRuleFile.FullName, true) == 0);
+                }
+            }
+            else
+            {
+                cboFIS.SelectedItem = null;
+            }
         }
     }
 }

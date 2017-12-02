@@ -166,8 +166,7 @@
             this.grdErrorProperties.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.grdErrorProperties.Size = new System.Drawing.Size(355, 180);
             this.grdErrorProperties.TabIndex = 0;
-            this.grdErrorProperties.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdErrorProperties_CellClick);
-            this.grdErrorProperties.CellLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdErrorProperties_CellLeave);
+            this.grdErrorProperties.SelectionChanged += new System.EventHandler(this.grdErrorProperties_SelectionChanged);
             // 
             // GroupBox1
             // 

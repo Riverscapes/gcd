@@ -21,7 +21,6 @@ namespace GCDCore.Project
             }
         }
 
-
         private AssocSurface _AssociatedSurface;
         public AssocSurface AssociatedSurface
         {
@@ -93,12 +92,12 @@ namespace GCDCore.Project
         public ErrorSurfaceProperty()
             : base(string.Empty)
         {
-
+            _UniformValue = new double?(0);
         }
 
         public ErrorSurfaceProperty(string name) : base(name)
         {
-            UniformValue = 0;
+            _UniformValue = new double?(0);
         }
 
         public void Serialize(XmlDocument xmlDoc, XmlNode nodParent)

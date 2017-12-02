@@ -20,8 +20,6 @@ namespace GCDCore.Project
 
         }
 
-
-
         /// <summary>
         /// Constructor for UI when switching between FIS rule files and no assoc has been selected yet
         /// </summary>
