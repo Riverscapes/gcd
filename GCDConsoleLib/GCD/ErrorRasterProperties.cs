@@ -9,15 +9,15 @@ namespace GCDConsoleLib.GCD
         public enum ERPType { FIS, UNIFORM, ASSOC }
 
         public readonly ERPType TheType;
-        public readonly double? UniformValue;
+        public readonly decimal? UniformValue;
         public readonly Raster AssociatedSurface;
 
         public readonly FileInfo FISRuleFile;
         public readonly Dictionary<string, Raster> FISInputs;
 
-        public ErrorRasterProperties(double uniformValue)
+        public ErrorRasterProperties(decimal uniformValue)
         {
-            UniformValue = new double?(uniformValue);
+            UniformValue = new decimal?(uniformValue);
             TheType = ERPType.UNIFORM;
         }
 

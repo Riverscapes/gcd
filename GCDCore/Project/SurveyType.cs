@@ -9,8 +9,8 @@ namespace GCDCore.Project
     {
         public string Name { get; set; }
 
-        private float m_fError;
-        public float ErrorValue
+        private decimal m_fError;
+        public decimal ErrorValue
         {
             get { return m_fError; }
 
@@ -30,7 +30,7 @@ namespace GCDCore.Project
             return Name;
         }
 
-        public SurveyType(string sName, float fError)
+        public SurveyType(string sName, decimal fError)
         {
             Name = sName;
             m_fError = fError;
@@ -46,7 +46,7 @@ namespace GCDCore.Project
             foreach (XmlNode nodType in xmlDoc.SelectNodes("SurveyTypes/SurveyType"))
             {
                 string sName = nodType.SelectSingleNode("Name").InnerText;
-                float fError = float.Parse(nodType.SelectSingleNode("Error").InnerText);
+                decimal fError = decimal.Parse(nodType.SelectSingleNode("Error").InnerText);
                 dSurveyTypes[sName] = new SurveyType(sName, fError);
             }
 

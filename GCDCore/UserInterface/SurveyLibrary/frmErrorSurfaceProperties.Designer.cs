@@ -38,8 +38,12 @@
             this.cboAssociated = new System.Windows.Forms.ComboBox();
             this.rdoAssociated = new System.Windows.Forms.RadioButton();
             this.grdFISInputs = new System.Windows.Forms.DataGridView();
+            this.FISInput = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.AssociatedSurface = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.GroupBox2 = new System.Windows.Forms.GroupBox();
             this.grdErrorProperties = new System.Windows.Forms.DataGridView();
+            this.Method = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ErrorType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.GroupBox1 = new System.Windows.Forms.GroupBox();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
@@ -49,10 +53,6 @@
             this.Label1 = new System.Windows.Forms.Label();
             this.txtRasterPath = new System.Windows.Forms.TextBox();
             this.chkIsDefault = new System.Windows.Forms.CheckBox();
-            this.Method = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ErrorType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FISInput = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.AssociatedSurface = new System.Windows.Forms.DataGridViewComboBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.valUniform)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdFISInputs)).BeginInit();
             this.GroupBox2.SuspendLayout();
@@ -80,6 +80,7 @@
             this.rdoFIS.TabStop = true;
             this.rdoFIS.Text = "FIS error model";
             this.rdoFIS.UseVisualStyleBackColor = true;
+            this.rdoFIS.CheckedChanged += new System.EventHandler(this.cboFIS_SelectedIndexChanged);
             // 
             // valUniform
             // 
@@ -88,6 +89,7 @@
             this.valUniform.Name = "valUniform";
             this.valUniform.Size = new System.Drawing.Size(85, 20);
             this.valUniform.TabIndex = 1;
+            this.valUniform.ValueChanged += new System.EventHandler(this.valUniform_ValueChanged);
             // 
             // rdoUniform
             // 
@@ -110,6 +112,7 @@
             this.cboAssociated.Name = "cboAssociated";
             this.cboAssociated.Size = new System.Drawing.Size(282, 21);
             this.cboAssociated.TabIndex = 3;
+            this.cboAssociated.SelectedIndexChanged += new System.EventHandler(this.cboAssociated_SelectedIndexChanged);
             // 
             // rdoAssociated
             // 
@@ -139,6 +142,23 @@
             this.grdFISInputs.TabIndex = 6;
             this.grdFISInputs.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.grdFISInputs_DataError);
             // 
+            // FISInput
+            // 
+            this.FISInput.DataPropertyName = "FISInputName";
+            this.FISInput.HeaderText = "FIS Input";
+            this.FISInput.Name = "FISInput";
+            this.FISInput.ReadOnly = true;
+            this.FISInput.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.FISInput.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.FISInput.Width = 200;
+            // 
+            // AssociatedSurface
+            // 
+            this.AssociatedSurface.DataPropertyName = "AssociatedSurface";
+            this.AssociatedSurface.HeaderText = "Associated Surface";
+            this.AssociatedSurface.Name = "AssociatedSurface";
+            this.AssociatedSurface.Width = 200;
+            // 
             // GroupBox2
             // 
             this.GroupBox2.Controls.Add(this.grdErrorProperties);
@@ -167,6 +187,24 @@
             this.grdErrorProperties.Size = new System.Drawing.Size(355, 180);
             this.grdErrorProperties.TabIndex = 0;
             this.grdErrorProperties.SelectionChanged += new System.EventHandler(this.grdErrorProperties_SelectionChanged);
+            // 
+            // Method
+            // 
+            this.Method.DataPropertyName = "Name";
+            this.Method.HeaderText = "Survey Method";
+            this.Method.Name = "Method";
+            this.Method.ReadOnly = true;
+            this.Method.Width = 175;
+            // 
+            // ErrorType
+            // 
+            this.ErrorType.DataPropertyName = "ErrorType";
+            this.ErrorType.HeaderText = "Error Type";
+            this.ErrorType.Name = "ErrorType";
+            this.ErrorType.ReadOnly = true;
+            this.ErrorType.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.ErrorType.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ErrorType.Width = 175;
             // 
             // GroupBox1
             // 
@@ -264,41 +302,6 @@
             this.chkIsDefault.TabIndex = 4;
             this.chkIsDefault.Text = "Default error surface for this DEM";
             this.chkIsDefault.UseVisualStyleBackColor = true;
-            // 
-            // Method
-            // 
-            this.Method.DataPropertyName = "Name";
-            this.Method.HeaderText = "Survey Method";
-            this.Method.Name = "Method";
-            this.Method.ReadOnly = true;
-            this.Method.Width = 175;
-            // 
-            // ErrorType
-            // 
-            this.ErrorType.DataPropertyName = "ErrorType";
-            this.ErrorType.HeaderText = "Error Type";
-            this.ErrorType.Name = "ErrorType";
-            this.ErrorType.ReadOnly = true;
-            this.ErrorType.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.ErrorType.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.ErrorType.Width = 175;
-            // 
-            // FISInput
-            // 
-            this.FISInput.DataPropertyName = "FISInputName";
-            this.FISInput.HeaderText = "FIS Input";
-            this.FISInput.Name = "FISInput";
-            this.FISInput.ReadOnly = true;
-            this.FISInput.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.FISInput.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.FISInput.Width = 200;
-            // 
-            // AssociatedSurface
-            // 
-            this.AssociatedSurface.DataPropertyName = "AssociatedSurface";
-            this.AssociatedSurface.HeaderText = "Associated Surface";
-            this.AssociatedSurface.Name = "AssociatedSurface";
-            this.AssociatedSurface.Width = 200;
             // 
             // frmErrorSurfaceProperties
             // 

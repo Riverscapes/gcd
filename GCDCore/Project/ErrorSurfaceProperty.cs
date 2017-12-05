@@ -8,8 +8,8 @@ namespace GCDCore.Project
 {
     public class ErrorSurfaceProperty : GCDProjectItem
     {
-        private double? _UniformValue;
-        public double? UniformValue
+        private decimal? _UniformValue;
+        public decimal? UniformValue
         {
             get { return _UniformValue; }
             set
@@ -28,7 +28,7 @@ namespace GCDCore.Project
             set
             {
                 _AssociatedSurface = value;
-                _UniformValue = new double?();
+                _UniformValue = new decimal?();
                 _FISRuleFile = null;
                 FISInputs = null;
             }
@@ -42,7 +42,7 @@ namespace GCDCore.Project
             {
                 _FISRuleFile = value;
                 FISInputs = new naru.ui.SortableBindingList<FISInput>();
-                _UniformValue = new double?();
+                _UniformValue = new decimal?();
                 _AssociatedSurface = null;
             }
         }
@@ -92,12 +92,12 @@ namespace GCDCore.Project
         public ErrorSurfaceProperty()
             : base(string.Empty)
         {
-            _UniformValue = new double?(0);
+            _UniformValue = new decimal?(0);
         }
 
         public ErrorSurfaceProperty(string name) : base(name)
         {
-            _UniformValue = new double?(0);
+            _UniformValue = new decimal?(0);
         }
 
         public void Serialize(XmlDocument xmlDoc, XmlNode nodParent)
@@ -105,7 +105,7 @@ namespace GCDCore.Project
             nodParent.AppendChild(xmlDoc.CreateElement("Name")).InnerText = Name;
 
             if (UniformValue.HasValue)
-                nodParent.AppendChild(xmlDoc.CreateElement("UniformValue")).InnerText = UniformValue.ToString();
+                nodParent.AppendChild(xmlDoc.CreateElement("UniformValue")).InnerText = UniformValue.Value.ToString();
 
             if (AssociatedSurface != null)
                 nodParent.AppendChild(xmlDoc.CreateElement("AssociatedSurface")).InnerText = AssociatedSurface.Name;
@@ -135,7 +135,7 @@ namespace GCDCore.Project
 
             if (nodUni is XmlNode)
             {
-                double value = double.Parse(nodUni.InnerText);
+                errProp.UniformValue = decimal.Parse(nodUni.InnerText);
             }
             else if (nodAss is XmlNode)
             {
