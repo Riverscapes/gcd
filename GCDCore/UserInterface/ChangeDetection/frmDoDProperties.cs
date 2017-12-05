@@ -8,10 +8,9 @@ namespace GCDCore.UserInterface.ChangeDetection
 {
     public partial class frmDoDProperties
     {
-        //Private m_pArcMap As ESRI.ArcGIS.ArcMapUI.IMxApplication
         private bool m_bUserEditedName;
 
-        private frmCoherenceProperties m_frmSpatialCoherence;
+        private CoherenceProperties CoherenceProps;
         // These are the results of the analysis. They are not populated until
         // the user clicks OK and the change detection completes successfully.
 
@@ -33,7 +32,6 @@ namespace GCDCore.UserInterface.ChangeDetection
 
         public frmDoDProperties()
         {
-            Load += DoDPropertiesForm_Load;
             // This call is required by the designer.
             InitializeComponent();
 
@@ -43,7 +41,6 @@ namespace GCDCore.UserInterface.ChangeDetection
 
         public frmDoDProperties(DEMSurvey newDEM, DEMSurvey oldDEM)
         {
-            Load += DoDPropertiesForm_Load;
             // This call is required by the designer.
             InitializeComponent();
 
@@ -59,6 +56,9 @@ namespace GCDCore.UserInterface.ChangeDetection
         {
             cboNewDEM.DataSource = ProjectManager.Project.DEMsSortByName(false);
             cboOldDEM.DataSource = ProjectManager.Project.DEMsSortByName(false);
+
+            // Initialize coherence properties in case they are needed.
+            CoherenceProps = new CoherenceProperties();
 
             if (m_InitialNewDEM == null)
             {
@@ -132,13 +132,8 @@ namespace GCDCore.UserInterface.ChangeDetection
                     }
                     else
                     {
-                        CoherenceProperties spatCoherence = null;
-                        if (chkBayesian.Checked)
-                        {
-                            spatCoherence = new CoherenceProperties(m_frmSpatialCoherence.FilterSize, m_frmSpatialCoherence.PercentLess, m_frmSpatialCoherence.PercentGreater);
-                        }
-
-                        cdEngine = new GCDCore.Engines.ChangeDetectionEngineProbabilistic(txtName.Text, dFolder, newDEM, oldDEM, newError, oldError, valConfidence.Value, spatCoherence);
+                        CoherenceProperties spatCoherence = chkBayesian.Checked ? spatCoherence = CoherenceProps : null;
+                        cdEngine = new Engines.ChangeDetectionEngineProbabilistic(txtName.Text, dFolder, newDEM, oldDEM, newError, oldError, valConfidence.Value, spatCoherence);
                     }
                 }
 
@@ -198,26 +193,30 @@ namespace GCDCore.UserInterface.ChangeDetection
                 else
                 {
                     MessageBox.Show("Please select an Old DEM Survey.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    cboOldDEM.Select();
                     return false;
                 }
             }
             else
             {
                 MessageBox.Show("Please select a New DEM Survey.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                cboNewDEM.Select();
                 return false;
             }
 
             if (!rdoMinLOD.Checked)
             {
-                if (!(cboNewError.SelectedItem is naru.db.NamedObject))
+                if (!(cboNewError.SelectedItem is ErrorSurface))
                 {
                     MessageBox.Show("Please select a new error surface.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    cboNewError.Select();
                     return false;
                 }
 
-                if (!(cboOldError.SelectedItem is naru.db.NamedObject))
+                if (!(cboOldError.SelectedItem is ErrorSurface))
                 {
                     MessageBox.Show("Please select an old error surface.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    cboOldError.Select();
                     return false;
                 }
             }
@@ -322,11 +321,9 @@ namespace GCDCore.UserInterface.ChangeDetection
             }
 
             txtName.Text = sAnalysisName.Trim();
-
         }
 
         #endregion
-
 
         private void rdoCommonArea_CheckedChanged(object sender, System.EventArgs e)
         {
@@ -355,13 +352,12 @@ namespace GCDCore.UserInterface.ChangeDetection
             catch (Exception ex)
             {
             }
-
         }
-
 
         private void cmdBayesianProperties_Click(System.Object sender, System.EventArgs e)
         {
-            m_frmSpatialCoherence.ShowDialog();
+            frmCoherenceProperties frm = new frmCoherenceProperties(CoherenceProps);
+            frm.ShowDialog();
         }
 
         private void chkBayesian_CheckedChanged(object sender, System.EventArgs e)
@@ -369,7 +365,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             EnableDisableControls();
         }
 
-        private void valConfidence_ValueChanged(object sender, System.EventArgs e)
+        private void Threshold_ValueChanged(object sender, System.EventArgs e)
         {
             UpdateAnalysisName();
         }
@@ -379,5 +375,4 @@ namespace GCDCore.UserInterface.ChangeDetection
             Process.Start(GCDCore.Properties.Resources.HelpBaseURL + "gcd-command-reference/gcd-project-explorer/j-change-detection-context-menu/i-add-change-detection");
         }
     }
-
 }

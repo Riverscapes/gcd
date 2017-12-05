@@ -151,6 +151,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.okButton.TabIndex = 21;
             this.okButton.Text = "OK";
             this.okButton.UseVisualStyleBackColor = true;
+            this.okButton.Click += new System.EventHandler(this.okButton_Click);
             // 
             // grpInput
             // 
@@ -204,6 +205,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.btnHelp.TabIndex = 25;
             this.btnHelp.Text = "Help";
             this.btnHelp.UseVisualStyleBackColor = true;
+            this.btnHelp.Click += new System.EventHandler(this.btnHelp_Click);
             // 
             // cmdCancel
             // 
@@ -233,6 +235,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.ShowIcon = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "Transform Function Parameter Editor";
+            this.Load += new System.EventHandler(this.frmCoherenceProperties_Load);
             ((System.ComponentModel.ISupportInitialize)(this.fisPictureBox)).EndInit();
             this.grpInput.ResumeLayout(false);
             this.grpInput.PerformLayout();

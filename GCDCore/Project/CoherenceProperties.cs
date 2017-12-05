@@ -4,9 +4,9 @@ namespace GCDCore.Project
 {
     public class CoherenceProperties
     {
-        public readonly int MovingWindowDimensions;
-        public readonly int InflectionA;
-        public readonly int InflectionB;
+        public  int MovingWindowDimensions { get; set; }
+        public int InflectionA { get; set; }
+        public int InflectionB { get; set; }
 
         public int XMin { get { return Convert.ToInt32(Math.Floor((double)(MovingWindowDimensions ^ 2) * (InflectionA / 100))); } }
         public int XMax { get { return Convert.ToInt32(Math.Floor((double)(MovingWindowDimensions ^ 2) * (InflectionB / 100))); } }

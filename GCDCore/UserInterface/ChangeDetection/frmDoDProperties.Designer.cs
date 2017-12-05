@@ -69,50 +69,49 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.Label2 = new System.Windows.Forms.Label();
             this.GroupBox1.SuspendLayout();
             this.GroupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)this.valMinLodThreshold).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)this.valConfidence).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.valMinLodThreshold)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.valConfidence)).BeginInit();
             this.GroupBox4.SuspendLayout();
             this.SuspendLayout();
-            //
-            //Label1
-            //
+            // 
+            // Label1
+            // 
             this.Label1.AutoSize = true;
             this.Label1.Location = new System.Drawing.Point(14, 30);
             this.Label1.Name = "Label1";
             this.Label1.Size = new System.Drawing.Size(31, 13);
             this.Label1.TabIndex = 0;
             this.Label1.Text = "DEM";
-            //
-            //cboNewDEM
-            //
+            // 
+            // cboNewDEM
+            // 
             this.cboNewDEM.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboNewDEM.FormattingEnabled = true;
             this.cboNewDEM.Location = new System.Drawing.Point(54, 30);
             this.cboNewDEM.Name = "cboNewDEM";
             this.cboNewDEM.Size = new System.Drawing.Size(201, 21);
             this.cboNewDEM.TabIndex = 1;
-            this.cboNewDEM.SelectedIndexChanged += cboNewDEM_SelectedIndexChanged;
-            //
-            //cboNewError
-            //
+            // 
+            // cboNewError
+            // 
             this.cboNewError.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboNewError.FormattingEnabled = true;
             this.cboNewError.Location = new System.Drawing.Point(54, 57);
             this.cboNewError.Name = "cboNewError";
             this.cboNewError.Size = new System.Drawing.Size(201, 21);
             this.cboNewError.TabIndex = 3;
-            //
-            //lblNewError
-            //
+            // 
+            // lblNewError
+            // 
             this.lblNewError.AutoSize = true;
             this.lblNewError.Location = new System.Drawing.Point(16, 57);
             this.lblNewError.Name = "lblNewError";
             this.lblNewError.Size = new System.Drawing.Size(29, 13);
             this.lblNewError.TabIndex = 2;
             this.lblNewError.Text = "Error";
-            //
-            //GroupBox1
-            //
+            // 
+            // GroupBox1
+            // 
             this.GroupBox1.Controls.Add(this.cboNewDEM);
             this.GroupBox1.Controls.Add(this.cboNewError);
             this.GroupBox1.Controls.Add(this.lblNewError);
@@ -123,9 +122,9 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.GroupBox1.TabIndex = 4;
             this.GroupBox1.TabStop = false;
             this.GroupBox1.Text = "New Survey";
-            //
-            //GroupBox3
-            //
+            // 
+            // GroupBox3
+            // 
             this.GroupBox3.Controls.Add(this.valMinLodThreshold);
             this.GroupBox3.Controls.Add(this.lblMinLodThreshold);
             this.GroupBox3.Controls.Add(this.cmdBayesianProperties);
@@ -141,55 +140,52 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.GroupBox3.TabIndex = 7;
             this.GroupBox3.TabStop = false;
             this.GroupBox3.Text = "Uncertainty Analysis Method";
-            //
-            //valMinLodThreshold
-            //
+            // 
+            // valMinLodThreshold
+            // 
             this.valMinLodThreshold.DecimalPlaces = 2;
             this.valMinLodThreshold.Increment = new decimal(new int[] {
-                1,
-                0,
-                0,
-                131072
-            });
+            1,
+            0,
+            0,
+            131072});
             this.valMinLodThreshold.Location = new System.Drawing.Point(170, 43);
             this.valMinLodThreshold.Maximum = new decimal(new int[] {
-                10000,
-                0,
-                0,
-                0
-            });
+            10000,
+            0,
+            0,
+            0});
             this.valMinLodThreshold.Name = "valMinLodThreshold";
             this.valMinLodThreshold.Size = new System.Drawing.Size(66, 20);
             this.valMinLodThreshold.TabIndex = 2;
             this.valMinLodThreshold.Value = new decimal(new int[] {
-                2,
-                0,
-                0,
-                65536
-            });
-            this.valMinLodThreshold.ValueChanged += valConfidence_ValueChanged;
-            //
-            //lblMinLodThreshold
-            //
+            2,
+            0,
+            0,
+            65536});
+            this.valMinLodThreshold.ValueChanged += new System.EventHandler(this.Threshold_ValueChanged);
+            // 
+            // lblMinLodThreshold
+            // 
             this.lblMinLodThreshold.AutoSize = true;
             this.lblMinLodThreshold.Location = new System.Drawing.Point(51, 47);
             this.lblMinLodThreshold.Name = "lblMinLodThreshold";
             this.lblMinLodThreshold.Size = new System.Drawing.Size(63, 13);
             this.lblMinLodThreshold.TabIndex = 1;
             this.lblMinLodThreshold.Text = "Threshold ()";
-            //
-            //cmdBayesianProperties
-            //
-            this.cmdBayesianProperties.Image = Properties.Resources.Settings;
+            // 
+            // cmdBayesianProperties
+            // 
+            this.cmdBayesianProperties.Image = global::GCDCore.Properties.Resources.Settings;
             this.cmdBayesianProperties.Location = new System.Drawing.Point(189, 141);
             this.cmdBayesianProperties.Name = "cmdBayesianProperties";
             this.cmdBayesianProperties.Size = new System.Drawing.Size(23, 23);
             this.cmdBayesianProperties.TabIndex = 8;
             this.cmdBayesianProperties.UseVisualStyleBackColor = true;
-            this.cmdBayesianProperties.Click += cmdBayesianProperties_Click;
-            //
-            //chkBayesian
-            //
+            this.cmdBayesianProperties.Click += new System.EventHandler(this.cmdBayesianProperties_Click);
+            // 
+            // chkBayesian
+            // 
             this.chkBayesian.AutoSize = true;
             this.chkBayesian.Location = new System.Drawing.Point(51, 144);
             this.chkBayesian.Name = "chkBayesian";
@@ -197,52 +193,48 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.chkBayesian.TabIndex = 7;
             this.chkBayesian.Text = "Use Bayesian updating";
             this.chkBayesian.UseVisualStyleBackColor = true;
-            this.chkBayesian.CheckedChanged += chkBayesian_CheckedChanged;
-            //
-            //valConfidence
-            //
+            this.chkBayesian.CheckedChanged += new System.EventHandler(this.chkBayesian_CheckedChanged);
+            // 
+            // valConfidence
+            // 
             this.valConfidence.DecimalPlaces = 2;
             this.valConfidence.Increment = new decimal(new int[] {
-                1,
-                0,
-                0,
-                131072
-            });
+            1,
+            0,
+            0,
+            131072});
             this.valConfidence.Location = new System.Drawing.Point(170, 112);
             this.valConfidence.Maximum = new decimal(new int[] {
-                1,
-                0,
-                0,
-                0
-            });
+            1,
+            0,
+            0,
+            0});
             this.valConfidence.Minimum = new decimal(new int[] {
-                1,
-                0,
-                0,
-                131072
-            });
+            1,
+            0,
+            0,
+            131072});
             this.valConfidence.Name = "valConfidence";
             this.valConfidence.Size = new System.Drawing.Size(66, 20);
             this.valConfidence.TabIndex = 6;
             this.valConfidence.Value = new decimal(new int[] {
-                95,
-                0,
-                0,
-                131072
-            });
-            this.valConfidence.ValueChanged += valConfidence_ValueChanged;
-            //
-            //lblConfidence
-            //
+            95,
+            0,
+            0,
+            131072});
+            this.valConfidence.ValueChanged += new System.EventHandler(this.Threshold_ValueChanged);
+            // 
+            // lblConfidence
+            // 
             this.lblConfidence.AutoSize = true;
             this.lblConfidence.Location = new System.Drawing.Point(51, 116);
             this.lblConfidence.Name = "lblConfidence";
             this.lblConfidence.Size = new System.Drawing.Size(110, 13);
             this.lblConfidence.TabIndex = 5;
             this.lblConfidence.Text = "Confidence level (0-1)";
-            //
-            //rdoProbabilistic
-            //
+            // 
+            // rdoProbabilistic
+            // 
             this.rdoProbabilistic.AutoSize = true;
             this.rdoProbabilistic.Location = new System.Drawing.Point(17, 92);
             this.rdoProbabilistic.Name = "rdoProbabilistic";
@@ -250,10 +242,10 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.rdoProbabilistic.TabIndex = 4;
             this.rdoProbabilistic.Text = "Probabilistic thresholding";
             this.rdoProbabilistic.UseVisualStyleBackColor = true;
-            this.rdoProbabilistic.CheckedChanged += rdoProbabilistic_CheckedChanged;
-            //
-            //rdoPropagated
-            //
+            this.rdoProbabilistic.CheckedChanged += new System.EventHandler(this.rdoProbabilistic_CheckedChanged);
+            // 
+            // rdoPropagated
+            // 
             this.rdoPropagated.AutoSize = true;
             this.rdoPropagated.Location = new System.Drawing.Point(17, 69);
             this.rdoPropagated.Name = "rdoPropagated";
@@ -261,10 +253,10 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.rdoPropagated.TabIndex = 3;
             this.rdoPropagated.Text = "Propagated errors";
             this.rdoPropagated.UseVisualStyleBackColor = true;
-            this.rdoPropagated.CheckedChanged += rdoProbabilistic_CheckedChanged;
-            //
-            //rdoMinLOD
-            //
+            this.rdoPropagated.CheckedChanged += new System.EventHandler(this.rdoProbabilistic_CheckedChanged);
+            // 
+            // rdoMinLOD
+            // 
             this.rdoMinLOD.AutoSize = true;
             this.rdoMinLOD.Checked = true;
             this.rdoMinLOD.Location = new System.Drawing.Point(17, 22);
@@ -274,27 +266,26 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.rdoMinLOD.TabStop = true;
             this.rdoMinLOD.Text = "Simple minimum level of detection";
             this.rdoMinLOD.UseVisualStyleBackColor = true;
-            this.rdoMinLOD.CheckedChanged += rdoProbabilistic_CheckedChanged;
-            //
-            //Label5
-            //
+            this.rdoMinLOD.CheckedChanged += new System.EventHandler(this.rdoProbabilistic_CheckedChanged);
+            // 
+            // Label5
+            // 
             this.Label5.AutoSize = true;
             this.Label5.Location = new System.Drawing.Point(12, 22);
             this.Label5.Name = "Label5";
             this.Label5.Size = new System.Drawing.Size(74, 13);
             this.Label5.TabIndex = 0;
             this.Label5.Text = "Analysis name";
-            //
-            //txtName
-            //
+            // 
+            // txtName
+            // 
             this.txtName.Location = new System.Drawing.Point(98, 18);
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(451, 20);
             this.txtName.TabIndex = 1;
-            this.txtName.TextChanged += txtName_TextChanged;
-            //
-            //GroupBox4
-            //
+            // 
+            // GroupBox4
+            // 
             this.GroupBox4.Controls.Add(this.cboOldDEM);
             this.GroupBox4.Controls.Add(this.cboOldError);
             this.GroupBox4.Controls.Add(this.lblOldError);
@@ -305,47 +296,46 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.GroupBox4.TabIndex = 5;
             this.GroupBox4.TabStop = false;
             this.GroupBox4.Text = "Old Survey";
-            //
-            //cboOldDEM
-            //
+            // 
+            // cboOldDEM
+            // 
             this.cboOldDEM.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboOldDEM.FormattingEnabled = true;
             this.cboOldDEM.Location = new System.Drawing.Point(52, 30);
             this.cboOldDEM.Name = "cboOldDEM";
             this.cboOldDEM.Size = new System.Drawing.Size(201, 21);
             this.cboOldDEM.TabIndex = 1;
-            this.cboOldDEM.SelectedIndexChanged += cboOldDEM_SelectedIndexChanged;
-            //
-            //cboOldError
-            //
+            // 
+            // cboOldError
+            // 
             this.cboOldError.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboOldError.FormattingEnabled = true;
             this.cboOldError.Location = new System.Drawing.Point(52, 57);
             this.cboOldError.Name = "cboOldError";
             this.cboOldError.Size = new System.Drawing.Size(201, 21);
             this.cboOldError.TabIndex = 3;
-            //
-            //lblOldError
-            //
+            // 
+            // lblOldError
+            // 
             this.lblOldError.AutoSize = true;
             this.lblOldError.Location = new System.Drawing.Point(14, 57);
             this.lblOldError.Name = "lblOldError";
             this.lblOldError.Size = new System.Drawing.Size(29, 13);
             this.lblOldError.TabIndex = 2;
             this.lblOldError.Text = "Error";
-            //
-            //Label7
-            //
+            // 
+            // Label7
+            // 
             this.Label7.AutoSize = true;
             this.Label7.Location = new System.Drawing.Point(12, 30);
             this.Label7.Name = "Label7";
             this.Label7.Size = new System.Drawing.Size(31, 13);
             this.Label7.TabIndex = 0;
             this.Label7.Text = "DEM";
-            //
-            //cmdCancel
-            //
-            this.cmdCancel.Anchor = (System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right);
+            // 
+            // cmdCancel
+            // 
+            this.cmdCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cmdCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.cmdCancel.Location = new System.Drawing.Point(474, 358);
             this.cmdCancel.Name = "cmdCancel";
@@ -353,10 +343,10 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.cmdCancel.TabIndex = 9;
             this.cmdCancel.Text = "Cancel";
             this.cmdCancel.UseVisualStyleBackColor = true;
-            //
-            //cmdOK
-            //
-            this.cmdOK.Anchor = (System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right);
+            // 
+            // cmdOK
+            // 
+            this.cmdOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cmdOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.cmdOK.Location = new System.Drawing.Point(393, 358);
             this.cmdOK.Name = "cmdOK";
@@ -364,40 +354,39 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.cmdOK.TabIndex = 8;
             this.cmdOK.Text = "Calculate";
             this.cmdOK.UseVisualStyleBackColor = true;
-            this.cmdOK.Click += cmdOK_Click;
-            //
-            //cmdHelp
-            //
-            this.cmdHelp.Anchor = (System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left);
+            // 
+            // cmdHelp
+            // 
+            this.cmdHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.cmdHelp.Location = new System.Drawing.Point(12, 358);
             this.cmdHelp.Name = "cmdHelp";
             this.cmdHelp.Size = new System.Drawing.Size(75, 23);
             this.cmdHelp.TabIndex = 10;
             this.cmdHelp.Text = "Help";
             this.cmdHelp.UseVisualStyleBackColor = true;
-            this.cmdHelp.Click += cmdHelp_Click;
-            //
-            //txtOutputFolder
-            //
+            this.cmdHelp.Click += new System.EventHandler(this.cmdHelp_Click);
+            // 
+            // txtOutputFolder
+            // 
             this.txtOutputFolder.Location = new System.Drawing.Point(98, 46);
             this.txtOutputFolder.Name = "txtOutputFolder";
             this.txtOutputFolder.ReadOnly = true;
             this.txtOutputFolder.Size = new System.Drawing.Size(451, 20);
             this.txtOutputFolder.TabIndex = 3;
-            //
-            //Label2
-            //
+            // 
+            // Label2
+            // 
             this.Label2.AutoSize = true;
             this.Label2.Location = new System.Drawing.Point(12, 50);
             this.Label2.Name = "Label2";
             this.Label2.Size = new System.Drawing.Size(68, 13);
             this.Label2.TabIndex = 2;
             this.Label2.Text = "Output folder";
-            //
-            //frmDoDProperties
-            //
+            // 
+            // frmDoDProperties
+            // 
             this.AcceptButton = this.cmdOK;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6f, 13f);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cmdCancel;
             this.ClientSize = new System.Drawing.Size(562, 395);
@@ -412,17 +401,18 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.Controls.Add(this.GroupBox3);
             this.Controls.Add(this.GroupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmDoDProperties";
             this.Text = "Change Detection Configuration";
+            this.Load += new System.EventHandler(this.DoDPropertiesForm_Load);
             this.GroupBox1.ResumeLayout(false);
             this.GroupBox1.PerformLayout();
             this.GroupBox3.ResumeLayout(false);
             this.GroupBox3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)this.valMinLodThreshold).EndInit();
-            ((System.ComponentModel.ISupportInitialize)this.valConfidence).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.valMinLodThreshold)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.valConfidence)).EndInit();
             this.GroupBox4.ResumeLayout(false);
             this.GroupBox4.PerformLayout();
             this.ResumeLayout(false);
