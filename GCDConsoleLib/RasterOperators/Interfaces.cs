@@ -506,16 +506,22 @@ namespace GCDConsoleLib
         /// <summary>
         /// Create a point density Raster
         /// </summary>
-        /// <param name="rInput"></param>
+        /// <param name="rDEM"></param>
         /// <param name="vPointCloud"></param>
         /// <param name="sOutputRaster"></param>
         /// <param name="eKernel"></param>
         /// <param name="fSize"></param>
+        /// <param name="progressHandler">Event handler to hook into this so that you can update a progress bar</param>
         /// <returns></returns>
-        public static Raster PointDensity(Raster rDEM, Vector vPointCloud, FileInfo sOutputRaster, KernelShapes eKernel, decimal fSize)
+        public static Raster PointDensity(Raster rDEM, Vector vPointCloud, FileInfo sOutputRaster, 
+            KernelShapes eKernel, decimal fSize, EventHandler<int> progressHandler = null)
         {
             Raster outputRaster = new Raster(rDEM, sOutputRaster, new GdalDataType(typeof(double)));
             PointDensity theSlopeOp = new PointDensity(rDEM, vPointCloud, outputRaster, eKernel, fSize);
+
+            if (progressHandler != null)
+                theSlopeOp.ProgressEvent += progressHandler;
+
             return theSlopeOp.RunWithOutput();
         }
 

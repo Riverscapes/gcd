@@ -146,7 +146,7 @@ namespace GCDConsoleLib
             foreach (KeyValuePair<long, VectorFeature> kvp in Features)
             {
                 Geometry pt = kvp.Value.Feat.GetGeometryRef();
-                if (extrect.Contains(pt))
+                if (pt != null && extrect.Contains(pt))
                     retVal.Add(pt);
             }
             return retVal;
