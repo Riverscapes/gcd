@@ -71,6 +71,7 @@
     <Compile Include="Project\FISInput.cs" />
     <Compile Include="Project\GCDProject.cs" />
     <Compile Include="Project\GCDProjectItem.cs" />
+    <Compile Include="Project\GCDProjectRasterItem.cs" />
     <Compile Include="Project\HistogramPair.cs" />
     <Compile Include="Project\ProjectManager.cs" />
     <Compile Include="Project\SurveyDateTime.cs" />

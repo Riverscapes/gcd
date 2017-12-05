@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Xml;
 using GCDConsoleLib;
+using System;
 
 namespace GCDCore.Project
 {
-    public class ErrorSurface : GCDProjectItem
+    public class ErrorSurface : GCDProjectRasterItem
     {
-        public readonly Raster Raster;
         public readonly DEMSurvey DEM;
         public readonly Dictionary<string, ErrorSurfaceProperty> ErrorProperties;
 
@@ -44,10 +44,9 @@ namespace GCDCore.Project
         /// <param name="rasterPath"></param>
         /// <param name="dem"></param>
         public ErrorSurface(string name, FileInfo rasterPath, DEMSurvey dem)
-            : base(name)
+            : base(name, rasterPath)
         {
-            Raster = new Raster(rasterPath);
-            DEM = dem;
+             DEM = dem;
 
             // The first error surface for a DEM is always the default
             _IsDefault = dem.ErrorSurfaces.Count == 0;
@@ -57,9 +56,8 @@ namespace GCDCore.Project
         }
 
         public ErrorSurface(string name, FileInfo rasterPath, DEMSurvey dem, bool isDefault, Dictionary<string, ErrorSurfaceProperty> errProperties)
-            : base(name)
+            : base(name, rasterPath)
         {
-            Raster = new Raster(rasterPath);
             DEM = dem;
             _IsDefault = isDefault;
             ErrorProperties = errProperties;
@@ -99,5 +97,6 @@ namespace GCDCore.Project
 
             return new ErrorSurface(name, path, dem, bIsDefault, properties); ;
         }
+
     }
 }

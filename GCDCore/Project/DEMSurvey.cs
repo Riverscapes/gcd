@@ -8,9 +8,8 @@ using GCDConsoleLib;
 
 namespace GCDCore.Project
 {
-    public class DEMSurvey : GCDProjectItem
+    public class DEMSurvey : GCDProjectRasterItem
     {
-        public readonly Raster Raster;
         public readonly naru.ui.SortableBindingList<AssocSurface> AssocSurfaces;
         public readonly naru.ui.SortableBindingList<ErrorSurface> ErrorSurfaces;
 
@@ -22,10 +21,9 @@ namespace GCDCore.Project
 
 
         public DEMSurvey(string name, SurveyDateTime surveyDate, FileInfo rasterPath)
-            : base(name)
+            : base(name, rasterPath)
         {
             SurveyDate = surveyDate;
-            Raster = new Raster(rasterPath);
 
             AssocSurfaces = new naru.ui.SortableBindingList<AssocSurface>();
             ErrorSurfaces = new naru.ui.SortableBindingList<ErrorSurface>();
@@ -33,112 +31,63 @@ namespace GCDCore.Project
 
         public bool IsErrorNameUnique(string name, ErrorSurface ignore)
         {
-            return ErrorSurfaces.Count<ErrorSurface>(x => x!= ignore && string.Compare(name, x.Name, true) == 0) == 0;
+            return ErrorSurfaces.Count<ErrorSurface>(x => x != ignore && string.Compare(name, x.Name, true) == 0) == 0;
         }
 
         public bool IsAssocNameUnique(string name, AssocSurface ignore)
         {
-            return AssocSurfaces.Count<AssocSurface>(x => x!= ignore&& string.Compare(name, x.Name, true) == 0) == 0;
+            return AssocSurfaces.Count<AssocSurface>(x => x != ignore && string.Compare(name, x.Name, true) == 0) == 0;
+        }
+
+        new public void Delete()
+        {
+            try
+            {
+                foreach (AssocSurface assoc in AssocSurfaces)
+                {
+                    assoc.Delete();
+                }
+            }
+            finally
+            {
+                AssocSurfaces.Clear();
+            }
+
+            try
+            {
+                foreach (ErrorSurface errSurf in ErrorSurfaces)
+                {
+                    errSurf.Delete();
+                }
+            }
+            finally
+            {
+                ErrorSurfaces.Clear();
+            }
         }
 
         public void DeleteAssociatedSurface(AssocSurface assoc)
         {
-            throw new NotImplementedException("delete associated surface not implemented");
-
-            //Dim sPath As IO.FileInfo = ProjectManager.GetAbsolutePath(rAssoc.Source)
-            //    Dim bContinue As Boolean = True
-
-            //    Try
-            //        'TODO
-            //        Throw New Exception("Not implemented")
-            //        ' RemoveAuxillaryLayersFromMap(sPath)
-            //    Catch ex As Exception
-            //        MsgBox("Error removing the associated surface from the ArcMap table of contents. Remove it manually And then try deleting the associated surface again.", MsgBoxStyle.Information, GCDCore.Properties.Resources.ApplicationNameLong)
-            //        bContinue = False
-            //    End Try
-
-            //    If bContinue Then
-            //        If ProjectManager.GetAbsolutePath(rAssoc.Source).Exists Then
-            //            Try
-            //                GCDConsoleLib.Raster.Delete(sPath)
-            //            Catch ex As Exception
-            //                Dim ex2 As New Exception("Error deleting the associated surface raster file And directory.", ex)
-            //                ex2.Data.Add("Raster Path", sPath)
-            //                naru.error.ExceptionUI.HandleException(ex2)
-            //                bContinue = False
-            //            End Try
-            //        End If
-            //    End If
-
-            //    Try
-            //        GCDConsoleLib.Raster.Delete(ProjectManager.GetAbsolutePath(rAssoc.Source))
-            //    Catch ex As Exception
-            //        ' do nothing
-            //    End Try
-
-            //    If bContinue Then
-            //        Try
-            //            rAssoc.Delete()
-            //            ProjectManager.save()
-            //        Catch ex As Exception
-            //            naru.error.ExceptionUI.HandleException(ex, "The raster file was deleted, but an error occurred removing the surface from the GCD project file. This will be fixed automatically by closing And opening ArcMap if Validate Project Is selected from the options menu")
-            //        End Try
-            //    End If
+            try
+            {
+                assoc.Delete();
+            }
+            finally
+            {
+                AssocSurfaces.Remove(assoc);
+            }
         }
 
         public void DeleteErrorSurface(ErrorSurface err)
         {
-            throw new NotImplementedException("todo");
-
-            //If Not TypeOf rError Is ProjectDS.ErrorSurfaceRow Then
-            //    Exit Sub
-            //End If
-
-            //If response = MsgBoxResult.Yes Then
-            //    Dim sPath As IO.FileInfo = ProjectManager.GetAbsolutePath(rError.Source.ToString)
-            //    Dim bContinue As Boolean = True
-
-            //    Try
-            //        'TODO
-            //        Throw New Exception("Not implemented")
-            //        'RemoveAuxillaryLayersFromMap(sPath)
-            //    Catch ex As Exception
-            //        MsgBox("Error removing the error surface from the ArcMap table of contents. Remove it manually And then try deleting the error surface again.", MsgBoxStyle.Information, GCDCore.Properties.Resources.ApplicationNameLong)
-            //        bContinue = False
-            //    End Try
-
-            //    If bContinue Then
-            //        If Not rError.IsSourceNull Then
-            //            If ProjectManager.GetAbsolutePath(rError.Source).Exists Then
-            //                Try
-            //                    GCDConsoleLib.Raster.Delete(sPath)
-            //                Catch ex As Exception
-            //                    naru.error.ExceptionUI.HandleException(ex, "Failed to delete the error surface raster.")
-            //                    bContinue = False
-            //                End Try
-            //            End If
-            //        End If
-            //    End If
-
-            //    If bContinue Then
-            //        Try
-            //            ProjectManager.GetAbsolutePath(rError.Source).Directory.Delete()
-            //        Catch ex As Exception
-            //            ' do nothing
-            //        End Try
-            //    End If
-
-            //    If bContinue Then
-            //        Try
-            //            rError.Delete()
-            //            ProjectManager.save()
-            //        Catch ex As Exception
-            //            naru.error.ExceptionUI.HandleException(ex, "The raster file was deleted, but an error occurred removing the surface from the GCD project file. This will be fixed automatically by closing and opening ArcMap if Validate Project is selected from the options menu")
-            //        End Try
-            //    End If
-
-            //End If
-
+            try
+            {
+                err.Delete();
+            }
+            finally
+            {
+                ErrorSurfaces.Remove(err);
+            }
         }
 
         public void Serialize(XmlDocument xmlDoc, XmlNode nodParent)
@@ -239,5 +188,7 @@ namespace GCDCore.Project
 
             return dem;
         }
+
     }
 }
+

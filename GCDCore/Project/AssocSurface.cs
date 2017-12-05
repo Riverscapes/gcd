@@ -1,12 +1,12 @@
 ﻿using System.IO;
 using System.Xml;
 using GCDConsoleLib;
+using System;
 
 namespace GCDCore.Project
 {
-    public class AssocSurface : GCDProjectItem
+    public class AssocSurface : GCDProjectRasterItem
     {
-        public readonly Raster  Raster;
         public string AssocSurfaceType { get; set; }
         public readonly DEMSurvey DEM;
         
@@ -16,9 +16,8 @@ namespace GCDCore.Project
         public AssocSurface This { get { return this; } }
         
         public AssocSurface(string name, FileInfo rasterPath, string sType, DEMSurvey dem)
-            : base(name)
+            : base(name, rasterPath)
         {
-            Raster = new Raster(rasterPath);
             AssocSurfaceType = sType;
             DEM = dem;
         }
@@ -37,6 +36,6 @@ namespace GCDCore.Project
             FileInfo path = ProjectManager.Project.GetAbsolutePath(nodAssoc.SelectSingleNode("Path").InnerText);
             string type = nodAssoc.SelectSingleNode("Type").InnerText;
             return new AssocSurface(name, path, type, dem);
-        }
+        }     
     }
 }
