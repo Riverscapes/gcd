@@ -91,6 +91,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.cboNewDEM.Name = "cboNewDEM";
             this.cboNewDEM.Size = new System.Drawing.Size(201, 21);
             this.cboNewDEM.TabIndex = 1;
+            this.cboNewDEM.SelectedIndexChanged += new System.EventHandler(this.cboNewDEM_SelectedIndexChanged);
             // 
             // cboNewError
             // 
@@ -283,6 +284,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(451, 20);
             this.txtName.TabIndex = 1;
+            this.txtName.TextChanged += new System.EventHandler(this.txtName_TextChanged);
             // 
             // GroupBox4
             // 
@@ -305,6 +307,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.cboOldDEM.Name = "cboOldDEM";
             this.cboOldDEM.Size = new System.Drawing.Size(201, 21);
             this.cboOldDEM.TabIndex = 1;
+            this.cboOldDEM.SelectedIndexChanged += new System.EventHandler(this.cboOldDEM_SelectedIndexChanged);
             // 
             // cboOldError
             // 
@@ -354,6 +357,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.cmdOK.TabIndex = 8;
             this.cmdOK.Text = "Calculate";
             this.cmdOK.UseVisualStyleBackColor = true;
+            this.cmdOK.Click += new System.EventHandler(this.cmdOK_Click);
             // 
             // cmdHelp
             // 
