@@ -111,7 +111,7 @@ namespace GCDConsoleLib.Internal.Operators
         {
             // Speed things up by ignoring nodatas
             if (data[0][id] == _rasternodatavals[0])
-                return 0;
+                return OpNodataVal;
 
             // With multimethod errors we need to do some fancy footwork
             if (isMultiMethod)
