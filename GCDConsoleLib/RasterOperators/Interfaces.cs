@@ -512,10 +512,11 @@ namespace GCDConsoleLib
         /// <param name="eKernel"></param>
         /// <param name="fSize"></param>
         /// <returns></returns>
-        public static Raster PointDensity(Raster rInput, Vector vPointCloud, string sOutputRaster, KernelShapes eKernel, decimal fSize)
+        public static Raster PointDensity(Raster rDEM, Vector vPointCloud, FileInfo sOutputRaster, KernelShapes eKernel, decimal fSize)
         {
-            throw new NotImplementedException();
-            return null;
+            Raster outputRaster = new Raster(rDEM, sOutputRaster, new GdalDataType(typeof(double)));
+            PointDensity theSlopeOp = new PointDensity(rDEM, vPointCloud, outputRaster, eKernel, fSize);
+            return theSlopeOp.RunWithOutput();
         }
 
 

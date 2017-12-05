@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Xml.Linq;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace GCDCore.UserInterface.SurveyLibrary
 {
@@ -200,7 +201,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
                                 break;
                             case AssociatedSurfaceMethods.PointDensity:
-                                GCDConsoleLib.RasterOperators.PointDensity(DEM.Raster, m_frmPointDensity.ucPointCloud.SelectedItem, txtProjectRaster.Text, GCDConsoleLib.RasterOperators.KernelShapes.Square, 4m);
+                                GCDConsoleLib.RasterOperators.PointDensity(DEM.Raster, m_frmPointDensity.ucPointCloud.SelectedItem, new FileInfo(txtProjectRaster.Text), GCDConsoleLib.RasterOperators.KernelShapes.Square, 4m);
 
                                 break;
                             case AssociatedSurfaceMethods.Roughness:

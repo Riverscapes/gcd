@@ -114,7 +114,7 @@ namespace GCDConsoleLib
             Geometry pt = new Geometry(wkbGeometryType.wkbPoint);
             pt.AddPoint(x, y, 0);
 
-            foreach (KeyValuePair <long, VectorFeature> kvp in Features)
+            foreach (KeyValuePair<long, VectorFeature> kvp in Features)
             {
                 if (kvp.Value.Feat.GetGeometryRef().Contains(pt))
                     retVal.Add(kvp.Value.Feat.GetFieldAsString(fieldName));
@@ -126,20 +126,29 @@ namespace GCDConsoleLib
         /// <summary>
         /// Is a point inside a feature?
         /// </summary>
-        /// <returns></returns>
+        /// <returns>returns a double array [x,y]</returns>
         public List<Geometry> PointsInExtent(ExtentRectangle ext)
         {
             Open();
             List<Geometry> retVal = new List<Geometry>();
             Layer mLayer = _ds.GetLayerByIndex(0);
 
-            Geometry pt = new Geometry(wkbGeometryType.wkbPoint);
+            Geometry ring = new Geometry(wkbGeometryType.wkbLinearRing);
+            ring.AddPoint((double)ext.Left, (double)ext.Top, 0);
+            ring.AddPoint((double)ext.Right, (double)ext.Top, 0);
+            ring.AddPoint((double)ext.Right, (double)ext.Bottom, 0);
+            ring.AddPoint((double)ext.Left, (double)ext.Bottom, 0);
+            ring.AddPoint((double)ext.Left, (double)ext.Top, 0);
+
+            Geometry extrect = new Geometry(wkbGeometryType.wkbPolygon);
+            extrect.AddGeometry(ring);
 
             foreach (KeyValuePair<long, VectorFeature> kvp in Features)
             {
-                // only add values that are inside the rectangle
+                Geometry pt = kvp.Value.Feat.GetGeometryRef();
+                if (extrect.Contains(pt))
+                    retVal.Add(pt);
             }
-
             return retVal;
         }
 
@@ -174,7 +183,7 @@ namespace GCDConsoleLib
             Layer mLayer = _ds.GetLayerByIndex(0);
             FIDColumn = mLayer.GetFIDColumn();
             LayerName = mLayer.GetName();
-           
+
             // Get our FEATURE definitions
             Feature mFeat = mLayer.GetNextFeature();
             while (mFeat != null)
@@ -215,7 +224,7 @@ namespace GCDConsoleLib
             }
 
             Fields.Add(fDef.GetName(), new VectorField(fDef));
-            
+
             return mLayer.CreateField(fDef, 0); // 0 => Approx ok
         }
 

@@ -25,6 +25,7 @@ namespace GCDConsoleLib.Internal
         protected readonly List<T> _rasternodatavals;
         public ExtentRectangle OpExtent;
         public ExtentRectangle InExtent;
+        protected int _oprows;
         protected T OpNodataVal;
 
         protected Raster _outputRaster;
@@ -53,10 +54,13 @@ namespace GCDConsoleLib.Internal
         {
             _rasters = new List<Raster>(rRasters.Count);
             _rasternodatavals = new List<T>(rRasters.Count);
+            _oprows = 10;
             _init(rRasters, rOutputRaster);
             _vOffset = 0;
+
             // Now that we have our rasters tested and a unioned extent we can set the operation extent
             SetOpExtent(InExtent);
+
         }
 
         protected void AddInputRaster(Raster rInput)
@@ -79,19 +83,42 @@ namespace GCDConsoleLib.Internal
         private void _init(List<Raster> rRasters, Raster rOutRaster)
         {
             OpDone = false;
-            InExtent = rRasters[0].Extent;
 
-            foreach (Raster rRa in rRasters)
-                AddInputRaster(rRa);
+            // Use the first input for the nodataval
+            if (rRasters.Count > 0)
+            {
+                InExtent = rRasters[0].Extent;
+                // Do a union on the inputextent
+                foreach (Raster rRa in rRasters)
+                    AddInputRaster(rRa);
 
-            if (typeof(T) == typeof(float))
-                OpNodataVal = (T)Convert.ChangeType(_rasters[0].NodataValue<float>(), typeof(T));
-            else if (typeof(T) == typeof(double))
-                OpNodataVal = (T)Convert.ChangeType(_rasters[0].NodataValue<double>(), typeof(T));
-            else if (typeof(T) == typeof(int))
-                OpNodataVal = (T)Convert.ChangeType(_rasters[0].NodataValue<int>(), typeof(T));
-            else if (typeof(T) == typeof(byte))
-                OpNodataVal = (T)Convert.ChangeType(_rasters[0].NodataValue<byte>(), typeof(T));
+                if (typeof(T) == typeof(float))
+                    OpNodataVal = (T)Convert.ChangeType(_rasters[0].NodataValue<float>(), typeof(T));
+                else if (typeof(T) == typeof(double))
+                    OpNodataVal = (T)Convert.ChangeType(_rasters[0].NodataValue<double>(), typeof(T));
+                else if (typeof(T) == typeof(int))
+                    OpNodataVal = (T)Convert.ChangeType(_rasters[0].NodataValue<int>(), typeof(T));
+                else if (typeof(T) == typeof(byte))
+                    OpNodataVal = (T)Convert.ChangeType(_rasters[0].NodataValue<byte>(), typeof(T));
+            }
+            // No inputs? then get the nodataval from the output
+            else if (rOutRaster != null)
+            {
+                InExtent = rOutRaster.Extent;
+                if (typeof(T) == typeof(float))
+                    OpNodataVal = (T)Convert.ChangeType(rOutRaster.NodataValue<float>(), typeof(T));
+                else if (typeof(T) == typeof(double))
+                    OpNodataVal = (T)Convert.ChangeType(rOutRaster.NodataValue<double>(), typeof(T));
+                else if (typeof(T) == typeof(int))
+                    OpNodataVal = (T)Convert.ChangeType(rOutRaster.NodataValue<int>(), typeof(T));
+                else if (typeof(T) == typeof(byte))
+                    OpNodataVal = (T)Convert.ChangeType(rOutRaster.NodataValue<byte>(), typeof(T));
+            }
+            // No inputs or outputs? (is this possible?) Just use the min value
+            else
+            {
+                OpNodataVal = Utility.Conversion.minValue<T>();
+            }
 
             // Finally, set up our output raster and make sure it's open for writing
             if (rOutRaster != null)
@@ -108,7 +135,7 @@ namespace GCDConsoleLib.Internal
 
             // Now initialize our window rectangle
             int chunkXsize = OpExtent.Cols;
-            int chunkYsize = 10;
+            int chunkYsize = _oprows;
 
             if (OpExtent.Rows < chunkYsize) chunkYsize = OpExtent.Rows;
             ChunkExtent = new ExtentRectangle(OpExtent.Top, OpExtent.Left, OpExtent.CellHeight, OpExtent.CellWidth, chunkYsize, chunkXsize);
