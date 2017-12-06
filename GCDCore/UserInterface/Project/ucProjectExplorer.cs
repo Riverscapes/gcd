@@ -43,7 +43,7 @@ namespace GCDCore.UserInterface.Project
         /// <remarks>Grouping nodes are added to the tree with the enumeration above as their key. i.e. Project node has key "1".
         /// Items that have database IDs are added with the key as type_id. So DEM Survey with ID 4 would have key "3_4"</remarks>
 
-        private void LoadTree(string sSelectedNodeTag = "", SortSurveyBy eSortSurveyBy = SortSurveyBy.SurveyDateDsc)
+        public void LoadTree(string sSelectedNodeTag = "", SortSurveyBy eSortSurveyBy = SortSurveyBy.SurveyDateDsc)
         {
             treProject.Nodes.Clear();
 
@@ -624,7 +624,7 @@ namespace GCDCore.UserInterface.Project
                 naru.error.ExceptionUI.HandleException(ex);
             }
 
-       }
+        }
 
 
         private void AddErrorSurfaceToMapToolStripMenuItem1_Click(System.Object sender, System.EventArgs e)
@@ -648,27 +648,27 @@ namespace GCDCore.UserInterface.Project
             }
         }
 
-        private void DeleteErrorSurfaceToolStripMenuItem_Click(System.Object sender, System.EventArgs e)
-        {
-            try
-            {
-                TreeNode selNode = treProject.SelectedNode;
-                if (selNode is TreeNode)
-                {
-                    GCDNodeTypes eType = GetNodeType(selNode);
-                    if (eType == GCDNodeTypes.ErrorSurface)
-                    {
-                        ErrorSurface errSurf = (ErrorSurface)((ProjectTreeNode)selNode.Tag).Item;
-                        errSurf.DEM.DeleteErrorSurface(errSurf);
-                        LoadTree();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                naru.error.ExceptionUI.HandleException(ex);
-            }
-        }
+        //private void DeleteErrorSurfaceToolStripMenuItem_Click(System.Object sender, System.EventArgs e)
+        //{
+        //    try
+        //    {
+        //        TreeNode selNode = treProject.SelectedNode;
+        //        if (selNode is TreeNode)
+        //        {
+        //            GCDNodeTypes eType = GetNodeType(selNode);
+        //            if (eType == GCDNodeTypes.ErrorSurface)
+        //            {
+        //                ErrorSurface errSurf = (ErrorSurface)((ProjectTreeNode)selNode.Tag).Item;
+        //                errSurf.DEM.DeleteErrorSurface(errSurf);
+        //                LoadTree();
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        naru.error.ExceptionUI.HandleException(ex);
+        //    }
+        //}
 
         #endregion
 
@@ -1027,14 +1027,24 @@ namespace GCDCore.UserInterface.Project
 
             try
             {
-                throw new NotImplementedException("Delete click");
+                ProjectTreeNode ptn = (ProjectTreeNode)nodSelected.Tag;
+
+                switch (eType)
+                {
+                    case GCDNodeTypes.ErrorSurface:
+                        ErrorSurface errSurf = (ErrorSurface)ptn.Item;
+                        errSurf.DEM.DeleteErrorSurface(errSurf);
+                        break;
+                    default:
+                        throw new NotImplementedException("delete not implemented for this node type");
+                }
+
                 LoadTree();
             }
             catch (Exception ex)
             {
                 naru.error.ExceptionUI.HandleException(ex);
             }
-
         }
 
         #region "Properties Button"

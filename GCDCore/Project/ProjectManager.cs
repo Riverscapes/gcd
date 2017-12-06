@@ -21,7 +21,7 @@ namespace GCDCore.Project
         private static FileInfo SurveyTypesPath { get; set; }
         private static FileInfo FISLibraryPath { get; set; }
 
-        public static bool IsArcMap { get { return System.Reflection.Assembly.GetEntryAssembly().FullName.ToLower().Contains("arcmap"); } }
+        public static bool IsArcMap { get { return System.Reflection.Assembly.GetEntryAssembly() == null; } }
 
         // Public event for ArcGIS to listen to when a GIS layer is about to be deleted
         // ArcGIS should search for this path in the map and then remove the layer

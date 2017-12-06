@@ -35,7 +35,7 @@ namespace GCDAddIn
             }
 
             public ucProjectManager UI { get { return m_windowUI; } }
-            
+
             protected override IntPtr OnCreateChild()
             {
                 m_windowUI = new ucProjectManager(this.Hook);

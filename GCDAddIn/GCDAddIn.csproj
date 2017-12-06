@@ -41,7 +41,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <RegisterForComInterop>false</RegisterForComInterop>
+    <RegisterForComInterop>true</RegisterForComInterop>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -110,7 +110,6 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApplicationExtension1.cs" />
     <Compile Include="ArcMapUtilities.cs" />
     <Compile Include="ArcMapBrowse.cs" />
     <Compile Include="Config1.Designer.cs">
@@ -124,6 +123,9 @@
     <Compile Include="frmLayerSelector.Designer.cs">
       <DependentUpon>frmLayerSelector.cs</DependentUpon>
     </Compile>
+    <Compile Include="GCDExtension.cs" />
+    <Compile Include="Project\btnNewProject.cs" />
+    <Compile Include="Project\btnOpenProject.cs" />
     <Compile Include="Project\btnTestProjectExplorer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ucProjectManager.cs">
@@ -205,6 +207,7 @@
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RegisterForComInterop>false</RegisterForComInterop>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>bin\x86\Release\</OutputPath>

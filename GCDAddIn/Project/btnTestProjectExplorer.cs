@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GCDAddIn.Project
 {
-    class btnTestProjectExplorer : ESRI.ArcGIS.Desktop.AddIns.Button
+    class btnProjectExplorer : ESRI.ArcGIS.Desktop.AddIns.Button
     {
         protected override void OnClick()
         {
@@ -49,8 +49,7 @@ namespace GCDAddIn.Project
                 {
                     // Try and refresh the project window.
                     ucProjectManager.AddinImpl winImpl = ESRI.ArcGIS.Desktop.AddIns.AddIn.FromID<ucProjectManager.AddinImpl>(ThisAddIn.IDs.GCDAddIn_ucProjectManager);
-                    // TODO
-                    //winImpl.UI.ProjectExplorerUC1.cmdRefresh.PerformClick();
+                    winImpl.UI.LoadTree();
                 }
                 catch (Exception ex)
                 {

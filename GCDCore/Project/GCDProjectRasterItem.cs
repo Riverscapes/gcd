@@ -19,7 +19,7 @@ namespace GCDCore.Project
             // Get the folder
             DirectoryInfo dir = Raster.GISFileInfo.Directory;
 
-            // Remove the raster from the ArcGIS map
+            // Remove the raster from the ArcGIS map and then delete the dataset
             try
             {
                 DeleteRaster(Raster);
@@ -27,19 +27,6 @@ namespace GCDCore.Project
             catch (Exception ex)
             {
                 Console.Write("Error attempting to remove raster from ArcGIS " + Raster.GISFileInfo.FullName, ex);
-            }
-
-            try
-            {
-                // Delete the raster itself
-                Raster.Delete();
-            }
-            catch (Exception ex)
-            {
-                Exception ex2 = new Exception("Error deleting associated surface raster.", ex);
-                ex2.Data["Associated Surface Name"] = Name;
-                ex2.Data["Raster Path"] = Raster.GISFileInfo.FullName;
-                throw ex2;
             }
 
             try
