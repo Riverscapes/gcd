@@ -28,6 +28,9 @@ namespace GCDCore.Project
         public delegate void GISLayerDeletingEvent(GISLayerEventArgs e);
         public static event GISLayerDeletingEvent GISLayerDeletingEventHandler;
 
+        public delegate void GISLayerBrowsing(System.Windows.Forms.TextBox txt, naru.ui.PathEventArgs e);
+        public static event GISLayerBrowsing GISLayerBrowsingEventHandler;
+
         public static Dictionary<string, SurveyType> SurveyTypes
         {
             get { return SurveyType.Load(SurveyTypesPath); }
@@ -236,6 +239,12 @@ namespace GCDCore.Project
         {
             if (GISLayerDeletingEventHandler != null)
                 ProjectManager.GISLayerDeletingEventHandler(e);
+        }
+
+        public static void OnBrowseRaster(System.Windows.Forms.TextBox txt, naru.ui.PathEventArgs e)
+        {
+            if (GISLayerBrowsingEventHandler != null)
+                ProjectManager.GISLayerBrowsingEventHandler(txt, e);
         }
 
         public class GISLayerEventArgs : EventArgs

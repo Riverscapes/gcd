@@ -41,6 +41,8 @@ namespace GCDAddIn
                 m_windowUI = new ucProjectManager(this.Hook);
 
                 GCDCore.Project.ProjectManager.GISLayerDeletingEventHandler += OnGISLayerDeleting;
+                GCDCore.Project.ProjectManager.GISLayerBrowsingEventHandler += OnGISLayerBrowsing;
+
                 return m_windowUI.Handle;
             }
 
@@ -55,6 +57,17 @@ namespace GCDAddIn
             public void OnGISLayerDeleting(GCDCore.Project.ProjectManager.GISLayerEventArgs e)
             {
                 ArcMapUtilities.RemoveLayer(e.RasterPath);
+            }
+
+            public void OnGISLayerBrowsing(System.Windows.Forms.TextBox txt, naru.ui.PathEventArgs e)
+            {
+                System.IO.DirectoryInfo dir = null;
+                if (e.Path is System.IO.FileInfo)
+                    dir = e.Path.Directory;
+
+                GCDConsoleLib.Raster result = ArcMapBrowse.BrowseOpenRaster(e.FormTitle, dir);
+                if (result is GCDConsoleLib.Raster)
+                    txt.Text = result.GISFileInfo.FullName;
             }
         }
     }

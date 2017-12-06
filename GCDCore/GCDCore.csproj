@@ -193,6 +193,7 @@
     <Compile Include="UserInterface\frmOptions.Designer.cs">
       <DependentUpon>frmOptions.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserInterface\GIS\BrowseGISLayerEventArgs.cs" />
     <Compile Include="UserInterface\Project\ucProjectExplorer.cs">
       <SubType>UserControl</SubType>
     </Compile>

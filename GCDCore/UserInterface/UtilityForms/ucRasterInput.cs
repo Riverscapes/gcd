@@ -10,6 +10,7 @@ namespace GCDCore.UserInterface.UtilityForms
 
         public event BrowseRasterEventHandler BrowseRaster;
         public delegate void BrowseRasterEventHandler(System.Windows.Forms.TextBox txtPath, naru.ui.PathEventArgs e);
+
         public event SelectRasterFromArcMapEventHandler SelectRasterFromArcMap;
         public delegate void SelectRasterFromArcMapEventHandler(System.Windows.Forms.TextBox txtPath, naru.ui.PathEventArgs e);
 

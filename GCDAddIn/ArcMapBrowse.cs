@@ -26,7 +26,7 @@ namespace GCDAddIn
             TIN
         };
 
-        public static GCDConsoleLib.Raster BrowseOpenRaster(string sFormTitle, ref System.IO.DirectoryInfo diWorkspace, string sName = "")
+        public static GCDConsoleLib.Raster BrowseOpenRaster(string sFormTitle, System.IO.DirectoryInfo diWorkspace, string sName = "")
         {
             IGxDialog pGxDialog = new GxDialog();
             IGxObjectFilter pRasterFilter = new GxFilterRasterDatasets();
