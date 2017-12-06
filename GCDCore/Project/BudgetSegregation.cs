@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Xml;
 
@@ -86,6 +87,31 @@ namespace GCDCore.Project
             }
 
             return bs;
+        }
+
+        public void Delete()
+        {
+            try
+            {
+                // Raise the event to say that a GIS layer is about to be deleted.
+                // This should bubble to ArcGIS so that the layer is removed from the ArcMap ToC
+                ProjectManager.OnGISLayerDelete(new ProjectManager.GISLayerEventArgs(PolygonMask));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Unable to delete budget segregation folder", Folder.FullName);
+                Console.WriteLine(ex.Message);
+            }
+
+            try
+            {
+                Folder.Delete();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Unable to delete budget segregation folder", Folder.FullName);
+                Console.WriteLine(ex.Message);
+            }
         }
     }
 }

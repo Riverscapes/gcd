@@ -23,6 +23,11 @@ namespace GCDCore.Project
 
         public static bool IsArcMap { get { return System.Reflection.Assembly.GetEntryAssembly().FullName.ToLower().Contains("arcmap"); } }
 
+        // Public event for ArcGIS to listen to when a GIS layer is about to be deleted
+        // ArcGIS should search for this path in the map and then remove the layer
+        public delegate void GISLayerDeletingEvent(GISLayerEventArgs e);
+        public static event GISLayerDeletingEvent GISLayerDeletingEventHandler;
+
         public static Dictionary<string, SurveyType> SurveyTypes
         {
             get { return SurveyType.Load(SurveyTypesPath); }
@@ -69,7 +74,7 @@ namespace GCDCore.Project
 
         public static void CopyDeployFolder()
         {
-            string sDestinationFolder = ApplicationFolder; 
+            string sDestinationFolder = ApplicationFolder;
 
             //New Code to test this may not be what you intend though
             string sFolderName = "Deploy";
@@ -225,6 +230,22 @@ namespace GCDCore.Project
         {
             Project = null;
             GC.Collect();
+        }
+
+        public static void OnGISLayerDelete(GISLayerEventArgs e)
+        {
+            if (GISLayerDeletingEventHandler != null)
+                ProjectManager.GISLayerDeletingEventHandler(e);
+        }
+
+        public class GISLayerEventArgs : EventArgs
+        {
+            public readonly FileInfo RasterPath;
+
+            public GISLayerEventArgs(FileInfo rasterPath)
+            {
+                RasterPath = rasterPath;
+            }
         }
     }
 }

@@ -1,9 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using GCDConsoleLib;
 
 namespace GCDCore.Project
@@ -11,17 +7,27 @@ namespace GCDCore.Project
     public class GCDProjectRasterItem : GCDProjectItem
     {
         public readonly Raster Raster;
-
+  
         public GCDProjectRasterItem(string name, FileInfo rasterPath)
             : base(name)
         {
             Raster = new Raster(rasterPath);
         }
 
-        public  void Delete()
+        public void Delete()
         {
             // Get the folder
             DirectoryInfo dir = Raster.GISFileInfo.Directory;
+
+            // Remove the raster from the ArcGIS map
+            try
+            {
+                DeleteRaster(Raster);
+            }
+            catch (Exception ex)
+            {
+                Console.Write("Error attempting to remove raster from ArcGIS " + Raster.GISFileInfo.FullName, ex);
+            }
 
             try
             {
@@ -44,6 +50,25 @@ namespace GCDCore.Project
             catch (Exception ex)
             {
                 Console.Write("Error attempting to delete associated surface directory " + dir.FullName, ex);
+            }
+        }
+
+        public static void DeleteRaster(Raster raster)
+        {
+            try
+            {
+                // Raise the event to say that a GIS layer is about to be deleted.
+                // This should bubble to ArcGIS so that the layer is removed from the ArcMap ToC
+                ProjectManager.OnGISLayerDelete(new ProjectManager.GISLayerEventArgs(raster.GISFileInfo));
+
+                // Delete the actual raster
+                raster.Delete();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error attempting to delete DoD raster " + raster.GISFileInfo.FullName);
+                Console.WriteLine("Raster Path: ", raster.GISFileInfo.FullName);
+                Console.WriteLine(ex.Message);
             }
         }
     }

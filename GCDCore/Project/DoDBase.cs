@@ -183,5 +183,51 @@ namespace GCDCore.Project
             double value = double.Parse(nodParent.SelectSingleNode(nodName).InnerText);
             return UnitsNet.Area.From(value, unit);
         }
+
+        public void Delete()
+        {
+            // Delete child budget segregations first
+            foreach (BudgetSegregation bs in BudgetSegregations.Values)
+            {
+                try
+                {
+                    bs.Delete();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Unable to delete budget segregation " + bs.Name);
+                }
+            }
+            BudgetSegregations.Clear();
+
+            // Delete the raw and thresholded rasters
+            GCDProjectRasterItem.DeleteRaster(RawDoD);
+            GCDProjectRasterItem.DeleteRaster(ThrDoD);
+
+            // Now delete all the meta files associated with the DoD
+            foreach(FileInfo file in RawDoD.GISFileInfo.Directory.GetFiles("*.*", SearchOption.AllDirectories))
+            {
+                try
+                {
+                    file.Delete();
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine("Unable to delete file " + file.FullName);
+                    Console.WriteLine(ex.Message);
+                }
+            }
+
+            // Finally try to delete the DoD folder 
+            try
+            {
+                Folder.Delete();
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Unable to delete DoD folder  " + Folder.FullName);
+                Console.WriteLine(ex.Message);
+            }
+        }
     }
 }

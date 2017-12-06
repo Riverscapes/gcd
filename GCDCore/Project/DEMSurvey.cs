@@ -19,7 +19,6 @@ namespace GCDCore.Project
         public FileInfo MethodMask { get; set; } // Multi-method polygon ShapeFile
         public string MethodMaskField { get; set; } // Multi-method field in ShapeFile
 
-
         public DEMSurvey(string name, SurveyDateTime surveyDate, FileInfo rasterPath)
             : base(name, rasterPath)
         {
@@ -63,6 +62,14 @@ namespace GCDCore.Project
             finally
             {
                 ErrorSurfaces.Clear();
+            }
+
+            // Delete the vector mask if it exists
+            if (MethodMask is FileInfo)
+            {
+                ProjectManager.OnGISLayerDelete(new ProjectManager.GISLayerEventArgs(MethodMask));
+                Vector mask = new Vector(MethodMask);
+                mask.Delete();
             }
         }
 
@@ -191,4 +198,3 @@ namespace GCDCore.Project
 
     }
 }
-
