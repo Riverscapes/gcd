@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GCDAddIn
 {
-    class ucProjectManager : GCDUserInterface.Project.ucProjectExplorer
+    class ucProjectManager : GCDCore.UserInterface.Project.ucProjectExplorer
     {
         public ucProjectManager(object hook) : base()
         {
@@ -39,6 +39,8 @@ namespace GCDAddIn
             protected override IntPtr OnCreateChild()
             {
                 m_windowUI = new ucProjectManager(this.Hook);
+
+                GCDCore.Project.ProjectManager.GISLayerDeletingEventHandler += OnGISLayerDeleting;
                 return m_windowUI.Handle;
             }
 
@@ -50,6 +52,10 @@ namespace GCDAddIn
                 base.Dispose(disposing);
             }
 
+            public void OnGISLayerDeleting(GCDCore.Project.ProjectManager.GISLayerEventArgs e)
+            {
+                System.Windows.Forms.MessageBox.Show(e.RasterPath.FullName, "ArcGIS Notified of Layer Deletion", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Stop);
+            }
         }
     }
 }

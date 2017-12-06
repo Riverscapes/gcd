@@ -6,7 +6,7 @@ namespace GCDAddIn.DataPreparation
     {
         protected override void OnClick()
         {
-            GCDUserInterface.SurveyLibrary.frmImportRaster frm = new GCDUserInterface.SurveyLibrary.frmImportRaster();
+            GCDCore.UserInterface.SurveyLibrary.frmImportRaster frm = new GCDCore.UserInterface.SurveyLibrary.frmImportRaster(null, GCDCore.UserInterface.SurveyLibrary.ExtentImporter.Purposes.Standalone, string.Empty);
 
             frm.ucRaster.BrowseRaster += BrowseRaster;
             frm.ucRaster.SelectRasterFromArcMap += SelectRasterFromArcMap;
