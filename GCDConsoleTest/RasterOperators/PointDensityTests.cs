@@ -40,6 +40,7 @@ namespace GCDConsoleLib.Internal.Operators.Tests
         [TestMethod()]
         public void PointDensityTest()
         {
+            Assert.Inconclusive();
             Raster rDEM = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"PointDensity\GrandCanyon\R02_DEM_Meters_2004_05.img")));
             Vector rPtDensity = new Vector(new FileInfo(TestHelpers.GetTestRootPath(@"PointDensity\GrandCanyon\R2_HybridData_2004_05.shp")));
 

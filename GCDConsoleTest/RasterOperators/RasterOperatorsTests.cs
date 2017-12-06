@@ -146,12 +146,6 @@ namespace GCDConsoleLib.Tests
 
 
         [TestMethod()]
-        public void PointDensityTest()
-        {
-            Assert.Inconclusive();
-        }
-
-        [TestMethod()]
         public void UniformTest()
         {
             using (ITempDir tmp = TempDir.Create())
@@ -206,30 +200,30 @@ namespace GCDConsoleLib.Tests
         }
 
 
+        //[TestMethod()]
+        //public void FISERRORSTEST()
+        //{
+        //    //Assert.Inconclusive();
+        //    using (ITempDir tmp = TempDir.Create())
+        //    {
+        //        //"C:\code\gcd\extlib\TestData\ERRORS\FISInputs\2006FebDEM.tif"
+        //        FileInfo fisFile = new FileInfo(@"C:\code\gcd\extlib\TestData\ERRORS\FISInputs\CHaMP_TS_ZError_SLPdeg_PD_2012.fis");
+        //        Raster reference = new Raster(new FileInfo(@"C:\code\gcd\extlib\TestData\ERRORS\FISInputs\2006FebDEM.tif"));
+
+        //        Dictionary<string, FileInfo> inputDict = new Dictionary<string, FileInfo>()
+        //        {
+        //            { "Slope", new FileInfo(@"C:\code\gcd\extlib\TestData\ERRORS\FISInputs\SlopeDegrees5.tif") },
+        //            { "PointDensity",  new FileInfo(@"C:\code\gcd\extlib\TestData\ERRORS\FISInputs\PointDensity.tif") }
+        //        };
+
+        //        Raster rTemplateOutput2 = RasterOperators.FISRaster(inputDict, fisFile, reference, new FileInfo(Path.Combine(tmp.Name, "FISTest.tif")));
+        //        Assert.Fail();
+        //    }
+        //}
+
+
+
         [TestMethod()]
-        public void FISERRORSTEST()
-        {
-            //Assert.Inconclusive();
-            using (ITempDir tmp = TempDir.Create())
-            {
-                //"C:\code\gcd\extlib\TestData\ERRORS\FISInputs\2006FebDEM.tif"
-                FileInfo fisFile = new FileInfo(@"C:\code\gcd\extlib\TestData\ERRORS\FISInputs\CHaMP_TS_ZError_SLPdeg_PD_2012.fis");
-                Raster reference = new Raster(new FileInfo(@"C:\code\gcd\extlib\TestData\ERRORS\FISInputs\2006FebDEM.tif"));
-
-                Dictionary<string, FileInfo> inputDict = new Dictionary<string, FileInfo>()
-                {
-                    { "Slope", new FileInfo(@"C:\code\gcd\extlib\TestData\ERRORS\FISInputs\SlopeDegrees5.tif") },
-                    { "PointDensity",  new FileInfo(@"C:\code\gcd\extlib\TestData\ERRORS\FISInputs\PointDensity.tif") }
-                };
-
-                Raster rTemplateOutput2 = RasterOperators.FISRaster(inputDict, fisFile, reference, new FileInfo(Path.Combine(tmp.Name, "FISTest.tif")));
-                Assert.Fail();
-            }
-        }
-
-
-
-[TestMethod()]
         public void RootSumSquaresTest()
         {
             using (ITempDir tmp = TempDir.Create())
@@ -259,7 +253,7 @@ namespace GCDConsoleLib.Tests
             {
                 Raster rTempl = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("const900.tif")));
                 Raster rTemp2 = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("const950.tif")));
-                
+
                 Raster rTemplateOutput1 = RasterOperators.SetNull(rTempl, RasterOperators.ThresholdOps.GreaterThan, 4, new FileInfo(Path.Combine(tmp.Name, "GreaterThan.tif")));
                 Raster rTemplateOutput2 = RasterOperators.SetNull(rTempl, RasterOperators.ThresholdOps.LessThan, 4, new FileInfo(Path.Combine(tmp.Name, "LessThan.tif")));
                 Raster rTemplateOutput3 = RasterOperators.SetNull(rTempl, RasterOperators.ThresholdOps.GreaterThanOrEqual, 4, new FileInfo(Path.Combine(tmp.Name, "GreaterThanOrEqual.tif")));
@@ -312,11 +306,11 @@ namespace GCDConsoleLib.Tests
             Raster rThresh = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2006Feb_DEM\2006Feb_DEM.img")));
 
             UnitGroup ug = new UnitGroup(VolumeUnit.CubicMeter, AreaUnit.SquareMeter, LengthUnit.Meter, LengthUnit.Meter);
-            DoDStats test = RasterOperators.GetStatsMinLoD(rRaw, rThresh, 73.0m,  ug);
+            DoDStats test = RasterOperators.GetStatsMinLoD(rRaw, rThresh, 73.0m, ug);
 
             // And now the budget seg case
             Vector rPolyMask = new Vector(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\MethodMask_ForTesting.shp")));
-            Dictionary<string, DoDStats> testBudgetSeg = RasterOperators.GetStatsMinLoD(rRaw, rThresh, 73.0m, rPolyMask, "Method",  ug);
+            Dictionary<string, DoDStats> testBudgetSeg = RasterOperators.GetStatsMinLoD(rRaw, rThresh, 73.0m, rPolyMask, "Method", ug);
         }
 
     }
