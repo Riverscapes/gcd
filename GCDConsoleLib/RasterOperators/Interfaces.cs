@@ -513,7 +513,7 @@ namespace GCDConsoleLib
         /// <param name="fSize"></param>
         /// <param name="progressHandler">Event handler to hook into this so that you can update a progress bar</param>
         /// <returns></returns>
-        public static Raster PointDensity(Raster rDEM, Vector vPointCloud, FileInfo sOutputRaster, 
+        public static Raster PointDensity(Raster rDEM, Vector vPointCloud, FileInfo sOutputRaster,
             KernelShapes eKernel, decimal fSize, EventHandler<int> progressHandler = null)
         {
             Raster outputRaster = new Raster(rDEM, sOutputRaster, new GdalDataType(typeof(double)));
@@ -616,42 +616,33 @@ namespace GCDConsoleLib
         }
 
         /// <summary>
-        /// 
+        /// Prior Probability Raster Generation
         /// </summary>
         /// <param name="rawDoD"></param>
         /// <param name="newError"></param>
         /// <param name="oldError"></param>
         /// <param name="sOutputRaster"></param>
         /// <returns></returns>
-        public static Raster CreatePriorProbabilityRaster(Raster rawDoD, Raster newError, Raster oldError, string sOutputRaster)
+        public static Raster CreatePriorProbabilityRaster(Raster rawDoD, Raster propError, FileInfo sOutputRaster)
         {
-            throw new NotImplementedException();
-            return null;
+            PriorProbRaster thePriorProb = new PriorProbRaster(rawDoD, propError, new Raster(rawDoD, sOutputRaster));
+            return thePriorProb.RunWithOutput();
         }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="rawDoD"></param>
-        /// <param name="thrDoDPath"></param>
-        /// <param name="newError"></param>
-        /// <param name="OldError"></param>
-        /// <param name="sPriorProbRaster"></param>
-        /// <param name="sPosteriorRaster"></param>
-        /// <param name="sConditionalRaster"></param>
-        /// <param name="sSpatialCoErosionRaster"></param>
-        /// <param name="sSpatialCoDepositionRaster"></param>
-        /// <param name="nMovingWindowWidth"></param>
-        /// <param name="nMovingWindowHeight"></param>
-        /// <param name="fThreshold"></param>
         /// <returns></returns>
-        public static Raster ThresholdDoDProbWithSpatialCoherence(Raster rawDoD, string thrDoDPath, Raster newError, Raster OldError,
-                                                            string sPriorProbRaster,
-                                                            string sPosteriorRaster,
-                                                            string sConditionalRaster,
-                                                            string sSpatialCoErosionRaster,
-                                                            string sSpatialCoDepositionRaster,
-                                                             int nMovingWindowWidth, int nMovingWindowHeight, decimal fThreshold)
+        public static Raster ThresholdDoDProbWithSpatialCoherence(
+            Raster rawDoD, FileInfo thrDoDPath, Raster newError, Raster OldError,
+            Raster priorProb,
+            FileInfo sPosteriorRaster,
+            FileInfo sConditionalRaster,
+            FileInfo sSpatialCoErosionRaster,
+            FileInfo sSpatialCoDepositionRaster,
+            int nMovingWindowWidth,
+            int nMovingWindowHeight,
+            decimal fThreshold)
         {
             throw new NotImplementedException();
             return null;
@@ -667,10 +658,10 @@ namespace GCDConsoleLib
         /// <param name="sPriorProbRaster"></param>
         /// <param name="fThreshold"></param>
         /// <returns></returns>
-        public static Raster ThresholdDoDProbability(Raster rawDoD, string thrHistPath, Raster newError, Raster oldError, string sPriorProbRaster, decimal fThreshold)
+        public static Raster ThresholdDoDProbability(Raster rawDoD, Raster rPriorProb, FileInfo thrHistPath, decimal fThreshold)
         {
-            throw new NotImplementedException();
-            return null;
+            CITThresholdRaster thePriorProb = new CITThresholdRaster(rawDoD, rPriorProb, new Raster(rawDoD, thrHistPath), fThreshold);
+            return thePriorProb.RunWithOutput();
         }
 
         /// <summary>

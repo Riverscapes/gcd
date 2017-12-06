@@ -1,8 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using GCDConsoleLib.Extensions;
-using System;
-using System.Collections.Generic;
-using GCDConsoleLib.Extensions;
+
 
 namespace GCDConsoleLib.Extensions.Tests
 {

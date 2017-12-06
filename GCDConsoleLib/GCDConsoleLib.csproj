@@ -107,8 +107,11 @@
     <Compile Include="RasterOperators\CellByCellOperator.cs" />
     <Compile Include="RasterOperators\Interfaces.cs" />
     <Compile Include="RasterOperators\Operators\BilinearResample.cs" />
+    <Compile Include="RasterOperators\Operators\CITThresholdRaster.cs" />
     <Compile Include="RasterOperators\Operators\CreateErrorRaster.cs" />
     <Compile Include="RasterOperators\Operators\FISRasterOp.cs" />
+    <Compile Include="RasterOperators\Operators\PriorProbRaster.cs" />
+    <Compile Include="RasterOperators\Operators\ThreshDoDProbSptlCoherence.cs" />
     <Compile Include="RasterOperators\PointDensity.cs" />
     <Compile Include="RasterOperators\Stats\GetChangeStats.cs" />
     <Compile Include="RasterOperators\Stats\GetDoDPropStats.cs" />
@@ -132,6 +135,7 @@
     <Compile Include="Projection.cs" />
     <Compile Include="RasterOperators\Operators\RasterMath.cs" />
     <Compile Include="RasterOperators\BaseOperator.cs" />
+    <Compile Include="Utility\Probability.cs" />
     <Compile Include="Vector.cs" />
     <Compile Include="Raster.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -80,15 +80,15 @@ namespace GCDConsoleLib.Internal.Operators.Tests
             PointDensity circletest = new PointDensity(rDEM, rPtDensity, circleOut, RasterOperators.KernelShapes.Circle, 5.0m);
 
             Geometry origin = pointMaker(0, 0);
-            Assert.IsTrue(circletest.InsideSquare(origin, origin));
-            Assert.IsTrue(circletest.InsideSquare(origin, pointMaker(0, 2)));
-            Assert.IsTrue(circletest.InsideSquare(origin, pointMaker(2, 0)));
-            Assert.IsTrue(circletest.InsideSquare(origin, pointMaker(1, 1)));
+            Assert.IsTrue(circletest.InsideRadius(origin, origin));
+            Assert.IsTrue(circletest.InsideRadius(origin, pointMaker(0, 2)));
+            Assert.IsTrue(circletest.InsideRadius(origin, pointMaker(2, 0)));
+            Assert.IsTrue(circletest.InsideRadius(origin, pointMaker(1, 1)));
 
-            Assert.IsFalse(circletest.InsideSquare(origin, pointMaker(0, 5.1)));
-            Assert.IsFalse(circletest.InsideSquare(origin, pointMaker(2, 6.0)));
-            Assert.IsFalse(circletest.InsideSquare(origin, pointMaker(5, 5)));
-            Assert.IsFalse(circletest.InsideSquare(origin, pointMaker(5.1, 5.1)));
+            Assert.IsFalse(circletest.InsideRadius(origin, pointMaker(0, 5.1)));
+            Assert.IsFalse(circletest.InsideRadius(origin, pointMaker(2, 6.0)));
+            Assert.IsFalse(circletest.InsideRadius(origin, pointMaker(5, 5)));
+            Assert.IsFalse(circletest.InsideRadius(origin, pointMaker(5.1, 5.1)));
 
         }
 

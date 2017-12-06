@@ -38,14 +38,14 @@ namespace GCDCore.Engines
 
             // Create the prior probability raster
             m_PriorProbRaster = new FileInfo(Path.ChangeExtension(Path.Combine(AnalysisFolder.FullName, "priorprob"), OutputManager.RasterExtension));
-            RasterOperators.CreatePriorProbabilityRaster(rawDoD, NewError.Raster, OldError.Raster, m_PriorProbRaster.FullName);
+            Raster priorPRob = RasterOperators.CreatePriorProbabilityRaster(rawDoD, propErrorRaster, m_PriorProbRaster);
 
             // Build Pyramids
             ProjectManager.PyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.ProbabilityRasters, m_PriorProbRaster);
 
             if (SpatialCoherence == null)
             {
-                thrDoD = RasterOperators.ThresholdDoDProbability(rawDoD, thrDoDPath.FullName, NewError.Raster, OldError.Raster, m_PriorProbRaster.FullName, Threshold);
+                thrDoD = RasterOperators.ThresholdDoDProbability(rawDoD, priorPRob, thrDoDPath, Threshold);
             }
             else
             {
@@ -54,8 +54,8 @@ namespace GCDCore.Engines
                 m_SpatialCoErosionRaster = new FileInfo(Path.ChangeExtension(Path.Combine(AnalysisFolder.FullName, "nbrErosion"), OutputManager.RasterExtension));
                 m_SpatialCoDepositionRaster = new FileInfo(Path.ChangeExtension(Path.Combine(AnalysisFolder.FullName, "nbrDeposition"), OutputManager.RasterExtension));
 
-                thrDoD = RasterOperators.ThresholdDoDProbWithSpatialCoherence(rawDoD, thrDoDPath.FullName, NewError.Raster, OldError.Raster, m_PriorProbRaster.FullName,
-                    m_PosteriorRaster.FullName, m_ConditionalRaster.FullName, m_SpatialCoErosionRaster.FullName, m_SpatialCoDepositionRaster.FullName,
+                thrDoD = RasterOperators.ThresholdDoDProbWithSpatialCoherence(rawDoD, new FileInfo(thrDoDPath.FullName), NewError.Raster, OldError.Raster, priorPRob,
+                    m_PosteriorRaster, m_ConditionalRaster, m_SpatialCoErosionRaster, m_SpatialCoDepositionRaster,
                     SpatialCoherence.MovingWindowDimensions, SpatialCoherence.MovingWindowDimensions, Threshold);
 
                 // Build Pyramids
