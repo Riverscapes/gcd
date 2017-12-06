@@ -4,7 +4,9 @@ using ESRI.ArcGIS.Carto;
 using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.DataSourcesRaster;
+using System.Collections;
 using System.IO;
+using System.Collections.Generic;
 
 namespace GCDAddIn
 {
@@ -40,7 +42,7 @@ namespace GCDAddIn
                 throw ex;
             }
 
-           ArcMapBrowse.GISDataStorageTypes eStorageType = GetWorkspaceType(fiFullPath.FullName);
+            ArcMapBrowse.GISDataStorageTypes eStorageType = GetWorkspaceType(fiFullPath.FullName);
             IWorkspace pWorkspace = GetWorkspace(fiFullPath);
 
             switch (eStorageType)
@@ -428,5 +430,141 @@ namespace GCDAddIn
                 }
             }
         }
+
+        public static void RemoveLayer(FileSystemInfo layerPath)
+        {
+            ILayer pLayer = GetLayerBySource(layerPath);
+            if (pLayer is ILayer)
+            {
+                if (pLayer is IDataLayer2)
+                {
+                    ((IDataLayer2)pLayer).Disconnect();
+                }
+
+                ArcMap.Document.FocusMap.DeleteLayer(pLayer);
+                ArcMap.Document.UpdateContents();
+                ArcMap.Document.ActiveView.Refresh();                
+            }
+        }
+
+        //public void RemoveLayersfromTOC(string directory)
+        //{
+        //    //IMxDocument mxMap = (IMxDocument)application.Document;
+        //    //IMap pMap = mxMap.FocusMap;
+        //    //IMapLayers pMapLayers = pMap;
+
+        //    for (int i = 0; i <= ArcMap.Document.FocusMap.LayerCount - 1; i++)
+        //    {
+        //        ILayer player = ArcMap.Document.FocusMap.Layer[i];
+        //        if (player is IGroupLayer)
+        //        {
+        //            RemoveLayersfromGroupLayer((IGroupLayer)player, directory);
+        //        }
+        //        else
+        //        {
+        //            IDataset pDS = player;
+        //            try
+        //            {
+        //                if (LCase(directory) == LCase(pDS.Workspace.PathName))
+        //                {
+        //                    pMap.DeleteLayer(player);
+        //                }
+        //            }
+        //            }
+
+        //        if (player != null)
+        //        {
+        //            System.Runtime.InteropServices.Marshal.ReleaseComObject(player);
+        //            player = null;
+        //        }
+        //    }
+
+        //    mxMap.UpdateContents();
+        //    mxMap.ActiveView.Refresh();
+        //    ESRI.ArcGIS.ArcMapUI.IContentsView pContentsView = mxMap.CurrentContentsView;
+        //    pContentsView.Refresh(null);
+        //    if (mxMap != null)
+        //    {
+        //        System.Runtime.InteropServices.Marshal.ReleaseComObject(mxMap);
+        //        mxMap = null;
+        //    }
+
+        //    if (pContentsView != null)
+        //    {
+        //        System.Runtime.InteropServices.Marshal.ReleaseComObject(pContentsView);
+        //        pContentsView = null;
+        //    }
+        //}
+
+        //public void RemoveLayersfromGroupLayer(IGroupLayer pGroupLayer, string directory)
+        //{
+        //    ILayer pLayer;
+        //    List<ILayer> LayersToDelete = new List<ILayer>();
+        //    ICompositeLayer pCompositeLayer = (ICompositeLayer)pGroupLayer;
+        //    for (int i = 1; i <= pCompositeLayer.Count; i++)
+        //    {
+        //        pLayer = pCompositeLayer.Layer[i - 1];
+        //        if (pLayer is IGroupLayer)
+        //        {
+        //            RemoveLayersfromGroupLayer(pLayer, directory);
+        //        }
+        //        else
+        //        {
+        //            try
+        //            {
+        //                IDataset pDS = (IDataset)pLayer;
+        //                string LayerDirectoryname = pDS.Workspace.PathName.ToLower();
+        //                if (LayerDirectoryname.EndsWith(IO.Path.DirectorySeparatorChar))
+        //                {
+        //                    LayerDirectoryname = LayerDirectoryname.Substring(0, LayerDirectoryname.Length - 1);
+        //                }
+
+        //                if (LCase(directory) == LayerDirectoryname)
+        //                {
+        //                    LayersToDelete.Add(pLayer);
+        //                }
+        //            }
+        //            catch (Exception ex)
+        //            {
+        //                Debug.WriteLine(ex.Message);
+        //            }
+        //        }
+        //    }
+
+        //    foreach (ILayer pDeleteLayer in LayersToDelete)
+        //    {
+        //        pGroupLayer.Delete(pDeleteLayer);
+        //        if (pDeleteLayer != null)
+        //        {
+        //            System.Runtime.InteropServices.Marshal.ReleaseComObject(pDeleteLayer);
+        //            pDeleteLayer = null;
+        //        }
+        //    }
+
+        //    if (pGroupLayer != null)
+        //    {
+        //        System.Runtime.InteropServices.Marshal.ReleaseComObject(pGroupLayer);
+        //        pGroupLayer = null;
+        //    }
+        //}
+
+        //public void RemoveGroupLayer(string sGroupLayerName)
+        //{
+        //    IMap pMap = ArcMap.Document.FocusMap;
+        //    UID pUID = new UID();
+        //    pUID.Value = "{EDAD6644-1810-11D1-86AE-0000F8751720}";
+
+        //    IEnumLayer pEnum = ArcMap.Document.FocusMap.Layers[pUID, true];
+        //    ILayer pL = pEnum.Next();
+        //    while (pL is ILayer)
+        //    {
+        //        if (string.Compare(sGroupLayerName, pL.Name, true) == 0)
+        //        {
+        //            pMap.DeleteLayer(pL);
+        //        }
+
+        //        pL = pEnum.Next();
+        //    }
+        //}
     }
 }

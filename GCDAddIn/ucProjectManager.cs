@@ -54,7 +54,7 @@ namespace GCDAddIn
 
             public void OnGISLayerDeleting(GCDCore.Project.ProjectManager.GISLayerEventArgs e)
             {
-                System.Windows.Forms.MessageBox.Show(e.RasterPath.FullName, "ArcGIS Notified of Layer Deletion", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Stop);
+                ArcMapUtilities.RemoveLayer(e.RasterPath);
             }
         }
     }
