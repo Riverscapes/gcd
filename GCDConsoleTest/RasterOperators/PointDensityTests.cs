@@ -20,9 +20,7 @@ namespace GCDConsoleLib.Internal.Operators.Tests
             //Dummy constructor
             public PointDensityTesterClass(Raster rDEM, Vector vPointCloud, Raster OutputRaster, RasterOperators.KernelShapes eKernel, decimal fSize)
             : base(rDEM, vPointCloud, OutputRaster, eKernel, fSize)
-            {
-
-            }
+            {  }
 
         }
 

@@ -466,7 +466,7 @@ namespace GCDConsoleLib
         /// <returns></returns>
         public static Raster Hillshade(Raster rInput, FileInfo sOutputRaster)
         {
-            Raster outputRaster = new Raster(rInput, sOutputRaster, new GdalDataType(OSGeo.GDAL.DataType.GDT_Int16));
+            Raster outputRaster = new Raster(rInput, sOutputRaster);
             Hillshade theHSOp = new Hillshade(rInput, outputRaster);
             return theHSOp.RunWithOutput();
         }

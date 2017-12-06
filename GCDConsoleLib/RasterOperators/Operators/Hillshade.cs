@@ -17,7 +17,9 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="rOutputRaster"></param>
         public Hillshade(Raster rInput, Raster rOutputRaster) :
             base(new List<Raster> { rInput }, 1, rOutputRaster)
-        { }
+        {
+            SetDefaultVars();
+        }
 
         /// <summary>
         /// Give us a sensible default for shadow direction etc.
@@ -47,7 +49,7 @@ namespace GCDConsoleLib.Internal.Operators
         {
             // Don't calculate if we have nodatas in the mix
             for (int k = 0; k < BufferCellNum; k++)
-                if (wd[0][k].Equals(OpNodataVal))
+                if (wd[0][k].Equals(_rasternodatavals[0]))
                     return OpNodataVal;
 
             float dzdx = ((wd[0][2] + (2 * wd[0][5]) + wd[0][8]) - (wd[0][0] + (2 * wd[0][3]) + wd[0][6])) / (8 * (float)Math.Abs(WindowExtent.CellHeight));

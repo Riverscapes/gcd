@@ -26,7 +26,7 @@ namespace GCDConsoleLib.Internal
         public ExtentRectangle OpExtent;
         public ExtentRectangle InExtent;
         protected int _oprows;
-        protected T OpNodataVal;
+        public T OpNodataVal;
 
         protected Raster _outputRaster;
         protected int _vOffset;
@@ -88,41 +88,73 @@ namespace GCDConsoleLib.Internal
             if (rRasters.Count > 0)
             {
                 InExtent = rRasters[0].Extent;
+
                 // Do a union on the inputextent
                 foreach (Raster rRa in rRasters)
                     AddInputRaster(rRa);
-
-                if (typeof(T) == typeof(float))
-                    OpNodataVal = (T)Convert.ChangeType(_rasters[0].NodataValue<float>(), typeof(T));
-                else if (typeof(T) == typeof(double))
-                    OpNodataVal = (T)Convert.ChangeType(_rasters[0].NodataValue<double>(), typeof(T));
-                else if (typeof(T) == typeof(int))
-                    OpNodataVal = (T)Convert.ChangeType(_rasters[0].NodataValue<int>(), typeof(T));
-                else if (typeof(T) == typeof(byte))
-                    OpNodataVal = (T)Convert.ChangeType(_rasters[0].NodataValue<byte>(), typeof(T));
             }
-            // No inputs? then get the nodataval from the output
-            else if (rOutRaster != null)
-            {
-                InExtent = rOutRaster.Extent;
-                if (typeof(T) == typeof(float))
-                    OpNodataVal = (T)Convert.ChangeType(rOutRaster.NodataValue<float>(), typeof(T));
-                else if (typeof(T) == typeof(double))
-                    OpNodataVal = (T)Convert.ChangeType(rOutRaster.NodataValue<double>(), typeof(T));
-                else if (typeof(T) == typeof(int))
-                    OpNodataVal = (T)Convert.ChangeType(rOutRaster.NodataValue<int>(), typeof(T));
-                else if (typeof(T) == typeof(byte))
-                    OpNodataVal = (T)Convert.ChangeType(rOutRaster.NodataValue<byte>(), typeof(T));
-            }
-            // No inputs or outputs? (is this possible?) Just use the min value
-            else
-            {
-                OpNodataVal = Utility.Conversion.minValue<T>();
-            }
+            else if (_outputRaster != null)
+                InExtent = _outputRaster.Extent;
 
             // Finally, set up our output raster and make sure it's open for writing
             if (rOutRaster != null)
                 _outputRaster = rOutRaster;
+
+            // Last thing we do is set the nodata value (which is suprisingly hard to do)
+            SetNodataValue();
+
+        }
+
+        private void SetNodataValue()
+        {
+            OpNodataVal = Utility.Conversion.minValue<T>();
+
+            // Use the first input for the nodataval
+            if (_rasters.Count > 0)
+            {
+                try
+                {
+                    if (_rasters[0].HasNodata)
+                    {
+                        T val = (T)Convert.ChangeType(_rasters[0].origNodataVal, typeof(T));
+                        // Double is the biggest value we can have so use that to see if these
+                        // values are really the same
+                        double dValConverted = (double)Convert.ChangeType(val, typeof(double));
+                        if ((double)_rasters[0].origNodataVal != dValConverted)
+                            throw new OverflowException("No good");
+                        OpNodataVal = val;
+                    }
+                }
+                catch (OverflowException){ }
+            }
+
+            // Now make sure our nodataval is compatible with the Output value
+            if (_outputRaster != null)
+            {
+                try
+                {
+                    var test = Convert.ChangeType(OpNodataVal, _outputRaster.Datatype.CSType);
+                    T throwaway = (T)Convert.ChangeType(test, typeof(T));
+                    if (!throwaway.Equals(OpNodataVal))
+                        throw new OverflowException("No good");
+                }
+                catch (OverflowException)
+                {
+                    Type outType = _outputRaster.Datatype.CSType;
+                    if (outType == typeof(int))
+                        OpNodataVal = (T)Convert.ChangeType(Utility.Conversion.minValue<int>(), typeof(T));
+                    else if (outType == typeof(double))
+                        OpNodataVal = (T)Convert.ChangeType(Utility.Conversion.minValue<double>(), typeof(T));
+                    else if (outType == typeof(float))
+                        OpNodataVal = (T)Convert.ChangeType(Utility.Conversion.minValue<float>(), typeof(T));
+                    else if (outType == typeof(byte))
+                        OpNodataVal = (T)Convert.ChangeType(Utility.Conversion.minValue<byte>(), typeof(T));
+                }
+                // Finally set the value in the output raster so it will be written correctly 
+                _outputRaster.origNodataVal = (double?)Convert.ChangeType(OpNodataVal, typeof(double));
+
+            }
+
         }
 
         /// <summary>

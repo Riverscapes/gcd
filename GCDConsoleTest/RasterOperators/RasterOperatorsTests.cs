@@ -89,14 +89,16 @@ namespace GCDConsoleLib.Tests
             Raster rThresh = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("const950.tif")));
             Raster rErr = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("const980.tif")));
 
+            // test the non-budget seg case
             UnitGroup ug = new UnitGroup(VolumeUnit.CubicMeter, AreaUnit.SquareMeter, LengthUnit.Meter, LengthUnit.Meter);
-            DoDStats test = RasterOperators.GetStatsPropagated(rRaw, rThresh, rErr, ug);
+            DoDStats test1 = RasterOperators.GetStatsPropagated(rRaw, rThresh, rErr, ug);
 
             // And now the budget seg case
             Vector rPolyMask = new Vector(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\MethodMask_ForTesting.shp")));
             Dictionary<string, DoDStats> testBudgetSeg = RasterOperators.GetStatsPropagated(rRaw, rThresh, rThresh, rPolyMask, "Method", ug);
 
         }
+
 
         [TestMethod()]
         public void GetStatsProbalisticTest()
@@ -134,7 +136,7 @@ namespace GCDConsoleLib.Tests
         {
             using (ITempDir tmp = TempDir.Create())
             {
-                Raster rTempl = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("SquareHill950-980.tif")));
+                Raster rTempl = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"PointDensity\SulpherCreek\2006Feb_DEM.img")));
 
                 Raster rTemplateOutput1 = RasterOperators.SlopeDegrees(rTempl, new FileInfo(Path.Combine(tmp.Name, "SlopeDegrees.tif")));
                 Raster rTemplateOutput2 = RasterOperators.SlopePercent(rTempl, new FileInfo(Path.Combine(tmp.Name, "SlopePercent.tif")));
@@ -203,7 +205,31 @@ namespace GCDConsoleLib.Tests
             }
         }
 
+
         [TestMethod()]
+        public void FISERRORSTEST()
+        {
+            //Assert.Inconclusive();
+            using (ITempDir tmp = TempDir.Create())
+            {
+                //"C:\code\gcd\extlib\TestData\ERRORS\FISInputs\2006FebDEM.tif"
+                FileInfo fisFile = new FileInfo(@"C:\code\gcd\extlib\TestData\ERRORS\FISInputs\CHaMP_TS_ZError_SLPdeg_PD_2012.fis");
+                Raster reference = new Raster(new FileInfo(@"C:\code\gcd\extlib\TestData\ERRORS\FISInputs\2006FebDEM.tif"));
+
+                Dictionary<string, FileInfo> inputDict = new Dictionary<string, FileInfo>()
+                {
+                    { "Slope", new FileInfo(@"C:\code\gcd\extlib\TestData\ERRORS\FISInputs\SlopeDegrees5.tif") },
+                    { "PointDensity",  new FileInfo(@"C:\code\gcd\extlib\TestData\ERRORS\FISInputs\PointDensity.tif") }
+                };
+
+                Raster rTemplateOutput2 = RasterOperators.FISRaster(inputDict, fisFile, reference, new FileInfo(Path.Combine(tmp.Name, "FISTest.tif")));
+                Assert.Fail();
+            }
+        }
+
+
+
+[TestMethod()]
         public void RootSumSquaresTest()
         {
             using (ITempDir tmp = TempDir.Create())

@@ -35,6 +35,10 @@ namespace GCDConsoleLib.Internal.Tests
                 Assert.IsFalse(OpDone);
             }
 
+            public TestOp(List<Raster> rRasters, Raster outRaster) : base(rRasters, outRaster)
+            {
+            }
+
             protected override void ChunkOp(List<T[]> data, T[] outChunk)
             {
                 for (int idx = 0; idx < data[0].GetLength(0); idx++)
@@ -178,6 +182,56 @@ namespace GCDConsoleLib.Internal.Tests
 
             theTest.nextChunk();
             Assert.IsTrue(theTest.OpDone);
+        }
+
+
+        [TestMethod()]
+        public void NodataTests()
+        {
+            Raster intRaster = new FakeRaster<int>(10, 20, -1, 1, new int[,] { { 1} });
+            Raster floatRaster = new FakeRaster<float>(10, 20, -1, 1, new float[,] { { 1.0f } });
+            Raster doubleRaster = new FakeRaster<double>(10, 20, -1, 1, new double[,] { { 1.0 } });
+            Raster byteRaster = new FakeRaster<byte>(10, 20, -1, 1, new byte[,] { { 0x20 } });
+
+            intRaster.origNodataVal = int.MinValue;
+            floatRaster.origNodataVal = float.MinValue;
+            doubleRaster.origNodataVal = double.MinValue;
+            byteRaster.origNodataVal = byte.MinValue;
+
+            Raster OUTfloatRaster1 = new FakeRaster<float>(10, 20, -1, 1, new float[,] { { 0.0f } });
+            OUTfloatRaster1.origNodataVal = 0; // Set Purposely wrong
+            TestOp<float> theTest1 = new TestOp<float>(new List<Raster> { floatRaster }, OUTfloatRaster1);
+            float expected = floatRaster.NodataValue<float>();
+            Assert.AreEqual(theTest1.OpNodataVal, expected);
+            Assert.AreEqual(OUTfloatRaster1.NodataValue<float>(), expected);
+
+            Raster OUTdoubleRaster1 = new FakeRaster<double>(10, 20, -1, 1, new double[,] { { 0.0 } });
+            OUTdoubleRaster1.origNodataVal = 0; // Set Purposely wrong
+            TestOp<double> theTest2 = new TestOp<double>(new List<Raster> { floatRaster }, OUTdoubleRaster1);
+            double expected2 = floatRaster.NodataValue<double>();
+            Assert.AreEqual(theTest2.OpNodataVal, expected2);
+            Assert.AreEqual(OUTdoubleRaster1.NodataValue<double>(), floatRaster.NodataValue<double>());
+
+            Raster OUTfloatRaster2 = new FakeRaster<float>(10, 20, -1, 1, new float[,] { { 0.0f } });
+            OUTfloatRaster2.origNodataVal = 0; // Set Purposely wrong
+            TestOp<double> theTest3 = new TestOp<double>(new List<Raster> { doubleRaster }, OUTfloatRaster2);
+            double expected3 = floatRaster.NodataValue<double>();
+            Assert.AreEqual(theTest3.OpNodataVal, expected3);
+            Assert.AreEqual(OUTfloatRaster2.NodataValue<double>(), expected3);
+
+            Raster OUTfloatRaster3 = new FakeRaster<float>(10, 20, -1, 1, new float[,] { { 0.0f } });
+            OUTfloatRaster3.origNodataVal = 0; // Set Purposely wrong
+            TestOp<float> theTest4 = new TestOp<float>(new List<Raster> { intRaster }, OUTfloatRaster3);
+            float expected4 = intRaster.NodataValue<float>();
+            Assert.AreEqual(theTest4.OpNodataVal, expected4);
+            Assert.AreEqual(OUTfloatRaster3.NodataValue<double>(), expected4);
+
+            Raster OUTintRaster = new FakeRaster<int>(10, 20, -1, 1, new int[,] { { 0 } });
+            OUTintRaster.origNodataVal = 0; // Set Purposely wrong
+            TestOp<float> theTest5 = new TestOp<float>(new List<Raster> { doubleRaster }, OUTintRaster);
+            float expected5 = floatRaster.NodataValue<float>();
+            Assert.AreEqual(theTest5.OpNodataVal, expected5);
+            Assert.AreEqual(OUTintRaster.NodataValue<float>(), expected5);
         }
 
         [TestMethod()]
