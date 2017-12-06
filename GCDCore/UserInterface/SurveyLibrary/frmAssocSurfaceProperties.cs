@@ -1,20 +1,13 @@
 using GCDCore.Project;
 using System.Windows.Forms;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Data;
 using System.Diagnostics;
-using System.Linq;
-using System.Xml.Linq;
-using System.Threading.Tasks;
 using System.IO;
 
 namespace GCDCore.UserInterface.SurveyLibrary
 {
     public partial class frmAssocSurfaceProperties
     {
-
         private enum AssociatedSurfaceMethods
         {
             Browse,
@@ -28,8 +21,13 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
         private AssocSurface m_Assoc;
         private DEMSurvey DEM;
-        private frmPointDensity m_frmPointDensity;
         private frmImportRaster m_ImportForm;
+
+        // Point density properties
+        private GCDConsoleLib.Vector PointCloud;
+        private GCDConsoleLib.RasterOperators.KernelShapes PointDensityShape;
+        private decimal PointDensitySize;
+
         //Private m_SurfaceRoughnessForm As frmSurfaceRoughness
 
         // This method tracks whether the surface is from an existing
@@ -43,10 +41,8 @@ namespace GCDCore.UserInterface.SurveyLibrary
             get { return m_Assoc; }
         }
 
-
         public frmAssocSurfaceProperties(DEMSurvey parentDEM, AssocSurface assoc)
         {
-            Load += SurfacePropertiesForm_Load;
             // This call is required by the Windows Form Designer.
             InitializeComponent();
 
@@ -54,10 +50,12 @@ namespace GCDCore.UserInterface.SurveyLibrary
             DEM = parentDEM;
             m_Assoc = assoc;
 
+            // Initialize the point density values to sensible defaults
+            PointDensityShape = GCDConsoleLib.RasterOperators.KernelShapes.Square;
+            PointDensitySize = 4;
         }
 
-
-        private void SurfacePropertiesForm_Load(System.Object sender, System.EventArgs e)
+        private void SurfacePropertiesForm_Load(Object sender, EventArgs e)
         {
             ttpTooltip.SetToolTip(btnCancel, "Cancel and close this form.");
             ttpTooltip.SetToolTip(btnHelp, string.Empty);
@@ -77,7 +75,6 @@ namespace GCDCore.UserInterface.SurveyLibrary
             cboType.Items.Add(new naru.db.NamedObject((long)AssociatedSurfaceMethods.InterpolationError, "Interpolation Error"));
             cboType.SelectedIndex = cboType.Items.Add(new naru.db.NamedObject((long)AssociatedSurfaceMethods.Browse, "Unknown"));
 
-            btnDensity.Enabled = ProjectManager.IsArcMap;
             btnRoughness.Enabled = ProjectManager.IsArcMap;
 
             if ((m_Assoc != null))
@@ -103,12 +100,10 @@ namespace GCDCore.UserInterface.SurveyLibrary
                 //Next
                 cboType.Select();
             }
-
         }
 
         private AssociatedSurfaceMethods GetAssociatedSurfaceType(long nSurfaceID)
         {
-
             if (m_Assoc is AssocSurface)
             {
                 foreach (naru.db.NamedObject item in cboType.Items)
@@ -121,9 +116,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             }
 
             return AssociatedSurfaceMethods.Browse;
-
         }
-
 
         private void btnOK_Click(System.Object sender, System.EventArgs e)
         {
@@ -198,7 +191,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
                                 break;
                             case AssociatedSurfaceMethods.PointDensity:
-                                GCDConsoleLib.RasterOperators.PointDensity(DEM.Raster, m_frmPointDensity.ucPointCloud.SelectedItem, new FileInfo(txtProjectRaster.Text), GCDConsoleLib.RasterOperators.KernelShapes.Square, 4m);
+                                GCDConsoleLib.RasterOperators.PointDensity(DEM.Raster, PointCloud, new FileInfo(txtProjectRaster.Text), PointDensityShape, PointDensitySize);
 
                                 break;
                             case AssociatedSurfaceMethods.Roughness:
@@ -342,45 +335,27 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
             txtOriginalRaster.Text = DEM.Raster.GISFileInfo.FullName;
 
-            System.Windows.Forms.MessageBox.Show("The slope raster will be generated after you click OK.", GCDCore.Properties.Resources.ApplicationNameLong, System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information);
-
+            MessageBox.Show("The slope raster will be generated after you click OK.", GCDCore.Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-
 
         private void btnDensity_Click(System.Object sender, System.EventArgs e)
         {
-            if (m_frmPointDensity == null)
-            {
-                m_frmPointDensity = new frmPointDensity(ProjectManager.Project.Units.VertUnit);
-            }
+            frmPointDensity frm = new frmPointDensity(ProjectManager.Project.Units.VertUnit, PointDensityShape, PointDensitySize);
 
-            if (m_frmPointDensity.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (frm.ShowDialog() == DialogResult.OK)
             {
+                m_eMethod = AssociatedSurfaceMethods.PointDensity;
                 if (string.IsNullOrEmpty(txtName.Text))
                 {
                     txtName.Text = "PDensity";
                 }
-                m_eMethod = AssociatedSurfaceMethods.PointDensity;
+                PointDensityShape = frm.KernelShape;
+                PointDensitySize = frm.KernerlSize;
+                PointCloud = frm.PointCloud;
 
-                //Dim sOutputRasterPath As String = GISCode.ChangeDetection.OutputManager.GetAssociatedSurfaceCopyPath(ProjectManager.ds.DEMSurvey.FindByDEMSurveyID(m_nDEMSurveyID).Name, txtName.Text, txtName.Text)
-                //sOutputRasterPath = IO.Path.ChangeExtension(sOutputRasterPath, GetDefaultRasterExtension)
-                //txtSource.Text = FileSystem.GetNewSafeFileName(sOutputRasterPath)
-                //
-                // Select the appropriate type in the dropdown box
-                //
-                for (int i = 0; i <= cboType.Items.Count - 1; i++)
-                {
-                    if (string.Compare(cboType.Items[i].ToString(), "Point Density", true) == 0)
-                    {
-                        cboType.SelectedIndex = i;
-                        break; // TODO: might not be correct. Was : Exit For
-                    }
-                }
-
-                txtOriginalRaster.Text = m_frmPointDensity.ucPointCloud.SelectedItem.GISFileInfo.FullName;
+                txtOriginalRaster.Text = frm.ucPointCloud.SelectedItem.GISFileInfo.FullName;
             }
         }
-
 
         private void txtName_TextChanged(object sender, System.EventArgs e)
         {
@@ -388,9 +363,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             {
                 txtProjectRaster.Text = ProjectManager.OutputManager.AssociatedSurfaceRasterPath(DEM.Name, txtName.Text).FullName;
             }
-
         }
-
 
         private void btnRoughness_Click(System.Object sender, System.EventArgs e)
         {
@@ -419,7 +392,6 @@ namespace GCDCore.UserInterface.SurveyLibrary
             //        naru.error.ExceptionUI.HandleException(ex)
             //    End Try
             //End If
-
         }
 
         private void btnHelp_Click(System.Object sender, System.EventArgs e)
@@ -427,5 +399,4 @@ namespace GCDCore.UserInterface.SurveyLibrary
             Process.Start(GCDCore.Properties.Resources.HelpBaseURL + "gcd-command-reference/gcd-project-explorer/d-dem-context-menu/iv-add-associated-surface");
         }
     }
-
 }
