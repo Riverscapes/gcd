@@ -91,7 +91,7 @@ namespace GCDConsoleLib.Tests
 
             // test the non-budget seg case
             UnitGroup ug = new UnitGroup(VolumeUnit.CubicMeter, AreaUnit.SquareMeter, LengthUnit.Meter, LengthUnit.Meter);
-            DoDStats test1 = RasterOperators.GetStatsPropagated(rRaw, rThresh, rErr, ug);
+            DoDStats test1 = RasterOperators.GetStatsPropagated(rRaw, rErr, ug);
 
             // And now the budget seg case
             Vector rPolyMask = new Vector(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\MethodMask_ForTesting.shp")));
@@ -208,15 +208,18 @@ namespace GCDConsoleLib.Tests
         //    {
         //        //"C:\code\gcd\extlib\TestData\ERRORS\FISInputs\2006FebDEM.tif"
         //        FileInfo fisFile = new FileInfo(@"C:\code\gcd\extlib\TestData\ERRORS\FISInputs\CHaMP_TS_ZError_SLPdeg_PD_2012.fis");
-        //        Raster reference = new Raster(new FileInfo(@"C:\code\gcd\extlib\TestData\ERRORS\FISInputs\2006FebDEM.tif"));
+        //        //Raster reference = new Raster(new FileInfo(@"C:\code\gcd\extlib\TestData\ERRORS\FISInputs\2006FebDEM.tif"));
+        //        Raster rawDEM = new Raster(new FileInfo(@"C:\code\gcd\extlib\TestData\ERRORS\FISInputs\2006FebDEM.tif"));
 
-        //        Dictionary<string, FileInfo> inputDict = new Dictionary<string, FileInfo>()
+        //        Dictionary<string, Raster> inputDict = new Dictionary<string, Raster>()
         //        {
-        //            { "Slope", new FileInfo(@"C:\code\gcd\extlib\TestData\ERRORS\FISInputs\SlopeDegrees5.tif") },
-        //            { "PointDensity",  new FileInfo(@"C:\code\gcd\extlib\TestData\ERRORS\FISInputs\PointDensity.tif") }
+        //            { "Slope", new Raster(new FileInfo(@"C:\code\gcd\extlib\TestData\ERRORS\FISInputs\SlopeDegrees5.tif") ) },
+        //            { "PointDensity",  new Raster(new FileInfo(@"C:\code\gcd\extlib\TestData\ERRORS\FISInputs\PointDensity.tif") )}
         //        };
 
-        //        Raster rTemplateOutput2 = RasterOperators.FISRaster(inputDict, fisFile, reference, new FileInfo(Path.Combine(tmp.Name, "FISTest.tif")));
+        //        ErrorRasterProperties props = new ErrorRasterProperties(fisFile, inputDict);
+
+        //        Raster rTemplateOutput2 = RasterOperators.CreateErrorRaster(rawDEM, props, new FileInfo(Path.Combine(tmp.Name, "FISTest.tif")));
         //        Assert.Fail();
         //    }
         //}

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using GCDConsoleLib.GCD;
+using System.Linq;
 
 namespace GCDConsoleLib.Internal.Operators
 {
@@ -11,6 +12,7 @@ namespace GCDConsoleLib.Internal.Operators
         private Dictionary<string, ErrorRasterProperties> _props;
         private Dictionary<string, FISRasterOp> _fisops;
         private Dictionary<string, int> _assocRasters;
+        private Dictionary<string, List<int>> _fisinputs;
 
         private Vector _polymask;
         private string _fieldname;
@@ -25,6 +27,7 @@ namespace GCDConsoleLib.Internal.Operators
             base(new List<Raster> { rawDEM }, outputRaster)
         {
             isMultiMethod = false;
+            _fisinputs = new Dictionary<string, List<int>>();
             _props = new Dictionary<string, ErrorRasterProperties>() { { "", prop } };
 
             if (prop.TheType == ErrorRasterProperties.ERPType.ASSOC)
@@ -34,7 +37,18 @@ namespace GCDConsoleLib.Internal.Operators
                 _assocRasters = new Dictionary<string, int>() { { "", _rasters.Count - 1 } };
             }
             else if (prop.TheType == ErrorRasterProperties.ERPType.FIS)
-                _fisops = new Dictionary<string, FISRasterOp>() { { "", new FISRasterOp(prop.FISInputs, prop.FISRuleFile) } };
+            {
+                _fisinputs[""] = new List<int>();
+                _fisops = new Dictionary<string, FISRasterOp>();
+                _fisops[""] = new FISRasterOp(prop.FISInputs, prop.FISRuleFile);
+                // Add the FIS rasters to these inputs so we can use them and keep track of their indices
+                // so we can slice this data out and feed it to the FIS operator
+                foreach (Raster fisinput in prop.FISInputs.Values)
+                {
+                    _fisinputs[""].Add(_rasters.Count);
+                    AddInputRaster(fisinput);
+                }
+            }
         }
 
         /// <summary>
@@ -52,6 +66,8 @@ namespace GCDConsoleLib.Internal.Operators
             isMultiMethod = true;
             _polymask = PolygonMask;
             _fieldname = MaskFieldName;
+            _fisinputs = new Dictionary<string, List<int>>();
+
 
             _props = new Dictionary<string, ErrorRasterProperties>();
             _assocRasters = new Dictionary<string, int>();
@@ -67,7 +83,17 @@ namespace GCDConsoleLib.Internal.Operators
                     _assocRasters[kvp.Key] =  _rasters.Count - 1;
                 }
                 else if (kvp.Value.TheType == ErrorRasterProperties.ERPType.FIS)
+                {
+                    _fisinputs[kvp.Key] = new List<int>();
                     _fisops[kvp.Key] = new FISRasterOp(kvp.Value.FISInputs, kvp.Value.FISRuleFile);
+                    // Add the FIS rasters to these inputs so we can use them and keep track of their indices
+                    // so we can slice this data out and feed it to the FIS operator
+                    foreach (Raster fisinput in kvp.Value.FISInputs.Values)
+                    {
+                        _fisinputs[kvp.Key].Add(_rasters.Count);
+                        AddInputRaster(fisinput);
+                    }
+                }
             }
         }
 
@@ -91,7 +117,9 @@ namespace GCDConsoleLib.Internal.Operators
 
                 // For FIS we have to do a whole thing...
                 case ErrorRasterProperties.ERPType.FIS:
-                    _fisops[propkey].FISCellOp(data, id);
+                    // We use Linq to slice the data and only send the appropriate 
+                    // inputs to the FIS Function
+                    _fisops[propkey].FISCellOp(data.Where((arr, ind) => _fisinputs[propkey].Contains(ind)).ToList(), id);
                     break;
 
                 default:
