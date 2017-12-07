@@ -16,16 +16,43 @@ namespace GCDConsoleLib.Utility
 
 
         /// <summary>
+        /// This one is PURELY to cast from double to decimal. DO NOT USE
+        /// </summary>
+        /// <param name="fNumerator"></param>
+        /// <param name="fDenominator"></param>
+        /// <returns></returns>
+        private static decimal SafeDivision(double fNumerator, double fDenominator)
+        {
+            decimal mNum, mDenom;
+
+            try { mNum = (decimal)fNumerator; }
+            catch (OverflowException) { mNum = fNumerator > 0 ? decimal.MaxValue : decimal.MinValue; }
+
+            try { mDenom = (decimal)fDenominator; }
+            catch (OverflowException) { mDenom = fDenominator > 0 ? decimal.MaxValue : decimal.MinValue; }
+
+            return SafeDivision(mNum, mDenom);
+        }
+
+        /// <summary>
         /// Return zero if we're ever dividing by zero
         /// </summary>
         /// <param name="fNumerator"></param>
         /// <param name="fDenominator"></param>
         /// <returns></returns>
-        private static decimal SafeDivision(decimal fNumerator, decimal fDenominator)
+        public static decimal SafeDivision(decimal fNumerator, decimal fDenominator)
         {
             decimal val = 0;
+
+            // Handle the zero numerator
+            if (fNumerator == 0) return 0;
+
+            // Handle the zero denominator
             if (fDenominator != 0)
                 val = fNumerator / fDenominator;
+            else if (fNumerator != 0)
+                val = fNumerator > 0 ? decimal.MaxValue : decimal.MinValue; 
+
             return val;
         }
 
@@ -65,8 +92,8 @@ namespace GCDConsoleLib.Utility
         /// <returns>decimal fraction</returns>
         public static decimal SafeDivision(Area vNum, Area vDenom)
         {
-            decimal vNummmm = (decimal)vNum.SquareMeters;
-            decimal vDenommm = (decimal)vDenom.SquareMeters;
+            double vNummmm = vNum.SquareMeters;
+            double vDenommm = vDenom.SquareMeters;
 
             return SafeDivision(vNummmm, vDenommm);
         }
@@ -79,8 +106,8 @@ namespace GCDConsoleLib.Utility
         /// <returns>UnitsNet Length object</returns>
         public static Length SafeDivision(Volume vNum, Area vDenom)
         {
-            decimal vNummmm = (decimal)vNum.CubicMeters;
-            decimal vDenommm = (decimal)vDenom.SquareMeters;
+            double vNummmm = vNum.CubicMeters;
+            double vDenommm = vDenom.SquareMeters;
 
             return Length.FromMeters((double)SafeDivision(vNummmm, vDenommm));
         }
@@ -93,8 +120,8 @@ namespace GCDConsoleLib.Utility
         /// <returns>UnitsNet Length object</returns>
         public static Length SafeDivision(Area vNum, Length vDenom)
         {
-            decimal vNummmm = (decimal)vNum.SquareMeters;
-            decimal vDenommm = (decimal)vDenom.Meters;
+            double vNummmm = vNum.SquareMeters;
+            double vDenommm = vDenom.Meters;
 
             return Length.FromMeters((double)SafeDivision(vNummmm, vDenommm));
         }
@@ -107,8 +134,8 @@ namespace GCDConsoleLib.Utility
         /// <returns>UnitsNet Length object</returns>
         public static Area SafeDivision(Volume vNum, Length vDenom)
         {
-            decimal vNummmm = (decimal)vNum.CubicMeters;
-            decimal vDenommm = (decimal)vDenom.Meters;
+            double vNummmm = vNum.CubicMeters;
+            double vDenommm = vDenom.Meters;
 
             return Area.FromSquareMeters((double)SafeDivision(vNummmm, vDenommm));
         }

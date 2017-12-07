@@ -49,6 +49,7 @@ namespace GCDConsoleLib.Utility.Tests
             Volume v1 = Volume.FromCubicMeters((double)dec1);
             Volume v2 = Volume.FromCubicMeters((double)dec2);
 
+            Assert.AreEqual(DynamicMath.SafeDivision(dec1, dec2), 28.0m);
             Assert.AreEqual(DynamicMath.SafeDivision(l1, l2), 28.0m);
             Assert.AreEqual(DynamicMath.SafeDivision(a1, a2), 28.0m);
             Assert.AreEqual(DynamicMath.SafeDivision(v1, v2), 28.0m);
@@ -56,6 +57,34 @@ namespace GCDConsoleLib.Utility.Tests
             Assert.AreEqual(DynamicMath.SafeDivision(v1, a2).Meters, 28.0);
             Assert.AreEqual(DynamicMath.SafeDivision(a1, l2).Meters, 28.0);
             Assert.AreEqual(DynamicMath.SafeDivision(v1, l2).SquareMeters, 28.0);
+
+            // Edge Cases (Very big numbers)
+            Assert.AreEqual(DynamicMath.SafeDivision(decimal.MaxValue, decimal.MinValue), -1.0m);
+            Assert.AreEqual(DynamicMath.SafeDivision(decimal.MaxValue, decimal.MaxValue), 1.0m);
+            Assert.AreEqual(DynamicMath.SafeDivision(decimal.MinValue, decimal.MinValue), 1.0m);
+
+            Area za0 = Area.FromSquareMeters(1.0);
+            Area za1 = Area.FromSquareMeters((double)decimal.MaxValue);
+            Area za2 = Area.FromSquareMeters((double)decimal.MinValue);
+
+            Assert.AreEqual(DynamicMath.SafeDivision(za0, za1), 0.0m);
+            Assert.AreEqual(DynamicMath.SafeDivision(za1, za1), 1.0m);
+            Assert.AreEqual(DynamicMath.SafeDivision(za1, za2), -1.0m);
+
+            // Now do very small numbers
+            Area zsm1 = Area.FromSquareMeters((double)(1/ decimal.MaxValue));
+            Area zsm2 = Area.FromSquareMeters((double)(1/ decimal.MinValue));
+
+            Assert.AreEqual(DynamicMath.SafeDivision(za0, zsm1), decimal.MaxValue); // 1/0 case
+            Assert.AreEqual(DynamicMath.SafeDivision(za0, zsm2), decimal.MaxValue); // 1/0 case
+            Assert.AreEqual(DynamicMath.SafeDivision(zsm1, zsm1), 0); // triggers the 0/0 case
+            Assert.AreEqual(DynamicMath.SafeDivision(zsm1, zsm2), 0);// triggers the 0/0 case
+
+            // Now do zeros
+            Area zero = Area.FromSquareMeters(0);
+            Assert.AreEqual(DynamicMath.SafeDivision(zero, zero), 0);
+            Assert.AreEqual(DynamicMath.SafeDivision(za0, zero), decimal.MaxValue);
+            Assert.AreEqual(DynamicMath.SafeDivision(zero, za0), 0);
 
         }
     }
