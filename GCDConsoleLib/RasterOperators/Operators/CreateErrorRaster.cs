@@ -119,8 +119,7 @@ namespace GCDConsoleLib.Internal.Operators
                 case ErrorRasterProperties.ERPType.FIS:
                     // We use Linq to slice the data and only send the appropriate 
                     // inputs to the FIS Function
-                    _fisops[propkey].FISCellOp(data.Where((arr, ind) => _fisinputs[propkey].Contains(ind)).ToList(), id);
-                    break;
+                    return _fisops[propkey].FISCellOp(data.Where((arr, ind) => _fisinputs[propkey].Contains(ind)).ToList(), id);
 
                 default:
                     throw new ArgumentException("Type not found");
