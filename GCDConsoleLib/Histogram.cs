@@ -44,9 +44,20 @@ namespace GCDConsoleLib
         {
             rRa.ComputeStatistics();
             Dictionary<string, decimal> stats = rRa.GetStatistics();
+            Tuple<int, decimal> newDims;
 
-            Tuple<int, decimal> newDims = GetCleanBins(bins, stats["max"], stats["min"]);
-            _init(newDims.Item1, newDims.Item2);
+            // No point calculating stats if there are no bins
+            if (stats["max"] == stats["min"])
+                if (stats["max"] == 0)
+                    newDims = new Tuple<int, decimal>(1, 1);
+                else
+                    newDims = new Tuple<int, decimal>(1, Math.Abs(stats["max"]));
+            else
+            {
+                newDims = GetCleanBins(bins, stats["max"], stats["min"]);
+                _init(newDims.Item1, newDims.Item2);
+            }
+
         }
 
         /// <summary>
@@ -90,7 +101,7 @@ namespace GCDConsoleLib
             decimal width;
             try
             {
-                width = Convert.ToDecimal(sLines[3][1]) - Convert.ToDecimal(sLines[3][0]);
+                width = Convert.ToDecimal(sLines[1][1]) - Convert.ToDecimal(sLines[1][0]);
             }
             catch (Exception e)
             {
@@ -101,11 +112,11 @@ namespace GCDConsoleLib
             _init(sLines.Count - 1, width);
 
             // We start on line 1 with the histogram and fill the values we need from that
-            for (int lid = 0; lid < sLines.Count-1; lid++)
+            for (int lid = 0; lid < sLines.Count - 1; lid++)
             {
-                BinCounts[lid] = Convert.ToInt32(sLines[lid+1][5]);
-                BinLefts[lid] = Convert.ToDecimal(sLines[lid+1][0]);
-                BinSums[lid] = Convert.ToDecimal(sLines[lid+1][6]);
+                BinCounts[lid] = Convert.ToInt32(sLines[lid + 1][5]);
+                BinLefts[lid] = Convert.ToDecimal(sLines[lid + 1][0]);
+                BinSums[lid] = Convert.ToDecimal(sLines[lid + 1][6]);
             }
         }
 
@@ -116,11 +127,13 @@ namespace GCDConsoleLib
         /// <param name="width"></param>
         private void _init(int bins, decimal width)
         {
+            if (bins == 0)
+                throw new ArgumentOutOfRangeException("Number of bins cannot be zero");
+
             BinWidth = width;
 
             // Must be a multiple of 2. Add a bin
             if (bins % 2 == 1) bins++;
-
             BinCounts = new List<int>();
             BinLefts = new List<decimal>();
             BinSums = new List<decimal>();
@@ -145,8 +158,6 @@ namespace GCDConsoleLib
         {
             if (origBins == 0)
                 throw new ArgumentOutOfRangeException("Number of bins cannot be zero.");
-            if (max == min)
-                throw new ArgumentOutOfRangeException("Max and min values cannot be the same");
 
             decimal oneSideDataWidth = Math.Max(Math.Abs(max), Math.Abs(min));
             decimal startwidth = (oneSideDataWidth * 2) / origBins;
@@ -162,21 +173,21 @@ namespace GCDConsoleLib
         /// <summary>
         /// Choose a clean division that is a muliple of 5 or 10
         /// </summary>
-        /// <param name="val"></param>
+        /// <param name="startWidth"></param>
         /// <returns></returns>
-        public static decimal GetNearestFiveOrderWidth(decimal val)
+        public static decimal GetNearestFiveOrderWidth(decimal startWidth)
         {
-            if (val == 0)
-                throw new ArgumentOutOfRangeException("Zero is not a valid input for GetNearestFiveOrderWidth");
+            // Special case. Constant rasters will generate this.
+            if (startWidth == 0)  return 0;
 
-                int order = (int)Math.Round(Math.Log10((double)val));
+            int order = (int)Math.Round(Math.Log10((double)startWidth));
             decimal tener = (decimal)Math.Pow(10, order);
 
             Dictionary<decimal, decimal> compares = new Dictionary<decimal, decimal>()
             {
-                {tener, Math.Abs(tener - val) },
-                {(tener/2), Math.Abs((tener/2) - val) },
-                {(tener * 5),  Math.Abs((tener * 5) - val) },
+                {tener, Math.Abs(tener - startWidth) },
+                {(tener/2), Math.Abs((tener/2) - startWidth) },
+                {(tener * 5),  Math.Abs((tener * 5) - startWidth) },
             };
             return compares.Aggregate((l, r) => l.Value < r.Value ? l : r).Key;
         }
@@ -277,7 +288,7 @@ namespace GCDConsoleLib
                 for (int bid = 0; bid < BinCounts.Count; bid++)
                 {
                     double vol = BinVolume(bid, cellArea, units).As(units.VolUnit);
-                    string binstr = string.Format("{0},{1},{2},{3},{4},{5},{6}", 
+                    string binstr = string.Format("{0},{1},{2},{3},{4},{5},{6}",
                         BinLower(bid), BinUpper(bid), BinCentre(bid),
                         cellArea, vol, BinCounts[bid], BinSums[bid]);
                     stream.WriteLine(binstr);

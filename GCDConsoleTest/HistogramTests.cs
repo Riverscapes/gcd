@@ -30,7 +30,15 @@ namespace GCDConsoleLib.Tests
             Assert.AreEqual(rTest2.LastBinId, 19);
             Assert.AreEqual(rTest2.HistogramLower, -10.0m);
             Assert.AreEqual(rTest2.HistogramUpper, 10.0m);
-            Assert.AreEqual(rTest1.Count, 20);
+            Assert.AreEqual(rTest2.Count, 20);
+
+            // Now let's try a zero width histogram
+            Histogram rTest3 = new Histogram(1, decimal.MaxValue);
+            Assert.AreEqual(rTest3.FirstBinId, 0);
+            Assert.AreEqual(rTest3.LastBinId, 1);
+            Assert.AreEqual(rTest3.HistogramLower, decimal.MinValue);
+            Assert.AreEqual(rTest3.HistogramUpper, decimal.MaxValue);
+            Assert.AreEqual(rTest3.Count, 2);
 
         }
 
@@ -54,6 +62,14 @@ namespace GCDConsoleLib.Tests
             Assert.AreEqual(rTest1.BinId(10.1), -1);
             Assert.AreEqual(rTest1.BinId(10), 19);
             Assert.AreEqual(rTest1.BinId(9.999), 19);
+
+            // Special case
+            Histogram rTest2 = new Histogram(1, decimal.MaxValue);
+
+            Assert.AreEqual(rTest2.BinId(10.1), 1);
+            Assert.AreEqual(rTest2.BinId(100000.1), 1);
+            Assert.AreEqual(rTest2.BinId(-10.1), 0);
+            Assert.AreEqual(rTest2.BinId(-100000.1), 0);
         }
 
         [TestMethod()]
@@ -63,6 +79,10 @@ namespace GCDConsoleLib.Tests
             Assert.AreEqual(rTest1.BinLower(0), -10);
             Assert.AreEqual(rTest1.BinLower(19), 9);
 
+            Histogram rTest2 = new Histogram(1, decimal.MaxValue);
+            Assert.AreEqual(rTest2.BinLower(0), decimal.MinValue);
+            Assert.AreEqual(rTest2.BinLower(1), 0);
+
         }
 
         [TestMethod()]
@@ -71,6 +91,10 @@ namespace GCDConsoleLib.Tests
             Histogram rTest1 = new Histogram(20, 1);
             Assert.AreEqual(rTest1.BinUpper(0), -9);
             Assert.AreEqual(rTest1.BinUpper(19), 10);
+
+            Histogram rTest2 = new Histogram(1, decimal.MaxValue);
+            Assert.AreEqual(rTest2.BinUpper(0), 0);
+            Assert.AreEqual(rTest2.BinUpper(1), decimal.MaxValue);
         }
 
 
@@ -96,6 +120,16 @@ namespace GCDConsoleLib.Tests
             {
                 Assert.AreEqual(rTest1.BinCount(i), 1);
             }
+
+            // The special case
+            Histogram rTest2 = new Histogram(1, decimal.MaxValue);
+            //Add some fake values into the mix
+            rTest2.AddBinVal(-1);
+            rTest2.AddBinVal(1);
+            rTest2.AddBinVal(1000);
+
+            Assert.AreEqual(rTest2.BinCount(0), 1);
+            Assert.AreEqual(rTest2.BinCount(1), 2);
 
         }
 
@@ -238,7 +272,44 @@ namespace GCDConsoleLib.Tests
                 Assert.AreEqual(rTest1.BinWidth, rTest1.BinWidth);
 
                 // Now go bin-by-bin to make sure we end up with the same numbers everywhere
-                for (int bid =0; bid< rTestRead.Count; bid++)
+                for (int bid = 0; bid < rTestRead.Count; bid++)
+                {
+                    Assert.AreEqual(rTest1.BinCounts[bid], rTestRead.BinCounts[bid]);
+                    Assert.AreEqual(rTest1.BinSums[bid], rTestRead.BinSums[bid]);
+                    Assert.AreEqual(rTest1.BinLefts[bid], rTestRead.BinLefts[bid]);
+                }
+
+            }
+        }
+
+
+        [TestMethod()]
+        public void ReadWriteFileSpecialCaseTest()
+        {
+            // Write to a file then read it to see if we get the same thing
+            Histogram rTest1 = new Histogram(1, decimal.MaxValue);
+
+            //Add some fake values into the mix
+            rTest1.AddBinVal(-5);
+            rTest1.AddBinVal(7.123);
+
+            // First try it with a real file
+            using (ITempDir tmp = TempDir.Create())
+            {
+                UnitGroup ug = new UnitGroup(VolumeUnit.CubicMeter, AreaUnit.SquareMeter, LengthUnit.Meter, LengthUnit.Meter);
+                Area cellArea = Area.From(0.2 * 0.3, ug.ArUnit);
+                FileInfo fPath = new FileInfo(Path.Combine(tmp.Name, "myHistogram.csv"));
+                rTest1.WriteFile(fPath, cellArea, ug);
+                Histogram rTestRead = new Histogram(fPath);
+
+                // Make sure the two histograms have the same edges and width
+                Assert.AreEqual(rTest1.Count, rTest1.Count);
+                Assert.AreEqual(rTest1.HistogramLower, rTest1.HistogramLower);
+                Assert.AreEqual(rTest1.HistogramUpper, rTest1.HistogramUpper);
+                Assert.AreEqual(rTest1.BinWidth, rTest1.BinWidth);
+
+                // Now go bin-by-bin to make sure we end up with the same numbers everywhere
+                for (int bid = 0; bid < rTestRead.Count; bid++)
                 {
                     Assert.AreEqual(rTest1.BinCounts[bid], rTestRead.BinCounts[bid]);
                     Assert.AreEqual(rTest1.BinSums[bid], rTestRead.BinSums[bid]);
