@@ -10,7 +10,7 @@ namespace GCDConsoleLib.Internal.Operators
     {
         double dzdx, dzdy, dzxy, riseRun, cellWidth, cellHeight, retval, theSlope;
         double[] _buff;
-        public enum SlopeType: byte { Percent, Degrees};
+        public enum SlopeType : byte { Percent, Degrees };
         private SlopeType _slopetype;
 
         /// <summary>
@@ -36,8 +36,9 @@ namespace GCDConsoleLib.Internal.Operators
         {
             dzdx = ((fElev[2] - fElev[0]) + ((2 * fElev[5]) - (2 * fElev[3])) + (fElev[8] - fElev[6])) / (8 * cellWidth);
             dzdy = ((fElev[0] - fElev[6]) + ((2 * fElev[1]) - (2 * fElev[7])) + (fElev[2] - fElev[8])) / (8 * cellHeight);
+
             dzxy = Math.Pow(dzdx, 2.0) + Math.Pow(dzdy, 2.0);
-            riseRun = Math.Pow(dzxy, 0.5);
+            riseRun = Math.Sqrt(dzxy);
 
             return riseRun;
         }
@@ -51,10 +52,13 @@ namespace GCDConsoleLib.Internal.Operators
         {
             _buff = wd[0];
 
+            if (wd[0][BufferCenterID].Equals(OpNodataVal))
+                return OpNodataVal;
+
             // If anything is nodataval just return that and skip everything else
             for (int k = 0; k < BufferCellNum; k++)
                 if (wd[0][k].Equals(OpNodataVal))
-                    return OpNodataVal;
+                    wd[0][k] = wd[0][BufferCenterID];
 
             theSlope = CalculateSlope(_buff);
 
