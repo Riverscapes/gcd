@@ -41,10 +41,9 @@ namespace GCDCore.UserInterface.SurveyLibrary
             tTip.SetToolTip(cboFIS, "Species the FIS rule file from the GCD FIS Library to use for the selected survey method.");
             tTip.SetToolTip(grdFISInputs, "Specify an associated surface for each FIS input for the selected FIS rule file and for the selected survey method.");
 
-            grdFISInputs.AutoGenerateColumns = false;
-
             grdErrorProperties.AutoGenerateColumns = false;
             grdErrorProperties.AllowUserToResizeRows = false;
+            grdFISInputs.AutoGenerateColumns = false;
             grdFISInputs.AllowUserToResizeRows = false;
 
             // Load the survey methods on the left and then populate the right side of the window.
@@ -553,7 +552,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
             foreach (ErrorSurfaceProperty prop in ErrorCalcProps)
             {
-                if (prop.UniformValue.HasValue)                    
+                if (prop.UniformValue.HasValue)
                 {
                     if (prop.UniformValue.Value <= 0)
                     {
@@ -691,7 +690,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
         private void cboAssociated_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ((ErrorSurfaceProperty)grdErrorProperties.SelectedRows[0].DataBoundItem).AssociatedSurface = (AssocSurface) cboAssociated.SelectedItem;
+            ((ErrorSurfaceProperty)grdErrorProperties.SelectedRows[0].DataBoundItem).AssociatedSurface = (AssocSurface)cboAssociated.SelectedItem;
         }
     }
 }
