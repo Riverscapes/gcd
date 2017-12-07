@@ -143,6 +143,11 @@ namespace GCDConsoleLib
         /// <returns></returns>
         public static Tuple<int, decimal> GetCleanBins(int origBins, decimal max, decimal min)
         {
+            if (origBins == 0)
+                throw new ArgumentOutOfRangeException("Number of bins cannot be zero.");
+            if (max == min)
+                throw new ArgumentOutOfRangeException("Max and min values cannot be the same");
+
             decimal oneSideDataWidth = Math.Max(Math.Abs(max), Math.Abs(min));
             decimal startwidth = (oneSideDataWidth * 2) / origBins;
 
@@ -161,14 +166,17 @@ namespace GCDConsoleLib
         /// <returns></returns>
         public static decimal GetNearestFiveOrderWidth(decimal val)
         {
-            int order = (int)Math.Round(Math.Log10((double)val));
+            if (val == 0)
+                throw new ArgumentOutOfRangeException("Zero is not a valid input for GetNearestFiveOrderWidth");
+
+                int order = (int)Math.Round(Math.Log10((double)val));
             decimal tener = (decimal)Math.Pow(10, order);
 
             Dictionary<decimal, decimal> compares = new Dictionary<decimal, decimal>()
             {
-                {tener, (decimal)Math.Abs(tener - val) },
-                {(tener/2), (decimal) Math.Abs((tener/2) - val) },
-                {(tener * 5),  (decimal)Math.Abs((tener * 5) - val) },
+                {tener, Math.Abs(tener - val) },
+                {(tener/2), Math.Abs((tener/2) - val) },
+                {(tener * 5),  Math.Abs((tener * 5) - val) },
             };
             return compares.Aggregate((l, r) => l.Value < r.Value ? l : r).Key;
         }
