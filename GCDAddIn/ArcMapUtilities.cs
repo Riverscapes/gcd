@@ -23,6 +23,12 @@ namespace GCDAddIn
             Esri_AnyLayer
         }
 
+        public static IRasterDataset GetRasterDataset(GCDConsoleLib.Raster raster)
+        {
+            IWorkspace pWorkspace = GetWorkspace(raster.GISFileInfo);
+            return ((IRasterWorkspace)pWorkspace).OpenRasterDataset(raster.GISFileInfo.Name);
+        }
+
         public static ILayer AddToMap(FileSystemInfo fiFullPath, string sLayerName = "", string sGroupLayer = "", FileInfo fiSymbologyLayerFile = null, bool bAddToMapIfPresent = false)
         {
             if (!fiFullPath.Exists)

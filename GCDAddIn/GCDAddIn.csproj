@@ -77,6 +77,9 @@
     <Reference Include="ESRI.ArcGIS.Desktop.AddIns">
       <Private>False</Private>
     </Reference>
+    <Reference Include="ESRI.ArcGIS.Display, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="ESRI.ArcGIS.Editor, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>False</EmbedInteropTypes>
@@ -129,6 +132,7 @@
     <Compile Include="Project\btnOpenProject.cs" />
     <Compile Include="Project\btnTestProjectExplorer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RasterSymbolization.cs" />
     <Compile Include="ucProjectManager.cs">
       <SubType>UserControl</SubType>
     </Compile>

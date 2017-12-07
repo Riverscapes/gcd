@@ -35,7 +35,7 @@ namespace GCDCore.Project
         /// </summary>
         /// <remarks>This isn't the ToC label, but instead it's the label
         /// that appears above the legend to describe the symbology</remarks>
-        private string GetLayerHeader
+        public string LayerHeader
         {
             get
             {
