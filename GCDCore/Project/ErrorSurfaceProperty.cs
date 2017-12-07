@@ -42,8 +42,11 @@ namespace GCDCore.Project
             {
                 _FISRuleFile = value;
                 FISInputs = new naru.ui.SortableBindingList<FISInput>();
-                _UniformValue = new decimal?();
-                _AssociatedSurface = null;
+                if (_FISRuleFile is FileInfo)
+                {
+                    _UniformValue = new decimal?();
+                    _AssociatedSurface = null;
+                }
             }
         }
 

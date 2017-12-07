@@ -663,10 +663,12 @@ namespace GCDCore.UserInterface.SurveyLibrary
                 return;
 
             rdoUniform.Checked = SelectedErrProp.UniformValue.HasValue;
+            valUniform.ValueChanged -= valUniform_ValueChanged;
             if (SelectedErrProp.UniformValue.HasValue)
                 valUniform.Value = (decimal)SelectedErrProp.UniformValue.Value;
             else
                 valUniform.Value = 0;
+            valUniform.ValueChanged += valUniform_ValueChanged;
 
             cboAssociated.SelectedItem = SelectedErrProp.AssociatedSurface;
 
