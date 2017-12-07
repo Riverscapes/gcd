@@ -73,8 +73,10 @@ namespace GCDConsoleLib.Internal.Operators
                 //    //aspectRad = aspectRad;
                 //}
             }
-
-            return (float)Math.Round(254 * ((Math.Cos(zenRad) * Math.Cos(slopeRad)) + (Math.Sin(zenRad) * Math.Sin(slopeRad) * Math.Cos(azimuthRad - aspectRad)))) + 1;
+            float val = (float)Math.Round(254 * ((Math.Cos(zenRad) * Math.Cos(slopeRad)) + (Math.Sin(zenRad) * Math.Sin(slopeRad) * Math.Cos(azimuthRad - aspectRad)))) + 1;
+            // WEird edge effects at the bottom of some rasters. We want to enforce 0-255
+            if (val < 0) val = 0;
+            return val;
         }
     }
 }
