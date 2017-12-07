@@ -143,7 +143,10 @@ namespace GCDCore.Project
 
         public FileInfo GetAbsolutePath(string sRelativePath)
         {
-            return new FileInfo(Path.Combine(ProjectFile.DirectoryName, sRelativePath));
+            if (sRelativePath.Contains(":") || sRelativePath.StartsWith("\\\\"))
+                return new FileInfo(sRelativePath);
+            else
+                return new FileInfo(Path.Combine(ProjectFile.DirectoryName, sRelativePath));
         }
 
         public DirectoryInfo GetAbsoluteDir(string sRelativeDir)

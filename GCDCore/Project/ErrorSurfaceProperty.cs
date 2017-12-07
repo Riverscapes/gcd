@@ -143,8 +143,8 @@ namespace GCDCore.Project
             }
             else if (nodFIS is XmlNode)
             {
-                errProp.FISRuleFile = ProjectManager.Project.GetAbsolutePath(nodFIS.SelectSingleNode("FISRuleFile").InnerText);
-                foreach (XmlNode nodInput in nodFIS.SelectNodes("Inputs/Input"))
+                errProp.FISRuleFile = ProjectManager.Project.GetAbsolutePath(nodFIS.InnerText);
+                foreach (XmlNode nodInput in nodProperty.SelectNodes("FISInputs/Input"))
                 {
                     AssocSurface assoc = dem.AssocSurfaces.First<AssocSurface>(x => string.Compare(nodInput.SelectSingleNode("AssociatedSurface").InnerText, x.Name, true) == 0);
                     errProp.FISInputs.Add(new FISInput(nodInput.SelectSingleNode("Name").InnerText, assoc));
