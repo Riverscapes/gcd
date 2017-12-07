@@ -58,7 +58,7 @@ namespace GCDConsoleLib.Internal.Operators
         protected override float CellOp(List<float[]> data, int id)
         {
             // Speed things up by ignoring nodatas
-            if (data[0][id] == _rasternodatavals[0])
+            if (data[0][id] == _rasternodatavals[0] || data[1][id] == _rasternodatavals[1])
                 return 0;
 
             if (isBudgSeg)

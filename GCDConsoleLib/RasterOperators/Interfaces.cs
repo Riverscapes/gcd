@@ -266,10 +266,10 @@ namespace GCDConsoleLib
         /// <param name="thrDoD">Thresholded DoD Raster Path</param>
         /// <param name="propErrRaster">Propagated Error Raster Path</param>
         /// <returns></returns>
-        public static DoDStats GetStatsPropagated(Raster rawDoD, Raster thrDoD, Raster propErrRaster, UnitGroup units)
+        public static DoDStats GetStatsPropagated(Raster rawDoD, Raster propErrRaster, UnitGroup units)
         {
             Area cellArea = rawDoD.Extent.CellArea(units);
-            GetDoDPropStats theStatsOp = new GetDoDPropStats(rawDoD, thrDoD, new DoDStats(cellArea, units));
+            GetDoDPropStats theStatsOp = new GetDoDPropStats(rawDoD, propErrRaster, new DoDStats(cellArea, units));
             theStatsOp.Run();
             return theStatsOp.Stats;
         }

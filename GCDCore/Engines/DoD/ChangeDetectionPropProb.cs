@@ -27,7 +27,7 @@ namespace GCDCore.Engines
 
         protected override DoDStats CalculateChangeStats(Raster rawDoD, Raster thrDoD, UnitGroup units)
         {
-            return RasterOperators.GetStatsPropagated(rawDoD, thrDoD, PropagatedErrRaster, units);
+            return RasterOperators.GetStatsPropagated(rawDoD, PropagatedErrRaster, units);
         }
 
         protected override DoDBase GetDoDResult(DoDStats changeStats, Raster rawDoD, Raster thrDoD, HistogramPair histograms, FileInfo summaryXML)
