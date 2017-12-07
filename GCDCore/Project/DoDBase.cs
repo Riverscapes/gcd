@@ -28,8 +28,8 @@ namespace GCDCore.Project
             Folder = folder;
             NewDEM = newDEM;
             OldDEM = oldDEM;
-            RawDoD = new Raster(rawDoD);
-            ThrDoD = new Raster(thrDoD);
+            RawDoD = rawDoD;
+            ThrDoD = thrDoD;
             Histograms = histograms;
             SummaryXML = summaryXML;
             Statistics = stats;
