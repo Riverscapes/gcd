@@ -591,7 +591,6 @@ namespace GCDCore.UserInterface.SurveyLibrary
             // 
             this.ucRaster.Location = new System.Drawing.Point(101, 19);
             this.ucRaster.Name = "ucRaster";
-            this.ucRaster.Noun = null;
             this.ucRaster.Size = new System.Drawing.Size(491, 25);
             this.ucRaster.TabIndex = 1;
             // 

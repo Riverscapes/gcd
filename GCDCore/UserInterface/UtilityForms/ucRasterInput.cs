@@ -6,19 +6,11 @@ namespace GCDCore.UserInterface.UtilityForms
 {
     public class ucRasterInput : naru.ui.ucInput
     {
-        public string Noun { get; set; }
-
         public event BrowseRasterEventHandler BrowseRaster;
         public delegate void BrowseRasterEventHandler(System.Windows.Forms.TextBox txtPath, naru.ui.PathEventArgs e);
 
         public event SelectRasterFromArcMapEventHandler SelectRasterFromArcMap;
         public delegate void SelectRasterFromArcMapEventHandler(System.Windows.Forms.TextBox txtPath, naru.ui.PathEventArgs e);
-
-        public new void Initialize(string sNoun, System.IO.FileInfo fiPath, bool bRequiredInput)
-        {
-            base.Initialize(fiPath, bRequiredInput);
-            Noun = sNoun;
-        }
 
         //Public Event RasterSelected(e As naru)
 

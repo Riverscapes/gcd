@@ -123,6 +123,7 @@
     <Compile Include="frmLayerSelector.Designer.cs">
       <DependentUpon>frmLayerSelector.cs</DependentUpon>
     </Compile>
+    <Compile Include="GCDArcMapManager.cs" />
     <Compile Include="GCDExtension.cs" />
     <Compile Include="Project\btnNewProject.cs" />
     <Compile Include="Project\btnOpenProject.cs" />

@@ -59,7 +59,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
                 ExtImporter = new ExtentImporter(ePurpose);
             }
 
-            ucRaster.Noun = sNoun;
+            ucRaster.Initialize(sNoun, null, true);
 
             // Fill the interpolation method in constructor so that selection index can be readonly
             cboMethod.Items.Add(new naru.db.NamedObject((long)ResamplingMethods.Bilinear, "Bilinear Interpolation"));

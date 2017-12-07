@@ -196,7 +196,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
             // Disable event handling to avoid circular function calls
             ucDEMMask.PathChanged -= OnMaskChanged;
-            ucDEMMask.Initialize(maskPath, true);
+            ucDEMMask.Initialize("DEM Survey Mask", maskPath, true);
             ucDEMMask.PathChanged += OnMaskChanged;
 
             List<GCDConsoleLib.VectorField> stringFields = ucDEMMask.SelectedItem.Fields.Values.Where(x => x.Type.Equals(GCDConsoleLib.GDalFieldType.StringField)).ToList<GCDConsoleLib.VectorField>();
@@ -436,7 +436,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
                 GCDConsoleLib.Raster errRaster = frm.ProcessRaster();
 
                 // Create the associated surface
-                AssocSurface assoc = new AssocSurface(frm.txtName.Text, errRaster.GISFileInfo, "Error Surface", dem);
+                AssocSurface assoc = new AssocSurface(frm.txtName.Text, errRaster.GISFileInfo, dem, AssocSurface.AssociatedSurfaceTypes.ElevationUncertainty);
                 dem.AssocSurfaces.Add(assoc);
 
                 // Create the error surface that points to the associated surface
