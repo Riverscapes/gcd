@@ -21,114 +21,111 @@ namespace GCDAddIn
         private const string ErrorSurfacesGroupLayer = "Error Surfaces";
         private const string AnalysesGroupLayer = "Analyses";
 
-        //public GCDArcMapManager(double fDefaultDEMTransparency = 40, IMapDocument pMapDocument = null)
-        //{
-        //    DefaultTransparency = fDefaultDEMTransparency;
+        public GCDArcMapManager(double fDefaultDEMTransparency = 40, IMapDocument pMapDocument = null)
+        {
+            DefaultTransparency = fDefaultDEMTransparency;
 
-        //    if (pMapDocument == null)
-        //        MapDocument = (IMapDocument)ArcMap.Document;
-        //    else
-        //        MapDocument = pMapDocument;
-        //}
+            if (pMapDocument == null)
+                MapDocument = (IMapDocument)ArcMap.Document;
+            else
+                MapDocument = pMapDocument;
+        }
 
-        //private IGroupLayer AddProjectGroupLayer()
-        //{
-        //    return ArcMapUtilities.GetGroupLayer(ProjectManager.Project.Name);
-        //}
+        private IGroupLayer AddProjectGroupLayer()
+        {
+            return ArcMapUtilities.GetGroupLayer(ProjectManager.Project.Name);
+        }
 
-        //public IGroupLayer AddProject()
-        //{
-        //    IGroupLayer pProjectGrpLyr = AddProjectGroupLayer();
-        //    foreach (DEMSurvey dem in ProjectManager.Project.DEMSurveys.Values)
-        //    {
-        //        AddSurvey(dem);
-        //    }
+        public IGroupLayer AddProject()
+        {
+            IGroupLayer pProjectGrpLyr = AddProjectGroupLayer();
+            foreach (DEMSurvey dem in ProjectManager.Project.DEMSurveys.Values)
+            {
+                AddSurvey(dem);
+            }
 
-        //    foreach (DoDBase dod in ProjectManager.Project.DoDs.Values)
-        //    {
-        //        AddDoD(dod);
-        //    }
+            foreach (DoDBase dod in ProjectManager.Project.DoDs.Values)
+            {
+                AddDoD(dod);
+            }
 
-        //    return pProjectGrpLyr;
-        //}
+            return pProjectGrpLyr;
+        }
 
-        //private IGroupLayer AddInputsGroupLayer()
-        //{
-        //    IGroupLayer pProjectGrpLyr = AddProjectGroupLayer();
-        //    return ArcMapUtilities.GetGroupLayer(InputsGroupLayer, pProjectGrpLyr);
-        //}
+        private IGroupLayer AddInputsGroupLayer()
+        {
+            IGroupLayer pProjectGrpLyr = AddProjectGroupLayer();
+            return ArcMapUtilities.GetGroupLayer(InputsGroupLayer, pProjectGrpLyr);
+        }
 
-        //private IGroupLayer AddSurveyGroupLayer(DEMSurvey dem)
-        //{
-        //    IGroupLayer pInputsGrpLyr = AddInputsGroupLayer();
-        //    return ArcMapUtilities.GetGroupLayer(dem.Name, pInputsGrpLyr);
-        //}
+        private IGroupLayer AddSurveyGroupLayer(DEMSurvey dem)
+        {
+            IGroupLayer pInputsGrpLyr = AddInputsGroupLayer();
+            return ArcMapUtilities.GetGroupLayer(dem.Name, pInputsGrpLyr);
+        }
 
-        //public IGroupLayer AddSurvey(DEMSurvey dem)
-        //{
-        //    IGroupLayer pSurveyLyr = AddSurveyGroupLayer(dem);
-        //    AddDEM(dem);
+        public IGroupLayer AddSurvey(DEMSurvey dem)
+        {
+            IGroupLayer pSurveyLyr = AddSurveyGroupLayer(dem);
+            AddDEM(dem);
 
-        //    foreach (AssocSurface assoc in dem.AssocSurfaces)
-        //    {
-        //        AddAssociatedSurface(assoc);
-        //    }
+            foreach (AssocSurface assoc in dem.AssocSurfaces)
+            {
+                AddAssociatedSurface(assoc);
+            }
 
-        //    foreach (ErrorSurface err in dem.ErrorSurfaces)
-        //    {
-        //        AddErrSurface(err);
-        //    }
+            foreach (ErrorSurface err in dem.ErrorSurfaces)
+            {
+                AddErrSurface(err);
+            }
 
-        //    return pSurveyLyr;
-        //}
+            return pSurveyLyr;
+        }
 
-        ///// <summary>
-        ///// 
-        ///// </summary>
-        ///// <param name="demRow"></param>
-        ///// <returns></returns>
-        ///// <remarks>Note: Add the hillshade first so that it appear UNDER the DEM in the TOC</remarks>
-        //public IRasterLayer AddDEM(DEMSurvey dem)
-        //{
-        //    double fDEMTransparency = -1;
-        //    IGroupLayer pSurveyLyr = AddSurveyGroupLayer(dem);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="demRow"></param>
+        /// <returns></returns>
+        /// <remarks>Note: Add the hillshade first so that it appear UNDER the DEM in the TOC</remarks>
+        public IRasterLayer AddDEM(DEMSurvey dem)
+        {
+            double fDEMTransparency = -1;
+            IGroupLayer pSurveyLyr = AddSurveyGroupLayer(dem);
 
-        //    IRasterLayer pHSLayer = null;
-        //    FileInfo hillshade = ProjectManager.OutputManager.DEMSurveyHillShadeRasterPath(dem.Name);
-        //    if (hillshade.Exists)
-        //    {
-        //        pHSLayer = ArcMapUtilities.AddToMapRaster(hillshade, dem.Name + " HillShade", pSurveyLyr);
-        //        fDEMTransparency = DefaultTransparency;
-        //    }
+            IRasterLayer pHSLayer = null;
+            FileInfo hillshade = ProjectManager.OutputManager.DEMSurveyHillShadeRasterPath(dem.Name);
+            if (hillshade.Exists)
+            {
+                pHSLayer = ArcMapUtilities.AddToMapRaster(hillshade, dem.Name + " HillShade", pSurveyLyr);
+                fDEMTransparency = DefaultTransparency;
+            }
 
-        //    IRasterLayer pDEMLyr = ArcMapUtilities.AddToMapRaster(dem.Raster.GISFileInfo, dem.Name, pSurveyLyr, fDEMTransparency);
+            IRasterLayer pDEMLyr = ArcMapUtilities.AddToMapRaster(dem.Raster.GISFileInfo, dem.Name, pSurveyLyr, fDEMTransparency);
 
-        //    // Collapse the Hillshade legend in the TOC
-        //    if (pHSLayer is IRasterLayer)
-        //    {
-        //        ((ILegendGroup)((ILegendInfo)pHSLayer).LegendGroup[0]).Visible = false;
-        //    }
+            // Collapse the Hillshade legend in the TOC
+            if (pHSLayer is IRasterLayer)
+            {
+                ((ILegendGroup)((ILegendInfo)pHSLayer).LegendGroup[0]).Visible = false;
+            }
 
-        //    return pDEMLyr;
-        //}
+            return pDEMLyr;
+        }
 
-        //private IGroupLayer AddAssociatedSurfaceGroupLayer(DEMSurvey dem)
-        //{
-        //    IGroupLayer pSurveyGrpLyr = AddSurveyGroupLayer(dem);
-        //    return ArcMapUtilities.GetGroupLayer(AssociatedSurfacesGroupLayer, pSurveyGrpLyr);
-        //}
+        private IGroupLayer AddAssociatedSurfaceGroupLayer(DEMSurvey dem)
+        {
+            IGroupLayer pSurveyGrpLyr = AddSurveyGroupLayer(dem);
+            return ArcMapUtilities.GetGroupLayer(AssociatedSurfacesGroupLayer, pSurveyGrpLyr);
+        }
 
-        //public IRasterLayer AddAssociatedSurface(AssocSurface assocRow)
-        //{
+        public IRasterLayer AddAssociatedSurface(AssocSurface assocRow)
+        {
         //    IGroupLayer pAssocGrpLyr = AddAssociatedSurfaceGroupLayer(assocRow.DEM);
-        //    ArcMap.RasterLayerTypes eType = ProjectDS.GetAssociatedSurfaceType(assocRow);
-        //    string sRasterPath = GCD.GCDProject.ProjectManager.GetAbsolutePath(assocRow.Source);
-        //    GISDataStructures.Raster gAssociatedRaster = new GISDataStructures.Raster(sRasterPath);
-        //    string sHeader = GetLayerHeader(assocRow);
+
         //    double dTransparency = -1;
-        //    if (My.Settings.TransparencyAssociatedLayers)
+        //    if (GCDCore.Properties.Settings.Default.TransparencyAssociatedLayers)
         //    {
-        //        dTransparency = My.Settings.AutoTransparencyValue;
+        //        dTransparency = GCDCore.Properties.Settings.Default.AutoTransparencyValue;
         //    }
 
         //    if (eType == ArcMap.RasterLayerTypes.InterpolationError)
