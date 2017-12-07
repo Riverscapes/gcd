@@ -45,15 +45,14 @@ namespace GCDCore.Project
             int nIndex = FullPath.ToLower().IndexOf(ProjectFile.DirectoryName.ToLower());
             if (nIndex < 0)
             {
-                Exception ex = new Exception("Unable to determine relative path.");
-                ex.Data["Project Directory"] = ProjectFile.DirectoryName;
-                ex.Data["File Path"] = FullPath;
-                throw ex;
+                return FullPath;
             }
-
-            string relativePath = FullPath.Substring(ProjectFile.DirectoryName.Length, FullPath.Length - ProjectFile.DirectoryName.Length);
-            relativePath = relativePath.TrimStart(Path.DirectorySeparatorChar);
-            return relativePath;
+            else
+            {
+                string relativePath = FullPath.Substring(ProjectFile.DirectoryName.Length, FullPath.Length - ProjectFile.DirectoryName.Length);
+                relativePath = relativePath.TrimStart(Path.DirectorySeparatorChar);
+                return relativePath;
+            }
         }
 
         public IEnumerable<DEMSurvey> DEMsSortByName(bool bAscending)

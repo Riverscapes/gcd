@@ -32,7 +32,7 @@ namespace GCDCore.Engines
 
         protected override DoDBase GetDoDResult(DoDStats changeStats, Raster rawDoD, Raster thrDoD, HistogramPair histograms, FileInfo summaryXML)
         {
-            return new DoDPropagated(Name, AnalysisFolder, NewDEM, OldDEM, rawDoD, thrDoD, histograms, summaryXML, NewError, OldError, PropagatedErrRaster.GISFileInfo, changeStats);
+            return new DoDPropagated(Name, AnalysisFolder, NewDEM, OldDEM, rawDoD, thrDoD, histograms, summaryXML, NewError, OldError, PropagatedErrRaster, changeStats);
         }
 
         /// <summary>

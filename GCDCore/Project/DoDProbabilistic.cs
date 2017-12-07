@@ -29,7 +29,7 @@ namespace GCDCore.Project
 
         public DoDProbabilistic(string name, DirectoryInfo folder, DEMSurvey newDEM, DEMSurvey oldDEM, HistogramPair histograms, FileInfo summaryXML,
             Raster rawDoD, Raster thrDoD,
-            ErrorSurface newError, ErrorSurface oldError, FileInfo propErr, FileInfo priorProb,
+            ErrorSurface newError, ErrorSurface oldError, Raster propErr, FileInfo priorProb,
             FileInfo postProb, FileInfo cond, FileInfo spatCoEr, FileInfo spatCoDep, CoherenceProperties spatCoProps,
             decimal confidenceLevel, DoDStats stats)
             : base(name, folder, newDEM, oldDEM, rawDoD, thrDoD, histograms, summaryXML, newError, oldError, propErr, stats)

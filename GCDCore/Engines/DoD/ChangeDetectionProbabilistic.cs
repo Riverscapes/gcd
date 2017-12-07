@@ -84,7 +84,7 @@ namespace GCDCore.Engines
             }
 
             return new DoDProbabilistic(Name, AnalysisFolder, NewDEM, OldDEM, histograms, summaryXML, rawDoD, thrDoD, NewError, OldError,
-                PropagatedErrRaster.GISFileInfo, m_PriorProbRaster, m_PosteriorRaster, m_ConditionalRaster, m_SpatialCoErosionRaster, m_SpatialCoDepositionRaster,
+                PropagatedErrRaster, m_PriorProbRaster, m_PosteriorRaster, m_ConditionalRaster, m_SpatialCoErosionRaster, m_SpatialCoDepositionRaster,
                 SpatialCoherence, Threshold, changeStats);
         }
     }
