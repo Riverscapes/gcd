@@ -21,7 +21,7 @@ namespace GCDCore.Engines
         protected override Raster ThresholdRawDoD(Raster rawDoD, FileInfo thrDoDPath)
         {
             PropagatedErrRaster = GeneratePropagatedErrorRaster();
-            Raster thrDoD = RasterOperators.SetNull(rawDoD, RasterOperators.ThresholdOps.LessThan, PropagatedErrRaster, thrDoDPath);
+            Raster thrDoD = RasterOperators.SetNull(rawDoD, RasterOperators.ThresholdOps.LessThanOrEqual, PropagatedErrRaster, thrDoDPath);
             return thrDoD;
         }
 
