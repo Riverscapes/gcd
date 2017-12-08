@@ -258,8 +258,6 @@
     </Compile>
     <Compile Include="Visualization\DoDHistogramViewerClass.cs" />
     <Compile Include="Visualization\ElevationChangeBarViewer.cs" />
-    <Compile Include="Visualization\ElevationChangeDataPoint.cs" />
-    <Compile Include="Visualization\HistogramDisplayData.cs" />
     <Compile Include="WorkspaceManager.cs" />
   </ItemGroup>
   <ItemGroup>

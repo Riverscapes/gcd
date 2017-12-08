@@ -16,14 +16,35 @@ namespace GCDCore.Visualization
         private const string RAW = "Raw";
 
         private Chart m_Chart;
+
         // Raw histogram data
-        private Dictionary<double, ElevationChangeDataPoint> m_Raw;
-        private Dictionary<double, ElevationChangeDataPoint> m_Thresholded;
+        Histogram _rawHist;
+        Histogram _thrHist;
+
+        private Dictionary<decimal, HistogramDisplayData> histoData;
 
         private readonly GCDConsoleLib.GCD.UnitGroup DataUnits;
         private GCDConsoleLib.GCD.UnitGroup DisplayUnits { get; set; }
 
-        private int m_nHistogramBins;
+
+        /// <summary>
+        /// NOTE: The decimals in here must already be in their display unit
+        /// </summary>
+        public class HistogramDisplayData
+        {
+            public decimal Threshold { get; set; }
+            public decimal Raw { get; private set; }
+            public decimal Elevation { get; private set; }
+
+            public decimal Deposition { get { return Elevation > 0 ? Threshold : 0; } }
+            public decimal Erosion { get { return Elevation > 0 ? Threshold : 0; } }
+
+            public HistogramDisplayData(decimal elev)
+            {
+                Elevation = elev;
+                Threshold = 0;
+            }
+        }
 
         /// <summary>
         /// Call this constructor from non-UI code that simply wants to generate histogram plot image files
@@ -47,19 +68,12 @@ namespace GCDCore.Visualization
             m_Chart.Legends.Clear();
 
             Dictionary<string, Color> seriesDefs = new Dictionary<string, Color> {
-                {
-                    EROSION, Properties.Settings.Default.Erosion
-                },
-                {
-                    DEPOSITION, Properties.Settings.Default.Deposition
-                },
-                {
-                    RAW, Color.LightGray
-                }
+                {  EROSION, Properties.Settings.Default.Erosion },
+                {  DEPOSITION, Properties.Settings.Default.Deposition  },
+                { RAW, Color.LightGray }
             };
-          
 
-            foreach (KeyValuePair<string, System.Drawing.Color> aDef in seriesDefs)
+            foreach (KeyValuePair<string, Color> aDef in seriesDefs)
             {
                 Series series = m_Chart.Series.Add(aDef.Key);
                 series.ChartType = SeriesChartType.StackedColumn;
@@ -68,107 +82,80 @@ namespace GCDCore.Visualization
             }
 
             var _with1 = m_Chart.ChartAreas[0].AxisX;
-            _with1.MajorGrid.LineColor = System.Drawing.Color.LightSlateGray;
+            _with1.MajorGrid.LineColor = Color.LightSlateGray;
             _with1.MinorTickMark.Enabled = true;
 
             var _with2 = m_Chart.ChartAreas[0].AxisY;
             _with2.MajorGrid.LineColor = Color.LightSlateGray;
             _with2.MinorTickMark.Enabled = true;
 
-            m_Raw = new Dictionary<double, ElevationChangeDataPoint>();
-            m_Thresholded = new Dictionary<double, ElevationChangeDataPoint>();
+            _rawHist = rawHisto;
+            _thrHist = thrHisto;
 
-            UpdateDisplay(true, DataUnits);
+            UpdateDisplay(true);
         }
 
-        public void SetChartType(bool bArea)
+        public void SetChartType(bool bSetArea)
         {
-            UpdateDisplay(bArea, DisplayUnits);
+            UpdateDisplay(bSetArea);
         }
 
-        public void UpdateDisplay(bool bArea, GCDConsoleLib.GCD.UnitGroup displayUnits)
+        public void UpdateDisplay(bool bArea, GCDConsoleLib.GCD.UnitGroup displayUnits = null)
         {
             // Store the display units so that the user can switch between area and volume easily
-            DisplayUnits = displayUnits;
+            if (displayUnits != null)
+                DisplayUnits = displayUnits;
 
-            List<HistogramDisplayData> histoData = GetDisplayValues(bArea);
+            // Go recalc our values
+            GetDisplayValues(bArea);
 
-            m_Chart.Series.FindByName(EROSION).Points.DataBindXY(histoData, "elevation", histoData, "erosion");
-            m_Chart.Series.FindByName(DEPOSITION).Points.DataBindXY(histoData, "elevation", histoData, "deposition");
-            m_Chart.Series.FindByName(RAW).Points.DataBindXY(histoData, "elevation", histoData, "raw");
+            m_Chart.Series.FindByName(EROSION).Points.DataBindXY(histoData.Values, "Elevation", histoData.Values, "Erosion");
+            m_Chart.Series.FindByName(DEPOSITION).Points.DataBindXY(histoData.Values, "Elevation", histoData.Values, "Deposition");
+            m_Chart.Series.FindByName(RAW).Points.DataBindXY(histoData.Values, "Elevation", histoData.Values, "Raw");
 
             var _with3 = m_Chart.ChartAreas[0];
             _with3.AxisX.Title = string.Format("Elevation Change ({0})", DisplayUnits.VertUnit);
 
             if (bArea)
-            {
                 _with3.AxisY.Title = string.Format("Area ({0}²)", UnitsNet.Area.GetAbbreviation(DisplayUnits.ArUnit));
-            }
             else
-            {
                 _with3.AxisY.Title = string.Format("Volume ({0}³)", UnitsNet.Volume.GetAbbreviation(DisplayUnits.VolUnit));
-            }
         }
 
-        private List<HistogramDisplayData> GetDisplayValues(bool bArea)
+        private void GetDisplayValues(bool bArea)
         {
             // Note that the key to this dictionary is the histogram elevation values in their ORIGINAL units
             // while the elevation properties of the HistogramDisplayDataPoint should be in the display units
-            Dictionary<double, HistogramDisplayData> lDisplayData = new Dictionary<double, HistogramDisplayData>();
+            histoData = new Dictionary<decimal, HistogramDisplayData>();
 
-            // There must always be a thresholded histogram that is displayed red/blue
-            foreach (ElevationChangeDataPoint dataPoint in m_Thresholded.Values)
+            for (int bid = 0; bid < _thrHist.Count; bid++)
             {
-                lDisplayData[dataPoint.Elevation] = new HistogramDisplayData(dataPoint.GetElevation(DataUnits.VertUnit, DisplayUnits.VertUnit));
+                // Make a dictionary entry if we don't already have one
+                decimal binleft = (decimal)_thrHist.BinLower(bid, DataUnits).As(DisplayUnits.VertUnit);
+                if (!histoData.ContainsKey(binleft)) histoData[binleft] = new HistogramDisplayData(binleft);
 
                 if (bArea)
-                {
-                    lDisplayData[dataPoint.Elevation].Erosion = dataPoint.AreaErosion(DataUnits.ArUnit, DisplayUnits.ArUnit);
-                    lDisplayData[dataPoint.Elevation].Deposition = dataPoint.AreaDeposition(DataUnits.ArUnit, DisplayUnits.ArUnit);
-                }
+                    histoData[binleft].Threshold = (decimal)(_thrHist.BinArea(bid, Project.ProjectManager.Project.CellArea).As(DisplayUnits.ArUnit));
                 else
-                {
-                    lDisplayData[dataPoint.Elevation].Erosion = dataPoint.VolumeErosion(DataUnits.VolUnit, DisplayUnits.VolUnit);
-                    lDisplayData[dataPoint.Elevation].Deposition = dataPoint.VolumeDeposition(DataUnits.VolUnit, DisplayUnits.VolUnit);
-                }
+                    histoData[binleft].Threshold = (decimal)_thrHist.BinVolume(bid, Project.ProjectManager.Project.CellArea, DataUnits).As(DisplayUnits.VolUnit);
             }
 
-            // If there's a raw histogram then load the values. These will be displayed as a grey column
-            if ((m_Raw != null))
+            if ((_rawHist != null))
             {
-                foreach (KeyValuePair<double, ElevationChangeDataPoint> item in m_Raw)
+                for (int bid = 0; bid < _rawHist.Count; bid++)
                 {
-                    if (!lDisplayData.ContainsKey(item.Key))
-                    {
-                        lDisplayData[item.Key] = new HistogramDisplayData(UnitsNet.Length.From(item.Value.Elevation, DataUnits.VertUnit).As(DisplayUnits.VertUnit));
-                    }
+                    // Make a dictionary entry if we don't already have one
+                    decimal binleft = (decimal)_rawHist.BinLower(bid, DataUnits).As(DisplayUnits.VertUnit);
+                    if (!histoData.ContainsKey(binleft)) histoData[binleft] = new HistogramDisplayData(binleft);
 
-                    if (item.Key < 0)
-                    {
-                        if (bArea)
-                        {
-                            lDisplayData[item.Key].Raw = Math.Max(0, item.Value.AreaChange(DataUnits.ArUnit, DisplayUnits.ArUnit) - lDisplayData[item.Key].Erosion);
-                        }
-                        else
-                        {
-                            lDisplayData[item.Key].Raw = Math.Max(0, item.Value.VolumeChange(DataUnits.VolUnit, DisplayUnits.VolUnit) - lDisplayData[item.Key].Erosion);
-                        }
-                    }
+                    if (bArea)
+                        histoData[binleft].Threshold = (decimal)(_rawHist.BinArea(bid, Project.ProjectManager.Project.CellArea).As(DisplayUnits.ArUnit)) - histoData[binleft].Threshold;
                     else
-                    {
-                        if (bArea)
-                        {
-                            lDisplayData[item.Key].Raw = Math.Max(0, item.Value.AreaChange(DataUnits.ArUnit, DisplayUnits.ArUnit) - lDisplayData[item.Key].Deposition);
-                        }
-                        else
-                        {
-                            lDisplayData[item.Key].Raw = Math.Max(0, item.Value.VolumeChange(DataUnits.VolUnit, DisplayUnits.VolUnit) - lDisplayData[item.Key].Deposition);
-                        }
-                    }
+                        histoData[binleft].Threshold = (decimal)_rawHist.BinVolume(bid, Project.ProjectManager.Project.CellArea, DataUnits).As(DisplayUnits.VolUnit) - histoData[binleft].Threshold;
                 }
+
             }
 
-            return lDisplayData.Values.ToList();
         }
 
         public void ExportCharts(string AreaGraphPath, string VolumeGraphPath, int ChartWidth, int ChartHeight)

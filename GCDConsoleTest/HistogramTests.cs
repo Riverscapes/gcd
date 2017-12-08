@@ -17,27 +17,28 @@ namespace GCDConsoleLib.Tests
         public void HistogramTest()
         {
             Histogram rTest1 = new Histogram(20, 1);
+            UnitGroup ug = new UnitGroup(VolumeUnit.ImperialBeerBarrel, AreaUnit.SquareInch, LengthUnit.Foot, LengthUnit.Meter);
 
             Assert.AreEqual(rTest1.FirstBinId, 0);
             Assert.AreEqual(rTest1.LastBinId, 19);
-            Assert.AreEqual(rTest1.HistogramLower, -10.0m);
-            Assert.AreEqual(rTest1.HistogramUpper, 10.0m);
+            Assert.AreEqual(rTest1.HistogramLower(ug).As(ug.VertUnit), -10.0);
+            Assert.AreEqual(rTest1.HistogramUpper(ug).As(ug.VertUnit), 10.0);
             Assert.AreEqual(rTest1.Count, 20);
 
             // Now let's try one with uneven bins
             Histogram rTest2 = new Histogram(19, 1);
             Assert.AreEqual(rTest2.FirstBinId, 0);
             Assert.AreEqual(rTest2.LastBinId, 19);
-            Assert.AreEqual(rTest2.HistogramLower, -10.0m);
-            Assert.AreEqual(rTest2.HistogramUpper, 10.0m);
+            Assert.AreEqual(rTest2.HistogramLower(ug).As(ug.VertUnit), -10.0);
+            Assert.AreEqual(rTest2.HistogramUpper(ug).As(ug.VertUnit), 10.0);
             Assert.AreEqual(rTest2.Count, 20);
 
             // Now let's try a zero width histogram
             Histogram rTest3 = new Histogram(1, decimal.MaxValue);
             Assert.AreEqual(rTest3.FirstBinId, 0);
             Assert.AreEqual(rTest3.LastBinId, 1);
-            Assert.AreEqual(rTest3.HistogramLower, decimal.MinValue);
-            Assert.AreEqual(rTest3.HistogramUpper, decimal.MaxValue);
+            Assert.AreEqual(rTest3.HistogramLower(ug).As(ug.VertUnit), (double)decimal.MinValue);
+            Assert.AreEqual(rTest3.HistogramUpper(ug).As(ug.VertUnit), (double)decimal.MaxValue);
             Assert.AreEqual(rTest3.Count, 2);
 
         }
@@ -75,35 +76,41 @@ namespace GCDConsoleLib.Tests
         [TestMethod()]
         public void BinLowerTest()
         {
+            UnitGroup ug = new UnitGroup(VolumeUnit.ImperialBeerBarrel, AreaUnit.SquareInch, LengthUnit.Foot, LengthUnit.Meter);
+
             Histogram rTest1 = new Histogram(20, 1);
-            Assert.AreEqual(rTest1.BinLower(0), -10);
-            Assert.AreEqual(rTest1.BinLower(19), 9);
+            Assert.AreEqual(rTest1.BinLower(0, ug).As(ug.VertUnit), -10);
+            Assert.AreEqual(rTest1.BinLower(19, ug).As(ug.VertUnit), 9);
 
             Histogram rTest2 = new Histogram(1, decimal.MaxValue);
-            Assert.AreEqual(rTest2.BinLower(0), decimal.MinValue);
-            Assert.AreEqual(rTest2.BinLower(1), 0);
+            Assert.AreEqual(rTest2.BinLower(0, ug).As(ug.VertUnit), (double)decimal.MinValue);
+            Assert.AreEqual(rTest2.BinLower(1, ug).As(ug.VertUnit), 0);
 
         }
 
         [TestMethod()]
         public void BinUpperTest()
         {
+            UnitGroup ug = new UnitGroup(VolumeUnit.ImperialBeerBarrel, AreaUnit.SquareInch, LengthUnit.Foot, LengthUnit.Meter);
+
             Histogram rTest1 = new Histogram(20, 1);
-            Assert.AreEqual(rTest1.BinUpper(0), -9);
-            Assert.AreEqual(rTest1.BinUpper(19), 10);
+            Assert.AreEqual(rTest1.BinUpper(0, ug).As(ug.VertUnit), -9);
+            Assert.AreEqual(rTest1.BinUpper(19, ug).As(ug.VertUnit), 10);
 
             Histogram rTest2 = new Histogram(1, decimal.MaxValue);
-            Assert.AreEqual(rTest2.BinUpper(0), 0);
-            Assert.AreEqual(rTest2.BinUpper(1), decimal.MaxValue);
+            Assert.AreEqual(rTest2.BinUpper(0, ug).As(ug.VertUnit), 0);
+            Assert.AreEqual(rTest2.BinUpper(1, ug).As(ug.VertUnit), (double)decimal.MaxValue);
         }
 
 
         [TestMethod()]
         public void BinCentreTest()
         {
+            UnitGroup ug = new UnitGroup(VolumeUnit.ImperialBeerBarrel, AreaUnit.SquareInch, LengthUnit.Foot, LengthUnit.Meter);
+
             Histogram rTest1 = new Histogram(20, 1);
-            Assert.AreEqual(rTest1.BinCentre(0), -9.5m);
-            Assert.AreEqual(rTest1.BinCentre(19), 9.5m);
+            Assert.AreEqual(rTest1.BinCentre(0, ug).As(ug.VertUnit), -9.5);
+            Assert.AreEqual(rTest1.BinCentre(19, ug).As(ug.VertUnit), 9.5);
         }
 
         [TestMethod()]
@@ -267,8 +274,8 @@ namespace GCDConsoleLib.Tests
 
                 // Make sure the two histograms have the same edges and width
                 Assert.AreEqual(rTest1.Count, rTest1.Count);
-                Assert.AreEqual(rTest1.HistogramLower, rTest1.HistogramLower);
-                Assert.AreEqual(rTest1.HistogramUpper, rTest1.HistogramUpper);
+                Assert.AreEqual(rTest1.HistogramLower(ug).Meters, rTest1.HistogramLower(ug).Meters);
+                Assert.AreEqual(rTest1.HistogramUpper(ug).Meters, rTest1.HistogramUpper(ug).Meters);
                 Assert.AreEqual(rTest1.BinWidth, rTest1.BinWidth);
 
                 // Now go bin-by-bin to make sure we end up with the same numbers everywhere
@@ -304,8 +311,8 @@ namespace GCDConsoleLib.Tests
 
                 // Make sure the two histograms have the same edges and width
                 Assert.AreEqual(rTest1.Count, rTest1.Count);
-                Assert.AreEqual(rTest1.HistogramLower, rTest1.HistogramLower);
-                Assert.AreEqual(rTest1.HistogramUpper, rTest1.HistogramUpper);
+                Assert.AreEqual(rTest1.HistogramLower(ug).Meters, rTest1.HistogramLower(ug).Meters);
+                Assert.AreEqual(rTest1.HistogramUpper(ug).Meters, rTest1.HistogramUpper(ug).Meters);
                 Assert.AreEqual(rTest1.BinWidth, rTest1.BinWidth);
 
                 // Now go bin-by-bin to make sure we end up with the same numbers everywhere

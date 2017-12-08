@@ -178,7 +178,7 @@ namespace GCDConsoleLib
         public static decimal GetNearestFiveOrderWidth(decimal startWidth)
         {
             // Special case. Constant rasters will generate this.
-            if (startWidth == 0)  return 0;
+            if (startWidth == 0) return 0;
 
             int order = (int)Math.Round(Math.Log10((double)startWidth));
             decimal tener = (decimal)Math.Pow(10, order);
@@ -233,17 +233,41 @@ namespace GCDConsoleLib
         public int FirstBinId { get { return 0; } }
         public int LastBinId { get { return BinLefts.Count - 1; } }
 
-        public decimal BinLower(decimal val) { return BinLower(BinId((double)val)); }
-        public decimal BinLower(int id) { return BinLefts[id]; }
+        public Length BinLower(decimal val, UnitGroup unitg)
+        {
+            return BinLower(BinId((double)val), unitg);
+        }
+        public Length BinLower(int id, UnitGroup unitg)
+        {
+            return Length.From((double)BinLefts[id], unitg.VertUnit);
+        }
 
-        public decimal BinUpper(decimal val) { return BinUpper(BinId((double)val)); }
-        public decimal BinUpper(int id) { return BinLefts[id] + BinWidth; }
+        public Length BinUpper(decimal val, UnitGroup unitg)
+        {
+            return BinUpper(BinId((double)val), unitg);
+        }
+        public Length BinUpper(int id, UnitGroup unitg)
+        {
+            return Length.From((double)(BinLefts[id] + BinWidth), unitg.VertUnit);
+        }
 
-        public decimal BinCentre(decimal val) { return BinCentre(BinId((double)val)); }
-        public decimal BinCentre(int id) { return BinLefts[id] + BinWidth / 2; }
+        public Length BinCentre(decimal val, UnitGroup unitg)
+        {
+            return BinCentre(BinId((double)val), unitg);
+        }
+        public Length BinCentre(int id, UnitGroup unitg)
+        {
+            return Length.From((double)(BinLefts[id] + BinWidth / 2), unitg.VertUnit);
+        }
 
-        public decimal HistogramLower { get { return BinLefts[0]; } }
-        public decimal HistogramUpper { get { return BinLefts.Last() + BinWidth; } }
+        public Length HistogramLower(UnitGroup unitg)
+        {
+            return Length.From((double)BinLefts[0], unitg.VertUnit);
+        }
+        public Length HistogramUpper(UnitGroup unitg)
+        {
+            return Length.From((double)(BinLefts.Last() + BinWidth), unitg.VertUnit);
+        }
 
         /// <summary>
         /// Return the sum of values (used to make the volume) in length units
@@ -260,11 +284,22 @@ namespace GCDConsoleLib
         /// </summary>
         /// <param name="bid"></param>
         /// <returns></returns>
-        public Volume BinVolume(int bid, Area cellArea, UnitGroup units)
+        public Volume BinVolume(int bid, Area cellArea, UnitGroup unitg)
         {
-            return Volume.FromCubicMeters(cellArea.SquareMeters * Length.From((double)BinSum(bid), units.VertUnit).Meters);
+            return Volume.FromCubicMeters(cellArea.SquareMeters * Length.From((double)BinSum(bid), unitg.VertUnit).Meters);
         }
 
+        /// <summary>
+        /// Simple area calculation
+        /// </summary>
+        /// <param name="bid"></param>
+        /// <param name="cellArea"></param>
+        /// <returns></returns>
+        public Area BinArea(int bid, Area cellArea)
+        {
+            return Area.FromSquareMeters(BinCounts[bid] * cellArea.SquareMeters);
+        }
+        
         /// <summary>
         /// Return a count at a given bin
         /// </summary>
@@ -280,16 +315,33 @@ namespace GCDConsoleLib
         /// </summary>
         /// <param name="outputPath"></param>
         /// This is no longer here MOVE IT TO THE PRESENTATION LAYER
-        public void WriteFile(FileInfo outputFile, Area cellArea, UnitGroup units)
+        public void WriteFile(FileInfo outputFile, Area cellArea, UnitGroup theUnits)
         {
-            using (System.IO.StreamWriter stream = new System.IO.StreamWriter(outputFile.FullName))
+            using (StreamWriter stream = new StreamWriter(outputFile.FullName))
             {
-                stream.WriteLine(string.Format("Bin Lower,Bin Upper,Bin Centre,Area({0}),Volume({1}),Cell Count,Cell Sum({2})", units.ArUnit, units.VolUnit, units.VertUnit));
+                stream.WriteLine(string.Format("Bin Lower,Bin Upper,Bin Centre,Area({0}),Volume({1}),Cell Count,Cell Sum({2})", theUnits.ArUnit, theUnits.VolUnit, theUnits.VertUnit));
                 for (int bid = 0; bid < BinCounts.Count; bid++)
                 {
-                    double vol = BinVolume(bid, cellArea, units).As(units.VolUnit);
+                    // This is unforunate but there's a casting problem between double and decimals at the highest decimal values.
+                    double bLower = BinLower(bid, theUnits).As(theUnits.VertUnit);
+                    double bUpper = BinUpper(bid, theUnits).As(theUnits.VertUnit);
+                    double bCenter = BinCentre(bid, theUnits).As(theUnits.VertUnit);
+
+                    decimal bLowerDec, bUpperDec, bCenterDec;
+                    try { bLowerDec = (decimal)bLower; }
+                    catch (OverflowException) { bLowerDec = bLower > 0 ? decimal.MaxValue : decimal.MinValue; }
+
+                    try { bUpperDec = (decimal)bUpper; }
+                    catch (OverflowException) { bUpperDec = bUpper > 0 ? decimal.MaxValue : decimal.MinValue; }
+
+                    try { bCenterDec = (decimal)bCenter; }
+                    catch (OverflowException) { bCenterDec = bCenter > 0 ? decimal.MaxValue : decimal.MinValue; }
+
+                    double vol = BinVolume(bid, cellArea, theUnits).As(theUnits.VolUnit);
                     string binstr = string.Format("{0},{1},{2},{3},{4},{5},{6}",
-                        BinLower(bid), BinUpper(bid), BinCentre(bid),
+                        bLowerDec,
+                        bUpper,
+                        bCenter,
                         cellArea, vol, BinCounts[bid], BinSums[bid]);
                     stream.WriteLine(binstr);
                 }
