@@ -205,13 +205,13 @@ namespace GCDCore.Project
             GCDProjectRasterItem.DeleteRaster(ThrDoD);
 
             // Now delete all the meta files associated with the DoD
-            foreach(FileInfo file in RawDoD.GISFileInfo.Directory.GetFiles("*.*", SearchOption.AllDirectories))
+            foreach (FileInfo file in RawDoD.GISFileInfo.Directory.GetFiles("*.*", SearchOption.AllDirectories))
             {
                 try
                 {
                     file.Delete();
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Console.WriteLine("Unable to delete file " + file.FullName);
                     Console.WriteLine(ex.Message);
@@ -223,7 +223,7 @@ namespace GCDCore.Project
             {
                 Folder.Delete();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine("Unable to delete DoD folder  " + Folder.FullName);
                 Console.WriteLine(ex.Message);
