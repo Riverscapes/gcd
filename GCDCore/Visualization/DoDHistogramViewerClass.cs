@@ -129,7 +129,7 @@ namespace GCDCore.Visualization
             m_Chart.Series.FindByName(DEPOSITION).Points.DataBindXY(histoData.Values, "Elevation", histoData.Values, "Deposition");
             m_Chart.Series.FindByName(RAW).Points.DataBindXY(histoData.Values, "Elevation", histoData.Values, "Raw");
 
-            double binWidth = UnitsNet.Length.From((double)_thrHist.BinWidth, Project.ProjectManager.Project.Units.VertUnit).As(DisplayUnits.VertUnit);
+            double binWidth = _thrHist.BinWidth(Project.ProjectManager.Project.Units).As(DisplayUnits.VertUnit);
 
             Axis axisX = m_Chart.ChartAreas[0].AxisX;
             axisX.Title = string.Format("Elevation Change ({0})", UnitsNet.Length.GetAbbreviation(DisplayUnits.VertUnit));
