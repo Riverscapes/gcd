@@ -160,13 +160,13 @@ namespace GCDCore.Visualization
             for (int bid = 0; bid < _thrHist.Count; bid++)
             {
                 // Make a dictionary entry if we don't already have one
-                decimal binleft = (decimal)_thrHist.BinCentre(bid, DataUnits).As(DisplayUnits.VertUnit);
-                if (!histoData.ContainsKey(binleft)) histoData[binleft] = new HistogramDisplayData(binleft);
+                decimal bincentre = (decimal)_thrHist.BinCentre(bid, DataUnits).As(DisplayUnits.VertUnit);
+                if (!histoData.ContainsKey(bincentre)) histoData[bincentre] = new HistogramDisplayData(bincentre);
 
                 if (bArea)
-                    histoData[binleft].Threshold = (decimal)(_thrHist.BinArea(bid, Project.ProjectManager.Project.CellArea).As(DisplayUnits.ArUnit));
+                    histoData[bincentre].Threshold = (decimal)(_thrHist.BinArea(bid, Project.ProjectManager.Project.CellArea).As(DisplayUnits.ArUnit));
                 else
-                    histoData[binleft].Threshold = Math.Abs((decimal)_thrHist.BinVolume(bid, Project.ProjectManager.Project.CellArea, DataUnits).As(DisplayUnits.VolUnit));
+                    histoData[bincentre].Threshold = Math.Abs((decimal)_thrHist.BinVolume(bid, Project.ProjectManager.Project.CellArea, DataUnits).As(DisplayUnits.VolUnit));
             }
 
             if ((_rawHist != null))
@@ -174,13 +174,13 @@ namespace GCDCore.Visualization
                 for (int bid = 0; bid < _rawHist.Count; bid++)
                 {
                     // Make a dictionary entry if we don't already have one
-                    decimal binleft = (decimal)_rawHist.BinCentre(bid, DataUnits).As(DisplayUnits.VertUnit);
-                    if (!histoData.ContainsKey(binleft)) histoData[binleft] = new HistogramDisplayData(binleft);
+                    decimal bincentre = (decimal)_rawHist.BinCentre(bid, DataUnits).As(DisplayUnits.VertUnit);
+                    if (!histoData.ContainsKey(bincentre)) histoData[bincentre] = new HistogramDisplayData(bincentre);
 
                     if (bArea)
-                        histoData[binleft].Raw = (decimal)(_rawHist.BinArea(bid, Project.ProjectManager.Project.CellArea).As(DisplayUnits.ArUnit)) - histoData[binleft].Threshold;
+                        histoData[bincentre].Raw = (decimal)(_rawHist.BinArea(bid, Project.ProjectManager.Project.CellArea).As(DisplayUnits.ArUnit)) - histoData[bincentre].Threshold;
                     else
-                        histoData[binleft].Raw = Math.Abs((decimal)_rawHist.BinVolume(bid, Project.ProjectManager.Project.CellArea, DataUnits).As(DisplayUnits.VolUnit)) - histoData[binleft].Threshold;
+                        histoData[bincentre].Raw = Math.Abs((decimal)_rawHist.BinVolume(bid, Project.ProjectManager.Project.CellArea, DataUnits).As(DisplayUnits.VolUnit)) - histoData[bincentre].Threshold;
                 }
 
             }
