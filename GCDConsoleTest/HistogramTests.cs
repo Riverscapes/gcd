@@ -276,14 +276,14 @@ namespace GCDConsoleLib.Tests
                 Assert.AreEqual(rTest1.Count, rTest1.Count);
                 Assert.AreEqual(rTest1.HistogramLower(ug).Meters, rTest1.HistogramLower(ug).Meters);
                 Assert.AreEqual(rTest1.HistogramUpper(ug).Meters, rTest1.HistogramUpper(ug).Meters);
-                Assert.AreEqual(rTest1.BinWidth, rTest1.BinWidth);
+                Assert.AreEqual(rTest1._binWidth, rTest1._binWidth);
 
                 // Now go bin-by-bin to make sure we end up with the same numbers everywhere
                 for (int bid = 0; bid < rTestRead.Count; bid++)
                 {
                     Assert.AreEqual(rTest1.BinCounts[bid], rTestRead.BinCounts[bid]);
-                    Assert.AreEqual(rTest1.BinSums[bid], rTestRead.BinSums[bid]);
-                    Assert.AreEqual(rTest1.BinLefts[bid], rTestRead.BinLefts[bid]);
+                    Assert.AreEqual(rTest1.BinArea(bid, cellArea).SquareMeters, rTestRead.BinArea(bid, cellArea).SquareMeters);
+                    Assert.AreEqual(rTest1.BinLower(bid, ug).Meters, rTestRead.BinLower(bid, ug).Meters);
                 }
 
             }
@@ -313,14 +313,14 @@ namespace GCDConsoleLib.Tests
                 Assert.AreEqual(rTest1.Count, rTest1.Count);
                 Assert.AreEqual(rTest1.HistogramLower(ug).Meters, rTest1.HistogramLower(ug).Meters);
                 Assert.AreEqual(rTest1.HistogramUpper(ug).Meters, rTest1.HistogramUpper(ug).Meters);
-                Assert.AreEqual(rTest1.BinWidth, rTest1.BinWidth);
+                Assert.AreEqual(rTest1._binWidth, rTest1._binWidth);
 
                 // Now go bin-by-bin to make sure we end up with the same numbers everywhere
                 for (int bid = 0; bid < rTestRead.Count; bid++)
                 {
                     Assert.AreEqual(rTest1.BinCounts[bid], rTestRead.BinCounts[bid]);
-                    Assert.AreEqual(rTest1.BinSums[bid], rTestRead.BinSums[bid]);
-                    Assert.AreEqual(rTest1.BinLefts[bid], rTestRead.BinLefts[bid]);
+                    Assert.AreEqual(rTest1.BinArea(bid, cellArea).SquareMeters, rTestRead.BinArea(bid, cellArea).SquareMeters);
+                    Assert.AreEqual(rTest1.BinLower(bid, ug).Meters, rTestRead.BinLower(bid, ug).Meters);
                 }
 
             }

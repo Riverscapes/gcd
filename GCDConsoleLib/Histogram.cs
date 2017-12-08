@@ -15,11 +15,11 @@ namespace GCDConsoleLib
     public class Histogram
     {
         public List<int> BinCounts;
-        public List<decimal> BinLefts;
-        public List<decimal> BinSums;
+        private List<decimal> _binLefts;
+        private List<decimal> _binSums;
 
         public int Count { get { return BinCounts.Count; } }
-        public decimal BinWidth { get; set; }
+        public decimal _binWidth;
 
         /// <summary>
         /// When we know the # of bins and the width of the bin
@@ -72,7 +72,7 @@ namespace GCDConsoleLib
         /// <param name="hUnit"></param>
         public Histogram(decimal width, decimal max, decimal min)
         {
-            BinWidth = width;
+            _binWidth = width;
             int bins = (int)Math.Ceiling(Math.Max(Math.Abs(max), Math.Abs(min))) * 2;
             _init(bins, width);
         }
@@ -115,8 +115,8 @@ namespace GCDConsoleLib
             for (int lid = 0; lid < sLines.Count - 1; lid++)
             {
                 BinCounts[lid] = Convert.ToInt32(sLines[lid + 1][5]);
-                BinLefts[lid] = Convert.ToDecimal(sLines[lid + 1][0]);
-                BinSums[lid] = Convert.ToDecimal(sLines[lid + 1][6]);
+                _binLefts[lid] = Convert.ToDecimal(sLines[lid + 1][0]);
+                _binSums[lid] = Convert.ToDecimal(sLines[lid + 1][6]);
             }
         }
 
@@ -130,19 +130,19 @@ namespace GCDConsoleLib
             if (bins == 0)
                 throw new ArgumentOutOfRangeException("Number of bins cannot be zero");
 
-            BinWidth = width;
+            _binWidth = width;
 
             // Must be a multiple of 2. Add a bin
             if (bins % 2 == 1) bins++;
             BinCounts = new List<int>();
-            BinLefts = new List<decimal>();
-            BinSums = new List<decimal>();
+            _binLefts = new List<decimal>();
+            _binSums = new List<decimal>();
 
             for (int bid = 0; bid < bins; bid++)
             {
                 BinCounts.Add(0);
-                BinLefts.Add(width * (bid - (bins / 2)));
-                BinSums.Add(0);
+                _binLefts.Add(width * (bid - (bins / 2)));
+                _binSums.Add(0);
             }
         }
 
@@ -201,13 +201,13 @@ namespace GCDConsoleLib
         {
             int bid;
             decimal decVal = (decimal)val;
-            if (decVal < BinLefts[0] || decVal > BinLefts[BinLefts.Count - 1] + BinWidth)
+            if (decVal < _binLefts[0] || decVal > _binLefts[_binLefts.Count - 1] + _binWidth)
                 bid = -1;
             // Top value is an exception and goes in the topmost bin
-            else if (decVal == BinLefts[BinLefts.Count - 1] + BinWidth)
+            else if (decVal == _binLefts[_binLefts.Count - 1] + _binWidth)
                 bid = BinCounts.Count - 1;
             else
-                for (bid = 0; decVal >= BinLefts[bid] + BinWidth && bid < BinCounts.Count - 1; bid++) ;
+                for (bid = 0; decVal >= _binLefts[bid] + _binWidth && bid < BinCounts.Count - 1; bid++) ;
             return bid;
         }
 
@@ -224,14 +224,14 @@ namespace GCDConsoleLib
                 throw new ArgumentOutOfRangeException("Trying to bin a value outside the histogram range");
 
             BinCounts[bid]++;
-            BinSums[bid] += (decimal)val;
+            _binSums[bid] += (decimal)val;
         }
 
         /// <summary>
         /// These are helpful functions to figure stuff out.
         /// </summary>
         public int FirstBinId { get { return 0; } }
-        public int LastBinId { get { return BinLefts.Count - 1; } }
+        public int LastBinId { get { return _binLefts.Count - 1; } }
 
         public Length BinLower(decimal val, UnitGroup unitg)
         {
@@ -239,7 +239,7 @@ namespace GCDConsoleLib
         }
         public Length BinLower(int id, UnitGroup unitg)
         {
-            return Length.From((double)BinLefts[id], unitg.VertUnit);
+            return Length.From((double)_binLefts[id], unitg.VertUnit);
         }
 
         public Length BinUpper(decimal val, UnitGroup unitg)
@@ -248,7 +248,7 @@ namespace GCDConsoleLib
         }
         public Length BinUpper(int id, UnitGroup unitg)
         {
-            return Length.From((double)(BinLefts[id] + BinWidth), unitg.VertUnit);
+            return Length.From((double)(_binLefts[id] + _binWidth), unitg.VertUnit);
         }
 
         public Length BinCentre(decimal val, UnitGroup unitg)
@@ -257,18 +257,23 @@ namespace GCDConsoleLib
         }
         public Length BinCentre(int id, UnitGroup unitg)
         {
-            return Length.From((double)(BinLefts[id] + BinWidth / 2), unitg.VertUnit);
+            return Length.From((double)(_binLefts[id] + _binWidth / 2), unitg.VertUnit);
         }
 
         public Length HistogramLower(UnitGroup unitg)
         {
-            return Length.From((double)BinLefts[0], unitg.VertUnit);
+            return Length.From((double)_binLefts[0], unitg.VertUnit);
         }
         public Length HistogramUpper(UnitGroup unitg)
         {
-            return Length.From((double)(BinLefts.Last() + BinWidth), unitg.VertUnit);
+            return Length.From((double)(_binLefts.Last() + _binWidth), unitg.VertUnit);
         }
 
+        public Length BinWidth(UnitGroup unitg) {
+            return Length.From((double)(_binWidth), unitg.VertUnit);
+        }
+
+            
         /// <summary>
         /// Return the sum of values (used to make the volume) in length units
         /// </summary>
@@ -276,7 +281,7 @@ namespace GCDConsoleLib
         /// <returns></returns>
         private decimal BinSum(int bid)
         {
-            return BinSums[bid];
+            return _binSums[bid];
         }
 
         /// <summary>
@@ -342,7 +347,7 @@ namespace GCDConsoleLib
                         bLowerDec,
                         bUpper,
                         bCenter,
-                        cellArea, vol, BinCounts[bid], BinSums[bid]);
+                        cellArea, vol, BinCounts[bid], _binSums[bid]);
                     stream.WriteLine(binstr);
                 }
             }
