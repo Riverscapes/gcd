@@ -25,7 +25,9 @@ namespace GCDCore.UserInterface.BudgetSegregation
 
         private void frmBudgetSegProperties_Load(object sender, System.EventArgs e)
         {
+            // Add the event handling after data binding to reduce false firing
             cboDoD.DataSource = new BindingList<DoDBase>(ProjectManager.Project.DoDs.Values.ToList<DoDBase>());
+            cboDoD.SelectedIndexChanged += cboDoD_SelectedIndexChanged;
             cboDoD.SelectedItem = InitialDoD;
 
             ucPolygon.PathChanged += this.PolygonChanged;
@@ -60,12 +62,10 @@ namespace GCDCore.UserInterface.BudgetSegregation
             {
                 Cursor.Current = Cursors.Default;
             }
-
         }
 
         private bool ValidateForm()
         {
-
             // Sanity check to avoid names with only empty spaces
             txtName.Text = txtName.Text.Trim();
 
@@ -75,7 +75,6 @@ namespace GCDCore.UserInterface.BudgetSegregation
                 cboDoD.Select();
                 return false;
             }
-
 
             if (string.IsNullOrEmpty(txtName.Text))
             {
@@ -92,7 +91,6 @@ namespace GCDCore.UserInterface.BudgetSegregation
                     return false;
                 }
             }
-
 
             if (ucPolygon.SelectedItem is GCDConsoleLib.Vector)
             {
@@ -140,11 +138,6 @@ namespace GCDCore.UserInterface.BudgetSegregation
 
         private void cboDoD_SelectedIndexChanged(object sender, System.EventArgs e)
         {
-            if (cboDoD.SelectedItem == null)
-            {
-                return;
-            }
-
             DoDBase dod = (DoDBase)cboDoD.SelectedItem;
 
             txtNewDEM.Text = dod.NewDEM.Name;

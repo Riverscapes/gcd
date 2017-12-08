@@ -25,6 +25,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
         //Do not modify it using the code editor.
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmBudgetSegProperties));
             this.Label1 = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
             this.GroupBox1 = new System.Windows.Forms.GroupBox();
@@ -90,8 +91,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.cboDoD.Location = new System.Drawing.Point(120, 27);
             this.cboDoD.Name = "cboDoD";
             this.cboDoD.Size = new System.Drawing.Size(355, 21);
-            this.cboDoD.TabIndex = 8;
-            this.cboDoD.SelectedIndexChanged += new System.EventHandler(this.cboDoD_SelectedIndexChanged);
+            this.cboDoD.TabIndex = 1;
             // 
             // txtUncertaintyAnalysis
             // 
@@ -100,6 +100,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.txtUncertaintyAnalysis.ReadOnly = true;
             this.txtUncertaintyAnalysis.Size = new System.Drawing.Size(355, 20);
             this.txtUncertaintyAnalysis.TabIndex = 7;
+            this.txtUncertaintyAnalysis.TabStop = false;
             // 
             // Label5
             // 
@@ -117,6 +118,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.txtOldDEM.ReadOnly = true;
             this.txtOldDEM.Size = new System.Drawing.Size(355, 20);
             this.txtOldDEM.TabIndex = 5;
+            this.txtOldDEM.TabStop = false;
             // 
             // Label4
             // 
@@ -134,6 +136,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.txtNewDEM.ReadOnly = true;
             this.txtNewDEM.Size = new System.Drawing.Size(355, 20);
             this.txtNewDEM.TabIndex = 3;
+            this.txtNewDEM.TabStop = false;
             // 
             // Label3
             // 
@@ -159,7 +162,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.Label6.Location = new System.Drawing.Point(40, 27);
             this.Label6.Name = "Label6";
             this.Label6.Size = new System.Drawing.Size(71, 13);
-            this.Label6.TabIndex = 3;
+            this.Label6.TabIndex = 0;
             this.Label6.Text = "Feature Class";
             // 
             // Label7
@@ -168,7 +171,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.Label7.Location = new System.Drawing.Point(82, 57);
             this.Label7.Name = "Label7";
             this.Label7.Size = new System.Drawing.Size(29, 13);
-            this.Label7.TabIndex = 1;
+            this.Label7.TabIndex = 2;
             this.Label7.Text = "Field";
             // 
             // GroupBox2
@@ -191,7 +194,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.cboField.Location = new System.Drawing.Point(120, 53);
             this.cboField.Name = "cboField";
             this.cboField.Size = new System.Drawing.Size(355, 21);
-            this.cboField.TabIndex = 2;
+            this.cboField.TabIndex = 3;
             // 
             // Label8
             // 
@@ -224,6 +227,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
             // cmdOK
             // 
             this.cmdOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmdOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.cmdOK.Location = new System.Drawing.Point(347, 340);
             this.cmdOK.Name = "cmdOK";
             this.cmdOK.Size = new System.Drawing.Size(75, 23);
@@ -247,7 +251,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.ucPolygon.Location = new System.Drawing.Point(120, 22);
             this.ucPolygon.Name = "ucPolygon";
             this.ucPolygon.Size = new System.Drawing.Size(355, 23);
-            this.ucPolygon.TabIndex = 4;
+            this.ucPolygon.TabIndex = 1;
             // 
             // frmBudgetSegProperties
             // 
@@ -266,6 +270,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.Controls.Add(this.txtName);
             this.Controls.Add(this.Label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmBudgetSegProperties";
