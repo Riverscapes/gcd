@@ -1,4 +1,3 @@
-using GCDCore.Project;
 using System;
 using System.Data;
 using System.Diagnostics;
@@ -6,6 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.ComponentModel;
 using System.Collections.Generic;
+using GCDCore.Project;
 
 namespace GCDCore.UserInterface.BudgetSegregation
 {
@@ -23,7 +23,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
             ucPolygon.Initialize("Budget Segregation Polygon Mask", GCDConsoleLib.GDalGeometryType.SimpleTypes.Polygon);
         }
 
-        private void frmBudgetSegProperties_Load(object sender, System.EventArgs e)
+        private void frmBudgetSegProperties_Load(object sender, EventArgs e)
         {
             // Add the event handling after data binding to reduce false firing
             cboDoD.DataSource = new BindingList<DoDBase>(ProjectManager.Project.DoDs.Values.ToList<DoDBase>());
@@ -33,7 +33,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
             ucPolygon.PathChanged += this.PolygonChanged;
         }
 
-        private void cmdOK_Click(System.Object sender, System.EventArgs e)
+        private void cmdOK_Click(Object sender, EventArgs e)
         {
             if (!ValidateForm())
             {
@@ -47,12 +47,10 @@ namespace GCDCore.UserInterface.BudgetSegregation
 
                 DoDBase dod = (DoDBase)cboDoD.SelectedItem;
                 System.IO.DirectoryInfo bsFolder = ProjectManager.OutputManager.GetBudgetSegreationDirectoryPath(dod.Folder, true);
-
-                GCDCore.Engines.BudgetSegregationEngine bsEngine = new GCDCore.Engines.BudgetSegregationEngine(txtName.Text, bsFolder);
-                BudgetSeg = bsEngine.Calculate(dod, (GCDConsoleLib.Vector)ucPolygon.SelectedItem, cboField.Text);
+                Engines.BudgetSegregationEngine bsEngine = new Engines.BudgetSegregationEngine(txtName.Text, bsFolder);
+                BudgetSeg = bsEngine.Calculate(dod, ucPolygon.SelectedItem, cboField.Text);
 
                 ProjectManager.Project.Save();
-
             }
             catch (Exception ex)
             {
@@ -136,7 +134,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
             return true;
         }
 
-        private void cboDoD_SelectedIndexChanged(object sender, System.EventArgs e)
+        private void cboDoD_SelectedIndexChanged(object sender, EventArgs e)
         {
             DoDBase dod = (DoDBase)cboDoD.SelectedItem;
 
@@ -177,9 +175,9 @@ namespace GCDCore.UserInterface.BudgetSegregation
             Cursor = Cursors.Default;
         }
 
-        private void cmdHelp_Click(System.Object sender, System.EventArgs e)
+        private void cmdHelp_Click(Object sender, EventArgs e)
         {
-            Process.Start(GCDCore.Properties.Resources.HelpBaseURL + "gcd-command-reference/gcd-project-explorer/l-individual-change-detection-context-menu/v-add-budget-segregation");
+            Process.Start(Properties.Resources.HelpBaseURL + "gcd-command-reference/gcd-project-explorer/l-individual-change-detection-context-menu/v-add-budget-segregation");
         }
     }
 }
