@@ -15,4 +15,4 @@ This repository contains the source code for the Geomorphic Change Detection (GC
 
 ## License
 
-]GNU Public License Version 3](https://raw.githubusercontent.com/Riverscapes/gcd/master/LICENSE)
+[GNU Public License Version 3](https://raw.githubusercontent.com/Riverscapes/gcd/master/LICENSE)
