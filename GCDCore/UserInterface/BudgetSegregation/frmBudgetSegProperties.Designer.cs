@@ -294,21 +294,16 @@ namespace GCDCore.UserInterface.BudgetSegregation
         internal System.Windows.Forms.TextBox txtNewDEM;
         internal System.Windows.Forms.Label Label3;
         internal System.Windows.Forms.Label Label2;
-        private System.Windows.Forms.ComboBox withEventsField_cboDoD;
-        private UtilityForms.ucVectorInput ucPolygon;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button cmdOK;
-        private System.Windows.Forms.Button cmdHelp;
+        internal UtilityForms.ucVectorInput ucPolygon;
+        internal System.Windows.Forms.Button button1;
+        internal System.Windows.Forms.Button cmdOK;
+        internal System.Windows.Forms.Button cmdHelp;
         internal System.Windows.Forms.Label Label6;
-        private GCDCore.UserInterface.UtilityForms.ucVectorInput withEventsField_ucPolygon;       
-        private System.Windows.Forms.Button withEventsField_cmdHelp;
-        internal System.Windows.Forms.Button cmdCancel;
-        private System.Windows.Forms.Button withEventsField_cmdOK;
         internal System.Windows.Forms.Label Label7;
         internal System.Windows.Forms.GroupBox GroupBox2;
         internal System.Windows.Forms.ComboBox cboField;
         internal System.Windows.Forms.Label Label8;
         internal System.Windows.Forms.TextBox txtOutputFolder;
-        private System.Windows.Forms.ComboBox cboDoD;
+        internal System.Windows.Forms.ComboBox cboDoD;
     }
 }

@@ -168,10 +168,13 @@ namespace GCDCore.UserInterface.BudgetSegregation
                 return;
             }
 
+            Cursor = Cursors.WaitCursor;
             List<GCDConsoleLib.VectorField> stringFields = ucPolygon.SelectedItem.Fields.Values.Where(x => x.Type.Equals(GCDConsoleLib.GDalFieldType.StringField)).ToList<GCDConsoleLib.VectorField>();
             cboField.Items.AddRange(stringFields.ToArray());
             if (cboField.Items.Count == 1)
                 cboField.SelectedIndex = 0;
+
+            Cursor = Cursors.Default;
         }
 
         private void cmdHelp_Click(System.Object sender, System.EventArgs e)
