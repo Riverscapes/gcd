@@ -118,7 +118,7 @@ namespace GCDConsoleLib.Internal.Operators
                 if (fDoDValue > _thresh)
                 {
                     stats.DepositionThr.AddToSumAndIncrementCounter(fDoDValue);
-                    stats.DepositionErr.AddToSumAndIncrementCounter(fDoDValue * _thresh);
+                    stats.DepositionErr.AddToSumAndIncrementCounter(_thresh);
                 }
             }
 
@@ -132,7 +132,7 @@ namespace GCDConsoleLib.Internal.Operators
                 if (fDoDValue < (_thresh * -1))
                 {
                     stats.ErosionThr.AddToSumAndIncrementCounter(fDoDValue * -1);
-                    stats.ErosionErr.AddToSumAndIncrementCounter(fDoDValue * _thresh);
+                    stats.ErosionErr.AddToSumAndIncrementCounter(_thresh);
                 }
             }
 
