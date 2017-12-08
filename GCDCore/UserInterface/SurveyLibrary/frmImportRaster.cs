@@ -214,6 +214,36 @@ namespace GCDCore.UserInterface.SurveyLibrary
                 return false;
             }
 
+            switch (ExtImporter.Purpose)
+            {
+                case ExtentImporter.Purposes.SubsequentDEM:
+                    if (!ProjectManager.Project.IsDEMNameUnique(txtName.Text, null))
+                    {
+                        MessageBox.Show(string.Format("There is already another DEM survey in this project with the name '{0}'. Each DEM Survey must have a unique name.", txtName.Text), Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        txtName.Select();
+                        return false;
+                    }
+                    break;
+
+                case ExtentImporter.Purposes.AssociatedSurface:
+                    if (!ReferenceDEM.IsAssocNameUnique(txtName.Text, null))
+                    {
+                        MessageBox.Show(string.Format("There is already another associated surface for this DEM with the name '{0}'. The associated surfaces for each DEM must have a unique name.", txtName.Text), Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        txtName.Select();
+                        return false;
+                    }
+                    break;
+
+                case ExtentImporter.Purposes.ErrorSurface:
+                    if (!ReferenceDEM.IsErrorNameUnique(txtName.Text, null))
+                    {
+                        MessageBox.Show(string.Format("There is already another error surface for this DEM with the name '{0}'. The error surfaces for each DEM must have a unique name.", txtName.Text), Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        txtName.Select();
+                        return false;
+                    }
+                    break;
+            }
+
             // Verify that the raster has a spatial reference
             if (ExtImporter.Purpose != ExtentImporter.Purposes.Standalone && ucRaster.SelectedItem.Proj.PrettyWkt.ToLower().Contains("unknown"))
             {
