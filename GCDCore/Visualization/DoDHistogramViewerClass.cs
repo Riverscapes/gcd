@@ -37,7 +37,7 @@ namespace GCDCore.Visualization
             public decimal Elevation { get; private set; }
 
             public decimal Deposition { get { return Elevation > 0 ? Threshold : 0; } }
-            public decimal Erosion { get { return Elevation > 0 ? Threshold : 0; } }
+            public decimal Erosion { get { return Elevation < 0 ? Threshold : 0; } }
 
             public HistogramDisplayData(decimal elev)
             {
