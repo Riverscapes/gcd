@@ -589,7 +589,12 @@ namespace GCDCore
                 }
             }
 
-            return new DirectoryInfo(Path.Combine(dodFolder.FullName, string.Format("BS{0:0000}", maxExisting + 1)));
+            DirectoryInfo bsFolder =  new DirectoryInfo(Path.Combine(dodFolder.FullName, string.Format("BS{0:0000}", maxExisting + 1)));
+
+            if (bCreate)
+                bsFolder.Create();
+
+            return bsFolder;
         }    
 
         #region "Change Detection"
