@@ -589,7 +589,7 @@ namespace GCDCore
                 }
             }
 
-            DirectoryInfo bsFolder =  new DirectoryInfo(Path.Combine(dodFolder.FullName, string.Format("BS{0:0000}", maxExisting + 1)));
+            DirectoryInfo bsFolder =  new DirectoryInfo(Path.Combine(bsGroupFolder.FullName, string.Format("BS{0:0000}", maxExisting + 1)));
 
             if (bCreate)
                 bsFolder.Create();

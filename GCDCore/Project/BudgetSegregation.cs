@@ -31,6 +31,7 @@ namespace GCDCore.Project
             ClassLegend = new FileInfo(Path.Combine(Folder.FullName, "ClassLegend.csv"));
             SummaryXML = new FileInfo(Path.Combine(Folder.FullName, "Summary.xml"));
             MaskField = maskField;
+            Classes = new Dictionary<string, BudgetSegregationClass>();
         }
 
         /// <summary>
@@ -52,6 +53,7 @@ namespace GCDCore.Project
             ClassLegend = classLegend;
             SummaryXML = summaryXML;
             MaskField = maskField;
+            Classes = new Dictionary<string, BudgetSegregationClass>();
         }
 
         public void Serialize(XmlDocument xmlDoc, XmlNode nodParent)

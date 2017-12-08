@@ -26,8 +26,8 @@ namespace GCDCore.UserInterface.BudgetSegregation
         private void frmBudgetSegProperties_Load(object sender, EventArgs e)
         {
             // Add the event handling after data binding to reduce false firing
-            cboDoD.DataSource = new BindingList<DoDBase>(ProjectManager.Project.DoDs.Values.ToList<DoDBase>());
             cboDoD.SelectedIndexChanged += cboDoD_SelectedIndexChanged;
+            cboDoD.DataSource = new BindingList<DoDBase>(ProjectManager.Project.DoDs.Values.ToList<DoDBase>());
             cboDoD.SelectedItem = InitialDoD;
 
             ucPolygon.PathChanged += this.PolygonChanged;
