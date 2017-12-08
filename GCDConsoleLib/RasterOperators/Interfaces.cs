@@ -634,14 +634,15 @@ namespace GCDConsoleLib
         /// </summary>
         /// <returns></returns>
         public static Raster ThresholdDoDProbWithSpatialCoherence(
-            Raster rawDoD, FileInfo thrDoDPath, Raster newError, Raster OldError,
+            Raster rawDoD, FileInfo thrDoDPath,
             Raster priorProb,
             FileInfo sPosteriorRaster,
             FileInfo sConditionalRaster,
             FileInfo sSpatialCoErosionRaster,
             FileInfo sSpatialCoDepositionRaster,
             int nMovingWindowWidth,
-            int nMovingWindowHeight,
+            int inflectionA,
+            int inflectionB,
             decimal fThreshold)
         {
             throw new NotImplementedException();
