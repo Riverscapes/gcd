@@ -199,33 +199,6 @@ namespace GCDConsoleLib.Tests
             }
         }
 
-
-        //[TestMethod()]
-        //public void FISERRORSTEST()
-        //{
-        //    //Assert.Inconclusive();
-        //    using (ITempDir tmp = TempDir.Create())
-        //    {
-        //        //"C:\code\gcd\extlib\TestData\ERRORS\FISInputs\2006FebDEM.tif"
-        //        FileInfo fisFile = new FileInfo(@"C:\code\gcd\extlib\TestData\ERRORS\FISInputs\CHaMP_TS_ZError_SLPdeg_PD_2012.fis");
-        //        //Raster reference = new Raster(new FileInfo(@"C:\code\gcd\extlib\TestData\ERRORS\FISInputs\2006FebDEM.tif"));
-        //        Raster rawDEM = new Raster(new FileInfo(@"C:\code\gcd\extlib\TestData\ERRORS\FISInputs\2006FebDEM.tif"));
-
-        //        Dictionary<string, Raster> inputDict = new Dictionary<string, Raster>()
-        //        {
-        //            { "Slope", new Raster(new FileInfo(@"C:\code\gcd\extlib\TestData\ERRORS\FISInputs\SlopeDegrees5.tif") ) },
-        //            { "PointDensity",  new Raster(new FileInfo(@"C:\code\gcd\extlib\TestData\ERRORS\FISInputs\PointDensity.tif") )}
-        //        };
-
-        //        ErrorRasterProperties props = new ErrorRasterProperties(fisFile, inputDict);
-
-        //        Raster rTemplateOutput2 = RasterOperators.CreateErrorRaster(rawDEM, props, new FileInfo(Path.Combine(tmp.Name, "FISTest.tif")));
-        //        Assert.Fail();
-        //    }
-        //}
-
-
-
         [TestMethod()]
         public void RootSumSquaresTest()
         {

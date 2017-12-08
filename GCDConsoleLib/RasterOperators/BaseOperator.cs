@@ -183,15 +183,15 @@ namespace GCDConsoleLib.Internal
         public void nextChunk()
         {
             // If the top of the chunk is lower than the bottom of the operational extent then we're done
-            if ((ChunkExtent.Top * ChunkExtent.CellHeight) < (OpExtent.Bottom * ChunkExtent.CellHeight))
+            if ((ChunkExtent.Top / ChunkExtent.CellHeight) < (OpExtent.Bottom / ChunkExtent.CellHeight))
             {
                 // Advance the chunk
                 ChunkExtent.Top = ChunkExtent.Top + (ChunkExtent.Rows * ChunkExtent.CellHeight);
 
                 // If we've fallen off the bottom of the intended extent then we need to shorten the chunk
-                if ((ChunkExtent.Bottom * ChunkExtent.CellHeight) > (OpExtent.Bottom * ChunkExtent.CellHeight))
+                if ((ChunkExtent.Bottom / ChunkExtent.CellHeight) > (OpExtent.Bottom / ChunkExtent.CellHeight))
                 {
-                    ChunkExtent.Rows = (int)((ChunkExtent.Top - OpExtent.Bottom) / ChunkExtent.CellHeight);
+                    ChunkExtent.Rows = (int)((OpExtent.Bottom - ChunkExtent.Top) / ChunkExtent.CellHeight);
                     if (ChunkExtent.Rows <= 0)
                         OpDone = true;
                 }
