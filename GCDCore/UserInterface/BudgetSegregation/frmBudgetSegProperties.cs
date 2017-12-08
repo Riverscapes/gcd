@@ -49,6 +49,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
                 System.IO.DirectoryInfo bsFolder = ProjectManager.OutputManager.GetBudgetSegreationDirectoryPath(dod.Folder, true);
                 Engines.BudgetSegregationEngine bsEngine = new Engines.BudgetSegregationEngine(txtName.Text, bsFolder);
                 BudgetSeg = bsEngine.Calculate(dod, ucPolygon.SelectedItem, cboField.Text);
+                dod.BudgetSegregations[bsEngine.Name] = BudgetSeg;
 
                 ProjectManager.Project.Save();
             }
