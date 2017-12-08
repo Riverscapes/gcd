@@ -26,7 +26,7 @@ namespace GCDCore.UserInterface.ChangeDetection
 
             if (dod is DoDMinLoD)
             {
-                txtType.Text = "Minimum Level of Detection (MinLod)";
+                txtType.Text = "Minimum Level of Detection (MinLoD)";
                 var _with1 = (DoDMinLoD)dod;
                 txtThreshold.Text = string.Format("{0:0.00}{1}", _with1.Threshold, UnitsNet.Length.GetAbbreviation(ProjectManager.Project.Units.VertUnit));
             }

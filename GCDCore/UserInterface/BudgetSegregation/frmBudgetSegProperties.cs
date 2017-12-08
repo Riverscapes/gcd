@@ -27,6 +27,8 @@ namespace GCDCore.UserInterface.BudgetSegregation
         {
             cboDoD.DataSource = new BindingList<DoDBase>(ProjectManager.Project.DoDs.Values.ToList<DoDBase>());
             cboDoD.SelectedItem = InitialDoD;
+
+            ucPolygon.PathChanged += this.PolygonChanged;
         }
 
         private void cmdOK_Click(System.Object sender, System.EventArgs e)
@@ -70,6 +72,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
             if (!(cboDoD.SelectedItem is DoDBase))
             {
                 MessageBox.Show("Please choose a change detection analysis on which you want to base this budget segregation.", "Missing Change Detection", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                cboDoD.Select();
                 return false;
             }
 
@@ -77,6 +80,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
             if (string.IsNullOrEmpty(txtName.Text))
             {
                 MessageBox.Show("Please enter a name for the budget segregation analysis.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                txtName.Select();
                 return false;
             }
             else
@@ -84,6 +88,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
                 if (!((DoDBase)cboDoD.SelectedItem).IsBudgetSegNameUnique(txtName.Text, null))
                 {
                     MessageBox.Show("Another budget segregation already uses the name '" + txtName.Text + "'. Please choose a unique name.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    txtName.Select();
                     return false;
                 }
             }
@@ -94,6 +99,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
                 if (ucPolygon.SelectedItem.Features.Count() < 1)
                 {
                     MessageBox.Show("The polygon mask feature class is empty and contains no features. You must choose a polygon feature class with at least one feature.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    ucPolygon.Select();
                     return false;
                 }
 
@@ -102,6 +108,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
                 if (ucPolygon.SelectedItem.Proj.PrettyWkt.ToLower().Contains("unknown"))
                 {
                     MessageBox.Show("The selected feature class appears to be missing a spatial reference. All GCD inputs must possess a spatial reference and it must be the same spatial reference for all datasets in a GCD project." + " If the selected feature class exists in the same coordinate system, " + dod.RawDoD.Proj.PrettyWkt + ", but the coordinate system has not yet been defined for the feature class." + " Use the ArcToolbox 'Define Projection' geoprocessing tool in the 'Data Management -> Projection & Transformations' Toolbox to correct the problem with the selected datasets by defining the coordinate system as:" + Environment.NewLine + Environment.NewLine + dod.RawDoD.Proj.PrettyWkt + Environment.NewLine + Environment.NewLine + "Then try using it with the GCD again.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    ucPolygon.Select();
                     return false;
                 }
                 else
@@ -109,6 +116,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
                     if (!dod.RawDoD.Proj.IsSame(ucPolygon.SelectedItem.Proj))
                     {
                         MessageBox.Show("The coordinate system of the selected feature class:" + Environment.NewLine + Environment.NewLine + ucPolygon.SelectedItem.Proj.PrettyWkt + Environment.NewLine + Environment.NewLine + "does not match that of the GCD project:" + Environment.NewLine + Environment.NewLine + dod.RawDoD.Proj.PrettyWkt + Environment.NewLine + Environment.NewLine + "All datasets within a GCD project must have the identical coordinate system. However, small discrepencies in coordinate system names might cause the two coordinate systems to appear different. " + "If you believe that the selected dataset does in fact possess the same coordinate system as the GCD project then use the ArcToolbox 'Define Projection' geoprocessing tool in the " + "'Data Management -> Projection & Transformations' Toolbox to correct the problem with the selected dataset by defining the coordinate system as:" + Environment.NewLine + Environment.NewLine + dod.RawDoD.Proj.PrettyWkt + Environment.NewLine + Environment.NewLine + "Then try importing it into the GCD again.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        ucPolygon.Select();
                         return false;
                     }
                 }
@@ -116,19 +124,19 @@ namespace GCDCore.UserInterface.BudgetSegregation
             else
             {
                 MessageBox.Show("Please choose a polygon mask on which you wish to base this budget segregation.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                ucPolygon.Select();
                 return false;
             }
 
             if (string.IsNullOrEmpty(cboField.Text))
             {
                 MessageBox.Show("Please choose a polygon mask field. Or add a \"string\" field to the feature class if one does not exist.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                cboField.Select();
                 return false;
             }
 
             return true;
-
         }
-
 
         private void cboDoD_SelectedIndexChanged(object sender, System.EventArgs e)
         {
@@ -144,7 +152,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
 
             if (dod is DoDMinLoD)
             {
-                txtUncertaintyAnalysis.Text = string.Format("Minimum Level of Detection at {0:#0.00}{1}", ((DoDMinLoD)dod).Threshold, UnitsNet.Length.GetAbbreviation( ProjectManager.Project.Units.VertUnit));
+                txtUncertaintyAnalysis.Text = string.Format("Minimum Level of Detection at {0:#0.00}{1}", ((DoDMinLoD)dod).Threshold, UnitsNet.Length.GetAbbreviation(ProjectManager.Project.Units.VertUnit));
             }
             else if (dod is DoDPropagated)
             {
@@ -167,13 +175,10 @@ namespace GCDCore.UserInterface.BudgetSegregation
                 return;
             }
 
-            cboField.DataSource = ucPolygon.SelectedItem.Fields.Values.Where(p => p.Type.Equals(GCDConsoleLib.GDalFieldType.StringField));
-
-            if (cboField.Items.Count > 0)
-            {
+            List<GCDConsoleLib.VectorField> stringFields = ucPolygon.SelectedItem.Fields.Values.Where(x => x.Type.Equals(GCDConsoleLib.GDalFieldType.StringField)).ToList<GCDConsoleLib.VectorField>();
+            cboField.Items.AddRange(stringFields.ToArray());
+            if (cboField.Items.Count == 1)
                 cboField.SelectedIndex = 0;
-            }
-
         }
 
         private void cmdHelp_Click(System.Object sender, System.EventArgs e)
