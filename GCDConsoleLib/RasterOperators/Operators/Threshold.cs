@@ -87,10 +87,10 @@ namespace GCDConsoleLib.Internal.Operators
             {
                 if (_rasters.Count == 1)
                 {
-                    if (_botOp == RasterOperators.ThresholdOps.GreaterThan && val <= _botNum ||
+                    if (!(_botOp == RasterOperators.ThresholdOps.GreaterThan && val <= _botNum ||
                         _botOp == RasterOperators.ThresholdOps.GreaterThanOrEqual && val < _botNum ||
                         _topOp == RasterOperators.ThresholdOps.LessThan && val >= _topNum ||
-                        _topOp == RasterOperators.ThresholdOps.LessThanOrEqual && val > _topNum)
+                        _topOp == RasterOperators.ThresholdOps.LessThanOrEqual && val > _topNum))
                         val = _rasternodatavals[0];
                 }
                 else

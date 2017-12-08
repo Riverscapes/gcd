@@ -24,7 +24,7 @@ namespace GCDCore.Engines
         /// <remarks>Let the base class build the pyramids for the thresholded raster</remarks>
         protected override Raster ThresholdRawDoD(Raster rawDoD, FileInfo thrDoDPath)
         {
-            return RasterOperators.SetNull(rawDoD, RasterOperators.ThresholdOps.LessThanOrEqual, Threshold, thrDoDPath);
+            return RasterOperators.SetNull(rawDoD, RasterOperators.ThresholdOps.GreaterThanOrEqual, -Threshold, RasterOperators.ThresholdOps.LessThanOrEqual, Threshold, thrDoDPath);
         }
 
         protected override DoDStats CalculateChangeStats(Raster rawDoD, Raster thrDoD, UnitGroup units)

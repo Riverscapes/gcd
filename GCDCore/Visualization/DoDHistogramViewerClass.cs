@@ -33,7 +33,7 @@ namespace GCDCore.Visualization
         public class HistogramDisplayData
         {
             public decimal Threshold { get; set; }
-            public decimal Raw { get; private set; }
+            public decimal Raw { get; set; }
             public decimal Elevation { get; private set; }
 
             public decimal Deposition { get { return Elevation > 0 ? Threshold : 0; } }
@@ -114,12 +114,12 @@ namespace GCDCore.Visualization
             m_Chart.Series.FindByName(RAW).Points.DataBindXY(histoData.Values, "Elevation", histoData.Values, "Raw");
 
             var _with3 = m_Chart.ChartAreas[0];
-            _with3.AxisX.Title = string.Format("Elevation Change ({0})", DisplayUnits.VertUnit);
+            _with3.AxisX.Title = string.Format("Elevation Change ({0})", UnitsNet.Length.GetAbbreviation(DisplayUnits.VertUnit));
 
             if (bArea)
-                _with3.AxisY.Title = string.Format("Area ({0}²)", UnitsNet.Area.GetAbbreviation(DisplayUnits.ArUnit));
+                _with3.AxisY.Title = string.Format("Area ({0})", UnitsNet.Area.GetAbbreviation(DisplayUnits.ArUnit));
             else
-                _with3.AxisY.Title = string.Format("Volume ({0}³)", UnitsNet.Volume.GetAbbreviation(DisplayUnits.VolUnit));
+                _with3.AxisY.Title = string.Format("Volume ({0})", UnitsNet.Volume.GetAbbreviation(DisplayUnits.VolUnit));
         }
 
         private void GetDisplayValues(bool bArea)
@@ -149,9 +149,9 @@ namespace GCDCore.Visualization
                     if (!histoData.ContainsKey(binleft)) histoData[binleft] = new HistogramDisplayData(binleft);
 
                     if (bArea)
-                        histoData[binleft].Threshold = (decimal)(_rawHist.BinArea(bid, Project.ProjectManager.Project.CellArea).As(DisplayUnits.ArUnit)) - histoData[binleft].Threshold;
+                        histoData[binleft].Raw = (decimal)(_rawHist.BinArea(bid, Project.ProjectManager.Project.CellArea).As(DisplayUnits.ArUnit)) - histoData[binleft].Threshold;
                     else
-                        histoData[binleft].Threshold = (decimal)_rawHist.BinVolume(bid, Project.ProjectManager.Project.CellArea, DataUnits).As(DisplayUnits.VolUnit) - histoData[binleft].Threshold;
+                        histoData[binleft].Raw = (decimal)_rawHist.BinVolume(bid, Project.ProjectManager.Project.CellArea, DataUnits).As(DisplayUnits.VolUnit) - histoData[binleft].Threshold;
                 }
 
             }
