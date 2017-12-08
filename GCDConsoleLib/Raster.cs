@@ -425,10 +425,10 @@ namespace GCDConsoleLib
         {
             if (bForce || !_bComputedStatistics)
             {
-                Open(true);
-                double min, max, mean, std;
                 try
                 {
+                    Open(true);
+                    double min, max, mean, std;
                     _ds.GetRasterBand(1).ComputeStatistics(false, out min, out max, out mean, out std, null, null);
                 }
                 catch { }
