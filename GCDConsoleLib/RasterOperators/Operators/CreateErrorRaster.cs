@@ -149,7 +149,7 @@ namespace GCDConsoleLib.Internal.Operators
 
                 // Now we need to decide what to do based on how many intersections we found.
                 if (shapes.Count == 1)
-                    CellChangeCalc(shapes[0], data, id);
+                    return CellChangeCalc(shapes[0], data, id);
                 else if (shapes.Count > 1)
                     throw new NotImplementedException("Overlapping shapes is not yet supported");
                 else
