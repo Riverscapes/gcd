@@ -137,7 +137,7 @@ namespace GCDCore.Visualization
                 if (bArea)
                     histoData[binleft].Threshold = (decimal)(_thrHist.BinArea(bid, Project.ProjectManager.Project.CellArea).As(DisplayUnits.ArUnit));
                 else
-                    histoData[binleft].Threshold = (decimal)_thrHist.BinVolume(bid, Project.ProjectManager.Project.CellArea, DataUnits).As(DisplayUnits.VolUnit);
+                    histoData[binleft].Threshold =Math.Abs( (decimal)_thrHist.BinVolume(bid, Project.ProjectManager.Project.CellArea, DataUnits).As(DisplayUnits.VolUnit));
             }
 
             if ((_rawHist != null))
@@ -151,7 +151,7 @@ namespace GCDCore.Visualization
                     if (bArea)
                         histoData[binleft].Raw = (decimal)(_rawHist.BinArea(bid, Project.ProjectManager.Project.CellArea).As(DisplayUnits.ArUnit)) - histoData[binleft].Threshold;
                     else
-                        histoData[binleft].Raw = (decimal)_rawHist.BinVolume(bid, Project.ProjectManager.Project.CellArea, DataUnits).As(DisplayUnits.VolUnit) - histoData[binleft].Threshold;
+                        histoData[binleft].Raw = Math.Abs((decimal)_rawHist.BinVolume(bid, Project.ProjectManager.Project.CellArea, DataUnits).As(DisplayUnits.VolUnit)) - histoData[binleft].Threshold;
                 }
 
             }
