@@ -121,6 +121,7 @@ namespace GCDAddIn
         public IRasterLayer AddAssociatedSurface(AssocSurface assocRow)
         {
             IGroupLayer pAssocGrpLyr = AddAssociatedSurfaceGroupLayer(assocRow.DEM);
+            IRasterLayer pAssocLyr = null;
 
             double dTransparency = GCDCore.Properties.Settings.Default.TransparencyAssociatedLayers ? GCDCore.Properties.Settings.Default.AutoTransparencyValue : -1;
 
@@ -131,90 +132,68 @@ namespace GCDAddIn
                     if (!GCDCore.Properties.Settings.Default.ApplyComparativeSymbology)
                     {
                         IRasterRenderer rasterRenderer = RasterSymbolization.CreateClassifyRenderer(assocRow.Raster, 11, "Slope");
-                        IRasterLayer pAssocLyr = AddRasterLayer(assocRow.Raster, rasterRenderer, assocRow.Name, pAssocGrpLyr, assocRow.LayerHeader, dTransparency);
-                        return pAssocLyr;
+                        pAssocLyr = ArcMapUtilities.AddRasterLayer(assocRow.Raster, rasterRenderer, assocRow.Name, pAssocGrpLyr, assocRow.LayerHeader, dTransparency);
+                    }
+
+                    break;
+
+                case AssocSurface.AssociatedSurfaceTypes.PointQuality3D:
+
+                    if (!GCDCore.Properties.Settings.Default.ApplyComparativeSymbology)
+                    {
+                        IRasterRenderer rasterRenderer = GCD.RasterSymbolization.CreateClassifyRenderer(gAssociatedRaster, 11, "Precipitation", true);
+                        pAssocLyr = AddRasterLayer(m_pArcMap.Document, gAssociatedRaster, rasterRenderer, assocRow.Name, pAssocGrpLyr, sHeader, dTransparency);
                     }
                     break;
-            }
-            else if (eType == ArcMap.RasterLayerTypes.PointQuality)
-            {
-                if (My.Settings.ApplyComparativeSymbology == false)
-                {
-                    IRasterRenderer rasterRenderer = GCD.RasterSymbolization.CreateClassifyRenderer(gAssociatedRaster, 11, "Precipitation", true);
+
+                case AssocSurface.AssociatedSurfaceTypes.PointDensity:
+
+                    if (!GCDCore.Properties.Settings.Default.ApplyComparativeSymbology)
+                    {
+                        if (gAssociatedRaster.Maximum <= 2 & gAssociatedRaster.Maximum > 0.25)
+                        {
+                            IRasterRenderer rasterRenderer = GCD.RasterSymbolization.CreateClassifyRenderer(gAssociatedRaster, 11, "Green to Blue", 1.1, true);
+                            pAssocLyr = AddRasterLayer(m_pArcMap.Document, gAssociatedRaster, rasterRenderer, assocRow.Name, pAssocGrpLyr, sHeader, dTransparency);
+                        }
+                        else
+                        {
+                            IRasterRenderer rasterRenderer = GCD.RasterSymbolization.CreateClassifyRenderer(gAssociatedRaster, 11, "Green to Blue", true);
+                            pAssocLyr = AddRasterLayer(m_pArcMap.Document, gAssociatedRaster, rasterRenderer, assocRow.Name, pAssocGrpLyr, sHeader, dTransparency);
+                        }
+                    }
+                    break;
+
+                case AssocSurface.AssociatedSurfaceTypes.GrainSizeStatic:
+
+                    NumberFormatting.LinearUnits eUnits = NumberFormatting.GetLinearUnitsFromString(GCDCore.Project.ProjectManager.Project.Units.VertUnit.ToString());
+                    IRasterRenderer rasterRenderer = RasterSymbolization.CreateGrainSizeStatisticColorRamp(gAssociatedRaster, eUnits);
                     ILayer pAssocLyr = AddRasterLayer(m_pArcMap.Document, gAssociatedRaster, rasterRenderer, assocRow.Name, pAssocGrpLyr, sHeader, dTransparency);
                     return pAssocLyr;
-                }
-                else if (My.Settings.ApplyComparativeSymbology & My.Settings.ComparativeSymbology3dPointQuality)
-                {
-                }
-            }
-            else if (eType == ArcMap.RasterLayerTypes.PointDensity)
-            {
-                if (My.Settings.ApplyComparativeSymbology == false)
-                {
-                    if (gAssociatedRaster.Maximum <= 2 & gAssociatedRaster.Maximum > 0.25)
-                    {
-                        IRasterRenderer rasterRenderer = GCD.RasterSymbolization.CreateClassifyRenderer(gAssociatedRaster, 11, "Green to Blue", 1.1, true);
-                        ILayer pAssocLyr = AddRasterLayer(m_pArcMap.Document, gAssociatedRaster, rasterRenderer, assocRow.Name, pAssocGrpLyr, sHeader, dTransparency);
-                        return pAssocLyr;
-                    }
-                    else
-                    {
-                        IRasterRenderer rasterRenderer = GCD.RasterSymbolization.CreateClassifyRenderer(gAssociatedRaster, 11, "Green to Blue", true);
-                        ILayer pAssocLyr = AddRasterLayer(m_pArcMap.Document, gAssociatedRaster, rasterRenderer, assocRow.Name, pAssocGrpLyr, sHeader, dTransparency);
-                        return pAssocLyr;
-                    }
-                }
-                else if (My.Settings.ApplyComparativeSymbology & My.Settings.ComparativeSymbologyPointDensity)
-                {
-                }
-            }
-            else if (eType == ArcMap.RasterLayerTypes.GrainSizeStatistic)
-            {
-                NumberFormatting.LinearUnits eUnits = NumberFormatting.GetLinearUnitsFromString(GCD.GCDProject.ProjectManager.DisplayUnits.ToString());
-                IRasterRenderer rasterRenderer = GCD.RasterSymbolization.CreateGrainSizeStatisticColorRamp(gAssociatedRaster, eUnits);
-                ILayer pAssocLyr = AddRasterLayer(m_pArcMap.Document, gAssociatedRaster, rasterRenderer, assocRow.Name, pAssocGrpLyr, sHeader, dTransparency);
-                return pAssocLyr;
-            }
-            else if (eType == ArcMap.RasterLayerTypes.Roughness)
-            {
-                IRasterRenderer rasterRenderer = GCD.RasterSymbolization.CreateRoughnessColorRamp(gAssociatedRaster);
-                ILayer pAssocLyr = AddRasterLayer(m_pArcMap.Document, gAssociatedRaster, rasterRenderer, assocRow.Name, pAssocGrpLyr, sHeader, dTransparency);
-                return pAssocLyr;
-            }
-            else if (eType == ArcMap.RasterLayerTypes.SlopeDegrees)
-            {
-                IRasterRenderer rasterRenderer = GCD.RasterSymbolization.CreateSlopeDegreesColorRamp(gAssociatedRaster);
-                ILayer pAssocLyr = AddRasterLayer(m_pArcMap.Document, gAssociatedRaster, rasterRenderer, assocRow.Name, pAssocGrpLyr, sHeader, dTransparency);
-                return pAssocLyr;
-            }
-            else if (eType == ArcMap.RasterLayerTypes.SlopePercentRise)
-            {
-                IRasterRenderer rasterRenderer = GCD.RasterSymbolization.CreateSlopePrecentRiseColorRamp(gAssociatedRaster);
-                ILayer pAssocLyr = AddRasterLayer(m_pArcMap.Document, gAssociatedRaster, rasterRenderer, assocRow.Name, pAssocGrpLyr, sHeader, dTransparency);
-                return pAssocLyr;
-            }
-            else if (eType != GISCode.ArcMap.RasterLayerTypes.Undefined)
-            {
-                string sSymbology = GISDataStructures.RasterGCD.GetSymbologyLayerFile(eType);
-                IRasterLayer pAssocLyr = AddToMapRaster(sRasterPath, assocRow.Name, pAssocGrpLyr, sSymbology, dTransparency, sHeader);
-                return pAssocLyr;
-            }
-            else
-            {
-                IRasterLayer pAssocLyr = AddToMapRaster(sRasterPath, assocRow.Name, pAssocGrpLyr);
-                return pAssocLyr;
-            }
 
-            throw new Exception("An unrecognized Raster Layer Type was used.");
+                case AssocSurface.AssociatedSurfaceTypes.Roughness:
+
+                    IRasterRenderer rasterRenderer = GCD.RasterSymbolization.CreateRoughnessColorRamp(gAssociatedRaster);
+                    ILayer pAssocLyr = AddRasterLayer(m_pArcMap.Document, gAssociatedRaster, rasterRenderer, assocRow.Name, pAssocGrpLyr, sHeader, dTransparency);
+                    return pAssocLyr;
+
+                case AssocSurface.AssociatedSurfaceTypes.SlopeDegree:
+
+                    IRasterRenderer rasterRenderer = GCD.RasterSymbolization.CreateSlopeDegreesColorRamp(gAssociatedRaster);
+                    ILayer pAssocLyr = AddRasterLayer(m_pArcMap.Document, gAssociatedRaster, rasterRenderer, assocRow.Name, pAssocGrpLyr, sHeader, dTransparency);
+                    return pAssocLyr;
+
+                case AssocSurface.AssociatedSurfaceTypes.SlopePercent:
+
+                    IRasterRenderer rasterRenderer = GCD.RasterSymbolization.CreateSlopePrecentRiseColorRamp(gAssociatedRaster);
+                    ILayer pAssocLyr = AddRasterLayer(m_pArcMap.Document, gAssociatedRaster, rasterRenderer, assocRow.Name, pAssocGrpLyr, sHeader, dTransparency);
+                    return pAssocLyr;
+
+                default:
+
+                    string sSymbology = GISDataStructures.RasterGCD.GetSymbologyLayerFile(eType);
+                    IRasterLayer pAssocLyr = AddToMapRaster(sRasterPath, assocRow.Name, pAssocGrpLyr, sSymbology, dTransparency, sHeader);
+                    return pAssocLyr;
+            }
         }
-
-
-
-
-
-
-
-
     }
 }
