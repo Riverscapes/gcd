@@ -38,12 +38,12 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.Label1 = new System.Windows.Forms.Label();
             this.GroupBox1 = new System.Windows.Forms.GroupBox();
             this.txtNewError = new System.Windows.Forms.TextBox();
-            this.Label2 = new System.Windows.Forms.Label();
+            this.lblNewError = new System.Windows.Forms.Label();
             this.txtNewDEM = new System.Windows.Forms.TextBox();
             this.cmsBasicRaster = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.GroupBox2 = new System.Windows.Forms.GroupBox();
             this.txtOldError = new System.Windows.Forms.TextBox();
-            this.Label3 = new System.Windows.Forms.Label();
+            this.lblOldError = new System.Windows.Forms.Label();
             this.txtOldDEM = new System.Windows.Forms.TextBox();
             this.Label4 = new System.Windows.Forms.Label();
             this.GroupBox3 = new System.Windows.Forms.GroupBox();
@@ -90,7 +90,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             // GroupBox1
             // 
             this.GroupBox1.Controls.Add(this.txtNewError);
-            this.GroupBox1.Controls.Add(this.Label2);
+            this.GroupBox1.Controls.Add(this.lblNewError);
             this.GroupBox1.Controls.Add(this.txtNewDEM);
             this.GroupBox1.Controls.Add(this.Label1);
             this.GroupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -111,14 +111,14 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.txtNewError.Size = new System.Drawing.Size(163, 20);
             this.txtNewError.TabIndex = 3;
             // 
-            // Label2
+            // lblNewError
             // 
-            this.Label2.AutoSize = true;
-            this.Label2.Location = new System.Drawing.Point(36, 50);
-            this.Label2.Name = "Label2";
-            this.Label2.Size = new System.Drawing.Size(29, 13);
-            this.Label2.TabIndex = 2;
-            this.Label2.Text = "Error";
+            this.lblNewError.AutoSize = true;
+            this.lblNewError.Location = new System.Drawing.Point(36, 50);
+            this.lblNewError.Name = "lblNewError";
+            this.lblNewError.Size = new System.Drawing.Size(29, 13);
+            this.lblNewError.TabIndex = 2;
+            this.lblNewError.Text = "Error";
             // 
             // txtNewDEM
             // 
@@ -138,7 +138,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             // GroupBox2
             // 
             this.GroupBox2.Controls.Add(this.txtOldError);
-            this.GroupBox2.Controls.Add(this.Label3);
+            this.GroupBox2.Controls.Add(this.lblOldError);
             this.GroupBox2.Controls.Add(this.txtOldDEM);
             this.GroupBox2.Controls.Add(this.Label4);
             this.GroupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -159,14 +159,14 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.txtOldError.Size = new System.Drawing.Size(163, 20);
             this.txtOldError.TabIndex = 3;
             // 
-            // Label3
+            // lblOldError
             // 
-            this.Label3.AutoSize = true;
-            this.Label3.Location = new System.Drawing.Point(36, 50);
-            this.Label3.Name = "Label3";
-            this.Label3.Size = new System.Drawing.Size(29, 13);
-            this.Label3.TabIndex = 2;
-            this.Label3.Text = "Error";
+            this.lblOldError.AutoSize = true;
+            this.lblOldError.Location = new System.Drawing.Point(36, 50);
+            this.lblOldError.Name = "lblOldError";
+            this.lblOldError.Size = new System.Drawing.Size(29, 13);
+            this.lblOldError.TabIndex = 2;
+            this.lblOldError.Text = "Error";
             // 
             // txtOldDEM
             // 
@@ -476,11 +476,11 @@ namespace GCDCore.UserInterface.ChangeDetection
 		internal System.Windows.Forms.Label Label1;
 		internal System.Windows.Forms.GroupBox GroupBox1;
 		internal System.Windows.Forms.TextBox txtNewError;
-		internal System.Windows.Forms.Label Label2;
+		internal System.Windows.Forms.Label lblNewError;
 		internal System.Windows.Forms.TextBox txtNewDEM;
 		internal System.Windows.Forms.GroupBox GroupBox2;
 		internal System.Windows.Forms.TextBox txtOldError;
-		internal System.Windows.Forms.Label Label3;
+		internal System.Windows.Forms.Label lblOldError;
 		internal System.Windows.Forms.TextBox txtOldDEM;
 		internal System.Windows.Forms.Label Label4;
 		internal System.Windows.Forms.GroupBox GroupBox3;

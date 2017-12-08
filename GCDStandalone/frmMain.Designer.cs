@@ -33,6 +33,7 @@
             this.projectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newGCDProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openGCDProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiRecentGCDProjects = new System.Windows.Forms.ToolStripMenuItem();
             this.closeGCDProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.projectPropertiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.browseGCDProjectFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -40,7 +41,6 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataPreparationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cleanRasterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.analysisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.customizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fISLibraryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -58,7 +58,6 @@
             this.ucProjectExplorer1 = new GCDCore.UserInterface.Project.ucProjectExplorer();
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.tsmiRecentGCDProjects = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -73,7 +72,6 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.projectToolStripMenuItem,
             this.dataPreparationToolStripMenuItem,
-            this.analysisToolStripMenuItem,
             this.customizeToolStripMenuItem,
             this.helpToolStripMenuItem1});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
@@ -113,6 +111,12 @@
             this.openGCDProjectToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
             this.openGCDProjectToolStripMenuItem.Text = "Open GCD Project...";
             this.openGCDProjectToolStripMenuItem.Click += new System.EventHandler(this.openGCDProjectToolStripMenuItem_Click);
+            // 
+            // tsmiRecentGCDProjects
+            // 
+            this.tsmiRecentGCDProjects.Name = "tsmiRecentGCDProjects";
+            this.tsmiRecentGCDProjects.Size = new System.Drawing.Size(215, 22);
+            this.tsmiRecentGCDProjects.Text = "Recent GCD Projects";
             // 
             // closeGCDProjectToolStripMenuItem
             // 
@@ -165,26 +169,20 @@
             this.cleanRasterToolStripMenuItem.Text = "Clean Raster...";
             this.cleanRasterToolStripMenuItem.Click += new System.EventHandler(this.cleanRasterToolStripMenuItem_Click);
             // 
-            // analysisToolStripMenuItem
-            // 
-            this.analysisToolStripMenuItem.Name = "analysisToolStripMenuItem";
-            this.analysisToolStripMenuItem.Size = new System.Drawing.Size(62, 20);
-            this.analysisToolStripMenuItem.Text = "Analysis";
-            // 
             // customizeToolStripMenuItem
             // 
             this.customizeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.optionsToolStripMenuItem,
             this.fISLibraryToolStripMenuItem});
             this.customizeToolStripMenuItem.Name = "customizeToolStripMenuItem";
-            this.customizeToolStripMenuItem.Size = new System.Drawing.Size(75, 20);
-            this.customizeToolStripMenuItem.Text = "Customize";
+            this.customizeToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
+            this.customizeToolStripMenuItem.Text = "Tools";
             // 
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.Image = global::GCDStandalone.Properties.Resources.Settings;
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.optionsToolStripMenuItem.Text = "Options";
             this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
             // 
@@ -192,7 +190,7 @@
             // 
             this.fISLibraryToolStripMenuItem.Image = global::GCDStandalone.Properties.Resources.FISLibrary;
             this.fISLibraryToolStripMenuItem.Name = "fISLibraryToolStripMenuItem";
-            this.fISLibraryToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.fISLibraryToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.fISLibraryToolStripMenuItem.Text = "FIS Library";
             this.fISLibraryToolStripMenuItem.Click += new System.EventHandler(this.fISLibraryToolStripMenuItem_Click);
             // 
@@ -347,12 +345,6 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(907, 392);
             this.tableLayoutPanel1.TabIndex = 5;
             // 
-            // tsmiRecentGCDProjects
-            // 
-            this.tsmiRecentGCDProjects.Name = "tsmiRecentGCDProjects";
-            this.tsmiRecentGCDProjects.Size = new System.Drawing.Size(215, 22);
-            this.tsmiRecentGCDProjects.Text = "Recent GCD Projects";
-            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -395,7 +387,6 @@
         private System.Windows.Forms.ToolStripMenuItem closeGCDProjectToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem projectPropertiesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem browseGCDProjectFolderToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem analysisToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem customizeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem1;

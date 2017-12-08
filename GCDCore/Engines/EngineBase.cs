@@ -162,8 +162,8 @@ namespace GCDCore.Engines
             string areaHistPath = Path.Combine(FiguresFolder.FullName, "Histogram_Area.png");
             string volhistPath = Path.Combine(FiguresFolder.FullName, "Histogram_Volume.png");
 
-            //DoDHistogramViewerClass ExportHistogramViewer = new DoDHistogramViewerClass(ref rawHisto, ref thrHisto, LinearUnits);
-            //ExportHistogramViewer.ExportCharts(areaHistPath, volhistPath, fChartWidth, fChartHeight);
+            DoDHistogramViewerClass ExportHistogramViewer = new DoDHistogramViewerClass(rawHisto, thrHisto, Project.ProjectManager.Project.Units);
+            ExportHistogramViewer.ExportCharts(areaHistPath, volhistPath, fChartWidth, fChartHeight);
         }
     }
 }

@@ -81,17 +81,33 @@ namespace GCDCore.Visualization
                 series.ChartArea = m_Chart.ChartAreas.First().Name;
             }
 
-            var _with1 = m_Chart.ChartAreas[0].AxisX;
-            _with1.MajorGrid.LineColor = Color.LightSlateGray;
-            _with1.MinorTickMark.Enabled = true;
-
-            var _with2 = m_Chart.ChartAreas[0].AxisY;
-            _with2.MajorGrid.LineColor = Color.LightSlateGray;
-            _with2.MinorTickMark.Enabled = true;
+            Axis x = m_Chart.ChartAreas[0].AxisX;
+            x.MajorGrid.LineColor = Color.LightSlateGray;
+            x.MinorTickMark.Enabled = false;
+ 
+            Axis y = m_Chart.ChartAreas[0].AxisY;
+            y.MajorGrid.LineColor = Color.LightSlateGray;
+            y.MinorTickMark.Enabled = true;
 
             _rawHist = rawHisto;
             _thrHist = thrHisto;
 
+            // Strip line is used to emphasize deposition
+            StripLine depositionArea = new StripLine();
+            depositionArea.BackColor = Color.FromArgb(10, GCDCore.Properties.Settings.Default.Deposition);
+            depositionArea.Interval = 0;
+            depositionArea.IntervalOffset = 0;
+            depositionArea.StripWidth = 10;
+            m_Chart.ChartAreas[0].AxisX.StripLines.Add(depositionArea);
+
+            // Strip line is used to emphasize deposition
+            StripLine erosionArea = new StripLine();
+            erosionArea.BackColor = Color.FromArgb(10, GCDCore.Properties.Settings.Default.Erosion);
+            erosionArea.Interval = 0;
+            erosionArea.IntervalOffset = 0;
+            erosionArea.StripWidth = 10;
+            m_Chart.ChartAreas[0].AxisX.StripLines.Add(erosionArea);
+            
             UpdateDisplay(true);
         }
 
@@ -113,13 +129,26 @@ namespace GCDCore.Visualization
             m_Chart.Series.FindByName(DEPOSITION).Points.DataBindXY(histoData.Values, "Elevation", histoData.Values, "Deposition");
             m_Chart.Series.FindByName(RAW).Points.DataBindXY(histoData.Values, "Elevation", histoData.Values, "Raw");
 
-            var _with3 = m_Chart.ChartAreas[0];
-            _with3.AxisX.Title = string.Format("Elevation Change ({0})", UnitsNet.Length.GetAbbreviation(DisplayUnits.VertUnit));
+            double binWidth = UnitsNet.Length.From((double)_thrHist.BinWidth, Project.ProjectManager.Project.Units.VertUnit).As(DisplayUnits.VertUnit);
+
+            Axis axisX = m_Chart.ChartAreas[0].AxisX;
+            axisX.Title = string.Format("Elevation Change ({0})", UnitsNet.Length.GetAbbreviation(DisplayUnits.VertUnit));
+            axisX.Minimum = _thrHist.BinLower(_thrHist.FirstBinId, Project.ProjectManager.Project.Units).As(DisplayUnits.VertUnit);
+            axisX.Maximum = _thrHist.BinLower(_thrHist.LastBinId, Project.ProjectManager.Project.Units).As(DisplayUnits.VertUnit) + binWidth;
+            axisX.MajorGrid.Interval = 10 * binWidth;
+            axisX.MajorGrid.IntervalOffset = binWidth;
+            axisX.Interval = 10 * binWidth;
+            axisX.IntervalOffset = binWidth;
+            axisX.MinorGrid.Interval = binWidth;
 
             if (bArea)
-                _with3.AxisY.Title = string.Format("Area ({0})", UnitsNet.Area.GetAbbreviation(DisplayUnits.ArUnit));
+                m_Chart.ChartAreas[0].AxisY.Title = string.Format("Area ({0})", UnitsNet.Area.GetAbbreviation(DisplayUnits.ArUnit));
             else
-                _with3.AxisY.Title = string.Format("Volume ({0})", UnitsNet.Volume.GetAbbreviation(DisplayUnits.VolUnit));
+                m_Chart.ChartAreas[0].AxisY.Title = string.Format("Volume ({0})", UnitsNet.Volume.GetAbbreviation(DisplayUnits.VolUnit));
+
+            axisX.StripLines[0].StripWidth = axisX.Maximum;
+            axisX.StripLines[1].StripWidth = axisX.Maximum;
+            axisX.StripLines[1].IntervalOffset = axisX.Minimum;
         }
 
         private void GetDisplayValues(bool bArea)
@@ -131,13 +160,13 @@ namespace GCDCore.Visualization
             for (int bid = 0; bid < _thrHist.Count; bid++)
             {
                 // Make a dictionary entry if we don't already have one
-                decimal binleft = (decimal)_thrHist.BinLower(bid, DataUnits).As(DisplayUnits.VertUnit);
+                decimal binleft = (decimal)_thrHist.BinCentre(bid, DataUnits).As(DisplayUnits.VertUnit);
                 if (!histoData.ContainsKey(binleft)) histoData[binleft] = new HistogramDisplayData(binleft);
 
                 if (bArea)
                     histoData[binleft].Threshold = (decimal)(_thrHist.BinArea(bid, Project.ProjectManager.Project.CellArea).As(DisplayUnits.ArUnit));
                 else
-                    histoData[binleft].Threshold =Math.Abs( (decimal)_thrHist.BinVolume(bid, Project.ProjectManager.Project.CellArea, DataUnits).As(DisplayUnits.VolUnit));
+                    histoData[binleft].Threshold = Math.Abs((decimal)_thrHist.BinVolume(bid, Project.ProjectManager.Project.CellArea, DataUnits).As(DisplayUnits.VolUnit));
             }
 
             if ((_rawHist != null))
@@ -145,7 +174,7 @@ namespace GCDCore.Visualization
                 for (int bid = 0; bid < _rawHist.Count; bid++)
                 {
                     // Make a dictionary entry if we don't already have one
-                    decimal binleft = (decimal)_rawHist.BinLower(bid, DataUnits).As(DisplayUnits.VertUnit);
+                    decimal binleft = (decimal)_rawHist.BinCentre(bid, DataUnits).As(DisplayUnits.VertUnit);
                     if (!histoData.ContainsKey(binleft)) histoData[binleft] = new HistogramDisplayData(binleft);
 
                     if (bArea)
@@ -171,6 +200,9 @@ namespace GCDCore.Visualization
                 Exception ex = new Exception("The output folder for the GCD volume graph does not exist.");
                 ex.Data["volume Graph Path"] = VolumeGraphPath;
             }
+
+            m_Chart.Width = ChartWidth;
+            m_Chart.Height = ChartHeight;
 
             UpdateDisplay(true, DataUnits);
             m_Chart.SaveImage(AreaGraphPath, ChartImageFormat.Png);

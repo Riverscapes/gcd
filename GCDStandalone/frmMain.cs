@@ -246,7 +246,11 @@ namespace GCDStandalone
                             return;
 
                         default:
-                            UpdateMenuItemStatus(((ToolStripMenuItem)subMenu).DropDownItems); // Call recursive Method.
+                            // Drill into sub menus except for the most recently used items
+                            if (string.Compare(subMenu.Name, "tsmiRecentGCDProjects", true) != 0)
+                            {
+                                UpdateMenuItemStatus(((ToolStripMenuItem)subMenu).DropDownItems); // Call recursive Method.
+                            }
                             break;
                     }
                 }
@@ -260,7 +264,7 @@ namespace GCDStandalone
                         case "exitToolStripMenuItem":
                         case "customizeToolStripMenuItem":
                             break; // do nothing. Always enabled.
-
+         
                         // Skip specific tool strip items here
                         case "tsiNewProject":
                         case "tsiOpenProject":

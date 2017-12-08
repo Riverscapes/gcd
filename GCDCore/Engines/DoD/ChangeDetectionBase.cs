@@ -67,7 +67,7 @@ namespace GCDCore.Engines
             DoDStats changeStats = CalculateChangeStats(rawDoD, thrDoD, units);
             GenerateSummaryXML(changeStats, sumXMLPath);
             GenerateChangeBarGraphicFiles(changeStats, 0, 0);
-            GenerateHistogramGraphicFiles(rawHisto, thrHisto, 0, 0);
+            GenerateHistogramGraphicFiles(rawHisto, thrHisto, 1920, 1080);
 
             return GetDoDResult(changeStats, rawDoD, thrDoD, new HistogramPair(rawHisto, rawHstPath, thrHisto, thrHstPath), sumXMLPath);
         }

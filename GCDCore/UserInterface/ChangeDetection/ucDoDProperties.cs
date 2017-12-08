@@ -29,6 +29,11 @@ namespace GCDCore.UserInterface.ChangeDetection
                 txtType.Text = "Minimum Level of Detection (MinLoD)";
                 var _with1 = (DoDMinLoD)dod;
                 txtThreshold.Text = string.Format("{0:0.00}{1}", _with1.Threshold, UnitsNet.Length.GetAbbreviation(ProjectManager.Project.Units.VertUnit));
+                lblNewError.Visible = false;
+                lblOldError.Visible = false;
+                txtNewError.Visible = false;
+                txtOldError.Visible = false;
+                grpPropagated.Visible = false;
             }
             else
             {
