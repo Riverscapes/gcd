@@ -54,9 +54,11 @@ namespace GCDCore.Engines
                 m_SpatialCoErosionRaster = new FileInfo(Path.ChangeExtension(Path.Combine(AnalysisFolder.FullName, "nbrErosion"), OutputManager.RasterExtension));
                 m_SpatialCoDepositionRaster = new FileInfo(Path.ChangeExtension(Path.Combine(AnalysisFolder.FullName, "nbrDeposition"), OutputManager.RasterExtension));
 
-                thrDoD = RasterOperators.ThresholdDoDProbWithSpatialCoherence(rawDoD, new FileInfo(thrDoDPath.FullName), priorPRob,
+                Raster PostProb = RasterOperators.PosteriorProbability(rawDoD, priorPRob,
                     m_PosteriorRaster, m_ConditionalRaster, m_SpatialCoErosionRaster, m_SpatialCoDepositionRaster,
-                    SpatialCoherence.MovingWindowDimensions, SpatialCoherence.InflectionA, SpatialCoherence.InflectionB, Threshold);
+                    SpatialCoherence.MovingWindowDimensions, SpatialCoherence.InflectionA, SpatialCoherence.InflectionB);
+
+                thrDoD = RasterOperators.ThresholdDoDProbability(rawDoD, PostProb, new FileInfo(thrDoDPath.FullName), Threshold);
 
                 // Build Pyramids
                 ProjectManager.PyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.ProbabilityRasters, m_SpatialCoErosionRaster);

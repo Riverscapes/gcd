@@ -633,8 +633,8 @@ namespace GCDConsoleLib
         /// 
         /// </summary>
         /// <returns></returns>
-        public static Raster ThresholdDoDProbWithSpatialCoherence(
-            Raster rawDoD, FileInfo thrDoDPath,
+        public static Raster PosteriorProbability(
+            Raster rawDoD, 
             Raster priorProb,
             FileInfo sPosteriorRaster,
             FileInfo sConditionalRaster,
@@ -643,10 +643,19 @@ namespace GCDConsoleLib
             int nMovingWindowWidth,
             int inflectionA,
             int inflectionB,
-            decimal fThreshold)
+            EventHandler<int> progressHandler = null)
         {
-            throw new NotImplementedException();
-            return null;
+            PosteriorProbability thePostProb = new PosteriorProbability(rawDoD, priorProb,
+                new Raster(rawDoD, sPosteriorRaster),
+                new Raster(rawDoD, sConditionalRaster),
+                new Raster(rawDoD, sSpatialCoErosionRaster), 
+                new Raster(rawDoD, sSpatialCoDepositionRaster),
+                nMovingWindowWidth, inflectionA, inflectionB);
+
+            if (progressHandler != null)
+                thePostProb.ProgressEvent += progressHandler;
+
+            return thePostProb.RunWithOutput();
         }
 
         /// <summary>
