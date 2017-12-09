@@ -16,7 +16,7 @@ namespace GCDConsoleLib.Tests
     /// DO NOT TEST ANY VALUES PRODUCED HERE!!!!!!!
     /// </summary>
     [TestClass()]
-    public class STUPIDTESTS
+    public class DEBUGGINGHELPER
     {
         [TestMethod()]
         public void EXTENTDEDCOPY()
@@ -59,12 +59,12 @@ namespace GCDConsoleLib.Tests
         [TestMethod()]
         public void BINRASTERPOLYGON()
         {
-            FileInfo fisFile = new FileInfo(@"C:\dev\MultMethodUniform\inputs\2006FebDEM\2006FebDEM.tif");
-            Raster Input = new Raster(fisFile);
-            Vector mask = new Vector(new FileInfo(@"C:\dev\MultMethodUniform\inputs\2006FebDEM\Masks\2006FebDEMMask.shp"));
+            //FileInfo fisFile = new FileInfo(@"C:\dev\MultMethodUniform\inputs\2006FebDEM\2006FebDEM.tif");
+            //Raster Input = new Raster(fisFile);
+            //Vector mask = new Vector(new FileInfo(@"C:\dev\MultMethodUniform\inputs\2006FebDEM\Masks\2006FebDEMMask.shp"));
 
-            Dictionary<string, Histogram> thebins = RasterOperators.BinRaster(Input, 100, mask, "Method");
-            Assert.Fail();
+            //Dictionary<string, Histogram> thebins = RasterOperators.BinRaster(Input, 100, mask, "Method");
+            //Assert.Fail();
         }
     }
 }
