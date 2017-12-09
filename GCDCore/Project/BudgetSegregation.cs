@@ -68,7 +68,7 @@ namespace GCDCore.Project
 
             XmlNode nodClasses = nodBS.AppendChild(xmlDoc.CreateElement("Classes"));
             foreach (BudgetSegregationClass segClass in Classes.Values)
-                segClass.Serialize(xmlDoc, nodBS);
+                segClass.Serialize(xmlDoc, nodClasses);
         }
 
         public static BudgetSegregation Deserialize(XmlNode nodBS, DoDBase dod)
