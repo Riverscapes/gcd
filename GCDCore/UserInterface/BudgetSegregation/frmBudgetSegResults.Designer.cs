@@ -143,6 +143,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.cboSummaryClass.Name = "cboSummaryClass";
             this.cboSummaryClass.Size = new System.Drawing.Size(293, 21);
             this.cboSummaryClass.TabIndex = 1;
+            this.cboSummaryClass.SelectedIndexChanged += new System.EventHandler(this.cboSummaryClass_SelectedIndexChanged);
             // 
             // Label2
             // 
@@ -211,6 +212,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.cboECDClass.Name = "cboECDClass";
             this.cboECDClass.Size = new System.Drawing.Size(293, 21);
             this.cboECDClass.TabIndex = 3;
+            this.cboECDClass.SelectedIndexChanged += new System.EventHandler(this.cboECDClass_SelectedIndexChanged);
             // 
             // ucHistogram
             // 

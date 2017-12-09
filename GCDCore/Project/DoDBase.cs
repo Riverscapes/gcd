@@ -86,7 +86,7 @@ namespace GCDCore.Project
 
             if (BudgetSegregations.Count > 0)
             {
-                XmlNode nodBS = nodParent.AppendChild(xmlDoc.CreateElement("BudgetSegregations"));
+                XmlNode nodBS = nodDoD.AppendChild(xmlDoc.CreateElement("BudgetSegregations"));
                 foreach (BudgetSegregation bs in BudgetSegregations.Values)
                     bs.Serialize(xmlDoc, nodBS);
             }

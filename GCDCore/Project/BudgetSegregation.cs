@@ -66,7 +66,7 @@ namespace GCDCore.Project
             nodBS.AppendChild(xmlDoc.CreateElement("ClassLegend")).InnerText = ProjectManager.Project.GetRelativePath(ClassLegend);
             nodBS.AppendChild(xmlDoc.CreateElement("MaskField")).InnerText = MaskField;
 
-            XmlNode nodClasses = nodParent.AppendChild(xmlDoc.CreateElement("Classes"));
+            XmlNode nodClasses = nodBS.AppendChild(xmlDoc.CreateElement("Classes"));
             foreach (BudgetSegregationClass segClass in Classes.Values)
                 segClass.Serialize(xmlDoc, nodBS);
         }
