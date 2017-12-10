@@ -256,8 +256,10 @@
     <Compile Include="UserInterface\UtilityForms\ucVectorInput.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Visualization\DoDHistogramViewerClass.cs" />
+    <Compile Include="Visualization\BudgetSegPieChartViewer.cs" />
+    <Compile Include="Visualization\DoDHistogramViewer.cs" />
     <Compile Include="Visualization\ElevationChangeBarViewer.cs" />
+    <Compile Include="Visualization\ViewerBase.cs" />
     <Compile Include="WorkspaceManager.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -6,7 +6,7 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 namespace GCDCore.Visualization
 {
-    public class ElevationChangeBarViewer
+    public class ElevationChangeBarViewer : ViewerBase
     {
         public enum BarTypes
         {
@@ -22,31 +22,9 @@ namespace GCDCore.Visualization
             Net
         }
 
-        private Chart m_chtControl;
-        //Private _ThresholdedHist As Dictionary(Of Double, Double)
-        //Private _RawHist As Dictionary(Of Double, Double)
-
-        public ElevationChangeBarViewer()
+        public ElevationChangeBarViewer(Chart chtControl = null)
+            : base(chtControl)
         {
-            m_chtControl = new Chart();
-            Init(ref m_chtControl);
-        }
-
-        public ElevationChangeBarViewer(Chart chtControl)
-        {
-            Init(ref chtControl);
-        }
-
-        private void Init(ref Chart chtControl)
-        {
-            m_chtControl = chtControl;
-
-            chtControl.ChartAreas.Clear();
-            chtControl.Series.Clear();
-
-            chtControl.ChartAreas.Add("ElevationChangeBars");
-            chtControl.Legends.Clear();
-
             var _with1 = chtControl.ChartAreas[0].AxisX;
             _with1.MajorGrid.Enabled = false;
             _with1.MajorTickMark.Enabled = false;
@@ -69,12 +47,12 @@ namespace GCDCore.Visualization
             bAbsolute);
         }
 
-        private void Refresh(double fErosion, double fDeposition, double fNet, double fErosionError, double fDepositionError, double fNetError, 
+        private void Refresh(double fErosion, double fDeposition, double fNet, double fErosionError, double fDepositionError, double fNetError,
             string sDisplayUnitsAbbreviation, bool bShowErrorBars, bool bShowNet, BarTypes eType,
 
         bool bAbsolute)
         {
-            m_chtControl.Series.Clear();
+            m_Chart.Series.Clear();
 
             if (bAbsolute)
             {
@@ -100,7 +78,7 @@ namespace GCDCore.Visualization
                     sYAxisLabel = string.Format("Elevation ({0})", sDisplayUnitsAbbreviation);
                     break;
             }
-            m_chtControl.ChartAreas[0].AxisY.Title = sYAxisLabel;
+            m_Chart.ChartAreas[0].AxisY.Title = sYAxisLabel;
 
             Dictionary<string, Color> dSeries = new Dictionary<string, Color> {
                 {
@@ -117,25 +95,25 @@ namespace GCDCore.Visualization
                 dSeries.Add("Net", Color.Black);
             }
 
-            Series errSeries = m_chtControl.Series.Add("erosion");
+            Series errSeries = m_Chart.Series.Add("erosion");
             errSeries.Color = Properties.Settings.Default.Erosion;
-            errSeries.ChartArea = m_chtControl.ChartAreas.First().Name;
+            errSeries.ChartArea = m_Chart.ChartAreas.First().Name;
             errSeries.ChartType = SeriesChartType.StackedColumn;
             errSeries.Points.AddXY(GetXAxisLabel(eType, SeriesType.Erosion), fErosion);
             errSeries.Points.AddXY(GetXAxisLabel(eType, SeriesType.Depositon), 0);
 
-            Series depSeries = m_chtControl.Series.Add("deposition");
+            Series depSeries = m_Chart.Series.Add("deposition");
             depSeries.Color = Properties.Settings.Default.Deposition;
-            depSeries.ChartArea = m_chtControl.ChartAreas.First().Name;
+            depSeries.ChartArea = m_Chart.ChartAreas.First().Name;
             depSeries.ChartType = SeriesChartType.StackedColumn;
             depSeries.Points.AddXY(GetXAxisLabel(eType, SeriesType.Erosion), 0);
             depSeries.Points.AddXY(GetXAxisLabel(eType, SeriesType.Depositon), fDeposition);
 
             if (bShowNet)
             {
-                Series netSeries = m_chtControl.Series.Add("net");
+                Series netSeries = m_Chart.Series.Add("net");
                 netSeries.Color = (fNet >= 0 ? Properties.Settings.Default.Deposition : Properties.Settings.Default.Erosion);
-                netSeries.ChartArea = m_chtControl.ChartAreas.First().Name;
+                netSeries.ChartArea = m_Chart.ChartAreas.First().Name;
                 netSeries.Points.AddXY(GetXAxisLabel(eType, SeriesType.Erosion), 0);
                 netSeries.Points.AddXY(GetXAxisLabel(eType, SeriesType.Depositon), 0);
                 netSeries.Points.AddXY(GetXAxisLabel(eType, SeriesType.Net), fNet);
@@ -144,8 +122,8 @@ namespace GCDCore.Visualization
                 depSeries.Points.AddXY(GetXAxisLabel(eType, SeriesType.Net), 0);
             }
 
-            m_chtControl.ChartAreas[0].RecalculateAxesScale();
-            m_chtControl.AlignDataPointsByAxisLabel();
+            m_Chart.ChartAreas[0].RecalculateAxesScale();
+            m_Chart.AlignDataPointsByAxisLabel();
         }
 
         private object GetXAxisLabel(BarTypes eBarType, SeriesType eSeriesType)
@@ -189,9 +167,9 @@ namespace GCDCore.Visualization
 
         }
 
-        public void Save(string sFilePath, int nChartWidth, int nChartHeight)
+        public void Save(System.IO.FileInfo filePath, int nChartWidth, int nChartHeight)
         {
-            m_chtControl.SaveImage(sFilePath, ChartImageFormat.Png);
+            SaveImage(filePath);
         }
     }
 }

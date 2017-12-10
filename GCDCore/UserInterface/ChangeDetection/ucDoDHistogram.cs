@@ -5,7 +5,7 @@ namespace GCDCore.UserInterface.ChangeDetection
 {
     public partial class ucDoDHistogram
     {
-        private DoDHistogramViewerClass m_HistogramViewer;
+        private DoDHistogramViewer m_HistogramViewer;
         private void rdoVolume_CheckedChanged(object sender, System.EventArgs e)
         {
             m_HistogramViewer.SetChartType(rdoArea.Checked);
@@ -18,7 +18,7 @@ namespace GCDCore.UserInterface.ChangeDetection
 
         public void LoadHistograms(GCDConsoleLib.Histogram rawHistogram, GCDConsoleLib.Histogram thrHistogram)
         {
-            m_HistogramViewer = new DoDHistogramViewerClass(rawHistogram, thrHistogram, ProjectManager.Project.Units, chtData);
+            m_HistogramViewer = new DoDHistogramViewer(rawHistogram, thrHistogram, ProjectManager.Project.Units, chtData);
         }
         public ucDoDHistogram()
         {

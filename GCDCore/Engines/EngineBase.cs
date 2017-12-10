@@ -106,12 +106,12 @@ namespace GCDCore.Engines
             barViewer.Refresh(
                 stats.ErosionThr.GetArea(ca).As(au),
                 stats.DepositionThr.GetArea(ca).As(au), abbr, ElevationChangeBarViewer.BarTypes.Area, true);
-            barViewer.Save(Path.Combine(FiguresFolder.FullName, sFilePrefix + "ChangeBars_AreaAbsolute.png"), fChartWidth, fChartHeight);
+            barViewer.Save(new FileInfo( Path.Combine(FiguresFolder.FullName, sFilePrefix + "ChangeBars_AreaAbsolute.png")), fChartWidth, fChartHeight);
 
             barViewer.Refresh(
                 stats.ErosionThr.GetArea(ca).As(au),
                 stats.DepositionThr.GetArea(ca).As(au), abbr, ElevationChangeBarViewer.BarTypes.Area, false);
-            barViewer.Save(Path.Combine(FiguresFolder.FullName, sFilePrefix + "ChangeBars_AreaRelative.png"), fChartWidth, fChartHeight);
+            barViewer.Save(new FileInfo(Path.Combine(FiguresFolder.FullName, sFilePrefix + "ChangeBars_AreaRelative.png")), fChartWidth, fChartHeight);
 
             barViewer.Refresh(
                 stats.ErosionThr.GetVolume(ca, lu).As(vu),
@@ -120,7 +120,7 @@ namespace GCDCore.Engines
                 stats.ErosionErr.GetVolume(ca, lu).As(vu),
                 stats.DepositionErr.GetVolume(ca, lu).As(vu),
                 stats.NetVolumeOfDifference_Error.As(vu), abbr, ElevationChangeBarViewer.BarTypes.Volume, true);
-            barViewer.Save(Path.Combine(FiguresFolder.FullName, sFilePrefix + "ChangeBars_VolumeAbsolute.png"), fChartWidth, fChartHeight);
+            barViewer.Save(new FileInfo(Path.Combine(FiguresFolder.FullName, sFilePrefix + "ChangeBars_VolumeAbsolute.png")), fChartWidth, fChartHeight);
 
             barViewer.Refresh(
                 stats.ErosionThr.GetVolume(ca, lu).As(vu),
@@ -129,7 +129,7 @@ namespace GCDCore.Engines
                 stats.ErosionErr.GetVolume(ca, lu).As(vu),
                 stats.DepositionErr.GetVolume(ca, lu).As(vu),
                 stats.NetVolumeOfDifference_Error.As(vu), abbr, ElevationChangeBarViewer.BarTypes.Volume, false);
-            barViewer.Save(Path.Combine(FiguresFolder.FullName, sFilePrefix + "ChangeBars_VolumeRelative.png"), fChartWidth, fChartHeight);
+            barViewer.Save(new FileInfo(Path.Combine(FiguresFolder.FullName, sFilePrefix + "ChangeBars_VolumeRelative.png")), fChartWidth, fChartHeight);
 
             barViewer.Refresh(
                 stats.AverageDepthErosion_Thresholded.As(lu),
@@ -138,7 +138,7 @@ namespace GCDCore.Engines
                 stats.AverageDepthErosion_Error.As(lu),
                 stats.AverageDepthDeposition_Error.As(lu),
                 stats.AverageThicknessOfDifferenceADC_Error.As(lu), abbr, ElevationChangeBarViewer.BarTypes.Vertical, true);
-            barViewer.Save(Path.Combine(FiguresFolder.FullName, sFilePrefix + "ChangeBars_DepthAbsolute.png"), fChartWidth, fChartHeight);
+            barViewer.Save(new FileInfo(Path.Combine(FiguresFolder.FullName, sFilePrefix + "ChangeBars_DepthAbsolute.png")), fChartWidth, fChartHeight);
 
             barViewer.Refresh(
                 stats.AverageDepthErosion_Thresholded.As(lu),
@@ -147,7 +147,7 @@ namespace GCDCore.Engines
                 stats.AverageDepthErosion_Error.As(lu),
                 stats.AverageDepthDeposition_Error.As(lu),
                 stats.AverageThicknessOfDifferenceADC_Error.As(lu), abbr, ElevationChangeBarViewer.BarTypes.Vertical, false);
-            barViewer.Save(Path.Combine(FiguresFolder.FullName, sFilePrefix + "ChangeBars_DepthRelative.png"), fChartWidth, fChartHeight);
+            barViewer.Save(new FileInfo(Path.Combine(FiguresFolder.FullName, sFilePrefix + "ChangeBars_DepthRelative.png")), fChartWidth, fChartHeight);
         }
 
         protected void WriteHistogram(Histogram histo, FileInfo outputFile)
@@ -159,10 +159,10 @@ namespace GCDCore.Engines
         {
             FiguresFolder.Create();
 
-            string areaHistPath = Path.Combine(FiguresFolder.FullName, "Histogram_Area.png");
-            string volhistPath = Path.Combine(FiguresFolder.FullName, "Histogram_Volume.png");
+            FileInfo areaHistPath = new FileInfo(Path.Combine(FiguresFolder.FullName, "Histogram_Area.png"));
+            FileInfo volhistPath = new FileInfo( Path.Combine(FiguresFolder.FullName, "Histogram_Volume.png"));
 
-            DoDHistogramViewerClass ExportHistogramViewer = new DoDHistogramViewerClass(rawHisto, thrHisto, Project.ProjectManager.Project.Units);
+            DoDHistogramViewer ExportHistogramViewer = new DoDHistogramViewer(rawHisto, thrHisto, Project.ProjectManager.Project.Units);
             ExportHistogramViewer.ExportCharts(areaHistPath, volhistPath, fChartWidth, fChartHeight);
         }
     }

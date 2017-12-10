@@ -8,14 +8,12 @@ using GCDConsoleLib;
 
 namespace GCDCore.Visualization
 {
-    public class DoDHistogramViewerClass
+    public class DoDHistogramViewer : ViewerBase
     {
         // Names for data series
         private const string EROSION = "Erosion";
         private const string DEPOSITION = "Deposition";
         private const string RAW = "Raw";
-
-        private Chart m_Chart;
 
         // Raw histogram data
         Histogram _rawHist;
@@ -25,7 +23,6 @@ namespace GCDCore.Visualization
 
         private readonly GCDConsoleLib.GCD.UnitGroup DataUnits;
         private GCDConsoleLib.GCD.UnitGroup DisplayUnits { get; set; }
-
 
         /// <summary>
         /// NOTE: The decimals in here must already be in their display unit
@@ -49,23 +46,11 @@ namespace GCDCore.Visualization
         /// <summary>
         /// Call this constructor from non-UI code that simply wants to generate histogram plot image files
         /// </summary>
-        public DoDHistogramViewerClass(Histogram rawHisto, Histogram thrHisto, GCDConsoleLib.GCD.UnitGroup dataUnits, Chart chtControl = null)
+        public DoDHistogramViewer(Histogram rawHisto, Histogram thrHisto, GCDConsoleLib.GCD.UnitGroup dataUnits, Chart chtControl = null)
+            : base(chtControl)
         {
             DataUnits = dataUnits;
             DisplayUnits = dataUnits;
-
-            // Proceed and do the one-time chart preparation
-            if (chtControl == null)
-                m_Chart = new Chart();
-            else
-                m_Chart = chtControl;
-
-            m_Chart.ChartAreas.Clear();
-            m_Chart.ChartAreas.Add(new ChartArea());
-
-            m_Chart.Series.Clear();
-            m_Chart.Palette = ChartColorPalette.None;
-            m_Chart.Legends.Clear();
 
             Dictionary<string, Color> seriesDefs = new Dictionary<string, Color> {
                 {  EROSION, Properties.Settings.Default.Erosion },
@@ -84,7 +69,7 @@ namespace GCDCore.Visualization
             Axis x = m_Chart.ChartAreas[0].AxisX;
             x.MajorGrid.LineColor = Color.LightSlateGray;
             x.MinorTickMark.Enabled = false;
- 
+
             Axis y = m_Chart.ChartAreas[0].AxisY;
             y.MajorGrid.LineColor = Color.LightSlateGray;
             y.MinorTickMark.Enabled = true;
@@ -107,7 +92,7 @@ namespace GCDCore.Visualization
             erosionArea.IntervalOffset = 0;
             erosionArea.StripWidth = 10;
             m_Chart.ChartAreas[0].AxisX.StripLines.Add(erosionArea);
-            
+
             UpdateDisplay(true);
         }
 
@@ -182,33 +167,19 @@ namespace GCDCore.Visualization
                     else
                         histoData[bincentre].Raw = Math.Abs((decimal)_rawHist.BinVolume(bid, Project.ProjectManager.Project.CellArea, DataUnits).As(DisplayUnits.VolUnit)) - histoData[bincentre].Threshold;
                 }
-
             }
-
         }
 
-        public void ExportCharts(string AreaGraphPath, string VolumeGraphPath, int ChartWidth, int ChartHeight)
+        public void ExportCharts(FileInfo AreaGraphPath, FileInfo VolumeGraphPath, int ChartWidth, int ChartHeight)
         {
-            if (!Directory.Exists(Path.GetDirectoryName(AreaGraphPath)))
-            {
-                Exception ex = new Exception("The output folder for the GCD area graph does not exist.");
-                ex.Data["Area Graph Path"] = AreaGraphPath;
-            }
-
-            if (!Directory.Exists(Path.GetDirectoryName(VolumeGraphPath)))
-            {
-                Exception ex = new Exception("The output folder for the GCD volume graph does not exist.");
-                ex.Data["volume Graph Path"] = VolumeGraphPath;
-            }
-
             m_Chart.Width = ChartWidth;
             m_Chart.Height = ChartHeight;
 
             UpdateDisplay(true, DataUnits);
-            m_Chart.SaveImage(AreaGraphPath, ChartImageFormat.Png);
+            SaveImage(AreaGraphPath);
 
             UpdateDisplay(false, DataUnits);
-            m_Chart.SaveImage(VolumeGraphPath, ChartImageFormat.Png);
+            SaveImage(VolumeGraphPath);
         }
     }
 }
