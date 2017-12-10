@@ -15,11 +15,10 @@ namespace GCDCore.UserInterface.BudgetSegregation
 
         private ChangeDetection.DoDSummaryDisplayOptions m_Options;
 
-        BindingList<BudgetSegregationClass> Classes;
+        //BindingList<BudgetSegregationClass> Classes;
 
         public frmBudgetSegResults(GCDCore.Project.BudgetSegregation BS)
         {
-            Load += BudgetSegResultsForm_Load;
             // This call is required by the designer.
             InitializeComponent();
 
@@ -31,17 +30,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
         private void BudgetSegResultsForm_Load(object sender, System.EventArgs e)
         {
             txtName.Text = BudgetSeg.Name;
-
-            // Using the same binding source for both these controls should keep them synchronized
-            Classes = new BindingList<BudgetSegregationClass>(BudgetSeg.Classes.Values.ToList());
-            cboSummaryClass.DataSource = Classes;
-            cboECDClass.DataSource = Classes;
-
-            //if (cboSummaryClass.Items.Count > 0)
-            //{
-            //    cboSummaryClass.SelectedIndex = 0;
-            //    cboECDClass.SelectedIndex = 0;
-            //}
+            cboBudgetClass.DataSource = new BindingList<BudgetSegregationClass>(BudgetSeg.Classes.Values.ToList());
 
             txtPolygonMask.Text = ProjectManager.Project.GetRelativePath(BudgetSeg.PolygonMask.FullName);
             txtField.Text = BudgetSeg.MaskField;
@@ -50,25 +39,12 @@ namespace GCDCore.UserInterface.BudgetSegregation
             tabMain.TabPages.Remove(TabPage4);
         }
 
-        private void cboSummaryClass_SelectedIndexChanged(object sender, System.EventArgs e)
+        private void cboBudgetClass_SelectedIndexChanged(object sender, EventArgs e)
         {
-            BudgetSegregationClass classResult = BudgetSeg.Classes[cboSummaryClass.SelectedItem.ToString()];
+            BudgetSegregationClass classResult = (BudgetSegregationClass) cboBudgetClass.SelectedItem;
             ucSummary.RefreshDisplay(classResult.Statistics, m_Options);
-
-            // syncronize the two dropdown lits
-           // cboECDClass.SelectedIndex = cboSummaryClass.SelectedIndex;
-        }
-
-        private void cboECDClass_SelectedIndexChanged(object sender, System.EventArgs e)
-        {
-            BudgetSegregationClass classResult = BudgetSeg.Classes[cboECDClass.SelectedItem.ToString()];
             ucHistogram.LoadHistograms(classResult.Histograms.Raw.Data, classResult.Histograms.Thr.Data);
-
-            // Update the elevation change bar chart control
             ucBars.ChangeStats = classResult.Statistics;
-
-            // syncronize the two dropdown lits
-            //cboSummaryClass.SelectedIndex = cboECDClass.SelectedIndex;
         }
 
         private void cmdBrowse_Click(System.Object sender, System.EventArgs e)
