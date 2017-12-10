@@ -45,11 +45,8 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.cmdHelp = new System.Windows.Forms.Button();
             this.tabMain = new System.Windows.Forms.TabControl();
             this.TabPage1 = new System.Windows.Forms.TabPage();
-            this.ucSummary = new GCDCore.UserInterface.ChangeDetection.ucDoDSummary();
             this.TabPage2 = new System.Windows.Forms.TabPage();
             this.TableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.ucBars = new GCDCore.UserInterface.ChangeDetection.ucChangeBars();
-            this.ucHistogram = new GCDCore.UserInterface.ChangeDetection.ucDoDHistogram();
             this.TabPage3 = new System.Windows.Forms.TabPage();
             this.grpBudgetSeg = new System.Windows.Forms.GroupBox();
             this.txtField = new System.Windows.Forms.TextBox();
@@ -58,13 +55,18 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.cmsBasicRaster = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.AddToMapToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.Label3 = new System.Windows.Forms.Label();
-            this.ucProperties = new GCDCore.UserInterface.ChangeDetection.ucDoDProperties();
             this.TabPage4 = new System.Windows.Forms.TabPage();
             this.Label1 = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
             this.cmdBrowse = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.cboBudgetClass = new System.Windows.Forms.ComboBox();
+            this.cboRaw = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.ucSummary = new GCDCore.UserInterface.ChangeDetection.ucDoDSummary();
+            this.ucBars = new GCDCore.UserInterface.ChangeDetection.ucChangeBars();
+            this.ucHistogram = new GCDCore.UserInterface.ChangeDetection.ucDoDHistogram();
+            this.ucProperties = new GCDCore.UserInterface.ChangeDetection.ucDoDProperties();
             this.tabMain.SuspendLayout();
             this.TabPage1.SuspendLayout();
             this.TabPage2.SuspendLayout();
@@ -81,7 +83,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.cmdCancel.Location = new System.Drawing.Point(591, 475);
             this.cmdCancel.Name = "cmdCancel";
             this.cmdCancel.Size = new System.Drawing.Size(75, 23);
-            this.cmdCancel.TabIndex = 0;
+            this.cmdCancel.TabIndex = 8;
             this.cmdCancel.Text = "Close";
             this.cmdCancel.UseVisualStyleBackColor = true;
             // 
@@ -91,7 +93,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.cmdHelp.Location = new System.Drawing.Point(12, 475);
             this.cmdHelp.Name = "cmdHelp";
             this.cmdHelp.Size = new System.Drawing.Size(75, 23);
-            this.cmdHelp.TabIndex = 2;
+            this.cmdHelp.TabIndex = 9;
             this.cmdHelp.Text = "Help";
             this.cmdHelp.UseVisualStyleBackColor = true;
             // 
@@ -104,11 +106,11 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.tabMain.Controls.Add(this.TabPage2);
             this.tabMain.Controls.Add(this.TabPage3);
             this.tabMain.Controls.Add(this.TabPage4);
-            this.tabMain.Location = new System.Drawing.Point(4, 76);
+            this.tabMain.Location = new System.Drawing.Point(4, 109);
             this.tabMain.Name = "tabMain";
             this.tabMain.SelectedIndex = 0;
-            this.tabMain.Size = new System.Drawing.Size(662, 393);
-            this.tabMain.TabIndex = 3;
+            this.tabMain.Size = new System.Drawing.Size(662, 360);
+            this.tabMain.TabIndex = 7;
             // 
             // TabPage1
             // 
@@ -116,18 +118,10 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.TabPage1.Location = new System.Drawing.Point(4, 22);
             this.TabPage1.Name = "TabPage1";
             this.TabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage1.Size = new System.Drawing.Size(654, 367);
+            this.TabPage1.Size = new System.Drawing.Size(654, 334);
             this.TabPage1.TabIndex = 0;
             this.TabPage1.Text = "Tabular Results By Category";
             this.TabPage1.UseVisualStyleBackColor = true;
-            // 
-            // ucSummary
-            // 
-            this.ucSummary.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucSummary.Location = new System.Drawing.Point(3, 3);
-            this.ucSummary.Name = "ucSummary";
-            this.ucSummary.Size = new System.Drawing.Size(648, 361);
-            this.ucSummary.TabIndex = 2;
             // 
             // TabPage2
             // 
@@ -135,7 +129,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.TabPage2.Location = new System.Drawing.Point(4, 22);
             this.TabPage2.Name = "TabPage2";
             this.TabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage2.Size = new System.Drawing.Size(654, 367);
+            this.TabPage2.Size = new System.Drawing.Size(654, 334);
             this.TabPage2.TabIndex = 1;
             this.TabPage2.Text = "Graphical Results By Category";
             this.TabPage2.UseVisualStyleBackColor = true;
@@ -154,28 +148,8 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.TableLayoutPanel1.RowCount = 1;
             this.TableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.TableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 376F));
-            this.TableLayoutPanel1.Size = new System.Drawing.Size(648, 361);
+            this.TableLayoutPanel1.Size = new System.Drawing.Size(648, 328);
             this.TableLayoutPanel1.TabIndex = 6;
-            // 
-            // ucBars
-            // 
-            this.ucBars.ChangeStats = null;
-            this.ucBars.DisplayUnits = null;
-            this.ucBars.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucBars.Location = new System.Drawing.Point(504, 3);
-            this.ucBars.Name = "ucBars";
-            this.ucBars.Size = new System.Drawing.Size(141, 370);
-            this.ucBars.TabIndex = 5;
-            // 
-            // ucHistogram
-            // 
-            this.ucHistogram.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.TableLayoutPanel1.SetColumnSpan(this.ucHistogram, 2);
-            this.ucHistogram.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucHistogram.Location = new System.Drawing.Point(3, 3);
-            this.ucHistogram.Name = "ucHistogram";
-            this.ucHistogram.Size = new System.Drawing.Size(495, 370);
-            this.ucHistogram.TabIndex = 4;
             // 
             // TabPage3
             // 
@@ -184,7 +158,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.TabPage3.Location = new System.Drawing.Point(4, 22);
             this.TabPage3.Name = "TabPage3";
             this.TabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage3.Size = new System.Drawing.Size(654, 367);
+            this.TabPage3.Size = new System.Drawing.Size(654, 334);
             this.TabPage3.TabIndex = 2;
             this.TabPage3.Text = "Analysis Inputs";
             this.TabPage3.UseVisualStyleBackColor = true;
@@ -251,19 +225,12 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.Label3.TabIndex = 0;
             this.Label3.Text = "Polygon mask:";
             // 
-            // ucProperties
-            // 
-            this.ucProperties.Location = new System.Drawing.Point(6, 6);
-            this.ucProperties.Name = "ucProperties";
-            this.ucProperties.Size = new System.Drawing.Size(642, 206);
-            this.ucProperties.TabIndex = 0;
-            // 
             // TabPage4
             // 
             this.TabPage4.Location = new System.Drawing.Point(4, 22);
             this.TabPage4.Name = "TabPage4";
             this.TabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage4.Size = new System.Drawing.Size(654, 367);
+            this.TabPage4.Size = new System.Drawing.Size(654, 334);
             this.TabPage4.TabIndex = 3;
             this.TabPage4.Text = "Report";
             this.TabPage4.UseVisualStyleBackColor = true;
@@ -271,7 +238,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
             // Label1
             // 
             this.Label1.AutoSize = true;
-            this.Label1.Location = new System.Drawing.Point(45, 14);
+            this.Label1.Location = new System.Drawing.Point(50, 14);
             this.Label1.Name = "Label1";
             this.Label1.Size = new System.Drawing.Size(35, 13);
             this.Label1.TabIndex = 0;
@@ -281,10 +248,10 @@ namespace GCDCore.UserInterface.BudgetSegregation
             // 
             this.txtName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtName.Location = new System.Drawing.Point(86, 10);
+            this.txtName.Location = new System.Drawing.Point(91, 10);
             this.txtName.Name = "txtName";
             this.txtName.ReadOnly = true;
-            this.txtName.Size = new System.Drawing.Size(551, 20);
+            this.txtName.Size = new System.Drawing.Size(546, 20);
             this.txtName.TabIndex = 1;
             // 
             // cmdBrowse
@@ -294,33 +261,93 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.cmdBrowse.Location = new System.Drawing.Point(643, 9);
             this.cmdBrowse.Name = "cmdBrowse";
             this.cmdBrowse.Size = new System.Drawing.Size(23, 23);
-            this.cmdBrowse.TabIndex = 6;
+            this.cmdBrowse.TabIndex = 2;
             this.cmdBrowse.UseVisualStyleBackColor = true;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(12, 46);
+            this.label6.Location = new System.Drawing.Point(17, 46);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(68, 13);
-            this.label6.TabIndex = 7;
+            this.label6.TabIndex = 3;
             this.label6.Text = "Budget class";
             // 
             // cboBudgetClass
             // 
+            this.cboBudgetClass.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.cboBudgetClass.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboBudgetClass.FormattingEnabled = true;
-            this.cboBudgetClass.Location = new System.Drawing.Point(86, 42);
+            this.cboBudgetClass.Location = new System.Drawing.Point(91, 39);
             this.cboBudgetClass.Name = "cboBudgetClass";
-            this.cboBudgetClass.Size = new System.Drawing.Size(551, 21);
-            this.cboBudgetClass.TabIndex = 8;
+            this.cboBudgetClass.Size = new System.Drawing.Size(546, 21);
+            this.cboBudgetClass.TabIndex = 4;
             this.cboBudgetClass.SelectedIndexChanged += new System.EventHandler(this.cboBudgetClass_SelectedIndexChanged);
+            // 
+            // cboRaw
+            // 
+            this.cboRaw.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cboRaw.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboRaw.FormattingEnabled = true;
+            this.cboRaw.Location = new System.Drawing.Point(91, 69);
+            this.cboRaw.Name = "cboRaw";
+            this.cboRaw.Size = new System.Drawing.Size(546, 21);
+            this.cboRaw.TabIndex = 6;
+            this.cboRaw.SelectedIndexChanged += new System.EventHandler(this.cboBudgetClass_SelectedIndexChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(4, 73);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(81, 13);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "Raw represents";
+            // 
+            // ucSummary
+            // 
+            this.ucSummary.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucSummary.Location = new System.Drawing.Point(3, 3);
+            this.ucSummary.Name = "ucSummary";
+            this.ucSummary.Size = new System.Drawing.Size(648, 328);
+            this.ucSummary.TabIndex = 2;
+            // 
+            // ucBars
+            // 
+            this.ucBars.ChangeStats = null;
+            this.ucBars.DisplayUnits = null;
+            this.ucBars.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucBars.Location = new System.Drawing.Point(504, 3);
+            this.ucBars.Name = "ucBars";
+            this.ucBars.Size = new System.Drawing.Size(141, 370);
+            this.ucBars.TabIndex = 5;
+            // 
+            // ucHistogram
+            // 
+            this.ucHistogram.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.TableLayoutPanel1.SetColumnSpan(this.ucHistogram, 2);
+            this.ucHistogram.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucHistogram.Location = new System.Drawing.Point(3, 3);
+            this.ucHistogram.Name = "ucHistogram";
+            this.ucHistogram.Size = new System.Drawing.Size(495, 370);
+            this.ucHistogram.TabIndex = 4;
+            // 
+            // ucProperties
+            // 
+            this.ucProperties.Location = new System.Drawing.Point(6, 6);
+            this.ucProperties.Name = "ucProperties";
+            this.ucProperties.Size = new System.Drawing.Size(642, 206);
+            this.ucProperties.TabIndex = 0;
             // 
             // frmBudgetSegResults
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(678, 510);
+            this.Controls.Add(this.cboRaw);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.cboBudgetClass);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.cmdBrowse);
@@ -369,5 +396,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
         internal System.Windows.Forms.ToolStripMenuItem AddToMapToolStripMenuItem1;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox cboBudgetClass;
+        private System.Windows.Forms.ComboBox cboRaw;
+        private System.Windows.Forms.Label label2;
     }
 }

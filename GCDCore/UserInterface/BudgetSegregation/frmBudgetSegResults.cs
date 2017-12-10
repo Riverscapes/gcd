@@ -32,6 +32,10 @@ namespace GCDCore.UserInterface.BudgetSegregation
             txtName.Text = BudgetSeg.Name;
             cboBudgetClass.DataSource = new BindingList<BudgetSegregationClass>(BudgetSeg.Classes.Values.ToList());
 
+            cboRaw.Items.Add("DoD Area of Intereset");
+            cboRaw.Items.Add("Budget Class Area of Intereset");
+            cboRaw.SelectedIndex = 0;
+
             txtPolygonMask.Text = ProjectManager.Project.GetRelativePath(BudgetSeg.PolygonMask.FullName);
             txtField.Text = BudgetSeg.MaskField;
 
@@ -41,10 +45,13 @@ namespace GCDCore.UserInterface.BudgetSegregation
 
         private void cboBudgetClass_SelectedIndexChanged(object sender, EventArgs e)
         {
-            BudgetSegregationClass classResult = (BudgetSegregationClass) cboBudgetClass.SelectedItem;
+            BudgetSegregationClass classResult = (BudgetSegregationClass)cboBudgetClass.SelectedItem;
             ucSummary.RefreshDisplay(classResult.Statistics, m_Options);
-            ucHistogram.LoadHistograms(classResult.Histograms.Raw.Data, classResult.Histograms.Thr.Data);
             ucBars.ChangeStats = classResult.Statistics;
+
+            // The raw histogram is either that for the whole DoD or just the budget seg class
+            GCDConsoleLib.Histogram rawHist = cboRaw.SelectedIndex == 0 ? BudgetSeg.DoD.Histograms.Raw.Data : classResult.Histograms.Raw.Data;
+            ucHistogram.LoadHistograms(rawHist, classResult.Histograms.Thr.Data);
         }
 
         private void cmdBrowse_Click(System.Object sender, System.EventArgs e)

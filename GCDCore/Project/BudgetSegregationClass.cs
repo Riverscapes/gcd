@@ -35,7 +35,7 @@ namespace GCDCore.Project
             nodClass.AppendChild(xmlDoc.CreateElement("RawHistogram")).InnerText = ProjectManager.Project.GetRelativePath(Histograms.Raw.Path);
             nodClass.AppendChild(xmlDoc.CreateElement("ThrHistogram")).InnerText = ProjectManager.Project.GetRelativePath(Histograms.Thr.Path);
             nodClass.AppendChild(xmlDoc.CreateElement("SummaryXML")).InnerText = ProjectManager.Project.GetRelativePath(SummaryXML);
-            XmlNode nodStatistics = nodParent.AppendChild(xmlDoc.CreateElement("Statistics"));
+            XmlNode nodStatistics = nodClass.AppendChild(xmlDoc.CreateElement("Statistics"));
             DoDBase.SerializeDoDStatistics(xmlDoc, nodStatistics, Statistics);
         }
 
