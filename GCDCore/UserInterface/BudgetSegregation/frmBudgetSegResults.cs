@@ -13,7 +13,8 @@ namespace GCDCore.UserInterface.BudgetSegregation
     {
         private GCDCore.Project.BudgetSegregation BudgetSeg;
 
-        private ChangeDetection.DoDSummaryDisplayOptions m_Options;
+        private DoDSummaryDisplayOptions m_Options;
+        private Visualization.BudgetSegPieChartViewer PieChartViewer;
 
         //BindingList<BudgetSegregationClass> Classes;
 
@@ -25,6 +26,8 @@ namespace GCDCore.UserInterface.BudgetSegregation
             BudgetSeg = BS;
             ucProperties.Initialize(BudgetSeg.DoD);
             m_Options = new DoDSummaryDisplayOptions(ProjectManager.Project.Units);
+
+            PieChartViewer = new Visualization.BudgetSegPieChartViewer(BudgetSeg.Classes.Values.ToList<BudgetSegregationClass>(), chtPieCharts);
         }
 
         private void BudgetSegResultsForm_Load(object sender, System.EventArgs e)
@@ -41,6 +44,8 @@ namespace GCDCore.UserInterface.BudgetSegregation
 
             //Hide Report tab for now
             tabMain.TabPages.Remove(TabPage4);
+
+            PieChartViewer.RefreshPieCharts(m_Options.Units);
         }
 
         private void cboBudgetClass_SelectedIndexChanged(object sender, EventArgs e)

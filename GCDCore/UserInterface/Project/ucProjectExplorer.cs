@@ -1434,13 +1434,9 @@ namespace GCDCore.UserInterface.Project
                 TreeNode nodSelected = treProject.SelectedNode;
                 if (nodSelected is TreeNode)
                 {
-                    GCDNodeTypes eType = GetNodeType(nodSelected);
-                    int nID = GetNodeID(nodSelected);
-                    if (eType == GCDNodeTypes.BudgetSegregation && nID > 0)
-                    {
-                        //Dim frm As New BudgetSegregation.frmBudgetSegResults(nID)
-                        //frm.ShowDialog()
-                    }
+                    GCDCore.Project.BudgetSegregation bs = (GCDCore.Project.BudgetSegregation)((ProjectTreeNode)nodSelected.Tag).Item;
+                    BudgetSegregation.frmBudgetSegResults frm = new BudgetSegregation.frmBudgetSegResults(bs);
+                    frm.ShowDialog();
                 }
             }
             catch (Exception ex)

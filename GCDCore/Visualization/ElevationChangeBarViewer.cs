@@ -25,11 +25,11 @@ namespace GCDCore.Visualization
         public ElevationChangeBarViewer(Chart chtControl = null)
             : base(chtControl)
         {
-            var _with1 = chtControl.ChartAreas[0].AxisX;
+            var _with1 = m_Chart.ChartAreas[0].AxisX;
             _with1.MajorGrid.Enabled = false;
             _with1.MajorTickMark.Enabled = false;
 
-            var _with2 = chtControl.ChartAreas[0].AxisY;
+            var _with2 = m_Chart.ChartAreas[0].AxisY;
             _with2.MinorTickMark.Enabled = true;
             _with2.MajorGrid.LineColor = Color.LightSlateGray;
             _with2.MinorGrid.Enabled = true;

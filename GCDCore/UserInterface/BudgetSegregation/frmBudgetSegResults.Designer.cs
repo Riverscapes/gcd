@@ -40,13 +40,19 @@ namespace GCDCore.UserInterface.BudgetSegregation
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmBudgetSegResults));
             this.cmdCancel = new System.Windows.Forms.Button();
             this.cmdHelp = new System.Windows.Forms.Button();
             this.tabMain = new System.Windows.Forms.TabControl();
             this.TabPage1 = new System.Windows.Forms.TabPage();
+            this.ucSummary = new GCDCore.UserInterface.ChangeDetection.ucDoDSummary();
             this.TabPage2 = new System.Windows.Forms.TabPage();
             this.TableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.ucBars = new GCDCore.UserInterface.ChangeDetection.ucChangeBars();
+            this.ucHistogram = new GCDCore.UserInterface.ChangeDetection.ucDoDHistogram();
             this.TabPage3 = new System.Windows.Forms.TabPage();
             this.grpBudgetSeg = new System.Windows.Forms.GroupBox();
             this.txtField = new System.Windows.Forms.TextBox();
@@ -55,6 +61,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.cmsBasicRaster = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.AddToMapToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.Label3 = new System.Windows.Forms.Label();
+            this.ucProperties = new GCDCore.UserInterface.ChangeDetection.ucDoDProperties();
             this.TabPage4 = new System.Windows.Forms.TabPage();
             this.Label1 = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
@@ -63,10 +70,8 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.cboBudgetClass = new System.Windows.Forms.ComboBox();
             this.cboRaw = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.ucSummary = new GCDCore.UserInterface.ChangeDetection.ucDoDSummary();
-            this.ucBars = new GCDCore.UserInterface.ChangeDetection.ucChangeBars();
-            this.ucHistogram = new GCDCore.UserInterface.ChangeDetection.ucDoDHistogram();
-            this.ucProperties = new GCDCore.UserInterface.ChangeDetection.ucDoDProperties();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.chtPieCharts = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabMain.SuspendLayout();
             this.TabPage1.SuspendLayout();
             this.TabPage2.SuspendLayout();
@@ -74,6 +79,8 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.TabPage3.SuspendLayout();
             this.grpBudgetSeg.SuspendLayout();
             this.cmsBasicRaster.SuspendLayout();
+            this.tabPage5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chtPieCharts)).BeginInit();
             this.SuspendLayout();
             // 
             // cmdCancel
@@ -106,6 +113,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.tabMain.Controls.Add(this.TabPage2);
             this.tabMain.Controls.Add(this.TabPage3);
             this.tabMain.Controls.Add(this.TabPage4);
+            this.tabMain.Controls.Add(this.tabPage5);
             this.tabMain.Location = new System.Drawing.Point(4, 109);
             this.tabMain.Name = "tabMain";
             this.tabMain.SelectedIndex = 0;
@@ -122,6 +130,14 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.TabPage1.TabIndex = 0;
             this.TabPage1.Text = "Tabular Results By Category";
             this.TabPage1.UseVisualStyleBackColor = true;
+            // 
+            // ucSummary
+            // 
+            this.ucSummary.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucSummary.Location = new System.Drawing.Point(3, 3);
+            this.ucSummary.Name = "ucSummary";
+            this.ucSummary.Size = new System.Drawing.Size(648, 328);
+            this.ucSummary.TabIndex = 2;
             // 
             // TabPage2
             // 
@@ -150,6 +166,26 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.TableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 376F));
             this.TableLayoutPanel1.Size = new System.Drawing.Size(648, 328);
             this.TableLayoutPanel1.TabIndex = 6;
+            // 
+            // ucBars
+            // 
+            this.ucBars.ChangeStats = null;
+            this.ucBars.DisplayUnits = null;
+            this.ucBars.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucBars.Location = new System.Drawing.Point(504, 3);
+            this.ucBars.Name = "ucBars";
+            this.ucBars.Size = new System.Drawing.Size(141, 370);
+            this.ucBars.TabIndex = 5;
+            // 
+            // ucHistogram
+            // 
+            this.ucHistogram.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.TableLayoutPanel1.SetColumnSpan(this.ucHistogram, 2);
+            this.ucHistogram.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucHistogram.Location = new System.Drawing.Point(3, 3);
+            this.ucHistogram.Name = "ucHistogram";
+            this.ucHistogram.Size = new System.Drawing.Size(495, 370);
+            this.ucHistogram.TabIndex = 4;
             // 
             // TabPage3
             // 
@@ -224,6 +260,13 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.Label3.Size = new System.Drawing.Size(76, 13);
             this.Label3.TabIndex = 0;
             this.Label3.Text = "Polygon mask:";
+            // 
+            // ucProperties
+            // 
+            this.ucProperties.Location = new System.Drawing.Point(6, 6);
+            this.ucProperties.Name = "ucProperties";
+            this.ucProperties.Size = new System.Drawing.Size(642, 206);
+            this.ucProperties.TabIndex = 0;
             // 
             // TabPage4
             // 
@@ -306,40 +349,33 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.label2.TabIndex = 5;
             this.label2.Text = "Raw represents";
             // 
-            // ucSummary
+            // tabPage5
             // 
-            this.ucSummary.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucSummary.Location = new System.Drawing.Point(3, 3);
-            this.ucSummary.Name = "ucSummary";
-            this.ucSummary.Size = new System.Drawing.Size(648, 328);
-            this.ucSummary.TabIndex = 2;
+            this.tabPage5.Controls.Add(this.chtPieCharts);
+            this.tabPage5.Location = new System.Drawing.Point(4, 22);
+            this.tabPage5.Name = "tabPage5";
+            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage5.Size = new System.Drawing.Size(654, 334);
+            this.tabPage5.TabIndex = 4;
+            this.tabPage5.Text = "Breakdown";
+            this.tabPage5.UseVisualStyleBackColor = true;
             // 
-            // ucBars
+            // chtPieCharts
             // 
-            this.ucBars.ChangeStats = null;
-            this.ucBars.DisplayUnits = null;
-            this.ucBars.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucBars.Location = new System.Drawing.Point(504, 3);
-            this.ucBars.Name = "ucBars";
-            this.ucBars.Size = new System.Drawing.Size(141, 370);
-            this.ucBars.TabIndex = 5;
-            // 
-            // ucHistogram
-            // 
-            this.ucHistogram.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.TableLayoutPanel1.SetColumnSpan(this.ucHistogram, 2);
-            this.ucHistogram.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucHistogram.Location = new System.Drawing.Point(3, 3);
-            this.ucHistogram.Name = "ucHistogram";
-            this.ucHistogram.Size = new System.Drawing.Size(495, 370);
-            this.ucHistogram.TabIndex = 4;
-            // 
-            // ucProperties
-            // 
-            this.ucProperties.Location = new System.Drawing.Point(6, 6);
-            this.ucProperties.Name = "ucProperties";
-            this.ucProperties.Size = new System.Drawing.Size(642, 206);
-            this.ucProperties.TabIndex = 0;
+            chartArea1.Name = "ChartArea1";
+            this.chtPieCharts.ChartAreas.Add(chartArea1);
+            this.chtPieCharts.Dock = System.Windows.Forms.DockStyle.Fill;
+            legend1.Name = "Legend1";
+            this.chtPieCharts.Legends.Add(legend1);
+            this.chtPieCharts.Location = new System.Drawing.Point(3, 3);
+            this.chtPieCharts.Name = "chtPieCharts";
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chtPieCharts.Series.Add(series1);
+            this.chtPieCharts.Size = new System.Drawing.Size(648, 328);
+            this.chtPieCharts.TabIndex = 0;
+            this.chtPieCharts.Text = "chart1";
             // 
             // frmBudgetSegResults
             // 
@@ -368,6 +404,8 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.grpBudgetSeg.ResumeLayout(false);
             this.grpBudgetSeg.PerformLayout();
             this.cmsBasicRaster.ResumeLayout(false);
+            this.tabPage5.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.chtPieCharts)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -398,5 +436,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
         private System.Windows.Forms.ComboBox cboBudgetClass;
         private System.Windows.Forms.ComboBox cboRaw;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TabPage tabPage5;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chtPieCharts;
     }
 }
