@@ -205,6 +205,7 @@ namespace GCDStandalone
             }
 
             ucProjectExplorer1.cmdRefresh_Click(null, null);
+            UpdateMenusAndToolstrips(null, null);
         }
 
         private void browseGCDProjectFolderToolStripMenuItem_Click(object sender, EventArgs e)
@@ -243,7 +244,7 @@ namespace GCDStandalone
                         case "dataPreparationToolStripMenuItem":
                         case "customizeToolStripMenuItem":
                         case "helpToolStripMenuItem1":
-                            return;
+                            continue;
 
                         default:
                             // Drill into sub menus except for the most recently used items
