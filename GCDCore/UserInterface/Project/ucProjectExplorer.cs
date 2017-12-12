@@ -34,6 +34,8 @@ namespace GCDCore.UserInterface.Project
         private void ProjectExplorerUC_Load(object sender, System.EventArgs e)
         {
             LoadTree();
+
+            this.treProject.MouseDown += treProject_MouseDown;
         }
 
         /// <summary>
