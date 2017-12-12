@@ -127,15 +127,13 @@ namespace GCDCore.UserInterface.Project
             this.cmsChangeDetectionGroup.SuspendLayout();
             this.cmsChangeDetection.SuspendLayout();
             this.cmsSurveysGroup.SuspendLayout();
-            this.cmsAOIGroup.SuspendLayout();
-            this.cmsAOI.SuspendLayout();
             this.cmsDEMSurveyPair.SuspendLayout();
             this.cmsBSGroup.SuspendLayout();
             this.cmsBS.SuspendLayout();
             this.SuspendLayout();
-            //
-            //treProject
-            //
+            // 
+            // treProject
+            // 
             this.treProject.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treProject.ImageIndex = 0;
             this.treProject.ImageList = this.imgTreeImageList;
@@ -146,16 +144,10 @@ namespace GCDCore.UserInterface.Project
             this.treProject.ShowRootLines = false;
             this.treProject.Size = new System.Drawing.Size(696, 663);
             this.treProject.TabIndex = 0;
-            this.treProject.DoubleClick += treProject_DoubleClick;
-            this.treProject.MouseDown += treProject_MouseDown;
-            this.treProject.AfterSelect += treProject_AfterSelect;
-
-
-
-            //
-            //imgTreeImageList
-            //
-            this.imgTreeImageList.ImageStream = (System.Windows.Forms.ImageListStreamer)resources.GetObject("imgTreeImageList.ImageStream");
+            // 
+            // imgTreeImageList
+            // 
+            this.imgTreeImageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imgTreeImageList.ImageStream")));
             this.imgTreeImageList.TransparentColor = System.Drawing.Color.Transparent;
             this.imgTreeImageList.Images.SetKeyName(0, "Delta.png");
             this.imgTreeImageList.Images.SetKeyName(1, "BrowseFolder.png");
@@ -174,585 +166,546 @@ namespace GCDCore.UserInterface.Project
             this.imgTreeImageList.Images.SetKeyName(14, "BrowseFolder.png");
             this.imgTreeImageList.Images.SetKeyName(15, "ConcaveHull.png");
             this.imgTreeImageList.Images.SetKeyName(16, "BudgetSeg.png");
-            //
-            //cmsProject
-            //
+            // 
+            // cmsProject
+            // 
             this.cmsProject.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-                this.EditGCDProjectPropertiesToolStripMenuItem,
-                this.ToolStripMenuItem2,
-                this.ExploreGCDProjectFolderToolStripMenuItem,
-                this.ToolStripSeparator2,
-                this.ToolStripMenuItem1
-            });
+            this.EditGCDProjectPropertiesToolStripMenuItem,
+            this.ToolStripMenuItem2,
+            this.ExploreGCDProjectFolderToolStripMenuItem,
+            this.ToolStripSeparator2,
+            this.ToolStripMenuItem1});
             this.cmsProject.Name = "cmsProject";
             this.cmsProject.Size = new System.Drawing.Size(231, 98);
-            this.EditGCDProjectPropertiesToolStripMenuItem.Click += EditGCDProjectPropertiesToolStripMenuItem_Click;
-            //
-            //EditGCDProjectPropertiesToolStripMenuItem
-            //
-            this.EditGCDProjectPropertiesToolStripMenuItem.Image = Properties.Resources.Settings;
+            // 
+            // EditGCDProjectPropertiesToolStripMenuItem
+            // 
+            this.EditGCDProjectPropertiesToolStripMenuItem.Image = global::GCDCore.Properties.Resources.Settings;
             this.EditGCDProjectPropertiesToolStripMenuItem.Name = "EditGCDProjectPropertiesToolStripMenuItem";
             this.EditGCDProjectPropertiesToolStripMenuItem.Size = new System.Drawing.Size(230, 22);
             this.EditGCDProjectPropertiesToolStripMenuItem.Text = "Edit GCD Project Properties";
-            //
-            //ToolStripMenuItem2
-            //
-            this.ToolStripMenuItem2.Image = Properties.Resources.AddToMap;
+            // 
+            // ToolStripMenuItem2
+            // 
+            this.ToolStripMenuItem2.Image = global::GCDCore.Properties.Resources.AddToMap;
             this.ToolStripMenuItem2.Name = "ToolStripMenuItem2";
             this.ToolStripMenuItem2.Size = new System.Drawing.Size(230, 22);
             this.ToolStripMenuItem2.Text = "Add Entire Project to the Map";
-            this.ToolStripMenuItem2.Click += ToolStripMenuItem2_Click;
-            //
-            //ExploreGCDProjectFolderToolStripMenuItem
-            //
-            this.ExploreGCDProjectFolderToolStripMenuItem.Image = Properties.Resources.BrowseFolder;
+            // 
+            // ExploreGCDProjectFolderToolStripMenuItem
+            // 
+            this.ExploreGCDProjectFolderToolStripMenuItem.Image = global::GCDCore.Properties.Resources.BrowseFolder;
             this.ExploreGCDProjectFolderToolStripMenuItem.Name = "ExploreGCDProjectFolderToolStripMenuItem";
             this.ExploreGCDProjectFolderToolStripMenuItem.Size = new System.Drawing.Size(230, 22);
             this.ExploreGCDProjectFolderToolStripMenuItem.Text = "Explore GCD Project Folder";
-            this.ExploreGCDProjectFolderToolStripMenuItem.Click += ExploreGCDProjectFolderToolStripMenuItem_Click;
-            //
-            //ToolStripSeparator2
-            //
+            // 
+            // ToolStripSeparator2
+            // 
             this.ToolStripSeparator2.Name = "ToolStripSeparator2";
             this.ToolStripSeparator2.Size = new System.Drawing.Size(227, 6);
-            //
-            //ToolStripMenuItem1
-            //
-            this.ToolStripMenuItem1.Image = Properties.Resources.Add;
+            // 
+            // ToolStripMenuItem1
+            // 
+            this.ToolStripMenuItem1.Image = global::GCDCore.Properties.Resources.Add;
             this.ToolStripMenuItem1.Name = "ToolStripMenuItem1";
             this.ToolStripMenuItem1.Size = new System.Drawing.Size(230, 22);
             this.ToolStripMenuItem1.Text = "Specify DEM Survey";
-            this.ToolStripMenuItem1.Click += ToolStripMenuItem1_Click;
-            //
-            //cmsDEMSurvey
-            //
+            // 
+            // cmsDEMSurvey
+            // 
             this.cmsDEMSurvey.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-                this.EditDEMSurveyProperatieToolStripMenuItem,
-                this.AddToMapToolStripMenuItem,
-                this.DeleteDEMSurveyToolStripMenuItem,
-                this.ToolStripSeparator1,
-                this.AddAssociatedSurfaceToolStripMenuItem,
-                this.AddErrorSurfaceToolStripMenuItem,
-                this.DeriveErrorSurfaceToolStripMenuItem1
-            });
+            this.EditDEMSurveyProperatieToolStripMenuItem,
+            this.AddToMapToolStripMenuItem,
+            this.DeleteDEMSurveyToolStripMenuItem,
+            this.ToolStripSeparator1,
+            this.AddAssociatedSurfaceToolStripMenuItem,
+            this.AddErrorSurfaceToolStripMenuItem,
+            this.DeriveErrorSurfaceToolStripMenuItem1});
             this.cmsDEMSurvey.Name = "cmsDEMSurvey";
             this.cmsDEMSurvey.Size = new System.Drawing.Size(217, 142);
-            //
-            //EditDEMSurveyProperatieToolStripMenuItem
-            //
-            this.EditDEMSurveyProperatieToolStripMenuItem.Image = Properties.Resources.Settings;
+            // 
+            // EditDEMSurveyProperatieToolStripMenuItem
+            // 
+            this.EditDEMSurveyProperatieToolStripMenuItem.Image = global::GCDCore.Properties.Resources.Settings;
             this.EditDEMSurveyProperatieToolStripMenuItem.Name = "EditDEMSurveyProperatieToolStripMenuItem";
             this.EditDEMSurveyProperatieToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
             this.EditDEMSurveyProperatieToolStripMenuItem.Text = "Edit DEM Survey Properties";
-            this.EditDEMSurveyProperatieToolStripMenuItem.Click += EditDEMSurveyProperatieToolStripMenuItem_Click;
-            //
-            //AddToMapToolStripMenuItem
-            //
-            this.AddToMapToolStripMenuItem.Image = Properties.Resources.AddToMap;
+            // 
+            // AddToMapToolStripMenuItem
+            // 
+            this.AddToMapToolStripMenuItem.Image = global::GCDCore.Properties.Resources.AddToMap;
             this.AddToMapToolStripMenuItem.Name = "AddToMapToolStripMenuItem";
             this.AddToMapToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
             this.AddToMapToolStripMenuItem.Text = "Add to Map";
-            this.AddToMapToolStripMenuItem.Click += AddToMapToolStripMenuItem_Click;
-            //
-            //DeleteDEMSurveyToolStripMenuItem
-            //
-            this.DeleteDEMSurveyToolStripMenuItem.Image = Properties.Resources.Delete;
+            // 
+            // DeleteDEMSurveyToolStripMenuItem
+            // 
+            this.DeleteDEMSurveyToolStripMenuItem.Image = global::GCDCore.Properties.Resources.Delete;
             this.DeleteDEMSurveyToolStripMenuItem.Name = "DeleteDEMSurveyToolStripMenuItem";
             this.DeleteDEMSurveyToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
             this.DeleteDEMSurveyToolStripMenuItem.Text = "Delete DEM Survey";
-            this.DeleteDEMSurveyToolStripMenuItem.Click += btnDelete_Click;
-            //
-            //ToolStripSeparator1
-            //
+            // 
+            // ToolStripSeparator1
+            // 
             this.ToolStripSeparator1.Name = "ToolStripSeparator1";
             this.ToolStripSeparator1.Size = new System.Drawing.Size(213, 6);
-            //
-            //AddAssociatedSurfaceToolStripMenuItem
-            //
-            this.AddAssociatedSurfaceToolStripMenuItem.Image = Properties.Resources.Add;
+            // 
+            // AddAssociatedSurfaceToolStripMenuItem
+            // 
+            this.AddAssociatedSurfaceToolStripMenuItem.Image = global::GCDCore.Properties.Resources.Add;
             this.AddAssociatedSurfaceToolStripMenuItem.Name = "AddAssociatedSurfaceToolStripMenuItem";
             this.AddAssociatedSurfaceToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
             this.AddAssociatedSurfaceToolStripMenuItem.Text = "Add Associated Surface";
-            this.AddAssociatedSurfaceToolStripMenuItem.Click += AddAssociatedSurfaceToolStripMenuItem_Click;
-            //
-            //AddErrorSurfaceToolStripMenuItem
-            //
-            this.AddErrorSurfaceToolStripMenuItem.Image = Properties.Resources.Add;
+            // 
+            // AddErrorSurfaceToolStripMenuItem
+            // 
+            this.AddErrorSurfaceToolStripMenuItem.Image = global::GCDCore.Properties.Resources.Add;
             this.AddErrorSurfaceToolStripMenuItem.Name = "AddErrorSurfaceToolStripMenuItem";
             this.AddErrorSurfaceToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
             this.AddErrorSurfaceToolStripMenuItem.Text = "Specify Error Surface";
-            this.AddErrorSurfaceToolStripMenuItem.Click += SpecifyErrorSurfaceToolStripMenuItem_Click;
-            //
-            //DeriveErrorSurfaceToolStripMenuItem1
-            //
-            this.DeriveErrorSurfaceToolStripMenuItem1.Image = Properties.Resources.sigma;
+            // 
+            // DeriveErrorSurfaceToolStripMenuItem1
+            // 
+            this.DeriveErrorSurfaceToolStripMenuItem1.Image = global::GCDCore.Properties.Resources.sigma;
             this.DeriveErrorSurfaceToolStripMenuItem1.Name = "DeriveErrorSurfaceToolStripMenuItem1";
             this.DeriveErrorSurfaceToolStripMenuItem1.Size = new System.Drawing.Size(216, 22);
             this.DeriveErrorSurfaceToolStripMenuItem1.Text = "Derive Error Surface";
-            this.DeriveErrorSurfaceToolStripMenuItem1.Click += DeriveErrorSurfaceToolStripMenuItem_Click;
-            //
-            //cmsAssociatedSurface
-            //
+            // 
+            // cmsAssociatedSurface
+            // 
             this.cmsAssociatedSurface.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-                this.EditPropertiesToolStripMenuItem,
-                this.AddToMapToolStripMenuItem1,
-                this.DeleteAssociatedSurfaceToolStripMenuItem
-            });
+            this.EditPropertiesToolStripMenuItem,
+            this.AddToMapToolStripMenuItem1,
+            this.DeleteAssociatedSurfaceToolStripMenuItem});
             this.cmsAssociatedSurface.Name = "cmsAssociatedSurface";
             this.cmsAssociatedSurface.Size = new System.Drawing.Size(253, 70);
-            //
-            //EditPropertiesToolStripMenuItem
-            //
-            this.EditPropertiesToolStripMenuItem.Image = Properties.Resources.Settings;
+            // 
+            // EditPropertiesToolStripMenuItem
+            // 
+            this.EditPropertiesToolStripMenuItem.Image = global::GCDCore.Properties.Resources.Settings;
             this.EditPropertiesToolStripMenuItem.Name = "EditPropertiesToolStripMenuItem";
             this.EditPropertiesToolStripMenuItem.Size = new System.Drawing.Size(252, 22);
             this.EditPropertiesToolStripMenuItem.Text = "Edit Associated Surface Properties";
-            this.EditPropertiesToolStripMenuItem.Click += EditPropertiesToolStripMenuItem_Click;
-            //
-            //AddToMapToolStripMenuItem1
-            //
-            this.AddToMapToolStripMenuItem1.Image = Properties.Resources.AddToMap;
+            // 
+            // AddToMapToolStripMenuItem1
+            // 
+            this.AddToMapToolStripMenuItem1.Image = global::GCDCore.Properties.Resources.AddToMap;
             this.AddToMapToolStripMenuItem1.Name = "AddToMapToolStripMenuItem1";
             this.AddToMapToolStripMenuItem1.Size = new System.Drawing.Size(252, 22);
             this.AddToMapToolStripMenuItem1.Text = "Add Associated Surface to Map";
-            this.AddToMapToolStripMenuItem1.Click += AddToMapToolStripMenuItem1_Click;
-            //
-            //DeleteAssociatedSurfaceToolStripMenuItem
-            //
-            this.DeleteAssociatedSurfaceToolStripMenuItem.Image = Properties.Resources.Delete;
+            // 
+            // DeleteAssociatedSurfaceToolStripMenuItem
+            // 
+            this.DeleteAssociatedSurfaceToolStripMenuItem.Image = global::GCDCore.Properties.Resources.Delete;
             this.DeleteAssociatedSurfaceToolStripMenuItem.Name = "DeleteAssociatedSurfaceToolStripMenuItem";
             this.DeleteAssociatedSurfaceToolStripMenuItem.Size = new System.Drawing.Size(252, 22);
             this.DeleteAssociatedSurfaceToolStripMenuItem.Text = "Delete Associated Surface";
-            this.DeleteAssociatedSurfaceToolStripMenuItem.Click += btnDelete_Click;
-            //
-            //cmsAssociatedSurfaceGroup
-            //
+            // 
+            // cmsAssociatedSurfaceGroup
+            // 
             this.cmsAssociatedSurfaceGroup.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-                this.AddAssociatedSurfaceToolStripMenuItem1,
-                this.AddAllAssociatedSurfacesToTheMapToolStripMenuItem
-            });
+            this.AddAssociatedSurfaceToolStripMenuItem1,
+            this.AddAllAssociatedSurfacesToTheMapToolStripMenuItem});
             this.cmsAssociatedSurfaceGroup.Name = "cmsAssociatedSurfaceGroup";
             this.cmsAssociatedSurfaceGroup.Size = new System.Drawing.Size(282, 48);
-            //
-            //AddAssociatedSurfaceToolStripMenuItem1
-            //
-            this.AddAssociatedSurfaceToolStripMenuItem1.Image = Properties.Resources.Add;
+            // 
+            // AddAssociatedSurfaceToolStripMenuItem1
+            // 
+            this.AddAssociatedSurfaceToolStripMenuItem1.Image = global::GCDCore.Properties.Resources.Add;
             this.AddAssociatedSurfaceToolStripMenuItem1.Name = "AddAssociatedSurfaceToolStripMenuItem1";
             this.AddAssociatedSurfaceToolStripMenuItem1.Size = new System.Drawing.Size(281, 22);
             this.AddAssociatedSurfaceToolStripMenuItem1.Text = "Add Associated Surface";
-            this.AddAssociatedSurfaceToolStripMenuItem1.Click += AddAssociatedSurfaceToolStripMenuItem1_Click;
-            //
-            //AddAllAssociatedSurfacesToTheMapToolStripMenuItem
-            //
-            this.AddAllAssociatedSurfacesToTheMapToolStripMenuItem.Image = Properties.Resources.AddToMap;
+            // 
+            // AddAllAssociatedSurfacesToTheMapToolStripMenuItem
+            // 
+            this.AddAllAssociatedSurfacesToTheMapToolStripMenuItem.Image = global::GCDCore.Properties.Resources.AddToMap;
             this.AddAllAssociatedSurfacesToTheMapToolStripMenuItem.Name = "AddAllAssociatedSurfacesToTheMapToolStripMenuItem";
             this.AddAllAssociatedSurfacesToTheMapToolStripMenuItem.Size = new System.Drawing.Size(281, 22);
             this.AddAllAssociatedSurfacesToTheMapToolStripMenuItem.Text = "Add All Associated Surfaces to the Map";
-            this.AddAllAssociatedSurfacesToTheMapToolStripMenuItem.Click += AddAllAssociatedSurfacesToTheMapToolStripMenuItem_Click;
-            //
-            //cmsInputsGroup
-            //
+            // 
+            // cmsInputsGroup
+            // 
             this.cmsInputsGroup.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-                this.AddDEMSurveyToolStripMenuItem,
-                this.AddAllDEMSurveysToTheMapToolStripMenuItem
-            });
+            this.AddDEMSurveyToolStripMenuItem,
+            this.AddAllDEMSurveysToTheMapToolStripMenuItem});
             this.cmsInputsGroup.Name = "cmsInputsGroup";
             this.cmsInputsGroup.Size = new System.Drawing.Size(297, 48);
-            //
-            //AddDEMSurveyToolStripMenuItem
-            //
-            this.AddDEMSurveyToolStripMenuItem.Image = Properties.Resources.Add;
+            // 
+            // AddDEMSurveyToolStripMenuItem
+            // 
+            this.AddDEMSurveyToolStripMenuItem.Image = global::GCDCore.Properties.Resources.Add;
             this.AddDEMSurveyToolStripMenuItem.Name = "AddDEMSurveyToolStripMenuItem";
             this.AddDEMSurveyToolStripMenuItem.Size = new System.Drawing.Size(296, 22);
             this.AddDEMSurveyToolStripMenuItem.Text = "Specify DEM Survey";
-            this.AddDEMSurveyToolStripMenuItem.Click += ToolStripMenuItem1_Click;
-            //
-            //AddAllDEMSurveysToTheMapToolStripMenuItem
-            //
-            this.AddAllDEMSurveysToTheMapToolStripMenuItem.Image = Properties.Resources.AddToMap;
+            // 
+            // AddAllDEMSurveysToTheMapToolStripMenuItem
+            // 
+            this.AddAllDEMSurveysToTheMapToolStripMenuItem.Image = global::GCDCore.Properties.Resources.AddToMap;
             this.AddAllDEMSurveysToTheMapToolStripMenuItem.Name = "AddAllDEMSurveysToTheMapToolStripMenuItem";
             this.AddAllDEMSurveysToTheMapToolStripMenuItem.Size = new System.Drawing.Size(296, 22);
             this.AddAllDEMSurveysToTheMapToolStripMenuItem.Text = "Add All DEM Surveys and AOIs to the Map";
-            //
-            //cmsErrorSurfacesGroup
-            //
+            // 
+            // cmsErrorSurfacesGroup
+            // 
             this.cmsErrorSurfacesGroup.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-                this.AddErrorSurfaceToolStripMenuItem1,
-                this.DeriveErrorSurfaceToolStripMenuItem,
-                this.AddErrorSurfaceToMapToolStripMenuItem
-            });
+            this.AddErrorSurfaceToolStripMenuItem1,
+            this.DeriveErrorSurfaceToolStripMenuItem,
+            this.AddErrorSurfaceToMapToolStripMenuItem});
             this.cmsErrorSurfacesGroup.Name = "cmsErrorSurfacesGroup";
             this.cmsErrorSurfacesGroup.Size = new System.Drawing.Size(250, 70);
-            //
-            //AddErrorSurfaceToolStripMenuItem1
-            //
-            this.AddErrorSurfaceToolStripMenuItem1.Image = Properties.Resources.Add;
+            // 
+            // AddErrorSurfaceToolStripMenuItem1
+            // 
+            this.AddErrorSurfaceToolStripMenuItem1.Image = global::GCDCore.Properties.Resources.Add;
             this.AddErrorSurfaceToolStripMenuItem1.Name = "AddErrorSurfaceToolStripMenuItem1";
             this.AddErrorSurfaceToolStripMenuItem1.Size = new System.Drawing.Size(249, 22);
             this.AddErrorSurfaceToolStripMenuItem1.Text = "Specify Error Surface";
-            this.AddErrorSurfaceToolStripMenuItem1.Click += SpecifyErrorSurfaceToolStripMenuItem_Click;
-            //
-            //DeriveErrorSurfaceToolStripMenuItem
-            //
-            this.DeriveErrorSurfaceToolStripMenuItem.Image = Properties.Resources.sigma;
+            // 
+            // DeriveErrorSurfaceToolStripMenuItem
+            // 
+            this.DeriveErrorSurfaceToolStripMenuItem.Image = global::GCDCore.Properties.Resources.sigma;
             this.DeriveErrorSurfaceToolStripMenuItem.Name = "DeriveErrorSurfaceToolStripMenuItem";
             this.DeriveErrorSurfaceToolStripMenuItem.Size = new System.Drawing.Size(249, 22);
             this.DeriveErrorSurfaceToolStripMenuItem.Text = "Derive Error Surface";
-            this.DeriveErrorSurfaceToolStripMenuItem.Click += DeriveErrorSurfaceToolStripMenuItem_Click;
-            //
-            //AddErrorSurfaceToMapToolStripMenuItem
-            //
-            this.AddErrorSurfaceToMapToolStripMenuItem.Image = Properties.Resources.AddToMap;
+            // 
+            // AddErrorSurfaceToMapToolStripMenuItem
+            // 
+            this.AddErrorSurfaceToMapToolStripMenuItem.Image = global::GCDCore.Properties.Resources.AddToMap;
             this.AddErrorSurfaceToMapToolStripMenuItem.Name = "AddErrorSurfaceToMapToolStripMenuItem";
             this.AddErrorSurfaceToMapToolStripMenuItem.Size = new System.Drawing.Size(249, 22);
             this.AddErrorSurfaceToMapToolStripMenuItem.Text = "Add All Error Surfaces to the Map";
-            this.AddErrorSurfaceToMapToolStripMenuItem.Click += AddErrorSurfaceToMapToolStripMenuItem_Click;
-            //
-            //cmsErrorSurface
-            //
+            // 
+            // cmsErrorSurface
+            // 
             this.cmsErrorSurface.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-                this.EditErrorSurfacePropertiesToolStripMenuItem,
-                this.AddErrorSurfaceToMapToolStripMenuItem1,
-                this.DeleteErrorSurfaceToolStripMenuItem,
-                this.ToolStripSeparator3
-            });
+            this.EditErrorSurfacePropertiesToolStripMenuItem,
+            this.AddErrorSurfaceToMapToolStripMenuItem1,
+            this.DeleteErrorSurfaceToolStripMenuItem,
+            this.ToolStripSeparator3});
             this.cmsErrorSurface.Name = "cmsErrorSurface";
             this.cmsErrorSurface.Size = new System.Drawing.Size(221, 76);
-            //
-            //EditErrorSurfacePropertiesToolStripMenuItem
-            //
-            this.EditErrorSurfacePropertiesToolStripMenuItem.Image = Properties.Resources.Settings;
+            // 
+            // EditErrorSurfacePropertiesToolStripMenuItem
+            // 
+            this.EditErrorSurfacePropertiesToolStripMenuItem.Image = global::GCDCore.Properties.Resources.Settings;
             this.EditErrorSurfacePropertiesToolStripMenuItem.Name = "EditErrorSurfacePropertiesToolStripMenuItem";
             this.EditErrorSurfacePropertiesToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
             this.EditErrorSurfacePropertiesToolStripMenuItem.Text = "Edit Error Surface Properties";
-            //
-            //AddErrorSurfaceToMapToolStripMenuItem1
-            //
-            this.AddErrorSurfaceToMapToolStripMenuItem1.Image = Properties.Resources.AddToMap;
+            // 
+            // AddErrorSurfaceToMapToolStripMenuItem1
+            // 
+            this.AddErrorSurfaceToMapToolStripMenuItem1.Image = global::GCDCore.Properties.Resources.AddToMap;
             this.AddErrorSurfaceToMapToolStripMenuItem1.Name = "AddErrorSurfaceToMapToolStripMenuItem1";
             this.AddErrorSurfaceToMapToolStripMenuItem1.Size = new System.Drawing.Size(220, 22);
             this.AddErrorSurfaceToMapToolStripMenuItem1.Text = "Add Error Surface to Map";
-            this.AddErrorSurfaceToMapToolStripMenuItem1.Click += AddErrorSurfaceToMapToolStripMenuItem1_Click;
-            this.EditErrorSurfacePropertiesToolStripMenuItem.Click += EditErrorSurfacePropertiesToolStripMenuItem_Click;
-            //
-            //DeleteErrorSurfaceToolStripMenuItem
-            //
-            this.DeleteErrorSurfaceToolStripMenuItem.Image = Properties.Resources.Delete;
+            // 
+            // DeleteErrorSurfaceToolStripMenuItem
+            // 
+            this.DeleteErrorSurfaceToolStripMenuItem.Image = global::GCDCore.Properties.Resources.Delete;
             this.DeleteErrorSurfaceToolStripMenuItem.Name = "DeleteErrorSurfaceToolStripMenuItem";
             this.DeleteErrorSurfaceToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
             this.DeleteErrorSurfaceToolStripMenuItem.Text = "Delete Error Surface";
-            this.DeleteErrorSurfaceToolStripMenuItem.Click += btnDelete_Click;
-            //
-            //ToolStripSeparator3
-            //
+            // 
+            // ToolStripSeparator3
+            // 
             this.ToolStripSeparator3.Name = "ToolStripSeparator3";
             this.ToolStripSeparator3.Size = new System.Drawing.Size(217, 6);
-            //
-            //cmsChangeDetectionGroup
-            //
+            // 
+            // cmsChangeDetectionGroup
+            // 
             this.cmsChangeDetectionGroup.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-                this.AddChangeDetectionToolStripMenuItem,
-                this.AddAllChangeDetectionAnalysesToTheMapToolStripMenuItem
-            });
+            this.AddChangeDetectionToolStripMenuItem,
+            this.AddAllChangeDetectionAnalysesToTheMapToolStripMenuItem});
             this.cmsChangeDetectionGroup.Name = "cmsChangeDetectionGroup";
             this.cmsChangeDetectionGroup.Size = new System.Drawing.Size(322, 48);
-            //
-            //AddChangeDetectionToolStripMenuItem
-            //
-            this.AddChangeDetectionToolStripMenuItem.Image = Properties.Resources.Add;
+            // 
+            // AddChangeDetectionToolStripMenuItem
+            // 
+            this.AddChangeDetectionToolStripMenuItem.Image = global::GCDCore.Properties.Resources.Add;
             this.AddChangeDetectionToolStripMenuItem.Name = "AddChangeDetectionToolStripMenuItem";
             this.AddChangeDetectionToolStripMenuItem.Size = new System.Drawing.Size(321, 22);
             this.AddChangeDetectionToolStripMenuItem.Text = "Add Change Detection";
-            this.AddChangeDetectionToolStripMenuItem.Click += AddChangeDetectionToolStripMenuItem_Click;
-            //
-            //AddAllChangeDetectionAnalysesToTheMapToolStripMenuItem
-            //
-            this.AddAllChangeDetectionAnalysesToTheMapToolStripMenuItem.Image = Properties.Resources.AddToMap;
+            // 
+            // AddAllChangeDetectionAnalysesToTheMapToolStripMenuItem
+            // 
+            this.AddAllChangeDetectionAnalysesToTheMapToolStripMenuItem.Image = global::GCDCore.Properties.Resources.AddToMap;
             this.AddAllChangeDetectionAnalysesToTheMapToolStripMenuItem.Name = "AddAllChangeDetectionAnalysesToTheMapToolStripMenuItem";
             this.AddAllChangeDetectionAnalysesToTheMapToolStripMenuItem.Size = new System.Drawing.Size(321, 22);
             this.AddAllChangeDetectionAnalysesToTheMapToolStripMenuItem.Text = "Add All Change Detection Analyses to the Map";
-            this.AddAllChangeDetectionAnalysesToTheMapToolStripMenuItem.Click += AddAllChangeDetectionAnalysesToTheMapToolStripMenuItem_Click;
-            //
-            //cmsChangeDetection
-            //
+            // 
+            // cmsChangeDetection
+            // 
             this.cmsChangeDetection.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-                this.ViewChangeDetectionResultsToolStripMenuItem,
-                this.AddChangeDetectionToTheMapToolStripMenuItem,
-                this.AddRawChangeDetectionToTheMapToolStripMenuItem,
-                this.ExploreChangeDetectionFolderToolStripMenuItem,
-                this.DeleteChangeDetectionToolStripMenuItem,
-                this.ToolStripSeparator5,
-                this.AddBudgetSegregationToolStripMenuItem
-            });
+            this.ViewChangeDetectionResultsToolStripMenuItem,
+            this.AddChangeDetectionToTheMapToolStripMenuItem,
+            this.AddRawChangeDetectionToTheMapToolStripMenuItem,
+            this.ExploreChangeDetectionFolderToolStripMenuItem,
+            this.DeleteChangeDetectionToolStripMenuItem,
+            this.ToolStripSeparator5,
+            this.AddBudgetSegregationToolStripMenuItem});
             this.cmsChangeDetection.Name = "cmsChangeDetection";
             this.cmsChangeDetection.Size = new System.Drawing.Size(325, 142);
-            //
-            //ViewChangeDetectionResultsToolStripMenuItem
-            //
-            this.ViewChangeDetectionResultsToolStripMenuItem.Image = Properties.Resources.GCD;
+            // 
+            // ViewChangeDetectionResultsToolStripMenuItem
+            // 
+            this.ViewChangeDetectionResultsToolStripMenuItem.Image = global::GCDCore.Properties.Resources.GCD;
             this.ViewChangeDetectionResultsToolStripMenuItem.Name = "ViewChangeDetectionResultsToolStripMenuItem";
             this.ViewChangeDetectionResultsToolStripMenuItem.Size = new System.Drawing.Size(324, 22);
             this.ViewChangeDetectionResultsToolStripMenuItem.Text = "View Change Detection Results";
-            this.ViewChangeDetectionResultsToolStripMenuItem.Click += ViewChangeDetectionResultsToolStripMenuItem_Click;
-            //
-            //AddChangeDetectionToTheMapToolStripMenuItem
-            //
-            this.AddChangeDetectionToTheMapToolStripMenuItem.Image = Properties.Resources.AddToMap;
+            // 
+            // AddChangeDetectionToTheMapToolStripMenuItem
+            // 
+            this.AddChangeDetectionToTheMapToolStripMenuItem.Image = global::GCDCore.Properties.Resources.AddToMap;
             this.AddChangeDetectionToTheMapToolStripMenuItem.Name = "AddChangeDetectionToTheMapToolStripMenuItem";
             this.AddChangeDetectionToTheMapToolStripMenuItem.Size = new System.Drawing.Size(324, 22);
             this.AddChangeDetectionToTheMapToolStripMenuItem.Text = "Add Thresholded Change Detection to the Map";
-            this.AddChangeDetectionToTheMapToolStripMenuItem.Click += AddChangeDetectionToTheMapToolStripMenuItem_Click;
-            //
-            //AddRawChangeDetectionToTheMapToolStripMenuItem
-            //
-            this.AddRawChangeDetectionToTheMapToolStripMenuItem.Image = Properties.Resources.AddToMap;
+            // 
+            // AddRawChangeDetectionToTheMapToolStripMenuItem
+            // 
+            this.AddRawChangeDetectionToTheMapToolStripMenuItem.Image = global::GCDCore.Properties.Resources.AddToMap;
             this.AddRawChangeDetectionToTheMapToolStripMenuItem.Name = "AddRawChangeDetectionToTheMapToolStripMenuItem";
             this.AddRawChangeDetectionToTheMapToolStripMenuItem.Size = new System.Drawing.Size(324, 22);
             this.AddRawChangeDetectionToTheMapToolStripMenuItem.Text = "Add Raw Change Detection to the Map";
-            this.AddRawChangeDetectionToTheMapToolStripMenuItem.Click += AddRawChangeDetectionToTheMapToolStripMenuItem_Click;
-            //
-            //ExploreChangeDetectionFolderToolStripMenuItem
-            //
-            this.ExploreChangeDetectionFolderToolStripMenuItem.Image = Properties.Resources.BrowseFolder;
+            // 
+            // ExploreChangeDetectionFolderToolStripMenuItem
+            // 
+            this.ExploreChangeDetectionFolderToolStripMenuItem.Image = global::GCDCore.Properties.Resources.BrowseFolder;
             this.ExploreChangeDetectionFolderToolStripMenuItem.Name = "ExploreChangeDetectionFolderToolStripMenuItem";
             this.ExploreChangeDetectionFolderToolStripMenuItem.Size = new System.Drawing.Size(324, 22);
             this.ExploreChangeDetectionFolderToolStripMenuItem.Text = "Explore Change Detection Folder";
-            this.ExploreChangeDetectionFolderToolStripMenuItem.Click += ExploreChangeDetectionFolderToolStripMenuItem_Click;
-            //
-            //DeleteChangeDetectionToolStripMenuItem
-            //
-            this.DeleteChangeDetectionToolStripMenuItem.Image = Properties.Resources.Delete;
+            // 
+            // DeleteChangeDetectionToolStripMenuItem
+            // 
+            this.DeleteChangeDetectionToolStripMenuItem.Image = global::GCDCore.Properties.Resources.Delete;
             this.DeleteChangeDetectionToolStripMenuItem.Name = "DeleteChangeDetectionToolStripMenuItem";
             this.DeleteChangeDetectionToolStripMenuItem.Size = new System.Drawing.Size(324, 22);
             this.DeleteChangeDetectionToolStripMenuItem.Text = "Delete Change Detection";
-            this.DeleteChangeDetectionToolStripMenuItem.Click += btnDelete_Click;
-            //
-            //ToolStripSeparator5
-            //
+            // 
+            // ToolStripSeparator5
+            // 
             this.ToolStripSeparator5.Name = "ToolStripSeparator5";
             this.ToolStripSeparator5.Size = new System.Drawing.Size(321, 6);
-            //
-            //AddBudgetSegregationToolStripMenuItem
-            //
-            this.AddBudgetSegregationToolStripMenuItem.Image = Properties.Resources.Add;
+            // 
+            // AddBudgetSegregationToolStripMenuItem
+            // 
+            this.AddBudgetSegregationToolStripMenuItem.Image = global::GCDCore.Properties.Resources.Add;
             this.AddBudgetSegregationToolStripMenuItem.Name = "AddBudgetSegregationToolStripMenuItem";
             this.AddBudgetSegregationToolStripMenuItem.Size = new System.Drawing.Size(324, 22);
             this.AddBudgetSegregationToolStripMenuItem.Text = "Add Budget Segregation";
-            this.AddBudgetSegregationToolStripMenuItem.Click += AddBudgetSegregationToolStripMenuItem1_Click;
-            //
-            //cmsSurveysGroup
-            //
+            // 
+            // cmsSurveysGroup
+            // 
             this.cmsSurveysGroup.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-                this.AddDEMSurveyToolStripMenuItem1,
-                this.AddAllDEMSurveysToTheMapToolStripMenuItem1,
-                this.SortByToolStripMenuItem
-            });
+            this.AddDEMSurveyToolStripMenuItem1,
+            this.AddAllDEMSurveysToTheMapToolStripMenuItem1,
+            this.SortByToolStripMenuItem});
             this.cmsSurveysGroup.Name = "cmsSurveysGroup";
-            this.cmsSurveysGroup.Size = new System.Drawing.Size(246, 70);
-            //
-            //AddDEMSurveyToolStripMenuItem1
-            //
-            this.AddDEMSurveyToolStripMenuItem1.Image = Properties.Resources.Add;
+            this.cmsSurveysGroup.Size = new System.Drawing.Size(246, 92);
+            // 
+            // AddDEMSurveyToolStripMenuItem1
+            // 
+            this.AddDEMSurveyToolStripMenuItem1.Image = global::GCDCore.Properties.Resources.Add;
             this.AddDEMSurveyToolStripMenuItem1.Name = "AddDEMSurveyToolStripMenuItem1";
             this.AddDEMSurveyToolStripMenuItem1.Size = new System.Drawing.Size(245, 22);
-            this.AddDEMSurveyToolStripMenuItem1.Text = "Add DEM Survey";
-            this.AddDEMSurveyToolStripMenuItem1.Click += AddDEMSurveyToolStripMenuItem1_Click;
-            //
-            //AddAllDEMSurveysToTheMapToolStripMenuItem1
-            //
-            this.AddAllDEMSurveysToTheMapToolStripMenuItem1.Image = Properties.Resources.AddToMap;
+            this.AddDEMSurveyToolStripMenuItem1.Text = "Specify DEM Survey";
+            // 
+            // AddAllDEMSurveysToTheMapToolStripMenuItem1
+            // 
+            this.AddAllDEMSurveysToTheMapToolStripMenuItem1.Image = global::GCDCore.Properties.Resources.AddToMap;
             this.AddAllDEMSurveysToTheMapToolStripMenuItem1.Name = "AddAllDEMSurveysToTheMapToolStripMenuItem1";
             this.AddAllDEMSurveysToTheMapToolStripMenuItem1.Size = new System.Drawing.Size(245, 22);
             this.AddAllDEMSurveysToTheMapToolStripMenuItem1.Text = "Add All DEM Surveys to the Map";
-            this.AddAllDEMSurveysToTheMapToolStripMenuItem1.Click += AddAllDEMSurveysToTheMapToolStripMenuItem1_Click;
-            //
-            //SortByToolStripMenuItem
-            //
+            // 
+            // SortByToolStripMenuItem
+            // 
             this.SortByToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-                this.NameToolStripMenuItem,
-                this.SurveyDateToolStripMenuItem,
-                this.DateAddedToolStripMenuItem
-            });
-            this.SortByToolStripMenuItem.Image = Properties.Resources.alphabetical;
+            this.NameToolStripMenuItem,
+            this.SurveyDateToolStripMenuItem,
+            this.DateAddedToolStripMenuItem});
+            this.SortByToolStripMenuItem.Image = global::GCDCore.Properties.Resources.alphabetical;
             this.SortByToolStripMenuItem.Name = "SortByToolStripMenuItem";
             this.SortByToolStripMenuItem.Size = new System.Drawing.Size(245, 22);
             this.SortByToolStripMenuItem.Text = "Sort by:";
-            //
-            //NameToolStripMenuItem
-            //
+            // 
+            // NameToolStripMenuItem
+            // 
             this.NameToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-                this.NameAscendingToolStripMenuItem,
-                this.NameDescendingToolStripMenuItem
-            });
+            this.NameAscendingToolStripMenuItem,
+            this.NameDescendingToolStripMenuItem});
             this.NameToolStripMenuItem.Name = "NameToolStripMenuItem";
             this.NameToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.NameToolStripMenuItem.Text = "Name";
-            //
-            //NameAscendingToolStripMenuItem
-            //
+            // 
+            // NameAscendingToolStripMenuItem
+            // 
             this.NameAscendingToolStripMenuItem.Name = "NameAscendingToolStripMenuItem";
             this.NameAscendingToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.NameAscendingToolStripMenuItem.Text = "Ascending";
-            this.NameAscendingToolStripMenuItem.Click += SortTOC_Click;
-            //
-            //NameDescendingToolStripMenuItem
-            //
+            // 
+            // NameDescendingToolStripMenuItem
+            // 
             this.NameDescendingToolStripMenuItem.Name = "NameDescendingToolStripMenuItem";
             this.NameDescendingToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.NameDescendingToolStripMenuItem.Text = "Descending";
-            this.NameDescendingToolStripMenuItem.Click += SortTOC_Click;
-            //
-            //SurveyDateToolStripMenuItem
-            //
+            // 
+            // SurveyDateToolStripMenuItem
+            // 
             this.SurveyDateToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-                this.SurveyDateAscendingToolStripMenuItem,
-                this.SurveyDateDescendingToolStripMenuItem
-            });
+            this.SurveyDateAscendingToolStripMenuItem,
+            this.SurveyDateDescendingToolStripMenuItem});
             this.SurveyDateToolStripMenuItem.Name = "SurveyDateToolStripMenuItem";
             this.SurveyDateToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.SurveyDateToolStripMenuItem.Text = "Survey date";
-            //
-            //SurveyDateAscendingToolStripMenuItem
-            //
+            // 
+            // SurveyDateAscendingToolStripMenuItem
+            // 
             this.SurveyDateAscendingToolStripMenuItem.Name = "SurveyDateAscendingToolStripMenuItem";
             this.SurveyDateAscendingToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.SurveyDateAscendingToolStripMenuItem.Text = "Ascending";
-            this.SurveyDateAscendingToolStripMenuItem.Click += SortTOC_Click;
-            //
-            //SurveyDateDescendingToolStripMenuItem
-            //
+            // 
+            // SurveyDateDescendingToolStripMenuItem
+            // 
             this.SurveyDateDescendingToolStripMenuItem.Name = "SurveyDateDescendingToolStripMenuItem";
             this.SurveyDateDescendingToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.SurveyDateDescendingToolStripMenuItem.Text = "Descending";
-            this.SurveyDateDescendingToolStripMenuItem.Click += SortTOC_Click;
-            //
-            //DateAddedToolStripMenuItem
-            //
+            // 
+            // DateAddedToolStripMenuItem
+            // 
             this.DateAddedToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-                this.DateAddedAscendingToolStripMenuItem,
-                this.DateAddedDescendingToolStripMenuItem
-            });
-            this.DateAddedToolStripMenuItem.Image = Properties.Resources.Check;
+            this.DateAddedAscendingToolStripMenuItem,
+            this.DateAddedDescendingToolStripMenuItem});
+            this.DateAddedToolStripMenuItem.Image = global::GCDCore.Properties.Resources.Check;
             this.DateAddedToolStripMenuItem.Name = "DateAddedToolStripMenuItem";
             this.DateAddedToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.DateAddedToolStripMenuItem.Text = "Date added";
-            //
-            //DateAddedAscendingToolStripMenuItem
-            //
+            // 
+            // DateAddedAscendingToolStripMenuItem
+            // 
             this.DateAddedAscendingToolStripMenuItem.Name = "DateAddedAscendingToolStripMenuItem";
             this.DateAddedAscendingToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.DateAddedAscendingToolStripMenuItem.Text = "Ascending";
-            this.DateAddedAscendingToolStripMenuItem.Click += SortTOC_Click;
-            //
-            //DateAddedDescendingToolStripMenuItem
-            //
+            // 
+            // DateAddedDescendingToolStripMenuItem
+            // 
             this.DateAddedDescendingToolStripMenuItem.Name = "DateAddedDescendingToolStripMenuItem";
             this.DateAddedDescendingToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.DateAddedDescendingToolStripMenuItem.Text = "Descending";
-            this.DateAddedDescendingToolStripMenuItem.Click += SortTOC_Click;
-            //
-            //AddToMapToolStripMenuItem2
-            //
-            this.AddToMapToolStripMenuItem2.Image = Properties.Resources.AddToMap;
+            // 
+            // cmsAOIGroup
+            // 
+            this.cmsAOIGroup.Name = "cmsAOIGroup";
+            this.cmsAOIGroup.Size = new System.Drawing.Size(61, 4);
+            // 
+            // AddAOIToolStripMenuItem
+            // 
+            this.AddAOIToolStripMenuItem.Name = "AddAOIToolStripMenuItem";
+            this.AddAOIToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
+            // 
+            // AddAllAOIsToTheMapToolStripMenuItem
+            // 
+            this.AddAllAOIsToTheMapToolStripMenuItem.Name = "AddAllAOIsToTheMapToolStripMenuItem";
+            this.AddAllAOIsToTheMapToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
+            // 
+            // cmsAOI
+            // 
+            this.cmsAOI.Name = "cmsAOI";
+            this.cmsAOI.Size = new System.Drawing.Size(61, 4);
+            // 
+            // AddToMapToolStripMenuItem2
+            // 
+            this.AddToMapToolStripMenuItem2.Image = global::GCDCore.Properties.Resources.AddToMap;
             this.AddToMapToolStripMenuItem2.Name = "AddToMapToolStripMenuItem2";
             this.AddToMapToolStripMenuItem2.Size = new System.Drawing.Size(173, 22);
             this.AddToMapToolStripMenuItem2.Text = "Add To Map";
-            //
-            //ToolStripSeparator4
-            //
+            // 
+            // ToolStripSeparator4
+            // 
             this.ToolStripSeparator4.Name = "ToolStripSeparator4";
             this.ToolStripSeparator4.Size = new System.Drawing.Size(170, 6);
-            //
-            //cmsDEMSurveyPair
-            //
+            // 
+            // cmsDEMSurveyPair
+            // 
             this.cmsDEMSurveyPair.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-                this.AddChangeDetectionToolStripMenuItem1,
-                this.AddAllChangeDetectionsToTheMapToolStripMenuItem
-            });
+            this.AddChangeDetectionToolStripMenuItem1,
+            this.AddAllChangeDetectionsToTheMapToolStripMenuItem});
             this.cmsDEMSurveyPair.Name = "cmsDEMSurveyPair";
             this.cmsDEMSurveyPair.Size = new System.Drawing.Size(424, 48);
-            //
-            //AddChangeDetectionToolStripMenuItem1
-            //
-            this.AddChangeDetectionToolStripMenuItem1.Image = Properties.Resources.Add;
+            // 
+            // AddChangeDetectionToolStripMenuItem1
+            // 
+            this.AddChangeDetectionToolStripMenuItem1.Image = global::GCDCore.Properties.Resources.Add;
             this.AddChangeDetectionToolStripMenuItem1.Name = "AddChangeDetectionToolStripMenuItem1";
             this.AddChangeDetectionToolStripMenuItem1.Size = new System.Drawing.Size(423, 22);
             this.AddChangeDetectionToolStripMenuItem1.Text = "Add Change Detection (With These DEM Surveys)";
-            this.AddChangeDetectionToolStripMenuItem1.Click += AddChangeDetectionToolStripMenuItem1_Click;
-            //
-            //AddAllChangeDetectionsToTheMapToolStripMenuItem
-            //
-            this.AddAllChangeDetectionsToTheMapToolStripMenuItem.Image = Properties.Resources.AddToMap;
+            // 
+            // AddAllChangeDetectionsToTheMapToolStripMenuItem
+            // 
+            this.AddAllChangeDetectionsToTheMapToolStripMenuItem.Image = global::GCDCore.Properties.Resources.AddToMap;
             this.AddAllChangeDetectionsToTheMapToolStripMenuItem.Name = "AddAllChangeDetectionsToTheMapToolStripMenuItem";
             this.AddAllChangeDetectionsToTheMapToolStripMenuItem.Size = new System.Drawing.Size(423, 22);
             this.AddAllChangeDetectionsToTheMapToolStripMenuItem.Text = "Add All Change Detections (With These DEM Surveys) To The Map";
-            this.AddAllChangeDetectionsToTheMapToolStripMenuItem.Click += AddAllChangeDetectionsToTheMapToolStripMenuItem_Click;
-            //
-            //cmsBSGroup
-            //
-            this.cmsBSGroup.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { this.AddBudgetSegregationToolStripMenuItem1 });
+            // 
+            // cmsBSGroup
+            // 
+            this.cmsBSGroup.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.AddBudgetSegregationToolStripMenuItem1});
             this.cmsBSGroup.Name = "cmsBSGroup";
             this.cmsBSGroup.Size = new System.Drawing.Size(204, 26);
-            //
-            //AddBudgetSegregationToolStripMenuItem1
-            //
-            this.AddBudgetSegregationToolStripMenuItem1.Image = Properties.Resources.Add;
+            // 
+            // AddBudgetSegregationToolStripMenuItem1
+            // 
+            this.AddBudgetSegregationToolStripMenuItem1.Image = global::GCDCore.Properties.Resources.Add;
             this.AddBudgetSegregationToolStripMenuItem1.Name = "AddBudgetSegregationToolStripMenuItem1";
             this.AddBudgetSegregationToolStripMenuItem1.Size = new System.Drawing.Size(203, 22);
             this.AddBudgetSegregationToolStripMenuItem1.Text = "Add Budget Segregation";
-            this.AddBudgetSegregationToolStripMenuItem1.Click += AddBudgetSegregationToolStripMenuItem1_Click;
-            //
-            //cmsBS
-            //
+            // 
+            // cmsBS
+            // 
             this.cmsBS.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-                this.BudgetSegregationPropertiesToolStripMenuItem,
-                this.BrowseBudgetSegregationFolderToolStripMenuItem,
-                this.ToolStripSeparator6,
-                this.AddBudgetSegregationToolStripMenuItem2,
-                this.DeleteBudgetSegregationToolStripMenuItem
-            });
+            this.BudgetSegregationPropertiesToolStripMenuItem,
+            this.BrowseBudgetSegregationFolderToolStripMenuItem,
+            this.ToolStripSeparator6,
+            this.AddBudgetSegregationToolStripMenuItem2,
+            this.DeleteBudgetSegregationToolStripMenuItem});
             this.cmsBS.Name = "cmsBS";
             this.cmsBS.Size = new System.Drawing.Size(256, 98);
-            //
-            //BudgetSegregationPropertiesToolStripMenuItem
-            //
-            this.BudgetSegregationPropertiesToolStripMenuItem.Image = Properties.Resources.BudgetSeg;
+            // 
+            // BudgetSegregationPropertiesToolStripMenuItem
+            // 
+            this.BudgetSegregationPropertiesToolStripMenuItem.Image = global::GCDCore.Properties.Resources.BudgetSeg;
             this.BudgetSegregationPropertiesToolStripMenuItem.Name = "BudgetSegregationPropertiesToolStripMenuItem";
             this.BudgetSegregationPropertiesToolStripMenuItem.Size = new System.Drawing.Size(255, 22);
             this.BudgetSegregationPropertiesToolStripMenuItem.Text = "View Budget Segregation Results";
-            this.BudgetSegregationPropertiesToolStripMenuItem.Click += BudgetSegregationPropertiesToolStripMenuItem_Click;
-            //
-            //BrowseBudgetSegregationFolderToolStripMenuItem
-            //
-            this.BrowseBudgetSegregationFolderToolStripMenuItem.Image = Properties.Resources.BrowseFolder;
+            // 
+            // BrowseBudgetSegregationFolderToolStripMenuItem
+            // 
+            this.BrowseBudgetSegregationFolderToolStripMenuItem.Image = global::GCDCore.Properties.Resources.BrowseFolder;
             this.BrowseBudgetSegregationFolderToolStripMenuItem.Name = "BrowseBudgetSegregationFolderToolStripMenuItem";
             this.BrowseBudgetSegregationFolderToolStripMenuItem.Size = new System.Drawing.Size(255, 22);
             this.BrowseBudgetSegregationFolderToolStripMenuItem.Text = "Browse Budget Segregation Folder";
-            this.BrowseBudgetSegregationFolderToolStripMenuItem.Click += BrowseBudgetSegregationFolderToolStripMenuItem_Click;
-            //
-            //ToolStripSeparator6
-            //
+            // 
+            // ToolStripSeparator6
+            // 
             this.ToolStripSeparator6.Name = "ToolStripSeparator6";
             this.ToolStripSeparator6.Size = new System.Drawing.Size(252, 6);
-            //
-            //AddBudgetSegregationToolStripMenuItem2
-            //
-            this.AddBudgetSegregationToolStripMenuItem2.Image = Properties.Resources.Add;
+            // 
+            // AddBudgetSegregationToolStripMenuItem2
+            // 
+            this.AddBudgetSegregationToolStripMenuItem2.Image = global::GCDCore.Properties.Resources.Add;
             this.AddBudgetSegregationToolStripMenuItem2.Name = "AddBudgetSegregationToolStripMenuItem2";
             this.AddBudgetSegregationToolStripMenuItem2.Size = new System.Drawing.Size(255, 22);
             this.AddBudgetSegregationToolStripMenuItem2.Text = "Add Budget Segregation";
-            this.AddBudgetSegregationToolStripMenuItem2.Click += AddBudgetSegregationToolStripMenuItem1_Click;
-            //
-            //DeleteBudgetSegregationToolStripMenuItem
-            //
-            this.DeleteBudgetSegregationToolStripMenuItem.Image = Properties.Resources.Delete;
+            // 
+            // DeleteBudgetSegregationToolStripMenuItem
+            // 
+            this.DeleteBudgetSegregationToolStripMenuItem.Image = global::GCDCore.Properties.Resources.Delete;
             this.DeleteBudgetSegregationToolStripMenuItem.Name = "DeleteBudgetSegregationToolStripMenuItem";
             this.DeleteBudgetSegregationToolStripMenuItem.Size = new System.Drawing.Size(255, 22);
             this.DeleteBudgetSegregationToolStripMenuItem.Text = "Delete Budget Segregation";
-            //
-            //ucProjectExplorer
-            //
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6f, 13f);
+            // 
+            // ucProjectExplorer
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.treProject);
             this.Name = "ucProjectExplorer";
@@ -767,8 +720,6 @@ namespace GCDCore.UserInterface.Project
             this.cmsChangeDetectionGroup.ResumeLayout(false);
             this.cmsChangeDetection.ResumeLayout(false);
             this.cmsSurveysGroup.ResumeLayout(false);
-            this.cmsAOIGroup.ResumeLayout(false);
-            this.cmsAOI.ResumeLayout(false);
             this.cmsDEMSurveyPair.ResumeLayout(false);
             this.cmsBSGroup.ResumeLayout(false);
             this.cmsBS.ResumeLayout(false);
