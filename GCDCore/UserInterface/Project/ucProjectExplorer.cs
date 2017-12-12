@@ -36,6 +36,53 @@ namespace GCDCore.UserInterface.Project
             LoadTree();
 
             this.treProject.MouseDown += treProject_MouseDown;
+            this.treProject.DoubleClick += treProject_DoubleClick;
+            this.treProject.MouseDown += treProject_MouseDown;
+            this.treProject.AfterSelect += treProject_AfterSelect;
+            this.EditGCDProjectPropertiesToolStripMenuItem.Click += EditGCDProjectPropertiesToolStripMenuItem_Click;
+            this.ToolStripMenuItem2.Click += ToolStripMenuItem2_Click;
+            this.ExploreGCDProjectFolderToolStripMenuItem.Click += ExploreGCDProjectFolderToolStripMenuItem_Click;
+            this.ToolStripMenuItem1.Click += ToolStripMenuItem1_Click;
+            this.EditDEMSurveyProperatieToolStripMenuItem.Click += EditDEMSurveyProperatieToolStripMenuItem_Click;
+            this.AddToMapToolStripMenuItem.Click += AddToMapToolStripMenuItem_Click;
+            this.DeleteDEMSurveyToolStripMenuItem.Click += btnDelete_Click;
+            this.AddAssociatedSurfaceToolStripMenuItem.Click += AddAssociatedSurfaceToolStripMenuItem_Click;
+            this.AddErrorSurfaceToolStripMenuItem.Click += SpecifyErrorSurfaceToolStripMenuItem_Click;
+            this.DeriveErrorSurfaceToolStripMenuItem1.Click += DeriveErrorSurfaceToolStripMenuItem_Click;
+            this.EditPropertiesToolStripMenuItem.Click += EditPropertiesToolStripMenuItem_Click;
+            this.AddToMapToolStripMenuItem1.Click += AddToMapToolStripMenuItem1_Click;
+            this.DeleteAssociatedSurfaceToolStripMenuItem.Click += btnDelete_Click;
+            this.AddAssociatedSurfaceToolStripMenuItem1.Click += AddAssociatedSurfaceToolStripMenuItem1_Click;
+            this.AddAllAssociatedSurfacesToTheMapToolStripMenuItem.Click += AddAllAssociatedSurfacesToTheMapToolStripMenuItem_Click;
+            this.AddDEMSurveyToolStripMenuItem.Click += ToolStripMenuItem1_Click;
+            this.AddErrorSurfaceToolStripMenuItem1.Click += SpecifyErrorSurfaceToolStripMenuItem_Click;
+            this.DeriveErrorSurfaceToolStripMenuItem.Click += DeriveErrorSurfaceToolStripMenuItem_Click;
+            this.AddErrorSurfaceToMapToolStripMenuItem.Click += AddErrorSurfaceToMapToolStripMenuItem_Click;
+            this.AddErrorSurfaceToMapToolStripMenuItem1.Click += AddErrorSurfaceToMapToolStripMenuItem1_Click;
+            this.EditErrorSurfacePropertiesToolStripMenuItem.Click += EditErrorSurfacePropertiesToolStripMenuItem_Click;
+            this.DeleteErrorSurfaceToolStripMenuItem.Click += btnDelete_Click;
+            this.AddChangeDetectionToolStripMenuItem.Click += AddChangeDetectionToolStripMenuItem_Click;
+            this.AddAllChangeDetectionAnalysesToTheMapToolStripMenuItem.Click += AddAllChangeDetectionAnalysesToTheMapToolStripMenuItem_Click;
+            this.ViewChangeDetectionResultsToolStripMenuItem.Click += ViewChangeDetectionResultsToolStripMenuItem_Click;
+            this.AddChangeDetectionToTheMapToolStripMenuItem.Click += AddChangeDetectionToTheMapToolStripMenuItem_Click;
+            this.AddRawChangeDetectionToTheMapToolStripMenuItem.Click += AddRawChangeDetectionToTheMapToolStripMenuItem_Click;
+            this.ExploreChangeDetectionFolderToolStripMenuItem.Click += ExploreChangeDetectionFolderToolStripMenuItem_Click;
+            this.DeleteChangeDetectionToolStripMenuItem.Click += btnDelete_Click;
+            this.AddBudgetSegregationToolStripMenuItem.Click += AddBudgetSegregationToolStripMenuItem1_Click;
+            this.AddDEMSurveyToolStripMenuItem1.Click += AddDEMSurveyToolStripMenuItem1_Click;
+            this.AddAllDEMSurveysToTheMapToolStripMenuItem1.Click += AddAllDEMSurveysToTheMapToolStripMenuItem1_Click;
+            this.NameAscendingToolStripMenuItem.Click += SortTOC_Click;
+            this.NameDescendingToolStripMenuItem.Click += SortTOC_Click;
+            this.SurveyDateAscendingToolStripMenuItem.Click += SortTOC_Click;
+            this.SurveyDateDescendingToolStripMenuItem.Click += SortTOC_Click;
+            this.DateAddedAscendingToolStripMenuItem.Click += SortTOC_Click;
+            this.DateAddedDescendingToolStripMenuItem.Click += SortTOC_Click;
+            this.AddChangeDetectionToolStripMenuItem1.Click += AddChangeDetectionToolStripMenuItem1_Click;
+            this.AddAllChangeDetectionsToTheMapToolStripMenuItem.Click += AddAllChangeDetectionsToTheMapToolStripMenuItem_Click;
+            this.AddBudgetSegregationToolStripMenuItem1.Click += AddBudgetSegregationToolStripMenuItem1_Click;
+            this.BudgetSegregationPropertiesToolStripMenuItem.Click += BudgetSegregationPropertiesToolStripMenuItem_Click;
+            this.BrowseBudgetSegregationFolderToolStripMenuItem.Click += BrowseBudgetSegregationFolderToolStripMenuItem_Click;
+            this.AddBudgetSegregationToolStripMenuItem2.Click += AddBudgetSegregationToolStripMenuItem1_Click;
         }
 
         /// <summary>
