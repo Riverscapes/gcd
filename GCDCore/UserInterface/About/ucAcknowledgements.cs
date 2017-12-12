@@ -25,7 +25,7 @@ namespace GCDCore.UserInterface.About
                 AddLink(lnkNSF, "ZCloud Tools", "http://zcloudtools.boisestate.edu");
 
                 lnkELR.Links.Clear();
-                AddLink(lnkELR, "Eco Logical Research", "https://sites.google.com/a/ecologicalresearch.net/ecologicalreseach-net");
+                AddLink(lnkELR, "Eco Logical Research", "https://www.eco-logical-research.com/");
 
                 lnkGCMRC.Links.Add(2, lnkGCMRC.Text.Length - 2, "http://www.gcmrc.gov/gcmrc.aspx");
                 lnkUSACE.Links.Add(2, lnkUSACE.Text.Length - 2, "http://www.nwk.usace.army.mil/");
@@ -82,10 +82,16 @@ namespace GCDCore.UserInterface.About
                 }
             }
         }
-        
+
         private void LinkClicked(System.Object sender, System.Windows.Forms.LinkLabelLinkClickedEventArgs e)
         {
-
+            // Displays the appropriate link based on the value of the LinkData property of the Link object. 
+            if (e.Link.LinkData != null)
+            {
+                string target = e.Link.LinkData.ToString();
+                if (!string.IsNullOrEmpty(target))
+                    System.Diagnostics.Process.Start(target);
+            }
         }
     }
 }

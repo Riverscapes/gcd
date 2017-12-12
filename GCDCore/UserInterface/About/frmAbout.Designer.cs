@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.GroupBox1 = new System.Windows.Forms.GroupBox();
-            this.LinkLabel3 = new System.Windows.Forms.LinkLabel();
-            this.LinkLabel2 = new System.Windows.Forms.LinkLabel();
-            this.LinkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.lnkEmail = new System.Windows.Forms.LinkLabel();
+            this.lnkOnlineHelp = new System.Windows.Forms.LinkLabel();
+            this.lnkWebSite = new System.Windows.Forms.LinkLabel();
             this.Label5 = new System.Windows.Forms.Label();
             this.Label4 = new System.Windows.Forms.Label();
             this.Label3 = new System.Windows.Forms.Label();
@@ -40,11 +40,7 @@
             this.lblAppTitle = new System.Windows.Forms.Label();
             this.PictureBox1 = new System.Windows.Forms.PictureBox();
             this.Panel2 = new System.Windows.Forms.Panel();
-            this.lblGCDCoreVersion = new System.Windows.Forms.Label();
-            this.Label9 = new System.Windows.Forms.Label();
-            this.lblRMVersion = new System.Windows.Forms.Label();
             this.Panel1 = new System.Windows.Forms.Panel();
-            this.Label7 = new System.Windows.Forms.Label();
             this.GroupBox2 = new System.Windows.Forms.GroupBox();
             this.btnOK = new System.Windows.Forms.Button();
             this.GroupBox1.SuspendLayout();
@@ -55,9 +51,9 @@
             // 
             // GroupBox1
             // 
-            this.GroupBox1.Controls.Add(this.LinkLabel3);
-            this.GroupBox1.Controls.Add(this.LinkLabel2);
-            this.GroupBox1.Controls.Add(this.LinkLabel1);
+            this.GroupBox1.Controls.Add(this.lnkEmail);
+            this.GroupBox1.Controls.Add(this.lnkOnlineHelp);
+            this.GroupBox1.Controls.Add(this.lnkWebSite);
             this.GroupBox1.Controls.Add(this.Label5);
             this.GroupBox1.Controls.Add(this.Label4);
             this.GroupBox1.Controls.Add(this.Label3);
@@ -68,68 +64,68 @@
             this.GroupBox1.TabStop = false;
             this.GroupBox1.Text = "Support";
             // 
-            // LinkLabel3
+            // lnkEmail
             // 
-            this.LinkLabel3.AutoSize = true;
-            this.LinkLabel3.Location = new System.Drawing.Point(74, 66);
-            this.LinkLabel3.Name = "LinkLabel3";
-            this.LinkLabel3.Size = new System.Drawing.Size(109, 13);
-            this.LinkLabel3.TabIndex = 6;
-            this.LinkLabel3.TabStop = true;
-            this.LinkLabel3.Text = "gcd@joewheaton.org";
+            this.lnkEmail.AutoSize = true;
+            this.lnkEmail.Location = new System.Drawing.Point(78, 66);
+            this.lnkEmail.Name = "lnkEmail";
+            this.lnkEmail.Size = new System.Drawing.Size(109, 13);
+            this.lnkEmail.TabIndex = 6;
+            this.lnkEmail.TabStop = true;
+            this.lnkEmail.Text = "gcd@joewheaton.org";
             // 
-            // LinkLabel2
+            // lnkOnlineHelp
             // 
-            this.LinkLabel2.AutoSize = true;
-            this.LinkLabel2.LinkColor = System.Drawing.Color.Blue;
-            this.LinkLabel2.Location = new System.Drawing.Point(74, 43);
-            this.LinkLabel2.Name = "LinkLabel2";
-            this.LinkLabel2.Size = new System.Drawing.Size(158, 13);
-            this.LinkLabel2.TabIndex = 5;
-            this.LinkLabel2.TabStop = true;
-            this.LinkLabel2.Text = "http://gcd6help.joewheaton.org";
+            this.lnkOnlineHelp.AutoSize = true;
+            this.lnkOnlineHelp.LinkColor = System.Drawing.Color.Blue;
+            this.lnkOnlineHelp.Location = new System.Drawing.Point(78, 43);
+            this.lnkOnlineHelp.Name = "lnkOnlineHelp";
+            this.lnkOnlineHelp.Size = new System.Drawing.Size(158, 13);
+            this.lnkOnlineHelp.TabIndex = 5;
+            this.lnkOnlineHelp.TabStop = true;
+            this.lnkOnlineHelp.Text = "http://gcd6help.joewheaton.org";
             // 
-            // LinkLabel1
+            // lnkWebSite
             // 
-            this.LinkLabel1.AutoSize = true;
-            this.LinkLabel1.Location = new System.Drawing.Point(74, 20);
-            this.LinkLabel1.Name = "LinkLabel1";
-            this.LinkLabel1.Size = new System.Drawing.Size(132, 13);
-            this.LinkLabel1.TabIndex = 4;
-            this.LinkLabel1.TabStop = true;
-            this.LinkLabel1.Text = "http://gcd.joewheaton.org";
+            this.lnkWebSite.AutoSize = true;
+            this.lnkWebSite.Location = new System.Drawing.Point(78, 20);
+            this.lnkWebSite.Name = "lnkWebSite";
+            this.lnkWebSite.Size = new System.Drawing.Size(132, 13);
+            this.lnkWebSite.TabIndex = 4;
+            this.lnkWebSite.TabStop = true;
+            this.lnkWebSite.Text = "http://gcd.joewheaton.org";
             // 
             // Label5
             // 
             this.Label5.AutoSize = true;
-            this.Label5.Location = new System.Drawing.Point(7, 66);
+            this.Label5.Location = new System.Drawing.Point(43, 66);
             this.Label5.Name = "Label5";
-            this.Label5.Size = new System.Drawing.Size(35, 13);
+            this.Label5.Size = new System.Drawing.Size(32, 13);
             this.Label5.TabIndex = 3;
-            this.Label5.Text = "Email:";
+            this.Label5.Text = "Email";
             // 
             // Label4
             // 
             this.Label4.AutoSize = true;
-            this.Label4.Location = new System.Drawing.Point(7, 43);
+            this.Label4.Location = new System.Drawing.Point(15, 43);
             this.Label4.Name = "Label4";
-            this.Label4.Size = new System.Drawing.Size(63, 13);
+            this.Label4.Size = new System.Drawing.Size(60, 13);
             this.Label4.TabIndex = 2;
-            this.Label4.Text = "Online help:";
+            this.Label4.Text = "Online help";
             // 
             // Label3
             // 
             this.Label3.AutoSize = true;
-            this.Label3.Location = new System.Drawing.Point(7, 20);
+            this.Label3.Location = new System.Drawing.Point(26, 20);
             this.Label3.Name = "Label3";
-            this.Label3.Size = new System.Drawing.Size(52, 13);
+            this.Label3.Size = new System.Drawing.Size(49, 13);
             this.Label3.TabIndex = 1;
-            this.Label3.Text = "Web site:";
+            this.Label3.Text = "Web site";
             // 
             // lblVersion
             // 
             this.lblVersion.AutoSize = true;
-            this.lblVersion.Location = new System.Drawing.Point(357, 37);
+            this.lblVersion.Location = new System.Drawing.Point(305, 37);
             this.lblVersion.Name = "lblVersion";
             this.lblVersion.Size = new System.Drawing.Size(40, 13);
             this.lblVersion.TabIndex = 9;
@@ -138,11 +134,11 @@
             // Label1
             // 
             this.Label1.AutoSize = true;
-            this.Label1.Location = new System.Drawing.Point(283, 37);
+            this.Label1.Location = new System.Drawing.Point(236, 37);
             this.Label1.Name = "Label1";
-            this.Label1.Size = new System.Drawing.Size(70, 13);
+            this.Label1.Size = new System.Drawing.Size(67, 13);
             this.Label1.TabIndex = 8;
-            this.Label1.Text = "GCD version:";
+            this.Label1.Text = "GCD version";
             // 
             // lblAppTitle
             // 
@@ -174,40 +170,9 @@
             this.Panel2.Size = new System.Drawing.Size(631, 398);
             this.Panel2.TabIndex = 0;
             // 
-            // lblGCDCoreVersion
-            // 
-            this.lblGCDCoreVersion.AutoSize = true;
-            this.lblGCDCoreVersion.Location = new System.Drawing.Point(357, 83);
-            this.lblGCDCoreVersion.Name = "lblGCDCoreVersion";
-            this.lblGCDCoreVersion.Size = new System.Drawing.Size(40, 13);
-            this.lblGCDCoreVersion.TabIndex = 15;
-            this.lblGCDCoreVersion.Text = "5.0.0.0";
-            // 
-            // Label9
-            // 
-            this.Label9.AutoSize = true;
-            this.Label9.Location = new System.Drawing.Point(258, 83);
-            this.Label9.Name = "Label9";
-            this.Label9.Size = new System.Drawing.Size(95, 13);
-            this.Label9.TabIndex = 14;
-            this.Label9.Text = "GCD Core version:";
-            // 
-            // lblRMVersion
-            // 
-            this.lblRMVersion.AutoSize = true;
-            this.lblRMVersion.Location = new System.Drawing.Point(357, 60);
-            this.lblRMVersion.Name = "lblRMVersion";
-            this.lblRMVersion.Size = new System.Drawing.Size(40, 13);
-            this.lblRMVersion.TabIndex = 13;
-            this.lblRMVersion.Text = "5.0.0.0";
-            // 
             // Panel1
             // 
             this.Panel1.BackColor = System.Drawing.SystemColors.Window;
-            this.Panel1.Controls.Add(this.lblGCDCoreVersion);
-            this.Panel1.Controls.Add(this.Label9);
-            this.Panel1.Controls.Add(this.lblRMVersion);
-            this.Panel1.Controls.Add(this.Label7);
             this.Panel1.Controls.Add(this.GroupBox2);
             this.Panel1.Controls.Add(this.GroupBox1);
             this.Panel1.Controls.Add(this.lblVersion);
@@ -218,15 +183,6 @@
             this.Panel1.Name = "Panel1";
             this.Panel1.Size = new System.Drawing.Size(653, 619);
             this.Panel1.TabIndex = 3;
-            // 
-            // Label7
-            // 
-            this.Label7.AutoSize = true;
-            this.Label7.Location = new System.Drawing.Point(230, 60);
-            this.Label7.Name = "Label7";
-            this.Label7.Size = new System.Drawing.Size(123, 13);
-            this.Label7.TabIndex = 12;
-            this.Label7.Text = "Raster Manager version:";
             // 
             // GroupBox2
             // 
@@ -259,6 +215,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "frmAbout";
             this.Text = "frmAbout";
+            this.Load += new System.EventHandler(this.AboutForm_Load);
             this.GroupBox1.ResumeLayout(false);
             this.GroupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).EndInit();
@@ -272,9 +229,9 @@
         #endregion
 
         internal System.Windows.Forms.GroupBox GroupBox1;
-        internal System.Windows.Forms.LinkLabel LinkLabel3;
-        internal System.Windows.Forms.LinkLabel LinkLabel2;
-        internal System.Windows.Forms.LinkLabel LinkLabel1;
+        internal System.Windows.Forms.LinkLabel lnkEmail;
+        internal System.Windows.Forms.LinkLabel lnkOnlineHelp;
+        internal System.Windows.Forms.LinkLabel lnkWebSite;
         internal System.Windows.Forms.Label Label5;
         internal System.Windows.Forms.Label Label4;
         internal System.Windows.Forms.Label Label3;
@@ -283,11 +240,7 @@
         internal System.Windows.Forms.Label lblAppTitle;
         internal System.Windows.Forms.PictureBox PictureBox1;
         internal System.Windows.Forms.Panel Panel2;
-        internal System.Windows.Forms.Label lblGCDCoreVersion;
-        internal System.Windows.Forms.Label Label9;
-        internal System.Windows.Forms.Label lblRMVersion;
         internal System.Windows.Forms.Panel Panel1;
-        internal System.Windows.Forms.Label Label7;
         internal System.Windows.Forms.GroupBox GroupBox2;
         internal System.Windows.Forms.Button btnOK;
     }

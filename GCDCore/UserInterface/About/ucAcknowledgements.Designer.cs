@@ -54,6 +54,7 @@
             this.lnkjDevelopers.Size = new System.Drawing.Size(578, 98);
             this.lnkjDevelopers.TabIndex = 75;
             this.lnkjDevelopers.Text = resources.GetString("lnkjDevelopers.Text");
+            this.lnkjDevelopers.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkClicked);
             // 
             // lnkICRRR
             // 
@@ -67,6 +68,7 @@
             this.lnkICRRR.Text = "- Utah State University Intermountain Center for River Rehabilitation and Restora" +
     "tion (ICRRR)";
             this.lnkICRRR.UseCompatibleTextRendering = true;
+            this.lnkICRRR.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkClicked);
             // 
             // lnkUSACE
             // 
@@ -77,6 +79,7 @@
             this.lnkUSACE.TabIndex = 73;
             this.lnkUSACE.TabStop = true;
             this.lnkUSACE.Text = "- US Army Corps of Engineers Kansas City District";
+            this.lnkUSACE.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkClicked);
             // 
             // lnkGCMRC
             // 
@@ -87,6 +90,7 @@
             this.lnkGCMRC.TabIndex = 72;
             this.lnkGCMRC.TabStop = true;
             this.lnkGCMRC.Text = "- USGS Grand Canyon Monitoring & Research Center";
+            this.lnkGCMRC.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkClicked);
             // 
             // lnkELR
             // 
@@ -99,6 +103,7 @@
             this.lnkELR.TabStop = true;
             this.lnkELR.Text = "- Bonneville Power Administration via Eco Logical Research";
             this.lnkELR.UseCompatibleTextRendering = true;
+            this.lnkELR.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkClicked);
             // 
             // lnkIPC
             // 
@@ -109,6 +114,7 @@
             this.lnkIPC.TabIndex = 70;
             this.lnkIPC.TabStop = true;
             this.lnkIPC.Text = "- Idaho Power Company";
+            this.lnkIPC.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkClicked);
             // 
             // lnkNSF
             // 
@@ -184,6 +190,7 @@
             this.Controls.Add(this.PictureBox1);
             this.Name = "ucAcknowledgements";
             this.Size = new System.Drawing.Size(590, 542);
+            this.Load += new System.EventHandler(this.ucAcknowledgements_Load);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).EndInit();

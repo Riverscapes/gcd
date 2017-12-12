@@ -12,8 +12,10 @@ namespace GCDCore.UserInterface.About
             InitializeComponent();
         }
 
-        private void AboutForm_Load(System.Object sender, System.EventArgs e)
+        private void AboutForm_Load(Object sender, EventArgs e)
         {
+            Text = string.Format("About {0}", Properties.Resources.ApplicationNameLong);
+
             Panel2.Controls.Add(new ucAcknowledgements());
 
             string sProduct = "Standalone";
@@ -36,24 +38,19 @@ namespace GCDCore.UserInterface.About
             }
         }
 
-        private void LinkLabel8_LinkClicked(System.Object sender, System.Windows.Forms.LinkLabelLinkClickedEventArgs e)
+        private void lnkFrankPoulsen(System.Object sender, System.Windows.Forms.LinkLabelLinkClickedEventArgs e)
         {
             Process.Start("http://www.essa.com/team/index.html#fp");
         }
 
-        private void LinkLabel9_LinkClicked(System.Object sender, System.Windows.Forms.LinkLabelLinkClickedEventArgs e)
-        {
-            Process.Start("http://www.essa.com/team/index.html#no");
-        }
-
-        private void LinkLabel6_LinkClicked(System.Object sender, System.Windows.Forms.LinkLabelLinkClickedEventArgs e)
+        private void lnkPhilipBailey(System.Object sender, System.Windows.Forms.LinkLabelLinkClickedEventArgs e)
         {
             Process.Start("http://northarrowresearch.com/north-arrow-research/people/");
         }
 
-        private void LinkLabel4_LinkClicked(System.Object sender, System.Windows.Forms.LinkLabelLinkClickedEventArgs e)
+        private void lnkJoeWheaton(System.Object sender, System.Windows.Forms.LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start(GCDCore.Properties.Resources.PeopleJoeWheatonURL);
+            Process.Start(Properties.Resources.PeopleJoeWheatonURL);
         }
     }
 }
