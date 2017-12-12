@@ -61,7 +61,15 @@ namespace GCDCore.Project
             Histograms = dod.Histograms;
             SummaryXML = dod.SummaryXML;
             Statistics = dod.Statistics;
-            BudgetSegregations = dod.BudgetSegregations;
+
+            // Need to rebuild BS library so that the internal DoD references point to this object, and not the argument DoD
+            BudgetSegregations = new Dictionary<string, BudgetSegregation>();
+            foreach (BudgetSegregation bs in dod.BudgetSegregations.Values)
+            {
+                BudgetSegregations[bs.Name] = new BudgetSegregation(bs.Name, bs.Folder, bs.PolygonMask, bs.MaskField, this, dod.SummaryXML, null);
+                foreach (BudgetSegregationClass bsc in bs.Classes.Values)
+                    BudgetSegregations[bs.Name].Classes.Add(bsc.Name, bsc);
+            }
         }
 
         public bool IsBudgetSegNameUnique(string name, BudgetSegregation ignore)

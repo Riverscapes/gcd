@@ -50,6 +50,9 @@ namespace GCDCore.UserInterface.BudgetSegregation
 
         private void cboBudgetClass_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (cboBudgetClass.SelectedItem == null)
+                return;
+
             BudgetSegregationClass classResult = (BudgetSegregationClass)cboBudgetClass.SelectedItem;
             ucSummary.RefreshDisplay(classResult.Statistics, m_Options);
             ucBars.ChangeStats = classResult.Statistics;
