@@ -10,7 +10,6 @@ namespace GCDCore.UserInterface.ChangeDetection
     {
         private bool m_bUserEditedName;
 
-        private CoherenceProperties CoherenceProps;
         // These are the results of the analysis. They are not populated until
         // the user clicks OK and the change detection completes successfully.
 
@@ -49,15 +48,11 @@ namespace GCDCore.UserInterface.ChangeDetection
 
         private void DoDPropertiesForm_Load(object sender, System.EventArgs e)
         {
-            // Initialize coherence properties in case they are needed.
-            CoherenceProps = new CoherenceProperties();
-
             EnableDisableControls();
-
-            lblMinLodThreshold.Text = string.Format("Threshold ({0})", UnitsNet.Length.GetAbbreviation(ProjectManager.Project.Units.VertUnit));
 
             // Subscribe to the event when DEM selection changes
             ucDEMs.SelectedDEMsChanged += UpdateAnalysisName;
+            ucThresholding.OnThresholdingMethodChanged += ThresholdMethodChanged;
 
             UpdateAnalysisName(sender, e);
         }
@@ -77,20 +72,20 @@ namespace GCDCore.UserInterface.ChangeDetection
                 System.IO.DirectoryInfo dFolder = new System.IO.DirectoryInfo(txtOutputFolder.Text);
                 GCDCore.Engines.ChangeDetectionEngineBase cdEngine = null;
 
-                if (rdoMinLOD.Checked)
+                if (ucThresholding.IsMindLoD)
                 {
-                    cdEngine = new GCDCore.Engines.ChangeDetectionEngineMinLoD(txtName.Text, dFolder, ucDEMs.NewDEM, ucDEMs.OldDEM, valMinLodThreshold.Value);
+                    cdEngine = new GCDCore.Engines.ChangeDetectionEngineMinLoD(txtName.Text, dFolder, ucDEMs.NewDEM, ucDEMs.OldDEM, ucThresholding.MinLoD);
                 }
                 else
                 {
-                    if (rdoPropagated.Checked)
+                    if (ucThresholding.IsPropagated)
                     {
                         cdEngine = new GCDCore.Engines.ChangeDetectionEnginePropProb(txtName.Text, dFolder, ucDEMs.NewDEM, ucDEMs.OldDEM, ucDEMs.NewError, ucDEMs.OldError);
                     }
                     else
                     {
-                        CoherenceProperties spatCoherence = chkBayesian.Checked ? spatCoherence = CoherenceProps : null;
-                        cdEngine = new Engines.ChangeDetectionEngineProbabilistic(txtName.Text, dFolder, ucDEMs.NewDEM, ucDEMs.OldDEM, ucDEMs.NewError, ucDEMs.OldError, valConfidence.Value, spatCoherence);
+                        CoherenceProperties spatCoherence = ucThresholding.UsesSpatialCoherence ? spatCoherence = ucThresholding.CoherenceProps : null;
+                        cdEngine = new Engines.ChangeDetectionEngineProbabilistic(txtName.Text, dFolder, ucDEMs.NewDEM, ucDEMs.OldDEM, ucDEMs.NewError, ucDEMs.OldError, ucThresholding.ConfidenceThreshold, spatCoherence);
                     }
                 }
 
@@ -146,23 +141,15 @@ namespace GCDCore.UserInterface.ChangeDetection
             return true;
         }
 
-        private void rdoProbabilistic_CheckedChanged(object sender, System.EventArgs e)
+        private void EnableDisableControls()
+        {
+            ucDEMs.EnableErrorSurfaces(!ucThresholding.IsMindLoD);
+        }
+
+        private void ThresholdMethodChanged(object sender, EventArgs e)
         {
             EnableDisableControls();
             UpdateAnalysisName(sender, e);
-        }
-
-        private void EnableDisableControls()
-        {
-            ucDEMs.EnableErrorSurfaces(!rdoMinLOD.Checked);
-
-            valMinLodThreshold.Enabled = rdoMinLOD.Checked;
-            lblMinLodThreshold.Enabled = rdoMinLOD.Checked;
-
-            lblConfidence.Enabled = rdoProbabilistic.Checked;
-            valConfidence.Enabled = rdoProbabilistic.Checked;
-            chkBayesian.Enabled = rdoProbabilistic.Checked;
-            cmdBayesianProperties.Enabled = rdoProbabilistic.Checked && chkBayesian.Checked;
         }
 
         #region "DEM Selection Changed"  
@@ -190,28 +177,23 @@ namespace GCDCore.UserInterface.ChangeDetection
                 sAnalysisName += naru.os.File.RemoveDangerousCharacters(ucDEMs.OldDEM.Name);
             }
 
-            if (rdoMinLOD.Checked)
+            if (ucThresholding.IsMindLoD)
             {
-                sAnalysisName += " MinLoD " + valMinLodThreshold.Value.ToString("#0.00");
+                sAnalysisName += " MinLoD " + ucThresholding.MinLoD.ToString("#0.00");
             }
-            else if (rdoPropagated.Checked)
+            else if (ucThresholding.IsPropagated)
             {
                 sAnalysisName += " Prop";
             }
             else
             {
-                sAnalysisName += " Prob " + valConfidence.Value.ToString("#0.00");
+                sAnalysisName += " Prob " + ucThresholding.ConfidenceThreshold.ToString("#0.00");
             }
 
             txtName.Text = sAnalysisName.Trim();
         }
 
         #endregion
-
-        private void rdoCommonArea_CheckedChanged(object sender, System.EventArgs e)
-        {
-            EnableDisableControls();
-        }
 
         private void txtName_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
         {
@@ -235,22 +217,6 @@ namespace GCDCore.UserInterface.ChangeDetection
             catch (Exception ex)
             {
             }
-        }
-
-        private void cmdBayesianProperties_Click(System.Object sender, System.EventArgs e)
-        {
-            frmCoherenceProperties frm = new frmCoherenceProperties(CoherenceProps);
-            frm.ShowDialog();
-        }
-
-        private void chkBayesian_CheckedChanged(object sender, System.EventArgs e)
-        {
-            EnableDisableControls();
-        }
-
-        private void Threshold_ValueChanged(object sender, System.EventArgs e)
-        {
-            UpdateAnalysisName(sender, e);
         }
 
         private void cmdHelp_Click(System.Object sender, System.EventArgs e)

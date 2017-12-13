@@ -40,16 +40,6 @@ namespace GCDCore.UserInterface.ChangeDetection
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmDoDProperties));
-            this.GroupBox3 = new System.Windows.Forms.GroupBox();
-            this.valMinLodThreshold = new System.Windows.Forms.NumericUpDown();
-            this.lblMinLodThreshold = new System.Windows.Forms.Label();
-            this.cmdBayesianProperties = new System.Windows.Forms.Button();
-            this.chkBayesian = new System.Windows.Forms.CheckBox();
-            this.valConfidence = new System.Windows.Forms.NumericUpDown();
-            this.lblConfidence = new System.Windows.Forms.Label();
-            this.rdoProbabilistic = new System.Windows.Forms.RadioButton();
-            this.rdoPropagated = new System.Windows.Forms.RadioButton();
-            this.rdoMinLOD = new System.Windows.Forms.RadioButton();
             this.Label5 = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
             this.cmdCancel = new System.Windows.Forms.Button();
@@ -58,155 +48,8 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.txtOutputFolder = new System.Windows.Forms.TextBox();
             this.Label2 = new System.Windows.Forms.Label();
             this.ucDEMs = new GCDCore.UserInterface.ChangeDetection.ucDoDDEMSelection();
-            this.GroupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.valMinLodThreshold)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.valConfidence)).BeginInit();
+            this.ucThresholding = new GCDCore.UserInterface.ChangeDetection.ucThresholding();
             this.SuspendLayout();
-            // 
-            // GroupBox3
-            // 
-            this.GroupBox3.Controls.Add(this.valMinLodThreshold);
-            this.GroupBox3.Controls.Add(this.lblMinLodThreshold);
-            this.GroupBox3.Controls.Add(this.cmdBayesianProperties);
-            this.GroupBox3.Controls.Add(this.chkBayesian);
-            this.GroupBox3.Controls.Add(this.valConfidence);
-            this.GroupBox3.Controls.Add(this.lblConfidence);
-            this.GroupBox3.Controls.Add(this.rdoProbabilistic);
-            this.GroupBox3.Controls.Add(this.rdoPropagated);
-            this.GroupBox3.Controls.Add(this.rdoMinLOD);
-            this.GroupBox3.Location = new System.Drawing.Point(12, 173);
-            this.GroupBox3.Name = "GroupBox3";
-            this.GroupBox3.Size = new System.Drawing.Size(537, 177);
-            this.GroupBox3.TabIndex = 7;
-            this.GroupBox3.TabStop = false;
-            this.GroupBox3.Text = "Uncertainty Analysis Method";
-            // 
-            // valMinLodThreshold
-            // 
-            this.valMinLodThreshold.DecimalPlaces = 2;
-            this.valMinLodThreshold.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            131072});
-            this.valMinLodThreshold.Location = new System.Drawing.Point(170, 43);
-            this.valMinLodThreshold.Maximum = new decimal(new int[] {
-            10000,
-            0,
-            0,
-            0});
-            this.valMinLodThreshold.Name = "valMinLodThreshold";
-            this.valMinLodThreshold.Size = new System.Drawing.Size(66, 20);
-            this.valMinLodThreshold.TabIndex = 2;
-            this.valMinLodThreshold.Value = new decimal(new int[] {
-            2,
-            0,
-            0,
-            65536});
-            this.valMinLodThreshold.ValueChanged += new System.EventHandler(this.Threshold_ValueChanged);
-            // 
-            // lblMinLodThreshold
-            // 
-            this.lblMinLodThreshold.AutoSize = true;
-            this.lblMinLodThreshold.Location = new System.Drawing.Point(51, 47);
-            this.lblMinLodThreshold.Name = "lblMinLodThreshold";
-            this.lblMinLodThreshold.Size = new System.Drawing.Size(63, 13);
-            this.lblMinLodThreshold.TabIndex = 1;
-            this.lblMinLodThreshold.Text = "Threshold ()";
-            // 
-            // cmdBayesianProperties
-            // 
-            this.cmdBayesianProperties.Image = global::GCDCore.Properties.Resources.Settings;
-            this.cmdBayesianProperties.Location = new System.Drawing.Point(189, 141);
-            this.cmdBayesianProperties.Name = "cmdBayesianProperties";
-            this.cmdBayesianProperties.Size = new System.Drawing.Size(23, 23);
-            this.cmdBayesianProperties.TabIndex = 8;
-            this.cmdBayesianProperties.UseVisualStyleBackColor = true;
-            this.cmdBayesianProperties.Click += new System.EventHandler(this.cmdBayesianProperties_Click);
-            // 
-            // chkBayesian
-            // 
-            this.chkBayesian.AutoSize = true;
-            this.chkBayesian.Location = new System.Drawing.Point(51, 144);
-            this.chkBayesian.Name = "chkBayesian";
-            this.chkBayesian.Size = new System.Drawing.Size(135, 17);
-            this.chkBayesian.TabIndex = 7;
-            this.chkBayesian.Text = "Use Bayesian updating";
-            this.chkBayesian.UseVisualStyleBackColor = true;
-            this.chkBayesian.CheckedChanged += new System.EventHandler(this.chkBayesian_CheckedChanged);
-            // 
-            // valConfidence
-            // 
-            this.valConfidence.DecimalPlaces = 2;
-            this.valConfidence.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            131072});
-            this.valConfidence.Location = new System.Drawing.Point(170, 112);
-            this.valConfidence.Maximum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.valConfidence.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            131072});
-            this.valConfidence.Name = "valConfidence";
-            this.valConfidence.Size = new System.Drawing.Size(66, 20);
-            this.valConfidence.TabIndex = 6;
-            this.valConfidence.Value = new decimal(new int[] {
-            95,
-            0,
-            0,
-            131072});
-            this.valConfidence.ValueChanged += new System.EventHandler(this.Threshold_ValueChanged);
-            // 
-            // lblConfidence
-            // 
-            this.lblConfidence.AutoSize = true;
-            this.lblConfidence.Location = new System.Drawing.Point(51, 116);
-            this.lblConfidence.Name = "lblConfidence";
-            this.lblConfidence.Size = new System.Drawing.Size(110, 13);
-            this.lblConfidence.TabIndex = 5;
-            this.lblConfidence.Text = "Confidence level (0-1)";
-            // 
-            // rdoProbabilistic
-            // 
-            this.rdoProbabilistic.AutoSize = true;
-            this.rdoProbabilistic.Location = new System.Drawing.Point(17, 92);
-            this.rdoProbabilistic.Name = "rdoProbabilistic";
-            this.rdoProbabilistic.Size = new System.Drawing.Size(141, 17);
-            this.rdoProbabilistic.TabIndex = 4;
-            this.rdoProbabilistic.Text = "Probabilistic thresholding";
-            this.rdoProbabilistic.UseVisualStyleBackColor = true;
-            this.rdoProbabilistic.CheckedChanged += new System.EventHandler(this.rdoProbabilistic_CheckedChanged);
-            // 
-            // rdoPropagated
-            // 
-            this.rdoPropagated.AutoSize = true;
-            this.rdoPropagated.Location = new System.Drawing.Point(17, 69);
-            this.rdoPropagated.Name = "rdoPropagated";
-            this.rdoPropagated.Size = new System.Drawing.Size(109, 17);
-            this.rdoPropagated.TabIndex = 3;
-            this.rdoPropagated.Text = "Propagated errors";
-            this.rdoPropagated.UseVisualStyleBackColor = true;
-            this.rdoPropagated.CheckedChanged += new System.EventHandler(this.rdoProbabilistic_CheckedChanged);
-            // 
-            // rdoMinLOD
-            // 
-            this.rdoMinLOD.AutoSize = true;
-            this.rdoMinLOD.Checked = true;
-            this.rdoMinLOD.Location = new System.Drawing.Point(17, 22);
-            this.rdoMinLOD.Name = "rdoMinLOD";
-            this.rdoMinLOD.Size = new System.Drawing.Size(183, 17);
-            this.rdoMinLOD.TabIndex = 0;
-            this.rdoMinLOD.TabStop = true;
-            this.rdoMinLOD.Text = "Simple minimum level of detection";
-            this.rdoMinLOD.UseVisualStyleBackColor = true;
-            this.rdoMinLOD.CheckedChanged += new System.EventHandler(this.rdoProbabilistic_CheckedChanged);
             // 
             // Label5
             // 
@@ -281,8 +124,16 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.ucDEMs.Location = new System.Drawing.Point(15, 75);
             this.ucDEMs.Name = "ucDEMs";
             this.ucDEMs.NewDEM = null;
+            this.ucDEMs.OldDEM = null;
             this.ucDEMs.Size = new System.Drawing.Size(535, 89);
             this.ucDEMs.TabIndex = 11;
+            // 
+            // ucThresholding
+            // 
+            this.ucThresholding.Location = new System.Drawing.Point(15, 166);
+            this.ucThresholding.Name = "ucThresholding";
+            this.ucThresholding.Size = new System.Drawing.Size(535, 186);
+            this.ucThresholding.TabIndex = 12;
             // 
             // frmDoDProperties
             // 
@@ -291,6 +142,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cmdCancel;
             this.ClientSize = new System.Drawing.Size(562, 395);
+            this.Controls.Add(this.ucThresholding);
             this.Controls.Add(this.ucDEMs);
             this.Controls.Add(this.txtOutputFolder);
             this.Controls.Add(this.Label2);
@@ -299,7 +151,6 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.Controls.Add(this.cmdCancel);
             this.Controls.Add(this.txtName);
             this.Controls.Add(this.Label5);
-            this.Controls.Add(this.GroupBox3);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -307,24 +158,12 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.Name = "frmDoDProperties";
             this.Text = "Change Detection Configuration";
             this.Load += new System.EventHandler(this.DoDPropertiesForm_Load);
-            this.GroupBox3.ResumeLayout(false);
-            this.GroupBox3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.valMinLodThreshold)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.valConfidence)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
         private System.Windows.Forms.ComboBox withEventsField_cboNewDEM;
-        internal System.Windows.Forms.GroupBox GroupBox3;
         private System.Windows.Forms.Button withEventsField_cmdBayesianProperties;
-        internal System.Windows.Forms.Button cmdBayesianProperties;
-        internal System.Windows.Forms.CheckBox chkBayesian;
-        internal System.Windows.Forms.NumericUpDown valConfidence;
-        internal System.Windows.Forms.Label lblConfidence;
-        internal System.Windows.Forms.RadioButton rdoProbabilistic;
-        internal System.Windows.Forms.RadioButton rdoPropagated;
-        internal System.Windows.Forms.RadioButton rdoMinLOD;
         internal System.Windows.Forms.Label Label5;
         internal System.Windows.Forms.TextBox txtName;
         internal System.Windows.Forms.Button cmdCancel;
@@ -332,8 +171,7 @@ namespace GCDCore.UserInterface.ChangeDetection
         internal System.Windows.Forms.Button cmdHelp;
         internal System.Windows.Forms.TextBox txtOutputFolder;
         internal System.Windows.Forms.Label Label2;
-        internal System.Windows.Forms.NumericUpDown valMinLodThreshold;
-        internal System.Windows.Forms.Label lblMinLodThreshold;
         private ucDoDDEMSelection ucDEMs;
+        private ucThresholding ucThresholding;
     }
 }
