@@ -120,6 +120,18 @@
     <Compile Include="UserInterface\BudgetSegregation\frmBudgetSegResults.Designer.cs">
       <DependentUpon>frmBudgetSegResults.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserInterface\ChangeDetection\Batch\frmBatchDoD.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\ChangeDetection\Batch\frmBatchDoD.Designer.cs">
+      <DependentUpon>frmBatchDoD.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\ChangeDetection\Batch\frmBatchDoDProperties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\ChangeDetection\Batch\frmBatchDoDProperties.Designer.cs">
+      <DependentUpon>frmBatchDoDProperties.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserInterface\ChangeDetection\DoDSummaryDisplayOptions.cs" />
     <Compile Include="UserInterface\ChangeDetection\frmCoherenceProperties.cs">
       <SubType>Form</SubType>
@@ -379,6 +391,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\BudgetSegregation\frmBudgetSegResults.resx">
       <DependentUpon>frmBudgetSegResults.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\ChangeDetection\Batch\frmBatchDoD.resx">
+      <DependentUpon>frmBatchDoD.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\ChangeDetection\Batch\frmBatchDoDProperties.resx">
+      <DependentUpon>frmBatchDoDProperties.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\ChangeDetection\frmCoherenceProperties.resx">
       <DependentUpon>frmCoherenceProperties.cs</DependentUpon>

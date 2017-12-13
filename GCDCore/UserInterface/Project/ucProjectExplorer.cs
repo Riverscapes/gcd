@@ -393,7 +393,6 @@ namespace GCDCore.UserInterface.Project
                 case GCDNodeTypes.ErrorSurface: cms = cmsErrorSurface; break;
                 case GCDNodeTypes.ChangeDetectionGroup: cms = cmsChangeDetectionGroup; break;
                 case GCDNodeTypes.DoD: cms = cmsChangeDetection; break;
-                case GCDNodeTypes.AOIGroup: cms = cmsAOIGroup; break;
                 case GCDNodeTypes.ChangeDetectionDEMPair: cms = cmsDEMSurveyPair; break;
                 case GCDNodeTypes.BudgetSegregationGroup: cms = cmsBSGroup; break;
                 case GCDNodeTypes.BudgetSegregation: cms = cmsBS; break;
@@ -1648,6 +1647,11 @@ namespace GCDCore.UserInterface.Project
         {
             Load += ProjectExplorerUC_Load;
             InitializeComponent();
+        }
+
+        private void addBatchChangeDetectionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 
