@@ -62,18 +62,16 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="data"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        protected override double CellOp(List<double[]> data, int id)
+        protected override void CellOp(List<double[]> data, List<double[]> outputs, int id)
         {
             // Speed things up by ignoring nodatas
-            if (data[0][id] == _rasternodatavals[0])
-                return 0;
+            if (data[0][id] == inNodataVals[0])
+                return;
 
             if (isBudgSeg)
                 BudgetSegCellOp(data, id);
             else
                 CellChangeCalc(data, id, Stats);
-            // We need to return something
-            return 0;
         }
 
         /// <summary>

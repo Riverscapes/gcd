@@ -48,12 +48,12 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="data"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        protected override T CellOp(List<T[]> data, int id)
+        protected override void CellOp(List<T[]> data, List<T[]> outputs, int id)
         {
-            T val = OpNodataVal;
+            T val = outNodataVals[0];
             if (_scalar)
             {
-                if (!data[0][id].Equals(_rasternodatavals[0]))
+                if (!data[0][id].Equals(inNodataVals[0]))
                 {
                     switch (_type)
                     {
@@ -75,7 +75,7 @@ namespace GCDConsoleLib.Internal.Operators
             }
             else
             {
-                if (!data[0][id].Equals(_rasternodatavals[0]) && !data[1][id].Equals(_rasternodatavals[1]))
+                if (!data[0][id].Equals(inNodataVals[0]) && !data[1][id].Equals(inNodataVals[1]))
                 {
                     switch (_type)
                     {
@@ -95,7 +95,7 @@ namespace GCDConsoleLib.Internal.Operators
                     }
                 }
             }
-            return val;
+            outputs[0][id] = val;
         }
     }
 }

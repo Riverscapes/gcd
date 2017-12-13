@@ -629,6 +629,21 @@ namespace GCDConsoleLib
             return thePriorProb.RunWithOutput();
         }
 
+
+        public enum GCDWindowType { Erosion, Deposition, All };
+        /// <summary>
+        /// Function designed to separate erosion and deposition
+        /// </summary>
+        /// <param name="rawDoD"></param>
+        /// <param name="wType"></param>
+        /// <param name="sOutputRaster"></param>
+        /// <returns></returns>
+        public static Raster NeighbourCount(Raster rawDoD, GCDWindowType wType, int nMovingWindowWidth, FileInfo sOutputRaster)
+        {
+            GCDNeighbourCount theCountRaster = new GCDNeighbourCount(rawDoD, new Raster(rawDoD, sOutputRaster, new GdalDataType(typeof(int))), nMovingWindowWidth, wType);
+            return theCountRaster.RunWithOutput();
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -636,20 +651,19 @@ namespace GCDConsoleLib
         public static Raster PosteriorProbability(
             Raster rawDoD, 
             Raster priorProb,
+            Raster sSpatialCoErosionRaster,
+            Raster sSpatialCoDepositionRaster,
             FileInfo sPosteriorRaster,
             FileInfo sConditionalRaster,
-            FileInfo sSpatialCoErosionRaster,
-            FileInfo sSpatialCoDepositionRaster,
             int nMovingWindowWidth,
             int inflectionA,
             int inflectionB,
             EventHandler<int> progressHandler = null)
         {
             PosteriorProbability thePostProb = new PosteriorProbability(rawDoD, priorProb,
+                sSpatialCoErosionRaster, sSpatialCoDepositionRaster,
                 new Raster(rawDoD, sPosteriorRaster),
-                new Raster(rawDoD, sConditionalRaster),
-                new Raster(rawDoD, sSpatialCoErosionRaster), 
-                new Raster(rawDoD, sSpatialCoDepositionRaster),
+                new Raster(rawDoD, sConditionalRaster),                
                 nMovingWindowWidth, inflectionA, inflectionB);
 
             if (progressHandler != null)

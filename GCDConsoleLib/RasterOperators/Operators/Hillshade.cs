@@ -16,7 +16,7 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="rInput"></param>
         /// <param name="rOutputRaster"></param>
         public Hillshade(Raster rInput, Raster rOutputRaster) :
-            base(new List<Raster> { rInput }, 1, rOutputRaster)
+            base(new List<Raster> { rInput }, 1, new List<Raster>() { rOutputRaster })
         {
             SetDefaultVars();
         }
@@ -45,12 +45,15 @@ namespace GCDConsoleLib.Internal.Operators
         /// </summary>
         /// <param name="wd"></param>
         /// <returns></returns>
-        protected override float WindowOp(List<float[]> wd)
+        protected override void WindowOp(List<float[]> wd, List<float[]> outbuffers, int id)
         {
             // Don't calculate if we have nodatas in the mix
             for (int k = 0; k < BufferCellNum; k++)
-                if (wd[0][k].Equals(_rasternodatavals[0]))
-                    return OpNodataVal;
+                if (wd[0][k].Equals(inNodataVals[0]))
+                {
+                    outbuffers[0][id] = outNodataVals[0];
+                    return;
+                }
 
             float dzdx = ((wd[0][2] + (2 * wd[0][5]) + wd[0][8]) - (wd[0][0] + (2 * wd[0][3]) + wd[0][6])) / (8 * (float)Math.Abs(WindowExtent.CellHeight));
             float dzdy = ((wd[0][6] + (2 * wd[0][7]) + wd[0][8]) - (wd[0][0] + (2 * wd[0][1]) + wd[0][2])) / (8 * (float)Math.Abs(WindowExtent.CellHeight));
@@ -76,7 +79,7 @@ namespace GCDConsoleLib.Internal.Operators
             float val = (float)Math.Round(254 * ((Math.Cos(zenRad) * Math.Cos(slopeRad)) + (Math.Sin(zenRad) * Math.Sin(slopeRad) * Math.Cos(azimuthRad - aspectRad)))) + 1;
             // WEird edge effects at the bottom of some rasters. We want to enforce 0-255
             if (val < 0) val = 0;
-            return val;
+            outbuffers[0][id] = val;
         }
     }
 }

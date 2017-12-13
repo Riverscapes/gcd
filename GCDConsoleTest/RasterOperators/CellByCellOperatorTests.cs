@@ -14,17 +14,19 @@ namespace GCDConsoleLib.Internal.Tests
     {
         public TestCBCOp(List<Raster> rRasters, Raster rOutput) : base(rRasters, rOutput)
         {
-            Assert.AreEqual(rRasters.Count, _rasters.Count);
+            Assert.AreEqual(rRasters.Count, _inputRasters.Count);
+            Assert.AreEqual(1, _outputRasters.Count);
             Assert.IsFalse(OpDone);
         }
         public TestCBCOp(List<Raster> rRasters, Raster rOutput, ExtentRectangle newExtent) : base(rRasters, rOutput)
         {
             SetOpExtent(newExtent);
-            Assert.AreEqual(rRasters.Count, _rasters.Count);
+            Assert.AreEqual(rRasters.Count, _inputRasters.Count);
+            Assert.AreEqual(1, _outputRasters.Count);
             Assert.IsFalse(OpDone);
         }
 
-        protected override T CellOp(List<T[]> data, int id)
+        protected override void CellOp(List<T[]> data, List<T[]>outputs, int id)
         {
             // Calculate the real 1D index of this cell 
             int idR0 = (int)((ChunkExtent.Top - OpExtent.Top) / OpExtent.CellHeight);
@@ -36,7 +38,7 @@ namespace GCDConsoleLib.Internal.Tests
             //    Assert.AreEqual(_rasters[did]._innter, data[did][id]);
             //}
             //return realid;
-            return data[0][id];
+            outputs[0][id] = data[0][id];
         }
 
     }

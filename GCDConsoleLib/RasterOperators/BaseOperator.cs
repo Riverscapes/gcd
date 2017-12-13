@@ -21,14 +21,16 @@ namespace GCDConsoleLib.Internal
         public ExtentRectangle ChunkExtent;
         public Boolean OpDone;
 
-        protected readonly List<Raster> _rasters;
-        protected readonly List<T> _rasternodatavals;
+        protected readonly List<Raster> _inputRasters;
+        protected readonly List<Raster> _outputRasters;
+
+        public readonly List<T> inNodataVals;
+        public readonly List<T> outNodataVals;
+
         public ExtentRectangle OpExtent;
         public ExtentRectangle InExtent;
         protected int _oprows;
-        public T OpNodataVal;
 
-        protected Raster _outputRaster;
         protected int _vOffset;
 
         public event EventHandler<int> ProgressEvent;
@@ -52,27 +54,61 @@ namespace GCDConsoleLib.Internal
         /// <param name="newRect"></param>
         protected BaseOperator(List<Raster> rRasters, Raster rOutputRaster = null)
         {
-            _rasters = new List<Raster>(rRasters.Count);
-            _rasternodatavals = new List<T>(rRasters.Count);
-            _oprows = 10;
-            _init(rRasters, rOutputRaster);
-            _vOffset = 0;
+            _inputRasters = new List<Raster>();
+            _outputRasters = new List<Raster>();
+            inNodataVals = new List<T>();
+            outNodataVals = new List<T>();
+
+            List<Raster> tempOut = new List<Raster>();
+            if (rOutputRaster != null)
+                tempOut.Add(rOutputRaster);
+
+            _init(rRasters, tempOut);
 
             // Now that we have our rasters tested and a unioned extent we can set the operation extent
             SetOpExtent(InExtent);
+        }
 
+
+        /// <summary>
+        /// Initialize a bunch of rasters with multiple outputs
+        /// </summary>
+        /// <param name="rRasters"></param>
+        /// <param name="rOutputRaster"></param>
+        /// <param name="newRect"></param>
+        protected BaseOperator(List<Raster> rRasters, List<Raster> rOutputRasters = null)
+        {
+            _inputRasters = new List<Raster>();
+            _outputRasters = new List<Raster>();
+            inNodataVals = new List<T>();
+            outNodataVals = new List<T>();
+            _init(rRasters, rOutputRasters);
+
+            // Now that we have our rasters tested and a unioned extent we can set the operation extent
+            SetOpExtent(InExtent);
         }
 
         protected void AddInputRaster(Raster rInput)
         {
-            if (_rasters.Count > 1)
-                Raster.ValidateSameMeta(_rasters[0], rInput);
+            if (_inputRasters.Count > 1)
+                Raster.ValidateSameMeta(_inputRasters[0], rInput);
 
-            _rasters.Add(rInput);
-            _rasternodatavals.Add(rInput.NodataValue<T>());
+            _inputRasters.Add(rInput);
+            inNodataVals.Add(rInput.NodataValue<T>());
 
             InExtent = InExtent.Union(rInput.Extent);
             rInput.Open();
+        }
+
+        protected void AddOutputRaster(Raster rOutput)
+        {
+            if (_outputRasters.Count > 1)
+                Raster.ValidateSameMeta(_outputRasters[0], rOutput);
+
+            _outputRasters.Add(rOutput);
+            outNodataVals.Add(rOutput.NodataValue<T>());
+
+            InExtent = InExtent.Union(rOutput.Extent);
         }
 
         /// <summary>
@@ -80,11 +116,13 @@ namespace GCDConsoleLib.Internal
         /// </summary>
         /// <param name="rOutRaster"></param>
         /// <param name="newExt"></param>
-        private void _init(List<Raster> rRasters, Raster rOutRaster)
+        private void _init(List<Raster> rRasters, List<Raster> rOutputRasters)
         {
+            _oprows = 10;
+            _vOffset = 0;
+
             OpDone = false;
 
-            // Use the first input for the nodataval
             if (rRasters.Count > 0)
             {
                 InExtent = rRasters[0].Extent;
@@ -93,12 +131,13 @@ namespace GCDConsoleLib.Internal
                 foreach (Raster rRa in rRasters)
                     AddInputRaster(rRa);
             }
-            else if (_outputRaster != null)
-                InExtent = _outputRaster.Extent;
+            else if (rOutputRasters.Count > 0)
+                InExtent = rOutputRasters[0].Extent;
 
-            // Finally, set up our output raster and make sure it's open for writing
-            if (rOutRaster != null)
-                _outputRaster = rOutRaster;
+            if (rOutputRasters.Count > 0)
+                // Do a union on the inputextent
+                foreach (Raster rRout in rOutputRasters)
+                    AddOutputRaster(rRout);
 
             // Last thing we do is set the nodata value (which is suprisingly hard to do)
             SetNodataValue();
@@ -107,40 +146,40 @@ namespace GCDConsoleLib.Internal
 
         private void SetNodataValue()
         {
-            OpNodataVal = Utility.Conversion.minValue<T>();
+            T OpNodataVal = Utility.Conversion.minValue<T>();
 
             // Use the first input for the nodataval
-            if (_rasters.Count > 0)
+            if (_inputRasters.Count > 0)
             {
                 try
                 {
-                    if (_rasters[0].HasNodata)
+                    if (_inputRasters[0].HasNodata)
                     {
-                        T val = (T)Convert.ChangeType(_rasters[0].origNodataVal, typeof(T));
+                        T val = (T)Convert.ChangeType(_inputRasters[0].origNodataVal, typeof(T));
                         // Double is the biggest value we can have so use that to see if these
                         // values are really the same
                         double dValConverted = (double)Convert.ChangeType(val, typeof(double));
-                        if ((double)_rasters[0].origNodataVal != dValConverted)
+                        if ((double)_inputRasters[0].origNodataVal != dValConverted)
                             throw new OverflowException("No good");
                         OpNodataVal = val;
                     }
                 }
-                catch (OverflowException){ }
+                catch (OverflowException) { }
             }
 
             // Now make sure our nodataval is compatible with the Output value
-            if (_outputRaster != null)
+            for (int dId = 0; dId < _outputRasters.Count; dId++)
             {
                 try
                 {
-                    var test = Convert.ChangeType(OpNodataVal, _outputRaster.Datatype.CSType);
+                    var test = Convert.ChangeType(OpNodataVal, _outputRasters[dId].Datatype.CSType);
                     T throwaway = (T)Convert.ChangeType(test, typeof(T));
                     if (!throwaway.Equals(OpNodataVal))
                         throw new OverflowException("No good");
                 }
                 catch (OverflowException)
                 {
-                    Type outType = _outputRaster.Datatype.CSType;
+                    Type outType = _outputRasters[dId].Datatype.CSType;
                     if (outType == typeof(int))
                         OpNodataVal = (T)Convert.ChangeType(Utility.Conversion.minValue<int>(), typeof(T));
                     else if (outType == typeof(double))
@@ -151,10 +190,9 @@ namespace GCDConsoleLib.Internal
                         OpNodataVal = (T)Convert.ChangeType(Utility.Conversion.minValue<byte>(), typeof(T));
                 }
                 // Finally set the value in the output raster so it will be written correctly 
-                _outputRaster.origNodataVal = (double?)Convert.ChangeType(OpNodataVal, typeof(double));
-
+                _outputRasters[dId].origNodataVal = (double?)Convert.ChangeType(OpNodataVal, typeof(double));
+                outNodataVals[dId] = OpNodataVal;
             }
-
         }
 
         /// <summary>
@@ -172,8 +210,10 @@ namespace GCDConsoleLib.Internal
             if (OpExtent.Rows < chunkYsize) chunkYsize = OpExtent.Rows;
             ChunkExtent = new ExtentRectangle(OpExtent.Top, OpExtent.Left, OpExtent.CellHeight, OpExtent.CellWidth, chunkYsize, chunkXsize);
 
-            if (_outputRaster != null)
-                _outputRaster.Extent = OpExtent;
+            foreach(Raster outraster in _outputRasters)
+            {
+                outraster.Extent = OpExtent;
+            }                
         }
 
         /// <summary>
@@ -209,13 +249,13 @@ namespace GCDConsoleLib.Internal
         /// <returns></returns>
         public void GetChunk(List<T[]> data)
         {
-            for (int idx = 0; idx < _rasters.Count; idx++)
+            for (int idx = 0; idx < _inputRasters.Count; idx++)
             {
-                Raster rRa = _rasters[idx];
+                Raster rRa = _inputRasters[idx];
 
                 // Reset everything first so we don't get any data bleed
                 // NOTE: if this is slow we can revisit
-                data[idx].Fill(OpNodataVal);
+                data[idx].Fill(inNodataVals[idx]);
 
                 ExtentRectangle _interSectRect = rRa.Extent.Intersect(ChunkExtent);
 
@@ -226,7 +266,7 @@ namespace GCDConsoleLib.Internal
 
                     // Find the offset between the intersection and rRa
                     int[] offrRa = _interSectRect.GetTopCornerTranslationRowCol(rRa.Extent);
-                    _rasters[idx].Read(offrRa[1], offrRa[0], _interSectRect.Cols, _interSectRect.Rows, _buffer);
+                    _inputRasters[idx].Read(offrRa[1], offrRa[0], _interSectRect.Cols, _interSectRect.Rows, _buffer);
 
                     // Find the offset between the intersection and the chunkwindow
                     int[] offChunk = _interSectRect.GetTopCornerTranslationRowCol(ChunkExtent);
@@ -243,28 +283,31 @@ namespace GCDConsoleLib.Internal
         /// </summary>
         public void Run()
         {
-            List<T[]> data = new List<T[]>(_rasters.Count);
+            List<T[]> data = new List<T[]>(_inputRasters.Count);
 
             ProgressEvent?.Invoke(this, 0);
 
             // Set up an array with nodatavals to be populated (or not)
-            for (int idx = 0; idx < _rasters.Count; idx++)
+            for (int idx = 0; idx < _inputRasters.Count; idx++)
                 data.Add(new T[ChunkExtent.Cols * ChunkExtent.Rows]);
 
-            T[] outBuffer = new T[ChunkExtent.Cols * ChunkExtent.Rows];
+            List<T[]> outBuffer = new List<T[]>();
+            foreach (Raster outraster in _outputRasters)
+                outBuffer.Add(new T[ChunkExtent.Cols * ChunkExtent.Rows]);
+
             while (!OpDone)
             {
                 GetChunk(data);
                 ProgressEvent?.Invoke(this, Progress);
                 ChunkOp(data, outBuffer);
 
-                if (_outputRaster != null)
+                for (int idx = 0; idx < _outputRasters.Count; idx++)
                 {
                     // Get the (col,row) offsets
                     int[] offset = ChunkExtent.GetTopCornerTranslationRowCol(OpExtent);
                     // Write this window tot he file
                     // it goes (colNum, rowNum, COLS, ROWS, buffer);
-                    _outputRaster.Write(offset[1], offset[0] + _vOffset, ChunkExtent.Cols, ChunkExtent.Rows, outBuffer);
+                    _outputRasters[idx].Write(offset[1], offset[0] + _vOffset, ChunkExtent.Cols, ChunkExtent.Rows, outBuffer[idx]);
                 }
                 // We always increment to the next one
                 nextChunk();
@@ -278,7 +321,13 @@ namespace GCDConsoleLib.Internal
         public Raster RunWithOutput()
         {
             Run();
-            return _outputRaster;
+            return _outputRasters[0];
+        }
+
+        public List<Raster> RunWithOutputs()
+        {
+            Run();
+            return _outputRasters;
         }
 
         /// <summary>
@@ -286,22 +335,22 @@ namespace GCDConsoleLib.Internal
         /// </summary>
         /// <param name="data"></param>
         /// <param name="outChunk"></param>
-        protected abstract void ChunkOp(List<T[]> data, T[] outChunk);
+        protected abstract void ChunkOp(List<T[]> data, List<T[]> outBuffers);
 
         /// <summary>
         /// Make sure this class leaves nothing behind and builds statistics before disappearing forever
         /// </summary>
         protected void Cleanup()
         {
-            foreach (Raster rRa in _rasters)
+            foreach (Raster rRa in _inputRasters)
             {
                 if (rRa.IsOpen)
                     rRa.Dispose();
             }
-            if (_outputRaster != null)
+            foreach (Raster rRout in _outputRasters)
             {
-                _outputRaster.ComputeStatistics();
-                _outputRaster.Dispose();
+                if (rRout.IsOpen)
+                    rRout.Dispose();
             }
         }
     }

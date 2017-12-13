@@ -5,20 +5,20 @@ namespace GCDConsoleLib.Internal.Operators
     /// <summary>
     /// We do Hillshade as a float on purpose since we need it to be fast and accuracy is less important
     /// </summary>
-    class PosteriorProbability : WindowOverlapOperator<double>
+    public class PosteriorProbability : WindowOverlapOperator<double>
     {
         // Just helpful statics for reference
         private static int rawDod = 0;
         private static int priorProb = 1;
+        private static int spCoEro = 2;
+        private static int spCoDep = 3;
 
-        // HEre are our other output rasters
-        private Raster _ConditionalRaster;
-        private Raster _SpatialCoErosionRaster;
-        private Raster _SpatialCoDepositionRaster;
+        private static int postRaster = 0;
+        private static int condRaster = 1;
 
         // Some parameters we store
-        private int _infA;
-        private int _infB;
+        private int _infA; // min
+        private int _infB; // Max
 
         /// <summary>
         /// Pass-through constructor for Creating Prior Probability Rasters
@@ -27,99 +27,81 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="rOutputRaster"></param>
         /// 
         public PosteriorProbability(Raster rawDoD, Raster rPriorProb,
-            Raster sPosteriorRaster, Raster sConditionalRaster, Raster sSpatialCoErosionRaster, Raster sSpatialCoDepositionRaster,
+            Raster rSpatialCoErosionRaster, Raster rSpatialCoDepositionRaster,
+            Raster sPosteriorRaster, Raster sConditionalRaster, 
             int buffCells,
             int inflectionA,
             int inflectionB) :
-            base(new List<Raster> { rawDoD, rPriorProb }, buffCells, sPosteriorRaster)
+            base(new List<Raster> { rawDoD, rPriorProb, rSpatialCoErosionRaster, rSpatialCoDepositionRaster }, buffCells, new List<Raster>() { sPosteriorRaster, sConditionalRaster })
         {
-            _ConditionalRaster = sConditionalRaster;
-            _SpatialCoDepositionRaster = sSpatialCoDepositionRaster;
-            _SpatialCoErosionRaster = sSpatialCoErosionRaster;
             _infA = inflectionA;
             _infB = inflectionB;
         }
 
-        protected override double WindowOp(List<double[]> windowData)
+        protected override void WindowOp(List<double[]> windowData, List<double[]> outputs, int id)
         {
-            // NEED TO FIGURE THESE OUT
-            double xMax = -1;
-            double xMin = -1;
-            double depositionNoData = OpNodataVal;
-            double erosionNoData = OpNodataVal;
-            double[] depositionData = new double[1] { 1 };
-            double[] conditionalData = new double[1] { 1 };
-            double[] erosionData = new double[1] { 1 };
-            double[] postData = new double[1] { 1 };
-
-
-            double pAgEjDenom = xMax - xMin;
+            double pAgEjDenom = _infB - _infA;
             double pA, pAgEj, pEj, nbrCnt;
             int i = BufferCenterID;
 
-            if ((windowData[rawDod][i] != _rasternodatavals[rawDod]) && (windowData[priorProb][i] != _rasternodatavals[priorProb]))
+            if ((windowData[rawDod][i] != inNodataVals[rawDod]) && (windowData[priorProb][i] != inNodataVals[priorProb]))
             {
-                if ((windowData[rawDod][i] > 0) && (depositionData[i] != depositionNoData))
+                // Deposition Case
+                if ((windowData[rawDod][i] > 0) && (windowData[spCoDep][i] != inNodataVals[spCoDep]))
                 {
-                    nbrCnt = depositionData[i];
-                    if (nbrCnt <= xMin)
+                    nbrCnt = windowData[spCoDep][i];
+                    if (nbrCnt <= _infA)
                     {
-                        conditionalData[i] = 0;
-                        postData[i] = 0;
+                        outputs[condRaster][id] = 0;
+                        outputs[postRaster][id] = 0;
                     }
-                    else if (nbrCnt >= xMax)
+                    else if (nbrCnt >= _infB)
                     {
-                        conditionalData[i] = 1;
-                        postData[i] = 1;
+                        outputs[condRaster][id] = 1;
+                        outputs[postRaster][id] = 1;
                     }
                     else
                     {
                         pEj = windowData[priorProb][i];
-                        pAgEj = (nbrCnt - xMin) / pAgEjDenom;
-                        conditionalData[i] = pAgEj;
+                        // Rise over run
+                        pAgEj = (nbrCnt - _infA) / pAgEjDenom;
+                        outputs[condRaster][id] = pAgEj;
+                        // Just a linear slope
                         pA = pAgEj * pEj + (1 - pAgEj) * (1 - pEj);
-                        postData[i] = pAgEj * pEj / pA;
+                        outputs[postRaster][id] = pAgEj * pEj / pA;
                     }
                 }
-                else if ((windowData[rawDod][i] < 0) && (erosionData[i] != erosionNoData))
+                // Erosion Case
+                else if ((windowData[rawDod][i] < 0) && (windowData[spCoEro][i] != inNodataVals[spCoEro]))
                 {
-                    nbrCnt = erosionData[i];
-                    if (nbrCnt <= xMin)
+                    nbrCnt = windowData[spCoEro][i];
+                    if (nbrCnt <= _infA)
                     {
-                        conditionalData[i] = 0;
-                        postData[i] = 0;
+                        outputs[condRaster][id] = 0;
+                        outputs[postRaster][id] = 0;
                     }
-                    else if (nbrCnt >= xMax)
+                    else if (nbrCnt >= _infB)
                     {
-                        conditionalData[i] = -1;
-                        postData[i] = -1;
+                        outputs[condRaster][id] = -1;
+                        outputs[postRaster][id] = -1;
                     }
                     else
                     {
                         pEj = -windowData[priorProb][i];
-                        pAgEj = (nbrCnt - xMin) / pAgEjDenom;
-                        conditionalData[i] = -pAgEj;
+                        // Rise over run
+                        pAgEj = (nbrCnt - _infA) / pAgEjDenom;
+                        outputs[condRaster][id] = -pAgEj;
+                        // Just a linear slope
                         pA = pAgEj * pEj + (1 - pAgEj) * (1 - pEj);
-                        postData[i] = -pAgEj * pEj / pA;
+                        outputs[postRaster][id] = -pAgEj * pEj / pA;
                     }
                 }
                 else if (windowData[rawDod][i] == 0)
                 {
-                    conditionalData[i] = 0;
-                    postData[i] = 0;
-                }
-                else
-                {
-                    conditionalData[i] = OpNodataVal;
-                    postData[i] = OpNodataVal;
+                    outputs[condRaster][id] = 0;
+                    outputs[postRaster][id] = 0;
                 }
             }
-            else
-            {
-                conditionalData[i] = OpNodataVal;
-                postData[i] = OpNodataVal;
-            }
-            return 0;
         }
 
     }

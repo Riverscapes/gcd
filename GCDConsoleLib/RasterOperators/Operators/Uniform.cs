@@ -16,15 +16,15 @@ namespace GCDConsoleLib.Internal.Operators
         public UniformRaster(Raster rInput, Raster rOutputRaster, T val) :
             base(new List<Raster> { rInput }, rOutputRaster)
         {
-           _val = val;
+            _val = val;
         }
 
         /// <summary>
         /// This is the actual implementation of the cell-by-cell logic
         /// </summary>
-        protected override T CellOp(List<T[]> data, int id)
+        protected override void CellOp(List<T[]> data, List<T[]> outputs, int id)
         {
-            return _val;
+            outputs[0][id] = _val;
         }
 
     }

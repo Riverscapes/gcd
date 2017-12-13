@@ -8,21 +8,21 @@ namespace GCDConsoleLib.Internal.Tests
 {
     class TestWOOOp<T> : WindowOverlapOperator<T>
     {
-        public TestWOOOp(List<Raster> rRasters, int buff, Raster rOutput) : base(rRasters, buff, rOutput)
+        public TestWOOOp(List<Raster> rRasters, int buff, Raster rOutput) : base(rRasters, buff, new List<Raster>() { rOutput })
         {
-            Assert.AreEqual(rRasters.Count, _rasters.Count);
+            Assert.AreEqual(rRasters.Count, _inputRasters.Count);
             Assert.IsFalse(OpDone);
         }
-        public TestWOOOp(List<Raster> rRasters, Raster rOutput, ExtentRectangle newExtent, int buff) : base(rRasters, buff, rOutput)
+        public TestWOOOp(List<Raster> rRasters, Raster rOutput, ExtentRectangle newExtent, int buff) : base(rRasters, buff, new List<Raster>() { rOutput })
         {
             SetOpExtent(newExtent);
-            Assert.AreEqual(rRasters.Count, _rasters.Count);
+            Assert.AreEqual(rRasters.Count, _inputRasters.Count);
             Assert.IsFalse(OpDone);
         }
-        protected override T WindowOp(List<T[]> windowData)
+        protected override void WindowOp(List<T[]> windowData, List<T[]> outputs, int id)
         {
             // We just return the middle cell for testing
-            return windowData[0][BufferCenterID];
+            outputs[0][id] = windowData[0][BufferCenterID];
         }
 
     }

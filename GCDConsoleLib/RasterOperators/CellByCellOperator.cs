@@ -19,19 +19,17 @@ namespace GCDConsoleLib.Internal
         /// <param name="data"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        protected abstract T CellOp(List<T[]> data, int id);
+        protected abstract void CellOp(List<T[]> data, List<T[]> outputs, int id);
 
         /// <summary>
         /// This is how we loop over a chunk
         /// </summary>
         /// <param name="data"></param>
         /// <param name="outChunk"></param>
-        protected override void ChunkOp(List<T[]> data, T[] outChunk)
+        protected override void ChunkOp(List<T[]> data, List<T[]> outChunks)
         {
             for (int id = 0; id < data[0].Length; id++)
-            {
-                outChunk[id] = CellOp(data, id);
-            }
+                CellOp(data, outChunks, id);
         }
     }
 

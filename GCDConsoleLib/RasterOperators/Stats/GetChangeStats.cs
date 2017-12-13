@@ -6,10 +6,10 @@ using GCDConsoleLib.GCD;
 namespace GCDConsoleLib.Internal.Operators
 {
 
-    public class GetChangeStats : CellByCellOperator<float>
+    public class GetChangeStats : CellByCellOperator<double>
     {
         public DoDStats Stats;
-        private List<float> _nodata;
+        private List<double> _nodata;
 
         // If we do budget seg we need the following
         private bool isBudgSeg;
@@ -27,7 +27,7 @@ namespace GCDConsoleLib.Internal.Operators
         {
             Stats = theStats;
             isBudgSeg = false;
-            _nodata = _rasternodatavals;
+            _nodata = inNodataVals;
         }
 
         /// <summary>
@@ -84,19 +84,17 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="data"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        protected override float CellOp(List<float[]> data, int id)
+        protected override void CellOp(List<double[]> data, List<double[]> outputs, int id)
         {
             // Speed things up by ignoring nodatas
-            if (data[0][id] == _rasternodatavals[0])
-                return 0;
+            if (data[0][id] == inNodataVals[0])
+                return;
 
             if (isBudgSeg)
                 BudgetSegCellOp(data, id);
             else
                 CellChangeCalc(data, id, Stats);
 
-            // We need to return something. Doesn't matter what
-            return 0;
         }
 
         /// <summary>
@@ -104,7 +102,7 @@ namespace GCDConsoleLib.Internal.Operators
         /// </summary>
         /// <param name="data"></param>
         /// <param name="id"></param>
-        private void BudgetSegCellOp(List<float[]> data, int id)
+        private void BudgetSegCellOp(List<double[]> data, int id)
         {
            decimal[] ptcoords = ChunkExtent.Id2XY(id);
             List<string> shapes = _polymask.ShapesContainPoint((double)ptcoords[0], (double)ptcoords[1], _fieldname);
@@ -127,12 +125,12 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="id"></param>
         /// <param name="stats"></param>
         /// <param name="nodata"></param>
-        public void CellChangeCalc(List<float[]> data, int id, DoDStats stats)
+        public void CellChangeCalc(List<double[]> data, int id, DoDStats stats)
         {
-            float fRVal, fMask;
+            double fRVal, fMask;
 
             // If we don't have a mask to use then do it this way
-            if (data.Count == 1 && data[0][id] != _rasternodatavals[0])
+            if (data.Count == 1 && data[0][id] != inNodataVals[0])
             {
                 fRVal = data[0][id];
                 // Deposition
@@ -144,14 +142,14 @@ namespace GCDConsoleLib.Internal.Operators
             }
 
             // If we have a mask then use it.
-            else if (data.Count == 2 && data[1][id] != _rasternodatavals[1])
+            else if (data.Count == 2 && data[1][id] != inNodataVals[1])
             {
                 fRVal = data[0][id];
                 fMask = data[1][id];
                 if (fRVal > 0)
                 {
                     // Deposition
-                    if (fMask != _rasternodatavals[1])
+                    if (fMask != inNodataVals[1])
                         stats.DepositionRaw.AddToSumAndIncrementCounter(fRVal);
                     // Erosion
                     else if (fMask< 0)

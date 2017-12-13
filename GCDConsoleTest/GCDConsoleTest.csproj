@@ -106,7 +106,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="DONOTCHECKIN.cs" />
+    <Compile Include="DebuggingHelper.cs" />
     <Compile Include="Extensions\BiDictionaryTests.cs" />
     <Compile Include="ExtentRectangleTests.cs" />
     <Compile Include="FIS\DefuzzifyTests.cs" />

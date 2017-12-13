@@ -110,10 +110,10 @@
     <Compile Include="RasterOperators\Operators\CITThresholdRaster.cs" />
     <Compile Include="RasterOperators\Operators\CreateErrorRaster.cs" />
     <Compile Include="RasterOperators\Operators\FISRasterOp.cs" />
+    <Compile Include="RasterOperators\Operators\GCDNeighbourCount.cs" />
     <Compile Include="RasterOperators\Operators\PostProbability.cs" />
     <Compile Include="RasterOperators\Operators\PriorProbRaster.cs" />
-    <Compile Include="RasterOperators\Operators\ThreshDoDProbSptlCoherence.cs" />
-    <Compile Include="RasterOperators\PointDensity.cs" />
+    <Compile Include="RasterOperators\Operators\PointDensity.cs" />
     <Compile Include="RasterOperators\Stats\GetChangeStats.cs" />
     <Compile Include="RasterOperators\Stats\GetDoDPropStats.cs" />
     <Compile Include="RasterOperators\Stats\GetDoDMinLodStats.cs" />

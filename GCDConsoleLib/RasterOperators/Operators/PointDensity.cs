@@ -134,17 +134,17 @@ namespace GCDConsoleLib.Internal.Operators
         /// </summary>
         /// <param name="data"></param>
         /// <param name="outChunk"></param>
-        protected override void ChunkOp(List<double[]> data, double[] outChunk)
+        protected override void ChunkOp(List<double[]> data, List<double[]> outBuffers)
         {
             // Get all the points in this chunk
             VectorChunkExtent = ChunkExtent.Buffer(_fsizedec);
             List<Geometry>[,] bins = BinPoints(_vinput.PointsInExtent(VectorChunkExtent));
 
-            for (int cid = 0; cid < outChunk.Length; cid++)
+            for (int cid = 0; cid < outBuffers[0].Length; cid++)
             {
                 // Save us a metric Tonne of effort by giving up on nodatavals in the DEM
-                if (data[0][cid] == _rasternodatavals[0])
-                    outChunk[cid] = OpNodataVal;
+                if (data[0][cid] == inNodataVals[0])
+                    outBuffers[0][cid] = outNodataVals[0];
                 else
                 {
                     double outval = 0;
@@ -169,7 +169,7 @@ namespace GCDConsoleLib.Internal.Operators
                                 else if (InsideSquare(pt, pt2)) outval++;
                             }
                     }
-                    outChunk[cid] = outval / area;
+                    outBuffers[0][cid] = outval / area;
                 }
             }
         }

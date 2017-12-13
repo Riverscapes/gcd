@@ -43,9 +43,9 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="data"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        protected override double CellOp(List<double[]> data, int id)
+        protected override void CellOp(List<double[]> data,List<double[]> outputs,  int id)
         {
-            return FISCellOp(data, id);
+            outputs[0][id] = FISCellOp(data, id);
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace GCDConsoleLib.Internal.Operators
         /// <returns></returns>
         public double FISCellOp(List<double[]> data, int id)
         {
-            return _RuleSet.calculate(data, id, true, _rasternodatavals, OpNodataVal);
+            return _RuleSet.calculate(data, id, true, inNodataVals, outNodataVals[0]);
         }
 
     }

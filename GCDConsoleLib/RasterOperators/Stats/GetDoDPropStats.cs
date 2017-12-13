@@ -6,10 +6,10 @@ using GCDConsoleLib.GCD;
 namespace GCDConsoleLib.Internal.Operators
 {
 
-    public class GetDoDPropStats : CellByCellOperator<float>
+    public class GetDoDPropStats : CellByCellOperator<double>
     {
         public DoDStats Stats;
-        public float fDoDValue, fPropErr;
+        public double fDoDValue, fPropErr;
 
         // If we do budget seg we need the following
         private bool isBudgSeg;
@@ -55,19 +55,17 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="data"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        protected override float CellOp(List<float[]> data, int id)
+        protected override void CellOp(List<double[]> data, List<double[]> outputs, int id)
         {
             // Speed things up by ignoring nodatas
-            if (data[0][id] == _rasternodatavals[0] || data[1][id] == _rasternodatavals[1])
-                return 0;
+            if (data[0][id] == inNodataVals[0] || data[1][id] == inNodataVals[1])
+                return;
 
             if (isBudgSeg)
                 BudgetSegCellOp(data, id);
             else
                 CellChangeCalc(data, id, Stats);
 
-            // We need to return something. Doesn't matter what
-            return 0;
         }
 
         /// <summary>
@@ -75,7 +73,7 @@ namespace GCDConsoleLib.Internal.Operators
         /// </summary>
         /// <param name="data"></param>
         /// <param name="id"></param>
-        private void BudgetSegCellOp(List<float[]> data, int id)
+        private void BudgetSegCellOp(List<double[]> data, int id)
         {
             decimal[] ptcoords = ChunkExtent.Id2XY(id);
             List<string> shapes = _polymask.ShapesContainPoint((double)ptcoords[0], (double)ptcoords[1], _fieldname);
@@ -98,7 +96,7 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="id"></param>
         /// <param name="stats"></param>
         /// <param name="nodata"></param>
-        public void CellChangeCalc(List<float[]> data, int id, DoDStats stats)
+        public void CellChangeCalc(List<double[]> data, int id, DoDStats stats)
         {
             fDoDValue = data[0][id];
             fPropErr = data[1][id];

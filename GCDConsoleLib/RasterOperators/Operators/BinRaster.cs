@@ -52,14 +52,14 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="id"></param>
         private void BudgetSegCellOp(List<double[]> data, int id)
         {
-           decimal[] ptcoords = ChunkExtent.Id2XY(id);
+            decimal[] ptcoords = ChunkExtent.Id2XY(id);
             List<string> shapes = _polymask.ShapesContainPoint((double)ptcoords[0], (double)ptcoords[1], _fieldname);
             if (shapes.Count > 0)
             {
                 foreach (string fldVal in shapes)
                 {
                     if (!SegHistograms.ContainsKey(fldVal))
-                        SegHistograms[fldVal] = new Histogram(_segNumBins, _rasters[0]);
+                        SegHistograms[fldVal] = new Histogram(_segNumBins, _inputRasters[0]);
 
                     SegHistograms[fldVal].AddBinVal(data[0][id]);
                 }
@@ -73,16 +73,13 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="data"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        protected override double CellOp(List<double[]> data, int id)
+        protected override void CellOp(List<double[]> data, List<double[]> outputs, int id)
         {
-            if (!data[0][id].Equals(_rasternodatavals[0]))
+            if (!data[0][id].Equals(inNodataVals[0]))
                 if (isBudgSeg)
                     BudgetSegCellOp(data, id);
                 else
                     theHistogram.AddBinVal(data[0][id]);
-
-            // We need to return something. Doesn't matter what
-            return 0;
         }
 
     }

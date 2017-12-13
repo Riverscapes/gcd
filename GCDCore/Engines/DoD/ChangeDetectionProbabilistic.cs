@@ -54,9 +54,15 @@ namespace GCDCore.Engines
                 m_SpatialCoErosionRaster = new FileInfo(Path.ChangeExtension(Path.Combine(AnalysisFolder.FullName, "nbrErosion"), OutputManager.RasterExtension));
                 m_SpatialCoDepositionRaster = new FileInfo(Path.ChangeExtension(Path.Combine(AnalysisFolder.FullName, "nbrDeposition"), OutputManager.RasterExtension));
 
+                // Count erosion and Deposition in a window around each cell
+                Raster rSpatialCoErosion = RasterOperators.NeighbourCount(rawDoD, RasterOperators.GCDWindowType.Erosion, SpatialCoherence.MovingWindowDimensions, m_SpatialCoErosionRaster);
+                Raster rSpatialCoDeposition = RasterOperators.NeighbourCount(rawDoD, RasterOperators.GCDWindowType.Deposition, SpatialCoherence.MovingWindowDimensions, m_SpatialCoDepositionRaster);
+
                 Raster PostProb = RasterOperators.PosteriorProbability(rawDoD, priorPRob,
-                    m_PosteriorRaster, m_ConditionalRaster, m_SpatialCoErosionRaster, m_SpatialCoDepositionRaster,
-                    SpatialCoherence.MovingWindowDimensions, SpatialCoherence.InflectionA, SpatialCoherence.InflectionB);
+                    rSpatialCoErosion, rSpatialCoDeposition,
+                    m_PosteriorRaster, m_ConditionalRaster,
+                    SpatialCoherence.MovingWindowDimensions, 
+                    SpatialCoherence.InflectionA, SpatialCoherence.InflectionB);
 
                 thrDoD = RasterOperators.ThresholdDoDProbability(rawDoD, PostProb, new FileInfo(thrDoDPath.FullName), Threshold);
 

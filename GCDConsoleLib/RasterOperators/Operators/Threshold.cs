@@ -75,23 +75,26 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="data"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        protected override double CellOp(List<double[]> data, int id)
+        protected override void CellOp(List<double[]> data, List<double[]> outputs, int id)
         {
             // Get out quick if we can
-            if (data[0][id] == _rasternodatavals[0])
-                return _rasternodatavals[0];
+            if (data[0][id] == inNodataVals[0])
+            {
+                outputs[0][id] = outNodataVals[0];
+                return;
+            }
 
             double val = data[0][id];
             // TwoOps means we're doing Greater than something AND less than something else
             if (bTwoOps)
             {
-                if (_rasters.Count == 1)
+                if (_inputRasters.Count == 1)
                 {
                     if (!(_botOp == RasterOperators.ThresholdOps.GreaterThan && val <= _botNum ||
                         _botOp == RasterOperators.ThresholdOps.GreaterThanOrEqual && val < _botNum ||
                         _topOp == RasterOperators.ThresholdOps.LessThan && val >= _topNum ||
                         _topOp == RasterOperators.ThresholdOps.LessThanOrEqual && val > _topNum))
-                        val = _rasternodatavals[0];
+                        val = inNodataVals[0];
                 }
                 else
                 {
@@ -101,20 +104,20 @@ namespace GCDConsoleLib.Internal.Operators
                         _botOp == RasterOperators.ThresholdOps.GreaterThanOrEqual && val < _botNum ||
                         _topOp == RasterOperators.ThresholdOps.LessThan && val >= _topNum ||
                         _topOp == RasterOperators.ThresholdOps.LessThanOrEqual && val < _topNum)
-                        val = _rasternodatavals[0];
+                        val = inNodataVals[0];
                 }
             }
             // One operation only means we're greater OR less than some value
             else
             {
                 // Compare the raster value to a constant
-                if (_rasters.Count == 1)
+                if (_inputRasters.Count == 1)
                 {
                     if (_botOp == RasterOperators.ThresholdOps.GreaterThan && data[0][id] <= _botNum ||
                         _botOp == RasterOperators.ThresholdOps.GreaterThanOrEqual && data[0][id] < _botNum ||
                         _botOp == RasterOperators.ThresholdOps.LessThan && data[0][id] >= _botNum ||
                         _botOp == RasterOperators.ThresholdOps.LessThanOrEqual && data[0][id] > _botNum)
-                        val = _rasternodatavals[0];
+                        val = inNodataVals[0];
                 }
                 // This is a raster operation. Compare the first raster value to a second raster value
                 else
@@ -124,11 +127,12 @@ namespace GCDConsoleLib.Internal.Operators
                         _botOp == RasterOperators.ThresholdOps.GreaterThanOrEqual && data[0][id] < rBotNum ||
                         _botOp == RasterOperators.ThresholdOps.LessThan && data[0][id] >= rBotNum ||
                         _botOp == RasterOperators.ThresholdOps.LessThanOrEqual && data[0][id] > rBotNum)
-                        val = _rasternodatavals[0];
+                        val = inNodataVals[0];
                 }
 
             }
-            return val;
+            outputs[0][id] = val;
+
         }
 
     }

@@ -21,12 +21,12 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="data"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        protected override T CellOp(List<T[]> data, int id)
+        protected override void CellOp(List<T[]> data, List<T[]> outputs, int id)
         {
-            if (data[1][id].Equals(_rasternodatavals[1]))
-                return OpNodataVal;
+            if (data[1][id].Equals(inNodataVals[1]))
+                outputs[0][id] = outNodataVals[0];
             else
-                return data[0][id];
+                outputs[0][id] = data[0][id];
         }
     }
 }

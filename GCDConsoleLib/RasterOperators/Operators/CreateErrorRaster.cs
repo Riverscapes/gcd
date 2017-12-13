@@ -34,7 +34,7 @@ namespace GCDConsoleLib.Internal.Operators
             {
                 AddInputRaster(prop.AssociatedSurface);
                 // Now keep track so we can find it later
-                _assocRasters = new Dictionary<string, int>() { { "", _rasters.Count - 1 } };
+                _assocRasters = new Dictionary<string, int>() { { "", _inputRasters.Count - 1 } };
             }
             else if (prop.TheType == ErrorRasterProperties.ERPType.FIS)
             {
@@ -45,7 +45,7 @@ namespace GCDConsoleLib.Internal.Operators
                 // so we can slice this data out and feed it to the FIS operator
                 foreach (Raster fisinput in prop.FISInputs.Values)
                 {
-                    _fisinputs[""].Add(_rasters.Count);
+                    _fisinputs[""].Add(_inputRasters.Count);
                     AddInputRaster(fisinput);
                 }
             }
@@ -80,7 +80,7 @@ namespace GCDConsoleLib.Internal.Operators
                 {
                     AddInputRaster(kvp.Value.AssociatedSurface);
                     // Now keep track so we can find it later
-                    _assocRasters[kvp.Key] =  _rasters.Count - 1;
+                    _assocRasters[kvp.Key] = _inputRasters.Count - 1;
                 }
                 else if (kvp.Value.TheType == ErrorRasterProperties.ERPType.FIS)
                 {
@@ -90,7 +90,7 @@ namespace GCDConsoleLib.Internal.Operators
                     // so we can slice this data out and feed it to the FIS operator
                     foreach (Raster fisinput in kvp.Value.FISInputs.Values)
                     {
-                        _fisinputs[kvp.Key].Add(_rasters.Count);
+                        _fisinputs[kvp.Key].Add(_inputRasters.Count);
                         AddInputRaster(fisinput);
                     }
                 }
@@ -124,8 +124,6 @@ namespace GCDConsoleLib.Internal.Operators
                 default:
                     throw new ArgumentException("Type not found");
             }
-            // we should never get this far
-            return OpNodataVal;
         }
 
         /// <summary>
@@ -134,33 +132,33 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="data"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        protected override double CellOp(List<double[]> data, int id)
+        protected override void CellOp(List<double[]> data, List<double[]> outputs, int id)
         {
             // Speed things up by ignoring nodatas
-            if (data[0][id] == _rasternodatavals[0])
-                return OpNodataVal;
+            if (data[0][id] == inNodataVals[0])
+            {
+                outputs[0][id] = outNodataVals[0];
+                return;
+            }
 
             // With multimethod errors we need to do some fancy footwork
             if (isMultiMethod)
             {
-               decimal[] ptcoords = ChunkExtent.Id2XY(id);
+                decimal[] ptcoords = ChunkExtent.Id2XY(id);
                 // Is this point in one (or more) of the shapes?
                 List<string> shapes = _polymask.ShapesContainPoint((double)ptcoords[0], (double)ptcoords[1], _fieldname);
 
                 // Now we need to decide what to do based on how many intersections we found.
                 if (shapes.Count == 1)
-                    return CellChangeCalc(shapes[0], data, id);
+                    outputs[0][id] = CellChangeCalc(shapes[0], data, id);
                 else if (shapes.Count > 1)
                     throw new NotImplementedException("Overlapping shapes is not yet supported");
                 else
-                    return OpNodataVal;
+                    outputs[0][id] = outNodataVals[0];
             }
             // Single method is easier
             else
-                return CellChangeCalc("", data, id);
-
-            // We should never get this far
-            return OpNodataVal;
+                outputs[0][id] = CellChangeCalc("", data, id);
         }
 
     }

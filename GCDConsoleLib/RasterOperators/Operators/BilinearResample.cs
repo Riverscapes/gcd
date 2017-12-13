@@ -58,11 +58,11 @@ namespace GCDConsoleLib.Internal.Operators
         /// </summary>
         public new void Run()
         {
-            int oldCols = _rasters[0].Extent.Cols;
-            int oldRows = _rasters[0].Extent.Rows;
+            int oldCols = _inputRasters[0].Extent.Cols;
+            int oldRows = _inputRasters[0].Extent.Rows;
 
             T[] outBuffer = new T[OpExtent.Cols];
-            List<T[]> indata = new List<T[]>() { new T[_rasters[0].Extent.Cols], new T[_rasters[0].Extent.Cols] };
+            List<T[]> indata = new List<T[]>() { new T[_inputRasters[0].Extent.Cols], new T[_inputRasters[0].Extent.Cols] };
 
             // This is a two-line cycling buffer. Either array el 1 or array el 0 is the first row.
             int topBit = 0;
@@ -71,7 +71,7 @@ namespace GCDConsoleLib.Internal.Operators
 
             for (int nrow = 0; nrow < OpExtent.Rows; nrow++)
             {
-                outBuffer.Fill(OpNodataVal);
+                outBuffer.Fill(outNodataVals[0]);
                 for (int ncol = 0; ncol < OpExtent.Cols; ncol++)
                 {
 
@@ -87,7 +87,7 @@ namespace GCDConsoleLib.Internal.Operators
                     {
                         topBit = (topBit + 1) % 2;
                         topBitRow += 1;
-                        _rasters[0].Read(0, iy2, _rasters[0].Extent.Cols, 1, indata[topBit]);
+                        _inputRasters[0].Read(0, iy2, _inputRasters[0].Extent.Cols, 1, indata[topBit]);
                     }
 
                     // Test if we're within the raster midpoints
@@ -101,10 +101,10 @@ namespace GCDConsoleLib.Internal.Operators
                             indata[(topBit + 1)%2 ][ix2]
                         };
                         // Bail if anything is NODATAVAL
-                        if (!vals[0].Equals(_rasternodatavals[0])
-                            && !vals[1].Equals(_rasternodatavals[0])
-                            && !vals[2].Equals(_rasternodatavals[0])
-                            && !vals[3].Equals(_rasternodatavals[0]))
+                        if (!vals[0].Equals(inNodataVals[0])
+                            && !vals[1].Equals(inNodataVals[0])
+                            && !vals[2].Equals(inNodataVals[0])
+                            && !vals[3].Equals(inNodataVals[0]))
                         {
                             // Finally, here's the resample:
                             // The conversion here is unfortunate but since we don't know what kind of thing we're
@@ -118,7 +118,7 @@ namespace GCDConsoleLib.Internal.Operators
                         }
                     }
                 }
-                _outputRaster.Write(0, nrow, ChunkExtent.Cols, 1, outBuffer);
+                _outputRasters[0].Write(0, nrow, ChunkExtent.Cols, 1, outBuffer);
             }
             Cleanup();
         }
@@ -130,7 +130,7 @@ namespace GCDConsoleLib.Internal.Operators
         public new Raster RunWithOutput()
         {
             Run();
-            return _outputRaster;
+            return _outputRasters[0];
         }
 
         /// <summary>
@@ -138,7 +138,7 @@ namespace GCDConsoleLib.Internal.Operators
         /// </summary>
         /// <param name="data"></param>
         /// <param name="outChunk"></param>
-        protected override void ChunkOp(List<T[]> data, T[] outChunk)
+        protected override void ChunkOp(List<T[]> data, List<T[]> outChunk)
         {
             throw new NotImplementedException();
         }

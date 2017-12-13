@@ -30,17 +30,17 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="data"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        protected override double CellOp(List<double[]> data, int id)
+        protected override void CellOp(List<double[]> data, List<double[]> outputs, int id)
         {
             // If Nothing is Nodata (as long as there is a nodata value) 
-            if ((data[rawDod][id] != _rasternodatavals[rawDod] || !_rasters[rawDod].HasNodata) &&
-                (data[priorProb][id] != _rasternodatavals[priorProb] || !_rasters[priorProb].HasNodata) &&
+            if ((data[rawDod][id] != inNodataVals[rawDod] || !_inputRasters[rawDod].HasNodata) &&
+                (data[priorProb][id] != inNodataVals[priorProb] || !_inputRasters[priorProb].HasNodata) &&
                 // AND this math is greater than the cutoff
                 (Math.Abs(data[rawDod][id]) / data[priorProb][id] >= zCutoff))
 
-                return data[rawDod][id];
+                outputs[0][id] = data[rawDod][id];
             else
-                return OpNodataVal;
+                outputs[0][id] = outNodataVals[0];
         }
     }
 }

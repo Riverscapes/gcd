@@ -20,7 +20,7 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="rOutputRaster"></param>
         /// <param name="theType"></param>
         public Slope(Raster rInput, Raster rOutputRaster, SlopeType theType) :
-            base(new List<Raster> { rInput }, 1, rOutputRaster)
+            base(new List<Raster> { rInput }, 1, new List<Raster>() { rOutputRaster })
         {
             _slopetype = theType;
             cellWidth = (double)Math.Abs(OpExtent.CellWidth);
@@ -48,16 +48,19 @@ namespace GCDConsoleLib.Internal.Operators
         /// </summary>
         /// <param name="wd">Window Data. A list of double arrays</param>
         /// <returns></returns>
-        protected override double WindowOp(List<double[]> wd)
+        protected override void WindowOp(List<double[]> wd, List<double[]> outputs, int id)
         {
             _buff = wd[0];
 
-            if (wd[0][BufferCenterID].Equals(OpNodataVal))
-                return OpNodataVal;
+            if (wd[0][BufferCenterID].Equals(outNodataVals[0]))
+            {
+                outputs[0][id] = outNodataVals[0];
+                return;
+            }
 
             // If anything is nodataval just return that and skip everything else
             for (int k = 0; k < BufferCellNum; k++)
-                if (wd[0][k].Equals(OpNodataVal))
+                if (wd[0][k].Equals(outNodataVals[0]))
                     wd[0][k] = wd[0][BufferCenterID];
 
             theSlope = CalculateSlope(_buff);
@@ -73,7 +76,7 @@ namespace GCDConsoleLib.Internal.Operators
             }
 
             // We are required to return something
-            return retval;
+            outputs[0][id] = retval;
         }
 
     }

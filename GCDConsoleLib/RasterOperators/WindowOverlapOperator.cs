@@ -20,15 +20,21 @@ namespace GCDConsoleLib.Internal
         List<T[]> dWindow; // this is our nxn window over which we are doing our masth
         private int _cacheIdx;
 
-        public WindowOverlapOperator(List<Raster> rRasters, int bufferCells, Raster rOutputRaster = null) :
-            base(rRasters, rOutputRaster)
+        /// <summary>
+        /// Output Constructor
+        /// </summary>
+        /// <param name="rRasters"></param>
+        /// <param name="bufferCells"></param>
+        /// <param name="rOutputRaster"></param>
+        public WindowOverlapOperator(List<Raster> rRasters, int bufferCells, List<Raster> rOutputRasters = null) :
+            base(rRasters, rOutputRasters)
         {
             BufferCells = bufferCells;
             _vOffset = -BufferCells;
             _chunkCache = new List<List<T[]>>(BufferLength);
 
             dWindow = new List<T[]>();
-            foreach (Raster rN in _rasters)
+            foreach (Raster rN in _inputRasters)
                 dWindow.Add(new T[BufferCellNum]);
 
             // 1 is the convention for windowed mode for good reason
@@ -38,7 +44,12 @@ namespace GCDConsoleLib.Internal
             // We add rows to the end so the operation goes over the end of the file
             OriginalOpBottom = OpExtent.Bottom;
             OpExtent.Rows += BufferCells;
-            WindowExtent = new ExtentRectangle(ChunkExtent.Top - OpExtent.CellHeight, ChunkExtent.Left - OpExtent.CellWidth, OpExtent.CellHeight, OpExtent.CellWidth, BufferLength, BufferLength);
+            WindowExtent = new ExtentRectangle(ChunkExtent.Top - OpExtent.CellHeight, 
+                ChunkExtent.Left - OpExtent.CellWidth, 
+                OpExtent.CellHeight, 
+                OpExtent.CellWidth, 
+                BufferLength, 
+                BufferLength);
 
         }
 
@@ -60,15 +71,15 @@ namespace GCDConsoleLib.Internal
         /// <param name="windowData"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        protected abstract T WindowOp(List<T[]> windowData);
+        protected abstract void WindowOp(List<T[]> windowData, List<T[]> outBuffers, int id);
 
         private List<T[]> NoDataChunkList()
         {
-            T[] inputchunk = new T[ChunkExtent.Rows * ChunkExtent.Cols];
-            inputchunk.Fill(OpNodataVal);
             List<T[]> inputChunkList = new List<T[]>();
-            for (int did = 0; did < _rasters.Count; did++)
+            for (int did = 0; did < _inputRasters.Count; did++)
             {
+                T[] inputchunk = new T[ChunkExtent.Rows * ChunkExtent.Cols];
+                inputchunk.Fill(inNodataVals[did]);
                 inputChunkList.Add(inputchunk);
             }
             return inputChunkList;
@@ -99,7 +110,7 @@ namespace GCDConsoleLib.Internal
             _cacheIdx = BufferCells;
         }
 
-        protected override void ChunkOp(List<T[]> data, T[] outChunk)
+        protected override void ChunkOp(List<T[]> data, List<T[]> outBuffers)
         {
             /** Don't forget the numbering scheme:
              *  0  1  2  or   0  1  2  3  4
@@ -130,7 +141,7 @@ namespace GCDConsoleLib.Internal
             }
 
             // Loop over the cells in the Chunk (line) 
-            for (int id = 0; id < outChunk.GetLength(0); id++)
+            for (int id = 0; id < data[0].GetLength(0); id++)
             {
                 // Now loop over cells in the window
                 for (int wId = 0; wId < BufferCellNum; wId++)
@@ -147,14 +158,14 @@ namespace GCDConsoleLib.Internal
                         // Edge cases to the left and right of the chunk data become nodata 
                         // (top and bottom are handled by pre-filling the cache)
                         if (wid2cid < 0 || wid2cid >= ChunkExtent.Cols)
-                            dWindow[dId][wId] = OpNodataVal;
+                            dWindow[dId][wId] = inNodataVals[dId];
                         else
                             dWindow[dId][wId] = _chunkCache[cacheNum][dId][wid2cid];
                     }
                 }
                 // DEBUG TEST
                 //dWindow[0].Make2DArray(BufferLength, BufferLength).DebugPrintGrid(OpNodataVal);
-                outChunk[id] = WindowOp(dWindow);
+                WindowOp(dWindow, outBuffers, id);
                 // Move the window by one cell to the right
                 WindowExtent.Left += ChunkExtent.CellWidth;
             }

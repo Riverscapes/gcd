@@ -26,14 +26,14 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="data"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        protected override double CellOp(List<double[]> data, int id)
+        protected override void CellOp(List<double[]> data, List<double[]> outputs,int id)
         {
             // Reminder: rawDod ==> 0, newError ==> 1, oldError ==> 2
-            double result = OpNodataVal;
+            double result = outNodataVals[0];
 
             // If Nothing is Nodata (as long as there is a nodata value) 
-            if ((data[rawDod][id] != _rasternodatavals[rawDod] || !_rasters[rawDod].HasNodata) &&
-                (data[propError][id] != _rasternodatavals[propError] || !_rasters[propError].HasNodata))
+            if ((data[rawDod][id] != inNodataVals[rawDod] || !_inputRasters[rawDod].HasNodata) &&
+                (data[propError][id] != inNodataVals[propError] || !_inputRasters[propError].HasNodata))
             {
 
                 if (data[rawDod][id] < 0)
@@ -42,10 +42,8 @@ namespace GCDConsoleLib.Internal.Operators
                     result = 2 * Probability.normalDist(Math.Abs(data[rawDod][id]) / data[propError][id]) - 1;
 
             }
-            else
-                result = OpNodataVal;
 
-            return result;
+            outputs[0][id] = result;
         }
     }
 }

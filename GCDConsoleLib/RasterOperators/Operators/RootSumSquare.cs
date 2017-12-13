@@ -23,13 +23,13 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="data"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        protected override double CellOp(List<double[]> data, int id)
+        protected override void CellOp(List<double[]> data, List<double[]> outputs, int id)
         {
-            if (data[0][id] == _rasternodatavals[0] ||
-                 data[1][id] == _rasternodatavals[1])
-                return OpNodataVal;
+            if (data[0][id] == inNodataVals[0] ||
+                 data[1][id] == inNodataVals[1])
+                outputs[0][id] = outNodataVals[0];
             else
-                return Math.Sqrt(Math.Pow(data[0][id], 2) + Math.Pow(data[1][id], 2));
+                outputs[0][id] = Math.Sqrt(Math.Pow(data[0][id], 2) + Math.Pow(data[1][id], 2));
         }
 
     }
