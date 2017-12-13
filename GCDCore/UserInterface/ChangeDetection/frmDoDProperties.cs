@@ -48,11 +48,17 @@ namespace GCDCore.UserInterface.ChangeDetection
 
         private void DoDPropertiesForm_Load(object sender, System.EventArgs e)
         {
+            // Initialize coherence properties in case they are needed.
+            CoherenceProps = new CoherenceProperties();
+
             EnableDisableControls();
 
             // Subscribe to the event when DEM selection changes
             ucDEMs.SelectedDEMsChanged += UpdateAnalysisName;
             ucThresholding.OnThresholdingMethodChanged += ThresholdMethodChanged;
+
+            // Subscribe to the event when DEM selection changes
+            ucDEMs.SelectedDEMsChanged += UpdateAnalysisName;
 
             UpdateAnalysisName(sender, e);
         }
@@ -72,20 +78,20 @@ namespace GCDCore.UserInterface.ChangeDetection
                 System.IO.DirectoryInfo dFolder = new System.IO.DirectoryInfo(txtOutputFolder.Text);
                 GCDCore.Engines.ChangeDetectionEngineBase cdEngine = null;
 
-                if (ucThresholding.IsMindLoD)
+                if (rdoMinLOD.Checked)
                 {
-                    cdEngine = new GCDCore.Engines.ChangeDetectionEngineMinLoD(txtName.Text, dFolder, ucDEMs.NewDEM, ucDEMs.OldDEM, ucThresholding.MinLoD);
+                    cdEngine = new GCDCore.Engines.ChangeDetectionEngineMinLoD(txtName.Text, dFolder, ucDEMs.NewDEM, ucDEMs.OldDEM, valMinLodThreshold.Value);
                 }
                 else
                 {
-                    if (ucThresholding.IsPropagated)
+                    if (rdoPropagated.Checked)
                     {
                         cdEngine = new GCDCore.Engines.ChangeDetectionEnginePropProb(txtName.Text, dFolder, ucDEMs.NewDEM, ucDEMs.OldDEM, ucDEMs.NewError, ucDEMs.OldError);
                     }
                     else
                     {
-                        CoherenceProperties spatCoherence = ucThresholding.UsesSpatialCoherence ? spatCoherence = ucThresholding.CoherenceProps : null;
-                        cdEngine = new Engines.ChangeDetectionEngineProbabilistic(txtName.Text, dFolder, ucDEMs.NewDEM, ucDEMs.OldDEM, ucDEMs.NewError, ucDEMs.OldError, ucThresholding.ConfidenceThreshold, spatCoherence);
+                        CoherenceProperties spatCoherence = chkBayesian.Checked ? spatCoherence = CoherenceProps : null;
+                        cdEngine = new Engines.ChangeDetectionEngineProbabilistic(txtName.Text, dFolder, ucDEMs.NewDEM, ucDEMs.OldDEM, ucDEMs.NewError, ucDEMs.OldError, valConfidence.Value, spatCoherence);
                     }
                 }
 
@@ -143,13 +149,21 @@ namespace GCDCore.UserInterface.ChangeDetection
 
         private void EnableDisableControls()
         {
-            ucDEMs.EnableErrorSurfaces(!ucThresholding.IsMindLoD);
+            EnableDisableControls();
+            UpdateAnalysisName(sender, e);
         }
 
         private void ThresholdMethodChanged(object sender, EventArgs e)
         {
-            EnableDisableControls();
-            UpdateAnalysisName(sender, e);
+            ucDEMs.EnableErrorSurfaces(!rdoMinLOD.Checked);
+
+            valMinLodThreshold.Enabled = rdoMinLOD.Checked;
+            lblMinLodThreshold.Enabled = rdoMinLOD.Checked;
+
+            lblConfidence.Enabled = rdoProbabilistic.Checked;
+            valConfidence.Enabled = rdoProbabilistic.Checked;
+            chkBayesian.Enabled = rdoProbabilistic.Checked;
+            cmdBayesianProperties.Enabled = rdoProbabilistic.Checked && chkBayesian.Checked;
         }
 
         #region "DEM Selection Changed"  
@@ -217,6 +231,22 @@ namespace GCDCore.UserInterface.ChangeDetection
             catch (Exception ex)
             {
             }
+        }
+
+        private void cmdBayesianProperties_Click(System.Object sender, System.EventArgs e)
+        {
+            frmCoherenceProperties frm = new frmCoherenceProperties(CoherenceProps);
+            frm.ShowDialog();
+        }
+
+        private void chkBayesian_CheckedChanged(object sender, System.EventArgs e)
+        {
+            EnableDisableControls();
+        }
+
+        private void Threshold_ValueChanged(object sender, System.EventArgs e)
+        {
+            UpdateAnalysisName(sender, e);
         }
 
         private void cmdHelp_Click(System.Object sender, System.EventArgs e)
