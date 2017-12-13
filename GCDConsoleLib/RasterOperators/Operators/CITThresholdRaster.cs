@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using GCDConsoleLib.Utility;
+
 namespace GCDConsoleLib.Internal.Operators
 {
     /// <summary>
@@ -8,7 +10,7 @@ namespace GCDConsoleLib.Internal.Operators
     class CITThresholdRaster : CellByCellOperator<double>
     {
         private static int rawDod = 0;
-        private static int priorProb = 1;
+        private static int propErr = 1;
 
         double zCutoff;
 
@@ -20,7 +22,7 @@ namespace GCDConsoleLib.Internal.Operators
         public CITThresholdRaster(Raster rawDoD, Raster rPriorProb, Raster rOutputRaster, decimal cutoff) :
             base(new List<Raster> { rawDoD, rPriorProb }, rOutputRaster)
         {
-            zCutoff = (double)cutoff;
+            zCutoff = (double)Probability.ltqnorm((1 + (double)cutoff) / 2);
         }
         // Raster rawDoD, string thrHistPath, Raster newError, Raster oldError, FileInfo sPriorProbRaster, decimal fThreshold
 
@@ -34,9 +36,9 @@ namespace GCDConsoleLib.Internal.Operators
         {
             // If Nothing is Nodata (as long as there is a nodata value) 
             if ((data[rawDod][id] != inNodataVals[rawDod] || !_inputRasters[rawDod].HasNodata) &&
-                (data[priorProb][id] != inNodataVals[priorProb] || !_inputRasters[priorProb].HasNodata) &&
+                (data[propErr][id] != inNodataVals[propErr] || !_inputRasters[propErr].HasNodata) &&
                 // AND this math is greater than the cutoff
-                (Math.Abs(data[rawDod][id]) / data[priorProb][id] >= zCutoff))
+                (Math.Abs(data[rawDod][id]) / data[propErr][id] >= zCutoff))
 
                 outputs[0][id] = data[rawDod][id];
             else

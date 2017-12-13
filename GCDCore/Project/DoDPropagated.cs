@@ -20,7 +20,7 @@ namespace GCDCore.Project
         {
             NewError = newError;
             OldError = oldError;
-            PropagatedError = propErr;
+            PropagatedError = new Raster(propErr.GISFileInfo);
         }
 
         public DoDPropagated(DoDBase dod, FileInfo propError, ErrorSurface newError, ErrorSurface oldError)

@@ -45,7 +45,7 @@ namespace GCDCore.Engines
 
             if (SpatialCoherence == null)
             {
-                thrDoD = RasterOperators.ThresholdDoDProbability(rawDoD, priorPRob, thrDoDPath, Threshold);
+                thrDoD = RasterOperators.ThresholdDoDProbability(rawDoD, PropagatedErrRaster, thrDoDPath, Threshold);
             }
             else
             {
