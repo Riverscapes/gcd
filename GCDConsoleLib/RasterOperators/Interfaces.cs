@@ -302,16 +302,22 @@ namespace GCDConsoleLib
         public static DoDStats GetStatsProbalistic(Raster rawDoD, Raster thrDoD, Raster propErrRaster, UnitGroup units)
         {
             Area cellArea = rawDoD.Extent.CellArea(units);
+
             GetChangeStats raw = new GetChangeStats(rawDoD, new DoDStats(cellArea, units));
+            raw.Run();
+
             GetChangeStats thr = new GetChangeStats(thrDoD, new DoDStats(cellArea, units));
+            thr.Run();
+
             GetChangeStats err = new GetChangeStats(propErrRaster, thrDoD, new DoDStats(cellArea, units));
+            err.Run();
 
             return new GCD.DoDStats(
                 raw.Stats.ErosionRaw.GetArea(cellArea), raw.Stats.DepositionRaw.GetArea(cellArea),
                 thr.Stats.ErosionRaw.GetArea(cellArea), thr.Stats.DepositionRaw.GetArea(cellArea),
                 raw.Stats.ErosionRaw.GetVolume(cellArea, units.VertUnit), raw.Stats.DepositionRaw.GetVolume(cellArea, units.VertUnit),
-                raw.Stats.ErosionRaw.GetVolume(cellArea, units.VertUnit), raw.Stats.DepositionRaw.GetVolume(cellArea, units.VertUnit),
-                err.Stats.ErosionRaw.GetVolume(cellArea, units.VertUnit), raw.Stats.DepositionRaw.GetVolume(cellArea, units.VertUnit),
+                thr.Stats.ErosionRaw.GetVolume(cellArea, units.VertUnit), thr.Stats.DepositionRaw.GetVolume(cellArea, units.VertUnit),
+                err.Stats.ErosionRaw.GetVolume(cellArea, units.VertUnit), err.Stats.DepositionRaw.GetVolume(cellArea, units.VertUnit),
                 cellArea, units
                 );
         }
@@ -648,7 +654,7 @@ namespace GCDConsoleLib
         /// </summary>
         /// <returns></returns>
         public static Raster PosteriorProbability(
-            Raster rawDoD, 
+            Raster rawDoD,
             Raster priorProb,
             Raster sSpatialCoErosionRaster,
             Raster sSpatialCoDepositionRaster,
@@ -662,7 +668,7 @@ namespace GCDConsoleLib
             PosteriorProbability thePostProb = new PosteriorProbability(rawDoD, priorProb,
                 sSpatialCoErosionRaster, sSpatialCoDepositionRaster,
                 new Raster(rawDoD, sPosteriorRaster),
-                new Raster(rawDoD, sConditionalRaster),                
+                new Raster(rawDoD, sConditionalRaster),
                 nMovingWindowWidth, inflectionA, inflectionB);
 
             if (progressHandler != null)
