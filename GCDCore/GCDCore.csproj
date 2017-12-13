@@ -151,6 +151,12 @@
     <Compile Include="UserInterface\ChangeDetection\ucChangeBars.Designer.cs">
       <DependentUpon>ucChangeBars.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserInterface\ChangeDetection\ucDoDDEMSelection.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserInterface\ChangeDetection\ucDoDDEMSelection.Designer.cs">
+      <DependentUpon>ucDoDDEMSelection.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserInterface\ChangeDetection\ucDoDHistogram.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -382,6 +388,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\ChangeDetection\ucChangeBars.resx">
       <DependentUpon>ucChangeBars.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\ChangeDetection\ucDoDDEMSelection.resx">
+      <DependentUpon>ucDoDDEMSelection.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\ChangeDetection\ucDoDHistogram.resx">
       <DependentUpon>ucDoDHistogram.cs</DependentUpon>

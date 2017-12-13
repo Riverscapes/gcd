@@ -40,11 +40,6 @@ namespace GCDCore.UserInterface.ChangeDetection
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmDoDProperties));
-            this.Label1 = new System.Windows.Forms.Label();
-            this.cboNewDEM = new System.Windows.Forms.ComboBox();
-            this.cboNewError = new System.Windows.Forms.ComboBox();
-            this.lblNewError = new System.Windows.Forms.Label();
-            this.GroupBox1 = new System.Windows.Forms.GroupBox();
             this.GroupBox3 = new System.Windows.Forms.GroupBox();
             this.valMinLodThreshold = new System.Windows.Forms.NumericUpDown();
             this.lblMinLodThreshold = new System.Windows.Forms.Label();
@@ -57,72 +52,16 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.rdoMinLOD = new System.Windows.Forms.RadioButton();
             this.Label5 = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
-            this.GroupBox4 = new System.Windows.Forms.GroupBox();
-            this.cboOldDEM = new System.Windows.Forms.ComboBox();
-            this.cboOldError = new System.Windows.Forms.ComboBox();
-            this.lblOldError = new System.Windows.Forms.Label();
-            this.Label7 = new System.Windows.Forms.Label();
             this.cmdCancel = new System.Windows.Forms.Button();
             this.cmdOK = new System.Windows.Forms.Button();
             this.cmdHelp = new System.Windows.Forms.Button();
             this.txtOutputFolder = new System.Windows.Forms.TextBox();
             this.Label2 = new System.Windows.Forms.Label();
-            this.GroupBox1.SuspendLayout();
+            this.ucDEMs = new GCDCore.UserInterface.ChangeDetection.ucDoDDEMSelection();
             this.GroupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.valMinLodThreshold)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.valConfidence)).BeginInit();
-            this.GroupBox4.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // Label1
-            // 
-            this.Label1.AutoSize = true;
-            this.Label1.Location = new System.Drawing.Point(14, 30);
-            this.Label1.Name = "Label1";
-            this.Label1.Size = new System.Drawing.Size(31, 13);
-            this.Label1.TabIndex = 0;
-            this.Label1.Text = "DEM";
-            // 
-            // cboNewDEM
-            // 
-            this.cboNewDEM.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboNewDEM.FormattingEnabled = true;
-            this.cboNewDEM.Location = new System.Drawing.Point(54, 30);
-            this.cboNewDEM.Name = "cboNewDEM";
-            this.cboNewDEM.Size = new System.Drawing.Size(201, 21);
-            this.cboNewDEM.TabIndex = 1;
-            this.cboNewDEM.SelectedIndexChanged += new System.EventHandler(this.cboNewDEM_SelectedIndexChanged);
-            // 
-            // cboNewError
-            // 
-            this.cboNewError.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboNewError.FormattingEnabled = true;
-            this.cboNewError.Location = new System.Drawing.Point(54, 57);
-            this.cboNewError.Name = "cboNewError";
-            this.cboNewError.Size = new System.Drawing.Size(201, 21);
-            this.cboNewError.TabIndex = 3;
-            // 
-            // lblNewError
-            // 
-            this.lblNewError.AutoSize = true;
-            this.lblNewError.Location = new System.Drawing.Point(16, 57);
-            this.lblNewError.Name = "lblNewError";
-            this.lblNewError.Size = new System.Drawing.Size(29, 13);
-            this.lblNewError.TabIndex = 2;
-            this.lblNewError.Text = "Error";
-            // 
-            // GroupBox1
-            // 
-            this.GroupBox1.Controls.Add(this.cboNewDEM);
-            this.GroupBox1.Controls.Add(this.cboNewError);
-            this.GroupBox1.Controls.Add(this.lblNewError);
-            this.GroupBox1.Controls.Add(this.Label1);
-            this.GroupBox1.Location = new System.Drawing.Point(12, 74);
-            this.GroupBox1.Name = "GroupBox1";
-            this.GroupBox1.Size = new System.Drawing.Size(266, 93);
-            this.GroupBox1.TabIndex = 4;
-            this.GroupBox1.TabStop = false;
-            this.GroupBox1.Text = "New Survey";
             // 
             // GroupBox3
             // 
@@ -286,56 +225,6 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.txtName.TabIndex = 1;
             this.txtName.TextChanged += new System.EventHandler(this.txtName_TextChanged);
             // 
-            // GroupBox4
-            // 
-            this.GroupBox4.Controls.Add(this.cboOldDEM);
-            this.GroupBox4.Controls.Add(this.cboOldError);
-            this.GroupBox4.Controls.Add(this.lblOldError);
-            this.GroupBox4.Controls.Add(this.Label7);
-            this.GroupBox4.Location = new System.Drawing.Point(283, 74);
-            this.GroupBox4.Name = "GroupBox4";
-            this.GroupBox4.Size = new System.Drawing.Size(266, 93);
-            this.GroupBox4.TabIndex = 5;
-            this.GroupBox4.TabStop = false;
-            this.GroupBox4.Text = "Old Survey";
-            // 
-            // cboOldDEM
-            // 
-            this.cboOldDEM.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboOldDEM.FormattingEnabled = true;
-            this.cboOldDEM.Location = new System.Drawing.Point(52, 30);
-            this.cboOldDEM.Name = "cboOldDEM";
-            this.cboOldDEM.Size = new System.Drawing.Size(201, 21);
-            this.cboOldDEM.TabIndex = 1;
-            this.cboOldDEM.SelectedIndexChanged += new System.EventHandler(this.cboOldDEM_SelectedIndexChanged);
-            // 
-            // cboOldError
-            // 
-            this.cboOldError.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboOldError.FormattingEnabled = true;
-            this.cboOldError.Location = new System.Drawing.Point(52, 57);
-            this.cboOldError.Name = "cboOldError";
-            this.cboOldError.Size = new System.Drawing.Size(201, 21);
-            this.cboOldError.TabIndex = 3;
-            // 
-            // lblOldError
-            // 
-            this.lblOldError.AutoSize = true;
-            this.lblOldError.Location = new System.Drawing.Point(14, 57);
-            this.lblOldError.Name = "lblOldError";
-            this.lblOldError.Size = new System.Drawing.Size(29, 13);
-            this.lblOldError.TabIndex = 2;
-            this.lblOldError.Text = "Error";
-            // 
-            // Label7
-            // 
-            this.Label7.AutoSize = true;
-            this.Label7.Location = new System.Drawing.Point(12, 30);
-            this.Label7.Name = "Label7";
-            this.Label7.Size = new System.Drawing.Size(31, 13);
-            this.Label7.TabIndex = 0;
-            this.Label7.Text = "DEM";
-            // 
             // cmdCancel
             // 
             this.cmdCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -387,6 +276,14 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.Label2.TabIndex = 2;
             this.Label2.Text = "Output folder";
             // 
+            // ucDEMs
+            // 
+            this.ucDEMs.Location = new System.Drawing.Point(15, 75);
+            this.ucDEMs.Name = "ucDEMs";
+            this.ucDEMs.NewDEM = null;
+            this.ucDEMs.Size = new System.Drawing.Size(535, 89);
+            this.ucDEMs.TabIndex = 11;
+            // 
             // frmDoDProperties
             // 
             this.AcceptButton = this.cmdOK;
@@ -394,16 +291,15 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cmdCancel;
             this.ClientSize = new System.Drawing.Size(562, 395);
+            this.Controls.Add(this.ucDEMs);
             this.Controls.Add(this.txtOutputFolder);
             this.Controls.Add(this.Label2);
             this.Controls.Add(this.cmdHelp);
             this.Controls.Add(this.cmdOK);
             this.Controls.Add(this.cmdCancel);
-            this.Controls.Add(this.GroupBox4);
             this.Controls.Add(this.txtName);
             this.Controls.Add(this.Label5);
             this.Controls.Add(this.GroupBox3);
-            this.Controls.Add(this.GroupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -411,24 +307,15 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.Name = "frmDoDProperties";
             this.Text = "Change Detection Configuration";
             this.Load += new System.EventHandler(this.DoDPropertiesForm_Load);
-            this.GroupBox1.ResumeLayout(false);
-            this.GroupBox1.PerformLayout();
             this.GroupBox3.ResumeLayout(false);
             this.GroupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.valMinLodThreshold)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.valConfidence)).EndInit();
-            this.GroupBox4.ResumeLayout(false);
-            this.GroupBox4.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
-        internal System.Windows.Forms.Label Label1;
         private System.Windows.Forms.ComboBox withEventsField_cboNewDEM;
-        internal System.Windows.Forms.ComboBox cboNewDEM;
-        internal System.Windows.Forms.ComboBox cboNewError;
-        internal System.Windows.Forms.Label lblNewError;
-        internal System.Windows.Forms.GroupBox GroupBox1;
         internal System.Windows.Forms.GroupBox GroupBox3;
         private System.Windows.Forms.Button withEventsField_cmdBayesianProperties;
         internal System.Windows.Forms.Button cmdBayesianProperties;
@@ -440,11 +327,6 @@ namespace GCDCore.UserInterface.ChangeDetection
         internal System.Windows.Forms.RadioButton rdoMinLOD;
         internal System.Windows.Forms.Label Label5;
         internal System.Windows.Forms.TextBox txtName;
-        internal System.Windows.Forms.GroupBox GroupBox4;
-        internal System.Windows.Forms.ComboBox cboOldDEM;
-        internal System.Windows.Forms.ComboBox cboOldError;
-        internal System.Windows.Forms.Label lblOldError;
-        internal System.Windows.Forms.Label Label7;
         internal System.Windows.Forms.Button cmdCancel;
         internal System.Windows.Forms.Button cmdOK;
         internal System.Windows.Forms.Button cmdHelp;
@@ -452,5 +334,6 @@ namespace GCDCore.UserInterface.ChangeDetection
         internal System.Windows.Forms.Label Label2;
         internal System.Windows.Forms.NumericUpDown valMinLodThreshold;
         internal System.Windows.Forms.Label lblMinLodThreshold;
+        private ucDoDDEMSelection ucDEMs;
     }
 }
