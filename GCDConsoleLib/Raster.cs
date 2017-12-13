@@ -266,8 +266,9 @@ namespace GCDConsoleLib
             // Check if we're already open and have the correct permissions
             if (IsOpen && _writepermission.Equals(write)) return;
 
-            // Close the file so we can re-open it with the correct permissions
-            if (_writepermission == write) Dispose();
+            // if it is open and we don't have the right permissions then close it and re-open it.
+            if (IsOpen)
+                Dispose();
 
             Access permission = Access.GA_ReadOnly;
             if (write) permission = Access.GA_Update;
@@ -281,7 +282,7 @@ namespace GCDConsoleLib
                 // File does not exist but there is no directory to put it in.
                 else if (!GISFileInfo.Exists && !Directory.Exists(GISFileInfo.DirectoryName))
                     throw new IOException(string.Format("File `{0}` could not be created because the directory `{1}`is not present", GISFileInfo, GISFileInfo.DirectoryName));
-                else
+                else if (!GISFileInfo.Exists)
                     Create();
             }
             else
