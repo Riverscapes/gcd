@@ -36,11 +36,15 @@ namespace GCDCore.Project
         {
             ConfidenceLevel = confidenceLevel;
             PriorProbability = new Raster(priorProb);
-            PosteriorProbability = new Raster(postProb);
-            ConditionalRaster = new Raster(cond);
-            SpatialCoherenceErosion = new Raster(spatCoEr);
-            SpatialCoherenceDeposition = new Raster(spatCoDep);
-            SpatialCoherence = spatCoProps;
+
+            if (spatCoProps != null)
+            {
+                PosteriorProbability = new Raster(postProb);
+                ConditionalRaster = new Raster(cond);
+                SpatialCoherenceErosion = new Raster(spatCoEr);
+                SpatialCoherenceDeposition = new Raster(spatCoDep);
+                SpatialCoherence = spatCoProps;
+            }
         }
 
         public DoDProbabilistic(DoDPropagated dod, FileInfo priorProb, decimal confidenceLevel)
@@ -57,17 +61,20 @@ namespace GCDCore.Project
             PriorProbability = new Raster(priorProb);
             ConfidenceLevel = confidenceLevel;
 
-            PosteriorProbability = new Raster(postProb);
-            ConditionalRaster = new Raster(cond);
-            SpatialCoherenceErosion = new Raster(spatCoEr);
-            SpatialCoherenceDeposition = new Raster(spatCoDep);
-            SpatialCoherence = spatCoProps;
+            if (spatCoProps != null)
+            {
+                PosteriorProbability = new Raster(postProb);
+                ConditionalRaster = new Raster(cond);
+                SpatialCoherenceErosion = new Raster(spatCoEr);
+                SpatialCoherenceDeposition = new Raster(spatCoDep);
+                SpatialCoherence = spatCoProps;
+            }
         }
 
-         public override XmlNode Serialize(XmlDocument xmlDoc, XmlNode nodParent)
+        public override XmlNode Serialize(XmlDocument xmlDoc, XmlNode nodParent)
         {
             XmlNode nodDod = base.Serialize(xmlDoc, nodParent);
-            nodDod.InsertBefore(xmlDoc.CreateElement("ConfidenceLevel"), nodDod.SelectSingleNode("Statistics")).InnerText = ConfidenceLevel.ToString("R");
+            nodDod.InsertBefore(xmlDoc.CreateElement("ConfidenceLevel"), nodDod.SelectSingleNode("Statistics")).InnerText = ConfidenceLevel.ToString();
 
             // Prior probability always exists, regardless of whether spatial coherence was used.
             nodDod.AppendChild(xmlDoc.CreateElement("PriorProbability")).InnerText = ProjectManager.Project.GetRelativePath(PriorProbability.GISFileInfo);

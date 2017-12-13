@@ -162,7 +162,7 @@ namespace GCDCore
 
         public void PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes ePyramidRasterType, FileInfo rasterPath)
         {
-            if (PyramidTypes[ePyramidRasterType])
+            if (PyramidTypes.ContainsKey(ePyramidRasterType) && PyramidTypes[ePyramidRasterType])
             {
                 if (rasterPath.Exists)
                 {

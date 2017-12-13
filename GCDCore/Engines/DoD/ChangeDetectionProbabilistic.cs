@@ -33,12 +33,12 @@ namespace GCDCore.Engines
         /// <remarks>Let the base class build pyramids for the thresholded raster</remarks>
         protected override Raster ThresholdRawDoD(Raster rawDoD, FileInfo thrDoDPath)
         {
-            Raster propErrorRaster = GeneratePropagatedErrorRaster();
+            PropagatedErrRaster = GeneratePropagatedErrorRaster();
             Raster thrDoD = null;
 
             // Create the prior probability raster
             m_PriorProbRaster = new FileInfo(Path.ChangeExtension(Path.Combine(AnalysisFolder.FullName, "priorprob"), OutputManager.RasterExtension));
-            Raster priorPRob = RasterOperators.CreatePriorProbabilityRaster(rawDoD, propErrorRaster, m_PriorProbRaster);
+            Raster priorPRob = RasterOperators.CreatePriorProbabilityRaster(rawDoD, PropagatedErrRaster, m_PriorProbRaster);
 
             // Build Pyramids
             ProjectManager.PyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.ProbabilityRasters, m_PriorProbRaster);
@@ -78,8 +78,7 @@ namespace GCDCore.Engines
 
         protected override DoDStats CalculateChangeStats(Raster rawDoD, Raster thrDoD, UnitGroup units)
         {
-            Raster propErr = PropagatedErrRaster;
-            return RasterOperators.GetStatsProbalistic(rawDoD, thrDoD, propErr, units);
+            return RasterOperators.GetStatsProbalistic(rawDoD, thrDoD, PropagatedErrRaster, units);
         }
 
         protected override DoDBase GetDoDResult(DoDStats changeStats, Raster rawDoD, Raster thrDoD, HistogramPair histograms, FileInfo summaryXML)
