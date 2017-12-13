@@ -20,7 +20,7 @@ namespace GCDCore.Engines
 
         protected override Raster ThresholdRawDoD(Raster rawDoD, FileInfo thrDoDPath)
         {
-            PropagatedErrRaster = GeneratePropagatedErrorRaster();
+            GeneratePropagatedErrorRaster();
             Raster thrDoD = RasterOperators.SetNull(rawDoD, RasterOperators.ThresholdOps.LessThanOrEqual, PropagatedErrRaster, thrDoDPath);
             return thrDoD;
         }
@@ -41,15 +41,13 @@ namespace GCDCore.Engines
         /// <returns></returns>
         /// <remarks>Calculate the propograted error raster based on the two error surfaces. Then threshold the raw
         /// DoD removing any cells that have a value less than the propogated error.</remarks>
-        protected Raster GeneratePropagatedErrorRaster()
+        protected void GeneratePropagatedErrorRaster()
         {
             FileInfo propErrPath = ProjectManager.OutputManager.PropagatedErrorPath(AnalysisFolder);
-            Raster propErr = RasterOperators.RootSumSquares(NewError.Raster, OldError.Raster, propErrPath);
+            PropagatedErrRaster = RasterOperators.RootSumSquares(NewError.Raster, OldError.Raster, propErrPath);
 
             // Build Pyramids
             ProjectManager.PyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.PropagatedError, propErrPath);
-
-            return propErr;
         }
     }
 }

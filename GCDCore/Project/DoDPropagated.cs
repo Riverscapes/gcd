@@ -20,7 +20,7 @@ namespace GCDCore.Project
         {
             NewError = newError;
             OldError = oldError;
-            PropagatedError = new Raster(propErr.GISFileInfo);
+            PropagatedError = propErr;
         }
 
         public DoDPropagated(DoDBase dod, FileInfo propError, ErrorSurface newError, ErrorSurface oldError)
@@ -35,7 +35,7 @@ namespace GCDCore.Project
         {
             XmlNode nodDoD = base.Serialize(xmlDoc, nodParent);
             XmlNode nodStatistics = nodDoD.SelectSingleNode("Statistics");
-            nodDoD.InsertBefore(xmlDoc.CreateElement("PrograpatedError"), nodStatistics).InnerText = ProjectManager.Project.GetRelativePath(PropagatedError.GISFileInfo);
+            nodDoD.InsertBefore(xmlDoc.CreateElement("PropagatedError"), nodStatistics).InnerText = ProjectManager.Project.GetRelativePath(PropagatedError.GISFileInfo);
             nodDoD.InsertBefore(xmlDoc.CreateElement("NewError"), nodStatistics).InnerText = NewError.Name;
             nodDoD.InsertBefore(xmlDoc.CreateElement("OldError"), nodStatistics).InnerText = OldError.Name;
             return nodDoD;

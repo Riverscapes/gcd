@@ -33,7 +33,7 @@ namespace GCDCore.Engines
         /// <remarks>Let the base class build pyramids for the thresholded raster</remarks>
         protected override Raster ThresholdRawDoD(Raster rawDoD, FileInfo thrDoDPath)
         {
-            PropagatedErrRaster = GeneratePropagatedErrorRaster();
+            GeneratePropagatedErrorRaster();
             Raster thrDoD = null;
 
             // Create the prior probability raster
