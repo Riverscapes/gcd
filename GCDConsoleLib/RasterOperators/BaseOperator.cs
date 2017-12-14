@@ -82,6 +82,10 @@ namespace GCDConsoleLib.Internal
             _outputRasters = new List<Raster>();
             inNodataVals = new List<T>();
             outNodataVals = new List<T>();
+
+            if (rOutputRasters == null)
+                rOutputRasters = new List<Raster>();
+
             _init(rRasters, rOutputRasters);
 
             // Now that we have our rasters tested and a unioned extent we can set the operation extent

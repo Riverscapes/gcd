@@ -246,7 +246,7 @@ namespace GCDConsoleLib.Tests
         }
 
         [TestMethod()]
-        public void GCDNeighbourCountTest()
+        public void PosteriorProbabilityTest()
         {
             using (ITempDir tmp = TempDir.Create())
             {
@@ -263,27 +263,10 @@ namespace GCDConsoleLib.Tests
                 Raster propError = RasterOperators.CreateErrorRaster(rTemp2, props, new FileInfo(Path.Combine(tmp.Name, "properror.tif")));
                 Raster postProb = RasterOperators.CreatePriorProbabilityRaster(rDoD, propError, new FileInfo(Path.Combine(tmp.Name, "priorprob.tif")));
 
-                Raster PostProb = RasterOperators.PosteriorProbability(rDoD, postProb, GCDErosion1, GCDDeposition1, new FileInfo(Path.Combine(tmp.Name, "cond.tif")), new FileInfo(Path.Combine(tmp.Name, "postprob.tif")), 2, 5);
+                Raster PostProb = RasterOperators.PosteriorProbability(rDoD, postProb, GCDErosion1, GCDDeposition1, new FileInfo(Path.Combine(tmp.Name, "cond.tif")), new FileInfo(Path.Combine(tmp.Name, "postprob.tif")), 2, 5);  
             }
         }
 
-        [TestMethod()]
-        public void CreatePriorProbabilityRasterTest()
-        {
-            Assert.Inconclusive();
-        }
-
-        [TestMethod()]
-        public void ThresholdDoDProbWithSpatialCoherenceTest()
-        {
-            Assert.Inconclusive();
-        }
-
-        [TestMethod()]
-        public void ThresholdDoDProbabilityTest()
-        {
-            Assert.Inconclusive();
-        }
 
         [TestMethod()]
         public void BuildPyramidsInterfaceTest()
