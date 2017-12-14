@@ -1651,8 +1651,18 @@ namespace GCDCore.UserInterface.Project
 
         private void addBatchChangeDetectionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            try
+            {
+                ChangeDetection.Batch.frmBatchDoD frm = new ChangeDetection.Batch.frmBatchDoD();
+                if (frm.ShowDialog() == DialogResult.OK)
+                {
+                    LoadTree();
+                }
+            }
+            catch(Exception ex)
+            {
+                naru.error.ExceptionUI.HandleException(ex);
+            }
         }
     }
-
 }

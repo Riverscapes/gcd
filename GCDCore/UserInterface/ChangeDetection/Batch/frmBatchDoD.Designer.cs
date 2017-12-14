@@ -29,89 +29,88 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmBatchDoD));
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.cmdCancel = new System.Windows.Forms.Button();
+            this.cmdOK = new System.Windows.Forms.Button();
             this.cmdHelp = new System.Windows.Forms.Button();
-            this.ucDoDDEMSelection1 = new GCDCore.UserInterface.ChangeDetection.ucDoDDEMSelection();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.button3 = new System.Windows.Forms.Button();
+            this.cmdAdd = new System.Windows.Forms.Button();
             this.cmdDelete = new System.Windows.Forms.Button();
             this.grdMethods = new System.Windows.Forms.DataGridView();
+            this.ucDoDDEMs = new GCDCore.UserInterface.ChangeDetection.ucDoDDEMSelection();
             this.colMethod = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colThresholding = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdMethods)).BeginInit();
             this.SuspendLayout();
             // 
-            // button1
+            // cmdCancel
             // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.button1.Location = new System.Drawing.Point(542, 356);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Cancel";
-            this.button1.UseVisualStyleBackColor = true;
+            this.cmdCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmdCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.cmdCancel.Location = new System.Drawing.Point(534, 298);
+            this.cmdCancel.Name = "cmdCancel";
+            this.cmdCancel.Size = new System.Drawing.Size(75, 23);
+            this.cmdCancel.TabIndex = 0;
+            this.cmdCancel.Text = "Cancel";
+            this.cmdCancel.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // cmdOK
             // 
-            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button2.Location = new System.Drawing.Point(461, 356);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "Calculate";
-            this.button2.UseVisualStyleBackColor = true;
+            this.cmdOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmdOK.Location = new System.Drawing.Point(453, 298);
+            this.cmdOK.Name = "cmdOK";
+            this.cmdOK.Size = new System.Drawing.Size(75, 23);
+            this.cmdOK.TabIndex = 1;
+            this.cmdOK.Text = "Calculate";
+            this.cmdOK.UseVisualStyleBackColor = true;
+            this.cmdOK.Click += new System.EventHandler(this.cmdOK_Click);
             // 
             // cmdHelp
             // 
             this.cmdHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.cmdHelp.Location = new System.Drawing.Point(12, 356);
+            this.cmdHelp.Location = new System.Drawing.Point(12, 298);
             this.cmdHelp.Name = "cmdHelp";
             this.cmdHelp.Size = new System.Drawing.Size(75, 23);
             this.cmdHelp.TabIndex = 2;
             this.cmdHelp.Text = "Help";
             this.cmdHelp.UseVisualStyleBackColor = true;
             // 
-            // ucDoDDEMSelection1
-            // 
-            this.ucDoDDEMSelection1.Location = new System.Drawing.Point(12, 12);
-            this.ucDoDDEMSelection1.Name = "ucDoDDEMSelection1";
-            this.ucDoDDEMSelection1.NewDEM = null;
-            this.ucDoDDEMSelection1.OldDEM = null;
-            this.ucDoDDEMSelection1.Size = new System.Drawing.Size(605, 89);
-            this.ucDoDDEMSelection1.TabIndex = 3;
-            // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.button3);
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.cmdAdd);
             this.groupBox1.Controls.Add(this.cmdDelete);
             this.groupBox1.Controls.Add(this.grdMethods);
             this.groupBox1.Location = new System.Drawing.Point(12, 107);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(605, 243);
+            this.groupBox1.Size = new System.Drawing.Size(597, 185);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Uncertainty Analysis Method";
+            this.groupBox1.Text = "Uncertainty Analysis Methods";
             // 
-            // button3
+            // cmdAdd
             // 
-            this.button3.Image = global::GCDCore.Properties.Resources.Add;
-            this.button3.Location = new System.Drawing.Point(549, 12);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(23, 23);
-            this.button3.TabIndex = 3;
-            this.button3.UseVisualStyleBackColor = true;
+            this.cmdAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmdAdd.Image = global::GCDCore.Properties.Resources.Add;
+            this.cmdAdd.Location = new System.Drawing.Point(541, 12);
+            this.cmdAdd.Name = "cmdAdd";
+            this.cmdAdd.Size = new System.Drawing.Size(23, 23);
+            this.cmdAdd.TabIndex = 3;
+            this.cmdAdd.UseVisualStyleBackColor = true;
+            this.cmdAdd.Click += new System.EventHandler(this.cmdAdd_Click);
             // 
             // cmdDelete
             // 
+            this.cmdDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cmdDelete.Image = global::GCDCore.Properties.Resources.Delete;
-            this.cmdDelete.Location = new System.Drawing.Point(577, 12);
+            this.cmdDelete.Location = new System.Drawing.Point(569, 12);
             this.cmdDelete.Name = "cmdDelete";
             this.cmdDelete.Size = new System.Drawing.Size(23, 23);
             this.cmdDelete.TabIndex = 1;
             this.cmdDelete.UseVisualStyleBackColor = true;
+            this.cmdDelete.Click += new System.EventHandler(this.cmdDelete_Click);
             // 
             // grdMethods
             // 
@@ -129,13 +128,24 @@
             this.grdMethods.Name = "grdMethods";
             this.grdMethods.ReadOnly = true;
             this.grdMethods.RowHeadersVisible = false;
-            this.grdMethods.Size = new System.Drawing.Size(593, 196);
+            this.grdMethods.Size = new System.Drawing.Size(585, 138);
             this.grdMethods.TabIndex = 0;
+            // 
+            // ucDoDDEMs
+            // 
+            this.ucDoDDEMs.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ucDoDDEMs.Location = new System.Drawing.Point(12, 12);
+            this.ucDoDDEMs.Name = "ucDoDDEMs";
+            this.ucDoDDEMs.NewDEM = null;
+            this.ucDoDDEMs.OldDEM = null;
+            this.ucDoDDEMs.Size = new System.Drawing.Size(597, 89);
+            this.ucDoDDEMs.TabIndex = 3;
             // 
             // colMethod
             // 
             this.colMethod.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colMethod.DataPropertyName = "Method";
+            this.colMethod.DataPropertyName = "MethodString";
             this.colMethod.HeaderText = "Method";
             this.colMethod.Name = "colMethod";
             this.colMethod.ReadOnly = true;
@@ -143,7 +153,7 @@
             // colThresholding
             // 
             this.colThresholding.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colThresholding.DataPropertyName = "Thresholding";
+            this.colThresholding.DataPropertyName = "ThresholdString";
             this.colThresholding.HeaderText = "Thresholding";
             this.colThresholding.Name = "colThresholding";
             this.colThresholding.ReadOnly = true;
@@ -152,15 +162,17 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(629, 391);
+            this.ClientSize = new System.Drawing.Size(621, 333);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.ucDoDDEMSelection1);
+            this.Controls.Add(this.ucDoDDEMs);
             this.Controls.Add(this.cmdHelp);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.cmdOK);
+            this.Controls.Add(this.cmdCancel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(300, 300);
             this.Name = "frmBatchDoD";
             this.Text = "Batch Change Detection";
+            this.Load += new System.EventHandler(this.frmBatchDoD_Load);
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.grdMethods)).EndInit();
             this.ResumeLayout(false);
@@ -169,13 +181,13 @@
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button cmdCancel;
+        private System.Windows.Forms.Button cmdOK;
         private System.Windows.Forms.Button cmdHelp;
-        private ucDoDDEMSelection ucDoDDEMSelection1;
+        private ucDoDDEMSelection ucDoDDEMs;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.DataGridView grdMethods;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button cmdAdd;
         private System.Windows.Forms.Button cmdDelete;
         private System.Windows.Forms.DataGridViewTextBoxColumn colMethod;
         private System.Windows.Forms.DataGridViewTextBoxColumn colThresholding;
