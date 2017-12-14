@@ -37,7 +37,7 @@ namespace GCDConsoleLib.Internal.Operators
                 for (int i = 0; i < windowData[0].Length; i++)
                 {
                     // Don't ever count nodatavalues or 
-                    if (i == BufferCenterID || windowData[0][i] == inNodataVals[0])
+                    if (windowData[0][i] == inNodataVals[0])
                         continue;
 
                     switch (wType)
