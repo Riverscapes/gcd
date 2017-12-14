@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using GCDCore.Project;
 
@@ -18,7 +19,17 @@ namespace GCDCore.UserInterface.ChangeDetection
 
         private void frmCoherenceProperties_Load(System.Object sender, System.EventArgs e)
         {
-            cboFilterSize.SelectedItem = string.Format("{0} x {0}", CoherenceProps.MovingWindowDimensions);
+            // The filter sizes display as the diameter of the kernel but store the radius
+            foreach (long i in new List<long> { 3, 5, 7, 9, 11, 13, 15 })
+            {
+                long kernelRadius = (i - 1) / 2;
+                int index = cboFilterSize.Items.Add(new naru.db.NamedObject(kernelRadius, string.Format("{0} x {0}", i)));
+                if (kernelRadius == CoherenceProps.KernelRadius)
+                {
+                    cboFilterSize.SelectedIndex = index;
+                }
+            }
+
             numLess.Value = CoherenceProps.InflectionA;
             numGreater.Value = CoherenceProps.InflectionB;
         }
@@ -29,10 +40,10 @@ namespace GCDCore.UserInterface.ChangeDetection
             {
                 MessageBox.Show("The value for inflection point A must be less than the value for inflection point B.", "Invalid Spatial Coherence Inflection Points", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.DialogResult = DialogResult.None;
-                return; 
+                return;
             }
 
-            CoherenceProps.MovingWindowDimensions = int.Parse(cboFilterSize.Text.Substring(0, cboFilterSize.Text.IndexOf(" ")));
+            CoherenceProps.KernelRadius = Convert.ToInt32(((naru.db.NamedObject)cboFilterSize.SelectedItem).ID);
             CoherenceProps.InflectionA = Convert.ToInt32(numLess.Value);
             CoherenceProps.InflectionB = Convert.ToInt32(numGreater.Value);
         }

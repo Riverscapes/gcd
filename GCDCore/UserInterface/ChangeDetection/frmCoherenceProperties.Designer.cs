@@ -128,14 +128,6 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.cboFilterSize.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cboFilterSize.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboFilterSize.FormattingEnabled = true;
-            this.cboFilterSize.Items.AddRange(new object[] {
-            "3 x 3",
-            "5 x 5",
-            "7 x 7",
-            "9 x 9",
-            "11 x 11",
-            "13 x 13",
-            "15 x 15"});
             this.cboFilterSize.Location = new System.Drawing.Point(151, 27);
             this.cboFilterSize.Name = "cboFilterSize";
             this.cboFilterSize.Size = new System.Drawing.Size(71, 21);

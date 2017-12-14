@@ -73,7 +73,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             {
                 Cursor.Current = System.Windows.Forms.Cursors.WaitCursor;
 
-                System.IO.DirectoryInfo dFolder = new System.IO.DirectoryInfo(txtOutputFolder.Text);
+                System.IO.DirectoryInfo dFolder = ProjectManager.Project.GetAbsoluteDir(txtOutputFolder.Text);
                 GCDCore.Engines.ChangeDetectionEngineBase cdEngine = null;
 
                 if (ucThresholding.ThresholdProperties.Method == Engines.DoD.ThresholdProps.ThresholdMethods.MinLoD)
@@ -121,7 +121,7 @@ namespace GCDCore.UserInterface.ChangeDetection
                 return false;
             }
 
-            if (System.IO.Directory.Exists(txtOutputFolder.Text))
+            if (ProjectManager.Project.GetAbsoluteDir(txtOutputFolder.Text).Exists)
             {
                 MessageBox.Show("An analysis folder with the same output path already exists. Please change the analysis name so that a different output folder will be used.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 txtName.Select();

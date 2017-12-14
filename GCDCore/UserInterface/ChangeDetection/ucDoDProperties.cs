@@ -61,7 +61,7 @@ namespace GCDCore.UserInterface.ChangeDetection
                         txtConditionalRaster.Text = ProjectManager.Project.GetRelativePath(((DoDProbabilistic)dod).ConditionalRaster.GISFileInfo);
                         txtErosionalSpatialCoherenceRaster.Text = ProjectManager.Project.GetRelativePath(((DoDProbabilistic)dod).SpatialCoherenceErosion.GISFileInfo);
                         txtDepositionSpatialCoherenceRaster.Text = ProjectManager.Project.GetRelativePath(((DoDProbabilistic)dod).SpatialCoherenceDeposition.GISFileInfo);
-                        txtBayesian.Text = string.Format("Bayesian updating with filter size of {0} X {0} cells", ((DoDProbabilistic)dod).SpatialCoherence.MovingWindowDimensions);
+                        txtBayesian.Text = string.Format("Bayesian updating with filter size of {0} X {0} cells", ((DoDProbabilistic)dod).SpatialCoherence.KernelRadius);
                     }
                 }
             }

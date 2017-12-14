@@ -4,12 +4,14 @@ namespace GCDCore.Project
 {
     public class CoherenceProperties
     {
-        public  int MovingWindowDimensions { get; set; }
+        // a 5x5 kernel has a KernelRadius of 2
+        public  int KernelRadius { get; set; }
+
         public int InflectionA { get; set; }
         public int InflectionB { get; set; }
 
-        public int XMin { get { return Convert.ToInt32(Math.Floor((double)(MovingWindowDimensions ^ 2) * (InflectionA / 100))); } }
-        public int XMax { get { return Convert.ToInt32(Math.Floor((double)(MovingWindowDimensions ^ 2) * (InflectionB / 100))); } }
+        public int XMin { get { return Convert.ToInt32(Math.Floor((double)(KernelRadius ^ 2) * (InflectionA / 100))); } }
+        public int XMax { get { return Convert.ToInt32(Math.Floor((double)(KernelRadius ^ 2) * (InflectionB / 100))); } }
 
         public CoherenceProperties(int nMovingWindowDimensions, int nInflectionA, int nInflectionB)
         {
@@ -17,7 +19,7 @@ namespace GCDCore.Project
             {
                 throw new ArgumentOutOfRangeException("MovingwindowDimensions", nMovingWindowDimensions, "The moving window dimension must be greater than zero.");
             }
-            MovingWindowDimensions = nMovingWindowDimensions;
+            KernelRadius = nMovingWindowDimensions;
 
             if (nInflectionA < 0 || nInflectionA > 100)
             {
@@ -34,7 +36,7 @@ namespace GCDCore.Project
 
         public CoherenceProperties()
         {
-            MovingWindowDimensions = 5;
+            KernelRadius = 2;
             InflectionA = 60;
             InflectionB = 100;
         }
