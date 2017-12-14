@@ -34,10 +34,10 @@ namespace GCDConsoleLib.Internal.Operators
         /// This is the propError constructor
         /// </summary>
         /// <param name="rInput"></param>
-        /// <param name="rPropError"></param>
+        /// <param name="rMask"></param>
         /// <param name="theStats"></param>
-        public GetChangeStats(Raster rInput, Raster rPropError, DoDStats theStats) :
-            base(new List<Raster> { rInput, rPropError })
+        public GetChangeStats(Raster rInput, Raster rMask, DoDStats theStats) :
+            base(new List<Raster> { rInput, rMask })
         {
             Stats = theStats;
             isBudgSeg = false;
@@ -104,7 +104,7 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="id"></param>
         private void BudgetSegCellOp(List<double[]> data, int id)
         {
-           decimal[] ptcoords = ChunkExtent.Id2XY(id);
+            decimal[] ptcoords = ChunkExtent.Id2XY(id);
             List<string> shapes = _polymask.ShapesContainPoint((double)ptcoords[0], (double)ptcoords[1], _fieldname);
             if (shapes.Count > 0)
             {
@@ -137,8 +137,8 @@ namespace GCDConsoleLib.Internal.Operators
                 if (fRVal > 0)
                     stats.DepositionRaw.AddToSumAndIncrementCounter(fRVal);
                 // Erosion
-                else if (fRVal< 0)
-                    stats.ErosionRaw.AddToSumAndIncrementCounter(fRVal* -1);
+                else if (fRVal < 0)
+                    stats.ErosionRaw.AddToSumAndIncrementCounter(fRVal * -1);
             }
 
             // If we have a mask then use it.
@@ -148,12 +148,13 @@ namespace GCDConsoleLib.Internal.Operators
                 fMask = data[1][id];
                 if (fRVal > 0)
                 {
-                    // Deposition
                     if (fMask != inNodataVals[1])
-                        stats.DepositionRaw.AddToSumAndIncrementCounter(fRVal);
-                    // Erosion
-                    else if (fMask< 0)
-                        stats.ErosionRaw.AddToSumAndIncrementCounter(fRVal);
+                    {
+                        if (fMask > 0) // Deposition
+                            stats.DepositionRaw.AddToSumAndIncrementCounter(fRVal);
+                        else // Erosion
+                            stats.ErosionRaw.AddToSumAndIncrementCounter(fRVal);
+                    }
                 }
             }
         }
