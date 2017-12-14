@@ -17,6 +17,7 @@ namespace GCDConsoleLib.Internal.Operators
             base(new List<Raster> { rDoD }, buffCells, new List<Raster>() { rOutput })
         {
             SetOpExtent(rDoD.Extent.Buffer(buffCells));
+            this.wType = wType;
         }
 
         /// <summary>
@@ -46,11 +47,12 @@ namespace GCDConsoleLib.Internal.Operators
                                 count++;
                             break;
                         case RasterOperators.GCDWindowType.Deposition:
-                            if (windowData[0][i] < 0)
+                            if (windowData[0][i] > 0)
                                 count++;
                             break;
                         case RasterOperators.GCDWindowType.All:
-                            count++;
+                            if (windowData[0][i] != 0)
+                                count++;
                             break;
                     }
                 }

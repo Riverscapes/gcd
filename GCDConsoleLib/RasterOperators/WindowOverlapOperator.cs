@@ -39,6 +39,7 @@ namespace GCDConsoleLib.Internal
 
             // 1 is the convention for windowed mode for good reason
             ChunkExtent.Rows = 1;
+            chunkRows = 1;
             ChunkExtent.Cols = OpExtent.Cols;
 
             // We add rows to the end so the operation goes over the end of the file

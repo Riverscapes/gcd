@@ -33,7 +33,7 @@ namespace GCDConsoleLib.Internal.Operators
             _fsizedec = fSize;
 
             // set the rows to be a certain multiple of fSize windows
-            _oprows = (int)Math.Ceiling((NUMWINDOWS * fSize) / Math.Abs(rDEM.Extent.CellHeight));
+            chunkRows = (int)Math.Ceiling((NUMWINDOWS * fSize) / Math.Abs(rDEM.Extent.CellHeight));
 
             // Calling this again after setting the rows will give us a nicer chunk size
             SetOpExtent(OpExtent);

@@ -246,6 +246,25 @@ namespace GCDConsoleLib.Tests
         }
 
         [TestMethod()]
+        public void GCDNeighbourCountTest()
+        {
+            using (ITempDir tmp = TempDir.Create())
+            {
+                Raster rTemp1 = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2005Dec_DEM\2005Dec_DEM.img")));
+                Raster rTemp2 = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2006Feb_DEM\2006Feb_DEM.img")));
+                Raster rDoD = RasterOperators.Subtract(rTemp2, rTemp1, new FileInfo(Path.Combine(tmp.Name, "rDoD.tif")));
+
+                Raster GCDErosion1 = RasterOperators.NeighbourCount(rDoD, RasterOperators.GCDWindowType.Erosion, 1, new FileInfo(Path.Combine(tmp.Name, "Erosion1.tif")));
+                Raster GCDDeposition1 = RasterOperators.NeighbourCount(rDoD, RasterOperators.GCDWindowType.Deposition, 1, new FileInfo(Path.Combine(tmp.Name, "Deposition1.tif")));
+                Raster GCDAll1 = RasterOperators.NeighbourCount(rDoD, RasterOperators.GCDWindowType.All, 1, new FileInfo(Path.Combine(tmp.Name, "All1.tif")));
+
+                Raster GCDErosion4 = RasterOperators.NeighbourCount(rDoD, RasterOperators.GCDWindowType.Erosion, 4, new FileInfo(Path.Combine(tmp.Name, "Erosion4.tif")));
+                Raster GCDDeposition4 = RasterOperators.NeighbourCount(rDoD, RasterOperators.GCDWindowType.Deposition, 4, new FileInfo(Path.Combine(tmp.Name, "Deposition4.tif")));
+                Raster GCDAll4 = RasterOperators.NeighbourCount(rDoD, RasterOperators.GCDWindowType.All, 4, new FileInfo(Path.Combine(tmp.Name, "All4.tif")));
+            }
+        }
+
+        [TestMethod()]
         public void CreatePriorProbabilityRasterTest()
         {
             Assert.Inconclusive();

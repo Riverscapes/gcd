@@ -29,7 +29,7 @@ namespace GCDConsoleLib.Internal
 
         public ExtentRectangle OpExtent;
         public ExtentRectangle InExtent;
-        protected int _oprows;
+        protected int chunkRows;
 
         protected int _vOffset;
 
@@ -118,7 +118,7 @@ namespace GCDConsoleLib.Internal
         /// <param name="newExt"></param>
         private void _init(List<Raster> rRasters, List<Raster> rOutputRasters)
         {
-            _oprows = 10;
+            chunkRows = 10;
             _vOffset = 0;
 
             OpDone = false;
@@ -205,15 +205,13 @@ namespace GCDConsoleLib.Internal
 
             // Now initialize our window rectangle
             int chunkXsize = OpExtent.Cols;
-            int chunkYsize = _oprows;
+            int chunkYsize = chunkRows;
 
             if (OpExtent.Rows < chunkYsize) chunkYsize = OpExtent.Rows;
             ChunkExtent = new ExtentRectangle(OpExtent.Top, OpExtent.Left, OpExtent.CellHeight, OpExtent.CellWidth, chunkYsize, chunkXsize);
 
             foreach(Raster outraster in _outputRasters)
-            {
                 outraster.Extent = OpExtent;
-            }                
         }
 
         /// <summary>
