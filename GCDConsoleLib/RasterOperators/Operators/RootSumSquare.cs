@@ -14,7 +14,7 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="rInput2"></param>
         /// <param name="rOutputRaster"></param>
         public RootSumSquare(Raster rInput1, Raster rInput2, Raster rOutputRaster) :
-            base(new List<Raster> { rInput1, rInput2 }, rOutputRaster)
+            base(new List<Raster> { rInput1, rInput2 }, new List<Raster> { rOutputRaster })
         { }
 
         /// <summary>

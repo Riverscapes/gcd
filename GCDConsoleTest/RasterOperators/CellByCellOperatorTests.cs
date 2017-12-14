@@ -12,13 +12,13 @@ namespace GCDConsoleLib.Internal.Tests
     [TestClass()]
     class TestCBCOp<T> : CellByCellOperator<T>
     {
-        public TestCBCOp(List<Raster> rRasters, Raster rOutput) : base(rRasters, rOutput)
+        public TestCBCOp(List<Raster> rRasters, Raster rOutputRaster) : base(rRasters, new List<Raster> { rOutputRaster })
         {
             Assert.AreEqual(rRasters.Count, _inputRasters.Count);
             Assert.AreEqual(1, _outputRasters.Count);
             Assert.IsFalse(OpDone);
         }
-        public TestCBCOp(List<Raster> rRasters, Raster rOutput, ExtentRectangle newExtent) : base(rRasters, rOutput)
+        public TestCBCOp(List<Raster> rRasters, Raster rOutputRaster, ExtentRectangle newExtent) : base(rRasters, new List<Raster> { rOutputRaster })
         {
             SetOpExtent(newExtent);
             Assert.AreEqual(rRasters.Count, _inputRasters.Count);

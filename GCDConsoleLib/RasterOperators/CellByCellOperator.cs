@@ -10,8 +10,8 @@ namespace GCDConsoleLib.Internal
         /// </summary>
         /// <param name="rRasters"></param>
         /// <param name="rOutputRaster"></param>
-        public CellByCellOperator(List<Raster> rRasters, Raster rOutputRaster=null) :
-            base(rRasters, rOutputRaster) {}
+        public CellByCellOperator(List<Raster> rRasters, List<Raster> rOutputRasters = null) :
+            base(rRasters, rOutputRasters)  { }
 
         /// <summary>
         /// The individual operators must implement this.

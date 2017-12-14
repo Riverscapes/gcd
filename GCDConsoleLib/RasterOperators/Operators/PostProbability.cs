@@ -5,7 +5,7 @@ namespace GCDConsoleLib.Internal.Operators
     /// <summary>
     /// We do Hillshade as a float on purpose since we need it to be fast and accuracy is less important
     /// </summary>
-    public class PosteriorProbability : WindowOverlapOperator<double>
+    public class PosteriorProbability : CellByCellOperator<double>
     {
         // Just helpful statics for reference
         private static int rawDod = 0;
@@ -29,27 +29,30 @@ namespace GCDConsoleLib.Internal.Operators
         public PosteriorProbability(Raster rawDoD, Raster rPriorProb,
             Raster rSpatialCoErosionRaster, Raster rSpatialCoDepositionRaster,
             Raster sPosteriorRaster, Raster sConditionalRaster, 
-            int buffCells,
             int inflectionA,
             int inflectionB) :
-            base(new List<Raster> { rawDoD, rPriorProb, rSpatialCoErosionRaster, rSpatialCoDepositionRaster }, buffCells, new List<Raster>() { sPosteriorRaster, sConditionalRaster })
+            base(new List<Raster> { rawDoD, rPriorProb, rSpatialCoErosionRaster, rSpatialCoDepositionRaster }, new List<Raster>() { sPosteriorRaster, sConditionalRaster })
         {
             _infA = inflectionA;
             _infB = inflectionB;
         }
 
-        protected override void WindowOp(List<double[]> windowData, List<double[]> outputs, int id)
+
+        protected override void CellOp(List<double[]> data, List<double[]> outputs, int id)
         {
             double pAgEjDenom = _infB - _infA;
             double pA, pAgEj, pEj, nbrCnt;
-            int i = BufferCenterID;
 
-            if ((windowData[rawDod][i] != inNodataVals[rawDod]) && (windowData[priorProb][i] != inNodataVals[priorProb]))
+            // Just for safety set it nodata to begin with
+            outputs[condRaster][id] = outNodataVals[condRaster];
+            outputs[postRaster][id] = outNodataVals[postRaster];
+
+            if ((data[rawDod][id] != inNodataVals[rawDod]) && (data[priorProb][id] != inNodataVals[priorProb]))
             {
                 // Deposition Case
-                if ((windowData[rawDod][i] > 0) && (windowData[spCoDep][i] != inNodataVals[spCoDep]))
+                if ((data[rawDod][id] > 0) && (data[spCoDep][id] != inNodataVals[spCoDep]))
                 {
-                    nbrCnt = windowData[spCoDep][i];
+                    nbrCnt = data[spCoDep][id];
                     if (nbrCnt <= _infA)
                     {
                         outputs[condRaster][id] = 0;
@@ -62,7 +65,7 @@ namespace GCDConsoleLib.Internal.Operators
                     }
                     else
                     {
-                        pEj = windowData[priorProb][i];
+                        pEj = data[priorProb][id];
                         // Rise over run
                         pAgEj = (nbrCnt - _infA) / pAgEjDenom;
                         outputs[condRaster][id] = pAgEj;
@@ -72,9 +75,9 @@ namespace GCDConsoleLib.Internal.Operators
                     }
                 }
                 // Erosion Case
-                else if ((windowData[rawDod][i] < 0) && (windowData[spCoEro][i] != inNodataVals[spCoEro]))
+                else if ((data[rawDod][id] < 0) && (data[spCoEro][id] != inNodataVals[spCoEro]))
                 {
-                    nbrCnt = windowData[spCoEro][i];
+                    nbrCnt = data[spCoEro][id];
                     if (nbrCnt <= _infA)
                     {
                         outputs[condRaster][id] = 0;
@@ -87,7 +90,7 @@ namespace GCDConsoleLib.Internal.Operators
                     }
                     else
                     {
-                        pEj = -windowData[priorProb][i];
+                        pEj = -data[priorProb][id];
                         // Rise over run
                         pAgEj = (nbrCnt - _infA) / pAgEjDenom;
                         outputs[condRaster][id] = -pAgEj;
@@ -96,7 +99,7 @@ namespace GCDConsoleLib.Internal.Operators
                         outputs[postRaster][id] = -pAgEj * pEj / pA;
                     }
                 }
-                else if (windowData[rawDod][i] == 0)
+                else if (data[rawDod][id] == 0)
                 {
                     outputs[condRaster][id] = 0;
                     outputs[postRaster][id] = 0;

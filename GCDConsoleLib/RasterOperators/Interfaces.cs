@@ -660,7 +660,6 @@ namespace GCDConsoleLib
             Raster sSpatialCoDepositionRaster,
             FileInfo sPosteriorRaster,
             FileInfo sConditionalRaster,
-            int nMovingWindowWidth,
             int inflectionA,
             int inflectionB,
             EventHandler<int> progressHandler = null)
@@ -669,7 +668,7 @@ namespace GCDConsoleLib
                 sSpatialCoErosionRaster, sSpatialCoDepositionRaster,
                 new Raster(rawDoD, sPosteriorRaster),
                 new Raster(rawDoD, sConditionalRaster),
-                nMovingWindowWidth, inflectionA, inflectionB);
+                inflectionA, inflectionB);
 
             if (progressHandler != null)
                 thePostProb.ProgressEvent += progressHandler;

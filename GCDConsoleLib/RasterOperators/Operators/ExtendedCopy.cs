@@ -12,7 +12,7 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="rOutputRaster"></param>
         /// <param name="newRect"></param>
         public ExtendedCopy(Raster rInput, Raster rOutputRaster, ExtentRectangle newRect) :
-            base(new List<Raster> { rInput }, rOutputRaster)
+            base(new List<Raster> { rInput }, new List<Raster> { rOutputRaster })
         {
             SetOpExtent(newRect);
         }

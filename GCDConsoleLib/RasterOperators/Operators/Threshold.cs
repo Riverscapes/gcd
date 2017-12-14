@@ -20,7 +20,7 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="rOutputRaster"></param>
         public Threshold(Raster rInput, RasterOperators.ThresholdOps tOp,
             decimal fThresh, Raster rOutputRaster) :
-            base(new List<Raster> { rInput }, rOutputRaster)
+            base(new List<Raster> { rInput }, new List<Raster> { rOutputRaster })
         {
             _botOp = tOp;
             _botNum = (double)fThresh;
@@ -36,7 +36,7 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="rOutputRaster"></param>
         public Threshold(Raster rInput, RasterOperators.ThresholdOps tOp,
             Raster rThresh, Raster rOutputRaster) :
-            base(new List<Raster> { rInput, rThresh }, rOutputRaster)
+            base(new List<Raster> { rInput, rThresh }, new List<Raster> { rOutputRaster })
         {
             _botOp = tOp;
             bTwoOps = false;
@@ -54,7 +54,7 @@ namespace GCDConsoleLib.Internal.Operators
         public Threshold(Raster rInput,
             RasterOperators.ThresholdOps tBottomOp, decimal fBottomThresh,
             RasterOperators.ThresholdOps tTopOp, decimal fTopThresh, Raster rOutputRaster) :
-            base(new List<Raster> { rInput }, rOutputRaster)
+            base(new List<Raster> { rInput }, new List<Raster> { rOutputRaster })
         {
             if (tBottomOp == RasterOperators.ThresholdOps.LessThan ||
                 tBottomOp == RasterOperators.ThresholdOps.LessThanOrEqual ||

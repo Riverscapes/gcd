@@ -12,7 +12,7 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="rMask"></param>
         /// <param name="rOutputRaster"></param>
         public Mask(Raster rUnMasked, Raster rMask, Raster rOutputRaster) :
-            base(new List<Raster> { rUnMasked, rMask }, rOutputRaster)
+            base(new List<Raster> { rUnMasked, rMask }, new List<Raster> { rOutputRaster })
         { }
 
         /// <summary>

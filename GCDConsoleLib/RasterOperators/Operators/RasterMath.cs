@@ -19,7 +19,7 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="dOperand"></param>
         /// <param name="sOutputRaster"></param>
         public RasterMath(RasterOperators.MathOpType otType, Raster rInput, decimal dOperand, 
-            Raster rOutputRaster) : base(new List<Raster> { rInput }, rOutputRaster)
+            Raster rOutputRaster) : base(new List<Raster> { rInput }, new List<Raster> { rOutputRaster })
         {
             _type = otType;
             _scalar = true;
@@ -36,7 +36,7 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="rOutputRaster"></param>
         public RasterMath(RasterOperators.MathOpType otType, Raster rInputA, 
             Raster rInputB, Raster rOutputRaster) :
-            base(new List<Raster> { rInputA, rInputB }, rOutputRaster)
+            base(new List<Raster> { rInputA, rInputB }, new List<Raster> { rOutputRaster })
         {
             _type = otType;
             _scalar = false;

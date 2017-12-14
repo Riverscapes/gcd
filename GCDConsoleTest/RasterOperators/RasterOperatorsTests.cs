@@ -258,9 +258,12 @@ namespace GCDConsoleLib.Tests
                 Raster GCDDeposition1 = RasterOperators.NeighbourCount(rDoD, RasterOperators.GCDWindowType.Deposition, 1, new FileInfo(Path.Combine(tmp.Name, "Deposition1.tif")));
                 Raster GCDAll1 = RasterOperators.NeighbourCount(rDoD, RasterOperators.GCDWindowType.All, 1, new FileInfo(Path.Combine(tmp.Name, "All1.tif")));
 
-                Raster GCDErosion4 = RasterOperators.NeighbourCount(rDoD, RasterOperators.GCDWindowType.Erosion, 4, new FileInfo(Path.Combine(tmp.Name, "Erosion4.tif")));
-                Raster GCDDeposition4 = RasterOperators.NeighbourCount(rDoD, RasterOperators.GCDWindowType.Deposition, 4, new FileInfo(Path.Combine(tmp.Name, "Deposition4.tif")));
-                Raster GCDAll4 = RasterOperators.NeighbourCount(rDoD, RasterOperators.GCDWindowType.All, 4, new FileInfo(Path.Combine(tmp.Name, "All4.tif")));
+                ErrorRasterProperties props = new ErrorRasterProperties(0.2m);
+
+                Raster propError = RasterOperators.CreateErrorRaster(rTemp2, props, new FileInfo(Path.Combine(tmp.Name, "properror.tif")));
+                Raster postProb = RasterOperators.CreatePriorProbabilityRaster(rDoD, propError, new FileInfo(Path.Combine(tmp.Name, "priorprob.tif")));
+
+                Raster PostProb = RasterOperators.PosteriorProbability(rDoD, postProb, GCDErosion1, GCDDeposition1, new FileInfo(Path.Combine(tmp.Name, "cond.tif")), new FileInfo(Path.Combine(tmp.Name, "postprob.tif")), 2, 5);
             }
         }
 

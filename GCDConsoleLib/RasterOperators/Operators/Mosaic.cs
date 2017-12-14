@@ -10,7 +10,7 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="rlInputs"></param>
         /// <param name="rOutputRaster"></param>
         public Mosaic(List<Raster> rlInputs, Raster rOutputRaster) :
-            base(rlInputs, rOutputRaster)
+            base(rlInputs, new List<Raster> { rOutputRaster })
         { }
 
         /// <summary>

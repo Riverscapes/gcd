@@ -61,7 +61,6 @@ namespace GCDCore.Engines
                 Raster PostProb = RasterOperators.PosteriorProbability(rawDoD, priorPRob,
                     rSpatialCoErosion, rSpatialCoDeposition,
                     m_PosteriorRaster, m_ConditionalRaster,
-                    SpatialCoherence.MovingWindowDimensions, 
                     SpatialCoherence.InflectionA, SpatialCoherence.InflectionB);
 
                 thrDoD = RasterOperators.ThresholdDoDProbability(rawDoD, PostProb, new FileInfo(thrDoDPath.FullName), Threshold);

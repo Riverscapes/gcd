@@ -20,7 +20,7 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="rInput"></param>
         /// <param name="rOutputRaster"></param>
         public CITThresholdRaster(Raster rawDoD, Raster rPriorProb, Raster rOutputRaster, decimal cutoff) :
-            base(new List<Raster> { rawDoD, rPriorProb }, rOutputRaster)
+            base(new List<Raster> { rawDoD, rPriorProb }, new List<Raster> { rOutputRaster })
         {
             zCutoff = (double)Probability.ltqnorm((1 + (double)cutoff) / 2);
         }

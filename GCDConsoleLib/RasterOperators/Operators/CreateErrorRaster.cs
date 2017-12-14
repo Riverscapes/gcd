@@ -23,8 +23,8 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="rawDEM"></param>
         /// <param name="props"></param>
         /// <param name="outputRaster"></param>
-        public CreateErrorRaster(Raster rawDEM, ErrorRasterProperties prop, Raster outputRaster) :
-            base(new List<Raster> { rawDEM }, outputRaster)
+        public CreateErrorRaster(Raster rawDEM, ErrorRasterProperties prop, Raster rOutputRaster) :
+            base(new List<Raster> { rawDEM }, new List<Raster> { rOutputRaster })
         {
             isMultiMethod = false;
             _fisinputs = new Dictionary<string, List<int>>();
@@ -60,8 +60,8 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="props"></param>
         /// <param name="outputRaster"></param>
         public CreateErrorRaster(Raster rawDEM, Vector PolygonMask, string MaskFieldName,
-            Dictionary<string, ErrorRasterProperties> props, Raster outputRaster) :
-            base(new List<Raster> { rawDEM }, outputRaster)
+            Dictionary<string, ErrorRasterProperties> props, Raster rOutputRaster) :
+            base(new List<Raster> { rawDEM }, new List<Raster> { rOutputRaster })
         {
             isMultiMethod = true;
             _polymask = PolygonMask;

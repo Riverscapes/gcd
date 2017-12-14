@@ -14,7 +14,7 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="rOutputRaster"></param>
         /// <param name="val"></param>
         public UniformRaster(Raster rInput, Raster rOutputRaster, T val) :
-            base(new List<Raster> { rInput }, rOutputRaster)
+            base(new List<Raster> { rInput }, new List<Raster> { rOutputRaster })
         {
             _val = val;
         }

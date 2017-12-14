@@ -17,7 +17,7 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="rInput"></param>
         /// <param name="rOutputRaster"></param>
         public PriorProbRaster(Raster rawDoD, Raster propError, Raster rOutputRaster) :
-            base(new List<Raster> { rawDoD, propError }, rOutputRaster)
+            base(new List<Raster> { rawDoD, propError }, new List<Raster> { rOutputRaster })
         {  }
 
         /// <summary>

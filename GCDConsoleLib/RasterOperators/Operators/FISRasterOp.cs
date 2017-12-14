@@ -18,7 +18,7 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="fisFile"></param>
         /// <param name="rOutput"></param>
         public FISRasterOp(Dictionary<string, Raster> rInputs, FileInfo fisFile, Raster rOutput) :
-            base(rInputs.Values.ToList(), rOutput)
+            base(rInputs.Values.ToList(), new List<Raster> { rOutput })
         {
             _FISFile = new FisFile(fisFile);
             _RuleSet = _FISFile.ruleset;
