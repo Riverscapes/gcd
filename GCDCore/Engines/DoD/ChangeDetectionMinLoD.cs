@@ -9,8 +9,8 @@ namespace GCDCore.Engines
     {
         public decimal Threshold { get; internal set; }
 
-        public ChangeDetectionEngineMinLoD(string name, DirectoryInfo folder, DEMSurvey NewDEM, DEMSurvey OldDEM, decimal fThreshold)
-            : base(name, folder, NewDEM, OldDEM)
+        public ChangeDetectionEngineMinLoD(DEMSurvey NewDEM, DEMSurvey OldDEM, decimal fThreshold)
+            : base(NewDEM, OldDEM)
         {
             Threshold = fThreshold;
         }
@@ -32,9 +32,9 @@ namespace GCDCore.Engines
             return RasterOperators.GetStatsMinLoD(rawDoD, thrDoD, Threshold, units);
         }
 
-        protected override DoDBase GetDoDResult(DoDStats changeStats, Raster rawDoD, Raster thrDoD, HistogramPair histograms, FileInfo summaryXML)
+        protected override DoDBase GetDoDResult(string dodName, DoDStats changeStats, Raster rawDoD, Raster thrDoD, HistogramPair histograms, FileInfo summaryXML)
         {
-            return new DoDMinLoD(Name, AnalysisFolder, NewDEM, OldDEM, rawDoD, thrDoD, histograms, summaryXML, Threshold, changeStats);
+            return new DoDMinLoD(dodName, rawDoD.GISFileInfo.Directory, NewDEM, OldDEM, rawDoD, thrDoD, histograms, summaryXML, Threshold, changeStats);
         }
     }
 }

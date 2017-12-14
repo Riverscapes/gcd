@@ -165,6 +165,15 @@ namespace GCDCore.UserInterface.ChangeDetection
                         MessageBox.Show("Please choose two different DEM Surveys.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
                         return false;
                     }
+
+                    DEMSurvey newDEM =(DEMSurvey) cboNewDEM.SelectedItem;
+                    DEMSurvey oldDEM = (DEMSurvey)cboOldDEM.SelectedItem;
+                        
+                    if (!newDEM.Raster.Extent.HasOverlap(oldDEM.Raster.Extent))
+                    {
+                        MessageBox.Show("The two DEM surveys do not overlap.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return false;
+                    }
                 }
                 else
                 {

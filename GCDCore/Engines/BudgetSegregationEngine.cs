@@ -9,15 +9,10 @@ namespace GCDCore.Engines
 {
     public class BudgetSegregationEngine : EngineBase
     {
-        public BudgetSegregationEngine(string name, DirectoryInfo folder)
-            : base(name, folder)
-        {
-        }
-
-        public BudgetSegregation Calculate(DoDBase dod, Vector polygonMask, string fieldName)
+        public BudgetSegregation Calculate(string dodName, DirectoryInfo analysisFolder, DoDBase dod, Vector polygonMask, string fieldName)
         {
             // Build the budget segregation result set object that will be returned. This determines paths
-            BudgetSegregation bsResult = new BudgetSegregation(Name, AnalysisFolder, fieldName, dod);
+            BudgetSegregation bsResult = new BudgetSegregation(dodName, analysisFolder, fieldName, dod);
 
             // Copy the budget segregation mask ShapeFile into the folder
             polygonMask.Copy(bsResult.PolygonMask);
@@ -49,8 +44,8 @@ namespace GCDCore.Engines
             Dictionary<string, Histogram> thrHistos = RasterOperators.BinRaster(dod.ThrDoD, DEFAULTHISTOGRAMNUMBER, Mask, fieldName);
 
             // Make sure that the output folder and the folder for the figures exist
-            AnalysisFolder.Create();
-            FiguresFolder.Create();
+            analysisFolder.Create();
+            FiguresFolder(analysisFolder).Create();
 
             // Build the output necessary output files 
             int classIndex = 1;
@@ -60,19 +55,19 @@ namespace GCDCore.Engines
                 legendText.AppendLine(string.Format("{0},{1}", classIndex, segClass.Key));
 
                 string filePrefix = string.Format("c{0:000}", classIndex);
-                FileInfo sumaryXML = new FileInfo(Path.Combine(AnalysisFolder.FullName, string.Format("{0}_summary.xml", filePrefix)));
-                FileInfo rawHstPth = new FileInfo(Path.Combine(AnalysisFolder.FullName, string.Format("{0}_raw.csv", filePrefix)));
-                FileInfo thrHstPth = new FileInfo(Path.Combine(AnalysisFolder.FullName, string.Format("{0}_thr.csv", filePrefix)));
+                FileInfo sumaryXML = new FileInfo(Path.Combine(analysisFolder.FullName, string.Format("{0}_summary.xml", filePrefix)));
+                FileInfo rawHstPth = new FileInfo(Path.Combine(analysisFolder.FullName, string.Format("{0}_raw.csv", filePrefix)));
+                FileInfo thrHstPth = new FileInfo(Path.Combine(analysisFolder.FullName, string.Format("{0}_thr.csv", filePrefix)));
 
                 GenerateSummaryXML(segClass.Value, sumaryXML);
-                GenerateChangeBarGraphicFiles(segClass.Value, 600, 600, filePrefix);
+                GenerateChangeBarGraphicFiles(analysisFolder, segClass.Value, 600, 600, filePrefix);
 
                 WriteHistogram(rawHistos[segClass.Key], rawHstPth);
                 WriteHistogram(thrHistos[segClass.Key], thrHstPth);
 
                 HistogramPair histograms = new HistogramPair(rawHistos[segClass.Key], rawHstPth, thrHistos[segClass.Key], thrHstPth);
 
-                BudgetSegregationClass bsClass = new BudgetSegregationClass(segClass.Key, AnalysisFolder, filePrefix, segClass.Value, histograms, sumaryXML);
+                BudgetSegregationClass bsClass = new BudgetSegregationClass(segClass.Key, analysisFolder, filePrefix, segClass.Value, histograms, sumaryXML);
                 bsResult.Classes[segClass.Key] = bsClass;
 
                 classIndex++;

@@ -47,9 +47,9 @@ namespace GCDCore.UserInterface.BudgetSegregation
 
                 DoDBase dod = (DoDBase)cboDoD.SelectedItem;
                 System.IO.DirectoryInfo bsFolder = ProjectManager.OutputManager.GetBudgetSegreationDirectoryPath(dod.Folder, true);
-                Engines.BudgetSegregationEngine bsEngine = new Engines.BudgetSegregationEngine(txtName.Text, bsFolder);
-                BudgetSeg = bsEngine.Calculate(dod, ucPolygon.SelectedItem, cboField.Text);
-                dod.BudgetSegregations[bsEngine.Name] = BudgetSeg;
+                Engines.BudgetSegregationEngine bsEngine = new Engines.BudgetSegregationEngine();
+                BudgetSeg = bsEngine.Calculate(txtName.Text, bsFolder, dod, ucPolygon.SelectedItem, cboField.Text);
+                dod.BudgetSegregations[BudgetSeg.Name] = BudgetSeg;
 
                 ProjectManager.Project.Save();
             }

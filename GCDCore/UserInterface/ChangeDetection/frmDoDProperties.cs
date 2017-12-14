@@ -76,24 +76,23 @@ namespace GCDCore.UserInterface.ChangeDetection
                 System.IO.DirectoryInfo dFolder = new System.IO.DirectoryInfo(txtOutputFolder.Text);
                 GCDCore.Engines.ChangeDetectionEngineBase cdEngine = null;
 
-                if (ucThresholding.IsMindLoD)
+                if (ucThresholding.ThresholdProperties.Method == Engines.DoD.ThresholdProps.ThresholdMethods.MinLoD)
                 {
-                    cdEngine = new GCDCore.Engines.ChangeDetectionEngineMinLoD(txtName.Text, dFolder, ucDEMs.NewDEM, ucDEMs.OldDEM, ucThresholding.MinLoD);
+                    cdEngine = new Engines.ChangeDetectionEngineMinLoD(ucDEMs.NewDEM, ucDEMs.OldDEM, ucThresholding.ThresholdProperties.Threshold);
                 }
                 else
                 {
-                    if (ucThresholding.IsPropagated)
+                    if (ucThresholding.ThresholdProperties.Method == Engines.DoD.ThresholdProps.ThresholdMethods.Propagated)
                     {
-                        cdEngine = new GCDCore.Engines.ChangeDetectionEnginePropProb(txtName.Text, dFolder, ucDEMs.NewDEM, ucDEMs.OldDEM, ucDEMs.NewError, ucDEMs.OldError);
+                        cdEngine = new Engines.ChangeDetectionEnginePropProb(ucDEMs.NewDEM, ucDEMs.OldDEM, ucDEMs.NewError, ucDEMs.OldError);
                     }
                     else
                     {
-                        CoherenceProperties spatCoherence = ucThresholding.UsesSpatialCoherence ? spatCoherence = ucThresholding.CoherenceProps : null;
-                        cdEngine = new Engines.ChangeDetectionEngineProbabilistic(txtName.Text, dFolder, ucDEMs.NewDEM, ucDEMs.OldDEM, ucDEMs.NewError, ucDEMs.OldError, ucThresholding.ConfidenceThreshold, spatCoherence);
+                        cdEngine = new Engines.ChangeDetectionEngineProbabilistic(ucDEMs.NewDEM, ucDEMs.OldDEM, ucDEMs.NewError, ucDEMs.OldError, ucThresholding.ThresholdProperties.Threshold, ucThresholding.ThresholdProperties.SpatialCoherenceProps);
                     }
                 }
 
-                m_DoD = cdEngine.Calculate(true, ProjectManager.Project.Units);
+                m_DoD = cdEngine.Calculate(txtName.Text, dFolder, true, ProjectManager.Project.Units);
 
                 ProjectManager.Project.DoDs[txtName.Name] = m_DoD;
                 ProjectManager.Project.Save();
@@ -147,7 +146,7 @@ namespace GCDCore.UserInterface.ChangeDetection
 
         private void EnableDisableControls()
         {
-            ucDEMs.EnableErrorSurfaces(!ucThresholding.IsMindLoD);
+            ucDEMs.EnableErrorSurfaces(ucThresholding.ThresholdProperties.Method != Engines.DoD.ThresholdProps.ThresholdMethods.MinLoD);
         }
 
         private void ThresholdMethodChanged(object sender, EventArgs e)
@@ -170,31 +169,25 @@ namespace GCDCore.UserInterface.ChangeDetection
                 return;
             }
 
-            string sAnalysisName = naru.os.File.RemoveDangerousCharacters(ucDEMs.NewDEM.Name);
-            if (!string.IsNullOrEmpty(sAnalysisName))
-            {
-                sAnalysisName += "_";
-            }
+            txtName.Text = GetUniqueAnalysisName(ucDEMs.NewDEM.Name, ucDEMs.OldDEM.Name, ucThresholding.ThresholdProperties.ThresholdString);
+        }
 
-            if (!string.IsNullOrEmpty(ucDEMs.OldDEM.Name))
-            {
-                sAnalysisName += naru.os.File.RemoveDangerousCharacters(ucDEMs.OldDEM.Name);
-            }
+        public static string GetUniqueAnalysisName(string newDEM, string oldDEM, string Threshold)
+        {
 
-            if (ucThresholding.IsMindLoD)
+            int index = 0;
+            string rootName = string.Format("{0}_{1} {2}", newDEM, oldDEM, Threshold);
+            string dodName = string.Empty;
+            do
             {
-                sAnalysisName += " MinLoD " + ucThresholding.MinLoD.ToString("#0.00");
-            }
-            else if (ucThresholding.IsPropagated)
-            {
-                sAnalysisName += " Prop";
-            }
-            else
-            {
-                sAnalysisName += " Prob " + ucThresholding.ConfidenceThreshold.ToString("#0.00");
-            }
+                dodName = rootName;
+                if (index > 0)
+                    dodName += string.Format(" ({0})", index);
 
-            txtName.Text = sAnalysisName.Trim();
+                index++;
+            } while (!ProjectManager.Project.IsDoDNameUnique(dodName, null));
+
+            return dodName;
         }
 
         #endregion
@@ -214,7 +207,7 @@ namespace GCDCore.UserInterface.ChangeDetection
                 }
                 else
                 {
-                    txtOutputFolder.Text = ProjectManager.OutputManager.GetDoDOutputFolder(txtName.Text);
+                    txtOutputFolder.Text = ProjectManager.Project.GetRelativePath(ProjectManager.OutputManager.GetDoDOutputFolder(txtName.Text).FullName);
                 }
 
             }

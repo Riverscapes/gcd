@@ -36,9 +36,10 @@
             this.cmdAdd = new System.Windows.Forms.Button();
             this.cmdDelete = new System.Windows.Forms.Button();
             this.grdMethods = new System.Windows.Forms.DataGridView();
-            this.ucDoDDEMs = new GCDCore.UserInterface.ChangeDetection.ucDoDDEMSelection();
             this.colMethod = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colThresholding = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ucDEMs = new GCDCore.UserInterface.ChangeDetection.ucDoDDEMSelection();
+            this.bgWorker = new System.ComponentModel.BackgroundWorker();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdMethods)).BeginInit();
             this.SuspendLayout();
@@ -131,17 +132,6 @@
             this.grdMethods.Size = new System.Drawing.Size(585, 138);
             this.grdMethods.TabIndex = 0;
             // 
-            // ucDoDDEMs
-            // 
-            this.ucDoDDEMs.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.ucDoDDEMs.Location = new System.Drawing.Point(12, 12);
-            this.ucDoDDEMs.Name = "ucDoDDEMs";
-            this.ucDoDDEMs.NewDEM = null;
-            this.ucDoDDEMs.OldDEM = null;
-            this.ucDoDDEMs.Size = new System.Drawing.Size(597, 89);
-            this.ucDoDDEMs.TabIndex = 3;
-            // 
             // colMethod
             // 
             this.colMethod.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
@@ -158,13 +148,32 @@
             this.colThresholding.Name = "colThresholding";
             this.colThresholding.ReadOnly = true;
             // 
+            // ucDEMs
+            // 
+            this.ucDEMs.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ucDEMs.Location = new System.Drawing.Point(12, 12);
+            this.ucDEMs.Name = "ucDEMs";
+            this.ucDEMs.NewDEM = null;
+            this.ucDEMs.OldDEM = null;
+            this.ucDEMs.Size = new System.Drawing.Size(597, 89);
+            this.ucDEMs.TabIndex = 3;
+            // 
+            // bgWorker
+            // 
+            this.bgWorker.WorkerReportsProgress = true;
+            this.bgWorker.WorkerSupportsCancellation = true;
+            this.bgWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgWorker_DoWork);
+            this.bgWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.bgWorker_ProgressChanged);
+            this.bgWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgWorker_RunWorkerCompleted);
+            // 
             // frmBatchDoD
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(621, 333);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.ucDoDDEMs);
+            this.Controls.Add(this.ucDEMs);
             this.Controls.Add(this.cmdHelp);
             this.Controls.Add(this.cmdOK);
             this.Controls.Add(this.cmdCancel);
@@ -184,12 +193,13 @@
         private System.Windows.Forms.Button cmdCancel;
         private System.Windows.Forms.Button cmdOK;
         private System.Windows.Forms.Button cmdHelp;
-        private ucDoDDEMSelection ucDoDDEMs;
+        private ucDoDDEMSelection ucDEMs;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.DataGridView grdMethods;
         private System.Windows.Forms.Button cmdAdd;
         private System.Windows.Forms.Button cmdDelete;
         private System.Windows.Forms.DataGridViewTextBoxColumn colMethod;
         private System.Windows.Forms.DataGridViewTextBoxColumn colThresholding;
+        private System.ComponentModel.BackgroundWorker bgWorker;
     }
 }

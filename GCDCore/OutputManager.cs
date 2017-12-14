@@ -589,13 +589,13 @@ namespace GCDCore
                 }
             }
 
-            DirectoryInfo bsFolder =  new DirectoryInfo(Path.Combine(bsGroupFolder.FullName, string.Format("BS{0:0000}", maxExisting + 1)));
+            DirectoryInfo bsFolder = new DirectoryInfo(Path.Combine(bsGroupFolder.FullName, string.Format("BS{0:0000}", maxExisting + 1)));
 
             if (bCreate)
                 bsFolder.Create();
 
             return bsFolder;
-        }    
+        }
 
         #region "Change Detection"
 
@@ -640,7 +640,7 @@ namespace GCDCore
         /// That way it can determine the output folder and show it to users without actually
         /// creating the folder. Then the change detection engine code can call this method with
         /// the value of True to ensure that the folder exists when it is time to create files in it.</remarks>
-        public string GetDoDOutputFolder(string sDoDName, bool bCreateIfMissing = false)
+        public DirectoryInfo GetDoDOutputFolder(string sDoDName, bool bCreateIfMissing = false)
         {
             string sDoDFolder = string.Empty;
             int nFolderIndex = 0;
@@ -670,7 +670,7 @@ namespace GCDCore
                 Directory.CreateDirectory(sDoDFolder);
             }
 
-            return sDoDFolder;
+            return new DirectoryInfo(sDoDFolder);
         }
 
         private string GetSafeDoDName(string sOriginalName)

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using GCDCore.Project;
 
-namespace GCDCore.UserInterface.ChangeDetection.Batch
+namespace GCDCore.Engines.DoD
 {
     public class ThresholdProps
     {

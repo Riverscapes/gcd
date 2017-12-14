@@ -60,6 +60,7 @@
     <Compile Include="Engines\DoD\ChangeDetectionMinLoD.cs" />
     <Compile Include="Engines\DoD\ChangeDetectionProbabilistic.cs" />
     <Compile Include="Engines\DoD\ChangeDetectionPropProb.cs" />
+    <Compile Include="Engines\DoD\ChangeDetetctionBatch.cs" />
     <Compile Include="GCDUnits.cs" />
     <Compile Include="Project\CoherenceProperties.cs" />
     <Compile Include="Engines\EngineBase.cs" />
@@ -84,7 +85,7 @@
     <Compile Include="Project\ProjectManager.cs" />
     <Compile Include="Project\SurveyDateTime.cs" />
     <Compile Include="Project\SurveyType.cs" />
-    <Compile Include="UserInterface\ChangeDetection\Batch\ThresholdProps.cs" />
+    <Compile Include="Engines\DoD\ThresholdProps.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

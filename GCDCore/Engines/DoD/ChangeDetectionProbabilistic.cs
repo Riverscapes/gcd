@@ -16,9 +16,9 @@ namespace GCDCore.Engines
 
         private FileInfo m_SpatialCoDepositionRaster;
 
-        public ChangeDetectionEngineProbabilistic(string name, DirectoryInfo folder, DEMSurvey newDEM, DEMSurvey oldDEM, ErrorSurface newError, ErrorSurface oldError,
+        public ChangeDetectionEngineProbabilistic(DEMSurvey newDEM, DEMSurvey oldDEM, ErrorSurface newError, ErrorSurface oldError,
             decimal fThreshold, CoherenceProperties spatCoherence = null)
-        : base(name, folder, newDEM, oldDEM, newError, oldError)
+        : base(newDEM, oldDEM, newError, oldError)
         {
             Threshold = fThreshold;
             SpatialCoherence = spatCoherence;
@@ -33,11 +33,11 @@ namespace GCDCore.Engines
         /// <remarks>Let the base class build pyramids for the thresholded raster</remarks>
         protected override Raster ThresholdRawDoD(Raster rawDoD, FileInfo thrDoDPath)
         {
-            GeneratePropagatedErrorRaster();
+            GeneratePropagatedErrorRaster(thrDoDPath.Directory);
             Raster thrDoD = null;
 
             // Create the prior probability raster
-            m_PriorProbRaster = new FileInfo(Path.ChangeExtension(Path.Combine(AnalysisFolder.FullName, "priorprob"), OutputManager.RasterExtension));
+            m_PriorProbRaster = new FileInfo(Path.ChangeExtension(Path.Combine(thrDoDPath.DirectoryName, "priorprob"), OutputManager.RasterExtension));
             Raster priorPRob = RasterOperators.CreatePriorProbabilityRaster(rawDoD, PropagatedErrRaster, m_PriorProbRaster);
 
             // Build Pyramids
@@ -49,10 +49,10 @@ namespace GCDCore.Engines
             }
             else
             {
-                m_PosteriorRaster = new FileInfo(Path.ChangeExtension(Path.Combine(AnalysisFolder.FullName, "postProb"), OutputManager.RasterExtension));
-                m_ConditionalRaster = new FileInfo(Path.ChangeExtension(Path.Combine(AnalysisFolder.FullName, "condProb"), OutputManager.RasterExtension));
-                m_SpatialCoErosionRaster = new FileInfo(Path.ChangeExtension(Path.Combine(AnalysisFolder.FullName, "nbrErosion"), OutputManager.RasterExtension));
-                m_SpatialCoDepositionRaster = new FileInfo(Path.ChangeExtension(Path.Combine(AnalysisFolder.FullName, "nbrDeposition"), OutputManager.RasterExtension));
+                m_PosteriorRaster = new FileInfo(Path.ChangeExtension(Path.Combine(thrDoDPath.DirectoryName, "postProb"), OutputManager.RasterExtension));
+                m_ConditionalRaster = new FileInfo(Path.ChangeExtension(Path.Combine(thrDoDPath.DirectoryName, "condProb"), OutputManager.RasterExtension));
+                m_SpatialCoErosionRaster = new FileInfo(Path.ChangeExtension(Path.Combine(thrDoDPath.DirectoryName, "nbrErosion"), OutputManager.RasterExtension));
+                m_SpatialCoDepositionRaster = new FileInfo(Path.ChangeExtension(Path.Combine(thrDoDPath.DirectoryName, "nbrDeposition"), OutputManager.RasterExtension));
 
                 // Count erosion and Deposition in a window around each cell
                 Raster rSpatialCoErosion = RasterOperators.NeighbourCount(rawDoD, RasterOperators.GCDWindowType.Erosion, SpatialCoherence.MovingWindowDimensions, m_SpatialCoErosionRaster);
@@ -80,7 +80,7 @@ namespace GCDCore.Engines
             return RasterOperators.GetStatsProbalistic(rawDoD, thrDoD, PropagatedErrRaster, units);
         }
 
-        protected override DoDBase GetDoDResult(DoDStats changeStats, Raster rawDoD, Raster thrDoD, HistogramPair histograms, FileInfo summaryXML)
+        protected override DoDBase GetDoDResult(string dodName, DoDStats changeStats, Raster rawDoD, Raster thrDoD, HistogramPair histograms, FileInfo summaryXML)
         {
             bool bBayesian = SpatialCoherence is CoherenceProperties;
             int nFilter = 0;
@@ -89,7 +89,7 @@ namespace GCDCore.Engines
                 nFilter = SpatialCoherence.MovingWindowDimensions;
             }
 
-            return new DoDProbabilistic(Name, AnalysisFolder, NewDEM, OldDEM, histograms, summaryXML, rawDoD, thrDoD, NewError, OldError,
+            return new DoDProbabilistic(dodName, rawDoD.GISFileInfo.Directory, NewDEM, OldDEM, histograms, summaryXML, rawDoD, thrDoD, NewError, OldError,
                 PropagatedErrRaster, m_PriorProbRaster, m_PosteriorRaster, m_ConditionalRaster, m_SpatialCoErosionRaster, m_SpatialCoDepositionRaster,
                 SpatialCoherence, Threshold, changeStats);
         }

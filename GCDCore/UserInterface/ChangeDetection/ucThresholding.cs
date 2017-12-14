@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using GCDCore.Project;
+using GCDCore.Engines.DoD;
 
 namespace GCDCore.UserInterface.ChangeDetection
 {
@@ -15,15 +16,20 @@ namespace GCDCore.UserInterface.ChangeDetection
     {
         public EventHandler OnThresholdingMethodChanged;
 
-        public bool IsMindLoD { get { return rdoMinLOD.Checked; } }
-        public decimal MinLoD { get { return valMinLodThreshold.Value; } }
-
-        public bool IsPropagated { get { return rdoPropagated.Checked; } }
-
-        public bool IsProbabilistic { get { return rdoProbabilistic.Checked; } }
-        public decimal ConfidenceThreshold { get { return valConfidence.Value; } }
-        public bool UsesSpatialCoherence { get { return chkBayesian.Checked; } }
         public readonly CoherenceProperties CoherenceProps;
+
+        public ThresholdProps ThresholdProperties
+        {
+            get
+            {
+                if (rdoMinLOD.Checked)
+                    return new ThresholdProps(valMinLodThreshold.Value);
+                else if (rdoPropagated.Checked)
+                    return new ThresholdProps();
+                else
+                    return new ThresholdProps(valConfidence.Value, CoherenceProps);
+            }
+        }
 
         public ucThresholding()
         {

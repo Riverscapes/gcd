@@ -12,8 +12,8 @@ namespace GCDCore.Engines
         protected DEMSurvey NewDEM;
         protected DEMSurvey OldDEM;
 
-        public ChangeDetectionEngineBase(string name, DirectoryInfo folder, DEMSurvey newDEM, DEMSurvey oldDEM)
-            : base(name, folder)
+        public ChangeDetectionEngineBase(DEMSurvey newDEM, DEMSurvey oldDEM)
+            : base()
         {
             if (!newDEM.Raster.Extent.HasOverlap(oldDEM.Raster.Extent))
             {
@@ -29,15 +29,15 @@ namespace GCDCore.Engines
             OldDEM = oldDEM;
         }
 
-        public DoDBase Calculate(bool bBuildPyramids, UnitGroup units)
+        public DoDBase Calculate(string dodName, DirectoryInfo analysisFolder, bool bBuildPyramids, UnitGroup units)
         {
-            FileInfo rawDoDPath = ProjectManager.OutputManager.RawDoDPath(AnalysisFolder);
-            FileInfo thrDoDPath = ProjectManager.OutputManager.ThrDoDPath(AnalysisFolder);
-            FileInfo rawHstPath = ProjectManager.OutputManager.RawHistPath(AnalysisFolder);
-            FileInfo thrHstPath = ProjectManager.OutputManager.ThrHistPath(AnalysisFolder);
-            FileInfo sumXMLPath = ProjectManager.OutputManager.SummaryXMLPath(AnalysisFolder);
+            FileInfo rawDoDPath = ProjectManager.OutputManager.RawDoDPath(analysisFolder);
+            FileInfo thrDoDPath = ProjectManager.OutputManager.ThrDoDPath(analysisFolder);
+            FileInfo rawHstPath = ProjectManager.OutputManager.RawHistPath(analysisFolder);
+            FileInfo thrHstPath = ProjectManager.OutputManager.ThrHistPath(analysisFolder);
+            FileInfo sumXMLPath = ProjectManager.OutputManager.SummaryXMLPath(analysisFolder);
 
-            AnalysisFolder.Create();
+            analysisFolder.Create();
 
             // Subtract the new and old rasters to produce the raw DoD
             Raster rawDoD = RasterOperators.Subtract(NewDEM.Raster, OldDEM.Raster, rawDoDPath);
@@ -66,16 +66,16 @@ namespace GCDCore.Engines
             // Calculate the change statistics and write the output files
             DoDStats changeStats = CalculateChangeStats(rawDoD, thrDoD, units);
             GenerateSummaryXML(changeStats, sumXMLPath);
-            GenerateChangeBarGraphicFiles(changeStats, 0, 0);
-            GenerateHistogramGraphicFiles(rawHisto, thrHisto, 1920, 1080);
+            GenerateChangeBarGraphicFiles(analysisFolder, changeStats, 0, 0);
+            GenerateHistogramGraphicFiles(analysisFolder, rawHisto, thrHisto, 1920, 1080);
 
-            return GetDoDResult(changeStats, rawDoD, thrDoD, new HistogramPair(rawHisto, rawHstPath, thrHisto, thrHstPath), sumXMLPath);
+            return GetDoDResult(dodName, changeStats, rawDoD, thrDoD, new HistogramPair(rawHisto, rawHstPath, thrHisto, thrHstPath), sumXMLPath);
         }
 
         protected abstract Raster ThresholdRawDoD(Raster rawDoD, FileInfo thrDoDPath);
 
         protected abstract DoDStats CalculateChangeStats(Raster rawDoD, Raster thrDoD, UnitGroup units);
 
-        protected abstract DoDBase GetDoDResult(DoDStats changeStats, Raster rawDoD, Raster thrDoD, HistogramPair histograms, FileInfo summaryXML);
+        protected abstract DoDBase GetDoDResult(string dodName, DoDStats changeStats, Raster rawDoD, Raster thrDoD, HistogramPair histograms, FileInfo summaryXML);
     }
 }

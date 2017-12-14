@@ -7,12 +7,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using GCDCore.Project;
+using GCDCore.Engines.DoD;
 
 namespace GCDCore.UserInterface.ChangeDetection.Batch
 {
     public partial class frmBatchDoD : Form
     {
         public readonly naru.ui.SortableBindingList<ThresholdProps> Thresholds;
+        private GCDCore.Engines.DoD.ChangeDetetctionBatch BatchEngine;
 
         public frmBatchDoD()
         {
@@ -55,11 +58,28 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
                 this.DialogResult = DialogResult.None;
                 return;
             }
-        }
 
+            try
+            {
+                Cursor.Current = Cursors.WaitCursor;
+                cmdOK.Enabled = false;
+                cmdCancel.DialogResult = DialogResult.None;
+                BatchEngine = new ChangeDetetctionBatch(ucDEMs.NewDEM, ucDEMs.OldDEM, ucDEMs.NewError, ucDEMs.OldError, Thresholds.ToList<ThresholdProps>());
+                bgWorker.RunWorkerAsync();
+            }
+            catch (Exception ex)
+            {
+                naru.error.ExceptionUI.HandleException(ex);
+            }
+            finally
+            {
+                Cursor.Current = Cursors.Default;
+            }
+        }
+      
         private bool ValidateForm()
         {
-            if (!ucDoDDEMs.ValidateForm())
+            if (!ucDEMs.ValidateForm())
                 return false;
 
             if (grdMethods.Rows.Count < 1)
@@ -70,6 +90,34 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
             }
 
             return true;
+        }
+
+        private void bgWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            try
+            {
+                BatchEngine.Run(bgWorker);
+            }
+            catch (Exception ex)
+            {
+                naru.error.ExceptionUI.HandleException(ex);
+            }
+            finally
+            {
+                Cursor.Current = Cursors.Default;
+            }
+        }
+
+        private void bgWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+
+        }
+
+        private void bgWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            cmdCancel.DialogResult = DialogResult.OK;
+            cmdCancel.Text = "Close";
+            MessageBox.Show("Batch Change Detection Complete.");
         }
     }
 }

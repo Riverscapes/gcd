@@ -11,8 +11,8 @@ namespace GCDCore.Engines
         protected readonly ErrorSurface OldError;
         public Raster PropagatedErrRaster;
 
-        public ChangeDetectionEnginePropProb(string name, DirectoryInfo folder, DEMSurvey newDEM, DEMSurvey oldDEM, ErrorSurface newError, ErrorSurface oldError)
-            : base(name, folder, newDEM, oldDEM)
+        public ChangeDetectionEnginePropProb(DEMSurvey newDEM, DEMSurvey oldDEM, ErrorSurface newError, ErrorSurface oldError)
+            : base(newDEM, oldDEM)
         {
             NewError = newError;
             OldError = oldError;
@@ -20,7 +20,7 @@ namespace GCDCore.Engines
 
         protected override Raster ThresholdRawDoD(Raster rawDoD, FileInfo thrDoDPath)
         {
-            GeneratePropagatedErrorRaster();
+            GeneratePropagatedErrorRaster(thrDoDPath.Directory);
             Raster thrDoD = RasterOperators.SetNull(rawDoD, RasterOperators.ThresholdOps.LessThanOrEqual, PropagatedErrRaster, thrDoDPath);
             return thrDoD;
         }
@@ -30,9 +30,9 @@ namespace GCDCore.Engines
             return RasterOperators.GetStatsPropagated(rawDoD, PropagatedErrRaster, units);
         }
 
-        protected override DoDBase GetDoDResult(DoDStats changeStats, Raster rawDoD, Raster thrDoD, HistogramPair histograms, FileInfo summaryXML)
+        protected override DoDBase GetDoDResult(string dodName, DoDStats changeStats, Raster rawDoD, Raster thrDoD, HistogramPair histograms, FileInfo summaryXML)
         {
-            return new DoDPropagated(Name, AnalysisFolder, NewDEM, OldDEM, rawDoD, thrDoD, histograms, summaryXML, NewError, OldError, PropagatedErrRaster, changeStats);
+            return new DoDPropagated(dodName, rawDoD.GISFileInfo.Directory, NewDEM, OldDEM, rawDoD, thrDoD, histograms, summaryXML, NewError, OldError, PropagatedErrRaster, changeStats);
         }
 
         /// <summary>
@@ -41,9 +41,9 @@ namespace GCDCore.Engines
         /// <returns></returns>
         /// <remarks>Calculate the propograted error raster based on the two error surfaces. Then threshold the raw
         /// DoD removing any cells that have a value less than the propogated error.</remarks>
-        protected void GeneratePropagatedErrorRaster()
+        protected void GeneratePropagatedErrorRaster(DirectoryInfo analysisFolder)
         {
-            FileInfo propErrPath = ProjectManager.OutputManager.PropagatedErrorPath(AnalysisFolder);
+            FileInfo propErrPath = ProjectManager.OutputManager.PropagatedErrorPath(analysisFolder);
             PropagatedErrRaster = RasterOperators.RootSumSquares(NewError.Raster, OldError.Raster, propErrPath);
 
             // Build Pyramids
