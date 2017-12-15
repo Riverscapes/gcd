@@ -43,7 +43,9 @@ namespace GCDCore.UserInterface.ChangeDetection
         {
             UpdateControls(sender, e);
 
-            lblMinLodThreshold.Text = string.Format("Threshold ({0})", UnitsNet.Length.GetAbbreviation(ProjectManager.Project.Units.VertUnit));
+            // If statement needed for designer
+            if (ProjectManager.Project != null)
+                lblMinLodThreshold.Text = string.Format("Threshold ({0})", UnitsNet.Length.GetAbbreviation(ProjectManager.Project.Units.VertUnit));
         }
 
         private void UpdateControls(object sender, EventArgs e)

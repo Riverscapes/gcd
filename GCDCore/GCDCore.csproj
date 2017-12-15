@@ -159,6 +159,12 @@
     <Compile Include="UserInterface\ChangeDetection\frmDoDSummaryProperties.Designer.cs">
       <DependentUpon>frmDoDSummaryProperties.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserInterface\ChangeDetection\Intercomparison\frmInterComp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\ChangeDetection\Intercomparison\frmInterComp.Designer.cs">
+      <DependentUpon>frmInterComp.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserInterface\ChangeDetection\ucChangeBars.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -411,6 +417,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\ChangeDetection\frmDoDSummaryProperties.resx">
       <DependentUpon>frmDoDSummaryProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\ChangeDetection\Intercomparison\frmInterComp.resx">
+      <DependentUpon>frmInterComp.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\ChangeDetection\ucChangeBars.resx">
       <DependentUpon>ucChangeBars.cs</DependentUpon>
