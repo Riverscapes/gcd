@@ -95,7 +95,7 @@ namespace GCDCore.Project
             if (SpatialCoherence != null)
             {
                 XmlNode nodSpatCo = nodDod.AppendChild(xmlDoc.CreateElement("SpatialCoherence"));
-                nodSpatCo.AppendChild(xmlDoc.CreateElement("WindowSize")).InnerText = SpatialCoherence.KernelRadius.ToString();
+                nodSpatCo.AppendChild(xmlDoc.CreateElement("WindowSize")).InnerText = SpatialCoherence.BufferSize.ToString();
                 nodSpatCo.AppendChild(xmlDoc.CreateElement("InflectionA")).InnerText = SpatialCoherence.InflectionA.ToString();
                 nodSpatCo.AppendChild(xmlDoc.CreateElement("InflectionB")).InnerText = SpatialCoherence.InflectionB.ToString();
             }

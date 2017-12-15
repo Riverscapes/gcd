@@ -17,8 +17,8 @@ namespace GCDConsoleLib.Internal.Operators
         private static int condRaster = 1;
 
         // Some parameters we store
-        private int _infA; // min
-        private int _infB; // Max
+        private int _XMin;
+        private int _XMax;
 
         /// <summary>
         /// Pass-through constructor for Creating Prior Probability Rasters
@@ -29,18 +29,17 @@ namespace GCDConsoleLib.Internal.Operators
         public PosteriorProbability(Raster rawDoD, Raster rPriorProb,
             Raster rSpatialCoErosionRaster, Raster rSpatialCoDepositionRaster,
             Raster sPosteriorRaster, Raster sConditionalRaster, 
-            int inflectionA,
-            int inflectionB) :
+            int xMin,
+            int xMax) :
             base(new List<Raster> { rawDoD, rPriorProb, rSpatialCoErosionRaster, rSpatialCoDepositionRaster }, new List<Raster>() { sPosteriorRaster, sConditionalRaster })
         {
-            _infA = inflectionA;
-            _infB = inflectionB;
+            _XMin = xMin;
+            _XMax = xMax;
         }
-
 
         protected override void CellOp(List<double[]> data, List<double[]> outputs, int id)
         {
-            double pAgEjDenom = _infB - _infA;
+            double pAgEjDenom = _XMax - _XMin;
             double pA, pAgEj, pEj, nbrCnt;
 
             // Just for safety set it nodata to begin with
@@ -53,12 +52,12 @@ namespace GCDConsoleLib.Internal.Operators
                 if ((data[rawDod][id] > 0) && (data[spCoDep][id] != inNodataVals[spCoDep]))
                 {
                     nbrCnt = data[spCoDep][id];
-                    if (nbrCnt <= _infA)
+                    if (nbrCnt <= _XMin)
                     {
                         outputs[condRaster][id] = 0;
                         outputs[postRaster][id] = 0;
                     }
-                    else if (nbrCnt >= _infB)
+                    else if (nbrCnt >= _XMax)
                     {
                         outputs[condRaster][id] = 1;
                         outputs[postRaster][id] = 1;
@@ -67,7 +66,7 @@ namespace GCDConsoleLib.Internal.Operators
                     {
                         pEj = data[priorProb][id];
                         // Rise over run
-                        pAgEj = (nbrCnt - _infA) / pAgEjDenom;
+                        pAgEj = (nbrCnt - _XMin) / pAgEjDenom;
                         outputs[condRaster][id] = pAgEj;
                         // Just a linear slope
                         pA = pAgEj * pEj + (1 - pAgEj) * (1 - pEj);
@@ -78,12 +77,12 @@ namespace GCDConsoleLib.Internal.Operators
                 else if ((data[rawDod][id] < 0) && (data[spCoEro][id] != inNodataVals[spCoEro]))
                 {
                     nbrCnt = data[spCoEro][id];
-                    if (nbrCnt <= _infA)
+                    if (nbrCnt <= _XMin)
                     {
                         outputs[condRaster][id] = 0;
                         outputs[postRaster][id] = 0;
                     }
-                    else if (nbrCnt >= _infB)
+                    else if (nbrCnt >= _XMax)
                     {
                         outputs[condRaster][id] = -1;
                         outputs[postRaster][id] = -1;
@@ -92,7 +91,7 @@ namespace GCDConsoleLib.Internal.Operators
                     {
                         pEj = -data[priorProb][id];
                         // Rise over run
-                        pAgEj = (nbrCnt - _infA) / pAgEjDenom;
+                        pAgEj = (nbrCnt - _XMin) / pAgEjDenom;
                         outputs[condRaster][id] = -pAgEj;
                         // Just a linear slope
                         pA = pAgEj * pEj + (1 - pAgEj) * (1 - pEj);
@@ -106,6 +105,5 @@ namespace GCDConsoleLib.Internal.Operators
                 }
             }
         }
-
     }
 }

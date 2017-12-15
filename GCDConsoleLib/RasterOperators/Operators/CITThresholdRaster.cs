@@ -38,7 +38,7 @@ namespace GCDConsoleLib.Internal.Operators
             if ((data[rawDod][id] != inNodataVals[rawDod] || !_inputRasters[rawDod].HasNodata) &&
                 (data[propErr][id] != inNodataVals[propErr] || !_inputRasters[propErr].HasNodata) &&
                 // AND this math is greater than the cutoff
-                (Math.Abs(data[rawDod][id]) / data[propErr][id] >= zCutoff))
+                (Math.Abs(data[rawDod][id] / data[propErr][id]) >= zCutoff))
 
                 outputs[0][id] = data[rawDod][id];
             else

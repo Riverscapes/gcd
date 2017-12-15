@@ -660,15 +660,15 @@ namespace GCDConsoleLib
             Raster sSpatialCoDepositionRaster,
             FileInfo sPosteriorRaster,
             FileInfo sConditionalRaster,
-            int inflectionA,
-            int inflectionB,
+            int xMin,
+            int xMax,
             EventHandler<int> progressHandler = null)
         {
             PosteriorProbability thePostProb = new PosteriorProbability(rawDoD, priorProb,
                 sSpatialCoErosionRaster, sSpatialCoDepositionRaster,
                 new Raster(rawDoD, sPosteriorRaster),
                 new Raster(rawDoD, sConditionalRaster),
-                inflectionA, inflectionB);
+                xMin, xMax);
 
             if (progressHandler != null)
                 thePostProb.ProgressEvent += progressHandler;

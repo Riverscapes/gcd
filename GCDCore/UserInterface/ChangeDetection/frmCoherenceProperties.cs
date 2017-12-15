@@ -20,11 +20,11 @@ namespace GCDCore.UserInterface.ChangeDetection
         private void frmCoherenceProperties_Load(System.Object sender, System.EventArgs e)
         {
             // The filter sizes display as the diameter of the kernel but store the radius
-            foreach (long i in new List<long> { 3, 5, 7, 9, 11, 13, 15 })
+            foreach (long kernelSize in new List<long> { 3, 5, 7, 9, 11, 13, 15 })
             {
-                long kernelRadius = (i - 1) / 2;
-                int index = cboFilterSize.Items.Add(new naru.db.NamedObject(kernelRadius, string.Format("{0} x {0}", i)));
-                if (kernelRadius == CoherenceProps.KernelRadius)
+                long bufferSize = (kernelSize - 1) / 2;
+                int index = cboFilterSize.Items.Add(new naru.db.NamedObject(bufferSize, string.Format("{0} x {0}", kernelSize)));
+                if (bufferSize == CoherenceProps.BufferSize)
                 {
                     cboFilterSize.SelectedIndex = index;
                 }
@@ -43,7 +43,7 @@ namespace GCDCore.UserInterface.ChangeDetection
                 return;
             }
 
-            CoherenceProps.KernelRadius = Convert.ToInt32(((naru.db.NamedObject)cboFilterSize.SelectedItem).ID);
+            CoherenceProps.BufferSize = Convert.ToInt32(((naru.db.NamedObject)cboFilterSize.SelectedItem).ID);
             CoherenceProps.InflectionA = Convert.ToInt32(numLess.Value);
             CoherenceProps.InflectionB = Convert.ToInt32(numGreater.Value);
         }
