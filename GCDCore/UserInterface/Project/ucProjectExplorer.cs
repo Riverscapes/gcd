@@ -1664,5 +1664,21 @@ namespace GCDCore.UserInterface.Project
                 naru.error.ExceptionUI.HandleException(ex);
             }
         }
+
+        private void addDEMSurveyIntercomparisonToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                ChangeDetection.Intercomparison.frmInterComp frm = new ChangeDetection.Intercomparison.frmInterComp();
+                if (frm.ShowDialog() == DialogResult.OK)
+                {
+                    LoadTree();
+                }
+            }
+            catch (Exception ex)
+            {
+                naru.error.ExceptionUI.HandleException(ex);
+            }
+        }
     }
 }

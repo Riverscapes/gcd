@@ -159,6 +159,8 @@
     <Compile Include="UserInterface\ChangeDetection\frmDoDSummaryProperties.Designer.cs">
       <DependentUpon>frmDoDSummaryProperties.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserInterface\ChangeDetection\Intercomparison\DEMSurveyItem.cs" />
+    <Compile Include="UserInterface\ChangeDetection\Intercomparison\Epoch.cs" />
     <Compile Include="UserInterface\ChangeDetection\Intercomparison\frmInterComp.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -331,6 +333,8 @@
     <Content Include="Deploy\SurveyTypes.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\down.png" />
+    <None Include="Resources\up.png" />
     <None Include="Resources\USUlogo.bmp" />
     <None Include="Resources\USGS.bmp" />
     <None Include="Resources\TopCat.png" />

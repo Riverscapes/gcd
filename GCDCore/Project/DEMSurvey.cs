@@ -19,6 +19,17 @@ namespace GCDCore.Project
         public FileInfo MethodMask { get; set; } // Multi-method polygon ShapeFile
         public string MethodMaskField { get; set; } // Multi-method field in ShapeFile
 
+        public ErrorSurface DefaultErrorSurface
+        {
+            get
+            {
+                if (ErrorSurfaces.Count(x => x.IsDefault) > 0)
+                    return ErrorSurfaces.First(x => x.IsDefault);
+                else
+                    return null;
+            }
+        }
+
         public DEMSurvey(string name, SurveyDateTime surveyDate, FileInfo rasterPath)
             : base(name, rasterPath)
         {

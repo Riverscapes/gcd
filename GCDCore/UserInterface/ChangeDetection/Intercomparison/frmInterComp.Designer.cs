@@ -32,20 +32,20 @@
             this.cmdOK = new System.Windows.Forms.Button();
             this.cmdHelp = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.grdDEMs = new System.Windows.Forms.DataGridView();
-            this.cmdMoveDown = new System.Windows.Forms.Button();
             this.cmdMoveUp = new System.Windows.Forms.Button();
+            this.cmdMoveDown = new System.Windows.Forms.Button();
+            this.grdDEMs = new System.Windows.Forms.DataGridView();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.grdEpochs = new System.Windows.Forms.DataGridView();
+            this.colNewDEM = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colOldDEM = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.chkPrevious = new System.Windows.Forms.CheckBox();
+            this.chkEarliest = new System.Windows.Forms.CheckBox();
+            this.chkNewest = new System.Windows.Forms.CheckBox();
             this.colActive = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.colDEMSurvey = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colErrorSurface = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ucThresholding1 = new GCDCore.UserInterface.ChangeDetection.ucThresholding();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.chkNewest = new System.Windows.Forms.CheckBox();
-            this.chkEarliest = new System.Windows.Forms.CheckBox();
-            this.chkPrevious = new System.Windows.Forms.CheckBox();
-            this.grdEpochs = new System.Windows.Forms.DataGridView();
-            this.colNewDEM = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colOldDEM = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdDEMs)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -94,7 +94,29 @@
             this.groupBox1.Size = new System.Drawing.Size(478, 169);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "DEM Surveys";
+            this.groupBox1.Text = "DEM Surveys in Chronological Order";
+            // 
+            // cmdMoveUp
+            // 
+            this.cmdMoveUp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmdMoveUp.Image = global::GCDCore.Properties.Resources.up;
+            this.cmdMoveUp.Location = new System.Drawing.Point(449, 19);
+            this.cmdMoveUp.Name = "cmdMoveUp";
+            this.cmdMoveUp.Size = new System.Drawing.Size(23, 23);
+            this.cmdMoveUp.TabIndex = 2;
+            this.cmdMoveUp.UseVisualStyleBackColor = true;
+            this.cmdMoveUp.Click += new System.EventHandler(this.cmdMoveUp_Click);
+            // 
+            // cmdMoveDown
+            // 
+            this.cmdMoveDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmdMoveDown.Image = global::GCDCore.Properties.Resources.down;
+            this.cmdMoveDown.Location = new System.Drawing.Point(449, 45);
+            this.cmdMoveDown.Name = "cmdMoveDown";
+            this.cmdMoveDown.Size = new System.Drawing.Size(23, 23);
+            this.cmdMoveDown.TabIndex = 1;
+            this.cmdMoveDown.UseVisualStyleBackColor = true;
+            this.cmdMoveDown.Click += new System.EventHandler(this.cmdMoveDown_Click);
             // 
             // grdDEMs
             // 
@@ -109,59 +131,14 @@
             this.colActive,
             this.colDEMSurvey,
             this.colErrorSurface});
-            this.grdDEMs.Location = new System.Drawing.Point(6, 48);
+            this.grdDEMs.Location = new System.Drawing.Point(6, 19);
+            this.grdDEMs.MultiSelect = false;
             this.grdDEMs.Name = "grdDEMs";
             this.grdDEMs.RowHeadersVisible = false;
-            this.grdDEMs.Size = new System.Drawing.Size(466, 115);
+            this.grdDEMs.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.grdDEMs.Size = new System.Drawing.Size(437, 144);
             this.grdDEMs.TabIndex = 0;
-            // 
-            // cmdMoveDown
-            // 
-            this.cmdMoveDown.Location = new System.Drawing.Point(449, 19);
-            this.cmdMoveDown.Name = "cmdMoveDown";
-            this.cmdMoveDown.Size = new System.Drawing.Size(23, 23);
-            this.cmdMoveDown.TabIndex = 1;
-            this.cmdMoveDown.UseVisualStyleBackColor = true;
-            // 
-            // cmdMoveUp
-            // 
-            this.cmdMoveUp.Location = new System.Drawing.Point(420, 19);
-            this.cmdMoveUp.Name = "cmdMoveUp";
-            this.cmdMoveUp.Size = new System.Drawing.Size(23, 23);
-            this.cmdMoveUp.TabIndex = 2;
-            this.cmdMoveUp.UseVisualStyleBackColor = true;
-            // 
-            // colActive
-            // 
-            this.colActive.DataPropertyName = "IsActive";
-            this.colActive.HeaderText = "";
-            this.colActive.Name = "colActive";
-            this.colActive.Width = 30;
-            // 
-            // colDEMSurvey
-            // 
-            this.colDEMSurvey.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colDEMSurvey.DataPropertyName = "DEM";
-            this.colDEMSurvey.HeaderText = "DEM Survey";
-            this.colDEMSurvey.Name = "colDEMSurvey";
-            this.colDEMSurvey.ReadOnly = true;
-            this.colDEMSurvey.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colDEMSurvey.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // colErrorSurface
-            // 
-            this.colErrorSurface.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colErrorSurface.DataPropertyName = "Error";
-            this.colErrorSurface.HeaderText = "Error Surface";
-            this.colErrorSurface.Name = "colErrorSurface";
-            this.colErrorSurface.ReadOnly = true;
-            // 
-            // ucThresholding1
-            // 
-            this.ucThresholding1.Location = new System.Drawing.Point(12, 184);
-            this.ucThresholding1.Name = "ucThresholding1";
-            this.ucThresholding1.Size = new System.Drawing.Size(478, 169);
-            this.ucThresholding1.TabIndex = 4;
+            this.grdDEMs.SelectionChanged += new System.EventHandler(this.grdDEMs_SelectionChanged);
             // 
             // groupBox2
             // 
@@ -179,42 +156,6 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "DEM Survey Epochs";
             // 
-            // chkNewest
-            // 
-            this.chkNewest.AutoSize = true;
-            this.chkNewest.Checked = true;
-            this.chkNewest.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkNewest.Location = new System.Drawing.Point(14, 20);
-            this.chkNewest.Name = "chkNewest";
-            this.chkNewest.Size = new System.Drawing.Size(191, 17);
-            this.chkNewest.TabIndex = 0;
-            this.chkNewest.Text = "Newest DEM minus all other DEMs";
-            this.chkNewest.UseVisualStyleBackColor = true;
-            // 
-            // chkEarliest
-            // 
-            this.chkEarliest.AutoSize = true;
-            this.chkEarliest.Checked = true;
-            this.chkEarliest.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkEarliest.Location = new System.Drawing.Point(14, 39);
-            this.chkEarliest.Name = "chkEarliest";
-            this.chkEarliest.Size = new System.Drawing.Size(180, 17);
-            this.chkEarliest.TabIndex = 1;
-            this.chkEarliest.Text = "All DEMs minus the earliest DEM";
-            this.chkEarliest.UseVisualStyleBackColor = true;
-            // 
-            // chkPrevious
-            // 
-            this.chkPrevious.AutoSize = true;
-            this.chkPrevious.Checked = true;
-            this.chkPrevious.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkPrevious.Location = new System.Drawing.Point(14, 60);
-            this.chkPrevious.Name = "chkPrevious";
-            this.chkPrevious.Size = new System.Drawing.Size(187, 17);
-            this.chkPrevious.TabIndex = 2;
-            this.chkPrevious.Text = "All DEMs minus the previous DEM";
-            this.chkPrevious.UseVisualStyleBackColor = true;
-            // 
             // grdEpochs
             // 
             this.grdEpochs.AllowUserToAddRows = false;
@@ -228,6 +169,7 @@
             this.colNewDEM,
             this.colOldDEM});
             this.grdEpochs.Location = new System.Drawing.Point(14, 83);
+            this.grdEpochs.MultiSelect = false;
             this.grdEpochs.Name = "grdEpochs";
             this.grdEpochs.RowHeadersVisible = false;
             this.grdEpochs.Size = new System.Drawing.Size(458, 104);
@@ -249,6 +191,74 @@
             this.colOldDEM.Name = "colOldDEM";
             this.colOldDEM.ReadOnly = true;
             // 
+            // chkPrevious
+            // 
+            this.chkPrevious.AutoSize = true;
+            this.chkPrevious.Checked = true;
+            this.chkPrevious.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkPrevious.Location = new System.Drawing.Point(14, 60);
+            this.chkPrevious.Name = "chkPrevious";
+            this.chkPrevious.Size = new System.Drawing.Size(187, 17);
+            this.chkPrevious.TabIndex = 2;
+            this.chkPrevious.Text = "All DEMs minus the previous DEM";
+            this.chkPrevious.UseVisualStyleBackColor = true;
+            // 
+            // chkEarliest
+            // 
+            this.chkEarliest.AutoSize = true;
+            this.chkEarliest.Checked = true;
+            this.chkEarliest.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkEarliest.Location = new System.Drawing.Point(14, 39);
+            this.chkEarliest.Name = "chkEarliest";
+            this.chkEarliest.Size = new System.Drawing.Size(180, 17);
+            this.chkEarliest.TabIndex = 1;
+            this.chkEarliest.Text = "All DEMs minus the earliest DEM";
+            this.chkEarliest.UseVisualStyleBackColor = true;
+            // 
+            // chkNewest
+            // 
+            this.chkNewest.AutoSize = true;
+            this.chkNewest.Checked = true;
+            this.chkNewest.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkNewest.Location = new System.Drawing.Point(14, 20);
+            this.chkNewest.Name = "chkNewest";
+            this.chkNewest.Size = new System.Drawing.Size(191, 17);
+            this.chkNewest.TabIndex = 0;
+            this.chkNewest.Text = "Newest DEM minus all other DEMs";
+            this.chkNewest.UseVisualStyleBackColor = true;
+            // 
+            // colActive
+            // 
+            this.colActive.DataPropertyName = "IsActive";
+            this.colActive.HeaderText = "";
+            this.colActive.Name = "colActive";
+            this.colActive.Width = 30;
+            // 
+            // colDEMSurvey
+            // 
+            this.colDEMSurvey.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colDEMSurvey.DataPropertyName = "DEMName";
+            this.colDEMSurvey.HeaderText = "DEM Survey";
+            this.colDEMSurvey.Name = "colDEMSurvey";
+            this.colDEMSurvey.ReadOnly = true;
+            this.colDEMSurvey.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colDEMSurvey.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // colErrorSurface
+            // 
+            this.colErrorSurface.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colErrorSurface.DataPropertyName = "ErrorName";
+            this.colErrorSurface.HeaderText = "Error Surface";
+            this.colErrorSurface.Name = "colErrorSurface";
+            this.colErrorSurface.ReadOnly = true;
+            // 
+            // ucThresholding1
+            // 
+            this.ucThresholding1.Location = new System.Drawing.Point(12, 184);
+            this.ucThresholding1.Name = "ucThresholding1";
+            this.ucThresholding1.Size = new System.Drawing.Size(478, 169);
+            this.ucThresholding1.TabIndex = 4;
+            // 
             // frmInterComp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -262,6 +272,7 @@
             this.Controls.Add(this.cmdCancel);
             this.Name = "frmInterComp";
             this.Text = "DEM Survey Intercomparison";
+            this.Load += new System.EventHandler(this.frmInterComp_Load);
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.grdDEMs)).EndInit();
             this.groupBox2.ResumeLayout(false);
@@ -280,9 +291,6 @@
         private System.Windows.Forms.Button cmdMoveUp;
         private System.Windows.Forms.Button cmdMoveDown;
         private System.Windows.Forms.DataGridView grdDEMs;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn colActive;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colDEMSurvey;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colErrorSurface;
         private ucThresholding ucThresholding1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.DataGridView grdEpochs;
@@ -291,5 +299,8 @@
         private System.Windows.Forms.CheckBox chkPrevious;
         private System.Windows.Forms.CheckBox chkEarliest;
         private System.Windows.Forms.CheckBox chkNewest;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn colActive;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDEMSurvey;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colErrorSurface;
     }
 }
