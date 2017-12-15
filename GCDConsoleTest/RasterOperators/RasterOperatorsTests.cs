@@ -214,7 +214,6 @@ namespace GCDConsoleLib.Tests
         [TestMethod()]
         public void LinearExtractorTest()
         {
-            Assert.Inconclusive();
             Raster rDetrended = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"ExtractorTest\Detrended.tif")));
             Raster rWSEDEM = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"ExtractorTest\WSEDEM.tif")));
 
@@ -223,15 +222,25 @@ namespace GCDConsoleLib.Tests
 
             using (ITempDir tmp = TempDir.Create())
             {
-                FileInfo centerlinecsv = new FileInfo(Path.Combine(tmp.Name, "centerline.csv"));
-                FileInfo xscsv = new FileInfo(Path.Combine(tmp.Name, "xs.csv"));
+                //FileInfo centerlinecsv = new FileInfo(Path.Combine(tmp.Name, "centerline.csv"));
+                //FileInfo xscsv = new FileInfo(Path.Combine(tmp.Name, "xs.csv"));
+
+                FileInfo centerlinecsv = new FileInfo(@"c:\dev\CSV\centerline.csv");
+                FileInfo xscsv = new FileInfo(@"c:\dev\CSV\xs.csv");
 
                 RasterOperators.LinearExtractor(xs, new List<Raster> { rDetrended, rWSEDEM }, xscsv);
                 RasterOperators.LinearExtractor(centerline, new List<Raster> { rDetrended, rWSEDEM }, centerlinecsv);
 
+                FileInfo centerlinecsv1m = new FileInfo(@"c:\dev\CSV\centerline1m.csv");
+                FileInfo xscsv1m = new FileInfo(@"c:\dev\CSV\xs1m.csv");
+
+                RasterOperators.LinearExtractor(xs, new List<Raster> { rDetrended, rWSEDEM }, xscsv1m, 1.0m);
+                RasterOperators.LinearExtractor(centerline, new List<Raster> { rDetrended, rWSEDEM }, centerlinecsv1m, 1.0m);
+
                 Assert.Fail();
             }
         }
+
 
         [TestMethod()]
         public void BinRasterTest()

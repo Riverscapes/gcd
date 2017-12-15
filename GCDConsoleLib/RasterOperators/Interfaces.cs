@@ -531,7 +531,7 @@ namespace GCDConsoleLib
         }
 
         /// <summary>
-        /// 
+        /// Extract every cell of the raster that intersects with all points on any line of an input vector
         /// </summary>
         /// <param name="rDEM"></param>
         /// <param name="vPointCloud"></param>
@@ -550,6 +550,24 @@ namespace GCDConsoleLib
             theExtractOp.Run();
         }
 
+        /// <summary>
+        /// Extract the values of the raster that occur under regular intervals of the input vector lines
+        /// </summary>
+        /// <param name="vLineShp"></param>
+        /// <param name="rRasters"></param>
+        /// <param name="sOutCSV"></param>
+        /// <param name="intervallength"></param>
+        /// <param name="progressHandler"></param>
+        public static void LinearExtractor(Vector vLineShp, List<Raster> rRasters, FileInfo sOutCSV, decimal intervallength, EventHandler<int> progressHandler = null)
+        {
+            LinearExtractor<double> theExtractOp = new LinearExtractor<double>(vLineShp, rRasters, sOutCSV, intervallength);
+
+            if (progressHandler != null)
+                theExtractOp.ProgressEvent += progressHandler;
+
+            //This is the magic sauce. This method doesn't use the base operator's run method at all.
+            theExtractOp.RunWithSpacing();
+        }
 
         /// <summary>
         /// Create a FIS Raster

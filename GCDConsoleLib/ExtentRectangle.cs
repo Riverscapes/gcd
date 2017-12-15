@@ -285,6 +285,13 @@ namespace GCDConsoleLib
             return new int[2] { rowId + 1, colId + 1 };
         }
 
+        public int[] Pt2RowCol(double[] pt)
+        {
+            int row = (int)Math.Floor((pt[1] - (double)Top) / (double)CellHeight);
+            int col = (int)Math.Floor((pt[0] - (double)Left) / (double)CellWidth);
+            return new int[2] { row, col };
+        }
+
         /// <summary>
         /// NOTE: THIS RETURNS CELL CENTERS
         /// </summary>
@@ -293,8 +300,8 @@ namespace GCDConsoleLib
         public decimal[] Id2XY(int id)
         {
             int[] rowcol = Id2RowCol(id);
-            decimal rowY = Top + (CellHeight * rowcol[0]) + CellHeight / 2;
-            decimal rowX = Left + (CellWidth * rowcol[1]) + CellWidth / 2;
+            decimal rowY = Top + (CellHeight * rowcol[0] - CellHeight / 2);
+            decimal rowX = Left + (CellWidth * rowcol[1] - CellWidth / 2);
             return new decimal[2] { rowX, rowY };
         }
 

@@ -161,9 +161,9 @@ namespace GCDConsoleLib
 
         public static Geometry CellToRect(int row, int col, ExtentRectangle ext)
         {
-            double l = (double)(ext.Left + (col * ext.CellWidth));
+            double l = (double)(ext.Left + ((col-1) * ext.CellWidth));
             double r = l + (double)ext.CellWidth;
-            double t = (double)(ext.Top + (row * ext.CellHeight));
+            double t = (double)(ext.Top + ((row-1) * ext.CellHeight));
             double b = t + (double)ext.CellWidth;
 
             Geometry ring = new Geometry(wkbGeometryType.wkbLinearRing);
