@@ -210,6 +210,29 @@ namespace GCDConsoleLib.Tests
             }
         }
 
+
+        [TestMethod()]
+        public void LinearExtractorTest()
+        {
+            Assert.Inconclusive();
+            Raster rDetrended = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"ExtractorTest\Detrended.tif")));
+            Raster rWSEDEM = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"ExtractorTest\WSEDEM.tif")));
+
+            Vector centerline = new Vector(new FileInfo(TestHelpers.GetTestRootPath(@"ExtractorTest\BCenterline.shp")));
+            Vector xs = new Vector(new FileInfo(TestHelpers.GetTestRootPath(@"ExtractorTest\BCrossSections.shp")));
+
+            using (ITempDir tmp = TempDir.Create())
+            {
+                FileInfo centerlinecsv = new FileInfo(Path.Combine(tmp.Name, "centerline.csv"));
+                FileInfo xscsv = new FileInfo(Path.Combine(tmp.Name, "xs.csv"));
+
+                RasterOperators.LinearExtractor(xs, new List<Raster> { rDetrended, rWSEDEM }, xscsv);
+                RasterOperators.LinearExtractor(centerline, new List<Raster> { rDetrended, rWSEDEM }, centerlinecsv);
+
+                Assert.Fail();
+            }
+        }
+
         [TestMethod()]
         public void BinRasterTest()
         {

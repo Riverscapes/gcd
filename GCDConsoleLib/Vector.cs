@@ -2,6 +2,7 @@
 using System.IO;
 using System.Collections.Generic;
 using OSGeo.OGR;
+using System.Linq;
 
 namespace GCDConsoleLib
 {
@@ -127,10 +128,10 @@ namespace GCDConsoleLib
         /// Is a point inside a feature?
         /// </summary>
         /// <returns>returns a double array [x,y]</returns>
-        public List<Geometry> PointsInExtent(ExtentRectangle ext)
+        public List<VectorFeature> FeaturesIntersectExtent(ExtentRectangle ext)
         {
             Open();
-            List<Geometry> retVal = new List<Geometry>();
+            List<VectorFeature> retVal = new List<VectorFeature>();
             Layer mLayer = _ds.GetLayerByIndex(0);
 
             Geometry ring = new Geometry(wkbGeometryType.wkbLinearRing);
@@ -145,13 +146,37 @@ namespace GCDConsoleLib
 
             foreach (KeyValuePair<long, VectorFeature> kvp in Features)
             {
-                Geometry pt = kvp.Value.Feat.GetGeometryRef();
-                if (pt != null && extrect.Contains(pt))
-                    retVal.Add(pt);
+                Geometry feat = kvp.Value.Feat.GetGeometryRef();
+                if (feat != null && extrect.Intersects(feat))
+                    retVal.Add(kvp.Value);
             }
             return retVal;
         }
 
+        public List<Geometry> GeometriesIntersectExtent(ExtentRectangle ext)
+        {
+            List<VectorFeature> feats = FeaturesIntersectExtent(ext);
+            return feats.Select(x => x.Feat.GetGeometryRef()).ToList();
+        }
+
+        public static Geometry CellToRect(int row, int col, ExtentRectangle ext)
+        {
+            double l = (double)(ext.Left + (col * ext.CellWidth));
+            double r = l + (double)ext.CellWidth;
+            double t = (double)(ext.Top + (row * ext.CellHeight));
+            double b = t + (double)ext.CellWidth;
+
+            Geometry ring = new Geometry(wkbGeometryType.wkbLinearRing);
+            ring.AddPoint(l, t, 0);
+            ring.AddPoint(r, t, 0);
+            ring.AddPoint(r, b, 0);
+            ring.AddPoint(l, b, 0);
+            ring.AddPoint(l, t, 0);
+
+            Geometry extrect = new Geometry(wkbGeometryType.wkbPolygon);
+            extrect.AddGeometry(ring);
+            return extrect;
+        }
 
         /// <summary>
         /// Deletion

@@ -530,6 +530,25 @@ namespace GCDConsoleLib
             return theSlopeOp.RunWithOutput();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="rDEM"></param>
+        /// <param name="vPointCloud"></param>
+        /// <param name="sOutputRaster"></param>
+        /// <param name="eKernel"></param>
+        /// <param name="fSize"></param>
+        /// <param name="progressHandler"></param>
+        /// <returns></returns>
+        public static void LinearExtractor(Vector vLineShp, List<Raster> rRasters, FileInfo sOutCSV, EventHandler<int> progressHandler = null)
+        {
+            LinearExtractor<double> theExtractOp = new LinearExtractor<double>(vLineShp, rRasters, sOutCSV);
+
+            if (progressHandler != null)
+                theExtractOp.ProgressEvent += progressHandler;
+
+            theExtractOp.Run();
+        }
 
 
         /// <summary>

@@ -111,6 +111,7 @@
     <Compile Include="RasterOperators\Operators\CreateErrorRaster.cs" />
     <Compile Include="RasterOperators\Operators\FISRasterOp.cs" />
     <Compile Include="RasterOperators\Operators\GCDNeighbourCount.cs" />
+    <Compile Include="RasterOperators\Operators\LinearExtractor.cs" />
     <Compile Include="RasterOperators\Operators\PostProbability.cs" />
     <Compile Include="RasterOperators\Operators\PriorProbRaster.cs" />
     <Compile Include="RasterOperators\Operators\PointDensity.cs" />

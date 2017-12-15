@@ -138,7 +138,7 @@ namespace GCDConsoleLib.Internal.Operators
         {
             // Get all the points in this chunk
             VectorChunkExtent = ChunkExtent.Buffer(_fsizedec);
-            List<Geometry>[,] bins = BinPoints(_vinput.PointsInExtent(VectorChunkExtent));
+            List<Geometry>[,] bins = BinPoints(_vinput.GeometriesIntersectExtent(VectorChunkExtent));
 
             for (int cid = 0; cid < outBuffers[0].Length; cid++)
             {
