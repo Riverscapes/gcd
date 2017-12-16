@@ -1665,11 +1665,11 @@ namespace GCDCore.UserInterface.Project
             }
         }
 
-        private void addDEMSurveyIntercomparisonToolStripMenuItem_Click(object sender, EventArgs e)
+        private void addMultiEpochToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
             {
-                ChangeDetection.Intercomparison.frmInterComp frm = new ChangeDetection.Intercomparison.frmInterComp();
+                ChangeDetection.MultiEpoch.frmMultiEpoch frm = new ChangeDetection.MultiEpoch.frmMultiEpoch();
                 if (frm.ShowDialog() == DialogResult.OK)
                 {
                     LoadTree();

@@ -78,7 +78,7 @@ namespace GCDCore.UserInterface.Project
             this.cmsChangeDetectionGroup = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.AddChangeDetectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addBatchChangeDetectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.addDEMSurveyIntercomparisonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addMultiEpochToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AddAllChangeDetectionAnalysesToTheMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsChangeDetection = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.ViewChangeDetectionResultsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -417,10 +417,10 @@ namespace GCDCore.UserInterface.Project
             this.cmsChangeDetectionGroup.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.AddChangeDetectionToolStripMenuItem,
             this.addBatchChangeDetectionToolStripMenuItem,
-            this.addDEMSurveyIntercomparisonToolStripMenuItem,
+            this.addMultiEpochToolStripMenuItem,
             this.AddAllChangeDetectionAnalysesToTheMapToolStripMenuItem});
             this.cmsChangeDetectionGroup.Name = "cmsChangeDetectionGroup";
-            this.cmsChangeDetectionGroup.Size = new System.Drawing.Size(322, 92);
+            this.cmsChangeDetectionGroup.Size = new System.Drawing.Size(322, 114);
             // 
             // AddChangeDetectionToolStripMenuItem
             // 
@@ -437,13 +437,13 @@ namespace GCDCore.UserInterface.Project
             this.addBatchChangeDetectionToolStripMenuItem.Text = "Add Batch Change Detection";
             this.addBatchChangeDetectionToolStripMenuItem.Click += new System.EventHandler(this.addBatchChangeDetectionToolStripMenuItem_Click);
             // 
-            // addDEMSurveyIntercomparisonToolStripMenuItem
+            // addMultiEpochToolStripMenuItem
             // 
-            this.addDEMSurveyIntercomparisonToolStripMenuItem.Image = global::GCDCore.Properties.Resources.Add;
-            this.addDEMSurveyIntercomparisonToolStripMenuItem.Name = "addDEMSurveyIntercomparisonToolStripMenuItem";
-            this.addDEMSurveyIntercomparisonToolStripMenuItem.Size = new System.Drawing.Size(321, 22);
-            this.addDEMSurveyIntercomparisonToolStripMenuItem.Text = "Add DEM Survey Intercomparison";
-            this.addDEMSurveyIntercomparisonToolStripMenuItem.Click += new System.EventHandler(this.addDEMSurveyIntercomparisonToolStripMenuItem_Click);
+            this.addMultiEpochToolStripMenuItem.Image = global::GCDCore.Properties.Resources.Add;
+            this.addMultiEpochToolStripMenuItem.Name = "addMultiEpochToolStripMenuItem";
+            this.addMultiEpochToolStripMenuItem.Size = new System.Drawing.Size(321, 22);
+            this.addMultiEpochToolStripMenuItem.Text = "Add Multi Epoch Change Detection";
+            this.addMultiEpochToolStripMenuItem.Click += new System.EventHandler(this.addMultiEpochToolStripMenuItem_Click);
             // 
             // AddAllChangeDetectionAnalysesToTheMapToolStripMenuItem
             // 
@@ -822,6 +822,6 @@ namespace GCDCore.UserInterface.Project
         internal System.Windows.Forms.TreeView treProject;
         private System.Windows.Forms.ToolStripMenuItem addBatchChangeDetectionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addBatchChangeDetectionWithTheseDEMSurveysToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem addDEMSurveyIntercomparisonToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addMultiEpochToolStripMenuItem;
     }
 }

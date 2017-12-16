@@ -159,13 +159,13 @@
     <Compile Include="UserInterface\ChangeDetection\frmDoDSummaryProperties.Designer.cs">
       <DependentUpon>frmDoDSummaryProperties.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserInterface\ChangeDetection\Intercomparison\DEMSurveyItem.cs" />
-    <Compile Include="UserInterface\ChangeDetection\Intercomparison\Epoch.cs" />
-    <Compile Include="UserInterface\ChangeDetection\Intercomparison\frmInterComp.cs">
+    <Compile Include="UserInterface\ChangeDetection\MultiEpoch\DEMSurveyItem.cs" />
+    <Compile Include="UserInterface\ChangeDetection\MultiEpoch\Epoch.cs" />
+    <Compile Include="UserInterface\ChangeDetection\MultiEpoch\frmMultiEpoch.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UserInterface\ChangeDetection\Intercomparison\frmInterComp.Designer.cs">
-      <DependentUpon>frmInterComp.cs</DependentUpon>
+    <Compile Include="UserInterface\ChangeDetection\MultiEpoch\frmMultiEpoch.Designer.cs">
+      <DependentUpon>frmMultiEpoch.cs</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\ChangeDetection\ucChangeBars.cs">
       <SubType>UserControl</SubType>
@@ -422,8 +422,8 @@
     <EmbeddedResource Include="UserInterface\ChangeDetection\frmDoDSummaryProperties.resx">
       <DependentUpon>frmDoDSummaryProperties.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserInterface\ChangeDetection\Intercomparison\frmInterComp.resx">
-      <DependentUpon>frmInterComp.cs</DependentUpon>
+    <EmbeddedResource Include="UserInterface\ChangeDetection\MultiEpoch\frmMultiEpoch.resx">
+      <DependentUpon>frmMultiEpoch.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\ChangeDetection\ucChangeBars.resx">
       <DependentUpon>ucChangeBars.cs</DependentUpon>

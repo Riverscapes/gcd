@@ -33,13 +33,13 @@
             this.cmdOK = new System.Windows.Forms.Button();
             this.cmdHelp = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.cmdAdd = new System.Windows.Forms.Button();
+            this.cmdAdd = new naru.ui.MenuButton();
             this.cmdDelete = new System.Windows.Forms.Button();
             this.grdMethods = new System.Windows.Forms.DataGridView();
             this.colMethod = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colThresholding = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ucDEMs = new GCDCore.UserInterface.ChangeDetection.ucDoDDEMSelection();
             this.bgWorker = new System.ComponentModel.BackgroundWorker();
+            this.ucDEMs = new GCDCore.UserInterface.ChangeDetection.ucDoDDEMSelection();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdMethods)).BeginInit();
             this.SuspendLayout();
@@ -95,12 +95,12 @@
             // 
             this.cmdAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cmdAdd.Image = global::GCDCore.Properties.Resources.Add;
-            this.cmdAdd.Location = new System.Drawing.Point(541, 12);
+            this.cmdAdd.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.cmdAdd.Location = new System.Drawing.Point(522, 12);
             this.cmdAdd.Name = "cmdAdd";
-            this.cmdAdd.Size = new System.Drawing.Size(23, 23);
+            this.cmdAdd.Size = new System.Drawing.Size(42, 23);
             this.cmdAdd.TabIndex = 3;
             this.cmdAdd.UseVisualStyleBackColor = true;
-            this.cmdAdd.Click += new System.EventHandler(this.cmdAdd_Click);
             // 
             // cmdDelete
             // 
@@ -148,6 +148,14 @@
             this.colThresholding.Name = "colThresholding";
             this.colThresholding.ReadOnly = true;
             // 
+            // bgWorker
+            // 
+            this.bgWorker.WorkerReportsProgress = true;
+            this.bgWorker.WorkerSupportsCancellation = true;
+            this.bgWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgWorker_DoWork);
+            this.bgWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.bgWorker_ProgressChanged);
+            this.bgWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgWorker_RunWorkerCompleted);
+            // 
             // ucDEMs
             // 
             this.ucDEMs.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -158,14 +166,6 @@
             this.ucDEMs.OldDEM = null;
             this.ucDEMs.Size = new System.Drawing.Size(597, 89);
             this.ucDEMs.TabIndex = 3;
-            // 
-            // bgWorker
-            // 
-            this.bgWorker.WorkerReportsProgress = true;
-            this.bgWorker.WorkerSupportsCancellation = true;
-            this.bgWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgWorker_DoWork);
-            this.bgWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.bgWorker_ProgressChanged);
-            this.bgWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgWorker_RunWorkerCompleted);
             // 
             // frmBatchDoD
             // 
@@ -196,7 +196,7 @@
         private ucDoDDEMSelection ucDEMs;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.DataGridView grdMethods;
-        private System.Windows.Forms.Button cmdAdd;
+        private naru.ui.MenuButton cmdAdd;
         private System.Windows.Forms.Button cmdDelete;
         private System.Windows.Forms.DataGridViewTextBoxColumn colMethod;
         private System.Windows.Forms.DataGridViewTextBoxColumn colThresholding;

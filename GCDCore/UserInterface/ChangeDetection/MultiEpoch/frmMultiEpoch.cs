@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using GCDCore.Project;
 
-namespace GCDCore.UserInterface.ChangeDetection.Intercomparison
+namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
 {
-    public partial class frmInterComp : Form
+    public partial class frmMultiEpoch : Form
     {
         public readonly BindingList<DEMSurveyItem> DEMs;
         public readonly BindingList<Epoch> Epochs;
 
-        public frmInterComp()
+        public frmMultiEpoch()
         {
             InitializeComponent();
 
@@ -30,6 +30,8 @@ namespace GCDCore.UserInterface.ChangeDetection.Intercomparison
 
         private void frmInterComp_Load(object sender, EventArgs e)
         {
+            grdEpochs.AutoGenerateColumns = false;
+
             // Bind the two grids to the corresponding lists
             grdDEMs.DataSource = DEMs;
             grdEpochs.DataSource = Epochs;

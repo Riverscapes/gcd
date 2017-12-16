@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using GCDCore.Project;
 
-namespace GCDCore.UserInterface.ChangeDetection.Intercomparison
+namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
 {
     public class DEMSurveyItem
     {

@@ -14,6 +14,15 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
 {
     public partial class frmBatchDoD : Form
     {
+        public enum ThresholdTypes
+        {
+            MinLoDSingle,
+            MinLoDMulti,
+            Propagated,
+            ProbSingle,
+            ProbMulti
+        }
+
         public readonly naru.ui.SortableBindingList<ThresholdProps> Thresholds;
         private GCDCore.Engines.DoD.ChangeDetetctionBatch BatchEngine;
 
@@ -30,14 +39,58 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
             grdMethods.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             grdMethods.SelectionChanged += UpdateControls;
             grdMethods.DataSource = Thresholds;
+
+            ContextMenuStrip cms = new ContextMenuStrip();
+
+            ToolStripItem tsi = new ToolStripMenuItem("Single Minimum Level of Detection", null, cmdAdd_Click);
+            tsi.Tag = ThresholdTypes.MinLoDSingle;
+            cms.Items.Add(tsi);
+
+            ToolStripItem tsi2 = new ToolStripMenuItem("Multiple Minimum Level of Detections", null, cmdAdd_Click);
+            tsi2.Tag = ThresholdTypes.MinLoDMulti;
+            cms.Items.Add(tsi2);
+
+            ToolStripItem tsi3 = new ToolStripMenuItem("Propagated Error", null, cmdAdd_Click);
+            tsi3.Tag = ThresholdTypes.Propagated;
+            cms.Items.Add(tsi3);
+
+            ToolStripItem tsi4 = new ToolStripMenuItem("Single Probabilistic", null, cmdAdd_Click);
+            tsi4.Tag = ThresholdTypes.MinLoDMulti;
+            cms.Items.Add(tsi4);
+
+            ToolStripItem tsi5 = new ToolStripMenuItem("Multiple Probabilistic", null, cmdAdd_Click);
+            tsi4.Tag = ThresholdTypes.ProbMulti;
+            cms.Items.Add(tsi5);
+
+            // Prescribed is distinguished by not having a tag
+            ToolStripItem tsi6 = new ToolStripMenuItem("Prescribed Probabilistic Thresholds", null, cmdAdd_Click);
+            cms.Items.Add(tsi6);
+
+            cmdAdd.Menu = cms;
         }
 
         private void cmdAdd_Click(object sender, EventArgs e)
         {
-            // If the user clicks OK the child form will
-            // append the appropriate ThresholdProps to the binding list
-            frmBatchDoDProperties frm = new frmBatchDoDProperties(Thresholds);
-            frm.ShowDialog();
+            ToolStripMenuItem tsmi = (ToolStripMenuItem)sender;
+            if (tsmi.Tag is ThresholdTypes)
+            {
+                if (((ThresholdTypes)tsmi.Tag) == ThresholdTypes.Propagated)
+                {
+                    // Simply add a new propagated
+                    Thresholds.Add(new ThresholdProps());
+                }
+                else
+                {
+                    // If the user clicks OK the child form will
+                    // append the appropriate ThresholdProps to the binding list
+                    frmBatchDoDProperties frm = new frmBatchDoDProperties(Thresholds, (ThresholdTypes)tsmi.Tag);
+                    frm.ShowDialog();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Prescribed thresholding not implemented");
+            }
         }
 
         private void cmdDelete_Click(object sender, EventArgs e)
@@ -76,7 +129,7 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
                 Cursor.Current = Cursors.Default;
             }
         }
-      
+
         private bool ValidateForm()
         {
             if (!ucDEMs.ValidateForm())

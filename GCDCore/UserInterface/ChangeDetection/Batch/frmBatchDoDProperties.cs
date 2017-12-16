@@ -13,14 +13,67 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
 {
     public partial class frmBatchDoDProperties : Form
     {
+        public readonly frmBatchDoD.ThresholdTypes ThresholdType;
         naru.ui.SortableBindingList<ThresholdProps> Thresholds;
         GCDCore.Project.CoherenceProperties CoherenceProps;
 
-        public frmBatchDoDProperties(naru.ui.SortableBindingList<ThresholdProps> thresholds)
+        public frmBatchDoDProperties(naru.ui.SortableBindingList<ThresholdProps> thresholds, frmBatchDoD.ThresholdTypes eType)
         {
             InitializeComponent();
             Thresholds = thresholds;
-            rdoSimpleMinLoD.Checked = true;
+            ThresholdType = eType;
+        }
+
+        private void frmBatchDoDProperties_Load(object sender, EventArgs e)
+        {
+            if (ThresholdType == frmBatchDoD.ThresholdTypes.MinLoDSingle ||
+                ThresholdType == frmBatchDoD.ThresholdTypes.ProbSingle)
+            {
+                lblMax.Visible = false;
+                valMax.Visible = false;
+                lblInterval.Visible = false;
+                valInterval.Visible = false;
+                chkBayesian.Visible = false;
+                cmdBayesian.Visible = false;
+                Height -= cmdOK.Top - valMax.Top;
+            }
+
+            string vertUnits = UnitsNet.Length.GetAbbreviation(GCDCore.Project.ProjectManager.Project.Units.VertUnit);
+
+            switch (ThresholdType)
+            {
+                case frmBatchDoD.ThresholdTypes.MinLoDSingle:
+                    lblMin.Text = string.Format("Minimum level of detection ({0})", vertUnits);
+                    break;
+
+                case frmBatchDoD.ThresholdTypes.MinLoDMulti:
+                    lblMin.Text = string.Format("Minimum MinLoD threshold ({0})", vertUnits);
+                    lblMin.Text = string.Format("Maximum MinLoD threshold ({0})", vertUnits);
+                    lblMin.Text = string.Format("Interval ({0})", vertUnits);
+                    break;
+
+                case frmBatchDoD.ThresholdTypes.ProbSingle:
+                    lblMin.Text = "Confidence level (0-1)";
+                    break;
+
+                case frmBatchDoD.ThresholdTypes.ProbMulti:
+                    lblMin.Text = "Minimum confidence level (0-1)";
+                    lblMin.Text = "Maximum confidence level (0-1)";
+                    lblMin.Text = "Interval 0-1)";
+                    break;
+
+                default:
+                    MessageBox.Show("Not Implemented");
+                    break;
+            }
+
+            //foreach( Control ctl in Controls)
+            //{
+            //    if (ctrl is Label)
+            //    {
+            //        ((Label)ctl).te.content
+            //    }
+            //}
         }
 
         private void cmdOK_Click(object sender, EventArgs e)
@@ -31,50 +84,48 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
                 return;
             }
 
-            if (rdoSimpleMinLoD.Checked)
+            switch (ThresholdType)
             {
-                Thresholds.Add(new ThresholdProps(valSingleMinLoD.Value));
-            }
-            else if (rdoMultipleMinLoD.Checked)
-            {
-                for (decimal minlod = valMMinLoDMin.Value; minlod <= valMMinLoDMax.Value; minlod += valMMinLoDInterval.Value)
-                    Thresholds.Add(new ThresholdProps(minlod));
-            }
-            else if (rdoPropagated.Checked)
-                Thresholds.Add(new ThresholdProps());
-            else if (rdoSingleProbabilistic.Checked)
-            {
-                Thresholds.Add(new ThresholdProps(valSProb.Value, CoherenceProps));
-            }
-            else if (rdoMultipleProbabilistic.Checked)
-            {
-                for (decimal conf = valMProbMin.Value; conf <= valMProbMax.Value; conf += valMProbInterval.Value)
-                    Thresholds.Add(new ThresholdProps(conf, CoherenceProps));
-            }
-            else if (rdoPrescribed.Checked)
-            {
-                MessageBox.Show("Not Implemented");
+                case frmBatchDoD.ThresholdTypes.MinLoDSingle:
+                    Thresholds.Add(new ThresholdProps(valMin.Value));
+                    break;
+
+                case frmBatchDoD.ThresholdTypes.MinLoDMulti:
+                    for (decimal minlod = valMin.Value; minlod <= valMax.Value; minlod += valInterval.Value)
+                        Thresholds.Add(new ThresholdProps(minlod));
+                    break;
+
+                case frmBatchDoD.ThresholdTypes.ProbSingle:
+                    Thresholds.Add(new ThresholdProps(valMin.Value, CoherenceProps));
+                    break;
+
+                case frmBatchDoD.ThresholdTypes.ProbMulti:
+                    for (decimal conf = valMin.Value; conf <= valMax.Value; conf += valInterval.Value)
+                        Thresholds.Add(new ThresholdProps(conf, CoherenceProps));
+                    break;
+
+                default:
+                    MessageBox.Show("Not Implemented");
+                    break;
             }
         }
 
         private bool ValidateForm()
         {
-            if (rdoMultipleMinLoD.Checked)
+            if (ThresholdType == frmBatchDoD.ThresholdTypes.MinLoDMulti ||
+                ThresholdType == frmBatchDoD.ThresholdTypes.ProbMulti)
             {
-                if (valMMinLoDMin.Value >= valMMinLoDMax.Value)
+                if (valMin.Value >= valMax.Value)
                 {
-                    MessageBox.Show("The minimum threshold must be less than the maximum threshold.", "Invalid Thresholds", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    valMMinLoDMin.Select();
-                    return false;
-                }
-            }
-
-            if (rdoMultipleProbabilistic.Checked)
-            {
-                if (valMProbMin.Value >= valMProbMax.Value)
-                {
-                    MessageBox.Show("The minimum confidence level must be less than the maximum confidence level.", "Invalid Confidence Levels", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    valMProbMin.Select();
+                    if (ThresholdType == frmBatchDoD.ThresholdTypes.MinLoDMulti)
+                    {
+                        MessageBox.Show("The minimum threshold must be less than the maximum threshold.", "Invalid Thresholds", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("The minimum confidence level must be less than the maximum confidence level.", "Invalid Confidence Levels", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    valMin.Select();
                     return false;
                 }
             }
@@ -82,51 +133,10 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
             return true;
         }
 
-        private void frmBatchDoDProperties_Load(object sender, EventArgs e)
-        {
-            ConfigureProbNumericUpDown(valSProb);
-            ConfigureProbNumericUpDown(valMProbMin);
-            ConfigureProbNumericUpDown(valMProbMax);
-            ConfigureProbNumericUpDown(valMProbInterval);
-
-            rdoSimpleMinLoD.Checked = true;
-        }
-
         private void ConfigureProbNumericUpDown(NumericUpDown ctrl)
         {
             ctrl.Minimum = 0;
             ctrl.Maximum = 1;
-        }
-
-        private void UpdateControls(object sender, EventArgs e)
-        {
-            lblSingleMinLoD.Enabled = rdoSimpleMinLoD.Checked;
-            valSingleMinLoD.Enabled = rdoSimpleMinLoD.Checked;
-
-            lblMMinLoDMin.Enabled = rdoMultipleMinLoD.Checked;
-            lblMMinLoDMax.Enabled = rdoMultipleMinLoD.Checked;
-            lblMMinLoDInterval.Enabled = rdoMultipleMinLoD.Checked;
-            valMMinLoDMin.Enabled = rdoMultipleMinLoD.Checked;
-            valMMinLoDMax.Enabled = rdoMultipleMinLoD.Checked;
-            valMMinLoDInterval.Enabled = rdoMultipleMinLoD.Checked;
-
-            lblSProb.Enabled = rdoSingleProbabilistic.Checked;
-            valSProb.Enabled = rdoSingleProbabilistic.Checked;
-            chkSProb.Enabled = rdoSingleProbabilistic.Checked;
-            cmdSProb.Enabled = rdoSingleProbabilistic.Checked;
-
-            lblMProbMin.Enabled = rdoMultipleProbabilistic.Checked;
-            lblMProbMax.Enabled = rdoMultipleProbabilistic.Checked;
-            lblMProbInterval.Enabled = rdoMultipleProbabilistic.Checked;
-            valMProbMin.Enabled = rdoMultipleProbabilistic.Checked;
-            valMProbMax.Enabled = rdoMultipleProbabilistic.Checked;
-            valMProbInterval.Enabled = rdoMultipleProbabilistic.Checked;
-            chkMProb.Enabled = rdoMultipleProbabilistic.Checked;
-            cmdMProb.Enabled = rdoMultipleProbabilistic.Checked;
-
-            lblPProb.Enabled = rdoPrescribed.Checked;
-            chkPProb.Enabled = rdoPrescribed.Checked;
-            cmdPProb.Enabled = rdoPrescribed.Checked;
         }
 
         private void valSingleMinLoD_Enter(object sender, EventArgs e)
