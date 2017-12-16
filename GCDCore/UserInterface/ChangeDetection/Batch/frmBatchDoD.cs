@@ -55,11 +55,11 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
             cms.Items.Add(tsi3);
 
             ToolStripItem tsi4 = new ToolStripMenuItem("Single Probabilistic", null, cmdAdd_Click);
-            tsi4.Tag = ThresholdTypes.MinLoDMulti;
+            tsi4.Tag = ThresholdTypes.ProbSingle;
             cms.Items.Add(tsi4);
 
             ToolStripItem tsi5 = new ToolStripMenuItem("Multiple Probabilistic", null, cmdAdd_Click);
-            tsi4.Tag = ThresholdTypes.ProbMulti;
+            tsi5.Tag = ThresholdTypes.ProbMulti;
             cms.Items.Add(tsi5);
 
             // Prescribed is distinguished by not having a tag
@@ -83,7 +83,7 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
                 {
                     // If the user clicks OK the child form will
                     // append the appropriate ThresholdProps to the binding list
-                    frmBatchDoDProperties frm = new frmBatchDoDProperties(Thresholds, (ThresholdTypes)tsmi.Tag);
+                    frmBatchDoDProperties frm = new frmBatchDoDProperties(Thresholds,tsmi.Text, (ThresholdTypes)tsmi.Tag);
                     frm.ShowDialog();
                 }
             }

@@ -17,11 +17,12 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
         naru.ui.SortableBindingList<ThresholdProps> Thresholds;
         GCDCore.Project.CoherenceProperties CoherenceProps;
 
-        public frmBatchDoDProperties(naru.ui.SortableBindingList<ThresholdProps> thresholds, frmBatchDoD.ThresholdTypes eType)
+        public frmBatchDoDProperties(naru.ui.SortableBindingList<ThresholdProps> thresholds,string sType, frmBatchDoD.ThresholdTypes eType)
         {
             InitializeComponent();
             Thresholds = thresholds;
             ThresholdType = eType;
+            Text = string.Format("Add {0} To Batch", sType);
         }
 
         private void frmBatchDoDProperties_Load(object sender, EventArgs e)
@@ -50,10 +51,19 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
                     lblMin.Text = string.Format("Minimum MinLoD threshold ({0})", vertUnits);
                     lblMin.Text = string.Format("Maximum MinLoD threshold ({0})", vertUnits);
                     lblMin.Text = string.Format("Interval ({0})", vertUnits);
+
+                    valMin.Maximum = 1;
+                    valMax.Maximum = 1;
+                    valInterval.Maximum = 1;
+
+                    chkBayesian.Visible = false;
+                    cmdBayesian.Visible = false;
+                    Height -= cmdOK.Top - chkBayesian.Top;
                     break;
 
                 case frmBatchDoD.ThresholdTypes.ProbSingle:
                     lblMin.Text = "Confidence level (0-1)";
+                    valMin.Maximum = 1;
                     break;
 
                 case frmBatchDoD.ThresholdTypes.ProbMulti:
@@ -66,14 +76,6 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
                     MessageBox.Show("Not Implemented");
                     break;
             }
-
-            //foreach( Control ctl in Controls)
-            //{
-            //    if (ctrl is Label)
-            //    {
-            //        ((Label)ctl).te.content
-            //    }
-            //}
         }
 
         private void cmdOK_Click(object sender, EventArgs e)

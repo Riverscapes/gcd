@@ -47,8 +47,9 @@
             // 
             // valMin
             // 
+            this.valMin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.valMin.DecimalPlaces = 2;
-            this.valMin.Location = new System.Drawing.Point(187, 12);
+            this.valMin.Location = new System.Drawing.Point(272, 12);
             this.valMin.Name = "valMin";
             this.valMin.Size = new System.Drawing.Size(68, 20);
             this.valMin.TabIndex = 5;
@@ -56,7 +57,8 @@
             // 
             // lblMin
             // 
-            this.lblMin.Location = new System.Drawing.Point(12, 12);
+            this.lblMin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblMin.Location = new System.Drawing.Point(97, 12);
             this.lblMin.Name = "lblMin";
             this.lblMin.Size = new System.Drawing.Size(170, 20);
             this.lblMin.TabIndex = 4;
@@ -65,8 +67,9 @@
             // 
             // valMax
             // 
+            this.valMax.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.valMax.DecimalPlaces = 2;
-            this.valMax.Location = new System.Drawing.Point(187, 38);
+            this.valMax.Location = new System.Drawing.Point(272, 38);
             this.valMax.Name = "valMax";
             this.valMax.Size = new System.Drawing.Size(68, 20);
             this.valMax.TabIndex = 7;
@@ -74,7 +77,8 @@
             // 
             // lblMax
             // 
-            this.lblMax.Location = new System.Drawing.Point(12, 38);
+            this.lblMax.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblMax.Location = new System.Drawing.Point(97, 38);
             this.lblMax.Name = "lblMax";
             this.lblMax.Size = new System.Drawing.Size(170, 20);
             this.lblMax.TabIndex = 6;
@@ -83,8 +87,9 @@
             // 
             // valInterval
             // 
+            this.valInterval.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.valInterval.DecimalPlaces = 2;
-            this.valInterval.Location = new System.Drawing.Point(187, 64);
+            this.valInterval.Location = new System.Drawing.Point(272, 64);
             this.valInterval.Name = "valInterval";
             this.valInterval.Size = new System.Drawing.Size(68, 20);
             this.valInterval.TabIndex = 9;
@@ -92,7 +97,8 @@
             // 
             // lblInterval
             // 
-            this.lblInterval.Location = new System.Drawing.Point(12, 64);
+            this.lblInterval.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblInterval.Location = new System.Drawing.Point(97, 64);
             this.lblInterval.Name = "lblInterval";
             this.lblInterval.Size = new System.Drawing.Size(170, 20);
             this.lblInterval.TabIndex = 8;
@@ -103,7 +109,7 @@
             // 
             this.cmdCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cmdCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cmdCancel.Location = new System.Drawing.Point(182, 128);
+            this.cmdCancel.Location = new System.Drawing.Point(266, 128);
             this.cmdCancel.Name = "cmdCancel";
             this.cmdCancel.Size = new System.Drawing.Size(75, 23);
             this.cmdCancel.TabIndex = 30;
@@ -114,7 +120,7 @@
             // 
             this.cmdOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cmdOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.cmdOK.Location = new System.Drawing.Point(85, 128);
+            this.cmdOK.Location = new System.Drawing.Point(169, 128);
             this.cmdOK.Name = "cmdOK";
             this.cmdOK.Size = new System.Drawing.Size(91, 23);
             this.cmdOK.TabIndex = 29;
@@ -133,8 +139,9 @@
             // 
             // chkBayesian
             // 
+            this.chkBayesian.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.chkBayesian.AutoSize = true;
-            this.chkBayesian.Location = new System.Drawing.Point(91, 94);
+            this.chkBayesian.Location = new System.Drawing.Point(176, 94);
             this.chkBayesian.Name = "chkBayesian";
             this.chkBayesian.Size = new System.Drawing.Size(135, 17);
             this.chkBayesian.TabIndex = 27;
@@ -144,8 +151,9 @@
             // 
             // cmdBayesian
             // 
+            this.cmdBayesian.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cmdBayesian.Image = global::GCDCore.Properties.Resources.Settings;
-            this.cmdBayesian.Location = new System.Drawing.Point(232, 91);
+            this.cmdBayesian.Location = new System.Drawing.Point(317, 91);
             this.cmdBayesian.Name = "cmdBayesian";
             this.cmdBayesian.Size = new System.Drawing.Size(23, 23);
             this.cmdBayesian.TabIndex = 28;
@@ -158,7 +166,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cmdCancel;
-            this.ClientSize = new System.Drawing.Size(269, 163);
+            this.ClientSize = new System.Drawing.Size(353, 163);
             this.Controls.Add(this.cmdHelp);
             this.Controls.Add(this.cmdOK);
             this.Controls.Add(this.cmdCancel);

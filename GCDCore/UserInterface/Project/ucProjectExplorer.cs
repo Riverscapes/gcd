@@ -1649,23 +1649,7 @@ namespace GCDCore.UserInterface.Project
             InitializeComponent();
         }
 
-        private void addBatchChangeDetectionToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                ChangeDetection.Batch.frmBatchDoD frm = new ChangeDetection.Batch.frmBatchDoD();
-                if (frm.ShowDialog() == DialogResult.OK)
-                {
-                    LoadTree();
-                }
-            }
-            catch(Exception ex)
-            {
-                naru.error.ExceptionUI.HandleException(ex);
-            }
-        }
-
-        private void addMultiEpochToolStripMenuItem_Click(object sender, EventArgs e)
+        private void multiEpochChangeDetectionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
             {
@@ -1679,6 +1663,24 @@ namespace GCDCore.UserInterface.Project
             {
                 naru.error.ExceptionUI.HandleException(ex);
             }
+
+        }
+
+        private void multiUncertaintyAnalysisChangeDetectionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                ChangeDetection.Batch.frmBatchDoD frm = new ChangeDetection.Batch.frmBatchDoD();
+                if (frm.ShowDialog() == DialogResult.OK)
+                {
+                    LoadTree();
+                }
+            }
+            catch (Exception ex)
+            {
+                naru.error.ExceptionUI.HandleException(ex);
+            }
+
         }
     }
 }

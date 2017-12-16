@@ -180,7 +180,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(300, 300);
             this.Name = "frmBatchDoD";
-            this.Text = "Batch Change Detection";
+            this.Text = "Batch Change Detection - Multiple Uncertainty Analysis";
             this.Load += new System.EventHandler(this.frmBatchDoD_Load);
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.grdMethods)).EndInit();
