@@ -17,7 +17,7 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
         naru.ui.SortableBindingList<ThresholdProps> Thresholds;
         GCDCore.Project.CoherenceProperties CoherenceProps;
 
-        public frmBatchDoDProperties(naru.ui.SortableBindingList<ThresholdProps> thresholds,string sType, frmBatchDoD.ThresholdTypes eType)
+        public frmBatchDoDProperties(naru.ui.SortableBindingList<ThresholdProps> thresholds, string sType, frmBatchDoD.ThresholdTypes eType)
         {
             InitializeComponent();
             Thresholds = thresholds;
@@ -27,6 +27,15 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
 
         private void frmBatchDoDProperties_Load(object sender, EventArgs e)
         {
+
+            if (ThresholdType == frmBatchDoD.ThresholdTypes.MinLoDSingle ||
+                ThresholdType == frmBatchDoD.ThresholdTypes.MinLoDMulti)
+            {
+                chkBayesian.Visible = false;
+                cmdBayesian.Visible = false;
+                Height -= cmdOK.Top - chkBayesian.Top;
+            }
+
             if (ThresholdType == frmBatchDoD.ThresholdTypes.MinLoDSingle ||
                 ThresholdType == frmBatchDoD.ThresholdTypes.ProbSingle)
             {
@@ -34,9 +43,11 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
                 valMax.Visible = false;
                 lblInterval.Visible = false;
                 valInterval.Visible = false;
-                chkBayesian.Visible = false;
-                cmdBayesian.Visible = false;
-                Height -= cmdOK.Top - valMax.Top;
+
+                Height -= chkBayesian.Top - valMax.Top;
+
+                chkBayesian.Top = valMax.Top;
+                cmdBayesian.Top = valMax.Top;
             }
 
             string vertUnits = UnitsNet.Length.GetAbbreviation(GCDCore.Project.ProjectManager.Project.Units.VertUnit);
@@ -49,8 +60,8 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
 
                 case frmBatchDoD.ThresholdTypes.MinLoDMulti:
                     lblMin.Text = string.Format("Minimum MinLoD threshold ({0})", vertUnits);
-                    lblMin.Text = string.Format("Maximum MinLoD threshold ({0})", vertUnits);
-                    lblMin.Text = string.Format("Interval ({0})", vertUnits);
+                    lblMax.Text = string.Format("Maximum MinLoD threshold ({0})", vertUnits);
+                    lblInterval.Text = string.Format("Interval ({0})", vertUnits);
 
                     valMin.Maximum = 1;
                     valMax.Maximum = 1;
@@ -68,8 +79,8 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
 
                 case frmBatchDoD.ThresholdTypes.ProbMulti:
                     lblMin.Text = "Minimum confidence level (0-1)";
-                    lblMin.Text = "Maximum confidence level (0-1)";
-                    lblMin.Text = "Interval 0-1)";
+                    lblMax.Text = "Maximum confidence level (0-1)";
+                    lblInterval.Text = "Interval (0-1)";
                     break;
 
                 default:

@@ -8,6 +8,7 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
 {
     public class Epoch
     {
+        bool IsActive { get; set; }
         public DEMSurvey NewDEM;
         public DEMSurvey OldDEM;
 
@@ -18,6 +19,7 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
         {
             NewDEM = newDEM;
             OldDEM = oldDEM;
+            IsActive = true;
         }
     }
 }

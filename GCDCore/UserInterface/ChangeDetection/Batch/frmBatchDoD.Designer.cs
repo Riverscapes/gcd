@@ -62,7 +62,7 @@
             this.cmdOK.Name = "cmdOK";
             this.cmdOK.Size = new System.Drawing.Size(75, 23);
             this.cmdOK.TabIndex = 1;
-            this.cmdOK.Text = "Calculate";
+            this.cmdOK.Text = "Run Batch";
             this.cmdOK.UseVisualStyleBackColor = true;
             this.cmdOK.Click += new System.EventHandler(this.cmdOK_Click);
             // 
@@ -89,7 +89,7 @@
             this.groupBox1.Size = new System.Drawing.Size(597, 185);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Uncertainty Analysis Methods";
+            this.groupBox1.Text = "Uncertainty Analysis Method Queue";
             // 
             // cmdAdd
             // 
