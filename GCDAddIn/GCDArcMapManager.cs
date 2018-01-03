@@ -6,12 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GCDCore.Project;
+using GCDConsoleLib;
 
 namespace GCDAddIn
 {
     public class GCDArcMapManager
     {
-        private readonly double DefaultTransparency;
+        private readonly short DefaultTransparency;
         private readonly IMapDocument MapDocument;
 
         // These constants are the names for the group layers that should be greated
@@ -21,7 +22,7 @@ namespace GCDAddIn
         private const string ErrorSurfacesGroupLayer = "Error Surfaces";
         private const string AnalysesGroupLayer = "Analyses";
 
-        public GCDArcMapManager(double fDefaultDEMTransparency = 40, IMapDocument pMapDocument = null)
+        public GCDArcMapManager(short fDefaultDEMTransparency = 40, IMapDocument pMapDocument = null)
         {
             DefaultTransparency = fDefaultDEMTransparency;
 
@@ -90,18 +91,19 @@ namespace GCDAddIn
         /// <remarks>Note: Add the hillshade first so that it appear UNDER the DEM in the TOC</remarks>
         public IRasterLayer AddDEM(DEMSurvey dem)
         {
-            double fDEMTransparency = -1;
+            short fDEMTransparency = (short)-1;
             IGroupLayer pSurveyLyr = AddSurveyGroupLayer(dem);
 
             IRasterLayer pHSLayer = null;
             FileInfo hillshade = ProjectManager.OutputManager.DEMSurveyHillShadeRasterPath(dem.Name);
             if (hillshade.Exists)
             {
-                pHSLayer = ArcMapUtilities.AddToMapRaster(hillshade, dem.Name + " HillShade", pSurveyLyr);
+                Raster gHillshade = new Raster(hillshade);
+                pHSLayer = AddRasterLayer(gHillshade, null, dem.Name + " Hillshade", pSurveyLyr);
                 fDEMTransparency = DefaultTransparency;
             }
 
-            IRasterLayer pDEMLyr = ArcMapUtilities.AddToMapRaster(dem.Raster.GISFileInfo, dem.Name, pSurveyLyr, fDEMTransparency);
+            IRasterLayer pDEMLyr = AddRasterLayer(dem.Raster, null, dem.Name, pSurveyLyr, dem.Name, fDEMTransparency);
 
             // Collapse the Hillshade legend in the TOC
             if (pHSLayer is IRasterLayer)
@@ -123,77 +125,200 @@ namespace GCDAddIn
             IGroupLayer pAssocGrpLyr = AddAssociatedSurfaceGroupLayer(assocRow.DEM);
             IRasterLayer pAssocLyr = null;
 
-            double dTransparency = GCDCore.Properties.Settings.Default.TransparencyAssociatedLayers ? GCDCore.Properties.Settings.Default.AutoTransparencyValue : -1;
+            short dTransparency = GCDCore.Properties.Settings.Default.TransparencyAssociatedLayers ? GCDCore.Properties.Settings.Default.AutoTransparencyValue : (short)-1;
 
+            IRasterRenderer rasterRenderer;
             switch (assocRow.AssocSurfaceType)
             {
                 case AssocSurface.AssociatedSurfaceTypes.InterpolationError:
 
                     if (!GCDCore.Properties.Settings.Default.ApplyComparativeSymbology)
                     {
-                        IRasterRenderer rasterRenderer = RasterSymbolization.CreateClassifyRenderer(assocRow.Raster, 11, "Slope");
-                        pAssocLyr = ArcMapUtilities.AddRasterLayer(assocRow.Raster, rasterRenderer, assocRow.Name, pAssocGrpLyr, assocRow.LayerHeader, dTransparency);
+                        rasterRenderer = RasterSymbolization.CreateClassifyRenderer(assocRow.Raster, 11, "Slope");
+                        return AddRasterLayer(assocRow.Raster, rasterRenderer, assocRow.Name, pAssocGrpLyr, assocRow.LayerHeader, dTransparency);
                     }
-
                     break;
 
                 case AssocSurface.AssociatedSurfaceTypes.PointQuality3D:
 
                     if (!GCDCore.Properties.Settings.Default.ApplyComparativeSymbology)
                     {
-                        IRasterRenderer rasterRenderer = GCD.RasterSymbolization.CreateClassifyRenderer(gAssociatedRaster, 11, "Precipitation", true);
-                        pAssocLyr = AddRasterLayer(m_pArcMap.Document, gAssociatedRaster, rasterRenderer, assocRow.Name, pAssocGrpLyr, sHeader, dTransparency);
+                        rasterRenderer = RasterSymbolization.CreateClassifyRenderer(assocRow.Raster, 11, "Precipitation", true);
+                        return AddRasterLayer(assocRow.Raster, rasterRenderer, assocRow.Name, pAssocGrpLyr, assocRow.LayerHeader, dTransparency);
                     }
                     break;
 
                 case AssocSurface.AssociatedSurfaceTypes.PointDensity:
 
+                    assocRow.Raster.ComputeStatistics();
+                    decimal rasterMax = assocRow.Raster.GetStatistics()["Maximum"];
+
                     if (!GCDCore.Properties.Settings.Default.ApplyComparativeSymbology)
                     {
-                        if (gAssociatedRaster.Maximum <= 2 & gAssociatedRaster.Maximum > 0.25)
+                        if (rasterMax <= 2 & rasterMax > 0.25m)
                         {
-                            IRasterRenderer rasterRenderer = GCD.RasterSymbolization.CreateClassifyRenderer(gAssociatedRaster, 11, "Green to Blue", 1.1, true);
-                            pAssocLyr = AddRasterLayer(m_pArcMap.Document, gAssociatedRaster, rasterRenderer, assocRow.Name, pAssocGrpLyr, sHeader, dTransparency);
+                            rasterRenderer = RasterSymbolization.CreateClassifyRenderer(assocRow.Raster, 11, "Green to Blue", 1.1, true);
+                            return AddRasterLayer(assocRow.Raster, rasterRenderer, assocRow.Name, pAssocGrpLyr, assocRow.LayerHeader, dTransparency);
                         }
                         else
                         {
-                            IRasterRenderer rasterRenderer = GCD.RasterSymbolization.CreateClassifyRenderer(gAssociatedRaster, 11, "Green to Blue", true);
-                            pAssocLyr = AddRasterLayer(m_pArcMap.Document, gAssociatedRaster, rasterRenderer, assocRow.Name, pAssocGrpLyr, sHeader, dTransparency);
+                            rasterRenderer = RasterSymbolization.CreateClassifyRenderer(assocRow.Raster, 11, "Green to Blue", true);
+                            return AddRasterLayer(assocRow.Raster, rasterRenderer, assocRow.Name, pAssocGrpLyr, assocRow.LayerHeader, dTransparency);
                         }
                     }
                     break;
 
                 case AssocSurface.AssociatedSurfaceTypes.GrainSizeStatic:
 
-                    NumberFormatting.LinearUnits eUnits = NumberFormatting.GetLinearUnitsFromString(GCDCore.Project.ProjectManager.Project.Units.VertUnit.ToString());
-                    IRasterRenderer rasterRenderer = RasterSymbolization.CreateGrainSizeStatisticColorRamp(gAssociatedRaster, eUnits);
-                    ILayer pAssocLyr = AddRasterLayer(m_pArcMap.Document, gAssociatedRaster, rasterRenderer, assocRow.Name, pAssocGrpLyr, sHeader, dTransparency);
-                    return pAssocLyr;
+                    rasterRenderer = RasterSymbolization.CreateGrainSizeStatisticColorRamp(assocRow.Raster, ProjectManager.Project.Units.VertUnit);
+                    return AddRasterLayer(assocRow.Raster, rasterRenderer, assocRow.Name, pAssocGrpLyr, assocRow.LayerHeader, dTransparency);
 
                 case AssocSurface.AssociatedSurfaceTypes.Roughness:
 
-                    IRasterRenderer rasterRenderer = GCD.RasterSymbolization.CreateRoughnessColorRamp(gAssociatedRaster);
-                    ILayer pAssocLyr = AddRasterLayer(m_pArcMap.Document, gAssociatedRaster, rasterRenderer, assocRow.Name, pAssocGrpLyr, sHeader, dTransparency);
-                    return pAssocLyr;
+                    rasterRenderer = RasterSymbolization.CreateRoughnessColorRamp(assocRow.Raster);
+                    return AddRasterLayer(assocRow.Raster, rasterRenderer, assocRow.Name, pAssocGrpLyr, assocRow.LayerHeader, dTransparency);
 
                 case AssocSurface.AssociatedSurfaceTypes.SlopeDegree:
 
-                    IRasterRenderer rasterRenderer = GCD.RasterSymbolization.CreateSlopeDegreesColorRamp(gAssociatedRaster);
-                    ILayer pAssocLyr = AddRasterLayer(m_pArcMap.Document, gAssociatedRaster, rasterRenderer, assocRow.Name, pAssocGrpLyr, sHeader, dTransparency);
-                    return pAssocLyr;
+                    rasterRenderer = RasterSymbolization.CreateSlopeDegreesColorRamp(assocRow.Raster);
+                    return AddRasterLayer(assocRow.Raster, rasterRenderer, assocRow.Name, pAssocGrpLyr, assocRow.LayerHeader, dTransparency);
 
                 case AssocSurface.AssociatedSurfaceTypes.SlopePercent:
 
-                    IRasterRenderer rasterRenderer = GCD.RasterSymbolization.CreateSlopePrecentRiseColorRamp(gAssociatedRaster);
-                    ILayer pAssocLyr = AddRasterLayer(m_pArcMap.Document, gAssociatedRaster, rasterRenderer, assocRow.Name, pAssocGrpLyr, sHeader, dTransparency);
-                    return pAssocLyr;
+                    rasterRenderer = RasterSymbolization.CreateSlopePrecentRiseColorRamp(assocRow.Raster);
+                    return AddRasterLayer(assocRow.Raster, rasterRenderer, assocRow.Name, pAssocGrpLyr, assocRow.LayerHeader, dTransparency);
 
                 default:
-
-                    string sSymbology = GISDataStructures.RasterGCD.GetSymbologyLayerFile(eType);
-                    IRasterLayer pAssocLyr = AddToMapRaster(sRasterPath, assocRow.Name, pAssocGrpLyr, sSymbology, dTransparency, sHeader);
-                    return pAssocLyr;
+                    return AddRasterLayer(assocRow.Raster, null, assocRow.Name, pAssocGrpLyr, assocRow.LayerHeader, dTransparency);
             }
+
+            return null;
+        }
+
+        public IRasterLayer AddDoD(DoDBase dod, bool bThresholded = true)
+        {
+            Raster gDoDRaster;
+            string sLayerName = dod.Name;
+
+            if (bThresholded)
+            {
+                gDoDRaster = dod.ThrDoD;
+                sLayerName += " (Thresholded)";
+            }
+            else
+            {
+                gDoDRaster = dod.RawDoD;
+                sLayerName += " (Raw)";
+            }
+
+            IGroupLayer pAnalGrpLayer = AddAnalysesGroupLayer();
+            short dTransparency = -1;
+            if (GCDCore.Properties.Settings.Default.TransparencyAnalysesLayers)
+            {
+                dTransparency = GCDCore.Properties.Settings.Default.AutoTransparencyValue;
+            }
+
+            IRasterRenderer rasterRenderer = RasterSymbolization.CreateDoDClassifyRenderer(gDoDRaster, 20);
+            string sHeader = string.Format("Elevation Difference ({0})", UnitsNet.Length.GetAbbreviation(ProjectManager.Project.Units.VertUnit));
+            return AddRasterLayer(gDoDRaster, rasterRenderer, sLayerName, pAnalGrpLayer, sHeader, dTransparency);
+        }
+
+        private IGroupLayer AddAnalysesGroupLayer()
+        {
+            IGroupLayer pProjLyr = AddProjectGroupLayer();
+            IGroupLayer pAnalGrpLyr = ArcMapUtilities.GetGroupLayer(AnalysesGroupLayer, pProjLyr);
+            return pAnalGrpLyr;
+        }
+
+        public IRasterLayer AddErrSurface(ErrorSurface errRow)
+        {
+            IGroupLayer pErrGrpLyr = AddErrorSurfacesGroupLayer(errRow.DEM);
+            string sHeader = string.Format("Error ({0})", UnitsNet.Length.GetAbbreviation(ProjectManager.Project.Units.VertUnit));
+
+            short dTransparency = -1;
+            if (GCDCore.Properties.Settings.Default.TransparencyErrorLayers)
+            {
+                dTransparency = GCDCore.Properties.Settings.Default.AutoTransparencyValue;
+            }
+
+            errRow.Raster.ComputeStatistics();
+            Dictionary<string, decimal> stats = errRow.Raster.GetStatistics();
+            double rMin = (double)stats["Minimum"];
+            double rMax = (double)stats["Maximum"];
+
+            if (rMin == rMax)
+            {
+                IRasterRenderer rasterRenderer = RasterSymbolization.CreateESRIDefinedContinuousRenderer(errRow.Raster, 1, "Partial Spectrum");
+                return AddRasterLayer(errRow.Raster, rasterRenderer, errRow.Name, pErrGrpLyr, sHeader, dTransparency);
+            }
+            else if (rMax <= 1 & rMax > 0.25)
+            {
+                IRasterRenderer rasterRenderer = RasterSymbolization.CreateClassifyRenderer(errRow.Raster, 11, "Partial Spectrum", 1.1);
+                return AddRasterLayer(errRow.Raster, rasterRenderer, errRow.Name, pErrGrpLyr, sHeader, dTransparency);
+            }
+            else
+            {
+                IRasterRenderer rasterRenderer = RasterSymbolization.CreateClassifyRenderer(errRow.Raster, 11, "Partial Spectrum");
+                return AddRasterLayer(errRow.Raster, rasterRenderer, errRow.Name, pErrGrpLyr, sHeader, dTransparency);
+            }
+        }
+
+        private IGroupLayer AddErrorSurfacesGroupLayer(DEMSurvey dem)
+        {
+            IGroupLayer pSurveyGrpLyr = AddSurveyGroupLayer(dem);
+            IGroupLayer pErrGrpLyr = ArcMapUtilities.GetGroupLayer(ErrorSurfacesGroupLayer, pSurveyGrpLyr);
+            return pErrGrpLyr;
+        }
+
+        private static IRasterLayer AddRasterLayer(Raster gRaster, IRasterRenderer rasterRenderer, string sRasterName, IGroupLayer pGrpLyr, string sHeader = null, short fTransparency = -1)
+        {
+            if (pGrpLyr != null)
+            {
+                IRasterLayer pResultLayer = ArcMapUtilities.IsRasterLayerInGroupLayer(gRaster.GISFileInfo, pGrpLyr);
+                if (pResultLayer is ILayer)
+                {
+                    return pResultLayer;
+                }
+            }
+
+            IRasterLayer rasterLayer = new RasterLayer();
+            rasterLayer.CreateFromDataset(ArcMapUtilities.GetRasterDataset(gRaster));
+            if (rasterRenderer != null)
+            {
+                rasterLayer.Renderer = rasterRenderer;
+            }
+
+            if (rasterLayer != null)
+            {
+                IMapLayers pMapLayers = (IMapLayers)ArcMap.Document.FocusMap.Layers;
+                if (!string.IsNullOrEmpty(sRasterName))
+                {
+                    rasterLayer.Name = sRasterName;
+                }
+
+                if (!string.IsNullOrEmpty(sHeader))
+                {
+                    ESRI.ArcGIS.Carto.ILegendInfo pLegend = (ESRI.ArcGIS.Carto.ILegendInfo)rasterLayer;
+                    pLegend.LegendGroup[0].Heading = sHeader;
+                }
+
+                if (fTransparency >= 0)
+                {
+                    ILayerEffects pLayerEffects = (ILayerEffects)rasterLayer;
+                    pLayerEffects.Transparency = fTransparency;
+                }
+
+                if (pGrpLyr == null)
+                {
+                    pMapLayers.InsertLayer(rasterLayer, false, 0);
+                }
+                else
+                {
+                    pMapLayers.InsertLayerInGroup(pGrpLyr, rasterLayer, false, 0);
+                }
+            }
+
+            return rasterLayer;
         }
     }
 }

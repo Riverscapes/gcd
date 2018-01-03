@@ -56,7 +56,7 @@
     <Setting Name="TransparencyErrorLayers" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="AutoTransparencyValue" Type="System.Int32" Scope="User">
+    <Setting Name="AutoTransparencyValue" Type="System.Int16" Scope="User">
       <Value Profile="(Default)">40</Value>
     </Setting>
     <Setting Name="DefaultRasterFormat" Type="System.String" Scope="User">

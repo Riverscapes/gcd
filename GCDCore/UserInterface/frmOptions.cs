@@ -172,7 +172,7 @@ namespace GCDCore.UserInterface.Options
             GCDCore.Properties.Settings.Default.TransparencyAssociatedLayers = chkAssociatedSurfacesTransparency.Checked;
             GCDCore.Properties.Settings.Default.TransparencyAnalysesLayers = chkAnalysesTransparency.Checked;
             GCDCore.Properties.Settings.Default.TransparencyErrorLayers = chkErrorSurfacesTransparency.Checked;
-            GCDCore.Properties.Settings.Default.AutoTransparencyValue = (int)nudTransparency.Value;
+            GCDCore.Properties.Settings.Default.AutoTransparencyValue = (short)nudTransparency.Value;
 
             GCDCore.Properties.Settings.Default.DefaultRasterFormat = cboFormat.Text;
 

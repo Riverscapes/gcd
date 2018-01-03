@@ -449,7 +449,7 @@ namespace GCDAddIn
 
                 ArcMap.Document.FocusMap.DeleteLayer(pLayer);
                 ArcMap.Document.UpdateContents();
-                ArcMap.Document.ActiveView.Refresh();                
+                ArcMap.Document.ActiveView.Refresh();
             }
         }
 
@@ -572,5 +572,27 @@ namespace GCDAddIn
         //        pL = pEnum.Next();
         //    }
         //}
+
+
+        public static IRasterLayer IsRasterLayerInGroupLayer(System.IO.FileSystemInfo rasterPath, IGroupLayer pGrpLyr)
+        {
+            ICompositeLayer compositeLayer = pGrpLyr as ICompositeLayer;
+            if (compositeLayer != null & compositeLayer.Count > 0)
+            {
+                for (int i = 0; i <= compositeLayer.Count - 1; i++)
+                {
+                    if (compositeLayer.Layer[i] is IRasterLayer)
+                    {
+                        IRasterLayer pLayer = (IRasterLayer)compositeLayer.Layer[i];
+                        if (string.Compare(pLayer.FilePath, rasterPath.FullName, true) == 0)
+                        {
+                            return pLayer;
+                        }
+                    }
+                }
+            }
+
+            return null;
+        }
     }
 }
