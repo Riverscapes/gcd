@@ -9,6 +9,9 @@ namespace GCDCore.UserInterface.UtilityForms
         public event BrowseVectorEventHandler BrowseVector;
         public delegate void BrowseVectorEventHandler(TextBox txtPath, naru.ui.PathEventArgs e);
 
+        public event SelectVectorEventHandler SelectVector;
+        public delegate void SelectVectorEventHandler(TextBox txtPath, naru.ui.PathEventArgs e, GCDConsoleLib.GDalGeometryType.SimpleTypes geometryType);
+
         private GCDConsoleLib.GDalGeometryType.SimpleTypes m_GeometryType;
         private string m_sNoun;
         public string Noun { get { return m_sNoun; } }
@@ -37,6 +40,7 @@ namespace GCDCore.UserInterface.UtilityForms
         public ucVectorInput()
         {
             BrowseFile += cmdBrowse_Click;
+            SelectLayer += cmdSelect_Click;
         }
 
         /// <summary>
@@ -67,6 +71,24 @@ namespace GCDCore.UserInterface.UtilityForms
                     naru.ui.Textbox.BrowseOpenVector(txtPath, naru.ui.UIHelpers.WrapMessageWithNoun("Browse and Select a", Noun, "ShapeFile"));
                 }
 
+            }
+            catch (Exception ex)
+            {
+                naru.error.ExceptionUI.HandleException(ex, "Error browsing to raster");
+            }
+        }
+
+        public void cmdSelect_Click(object sender, naru.ui.PathEventArgs e)
+        {
+            try
+            {
+                if (ProjectManager.IsArcMap)
+                {
+                    if (SelectVector != null)
+                    {
+                        SelectVector((TextBox)sender, e, m_GeometryType);
+                    }
+                }
             }
             catch (Exception ex)
             {

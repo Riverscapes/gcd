@@ -297,6 +297,10 @@ namespace GCDCore.UserInterface.SurveyLibrary
             MessageBox.Show("The slope raster will be generated after you click OK.", GCDCore.Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
+
+        public event BrowseVectorEventHandler BrowseVector;
+        public delegate void BrowseVectorEventHandler(TextBox txtPath, naru.ui.PathEventArgs e);
+
         private void btnDensity_Click(System.Object sender, System.EventArgs e)
         {
             frmPointDensity frm = new frmPointDensity(ProjectManager.Project.Units.VertUnit, PointDensityShape, PointDensitySize);

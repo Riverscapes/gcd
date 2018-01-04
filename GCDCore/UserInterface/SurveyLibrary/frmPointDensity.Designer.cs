@@ -52,12 +52,12 @@ namespace GCDCore.UserInterface.SurveyLibrary
             // 
             // lblDistance
             // 
-            this.lblDistance.AutoSize = true;
-            this.lblDistance.Location = new System.Drawing.Point(39, 56);
+            this.lblDistance.Location = new System.Drawing.Point(6, 54);
             this.lblDistance.Name = "lblDistance";
-            this.lblDistance.Size = new System.Drawing.Size(49, 13);
+            this.lblDistance.Size = new System.Drawing.Size(82, 16);
             this.lblDistance.TabIndex = 2;
             this.lblDistance.Text = "Distance";
+            this.lblDistance.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // valSampleDistance
             // 
@@ -119,7 +119,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.GroupBox1.Size = new System.Drawing.Size(455, 90);
             this.GroupBox1.TabIndex = 2;
             this.GroupBox1.TabStop = false;
-            this.GroupBox1.Text = "Neighborhood:";
+            this.GroupBox1.Text = "Neighborhood";
             // 
             // Label3
             // 
@@ -138,6 +138,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.cboNeighbourhood.Name = "cboNeighbourhood";
             this.cboNeighbourhood.Size = new System.Drawing.Size(327, 21);
             this.cboNeighbourhood.TabIndex = 1;
+            this.cboNeighbourhood.SelectedIndexChanged += new System.EventHandler(this.cboNeighbourhood_SelectedIndexChanged);
             // 
             // ucPointCloud
             // 
@@ -184,7 +185,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
 		internal System.Windows.Forms.GroupBox GroupBox1;
 		internal System.Windows.Forms.Label Label3;
 		internal System.Windows.Forms.ComboBox cboNeighbourhood;
-		internal GCDCore.UserInterface.UtilityForms.ucVectorInput ucPointCloud;
-	}
+        public UtilityForms.ucVectorInput ucPointCloud;
+    }
 
 }

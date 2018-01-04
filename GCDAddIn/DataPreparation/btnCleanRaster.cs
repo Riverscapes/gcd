@@ -48,7 +48,7 @@ namespace GCDAddIn.DataPreparation
         {
             try
             {
-                frmLayerSelector frm = new frmLayerSelector( ArcMapBrowse.BrowseGISTypes.Raster);
+                frmLayerSelector frm = new frmLayerSelector(ArcMapBrowse.BrowseGISTypes.Raster);
                 if (frm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     ((System.Windows.Forms.TextBox)sender).Text = frm.SelectedLayer.GISFileInfo.FullName;

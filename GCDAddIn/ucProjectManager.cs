@@ -44,9 +44,10 @@ namespace GCDAddIn
                 m_windowUI = new ucProjectManager(this.Hook);
 
 
-                GCDCore.Project.ProjectManager.GISLayerDeletingEventHandler += OnGISLayerDeleting;
-                GCDCore.Project.ProjectManager.GISLayerBrowsingEventHandler += OnGISLayerBrowsing;
-                GCDCore.Project.ProjectManager.GISAddToMapEventHandler += OnAddRasterToMap;
+                ProjectManager.GISLayerDeletingEventHandler += OnGISLayerDeleting;
+                ProjectManager.GISLayerBrowsingEventHandler += OnGISLayerBrowsing;
+                ProjectManager.GISLayerSelectingEventHandler += OnGISLayerSelecting;
+                ProjectManager.GISAddToMapEventHandler += OnAddRasterToMap;
 
                 ArcMapManager = new GCDArcMapManager();
 
@@ -77,6 +78,22 @@ namespace GCDAddIn
                     txt.Text = result.GISFileInfo.FullName;
             }
 
+            public void OnGISLayerSelecting(System.Windows.Forms.TextBox txt, naru.ui.PathEventArgs e, GCDConsoleLib.GDalGeometryType.SimpleTypes geometryType)
+            {
+                try
+                {
+                    frmLayerSelector frm = new frmLayerSelector(ArcMapBrowse.BrowseGISTypes.Raster);
+                    if (frm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    {
+                        txt.Text = frm.SelectedLayer.GISFileInfo.FullName;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    naru.error.ExceptionUI.HandleException(ex);
+                }
+            }
+
             public void OnAddRasterToMap(GCDProjectRasterItem raster)
             {
                 if (raster is DEMSurvey)
@@ -87,8 +104,6 @@ namespace GCDAddIn
                     ArcMapManager.AddErrSurface((ErrorSurface)raster);
                 else if (raster is DoDBase)
                     ArcMapManager.AddDoD(raster);
-
-
 
                 ArcMap.Document.ActivatedView.Refresh();
                 ArcMap.Document.UpdateContents();
