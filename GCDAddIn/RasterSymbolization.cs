@@ -350,6 +350,25 @@ namespace GCDAddIn
             }
         }
 
+        public static IRasterRenderer CreateDEMColorRamp(Raster gRaster)
+        {
+            IColor pStartColor = (IColor)CreateRGBColor(255, 235, 176);
+            IColor pEndColor = (IColor)CreateRGBColor(38, 115, 0);
+            IAlgorithmicColorRamp pColorRamp1 = CreateAlgorithmicColorRamp(pStartColor, pEndColor);
+
+            pStartColor = (IColor)CreateRGBColor(38, 115, 0);
+            pEndColor = (IColor)CreateRGBColor(115, 77, 0);
+            IAlgorithmicColorRamp pColorRamp2 = CreateAlgorithmicColorRamp(pStartColor, pEndColor);
+
+            pStartColor = (IColor)CreateRGBColor(115, 77, 0);
+            pEndColor = (IColor)CreateRGBColor(255, 255, 255);
+            IAlgorithmicColorRamp pColorRamp3 = CreateAlgorithmicColorRamp(pStartColor, pEndColor);
+            List<IColorRamp> lColorRamps = new List<IColorRamp>(new IColorRamp[] { pColorRamp1, pColorRamp2, pColorRamp3 });
+
+            IMultiPartColorRamp pMultiPartColorRamp = CreateMultiPartColorRamp(lColorRamps);
+            return CreateContinuousRenderer(gRaster, pMultiPartColorRamp);
+        }
+
         public static IRasterRenderer CreateRoughnessColorRamp(GCDConsoleLib.Raster gRaster)
         {
             try
