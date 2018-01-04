@@ -85,6 +85,69 @@ namespace GCDAddIn
             throw new Exception("The name of the color ramp provided does not exist.");
         }
 
+        public static IAlgorithmicColorRamp CreateAlgorithmicColorRamp(IColor pStartColor, IColor pEndColor, esriColorRampAlgorithm eColorAlgorithm = esriColorRampAlgorithm.esriHSVAlgorithm, int iSize = 500)
+        {
+            IAlgorithmicColorRamp pAlgorithmicColorRamp = new AlgorithmicColorRampClass();
+            pAlgorithmicColorRamp.FromColor = pStartColor;
+            pAlgorithmicColorRamp.ToColor = pEndColor;
+            pAlgorithmicColorRamp.Algorithm = esriColorRampAlgorithm.esriHSVAlgorithm;
+            pAlgorithmicColorRamp.Size = iSize;
+            bool bOK = true;
+            pAlgorithmicColorRamp.CreateRamp(out bOK);
+            return pAlgorithmicColorRamp;
+        }
+
+        public static IMultiPartColorRamp CreateMultiPartColorRamp(List<IColorRamp> lColorRamps, int iSize = 500)
+        {
+            IMultiPartColorRamp pMultiPartColorRamp = new MultiPartColorRampClass();
+            foreach (IColorRamp pColorRamp in lColorRamps)
+            {
+                pMultiPartColorRamp.AddRamp(pColorRamp);
+            }
+
+            pMultiPartColorRamp.Size = iSize;
+            bool bOK = true;
+            pMultiPartColorRamp.CreateRamp(out bOK);
+            return pMultiPartColorRamp;
+        }
+
+        public static IRasterRenderer CreateContinuousRenderer(Raster gRaster, IColorRamp pColorRamp, bool bInvert = false)
+        {
+            try
+            {
+                gRaster.ComputeStatistics();
+                Dictionary<string, decimal> stats = gRaster.GetStatistics();
+                double rMin = (double)stats["min"];
+                double rMax = (double)stats["max"];
+
+                RasterStretchColorRampRenderer stretchRenderer = new RasterStretchColorRampRenderer();
+                IRasterRenderer rasterRenderer = (IRasterRenderer)stretchRenderer;
+                IRasterDataset rasterDataset = ArcMapUtilities.GetRasterDataset(gRaster);
+                IRaster raster = rasterDataset.CreateDefaultRaster();
+                rasterRenderer.Raster = raster;
+
+                IRasterRendererColorRamp pRenderColorRamp = (IRasterRendererColorRamp)rasterRenderer;
+                pRenderColorRamp.ColorRamp = pColorRamp;
+                int iRound = GetMagnitude(rMin);
+                stretchRenderer.LabelHigh = Math.Round(rMax, Math.Abs(iRound)).ToString();
+                stretchRenderer.LabelLow = Math.Round(rMin, Math.Abs(iRound)).ToString();
+
+                if (bInvert)
+                {
+                    IRasterStretch2 pStretch = (IRasterStretch2)stretchRenderer;
+                    pStretch.Invert = true;
+                }
+
+                rasterRenderer.Update();
+                return rasterRenderer;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+                return null;
+            }
+        }
+
         public static IRasterRenderer CreateClassifyRenderer(GCDConsoleLib.Raster gRaster, int iClassCount, string sColorRampName, bool bInvert = false)
         {
             gRaster.ComputeStatistics();
@@ -656,10 +719,7 @@ namespace GCDAddIn
             return lColors;
         }
 
-
-
-
-        private static RgbColor CreateRGBColor(UInt16 iRed, UInt16 iGreen, UInt16 iBlue)
+        public static RgbColor CreateRGBColor(UInt16 iRed, UInt16 iGreen, UInt16 iBlue)
         {
             RgbColor RGBColor = new RgbColor();
             RGBColor.Red = iRed;

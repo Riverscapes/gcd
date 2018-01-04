@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using GCDCore.Project;
 using GCDConsoleLib;
+using ESRI.ArcGIS.Display;
 
 namespace GCDAddIn
 {
@@ -103,7 +104,23 @@ namespace GCDAddIn
                 fDEMTransparency = DefaultTransparency;
             }
 
-            IRasterLayer pDEMLyr = AddRasterLayer(dem.Raster, null, dem.Name, pSurveyLyr, dem.Name, fDEMTransparency);
+            IColor pStartColor = (IColor)RasterSymbolization.CreateRGBColor(255, 235, 176);
+            IColor pEndColor = (IColor)RasterSymbolization.CreateRGBColor(38, 115, 0);
+            IAlgorithmicColorRamp pColorRamp1 = RasterSymbolization.CreateAlgorithmicColorRamp(pStartColor, pEndColor);
+
+            pStartColor = (IColor)RasterSymbolization.CreateRGBColor(38, 115, 0);
+            pEndColor = (IColor)RasterSymbolization.CreateRGBColor(115, 77, 0);
+            IAlgorithmicColorRamp pColorRamp2 = RasterSymbolization.CreateAlgorithmicColorRamp(pStartColor, pEndColor);
+
+            pStartColor = (IColor)RasterSymbolization.CreateRGBColor(115, 77, 0);
+            pEndColor = (IColor)RasterSymbolization.CreateRGBColor(255, 255, 255);
+            IAlgorithmicColorRamp pColorRamp3 = RasterSymbolization.CreateAlgorithmicColorRamp(pStartColor, pEndColor);
+            List<IColorRamp> lColorRamps = new List<IColorRamp>(new IColorRamp[] { pColorRamp1, pColorRamp2, pColorRamp3 });
+
+            IMultiPartColorRamp pMultiPartColorRamp = RasterSymbolization.CreateMultiPartColorRamp(lColorRamps);
+            IRasterRenderer rasterRenderer = RasterSymbolization.CreateContinuousRenderer(dem.Raster, pMultiPartColorRamp);
+            
+            IRasterLayer pDEMLyr = AddRasterLayer(dem.Raster, rasterRenderer, dem.Name, pSurveyLyr, dem.Name, fDEMTransparency);
 
             // Collapse the Hillshade legend in the TOC
             if (pHSLayer is IRasterLayer)
