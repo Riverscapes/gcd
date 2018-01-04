@@ -54,7 +54,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
                 if (DEM.MethodMask is FileInfo && DEM.MethodMask.Exists)
                 {
                     // This should fire the reloading of the mask field dropdown
-                    ucDEMMask.Initialize(DEM.MethodMask.FullName, true);
+                    ucDEMMask.Initialize(DEM.MethodMask.FullName,  GCDConsoleLib.GDalGeometryType.SimpleTypes.Polygon);
                 }
             }
 
@@ -65,6 +65,12 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
             grdErrorSurfaces.DataSource = DEM.ErrorSurfaces;
             grdAssocSurface.DataSource = DEM.AssocSurfaces;
+
+            if (ProjectManager.IsArcMap)
+            {
+                ucDEMMask.BrowseVector += ProjectManager.OnBrowseVector;
+                ucDEMMask.SelectVector += ProjectManager.OnSelectVector;
+            }
 
             UpdateControls(sender, e);
             LoadRasterProperties();

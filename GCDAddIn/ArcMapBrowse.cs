@@ -26,9 +26,9 @@ namespace GCDAddIn
             TIN
         };
 
-        public static GCDConsoleLib.Raster BrowseOpenRaster(string sFormTitle, System.IO.DirectoryInfo diWorkspace, string sName = "")
+        public static GCDConsoleLib.Raster BrowseOpenRaster(string sFormTitle, System.IO.DirectoryInfo diWorkspace, string sName, IntPtr hParentWindowHandle)
         {
-            IGxDialog pGxDialog = new GxDialog();
+            IGxDialog pGxDialog = new GxDialogClass();
             IGxObjectFilter pRasterFilter = new GxFilterRasterDatasets();
             IGxObjectFilterCollection pFilterCol = (IGxObjectFilterCollection)pGxDialog;
             pFilterCol.AddFilter(pRasterFilter, true);
@@ -47,7 +47,7 @@ namespace GCDAddIn
             GCDConsoleLib.Raster rResult = null;
             try
             {
-                if (pGxDialog.DoModalOpen(0, out pEnumGx))
+                if (pGxDialog.DoModalOpen(hParentWindowHandle.ToInt32(), out pEnumGx))
                 {
                     pGxObject = pEnumGx.Next();
                     System.IO.FileInfo sFile = new System.IO.FileInfo(pGxObject.FullName);
@@ -65,6 +65,49 @@ namespace GCDAddIn
             }
 
             return rResult;
+        }
+
+        public static GCDConsoleLib.Vector BrowseOpenVector(string formTitle, System.IO.DirectoryInfo diWorkspace, string sFCName, BrowseGISTypes eType, IntPtr hParentWindowHandle)
+        {
+            IGxDialog pGxDialog = new GxDialogClass();
+            IGxObjectFilterCollection pFilterCol = (IGxObjectFilterCollection)pGxDialog;
+            switch (eType)
+            {
+                case BrowseGISTypes.Point: pFilterCol.AddFilter(new GxFilterPointFeatureClasses(), true); break;
+                case BrowseGISTypes.Line: pFilterCol.AddFilter(new GxFilterPolylineFeatureClasses(), true); break;
+                case BrowseGISTypes.Polygon: pFilterCol.AddFilter(new GxFilterPolygonFeatureClasses(), true); break;
+                default: pFilterCol.AddFilter(new GxFilterFeatureClasses(), true); break;
+            }
+
+            IEnumGxObject pEnumGx = null;
+            IGxObject pGxObject = null;
+            pGxDialog.RememberLocation = true;
+            pGxDialog.AllowMultiSelect = false;
+            pGxDialog.Title = formTitle;
+            pGxDialog.ButtonCaption = "Select";
+            if (diWorkspace != null && diWorkspace.Exists)
+            {
+                object existingDirectory = diWorkspace.FullName;
+                pGxDialog.set_StartingLocation(ref existingDirectory);
+            }
+
+            pGxDialog.Name = sFCName;
+            GCDConsoleLib.Vector gResult = null;
+            try
+            {
+                if (pGxDialog.DoModalOpen(hParentWindowHandle.ToInt32(), out pEnumGx))
+                {
+                    pGxObject = pEnumGx.Next();
+                    sFCName = pGxObject.BaseName;
+                    gResult = new GCDConsoleLib.Vector(new System.IO.FileInfo(pGxObject.FullName));
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error attempting to browse for vector GIS data source", ex);
+            }
+
+            return gResult;
         }
     }
 }

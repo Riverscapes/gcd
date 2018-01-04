@@ -7,14 +7,12 @@ namespace GCDCore.UserInterface.UtilityForms
     public class ucVectorInput : naru.ui.ucInput
     {
         public event BrowseVectorEventHandler BrowseVector;
-        public delegate void BrowseVectorEventHandler(TextBox txtPath, naru.ui.PathEventArgs e);
+        public delegate void BrowseVectorEventHandler(TextBox txtPath, naru.ui.PathEventArgs e, GCDConsoleLib.GDalGeometryType.SimpleTypes geometryType);
 
         public event SelectVectorEventHandler SelectVector;
         public delegate void SelectVectorEventHandler(TextBox txtPath, naru.ui.PathEventArgs e, GCDConsoleLib.GDalGeometryType.SimpleTypes geometryType);
 
         private GCDConsoleLib.GDalGeometryType.SimpleTypes m_GeometryType;
-        private string m_sNoun;
-        public string Noun { get { return m_sNoun; } }
 
         public GCDConsoleLib.Vector SelectedItem
         {
@@ -51,7 +49,7 @@ namespace GCDCore.UserInterface.UtilityForms
         /// <remarks></remarks>
         public new void Initialize(string sNoun, GCDConsoleLib.GDalGeometryType.SimpleTypes eBrowseType)
         {
-            m_sNoun = sNoun;
+            Noun = sNoun;
             GeometryType = eBrowseType;
         }
 
@@ -63,7 +61,7 @@ namespace GCDCore.UserInterface.UtilityForms
                 {
                     if (BrowseVector != null)
                     {
-                        BrowseVector((TextBox)sender, e);
+                        BrowseVector((TextBox)sender, e, m_GeometryType);
                     }
                 }
                 else

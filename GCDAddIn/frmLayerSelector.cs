@@ -60,6 +60,9 @@ namespace GCDAddIn
                     }
                 }
             }
+
+            if (lstLayers.Items.Count == 1)
+                lstLayers.SelectedIndex = 0;
         }
 
         private ArcMapBrowse.BrowseGISTypes GetBrowseType(ref ESRI.ArcGIS.Carto.ILayer pLayer)

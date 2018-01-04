@@ -31,8 +31,11 @@ namespace GCDCore.Project
         public delegate void GISLayerBrowsing(System.Windows.Forms.TextBox txt, naru.ui.PathEventArgs e);
         public static event GISLayerBrowsing GISLayerBrowsingEventHandler;
 
-        public delegate void GISLayerSelecting(System.Windows.Forms.TextBox txt, naru.ui.PathEventArgs e, GCDConsoleLib.GDalGeometryType.SimpleTypes geometryType);
-        public static event GISLayerSelecting GISLayerSelectingEventHandler;
+        public delegate void GISBrowseVector(System.Windows.Forms.TextBox txt, naru.ui.PathEventArgs e, GCDConsoleLib.GDalGeometryType.SimpleTypes geometryType);
+        public static event GISBrowseVector GISBrowseVectorEventHandler;
+
+        public delegate void GISSelectingVector(System.Windows.Forms.TextBox txt, naru.ui.PathEventArgs e, GCDConsoleLib.GDalGeometryType.SimpleTypes geometryType);
+        public static event GISSelectingVector GISSelectingVectorEventHandler;
 
         public delegate void GISAddToMapEvent(GCDProjectRasterItem raster);
         public static event GISAddToMapEvent GISAddToMapEventHandler;
@@ -253,10 +256,16 @@ namespace GCDCore.Project
                 ProjectManager.GISLayerBrowsingEventHandler(txt, e);
         }
 
-        public static void OnSelectLayer(System.Windows.Forms.TextBox txt, naru.ui.PathEventArgs e, GCDConsoleLib.GDalGeometryType.SimpleTypes geometryType)
+        public static void OnBrowseVector(System.Windows.Forms.TextBox txt, naru.ui.PathEventArgs e, GCDConsoleLib.GDalGeometryType.SimpleTypes geometryType)
         {
-            if (GISLayerSelectingEventHandler != null)
-                ProjectManager.GISLayerSelectingEventHandler(txt, e, geometryType);
+            if (GISBrowseVectorEventHandler != null)
+                ProjectManager.GISBrowseVectorEventHandler(txt, e, geometryType);
+        }
+
+        public static void OnSelectVector(System.Windows.Forms.TextBox txt, naru.ui.PathEventArgs e, GCDConsoleLib.GDalGeometryType.SimpleTypes geometryType)
+        {
+            if (GISSelectingVectorEventHandler != null)
+                ProjectManager.GISSelectingVectorEventHandler(txt, e, geometryType);
         }
 
         public static void OnAddToMap(GCDCore.Project.GCDProjectRasterItem raster)

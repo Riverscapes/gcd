@@ -37,7 +37,7 @@ namespace GCDAddIn.DataPreparation
         {
             System.IO.DirectoryInfo diWorkspace = ArcMapUtilities.GetWorkspacePath(e.Path.FullName);
             string sDataset = System.IO.Path.GetFileNameWithoutExtension(e.Path.FullName);
-            GCDConsoleLib.Raster selectedRaster = ArcMapBrowse.BrowseOpenRaster(e.FormTitle, diWorkspace, sDataset);
+            GCDConsoleLib.Raster selectedRaster = ArcMapBrowse.BrowseOpenRaster(e.FormTitle, diWorkspace, sDataset, e.hWndParent);
             if (!(selectedRaster == null))
             {
                 ((System.Windows.Forms.TextBox)sender).Text = selectedRaster.GISFileInfo.FullName;

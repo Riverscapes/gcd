@@ -65,8 +65,8 @@ namespace GCDCore.UserInterface.SurveyLibrary
         {
             if (ProjectManager.IsArcMap)
             {
-                ucPointCloud.BrowseVector += ProjectManager.OnBrowseRaster;
-                ucPointCloud.SelectVector += ProjectManager.OnSelectLayer;
+                ucPointCloud.BrowseVector += ProjectManager.OnBrowseVector;
+                ucPointCloud.SelectVector += ProjectManager.OnSelectVector;
             }
         }
     }

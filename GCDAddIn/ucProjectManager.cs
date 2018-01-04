@@ -45,8 +45,9 @@ namespace GCDAddIn
 
 
                 ProjectManager.GISLayerDeletingEventHandler += OnGISLayerDeleting;
-                ProjectManager.GISLayerBrowsingEventHandler += OnGISLayerBrowsing;
-                ProjectManager.GISLayerSelectingEventHandler += OnGISLayerSelecting;
+                ProjectManager.GISLayerBrowsingEventHandler += OnGISBrowseRaster;
+                ProjectManager.GISBrowseVectorEventHandler += OnGISBrowseVector;
+                ProjectManager.GISSelectingVectorEventHandler += OnGISSelectingVector;
                 ProjectManager.GISAddToMapEventHandler += OnAddRasterToMap;
 
                 ArcMapManager = new GCDArcMapManager();
@@ -67,22 +68,65 @@ namespace GCDAddIn
                 ArcMapUtilities.RemoveLayer(e.RasterPath);
             }
 
-            public void OnGISLayerBrowsing(System.Windows.Forms.TextBox txt, naru.ui.PathEventArgs e)
+            public void OnGISBrowseRaster(System.Windows.Forms.TextBox txt, naru.ui.PathEventArgs e)
             {
                 System.IO.DirectoryInfo dir = null;
+                string RasterName = string.Empty;
                 if (e.Path is System.IO.FileInfo)
+                {
                     dir = e.Path.Directory;
+                    RasterName = System.IO.Path.GetFileName(e.Path.FullName);
+                }
 
-                GCDConsoleLib.Raster result = ArcMapBrowse.BrowseOpenRaster(e.FormTitle, dir);
+                GCDConsoleLib.Raster result = ArcMapBrowse.BrowseOpenRaster(e.FormTitle, dir, RasterName, e.hWndParent);
                 if (result is GCDConsoleLib.Raster)
                     txt.Text = result.GISFileInfo.FullName;
             }
 
-            public void OnGISLayerSelecting(System.Windows.Forms.TextBox txt, naru.ui.PathEventArgs e, GCDConsoleLib.GDalGeometryType.SimpleTypes geometryType)
+            public void OnGISBrowseVector(System.Windows.Forms.TextBox txt, naru.ui.PathEventArgs e, GCDConsoleLib.GDalGeometryType.SimpleTypes geometryType)
+            {
+                System.IO.DirectoryInfo dir = null;
+                string FCName = string.Empty;
+                if (e.Path is System.IO.FileInfo)
+                {
+                    dir = e.Path.Directory;
+                    FCName = System.IO.Path.GetFileNameWithoutExtension(e.Path.FullName);
+                }
+
+                ArcMapBrowse.BrowseGISTypes eType = ArcMapBrowse.BrowseGISTypes.Any;
+                switch (geometryType)
+                {
+                    case GCDConsoleLib.GDalGeometryType.SimpleTypes.Point: eType = ArcMapBrowse.BrowseGISTypes.Point; break;
+                    case GCDConsoleLib.GDalGeometryType.SimpleTypes.LineString: eType = ArcMapBrowse.BrowseGISTypes.Line; break;
+                    case GCDConsoleLib.GDalGeometryType.SimpleTypes.Polygon: eType = ArcMapBrowse.BrowseGISTypes.Polygon; break;
+                }
+
+                GCDConsoleLib.Vector result = ArcMapBrowse.BrowseOpenVector(e.FormTitle, dir, FCName, eType, e.hWndParent);
+                if (result is GCDConsoleLib.Vector)
+                    txt.Text = result.GISFileInfo.FullName;
+            }
+
+            public void OnGISSelectingVector(System.Windows.Forms.TextBox txt, naru.ui.PathEventArgs e, GCDConsoleLib.GDalGeometryType.SimpleTypes geometryType)
             {
                 try
                 {
-                    frmLayerSelector frm = new frmLayerSelector(ArcMapBrowse.BrowseGISTypes.Raster);
+                    ArcMapBrowse.BrowseGISTypes eType = ArcMapBrowse.BrowseGISTypes.Polygon;
+                    switch (geometryType)
+                    {
+                        case GCDConsoleLib.GDalGeometryType.SimpleTypes.Point:
+                            eType = ArcMapBrowse.BrowseGISTypes.Point;
+                            break;
+
+                        case GCDConsoleLib.GDalGeometryType.SimpleTypes.LineString:
+                            eType = ArcMapBrowse.BrowseGISTypes.Line;
+                            break;
+
+                        case GCDConsoleLib.GDalGeometryType.SimpleTypes.Polygon:
+                            eType = ArcMapBrowse.BrowseGISTypes.Polygon;
+                            break;
+                    }
+
+                    frmLayerSelector frm = new frmLayerSelector(eType);
                     if (frm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                     {
                         txt.Text = frm.SelectedLayer.GISFileInfo.FullName;
