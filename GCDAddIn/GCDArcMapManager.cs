@@ -105,7 +105,7 @@ namespace GCDAddIn
             }
 
             IRasterRenderer demRenderer = RasterSymbolization.CreateDEMColorRamp(dem.Raster);
-            IRasterLayer pDEMLyr = AddRasterLayer(dem.Raster, demRenderer, dem.Name, pSurveyLyr, dem.Name, fDEMTransparency);
+            IRasterLayer pDEMLyr = AddRasterLayer(dem.Raster, demRenderer, dem.Name, pSurveyLyr, dem.LayerHeader, fDEMTransparency);
 
             // Collapse the Hillshade legend in the TOC
             if (pHSLayer is IRasterLayer)

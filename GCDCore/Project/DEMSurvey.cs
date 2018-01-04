@@ -30,6 +30,19 @@ namespace GCDCore.Project
             }
         }
 
+        /// <summary>
+        /// GIS legend label for the associated surface
+        /// </summary>
+        /// <remarks>This isn't the ToC label, but instead it's the label
+        /// that appears above the legend to describe the symbology</remarks>
+        public string LayerHeader
+        {
+            get
+            {
+                return string.Format("Elevation ({0})", UnitsNet.Length.GetAbbreviation(ProjectManager.Project.Units.VertUnit));
+            }
+        }
+
         public DEMSurvey(string name, SurveyDateTime surveyDate, FileInfo rasterPath)
             : base(name, rasterPath)
         {
