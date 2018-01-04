@@ -172,7 +172,7 @@ namespace GCDAddIn
             if (ArcMap.Document.FocusMap.LayerCount < 1)
                 return null;
 
-            IUID pID = new UIDClass();
+            UID pID = new UIDClass();
             switch (eType)
             {
                 case eEsriLayerTypes.Esri_DataLayer:
@@ -198,7 +198,7 @@ namespace GCDAddIn
                     break;
             }
 
-            IEnumLayer pEnumLayer = ArcMap.Document.FocusMap.Layers[(UID)pID.Value];
+            IEnumLayer pEnumLayer = ArcMap.Document.FocusMap.Layers[pID, true];
             ILayer pLayer = pEnumLayer.Next();
             while (pLayer != null)
             {
