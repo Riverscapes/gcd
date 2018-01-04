@@ -601,7 +601,6 @@ namespace GCDCore.UserInterface.SurveyLibrary
         internal System.Windows.Forms.GroupBox GroupBox2;
         internal System.Windows.Forms.GroupBox GroupBox1;
         internal System.Windows.Forms.ComboBox cboSingle;
-        internal System.Windows.Forms.Button cmdAddDEMToMap;
         internal System.Windows.Forms.ComboBox cboIdentify;
         internal System.Windows.Forms.Label Label5;
         internal System.Windows.Forms.Label Label6;
@@ -622,5 +621,6 @@ namespace GCDCore.UserInterface.SurveyLibrary
         internal System.Windows.Forms.DataGridViewTextBoxColumn colType;
         private UtilityForms.ucVectorInput ucDEMMask;
         private System.Windows.Forms.DataGridViewTextBoxColumn colErrName;
+        public System.Windows.Forms.Button cmdAddDEMToMap;
     }
 }

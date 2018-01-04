@@ -811,6 +811,10 @@ namespace GCDCore.UserInterface.Project
                     {
                         DEMSurvey dem = (DEMSurvey)((ProjectTreeNode)selNode.Tag).Item;
                         frmDEMSurveyProperties frm = new frmDEMSurveyProperties(dem);
+
+                        if (ProjectManager.IsArcMap)
+                            frm.cmdAddDEMToMap.Click += this.AddToMapToolStripMenuItem_Click;
+
                         if (frm.ShowDialog() == DialogResult.OK)
                         {
                             LoadTree(selNode.Tag.ToString());
@@ -1588,7 +1592,6 @@ namespace GCDCore.UserInterface.Project
                 naru.error.ExceptionUI.HandleException(ex);
             }
         }
-
 
         private void AddBudgetSegregationToolStripMenuItem1_Click(System.Object sender, System.EventArgs e)
         {

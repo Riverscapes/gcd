@@ -369,7 +369,15 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
         private void btnAddToMap_Click(System.Object sender, System.EventArgs e)
         {
-            throw new NotImplementedException("add selected associated surface to map");
+            try
+            {
+                AssocSurface assoc = (AssocSurface)grdAssocSurface.SelectedRows[0].DataBoundItem;
+                ProjectManager.OnAddToMap((GCDProjectRasterItem)assoc);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error adding associated surface to the map.", GCDCore.Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         private void btnAddAssociatedSurface_Click(System.Object sender, System.EventArgs e)
@@ -537,7 +545,14 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
         private void btnAddErrorToMap_Click(System.Object sender, System.EventArgs e)
         {
-            throw new NotImplementedException("add error surface to map");
+            try
+            {
+                ProjectManager.OnAddToMap((GCDProjectRasterItem)grdErrorSurfaces.SelectedRows[0].DataBoundItem);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error adding error surface to the map.", GCDCore.Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         public static DialogResult ViewErrorSurfaceProperties(ErrorSurface errSurf)
