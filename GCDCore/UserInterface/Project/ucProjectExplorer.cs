@@ -41,7 +41,7 @@ namespace GCDCore.UserInterface.Project
             this.treProject.MouseDown += treProject_MouseDown;
             this.treProject.AfterSelect += treProject_AfterSelect;
             this.EditGCDProjectPropertiesToolStripMenuItem.Click += EditGCDProjectPropertiesToolStripMenuItem_Click;
-            this.ToolStripMenuItem2.Click += ToolStripMenuItem2_Click;
+            this.cmsAddProjectToMap.Click += AddProjectToMap_Click;
             this.ExploreGCDProjectFolderToolStripMenuItem.Click += ExploreGCDProjectFolderToolStripMenuItem_Click;
             this.ToolStripMenuItem1.Click += ToolStripMenuItem1_Click;
             this.EditDEMSurveyProperatieToolStripMenuItem.Click += EditDEMSurveyProperatieToolStripMenuItem_Click;
@@ -501,7 +501,7 @@ namespace GCDCore.UserInterface.Project
                         DEMSurvey dem = (DEMSurvey)((ProjectTreeNode)selNode.Parent.Tag).Item;
                         foreach (AssocSurface assoc in dem.AssocSurfaces)
                         {
-                            throw new Exception("add all associated surfaes to map ");
+                            ProjectManager.OnAddToMap(assoc);
                         }
                     }
                 }
@@ -636,7 +636,7 @@ namespace GCDCore.UserInterface.Project
                         DEMSurvey dem = (DEMSurvey)((ProjectTreeNode)selNode.Parent.Tag).Item;
                         foreach (ErrorSurface errSurf in dem.ErrorSurfaces)
                         {
-                            throw new Exception("Add error surface to map not implemented");
+                            ProjectManager.OnAddToMap(errSurf);
                         }
                     }
                 }
@@ -738,43 +738,31 @@ namespace GCDCore.UserInterface.Project
         }
 
 
-        private void ToolStripMenuItem2_Click(System.Object sender, System.EventArgs e)
+        private void AddProjectToMap_Click(System.Object sender, System.EventArgs e)
         {
-            //TODO entire function contents commented out
-            throw new Exception("not implemented");
-            //Try
-            //    Dim rProject As ProjectDS.ProjectRow = GCDProject.ProjectManagerBase.CurrentProject
+            try
+            {
+                if (ProjectManager.Project == null)
+                    return;
 
-            //    'TODO: Insert the GetSortedSurveyRowsMethod
-            //    If TypeOf rProject Is ProjectDS.ProjectRow Then
+                foreach (DEMSurvey dem in ProjectManager.Project.DEMSurveys.Values)
+                {
+                    ProjectManager.OnAddToMap(dem);
 
-            //        'Store DEM Survey Rows in an Ienumerable then loop over
-            //        Dim sortedSurveys As System.Linq.IOrderedEnumerable(Of ProjectDS.DEMSurveyRow) = GetSortedSurveyRows(rProject, m_eSortBy)
-            //        For Each rDEM As ProjectDS.DEMSurveyRow In sortedSurveys.Reverse()
-            //            GCDProject.ProjectManagerUI.ArcMapManager.AddDEM(rDEM)
+                    foreach (AssocSurface assoc in dem.AssocSurfaces)
+                        ProjectManager.OnAddToMap(assoc);
 
-            //            For Each rAssoc As ProjectDS.AssociatedSurfaceRow In rDEM.GetAssociatedSurfaceRows
-            //                GCDProject.ProjectManagerUI.ArcMapManager.AddAssociatedSurface(rAssoc)
-            //            Next
+                    foreach (ErrorSurface err in dem.ErrorSurfaces)
+                        ProjectManager.OnAddToMap(err);
+                }
 
-            //            For Each rError As ProjectDS.ErrorSurfaceRow In rDEM.GetErrorSurfaceRows
-            //                GCDProject.ProjectManagerUI.ArcMapManager.AddErrSurface(rError)
-            //            Next
-            //        Next
-
-            //        For Each rAOI As ProjectDS.AOIsRow In rProject.GetAOIsRows
-            //            GCDProject.ProjectManagerUI.ArcMapManager.AddAOI(rAOI)
-            //        Next
-
-            //        For Each rDoD As ProjectDS.DoDsRow In rProject.GetDoDsRows
-            //            GCDProject.ProjectManagerUI.ArcMapManager.AddDoD(rDoD)
-            //        Next
-            //    End If
-
-            //Catch ex As Exception
-            //    naru.error.ExceptionUI.HandleException(ex)
-            //End Try
-
+                foreach (DoDBase dod in ProjectManager.Project.DoDs.Values)
+                    ProjectManager.OnAddToMap(dod.ThrDoD);
+            }
+            catch (Exception ex)
+            {
+                naru.error.ExceptionUI.HandleException(ex);
+            }
         }
 
 
@@ -1464,7 +1452,14 @@ namespace GCDCore.UserInterface.Project
         {
             foreach (DEMSurvey dem in ProjectManager.Project.DEMSurveys.Values)
             {
-                throw new Exception("Add all DEMs to the map");
+                try
+                {
+                    ProjectManager.OnAddToMap(dem);
+                }
+                catch (Exception ex)
+                {
+                    naru.error.ExceptionUI.HandleException(ex);
+                }
             }
         }
 
