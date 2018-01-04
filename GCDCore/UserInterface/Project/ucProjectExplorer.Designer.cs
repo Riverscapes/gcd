@@ -178,7 +178,7 @@ namespace GCDCore.UserInterface.Project
             this.ToolStripSeparator2,
             this.ToolStripMenuItem1});
             this.cmsProject.Name = "cmsProject";
-            this.cmsProject.Size = new System.Drawing.Size(231, 120);
+            this.cmsProject.Size = new System.Drawing.Size(231, 98);
             // 
             // EditGCDProjectPropertiesToolStripMenuItem
             // 
@@ -331,7 +331,7 @@ namespace GCDCore.UserInterface.Project
             this.AddDEMSurveyToolStripMenuItem,
             this.AddAllDEMSurveysToTheMapToolStripMenuItem});
             this.cmsInputsGroup.Name = "cmsInputsGroup";
-            this.cmsInputsGroup.Size = new System.Drawing.Size(297, 48);
+            this.cmsInputsGroup.Size = new System.Drawing.Size(246, 70);
             // 
             // AddDEMSurveyToolStripMenuItem
             // 
@@ -344,8 +344,8 @@ namespace GCDCore.UserInterface.Project
             // 
             this.AddAllDEMSurveysToTheMapToolStripMenuItem.Image = global::GCDCore.Properties.Resources.AddToMap;
             this.AddAllDEMSurveysToTheMapToolStripMenuItem.Name = "AddAllDEMSurveysToTheMapToolStripMenuItem";
-            this.AddAllDEMSurveysToTheMapToolStripMenuItem.Size = new System.Drawing.Size(296, 22);
-            this.AddAllDEMSurveysToTheMapToolStripMenuItem.Text = "Add All DEM Surveys and AOIs to the Map";
+            this.AddAllDEMSurveysToTheMapToolStripMenuItem.Size = new System.Drawing.Size(245, 22);
+            this.AddAllDEMSurveysToTheMapToolStripMenuItem.Text = "Add All DEM Surveys to the Map";
             // 
             // cmsErrorSurfacesGroup
             // 

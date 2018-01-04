@@ -85,10 +85,12 @@
         <Menu caption="Data Preparation" isRootMenu="false" id="GCD_AddIn_DataPreparationMenu">
           <Items>
             <Button refID="GCD_AddIn_CleanRasterButton" separator="true" />
+            <!--
             <Button refID="GCD_AddIn_ConcaveHull" />
             <Menu refID="GCD_AddIn_SurveyPreparationMenu" separator="true" />
             <Button refID="GCD_AddIn_AddDEM_Survey" separator="true" />
             <Menu refID="GCD_AddIn_ToPCATMenu" separator="true" />
+            -->
           </Items>
         </Menu>
         <Menu caption="Analysis" isRootMenu="false" id="GCD_AddIn_GCDAnalysisMenu">
@@ -182,7 +184,7 @@
             <Button refID="GCD_AddIn_ToolbarExplorerButton" />
             <Menu refID="GCD_AddIn_ProjectMenu" separator="true" />
             <Menu refID="GCD_AddIn_DataPreparationMenu" />
-            <Menu refID="GCD_AddIn_GCDAnalysisMenu" />
+            <!--<Menu refID="GCD_AddIn_GCDAnalysisMenu" />-->
             <Menu refID="GCD_AddIn_CustomizeMenu" />
             <Menu refID="GCD_AddIn_HelpMenu" />
           </Items>

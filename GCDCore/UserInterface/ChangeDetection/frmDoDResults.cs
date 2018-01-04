@@ -44,8 +44,14 @@ namespace GCDCore.UserInterface.ChangeDetection
 
         private void cmdAddToMap_Click(System.Object sender, System.EventArgs e)
         {
-            throw new Exception("Add to map not implemented");
-
+            try
+            {
+                ProjectManager.OnAddToMap(DoD.ThrDoD);
+            }
+            catch(Exception ex)
+            {
+                naru.error.ExceptionUI.HandleException(ex);
+            }
         }
 
         private void cmdBrowse_Click(System.Object sender, System.EventArgs e)

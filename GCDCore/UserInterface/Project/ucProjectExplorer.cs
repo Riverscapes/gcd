@@ -72,6 +72,7 @@ namespace GCDCore.UserInterface.Project
             this.AddBudgetSegregationToolStripMenuItem.Click += AddBudgetSegregationToolStripMenuItem1_Click;
             this.AddDEMSurveyToolStripMenuItem1.Click += AddDEMSurveyToolStripMenuItem1_Click;
             this.AddAllDEMSurveysToTheMapToolStripMenuItem1.Click += AddAllDEMSurveysToTheMapToolStripMenuItem1_Click;
+            this.AddAllDEMSurveysToTheMapToolStripMenuItem.Click += AddAllDEMSurveysToTheMapToolStripMenuItem1_Click;
             this.NameAscendingToolStripMenuItem.Click += SortTOC_Click;
             this.NameDescendingToolStripMenuItem.Click += SortTOC_Click;
             this.SurveyDateAscendingToolStripMenuItem.Click += SortTOC_Click;
@@ -737,7 +738,6 @@ namespace GCDCore.UserInterface.Project
             }
         }
 
-
         private void AddProjectToMap_Click(System.Object sender, System.EventArgs e)
         {
             try
@@ -765,7 +765,6 @@ namespace GCDCore.UserInterface.Project
             }
         }
 
-
         private void ToolStripMenuItem1_Click(System.Object sender, System.EventArgs e)
         {
             try
@@ -785,7 +784,6 @@ namespace GCDCore.UserInterface.Project
         #endregion
 
         #region "DEM Survey Menu Items"
-
 
         private void EditDEMSurveyProperatieToolStripMenuItem_Click(System.Object sender, System.EventArgs e)
         {
@@ -946,15 +944,12 @@ namespace GCDCore.UserInterface.Project
                         frmResults.ShowDialog();
                     }
                 }
-
             }
             catch (Exception ex)
             {
                 naru.error.ExceptionUI.HandleException(ex);
             }
-
         }
-
 
         private void AddAllChangeDetectionAnalysesToTheMapToolStripMenuItem_Click(System.Object sender, System.EventArgs e)
         {
@@ -968,11 +963,10 @@ namespace GCDCore.UserInterface.Project
                     {
                         foreach (DoDBase rDoD in ProjectManager.Project.DoDs.Values)
                         {
-                            throw new Exception("add all dods to the map not implemented");
+                            ProjectManager.OnAddToMap(rDoD.ThrDoD);
                         }
                     }
                 }
-
             }
             catch (Exception ex)
             {
@@ -983,7 +977,6 @@ namespace GCDCore.UserInterface.Project
         #endregion
 
         #region "Change Detection Menu Items"
-
 
         private void AddChangeDetectionToTheMapToolStripMenuItem_Click(System.Object sender, System.EventArgs e)
         {
@@ -996,7 +989,7 @@ namespace GCDCore.UserInterface.Project
                     if (eType == GCDNodeTypes.DoD)
                     {
                         DoDBase dod = (DoDBase)((ProjectTreeNode)selNode.Tag).Item;
-                        throw new Exception("Add thresholded DoD raster to map not implemented");
+                        ProjectManager.OnAddToMap(dod.ThrDoD);
                     }
                 }
             }
@@ -1004,7 +997,6 @@ namespace GCDCore.UserInterface.Project
             {
                 naru.error.ExceptionUI.HandleException(ex);
             }
-
         }
 
         private void AddRawChangeDetectionToTheMapToolStripMenuItem_Click(System.Object sender, System.EventArgs e)
@@ -1019,17 +1011,15 @@ namespace GCDCore.UserInterface.Project
                     if (eType == GCDNodeTypes.DoD)
                     {
                         DoDBase dod = (DoDBase)((ProjectTreeNode)selNode.Tag).Item;
-                        throw new Exception("Add raw DoD raster to map not implemented");
+                        ProjectManager.OnAddToMap(dod.RawDoD);
                     }
                 }
-
             }
             catch (Exception ex)
             {
                 naru.error.ExceptionUI.HandleException(ex);
             }
         }
-
 
         private void ViewChangeDetectionResultsToolStripMenuItem_Click(System.Object sender, System.EventArgs e)
         {
@@ -1046,13 +1036,11 @@ namespace GCDCore.UserInterface.Project
                         frm.ShowDialog();
                     }
                 }
-
             }
             catch (Exception ex)
             {
                 naru.error.ExceptionUI.HandleException(ex);
             }
-
         }
 
         #endregion

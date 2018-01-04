@@ -146,7 +146,7 @@ namespace GCDAddIn
                     ArcMapManager.AddAssociatedSurface((AssocSurface)raster);
                 else if (raster is ErrorSurface)
                     ArcMapManager.AddErrSurface((ErrorSurface)raster);
-                else if (raster is DoDBase)
+                else if (raster is GCDProjectRasterItem)
                     ArcMapManager.AddDoD(raster);
 
                 ArcMap.Document.ActivatedView.Refresh();

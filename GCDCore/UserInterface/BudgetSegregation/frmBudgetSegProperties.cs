@@ -31,6 +31,9 @@ namespace GCDCore.UserInterface.BudgetSegregation
             cboDoD.SelectedItem = InitialDoD;
 
             ucPolygon.PathChanged += this.PolygonChanged;
+
+            ucPolygon.SelectVector += ProjectManager.OnSelectVector;
+            ucPolygon.BrowseVector += ProjectManager.OnBrowseVector;
         }
 
         private void cmdOK_Click(Object sender, EventArgs e)
