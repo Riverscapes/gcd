@@ -59,7 +59,7 @@ namespace GCDCore.UserInterface.Project
             this.AddErrorSurfaceToolStripMenuItem1.Click += SpecifyErrorSurfaceToolStripMenuItem_Click;
             this.DeriveErrorSurfaceToolStripMenuItem.Click += DeriveErrorSurfaceToolStripMenuItem_Click;
             this.AddErrorSurfaceToMapToolStripMenuItem.Click += AddErrorSurfaceToMapToolStripMenuItem_Click;
-            this.AddErrorSurfaceToMapToolStripMenuItem1.Click += AddErrorSurfaceToMapToolStripMenuItem1_Click;
+            this.AddErrorSurfaceToMapToolStripMenuItem1.Click += AddToMapToolStripMenuItem_Click;
             this.EditErrorSurfacePropertiesToolStripMenuItem.Click += EditErrorSurfacePropertiesToolStripMenuItem_Click;
             this.DeleteErrorSurfaceToolStripMenuItem.Click += btnDelete_Click;
             this.AddChangeDetectionToolStripMenuItem.Click += AddChangeDetectionToolStripMenuItem_Click;

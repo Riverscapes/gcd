@@ -27,7 +27,7 @@ namespace GCDAddIn
                 IRaster raster = rasterDataset.CreateDefaultRaster();
                 rasterRenderer.Raster = raster;
                 IColorRamp pColorRamp = null;
-                IStyleGalleryItem pStyleItem = GetESRIStyleColorRamp(ref pColorRamp, sColorRampName);
+                IStyleGalleryItem pStyleItem = GetESRIStyleColorRamp(out pColorRamp, sColorRampName);
                 IRasterRendererColorRamp pRenderColorRamp = (IRasterRendererColorRamp)rasterRenderer;
                 pRenderColorRamp.ColorScheme = pStyleItem.Name;
                 IRasterStretchMinMax pStretchInfo = (IRasterStretchMinMax)stretchRenderer;
@@ -52,21 +52,20 @@ namespace GCDAddIn
             }
         }
 
-        private static IStyleGalleryItem GetESRIStyleColorRamp(ref IColorRamp pColorRamp, string sColorRampName)
+        private static IStyleGalleryItem GetESRIStyleColorRamp(out IColorRamp pColorRamp, string sColorRampName)
         {
             IStyleGallery pStyleGallery = new ESRI.ArcGIS.Framework.StyleGalleryClass();
             IStyleGalleryStorage pStyleStorage;
-            pStyleStorage = pStyleGallery as ESRI.ArcGIS.Display.IStyleGalleryStorage;
+            pStyleStorage = pStyleGallery as IStyleGalleryStorage;
             string pStylePath = pStyleStorage.DefaultStylePath + "ESRI.style";
             pStyleStorage.AddFile(pStylePath);
             ESRI.ArcGIS.esriSystem.IEnumBSTR eESRIRampCategories = pStyleGallery.Categories["Color Ramps"];
             string sESRIRampCategoryName = eESRIRampCategories.Next();
             IStyleGalleryItem pStyleItem;
-            bool bFound = false;
 
-            while (string.IsNullOrEmpty(sESRIRampCategoryName))
+            while (!string.IsNullOrEmpty(sESRIRampCategoryName))
             {
-                ESRI.ArcGIS.Display.IEnumStyleGalleryItem eESRIColorRamps = pStyleGallery.Items["Color Ramps", pStylePath, sESRIRampCategoryName];
+                IEnumStyleGalleryItem eESRIColorRamps = pStyleGallery.Items["Color Ramps", pStylePath, sESRIRampCategoryName];
                 pStyleItem = eESRIColorRamps.Next();
                 while (pStyleItem != null)
                 {
@@ -82,7 +81,7 @@ namespace GCDAddIn
                 sESRIRampCategoryName = eESRIRampCategories.Next();
             }
 
-            throw new Exception("The name of the color ramp provided does not exist.");
+            throw new Exception(string.Format("Cannot find the color ramp with the name '{0}'", sColorRampName));
         }
 
         public static IAlgorithmicColorRamp CreateAlgorithmicColorRamp(IColor pStartColor, IColor pEndColor, esriColorRampAlgorithm eColorAlgorithm = esriColorRampAlgorithm.esriHSVAlgorithm, int iSize = 500)
@@ -160,7 +159,7 @@ namespace GCDAddIn
             IRaster raster = rasterDataset.CreateDefaultRaster();
             rasterRenderer.Raster = raster;
             IColorRamp pColorRamp = null;
-            IStyleGalleryItem pStyleItem = GetESRIStyleColorRamp(ref pColorRamp, sColorRampName);
+            IStyleGalleryItem pStyleItem = GetESRIStyleColorRamp(out pColorRamp, sColorRampName);
             classifyRenderer.ClassCount = iClassCount;
             rasterRenderer.Update();
             CreateClassBreaks((double)maxValue, iClassCount, classifyRenderer);
@@ -200,8 +199,8 @@ namespace GCDAddIn
                 IRaster raster = rasterDataset.CreateDefaultRaster();
 
                 rasterRenderer.Raster = raster;
-                IColorRamp pColorRamp = null;
-                IStyleGalleryItem pStyleItem = GetESRIStyleColorRamp(ref pColorRamp, sColorRampName);
+                IColorRamp pColorRamp;
+                IStyleGalleryItem pStyleItem = GetESRIStyleColorRamp(out pColorRamp, sColorRampName);
                 classifyRenderer.ClassCount = iClassCount;
                 rasterRenderer.Update();
                 CreateClassBreaks(dMax, iClassCount, classifyRenderer);
