@@ -14,6 +14,12 @@ namespace GCDCore.Project
             Raster = new Raster(rasterPath);
         }
 
+        public GCDProjectRasterItem(string name, Raster raster)
+            : base(name)
+        {
+            Raster = raster;
+        }
+
         public void Delete()
         {
             // Get the folder

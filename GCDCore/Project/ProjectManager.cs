@@ -31,6 +31,9 @@ namespace GCDCore.Project
         public delegate void GISLayerBrowsing(System.Windows.Forms.TextBox txt, naru.ui.PathEventArgs e);
         public static event GISLayerBrowsing GISLayerBrowsingEventHandler;
 
+        public delegate void GISAddToMapEvent(GCDProjectRasterItem raster);
+        public static event GISAddToMapEvent GISAddToMapEventHandler;
+
         public static Dictionary<string, SurveyType> SurveyTypes
         {
             get { return SurveyType.Load(SurveyTypesPath); }
@@ -245,6 +248,12 @@ namespace GCDCore.Project
         {
             if (GISLayerBrowsingEventHandler != null)
                 ProjectManager.GISLayerBrowsingEventHandler(txt, e);
+        }
+
+        public static void OnAddToMap(GCDCore.Project.GCDProjectRasterItem raster)
+        {
+            if (GISAddToMapEventHandler != null)
+                ProjectManager.GISAddToMapEventHandler(raster);
         }
 
         public class GISLayerEventArgs : EventArgs

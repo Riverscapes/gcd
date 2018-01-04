@@ -280,7 +280,7 @@ namespace GCDCore.UserInterface.Project
             this.AddToMapToolStripMenuItem1,
             this.DeleteAssociatedSurfaceToolStripMenuItem});
             this.cmsAssociatedSurface.Name = "cmsAssociatedSurface";
-            this.cmsAssociatedSurface.Size = new System.Drawing.Size(253, 70);
+            this.cmsAssociatedSurface.Size = new System.Drawing.Size(253, 92);
             // 
             // EditPropertiesToolStripMenuItem
             // 
@@ -420,7 +420,7 @@ namespace GCDCore.UserInterface.Project
             this.batchChangeDetectionToolStripMenuItem,
             this.AddAllChangeDetectionAnalysesToTheMapToolStripMenuItem});
             this.cmsChangeDetectionGroup.Name = "cmsChangeDetectionGroup";
-            this.cmsChangeDetectionGroup.Size = new System.Drawing.Size(322, 92);
+            this.cmsChangeDetectionGroup.Size = new System.Drawing.Size(322, 70);
             // 
             // AddChangeDetectionToolStripMenuItem
             // 

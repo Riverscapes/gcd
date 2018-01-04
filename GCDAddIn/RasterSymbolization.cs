@@ -12,16 +12,16 @@ namespace GCDAddIn
 {
     public class RasterSymbolization
     {
-        public static IRasterRenderer CreateESRIDefinedContinuousRenderer(Raster gRaster, int iClassCount, string sColorRampName, bool bInvert = false)
+        public static IRasterRenderer CreateESRIDefinedContinuousRenderer(GCDConsoleLib.Raster gRaster, int iClassCount, string sColorRampName, bool bInvert = false)
         {
             try
             {
                 gRaster.ComputeStatistics();
-                decimal maxValue = gRaster.GetStatistics()["Maximum"];
+                decimal maxValue = gRaster.GetStatistics()["max"];
                 int iRound = GetMagnitude(maxValue);
                 double maxValueRounded = Math.Round((double)maxValue, Math.Abs(iRound));
 
-                RasterStretchColorRampRenderer stretchRenderer = new RasterStretchColorRampRenderer();
+                RasterStretchColorRampRenderer stretchRenderer = new RasterStretchColorRampRendererClass();
                 IRasterRenderer rasterRenderer = (IRasterRenderer)stretchRenderer;
                 IRasterDataset rasterDataset = ArcMapUtilities.GetRasterDataset(gRaster);
                 IRaster raster = rasterDataset.CreateDefaultRaster();
@@ -54,7 +54,7 @@ namespace GCDAddIn
 
         private static IStyleGalleryItem GetESRIStyleColorRamp(ref IColorRamp pColorRamp, string sColorRampName)
         {
-            IStyleGallery pStyleGallery = new ESRI.ArcGIS.Framework.StyleGallery();
+            IStyleGallery pStyleGallery = new ESRI.ArcGIS.Framework.StyleGalleryClass();
             IStyleGalleryStorage pStyleStorage;
             pStyleStorage = pStyleGallery as ESRI.ArcGIS.Display.IStyleGalleryStorage;
             string pStylePath = pStyleStorage.DefaultStylePath + "ESRI.style";
@@ -72,7 +72,7 @@ namespace GCDAddIn
                 {
                     if (string.Compare(pStyleItem.Name, sColorRampName) == 0)
                     {
-                        pColorRamp = pStyleItem.Item;
+                        pColorRamp = (IColorRamp)pStyleItem.Item;
                         return pStyleItem;
                     }
 
@@ -85,12 +85,12 @@ namespace GCDAddIn
             throw new Exception("The name of the color ramp provided does not exist.");
         }
 
-        public static IRasterRenderer CreateClassifyRenderer(Raster gRaster, int iClassCount, string sColorRampName, bool bInvert = false)
+        public static IRasterRenderer CreateClassifyRenderer(GCDConsoleLib.Raster gRaster, int iClassCount, string sColorRampName, bool bInvert = false)
         {
             gRaster.ComputeStatistics();
-            decimal maxValue = gRaster.GetStatistics()["Maximum"];
+            decimal maxValue = gRaster.GetStatistics()["max"];
 
-            IRasterClassifyColorRampRenderer classifyRenderer = new RasterClassifyColorRampRenderer();
+            IRasterClassifyColorRampRenderer classifyRenderer = new RasterClassifyColorRampRendererClass();
             IRasterRenderer rasterRenderer = (IRasterRenderer)classifyRenderer;
             IFillSymbol fillSymbol = new SimpleFillSymbol();
             IRasterDataset rasterDataset = ArcMapUtilities.GetRasterDataset(gRaster);
@@ -126,11 +126,11 @@ namespace GCDAddIn
         }
 
 
-        public static IRasterRenderer CreateClassifyRenderer(Raster gRaster, int iClassCount, string sColorRampName, double dMax, bool bInvert = false)
+        public static IRasterRenderer CreateClassifyRenderer(GCDConsoleLib.Raster gRaster, int iClassCount, string sColorRampName, double dMax, bool bInvert = false)
         {
             try
             {
-                IRasterClassifyColorRampRenderer classifyRenderer = new RasterClassifyColorRampRenderer();
+                IRasterClassifyColorRampRenderer classifyRenderer = new RasterClassifyColorRampRendererClass();
                 IRasterRenderer rasterRenderer = (IRasterRenderer)classifyRenderer;
                 IFillSymbol fillSymbol = new SimpleFillSymbol();
                 IRasterDataset rasterDataset = ArcMapUtilities.GetRasterDataset(gRaster);
@@ -241,11 +241,11 @@ namespace GCDAddIn
             }
         }
 
-        public static IRasterRenderer CreateGrainSizeStatisticColorRamp(Raster gRaster, UnitsNet.Units.LengthUnit eUnits)
+        public static IRasterRenderer CreateGrainSizeStatisticColorRamp(GCDConsoleLib.Raster gRaster, UnitsNet.Units.LengthUnit eUnits)
         {
             try
             {
-                IRasterClassifyColorRampRenderer classifyRenderer = new RasterClassifyColorRampRenderer();
+                IRasterClassifyColorRampRenderer classifyRenderer = new RasterClassifyColorRampRendererClass();
                 IRasterRenderer rasterRenderer = (IRasterRenderer)classifyRenderer;
                 IRasterDataset rasterDataset = ArcMapUtilities.GetRasterDataset(gRaster);
                 IRaster raster = rasterDataset.CreateDefaultRaster();
@@ -287,11 +287,11 @@ namespace GCDAddIn
             }
         }
 
-        public static IRasterRenderer CreateRoughnessColorRamp(Raster gRaster)
+        public static IRasterRenderer CreateRoughnessColorRamp(GCDConsoleLib.Raster gRaster)
         {
             try
             {
-                IRasterClassifyColorRampRenderer classifyRenderer = new RasterClassifyColorRampRenderer();
+                IRasterClassifyColorRampRenderer classifyRenderer = new RasterClassifyColorRampRendererClass();
                 IRasterRenderer rasterRenderer = (IRasterRenderer)classifyRenderer;
                 IRasterDataset rasterDataset = ArcMapUtilities.GetRasterDataset(gRaster);
                 IRaster raster = rasterDataset.CreateDefaultRaster();
@@ -349,51 +349,86 @@ namespace GCDAddIn
         }
 
 
-        public static IRasterRenderer CreateSlopeDegreesColorRamp(Raster gRaster)
+        public static IRasterRenderer CreateSlopeDegreesColorRamp(GCDConsoleLib.Raster gRaster)
         {
             try
             {
-                IRasterClassifyColorRampRenderer classifyRenderer = new RasterClassifyColorRampRenderer();
+                //Open raster file workspace.
+                IWorkspaceFactory workspaceFactory = new ESRI.ArcGIS.DataSourcesRaster.RasterWorkspaceFactoryClass();
+                ESRI.ArcGIS.DataSourcesRaster.IRasterWorkspace rasterWorkspace = (ESRI.ArcGIS.DataSourcesRaster.IRasterWorkspace)workspaceFactory.OpenFromFile(@"D:\Testing\GCD\test\inputs\2005DecDEM\AssociatedSurfaces\SlopeDegrees", 0);
+
+                //Open file raster dataset. 
+                IRasterDataset rasterDataset = rasterWorkspace.OpenRasterDataset("SlopeDegrees.tif");
+
+                ////Create the classify renderer.
+                IRasterClassifyColorRampRenderer classifyRenderer = new RasterClassifyColorRampRendererClass();
                 IRasterRenderer rasterRenderer = (IRasterRenderer)classifyRenderer;
-                IRasterDataset rasterDataset = ArcMapUtilities.GetRasterDataset(gRaster);
+
+                //Set up the renderer properties.
+                gRaster.ComputeStatistics(true);
+                //IRasterDataset rasterDataset = ArcMapUtilities.GetRasterDataset(gRaster);
                 IRaster raster = rasterDataset.CreateDefaultRaster();
-
-                gRaster.ComputeStatistics();
-                double rasterMin = (double)gRaster.GetStatistics()["Minimum"];
-
                 rasterRenderer.Raster = raster;
-                classifyRenderer.ClassCount = 10;
+                classifyRenderer.ClassCount = 3;
                 rasterRenderer.Update();
-                classifyRenderer.Break[0] = rasterMin;
-                classifyRenderer.Label[0] = "0 to 2";
-                classifyRenderer.Break[1] = 2;
-                classifyRenderer.Label[1] = "2 to 5";
-                classifyRenderer.Break[2] = 5;
-                classifyRenderer.Label[2] = "5 to 10";
-                classifyRenderer.Break[3] = 10;
-                classifyRenderer.Label[3] = "10 to 15";
-                classifyRenderer.Break[4] = 15;
-                classifyRenderer.Label[4] = "15 to 25";
-                classifyRenderer.Break[5] = 25;
-                classifyRenderer.Label[5] = "25 to 35";
-                classifyRenderer.Break[6] = 35;
-                classifyRenderer.Label[6] = "35 to 45";
-                classifyRenderer.Break[7] = 45;
-                classifyRenderer.Label[7] = "45 to 60";
-                classifyRenderer.Break[8] = 60;
-                classifyRenderer.Label[8] = "60 to 80";
-                classifyRenderer.Break[9] = 80;
-                classifyRenderer.Label[9] = "80 to 90";
-                classifyRenderer.Break[10] = 90;
 
-                List<RgbColor> lColors = CreateSlopeColorRamp();
-                IFillSymbol fillSymbol = new SimpleFillSymbol();
-                for (int i = 0; i <= classifyRenderer.ClassCount - 1; i += i + 1)
+                //Set the color ramp for the symbology.
+                IAlgorithmicColorRamp colorRamp = new AlgorithmicColorRampClass();
+                colorRamp.Size = 3;
+                bool createColorRamp;
+                colorRamp.CreateRamp(out createColorRamp);
+
+                //Create the symbol for the classes.
+                IFillSymbol fillSymbol = new SimpleFillSymbolClass();
+                for (int i = 0; i < classifyRenderer.ClassCount; i++)
                 {
-                    fillSymbol.Color = lColors[i];
-                    classifyRenderer.Symbol[i] = (ISymbol)fillSymbol;
+                    fillSymbol.Color = colorRamp.get_Color(i);
+                    classifyRenderer.set_Symbol(i, (ISymbol)fillSymbol);
+                    classifyRenderer.set_Label(i, Convert.ToString(i));
                 }
+                //IRasterClassifyColorRampRenderer classifyRenderer = new RasterClassifyColorRampRendererClass();
+                //IRasterRenderer rasterRenderer = (IRasterRenderer)classifyRenderer;
+                //IRasterDataset rasterDataset = ArcMapUtilities.GetRasterDataset(gRaster);
+                //IRaster raster = rasterDataset.CreateDefaultRaster();
 
+                ////gRaster.ComputeStatistics();
+                ////double rasterMin = (double)gRaster.GetStatistics()["min"];
+
+                //rasterRenderer.Raster = raster;
+                //classifyRenderer.ClassCount = 1;
+                //rasterRenderer.Update();
+
+                //classifyRenderer.Break[0] = 0f;
+                ////classifyRenderer.Label[0] = "0 to 2";
+                //classifyRenderer.set_Label(0, "test");
+                ////classifyRenderer.Break[1] = 2;
+                ////classifyRenderer.Label[1] = "2 to 5";
+                ////classifyRenderer.Break[2] = 5;
+                ////classifyRenderer.Label[2] = "5 to 10";
+                ////classifyRenderer.Break[3] = 10;
+                ////classifyRenderer.Label[3] = "10 to 15";
+                ////classifyRenderer.Break[4] = 15;
+                ////classifyRenderer.Label[4] = "15 to 25";
+                ////classifyRenderer.Break[5] = 25;
+                ////classifyRenderer.Label[5] = "25 to 35";
+                ////classifyRenderer.Break[6] = 35;
+                ////classifyRenderer.Label[6] = "35 to 45";
+                ////classifyRenderer.Break[7] = 45;
+                ////classifyRenderer.Label[7] = "45 to 60";
+                ////classifyRenderer.Break[8] = 60;
+                ////classifyRenderer.Label[8] = "60 to 80";
+                ////classifyRenderer.Break[9] = 80;
+                ////classifyRenderer.Label[9] = "80 to 90";
+                ////classifyRenderer.Break[10] = 90;
+                ////classifyRenderer.set_Label(10, "temp");
+
+                ////List<RgbColor> lColors = CreateSlopeColorRamp();
+                ////IFillSymbol fillSymbol = new SimpleFillSymbol();
+                ////for (int i = 0; i < classifyRenderer.ClassCount; i++)
+                ////{
+                ////    fillSymbol.Color = lColors[i];
+                ////    classifyRenderer.Symbol[i] = (ISymbol)fillSymbol;
+                ////}
                 return rasterRenderer;
             }
             catch (Exception ex)
@@ -423,7 +458,7 @@ namespace GCDAddIn
         {
             try
             {
-                IRasterClassifyColorRampRenderer classifyRenderer = new RasterClassifyColorRampRenderer();
+                IRasterClassifyColorRampRenderer classifyRenderer = new RasterClassifyColorRampRendererClass();
                 IRasterRenderer rasterRenderer = (IRasterRenderer)classifyRenderer;
                 IRasterDataset rasterDataset = ArcMapUtilities.GetRasterDataset(gRaster);
                 IRaster raster = rasterDataset.CreateDefaultRaster();
@@ -452,7 +487,7 @@ namespace GCDAddIn
                 classifyRenderer.Break[9] = 565;
                 classifyRenderer.Label[9] = "> 565%";
                 List<RgbColor> lColors = CreateSlopeColorRamp();
-                IFillSymbol fillSymbol = new SimpleFillSymbol();
+                IFillSymbol fillSymbol = new SimpleFillSymbolClass();
                 for (int i = 0; i <= classifyRenderer.ClassCount - 1; i += i + 1)
                 {
                     fillSymbol.Color = lColors[i];
@@ -473,16 +508,16 @@ namespace GCDAddIn
         {
             try
             {
-                IRasterClassifyColorRampRenderer classifyRenderer = new RasterClassifyColorRampRenderer();
+                IRasterClassifyColorRampRenderer classifyRenderer = new RasterClassifyColorRampRendererClass();
                 IRasterRenderer rasterRenderer = (IRasterRenderer)classifyRenderer;
-                IFillSymbol fillSymbol = new SimpleFillSymbol();
+                IFillSymbol fillSymbol = new SimpleFillSymbolClass();
                 IRasterDataset rasterDataset = ArcMapUtilities.GetRasterDataset(gRaster);
                 IRaster raster = rasterDataset.CreateDefaultRaster();
 
                 gRaster.ComputeStatistics();
                 Dictionary<string, decimal> rasterStats = gRaster.GetStatistics();
-                double rMin = (double)rasterStats["Minimum"];
-                double rMax = (double)rasterStats["Maximum"];
+                double rMin = (double)rasterStats["min"];
+                double rMax = (double)rasterStats["max"];
 
                 rasterRenderer.Raster = raster;
                 if ((rMin == double.MinValue & rMax == double.MaxValue) | (rMin == double.MaxValue & rMax == double.MinValue) | (rMin == float.MinValue & rMax == float.MaxValue) | (rMin == float.MaxValue & rMax == float.MinValue))
@@ -622,7 +657,7 @@ namespace GCDAddIn
         }
 
 
-     
+
 
         private static RgbColor CreateRGBColor(UInt16 iRed, UInt16 iGreen, UInt16 iBlue)
         {

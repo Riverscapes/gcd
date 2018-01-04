@@ -13,8 +13,8 @@ namespace GCDCore.Project
         public readonly DEMSurvey NewDEM;
         public readonly DEMSurvey OldDEM;
 
-        public Raster RawDoD { get; set; }
-        public Raster ThrDoD { get; set; }
+        public GCDProjectRasterItem RawDoD { get; internal set; }
+        public GCDProjectRasterItem ThrDoD { get; internal set; }
 
         public HistogramPair Histograms { get; set; }
         public FileInfo SummaryXML { get; set; }
@@ -28,8 +28,8 @@ namespace GCDCore.Project
             Folder = folder;
             NewDEM = newDEM;
             OldDEM = oldDEM;
-            RawDoD = rawDoD;
-            ThrDoD = thrDoD;
+            RawDoD = new GCDProjectRasterItem("Raw DoD", rawDoD);
+            ThrDoD = new GCDProjectRasterItem("Thresholded DoD", thrDoD);
             Histograms = histograms;
             SummaryXML = summaryXML;
             Statistics = stats;
@@ -42,8 +42,8 @@ namespace GCDCore.Project
             Folder = folder;
             NewDEM = newDEM;
             OldDEM = oldDEM;
-            RawDoD = new Raster(rawDoD);
-            ThrDoD = new Raster(thrDoD);
+            RawDoD = new GCDProjectRasterItem("Raw DoD", rawDoD);
+            ThrDoD = new GCDProjectRasterItem("Thresholded DoD", thrDoD);
             Histograms = histograms;
             SummaryXML = summaryXML;
             Statistics = stats;
@@ -84,8 +84,8 @@ namespace GCDCore.Project
             nodDoD.AppendChild(xmlDoc.CreateElement("Folder")).InnerText = ProjectManager.Project.GetRelativePath(Folder.FullName);
             nodDoD.AppendChild(xmlDoc.CreateElement("NewDEM")).InnerText = NewDEM.Name;
             nodDoD.AppendChild(xmlDoc.CreateElement("OldDEM")).InnerText = OldDEM.Name;
-            nodDoD.AppendChild(xmlDoc.CreateElement("RawDoD")).InnerText = ProjectManager.Project.GetRelativePath(RawDoD.GISFileInfo);
-            nodDoD.AppendChild(xmlDoc.CreateElement("ThrDoD")).InnerText = ProjectManager.Project.GetRelativePath(ThrDoD.GISFileInfo);
+            nodDoD.AppendChild(xmlDoc.CreateElement("RawDoD")).InnerText = ProjectManager.Project.GetRelativePath(RawDoD.Raster.GISFileInfo);
+            nodDoD.AppendChild(xmlDoc.CreateElement("ThrDoD")).InnerText = ProjectManager.Project.GetRelativePath(ThrDoD.Raster.GISFileInfo);
             nodDoD.AppendChild(xmlDoc.CreateElement("RawHistogram")).InnerText = ProjectManager.Project.GetRelativePath(Histograms.Raw.Path);
             nodDoD.AppendChild(xmlDoc.CreateElement("ThrHistogram")).InnerText = ProjectManager.Project.GetRelativePath(Histograms.Thr.Path);
             nodDoD.AppendChild(xmlDoc.CreateElement("SummaryXML")).InnerText = ProjectManager.Project.GetRelativePath(SummaryXML);
@@ -209,11 +209,11 @@ namespace GCDCore.Project
             BudgetSegregations.Clear();
 
             // Delete the raw and thresholded rasters
-            GCDProjectRasterItem.DeleteRaster(RawDoD);
-            GCDProjectRasterItem.DeleteRaster(ThrDoD);
+            RawDoD.Delete();
+            ThrDoD.Delete();
 
             // Now delete all the meta files associated with the DoD
-            foreach (FileInfo file in RawDoD.GISFileInfo.Directory.GetFiles("*.*", SearchOption.AllDirectories))
+            foreach (FileInfo file in RawDoD.Raster.GISFileInfo.Directory.GetFiles("*.*", SearchOption.AllDirectories))
             {
                 try
                 {

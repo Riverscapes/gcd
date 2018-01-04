@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GCDCore.Project;
 
 namespace GCDAddIn
 {
     class ucProjectManager : GCDCore.UserInterface.Project.ucProjectExplorer
     {
+
         public ucProjectManager(object hook) : base()
         {
             this.Hook = hook;
@@ -29,6 +31,7 @@ namespace GCDAddIn
         public class AddinImpl : ESRI.ArcGIS.Desktop.AddIns.DockableWindow
         {
             private ucProjectManager m_windowUI;
+            private GCDArcMapManager ArcMapManager;
 
             public AddinImpl()
             {
@@ -40,8 +43,12 @@ namespace GCDAddIn
             {
                 m_windowUI = new ucProjectManager(this.Hook);
 
+
                 GCDCore.Project.ProjectManager.GISLayerDeletingEventHandler += OnGISLayerDeleting;
                 GCDCore.Project.ProjectManager.GISLayerBrowsingEventHandler += OnGISLayerBrowsing;
+                GCDCore.Project.ProjectManager.GISAddToMapEventHandler += OnAddRasterToMap;
+
+                ArcMapManager = new GCDArcMapManager();
 
                 return m_windowUI.Handle;
             }
@@ -68,6 +75,23 @@ namespace GCDAddIn
                 GCDConsoleLib.Raster result = ArcMapBrowse.BrowseOpenRaster(e.FormTitle, dir);
                 if (result is GCDConsoleLib.Raster)
                     txt.Text = result.GISFileInfo.FullName;
+            }
+
+            public void OnAddRasterToMap(GCDProjectRasterItem raster)
+            {
+                if (raster is DEMSurvey)
+                    ArcMapManager.AddDEM((DEMSurvey)raster);
+                else if (raster is AssocSurface)
+                    ArcMapManager.AddAssociatedSurface((AssocSurface)raster);
+                else if (raster is ErrorSurface)
+                    ArcMapManager.AddErrSurface((ErrorSurface)raster);
+                else if (raster is DoDBase)
+                    ArcMapManager.AddDoD(raster);
+
+
+
+                ArcMap.Document.ActivatedView.Refresh();
+                ArcMap.Document.UpdateContents();
             }
         }
     }

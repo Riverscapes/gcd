@@ -115,7 +115,9 @@ namespace GCDCore
 
         public FileInfo DEMSurveyHillShadeRasterPath(string sSurveyName)
         {
-            return naru.os.File.GetNewSafeName(DEMSurveyFolder(sSurveyName), sSurveyName + m_sDEMSurveyHillshadeSuffix, RasterExtension);
+            string path = naru.os.File.RemoveDangerousCharacters(sSurveyName + m_sDEMSurveyHillshadeSuffix);
+            path = Path.ChangeExtension(Path.Combine(DEMSurveyFolder(sSurveyName), path), RasterExtension);
+            return new System.IO.FileInfo(path);
         }
 
         public FileInfo AssociatedSurfaceRasterPath(string sSurveyName, string sAssociatedSurface)

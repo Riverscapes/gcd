@@ -47,7 +47,7 @@ namespace GCDAddIn
 
             foreach (DoDBase dod in ProjectManager.Project.DoDs.Values)
             {
-                AddDoD(dod);
+                AddDoD(dod.RawDoD);
             }
 
             return pProjectGrpLyr;
@@ -151,7 +151,7 @@ namespace GCDAddIn
                 case AssocSurface.AssociatedSurfaceTypes.PointDensity:
 
                     assocRow.Raster.ComputeStatistics();
-                    decimal rasterMax = assocRow.Raster.GetStatistics()["Maximum"];
+                    decimal rasterMax = assocRow.Raster.GetStatistics()["max"];
 
                     if (!GCDCore.Properties.Settings.Default.ApplyComparativeSymbology)
                     {
@@ -195,19 +195,19 @@ namespace GCDAddIn
             return null;
         }
 
-        public IRasterLayer AddDoD(DoDBase dod, bool bThresholded = true)
+        public IRasterLayer AddDoD(GCDProjectRasterItem dod, bool bThresholded = true)
         {
             Raster gDoDRaster;
             string sLayerName = dod.Name;
 
             if (bThresholded)
             {
-                gDoDRaster = dod.ThrDoD;
+                gDoDRaster = dod.Raster;
                 sLayerName += " (Thresholded)";
             }
             else
             {
-                gDoDRaster = dod.RawDoD;
+                gDoDRaster = dod.Raster;
                 sLayerName += " (Raw)";
             }
 
@@ -243,8 +243,8 @@ namespace GCDAddIn
 
             errRow.Raster.ComputeStatistics();
             Dictionary<string, decimal> stats = errRow.Raster.GetStatistics();
-            double rMin = (double)stats["Minimum"];
-            double rMax = (double)stats["Maximum"];
+            double rMin = (double)stats["min"];
+            double rMax = (double)stats["max"];
 
             if (rMin == rMax)
             {
@@ -290,7 +290,7 @@ namespace GCDAddIn
 
             if (rasterLayer != null)
             {
-                IMapLayers pMapLayers = (IMapLayers)ArcMap.Document.FocusMap.Layers;
+                IMapLayers pMapLayers = (IMapLayers)ArcMap.Document.FocusMap;
                 if (!string.IsNullOrEmpty(sRasterName))
                 {
                     rasterLayer.Name = sRasterName;

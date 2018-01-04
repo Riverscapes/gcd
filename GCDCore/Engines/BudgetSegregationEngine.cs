@@ -23,7 +23,7 @@ namespace GCDCore.Engines
 
             if (dod is DoDMinLoD)
             {
-                results = RasterOperators.GetStatsMinLoD(dod.RawDoD, dod.RawDoD, ((DoDMinLoD)dod).Threshold, Mask, fieldName, ProjectManager.Project.Units);
+                results = RasterOperators.GetStatsMinLoD(dod.RawDoD.Raster, dod.RawDoD.Raster, ((DoDMinLoD)dod).Threshold, Mask, fieldName, ProjectManager.Project.Units);
             }
             else
             {
@@ -31,17 +31,17 @@ namespace GCDCore.Engines
 
                 if (dod is DoDProbabilistic)
                 {
-                    results = RasterOperators.GetStatsProbalistic(dod.RawDoD, dod.ThrDoD, propErr, Mask, fieldName, ProjectManager.Project.Units);
+                    results = RasterOperators.GetStatsProbalistic(dod.RawDoD.Raster, dod.ThrDoD.Raster, propErr, Mask, fieldName, ProjectManager.Project.Units);
                 }
                 else
                 {
-                    results = RasterOperators.GetStatsPropagated(dod.RawDoD, dod.ThrDoD, propErr, Mask, fieldName, ProjectManager.Project.Units);
+                    results = RasterOperators.GetStatsPropagated(dod.RawDoD.Raster, dod.ThrDoD.Raster, propErr, Mask, fieldName, ProjectManager.Project.Units);
                 }
             }
 
             // Retrieve the histograms for all budget segregation classes
-            Dictionary<string, Histogram> rawHistos = RasterOperators.BinRaster(dod.RawDoD, DEFAULTHISTOGRAMNUMBER, Mask, fieldName);
-            Dictionary<string, Histogram> thrHistos = RasterOperators.BinRaster(dod.ThrDoD, DEFAULTHISTOGRAMNUMBER, Mask, fieldName);
+            Dictionary<string, Histogram> rawHistos = RasterOperators.BinRaster(dod.RawDoD.Raster, DEFAULTHISTOGRAMNUMBER, Mask, fieldName);
+            Dictionary<string, Histogram> thrHistos = RasterOperators.BinRaster(dod.ThrDoD.Raster, DEFAULTHISTOGRAMNUMBER, Mask, fieldName);
 
             // Make sure that the output folder and the folder for the figures exist
             analysisFolder.Create();

@@ -35,6 +35,7 @@ namespace GCDCore.UserInterface.Project
         {
             LoadTree();
 
+            // AddToMapToolStripMenuItem_Click
             this.treProject.MouseDown += treProject_MouseDown;
             this.treProject.DoubleClick += treProject_DoubleClick;
             this.treProject.MouseDown += treProject_MouseDown;
@@ -47,10 +48,10 @@ namespace GCDCore.UserInterface.Project
             this.AddToMapToolStripMenuItem.Click += AddToMapToolStripMenuItem_Click;
             this.DeleteDEMSurveyToolStripMenuItem.Click += btnDelete_Click;
             this.AddAssociatedSurfaceToolStripMenuItem.Click += AddAssociatedSurfaceToolStripMenuItem_Click;
+            this.AddToMapToolStripMenuItem1.Click += AddToMapToolStripMenuItem_Click;
             this.AddErrorSurfaceToolStripMenuItem.Click += SpecifyErrorSurfaceToolStripMenuItem_Click;
             this.DeriveErrorSurfaceToolStripMenuItem1.Click += DeriveErrorSurfaceToolStripMenuItem_Click;
             this.EditPropertiesToolStripMenuItem.Click += EditPropertiesToolStripMenuItem_Click;
-            this.AddToMapToolStripMenuItem1.Click += AddToMapToolStripMenuItem1_Click;
             this.DeleteAssociatedSurfaceToolStripMenuItem.Click += btnDelete_Click;
             this.AddAssociatedSurfaceToolStripMenuItem1.Click += AddAssociatedSurfaceToolStripMenuItem1_Click;
             this.AddAllAssociatedSurfacesToTheMapToolStripMenuItem.Click += AddAllAssociatedSurfacesToTheMapToolStripMenuItem_Click;
@@ -831,11 +832,12 @@ namespace GCDCore.UserInterface.Project
                 TreeNode selNode = treProject.SelectedNode;
                 if (selNode is TreeNode)
                 {
-                    GCDNodeTypes eType = GetNodeType(selNode);
-                    if (eType == GCDNodeTypes.DEMSurvey)
+                    if (selNode.Tag is ProjectTreeNode)
                     {
-                        DEMSurvey dem = (DEMSurvey)((ProjectTreeNode)selNode.Tag).Item;
-                        throw new Exception("Adding DEM to map not implemented");
+                        if (((ProjectTreeNode)selNode.Tag).Item is GCDProjectRasterItem)
+                        {
+                            ProjectManager.OnAddToMap((GCDProjectRasterItem)((ProjectTreeNode)selNode.Tag).Item);
+                        }
                     }
                 }
             }
