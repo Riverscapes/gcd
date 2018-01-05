@@ -1077,68 +1077,6 @@ namespace GCDCore.UserInterface.Project
             }
         }
 
-        #region "Properties Button"
-
-
-        private void btnProperties_Click(object sender, System.EventArgs e)
-        {
-            try
-            {
-                TreeNode nodSelected = treProject.SelectedNode;
-                if (nodSelected == null)
-                {
-                    return;
-                }
-
-                GCDNodeTypes eType = GetNodeType(nodSelected);
-                int nID = GetNodeID(nodSelected);
-                Form frm = null;
-                switch (eType)
-                {
-
-                    case GCDNodeTypes.Project:
-                        frm = new GCDCore.UserInterface.Project.frmProjectProperties(true);
-
-                        break;
-                    case GCDNodeTypes.DEMSurvey:
-                        DEMSurvey dem = (DEMSurvey)((ProjectTreeNode)nodSelected.Tag).Item;
-                        frm = new frmDEMSurveyProperties(dem);
-
-                        break;
-                    case GCDNodeTypes.AssociatedSurface:
-                        AssocSurface assoc = (AssocSurface)((ProjectTreeNode)nodSelected.Tag).Item;
-                        frm = new frmAssocSurfaceProperties(assoc.DEM, assoc);
-
-                        break;
-                    case GCDNodeTypes.ErrorSurface:
-                        throw new NotImplementedException("error surface properties");
-                        //    Dim nDEMSurveyID As Integer = GetNodeID(nodSelected.Parent.Parent)
-                        //    Dim rDEMSurvey As ProjectDS.DEMSurveyRow = GCD.GCDProject.ProjectManagerBase.ds.DEMSurvey.FindByDEMSurveyID(nDEMSurveyID)
-                        //    For Each rError As ProjectDS.ErrorSurfaceRow In rDEMSurvey.GetErrorSurfaceRows
-                        //        If rError.ErrorSurfaceID = nID Then
-                        //            Dim frm As Newe
-                        //        End If
-                        //    Next
-
-                }
-
-                if (frm is Form)
-                {
-                    if (frm.ShowDialog() == DialogResult.OK)
-                    {
-                        LoadTree();
-                    }
-                }
-
-            }
-            catch (Exception ex)
-            {
-                naru.error.ExceptionUI.HandleException(ex);
-            }
-        }
-
-        #endregion
-
         public void cmdRefresh_Click(System.Object sender, System.EventArgs e)
         {
             //Dim sSortBy As String = sender.ToString
