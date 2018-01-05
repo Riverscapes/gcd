@@ -70,7 +70,9 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.grpPropagated = new System.Windows.Forms.GroupBox();
             this.txtPropErr = new System.Windows.Forms.TextBox();
             this.Label11 = new System.Windows.Forms.Label();
+            this.addToMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.GroupBox1.SuspendLayout();
+            this.cmsBasicRaster.SuspendLayout();
             this.GroupBox2.SuspendLayout();
             this.GroupBox3.SuspendLayout();
             this.TableLayoutPanel1.SuspendLayout();
@@ -132,8 +134,10 @@ namespace GCDCore.UserInterface.ChangeDetection
             // 
             // cmsBasicRaster
             // 
+            this.cmsBasicRaster.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addToMapToolStripMenuItem});
             this.cmsBasicRaster.Name = "cmsBasicRaster";
-            this.cmsBasicRaster.Size = new System.Drawing.Size(61, 4);
+            this.cmsBasicRaster.Size = new System.Drawing.Size(138, 26);
             // 
             // GroupBox2
             // 
@@ -452,6 +456,14 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.Label11.TabIndex = 4;
             this.Label11.Text = "Propagated error";
             // 
+            // addToMapToolStripMenuItem
+            // 
+            this.addToMapToolStripMenuItem.Image = global::GCDCore.Properties.Resources.AddToMap;
+            this.addToMapToolStripMenuItem.Name = "addToMapToolStripMenuItem";
+            this.addToMapToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.addToMapToolStripMenuItem.Text = "Add to Map";
+            this.addToMapToolStripMenuItem.Click += new System.EventHandler(this.AddToMapToolStripMenuItem_Click);
+            // 
             // ucDoDProperties
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -461,6 +473,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.Size = new System.Drawing.Size(500, 472);
             this.GroupBox1.ResumeLayout(false);
             this.GroupBox1.PerformLayout();
+            this.cmsBasicRaster.ResumeLayout(false);
             this.GroupBox2.ResumeLayout(false);
             this.GroupBox2.PerformLayout();
             this.GroupBox3.ResumeLayout(false);
@@ -536,7 +549,9 @@ namespace GCDCore.UserInterface.ChangeDetection
 		internal System.Windows.Forms.Label Label12;
 		internal System.Windows.Forms.ContextMenuStrip cmsBasicRaster;
 		private System.Windows.Forms.ToolStripMenuItem withEventsField_AddToMapToolStripMenuItem1;
-		internal System.Windows.Forms.ToolStripMenuItem AddToMapToolStripMenuItem1 {
+        private System.Windows.Forms.ToolStripMenuItem addToMapToolStripMenuItem;
+
+        internal System.Windows.Forms.ToolStripMenuItem AddToMapToolStripMenuItem1 {
 			get { return withEventsField_AddToMapToolStripMenuItem1; }
 			set {
 				if (withEventsField_AddToMapToolStripMenuItem1 != null) {

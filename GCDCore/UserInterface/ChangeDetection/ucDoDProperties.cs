@@ -6,6 +6,8 @@ namespace GCDCore.UserInterface.ChangeDetection
 {
     public partial class ucDoDProperties
     {
+        public DoDBase DoD { get; internal set; }
+
         private void DodPropertiesUC_Load(object sender, System.EventArgs e)
         {
             // Make all textboxes have invisible border. Easier to keep border turned on
@@ -17,10 +19,27 @@ namespace GCDCore.UserInterface.ChangeDetection
                     ((TextBox)aControl).BorderStyle = System.Windows.Forms.BorderStyle.None;
                 }
             }
+
+            if (ProjectManager.IsArcMap)
+            {
+                txtNewDEM.ContextMenuStrip = cmsBasicRaster;
+                txtOldDEM.ContextMenuStrip = cmsBasicRaster;
+                txtNewError.ContextMenuStrip = cmsBasicRaster;
+                txtOldError.ContextMenuStrip = cmsBasicRaster;
+
+                txtPropErr.ContextMenuStrip = cmsBasicRaster;
+
+                txtProbabilityRaster.ContextMenuStrip = cmsBasicRaster;
+                txtErosionalSpatialCoherenceRaster.ContextMenuStrip = cmsBasicRaster;
+                txtDepositionSpatialCoherenceRaster.ContextMenuStrip = cmsBasicRaster;
+                txtPosteriorRaster.ContextMenuStrip = cmsBasicRaster;
+                txtConditionalRaster.ContextMenuStrip = cmsBasicRaster;
+            }
         }
 
         public void Initialize(DoDBase dod)
         {
+            DoD = dod;
             txtNewDEM.Text = dod.NewDEM.Name;
             txtOldDEM.Text = dod.OldDEM.Name;
 
@@ -77,47 +96,17 @@ namespace GCDCore.UserInterface.ChangeDetection
 
             if (cms.SourceControl.Name.ToLower().Contains("dem"))
             {
-                // Get the new or old survey name
-                if (cms.SourceControl.Name.ToLower().Contains("new"))
-                {
-                    sItemName = txtNewDEM.Text;
-                }
-                else
-                {
-                    sItemName = txtOldDEM.Text;
-                }
-
-                throw new NotImplementedException("add to map functionality commented out");
-                //For Each aDEMSurvey In m_rDoD.ProjectRow.GetDEMSurveyRows
-                //    If String.Compare(sItemName, aDEMSurvey.Name, True) = 0 Then
-                //        '  Core.GCDProject.ProjectManagerUI.ArcMapManager.AddDEM(aDEMSurvey)
-                //        Exit Sub
-                //    End If
-                //Next
-
-
+                // Get the new or old DEM
+                DEMSurvey dem = cms.SourceControl.Name.ToLower().Contains("new") ? DoD.NewDEM : DoD.OldDEM;
+                ProjectManager.OnAddToMap(dem);
             }
             else if (cms.SourceControl.Name.ToLower().Contains("error"))
             {
-                // Get the new or old error surface name
-                if (cms.SourceControl.Name.ToLower().Contains("old"))
+                if (DoD is DoDPropagated)
                 {
-                    sItemName = txtNewError.Text;
+                    ErrorSurface err = cms.SourceControl.Name.ToLower().Contains("new") ? ((DoDPropagated)DoD).NewError : ((DoDPropagated)DoD).OldError;
+                    ProjectManager.OnAddToMap(err);
                 }
-                else
-                {
-                    sItemName = txtOldError.Text;
-                }
-
-                throw new NotImplementedException("Add to map functionaility commented out");
-                //For Each aDEMSurvey In m_rDoD.ProjectRow.GetDEMSurveyRows
-                //    For Each anErrorSurface In aDEMSurvey.GetErrorSurfaceRows
-                //        If String.Compare(anErrorSurface.Name, sItemName, True) = 0 Then
-                //            'Core.GCDProject.ProjectManagerUI.ArcMapManager.AddErrSurface(anErrorSurface)
-                //            Exit Sub
-                //        End If
-                //    Next
-                //Next
             }
             else
             {
@@ -126,33 +115,20 @@ namespace GCDCore.UserInterface.ChangeDetection
                 {
                     if (System.IO.File.Exists(sPath))
                     {
-                        //GISCode.ArcMap.AddToMap(My.ThisApplication, sPath, IO.Path.GetFileNameWithoutExtension(sPath), GISDataStructures.BasicGISTypes.Raster)
-                        string sFileName = System.IO.Path.GetFileNameWithoutExtension(sPath);
+                        string rasterFileName = System.IO.Path.GetFileNameWithoutExtension(sPath);
+                        string rasterDisplayName = string.Empty;
 
-                        switch (sFileName)
+                        switch (rasterFileName)
                         {
-
-                            case "PropErr":
-                                // TODO 
-                                throw new Exception("not implemented");
-                            // Core.GCDProject.ProjectManagerUI.ArcMapManager.AddPropErr(m_rDoD)
-
-                            case "priorProb":
-                                // TODO 
-                                throw new Exception("not implemented");
-                            //  Core.GCDProject.ProjectManagerUI.ArcMapManager.AddProbabilityRaster(m_rDoD, m_rDoD.ProbabilityRaster)
-
-                            case "nbrErosion":
-                                // TODO 
-                                throw new Exception("not implemented");
-                            // Core.GCDProject.ProjectManagerUI.ArcMapManager.AddProbabilityRaster(m_rDoD, m_rDoD.SpatialCoErosionRaster)
-
-                            case "nbrDeposition":
-                                // TODO 
-                                throw new Exception("not implemented");
-                                //  Core.GCDProject.ProjectManagerUI.ArcMapManager.AddProbabilityRaster(m_rDoD, m_rDoD.SpatialCoDepositionRaster)
-
+                            case "PropErr": rasterDisplayName = "Propagated Error"; break;
+                            case "priorProb": rasterDisplayName = "Prior Probability"; break;
+                            case "nbrErosion": rasterDisplayName = "Erosion Spatial Coherence"; break;
+                            case "nbrDeposition": rasterDisplayName = "Deposition Spatial Coherence"; break;
                         }
+
+                        System.IO.FileInfo rasterPath = ProjectManager.Project.GetAbsolutePath(sPath);
+                        GCDProjectRasterItem raster = new GCDProjectRasterItem("Propagated Error", rasterPath);
+                        ProjectManager.OnAddToMap(raster);
                     }
                 }
             }
@@ -167,7 +143,5 @@ namespace GCDCore.UserInterface.ChangeDetection
             Load += DodPropertiesUC_Load;
             InitializeComponent();
         }
-
     }
-
 }
