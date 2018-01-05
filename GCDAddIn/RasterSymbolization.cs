@@ -149,13 +149,20 @@ namespace GCDAddIn
 
         public static IRasterRenderer CreateClassifyRenderer(GCDConsoleLib.Raster gRaster, int iClassCount, string sColorRampName, bool bInvert = false)
         {
+            // Open file raster dataset and ensure that statistics and histograms are present (absence of histograms will cause Renderer.Update() to crash)
+            IRasterDataset rasterDataset = ArcMapUtilities.GetRasterDataset(gRaster);
+            ESRI.ArcGIS.DataSourcesRaster.IRasterBandCollection pRastBands = (ESRI.ArcGIS.DataSourcesRaster.IRasterBandCollection)rasterDataset;
+            ESRI.ArcGIS.DataSourcesRaster.IEnumRasterBand enumRasterBand = (ESRI.ArcGIS.DataSourcesRaster.IEnumRasterBand)pRastBands.Bands;
+            rasterDataset.PrecalculateStats(0);
+            ESRI.ArcGIS.DataSourcesRaster.IRasterBand pRastBand = enumRasterBand.Next();
+            pRastBand.ComputeStatsAndHist();
+
             gRaster.ComputeStatistics();
             decimal maxValue = gRaster.GetStatistics()["max"];
 
             IRasterClassifyColorRampRenderer classifyRenderer = new RasterClassifyColorRampRendererClass();
             IRasterRenderer rasterRenderer = (IRasterRenderer)classifyRenderer;
             IFillSymbol fillSymbol = new SimpleFillSymbol();
-            IRasterDataset rasterDataset = ArcMapUtilities.GetRasterDataset(gRaster);
             IRaster raster = rasterDataset.CreateDefaultRaster();
             rasterRenderer.Raster = raster;
             IColorRamp pColorRamp = null;
@@ -168,7 +175,7 @@ namespace GCDAddIn
             pColorRamp.CreateRamp(out bSucess);
             List<IColor> lColors = new List<IColor>();
 
-            for (int i = 0; i <= classifyRenderer.ClassCount - 1; i += i + 1)
+            for (int i = 0; i < classifyRenderer.ClassCount; i++)
             {
                 lColors.Add(pColorRamp.Color[i]);
             }
@@ -178,7 +185,7 @@ namespace GCDAddIn
                 lColors.Reverse();
             }
 
-            for (int i = 0; i <= classifyRenderer.ClassCount - 1; i += i + 1)
+            for (int i = 0; i < classifyRenderer.ClassCount; i++)
             {
                 fillSymbol.Color = lColors[i];
                 classifyRenderer.Symbol[i] = (ISymbol)fillSymbol;
@@ -187,15 +194,21 @@ namespace GCDAddIn
             return rasterRenderer;
         }
 
-
         public static IRasterRenderer CreateClassifyRenderer(GCDConsoleLib.Raster gRaster, int iClassCount, string sColorRampName, double dMax, bool bInvert = false)
         {
             try
             {
+                // Open file raster dataset and ensure that statistics and histograms are present (absence of histograms will cause Renderer.Update() to crash)
+                IRasterDataset rasterDataset = ArcMapUtilities.GetRasterDataset(gRaster);
+                ESRI.ArcGIS.DataSourcesRaster.IRasterBandCollection pRastBands = (ESRI.ArcGIS.DataSourcesRaster.IRasterBandCollection)rasterDataset;
+                ESRI.ArcGIS.DataSourcesRaster.IEnumRasterBand enumRasterBand = (ESRI.ArcGIS.DataSourcesRaster.IEnumRasterBand)pRastBands.Bands;
+                rasterDataset.PrecalculateStats(0);
+                ESRI.ArcGIS.DataSourcesRaster.IRasterBand pRastBand = enumRasterBand.Next();
+                pRastBand.ComputeStatsAndHist();
+
                 IRasterClassifyColorRampRenderer classifyRenderer = new RasterClassifyColorRampRendererClass();
                 IRasterRenderer rasterRenderer = (IRasterRenderer)classifyRenderer;
                 IFillSymbol fillSymbol = new SimpleFillSymbol();
-                IRasterDataset rasterDataset = ArcMapUtilities.GetRasterDataset(gRaster);
                 IRaster raster = rasterDataset.CreateDefaultRaster();
 
                 rasterRenderer.Raster = raster;
@@ -208,7 +221,7 @@ namespace GCDAddIn
                 bool bOK = false;
                 pColorRamp.CreateRamp(out bOK);
                 List<IColor> lColors = new List<IColor>();
-                for (int i = 0; i <= classifyRenderer.ClassCount - 1; i += i + 1)
+                for (int i = 0; i < classifyRenderer.ClassCount; i++)
                 {
                     lColors.Add(pColorRamp.Color[i]);
                 }
@@ -218,7 +231,7 @@ namespace GCDAddIn
                     lColors.Reverse();
                 }
 
-                for (int i = 0; i <= classifyRenderer.ClassCount - 1; i += i + 1)
+                for (int i = 0; i < classifyRenderer.ClassCount; i++)
                 {
                     fillSymbol.Color = lColors[i];
                     classifyRenderer.Symbol[i] = (ISymbol)fillSymbol;
@@ -235,7 +248,7 @@ namespace GCDAddIn
 
         private static int GetMagnitude(double range, int iMagnitudeMinimum = -4, int iMagnitudeMaximum = 4)
         {
-            for (int i = iMagnitudeMinimum; i <= iMagnitudeMaximum; i += 1)
+            for (int i = iMagnitudeMinimum; i <= iMagnitudeMaximum; i++)
             {
                 double tempVal = range / Math.Pow(10, i);
                 if (Math.Floor(Math.Abs(tempVal)) >= 1 & Math.Floor(Math.Abs(tempVal)) < 10)
@@ -307,9 +320,16 @@ namespace GCDAddIn
         {
             try
             {
+                // Open file raster dataset and ensure that statistics and histograms are present (absence of histograms will cause Renderer.Update() to crash)
+                IRasterDataset rasterDataset = ArcMapUtilities.GetRasterDataset(gRaster);
+                ESRI.ArcGIS.DataSourcesRaster.IRasterBandCollection pRastBands = (ESRI.ArcGIS.DataSourcesRaster.IRasterBandCollection)rasterDataset;
+                ESRI.ArcGIS.DataSourcesRaster.IEnumRasterBand enumRasterBand = (ESRI.ArcGIS.DataSourcesRaster.IEnumRasterBand)pRastBands.Bands;
+                rasterDataset.PrecalculateStats(0);
+                ESRI.ArcGIS.DataSourcesRaster.IRasterBand pRastBand = enumRasterBand.Next();
+                pRastBand.ComputeStatsAndHist();
+
                 IRasterClassifyColorRampRenderer classifyRenderer = new RasterClassifyColorRampRendererClass();
                 IRasterRenderer rasterRenderer = (IRasterRenderer)classifyRenderer;
-                IRasterDataset rasterDataset = ArcMapUtilities.GetRasterDataset(gRaster);
                 IRaster raster = rasterDataset.CreateDefaultRaster();
 
                 rasterRenderer.Raster = raster;
@@ -334,7 +354,7 @@ namespace GCDAddIn
                 lColors.Add(CreateRGBColor(11, 44, 122));
 
                 IFillSymbol fillSymbol = new SimpleFillSymbol();
-                for (int i = 0; i <= classifyRenderer.ClassCount - 1; i += i + 1)
+                for (int i = 0; i < classifyRenderer.ClassCount; i++)
                 {
                     fillSymbol.Color = lColors[i];
                     classifyRenderer.Symbol[i] = (ISymbol)fillSymbol;
@@ -372,9 +392,16 @@ namespace GCDAddIn
         {
             try
             {
+                // Open file raster dataset and ensure that statistics and histograms are present (absence of histograms will cause Renderer.Update() to crash)
+                IRasterDataset rasterDataset = ArcMapUtilities.GetRasterDataset(gRaster);
+                ESRI.ArcGIS.DataSourcesRaster.IRasterBandCollection pRastBands = (ESRI.ArcGIS.DataSourcesRaster.IRasterBandCollection)rasterDataset;
+                ESRI.ArcGIS.DataSourcesRaster.IEnumRasterBand enumRasterBand = (ESRI.ArcGIS.DataSourcesRaster.IEnumRasterBand)pRastBands.Bands;
+                rasterDataset.PrecalculateStats(0);
+                ESRI.ArcGIS.DataSourcesRaster.IRasterBand pRastBand = enumRasterBand.Next();
+                pRastBand.ComputeStatsAndHist();
+
                 IRasterClassifyColorRampRenderer classifyRenderer = new RasterClassifyColorRampRendererClass();
                 IRasterRenderer rasterRenderer = (IRasterRenderer)classifyRenderer;
-                IRasterDataset rasterDataset = ArcMapUtilities.GetRasterDataset(gRaster);
                 IRaster raster = rasterDataset.CreateDefaultRaster();
 
                 rasterRenderer.Raster = raster;
@@ -414,7 +441,7 @@ namespace GCDAddIn
                 lColors.Add(CreateRGBColor(166, 101, 101));
 
                 IFillSymbol fillSymbol = new SimpleFillSymbol();
-                for (int i = 0; i <= classifyRenderer.ClassCount - 1; i += i + 1)
+                for (int i = 0; i < classifyRenderer.ClassCount; i++)
                 {
                     fillSymbol.Color = lColors[i];
                     classifyRenderer.Symbol[i] = (ISymbol)fillSymbol;
@@ -436,10 +463,6 @@ namespace GCDAddIn
 
             try
             {
-                ////Open raster file workspace
-                //IWorkspaceFactory workspaceFactory = new ESRI.ArcGIS.DataSourcesRaster.RasterWorkspaceFactoryClass();
-                //ESRI.ArcGIS.DataSourcesRaster.IRasterWorkspace rasterWorkspace = (ESRI.ArcGIS.DataSourcesRaster.IRasterWorkspace)workspaceFactory.OpenFromFile(@"D:\Testing\GCD\test\inputs\2005DecDEM\AssociatedSurfaces\SlopeDegrees", 0);
-
                 // Open file raster dataset and ensure that statistics and histograms are present (absence of histograms will cause Renderer.Update() to crash)
                 IRasterDataset rasterDataset = ArcMapUtilities.GetRasterDataset(gRaster);
                 ESRI.ArcGIS.DataSourcesRaster.IRasterBandCollection pRastBands = (ESRI.ArcGIS.DataSourcesRaster.IRasterBandCollection)rasterDataset;
@@ -486,12 +509,11 @@ namespace GCDAddIn
                     fillSymbol.Color = lColors[i];
                     classifyRenderer.Symbol[i] = (ISymbol)fillSymbol;
                 }
-
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine(ex.Message);
-                return null;
+                rasterRenderer = null;
             }
 
             return rasterRenderer;
@@ -517,9 +539,16 @@ namespace GCDAddIn
         {
             try
             {
+                // Open file raster dataset and ensure that statistics and histograms are present (absence of histograms will cause Renderer.Update() to crash)
+                IRasterDataset rasterDataset = ArcMapUtilities.GetRasterDataset(gRaster);
+                ESRI.ArcGIS.DataSourcesRaster.IRasterBandCollection pRastBands = (ESRI.ArcGIS.DataSourcesRaster.IRasterBandCollection)rasterDataset;
+                ESRI.ArcGIS.DataSourcesRaster.IEnumRasterBand enumRasterBand = (ESRI.ArcGIS.DataSourcesRaster.IEnumRasterBand)pRastBands.Bands;
+                rasterDataset.PrecalculateStats(0);
+                ESRI.ArcGIS.DataSourcesRaster.IRasterBand pRastBand = enumRasterBand.Next();
+                pRastBand.ComputeStatsAndHist();
+
                 IRasterClassifyColorRampRenderer classifyRenderer = new RasterClassifyColorRampRendererClass();
                 IRasterRenderer rasterRenderer = (IRasterRenderer)classifyRenderer;
-                IRasterDataset rasterDataset = ArcMapUtilities.GetRasterDataset(gRaster);
                 IRaster raster = rasterDataset.CreateDefaultRaster();
 
                 rasterRenderer.Raster = raster;
@@ -547,7 +576,7 @@ namespace GCDAddIn
                 classifyRenderer.Label[9] = "> 565%";
                 List<RgbColor> lColors = CreateSlopeColorRamp();
                 IFillSymbol fillSymbol = new SimpleFillSymbolClass();
-                for (int i = 0; i <= classifyRenderer.ClassCount - 1; i += i + 1)
+                for (int i = 0; i < classifyRenderer.ClassCount; i++)
                 {
                     fillSymbol.Color = lColors[i];
                     classifyRenderer.Symbol[i] = (ISymbol)fillSymbol;
@@ -567,10 +596,17 @@ namespace GCDAddIn
         {
             try
             {
+                // Open file raster dataset and ensure that statistics and histograms are present (absence of histograms will cause Renderer.Update() to crash)
+                IRasterDataset rasterDataset = ArcMapUtilities.GetRasterDataset(gRaster);
+                ESRI.ArcGIS.DataSourcesRaster.IRasterBandCollection pRastBands = (ESRI.ArcGIS.DataSourcesRaster.IRasterBandCollection)rasterDataset;
+                ESRI.ArcGIS.DataSourcesRaster.IEnumRasterBand enumRasterBand = (ESRI.ArcGIS.DataSourcesRaster.IEnumRasterBand)pRastBands.Bands;
+                rasterDataset.PrecalculateStats(0);
+                ESRI.ArcGIS.DataSourcesRaster.IRasterBand pRastBand = enumRasterBand.Next();
+                pRastBand.ComputeStatsAndHist();
+
                 IRasterClassifyColorRampRenderer classifyRenderer = new RasterClassifyColorRampRendererClass();
                 IRasterRenderer rasterRenderer = (IRasterRenderer)classifyRenderer;
                 IFillSymbol fillSymbol = new SimpleFillSymbolClass();
-                IRasterDataset rasterDataset = ArcMapUtilities.GetRasterDataset(gRaster);
                 IRaster raster = rasterDataset.CreateDefaultRaster();
 
                 gRaster.ComputeStatistics();
@@ -594,7 +630,7 @@ namespace GCDAddIn
                 rasterRenderer.Update();
                 CreateDoDClassBreaks(rMax, rMin, iClassCount, ref classifyRenderer);
                 List<IColor> lColors = CreateDoDColorRamp();
-                for (int i = 0; i <= classifyRenderer.ClassCount - 1; i += i + 1)
+                for (int i = 0; i < classifyRenderer.ClassCount; i++)
                 {
                     fillSymbol.Color = lColors[i];
                     classifyRenderer.Symbol[i] = (ISymbol)fillSymbol;
@@ -608,7 +644,6 @@ namespace GCDAddIn
                 return null;
             }
         }
-
 
         private static void CreateDoDClassBreaks(double dMax, double dMin, int iClassCount, ref IRasterClassifyColorRampRenderer pRasterClassify)
         {

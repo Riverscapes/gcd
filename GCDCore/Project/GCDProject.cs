@@ -75,13 +75,10 @@ namespace GCDCore.Project
             return dems;
         }
 
-        public void DeleteDEMSurvey(DEMSurvey dem)
-        {
-            throw new NotImplementedException("delete DEM not implemented");
-        }
-
         public void DeleteDoD(DoDBase dod)
         {
+
+
             //    Private Sub DeleteDoD(ByVal rDoD As ProjectDS.DoDsRow)
 
             //    'TODO entire contents commented out

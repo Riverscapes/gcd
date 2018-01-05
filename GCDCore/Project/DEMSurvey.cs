@@ -95,6 +95,22 @@ namespace GCDCore.Project
                 Vector mask = new Vector(MethodMask);
                 mask.Delete();
             }
+
+            // Delete the DEM raster
+            try
+            {
+                base.Delete();
+            }
+            catch(Exception ex)
+            {
+                Exception ex2 = new Exception("Error attempting to delete DEM Survey.", ex);
+                ex2.Data["Name"] = Name;
+                ex2.Data["File Path"] = Raster.GISFileInfo.FullName;
+                throw ex2;
+            }
+
+            // Remove the DEM from the project
+            ProjectManager.Project.DEMSurveys.Remove(Name);
         }
 
         public void DeleteAssociatedSurface(AssocSurface assoc)

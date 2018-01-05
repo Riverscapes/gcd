@@ -1055,16 +1055,38 @@ namespace GCDCore.UserInterface.Project
 
             GCDNodeTypes eType = GetNodeType(nodSelected);
 
+            if (MessageBox.Show(string.Format("Are you sure that you want to delete {0}? The item will be deleted permanently.", nodSelected.Text), 
+                Properties.Resources.ApplicationNameLong, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.No)
+            {
+                return;
+            }
+
             try
             {
                 ProjectTreeNode ptn = (ProjectTreeNode)nodSelected.Tag;
 
                 switch (eType)
                 {
+                    case GCDNodeTypes.DEMSurvey:
+                        DEMSurvey dem = (DEMSurvey)ptn.Item;
+                        dem.Delete();
+                        break;
+
+                    case GCDNodeTypes.AssociatedSurface:
+                        AssocSurface assoc = (AssocSurface)ptn.Item;
+                        assoc.DEM.DeleteAssociatedSurface(assoc);
+                        break;
+
                     case GCDNodeTypes.ErrorSurface:
                         ErrorSurface errSurf = (ErrorSurface)ptn.Item;
                         errSurf.DEM.DeleteErrorSurface(errSurf);
                         break;
+
+                    case GCDNodeTypes.DoD:
+                        DoDBase dod = (DoDBase)ptn.Item;
+                        ProjectManager.Project.DeleteDoD(dod);
+                        break;
+
                     default:
                         throw new NotImplementedException("delete not implemented for this node type");
                 }
