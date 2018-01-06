@@ -443,6 +443,11 @@ namespace GCDConsoleLib
         /// <param name="method">"nearest", "gauss", "cubic", "average", "mode", "average_magphase" or "none" </param>
         public void BuildPyramids(string method)
         {
+            // ArcGIS does not use Pyramids when the raster has less than 1024 rows or columns
+            // http://desktop.arcgis.com/en/arcmap/10.3/tools/data-management-toolbox/build-pyramids.htm
+            if (Extent.Rows < 1024 || Extent.Cols < 1024)
+                return;
+
             Open();
             int iPixelNum = Extent.Rows * Extent.Rows;
             int iTopNum = 4096;
