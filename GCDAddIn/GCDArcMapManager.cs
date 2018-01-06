@@ -155,8 +155,8 @@ namespace GCDAddIn
                     assocRow.Raster.ComputeStatistics();
                     decimal rasterMax = assocRow.Raster.GetStatistics()["max"];
 
-                    if (!GCDCore.Properties.Settings.Default.ApplyComparativeSymbology)
-                    {
+                    //if (!GCDCore.Properties.Settings.Default.ApplyComparativeSymbology)
+                    //{
                         if (rasterMax <= 2 & rasterMax > 0.25m)
                         {
                             rasterRenderer = RasterSymbolization.CreateClassifyRenderer(assocRow.Raster, 11, "Green to Blue", 1.1, true);
@@ -167,7 +167,7 @@ namespace GCDAddIn
                             rasterRenderer = RasterSymbolization.CreateClassifyRenderer(assocRow.Raster, 11, "Green to Blue", true);
                             return AddRasterLayer(assocRow.Raster, rasterRenderer, assocRow.Name, pAssocGrpLyr, assocRow.LayerHeader, dTransparency);
                         }
-                    }
+                    //}
                     break;
 
                 case AssocSurface.AssociatedSurfaceTypes.GrainSizeStatic:

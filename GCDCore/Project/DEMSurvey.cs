@@ -10,6 +10,7 @@ namespace GCDCore.Project
 {
     public class DEMSurvey : GCDProjectRasterItem
     {
+        public readonly GCDProjectRasterItem Hillshade;
         public readonly naru.ui.SortableBindingList<AssocSurface> AssocSurfaces;
         public readonly naru.ui.SortableBindingList<ErrorSurface> ErrorSurfaces;
 
@@ -50,6 +51,12 @@ namespace GCDCore.Project
 
             AssocSurfaces = new naru.ui.SortableBindingList<AssocSurface>();
             ErrorSurfaces = new naru.ui.SortableBindingList<ErrorSurface>();
+
+            FileInfo hsPath = Project.ProjectManager.OutputManager.DEMSurveyHillShadeRasterPath(name);
+            if (hsPath.Exists)
+            {
+                Hillshade = new GCDProjectRasterItem("DEM Hillshade", hsPath);
+            }
         }
 
         public bool IsErrorNameUnique(string name, ErrorSurface ignore)
@@ -96,12 +103,22 @@ namespace GCDCore.Project
                 mask.Delete();
             }
 
+            try
+            {
+                if (Hillshade != null)
+                    Hillshade.Delete();
+            }
+            catch (Exception ex)
+            {
+                // Do nothing try and continue with the delete.
+            }
+
             // Delete the DEM raster
             try
             {
                 base.Delete();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Exception ex2 = new Exception("Error attempting to delete DEM Survey.", ex);
                 ex2.Data["Name"] = Name;
@@ -115,6 +132,7 @@ namespace GCDCore.Project
 
         public void DeleteAssociatedSurface(AssocSurface assoc)
         {
+
             try
             {
                 assoc.Delete();
@@ -122,6 +140,18 @@ namespace GCDCore.Project
             finally
             {
                 AssocSurfaces.Remove(assoc);
+            }
+
+            if (AssocSurfaces.Count < 1)
+            {
+                try
+                {
+                    assoc.Raster.GISFileInfo.Directory.Parent.Delete();
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine("Failed to delete associate surface directory" + assoc.Raster.GISFileInfo.Directory.Parent);
+                }
             }
         }
 

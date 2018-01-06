@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GCDCore.Project;
+using ESRI.ArcGIS.DataManagementTools;
 
 namespace GCDAddIn
 {
@@ -66,7 +67,7 @@ namespace GCDAddIn
             public void OnGISLayerDeleting(GCDCore.Project.ProjectManager.GISLayerEventArgs e)
             {
                 ArcMapUtilities.RemoveLayer(e.RasterPath);
-            }
+            }       
 
             public void OnGISBrowseRaster(System.Windows.Forms.TextBox txt, naru.ui.PathEventArgs e)
             {

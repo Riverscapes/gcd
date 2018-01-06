@@ -114,9 +114,13 @@ namespace GCDAddIn
             if (!fiFullPath.Exists)
                 return null;
 
-            for (int i = 0; i <= ArcMap.Document.FocusMap.LayerCount - 1; i++)
+            IMapLayers mapLayers = (IMapLayers)ArcMap.Document.FocusMap;
+            UID pID = new UIDClass();
+            pID.Value = "{6CA416B1-E160-11D2-9F4E-00C04F6BC78E}"; // eEsriLayerTypes.Esri_DataLayer
+            IEnumLayer pEnumLayer = ((IMapLayers)ArcMap.Document.FocusMap).Layers[pID, true];
+            ILayer pLayer = pEnumLayer.Next();
+            while (pLayer != null)
             {
-                ILayer pLayer = ArcMap.Document.FocusMap.Layer[i];
                 if (pLayer is IGeoFeatureLayer)
                 {
                     IGeoFeatureLayer pGFL = (IGeoFeatureLayer)pLayer;
@@ -145,6 +149,8 @@ namespace GCDAddIn
                         return pLayer;
                     }
                 }
+
+                pLayer = pEnumLayer.Next();
             }
 
             return null;
@@ -440,17 +446,56 @@ namespace GCDAddIn
         public static void RemoveLayer(FileSystemInfo layerPath)
         {
             ILayer pLayer = GetLayerBySource(layerPath);
+
             if (pLayer is ILayer)
             {
+                IGroupLayer pParent = GetParentGroupLayer(pLayer);
+
                 if (pLayer is IDataLayer2)
                 {
                     ((IDataLayer2)pLayer).Disconnect();
                 }
 
                 ArcMap.Document.FocusMap.DeleteLayer(pLayer);
+                //ArcMap.Document.ActiveView.ContentsChanged();
                 ArcMap.Document.UpdateContents();
+
+                // Remove empty group layers from ToC
+                if (pParent is IGroupLayer)
+                {
+                    ArcMap.Document.FocusMap.DeleteLayer(pParent);
+                    ArcMap.Document.UpdateContents();
+                }
+
                 ArcMap.Document.ActiveView.Refresh();
+                System.Runtime.InteropServices.Marshal.FinalReleaseComObject(pLayer);
+                pLayer = null;
+                GC.Collect();
             }
+        }
+
+        private static IGroupLayer GetParentGroupLayer(ILayer pLayer)
+        {
+            //Loop over all group layers and see if the specified layer is inside
+            IMap pMap = ArcMap.Document.FocusMap;
+            UID pUID = new UID();
+            pUID.Value = "{EDAD6644-1810-11D1-86AE-0000F8751720}";
+
+            IEnumLayer pEnum = ArcMap.Document.FocusMap.Layers[pUID, true];
+            ICompositeLayer pGroupLayer = (ICompositeLayer)pEnum.Next();
+            while (pGroupLayer is ICompositeLayer)
+            {
+                for (int i = 0; i < pGroupLayer.Count; i++)
+                {
+                    if (pGroupLayer.Layer[i].Equals(pLayer))
+                    {
+                        return (IGroupLayer)pGroupLayer;
+                    }
+                }
+                pGroupLayer = (ICompositeLayer)pEnum.Next();
+            }
+
+            return null;
         }
 
         //public void RemoveLayersfromTOC(string directory)
