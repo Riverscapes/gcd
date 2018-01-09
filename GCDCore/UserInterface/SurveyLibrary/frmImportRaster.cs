@@ -180,6 +180,9 @@ namespace GCDCore.UserInterface.SurveyLibrary
             // So that the browse can bubble to ArcMap
             if (ProjectManager.IsArcMap)
                 ucRaster.BrowseRaster += ProjectManager.OnBrowseRaster;
+
+            // Select the input raster control to make it quicker for user
+            ucRaster.Select();
         }
 
         private void SetupToolTips()
