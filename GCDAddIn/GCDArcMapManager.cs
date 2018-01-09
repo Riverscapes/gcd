@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using GCDCore.Project;
 using GCDConsoleLib;
 using ESRI.ArcGIS.Display;
+using ESRI.ArcGIS.Geodatabase;
 
 namespace GCDAddIn
 {
@@ -90,30 +91,35 @@ namespace GCDAddIn
         /// <param name="demRow"></param>
         /// <returns></returns>
         /// <remarks>Note: Add the hillshade first so that it appear UNDER the DEM in the TOC</remarks>
-        public IRasterLayer AddDEM(DEMSurvey dem)
+        public void AddDEM(DEMSurvey dem)
         {
             short fDEMTransparency = (short)-1;
             IGroupLayer pSurveyLyr = AddSurveyGroupLayer(dem);
 
-            IRasterLayer pHSLayer = null;
             FileInfo hillshade = ProjectManager.OutputManager.DEMSurveyHillShadeRasterPath(dem.Name);
             if (hillshade.Exists)
             {
                 Raster gHillshade = new Raster(hillshade);
-                pHSLayer = AddRasterLayer(gHillshade, null, dem.Name + " Hillshade", pSurveyLyr);
+                AddRasterLayer(gHillshade, null, dem.Name + " Hillshade", pSurveyLyr, "Aspect", -1, ExpandLegend: false);
                 fDEMTransparency = DefaultTransparency;
             }
 
             IRasterRenderer demRenderer = RasterSymbolization.CreateDEMColorRamp(dem.Raster);
-            IRasterLayer pDEMLyr = AddRasterLayer(dem.Raster, demRenderer, dem.Name, pSurveyLyr, dem.LayerHeader, fDEMTransparency);
+            AddRasterLayer(dem.Raster, demRenderer, dem.Name, pSurveyLyr, dem.LayerHeader, fDEMTransparency);
 
             // Collapse the Hillshade legend in the TOC
-            if (pHSLayer is IRasterLayer)
-            {
-                ((ILegendGroup)((ILegendInfo)pHSLayer).LegendGroup[0]).Visible = false;
-            }
+            //if (pHSLayer is IRasterLayer)
+            //{
+            //    ((ILegendGroup)((ILegendInfo)pHSLayer).LegendGroup[0]).Visible = false;
+            //}
 
-            return pDEMLyr;
+            //if (pDEMLyr is IDataLayer2)
+            //{
+            //    ((IDataLayer2)pDEMLyr).Disconnect();
+            //}
+
+            //System.Runtime.InteropServices.Marshal.ReleaseComObject(pDEMLyr);
+            //System.Runtime.InteropServices.Marshal.ReleaseComObject(pHSLayer);
         }
 
         private IGroupLayer AddAssociatedSurfaceGroupLayer(DEMSurvey dem)
@@ -137,7 +143,7 @@ namespace GCDAddIn
                     if (!GCDCore.Properties.Settings.Default.ApplyComparativeSymbology)
                     {
                         rasterRenderer = RasterSymbolization.CreateClassifyRenderer(assocRow.Raster, 11, "Slope");
-                        return AddRasterLayer(assocRow.Raster, rasterRenderer, assocRow.Name, pAssocGrpLyr, assocRow.LayerHeader, dTransparency);
+                        AddRasterLayer(assocRow.Raster, rasterRenderer, assocRow.Name, pAssocGrpLyr, assocRow.LayerHeader, dTransparency);
                     }
                     break;
 
@@ -146,7 +152,7 @@ namespace GCDAddIn
                     if (!GCDCore.Properties.Settings.Default.ApplyComparativeSymbology)
                     {
                         rasterRenderer = RasterSymbolization.CreateClassifyRenderer(assocRow.Raster, 11, "Precipitation", true);
-                        return AddRasterLayer(assocRow.Raster, rasterRenderer, assocRow.Name, pAssocGrpLyr, assocRow.LayerHeader, dTransparency);
+                        AddRasterLayer(assocRow.Raster, rasterRenderer, assocRow.Name, pAssocGrpLyr, assocRow.LayerHeader, dTransparency);
                     }
                     break;
 
@@ -157,47 +163,52 @@ namespace GCDAddIn
 
                     //if (!GCDCore.Properties.Settings.Default.ApplyComparativeSymbology)
                     //{
-                        if (rasterMax <= 2 & rasterMax > 0.25m)
-                        {
-                            rasterRenderer = RasterSymbolization.CreateClassifyRenderer(assocRow.Raster, 11, "Green to Blue", 1.1, true);
-                            return AddRasterLayer(assocRow.Raster, rasterRenderer, assocRow.Name, pAssocGrpLyr, assocRow.LayerHeader, dTransparency);
-                        }
-                        else
-                        {
-                            rasterRenderer = RasterSymbolization.CreateClassifyRenderer(assocRow.Raster, 11, "Green to Blue", true);
-                            return AddRasterLayer(assocRow.Raster, rasterRenderer, assocRow.Name, pAssocGrpLyr, assocRow.LayerHeader, dTransparency);
-                        }
+                    if (rasterMax <= 2 & rasterMax > 0.25m)
+                    {
+                        rasterRenderer = RasterSymbolization.CreateClassifyRenderer(assocRow.Raster, 11, "Green to Blue", 1.1, true);
+                        AddRasterLayer(assocRow.Raster, rasterRenderer, assocRow.Name, pAssocGrpLyr, assocRow.LayerHeader, dTransparency);
+                    }
+                    else
+                    {
+                        rasterRenderer = RasterSymbolization.CreateClassifyRenderer(assocRow.Raster, 11, "Green to Blue", true);
+                        AddRasterLayer(assocRow.Raster, rasterRenderer, assocRow.Name, pAssocGrpLyr, assocRow.LayerHeader, dTransparency);
+                    }
                     //}
                     break;
 
                 case AssocSurface.AssociatedSurfaceTypes.GrainSizeStatic:
 
                     rasterRenderer = RasterSymbolization.CreateGrainSizeStatisticColorRamp(assocRow.Raster, ProjectManager.Project.Units.VertUnit);
-                    return AddRasterLayer(assocRow.Raster, rasterRenderer, assocRow.Name, pAssocGrpLyr, assocRow.LayerHeader, dTransparency);
+                    AddRasterLayer(assocRow.Raster, rasterRenderer, assocRow.Name, pAssocGrpLyr, assocRow.LayerHeader, dTransparency);
+                    break;
 
                 case AssocSurface.AssociatedSurfaceTypes.Roughness:
 
                     rasterRenderer = RasterSymbolization.CreateRoughnessColorRamp(assocRow.Raster);
-                    return AddRasterLayer(assocRow.Raster, rasterRenderer, assocRow.Name, pAssocGrpLyr, assocRow.LayerHeader, dTransparency);
+                    AddRasterLayer(assocRow.Raster, rasterRenderer, assocRow.Name, pAssocGrpLyr, assocRow.LayerHeader, dTransparency);
+                    break;
 
                 case AssocSurface.AssociatedSurfaceTypes.SlopeDegree:
 
                     rasterRenderer = RasterSymbolization.CreateSlopeDegreesColorRamp(assocRow.Raster);
-                    return AddRasterLayer(assocRow.Raster, rasterRenderer, assocRow.Name, pAssocGrpLyr, assocRow.LayerHeader, dTransparency);
+                    AddRasterLayer(assocRow.Raster, rasterRenderer, assocRow.Name, pAssocGrpLyr, assocRow.LayerHeader, dTransparency);
+                    break;
 
                 case AssocSurface.AssociatedSurfaceTypes.SlopePercent:
 
                     rasterRenderer = RasterSymbolization.CreateSlopePrecentRiseColorRamp(assocRow.Raster);
-                    return AddRasterLayer(assocRow.Raster, rasterRenderer, assocRow.Name, pAssocGrpLyr, assocRow.LayerHeader, dTransparency);
-
+                    AddRasterLayer(assocRow.Raster, rasterRenderer, assocRow.Name, pAssocGrpLyr, assocRow.LayerHeader, dTransparency);
+                    break;
+                    break;
                 default:
-                    return AddRasterLayer(assocRow.Raster, null, assocRow.Name, pAssocGrpLyr, assocRow.LayerHeader, dTransparency);
+                    AddRasterLayer(assocRow.Raster, null, assocRow.Name, pAssocGrpLyr, assocRow.LayerHeader, dTransparency);
+                    break;
             }
 
             return null;
         }
 
-        public IRasterLayer AddDoD(GCDProjectRasterItem dod, bool bThresholded = true)
+        public void AddDoD(GCDProjectRasterItem dod, bool bThresholded = true)
         {
             Raster gDoDRaster;
             string sLayerName = dod.Name;
@@ -222,7 +233,7 @@ namespace GCDAddIn
 
             IRasterRenderer rasterRenderer = RasterSymbolization.CreateDoDClassifyRenderer(gDoDRaster, 20);
             string sHeader = string.Format("Elevation Difference ({0})", UnitsNet.Length.GetAbbreviation(ProjectManager.Project.Units.VertUnit));
-            return AddRasterLayer(gDoDRaster, rasterRenderer, sLayerName, pAnalGrpLayer, sHeader, dTransparency);
+            AddRasterLayer(gDoDRaster, rasterRenderer, sLayerName, pAnalGrpLayer, sHeader, dTransparency);
         }
 
         private IGroupLayer AddAnalysesGroupLayer()
@@ -232,7 +243,7 @@ namespace GCDAddIn
             return pAnalGrpLyr;
         }
 
-        public IRasterLayer AddErrSurface(ErrorSurface errRow)
+        public void AddErrSurface(ErrorSurface errRow)
         {
             IGroupLayer pErrGrpLyr = AddErrorSurfacesGroupLayer(errRow.DEM);
             string sHeader = string.Format("Error ({0})", UnitsNet.Length.GetAbbreviation(ProjectManager.Project.Units.VertUnit));
@@ -251,17 +262,17 @@ namespace GCDAddIn
             if (rMin == rMax)
             {
                 IRasterRenderer rasterRenderer = RasterSymbolization.CreateESRIDefinedContinuousRenderer(errRow.Raster, 1, "Partial Spectrum");
-                return AddRasterLayer(errRow.Raster, rasterRenderer, errRow.Name, pErrGrpLyr, sHeader, dTransparency);
+                AddRasterLayer(errRow.Raster, rasterRenderer, errRow.Name, pErrGrpLyr, sHeader, dTransparency);
             }
             else if (rMax <= 1 & rMax > 0.25)
             {
                 IRasterRenderer rasterRenderer = RasterSymbolization.CreateClassifyRenderer(errRow.Raster, 11, "Partial Spectrum", 1.1);
-                return AddRasterLayer(errRow.Raster, rasterRenderer, errRow.Name, pErrGrpLyr, sHeader, dTransparency);
+                AddRasterLayer(errRow.Raster, rasterRenderer, errRow.Name, pErrGrpLyr, sHeader, dTransparency);
             }
             else
             {
                 IRasterRenderer rasterRenderer = RasterSymbolization.CreateClassifyRenderer(errRow.Raster, 11, "Partial Spectrum");
-                return AddRasterLayer(errRow.Raster, rasterRenderer, errRow.Name, pErrGrpLyr, sHeader, dTransparency);
+                AddRasterLayer(errRow.Raster, rasterRenderer, errRow.Name, pErrGrpLyr, sHeader, dTransparency);
             }
         }
 
@@ -272,19 +283,20 @@ namespace GCDAddIn
             return pErrGrpLyr;
         }
 
-        private static IRasterLayer AddRasterLayer(Raster gRaster, IRasterRenderer rasterRenderer, string sRasterName, IGroupLayer pGrpLyr, string sHeader = null, short fTransparency = -1)
+        private static void AddRasterLayer(Raster gRaster, IRasterRenderer rasterRenderer, string sRasterName, IGroupLayer pGrpLyr, string sHeader = null, short fTransparency = -1, bool ExpandLegend = true)
         {
             if (pGrpLyr != null)
             {
                 IRasterLayer pResultLayer = ArcMapUtilities.IsRasterLayerInGroupLayer(gRaster.GISFileInfo, pGrpLyr);
                 if (pResultLayer is ILayer)
                 {
-                    return pResultLayer;
+                    return;
                 }
             }
 
             IRasterLayer rasterLayer = new RasterLayer();
-            rasterLayer.CreateFromDataset(ArcMapUtilities.GetRasterDataset(gRaster));
+            IRasterDataset pRDS = ArcMapUtilities.GetRasterDataset(gRaster);
+            rasterLayer.CreateFromDataset(pRDS);
             if (rasterRenderer != null)
             {
                 rasterLayer.Renderer = rasterRenderer;
@@ -318,9 +330,24 @@ namespace GCDAddIn
                 {
                     pMapLayers.InsertLayerInGroup(pGrpLyr, rasterLayer, false, 0);
                 }
+
+                // Collapse or expand the legend in the ToC (e.g. Hillshade should be collapsed)
+                ((ILegendGroup)((ILegendInfo)rasterLayer).LegendGroup[0]).Visible = ExpandLegend;
             }
 
-            return rasterLayer;
+            int refsLeft = 0;
+            do
+            {
+                refsLeft = System.Runtime.InteropServices.Marshal.ReleaseComObject(pRDS);
+            }
+            while (refsLeft > 0);
+
+            refsLeft = 0;
+            do
+            {
+                refsLeft = System.Runtime.InteropServices.Marshal.ReleaseComObject(rasterLayer);
+            }
+            while (refsLeft > 0);
         }
     }
 }

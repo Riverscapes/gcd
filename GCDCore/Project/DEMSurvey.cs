@@ -128,6 +128,21 @@ namespace GCDCore.Project
 
             // Remove the DEM from the project
             ProjectManager.Project.DEMSurveys.Remove(Name);
+
+            // If no more inputs then delete the folder
+            if (ProjectManager.Project.DEMSurveys.Count < 1 && !Directory.EnumerateFileSystemEntries(Raster.GISFileInfo.Directory.Parent.FullName).Any())
+            {
+                try
+                {
+                    Raster.GISFileInfo.Directory.Parent.Delete();
+                }
+                catch (Exception ex)
+                {
+                    Console.Write("Failed to delete empty DEM Survey directory " + Raster.GISFileInfo.Directory.Parent.FullName);
+                }
+            }
+
+            ProjectManager.Project.Save();
         }
 
         public void DeleteAssociatedSurface(AssocSurface assoc)
@@ -148,7 +163,7 @@ namespace GCDCore.Project
                 {
                     assoc.Raster.GISFileInfo.Directory.Parent.Delete();
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Console.WriteLine("Failed to delete associate surface directory" + assoc.Raster.GISFileInfo.Directory.Parent);
                 }

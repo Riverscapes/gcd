@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using GCDConsoleLib;
 
 namespace GCDCore.Project
@@ -7,7 +8,7 @@ namespace GCDCore.Project
     public class GCDProjectRasterItem : GCDProjectItem
     {
         public readonly Raster Raster;
-  
+
         public GCDProjectRasterItem(string name, FileInfo rasterPath)
             : base(name)
         {
@@ -37,8 +38,11 @@ namespace GCDCore.Project
 
             try
             {
-                // Delete the directory 
-                dir.Delete();
+                // Delete empty directory 
+                if (!Directory.EnumerateFileSystemEntries(dir.FullName).Any())
+                {
+                    dir.Delete();
+                }
             }
             catch (Exception ex)
             {

@@ -26,7 +26,16 @@ namespace GCDAddIn
         public static IRasterDataset GetRasterDataset(GCDConsoleLib.Raster raster)
         {
             IWorkspace pWorkspace = GetWorkspace(raster.GISFileInfo);
-            return ((IRasterWorkspace)pWorkspace).OpenRasterDataset(raster.GISFileInfo.Name);
+            IRasterDataset pRDS = ((IRasterWorkspace)pWorkspace).OpenRasterDataset(raster.GISFileInfo.Name);
+
+            int refsLeft = 0;
+            do
+            {
+                refsLeft = System.Runtime.InteropServices.Marshal.ReleaseComObject(pWorkspace);
+            }
+            while (refsLeft > 0);
+
+            return pRDS;
         }
 
         public static ILayer AddToMap(FileSystemInfo fiFullPath, string sLayerName = "", string sGroupLayer = "", FileInfo fiSymbologyLayerFile = null, bool bAddToMapIfPresent = false)
@@ -315,12 +324,11 @@ namespace GCDAddIn
         /// Create a singleton for a workspace factory
         /// </summary>
         /// <param name="eGISStorageType"></param>
-        /// <returns></returns>
-        /// <remarks>PGB 28 Aug 2013 - Note that this is the only correct method for creating a workspace factory.
-        /// Do not call "New" to create this singleton classes.
-        /// http://forums.esri.com/Thread.asp?c=93&f=993&t=178686"
+        /// <returns>CALLER IS RESPONSIBLE FOR RELEASING RETURNED COM OBJECT</returns>
+        /// <remarks>This is the only correct method for creating a workspace factory. Do not call "New" to create this singleton classes.
+        /// http://forums.esri.com/Thread.asp?c=93&f=993&t=178686
         /// </remarks>
-        public static IWorkspaceFactory GetWorkspaceFactory(ArcMapBrowse.GISDataStorageTypes eGISStorageType)
+        private static IWorkspaceFactory GetWorkspaceFactory(ArcMapBrowse.GISDataStorageTypes eGISStorageType)
         {
             Type aType = null;
             IWorkspaceFactory pWSFact = null;
@@ -360,15 +368,32 @@ namespace GCDAddIn
                 throw ex2;
             }
 
+            // CALLER IS RESPONSIBLE FOR RELEASING RETURNED COM OBJECT
             return pWSFact;
         }
 
-        public static IWorkspace GetWorkspace(System.IO.FileSystemInfo fiFullPath)
+        /// <summary>
+        /// Open a file-based workspace (Raster or ShapeFile)
+        /// </summary>
+        /// <param name="fiFullPath">Workspace directory or file path</param>
+        /// <returns>CALLER IS RESPONSIBLE FOR RELEASING RETURNED COM OBJECT</returns>
+        public static IWorkspace GetWorkspace(FileSystemInfo fiFullPath)
         {
             ArcMapBrowse.GISDataStorageTypes eType = GetWorkspaceType(fiFullPath.FullName);
             IWorkspaceFactory pWSFact = GetWorkspaceFactory(eType);
-            System.IO.DirectoryInfo fiWorkspace = GetWorkspacePath(fiFullPath.FullName);
-            return pWSFact.OpenFromFile(fiWorkspace.FullName, ArcMap.Application.hWnd);
+            DirectoryInfo fiWorkspace = GetWorkspacePath(fiFullPath.FullName);
+            IWorkspace pWS = pWSFact.OpenFromFile(fiWorkspace.FullName, ArcMap.Application.hWnd);
+
+            // Must release the workspace factory object
+            int refsLeft = 0;
+            do
+            {
+                refsLeft = System.Runtime.InteropServices.Marshal.ReleaseComObject(pWSFact);
+            }
+            while (refsLeft > 0);
+
+            // CALLER IS RESPONSIBLE FOR RELEASING RETURNED COM OBJECT
+            return pWS;
         }
 
         /// <summary>
@@ -377,7 +402,7 @@ namespace GCDAddIn
         /// <param name="sPath">Any path. Can be a folder (e.g. file geodatabase) or absolute path to a file.</param>
         /// <returns>The workspace path (ending with .gdb for file geodatabases) or the folder for file based data.</returns>
         /// <remarks>PGB 9 Sep 2011.</remarks>
-        public static System.IO.DirectoryInfo GetWorkspacePath(string sFullPath)
+        public static DirectoryInfo GetWorkspacePath(string sFullPath)
         {
             if (string.IsNullOrEmpty(sFullPath))
                 return null;
@@ -457,18 +482,35 @@ namespace GCDAddIn
                 }
 
                 ArcMap.Document.FocusMap.DeleteLayer(pLayer);
-                //ArcMap.Document.ActiveView.ContentsChanged();
                 ArcMap.Document.UpdateContents();
 
                 // Remove empty group layers from ToC
-                if (pParent is IGroupLayer)
+                while (pParent is IGroupLayer)
                 {
-                    ArcMap.Document.FocusMap.DeleteLayer(pParent);
-                    ArcMap.Document.UpdateContents();
+                    ILayer pNextParent = GetParentGroupLayer(pParent);
+                    ICompositeLayer pComp = (ICompositeLayer)pParent;
+                    if (pComp.Count < 1)
+                    {
+                        ArcMap.Document.FocusMap.DeleteLayer(pParent);
+                        ArcMap.Document.UpdateContents();
+                    }
+
+                    if (pNextParent is IGroupLayer)
+                        pParent = (IGroupLayer)pNextParent;
+                    else
+                        pParent = null;
                 }
 
                 ArcMap.Document.ActiveView.Refresh();
-                System.Runtime.InteropServices.Marshal.FinalReleaseComObject(pLayer);
+
+                // Release all references to the layer to prevent locks on the underlying data source
+                // http://edndoc.esri.com/arcobjects/9.2/net/fe9f7423-2100-4c70-8bd6-f4f16d5ce8c0.htm
+                int refsLeft = 0;
+                do
+                {
+                    refsLeft = System.Runtime.InteropServices.Marshal.ReleaseComObject(pLayer);
+                }
+                while (refsLeft > 0);
                 pLayer = null;
                 GC.Collect();
             }
