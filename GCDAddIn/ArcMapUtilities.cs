@@ -472,7 +472,7 @@ namespace GCDAddIn
         {
             ILayer pLayer = GetLayerBySource(layerPath);
 
-            if (pLayer is ILayer)
+            while (pLayer is ILayer)
             {
                 IGroupLayer pParent = GetParentGroupLayer(pLayer);
 
@@ -513,8 +513,10 @@ namespace GCDAddIn
                 while (refsLeft > 0);
                 pLayer = null;
                 GC.Collect();
+                pLayer = GetLayerBySource(layerPath);
             }
         }
+
 
         private static IGroupLayer GetParentGroupLayer(ILayer pLayer)
         {
