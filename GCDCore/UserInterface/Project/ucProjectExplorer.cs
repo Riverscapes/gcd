@@ -483,6 +483,7 @@ namespace GCDCore.UserInterface.Project
                         frmAssocSurfaceProperties frm = new frmAssocSurfaceProperties(dem, null);
                         if (frm.ShowDialog() == DialogResult.OK)
                         {
+                            ProjectManager.OnAddToMap(frm.m_Assoc);
                             LoadTree();
                         }
                     }
@@ -493,7 +494,6 @@ namespace GCDCore.UserInterface.Project
                 naru.error.ExceptionUI.HandleException(ex);
             }
         }
-
 
         private void AddAllAssociatedSurfacesToTheMapToolStripMenuItem_Click(System.Object sender, System.EventArgs e)
         {
@@ -518,13 +518,11 @@ namespace GCDCore.UserInterface.Project
             {
                 naru.error.ExceptionUI.HandleException(ex);
             }
-
         }
 
         #endregion
 
         #region "Associated Surface Menu Items"
-
 
         private void EditPropertiesToolStripMenuItem_Click(System.Object sender, System.EventArgs e)
         {
