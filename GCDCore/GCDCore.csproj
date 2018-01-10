@@ -60,6 +60,7 @@
     <Compile Include="Engines\DoD\ChangeDetectionMinLoD.cs" />
     <Compile Include="Engines\DoD\ChangeDetectionProbabilistic.cs" />
     <Compile Include="Engines\DoD\ChangeDetectionPropProb.cs" />
+    <Compile Include="Engines\DoD\ChangeDetetctionMultiEpoch.cs" />
     <Compile Include="Engines\DoD\ChangeDetetctionBatch.cs" />
     <Compile Include="GCDUnits.cs" />
     <Compile Include="Project\CoherenceProperties.cs" />

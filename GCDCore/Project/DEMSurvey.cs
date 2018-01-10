@@ -19,6 +19,7 @@ namespace GCDCore.Project
         public SurveyDateTime SurveyDate { get; set; }
         public FileInfo MethodMask { get; set; } // Multi-method polygon ShapeFile
         public string MethodMaskField { get; set; } // Multi-method field in ShapeFile
+        public int? ChronologicalOrder { get; set; } // Optional zero-based index of chronological order maintain by the Multi-Epoch GCD Analysis
 
         public ErrorSurface DefaultErrorSurface
         {
@@ -202,6 +203,12 @@ namespace GCDCore.Project
                 naru.xml.XMLHelpers.AddNode(xmlDoc, nodSurveyDate, "Hour", SurveyDate.Hour > -1 ? SurveyDate.Hour.ToString() : string.Empty);
                 naru.xml.XMLHelpers.AddNode(xmlDoc, nodSurveyDate, "Minute", SurveyDate.Minute > -1 ? SurveyDate.Minute.ToString() : string.Empty);
             }
+
+            if (ChronologicalOrder.HasValue)
+            {
+                nodDEM.AppendChild(xmlDoc.CreateElement("ChronologicalOrder")).InnerText = ChronologicalOrder.ToString();
+            }
+
 
             if (MethodMask != null)
             {
