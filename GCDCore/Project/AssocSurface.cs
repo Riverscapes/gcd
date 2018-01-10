@@ -89,7 +89,7 @@ namespace GCDCore.Project
 
             return assocTypes;
         }
-        
+
         public AssocSurface(string name, FileInfo rasterPath, DEMSurvey dem, AssociatedSurfaceTypes eType)
                     : base(name, rasterPath)
         {
@@ -125,6 +125,17 @@ namespace GCDCore.Project
             }
 
             return new AssocSurface(name, path, dem, eType);
+        }
+
+        new public void Delete()
+        {
+            base.Delete();
+
+            // delete the associated surfaces group folder if this was the last associated surface
+            if (!Directory.EnumerateFileSystemEntries(Raster.GISFileInfo.Directory.Parent.FullName).Any())
+            {
+                Raster.GISFileInfo.Directory.Parent.Delete();
+            }
         }
     }
 }

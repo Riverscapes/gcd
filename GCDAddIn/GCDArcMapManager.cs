@@ -128,14 +128,13 @@ namespace GCDAddIn
             return ArcMapUtilities.GetGroupLayer(AssociatedSurfacesGroupLayer, pSurveyGrpLyr);
         }
 
-        public IRasterLayer AddAssociatedSurface(AssocSurface assocRow)
+        public void AddAssociatedSurface(AssocSurface assocRow)
         {
             IGroupLayer pAssocGrpLyr = AddAssociatedSurfaceGroupLayer(assocRow.DEM);
-            IRasterLayer pAssocLyr = null;
 
             short dTransparency = GCDCore.Properties.Settings.Default.TransparencyAssociatedLayers ? GCDCore.Properties.Settings.Default.AutoTransparencyValue : (short)-1;
 
-            IRasterRenderer rasterRenderer;
+            IRasterRenderer rasterRenderer = null;
             switch (assocRow.AssocSurfaceType)
             {
                 case AssocSurface.AssociatedSurfaceTypes.InterpolationError:
@@ -143,7 +142,6 @@ namespace GCDAddIn
                     if (!GCDCore.Properties.Settings.Default.ApplyComparativeSymbology)
                     {
                         rasterRenderer = RasterSymbolization.CreateClassifyRenderer(assocRow.Raster, 11, "Slope");
-                        AddRasterLayer(assocRow.Raster, rasterRenderer, assocRow.Name, pAssocGrpLyr, assocRow.LayerHeader, dTransparency);
                     }
                     break;
 
@@ -152,60 +150,42 @@ namespace GCDAddIn
                     if (!GCDCore.Properties.Settings.Default.ApplyComparativeSymbology)
                     {
                         rasterRenderer = RasterSymbolization.CreateClassifyRenderer(assocRow.Raster, 11, "Precipitation", true);
-                        AddRasterLayer(assocRow.Raster, rasterRenderer, assocRow.Name, pAssocGrpLyr, assocRow.LayerHeader, dTransparency);
                     }
                     break;
 
                 case AssocSurface.AssociatedSurfaceTypes.PointDensity:
-
                     assocRow.Raster.ComputeStatistics();
                     decimal rasterMax = assocRow.Raster.GetStatistics()["max"];
 
-                    //if (!GCDCore.Properties.Settings.Default.ApplyComparativeSymbology)
-                    //{
                     if (rasterMax <= 2 & rasterMax > 0.25m)
                     {
                         rasterRenderer = RasterSymbolization.CreateClassifyRenderer(assocRow.Raster, 11, "Green to Blue", 1.1, true);
-                        AddRasterLayer(assocRow.Raster, rasterRenderer, assocRow.Name, pAssocGrpLyr, assocRow.LayerHeader, dTransparency);
-                    }
+                   }
                     else
                     {
                         rasterRenderer = RasterSymbolization.CreateClassifyRenderer(assocRow.Raster, 11, "Green to Blue", true);
-                        AddRasterLayer(assocRow.Raster, rasterRenderer, assocRow.Name, pAssocGrpLyr, assocRow.LayerHeader, dTransparency);
                     }
-                    //}
                     break;
 
                 case AssocSurface.AssociatedSurfaceTypes.GrainSizeStatic:
 
                     rasterRenderer = RasterSymbolization.CreateGrainSizeStatisticColorRamp(assocRow.Raster, ProjectManager.Project.Units.VertUnit);
-                    AddRasterLayer(assocRow.Raster, rasterRenderer, assocRow.Name, pAssocGrpLyr, assocRow.LayerHeader, dTransparency);
                     break;
 
                 case AssocSurface.AssociatedSurfaceTypes.Roughness:
-
                     rasterRenderer = RasterSymbolization.CreateRoughnessColorRamp(assocRow.Raster);
-                    AddRasterLayer(assocRow.Raster, rasterRenderer, assocRow.Name, pAssocGrpLyr, assocRow.LayerHeader, dTransparency);
                     break;
 
                 case AssocSurface.AssociatedSurfaceTypes.SlopeDegree:
-
                     rasterRenderer = RasterSymbolization.CreateSlopeDegreesColorRamp(assocRow.Raster);
-                    AddRasterLayer(assocRow.Raster, rasterRenderer, assocRow.Name, pAssocGrpLyr, assocRow.LayerHeader, dTransparency);
                     break;
 
                 case AssocSurface.AssociatedSurfaceTypes.SlopePercent:
-
                     rasterRenderer = RasterSymbolization.CreateSlopePrecentRiseColorRamp(assocRow.Raster);
-                    AddRasterLayer(assocRow.Raster, rasterRenderer, assocRow.Name, pAssocGrpLyr, assocRow.LayerHeader, dTransparency);
-                    break;
-                    break;
-                default:
-                    AddRasterLayer(assocRow.Raster, null, assocRow.Name, pAssocGrpLyr, assocRow.LayerHeader, dTransparency);
                     break;
             }
 
-            return null;
+            AddRasterLayer(assocRow.Raster, rasterRenderer, assocRow.Name, pAssocGrpLyr, assocRow.LayerHeader, dTransparency);
         }
 
         public void AddDoD(GCDProjectRasterItem dod, bool bThresholded = true)

@@ -1097,6 +1097,7 @@ namespace GCDCore.UserInterface.Project
                         throw new NotImplementedException("delete not implemented for this node type");
                 }
 
+                ProjectManager.Project.Save();
                 LoadTree();
             }
             catch (Exception ex)
