@@ -404,6 +404,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.cmdAddDEMToMap.Size = new System.Drawing.Size(29, 23);
             this.cmdAddDEMToMap.TabIndex = 2;
             this.cmdAddDEMToMap.UseVisualStyleBackColor = true;
+            this.cmdAddDEMToMap.Click += new System.EventHandler(this.cmdAddDEMToMap_Click);
             // 
             // cboIdentify
             // 

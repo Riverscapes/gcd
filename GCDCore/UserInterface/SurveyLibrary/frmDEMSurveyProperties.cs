@@ -587,5 +587,17 @@ namespace GCDCore.UserInterface.SurveyLibrary
             if (ViewAssociatedSurface() == DialogResult.OK)
                 DEM.AssocSurfaces.ResetBindings();
         }
+
+        private void cmdAddDEMToMap_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                ProjectManager.OnAddToMap(DEM);
+            }
+            catch(Exception ex)
+            {
+                naru.error.ExceptionUI.HandleException(ex, "Error adding DEM to map.");
+            }
+        }
     }
 }
