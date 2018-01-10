@@ -224,7 +224,7 @@ namespace GCDCore.UserInterface.Project
             this.AddErrorSurfaceToolStripMenuItem,
             this.DeriveErrorSurfaceToolStripMenuItem1});
             this.cmsDEMSurvey.Name = "cmsDEMSurvey";
-            this.cmsDEMSurvey.Size = new System.Drawing.Size(217, 142);
+            this.cmsDEMSurvey.Size = new System.Drawing.Size(217, 164);
             // 
             // EditDEMSurveyProperatieToolStripMenuItem
             // 
@@ -331,13 +331,13 @@ namespace GCDCore.UserInterface.Project
             this.AddDEMSurveyToolStripMenuItem,
             this.AddAllDEMSurveysToTheMapToolStripMenuItem});
             this.cmsInputsGroup.Name = "cmsInputsGroup";
-            this.cmsInputsGroup.Size = new System.Drawing.Size(246, 70);
+            this.cmsInputsGroup.Size = new System.Drawing.Size(246, 48);
             // 
             // AddDEMSurveyToolStripMenuItem
             // 
             this.AddDEMSurveyToolStripMenuItem.Image = global::GCDCore.Properties.Resources.Add;
             this.AddDEMSurveyToolStripMenuItem.Name = "AddDEMSurveyToolStripMenuItem";
-            this.AddDEMSurveyToolStripMenuItem.Size = new System.Drawing.Size(296, 22);
+            this.AddDEMSurveyToolStripMenuItem.Size = new System.Drawing.Size(245, 22);
             this.AddDEMSurveyToolStripMenuItem.Text = "Specify DEM Survey";
             // 
             // AddAllDEMSurveysToTheMapToolStripMenuItem

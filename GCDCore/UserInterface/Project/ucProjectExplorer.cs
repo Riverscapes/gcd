@@ -593,8 +593,12 @@ namespace GCDCore.UserInterface.Project
                     }
 
                     DEMSurvey dem = (DEMSurvey)((ProjectTreeNode)nodDEM.Tag).Item;
-                    if (frmDEMSurveyProperties.CalculateErrorSurface(dem) is ErrorSurface)
+                    ErrorSurface err = frmDEMSurveyProperties.CalculateErrorSurface(dem);
+                    if (err is ErrorSurface)
+                    {
+                        ProjectManager.OnAddToMap(err);
                         LoadTree();
+                    }
                 }
             }
             catch (Exception ex)
@@ -618,8 +622,12 @@ namespace GCDCore.UserInterface.Project
                     }
 
                     DEMSurvey dem = (DEMSurvey)((ProjectTreeNode)nodDEM.Tag).Item;
-                    if (frmDEMSurveyProperties.SpecifyErrorSurface(dem) is ErrorSurface)
+                    ErrorSurface err = frmDEMSurveyProperties.SpecifyErrorSurface(dem);
+                    if (err is ErrorSurface)
+                    {
+                        ProjectManager.OnAddToMap(err);
                         LoadTree();
+                    }
                 }
             }
             catch (Exception ex)
@@ -1073,7 +1081,7 @@ namespace GCDCore.UserInterface.Project
                     }
 
                     additionalInfo = " All associated surfaces and error surfaces that belong to this DEM survey will also be deleted.";
-                        break;
+                    break;
             }
 
             if (MessageBox.Show(string.Format("Are you sure that you want to delete {0}?{1} The item will be deleted permanently.", nodSelected.Text, additionalInfo),

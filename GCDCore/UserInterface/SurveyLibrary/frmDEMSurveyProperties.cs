@@ -398,6 +398,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
                 if (SurfaceForm.ShowDialog() == DialogResult.OK)
                 {
                     grdAssocSurface.Rows[grdAssocSurface.Rows.Count - 1].Selected = true;
+                    ProjectManager.OnAddToMap((AssocSurface) grdAssocSurface.Rows[grdAssocSurface.Rows.Count - 1].DataBoundItem);
                 }
             }
         }
