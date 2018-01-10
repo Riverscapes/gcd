@@ -430,6 +430,8 @@ namespace GCDCore.UserInterface.Project
             DEMSurvey demResult = null;
             if (frmImport.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
+                this.Cursor = Cursors.WaitCursor;
+
                 GCDConsoleLib.Raster gRaster = frmImport.ProcessRaster();
 
                 if (gRaster is GCDConsoleLib.Raster)
@@ -450,12 +452,16 @@ namespace GCDCore.UserInterface.Project
                     frmDEMSurveyProperties frm = new frmDEMSurveyProperties(dem);
                     frm.ShowDialog();
 
+                    ProjectManager.OnAddToMap(dem);
+
                     // Load the tree again because the use may have added Assoc or error surfaces
                     // while the form was open (and since the tree was last loaded)
                 }
 
                 LoadTree();
             }
+
+            this.Cursor = Cursors.Default;
 
             return demResult;
         }
