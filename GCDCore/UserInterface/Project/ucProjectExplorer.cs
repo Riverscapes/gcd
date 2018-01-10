@@ -1058,8 +1058,25 @@ namespace GCDCore.UserInterface.Project
             }
 
             GCDNodeTypes eType = GetNodeType(nodSelected);
+            ProjectTreeNode ptn = (ProjectTreeNode)nodSelected.Tag;
+            string additionalInfo = string.Empty;
 
-            if (MessageBox.Show(string.Format("Are you sure that you want to delete {0}? The item will be deleted permanently.", nodSelected.Text), 
+            switch (eType)
+            {
+                case GCDNodeTypes.DEMSurvey:
+                    DEMSurvey dem = (DEMSurvey)ptn.Item;
+                    if (ProjectManager.Project.DoDs.Values.Any(x => x.NewDEM == dem || x.OldDEM == dem))
+                    {
+                        MessageBox.Show("DEM Surveys that are used by one or more change detection analyses cannot be deleted." +
+                            " Delete all change detection analyses that use this DEM survey before attempting to delete this item.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
+
+                    additionalInfo = " All associated surfaces and error surfaces that belong to this DEM survey will also be deleted.";
+                        break;
+            }
+
+            if (MessageBox.Show(string.Format("Are you sure that you want to delete {0}?{1} The item will be deleted permanently.", nodSelected.Text, additionalInfo),
                 Properties.Resources.ApplicationNameLong, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.No)
             {
                 return;
@@ -1067,8 +1084,6 @@ namespace GCDCore.UserInterface.Project
 
             try
             {
-                ProjectTreeNode ptn = (ProjectTreeNode)nodSelected.Tag;
-
                 switch (eType)
                 {
                     case GCDNodeTypes.DEMSurvey:
