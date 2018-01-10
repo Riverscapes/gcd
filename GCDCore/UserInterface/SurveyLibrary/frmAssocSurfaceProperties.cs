@@ -295,6 +295,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             txtOriginalRaster.Text = DEM.Raster.GISFileInfo.FullName;
 
             MessageBox.Show("The slope raster will be generated after you click OK.", GCDCore.Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            btnOK.Select();
         }
 
 
