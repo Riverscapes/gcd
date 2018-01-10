@@ -260,6 +260,20 @@ namespace GCDCore.Project
 
             DEMSurvey dem = new DEMSurvey(name, surveyDT, path);
 
+            //read Chronological Order, if set
+            XmlNode nodChronologicalOrder = nodDEM.SelectSingleNode("ChronologicalOrder");
+            if (nodChronologicalOrder is XmlNode)
+            {
+                string sChronologicalOrder = nodChronologicalOrder.InnerText;
+                int iChronologicalOrder;
+                Boolean bParseSuccessful = int.TryParse(sChronologicalOrder, out iChronologicalOrder);
+                if (bParseSuccessful)
+                {
+                    dem.ChronologicalOrder = iChronologicalOrder;
+                }
+            }
+
+
             // Single survey method DEM surveys
             XmlNode nodSurveyMethod = nodDEM.SelectSingleNode("SurveyMethod");
             if (nodSurveyMethod is XmlNode)
