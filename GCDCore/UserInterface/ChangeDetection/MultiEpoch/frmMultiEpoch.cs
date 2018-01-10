@@ -55,6 +55,8 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
             {
                 SurveyItem.PropertyChanged+= DEMIsActive_Changed;
             }
+
+            UpdateEpochQueue();
       }
 
         private void cmdMoveUp_Click(object sender, EventArgs e)
@@ -140,9 +142,7 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
                 ProjectManager.Project.Save();
 
                 ThresholdProps threshold = ucThresholding1.ThresholdProperties;
-                List < ThresholdProps > thresholds = new List<ThresholdProps>();
-                thresholds.Add(threshold);
-                BatchEngine = new ChangeDetectionMultiEpoch(DEMs[0].DEM, DEMs[1].DEM, DEMs[0].ErrorSurf, DEMs[1].ErrorSurf, thresholds);
+                BatchEngine = new ChangeDetectionMultiEpoch(Epochs.ToList(), threshold);
                 bgWorker.RunWorkerAsync();
             }
             catch (Exception ex)
@@ -155,20 +155,46 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
             }
         }
 
+        private void chkNewest_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateEpochQueue();
+        }
+
+        private void chkEarliest_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateEpochQueue();
+        }
+
+        private void chkPrevious_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateEpochQueue();
+        }
         #endregion
 
         #region "Methods"
         private void UpdateEpochQueue()
         {
-            //PopulateNewestDEMMinusAllOtherDEMs();
-            //PopulateAllDEMsMinusTheEarliestDEMs();
-            PopulateAllDEMsMinusThePreviousDEM();
+            //clear list
+            Epochs.Clear();
+
+            if(chkNewest.Checked)
+            {
+                PopulateNewestDEMMinusAllOtherDEMs();
+            }
+
+            if(chkEarliest.Checked)
+            {
+                PopulateAllDEMsMinusTheEarliestDEMs();
+            }
+
+            if(chkPrevious.Checked)
+            {
+                PopulateAllDEMsMinusThePreviousDEM();
+            }
         }
 
         private void PopulateNewestDEMMinusAllOtherDEMs()
         {
-            //clear list
-            Epochs.Clear();
 
             List<DEMSurvey> ActiveDEMs = GetActiveDEMs();
             
@@ -184,9 +210,6 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
 
         private void PopulateAllDEMsMinusTheEarliestDEMs()
         {
-            //clear list
-            Epochs.Clear();
-
             List<DEMSurvey> ActiveDEMs = GetActiveDEMs();
 
             DEMSurvey EarliestDEM = ActiveDEMs[0];
@@ -201,8 +224,6 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
 
         private void PopulateAllDEMsMinusThePreviousDEM()
         {
-            //clear list
-            Epochs.Clear();
 
             List<DEMSurvey> ActiveDEMs = GetActiveDEMs();
 
@@ -256,6 +277,8 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
 
         #endregion
 
+        #region "Background worker support"
+
         private void bgWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             try
@@ -284,6 +307,9 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
             MessageBox.Show("Batch Change Detection Complete.");
 
         }
+
+        #endregion
+
     }
 
 }
