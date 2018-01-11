@@ -179,62 +179,95 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
 
             if(chkNewest.Checked)
             {
-                PopulateNewestDEMMinusAllOtherDEMs();
+                List<Epoch> NewestDEMMinusAllOtherDEMs = PopulateNewestDEMMinusAllOtherDEMs();
+                AddEpochsWithoutDuplicates(NewestDEMMinusAllOtherDEMs);
             }
 
             if(chkEarliest.Checked)
             {
-                PopulateAllDEMsMinusTheEarliestDEMs();
+                List<Epoch> AllDEMsMinusTheEarliestDEMs = PopulateAllDEMsMinusTheEarliestDEMs();
+                AddEpochsWithoutDuplicates(AllDEMsMinusTheEarliestDEMs);
             }
 
-            if(chkPrevious.Checked)
+            if (chkPrevious.Checked)
             {
-                PopulateAllDEMsMinusThePreviousDEM();
+                List<Epoch> AllDEMsMinusThePreviousDEM = PopulateAllDEMsMinusThePreviousDEM();
+                AddEpochsWithoutDuplicates(AllDEMsMinusThePreviousDEM);
             }
         }
 
-        private void PopulateNewestDEMMinusAllOtherDEMs()
+        private void AddEpochsWithoutDuplicates(List<Epoch> NewEpochs)
         {
+            foreach(Epoch currentEpoch in NewEpochs)
+            {
+                if(!EpochIsCurrentInList(currentEpoch))
+                {
+                    Epochs.Add(currentEpoch);
+                }
+            }
+        }
+
+        private Boolean EpochIsCurrentInList(Epoch newEpoch)
+        {
+            foreach(Epoch CurrentEpoch in Epochs)
+            {
+                if(CurrentEpoch.NewDEMName == newEpoch.NewDEMName & CurrentEpoch.OldDEMName == newEpoch.OldDEMName) //each DEM must have a unique name so we can compare DEM names
+                {
+                    return (true);
+                }
+            }
+            return (false);
+        }
+
+        private List<Epoch> PopulateNewestDEMMinusAllOtherDEMs()
+        {
+            List<Epoch> NewestDEMMinusAllOtherDEMs = new List<Epoch>();
 
             List<DEMSurvey> ActiveDEMs = GetActiveDEMs();
             
-            DEMSurvey NewestDEM = ActiveDEMs[ActiveDEMs.Count-1];
-            for(int i = 0; i< ActiveDEMs.Count - 1; i++)
+            DEMSurvey NewestDEM = ActiveDEMs[0];
+            for(int i = 1; i< ActiveDEMs.Count; i++)
             {
                 DEMSurvey OlderDEM = ActiveDEMs[i];
                 Epoch FirstEpoch = new Epoch(NewestDEM, OlderDEM);
-                Epochs.Add(FirstEpoch);
+                NewestDEMMinusAllOtherDEMs.Add(FirstEpoch);
             }
 
+            return (NewestDEMMinusAllOtherDEMs);
         }
 
-        private void PopulateAllDEMsMinusTheEarliestDEMs()
+        private List<Epoch> PopulateAllDEMsMinusTheEarliestDEMs()
         {
+            List<Epoch> AllDEMsMinusTheEarliestDEMs = new List<Epoch>();
+
             List<DEMSurvey> ActiveDEMs = GetActiveDEMs();
 
-            DEMSurvey EarliestDEM = ActiveDEMs[0];
-            for (int i = 1; i < ActiveDEMs.Count; i++)
+            DEMSurvey EarliestDEM = ActiveDEMs[ActiveDEMs.Count - 1];
+            for (int i = 0; i < ActiveDEMs.Count - 1; i++)
             {
                 DEMSurvey OtherDEM = ActiveDEMs[i];
                 Epoch NewEpoch = new Epoch(OtherDEM, EarliestDEM);
-                Epochs.Add(NewEpoch);
+                AllDEMsMinusTheEarliestDEMs.Add(NewEpoch);
             }
 
+            return (AllDEMsMinusTheEarliestDEMs);
         }
 
-        private void PopulateAllDEMsMinusThePreviousDEM()
+        private List<Epoch> PopulateAllDEMsMinusThePreviousDEM()
         {
+            List<Epoch> AllDEMsMinusThePreviousDEM = new List<Epoch>();
 
             List<DEMSurvey> ActiveDEMs = GetActiveDEMs();
 
             for (int i = 0; i < ActiveDEMs.Count - 1; i++)
             {
-                DEMSurvey oldDEM = ActiveDEMs[i];
-                DEMSurvey newDEM = ActiveDEMs[i+1];
+                DEMSurvey newDEM = ActiveDEMs[i];
+                DEMSurvey oldDEM = ActiveDEMs[i+1];
                 Epoch NewEpoch = new Epoch(newDEM, oldDEM);
-                Epochs.Add(NewEpoch);
+                AllDEMsMinusThePreviousDEM.Add(NewEpoch);
             }
 
+            return (AllDEMsMinusThePreviousDEM);
         }
 
         /// <summary>
