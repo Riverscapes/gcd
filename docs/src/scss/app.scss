@@ -1,0 +1,250 @@
+@charset 'utf-8';
+
+// Extra fonts we bring in form google
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+// This grabs all our foundation settings
+@import 'settings';
+@import 'font-awesome';
+@import 'github';
+
+// SECTION is the tag denoting where all the 
+// content is. It's how we style the article content
+// without styling the header, menu etc.
+section {
+  h2 {
+    color: #333333;
+    font-family: 'Raleway', serif;
+    font-weight: 400;
+  }
+  h3{
+    border-bottom: 1px solid black;
+  }
+
+  .imgleft{
+    float: left;
+    display: block;
+    max-width: 50%;
+    margin-right: 1.5rem;
+    margin-bottom: 1rem;  
+  }
+
+  .imgright{
+    float: right;
+    display: block;
+    max-width: 50%;
+    margin-left: 1.5rem;
+    margin-bottom: 1rem;  
+  }
+  @include breakpoint(medium down) {
+    .imgleft, .imgright {
+      float: none;
+      max-width: 100%;
+      margin: 0 0 1rem 0;
+    }
+  }
+  h1,h2,h3,h4,h5{
+    clear: both;
+  }
+}
+
+// The Header 
+header { 
+  text-shadow: 3px 3px 3px rgba(0,0,0,0.7);
+  background-repeat: no-repeat;
+  background-position: 0% 50%;
+  background-size: cover;
+  background-color: #444444;
+  a { color: white; }
+  a:hover{ color: #eeeeee; }
+  h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: white;
+    text-transform: uppercase;    
+  }
+  h3.subheader {
+    color: #eeeeee;
+
+  }
+  h4.subheader {
+    font-size: 1.2rem;
+    color: #eeeeee;
+  }
+  .callout { 
+    background: transparent; 
+    border: none;
+  }
+  .callout.home { 
+    padding: 6rem 3rem 9rem 3rem;
+  }
+  .logo {
+    display: block;
+    max-width: 150px;
+    img { max-width: 100%; }
+  }
+
+}
+
+#toc {
+    display: block;
+    padding: 1.25rem; 
+    margin-bottom: 0.75rem;
+    background-color: #fff;
+    background: #eceeef;
+    border-radius: 0.25rem;  
+    ul {
+      list-style: none;
+      margin-left: 0;
+    }
+    li.toc-active { font-weight: bold; }
+    li.toc-h1 { padding-left: 0rem; font-size: 1rem; }
+    li.toc-h2 { padding-left: 1rem; font-size: 0.9rem; }
+    li.toc-h3 { padding-left: 2rem; font-size: 0.8rem; }
+    li.toc-h4 { padding-left: 3rem; font-size: 0.7rem; }
+    li.toc-h5 { padding-left: 4rem; font-size: 0.6rem; }
+}
+#topbarnav a { color: white; }
+.top-bar {
+  &, & ul { background-color: #333333; }
+  .menu .menu-text { color: white; }
+  .dropdown.menu a { color: white; }
+  .dropdown.menu>li.is-dropdown-submenu-parent>a::after{
+    border-color: white transparent transparent;
+  }
+  .is-dropdown-submenu {
+    border: 1px solid #666666;
+  }
+  .is-dropdown-submenu .is-dropdown-submenu-parent.opens-right>a::after{
+    border-color: transparent transparent transparent white;
+  }
+}
+
+#sidebar {
+  .title-bar {
+    background: $secondary-color;
+    position: relative;
+  }
+  #menuCtls {
+    margin-bottom: 0;
+    position: absolute;
+    right: 0.5rem;
+    top: 0.5rem;
+    span { border-bottom: none; }
+    .button{
+      padding: 0.45em 0.5em;
+    }  
+  }  
+}
+
+#sidenav {
+  display: block;
+  padding: 1.25rem;   
+  margin-bottom: 0.75rem;
+  background-color: #f5f5f5;
+  border: 1px solid #e5e5e5;
+  border-radius: 0.25rem;
+  li li {
+    font-size: 95%;
+  }
+  li a {
+    padding: 0.3rem 1rem 0.3rem 1rem;
+    line-height: 1.2;
+  }
+  li>a:before{
+    color: $primary-color;
+    display: block;
+    position: relative;
+    left: -4px;
+    float: left;
+  }
+  li.branch > a > i.icon {
+    @extend .fa;
+    @extend .fa-folder;
+    padding-right: 0.3rem;
+  }
+  li.leaf > a > i.icon {
+    @extend .fa;
+    padding-right: 0.3rem;
+  }
+  li.leaf.home > a > i.icon { @extend .fa-home; }
+  li.leaf.page > a > i.icon { @extend .fa-file-text; }
+  li.leaf a:hover {
+    text-decoration: underline;
+  }
+  a.menuActive {
+    &:before{ color: black; }
+    font-weight: bold;
+    color: black;
+  }
+  li.is-accordion-submenu-parent{
+    &>a{
+      &:before{ color: #444444; }
+      color: #444444;      
+    }
+    &>a.reallink{
+      &:hover{ text-decoration: underline; }
+      &:before{
+        color:  $primary-color;
+      }
+      color: $primary-color;    
+    }
+  }
+  .submenu-toggle {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+
+#pluginrepo {
+  margin: 0;
+  .plugin{
+    li {
+      padding: 0.2rem 0.5rem;      
+    }
+    .cta-button {
+      padding: 0
+    }
+    list-style: none;
+    border: 1px solid #666666;
+    .title{
+      background: #444;
+      color: white;
+      font-weight: bold;
+    }
+    .lbl { font-weight: bold; }
+    .about {}
+    .description {}
+    .button{
+      width: 100%;
+      margin: 0;
+    }
+  }
+}
+
+code.highlighter-rouge {
+  padding: 0rem 0.2rem;
+  border: 1px solid #d7d7d7;
+  background-color: #fafafa;
+  font-family: Consolas,"Liberation Mono",Courier,monospace;
+  font-weight: normal;
+  color: #0a0a0a;
+}
+
+.highlighter-rouge code {
+  font-size: 0.9rem;
+  line-height: 1.1;
+  padding: inherit;
+  border: inherit;
+  background-color: inherit;
+  font-family: inherit;
+  font-weight: inherit;
+  color: inherit;
+
+}
+
+div.highlighter-rouge {
+  margin-bottom: 1.5rem;
+}

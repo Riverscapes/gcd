@@ -1,0 +1,91 @@
+<h3 id="overview">Overview</h3>
+
+<p>This exercise is simply about putting together what you’ve done in <a href="/tutorials--how-to/workshop-tutorials/m-deriving-roughness-with-topcat">M. Deriving Roughness with ToPCAT</a>, <a href="/tutorials--how-to/workshop-tutorials/p-building-your-own-fis">P. Building your own FIS</a> and the data we collected in the flume and do a complete change detection.</p>
+
+<h3 id="data-and-materials-for-exercises">Data and Materials for Exercises</h3>
+
+<h4 id="datasets">Datasets</h4>
+
+<p><a href="http://etalweb.joewheaton.org/etal_workshops/GCD/2015_USU/Q_FlumeFIS.zip">Q_FlumeFIS.zip</a> File of Data for this Exercise</p>
+
+<p><a href="http://etalweb.joewheaton.org/etal_workshops/GCD/2015_USU/Q_BridgeCreek.zip">Q_BridgeCreek.zip</a> File of Data for this Exercise</p>
+
+<h4 id="prerequisite-for-this-exercise">Prerequisite for this Exercise</h4>
+
+<ul>
+  <li>Some ArcGIS experience</li>
+  <li>ArcGIS 10.X w/ Spatial Analyst Extension</li>
+  <li>GCD Add-In</li>
+</ul>
+
+<hr />
+
+<h3 id="step-by-step">Step by Step</h3>
+
+<h4 id="exercise-r-running-a-change-detection-with-fis---bridge-creek"><strong>Exercise R: Running a Change Detection with FIS - Bridge Creek</strong></h4>
+
+<p>C:\0_GCD\Exercises\R_BridgeCreek</p>
+
+<p>**1. **Start new ArcMap Document</p>
+
+<p>**2. **Create New GCD Project - “Lower Owens D” in R</p>
+
+<p>**3. **Add two DEM Surveys (2010, 2014)</p>
+
+<p>**4. **Generate Associated Surfaces</p>
+
+<ul>
+  <li>
+    <p>Slope degrees</p>
+  </li>
+  <li>
+    <p>Point density</p>
+  </li>
+  <li>
+    <ul>
+      <li>use Topo_Points.shp</li>
+    </ul>
+  </li>
+  <li>
+    <p>Interpolation Error</p>
+  </li>
+  <li>
+    <ul>
+      <li>use provided surface or generate it with interpolation error tool</li>
+    </ul>
+  </li>
+</ul>
+
+<p>**5. **Generate 3 Input FIS error surfaces</p>
+
+<ul>
+  <li>Using CHaMP_TLS_ZError_PD_SLPdeg_IntErr</li>
+</ul>
+
+<p>**6. **Perform change detection using probabilistic thresholding at 80% confidence</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/vzsDEEwVVMk" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen=""></iframe>
+
+<h3 id="related-online-help-or-tutorials-for-this-topic">Related Online Help or Tutorials for this Topic</h3>
+
+<ul>
+  <li>
+    <p><a href="http://gcdworkshop.joewheaton.org/workshop-topics/versions/3-day-workshop/2-errors-uncertainties/q-changedetection">Parent Workshop Topic</a></p>
+  </li>
+  <li>
+    <p><a href="/">GCD 6 Help</a></p>
+  </li>
+  <li>
+    <ul>
+      <li><a href="/gcd-concepts/fuzzy-inference-systems-for-modeling-dem-error">Fuzzy Inference Systems for Modeling DEM Error</a></li>
+      <li><a href="/gcd-command-reference/gcd-project-explorer/g-error-surfaces-context-menu/ii-derive-error-surface">ii. Derive Error Surface</a></li>
+      <li><a href="/gcd-command-reference/gcd-project-explorer/f-individual-associated-surface-context-menu">F. Individual Associated Surface Context Menu</a></li>
+      <li><a href="/gcd-command-reference/gcd-analysis-menu/c-geomorphic-change-detection-submenu/change-detection">Add Change Detection</a></li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<p>← <a href="/tutorials--how-to/workshop-tutorials/p-building-your-own-fis">Back to Previous Tutorial</a>        <a href="/tutorials--how-to/workshop-tutorials/s-bayesian-updating-excercise">Ahead to Next Tutorial</a> →</p>
+

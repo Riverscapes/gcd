@@ -1,0 +1,48 @@
+<h4 id="simply-customize-elevation-change-distributions-in-excel">Simply Customize Elevation Change Distributions in Excel</h4>
+
+<p>If you don’t like how the elevation change distribution graphics are produced by GCD, simply open up the threshold.csv and <code class="highlighter-rouge">raw.csv</code> files in your output folder and copy the contents of the volume column into the <code class="highlighter-rouge">ECD.xlsx</code>excel file below. You’ll need to make sure you put the right values in the right places and then recalculate some of the files, but you will then be able to customize the size and layout of the fonts, bars, colors, sizes etc. You can of course do this in excel manually, but the template below is formatted to have a similar appearance to what you see in GCD.</p>
+
+<p><img src="/_/rsrc/1472842984592/tutorials--how-to/v-thresholding-w-raster-calculator/Excel_icon.gif" alt="img" /><code class="highlighter-rouge"> </code><a href="http://etal.usu.edu/GCD/ECD.xlsx"><code class="highlighter-rouge">ECD.xlsx</code> </a></p>
+
+<h4 id="fancier-elevation-change-distributions-plots-in-r">Fancier Elevation Change Distributions Plots in R</h4>
+
+<p>If you want to make more customizable and professional elevation change distribution plots in R, see the two scripts in:</p>
+
+<p><a href="http://etal.usu.edu/GCD/Scripts/gcdbarplots.zip"><img src="assets/images/box_zip.png" alt="box_zip" /></a></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>ECDplots_R.zip
+</code></pre>
+</div>
+
+<p>What does the script(s) output?</p>
+
+<ul>
+  <li>ECD plots as a *.pdf.  These can be further customized using a graphics drawing program (e.g. Adobe Illustrator) or simply saved as a *.png to use in a report, etc.</li>
+</ul>
+
+<p><img src="assets/images/thresh_plots.png" alt="thresh_plots" /></p>
+
+<p>What’s in the *.zip?</p>
+
+<ul>
+  <li>Script to produce Simple DoD ECD plots  (GCD_SimpleMinLoDBarplots_v2.R)</li>
+  <li>Script to produce Thresholded DoD ECD plots  (GCD_ThresholdedBarplots_v2.R)</li>
+  <li>Example data (raw.csv; thresholded.csv)</li>
+</ul>
+
+<p>Who should use these scripts?</p>
+
+<ul>
+  <li>Anyone with a very basic working knowledge of R (i.e. you’ve figured out how to install and open the program!)</li>
+</ul>
+
+<p>What do I need to do to run the script?</p>
+
+<ul>
+  <li>Watch the step-by-step video posted below, or follow these simple steps:</li>
+  <li>Step 1: Open the script in R</li>
+  <li>Step 2: Define necessary ‘user-defined arguments’ (differs based on script you choose to run)</li>
+  <li>Step 3: Highlight all the code and run!</li>
+</ul>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/ughZsKnmcCg" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen=""></iframe>

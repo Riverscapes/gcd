@@ -1,0 +1,97 @@
+<p>The Bootstrap Roughness Modeler Tool* <em>is located under the *Analysis</em> menu and further the <em>Roughness Analysis</em> menu:</p>
+
+<p><img src="/assets/images/GCD_MenuLocationBootstrapRoughnessModeler.png" alt="GCD_MenuLocationBootstrapRoughnessModeler" /></p>
+
+<p>A video tutorial for how to use the <em>Bootstrap Roughness Modeler</em> can be seen below:</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/U05upegsMlI" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen=""></iframe>
+
+<p>When the <em>Bootstrap Roughness Modeler</em> is run, the following dialog appears:</p>
+
+<p><img src="/assets/images/ScreenshotBootstrapRoughnessModeler.png" alt="ScreenshotBootstrapRoughnessModeler" /></p>
+
+<h4 id="inputs">INPUTS:</h4>
+
+<p>The inputs for this tool are:</p>
+
+<ul>
+  <li>
+    <p><strong>Input Survey Points</strong></p>
+  </li>
+  <li>
+    <ul>
+      <li>point feature class of the points used to create the Digital elevation model (DEM) used as input below.</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Survey Extent</strong></p>
+  </li>
+  <li>
+    <ul>
+      <li>Polygon feature class representing the extent of the survey.</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Channel Extent (optional)</strong></p>
+  </li>
+  <li>
+    <ul>
+      <li>Polygon feature class representing areas not to be included in the bootstrapping. For example if a channel unit polygon feature class is used as input then the bootstrap will only be performed using points that exist outside of the channel unit feature class.</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>DEM</strong></p>
+  </li>
+  <li>
+    <ul>
+      <li>Digital elevation model (DEM) that was created from the input survey points.</li>
+    </ul>
+  </li>
+  <li>
+    <p>**Convert to millimeters **(optional)</p>
+  </li>
+  <li>
+    <ul>
+      <li>if this check box is selected then the output results will be in millimeters</li>
+    </ul>
+  </li>
+  <li>
+    <p>**Vertical units of DEM **(optional, only enabled if Convert to millimeters is checked)</p>
+  </li>
+  <li>
+    <ul>
+      <li>grain size metrics are generally reported in millimeters so a conversion based on this value is performed to get values in millimeters.</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Number of Iterations</strong></p>
+  </li>
+  <li>
+    <ul>
+      <li>controls the number of times that points should be randomly sampled and differenced from the DEM.</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Percent of data to keep as subset each iteration</strong></p>
+  </li>
+  <li>
+    <ul>
+      <li>controls the percent of data that should be kept during each iteration to make a DEM to compare with the DEM provided above.</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="outputs">OUTPUTS:</h4>
+
+<p>The outputs for the tool are:</p>
+
+<ul>
+  <li>
+    <p><strong>Output Raster Path</strong></p>
+  </li>
+  <li>
+    <ul>
+      <li>path to save the output bootstrap roughness raster to. The output raster is comprised of the mean delta Z between each iteration of sub-setting points and the original DEM.</li>
+    </ul>
+  </li>
+</ul>

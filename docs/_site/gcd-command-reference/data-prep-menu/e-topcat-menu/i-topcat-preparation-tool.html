@@ -1,0 +1,41 @@
+<p>Currently in order to use ToPCAT to decimate a point cloud the input point cloud file needs to be in a space separated x y z file. To address this need, ToPCAT prep takes in a raw point cloud file and replaces its separator with spaces so that the file can be used in ToPCAT.</p>
+
+<p>In addition to space separated files, files greater than 300 MB can occasionally fail to be processed by ToPCAT due to their large size. If you have a file larger than this or have run ToPCAT and it does not work you may want to consider subsetting your raw point cloud file with the <em>Subset Raw Point Cloud Tool</em>.</p>
+
+<p>When the <em>ToPCAT Prep - Convert Point Cloud to Space Delimited</em> button is clicked the tool menu is shown:</p>
+
+<p><img src="/assets/images/GCD6_Form_ToPCAT_Prep.png" alt="GCD6_Form_ToPCAT_Prep" /></p>
+
+<p>The inputs for this tool are:</p>
+
+<ul>
+  <li>
+    <p><strong>Raw point cloud</strong></p>
+  </li>
+  <li>
+    <ul>
+      <li><strong>formatted into columns of x, y, z.</strong></li>
+    </ul>
+  </li>
+  <li>
+    <p>**Point Cloud separator **(optional):</p>
+  </li>
+  <li>
+    <ul>
+      <li>the symbol used to separate the x, y, z values. The default is comma.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>The outputs for the tool are:</p>
+
+<ul>
+  <li>
+    <p><strong>ToPCAT ready raw point cloud</strong></p>
+  </li>
+  <li>
+    <ul>
+      <li>raw point cloud formatted into space delimited columns of x y z.</li>
+    </ul>
+  </li>
+</ul>

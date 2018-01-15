@@ -1,0 +1,89 @@
+<p>The Grain Size Distribution Estimator Tool* <em>is located under the *Analysis</em> menu and further the <em>Roughness Analysis</em> menu:</p>
+
+<p><img src="/assets/images/GCD_MenuLocationGrainSizeDistributionCalculator.png" alt="GCD_MenuLocationGrainSizeDistributionCalculator" /></p>
+
+<p>A video tutorial for how to use the <em>Grain Size Distribution Calculator</em> can be seen below:</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/JpOu5ooGhpw" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen=""></iframe>
+
+<p>When the *Grain Size Distribution Calculator *is run, the following dialog appears:</p>
+
+<p><img src="/assets/images/GrainSizeDistributionCalculatorScreenshot_6_1_7.png" alt="GrainSizeDistributionCalculatorScreenshot_6_1_7" /></p>
+
+<h4 id="inputs">INPUTS:</h4>
+
+<p>The inputs for this tool are:</p>
+
+<ul>
+  <li>
+    <p><strong>Surface roughness raster</strong></p>
+  </li>
+  <li>
+    <ul>
+      <li>raster representing surface roughness. With high density data it is recommended to create this raster with the <a href="/gcd-command-reference/gcd-analysis-menu/b-roughness-analysis-submenu/i-simple-topcat-roughness">Simple ToPCAT Roughness Tool</a>.</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Vertical units of surface roughness raster</strong></p>
+  </li>
+  <li>
+    <ul>
+      <li>grain size metrics are generally reported in millimeters so a conversion based on this value is performed to get values in millimeters .</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Channel unit polygon</strong></p>
+  </li>
+  <li>
+    <ul>
+      <li>Polygon feature class representing areas of interest where the grain size metrics of D16, D50, D84, and D90 will be calculated for.</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Unique channel Field</strong></p>
+  </li>
+  <li>
+    <ul>
+      <li>Field in polygon feature class that will be used as a unique identifier to append the grain size metrics to the correct field. It is important that the value of this field is a unique for each record in the feature class.</li>
+    </ul>
+  </li>
+  <li>
+    <p>**Append grain size metrics **(optional)</p>
+  </li>
+  <li>
+    <ul>
+      <li>if this check box is selected then the grain size metrics of D16, D50, D84, and D90 will be appended to the channel unit polygon</li>
+    </ul>
+  </li>
+  <li>
+    <p>**Append number of raster cells **(optional)</p>
+  </li>
+  <li>
+    <ul>
+      <li>if this check box is selected then the number of raster cells used to calculate the grain size metrics will be appended to the channel unit polygon.</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="outputs">OUTPUTS:</h4>
+
+<p>The outputs for the tool are:</p>
+
+<ul>
+  <li>
+    <p><strong>Create cumulative distribution plot</strong></p>
+  </li>
+  <li>
+    <ul>
+      <li>if this check box is selected then a cumulative distribution figure of the grain size distribution will be created for each polygon in the channel unit polygon.</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>CDF Folder</strong></p>
+  </li>
+  <li>
+    <ul>
+      <li>The folder to store the cumulative distribution plots to. Each file is named as a combination of the unique field name and its value. For example if a field called Id was used for the unique channel field then the figure for the polygon with an Id of 23 would be named Id_23.png</li>
+    </ul>
+  </li>
+</ul>

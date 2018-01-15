@@ -1,0 +1,67 @@
+# Site title will be used everywhere
+title: Geomorphic Change Detection Software
+description: > # this means to ignore newlines until "baseurl:"
+  Online help and documentation site for the GCD
+
+# Final root url of the site. No ending slash. No subdirectory
+url: https://riverscapes.github.io
+# If the site is in a subdirectory you should do it like this: "/subdirectory". Otherwise ""
+baseurl: "/gcd6temp"
+# When serving locally what port should we use:
+port: 4001
+
+# Markdown style
+markdown: kramdown
+# Syntax highlighter.
+highlighter: rouge
+
+# Choosing "default" layout means we don't need a "layout:default" in all our 
+# front matter
+defaults:
+  -
+    scope:
+      path: "" # an empty string here means all files in the project
+    values:
+      layout: "default"
+
+# Files/Folders to exclude from publishing
+exclude:
+  - src
+  - LICENSE
+  - README.md
+  - _config.yml
+
+# Where our layouts and templates are stored
+layouts_dir:  src/_layouts
+includes_dir: src/_includes
+
+# These are theme settings that will be used to turn features on and off
+# They are not part of Jekyll, they are entirely custom.
+settings:
+  # Turn the automatically generated page contents on and off
+  autoPageContents:
+    active: true
+    onHome: false
+  # Options for the sidebar menu      
+  sideMenu:
+    homeItem: true
+    startExpanded: false
+  # Arbitrary multi-level topbar menu
+  # IF you don't need this just comment out everything below
+  # ----------------------------------
+  # topmenu:
+  #   - title: About
+  #     url: ThingsA
+  #   - title: Submenu
+  #     children:
+  #       - title: subsub
+  #         url: ThingsB/subpageB.html
+  #       - title: SubSUBmenu
+  #         children:
+  #           - title: Google
+  #             url: https://google.com
+  #   - title: Config
+  #     url: index.html
+  #   - title: Deploy
+  #     url: index.html
+

@@ -1,0 +1,25 @@
+{% capture html %}
+
+{% assign entries = site.pages | sort: "path" %}
+
+<script type="text/javascript">
+    var NAVTitle = "{{site.title}}";
+    var NAVHome = "{{site.baseurl}}";
+    var NAVPages = [
+        {% for entry in entries %}
+
+            {% capture slug    %}{{ entry.url | split: "/"   | last                       }}{% endcapture %}
+            {% capture current %}{{ entry.url | remove: slug | remove: "//" | append: "/" }}{% endcapture %}
+        {
+            url: "{{entry.url}}",
+            absurl: "{{ site.baseurl }}{{ entry.url }}",
+            slug: "{{slug}}",
+            title: "{{entry.title}}",
+            weight: "{{entry.weight}}"
+        },
+        {% endfor %}
+    ];
+    var SiteSettings = {{ site.settings | jsonify }};
+</script>
+
+{% endcapture %}{{ html | strip_newlines | replace:'    ','' | replace:'    ','' | replace:'  ',' ' }}

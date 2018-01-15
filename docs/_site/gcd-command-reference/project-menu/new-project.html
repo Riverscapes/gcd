@@ -1,0 +1,21 @@
+<p>The <code class="highlighter-rouge">Create New Project</code> dialog is where you create a new <a href="/gcd-concepts/project">project</a> by specifying the following information:</p>
+
+<ul>
+  <li><strong>Name</strong> (required): This is any descriptive name that you want to give to the project. Spaces and special characters can be used.</li>
+  <li><strong>Parent directory</strong> (required): This is where the project files will be stored. All inputs loaded through the <a href="/system/errors/NodeNotFound?suri=wuid:gx:3ed05905e41de6f6"><em>Survey Library</em></a> will be copied and/or created in the ‘<a href="/gcd-concepts/project/inputs-folder"><code class="highlighter-rouge">Inputs</code></a>’ folder, whereas all outputs will be stored in the ‘<a href="/gcd-concepts/project/analsyses-folder"><code class="highlighter-rouge">Analyses</code></a>’ folder.</li>
+  <li><strong>GCD Project File</strong> (optional): By default, this is the same as the Output file directory (recommended), but you can optionally choose where the <code class="highlighter-rouge">*.gcd</code> <a href="/gcd-concepts/project/-gcd-files">project XML file</a> is stored.</li>
+  <li><strong>Description</strong> (optional): This is an optional field where you can save any additional information about your project.</li>
+  <li><strong>Horizontal decimal precision</strong>: The horizontal decimal precision refers to the number of decimals places used to define the raster extent and cell size. This value should be the minimum number of decimal places required to accurately store the raster cell size. e.g. a cell size of 0.01m (1cm) should use a precision of 2.</li>
+</ul>
+
+<p><img src="/assets/images/GCD6_Form_CreateNewGCDProject_HorizontalDecimalPrecision.png" alt="GCD6_Form_CreateNewGCDProject_HorizontalDecimalPrecision" /></p>
+
+<p><img src="/assets/images/GCD6_Form_CreateNewGCDProject.png" alt="GCD6_Form_CreateNewGCDProject" /></p>
+
+<p>This video walks through the creation of a new project using the <code class="highlighter-rouge">Create New Project</code> dialog and shows what files and folders are created as a result of this process.</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/YPeVRjoq0Y0" frameborder="0" allowfullscreen=""></iframe>
+
+<p>When <a href="/gcd-concepts/project/-gcd-files">project XML file</a> (*.gcd) gets created, these are the XML tags that get populated in the project (example below is what gets saved when the dialog is filled out as specified above:</p>
+
+<p><img src="/assets/images/GCDSnipett.png" alt="GCDSnipett" /></p>

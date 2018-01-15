@@ -1,0 +1,63 @@
+<p>The<code class="highlighter-rouge"> Create Survey Extent Polygon tool</code> takes a raw xyz point cloud in a flat ascii file (e.g. <code class="highlighter-rouge">*.csv</code>, <code class="highlighter-rouge">*txt</code>,<code class="highlighter-rouge">*.xyz</code>, <code class="highlighter-rouge">*.pts</code>) and converts it into a polygon shapefile for direct use in deriving a TIN and DEM. The polygon shapefile will be used in constricting the area that is interpolated across when creating a TIN and/or DEM through the <code class="highlighter-rouge">Create DEM and/or TIN. </code>It also allows you to specify the spatial reference (coordinate system) of the polygon shapefile. The tool is a precursor to <code class="highlighter-rouge">Create DEM and/or TIN</code> tool.</p>
+
+<p><img src="/assets/images/CreateSurveyExtentPolygonToolUI.png" alt="CreateSurveyExtentPolygonToolUI" /></p>
+
+<p>The below video gives a succinct tutorial on how to use and the details of the Create Survey Extent Polygon Tool:</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/O6MR16S2mBc" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen=""></iframe>
+
+<h4 id="inputs">INPUTS:</h4>
+
+<p>Create Survey Extent Polygon</p>
+
+<ul>
+  <li>
+    <p><strong>raw point cloud</strong></p>
+  </li>
+  <li>
+    <ul>
+      <li>
+        <p>An ascii text file formatted into columns of x, y, z. Other columns can be present but will not be included in the output shapefile. (headers can be commented out with a <code class="highlighter-rouge">#</code>)</p>
+      </li>
+      <li>
+        <ul>
+          <li><strong>File must be space delimited</strong>. If it is not space delimited use the <a href="http://mbes.joewheaton.org/background/mbes-tools-command-reference/data-preparation/topcat-prep">TopCat Prep</a> tool to make the file space delimited.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p>**spatial reference **(optional)</p>
+  </li>
+  <li>
+    <ul>
+      <li>can be in the form of a .prj file or you can load an existing shapefile that contains a spatial reference and that spatial reference will be imported.</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>sample window size</strong></p>
+  </li>
+  <li>
+    <ul>
+      <li>defines the window size that will be used to create the survey grid. Every sample window that contains one point within it will be included in the final survey extent polygon.</li>
+      <li><strong>The sample window size should match the grid size that will be used in the subsequent GCD analysis</strong>.</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="outputs">OUTPUTS:</h4>
+
+<p>The outputs for the Create Survey Extent Polygon tool are:</p>
+
+<ul>
+  <li>
+    <p><strong>Polygon Shapefile or Feature Class</strong></p>
+  </li>
+  <li>
+    <ul>
+      <li><strong>represents the area where a point was surveyed for each individual sample window based on the grid created by the input sample size window</strong></li>
+    </ul>
+  </li>
+</ul>
+
+<p>← Back to  <a href="/gcd-command-reference/data-prep-menu/c-survey-preparation-menu/i-create-point-feature-class">i. Create Point Feature Class</a>       Ahead to <a href="/gcd-command-reference/data-prep-menu/c-survey-preparation-menu/ii-create-tin-and-or-dem">iii. Create TIN and/or DEM</a>  →</p>

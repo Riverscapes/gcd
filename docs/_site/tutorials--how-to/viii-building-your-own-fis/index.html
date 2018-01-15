@@ -1,0 +1,66 @@
+<h3 id="customizing-fuzzy-inference-systems-using-matlab-fuzzy-logic-toolbox">Customizing Fuzzy Inference Systems using Matlab Fuzzy Logic Toolbox</h3>
+
+<p>These video tutorials goes through how to customize a Fuzzy Inference System in Matlab for use in the GCD. Note that these videos are only useful if you have Matlab installed with  the <a href="http://www.mathworks.com/products/fuzzylogic/">Fuzzy Logic Toolbox</a>. If you want to make your own fuzzy inference systems or edit systems you can still do so (scroll down to ‘Customizing Fuzzy Inference Systems with a Text Editor’).</p>
+
+<h4 id="part-i---getting-around-in-the-fuzzy-logic-toolobox">Part I - Getting Around in the Fuzzy Logic Toolobox</h4>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/USy-Zk5wNuw" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen=""></iframe>
+
+<h4 id="part-ii--looking-at-an-existing-fuzzy-inference-system">Part II -Looking at an Existing Fuzzy Inference System</h4>
+
+<p>This goes through how an existing FIS that is installed with GCD 5 is set up, which is described in both Wheaton (2008) and Wheaton et al. (2010). The video shows you how to explore how the fuzzy inference system works and how it is organized.</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/mOYfYoNxRTY" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen=""></iframe>
+
+<h4 id="part-iii---modifying-a-fuzzy-inference-system">Part III - Modifying a Fuzzy Inference System</h4>
+
+<p>This video goes through modifying inputs and rules in Matlab’s <a href="http://www.mathworks.com/products/fuzzylogic/">Fuzzy Logic Toolbox</a>.</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/ld1Q3uEo1SQ" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen=""></iframe>
+
+<h3 id="customizing-fuzzy-inference-systems-with-a-text-editor">Customizing Fuzzy Inference Systems with a Text Editor</h3>
+
+<p>This video goes through how you customize a Fuzzy Inference System using either GCD or a text editor for use in GCD.</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/sPDx8Wsu2DA" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen=""></iframe>
+
+<p>To see how to edit an FIS using the GCD’s <code class="highlighter-rouge">Fuzzy Inference System Editor</code>, see here.</p>
+
+<h3 id="running-your-own-fis-with-more-than-three-inputs">Running your own FIS with more than Three Inputs</h3>
+
+<p>In GCD 5, we currently only support running fuzzy inference systems with two or three inputs. If you have more then three inputs, you’ll need to run your inference system outside of the GCD. You can still load your FIS output as a user-specified error grid in the <a href="/system/errors/NodeNotFound?suri=wuid:gx:3ed05905e41de6f6">Survey Library</a>, after converting it to raster format GCD recognizes (e.g. <code class="highlighter-rouge">*.tiff</code> or <code class="highlighter-rouge">*.img</code>).</p>
+
+<p>As a work around, we’ve developed some simple Matlab code (<code class="highlighter-rouge">FIS_IT.m</code>) that allows you to build spatial FIS outputs from an FIS you have created, with anywhere between two and seven inputs. You need Matlab’s fuzzy logic toolbox files loaded to use the code. The code can be downloaded <a href="http://etal.usu.edu/GCD/FIS-IT-Program.zip">here</a>. 
+​    <a href="http://etal.usu.edu/GCD/FIS-IT-Program.zip"><code class="highlighter-rouge">FIS-IT-Program.zip</code></a></p>
+
+<p>This video tutorial goes through how to run the FIS it! code:</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/UmxxHcO_NcM" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen=""></iframe>
+
+<p>For those of you who might want to extend the code, this video tutorial walks through how the code is organized and works:</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/yPDJKem3GnI" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen=""></iframe>
+
+<p>If you do make your own FIS, and want to produce some production quality plots of the input and output membership functions, check out ‘<a href="/tutorials--how-to/viii-building-your-own-fis/fuzzymembershipplot">R Plot Function for Fuzzy Membership Functions</a>’.</p>
+
+<h3 id="further-reading-on-fuzzy-inference-systems">Further Reading on Fuzzy Inference Systems</h3>
+
+<ul>
+  <li>
+    <p>See pages 97-108 of:</p>
+  </li>
+  <li>
+    <ul>
+      <li>Chapter 4 of Wheaton JM. 2008. <a href="http://www.joewheaton.org/Home/research/projects-1/morphological-sediment-budgeting/phdthesis">Uncertainty in Morphological Sediment Budgeting of Rivers</a>. Unpublished PhD Thesis, University of Southampton, Southampton, 412 pp.</li>
+    </ul>
+  </li>
+  <li>
+    <p>See page 142-146 of:</p>
+  </li>
+  <li>
+    <ul>
+      <li>Wheaton JM, Brasington J, Darby SE and Sear D. 2010. <a href="http://dx.doi.org/10.1002/esp.1886">Accounting for Uncertainty in DEMs from Repeat Topographic Surveys: Improved Sediment Budgets</a>. Earth Surface Processes and Landforms. 35 (2): 136-156. DOI: <a href="http://dx.doi.org/10.1002/esp.1886">10.1002/esp.1886</a>.</li>
+    </ul>
+  </li>
+  <li><a href="http://www.mathworks.com/help/toolbox/fuzzy/">Matlab Fuzzy Logic Toolbox Documentation</a></li>
+</ul>

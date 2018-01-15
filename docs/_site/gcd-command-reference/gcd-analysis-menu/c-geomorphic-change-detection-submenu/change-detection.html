@@ -1,0 +1,22 @@
+<p>The <code class="highlighter-rouge">Add Change Detection</code> command <a href="/gcd-command-reference/gcd-analysis-menu/c-geomorphic-change-detection-submenu/change-detection/Add.png?attredirects=0"><img src="/_/rsrc/1472842988678/gcd-command-reference/gcd-analysis-menu/c-geomorphic-change-detection-submenu/change-detection/Add.png" alt="img" /></a>  brings up a dialog, which allows you to specify how you wish to perform a change detection analysis.</p>
+
+<p><img src="/assets/images/GCD6_Form_ChangeDetectionConfiguration.png" alt="GCD6_Form_ChangeDetectionConfiguration" /></p>
+
+<p>The command is only accessible when you are in a <code class="highlighter-rouge">*.gcd </code><a href="/gcd-concepts/project">project</a> and you can only perform analyses when you have at least two overlapping surveys loaded in the <a href="/gcd-command-reference/gcd-project-explorer">GCD Project Explorer</a>. Because the <a href="/gcd-command-reference/gcd-project-explorer">GCD Project Explorer</a>  enforces <a href="/gcd-concepts/data-preparation---best-practices">orthogonality</a> of all rasters loaded, we know that any two surveys will be compatible for analysis without requiring resampling. However, the rasters may have different extents, and the surveys may have different coverages (i.e. the NoData extents) within those rasters. As such, at the time of analysis, the GCD Software creates two temporary concurrent rasters, and only performs the DoD analysis where their data intersect.</p>
+
+<ul>
+  <li>
+    <p><a href="/tutorials--how-to/iv-basic-dod-analysis-in-gcd">04. Basic DoD Analysis in GCD</a></p>
+  </li>
+  <li>
+    <p><a href="/tutorials--how-to/v-thresholding-w-raster-calculator">05. Thresholding w/ GCD</a></p>
+  </li>
+  <li>
+    <p><a href="/tutorials--how-to/vii-fuzzy-inference-systems-in-gcd">07. Applying Fuzzy Inference Systems in GCD</a></p>
+  </li>
+  <li>
+    <p><a href="/tutorials--how-to/vi-spatial-coherence-bayesian-updaing">06. Spatial Coherence &amp; Bayesian Updating</a></p>
+
+    <p>​</p>
+  </li>
+</ul>

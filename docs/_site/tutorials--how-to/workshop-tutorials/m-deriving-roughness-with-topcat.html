@@ -1,0 +1,72 @@
+<h3 id="overview">Overview</h3>
+
+<p>This exercise shows how GCD can be used for coming up with statistical models of error. We will cover coincident point analysis, interpolation error, and using the ToPCAT algorithm to look at statistics from high resolution point clouds within a user-defined moving voxel.</p>
+
+<h3 id="data-and-materials-for-exercises">Data and Materials for Exercises</h3>
+
+<h4 id="datasets">Datasets</h4>
+
+<p><a href="http://etalweb.joewheaton.org/etal_workshops/GCD/2015_USU/M_TopCATRoughness.zip">M_ToPCATRoughness.zip</a> File of Data for this Exercise</p>
+
+<h4 id="prerequisite-for-this-exercise">Prerequisite for this Exercise</h4>
+
+<ul>
+  <li>Some ArcGIS experience</li>
+  <li>ArcGIS 10.X w/ Spatial Analyst Extension</li>
+  <li>GCD Add-In</li>
+</ul>
+
+<h3 id="step-by-step">Step by Step</h3>
+
+<h4 id="run-topcat-to-get-roughness-surface-simple">Run ToPCAT to get Roughness Surface (Simple)</h4>
+
+<p><img src="assets/images/ExcerciseM1.png" alt="ExcerciseM1" /></p>
+
+<h4 id="run-topcat-as-associated-surface-to-get-roughness">Run ToPCAT as Associated Surface to Get Roughness</h4>
+
+<p><img src="assets/images/ExcerciseM2.png" alt="ExcerciseM2" /></p>
+
+<p><strong>Exercise M - Part 3: Use Associated Surface Panel to Create Roughness</strong></p>
+
+<p>C:\0_GCD\Exercises\M_ToPCATRoughness\TLS_Flume\Exercise</p>
+
+<ol>
+  <li>Start new ArcMap Document</li>
+</ol>
+
+<p>**2. **Open GCD Project  ToPCATRoughnessTLSFlume.gcd</p>
+
+<p>**3. **For each DEM in GCD Project Select Add Associated Surface and from this menu choose to Calculate a Roughness Raster.</p>
+
+<ol>
+  <li>
+    <p>Use the *.pts file associated with each flume run as input to the Generate Surface Roughness Raster dialog.</p>
+  </li>
+  <li>
+    <p>Due to scale of flume data you may want to adjust symbology.</p>
+  </li>
+</ol>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/v5xd9-UQook" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen=""></iframe>
+
+<h3 id="related-online-help-or-tutorials-for-this-topic">Related Online Help or Tutorials for this Topic</h3>
+
+<ul>
+  <li>
+    <p><a href="http://gcdworkshop.joewheaton.org/workshop-topics/versions/3-day-workshop/2-errors-uncertainties/m-using-topcat-gcd-for-roughness-estimation-surface-construction">Parent Workshop Topic</a></p>
+  </li>
+  <li>
+    <p><a href="/">GCD 6 Help</a></p>
+  </li>
+  <li>
+    <ul>
+      <li><a href="/gcd-command-reference/data-prep-menu/e-topcat-menu">ToPCAT Submenu</a></li>
+      <li><a href="/gcd-command-reference/gcd-analysis-menu/b-roughness-analysis-submenu/i-simple-topcat-roughness">Simple ToPCAT Roughness</a></li>
+      <li><a href="/gcd-command-reference/gcd-project-explorer/d-dem-context-menu/iv-add-associated-surface/4-deriving-roughness">Create Roughness as Associated Surface</a></li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<p><a href="/tutorials--how-to/workshop-tutorials/k-statistical-methods-of-estimating-error">← Back to Previous Tutorial</a>        <a href="/tutorials--how-to/workshop-tutorials/n-running-an-fis-dem-error-model">Ahead to Next Tutorial </a>→</p>

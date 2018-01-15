@@ -1,0 +1,75 @@
+<p>The <code class="highlighter-rouge">ToPCAT point cloud decimation</code> tool takes in a space delimited x y z file (i.e. a <code class="highlighter-rouge">*.pts</code>), x and y sample window resolutions, and a minimum number of points to calculate a statistics. By gridding the points based on the user defined x and y resolutions it calculates valuable statistics for each sample window with at least the user input.minimum number of points.  These statistics are stored in a single point in the center of each sample window.</p>
+
+<p><img src="/assets/images/GCD6_Form_ToPCAT_Decimation_Tab1.png" alt="GCD6_Form_ToPCAT_Decimation_Tab1" /></p>
+
+<p><img src="/assets/images/GCD6_Form_ToPCAT_Decimation_Tab2.png" alt="GCD6_Form_ToPCAT_Decimation_Tab2" /></p>
+
+<p>The inputs for this tool are:</p>
+
+<ul>
+  <li>
+    <p><strong>ToPCAT ready raw point cloud</strong></p>
+  </li>
+  <li>
+    <ul>
+      <li>raw point cloud formatted into space delimited columns of x y z.</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>X and Y sample window dimensions</strong></p>
+  </li>
+  <li>
+    <ul>
+      <li>Dimensions in units of the raw survey file to define the size of the sample window used to calculate statistics from.</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Minimum number of points in sample window to calculate statistics</strong></p>
+  </li>
+  <li>
+    <ul>
+      <li>To calculate many of its output statistics multiple points are needed within a sample window. The default minimum number is 4 points.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>The outputs for the tool are:</p>
+
+<ul>
+  <li>
+    <p><strong>Z stats shapefile</strong></p>
+  </li>
+  <li>
+    <ul>
+      <li>Point shapefile containing the statistics calculated for each sample window. The representative point is in the center of the sample window.</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Z minimum shapfile</strong></p>
+  </li>
+  <li>
+    <ul>
+      <li>Point shapefile containing the x,y location and z-value of the minimum value in the sample windows.</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Z maximum shapefile</strong></p>
+  </li>
+  <li>
+    <ul>
+      <li>Point Shapefile containing the x,y location and z-value of the maximum value in the sample windows.</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Underpopulated Z stats shapefile</strong></p>
+  </li>
+  <li>
+    <ul>
+      <li>Point shapefile with points at the cell centers of sample windows that did not have enough points to calculate all of the statistics calculated for its sample window. Still contains some statistics it was able to calculate.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>For a demonstration of this tool (run in <a href="http://mbes.joewheaton.org/">MBES Tools</a>) and an explanation of why or why not to create the two outputs see the video below:</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/OyVlYZJmtIg" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen=""></iframe>

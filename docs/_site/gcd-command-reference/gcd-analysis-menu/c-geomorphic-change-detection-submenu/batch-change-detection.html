@@ -1,0 +1,226 @@
+<p>The batch change detection automates performing multiple change detection analyses.</p>
+
+<p>The batch change dialog allows you to load an XML file (currently this must be manually populated), that specifies the parameters required to run multiple change detection scenarios at once. You can create an XML file in any text editor (e.g. <a href="http://notepad-plus-plus.org/">Notepad++</a>). The current functionality is primitive in its functionality and user friendliness and intended for power users. Future releases will look at ways of expanding on this.</p>
+
+<h2 id="batch-change-detection-parameters">Batch Change Detection Parameters</h2>
+
+<p>The input to the Batch Change Detection tools is provided in an XML file. Several examples are provided in the next section. This section describes the input parameters (XML tags).</p>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>Input Name</strong></th>
+      <th><strong>Comment</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Name</strong></td>
+      <td>Name of the analysis. The name must be unique, i.e. it cannot previously have been used to do a Change Detection Analysis.</td>
+    </tr>
+    <tr>
+      <td><strong>Type</strong></td>
+      <td>The type describes the type of analysis to run and must be either “<code class="highlighter-rouge">simple</code>”, “<code class="highlighter-rouge">propagated</code>” or “<code class="highlighter-rouge">probability</code>” (case sensitive).</td>
+    </tr>
+    <tr>
+      <td><strong>NewSurvey</strong></td>
+      <td>Name of new survey. The survey must have previously been loaded in Survey Library</td>
+    </tr>
+    <tr>
+      <td><strong>OldSurvey</strong></td>
+      <td>Name of old survey. The survey must have previously been loaded in Survey Library</td>
+    </tr>
+    <tr>
+      <td><strong>Threshold</strong></td>
+      <td>Threshold value for analysis (see examples by type below)</td>
+    </tr>
+    <tr>
+      <td><strong>NewSurveyError*</strong></td>
+      <td>Name of error calculation for new survey. The error calculation must have previously been specified in Survey Library</td>
+    </tr>
+    <tr>
+      <td><strong>OldSurveyError*</strong></td>
+      <td>Name of error calculation for old survey. The error calculation must have previously been specified in Survey Library</td>
+    </tr>
+    <tr>
+      <td><strong>Baysian*</strong></td>
+      <td>Baysian must be either “<code class="highlighter-rouge">TRUE</code>” or “<code class="highlighter-rouge">FALSE</code>”. Enables Baysian updating if “<code class="highlighter-rouge">TRUE</code>”</td>
+    </tr>
+    <tr>
+      <td><strong>WindowSize*</strong></td>
+      <td>Size of window for spatial coherence filter.</td>
+    </tr>
+    <tr>
+      <td><strong>PercentLess*</strong></td>
+      <td>Setting for spatial coherence filter. If percent of cells is less than this value, then probability is 0%.</td>
+    </tr>
+    <tr>
+      <td><strong>PercentGreater*</strong></td>
+      <td>Setting for spatial coherence filter. If percent of cells is greater than this value, then probability is 100%.</td>
+    </tr>
+  </tbody>
+</table>
+
+<ul>
+  <li>Optional tags</li>
+</ul>
+
+<h2 id="examples">Examples</h2>
+
+<h3 id="simple-change-detection-analysis">Simple change detection analysis</h3>
+
+<p><code class="highlighter-rouge"><span class="cp">&lt;?xml version="1.0" standalone="yes"?&gt;</span></code></p>
+
+<p><code class="highlighter-rouge">&lt;BatchChangeDetectionDS xmlns="http://tempuri.org/BatchChangeDetectionDS.xsd"&gt;</code></p>
+
+<p><code class="highlighter-rouge">  </code><code class="highlighter-rouge">&lt;BatchChangeDetection&gt;</code></p>
+
+<p><code class="highlighter-rouge">    </code><code class="highlighter-rouge">&lt;Name&gt;</code><strong>BatchA</strong><code class="highlighter-rouge">&lt;/Name&gt;</code></p>
+
+<p><code class="highlighter-rouge">    </code><code class="highlighter-rouge">&lt;Type&gt;</code><strong>simple</strong><code class="highlighter-rouge">&lt;/Type&gt;</code></p>
+
+<p><code class="highlighter-rouge">    </code><code class="highlighter-rouge">&lt;NewSurvey&gt;</code><strong>DEM_2005Projected</strong><code class="highlighter-rouge">&lt;/NewSurvey&gt;</code></p>
+
+<p><code class="highlighter-rouge">    </code><code class="highlighter-rouge">&lt;OldSurvey&gt;</code><strong>DEM_2004Projected</strong><code class="highlighter-rouge">&lt;/OldSurvey&gt;</code></p>
+
+<p><code class="highlighter-rouge">    </code><code class="highlighter-rouge">&lt;Threshold&gt;</code><strong>0.10</strong><code class="highlighter-rouge">&lt;/Threshold&gt;</code></p>
+
+<p><code class="highlighter-rouge">  </code><code class="highlighter-rouge">&lt;/BatchChangeDetection&gt;</code></p>
+
+<p><code class="highlighter-rouge">&lt;/BatchChangeDetectionDS&gt;</code></p>
+
+<p>Download this <a href="http://www.gis.usu.edu/~jwheaton/et_al/GCD/GCD5/XML_BatchExamples/SimpleChangeDetectionAnalysisTemplate.xml">XML example</a> as a template.</p>
+
+<h3 id="propagated-change-detection-analysis">Propagated change detection analysis</h3>
+
+<p><code class="highlighter-rouge"><span class="cp">&lt;?xml version="1.0" standalone="yes"?&gt;</span></code></p>
+
+<p><code class="highlighter-rouge">&lt;BatchChangeDetectionDS xmlns="http://tempuri.org/BatchChangeDetectionDS.xsd"&gt;</code></p>
+
+<p><code class="highlighter-rouge">  </code><code class="highlighter-rouge">&lt;BatchChangeDetection&gt;</code></p>
+
+<p><code class="highlighter-rouge">    </code><code class="highlighter-rouge">&lt;Name&gt;</code><strong>BatchA</strong><code class="highlighter-rouge">&lt;/Name&gt;</code></p>
+
+<p><code class="highlighter-rouge">    </code><code class="highlighter-rouge">&lt;Type&gt;</code><strong>simple</strong><code class="highlighter-rouge">&lt;/Type&gt;</code></p>
+
+<p><code class="highlighter-rouge">    </code><code class="highlighter-rouge">&lt;NewSurvey&gt;</code><strong>DEM_2005Projected</strong><code class="highlighter-rouge">&lt;/NewSurvey&gt;</code></p>
+
+<p><code class="highlighter-rouge">    </code><code class="highlighter-rouge">&lt;OldSurvey&gt;</code><strong>DEM_2004Projected</strong><code class="highlighter-rouge">&lt;/OldSurvey&gt;</code></p>
+
+<p><code class="highlighter-rouge">    </code><code class="highlighter-rouge">&lt;Threshold&gt;</code><strong>0.10</strong><code class="highlighter-rouge">&lt;/Threshold&gt;</code></p>
+
+<p><code class="highlighter-rouge">  </code><code class="highlighter-rouge">&lt;/BatchChangeDetection&gt;</code></p>
+
+<p><code class="highlighter-rouge">&lt;/BatchChangeDetectionDS&gt;</code></p>
+
+<p>Download this <a href="http://www.gis.usu.edu/~jwheaton/et_al/GCD/GCD5/XML_BatchExamples/PropagatedChangeDetectionAnalysisTemplate.xml">XML example</a> as a template.</p>
+
+<h3 id="probability-change-detection-analysis-without-baysian-updating">Probability change detection analysis without Baysian updating</h3>
+
+<p><code class="highlighter-rouge"><span class="cp">&lt;?xml version="1.0" standalone="yes"?&gt;</span></code></p>
+
+<p><code class="highlighter-rouge">&lt;BatchChangeDetectionDS xmlns="http://tempuri.org/BatchChangeDetectionDS.xsd"&gt;</code></p>
+
+<p><code class="highlighter-rouge">  </code><code class="highlighter-rouge">&lt;BatchChangeDetection&gt;</code></p>
+
+<p><code class="highlighter-rouge">    </code><code class="highlighter-rouge">&lt;Name&gt;</code><strong>BatchC</strong><code class="highlighter-rouge">&lt;/Name&gt;</code></p>
+
+<p><code class="highlighter-rouge">    </code><code class="highlighter-rouge">&lt;Type&gt;</code><strong>probability</strong><code class="highlighter-rouge">&lt;/Type&gt;</code></p>
+
+<p><code class="highlighter-rouge">    </code><code class="highlighter-rouge">&lt;NewSurvey&gt;</code><strong>DEM_2005Projected</strong><code class="highlighter-rouge">&lt;/NewSurvey&gt;</code></p>
+
+<p><code class="highlighter-rouge">    </code><code class="highlighter-rouge">&lt;OldSurvey&gt;</code><strong>DEM_2004Projected</strong><code class="highlighter-rouge">&lt;/OldSurvey&gt;</code></p>
+
+<p><code class="highlighter-rouge">    </code><code class="highlighter-rouge">&lt;NewSurveyError&gt;</code><strong>TS</strong><code class="highlighter-rouge">&lt;/NewSurveyError&gt;</code></p>
+
+<p><code class="highlighter-rouge">    </code><code class="highlighter-rouge">&lt;OldSurveyError&gt;</code><strong>rtkGPS</strong><code class="highlighter-rouge">&lt;/OldSurveyError&gt;</code></p>
+
+<p><code class="highlighter-rouge">    </code><code class="highlighter-rouge">&lt;Threshold&gt;</code><strong>0.95</strong><code class="highlighter-rouge">&lt;/Threshold&gt;</code></p>
+
+<p><code class="highlighter-rouge">  </code><code class="highlighter-rouge">&lt;/BatchChangeDetection&gt;</code></p>
+
+<p><code class="highlighter-rouge">&lt;/BatchChangeDetectionDS&gt;</code></p>
+
+<p>Download this <a href="http://www.gis.usu.edu/~jwheaton/et_al/GCD/GCD5/XML_BatchExamples/Probablistic_NoBayesian_ChangeDetectionAnalysisTemplate.xml">XML example</a> as a template.</p>
+
+<h3 id="probability-change-detection-analysis-with-baysian-updating">Probability change detection analysis with Baysian updating</h3>
+
+<p><code class="highlighter-rouge"><span class="cp">&lt;?xml version="1.0" standalone="yes"?&gt;</span></code></p>
+
+<p><code class="highlighter-rouge">&lt;BatchChangeDetectionDS xmlns="http://tempuri.org/BatchChangeDetectionDS.xsd"&gt;</code></p>
+
+<p><code class="highlighter-rouge">  </code><code class="highlighter-rouge">&lt;BatchChangeDetection&gt;</code></p>
+
+<p><code class="highlighter-rouge">    </code><code class="highlighter-rouge">&lt;Name&gt;</code><strong>BatchC</strong><code class="highlighter-rouge">&lt;/Name&gt;</code></p>
+
+<p><code class="highlighter-rouge">    </code><code class="highlighter-rouge">&lt;Type&gt;</code><strong>probability</strong><code class="highlighter-rouge">&lt;/Type&gt;</code></p>
+
+<p><code class="highlighter-rouge">    </code><code class="highlighter-rouge">&lt;NewSurvey&gt;</code><strong>DEM_2005Projected</strong><code class="highlighter-rouge">&lt;/NewSurvey&gt;</code></p>
+
+<p><code class="highlighter-rouge">    </code><code class="highlighter-rouge">&lt;OldSurvey&gt;</code><strong>DEM_2004Projected</strong><code class="highlighter-rouge">&lt;/OldSurvey&gt;</code></p>
+
+<p><code class="highlighter-rouge">    </code><code class="highlighter-rouge">&lt;NewSurveyError&gt;</code><strong>TS</strong><code class="highlighter-rouge">&lt;/NewSurveyError&gt;</code></p>
+
+<p><code class="highlighter-rouge">    </code><code class="highlighter-rouge">&lt;OldSurveyError&gt;</code><strong>rtkGPS</strong><code class="highlighter-rouge">&lt;/OldSurveyError&gt;</code></p>
+
+<p><code class="highlighter-rouge">    </code><code class="highlighter-rouge">&lt;Threshold&gt;</code><strong>0.95</strong><code class="highlighter-rouge">&lt;/Threshold&gt;</code></p>
+
+<p><code class="highlighter-rouge">    </code><code class="highlighter-rouge">&lt;Baysian&gt;</code><strong>TRUE</strong><code class="highlighter-rouge">&lt;/Baysian&gt;</code></p>
+
+<p><code class="highlighter-rouge">    </code><code class="highlighter-rouge">&lt;WindowSize&gt;</code><strong>5</strong><code class="highlighter-rouge">&lt;/WindowSize&gt;</code></p>
+
+<p><code class="highlighter-rouge">    </code><code class="highlighter-rouge">&lt;PercentLess&gt;</code><strong>60</strong><code class="highlighter-rouge">&lt;/PercentLess&gt;</code></p>
+
+<p><code class="highlighter-rouge">    </code><code class="highlighter-rouge">&lt;PercentGreater&gt;</code><strong>100</strong><code class="highlighter-rouge">&lt;/PercentGreater&gt;</code></p>
+
+<p><code class="highlighter-rouge">  </code><code class="highlighter-rouge">&lt;/BatchChangeDetection&gt;</code></p>
+
+<p><code class="highlighter-rouge">&lt;/BatchChangeDetectionDS&gt;</code></p>
+
+<p>Download this <a href="http://www.gis.usu.edu/~jwheaton/et_al/GCD/GCD5/XML_BatchExamples/Probablistic_BayesianChangeDetectionAnalysisTemplate.xml">XML example</a> as a template.</p>
+
+<h3 id="multiple-change-detection-analysis">Multiple change detection analysis</h3>
+
+<p><code class="highlighter-rouge"><span class="cp">&lt;?xml version="1.0" standalone="yes"?&gt;</span></code></p>
+
+<p><code class="highlighter-rouge">&lt;BatchChangeDetectionDS xmlns="http://tempuri.org/BatchChangeDetectionDS.xsd"&gt;</code></p>
+
+<p><code class="highlighter-rouge">  </code><code class="highlighter-rouge">&lt;BatchChangeDetection&gt;</code></p>
+
+<p><code class="highlighter-rouge">    </code><code class="highlighter-rouge">&lt;Name&gt;BatchF&lt;/Name&gt;</code></p>
+
+<p><code class="highlighter-rouge">    </code><code class="highlighter-rouge">&lt;Type&gt;probability&lt;/Type&gt;</code></p>
+
+<p><code class="highlighter-rouge">    </code><code class="highlighter-rouge">&lt;NewSurvey&gt;DEM_2005Projected&lt;/NewSurvey&gt;</code></p>
+
+<p><code class="highlighter-rouge">    </code><code class="highlighter-rouge">&lt;OldSurvey&gt;DEM_2004Projected&lt;/OldSurvey&gt;</code></p>
+
+<p><code class="highlighter-rouge">    </code><code class="highlighter-rouge">&lt;NewSurveyError&gt;TS&lt;/NewSurveyError&gt;</code></p>
+
+<p><code class="highlighter-rouge">    </code><code class="highlighter-rouge">&lt;OldSurveyError&gt;rtkGPS&lt;/OldSurveyError&gt;</code></p>
+
+<p><code class="highlighter-rouge">    </code><code class="highlighter-rouge">&lt;Threshold&gt;</code><strong>0.95</strong><code class="highlighter-rouge">&lt;/Threshold&gt;</code></p>
+
+<p><code class="highlighter-rouge">  </code><code class="highlighter-rouge">&lt;/BatchChangeDetection&gt;</code></p>
+
+<p><code class="highlighter-rouge">  </code><code class="highlighter-rouge">&lt;BatchChangeDetection&gt;</code></p>
+
+<p><code class="highlighter-rouge">    </code><code class="highlighter-rouge">&lt;Name&gt;BatchG&lt;/Name&gt;</code></p>
+
+<p><code class="highlighter-rouge">    </code><code class="highlighter-rouge">&lt;Type&gt;probability&lt;/Type&gt;</code></p>
+
+<p><code class="highlighter-rouge">    </code><code class="highlighter-rouge">&lt;NewSurvey&gt;DEM_2005Projected&lt;/NewSurvey&gt;</code></p>
+
+<p><code class="highlighter-rouge">    </code><code class="highlighter-rouge">&lt;OldSurvey&gt;DEM_2004Projected&lt;/OldSurvey&gt;</code></p>
+
+<p><code class="highlighter-rouge">    </code><code class="highlighter-rouge">&lt;NewSurveyError&gt;TS&lt;/NewSurveyError&gt;</code></p>
+
+<p><code class="highlighter-rouge">    </code><code class="highlighter-rouge">&lt;OldSurveyError&gt;rtkGPS&lt;/OldSurveyError&gt;</code></p>
+
+<p><code class="highlighter-rouge">    </code><code class="highlighter-rouge">&lt;Threshold&gt;</code><strong>0.90</strong><code class="highlighter-rouge">&lt;/Threshold&gt;</code></p>
+
+<p><code class="highlighter-rouge">  </code><code class="highlighter-rouge">&lt;/BatchChangeDetection&gt;</code></p>
+
+<p><code class="highlighter-rouge">&lt;/BatchChangeDetectionDS&gt;</code></p>
+
+<p>Download this <a href="http://www.gis.usu.edu/~jwheaton/et_al/GCD/GCD5/XML_BatchExamples/Multiple_ChangeDetectionAnalysisTemplate.xml">XML example</a> as a template.</p>

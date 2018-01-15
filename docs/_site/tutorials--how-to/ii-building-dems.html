@@ -1,0 +1,91 @@
+<p>Having good DEMs is critical for effective change detection. In this series of video tutorials, we lay out how to build DEMs from raw topographic data (e.g. rtkGPS or total station data). A similar procedure is available for airborne LiDaR data <a href="http://gis.joewheaton.org/assignments/labs/lab-07---building-dems/task-4">here</a>.</p>
+
+<h3 id="overview">Overview</h3>
+
+<p>In this tutorial we are provided with some raw topographic survey data. Your job is to build a DEM from that data (of appropriate resolution), show the water depth overlaid on the DEM, and pull a longitudinal profile and some cross sections off the DEM. You will use a triangular irregular network (TIN) to interpolate between your raw topographic survey data and produce a continuous surface that you will later convert to a raster DEM.</p>
+
+<p>NOTE: These instructions are for ArcGIS 10 and are primarily provided in the form of video tutorials. As an additional reference, you might find the ‘Using ArcGIS 9.3.X to Construct and Manipulate DEMs’ tutorial listed in the <a href="http://gis.joewheaton.org/assignments/labs/lab06-1#TOC-Follow-up-Activities:">main Lab 6 page</a> helpful (it uses different data, and is for the old version of ArcGIS, but goes through a similar sequence of steps to arrive at the same end point in Part I of the document; one significant difference is the absence of TIN editing in ArcGIS 9.3.X).</p>
+
+<h3 id="data">Data</h3>
+
+<p>Everything you need to create a TIN can be found in the</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>PatsCabinSurveyPoints.csv 
+</code></pre>
+</div>
+
+<p>file and the</p>
+
+<p><code class="highlighter-rouge">Task3_PatsCabinShapefiles.zip</code></p>
+
+<p>. This video tutorial goes through what is included in the data and how to import it into ArcGIS:</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/jb-UY6S6r8I" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen=""></iframe>
+
+<p>Although not covered in the video tutorial, I would suggest exporting the</p>
+
+<p><code class="highlighter-rouge">PatsCabinSurveyPoints.csv</code></p>
+
+<p>table you imported as X-Y points to a shapefile or feature class to use in the construction of the TIN (I named mine</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>TopoSurveyPoints
+</code></pre>
+</div>
+
+<p>).</p>
+
+<hr />
+
+<h3 id="building-tins">Building TINS</h3>
+
+<h4 id="your-first-tin">Your First TIN</h4>
+
+<p>In this video tutorial, we go through the simplest form of constructing a TIN from just raw topographic survey point data. We also highlight some of the potential pitfalls to this approach.</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/FrXqYazKuAk" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen=""></iframe>
+
+<h4 id="a-better-tin">A Better TIN</h4>
+
+<p>In this video tutorial, we talk about how you can build a TIN using a polygon hardclip boundary as well as how to manually edit your tin with the TIN Editing Tools.</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/LoK6lazwGqM" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen=""></iframe>
+
+<h4 id="a-better-tin-yet">A Better TIN yet</h4>
+
+<p>In this video tutorial, we will use the same data used in our first two TINs as well as the some 3D breakline data provided to you:</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/x3iCJ9xBocE" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen=""></iframe>
+
+<h3 id="building-dem">Building DEM</h3>
+
+<p>Building the DEM is a simple matter of <a href="http://help.arcgis.com/en/arcgisdesktop/10.0/help/index.html#//00q900000077000000.htm">converting the TIN to a Raster</a>. This video tutorial walks you through the considerations.</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/cORkIYUp3_U" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen=""></iframe>
+
+<p>For this exercise, we have not been careful with the creation of this raster (see <a href="/gcd-concepts/data-preparation---best-practices">best practices</a> for a follow up).</p>
+
+<hr />
+
+<h3 id="optional-building-water-depth-dem">OPTIONAL: Building Water Depth DEM</h3>
+
+<p>Since we have a DEM that includes shots above the water and below the water, and because the survey data denoted where the water’s edge shots are, we can derive a bathymetric water depth DEM. The way in which we will do this is to:</p>
+
+<ol>
+  <li>Build a water surface TIN from the water edge data</li>
+  <li>Convert that water surface TIN into a DEM of the same resolution and extent (i.e. concurrent) as our original DEM</li>
+  <li>Use Raster Calculator to derive water depths by subtracting the lower elevation DEM from the higher elevation water surface.</li>
+</ol>
+
+<p>The resulting water depth map can be overlaid on the DEM and provides a more intuitive context of the physcial habitat within the reach as the pools, bars, and beaver ponds jump out more clearly then from the topography alone. This video walks you through the sequence:</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/hSGW9p570Y8" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen=""></iframe>
+
+<h3 id="optional-pulling-some-cross-sections-and-a-long-profile-off-dem">OPTIONAL: Pulling Some Cross Sections and a Long Profile Off DEM</h3>
+
+<p>Using the 3D Analyst interpolate line and profile graph features, you can easily pull off a longitudinal profile and cross section(s) from the DEM. This video shows you how:</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Kv263FBGJnE" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen=""></iframe>
+
+<h3 id="references">References</h3>
+
+<p>The above exercise comes from a <a href="http://gis.joewheaton.org/assignments/labs/lab06-1">Lab</a> in my <a href="http://gis.joewheaton.org/assignments/labs/lab08">Advanced GIS Class</a>. If you want more information on how to work with DEMs and topographic data, you may find Labs <a href="http://gis.joewheaton.org/assignments/labs/lab06-1">6</a>, <a href="http://gis.joewheaton.org/assignments/labs/lab-07---building-dems">7</a> and <a href="http://gis.joewheaton.org/assignments/labs/lab08">8</a> helpful references/refreshers.</p>

@@ -1,0 +1,78 @@
+<p>The Fuzzy Inference System Library is where you load <code class="highlighter-rouge">*.fis</code> files so that they are available for use in the <code class="highlighter-rouge">Error C</code><code class="highlighter-rouge">alculations</code> tab of the <code class="highlighter-rouge">DEM Survey Properties</code> dialog. In the FIS library, you can <code class="highlighter-rouge">Add new FIS</code>, <code class="highlighter-rouge">Edit </code>or configure an existing FIS and <code class="highlighter-rouge">Remove</code> items from the library. The topics at left discuss each of these operations.</p>
+
+<p><img src="/assets/images/GCD6_Form_FIS_Libraqry.png" alt="GCD6_Form_FIS_Libraqry" /></p>
+
+<h3 id="adding-an-fis-to-the-library">Adding an FIS to the Library</h3>
+
+<p>To add an existing FIS is easy. Note that by default, when you install GCD no FIS files are loaded in the library, but</p>
+
+<p>two example FIS files are included in the user’s roaming folder. These can be found at:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>c:\Users\&lt;YourUsername&gt;\AppData\Roaming\GCD\FIS Sample Files
+</code></pre>
+</div>
+
+<p>The two FIS files provided are examples of two input FIS where the inputs are slope and point density, and the output is elevation uncertainty. We do not automtically load FIS files into GCD’s Survey library as users should excercise judgement and caution in applying, calibrating and developing appropriate fuzzy inference sytems.</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/84KgNRMQp2k" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen=""></iframe>
+
+<h2 id="how-it-actually-works">How it Actually Works</h2>
+
+<p>When you add a FIS to the library, this video shows what actually happens to the</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>FISLibraryXML.xml
+</code></pre>
+</div>
+
+<p>file, which is stored in your</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>c:\Users\&lt;YourUsername&gt;\AppData\Roaming\GCD\FISLibrary 
+</code></pre>
+</div>
+
+<p>folder.</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/6COkQrzL7_c" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen=""></iframe>
+
+<p>Every time a FIS is added, another <FISTable> entry gets added to the</FISTable></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>FISLibraryXML.xml
+</code></pre>
+</div>
+
+<p>file:</p>
+
+<p><code class="highlighter-rouge">  &lt;FISTable&gt;</code>
+`    <FISID>3</FISID><code class="highlighter-rouge">
+</code>    <Name>GPS_2Input_PD_SLP</Name><code class="highlighter-rouge">
+</code>    <Path>C:\Users\Joe Wheaton\AppData\Roaming\GCD\FIS Sample Files\GPS_2Input_PD_SLP.fis</Path><code class="highlighter-rouge">
+</code>  &lt;/FISTable&gt;`</p>
+
+<h3 id="removing-a-fis-from-the-library">Removing a FIS from the Library</h3>
+
+<p>Removing a FIS from the library is as simple as highlighting it and clicking remove. When you remove a FIS from the library, it only removes it from the listing here (i.e. it deletes the corresponding</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;FISTable&gt;...&lt;/FISTable&gt;
+</code></pre>
+</div>
+
+<p>entry in the</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>FISLibraryXML.xml
+</code></pre>
+</div>
+
+<p>file. It does not delete the actual *.fis file from your computer.</p>
+
+<h3 id="editing-a-fis-in-fis-library">Editing a FIS in FIS Library</h3>
+
+<p>FIS files (*.fis) are an ASCII text format file that is compatible with the <a href="http://www.mathworks.com/help/toolbox/fuzzy/fp351dup8.html">Matlab’s Fuzzy Logic Toolbox</a> and can be edited in a text editor (e.g. <a href="http://notepad-plus-plus.org/">Notepad ++</a>), in Matlab’s Fuzzy Logic Toolobx using their <a href="http://www.mathworks.com/help/toolbox/fuzzy/fp243dup9.html#FP28385">FIS Editor</a>, or in GCD using the <code class="highlighter-rouge">Fuzzy Inference System Editor</code>:</p>
+
+<p><img src="/assets/images/Dialog_FISLibrary_FIS_Editor.png" alt="Dialog_FISLibrary_FIS_Editor" /></p>
+
+<p>This video shows you how to edit an FIS using the Fuzzy Inference System Editor:</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/fnvsyBBCFwc" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen=""></iframe>
+
+<p>For more information on how fuzzy inference systems for elevation uncertainty work and can be created and modified, see the GCD Concept Reference documentation <a href="/gcd-concepts/fuzzy-inference-systems-for-modeling-dem-error">here</a>.</p>
+

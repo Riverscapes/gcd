@@ -1,0 +1,47 @@
+<p>The <code class="highlighter-rouge">Create Point Feature Class</code> tool takes a raw xyz point cloud in a flat ascii file (e.g. <code class="highlighter-rouge">*.csv</code>, <code class="highlighter-rouge">*.txt</code>, <code class="highlighter-rouge">*.xyz</code>, <code class="highlighter-rouge">*.pts</code>) and converts it into a point shapefile for direct use in deriving a TIN and DEM. It also allows you to specify the spatial reference (coordinate system) of the point shapefile you will create, which is required to use the shapefile in a GCD project analyses (e.g. point density estimation). The tool is a precursor to <code class="highlighter-rouge">Create DEM and/or TIN</code> tool.</p>
+
+<p><img src="/assets/images/CreatePointFeatureClassToolUI.png" alt="CreatePointFeatureClassToolUI" /></p>
+
+<p>The below video gives a succinct tutorial on how to use and the details of the Create Point Feature ClassTool:</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/5e6e9j4v5Fc" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen=""></iframe>
+
+<h4 id="inputs">INPUTS:</h4>
+
+<p>Raw Point Cloud to Feature Class</p>
+
+<ul>
+  <li>
+    <p><strong>raw point cloud</strong></p>
+  </li>
+  <li>
+    <ul>
+      <li>An ascii text file formatted into columns of x, y, z. Other columns can be present but will not be included in the output shapefile. (headers can be commented out with a <code class="highlighter-rouge">#</code>)</li>
+    </ul>
+  </li>
+  <li>
+    <p>**spatial reference **(optional)</p>
+  </li>
+  <li>
+    <ul>
+      <li>can be in the form of a .prj file or you can load an existing shapefile that contains a spatial reference and that spatial reference will be imported.</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="outputs">OUTPUTS:</h4>
+
+<p>The outputs for the tool are:</p>
+
+<ul>
+  <li>
+    <p><strong>Shapefile or Feature Class</strong></p>
+  </li>
+  <li>
+    <ul>
+      <li>contains x, y, z fields from the original surveyed points.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Ahead to: <a href="/gcd-command-reference/data-prep-menu/c-survey-preparation-menu/ii-create-survey-extent-polygon">ii. Create Survey Extent Polygon Tool</a>→</p>

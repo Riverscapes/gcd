@@ -1,0 +1,71 @@
+<p>The <code class="highlighter-rouge">Create TIN and/or DEM</code> tool allows you to derive a TIN and raster DEM in one step.</p>
+
+<p><img src="/assets/images/GCD6_Form_PointCloudtoTINDEM.png" alt="GCD6_Form_PointCloudtoTINDEM" /></p>
+
+<p>The below video gives a succinct tutorial on how to use and the details of the Create TIN and/or DEM tool:</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/RR9_VHl9S0g" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen=""></iframe>
+
+<p><strong>INPUTS:</strong></p>
+
+<p>Create TIN and/or DEM</p>
+
+<ul>
+  <li>
+    <p><strong>Point Cloud Shapefile</strong></p>
+  </li>
+  <li>
+    <ul>
+      <li>point shapefile containing the original surveyed z values. This file can be created using the <a href="/gcd-command-reference/data-prep-menu/c-survey-preparation-menu/i-create-point-feature-class">Create Point Feature Class</a> tool located under the Data Preparation tab.</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Extent Polygon</strong></p>
+  </li>
+  <li>
+    <ul>
+      <li>polygon shapefile of the survey extent for the point cloud shapfile. This can be created through in GCD with the <a href="/gcd-command-reference/data-prep-menu/c-survey-preparation-menu/ii-create-survey-extent-polygon">Create Survey Extent Polygon</a> Tool.</li>
+    </ul>
+  </li>
+  <li>
+    <p>**Spatial Reference **(optional)</p>
+  </li>
+  <li>
+    <ul>
+      <li>can be in the form of a .prj file or a shapefile that contains a spatial reference.</li>
+    </ul>
+  </li>
+  <li>
+    <p>**Cell Size of DEM **(optional)</p>
+  </li>
+  <li>
+    <ul>
+      <li>The cell size to for the DEM, this option is only activated once the user checks the *Create DEM *option. 2 feet is currently the default</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>OUTPUTS:</strong></p>
+
+<p>The outputs for the Create TIN and/or DEM  tool are:</p>
+
+<ul>
+  <li>
+    <p>**TIN **(optional)</p>
+  </li>
+  <li>
+    <ul>
+      <li>TIN created from the original surveyed values contained in the point cloud shapefile. This will not be output if the user selects the *Delete TIN *option</li>
+    </ul>
+  </li>
+  <li>
+    <p>**DEM **(optional)</p>
+  </li>
+  <li>
+    <ul>
+      <li>DEM created from the TIN. This is only created if the user selects the *Create DEM *option.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>← Back to  <a href="/gcd-command-reference/data-prep-menu/c-survey-preparation-menu/ii-create-survey-extent-polygon">ii. Create Survey Extent Polygon</a></p>

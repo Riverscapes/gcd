@@ -1,0 +1,70 @@
+<h3 id="overview">Overview</h3>
+
+<p>This exercise is to show you that you can use Bayes theorem to update the probability that change is real if you have other lines of evidence. In this case, we will assume that there are no systematic errors or bias , and look at the spatial coherence of erosion and deposition patterns. Below shows the contrast in spatial coherence filter outputs based on moving window size.</p>
+
+<p><img src="assets/images/FIG_2007-2006_NbrHoodCompare0001.png" alt="FIG_2007-2006_NbrHoodCompare0001" /></p>
+
+<h3 id="data-and-materials-for-exercises">Data and Materials for Exercises</h3>
+
+<h4 id="datasets">Datasets</h4>
+
+<p><a href="https://s3-us-west-2.amazonaws.com/etalweb.joewheaton.org/etal_workshops/GCD/2015_USU/S_SpatialCoherence.zip">S_SpatialCoherence.zip</a> File of Data for this Exercise</p>
+
+<h4 id="prerequisite-for-this-exercise">Prerequisite for this Exercise</h4>
+
+<ul>
+  <li>Some ArcGIS experience</li>
+  <li>ArcGIS 10.X w/ Spatial Analyst Extension</li>
+  <li>GCD Add-In</li>
+</ul>
+
+<hr />
+
+<h3 id="step-by-step">Step by Step</h3>
+
+<h4 id="exercise-s-bayesian-updatingspatial-coherence"><strong>Exercise S: Bayesian Updating/Spatial Coherence</strong></h4>
+
+<p>C:\0_GCD\Exercises\S_SpatialCoherence</p>
+
+<p>**1. **Start new ArcMap Document</p>
+
+<p>**2. **Start a new GCD Project</p>
+
+<p>**3. **Add two DEM</p>
+
+<p>**4. **Do any type of error modeling for both DEM</p>
+
+<p>**5. **Perform change detection using probabilistic thresholding at 80% confidence</p>
+
+<p>**6. **Re-calculate probabilistic change detection by applying Bayesian updating with:</p>
+
+<ul>
+  <li>5 x 5 moving window</li>
+  <li>10 x 10 moving window</li>
+</ul>
+
+<p><strong>7.</strong> Compare outputs</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/n0wH63OWFFU" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen=""></iframe>
+
+<h3 id="related-online-help-or-tutorials-for-this-topic">Related Online Help or Tutorials for this Topic</h3>
+
+<ul>
+  <li>
+    <p><a href="http://gcdworkshop.joewheaton.org/workshop-topics/versions/3-day-workshop/3-Day3/s-spatial-coherence-bayesian-updating">Parent Workshop Topic</a></p>
+  </li>
+  <li>
+    <p><a href="/">GCD 6 Help</a></p>
+  </li>
+  <li>
+    <ul>
+      <li><a href="/tutorials--how-to/vi-spatial-coherence-bayesian-updaing">06. Spatial Coherence &amp; Bayesian Updating</a></li>
+      <li><a href="/gcd-command-reference/gcd-analysis-menu/c-geomorphic-change-detection-submenu/change-detection">Add Change Detection</a></li>
+      <li><a href="/gcd-command-reference/gcd-project-explorer/j-change-detection-context-menu/i-add-change-detection">i. Add Change Detection</a></li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<p>← <a href="/tutorials--how-to/workshop-tutorials/q-running-a-change-detection-w-fis">Back to Previous Tutorial</a>        <a href="/tutorials--how-to/workshop-tutorials/v-morphodynamic-signatures-from-budget-segeregation">Ahead to Next Tutorial</a> →</p>
