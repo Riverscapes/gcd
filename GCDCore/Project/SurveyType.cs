@@ -30,6 +30,14 @@ namespace GCDCore.Project
             return Name;
         }
 
+        /// <summary>
+        /// Default constructor needed for data binding
+        /// </summary>
+        public SurveyType()
+        {
+
+        }
+
         public SurveyType(string sName, decimal fError)
         {
             Name = sName;
@@ -57,6 +65,7 @@ namespace GCDCore.Project
         {
             XmlDocument xmlDoc = new XmlDocument();
             XmlNode nodRoot = xmlDoc.CreateElement("SurveyTypes");
+            xmlDoc.AppendChild(nodRoot);
             xmlDoc.InsertBefore(xmlDoc.CreateXmlDeclaration("1.0", null, null), nodRoot);
 
             foreach (SurveyType sType in dSurveyTypes.Values)

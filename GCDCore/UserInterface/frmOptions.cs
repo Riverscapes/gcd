@@ -2,11 +2,15 @@ using GCDCore.Project;
 using System;
 using System.Diagnostics;
 using System.Windows.Forms;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace GCDCore.UserInterface.Options
 {
     public partial class frmOptions
     {
+        private readonly naru.ui.SortableBindingList<SurveyType> SurveyTypes;
+
         private string m_sArcMapDisplayUnits;
         #region "Events"
 
@@ -21,6 +25,9 @@ namespace GCDCore.UserInterface.Options
             InitializeComponent();
 
             m_sArcMapDisplayUnits = sArcMapDisplayUnits;
+
+            SurveyTypes = new naru.ui.SortableBindingList<SurveyType>(ProjectManager.SurveyTypes.Values.ToList<SurveyType>());
+            grdSurveyTypes.DataSource = SurveyTypes;
         }
 
         private void frmOptions_Load(System.Object sender, System.EventArgs e)
@@ -114,8 +121,6 @@ namespace GCDCore.UserInterface.Options
 
             //settings for accuracy, used for concurrency and orthogonality
             //numPrecision.Value = GCDCore.Properties.Settings.Default.Precision
-
-            Label6.Text = m_sArcMapDisplayUnits;
 
             //
             ///''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -248,7 +253,7 @@ namespace GCDCore.UserInterface.Options
             finally
             {
                 Cursor.Current = Cursors.Default;
-           }
+            }
         }
 
         private void btnExploreWorkspace_Click(System.Object sender, System.EventArgs e)
@@ -293,76 +298,7 @@ namespace GCDCore.UserInterface.Options
         #endregion
 
 
-        private void btnDeleteSurveyType_Click(System.Object sender, System.EventArgs e)
-        {
-            throw new NotImplementedException();
 
-            //Dim CurrentRow As DataRowView = SurveyTypesBindingSource.Current
-            //If TypeOf CurrentRow Is DataRowView Then
-            //    If TypeOf CurrentRow.Row Is SurveyTypes.SurveyTypesRow Then
-            //        Dim surveytype As SurveyTypes.SurveyTypesRow = CurrentRow.Row
-            //        Dim sMessage As String = "Are you sure you want to remove the survey type '" & surveytype.Name & "' and its corresponding error value?"
-            //        Dim response As MsgBoxResult = MsgBox(sMessage, MsgBoxStyle.YesNo Or MsgBoxStyle.Question, GCDCore.Properties.Resources.ApplicationNameLong)
-            //        If response = MsgBoxResult.Yes Then
-            //            If Not CurrentRow Is Nothing Then
-            //                'Delete the selected item from the dataset and write this new information to the XML file at the specified location
-            //                SurveyTypesBindingSource.RemoveCurrent()
-            //                Core.GCDProject.ProjectManagerBase.saveSurveyTypes()
-            //            End If
-            //        End If
-            //    End If
-            //End If
-
-        }
-
-
-        private void btnAddSurveyType_Click(System.Object sender, System.EventArgs e)
-        {
-            try
-            {
-                if (txtSurveyType.TextLength < 1)
-                {
-                    MessageBox.Show("Please enter a name for the survey type.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    return;
-                }
-
-                if (nbrError.Value < 0.01m || nbrError.Value > 100m)
-                {
-                    MessageBox.Show("Please enter a default error value in meters to be associated with the survey type. The value must be greater than 0.01 and less than 100.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    return;
-                }       
-          
-                 throw new NotImplementedException();
-                //SurveyTypesBindingSource.EndEdit()
-                //Core.GCDProject.ProjectManagerBase.saveSurveyTypes()
-
-                txtSurveyType.Text = "";
-                //nbrError.Value = nbrError.Minimum
-
-            }
-            catch (Exception ex)
-            {
-                if (ex.Message.ToString().ToLower().Contains("name"))
-                {
-                    MessageBox.Show("Please select a unique name for the survey type being added.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                }
-                else if (ex.Message.ToString().ToLower().Contains("error"))
-                {
-                    MessageBox.Show("The error value is invalid.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                }
-                else
-                {
-                    MessageBox.Show("An error occured while trying to save the information. " + Environment.NewLine + ex.Message);
-                }
-
-                SurveyTypesBindingSource.CancelEdit();
-            }
-        }
-
-        private void btnHelp_Click(System.Object sender, System.EventArgs e)
-        {
-            Process.Start(GCDCore.Properties.Resources.HelpBaseURL + "gcd-command-reference/customize-menu/options");
-        }
 
 
         private void chkComparativeSymbology_CheckedChanged(System.Object sender, System.EventArgs e)
@@ -417,6 +353,21 @@ namespace GCDCore.UserInterface.Options
             Process.Start("http://blogs.esri.com/esri/arcgis/2012/11/14/should-i-build-pyramids-or-overviews");
         }
 
-    }
+        private void btnHelp_Click(System.Object sender, System.EventArgs e)
+        {
+            Process.Start(GCDCore.Properties.Resources.HelpBaseURL + "customize-menu/options.html");
+        }
 
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            Dictionary<string, SurveyType> d = new Dictionary<string, SurveyType>();
+            foreach (SurveyType s in SurveyTypes)
+                d.Add(s.Name, s);
+
+            // This is save the dictionary to XML
+            ProjectManager.SurveyTypes = d;
+
+            this.DialogResult = DialogResult.OK;
+        }
+    }
 }
