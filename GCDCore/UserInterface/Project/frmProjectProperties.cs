@@ -316,7 +316,7 @@ namespace GCDCore.UserInterface.Project
         {
             if (CreateMode)
             {
-                System.Diagnostics.Process.Start(Properties.Resources.HelpBaseURL + "gcd-command-reference/project-menu/new-project");
+                System.Diagnostics.Process.Start(Properties.Resources.HelpBaseURL + "project-menu/new-project");
             }
             else
             {

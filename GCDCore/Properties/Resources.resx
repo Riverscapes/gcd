@@ -155,7 +155,7 @@
     <value>..\Resources\up.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="HelpBaseURL" xml:space="preserve">
-    <value>http://gcd6help.joewheaton.org/</value>
+    <value>https://riverscapes.github.io/gcd6temp/gcd-command-reference/</value>
   </data>
   <data name="Excel" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Excel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -200,7 +200,7 @@
     <value>..\Resources\print.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="GCDWebSiteURL" xml:space="preserve">
-    <value>http://gcd.joewheaton.org/</value>
+    <value>https://riverscapes.github.io/gcd6temp</value>
   </data>
   <data name="SelectNone" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SelectNone.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
