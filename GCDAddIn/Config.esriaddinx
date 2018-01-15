@@ -1,34 +1,36 @@
 ﻿<ESRI.Configuration xmlns="http://schemas.esri.com/Desktop/AddIns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <Name>GCDAddIn</Name>
+  <Name>Geomorphic Change Detection (GCD) 7</Name>
   <AddInID>{f8ca7dea-22fb-40a3-8412-b84a4b528602}</AddInID>
-  <Description>Type in a description for this Add-in.</Description>
-  <Version>1.0</Version>
+  <Description>Geomorphic Change Detection (GCD) Software</Description>
+  <Version>7.0.0</Version>
   <Image>Images\GCDAddIn.png</Image>
   <Author>Philip Bailey</Author>
   <Company>North Arrow Research</Company>
-  <Date>12/6/2017</Date>
+  <Date>15/01/2018</Date>
   <Targets>
     <Target name="Desktop" version="10.4" />
   </Targets>
   <AddIn language="CLR" library="GCDAddIn.dll" namespace="GCDAddIn">
     <ArcMap>
       <Commands>
-        <Button id="GCD_AddIn_ToolbarExplorerButton" class="MainMenuDockableProjectExplorerButton" onDemand="false" message="The GCD Project Explorer is the main interface for creating, managing and displaying data within a GCD project. It is a dockable window within ArcMap that contains an interactive hierarchy of contents of a GCD project." caption="" tip="Open the GCD Project Explorer Dockable Window" category="GCD" image="Resources\GCD.png" />
+        <Button id="GCD_AddIn_ToolbarExplorerButton" class="GCDAddIn.Project.btnProjectExplorer" message="The GCD Project Explorer is the main interface for creating, managing and displaying data within a GCD project. It is a dockable window within ArcMap that contains an interactive hierarchy of contents of a GCD project." caption="" tip="Open the GCD Project Explorer Dockable Window" category="GCD" image="Images\GCD.png" />
         <!-- Menu -->
-        <Button id="GCD_AddIn_NewProjectButton" class="GCDAddIn.Project.btnNewProject" message="GCD Projects are workspaces for your data. They store DEM surveys, their associated surfaces as well as any change detection analyses that you perform. A GCD project exists in a dedicated folder that contains a *.gcd project file and copies of all your spatial data." caption="New GCD Project..." tip="Create a new GCD Project" category="GCD" image="Resources\NewProject.png" />
-        <Button id="GCD_AddIn_OpenProjectButton" class="GCDAddIn.Project.btnOpenProject" message="Browse and select an existing GCD project file (*.gcd) in a GCD project folder." caption="Open GCD Project..." tip="Open an existing GCD Project" category="GCD" image="Resources\OpenProject.png" />
-        <Button id="GCD_AddIn_CloseProjectButton" class="CloseProjectButton" onDemand="false" message="Close the current GCD project and hide the GCD project explorer dockable window. This will not delete any data or remove any layers from ArcMap." caption="Close GCD project" tip="Close the current GCD project" category="GCD" image="" />
-        <Button id="GCD_AddIn_DockableProjectExplorerButton" class="DockableProjectExplorerButton" onDemand="false" message="The GCD Project Explorer is the main interface for creating, managing and displaying data within a GCD project. It is a dockable window within ArcMap that contains an interactive hierarchy of contents of a GCD project." caption="GCD Project Explorer" tip="Open the GCD Project Explorer Dockable Window" category="GCD" image="Resources\DEMSurvey.png" />
-        <Button id="GCD_AddIn_ProjectPropertiesButton" class="ProjectPropertiesButton" onDemand="false" message="Edit the properties for the current GCD project." caption="Project Properties" tip="Edit the properties of the current GCD project" category="GCD" image="Resources\Options.png" />
+        <Button id="GCD_AddIn_NewProjectButton" class="GCDAddIn.Project.btnNewProject" message="GCD Projects are workspaces for your data. They store DEM surveys, their associated surfaces as well as any change detection analyses that you perform. A GCD project exists in a dedicated folder that contains a *.gcd project file and copies of all your spatial data." caption="New GCD Project..." tip="Create a new GCD Project" category="GCD" image="Images\NewProject.png" />
+        <Button id="GCD_AddIn_OpenProjectButton" class="GCDAddIn.Project.btnOpenProject" message="Browse and select an existing GCD project file (*.gcd) in a GCD project folder." caption="Open GCD Project..." tip="Open an existing GCD Project" category="GCD" image="Images\OpenProject.png" />
+        <Button id="GCD_AddIn_CloseProjectButton" class="GCDAddIn.Project.btnCloseProject" onDemand="false" message="Close the current GCD project and hide the GCD project explorer dockable window. This will not delete any data or remove any layers from ArcMap." caption="Close GCD project" tip="Close the current GCD project" category="GCD" image="" />
+        <Button id="GCD_AddIn_DockableProjectExplorerButton" class="GCDAddIn.Project.btnProjectExplorer2" onDemand="false" message="The GCD Project Explorer is the main interface for creating, managing and displaying data within a GCD project. It is a dockable window within ArcMap that contains an interactive hierarchy of contents of a GCD project." caption="GCD Project Explorer" tip="Open the GCD Project Explorer Dockable Window" category="GCD" image="Images\GCD.png" />
+        <Button id="GCD_AddIn_ProjectPropertiesButton" class="GCDAddIn.Project.btnProjectProperties" onDemand="false" message="Edit the properties for the current GCD project." caption="Project Properties" tip="Edit the properties of the current GCD project" category="GCD" image="Images\Options.png" />
+        <!--
         <Button id="GCDAddIn_ExploreProjectButton" class="ExploreProjectButton" onDemand="false" message="Open Windows Explorer at the current GCD project folder location." caption="Browse GCD Project Folder" category="GCD" image="Resources\BrowseFolder.png" />
         <Button id="GCD_AddIn_GCDReportButton" class="ReportButton" onDemand="false" message="A GCD report describes the full workflow of all analysis steps performed since the project was created. Each DEM Survey, associated and error surface is described, together with all the change detection analyses." caption="GCD Report" tip="Generate a GCD report for the current project." category="GCD" image="Resources\Report.png" />
+        -->
         <!-- Options Menu-->
-        <Button id="GCD_AddIn_OptionsButton" class="OptionsButton" message="Manage GCD Options" caption="Options" tip="Manage GCD Options" category="GCD" image="Resources\Options.png" />
-        <Button id="GCD_AddIn_FISLibraryButton" class="FISLibraryButton" message="Manage FIS files associated with the GCD" caption="FIS Library" tip="Add, edit and remove FIS files." category="GCD" image="Resources\FISLibrary.png" />
+        <Button id="GCD_AddIn_OptionsButton" class="GCDAddIn.Customize.btnOptions" message="Manage GCD Options" caption="Options" tip="Manage GCD Options" category="GCD" image="Images\Options.png" />
+        <Button id="GCD_AddIn_FISLibraryButton" class="GCDAddIn.Customize.btnFISLibrary" message="Manage FIS files associated with the GCD" caption="FIS Library" tip="Add, edit and remove FIS files." category="GCD" image="Images\FISLibrary.png" />
         <!-- Data Preparation Menu -->
         <!--<Button id="GCD_AddIn_SurveyLibraryButton" class="SurveyLibraryButton"  onDemand="false" message="Open the GCD Project Explorer" caption="Survey Library" category="GCD" image="Images\SurveyLibrary.png" />
         -->
-        <Button id="GCD_AddIn_CleanRasterButton" class="GCDAddIn.DataPreparation.btnCleanRaster" message="Clean a raster to fix cell extent and divisibility issues" caption="Clean Raster" category="GCD" image="Resources\CleanRaster.png" />
+        <Button id="GCD_AddIn_CleanRasterButton" class="GCDAddIn.DataPreparation.btnCleanRaster" message="Clean a raster to fix cell extent and divisibility issues" caption="Clean Raster" category="GCD" image="Images\CleanRaster.png" />
         <Button id="GCD_AddIn_ConcaveHull" class="ConcaveHullButton" message="Create a bounding polygon around a set of survey points." caption="Creating Bounding Polygon" category="GCD" image="Resources\ConcaveHull.png" />
         <!--Survey Preparation Sub-Menu-->
         <Button id="GCD_AddIn_RawPointCloudToFeatureClass" class="PointCloudToFcButton" message="Convert a x,y,z delimted text file to a point feature class" caption="Create Point Feature Class" category="GCD" image="" />
@@ -60,13 +62,12 @@
         <Button id="GCD_AddIn_ReservoirButton" class="ReservoirLibraryButton" onDemand="false" message="Manage GCD Reservoirs" caption="Reservoir" category="GCD" image="Resources\Reservoir.png" />
         <Button id="GCD_AddIn_BudgetSegregationButton" class="BudgetSegregationButton" onDemand="false" message="Perform a GCD Budget Segregation" caption="Budget Segregation" category="GCD" image="Resources\BudgetSeg.png" />
         <!-- Help Menu-->
-        <Button id="GCD_AddIn_AboutButton" class="AboutButton" message="Provides information about the version, authors and funding for the Geomorphic Change Detection (GCD)." caption="About GCD" tip="Information About the GCD" category="GCD" image="Resources\GCD.png" />
-        <Button id="GCD_AddIn_OnlineHelp" class="OnlineHelpButton" message="Open the GCD Online Help" caption="Online GCD 6 Help" category="GCD" image="Resources\Help.png" />
-        <Button id="GCD_AddIn_WebSite" class="WebSiteButton" message="Open the GCD Software Web Site" caption="GCD Web Site" category="GCD" image="Resources\Help.png" />
-        <Button id="GCD_AddIn_Forum" class="ForumButton" message="Open the GCD Online Forum" caption="GCD Forum" category="GCD" image="Resources\Help.png" />
+        <Button id="GCD_AddIn_AboutButton" class="GCDAddIn.Help.btnAbout" message="Provides information about the version, authors and funding for the Geomorphic Change Detection (GCD)." caption="About GCD" tip="Information About the GCD" category="GCD" image="Images\GCD.png" />
+        <Button id="GCD_AddIn_OnlineHelp" class="GCDAddIn.Help.btnOnlineHelp" message="Open the GCD Online Help" caption="Online GCD 6 Help" category="GCD" image="Images\Help.png" />
+        <Button id="GCD_AddIn_WebSite" class="GCDAddIn.Help.btnWebSite" message="Open the GCD Software Web Site" caption="GCD Web Site" category="GCD" image="Images\Help.png" />
       </Commands>
       <DockableWindows>
-        <DockableWindow id="GCD_ucProjectManager" class="GCDAddIn.ucProjectManager+AddinImpl" caption="GCD Project Explorer" image="resources\GCD.png">
+        <DockableWindow id="GCD_ucProjectManager" class="GCDAddIn.ucProjectManager+AddinImpl" caption="GCD Project Explorer" image="Images\GCD.png">
           <InitialPlacement height="300" width="300" state="pinned" position="left" />
         </DockableWindow>
       </DockableWindows>
@@ -75,11 +76,11 @@
           <Items>
             <Button refID="GCD_AddIn_NewProjectButton" />
             <Button refID="GCD_AddIn_OpenProjectButton" />
-            <Button refID="GCD_AddIn_CloseProjectButton" />
             <Button refID="GCD_AddIn_DockableProjectExplorerButton" />
-            <Button refID="GCD_AddIn_ProjectPropertiesButton" separator="" />
-            <Button refID="GCDAddIn_ExploreProjectButton" />
-            <Button refID="GCD_AddIn_GCDReportButton" separator="true" />
+            <Button refID="GCD_AddIn_ProjectPropertiesButton"  />
+            <Button refID="GCD_AddIn_CloseProjectButton"/>
+            <Button refID="GCDAddIn_ExploreProjectButton" separator="true" />
+            <!--<Button refID="GCD_AddIn_GCDReportButton" separator="true" />-->
           </Items>
         </Menu>
         <Menu caption="Data Preparation" isRootMenu="false" id="GCD_AddIn_DataPreparationMenu">

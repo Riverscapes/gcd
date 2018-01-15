@@ -12,7 +12,7 @@ namespace GCDAddIn.Project
         {
             try
             {
-                OpenProjectExplorer();
+                ShowProjectExplorer(true);
             }
             catch (Exception ex)
             {
@@ -29,7 +29,7 @@ namespace GCDAddIn.Project
             Enabled = ArcMap.Application != null;
         }
 
-        public static void OpenProjectExplorer(string sSelectNodeTag = "")
+        public static void ShowProjectExplorer(bool bVisible)
         {
             // Note that the IsVisible property on the dockable window does not
             // seem to track the state of the window properly. Especially if the user
@@ -43,19 +43,21 @@ namespace GCDAddIn.Project
             ESRI.ArcGIS.Framework.IDockableWindow docWin = ArcMap.DockableWindowManager.GetDockableWindow((ESRI.ArcGIS.esriSystem.UID)pUI);
             if (docWin is ESRI.ArcGIS.Framework.IDockableWindow)
             {
-                docWin.Show(true);
+                docWin.Show(bVisible);
 
-                try
+                if (bVisible)
                 {
-                    // Try and refresh the project window.
-                    ucProjectManager.AddinImpl winImpl = ESRI.ArcGIS.Desktop.AddIns.AddIn.FromID<ucProjectManager.AddinImpl>(ThisAddIn.IDs.GCDAddIn_ucProjectManager);
-                    winImpl.UI.LoadTree();
+                    try
+                    {
+                        // Try and refresh the project window.
+                        ucProjectManager.AddinImpl winImpl = ESRI.ArcGIS.Desktop.AddIns.AddIn.FromID<ucProjectManager.AddinImpl>(ThisAddIn.IDs.GCDAddIn_ucProjectManager);
+                        winImpl.UI.LoadTree();
+                    }
+                    catch (Exception ex)
+                    {
+                        // Do nothing if it fails. It's just a treat.
+                    }
                 }
-                catch (Exception ex)
-                {
-                    // Do nothing if it fails. It's just a treat.
-                }
-
             }
         }
     }

@@ -32,7 +32,7 @@ namespace GCDAddIn.Project
                     try
                     {
                         GCDCore.Project.ProjectManager.OpenProject(new System.IO.FileInfo(f.FileName));
-                        btnProjectExplorer.OpenProjectExplorer();
+                        btnProjectExplorer.ShowProjectExplorer(true);
                     }
                     catch (Exception ex)
                     {

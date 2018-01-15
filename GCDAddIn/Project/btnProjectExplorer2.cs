@@ -1,16 +1,21 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace GCDAddIn.Project
 {
-    class btnNewProject : ESRI.ArcGIS.Desktop.AddIns.Button
+    /// <summary>
+    /// hooked up to the Project menu item "GCD Project Explorer" whereas btnProjectExplorer is hooked up to the toolbar button
+    /// </summary>
+    class btnProjectExplorer2 : ESRI.ArcGIS.Desktop.AddIns.Button
     {
         protected override void OnClick()
         {
             try
             {
-                GCDCore.UserInterface.Project.frmProjectProperties frm = new GCDCore.UserInterface.Project.frmProjectProperties(true);
-                if (frm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                    btnProjectExplorer.ShowProjectExplorer(true);
+                btnProjectExplorer.ShowProjectExplorer(true);
             }
             catch (Exception ex)
             {

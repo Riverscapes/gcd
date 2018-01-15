@@ -127,6 +127,8 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Config.esriaddinx</DependentUpon>
     </Compile>
+    <Compile Include="Customize\btnFISLibrary.cs" />
+    <Compile Include="Customize\btnOptions.cs" />
     <Compile Include="DataPreparation\btnCleanRaster.cs" />
     <Compile Include="frmLayerSelector.cs">
       <SubType>Form</SubType>
@@ -136,9 +138,15 @@
     </Compile>
     <Compile Include="GCDArcMapManager.cs" />
     <Compile Include="GCDExtension.cs" />
+    <Compile Include="Help\btnAbout.cs" />
+    <Compile Include="Help\btnOnlineHelp.cs" />
+    <Compile Include="Help\btnWebSite.cs" />
+    <Compile Include="Project\btnCloseProject.cs" />
     <Compile Include="Project\btnNewProject.cs" />
     <Compile Include="Project\btnOpenProject.cs" />
-    <Compile Include="Project\btnTestProjectExplorer.cs" />
+    <Compile Include="Project\btnProjectExplorer.cs" />
+    <Compile Include="Project\btnProjectExplorer2.cs" />
+    <Compile Include="Project\btnProjectProperties.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RasterSymbolization.cs" />
     <Compile Include="ucProjectManager.cs">
@@ -205,6 +213,19 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <AddInContent Include="Images\GCD.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AddInContent Include="Images\Help.png" />
+    <AddInContent Include="Images\NewProject.png" />
+    <AddInContent Include="Images\OpenProject.png" />
+    <AddInContent Include="Images\Options.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AddInContent Include="Images\CleanRaster.png" />
+    <AddInContent Include="Images\FISLibrary.png" />
   </ItemGroup>
   <PropertyGroup>
     <ZipFileExtension>esriAddIn</ZipFileExtension>
