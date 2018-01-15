@@ -41,30 +41,25 @@ namespace GCDCore.UserInterface.Options
             this.btnClose = new System.Windows.Forms.Button();
             this.TabControl1 = new System.Windows.Forms.TabControl();
             this.TabPage1 = new System.Windows.Forms.TabPage();
-            this.chkTempWorkspaceWarning = new System.Windows.Forms.CheckBox();
             this.GroupBox2 = new System.Windows.Forms.GroupBox();
             this.cmdDefault = new System.Windows.Forms.Button();
             this.txtWorkspace = new System.Windows.Forms.TextBox();
             this.btnBrowse = new System.Windows.Forms.Button();
             this.btnExploreWorkspace = new System.Windows.Forms.Button();
             this.btnClearWorkspace = new System.Windows.Forms.Button();
-            this.chkAutoLoadEtalFIS = new System.Windows.Forms.CheckBox();
             this.chkBoxValidateProjectOnLoad = new System.Windows.Forms.CheckBox();
-            this.chkWarnAboutLongPaths = new System.Windows.Forms.CheckBox();
-            this.chkAddOutputLayersToMap = new System.Windows.Forms.CheckBox();
-            this.chkAddInputLayersToMap = new System.Windows.Forms.CheckBox();
-            this.Label5 = new System.Windows.Forms.Label();
-            this.cboFormat = new System.Windows.Forms.ComboBox();
             this.chkClearWorkspaceOnStartup = new System.Windows.Forms.CheckBox();
             this.TabPage2 = new System.Windows.Forms.TabPage();
-            this.SurveyTypesBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.grdSurveyTypes = new System.Windows.Forms.DataGridView();
+            this.colSurveyType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colUncertainty = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TabPage3 = new System.Windows.Forms.TabPage();
             this.grbTransparencyLayer = new System.Windows.Forms.GroupBox();
             this.chkErrorSurfacesTransparency = new System.Windows.Forms.CheckBox();
             this.Label7 = new System.Windows.Forms.Label();
-            this.nudTransparency = new System.Windows.Forms.NumericUpDown();
             this.chkAnalysesTransparency = new System.Windows.Forms.CheckBox();
             this.chkAssociatedSurfacesTransparency = new System.Windows.Forms.CheckBox();
+            this.nudTransparency = new System.Windows.Forms.NumericUpDown();
             this.chkAutoApplyTransparency = new System.Windows.Forms.CheckBox();
             this.grbComparitiveLayers = new System.Windows.Forms.GroupBox();
             this.chkPointDensityComparative = new System.Windows.Forms.CheckBox();
@@ -73,12 +68,6 @@ namespace GCDCore.UserInterface.Options
             this.chkInterpolationErrorComparative = new System.Windows.Forms.CheckBox();
             this.chk3DPointQualityComparative = new System.Windows.Forms.CheckBox();
             this.chkComparativeSymbology = new System.Windows.Forms.CheckBox();
-            this.cboLayer = new System.Windows.Forms.ComboBox();
-            this.cboType = new System.Windows.Forms.ComboBox();
-            this.Label2 = new System.Windows.Forms.Label();
-            this.Label1 = new System.Windows.Forms.Label();
-            this.btnSet = new System.Windows.Forms.Button();
-            this.btnSymReset = new System.Windows.Forms.Button();
             this.TabPage4 = new System.Windows.Forms.TabPage();
             this.GroupBox1 = new System.Windows.Forms.GroupBox();
             this.lblWidth = new System.Windows.Forms.Label();
@@ -88,15 +77,13 @@ namespace GCDCore.UserInterface.Options
             this.TabPage5 = new System.Windows.Forms.TabPage();
             this.lstPyramids = new System.Windows.Forms.CheckedListBox();
             this.lnkPyramidsHelp = new System.Windows.Forms.LinkLabel();
+            this.SurveyTypesBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.ttpTooltip = new System.Windows.Forms.ToolTip(this.components);
-            this.grdSurveyTypes = new System.Windows.Forms.DataGridView();
-            this.colSurveyType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colUncertainty = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TabControl1.SuspendLayout();
             this.TabPage1.SuspendLayout();
             this.GroupBox2.SuspendLayout();
             this.TabPage2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.SurveyTypesBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grdSurveyTypes)).BeginInit();
             this.TabPage3.SuspendLayout();
             this.grbTransparencyLayer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudTransparency)).BeginInit();
@@ -106,7 +93,7 @@ namespace GCDCore.UserInterface.Options
             ((System.ComponentModel.ISupportInitialize)(this.numChartHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numChartWidth)).BeginInit();
             this.TabPage5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.grdSurveyTypes)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SurveyTypesBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // btnHelp
@@ -128,7 +115,7 @@ namespace GCDCore.UserInterface.Options
             this.btnClose.TabIndex = 1;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            this.btnClose.Click += new System.EventHandler(this.btnOK_Click);
             // 
             // TabControl1
             // 
@@ -148,15 +135,8 @@ namespace GCDCore.UserInterface.Options
             // 
             // TabPage1
             // 
-            this.TabPage1.Controls.Add(this.chkTempWorkspaceWarning);
             this.TabPage1.Controls.Add(this.GroupBox2);
-            this.TabPage1.Controls.Add(this.chkAutoLoadEtalFIS);
             this.TabPage1.Controls.Add(this.chkBoxValidateProjectOnLoad);
-            this.TabPage1.Controls.Add(this.chkWarnAboutLongPaths);
-            this.TabPage1.Controls.Add(this.chkAddOutputLayersToMap);
-            this.TabPage1.Controls.Add(this.chkAddInputLayersToMap);
-            this.TabPage1.Controls.Add(this.Label5);
-            this.TabPage1.Controls.Add(this.cboFormat);
             this.TabPage1.Controls.Add(this.chkClearWorkspaceOnStartup);
             this.TabPage1.Location = new System.Drawing.Point(4, 22);
             this.TabPage1.Name = "TabPage1";
@@ -165,16 +145,6 @@ namespace GCDCore.UserInterface.Options
             this.TabPage1.TabIndex = 0;
             this.TabPage1.Text = "Workspace";
             this.TabPage1.UseVisualStyleBackColor = true;
-            // 
-            // chkTempWorkspaceWarning
-            // 
-            this.chkTempWorkspaceWarning.AutoSize = true;
-            this.chkTempWorkspaceWarning.Location = new System.Drawing.Point(265, 126);
-            this.chkTempWorkspaceWarning.Name = "chkTempWorkspaceWarning";
-            this.chkTempWorkspaceWarning.Size = new System.Drawing.Size(226, 17);
-            this.chkTempWorkspaceWarning.TabIndex = 9;
-            this.chkTempWorkspaceWarning.Text = "Invalid temp workspace character warning";
-            this.chkTempWorkspaceWarning.UseVisualStyleBackColor = true;
             // 
             // GroupBox2
             // 
@@ -198,6 +168,7 @@ namespace GCDCore.UserInterface.Options
             this.cmdDefault.TabIndex = 4;
             this.cmdDefault.Text = "Use Default Workspace";
             this.cmdDefault.UseVisualStyleBackColor = true;
+            this.cmdDefault.Click += new System.EventHandler(this.cmdDefault_Click);
             // 
             // txtWorkspace
             // 
@@ -218,6 +189,7 @@ namespace GCDCore.UserInterface.Options
             this.btnBrowse.Size = new System.Drawing.Size(29, 23);
             this.btnBrowse.TabIndex = 1;
             this.btnBrowse.UseVisualStyleBackColor = true;
+            this.btnBrowse.Click += new System.EventHandler(this.btnBrowseChangeWorkspace_Click);
             // 
             // btnExploreWorkspace
             // 
@@ -227,6 +199,7 @@ namespace GCDCore.UserInterface.Options
             this.btnExploreWorkspace.TabIndex = 2;
             this.btnExploreWorkspace.Text = "Open In Explorer";
             this.btnExploreWorkspace.UseVisualStyleBackColor = true;
+            this.btnExploreWorkspace.Click += new System.EventHandler(this.btnExploreWorkspace_Click);
             // 
             // btnClearWorkspace
             // 
@@ -236,79 +209,17 @@ namespace GCDCore.UserInterface.Options
             this.btnClearWorkspace.TabIndex = 3;
             this.btnClearWorkspace.Text = "Clear Workspace";
             this.btnClearWorkspace.UseVisualStyleBackColor = true;
-            // 
-            // chkAutoLoadEtalFIS
-            // 
-            this.chkAutoLoadEtalFIS.AutoSize = true;
-            this.chkAutoLoadEtalFIS.Location = new System.Drawing.Point(11, 213);
-            this.chkAutoLoadEtalFIS.Margin = new System.Windows.Forms.Padding(2);
-            this.chkAutoLoadEtalFIS.Name = "chkAutoLoadEtalFIS";
-            this.chkAutoLoadEtalFIS.Size = new System.Drawing.Size(194, 17);
-            this.chkAutoLoadEtalFIS.TabIndex = 5;
-            this.chkAutoLoadEtalFIS.Text = "Autoload ET-AL provided FIS library";
-            this.chkAutoLoadEtalFIS.UseVisualStyleBackColor = true;
+            this.btnClearWorkspace.Click += new System.EventHandler(this.btnClearWorkspace_Click);
             // 
             // chkBoxValidateProjectOnLoad
             // 
             this.chkBoxValidateProjectOnLoad.AutoSize = true;
-            this.chkBoxValidateProjectOnLoad.Location = new System.Drawing.Point(11, 184);
+            this.chkBoxValidateProjectOnLoad.Location = new System.Drawing.Point(11, 118);
             this.chkBoxValidateProjectOnLoad.Name = "chkBoxValidateProjectOnLoad";
             this.chkBoxValidateProjectOnLoad.Size = new System.Drawing.Size(163, 17);
             this.chkBoxValidateProjectOnLoad.TabIndex = 4;
             this.chkBoxValidateProjectOnLoad.Text = "Validate GCD project on load";
             this.chkBoxValidateProjectOnLoad.UseVisualStyleBackColor = true;
-            // 
-            // chkWarnAboutLongPaths
-            // 
-            this.chkWarnAboutLongPaths.AutoSize = true;
-            this.chkWarnAboutLongPaths.Location = new System.Drawing.Point(265, 97);
-            this.chkWarnAboutLongPaths.Name = "chkWarnAboutLongPaths";
-            this.chkWarnAboutLongPaths.Size = new System.Drawing.Size(193, 17);
-            this.chkWarnAboutLongPaths.TabIndex = 8;
-            this.chkWarnAboutLongPaths.Text = "Warn about potential long file paths";
-            this.chkWarnAboutLongPaths.UseVisualStyleBackColor = true;
-            // 
-            // chkAddOutputLayersToMap
-            // 
-            this.chkAddOutputLayersToMap.AutoSize = true;
-            this.chkAddOutputLayersToMap.Location = new System.Drawing.Point(11, 155);
-            this.chkAddOutputLayersToMap.Name = "chkAddOutputLayersToMap";
-            this.chkAddOutputLayersToMap.Size = new System.Drawing.Size(143, 17);
-            this.chkAddOutputLayersToMap.TabIndex = 3;
-            this.chkAddOutputLayersToMap.Text = "Add output layers to map";
-            this.chkAddOutputLayersToMap.UseVisualStyleBackColor = true;
-            // 
-            // chkAddInputLayersToMap
-            // 
-            this.chkAddInputLayersToMap.AutoSize = true;
-            this.chkAddInputLayersToMap.Checked = true;
-            this.chkAddInputLayersToMap.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkAddInputLayersToMap.Location = new System.Drawing.Point(11, 126);
-            this.chkAddInputLayersToMap.Name = "chkAddInputLayersToMap";
-            this.chkAddInputLayersToMap.Size = new System.Drawing.Size(136, 17);
-            this.chkAddInputLayersToMap.TabIndex = 2;
-            this.chkAddInputLayersToMap.Text = "Add input layers to map";
-            this.chkAddInputLayersToMap.UseVisualStyleBackColor = true;
-            // 
-            // Label5
-            // 
-            this.Label5.AutoSize = true;
-            this.Label5.Location = new System.Drawing.Point(11, 246);
-            this.Label5.Name = "Label5";
-            this.Label5.Size = new System.Drawing.Size(138, 13);
-            this.Label5.TabIndex = 6;
-            this.Label5.Text = "Default output raster format:";
-            // 
-            // cboFormat
-            // 
-            this.cboFormat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboFormat.FormattingEnabled = true;
-            this.cboFormat.Items.AddRange(new object[] {
-            "ESRI GeoTIFF"});
-            this.cboFormat.Location = new System.Drawing.Point(166, 242);
-            this.cboFormat.Name = "cboFormat";
-            this.cboFormat.Size = new System.Drawing.Size(170, 21);
-            this.cboFormat.TabIndex = 7;
             // 
             // chkClearWorkspaceOnStartup
             // 
@@ -333,23 +244,39 @@ namespace GCDCore.UserInterface.Options
             this.TabPage2.Text = "Survey Types";
             this.TabPage2.UseVisualStyleBackColor = true;
             // 
-            // SurveyTypesBindingSource
+            // grdSurveyTypes
             // 
-            this.SurveyTypesBindingSource.AllowNew = true;
-            this.SurveyTypesBindingSource.DataMember = "SurveyTypes";
+            this.grdSurveyTypes.AllowUserToResizeRows = false;
+            this.grdSurveyTypes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grdSurveyTypes.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colSurveyType,
+            this.colUncertainty});
+            this.grdSurveyTypes.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.grdSurveyTypes.Location = new System.Drawing.Point(3, 3);
+            this.grdSurveyTypes.Name = "grdSurveyTypes";
+            this.grdSurveyTypes.Size = new System.Drawing.Size(494, 277);
+            this.grdSurveyTypes.TabIndex = 0;
+            // 
+            // colSurveyType
+            // 
+            this.colSurveyType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colSurveyType.DataPropertyName = "Name";
+            this.colSurveyType.HeaderText = "Survey Type";
+            this.colSurveyType.Name = "colSurveyType";
+            // 
+            // colUncertainty
+            // 
+            this.colUncertainty.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colUncertainty.DataPropertyName = "ErrorValue";
+            this.colUncertainty.HeaderText = "Default Uncertainty";
+            this.colUncertainty.Name = "colUncertainty";
             // 
             // TabPage3
             // 
-            this.TabPage3.Controls.Add(this.grbTransparencyLayer);
-            this.TabPage3.Controls.Add(this.chkAutoApplyTransparency);
-            this.TabPage3.Controls.Add(this.grbComparitiveLayers);
             this.TabPage3.Controls.Add(this.chkComparativeSymbology);
-            this.TabPage3.Controls.Add(this.cboLayer);
-            this.TabPage3.Controls.Add(this.cboType);
-            this.TabPage3.Controls.Add(this.Label2);
-            this.TabPage3.Controls.Add(this.Label1);
-            this.TabPage3.Controls.Add(this.btnSet);
-            this.TabPage3.Controls.Add(this.btnSymReset);
+            this.TabPage3.Controls.Add(this.chkAutoApplyTransparency);
+            this.TabPage3.Controls.Add(this.grbTransparencyLayer);
+            this.TabPage3.Controls.Add(this.grbComparitiveLayers);
             this.TabPage3.Location = new System.Drawing.Point(4, 22);
             this.TabPage3.Name = "TabPage3";
             this.TabPage3.Padding = new System.Windows.Forms.Padding(3);
@@ -362,22 +289,22 @@ namespace GCDCore.UserInterface.Options
             // 
             this.grbTransparencyLayer.Controls.Add(this.chkErrorSurfacesTransparency);
             this.grbTransparencyLayer.Controls.Add(this.Label7);
-            this.grbTransparencyLayer.Controls.Add(this.nudTransparency);
             this.grbTransparencyLayer.Controls.Add(this.chkAnalysesTransparency);
             this.grbTransparencyLayer.Controls.Add(this.chkAssociatedSurfacesTransparency);
-            this.grbTransparencyLayer.Location = new System.Drawing.Point(48, 133);
+            this.grbTransparencyLayer.Controls.Add(this.nudTransparency);
+            this.grbTransparencyLayer.Location = new System.Drawing.Point(15, 12);
             this.grbTransparencyLayer.Margin = new System.Windows.Forms.Padding(2);
             this.grbTransparencyLayer.Name = "grbTransparencyLayer";
             this.grbTransparencyLayer.Padding = new System.Windows.Forms.Padding(2);
-            this.grbTransparencyLayer.Size = new System.Drawing.Size(176, 119);
+            this.grbTransparencyLayer.Size = new System.Drawing.Size(176, 131);
             this.grbTransparencyLayer.TabIndex = 9;
             this.grbTransparencyLayer.TabStop = false;
-            this.grbTransparencyLayer.Text = "Transparency Layer";
+            this.grbTransparencyLayer.Text = "       Auto Apply Transparency";
             // 
             // chkErrorSurfacesTransparency
             // 
             this.chkErrorSurfacesTransparency.AutoSize = true;
-            this.chkErrorSurfacesTransparency.Location = new System.Drawing.Point(19, 65);
+            this.chkErrorSurfacesTransparency.Location = new System.Drawing.Point(19, 55);
             this.chkErrorSurfacesTransparency.Margin = new System.Windows.Forms.Padding(2);
             this.chkErrorSurfacesTransparency.Name = "chkErrorSurfacesTransparency";
             this.chkErrorSurfacesTransparency.Size = new System.Drawing.Size(93, 17);
@@ -388,12 +315,34 @@ namespace GCDCore.UserInterface.Options
             // Label7
             // 
             this.Label7.AutoSize = true;
-            this.Label7.Location = new System.Drawing.Point(21, 23);
+            this.Label7.Location = new System.Drawing.Point(18, 103);
             this.Label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.Label7.Name = "Label7";
             this.Label7.Size = new System.Drawing.Size(72, 13);
             this.Label7.TabIndex = 3;
             this.Label7.Text = "Transparency";
+            // 
+            // chkAnalysesTransparency
+            // 
+            this.chkAnalysesTransparency.AutoSize = true;
+            this.chkAnalysesTransparency.Location = new System.Drawing.Point(19, 78);
+            this.chkAnalysesTransparency.Margin = new System.Windows.Forms.Padding(2);
+            this.chkAnalysesTransparency.Name = "chkAnalysesTransparency";
+            this.chkAnalysesTransparency.Size = new System.Drawing.Size(113, 17);
+            this.chkAnalysesTransparency.TabIndex = 1;
+            this.chkAnalysesTransparency.Text = "Analyses Surfaces";
+            this.chkAnalysesTransparency.UseVisualStyleBackColor = true;
+            // 
+            // chkAssociatedSurfacesTransparency
+            // 
+            this.chkAssociatedSurfacesTransparency.AutoSize = true;
+            this.chkAssociatedSurfacesTransparency.Location = new System.Drawing.Point(19, 32);
+            this.chkAssociatedSurfacesTransparency.Margin = new System.Windows.Forms.Padding(2);
+            this.chkAssociatedSurfacesTransparency.Name = "chkAssociatedSurfacesTransparency";
+            this.chkAssociatedSurfacesTransparency.Size = new System.Drawing.Size(123, 17);
+            this.chkAssociatedSurfacesTransparency.TabIndex = 0;
+            this.chkAssociatedSurfacesTransparency.Text = "Associated Surfaces";
+            this.chkAssociatedSurfacesTransparency.UseVisualStyleBackColor = true;
             // 
             // nudTransparency
             // 
@@ -402,7 +351,7 @@ namespace GCDCore.UserInterface.Options
             0,
             0,
             0});
-            this.nudTransparency.Location = new System.Drawing.Point(103, 23);
+            this.nudTransparency.Location = new System.Drawing.Point(100, 99);
             this.nudTransparency.Margin = new System.Windows.Forms.Padding(2);
             this.nudTransparency.Maximum = new decimal(new int[] {
             99,
@@ -423,38 +372,16 @@ namespace GCDCore.UserInterface.Options
             0,
             0});
             // 
-            // chkAnalysesTransparency
-            // 
-            this.chkAnalysesTransparency.AutoSize = true;
-            this.chkAnalysesTransparency.Location = new System.Drawing.Point(19, 85);
-            this.chkAnalysesTransparency.Margin = new System.Windows.Forms.Padding(2);
-            this.chkAnalysesTransparency.Name = "chkAnalysesTransparency";
-            this.chkAnalysesTransparency.Size = new System.Drawing.Size(113, 17);
-            this.chkAnalysesTransparency.TabIndex = 1;
-            this.chkAnalysesTransparency.Text = "Analyses Surfaces";
-            this.chkAnalysesTransparency.UseVisualStyleBackColor = true;
-            // 
-            // chkAssociatedSurfacesTransparency
-            // 
-            this.chkAssociatedSurfacesTransparency.AutoSize = true;
-            this.chkAssociatedSurfacesTransparency.Location = new System.Drawing.Point(19, 46);
-            this.chkAssociatedSurfacesTransparency.Margin = new System.Windows.Forms.Padding(2);
-            this.chkAssociatedSurfacesTransparency.Name = "chkAssociatedSurfacesTransparency";
-            this.chkAssociatedSurfacesTransparency.Size = new System.Drawing.Size(123, 17);
-            this.chkAssociatedSurfacesTransparency.TabIndex = 0;
-            this.chkAssociatedSurfacesTransparency.Text = "Associated Surfaces";
-            this.chkAssociatedSurfacesTransparency.UseVisualStyleBackColor = true;
-            // 
             // chkAutoApplyTransparency
             // 
             this.chkAutoApplyTransparency.AutoSize = true;
-            this.chkAutoApplyTransparency.Location = new System.Drawing.Point(48, 111);
+            this.chkAutoApplyTransparency.Location = new System.Drawing.Point(27, 12);
             this.chkAutoApplyTransparency.Margin = new System.Windows.Forms.Padding(2);
             this.chkAutoApplyTransparency.Name = "chkAutoApplyTransparency";
-            this.chkAutoApplyTransparency.Size = new System.Drawing.Size(140, 17);
+            this.chkAutoApplyTransparency.Size = new System.Drawing.Size(15, 14);
             this.chkAutoApplyTransparency.TabIndex = 8;
-            this.chkAutoApplyTransparency.Text = "Auto apply transparency";
             this.chkAutoApplyTransparency.UseVisualStyleBackColor = true;
+            this.chkAutoApplyTransparency.CheckedChanged += new System.EventHandler(this.chkAutoApplyTransparency_CheckedChanged);
             // 
             // grbComparitiveLayers
             // 
@@ -464,19 +391,19 @@ namespace GCDCore.UserInterface.Options
             this.grbComparitiveLayers.Controls.Add(this.chkInterpolationErrorComparative);
             this.grbComparitiveLayers.Controls.Add(this.chk3DPointQualityComparative);
             this.grbComparitiveLayers.Enabled = false;
-            this.grbComparitiveLayers.Location = new System.Drawing.Point(236, 133);
+            this.grbComparitiveLayers.Location = new System.Drawing.Point(203, 12);
             this.grbComparitiveLayers.Margin = new System.Windows.Forms.Padding(2);
             this.grbComparitiveLayers.Name = "grbComparitiveLayers";
             this.grbComparitiveLayers.Padding = new System.Windows.Forms.Padding(2);
-            this.grbComparitiveLayers.Size = new System.Drawing.Size(256, 119);
+            this.grbComparitiveLayers.Size = new System.Drawing.Size(280, 131);
             this.grbComparitiveLayers.TabIndex = 7;
             this.grbComparitiveLayers.TabStop = false;
-            this.grbComparitiveLayers.Text = "Comparitive Layers";
+            this.grbComparitiveLayers.Text = "       Use Comparitive Symbology";
             // 
             // chkPointDensityComparative
             // 
             this.chkPointDensityComparative.AutoSize = true;
-            this.chkPointDensityComparative.Location = new System.Drawing.Point(19, 85);
+            this.chkPointDensityComparative.Location = new System.Drawing.Point(19, 78);
             this.chkPointDensityComparative.Margin = new System.Windows.Forms.Padding(2);
             this.chkPointDensityComparative.Name = "chkPointDensityComparative";
             this.chkPointDensityComparative.Size = new System.Drawing.Size(88, 17);
@@ -487,7 +414,7 @@ namespace GCDCore.UserInterface.Options
             // chkDoDComparative
             // 
             this.chkDoDComparative.AutoSize = true;
-            this.chkDoDComparative.Location = new System.Drawing.Point(180, 17);
+            this.chkDoDComparative.Location = new System.Drawing.Point(180, 32);
             this.chkDoDComparative.Margin = new System.Windows.Forms.Padding(2);
             this.chkDoDComparative.Name = "chkDoDComparative";
             this.chkDoDComparative.Size = new System.Drawing.Size(48, 17);
@@ -498,7 +425,7 @@ namespace GCDCore.UserInterface.Options
             // chkFISErrorComparative
             // 
             this.chkFISErrorComparative.AutoSize = true;
-            this.chkFISErrorComparative.Location = new System.Drawing.Point(180, 53);
+            this.chkFISErrorComparative.Location = new System.Drawing.Point(180, 55);
             this.chkFISErrorComparative.Margin = new System.Windows.Forms.Padding(2);
             this.chkFISErrorComparative.Name = "chkFISErrorComparative";
             this.chkFISErrorComparative.Size = new System.Drawing.Size(67, 17);
@@ -509,7 +436,7 @@ namespace GCDCore.UserInterface.Options
             // chkInterpolationErrorComparative
             // 
             this.chkInterpolationErrorComparative.AutoSize = true;
-            this.chkInterpolationErrorComparative.Location = new System.Drawing.Point(19, 53);
+            this.chkInterpolationErrorComparative.Location = new System.Drawing.Point(19, 55);
             this.chkInterpolationErrorComparative.Margin = new System.Windows.Forms.Padding(2);
             this.chkInterpolationErrorComparative.Name = "chkInterpolationErrorComparative";
             this.chkInterpolationErrorComparative.Size = new System.Drawing.Size(109, 17);
@@ -520,7 +447,7 @@ namespace GCDCore.UserInterface.Options
             // chk3DPointQualityComparative
             // 
             this.chk3DPointQualityComparative.AutoSize = true;
-            this.chk3DPointQualityComparative.Location = new System.Drawing.Point(19, 20);
+            this.chk3DPointQualityComparative.Location = new System.Drawing.Point(19, 32);
             this.chk3DPointQualityComparative.Margin = new System.Windows.Forms.Padding(2);
             this.chk3DPointQualityComparative.Name = "chk3DPointQualityComparative";
             this.chk3DPointQualityComparative.Size = new System.Drawing.Size(102, 17);
@@ -532,77 +459,13 @@ namespace GCDCore.UserInterface.Options
             // 
             this.chkComparativeSymbology.AutoSize = true;
             this.chkComparativeSymbology.Enabled = false;
-            this.chkComparativeSymbology.Location = new System.Drawing.Point(236, 111);
+            this.chkComparativeSymbology.Location = new System.Drawing.Point(214, 12);
             this.chkComparativeSymbology.Margin = new System.Windows.Forms.Padding(2);
             this.chkComparativeSymbology.Name = "chkComparativeSymbology";
-            this.chkComparativeSymbology.Size = new System.Drawing.Size(165, 17);
+            this.chkComparativeSymbology.Size = new System.Drawing.Size(15, 14);
             this.chkComparativeSymbology.TabIndex = 6;
-            this.chkComparativeSymbology.Text = "Apply comparative symbology";
             this.chkComparativeSymbology.UseVisualStyleBackColor = true;
-            // 
-            // cboLayer
-            // 
-            this.cboLayer.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.cboLayer.Enabled = false;
-            this.cboLayer.FormattingEnabled = true;
-            this.cboLayer.Location = new System.Drawing.Point(48, 49);
-            this.cboLayer.Name = "cboLayer";
-            this.cboLayer.Size = new System.Drawing.Size(446, 21);
-            this.cboLayer.TabIndex = 3;
-            // 
-            // cboType
-            // 
-            this.cboType.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.cboType.Enabled = false;
-            this.cboType.FormattingEnabled = true;
-            this.cboType.Location = new System.Drawing.Point(48, 15);
-            this.cboType.Name = "cboType";
-            this.cboType.Size = new System.Drawing.Size(446, 21);
-            this.cboType.TabIndex = 1;
-            // 
-            // Label2
-            // 
-            this.Label2.AutoSize = true;
-            this.Label2.Enabled = false;
-            this.Label2.Location = new System.Drawing.Point(6, 52);
-            this.Label2.Name = "Label2";
-            this.Label2.Size = new System.Drawing.Size(36, 13);
-            this.Label2.TabIndex = 2;
-            this.Label2.Text = "Layer:";
-            // 
-            // Label1
-            // 
-            this.Label1.AutoSize = true;
-            this.Label1.Enabled = false;
-            this.Label1.Location = new System.Drawing.Point(6, 18);
-            this.Label1.Name = "Label1";
-            this.Label1.Size = new System.Drawing.Size(34, 13);
-            this.Label1.TabIndex = 0;
-            this.Label1.Text = "Type:";
-            // 
-            // btnSet
-            // 
-            this.btnSet.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSet.Enabled = false;
-            this.btnSet.Location = new System.Drawing.Point(416, 76);
-            this.btnSet.Name = "btnSet";
-            this.btnSet.Size = new System.Drawing.Size(78, 23);
-            this.btnSet.TabIndex = 5;
-            this.btnSet.Text = "Set";
-            this.btnSet.UseVisualStyleBackColor = true;
-            // 
-            // btnSymReset
-            // 
-            this.btnSymReset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSymReset.Enabled = false;
-            this.btnSymReset.Location = new System.Drawing.Point(335, 76);
-            this.btnSymReset.Name = "btnSymReset";
-            this.btnSymReset.Size = new System.Drawing.Size(75, 23);
-            this.btnSymReset.TabIndex = 4;
-            this.btnSymReset.Text = "Reset";
-            this.btnSymReset.UseVisualStyleBackColor = true;
+            this.chkComparativeSymbology.CheckedChanged += new System.EventHandler(this.chkComparativeSymbology_CheckedChanged);
             // 
             // TabPage4
             // 
@@ -623,19 +486,19 @@ namespace GCDCore.UserInterface.Options
             this.GroupBox1.Controls.Add(this.numChartWidth);
             this.GroupBox1.Location = new System.Drawing.Point(6, 6);
             this.GroupBox1.Name = "GroupBox1";
-            this.GroupBox1.Size = new System.Drawing.Size(479, 117);
+            this.GroupBox1.Size = new System.Drawing.Size(479, 80);
             this.GroupBox1.TabIndex = 4;
             this.GroupBox1.TabStop = false;
-            this.GroupBox1.Text = "Default Settings for Automatically Saved Graphs:";
+            this.GroupBox1.Text = "Default Settings for Automatically Saved Graphs";
             // 
             // lblWidth
             // 
             this.lblWidth.AutoSize = true;
-            this.lblWidth.Location = new System.Drawing.Point(15, 26);
+            this.lblWidth.Location = new System.Drawing.Point(21, 28);
             this.lblWidth.Name = "lblWidth";
-            this.lblWidth.Size = new System.Drawing.Size(73, 13);
+            this.lblWidth.Size = new System.Drawing.Size(70, 13);
             this.lblWidth.TabIndex = 0;
-            this.lblWidth.Text = "Width (pixels):";
+            this.lblWidth.Text = "Width (pixels)";
             // 
             // numChartHeight
             // 
@@ -646,7 +509,7 @@ namespace GCDCore.UserInterface.Options
             0,
             0});
             this.numChartHeight.Name = "numChartHeight";
-            this.numChartHeight.Size = new System.Drawing.Size(120, 20);
+            this.numChartHeight.Size = new System.Drawing.Size(70, 20);
             this.numChartHeight.TabIndex = 3;
             this.numChartHeight.Value = new decimal(new int[] {
             1000,
@@ -657,11 +520,11 @@ namespace GCDCore.UserInterface.Options
             // lblHeight
             // 
             this.lblHeight.AutoSize = true;
-            this.lblHeight.Location = new System.Drawing.Point(16, 52);
+            this.lblHeight.Location = new System.Drawing.Point(18, 54);
             this.lblHeight.Name = "lblHeight";
-            this.lblHeight.Size = new System.Drawing.Size(76, 13);
+            this.lblHeight.Size = new System.Drawing.Size(73, 13);
             this.lblHeight.TabIndex = 1;
-            this.lblHeight.Text = "Height (pixels):";
+            this.lblHeight.Text = "Height (pixels)";
             // 
             // numChartWidth
             // 
@@ -672,7 +535,7 @@ namespace GCDCore.UserInterface.Options
             0,
             0});
             this.numChartWidth.Name = "numChartWidth";
-            this.numChartWidth.Size = new System.Drawing.Size(120, 20);
+            this.numChartWidth.Size = new System.Drawing.Size(70, 20);
             this.numChartWidth.TabIndex = 2;
             this.numChartWidth.Value = new decimal(new int[] {
             1000,
@@ -715,33 +578,12 @@ namespace GCDCore.UserInterface.Options
             this.lnkPyramidsHelp.TabStop = true;
             this.lnkPyramidsHelp.Text = "Choose which GCD rasters automatically have pyramids built as they are created.";
             this.lnkPyramidsHelp.UseCompatibleTextRendering = true;
+            this.lnkPyramidsHelp.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkPyramidsHelp_LinkClicked);
             // 
-            // grdSurveyTypes
+            // SurveyTypesBindingSource
             // 
-            this.grdSurveyTypes.AllowUserToResizeRows = false;
-            this.grdSurveyTypes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.grdSurveyTypes.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colSurveyType,
-            this.colUncertainty});
-            this.grdSurveyTypes.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.grdSurveyTypes.Location = new System.Drawing.Point(3, 3);
-            this.grdSurveyTypes.Name = "grdSurveyTypes";
-            this.grdSurveyTypes.Size = new System.Drawing.Size(494, 277);
-            this.grdSurveyTypes.TabIndex = 0;
-            // 
-            // colSurveyType
-            // 
-            this.colSurveyType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colSurveyType.DataPropertyName = "Name";
-            this.colSurveyType.HeaderText = "Survey Type";
-            this.colSurveyType.Name = "colSurveyType";
-            // 
-            // colUncertainty
-            // 
-            this.colUncertainty.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colUncertainty.DataPropertyName = "ErrorValue";
-            this.colUncertainty.HeaderText = "Default Uncertainty";
-            this.colUncertainty.Name = "colUncertainty";
+            this.SurveyTypesBindingSource.AllowNew = true;
+            this.SurveyTypesBindingSource.DataMember = "SurveyTypes";
             // 
             // frmOptions
             // 
@@ -764,7 +606,7 @@ namespace GCDCore.UserInterface.Options
             this.GroupBox2.ResumeLayout(false);
             this.GroupBox2.PerformLayout();
             this.TabPage2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.SurveyTypesBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grdSurveyTypes)).EndInit();
             this.TabPage3.ResumeLayout(false);
             this.TabPage3.PerformLayout();
             this.grbTransparencyLayer.ResumeLayout(false);
@@ -779,7 +621,7 @@ namespace GCDCore.UserInterface.Options
             ((System.ComponentModel.ISupportInitialize)(this.numChartWidth)).EndInit();
             this.TabPage5.ResumeLayout(false);
             this.TabPage5.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.grdSurveyTypes)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SurveyTypesBindingSource)).EndInit();
             this.ResumeLayout(false);
 
 		}
@@ -793,21 +635,11 @@ namespace GCDCore.UserInterface.Options
         internal System.Windows.Forms.Button btnBrowse;
 		internal System.Windows.Forms.TabPage TabPage2;
 		internal System.Windows.Forms.TabPage TabPage3;
-		internal System.Windows.Forms.Button btnSet;
-		internal System.Windows.Forms.Button btnSymReset;
-		internal System.Windows.Forms.ComboBox cboLayer;
-		internal System.Windows.Forms.ComboBox cboType;
-		internal System.Windows.Forms.Label Label2;
-		internal System.Windows.Forms.Label Label1;
 		internal System.Windows.Forms.ToolTip ttpTooltip;
 		internal System.Windows.Forms.BindingSource SurveyTypesBindingSource;
 		internal System.Windows.Forms.DataGridViewTextBoxColumn NameDataGridViewTextBoxColumn;
 		internal System.Windows.Forms.DataGridViewTextBoxColumn ErrorDataGridViewTextBoxColumn;
 		internal System.Windows.Forms.DataGridViewTextBoxColumn TypeIDDataGridViewTextBoxColumn;
-		internal System.Windows.Forms.Label Label5;
-		internal System.Windows.Forms.ComboBox cboFormat;
-		internal System.Windows.Forms.CheckBox chkAddOutputLayersToMap;
-		internal System.Windows.Forms.CheckBox chkAddInputLayersToMap;
 		internal System.Windows.Forms.TabPage TabPage4;
 		internal System.Windows.Forms.Label lblHeight;
 		internal System.Windows.Forms.Label lblWidth;
@@ -815,9 +647,7 @@ namespace GCDCore.UserInterface.Options
 		internal System.Windows.Forms.NumericUpDown numChartWidth;
         internal System.Windows.Forms.Button btnExploreWorkspace;
 		internal System.Windows.Forms.GroupBox GroupBox1;
-		internal System.Windows.Forms.CheckBox chkWarnAboutLongPaths;
 		internal System.Windows.Forms.CheckBox chkBoxValidateProjectOnLoad;
-		internal System.Windows.Forms.CheckBox chkAutoLoadEtalFIS;
 		internal System.Windows.Forms.GroupBox grbComparitiveLayers;
 		internal System.Windows.Forms.CheckBox chkPointDensityComparative;
 		internal System.Windows.Forms.CheckBox chkDoDComparative;
@@ -837,7 +667,6 @@ namespace GCDCore.UserInterface.Options
 		internal System.Windows.Forms.TabPage TabPage5;
         internal System.Windows.Forms.LinkLabel lnkPyramidsHelp;
 		internal System.Windows.Forms.CheckedListBox lstPyramids;
-		internal System.Windows.Forms.CheckBox chkTempWorkspaceWarning;
         private System.Windows.Forms.DataGridView grdSurveyTypes;
         private System.Windows.Forms.DataGridViewTextBoxColumn colSurveyType;
         private System.Windows.Forms.DataGridViewTextBoxColumn colUncertainty;

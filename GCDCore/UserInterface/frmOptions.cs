@@ -11,20 +11,10 @@ namespace GCDCore.UserInterface.Options
     {
         private readonly naru.ui.SortableBindingList<SurveyType> SurveyTypes;
 
-        private string m_sArcMapDisplayUnits;
-        #region "Events"
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sArcMapDisplayUnits">The current linear display units of the current ArcMap map data frame</param>
-
-        public frmOptions(string sArcMapDisplayUnits = "")
+        public frmOptions()
         {
             // This call is required by the Windows Form Designer.
             InitializeComponent();
-
-            m_sArcMapDisplayUnits = sArcMapDisplayUnits;
 
             SurveyTypes = new naru.ui.SortableBindingList<SurveyType>(ProjectManager.SurveyTypes.Values.ToList<SurveyType>());
             grdSurveyTypes.DataSource = SurveyTypes;
@@ -32,10 +22,8 @@ namespace GCDCore.UserInterface.Options
 
         private void frmOptions_Load(System.Object sender, System.EventArgs e)
         {
-            //
             // New method to upgrade the GCD user configuration settings
-            //
-            GCDCore.Properties.Settings.Default.Upgrade();
+            Properties.Settings.Default.Upgrade();
 
             //TOOLTIPS
             //Workspace Tab
@@ -63,75 +51,57 @@ namespace GCDCore.UserInterface.Options
 
             //ttpTooltip.SetToolTip(nbrError, My.Resources.ttpOptionsFormSurveyTypeError)
 
-            txtWorkspace.Text = GCDCore.WorkspaceManager.WorkspacePath;
-            chkTempWorkspaceWarning.Checked = GCDCore.Properties.Settings.Default.StartUpWorkspaceWarning;
-
-            chkClearWorkspaceOnStartup.Checked = GCDCore.Properties.Settings.Default.ClearWorkspaceOnStartup;
-            //chkAddInputLayersToMap.Checked = GCDCore.Properties.Settings.Default.AddInputLayersToMap
-            //chkAddOutputLayersToMap.Checked = GCDCore.Properties.Settings.Default.AddOutputLayersToMap
-            chkWarnAboutLongPaths.Checked = GCDCore.Properties.Settings.Default.WarnAboutLongPaths;
-            chkBoxValidateProjectOnLoad.Checked = GCDCore.Properties.Settings.Default.ValidateProjectOnLoad;
-            chkAutoLoadEtalFIS.Checked = GCDCore.Properties.Settings.Default.AutoLoadFISLibrary;
-            chkComparativeSymbology.Checked = GCDCore.Properties.Settings.Default.ApplyComparativeSymbology;
-            chkAutoApplyTransparency.Checked = GCDCore.Properties.Settings.Default.ApplyTransparencySymbology;
-
+            txtWorkspace.Text = WorkspaceManager.WorkspacePath;
+            chkClearWorkspaceOnStartup.Checked = Properties.Settings.Default.ClearWorkspaceOnStartup;
+            chkBoxValidateProjectOnLoad.Checked = Properties.Settings.Default.ValidateProjectOnLoad;
+            chkComparativeSymbology.Checked = Properties.Settings.Default.ApplyComparativeSymbology;
+            chkAutoApplyTransparency.Checked = Properties.Settings.Default.ApplyTransparencySymbology;
 
             if (chkComparativeSymbology.Checked)
             {
                 //Settings based on chkComparativeSymbology (always turned off when chkComparativeSymbology is turned off)
-                chk3DPointQualityComparative.Checked = GCDCore.Properties.Settings.Default.ComparativeSymbology3dPointQuality;
-                chkInterpolationErrorComparative.Checked = GCDCore.Properties.Settings.Default.ComparativeSymbologyInterpolationError;
-                chkPointDensityComparative.Checked = GCDCore.Properties.Settings.Default.ComparativeSymbologyPointDensity;
-                chkDoDComparative.Checked = GCDCore.Properties.Settings.Default.ComparativeSymbologyDoD;
-                chkDoDComparative.Checked = GCDCore.Properties.Settings.Default.ComparativeSymbologyFISError;
+                chk3DPointQualityComparative.Checked = Properties.Settings.Default.ComparativeSymbology3dPointQuality;
+                chkInterpolationErrorComparative.Checked = Properties.Settings.Default.ComparativeSymbologyInterpolationError;
+                chkPointDensityComparative.Checked = Properties.Settings.Default.ComparativeSymbologyPointDensity;
+                chkDoDComparative.Checked = Properties.Settings.Default.ComparativeSymbologyDoD;
+                chkDoDComparative.Checked = Properties.Settings.Default.ComparativeSymbologyFISError;
                 grbComparitiveLayers.Enabled = true;
-
-
             }
-            else if (chkComparativeSymbology.Checked == false)
+            else
             {
                 grbComparitiveLayers.Enabled = false;
-
             }
-
 
             if (chkAutoApplyTransparency.Checked)
             {
-                chkAssociatedSurfacesTransparency.Checked = GCDCore.Properties.Settings.Default.TransparencyAssociatedLayers;
-                chkAnalysesTransparency.Checked = GCDCore.Properties.Settings.Default.TransparencyAnalysesLayers;
-                chkErrorSurfacesTransparency.Checked = GCDCore.Properties.Settings.Default.TransparencyErrorLayers;
+                chkAssociatedSurfacesTransparency.Checked = Properties.Settings.Default.TransparencyAssociatedLayers;
+                chkAnalysesTransparency.Checked = Properties.Settings.Default.TransparencyAnalysesLayers;
+                chkErrorSurfacesTransparency.Checked = Properties.Settings.Default.TransparencyErrorLayers;
                 nudTransparency.Value = Properties.Settings.Default.AutoTransparencyValue;
                 grbTransparencyLayer.Enabled = true;
                 nudTransparency.Enabled = true;
-
             }
-            else if (chkAutoApplyTransparency.Checked == false)
+            else
             {
                 grbTransparencyLayer.Enabled = false;
                 nudTransparency.Enabled = false;
                 nudTransparency.Value = -1;
-
             }
 
-            cboFormat.Text = GCDCore.Properties.Settings.Default.DefaultRasterFormat;
+            //////////////////////////////////////////////////////////////////////////////////////////////////
+            // Sizes for exporting charts to file
+            numChartWidth.Value = Properties.Settings.Default.ChartWidth;
+            numChartHeight.Value = Properties.Settings.Default.ChartHeight;
 
-            //chart setting for exporting charts
-            numChartWidth.Value = GCDCore.Properties.Settings.Default.ChartWidth;
-            numChartHeight.Value = GCDCore.Properties.Settings.Default.ChartHeight;
-
-            //settings for accuracy, used for concurrency and orthogonality
-            //numPrecision.Value = GCDCore.Properties.Settings.Default.Precision
-
-            //
-            ///''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-            // New Automatic Pyramid building features
+            //////////////////////////////////////////////////////////////////////////////////////////////////
+            // Automatic Pyramid building features
             try
             {
                 lstPyramids.Items.Clear();
-                foreach (GCDCore.RasterPyramidManager.PyramidRasterTypes eType in Enum.GetValues(typeof(GCDCore.RasterPyramidManager.PyramidRasterTypes)))
+                foreach (RasterPyramidManager.PyramidRasterTypes eType in Enum.GetValues(typeof(RasterPyramidManager.PyramidRasterTypes)))
                 {
                     bool bPyramids = ProjectManager.PyramidManager.AutomaticallyBuildPyramids(eType);
-                    lstPyramids.Items.Add(new GCDCore.PyramidRasterTypeDisplay(eType), bPyramids);
+                    lstPyramids.Items.Add(new PyramidRasterTypeDisplay(eType), bPyramids);
                 }
 
             }
@@ -141,13 +111,12 @@ namespace GCDCore.UserInterface.Options
             }
         }
 
-
         private void btnOK_Click(System.Object sender, System.EventArgs e)
         {
-            if (GCDCore.WorkspaceManager.ValidateWorkspace(txtWorkspace.Text))
+            if (WorkspaceManager.ValidateWorkspace(txtWorkspace.Text))
             {
-                GCDCore.WorkspaceManager.SetWorkspacePath(txtWorkspace.Text);
-                GCDCore.Properties.Settings.Default.TempWorkspace = txtWorkspace.Text;
+                WorkspaceManager.SetWorkspacePath(txtWorkspace.Text);
+                Properties.Settings.Default.TempWorkspace = txtWorkspace.Text;
             }
             else
             {
@@ -155,35 +124,29 @@ namespace GCDCore.UserInterface.Options
                 return;
             }
 
-            GCDCore.Properties.Settings.Default.ClearWorkspaceOnStartup = chkClearWorkspaceOnStartup.Checked;
-            GCDCore.Properties.Settings.Default.StartUpWorkspaceWarning = chkTempWorkspaceWarning.Checked;
-
+            Properties.Settings.Default.ClearWorkspaceOnStartup = chkClearWorkspaceOnStartup.Checked;
             //GCDCore.Properties.Settings.Default.AddInputLayersToMap = chkAddInputLayersToMap.Checked
             //GCDCore.Properties.Settings.Default.AddOutputLayersToMap = chkAddOutputLayersToMap.Checked
-            GCDCore.Properties.Settings.Default.WarnAboutLongPaths = chkWarnAboutLongPaths.Checked;
-            GCDCore.Properties.Settings.Default.ValidateProjectOnLoad = chkBoxValidateProjectOnLoad.Checked;
-            GCDCore.Properties.Settings.Default.AutoLoadFISLibrary = chkAutoLoadEtalFIS.Checked;
-            GCDCore.Properties.Settings.Default.ApplyComparativeSymbology = chkComparativeSymbology.Checked;
-            GCDCore.Properties.Settings.Default.ApplyTransparencySymbology = chkAutoApplyTransparency.Checked;
+            Properties.Settings.Default.ValidateProjectOnLoad = chkBoxValidateProjectOnLoad.Checked;
+            Properties.Settings.Default.ApplyComparativeSymbology = chkComparativeSymbology.Checked;
+            Properties.Settings.Default.ApplyTransparencySymbology = chkAutoApplyTransparency.Checked;
 
             //Settings based on chkComparativeSymbology (always turned off when chkComparativeSymbology is turned off)
-            GCDCore.Properties.Settings.Default.ComparativeSymbology3dPointQuality = chk3DPointQualityComparative.Checked;
-            GCDCore.Properties.Settings.Default.ComparativeSymbologyInterpolationError = chkInterpolationErrorComparative.Checked;
-            GCDCore.Properties.Settings.Default.ComparativeSymbologyPointDensity = chkPointDensityComparative.Checked;
-            GCDCore.Properties.Settings.Default.ComparativeSymbologyDoD = chkDoDComparative.Checked;
-            GCDCore.Properties.Settings.Default.ComparativeSymbologyFISError = chkFISErrorComparative.Checked;
+            Properties.Settings.Default.ComparativeSymbology3dPointQuality = chk3DPointQualityComparative.Checked;
+            Properties.Settings.Default.ComparativeSymbologyInterpolationError = chkInterpolationErrorComparative.Checked;
+            Properties.Settings.Default.ComparativeSymbologyPointDensity = chkPointDensityComparative.Checked;
+            Properties.Settings.Default.ComparativeSymbologyDoD = chkDoDComparative.Checked;
+            Properties.Settings.Default.ComparativeSymbologyFISError = chkFISErrorComparative.Checked;
 
             //Settings based on chkAutoApplyTransparency (always turned off when chkAutoApplyTransparency is turned off)
-            GCDCore.Properties.Settings.Default.TransparencyAssociatedLayers = chkAssociatedSurfacesTransparency.Checked;
-            GCDCore.Properties.Settings.Default.TransparencyAnalysesLayers = chkAnalysesTransparency.Checked;
-            GCDCore.Properties.Settings.Default.TransparencyErrorLayers = chkErrorSurfacesTransparency.Checked;
-            GCDCore.Properties.Settings.Default.AutoTransparencyValue = (short)nudTransparency.Value;
-
-            GCDCore.Properties.Settings.Default.DefaultRasterFormat = cboFormat.Text;
+            Properties.Settings.Default.TransparencyAssociatedLayers = chkAssociatedSurfacesTransparency.Checked;
+            Properties.Settings.Default.TransparencyAnalysesLayers = chkAnalysesTransparency.Checked;
+            Properties.Settings.Default.TransparencyErrorLayers = chkErrorSurfacesTransparency.Checked;
+            Properties.Settings.Default.AutoTransparencyValue = (short)nudTransparency.Value;
 
             //chart setting for exporting charts
-            GCDCore.Properties.Settings.Default.ChartWidth = (int)numChartWidth.Value;
-            GCDCore.Properties.Settings.Default.ChartHeight = (int)numChartHeight.Value;
+            Properties.Settings.Default.ChartWidth = (int)numChartWidth.Value;
+            Properties.Settings.Default.ChartHeight = (int)numChartHeight.Value;
 
             for (int i = 0; i <= lstPyramids.Items.Count - 1; i++)
             {
@@ -193,42 +156,35 @@ namespace GCDCore.UserInterface.Options
 
             Properties.Settings.Default.AutomaticPyramids = ProjectManager.PyramidManager.GetPyramidSettingString();
 
-            //settings for accuracy, used for concurrency and orthogonality
-            //GCDCore.Properties.Settings.Default.Precision = numPrecision.Value
+            ////////////////////////////////////////////////////////////////////
+            // Survey Types
+            Dictionary<string, SurveyType> d = new Dictionary<string, SurveyType>();
+            foreach (SurveyType s in SurveyTypes)
+                d.Add(s.Name, s);
+            ProjectManager.SurveyTypes = d;
 
+            ////////////////////////////////////////////////////////////////////
+            // Save the project settings
             Properties.Settings.Default.Save();
-            //
-            // PGB 2 Jun 2011 - Now need to update the workspace folder as it is managed by the Extension
-            //
-            // TODO: is this necessary?
-            throw new Exception("not implemented");
-            //Dim gcd As GCDExtension = GCDExtension.GetGCDExtension(My.ThisApplication)
-            //If TypeOf gcd Is GCDExtension Then
-            //    'gcd.SetWorkspacePath()
-            //End If
-
             this.Close();
         }
 
         private void btnBrowseChangeWorkspace_Click(System.Object sender, System.EventArgs e)
         {
             FolderBrowserDialog pFolderBrowserDialog = new FolderBrowserDialog();
-            pFolderBrowserDialog.Description = string.Format("Select {0} Temporary Workspace", GCDCore.Properties.Resources.ApplicationNameShort);
+            pFolderBrowserDialog.Description = string.Format("Select {0} Temporary Workspace", Properties.Resources.ApplicationNameShort);
             if (pFolderBrowserDialog.ShowDialog() == DialogResult.OK)
             {
-                if (GCDCore.WorkspaceManager.ValidateWorkspace(pFolderBrowserDialog.SelectedPath))
+                if (WorkspaceManager.ValidateWorkspace(pFolderBrowserDialog.SelectedPath))
                 {
                     txtWorkspace.Text = pFolderBrowserDialog.SelectedPath;
-
-                    // User may have updated whether they want temp workspace warnings
-                    chkTempWorkspaceWarning.Checked = GCDCore.Properties.Settings.Default.StartUpWorkspaceWarning;
                 }
             }
         }
 
         private void btnClearWorkspace_Click(System.Object sender, System.EventArgs e)
         {
-            if (!(txtWorkspace.Text == GCDCore.WorkspaceManager.WorkspacePath))
+            if (!(txtWorkspace.Text == WorkspaceManager.WorkspacePath))
             {
                 MessageBox.Show("Please save your settings before clearing workspace", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
@@ -242,7 +198,7 @@ namespace GCDCore.UserInterface.Options
             try
             {
                 Cursor.Current = Cursors.WaitCursor;
-                GCDCore.WorkspaceManager.ClearWorkspace();
+                WorkspaceManager.ClearWorkspace();
                 Cursor.Current = Cursors.Default;
                 MessageBox.Show("Workspace cleared successfully.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -260,14 +216,14 @@ namespace GCDCore.UserInterface.Options
         {
             if (string.IsNullOrEmpty(txtWorkspace.Text))
             {
-                MessageBox.Show("You must define a temporary workspace before you can open it in Windows Explorer.", GCDCore.Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("You must define a temporary workspace before you can open it in Windows Explorer.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
             else
             {
                 if (!System.IO.Directory.Exists(txtWorkspace.Text))
                 {
-                    MessageBox.Show("The temporary workspace is not a valid folder. Browse and set the temporary workspace to an existing folder on your computer. This should preferably be a folder without spaces or periods in the path.", GCDCore.Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("The temporary workspace is not a valid folder. Browse and set the temporary workspace to an existing folder on your computer. This should preferably be a folder without spaces or periods in the path.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
             }
@@ -278,15 +234,11 @@ namespace GCDCore.UserInterface.Options
 
         private void cmdDefault_Click(System.Object sender, System.EventArgs e)
         {
-            string sNewWorkspacePath = GCDCore.WorkspaceManager.GetDefaultWorkspace(GCDCore.Properties.Resources.ApplicationNameShort);
-            if (GCDCore.WorkspaceManager.ValidateWorkspace(sNewWorkspacePath))
+            string sNewWorkspacePath = WorkspaceManager.GetDefaultWorkspace(Properties.Resources.ApplicationNameShort);
+            if (WorkspaceManager.ValidateWorkspace(sNewWorkspacePath))
             {
                 txtWorkspace.Text = sNewWorkspacePath;
-
-                // User may have updated whether they want temp workspace warnings
-                chkTempWorkspaceWarning.Checked = GCDCore.Properties.Settings.Default.StartUpWorkspaceWarning;
             }
-
         }
 
         private void txtWorkspace_TextChanged(System.Object sender, System.EventArgs e)
@@ -295,16 +247,13 @@ namespace GCDCore.UserInterface.Options
             btnClearWorkspace.Enabled = btnBrowse.Enabled;
         }
 
-        #endregion
-
-
-
-
-
         private void chkComparativeSymbology_CheckedChanged(System.Object sender, System.EventArgs e)
         {
-
-            if (chkComparativeSymbology.Checked == false)
+            if (chkComparativeSymbology.Checked)
+            {
+                grbComparitiveLayers.Enabled = true;
+            }
+            else
             {
                 chk3DPointQualityComparative.Checked = false;
                 chkInterpolationErrorComparative.Checked = false;
@@ -312,22 +261,18 @@ namespace GCDCore.UserInterface.Options
                 chkDoDComparative.Checked = false;
                 chkFISErrorComparative.Checked = false;
                 grbComparitiveLayers.Enabled = false;
-
-
             }
-            else if (chkComparativeSymbology.Checked)
-            {
-                grbComparitiveLayers.Enabled = true;
-
-            }
-
         }
-
 
         private void chkAutoApplyTransparency_CheckedChanged(System.Object sender, System.EventArgs e)
         {
-
-            if (chkAutoApplyTransparency.Checked == false)
+            if (chkAutoApplyTransparency.Checked)
+            {
+                grbTransparencyLayer.Enabled = true;
+                nudTransparency.Enabled = true;
+                nudTransparency.Value = 40;
+            }
+            else
             {
                 chkAssociatedSurfacesTransparency.Checked = false;
                 chkAnalysesTransparency.Checked = false;
@@ -335,17 +280,7 @@ namespace GCDCore.UserInterface.Options
                 grbTransparencyLayer.Enabled = false;
                 nudTransparency.Value = -1;
                 nudTransparency.Enabled = false;
-
-
             }
-            else if (chkAutoApplyTransparency.Checked)
-            {
-                grbTransparencyLayer.Enabled = true;
-                nudTransparency.Enabled = true;
-                nudTransparency.Value = 40;
-
-            }
-
         }
 
         private void lnkPyramidsHelp_LinkClicked(System.Object sender, System.Windows.Forms.LinkLabelLinkClickedEventArgs e)
@@ -355,19 +290,7 @@ namespace GCDCore.UserInterface.Options
 
         private void btnHelp_Click(System.Object sender, System.EventArgs e)
         {
-            Process.Start(GCDCore.Properties.Resources.HelpBaseURL + "customize-menu/options.html");
-        }
-
-        private void btnClose_Click(object sender, EventArgs e)
-        {
-            Dictionary<string, SurveyType> d = new Dictionary<string, SurveyType>();
-            foreach (SurveyType s in SurveyTypes)
-                d.Add(s.Name, s);
-
-            // This is save the dictionary to XML
-            ProjectManager.SurveyTypes = d;
-
-            this.DialogResult = DialogResult.OK;
+            Process.Start(Properties.Resources.HelpBaseURL + "customize-menu/options.html");
         }
     }
 }
