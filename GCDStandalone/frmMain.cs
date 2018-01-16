@@ -3,6 +3,7 @@ using System.Linq;
 using System.Windows.Forms;
 using GCDCore.Project;
 using System.Text.RegularExpressions;
+using System.Deployment.Application;
 
 namespace GCDStandalone
 {
@@ -389,6 +390,84 @@ namespace GCDStandalone
                         break;
                 }
             }
+        }
+
+        private void checkForUpdatesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UpdateCheckInfo info = null;
+            Cursor.Current = Cursors.WaitCursor;
+
+            if ((ApplicationDeployment.IsNetworkDeployed))
+            {
+                ApplicationDeployment AD = ApplicationDeployment.CurrentDeployment;
+
+                try
+                {
+                    info = AD.CheckForDetailedUpdate();
+                }
+                catch (DeploymentDownloadException dde)
+                {
+                    MessageBox.Show("The new version of the application cannot be downloaded at this time.\n\nPlease check your network connection, or try again later. Error: "
+                        + dde.Message, GCDCore.Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+                catch (InvalidOperationException ioe)
+                {
+                    MessageBox.Show("This application cannot be updated. It is likely not a ClickOnce application. Error: " + ioe.Message, 
+                        GCDCore.Properties.Resources.ApplicationNameLong);
+                    return;
+                }
+
+                if ((info.UpdateAvailable))
+                {
+                    bool doUpdate = true;
+
+                    if ((!info.IsUpdateRequired))
+                    {
+                        DialogResult dr = MessageBox.Show("An update is available. Would you like to update the application now?", "Update Available", MessageBoxButtons.OKCancel);
+                        if ((!(System.Windows.Forms.DialogResult.OK == dr)))
+                        {
+                            doUpdate = false;
+                        }
+                    }
+                    else
+                    {
+                        // Display a message that the app MUST reboot. Display the minimum required version.
+                        MessageBox.Show("This application has detected a mandatory update from your current " + "version to version " 
+                            + info.MinimumRequiredVersion.ToString() + ". The application will now install the update and restart.", "Update Available", 
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+
+                    if ((doUpdate))
+                    {
+                        try
+                        {
+                            AD.Update();
+                            MessageBox.Show("The application has been upgraded, and will now restart.");
+                            Application.Restart();
+                        }
+                        catch (DeploymentDownloadException dde)
+                        {
+                            MessageBox.Show("Cannot install the latest version of the application.\n\nPlease check your network connection, or try again later.",
+                                GCDCore.Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            return;
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show(string.Format("There are no updates available. The {0} software is up to date.",
+                        GCDCore.Properties.Resources.ApplicationNameLong), GCDCore.Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+            }
+            else
+            {
+                MessageBox.Show("The application is not deployed over the internet and therefore cannot be updated automatically.",
+                    GCDCore.Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
+            Cursor.Current = Cursors.Default;
         }
     }
 }
