@@ -27,7 +27,8 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
             InitializeComponent();
 
             // List of project DEMs that the user cannot add to or remove from, but they can change the order of this list.
-            DEMs = new BindingList<DEMSurveyItem>(ProjectManager.Project.DEMSurveys.Values.Select(x => new DEMSurveyItem(x, x.DefaultErrorSurface)).ToList<DEMSurveyItem>());
+            List<DEMSurvey> SortedSurveys = GetSortedDEMSurveyList();
+            DEMs = new BindingList<DEMSurveyItem>(SortedSurveys.Select(x => new DEMSurveyItem(x, x.DefaultErrorSurface)).ToList<DEMSurveyItem>());
 
             // Empty list of epochs that will have items added to and removed form as user interacts with form controls
             Epochs = new BindingList<Epoch>();
@@ -224,6 +225,12 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
             List<Epoch> NewestDEMMinusAllOtherDEMs = new List<Epoch>();
 
             List<DEMSurvey> ActiveDEMs = GetActiveDEMs();
+            if(ActiveDEMs.Count < 2)
+            {
+                return (NewestDEMMinusAllOtherDEMs);
+            }
+
+
             
             DEMSurvey NewestDEM = ActiveDEMs[0];
             for(int i = 1; i< ActiveDEMs.Count; i++)
@@ -242,6 +249,12 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
 
             List<DEMSurvey> ActiveDEMs = GetActiveDEMs();
 
+            if (ActiveDEMs.Count < 2)
+            {
+                return (AllDEMsMinusTheEarliestDEMs);
+            }
+
+
             DEMSurvey EarliestDEM = ActiveDEMs[ActiveDEMs.Count - 1];
             for (int i = 0; i < ActiveDEMs.Count - 1; i++)
             {
@@ -258,6 +271,11 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
             List<Epoch> AllDEMsMinusThePreviousDEM = new List<Epoch>();
 
             List<DEMSurvey> ActiveDEMs = GetActiveDEMs();
+
+            if (ActiveDEMs.Count < 2)
+            {
+                return (AllDEMsMinusThePreviousDEM);
+            }
 
             for (int i = 0; i < ActiveDEMs.Count - 1; i++)
             {
@@ -306,6 +324,24 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
             }
             */
             return true;
+        }
+
+
+        private List<DEMSurvey> GetSortedDEMSurveyList()
+        {
+            List<DEMSurvey> SortedSurveys = new List<DEMSurvey>();
+
+            List<DEMSurvey> AllSurveys = ProjectManager.Project.DEMSurveys.Values.ToList();
+
+            List<DEMSurvey> SurveysWithChronologicalOrder = AllSurveys.Where(survey => survey.ChronologicalOrder.HasValue).OrderBy(survey =>survey.ChronologicalOrder).ToList();
+            List<DEMSurvey> SurveysWithSurveyDate= AllSurveys.Where(survey => !survey.ChronologicalOrder.HasValue && survey.SurveyDate != null).OrderBy(survey => survey.SurveyDate).ToList();
+            List<DEMSurvey> RemainingSurveys= AllSurveys.Where(survey => !survey.ChronologicalOrder.HasValue && survey.SurveyDate == null).OrderBy(survey => survey.Name).ToList();
+
+            SortedSurveys.AddRange(SurveysWithChronologicalOrder);
+            SortedSurveys.AddRange(SurveysWithSurveyDate);
+            SortedSurveys.AddRange(RemainingSurveys);
+
+            return (SortedSurveys);
         }
 
         #endregion
