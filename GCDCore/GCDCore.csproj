@@ -315,24 +315,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Deploy\ExcelTemplates\BudgetSegregationSummaryTemplate.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Deploy\ExcelTemplates\ClassSummary.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Deploy\ExcelTemplates\ClassSummary_Layout.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Deploy\ExcelTemplates\GCDSummary.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Deploy\ExcelTemplates\SummaryTemplate.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Deploy\SurveyTypes.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <None Include="Resources\down.png" />
     <None Include="Resources\up.png" />
     <None Include="Resources\USUlogo.bmp" />
