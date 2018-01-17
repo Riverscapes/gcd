@@ -128,6 +128,7 @@
             // 
             // PictureBox3
             // 
+            this.PictureBox3.Image = global::GCDCore.Properties.Resources.PreviousFunders;
             this.PictureBox3.Location = new System.Drawing.Point(95, 267);
             this.PictureBox3.Name = "PictureBox3";
             this.PictureBox3.Size = new System.Drawing.Size(417, 72);
@@ -156,6 +157,7 @@
             // 
             // PictureBox2
             // 
+            this.PictureBox2.Image = global::GCDCore.Properties.Resources.CurrentFunders2;
             this.PictureBox2.Location = new System.Drawing.Point(6, 92);
             this.PictureBox2.Name = "PictureBox2";
             this.PictureBox2.Size = new System.Drawing.Size(590, 92);
@@ -165,6 +167,7 @@
             // 
             // PictureBox1
             // 
+            this.PictureBox1.Image = global::GCDCore.Properties.Resources.Developers;
             this.PictureBox1.Location = new System.Drawing.Point(63, 434);
             this.PictureBox1.Name = "PictureBox1";
             this.PictureBox1.Size = new System.Drawing.Size(481, 93);
