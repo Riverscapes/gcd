@@ -154,6 +154,26 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <AddInContent Include="..\ext\Deploy\ExcelTemplates\BudgetSegregationSummaryTemplate.xml">
+      <Link>Deploy\ExcelTemplates\BudgetSegregationSummaryTemplate.xml</Link>
+    </AddInContent>
+    <AddInContent Include="..\ext\Deploy\ExcelTemplates\ClassSummary.xml">
+      <Link>Deploy\ExcelTemplates\ClassSummary.xml</Link>
+    </AddInContent>
+    <AddInContent Include="..\ext\Deploy\ExcelTemplates\ClassSummary_Layout.xml">
+      <Link>Deploy\ExcelTemplates\ClassSummary_Layout.xml</Link>
+    </AddInContent>
+    <AddInContent Include="..\ext\Deploy\ExcelTemplates\GCDSummary.xml">
+      <Link>Deploy\ExcelTemplates\GCDSummary.xml</Link>
+    </AddInContent>
+    <AddInContent Include="..\ext\Deploy\ExcelTemplates\SummaryTemplate.xml">
+      <Link>Deploy\ExcelTemplates\SummaryTemplate.xml</Link>
+    </AddInContent>
+    <AddInContent Include="..\ext\Deploy\SurveyTypes.xml">
+      <Link>Deploy\SurveyTypes.xml</Link>
+    </AddInContent>
+  </ItemGroup>
+  <ItemGroup>
     <AddInContent Include="Config.esriaddinx">
       <Generator>ArcGISAddInHostGenerator</Generator>
       <LastGenOutput>Config1.Designer.cs</LastGenOutput>
