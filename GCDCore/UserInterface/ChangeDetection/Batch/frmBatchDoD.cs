@@ -67,6 +67,18 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
             cms.Items.Add(tsi6);
 
             cmdAdd.Menu = cms;
+
+            Thresholds.ListChanged += Thresholds_ListChanged;
+        }
+
+        /// <summary>
+        /// Need to update where the error surface combo boxes should be enabled or disabled
+        /// </summary>
+        /// <remarks>
+        /// Call this method after changing the </remarks>
+        private void Thresholds_ListChanged(object sender, ListChangedEventArgs e)
+        {
+            ucDEMs.EnableErrorSurfaces(Thresholds.Any<ThresholdProps>(x => x.Method != ThresholdProps.ThresholdMethods.MinLoD));
         }
 
         private void cmdAdd_Click(object sender, EventArgs e)
@@ -132,15 +144,15 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
 
         private bool ValidateForm()
         {
-            if (!ucDEMs.ValidateForm())
-                return false;
-
             if (grdMethods.Rows.Count < 1)
             {
                 MessageBox.Show("You must specify one or more uncertainty analysis methods to continue.", "No Uncertainty Analysis Methods", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 cmdAdd.Select();
                 return false;
             }
+
+            if (!ucDEMs.ValidateForm())
+                return false;
 
             return true;
         }

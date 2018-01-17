@@ -108,7 +108,6 @@ namespace GCDCore.UserInterface.Project
             this.ToolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.cmsDEMSurveyPair = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.AddChangeDetectionToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.addBatchChangeDetectionWithTheseDEMSurveysToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AddAllChangeDetectionsToTheMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tTip = new System.Windows.Forms.ToolTip(this.components);
             this.cmsBSGroup = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -224,7 +223,7 @@ namespace GCDCore.UserInterface.Project
             this.AddErrorSurfaceToolStripMenuItem,
             this.DeriveErrorSurfaceToolStripMenuItem1});
             this.cmsDEMSurvey.Name = "cmsDEMSurvey";
-            this.cmsDEMSurvey.Size = new System.Drawing.Size(217, 164);
+            this.cmsDEMSurvey.Size = new System.Drawing.Size(217, 142);
             // 
             // EditDEMSurveyProperatieToolStripMenuItem
             // 
@@ -420,7 +419,7 @@ namespace GCDCore.UserInterface.Project
             this.batchChangeDetectionToolStripMenuItem,
             this.AddAllChangeDetectionAnalysesToTheMapToolStripMenuItem});
             this.cmsChangeDetectionGroup.Name = "cmsChangeDetectionGroup";
-            this.cmsChangeDetectionGroup.Size = new System.Drawing.Size(322, 70);
+            this.cmsChangeDetectionGroup.Size = new System.Drawing.Size(322, 92);
             // 
             // AddChangeDetectionToolStripMenuItem
             // 
@@ -440,6 +439,7 @@ namespace GCDCore.UserInterface.Project
             // 
             // multiEpochChangeDetectionToolStripMenuItem
             // 
+            this.multiEpochChangeDetectionToolStripMenuItem.Enabled = false;
             this.multiEpochChangeDetectionToolStripMenuItem.Image = global::GCDCore.Properties.Resources.Add;
             this.multiEpochChangeDetectionToolStripMenuItem.Name = "multiEpochChangeDetectionToolStripMenuItem";
             this.multiEpochChangeDetectionToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
@@ -645,10 +645,9 @@ namespace GCDCore.UserInterface.Project
             // 
             this.cmsDEMSurveyPair.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.AddChangeDetectionToolStripMenuItem1,
-            this.addBatchChangeDetectionWithTheseDEMSurveysToolStripMenuItem,
             this.AddAllChangeDetectionsToTheMapToolStripMenuItem});
             this.cmsDEMSurveyPair.Name = "cmsDEMSurveyPair";
-            this.cmsDEMSurveyPair.Size = new System.Drawing.Size(424, 70);
+            this.cmsDEMSurveyPair.Size = new System.Drawing.Size(424, 48);
             // 
             // AddChangeDetectionToolStripMenuItem1
             // 
@@ -656,13 +655,6 @@ namespace GCDCore.UserInterface.Project
             this.AddChangeDetectionToolStripMenuItem1.Name = "AddChangeDetectionToolStripMenuItem1";
             this.AddChangeDetectionToolStripMenuItem1.Size = new System.Drawing.Size(423, 22);
             this.AddChangeDetectionToolStripMenuItem1.Text = "Add Change Detection (With These DEM Surveys)";
-            // 
-            // addBatchChangeDetectionWithTheseDEMSurveysToolStripMenuItem
-            // 
-            this.addBatchChangeDetectionWithTheseDEMSurveysToolStripMenuItem.Image = global::GCDCore.Properties.Resources.Add;
-            this.addBatchChangeDetectionWithTheseDEMSurveysToolStripMenuItem.Name = "addBatchChangeDetectionWithTheseDEMSurveysToolStripMenuItem";
-            this.addBatchChangeDetectionWithTheseDEMSurveysToolStripMenuItem.Size = new System.Drawing.Size(423, 22);
-            this.addBatchChangeDetectionWithTheseDEMSurveysToolStripMenuItem.Text = "Add Batch Change Detection (With These DEM Surveys)";
             // 
             // AddAllChangeDetectionsToTheMapToolStripMenuItem
             // 
@@ -828,7 +820,6 @@ namespace GCDCore.UserInterface.Project
         internal System.Windows.Forms.ToolStripMenuItem DateAddedAscendingToolStripMenuItem;
         internal System.Windows.Forms.ToolStripMenuItem DateAddedDescendingToolStripMenuItem;
         internal System.Windows.Forms.TreeView treProject;
-        private System.Windows.Forms.ToolStripMenuItem addBatchChangeDetectionWithTheseDEMSurveysToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem batchChangeDetectionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem multiEpochChangeDetectionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem multiUncertaintyAnalysisChangeDetectionToolStripMenuItem;
