@@ -207,8 +207,10 @@
             // 
             // frmAbout
             // 
+            this.AcceptButton = this.btnOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btnOK;
             this.ClientSize = new System.Drawing.Size(679, 679);
             this.Controls.Add(this.Panel1);
             this.Controls.Add(this.btnOK);
