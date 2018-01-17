@@ -304,14 +304,27 @@ namespace GCDCore.UserInterface.SurveyLibrary
         /// <remarks></remarks>
         private void UpdateControls()
         {
-            if (rdoFIS.Checked)
+            if (rdoUniform.Checked)
+                ((ErrorSurfaceProperty)grdErrorProperties.SelectedRows[0].DataBoundItem).UniformValue = valUniform.Value;
+            else if (rdoAssociated.Checked)
             {
+                if (cboAssociated.SelectedIndex < 0)
+                    cboAssociated.SelectedIndex = 0;
+            }
+            else if (rdoFIS.Checked)
+            {
+                if (cboFIS.SelectedIndex < 0)
+                    cboFIS.SelectedIndex = 0;
+
                 if (DEM.AssocSurfaces.Count < 1)
                 {
                     MessageBox.Show("You cannot create a FIS error surface until you define at least 2 associated surfaces for this DEM survey.", GCDCore.Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     rdoUniform.Checked = true;
                 }
             }
+
+            // Force a refresh of the binding list so that the correct error calc method name is displayed beside the survey method on the left
+            ErrorCalcProps.ResetBindings();
 
             if (ErrorSurf is ErrorSurface)
             {
@@ -353,7 +366,12 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
         private void cboFIS_SelectedIndexChanged(System.Object sender, System.EventArgs e)
         {
-            grdFISInputs.DataSource = null;
+            if (!rdoFIS.Checked)
+            {
+                grdFISInputs.DataSource = null;
+                return;
+            }
+
             ErrorSurfaceProperty selectedErrorProp = (ErrorSurfaceProperty)grdErrorProperties.SelectedRows[0].DataBoundItem;
 
             if (!rdoFIS.Checked)
@@ -692,7 +710,8 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
         private void cboAssociated_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ((ErrorSurfaceProperty)grdErrorProperties.SelectedRows[0].DataBoundItem).AssociatedSurface = (AssocSurface)cboAssociated.SelectedItem;
+            if (rdoAssociated.Checked)
+                ((ErrorSurfaceProperty)grdErrorProperties.SelectedRows[0].DataBoundItem).AssociatedSurface = (AssocSurface)cboAssociated.SelectedItem;
         }
     }
 }
