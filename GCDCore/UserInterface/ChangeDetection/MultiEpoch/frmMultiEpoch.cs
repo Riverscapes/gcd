@@ -58,7 +58,25 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
             }
 
             UpdateEpochQueue();
-      }
+
+            //4.28 - need to set the datasource for each cell instead of at the column level because the error surfaces are different for each DEM Survey
+            for (int i = 0; i < grdDEMs.Rows.Count; i++)
+            {
+                DataGridViewComboBoxCell comboCell = grdDEMs[0, i] as DataGridViewComboBoxCell;
+                //int[] data = { 1 * i, 2 * i, 3 * i }; This works, but is not the data we want
+                //comboCell.DataSource = new BindingSource(data, null);
+
+                comboCell.DataSource = new BindingSource(DEMs[i].ErrorSurfaces, null);
+                comboCell.DisplayMember = "NameWithDefault"; //4.29 - lets try adding display member. It works but dropdown closes immediately and error name column is still there.
+
+                //select first item
+                comboCell.Value = DEMs[i].ErrorSurfaces[0].NameWithDefault;
+                //ComboBox cbo = (ComboBox) comboCell as ComboBox;
+                //cbo.SelectedIndex = 0;
+
+            }
+
+        }
 
         private void cmdMoveUp_Click(object sender, EventArgs e)
         {
@@ -110,7 +128,7 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
         //http://geekswithblogs.net/FrostRed/archive/2008/09/07/125001.aspx
         private void grdDEMs_CellMouseUp(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if (e.ColumnIndex == 0 && e.RowIndex > -1)
+            if (e.ColumnIndex == 1 && e.RowIndex > -1)
 
             {
 
