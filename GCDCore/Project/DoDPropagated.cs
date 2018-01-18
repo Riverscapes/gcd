@@ -64,10 +64,22 @@ namespace GCDCore.Project
 
         public override void Delete()
         {
-            // Delete the propagated error raster
-            PropagatedError.Delete();
-
+            DeleteRaster(PropagatedError);
             base.Delete();
+        }
+
+        /// <summary>
+        /// Delete non-ProjectRasterItem rasters (i.e. prop err and other probabilistic rasters)
+        /// </summary>
+        /// <param name="r"></param>
+        /// <remarks>
+        /// 1. Ensure the rasters is out of the map
+        /// 2. Delete the raster
+        /// </remarks>
+        protected void DeleteRaster(Raster r)
+        {
+            ProjectManager.OnGISLayerDelete(new ProjectManager.GISLayerEventArgs(r.GISFileInfo));
+            r.Delete();
         }
     }
 }
