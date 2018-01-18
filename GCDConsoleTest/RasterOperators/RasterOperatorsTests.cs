@@ -283,20 +283,27 @@ namespace GCDConsoleLib.Tests
         {
             using (ITempDir tmp = TempDir.Create())
             {
-                Raster rTemp1 = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2005Dec_DEM\2005Dec_DEM.img")));
-                Raster rTemp2 = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2006Feb_DEM\2006Feb_DEM.img")));
-                Raster rDoD = RasterOperators.Subtract(rTemp2, rTemp1, new FileInfo(Path.Combine(tmp.Name, "rDoD.tif")));
+                Raster rTemp2005 = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2005Dec_DEM\2005Dec_DEM.img")));
+                Raster rTemp2006 = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2006Feb_DEM\2006Feb_DEM.img")));
+                Raster rDoD = RasterOperators.Subtract(rTemp2006, rTemp2005, new FileInfo(Path.Combine(tmp.Name, "rDoD.tif")));
 
                 Raster GCDErosion1 = RasterOperators.NeighbourCount(rDoD, RasterOperators.GCDWindowType.Erosion, 1, new FileInfo(Path.Combine(tmp.Name, "Erosion1.tif")));
                 Raster GCDDeposition1 = RasterOperators.NeighbourCount(rDoD, RasterOperators.GCDWindowType.Deposition, 1, new FileInfo(Path.Combine(tmp.Name, "Deposition1.tif")));
                 Raster GCDAll1 = RasterOperators.NeighbourCount(rDoD, RasterOperators.GCDWindowType.All, 1, new FileInfo(Path.Combine(tmp.Name, "All1.tif")));
 
-                ErrorRasterProperties props = new ErrorRasterProperties(0.2m);
+                ErrorRasterProperties props02 = new ErrorRasterProperties(0.2m);
+                ErrorRasterProperties props01 = new ErrorRasterProperties(0.1m);
+                // min 60% => 5 // max 100% => 9
 
-                Raster propError = RasterOperators.CreateErrorRaster(rTemp2, props, new FileInfo(Path.Combine(tmp.Name, "properror.tif")));
+                // 0.1 2006
+                // 0.2 2005
+                Raster r2005Error = RasterOperators.CreateErrorRaster(rTemp2005, props02, new FileInfo(Path.Combine(tmp.Name, "2005Dec_DEM_CONSTERR02.tif")));
+                Raster r2006Error = RasterOperators.CreateErrorRaster(rTemp2006, props01, new FileInfo(Path.Combine(tmp.Name, "2006Feb_DEM_CONSTERR01.tif")));
+
+                Raster propError = RasterOperators.RootSumSquares(r2006Error, r2005Error, new FileInfo(Path.Combine(tmp.Name, "properror.tif")));
                 Raster postProb = RasterOperators.CreatePriorProbabilityRaster(rDoD, propError, new FileInfo(Path.Combine(tmp.Name, "priorprob.tif")));
 
-                Raster PostProb = RasterOperators.PosteriorProbability(rDoD, postProb, GCDErosion1, GCDDeposition1, new FileInfo(Path.Combine(tmp.Name, "cond.tif")), new FileInfo(Path.Combine(tmp.Name, "postprob.tif")), 2, 5);  
+                Raster PostProb = RasterOperators.PosteriorProbability(rDoD, postProb, GCDErosion1, GCDDeposition1, new FileInfo(Path.Combine(tmp.Name, "postprob.tif")), new FileInfo(Path.Combine(tmp.Name, "cond.tif")), 5, 9);
             }
         }
 

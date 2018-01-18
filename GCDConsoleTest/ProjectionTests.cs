@@ -11,11 +11,25 @@ namespace GCDConsoleLib.Tests
         [TestMethod()]
         public void ProjectionTestWKT()
         {
-            string sWKT1 = "GEOGCS[\"NAD83\",DATUM[\"North_American_Datum_1983\",SPHEROID[\"GRS 1980\",6378137,298.257222101,AUTHORITY[\"EPSG\",\"7019\"]],AUTHORITY[\"EPSG\",\"6269\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIT[\"degree\",0.01745329251994328,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"4269\"]]";
-            Projection sP1 = new Projection(sWKT1);
-            Projection junk = new Projection("junk");
-            Assert.IsNotNull(sWKT1);
-            Assert.IsNotNull(junk);
+            string sUnitWKT = "PROJCS[\"NAD_1983_StatePlane_California_II_FIPS_0402\",GEOGCS[\"GCS_North_American_1983\",DATUM[\"North_American_Datum_1983\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.017453292519943295]],PROJECTION[\"Lambert_Conformal_Conic_2SP\"],PARAMETER[\"False_Easting\",2000000.0],PARAMETER[\"False_Northing\",500000.0],PARAMETER[\"Central_Meridian\",-122.0],PARAMETER[\"Standard_Parallel_1\",38.33333333333334],PARAMETER[\"Standard_Parallel_2\",39.83333333333334],PARAMETER[\"Latitude_Of_Origin\",37.66666666666666],UNIT[\"meter\",1.0]]";
+            string sNoUnitWKT1 = "GEOGCS[\"NAD83\",DATUM[\"North_American_Datum_1983\",SPHEROID[\"GRS 1980\",6378137,298.257222101,AUTHORITY[\"EPSG\",\"7019\"]],AUTHORITY[\"EPSG\",\"6269\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIT[\"degree\",0.01745329251994328,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"4269\"]]";
+            Projection sUnitP1 = new Projection(sUnitWKT);
+            Projection sNoUnitP1 = new Projection(sNoUnitWKT1);
+
+            Assert.IsNotNull(sUnitP1);
+            Assert.IsNotNull(sNoUnitP1);
+
+            // Majke sure we throw on a junk projection
+            try
+            {
+                Projection junk = new Projection("junk");
+                Assert.Fail();
+            }
+            catch(Exception e)
+            {
+                Assert.IsInstanceOfType(e, typeof(ApplicationException));
+            }
+
         }
 
         [TestMethod()]
@@ -32,18 +46,22 @@ namespace GCDConsoleLib.Tests
             string sWKTTest1 = "GEOGCS[\"NAD83\",DATUM[\"North_American_Datum_1983\",SPHEROID[\"GRS 1980\",6378137,298.257222101,AUTHORITY[\"EPSG\",\"7019\"]],AUTHORITY[\"EPSG\",\"6269\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIT[\"degree\",0.01745329251994328,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"4269\"]]";
             string sWKTTest2 = "geogcs[\"NAD83\",datum[\"North_American_Datum_1983\",SPHEROID[\"GRS 1980\",6378137,298.257222101,AUTHORITY[\"EPSG\",\"7019\"]],AUTHORITY[\"EPSG\",\"6269\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIT[\"degree\",0.01745329251994328,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"4269\"]]";
             string sWKTTest3 = "GEOGCS[     \"NAD83\"    ,    DATUM[    \"North_American_Datum_1983\",SPHEROID[\"GRS 1980\",6378137,298.257222101,AUTHORITY[\"EPSG\",\"7019\"]],AUTHORITY[\"EPSG\",\"6269\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIT[\"degree\",0.01745329251994328,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"4269\"]]";
-            Projection junk = new Projection("junk");
+
+            string sDiff = "PROJCS[\"NAD_1983_StatePlane_California_II_FIPS_0402\",GEOGCS[\"GCS_North_American_1983\",DATUM[\"North_American_Datum_1983\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.017453292519943295]],PROJECTION[\"Lambert_Conformal_Conic_2SP\"],PARAMETER[\"False_Easting\",2000000.0],PARAMETER[\"False_Northing\",500000.0],PARAMETER[\"Central_Meridian\",-122.0],PARAMETER[\"Standard_Parallel_1\",38.33333333333334],PARAMETER[\"Standard_Parallel_2\",39.83333333333334],PARAMETER[\"Latitude_Of_Origin\",37.66666666666666],UNIT[\"meter\",1.0]]";
+
 
             Projection pWKTTest1 = new Projection(sWKTTest1);
             Projection pWKTTest2 = new Projection(sWKTTest2);
             Projection pWKTTest3 = new Projection(sWKTTest3);
+
+            Projection pWKTTestDiff = new Projection(sDiff);
 
             // Positive Test
             Assert.IsTrue(pWKTTest1.IsSame(pWKTTest2));
             Assert.IsTrue(pWKTTest1.IsSame(pWKTTest3));
 
             // Negative Test
-            Assert.IsFalse(pWKTTest1.IsSame(junk));
+            Assert.IsFalse(pWKTTestDiff.IsSame(pWKTTest2));
         }
 
         [TestMethod()]

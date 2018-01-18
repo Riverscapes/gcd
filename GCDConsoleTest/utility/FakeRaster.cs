@@ -52,7 +52,7 @@ namespace GCDConsoleLib.Tests.Utility
 
         public FakeRaster(decimal fTop, decimal fLeft, decimal dCellHeight, decimal dCellWidth, int rows, int cols, 
             GdalDataType eDataType) : base(fTop, fLeft, dCellHeight, dCellWidth, rows, cols, float.MinValue,
-                RasterDriver.GTiff, eDataType, "My Fake Projection", "m")
+                RasterDriver.GTiff, eDataType, "GEOGCS[\"NAD83\",DATUM[\"North_American_Datum_1983\",SPHEROID[\"GRS 1980\",6378137,298.257222101,AUTHORITY[\"EPSG\",\"7019\"]],AUTHORITY[\"EPSG\",\"6269\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIU[\"degree\",0.01745329251994328,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"4269\"]]", "m")
         {
             _inputgrid = new U[cols, rows];
             _outputGrid = new U[cols, rows];
@@ -175,7 +175,7 @@ namespace GCDConsoleLib.Tests.Utility
             Assert.AreEqual(frInit2.Proj.OriginalString, FakeRaster<decimal>.fakeproj);
             Assert.AreEqual(UnitsNet.Length.GetAbbreviation(frInit2.VerticalUnits), FakeRaster<decimal>.fakeunit);
 
-            string myFakeProj = "My Fake Proj";
+            string myFakeProj = "GEOGCS[\"NAD83\",DATUM[\"North_American_Datum_1983\",SPHEROID[\"GRS 1980\",6378137,298.257222101,AUTHORITY[\"EPSG\",\"7019\"]],AUTHORITY[\"EPSG\",\"6269\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIU[\"degree\",0.01745329251994328,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"4269\"]]";
             string myFakeUnit = "ft";
             FakeRaster<float> frInit3 = new FakeRaster<float>(10.3m, 11.5m, -0.2m, 0.3m, -999.9, Raster.RasterDriver.HFA, FakeRaster<float>.floatType, myFakeProj, myFakeUnit, singlArr);
             Assert.AreEqual(frInit3.Extent.Rows, 4);

@@ -169,11 +169,21 @@ namespace GCDConsoleLib.Tests
         {
             using (ITempDir tmp = TempDir.Create())
             {
+                // Small rasters don't need pyramids 
                 Raster rTempl = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("SquareValley950-980.tif")));
-                Raster rTemplateOutput = RasterOperators.ExtendedCopy(rTempl, new FileInfo(Path.Combine(tmp.Name, "PyramidTest.tif")));
+                Raster rTemplateOutput = RasterOperators.ExtendedCopy(rTempl, new FileInfo(Path.Combine(tmp.Name, "SMALL_PyramidTest.tif")));
 
                 rTemplateOutput.BuildPyramids("average");
-                Assert.IsTrue(File.Exists(Path.Combine(tmp.Name, "PyramidTest.tif.ovr")));
+                Assert.IsFalse(File.Exists(Path.Combine(tmp.Name, "SMALL_PyramidTest.tif.ovr")));
+
+
+                // Big Rasters do need pyramids
+                Raster rBigTempl = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2005Dec_DEM\2005Dec_DEM.img")));
+                ExtentRectangle newExtReal = rBigTempl.Extent.Buffer(1000);
+                Raster rBigTemplateOutput = RasterOperators.ExtendedCopy(rBigTempl, new FileInfo(Path.Combine(tmp.Name, "BIG_PyramidTest.tif")), newExtReal);
+
+                rBigTemplateOutput.BuildPyramids("average");
+                Assert.IsTrue(File.Exists(Path.Combine(tmp.Name, "BIG_PyramidTest.tif.ovr")));
             }
         }
     }

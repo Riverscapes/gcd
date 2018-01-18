@@ -13,7 +13,6 @@ namespace GCDConsoleLib
         public string OriginalString;
         public SpatialReference mSRef;
         public LengthUnit HorizontalUnit;
-        public decimal LinearUnitConversionToM;
         public string LinearUnits;
 
         /// <summary>
@@ -52,8 +51,8 @@ namespace GCDConsoleLib
 
         private void _Init()
         {
-            LinearUnitConversionToM = 0;
-            HorizontalUnit = Utility.Conversion.ParseLengthUnit(mSRef.GetLinearUnitsName());
+            string unitname = mSRef.GetLinearUnitsName();
+            HorizontalUnit = Utility.Conversion.ParseLengthUnit(unitname);
             mSRef.AutoIdentifyEPSG();
         }
 
