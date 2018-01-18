@@ -74,70 +74,7 @@ namespace GCDCore.Project
 
             return dems;
         }
-
-        public void DeleteDoD(DoDBase dod)
-        {
-
-
-            //    Private Sub DeleteDoD(ByVal rDoD As ProjectDS.DoDsRow)
-
-            //    'TODO entire contents commented out
-            //    Throw New Exception("not implemented")
-
-            //    'If Not TypeOf rDoD Is ProjectDS.DoDsRow Then
-            //    '    Exit Sub
-            //    'End If
-
-
-            //    'Dim response As MsgBoxResult = MsgBox("Are you sure you want to remove the selected change detection?  Note: this will remove the change detection from the GCD Project (*.gcd) file and also delete the copy of the raster in the GCD project folder.", MsgBoxStyle.YesNo Or MsgBoxStyle.Question, GCDCore.Properties.Resources.ApplicationNameLong)
-            //    'If response = MsgBoxResult.Yes Then
-
-            //    '    Dim pMXDoc As ESRI.ArcGIS.ArcMapUI.IMxDocument = DirectCast(My.ThisApplication, ESRI.ArcGIS.Framework.IApplication).Document
-            //    '    Dim pMap As ESRI.ArcGIS.Carto.IMap = pMXDoc.FocusMap
-            //    '    Dim projectName As String = rDoD.Name
-
-            //    '    ' Both raw and thresholded DoD rasters can be in the map. Make a list and remove both.
-            //    '    Dim lDoDSource As New List(Of String)
-            //    '    lDoDSource.Add(GCDProject.ProjectManagerBase.GetAbsolutePath(rDoD.RawDoDPath))
-            //    '    lDoDSource.Add(GCDProject.ProjectManagerBase.GetAbsolutePath(rDoD.ThreshDoDPath))
-
-            //    '    For Each sDoDSource As String In lDoDSource
-            //    '        'New code to remove project layer from map if in map
-            //    '        Dim enumLayer As ESRI.ArcGIS.Carto.IEnumLayer = pMap.Layers
-            //    '        Dim pLayer As ESRI.ArcGIS.Carto.ILayer = enumLayer.Next()
-
-            //    '        While pLayer IsNot Nothing
-            //    '            If TypeOf pLayer Is ESRI.ArcGIS.Carto.RasterLayer Then
-            //    '                If String.Compare(sDoDSource, DirectCast(pLayer, ESRI.ArcGIS.Carto.RasterLayer).FilePath, True) = 0 Then
-            //    '                    pMap.DeleteLayer(pLayer)
-            //    '                    System.Runtime.InteropServices.Marshal.ReleaseComObject(pLayer)
-            //    '                    pLayer = Nothing
-            //    '                    Exit While
-            //    '                End If
-            //    '            End If
-            //    '            pLayer = enumLayer.Next()
-            //    '        End While
-            //    '    Next
-
-            //    '    Try
-            //    '        'DeleteSurveyFiles(IO.Path.GetDirectoryName(CurrentRow.Item("Source")))
-            //    '        'IO.Directory.Delete(IO.Path.GetDirectoryName(CurrentRow.Item("Source")), True)
-            //    '        DeleteSurveyFiles(IO.Path.GetDirectoryName(lDoDSource(0)))
-            //    '        IO.Directory.Delete(IO.Path.GetDirectoryName(lDoDSource(0)), True)
-            //    '    Catch ex As Exception
-            //    '        naru.error.ExceptionUI.HandleException(ex, "The GCD survey files failed to delete. Some of the files associated with this survey still exist.")
-            //    '        'Dim ex2 As New Exception("The GCD survey files failed to delete. Some of the files associated with this survey still exist.", ex)
-            //    '        'ex2.Data.Add("Project Name: ", projectName)
-            //    '        'Throw ex2
-            //    '    Finally
-            //    '        rDoD.Delete()
-            //    '        GCDProject.ProjectManagerBase.save()
-            //    '    End Try
-
-            //    'End If
-            //End Sub
-        }
-
+     
         public FileInfo GetAbsolutePath(string sRelativePath)
         {
             if (sRelativePath.Contains(":") || sRelativePath.StartsWith("\\\\"))

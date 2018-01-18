@@ -13,7 +13,7 @@ namespace GCDCore.Engines
 
         protected DirectoryInfo FiguresFolder(DirectoryInfo analysisFolder)
         {
-            return new DirectoryInfo(Path.Combine(analysisFolder.FullName, "Figures"));
+            return Project.ProjectManager.OutputManager.GetChangeDetectionFiguresFolder(analysisFolder, false);
         }
 
         /// <summary>

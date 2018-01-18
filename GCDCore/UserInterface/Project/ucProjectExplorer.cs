@@ -1113,7 +1113,7 @@ namespace GCDCore.UserInterface.Project
 
                     case GCDNodeTypes.DoD:
                         DoDBase dod = (DoDBase)ptn.Item;
-                        ProjectManager.Project.DeleteDoD(dod);
+                        dod.Delete();
                         break;
 
                     default:

@@ -889,13 +889,13 @@ namespace GCDCore
             return sTopFolder;
         }
 
-        public string GetChangeDetectionFiguresFolder(string sParentFolder, bool bCreate)
+        public System.IO.DirectoryInfo GetChangeDetectionFiguresFolder(System.IO.DirectoryInfo parentFolder, bool bCreate)
         {
 
             string sResult = null;
-            if (Directory.Exists(sParentFolder))
+            if (parentFolder.Exists)
             {
-                sResult = Path.Combine(sParentFolder, m_sFiguresSubfolder);
+                sResult = Path.Combine(parentFolder.FullName, m_sFiguresSubfolder);
                 if (bCreate && !Directory.Exists(sResult))
                 {
                     Directory.CreateDirectory(sResult);
@@ -905,7 +905,7 @@ namespace GCDCore
             {
                 throw new ArgumentException("The parent folder must already exist.", "sParentFolder");
             }
-            return sResult;
+            return new System.IO.DirectoryInfo(sResult);
         }
     }
 }

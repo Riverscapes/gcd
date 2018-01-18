@@ -192,7 +192,7 @@ namespace GCDCore.Project
             return UnitsNet.Area.From(value, unit);
         }
 
-        public void Delete()
+        public virtual void Delete()
         {
             // Delete child budget segregations first
             foreach (BudgetSegregation bs in BudgetSegregations.Values)
@@ -226,7 +226,19 @@ namespace GCDCore.Project
                 }
             }
 
-            // Finally try to delete the DoD folder 
+            // Delete the figures folder
+                 DirectoryInfo dirFigs = ProjectManager.OutputManager.GetChangeDetectionFiguresFolder(Folder, false);
+           try
+            {
+                System.IO.Directory.Delete(dirFigs.FullName, true);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Unable to delete DoD figures folder " + dirFigs.FullName);
+                Console.WriteLine(ex.Message);
+            }
+
+            // Try to delete the DoD folder 
             try
             {
                 Folder.Delete();
@@ -236,6 +248,22 @@ namespace GCDCore.Project
                 Console.WriteLine("Unable to delete DoD folder  " + Folder.FullName);
                 Console.WriteLine(ex.Message);
             }
+
+            // If there are no more DoDs try to delete the parent change detection folder "CD"
+            if (Folder.Parent.GetDirectories().Length < 1)
+            {
+                Folder.Parent.Delete();
+            }
+
+            // If there are no more analyses then delete this folder
+            if (Folder.Parent.Parent.GetDirectories().Length < 1)
+            {
+                Folder.Parent.Parent.Delete();
+            }
+
+            // Remove the DoD from the project
+            ProjectManager.Project.DoDs.Remove(Name);           
+            ProjectManager.Project.Save();
         }
     }
 }

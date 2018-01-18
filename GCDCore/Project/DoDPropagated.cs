@@ -61,5 +61,13 @@ namespace GCDCore.Project
             string errorName = nodDoD.SelectSingleNode(ErrorXMLNodeName).InnerText;
             return ErrorSurfaces.First<ErrorSurface>(x => string.Compare(errorName, x.Name, true) == 0);
         }
+
+        public override void Delete()
+        {
+            // Delete the propagated error raster
+            PropagatedError.Delete();
+
+            base.Delete();
+        }
     }
 }

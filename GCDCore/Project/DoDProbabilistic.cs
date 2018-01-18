@@ -144,5 +144,24 @@ namespace GCDCore.Project
 
             return result;
         }
+
+        public override void Delete()
+        {
+            // Ensure all the rasters are out of the map
+            ProjectManager.OnGISLayerDelete(new ProjectManager.GISLayerEventArgs(PriorProbability.GISFileInfo));
+            ProjectManager.OnGISLayerDelete(new ProjectManager.GISLayerEventArgs(PosteriorProbability.GISFileInfo));
+            ProjectManager.OnGISLayerDelete(new ProjectManager.GISLayerEventArgs(ConditionalRaster.GISFileInfo));
+            ProjectManager.OnGISLayerDelete(new ProjectManager.GISLayerEventArgs(SpatialCoherenceErosion.GISFileInfo));
+            ProjectManager.OnGISLayerDelete(new ProjectManager.GISLayerEventArgs(SpatialCoherenceDeposition.GISFileInfo));
+            
+            // Now delete the rasters
+            PriorProbability.Delete();
+            PosteriorProbability.Delete();
+            ConditionalRaster.Delete();
+            SpatialCoherenceErosion.Delete();
+            SpatialCoherenceDeposition.Delete();
+
+            base.Delete();
+        }
     }
 }
