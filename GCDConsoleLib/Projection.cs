@@ -52,16 +52,9 @@ namespace GCDConsoleLib
 
         private void _Init()
         {
-            HorizontalUnit = LengthUnit.Meter;
             LinearUnitConversionToM = 0;
-            try
-            {
-                HorizontalUnit =  Length.ParseUnit(mSRef.GetLinearUnitsName()); ;
-                mSRef.AutoIdentifyEPSG();
-            }
-            catch (Exception e) {
-                Debug.WriteLine(e.Message);
-            }
+            HorizontalUnit = Utility.Conversion.ParseLengthUnit(mSRef.GetLinearUnitsName());
+            mSRef.AutoIdentifyEPSG();
         }
 
         /// <summary>
@@ -77,7 +70,8 @@ namespace GCDConsoleLib
             {
                 bSame = Convert.ToBoolean(mSRef.IsSame(otherProj.mSRef));
             }
-            catch(Exception e) {
+            catch (Exception e)
+            {
                 Debug.WriteLine(e.Message);
             }
             return bSame;
@@ -117,10 +111,12 @@ namespace GCDConsoleLib
             get
             {
                 int iEPSG = 0;
-                try {
+                try
+                {
                     iEPSG = Convert.ToInt32(mSRef.GetAttrValue("PROJCS|GEOGCS|AUTHORITY", 1));
                 }
-                catch(Exception e) {
+                catch (Exception e)
+                {
                     Debug.WriteLine(e.Message);
                 }
                 return iEPSG;

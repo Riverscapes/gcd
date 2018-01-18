@@ -2,6 +2,9 @@
 using OSGeo.OGR;
 using OSGeo.GDAL;
 using System.Collections.Generic;
+using UnitsNet;
+using UnitsNet.Units;
+using System.Linq;
 
 namespace GCDConsoleLib.Utility
 {
@@ -237,7 +240,7 @@ namespace GCDConsoleLib.Utility
             T minVal = minValue<T>();
             return (double?)Convert.ChangeType(minVal, typeof(double));
         }
-        
+
         /// <summary>
         /// Return the smallest number for a given numeric type "T"
         /// </summary>
@@ -259,6 +262,55 @@ namespace GCDConsoleLib.Utility
             else
                 throw new NotSupportedException("Type conversion problem");
             return retval;
+        }
+
+        /// <summary>
+        /// Here's your lookup table. Keep it all lowercase. Don't put the standard spelling in there because we already try that
+        /// </summary>
+        private static Dictionary<LengthUnit, string[]> LengthAliases = new Dictionary<LengthUnit, string[]>() {
+            { LengthUnit.Meter, new string[] { "metre" } },
+            { LengthUnit.Foot, new string[] { "feet", "ft-us" } },
+        };
+
+        /// <summary>
+        /// Do a proper parse of all acronyms and weird spellings of units
+        /// </summary>
+        /// <param name="u"></param>
+        /// <returns></returns>
+        public static LengthUnit ParseLengthUnit(string u)
+        {
+            // Meters is always going to be our fallback
+            LengthUnit lUnit = LengthUnit.Meter;
+            bool bFound = false;
+            try
+            {
+                lUnit = Length.ParseUnit(u);
+                bFound = true;
+            }
+            catch (Exception e)
+            {
+                // Didn't work. Do it the hard way
+                foreach (LengthUnit iterUnit in Enum.GetValues(typeof(LengthUnit)))
+                {
+                    // If it's a direct lookup then just go with that.
+                    string sIterUnit = Enum.GetName(typeof(LengthUnit), iterUnit);
+                    if (String.Compare(sIterUnit, u, StringComparison.OrdinalIgnoreCase) == 0)
+                    {
+                        lUnit = iterUnit;
+                        bFound = true;
+                        break;
+                    }
+                    else if (LengthAliases.ContainsKey(iterUnit) && 
+                        LengthAliases[iterUnit].Any(s => String.Compare(s, u, StringComparison.OrdinalIgnoreCase) == 0))
+                    {
+                        lUnit = iterUnit;
+                        bFound = true;
+                        break;
+                    }
+                }
+                if (!bFound) throw new ArgumentException(String.Format("Could not parse unit string: {0}", u));
+            }
+            return lUnit;
         }
     }
 }

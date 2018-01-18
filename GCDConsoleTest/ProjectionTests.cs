@@ -47,6 +47,37 @@ namespace GCDConsoleLib.Tests
         }
 
         [TestMethod()]
+        public void HorizontalUnitTest()
+        {
+            // Let's set up a WKT and then swap out the units
+            string sUnitWKT = "PROJCS[\"NAD_1983_StatePlane_California_II_FIPS_0402\",GEOGCS[\"GCS_North_American_1983\",DATUM[\"North_American_Datum_1983\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.017453292519943295]],PROJECTION[\"Lambert_Conformal_Conic_2SP\"],PARAMETER[\"False_Easting\",2000000.0],PARAMETER[\"False_Northing\",500000.0],PARAMETER[\"Central_Meridian\",-122.0],PARAMETER[\"Standard_Parallel_1\",38.33333333333334],PARAMETER[\"Standard_Parallel_2\",39.83333333333334],PARAMETER[\"Latitude_Of_Origin\",37.66666666666666],UNIT[\"{0}\",1.0]]";
+
+            Assert.AreEqual(new Projection(String.Format(sUnitWKT, "meter")).HorizontalUnit, UnitsNet.Units.LengthUnit.Meter);
+            Assert.AreEqual(new Projection(String.Format(sUnitWKT, "Meter")).HorizontalUnit, UnitsNet.Units.LengthUnit.Meter);
+            Assert.AreEqual(new Projection(String.Format(sUnitWKT, "m")).HorizontalUnit, UnitsNet.Units.LengthUnit.Meter);
+
+            Assert.AreEqual(new Projection(String.Format(sUnitWKT, "Feet")).HorizontalUnit, UnitsNet.Units.LengthUnit.Foot);
+            Assert.AreEqual(new Projection(String.Format(sUnitWKT, "Foot")).HorizontalUnit, UnitsNet.Units.LengthUnit.Foot);
+            Assert.AreEqual(new Projection(String.Format(sUnitWKT, "ft")).HorizontalUnit, UnitsNet.Units.LengthUnit.Foot);
+            Assert.AreEqual(new Projection(String.Format(sUnitWKT, "ft-us")).HorizontalUnit, UnitsNet.Units.LengthUnit.Foot);
+
+            Assert.AreEqual(new Projection(String.Format(sUnitWKT, "Centimeter")).HorizontalUnit, UnitsNet.Units.LengthUnit.Centimeter);
+            Assert.AreEqual(new Projection(String.Format(sUnitWKT, "cm")).HorizontalUnit, UnitsNet.Units.LengthUnit.Centimeter);
+
+            try
+            {
+                Projection s1 = new Projection(String.Format(sUnitWKT, "gallops"));
+                Assert.Fail();
+            }
+            catch(Exception e)
+            {
+                // Not just any exception will do.
+                Assert.IsInstanceOfType(e, typeof(ArgumentException));
+            }
+        }
+
+
+        [TestMethod()]
         public void IsSameComplexTest()
         {
             Assert.Inconclusive();
