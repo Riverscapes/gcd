@@ -414,7 +414,7 @@ namespace GCDStandalone
                 catch (InvalidOperationException ioe)
                 {
                     MessageBox.Show("This application cannot be updated. It is likely not a ClickOnce application. Error: " + ioe.Message, 
-                        GCDCore.Properties.Resources.ApplicationNameLong);
+                        GCDCore.Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
 
@@ -424,7 +424,7 @@ namespace GCDStandalone
 
                     if ((!info.IsUpdateRequired))
                     {
-                        DialogResult dr = MessageBox.Show("An update is available. Would you like to update the application now?", "Update Available", MessageBoxButtons.OKCancel);
+                        DialogResult dr = MessageBox.Show("An update is available. Would you like to update the application now?", "Update Available", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
                         if ((!(System.Windows.Forms.DialogResult.OK == dr)))
                         {
                             doUpdate = false;
@@ -443,7 +443,7 @@ namespace GCDStandalone
                         try
                         {
                             AD.Update();
-                            MessageBox.Show("The application has been upgraded, and will now restart.");
+                            MessageBox.Show("The application has been upgraded, and will now restart.", GCDCore.Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
                             Application.Restart();
                         }
                         catch (DeploymentDownloadException dde)
