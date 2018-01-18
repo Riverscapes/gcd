@@ -94,9 +94,10 @@ namespace GCDCore.UserInterface.ChangeDetection
 
                 m_DoD = cdEngine.Calculate(txtName.Text, dFolder, true, ProjectManager.Project.Units);
 
+                ProjectManager.OnAddToMap(m_DoD.ThrDoD);
+
                 ProjectManager.Project.DoDs[txtName.Text] = m_DoD;
                 ProjectManager.Project.Save();
-
             }
             catch (Exception ex)
             {
