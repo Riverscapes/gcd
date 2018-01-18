@@ -599,7 +599,7 @@ namespace GCDCore.UserInterface.Project
                     if (err is ErrorSurface)
                     {
                         ProjectManager.OnAddToMap(err);
-                        LoadTree((ProjectTreeNode)nodDEM.Tag);
+                        LoadTree(new ProjectTreeNode(GCDNodeTypes.ErrorSurface, err));
                     }
                 }
             }
