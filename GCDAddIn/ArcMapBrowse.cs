@@ -109,5 +109,50 @@ namespace GCDAddIn
 
             return gResult;
         }
+
+
+        public static string BrowseSaveRaster(string formTitle, IntPtr hParentWindowHandle, string sWorkspace = null, string sName = null)
+        {
+            IGxDialog pGxDialog = new GxDialog();
+            IGxObjectFilterCollection pFilterCol = (IGxObjectFilterCollection)pGxDialog;
+            pFilterCol.AddFilter(new GxFilterRasterDatasets(), true);
+            pGxDialog.RememberLocation = true;
+            pGxDialog.AllowMultiSelect = false;
+            pGxDialog.Title = formTitle;
+            if (!string.IsNullOrEmpty(sWorkspace))
+            {
+                pGxDialog.set_StartingLocation(sWorkspace);
+            }
+
+            if (sWorkspace is string)
+            {
+                sWorkspace = string.Empty;
+            }
+
+            if (sName is string)
+            {
+                sName = string.Empty;
+            }
+
+            string sResult = string.Empty;
+            try
+            {
+                if (pGxDialog.DoModalSave(hParentWindowHandle.ToInt32()))
+                {
+                    sWorkspace = pGxDialog.FinalLocation.FullName;
+                    sName = pGxDialog.Name;
+                    sResult = System.IO.Path.Combine(sWorkspace, sName);
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.Data["Title"] = formTitle;
+                ex.Data["Folder"] = sWorkspace;
+                ex.Data["Name"] = sName;
+                throw;
+            }
+
+            return sResult;
+        }
     }
 }

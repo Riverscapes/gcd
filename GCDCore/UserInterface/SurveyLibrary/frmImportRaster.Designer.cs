@@ -51,6 +51,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.txtOrigHeight = new System.Windows.Forms.TextBox();
             this.txtTop = new System.Windows.Forms.TextBox();
             this.Label11 = new System.Windows.Forms.Label();
+            this.ucRaster = new GCDCore.UserInterface.UtilityForms.ucRasterInput();
             this.grpProjectRaaster = new System.Windows.Forms.GroupBox();
             this.cmdHelpPrecision = new System.Windows.Forms.Button();
             this.Label1 = new System.Windows.Forms.Label();
@@ -79,7 +80,6 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.cmdHelp = new System.Windows.Forms.Button();
             this.cmdOK = new System.Windows.Forms.Button();
             this.cmdCancel = new System.Windows.Forms.Button();
-            this.ucRaster = new GCDCore.UserInterface.UtilityForms.ucRasterInput();
             this.grpOriginalRaster.SuspendLayout();
             this.grpProjectRaaster.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.valPrecision)).BeginInit();
@@ -316,6 +316,13 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.Label11.TabIndex = 2;
             this.Label11.Text = "Left";
             // 
+            // ucRaster
+            // 
+            this.ucRaster.Location = new System.Drawing.Point(101, 19);
+            this.ucRaster.Name = "ucRaster";
+            this.ucRaster.Size = new System.Drawing.Size(491, 25);
+            this.ucRaster.TabIndex = 1;
+            // 
             // grpProjectRaaster
             // 
             this.grpProjectRaaster.Controls.Add(this.cmdHelpPrecision);
@@ -389,6 +396,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.cmdSave.Size = new System.Drawing.Size(23, 23);
             this.cmdSave.TabIndex = 23;
             this.cmdSave.UseVisualStyleBackColor = true;
+            this.cmdSave.Click += new System.EventHandler(this.cmdSave_Click);
             // 
             // valPrecision
             // 
@@ -586,13 +594,6 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.cmdCancel.TabIndex = 5;
             this.cmdCancel.Text = "Cancel";
             this.cmdCancel.UseVisualStyleBackColor = true;
-            // 
-            // ucRaster
-            // 
-            this.ucRaster.Location = new System.Drawing.Point(101, 19);
-            this.ucRaster.Name = "ucRaster";
-            this.ucRaster.Size = new System.Drawing.Size(491, 25);
-            this.ucRaster.TabIndex = 1;
             // 
             // frmImportRaster
             // 

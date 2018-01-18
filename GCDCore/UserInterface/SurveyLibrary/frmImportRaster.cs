@@ -7,9 +7,10 @@ using System.Windows.Forms;
 
 namespace GCDCore.UserInterface.SurveyLibrary
 {
-
     public partial class frmImportRaster
     {
+        public delegate void GISBrowseSaveRaster(System.Windows.Forms.TextBox txt, string fromTitle, IntPtr hParentWindowHandle);
+        public event GISBrowseSaveRaster GISBrowseSaveRasterHandler;
 
         private enum RoundingDirection
         {
@@ -659,7 +660,15 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
         private void cmdSave_Click(System.Object sender, System.EventArgs e)
         {
-            naru.ui.Textbox.BrowseSaveRaster(txtRasterPath, "Output Raster", naru.os.File.RemoveDangerousCharacters(txtName.Text));
+            if (ProjectManager.IsArcMap)
+            {
+                if (GISBrowseSaveRasterHandler != null)
+                    GISBrowseSaveRasterHandler(txtRasterPath, "Save Clean Raster", Handle);
+            }
+            else
+            {
+                naru.ui.Textbox.BrowseSaveRaster(txtRasterPath, "Output Raster", naru.os.File.RemoveDangerousCharacters(txtName.Text));
+            }
         }
 
         private void valPrecision_ValueChanged(object sender, System.EventArgs e)

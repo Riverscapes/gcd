@@ -10,6 +10,7 @@ namespace GCDAddIn.DataPreparation
 
             frm.ucRaster.BrowseRaster += BrowseRaster;
             frm.ucRaster.SelectRasterFromArcMap += SelectRasterFromArcMap;
+            frm.GISBrowseSaveRasterHandler += BrowseSaveRaster;
 
             try
             {
@@ -42,6 +43,13 @@ namespace GCDAddIn.DataPreparation
             {
                 ((System.Windows.Forms.TextBox)sender).Text = selectedRaster.GISFileInfo.FullName;
             }
+        }
+
+        private void BrowseSaveRaster(System.Windows.Forms.TextBox txt, string formTitle, IntPtr hParentWindowHandle)
+        {
+            string result = ArcMapBrowse.BrowseSaveRaster(formTitle, hParentWindowHandle);
+            if (!string.IsNullOrEmpty(result))
+                txt.Text = result;
         }
 
         private void SelectRasterFromArcMap(object sender, naru.ui.PathEventArgs e)
