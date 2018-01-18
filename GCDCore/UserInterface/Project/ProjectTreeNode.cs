@@ -43,43 +43,43 @@
             return Item.ToString();
         }
 
+        public string Name
+        {
+            get
+            {
+                string name = NodeType.ToString();
+                if (Item != null)
+                {
+                    name = string.Format("{0}_{1}", name.ToString());
+                }
+
+                return name;
+            }
+        }
+
         public ProjectTreeNode(GCDNodeTypes type, object theItem)
         {
             m_Type = type;
             m_Item = theItem;
         }
 
-        public static bool operator ==(ProjectTreeNode node1, ProjectTreeNode node2)
+        public bool Equals(ProjectTreeNode obj)
         {
-
-            if (node1 == null && node2 == null)
-            {
-                return true;
-            }
-            else if (node1 == null)
-            {
-                return false;
-            }
-            else if (node2 == null)
+            if (obj == null)
             {
                 return false;
             }
             else
             {
-                if ((node1.NodeType == node2.NodeType))
+                if (NodeType == obj.NodeType)
                 {
-                    return object.ReferenceEquals(node1.Item, node2.Item);
+                    return object.ReferenceEquals(Item, obj.Item);
                 }
                 else
                 {
                     return false;
                 }
             }
-        }
-
-        public static bool operator !=(ProjectTreeNode node1, ProjectTreeNode node2)
-        {
-            return !(node1 == node2);
-        }
+        }        
     }
 }

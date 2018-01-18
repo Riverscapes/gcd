@@ -33,7 +33,7 @@ namespace GCDCore.UserInterface.Project
 
         private void ProjectExplorerUC_Load(object sender, System.EventArgs e)
         {
-            LoadTree();
+            LoadTree(null);
 
             // AddToMapToolStripMenuItem_Click
             this.treProject.MouseDown += treProject_MouseDown;
@@ -93,19 +93,17 @@ namespace GCDCore.UserInterface.Project
         /// <param name="sSelectedNodeTag">If provided, the code will make this the selected node</param>
         /// <remarks>Grouping nodes are added to the tree with the enumeration above as their key. i.e. Project node has key "1".
         /// Items that have database IDs are added with the key as type_id. So DEM Survey with ID 4 would have key "3_4"</remarks>
-
-        public void LoadTree(string sSelectedNodeTag = "", SortSurveyBy eSortSurveyBy = SortSurveyBy.SurveyDateDsc)
+        public void LoadTree(ProjectTreeNode selectItem, SortSurveyBy eSortSurveyBy = SortSurveyBy.SurveyDateDsc)
         {
             treProject.Nodes.Clear();
 
             if (ProjectManager.Project is GCDProject)
             {
-                LoadTree(treProject, false, sSelectedNodeTag, eSortSurveyBy);
+                LoadTree(treProject, false, selectItem, eSortSurveyBy);
             }
-
         }
 
-        private TreeNode AddTreeNode(TreeNode nodParent, GCDNodeTypes eType, string displayText, object projectItem)
+        private TreeNode AddTreeNode(TreeNode nodParent, GCDNodeTypes eType, string displayText, object projectItem, ProjectTreeNode selItem)
         {
             TreeNode newNode = null;
             if (nodParent is TreeNode)
@@ -120,16 +118,23 @@ namespace GCDCore.UserInterface.Project
             newNode.ImageIndex = (int)eType;
             newNode.SelectedImageIndex = (int)eType;
             newNode.Tag = new ProjectTreeNode(eType, projectItem);
+
+            if (selItem  is ProjectTreeNode && selItem.Equals((ProjectTreeNode)newNode.Tag))
+            {
+                newNode.TreeView.SelectedNode = newNode;
+                newNode.Parent.Expand();
+            }
+
             return newNode;
         }
 
-        public void LoadTree(TreeView tre, bool bCheckboxes, string sSelectedNodeTag = "", SortSurveyBy eSortSurveyBy = SortSurveyBy.SurveyDateDsc)
+        public void LoadTree(TreeView tre, bool bCheckboxes, ProjectTreeNode selectItem, SortSurveyBy eSortSurveyBy = SortSurveyBy.SurveyDateDsc)
         {
             try
             {
-                TreeNode nodProject = AddTreeNode(null, GCDNodeTypes.Project, ProjectManager.Project.Name, ProjectManager.Project);
-                TreeNode nodInputs = AddTreeNode(nodProject, GCDNodeTypes.InputsGroup, m_sGroupInputs, null);
-                TreeNode nodSurveys = AddTreeNode(nodInputs, GCDNodeTypes.SurveysGroup, "DEM Surveys", null);
+                TreeNode nodProject = AddTreeNode(null, GCDNodeTypes.Project, ProjectManager.Project.Name, ProjectManager.Project, selectItem);
+                TreeNode nodInputs = AddTreeNode(nodProject, GCDNodeTypes.InputsGroup, m_sGroupInputs, null, selectItem);
+                TreeNode nodSurveys = AddTreeNode(nodInputs, GCDNodeTypes.SurveysGroup, "DEM Surveys", null, selectItem);
 
                 // DEM Surveys
                 IEnumerable<DEMSurvey> orderedSurveys = new List<DEMSurvey>();
@@ -151,22 +156,22 @@ namespace GCDCore.UserInterface.Project
 
                 foreach (DEMSurvey dem in orderedSurveys)
                 {
-                    TreeNode nodSurvey = AddTreeNode(nodSurveys, GCDNodeTypes.DEMSurvey, dem.Name, dem);
+                    TreeNode nodSurvey = AddTreeNode(nodSurveys, GCDNodeTypes.DEMSurvey, dem.Name, dem, selectItem);
                     bool bExpandSurveyNode = false;
 
                     // Associated surfaces
-                    TreeNode nodAssocGroup = AddTreeNode(nodSurvey, GCDNodeTypes.AssocGroup, m_sAssocSurfaces, null);
+                    TreeNode nodAssocGroup = AddTreeNode(nodSurvey, GCDNodeTypes.AssocGroup, m_sAssocSurfaces, null, selectItem);
                     foreach (AssocSurface assoc in dem.AssocSurfaces)
                     {
-                        AddTreeNode(nodAssocGroup, GCDNodeTypes.AssociatedSurface, assoc.Name, assoc);
+                        AddTreeNode(nodAssocGroup, GCDNodeTypes.AssociatedSurface, assoc.Name, assoc, selectItem);
                         bExpandSurveyNode = true;
                     }
 
                     // Error surfaces
-                    TreeNode nodErrorGroup = AddTreeNode(nodSurvey, GCDNodeTypes.ErrorSurfaceGroup, m_sErrorSurfaces, null);
+                    TreeNode nodErrorGroup = AddTreeNode(nodSurvey, GCDNodeTypes.ErrorSurfaceGroup, m_sErrorSurfaces, null, selectItem);
                     foreach (ErrorSurface errSurf in dem.ErrorSurfaces)
                     {
-                        AddTreeNode(nodErrorGroup, GCDNodeTypes.ErrorSurface, errSurf.NameWithDefault, errSurf);
+                        AddTreeNode(nodErrorGroup, GCDNodeTypes.ErrorSurface, errSurf.NameWithDefault, errSurf, selectItem);
                         bExpandSurveyNode = true;
                     }
 
@@ -177,8 +182,8 @@ namespace GCDCore.UserInterface.Project
                 nodInputs.Expand();
                 nodSurveys.Expand();
 
-                TreeNode AnalNode = AddTreeNode(nodProject, GCDNodeTypes.AnalysesGroup, "Analyses", null);
-                TreeNode ChDtNode = AddTreeNode(AnalNode, GCDNodeTypes.ChangeDetectionGroup, "Change Detection", null);
+                TreeNode AnalNode = AddTreeNode(nodProject, GCDNodeTypes.AnalysesGroup, "Analyses", null, selectItem);
+                TreeNode ChDtNode = AddTreeNode(AnalNode, GCDNodeTypes.ChangeDetectionGroup, "Change Detection", null, selectItem);
 
                 Dictionary<string, TreeNode> dDoD = new Dictionary<string, TreeNode>();
                 foreach (DoDBase rDoD in ProjectManager.Project.DoDs.Values)
@@ -195,12 +200,12 @@ namespace GCDCore.UserInterface.Project
                     else
                     {
                         // Create a new parent of DEM surveys for this DoD
-                        theParent = AddTreeNode(ChDtNode, GCDNodeTypes.ChangeDetectionDEMPair, sDEMPair, null);
+                        theParent = AddTreeNode(ChDtNode, GCDNodeTypes.ChangeDetectionDEMPair, sDEMPair, null, selectItem);
                         dDoD[sDEMPair] = theParent;
                     }
 
                     // Now create the actual DoD node under the node for the pair of DEMs
-                    TreeNode nodDoD = AddTreeNode(theParent, GCDNodeTypes.DoD, rDoD.Name, rDoD);
+                    TreeNode nodDoD = AddTreeNode(theParent, GCDNodeTypes.DoD, rDoD.Name, rDoD, selectItem);
                     theParent.Expand();
 
                     // Budget Segregation Group Node
@@ -225,17 +230,17 @@ namespace GCDCore.UserInterface.Project
                             {
                                 if (!(nodBSGroup is TreeNode))
                                 {
-                                    nodBSGroup = AddTreeNode(nodDoD, GCDNodeTypes.BudgetSegregationGroup, m_sBudgetSegs, null);
+                                    nodBSGroup = AddTreeNode(nodDoD, GCDNodeTypes.BudgetSegregationGroup, m_sBudgetSegs, null, selectItem);
                                     nodBSGroup.Expand();
                                 }
 
                                 if (nodMask == null)
                                 {
-                                    nodMask = AddTreeNode(nodBSGroup, GCDNodeTypes.BudgetSegregationMask, sMaskDict[sPolygonMask], null);
+                                    nodMask = AddTreeNode(nodBSGroup, GCDNodeTypes.BudgetSegregationMask, sMaskDict[sPolygonMask], null, selectItem);
                                 }
 
                                 // Budget Segregation
-                                AddTreeNode(nodMask, GCDNodeTypes.BudgetSegregation, rBS.Name, rBS);
+                                AddTreeNode(nodMask, GCDNodeTypes.BudgetSegregation, rBS.Name, rBS, selectItem);
                             }
                         }
                     }
@@ -299,7 +304,7 @@ namespace GCDCore.UserInterface.Project
                     {
                         if (frm.ShowDialog() == DialogResult.OK)
                         {
-                            LoadTree();
+                            LoadTree(tag);
                         }
                     }
                 }
@@ -447,7 +452,7 @@ namespace GCDCore.UserInterface.Project
                     ProjectManager.Project.DEMSurveys.Add(dem.Name, dem);
                     ProjectManager.Project.Save();
 
-                    LoadTree();
+                    LoadTree(new ProjectTreeNode(GCDNodeTypes.DEMSurvey, dem));
 
                     frmDEMSurveyProperties frm = new frmDEMSurveyProperties(dem);
                     frm.ShowDialog();
@@ -457,8 +462,6 @@ namespace GCDCore.UserInterface.Project
                     // Load the tree again because the use may have added Assoc or error surfaces
                     // while the form was open (and since the tree was last loaded)
                 }
-
-                LoadTree();
             }
 
             this.Cursor = Cursors.Default;
@@ -484,7 +487,7 @@ namespace GCDCore.UserInterface.Project
                         if (frm.ShowDialog() == DialogResult.OK)
                         {
                             ProjectManager.OnAddToMap(frm.m_Assoc);
-                            LoadTree();
+                            LoadTree(new ProjectTreeNode(GCDNodeTypes.AssociatedSurface, frm.m_Assoc));
                         }
                     }
                 }
@@ -538,7 +541,7 @@ namespace GCDCore.UserInterface.Project
                         frmAssocSurfaceProperties frm = new frmAssocSurfaceProperties(assoc.DEM, assoc);
                         if (frm.ShowDialog() == DialogResult.OK)
                         {
-                            LoadTree(selNode.Tag.ToString());
+                            LoadTree((ProjectTreeNode)selNode.Tag);
                         }
                     }
                 }
@@ -548,7 +551,6 @@ namespace GCDCore.UserInterface.Project
                 naru.error.ExceptionUI.HandleException(ex);
             }
         }
-
 
         private void AddToMapToolStripMenuItem1_Click(System.Object sender, System.EventArgs e)
         {
@@ -597,7 +599,7 @@ namespace GCDCore.UserInterface.Project
                     if (err is ErrorSurface)
                     {
                         ProjectManager.OnAddToMap(err);
-                        LoadTree();
+                        LoadTree((ProjectTreeNode)nodDEM.Tag);
                     }
                 }
             }
@@ -626,7 +628,7 @@ namespace GCDCore.UserInterface.Project
                     if (err is ErrorSurface)
                     {
                         ProjectManager.OnAddToMap(err);
-                        LoadTree();
+                        LoadTree((ProjectTreeNode)nodDEM.Tag);
                     }
                 }
             }
@@ -677,7 +679,7 @@ namespace GCDCore.UserInterface.Project
                     {
                         ErrorSurface errSurf = (ErrorSurface)((ProjectTreeNode)selNode.Tag).Item;
                         if (frmDEMSurveyProperties.ViewErrorSurfaceProperties(errSurf) == DialogResult.OK)
-                            LoadTree();
+                            LoadTree((ProjectTreeNode)selNode.Tag);
                     }
                 }
             }
@@ -784,7 +786,7 @@ namespace GCDCore.UserInterface.Project
                 DEMSurvey dem = AddDEMSurvey();
                 if (dem is DEMSurvey)
                 {
-                    LoadTree();
+                    LoadTree(new ProjectTreeNode(GCDNodeTypes.DEMSurvey, dem));
                 }
             }
             catch (Exception ex)
@@ -815,7 +817,7 @@ namespace GCDCore.UserInterface.Project
 
                         if (frm.ShowDialog() == DialogResult.OK)
                         {
-                            LoadTree(selNode.Tag.ToString());
+                            LoadTree((ProjectTreeNode)selNode.Tag);
                         }
                     }
                 }
@@ -864,7 +866,7 @@ namespace GCDCore.UserInterface.Project
                         frmAssocSurfaceProperties frm = new frmAssocSurfaceProperties(dem, null);
                         if (frm.ShowDialog() == DialogResult.OK)
                         {
-                            LoadTree(selNode.Tag.ToString());
+                            LoadTree(new ProjectTreeNode(GCDNodeTypes.AssociatedSurface, frm.m_Assoc));
                         }
                     }
                 }
@@ -949,7 +951,7 @@ namespace GCDCore.UserInterface.Project
                     string sTag = string.Empty;
                     if (frmDoDCalculation.DoD is GCDCore.Project.DoDBase)
                     {
-                        LoadTree();
+                        LoadTree(new ProjectTreeNode(GCDNodeTypes.DoD, frmDoDCalculation.DoD));
 
                         // Now show the results form for this new DoD Calculation
                         ChangeDetection.frmDoDResults frmResults = new ChangeDetection.frmDoDResults(frmDoDCalculation.DoD);
@@ -1119,7 +1121,7 @@ namespace GCDCore.UserInterface.Project
                 }
 
                 ProjectManager.Project.Save();
-                LoadTree();
+                LoadTree((ProjectTreeNode)nodSelected.Parent.Tag);
             }
             catch (Exception ex)
             {
@@ -1553,7 +1555,8 @@ namespace GCDCore.UserInterface.Project
                     {
                         if (frm.ShowDialog() == DialogResult.OK)
                         {
-                            LoadTree(nodSelected.Tag.ToString());
+                            // TODO: nod selection needed
+                            LoadTree(null);
                         }
                     }
                 }
@@ -1600,7 +1603,7 @@ namespace GCDCore.UserInterface.Project
                     BudgetSegregation.frmBudgetSegProperties frm = new BudgetSegregation.frmBudgetSegProperties((DoDBase)treDod.Item);
                     if (frm.ShowDialog() == DialogResult.OK)
                     {
-                        LoadTree();
+                        LoadTree(new ProjectTreeNode(GCDNodeTypes.BudgetSegregation, frm.BudgetSeg));
                         BudgetSegregation.frmBudgetSegResults frmResults = new BudgetSegregation.frmBudgetSegResults(frm.BudgetSeg);
                         frmResults.ShowDialog();
                     }
@@ -1632,7 +1635,7 @@ namespace GCDCore.UserInterface.Project
                 ChangeDetection.MultiEpoch.frmMultiEpoch frm = new ChangeDetection.MultiEpoch.frmMultiEpoch();
                 if (frm.ShowDialog() == DialogResult.OK)
                 {
-                    LoadTree();
+                    LoadTree(new ProjectTreeNode(GCDNodeTypes.ChangeDetectionGroup, null));
                 }
             }
             catch (Exception ex)
@@ -1649,7 +1652,7 @@ namespace GCDCore.UserInterface.Project
                 ChangeDetection.Batch.frmBatchDoD frm = new ChangeDetection.Batch.frmBatchDoD();
                 if (frm.ShowDialog() == DialogResult.OK)
                 {
-                    LoadTree();
+                    LoadTree(new ProjectTreeNode(GCDNodeTypes.DoD, null));
                 }
             }
             catch (Exception ex)
