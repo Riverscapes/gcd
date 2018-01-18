@@ -17,10 +17,13 @@ namespace GCDCore.Project
             get { return _IsDefault; }
             set
             {
-                foreach (ErrorSurface errSurf in DEM.ErrorSurfaces)
-                    errSurf._IsDefault = false;
+                if (value)
+                {
+                    foreach (ErrorSurface errSurf in DEM.ErrorSurfaces)
+                        errSurf._IsDefault = false;
+                }
 
-                _IsDefault = true;
+                _IsDefault = value;
             }
         }
 
@@ -46,7 +49,7 @@ namespace GCDCore.Project
         public ErrorSurface(string name, FileInfo rasterPath, DEMSurvey dem)
             : base(name, rasterPath)
         {
-             DEM = dem;
+            DEM = dem;
 
             // The first error surface for a DEM is always the default
             _IsDefault = dem.ErrorSurfaces.Count == 0;

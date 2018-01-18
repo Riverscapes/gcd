@@ -615,6 +615,13 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
             Cursor.Current = Cursors.WaitCursor;
 
+            if (chkIsDefault.Enabled && chkIsDefault.Checked)
+            {
+                // If this error surface is set to default then ensure that all other error surfaces for this DEM Are not set to default.
+                // Note that UI should disable this checkbox if this is the only error surface and the checkbox should already be checked.
+                DEM.ErrorSurfaces.Where(x => x.IsDefault && !x.Equals(ErrorSurf)).ToList<ErrorSurface>().ForEach(x => x.IsDefault = false);
+            }
+
             if (ErrorSurf is ErrorSurface)
             {
                 ErrorSurf.Name = txtName.Text;
