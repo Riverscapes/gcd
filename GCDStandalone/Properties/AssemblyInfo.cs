@@ -5,10 +5,10 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("GCDStandalone")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Geomorphic Change Detection Software")]
+[assembly: AssemblyDescription("Geomorphic Change Detection Software")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("North Arrow Research Ltd.")]
 [assembly: AssemblyProduct("GCDStandalone")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]

@@ -24,7 +24,12 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>http://releases.northarrowresearch.com/GCD/StandAlone/</InstallUrl>
-    <ApplicationRevision>2</ApplicationRevision>
+    <SupportUrl>http://gcd.riverscapes.xyz</SupportUrl>
+    <ErrorReportUrl>https://github.com/Riverscapes/gcd/issues</ErrorReportUrl>
+    <ProductName>GCD Stand Alone</ProductName>
+    <PublisherName>North Arrow Research Ltd.</PublisherName>
+    <SuiteName>Geomorphic Change Detection Software</SuiteName>
+    <ApplicationRevision>4</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -81,11 +86,15 @@
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>gcd_multi_resolution.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Content Include="..\ext\**\*.*">
       <Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="gcd_multi_resolution.ico" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\extlib\GDAL221\data\pci_datum.txt">
