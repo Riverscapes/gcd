@@ -74,14 +74,6 @@ namespace GCDCore.Project
                 ex.Data["GCD Excel Template Path"] = ExcelTemplatesFolder.FullName;
                 throw ex;
             }
-
-            ReportsFolder = new DirectoryInfo(Path.Combine(ApplicationFolder, "ReportFiles"));
-            if (!ReportsFolder.Exists)
-            {
-                Exception ex = new Exception("The GCD reports folder path does not exist.");
-                ex.Data["GCD Reports Path"] = ReportsFolder.FullName;
-                throw ex;
-            }
         }
 
         public static void CopyDeployFolder()
