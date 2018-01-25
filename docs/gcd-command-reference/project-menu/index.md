@@ -4,7 +4,7 @@ title: 1. Project Menu
 
 The main entry point to begin using the GCD Software is the *Project Menu*:
 
-![GCD6_Menu_Project](C:\Users\A00805535\Documents\GitHub\gcd6help\docs\assets\images\GCD6_Menu_Project.png)
+![GCD6_Menu_Project]({{ site.baseurl }}/assets/images/GCD6_Menu_Project.png)
 
 In the GCD Software, all change detection analyses that you do are performed within a specific [project]({{ site.baseurl }}/gcd-concepts/project). A [project]({{ site.baseurl }}/gcd-concepts/project)consists of three primary elements:
 
@@ -14,7 +14,7 @@ In the GCD Software, all change detection analyses that you do are performed wit
 
 From the *Project Menu*, you can create` New... `projects, `Open...` existing projects and `Close `the current project. You can always tell if a project is open because it will be listed by its name in the GCD *Project Explorer*:
 
-![GCD6_GCDName](C:\Users\A00805535\Documents\GitHub\gcd6help\docs\assets\images\GCD6_GCDName.png)
+![GCD6_GCDName]({{ site.baseurl }}/assets/images/GCD6_GCDName.png)
 
 #### Commands
 

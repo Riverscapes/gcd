@@ -65,3 +65,6 @@ settings:
   #   - title: Deploy
   #     url: index.html
 
+collections:
+  releasenotes:
+    output: true
