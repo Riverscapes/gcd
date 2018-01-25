@@ -6,20 +6,25 @@ The GCD 7 software is available in two different versions. The GCD Addin for Arc
 
 GCD Standalone is a desktop software version that performs all the core GCD functionality (building projects and perfoming change detection analyses etc) but does not include any map display. If you don't possess ArcGIS, or you want to use an alternative map display tool, such as [QGIS](https://www.qgis.org/en/site), then we recommend this version. It also works as a nice companion to the Add-In and you can go back and forth between the Add-In and Stand-Alone seamlessly. Note that GCD performs all spatial operations using the free and open source [GDAL](http://www.gdal.org/) library. Therefore you do not need ArcGIS to use GCD Standalone.
 
-<div class="row medium-up-2 small-up-1">
+<div class="row">
 
-<div class="column column-block">
+<div class="columns small-6">
   <img src="{{ site.baseurl }}/assets/images/gcd_addin.png" style="height:200px">
     <div>
-    	<a class="button large fa fa-cloud-download expanded" href="http://releases.northarrowresearch.com/GCD/Desktop/2018_01_23_GCDAddIn_7_0_02.esriAddIn">&nbsp;&nbsp;GCD AddIn for ArcGIS 10.4</a>
+    	<a class="button large expanded" href="http://releases.northarrowresearch.com/GCD/Desktop/2018_01_23_GCDAddIn_7_0_02.esriAddIn">
+        <span class="fa fa-cloud-download"></span>
+        &nbsp;&nbsp;GCD AddIn for ArcGIS 10.4</a>
     </div>  
 </div>
 
-<div class="column column-block">
+<div class="columns small-6">
 	<div>
+  
   <img src="{{ site.baseurl }}/assets/images/gcd_standalone.png" style="height:200px">
     <div>
-    	<a class="button large fa fa-cloud-download expanded" href="https://github.com/Riverscapes/gcd/releases/tag/v1.0.0_StandAlone">&nbsp;&nbsp;GCD Standalone</a>
+    	<a class="button large expanded" href="https://github.com/Riverscapes/gcd/releases/tag/v1.0.0_StandAlone">
+        <span class="fa fa-cloud-download"></span>
+        &nbsp;&nbsp;GCD Standalone</a>
     </div>
 </div>
 

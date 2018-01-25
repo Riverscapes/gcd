@@ -454,7 +454,7 @@ graceful-fs@~1.2.0:
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-1.2.3.tgz#15a4806a57547cb2d2dbf27f42e89a8c3451b364"
 
-grunt-cli@~0.1.13:
+grunt-cli@^0.1.13:
   version "0.1.13"
   resolved "https://registry.yarnpkg.com/grunt-cli/-/grunt-cli-0.1.13.tgz#e9ebc4047631f5012d922770c39378133cad10f4"
   dependencies:
@@ -529,7 +529,7 @@ grunt-sass@^1.1.0:
     node-sass "^3.7.0"
     object-assign "^4.0.1"
 
-grunt@~0.4.2:
+grunt@^0.4.5:
   version "0.4.5"
   resolved "https://registry.yarnpkg.com/grunt/-/grunt-0.4.5.tgz#56937cd5194324adff6d207631832a9d6ba4e7f0"
   dependencies:
