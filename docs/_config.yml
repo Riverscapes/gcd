@@ -4,12 +4,12 @@ description: > # this means to ignore newlines until "baseurl:"
   Online help and documentation site for the GCD
 
 # Final root url of the site. No ending slash. No subdirectory
-url: https://riverscapes.github.io
+url: https://gcd.riverscapes.xyz
 # If the site is in a subdirectory you should do it like this: "/subdirectory". Otherwise ""
-baseurl: "/gcd6temp"
+# baseurl: "/gcd"
 # When serving locally what port should we use:
 port: 4001
-
+google_analytics: UA-60121403-8
 # Markdown style
 markdown: kramdown
 # Syntax highlighter.
