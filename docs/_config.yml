@@ -4,7 +4,7 @@ description: > # this means to ignore newlines until "baseurl:"
   Online help and documentation site for the GCD
 
 # Final root url of the site. No ending slash. No subdirectory
-url: https://gcd.riverscapes.xyz
+url: http://gcd.riverscapes.xyz
 # If the site is in a subdirectory you should do it like this: "/subdirectory". Otherwise ""
 # baseurl: "/gcd"
 # When serving locally what port should we use:
