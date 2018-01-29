@@ -116,6 +116,8 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
             
             ErrorSurface selectedDEMErrorSurface = (ErrorSurface) cbo.SelectedItem;
             selectedDEM.SelectedErrorSurface = selectedDEMErrorSurface;
+
+            UpdateEpochQueue();
         }
 
         private void cmdMoveUp_Click(object sender, EventArgs e)

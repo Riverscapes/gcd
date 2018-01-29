@@ -51,15 +51,13 @@ namespace GCDCore.Engines.DoD
                     cdEngine = new ChangeDetectionEngineMinLoD(NewDEM, OldDEM, tProps.Threshold);
                     break;
 
-                    /*
                 case ThresholdProps.ThresholdMethods.Propagated:
-                    cdEngine = new ChangeDetectionEnginePropProb(NewDEM, OldDEM, NewError, OldError);
+                    cdEngine = new ChangeDetectionEnginePropProb(NewDEM, OldDEM, DoDEpoch.NewDEMErrorSurface, DoDEpoch.OldDEMErrorSurface);
                     break;
 
                 case ThresholdProps.ThresholdMethods.Probabilistic:
-                    cdEngine = new ChangeDetectionEngineProbabilistic(NewDEM, OldDEM, NewError, OldError, tProps.Threshold, tProps.SpatialCoherenceProps);
+                    cdEngine = new ChangeDetectionEngineProbabilistic(NewDEM, OldDEM, DoDEpoch.NewDEMErrorSurface, DoDEpoch.OldDEMErrorSurface, tProps.Threshold, tProps.SpatialCoherenceProps);
                     break;
-                    */
             }
 
             DoDBase dod = cdEngine.Calculate(dodName, dFolder, true, ProjectManager.Project.Units);
