@@ -111,6 +111,11 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
         {
             ((ComboBox)sender).BackColor = Color.AliceBlue;
             DEMSurveyItem selectedDEM = (DEMSurveyItem)grdDEMs.SelectedRows[0].DataBoundItem;
+
+            ComboBox cbo = (ComboBox)sender;
+            
+            ErrorSurface selectedDEMErrorSurface = (ErrorSurface) cbo.SelectedItem;
+            selectedDEM.SelectedErrorSurface = selectedDEMErrorSurface;
         }
 
         private void cmdMoveUp_Click(object sender, EventArgs e)
@@ -277,19 +282,17 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
         {
             List<Epoch> NewestDEMMinusAllOtherDEMs = new List<Epoch>();
 
-            List<DEMSurvey> ActiveDEMs = GetActiveDEMs();
+            List<DEMSurveyItem> ActiveDEMs = GetActiveDEMs();
             if(ActiveDEMs.Count < 2)
             {
                 return (NewestDEMMinusAllOtherDEMs);
             }
 
-
-            
-            DEMSurvey NewestDEM = ActiveDEMs[0];
-            for(int i = 1; i< ActiveDEMs.Count; i++)
+            DEMSurveyItem NewestDEM = ActiveDEMs[0];
+            for (int i = 1; i< ActiveDEMs.Count; i++)
             {
-                DEMSurvey OlderDEM = ActiveDEMs[i];
-                Epoch FirstEpoch = new Epoch(NewestDEM, OlderDEM);
+                DEMSurveyItem OlderDEM = ActiveDEMs[i];
+                Epoch FirstEpoch = new Epoch(NewestDEM.DEM, NewestDEM.SelectedErrorSurface, OlderDEM.DEM, OlderDEM.SelectedErrorSurface);
                 NewestDEMMinusAllOtherDEMs.Add(FirstEpoch);
             }
 
@@ -300,7 +303,7 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
         {
             List<Epoch> AllDEMsMinusTheEarliestDEMs = new List<Epoch>();
 
-            List<DEMSurvey> ActiveDEMs = GetActiveDEMs();
+            List<DEMSurveyItem> ActiveDEMs = GetActiveDEMs();
 
             if (ActiveDEMs.Count < 2)
             {
@@ -308,11 +311,11 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
             }
 
 
-            DEMSurvey EarliestDEM = ActiveDEMs[ActiveDEMs.Count - 1];
+            DEMSurveyItem EarliestDEM = ActiveDEMs[ActiveDEMs.Count - 1];
             for (int i = 0; i < ActiveDEMs.Count - 1; i++)
             {
-                DEMSurvey OtherDEM = ActiveDEMs[i];
-                Epoch NewEpoch = new Epoch(OtherDEM, EarliestDEM);
+                DEMSurveyItem OtherDEM = ActiveDEMs[i];
+                Epoch NewEpoch = new Epoch(OtherDEM.DEM, OtherDEM.SelectedErrorSurface, EarliestDEM.DEM, EarliestDEM.SelectedErrorSurface);
                 AllDEMsMinusTheEarliestDEMs.Add(NewEpoch);
             }
 
@@ -323,7 +326,7 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
         {
             List<Epoch> AllDEMsMinusThePreviousDEM = new List<Epoch>();
 
-            List<DEMSurvey> ActiveDEMs = GetActiveDEMs();
+            List<DEMSurveyItem> ActiveDEMs = GetActiveDEMs();
 
             if (ActiveDEMs.Count < 2)
             {
@@ -332,9 +335,9 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
 
             for (int i = 0; i < ActiveDEMs.Count - 1; i++)
             {
-                DEMSurvey newDEM = ActiveDEMs[i];
-                DEMSurvey oldDEM = ActiveDEMs[i+1];
-                Epoch NewEpoch = new Epoch(newDEM, oldDEM);
+                DEMSurveyItem newDEM = ActiveDEMs[i];
+                DEMSurveyItem oldDEM = ActiveDEMs[i+1];
+                Epoch NewEpoch = new Epoch(newDEM.DEM, newDEM.SelectedErrorSurface, oldDEM.DEM, oldDEM.SelectedErrorSurface);
                 AllDEMsMinusThePreviousDEM.Add(NewEpoch);
             }
 
@@ -345,9 +348,9 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
         /// Returns a list of active DEMs
         /// </summary>
         /// <returns></returns>
-        private List<DEMSurvey> GetActiveDEMs()
+        private List<DEMSurveyItem> GetActiveDEMs()
         {
-            List<DEMSurvey> ActiveDEMs = new List<DEMSurvey>();
+            List<DEMSurveyItem> ActiveDEMs = new List<DEMSurveyItem>();
 
             for(int i=0; i<DEMs.Count; i++) //loop through all surveys
             {
@@ -355,7 +358,7 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
                 //if active, add to list of active DEMs
                 if(CurrentDEM.IsActive)
                 {
-                    ActiveDEMs.Add(CurrentDEM.DEM);
+                    ActiveDEMs.Add(CurrentDEM);
                 }
             }
 
