@@ -41,6 +41,7 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
 
         private void frmInterComp_Load(object sender, EventArgs e)
         {
+            grdDEMs.AutoGenerateColumns = false;
             grdEpochs.AutoGenerateColumns = false;
 
             // Bind the two grids to the corresponding lists
@@ -62,7 +63,7 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
             //4.28 - need to set the datasource for each cell instead of at the column level because the error surfaces are different for each DEM Survey
             for (int i = 0; i < grdDEMs.Rows.Count; i++)
             {
-                DataGridViewComboBoxCell comboCell = grdDEMs[0, i] as DataGridViewComboBoxCell;
+                DataGridViewComboBoxCell comboCell = grdDEMs[2, i] as DataGridViewComboBoxCell;
                 //int[] data = { 1 * i, 2 * i, 3 * i }; This works, but is not the data we want
                 //comboCell.DataSource = new BindingSource(data, null);
 
@@ -71,11 +72,45 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
 
                 //select first item
                 comboCell.Value = DEMs[i].ErrorSurfaces[0].NameWithDefault;
-                //ComboBox cbo = (ComboBox) comboCell as ComboBox;
-                //cbo.SelectedIndex = 0;
+
+                //8.08 - set selected error surface
+                //8.09 - the cell doesnt have any datapropertyname, so I will try setting that on the column
+                //8.19 - I think maybe we need to set the property on the DEMSurveyItwm using an event.
 
             }
 
+            grdDEMs.EditingControlShowing +=
+        new DataGridViewEditingControlShowingEventHandler(
+        dataGridView1_EditingControlShowing);
+        }
+
+
+        /// <summary>
+        /// https://stackoverflow.com/questions/11141872/event-that-fires-during-datagridviewcomboboxcolumn-selectedindexchanged
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dataGridView1_EditingControlShowing(object sender,
+    DataGridViewEditingControlShowingEventArgs e)
+        {
+            ComboBox combo = e.Control as ComboBox;
+            if (combo != null)
+            {
+                // Remove an existing event-handler, if present, to avoid 
+                // adding multiple handlers when the editing control is reused.
+                combo.SelectedIndexChanged -=
+                    new EventHandler(ComboBox_SelectedIndexChanged);
+
+                // Add the event handler. 
+                combo.SelectedIndexChanged +=
+                    new EventHandler(ComboBox_SelectedIndexChanged);
+            }
+        }
+
+        private void ComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ((ComboBox)sender).BackColor = Color.AliceBlue;
+            DEMSurveyItem selectedDEM = (DEMSurveyItem)grdDEMs.SelectedRows[0].DataBoundItem;
         }
 
         private void cmdMoveUp_Click(object sender, EventArgs e)

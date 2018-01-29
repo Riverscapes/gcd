@@ -26,12 +26,18 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
             }
         }
         public readonly DEMSurvey DEM;
-        public readonly ErrorSurface ErrorSurf;
+        public ErrorSurface ErrorSurf;
 
         public string DEMName { get { return DEM.Name; } }
         public string ErrorName { get { return ErrorSurf.Name; } }
 
         public readonly naru.ui.SortableBindingList<ErrorSurface> ErrorSurfaces;
+
+        public ErrorSurface SelectedErrorSurface
+        {
+            get { return ErrorSurf; }
+            set { ErrorSurf = value; }
+        }
 
         public DEMSurveyItem(DEMSurvey dem, ErrorSurface err)
         {
