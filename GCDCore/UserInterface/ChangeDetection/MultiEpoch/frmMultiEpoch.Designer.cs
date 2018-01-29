@@ -36,6 +36,9 @@
             this.cmdMoveUp = new System.Windows.Forms.Button();
             this.cmdMoveDown = new System.Windows.Forms.Button();
             this.grdDEMs = new System.Windows.Forms.DataGridView();
+            this.colActive = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.colDEMSurvey = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colErrorSurface = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.grdEpochs = new System.Windows.Forms.DataGridView();
             this.colIsActive = new System.Windows.Forms.DataGridViewCheckBoxColumn();
@@ -49,9 +52,6 @@
             this.pnlBottom = new System.Windows.Forms.Panel();
             this.bgWorker = new System.ComponentModel.BackgroundWorker();
             this.ucThresholding1 = new GCDCore.UserInterface.ChangeDetection.ucThresholding();
-            this.colActive = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.colDEMSurvey = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colErrorSurface = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdDEMs)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -150,9 +150,35 @@
             this.grdDEMs.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.grdDEMs.Size = new System.Drawing.Size(520, 146);
             this.grdDEMs.TabIndex = 0;
+            this.grdDEMs.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdDEMs_CellEnter);
             this.grdDEMs.CellMouseUp += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.grdDEMs_CellMouseUp);
             this.grdDEMs.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdDEMs_CellValueChanged);
             this.grdDEMs.SelectionChanged += new System.EventHandler(this.grdDEMs_SelectionChanged);
+            // 
+            // colActive
+            // 
+            this.colActive.DataPropertyName = "IsActive";
+            this.colActive.HeaderText = "Active";
+            this.colActive.Name = "colActive";
+            this.colActive.Width = 50;
+            // 
+            // colDEMSurvey
+            // 
+            this.colDEMSurvey.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colDEMSurvey.DataPropertyName = "DEMName";
+            this.colDEMSurvey.HeaderText = "DEM Survey";
+            this.colDEMSurvey.Name = "colDEMSurvey";
+            this.colDEMSurvey.ReadOnly = true;
+            this.colDEMSurvey.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colDEMSurvey.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // colErrorSurface
+            // 
+            this.colErrorSurface.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colErrorSurface.HeaderText = "Error Surface";
+            this.colErrorSurface.Name = "colErrorSurface";
+            this.colErrorSurface.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colErrorSurface.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // groupBox2
             // 
@@ -306,31 +332,6 @@
             this.ucThresholding1.Name = "ucThresholding1";
             this.ucThresholding1.Size = new System.Drawing.Size(560, 169);
             this.ucThresholding1.TabIndex = 4;
-            // 
-            // colActive
-            // 
-            this.colActive.DataPropertyName = "IsActive";
-            this.colActive.HeaderText = "Active";
-            this.colActive.Name = "colActive";
-            this.colActive.Width = 50;
-            // 
-            // colDEMSurvey
-            // 
-            this.colDEMSurvey.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colDEMSurvey.DataPropertyName = "DEMName";
-            this.colDEMSurvey.HeaderText = "DEM Survey";
-            this.colDEMSurvey.Name = "colDEMSurvey";
-            this.colDEMSurvey.ReadOnly = true;
-            this.colDEMSurvey.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colDEMSurvey.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // colErrorSurface
-            // 
-            this.colErrorSurface.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colErrorSurface.HeaderText = "Error Surface";
-            this.colErrorSurface.Name = "colErrorSurface";
-            this.colErrorSurface.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colErrorSurface.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // frmMultiEpoch
             // 

@@ -432,6 +432,21 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
 
         #endregion
 
+
+        //Implementing dropbox opening on initial click
+        //see https://stackoverflow.com/questions/13005112/how-to-activate-combobox-on-first-click-datagridview
+        private void grdDEMs_CellEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            bool validClick = (e.RowIndex != -1 && e.ColumnIndex != -1); //Make sure the clicked row/column is valid.
+            DataGridView datagridview = sender as DataGridView;
+
+            // Check to make sure the cell clicked is the cell containing the combobox 
+            if (datagridview.Columns[e.ColumnIndex] is DataGridViewComboBoxColumn && validClick)
+            {
+                datagridview.BeginEdit(true);
+                ((ComboBox)datagridview.EditingControl).DroppedDown = true;
+            }
+        }
     }
 
 }
