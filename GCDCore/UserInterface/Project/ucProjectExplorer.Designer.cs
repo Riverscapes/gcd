@@ -439,7 +439,7 @@ namespace GCDCore.UserInterface.Project
             // 
             // multiEpochChangeDetectionToolStripMenuItem
             // 
-            this.multiEpochChangeDetectionToolStripMenuItem.Enabled = false;
+            this.multiEpochChangeDetectionToolStripMenuItem.Enabled = true;
             this.multiEpochChangeDetectionToolStripMenuItem.Image = global::GCDCore.Properties.Resources.Add;
             this.multiEpochChangeDetectionToolStripMenuItem.Name = "multiEpochChangeDetectionToolStripMenuItem";
             this.multiEpochChangeDetectionToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
