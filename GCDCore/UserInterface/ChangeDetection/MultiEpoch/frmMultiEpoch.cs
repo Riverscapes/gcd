@@ -379,6 +379,19 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
                 return false;
             }
             */
+
+            //check for surveys without error surfaces if uncertainty analysis method is propagated or probabilistic thresholding
+            if(ucThresholding1.ThresholdProperties.Method != ThresholdProps.ThresholdMethods.MinLoD) //if method is not minimum level of detection
+            {
+                foreach(Epoch currentEpoch in Epochs)
+                {
+                    if(currentEpoch.NewDEMErrorSurface == null || currentEpoch.OldDEMErrorSurface == null)
+                    {
+                        MessageBox.Show("You must specify an error surface for each included survey if your uncertainty analysis method is not minimum level of detection.", "Missing Error Surface", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return false;
+                    }
+                }
+            }
             return true;
         }
 
