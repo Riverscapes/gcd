@@ -157,25 +157,27 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
 
         private void DEMIsActive_Changed(object sender, EventArgs e)
         {
-            Console.WriteLine("DEM isactive changed");
             UpdateEpochQueue();
         }
 
-        private void grdDEMs_CellValueChanged(object sender, DataGridViewCellEventArgs e)
-        {
-            Console.WriteLine("Cell Value CHanged");
-
-        }
-
-        //http://geekswithblogs.net/FrostRed/archive/2008/09/07/125001.aspx
+        /// <summary>
+        /// Makes sure changes to the active checkbox is propagated through to changing the databound Active property on DEMSurveyItem
+        /// when the user check
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// See link below for strategy 
+        /// http://geekswithblogs.net/FrostRed/archive/2008/09/07/125001.aspx
         private void grdDEMs_CellMouseUp(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if (e.ColumnIndex == 1 && e.RowIndex > -1)
+            //get column name
+            int colIndex = e.ColumnIndex;
+            string colName = grdDEMs.Columns[colIndex].Name;
 
+            //if its the Active checkbox column, end edit when mouse button is up to propate changes to databound item
+            if (colName == "colActive" && e.RowIndex > -1)
             {
-
                 grdDEMs.EndEdit();
-
             }
         }
 
