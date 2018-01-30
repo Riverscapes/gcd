@@ -4,7 +4,9 @@ title: Release Notes
 
 ## 7.0.03 - 30 Jan 2018
 
-* Fixed change detection with probabilistic thresholding when no spatial coherence in use (see [issue #30](https://github.com/Riverscapes/gcd/issues/30)).
+* Fixed change detection with probabilistic thresholding when no spatial coherence in use ([issue #30](https://github.com/Riverscapes/gcd/issues/30)).
+
+[Download](https://github.com/Riverscapes/gcd/releases)
 
 ## 7.0.02 - 22 Jan 2018
 

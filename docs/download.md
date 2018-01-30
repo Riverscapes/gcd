@@ -17,9 +17,9 @@ GCD Standalone is a desktop software version that performs all the core GCD func
 <div class="columns small-6">
   <img src="{{ site.baseurl }}/assets/images/gcd_addin.png" style="height:200px">
     <div>
-    	<a class="button large expanded" href="http://releases.northarrowresearch.com/GCD/Desktop/2018_01_23_GCDAddIn_7_0_02.esriAddIn">
+    	<a class="button large expanded" href="https://github.com/Riverscapes/gcd/releases">
         <span class="fa fa-cloud-download"></span>
-        &nbsp;&nbsp;GCD AddIn for ArcGIS 10.4</a>
+        &nbsp;&nbsp;GCD AddIn for ArcGIS 10.x</a>
     </div>  
 </div>
 
@@ -28,7 +28,7 @@ GCD Standalone is a desktop software version that performs all the core GCD func
   
   <img src="{{ site.baseurl }}/assets/images/gcd_standalone.png" style="height:200px">
     <div>
-    	<a class="button large expanded" href="https://github.com/Riverscapes/gcd/releases/tag/v1.0.0_StandAlone">
+    	<a class="button large expanded" href="https://github.com/Riverscapes/gcd/releases">
         <span class="fa fa-cloud-download"></span>
         &nbsp;&nbsp;GCD Standalone</a>
     </div>
