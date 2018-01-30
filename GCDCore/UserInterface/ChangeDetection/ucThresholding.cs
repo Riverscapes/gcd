@@ -27,7 +27,16 @@ namespace GCDCore.UserInterface.ChangeDetection
                 else if (rdoPropagated.Checked)
                     return new ThresholdProps();
                 else
-                    return new ThresholdProps(valConfidence.Value, CoherenceProps);
+                {
+                    if (chkBayesian.Checked)
+                    {
+                        return new ThresholdProps(valConfidence.Value, CoherenceProps);
+                    }
+                    else
+                    {
+                        return new ThresholdProps(valConfidence.Value, null);
+                    }
+                }
             }
         }
 
