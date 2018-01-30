@@ -2,6 +2,10 @@
 title: Release Notes
 ---
 
+## 7.0.03 - 30 Jan 2018
+
+* Fixed change detection with probabilistic thresholding when no spatial coherence in use (see [issue #30](https://github.com/Riverscapes/gcd/issues/30)).
+
 ## 7.0.02 - 22 Jan 2018
 
 * Fixing AddIn so that `Deploy` files are considered part of the installation and not `AddInContent`.
