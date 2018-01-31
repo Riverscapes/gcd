@@ -83,6 +83,8 @@
     <Compile Include="Project\GCDProjectItem.cs" />
     <Compile Include="Project\GCDProjectRasterItem.cs" />
     <Compile Include="Project\HistogramPair.cs" />
+    <Compile Include="Project\Morphological\MorphologicalAnalysis.cs" />
+    <Compile Include="Project\Morphological\MorphologicalUnit.cs" />
     <Compile Include="Project\ProjectManager.cs" />
     <Compile Include="Project\SurveyDateTime.cs" />
     <Compile Include="Project\SurveyType.cs" />
@@ -122,6 +124,18 @@
     </Compile>
     <Compile Include="UserInterface\BudgetSegregation\frmBudgetSegResults.Designer.cs">
       <DependentUpon>frmBudgetSegResults.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\BudgetSegregation\Morphological\frmMorphResults.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\BudgetSegregation\Morphological\frmMorphResults.Designer.cs">
+      <DependentUpon>frmMorphResults.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\BudgetSegregation\Morphological\frmMorpProperties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\BudgetSegregation\Morphological\frmMorpProperties.Designer.cs">
+      <DependentUpon>frmMorpProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\ChangeDetection\Batch\frmBatchDoD.cs">
       <SubType>Form</SubType>
@@ -386,6 +400,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\BudgetSegregation\frmBudgetSegResults.resx">
       <DependentUpon>frmBudgetSegResults.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\BudgetSegregation\Morphological\frmMorphResults.resx">
+      <DependentUpon>frmMorphResults.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\BudgetSegregation\Morphological\frmMorpProperties.resx">
+      <DependentUpon>frmMorpProperties.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\ChangeDetection\Batch\frmBatchDoD.resx">
       <DependentUpon>frmBatchDoD.cs</DependentUpon>
