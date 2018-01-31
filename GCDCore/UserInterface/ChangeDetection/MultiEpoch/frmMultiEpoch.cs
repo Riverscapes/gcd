@@ -404,7 +404,7 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
             List<DEMSurvey> AllSurveys = ProjectManager.Project.DEMSurveys.Values.ToList();
 
             List<DEMSurvey> SurveysWithChronologicalOrder = AllSurveys.Where(survey => survey.ChronologicalOrder.HasValue).OrderBy(survey =>survey.ChronologicalOrder).ToList();
-            List<DEMSurvey> SurveysWithSurveyDate= AllSurveys.Where(survey => !survey.ChronologicalOrder.HasValue && survey.SurveyDate != null).OrderBy(survey => survey.SurveyDate).ToList();
+            List<DEMSurvey> SurveysWithSurveyDate= AllSurveys.Where(survey => !survey.ChronologicalOrder.HasValue && survey.SurveyDate != null).OrderByDescending(survey => survey.SurveyDate).ToList();
             List<DEMSurvey> RemainingSurveys= AllSurveys.Where(survey => !survey.ChronologicalOrder.HasValue && survey.SurveyDate == null).OrderByDescending(survey => survey.Name).ToList();
 
             SortedSurveys.AddRange(SurveysWithChronologicalOrder);
