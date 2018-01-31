@@ -201,7 +201,8 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
                 ProjectManager.Project.Save();
 
                 ThresholdProps threshold = ucThresholding1.ThresholdProperties;
-                BatchEngine = new ChangeDetectionMultiEpoch(Epochs.ToList(), threshold);
+                List<Epoch> ActiveEpochs = Epochs.Where(epoch => epoch.IsActive == true).ToList();
+                BatchEngine = new ChangeDetectionMultiEpoch(ActiveEpochs, threshold);
                 bgWorker.RunWorkerAsync();
             }
             catch (Exception ex)
