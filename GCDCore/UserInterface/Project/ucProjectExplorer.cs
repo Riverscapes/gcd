@@ -19,6 +19,7 @@ namespace GCDCore.UserInterface.Project
         private const string m_sAssocSurfaces = "Associated Surfaces";
         private const string m_sErrorSurfaces = "Error Surfaces";
         private const string m_sBudgetSegs = "Budget Segregations";
+        private const string m_sMasks = "Masks";
 
         private static SortSurveyBy m_eSortBy = SortSurveyBy.SurveyDateDsc;
 
@@ -119,7 +120,7 @@ namespace GCDCore.UserInterface.Project
             newNode.SelectedImageIndex = (int)eType;
             newNode.Tag = new ProjectTreeNode(eType, projectItem);
 
-            if (selItem  is ProjectTreeNode && selItem.Equals((ProjectTreeNode)newNode.Tag))
+            if (selItem is ProjectTreeNode && selItem.Equals((ProjectTreeNode)newNode.Tag))
             {
                 newNode.TreeView.SelectedNode = newNode;
                 newNode.Parent.Expand();
@@ -178,6 +179,8 @@ namespace GCDCore.UserInterface.Project
                     if (bExpandSurveyNode)
                         nodSurvey.Expand();
                 }
+
+                TreeNode nodMasks = AddTreeNode(nodProject, GCDNodeTypes.MasksGroup, m_sMasks, null, selectItem);
 
                 nodInputs.Expand();
                 nodSurveys.Expand();
@@ -398,6 +401,7 @@ namespace GCDCore.UserInterface.Project
                 case GCDNodeTypes.AssociatedSurface: cms = cmsAssociatedSurface; break;
                 case GCDNodeTypes.ErrorSurfaceGroup: cms = cmsErrorSurfacesGroup; break;
                 case GCDNodeTypes.ErrorSurface: cms = cmsErrorSurface; break;
+                case GCDNodeTypes.MasksGroup: cms = cmsMasks; break;
                 case GCDNodeTypes.ChangeDetectionGroup: cms = cmsChangeDetectionGroup; break;
                 case GCDNodeTypes.DoD: cms = cmsChangeDetection; break;
                 case GCDNodeTypes.ChangeDetectionDEMPair: cms = cmsDEMSurveyPair; break;
@@ -1659,6 +1663,27 @@ namespace GCDCore.UserInterface.Project
             {
                 naru.error.ExceptionUI.HandleException(ex);
             }
+
+        }
+
+        private void addMorphologicalAnalysisToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UserInterface.BudgetSegregation.Morphological.frmMorpProperties frm1 = new BudgetSegregation.Morphological.frmMorpProperties();
+            frm1.ShowDialog();
+
+            UserInterface.BudgetSegregation.Morphological.frmMorphResults frm2 = new BudgetSegregation.Morphological.frmMorphResults();
+            frm2.ShowDialog();
+        }
+
+        private void addRegularMaskToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            GCDCore.UserInterface.Masks.frmMaskProperties frm = new Masks.frmMaskProperties();
+            frm.ShowDialog();
+
+        }
+
+        private void addDirectionalMaskToolStripMenuItem_Click(object sender, EventArgs e)
+        {
 
         }
     }

@@ -27,6 +27,34 @@ namespace GCDCore.Project.Morphological
             BS = bs;
 
             Units = new BindingList<MorphologicalUnit>();
+
+            MorphologicalUnit muPos = null;
+            foreach (BudgetSegregationClass bsc in bs.Classes.Values)
+            {
+                MorphologicalUnit mu = new MorphologicalUnit(bsc.Name);
+                mu.VolErosion = bsc.Statistics.ErosionThr.GetVolume(ProjectManager.Project.CellArea, ProjectManager.Project.Units.VertUnit);
+                mu.VolErsionErr = bsc.Statistics.ErosionErr.GetVolume(ProjectManager.Project.CellArea, ProjectManager.Project.Units.VertUnit);
+
+                mu.VolDeposition = bsc.Statistics.DepositionThr.GetVolume(ProjectManager.Project.CellArea, ProjectManager.Project.Units.VertUnit);
+                mu.VolDepositionErr = bsc.Statistics.DepositionErr.GetVolume(ProjectManager.Project.CellArea, ProjectManager.Project.Units.VertUnit);
+
+                // Track the first unit that possesses a positive exit volume
+                if (mu.VolOut > new Volume(0))
+                    muPos = mu;
+
+                Units.Add(mu);
+            }
+
+            // The volume entering the first unit is the volume change of that first unit
+            // plus the volume exiting the unit with the first positive volume out
+            Units[0].VolIn = Units[0].VolChange + muPos.VolOut;
+
+            // All remaining units should have their volumes in and out adjusted
+            for (int i = 1; i < Units.Count; i++)
+                Units[i].VolIn = Units[i - 1].VolOut;
+
+            // Calculate the work performed in each cell now that the values are adjusted
+            CalculateWork();
         }
 
         private decimal _porosity;
@@ -120,12 +148,13 @@ namespace GCDCore.Project.Morphological
             nodDEM.AppendChild(nodParent.OwnerDocument.CreateElement("BudgetSegregation")).InnerText = BS.Name;
             nodDEM.AppendChild(nodParent.OwnerDocument.CreateElement("Porosity")).InnerText = Porosity.ToString();
             nodDEM.AppendChild(nodParent.OwnerDocument.CreateElement("Density")).InnerText = Density.ToString();
+            nodParent.AppendChild(nodParent.OwnerDocument.CreateElement("Competency")).InnerText = Competency.ToString();
 
             XmlNode nodDuration = nodParent.OwnerDocument.CreateElement("Duration");
             nodDuration.InnerText = Duration.ToString();
-            nodDuration.Attributes.Append(nodParent.OwnerDocument.CreateAttribute("units")).InnerText = Duration.un
-
-
+            // nodDuration.Attributes.Append(nodParent.OwnerDocument.CreateAttribute("units")).InnerText = Duration.GetAbbreviation(_duration);
         }
+
+
     }
 }

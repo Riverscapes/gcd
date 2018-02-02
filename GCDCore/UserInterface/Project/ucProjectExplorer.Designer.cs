@@ -118,6 +118,11 @@ namespace GCDCore.UserInterface.Project
             this.ToolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.AddBudgetSegregationToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.DeleteBudgetSegregationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.addMorphologicalAnalysisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmsMasks = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.addRegularMaskToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addDirectionalMaskToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsProject.SuspendLayout();
             this.cmsDEMSurvey.SuspendLayout();
             this.cmsAssociatedSurface.SuspendLayout();
@@ -131,6 +136,7 @@ namespace GCDCore.UserInterface.Project
             this.cmsDEMSurveyPair.SuspendLayout();
             this.cmsBSGroup.SuspendLayout();
             this.cmsBS.SuspendLayout();
+            this.cmsMasks.SuspendLayout();
             this.SuspendLayout();
             // 
             // treProject
@@ -419,7 +425,7 @@ namespace GCDCore.UserInterface.Project
             this.batchChangeDetectionToolStripMenuItem,
             this.AddAllChangeDetectionAnalysesToTheMapToolStripMenuItem});
             this.cmsChangeDetectionGroup.Name = "cmsChangeDetectionGroup";
-            this.cmsChangeDetectionGroup.Size = new System.Drawing.Size(322, 92);
+            this.cmsChangeDetectionGroup.Size = new System.Drawing.Size(322, 70);
             // 
             // AddChangeDetectionToolStripMenuItem
             // 
@@ -684,9 +690,11 @@ namespace GCDCore.UserInterface.Project
             this.BrowseBudgetSegregationFolderToolStripMenuItem,
             this.ToolStripSeparator6,
             this.AddBudgetSegregationToolStripMenuItem2,
-            this.DeleteBudgetSegregationToolStripMenuItem});
+            this.DeleteBudgetSegregationToolStripMenuItem,
+            this.toolStripSeparator7,
+            this.addMorphologicalAnalysisToolStripMenuItem});
             this.cmsBS.Name = "cmsBS";
-            this.cmsBS.Size = new System.Drawing.Size(256, 98);
+            this.cmsBS.Size = new System.Drawing.Size(256, 126);
             // 
             // BudgetSegregationPropertiesToolStripMenuItem
             // 
@@ -721,6 +729,43 @@ namespace GCDCore.UserInterface.Project
             this.DeleteBudgetSegregationToolStripMenuItem.Size = new System.Drawing.Size(255, 22);
             this.DeleteBudgetSegregationToolStripMenuItem.Text = "Delete Budget Segregation";
             // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(252, 6);
+            // 
+            // addMorphologicalAnalysisToolStripMenuItem
+            // 
+            this.addMorphologicalAnalysisToolStripMenuItem.Image = global::GCDCore.Properties.Resources.bars;
+            this.addMorphologicalAnalysisToolStripMenuItem.Name = "addMorphologicalAnalysisToolStripMenuItem";
+            this.addMorphologicalAnalysisToolStripMenuItem.Size = new System.Drawing.Size(255, 22);
+            this.addMorphologicalAnalysisToolStripMenuItem.Text = "Add Morphological Analysis...";
+            this.addMorphologicalAnalysisToolStripMenuItem.Click += new System.EventHandler(this.addMorphologicalAnalysisToolStripMenuItem_Click);
+            // 
+            // cmsMasks
+            // 
+            this.cmsMasks.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addRegularMaskToolStripMenuItem,
+            this.addDirectionalMaskToolStripMenuItem});
+            this.cmsMasks.Name = "cmsMasks";
+            this.cmsMasks.Size = new System.Drawing.Size(188, 48);
+            // 
+            // addRegularMaskToolStripMenuItem
+            // 
+            this.addRegularMaskToolStripMenuItem.Image = global::GCDCore.Properties.Resources.mask;
+            this.addRegularMaskToolStripMenuItem.Name = "addRegularMaskToolStripMenuItem";
+            this.addRegularMaskToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.addRegularMaskToolStripMenuItem.Text = "Add Regular Mask";
+            this.addRegularMaskToolStripMenuItem.Click += new System.EventHandler(this.addRegularMaskToolStripMenuItem_Click);
+            // 
+            // addDirectionalMaskToolStripMenuItem
+            // 
+            this.addDirectionalMaskToolStripMenuItem.Image = global::GCDCore.Properties.Resources.mask_dir;
+            this.addDirectionalMaskToolStripMenuItem.Name = "addDirectionalMaskToolStripMenuItem";
+            this.addDirectionalMaskToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.addDirectionalMaskToolStripMenuItem.Text = "Add Directional Mask";
+            this.addDirectionalMaskToolStripMenuItem.Click += new System.EventHandler(this.addDirectionalMaskToolStripMenuItem_Click);
+            // 
             // ucProjectExplorer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -741,6 +786,7 @@ namespace GCDCore.UserInterface.Project
             this.cmsDEMSurveyPair.ResumeLayout(false);
             this.cmsBSGroup.ResumeLayout(false);
             this.cmsBS.ResumeLayout(false);
+            this.cmsMasks.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -823,5 +869,10 @@ namespace GCDCore.UserInterface.Project
         private System.Windows.Forms.ToolStripMenuItem batchChangeDetectionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem multiEpochChangeDetectionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem multiUncertaintyAnalysisChangeDetectionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
+        private System.Windows.Forms.ToolStripMenuItem addMorphologicalAnalysisToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip cmsMasks;
+        private System.Windows.Forms.ToolStripMenuItem addRegularMaskToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addDirectionalMaskToolStripMenuItem;
     }
 }

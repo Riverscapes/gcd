@@ -12,6 +12,7 @@
             AssociatedSurface,
             ErrorSurfaceGroup,
             ErrorSurface,
+            MasksGroup,
             AOIGroup,
             AOI,
             AnalysesGroup,

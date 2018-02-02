@@ -16,5 +16,10 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
         {
             InitializeComponent();
         }
+
+        private void frmMorphResults_Load(object sender, EventArgs e)
+        {
+                       
+        }
     }
 }

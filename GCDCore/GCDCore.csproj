@@ -83,6 +83,7 @@
     <Compile Include="Project\GCDProjectItem.cs" />
     <Compile Include="Project\GCDProjectRasterItem.cs" />
     <Compile Include="Project\HistogramPair.cs" />
+    <Compile Include="Project\Masks\MaskItem.cs" />
     <Compile Include="Project\Morphological\MorphologicalAnalysis.cs" />
     <Compile Include="Project\Morphological\MorphologicalUnit.cs" />
     <Compile Include="Project\ProjectManager.cs" />
@@ -243,6 +244,12 @@
       <DependentUpon>frmOptions.cs</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\GIS\BrowseGISLayerEventArgs.cs" />
+    <Compile Include="UserInterface\Masks\frmMaskProperties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\Masks\frmMaskProperties.Designer.cs">
+      <DependentUpon>frmMaskProperties.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserInterface\Project\ucProjectExplorer.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -458,6 +465,9 @@
     <EmbeddedResource Include="UserInterface\frmOptions.resx">
       <DependentUpon>frmOptions.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\Masks\frmMaskProperties.resx">
+      <DependentUpon>frmMaskProperties.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\Project\ucProjectExplorer.resx">
       <DependentUpon>ucProjectExplorer.cs</DependentUpon>
     </EmbeddedResource>
@@ -485,6 +495,15 @@
     <EmbeddedResource Include="UserInterface\Project\frmProjectProperties.resx">
       <DependentUpon>frmProjectProperties.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bars.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\mask.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\mask_dir.png" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

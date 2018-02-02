@@ -131,6 +131,16 @@ namespace GCDCore.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap bars {
+            get {
+                object obj = ResourceManager.GetObject("bars", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap BrowseFolder {
             get {
                 object obj = ResourceManager.GetObject("BrowseFolder", resourceCulture);
@@ -401,6 +411,26 @@ namespace GCDCore.Properties {
         public static System.Drawing.Bitmap IdahoPower_63height {
             get {
                 object obj = ResourceManager.GetObject("IdahoPower_63height", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap mask {
+            get {
+                object obj = ResourceManager.GetObject("mask", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap mask_dir {
+            get {
+                object obj = ResourceManager.GetObject("mask_dir", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
