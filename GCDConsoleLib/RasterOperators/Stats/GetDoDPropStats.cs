@@ -118,9 +118,9 @@ namespace GCDConsoleLib.Internal.Operators
             if (fDoDValue < 0)
             {
                 // Raw Erosion
-                stats.ErosionRaw.AddToSumAndIncrementCounter(fDoDValue - 1);
+                stats.ErosionRaw.AddToSumAndIncrementCounter(fDoDValue * - 1);
 
-                if (fDoDValue < (fPropErr - 1))
+                if (fDoDValue < (fPropErr * - 1))
                 {
                     // Thresholded Erosion
                     stats.ErosionThr.AddToSumAndIncrementCounter(fDoDValue * -1);
