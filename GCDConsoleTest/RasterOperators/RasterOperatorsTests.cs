@@ -279,6 +279,27 @@ namespace GCDConsoleLib.Tests
         }
 
         [TestMethod()]
+        public void SetNullAbsoluteTest()
+        {
+            using (ITempDir tmp = TempDir.Create())
+            {
+                Raster rTemp2005 = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2005Dec_DEM\2005Dec_DEM.img")));
+                Raster rTemp2006 = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2006Feb_DEM\2006Feb_DEM.img")));
+                Raster rDoD = RasterOperators.Subtract(rTemp2006, rTemp2005, new FileInfo(Path.Combine(tmp.Name, "rDoD.tif")));
+
+                ErrorRasterProperties props02 = new ErrorRasterProperties(0.2m);
+                ErrorRasterProperties props01 = new ErrorRasterProperties(0.1m);        
+                // 0.1 2006
+                // 0.2 2005
+                Raster r2005Error = RasterOperators.CreateErrorRaster(rTemp2005, props02, new FileInfo(Path.Combine(tmp.Name, "2005Dec_DEM_CONSTERR02.tif")));
+                Raster r2006Error = RasterOperators.CreateErrorRaster(rTemp2006, props01, new FileInfo(Path.Combine(tmp.Name, "2006Feb_DEM_CONSTERR01.tif")));
+                Raster propError = RasterOperators.RootSumSquares(r2006Error, r2005Error, new FileInfo(Path.Combine(tmp.Name, "properror.tif")));
+
+                Raster rTemplateOutput5 = RasterOperators.AbsoluteSetNull(rDoD, RasterOperators.ThresholdOps.GreaterThan, propError, new FileInfo(Path.Combine(tmp.Name, "AbsRasterGreaterThan.tif")));                
+            }
+        }
+
+        [TestMethod()]
         public void PosteriorProbabilityTest()
         {
             using (ITempDir tmp = TempDir.Create())

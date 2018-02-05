@@ -658,6 +658,20 @@ namespace GCDConsoleLib
         }
 
         /// <summary>
+        /// SetNull based on a requested method, after performing Absolute() on the rInput raster 
+        /// </summary>
+        /// <param name="rInput"></param>
+        /// <param name="fThresholdOp">LessThan, GreaterThan, LessThanOrEqual, GreaterThanOrEqual</param>
+        /// <param name="rThreshold"></param>
+        /// <param name="sOutputRaster"></param>
+        /// <returns></returns>
+        public static Raster AbsoluteSetNull(Raster rInput, ThresholdOps fThresholdOp, Raster rThreshold, FileInfo sOutputRaster)
+        {
+            ThresholdAbs threshOp = new ThresholdAbs(rInput, fThresholdOp, rThreshold, new Raster(rInput, sOutputRaster));
+            return threshOp.RunWithOutput();
+        }
+
+        /// <summary>
         /// Prior Probability Raster Generation
         /// </summary>
         /// <param name="rawDoD"></param>

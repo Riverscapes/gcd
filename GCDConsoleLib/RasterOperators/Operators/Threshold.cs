@@ -5,8 +5,8 @@ namespace GCDConsoleLib.Internal.Operators
 {
     public class Threshold : CellByCellOperator<double>
     {
-        private RasterOperators.ThresholdOps _botOp;
-        private double _botNum;
+        protected RasterOperators.ThresholdOps _botOp;
+        protected double _botNum;
         private RasterOperators.ThresholdOps _topOp;
         private double _topNum;
         private bool bTwoOps;

@@ -115,6 +115,7 @@
     <Compile Include="RasterOperators\Operators\PostProbability.cs" />
     <Compile Include="RasterOperators\Operators\PriorProbRaster.cs" />
     <Compile Include="RasterOperators\Operators\PointDensity.cs" />
+    <Compile Include="RasterOperators\Operators\ThresholdAbs.cs" />
     <Compile Include="RasterOperators\Stats\GetChangeStats.cs" />
     <Compile Include="RasterOperators\Stats\GetDoDPropStats.cs" />
     <Compile Include="RasterOperators\Stats\GetDoDMinLodStats.cs" />
