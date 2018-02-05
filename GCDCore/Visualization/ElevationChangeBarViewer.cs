@@ -122,8 +122,15 @@ namespace GCDCore.Visualization
                 depSeries.Points.AddXY(GetXAxisLabel(eType, SeriesType.Net), 0);
             }
 
-            m_Chart.ChartAreas[0].RecalculateAxesScale();
-            m_Chart.AlignDataPointsByAxisLabel();
+            try
+            {
+                m_Chart.ChartAreas[0].RecalculateAxesScale();
+                m_Chart.AlignDataPointsByAxisLabel();
+            }
+            catch(Exception ex)
+            {
+                Console.Write("stop");
+            }
         }
 
         private object GetXAxisLabel(BarTypes eBarType, SeriesType eSeriesType)

@@ -152,7 +152,7 @@ namespace GCDConsoleLib.Internal.Operators
                     {
                         if (fMask > 0) // Deposition
                             stats.DepositionRaw.AddToSumAndIncrementCounter(fRVal);
-                        else // Erosion
+                        else if (fMask < 0) // Erosion
                             stats.ErosionRaw.AddToSumAndIncrementCounter(fRVal);
                     }
                 }
