@@ -8,12 +8,11 @@ using GCDConsoleLib;
 
 namespace GCDCore.Project
 {
-    public class DEMSurvey : GCDProjectRasterItem
+    public class DEMSurvey : Surface
     {
         public readonly GCDProjectRasterItem Hillshade;
         public readonly naru.ui.SortableBindingList<AssocSurface> AssocSurfaces;
-        public readonly naru.ui.SortableBindingList<ErrorSurface> ErrorSurfaces;
-
+ 
         public string SurveyMethod { get; set; } // Single survey methods
         public bool IsSingleSurveyMethod { get { return MethodMask == null; } }
         public SurveyDateTime SurveyDate { get; set; }
@@ -21,48 +20,18 @@ namespace GCDCore.Project
         public string MethodMaskField { get; set; } // Multi-method field in ShapeFile
         public int? ChronologicalOrder { get; set; } // Optional zero-based index of chronological order maintain by the Multi-Epoch GCD Analysis
 
-        public ErrorSurface DefaultErrorSurface
-        {
-            get
-            {
-                if (ErrorSurfaces.Count(x => x.IsDefault) > 0)
-                    return ErrorSurfaces.First(x => x.IsDefault);
-                else
-                    return null;
-            }
-        }
-
-        /// <summary>
-        /// GIS legend label for the associated surface
-        /// </summary>
-        /// <remarks>This isn't the ToC label, but instead it's the label
-        /// that appears above the legend to describe the symbology</remarks>
-        public string LayerHeader
-        {
-            get
-            {
-                return string.Format("Elevation ({0})", UnitsNet.Length.GetAbbreviation(ProjectManager.Project.Units.VertUnit));
-            }
-        }
-
         public DEMSurvey(string name, SurveyDateTime surveyDate, FileInfo rasterPath)
             : base(name, rasterPath)
         {
             SurveyDate = surveyDate;
 
             AssocSurfaces = new naru.ui.SortableBindingList<AssocSurface>();
-            ErrorSurfaces = new naru.ui.SortableBindingList<ErrorSurface>();
-
+  
             FileInfo hsPath = Project.ProjectManager.OutputManager.DEMSurveyHillShadeRasterPath(name);
             if (hsPath.Exists)
             {
                 Hillshade = new GCDProjectRasterItem("DEM Hillshade", hsPath);
             }
-        }
-
-        public bool IsErrorNameUnique(string name, ErrorSurface ignore)
-        {
-            return ErrorSurfaces.Count<ErrorSurface>(x => x != ignore && string.Compare(name, x.Name, true) == 0) == 0;
         }
 
         public bool IsAssocNameUnique(string name, AssocSurface ignore)
@@ -168,18 +137,6 @@ namespace GCDCore.Project
                 {
                     Console.WriteLine("Failed to delete associate surface directory" + assoc.Raster.GISFileInfo.Directory.Parent);
                 }
-            }
-        }
-
-        public void DeleteErrorSurface(ErrorSurface err)
-        {
-            try
-            {
-                err.Delete();
-            }
-            finally
-            {
-                ErrorSurfaces.Remove(err);
             }
         }
 
@@ -301,6 +258,5 @@ namespace GCDCore.Project
 
             return dem;
         }
-
     }
 }

@@ -20,6 +20,7 @@ namespace GCDCore.UserInterface.Project
         private const string m_sErrorSurfaces = "Error Surfaces";
         private const string m_sBudgetSegs = "Budget Segregations";
         private const string m_sMasks = "Masks";
+        private const string m_sReferenceSurfaces = "Reference Surfaces";
 
         private static SortSurveyBy m_eSortBy = SortSurveyBy.SurveyDateDsc;
 
@@ -180,6 +181,9 @@ namespace GCDCore.UserInterface.Project
                         nodSurvey.Expand();
                 }
 
+
+
+                TreeNode nodReferenceSurfaces = AddTreeNode(nodProject, GCDNodeTypes.ReferenceSurfaces, m_sReferenceSurfaces, null, selectItem);
                 TreeNode nodMasks = AddTreeNode(nodProject, GCDNodeTypes.MasksGroup, m_sMasks, null, selectItem);
 
                 nodInputs.Expand();
@@ -1684,7 +1688,8 @@ namespace GCDCore.UserInterface.Project
 
         private void addDirectionalMaskToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            GCDCore.UserInterface.Masks.frmDirectionalMaskProps frm = new Masks.frmDirectionalMaskProps();
+            frm.ShowDialog();
         }
     }
 }

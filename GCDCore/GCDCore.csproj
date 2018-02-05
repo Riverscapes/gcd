@@ -87,6 +87,7 @@
     <Compile Include="Project\Morphological\MorphologicalAnalysis.cs" />
     <Compile Include="Project\Morphological\MorphologicalUnit.cs" />
     <Compile Include="Project\ProjectManager.cs" />
+    <Compile Include="Project\Surface.cs" />
     <Compile Include="Project\SurveyDateTime.cs" />
     <Compile Include="Project\SurveyType.cs" />
     <Compile Include="Engines\DoD\ThresholdProps.cs" />
@@ -244,6 +245,12 @@
       <DependentUpon>frmOptions.cs</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\GIS\BrowseGISLayerEventArgs.cs" />
+    <Compile Include="UserInterface\Masks\frmDirectionalMaskProps.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\Masks\frmDirectionalMaskProps.Designer.cs">
+      <DependentUpon>frmDirectionalMaskProps.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserInterface\Masks\frmMaskProperties.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -464,6 +471,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\frmOptions.resx">
       <DependentUpon>frmOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\Masks\frmDirectionalMaskProps.resx">
+      <DependentUpon>frmDirectionalMaskProps.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\Masks\frmMaskProperties.resx">
       <DependentUpon>frmMaskProperties.cs</DependentUpon>
