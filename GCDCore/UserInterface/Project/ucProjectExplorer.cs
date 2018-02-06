@@ -367,7 +367,7 @@ namespace GCDCore.UserInterface.Project
         {
 
             int nID = -1;
-            int nIndex = aNode.Tag.ToString().IndexOf("_");
+            int nIndex = ((ProjectTreeNode) aNode.Tag).Name.ToString().IndexOf("_");
             if (nIndex > 0)
             {
                 int.TryParse(aNode.Tag.ToString().Substring(nIndex + 1), out nID);
