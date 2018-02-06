@@ -34,5 +34,6 @@ namespace GCDConsoleLib.Tests
             string[] dirs = new string[] { AssemblyDir, @"TestData\vectors", rName };
             return Path.Combine(dirs);
         }
+
     }
 }

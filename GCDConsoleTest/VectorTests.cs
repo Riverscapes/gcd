@@ -1,5 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
+using GCDConsoleTest.Utility;
+using GCDConsoleLib.Tests.Utility;
 
 namespace GCDConsoleLib.Tests
 {
@@ -70,5 +72,107 @@ namespace GCDConsoleLib.Tests
             }
         }
 
+
+        [TestMethod()]
+        public void StringVector()
+        {
+            string geoJSON = @"
+{
+    'type': 'FeatureCollection',
+    'crs': {
+        'type': 'name',
+        'properties': {
+            'name': 'urn:ogc:def:crs:OGC:1.3:CRS84'
+        }
+    },
+    'features': [{
+            'type': 'Feature',
+            'properties': {
+                'id': 1,
+                'name': 'FeatA'
+            },
+            'geometry': {
+                'type': 'Polygon',
+                'coordinates': [
+                    [
+                        [-114.252403253361436, 30.888533802761863],
+                        [-114.252403223569075, 30.888531408978231],
+                        [-114.252400449711814, 30.888531507935365],
+                        [-114.252400393960841, 30.888533878831986],
+                        [-114.252403253361436, 30.888533802761863]
+                    ]
+                ]
+            }
+        },
+        {
+            'type': 'Feature',
+            'properties': {
+                'id': 2,
+                'name': 'FeatB'
+            },
+            'geometry': {
+                'type': 'Polygon',
+                'coordinates': [
+                    [
+                        [-114.2524031592272, 30.888531092526087],
+                        [-114.252403186661326, 30.888528722140837],
+                        [-114.252400238159936, 30.888528628797079],
+                        [-114.252400356460214, 30.888531167573458],
+                        [-114.2524031592272, 30.888531092526087]
+                    ]
+                ]
+            }
+        },
+        {
+            'type': 'Feature',
+            'properties': {
+                'id': 3,
+                'name': 'FeatC'
+            },
+            'geometry': {
+                'type': 'Polygon',
+                'coordinates': [
+                    [
+                        [-114.25240312113354, 30.888528356846415],
+                        [-114.252403033521759, 30.888525915243243],
+                        [-114.252400202438167, 30.88852599080198],
+                        [-114.252400343125714, 30.888528284855536],
+                        [-114.25240312113354, 30.888528356846415]
+                    ]
+                ]
+            }
+        }
+    ]
+}  ";
+            // First we test using it on its own. Just a temporary file all alone in the world
+            string filepath1 = "";
+            using (var tmp = new TempGeoJSONFile(geoJSON))
+            {
+                filepath1 = tmp.fInfo.FullName;
+                Vector stringVector = new Vector(tmp.fInfo);
+                Assert.IsTrue(stringVector.Features.Count > 2);
+                Assert.IsTrue(new FileInfo(filepath1).Exists);
+            }
+            // Usage is done now file is cleaned up
+            Assert.IsFalse(new FileInfo(filepath1).Exists);
+
+            // Now let's test using it as part of a temporary directory 
+            string filepath2 = "";
+            using (ITempDir tmpfolder = TempDir.Create())
+            {
+                using (var tmpfile = new TempGeoJSONFile(geoJSON, Path.Combine(tmpfolder.Name, "geojson.json")))
+                {
+                    filepath2 = tmpfile.fInfo.FullName;
+                    Vector stringVector = new Vector(tmpfile.fInfo);
+                    Assert.IsTrue(stringVector.Features.Count > 2);
+                    Assert.IsTrue(new FileInfo(filepath2).Exists);
+                }
+                // Still here
+                Assert.IsTrue(new FileInfo(filepath2).Exists);
+            }
+            // Now it's gone 
+            Assert.IsFalse(new FileInfo(filepath2).Exists);
+
+        }
     }
 }

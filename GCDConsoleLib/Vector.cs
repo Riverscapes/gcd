@@ -52,9 +52,7 @@ namespace GCDConsoleLib
             _drv = GetDriver(GISFileInfo);
             
             if (!leaveopen)
-            {
                 Dispose();
-            }
         }
 
         /// <summary>

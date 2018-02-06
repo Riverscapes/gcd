@@ -1,9 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using GCDConsoleLib;
 using GCDConsoleLib.Tests.Utility;
 using GCDConsoleLib.Common.Extensons;
 using System.IO;
-using UnitsNet;
 using UnitsNet.Units;
 using GCDConsoleLib.GCD;
 using System.Collections.Generic;

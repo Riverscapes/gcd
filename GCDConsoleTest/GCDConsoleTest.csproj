@@ -127,6 +127,7 @@
     <Compile Include="RasterTests.cs" />
     <Compile Include="Miscellaneous.cs" />
     <Compile Include="Utility\ArrayExtensionsTests.cs" />
+    <Compile Include="Utility\TempGeoJSONFile.cs" />
     <Compile Include="Utility\DynamicMathTests.cs" />
     <Compile Include="Utility\ProbabilityTests.cs" />
     <Compile Include="Utility\TempDir.cs" />
