@@ -1,11 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using GCDConsoleLib;
-using System;
 using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GCDConsoleLib.Tests
 {
@@ -40,6 +34,16 @@ namespace GCDConsoleLib.Tests
             }
         }
 
+        [TestMethod()]
+        public void FileTypes()
+        {
+            Vector shp = new Vector(new FileInfo(TestHelpers.GetTestRootPath(@"vectors\StressTest.shp")));
+            Assert.IsTrue(shp.Features.Count > 10);
+
+            Vector geojson = new Vector(new FileInfo(TestHelpers.GetTestRootPath(@"geojson\3squares.json")));
+            Assert.IsTrue(geojson.Features.Count > 2);
+
+        }
 
         [TestMethod()]
         public void VectorDeleteTest()

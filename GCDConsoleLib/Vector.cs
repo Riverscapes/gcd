@@ -3,12 +3,17 @@ using System.IO;
 using System.Collections.Generic;
 using OSGeo.OGR;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace GCDConsoleLib
 {
     public class Vector : GISDataset
     {
-        private static string _driverstring = "ESRI Shapefile";
+        private static Dictionary<string, string> _driverstrings = new Dictionary<string, string>
+        {
+            {@".*\.shp","ESRI Shapefile"},
+            {@".*\.(json|geojson)","GeoJSON"}
+        };
         private Driver _drv;
         private DataSource _ds;
         public Dictionary<long, VectorFeature> Features;
@@ -44,11 +49,8 @@ namespace GCDConsoleLib
 
             List<string> creationOpts = new List<string>();
 
-            Driver driverobj = Ogr.GetDriverByName(_driverstring);
-
-            //dataset = driverobj.Create(filepath, Extent.cols, Extent.rows, 1, Datatype, creationOpts.ToArray());
-            //dataset.SetProjection(projection);
-
+            _drv = GetDriver(GISFileInfo);
+            
             if (!leaveopen)
             {
                 Dispose();
@@ -65,11 +67,11 @@ namespace GCDConsoleLib
                 _ds.Dispose();
                 _ds = null;
             }
-            if (_drv != null)
-            {
-                _drv.Dispose();
-                _drv = null;
-            }
+            //if (_drv != null)
+            //{
+            //    _drv.Dispose();
+            //    _drv = null;
+            //}
         }
 
         /// <summary>
@@ -93,10 +95,36 @@ namespace GCDConsoleLib
             // Register GDal and get the driver objects
             GdalConfiguration.ConfigureOgr();
             if (_ds == null)
-            {
-                _drv = Ogr.GetDriverByName(_driverstring);
-                _ds = _drv.Open(GISFileInfo.FullName, 0); // 0 => Read-only
+            {               
+                _ds = Ogr.Open(GISFileInfo.FullName, 0); // 0 => Read-only
+                _drv = _ds.GetDriver();
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="src"></param>
+        /// <returns></returns>
+        public static Driver GetDriver(FileInfo src)
+        {
+            GdalConfiguration.ConfigureOgr();
+            Driver driverobj = null;
+            bool found = false;
+            foreach (KeyValuePair<string, string> kvp in _driverstrings)
+            {
+                Regex r = new Regex(kvp.Key, RegexOptions.IgnoreCase);
+
+                if (r.IsMatch(src.Name))
+                {
+                    driverobj = Ogr.GetDriverByName(kvp.Value);
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) throw new FileLoadException(String.Format("No driver for file: {0}", src.FullName));
+
+            return driverobj;
         }
 
         /// <summary>
@@ -193,9 +221,10 @@ namespace GCDConsoleLib
         /// </summary>
         public override void Delete()
         {
-            Dispose();
             // We need a separate copy of the driver so we can delete it from the outside.
-            Driver drv = Ogr.GetDriverByName(_driverstring);
+            Driver drv = Ogr.GetDriverByName(_drv.GetName());
+
+            Dispose();
             drv.DeleteDataSource(GISFileInfo.FullName);
             drv.Dispose();
         }
@@ -208,7 +237,7 @@ namespace GCDConsoleLib
             Layer mLayer = _ds.GetLayerByIndex(0);
             FIDColumn = mLayer.GetFIDColumn();
             LayerName = mLayer.GetName();
-
+            
             // Get our FEATURE definitions
             Feature mFeat = mLayer.GetNextFeature();
             while (mFeat != null)

@@ -351,8 +351,6 @@ namespace GCDConsoleLib.Tests
 
                 Raster thrDoD = RasterOperators.ThresholdDoDProbability(rDoD, propError, new FileInfo(Path.Combine(tmp.Name, "tDoD.tif")), 0.95m);
 
-                Assert.Fail();
-
             }
         }
 
