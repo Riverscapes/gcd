@@ -9,9 +9,7 @@ namespace GCDConsoleLib.Internal.Operators
         public Histogram theHistogram;
 
         // If we do budget seg we need the following
-        private bool isBudgSeg;
         public Dictionary<string, Histogram> SegHistograms;
-        private Vector _polymask;
         private string _fieldname;
         private int _segNumBins;
 
@@ -36,11 +34,9 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="FieldName"></param>
         public BinRaster(Raster rInput, int numBins, Vector PolygonMask,
             string FieldName) :
-            base(new List<Raster> { rInput })
+            base(new List<Raster> { rInput }, PolygonMask)
         {
-            isBudgSeg = true;
             SegHistograms = new Dictionary<string, Histogram>();
-            _polymask = PolygonMask;
             _fieldname = FieldName;
             _segNumBins = numBins;
         }

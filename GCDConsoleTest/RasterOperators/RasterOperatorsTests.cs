@@ -74,10 +74,6 @@ namespace GCDConsoleLib.Tests
 
             UnitGroup ug = new UnitGroup(VolumeUnit.CubicMeter, AreaUnit.SquareMeter, LengthUnit.Meter, LengthUnit.Meter);
             DoDStats test = RasterOperators.GetStatsMinLoD(rRaw, rThresh, 73.0m, ug);
-
-            // And now the budget seg case
-            Vector rPolyMask = new Vector(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\MethodMask_ForTesting.shp")));
-            Dictionary<string, DoDStats> testBudgetSeg = RasterOperators.GetStatsMinLoD(rRaw, rThresh, 73.0m, rPolyMask, "Method", ug);
         }
 
         [TestMethod()]
@@ -104,9 +100,20 @@ namespace GCDConsoleLib.Tests
             // test the non-budget seg case
             UnitGroup ug = new UnitGroup(VolumeUnit.CubicMeter, AreaUnit.SquareMeter, LengthUnit.Meter, LengthUnit.Meter);
             DoDStats test1 = RasterOperators.GetStatsPropagated(rRaw, rErr, ug);
+        }
+
+        [TestMethod()]
+        public void GetStatsPropagatedBudgetSegTest()
+        {
+            Raster rRaw = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("const900.tif")));
+            Raster rThresh = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("const950.tif")));
+            Raster rErr = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("const980.tif")));
+
+            // test the non-budget seg case
+            UnitGroup ug = new UnitGroup(VolumeUnit.CubicMeter, AreaUnit.SquareMeter, LengthUnit.Meter, LengthUnit.Meter);
 
             // And now the budget seg case
-            Vector rPolyMask = new Vector(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\MethodMask_ForTesting.shp")));
+            Vector rPolyMask = new Vector(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\BudgetMasks\DoD_Geomorphic_Interpretation.shp")));
             Dictionary<string, DoDStats> testBudgetSeg = RasterOperators.GetStatsPropagated(rRaw, rThresh, rThresh, rPolyMask, "Method", ug);
 
         }
@@ -115,6 +122,7 @@ namespace GCDConsoleLib.Tests
         [TestMethod()]
         public void GetStatsProbalisticTest()
         {
+            Assert.Fail();
             Raster rRaw = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("const900.tif")));
             Raster rThresh = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("const950.tif")));
             Raster rErr = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("const980.tif")));
@@ -122,8 +130,21 @@ namespace GCDConsoleLib.Tests
             UnitGroup ug = new UnitGroup(VolumeUnit.CubicMeter, AreaUnit.SquareMeter, LengthUnit.Meter, LengthUnit.Meter);
             DoDStats test = RasterOperators.GetStatsProbalistic(rRaw, rThresh, rThresh, ug);
 
+        }
+
+
+        [TestMethod()]
+        public void GetStatsProbalisticBudgetSegTest()
+        {
+            Assert.Fail();
+            Raster rRaw = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("const900.tif")));
+            Raster rThresh = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("const950.tif")));
+            Raster rErr = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("const980.tif")));
+
+            UnitGroup ug = new UnitGroup(VolumeUnit.CubicMeter, AreaUnit.SquareMeter, LengthUnit.Meter, LengthUnit.Meter);
+
             // And now the budget seg case
-            Vector rPolyMask = new Vector(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\MethodMask_ForTesting.shp")));
+            Vector rPolyMask = new Vector(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\BudgetMasks\DoD_Geomorphic_Interpretation.shp")));
             Dictionary<string, DoDStats> testBudgetSeg = RasterOperators.GetStatsProbalistic(rRaw, rThresh, rThresh, rPolyMask, "Method", ug);
 
         }
@@ -389,7 +410,7 @@ namespace GCDConsoleLib.Tests
             DoDStats test = RasterOperators.GetStatsMinLoD(rRaw, rThresh, 73.0m, ug);
 
             // And now the budget seg case
-            Vector rPolyMask = new Vector(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\MethodMask_ForTesting.shp")));
+            Vector rPolyMask = new Vector(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\BudgetMasks\DoD_Geomorphic_Interpretation.shp")));
             Dictionary<string, DoDStats> testBudgetSeg = RasterOperators.GetStatsMinLoD(rRaw, rThresh, 73.0m, rPolyMask, "Method", ug);
         }
 

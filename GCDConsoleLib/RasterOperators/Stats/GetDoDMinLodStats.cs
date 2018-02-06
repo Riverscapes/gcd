@@ -13,9 +13,8 @@ namespace GCDConsoleLib.Internal.Operators
         private double _thresh;
 
         // If we do budget seg we need the following
-        private bool isBudgSeg;
+
         public Dictionary<string, DoDStats> SegStats;
-        private Vector _polymask;
         private string _fieldname;
 
         /// <summary>
@@ -30,7 +29,6 @@ namespace GCDConsoleLib.Internal.Operators
         {
             Stats = theStats;
             _thresh = (double)thresh;
-            isBudgSeg = false;
         }
 
 
@@ -45,14 +43,12 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="FieldName"></param>
         public GetDodMinLodStats(Raster rawDoD, Raster thrDoD,
             decimal thresh, DoDStats theStats, Vector PolygonMask, string FieldName) :
-           base(new List<Raster> { rawDoD, thrDoD })
+           base(new List<Raster> { rawDoD, thrDoD }, PolygonMask)
         {
             Stats = theStats;
             _thresh = (double)thresh;
             SegStats = new Dictionary<string, DoDStats>();
-            _polymask = PolygonMask;
             _fieldname = FieldName;
-            isBudgSeg = true;
         }
 
 
@@ -81,16 +77,19 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="id"></param>
         private void BudgetSegCellOp(List<double[]> data, int id)
         {
-            decimal[] ptcoords = ChunkExtent.Id2XY(id);
-            List<string> shapes = _polymask.ShapesContainPoint((double)ptcoords[0], (double)ptcoords[1], _fieldname);
-            if (shapes.Count > 0)
+            if (_shapemask.Count > 0)
             {
-                foreach (string fldVal in shapes)
+                decimal[] ptcoords = ChunkExtent.Id2XY(id);
+                List<string> shapes = _polymask.ShapesContainPoint((double)ptcoords[0], (double)ptcoords[1], _fieldname, _shapemask);
+                if (shapes.Count > 0)
                 {
-                    if (!SegStats.ContainsKey(fldVal))
-                        SegStats[fldVal] = new DoDStats(Stats);
+                    foreach (string fldVal in shapes)
+                    {
+                        if (!SegStats.ContainsKey(fldVal))
+                            SegStats[fldVal] = new DoDStats(Stats);
 
-                    CellChangeCalc(data, id, SegStats[fldVal]);
+                        CellChangeCalc(data, id, SegStats[fldVal]);
+                    }
                 }
             }
         }

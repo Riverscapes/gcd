@@ -14,7 +14,6 @@ namespace GCDConsoleLib.Internal.Operators
         private Dictionary<string, int> _assocRasters;
         private Dictionary<string, List<int>> _fisinputs;
 
-        private Vector _polymask;
         private string _fieldname;
 
         /// <summary>

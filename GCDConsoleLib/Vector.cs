@@ -129,7 +129,7 @@ namespace GCDConsoleLib
         /// Is a point inside a feature?
         /// </summary>
         /// <returns></returns>
-        public List<string> ShapesContainPoint(double x, double y, string fieldName)
+        public List<string> ShapesContainPoint(double x, double y, string fieldName, List<long> shapemask = null)
         {
             if (!Fields.ContainsKey(fieldName))
                 throw new ArgumentException("Field Not found: " + fieldName);
@@ -141,14 +141,19 @@ namespace GCDConsoleLib
             Geometry pt = new Geometry(wkbGeometryType.wkbPoint);
             pt.AddPoint(x, y, 0);
 
-            foreach (KeyValuePair<long, VectorFeature> kvp in Features)
+            // If no mask provided test against everything
+            if (shapemask == null)
+                shapemask = Features.Keys.ToList();
+            
+            foreach (long fid in shapemask)
             {
-                if (kvp.Value.Feat.GetGeometryRef().Contains(pt))
-                    retVal.Add(kvp.Value.Feat.GetFieldAsString(fieldName));
+                if (Features[fid].Feat.GetGeometryRef().Contains(pt))
+                    retVal.Add(Features[fid].Feat.GetFieldAsString(fieldName));
             }
 
             return retVal;
         }
+        
 
         /// <summary>
         /// Is a point inside a feature?
@@ -179,12 +184,49 @@ namespace GCDConsoleLib
             return retVal;
         }
 
+        /// <summary>
+        /// We just want a list of keys back
+        /// </summary>
+        /// <param name="ext"></param>
+        /// <returns></returns>
+        public List<long> FIDIntersectExtent(ExtentRectangle ext)
+        {
+            Open();
+            List<long> retVal = new List<long>();
+            Layer mLayer = _ds.GetLayerByIndex(0);
+
+            Geometry ring = new Geometry(wkbGeometryType.wkbLinearRing);
+            ring.AddPoint((double)ext.Left, (double)ext.Top, 0);
+            ring.AddPoint((double)ext.Right, (double)ext.Top, 0);
+            ring.AddPoint((double)ext.Right, (double)ext.Bottom, 0);
+            ring.AddPoint((double)ext.Left, (double)ext.Bottom, 0);
+            ring.AddPoint((double)ext.Left, (double)ext.Top, 0);
+
+            Geometry extrect = new Geometry(wkbGeometryType.wkbPolygon);
+            extrect.AddGeometry(ring);
+
+            foreach (KeyValuePair<long, VectorFeature> kvp in Features)
+            {
+                Geometry feat = kvp.Value.Feat.GetGeometryRef();
+                if (feat != null && extrect.Intersects(feat))
+                    retVal.Add(kvp.Key);
+            }
+            return retVal;
+        }
+
         public List<Geometry> GeometriesIntersectExtent(ExtentRectangle ext)
         {
             List<VectorFeature> feats = FeaturesIntersectExtent(ext);
             return feats.Select(x => x.Feat.GetGeometryRef()).ToList();
         }
 
+        /// <summary>
+        /// Transform a cell into a rectangle geometry
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="col"></param>
+        /// <param name="ext"></param>
+        /// <returns></returns>
         public static Geometry CellToRect(int row, int col, ExtentRectangle ext)
         {
             double l = (double)(ext.Left + ((col-1) * ext.CellWidth));

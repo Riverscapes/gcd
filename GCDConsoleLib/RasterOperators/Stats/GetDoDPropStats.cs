@@ -14,7 +14,6 @@ namespace GCDConsoleLib.Internal.Operators
         // If we do budget seg we need the following
         private bool isBudgSeg;
         public Dictionary<string, DoDStats> SegStats;
-        private Vector _polymask;
         private string _fieldname;
 
         /// <summary>
