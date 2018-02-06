@@ -378,17 +378,20 @@ namespace GCDConsoleLib
                     if (!kvp.Value.ContainsKey(tp))
                         kvp.Value[tp] = empty;
 
+                // Note that the raw, thr and err stats calculated above are all stored in 
+                // the "raw" object of the returned stats dictionary. So the "thr" and "err"
+                // stats are **assigned** to the appropriate types but **originate** from the "raw" part of the object.
                 retVal[kvp.Key] = new GCD.DoDStats(
                             kvp.Value[statsType.raw].ErosionRaw.GetArea(cellArea),
                             kvp.Value[statsType.raw].DepositionRaw.GetArea(cellArea),
-                            kvp.Value[statsType.thr].ErosionThr.GetArea(cellArea),
-                            kvp.Value[statsType.thr].DepositionThr.GetArea(cellArea),
+                            kvp.Value[statsType.thr].ErosionRaw.GetArea(cellArea),
+                            kvp.Value[statsType.thr].DepositionRaw.GetArea(cellArea),
                             kvp.Value[statsType.raw].ErosionRaw.GetVolume(cellArea, units.VertUnit),
                             kvp.Value[statsType.raw].DepositionRaw.GetVolume(cellArea, units.VertUnit),
-                            kvp.Value[statsType.thr].ErosionThr.GetVolume(cellArea, units.VertUnit),
-                            kvp.Value[statsType.thr].DepositionThr.GetVolume(cellArea, units.VertUnit),
-                            kvp.Value[statsType.err].ErosionErr.GetVolume(cellArea, units.VertUnit),
-                            kvp.Value[statsType.err].DepositionErr.GetVolume(cellArea, units.VertUnit),
+                            kvp.Value[statsType.thr].ErosionRaw.GetVolume(cellArea, units.VertUnit),
+                            kvp.Value[statsType.thr].DepositionRaw.GetVolume(cellArea, units.VertUnit),
+                            kvp.Value[statsType.err].ErosionRaw.GetVolume(cellArea, units.VertUnit),
+                            kvp.Value[statsType.err].DepositionRaw.GetVolume(cellArea, units.VertUnit),
                             cellArea, units);
             }
 
