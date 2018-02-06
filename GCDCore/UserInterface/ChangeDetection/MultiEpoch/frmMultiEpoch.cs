@@ -204,6 +204,8 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
                 List<Epoch> ActiveEpochs = Epochs.Where(epoch => epoch.IsActive == true).ToList();
                 BatchEngine = new ChangeDetectionMultiEpoch(ActiveEpochs, threshold);
                 bgWorker.RunWorkerAsync();
+
+                DisableForm();
             }
             catch (Exception ex)
             {
@@ -232,6 +234,18 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
         #endregion
 
         #region "Methods"
+        private void DisableForm()
+        {
+            grdDEMs.Enabled = false;
+            cmdMoveDown.Enabled = false;
+            cmdMoveUp.Enabled = false;
+            ucThresholding1.Enabled = false;
+            chkEarliest.Enabled = false;
+            chkNewest.Enabled = false;
+            chkPrevious.Enabled = false;
+            grdEpochs.Enabled = false;
+        }
+
         private void UpdateEpochQueue()
         {
             //clear list
