@@ -128,7 +128,7 @@ namespace GCDCore.Project
             }
         }
 
-        public static ErrorSurfaceProperty Deserialize(XmlNode nodProperty, DEMSurvey dem)
+        public static ErrorSurfaceProperty Deserialize(XmlNode nodProperty, Surface surf)
         {
             ErrorSurfaceProperty errProp = new ErrorSurfaceProperty(nodProperty.SelectSingleNode("Name").InnerText);
 
@@ -140,17 +140,23 @@ namespace GCDCore.Project
             {
                 errProp.UniformValue = decimal.Parse(nodUni.InnerText);
             }
-            else if (nodAss is XmlNode)
+            else if (surf is DEMSurvey)
             {
-                errProp.AssociatedSurface = dem.AssocSurfaces.First<AssocSurface>(x => string.Compare(nodAss.InnerText, x.Name, true) == 0);
-            }
-            else if (nodFIS is XmlNode)
-            {
-                errProp.FISRuleFile = ProjectManager.Project.GetAbsolutePath(nodFIS.InnerText);
-                foreach (XmlNode nodInput in nodProperty.SelectNodes("FISInputs/Input"))
+                DEMSurvey dem = ((DEMSurvey)surf);
+
+                if (nodAss is XmlNode)
                 {
-                    AssocSurface assoc = dem.AssocSurfaces.First<AssocSurface>(x => string.Compare(nodInput.SelectSingleNode("AssociatedSurface").InnerText, x.Name, true) == 0);
-                    errProp.FISInputs.Add(new FISInput(nodInput.SelectSingleNode("Name").InnerText, assoc));
+
+                    errProp.AssociatedSurface = dem.AssocSurfaces.First<AssocSurface>(x => string.Compare(nodAss.InnerText, x.Name, true) == 0);
+                }
+                else if (nodFIS is XmlNode)
+                {
+                    errProp.FISRuleFile = ProjectManager.Project.GetAbsolutePath(nodFIS.InnerText);
+                    foreach (XmlNode nodInput in nodProperty.SelectNodes("FISInputs/Input"))
+                    {
+                        AssocSurface assoc = dem.AssocSurfaces.First<AssocSurface>(x => string.Compare(nodInput.SelectSingleNode("AssociatedSurface").InnerText, x.Name, true) == 0);
+                        errProp.FISInputs.Add(new FISInput(nodInput.SelectSingleNode("Name").InnerText, assoc));
+                    }
                 }
             }
 

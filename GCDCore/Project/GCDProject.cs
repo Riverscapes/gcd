@@ -16,6 +16,7 @@ namespace GCDCore.Project
         public GCDConsoleLib.GCD.UnitGroup Units { get; set; }
 
         public readonly Dictionary<string, DEMSurvey> DEMSurveys;
+        public readonly Dictionary<string, Surface> ReferenceSurfaces;
         public readonly Dictionary<string, DoDBase> DoDs;
         public readonly Dictionary<string, string> MetaData;
 
@@ -31,6 +32,7 @@ namespace GCDCore.Project
             CellArea = cellArea;
 
             DEMSurveys = new Dictionary<string, DEMSurvey>();
+            ReferenceSurfaces = new Dictionary<string, Surface>();
             DoDs = new Dictionary<string, DoDBase>();
             MetaData = new Dictionary<string, string>();
         }
@@ -93,6 +95,11 @@ namespace GCDCore.Project
             return DEMSurveys.ContainsKey(name) ? DEMSurveys[name] == ignore : true;
         }
 
+        public bool IsReferenceSurfaceNameUnique(string name, Surface ignore)
+        {
+            return ReferenceSurfaces.ContainsKey(name) ? ReferenceSurfaces[name] == ignore : true;
+        }
+
         public bool IsDoDNameUnique(string name, DoDBase ignore)
         {
             return DoDs.ContainsKey(name) ? DoDs[name] == ignore : true;
@@ -131,7 +138,20 @@ namespace GCDCore.Project
             {
                 XmlNode nodDEMs = nodProject.AppendChild(xmlDoc.CreateElement("DEMSurveys"));
                 foreach (DEMSurvey dem in DEMSurveys.Values)
-                    dem.Serialize(xmlDoc, nodDEMs);
+                {
+                    XmlNode nodItem = nodDEMs.AppendChild(xmlDoc.CreateElement("DEM"));
+                    dem.Serialize(nodItem);
+                }
+            }
+
+            if (ReferenceSurfaces.Count > 0)
+            {
+                XmlNode nodSurfaces = nodProject.AppendChild(xmlDoc.CreateElement("ReferenceSurfaces"));
+                foreach (Surface surf in ReferenceSurfaces.Values)
+                {
+                    XmlNode nodItem = nodSurfaces.AppendChild(xmlDoc.CreateElement("ReferenceSurface"));
+                    surf.Serialize(nodItem);
+                }
             }
 
             if (DoDs.Count > 0)

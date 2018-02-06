@@ -564,7 +564,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
         public static DialogResult ViewErrorSurfaceProperties(ErrorSurface errSurf)
         {
-            frmErrorSurfaceProperties frm = new frmErrorSurfaceProperties(errSurf.DEM, errSurf);
+            frmErrorSurfaceProperties frm = new frmErrorSurfaceProperties(errSurf.Surf, errSurf);
             return frm.ShowDialog();
         }
 

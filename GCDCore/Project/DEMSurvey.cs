@@ -12,7 +12,7 @@ namespace GCDCore.Project
     {
         public readonly GCDProjectRasterItem Hillshade;
         public readonly naru.ui.SortableBindingList<AssocSurface> AssocSurfaces;
- 
+
         public string SurveyMethod { get; set; } // Single survey methods
         public bool IsSingleSurveyMethod { get { return MethodMask == null; } }
         public SurveyDateTime SurveyDate { get; set; }
@@ -26,7 +26,7 @@ namespace GCDCore.Project
             SurveyDate = surveyDate;
 
             AssocSurfaces = new naru.ui.SortableBindingList<AssocSurface>();
-  
+
             FileInfo hsPath = Project.ProjectManager.OutputManager.DEMSurveyHillShadeRasterPath(name);
             if (hsPath.Exists)
             {
@@ -140,25 +140,25 @@ namespace GCDCore.Project
             }
         }
 
-        public void Serialize(XmlDocument xmlDoc, XmlNode nodParent)
+        new public void Serialize(XmlNode nodDEM)
         {
-            XmlNode nodDEM = nodParent.AppendChild(xmlDoc.CreateElement("DEM"));
-            nodDEM.AppendChild(xmlDoc.CreateElement("Name")).InnerText = Name;
-            nodDEM.AppendChild(xmlDoc.CreateElement("Path")).InnerText = ProjectManager.Project.GetRelativePath(Raster.GISFileInfo);
+            // Serialize the surface properties first.
+            base.Serialize(nodDEM);
 
+            // Now serialize the DEM-specific member properties
             if (!string.IsNullOrEmpty(SurveyMethod))
             {
-                nodDEM.AppendChild(xmlDoc.CreateElement("SurveyMethod")).InnerText = SurveyMethod;
+                nodDEM.AppendChild(nodDEM.OwnerDocument.CreateElement("SurveyMethod")).InnerText = SurveyMethod;
             }
 
             if (SurveyDate != null)
             {
-                XmlNode nodSurveyDate = nodDEM.AppendChild(xmlDoc.CreateElement("SurveyDate"));
-                naru.xml.XMLHelpers.AddNode(xmlDoc, nodSurveyDate, "Year", SurveyDate.Year > 0 ? SurveyDate.Year.ToString() : string.Empty);
-                naru.xml.XMLHelpers.AddNode(xmlDoc, nodSurveyDate, "Month", SurveyDate.Month > 0 ? SurveyDate.Month.ToString() : string.Empty);
-                naru.xml.XMLHelpers.AddNode(xmlDoc, nodSurveyDate, "Day", SurveyDate.Day > 0 ? SurveyDate.Day.ToString() : string.Empty);
-                naru.xml.XMLHelpers.AddNode(xmlDoc, nodSurveyDate, "Hour", SurveyDate.Hour > -1 ? SurveyDate.Hour.ToString() : string.Empty);
-                naru.xml.XMLHelpers.AddNode(xmlDoc, nodSurveyDate, "Minute", SurveyDate.Minute > -1 ? SurveyDate.Minute.ToString() : string.Empty);
+                XmlNode nodSurveyDate = nodDEM.AppendChild(nodDEM.OwnerDocument.CreateElement("SurveyDate"));
+                naru.xml.XMLHelpers.AddNode(nodDEM.OwnerDocument, nodSurveyDate, "Year", SurveyDate.Year > 0 ? SurveyDate.Year.ToString() : string.Empty);
+                naru.xml.XMLHelpers.AddNode(nodDEM.OwnerDocument, nodSurveyDate, "Month", SurveyDate.Month > 0 ? SurveyDate.Month.ToString() : string.Empty);
+                naru.xml.XMLHelpers.AddNode(nodDEM.OwnerDocument, nodSurveyDate, "Day", SurveyDate.Day > 0 ? SurveyDate.Day.ToString() : string.Empty);
+                naru.xml.XMLHelpers.AddNode(nodDEM.OwnerDocument, nodSurveyDate, "Hour", SurveyDate.Hour > -1 ? SurveyDate.Hour.ToString() : string.Empty);
+                naru.xml.XMLHelpers.AddNode(nodDEM.OwnerDocument, nodSurveyDate, "Minute", SurveyDate.Minute > -1 ? SurveyDate.Minute.ToString() : string.Empty);
             }
 
             if (ChronologicalOrder.HasValue)
@@ -169,27 +169,20 @@ namespace GCDCore.Project
 
             if (MethodMask != null)
             {
-                XmlNode nodMethodMask = nodDEM.AppendChild(xmlDoc.CreateElement("MethodMask"));
-                nodMethodMask.AppendChild(xmlDoc.CreateElement("Path")).InnerText = ProjectManager.Project.GetRelativePath(MethodMask);
-                nodMethodMask.AppendChild(xmlDoc.CreateElement("Field")).InnerText = MethodMaskField;
+                XmlNode nodMethodMask = nodDEM.AppendChild(nodDEM.OwnerDocument.CreateElement("MethodMask"));
+                nodMethodMask.AppendChild(nodDEM.OwnerDocument.CreateElement("Path")).InnerText = ProjectManager.Project.GetRelativePath(MethodMask);
+                nodMethodMask.AppendChild(nodDEM.OwnerDocument.CreateElement("Field")).InnerText = MethodMaskField;
             }
 
             if (AssocSurfaces.Count > 0)
             {
-                XmlNode nodAssoc = nodDEM.AppendChild(xmlDoc.CreateElement("AssociatedSurfaces"));
+                XmlNode nodAssoc = nodDEM.AppendChild(nodDEM.OwnerDocument.CreateElement("AssociatedSurfaces"));
                 foreach (AssocSurface assoc in AssocSurfaces)
-                    assoc.Serialize(xmlDoc, nodAssoc);
-            }
-
-            if (ErrorSurfaces.Count > 0)
-            {
-                XmlNode nodError = nodDEM.AppendChild(xmlDoc.CreateElement("ErrorSurfaces"));
-                foreach (ErrorSurface error in ErrorSurfaces)
-                    error.Serialize(xmlDoc, nodError);
+                    assoc.Serialize(nodDEM.OwnerDocument, nodAssoc);
             }
         }
 
-        public static DEMSurvey Deserialize(XmlNode nodDEM)
+        new public static DEMSurvey Deserialize(XmlNode nodDEM)
         {
             string name = nodDEM.SelectSingleNode("Name").InnerText;
             FileInfo path = ProjectManager.Project.GetAbsolutePath(nodDEM.SelectSingleNode("Path").InnerText);

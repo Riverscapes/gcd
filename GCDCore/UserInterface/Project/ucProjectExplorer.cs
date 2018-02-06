@@ -1116,7 +1116,7 @@ namespace GCDCore.UserInterface.Project
 
                     case GCDNodeTypes.ErrorSurface:
                         ErrorSurface errSurf = (ErrorSurface)ptn.Item;
-                        errSurf.DEM.DeleteErrorSurface(errSurf);
+                        errSurf.Surf.DeleteErrorSurface(errSurf);
                         break;
 
                     case GCDNodeTypes.DoD:

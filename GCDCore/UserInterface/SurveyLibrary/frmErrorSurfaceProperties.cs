@@ -12,7 +12,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
 {
     public partial class frmErrorSurfaceProperties : Form
     {
-        public readonly DEMSurvey DEM;
+        public readonly Surface Surf;
         public ErrorSurface ErrorSurf { get; internal set; }
 
         public const string m_sEntireDEMExtent = "Entire DEM Extent";
@@ -23,10 +23,10 @@ namespace GCDCore.UserInterface.SurveyLibrary
         // The item bound to the selected row on the left grid
         private ErrorSurfaceProperty SelectedErrProp { get { return (ErrorSurfaceProperty)grdErrorProperties.SelectedRows[0].DataBoundItem; } }
 
-        public frmErrorSurfaceProperties(DEMSurvey dem, ErrorSurface errorSurf)
+        public frmErrorSurfaceProperties(Surface surf, ErrorSurface errorSurf)
         {
             InitializeComponent();
-            DEM = dem;
+            Surf = surf;
             ErrorSurf = errorSurf;
         }
 

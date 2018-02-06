@@ -8,7 +8,7 @@ namespace GCDCore.Project
 {
     public class ErrorSurface : GCDProjectRasterItem
     {
-        public readonly DEMSurvey DEM;
+        public readonly Surface Surf;
         public readonly Dictionary<string, ErrorSurfaceProperty> ErrorProperties;
 
         private bool _IsDefault;
@@ -19,7 +19,7 @@ namespace GCDCore.Project
             {
                 if (value)
                 {
-                    foreach (ErrorSurface errSurf in DEM.ErrorSurfaces)
+                    foreach (ErrorSurface errSurf in Surf.ErrorSurfaces)
                         errSurf._IsDefault = false;
                 }
 
@@ -46,22 +46,22 @@ namespace GCDCore.Project
         /// <param name="name"></param>
         /// <param name="rasterPath"></param>
         /// <param name="dem"></param>
-        public ErrorSurface(string name, FileInfo rasterPath, DEMSurvey dem)
+        public ErrorSurface(string name, FileInfo rasterPath, Surface surf)
             : base(name, rasterPath)
         {
-            DEM = dem;
+            Surf = surf;
 
             // The first error surface for a DEM is always the default
-            _IsDefault = dem.ErrorSurfaces.Count == 0;
+            _IsDefault = surf.ErrorSurfaces.Count == 0;
 
             // Empty dictionary of properties
             ErrorProperties = new Dictionary<string, ErrorSurfaceProperty>();
         }
 
-        public ErrorSurface(string name, FileInfo rasterPath, DEMSurvey dem, bool isDefault, Dictionary<string, ErrorSurfaceProperty> errProperties)
+        public ErrorSurface(string name, FileInfo rasterPath, Surface surf, bool isDefault, Dictionary<string, ErrorSurfaceProperty> errProperties)
             : base(name, rasterPath)
         {
-            DEM = dem;
+            Surf = surf;
             _IsDefault = isDefault;
             ErrorProperties = errProperties;
         }
@@ -84,7 +84,7 @@ namespace GCDCore.Project
             }
         }
 
-        public static ErrorSurface Deserialize(XmlNode nodError, DEMSurvey dem)
+        public static ErrorSurface Deserialize(XmlNode nodError, Surface surf)
         {
             string name = nodError.SelectSingleNode("Name").InnerText;
             FileInfo path = ProjectManager.Project.GetAbsolutePath(nodError.SelectSingleNode("Path").InnerText);
@@ -94,11 +94,11 @@ namespace GCDCore.Project
             Dictionary<string, ErrorSurfaceProperty> properties = new Dictionary<string, ErrorSurfaceProperty>();
             foreach (XmlNode nodProperty in nodError.SelectNodes("ErrorSurfaceProperties/ErrorSurfaceProperty"))
             {
-                ErrorSurfaceProperty prop = ErrorSurfaceProperty.Deserialize(nodProperty, dem);
+                ErrorSurfaceProperty prop = ErrorSurfaceProperty.Deserialize(nodProperty, surf);
                 properties[prop.Name] = prop;
             }
 
-            return new ErrorSurface(name, path, dem, bIsDefault, properties); ;
+            return new ErrorSurface(name, path, surf, bIsDefault, properties); ;
         }
 
     }
