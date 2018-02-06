@@ -81,6 +81,20 @@ namespace GCDConsoleLib.Tests
         }
 
         [TestMethod()]
+        public void GetStatsMinLoDBudgetSegTest()
+        {
+            Raster rRaw = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2005Dec_DEM\2005Dec_DEM.img")));
+            Raster rThresh = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2006Feb_DEM\2006Feb_DEM.img")));
+
+            UnitGroup ug = new UnitGroup(VolumeUnit.CubicMeter, AreaUnit.SquareMeter, LengthUnit.Meter, LengthUnit.Meter);
+
+            // And now the budget seg case
+            Vector rPolyMask = new Vector(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\BudgetMasks\DoD_Geomorphic_Interpretation.shp")));
+            Dictionary<string, DoDStats> testBudgetSeg = RasterOperators.GetStatsMinLoD(rRaw, rThresh, 73.0m, rPolyMask, "Category", ug);
+            Assert.Fail();
+        }
+
+        [TestMethod()]
         public void GetStatsPropagatedTest()
         {
             Raster rRaw = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("const900.tif")));
