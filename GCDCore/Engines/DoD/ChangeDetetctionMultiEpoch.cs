@@ -15,6 +15,14 @@ namespace GCDCore.Engines.DoD
         public readonly ThresholdProps Thresholds;
         public readonly List<Epoch> Epochs;
 
+        public  Boolean Cancelled
+        {
+            get { return _Cancelled; }
+        }
+        private Boolean _Cancelled = false;
+
+
+
         private readonly Dictionary<ThresholdProps.ThresholdMethods, ChangeDetectionEngineBase> DoDEngines;
 
         public ChangeDetectionMultiEpoch(List<Epoch> lEpochs, ThresholdProps tProps)
@@ -30,6 +38,12 @@ namespace GCDCore.Engines.DoD
 
             foreach (Epoch currentEpoch in Epochs)
             {
+                if (bgWorker.CancellationPending)
+                {
+                    _Cancelled = true;
+                    break;
+                }
+
                 PerformDoD(currentEpoch, Thresholds);
             }
 

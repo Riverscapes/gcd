@@ -246,6 +246,19 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
             grdEpochs.Enabled = false;
         }
 
+        private void EnableForm()
+        {
+            grdDEMs.Enabled = true;
+            cmdMoveDown.Enabled = true;
+            cmdMoveUp.Enabled = true;
+            ucThresholding1.Enabled = true;
+            chkEarliest.Enabled = true;
+            chkNewest.Enabled = true;
+            chkPrevious.Enabled = true;
+            grdEpochs.Enabled = true;
+            cmdOK.Enabled = true;
+        }
+
         private void UpdateEpochQueue()
         {
             //clear list
@@ -437,6 +450,10 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
             try
             {
                 BatchEngine.Run(bgWorker);
+                if(BatchEngine.Cancelled)
+                {
+                    e.Cancel = true;
+                }
             }
             catch (Exception ex)
             {
@@ -455,9 +472,16 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
 
         private void bgWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            cmdCancel.DialogResult = DialogResult.OK;
-            cmdCancel.Text = "Close";
-            MessageBox.Show("Batch Change Detection Complete.");
+            if(e.Cancelled)
+            {
+                MessageBox.Show("Batch Change Detection  cancelled");
+                EnableForm();
+            } else
+            {
+                cmdCancel.DialogResult = DialogResult.OK;
+                cmdCancel.Text = "Close";
+                MessageBox.Show("Batch Change Detection Complete.");
+            }
 
         }
 
@@ -477,6 +501,11 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
                 datagridview.BeginEdit(true);
                 ((ComboBox)datagridview.EditingControl).DroppedDown = true;
             }
+        }
+
+        private void cmdCancel_Click(object sender, EventArgs e)
+        {
+            bgWorker.CancelAsync();
         }
     }
 
