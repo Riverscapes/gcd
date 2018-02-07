@@ -300,6 +300,18 @@
     <Compile Include="UserInterface\SurveyLibrary\frmSurveyDateTime.Designer.cs">
       <DependentUpon>frmSurveyDateTime.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserInterface\SurveyLibrary\ReferenceSurfaces\frmReferenceSurfaceFromConstant.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\SurveyLibrary\ReferenceSurfaces\frmReferenceSurfaceFromConstant.Designer.cs">
+      <DependentUpon>frmReferenceSurfaceFromConstant.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\SurveyLibrary\ReferenceSurfaces\frmReferenceSurfaceFromDEMs.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\SurveyLibrary\ReferenceSurfaces\frmReferenceSurfaceFromDEMs.Designer.cs">
+      <DependentUpon>frmReferenceSurfaceFromDEMs.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserInterface\UtilityForms\frmInformation.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -498,6 +510,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\SurveyLibrary\frmSurveyDateTime.resx">
       <DependentUpon>frmSurveyDateTime.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\SurveyLibrary\ReferenceSurfaces\frmReferenceSurfaceFromConstant.resx">
+      <DependentUpon>frmReferenceSurfaceFromConstant.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\SurveyLibrary\ReferenceSurfaces\frmReferenceSurfaceFromDEMs.resx">
+      <DependentUpon>frmReferenceSurfaceFromDEMs.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\UtilityForms\frmInformation.resx">
       <DependentUpon>frmInformation.cs</DependentUpon>

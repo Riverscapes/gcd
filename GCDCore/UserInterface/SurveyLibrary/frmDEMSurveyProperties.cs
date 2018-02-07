@@ -54,7 +54,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
                 if (DEM.MethodMask is FileInfo && DEM.MethodMask.Exists)
                 {
                     // This should fire the reloading of the mask field dropdown
-                    ucDEMMask.Initialize(DEM.MethodMask.FullName,  GCDConsoleLib.GDalGeometryType.SimpleTypes.Polygon);
+                    ucDEMMask.Initialize(DEM.MethodMask.FullName, GCDConsoleLib.GDalGeometryType.SimpleTypes.Polygon);
                 }
             }
 
@@ -398,7 +398,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
                 if (SurfaceForm.ShowDialog() == DialogResult.OK)
                 {
                     grdAssocSurface.Rows[grdAssocSurface.Rows.Count - 1].Selected = true;
-                    ProjectManager.OnAddToMap((AssocSurface) grdAssocSurface.Rows[grdAssocSurface.Rows.Count - 1].DataBoundItem);
+                    ProjectManager.OnAddToMap((AssocSurface)grdAssocSurface.Rows[grdAssocSurface.Rows.Count - 1].DataBoundItem);
                 }
             }
         }
@@ -564,7 +564,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
         public static DialogResult ViewErrorSurfaceProperties(ErrorSurface errSurf)
         {
-            frmErrorSurfaceProperties frm = new frmErrorSurfaceProperties(errSurf.Surf, errSurf);
+            frmErrorSurfaceProperties frm = new frmErrorSurfaceProperties((DEMSurvey)errSurf.Surf, errSurf);
             return frm.ShowDialog();
         }
 
@@ -595,7 +595,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             {
                 ProjectManager.OnAddToMap(DEM);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 naru.error.ExceptionUI.HandleException(ex, "Error adding DEM to map.");
             }

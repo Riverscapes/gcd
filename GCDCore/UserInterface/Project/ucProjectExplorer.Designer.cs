@@ -123,6 +123,11 @@ namespace GCDCore.UserInterface.Project
             this.cmsMasks = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addRegularMaskToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addDirectionalMaskToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmsRefSurfaceGroup = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.specifyReferenceSurfaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deriveReferenceSurfaceFromDEMSurveysToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deriveConstantReferenceSurfaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addAllReferenceSurfacesToTheMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsProject.SuspendLayout();
             this.cmsDEMSurvey.SuspendLayout();
             this.cmsAssociatedSurface.SuspendLayout();
@@ -137,6 +142,7 @@ namespace GCDCore.UserInterface.Project
             this.cmsBSGroup.SuspendLayout();
             this.cmsBS.SuspendLayout();
             this.cmsMasks.SuspendLayout();
+            this.cmsRefSurfaceGroup.SuspendLayout();
             this.SuspendLayout();
             // 
             // treProject
@@ -766,6 +772,44 @@ namespace GCDCore.UserInterface.Project
             this.addDirectionalMaskToolStripMenuItem.Text = "Add Directional Mask";
             this.addDirectionalMaskToolStripMenuItem.Click += new System.EventHandler(this.addDirectionalMaskToolStripMenuItem_Click);
             // 
+            // cmsRefSurfaceGroup
+            // 
+            this.cmsRefSurfaceGroup.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.specifyReferenceSurfaceToolStripMenuItem,
+            this.deriveReferenceSurfaceFromDEMSurveysToolStripMenuItem,
+            this.deriveConstantReferenceSurfaceToolStripMenuItem,
+            this.addAllReferenceSurfacesToTheMapToolStripMenuItem});
+            this.cmsRefSurfaceGroup.Name = "cmsRefSurfaceGroup";
+            this.cmsRefSurfaceGroup.Size = new System.Drawing.Size(307, 114);
+            // 
+            // specifyReferenceSurfaceToolStripMenuItem
+            // 
+            this.specifyReferenceSurfaceToolStripMenuItem.Image = global::GCDCore.Properties.Resources.Add;
+            this.specifyReferenceSurfaceToolStripMenuItem.Name = "specifyReferenceSurfaceToolStripMenuItem";
+            this.specifyReferenceSurfaceToolStripMenuItem.Size = new System.Drawing.Size(306, 22);
+            this.specifyReferenceSurfaceToolStripMenuItem.Text = "Specify Reference Surface";
+            // 
+            // deriveReferenceSurfaceFromDEMSurveysToolStripMenuItem
+            // 
+            this.deriveReferenceSurfaceFromDEMSurveysToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("deriveReferenceSurfaceFromDEMSurveysToolStripMenuItem.Image")));
+            this.deriveReferenceSurfaceFromDEMSurveysToolStripMenuItem.Name = "deriveReferenceSurfaceFromDEMSurveysToolStripMenuItem";
+            this.deriveReferenceSurfaceFromDEMSurveysToolStripMenuItem.Size = new System.Drawing.Size(306, 22);
+            this.deriveReferenceSurfaceFromDEMSurveysToolStripMenuItem.Text = "Derive Reference Surface From DEM Surveys";
+            // 
+            // deriveConstantReferenceSurfaceToolStripMenuItem
+            // 
+            this.deriveConstantReferenceSurfaceToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("deriveConstantReferenceSurfaceToolStripMenuItem.Image")));
+            this.deriveConstantReferenceSurfaceToolStripMenuItem.Name = "deriveConstantReferenceSurfaceToolStripMenuItem";
+            this.deriveConstantReferenceSurfaceToolStripMenuItem.Size = new System.Drawing.Size(306, 22);
+            this.deriveConstantReferenceSurfaceToolStripMenuItem.Text = "Derive Constant Reference Surface(s)";
+            // 
+            // addAllReferenceSurfacesToTheMapToolStripMenuItem
+            // 
+            this.addAllReferenceSurfacesToTheMapToolStripMenuItem.Image = global::GCDCore.Properties.Resources.AddToMap;
+            this.addAllReferenceSurfacesToTheMapToolStripMenuItem.Name = "addAllReferenceSurfacesToTheMapToolStripMenuItem";
+            this.addAllReferenceSurfacesToTheMapToolStripMenuItem.Size = new System.Drawing.Size(306, 22);
+            this.addAllReferenceSurfacesToTheMapToolStripMenuItem.Text = "Add All Reference Surfaces to the Map";
+            // 
             // ucProjectExplorer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -787,6 +831,7 @@ namespace GCDCore.UserInterface.Project
             this.cmsBSGroup.ResumeLayout(false);
             this.cmsBS.ResumeLayout(false);
             this.cmsMasks.ResumeLayout(false);
+            this.cmsRefSurfaceGroup.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -874,5 +919,10 @@ namespace GCDCore.UserInterface.Project
         private System.Windows.Forms.ContextMenuStrip cmsMasks;
         private System.Windows.Forms.ToolStripMenuItem addRegularMaskToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addDirectionalMaskToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip cmsRefSurfaceGroup;
+        private System.Windows.Forms.ToolStripMenuItem specifyReferenceSurfaceToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deriveReferenceSurfaceFromDEMSurveysToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deriveConstantReferenceSurfaceToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addAllReferenceSurfacesToTheMapToolStripMenuItem;
     }
 }

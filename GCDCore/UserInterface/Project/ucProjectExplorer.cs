@@ -87,6 +87,9 @@ namespace GCDCore.UserInterface.Project
             this.BudgetSegregationPropertiesToolStripMenuItem.Click += BudgetSegregationPropertiesToolStripMenuItem_Click;
             this.BrowseBudgetSegregationFolderToolStripMenuItem.Click += BrowseBudgetSegregationFolderToolStripMenuItem_Click;
             this.AddBudgetSegregationToolStripMenuItem2.Click += AddBudgetSegregationToolStripMenuItem1_Click;
+
+            this.deriveReferenceSurfaceFromDEMSurveysToolStripMenuItem.Click += addReferenceSurfaceFromDEMs;
+            this.deriveConstantReferenceSurfaceToolStripMenuItem.Click += addReferenceSurfaceFromContant;
         }
 
         /// <summary>
@@ -181,9 +184,12 @@ namespace GCDCore.UserInterface.Project
                         nodSurvey.Expand();
                 }
 
+                TreeNode nodReferenceSurfaces = AddTreeNode(nodProject, GCDNodeTypes.ReferenceSurfaceGroup, m_sReferenceSurfaces, null, selectItem);
+                foreach(Surface surf in ProjectManager.Project.ReferenceSurfaces.Values)
+                {
+                    TreeNode nodSurvey = AddTreeNode(nodSurveys, GCDNodeTypes.ReferenceSurface, surf.Name, surf, selectItem);
+                }
 
-
-                TreeNode nodReferenceSurfaces = AddTreeNode(nodProject, GCDNodeTypes.ReferenceSurfaces, m_sReferenceSurfaces, null, selectItem);
                 TreeNode nodMasks = AddTreeNode(nodProject, GCDNodeTypes.MasksGroup, m_sMasks, null, selectItem);
 
                 nodInputs.Expand();
@@ -297,7 +303,7 @@ namespace GCDCore.UserInterface.Project
 
                         case GCDNodeTypes.ErrorSurface:
                             ErrorSurface err = (ErrorSurface)tag.Item;
-                            frm = new frmErrorSurfaceProperties(err.DEM, err);
+                            frm = new frmErrorSurfaceProperties((DEMSurvey)err.Surf, err);
                             break;
 
                         case GCDNodeTypes.DoD:
@@ -374,7 +380,7 @@ namespace GCDCore.UserInterface.Project
         {
 
             int nID = -1;
-            int nIndex = ((ProjectTreeNode) aNode.Tag).Name.ToString().IndexOf("_");
+            int nIndex = ((ProjectTreeNode)aNode.Tag).Name.ToString().IndexOf("_");
             if (nIndex > 0)
             {
                 int.TryParse(aNode.Tag.ToString().Substring(nIndex + 1), out nID);
@@ -405,6 +411,7 @@ namespace GCDCore.UserInterface.Project
                 case GCDNodeTypes.AssociatedSurface: cms = cmsAssociatedSurface; break;
                 case GCDNodeTypes.ErrorSurfaceGroup: cms = cmsErrorSurfacesGroup; break;
                 case GCDNodeTypes.ErrorSurface: cms = cmsErrorSurface; break;
+                case GCDNodeTypes.ReferenceSurfaceGroup: cms = cmsRefSurfaceGroup;break;
                 case GCDNodeTypes.MasksGroup: cms = cmsMasks; break;
                 case GCDNodeTypes.ChangeDetectionGroup: cms = cmsChangeDetectionGroup; break;
                 case GCDNodeTypes.DoD: cms = cmsChangeDetection; break;
@@ -1689,6 +1696,18 @@ namespace GCDCore.UserInterface.Project
         private void addDirectionalMaskToolStripMenuItem_Click(object sender, EventArgs e)
         {
             GCDCore.UserInterface.Masks.frmDirectionalMaskProps frm = new Masks.frmDirectionalMaskProps();
+            frm.ShowDialog();
+        }
+
+        private void addReferenceSurfaceFromDEMs(object sender, EventArgs e)
+        {
+            UserInterface.SurveyLibrary.ReferenceSurfaces.frmReferenceSurfaceFromDEMs frm = new SurveyLibrary.ReferenceSurfaces.frmReferenceSurfaceFromDEMs();
+            frm.ShowDialog();
+        }
+
+        private void addReferenceSurfaceFromContant(object sender, EventArgs e)
+        {
+            UserInterface.SurveyLibrary.ReferenceSurfaces.frmReferenceSurfaceFromConstant frm = new SurveyLibrary.ReferenceSurfaces.frmReferenceSurfaceFromConstant();
             frm.ShowDialog();
         }
     }
