@@ -361,6 +361,8 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
         /// </summary>
         private void UpdateEpochQueue()
         {
+            List<Epoch> InActiveEpochs = Epochs.Where(epoch => epoch.IsActive == false).ToList();
+
             //clear list
             Epochs.Clear();
 
@@ -368,21 +370,21 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
             if (chkNewest.Checked)
             {
                 List<Epoch> NewestDEMMinusAllOtherDEMs = PopulateNewestDEMMinusAllOtherDEMs();
-                AddEpochsWithoutDuplicates(NewestDEMMinusAllOtherDEMs);
+                AddEpochsWithoutDuplicates(NewestDEMMinusAllOtherDEMs, InActiveEpochs);
             }
 
             //if All DEMs minus the earliest DEM is selected, get all relevant epochs and add without duplicates
             if (chkEarliest.Checked)
             {
                 List<Epoch> AllDEMsMinusTheEarliestDEMs = PopulateAllDEMsMinusTheEarliestDEMs();
-                AddEpochsWithoutDuplicates(AllDEMsMinusTheEarliestDEMs);
+                AddEpochsWithoutDuplicates(AllDEMsMinusTheEarliestDEMs, InActiveEpochs);
             }
 
             //if All DEMs minus the previous DEM is selected, get all relevant epochs and add without duplicates
             if (chkPrevious.Checked)
             {
                 List<Epoch> AllDEMsMinusThePreviousDEM = PopulateAllDEMsMinusThePreviousDEM();
-                AddEpochsWithoutDuplicates(AllDEMsMinusThePreviousDEM);
+                AddEpochsWithoutDuplicates(AllDEMsMinusThePreviousDEM, InActiveEpochs);
             }
         }
 
@@ -390,13 +392,19 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
         /// Adds epochs to epoch grid if not already in grid
         /// </summary>
         /// <param name="NewEpochs"></param>
-        private void AddEpochsWithoutDuplicates(List<Epoch> NewEpochs)
+        private void AddEpochsWithoutDuplicates(List<Epoch> NewEpochs, List<Epoch> InActiveEpochs)
         {
             foreach(Epoch currentEpoch in NewEpochs)
             {
                 //if epoch is not already in grid, add it
                 if(!EpochIsCurrentInList(currentEpoch))
                 {
+                    //check if its inactive
+                    if(InActiveEpochs.Where(IAEpochs => IAEpochs.NewDEMName == currentEpoch.NewDEMName && IAEpochs.OldDEMName == currentEpoch.OldDEMName).Count() > 0)
+                    {
+                        currentEpoch.IsActive = false;
+                    }
+
                     Epochs.Add(currentEpoch);
                 }
             }
