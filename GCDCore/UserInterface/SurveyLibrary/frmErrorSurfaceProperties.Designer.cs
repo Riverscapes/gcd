@@ -84,7 +84,7 @@
             // 
             // valUniform
             // 
-            this.valUniform.DecimalPlaces = 2;
+            this.valUniform.DecimalPlaces = 3;
             this.valUniform.Location = new System.Drawing.Point(161, 25);
             this.valUniform.Name = "valUniform";
             this.valUniform.Size = new System.Drawing.Size(85, 20);
