@@ -1,0 +1,3 @@
+[submodule "naru"]
+	path = naru
+	url = git@github.com:NorthArrowResearch/naru.git
