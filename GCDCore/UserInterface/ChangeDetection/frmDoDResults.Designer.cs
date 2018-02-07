@@ -28,28 +28,33 @@ namespace GCDCore.UserInterface.ChangeDetection
         [System.Diagnostics.DebuggerStepThrough()]
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmDoDResults));
             this.cmdOK = new System.Windows.Forms.Button();
             this.txtDoDName = new System.Windows.Forms.TextBox();
             this.Label6 = new System.Windows.Forms.Label();
             this.TabPage3 = new System.Windows.Forms.TabPage();
+            this.ucProperties = new GCDCore.UserInterface.ChangeDetection.ucDoDProperties();
             this.tbpElevationChangeDistribution = new System.Windows.Forms.TabPage();
             this.TableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.ucHistogram = new GCDCore.UserInterface.ChangeDetection.ucDoDHistogram();
+            this.ucBars = new GCDCore.UserInterface.ChangeDetection.ucChangeBars();
             this.TabPage1 = new System.Windows.Forms.TabPage();
+            this.ucSummary = new GCDCore.UserInterface.ChangeDetection.ucDoDSummary();
             this.tabProperties = new System.Windows.Forms.TabControl();
             this.cmdHelp = new System.Windows.Forms.Button();
             this.cmdBrowse2 = new System.Windows.Forms.Button();
             this.cmdProperties = new System.Windows.Forms.Button();
             this.cmdAddToMap2 = new System.Windows.Forms.Button();
-            this.ucSummary = new GCDCore.UserInterface.ChangeDetection.ucDoDSummary();
-            this.ucHistogram = new GCDCore.UserInterface.ChangeDetection.ucDoDHistogram();
-            this.ucBars = new GCDCore.UserInterface.ChangeDetection.ucChangeBars();
-            this.ucProperties = new GCDCore.UserInterface.ChangeDetection.ucDoDProperties();
+            this.cmsChart = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.copyChartImageToClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveChartImageToFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TabPage3.SuspendLayout();
             this.tbpElevationChangeDistribution.SuspendLayout();
             this.TableLayoutPanel1.SuspendLayout();
             this.TabPage1.SuspendLayout();
             this.tabProperties.SuspendLayout();
+            this.cmsChart.SuspendLayout();
             this.SuspendLayout();
             // 
             // cmdOK
@@ -93,6 +98,14 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.TabPage3.Text = "Analysis Inputs";
             this.TabPage3.UseVisualStyleBackColor = true;
             // 
+            // ucProperties
+            // 
+            this.ucProperties.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucProperties.Location = new System.Drawing.Point(3, 3);
+            this.ucProperties.Name = "ucProperties";
+            this.ucProperties.Size = new System.Drawing.Size(662, 405);
+            this.ucProperties.TabIndex = 0;
+            // 
             // tbpElevationChangeDistribution
             // 
             this.tbpElevationChangeDistribution.Controls.Add(this.TableLayoutPanel1);
@@ -116,8 +129,27 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.TableLayoutPanel1.Name = "TableLayoutPanel1";
             this.TableLayoutPanel1.RowCount = 1;
             this.TableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.TableLayoutPanel1.Size = new System.Drawing.Size(667, 405);
+            this.TableLayoutPanel1.Size = new System.Drawing.Size(662, 405);
             this.TableLayoutPanel1.TabIndex = 1;
+            // 
+            // ucHistogram
+            // 
+            this.ucHistogram.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.ucHistogram.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucHistogram.Location = new System.Drawing.Point(3, 3);
+            this.ucHistogram.Name = "ucHistogram";
+            this.ucHistogram.Size = new System.Drawing.Size(487, 399);
+            this.ucHistogram.TabIndex = 0;
+            // 
+            // ucBars
+            // 
+            this.ucBars.ChangeStats = null;
+            this.ucBars.DisplayUnits = null;
+            this.ucBars.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucBars.Location = new System.Drawing.Point(496, 3);
+            this.ucBars.Name = "ucBars";
+            this.ucBars.Size = new System.Drawing.Size(163, 399);
+            this.ucBars.TabIndex = 1;
             // 
             // TabPage1
             // 
@@ -129,6 +161,14 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.TabPage1.TabIndex = 0;
             this.TabPage1.Text = "Tabular Results";
             this.TabPage1.UseVisualStyleBackColor = true;
+            // 
+            // ucSummary
+            // 
+            this.ucSummary.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucSummary.Location = new System.Drawing.Point(3, 3);
+            this.ucSummary.Name = "ucSummary";
+            this.ucSummary.Size = new System.Drawing.Size(662, 405);
+            this.ucSummary.TabIndex = 0;
             // 
             // tabProperties
             // 
@@ -188,40 +228,29 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.cmdAddToMap2.UseVisualStyleBackColor = true;
             this.cmdAddToMap2.Click += new System.EventHandler(this.cmdAddToMap_Click);
             // 
-            // ucSummary
+            // cmsChart
             // 
-            this.ucSummary.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucSummary.Location = new System.Drawing.Point(3, 3);
-            this.ucSummary.Name = "ucSummary";
-            this.ucSummary.Size = new System.Drawing.Size(662, 405);
-            this.ucSummary.TabIndex = 0;
+            this.cmsChart.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.copyChartImageToClipboardToolStripMenuItem,
+            this.saveChartImageToFileToolStripMenuItem});
+            this.cmsChart.Name = "cmsChart";
+            this.cmsChart.Size = new System.Drawing.Size(242, 70);
             // 
-            // ucHistogram
+            // copyChartImageToClipboardToolStripMenuItem
             // 
-            this.ucHistogram.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ucHistogram.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucHistogram.Location = new System.Drawing.Point(3, 3);
-            this.ucHistogram.Name = "ucHistogram";
-            this.ucHistogram.Size = new System.Drawing.Size(490, 399);
-            this.ucHistogram.TabIndex = 0;
+            this.copyChartImageToClipboardToolStripMenuItem.Image = global::GCDCore.Properties.Resources.Copy;
+            this.copyChartImageToClipboardToolStripMenuItem.Name = "copyChartImageToClipboardToolStripMenuItem";
+            this.copyChartImageToClipboardToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
+            this.copyChartImageToClipboardToolStripMenuItem.Text = "Copy Chart Image To Clipboard";
+            this.copyChartImageToClipboardToolStripMenuItem.Click += new System.EventHandler(this.copyChartImageToClipboardToolStripMenuItem_Click);
             // 
-            // ucBars
+            // saveChartImageToFileToolStripMenuItem
             // 
-            this.ucBars.ChangeStats = null;
-            this.ucBars.DisplayUnits = null;
-            this.ucBars.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucBars.Location = new System.Drawing.Point(499, 3);
-            this.ucBars.Name = "ucBars";
-            this.ucBars.Size = new System.Drawing.Size(165, 399);
-            this.ucBars.TabIndex = 1;
-            // 
-            // ucProperties
-            // 
-            this.ucProperties.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucProperties.Location = new System.Drawing.Point(3, 3);
-            this.ucProperties.Name = "ucProperties";
-            this.ucProperties.Size = new System.Drawing.Size(662, 405);
-            this.ucProperties.TabIndex = 0;
+            this.saveChartImageToFileToolStripMenuItem.Image = global::GCDCore.Properties.Resources.Save;
+            this.saveChartImageToFileToolStripMenuItem.Name = "saveChartImageToFileToolStripMenuItem";
+            this.saveChartImageToFileToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
+            this.saveChartImageToFileToolStripMenuItem.Text = "Save Chart Image To File";
+            this.saveChartImageToFileToolStripMenuItem.Click += new System.EventHandler(this.saveChartImageToFileToolStripMenuItem_Click);
             // 
             // frmDoDResults
             // 
@@ -248,6 +277,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.TableLayoutPanel1.ResumeLayout(false);
             this.TabPage1.ResumeLayout(false);
             this.tabProperties.ResumeLayout(false);
+            this.cmsChart.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -275,5 +305,8 @@ namespace GCDCore.UserInterface.ChangeDetection
         private System.Windows.Forms.Button cmdBrowse2;
         private System.Windows.Forms.Button cmdProperties;
         private System.Windows.Forms.Button cmdAddToMap2;
+        private System.Windows.Forms.ContextMenuStrip cmsChart;
+        private System.Windows.Forms.ToolStripMenuItem copyChartImageToClipboardToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveChartImageToFileToolStripMenuItem;
     }
 }

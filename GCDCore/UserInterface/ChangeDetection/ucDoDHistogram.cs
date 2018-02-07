@@ -1,5 +1,11 @@
 using GCDCore.Project;
 using GCDCore.Visualization;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
+using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace GCDCore.UserInterface.ChangeDetection
 {
@@ -9,6 +15,19 @@ namespace GCDCore.UserInterface.ChangeDetection
         private void rdoVolume_CheckedChanged(object sender, System.EventArgs e)
         {
             m_HistogramViewer.SetChartType(rdoArea.Checked);
+        }
+
+        public ContextMenuStrip ChartContextMenuStrip
+        {
+            get
+            {
+                return chtData.ContextMenuStrip;
+            }
+
+            set
+            {
+                chtData.ContextMenuStrip = value;
+            }
         }
 
         public void SetHistogramUnits(GCDConsoleLib.GCD.UnitGroup displayUnits)

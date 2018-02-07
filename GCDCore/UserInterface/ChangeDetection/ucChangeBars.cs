@@ -1,6 +1,7 @@
 using GCDCore.Project;
 using GCDCore.Visualization;
 using System;
+using System.Windows.Forms;
 
 namespace GCDCore.UserInterface.ChangeDetection
 {
@@ -33,6 +34,19 @@ namespace GCDCore.UserInterface.ChangeDetection
 				RefreshBars(null, null);
 			}
 		}
+
+        public ContextMenuStrip ChartContextMenuStrip
+        {
+            get
+            {
+                return chtControl.ContextMenuStrip;
+            }
+
+            set
+            {
+                chtControl.ContextMenuStrip = value;
+            }
+        }
 
 		public ucChangeBars()
 		{
