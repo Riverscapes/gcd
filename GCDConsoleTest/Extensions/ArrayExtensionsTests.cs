@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using GCDConsoleLib.Common.Extensons;
 
 namespace GCDConsoleLib.Common.Extensons.Tests
 {
@@ -7,6 +6,7 @@ namespace GCDConsoleLib.Common.Extensons.Tests
     public class ArrayExtensionsTests
     {
         [TestMethod()]
+        [TestCategory("Unit")]
         public void SliceTest1D()
         {
             int[] intArr = new int[] { -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18 };
@@ -23,6 +23,7 @@ namespace GCDConsoleLib.Common.Extensons.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void SliceTest2D()
         {
             int[,] intArr = new int[,] {
@@ -40,6 +41,7 @@ namespace GCDConsoleLib.Common.Extensons.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void FillTest1D()
         {
             int[] intArr = new int[] { 0, 0, 0, 0 };
@@ -48,6 +50,7 @@ namespace GCDConsoleLib.Common.Extensons.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void FillTest2D()
         {
             int[,] intArr = new int[,] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 } };
@@ -57,6 +60,7 @@ namespace GCDConsoleLib.Common.Extensons.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void PlunkTest1D()
         {
             int[] intArr = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
@@ -68,6 +72,7 @@ namespace GCDConsoleLib.Common.Extensons.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void PlunkTest2D()
         {
             int[,] intArr = new int[,] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 } };
@@ -79,6 +84,7 @@ namespace GCDConsoleLib.Common.Extensons.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void PlunkTestFlat()
         {
             int[,] intArr = new int[,] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 } };
@@ -94,6 +100,7 @@ namespace GCDConsoleLib.Common.Extensons.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void Make2DArrayTest()
         {
             int[] intArr = new int[] { 0, 0, 0, 0, 1, 2, 1, 2, 2, 3, 3, 4, 5, 5, 5, 6, 7, 7, 7, 9 };
@@ -105,6 +112,7 @@ namespace GCDConsoleLib.Common.Extensons.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void Make1DArrayTest()
         {
             int[,] intArr = new int[,] { { 0, 0, 0, 0 }, { 1, 2, 1, 2 }, { 2, 3, 3, 4 }, { 5, 5, 5, 6 }, { 7, 7, 7, 9 } };

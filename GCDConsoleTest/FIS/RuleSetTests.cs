@@ -1,7 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using GCDConsoleLib.FIS;
-using System;
-using System.Collections.Generic;
 
 namespace GCDConsoleLib.FIS.Tests
 {
@@ -9,6 +6,7 @@ namespace GCDConsoleLib.FIS.Tests
     public class RuleSetTests
     {
         [TestMethod()]
+        [TestCategory("Unit")]
         public void RuleSetTest()
         {
             RuleSet rs1 = new RuleSet();
@@ -36,54 +34,63 @@ namespace GCDConsoleLib.FIS.Tests
 
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void addInputMFSetTest()
         {
             Assert.Inconclusive();
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void addOutputMFSetTest()
         {
             // We don't need to test this. It's too simple.
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void addRuleTest()
         {
             Assert.Inconclusive();
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void calculateTest()
         {
             Assert.Inconclusive();
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void calculateTest1()
         {
             Assert.Inconclusive();
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void setInputMFSetTest()
         {
             Assert.Inconclusive();
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void validTest()
         {
             Assert.Inconclusive();
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void getFuzzyValTest()
         {
             Assert.Inconclusive();
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void ImplicatorOpTest()
         {
             Assert.Inconclusive();

@@ -1,12 +1,11 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using GCDConsoleLib;
 using System;
 using System.Collections.Generic;
 using UnitsNet;
 using UnitsNet.Units;
-using GCDConsoleLib.Tests.Utility;
 using GCDConsoleLib.GCD;
 using System.IO;
+using GCDConsoleTest.Helpers;
 
 namespace GCDConsoleLib.Tests
 {
@@ -14,6 +13,7 @@ namespace GCDConsoleLib.Tests
     public class HistogramTests
     {
         [TestMethod()]
+        [TestCategory("Unit")]
         public void HistogramTest()
         {
             Histogram rTest1 = new Histogram(20, 1);
@@ -44,6 +44,7 @@ namespace GCDConsoleLib.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void BinIdTest()
         {
             Histogram rTest1 = new Histogram(20, 1);
@@ -74,6 +75,7 @@ namespace GCDConsoleLib.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void BinLowerTest()
         {
             UnitGroup ug = new UnitGroup(VolumeUnit.ImperialBeerBarrel, AreaUnit.SquareInch, LengthUnit.Foot, LengthUnit.Meter);
@@ -89,6 +91,7 @@ namespace GCDConsoleLib.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void BinUpperTest()
         {
             UnitGroup ug = new UnitGroup(VolumeUnit.ImperialBeerBarrel, AreaUnit.SquareInch, LengthUnit.Foot, LengthUnit.Meter);
@@ -104,6 +107,7 @@ namespace GCDConsoleLib.Tests
 
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void BinCentreTest()
         {
             UnitGroup ug = new UnitGroup(VolumeUnit.ImperialBeerBarrel, AreaUnit.SquareInch, LengthUnit.Foot, LengthUnit.Meter);
@@ -114,6 +118,7 @@ namespace GCDConsoleLib.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void BinValsTest()
         {
             Histogram rTest1 = new Histogram(20, 1);
@@ -142,6 +147,7 @@ namespace GCDConsoleLib.Tests
 
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void BinValsTest2()
         {
             Histogram rTest1 = new Histogram(4, 1);
@@ -177,6 +183,7 @@ namespace GCDConsoleLib.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void GetNearestFiveOrderWidthTest()
         {
             Assert.AreEqual(Histogram.GetNearestFiveOrderWidth(0.1m), 0.1m);
@@ -212,6 +219,7 @@ namespace GCDConsoleLib.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void GetCleanBinsTest()
         {
             Tuple<int, decimal> t1 = Histogram.GetCleanBins(10, 1, -1);
@@ -229,6 +237,7 @@ namespace GCDConsoleLib.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void BinVolumeTest()
         {
             Histogram rTest1 = new Histogram(20, 1);
@@ -254,6 +263,7 @@ namespace GCDConsoleLib.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void ReadWriteFileTest()
         {
             // Write to a file then read it to see if we get the same thing
@@ -291,6 +301,7 @@ namespace GCDConsoleLib.Tests
 
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void ReadWriteFileSpecialCaseTest()
         {
             // Write to a file then read it to see if we get the same thing

@@ -9,6 +9,7 @@ namespace GCDConsoleLib.FIS.Tests
     public class RuleTests
     {
         [TestMethod()]
+        [TestCategory("Unit")]
         public void RuleTest()
         {
             Rule testRule = new Rule();
@@ -19,6 +20,7 @@ namespace GCDConsoleLib.FIS.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void addMfTest()
         {
             Rule testRule = new Rule();

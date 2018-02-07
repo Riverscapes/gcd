@@ -1,16 +1,10 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
-using GCDConsoleLib.Internal.Operators;
-using GCDConsoleLib.Tests.Utility;
-using GCDConsoleLib.Tests;
+using GCDConsoleTest.Helpers;
 using OSGeo.OGR;
 
-namespace GCDConsoleLib.Internal.Operators.Tests
+namespace GCDConsoleLib.Internal.Operators.FuncTests
 {
     [TestClass()]
     public class PointDensityTests
@@ -37,15 +31,16 @@ namespace GCDConsoleLib.Internal.Operators.Tests
             return pt;
         }
 
+
         [TestMethod()]
+        [TestCategory("Functional")]
         public void PointDensityTest()
         {
-            Assert.Inconclusive();
-            Raster rDEM = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"PointDensity\GrandCanyon\R02_DEM_Meters_2004_05.img")));
-            Vector rPtDensity = new Vector(new FileInfo(TestHelpers.GetTestRootPath(@"PointDensity\GrandCanyon\R2_HybridData_2004_05.shp")));
+            Raster rDEM = new Raster(new FileInfo(DirHelpers.GetTestRootPath(@"PointDensity\GrandCanyon\R02_DEM_Meters_2004_05.img")));
+            Vector rPtDensity = new Vector(new FileInfo(DirHelpers.GetTestRootPath(@"PointDensity\GrandCanyon\R2_HybridData_2004_05.shp")));
 
-            Raster rDEM2 = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"PointDensity\SulpherCreek\2006Feb_DEM.img")));
-            Vector rPtDensity2 = new Vector(new FileInfo(TestHelpers.GetTestRootPath(@"PointDensity\SulpherCreek\feb06_all_points.shp")));
+            Raster rDEM2 = new Raster(new FileInfo(DirHelpers.GetTestRootPath(@"PointDensity\SulpherCreek\2006Feb_DEM.img")));
+            Vector rPtDensity2 = new Vector(new FileInfo(DirHelpers.GetTestRootPath(@"PointDensity\SulpherCreek\feb06_all_points.shp")));
 
             using (ITempDir tmp = TempDir.Create())
             {
@@ -70,10 +65,11 @@ namespace GCDConsoleLib.Internal.Operators.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Functional")]
         public void InsideRadiusTest()
         {
-            Raster rDEM = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"PointDensity\GrandCanyon\RASTER1m.tif")));
-            Vector rPtDensity = new Vector(new FileInfo(TestHelpers.GetTestRootPath(@"PointDensity\GrandCanyon\R2_HybridData_2004_05.shp")));
+            Raster rDEM = new Raster(new FileInfo(DirHelpers.GetTestRootPath(@"PointDensity\GrandCanyon\RASTER1m.tif")));
+            Vector rPtDensity = new Vector(new FileInfo(DirHelpers.GetTestRootPath(@"PointDensity\GrandCanyon\R2_HybridData_2004_05.shp")));
 
             Raster circleOut = new FakeRaster<double>(rDEM);
             PointDensity circletest = new PointDensity(rDEM, rPtDensity, circleOut, RasterOperators.KernelShapes.Circle, 5.0m);
@@ -92,10 +88,11 @@ namespace GCDConsoleLib.Internal.Operators.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Functional")]
         public void InsideSquareTest()
         {
-            Raster rDEM = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"PointDensity\GrandCanyon\RASTER1m.tif")));
-            Vector rPtDensity = new Vector(new FileInfo(TestHelpers.GetTestRootPath(@"PointDensity\GrandCanyon\R2_HybridData_2004_05.shp")));
+            Raster rDEM = new Raster(new FileInfo(DirHelpers.GetTestRootPath(@"PointDensity\GrandCanyon\RASTER1m.tif")));
+            Vector rPtDensity = new Vector(new FileInfo(DirHelpers.GetTestRootPath(@"PointDensity\GrandCanyon\R2_HybridData_2004_05.shp")));
 
             Raster circleOut = new FakeRaster<double>(rDEM);
             PointDensity circletest = new PointDensity(rDEM, rPtDensity, circleOut, RasterOperators.KernelShapes.Square, 5.0m);
@@ -116,10 +113,11 @@ namespace GCDConsoleLib.Internal.Operators.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Functional")]
         public void BinPointsTest()
         {
-            Raster rDEM = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"PointDensity\GrandCanyon\RASTER1m.tif")));
-            Vector rPtDensity = new Vector(new FileInfo(TestHelpers.GetTestRootPath(@"PointDensity\GrandCanyon\R2_HybridData_2004_05.shp")));
+            Raster rDEM = new Raster(new FileInfo(DirHelpers.GetTestRootPath(@"PointDensity\GrandCanyon\RASTER1m.tif")));
+            Vector rPtDensity = new Vector(new FileInfo(DirHelpers.GetTestRootPath(@"PointDensity\GrandCanyon\R2_HybridData_2004_05.shp")));
 
             Raster circleOut = new FakeRaster<double>(rDEM);
             PointDensity circletest = new PointDensity(rDEM, rPtDensity, circleOut, RasterOperators.KernelShapes.Square, 5.0m);
@@ -146,10 +144,11 @@ namespace GCDConsoleLib.Internal.Operators.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Functional")]
         public void TranslateCIDToBinIDTest()
         {
-            Raster rDEM = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"PointDensity\GrandCanyon\RASTER1m.tif")));
-            Vector rPtDensity = new Vector(new FileInfo(TestHelpers.GetTestRootPath(@"PointDensity\GrandCanyon\R2_HybridData_2004_05.shp")));
+            Raster rDEM = new Raster(new FileInfo(DirHelpers.GetTestRootPath(@"PointDensity\GrandCanyon\RASTER1m.tif")));
+            Vector rPtDensity = new Vector(new FileInfo(DirHelpers.GetTestRootPath(@"PointDensity\GrandCanyon\R2_HybridData_2004_05.shp")));
 
             Raster circleOut = new FakeRaster<double>(rDEM);
             PointDensity circletest = new PointDensity(rDEM, rPtDensity, circleOut, RasterOperators.KernelShapes.Square, 5.0m);
@@ -171,10 +170,11 @@ namespace GCDConsoleLib.Internal.Operators.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Functional")]
         public void GetRelevantBinsTest()
         {
-            Raster rDEM = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"PointDensity\GrandCanyon\RASTER1m.tif")));
-            Vector rPtDensity = new Vector(new FileInfo(TestHelpers.GetTestRootPath(@"PointDensity\GrandCanyon\R2_HybridData_2004_05.shp")));
+            Raster rDEM = new Raster(new FileInfo(DirHelpers.GetTestRootPath(@"PointDensity\GrandCanyon\RASTER1m.tif")));
+            Vector rPtDensity = new Vector(new FileInfo(DirHelpers.GetTestRootPath(@"PointDensity\GrandCanyon\R2_HybridData_2004_05.shp")));
 
             Raster circleOut = new FakeRaster<double>(rDEM);
             PointDensity circletest = new PointDensity(rDEM, rPtDensity, circleOut, RasterOperators.KernelShapes.Square, 5.0m);

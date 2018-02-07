@@ -1,9 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using GCDConsoleLib.Utility;
-using System;
-using System.Collections.Generic;
 using UnitsNet;
-using GCDConsoleLib.GCD;
 
 namespace GCDConsoleLib.Utility.Tests
 {
@@ -11,6 +7,7 @@ namespace GCDConsoleLib.Utility.Tests
     public class DynamicMathTests
     {
         [TestMethod()]
+        [TestCategory("Unit")]
         public void DynamicMathTest()
         {
             Assert.AreEqual(DynamicMath.Add(0.5,4), 4.5);
@@ -35,6 +32,7 @@ namespace GCDConsoleLib.Utility.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void SafeDivisionTest()
         {
             decimal dec1 = 0.7m;

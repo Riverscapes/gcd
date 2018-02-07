@@ -1,8 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using GCDConsoleLib.Internal;
-using System;
 using System.Collections.Generic;
-using GCDConsoleLib.Tests.Utility;
+using GCDConsoleTest.Helpers;
 
 namespace GCDConsoleLib.Internal.Tests
 {
@@ -55,6 +53,7 @@ namespace GCDConsoleLib.Internal.Tests
     public class WindowOverlapOperatorTests
     {
         [TestMethod()]
+        [TestCategory("Unit")]
         public void WindowOverlapOperatorTest()
         {
             FakeRaster<int> Raster1 = new FakeRaster<int>(0, 0, -1, 1, new int[,] {
@@ -91,6 +90,7 @@ namespace GCDConsoleLib.Internal.Tests
 
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void SetOpExtentTest()
         {
             FakeRaster<int> Raster1 = new FakeRaster<int>(0, 0, -1, 1, new int[,] {

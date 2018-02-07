@@ -1,14 +1,13 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace GCDConsoleLib.Tests
+namespace GCDConsoleTest.Helpers
 {
     /// <summary>
     /// Summary description for TestHelpers
     /// </summary>
-    public struct TestHelpers
+    public struct DirHelpers
     {
         public static string AssemblyDir
         {

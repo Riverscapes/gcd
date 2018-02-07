@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using GCDConsoleLib;
 using System;
 
 namespace GCDConsoleLib.Tests
@@ -9,6 +8,7 @@ namespace GCDConsoleLib.Tests
     {
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void ProjectionTestWKT()
         {
             string sUnitWKT = "PROJCS[\"NAD_1983_StatePlane_California_II_FIPS_0402\",GEOGCS[\"GCS_North_American_1983\",DATUM[\"North_American_Datum_1983\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.017453292519943295]],PROJECTION[\"Lambert_Conformal_Conic_2SP\"],PARAMETER[\"False_Easting\",2000000.0],PARAMETER[\"False_Northing\",500000.0],PARAMETER[\"Central_Meridian\",-122.0],PARAMETER[\"Standard_Parallel_1\",38.33333333333334],PARAMETER[\"Standard_Parallel_2\",39.83333333333334],PARAMETER[\"Latitude_Of_Origin\",37.66666666666666],UNIT[\"meter\",1.0]]";
@@ -33,6 +33,7 @@ namespace GCDConsoleLib.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void ProjectionTestEPSG()
         {
             Assert.Inconclusive();
@@ -40,6 +41,7 @@ namespace GCDConsoleLib.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void IsSameBasicTest()
         {
             // Ok. Easy test first. Minor changes to the same WKT
@@ -65,6 +67,7 @@ namespace GCDConsoleLib.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void HorizontalUnitTest()
         {
             // Let's set up a WKT and then swap out the units
@@ -96,6 +99,7 @@ namespace GCDConsoleLib.Tests
 
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void IsSameComplexTest()
         {
             Assert.Inconclusive();

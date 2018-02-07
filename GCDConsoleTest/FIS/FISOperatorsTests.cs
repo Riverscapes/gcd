@@ -1,8 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using GCDConsoleLib.FIS;
 using System;
 using System.Collections.Generic;
-using GCDConsoleLib.GCD;
 using System.Diagnostics;
 
 namespace GCDConsoleLib.FIS.Tests
@@ -11,6 +9,7 @@ namespace GCDConsoleLib.FIS.Tests
     public class FISOperatorsTests
     {
         [TestMethod()]
+        [TestCategory("Unit")]
         public void MaxTest()
         {
             Assert.AreEqual(FISOperators.Max(1, 1), 1);
@@ -21,6 +20,7 @@ namespace GCDConsoleLib.FIS.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void MinTest()
         {
             Assert.AreEqual(FISOperators.Min(1, 1), 1);
@@ -31,6 +31,7 @@ namespace GCDConsoleLib.FIS.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void ProbOrTest()
         {
             // Note: I go this from https://www.mathworks.com/help/fuzzy/probor.html?requestedDomain=www.mathworks.com
@@ -42,6 +43,7 @@ namespace GCDConsoleLib.FIS.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void ProductTest()
         {
             Assert.AreEqual(FISOperators.Product(1, 1), 1);
@@ -52,6 +54,7 @@ namespace GCDConsoleLib.FIS.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void IntersectLinesTest()
         {
             // Lines do intersects with infinities first (vertical lines)
@@ -81,6 +84,7 @@ namespace GCDConsoleLib.FIS.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void ImpMinTest()
         {
             // Set our input
@@ -112,6 +116,7 @@ namespace GCDConsoleLib.FIS.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void ImpProductTest()
         {
             // Set our input
@@ -143,6 +148,7 @@ namespace GCDConsoleLib.FIS.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void AggMaxTest()
         {
             // Set our inputs

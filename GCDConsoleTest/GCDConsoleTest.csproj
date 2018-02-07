@@ -106,7 +106,6 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="DebuggingHelper.cs" />
     <Compile Include="Extensions\BiDictionaryTests.cs" />
     <Compile Include="ExtentRectangleTests.cs" />
     <Compile Include="FIS\DefuzzifyTests.cs" />
@@ -126,14 +125,15 @@
     <Compile Include="RasterOperators\WindowOverlapOperatorTests.cs" />
     <Compile Include="RasterTests.cs" />
     <Compile Include="Miscellaneous.cs" />
-    <Compile Include="Utility\ArrayExtensionsTests.cs" />
-    <Compile Include="Utility\TempGeoJSONFile.cs" />
+    <Compile Include="Extensions\ArrayExtensionsTests.cs" />
+    <Compile Include="Helpers\RasterTests.cs" />
+    <Compile Include="Helpers\TempGeoJSONFile.cs" />
     <Compile Include="Utility\DynamicMathTests.cs" />
     <Compile Include="Utility\ProbabilityTests.cs" />
-    <Compile Include="Utility\TempDir.cs" />
-    <Compile Include="Utility\FakeRaster.cs" />
+    <Compile Include="Helpers\TempDir.cs" />
+    <Compile Include="Helpers\FakeRaster.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utility\TestHelpers.cs" />
+    <Compile Include="Helpers\DirHelpers.cs" />
     <Compile Include="VectorTests.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -145,6 +145,9 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="FunctionalTests\" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

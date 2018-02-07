@@ -1,9 +1,7 @@
 ﻿using System;
 using System.IO;
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
 
-namespace GCDConsoleTest.Utility
+namespace GCDConsoleTest.Helpers
 {
     interface ITempFile : IDisposable
     {

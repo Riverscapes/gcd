@@ -1,9 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using GCDConsoleLib;
-using System;
 using System.IO;
 using GCDConsoleLib.GCD;
 using UnitsNet.Units;
+using GCDConsoleTest.Helpers;
 
 namespace GCDConsoleLib.Tests
 {
@@ -11,9 +10,10 @@ namespace GCDConsoleLib.Tests
     public class ExtentRectangleTests
     {
         [TestMethod()]
+        [TestCategory("Unit")]
         public void ExtentRectangleTest()
         {
-            ExtentRectangle rA2 = new ExtentRectangle(new FileInfo(TestHelpers.GetTestRasterPath("Slopey980-950.tif")));
+            ExtentRectangle rA2 = new ExtentRectangle(new FileInfo(DirHelpers.GetTestRasterPath("Slopey980-950.tif")));
             Assert.AreEqual(rA2.Top, -10019.0m);
             Assert.AreEqual(rA2.Bottom, -10029.0m);
             Assert.AreEqual(rA2.Left, -9979.0m);
@@ -61,6 +61,7 @@ namespace GCDConsoleLib.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void BufferTest()
         {
             ExtentRectangle rOrig = new ExtentRectangle(20, 20, -1, 1, 20, 20);
@@ -95,6 +96,7 @@ namespace GCDConsoleLib.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void ToStringTest()
         {
             ExtentRectangle rA1 = new ExtentRectangle(5, 6, -1, 1, 100, 100);
@@ -102,6 +104,7 @@ namespace GCDConsoleLib.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void UnionTest()
         {
             ExtentRectangle rA1 = new ExtentRectangle(0, 0, -1, 1, 30, 30);
@@ -125,6 +128,7 @@ namespace GCDConsoleLib.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void IntersectTest()
         {
             ExtentRectangle rA1 = new ExtentRectangle(0, 0, -1, 1, 30, 30);
@@ -147,6 +151,7 @@ namespace GCDConsoleLib.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void GetTranslationTest()
         {
             ExtentRectangle rA1 = new ExtentRectangle(0, 0, -1, 1, 30, 30);
@@ -164,6 +169,7 @@ namespace GCDConsoleLib.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void IsConcurrentTest()
         {
             ExtentRectangle rA1 = new ExtentRectangle(5, 6, -1, 1, 100, 100);
@@ -181,6 +187,7 @@ namespace GCDConsoleLib.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void IsOrthogonalTest()
         {
             ExtentRectangle rA1 = new ExtentRectangle(5, 6, -1, 1, 100, 100);
@@ -200,6 +207,7 @@ namespace GCDConsoleLib.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void IsDivisibleTest()
         {
             // Positive test
@@ -232,6 +240,7 @@ namespace GCDConsoleLib.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void MakeDivisibleTest()
         {
             ///
@@ -326,6 +335,7 @@ namespace GCDConsoleLib.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void HasOverlapTest()
         {
             // TODO: TEST THIS THOROUGHLY, ESPECIALLY -/+ width heights
@@ -351,6 +361,7 @@ namespace GCDConsoleLib.Tests
 
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void RowCol2IdTest()
         {
             ExtentRectangle rTest1 = new ExtentRectangle(5, 6, -1, 1, 100, 100);
@@ -362,6 +373,7 @@ namespace GCDConsoleLib.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void Id2RowColTest()
         {
             ExtentRectangle rTest1 = new ExtentRectangle(5, 6, -1, 1, 100, 50);
@@ -373,6 +385,7 @@ namespace GCDConsoleLib.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void RelativeId()
         {
             ExtentRectangle rTest1 = new ExtentRectangle(4, 6, -1, 1, 10, 10);
@@ -405,10 +418,11 @@ namespace GCDConsoleLib.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Functional")]
         public void CellAreaTest()
         {
             UnitGroup ug = new UnitGroup(VolumeUnit.CubicMeter, AreaUnit.SquareMeter, LengthUnit.Meter, LengthUnit.Meter);
-            ExtentRectangle rA2 = new ExtentRectangle(new FileInfo(TestHelpers.GetTestRasterPath("Slopey980-950.tif")));
+            ExtentRectangle rA2 = new ExtentRectangle(new FileInfo(DirHelpers.GetTestRasterPath("Slopey980-950.tif")));
             Assert.AreEqual(rA2.CellArea(ug).SquareMeters, 0.01, 0.000000000001);
         }
     }

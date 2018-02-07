@@ -1,7 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
-using System;
-using GCDConsoleLib.Tests.Utility;
+using GCDConsoleTest.Helpers;
 
 namespace GCDConsoleLib.Tests
 {
@@ -10,18 +9,20 @@ namespace GCDConsoleLib.Tests
     public class RasterTests
     {
         [TestMethod()]
+        [TestCategory("Unit")]
         public void RasterInitTest()
         {
-            Raster rTemplateRaster = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("Slopey980-950.tif")));
+            Raster rTemplateRaster = new Raster(new FileInfo(DirHelpers.GetTestRasterPath("Slopey980-950.tif")));
             Assert.IsFalse(rTemplateRaster.IsOpen);
             Assert.IsTrue(rTemplateRaster.Datatype.Equals(FakeRaster<float>.floatType));
             Assert.IsFalse(rTemplateRaster.IsOpen);
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void RasterInitLazyTest()
         {
-            Raster rTemplateRaster = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("Slopey980-950.tif")));
+            Raster rTemplateRaster = new Raster(new FileInfo(DirHelpers.GetTestRasterPath("Slopey980-950.tif")));
             Assert.IsFalse(rTemplateRaster.IsOpen);
             Assert.IsFalse(rTemplateRaster.IsLoaded);
 
@@ -33,7 +34,7 @@ namespace GCDConsoleLib.Tests
             // Reset and try again
             rTemplateRaster = null;
 
-            rTemplateRaster = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("Slopey980-950.tif")));
+            rTemplateRaster = new Raster(new FileInfo(DirHelpers.GetTestRasterPath("Slopey980-950.tif")));
             Assert.IsFalse(rTemplateRaster.IsOpen);
             Assert.IsFalse(rTemplateRaster.IsLoaded);
 
@@ -45,7 +46,7 @@ namespace GCDConsoleLib.Tests
             // Reset and try again
             rTemplateRaster = null;
 
-            rTemplateRaster = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("Slopey980-950.tif")));
+            rTemplateRaster = new Raster(new FileInfo(DirHelpers.GetTestRasterPath("Slopey980-950.tif")));
             Assert.IsFalse(rTemplateRaster.IsOpen);
             Assert.IsFalse(rTemplateRaster.IsLoaded);
 
@@ -56,11 +57,12 @@ namespace GCDConsoleLib.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void BasicRasterDSCopyTest()
         {
             using (ITempDir tmp = TempDir.Create())
             {
-                Raster rTemplaetRaster = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("SinWave950-980.tif")));
+                Raster rTemplaetRaster = new Raster(new FileInfo(DirHelpers.GetTestRasterPath("SinWave950-980.tif")));
                 rTemplaetRaster.Copy(new FileInfo(Path.Combine(tmp.Name, "CopyRasterTest.tif")));
 
                 // Make sure we're good.
@@ -74,11 +76,12 @@ namespace GCDConsoleLib.Tests
 
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void RasterDeleteTest()
         {
             using (ITempDir tmp = TempDir.Create())
             {
-                FileInfo sSourceRater = new FileInfo(TestHelpers.GetTestRasterPath("const990.tif"));
+                FileInfo sSourceRater = new FileInfo(DirHelpers.GetTestRasterPath("const990.tif"));
                 FileInfo sDeletePath = new FileInfo(Path.Combine(tmp.Name, "DeleteRasterTest.tif"));
 
                 Raster rRaster = new Raster(sSourceRater);
@@ -102,6 +105,7 @@ namespace GCDConsoleLib.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void RasterExtentExpandTest()
         {
             // This is kind of too simple to test.
@@ -109,9 +113,10 @@ namespace GCDConsoleLib.Tests
 
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void ReadTest()
         {
-            Raster rTempl = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("AngledSlopey950-980E.tif")));
+            Raster rTempl = new Raster(new FileInfo(DirHelpers.GetTestRasterPath("AngledSlopey950-980E.tif")));
             rTempl.Open();
 
             float[] fBuff = new float[1];
@@ -128,9 +133,10 @@ namespace GCDConsoleLib.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void WriteTest()
         {
-            Raster rTempl = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("SquareValley950-980.tif")));
+            Raster rTempl = new Raster(new FileInfo(DirHelpers.GetTestRasterPath("SquareValley950-980.tif")));
             using (ITempDir tmp = TempDir.Create())
             {
                 Raster rOutput = new Raster(rTempl, new FileInfo(Path.Combine(tmp.Name, "ExtendedCopyRasterTestBuffer.tif")));
@@ -165,12 +171,13 @@ namespace GCDConsoleLib.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Functional")]
         public void BuildPyramidsTest()
         {
             using (ITempDir tmp = TempDir.Create())
             {
                 // Small rasters don't need pyramids 
-                Raster rTempl = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("SquareValley950-980.tif")));
+                Raster rTempl = new Raster(new FileInfo(DirHelpers.GetTestRasterPath("SquareValley950-980.tif")));
                 Raster rTemplateOutput = RasterOperators.ExtendedCopy(rTempl, new FileInfo(Path.Combine(tmp.Name, "SMALL_PyramidTest.tif")));
 
                 rTemplateOutput.BuildPyramids("average");
@@ -178,7 +185,7 @@ namespace GCDConsoleLib.Tests
 
 
                 // Big Rasters do need pyramids
-                Raster rBigTempl = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2005Dec_DEM\2005Dec_DEM.img")));
+                Raster rBigTempl = new Raster(new FileInfo(DirHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2005Dec_DEM\2005Dec_DEM.img")));
                 ExtentRectangle newExtReal = rBigTempl.Extent.Buffer(1000);
                 Raster rBigTemplateOutput = RasterOperators.ExtendedCopy(rBigTempl, new FileInfo(Path.Combine(tmp.Name, "BIG_PyramidTest.tif")), newExtReal);
 

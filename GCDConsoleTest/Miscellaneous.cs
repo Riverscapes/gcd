@@ -1,5 +1,4 @@
-﻿
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -28,6 +27,7 @@ namespace GCDConsoleLib.Tests
         /// (and more specifically how they don't work)
         /// </summary>
         [TestMethod()]
+        [TestCategory("Unit")]
         public void PassByRef()
         {
             List<string> A = new List<string>();
@@ -51,6 +51,7 @@ namespace GCDConsoleLib.Tests
         /// How do we set cultures and read cultural numbers
         /// </summary>
         [TestMethod()]
+        [TestCategory("Unit")]
         public void CultureStuff()
         {
             double x = 123123123.456;
@@ -84,6 +85,7 @@ namespace GCDConsoleLib.Tests
         /// Just a quick little test to see how floating point numbers work in C#
         /// </summary>
         [TestMethod()]
+        [TestCategory("Unit")]
         public void floatingPoint()
         {
             // Pick a stupid number first to show how it goes
@@ -140,6 +142,7 @@ namespace GCDConsoleLib.Tests
         /// to 2.13 instead of 2.14. This occurs because internally the method multiplies value by 10digits, and 
         /// the multiplication operation in this case suffers from a loss of precision.
         [TestMethod()]
+        [TestCategory("Unit")]
         public void MathRounding()
         {
 

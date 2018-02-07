@@ -1,9 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.IO;
 using System.Collections.Generic;
-using GCDConsoleLib.Tests;
-using GCDConsoleLib.FIS;
+using GCDConsoleTest.Helpers;
 
 namespace GCDConsoleLib.FIS.Tests
 {
@@ -11,9 +9,10 @@ namespace GCDConsoleLib.FIS.Tests
     public class FisFileTests
     {
         [TestMethod()]
+        [TestCategory("Unit")]
         public void FisFileTest()
         {
-            FileInfo fn = new FileInfo(TestHelpers.GetTestRootPath(@"FIS\FuzzyChinookSpawner_03.fis"));
+            FileInfo fn = new FileInfo(DirHelpers.GetTestRootPath(@"FIS\FuzzyChinookSpawner_03.fis"));
             FisFile test = new FisFile(fn);
 
             Assert.AreEqual(test.ruleset.Rules.Count, 64);
@@ -40,6 +39,7 @@ namespace GCDConsoleLib.FIS.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void RangeSquareBracketsTest()
         {
             List<double> expected1 = new List<double>() { 0, -1, 0.09, 0.17 };

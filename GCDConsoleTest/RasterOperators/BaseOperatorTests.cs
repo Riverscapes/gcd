@@ -1,11 +1,10 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
-using GCDConsoleLib.Tests.Utility;
 using GCDConsoleLib.Utility;
 using GCDConsoleLib.Common.Extensons;
 using System.IO;
-using GCDConsoleLib.Tests;
+using GCDConsoleTest.Helpers;
 
 namespace GCDConsoleLib.Internal.Tests
 {
@@ -62,6 +61,7 @@ namespace GCDConsoleLib.Internal.Tests
 
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void BaseInitTest()
         {
             FakeRaster<int> Raster1 = new FakeRaster<int>(0, 0, -1, 1, new int[,] { { 1, 2, 3, 4 }, { 5, 6, 7, 8 }, { 9, 10, 11, 12 } });
@@ -79,6 +79,7 @@ namespace GCDConsoleLib.Internal.Tests
         delegate void Del(object sender, int e);
 
         [TestMethod]
+        [TestCategory("Unit")]
         public void TestEventRaised()
         {
             // This is a test object to collect all the progress events
@@ -106,12 +107,13 @@ namespace GCDConsoleLib.Internal.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void BaseInitTestReal()
         {
             // First try it with a real file
             using (ITempDir tmp = TempDir.Create())
             {
-                Raster rTemplateRaster = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("AngledSlopey950-980E.tif")));
+                Raster rTemplateRaster = new Raster(new FileInfo(DirHelpers.GetTestRasterPath("AngledSlopey950-980E.tif")));
                 FakeRaster<float> rOut = new FakeRaster<float>(rTemplateRaster);
                 TestOp<float> theTest = new TestOp<float>(new List<Raster> { rTemplateRaster }, rOut);
 
@@ -170,6 +172,7 @@ namespace GCDConsoleLib.Internal.Tests
 
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void nextChunkTest()
         {
             FakeRaster<int> Raster1 = new FakeRaster<int>(10, 20, -1, 1, new int[,] { { 1, 2, 3, 4 }, { 5, 6, 7, 8 }, { 9, 10, 11, 12 } });
@@ -189,6 +192,7 @@ namespace GCDConsoleLib.Internal.Tests
 
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void NodataTests()
         {
             Raster intRaster = new FakeRaster<int>(10, 20, -1, 1, new int[,] { { 1 } });
@@ -239,6 +243,7 @@ namespace GCDConsoleLib.Internal.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void GetChunkTest()
         {
             FakeRaster<int> Raster1 = new FakeRaster<int>(10, 20, -1, 1, new int[,] { { 1, 2, 3, 4 }, { 5, 6, 7, 8 }, { 9, 10, 11, 12 } });

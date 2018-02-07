@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Runtime.CompilerServices;
 
-namespace GCDConsoleLib.Tests.Utility
+namespace GCDConsoleTest.Helpers
 {
     interface ITempDir : IDisposable
     {

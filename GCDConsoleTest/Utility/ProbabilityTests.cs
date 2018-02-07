@@ -1,10 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using GCDConsoleLib.Utility;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GCDConsoleLib.Utility.Tests
 {
@@ -12,6 +6,7 @@ namespace GCDConsoleLib.Utility.Tests
     public class ProbabilityTests
     {
         [TestMethod()]
+        [TestCategory("Unit")]
         public void normalDistTest()
         {
             double accuracy = 0.0001;
@@ -35,6 +30,7 @@ namespace GCDConsoleLib.Utility.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void ltqnormTest()
         {
             double accuracy = 0.0001;

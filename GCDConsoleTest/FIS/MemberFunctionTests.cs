@@ -1,6 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using GCDConsoleLib.FIS;
-using System;
 using System.Collections.Generic;
 
 namespace GCDConsoleLib.FIS.Tests
@@ -20,6 +18,7 @@ namespace GCDConsoleLib.FIS.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void MemberFunctionTest()
         {
             // Empty Constructor
@@ -64,6 +63,7 @@ namespace GCDConsoleLib.FIS.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void clearTest()
         {
             MemberFunction mf1 = new MemberFunction(new List<double[]>(){
@@ -81,6 +81,7 @@ namespace GCDConsoleLib.FIS.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void getXTest()
         {
             MemberFunction mf1 = new MemberFunction(new List<double[]>(){
@@ -113,6 +114,7 @@ namespace GCDConsoleLib.FIS.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void fuzzifyTest()
         {
             MemberFunction mf1 = new MemberFunction(new List<double[]>(){

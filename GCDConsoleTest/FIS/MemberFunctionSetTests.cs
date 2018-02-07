@@ -1,6 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using GCDConsoleLib.FIS;
-using System;
 using System.Collections.Generic;
 
 namespace GCDConsoleLib.FIS.Tests
@@ -9,6 +7,7 @@ namespace GCDConsoleLib.FIS.Tests
     public class MemberFunctionSetTests
     {
         [TestMethod()]
+        [TestCategory("Unit")]
         public void MemberFunctionSetTest()
         {
             MemberFunctionSet mfSet1 = new MemberFunctionSet();
@@ -25,6 +24,7 @@ namespace GCDConsoleLib.FIS.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void addMFTest()
         {
             MemberFunctionSet mfSet = new MemberFunctionSet(0, 5);
@@ -53,6 +53,7 @@ namespace GCDConsoleLib.FIS.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void addTriangleMFTest()
         {
             MemberFunctionSet mfSet = new MemberFunctionSet(0, 5);
@@ -71,6 +72,7 @@ namespace GCDConsoleLib.FIS.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void addTrapezoidMFTest()
         {
             MemberFunctionSet mfSet = new MemberFunctionSet(0, 5);

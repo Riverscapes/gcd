@@ -3,8 +3,9 @@ using OSGeo.GDAL;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using GCDConsoleLib.Common.Extensons;
 using GCDConsoleLib.Utility;
+using GCDConsoleLib;
 
-namespace GCDConsoleLib.Tests.Utility
+namespace GCDConsoleTest.Helpers
 {
     public class FakeRaster<U> : Raster
     {
@@ -122,7 +123,8 @@ namespace GCDConsoleLib.Tests.Utility
     {
 
         [TestMethod()]
-        public void InitTest()
+        [TestCategory("Unit")]
+        public void FakeRasterInitTest()
         {
             int[,] intArr = new int[5, 4] {
                 { -1, 0, 1, 2 },

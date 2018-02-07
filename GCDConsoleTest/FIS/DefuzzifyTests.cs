@@ -1,6 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using GCDConsoleLib.FIS;
-using System;
 using System.Collections.Generic;
 
 namespace GCDConsoleLib.FIS.Tests
@@ -9,6 +7,7 @@ namespace GCDConsoleLib.FIS.Tests
     public class DefuzzifyTests
     {
         [TestMethod()]
+        [TestCategory("Unit")]
         public void DefuzzCentroidTest()
         {
             // Set our input
@@ -29,6 +28,7 @@ namespace GCDConsoleLib.FIS.Tests
         } 
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void FISDefuzzBisectTest()
         {
             // Test a symmetric shape
@@ -80,6 +80,7 @@ namespace GCDConsoleLib.FIS.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void FISDefuzzMaxMethodsTest()
         {
             // Test a shape where the bisect happens beteen points

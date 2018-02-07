@@ -1,8 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using GCDConsoleLib.Internal;
-using System;
 using System.Collections.Generic;
-using GCDConsoleLib.Tests.Utility;
+using GCDConsoleTest.Helpers;
 
 namespace GCDConsoleLib.Internal.Tests
 {
@@ -48,6 +46,7 @@ namespace GCDConsoleLib.Internal.Tests
     public class CellByCellOperatorTests
     {
         [TestMethod()]
+        [TestCategory("Unit")]
         public void CellByCellOperatorTest()
         {
             FakeRaster<int> Raster1 = new FakeRaster<int>(0, 0, -1, 1, new int[,] { { 1, 2, 3, 4 }, { 5, 6, 7, 8 }, { 9, 10, 11, 12 } });

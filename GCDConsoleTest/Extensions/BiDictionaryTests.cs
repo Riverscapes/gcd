@@ -1,12 +1,12 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-
 namespace GCDConsoleLib.Extensions.Tests
 {
     [TestClass()]
     public class BiDictionaryTests
     {
         [TestMethod()]
+        [TestCategory("Unit")]
         public void BiDictionaryTest()
         {
             BiDictionary<int, string, double> test1 = new BiDictionary<int, string, double>()

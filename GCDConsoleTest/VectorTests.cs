@@ -1,7 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
-using GCDConsoleTest.Utility;
-using GCDConsoleLib.Tests.Utility;
+using GCDConsoleTest.Helpers;
 
 namespace GCDConsoleLib.Tests
 {
@@ -9,9 +8,10 @@ namespace GCDConsoleLib.Tests
     public class VectorTests
     {
         [TestMethod()]
+        [TestCategory("Unit")]
         public void VectorTest()
         {
-            string sFilepath = TestHelpers.GetTestVectorPath("StressTest.shp");
+            string sFilepath = DirHelpers.GetTestVectorPath("StressTest.shp");
             Vector rVector = new Vector(new FileInfo(sFilepath));
             Assert.IsTrue(rVector.Features.Count > 0);
             Assert.IsTrue(rVector.Fields.Count > 0);
@@ -21,11 +21,12 @@ namespace GCDConsoleLib.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void VectorCopyTest()
         {
-            using (Utility.ITempDir tmp = Utility.TempDir.Create())
+            using (ITempDir tmp = TempDir.Create())
             {
-                Vector rVector = new Vector(new FileInfo(TestHelpers.GetTestVectorPath("StressTest.shp")));
+                Vector rVector = new Vector(new FileInfo(DirHelpers.GetTestVectorPath("StressTest.shp")));
                 rVector.Copy(new FileInfo(Path.Combine(tmp.Name, "CopyShapefile.shp")));
 
                 // Make sure we're good.
@@ -37,22 +38,24 @@ namespace GCDConsoleLib.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void FileTypes()
         {
-            Vector shp = new Vector(new FileInfo(TestHelpers.GetTestRootPath(@"vectors\StressTest.shp")));
+            Vector shp = new Vector(new FileInfo(DirHelpers.GetTestRootPath(@"vectors\StressTest.shp")));
             Assert.IsTrue(shp.Features.Count > 10);
 
-            Vector geojson = new Vector(new FileInfo(TestHelpers.GetTestRootPath(@"geojson\3squares.json")));
+            Vector geojson = new Vector(new FileInfo(DirHelpers.GetTestRootPath(@"geojson\3squares.json")));
             Assert.IsTrue(geojson.Features.Count > 2);
 
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void VectorDeleteTest()
         {
-            using (Utility.ITempDir tmp = Utility.TempDir.Create())
+            using (ITempDir tmp = TempDir.Create())
             {
-                string sOrigPath = TestHelpers.GetTestVectorPath("StressTest.shp");
+                string sOrigPath = DirHelpers.GetTestVectorPath("StressTest.shp");
                 string sDeletePath = Path.Combine(tmp.Name, "DeleteShapefile.shp");
 
                 Vector rVector = new Vector(new FileInfo(sOrigPath));
@@ -74,6 +77,7 @@ namespace GCDConsoleLib.Tests
 
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void StringVector()
         {
             string geoJSON = @"

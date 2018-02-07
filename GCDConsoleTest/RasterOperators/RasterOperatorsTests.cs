@@ -1,12 +1,12 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using GCDConsoleLib.Tests.Utility;
 using GCDConsoleLib.Common.Extensons;
 using System.IO;
 using UnitsNet.Units;
 using GCDConsoleLib.GCD;
 using System.Collections.Generic;
+using GCDConsoleTest.Helpers;
 
-namespace GCDConsoleLib.Tests
+namespace GCDConsoleLib.Internal.Operators.Tests
 {
     /// <summary>
     /// NOTE: WE ARE ONLY TESTING THE INTERFACE HERE. 
@@ -17,12 +17,13 @@ namespace GCDConsoleLib.Tests
     public class RasterOperatorsTests
     {
         [TestMethod()]
+        [TestCategory("Functional")]
         public void ExtendedCopyTest()
         {
             // First try it with a real file
             using (ITempDir tmp = TempDir.Create())
             {
-                Raster rTempl = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("Slopey950-980.tif")));
+                Raster rTempl = new Raster(new FileInfo(DirHelpers.GetTestRasterPath("Slopey950-980.tif")));
                 ExtentRectangle newExtReal = rTempl.Extent.Buffer(15);
                 Raster rTemplateOutput = RasterOperators.ExtendedCopy(rTempl, new FileInfo(Path.Combine(tmp.Name, "ExtendedCopyRasterTestBuffer.tif")), newExtReal);
 
@@ -44,12 +45,13 @@ namespace GCDConsoleLib.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Functional")]
         public void MathTest()
         {
             using (ITempDir tmp = TempDir.Create())
             {
-                Raster rTempl = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("const900.tif")));
-                Raster rTemp2 = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("const950.tif")));
+                Raster rTempl = new Raster(new FileInfo(DirHelpers.GetTestRasterPath("const900.tif")));
+                Raster rTemp2 = new Raster(new FileInfo(DirHelpers.GetTestRasterPath("const950.tif")));
 
                 Raster rAdd1 = RasterOperators.Add(rTempl, 2.1m, new FileInfo(Path.Combine(tmp.Name, "RasterAddOperand.tif")));
                 Raster rAdd2 = RasterOperators.Add(rTempl, rTemp2, new FileInfo(Path.Combine(tmp.Name, "RasterAddRaster.tif")));
@@ -67,34 +69,37 @@ namespace GCDConsoleLib.Tests
 
 
         [TestMethod()]
+        [TestCategory("Functional")]
         public void GetStatsMinLoDTest()
         {
-            Raster rRaw = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2005Dec_DEM\2005Dec_DEM.img")));
-            Raster rThresh = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2006Feb_DEM\2006Feb_DEM.img")));
+            Raster rRaw = new Raster(new FileInfo(DirHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2005Dec_DEM\2005Dec_DEM.img")));
+            Raster rThresh = new Raster(new FileInfo(DirHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2006Feb_DEM\2006Feb_DEM.img")));
 
             UnitGroup ug = new UnitGroup(VolumeUnit.CubicMeter, AreaUnit.SquareMeter, LengthUnit.Meter, LengthUnit.Meter);
             DoDStats test = RasterOperators.GetStatsMinLoD(rRaw, rThresh, 73.0m, ug);
         }
 
         [TestMethod()]
+        [TestCategory("Functional")]
         public void GetStatsMinLoDBudgetSegTest()
         {
-            Raster rRaw = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2005Dec_DEM\2005Dec_DEM.img")));
-            Raster rThresh = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2006Feb_DEM\2006Feb_DEM.img")));
+            Raster rRaw = new Raster(new FileInfo(DirHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2005Dec_DEM\2005Dec_DEM.img")));
+            Raster rThresh = new Raster(new FileInfo(DirHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2006Feb_DEM\2006Feb_DEM.img")));
 
             UnitGroup ug = new UnitGroup(VolumeUnit.CubicMeter, AreaUnit.SquareMeter, LengthUnit.Meter, LengthUnit.Meter);
 
             // And now the budget seg case
-            Vector rPolyMask = new Vector(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\BudgetMasks\DoD_Geomorphic_Interpretation.shp")));
+            Vector rPolyMask = new Vector(new FileInfo(DirHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\BudgetMasks\DoD_Geomorphic_Interpretation.shp")));
 
             Dictionary<string, DoDStats> testBudgetSeg = RasterOperators.GetStatsMinLoD(rRaw, rThresh, 73.0m, rPolyMask, "Category", ug);
         }
 
         [TestMethod()]
+        [TestCategory("Functional")]
         public void GetStatsPropagatedTest()
         {
-            Raster rTemp2005 = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2005Dec_DEM\2005Dec_DEM.img")));
-            Raster rTemp2006 = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2006Feb_DEM\2006Feb_DEM.img")));
+            Raster rTemp2005 = new Raster(new FileInfo(DirHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2005Dec_DEM\2005Dec_DEM.img")));
+            Raster rTemp2006 = new Raster(new FileInfo(DirHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2006Feb_DEM\2006Feb_DEM.img")));
 
             // test the non-budget seg case
             UnitGroup ug = new UnitGroup(VolumeUnit.CubicMeter, AreaUnit.SquareMeter, LengthUnit.Meter, LengthUnit.Meter);
@@ -102,24 +107,26 @@ namespace GCDConsoleLib.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Functional")]
         public void GetStatsPropagatedBudgetSegTest()
         {
-            Raster rTemp2005 = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2005Dec_DEM\2005Dec_DEM.img")));
-            Raster rTemp2006 = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2006Feb_DEM\2006Feb_DEM.img")));
+            Raster rTemp2005 = new Raster(new FileInfo(DirHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2005Dec_DEM\2005Dec_DEM.img")));
+            Raster rTemp2006 = new Raster(new FileInfo(DirHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2006Feb_DEM\2006Feb_DEM.img")));
 
             UnitGroup ug = new UnitGroup(VolumeUnit.CubicMeter, AreaUnit.SquareMeter, LengthUnit.Meter, LengthUnit.Meter);
 
             // And now the budget seg case
-            Vector rPolyMask = new Vector(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\BudgetMasks\DoD_Geomorphic_Interpretation.shp")));
+            Vector rPolyMask = new Vector(new FileInfo(DirHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\BudgetMasks\DoD_Geomorphic_Interpretation.shp")));
             Dictionary<string, DoDStats> testBudgetSeg = RasterOperators.GetStatsPropagated(rTemp2005, rTemp2006, rTemp2005, rPolyMask, "Category", ug);
         }
 
 
         [TestMethod()]
+        [TestCategory("Functional")]
         public void GetStatsProbalisticTest()
         {
-            Raster rTemp2005 = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2005Dec_DEM\2005Dec_DEM.img")));
-            Raster rTemp2006 = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2006Feb_DEM\2006Feb_DEM.img")));
+            Raster rTemp2005 = new Raster(new FileInfo(DirHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2005Dec_DEM\2005Dec_DEM.img")));
+            Raster rTemp2006 = new Raster(new FileInfo(DirHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2006Feb_DEM\2006Feb_DEM.img")));
 
             UnitGroup ug = new UnitGroup(VolumeUnit.CubicMeter, AreaUnit.SquareMeter, LengthUnit.Meter, LengthUnit.Meter);
             DoDStats test = RasterOperators.GetStatsProbalistic(rTemp2005, rTemp2006, rTemp2005, ug);
@@ -128,25 +135,27 @@ namespace GCDConsoleLib.Tests
 
 
         [TestMethod()]
+        [TestCategory("Functional")]
         public void GetStatsProbalisticBudgetSegTest()
         {
-            Raster rTemp2005 = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2005Dec_DEM\2005Dec_DEM.img")));
-            Raster rTemp2006 = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2006Feb_DEM\2006Feb_DEM.img")));
+            Raster rTemp2005 = new Raster(new FileInfo(DirHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2005Dec_DEM\2005Dec_DEM.img")));
+            Raster rTemp2006 = new Raster(new FileInfo(DirHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2006Feb_DEM\2006Feb_DEM.img")));
 
             UnitGroup ug = new UnitGroup(VolumeUnit.CubicMeter, AreaUnit.SquareMeter, LengthUnit.Meter, LengthUnit.Meter);
 
             // And now the budget seg case
-            Vector rPolyMask = new Vector(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\BudgetMasks\DoD_Geomorphic_Interpretation.shp")));
+            Vector rPolyMask = new Vector(new FileInfo(DirHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\BudgetMasks\DoD_Geomorphic_Interpretation.shp")));
             Dictionary<string, DoDStats> testBudgetSeg = RasterOperators.GetStatsProbalistic(rTemp2005, rTemp2006, rTemp2005, rPolyMask, "Category", ug);
 
         }
 
         [TestMethod()]
+        [TestCategory("Functional")]
         public void BilinearResampleTest()
         {
             using (ITempDir tmp = TempDir.Create())
             {
-                Raster rTempl = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("AngledSlopey950-980E.tif")));
+                Raster rTempl = new Raster(new FileInfo(DirHelpers.GetTestRasterPath("AngledSlopey950-980E.tif")));
                 ExtentRectangle newExtReal = new ExtentRectangle(rTempl.Extent);
                 newExtReal.CellHeight = newExtReal.CellHeight * 2;
                 newExtReal.CellWidth = newExtReal.CellWidth * 2;
@@ -157,11 +166,12 @@ namespace GCDConsoleLib.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Functional")]
         public void SlopeHillshadeTest()
         {
             using (ITempDir tmp = TempDir.Create())
             {
-                Raster rTempl = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"PointDensity\SulpherCreek\2006Feb_DEM.img")));
+                Raster rTempl = new Raster(new FileInfo(DirHelpers.GetTestRootPath(@"PointDensity\SulpherCreek\2006Feb_DEM.img")));
 
                 Raster rTemplateOutput1 = RasterOperators.SlopeDegrees(rTempl, new FileInfo(Path.Combine(tmp.Name, "SlopeDegrees.tif")));
                 Raster rTemplateOutput2 = RasterOperators.SlopePercent(rTempl, new FileInfo(Path.Combine(tmp.Name, "SlopePercent.tif")));
@@ -171,40 +181,44 @@ namespace GCDConsoleLib.Tests
 
 
         [TestMethod()]
+        [TestCategory("Functional")]
         public void UniformTest()
         {
             using (ITempDir tmp = TempDir.Create())
             {
-                Raster rTempl = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("AngledSlopey950-980E.tif")));
+                Raster rTempl = new Raster(new FileInfo(DirHelpers.GetTestRasterPath("AngledSlopey950-980E.tif")));
                 Raster rTemplateOutput1 = RasterOperators.Uniform<int>(rTempl, new FileInfo(Path.Combine(tmp.Name, "UniformTest.tif")), 7);
             }
         }
 
         [TestMethod()]
+        [TestCategory("Functional")]
         public void MosaicTest()
         {
             using (ITempDir tmp = TempDir.Create())
             {
                 List<FileInfo> theList = new List<FileInfo>() {
-                    new FileInfo(TestHelpers.GetTestRasterPath("const900.tif")),
-                    new FileInfo(TestHelpers.GetTestRasterPath("const950.tif"))
+                    new FileInfo(DirHelpers.GetTestRasterPath("const900.tif")),
+                    new FileInfo(DirHelpers.GetTestRasterPath("const950.tif"))
                 };
                 Raster rTemplateOutput2 = RasterOperators.Mosaic(theList, new FileInfo(Path.Combine(tmp.Name, "FISTest.tif")));
             }
         }
 
         [TestMethod()]
+        [TestCategory("Functional")]
         public void MaskTest()
         {
             using (ITempDir tmp = TempDir.Create())
             {
-                Raster rTempl = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("const900.tif")));
-                Raster rTemp2 = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("const950.tif")));
+                Raster rTempl = new Raster(new FileInfo(DirHelpers.GetTestRasterPath("const900.tif")));
+                Raster rTemp2 = new Raster(new FileInfo(DirHelpers.GetTestRasterPath("const950.tif")));
                 Raster rTemplateOutput2 = RasterOperators.Mask(rTempl, rTemp2, new FileInfo(Path.Combine(tmp.Name, "FISTest.tif")));
             }
         }
 
         [TestMethod()]
+        [TestCategory("Functional")]
         public void FISRasterTest()
         {
             Assert.Inconclusive();
@@ -225,26 +239,28 @@ namespace GCDConsoleLib.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Functional")]
         public void RootSumSquaresTest()
         {
             using (ITempDir tmp = TempDir.Create())
             {
-                Raster rTempl = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("const900.tif")));
-                Raster rTemp2 = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("const950.tif")));
+                Raster rTempl = new Raster(new FileInfo(DirHelpers.GetTestRasterPath("const900.tif")));
+                Raster rTemp2 = new Raster(new FileInfo(DirHelpers.GetTestRasterPath("const950.tif")));
                 Raster rTemplateOutput2 = RasterOperators.RootSumSquares(rTempl, rTemp2, new FileInfo(Path.Combine(tmp.Name, "FISTest.tif")));
             }
         }
 
 
         [TestMethod()]
+        [TestCategory("Functional")]
         public void LinearExtractorTest()
         {
             Assert.Inconclusive();
-            Raster rDetrended = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"ExtractorTest\Detrended.tif")));
-            Raster rWSEDEM = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"ExtractorTest\WSEDEM.tif")));
+            Raster rDetrended = new Raster(new FileInfo(DirHelpers.GetTestRootPath(@"ExtractorTest\Detrended.tif")));
+            Raster rWSEDEM = new Raster(new FileInfo(DirHelpers.GetTestRootPath(@"ExtractorTest\WSEDEM.tif")));
 
-            Vector centerline = new Vector(new FileInfo(TestHelpers.GetTestRootPath(@"ExtractorTest\BCenterline.shp")));
-            Vector xs = new Vector(new FileInfo(TestHelpers.GetTestRootPath(@"ExtractorTest\BCrossSections.shp")));
+            Vector centerline = new Vector(new FileInfo(DirHelpers.GetTestRootPath(@"ExtractorTest\BCenterline.shp")));
+            Vector xs = new Vector(new FileInfo(DirHelpers.GetTestRootPath(@"ExtractorTest\BCrossSections.shp")));
 
             using (ITempDir tmp = TempDir.Create())
             {
@@ -269,11 +285,12 @@ namespace GCDConsoleLib.Tests
 
 
         [TestMethod()]
+        [TestCategory("Functional")]
         public void BinRasterTest()
         {
             using (ITempDir tmp = TempDir.Create())
             {
-                Raster rTempl = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("AngledSlopey950-980E.tif")));
+                Raster rTempl = new Raster(new FileInfo(DirHelpers.GetTestRasterPath("AngledSlopey950-980E.tif")));
                 ExtentRectangle newExtReal = rTempl.Extent.Buffer(15);
                 Raster rTemplateOutput = RasterOperators.ExtendedCopy(rTempl, new FileInfo(Path.Combine(tmp.Name, "BinRasterTest.tif")), newExtReal);
                 Histogram theHisto = RasterOperators.BinRaster(rTemplateOutput, 10);
@@ -281,12 +298,13 @@ namespace GCDConsoleLib.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Functional")]
         public void SetNullTest()
         {
             using (ITempDir tmp = TempDir.Create())
             {
-                Raster rTempl = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("const900.tif")));
-                Raster rTemp2 = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("const950.tif")));
+                Raster rTempl = new Raster(new FileInfo(DirHelpers.GetTestRasterPath("const900.tif")));
+                Raster rTemp2 = new Raster(new FileInfo(DirHelpers.GetTestRasterPath("const950.tif")));
 
                 Raster rTemplateOutput1 = RasterOperators.SetNull(rTempl, RasterOperators.ThresholdOps.GreaterThan, 4, new FileInfo(Path.Combine(tmp.Name, "GreaterThan.tif")));
                 Raster rTemplateOutput2 = RasterOperators.SetNull(rTempl, RasterOperators.ThresholdOps.LessThan, 4, new FileInfo(Path.Combine(tmp.Name, "LessThan.tif")));
@@ -304,12 +322,13 @@ namespace GCDConsoleLib.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Functional")]
         public void SetNullAbsoluteTest()
         {
             using (ITempDir tmp = TempDir.Create())
             {
-                Raster rTemp2005 = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2005Dec_DEM\2005Dec_DEM.img")));
-                Raster rTemp2006 = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2006Feb_DEM\2006Feb_DEM.img")));
+                Raster rTemp2005 = new Raster(new FileInfo(DirHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2005Dec_DEM\2005Dec_DEM.img")));
+                Raster rTemp2006 = new Raster(new FileInfo(DirHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2006Feb_DEM\2006Feb_DEM.img")));
                 Raster rDoD = RasterOperators.Subtract(rTemp2006, rTemp2005, new FileInfo(Path.Combine(tmp.Name, "rDoD.tif")));
 
                 ErrorRasterProperties props02 = new ErrorRasterProperties(0.2m);
@@ -325,12 +344,13 @@ namespace GCDConsoleLib.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Functional")]
         public void PosteriorProbabilityTest()
         {
             using (ITempDir tmp = TempDir.Create())
             {
-                Raster rTemp2005 = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2005Dec_DEM\2005Dec_DEM.img")));
-                Raster rTemp2006 = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2006Feb_DEM\2006Feb_DEM.img")));
+                Raster rTemp2005 = new Raster(new FileInfo(DirHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2005Dec_DEM\2005Dec_DEM.img")));
+                Raster rTemp2006 = new Raster(new FileInfo(DirHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2006Feb_DEM\2006Feb_DEM.img")));
                 Raster rDoD = RasterOperators.Subtract(rTemp2006, rTemp2005, new FileInfo(Path.Combine(tmp.Name, "rDoD.tif")));
 
                 Raster GCDErosion1 = RasterOperators.NeighbourCount(rDoD, RasterOperators.GCDWindowType.Erosion, 1, new FileInfo(Path.Combine(tmp.Name, "Erosion1.tif")));
@@ -354,12 +374,13 @@ namespace GCDConsoleLib.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Functional")]
         public void ThresholdProbabilityNoSCTest()
         {
             using (ITempDir tmp = TempDir.Create())
             {
-                Raster rTemp2005 = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2005Dec_DEM\2005Dec_DEM.img")));
-                Raster rTemp2006 = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2006Feb_DEM\2006Feb_DEM.img")));
+                Raster rTemp2005 = new Raster(new FileInfo(DirHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2005Dec_DEM\2005Dec_DEM.img")));
+                Raster rTemp2006 = new Raster(new FileInfo(DirHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2006Feb_DEM\2006Feb_DEM.img")));
                 Raster rDoD = RasterOperators.Subtract(rTemp2006, rTemp2005, new FileInfo(Path.Combine(tmp.Name, "rDoD.tif")));
 
                 ErrorRasterProperties props02 = new ErrorRasterProperties(0.2m);
@@ -381,11 +402,12 @@ namespace GCDConsoleLib.Tests
 
 
         [TestMethod()]
+        [TestCategory("Functional")]
         public void BuildPyramidsInterfaceTest()
         {
             using (ITempDir tmp = TempDir.Create())
             {
-                Raster rTempl = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("AngledSlopey950-980E.tif")));
+                Raster rTempl = new Raster(new FileInfo(DirHelpers.GetTestRasterPath("AngledSlopey950-980E.tif")));
                 ExtentRectangle newExtReal = rTempl.Extent.Buffer(15);
                 Raster rTemplateOutput = RasterOperators.ExtendedCopy(rTempl, new FileInfo(Path.Combine(tmp.Name, "PyramidTest.tif")), newExtReal);
                 RasterOperators.BuildPyramids(new FileInfo(Path.Combine(tmp.Name, "PyramidTest.tif")));
@@ -393,16 +415,17 @@ namespace GCDConsoleLib.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Functional")]
         public void CreateErrorRasterTest()
         {
-            Raster rRaw = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2005Dec_DEM\2005Dec_DEM.img")));
-            Raster rThresh = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2006Feb_DEM\2006Feb_DEM.img")));
+            Raster rRaw = new Raster(new FileInfo(DirHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2005Dec_DEM\2005Dec_DEM.img")));
+            Raster rThresh = new Raster(new FileInfo(DirHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2006Feb_DEM\2006Feb_DEM.img")));
 
             UnitGroup ug = new UnitGroup(VolumeUnit.CubicMeter, AreaUnit.SquareMeter, LengthUnit.Meter, LengthUnit.Meter);
             DoDStats test = RasterOperators.GetStatsMinLoD(rRaw, rThresh, 73.0m, ug);
 
             // And now the budget seg case
-            Vector rPolyMask = new Vector(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\BudgetMasks\DoD_Geomorphic_Interpretation.shp")));
+            Vector rPolyMask = new Vector(new FileInfo(DirHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\BudgetMasks\DoD_Geomorphic_Interpretation.shp")));
             Dictionary<string, DoDStats> testBudgetSeg = RasterOperators.GetStatsMinLoD(rRaw, rThresh, 73.0m, rPolyMask, "Category", ug);
         }
 
