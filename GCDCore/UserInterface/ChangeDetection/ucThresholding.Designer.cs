@@ -139,7 +139,7 @@
             this.valConfidence.Size = new System.Drawing.Size(66, 20);
             this.valConfidence.TabIndex = 6;
             this.valConfidence.Value = new decimal(new int[] {
-            95,
+            80,
             0,
             0,
             131072});
