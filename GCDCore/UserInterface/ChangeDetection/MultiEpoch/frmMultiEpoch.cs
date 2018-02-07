@@ -528,17 +528,13 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
         /// <returns></returns>
         private bool ValidateForm()
         {
-            /*
-            if (!ucDEMs.ValidateForm())
-                return false;
-
-            if (grdMethods.Rows.Count < 1)
+            //Check there is at least one active epoch to analyse
+            List<Epoch> ActiveEpochs = Epochs.Where(epoch => epoch.IsActive == true).ToList();
+            if(ActiveEpochs.Count == 0)
             {
-                MessageBox.Show("You must specify one or more uncertainty analysis methods to continue.", "No Uncertainty Analysis Methods", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                cmdAdd.Select();
+                MessageBox.Show("Please select at least one one active epoch for analysis .", "No Active Epochs", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return false;
             }
-            */
 
             //check for surveys without error surfaces if uncertainty analysis method is propagated or probabilistic thresholding
             if(ucThresholding1.ThresholdProperties.Method != ThresholdProps.ThresholdMethods.MinLoD) //if method is not minimum level of detection
@@ -547,7 +543,7 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
                 {
                     if(currentEpoch.NewDEMErrorSurface == null || currentEpoch.OldDEMErrorSurface == null)
                     {
-                        MessageBox.Show("You must specify an error surface for each included survey if your uncertainty analysis method is not minimum level of detection.", "Missing Error Surface", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Please specify an error surface for each included survey if your uncertainty analysis method is not minimum level of detection.", "Missing Error Surface", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         return false;
                     }
                 }
