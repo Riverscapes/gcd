@@ -50,7 +50,7 @@ namespace GCDConsoleLib
             List<string> creationOpts = new List<string>();
 
             _drv = GetDriver(GISFileInfo);
-            
+
             if (!leaveopen)
                 Dispose();
         }
@@ -93,7 +93,7 @@ namespace GCDConsoleLib
             // Register GDal and get the driver objects
             GdalConfiguration.ConfigureOgr();
             if (_ds == null)
-            {               
+            {
                 _ds = Ogr.Open(GISFileInfo.FullName, 0); // 0 => Read-only
                 _drv = _ds.GetDriver();
             }
@@ -144,7 +144,7 @@ namespace GCDConsoleLib
             // If no mask provided test against everything
             if (shapemask == null)
                 shapemask = Features.Keys.ToList();
-            
+
             foreach (long fid in shapemask)
             {
                 if (Features[fid].Feat.GetGeometryRef().Contains(pt))
@@ -153,10 +153,37 @@ namespace GCDConsoleLib
 
             return retVal;
         }
-        
 
         /// <summary>
-        /// Is a point inside a feature?
+        /// Quick calculation if a point is inside a rectangle
+        /// </summary>
+        /// <param name="feat"></param>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        public static bool PointEnvelopeIntersection(Envelope env, double x, double y)
+        {
+            // Return as fast as possible
+            return (y <= env.MaxY && y >= env.MinY && x <= env.MaxX && x >= env.MinX);
+        }
+
+        /// <summary>
+        /// Quick calculation if two envolopes intersect
+        /// </summary>
+        /// <param name="env1"></param>
+        /// <param name="env2"></param>
+        /// <returns></returns>
+        public static bool EnvelopeEnvelopeIntersection(Envelope env1, Envelope env2)
+        {
+            return (
+                env1.MaxX < env2.MinX ||
+                env1.MinX > env2.MaxX ||
+                env1.MaxY < env2.MinY ||
+                env1.MinY > env2.MaxY);
+        }
+
+        /// <summary>
+        /// Is a extent intersecting a feature?
         /// </summary>
         /// <returns>returns a double array [x,y]</returns>
         public List<VectorFeature> FeaturesIntersectExtent(ExtentRectangle ext)
@@ -229,9 +256,9 @@ namespace GCDConsoleLib
         /// <returns></returns>
         public static Geometry CellToRect(int row, int col, ExtentRectangle ext)
         {
-            double l = (double)(ext.Left + ((col-1) * ext.CellWidth));
+            double l = (double)(ext.Left + ((col - 1) * ext.CellWidth));
             double r = l + (double)ext.CellWidth;
-            double t = (double)(ext.Top + ((row-1) * ext.CellHeight));
+            double t = (double)(ext.Top + ((row - 1) * ext.CellHeight));
             double b = t + (double)ext.CellWidth;
 
             Geometry ring = new Geometry(wkbGeometryType.wkbLinearRing);
@@ -277,7 +304,7 @@ namespace GCDConsoleLib
             Layer mLayer = _ds.GetLayerByIndex(0);
             FIDColumn = mLayer.GetFIDColumn();
             LayerName = mLayer.GetName();
-            
+
             // Get our FEATURE definitions
             Feature mFeat = mLayer.GetNextFeature();
             while (mFeat != null)

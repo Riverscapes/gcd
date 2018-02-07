@@ -10,10 +10,25 @@ namespace GCDConsoleLib
     public class VectorFeature
     {
         public Feature Feat;
+        private Envelope _bounds;
 
         public VectorFeature(Feature featDef)
         {
             Feat = featDef;
+            _bounds = null;
+        }
+
+        public Envelope Bounds
+        {
+            get {
+                if (_bounds == null)
+                {
+                    Envelope tmpEnv = new Envelope();
+                    Feat.GetGeometryRef().GetEnvelope(tmpEnv);
+                    _bounds = tmpEnv;                    
+                }
+                return _bounds;
+            }
         }
 
         public string GetFieldAsString(string fieldName)

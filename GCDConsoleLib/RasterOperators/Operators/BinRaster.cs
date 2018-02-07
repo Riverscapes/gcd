@@ -22,7 +22,6 @@ namespace GCDConsoleLib.Internal.Operators
             base(new List<Raster> { rInput })
         {
             theHistogram = new Histogram(numBins, rInput);
-            isBudgSeg = false;
         }
 
         /// <summary>
@@ -48,18 +47,21 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="id"></param>
         private void BudgetSegCellOp(List<double[]> data, int id)
         {
-            decimal[] ptcoords = ChunkExtent.Id2XY(id);
-            List<string> shapes = _polymask.ShapesContainPoint((double)ptcoords[0], (double)ptcoords[1], _fieldname);
-            if (shapes.Count > 0)
+            if (_shapemask.Count > 0)
             {
-                foreach (string fldVal in shapes)
+                decimal[] ptcoords = ChunkExtent.Id2XY(id);
+                List<string> shapes = _polymask.ShapesContainPoint((double)ptcoords[0], (double)ptcoords[1], _fieldname, _shapemask);
+                if (shapes.Count > 0)
                 {
-                    if (!SegHistograms.ContainsKey(fldVal))
-                        SegHistograms[fldVal] = new Histogram(_segNumBins, _inputRasters[0]);
+                    foreach (string fldVal in shapes)
+                    {
+                        if (!SegHistograms.ContainsKey(fldVal))
+                            SegHistograms[fldVal] = new Histogram(_segNumBins, _inputRasters[0]);
 
-                    SegHistograms[fldVal].AddBinVal(data[0][id]);
+                        SegHistograms[fldVal].AddBinVal(data[0][id]);
+                    }
+
                 }
-
             }
         }
 

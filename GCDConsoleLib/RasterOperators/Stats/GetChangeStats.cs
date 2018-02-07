@@ -12,9 +12,7 @@ namespace GCDConsoleLib.Internal.Operators
         private List<double> _nodata;
 
         // If we do budget seg we need the following
-        private bool isBudgSeg;
         public Dictionary<string, DoDStats> SegStats;
-        private Vector _polymask;
         private string _fieldname;
 
         /// <summary>
@@ -26,7 +24,6 @@ namespace GCDConsoleLib.Internal.Operators
             base(new List<Raster> { rInput })
         {
             Stats = theStats;
-            isBudgSeg = false;
             _nodata = inNodataVals;
         }
 
@@ -40,7 +37,6 @@ namespace GCDConsoleLib.Internal.Operators
             base(new List<Raster> { rInput, rMask })
         {
             Stats = theStats;
-            isBudgSeg = false;
         }
 
         /// <summary>
@@ -51,12 +47,10 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="PolygonMask"></param>
         /// <param name="FieldName"></param>
         public GetChangeStats(Raster rInput, DoDStats theStats, Vector PolygonMask, string FieldName) :
-            base(new List<Raster> { rInput })
+            base(new List<Raster> { rInput }, PolygonMask)
         {
             Stats = theStats;
-            isBudgSeg = true;
             SegStats = new Dictionary<string, DoDStats>();
-            _polymask = PolygonMask;
             _fieldname = FieldName;
         }
 
@@ -69,12 +63,10 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="PolygonMask"></param>
         /// <param name="FieldName"></param>
         public GetChangeStats(Raster rInput, Raster rPropError, DoDStats theStats, Vector PolygonMask, string FieldName) :
-           base(new List<Raster> { rInput, rPropError })
+           base(new List<Raster> { rInput, rPropError }, PolygonMask)
         {
             Stats = theStats;
-            isBudgSeg = true;
             SegStats = new Dictionary<string, DoDStats>();
-            _polymask = PolygonMask;
             _fieldname = FieldName;
         }
 
@@ -104,16 +96,19 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="id"></param>
         private void BudgetSegCellOp(List<double[]> data, int id)
         {
-            decimal[] ptcoords = ChunkExtent.Id2XY(id);
-            List<string> shapes = _polymask.ShapesContainPoint((double)ptcoords[0], (double)ptcoords[1], _fieldname);
-            if (shapes.Count > 0)
+            if (_shapemask.Count > 0)
             {
-                foreach (string fldVal in shapes)
+                decimal[] ptcoords = ChunkExtent.Id2XY(id);
+                List<string> shapes = _polymask.ShapesContainPoint((double)ptcoords[0], (double)ptcoords[1], _fieldname, _shapemask);
+                if (shapes.Count > 0)
                 {
-                    if (!SegStats.ContainsKey(fldVal))
-                        SegStats[fldVal] = new DoDStats(Stats);
+                    foreach (string fldVal in shapes)
+                    {
+                        if (!SegStats.ContainsKey(fldVal))
+                            SegStats[fldVal] = new DoDStats(Stats);
 
-                    CellChangeCalc(data, id, SegStats[fldVal]);
+                        CellChangeCalc(data, id, SegStats[fldVal]);
+                    }
                 }
             }
         }

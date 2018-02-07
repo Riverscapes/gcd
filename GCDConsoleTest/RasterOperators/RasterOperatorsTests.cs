@@ -86,49 +86,43 @@ namespace GCDConsoleLib.Tests
 
             // And now the budget seg case
             Vector rPolyMask = new Vector(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\BudgetMasks\DoD_Geomorphic_Interpretation.shp")));
+
             Dictionary<string, DoDStats> testBudgetSeg = RasterOperators.GetStatsMinLoD(rRaw, rThresh, 73.0m, rPolyMask, "Category", ug);
-            Assert.Fail();
         }
 
         [TestMethod()]
         public void GetStatsPropagatedTest()
         {
-            Raster rRaw = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("const900.tif")));
-            Raster rThresh = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("const950.tif")));
-            Raster rErr = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("const980.tif")));
+            Raster rTemp2005 = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2005Dec_DEM\2005Dec_DEM.img")));
+            Raster rTemp2006 = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2006Feb_DEM\2006Feb_DEM.img")));
 
             // test the non-budget seg case
             UnitGroup ug = new UnitGroup(VolumeUnit.CubicMeter, AreaUnit.SquareMeter, LengthUnit.Meter, LengthUnit.Meter);
-            DoDStats test1 = RasterOperators.GetStatsPropagated(rRaw, rErr, ug);
+            DoDStats test1 = RasterOperators.GetStatsPropagated(rTemp2005, rTemp2006, ug);
         }
 
         [TestMethod()]
         public void GetStatsPropagatedBudgetSegTest()
         {
-            Raster rRaw = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("const900.tif")));
-            Raster rThresh = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("const950.tif")));
-            Raster rErr = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("const980.tif")));
+            Raster rTemp2005 = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2005Dec_DEM\2005Dec_DEM.img")));
+            Raster rTemp2006 = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2006Feb_DEM\2006Feb_DEM.img")));
 
-            // test the non-budget seg case
             UnitGroup ug = new UnitGroup(VolumeUnit.CubicMeter, AreaUnit.SquareMeter, LengthUnit.Meter, LengthUnit.Meter);
 
             // And now the budget seg case
             Vector rPolyMask = new Vector(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\BudgetMasks\DoD_Geomorphic_Interpretation.shp")));
-            Dictionary<string, DoDStats> testBudgetSeg = RasterOperators.GetStatsPropagated(rRaw, rThresh, rThresh, rPolyMask, "Method", ug);
-
+            Dictionary<string, DoDStats> testBudgetSeg = RasterOperators.GetStatsPropagated(rTemp2005, rTemp2006, rTemp2005, rPolyMask, "Category", ug);
         }
 
 
         [TestMethod()]
         public void GetStatsProbalisticTest()
         {
-            Assert.Fail();
-            Raster rRaw = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("const900.tif")));
-            Raster rThresh = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("const950.tif")));
-            Raster rErr = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("const980.tif")));
+            Raster rTemp2005 = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2005Dec_DEM\2005Dec_DEM.img")));
+            Raster rTemp2006 = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2006Feb_DEM\2006Feb_DEM.img")));
 
             UnitGroup ug = new UnitGroup(VolumeUnit.CubicMeter, AreaUnit.SquareMeter, LengthUnit.Meter, LengthUnit.Meter);
-            DoDStats test = RasterOperators.GetStatsProbalistic(rRaw, rThresh, rThresh, ug);
+            DoDStats test = RasterOperators.GetStatsProbalistic(rTemp2005, rTemp2006, rTemp2005, ug);
 
         }
 
@@ -136,16 +130,14 @@ namespace GCDConsoleLib.Tests
         [TestMethod()]
         public void GetStatsProbalisticBudgetSegTest()
         {
-            Assert.Fail();
-            Raster rRaw = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("const900.tif")));
-            Raster rThresh = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("const950.tif")));
-            Raster rErr = new Raster(new FileInfo(TestHelpers.GetTestRasterPath("const980.tif")));
+            Raster rTemp2005 = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2005Dec_DEM\2005Dec_DEM.img")));
+            Raster rTemp2006 = new Raster(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2006Feb_DEM\2006Feb_DEM.img")));
 
             UnitGroup ug = new UnitGroup(VolumeUnit.CubicMeter, AreaUnit.SquareMeter, LengthUnit.Meter, LengthUnit.Meter);
 
             // And now the budget seg case
             Vector rPolyMask = new Vector(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\BudgetMasks\DoD_Geomorphic_Interpretation.shp")));
-            Dictionary<string, DoDStats> testBudgetSeg = RasterOperators.GetStatsProbalistic(rRaw, rThresh, rThresh, rPolyMask, "Method", ug);
+            Dictionary<string, DoDStats> testBudgetSeg = RasterOperators.GetStatsProbalistic(rTemp2005, rTemp2006, rTemp2005, rPolyMask, "Category", ug);
 
         }
 
@@ -321,14 +313,14 @@ namespace GCDConsoleLib.Tests
                 Raster rDoD = RasterOperators.Subtract(rTemp2006, rTemp2005, new FileInfo(Path.Combine(tmp.Name, "rDoD.tif")));
 
                 ErrorRasterProperties props02 = new ErrorRasterProperties(0.2m);
-                ErrorRasterProperties props01 = new ErrorRasterProperties(0.1m);        
+                ErrorRasterProperties props01 = new ErrorRasterProperties(0.1m);
                 // 0.1 2006
                 // 0.2 2005
                 Raster r2005Error = RasterOperators.CreateErrorRaster(rTemp2005, props02, new FileInfo(Path.Combine(tmp.Name, "2005Dec_DEM_CONSTERR02.tif")));
                 Raster r2006Error = RasterOperators.CreateErrorRaster(rTemp2006, props01, new FileInfo(Path.Combine(tmp.Name, "2006Feb_DEM_CONSTERR01.tif")));
                 Raster propError = RasterOperators.RootSumSquares(r2006Error, r2005Error, new FileInfo(Path.Combine(tmp.Name, "properror.tif")));
 
-                Raster rTemplateOutput5 = RasterOperators.AbsoluteSetNull(rDoD, RasterOperators.ThresholdOps.GreaterThan, propError, new FileInfo(Path.Combine(tmp.Name, "AbsRasterGreaterThan.tif")));                
+                Raster rTemplateOutput5 = RasterOperators.AbsoluteSetNull(rDoD, RasterOperators.ThresholdOps.GreaterThan, propError, new FileInfo(Path.Combine(tmp.Name, "AbsRasterGreaterThan.tif")));
             }
         }
 
@@ -411,7 +403,7 @@ namespace GCDConsoleLib.Tests
 
             // And now the budget seg case
             Vector rPolyMask = new Vector(new FileInfo(TestHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\BudgetMasks\DoD_Geomorphic_Interpretation.shp")));
-            Dictionary<string, DoDStats> testBudgetSeg = RasterOperators.GetStatsMinLoD(rRaw, rThresh, 73.0m, rPolyMask, "Method", ug);
+            Dictionary<string, DoDStats> testBudgetSeg = RasterOperators.GetStatsMinLoD(rRaw, rThresh, 73.0m, rPolyMask, "Category", ug);
         }
 
     }

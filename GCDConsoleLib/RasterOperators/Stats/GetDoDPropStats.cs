@@ -12,7 +12,6 @@ namespace GCDConsoleLib.Internal.Operators
         public double fDoDValue, fPropErr;
 
         // If we do budget seg we need the following
-        private bool isBudgSeg;
         public Dictionary<string, DoDStats> SegStats;
         private string _fieldname;
 
@@ -26,7 +25,6 @@ namespace GCDConsoleLib.Internal.Operators
             base(new List<Raster> { rDod, rErr })
         {
             Stats = theStats;
-            isBudgSeg = false;
         }
 
         /// <summary>
@@ -39,12 +37,10 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="FieldName"></param>
         public GetDoDPropStats(Raster rDod, Raster rErr, DoDStats theStats, Vector PolygonMask,
             string FieldName) :
-            base(new List<Raster> { rDod, rErr })
+            base(new List<Raster> { rDod, rErr }, PolygonMask)
         {
             Stats = theStats;
-            isBudgSeg = true;
             SegStats = new Dictionary<string, DoDStats>();
-            _polymask = PolygonMask;
             _fieldname = FieldName;
         }
 
@@ -74,16 +70,19 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="id"></param>
         private void BudgetSegCellOp(List<double[]> data, int id)
         {
-            decimal[] ptcoords = ChunkExtent.Id2XY(id);
-            List<string> shapes = _polymask.ShapesContainPoint((double)ptcoords[0], (double)ptcoords[1], _fieldname);
-            if (shapes.Count > 0)
+            if (_shapemask.Count > 0)
             {
-                foreach (string fldVal in shapes)
+                decimal[] ptcoords = ChunkExtent.Id2XY(id);
+                List<string> shapes = _polymask.ShapesContainPoint((double)ptcoords[0], (double)ptcoords[1], _fieldname, _shapemask);
+                if (shapes.Count > 0)
                 {
-                    if (!SegStats.ContainsKey(fldVal))
-                        SegStats[fldVal] = new DoDStats(Stats);
+                    foreach (string fldVal in shapes)
+                    {
+                        if (!SegStats.ContainsKey(fldVal))
+                            SegStats[fldVal] = new DoDStats(Stats);
 
-                    CellChangeCalc(data, id, SegStats[fldVal]);
+                        CellChangeCalc(data, id, SegStats[fldVal]);
+                    }
                 }
             }
         }
@@ -117,9 +116,9 @@ namespace GCDConsoleLib.Internal.Operators
             if (fDoDValue < 0)
             {
                 // Raw Erosion
-                stats.ErosionRaw.AddToSumAndIncrementCounter(fDoDValue * - 1);
+                stats.ErosionRaw.AddToSumAndIncrementCounter(fDoDValue * -1);
 
-                if (fDoDValue < (fPropErr * - 1))
+                if (fDoDValue < (fPropErr * -1))
                 {
                     // Thresholded Erosion
                     stats.ErosionThr.AddToSumAndIncrementCounter(fDoDValue * -1);
