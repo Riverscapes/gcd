@@ -231,7 +231,8 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
             try
             {
                 //Change state of UI
-                Cursor.Current = Cursors.WaitCursor;
+                this.UseWaitCursor = true;
+
                 cmdOK.Enabled = false;
                 cmdCancel.DialogResult = DialogResult.None;
                 DisableForm();
@@ -255,10 +256,6 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
             catch (Exception ex)
             {
                 naru.error.ExceptionUI.HandleException(ex);
-            }
-            finally
-            {
-                Cursor.Current = Cursors.Default;
             }
         }
 
@@ -603,7 +600,7 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
             }
             finally
             {
-                Cursor.Current = Cursors.Default;
+                this.UseWaitCursor = false;
             }
         }
 
