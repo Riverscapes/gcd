@@ -761,22 +761,22 @@
     <Cell ss:StyleID="s150"/>
    </Row>
    <Row ss:Height="15.75">
-    <Cell ss:StyleID="s66"><Data ss:Type="String">Total Area of Erosion ([LinearUnits]²)</Data></Cell>
+    <Cell ss:StyleID="s66"><Data ss:Type="String">Total Area of Surface Lowering ([LinearUnits]²)</Data></Cell>
     <Cell ss:StyleID="s67"><Data ss:Type="Number">[TotalAreaOfErosionRaw]</Data></Cell>
     <Cell ss:StyleID="s68"><Data ss:Type="Number">[TotalAreaOfErosionThresholded]</Data></Cell>
     <Cell ss:StyleID="s69"/>
     <Cell ss:StyleID="s70"/>
     <Cell ss:StyleID="s70"/>
-    <Cell ss:Index="8" ss:StyleID="s147"><Data ss:Type="String">The amount of area experiencing erosion</Data></Cell>
+    <Cell ss:Index="8" ss:StyleID="s147"><Data ss:Type="String">The amount of area experiencing a lowering of surface elevations</Data></Cell>
    </Row>
    <Row ss:Height="15.75">
-    <Cell ss:StyleID="s71"><Data ss:Type="String">Total Area of Deposition ([LinearUnits]²)</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">Total Area of Surface Raising ([LinearUnits]²)</Data></Cell>
     <Cell ss:StyleID="s72"><Data ss:Type="Number">[TotalAreaOfDepositionRaw]</Data></Cell>
     <Cell ss:StyleID="s73"><Data ss:Type="Number">[TotalAreaOfDepositionThresholded]</Data></Cell>
     <Cell ss:StyleID="s100"/>
     <Cell ss:StyleID="s101"/>
     <Cell ss:StyleID="s101"/>
-    <Cell ss:Index="8" ss:StyleID="s147"><Data ss:Type="String">The amount of area experiencing deposition</Data></Cell>
+    <Cell ss:Index="8" ss:StyleID="s147"><Data ss:Type="String">The amount of area experiencing an increase of surface elevations</Data></Cell>
    </Row>
    <Row ss:Height="15.75">
     <Cell ss:StyleID="s71"><Data ss:Type="String">Total Area of Detectable Change ([LinearUnits]²)</Data></Cell>
@@ -785,7 +785,7 @@
     <Cell ss:StyleID="s100"/>
     <Cell ss:StyleID="s101"/>
     <Cell ss:StyleID="s101"/>
-    <Cell ss:Index="8" ss:StyleID="s147"><Data ss:Type="String">The sum of areas experiencing detectable erosion and deposition</Data></Cell>
+    <Cell ss:Index="8" ss:StyleID="s147"><Data ss:Type="String">The sum of areas experiencing detectable surface elevation changes</Data></Cell>
    </Row>
    <Row ss:Height="15.75">
     <Cell ss:StyleID="s71"><Data ss:Type="String">Total  Area of Interest ([LinearUnits]²)</Data></Cell>
@@ -815,22 +815,22 @@
     <Cell ss:Index="8" ss:StyleID="s153"><Data ss:Type="String">VOLUMETRIC METRICS</Data></Cell>
    </Row>
    <Row>
-    <Cell ss:StyleID="s80"><Data ss:Type="String">Total Volume of Erosion ([LinearUnits]³)</Data></Cell>
+    <Cell ss:StyleID="s80"><Data ss:Type="String">Total Volume of Surface Lowering ([LinearUnits]³)</Data></Cell>
     <Cell ss:StyleID="s81"><Data ss:Type="Number">[TotalVolumeOfErosionRaw]</Data></Cell>
     <Cell ss:StyleID="s81"><Data ss:Type="Number">[TotalVolumeOfErosionThresholded]</Data></Cell>
     <Cell ss:StyleID="s82"><Data ss:Type="String">±</Data></Cell>
     <Cell ss:StyleID="s83"><Data ss:Type="Number">[ErrorVolumeOfErosion]</Data></Cell>
     <Cell ss:StyleID="s84" ss:Formula="=RC[-1]/RC[-3]"><Data ss:Type="Number">0</Data></Cell>
-    <Cell ss:Index="8" ss:StyleID="s147"><Data ss:Type="String">On a cell-by-cell basis, the DoD erosion depth multiplied by cell area and summed</Data></Cell>
+    <Cell ss:Index="8" ss:StyleID="s147"><Data ss:Type="String">On a cell-by-cell basis, the DoD surface lowering depth (e.g. erosion, cut or deflation) multiplied by cell area and summed</Data></Cell>
    </Row>
    <Row>
-    <Cell ss:StyleID="s85"><Data ss:Type="String">Total Volume of Deposition ([LinearUnits]³)</Data></Cell>
+    <Cell ss:StyleID="s85"><Data ss:Type="String">Total Volume of Surface Raising ([LinearUnits]³)</Data></Cell>
     <Cell ss:StyleID="s86"><Data ss:Type="Number">[TotalVolumeOfDepositionRaw]</Data></Cell>
     <Cell ss:StyleID="s86"><Data ss:Type="Number">[TotalVolumeOfDepositionThresholded]</Data></Cell>
     <Cell ss:StyleID="s87"><Data ss:Type="String">±</Data></Cell>
     <Cell ss:StyleID="s88"><Data ss:Type="Number">[ErrorVolumeOfDeposition]</Data></Cell>
     <Cell ss:StyleID="s89" ss:Formula="=RC[-1]/RC[-3]"><Data ss:Type="Number">0</Data></Cell>
-    <Cell ss:Index="8" ss:StyleID="s147"><Data ss:Type="String">On a cell-by-cell basis, the DoD deposition depth multiplied by cell area and summed</Data></Cell>
+    <Cell ss:Index="8" ss:StyleID="s147"><Data ss:Type="String">On a cell-by-cell basis, the DoD surface raising (e.g. deposition, fill or inflation) depth multiplied by cell area and summed</Data></Cell>
    </Row>
    <Row>
     <Cell ss:StyleID="s85"><Data ss:Type="String">Total Volume of Difference ([LinearUnits]³)</Data></Cell>
@@ -839,7 +839,7 @@
     <Cell ss:StyleID="s87"><Data ss:Type="String">±</Data></Cell>
     <Cell ss:StyleID="s88" ss:Formula="=R[-1]C+R[-2]C"><Data ss:Type="Number">0</Data></Cell>
     <Cell ss:StyleID="s89" ss:Formula="=RC[-1]/RC[-3]"><Data ss:Type="Number">0</Data></Cell>
-    <Cell ss:Index="8" ss:StyleID="s147"><Data ss:Type="String">The sum of erosion and deposition volumes (a measure of total turnover)</Data></Cell>
+    <Cell ss:Index="8" ss:StyleID="s147"><Data ss:Type="String">The sum of lowering and raising volumes (a measure of total turnover)</Data></Cell>
    </Row>
    <Row ss:Height="16.5">
     <Cell ss:StyleID="s71"><ss:Data ss:Type="String"
@@ -862,22 +862,22 @@
     <Cell ss:Index="8" ss:StyleID="s153"><Data ss:Type="String">VOLUMETRIC METRICS NORMALIZED BY AREA</Data></Cell>
    </Row>
    <Row>
-    <Cell ss:StyleID="s80"><Data ss:Type="String">Average Depth of Erosion ([LinearUnits])</Data></Cell>
+    <Cell ss:StyleID="s80"><Data ss:Type="String">Average Depth of Surface Lowering ([LinearUnits])</Data></Cell>
     <Cell ss:StyleID="s111" ss:Formula="=R[-5]C/R[-11]C"><Data ss:Type="Number">0</Data></Cell>
     <Cell ss:StyleID="s111" ss:Formula="=R[-5]C/R[-11]C"><Data ss:Type="Number">0</Data></Cell>
     <Cell ss:StyleID="s82"><Data ss:Type="String">±</Data></Cell>
     <Cell ss:StyleID="s115" ss:Formula="=R[-5]C/R[-11]C[-2]"><Data ss:Type="Number">0</Data></Cell>
     <Cell ss:StyleID="s119" ss:Formula="=RC[-1]/RC[-3]"><Data ss:Type="Number">0</Data></Cell>
-    <Cell ss:Index="8" ss:StyleID="s147"><Data ss:Type="String">The average depth of erosion (erosion volume dividied by erosion area)</Data></Cell>
+    <Cell ss:Index="8" ss:StyleID="s147"><Data ss:Type="String">The average depth of lowering (surface lowering volume divided by surface lowering area)</Data></Cell>
    </Row>
    <Row>
-    <Cell ss:StyleID="s85"><Data ss:Type="String">Average Depth of Deposition ([LinearUnits])</Data></Cell>
+    <Cell ss:StyleID="s85"><Data ss:Type="String">Average Depth of Surface Raising ([LinearUnits])</Data></Cell>
     <Cell ss:StyleID="s112" ss:Formula="=R[-5]C/R[-11]C"><Data ss:Type="Number">0</Data></Cell>
     <Cell ss:StyleID="s112" ss:Formula="=R[-5]C/R[-11]C"><Data ss:Type="Number">0</Data></Cell>
     <Cell ss:StyleID="s87"><Data ss:Type="String">±</Data></Cell>
     <Cell ss:StyleID="s116" ss:Formula="=R[-5]C/R[-11]C[-2]"><Data ss:Type="Number">0</Data></Cell>
     <Cell ss:StyleID="s120" ss:Formula="=RC[-1]/RC[-3]"><Data ss:Type="Number">0</Data></Cell>
-    <Cell ss:Index="8" ss:StyleID="s147"><Data ss:Type="String">The average depth of deposition (deposition volume dividied by deposition area)</Data></Cell>
+    <Cell ss:Index="8" ss:StyleID="s147"><Data ss:Type="String">The average depth of raising (surace raising volume divided by surface raising area)</Data></Cell>
    </Row>
    <Row ss:Height="30">
     <Cell ss:StyleID="s85"><Data ss:Type="String">Average Total Thickness of Difference ([LinearUnits]) for Area of Interest</Data></Cell>
@@ -929,22 +929,22 @@
     <Cell ss:Index="8" ss:StyleID="s153"><Data ss:Type="String">NORMALIZED PERCENTAGES</Data></Cell>
    </Row>
    <Row ss:Height="15.75">
-    <Cell ss:StyleID="s80"><Data ss:Type="String">Percent Erosion</Data></Cell>
+    <Cell ss:StyleID="s80"><Data ss:Type="String">Percent Elevation Lowering</Data></Cell>
     <Cell ss:StyleID="s96" ss:Formula="=R[-12]C/R[-10]C"><Data ss:Type="Number">0</Data></Cell>
     <Cell ss:StyleID="s97" ss:Formula="=R[-12]C/R[-10]C"><Data ss:Type="Number">0</Data></Cell>
     <Cell ss:StyleID="s69"/>
     <Cell ss:StyleID="s70"/>
     <Cell ss:StyleID="s70"/>
-    <Cell ss:Index="8" ss:StyleID="s147"><Data ss:Type="String">Percent of Total Volume of Difference that is erosional</Data></Cell>
+    <Cell ss:Index="8" ss:StyleID="s147"><Data ss:Type="String">Percent of Total Volume of Difference that is surface lowering</Data></Cell>
    </Row>
    <Row>
-    <Cell ss:StyleID="s85"><Data ss:Type="String">Percent Deposition</Data></Cell>
+    <Cell ss:StyleID="s85"><Data ss:Type="String">Percent Surface Raising</Data></Cell>
     <Cell ss:StyleID="s98" ss:Formula="=R[-12]C/R[-11]C"><Data ss:Type="Number">0</Data></Cell>
     <Cell ss:StyleID="s99" ss:Formula="=R[-12]C/R[-11]C"><Data ss:Type="Number">0</Data></Cell>
     <Cell ss:StyleID="s100"/>
     <Cell ss:StyleID="s101"/>
     <Cell ss:StyleID="s101"/>
-    <Cell ss:Index="8" ss:StyleID="s147"><Data ss:Type="String">Percent of Total Volume of Difference that is depositional</Data></Cell>
+    <Cell ss:Index="8" ss:StyleID="s147"><Data ss:Type="String">Percent of Total Volume of Difference that is surface raising</Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0" ss:Height="29.25">
     <Cell ss:StyleID="s128"><ss:Data ss:Type="String"
@@ -957,7 +957,7 @@
     <Cell ss:StyleID="s100"/>
     <Cell ss:StyleID="s101"/>
     <Cell ss:StyleID="s101"/>
-    <Cell ss:Index="8" ss:StyleID="s149"><Data ss:Type="String">The percent depature from a 50%-50% equilibirum erosion/deposition balance (an normalized indication of the magnitude of the net difference)</Data></Cell>
+    <Cell ss:Index="8" ss:StyleID="s149"><Data ss:Type="String">The percent depature from a 50%-50% equilibirum lowering/raising (i.e. erosion/deposition) balance (a normalized indication of the magnitude of the net difference)</Data></Cell>
    </Row>
    <Row ss:Height="25.5">
     <Cell ss:StyleID="s140"><Data ss:Type="String">Net to Total Volume Ratio</Data></Cell>

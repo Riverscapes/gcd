@@ -82,11 +82,11 @@ namespace GCDCore.Visualization
 
             Dictionary<string, Color> dSeries = new Dictionary<string, Color> {
                 {
-                    "Erosion",
+                    "Lowering",
                     Properties.Settings.Default.Erosion
                 },
                 {
-                    "Depsotion",
+                    "Raising",
                     Properties.Settings.Default.Deposition
                 }
             };
@@ -153,10 +153,10 @@ namespace GCDCore.Visualization
             switch (eSeriesType)
             {
                 case SeriesType.Erosion:
-                    sSeriesType = "Erosion";
+                    sSeriesType = "Lowering";
                     break;
                 case SeriesType.Depositon:
-                    sSeriesType = "Deposition";
+                    sSeriesType = "Raising";
                     break;
                 case SeriesType.Net:
                     if (eBarType == BarTypes.Volume)

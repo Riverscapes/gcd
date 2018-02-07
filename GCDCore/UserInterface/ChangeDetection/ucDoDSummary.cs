@@ -94,9 +94,9 @@ namespace GCDCore.UserInterface.ChangeDetection
 				//Area of erosion
 				nIndex = grdData.Rows.Add(1);
 				aRow = grdData.Rows[nIndex];
-				aRow.Cells[0].Value = "Total Area of Erosion (" + UnitsNet.Area.GetAbbreviation(options.AreaUnits) + ")";
+				aRow.Cells[0].Value = "Total Area of Surface Lowering (" + UnitsNet.Area.GetAbbreviation(options.AreaUnits) + ")";
 				//the superscript 2 is ALT+0178
-				aRow.Cells[0].ToolTipText = "The amount of area experiencing erosion";
+				aRow.Cells[0].ToolTipText = "The amount of area experiencing a lowering of surface elevations";
 				aRow.Cells[1].Value = dodStats.ErosionRaw.GetArea(ca).As(options.AreaUnits).ToString(sFormat);
 				aRow.Cells[2].Value = dodStats.ErosionThr.GetArea(ca).As(options.AreaUnits).ToString(sFormat);
 				aRow.Cells[3].Style.BackColor = System.Drawing.Color.LightGray;
@@ -106,8 +106,8 @@ namespace GCDCore.UserInterface.ChangeDetection
 				//Area of deposition
 				nIndex = grdData.Rows.Add(1);
 				aRow = grdData.Rows[nIndex];
-				aRow.Cells[0].Value = "Total Area of Deposition (" + UnitsNet.Area.GetAbbreviation(options.AreaUnits) + ")";
-				aRow.Cells[0].ToolTipText = "The amount of area experiencing deposition";
+				aRow.Cells[0].Value = "Total Area of Surface Raising (" + UnitsNet.Area.GetAbbreviation(options.AreaUnits) + ")";
+				aRow.Cells[0].ToolTipText = "The amount of area experiencing an increase of surface elevations";
 				aRow.Cells[1].Value = dodStats.DepositionRaw.GetArea(ca).As(options.AreaUnits).ToString(sFormat);
 				aRow.Cells[2].Value = dodStats.DepositionThr.GetArea(ca).As(options.AreaUnits).ToString(sFormat);
 				aRow.Cells[3].Style.BackColor = System.Drawing.Color.LightGray;
@@ -118,7 +118,7 @@ namespace GCDCore.UserInterface.ChangeDetection
 				nIndex = grdData.Rows.Add(1);
 				aRow = grdData.Rows[nIndex];
 				aRow.Cells[0].Value = "Total Area of Detectable Change (" + UnitsNet.Area.GetAbbreviation(options.AreaUnits) + ")";
-				aRow.Cells[0].ToolTipText = "The sum of areas experiencing detectable erosion and deposition";
+				aRow.Cells[0].ToolTipText = "The sum of areas experiencing detectable lowering and raising";
 				aRow.Cells[1].Value = "NA";
 				aRow.Cells[2].Value = dodStats.AreaDetectableChange_Thresholded.As(options.AreaUnits).ToString(sFormat);
 				aRow.Cells[3].Style.BackColor = System.Drawing.Color.LightGray;
@@ -168,9 +168,9 @@ namespace GCDCore.UserInterface.ChangeDetection
 				//Volume of erosion
 				nIndex = grdData.Rows.Add(1);
 				aRow = grdData.Rows[nIndex];
-				aRow.Cells[0].Value = "Total Volume of Erosion (" + UnitsNet.Volume.GetAbbreviation(options.VolumeUnits) + ")";
+				aRow.Cells[0].Value = "Total Volume of Surface Lowering (" + UnitsNet.Volume.GetAbbreviation(options.VolumeUnits) + ")";
 				//the superscript 3 is ALT+0179
-				aRow.Cells[0].ToolTipText = "On a cell-by-cell basis, the DoD erosion depth multiplied by cell area and summed";
+				aRow.Cells[0].ToolTipText = "On a cell-by-cell basis, the DoD surface lowering depth (e.g. erosion, cut or deflation) multiplied by cell area and summed";
 				aRow.Cells[1].Value = dodStats.ErosionRaw.GetVolume(ca, vunit).As(options.VolumeUnits).ToString(sFormat);
 				aRow.Cells[2].Value = dodStats.ErosionThr.GetVolume(ca, vunit).As(options.VolumeUnits).ToString(sFormat);
 				aRow.Cells[3].Value = "±";
@@ -180,8 +180,8 @@ namespace GCDCore.UserInterface.ChangeDetection
 				//Volume of deposition
 				nIndex = grdData.Rows.Add(1);
 				aRow = grdData.Rows[nIndex];
-				aRow.Cells[0].Value = "Total Volume of Deposition (" + UnitsNet.Volume.GetAbbreviation(options.VolumeUnits) + ")";
-				aRow.Cells[0].ToolTipText = "On a cell-by-cell basis, the DoD deposition depth multiplied by cell area and summed";
+				aRow.Cells[0].Value = "Total Volume of Surface Raising (" + UnitsNet.Volume.GetAbbreviation(options.VolumeUnits) + ")";
+				aRow.Cells[0].ToolTipText = "On a cell-by-cell basis, the DoD surface raising (e.g. deposition, fill or inflation) depth multiplied by cell area and summed";
 				aRow.Cells[1].Value = dodStats.DepositionRaw.GetVolume(ca, vunit).As(options.VolumeUnits).ToString(sFormat);
 				aRow.Cells[2].Value = dodStats.DepositionThr.GetVolume(ca, vunit).As(options.VolumeUnits).ToString(sFormat);
 				aRow.Cells[3].Value = "±";
@@ -192,7 +192,7 @@ namespace GCDCore.UserInterface.ChangeDetection
 				nIndex = grdData.Rows.Add(1);
 				aRow = grdData.Rows[nIndex];
 				aRow.Cells[0].Value = "Total Volume of Difference (" + UnitsNet.Volume.GetAbbreviation(options.VolumeUnits) + ")";
-				aRow.Cells[0].ToolTipText = "The sum of erosion and deposition volumes (a measure of total turnover)";
+				aRow.Cells[0].ToolTipText = "The sum of lowering and raising volumes (a measure of total turnover)";
 				aRow.Cells[1].Value = dodStats.VolumeOfDifference_Raw.As(options.VolumeUnits).ToString(sFormat);
 				aRow.Cells[2].Value = dodStats.VolumeOfDifference_Thresholded.As(options.VolumeUnits).ToString(sFormat);
 				aRow.Cells[3].Value = "±";
@@ -232,8 +232,8 @@ namespace GCDCore.UserInterface.ChangeDetection
 				// Average Depth of Erosion
 				nIndex = grdData.Rows.Add(1);
 				aRow = grdData.Rows[nIndex];
-				aRow.Cells[0].Value = "Average Depth of Erosion (" + UnitsNet.Length.GetAbbreviation(options.LinearUnits) + ")";
-				aRow.Cells[0].ToolTipText = "The average depth of erosion (erosion volume dividied by erosion area)";
+				aRow.Cells[0].Value = "Average Depth of Surface Lowering (" + UnitsNet.Length.GetAbbreviation(options.LinearUnits) + ")";
+				aRow.Cells[0].ToolTipText = "The average depth of lowering (lowering volume divided by lowering area)";
 				aRow.Cells[1].Value = dodStats.AverageDepthErosion_Raw.As(options.LinearUnits).ToString(sFormat);
 				aRow.Cells[2].Value = dodStats.AverageDepthErosion_Thresholded.As(options.LinearUnits).ToString(sFormat);
 				aRow.Cells[3].Value = "±";
@@ -243,8 +243,8 @@ namespace GCDCore.UserInterface.ChangeDetection
 				// Average Depth of Deposition
 				nIndex = grdData.Rows.Add(1);
 				aRow = grdData.Rows[nIndex];
-				aRow.Cells[0].Value = "Average Depth of Deposition (" + UnitsNet.Length.GetAbbreviation(options.LinearUnits) + ")";
-				aRow.Cells[0].ToolTipText = "The average depth of deposition (deposition volume dividied by deposition area)";
+				aRow.Cells[0].Value = "Average Depth of Surface Raising (" + UnitsNet.Length.GetAbbreviation(options.LinearUnits) + ")";
+				aRow.Cells[0].ToolTipText = "The average depth of raising (raising volume divided by raising area)";
 				aRow.Cells[1].Value = dodStats.AverageDepthDeposition_Raw.As(options.LinearUnits).ToString(sFormat);
 				aRow.Cells[2].Value = dodStats.AverageDepthDeposition_Thresholded.As(options.LinearUnits).ToString(sFormat);
 				aRow.Cells[3].Value = "±";
@@ -269,7 +269,7 @@ namespace GCDCore.UserInterface.ChangeDetection
 				nIndex = grdData.Rows.Add(1);
 				aRow = grdData.Rows[nIndex];
 				aRow.Cells[0].Value = "Average Net Thickness of Difference (" + UnitsNet.Length.GetAbbreviation(options.LinearUnits) + ") for Area of Interest";
-				aRow.Cells[0].ToolTipText = "The total net volume of difference dividied by the area of interest (a measure of resulting net change within the analysis area)";
+				aRow.Cells[0].ToolTipText = "The total net volume of difference divided by the area of interest (a measure of resulting net change within the analysis area)";
 				aRow.Cells[1].Value = dodStats.AverageNetThicknessofDifferenceAOI_Raw.As(options.LinearUnits).ToString(sFormat);
 				aRow.Cells[2].Value = dodStats.AverageNetThicknessOfDifferenceAOI_Thresholded.As(options.LinearUnits).ToString(sFormat);
 				aRow.Cells[3].Value = "±";
@@ -298,7 +298,7 @@ namespace GCDCore.UserInterface.ChangeDetection
 				nIndex = grdData.Rows.Add(1);
 				aRow = grdData.Rows[nIndex];
 				aRow.Cells[0].Value = "Average Net Thickness of Difference (" + UnitsNet.Length.GetAbbreviation(options.LinearUnits) + ") for Area with Detectable Change";
-				aRow.Cells[0].ToolTipText = "The total net volume of difference dividied by the total area of detectable change (a measure of resulting net change where the was detectable change)";
+				aRow.Cells[0].ToolTipText = "The total net volume of difference divided by the total area of detectable change (a measure of resulting net change where the was detectable change)";
 				aRow.Cells[1].Value = "NA";
 				aRow.Cells[1].Style.BackColor = System.Drawing.Color.LightGray;
 				aRow.Cells[2].Value = dodStats.AverageNetThicknessOfDifferenceADC_Thresholded.As(options.LinearUnits).ToString(sFormat);
@@ -319,8 +319,8 @@ namespace GCDCore.UserInterface.ChangeDetection
 				// Percent Erosion
 				nIndex = grdData.Rows.Add(1);
 				aRow = grdData.Rows[nIndex];
-				aRow.Cells[0].Value = "Percent Erosion";
-				aRow.Cells[0].ToolTipText = "Percent of Total Volume of Difference that is erosional";
+				aRow.Cells[0].Value = "Percent Elevation Lowering";
+				aRow.Cells[0].ToolTipText = "Percent of Total Volume of Difference that is surface lowering";
 				aRow.Cells[1].Value = dodStats.PercentErosion_Raw.ToString(sFormat);
 				aRow.Cells[2].Value = dodStats.PercentErosion_Thresholded.ToString(sFormat);
 				aRow.Cells[3].Style.BackColor = System.Drawing.Color.LightGray;
@@ -330,8 +330,8 @@ namespace GCDCore.UserInterface.ChangeDetection
 				// Percent Deposition
 				nIndex = grdData.Rows.Add(1);
 				aRow = grdData.Rows[nIndex];
-				aRow.Cells[0].Value = "Percent Deposition";
-				aRow.Cells[0].ToolTipText = "Percent of Total Volume of Difference that is depositional";
+				aRow.Cells[0].Value = "Percent Elevation Raising";
+				aRow.Cells[0].ToolTipText = "Percent of Total Volume of Difference that is surface raising";
 				aRow.Cells[1].Value = dodStats.PercentDeposition_Raw.ToString(sFormat);
 				aRow.Cells[2].Value = dodStats.PercentDeposition_Thresholded.ToString(sFormat);
 				aRow.Cells[3].Style.BackColor = System.Drawing.Color.LightGray;
@@ -342,7 +342,7 @@ namespace GCDCore.UserInterface.ChangeDetection
 				nIndex = grdData.Rows.Add(1);
 				aRow = grdData.Rows[nIndex];
 				aRow.Cells[0].Value = "Percent Imbalance (departure from equilibium)";
-				aRow.Cells[0].ToolTipText = "The percent depature from a 50%-50% equilibirum erosion/deposition balance (an normalized indication of the magnitude of the net difference)";
+				aRow.Cells[0].ToolTipText = "The percent depature from a 50%-50% equilibirum lowering/raising (i.e. erosion/deposition) balance (a normalized indication of the magnitude of the net difference)";
 				aRow.Cells[1].Value = dodStats.PercentImbalance_Raw.ToString(sFormat);
 				aRow.Cells[2].Value = dodStats.PercentImbalance_Thresholded.ToString(sFormat);
 				aRow.Cells[3].Style.BackColor = System.Drawing.Color.LightGray;
