@@ -82,7 +82,7 @@ namespace GCDConsoleLib.Internal.Operators
             if (data[0][id] == inNodataVals[0])
                 return;
 
-            if (isBudgSeg)
+            if (_polymask != null)
                 BudgetSegCellOp(data, id);
             else
                 CellChangeCalc(data, id, Stats);

@@ -74,7 +74,7 @@ namespace GCDConsoleLib.Internal.Operators
         protected override void CellOp(List<double[]> data, List<double[]> outputs, int id)
         {
             if (!data[0][id].Equals(inNodataVals[0]))
-                if (isBudgSeg)
+                if (has)
                     BudgetSegCellOp(data, id);
                 else
                     theHistogram.AddBinVal(data[0][id]);

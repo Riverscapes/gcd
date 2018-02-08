@@ -8,7 +8,6 @@ namespace GCDConsoleLib.Internal
         // Multi-use dictionary that gets reset after every chunk
         protected List<long> _shapemask;
         protected Vector _polymask;
-        protected bool isBudgSeg;
 
         /// <summary>
         /// Just a simple pass-through constructor
@@ -17,8 +16,8 @@ namespace GCDConsoleLib.Internal
         /// <param name="rOutputRaster"></param>
         public CellByCellOperator(List<Raster> rRasters, List<Raster> rOutputRasters = null) :
             base(rRasters, rOutputRasters)  {
-            isBudgSeg = false;
 
+            _polymask = null;
         }
 
         /// <summary>
@@ -31,8 +30,6 @@ namespace GCDConsoleLib.Internal
             base(rRasters, rOutputRasters)  {
 
             _polymask = PolygonMask;
-            isBudgSeg = true;
-
         }
 
         /// <summary>
@@ -51,7 +48,7 @@ namespace GCDConsoleLib.Internal
         protected override void ChunkOp(List<T[]> data, List<T[]> outChunks)
         {
             // First check if this chunk intersects with any of the shapes and filter the list
-            if (isBudgSeg)
+            if (_polymask != null)
                 _shapemask = _polymask.FIDIntersectExtent(ChunkExtent);
 
             for (int id = 0; id < data[0].Length; id++)

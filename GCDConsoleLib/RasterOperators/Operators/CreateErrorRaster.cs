@@ -7,8 +7,6 @@ namespace GCDConsoleLib.Internal.Operators
 {
     class CreateErrorRaster : CellByCellOperator<double>
     {
-        private bool isMultiMethod;
-
         private Dictionary<string, ErrorRasterProperties> _props;
         private Dictionary<string, FISRasterOp> _fisops;
         private Dictionary<string, int> _assocRasters;
@@ -25,7 +23,6 @@ namespace GCDConsoleLib.Internal.Operators
         public CreateErrorRaster(Raster rawDEM, ErrorRasterProperties prop, Raster rOutputRaster) :
             base(new List<Raster> { rawDEM }, new List<Raster> { rOutputRaster })
         {
-            isMultiMethod = false;
             _fisinputs = new Dictionary<string, List<int>>();
             _props = new Dictionary<string, ErrorRasterProperties>() { { "", prop } };
 
@@ -60,13 +57,10 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="outputRaster"></param>
         public CreateErrorRaster(Raster rawDEM, Vector PolygonMask, string MaskFieldName,
             Dictionary<string, ErrorRasterProperties> props, Raster rOutputRaster) :
-            base(new List<Raster> { rawDEM }, new List<Raster> { rOutputRaster })
+            base(new List<Raster> { rawDEM }, PolygonMask, new List <Raster> { rOutputRaster })
         {
-            isMultiMethod = true;
-            _polymask = PolygonMask;
             _fieldname = MaskFieldName;
             _fisinputs = new Dictionary<string, List<int>>();
-
 
             _props = new Dictionary<string, ErrorRasterProperties>();
             _assocRasters = new Dictionary<string, int>();
@@ -133,27 +127,27 @@ namespace GCDConsoleLib.Internal.Operators
         /// <returns></returns>
         protected override void CellOp(List<double[]> data, List<double[]> outputs, int id)
         {
+            outputs[0][id] = outNodataVals[0];
+
             // Speed things up by ignoring nodatas
-            if (data[0][id] == inNodataVals[0])
-            {
-                outputs[0][id] = outNodataVals[0];
+            if (data[0][id] == inNodataVals[0])                
                 return;
-            }
 
             // With multimethod errors we need to do some fancy footwork
-            if (isMultiMethod)
+            if (_polymask != null)
             {
-                decimal[] ptcoords = ChunkExtent.Id2XY(id);
-                // Is this point in one (or more) of the shapes?
-                List<string> shapes = _polymask.ShapesContainPoint((double)ptcoords[0], (double)ptcoords[1], _fieldname);
+                if (_shapemask.Count > 0)
+                {
+                    decimal[] ptcoords = ChunkExtent.Id2XY(id);
+                    // Is this point in one (or more) of the shapes?
+                    List<string> shapes = _polymask.ShapesContainPoint((double)ptcoords[0], (double)ptcoords[1], _fieldname);
 
-                // Now we need to decide what to do based on how many intersections we found.
-                if (shapes.Count == 1)
-                    outputs[0][id] = CellChangeCalc(shapes[0], data, id);
-                else if (shapes.Count > 1)
-                    throw new NotImplementedException("Overlapping shapes is not yet supported");
-                else
-                    outputs[0][id] = outNodataVals[0];
+                    // Now we need to decide what to do based on how many intersections we found.
+                    if (shapes.Count == 1)
+                        outputs[0][id] = CellChangeCalc(shapes[0], data, id);
+                    else if (shapes.Count > 1)
+                        throw new NotImplementedException("Overlapping shapes is not yet supported");
+                }
             }
             // Single method is easier
             else
