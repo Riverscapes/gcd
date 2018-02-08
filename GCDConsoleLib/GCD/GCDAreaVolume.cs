@@ -36,10 +36,26 @@ namespace GCDConsoleLib.GCD
             _sum = sum;
         }
 
+        /// <summary>
+        /// Initialize using area / vol and cell area
+        /// </summary>
+        /// <param name="ar"></param>
+        /// <param name="vol"></param>
+        /// <param name="cellArea"></param>
         public GCDAreaVolume(Area ar, Volume vol, Area cellArea)
         {
             SetArea(ar, cellArea);
             SetVolume(vol, cellArea);
+        }
+
+        /// <summary>
+        /// Mainly Used for Testing
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        public bool Equals(GCDAreaVolume other)
+        {
+            return Count.Equals(other.Count) && _sum.Equals(other._sum);
         }
 
         /// <summary>

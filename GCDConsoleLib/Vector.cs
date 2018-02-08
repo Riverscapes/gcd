@@ -185,6 +185,34 @@ namespace GCDConsoleLib
         }
 
         /// <summary>
+        /// This is a quicker operation and returns the first shape only
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="shapemask"></param>
+        /// <returns></returns>
+        public long? ShapeContainPoint(double x, double y, List<long> shapemask = null)
+        {
+            Open();
+            Layer mLayer = _ds.GetLayerByIndex(0);
+
+            Geometry pt = new Geometry(wkbGeometryType.wkbPoint);
+            pt.AddPoint(x, y, 0);
+
+            // If no mask provided test against everything
+            if (shapemask == null)
+                shapemask = Features.Keys.ToList();
+
+            foreach (long fid in shapemask)
+            {
+                if (Features[fid].Feat.GetGeometryRef().Contains(pt))
+                    return fid;
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Quick calculation if a point is inside a rectangle
         /// </summary>
         /// <param name="feat"></param>

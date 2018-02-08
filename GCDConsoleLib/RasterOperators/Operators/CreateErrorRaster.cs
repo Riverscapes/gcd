@@ -14,6 +14,9 @@ namespace GCDConsoleLib.Internal.Operators
 
         private string _fieldname;
 
+        // When we use rasterized polygons we use this as the field vals
+        private Dictionary<long, string> _rasterVectorFieldVals;
+
         /// <summary>
         /// Single method Constructor
         /// </summary>
@@ -58,6 +61,36 @@ namespace GCDConsoleLib.Internal.Operators
         public CreateErrorRaster(Raster rawDEM, Vector PolygonMask, string MaskFieldName,
             Dictionary<string, ErrorRasterProperties> props, Raster rOutputRaster) :
             base(new List<Raster> { rawDEM }, PolygonMask, new List <Raster> { rOutputRaster })
+        {
+            _initMultiMethod(MaskFieldName, props);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="rawDEM"></param>
+        /// <param name="PolygonMask"></param>
+        /// <param name="MaskFieldName"></param>
+        /// <param name="props"></param>
+        /// <param name="rOutputRaster"></param>
+        public CreateErrorRaster(Raster rawDEM, Raster rPolygonMask, Vector vPolygonMask, string MaskFieldName,
+            Dictionary<string, ErrorRasterProperties> props, Raster rOutputRaster) :
+            base(new List<Raster> { rawDEM }, rPolygonMask, new List<Raster> { rOutputRaster })
+        {
+            _initMultiMethod(MaskFieldName, props);
+
+            // Pull just the field values out for later retrieval
+            _rasterVectorFieldVals = vPolygonMask.Features
+                .ToDictionary(d => d.Key, d => d.Value.Feat.GetFieldAsString(MaskFieldName));
+
+        }
+
+        /// <summary>
+        /// Code we were using in two constructors made sense to combine
+        /// </summary>
+        /// <param name="MaskFieldName"></param>
+        /// <param name="props"></param>
+        private void _initMultiMethod(string MaskFieldName, Dictionary<string, ErrorRasterProperties> props)
         {
             _fieldname = MaskFieldName;
             _fisinputs = new Dictionary<string, List<int>>();
@@ -134,7 +167,7 @@ namespace GCDConsoleLib.Internal.Operators
                 return;
 
             // With multimethod errors we need to do some fancy footwork
-            if (_polymask != null)
+            if (_hasVectorPolymask && !_hasRasteriszedPolymask)
             {
                 if (_shapemask.Count > 0)
                 {
@@ -147,6 +180,14 @@ namespace GCDConsoleLib.Internal.Operators
                         outputs[0][id] = CellChangeCalc(shapes[0], data, id);
                     else if (shapes.Count > 1)
                         throw new NotImplementedException("Overlapping shapes is not yet supported");
+                }
+            }
+            else if (_hasVectorPolymask && _hasRasteriszedPolymask)
+            {
+                if (data[_inputRasters.Count - 1][id] != inNodataVals[_inputRasters.Count - 1])
+                {
+                    string fldVal = _rasterVectorFieldVals[(long)data[_inputRasters.Count - 1][id]];
+                    outputs[0][id] = CellChangeCalc(fldVal, data, id);
                 }
             }
             // Single method is easier

@@ -5,6 +5,9 @@ using UnitsNet.Units;
 using GCDConsoleLib.GCD;
 using System.Collections.Generic;
 using GCDConsoleTest.Helpers;
+using System.Diagnostics;
+using System.Linq;
+using System;
 
 namespace GCDConsoleLib.Internal.Operators.Tests
 {
@@ -429,5 +432,91 @@ namespace GCDConsoleLib.Internal.Operators.Tests
             Dictionary<string, DoDStats> testBudgetSeg = RasterOperators.GetStatsMinLoD(rRaw, rThresh, 73.0m, rPolyMask, "Category", ug);
         }
 
+        /// <summary>
+        /// Things we have to test here:
+        /// 
+        /// -- Does the rasterization work?
+        /// -- Do all the functions that use it give good outputs?
+        /// -- Do the results of the rasterization method match the inputs?
+        /// 
+        /// </summary>
+        [TestMethod()]
+        [TestCategory("Functional")]
+        public void RasterizedVectorTest()
+        {
+            Raster rOld = new Raster(new FileInfo(DirHelpers.GetTestRootPath(@"VerificationProject\inputs\2005DecDEM\2005DecDEM.tif")));
+            Raster rNew = new Raster(new FileInfo(DirHelpers.GetTestRootPath(@"VerificationProject\inputs\2006FebDEM\2006FebDEM.tif")));
+
+            Raster rOldErr = new Raster(new FileInfo(DirHelpers.GetTestRootPath(@"VerificationProject\inputs\2005DecDEM\ErrorSurfaces\Constant01\Constant01.tif")));
+            Raster rNewErr = new Raster(new FileInfo(DirHelpers.GetTestRootPath(@"VerificationProject\inputs\2006FebDEM\ErrorSurfaces\Constant02\Constant02.tif")));
+
+            Raster rDoD = new Raster(new FileInfo(DirHelpers.GetTestRootPath(@"VerificationProject\Analyses\CD\GCD0001\raw.tif")));
+            Raster rThresh = new Raster(new FileInfo(DirHelpers.GetTestRootPath(@"VerificationProject\Analyses\CD\GCD0001\thresh.tif")));
+
+            // And now the budget seg case
+            Vector rPolyMask = new Vector(new FileInfo(DirHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\BudgetMasks\DoD_Geomorphic_Interpretation.shp")));
+
+            UnitGroup ug = new UnitGroup(VolumeUnit.CubicMeter, AreaUnit.SquareMeter, LengthUnit.Meter, LengthUnit.Meter);
+
+            List<string> times = new List<string> { };
+            var watch = Stopwatch.StartNew();
+
+            using (ITempDir tmp = TempDir.Create())
+            {
+                Raster rPropErr = RasterOperators.RootSumSquares(rOldErr, rNewErr, new FileInfo(Path.Combine(tmp.Name, "PropErr.tif")));
+
+                watch.Restart();
+                Raster rRasterizedVector = RasterOperators.Rasterize(rOld, rPolyMask, new FileInfo(Path.Combine(tmp.Name, "DoD_Geomorphic_Interpretation_Rasterized.tif")));
+                times.Add(string.Format("Rasterization, ,{0}", watch.Elapsed.Seconds));
+
+                watch.Restart();
+                Dictionary<string, Histogram> binRasterV = RasterOperators.BinRaster(rOld, 10, rPolyMask, "Category");
+                times.Add(string.Format("BinRaster, Vector, {0}", watch.Elapsed.Seconds));
+                watch.Restart();
+                Dictionary<string, Histogram> binRasterR = RasterOperators.BinRaster(rOld, 10, rRasterizedVector, rPolyMask, "Category");
+                times.Add(string.Format("BinRaster, Rasterized, {0}", watch.Elapsed.Seconds));
+
+                foreach (KeyValuePair<string, Histogram> kvp in binRasterV)
+                    Assert.IsTrue(kvp.Value.Equals(binRasterR[kvp.Key]));
+
+                watch.Restart();
+                Dictionary<string, DoDStats> statsPropV = RasterOperators.GetStatsPropagated(rDoD, rPropErr, rPolyMask, "Category", ug);
+                times.Add(string.Format("GetStatsPropagated, Vector, {0}", watch.Elapsed.Seconds));
+                watch.Restart();
+                Dictionary<string, DoDStats> statsPropR = RasterOperators.GetStatsPropagated(rDoD, rPropErr, rRasterizedVector, rPolyMask, "Category", ug);
+                times.Add(string.Format("GetStatsPropagated, Rasterized, {0}", watch.Elapsed.Seconds));
+
+                foreach (KeyValuePair<string, DoDStats> kvp in statsPropV)
+                    Assert.IsTrue(kvp.Value.Equals(statsPropR[kvp.Key]));
+
+                watch.Restart();
+                Dictionary <string, DoDStats> minlodV = RasterOperators.GetStatsMinLoD(rDoD, rThresh, 0.2m, rPolyMask, "Category", ug);
+                times.Add(string.Format("GetStatsMinLoD, Vector, {0}", watch.Elapsed.Seconds));
+                watch.Restart();
+                Dictionary <string, DoDStats> minlodR = RasterOperators.GetStatsMinLoD(rDoD, rThresh, 0.2m, rRasterizedVector, rPolyMask, "Category", ug);
+                times.Add(string.Format("GetStatsMinLoD, Rasterized, {0}", watch.Elapsed.Seconds));
+
+                foreach (KeyValuePair<string, DoDStats> kvp in minlodV)
+                    Assert.IsTrue(kvp.Value.Equals(minlodR[kvp.Key]));
+
+                watch.Restart();
+                Dictionary <string, DoDStats> statsprobV = RasterOperators.GetStatsProbalistic(rDoD, rThresh, rPropErr, rPolyMask, "Category", ug);
+                times.Add(string.Format("GetStatsProbalistic, Vector, {0}", watch.Elapsed.Seconds));
+                watch.Restart();
+                Dictionary<string, DoDStats> statsprobR = RasterOperators.GetStatsProbalistic(rDoD, rThresh, rPropErr, rRasterizedVector, rPolyMask, "Category", ug);
+                times.Add(string.Format("GetStatsProbalistic, Rasterized, {0}", watch.Elapsed.Seconds));
+
+                foreach (KeyValuePair<string, DoDStats> kvp in statsprobV)
+                    Assert.IsTrue(kvp.Value.Equals(statsprobR[kvp.Key]));
+
+                //Raster errorV = RasterOperators.CreateErrorRaster();
+                //Raster errorR = RasterOperators.CreateErrorRaster();
+
+                foreach (string line in times)
+                    Console.WriteLine(line);
+
+                Assert.Fail();
+            }
+        }
     }
 }

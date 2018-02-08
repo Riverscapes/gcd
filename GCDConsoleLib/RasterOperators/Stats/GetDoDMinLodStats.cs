@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using GCDConsoleLib.Internal;
+using System.Linq;
 using GCDConsoleLib.GCD;
 
 namespace GCDConsoleLib.Internal.Operators
@@ -12,8 +12,11 @@ namespace GCDConsoleLib.Internal.Operators
         private double fDoDValue;
         private double _thresh;
 
-        // If we do budget seg we need the following
+        // When we use rasterized polygons we use this as the field vals
+        private Dictionary<long, string> _rasterVectorFieldVals;
 
+
+        // If we do budget seg we need the following
         public Dictionary<string, DoDStats> SegStats;
         private string _fieldname;
 
@@ -51,6 +54,29 @@ namespace GCDConsoleLib.Internal.Operators
             _fieldname = FieldName;
         }
 
+        /// <summary>
+        /// Rasterized Vector Budget Seggregation constructor
+        /// </summary>
+        /// <param name="rawDoD"></param>
+        /// <param name="thrDoD"></param>
+        /// <param name="thresh"></param>
+        /// <param name="theStats"></param>
+        /// <param name="PolygonMask"></param>
+        /// <param name="FieldName"></param>
+        public GetDodMinLodStats(Raster rawDoD, Raster thrDoD,
+            decimal thresh, DoDStats theStats, Raster rPolymask, Vector vPolygonMask, string FieldName) :
+           base(new List<Raster> { rawDoD, thrDoD }, rPolymask)
+        {
+            Stats = theStats;
+            _thresh = (double)thresh;
+            SegStats = new Dictionary<string, DoDStats>();
+
+            // Pull just the field values out for later retrieval
+            _rasterVectorFieldVals = vPolygonMask.Features
+                .ToDictionary(d => d.Key, d => d.Value.Feat.GetFieldAsString(FieldName));
+
+        }
+
 
         /// <summary>
         ///  This is the actual implementation of the cell-by-cell logic
@@ -64,10 +90,16 @@ namespace GCDConsoleLib.Internal.Operators
             if (data[0][id] == inNodataVals[0])
                 return;
 
-            if (_polymask != null)
-                BudgetSegCellOp(data, id);
-            else
+            if (!_hasVectorPolymask)
                 CellChangeCalc(data, id, Stats);
+            else
+            {
+                // Budget seggregation can be one of two types
+                if (_polymask != null)
+                    VectorBudgetSegCellOp(data, id);
+                else
+                    RasterBudgetSegCellOp(data, id);
+            }
         }
 
         /// <summary>
@@ -75,7 +107,7 @@ namespace GCDConsoleLib.Internal.Operators
         /// </summary>
         /// <param name="data"></param>
         /// <param name="id"></param>
-        private void BudgetSegCellOp(List<double[]> data, int id)
+        private void VectorBudgetSegCellOp(List<double[]> data, int id)
         {
             if (_shapemask.Count > 0)
             {
@@ -91,6 +123,24 @@ namespace GCDConsoleLib.Internal.Operators
                         CellChangeCalc(data, id, SegStats[fldVal]);
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// Using a Rasterized vector to run a budget seggregation op
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="id"></param>
+        private void RasterBudgetSegCellOp(List<double[]> data, int id)
+        {
+            if (data[_inputRasters.Count - 1][id] != inNodataVals[_inputRasters.Count - 1])
+            {
+                string fldVal = _rasterVectorFieldVals[(long)data[_inputRasters.Count - 1][id]];
+                // Create a new DoDStats object if we don't already have one
+                if (!SegStats.ContainsKey(fldVal))
+                    SegStats[fldVal] = new DoDStats(Stats);
+
+                CellChangeCalc(data, id, SegStats[fldVal]);
             }
         }
 

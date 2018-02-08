@@ -43,6 +43,47 @@ namespace GCDConsoleLib.Tests
 
         }
 
+
+        [TestMethod()]
+        [TestCategory("Unit")]
+        public void Histogram_Equals_Test()
+        {
+            Histogram rTest1 = new Histogram(20, 1); // This is our control
+            Histogram rTest2 = new Histogram(21, 1); // different number of bins
+            Histogram rTest3 = new Histogram(20, 1); // change one value in the bins
+            Histogram rTest4 = new Histogram(20, 2); // different bin width
+
+            //Add some fake values into the mix
+            for (int i = 0; i < 20; i++)
+            {
+                rTest1.AddBinVal(i - 9.9);
+                rTest2.AddBinVal(i - 9.9);
+                rTest3.AddBinVal(i - 9.9);
+            }
+            // Change one value in 2
+            rTest3.AddBinVal(2);
+
+            Assert.IsTrue(rTest1.Equals(rTest1));
+            Assert.IsFalse(rTest1.Equals(rTest2));
+            Assert.IsFalse(rTest1.Equals(rTest3));
+            Assert.IsFalse(rTest1.Equals(rTest4));
+
+            Assert.IsFalse(rTest2.Equals(rTest1));
+            Assert.IsTrue(rTest2.Equals(rTest2));
+            Assert.IsFalse(rTest2.Equals(rTest3));
+            Assert.IsFalse(rTest2.Equals(rTest4));
+
+            Assert.IsFalse(rTest3.Equals(rTest1));
+            Assert.IsFalse(rTest3.Equals(rTest2));
+            Assert.IsTrue(rTest3.Equals(rTest3));
+            Assert.IsFalse(rTest3.Equals(rTest4));
+
+            Assert.IsFalse(rTest4.Equals(rTest1));
+            Assert.IsFalse(rTest4.Equals(rTest2));
+            Assert.IsFalse(rTest4.Equals(rTest3));
+            Assert.IsTrue(rTest4.Equals(rTest4));
+        }
+
         [TestMethod()]
         [TestCategory("Unit")]
         public void BinIdTest()

@@ -540,7 +540,14 @@ namespace GCDConsoleLib
         {
             T retval;
             if (origNodataVal != null)
-                retval = (T)Convert.ChangeType(origNodataVal, typeof(T));
+                try
+                {
+                    retval = (T)Convert.ChangeType(origNodataVal, typeof(T));
+                }
+                catch (Exception e)
+                {
+                    retval = Utility.Conversion.minValue<T>();
+                }
             else
             {
                 retval = Utility.Conversion.minValue<T>();

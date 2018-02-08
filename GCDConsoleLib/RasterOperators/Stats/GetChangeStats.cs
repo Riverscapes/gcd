@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using GCDConsoleLib.Internal;
+using System.Linq;
 using GCDConsoleLib.GCD;
 
 namespace GCDConsoleLib.Internal.Operators
@@ -10,10 +10,15 @@ namespace GCDConsoleLib.Internal.Operators
     {
         public DoDStats Stats;
         private List<double> _nodata;
+        private string _fieldname;
 
         // If we do budget seg we need the following
         public Dictionary<string, DoDStats> SegStats;
-        private string _fieldname;
+
+        // When we use rasterized polygons we use this as the field vals
+        private Dictionary<long, string> _rasterVectorFieldVals;
+
+        #region Constructors
 
         /// <summary>
         /// Constructor
@@ -40,7 +45,7 @@ namespace GCDConsoleLib.Internal.Operators
         }
 
         /// <summary>
-        /// Budget Seggregation constructor
+        /// Budget Seggregation constructor using a VECTOR mask only
         /// </summary>
         /// <param name="rInput"></param>
         /// <param name="theStats"></param>
@@ -49,13 +54,15 @@ namespace GCDConsoleLib.Internal.Operators
         public GetChangeStats(Raster rInput, DoDStats theStats, Vector PolygonMask, string FieldName) :
             base(new List<Raster> { rInput }, PolygonMask)
         {
+            // Note hwo the polymask gets passed to the base. This is so we can filter to shapes that
+            // overlap the chunks to speed things up.
             Stats = theStats;
             SegStats = new Dictionary<string, DoDStats>();
             _fieldname = FieldName;
         }
 
         /// <summary>
-        /// This is the Budget Seggregation with propError Constructor
+        /// This is the Budget Seggregation with propError Constructor using a VECTOR mask only
         /// </summary>
         /// <param name="rInput"></param>
         /// <param name="rPropError"></param>
@@ -65,10 +72,57 @@ namespace GCDConsoleLib.Internal.Operators
         public GetChangeStats(Raster rInput, Raster rPropError, DoDStats theStats, Vector PolygonMask, string FieldName) :
            base(new List<Raster> { rInput, rPropError }, PolygonMask)
         {
+            // Note hwo the polymask gets passed to the base. This is so we can filter to shapes that
+            // overlap the chunks to speed things up.
             Stats = theStats;
             SegStats = new Dictionary<string, DoDStats>();
             _fieldname = FieldName;
         }
+
+        /// <summary>
+        /// Budget Seggregation constructor using a raster mask
+        /// </summary>
+        /// <param name="rInput"></param>
+        /// <param name="theStats"></param>
+        /// <param name="PolygonMask"></param>
+        /// <param name="FieldName"></param>
+        public GetChangeStats(Raster rInput, DoDStats theStats, Raster rPolygonMask, Vector vPolygonMask, string FieldName) :
+            base(new List<Raster> { rInput }, rPolygonMask)
+        {
+            // Note how we don't pass the vector into the base. We're not going to do anything
+            // with the geometry of the shapefile. 
+            Stats = theStats;
+            SegStats = new Dictionary<string, DoDStats>();
+
+            // Pull just the field values out for later retrieval
+            _rasterVectorFieldVals = vPolygonMask.Features
+                .ToDictionary(d => d.Key, d => d.Value.Feat.GetFieldAsString(FieldName));
+
+        }
+
+        /// <summary>
+        /// This is the Budget Seggregation with propError Constructor using a raster mask
+        /// </summary>
+        /// <param name="rInput"></param>
+        /// <param name="rPropError"></param>
+        /// <param name="theStats"></param>
+        /// <param name="PolygonMask"></param>
+        /// <param name="FieldName"></param>
+        public GetChangeStats(Raster rInput, Raster rPropError, DoDStats theStats,
+            Raster rPolygonMask, Vector vPolygonMask, string FieldName) :
+           base(new List<Raster> { rInput, rPropError }, rPolygonMask)
+        {
+            Stats = theStats;
+            SegStats = new Dictionary<string, DoDStats>();
+
+            // Pull just the field values out for later retrieval
+            _rasterVectorFieldVals = vPolygonMask.Features
+                .ToDictionary(d => d.Key, d => d.Value.Feat.GetFieldAsString(FieldName));
+        }
+
+        #endregion
+
+        #region Functions
 
         /// <summary>
         /// This is the actual implementation of the cell-by-cell logic
@@ -82,11 +136,16 @@ namespace GCDConsoleLib.Internal.Operators
             if (data[0][id] == inNodataVals[0])
                 return;
 
-            if (_polymask != null)
-                BudgetSegCellOp(data, id);
-            else
+            if (!_hasVectorPolymask)
                 CellChangeCalc(data, id, Stats);
-
+            else
+            {
+                // Budget seggregation can be one of two types
+                if (_polymask != null)
+                    VectorBudgetSegCellOp(data, id);
+                else
+                    RasterBudgetSegCellOp(data, id);
+            }
         }
 
         /// <summary>
@@ -94,7 +153,7 @@ namespace GCDConsoleLib.Internal.Operators
         /// </summary>
         /// <param name="data"></param>
         /// <param name="id"></param>
-        private void BudgetSegCellOp(List<double[]> data, int id)
+        private void VectorBudgetSegCellOp(List<double[]> data, int id)
         {
             if (_shapemask.Count > 0)
             {
@@ -114,6 +173,25 @@ namespace GCDConsoleLib.Internal.Operators
         }
 
         /// <summary>
+        /// When you want to use a rasterized vector instead
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="id"></param>
+        private void RasterBudgetSegCellOp(List<double[]> data, int id)
+        {
+            if (data[_inputRasters.Count-1][id] != inNodataVals[_inputRasters.Count - 1])
+            {
+                string fldVal = _rasterVectorFieldVals[(long)data[_inputRasters.Count - 1][id]];
+                // Create a new DoDStats object if we don't already have one
+                if (!SegStats.ContainsKey(fldVal))
+                    SegStats[fldVal] = new DoDStats(Stats);
+
+                CellChangeCalc(data, id, SegStats[fldVal]);
+            }
+
+        }
+
+        /// <summary>
         /// We separate out the calc op so we can call it from elsewhere (like the seggregation function)
         /// </summary>
         /// <param name="data"></param>
@@ -124,8 +202,12 @@ namespace GCDConsoleLib.Internal.Operators
         {
             double fRVal, fMask;
 
+            int rasterCount = data.Count;
+            // We need to discount the rastermask
+            if (_hasRasteriszedPolymask) rasterCount--;
+
             // If we don't have a mask to use then do it this way
-            if (data.Count == 1 && data[0][id] != inNodataVals[0])
+            if (rasterCount == 1 && data[0][id] != inNodataVals[0])
             {
                 fRVal = data[0][id];
                 // Deposition
@@ -136,8 +218,8 @@ namespace GCDConsoleLib.Internal.Operators
                     stats.ErosionRaw.AddToSumAndIncrementCounter(fRVal * -1);
             }
 
-            // If we have a mask then use it.
-            else if (data.Count == 2 && data[1][id] != inNodataVals[1])
+            // If we have an error mask then use it.
+            else if (rasterCount == 2 && data[1][id] != inNodataVals[1])
             {
                 fRVal = data[0][id];
                 fMask = data[1][id];
@@ -153,5 +235,6 @@ namespace GCDConsoleLib.Internal.Operators
                 }
             }
         }
+        #endregion
     }
 }

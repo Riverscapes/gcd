@@ -9,6 +9,10 @@ namespace GCDConsoleLib.Internal
         protected List<long> _shapemask;
         protected Vector _polymask;
 
+        // RASTER POLYMASK: 
+        protected bool _hasVectorPolymask;
+        protected bool _hasRasteriszedPolymask;
+
         /// <summary>
         /// Just a simple pass-through constructor
         /// </summary>
@@ -18,10 +22,12 @@ namespace GCDConsoleLib.Internal
             base(rRasters, rOutputRasters)  {
 
             _polymask = null;
+            _hasVectorPolymask = false;
+            _hasRasteriszedPolymask = false;
         }
 
         /// <summary>
-        /// Budget Seggregation case
+        /// Cell by cell op using using a VECTOR for some purpose
         /// </summary>
         /// <param name="rRasters"></param>
         /// <param name="PolygonMask"></param>
@@ -30,6 +36,25 @@ namespace GCDConsoleLib.Internal
             base(rRasters, rOutputRasters)  {
 
             _polymask = PolygonMask;
+            _hasVectorPolymask = true;
+            _hasRasteriszedPolymask = false;
+        }
+
+        /// <summary>
+        /// Cell by cell op using using a RASTERIZED VECTOR for some purpose
+        /// </summary>
+        /// <param name="rRasters"></param>
+        /// <param name="rPolygonMask"></param>
+        /// <param name="vPolygonMask"></param>
+        /// <param name="rOutputRasters"></param>
+        public CellByCellOperator(List<Raster> rRasters, Raster rPolygonMask, List<Raster> rOutputRasters = null) :
+            base(rRasters, rOutputRasters)
+        {
+            _hasVectorPolymask = true;
+            _hasRasteriszedPolymask = true;
+
+            // Make sure we add the rasterized vector as the last item we can look up
+            AddInputRaster(rPolygonMask);
         }
 
         /// <summary>
@@ -51,7 +76,13 @@ namespace GCDConsoleLib.Internal
             if (_polymask != null)
                 _shapemask = _polymask.FIDIntersectExtent(ChunkExtent);
 
-            for (int id = 0; id < data[0].Length; id++)
+            // We either have an input or an output (but never neither) Figure out the buffer size
+            int buffSize;
+            if (data.Count > 0)
+                buffSize = data[0].Length;
+            else buffSize = outChunks[0].Length;
+
+            for (int id = 0; id < buffSize; id++)
                 CellOp(data, outChunks, id);
         }
 

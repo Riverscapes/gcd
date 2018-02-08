@@ -167,6 +167,19 @@ namespace GCDConsoleLib
         }
 
         /// <summary>
+        /// Mainly used for testing
+        /// </summary>
+        /// <param name="second"></param>
+        /// <returns></returns>
+        public bool Equals(Histogram second)
+        {
+            return _binLefts.SequenceEqual(second._binLefts) &&
+                _binSums.SequenceEqual(second._binSums) &&
+                _binWidth == second._binWidth &&
+                BinCounts.SequenceEqual(second.BinCounts);
+        }
+
+        /// <summary>
         /// Choose a clean division that is a muliple of 5 or 10
         /// </summary>
         /// <param name="startWidth"></param>

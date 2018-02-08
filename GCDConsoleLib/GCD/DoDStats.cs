@@ -38,7 +38,7 @@ namespace GCDConsoleLib.GCD
         }
 
         /// <summary>
-        /// Copy Constructor
+        /// Copy Constructor (NOTE: Creates an EMPTY COPY!!!!)
         /// </summary>
         /// <param name="oldStats"></param>
         public DoDStats(DoDStats oldStats)
@@ -85,6 +85,22 @@ namespace GCDConsoleLib.GCD
             // Note that we don't store Area for the error so let's just set it to 0
             ErosionErr = new GCDAreaVolume(Area.FromSquareMeters(0), VolumeErosion_Error, cellArea);
             DepositionErr = new GCDAreaVolume(Area.FromSquareMeters(0), VolumeDeposition_Error, cellArea);
+        }
+        
+        /// <summary>
+        /// Mainly used for testing and verification
+        /// </summary>
+        /// <returns></returns>
+        public bool Equals(DoDStats other)
+        {
+            return StatsUnits.Equals(other.StatsUnits) &&
+                CellArea.Equals(other.CellArea) &&
+                ErosionRaw.Equals(other.ErosionRaw) &&
+                DepositionRaw.Equals(other.DepositionRaw) &&
+                ErosionThr.Equals(other.ErosionThr) &&
+                DepositionThr.Equals(other.DepositionThr) &&
+                ErosionErr.Equals(other.ErosionErr) &&
+                DepositionErr.Equals(other.DepositionErr);
         }
 
     }

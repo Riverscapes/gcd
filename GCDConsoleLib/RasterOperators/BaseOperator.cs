@@ -92,6 +92,10 @@ namespace GCDConsoleLib.Internal
             SetOpExtent(InExtent);
         }
 
+        /// <summary>
+        /// Sometimes we want to add an input raster after the constructor has been called
+        /// </summary>
+        /// <param name="rInput"></param>
         protected void AddInputRaster(Raster rInput)
         {
             if (_inputRasters.Count > 1)
@@ -104,6 +108,10 @@ namespace GCDConsoleLib.Internal
             rInput.Open();
         }
 
+        /// <summary>
+        /// Sometimes we want to add an output raster after the constructor has been called
+        /// </summary>
+        /// <param name="rOutput"></param>
         protected void AddOutputRaster(Raster rOutput)
         {
             if (_outputRasters.Count > 1)

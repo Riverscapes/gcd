@@ -234,6 +234,19 @@ namespace GCDConsoleLib
             });
         }
 
+        /// <summary>
+        /// Rasterize a vector into a byte array
+        /// </summary>
+        /// <param name="rInput"></param>
+        /// <param name="sOutputRaster"></param>
+        /// <param name="outputExtent"></param>
+        /// <returns></returns>
+        public static Raster Rasterize(Raster TemplateRaster, Vector vInput, FileInfo rOutput)
+        {
+            RasterizeVector op = new RasterizeVector(vInput, new Raster(TemplateRaster, rOutput));
+            return op.RunWithOutput();
+        }
+
 
         /// <summary>
         /// Create a Root Sum Squares Calculation Raster
@@ -306,6 +319,7 @@ namespace GCDConsoleLib
 
         /// <summary>
         /// Retrieve the segregated Change Statistics from a pair of DoD rasters that were thresholded using minimum level of detection
+        /// THIS IS THE PURE VECTOR APPROACH
         /// </summary>
         /// <param name="rawDoD">Raw DoD Raster Path</param>
         /// <param name="thrDoD">Thresholded DoD Raster Path</param>
@@ -318,6 +332,27 @@ namespace GCDConsoleLib
         {
             Area cellArea = rawDoD.Extent.CellArea(units);
             GetDodMinLodStats theStatsOp = new GetDodMinLodStats(rawDoD, thrDoD, minLoD, new DoDStats(cellArea, units), PolygonMask, FieldName);
+            theStatsOp.Run();
+            return theStatsOp.SegStats;
+        }
+
+        /// <summary>
+        /// Retrieve the segregated Change Statistics from a pair of DoD rasters that were thresholded using minimum level of detection
+        /// THIS IS THE METHOD FOR RASTERIZED VECTOR
+        /// </summary>
+        /// <param name="rawDoD"></param>
+        /// <param name="thrDoD"></param>
+        /// <param name="minLoD"></param>
+        /// <param name="rPolygonMask"></param>
+        /// <param name="vPolygonMask"></param>
+        /// <param name="FieldName"></param>
+        /// <param name="units"></param>
+        /// <returns></returns>
+        public static Dictionary<string, DoDStats> GetStatsMinLoD(Raster rawDoD, Raster thrDoD, decimal minLoD,
+            Raster rPolygonMask, Vector vPolygonMask, string FieldName, UnitGroup units)
+        {
+            Area cellArea = rawDoD.Extent.CellArea(units);
+            GetDodMinLodStats theStatsOp = new GetDodMinLodStats(rawDoD, thrDoD, minLoD, new DoDStats(cellArea, units), rPolygonMask, vPolygonMask, FieldName);
             theStatsOp.Run();
             return theStatsOp.SegStats;
         }
@@ -342,16 +377,34 @@ namespace GCDConsoleLib
         /// Retrieve the Change Statistics from a pair of DoD rasters that were thresholded using a propagated error raster
         /// </summary>
         /// <param name="rawDoD">Raw DoD Raster Path</param>
-        /// <param name="thrDoD">Thresholded DoD Raster Path</param>
         /// <param name="propErrRaster">Propagated Error Raster Path</param>
         /// <param name="PolygonMask">Vector layer containing the mask polygons</param>
         /// <param name="FieldName">Name of the field in the PolygonMask that contains the distinguishing property on which to group statistics</param>
         /// <returns></returns>
-        public static Dictionary<string, DoDStats> GetStatsPropagated(Raster rawDoD, Raster thrDoD, Raster propErrRaster,
+        public static Dictionary<string, DoDStats> GetStatsPropagated(Raster rawDoD, Raster propErrRaster,
           Vector PolygonMask, string FieldName, UnitGroup units)
         {
             Area cellArea = rawDoD.Extent.CellArea(units);
-            GetDoDPropStats theStatsOp = new GetDoDPropStats(rawDoD, thrDoD, new DoDStats(cellArea, units), PolygonMask, FieldName);
+            GetDoDPropStats theStatsOp = new GetDoDPropStats(rawDoD, propErrRaster, new DoDStats(cellArea, units), PolygonMask, FieldName);
+            theStatsOp.Run();
+            return theStatsOp.SegStats;
+        }
+
+        /// <summary>
+        /// Retrieve the Change Statistics from a pair of DoD rasters that were thresholded using a propagated error raster
+        /// </summary>
+        /// <param name="rawDoD"></param>
+        /// <param name="propErrRaster"></param>
+        /// <param name="rPolygonMask"></param>
+        /// <param name="vPolygonMask"></param>
+        /// <param name="FieldName"></param>
+        /// <param name="units"></param>
+        /// <returns></returns>
+        public static Dictionary<string, DoDStats> GetStatsPropagated(Raster rawDoD, Raster propErrRaster,
+            Raster rPolygonMask, Vector vPolygonMask, string FieldName, UnitGroup units)
+        {
+            Area cellArea = rawDoD.Extent.CellArea(units);
+            GetDoDPropStats theStatsOp = new GetDoDPropStats(rawDoD, propErrRaster, new DoDStats(cellArea, units), rPolygonMask, vPolygonMask, FieldName);
             theStatsOp.Run();
             return theStatsOp.SegStats;
         }
@@ -408,6 +461,38 @@ namespace GCDConsoleLib
             thr.Run();
             err.Run();
 
+            return StatsProbabilisticCombine(raw, thr, err, cellArea, units);
+        }
+
+
+        /// <summary>
+        /// Retrieve the Change Statistics from a pair of DoD rasters that were thresholded using a probabilistic thresholding
+        /// </summary>
+        /// <param name="rawDoD"></param>
+        /// <param name="thrDoD"></param>
+        /// <param name="propErrRaster"></param>
+        /// <param name="PolygonMask"></param>
+        /// <param name="FieldName"></param>
+        /// <param name="units"></param>
+        /// <returns></returns>
+        public static Dictionary<string, DoDStats> GetStatsProbalistic(Raster rawDoD, Raster thrDoD, Raster propErrRaster,
+            Raster rPolygonMask, Vector vPolygonMask, string FieldName, UnitGroup units)
+        {
+            Area cellArea = rawDoD.Extent.CellArea(units);
+            GetChangeStats raw = new GetChangeStats(rawDoD, new DoDStats(cellArea, units), rPolygonMask, vPolygonMask, FieldName);
+            GetChangeStats thr = new GetChangeStats(thrDoD, new DoDStats(cellArea, units), rPolygonMask, vPolygonMask, FieldName);
+            GetChangeStats err = new GetChangeStats(propErrRaster, thrDoD, new DoDStats(cellArea, units), rPolygonMask, vPolygonMask, FieldName);
+
+            raw.Run();
+            thr.Run();
+            err.Run();
+
+            return StatsProbabilisticCombine(raw, thr, err, cellArea, units);
+        }
+
+        public static Dictionary<string, DoDStats> StatsProbabilisticCombine(GetChangeStats raw, GetChangeStats thr, GetChangeStats err,
+            Area cellArea, UnitGroup units)
+        {
             // Create an empty stats object we will use wherever we need to
             DoDStats empty = new DoDStats(cellArea, units);
 
@@ -462,7 +547,6 @@ namespace GCDConsoleLib
             return retVal;
         }
 
-
         /// <summary>
         /// Default histogram generator
         /// </summary>
@@ -501,7 +585,7 @@ namespace GCDConsoleLib
         }
 
         /// <summary>
-        /// Multimethod error calculation
+        /// Multimethod error calculation (Pure Vector Method)
         /// </summary>
         /// <param name="rawDEM"></param>
         /// <param name="props"></param>
@@ -512,6 +596,27 @@ namespace GCDConsoleLib
         {
             //https://stackoverflow.com/questions/2560258/how-to-pass-an-event-to-a-method
             CreateErrorRaster theStatsOp = new CreateErrorRaster(rawDEM, PolygonMask, MaskFieldName, props, new Raster(rawDEM, sOutputRaster));
+            if (progressHandler != null)
+                theStatsOp.ProgressEvent += progressHandler;
+            return theStatsOp.RunWithOutput();
+        }
+
+        /// <summary>
+        /// Multimethod error calculation (Rasterized Vector Method)
+        /// </summary>
+        /// <param name="rawDEM"></param>
+        /// <param name="rPolygonMask"></param>
+        /// <param name="vPolygonMask"></param>
+        /// <param name="MaskFieldName"></param>
+        /// <param name="props"></param>
+        /// <param name="sOutputRaster"></param>
+        /// <param name="progressHandler"></param>
+        /// <returns></returns>
+        public static Raster CreateErrorRaster(Raster rawDEM, Raster rPolygonMask, Vector vPolygonMask, string MaskFieldName,
+            Dictionary<string, ErrorRasterProperties> props, FileInfo sOutputRaster, EventHandler<int> progressHandler = null)
+        {
+            //https://stackoverflow.com/questions/2560258/how-to-pass-an-event-to-a-method
+            CreateErrorRaster theStatsOp = new CreateErrorRaster(rawDEM, rPolygonMask, vPolygonMask, MaskFieldName, props, new Raster(rawDEM, sOutputRaster));
             if (progressHandler != null)
                 theStatsOp.ProgressEvent += progressHandler;
             return theStatsOp.RunWithOutput();
@@ -667,7 +772,7 @@ namespace GCDConsoleLib
         }
 
         /// <summary>
-        /// Bin a Raster into a Histogram
+        /// Bin a Raster into a Histogram (pure vector)
         /// </summary>
         /// <param name="rInput"></param>
         /// <param name="numberofBins"></param>
@@ -677,6 +782,21 @@ namespace GCDConsoleLib
         public static Dictionary<string, Histogram> BinRaster(Raster rInput, int numberofBins, Vector polygonMask, string FieldName)
         {
             BinRaster histOp = new BinRaster(rInput, numberofBins, polygonMask, FieldName);
+            histOp.Run();
+            return histOp.SegHistograms;
+        }
+
+        /// <summary>
+        /// Bin a Raster into a Histogram (RASTERIZED vector)
+        /// </summary>
+        /// <param name="rInput"></param>
+        /// <param name="numberofBins"></param>
+        /// <param name="polygonMask"></param>
+        /// <param name="FieldName"></param>
+        /// <returns></returns>
+        public static Dictionary<string, Histogram> BinRaster(Raster rInput, int numberofBins, Raster rPolyMask, Vector vPolyMask, string FieldName)
+        {
+            BinRaster histOp = new BinRaster(rInput, numberofBins, rPolyMask, vPolyMask, FieldName);
             histOp.Run();
             return histOp.SegHistograms;
         }

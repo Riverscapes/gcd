@@ -25,5 +25,18 @@ namespace GCDConsoleLib.GCD
             VertUnit = vertU;
             HorizUnit = horU;
         }
+
+        /// <summary>
+        /// Mainly used for testing
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        public bool Equals(UnitGroup other)
+        {
+            return VolUnit.Equals(other.VolUnit) &&
+                ArUnit.Equals(other.ArUnit) &&
+                VertUnit.Equals(other.VertUnit) &&
+                HorizUnit.Equals(other.HorizUnit);
+        }
     }
 }
