@@ -336,8 +336,15 @@ namespace GCDConsoleLib.Tests
 
             }
         }
+        [TestMethod()]
+        [TestCategory("Unit")]
+        public void Histogram_Uniform_Raster_Test()
+        {
+            Raster rTempl = new Raster(new FileInfo(DirHelpers.GetTestRasterPath("const950.tif")));
+            Histogram theHisto = new Histogram(1, rTempl);
+            theHisto.AddBinVal(1.0);
+        }
+
     }
-
-
 
 }

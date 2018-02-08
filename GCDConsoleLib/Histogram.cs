@@ -2,9 +2,7 @@
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
-using GCDConsoleLib.Utility;
 using UnitsNet;
-using UnitsNet.Units;
 using GCDConsoleLib.GCD;
 
 namespace GCDConsoleLib
@@ -53,11 +51,9 @@ namespace GCDConsoleLib
                 else
                     newDims = new Tuple<int, decimal>(1, Math.Abs(stats["max"]));
             else
-            {
                 newDims = GetCleanBins(bins, stats["max"], stats["min"]);
-                _init(newDims.Item1, newDims.Item2);
-            }
 
+            _init(newDims.Item1, newDims.Item2);
         }
 
         /// <summary>
