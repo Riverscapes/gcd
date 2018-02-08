@@ -155,6 +155,36 @@ namespace GCDConsoleLib
         }
 
         /// <summary>
+        /// Is a point inside a feature (return only FID)
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="fieldName"></param>
+        /// <param name="shapemask"></param>
+        /// <returns></returns>
+        public List<long> ShapesContainPoint(double x, double y, List<long> shapemask = null)
+        {
+            Open();
+            List<long> retVal = new List<long>();
+            Layer mLayer = _ds.GetLayerByIndex(0);
+
+            Geometry pt = new Geometry(wkbGeometryType.wkbPoint);
+            pt.AddPoint(x, y, 0);
+
+            // If no mask provided test against everything
+            if (shapemask == null)
+                shapemask = Features.Keys.ToList();
+
+            foreach (long fid in shapemask)
+            {
+                if (Features[fid].Feat.GetGeometryRef().Contains(pt))
+                    retVal.Add(fid);
+            }
+
+            return retVal;
+        }
+
+        /// <summary>
         /// Quick calculation if a point is inside a rectangle
         /// </summary>
         /// <param name="feat"></param>
