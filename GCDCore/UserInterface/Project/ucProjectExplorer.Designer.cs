@@ -80,6 +80,9 @@ namespace GCDCore.UserInterface.Project
             this.batchChangeDetectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.multiEpochChangeDetectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.multiUncertaintyAnalysisChangeDetectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
+            this.addChangeDetectionIntercomparisonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.AddAllChangeDetectionAnalysesToTheMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsChangeDetection = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.ViewChangeDetectionResultsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -128,6 +131,9 @@ namespace GCDCore.UserInterface.Project
             this.deriveReferenceSurfaceFromDEMSurveysToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deriveConstantReferenceSurfaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addAllReferenceSurfacesToTheMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmsInterComparison = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.addChangeDetectionInterComparisonToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.openInterComparisonFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsProject.SuspendLayout();
             this.cmsDEMSurvey.SuspendLayout();
             this.cmsAssociatedSurface.SuspendLayout();
@@ -143,6 +149,7 @@ namespace GCDCore.UserInterface.Project
             this.cmsBS.SuspendLayout();
             this.cmsMasks.SuspendLayout();
             this.cmsRefSurfaceGroup.SuspendLayout();
+            this.cmsInterComparison.SuspendLayout();
             this.SuspendLayout();
             // 
             // treProject
@@ -179,6 +186,8 @@ namespace GCDCore.UserInterface.Project
             this.imgTreeImageList.Images.SetKeyName(14, "BrowseFolder.png");
             this.imgTreeImageList.Images.SetKeyName(15, "ConcaveHull.png");
             this.imgTreeImageList.Images.SetKeyName(16, "BudgetSeg.png");
+            this.imgTreeImageList.Images.SetKeyName(17, "BrowseFolder.png");
+            this.imgTreeImageList.Images.SetKeyName(18, "comparison.png");
             // 
             // cmsProject
             // 
@@ -429,9 +438,12 @@ namespace GCDCore.UserInterface.Project
             this.cmsChangeDetectionGroup.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.AddChangeDetectionToolStripMenuItem,
             this.batchChangeDetectionToolStripMenuItem,
+            this.toolStripSeparator9,
+            this.addChangeDetectionIntercomparisonToolStripMenuItem,
+            this.toolStripSeparator8,
             this.AddAllChangeDetectionAnalysesToTheMapToolStripMenuItem});
             this.cmsChangeDetectionGroup.Name = "cmsChangeDetectionGroup";
-            this.cmsChangeDetectionGroup.Size = new System.Drawing.Size(322, 70);
+            this.cmsChangeDetectionGroup.Size = new System.Drawing.Size(322, 104);
             // 
             // AddChangeDetectionToolStripMenuItem
             // 
@@ -451,7 +463,6 @@ namespace GCDCore.UserInterface.Project
             // 
             // multiEpochChangeDetectionToolStripMenuItem
             // 
-            this.multiEpochChangeDetectionToolStripMenuItem.Enabled = true;
             this.multiEpochChangeDetectionToolStripMenuItem.Image = global::GCDCore.Properties.Resources.Add;
             this.multiEpochChangeDetectionToolStripMenuItem.Name = "multiEpochChangeDetectionToolStripMenuItem";
             this.multiEpochChangeDetectionToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
@@ -465,6 +476,23 @@ namespace GCDCore.UserInterface.Project
             this.multiUncertaintyAnalysisChangeDetectionToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
             this.multiUncertaintyAnalysisChangeDetectionToolStripMenuItem.Text = "Multiple Uncertainty Analysis";
             this.multiUncertaintyAnalysisChangeDetectionToolStripMenuItem.Click += new System.EventHandler(this.multiUncertaintyAnalysisChangeDetectionToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator9
+            // 
+            this.toolStripSeparator9.Name = "toolStripSeparator9";
+            this.toolStripSeparator9.Size = new System.Drawing.Size(318, 6);
+            // 
+            // addChangeDetectionIntercomparisonToolStripMenuItem
+            // 
+            this.addChangeDetectionIntercomparisonToolStripMenuItem.Image = global::GCDCore.Properties.Resources.Add;
+            this.addChangeDetectionIntercomparisonToolStripMenuItem.Name = "addChangeDetectionIntercomparisonToolStripMenuItem";
+            this.addChangeDetectionIntercomparisonToolStripMenuItem.Size = new System.Drawing.Size(321, 22);
+            this.addChangeDetectionIntercomparisonToolStripMenuItem.Text = "Add Change Detection Inter-comparison";
+            // 
+            // toolStripSeparator8
+            // 
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(318, 6);
             // 
             // AddAllChangeDetectionAnalysesToTheMapToolStripMenuItem
             // 
@@ -780,7 +808,7 @@ namespace GCDCore.UserInterface.Project
             this.deriveConstantReferenceSurfaceToolStripMenuItem,
             this.addAllReferenceSurfacesToTheMapToolStripMenuItem});
             this.cmsRefSurfaceGroup.Name = "cmsRefSurfaceGroup";
-            this.cmsRefSurfaceGroup.Size = new System.Drawing.Size(307, 114);
+            this.cmsRefSurfaceGroup.Size = new System.Drawing.Size(307, 92);
             // 
             // specifyReferenceSurfaceToolStripMenuItem
             // 
@@ -810,6 +838,28 @@ namespace GCDCore.UserInterface.Project
             this.addAllReferenceSurfacesToTheMapToolStripMenuItem.Size = new System.Drawing.Size(306, 22);
             this.addAllReferenceSurfacesToTheMapToolStripMenuItem.Text = "Add All Reference Surfaces to the Map";
             // 
+            // cmsInterComparison
+            // 
+            this.cmsInterComparison.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addChangeDetectionInterComparisonToolStripMenuItem1,
+            this.openInterComparisonFolderToolStripMenuItem});
+            this.cmsInterComparison.Name = "cmsInterComparison";
+            this.cmsInterComparison.Size = new System.Drawing.Size(292, 48);
+            // 
+            // addChangeDetectionInterComparisonToolStripMenuItem1
+            // 
+            this.addChangeDetectionInterComparisonToolStripMenuItem1.Image = global::GCDCore.Properties.Resources.Add;
+            this.addChangeDetectionInterComparisonToolStripMenuItem1.Name = "addChangeDetectionInterComparisonToolStripMenuItem1";
+            this.addChangeDetectionInterComparisonToolStripMenuItem1.Size = new System.Drawing.Size(291, 22);
+            this.addChangeDetectionInterComparisonToolStripMenuItem1.Text = "Add Change Detection Inter-Comparison";
+            // 
+            // openInterComparisonFolderToolStripMenuItem
+            // 
+            this.openInterComparisonFolderToolStripMenuItem.Image = global::GCDCore.Properties.Resources.BrowseFolder;
+            this.openInterComparisonFolderToolStripMenuItem.Name = "openInterComparisonFolderToolStripMenuItem";
+            this.openInterComparisonFolderToolStripMenuItem.Size = new System.Drawing.Size(291, 22);
+            this.openInterComparisonFolderToolStripMenuItem.Text = "Open Inter-Comparison Folder";
+            // 
             // ucProjectExplorer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -832,6 +882,7 @@ namespace GCDCore.UserInterface.Project
             this.cmsBS.ResumeLayout(false);
             this.cmsMasks.ResumeLayout(false);
             this.cmsRefSurfaceGroup.ResumeLayout(false);
+            this.cmsInterComparison.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -924,5 +975,11 @@ namespace GCDCore.UserInterface.Project
         private System.Windows.Forms.ToolStripMenuItem deriveReferenceSurfaceFromDEMSurveysToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deriveConstantReferenceSurfaceToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addAllReferenceSurfacesToTheMapToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
+        private System.Windows.Forms.ToolStripMenuItem addChangeDetectionIntercomparisonToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
+        private System.Windows.Forms.ContextMenuStrip cmsInterComparison;
+        private System.Windows.Forms.ToolStripMenuItem addChangeDetectionInterComparisonToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem openInterComparisonFolderToolStripMenuItem;
     }
 }

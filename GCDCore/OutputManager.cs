@@ -19,6 +19,7 @@ namespace GCDCore
         private const string m_sDEMSurveyMethodMasks = "Masks";
         private const string m_sErrorSurfaceMethodsFolder = "Methods";
         private const string m_sErrorSurfaceMethodMask = "_Mask";
+        private const string m_sInterComparison = "InterCompare";
 
         private const string m_sFiguresSubfolder = "Figs";
         private string m_sOutputDriver = "GTiff";
@@ -906,6 +907,12 @@ namespace GCDCore
                 throw new ArgumentException("The parent folder must already exist.", "sParentFolder");
             }
             return new System.IO.DirectoryInfo(sResult);
+        }
+
+        public FileInfo GetInterComparisonPath(string name)
+        {
+            string sTopFolder = Path.Combine(GCDProjectFolder(), m_sInterComparison);
+            return naru.os.File.GetNewSafeName(sTopFolder, "ic" + name, "xml");
         }
     }
 }

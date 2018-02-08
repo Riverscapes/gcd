@@ -62,6 +62,7 @@
     <Compile Include="Engines\DoD\ChangeDetectionPropProb.cs" />
     <Compile Include="Engines\DoD\ChangeDetetctionMultiEpoch.cs" />
     <Compile Include="Engines\DoD\ChangeDetetctionBatch.cs" />
+    <Compile Include="Engines\InterComparison.cs" />
     <Compile Include="GCDUnits.cs" />
     <Compile Include="Project\CoherenceProperties.cs" />
     <Compile Include="Engines\EngineBase.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="Project\GCDProjectItem.cs" />
     <Compile Include="Project\GCDProjectRasterItem.cs" />
     <Compile Include="Project\HistogramPair.cs" />
+    <Compile Include="Project\InterComparison.cs" />
     <Compile Include="Project\Masks\MaskItem.cs" />
     <Compile Include="Project\Morphological\MorphologicalAnalysis.cs" />
     <Compile Include="Project\Morphological\MorphologicalUnit.cs" />
@@ -175,6 +177,12 @@
     </Compile>
     <Compile Include="UserInterface\ChangeDetection\frmDoDSummaryProperties.Designer.cs">
       <DependentUpon>frmDoDSummaryProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\ChangeDetection\Intercomparison\frmInterComparisonProperties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\ChangeDetection\Intercomparison\frmInterComparisonProperties.Designer.cs">
+      <DependentUpon>frmInterComparisonProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\ChangeDetection\MultiEpoch\DEMSurveyItem.cs" />
     <Compile Include="UserInterface\ChangeDetection\MultiEpoch\Epoch.cs" />
@@ -450,6 +458,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\ChangeDetection\frmDoDSummaryProperties.resx">
       <DependentUpon>frmDoDSummaryProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\ChangeDetection\Intercomparison\frmInterComparisonProperties.resx">
+      <DependentUpon>frmInterComparisonProperties.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\ChangeDetection\MultiEpoch\frmMultiEpoch.resx">
       <DependentUpon>frmMultiEpoch.cs</DependentUpon>

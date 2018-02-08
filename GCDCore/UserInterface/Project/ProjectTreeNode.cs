@@ -24,6 +24,8 @@
             BudgetSegregationGroup,
             BudgetSegregationMask,
             BudgetSegregation,
+            InterComparisonGroup,
+            InterComparison,
             ReservoirGroup,
             Reservoir
         }

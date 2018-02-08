@@ -19,6 +19,7 @@ namespace GCDCore.Project
         public readonly Dictionary<string, Surface> ReferenceSurfaces;
         public readonly Dictionary<string, DoDBase> DoDs;
         public readonly Dictionary<string, string> MetaData;
+        public readonly Dictionary<string, InterComparison> InterComparisons;
 
         public GCDProject(string name, string description, FileInfo projectFile,
             DateTime dtCreated, string gcdVersion, UnitsNet.Area cellArea, GCDConsoleLib.GCD.UnitGroup units)
@@ -34,6 +35,7 @@ namespace GCDCore.Project
             DEMSurveys = new Dictionary<string, DEMSurvey>();
             ReferenceSurfaces = new Dictionary<string, Surface>();
             DoDs = new Dictionary<string, DoDBase>();
+            InterComparisons = new Dictionary<string, InterComparison>();
             MetaData = new Dictionary<string, string>();
         }
 
@@ -161,6 +163,12 @@ namespace GCDCore.Project
                     dod.Serialize(nodDoDs);
             }
 
+            if (InterComparisons.Count > 0)
+            {
+                XmlNode nodInter = nodProject.AppendChild(xmlDoc.CreateElement("InterComparisons"));
+                InterComparisons.Values.ToList<InterComparison>().ForEach(x => x.Serialize(nodInter));
+            }
+
             if (MetaData.Count > 0)
             {
                 XmlNode nodMetaData = nodProject.AppendChild(xmlDoc.CreateElement("MetaData"));
@@ -216,6 +224,12 @@ namespace GCDCore.Project
                     dod = new DoDPropagated(nodDoD, ProjectManager.Project.DEMSurveys);
 
                 ProjectManager.Project.DoDs[dod.Name] = dod;
+            }
+
+            foreach(XmlNode nodInter in nodProject.SelectNodes("InterComparisons/InterComparisons"))
+            {
+                InterComparison inter = new InterComparison(nodInter, ProjectManager.Project.DoDs);
+                ProjectManager.Project.InterComparisons[inter.Name] = inter;
             }
 
             foreach (XmlNode nodItem in nodProject.SelectNodes("MetaData/Item"))

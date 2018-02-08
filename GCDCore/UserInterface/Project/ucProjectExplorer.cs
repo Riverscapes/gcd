@@ -90,6 +90,10 @@ namespace GCDCore.UserInterface.Project
 
             this.deriveReferenceSurfaceFromDEMSurveysToolStripMenuItem.Click += addReferenceSurfaceFromDEMs;
             this.deriveConstantReferenceSurfaceToolStripMenuItem.Click += addReferenceSurfaceFromContant;
+            this.addChangeDetectionIntercomparisonToolStripMenuItem.Click += addChangeDetectionIntercomparisonToolStripMenuItem_Click;
+            this.addChangeDetectionInterComparisonToolStripMenuItem1.Click += addChangeDetectionIntercomparisonToolStripMenuItem_Click;
+            this.openInterComparisonFolderToolStripMenuItem.Click += openInterComparisonFolderToolStripMenuItem_Click;
+
         }
 
         /// <summary>
@@ -185,7 +189,7 @@ namespace GCDCore.UserInterface.Project
                 }
 
                 TreeNode nodReferenceSurfaces = AddTreeNode(nodProject, GCDNodeTypes.ReferenceSurfaceGroup, m_sReferenceSurfaces, null, selectItem);
-                foreach(Surface surf in ProjectManager.Project.ReferenceSurfaces.Values)
+                foreach (Surface surf in ProjectManager.Project.ReferenceSurfaces.Values)
                 {
                     TreeNode nodSurvey = AddTreeNode(nodSurveys, GCDNodeTypes.ReferenceSurface, surf.Name, surf, selectItem);
                 }
@@ -260,6 +264,9 @@ namespace GCDCore.UserInterface.Project
 ;
                     nodDoD.ExpandAll();
                 }
+
+                TreeNode nodInter = AddTreeNode(AnalNode, GCDNodeTypes.InterComparisonGroup, "Inter-Comparisons", null, selectItem);
+                ProjectManager.Project.InterComparisons.Values.ToList<InterComparison>().ForEach(x => AddTreeNode(nodInter, GCDNodeTypes.InterComparison, x.Name, x, selectItem));
 
                 AnalNode.Expand();
 
@@ -411,7 +418,7 @@ namespace GCDCore.UserInterface.Project
                 case GCDNodeTypes.AssociatedSurface: cms = cmsAssociatedSurface; break;
                 case GCDNodeTypes.ErrorSurfaceGroup: cms = cmsErrorSurfacesGroup; break;
                 case GCDNodeTypes.ErrorSurface: cms = cmsErrorSurface; break;
-                case GCDNodeTypes.ReferenceSurfaceGroup: cms = cmsRefSurfaceGroup;break;
+                case GCDNodeTypes.ReferenceSurfaceGroup: cms = cmsRefSurfaceGroup; break;
                 case GCDNodeTypes.MasksGroup: cms = cmsMasks; break;
                 case GCDNodeTypes.ChangeDetectionGroup: cms = cmsChangeDetectionGroup; break;
                 case GCDNodeTypes.DoD: cms = cmsChangeDetection; break;
@@ -419,6 +426,7 @@ namespace GCDCore.UserInterface.Project
                 case GCDNodeTypes.BudgetSegregationGroup: cms = cmsBSGroup; break;
                 case GCDNodeTypes.BudgetSegregation: cms = cmsBS; break;
                 case GCDNodeTypes.BudgetSegregationMask: cms = cmsBSGroup; break;
+                case GCDNodeTypes.InterComparisonGroup: cms = cmsInterComparison; break;
             }
 
             if (cms is ContextMenuStrip)
@@ -1709,6 +1717,27 @@ namespace GCDCore.UserInterface.Project
         {
             UserInterface.SurveyLibrary.ReferenceSurfaces.frmReferenceSurfaceFromConstant frm = new SurveyLibrary.ReferenceSurfaces.frmReferenceSurfaceFromConstant();
             frm.ShowDialog();
+        }
+
+        private void addChangeDetectionIntercomparisonToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (ProjectManager.Project.DoDs.Count < 2)
+            {
+                MessageBox.Show("Your project must contain at least two change detection analyses before you can perform an inter-comparison.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            ChangeDetection.Intercomparison.frmInterComparisonProperties frm = new ChangeDetection.Intercomparison.frmInterComparisonProperties();
+            frm.ShowDialog();
+        }
+
+        private void openInterComparisonFolderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.IO.DirectoryInfo dir = ProjectManager.OutputManager.GetInterComparisonPath("junk").Directory;
+            if (dir.Exists)
+                Process.Start(dir.FullName);
+            else
+                MessageBox.Show("This project does not contain any inter-comparisons.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

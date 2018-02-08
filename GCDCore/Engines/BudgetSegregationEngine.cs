@@ -73,6 +73,10 @@ namespace GCDCore.Engines
                 classIndex++;
             }
 
+            // Generate the new inter-comparison spreadsheet
+            FileInfo interCompare = new FileInfo(Path.Combine(analysisFolder.FullName, "InterCompare.xml"));
+            InterComparison.Generate(results, interCompare);
+
             // Write the class legend to file          
             File.WriteAllText(bsResult.ClassLegend.FullName, legendText.ToString());
 
