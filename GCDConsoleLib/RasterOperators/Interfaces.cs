@@ -156,6 +156,70 @@ namespace GCDConsoleLib
             });
         }
 
+
+
+        public enum MultiMathOpType : byte { Maximum, Minimum, Mean, Addition, StandardDeviation }
+
+        /// <summary>
+        /// Maximum of a series of rasters
+        /// </summary>
+        /// <param name="rasters"></param>
+        /// <param name="sOutputRaster"></param>
+        /// <returns></returns>
+        public static Raster Maximum(List<Raster> rasters, FileInfo sOutputRaster)
+        {
+            RasterMultiMath op =new RasterMultiMath(MultiMathOpType.Maximum, rasters, new Raster(rasters[0], sOutputRaster));
+            return op.RunWithOutput();
+        }
+
+        /// <summary>
+        /// Minimum of a series of rasters
+        /// </summary>
+        /// <param name="rasters"></param>
+        /// <param name="sOutputRaster"></param>
+        /// <returns></returns>
+        public static Raster Minimum(List<Raster> rasters, FileInfo sOutputRaster)
+        {
+            RasterMultiMath op = new RasterMultiMath(MultiMathOpType.Minimum, rasters, new Raster(rasters[0], sOutputRaster));
+            return op.RunWithOutput();
+        }
+
+        /// <summary>
+        /// Mean of a series of rasters
+        /// </summary>
+        /// <param name="rasters"></param>
+        /// <param name="sOutputRaster"></param>
+        /// <returns></returns>
+        public static Raster Mean(List<Raster> rasters, FileInfo sOutputRaster)
+        {
+            RasterMultiMath op = new RasterMultiMath(MultiMathOpType.Mean, rasters, new Raster(rasters[0], sOutputRaster));
+            return op.RunWithOutput();
+        }
+
+        /// <summary>
+        /// Addition of a series of rasters
+        /// </summary>
+        /// <param name="rasters"></param>
+        /// <param name="sOutputRaster"></param>
+        /// <returns></returns>
+        public static Raster MultiAdd(List<Raster> rasters, FileInfo sOutputRaster)
+        {
+            RasterMultiMath op = new RasterMultiMath(MultiMathOpType.Addition, rasters, new Raster(rasters[0], sOutputRaster));
+            return op.RunWithOutput();
+        }
+
+        /// <summary>
+        /// StandardDeviation of a series of rasters
+        /// </summary>
+        /// <param name="rasters"></param>
+        /// <param name="sOutputRaster"></param>
+        /// <returns></returns>
+        public static Raster StandardDeviation(List<Raster> rasters, FileInfo sOutputRaster)
+        {
+            RasterMultiMath op = new RasterMultiMath(MultiMathOpType.StandardDeviation, rasters, new Raster(rasters[0], sOutputRaster));
+            return op.RunWithOutput();
+        }
+
         /// <summary>
         /// Create a BilinearReseample Raster
         /// </summary>
