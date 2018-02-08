@@ -56,7 +56,7 @@
             this.GroupBox4.Size = new System.Drawing.Size(242, 83);
             this.GroupBox4.TabIndex = 7;
             this.GroupBox4.TabStop = false;
-            this.GroupBox4.Text = "Old Survey";
+            this.GroupBox4.Text = "Old";
             // 
             // cboOldDEM
             // 
@@ -84,7 +84,7 @@
             // lblOldError
             // 
             this.lblOldError.AutoSize = true;
-            this.lblOldError.Location = new System.Drawing.Point(14, 48);
+            this.lblOldError.Location = new System.Drawing.Point(20, 52);
             this.lblOldError.Name = "lblOldError";
             this.lblOldError.Size = new System.Drawing.Size(29, 13);
             this.lblOldError.TabIndex = 2;
@@ -93,11 +93,11 @@
             // Label7
             // 
             this.Label7.AutoSize = true;
-            this.Label7.Location = new System.Drawing.Point(12, 21);
+            this.Label7.Location = new System.Drawing.Point(5, 25);
             this.Label7.Name = "Label7";
-            this.Label7.Size = new System.Drawing.Size(31, 13);
+            this.Label7.Size = new System.Drawing.Size(44, 13);
             this.Label7.TabIndex = 0;
-            this.Label7.Text = "DEM";
+            this.Label7.Text = "Surface";
             // 
             // GroupBox1
             // 
@@ -111,7 +111,7 @@
             this.GroupBox1.Size = new System.Drawing.Size(242, 83);
             this.GroupBox1.TabIndex = 6;
             this.GroupBox1.TabStop = false;
-            this.GroupBox1.Text = "New Survey";
+            this.GroupBox1.Text = "New";
             // 
             // cboNewDEM
             // 
@@ -139,7 +139,7 @@
             // lblNewError
             // 
             this.lblNewError.AutoSize = true;
-            this.lblNewError.Location = new System.Drawing.Point(16, 48);
+            this.lblNewError.Location = new System.Drawing.Point(21, 52);
             this.lblNewError.Name = "lblNewError";
             this.lblNewError.Size = new System.Drawing.Size(29, 13);
             this.lblNewError.TabIndex = 2;
@@ -148,11 +148,11 @@
             // Label1
             // 
             this.Label1.AutoSize = true;
-            this.Label1.Location = new System.Drawing.Point(14, 21);
+            this.Label1.Location = new System.Drawing.Point(6, 25);
             this.Label1.Name = "Label1";
-            this.Label1.Size = new System.Drawing.Size(31, 13);
+            this.Label1.Size = new System.Drawing.Size(44, 13);
             this.Label1.TabIndex = 0;
-            this.Label1.Text = "DEM";
+            this.Label1.Text = "Surface";
             // 
             // tableLayoutPanel1
             // 

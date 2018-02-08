@@ -163,7 +163,7 @@ namespace GCDCore.Project
 
             if (ChronologicalOrder.HasValue)
             {
-                nodDEM.AppendChild(xmlDoc.CreateElement("ChronologicalOrder")).InnerText = ChronologicalOrder.ToString();
+                nodDEM.AppendChild(nodDEM.OwnerDocument.CreateElement("ChronologicalOrder")).InnerText = ChronologicalOrder.ToString();
             }
 
 

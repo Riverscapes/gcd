@@ -202,11 +202,11 @@
     <Compile Include="UserInterface\ChangeDetection\ucDoDHistogram.Designer.cs">
       <DependentUpon>ucDoDHistogram.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserInterface\ChangeDetection\ucDoDProperties.cs">
+    <Compile Include="UserInterface\ChangeDetection\ucDoDPropertiesGrid.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UserInterface\ChangeDetection\ucDoDProperties.Designer.cs">
-      <DependentUpon>ucDoDProperties.cs</DependentUpon>
+    <Compile Include="UserInterface\ChangeDetection\ucDoDPropertiesGrid.Designer.cs">
+      <DependentUpon>ucDoDPropertiesGrid.cs</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\ChangeDetection\ucDoDSummary.cs">
       <SubType>UserControl</SubType>
@@ -463,8 +463,8 @@
     <EmbeddedResource Include="UserInterface\ChangeDetection\ucDoDHistogram.resx">
       <DependentUpon>ucDoDHistogram.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserInterface\ChangeDetection\ucDoDProperties.resx">
-      <DependentUpon>ucDoDProperties.cs</DependentUpon>
+    <EmbeddedResource Include="UserInterface\ChangeDetection\ucDoDPropertiesGrid.resx">
+      <DependentUpon>ucDoDPropertiesGrid.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\ChangeDetection\ucDoDSummary.resx">
       <DependentUpon>ucDoDSummary.cs</DependentUpon>

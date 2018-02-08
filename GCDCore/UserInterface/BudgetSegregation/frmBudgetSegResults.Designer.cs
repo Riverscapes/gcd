@@ -61,7 +61,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.cmsBasicRaster = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.AddToMapToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.Label3 = new System.Windows.Forms.Label();
-            this.ucProperties = new GCDCore.UserInterface.ChangeDetection.ucDoDProperties();
+            this.ucProperties = new GCDCore.UserInterface.ChangeDetection.ucDoDPropertiesGrid();
             this.TabPage4 = new System.Windows.Forms.TabPage();
             this.Label1 = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
@@ -425,7 +425,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
         internal System.Windows.Forms.Label Label4;
         internal System.Windows.Forms.TextBox txtPolygonMask;
         internal System.Windows.Forms.Label Label3;
-        internal ChangeDetection.ucDoDProperties ucProperties;
+        internal ChangeDetection.ucDoDPropertiesGrid ucProperties;
         internal ChangeDetection.ucDoDHistogram ucHistogram;
         internal ChangeDetection.ucChangeBars ucBars;
         internal System.Windows.Forms.TableLayoutPanel TableLayoutPanel1;
