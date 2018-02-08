@@ -44,10 +44,10 @@ namespace GCDCore.Project
            Threshold = decimal.Parse(nodDoD.SelectSingleNode("Threshold").InnerText);
         }
 
-        public override XmlNode Serialize(XmlDocument xmlDoc, XmlNode nodParent)
+        public override XmlNode Serialize(XmlNode nodParent)
         {
-            XmlNode nodDoD = base.Serialize(xmlDoc, nodParent);
-            nodDoD.InsertBefore(xmlDoc.CreateElement("Threshold"), nodDoD.SelectSingleNode("Statistics")).InnerText = Threshold.ToString();
+            XmlNode nodDoD = base.Serialize(nodParent);
+            nodDoD.InsertBefore(nodParent.OwnerDocument.CreateElement("Threshold"), nodDoD.SelectSingleNode("Statistics")).InnerText = Threshold.ToString();
             return nodDoD;
         }
     }

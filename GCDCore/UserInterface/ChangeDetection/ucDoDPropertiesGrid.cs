@@ -26,7 +26,6 @@ namespace GCDCore.UserInterface.ChangeDetection
         {
             grdData.AutoGenerateColumns = false;
             grdData.DataSource = DoDProperties;
-
         }
 
         public void Initialize(DoDBase dod)

@@ -97,12 +97,12 @@ namespace GCDCore.Project
             DEM = dem;
         }
 
-        public void Serialize(XmlDocument xmlDoc, XmlNode nodParent)
+        public void Serialize(XmlNode nodParent)
         {
-            XmlNode nodAssoc = nodParent.AppendChild(xmlDoc.CreateElement("AssociatedSurface"));
-            nodAssoc.AppendChild(xmlDoc.CreateElement("Name")).InnerText = Name;
-            nodAssoc.AppendChild(xmlDoc.CreateElement("Type")).InnerText = AssocSurfaceType.ToString();
-            nodAssoc.AppendChild(xmlDoc.CreateElement("Path")).InnerText = ProjectManager.Project.GetRelativePath(Raster.GISFileInfo);
+            XmlNode nodAssoc = nodParent.AppendChild(nodParent.OwnerDocument.CreateElement("AssociatedSurface"));
+            nodAssoc.AppendChild(nodParent.OwnerDocument.CreateElement("Name")).InnerText = Name;
+            nodAssoc.AppendChild(nodParent.OwnerDocument.CreateElement("Type")).InnerText = AssocSurfaceType.ToString();
+            nodAssoc.AppendChild(nodParent.OwnerDocument.CreateElement("Path")).InnerText = ProjectManager.Project.GetRelativePath(Raster.GISFileInfo);
         }
 
         public static AssocSurface Deserialize(XmlNode nodAssoc, DEMSurvey dem)

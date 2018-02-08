@@ -75,7 +75,7 @@ namespace GCDCore.Project
             {
                 XmlNode nodError = nodItem.AppendChild(nodItem.OwnerDocument.CreateElement("ErrorSurfaces"));
                 foreach (ErrorSurface error in ErrorSurfaces)
-                    error.Serialize(nodItem.OwnerDocument, nodError);
+                    error.Serialize(nodError);
             }
         }
 

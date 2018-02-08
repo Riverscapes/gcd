@@ -178,7 +178,7 @@ namespace GCDCore.Project
             {
                 XmlNode nodAssoc = nodDEM.AppendChild(nodDEM.OwnerDocument.CreateElement("AssociatedSurfaces"));
                 foreach (AssocSurface assoc in AssocSurfaces)
-                    assoc.Serialize(nodDEM.OwnerDocument, nodAssoc);
+                    assoc.Serialize(nodAssoc);
             }
         }
 

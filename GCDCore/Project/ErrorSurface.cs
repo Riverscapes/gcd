@@ -66,20 +66,20 @@ namespace GCDCore.Project
             ErrorProperties = errProperties;
         }
 
-        public void Serialize(XmlDocument xmlDoc, XmlNode nodParent)
+        public void Serialize(XmlNode nodParent)
         {
-            XmlNode nodError = nodParent.AppendChild(xmlDoc.CreateElement("ErrorSurface"));
-            nodError.AppendChild(xmlDoc.CreateElement("Name")).InnerText = Name;
-            nodError.AppendChild(xmlDoc.CreateElement("Path")).InnerText = ProjectManager.Project.GetRelativePath(Raster.GISFileInfo);
-            nodError.AppendChild(xmlDoc.CreateElement("IsDefault")).InnerText = _IsDefault.ToString();
+            XmlNode nodError = nodParent.AppendChild(nodParent.OwnerDocument.CreateElement("ErrorSurface"));
+            nodError.AppendChild(nodParent.OwnerDocument.CreateElement("Name")).InnerText = Name;
+            nodError.AppendChild(nodParent.OwnerDocument.CreateElement("Path")).InnerText = ProjectManager.Project.GetRelativePath(Raster.GISFileInfo);
+            nodError.AppendChild(nodParent.OwnerDocument.CreateElement("IsDefault")).InnerText = _IsDefault.ToString();
 
             if (ErrorProperties != null)
             {
-                XmlNode nodProperties = nodError.AppendChild(xmlDoc.CreateElement("ErrorSurfaceProperties"));
+                XmlNode nodProperties = nodError.AppendChild(nodParent.OwnerDocument.CreateElement("ErrorSurfaceProperties"));
                 foreach (ErrorSurfaceProperty props in ErrorProperties.Values)
                 {
-                    XmlNode nodProperty = nodProperties.AppendChild(xmlDoc.CreateElement("ErrorSurfaceProperty"));
-                    props.Serialize(xmlDoc, nodProperty);
+                    XmlNode nodProperty = nodProperties.AppendChild(nodParent.OwnerDocument.CreateElement("ErrorSurfaceProperty"));
+                    props.Serialize(nodProperty);
                 }
             }
         }

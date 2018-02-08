@@ -56,19 +56,19 @@ namespace GCDCore.Project
             Classes = new Dictionary<string, BudgetSegregationClass>();
         }
 
-        public void Serialize(XmlDocument xmlDoc, XmlNode nodParent)
+        public void Serialize(XmlNode nodParent)
         {
-            XmlNode nodBS = nodParent.AppendChild(xmlDoc.CreateElement("BudgetSegregation"));
-            nodBS.AppendChild(xmlDoc.CreateElement("Name")).InnerText = Name;
-            nodBS.AppendChild(xmlDoc.CreateElement("Folder")).InnerText = ProjectManager.Project.GetRelativePath(Folder.FullName);
-            nodBS.AppendChild(xmlDoc.CreateElement("PolygonMask")).InnerText = ProjectManager.Project.GetRelativePath(PolygonMask);
-            nodBS.AppendChild(xmlDoc.CreateElement("SummaryXML")).InnerText = ProjectManager.Project.GetRelativePath(SummaryXML);
-            nodBS.AppendChild(xmlDoc.CreateElement("ClassLegend")).InnerText = ProjectManager.Project.GetRelativePath(ClassLegend);
-            nodBS.AppendChild(xmlDoc.CreateElement("MaskField")).InnerText = MaskField;
+            XmlNode nodBS = nodParent.AppendChild(nodParent.OwnerDocument.CreateElement("BudgetSegregation"));
+            nodBS.AppendChild(nodParent.OwnerDocument.CreateElement("Name")).InnerText = Name;
+            nodBS.AppendChild(nodParent.OwnerDocument.CreateElement("Folder")).InnerText = ProjectManager.Project.GetRelativePath(Folder.FullName);
+            nodBS.AppendChild(nodParent.OwnerDocument.CreateElement("PolygonMask")).InnerText = ProjectManager.Project.GetRelativePath(PolygonMask);
+            nodBS.AppendChild(nodParent.OwnerDocument.CreateElement("SummaryXML")).InnerText = ProjectManager.Project.GetRelativePath(SummaryXML);
+            nodBS.AppendChild(nodParent.OwnerDocument.CreateElement("ClassLegend")).InnerText = ProjectManager.Project.GetRelativePath(ClassLegend);
+            nodBS.AppendChild(nodParent.OwnerDocument.CreateElement("MaskField")).InnerText = MaskField;
 
-            XmlNode nodClasses = nodBS.AppendChild(xmlDoc.CreateElement("Classes"));
+            XmlNode nodClasses = nodBS.AppendChild(nodParent.OwnerDocument.CreateElement("Classes"));
             foreach (BudgetSegregationClass segClass in Classes.Values)
-                segClass.Serialize(xmlDoc, nodClasses);
+                segClass.Serialize(nodClasses);
         }
 
         public static BudgetSegregation Deserialize(XmlNode nodBS, DoDBase dod)

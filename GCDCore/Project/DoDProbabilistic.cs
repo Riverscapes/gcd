@@ -67,33 +67,33 @@ namespace GCDCore.Project
             }
         }
 
-        public override XmlNode Serialize(XmlDocument xmlDoc, XmlNode nodParent)
+        public override XmlNode Serialize(XmlNode nodParent)
         {
-            XmlNode nodDod = base.Serialize(xmlDoc, nodParent);
-            nodDod.InsertBefore(xmlDoc.CreateElement("ConfidenceLevel"), nodDod.SelectSingleNode("Statistics")).InnerText = ConfidenceLevel.ToString();
+            XmlNode nodDod = base.Serialize(nodParent);
+            nodDod.InsertBefore(nodParent.OwnerDocument.CreateElement("ConfidenceLevel"), nodDod.SelectSingleNode("Statistics")).InnerText = ConfidenceLevel.ToString();
 
             // Prior probability always exists, regardless of whether spatial coherence was used.
-            nodDod.AppendChild(xmlDoc.CreateElement("PriorProbability")).InnerText = ProjectManager.Project.GetRelativePath(PriorProbability.GISFileInfo);
+            nodDod.AppendChild(nodParent.OwnerDocument.CreateElement("PriorProbability")).InnerText = ProjectManager.Project.GetRelativePath(PriorProbability.GISFileInfo);
 
             // Remaining rasters only exist if spatial coherence was used.
             if (PosteriorProbability != null)
-                nodDod.AppendChild(xmlDoc.CreateElement("PosteriorProbability")).InnerText = ProjectManager.Project.GetRelativePath(PosteriorProbability.GISFileInfo);
+                nodDod.AppendChild(nodParent.OwnerDocument.CreateElement("PosteriorProbability")).InnerText = ProjectManager.Project.GetRelativePath(PosteriorProbability.GISFileInfo);
 
             if (ConditionalRaster != null)
-                nodDod.AppendChild(xmlDoc.CreateElement("ConditionalRaster")).InnerText = ProjectManager.Project.GetRelativePath(ConditionalRaster.GISFileInfo);
+                nodDod.AppendChild(nodParent.OwnerDocument.CreateElement("ConditionalRaster")).InnerText = ProjectManager.Project.GetRelativePath(ConditionalRaster.GISFileInfo);
 
             if (SpatialCoherenceErosion != null)
-                nodDod.AppendChild(xmlDoc.CreateElement("SpatialCoherenceErosion")).InnerText = ProjectManager.Project.GetRelativePath(SpatialCoherenceErosion.GISFileInfo);
+                nodDod.AppendChild(nodParent.OwnerDocument.CreateElement("SpatialCoherenceErosion")).InnerText = ProjectManager.Project.GetRelativePath(SpatialCoherenceErosion.GISFileInfo);
 
             if (SpatialCoherenceDeposition != null)
-                nodDod.AppendChild(xmlDoc.CreateElement("SpatialCoherenceDeposition")).InnerText = ProjectManager.Project.GetRelativePath(SpatialCoherenceDeposition.GISFileInfo);
+                nodDod.AppendChild(nodParent.OwnerDocument.CreateElement("SpatialCoherenceDeposition")).InnerText = ProjectManager.Project.GetRelativePath(SpatialCoherenceDeposition.GISFileInfo);
 
             if (SpatialCoherence != null)
             {
-                XmlNode nodSpatCo = nodDod.AppendChild(xmlDoc.CreateElement("SpatialCoherence"));
-                nodSpatCo.AppendChild(xmlDoc.CreateElement("WindowSize")).InnerText = SpatialCoherence.BufferSize.ToString();
-                nodSpatCo.AppendChild(xmlDoc.CreateElement("InflectionA")).InnerText = SpatialCoherence.InflectionA.ToString();
-                nodSpatCo.AppendChild(xmlDoc.CreateElement("InflectionB")).InnerText = SpatialCoherence.InflectionB.ToString();
+                XmlNode nodSpatCo = nodDod.AppendChild(nodParent.OwnerDocument.CreateElement("SpatialCoherence"));
+                nodSpatCo.AppendChild(nodParent.OwnerDocument.CreateElement("WindowSize")).InnerText = SpatialCoherence.BufferSize.ToString();
+                nodSpatCo.AppendChild(nodParent.OwnerDocument.CreateElement("InflectionA")).InnerText = SpatialCoherence.InflectionA.ToString();
+                nodSpatCo.AppendChild(nodParent.OwnerDocument.CreateElement("InflectionB")).InnerText = SpatialCoherence.InflectionB.ToString();
             }
 
             return nodDod;

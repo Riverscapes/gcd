@@ -42,13 +42,13 @@ namespace GCDCore.Project
                 PropagatedError = new Raster(ProjectManager.Project.GetAbsolutePath(nodPropErr.InnerText));
         }
 
-        public override XmlNode Serialize(XmlDocument xmlDoc, XmlNode nodParent)
+        public override XmlNode Serialize(XmlNode nodParent)
         {
-            XmlNode nodDoD = base.Serialize(xmlDoc, nodParent);
+            XmlNode nodDoD = base.Serialize(nodParent);
             XmlNode nodStatistics = nodDoD.SelectSingleNode("Statistics");
-            nodDoD.InsertBefore(xmlDoc.CreateElement("PropagatedError"), nodStatistics).InnerText = ProjectManager.Project.GetRelativePath(PropagatedError.GISFileInfo);
-            nodDoD.InsertBefore(xmlDoc.CreateElement("NewError"), nodStatistics).InnerText = NewError.Name;
-            nodDoD.InsertBefore(xmlDoc.CreateElement("OldError"), nodStatistics).InnerText = OldError.Name;
+            nodDoD.InsertBefore(nodParent.OwnerDocument.CreateElement("PropagatedError"), nodStatistics).InnerText = ProjectManager.Project.GetRelativePath(PropagatedError.GISFileInfo);
+            nodDoD.InsertBefore(nodParent.OwnerDocument.CreateElement("NewError"), nodStatistics).InnerText = NewError.Name;
+            nodDoD.InsertBefore(nodParent.OwnerDocument.CreateElement("OldError"), nodStatistics).InnerText = OldError.Name;
             return nodDoD;
         }   
 

@@ -74,26 +74,26 @@ namespace GCDCore.Project
             return BudgetSegregations.ContainsKey(name) ? BudgetSegregations[name] == ignore : true;
         }
 
-        public virtual XmlNode Serialize(XmlDocument xmlDoc, XmlNode nodParent)
+        public virtual XmlNode Serialize(XmlNode nodParent)
         {
-            XmlNode nodDoD = nodParent.AppendChild(xmlDoc.CreateElement("DoD"));
-            nodDoD.AppendChild(xmlDoc.CreateElement("Name")).InnerText = Name;
-            nodDoD.AppendChild(xmlDoc.CreateElement("Folder")).InnerText = ProjectManager.Project.GetRelativePath(Folder.FullName);
-            nodDoD.AppendChild(xmlDoc.CreateElement("NewDEM")).InnerText = NewDEM.Name;
-            nodDoD.AppendChild(xmlDoc.CreateElement("OldDEM")).InnerText = OldDEM.Name;
-            nodDoD.AppendChild(xmlDoc.CreateElement("RawDoD")).InnerText = ProjectManager.Project.GetRelativePath(RawDoD.Raster.GISFileInfo);
-            nodDoD.AppendChild(xmlDoc.CreateElement("ThrDoD")).InnerText = ProjectManager.Project.GetRelativePath(ThrDoD.Raster.GISFileInfo);
-            nodDoD.AppendChild(xmlDoc.CreateElement("RawHistogram")).InnerText = ProjectManager.Project.GetRelativePath(Histograms.Raw.Path);
-            nodDoD.AppendChild(xmlDoc.CreateElement("ThrHistogram")).InnerText = ProjectManager.Project.GetRelativePath(Histograms.Thr.Path);
-            nodDoD.AppendChild(xmlDoc.CreateElement("SummaryXML")).InnerText = ProjectManager.Project.GetRelativePath(SummaryXML);
+            XmlNode nodDoD = nodParent.AppendChild(nodParent.OwnerDocument.CreateElement("DoD"));
+            nodDoD.AppendChild(nodParent.OwnerDocument.CreateElement("Name")).InnerText = Name;
+            nodDoD.AppendChild(nodParent.OwnerDocument.CreateElement("Folder")).InnerText = ProjectManager.Project.GetRelativePath(Folder.FullName);
+            nodDoD.AppendChild(nodParent.OwnerDocument.CreateElement("NewDEM")).InnerText = NewDEM.Name;
+            nodDoD.AppendChild(nodParent.OwnerDocument.CreateElement("OldDEM")).InnerText = OldDEM.Name;
+            nodDoD.AppendChild(nodParent.OwnerDocument.CreateElement("RawDoD")).InnerText = ProjectManager.Project.GetRelativePath(RawDoD.Raster.GISFileInfo);
+            nodDoD.AppendChild(nodParent.OwnerDocument.CreateElement("ThrDoD")).InnerText = ProjectManager.Project.GetRelativePath(ThrDoD.Raster.GISFileInfo);
+            nodDoD.AppendChild(nodParent.OwnerDocument.CreateElement("RawHistogram")).InnerText = ProjectManager.Project.GetRelativePath(Histograms.Raw.Path);
+            nodDoD.AppendChild(nodParent.OwnerDocument.CreateElement("ThrHistogram")).InnerText = ProjectManager.Project.GetRelativePath(Histograms.Thr.Path);
+            nodDoD.AppendChild(nodParent.OwnerDocument.CreateElement("SummaryXML")).InnerText = ProjectManager.Project.GetRelativePath(SummaryXML);
 
-            SerializeDoDStatistics(xmlDoc, nodDoD.AppendChild(xmlDoc.CreateElement("Statistics")), Statistics);
+            SerializeDoDStatistics(nodParent.OwnerDocument, nodDoD.AppendChild(nodParent.OwnerDocument.CreateElement("Statistics")), Statistics);
 
             if (BudgetSegregations.Count > 0)
             {
-                XmlNode nodBS = nodDoD.AppendChild(xmlDoc.CreateElement("BudgetSegregations"));
+                XmlNode nodBS = nodDoD.AppendChild(nodParent.OwnerDocument.CreateElement("BudgetSegregations"));
                 foreach (BudgetSegregation bs in BudgetSegregations.Values)
-                    bs.Serialize(xmlDoc, nodBS);
+                    bs.Serialize(nodBS);
             }
 
             // Return this so inherited classes can append to it.

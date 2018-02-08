@@ -103,27 +103,27 @@ namespace GCDCore.Project
             _UniformValue = new decimal?(0);
         }
 
-        public void Serialize(XmlDocument xmlDoc, XmlNode nodParent)
+        public void Serialize(XmlNode nodParent)
         {
-            nodParent.AppendChild(xmlDoc.CreateElement("Name")).InnerText = Name;
+            nodParent.AppendChild(nodParent.OwnerDocument.CreateElement("Name")).InnerText = Name;
 
             if (UniformValue.HasValue)
-                nodParent.AppendChild(xmlDoc.CreateElement("UniformValue")).InnerText = UniformValue.Value.ToString();
+                nodParent.AppendChild(nodParent.OwnerDocument.CreateElement("UniformValue")).InnerText = UniformValue.Value.ToString();
 
             if (AssociatedSurface != null)
-                nodParent.AppendChild(xmlDoc.CreateElement("AssociatedSurface")).InnerText = AssociatedSurface.Name;
+                nodParent.AppendChild(nodParent.OwnerDocument.CreateElement("AssociatedSurface")).InnerText = AssociatedSurface.Name;
 
             if (FISRuleFile is FileInfo)
-                nodParent.AppendChild(xmlDoc.CreateElement("FISRuleFile")).InnerText = ProjectManager.Project.GetRelativePath(FISRuleFile);
+                nodParent.AppendChild(nodParent.OwnerDocument.CreateElement("FISRuleFile")).InnerText = ProjectManager.Project.GetRelativePath(FISRuleFile);
 
             if (FISInputs != null)
             {
-                XmlNode nodInputs = nodParent.AppendChild(xmlDoc.CreateElement("FISInputs"));
+                XmlNode nodInputs = nodParent.AppendChild(nodParent.OwnerDocument.CreateElement("FISInputs"));
                 foreach (FISInput input in FISInputs)
                 {
-                    XmlNode nodInput = nodInputs.AppendChild(xmlDoc.CreateElement("Input"));
-                    nodInput.AppendChild(xmlDoc.CreateElement("Name")).InnerText = input.FISInputName;
-                    nodInput.AppendChild(xmlDoc.CreateElement("AssociatedSurface")).InnerText = input.AssociatedSurface.Name;
+                    XmlNode nodInput = nodInputs.AppendChild(nodParent.OwnerDocument.CreateElement("Input"));
+                    nodInput.AppendChild(nodParent.OwnerDocument.CreateElement("Name")).InnerText = input.FISInputName;
+                    nodInput.AppendChild(nodParent.OwnerDocument.CreateElement("AssociatedSurface")).InnerText = input.AssociatedSurface.Name;
                 }
             }
         }

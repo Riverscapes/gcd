@@ -158,7 +158,7 @@ namespace GCDCore.Project
             {
                 XmlNode nodDoDs = nodProject.AppendChild(xmlDoc.CreateElement("DoDs"));
                 foreach (DoDBase dod in DoDs.Values)
-                    dod.Serialize(xmlDoc, nodDoDs);
+                    dod.Serialize(nodDoDs);
             }
 
             if (MetaData.Count > 0)

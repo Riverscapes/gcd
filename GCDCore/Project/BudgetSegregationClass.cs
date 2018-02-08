@@ -28,15 +28,15 @@ namespace GCDCore.Project
             SummaryXML = summaryXML;
         }
 
-        public void Serialize(XmlDocument xmlDoc, XmlNode nodParent)
+        public void Serialize(XmlNode nodParent)
         {
-            XmlNode nodClass = nodParent.AppendChild(xmlDoc.CreateElement("Class"));
-            nodClass.AppendChild(xmlDoc.CreateElement("Name")).InnerText = Name;
-            nodClass.AppendChild(xmlDoc.CreateElement("RawHistogram")).InnerText = ProjectManager.Project.GetRelativePath(Histograms.Raw.Path);
-            nodClass.AppendChild(xmlDoc.CreateElement("ThrHistogram")).InnerText = ProjectManager.Project.GetRelativePath(Histograms.Thr.Path);
-            nodClass.AppendChild(xmlDoc.CreateElement("SummaryXML")).InnerText = ProjectManager.Project.GetRelativePath(SummaryXML);
-            XmlNode nodStatistics = nodClass.AppendChild(xmlDoc.CreateElement("Statistics"));
-            DoDBase.SerializeDoDStatistics(xmlDoc, nodStatistics, Statistics);
+            XmlNode nodClass = nodParent.AppendChild(nodParent.OwnerDocument.CreateElement("Class"));
+            nodClass.AppendChild(nodParent.OwnerDocument.CreateElement("Name")).InnerText = Name;
+            nodClass.AppendChild(nodParent.OwnerDocument.CreateElement("RawHistogram")).InnerText = ProjectManager.Project.GetRelativePath(Histograms.Raw.Path);
+            nodClass.AppendChild(nodParent.OwnerDocument.CreateElement("ThrHistogram")).InnerText = ProjectManager.Project.GetRelativePath(Histograms.Thr.Path);
+            nodClass.AppendChild(nodParent.OwnerDocument.CreateElement("SummaryXML")).InnerText = ProjectManager.Project.GetRelativePath(SummaryXML);
+            XmlNode nodStatistics = nodClass.AppendChild(nodParent.OwnerDocument.CreateElement("Statistics"));
+            DoDBase.SerializeDoDStatistics(nodParent.OwnerDocument, nodStatistics, Statistics);
         }
 
         public static BudgetSegregationClass Deserialize(XmlNode nodClass)
