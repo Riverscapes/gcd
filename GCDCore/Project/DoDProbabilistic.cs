@@ -18,14 +18,13 @@ namespace GCDCore.Project
         public readonly Raster SpatialCoherenceErosion;
         public readonly Raster SpatialCoherenceDeposition;
 
-        //public DoDProbabilistic(string name, DirectoryInfo folder, DEMSurvey newDEM, DEMSurvey oldDEM, HistogramPair histograms,
-        //    Raster rawDod, Raster thrDod,
-        //    ErrorSurface newError, ErrorSurface oldError, FileInfo propErr, FileInfo priorProb, double confidenceLevel, DoDStats stats)
-        //    : base(name, folder, newDEM, oldDEM, rawDod, thrDod, histograms, newError, oldError, propErr, stats)
-        //{
-        //    ConfidenceLevel = confidenceLevel;
-        //    PriorProbability = new ProjectRaster(priorProb);
-        //}
+        public override string UncertaintyAnalysisLabel
+        {
+            get
+            {
+                return string.Format("Probabilistic Thresholding at the {0}% confidence level", (100 * ConfidenceLevel).ToString("0") + "%");
+            }
+        }
 
         public DoDProbabilistic(string name, DirectoryInfo folder, DEMSurvey newDEM, DEMSurvey oldDEM, HistogramPair histograms, FileInfo summaryXML,
             Raster rawDoD, Raster thrDoD,
@@ -47,27 +46,24 @@ namespace GCDCore.Project
             }
         }
 
-        public DoDProbabilistic(DoDPropagated dod, FileInfo priorProb, decimal confidenceLevel)
-            : base(dod, dod.PropagatedError.GISFileInfo, dod.NewError, dod.OldError)
+        public DoDProbabilistic(XmlNode nodDoD, Dictionary<string, DEMSurvey> dems)
+            : base(nodDoD, dems)
         {
-            PriorProbability = new Raster(priorProb);
-            ConfidenceLevel = confidenceLevel;
-        }
+            ConfidenceLevel = decimal.Parse(nodDoD.SelectSingleNode("ConfidenceLevel").InnerText);
+            PriorProbability = DeserializeRaster(nodDoD, "PriorProbability");
 
-        public DoDProbabilistic(DoDPropagated dod, FileInfo priorProb, decimal confidenceLevel,
-            FileInfo postProb, FileInfo cond, FileInfo spatCoEr, FileInfo spatCoDep, CoherenceProperties spatCoProps)
-       : base(dod, dod.PropagatedError.GISFileInfo, dod.NewError, dod.OldError)
-        {
-            PriorProbability = new Raster(priorProb);
-            ConfidenceLevel = confidenceLevel;
-
-            if (spatCoProps != null)
+            XmlNode nodSpatCo = nodDoD.SelectSingleNode("SpatialCoherence");
+            if (nodSpatCo != null)
             {
-                PosteriorProbability = new Raster(postProb);
-                ConditionalRaster = new Raster(cond);
-                SpatialCoherenceErosion = new Raster(spatCoEr);
-                SpatialCoherenceDeposition = new Raster(spatCoDep);
-                SpatialCoherence = spatCoProps;
+                int windowSize = int.Parse(nodSpatCo.SelectSingleNode("WindowSize").InnerText);
+                int inflectinA = int.Parse(nodSpatCo.SelectSingleNode("InflectionA").InnerText);
+                int inflectinB = int.Parse(nodSpatCo.SelectSingleNode("InflectionB").InnerText);
+                SpatialCoherence = new CoherenceProperties(windowSize, inflectinA, inflectinB);
+
+                PosteriorProbability = DeserializeRaster(nodDoD, "PosteriorProbability");
+                ConditionalRaster = DeserializeRaster(nodDoD, "ConditionalRaster");
+                SpatialCoherenceErosion = DeserializeRaster(nodDoD, "SpatialCoherenceErosion");
+                SpatialCoherenceDeposition = DeserializeRaster(nodDoD, "SpatialCoherenceDeposition");
             }
         }
 
@@ -103,44 +99,12 @@ namespace GCDCore.Project
             return nodDod;
         }
 
-        new public static DoDProbabilistic Deserialize(XmlNode nodDoD, Dictionary<string, DEMSurvey> dems)
+        private Raster DeserializeRaster(XmlNode nodParent, string nodeName)
         {
-            DoDPropagated partialDoD = DoDPropagated.Deserialize(nodDoD, dems);
-
-            FileInfo priorProb = ProjectManager.Project.GetAbsolutePath(nodDoD.SelectSingleNode("PriorProbability").InnerText);
-            decimal confidenceLevel = decimal.Parse(nodDoD.SelectSingleNode("ConfidenceLevel").InnerText);
-
-            DoDProbabilistic dod;
-            CoherenceProperties props = null;
-            XmlNode nodSpatCo = nodDoD.SelectSingleNode("SpatialCoherence");
-            if (nodSpatCo == null)
-            {
-                dod = new DoDProbabilistic(partialDoD, priorProb, confidenceLevel);
-            }
-            else
-            {
-                int windowSize = int.Parse(nodSpatCo.SelectSingleNode("WindowSize").InnerText);
-                int inflectinA = int.Parse(nodSpatCo.SelectSingleNode("InflectionA").InnerText);
-                int inflectinB = int.Parse(nodSpatCo.SelectSingleNode("InflectionB").InnerText);
-                props = new CoherenceProperties(windowSize, inflectinA, inflectinB);
-
-                FileInfo postProb = DeserializeRaster(nodDoD, "PosteriorProbability");
-                FileInfo CondRast = DeserializeRaster(nodDoD, "ConditionalRaster");
-                FileInfo SpatCoEr = DeserializeRaster(nodDoD, "SpatialCoherenceErosion");
-                FileInfo SpatCoDe = DeserializeRaster(nodDoD, "SpatialCoherenceDeposition");
-
-                dod = new DoDProbabilistic(partialDoD, priorProb, confidenceLevel, postProb, CondRast, SpatCoEr, SpatCoDe, props);
-            }
-
-            return dod;
-        }
-
-        private static FileInfo DeserializeRaster(XmlNode nodParent, string nodeName)
-        {
-            FileInfo result = null;
+            Raster result = null;
             XmlNode nodRaster = nodParent.SelectSingleNode(nodeName);
             if (nodRaster is XmlNode)
-                result = ProjectManager.Project.GetAbsolutePath(nodRaster.InnerText);
+                result = new Raster(ProjectManager.Project.GetAbsolutePath(nodRaster.InnerText));
 
             return result;
         }

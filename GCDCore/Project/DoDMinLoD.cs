@@ -11,6 +11,14 @@ namespace GCDCore.Project
     {
         public readonly decimal Threshold;
 
+        public override string UncertaintyAnalysisLabel
+        {
+            get
+            {
+                return string.Format("{0:0.00}{1} Minimum level of detection", Threshold, UnitsNet.Length.GetAbbreviation(ProjectManager.Project.Units.VertUnit));
+            }
+        }
+
         /// <summary>
         /// Constructor for change detection engine
         /// </summary>
@@ -30,15 +38,10 @@ namespace GCDCore.Project
             Threshold = threshold;
         }
 
-        /// <summary>
-        /// Constructor for XML deserialization
-        /// </summary>
-        /// <param name="dod"></param>
-        /// <param name="threshold"></param>
-        public DoDMinLoD(DoDBase dod, decimal threshold)
-            : base(dod)
+        public DoDMinLoD(XmlNode nodDoD, Dictionary<string, DEMSurvey> dems)
+            : base(nodDoD, dems)
         {
-            Threshold = threshold;
+           Threshold = decimal.Parse(nodDoD.SelectSingleNode("Threshold").InnerText);
         }
 
         public override XmlNode Serialize(XmlDocument xmlDoc, XmlNode nodParent)
@@ -46,13 +49,6 @@ namespace GCDCore.Project
             XmlNode nodDoD = base.Serialize(xmlDoc, nodParent);
             nodDoD.InsertBefore(xmlDoc.CreateElement("Threshold"), nodDoD.SelectSingleNode("Statistics")).InnerText = Threshold.ToString();
             return nodDoD;
-        }
-
-        new public static DoDMinLoD Deserialize(XmlNode nodDoD, Dictionary<string, DEMSurvey> dems)
-        {
-            DoDBase partialDoD = DoDBase.Deserialize(nodDoD, dems);
-            decimal threshold = decimal.Parse(nodDoD.SelectSingleNode("Threshold").InnerText);
-            return new DoDMinLoD(partialDoD, threshold);
         }
     }
 }

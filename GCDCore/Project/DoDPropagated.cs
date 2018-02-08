@@ -14,6 +14,14 @@ namespace GCDCore.Project
         public readonly ErrorSurface NewError;
         public readonly ErrorSurface OldError;
 
+        public override string UncertaintyAnalysisLabel
+        {
+            get
+            {
+                return "Propagated Error";
+            }
+        }
+
         public DoDPropagated(string name, DirectoryInfo folder, DEMSurvey newDEM, DEMSurvey oldDEM, Raster rawDoD, Raster thrDoD,
          HistogramPair histograms, FileInfo summaryXML, ErrorSurface newError, ErrorSurface oldError, Raster propErr, DoDStats stats)
             : base(name, folder, newDEM, oldDEM, rawDoD, thrDoD, histograms, summaryXML, stats)
@@ -23,12 +31,15 @@ namespace GCDCore.Project
             PropagatedError = propErr;
         }
 
-        public DoDPropagated(DoDBase dod, FileInfo propError, ErrorSurface newError, ErrorSurface oldError)
-            : base(dod)
+        public DoDPropagated(XmlNode nodDoD, Dictionary<string, DEMSurvey> dems)
+            : base(nodDoD, dems)
         {
-            NewError = newError;
-            OldError = oldError;
-            PropagatedError = new Raster(propError);
+            NewError = DeserializeError(nodDoD, NewDEM.ErrorSurfaces.ToList<ErrorSurface>(), "NewError");
+            OldError = DeserializeError(nodDoD, OldDEM.ErrorSurfaces.ToList<ErrorSurface>(), "OldError");
+
+            XmlNode nodPropErr = nodDoD.SelectSingleNode("PropagatedError");
+            if (nodPropErr != null)
+                PropagatedError = new Raster(ProjectManager.Project.GetAbsolutePath(nodPropErr.InnerText));
         }
 
         public override XmlNode Serialize(XmlDocument xmlDoc, XmlNode nodParent)
@@ -39,22 +50,7 @@ namespace GCDCore.Project
             nodDoD.InsertBefore(xmlDoc.CreateElement("NewError"), nodStatistics).InnerText = NewError.Name;
             nodDoD.InsertBefore(xmlDoc.CreateElement("OldError"), nodStatistics).InnerText = OldError.Name;
             return nodDoD;
-        }
-
-        new public static DoDPropagated Deserialize(XmlNode nodDoD, Dictionary<string, DEMSurvey> dems)
-        {
-            DoDBase partialDoD = DoDBase.Deserialize(nodDoD, dems);
-
-            ErrorSurface newError = DeserializeError(nodDoD, partialDoD.NewDEM.ErrorSurfaces.ToList<ErrorSurface>(), "NewError");
-            ErrorSurface oldError = DeserializeError(nodDoD, partialDoD.OldDEM.ErrorSurfaces.ToList<ErrorSurface>(), "OldError");
-
-            FileInfo propErr = null;
-            XmlNode nodPropErr = nodDoD.SelectSingleNode("PropagatedError");
-            if (nodPropErr != null)
-                propErr = ProjectManager.Project.GetAbsolutePath(nodPropErr.InnerText);
-
-            return new DoDPropagated(partialDoD, propErr, newError, oldError);
-        }
+        }   
 
         private static ErrorSurface DeserializeError(XmlNode nodDoD, List<ErrorSurface> ErrorSurfaces, string ErrorXMLNodeName)
         {

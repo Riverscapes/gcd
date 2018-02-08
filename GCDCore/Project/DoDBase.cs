@@ -7,8 +7,11 @@ using System.Xml;
 
 namespace GCDCore.Project
 {
-    public class DoDBase : GCDProjectItem
+    public abstract class DoDBase : GCDProjectItem
     {
+        private const string RawRasterName = "Raw DoD";
+        private const string ThrRasterName = "Thresholded DoD";
+
         public readonly DirectoryInfo Folder;
         public readonly DEMSurvey NewDEM;
         public readonly DEMSurvey OldDEM;
@@ -22,53 +25,47 @@ namespace GCDCore.Project
 
         public Dictionary<string, BudgetSegregation> BudgetSegregations { get; internal set; }
 
-        public DoDBase(string name, DirectoryInfo folder, DEMSurvey newDEM, DEMSurvey oldDEM, Raster rawDoD, Raster thrDoD, HistogramPair histograms, FileInfo summaryXML, DoDStats stats)
+        public abstract string UncertaintyAnalysisLabel
+        {
+            get;
+        }
+
+        protected DoDBase(string name, DirectoryInfo folder, DEMSurvey newDEM, DEMSurvey oldDEM, Raster rawDoD, Raster thrDoD, HistogramPair histograms, FileInfo summaryXML, DoDStats stats)
             : base(name)
         {
             Folder = folder;
             NewDEM = newDEM;
             OldDEM = oldDEM;
-            RawDoD = new GCDProjectRasterItem("Raw DoD", rawDoD);
-            ThrDoD = new GCDProjectRasterItem("Thresholded DoD", thrDoD);
+            RawDoD = new GCDProjectRasterItem(RawRasterName, rawDoD);
+            ThrDoD = new GCDProjectRasterItem(ThrRasterName, thrDoD);
             Histograms = histograms;
             SummaryXML = summaryXML;
             Statistics = stats;
             BudgetSegregations = new Dictionary<string, BudgetSegregation>();
         }
 
-        public DoDBase(string name, DirectoryInfo folder, DEMSurvey newDEM, DEMSurvey oldDEM, FileInfo rawDoD, FileInfo thrDoD, HistogramPair histograms, FileInfo summaryXML, DoDStats stats)
-                  : base(name)
+        protected DoDBase(XmlNode nodDoD, Dictionary<string, DEMSurvey> DEMs)
+            : base(nodDoD.SelectSingleNode("Name").InnerText)
         {
-            Folder = folder;
-            NewDEM = newDEM;
-            OldDEM = oldDEM;
-            RawDoD = new GCDProjectRasterItem("Raw DoD", rawDoD);
-            ThrDoD = new GCDProjectRasterItem("Thresholded DoD", thrDoD);
-            Histograms = histograms;
-            SummaryXML = summaryXML;
-            Statistics = stats;
-            BudgetSegregations = new Dictionary<string, BudgetSegregation>();
-        }
+            Folder = ProjectManager.Project.GetAbsoluteDir(nodDoD.SelectSingleNode("Folder").InnerText);
+            NewDEM = DeserializeDEM(nodDoD, DEMs, "NewDEM");
+            OldDEM = DeserializeDEM(nodDoD, DEMs, "OldDEM");
+            RawDoD = new GCDProjectRasterItem(RawRasterName, ProjectManager.Project.GetAbsolutePath(nodDoD.SelectSingleNode("RawDoD").InnerText));
+            ThrDoD = new GCDProjectRasterItem(ThrRasterName, ProjectManager.Project.GetAbsolutePath(nodDoD.SelectSingleNode("ThrDoD").InnerText));
+            Histograms = new HistogramPair(ProjectManager.Project.GetAbsolutePath(nodDoD.SelectSingleNode("RawHistogram").InnerText),
+                ProjectManager.Project.GetAbsolutePath(nodDoD.SelectSingleNode("ThrHistogram").InnerText));
+            SummaryXML = ProjectManager.Project.GetAbsolutePath(nodDoD.SelectSingleNode("SummaryXML").InnerText);
+            Statistics = DeserializeStatistics(nodDoD.SelectSingleNode("Statistics"), ProjectManager.Project.CellArea, ProjectManager.Project.Units);
 
-        public DoDBase(DoDBase dod)
-            : base(dod.Name)
-        {
-            Folder = dod.Folder;
-            NewDEM = dod.NewDEM;
-            OldDEM = dod.OldDEM;
-            RawDoD = dod.RawDoD;
-            ThrDoD = dod.ThrDoD;
-            Histograms = dod.Histograms;
-            SummaryXML = dod.SummaryXML;
-            Statistics = dod.Statistics;
-
-            // Need to rebuild BS library so that the internal DoD references point to this object, and not the argument DoD
             BudgetSegregations = new Dictionary<string, BudgetSegregation>();
-            foreach (BudgetSegregation bs in dod.BudgetSegregations.Values)
+            XmlNode nodBSes = nodDoD.SelectSingleNode("BudgetSegregations");
+            if (nodBSes is XmlNode)
             {
-                BudgetSegregations[bs.Name] = new BudgetSegregation(bs.Name, bs.Folder, bs.PolygonMask, bs.MaskField, this, dod.SummaryXML, null);
-                foreach (BudgetSegregationClass bsc in bs.Classes.Values)
-                    BudgetSegregations[bs.Name].Classes.Add(bsc.Name, bsc);
+                foreach (XmlNode nodBS in nodBSes.SelectNodes("BudgetSegregation"))
+                {
+                    BudgetSegregation bs = BudgetSegregation.Deserialize(nodBS, this);
+                    BudgetSegregations[bs.Name] = bs;
+                }
             }
         }
 
@@ -124,36 +121,7 @@ namespace GCDCore.Project
             nodParent.AppendChild(xmlDoc.CreateElement("Volume")).InnerText = areaVol.GetVolume(cellArea, units.VertUnit).As(units.VolUnit).ToString("R");
         }
 
-        protected static DoDBase Deserialize(XmlNode nodDoD, Dictionary<string, DEMSurvey> DEMs)
-        {
-            string name = nodDoD.SelectSingleNode("Name").InnerText;
-            DirectoryInfo folder = ProjectManager.Project.GetAbsoluteDir(nodDoD.SelectSingleNode("Folder").InnerText);
-
-            DEMSurvey newDEM = DeserializeDEM(nodDoD, DEMs, "NewDEM");
-            DEMSurvey oldDEM = DeserializeDEM(nodDoD, DEMs, "OldDEM");
-
-            FileInfo rawDoD = ProjectManager.Project.GetAbsolutePath(nodDoD.SelectSingleNode("RawDoD").InnerText);
-            FileInfo thrDoD = ProjectManager.Project.GetAbsolutePath(nodDoD.SelectSingleNode("ThrDoD").InnerText);
-            FileInfo rawHis = ProjectManager.Project.GetAbsolutePath(nodDoD.SelectSingleNode("RawHistogram").InnerText);
-            FileInfo thrHis = ProjectManager.Project.GetAbsolutePath(nodDoD.SelectSingleNode("ThrHistogram").InnerText);
-            FileInfo summar = ProjectManager.Project.GetAbsolutePath(nodDoD.SelectSingleNode("SummaryXML").InnerText);
-
-            DoDStats stats = DeserializeStatistics(nodDoD.SelectSingleNode("Statistics"), ProjectManager.Project.CellArea, ProjectManager.Project.Units);
-
-            DoDBase dod = new DoDBase(name, folder, newDEM, oldDEM, rawDoD, thrDoD, new HistogramPair(rawHis, thrHis), summar, stats);
-
-            XmlNode nodBSes = nodDoD.SelectSingleNode("BudgetSegregations");
-            if (nodBSes is XmlNode)
-                foreach (XmlNode nodBS in nodBSes.SelectNodes("BudgetSegregation"))
-                {
-                    BudgetSegregation bs = BudgetSegregation.Deserialize(nodBS, dod);
-                    dod.BudgetSegregations[bs.Name] = bs;
-                }
-
-            return dod;
-        }
-
-        private static DEMSurvey DeserializeDEM(XmlNode nodDoD, Dictionary<string, DEMSurvey> DEMs, string nodDEMName)
+        private DEMSurvey DeserializeDEM(XmlNode nodDoD, Dictionary<string, DEMSurvey> DEMs, string nodDEMName)
         {
             string demName = nodDoD.SelectSingleNode(nodDEMName).InnerText;
             if (DEMs.ContainsKey(demName))
@@ -227,12 +195,12 @@ namespace GCDCore.Project
             }
 
             // Delete the figures folder
-                 DirectoryInfo dirFigs = ProjectManager.OutputManager.GetChangeDetectionFiguresFolder(Folder, false);
-           try
+            DirectoryInfo dirFigs = ProjectManager.OutputManager.GetChangeDetectionFiguresFolder(Folder, false);
+            try
             {
                 System.IO.Directory.Delete(dirFigs.FullName, true);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine("Unable to delete DoD figures folder " + dirFigs.FullName);
                 Console.WriteLine(ex.Message);
@@ -262,7 +230,7 @@ namespace GCDCore.Project
             }
 
             // Remove the DoD from the project
-            ProjectManager.Project.DoDs.Remove(Name);           
+            ProjectManager.Project.DoDs.Remove(Name);
             ProjectManager.Project.Save();
         }
     }

@@ -76,7 +76,7 @@ namespace GCDCore.Project
 
             return dems;
         }
-     
+
         public FileInfo GetAbsolutePath(string sRelativePath)
         {
             if (sRelativePath.Contains(":") || sRelativePath.StartsWith("\\\\"))
@@ -209,11 +209,11 @@ namespace GCDCore.Project
             {
                 DoDBase dod = null;
                 if (nodDoD.SelectSingleNode("Threshold") is XmlNode)
-                    dod = DoDMinLoD.Deserialize(nodDoD, ProjectManager.Project.DEMSurveys);
+                    dod = new DoDMinLoD(nodDoD, ProjectManager.Project.DEMSurveys);
                 else if (nodDoD.SelectSingleNode("ConfidenceLevel") is XmlNode)
-                    dod = DoDProbabilistic.Deserialize(nodDoD, ProjectManager.Project.DEMSurveys);
+                    dod = new DoDProbabilistic(nodDoD, ProjectManager.Project.DEMSurveys);
                 else
-                    dod = DoDPropagated.Deserialize(nodDoD, ProjectManager.Project.DEMSurveys);
+                    dod = new DoDPropagated(nodDoD, ProjectManager.Project.DEMSurveys);
 
                 ProjectManager.Project.DoDs[dod.Name] = dod;
             }
