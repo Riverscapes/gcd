@@ -178,16 +178,19 @@ namespace GCDCore.UserInterface.Project
             this.imgTreeImageList.Images.SetKeyName(6, "BrowseFolder.png");
             this.imgTreeImageList.Images.SetKeyName(7, "sigma.png");
             this.imgTreeImageList.Images.SetKeyName(8, "BrowseFolder.png");
-            this.imgTreeImageList.Images.SetKeyName(9, "AOI.png");
+            this.imgTreeImageList.Images.SetKeyName(9, "Reservoir.png");
             this.imgTreeImageList.Images.SetKeyName(10, "BrowseFolder.png");
             this.imgTreeImageList.Images.SetKeyName(11, "BrowseFolder.png");
-            this.imgTreeImageList.Images.SetKeyName(12, "BrowseFolder.png");
-            this.imgTreeImageList.Images.SetKeyName(13, "About.png");
+            this.imgTreeImageList.Images.SetKeyName(12, "AOI.png");
+            this.imgTreeImageList.Images.SetKeyName(13, "BrowseFolder.png");
             this.imgTreeImageList.Images.SetKeyName(14, "BrowseFolder.png");
-            this.imgTreeImageList.Images.SetKeyName(15, "ConcaveHull.png");
-            this.imgTreeImageList.Images.SetKeyName(16, "BudgetSeg.png");
-            this.imgTreeImageList.Images.SetKeyName(17, "BrowseFolder.png");
-            this.imgTreeImageList.Images.SetKeyName(18, "comparison.png");
+            this.imgTreeImageList.Images.SetKeyName(15, "BrowseFolder.png");
+            this.imgTreeImageList.Images.SetKeyName(16, "About.png");
+            this.imgTreeImageList.Images.SetKeyName(17, "ConcaveHull.png");
+            this.imgTreeImageList.Images.SetKeyName(18, "BudgetSeg.png");
+            this.imgTreeImageList.Images.SetKeyName(19, "BrowseFolder.png");
+            this.imgTreeImageList.Images.SetKeyName(20, "BrowseFolder.png");
+            this.imgTreeImageList.Images.SetKeyName(21, "comparison.png");
             // 
             // cmsProject
             // 

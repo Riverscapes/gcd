@@ -73,14 +73,12 @@ namespace GCDCore.UserInterface.ChangeDetection.Intercomparison
                 InterComparison inter = new InterComparison(txtName.Text, fiOutput, dods);
                 ProjectManager.Project.InterComparisons[inter.Name] = inter;
                 ProjectManager.Project.Save();
+                Cursor = Cursors.Default;
+                MessageBox.Show("Change detection inter-comparison generated successfully.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
                 naru.error.ExceptionUI.HandleException(ex, "Error performing change detection inter-comparison.");
-            }
-            finally
-            {
-                Cursor = Cursors.Default;
             }
         }
 

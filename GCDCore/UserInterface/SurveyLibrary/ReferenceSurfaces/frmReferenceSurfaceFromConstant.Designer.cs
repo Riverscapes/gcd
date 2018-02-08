@@ -113,6 +113,7 @@
             this.cmdOK.TabIndex = 14;
             this.cmdOK.Text = "Save";
             this.cmdOK.UseVisualStyleBackColor = true;
+            this.cmdOK.Click += new System.EventHandler(this.cmdOK_Click);
             // 
             // cmdCancel
             // 
@@ -158,6 +159,11 @@
             // 
             this.valUpper.DecimalPlaces = 2;
             this.valUpper.Location = new System.Drawing.Point(277, 183);
+            this.valUpper.Maximum = new decimal(new int[] {
+            30000,
+            0,
+            0,
+            0});
             this.valUpper.Name = "valUpper";
             this.valUpper.Size = new System.Drawing.Size(94, 20);
             this.valUpper.TabIndex = 9;
@@ -186,6 +192,11 @@
             // 
             this.valLower.DecimalPlaces = 2;
             this.valLower.Location = new System.Drawing.Point(277, 209);
+            this.valLower.Maximum = new decimal(new int[] {
+            30000,
+            0,
+            0,
+            0});
             this.valLower.Name = "valLower";
             this.valLower.Size = new System.Drawing.Size(94, 20);
             this.valLower.TabIndex = 11;
@@ -202,10 +213,30 @@
             // valIncrement
             // 
             this.valIncrement.DecimalPlaces = 2;
+            this.valIncrement.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
             this.valIncrement.Location = new System.Drawing.Point(277, 237);
+            this.valIncrement.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.valIncrement.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
             this.valIncrement.Name = "valIncrement";
             this.valIncrement.Size = new System.Drawing.Size(94, 20);
             this.valIncrement.TabIndex = 13;
+            this.valIncrement.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
             // 
             // lblIncrement
             // 

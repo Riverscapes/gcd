@@ -42,6 +42,12 @@ namespace GCDCore.Project
             ErrorSurfaces = new naru.ui.SortableBindingList<ErrorSurface>();
         }
 
+        public Surface(string name, GCDConsoleLib.Raster raster)
+         : base(name, raster)
+        {
+            ErrorSurfaces = new naru.ui.SortableBindingList<ErrorSurface>();
+        }
+
         public bool IsErrorNameUnique(string name, ErrorSurface ignore)
         {
             return ErrorSurfaces.Count<ErrorSurface>(x => x != ignore && string.Compare(name, x.Name, true) == 0) == 0;
