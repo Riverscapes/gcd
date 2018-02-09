@@ -213,6 +213,12 @@ namespace GCDCore.Project
                 ProjectManager.Project.DEMSurveys[dem.Name] = dem;
             }
 
+            foreach (XmlNode nodRefSurf in nodProject.SelectNodes("ReferenceSurfaces/ReferenceSurface"))
+            {
+                Surface surf = Surface.Deserialize(nodRefSurf);
+                ProjectManager.Project.ReferenceSurfaces[surf.Name] = surf;
+            }
+
             foreach (XmlNode nodDoD in nodProject.SelectNodes("DoDs/DoD"))
             {
                 DoDBase dod = null;

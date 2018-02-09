@@ -188,11 +188,25 @@ namespace GCDCore.UserInterface.Project
                         nodSurvey.Expand();
                 }
 
+                // Reference Surfaces
                 TreeNode nodReferenceSurfaces = AddTreeNode(nodProject, GCDNodeTypes.ReferenceSurfaceGroup, m_sReferenceSurfaces, null, selectItem);
                 foreach (Surface surf in ProjectManager.Project.ReferenceSurfaces.Values)
                 {
-                    TreeNode nodSurvey = AddTreeNode(nodSurveys, GCDNodeTypes.ReferenceSurface, surf.Name, surf, selectItem);
+                    bool bExpandSurfNode = false;
+                    TreeNode nodSurface = AddTreeNode(nodReferenceSurfaces, GCDNodeTypes.ReferenceSurface, surf.Name, surf, selectItem);
+
+                    // Error surfaces
+                    TreeNode nodErrorGroup = AddTreeNode(nodSurface, GCDNodeTypes.ErrorSurfaceGroup, m_sErrorSurfaces, null, selectItem);
+                    foreach (ErrorSurface errSurf in surf.ErrorSurfaces)
+                    {
+                        AddTreeNode(nodErrorGroup, GCDNodeTypes.ErrorSurface, errSurf.NameWithDefault, errSurf, selectItem);
+                        bExpandSurfNode = true;
+                    }
+
+                    if (bExpandSurfNode)
+                        nodSurface.Expand();
                 }
+                nodReferenceSurfaces.Expand();
 
                 TreeNode nodMasks = AddTreeNode(nodProject, GCDNodeTypes.MasksGroup, m_sMasks, null, selectItem);
 
@@ -1710,7 +1724,10 @@ namespace GCDCore.UserInterface.Project
         private void addReferenceSurfaceFromDEMs(object sender, EventArgs e)
         {
             UserInterface.SurveyLibrary.ReferenceSurfaces.frmReferenceSurfaceFromDEMs frm = new SurveyLibrary.ReferenceSurfaces.frmReferenceSurfaceFromDEMs();
-            frm.ShowDialog();
+            if (frm.ShowDialog() == DialogResult.OK)
+            {
+                LoadTree(new ProjectTreeNode(GCDNodeTypes.ReferenceSurface, frm.ReferenceSurface));
+            }
         }
 
         private void addReferenceSurfaceFromContant(object sender, EventArgs e)

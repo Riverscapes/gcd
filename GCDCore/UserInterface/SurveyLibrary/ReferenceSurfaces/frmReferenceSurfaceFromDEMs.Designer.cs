@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmReferenceSurfaceFromDEMs));
             this.cmdCancel = new System.Windows.Forms.Button();
             this.cmdOK = new System.Windows.Forms.Button();
@@ -40,7 +41,11 @@
             this.lstDEMs = new System.Windows.Forms.CheckedListBox();
             this.label3 = new System.Windows.Forms.Label();
             this.cboMethod = new System.Windows.Forms.ComboBox();
+            this.cmsList = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.selectAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.selectNoneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
+            this.cmsList.SuspendLayout();
             this.SuspendLayout();
             // 
             // cmdCancel
@@ -105,12 +110,12 @@
             this.label2.TabIndex = 4;
             this.label2.Text = "Project path";
             // 
-            // textBox2
+            // txtPath
             // 
             this.txtPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtPath.Location = new System.Drawing.Point(83, 74);
-            this.txtPath.Name = "textBox2";
+            this.txtPath.Name = "txtPath";
             this.txtPath.ReadOnly = true;
             this.txtPath.Size = new System.Drawing.Size(316, 20);
             this.txtPath.TabIndex = 5;
@@ -131,6 +136,7 @@
             // lstDEMs
             // 
             this.lstDEMs.CheckOnClick = true;
+            this.lstDEMs.ContextMenuStrip = this.cmsList;
             this.lstDEMs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lstDEMs.FormattingEnabled = true;
             this.lstDEMs.Location = new System.Drawing.Point(3, 16);
@@ -158,6 +164,28 @@
             this.cboMethod.Size = new System.Drawing.Size(316, 21);
             this.cboMethod.TabIndex = 3;
             // 
+            // cmsList
+            // 
+            this.cmsList.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.selectAllToolStripMenuItem,
+            this.selectNoneToolStripMenuItem});
+            this.cmsList.Name = "cmsDoDList";
+            this.cmsList.Size = new System.Drawing.Size(153, 70);
+            // 
+            // selectAllToolStripMenuItem
+            // 
+            this.selectAllToolStripMenuItem.Name = "selectAllToolStripMenuItem";
+            this.selectAllToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.selectAllToolStripMenuItem.Text = "Select All";
+            this.selectAllToolStripMenuItem.Click += new System.EventHandler(this.selectToolStripMenuItem_Click);
+            // 
+            // selectNoneToolStripMenuItem
+            // 
+            this.selectNoneToolStripMenuItem.Name = "selectNoneToolStripMenuItem";
+            this.selectNoneToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.selectNoneToolStripMenuItem.Text = "Select None";
+            this.selectNoneToolStripMenuItem.Click += new System.EventHandler(this.selectToolStripMenuItem_Click);
+            // 
             // frmReferenceSurfaceFromDEMs
             // 
             this.AcceptButton = this.cmdOK;
@@ -181,6 +209,7 @@
             this.Text = "Derive Reference Surface From DEM Surveys";
             this.Load += new System.EventHandler(this.frmReferenceSurfaceFromDEMs_Load);
             this.groupBox1.ResumeLayout(false);
+            this.cmsList.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -199,5 +228,8 @@
         private System.Windows.Forms.CheckedListBox lstDEMs;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox cboMethod;
+        private System.Windows.Forms.ContextMenuStrip cmsList;
+        private System.Windows.Forms.ToolStripMenuItem selectAllToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem selectNoneToolStripMenuItem;
     }
 }

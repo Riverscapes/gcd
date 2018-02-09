@@ -13,6 +13,7 @@ namespace GCDCore.UserInterface.SurveyLibrary.ReferenceSurfaces
     public partial class frmReferenceSurfaceFromDEMs : Form
     {
         public naru.ui.SortableBindingList<GCDCore.Project.DEMSurvey> DEMSurveys;
+        public GCDCore.Project.Surface ReferenceSurface { get; internal set; }
 
         public frmReferenceSurfaceFromDEMs()
         {
@@ -47,10 +48,11 @@ namespace GCDCore.UserInterface.SurveyLibrary.ReferenceSurfaces
                 return;
             }
 
-            System.IO.FileInfo fiOutput = GCDCore.Project.ProjectManager.Project.GetAbsolutePath(txtPath.Text); 
+            System.IO.FileInfo fiOutput = GCDCore.Project.ProjectManager.Project.GetAbsolutePath(txtPath.Text);
+            fiOutput.Directory.Create();
 
             List<GCDConsoleLib.Raster> rInputs = new List<GCDConsoleLib.Raster>();
-            foreach(GCDCore.Project.DEMSurvey dem in lstDEMs.CheckedItems)
+            foreach (GCDCore.Project.DEMSurvey dem in lstDEMs.CheckedItems)
             {
                 rInputs.Add(dem.Raster);
             }
@@ -59,36 +61,41 @@ namespace GCDCore.UserInterface.SurveyLibrary.ReferenceSurfaces
             {
                 Cursor = Cursors.WaitCursor;
 
+                GCDConsoleLib.Raster rOutput;
                 switch (((GCDConsoleLib.RasterOperators.MultiMathOpType)((naru.db.NamedObject)cboMethod.SelectedItem).ID))
                 {
                     case GCDConsoleLib.RasterOperators.MultiMathOpType.Addition:
-                        GCDConsoleLib.RasterOperators.MultiAdd(rInputs, fiOutput);
+                        rOutput = GCDConsoleLib.RasterOperators.MultiAdd(rInputs, fiOutput);
                         break;
 
                     case GCDConsoleLib.RasterOperators.MultiMathOpType.Maximum:
-                        GCDConsoleLib.RasterOperators.Maximum(rInputs, fiOutput);
+                        rOutput = GCDConsoleLib.RasterOperators.Maximum(rInputs, fiOutput);
                         break;
 
                     case GCDConsoleLib.RasterOperators.MultiMathOpType.Mean:
-                        GCDConsoleLib.RasterOperators.Mean(rInputs, fiOutput);
+                        rOutput = GCDConsoleLib.RasterOperators.Mean(rInputs, fiOutput);
                         break;
 
                     case GCDConsoleLib.RasterOperators.MultiMathOpType.Minimum:
-                        GCDConsoleLib.RasterOperators.Minimum(rInputs, fiOutput);
+                        rOutput = GCDConsoleLib.RasterOperators.Minimum(rInputs, fiOutput);
                         break;
 
                     case GCDConsoleLib.RasterOperators.MultiMathOpType.StandardDeviation:
-                        GCDConsoleLib.RasterOperators.StandardDeviation(rInputs, fiOutput);
+                        rOutput = GCDConsoleLib.RasterOperators.StandardDeviation(rInputs, fiOutput);
                         break;
 
                     default:
                         throw new Exception("Unhandled math operation type " + cboMethod.Text);
                 }
 
+                ReferenceSurface = new GCDCore.Project.Surface(txtName.Text, rOutput);
+                GCDCore.Project.ProjectManager.Project.ReferenceSurfaces[ReferenceSurface.Name] = ReferenceSurface;
+                GCDCore.Project.ProjectManager.Project.Save();
+
                 Cursor = Cursors.Default;
                 MessageBox.Show("Reference surface generated successfully.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 naru.error.ExceptionUI.HandleException(ex, "Error generating reference surface from DEM surveys.");
                 this.DialogResult = DialogResult.None;
@@ -126,8 +133,23 @@ namespace GCDCore.UserInterface.SurveyLibrary.ReferenceSurfaces
 
         private void txtName_TextChanged(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(txtName.Text))
+                txtPath.Text = string.Empty;
+            else
+                txtPath.Text = GCDCore.Project.ProjectManager.Project.GetRelativePath(GCDCore.Project.ProjectManager.OutputManager.GetReferenceSurfaceRasterPath(txtName.Text));
+        }
 
-
+        private void selectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                for (int i = 0; i < lstDEMs.Items.Count; i++)
+                    lstDEMs.SetItemChecked(i, ((System.Windows.Forms.ToolStripMenuItem)sender).Name.ToLower().Contains("all"));
+            }
+            catch (Exception ex)
+            {
+                naru.error.ExceptionUI.HandleException(ex);
+            }
         }
     }
 }

@@ -7,7 +7,7 @@ namespace GCDCore
     public class OutputManager
     {
         public const string RasterExtension = "tif";
-        private const string m_sInputsFolder = "inputs";
+        private const string m_sInputsFolder = "Inputs";
         private const string m_sAssociatedSurfacesFolder = "AssociatedSurfaces";
         private const string m_sBudgetSegregationFolder = "BS";
         private const string m_sAnalysesFolder = "Analyses";
@@ -20,6 +20,7 @@ namespace GCDCore
         private const string m_sErrorSurfaceMethodsFolder = "Methods";
         private const string m_sErrorSurfaceMethodMask = "_Mask";
         private const string m_sInterComparison = "InterCompare";
+        private const string m_sRefSurfaceFolder = "RefSurfaces";
 
         private const string m_sFiguresSubfolder = "Figs";
         private string m_sOutputDriver = "GTiff";
@@ -913,6 +914,17 @@ namespace GCDCore
         {
             string sTopFolder = Path.Combine(GCDProjectFolder(), m_sInterComparison);
             return naru.os.File.GetNewSafeName(sTopFolder, "ic" + name, "xml");
+        }
+
+        private string GetReferenceSurfaceFolder(string surfaceName)
+        {
+            surfaceName = naru.os.File.RemoveDangerousCharacters(surfaceName);
+            return Path.Combine(Path.Combine(GCDProjectFolder(), m_sRefSurfaceFolder), surfaceName);
+        }
+
+        public FileInfo GetReferenceSurfaceRasterPath(string surfaceName)
+        {
+            return naru.os.File.GetNewSafeName(GetReferenceSurfaceFolder(surfaceName), surfaceName, RasterExtension);
         }
     }
 }
