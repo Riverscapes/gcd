@@ -93,6 +93,8 @@ namespace GCDCore.UserInterface.Project
             this.addChangeDetectionIntercomparisonToolStripMenuItem.Click += addChangeDetectionIntercomparisonToolStripMenuItem_Click;
             this.addChangeDetectionInterComparisonToolStripMenuItem1.Click += addChangeDetectionIntercomparisonToolStripMenuItem_Click;
             this.openInterComparisonFolderToolStripMenuItem.Click += openInterComparisonFolderToolStripMenuItem_Click;
+            this.addReferenceSurfaceToMapToolStripMenuItem.Click += AddToMapToolStripMenuItem_Click;
+            this.deleteToolStripMenuItem.Click += btnDelete_Click;
 
         }
 
@@ -433,6 +435,7 @@ namespace GCDCore.UserInterface.Project
                 case GCDNodeTypes.ErrorSurfaceGroup: cms = cmsErrorSurfacesGroup; break;
                 case GCDNodeTypes.ErrorSurface: cms = cmsErrorSurface; break;
                 case GCDNodeTypes.ReferenceSurfaceGroup: cms = cmsRefSurfaceGroup; break;
+                case GCDNodeTypes.ReferenceSurface: cms = cmsRefSurface; break;
                 case GCDNodeTypes.MasksGroup: cms = cmsMasks; break;
                 case GCDNodeTypes.ChangeDetectionGroup: cms = cmsChangeDetectionGroup; break;
                 case GCDNodeTypes.DoD: cms = cmsChangeDetection; break;
@@ -1146,6 +1149,11 @@ namespace GCDCore.UserInterface.Project
                     case GCDNodeTypes.ErrorSurface:
                         ErrorSurface errSurf = (ErrorSurface)ptn.Item;
                         errSurf.Surf.DeleteErrorSurface(errSurf);
+                        break;
+
+                    case GCDNodeTypes.ReferenceSurface:
+                        Surface surf = (Surface)ptn.Item;
+                        surf.Delete();
                         break;
 
                     case GCDNodeTypes.DoD:

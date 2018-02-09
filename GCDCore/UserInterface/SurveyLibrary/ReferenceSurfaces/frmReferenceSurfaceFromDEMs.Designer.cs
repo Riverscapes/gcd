@@ -39,11 +39,11 @@
             this.txtPath = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lstDEMs = new System.Windows.Forms.CheckedListBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.cboMethod = new System.Windows.Forms.ComboBox();
             this.cmsList = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.selectAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.selectNoneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label3 = new System.Windows.Forms.Label();
+            this.cboMethod = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             this.cmsList.SuspendLayout();
             this.SuspendLayout();
@@ -119,6 +119,7 @@
             this.txtPath.ReadOnly = true;
             this.txtPath.Size = new System.Drawing.Size(316, 20);
             this.txtPath.TabIndex = 5;
+            this.txtPath.TabStop = false;
             // 
             // groupBox1
             // 
@@ -144,6 +145,28 @@
             this.lstDEMs.Size = new System.Drawing.Size(381, 158);
             this.lstDEMs.TabIndex = 0;
             // 
+            // cmsList
+            // 
+            this.cmsList.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.selectAllToolStripMenuItem,
+            this.selectNoneToolStripMenuItem});
+            this.cmsList.Name = "cmsDoDList";
+            this.cmsList.Size = new System.Drawing.Size(138, 48);
+            // 
+            // selectAllToolStripMenuItem
+            // 
+            this.selectAllToolStripMenuItem.Name = "selectAllToolStripMenuItem";
+            this.selectAllToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
+            this.selectAllToolStripMenuItem.Text = "Select All";
+            this.selectAllToolStripMenuItem.Click += new System.EventHandler(this.selectToolStripMenuItem_Click);
+            // 
+            // selectNoneToolStripMenuItem
+            // 
+            this.selectNoneToolStripMenuItem.Name = "selectNoneToolStripMenuItem";
+            this.selectNoneToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
+            this.selectNoneToolStripMenuItem.Text = "Select None";
+            this.selectNoneToolStripMenuItem.Click += new System.EventHandler(this.selectToolStripMenuItem_Click);
+            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -163,28 +186,6 @@
             this.cboMethod.Name = "cboMethod";
             this.cboMethod.Size = new System.Drawing.Size(316, 21);
             this.cboMethod.TabIndex = 3;
-            // 
-            // cmsList
-            // 
-            this.cmsList.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.selectAllToolStripMenuItem,
-            this.selectNoneToolStripMenuItem});
-            this.cmsList.Name = "cmsDoDList";
-            this.cmsList.Size = new System.Drawing.Size(153, 70);
-            // 
-            // selectAllToolStripMenuItem
-            // 
-            this.selectAllToolStripMenuItem.Name = "selectAllToolStripMenuItem";
-            this.selectAllToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.selectAllToolStripMenuItem.Text = "Select All";
-            this.selectAllToolStripMenuItem.Click += new System.EventHandler(this.selectToolStripMenuItem_Click);
-            // 
-            // selectNoneToolStripMenuItem
-            // 
-            this.selectNoneToolStripMenuItem.Name = "selectNoneToolStripMenuItem";
-            this.selectNoneToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.selectNoneToolStripMenuItem.Text = "Select None";
-            this.selectNoneToolStripMenuItem.Click += new System.EventHandler(this.selectToolStripMenuItem_Click);
             // 
             // frmReferenceSurfaceFromDEMs
             // 

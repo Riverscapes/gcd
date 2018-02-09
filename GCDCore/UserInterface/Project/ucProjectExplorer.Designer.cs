@@ -134,6 +134,12 @@ namespace GCDCore.UserInterface.Project
             this.cmsInterComparison = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addChangeDetectionInterComparisonToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.openInterComparisonFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmsRefSurface = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.addReferenceSurfaceToMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
+            this.specifyErrorSurfaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deriveErrorSurfaceToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsProject.SuspendLayout();
             this.cmsDEMSurvey.SuspendLayout();
             this.cmsAssociatedSurface.SuspendLayout();
@@ -150,6 +156,7 @@ namespace GCDCore.UserInterface.Project
             this.cmsMasks.SuspendLayout();
             this.cmsRefSurfaceGroup.SuspendLayout();
             this.cmsInterComparison.SuspendLayout();
+            this.cmsRefSurface.SuspendLayout();
             this.SuspendLayout();
             // 
             // treProject
@@ -863,6 +870,50 @@ namespace GCDCore.UserInterface.Project
             this.openInterComparisonFolderToolStripMenuItem.Size = new System.Drawing.Size(291, 22);
             this.openInterComparisonFolderToolStripMenuItem.Text = "Open Inter-Comparison Folder";
             // 
+            // cmsRefSurface
+            // 
+            this.cmsRefSurface.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addReferenceSurfaceToMapToolStripMenuItem,
+            this.deleteToolStripMenuItem,
+            this.toolStripSeparator10,
+            this.specifyErrorSurfaceToolStripMenuItem,
+            this.deriveErrorSurfaceToolStripMenuItem2});
+            this.cmsRefSurface.Name = "cmsRefSurface";
+            this.cmsRefSurface.Size = new System.Drawing.Size(235, 120);
+            // 
+            // addReferenceSurfaceToMapToolStripMenuItem
+            // 
+            this.addReferenceSurfaceToMapToolStripMenuItem.Image = global::GCDCore.Properties.Resources.AddToMap;
+            this.addReferenceSurfaceToMapToolStripMenuItem.Name = "addReferenceSurfaceToMapToolStripMenuItem";
+            this.addReferenceSurfaceToMapToolStripMenuItem.Size = new System.Drawing.Size(234, 22);
+            this.addReferenceSurfaceToMapToolStripMenuItem.Text = "Add Reference Surface to Map";
+            // 
+            // deleteToolStripMenuItem
+            // 
+            this.deleteToolStripMenuItem.Image = global::GCDCore.Properties.Resources.Delete;
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(234, 22);
+            this.deleteToolStripMenuItem.Text = "Delete Reference Surface";
+            // 
+            // toolStripSeparator10
+            // 
+            this.toolStripSeparator10.Name = "toolStripSeparator10";
+            this.toolStripSeparator10.Size = new System.Drawing.Size(231, 6);
+            // 
+            // specifyErrorSurfaceToolStripMenuItem
+            // 
+            this.specifyErrorSurfaceToolStripMenuItem.Image = global::GCDCore.Properties.Resources.Add;
+            this.specifyErrorSurfaceToolStripMenuItem.Name = "specifyErrorSurfaceToolStripMenuItem";
+            this.specifyErrorSurfaceToolStripMenuItem.Size = new System.Drawing.Size(234, 22);
+            this.specifyErrorSurfaceToolStripMenuItem.Text = "Specify Error Surface";
+            // 
+            // deriveErrorSurfaceToolStripMenuItem2
+            // 
+            this.deriveErrorSurfaceToolStripMenuItem2.Image = global::GCDCore.Properties.Resources.sigma;
+            this.deriveErrorSurfaceToolStripMenuItem2.Name = "deriveErrorSurfaceToolStripMenuItem2";
+            this.deriveErrorSurfaceToolStripMenuItem2.Size = new System.Drawing.Size(234, 22);
+            this.deriveErrorSurfaceToolStripMenuItem2.Text = "Derive Error Surface";
+            // 
             // ucProjectExplorer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -886,6 +937,7 @@ namespace GCDCore.UserInterface.Project
             this.cmsMasks.ResumeLayout(false);
             this.cmsRefSurfaceGroup.ResumeLayout(false);
             this.cmsInterComparison.ResumeLayout(false);
+            this.cmsRefSurface.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -984,5 +1036,11 @@ namespace GCDCore.UserInterface.Project
         private System.Windows.Forms.ContextMenuStrip cmsInterComparison;
         private System.Windows.Forms.ToolStripMenuItem addChangeDetectionInterComparisonToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem openInterComparisonFolderToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip cmsRefSurface;
+        private System.Windows.Forms.ToolStripMenuItem addReferenceSurfaceToMapToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
+        private System.Windows.Forms.ToolStripMenuItem specifyErrorSurfaceToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deriveErrorSurfaceToolStripMenuItem2;
     }
 }

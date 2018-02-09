@@ -53,6 +53,52 @@ namespace GCDCore.Project
             return ErrorSurfaces.Count<ErrorSurface>(x => x != ignore && string.Compare(name, x.Name, true) == 0) == 0;
         }
 
+        new public void Delete()
+        {
+            try
+            {
+                foreach (ErrorSurface errSurf in ErrorSurfaces)
+                {
+                    errSurf.Delete();
+                }
+            }
+            finally
+            {
+                ErrorSurfaces.Clear();
+            }          
+
+            // Delete the raster
+            try
+            {
+                base.Delete();
+            }
+            catch (Exception ex)
+            {
+                Exception ex2 = new Exception("Error attempting to delete DEM Survey.", ex);
+                ex2.Data["Name"] = Name;
+                ex2.Data["File Path"] = Raster.GISFileInfo.FullName;
+                throw ex2;
+            }
+
+            // Remove the DEM from the project
+            ProjectManager.Project.ReferenceSurfaces.Remove(Name);
+
+            // If no more inputs then delete the folder
+            if (ProjectManager.Project.ReferenceSurfaces.Count < 1 && !Directory.EnumerateFileSystemEntries(Raster.GISFileInfo.Directory.Parent.FullName).Any())
+            {
+                try
+                {
+                    Raster.GISFileInfo.Directory.Parent.Delete();
+                }
+                catch (Exception ex)
+                {
+                    Console.Write("Failed to delete empty reference surface directory " + Raster.GISFileInfo.Directory.Parent.FullName);
+                }
+            }
+
+            ProjectManager.Project.Save();
+        }
+
         public void DeleteErrorSurface(ErrorSurface err)
         {
             try

@@ -83,6 +83,7 @@
             this.txtPath.ReadOnly = true;
             this.txtPath.Size = new System.Drawing.Size(357, 20);
             this.txtPath.TabIndex = 3;
+            this.txtPath.TabStop = false;
             // 
             // cmdCancel
             // 
