@@ -73,16 +73,11 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="MaskFieldName"></param>
         /// <param name="props"></param>
         /// <param name="rOutputRaster"></param>
-        public CreateErrorRaster(Raster rawDEM, Raster rPolygonMask, Vector vPolygonMask, string MaskFieldName,
+        public CreateErrorRaster(Raster rawDEM, VectorRaster rPolygonMask, string MaskFieldName,
             Dictionary<string, ErrorRasterProperties> props, Raster rOutputRaster) :
             base(new List<Raster> { rawDEM }, rPolygonMask, new List<Raster> { rOutputRaster })
         {
             _initMultiMethod(MaskFieldName, props);
-
-            // Pull just the field values out for later retrieval
-            _rasterVectorFieldVals = vPolygonMask.Features
-                .ToDictionary(d => d.Key, d => d.Value.Feat.GetFieldAsString(MaskFieldName));
-
         }
 
         /// <summary>
@@ -167,7 +162,7 @@ namespace GCDConsoleLib.Internal.Operators
                 return;
 
             // With multimethod errors we need to do some fancy footwork
-            if (_hasVectorPolymask && !_hasRasteriszedPolymask)
+            if (_hasVectorPolymask && !_hasRasterizedPolymask)
             {
                 if (_shapemask.Count > 0)
                 {
@@ -182,7 +177,7 @@ namespace GCDConsoleLib.Internal.Operators
                         throw new NotImplementedException("Overlapping shapes is not yet supported");
                 }
             }
-            else if (_hasVectorPolymask && _hasRasteriszedPolymask)
+            else if (_hasVectorPolymask && _hasRasterizedPolymask)
             {
                 if (data[_inputRasters.Count - 1][id] != inNodataVals[_inputRasters.Count - 1])
                 {

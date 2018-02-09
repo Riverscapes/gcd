@@ -16,7 +16,7 @@ namespace GCDConsoleLib.Internal.Operators
         public Dictionary<string, DoDStats> SegStats;
 
         // When we use rasterized polygons we use this as the field vals
-        private Dictionary<long, string> _rasterVectorFieldVals;
+        private Dictionary<int, string> _rasterVectorFieldVals;
 
         #region Constructors
 
@@ -86,7 +86,8 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="theStats"></param>
         /// <param name="PolygonMask"></param>
         /// <param name="FieldName"></param>
-        public GetChangeStats(Raster rInput, DoDStats theStats, Raster rPolygonMask, Vector vPolygonMask, string FieldName) :
+        public GetChangeStats(Raster rInput, DoDStats theStats, VectorRaster rPolygonMask, 
+            string FieldName) :
             base(new List<Raster> { rInput }, rPolygonMask)
         {
             // Note how we don't pass the vector into the base. We're not going to do anything
@@ -94,10 +95,7 @@ namespace GCDConsoleLib.Internal.Operators
             Stats = theStats;
             SegStats = new Dictionary<string, DoDStats>();
 
-            // Pull just the field values out for later retrieval
-            _rasterVectorFieldVals = vPolygonMask.Features
-                .ToDictionary(d => d.Key, d => d.Value.Feat.GetFieldAsString(FieldName));
-
+            _rasterVectorFieldVals = rPolygonMask.FieldValues;
         }
 
         /// <summary>
@@ -109,15 +107,14 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="PolygonMask"></param>
         /// <param name="FieldName"></param>
         public GetChangeStats(Raster rInput, Raster rPropError, DoDStats theStats,
-            Raster rPolygonMask, Vector vPolygonMask, string FieldName) :
+            VectorRaster rPolygonMask, string FieldName) :
            base(new List<Raster> { rInput, rPropError }, rPolygonMask)
         {
             Stats = theStats;
             SegStats = new Dictionary<string, DoDStats>();
 
-            // Pull just the field values out for later retrieval
-            _rasterVectorFieldVals = vPolygonMask.Features
-                .ToDictionary(d => d.Key, d => d.Value.Feat.GetFieldAsString(FieldName));
+            _rasterVectorFieldVals = rPolygonMask.FieldValues;
+
         }
 
         #endregion
@@ -136,16 +133,17 @@ namespace GCDConsoleLib.Internal.Operators
             if (data[0][id] == inNodataVals[0])
                 return;
 
-            if (!_hasVectorPolymask)
-                CellChangeCalc(data, id, Stats);
+            // Pure vector method
+            if (_hasVectorPolymask)
+                VectorBudgetSegCellOp(data, id);
+
+            // Rasterized vector method
+            else if (_hasRasterizedPolymask)
+                RasterBudgetSegCellOp(data, id);
+
+            // Non budget seg method
             else
-            {
-                // Budget seggregation can be one of two types
-                if (!_hasRasteriszedPolymask)
-                    VectorBudgetSegCellOp(data, id);
-                else
-                    RasterBudgetSegCellOp(data, id);
-            }
+                CellChangeCalc(data, id, Stats);
         }
 
         /// <summary>
@@ -179,16 +177,16 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="id"></param>
         private void RasterBudgetSegCellOp(List<double[]> data, int id)
         {
-            if (data[_inputRasters.Count-1][id] != inNodataVals[_inputRasters.Count - 1])
+            double rPolymaskVal = data[_inputRasters.Count - 1][id];
+            if (rPolymaskVal != inNodataVals[_inputRasters.Count - 1])
             {
-                string fldVal = _rasterVectorFieldVals[(long)data[_inputRasters.Count - 1][id]];
+                string fldVal = _rasterVectorFieldVals[(int)rPolymaskVal];
                 // Create a new DoDStats object if we don't already have one
                 if (!SegStats.ContainsKey(fldVal))
                     SegStats[fldVal] = new DoDStats(Stats);
 
                 CellChangeCalc(data, id, SegStats[fldVal]);
             }
-
         }
 
         /// <summary>
@@ -204,7 +202,7 @@ namespace GCDConsoleLib.Internal.Operators
 
             int rasterCount = data.Count;
             // We need to discount the rastermask
-            if (_hasRasteriszedPolymask) rasterCount--;
+            if (_hasRasterizedPolymask) rasterCount--;
 
             // If we don't have a mask to use then do it this way
             if (rasterCount == 1 && data[0][id] != inNodataVals[0])

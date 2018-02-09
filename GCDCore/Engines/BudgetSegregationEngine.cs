@@ -35,7 +35,7 @@ namespace GCDCore.Engines
                 }
                 else
                 {
-                    results = RasterOperators.GetStatsPropagated(dod.RawDoD.Raster, dod.ThrDoD.Raster, propErr, Mask, fieldName, ProjectManager.Project.Units);
+                    results = RasterOperators.GetStatsPropagated(dod.RawDoD.Raster, propErr, Mask, fieldName, ProjectManager.Project.Units);
                 }
             }
 

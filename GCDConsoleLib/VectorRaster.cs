@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using OSGeo.GDAL;
+using System.Linq;
 using System.Diagnostics;
 using GCDConsoleLib.Internal.Operators;
 
@@ -8,7 +9,8 @@ namespace GCDConsoleLib
 {
     public class VectorRaster : Raster
     {
-        public List<string> FieldValues {  get; private set;  }
+        public static string CGDMASKFIELD = "GCDMASK";
+        public Dictionary<int, string> FieldValues { get; private set; }
 
         /// <summary>
         /// Given a Template Raster, a vector and a field name, create a usable rasterized poly mask
@@ -18,21 +20,25 @@ namespace GCDConsoleLib
         /// <param name="FieldName"></param>
         public VectorRaster(Raster Template, Vector vectorInput, string FieldName) : base(Template)
         {
-            FieldValues = new List<string> { };
+            FieldValues = new Dictionary<int, string> { };
             Datatype = new GdalDataType(typeof(int));
 
-            using (Raster tmp = new Raster(Template))
-            {
-                // Make sure our nodatavals line up
-                SetNoData(0.0);
-                tmp.SetNoData(0.0);
-                // Do GDaL's rasterize first to get the rough boolean shape.
-                Rasterize(vectorInput, tmp);
+            SetNoData(0.0);
+            // Do GDaL's rasterize first to get the rough boolean shape.
+            Rasterize(vectorInput, this);
 
-                // Now we call our Rasterize with an empty List that will be filled with field values.
-                RasterizeVector op = new RasterizeVector(tmp, vectorInput, this, FieldName, FieldValues);
-                op.RunWithOutput();
-                // This is a little sneaky because we're kind of writing back to ourselves here.
+            int fieldIndex = vectorInput.Features.First().Value.Feat.GetFieldIndex(FieldName);
+            if (fieldIndex == -1) throw new IndexOutOfRangeException(String.Format("Could not find field: `{0}`", FieldName));
+            int GDALMASKidx = vectorInput.Features.First().Value.Feat.GetFieldIndex(CGDMASKFIELD);
+            if (GDALMASKidx == -1) throw new IndexOutOfRangeException(String.Format("Could not find MANDATORY field: `{0}`", FieldName));
+
+            // Now make an equivalence between the field values and the 
+            foreach (KeyValuePair<long, VectorFeature> kvp in vectorInput.Features)
+            {
+                string val = kvp.Value.Feat.GetFieldAsString(fieldIndex);
+                int maskid = kvp.Value.Feat.GetFieldAsInteger(GDALMASKidx);
+                if (!FieldValues.ContainsKey(maskid))
+                    FieldValues.Add(maskid, val);
             }
         }
 
@@ -56,7 +62,7 @@ namespace GCDConsoleLib
             OSGeo.OGR.Layer layer = vectorinput._ds.GetLayerByIndex(0);
 
             double[] burnValues = new double[] { 1.0 };
-            string[] rasterizeOptions = new string[] {}; // String.Format("ATTRIBUTE={0}", fieldname) 
+            string[] rasterizeOptions = new string[] {String.Format("ATTRIBUTE={0}", CGDMASKFIELD) }; // String.Format("ATTRIBUTE={0}", fieldname) 
 
             Gdal.RasterizeLayer(_ds, 1, bandlist, layer, IntPtr.Zero, IntPtr.Zero,
                 burnValues.Length, burnValues, rasterizeOptions,

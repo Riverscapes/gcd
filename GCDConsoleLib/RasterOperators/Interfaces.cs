@@ -314,35 +314,26 @@ namespace GCDConsoleLib
         /// <param name="FieldName">Name of the field in the PolygonMask that contains the distinguishing property on which to group statistics</param>
         /// <returns></returns>
         public static Dictionary<string, DoDStats> GetStatsMinLoD(Raster rawDoD, Raster thrDoD, decimal minLoD,
-            Vector PolygonMask, string FieldName, UnitGroup units)
+            Vector PolygonMask, string FieldName, UnitGroup units, bool RasterizeFirst = false)
         {
             Area cellArea = rawDoD.Extent.CellArea(units);
-            GetDodMinLodStats theStatsOp = new GetDodMinLodStats(rawDoD, thrDoD, minLoD, new DoDStats(cellArea, units), PolygonMask, FieldName);
-            theStatsOp.Run();
+            GetDodMinLodStats theStatsOp;
+
+            if (RasterizeFirst)
+            {
+                using (VectorRaster tmp = new VectorRaster(rawDoD, PolygonMask, FieldName))
+                {
+                    theStatsOp = new GetDodMinLodStats(rawDoD, thrDoD, minLoD, new DoDStats(cellArea, units), tmp, FieldName);
+                    theStatsOp.Run();
+                }
+            }
+            else
+            {
+                theStatsOp = new GetDodMinLodStats(rawDoD, thrDoD, minLoD, new DoDStats(cellArea, units), PolygonMask, FieldName);
+                theStatsOp.Run();
+            }
             return theStatsOp.SegStats;
         }
-
-        /// <summary>
-        /// Retrieve the segregated Change Statistics from a pair of DoD rasters that were thresholded using minimum level of detection
-        /// THIS IS THE METHOD FOR RASTERIZED VECTOR
-        /// </summary>
-        /// <param name="rawDoD"></param>
-        /// <param name="thrDoD"></param>
-        /// <param name="minLoD"></param>
-        /// <param name="rPolygonMask"></param>
-        /// <param name="vPolygonMask"></param>
-        /// <param name="FieldName"></param>
-        /// <param name="units"></param>
-        /// <returns></returns>
-        public static Dictionary<string, DoDStats> GetStatsMinLoD(Raster rawDoD, Raster thrDoD, decimal minLoD,
-            Raster rPolygonMask, Vector vPolygonMask, string FieldName, UnitGroup units)
-        {
-            Area cellArea = rawDoD.Extent.CellArea(units);
-            GetDodMinLodStats theStatsOp = new GetDodMinLodStats(rawDoD, thrDoD, minLoD, new DoDStats(cellArea, units), rPolygonMask, vPolygonMask, FieldName);
-            theStatsOp.Run();
-            return theStatsOp.SegStats;
-        }
-
 
         /// <summary>
         /// Retrieve the segragated Change Statistics from a pair of DoD rasters that were thresholded using a propagated error raster
@@ -368,30 +359,23 @@ namespace GCDConsoleLib
         /// <param name="FieldName">Name of the field in the PolygonMask that contains the distinguishing property on which to group statistics</param>
         /// <returns></returns>
         public static Dictionary<string, DoDStats> GetStatsPropagated(Raster rawDoD, Raster propErrRaster,
-          Vector PolygonMask, string FieldName, UnitGroup units)
+          Vector PolygonMask, string FieldName, UnitGroup units, bool RasterizeFirst = false)
         {
             Area cellArea = rawDoD.Extent.CellArea(units);
-            GetDoDPropStats theStatsOp = new GetDoDPropStats(rawDoD, propErrRaster, new DoDStats(cellArea, units), PolygonMask, FieldName);
-            theStatsOp.Run();
-            return theStatsOp.SegStats;
-        }
-
-        /// <summary>
-        /// Retrieve the Change Statistics from a pair of DoD rasters that were thresholded using a propagated error raster
-        /// </summary>
-        /// <param name="rawDoD"></param>
-        /// <param name="propErrRaster"></param>
-        /// <param name="rPolygonMask"></param>
-        /// <param name="vPolygonMask"></param>
-        /// <param name="FieldName"></param>
-        /// <param name="units"></param>
-        /// <returns></returns>
-        public static Dictionary<string, DoDStats> GetStatsPropagated(Raster rawDoD, Raster propErrRaster,
-            Raster rPolygonMask, Vector vPolygonMask, string FieldName, UnitGroup units)
-        {
-            Area cellArea = rawDoD.Extent.CellArea(units);
-            GetDoDPropStats theStatsOp = new GetDoDPropStats(rawDoD, propErrRaster, new DoDStats(cellArea, units), rPolygonMask, vPolygonMask, FieldName);
-            theStatsOp.Run();
+            GetDoDPropStats theStatsOp;
+            if (RasterizeFirst)
+            {
+                using (VectorRaster tmp = new VectorRaster(rawDoD, PolygonMask, FieldName))
+                {
+                    theStatsOp = new GetDoDPropStats(rawDoD, propErrRaster, new DoDStats(cellArea, units), tmp, FieldName);
+                    theStatsOp.Run();
+                }
+            }
+            else
+            {
+                theStatsOp = new GetDoDPropStats(rawDoD, propErrRaster, new DoDStats(cellArea, units), PolygonMask, FieldName);
+                theStatsOp.Run();
+            }
             return theStatsOp.SegStats;
         }
 
@@ -436,45 +420,40 @@ namespace GCDConsoleLib
         /// <returns></returns>
         enum statsType : byte { raw, thr, err };
         public static Dictionary<string, DoDStats> GetStatsProbalistic(Raster rawDoD, Raster thrDoD, Raster propErrRaster,
-            Vector PolygonMask, string FieldName, UnitGroup units)
+            Vector PolygonMask, string FieldName, UnitGroup units, bool RasterizeFirst = false)
         {
             Area cellArea = rawDoD.Extent.CellArea(units);
-            GetChangeStats raw = new GetChangeStats(rawDoD, new DoDStats(cellArea, units), PolygonMask, FieldName);
-            GetChangeStats thr = new GetChangeStats(thrDoD, new DoDStats(cellArea, units), PolygonMask, FieldName);
-            GetChangeStats err = new GetChangeStats(propErrRaster, thrDoD, new DoDStats(cellArea, units), PolygonMask, FieldName);
+            GetChangeStats raw;
+            GetChangeStats thr;
+            GetChangeStats err;
 
-            raw.Run();
-            thr.Run();
-            err.Run();
+            if (RasterizeFirst)
+            {
+                using (VectorRaster tmp = new VectorRaster(rawDoD, PolygonMask, FieldName))
+                {
+                    raw = new GetChangeStats(rawDoD, new DoDStats(cellArea, units), tmp, FieldName);
+                    thr = new GetChangeStats(thrDoD, new DoDStats(cellArea, units), tmp, FieldName);
+                    err = new GetChangeStats(propErrRaster, thrDoD, new DoDStats(cellArea, units), tmp, FieldName);
 
+                    raw.Run();
+                    thr.Run();
+                    err.Run();
+                }
+            }
+            else
+            {
+                raw = new GetChangeStats(rawDoD, new DoDStats(cellArea, units), PolygonMask, FieldName);
+                thr = new GetChangeStats(thrDoD, new DoDStats(cellArea, units), PolygonMask, FieldName);
+                err = new GetChangeStats(propErrRaster, thrDoD, new DoDStats(cellArea, units), PolygonMask, FieldName);
+
+                raw.Run();
+                thr.Run();
+                err.Run();
+            }
             return StatsProbabilisticCombine(raw, thr, err, cellArea, units);
         }
 
 
-        /// <summary>
-        /// Retrieve the Change Statistics from a pair of DoD rasters that were thresholded using a probabilistic thresholding
-        /// </summary>
-        /// <param name="rawDoD"></param>
-        /// <param name="thrDoD"></param>
-        /// <param name="propErrRaster"></param>
-        /// <param name="PolygonMask"></param>
-        /// <param name="FieldName"></param>
-        /// <param name="units"></param>
-        /// <returns></returns>
-        public static Dictionary<string, DoDStats> GetStatsProbalistic(Raster rawDoD, Raster thrDoD, Raster propErrRaster,
-            Raster rPolygonMask, Vector vPolygonMask, string FieldName, UnitGroup units)
-        {
-            Area cellArea = rawDoD.Extent.CellArea(units);
-            GetChangeStats raw = new GetChangeStats(rawDoD, new DoDStats(cellArea, units), rPolygonMask, vPolygonMask, FieldName);
-            GetChangeStats thr = new GetChangeStats(thrDoD, new DoDStats(cellArea, units), rPolygonMask, vPolygonMask, FieldName);
-            GetChangeStats err = new GetChangeStats(propErrRaster, thrDoD, new DoDStats(cellArea, units), rPolygonMask, vPolygonMask, FieldName);
-
-            raw.Run();
-            thr.Run();
-            err.Run();
-
-            return StatsProbabilisticCombine(raw, thr, err, cellArea, units);
-        }
 
         public static Dictionary<string, DoDStats> StatsProbabilisticCombine(GetChangeStats raw, GetChangeStats thr, GetChangeStats err,
             Area cellArea, UnitGroup units)
@@ -587,26 +566,6 @@ namespace GCDConsoleLib
             return theStatsOp.RunWithOutput();
         }
 
-        /// <summary>
-        /// Multimethod error calculation (Rasterized Vector Method)
-        /// </summary>
-        /// <param name="rawDEM"></param>
-        /// <param name="rPolygonMask"></param>
-        /// <param name="vPolygonMask"></param>
-        /// <param name="MaskFieldName"></param>
-        /// <param name="props"></param>
-        /// <param name="sOutputRaster"></param>
-        /// <param name="progressHandler"></param>
-        /// <returns></returns>
-        public static Raster CreateErrorRaster(Raster rawDEM, Raster rPolygonMask, Vector vPolygonMask, string MaskFieldName,
-            Dictionary<string, ErrorRasterProperties> props, FileInfo sOutputRaster, EventHandler<int> progressHandler = null)
-        {
-            //https://stackoverflow.com/questions/2560258/how-to-pass-an-event-to-a-method
-            CreateErrorRaster theStatsOp = new CreateErrorRaster(rawDEM, rPolygonMask, vPolygonMask, MaskFieldName, props, new Raster(rawDEM, sOutputRaster));
-            if (progressHandler != null)
-                theStatsOp.ProgressEvent += progressHandler;
-            return theStatsOp.RunWithOutput();
-        }
 
         /// <summary>
         /// Generate a Uniform Raster
@@ -765,27 +724,26 @@ namespace GCDConsoleLib
         /// <param name="polygonMask"></param>
         /// <param name="FieldName"></param>
         /// <returns></returns>
-        public static Dictionary<string, Histogram> BinRaster(Raster rInput, int numberofBins, Vector polygonMask, string FieldName)
+        public static Dictionary<string, Histogram> BinRaster(Raster rInput, int numberofBins, 
+            Vector polygonMask, string FieldName, bool RasterizeFirst = false)
         {
-            BinRaster histOp = new BinRaster(rInput, numberofBins, polygonMask, FieldName);
-            histOp.Run();
+            BinRaster histOp;
+            if (RasterizeFirst)
+            {
+                using (VectorRaster tmp = new VectorRaster(rInput, polygonMask, FieldName))
+                {
+                    histOp = new BinRaster(rInput, numberofBins, tmp, FieldName);
+                    histOp.Run();
+                }
+            }
+            else
+            {
+                histOp = new BinRaster(rInput, numberofBins, polygonMask, FieldName);
+                histOp.Run();
+            }
             return histOp.SegHistograms;
         }
 
-        /// <summary>
-        /// Bin a Raster into a Histogram (RASTERIZED vector)
-        /// </summary>
-        /// <param name="rInput"></param>
-        /// <param name="numberofBins"></param>
-        /// <param name="polygonMask"></param>
-        /// <param name="FieldName"></param>
-        /// <returns></returns>
-        public static Dictionary<string, Histogram> BinRaster(Raster rInput, int numberofBins, Raster rPolyMask, Vector vPolyMask, string FieldName)
-        {
-            BinRaster histOp = new BinRaster(rInput, numberofBins, rPolyMask, vPolyMask, FieldName);
-            histOp.Run();
-            return histOp.SegHistograms;
-        }
 
         public enum ThresholdOps { LessThan, GreaterThan, LessThanOrEqual, GreaterThanOrEqual }
 

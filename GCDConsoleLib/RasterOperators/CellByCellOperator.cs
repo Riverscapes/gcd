@@ -11,7 +11,7 @@ namespace GCDConsoleLib.Internal
 
         // RASTER POLYMASK: 
         protected bool _hasVectorPolymask;
-        protected bool _hasRasteriszedPolymask;
+        protected bool _hasRasterizedPolymask;
 
         /// <summary>
         /// Just a simple pass-through constructor
@@ -23,7 +23,7 @@ namespace GCDConsoleLib.Internal
 
             _polymask = null;
             _hasVectorPolymask = false;
-            _hasRasteriszedPolymask = false;
+            _hasRasterizedPolymask = false;
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace GCDConsoleLib.Internal
 
             _polymask = PolygonMask;
             _hasVectorPolymask = true;
-            _hasRasteriszedPolymask = false;
+            _hasRasterizedPolymask = false;
         }
 
         /// <summary>
@@ -47,11 +47,11 @@ namespace GCDConsoleLib.Internal
         /// <param name="rPolygonMask"></param>
         /// <param name="vPolygonMask"></param>
         /// <param name="rOutputRasters"></param>
-        public CellByCellOperator(List<Raster> rRasters, Raster rPolygonMask, List<Raster> rOutputRasters = null) :
+        public CellByCellOperator(List<Raster> rRasters, VectorRaster rPolygonMask, List<Raster> rOutputRasters = null) :
             base(rRasters, rOutputRasters)
         {
-            _hasVectorPolymask = true;
-            _hasRasteriszedPolymask = true;
+            _hasVectorPolymask = false;
+            _hasRasterizedPolymask = true;
 
             // Make sure we add the rasterized vector as the last item we can look up
             AddInputRaster(rPolygonMask);
@@ -73,7 +73,7 @@ namespace GCDConsoleLib.Internal
         protected override void ChunkOp(List<T[]> data, List<T[]> outChunks)
         {
             // First check if this chunk intersects with any of the shapes and filter the list
-            if (_hasVectorPolymask && !_hasRasteriszedPolymask)
+            if (_hasVectorPolymask)
                 _shapemask = _polymask.FIDIntersectExtent(ChunkExtent);
 
             // We either have an input or an output (but never neither) Figure out the buffer size
