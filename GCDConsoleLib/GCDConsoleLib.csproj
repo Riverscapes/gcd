@@ -147,6 +147,7 @@
     <Compile Include="Extensions\ArrayExtensions.cs" />
     <Compile Include="VectorFeature.cs" />
     <Compile Include="VectorField.cs" />
+    <Compile Include="VectorRaster.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\extlib\GDAL221\data\pci_datum.txt">

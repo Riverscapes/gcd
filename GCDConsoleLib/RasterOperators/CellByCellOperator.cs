@@ -73,7 +73,7 @@ namespace GCDConsoleLib.Internal
         protected override void ChunkOp(List<T[]> data, List<T[]> outChunks)
         {
             // First check if this chunk intersects with any of the shapes and filter the list
-            if (_polymask != null)
+            if (_hasVectorPolymask && !_hasRasteriszedPolymask)
                 _shapemask = _polymask.FIDIntersectExtent(ChunkExtent);
 
             // We either have an input or an output (but never neither) Figure out the buffer size

@@ -168,7 +168,7 @@ namespace GCDConsoleLib
         /// <returns></returns>
         public static Raster Maximum(List<Raster> rasters, FileInfo sOutputRaster)
         {
-            RasterMultiMath op =new RasterMultiMath(MultiMathOpType.Maximum, rasters, new Raster(rasters[0], sOutputRaster));
+            RasterMultiMath op = new RasterMultiMath(MultiMathOpType.Maximum, rasters, new Raster(rasters[0], sOutputRaster));
             return op.RunWithOutput();
         }
 
@@ -233,20 +233,6 @@ namespace GCDConsoleLib
                 rInput, outputExtent, new Raster(rInput, sOutputRaster)
             });
         }
-
-        /// <summary>
-        /// Rasterize a vector into a byte array
-        /// </summary>
-        /// <param name="rInput"></param>
-        /// <param name="sOutputRaster"></param>
-        /// <param name="outputExtent"></param>
-        /// <returns></returns>
-        public static Raster Rasterize(Raster TemplateRaster, Vector vInput, FileInfo rOutput)
-        {
-            RasterizeVector op = new RasterizeVector(vInput, new Raster(TemplateRaster, rOutput));
-            return op.RunWithOutput();
-        }
-
 
         /// <summary>
         /// Create a Root Sum Squares Calculation Raster

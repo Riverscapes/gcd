@@ -95,7 +95,7 @@ namespace GCDConsoleLib.Internal.Operators
             else
             {
                 // Budget seggregation can be one of two types
-                if (_polymask != null)
+                if (!_hasRasteriszedPolymask)
                     VectorBudgetSegCellOp(data, id);
                 else
                     RasterBudgetSegCellOp(data, id);

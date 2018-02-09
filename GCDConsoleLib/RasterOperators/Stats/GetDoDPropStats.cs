@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using GCDConsoleLib.Internal;
+using System.Linq;
 using GCDConsoleLib.GCD;
 
 namespace GCDConsoleLib.Internal.Operators
@@ -58,11 +59,15 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="FieldName"></param>
         public GetDoDPropStats(Raster rDod, Raster rErr, DoDStats theStats, Raster rPolymask, Vector vPolygonMask,
             string FieldName) :
-            base(new List<Raster> { rDod, rErr })
+            base(new List<Raster> { rDod, rErr }, rPolymask)
         {
             Stats = theStats;
             SegStats = new Dictionary<string, DoDStats>();
             _fieldname = FieldName;
+
+            // Pull just the field values out for later retrieval
+            _rasterVectorFieldVals = vPolygonMask.Features
+                .ToDictionary(d => d.Key, d => d.Value.Feat.GetFieldAsString(FieldName));
         }
 
         /// <summary>
@@ -77,12 +82,12 @@ namespace GCDConsoleLib.Internal.Operators
             if (data[0][id] == inNodataVals[0])
                 return;
 
-            if (!_hasVectorPolymask)
+            if (!_hasVectorPolymask && !_hasRasteriszedPolymask)
                 CellChangeCalc(data, id, Stats);
             else
             {
                 // Budget seggregation can be one of two types
-                if (_polymask != null)
+                if (!_hasRasteriszedPolymask)
                     VectorBudgetSegCellOp(data, id);
                 else
                     RasterBudgetSegCellOp(data, id);

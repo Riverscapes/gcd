@@ -18,6 +18,34 @@ namespace GCDConsoleLib.Tests
             Assert.IsFalse(rTemplateRaster.IsOpen);
         }
 
+        /// <summary>
+        /// Temporary Raster Tests
+        /// </summary>
+        [TestMethod()]
+        [TestCategory("Unit")]
+        public void Raster_Temporary_Init_Test()
+        {
+            // First try with the using method
+            Raster rOrig = new Raster(new FileInfo(DirHelpers.GetTestRasterPath("Slopey980-950.tif")));
+            string path = "";
+            using (Raster tmpRaster = new Raster(rOrig)) {
+                path = tmpRaster.GISFileInfo.FullName;
+                Assert.IsTrue(tmpRaster.Extent.Equals(rOrig.Extent));
+                Assert.IsTrue(tmpRaster.FileExists());
+            }
+            Assert.IsFalse(new FileInfo(path).Exists);
+            // Make sure the original file is still there
+            Assert.IsTrue(rOrig.FileExists());
+
+
+            // Now try explicitly cleaning it up
+            Raster tmpRaster2 = new Raster(rOrig);
+            string path2 = tmpRaster2.GISFileInfo.FullName;
+            Assert.IsTrue(tmpRaster2.FileExists());
+            tmpRaster2.Dispose();
+            Assert.IsFalse(new FileInfo(path2).Exists);
+        }
+
         [TestMethod()]
         [TestCategory("Unit")]
         public void RasterInitLazyTest()
@@ -69,7 +97,7 @@ namespace GCDConsoleLib.Tests
                 Assert.IsTrue(File.Exists(Path.Combine(tmp.Name, "CopyRasterTest.tif")));
                 Assert.IsTrue(File.Exists(Path.Combine(tmp.Name, "CopyRasterTest.tif.aux.xml")));
                 Assert.IsTrue(File.Exists(Path.Combine(tmp.Name, "CopyRasterTest.tif.ovr")));
-                rTemplaetRaster.Dispose();
+                rTemplaetRaster.UnloadDS();
                 rTemplaetRaster = null;
             }
         }
@@ -97,8 +125,8 @@ namespace GCDConsoleLib.Tests
                 Assert.IsFalse(sDeletePath.Exists);
                 Assert.IsFalse(File.Exists(Path.Combine(tmp.Name, "DeleteRasterTest.tif.aux.xml")));
                 Assert.IsFalse(File.Exists(Path.Combine(tmp.Name, "DeleteRasterTest.tif.ovr")));
-                rRaster.Dispose();
-                rDeleteRaster.Dispose();
+                rRaster.UnloadDS();
+                rDeleteRaster.UnloadDS();
                 rDeleteRaster = null;
                 rRaster = null;
             }
@@ -140,7 +168,7 @@ namespace GCDConsoleLib.Tests
             using (ITempDir tmp = TempDir.Create())
             {
                 Raster rOutput = new Raster(rTempl, new FileInfo(Path.Combine(tmp.Name, "ExtendedCopyRasterTestBuffer.tif")));
-                rTempl.Dispose();
+                rTempl.UnloadDS();
                 rTempl = null;
 
                 rOutput.Open(true);
@@ -148,7 +176,7 @@ namespace GCDConsoleLib.Tests
                 rOutput.Write(0, 0, 1, 1, new double[1] { 0.55 });
                 rOutput.Write(0, 1, 1, 1, new float[1] { 30.135f });
                 rOutput.Write(0, 2, 1, 1, new int[1] { 3 });
-                rOutput.Dispose();
+                rOutput.UnloadDS();
                 rOutput = null;
 
                 Raster rTest = new Raster(new FileInfo(Path.Combine(tmp.Name, "ExtendedCopyRasterTestBuffer.tif")));
@@ -165,7 +193,7 @@ namespace GCDConsoleLib.Tests
                 rTest.Read(0, 2, 1, 1, iBuff);
                 Assert.AreEqual(iBuff[0], 3);
 
-                rTest.Dispose();
+                rTest.UnloadDS();
                 rTest = null;
             }
         }

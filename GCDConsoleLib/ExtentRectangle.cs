@@ -58,7 +58,7 @@ namespace GCDConsoleLib
         {
             Raster temp = new Raster(sFilePath);
             _Init(temp.Extent.Top, temp.Extent.Left, temp.Extent.CellHeight, temp.Extent.CellWidth, temp.Extent.Rows, temp.Extent.Cols);
-            temp.Dispose();
+            temp.UnloadDS();
         }
 
         /// <summary>
@@ -252,6 +252,11 @@ namespace GCDConsoleLib
                 Right == otherExtent.Right &&
                 Top == otherExtent.Top &&
                 Bottom == otherExtent.Bottom;
+        }
+
+        public bool Equals(ExtentRectangle other)
+        {
+            return IsConcurrent(other);
         }
 
         /// <summary>

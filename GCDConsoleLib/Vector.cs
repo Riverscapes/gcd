@@ -15,7 +15,7 @@ namespace GCDConsoleLib
             {@".*\.(json|geojson)","GeoJSON"}
         };
         private Driver _drv;
-        private DataSource _ds;
+        internal DataSource _ds;
         public Dictionary<long, VectorFeature> Features;
         public Dictionary<string, VectorField> Fields;
         public string FIDColumn;
@@ -52,13 +52,13 @@ namespace GCDConsoleLib
             _drv = GetDriver(GISFileInfo);
 
             if (!leaveopen)
-                Dispose();
+                UnloadDS();
         }
 
         /// <summary>
         /// Object hygiene is super important with GDAL. 
         /// </summary>
-        public override void Dispose()
+        public override void UnloadDS()
         {
             if (_ds != null)
             {
@@ -81,7 +81,7 @@ namespace GCDConsoleLib
             Open();
             DataSource _cpyDs = _drv.CopyDataSource(_ds, destPath.FullName, null);
             _cpyDs.Dispose();
-            Dispose();
+            UnloadDS();
         }
 
         /// <summary>
@@ -136,7 +136,6 @@ namespace GCDConsoleLib
 
             Open();
             List<string> retVal = new List<string>();
-            Layer mLayer = _ds.GetLayerByIndex(0);
 
             Geometry pt = new Geometry(wkbGeometryType.wkbPoint);
             pt.AddPoint(x, y, 0);
@@ -166,7 +165,6 @@ namespace GCDConsoleLib
         {
             Open();
             List<long> retVal = new List<long>();
-            Layer mLayer = _ds.GetLayerByIndex(0);
 
             Geometry pt = new Geometry(wkbGeometryType.wkbPoint);
             pt.AddPoint(x, y, 0);
@@ -194,10 +192,10 @@ namespace GCDConsoleLib
         public long? ShapeContainPoint(double x, double y, List<long> shapemask = null)
         {
             Open();
-            Layer mLayer = _ds.GetLayerByIndex(0);
+            long? retval = null;
 
             Geometry pt = new Geometry(wkbGeometryType.wkbPoint);
-            pt.AddPoint(x, y, 0);
+            pt.AddPoint_2D(x, y);
 
             // If no mask provided test against everything
             if (shapemask == null)
@@ -205,11 +203,17 @@ namespace GCDConsoleLib
 
             foreach (long fid in shapemask)
             {
-                if (Features[fid].Feat.GetGeometryRef().Contains(pt))
-                    return fid;
+                Geometry geo = Features[fid].Feat.GetGeometryRef();
+                // Distance is slightly better
+                retval = fid;
+                if (geo.Contains(pt))
+                {
+                    retval = fid;
+                    break;
+                }
             }
 
-            return null;
+            return retval;
         }
 
         /// <summary>
@@ -248,7 +252,6 @@ namespace GCDConsoleLib
         {
             Open();
             List<VectorFeature> retVal = new List<VectorFeature>();
-            Layer mLayer = _ds.GetLayerByIndex(0);
 
             Geometry ring = new Geometry(wkbGeometryType.wkbLinearRing);
             ring.AddPoint((double)ext.Left, (double)ext.Top, 0);
@@ -278,7 +281,6 @@ namespace GCDConsoleLib
         {
             Open();
             List<long> retVal = new List<long>();
-            Layer mLayer = _ds.GetLayerByIndex(0);
 
             Geometry ring = new Geometry(wkbGeometryType.wkbLinearRing);
             ring.AddPoint((double)ext.Left, (double)ext.Top, 0);
@@ -349,7 +351,7 @@ namespace GCDConsoleLib
             // We need a separate copy of the driver so we can delete it from the outside.
             Driver drv = Ogr.GetDriverByName(_drv.GetName());
 
-            Dispose();
+            UnloadDS();
             drv.DeleteDataSource(GISFileInfo.FullName);
             drv.Dispose();
         }
@@ -388,7 +390,7 @@ namespace GCDConsoleLib
 
             if (!leaveopen)
             {
-                Dispose();
+                UnloadDS();
             }
         }
 

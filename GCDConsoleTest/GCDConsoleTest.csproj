@@ -137,6 +137,7 @@
     <Compile Include="Helpers\FakeRaster.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\DirHelpers.cs" />
+    <Compile Include="VectorRasterTests.cs" />
     <Compile Include="VectorTests.cs" />
   </ItemGroup>
   <ItemGroup>

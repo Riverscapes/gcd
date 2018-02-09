@@ -355,12 +355,12 @@ namespace GCDConsoleLib.Internal
             foreach (Raster rRa in _inputRasters)
             {
                 if (rRa.IsOpen)
-                    rRa.Dispose();
+                    rRa.UnloadDS();
             }
             foreach (Raster rRout in _outputRasters)
             {
                 if (rRout.IsOpen)
-                    rRout.Dispose();
+                    rRout.UnloadDS();
             }
         }
     }

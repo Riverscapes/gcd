@@ -25,6 +25,7 @@ namespace GCDConsoleLib
 
         public bool FileExists()
         {
+            GISFileInfo.Refresh();
             return GISFileInfo !=null && GISFileInfo.Exists;
         }
 
@@ -35,7 +36,7 @@ namespace GCDConsoleLib
         public abstract void Open(bool write = false);
         public abstract void Copy(FileInfo destPath);
         public abstract void Delete();
-        public abstract void Dispose();
+        public abstract void UnloadDS();
         protected abstract void _initfromfile();
 
         /// <summary>
@@ -54,5 +55,6 @@ namespace GCDConsoleLib
         /// <param name="sFilepath"></param>
         public GISDataset(FileInfo sFilepath)  { GISFileInfo = sFilepath;  }
 
+        public void Dispose() { }
     }
 }

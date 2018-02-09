@@ -4,12 +4,14 @@ using System.Collections.Generic;
 using OSGeo.GDAL;
 using UnitsNet;
 using UnitsNet.Units;
+using System.Linq;
 using System.Diagnostics;
 
 namespace GCDConsoleLib
 {
-    public class Raster : GISDataset
+    public class Raster : GISDataset, IDisposable
     {
+        private bool _temporary;
         public enum RasterDriver : byte { GTiff, HFA }
         public LengthUnit VerticalUnits;
         private bool _bComputedStatistics { get; set; }
@@ -38,7 +40,7 @@ namespace GCDConsoleLib
                     _initfromfile();
                 return _gdalDataType;
             }
-            private set { _gdalDataType = value; }
+            protected set { _gdalDataType = value; }
         }
 
 
@@ -67,7 +69,7 @@ namespace GCDConsoleLib
         }
 
         // We store the following in the guts since they are used there a lot
-        private Dataset _ds { get; set; }
+        protected Dataset _ds { get; set; }
         private bool _writepermission;
 
         /// <summary>
@@ -85,10 +87,11 @@ namespace GCDConsoleLib
         /// <param name="leaveopen"></param>
         public Raster(Raster rTemplate, FileInfo sFilename, bool leaveopen = false) : base(sFilename)
         {
+            _temporary = false;
             ExtentRectangle theExtent = new ExtentRectangle(rTemplate.Extent);
             _Init(RasterDriver.GTiff, rTemplate.VerticalUnits, rTemplate.Proj, rTemplate.Datatype, theExtent, rTemplate.origNodataVal);
             if (!leaveopen)
-                Dispose();
+                UnloadDS();
         }
 
         /// <summary>
@@ -99,19 +102,21 @@ namespace GCDConsoleLib
         /// <param name="leaveopen"></param>
         public Raster(Raster rTemplate, FileInfo sFilename, GdalDataType dType, bool leaveopen = false) : base(sFilename)
         {
+            _temporary = false;
             ExtentRectangle theExtent = new ExtentRectangle(rTemplate.Extent);
             _Init(RasterDriver.GTiff, rTemplate.VerticalUnits, rTemplate.Proj, dType, theExtent, rTemplate.origNodataVal);
             if (!leaveopen)
-                Dispose();
+                UnloadDS();
         }
 
         // This is mainly for testing purposes
         public Raster(Raster rTemplate, bool leaveopen = false) : base()
         {
+            _temporary = false;
             ExtentRectangle theExtent = new ExtentRectangle(rTemplate.Extent);
             _Init(RasterDriver.GTiff, rTemplate.VerticalUnits, rTemplate.Proj, rTemplate.Datatype, theExtent, rTemplate.origNodataVal);
             if (!leaveopen)
-                Dispose();
+                UnloadDS();
         }
 
         /// <summary>
@@ -125,7 +130,7 @@ namespace GCDConsoleLib
         {
             _Init(rTemplate.driver, rTemplate.VerticalUnits, rTemplate.Proj, rTemplate.Datatype, rExtent, rTemplate.origNodataVal);
             if (!leaveopen)
-                Dispose();
+                UnloadDS();
         }
 
         /// <summary>
@@ -146,12 +151,31 @@ namespace GCDConsoleLib
                double? dNoData, RasterDriver psDriver, GdalDataType dType,
                string psProjection, string psUnit, bool leaveopen = false) : base()
         {
+            _temporary = false;
             ExtentRectangle theExtent = new ExtentRectangle(fTop, fLeft, dCellHeight, dCellWidth, nRows, nCols);
             _Init(psDriver, UnitFromString(psUnit), new Projection(psProjection), dType, theExtent, dNoData);
             if (!leaveopen)
-                Dispose();
+                UnloadDS();
         }
 
+        /// <summary>
+        /// Temporary file constructor
+        /// </summary>
+        /// <param name="rTemplate"></param>
+        /// <param name="sFilename"></param>
+        /// <param name="leaveopen"></param>
+        public Raster(Raster rTemplate) : base(TempRasterFileInfo())
+        {
+            _temporary = true;
+            ExtentRectangle theExtent = new ExtentRectangle(rTemplate.Extent);
+            _Init(RasterDriver.GTiff, rTemplate.VerticalUnits, rTemplate.Proj, rTemplate.Datatype, theExtent, rTemplate.origNodataVal);
+            Create();
+        }
+
+        public static FileInfo TempRasterFileInfo()
+        {
+            return new FileInfo(Path.GetTempPath() + Guid.NewGuid().ToString() + ".tif");
+        }
 
         /// <summary>
         /// Load all relevant settings from a file
@@ -173,13 +197,13 @@ namespace GCDConsoleLib
                 dType, theExtent, GetNodataVal());
 
             if (!leaveOpen)
-                Dispose();
+                UnloadDS();
         }
 
         /// <summary>
         /// Initialization function
         /// </summary>
-        private void _Init(RasterDriver rdDriver, LengthUnit lUnits, Projection proj, GdalDataType dType,
+        protected void _Init(RasterDriver rdDriver, LengthUnit lUnits, Projection proj, GdalDataType dType,
             ExtentRectangle theExtent, double? ndv)
         {
             _writepermission = false;
@@ -208,9 +232,18 @@ namespace GCDConsoleLib
             _ds = driverobj.Create(finfo.FullName, theExtent.Cols, theExtent.Rows, 1, theType._origType, creationOpts.ToArray());
             _ds.SetGeoTransform(theExtent.Transform);
             _ds.SetProjection(proj.OriginalString);
+
+            SetNoData((double)origNodataVal);
+        }
+
+        internal void SetNoData(double newNodataVal)
+        {
+            Open(true);
             Band band = _ds.GetRasterBand(1);
             if (HasNodata)
-                band.SetNoDataValue((double)origNodataVal);
+                band.SetNoDataValue(newNodataVal);
+            _origNodata = newNodataVal;
+            UnloadDS();
         }
 
         /// <summary>
@@ -255,7 +288,7 @@ namespace GCDConsoleLib
             CreateDS(driver, GISFileInfo, Extent, Proj, Datatype);
             RefreshFileInfo();
             if (!leaveopen)
-                Dispose();
+                UnloadDS();
         }
 
         /// <summary>
@@ -268,7 +301,7 @@ namespace GCDConsoleLib
 
             // if it is open and we don't have the right permissions then close it and re-open it.
             if (IsOpen)
-                Dispose();
+                UnloadDS();
 
             Access permission = Access.GA_ReadOnly;
             if (write) permission = Access.GA_Update;
@@ -338,15 +371,52 @@ namespace GCDConsoleLib
         }
 
         /// <summary>
+        /// Here's our destructor. It's Pretty simple.
+        /// </summary>
+        ~Raster() {
+            Dispose(false);
+        }
+
+        /// <summary>
         /// Object hygiene is super important with GDAL. 
         /// </summary>
-        public override void Dispose()
+        public override void UnloadDS()
         {
             if (_ds != null)
             {
                 _ds.Dispose();
                 _ds = null;
                 RefreshFileInfo();
+            }
+        }
+
+        public new void Dispose() { Dispose(true); }
+
+        /// <summary>
+        /// Dispose of this temporary raster
+        /// </summary>
+        /// <param name="disposing"></param>
+        private void Dispose(bool disposing)
+        {
+            // Make sure we've freed up all the handles on the file
+            UnloadDS();
+
+            // Don't clean up this file unless it's marked temporary
+            if (!_temporary) return;
+
+            // Don't call the destructor if we're explicitly disposing of this.
+            if (disposing)
+                GC.SuppressFinalize(this);
+
+            // Make sure to refresh and check
+            GISFileInfo.Refresh();
+            if (GISFileInfo.Exists)
+            {
+                try { Delete(); }
+                catch(Exception e) {
+                    Debug.WriteLine(e.ToString());
+                } // best effort only
+                GISFileInfo.Refresh();
             }
         }
 
@@ -377,7 +447,7 @@ namespace GCDConsoleLib
         {
             Open();
             _ds.GetDriver().CopyFiles(destPath.FullName, GISFileInfo.FullName);
-            Dispose();
+            UnloadDS();
             RefreshFileInfo();
         }
 
@@ -399,7 +469,7 @@ namespace GCDConsoleLib
         {
             Open();
             Driver drv = _ds.GetDriver();
-            Dispose();
+            UnloadDS();
             drv.Delete(GISFileInfo.FullName);
             drv.Dispose();
         }
@@ -471,7 +541,7 @@ namespace GCDConsoleLib
             if (_ds.BuildOverviews(method, levels, null, null) == (int)CPLErr.CE_Failure)
                 throw new InvalidDataException("Pyramids could not be built for this dataset");
 
-            Dispose();
+            UnloadDS();
         }
 
 
