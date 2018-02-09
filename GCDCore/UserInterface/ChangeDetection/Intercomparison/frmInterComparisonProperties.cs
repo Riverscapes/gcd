@@ -25,7 +25,7 @@ namespace GCDCore.UserInterface.ChangeDetection.Intercomparison
 
         private void txtName_TextChanged(object sender, EventArgs e)
         {
-            ProjectManager.Project.GetRelativePath(ProjectManager.OutputManager.GetInterComparisonPath(txtName.Text));
+            txtPath.Text = ProjectManager.Project.GetRelativePath(ProjectManager.OutputManager.GetInterComparisonPath(txtName.Text));
         }
 
         private bool ValidateForm()
@@ -88,10 +88,10 @@ namespace GCDCore.UserInterface.ChangeDetection.Intercomparison
             {
                 for (int i = 0; i < lstDoDs.Items.Count; i++)
                     lstDoDs.SetItemChecked(i, ((System.Windows.Forms.ToolStripMenuItem)sender).Name.ToLower().Contains("all"));
-           }
+            }
             catch (Exception ex)
             {
-               naru.error.ExceptionUI.HandleException(ex);
+                naru.error.ExceptionUI.HandleException(ex);
             }
         }
     }
