@@ -21,6 +21,7 @@ namespace GCDCore
         private const string m_sErrorSurfaceMethodMask = "_Mask";
         private const string m_sInterComparison = "InterCompare";
         private const string m_sRefSurfaceFolder = "RefSurfaces";
+        private const string m_sProjectMaskFolder = "Masks";
 
         private const string m_sFiguresSubfolder = "Figs";
         private string m_sOutputDriver = "GTiff";
@@ -925,6 +926,18 @@ namespace GCDCore
         public FileInfo GetReferenceSurfaceRasterPath(string surfaceName)
         {
             return naru.os.File.GetNewSafeName(GetReferenceSurfaceFolder(surfaceName), surfaceName, RasterExtension);
+        }
+
+        private string GetProjectMaskFolder(string maskName)
+        {
+            maskName = naru.os.File.RemoveDangerousCharacters(maskName);
+            return Path.Combine(Path.Combine(GCDProjectFolder(), m_sProjectMaskFolder), maskName);
+        }
+
+        public System.IO.FileInfo GetMaskShapeFilePath(string maskName)
+        {
+            string sMaskPath = GetProjectMaskFolder(maskName);
+            return naru.os.File.GetNewSafeName(sMaskPath, maskName, "shp");
         }
     }
 }

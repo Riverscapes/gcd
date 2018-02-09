@@ -20,6 +20,7 @@ namespace GCDCore.Project
         public readonly Dictionary<string, DoDBase> DoDs;
         public readonly Dictionary<string, string> MetaData;
         public readonly Dictionary<string, InterComparison> InterComparisons;
+        public readonly Dictionary<string, Masks.Mask> Masks;
 
         public GCDProject(string name, string description, FileInfo projectFile,
             DateTime dtCreated, string gcdVersion, UnitsNet.Area cellArea, GCDConsoleLib.GCD.UnitGroup units)
@@ -34,6 +35,7 @@ namespace GCDCore.Project
 
             DEMSurveys = new Dictionary<string, DEMSurvey>();
             ReferenceSurfaces = new Dictionary<string, Surface>();
+            Masks = new Dictionary<string, Project.Masks.Mask>();
             DoDs = new Dictionary<string, DoDBase>();
             InterComparisons = new Dictionary<string, InterComparison>();
             MetaData = new Dictionary<string, string>();
@@ -105,6 +107,11 @@ namespace GCDCore.Project
         public bool IsDoDNameUnique(string name, DoDBase ignore)
         {
             return DoDs.ContainsKey(name) ? DoDs[name] == ignore : true;
+        }
+
+        public bool IsMaskNameUnique(string name, Masks.Mask ignore)
+        {
+            return Masks.ContainsKey(name) ? Masks[name] == ignore : true;
         }
 
         public void Save()
