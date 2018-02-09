@@ -1733,7 +1733,10 @@ namespace GCDCore.UserInterface.Project
         private void addReferenceSurfaceFromContant(object sender, EventArgs e)
         {
             UserInterface.SurveyLibrary.ReferenceSurfaces.frmReferenceSurfaceFromConstant frm = new SurveyLibrary.ReferenceSurfaces.frmReferenceSurfaceFromConstant();
-            frm.ShowDialog();
+            if (frm.ShowDialog() == DialogResult.OK)
+            {
+                LoadTree(new ProjectTreeNode(GCDNodeTypes.ReferenceSurface, frm.ReferenceSurface));
+            }
         }
 
         private void addChangeDetectionIntercomparisonToolStripMenuItem_Click(object sender, EventArgs e)

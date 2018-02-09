@@ -13,7 +13,8 @@ namespace GCDCore.UserInterface.SurveyLibrary.ReferenceSurfaces
 {
     public partial class frmReferenceSurfaceFromConstant : Form
     {
-        public naru.ui.SortableBindingList<GCDCore.Project.DEMSurvey> DEMSurveys;
+        public naru.ui.SortableBindingList<DEMSurvey> DEMSurveys;
+        public Surface ReferenceSurface { get; internal set; }
 
         public frmReferenceSurfaceFromConstant()
         {
@@ -47,14 +48,30 @@ namespace GCDCore.UserInterface.SurveyLibrary.ReferenceSurfaces
             valLower.Enabled = rdoMultiple.Checked;
             lblIncrement.Enabled = rdoMultiple.Checked;
             valIncrement.Enabled = rdoMultiple.Checked;
+
+            // Ensure that output path is updated to reflect the new mode
+            txtName_TextChanged(sender, e);
         }
 
         private void txtName_TextChanged(object sender, EventArgs e)
         {
+            if (rdoSingle.Checked)
+            {
+                txtPath.Font = new Font(txtPath.Font, FontStyle.Regular);
 
+                if (string.IsNullOrEmpty(txtName.Text))
+                    txtPath.Text = string.Empty;
+                else
+                    txtPath.Text = GCDCore.Project.ProjectManager.Project.GetRelativePath(GCDCore.Project.ProjectManager.OutputManager.GetReferenceSurfaceRasterPath(txtName.Text));
+            }
+            else
+            {
+                txtPath.Text = "Multiple rasters produced";
+                txtPath.Font = new Font(txtPath.Font, FontStyle.Italic);
+            }
         }
 
-        private bool ValidateForm()
+        private DialogResult ValidateForm()
         {
             // Sanity check to avoid empty names
             txtName.Text.Trim();
@@ -63,7 +80,7 @@ namespace GCDCore.UserInterface.SurveyLibrary.ReferenceSurfaces
             {
                 MessageBox.Show("You must provide a name for the reference surface.", "Missing Name", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 txtName.Select();
-                return false;
+                return DialogResult.None;
             }
 
             if (rdoSingle.Checked)
@@ -72,7 +89,7 @@ namespace GCDCore.UserInterface.SurveyLibrary.ReferenceSurfaces
                 {
                     MessageBox.Show("The GCD project already contains a reference surface with this name. Please choose a unique name for the reference surface.", "Name Already Exists", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     txtName.Select();
-                    return false;
+                    return DialogResult.None;
                 }
             }
 
@@ -81,17 +98,33 @@ namespace GCDCore.UserInterface.SurveyLibrary.ReferenceSurfaces
                 if (valUpper.Value <= valLower.Value)
                 {
                     MessageBox.Show("The upper elevation must be greater than the lower elevation.", "Invalid Elevations", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return DialogResult.None;
+                }
+
+                long count = Convert.ToInt64((valUpper.Value - valLower.Value) / valIncrement.Value);
+                if (count > 20)
+                {
+                    switch (MessageBox.Show(string.Format("This process is about to generate a large number ({0:n0}) of rasters in this GCD project. Are you sure you want to proceed with this operation?", count),
+                         Properties.Resources.ApplicationNameLong, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2))
+                    {
+                        case DialogResult.No:
+                            valUpper.Select();
+                            return DialogResult.None;
+
+                        case DialogResult.Cancel:
+                            return DialogResult.Cancel;
+                    }
                 }
             }
 
-            return true;
+            return DialogResult.OK;
         }
 
         private void cmdOK_Click(object sender, EventArgs e)
         {
-            if (!ValidateForm())
+            DialogResult = ValidateForm();
+            if (DialogResult != DialogResult.OK)
             {
-                this.DialogResult = DialogResult.None;
                 return;
             }
 
@@ -109,13 +142,12 @@ namespace GCDCore.UserInterface.SurveyLibrary.ReferenceSurfaces
             }
             else
             {
-                successMsg = string.Format("{0} reference surfaces generated successfully.", Values.Count);
-
                 for (decimal aVal = valLower.Value; aVal <= valUpper.Value; aVal += valIncrement.Value)
                 {
                     Values.Add((float)aVal);
                 }
-            }
+                    successMsg = string.Format("{0} reference surfaces generated successfully.", Values.Count);
+    }
 
             try
             {
@@ -125,8 +157,8 @@ namespace GCDCore.UserInterface.SurveyLibrary.ReferenceSurfaces
                 {
                     string name = GetUniqueName(value);
                     GCDConsoleLib.Raster rOut = GCDConsoleLib.RasterOperators.Uniform<float>(template, fiOutput, value);
-                    Surface surf = new Surface(name, rOut);
-                    ProjectManager.Project.ReferenceSurfaces[surf.Name] = surf;
+                    ReferenceSurface = new Surface(name, rOut);
+                    ProjectManager.Project.ReferenceSurfaces[ReferenceSurface.Name] = ReferenceSurface;
                 }
 
                 ProjectManager.Project.Save();
@@ -142,11 +174,14 @@ namespace GCDCore.UserInterface.SurveyLibrary.ReferenceSurfaces
 
         private string GetUniqueName(float value)
         {
-            string name = string.Empty;
+            string name = txtName.Text;
             int index = 0;
             do
             {
-                name = string.Format("{0}_{1}", txtName.Text, value.ToString().Replace(".", "").Replace(",", ""));
+                if (rdoMultiple.Checked)
+                {
+                    name = string.Format("{0}_{1}", txtName.Text, value.ToString().Replace(".", "").Replace(",", ""));
+                }
 
                 if (index > 0)
                 {
@@ -157,8 +192,12 @@ namespace GCDCore.UserInterface.SurveyLibrary.ReferenceSurfaces
 
             } while (!GCDCore.Project.ProjectManager.Project.IsReferenceSurfaceNameUnique(name, null));
 
-            return Name;
+            return name;
         }
 
+        private void numericUpDown_Enter(object sender, EventArgs e)
+        {
+            ((NumericUpDown) sender).Select(0, ((NumericUpDown) sender).Text.Length);
+        }
     }
 }

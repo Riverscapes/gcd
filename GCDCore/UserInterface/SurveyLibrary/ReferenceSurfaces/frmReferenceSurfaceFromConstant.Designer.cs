@@ -63,6 +63,7 @@
             this.txtPath.ReadOnly = true;
             this.txtPath.Size = new System.Drawing.Size(241, 20);
             this.txtPath.TabIndex = 3;
+            this.txtPath.TabStop = false;
             // 
             // label2
             // 
@@ -154,6 +155,7 @@
             this.valSingle.Name = "valSingle";
             this.valSingle.Size = new System.Drawing.Size(94, 20);
             this.valSingle.TabIndex = 6;
+            this.valSingle.Enter += new System.EventHandler(this.numericUpDown_Enter);
             // 
             // valUpper
             // 
@@ -167,6 +169,7 @@
             this.valUpper.Name = "valUpper";
             this.valUpper.Size = new System.Drawing.Size(94, 20);
             this.valUpper.TabIndex = 9;
+            this.valUpper.Enter += new System.EventHandler(this.numericUpDown_Enter);
             // 
             // lblUpper
             // 
@@ -200,6 +203,7 @@
             this.valLower.Name = "valLower";
             this.valLower.Size = new System.Drawing.Size(94, 20);
             this.valLower.TabIndex = 11;
+            this.valLower.Enter += new System.EventHandler(this.numericUpDown_Enter);
             // 
             // lblLower
             // 
@@ -237,6 +241,7 @@
             0,
             0,
             131072});
+            this.valIncrement.Enter += new System.EventHandler(this.numericUpDown_Enter);
             // 
             // lblIncrement
             // 
