@@ -92,13 +92,52 @@ namespace GCDCore.UserInterface.Masks
 
         private bool ValidateForm()
         {
+            // Sanity check to prevent empty names
+            txtName.Text = txtName.Text.Trim();
+
             if (string.IsNullOrEmpty(txtName.Text))
             {
                 MessageBox.Show("You must provide a name for the mask.", "Missing Name", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return false;
             }
 
-            if (GCDCore.Project.ProjectManager.Project.is)
+            if (!GCDCore.Project.ProjectManager.Project.IsMaskNameUnique(txtName.Text, null))
+            {
+                MessageBox.Show("This project already contains a mask with this name. Please choose a unique name.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                txtName.Select();
+                return false;
+            }
+
+            if (ucPolygon.Validate())
+            {
+                ucPolygon.Select();
+                return false;
+            }
+
+            // Should be safe after Validate call above
+            GCDConsoleLib.Vector shp = ucPolygon.SelectedItem;
+            //if (GCDCore.Project.ProjectManager.Project. shp)
+
+            if (string.IsNullOrEmpty(cboField.Text))
+            {
+                MessageBox.Show("You must select the field in the ShapeFile that identifies the mask values.", "Missing Mask Field", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                cboField.Select();
+                return false;
+            }
+
+            if (MaskItems.Count < 1)
+            {
+                MessageBox.Show(string.Format("The ShapeFile selected does not contain any valid string values in the {0} field. Please choose a different field or ShapeFile.", cboField.Text), "No Field Values", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                cboField.Select();
+                return false;
+            }
+
+            if (MaskItems.Count(x => !x.Include) < 1)
+            {
+                MessageBox.Show("You must check the box beside at least one field value.", "No Field Values Included", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                grdData.Select();
+                return false;
+            }
 
 
 

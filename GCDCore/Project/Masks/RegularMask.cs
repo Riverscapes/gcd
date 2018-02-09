@@ -22,7 +22,7 @@ namespace GCDCore.Project.Masks
             : base(nodParent)
         {
             _Items = new List<MaskItem>();
-            foreach (XmlNode nodItem in nodParent.SelectNodes("Items\Item"))
+            foreach (XmlNode nodItem in nodParent.SelectNodes("Items/Item"))
             {
                 bool bInclude = bool.Parse(nodItem.SelectSingleNode("Include").InnerText);
                 string fieldValue = nodItem.SelectSingleNode("FieldValue").InnerText;
