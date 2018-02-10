@@ -14,61 +14,61 @@ namespace GCDConsoleLib.GCD.Tests
         [TestMethod()]
         public void GCDAreaVolumeTest()
         {
-            Assert.Fail();
+            Assert.Inconclusive();
         }
 
         [TestMethod()]
         public void EqualsTest()
         {
-            Assert.Fail();
+            Assert.Inconclusive();
         }
 
         [TestMethod()]
         public void AddToSumAndIncrementCounterTest()
         {
-            Assert.Fail();
+            Assert.Inconclusive();
         }
 
         [TestMethod()]
         public void IncrementCountTest()
         {
-            Assert.Fail();
+            Assert.Inconclusive();
         }
 
         [TestMethod()]
         public void AddToSumTest()
         {
-            Assert.Fail();
+            Assert.Inconclusive();
         }
 
         [TestMethod()]
         public void GetAreaTest()
         {
-            Assert.Fail();
+            Assert.Inconclusive();
         }
 
         [TestMethod()]
         public void SetAreaTest()
         {
-            Assert.Fail();
+            Assert.Inconclusive();
         }
 
         [TestMethod()]
         public void GetAreaValueTest()
         {
-            Assert.Fail();
+            Assert.Inconclusive();
         }
 
         [TestMethod()]
         public void GetVolumeTest()
         {
-            Assert.Fail();
+            Assert.Inconclusive();
         }
 
         [TestMethod()]
         public void SetVolumeTest()
         {
-            Assert.Fail();
+            Assert.Inconclusive();
         }
     }
 }

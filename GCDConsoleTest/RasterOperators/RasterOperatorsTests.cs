@@ -92,7 +92,7 @@ namespace GCDConsoleLib.Internal.Operators.Tests
             UnitGroup ug = new UnitGroup(VolumeUnit.CubicMeter, AreaUnit.SquareMeter, LengthUnit.Meter, LengthUnit.Meter);
 
             // And now the budget seg case
-            Vector rPolyMask = new Vector(new FileInfo(DirHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\BudgetMasks\DoD_Geomorphic_Interpretation.shp")));
+            Vector rPolyMask = new Vector(new FileInfo(DirHelpers.GetTestRootPath(@"SulphurGCDMASK\Sulphur_ComplexGCDMask.shp")));
 
             Dictionary<string, DoDStats> testBudgetSeg = RasterOperators.GetStatsMinLoD(rRaw, rThresh, 73.0m, rPolyMask, "Category", ug);
         }
@@ -119,7 +119,7 @@ namespace GCDConsoleLib.Internal.Operators.Tests
             UnitGroup ug = new UnitGroup(VolumeUnit.CubicMeter, AreaUnit.SquareMeter, LengthUnit.Meter, LengthUnit.Meter);
 
             // And now the budget seg case
-            Vector rPolyMask = new Vector(new FileInfo(DirHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\BudgetMasks\DoD_Geomorphic_Interpretation.shp")));
+            Vector rPolyMask = new Vector(new FileInfo(DirHelpers.GetTestRootPath(@"SulphurGCDMASK\Sulphur_ComplexGCDMask.shp")));
             Dictionary<string, DoDStats> testBudgetSeg = RasterOperators.GetStatsPropagated(rTemp2005, rTemp2006, rPolyMask, "Category", ug);
         }
 
@@ -147,7 +147,8 @@ namespace GCDConsoleLib.Internal.Operators.Tests
             UnitGroup ug = new UnitGroup(VolumeUnit.CubicMeter, AreaUnit.SquareMeter, LengthUnit.Meter, LengthUnit.Meter);
 
             // And now the budget seg case
-            Vector rPolyMask = new Vector(new FileInfo(DirHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\BudgetMasks\DoD_Geomorphic_Interpretation.shp")));
+            Vector rPolyMask = new Vector(new FileInfo(DirHelpers.GetTestRootPath(@"SulphurGCDMASK\Sulphur_ComplexGCDMask.shp")));
+
             Dictionary<string, DoDStats> testBudgetSeg = RasterOperators.GetStatsProbalistic(rTemp2005, rTemp2006, rTemp2005, rPolyMask, "Category", ug);
 
         }
@@ -421,15 +422,16 @@ namespace GCDConsoleLib.Internal.Operators.Tests
         [TestCategory("Functional")]
         public void CreateErrorRasterTest()
         {
-            Raster rRaw = new Raster(new FileInfo(DirHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2005Dec_DEM\2005Dec_DEM.img")));
-            Raster rThresh = new Raster(new FileInfo(DirHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2006Feb_DEM\2006Feb_DEM.img")));
+            Assert.Inconclusive();
+            //Raster rRaw = new Raster(new FileInfo(DirHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2005Dec_DEM\2005Dec_DEM.img")));
+            //Raster rThresh = new Raster(new FileInfo(DirHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2006Feb_DEM\2006Feb_DEM.img")));
 
-            UnitGroup ug = new UnitGroup(VolumeUnit.CubicMeter, AreaUnit.SquareMeter, LengthUnit.Meter, LengthUnit.Meter);
-            DoDStats test = RasterOperators.GetStatsMinLoD(rRaw, rThresh, 73.0m, ug);
+            //UnitGroup ug = new UnitGroup(VolumeUnit.CubicMeter, AreaUnit.SquareMeter, LengthUnit.Meter, LengthUnit.Meter);
+            //DoDStats test = RasterOperators.GetStatsMinLoD(rRaw, rThresh, 73.0m, ug);
 
             // And now the budget seg case
-            Vector rPolyMask = new Vector(new FileInfo(DirHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\BudgetMasks\DoD_Geomorphic_Interpretation.shp")));
-            Dictionary<string, DoDStats> testBudgetSeg = RasterOperators.GetStatsMinLoD(rRaw, rThresh, 73.0m, rPolyMask, "Category", ug);
+            //Vector rPolyMask = new Vector(new FileInfo(DirHelpers.GetTestRootPath(@"SulphurGCDMASK\Sulphur_ComplexGCDMask.shp")));
+            //Dictionary<string, DoDStats> testBudgetSeg = RasterOperators.GetStatsMinLoD(rRaw, rThresh, 73.0m, rPolyMask, "Category", ug);
         }
 
         /// <summary>
