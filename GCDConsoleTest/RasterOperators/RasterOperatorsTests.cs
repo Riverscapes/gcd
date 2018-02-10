@@ -509,13 +509,24 @@ namespace GCDConsoleLib.Internal.Operators.Tests
                 foreach (KeyValuePair<string, DoDStats> kvp in statsprobV)
                     Assert.IsTrue(kvp.Value.Equals(statsprobR[kvp.Key]));
 
-                ////Raster errorV = RasterOperators.CreateErrorRaster();
-                ////Raster errorR = RasterOperators.CreateErrorRaster();
+                Dictionary<string, ErrorRasterProperties> props = new Dictionary<string, ErrorRasterProperties>
+                {
+                    {"LiDAR", new ErrorRasterProperties(0.1m) },
+                    {"Total Station", new ErrorRasterProperties(0.2m) }
+                };
+
+                watch.Restart();
+                Raster errorV = RasterOperators.CreateErrorRaster(rDoD, vPolyMaskSimple, "Method", props, new FileInfo(Path.Combine(tmp.Name, "MultiMethodErrorV.tif")));
+                times.Add(string.Format("CreateErrorRaster, Vector, {0}.{1}", watch.Elapsed.Seconds, watch.Elapsed.Milliseconds));
+
+                watch.Restart();
+                Raster errorR = RasterOperators.CreateErrorRaster(rDoD, vPolyMaskSimple, "Method", props, new FileInfo(Path.Combine(tmp.Name, "MultiMethodErrorR.tif")), true);
+                times.Add(string.Format("CreateErrorRaster, Rasterized, {0}.{1}", watch.Elapsed.Seconds, watch.Elapsed.Milliseconds));
+
+                RasterTests.RasterCompare(errorV, errorR);
 
                 foreach (string line in times)
-                    System.Diagnostics.Debug.WriteLine(line);
-
-                Assert.Fail();
+                    Debug.WriteLine(line);
             }
         }
 
@@ -584,13 +595,10 @@ namespace GCDConsoleLib.Internal.Operators.Tests
                 Dictionary<string, DoDStats> statsprobR = RasterOperators.GetStatsProbalistic(rDoD, rThresh, rPropErr, vPolyMask, "Desc_", ug, true);
                 times.Add(string.Format("GetStatsProbalistic, Rasterized, {0}.{1}", watch.Elapsed.Seconds, watch.Elapsed.Milliseconds));
 
-                ////Raster errorV = RasterOperators.CreateErrorRaster();
-                ////Raster errorR = RasterOperators.CreateErrorRaster();
 
                 foreach (string line in times)
-                    System.Diagnostics.Debug.WriteLine(line);
+                    Debug.WriteLine(line);
 
-                Assert.Fail();
             }
         }
     }

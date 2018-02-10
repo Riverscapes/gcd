@@ -312,9 +312,10 @@ namespace GCDConsoleLib
         /// <param name="minLoD">Minimum Level of Detection</param>
         /// <param name="PolygonMask">Vector layer containing the mask polygons</param>
         /// <param name="FieldName">Name of the field in the PolygonMask that contains the distinguishing property on which to group statistics</param>
+        /// <param name="RasterizeFirst">Set to false to allow overlaps (much slower)</param>
         /// <returns></returns>
         public static Dictionary<string, DoDStats> GetStatsMinLoD(Raster rawDoD, Raster thrDoD, decimal minLoD,
-            Vector PolygonMask, string FieldName, UnitGroup units, bool RasterizeFirst = false)
+            Vector PolygonMask, string FieldName, UnitGroup units, bool RasterizeFirst = true)
         {
             Area cellArea = rawDoD.Extent.CellArea(units);
             GetDodMinLodStats theStatsOp;
@@ -357,9 +358,10 @@ namespace GCDConsoleLib
         /// <param name="propErrRaster">Propagated Error Raster Path</param>
         /// <param name="PolygonMask">Vector layer containing the mask polygons</param>
         /// <param name="FieldName">Name of the field in the PolygonMask that contains the distinguishing property on which to group statistics</param>
+        /// <param name="RasterizeFirst">Set to false to allow overlaps (much slower)</param>
         /// <returns></returns>
         public static Dictionary<string, DoDStats> GetStatsPropagated(Raster rawDoD, Raster propErrRaster,
-          Vector PolygonMask, string FieldName, UnitGroup units, bool RasterizeFirst = false)
+          Vector PolygonMask, string FieldName, UnitGroup units, bool RasterizeFirst = true)
         {
             Area cellArea = rawDoD.Extent.CellArea(units);
             GetDoDPropStats theStatsOp;
@@ -417,10 +419,11 @@ namespace GCDConsoleLib
         /// <param name="propErrRaster">Propagated Error Raster Path</param>
         /// <param name="PolygonMask">Vector layer containing the mask polygons</param>
         /// <param name="FieldName">Name of the field in the PolygonMask that contains the distinguishing property on which to group statistics</param>
+        /// <param name="RasterizeFirst">Set to false to allow overlaps (much slower)</param>
         /// <returns></returns>
         enum statsType : byte { raw, thr, err };
         public static Dictionary<string, DoDStats> GetStatsProbalistic(Raster rawDoD, Raster thrDoD, Raster propErrRaster,
-            Vector PolygonMask, string FieldName, UnitGroup units, bool RasterizeFirst = false)
+            Vector PolygonMask, string FieldName, UnitGroup units, bool RasterizeFirst = true)
         {
             Area cellArea = rawDoD.Extent.CellArea(units);
             GetChangeStats raw;
@@ -555,15 +558,32 @@ namespace GCDConsoleLib
         /// <param name="rawDEM"></param>
         /// <param name="props"></param>
         /// <param name="outputPath"></param>
+        /// <param name="RasterizeFirst">Set to false to allow overlaps (much slower)</param>
         /// <returns></returns>
         public static Raster CreateErrorRaster(Raster rawDEM, Vector PolygonMask, string MaskFieldName,
-            Dictionary<string, ErrorRasterProperties> props, FileInfo sOutputRaster, EventHandler<int> progressHandler = null)
+            Dictionary<string, ErrorRasterProperties> props, FileInfo sOutputRaster, 
+            bool RasterizeFirst = true, EventHandler<int> progressHandler = null)
         {
-            //https://stackoverflow.com/questions/2560258/how-to-pass-an-event-to-a-method
-            CreateErrorRaster theStatsOp = new CreateErrorRaster(rawDEM, PolygonMask, MaskFieldName, props, new Raster(rawDEM, sOutputRaster));
-            if (progressHandler != null)
-                theStatsOp.ProgressEvent += progressHandler;
-            return theStatsOp.RunWithOutput();
+            Raster returnRaster;
+            if (RasterizeFirst)
+            {
+                using (VectorRaster tmp = new VectorRaster(rawDEM, PolygonMask, MaskFieldName))
+                {
+                    CreateErrorRaster theStatsOp = new CreateErrorRaster(rawDEM, PolygonMask, MaskFieldName, props, new Raster(rawDEM, sOutputRaster));
+                    if (progressHandler != null)
+                        theStatsOp.ProgressEvent += progressHandler;
+                    returnRaster = theStatsOp.RunWithOutput();
+                }
+            }
+            else
+            {
+                CreateErrorRaster theStatsOp = new CreateErrorRaster(rawDEM, PolygonMask, MaskFieldName, props, new Raster(rawDEM, sOutputRaster));
+                if (progressHandler != null)
+                    theStatsOp.ProgressEvent += progressHandler;
+                returnRaster = theStatsOp.RunWithOutput();
+            }
+            return returnRaster;
+
         }
 
 
@@ -723,9 +743,10 @@ namespace GCDConsoleLib
         /// <param name="numberofBins"></param>
         /// <param name="polygonMask"></param>
         /// <param name="FieldName"></param>
+        /// <param name="RasterizeFirst">Set to false to allow overlaps (much slower)</param>
         /// <returns></returns>
         public static Dictionary<string, Histogram> BinRaster(Raster rInput, int numberofBins, 
-            Vector polygonMask, string FieldName, bool RasterizeFirst = false)
+            Vector polygonMask, string FieldName, bool RasterizeFirst = true)
         {
             BinRaster histOp;
             if (RasterizeFirst)

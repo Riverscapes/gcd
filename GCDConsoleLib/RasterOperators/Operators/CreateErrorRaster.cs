@@ -15,7 +15,7 @@ namespace GCDConsoleLib.Internal.Operators
         private string _fieldname;
 
         // When we use rasterized polygons we use this as the field vals
-        private Dictionary<long, string> _rasterVectorFieldVals;
+        private Dictionary<int, string> _rasterVectorFieldVals;
 
         /// <summary>
         /// Single method Constructor
@@ -51,7 +51,7 @@ namespace GCDConsoleLib.Internal.Operators
         }
 
         /// <summary>
-        /// Multi-method Constructor
+        /// Multi-method Constructor (Pure Vector)
         /// </summary>
         /// <param name="rawDEM"></param>
         /// <param name="PolygonMask"></param>
@@ -66,7 +66,7 @@ namespace GCDConsoleLib.Internal.Operators
         }
 
         /// <summary>
-        /// 
+        /// Multi-method Constructor (Rasterized Vector Method)
         /// </summary>
         /// <param name="rawDEM"></param>
         /// <param name="PolygonMask"></param>
@@ -78,6 +78,8 @@ namespace GCDConsoleLib.Internal.Operators
             base(new List<Raster> { rawDEM }, rPolygonMask, new List<Raster> { rOutputRaster })
         {
             _initMultiMethod(MaskFieldName, props);
+
+            _rasterVectorFieldVals = rPolygonMask.FieldValues;
         }
 
         /// <summary>
@@ -126,6 +128,9 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="stats"></param>
         public double CellChangeCalc(string propkey, List<double[]> data, int id)
         {
+            if (!_props.ContainsKey(propkey))
+                return outNodataVals[0];
+
             switch (_props[propkey].TheType)
             {
                 // This is easy. Just return a value from the correct raster
@@ -162,7 +167,7 @@ namespace GCDConsoleLib.Internal.Operators
                 return;
 
             // With multimethod errors we need to do some fancy footwork
-            if (_hasVectorPolymask && !_hasRasterizedPolymask)
+            if (_hasVectorPolymask)
             {
                 if (_shapemask.Count > 0)
                 {
@@ -177,11 +182,12 @@ namespace GCDConsoleLib.Internal.Operators
                         throw new NotImplementedException("Overlapping shapes is not yet supported");
                 }
             }
-            else if (_hasVectorPolymask && _hasRasterizedPolymask)
+            else if (_hasRasterizedPolymask)
             {
-                if (data[_inputRasters.Count - 1][id] != inNodataVals[_inputRasters.Count - 1])
+                double rPolymaskVal = data[_inputRasters.Count - 1][id];
+                if (rPolymaskVal != inNodataVals[_inputRasters.Count - 1])
                 {
-                    string fldVal = _rasterVectorFieldVals[(long)data[_inputRasters.Count - 1][id]];
+                    string fldVal = _rasterVectorFieldVals[(int)rPolymaskVal];
                     outputs[0][id] = CellChangeCalc(fldVal, data, id);
                 }
             }
