@@ -210,7 +210,11 @@ namespace GCDCore.UserInterface.Project
                 }
                 nodReferenceSurfaces.Expand();
 
-                TreeNode nodMasks = AddTreeNode(nodProject, GCDNodeTypes.MasksGroup, m_sMasks, null, selectItem);
+                TreeNode nodMaskGroup = AddTreeNode(nodProject, GCDNodeTypes.MasksGroup, m_sMasks, null, selectItem);
+                foreach(GCDCore.Project.Masks.Mask aMask in ProjectManager.Project.Masks.Values)
+                {
+                    AddTreeNode(nodMaskGroup, GCDNodeTypes.Mask, aMask.Name, aMask, selectItem);
+                }
 
                 nodInputs.Expand();
                 nodSurveys.Expand();
@@ -1719,8 +1723,10 @@ namespace GCDCore.UserInterface.Project
         private void addRegularMaskToolStripMenuItem_Click(object sender, EventArgs e)
         {
             GCDCore.UserInterface.Masks.frmMaskProperties frm = new Masks.frmMaskProperties();
-            frm.ShowDialog();
-
+            if (frm.ShowDialog() == DialogResult.OK)
+            {
+                LoadTree(new ProjectTreeNode(GCDNodeTypes.Mask, frm.Mask));
+            }
         }
 
         private void addDirectionalMaskToolStripMenuItem_Click(object sender, EventArgs e)

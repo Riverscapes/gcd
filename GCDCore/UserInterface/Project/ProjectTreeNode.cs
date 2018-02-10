@@ -15,6 +15,7 @@
             ReferenceSurfaceGroup,
             ReferenceSurface,
             MasksGroup,
+            Mask,
             AOIGroup,
             AOI,
             AnalysesGroup,

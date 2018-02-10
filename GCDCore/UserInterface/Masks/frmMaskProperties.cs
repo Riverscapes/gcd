@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,12 +8,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using GCDCore.Project;
 
 namespace GCDCore.UserInterface.Masks
 {
     public partial class frmMaskProperties : Form
     {
         public readonly naru.ui.SortableBindingList<GCDCore.Project.Masks.MaskItem> MaskItems;
+        public GCDCore.Project.Masks.RegularMask Mask { get; internal set; }
 
         public frmMaskProperties()
         {
@@ -108,15 +111,51 @@ namespace GCDCore.UserInterface.Masks
                 return false;
             }
 
-            if (ucPolygon.Validate())
+            if (!(ucPolygon.SelectedItem is GCDConsoleLib.Vector))
             {
+                MessageBox.Show("You must choose a mask ShapeFile to continue.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 ucPolygon.Select();
                 return false;
             }
 
             // Should be safe after Validate call above
             GCDConsoleLib.Vector shp = ucPolygon.SelectedItem;
-            //if (GCDCore.Project.ProjectManager.Project. shp)
+
+            if (shp.Features.Count < 1)
+            {
+                MessageBox.Show("The ShapeFile does not contain any features. You must choose a polygon ShapeFile with one or more feature.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                ucPolygon.Select();
+                return false;
+            }
+
+            //
+            // TODO: Validate that hte user actually chose a POLYGON ShapeFile
+            //           
+
+            if (shp.Proj.PrettyWkt.ToLower().Contains("unknown"))
+            {
+                MessageBox.Show("The selected ShapeFile appears to be missing a spatial reference." +
+                    " All GCD ShapeFiles must possess a spatial reference and it must be the same spatial reference for all rasters in a GCD project.", "Missing Spatial Reference", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                ucPolygon.Select();
+                return false;
+            }
+
+            if (ProjectManager.Project.DEMSurveys.Count > 0)
+            {
+                if (!ProjectManager.Project.DEMSurveys.Values.First<DEMSurvey>().Raster.Proj.IsSame(shp.Proj))
+                {
+                    string wkt = ProjectManager.Project.DEMSurveys.Values.First<DEMSurvey>().Raster.Proj.Wkt;
+
+                    MessageBox.Show("The coordinate system of the selected ShapeFile:" + Environment.NewLine + Environment.NewLine + shp.Proj.PrettyWkt + Environment.NewLine + Environment.NewLine +
+                       "does not match that of the GCD project:" + Environment.NewLine + Environment.NewLine + wkt + Environment.NewLine + Environment.NewLine +
+                       "All ShapeFiles and rasters within a GCD project must have the identical coordinate system. However, small discrepencies in coordinate system names might cause the two coordinate systems to appear different. " +
+                       "If you believe that the selected ShapeFile does in fact possess the same coordinate system as the GCD project then use the ArcToolbox 'Define Projection' geoprocessing tool in the " +
+                       "'Data Management -> Projection & Transformations' Toolbox to correct the problem with the selected raster by defining the coordinate system as:"
+                       + Environment.NewLine + Environment.NewLine + wkt + Environment.NewLine + Environment.NewLine + "Then try importing it into the GCD again.",
+                       Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return false;
+                }
+            }
 
             if (string.IsNullOrEmpty(cboField.Text))
             {
@@ -139,12 +178,45 @@ namespace GCDCore.UserInterface.Masks
                 return false;
             }
 
-
-
-
             return true;
         }
 
+        private void grdData_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
+        {
+            if (string.IsNullOrEmpty(e.FormattedValue.ToString()))
+            {
+                MessageBox.Show("You must provide a non-empty label for every field value.", "Empty Label", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                e.Cancel = true;
+            }
+        }
 
+        private void cmdOK_Click(object sender, EventArgs e)
+        {
+            if (!ValidateForm())
+            {
+                DialogResult = DialogResult.None;
+                return;
+            }
+
+            try
+            {
+                Cursor = Cursors.WaitCursor;
+
+                FileInfo fiMask = ProjectManager.Project.GetAbsolutePath(txtPath.Text);
+                fiMask.Directory.Create();
+
+                ucPolygon.SelectedItem.Copy(fiMask);
+
+                Mask = new GCDCore.Project.Masks.RegularMask(txtName.Text, fiMask, cboField.Text, MaskItems.ToList<GCDCore.Project.Masks.MaskItem>());
+                ProjectManager.Project.Masks[Mask.Name] = Mask;
+                ProjectManager.Project.Save();
+
+                Cursor = Cursors.Default;
+            }
+            catch(Exception ex)
+            {
+                naru.error.ExceptionUI.HandleException(ex, "Error creating regular mask.");
+            }
+        }
     }
 }

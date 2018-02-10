@@ -187,7 +187,7 @@ namespace GCDCore.UserInterface.Project
             this.imgTreeImageList.Images.SetKeyName(8, "BrowseFolder.png");
             this.imgTreeImageList.Images.SetKeyName(9, "Reservoir.png");
             this.imgTreeImageList.Images.SetKeyName(10, "BrowseFolder.png");
-            this.imgTreeImageList.Images.SetKeyName(11, "BrowseFolder.png");
+            this.imgTreeImageList.Images.SetKeyName(11, "mask.png");
             this.imgTreeImageList.Images.SetKeyName(12, "AOI.png");
             this.imgTreeImageList.Images.SetKeyName(13, "BrowseFolder.png");
             this.imgTreeImageList.Images.SetKeyName(14, "BrowseFolder.png");
@@ -879,7 +879,7 @@ namespace GCDCore.UserInterface.Project
             this.specifyErrorSurfaceToolStripMenuItem,
             this.deriveErrorSurfaceToolStripMenuItem2});
             this.cmsRefSurface.Name = "cmsRefSurface";
-            this.cmsRefSurface.Size = new System.Drawing.Size(235, 120);
+            this.cmsRefSurface.Size = new System.Drawing.Size(235, 98);
             // 
             // addReferenceSurfaceToMapToolStripMenuItem
             // 

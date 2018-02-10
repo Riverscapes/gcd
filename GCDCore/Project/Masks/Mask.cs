@@ -34,6 +34,7 @@ namespace GCDCore.Project.Masks
         public XmlNode  Serialize(XmlNode nodParent)
         {
             XmlNode nodMask = nodParent.AppendChild(nodParent.OwnerDocument.CreateElement("Mask"));
+            nodMask.AppendChild(nodParent.OwnerDocument.CreateElement("Name")).InnerText = Name;
             nodMask.AppendChild(nodParent.OwnerDocument.CreateElement("ShapeFile")).InnerText = ProjectManager.Project.GetRelativePath(_ShapeFile);
             nodMask.AppendChild(nodParent.OwnerDocument.CreateElement("Field")).InnerText = _Field;
             return nodMask;

@@ -163,6 +163,16 @@ namespace GCDCore.Project
                 }
             }
 
+            if (Masks.Count > 0)
+            {
+                XmlNode nodMasks = nodProject.AppendChild(xmlDoc.CreateElement("Masks"));
+                foreach(GCDCore.Project.Masks.Mask mask in Masks.Values)
+                {
+                    if (mask is GCDCore.Project.Masks.RegularMask)
+                        ((GCDCore.Project.Masks.RegularMask)mask).Serialize(nodMasks);
+                }
+            }
+
             if (DoDs.Count > 0)
             {
                 XmlNode nodDoDs = nodProject.AppendChild(xmlDoc.CreateElement("DoDs"));
@@ -226,6 +236,15 @@ namespace GCDCore.Project
                 ProjectManager.Project.ReferenceSurfaces[surf.Name] = surf;
             }
 
+            foreach(XmlNode nodMask in nodProject.SelectNodes("Masks/Mask"))
+            {
+                if (nodMask.SelectSingleNode("Items") is XmlNode)
+                {
+                    GCDCore.Project.Masks.RegularMask regMask = new Project.Masks.RegularMask(nodMask);
+                    ProjectManager.Project.Masks[regMask.Name] = regMask; 
+                }
+            }
+
             foreach (XmlNode nodDoD in nodProject.SelectNodes("DoDs/DoD"))
             {
                 DoDBase dod = null;
@@ -239,7 +258,7 @@ namespace GCDCore.Project
                 ProjectManager.Project.DoDs[dod.Name] = dod;
             }
 
-            foreach(XmlNode nodInter in nodProject.SelectNodes("InterComparisons/InterComparisons"))
+            foreach (XmlNode nodInter in nodProject.SelectNodes("InterComparisons/InterComparisons"))
             {
                 InterComparison inter = new InterComparison(nodInter, ProjectManager.Project.DoDs);
                 ProjectManager.Project.InterComparisons[inter.Name] = inter;
