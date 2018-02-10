@@ -18,6 +18,9 @@ namespace GCDConsoleLib.Tests
             Assert.AreEqual(rVector.LayerName, "StressTest");
             Assert.AreEqual(rVector.GISFileInfo.FullName, sFilepath);
             Assert.IsNotNull(rVector.Proj);
+
+            Assert.AreEqual(rVector.GeometryType.SimpleType, GDalGeometryType.SimpleTypes.LineString);
+
         }
 
         [TestMethod()]

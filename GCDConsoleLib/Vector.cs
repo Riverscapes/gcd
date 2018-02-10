@@ -55,6 +55,16 @@ namespace GCDConsoleLib
                 UnloadDS();
         }
 
+        private GDalGeometryType _geometryType;
+        public GDalGeometryType GeometryType
+        {
+            get
+            {
+                return _geometryType;
+            }
+            protected set { _geometryType = value; }
+        }
+
         /// <summary>
         /// Object hygiene is super important with GDAL. 
         /// </summary>
@@ -364,6 +374,8 @@ namespace GCDConsoleLib
             Layer mLayer = _ds.GetLayerByIndex(0);
             FIDColumn = mLayer.GetFIDColumn();
             LayerName = mLayer.GetName();
+
+            _geometryType = new GDalGeometryType(mLayer.GetGeomType());
 
             // Get our FEATURE definitions
             Feature mFeat = mLayer.GetNextFeature();
