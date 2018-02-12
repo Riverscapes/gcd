@@ -68,55 +68,58 @@ namespace GCDCore.Engines
                 var nsmgr = new XmlNamespaceManager(xmlDoc.NameTable);
                 nsmgr.AddNamespace("ss", "urn:schemas-microsoft-com:office:spreadsheet");
 
-                //find areal row
+                int DoDCount = 0;
+                XmlNode ArealRow;
+
                 string NamedCell = "ArealDoDName";
-                XmlNode ArealRow= xmlDoc.SelectSingleNode("//ss:Row[ss:Cell[ss:NamedCell[@ss:Name='" + NamedCell + "']]]", nsmgr); // gets the cell with the named cell name
+                ArealRow = xmlDoc.SelectSingleNode("//ss:Row[ss:Cell[ss:NamedCell[@ss:Name='" + NamedCell + "']]]", nsmgr); // gets the cell with the named cell name
 
-                XmlNode ArealRowClone = ArealRow.Clone();
+                UnitsNet.Area ca = ProjectManager.Project.CellArea;
+                DoDSummaryDisplayOptions options = new DoDSummaryDisplayOptions(ProjectManager.Project.Units);
 
-                XmlNode parent = ArealRow.ParentNode;
+                foreach (KeyValuePair<string, GCDConsoleLib.GCD.DoDStats> kvp in dodStats)
+                {
+                    string DoDName = kvp.Key;
+                    GCDConsoleLib.GCD.DoDStats dodStat = kvp.Value;
 
-                parent.InsertAfter(ArealRowClone, ArealRow);
+                    DoDCount += 1;
+
+
+                    if (DoDCount > 1)
+                    {
+                        //find areal row
+                        XmlNode ArealRowClone = ArealRow.Clone();
+                        XmlNode parent = ArealRow.ParentNode;
+                        parent.InsertAfter(ArealRowClone, ArealRow);
+                        ArealRow = ArealRowClone;
+                    }
+
+                    SetNameCellValue(ArealRow, nsmgr, "ArealDoDName", DoDName);
+
+                    //using same pattern as ucDoDSummary
+                    string ArealLoweringRaw = dodStat.ErosionRaw.GetArea(ca).As(options.AreaUnits).ToString();
+                    SetNameCellValue(ArealRow, nsmgr, "ArealLoweringRaw", ArealLoweringRaw);
+
+                    string ArealLoweringThresholded = dodStat.ErosionThr.GetArea(ca).As(options.AreaUnits).ToString();
+                    SetNameCellValue(ArealRow, nsmgr, "ArealLoweringThresholded", ArealLoweringThresholded);
+
+                    string ArealRaisingRaw = dodStat.DepositionRaw.GetArea(ca).As(options.AreaUnits).ToString();
+                    SetNameCellValue(ArealRow, nsmgr, "ArealRaisingRaw", ArealRaisingRaw);
+
+                    string ArealRaisingThresholded = dodStat.DepositionThr.GetArea(ca).As(options.AreaUnits).ToString();
+                    SetNameCellValue(ArealRow, nsmgr, "ArealRaisingThresholded", ArealRaisingThresholded);
+                }
+
 
                 //need to set after adding rows
                 //pattern:
                 //<Table ss:ExpandedColumnCount="52" ss:ExpandedRowCount="29" x:FullColumns="1" x:FullRows="1" ss:DefaultRowHeight="15">
                 XmlNode TableNode= xmlDoc.SelectSingleNode("//ss:Table", nsmgr); // gets the cell with the named cell name
 
-                string OrigExpandedRowCount = TableNode.Attributes["ExpandedRowCount"].Value;
+                string OrigExpandedRowCount = TableNode.Attributes["ss:ExpandedRowCount"].Value;
                 int iOrigExpandedRowCount = int.Parse(OrigExpandedRowCount);
-                int iNewExpandedRowCount = iOrigExpandedRowCount + 1;
-                TableNode.Attributes["ExpandedRowCount"].Value = iNewExpandedRowCount.ToString();
-
-
-
-
-
-                GCDConsoleLib.GCD.DoDStats dodStat;
-
-                string dodName = dodStats.Keys.First();
-
-                dodStat = dodStats[dodName];
-
-                SetNameCellValue(xmlDoc, nsmgr, "ArealDoDName", dodName);
-
-
-                //using same pattern as ucDoDSummary
-
-                UnitsNet.Area ca = ProjectManager.Project.CellArea;
-                DoDSummaryDisplayOptions options = new DoDSummaryDisplayOptions(ProjectManager.Project.Units);
-
-                string ArealLoweringRaw = dodStat.ErosionRaw.GetArea(ca).As(options.AreaUnits).ToString();
-                SetNameCellValue(xmlDoc, nsmgr, "ArealLoweringRaw", ArealLoweringRaw);
-
-                string ArealLoweringThresholded = dodStat.ErosionThr.GetArea(ca).As(options.AreaUnits).ToString();
-                SetNameCellValue(xmlDoc, nsmgr, "ArealLoweringThresholded", ArealLoweringThresholded);
-
-                string ArealRaisingRaw = dodStat.DepositionRaw.GetArea(ca).As(options.AreaUnits).ToString();
-                SetNameCellValue(xmlDoc, nsmgr, "ArealRaisingRaw", ArealRaisingRaw);
-
-                string ArealRaisingThresholded = dodStat.DepositionThr.GetArea(ca).As(options.AreaUnits).ToString();
-                SetNameCellValue(xmlDoc, nsmgr, "ArealRaisingThresholded", ArealRaisingThresholded);
+                int iNewExpandedRowCount = iOrigExpandedRowCount + DoDCount - 1;
+                TableNode.Attributes["ss:ExpandedRowCount"].Value = iNewExpandedRowCount.ToString();
 
             }
             catch (Exception ex)
@@ -129,7 +132,7 @@ namespace GCDCore.Engines
 
         }
 
-        private static void SetNameCellValue(XmlDocument xmlDoc, XmlNamespaceManager nsmgr, string NamedCell, string value)
+        private static void SetNameCellValue(XmlNode xmlDoc, XmlNamespaceManager nsmgr, string NamedCell, string value)
         {
             XmlNodeList NamedCells = xmlDoc.SelectNodes("//ss:Cell[ss:NamedCell[@ss:Name='" + NamedCell + "']]", nsmgr); // gets the cell with the named cell name
 
