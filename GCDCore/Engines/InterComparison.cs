@@ -122,19 +122,10 @@ namespace GCDCore.Engines
                 int iNewExpandedRowCount = iOrigExpandedRowCount + DoDCount - 1;
                 TableNode.Attributes["ss:ExpandedRowCount"].Value = iNewExpandedRowCount.ToString();
 
-                //calculate total raw
-                string NamedCellTotalRaw = "TotalRaw";
-                XmlNode TotalRawCell = xmlDoc.SelectSingleNode("//ss:Cell[ss:NamedCell[@ss:Name='" + NamedCellTotalRaw + "']]", nsmgr); // gets the cell with the named cell name
-
-                string formula = "=SUM(R[-" + DoDCount + "]C:R[-1]C)";
-                TotalRawCell.Attributes["ss:Formula"].Value = formula;
-
-                //calculate total thresholded
-                string NamedCellTotalThresholded= "TotalThresholded";
-                XmlNode TotalThresholdedCell = xmlDoc.SelectSingleNode("//ss:Cell[ss:NamedCell[@ss:Name='" + NamedCellTotalThresholded + "']]", nsmgr); // gets the cell with the named cell name
-
-                string TotalThresholdedformula = "=SUM(R[-" + DoDCount + "]C:R[-1]C)";
-                TotalThresholdedCell.Attributes["ss:Formula"].Value = TotalThresholdedformula;
+                //Update sum formulas
+                SetSumFormula(xmlDoc, nsmgr, "TotalRaw", DoDCount);  //update formula for total raw
+                SetSumFormula(xmlDoc, nsmgr, "TotalThresholded", DoDCount);  //update formula for total thresholded
+                SetSumFormula(xmlDoc, nsmgr, "SumPctTotalArealLowering", DoDCount); //update formula for SumPctTotalArealLowering
 
                 //update names range
                 //      <Names>/< NamedRange ss:Name="TotalThresholded" ss:RefersTo="=Intercomparison!R5C3"/>
@@ -173,6 +164,15 @@ namespace GCDCore.Engines
             XmlNode CellData = NamedCells[0].SelectSingleNode("ss:Data", nsmgr);
 
             CellData.InnerText = value;
+
+        }
+
+        private static void SetSumFormula(XmlNode xmlDoc, XmlNamespaceManager nsmgr, string SumFormularNamedCell, int SumCount)
+        {
+            XmlNode SumFormulaCell = xmlDoc.SelectSingleNode("//ss:Cell[ss:NamedCell[@ss:Name='" + SumFormularNamedCell + "']]", nsmgr); // gets the cell with the named cell name
+
+            string SumFormula = "=SUM(R[-" + SumCount + "]C:R[-1]C)";
+            SumFormulaCell.Attributes["ss:Formula"].Value = SumFormula;
 
         }
     }
