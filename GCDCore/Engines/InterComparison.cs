@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using GCDCore.Project;
+using GCDCore.UserInterface.ChangeDetection;
 
 namespace GCDCore.Engines
 {
@@ -62,25 +64,43 @@ namespace GCDCore.Engines
             {
 
 
-            //xpaths needs to be specified with namespace, see e.g. https://stackoverflow.com/questions/36504656/how-to-select-xml-nodes-by-position-linq-or-xpath
-            var nsmgr = new XmlNamespaceManager(xmlDoc.NameTable);
-            nsmgr.AddNamespace("ss", "urn:schemas-microsoft-com:office:spreadsheet");
-            XmlNodeList nodes = xmlDoc.SelectNodes("//ss:Row", nsmgr);
+                //xpaths needs to be specified with namespace, see e.g. https://stackoverflow.com/questions/36504656/how-to-select-xml-nodes-by-position-linq-or-xpath
+                var nsmgr = new XmlNamespaceManager(xmlDoc.NameTable);
+                nsmgr.AddNamespace("ss", "urn:schemas-microsoft-com:office:spreadsheet");
 
-            XmlNodeList nodes2 = xmlDoc.SelectNodes("//ss:NamedCell", nsmgr);
+                /*
+                XmlNodeList nodes6 = xmlDoc.SelectNodes("//ss:Cell[ss:NamedCell[@ss:Name='ArealDoDName']]", nsmgr); // gets the cell with the named cell name
 
-            XmlNodeList nodes3 = xmlDoc.SelectNodes("//ss:Cell/ss:NamedCell", nsmgr);
-
-            XmlNodeList nodes4 = xmlDoc.SelectNodes("//ss:Cell[ss:NamedCell]", nsmgr);
-
-            //XmlNodeList nodes5 = xmlDoc.SelectNodes("//x:Cell[x:NamedCell@Name='ArealDoDName']", nsmgr);
-            XmlNodeList nodes5 = xmlDoc.SelectNodes("//ss:NamedCell[@ss:Name='ArealDoDName']", nsmgr); // gets named cell
-
-            XmlNodeList nodes6 = xmlDoc.SelectNodes("//ss:Cell[ss:NamedCell[@ss:Name='ArealDoDName']]", nsmgr); // gets the cell with the named cell name
-
-                XmlNode CellData = nodes6[0].SelectSingleNode("ss:Data");
+                XmlNode CellData = nodes6[0].SelectSingleNode("ss:Data", nsmgr);
 
                 CellData.InnerText = dodStats.Keys.First();
+                */
+
+                GCDConsoleLib.GCD.DoDStats dodStat;
+
+                string dodName = dodStats.Keys.First();
+
+                dodStat = dodStats[dodName];
+
+                SetNameCellValue(xmlDoc, nsmgr, "ArealDoDName", dodName);
+
+
+                //using same pattern as ucDoDSummary
+
+                UnitsNet.Area ca = ProjectManager.Project.CellArea;
+                DoDSummaryDisplayOptions options = new DoDSummaryDisplayOptions(ProjectManager.Project.Units);
+
+                string ArealLoweringRaw = dodStat.ErosionRaw.GetArea(ca).As(options.AreaUnits).ToString();
+                SetNameCellValue(xmlDoc, nsmgr, "ArealLoweringRaw", ArealLoweringRaw);
+
+                string ArealLoweringThresholded = dodStat.ErosionThr.GetArea(ca).As(options.AreaUnits).ToString();
+                SetNameCellValue(xmlDoc, nsmgr, "ArealLoweringThresholded", ArealLoweringThresholded);
+
+                string ArealRaisingRaw = dodStat.DepositionRaw.GetArea(ca).As(options.AreaUnits).ToString();
+                SetNameCellValue(xmlDoc, nsmgr, "ArealRaisingRaw", ArealRaisingRaw);
+
+                string ArealRaisingThresholded = dodStat.DepositionThr.GetArea(ca).As(options.AreaUnits).ToString();
+                SetNameCellValue(xmlDoc, nsmgr, "ArealRaisingThresholded", ArealRaisingThresholded);
 
             }
             catch (Exception ex)
@@ -90,6 +110,16 @@ namespace GCDCore.Engines
             Console.WriteLine("DONE!");
             xmlDoc.Save(output.FullName);
 
+
+        }
+
+        private static void SetNameCellValue(XmlDocument xmlDoc, XmlNamespaceManager nsmgr, string NamedCell, string value)
+        {
+            XmlNodeList NamedCells = xmlDoc.SelectNodes("//ss:Cell[ss:NamedCell[@ss:Name='" + NamedCell + "']]", nsmgr); // gets the cell with the named cell name
+
+            XmlNode CellData = NamedCells[0].SelectSingleNode("ss:Data", nsmgr);
+
+            CellData.InnerText = value;
 
         }
     }
