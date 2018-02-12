@@ -68,13 +68,29 @@ namespace GCDCore.Engines
                 var nsmgr = new XmlNamespaceManager(xmlDoc.NameTable);
                 nsmgr.AddNamespace("ss", "urn:schemas-microsoft-com:office:spreadsheet");
 
-                /*
-                XmlNodeList nodes6 = xmlDoc.SelectNodes("//ss:Cell[ss:NamedCell[@ss:Name='ArealDoDName']]", nsmgr); // gets the cell with the named cell name
+                //find areal row
+                string NamedCell = "ArealDoDName";
+                XmlNode ArealRow= xmlDoc.SelectSingleNode("//ss:Row[ss:Cell[ss:NamedCell[@ss:Name='" + NamedCell + "']]]", nsmgr); // gets the cell with the named cell name
 
-                XmlNode CellData = nodes6[0].SelectSingleNode("ss:Data", nsmgr);
+                XmlNode ArealRowClone = ArealRow.Clone();
 
-                CellData.InnerText = dodStats.Keys.First();
-                */
+                XmlNode parent = ArealRow.ParentNode;
+
+                parent.InsertAfter(ArealRowClone, ArealRow);
+
+                //need to set after adding rows
+                //pattern:
+                //<Table ss:ExpandedColumnCount="52" ss:ExpandedRowCount="29" x:FullColumns="1" x:FullRows="1" ss:DefaultRowHeight="15">
+                XmlNode TableNode= xmlDoc.SelectSingleNode("//ss:Table", nsmgr); // gets the cell with the named cell name
+
+                string OrigExpandedRowCount = TableNode.Attributes["ExpandedRowCount"].Value;
+                int iOrigExpandedRowCount = int.Parse(OrigExpandedRowCount);
+                int iNewExpandedRowCount = iOrigExpandedRowCount + 1;
+                TableNode.Attributes["ExpandedRowCount"].Value = iNewExpandedRowCount.ToString();
+
+
+
+
 
                 GCDConsoleLib.GCD.DoDStats dodStat;
 
