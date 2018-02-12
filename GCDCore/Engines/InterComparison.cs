@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace GCDCore.Engines
 {
@@ -34,6 +35,62 @@ namespace GCDCore.Engines
             }
 
             // TODO: implement inter-comparison template here.
+
+            //read template
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.Load(template.FullName);
+
+            //find node to replace name
+            //https://msdn.microsoft.com/library/1431789e-c545-4765-8c09-3057e07d3041
+            //XmlNode root = xmlDoc.DocumentElement;
+
+            //XmlNodeList titleNodes = root.SelectNodes("//*"); //works
+            //XmlNodeList titleNodes = xmlDoc.ChildNodes;
+            //int count = titleNodes.Count;
+            //save document
+
+            //XmlNode titleNode = root.SelectSingleNode("Worksheet");
+
+
+            /*
+            foreach (XmlNode nodDEM in root.SelectNodes("Worksheet"))
+            {
+                Console.WriteLine(nodDEM.InnerText);
+            }
+            */
+            try
+            {
+
+
+            //xpaths needs to be specified with namespace, see e.g. https://stackoverflow.com/questions/36504656/how-to-select-xml-nodes-by-position-linq-or-xpath
+            var nsmgr = new XmlNamespaceManager(xmlDoc.NameTable);
+            nsmgr.AddNamespace("ss", "urn:schemas-microsoft-com:office:spreadsheet");
+            XmlNodeList nodes = xmlDoc.SelectNodes("//ss:Row", nsmgr);
+
+            XmlNodeList nodes2 = xmlDoc.SelectNodes("//ss:NamedCell", nsmgr);
+
+            XmlNodeList nodes3 = xmlDoc.SelectNodes("//ss:Cell/ss:NamedCell", nsmgr);
+
+            XmlNodeList nodes4 = xmlDoc.SelectNodes("//ss:Cell[ss:NamedCell]", nsmgr);
+
+            //XmlNodeList nodes5 = xmlDoc.SelectNodes("//x:Cell[x:NamedCell@Name='ArealDoDName']", nsmgr);
+            XmlNodeList nodes5 = xmlDoc.SelectNodes("//ss:NamedCell[@ss:Name='ArealDoDName']", nsmgr); // gets named cell
+
+            XmlNodeList nodes6 = xmlDoc.SelectNodes("//ss:Cell[ss:NamedCell[@ss:Name='ArealDoDName']]", nsmgr); // gets the cell with the named cell name
+
+                XmlNode CellData = nodes6[0].SelectSingleNode("ss:Data");
+
+                CellData.InnerText = dodStats.Keys.First();
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            Console.WriteLine("DONE!");
+            xmlDoc.Save(output.FullName);
+
+
         }
     }
 }
