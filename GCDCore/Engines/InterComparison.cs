@@ -138,25 +138,6 @@ namespace GCDCore.Engines
                 UpdateNamedRangeRefersTo(xmlDoc, nsmgr, "SumThresholdedArealSurfaceRaising", DoDCount - 1);
                 UpdateNamedRangeRefersTo(xmlDoc, nsmgr, "SumThresholdedArealDetectableChange", DoDCount - 1);
 
-                /*
-                //      <Names>/< NamedRange ss:Name="TotalThresholded" ss:RefersTo="=Intercomparison!R5C3"/>
-                XmlNode TotalThresholdedNamedRange = xmlDoc.SelectSingleNode("//ss:Names/ss:NamedRange[@ss:Name='TotalThresholded']", nsmgr); // gets the cell with the named cell name
-                string refersto = TotalThresholdedNamedRange.Attributes["ss:RefersTo"].Value;
-
-                //match R*C*
-                Regex r = new Regex(@".*!R(.)C.", RegexOptions.IgnoreCase);
-                Match m = r.Match(refersto);
-                string sRow = m.Groups[1].Value;
-                int iRow = int.Parse(sRow);
-
-                iRow = iRow + DoDCount - 1;
-
-                var pattern = @"(.*!)(R)(.)(C.)";
-                var replaced = Regex.Replace(refersto, pattern, "$1R" + iRow + "$4");
-
-                TotalThresholdedNamedRange.Attributes["ss:RefersTo"].Value = replaced;
-                */
-
             }
             catch (Exception ex)
             {
