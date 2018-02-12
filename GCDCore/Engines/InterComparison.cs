@@ -123,11 +123,22 @@ namespace GCDCore.Engines
                 TableNode.Attributes["ss:ExpandedRowCount"].Value = iNewExpandedRowCount.ToString();
 
                 //Update sum formulas
-                SetSumFormula(xmlDoc, nsmgr, "TotalRaw", DoDCount);  //update formula for total raw
-                SetSumFormula(xmlDoc, nsmgr, "TotalThresholded", DoDCount);  //update formula for total thresholded
-                SetSumFormula(xmlDoc, nsmgr, "SumPctTotalArealLowering", DoDCount); //update formula for SumPctTotalArealLowering
+                SetSumFormula(xmlDoc, nsmgr, "SumRawArealSurfaceLowering", DoDCount);
+                SetSumFormula(xmlDoc, nsmgr, "SumThresholdedArealSurfaceLowering", DoDCount);
+                SetSumFormula(xmlDoc, nsmgr, "SumPctTotalArealLowering", DoDCount);
+                SetSumFormula(xmlDoc, nsmgr, "SumRawArealSurfaceRaising", DoDCount);
+                SetSumFormula(xmlDoc, nsmgr, "SumThresholdedArealSurfaceRaising", DoDCount);
+                SetSumFormula(xmlDoc, nsmgr, "SumPctTotalArealRaising", DoDCount);
+                SetSumFormula(xmlDoc, nsmgr, "SumThresholdedArealDetectableChange", DoDCount);
+                SetSumFormula(xmlDoc, nsmgr, "SumPctTotalDetecableChange", DoDCount);
+                SetSumFormula(xmlDoc, nsmgr, "SumTotalAreaOfInterest", DoDCount);
 
                 //update names range
+                UpdateNamedRangeRefersTo(xmlDoc, nsmgr, "SumThresholdedArealSurfaceLowering", DoDCount - 1);
+                UpdateNamedRangeRefersTo(xmlDoc, nsmgr, "SumThresholdedArealSurfaceRaising", DoDCount - 1);
+                UpdateNamedRangeRefersTo(xmlDoc, nsmgr, "SumThresholdedArealDetectableChange", DoDCount - 1);
+
+                /*
                 //      <Names>/< NamedRange ss:Name="TotalThresholded" ss:RefersTo="=Intercomparison!R5C3"/>
                 XmlNode TotalThresholdedNamedRange = xmlDoc.SelectSingleNode("//ss:Names/ss:NamedRange[@ss:Name='TotalThresholded']", nsmgr); // gets the cell with the named cell name
                 string refersto = TotalThresholdedNamedRange.Attributes["ss:RefersTo"].Value;
@@ -144,7 +155,7 @@ namespace GCDCore.Engines
                 var replaced = Regex.Replace(refersto, pattern, "$1R" + iRow + "$4");
 
                 TotalThresholdedNamedRange.Attributes["ss:RefersTo"].Value = replaced;
-
+                */
 
             }
             catch (Exception ex)
@@ -173,6 +184,26 @@ namespace GCDCore.Engines
 
             string SumFormula = "=SUM(R[-" + SumCount + "]C:R[-1]C)";
             SumFormulaCell.Attributes["ss:Formula"].Value = SumFormula;
+
+        }
+
+        private static void UpdateNamedRangeRefersTo(XmlNode xmlDoc, XmlNamespaceManager nsmgr, string NamedRange, int AddedRows)
+        {
+            XmlNode NamedRangeNode = xmlDoc.SelectSingleNode("//ss:Names/ss:NamedRange[@ss:Name='" + NamedRange + "']", nsmgr); // gets the cell with the named cell name
+            string refersto = NamedRangeNode.Attributes["ss:RefersTo"].Value;
+
+            //match R*C*
+            Regex r = new Regex(@".*!R(.)C.", RegexOptions.IgnoreCase);
+            Match m = r.Match(refersto);
+            string sRow = m.Groups[1].Value;
+            int iRow = int.Parse(sRow);
+
+            iRow = iRow + AddedRows;
+
+            var pattern = @"(.*!)(R)(.)(C.)";
+            var replaced = Regex.Replace(refersto, pattern, "$1R" + iRow + "$4");
+
+            NamedRangeNode.Attributes["ss:RefersTo"].Value = replaced;
 
         }
     }

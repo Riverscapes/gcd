@@ -35,7 +35,7 @@
     <Style ss:ID="s20" ss:Name="Percent">
       <NumberFormat ss:Format="0%"/>
     </Style>
-    <Style ss:ID="m51906304">
+    <Style ss:ID="m52086528">
       <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
       <Borders>
         <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
@@ -45,7 +45,7 @@
       <Font ss:FontName="Calibri" x:Family="Swiss" ss:Color="#000000"/>
       <Interior ss:Color="#E7E6E6" ss:Pattern="Solid"/>
     </Style>
-    <Style ss:ID="m51906324">
+    <Style ss:ID="m52086548">
       <Alignment ss:Horizontal="Center" ss:Vertical="Top"/>
       <Borders>
         <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
@@ -55,7 +55,7 @@
       <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11" ss:Color="#000000"/>
       <Interior ss:Color="#E7E6E6" ss:Pattern="Solid"/>
     </Style>
-    <Style ss:ID="m51906344">
+    <Style ss:ID="m52086568">
       <Alignment ss:Horizontal="Center" ss:Vertical="Top"/>
       <Borders>
         <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
@@ -65,7 +65,7 @@
       <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11" ss:Color="#000000"/>
       <Interior ss:Color="#E7E6E6" ss:Pattern="Solid"/>
     </Style>
-    <Style ss:ID="m51906364">
+    <Style ss:ID="m52086588">
       <Alignment ss:Horizontal="Center" ss:Vertical="Top" ss:WrapText="1"/>
       <Borders>
         <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
@@ -74,7 +74,7 @@
       </Borders>
       <Interior ss:Color="#E7E6E6" ss:Pattern="Solid"/>
     </Style>
-    <Style ss:ID="m51906384">
+    <Style ss:ID="m52086608">
       <Alignment ss:Horizontal="Center" ss:Vertical="Top" ss:WrapText="1"/>
       <Borders>
         <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
@@ -83,7 +83,7 @@
       </Borders>
       <Interior ss:Color="#E7E6E6" ss:Pattern="Solid"/>
     </Style>
-    <Style ss:ID="m52086304">
+    <Style ss:ID="m51906528">
       <Alignment ss:Horizontal="Center" ss:Vertical="Top"/>
       <Borders>
         <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
@@ -93,7 +93,7 @@
       <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11" ss:Color="#000000"/>
       <Interior ss:Color="#E7E6E6" ss:Pattern="Solid"/>
     </Style>
-    <Style ss:ID="m52086324">
+    <Style ss:ID="m51906548">
       <Alignment ss:Horizontal="Center" ss:Vertical="Top"/>
       <Borders>
         <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
@@ -103,7 +103,7 @@
       <Font ss:FontName="Calibri" x:Family="Swiss" ss:Color="#000000"/>
       <Interior ss:Color="#E7E6E6" ss:Pattern="Solid"/>
     </Style>
-    <Style ss:ID="m52086344">
+    <Style ss:ID="m51906568">
       <Alignment ss:Horizontal="Center" ss:Vertical="Top"/>
       <Borders>
         <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
@@ -113,7 +113,7 @@
       <Font ss:FontName="Calibri" x:Family="Swiss" ss:Color="#000000"/>
       <Interior ss:Color="#E7E6E6" ss:Pattern="Solid"/>
     </Style>
-    <Style ss:ID="m52086364">
+    <Style ss:ID="m51906588">
       <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
       <Borders>
         <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
@@ -123,7 +123,7 @@
       <Font ss:FontName="Calibri" x:Family="Swiss" ss:Color="#000000"/>
       <Interior ss:Color="#E7E6E6" ss:Pattern="Solid"/>
     </Style>
-    <Style ss:ID="m52086384">
+    <Style ss:ID="m51906608">
       <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
       <Borders>
         <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
@@ -133,7 +133,7 @@
       <Font ss:FontName="Calibri" x:Family="Swiss" ss:Color="#000000"/>
       <Interior ss:Color="#E7E6E6" ss:Pattern="Solid"/>
     </Style>
-    <Style ss:ID="m52086404">
+    <Style ss:ID="m51906628">
       <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
       <Borders>
         <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
@@ -143,7 +143,7 @@
       <Font ss:FontName="Calibri" x:Family="Swiss" ss:Color="#000000"/>
       <Interior ss:Color="#E7E6E6" ss:Pattern="Solid"/>
     </Style>
-    <Style ss:ID="m51904512">
+    <Style ss:ID="m51907872">
       <Alignment ss:Horizontal="Center" ss:Vertical="Top"/>
       <Borders>
         <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
@@ -153,7 +153,7 @@
       <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11" ss:Color="#000000"/>
       <Interior ss:Color="#E7E6E6" ss:Pattern="Solid"/>
     </Style>
-    <Style ss:ID="m51904532">
+    <Style ss:ID="m51907892">
       <Alignment ss:Horizontal="Center" ss:Vertical="Top"/>
       <Borders>
         <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
@@ -163,7 +163,7 @@
       <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11" ss:Color="#000000"/>
       <Interior ss:Color="#E7E6E6" ss:Pattern="Solid"/>
     </Style>
-    <Style ss:ID="m51904552">
+    <Style ss:ID="m51907912">
       <Alignment ss:Horizontal="Center" ss:Vertical="Top" ss:WrapText="1"/>
       <Borders>
         <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
@@ -173,7 +173,7 @@
       <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11" ss:Color="#000000"/>
       <Interior ss:Color="#E7E6E6" ss:Pattern="Solid"/>
     </Style>
-    <Style ss:ID="m51904572">
+    <Style ss:ID="m51907932">
       <Alignment ss:Horizontal="Center" ss:Vertical="Top" ss:WrapText="1"/>
       <Borders>
         <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="2"/>
@@ -183,7 +183,7 @@
       <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11" ss:Color="#000000"/>
       <Interior ss:Color="#E7E6E6" ss:Pattern="Solid"/>
     </Style>
-    <Style ss:ID="m51904592">
+    <Style ss:ID="m51907952">
       <Alignment ss:Horizontal="Center" ss:Vertical="Top" ss:WrapText="1"/>
       <Borders>
         <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="2"/>
@@ -193,7 +193,7 @@
       <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11" ss:Color="#000000"/>
       <Interior ss:Color="#E7E6E6" ss:Pattern="Solid"/>
     </Style>
-    <Style ss:ID="m51904612">
+    <Style ss:ID="m51907972">
       <Alignment ss:Horizontal="Center" ss:Vertical="Top"/>
       <Borders>
         <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
@@ -203,7 +203,7 @@
       <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11" ss:Color="#000000"/>
       <Interior ss:Color="#E7E6E6" ss:Pattern="Solid"/>
     </Style>
-    <Style ss:ID="m51904632">
+    <Style ss:ID="m51907992">
       <Alignment ss:Horizontal="Center" ss:Vertical="Top"/>
       <Borders>
         <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
@@ -213,7 +213,7 @@
       <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11" ss:Color="#000000"/>
       <Interior ss:Color="#E7E6E6" ss:Pattern="Solid"/>
     </Style>
-    <Style ss:ID="m51904652">
+    <Style ss:ID="m51908012">
       <Alignment ss:Horizontal="Center" ss:Vertical="Top"/>
       <Borders>
         <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
@@ -1380,6 +1380,20 @@
     <NamedRange ss:Name="ArealThresholded" ss:RefersTo="=Intercomparison!R4C3"/>
     <NamedRange ss:Name="SumPctTotalArealLowering"
      ss:RefersTo="=Intercomparison!R5C5"/>
+    <NamedRange ss:Name="SumPctTotalArealRaising" ss:RefersTo="=Intercomparison!R5C9"/>
+    <NamedRange ss:Name="SumPctTotalDetecableChange"
+     ss:RefersTo="=Intercomparison!R5C11"/>
+    <NamedRange ss:Name="SumRawArealSurfaceLowering"
+     ss:RefersTo="=Intercomparison!R5C2"/>
+    <NamedRange ss:Name="SumRawArealSurfaceRaising"
+     ss:RefersTo="=Intercomparison!R5C6"/>
+    <NamedRange ss:Name="SumThresholdedArealDetectableChange"
+     ss:RefersTo="=Intercomparison!R5C10"/>
+    <NamedRange ss:Name="SumThresholdedArealSurfaceLowering"
+     ss:RefersTo="=Intercomparison!R5C3"/>
+    <NamedRange ss:Name="SumThresholdedArealSurfaceRaising"
+     ss:RefersTo="=Intercomparison!R5C7"/>
+    <NamedRange ss:Name="SumTotalAreaOfInterest" ss:RefersTo="=Intercomparison!R5C12"/>
     <NamedRange ss:Name="TotalRaw" ss:RefersTo="=Intercomparison!R5C2"/>
     <NamedRange ss:Name="TotalThresholded" ss:RefersTo="=Intercomparison!R5C3"/>
   </Names>
@@ -1412,7 +1426,7 @@
       </Row>
       <Row ss:AutoFitHeight="0" ss:Height="32.25">
         <Cell ss:StyleID="s63"/>
-        <Cell ss:MergeAcross="3" ss:StyleID="m51904512">
+        <Cell ss:MergeAcross="3" ss:StyleID="m51907872">
           <Data ss:Type="String">Total Area of Surface Lowering (m²)</Data>
           <Comment
       ss:Author="philip">
@@ -1426,16 +1440,16 @@
             </ss:Data>
           </Comment>
         </Cell>
-        <Cell ss:MergeAcross="3" ss:StyleID="m51904532">
+        <Cell ss:MergeAcross="3" ss:StyleID="m51907892">
           <Data ss:Type="String">Total Area of Surface Raising (m²)</Data>
         </Cell>
-        <Cell ss:MergeAcross="1" ss:StyleID="m51904552">
+        <Cell ss:MergeAcross="1" ss:StyleID="m51907912">
           <Data ss:Type="String">Total Area of Detectable Change (m²)</Data>
         </Cell>
-        <Cell ss:MergeDown="1" ss:StyleID="m51904572">
+        <Cell ss:MergeDown="1" ss:StyleID="m51907932">
           <Data ss:Type="String">Total Area of Interest (m²)</Data>
         </Cell>
-        <Cell ss:MergeDown="1" ss:StyleID="m51904592">
+        <Cell ss:MergeDown="1" ss:StyleID="m51907952">
           <Data ss:Type="String">AOI % with Detectable Change</Data>
         </Cell>
       </Row>
@@ -1487,7 +1501,7 @@
           <NamedCell ss:Name="ArealLoweringThresholded"/>
         </Cell>
         <Cell ss:StyleID="s91"/>
-        <Cell ss:StyleID="s93" ss:Formula="=RC[-2]/TotalThresholded">
+        <Cell ss:StyleID="s93" ss:Formula="=RC[-2]/SumThresholdedArealSurfaceLowering">
           <Data
       ss:Type="Number">1</Data>
         </Cell>
@@ -1502,14 +1516,16 @@
       ss:Name="ArealRaisingThresholded"/>
         </Cell>
         <Cell ss:StyleID="s91"/>
-        <Cell ss:StyleID="s93" ss:Formula="=RC[-2]/R5C[-2]">
-          <Data ss:Type="Number">1</Data>
+        <Cell ss:StyleID="s93" ss:Formula="=RC[-2]/SumThresholdedArealSurfaceRaising">
+          <Data
+      ss:Type="Number">1</Data>
         </Cell>
         <Cell ss:StyleID="s94" ss:Formula="=SUM(RC[-7],RC[-3])">
           <Data ss:Type="Number">181</Data>
         </Cell>
-        <Cell ss:StyleID="s93" ss:Formula="=RC[-1]/R5C10">
-          <Data ss:Type="Number">1</Data>
+        <Cell ss:StyleID="s93" ss:Formula="=RC[-1]/SumThresholdedArealDetectableChange">
+          <Data
+      ss:Type="Number">1</Data>
         </Cell>
         <Cell ss:StyleID="s94" ss:Formula="=SUM(RC[-10],RC[-6])">
           <Data ss:Type="Number">258</Data>
@@ -1526,11 +1542,14 @@
           <Data ss:Type="Number">5</Data>
           <NamedCell
       ss:Name="TotalRaw"/>
+          <NamedCell ss:Name="SumRawArealSurfaceLowering"/>
         </Cell>
         <Cell ss:StyleID="s96" ss:Formula="=SUM(R[-1]C:R[-1]C)">
           <Data ss:Type="Number">1</Data>
           <NamedCell
       ss:Name="TotalThresholded"/>
+          <NamedCell
+      ss:Name="SumThresholdedArealSurfaceLowering"/>
         </Cell>
         <Cell ss:StyleID="s96"/>
         <Cell ss:StyleID="s98" ss:Formula="=SUM(R[-1]C:R[-1]C)">
@@ -1540,22 +1559,34 @@
         </Cell>
         <Cell ss:StyleID="s97" ss:Formula="=SUM(R[-1]C:R[-1]C)">
           <Data ss:Type="Number">253</Data>
+          <NamedCell
+      ss:Name="SumRawArealSurfaceRaising"/>
         </Cell>
         <Cell ss:StyleID="s96" ss:Formula="=SUM(R[-1]C:R[-1]C)">
           <Data ss:Type="Number">180</Data>
+          <NamedCell
+      ss:Name="SumThresholdedArealSurfaceRaising"/>
         </Cell>
         <Cell ss:StyleID="s96"/>
         <Cell ss:StyleID="s98" ss:Formula="=SUM(R[-1]C:R[-1]C)">
           <Data ss:Type="Number">1</Data>
+          <NamedCell
+      ss:Name="SumPctTotalArealRaising"/>
         </Cell>
         <Cell ss:StyleID="s97" ss:Formula="=SUM(R[-1]C:R[-1]C)">
           <Data ss:Type="Number">181</Data>
+          <NamedCell
+      ss:Name="SumThresholdedArealDetectableChange"/>
         </Cell>
         <Cell ss:StyleID="s98" ss:Formula="=SUM(R[-1]C:R[-1]C)">
           <Data ss:Type="Number">1</Data>
+          <NamedCell
+      ss:Name="SumPctTotalDetecableChange"/>
         </Cell>
         <Cell ss:StyleID="s96" ss:Formula="=SUM(R[-1]C:R[-1]C)">
           <Data ss:Type="Number">258</Data>
+          <NamedCell
+      ss:Name="SumTotalAreaOfInterest"/>
         </Cell>
         <Cell ss:StyleID="s99"/>
       </Row>
@@ -1578,16 +1609,16 @@
       </Row>
       <Row ss:AutoFitHeight="0">
         <Cell ss:StyleID="s63"/>
-        <Cell ss:MergeAcross="3" ss:StyleID="m51904612">
+        <Cell ss:MergeAcross="3" ss:StyleID="m51907972">
           <Data ss:Type="String">Total Volume of Surface Lowering (m³)</Data>
         </Cell>
-        <Cell ss:MergeAcross="3" ss:StyleID="m51904632">
+        <Cell ss:MergeAcross="3" ss:StyleID="m51907992">
           <Data ss:Type="String">Total Volume of Surface Raising (m³)</Data>
         </Cell>
-        <Cell ss:MergeAcross="3" ss:StyleID="m51904652">
+        <Cell ss:MergeAcross="3" ss:StyleID="m51908012">
           <Data ss:Type="String">Total Volume of Difference (m³)</Data>
         </Cell>
-        <Cell ss:MergeAcross="2" ss:StyleID="m52086304">
+        <Cell ss:MergeAcross="2" ss:StyleID="m51906528">
           <Data ss:Type="String">Total Net Volume Difference (m³)</Data>
         </Cell>
       </Row>
@@ -1913,22 +1944,22 @@
       </Row>
       <Row ss:AutoFitHeight="0" ss:Height="12.75" ss:StyleID="s127">
         <Cell ss:StyleID="s128"/>
-        <Cell ss:MergeAcross="3" ss:StyleID="m52086324">
+        <Cell ss:MergeAcross="3" ss:StyleID="m51906548">
           <Data ss:Type="String">Average Depth of Surface Lowering (m)</Data>
         </Cell>
-        <Cell ss:MergeAcross="3" ss:StyleID="m52086344">
+        <Cell ss:MergeAcross="3" ss:StyleID="m51906568">
           <Data ss:Type="String">Average Depth of Surface Raising (m)</Data>
         </Cell>
-        <Cell ss:MergeAcross="3" ss:StyleID="m52086364">
+        <Cell ss:MergeAcross="3" ss:StyleID="m51906588">
           <Data ss:Type="String">AOI Average Total Thickness of Difference (m)</Data>
         </Cell>
-        <Cell ss:MergeAcross="2" ss:StyleID="m52086384">
+        <Cell ss:MergeAcross="2" ss:StyleID="m51906608">
           <Data ss:Type="String">AOI Average Net Thickness Difference (m)</Data>
         </Cell>
-        <Cell ss:MergeAcross="1" ss:StyleID="m52086404">
+        <Cell ss:MergeAcross="1" ss:StyleID="m51906628">
           <Data ss:Type="String">ADC Avg Total Thickness of Difference (m)</Data>
         </Cell>
-        <Cell ss:MergeAcross="1" ss:StyleID="m51906304">
+        <Cell ss:MergeAcross="1" ss:StyleID="m52086528">
           <Data ss:Type="String">ADC Average Net Thickness of Difference (m)</Data>
         </Cell>
       </Row>
@@ -2293,16 +2324,16 @@
       </Row>
       <Row ss:AutoFitHeight="0" ss:Height="32.25">
         <Cell ss:StyleID="s63"/>
-        <Cell ss:MergeAcross="3" ss:StyleID="m51906324">
+        <Cell ss:MergeAcross="3" ss:StyleID="m52086548">
           <Data ss:Type="String">Percent Elevation Lowering</Data>
         </Cell>
-        <Cell ss:MergeAcross="3" ss:StyleID="m51906344">
+        <Cell ss:MergeAcross="3" ss:StyleID="m52086568">
           <Data ss:Type="String">Percent Elevation Raising</Data>
         </Cell>
-        <Cell ss:MergeAcross="1" ss:StyleID="m51906364">
+        <Cell ss:MergeAcross="1" ss:StyleID="m52086588">
           <Data ss:Type="String">Percent Imbalance&#10;(departure from equilibrium)</Data>
         </Cell>
-        <Cell ss:MergeAcross="1" ss:StyleID="m51906384">
+        <Cell ss:MergeAcross="1" ss:StyleID="m52086608">
           <Data ss:Type="String">Net to Total Volume Ratio</Data>
         </Cell>
       </Row>
@@ -2541,7 +2572,7 @@
         <Pane>
           <Number>3</Number>
           <ActiveRow>4</ActiveRow>
-          <ActiveCol>4</ActiveCol>
+          <ActiveCol>11</ActiveCol>
         </Pane>
       </Panes>
       <ProtectObjects>False</ProtectObjects>
