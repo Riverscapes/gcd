@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using GCDCore.Project;
 using GCDCore.UserInterface.ChangeDetection;
+using System.Text.RegularExpressions;
 
 namespace GCDCore.Engines
 {
@@ -120,6 +121,39 @@ namespace GCDCore.Engines
                 int iOrigExpandedRowCount = int.Parse(OrigExpandedRowCount);
                 int iNewExpandedRowCount = iOrigExpandedRowCount + DoDCount - 1;
                 TableNode.Attributes["ss:ExpandedRowCount"].Value = iNewExpandedRowCount.ToString();
+
+                //calculate total raw
+                string NamedCellTotalRaw = "TotalRaw";
+                XmlNode TotalRawCell = xmlDoc.SelectSingleNode("//ss:Cell[ss:NamedCell[@ss:Name='" + NamedCellTotalRaw + "']]", nsmgr); // gets the cell with the named cell name
+
+                string formula = "=SUM(R[-" + DoDCount + "]C:R[-1]C)";
+                TotalRawCell.Attributes["ss:Formula"].Value = formula;
+
+                //calculate total thresholded
+                string NamedCellTotalThresholded= "TotalThresholded";
+                XmlNode TotalThresholdedCell = xmlDoc.SelectSingleNode("//ss:Cell[ss:NamedCell[@ss:Name='" + NamedCellTotalThresholded + "']]", nsmgr); // gets the cell with the named cell name
+
+                string TotalThresholdedformula = "=SUM(R[-" + DoDCount + "]C:R[-1]C)";
+                TotalThresholdedCell.Attributes["ss:Formula"].Value = TotalThresholdedformula;
+
+                //update names range
+                //      <Names>/< NamedRange ss:Name="TotalThresholded" ss:RefersTo="=Intercomparison!R5C3"/>
+                XmlNode TotalThresholdedNamedRange = xmlDoc.SelectSingleNode("//ss:Names/ss:NamedRange[@ss:Name='TotalThresholded']", nsmgr); // gets the cell with the named cell name
+                string refersto = TotalThresholdedNamedRange.Attributes["ss:RefersTo"].Value;
+
+                //match R*C*
+                Regex r = new Regex(@".*!R(.)C.", RegexOptions.IgnoreCase);
+                Match m = r.Match(refersto);
+                string sRow = m.Groups[1].Value;
+                int iRow = int.Parse(sRow);
+
+                iRow = iRow + DoDCount - 1;
+
+                var pattern = @"(.*!)(R)(.)(C.)";
+                var replaced = Regex.Replace(refersto, pattern, "$1R" + iRow + "$4");
+
+                TotalThresholdedNamedRange.Attributes["ss:RefersTo"].Value = replaced;
+
 
             }
             catch (Exception ex)
