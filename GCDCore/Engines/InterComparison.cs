@@ -109,13 +109,38 @@ namespace GCDCore.Engines
 
                     string ArealRaisingThresholded = dodStat.DepositionThr.GetArea(ca).As(options.AreaUnits).ToString();
                     SetNameCellValue(ArealRow, nsmgr, "ArealRaisingThresholded", ArealRaisingThresholded);
+
                 }
 
+                //using same pattern as ucDoDSummary
+                string DoDName2 = dodStats.Keys.ToList()[0] ;
+                GCDConsoleLib.GCD.DoDStats dodStat2 = dodStats[DoDName2];
+                UnitsNet.Units.LengthUnit vunit = ProjectManager.Project.Units.VertUnit;
+
+                SetNameCellValue(xmlDoc, nsmgr, "VolumeDoDName", DoDName2);
+
+                string VolumeLoweringRaw = dodStat2.ErosionRaw.GetVolume(ca, vunit).As(options.VolumeUnits).ToString();
+                SetNameCellValue(xmlDoc, nsmgr, "VolumeLoweringRaw", VolumeLoweringRaw);
+
+                string VolumeLoweringThresholded = dodStat2.ErosionThr.GetVolume(ca, vunit).As(options.VolumeUnits).ToString();
+                SetNameCellValue(xmlDoc, nsmgr, "VolumeLoweringThresholded", VolumeLoweringThresholded);
+
+                string VolumeErrorLowering = dodStat2.ErosionErr.GetVolume(ca, vunit).As(options.VolumeUnits).ToString();
+                SetNameCellValue(xmlDoc, nsmgr, "VolumeErrorLowering", VolumeErrorLowering);
+
+                string VolumeRaisingRaw = dodStat2.DepositionRaw.GetVolume(ca, vunit).As(options.VolumeUnits).ToString();
+                SetNameCellValue(xmlDoc, nsmgr, "VolumeRaisingRaw", VolumeRaisingRaw);
+
+                string VolumeRaisingThresholded = dodStat2.DepositionThr.GetVolume(ca, vunit).As(options.VolumeUnits).ToString();
+                SetNameCellValue(xmlDoc, nsmgr, "VolumeRaisingThresholded", VolumeRaisingThresholded);
+
+                string VolumeErrorRaising = dodStat2.DepositionErr.GetVolume(ca, vunit).As(options.VolumeUnits).ToString();
+                SetNameCellValue(xmlDoc, nsmgr, "VolumeErrorRaising", VolumeErrorRaising);
 
                 //need to set after adding rows
                 //pattern:
                 //<Table ss:ExpandedColumnCount="52" ss:ExpandedRowCount="29" x:FullColumns="1" x:FullRows="1" ss:DefaultRowHeight="15">
-                XmlNode TableNode= xmlDoc.SelectSingleNode("//ss:Table", nsmgr); // gets the cell with the named cell name
+                XmlNode TableNode = xmlDoc.SelectSingleNode("//ss:Table", nsmgr); // gets the cell with the named cell name
 
                 string OrigExpandedRowCount = TableNode.Attributes["ss:ExpandedRowCount"].Value;
                 int iOrigExpandedRowCount = int.Parse(OrigExpandedRowCount);
