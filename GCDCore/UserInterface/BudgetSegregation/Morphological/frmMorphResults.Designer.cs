@@ -47,6 +47,7 @@
             this.colWork = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colCumulative = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cmdReset = new System.Windows.Forms.Button();
             this.numericUpDown4 = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
             this.label6 = new System.Windows.Forms.Label();
@@ -68,7 +69,10 @@
             this.label8 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.cmdBrowse = new System.Windows.Forms.Button();
-            this.cmdReset = new System.Windows.Forms.Button();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.textBox3 = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdData)).BeginInit();
@@ -80,6 +84,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.valPorosity)).BeginInit();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chtData)).BeginInit();
+            this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // button3
@@ -130,6 +136,8 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.groupBox3);
+            this.tabPage1.Controls.Add(this.groupBox2);
             this.tabPage1.Controls.Add(this.grdData);
             this.tabPage1.Controls.Add(this.groupBox1);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
@@ -217,29 +225,29 @@
             // 
             this.groupBox1.Controls.Add(this.cmdReset);
             this.groupBox1.Controls.Add(this.numericUpDown4);
-            this.groupBox1.Controls.Add(this.numericUpDown3);
-            this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.comboBox2);
             this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.numericUpDown2);
-            this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.comboBox1);
-            this.groupBox1.Controls.Add(this.numericUpDown1);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.valPorosity);
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new System.Drawing.Point(12, 6);
+            this.groupBox1.Location = new System.Drawing.Point(12, 110);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(608, 182);
+            this.groupBox1.Size = new System.Drawing.Size(612, 78);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Paramters";
             // 
+            // cmdReset
+            // 
+            this.cmdReset.Image = global::GCDCore.Properties.Resources.refresh;
+            this.cmdReset.Location = new System.Drawing.Point(321, 50);
+            this.cmdReset.Name = "cmdReset";
+            this.cmdReset.Size = new System.Drawing.Size(23, 23);
+            this.cmdReset.TabIndex = 14;
+            this.cmdReset.UseVisualStyleBackColor = true;
+            // 
             // numericUpDown4
             // 
             this.numericUpDown4.DecimalPlaces = 2;
-            this.numericUpDown4.Location = new System.Drawing.Point(98, 146);
+            this.numericUpDown4.Location = new System.Drawing.Point(194, 51);
             this.numericUpDown4.Name = "numericUpDown4";
             this.numericUpDown4.Size = new System.Drawing.Size(120, 20);
             this.numericUpDown4.TabIndex = 13;
@@ -247,7 +255,7 @@
             // numericUpDown3
             // 
             this.numericUpDown3.DecimalPlaces = 2;
-            this.numericUpDown3.Location = new System.Drawing.Point(98, 55);
+            this.numericUpDown3.Location = new System.Drawing.Point(58, 45);
             this.numericUpDown3.Name = "numericUpDown3";
             this.numericUpDown3.Size = new System.Drawing.Size(120, 20);
             this.numericUpDown3.TabIndex = 12;
@@ -255,7 +263,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(50, 59);
+            this.label6.Location = new System.Drawing.Point(9, 49);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(42, 13);
             this.label6.TabIndex = 11;
@@ -264,17 +272,17 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(7, 150);
+            this.label5.Location = new System.Drawing.Point(11, 55);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(85, 13);
+            this.label5.Size = new System.Drawing.Size(178, 13);
             this.label5.TabIndex = 9;
-            this.label5.Text = "Zero flux volume";
+            this.label5.Text = "Top of reach minimum flux volume in";
             // 
             // comboBox2
             // 
             this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(98, 115);
+            this.comboBox2.Location = new System.Drawing.Point(194, 20);
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(120, 21);
             this.comboBox2.TabIndex = 8;
@@ -282,17 +290,17 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(25, 119);
+            this.label4.Location = new System.Drawing.Point(102, 24);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(67, 13);
+            this.label4.Size = new System.Drawing.Size(87, 13);
             this.label4.TabIndex = 7;
-            this.label4.Text = "Zero flux cell";
+            this.label4.Text = "Minimum flux unit";
             // 
             // numericUpDown2
             // 
-            this.numericUpDown2.Location = new System.Drawing.Point(486, 85);
+            this.numericUpDown2.Location = new System.Drawing.Point(144, 45);
             this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Size = new System.Drawing.Size(53, 20);
+            this.numericUpDown2.Size = new System.Drawing.Size(69, 20);
             this.numericUpDown2.TabIndex = 6;
             this.numericUpDown2.Value = new decimal(new int[] {
             100,
@@ -303,17 +311,17 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(340, 89);
+            this.label3.Location = new System.Drawing.Point(21, 49);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(142, 13);
+            this.label3.Size = new System.Drawing.Size(117, 13);
             this.label3.TabIndex = 5;
-            this.label3.Text = "of which was comptetent (%)";
+            this.label3.Text = "Percent comptetent (%)";
             // 
             // comboBox1
             // 
             this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(224, 85);
+            this.comboBox1.Location = new System.Drawing.Point(222, 19);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(109, 21);
             this.comboBox1.TabIndex = 4;
@@ -321,24 +329,24 @@
             // numericUpDown1
             // 
             this.numericUpDown1.DecimalPlaces = 2;
-            this.numericUpDown1.Location = new System.Drawing.Point(98, 85);
+            this.numericUpDown1.Location = new System.Drawing.Point(144, 19);
             this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(120, 20);
+            this.numericUpDown1.Size = new System.Drawing.Size(69, 20);
             this.numericUpDown1.TabIndex = 3;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(45, 89);
+            this.label2.Location = new System.Drawing.Point(8, 23);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(47, 13);
+            this.label2.Size = new System.Drawing.Size(130, 13);
             this.label2.TabIndex = 2;
-            this.label2.Text = "Duration";
+            this.label2.Text = "Duration between surveys";
             // 
             // valPorosity
             // 
             this.valPorosity.DecimalPlaces = 2;
-            this.valPorosity.Location = new System.Drawing.Point(98, 25);
+            this.valPorosity.Location = new System.Drawing.Point(58, 19);
             this.valPorosity.Name = "valPorosity";
             this.valPorosity.Size = new System.Drawing.Size(120, 20);
             this.valPorosity.TabIndex = 1;
@@ -346,7 +354,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(48, 29);
+            this.label1.Location = new System.Drawing.Point(7, 23);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(44, 13);
             this.label1.TabIndex = 0;
@@ -432,14 +440,51 @@
             this.cmdBrowse.TabIndex = 11;
             this.cmdBrowse.UseVisualStyleBackColor = true;
             // 
-            // cmdReset
+            // groupBox2
             // 
-            this.cmdReset.Image = global::GCDCore.Properties.Resources.refresh;
-            this.cmdReset.Location = new System.Drawing.Point(225, 145);
-            this.cmdReset.Name = "cmdReset";
-            this.cmdReset.Size = new System.Drawing.Size(23, 23);
-            this.cmdReset.TabIndex = 14;
-            this.cmdReset.UseVisualStyleBackColor = true;
+            this.groupBox2.Controls.Add(this.textBox3);
+            this.groupBox2.Controls.Add(this.label9);
+            this.groupBox2.Controls.Add(this.numericUpDown2);
+            this.groupBox2.Controls.Add(this.label3);
+            this.groupBox2.Controls.Add(this.label2);
+            this.groupBox2.Controls.Add(this.numericUpDown1);
+            this.groupBox2.Controls.Add(this.comboBox1);
+            this.groupBox2.Location = new System.Drawing.Point(283, 6);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(341, 100);
+            this.groupBox2.TabIndex = 2;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Duration";
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.numericUpDown3);
+            this.groupBox3.Controls.Add(this.label1);
+            this.groupBox3.Controls.Add(this.valPorosity);
+            this.groupBox3.Controls.Add(this.label6);
+            this.groupBox3.Location = new System.Drawing.Point(12, 6);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(265, 100);
+            this.groupBox3.TabIndex = 3;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Bed Material";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(25, 74);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(113, 13);
+            this.label9.TabIndex = 7;
+            this.label9.Text = "Duration above critical";
+            // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(145, 71);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.ReadOnly = true;
+            this.textBox3.Size = new System.Drawing.Size(186, 20);
+            this.textBox3.TabIndex = 8;
             // 
             // frmMorphResults
             // 
@@ -471,6 +516,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.valPorosity)).EndInit();
             this.tabPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chtData)).EndInit();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -515,5 +564,9 @@
         private System.Windows.Forms.NumericUpDown numericUpDown4;
         private System.Windows.Forms.DataVisualization.Charting.Chart chtData;
         private System.Windows.Forms.Button cmdReset;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.Label label9;
     }
 }
