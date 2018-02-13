@@ -91,9 +91,10 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
 
         private void cmdOK_Click(object sender, EventArgs e)
         {
-            if (!ValidateForm())
+            DialogResult eResult = ValidateForm();
+            if (eResult != DialogResult.OK)
             {
-                this.DialogResult = DialogResult.None;
+                DialogResult = eResult;
                 return;
             }
 
@@ -123,7 +124,7 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
             }
         }
 
-        private bool ValidateForm()
+        private DialogResult ValidateForm()
         {
             if (ThresholdType == frmBatchDoD.ThresholdTypes.MinLoDMulti ||
                 ThresholdType == frmBatchDoD.ThresholdTypes.ProbMulti)
@@ -139,18 +140,34 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
                         MessageBox.Show("The minimum confidence level must be less than the maximum confidence level.", "Invalid Confidence Levels", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     valMin.Select();
-                    return false;
+                    return DialogResult.None;
                 }
 
                 if (valInterval.Value == 0)
                 {
                     MessageBox.Show("The interval cannot be zero.", "Invalid Interval", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     valInterval.Select();
-                    return false;
+                    return DialogResult.None;
+                }
+
+                long count = Convert.ToInt64((valMax.Value - valMin.Value) / valInterval.Value);
+                if (count > 20)
+                {
+                    switch (MessageBox.Show(string.Format("This process is about to generate a large number ({0:n0}) of change detection analyses in this GCD project." +
+                        " Are you sure you want to proceed with this operation?", count),
+                         Properties.Resources.ApplicationNameLong, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2))
+                    {
+                        case DialogResult.No:
+                            valMax.Select();
+                            return DialogResult.None;
+
+                        case DialogResult.Cancel:
+                            return DialogResult.Cancel;
+                    }
                 }
             }
 
-            return true;
+            return  DialogResult.OK;
         }
 
         private void ConfigureProbNumericUpDown(NumericUpDown ctrl)
