@@ -9,7 +9,6 @@ namespace GCDConsoleLib
 {
     public class VectorRaster : Raster
     {
-        public static string CGDMASKFIELD = "GCDMASK";
         public Dictionary<int, string> FieldValues { get; private set; }
 
         /// <summary>
@@ -23,20 +22,21 @@ namespace GCDConsoleLib
             FieldValues = new Dictionary<int, string> { };
             Datatype = new GdalDataType(typeof(int));
 
-            SetNoData(0.0);
+            SetNoData(-1.0);
             // Do GDaL's rasterize first to get the rough boolean shape.
             Rasterize(vectorInput, this);
 
             int fieldIndex = vectorInput.Features.First().Value.Feat.GetFieldIndex(FieldName);
             if (fieldIndex == -1) throw new IndexOutOfRangeException(String.Format("Could not find field: `{0}`", FieldName));
-            int GDALMASKidx = vectorInput.Features.First().Value.Feat.GetFieldIndex(CGDMASKFIELD);
+
+            int GDALMASKidx = vectorInput.Features.First().Value.Feat.GetFieldIndex(Vector.CGDMASKFIELD);
             if (GDALMASKidx == -1) throw new IndexOutOfRangeException(String.Format("Could not find MANDATORY field: `{0}`", FieldName));
 
-            // Now make an equivalence between the field values and the 
+            // Now make an equivalence between the GCDFID field and the FieldName Values
             foreach (KeyValuePair<long, VectorFeature> kvp in vectorInput.Features)
             {
-                string val = kvp.Value.Feat.GetFieldAsString(fieldIndex);
                 int maskid = kvp.Value.Feat.GetFieldAsInteger(GDALMASKidx);
+                string val = kvp.Value.Feat.GetFieldAsString(fieldIndex);
                 if (!FieldValues.ContainsKey(maskid))
                     FieldValues.Add(maskid, val);
             }
@@ -53,7 +53,7 @@ namespace GCDConsoleLib
             GdalConfiguration.ConfigureOgr();
 
             outputRaster.Create();
-            outputRaster.SetNoData(0.0);
+            outputRaster.SetNoData(-1.0);
             Dataset _ds = Gdal.Open(outputRaster.GISFileInfo.FullName, Access.GA_Update);
 
             vectorinput.Open();
@@ -62,7 +62,7 @@ namespace GCDConsoleLib
             OSGeo.OGR.Layer layer = vectorinput._ds.GetLayerByIndex(0);
 
             double[] burnValues = new double[] { 1.0 };
-            string[] rasterizeOptions = new string[] {String.Format("ATTRIBUTE={0}", CGDMASKFIELD) }; // String.Format("ATTRIBUTE={0}", fieldname) 
+            string[] rasterizeOptions = new string[] {String.Format("ATTRIBUTE={0}", Vector.CGDMASKFIELD) }; // String.Format("ATTRIBUTE={0}", fieldname) 
 
             Gdal.RasterizeLayer(_ds, 1, bandlist, layer, IntPtr.Zero, IntPtr.Zero,
                 burnValues.Length, burnValues, rasterizeOptions,

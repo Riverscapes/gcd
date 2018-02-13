@@ -12,6 +12,8 @@ namespace GCDConsoleLib
     {
         public string Name { get { return _fieldDef.GetName(); } }
         public int Precision { get { return _fieldDef.GetPrecision(); } }
+        public int FieldID { get; private set; }
+
         public GDalFieldType Type;
 
         public override string ToString()
@@ -20,8 +22,9 @@ namespace GCDConsoleLib
         }
 
         private FieldDefn _fieldDef;
-        public VectorField(FieldDefn fieldDef)
+        public VectorField(FieldDefn fieldDef, int idx)
         {
+            FieldID = idx;
             _fieldDef = fieldDef;
             Type = new GDalFieldType(_fieldDef.GetFieldType());
         }

@@ -59,6 +59,9 @@ namespace GCDConsoleTest.Helpers
                 string errMsg = String.Join(System.Environment.NewLine, errs);
                 Assert.Fail(errMsg);
             }
+
+            rTest.UnloadDS();
+            rTruth.UnloadDS();
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using GCDConsoleTest.Helpers;
+using System.Collections.Generic;
 
 namespace GCDConsoleLib.Tests
 {
@@ -29,6 +30,23 @@ namespace GCDConsoleLib.Tests
         {
             using (ITempDir tmp = TempDir.Create())
             {
+                Vector rVector1 = new Vector(new FileInfo(DirHelpers.GetTestRootPath("SulphurGCDMASK/Sulphur_ComplexGCDMask.shp")));
+                FileInfo rV1Copy = new FileInfo(Path.Combine(tmp.Name, "COPYSulphur_ComplexGCDMask.shp"));
+                rVector1.Copy(rV1Copy);
+
+                // Now verify that everything got created correctly
+                Vector rVector1Copy = new Vector(rV1Copy);
+
+                Assert.IsFalse(rVector1.Fields.ContainsKey(Vector.CGDMASKFIELD));
+                Assert.IsTrue(rVector1Copy.Fields.ContainsKey(Vector.CGDMASKFIELD));
+
+                // Make sure our GCDFID is getting set properly
+                foreach (KeyValuePair<long, VectorFeature> kvp in rVector1Copy.Features)
+                {
+                    int fieldID = rVector1Copy.Fields[Vector.CGDMASKFIELD].FieldID;
+                    Assert.AreEqual(kvp.Value.Feat.GetFieldAsInteger(fieldID), kvp.Key);
+                }
+
                 Vector rVector = new Vector(new FileInfo(DirHelpers.GetTestVectorPath("StressTest.shp")));
                 rVector.Copy(new FileInfo(Path.Combine(tmp.Name, "CopyShapefile.shp")));
 
@@ -37,6 +55,8 @@ namespace GCDConsoleLib.Tests
                 Assert.IsTrue(File.Exists(Path.Combine(tmp.Name, "CopyShapefile.dbf")));
                 Assert.IsTrue(File.Exists(Path.Combine(tmp.Name, "CopyShapefile.prj")));
                 Assert.IsTrue(File.Exists(Path.Combine(tmp.Name, "CopyShapefile.shx")));
+
+
             }
         }
 

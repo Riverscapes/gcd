@@ -92,9 +92,16 @@ namespace GCDConsoleLib.Internal.Operators.Tests
             UnitGroup ug = new UnitGroup(VolumeUnit.CubicMeter, AreaUnit.SquareMeter, LengthUnit.Meter, LengthUnit.Meter);
 
             // And now the budget seg case
-            Vector rPolyMask = new Vector(new FileInfo(DirHelpers.GetTestRootPath(@"SulphurGCDMASK\Sulphur_ComplexGCDMask.shp")));
+            Vector vPolyMask = new Vector(new FileInfo(DirHelpers.GetTestRootPath(@"SulphurGCDMASK\Sulphur_ComplexGCDMask.shp")));
 
-            Dictionary<string, DoDStats> testBudgetSeg = RasterOperators.GetStatsMinLoD(rRaw, rThresh, 73.0m, rPolyMask, "Category", ug);
+            using (ITempDir tmp = TempDir.Create())
+            {
+                FileInfo fiPolyMaskCopy = new FileInfo(Path.Combine(tmp.Name, "Sulphur_ComplexGCDMask.shp"));
+                vPolyMask.Copy(fiPolyMaskCopy);
+                Vector vPolyMaskCopy = new Vector(fiPolyMaskCopy);
+
+                Dictionary<string, DoDStats> testBudgetSeg = RasterOperators.GetStatsMinLoD(rRaw, rThresh, 73.0m, vPolyMaskCopy, "Category", ug);
+            }
         }
 
         [TestMethod()]
@@ -119,8 +126,16 @@ namespace GCDConsoleLib.Internal.Operators.Tests
             UnitGroup ug = new UnitGroup(VolumeUnit.CubicMeter, AreaUnit.SquareMeter, LengthUnit.Meter, LengthUnit.Meter);
 
             // And now the budget seg case
-            Vector rPolyMask = new Vector(new FileInfo(DirHelpers.GetTestRootPath(@"SulphurGCDMASK\Sulphur_ComplexGCDMask.shp")));
-            Dictionary<string, DoDStats> testBudgetSeg = RasterOperators.GetStatsPropagated(rTemp2005, rTemp2006, rPolyMask, "Category", ug);
+            Vector vPolyMask = new Vector(new FileInfo(DirHelpers.GetTestRootPath(@"SulphurGCDMASK\Sulphur_ComplexGCDMask.shp")));
+
+            using (ITempDir tmp = TempDir.Create())
+            {
+                FileInfo fiPolyMaskCopy = new FileInfo(Path.Combine(tmp.Name, "Sulphur_ComplexGCDMask.shp"));
+                vPolyMask.Copy(fiPolyMaskCopy);
+                Vector vPolyMaskCopy = new Vector(fiPolyMaskCopy);
+
+                Dictionary<string, DoDStats> testBudgetSeg = RasterOperators.GetStatsPropagated(rTemp2005, rTemp2006, vPolyMaskCopy, "Category", ug);
+            }
         }
 
 
@@ -147,9 +162,16 @@ namespace GCDConsoleLib.Internal.Operators.Tests
             UnitGroup ug = new UnitGroup(VolumeUnit.CubicMeter, AreaUnit.SquareMeter, LengthUnit.Meter, LengthUnit.Meter);
 
             // And now the budget seg case
-            Vector rPolyMask = new Vector(new FileInfo(DirHelpers.GetTestRootPath(@"SulphurGCDMASK\Sulphur_ComplexGCDMask.shp")));
+            Vector vPolyMask = new Vector(new FileInfo(DirHelpers.GetTestRootPath(@"SulphurGCDMASK\Sulphur_ComplexGCDMask.shp")));
 
-            Dictionary<string, DoDStats> testBudgetSeg = RasterOperators.GetStatsProbalistic(rTemp2005, rTemp2006, rTemp2005, rPolyMask, "Category", ug);
+            using (ITempDir tmp = TempDir.Create())
+            {
+                FileInfo fiPolyMaskCopy = new FileInfo(Path.Combine(tmp.Name, "Sulphur_ComplexGCDMask.shp"));
+                vPolyMask.Copy(fiPolyMaskCopy);
+                Vector vPolyMaskCopy = new Vector(fiPolyMaskCopy);
+
+                Dictionary<string, DoDStats> testBudgetSeg = RasterOperators.GetStatsProbalistic(rTemp2005, rTemp2006, rTemp2005, vPolyMaskCopy, "Category", ug);
+            }
 
         }
 
@@ -456,7 +478,7 @@ namespace GCDConsoleLib.Internal.Operators.Tests
             Raster rThresh = new Raster(new FileInfo(DirHelpers.GetTestRootPath(@"VerificationProject\Analyses\CD\GCD0001\thresh.tif")));
 
             // And now the budget seg case
-            Vector vPolyMaskSimple = new Vector(new FileInfo(DirHelpers.GetTestRootPath(@"SulphurGCDMASK\Sulphur_SimpleGCDMask.shp")));
+            Vector vPolyMask = new Vector(new FileInfo(DirHelpers.GetTestRootPath(@"SulphurGCDMASK\Sulphur_SimpleGCDMask.shp")));
 
             UnitGroup ug = new UnitGroup(VolumeUnit.CubicMeter, AreaUnit.SquareMeter, LengthUnit.Meter, LengthUnit.Meter);
 
@@ -467,45 +489,49 @@ namespace GCDConsoleLib.Internal.Operators.Tests
             {
                 Raster rPropErr = RasterOperators.RootSumSquares(rOldErr, rNewErr, new FileInfo(Path.Combine(tmp.Name, "PropErr.tif")));
 
+                FileInfo fiPolyMaskCopy = new FileInfo(Path.Combine(tmp.Name, "Sulphur_SimpleGCDMask.shp"));
+                vPolyMask.Copy(fiPolyMaskCopy);
+                Vector vPolyMaskCopy = new Vector(fiPolyMaskCopy);
+
                 watch.Restart();
-                Dictionary<string, Histogram> binRasterV = RasterOperators.BinRaster(rDoD, 100, vPolyMaskSimple, "Method");
+                Dictionary<string, Histogram> binRasterV = RasterOperators.BinRaster(rDoD, 100, vPolyMaskCopy, "Method", false);
                 times.Add(string.Format("BinRaster, Vector, {0}.{1}", watch.Elapsed.Seconds, watch.Elapsed.Milliseconds));
 
                 watch.Restart();
-                Dictionary<string, Histogram> binRasterR = RasterOperators.BinRaster(rDoD, 100, vPolyMaskSimple, "Method", true);
+                Dictionary<string, Histogram> binRasterR = RasterOperators.BinRaster(rDoD, 100, vPolyMaskCopy, "Method", true);
                 times.Add(string.Format("BinRaster, Rasterized, {0}.{1}", watch.Elapsed.Seconds, watch.Elapsed.Milliseconds));
 
                 foreach (KeyValuePair<string, Histogram> kvp in binRasterV)
                     Assert.IsTrue(kvp.Value.Equals(binRasterR[kvp.Key]));
 
                 watch.Restart();
-                Dictionary<string, DoDStats> statsPropV = RasterOperators.GetStatsPropagated(rDoD, rPropErr, vPolyMaskSimple, "Method", ug);
+                Dictionary<string, DoDStats> statsPropV = RasterOperators.GetStatsPropagated(rDoD, rPropErr, vPolyMaskCopy, "Method", ug, false);
                 times.Add(string.Format("GetStatsPropagated, Vector, {0}.{1}", watch.Elapsed.Seconds, watch.Elapsed.Milliseconds));
 
                 watch.Restart();
-                Dictionary<string, DoDStats> statsPropR = RasterOperators.GetStatsPropagated(rDoD, rPropErr, vPolyMaskSimple, "Method", ug, true);
+                Dictionary<string, DoDStats> statsPropR = RasterOperators.GetStatsPropagated(rDoD, rPropErr, vPolyMaskCopy, "Method", ug, true);
                 times.Add(string.Format("GetStatsPropagated, Rasterized, {0}.{1}", watch.Elapsed.Seconds, watch.Elapsed.Milliseconds));
 
                 foreach (KeyValuePair<string, DoDStats> kvp in statsPropV)
                     Assert.IsTrue(kvp.Value.Equals(statsPropR[kvp.Key]));
 
                 watch.Restart();
-                Dictionary<string, DoDStats> minlodV = RasterOperators.GetStatsMinLoD(rDoD, rThresh, 0.2m, vPolyMaskSimple, "Method", ug);
+                Dictionary<string, DoDStats> minlodV = RasterOperators.GetStatsMinLoD(rDoD, rThresh, 0.2m, vPolyMaskCopy, "Method", ug, false);
                 times.Add(string.Format("GetStatsMinLoD, Vector, {0}.{1}", watch.Elapsed.Seconds, watch.Elapsed.Milliseconds));
 
                 watch.Restart();
-                Dictionary<string, DoDStats> minlodR = RasterOperators.GetStatsMinLoD(rDoD, rThresh, 0.2m, vPolyMaskSimple, "Method", ug, true);
+                Dictionary<string, DoDStats> minlodR = RasterOperators.GetStatsMinLoD(rDoD, rThresh, 0.2m, vPolyMaskCopy, "Method", ug, true);
                 times.Add(string.Format("GetStatsMinLoD, Rasterized, {0}.{1}", watch.Elapsed.Seconds, watch.Elapsed.Milliseconds));
 
                 foreach (KeyValuePair<string, DoDStats> kvp in minlodV)
                     Assert.IsTrue(kvp.Value.Equals(minlodR[kvp.Key]));
 
                 watch.Restart();
-                Dictionary<string, DoDStats> statsprobV = RasterOperators.GetStatsProbalistic(rDoD, rThresh, rPropErr, vPolyMaskSimple, "Method", ug);
+                Dictionary<string, DoDStats> statsprobV = RasterOperators.GetStatsProbalistic(rDoD, rThresh, rPropErr, vPolyMaskCopy, "Method", ug, false);
                 times.Add(string.Format("GetStatsProbalistic, Vector, {0}.{1}", watch.Elapsed.Seconds, watch.Elapsed.Milliseconds));
 
                 watch.Restart();
-                Dictionary<string, DoDStats> statsprobR = RasterOperators.GetStatsProbalistic(rDoD, rThresh, rPropErr, vPolyMaskSimple, "Method", ug, true);
+                Dictionary<string, DoDStats> statsprobR = RasterOperators.GetStatsProbalistic(rDoD, rThresh, rPropErr, vPolyMaskCopy, "Method", ug, true);
                 times.Add(string.Format("GetStatsProbalistic, Rasterized, {0}.{1}", watch.Elapsed.Seconds, watch.Elapsed.Milliseconds));
 
                 foreach (KeyValuePair<string, DoDStats> kvp in statsprobV)
@@ -518,17 +544,19 @@ namespace GCDConsoleLib.Internal.Operators.Tests
                 };
 
                 watch.Restart();
-                Raster errorV = RasterOperators.CreateErrorRaster(rDoD, vPolyMaskSimple, "Method", props, new FileInfo(Path.Combine(tmp.Name, "MultiMethodErrorV.tif")));
+                Raster errorV = RasterOperators.CreateErrorRaster(rDoD, vPolyMaskCopy, "Method", props, new FileInfo(Path.Combine(tmp.Name, "MultiMethodErrorV.tif")), false);
                 times.Add(string.Format("CreateErrorRaster, Vector, {0}.{1}", watch.Elapsed.Seconds, watch.Elapsed.Milliseconds));
 
                 watch.Restart();
-                Raster errorR = RasterOperators.CreateErrorRaster(rDoD, vPolyMaskSimple, "Method", props, new FileInfo(Path.Combine(tmp.Name, "MultiMethodErrorR.tif")), true);
+                Raster errorR = RasterOperators.CreateErrorRaster(rDoD, vPolyMaskCopy, "Method", props, new FileInfo(Path.Combine(tmp.Name, "MultiMethodErrorR.tif")), true);
                 times.Add(string.Format("CreateErrorRaster, Rasterized, {0}.{1}", watch.Elapsed.Seconds, watch.Elapsed.Milliseconds));
 
                 RasterTests.RasterCompare(errorV, errorR);
 
                 foreach (string line in times)
                     Debug.WriteLine(line);
+
+                vPolyMaskCopy.UnloadDS();
             }
         }
 
@@ -563,38 +591,42 @@ namespace GCDConsoleLib.Internal.Operators.Tests
 
             using (ITempDir tmp = TempDir.Create())
             {
+                FileInfo fiPolyMaskCopy = new FileInfo(Path.Combine(tmp.Name, "Sulphur_ComplexGCDMask.shp"));
+                vPolyMask.Copy(fiPolyMaskCopy);
+                Vector vPolyMaskCopy = new Vector(fiPolyMaskCopy);
+
                 Raster rPropErr = RasterOperators.RootSumSquares(rOldErr, rNewErr, new FileInfo(Path.Combine(tmp.Name, "PropErr.tif")));
 
                 watch.Restart();
-                Dictionary<string, Histogram> binRasterV = RasterOperators.BinRaster(rDoD, 100, vPolyMask, "Desc_");
+                Dictionary<string, Histogram> binRasterV = RasterOperators.BinRaster(rDoD, 100, vPolyMaskCopy, "Desc_", false);
                 times.Add(string.Format("BinRaster, Vector, {0}.{1}", watch.Elapsed.Seconds, watch.Elapsed.Milliseconds));
 
                 watch.Restart();
-                Dictionary<string, Histogram> binRasterR = RasterOperators.BinRaster(rDoD, 100, vPolyMask, "Desc_", true);
+                Dictionary<string, Histogram> binRasterR = RasterOperators.BinRaster(rDoD, 100, vPolyMaskCopy, "Desc_");
                 times.Add(string.Format("BinRaster, Rasterized, {0}.{1}", watch.Elapsed.Seconds, watch.Elapsed.Milliseconds));
 
                 watch.Restart();
-                Dictionary<string, DoDStats> statsPropV = RasterOperators.GetStatsPropagated(rDoD, rPropErr, vPolyMask, "Desc_", ug);
+                Dictionary<string, DoDStats> statsPropV = RasterOperators.GetStatsPropagated(rDoD, rPropErr, vPolyMaskCopy, "Desc_", ug, false);
                 times.Add(string.Format("GetStatsPropagated, Vector, {0}.{1}", watch.Elapsed.Seconds, watch.Elapsed.Milliseconds));
 
                 watch.Restart();
-                Dictionary<string, DoDStats> statsPropR = RasterOperators.GetStatsPropagated(rDoD, rPropErr, vPolyMask, "Desc_", ug, true);
+                Dictionary<string, DoDStats> statsPropR = RasterOperators.GetStatsPropagated(rDoD, rPropErr, vPolyMaskCopy, "Desc_", ug);
                 times.Add(string.Format("GetStatsPropagated, Rasterized, {0}.{1}", watch.Elapsed.Seconds, watch.Elapsed.Milliseconds));
 
                 watch.Restart();
-                Dictionary<string, DoDStats> minlodV = RasterOperators.GetStatsMinLoD(rDoD, rThresh, 0.2m, vPolyMask, "Desc_", ug);
+                Dictionary<string, DoDStats> minlodV = RasterOperators.GetStatsMinLoD(rDoD, rThresh, 0.2m, vPolyMaskCopy, "Desc_", ug, false);
                 times.Add(string.Format("GetStatsMinLoD, Vector, {0}.{1}", watch.Elapsed.Seconds, watch.Elapsed.Milliseconds));
 
                 watch.Restart();
-                Dictionary<string, DoDStats> minlodR = RasterOperators.GetStatsMinLoD(rDoD, rThresh, 0.2m, vPolyMask, "Desc_", ug, true);
+                Dictionary<string, DoDStats> minlodR = RasterOperators.GetStatsMinLoD(rDoD, rThresh, 0.2m, vPolyMaskCopy, "Desc_", ug);
                 times.Add(string.Format("GetStatsMinLoD, Rasterized, {0}.{1}", watch.Elapsed.Seconds, watch.Elapsed.Milliseconds));
 
                 watch.Restart();
-                Dictionary<string, DoDStats> statsprobV = RasterOperators.GetStatsProbalistic(rDoD, rThresh, rPropErr, vPolyMask, "Desc_", ug);
+                Dictionary<string, DoDStats> statsprobV = RasterOperators.GetStatsProbalistic(rDoD, rThresh, rPropErr, vPolyMaskCopy, "Desc_", ug, false);
                 times.Add(string.Format("GetStatsProbalistic, Vector, {0}.{1}", watch.Elapsed.Seconds, watch.Elapsed.Milliseconds));
 
                 watch.Restart();
-                Dictionary<string, DoDStats> statsprobR = RasterOperators.GetStatsProbalistic(rDoD, rThresh, rPropErr, vPolyMask, "Desc_", ug, true);
+                Dictionary<string, DoDStats> statsprobR = RasterOperators.GetStatsProbalistic(rDoD, rThresh, rPropErr, vPolyMaskCopy, "Desc_", ug);
                 times.Add(string.Format("GetStatsProbalistic, Rasterized, {0}.{1}", watch.Elapsed.Seconds, watch.Elapsed.Milliseconds));
 
 

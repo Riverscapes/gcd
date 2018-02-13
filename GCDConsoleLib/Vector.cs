@@ -9,11 +9,14 @@ namespace GCDConsoleLib
 {
     public class Vector : GISDataset
     {
+        public static string CGDMASKFIELD = "GCDFID";
+
         private static Dictionary<string, string> _driverstrings = new Dictionary<string, string>
         {
             {@".*\.shp","ESRI Shapefile"},
             {@".*\.(json|geojson)","GeoJSON"}
         };
+
         private Driver _drv;
         internal DataSource _ds;
         public Dictionary<long, VectorFeature> Features;
@@ -55,6 +58,37 @@ namespace GCDConsoleLib
                 UnloadDS();
         }
 
+        /// <summary>
+        /// Because of inconsistencies with how ESRI and GDAL handle FID and because the GDAL rasterize method lacks
+        /// the ability to raterize using its own FIDs we need to fake this column. This function will augment a 
+        /// dataset with a GCDFID field. 
+        /// 
+        /// It's not a great solution so anyone reading this who has a better idea.... have at it.
+        /// </summary>
+        /// <param name="srcds">Dataset of the file you want to augment. Watch that it's not already open.</param>
+        public void CreateGCDFID(DataSource srcds)
+        {
+            // Populate some important metadata
+            Layer mLayer = srcds.GetLayerByIndex(0);
+
+            // Only crete it if it isn't already there
+            if (mLayer.FindFieldIndex(CGDMASKFIELD, 1) == -1)
+                mLayer.CreateField(new FieldDefn(CGDMASKFIELD, FieldType.OFTInteger), 0);
+
+            int GCDFIDID = mLayer.FindFieldIndex(CGDMASKFIELD, 1);
+
+            // Get our FEATURE definitions and make sure to set the GCDMASK to the FID that GDAL
+            // Creates for us.
+            Feature mFeat = mLayer.GetNextFeature();
+            while (mFeat != null)
+            {
+                int gdalGID = (int)mFeat.GetFID();
+                mFeat.SetField(GCDFIDID, gdalGID);
+                mLayer.SetFeature(mFeat);
+                mFeat = mLayer.GetNextFeature();
+            }
+        }
+
         private GDalGeometryType _geometryType;
         public GDalGeometryType GeometryType
         {
@@ -90,6 +124,11 @@ namespace GCDConsoleLib
         {
             Open();
             DataSource _cpyDs = _drv.CopyDataSource(_ds, destPath.FullName, null);
+
+            // Now we add our Unique GCDFID field
+            CreateGCDFID(_cpyDs);
+
+
             _cpyDs.Dispose();
             UnloadDS();
         }
@@ -391,7 +430,7 @@ namespace GCDConsoleLib
             for (int fldId = 0; fldId < iFldCnt; fldId++)
             {
                 FieldDefn mFldDef = mFeatDfn.GetFieldDefn(fldId);
-                Fields.Add(mFldDef.GetName(), new VectorField(mFldDef));
+                Fields.Add(mFldDef.GetName(), new VectorField(mFldDef, fldId));
             }
 
             // Spatial is way harder than it needs to be:
@@ -406,20 +445,24 @@ namespace GCDConsoleLib
             }
         }
 
-        public int AddField(string sName, GDalFieldType fType, int? precision)
-        {
-            Open();
-            Layer mLayer = _ds.GetLayerByIndex(0);
-            FieldDefn fDef = new FieldDefn(sName, fType._origType);
-            if (precision != null)
-            {
-                fDef.SetPrecision((int)precision);
-            }
+        /// <summary>
+        /// Fix this later: chicken and egg problem/ The constructor for VectorField needs
+        /// an ID that you don't get until you create it.
+        /// </summary>
+        //public int AddField(string sName, GDalFieldType fType, int? precision)
+        //{
+        //    Open();
+        //    Layer mLayer = _ds.GetLayerByIndex(0);
+        //    FieldDefn fDef = new FieldDefn(sName, fType._origType);
+        //    if (precision != null)
+        //    {
+        //        fDef.SetPrecision((int)precision);
+        //    }
 
-            Fields.Add(fDef.GetName(), new VectorField(fDef));
+        //    Fields.Add(fDef.GetName(), new VectorField(fDef));
 
-            return mLayer.CreateField(fDef, 0); // 0 => Approx ok
-        }
+        //    return mLayer.CreateField(fDef, 0); // 0 => Approx ok
+        //}
 
         protected override void _initfromfile()
         {
