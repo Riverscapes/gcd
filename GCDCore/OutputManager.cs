@@ -920,12 +920,19 @@ namespace GCDCore
         private string GetReferenceSurfaceFolder(string surfaceName)
         {
             surfaceName = naru.os.File.RemoveDangerousCharacters(surfaceName);
-            return Path.Combine(Path.Combine(GCDProjectFolder(), m_sRefSurfaceFolder), surfaceName);
+            return Path.Combine(GCDProjectFolder(), m_sInputsFolder, m_sRefSurfaceFolder, surfaceName);
         }
 
         public FileInfo GetReferenceSurfaceRasterPath(string surfaceName)
         {
             return naru.os.File.GetNewSafeName(GetReferenceSurfaceFolder(surfaceName), surfaceName, RasterExtension);
+        }
+
+        public FileInfo GetReferenceErrorSurfaceRasterPath(string errorName, DirectoryInfo surfaceDir)
+        {
+            errorName = naru.os.File.RemoveDangerousCharacters(errorName);
+            string subDir = System.IO.Path.Combine(surfaceDir.FullName, m_sErrorCalculationsFolder, errorName);
+            return naru.os.File.GetNewSafeName(subDir, errorName, RasterExtension);
         }
 
         private string GetProjectMaskFolder(string maskName)

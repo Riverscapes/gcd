@@ -38,13 +38,17 @@
             this.label2 = new System.Windows.Forms.Label();
             this.txtPath = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.lstDEMs = new System.Windows.Forms.CheckedListBox();
+            this.grdData = new System.Windows.Forms.DataGridView();
             this.cmsList = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.selectAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.selectNoneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label3 = new System.Windows.Forms.Label();
             this.cboMethod = new System.Windows.Forms.ComboBox();
+            this.colInclude = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.colDEM = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colError = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.grdData)).BeginInit();
             this.cmsList.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -126,7 +130,7 @@
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.Controls.Add(this.lstDEMs);
+            this.groupBox1.Controls.Add(this.grdData);
             this.groupBox1.Location = new System.Drawing.Point(12, 107);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(387, 177);
@@ -134,16 +138,23 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "DEM Surveys";
             // 
-            // lstDEMs
+            // grdData
             // 
-            this.lstDEMs.CheckOnClick = true;
-            this.lstDEMs.ContextMenuStrip = this.cmsList;
-            this.lstDEMs.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lstDEMs.FormattingEnabled = true;
-            this.lstDEMs.Location = new System.Drawing.Point(3, 16);
-            this.lstDEMs.Name = "lstDEMs";
-            this.lstDEMs.Size = new System.Drawing.Size(381, 158);
-            this.lstDEMs.TabIndex = 0;
+            this.grdData.AllowUserToAddRows = false;
+            this.grdData.AllowUserToDeleteRows = false;
+            this.grdData.AllowUserToResizeRows = false;
+            this.grdData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grdData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colInclude,
+            this.colDEM,
+            this.colError});
+            this.grdData.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.grdData.Location = new System.Drawing.Point(3, 16);
+            this.grdData.MultiSelect = false;
+            this.grdData.Name = "grdData";
+            this.grdData.RowHeadersVisible = false;
+            this.grdData.Size = new System.Drawing.Size(381, 158);
+            this.grdData.TabIndex = 0;
             // 
             // cmsList
             // 
@@ -187,6 +198,27 @@
             this.cboMethod.Size = new System.Drawing.Size(316, 21);
             this.cboMethod.TabIndex = 3;
             // 
+            // colInclude
+            // 
+            this.colInclude.DataPropertyName = "Include";
+            this.colInclude.HeaderText = "Include";
+            this.colInclude.Name = "colInclude";
+            this.colInclude.Width = 60;
+            // 
+            // colDEM
+            // 
+            this.colDEM.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colDEM.DataPropertyName = "DEMName";
+            this.colDEM.HeaderText = "DEM Survey";
+            this.colDEM.Name = "colDEM";
+            this.colDEM.ReadOnly = true;
+            // 
+            // colError
+            // 
+            this.colError.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colError.HeaderText = "Error Surface";
+            this.colError.Name = "colError";
+            // 
             // frmReferenceSurfaceFromDEMs
             // 
             this.AcceptButton = this.cmdOK;
@@ -210,6 +242,7 @@
             this.Text = "Derive Reference Surface From DEM Surveys";
             this.Load += new System.EventHandler(this.frmReferenceSurfaceFromDEMs_Load);
             this.groupBox1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.grdData)).EndInit();
             this.cmsList.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -226,11 +259,14 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtPath;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.CheckedListBox lstDEMs;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox cboMethod;
         private System.Windows.Forms.ContextMenuStrip cmsList;
         private System.Windows.Forms.ToolStripMenuItem selectAllToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem selectNoneToolStripMenuItem;
+        private System.Windows.Forms.DataGridView grdData;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn colInclude;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDEM;
+        private System.Windows.Forms.DataGridViewComboBoxColumn colError;
     }
 }

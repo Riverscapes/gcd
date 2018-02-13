@@ -63,6 +63,7 @@
     <Compile Include="Engines\DoD\ChangeDetetctionMultiEpoch.cs" />
     <Compile Include="Engines\DoD\ChangeDetetctionBatch.cs" />
     <Compile Include="Engines\InterComparison.cs" />
+    <Compile Include="Engines\ReferenceSurfaceEngine.cs" />
     <Compile Include="GCDUnits.cs" />
     <Compile Include="Project\CoherenceProperties.cs" />
     <Compile Include="Engines\EngineBase.cs" />
@@ -310,6 +311,7 @@
     <Compile Include="UserInterface\SurveyLibrary\frmSurveyDateTime.Designer.cs">
       <DependentUpon>frmSurveyDateTime.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserInterface\SurveyLibrary\ReferenceSurfaces\DEMItem.cs" />
     <Compile Include="UserInterface\SurveyLibrary\ReferenceSurfaces\frmReferenceSurfaceFromConstant.cs">
       <SubType>Form</SubType>
     </Compile>

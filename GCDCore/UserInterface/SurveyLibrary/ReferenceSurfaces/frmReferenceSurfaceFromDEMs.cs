@@ -7,12 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using GCDCore.Project;
+using GCDConsoleLib;
 
 namespace GCDCore.UserInterface.SurveyLibrary.ReferenceSurfaces
 {
     public partial class frmReferenceSurfaceFromDEMs : Form
     {
-        public naru.ui.SortableBindingList<GCDCore.Project.DEMSurvey> DEMSurveys;
+        public naru.ui.SortableBindingList<DEMItem> DEMSurveys;
         public GCDCore.Project.Surface ReferenceSurface { get; internal set; }
 
         public frmReferenceSurfaceFromDEMs()
@@ -23,21 +25,32 @@ namespace GCDCore.UserInterface.SurveyLibrary.ReferenceSurfaces
         private void frmReferenceSurfaceFromDEMs_Load(object sender, EventArgs e)
         {
             // Add all the project DEM surveys to the list and then bind to checked listbox
-            DEMSurveys = new naru.ui.SortableBindingList<GCDCore.Project.DEMSurvey>(GCDCore.Project.ProjectManager.Project.DEMSurveys.Values.ToList<GCDCore.Project.DEMSurvey>());
-            lstDEMs.DataSource = DEMSurveys;
+            List<DEMItem> items = new List<DEMItem>(ProjectManager.Project.DEMSurveys.Values.Select(x => new DEMItem(x)));
+            DEMSurveys = new naru.ui.SortableBindingList<DEMItem>(items);
+            grdData.DataSource = DEMSurveys;
 
-            foreach (GCDConsoleLib.RasterOperators.MultiMathOpType val in Enum.GetValues(typeof(GCDConsoleLib.RasterOperators.MultiMathOpType)))
+            //Setup error surfaces for DEM grid
+            for (int i = 0; i < grdData.Rows.Count; i++)
             {
-                if (val.ToString().ToLower().Contains("standarddeviation"))
-                    cboMethod.Items.Add(new naru.db.NamedObject((long)val, "Standard Deviation"));
-                else
-                    cboMethod.Items.Add(new naru.db.NamedObject((long)val, val.ToString()));
-            }
-            cboMethod.SelectedIndex = 0;
+                DataGridViewComboBoxCell comboCell = grdData.Rows[i].Cells["colError"] as DataGridViewComboBoxCell;
 
-            // ensure all DEMs are checked by default
-            for (int i = 0; i < lstDEMs.Items.Count; i++)
-                lstDEMs.SetItemChecked(i, true);
+                DEMSurvey dem = ((DEMItem)grdData.Rows[i].DataBoundItem)._DEM;
+
+                comboCell.DataSource = new BindingSource(dem.ErrorSurfaces, null);
+                comboCell.DisplayMember = "NameWithDefault";
+
+                //select any error surfaces have default flat
+                if (dem.ErrorSurfaces.Any(x => x.IsDefault))
+                {
+                    comboCell.Value = dem.ErrorSurfaces.First(x => x.IsDefault).NameWithDefault;
+                }
+            }
+
+            cboMethod.Items.Add(new naru.db.NamedObject((long)RasterOperators.MultiMathOpType.Maximum, "Maximum"));
+            cboMethod.Items.Add(new naru.db.NamedObject((long)RasterOperators.MultiMathOpType.Mean, "Mean"));
+            cboMethod.Items.Add(new naru.db.NamedObject((long)RasterOperators.MultiMathOpType.Minimum, "Minimum"));
+            cboMethod.Items.Add(new naru.db.NamedObject((long)RasterOperators.MultiMathOpType.StandardDeviation, "Standard Deviation"));
+            cboMethod.SelectedIndex = 0;
         }
 
         private void cmdOK_Click(object sender, EventArgs e)
@@ -48,49 +61,32 @@ namespace GCDCore.UserInterface.SurveyLibrary.ReferenceSurfaces
                 return;
             }
 
-            System.IO.FileInfo fiOutput = GCDCore.Project.ProjectManager.Project.GetAbsolutePath(txtPath.Text);
-            fiOutput.Directory.Create();
+            RasterOperators.MultiMathOpType eMethod = (RasterOperators.MultiMathOpType)((naru.db.NamedObject)cboMethod.SelectedItem).ID;
 
-            List<GCDConsoleLib.Raster> rInputs = new List<GCDConsoleLib.Raster>();
-            foreach (GCDCore.Project.DEMSurvey dem in lstDEMs.CheckedItems)
+            List<Tuple<DEMSurvey, ErrorSurface>> rInputs = new List<Tuple<DEMSurvey, ErrorSurface>>();
+            for (int i = 0; i < grdData.Rows.Count; i++)
             {
-                rInputs.Add(dem.Raster);
+                DEMItem dem = grdData.Rows[i].DataBoundItem as DEMItem;
+                if (!dem.Include)
+                    continue;
+
+                DataGridViewComboBoxCell comboCell = grdData.Rows[i].Cells["colError"] as DataGridViewComboBoxCell;
+                BindingSource bs = comboCell.DataSource as BindingSource;
+                ErrorSurface err = bs.Current as ErrorSurface;
+
+                rInputs.Add(new Tuple<DEMSurvey, ErrorSurface>(dem._DEM, err));
             }
+
+            Engines.ReferenceSurfaceEngine eng = new Engines.ReferenceSurfaceEngine(txtName.Text, rInputs, eMethod);
+
+            System.IO.FileInfo fiOutput = ProjectManager.Project.GetAbsolutePath(txtPath.Text);
+            System.IO.FileInfo fiError = ProjectManager.OutputManager.GetReferenceErrorSurfaceRasterPath(eng.ErrorSurfaceName, fiOutput.Directory);
 
             try
             {
                 Cursor = Cursors.WaitCursor;
 
-                GCDConsoleLib.Raster rOutput;
-                switch (((GCDConsoleLib.RasterOperators.MultiMathOpType)((naru.db.NamedObject)cboMethod.SelectedItem).ID))
-                {
-                    case GCDConsoleLib.RasterOperators.MultiMathOpType.Addition:
-                        rOutput = GCDConsoleLib.RasterOperators.MultiAdd(rInputs, fiOutput);
-                        break;
-
-                    case GCDConsoleLib.RasterOperators.MultiMathOpType.Maximum:
-                        rOutput = GCDConsoleLib.RasterOperators.Maximum(rInputs, fiOutput);
-                        break;
-
-                    case GCDConsoleLib.RasterOperators.MultiMathOpType.Mean:
-                        rOutput = GCDConsoleLib.RasterOperators.Mean(rInputs, fiOutput);
-                        break;
-
-                    case GCDConsoleLib.RasterOperators.MultiMathOpType.Minimum:
-                        rOutput = GCDConsoleLib.RasterOperators.Minimum(rInputs, fiOutput);
-                        break;
-
-                    case GCDConsoleLib.RasterOperators.MultiMathOpType.StandardDeviation:
-                        rOutput = GCDConsoleLib.RasterOperators.StandardDeviation(rInputs, fiOutput);
-                        break;
-
-                    default:
-                        throw new Exception("Unhandled math operation type " + cboMethod.Text);
-                }
-
-                ReferenceSurface = new GCDCore.Project.Surface(txtName.Text, rOutput);
-                GCDCore.Project.ProjectManager.Project.ReferenceSurfaces[ReferenceSurface.Name] = ReferenceSurface;
-                GCDCore.Project.ProjectManager.Project.Save();
+                eng.Run(fiOutput, fiError);
 
                 Cursor = Cursors.Default;
                 MessageBox.Show("Reference surface generated successfully.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -121,10 +117,10 @@ namespace GCDCore.UserInterface.SurveyLibrary.ReferenceSurfaces
                 return false;
             }
 
-            if (lstDEMs.CheckedItems.Count < 2)
+            if (DEMSurveys.Count(x => x.Include) < 2)
             {
                 MessageBox.Show("You must select at least two DEM surveys to generate a reference surface.", "Insufficient DEM Surveys", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                lstDEMs.Select();
+                grdData.Select();
                 return false;
             }
 
@@ -143,8 +139,7 @@ namespace GCDCore.UserInterface.SurveyLibrary.ReferenceSurfaces
         {
             try
             {
-                for (int i = 0; i < lstDEMs.Items.Count; i++)
-                    lstDEMs.SetItemChecked(i, ((System.Windows.Forms.ToolStripMenuItem)sender).Name.ToLower().Contains("all"));
+                DEMSurveys.ToList<DEMItem>().ForEach(x => x.Include = ((System.Windows.Forms.ToolStripMenuItem)sender).Name.ToLower().Contains("all"));
             }
             catch (Exception ex)
             {
