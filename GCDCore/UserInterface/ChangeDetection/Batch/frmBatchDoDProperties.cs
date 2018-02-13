@@ -141,6 +141,13 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
                     valMin.Select();
                     return false;
                 }
+
+                if (valInterval.Value == 0)
+                {
+                    MessageBox.Show("The interval cannot be zero.", "Invalid Interval", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    valInterval.Select();
+                    return false;
+                }
             }
 
             return true;
