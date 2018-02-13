@@ -140,6 +140,7 @@ namespace GCDCore.UserInterface.Project
             this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
             this.specifyErrorSurfaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deriveErrorSurfaceToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.refreshProjectTreeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsProject.SuspendLayout();
             this.cmsDEMSurvey.SuspendLayout();
             this.cmsAssociatedSurface.SuspendLayout();
@@ -205,10 +206,11 @@ namespace GCDCore.UserInterface.Project
             this.EditGCDProjectPropertiesToolStripMenuItem,
             this.cmsAddProjectToMap,
             this.ExploreGCDProjectFolderToolStripMenuItem,
+            this.refreshProjectTreeToolStripMenuItem,
             this.ToolStripSeparator2,
             this.ToolStripMenuItem1});
             this.cmsProject.Name = "cmsProject";
-            this.cmsProject.Size = new System.Drawing.Size(231, 98);
+            this.cmsProject.Size = new System.Drawing.Size(231, 142);
             // 
             // EditGCDProjectPropertiesToolStripMenuItem
             // 
@@ -914,6 +916,13 @@ namespace GCDCore.UserInterface.Project
             this.deriveErrorSurfaceToolStripMenuItem2.Size = new System.Drawing.Size(234, 22);
             this.deriveErrorSurfaceToolStripMenuItem2.Text = "Derive Error Surface";
             // 
+            // refreshProjectTreeToolStripMenuItem
+            // 
+            this.refreshProjectTreeToolStripMenuItem.Image = global::GCDCore.Properties.Resources.refresh;
+            this.refreshProjectTreeToolStripMenuItem.Name = "refreshProjectTreeToolStripMenuItem";
+            this.refreshProjectTreeToolStripMenuItem.Size = new System.Drawing.Size(230, 22);
+            this.refreshProjectTreeToolStripMenuItem.Text = "Refresh Project Tree";
+            // 
             // ucProjectExplorer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1042,5 +1051,6 @@ namespace GCDCore.UserInterface.Project
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
         private System.Windows.Forms.ToolStripMenuItem specifyErrorSurfaceToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deriveErrorSurfaceToolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem refreshProjectTreeToolStripMenuItem;
     }
 }

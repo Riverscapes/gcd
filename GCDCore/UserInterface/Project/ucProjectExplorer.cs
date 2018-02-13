@@ -45,6 +45,7 @@ namespace GCDCore.UserInterface.Project
             this.EditGCDProjectPropertiesToolStripMenuItem.Click += EditGCDProjectPropertiesToolStripMenuItem_Click;
             this.cmsAddProjectToMap.Click += AddProjectToMap_Click;
             this.ExploreGCDProjectFolderToolStripMenuItem.Click += ExploreGCDProjectFolderToolStripMenuItem_Click;
+            this.refreshProjectTreeToolStripMenuItem.Click += LoadTree;
             this.ToolStripMenuItem1.Click += ToolStripMenuItem1_Click;
             this.EditDEMSurveyProperatieToolStripMenuItem.Click += EditDEMSurveyProperatieToolStripMenuItem_Click;
             this.AddToMapToolStripMenuItem.Click += AddToMapToolStripMenuItem_Click;
@@ -97,6 +98,11 @@ namespace GCDCore.UserInterface.Project
             this.addReferenceSurfaceToMapToolStripMenuItem.Click += AddToMapToolStripMenuItem_Click;
             this.deleteToolStripMenuItem.Click += btnDelete_Click;
 
+        }
+
+        public void LoadTree(object sender, EventArgs e)
+        {
+            LoadTree(null, SortSurveyBy.NameAsc);
         }
 
         /// <summary>
