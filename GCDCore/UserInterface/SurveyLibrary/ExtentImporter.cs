@@ -15,7 +15,8 @@ namespace GCDCore.UserInterface.SurveyLibrary
             FirstDEM,
             SubsequentDEM,
             AssociatedSurface,
-            ErrorSurface
+            ErrorSurface,
+            ReferenceSurface
         };
 
         public readonly Purposes Purpose;
@@ -31,7 +32,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
                 _InputExtent = value;
 
                 decimal cellSize = 0;
-                if (Purpose == Purposes.SubsequentDEM || Purpose == Purposes.AssociatedSurface || Purpose == Purposes.ErrorSurface)
+                if (Purpose == Purposes.SubsequentDEM || Purpose == Purposes.AssociatedSurface || Purpose == Purposes.ErrorSurface || Purpose == Purposes.ReferenceSurface)
                     cellSize = RefExtent.CellWidth;
                 else
                 {
@@ -92,8 +93,9 @@ namespace GCDCore.UserInterface.SurveyLibrary
             set
             {
                 if (Purpose == Purposes.AssociatedSurface) throw new Exception("Cannot adjust cell size in associated surface mode.");
-                if (Purpose == Purposes.AssociatedSurface) throw new Exception("Cannot adjust cell size in error surface mode.");
+                if (Purpose == Purposes.ErrorSurface) throw new Exception("Cannot adjust cell size in error surface mode.");
                 if (Purpose == Purposes.SubsequentDEM) throw new Exception("Cannot adjust cell size in subsequent DEM mode.");
+                if (Purpose == Purposes.ReferenceSurface) throw new Exception("Cannot adjust cell size in reference surface DEM mode.");
                 if (value <= 0) throw new ArgumentOutOfRangeException("value", "Invalid cell size");
 
                 Initialize(value);
@@ -107,8 +109,9 @@ namespace GCDCore.UserInterface.SurveyLibrary
             set
             {
                 if (Purpose == Purposes.AssociatedSurface) throw new Exception("Cannot adjust precision in associated surface mode.");
-                if (Purpose == Purposes.AssociatedSurface) throw new Exception("Cannot adjust precision in error surface mode.");
+                if (Purpose == Purposes.ErrorSurface) throw new Exception("Cannot adjust precision in error surface mode.");
                 if (Purpose == Purposes.SubsequentDEM) throw new Exception("Cannot adjust precision in subsequent DEM mode.");
+                if (Purpose == Purposes.ReferenceSurface) throw new Exception("Cannot adjust precision in reference surface DEM mode.");
 
                 _Precision = value;
                 decimal cellSize = Math.Round(Output.CellWidth, _Precision);
@@ -147,6 +150,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             if (Purpose == Purposes.SubsequentDEM && RefExtent == null) throw new Exception("Subsequent DEM mode requires a reference raster.");
             if (Purpose == Purposes.AssociatedSurface && RefExtent == null) throw new Exception("Associated surface mode requires a reference raster.");
             if (Purpose == Purposes.ErrorSurface && RefExtent == null) throw new Exception("Error surface mode requires a reference raster.");
+            if (Purpose == Purposes.ReferenceSurface && RefExtent == null) throw new Exception("Reference surface mode requires a reference raster.");
             if (RefExtent is ExtentRectangle && !RefExtent.IsDivisible()) throw new Exception("Reference raster must always be divisble extent.");
 
             if (cellWidth < 0 && Precision < 1) throw new Exception("The precision must be greater than zero when the cell resolution is less than 1");

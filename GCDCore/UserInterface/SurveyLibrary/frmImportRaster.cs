@@ -246,6 +246,15 @@ namespace GCDCore.UserInterface.SurveyLibrary
                         return false;
                     }
                     break;
+
+                case ExtentImporter.Purposes.ReferenceSurface:
+                    if (!ProjectManager.Project.IsReferenceSurfaceNameUnique(txtName.Text, null))
+                    {
+                        MessageBox.Show(string.Format("There is already another reference surface with the name '{0}'. Each reference surface must have a unique name.", txtName.Text), Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        txtName.Select();
+                        return false;
+                    }
+                    break;
             }
 
             // Verify that the raster has a spatial reference
@@ -257,8 +266,8 @@ namespace GCDCore.UserInterface.SurveyLibrary
                 {
                     string wkt = ReferenceDEM.Raster.Proj.PrettyWkt;
                     msg += " If the selected raster exists in the GCD project coordinate system (" + wkt + "), but the coordinate system has not yet been defined for the raster, then" +
-                    " use the ArcToolbox 'Define Projection' geoprocessing tool in the 'Data Management -> Projection & Transformations' Toolbox to correct the problem with the selected raster by defining the coordinate system as:" +
-                    Environment.NewLine + Environment.NewLine + wkt + Environment.NewLine + Environment.NewLine + "Then try importing it into the GCD again.";
+                                " use the ArcToolbox 'Define Projection' geoprocessing tool in the 'Data Management -> Projection & Transformations' Toolbox to correct the problem with the selected raster by defining the coordinate system as:" +
+                                Environment.NewLine + Environment.NewLine + wkt + Environment.NewLine + Environment.NewLine + "Then try importing it into the GCD again.";
                 }
 
                 MessageBox.Show(msg, Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -494,12 +503,15 @@ namespace GCDCore.UserInterface.SurveyLibrary
                 case ExtentImporter.Purposes.ErrorSurface:
                     txtRasterPath.Text = ProjectManager.Project.GetRelativePath(ProjectManager.OutputManager.ErrorSurfaceRasterPath(ReferenceDEM.Name, txtName.Text));
                     break;
+
+                case ExtentImporter.Purposes.ReferenceSurface:
+                    txtRasterPath.Text = ProjectManager.Project.GetRelativePath(ProjectManager.OutputManager.GetReferenceSurfaceRasterPath(txtName.Text));
+                    break;
             }
         }
 
         public GCDConsoleLib.Raster ProcessRaster()
         {
-
             GCDConsoleLib.Raster gResult = null;
             if (!string.IsNullOrEmpty(txtRasterPath.Text))
             {

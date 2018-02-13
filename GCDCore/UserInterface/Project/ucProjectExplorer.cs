@@ -90,6 +90,7 @@ namespace GCDCore.UserInterface.Project
 
             this.deriveReferenceSurfaceFromDEMSurveysToolStripMenuItem.Click += addReferenceSurfaceFromDEMs;
             this.deriveConstantReferenceSurfaceToolStripMenuItem.Click += addReferenceSurfaceFromContant;
+            this.specifyReferenceSurfaceToolStripMenuItem.Click += specifyReferenceSurface;
             this.addChangeDetectionIntercomparisonToolStripMenuItem.Click += addChangeDetectionIntercomparisonToolStripMenuItem_Click;
             this.addChangeDetectionInterComparisonToolStripMenuItem1.Click += addChangeDetectionIntercomparisonToolStripMenuItem_Click;
             this.openInterComparisonFolderToolStripMenuItem.Click += openInterComparisonFolderToolStripMenuItem_Click;
@@ -211,7 +212,7 @@ namespace GCDCore.UserInterface.Project
                 nodReferenceSurfaces.Expand();
 
                 TreeNode nodMaskGroup = AddTreeNode(nodProject, GCDNodeTypes.MasksGroup, m_sMasks, null, selectItem);
-                foreach(GCDCore.Project.Masks.Mask aMask in ProjectManager.Project.Masks.Values)
+                foreach (GCDCore.Project.Masks.Mask aMask in ProjectManager.Project.Masks.Values)
                 {
                     AddTreeNode(nodMaskGroup, GCDNodeTypes.Mask, aMask.Name, aMask, selectItem);
                 }
@@ -1737,6 +1738,12 @@ namespace GCDCore.UserInterface.Project
 
         private void addReferenceSurfaceFromDEMs(object sender, EventArgs e)
         {
+            if (ProjectManager.Project.DEMSurveys.Count < 2)
+            {
+                MessageBox.Show("You must have at least two DEM surveys in your GCD project before you can generate a reference surface from DEM surveys.", "DEM Surveys Required", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
             UserInterface.SurveyLibrary.ReferenceSurfaces.frmReferenceSurfaceFromDEMs frm = new SurveyLibrary.ReferenceSurfaces.frmReferenceSurfaceFromDEMs();
             if (frm.ShowDialog() == DialogResult.OK)
             {
@@ -1746,10 +1753,35 @@ namespace GCDCore.UserInterface.Project
 
         private void addReferenceSurfaceFromContant(object sender, EventArgs e)
         {
+            if (ProjectManager.Project.DEMSurveys.Count < 1)
+            {
+                MessageBox.Show("You must have at least one DEM survey in your GCD project before you can generate a constant reference surface.", "DEM Surveys Required", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
             UserInterface.SurveyLibrary.ReferenceSurfaces.frmReferenceSurfaceFromConstant frm = new SurveyLibrary.ReferenceSurfaces.frmReferenceSurfaceFromConstant();
             if (frm.ShowDialog() == DialogResult.OK)
             {
                 LoadTree(new ProjectTreeNode(GCDNodeTypes.ReferenceSurface, frm.ReferenceSurface));
+            }
+        }
+
+        private void specifyReferenceSurface(object sender, EventArgs e)
+        {
+            if (ProjectManager.Project.DEMSurveys.Count < 1)
+            {
+                MessageBox.Show("You must have at least one DEM survey in your GCD project before you can generate a constant reference surface.", "DEM Surveys Required", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            frmImportRaster frm = new frmImportRaster(ProjectManager.Project.DEMSurveys.Values.First<DEMSurvey>(), ExtentImporter.Purposes.ReferenceSurface, "Reference Surface");
+            if (frm.ShowDialog() == DialogResult.OK)
+            {
+                GCDConsoleLib.Raster rOutput = frm.ProcessRaster();
+                GCDCore.Project.Surface refSurf = new Surface(frm.txtName.Text, rOutput);
+                ProjectManager.Project.ReferenceSurfaces[refSurf.Name] = refSurf;
+                ProjectManager.Project.Save();
+                LoadTree(new ProjectTreeNode(GCDNodeTypes.ReferenceSurface, refSurf));
             }
         }
 
