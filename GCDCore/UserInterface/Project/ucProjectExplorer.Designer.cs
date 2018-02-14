@@ -46,6 +46,7 @@ namespace GCDCore.UserInterface.Project
             this.EditGCDProjectPropertiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsAddProjectToMap = new System.Windows.Forms.ToolStripMenuItem();
             this.ExploreGCDProjectFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.refreshProjectTreeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsDEMSurvey = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -140,7 +141,6 @@ namespace GCDCore.UserInterface.Project
             this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
             this.specifyErrorSurfaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deriveErrorSurfaceToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.refreshProjectTreeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsProject.SuspendLayout();
             this.cmsDEMSurvey.SuspendLayout();
             this.cmsAssociatedSurface.SuspendLayout();
@@ -210,7 +210,7 @@ namespace GCDCore.UserInterface.Project
             this.ToolStripSeparator2,
             this.ToolStripMenuItem1});
             this.cmsProject.Name = "cmsProject";
-            this.cmsProject.Size = new System.Drawing.Size(231, 142);
+            this.cmsProject.Size = new System.Drawing.Size(231, 120);
             // 
             // EditGCDProjectPropertiesToolStripMenuItem
             // 
@@ -232,6 +232,13 @@ namespace GCDCore.UserInterface.Project
             this.ExploreGCDProjectFolderToolStripMenuItem.Name = "ExploreGCDProjectFolderToolStripMenuItem";
             this.ExploreGCDProjectFolderToolStripMenuItem.Size = new System.Drawing.Size(230, 22);
             this.ExploreGCDProjectFolderToolStripMenuItem.Text = "Explore GCD Project Folder";
+            // 
+            // refreshProjectTreeToolStripMenuItem
+            // 
+            this.refreshProjectTreeToolStripMenuItem.Image = global::GCDCore.Properties.Resources.refresh;
+            this.refreshProjectTreeToolStripMenuItem.Name = "refreshProjectTreeToolStripMenuItem";
+            this.refreshProjectTreeToolStripMenuItem.Size = new System.Drawing.Size(230, 22);
+            this.refreshProjectTreeToolStripMenuItem.Text = "Refresh Project Tree";
             // 
             // ToolStripSeparator2
             // 
@@ -881,7 +888,7 @@ namespace GCDCore.UserInterface.Project
             this.specifyErrorSurfaceToolStripMenuItem,
             this.deriveErrorSurfaceToolStripMenuItem2});
             this.cmsRefSurface.Name = "cmsRefSurface";
-            this.cmsRefSurface.Size = new System.Drawing.Size(235, 98);
+            this.cmsRefSurface.Size = new System.Drawing.Size(235, 120);
             // 
             // addReferenceSurfaceToMapToolStripMenuItem
             // 
@@ -915,13 +922,6 @@ namespace GCDCore.UserInterface.Project
             this.deriveErrorSurfaceToolStripMenuItem2.Name = "deriveErrorSurfaceToolStripMenuItem2";
             this.deriveErrorSurfaceToolStripMenuItem2.Size = new System.Drawing.Size(234, 22);
             this.deriveErrorSurfaceToolStripMenuItem2.Text = "Derive Error Surface";
-            // 
-            // refreshProjectTreeToolStripMenuItem
-            // 
-            this.refreshProjectTreeToolStripMenuItem.Image = global::GCDCore.Properties.Resources.refresh;
-            this.refreshProjectTreeToolStripMenuItem.Name = "refreshProjectTreeToolStripMenuItem";
-            this.refreshProjectTreeToolStripMenuItem.Size = new System.Drawing.Size(230, 22);
-            this.refreshProjectTreeToolStripMenuItem.Text = "Refresh Project Tree";
             // 
             // ucProjectExplorer
             // 

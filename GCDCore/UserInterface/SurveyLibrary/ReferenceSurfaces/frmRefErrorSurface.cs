@@ -78,6 +78,8 @@ namespace GCDCore.UserInterface.SurveyLibrary.ReferenceSurfaces
                 return;
             }
 
+            Cursor.Current = Cursors.WaitCursor;
+
             string successMsg = string.Empty;
             List<float> errVals = new List<float>();
             if (rdoSingle.Checked)
@@ -102,17 +104,22 @@ namespace GCDCore.UserInterface.SurveyLibrary.ReferenceSurfaces
                     fiOutput.Directory.Create();
 
                     GCDConsoleLib.RasterOperators.Uniform<float>(ReferenceSurface.Raster, fiOutput, errVal);
-                    ErrorSurface errSurf = new ErrorSurface(name, fiOutput, ReferenceSurface);
-                    ReferenceSurface.ErrorSurfaces.Add(errSurf);
+                    ErrorSurface = new ErrorSurface(name, fiOutput, ReferenceSurface);
+                    ReferenceSurface.ErrorSurfaces.Add(ErrorSurface);
                 }
 
                 ProjectManager.Project.Save();
+                Cursor.Current = Cursors.Default;
                 MessageBox.Show(successMsg, Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch(Exception ex)
             {
                 DialogResult = DialogResult.None;
                 naru.error.ExceptionUI.HandleException(ex);
+            }
+            finally
+            {
+                Cursor.Current = Cursors.Default;
             }
         }
 

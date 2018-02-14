@@ -27,7 +27,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             None
         }
 
-        public readonly DEMSurvey ReferenceDEM;
+        public readonly Surface ReferenceSurface;
         public ExtentImporter ExtImporter { get; internal set; }
         private readonly int NoInterpolationIndex; // the combobox index of the straight cell-wise copy
 
@@ -45,15 +45,15 @@ namespace GCDCore.UserInterface.SurveyLibrary
         }
 
 
-        public frmImportRaster(DEMSurvey referenceDEM, ExtentImporter.Purposes ePurpose, string sNoun)
+        public frmImportRaster(Surface refSurface, ExtentImporter.Purposes ePurpose, string sNoun)
         {
             // This call is required by the designer.
             InitializeComponent();
 
-            if (referenceDEM is DEMSurvey)
+            if (refSurface is Surface)
             {
-                ReferenceDEM = referenceDEM;
-                ExtImporter = new ExtentImporter(ePurpose, referenceDEM.Raster.Extent);
+                ReferenceSurface = refSurface;
+                ExtImporter = new ExtentImporter(ePurpose, refSurface.Raster.Extent);
             }
             else
             {
@@ -150,7 +150,9 @@ namespace GCDCore.UserInterface.SurveyLibrary
                 txtRasterPath.Width = txtName.Width;
                 cmdSave.Visible = false;
 
-                if (ExtImporter.Purpose == ExtentImporter.Purposes.AssociatedSurface)
+                if (ExtImporter.Purpose == ExtentImporter.Purposes.AssociatedSurface ||
+                    ExtImporter.Purpose == ExtentImporter.Purposes.ErrorSurface ||
+                    ExtImporter.Purpose == ExtentImporter.Purposes.ReferenceErrorSurface)
                 {
                     valTop.Value = ExtImporter.OutputTop;
                     valLeft.Value = ExtImporter.OutputLeft;
@@ -158,7 +160,10 @@ namespace GCDCore.UserInterface.SurveyLibrary
                     valBottom.Value = ExtImporter.OutputBottom;
                 }
 
-                if (ExtImporter.Purpose == ExtentImporter.Purposes.AssociatedSurface || ExtImporter.Purpose == ExtentImporter.Purposes.SubsequentDEM)
+                if (ExtImporter.Purpose == ExtentImporter.Purposes.AssociatedSurface ||
+                    ExtImporter.Purpose == ExtentImporter.Purposes.SubsequentDEM ||
+                    ExtImporter.Purpose == ExtentImporter.Purposes.ErrorSurface ||
+                    ExtImporter.Purpose == ExtentImporter.Purposes.ReferenceErrorSurface)
                 {
                     valCellSize.DecimalPlaces = ExtImporter.Precision;
                     valTop.DecimalPlaces = ExtImporter.Precision;
@@ -197,7 +202,6 @@ namespace GCDCore.UserInterface.SurveyLibrary
                 this.DialogResult = DialogResult.None;
                 return;
             }
-
         }
 
         private bool ValidateForm()
@@ -230,7 +234,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
                     break;
 
                 case ExtentImporter.Purposes.AssociatedSurface:
-                    if (!ReferenceDEM.IsAssocNameUnique(txtName.Text, null))
+                    if (!((DEMSurvey)ReferenceSurface).IsAssocNameUnique(txtName.Text, null))
                     {
                         MessageBox.Show(string.Format("There is already another associated surface for this DEM with the name '{0}'. The associated surfaces for each DEM must have a unique name.", txtName.Text), Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
                         txtName.Select();
@@ -239,9 +243,14 @@ namespace GCDCore.UserInterface.SurveyLibrary
                     break;
 
                 case ExtentImporter.Purposes.ErrorSurface:
-                    if (!ReferenceDEM.IsErrorNameUnique(txtName.Text, null))
+                case ExtentImporter.Purposes.ReferenceErrorSurface:
+                    if (!ReferenceSurface.IsErrorNameUnique(txtName.Text, null))
                     {
-                        MessageBox.Show(string.Format("There is already another error surface for this DEM with the name '{0}'. The error surfaces for each DEM must have a unique name.", txtName.Text), Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        string parentType = "Reference Surface";
+                        if (ReferenceSurface is DEMSurvey)
+                            parentType = "DEM Survey";
+
+                        MessageBox.Show(string.Format("There is already another error surface for this {0} with the name '{1}'. The error surfaces for each {0} must have a unique name.", parentType, txtName.Text), Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
                         txtName.Select();
                         return false;
                     }
@@ -262,9 +271,9 @@ namespace GCDCore.UserInterface.SurveyLibrary
             {
                 string msg = "The selected raster appears to be missing a spatial reference. All GCD rasters must possess a spatial reference and it must be the same spatial reference for all rasters in a GCD project.";
 
-                if (ReferenceDEM is DEMSurvey)
+                if (ReferenceSurface is DEMSurvey)
                 {
-                    string wkt = ReferenceDEM.Raster.Proj.PrettyWkt;
+                    string wkt = ReferenceSurface.Raster.Proj.PrettyWkt;
                     msg += " If the selected raster exists in the GCD project coordinate system (" + wkt + "), but the coordinate system has not yet been defined for the raster, then" +
                                 " use the ArcToolbox 'Define Projection' geoprocessing tool in the 'Data Management -> Projection & Transformations' Toolbox to correct the problem with the selected raster by defining the coordinate system as:" +
                                 Environment.NewLine + Environment.NewLine + wkt + Environment.NewLine + Environment.NewLine + "Then try importing it into the GCD again.";
@@ -275,10 +284,10 @@ namespace GCDCore.UserInterface.SurveyLibrary
             }
 
             // Compare the reference DEM projection against the new raster
-            if (ReferenceDEM is DEMSurvey)
+            if (ReferenceSurface is Surface)
             {
-                string wkt = ReferenceDEM.Raster.Proj.PrettyWkt;
-                if (!ReferenceDEM.Raster.Proj.IsSame(ucRaster.SelectedItem.Proj))
+                string wkt = ReferenceSurface.Raster.Proj.PrettyWkt;
+                if (!ReferenceSurface.Raster.Proj.IsSame(ucRaster.SelectedItem.Proj))
                 {
                     MessageBox.Show("The coordinate system of the selected raster:" + Environment.NewLine + Environment.NewLine + ucRaster.SelectedItem.Proj.PrettyWkt + Environment.NewLine + Environment.NewLine +
                         "does not match that of the GCD project:" + Environment.NewLine + Environment.NewLine + wkt + Environment.NewLine + Environment.NewLine +
@@ -485,7 +494,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
             txtRasterPath.Text = string.Empty;
 
-            if (string.IsNullOrEmpty(txtName.Text) || ucRaster.SelectedItem == null)
+            if (string.IsNullOrEmpty(txtName.Text)) // || ucRaster.SelectedItem == null)
                 return;
 
             // Get the appropriate raster path depending on the purpose of this window (DEM, associated surface, error surface)
@@ -497,15 +506,19 @@ namespace GCDCore.UserInterface.SurveyLibrary
                     break;
 
                 case ExtentImporter.Purposes.AssociatedSurface:
-                    txtRasterPath.Text = ProjectManager.Project.GetRelativePath(ProjectManager.OutputManager.AssociatedSurfaceRasterPath(ReferenceDEM.Name, txtName.Text));
+                    txtRasterPath.Text = ProjectManager.Project.GetRelativePath(ProjectManager.OutputManager.AssociatedSurfaceRasterPath(ReferenceSurface.Name, txtName.Text));
                     break;
 
                 case ExtentImporter.Purposes.ErrorSurface:
-                    txtRasterPath.Text = ProjectManager.Project.GetRelativePath(ProjectManager.OutputManager.ErrorSurfaceRasterPath(ReferenceDEM.Name, txtName.Text));
+                    txtRasterPath.Text = ProjectManager.Project.GetRelativePath(ProjectManager.OutputManager.ErrorSurfaceRasterPath(ReferenceSurface.Name, txtName.Text));
                     break;
 
                 case ExtentImporter.Purposes.ReferenceSurface:
                     txtRasterPath.Text = ProjectManager.Project.GetRelativePath(ProjectManager.OutputManager.GetReferenceSurfaceRasterPath(txtName.Text));
+                    break;
+
+                case ExtentImporter.Purposes.ReferenceErrorSurface:
+                    txtRasterPath.Text = ProjectManager.Project.GetRelativePath(ProjectManager.OutputManager.GetReferenceErrorSurfaceRasterPath(txtName.Text, ReferenceSurface.Raster.GISFileInfo.Directory));
                     break;
             }
         }

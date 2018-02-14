@@ -91,6 +91,11 @@ namespace GCDCore.UserInterface.Project
 
             this.deriveReferenceSurfaceFromDEMSurveysToolStripMenuItem.Click += addReferenceSurfaceFromDEMs;
             this.deriveConstantReferenceSurfaceToolStripMenuItem.Click += addReferenceSurfaceFromContant;
+            this.deriveErrorSurfaceToolStripMenuItem2.Click += DeriveErrorSurfaceToolStripMenuItem_Click;
+
+            this.specifyErrorSurfaceToolStripMenuItem.Click += SpecifyErrorSurfaceToolStripMenuItem_Click;
+
+
             this.specifyReferenceSurfaceToolStripMenuItem.Click += specifyReferenceSurface;
             this.addChangeDetectionIntercomparisonToolStripMenuItem.Click += addChangeDetectionIntercomparisonToolStripMenuItem_Click;
             this.addChangeDetectionInterComparisonToolStripMenuItem1.Click += addChangeDetectionIntercomparisonToolStripMenuItem_Click;
@@ -629,7 +634,6 @@ namespace GCDCore.UserInterface.Project
 
         #region "Error Surface Group Menu Items"
 
-
         private void DeriveErrorSurfaceToolStripMenuItem_Click(System.Object sender, System.EventArgs e)
         {
             try
@@ -645,8 +649,22 @@ namespace GCDCore.UserInterface.Project
                         nodDEM = selNode.Parent;
                     }
 
-                    DEMSurvey dem = (DEMSurvey)((ProjectTreeNode)nodDEM.Tag).Item;
-                    ErrorSurface err = frmDEMSurveyProperties.CalculateErrorSurface(dem);
+                    Surface parent = ((ProjectTreeNode)nodDEM.Tag).Item as Surface;
+                    ErrorSurface err = null;
+
+                    if (parent is DEMSurvey)
+                    {
+                        frmDEMSurveyProperties.CalculateErrorSurface(parent as DEMSurvey);
+                    }
+                    else
+                    {
+                        SurveyLibrary.ReferenceSurfaces.frmRefErrorSurface frm = new SurveyLibrary.ReferenceSurfaces.frmRefErrorSurface(parent);
+                        if (frm.ShowDialog() == DialogResult.OK)
+                        {
+                            err = frm.ErrorSurface;
+                        }
+                    }
+
                     if (err is ErrorSurface)
                     {
                         ProjectManager.OnAddToMap(err);
@@ -674,12 +692,29 @@ namespace GCDCore.UserInterface.Project
                         nodDEM = selNode.Parent;
                     }
 
-                    DEMSurvey dem = (DEMSurvey)((ProjectTreeNode)nodDEM.Tag).Item;
-                    ErrorSurface err = frmDEMSurveyProperties.SpecifyErrorSurface(dem);
+                    Surface parent = ((ProjectTreeNode)nodDEM.Tag).Item as Surface;
+                    ErrorSurface err = null;
+
+                    if (parent is DEMSurvey)
+                    {
+                        err = frmDEMSurveyProperties.SpecifyErrorSurface(parent as DEMSurvey);
+                    }
+                    else
+                    {
+                        frmImportRaster frm = new frmImportRaster(parent, ExtentImporter.Purposes.ReferenceErrorSurface, "Reference Error Surface");
+                        if (frm.ShowDialog() == DialogResult.OK)
+                        {
+                            GCDConsoleLib.Raster rError = frm.ProcessRaster();
+                            err = new ErrorSurface(frm.txtName.Text, rError.GISFileInfo, parent);
+                            parent.ErrorSurfaces.Add(err);
+                            ProjectManager.Project.Save();
+                        }
+                    }
+
                     if (err is ErrorSurface)
                     {
                         ProjectManager.OnAddToMap(err);
-                        LoadTree((ProjectTreeNode)nodDEM.Tag);
+                        LoadTree(new ProjectTreeNode(GCDNodeTypes.ErrorSurface, err));
                     }
                 }
             }

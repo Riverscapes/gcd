@@ -16,7 +16,8 @@ namespace GCDCore.UserInterface.SurveyLibrary
             SubsequentDEM,
             AssociatedSurface,
             ErrorSurface,
-            ReferenceSurface
+            ReferenceSurface,
+            ReferenceErrorSurface
         };
 
         public readonly Purposes Purpose;
@@ -32,7 +33,9 @@ namespace GCDCore.UserInterface.SurveyLibrary
                 _InputExtent = value;
 
                 decimal cellSize = 0;
-                if (Purpose == Purposes.SubsequentDEM || Purpose == Purposes.AssociatedSurface || Purpose == Purposes.ErrorSurface || Purpose == Purposes.ReferenceSurface)
+                if (Purpose == Purposes.SubsequentDEM || Purpose == Purposes.AssociatedSurface || Purpose == Purposes.ErrorSurface || 
+                    Purpose == Purposes.ReferenceSurface || Purpose == Purposes.ReferenceErrorSurface)
+
                     cellSize = RefExtent.CellWidth;
                 else
                 {
@@ -56,7 +59,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
         }
 
         private decimal InputHeightMultiplier { get { return InputExtent.CellHeight > 0 ? 1 : -1; } }
-        public bool IsOutputExtentEditable { get { return !(Purpose == Purposes.AssociatedSurface || Purpose == Purposes.ErrorSurface); } }
+        public bool IsOutputExtentEditable { get { return !(Purpose == Purposes.AssociatedSurface || Purpose == Purposes.ErrorSurface || Purpose == Purposes.ReferenceErrorSurface); } }
 
         public decimal OutputLeft { get { return Output.Left; } set { Output.Left = value; } }
 
@@ -67,6 +70,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             {
                 if (Purpose == Purposes.AssociatedSurface) throw new Exception("Cannot adjust right in associated surface mode.");
                 if (Purpose == Purposes.ErrorSurface) throw new Exception("Cannot adjust right in error surface mode.");
+                if (Purpose == Purposes.ReferenceErrorSurface) throw new Exception("Cannot adjust right in reference error surface mode.");
                 if (value <= OutputLeft) throw new Exception("Cannot adjust right to be less than left.");
 
                 Output.Cols = (int)((value - Output.Left) / Output.CellWidth);
@@ -81,7 +85,8 @@ namespace GCDCore.UserInterface.SurveyLibrary
             set
             {
                 if (Purpose == Purposes.AssociatedSurface) throw new Exception("Cannot adjust bottom in associated surface mode.");
-                if (Purpose == Purposes.AssociatedSurface) throw new Exception("Cannot adjust bottom in error surface mode.");
+                if (Purpose == Purposes.ErrorSurface) throw new Exception("Cannot adjust bottom in error surface mode.");
+                if (Purpose == Purposes.ReferenceErrorSurface) throw new Exception("Cannot adjust bottom in reference error surface mode.");
 
                 Output.Rows = (int)((value - Output.Top) / Output.CellHeight);
             }
@@ -95,7 +100,8 @@ namespace GCDCore.UserInterface.SurveyLibrary
                 if (Purpose == Purposes.AssociatedSurface) throw new Exception("Cannot adjust cell size in associated surface mode.");
                 if (Purpose == Purposes.ErrorSurface) throw new Exception("Cannot adjust cell size in error surface mode.");
                 if (Purpose == Purposes.SubsequentDEM) throw new Exception("Cannot adjust cell size in subsequent DEM mode.");
-                if (Purpose == Purposes.ReferenceSurface) throw new Exception("Cannot adjust cell size in reference surface DEM mode.");
+                if (Purpose == Purposes.ReferenceSurface) throw new Exception("Cannot adjust cell size in reference surface mode.");
+                if (Purpose == Purposes.ReferenceErrorSurface) throw new Exception("Cannot adjust cell size in reference error surface mode.");
                 if (value <= 0) throw new ArgumentOutOfRangeException("value", "Invalid cell size");
 
                 Initialize(value);
@@ -112,6 +118,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
                 if (Purpose == Purposes.ErrorSurface) throw new Exception("Cannot adjust precision in error surface mode.");
                 if (Purpose == Purposes.SubsequentDEM) throw new Exception("Cannot adjust precision in subsequent DEM mode.");
                 if (Purpose == Purposes.ReferenceSurface) throw new Exception("Cannot adjust precision in reference surface DEM mode.");
+                if (Purpose == Purposes.ReferenceErrorSurface) throw new Exception("Cannot adjust precision in reference error surface mode.");
 
                 _Precision = value;
                 decimal cellSize = Math.Round(Output.CellWidth, _Precision);
@@ -125,7 +132,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             RefExtent = refExtent;
             _Precision = CalculatePrecision(RefExtent.CellWidth);
 
-            if (ePurpose == Purposes.AssociatedSurface || ePurpose == Purposes.ErrorSurface)
+            if (ePurpose == Purposes.AssociatedSurface || ePurpose == Purposes.ErrorSurface || ePurpose == Purposes.ReferenceErrorSurface)
             {
                 Output = new ExtentRectangle(refExtent);
             }
@@ -151,11 +158,12 @@ namespace GCDCore.UserInterface.SurveyLibrary
             if (Purpose == Purposes.AssociatedSurface && RefExtent == null) throw new Exception("Associated surface mode requires a reference raster.");
             if (Purpose == Purposes.ErrorSurface && RefExtent == null) throw new Exception("Error surface mode requires a reference raster.");
             if (Purpose == Purposes.ReferenceSurface && RefExtent == null) throw new Exception("Reference surface mode requires a reference raster.");
+            if (Purpose == Purposes.ReferenceErrorSurface && RefExtent == null) throw new Exception("Reference error surface mode requires a reference raster.");
             if (RefExtent is ExtentRectangle && !RefExtent.IsDivisible()) throw new Exception("Reference raster must always be divisble extent.");
 
             if (cellWidth < 0 && Precision < 1) throw new Exception("The precision must be greater than zero when the cell resolution is less than 1");
 
-            if (_InputExtent != null && Purpose != Purposes.AssociatedSurface && Purpose != Purposes.ErrorSurface)
+            if (_InputExtent != null && Purpose != Purposes.AssociatedSurface && Purpose != Purposes.ErrorSurface && Purpose != Purposes.ReferenceErrorSurface)
             {
                 ExtentRectangle temp = new ExtentRectangle(InputExtent);
                 temp.CellWidth = cellWidth;

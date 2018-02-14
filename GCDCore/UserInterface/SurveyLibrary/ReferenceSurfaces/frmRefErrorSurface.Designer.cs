@@ -194,6 +194,7 @@
             this.rdoMultiple.TabIndex = 7;
             this.rdoMultiple.Text = "Multiple error surface elevation";
             this.rdoMultiple.UseVisualStyleBackColor = true;
+            this.rdoMultiple.CheckedChanged += new System.EventHandler(this.UpdateControls);
             // 
             // lblIncrement
             // 
