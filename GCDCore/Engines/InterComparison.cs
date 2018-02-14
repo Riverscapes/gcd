@@ -112,30 +112,51 @@ namespace GCDCore.Engines
 
                 }
 
-                //using same pattern as ucDoDSummary
-                string DoDName2 = dodStats.Keys.ToList()[0] ;
-                GCDConsoleLib.GCD.DoDStats dodStat2 = dodStats[DoDName2];
+                //Find VolumeDoDName
+                string VolumeDoDNamedCell = "VolumeDoDName";
+                XmlNode VolumeRow;
+                VolumeRow = xmlDoc.SelectSingleNode("//ss:Row[ss:Cell[ss:NamedCell[@ss:Name='" + VolumeDoDNamedCell + "']]]", nsmgr); // gets the cell with the named cell name
                 UnitsNet.Units.LengthUnit vunit = ProjectManager.Project.Units.VertUnit;
+                DoDCount = 0;
 
-                SetNameCellValue(xmlDoc, nsmgr, "VolumeDoDName", DoDName2);
+                foreach (KeyValuePair<string, GCDConsoleLib.GCD.DoDStats> kvp in dodStats)
+                {
+                    string DoDName = kvp.Key;
+                    GCDConsoleLib.GCD.DoDStats dodStat = kvp.Value;
 
-                string VolumeLoweringRaw = dodStat2.ErosionRaw.GetVolume(ca, vunit).As(options.VolumeUnits).ToString();
-                SetNameCellValue(xmlDoc, nsmgr, "VolumeLoweringRaw", VolumeLoweringRaw);
+                    DoDCount += 1;
 
-                string VolumeLoweringThresholded = dodStat2.ErosionThr.GetVolume(ca, vunit).As(options.VolumeUnits).ToString();
-                SetNameCellValue(xmlDoc, nsmgr, "VolumeLoweringThresholded", VolumeLoweringThresholded);
 
-                string VolumeErrorLowering = dodStat2.ErosionErr.GetVolume(ca, vunit).As(options.VolumeUnits).ToString();
-                SetNameCellValue(xmlDoc, nsmgr, "VolumeErrorLowering", VolumeErrorLowering);
+                    if (DoDCount > 1)
+                    {
+                        //find areal row
+                        XmlNode VolumeRowClone = VolumeRow.Clone();
+                        XmlNode parent = VolumeRow.ParentNode;
+                        parent.InsertAfter(VolumeRowClone, VolumeRow);
+                        VolumeRow = VolumeRowClone;
+                    }
+                    //using same pattern as ucDoDSummary
 
-                string VolumeRaisingRaw = dodStat2.DepositionRaw.GetVolume(ca, vunit).As(options.VolumeUnits).ToString();
-                SetNameCellValue(xmlDoc, nsmgr, "VolumeRaisingRaw", VolumeRaisingRaw);
+                    SetNameCellValue(xmlDoc, nsmgr, "VolumeDoDName", DoDName);
 
-                string VolumeRaisingThresholded = dodStat2.DepositionThr.GetVolume(ca, vunit).As(options.VolumeUnits).ToString();
-                SetNameCellValue(xmlDoc, nsmgr, "VolumeRaisingThresholded", VolumeRaisingThresholded);
+                    string VolumeLoweringRaw = dodStat.ErosionRaw.GetVolume(ca, vunit).As(options.VolumeUnits).ToString();
+                    SetNameCellValue(xmlDoc, nsmgr, "VolumeLoweringRaw", VolumeLoweringRaw);
 
-                string VolumeErrorRaising = dodStat2.DepositionErr.GetVolume(ca, vunit).As(options.VolumeUnits).ToString();
-                SetNameCellValue(xmlDoc, nsmgr, "VolumeErrorRaising", VolumeErrorRaising);
+                    string VolumeLoweringThresholded = dodStat.ErosionThr.GetVolume(ca, vunit).As(options.VolumeUnits).ToString();
+                    SetNameCellValue(xmlDoc, nsmgr, "VolumeLoweringThresholded", VolumeLoweringThresholded);
+
+                    string VolumeErrorLowering = dodStat.ErosionErr.GetVolume(ca, vunit).As(options.VolumeUnits).ToString();
+                    SetNameCellValue(xmlDoc, nsmgr, "VolumeErrorLowering", VolumeErrorLowering);
+
+                    string VolumeRaisingRaw = dodStat.DepositionRaw.GetVolume(ca, vunit).As(options.VolumeUnits).ToString();
+                    SetNameCellValue(xmlDoc, nsmgr, "VolumeRaisingRaw", VolumeRaisingRaw);
+
+                    string VolumeRaisingThresholded = dodStat.DepositionThr.GetVolume(ca, vunit).As(options.VolumeUnits).ToString();
+                    SetNameCellValue(xmlDoc, nsmgr, "VolumeRaisingThresholded", VolumeRaisingThresholded);
+
+                    string VolumeErrorRaising = dodStat.DepositionErr.GetVolume(ca, vunit).As(options.VolumeUnits).ToString();
+                    SetNameCellValue(xmlDoc, nsmgr, "VolumeErrorRaising", VolumeErrorRaising);
+                }
 
                 //need to set after adding rows
                 //pattern:
@@ -144,7 +165,7 @@ namespace GCDCore.Engines
 
                 string OrigExpandedRowCount = TableNode.Attributes["ss:ExpandedRowCount"].Value;
                 int iOrigExpandedRowCount = int.Parse(OrigExpandedRowCount);
-                int iNewExpandedRowCount = iOrigExpandedRowCount + DoDCount - 1;
+                int iNewExpandedRowCount = iOrigExpandedRowCount + 2*(DoDCount - 1); //add new row twice (once for area, once for volume)
                 TableNode.Attributes["ss:ExpandedRowCount"].Value = iNewExpandedRowCount.ToString();
 
                 //Update sum formulas
