@@ -94,14 +94,16 @@ namespace GCDCore.UserInterface.Project
             this.deriveErrorSurfaceToolStripMenuItem2.Click += DeriveErrorSurfaceToolStripMenuItem_Click;
 
             this.specifyErrorSurfaceToolStripMenuItem.Click += SpecifyErrorSurfaceToolStripMenuItem_Click;
-
-
+            
             this.specifyReferenceSurfaceToolStripMenuItem.Click += specifyReferenceSurface;
             this.addChangeDetectionIntercomparisonToolStripMenuItem.Click += addChangeDetectionIntercomparisonToolStripMenuItem_Click;
             this.addChangeDetectionInterComparisonToolStripMenuItem1.Click += addChangeDetectionIntercomparisonToolStripMenuItem_Click;
             this.openInterComparisonFolderToolStripMenuItem.Click += openInterComparisonFolderToolStripMenuItem_Click;
             this.addReferenceSurfaceToMapToolStripMenuItem.Click += AddToMapToolStripMenuItem_Click;
             this.deleteToolStripMenuItem.Click += btnDelete_Click;
+
+            this.collapseChildrenInGCDProjectTreeToolStripMenuItem.Click += CollapseChildren_Click;
+            this.collapseChildrenInGCDProjectTreeToolStripMenuItem1.Click += CollapseChildren_Click;
 
         }
 
@@ -1845,6 +1847,16 @@ namespace GCDCore.UserInterface.Project
                 Process.Start(dir.FullName);
             else
                 MessageBox.Show("This project does not contain any inter-comparisons.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void CollapseChildren_Click(object sender, EventArgs e)
+        {
+            TreeNode nodSelected = treProject.SelectedNode;
+            if (nodSelected is TreeNode)
+            {
+                foreach (TreeNode nodChild in nodSelected.Nodes)
+                    nodChild.Collapse();
+            }
         }
     }
 }

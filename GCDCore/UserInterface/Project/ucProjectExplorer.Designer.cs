@@ -132,6 +132,8 @@ namespace GCDCore.UserInterface.Project
             this.deriveReferenceSurfaceFromDEMSurveysToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deriveConstantReferenceSurfaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addAllReferenceSurfacesToTheMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
+            this.collapseChildrenInGCDProjectTreeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsInterComparison = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addChangeDetectionInterComparisonToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.openInterComparisonFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -141,6 +143,8 @@ namespace GCDCore.UserInterface.Project
             this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
             this.specifyErrorSurfaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deriveErrorSurfaceToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
+            this.collapseChildrenInGCDProjectTreeToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsProject.SuspendLayout();
             this.cmsDEMSurvey.SuspendLayout();
             this.cmsAssociatedSurface.SuspendLayout();
@@ -585,22 +589,24 @@ namespace GCDCore.UserInterface.Project
             this.cmsSurveysGroup.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.AddDEMSurveyToolStripMenuItem1,
             this.AddAllDEMSurveysToTheMapToolStripMenuItem1,
-            this.SortByToolStripMenuItem});
+            this.toolStripSeparator12,
+            this.SortByToolStripMenuItem,
+            this.collapseChildrenInGCDProjectTreeToolStripMenuItem1});
             this.cmsSurveysGroup.Name = "cmsSurveysGroup";
-            this.cmsSurveysGroup.Size = new System.Drawing.Size(246, 70);
+            this.cmsSurveysGroup.Size = new System.Drawing.Size(273, 120);
             // 
             // AddDEMSurveyToolStripMenuItem1
             // 
             this.AddDEMSurveyToolStripMenuItem1.Image = global::GCDCore.Properties.Resources.Add;
             this.AddDEMSurveyToolStripMenuItem1.Name = "AddDEMSurveyToolStripMenuItem1";
-            this.AddDEMSurveyToolStripMenuItem1.Size = new System.Drawing.Size(245, 22);
+            this.AddDEMSurveyToolStripMenuItem1.Size = new System.Drawing.Size(272, 22);
             this.AddDEMSurveyToolStripMenuItem1.Text = "Specify DEM Survey";
             // 
             // AddAllDEMSurveysToTheMapToolStripMenuItem1
             // 
             this.AddAllDEMSurveysToTheMapToolStripMenuItem1.Image = global::GCDCore.Properties.Resources.AddToMap;
             this.AddAllDEMSurveysToTheMapToolStripMenuItem1.Name = "AddAllDEMSurveysToTheMapToolStripMenuItem1";
-            this.AddAllDEMSurveysToTheMapToolStripMenuItem1.Size = new System.Drawing.Size(245, 22);
+            this.AddAllDEMSurveysToTheMapToolStripMenuItem1.Size = new System.Drawing.Size(272, 22);
             this.AddAllDEMSurveysToTheMapToolStripMenuItem1.Text = "Add All DEM Surveys to the Map";
             // 
             // SortByToolStripMenuItem
@@ -611,7 +617,7 @@ namespace GCDCore.UserInterface.Project
             this.DateAddedToolStripMenuItem});
             this.SortByToolStripMenuItem.Image = global::GCDCore.Properties.Resources.alphabetical;
             this.SortByToolStripMenuItem.Name = "SortByToolStripMenuItem";
-            this.SortByToolStripMenuItem.Size = new System.Drawing.Size(245, 22);
+            this.SortByToolStripMenuItem.Size = new System.Drawing.Size(272, 22);
             this.SortByToolStripMenuItem.Text = "Sort by:";
             // 
             // NameToolStripMenuItem
@@ -825,9 +831,11 @@ namespace GCDCore.UserInterface.Project
             this.specifyReferenceSurfaceToolStripMenuItem,
             this.deriveReferenceSurfaceFromDEMSurveysToolStripMenuItem,
             this.deriveConstantReferenceSurfaceToolStripMenuItem,
-            this.addAllReferenceSurfacesToTheMapToolStripMenuItem});
+            this.addAllReferenceSurfacesToTheMapToolStripMenuItem,
+            this.toolStripSeparator11,
+            this.collapseChildrenInGCDProjectTreeToolStripMenuItem});
             this.cmsRefSurfaceGroup.Name = "cmsRefSurfaceGroup";
-            this.cmsRefSurfaceGroup.Size = new System.Drawing.Size(307, 92);
+            this.cmsRefSurfaceGroup.Size = new System.Drawing.Size(307, 120);
             // 
             // specifyReferenceSurfaceToolStripMenuItem
             // 
@@ -856,6 +864,18 @@ namespace GCDCore.UserInterface.Project
             this.addAllReferenceSurfacesToTheMapToolStripMenuItem.Name = "addAllReferenceSurfacesToTheMapToolStripMenuItem";
             this.addAllReferenceSurfacesToTheMapToolStripMenuItem.Size = new System.Drawing.Size(306, 22);
             this.addAllReferenceSurfacesToTheMapToolStripMenuItem.Text = "Add All Reference Surfaces to the Map";
+            // 
+            // toolStripSeparator11
+            // 
+            this.toolStripSeparator11.Name = "toolStripSeparator11";
+            this.toolStripSeparator11.Size = new System.Drawing.Size(303, 6);
+            // 
+            // collapseChildrenInGCDProjectTreeToolStripMenuItem
+            // 
+            this.collapseChildrenInGCDProjectTreeToolStripMenuItem.Image = global::GCDCore.Properties.Resources.collapse;
+            this.collapseChildrenInGCDProjectTreeToolStripMenuItem.Name = "collapseChildrenInGCDProjectTreeToolStripMenuItem";
+            this.collapseChildrenInGCDProjectTreeToolStripMenuItem.Size = new System.Drawing.Size(306, 22);
+            this.collapseChildrenInGCDProjectTreeToolStripMenuItem.Text = "Collapse Children In GCD Project Tree";
             // 
             // cmsInterComparison
             // 
@@ -888,7 +908,7 @@ namespace GCDCore.UserInterface.Project
             this.specifyErrorSurfaceToolStripMenuItem,
             this.deriveErrorSurfaceToolStripMenuItem2});
             this.cmsRefSurface.Name = "cmsRefSurface";
-            this.cmsRefSurface.Size = new System.Drawing.Size(235, 120);
+            this.cmsRefSurface.Size = new System.Drawing.Size(235, 98);
             // 
             // addReferenceSurfaceToMapToolStripMenuItem
             // 
@@ -922,6 +942,18 @@ namespace GCDCore.UserInterface.Project
             this.deriveErrorSurfaceToolStripMenuItem2.Name = "deriveErrorSurfaceToolStripMenuItem2";
             this.deriveErrorSurfaceToolStripMenuItem2.Size = new System.Drawing.Size(234, 22);
             this.deriveErrorSurfaceToolStripMenuItem2.Text = "Derive Error Surface";
+            // 
+            // toolStripSeparator12
+            // 
+            this.toolStripSeparator12.Name = "toolStripSeparator12";
+            this.toolStripSeparator12.Size = new System.Drawing.Size(269, 6);
+            // 
+            // collapseChildrenInGCDProjectTreeToolStripMenuItem1
+            // 
+            this.collapseChildrenInGCDProjectTreeToolStripMenuItem1.Image = global::GCDCore.Properties.Resources.collapse;
+            this.collapseChildrenInGCDProjectTreeToolStripMenuItem1.Name = "collapseChildrenInGCDProjectTreeToolStripMenuItem1";
+            this.collapseChildrenInGCDProjectTreeToolStripMenuItem1.Size = new System.Drawing.Size(272, 22);
+            this.collapseChildrenInGCDProjectTreeToolStripMenuItem1.Text = "Collapse Children In GCD Project Tree";
             // 
             // ucProjectExplorer
             // 
@@ -1052,5 +1084,9 @@ namespace GCDCore.UserInterface.Project
         private System.Windows.Forms.ToolStripMenuItem specifyErrorSurfaceToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deriveErrorSurfaceToolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem refreshProjectTreeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
+        private System.Windows.Forms.ToolStripMenuItem collapseChildrenInGCDProjectTreeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator12;
+        private System.Windows.Forms.ToolStripMenuItem collapseChildrenInGCDProjectTreeToolStripMenuItem1;
     }
 }
