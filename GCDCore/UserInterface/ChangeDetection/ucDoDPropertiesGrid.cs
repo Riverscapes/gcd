@@ -30,8 +30,8 @@ namespace GCDCore.UserInterface.ChangeDetection
 
         public void Initialize(DoDBase dod)
         {
-            DoDProperties.Add(new DoDPropertyRaster("New Surface", dod.NewDEM.Name, dod.NewDEM.Raster.GISFileInfo));
-            DoDProperties.Add(new DoDPropertyRaster("Old Surface", dod.NewDEM.Name, dod.OldDEM.Raster.GISFileInfo));
+            DoDProperties.Add(new DoDPropertyRaster("New Surface", dod.NewSurface.Name, dod.NewSurface.Raster.GISFileInfo));
+            DoDProperties.Add(new DoDPropertyRaster("Old Surface", dod.NewSurface.Name, dod.OldSurface.Raster.GISFileInfo));
             DoDProperties.Add(new DoDProperty("Uncertainty Analysis", dod.UncertaintyAnalysisLabel));
 
             if (dod is DoDPropagated)

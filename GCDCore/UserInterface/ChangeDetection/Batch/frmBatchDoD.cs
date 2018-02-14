@@ -129,7 +129,7 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
                 Cursor.Current = Cursors.WaitCursor;
                 cmdOK.Enabled = false;
                 cmdCancel.DialogResult = DialogResult.None;
-                BatchEngine = new ChangeDetetctionBatch(ucDEMs.NewDEM, ucDEMs.OldDEM, ucDEMs.NewError, ucDEMs.OldError, Thresholds.ToList<ThresholdProps>());
+                BatchEngine = new ChangeDetetctionBatch(ucDEMs.NewSurface, ucDEMs.OldSurface, ucDEMs.NewError, ucDEMs.OldError, Thresholds.ToList<ThresholdProps>());
                 bgWorker.RunWorkerAsync();
             }
             catch (Exception ex)

@@ -241,7 +241,7 @@ namespace GCDCore.UserInterface.Project
                 {
                     ChDtNode.Expand();
 
-                    string sDEMPair = rDoD.NewDEM.Name + " - " + rDoD.OldDEM.Name;
+                    string sDEMPair = rDoD.NewSurface.Name + " - " + rDoD.OldSurface.Name;
                     TreeNode theParent = null;
                     if (dDoD.ContainsKey(sDEMPair))
                     {
@@ -1163,7 +1163,7 @@ namespace GCDCore.UserInterface.Project
             {
                 case GCDNodeTypes.DEMSurvey:
                     DEMSurvey dem = (DEMSurvey)ptn.Item;
-                    if (ProjectManager.Project.DoDs.Values.Any(x => x.NewDEM == dem || x.OldDEM == dem))
+                    if (ProjectManager.Project.DoDs.Values.Any(x => x.NewSurface == dem || x.OldSurface == dem))
                     {
                         MessageBox.Show("DEM Surveys that are used by one or more change detection analyses cannot be deleted." +
                             " Delete all change detection analyses that use this DEM survey before attempting to delete this item.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -1449,7 +1449,7 @@ namespace GCDCore.UserInterface.Project
 
                 ProjectTreeNode dodTag = (ProjectTreeNode)nodSelected.Nodes[0].Tag;
                 DoDBase dod = (DoDBase)dodTag.Item;
-                ChangeDetection.frmDoDProperties frm = new ChangeDetection.frmDoDProperties(dod.NewDEM, dod.OldDEM);
+                ChangeDetection.frmDoDProperties frm = new ChangeDetection.frmDoDProperties(dod.NewSurface, dod.OldSurface);
                 DoChangeDetection(ref frm);
             }
             catch (Exception ex)

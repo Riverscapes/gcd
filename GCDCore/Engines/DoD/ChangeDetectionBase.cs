@@ -9,24 +9,24 @@ namespace GCDCore.Engines
 {
     public abstract class ChangeDetectionEngineBase : EngineBase
     {
-        protected DEMSurvey NewDEM;
-        protected DEMSurvey OldDEM;
+        protected Surface NewSurface;
+        protected Surface OldSurface;
 
-        public ChangeDetectionEngineBase(DEMSurvey newDEM, DEMSurvey oldDEM)
+        public ChangeDetectionEngineBase(Surface newSurface, Surface oldSurface)
             : base()
         {
-            if (!newDEM.Raster.Extent.HasOverlap(oldDEM.Raster.Extent))
+            if (!newSurface.Raster.Extent.HasOverlap(oldSurface.Raster.Extent))
             {
                 Exception ex = new Exception("The two rasters do not overlap.");
-                ex.Data["New DEM Path"] = newDEM.Raster.GISFileInfo.ToString();
-                ex.Data["New DEM Extent"] = newDEM.Raster.Extent.ToString();
-                ex.Data["Old DEM Path"] = oldDEM.Raster.GISFileInfo.ToString();
-                ex.Data["Old DEM Extent"] = oldDEM.Raster.Extent.ToString();
+                ex.Data["New DEM Path"] = newSurface.Raster.GISFileInfo.ToString();
+                ex.Data["New DEM Extent"] = newSurface.Raster.Extent.ToString();
+                ex.Data["Old DEM Path"] = oldSurface.Raster.GISFileInfo.ToString();
+                ex.Data["Old DEM Extent"] = oldSurface.Raster.Extent.ToString();
                 throw ex;
             }
 
-            NewDEM = newDEM;
-            OldDEM = oldDEM;
+            NewSurface = newSurface;
+            OldSurface = oldSurface;
         }
 
         public DoDBase Calculate(string dodName, DirectoryInfo analysisFolder, bool bBuildPyramids, UnitGroup units)
@@ -40,7 +40,7 @@ namespace GCDCore.Engines
             analysisFolder.Create();
 
             // Subtract the new and old rasters to produce the raw DoD
-            Raster rawDoD = RasterOperators.Subtract(NewDEM.Raster, OldDEM.Raster, rawDoDPath);
+            Raster rawDoD = RasterOperators.Subtract(NewSurface.Raster, OldSurface.Raster, rawDoDPath);
 
             // Build pyraminds
             ProjectManager.PyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.DoDRaw, rawDoDPath);

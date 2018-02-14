@@ -24,22 +24,22 @@ namespace GCDCore.Project
         /// </summary>
         /// <param name="name"></param>
         /// <param name="folder"></param>
-        /// <param name="newDEM"></param>
-        /// <param name="oldDEM"></param>
+        /// <param name="newSurface"></param>
+        /// <param name="oldSurface"></param>
         /// <param name="rawDoD"></param>
         /// <param name="thrDoD"></param>
         /// <param name="rawHist"></param>
         /// <param name="thrHist"></param>
         /// <param name="threshold"></param>
         /// <param name="stats"></param>
-        public DoDMinLoD(string name, DirectoryInfo folder, DEMSurvey newDEM, DEMSurvey oldDEM, Raster rawDoD, Raster thrDoD, HistogramPair histograms, FileInfo summaryXML, decimal threshold, DoDStats stats)
-            : base(name, folder, newDEM, oldDEM, rawDoD, thrDoD, histograms, summaryXML, stats)
+        public DoDMinLoD(string name, DirectoryInfo folder, Surface newSurface, Surface oldSurface, Raster rawDoD, Raster thrDoD, HistogramPair histograms, FileInfo summaryXML, decimal threshold, DoDStats stats)
+            : base(name, folder, newSurface, oldSurface, rawDoD, thrDoD, histograms, summaryXML, stats)
         {
             Threshold = threshold;
         }
 
-        public DoDMinLoD(XmlNode nodDoD, Dictionary<string, DEMSurvey> dems)
-            : base(nodDoD, dems)
+        public DoDMinLoD(XmlNode nodDoD)
+            : base(nodDoD)
         {
            Threshold = decimal.Parse(nodDoD.SelectSingleNode("Threshold").InnerText);
         }

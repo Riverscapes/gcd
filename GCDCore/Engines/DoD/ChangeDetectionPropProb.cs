@@ -11,7 +11,7 @@ namespace GCDCore.Engines
         protected readonly ErrorSurface OldError;
         public Raster PropagatedErrRaster;
 
-        public ChangeDetectionEnginePropProb(DEMSurvey newDEM, DEMSurvey oldDEM, ErrorSurface newError, ErrorSurface oldError)
+        public ChangeDetectionEnginePropProb(Surface newDEM, Surface oldDEM, ErrorSurface newError, ErrorSurface oldError)
             : base(newDEM, oldDEM)
         {
             NewError = newError;
@@ -32,7 +32,7 @@ namespace GCDCore.Engines
 
         protected override DoDBase GetDoDResult(string dodName, DoDStats changeStats, Raster rawDoD, Raster thrDoD, HistogramPair histograms, FileInfo summaryXML)
         {
-            return new DoDPropagated(dodName, rawDoD.GISFileInfo.Directory, NewDEM, OldDEM, rawDoD, thrDoD, histograms, summaryXML, NewError, OldError, PropagatedErrRaster, changeStats);
+            return new DoDPropagated(dodName, rawDoD.GISFileInfo.Directory, NewSurface, OldSurface, rawDoD, thrDoD, histograms, summaryXML, NewError, OldError, PropagatedErrRaster, changeStats);
         }
 
         /// <summary>

@@ -26,12 +26,12 @@ namespace GCDCore.Project
             }
         }
 
-        public DoDProbabilistic(string name, DirectoryInfo folder, DEMSurvey newDEM, DEMSurvey oldDEM, HistogramPair histograms, FileInfo summaryXML,
+        public DoDProbabilistic(string name, DirectoryInfo folder, Surface newSurface, Surface oldSurface, HistogramPair histograms, FileInfo summaryXML,
             Raster rawDoD, Raster thrDoD,
             ErrorSurface newError, ErrorSurface oldError, Raster propErr, FileInfo priorProb,
             FileInfo postProb, FileInfo cond, FileInfo spatCoEr, FileInfo spatCoDep, CoherenceProperties spatCoProps,
             decimal confidenceLevel, DoDStats stats)
-            : base(name, folder, newDEM, oldDEM, rawDoD, thrDoD, histograms, summaryXML, newError, oldError, propErr, stats)
+            : base(name, folder, newSurface, oldSurface, rawDoD, thrDoD, histograms, summaryXML, newError, oldError, propErr, stats)
         {
             ConfidenceLevel = confidenceLevel;
             PriorProbability = new Raster(priorProb);
@@ -46,8 +46,8 @@ namespace GCDCore.Project
             }
         }
 
-        public DoDProbabilistic(XmlNode nodDoD, Dictionary<string, DEMSurvey> dems)
-            : base(nodDoD, dems)
+        public DoDProbabilistic(XmlNode nodDoD)
+            : base(nodDoD)
         {
             ConfidenceLevel = decimal.Parse(nodDoD.SelectSingleNode("ConfidenceLevel").InnerText);
             PriorProbability = DeserializeRaster(nodDoD, "PriorProbability");

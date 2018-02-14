@@ -9,33 +9,35 @@ namespace GCDCore.UserInterface.ChangeDetection
 {
     public partial class ucDoDDEMSelection : UserControl
     {
-
         // Event so that parent form can be alerted when DEM names change
-        public EventHandler SelectedDEMsChanged;
+        public EventHandler SelectedSurfacesChanged;
+
+        private BindingList<Surface> NewSurfaces;
+        private BindingList<Surface> OldSurfaces;
 
         // Initial DEM Surveys to select. (User right clicked on a pair of DEMs
         // in the project explorer and chose to add a new DoD for the same DEMs.
-        public DEMSurvey NewDEM
+        public Surface NewSurface
         {
             get
             {
-                return (DEMSurvey)cboNewDEM.SelectedItem;
+                return (Surface)cboNewSurface.SelectedItem;
             }
             set
             {
-                cboNewDEM.SelectedItem = value;
+                cboNewSurface.SelectedItem = value;
             }
         }
 
-        public DEMSurvey OldDEM
+        public Surface OldSurface
         {
             get
             {
-                return (DEMSurvey)cboOldDEM.SelectedItem;
+                return (Surface)cboOldSurface.SelectedItem;
             }
             set
             {
-                cboOldDEM.SelectedItem = value;
+                cboOldSurface.SelectedItem = value;
             }
         }
 
@@ -59,33 +61,41 @@ namespace GCDCore.UserInterface.ChangeDetection
         {
             InitializeComponent();
 
-            if (ProjectManager.Project != null)
-            {
-                cboNewDEM.DataSource = ProjectManager.Project.DEMsSortByName(false);
-                cboOldDEM.DataSource = ProjectManager.Project.DEMsSortByName(false);
-            }
+            NewSurfaces = new BindingList<Surface>();
+            OldSurfaces = new BindingList<Surface>();
+
+            // Add all DEM Surveys
+            ProjectManager.Project.DEMSurveys.Values.ToList<Surface>().ForEach(x => NewSurfaces.Add(x));
+            ProjectManager.Project.DEMSurveys.Values.ToList<Surface>().ForEach(x => OldSurfaces.Add(x));
+
+            // Add all reference surfaces
+            ProjectManager.Project.ReferenceSurfaces.Values.ToList<Surface>().ForEach(x => NewSurfaces.Add(x));
+            ProjectManager.Project.ReferenceSurfaces.Values.ToList<Surface>().ForEach(x => OldSurfaces.Add(x));
+
+            cboNewSurface.DataSource = NewSurfaces;
+            cboOldSurface.DataSource = OldSurfaces;
         }
 
         private void ucDoDDEMSelection_Load(object sender, EventArgs e)
         {
-            if (cboNewDEM.Items.Count > 0)
+            if (cboNewSurface.Items.Count > 0)
             {
-                if (NewDEM is DEMSurvey)
-                    cboNewDEM.SelectedItem = NewDEM;
+                if (NewSurface is Surface)
+                    cboNewSurface.SelectedItem = NewSurface;
                 else
-                    cboNewDEM.SelectedIndex = 0;
+                    cboNewSurface.SelectedIndex = 0;
             }
 
-            if (cboOldDEM.Items.Count > 0)
+            if (cboOldSurface.Items.Count > 0)
             {
-                if (OldDEM is DEMSurvey)
-                    cboOldDEM.SelectedItem = OldDEM;
+                if (OldSurface is Surface)
+                    cboOldSurface.SelectedItem = OldSurface;
                 else
                 {
-                    if (cboOldDEM.Items.Count > 1)
-                        cboOldDEM.SelectedIndex = 1;
+                    if (cboOldSurface.Items.Count > 1)
+                        cboOldSurface.SelectedIndex = 1;
                     else
-                        cboOldDEM.SelectedIndex = 0;
+                        cboOldSurface.SelectedIndex = 0;
                 }
             }
         }
@@ -112,80 +122,63 @@ namespace GCDCore.UserInterface.ChangeDetection
             }
         }
 
-        private void cboNewDEM_SelectedIndexChanged(object sender, System.EventArgs e)
+        private void SurfaceComboSelectedIndexChanged(object sender, System.EventArgs e)
         {
-            if (cboNewDEM.SelectedItem is DEMSurvey)
-            {
-                DEMSurvey dem = ((DEMSurvey)cboNewDEM.SelectedItem);
-                cboNewError.DataSource = ((DEMSurvey)cboNewDEM.SelectedItem).ErrorSurfaces;
+            ComboBox cboSurface = sender as ComboBox;
+            ComboBox cboError = cboSurface.Name.ToLower().Contains("new") ? cboNewError : cboOldError;
 
-                if (cboNewError.Items.Count == 1)
+            if (cboSurface.SelectedItem is Surface)
+            {
+                Surface surf = cboSurface.SelectedItem as Surface;
+                cboError.DataSource = surf.ErrorSurfaces;
+
+                if (cboError.Items.Count == 1)
                 {
-                    cboNewError.SelectedIndex = 0;
+                    cboError.SelectedIndex = 0;
                 }
-                else if (cboOldError.Items.Count > 1 && dem.ErrorSurfaces.Count<ErrorSurface>(x => x.IsDefault) > 0)
+                else if (cboError.Items.Count > 1 && surf.ErrorSurfaces.Count<ErrorSurface>(x => x.IsDefault) > 0)
                 {
-                    cboNewError.SelectedItem = ((DEMSurvey)cboNewDEM.SelectedItem).ErrorSurfaces.First<ErrorSurface>(x => x.IsDefault);
+                    cboError.SelectedItem = ((Surface)cboSurface.SelectedItem).ErrorSurfaces.First<ErrorSurface>(x => x.IsDefault);
                 }
             }
 
-            if (SelectedDEMsChanged != null)
-                SelectedDEMsChanged(sender, e);
-        }
-
-        private void cboOldDEM_SelectedIndexChanged(object sender, System.EventArgs e)
-        {
-            if (cboOldDEM.SelectedItem is DEMSurvey)
-            {
-                DEMSurvey dem = ((DEMSurvey)cboOldDEM.SelectedItem);
-                cboOldError.DataSource = dem.ErrorSurfaces;
-
-                if (cboOldError.Items.Count == 1)
-                {
-                    cboOldError.SelectedIndex = 0;
-                }
-                else if (cboOldError.Items.Count > 1 && dem.ErrorSurfaces.Count<ErrorSurface>(x => x.IsDefault) > 0)
-                {
-                    cboOldError.SelectedItem = ((DEMSurvey)cboOldDEM.SelectedItem).ErrorSurfaces.First<ErrorSurface>(x => x.IsDefault);
-                }
-            }
-
-            if (SelectedDEMsChanged != null)
-                SelectedDEMsChanged(sender, e);
+            if (SelectedSurfacesChanged != null)
+                SelectedSurfacesChanged(sender, e);
         }
 
         public bool ValidateForm()
         {
-            if (cboNewDEM.SelectedItem is DEMSurvey)
+            if (cboNewSurface.SelectedItem is Surface)
             {
-                if (cboOldDEM.SelectedItem is DEMSurvey)
+                if (cboOldSurface.SelectedItem is Surface)
                 {
-                    if (object.ReferenceEquals(cboNewDEM.SelectedItem, cboOldDEM.SelectedItem))
+                    if (object.ReferenceEquals(cboNewSurface.SelectedItem, cboOldSurface.SelectedItem))
                     {
-                        MessageBox.Show("Please choose two different DEM Surveys.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Please choose two different surfaces.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        cboNewSurface.Select();
                         return false;
                     }
 
-                    DEMSurvey newDEM =(DEMSurvey) cboNewDEM.SelectedItem;
-                    DEMSurvey oldDEM = (DEMSurvey)cboOldDEM.SelectedItem;
-                        
-                    if (!newDEM.Raster.Extent.HasOverlap(oldDEM.Raster.Extent))
+                    Surface newSurface = (Surface)cboNewSurface.SelectedItem;
+                    Surface oldSurface = (Surface)cboOldSurface.SelectedItem;
+
+                    if (!newSurface.Raster.Extent.HasOverlap(oldSurface.Raster.Extent))
                     {
-                        MessageBox.Show("The two DEM surveys do not overlap.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("The two surfaces do not overlap.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
                         return false;
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Please select an Old DEM Survey.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    cboOldDEM.Select();
+                    MessageBox.Show("Please select an old surface.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    cboOldSurface.Select();
                     return false;
                 }
             }
             else
             {
-                MessageBox.Show("Please select a New DEM Survey.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                cboNewDEM.Select();
+                MessageBox.Show("Please select a new surface.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                cboNewSurface.Select();
                 return false;
             }
 

@@ -33,13 +33,13 @@ namespace GCDCore.UserInterface.ChangeDetection
             m_bUserEditedName = false;
         }
 
-        public frmDoDProperties(DEMSurvey newDEM, DEMSurvey oldDEM)
+        public frmDoDProperties(Surface newSurface, Surface oldSurface)
         {
             // This call is required by the designer.
             InitializeComponent();
 
-            ucDEMs.NewDEM = newDEM;
-            ucDEMs.OldDEM = oldDEM;
+            ucDEMs.NewSurface = newSurface;
+            ucDEMs.OldSurface = oldSurface;
 
             // Add any initialization after the InitializeComponent() call.
             //m_pArcMap = pArcMap
@@ -51,11 +51,11 @@ namespace GCDCore.UserInterface.ChangeDetection
             EnableDisableControls();
 
             // Subscribe to the event when DEM selection changes
-            ucDEMs.SelectedDEMsChanged += UpdateAnalysisName;
+            ucDEMs.SelectedSurfacesChanged += UpdateAnalysisName;
             ucThresholding.OnThresholdingMethodChanged += ThresholdMethodChanged;
 
             // Subscribe to the event when DEM selection changes
-            ucDEMs.SelectedDEMsChanged += UpdateAnalysisName;
+            ucDEMs.SelectedSurfacesChanged += UpdateAnalysisName;
             ucThresholding.OnThresholdingMethodChanged += ThresholdMethodChanged;
 
             UpdateAnalysisName(sender, e);
@@ -78,17 +78,17 @@ namespace GCDCore.UserInterface.ChangeDetection
 
                 if (ucThresholding.ThresholdProperties.Method == Engines.DoD.ThresholdProps.ThresholdMethods.MinLoD)
                 {
-                    cdEngine = new Engines.ChangeDetectionEngineMinLoD(ucDEMs.NewDEM, ucDEMs.OldDEM, ucThresholding.ThresholdProperties.Threshold);
+                    cdEngine = new Engines.ChangeDetectionEngineMinLoD(ucDEMs.NewSurface, ucDEMs.OldSurface, ucThresholding.ThresholdProperties.Threshold);
                 }
                 else
                 {
                     if (ucThresholding.ThresholdProperties.Method == Engines.DoD.ThresholdProps.ThresholdMethods.Propagated)
                     {
-                        cdEngine = new Engines.ChangeDetectionEnginePropProb(ucDEMs.NewDEM, ucDEMs.OldDEM, ucDEMs.NewError, ucDEMs.OldError);
+                        cdEngine = new Engines.ChangeDetectionEnginePropProb(ucDEMs.NewSurface, ucDEMs.OldSurface, ucDEMs.NewError, ucDEMs.OldError);
                     }
                     else
                     {
-                        cdEngine = new Engines.ChangeDetectionEngineProbabilistic(ucDEMs.NewDEM, ucDEMs.OldDEM, ucDEMs.NewError, ucDEMs.OldError, ucThresholding.ThresholdProperties.Threshold, ucThresholding.ThresholdProperties.SpatialCoherenceProps);
+                        cdEngine = new Engines.ChangeDetectionEngineProbabilistic(ucDEMs.NewSurface, ucDEMs.OldSurface, ucDEMs.NewError, ucDEMs.OldError, ucThresholding.ThresholdProperties.Threshold, ucThresholding.ThresholdProperties.SpatialCoherenceProps);
                     }
                 }
 
@@ -165,12 +165,12 @@ namespace GCDCore.UserInterface.ChangeDetection
                 return;
             }
 
-            if (ucDEMs.NewDEM == null || ucDEMs.OldDEM == null)
+            if (ucDEMs.NewSurface == null || ucDEMs.OldSurface == null)
             {
                 return;
             }
 
-            txtName.Text = GetUniqueAnalysisName(ucDEMs.NewDEM.Name, ucDEMs.OldDEM.Name, ucThresholding.ThresholdProperties.ThresholdString);
+            txtName.Text = GetUniqueAnalysisName(ucDEMs.NewSurface.Name, ucDEMs.OldSurface.Name, ucThresholding.ThresholdProperties.ThresholdString);
         }
 
         public static string GetUniqueAnalysisName(string newDEM, string oldDEM, string Threshold)

@@ -162,8 +162,8 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ucDEMs.Location = new System.Drawing.Point(12, 12);
             this.ucDEMs.Name = "ucDEMs";
-            this.ucDEMs.NewDEM = null;
-            this.ucDEMs.OldDEM = null;
+            this.ucDEMs.NewSurface = null;
+            this.ucDEMs.OldSurface = null;
             this.ucDEMs.Size = new System.Drawing.Size(597, 89);
             this.ucDEMs.TabIndex = 3;
             // 

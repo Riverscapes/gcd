@@ -142,8 +142,8 @@ namespace GCDCore.UserInterface.BudgetSegregation
         {
             DoDBase dod = (DoDBase)cboDoD.SelectedItem;
 
-            txtNewDEM.Text = dod.NewDEM.Name;
-            txtOldDEM.Text = dod.OldDEM.Name;
+            txtNewDEM.Text = dod.NewSurface.Name;
+            txtOldDEM.Text = dod.OldSurface.Name;
 
             if (dod is DoDMinLoD)
             {

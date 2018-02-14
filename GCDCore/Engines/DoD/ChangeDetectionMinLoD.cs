@@ -9,8 +9,8 @@ namespace GCDCore.Engines
     {
         public decimal Threshold { get; internal set; }
 
-        public ChangeDetectionEngineMinLoD(DEMSurvey NewDEM, DEMSurvey OldDEM, decimal fThreshold)
-            : base(NewDEM, OldDEM)
+        public ChangeDetectionEngineMinLoD(Surface newSurface, Surface oldSurface, decimal fThreshold)
+            : base(newSurface, oldSurface)
         {
             Threshold = fThreshold;
         }
@@ -34,7 +34,7 @@ namespace GCDCore.Engines
 
         protected override DoDBase GetDoDResult(string dodName, DoDStats changeStats, Raster rawDoD, Raster thrDoD, HistogramPair histograms, FileInfo summaryXML)
         {
-            return new DoDMinLoD(dodName, rawDoD.GISFileInfo.Directory, NewDEM, OldDEM, rawDoD, thrDoD, histograms, summaryXML, Threshold, changeStats);
+            return new DoDMinLoD(dodName, rawDoD.GISFileInfo.Directory, NewSurface, OldSurface, rawDoD, thrDoD, histograms, summaryXML, Threshold, changeStats);
         }
     }
 }

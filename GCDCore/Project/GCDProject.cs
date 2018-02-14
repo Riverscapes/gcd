@@ -249,11 +249,11 @@ namespace GCDCore.Project
             {
                 DoDBase dod = null;
                 if (nodDoD.SelectSingleNode("Threshold") is XmlNode)
-                    dod = new DoDMinLoD(nodDoD, ProjectManager.Project.DEMSurveys);
+                    dod = new DoDMinLoD(nodDoD);
                 else if (nodDoD.SelectSingleNode("ConfidenceLevel") is XmlNode)
-                    dod = new DoDProbabilistic(nodDoD, ProjectManager.Project.DEMSurveys);
+                    dod = new DoDProbabilistic(nodDoD);
                 else
-                    dod = new DoDPropagated(nodDoD, ProjectManager.Project.DEMSurveys);
+                    dod = new DoDPropagated(nodDoD);
 
                 ProjectManager.Project.DoDs[dod.Name] = dod;
             }

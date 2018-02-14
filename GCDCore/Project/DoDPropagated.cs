@@ -22,20 +22,20 @@ namespace GCDCore.Project
             }
         }
 
-        public DoDPropagated(string name, DirectoryInfo folder, DEMSurvey newDEM, DEMSurvey oldDEM, Raster rawDoD, Raster thrDoD,
+        public DoDPropagated(string name, DirectoryInfo folder, Surface newSurface, Surface oldSurface, Raster rawDoD, Raster thrDoD,
          HistogramPair histograms, FileInfo summaryXML, ErrorSurface newError, ErrorSurface oldError, Raster propErr, DoDStats stats)
-            : base(name, folder, newDEM, oldDEM, rawDoD, thrDoD, histograms, summaryXML, stats)
+            : base(name, folder, newSurface, oldSurface, rawDoD, thrDoD, histograms, summaryXML, stats)
         {
             NewError = newError;
             OldError = oldError;
             PropagatedError = propErr;
         }
 
-        public DoDPropagated(XmlNode nodDoD, Dictionary<string, DEMSurvey> dems)
-            : base(nodDoD, dems)
+        public DoDPropagated(XmlNode nodDoD)
+            : base(nodDoD)
         {
-            NewError = DeserializeError(nodDoD, NewDEM.ErrorSurfaces.ToList<ErrorSurface>(), "NewError");
-            OldError = DeserializeError(nodDoD, OldDEM.ErrorSurfaces.ToList<ErrorSurface>(), "OldError");
+            NewError = DeserializeError(nodDoD, NewSurface.ErrorSurfaces.ToList<ErrorSurface>(), "NewError");
+            OldError = DeserializeError(nodDoD, OldSurface.ErrorSurfaces.ToList<ErrorSurface>(), "OldError");
 
             XmlNode nodPropErr = nodDoD.SelectSingleNode("PropagatedError");
             if (nodPropErr != null)

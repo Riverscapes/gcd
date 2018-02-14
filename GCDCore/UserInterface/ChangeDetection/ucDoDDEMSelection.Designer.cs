@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             this.GroupBox4 = new System.Windows.Forms.GroupBox();
-            this.cboOldDEM = new System.Windows.Forms.ComboBox();
+            this.cboOldSurface = new System.Windows.Forms.ComboBox();
             this.cboOldError = new System.Windows.Forms.ComboBox();
             this.lblOldError = new System.Windows.Forms.Label();
             this.Label7 = new System.Windows.Forms.Label();
             this.GroupBox1 = new System.Windows.Forms.GroupBox();
-            this.cboNewDEM = new System.Windows.Forms.ComboBox();
+            this.cboNewSurface = new System.Windows.Forms.ComboBox();
             this.cboNewError = new System.Windows.Forms.ComboBox();
             this.lblNewError = new System.Windows.Forms.Label();
             this.Label1 = new System.Windows.Forms.Label();
@@ -46,7 +46,7 @@
             // 
             // GroupBox4
             // 
-            this.GroupBox4.Controls.Add(this.cboOldDEM);
+            this.GroupBox4.Controls.Add(this.cboOldSurface);
             this.GroupBox4.Controls.Add(this.cboOldError);
             this.GroupBox4.Controls.Add(this.lblOldError);
             this.GroupBox4.Controls.Add(this.Label7);
@@ -60,15 +60,15 @@
             // 
             // cboOldDEM
             // 
-            this.cboOldDEM.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.cboOldSurface.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.cboOldDEM.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboOldDEM.FormattingEnabled = true;
-            this.cboOldDEM.Location = new System.Drawing.Point(52, 21);
-            this.cboOldDEM.Name = "cboOldDEM";
-            this.cboOldDEM.Size = new System.Drawing.Size(184, 21);
-            this.cboOldDEM.TabIndex = 1;
-            this.cboOldDEM.SelectedIndexChanged += new System.EventHandler(this.cboOldDEM_SelectedIndexChanged);
+            this.cboOldSurface.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboOldSurface.FormattingEnabled = true;
+            this.cboOldSurface.Location = new System.Drawing.Point(52, 21);
+            this.cboOldSurface.Name = "cboOldDEM";
+            this.cboOldSurface.Size = new System.Drawing.Size(184, 21);
+            this.cboOldSurface.TabIndex = 1;
+            this.cboOldSurface.SelectedIndexChanged += new System.EventHandler(this.SurfaceComboSelectedIndexChanged);
             // 
             // cboOldError
             // 
@@ -101,7 +101,7 @@
             // 
             // GroupBox1
             // 
-            this.GroupBox1.Controls.Add(this.cboNewDEM);
+            this.GroupBox1.Controls.Add(this.cboNewSurface);
             this.GroupBox1.Controls.Add(this.cboNewError);
             this.GroupBox1.Controls.Add(this.lblNewError);
             this.GroupBox1.Controls.Add(this.Label1);
@@ -115,15 +115,15 @@
             // 
             // cboNewDEM
             // 
-            this.cboNewDEM.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.cboNewSurface.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.cboNewDEM.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboNewDEM.FormattingEnabled = true;
-            this.cboNewDEM.Location = new System.Drawing.Point(54, 21);
-            this.cboNewDEM.Name = "cboNewDEM";
-            this.cboNewDEM.Size = new System.Drawing.Size(182, 21);
-            this.cboNewDEM.TabIndex = 1;
-            this.cboNewDEM.SelectedIndexChanged += new System.EventHandler(this.cboNewDEM_SelectedIndexChanged);
+            this.cboNewSurface.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboNewSurface.FormattingEnabled = true;
+            this.cboNewSurface.Location = new System.Drawing.Point(54, 21);
+            this.cboNewSurface.Name = "cboNewDEM";
+            this.cboNewSurface.Size = new System.Drawing.Size(182, 21);
+            this.cboNewSurface.TabIndex = 1;
+            this.cboNewSurface.SelectedIndexChanged += new System.EventHandler(this.SurfaceComboSelectedIndexChanged);
             // 
             // cboNewError
             // 
@@ -189,12 +189,12 @@
         #endregion
 
         internal System.Windows.Forms.GroupBox GroupBox4;
-        internal System.Windows.Forms.ComboBox cboOldDEM;
+        internal System.Windows.Forms.ComboBox cboOldSurface;
         internal System.Windows.Forms.ComboBox cboOldError;
         internal System.Windows.Forms.Label lblOldError;
         internal System.Windows.Forms.Label Label7;
         internal System.Windows.Forms.GroupBox GroupBox1;
-        internal System.Windows.Forms.ComboBox cboNewDEM;
+        internal System.Windows.Forms.ComboBox cboNewSurface;
         internal System.Windows.Forms.ComboBox cboNewError;
         internal System.Windows.Forms.Label lblNewError;
         internal System.Windows.Forms.Label Label1;

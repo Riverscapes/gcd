@@ -13,8 +13,8 @@ namespace GCDCore.Project
         private const string ThrRasterName = "Thresholded DoD";
 
         public readonly DirectoryInfo Folder;
-        public readonly DEMSurvey NewDEM;
-        public readonly DEMSurvey OldDEM;
+        public readonly Surface NewSurface;
+        public readonly Surface OldSurface;
 
         public GCDProjectRasterItem RawDoD { get; internal set; }
         public GCDProjectRasterItem ThrDoD { get; internal set; }
@@ -30,12 +30,12 @@ namespace GCDCore.Project
             get;
         }
 
-        protected DoDBase(string name, DirectoryInfo folder, DEMSurvey newDEM, DEMSurvey oldDEM, Raster rawDoD, Raster thrDoD, HistogramPair histograms, FileInfo summaryXML, DoDStats stats)
+        protected DoDBase(string name, DirectoryInfo folder, Surface newSurface, Surface oldSurface, Raster rawDoD, Raster thrDoD, HistogramPair histograms, FileInfo summaryXML, DoDStats stats)
             : base(name)
         {
             Folder = folder;
-            NewDEM = newDEM;
-            OldDEM = oldDEM;
+            NewSurface = newSurface;
+            OldSurface = oldSurface;
             RawDoD = new GCDProjectRasterItem(RawRasterName, rawDoD);
             ThrDoD = new GCDProjectRasterItem(ThrRasterName, thrDoD);
             Histograms = histograms;
@@ -44,12 +44,12 @@ namespace GCDCore.Project
             BudgetSegregations = new Dictionary<string, BudgetSegregation>();
         }
 
-        protected DoDBase(XmlNode nodDoD, Dictionary<string, DEMSurvey> DEMs)
+        protected DoDBase(XmlNode nodDoD)
             : base(nodDoD.SelectSingleNode("Name").InnerText)
         {
             Folder = ProjectManager.Project.GetAbsoluteDir(nodDoD.SelectSingleNode("Folder").InnerText);
-            NewDEM = DeserializeDEM(nodDoD, DEMs, "NewDEM");
-            OldDEM = DeserializeDEM(nodDoD, DEMs, "OldDEM");
+            NewSurface = DeserializeSurface(nodDoD, "NewSurface");
+            OldSurface = DeserializeSurface(nodDoD, "OldSurface");
             RawDoD = new GCDProjectRasterItem(RawRasterName, ProjectManager.Project.GetAbsolutePath(nodDoD.SelectSingleNode("RawDoD").InnerText));
             ThrDoD = new GCDProjectRasterItem(ThrRasterName, ProjectManager.Project.GetAbsolutePath(nodDoD.SelectSingleNode("ThrDoD").InnerText));
             Histograms = new HistogramPair(ProjectManager.Project.GetAbsolutePath(nodDoD.SelectSingleNode("RawHistogram").InnerText),
@@ -79,8 +79,8 @@ namespace GCDCore.Project
             XmlNode nodDoD = nodParent.AppendChild(nodParent.OwnerDocument.CreateElement("DoD"));
             nodDoD.AppendChild(nodParent.OwnerDocument.CreateElement("Name")).InnerText = Name;
             nodDoD.AppendChild(nodParent.OwnerDocument.CreateElement("Folder")).InnerText = ProjectManager.Project.GetRelativePath(Folder.FullName);
-            nodDoD.AppendChild(nodParent.OwnerDocument.CreateElement("NewDEM")).InnerText = NewDEM.Name;
-            nodDoD.AppendChild(nodParent.OwnerDocument.CreateElement("OldDEM")).InnerText = OldDEM.Name;
+            SerializeSurface(nodDoD, NewSurface, "NewSurface");
+            SerializeSurface(nodDoD, OldSurface, "OldSurface");
             nodDoD.AppendChild(nodParent.OwnerDocument.CreateElement("RawDoD")).InnerText = ProjectManager.Project.GetRelativePath(RawDoD.Raster.GISFileInfo);
             nodDoD.AppendChild(nodParent.OwnerDocument.CreateElement("ThrDoD")).InnerText = ProjectManager.Project.GetRelativePath(ThrDoD.Raster.GISFileInfo);
             nodDoD.AppendChild(nodParent.OwnerDocument.CreateElement("RawHistogram")).InnerText = ProjectManager.Project.GetRelativePath(Histograms.Raw.Path);
@@ -121,15 +121,29 @@ namespace GCDCore.Project
             nodParent.AppendChild(xmlDoc.CreateElement("Volume")).InnerText = areaVol.GetVolume(cellArea, units.VertUnit).As(units.VolUnit).ToString("R");
         }
 
-        private DEMSurvey DeserializeDEM(XmlNode nodDoD, Dictionary<string, DEMSurvey> DEMs, string nodDEMName)
+        private void SerializeSurface(XmlNode nodDoD, Surface surface, string nodName)
         {
-            string demName = nodDoD.SelectSingleNode(nodDEMName).InnerText;
-            if (DEMs.ContainsKey(demName))
+            XmlNode nodSurface = nodDoD.AppendChild(nodDoD.OwnerDocument.CreateElement(nodName));
+            nodSurface.InnerText = NewSurface.Name;
+
+            // Track whether the surface is a DEM or reference surface as an attribute.
+            // This is needed for derserialization to look in the correct dictionary.
+            nodSurface.Attributes.Append(nodDoD.OwnerDocument.CreateAttribute("type")).InnerText = surface is DEMSurvey ? "dem" : "surface";
+        }
+
+        private Surface DeserializeSurface(XmlNode nodDoD, string nodDEMName)
+        {
+            string surfaceName = nodDoD.SelectSingleNode(nodDEMName).InnerText;
+            string surfaceType = nodDoD.SelectSingleNode(nodDEMName).Attributes["type"].InnerText;
+
+            if (string.Compare(surfaceType, "dem", true) ==0)
             {
-                return DEMs[demName];
+                return ProjectManager.Project.DEMSurveys[surfaceName];
             }
             else
-                return null;
+            {
+                return ProjectManager.Project.ReferenceSurfaces[surfaceName];
+            }
         }
 
         public static DoDStats DeserializeStatistics(XmlNode nodStatistics, UnitsNet.Area cellArea, UnitGroup units)

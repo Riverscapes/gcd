@@ -123,8 +123,8 @@ namespace GCDCore.UserInterface.ChangeDetection
             // 
             this.ucDEMs.Location = new System.Drawing.Point(15, 75);
             this.ucDEMs.Name = "ucDEMs";
-            this.ucDEMs.NewDEM = null;
-            this.ucDEMs.OldDEM = null;
+            this.ucDEMs.NewSurface = null;
+            this.ucDEMs.OldSurface = null;
             this.ucDEMs.Size = new System.Drawing.Size(535, 89);
             this.ucDEMs.TabIndex = 11;
             // 
