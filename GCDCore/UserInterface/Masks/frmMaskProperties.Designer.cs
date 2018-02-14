@@ -74,6 +74,8 @@
             // 
             this.cmdOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cmdOK.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.cmdOK.Image = global::GCDCore.Properties.Resources.Save;
+            this.cmdOK.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.cmdOK.Location = new System.Drawing.Point(351, 453);
             this.cmdOK.Name = "cmdOK";
             this.cmdOK.Size = new System.Drawing.Size(75, 23);
@@ -109,7 +111,6 @@
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(423, 20);
             this.txtName.TabIndex = 1;
-            this.txtName.TextChanged += new System.EventHandler(this.txtName_TextChanged);
             // 
             // GroupBox2
             // 
@@ -132,6 +133,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ucPolygon.Location = new System.Drawing.Point(120, 22);
             this.ucPolygon.Name = "ucPolygon";
+            this.ucPolygon.ReadOnly = false;
             this.ucPolygon.Size = new System.Drawing.Size(355, 23);
             this.ucPolygon.TabIndex = 1;
             // 
@@ -145,7 +147,6 @@
             this.cboField.Name = "cboField";
             this.cboField.Size = new System.Drawing.Size(355, 21);
             this.cboField.TabIndex = 3;
-            this.cboField.SelectedIndexChanged += new System.EventHandler(this.cboField_SelectedIndexChanged);
             // 
             // Label7
             // 

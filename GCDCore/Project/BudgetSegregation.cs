@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using System.Xml;
 
 namespace GCDCore.Project
@@ -9,11 +11,31 @@ namespace GCDCore.Project
     {
         public readonly DoDBase DoD;
         public readonly DirectoryInfo Folder;
-        public readonly Masks.Mask Mask;
+        public readonly Masks.RegularMask Mask;
         public readonly FileInfo ClassLegend;
         public readonly FileInfo SummaryXML;
         public readonly string MaskField;
         public readonly Dictionary<string, BudgetSegregationClass> Classes;
+
+        public BindingList<BudgetSegregationClass> FilteredClasses
+        {
+            get
+            {
+                BindingList<BudgetSegregationClass> result = new BindingList<BudgetSegregationClass>();
+
+                // Loop through field values that are flagged to be included
+                foreach (Masks.MaskItem item in Mask._Items.Where(x => x.Include))
+                {
+                    if (Classes.ContainsKey(item.FieldValue))
+                    {
+                        BudgetSegregationClass existingClass = Classes[item.FieldValue];
+                        result.Add(new BudgetSegregationClass(item.Label, existingClass.Statistics, existingClass.Histograms,existingClass.SummaryXML));                        
+                    }
+                }
+
+                return result;
+            }
+        }
 
         /// <summary>
         /// Engine Constructor
@@ -22,7 +44,7 @@ namespace GCDCore.Project
         /// <param name="folder"></param>
         /// <param name="maskField"></param>
         /// <param name="dod"></param>
-        public BudgetSegregation(string name, DirectoryInfo folder, Masks.Mask mask, DoDBase dod)
+        public BudgetSegregation(string name, DirectoryInfo folder, Masks.RegularMask mask, DoDBase dod)
             : base(name)
         {
             DoD = dod;
@@ -43,7 +65,7 @@ namespace GCDCore.Project
         /// <param name="dod"></param>
         /// <param name="summaryXML"></param>
         /// <param name="classLegend"></param>
-        public BudgetSegregation(string name, DirectoryInfo folder, Masks.Mask mask, DoDBase dod, FileInfo summaryXML, FileInfo classLegend)
+        public BudgetSegregation(string name, DirectoryInfo folder, Masks.RegularMask mask, DoDBase dod, FileInfo summaryXML, FileInfo classLegend)
             : base(name)
         {
             DoD = dod;
@@ -73,7 +95,7 @@ namespace GCDCore.Project
         {
             string name = nodBS.SelectSingleNode("Name").InnerText;
             DirectoryInfo folder = ProjectManager.Project.GetAbsoluteDir(nodBS.SelectSingleNode("Folder").InnerText);
-            Masks.Mask mask = ProjectManager.Project.Masks[nodBS.SelectSingleNode("Mask").InnerText];
+            Masks.RegularMask mask = (Masks.RegularMask) ProjectManager.Project.Masks[nodBS.SelectSingleNode("Mask").InnerText];
             FileInfo summaryXML = ProjectManager.Project.GetAbsolutePath(nodBS.SelectSingleNode("SummaryXML").InnerText);
             FileInfo classLegend = ProjectManager.Project.GetAbsolutePath(nodBS.SelectSingleNode("ClassLegend").InnerText);
 
@@ -90,7 +112,7 @@ namespace GCDCore.Project
 
         public void Delete()
         {
-             try
+            try
             {
                 Folder.Delete();
             }

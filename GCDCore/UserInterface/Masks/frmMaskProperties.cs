@@ -17,16 +17,47 @@ namespace GCDCore.UserInterface.Masks
         public readonly naru.ui.SortableBindingList<GCDCore.Project.Masks.MaskItem> MaskItems;
         public GCDCore.Project.Masks.RegularMask Mask { get; internal set; }
 
-        public frmMaskProperties()
+        public frmMaskProperties(GCDCore.Project.Masks.RegularMask mask = null)
         {
             InitializeComponent();
             MaskItems = new naru.ui.SortableBindingList<GCDCore.Project.Masks.MaskItem>();
+            Mask = mask;
         }
 
         private void frmMaskProperties_Load(object sender, EventArgs e)
         {
+            FileInfo fiShapeFile = null;
+
+            if (Mask is GCDCore.Project.Masks.RegularMask)
+            {
+                txtName.Text = Mask.Name;
+                txtPath.Text = ProjectManager.Project.GetRelativePath(Mask._ShapeFile);
+                fiShapeFile = Mask._ShapeFile;
+
+                ucPolygon.Initialize("Mask Polygon ShapeFile", fiShapeFile, true);
+                ucPolygon.ReadOnly = true;
+
+                cboField.DataSource = new BindingList<string>() { Mask._Field };
+                cboField.SelectedIndex = 0;
+                cboField.Enabled = false;
+
+                Mask._Items.ForEach(x => MaskItems.Add(x));
+                cmdOK.Text = "Update";
+
+                grdData.Select();
+            }
+
+
             // subscribe to the even when the user changes the input ShapeFile
             ucPolygon.PathChanged += InputShapeFileChanged;
+
+            // Subscribe to name changing so that path can update
+            // do this after any setting of name for existing mask
+            txtName.TextChanged += txtName_TextChanged;
+
+            // Subscribe to the field changing.
+            // do this after any setting of shapefile for existing mask
+            cboField.SelectedIndexChanged += cboField_SelectedIndexChanged;
 
             grdData.DataSource = MaskItems;
         }
@@ -104,7 +135,7 @@ namespace GCDCore.UserInterface.Masks
                 return false;
             }
 
-            if (!GCDCore.Project.ProjectManager.Project.IsMaskNameUnique(txtName.Text, null))
+            if (!GCDCore.Project.ProjectManager.Project.IsMaskNameUnique(txtName.Text, Mask))
             {
                 MessageBox.Show("This project already contains a mask with this name. Please choose a unique name.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 txtName.Select();
@@ -128,9 +159,13 @@ namespace GCDCore.UserInterface.Masks
                 return false;
             }
 
-            //
-            // TODO: Validate that hte user actually chose a POLYGON ShapeFile
-            //           
+            // Validate that hte user actually chose a POLYGON ShapeFile
+            if (shp.GeometryType.SimpleType != GCDConsoleLib.GDalGeometryType.SimpleTypes.Polygon)
+            {
+                MessageBox.Show(string.Format("The selected ShapeFile appears to be of {0} geometry type. Only polygon ShapeFiles can be used as masks.", shp.GeometryType.SimpleType), "Invalid Geometry Type", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                ucPolygon.Select();
+                return false;
+            }
 
             if (shp.Proj.PrettyWkt.ToLower().Contains("unknown"))
             {
@@ -202,18 +237,26 @@ namespace GCDCore.UserInterface.Masks
             {
                 Cursor = Cursors.WaitCursor;
 
-                FileInfo fiMask = ProjectManager.Project.GetAbsolutePath(txtPath.Text);
-                fiMask.Directory.Create();
+                if (Mask == null)
+                {
+                    FileInfo fiMask = ProjectManager.Project.GetAbsolutePath(txtPath.Text);
+                    fiMask.Directory.Create();
 
-                ucPolygon.SelectedItem.Copy(fiMask);
+                    ucPolygon.SelectedItem.Copy(fiMask);
 
-                Mask = new GCDCore.Project.Masks.RegularMask(txtName.Text, fiMask, cboField.Text, MaskItems.ToList<GCDCore.Project.Masks.MaskItem>());
-                ProjectManager.Project.Masks[Mask.Name] = Mask;
+                    Mask = new GCDCore.Project.Masks.RegularMask(txtName.Text, fiMask, cboField.Text, MaskItems.ToList<GCDCore.Project.Masks.MaskItem>());
+                    ProjectManager.Project.Masks[Mask.Name] = Mask;
+                }
+                else
+                {
+                    Mask.Name = txtName.Text;
+                }
+
                 ProjectManager.Project.Save();
 
                 Cursor = Cursors.Default;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 naru.error.ExceptionUI.HandleException(ex, "Error creating regular mask.");
             }

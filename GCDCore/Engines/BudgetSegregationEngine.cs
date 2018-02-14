@@ -9,7 +9,7 @@ namespace GCDCore.Engines
 {
     public class BudgetSegregationEngine : EngineBase
     {
-        public BudgetSegregation Calculate(string dodName, DirectoryInfo analysisFolder, DoDBase dod, Project.Masks.Mask mask)
+        public BudgetSegregation Calculate(string dodName, DirectoryInfo analysisFolder, DoDBase dod, Project.Masks.RegularMask mask)
         {
             // Build the budget segregation result set object that will be returned. This determines paths
             BudgetSegregation bsResult = new BudgetSegregation(dodName, analysisFolder, mask, dod);

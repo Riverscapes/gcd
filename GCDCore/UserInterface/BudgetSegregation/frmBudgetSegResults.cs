@@ -33,7 +33,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
         private void BudgetSegResultsForm_Load(object sender, System.EventArgs e)
         {
             txtName.Text = BudgetSeg.Name;
-            cboBudgetClass.DataSource = new BindingList<BudgetSegregationClass>(BudgetSeg.Classes.Values.ToList());
+            cboBudgetClass.DataSource = new BindingList<BudgetSegregationClass>(BudgetSeg.FilteredClasses);
 
             cboRaw.Items.Add("DoD Area of Intereset");
             cboRaw.Items.Add("Budget Class Area of Intereset");

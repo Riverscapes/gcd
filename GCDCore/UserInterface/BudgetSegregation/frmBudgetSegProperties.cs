@@ -28,7 +28,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
             cboDoD.DataSource = new BindingList<DoDBase>(ProjectManager.Project.DoDs.Values.ToList<DoDBase>());
             cboDoD.SelectedItem = InitialDoD;
 
-            cboMasks.DataSource = new BindingList<GCDCore.Project.Masks.Mask>(ProjectManager.Project.Masks.Values.ToList<GCDCore.Project.Masks.Mask>());
+            cboMasks.DataSource = new BindingList<GCDCore.Project.Masks.Mask>(ProjectManager.Project.Masks.Values.Where(x => x is GCDCore.Project.Masks.RegularMask).ToList<GCDCore.Project.Masks.Mask>());
             if (cboMasks.Items.Count > 0)
                 cboMasks.SelectedIndex = 0;
         }
@@ -46,7 +46,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
                 Cursor.Current = Cursors.WaitCursor;
 
                 DoDBase dod = cboDoD.SelectedItem as DoDBase;
-                GCDCore.Project.Masks.Mask mask = cboMasks.SelectedItem as GCDCore.Project.Masks.Mask;
+                GCDCore.Project.Masks.RegularMask mask = cboMasks.SelectedItem as GCDCore.Project.Masks.RegularMask;
 
                 System.IO.DirectoryInfo bsFolder = ProjectManager.OutputManager.GetBudgetSegreationDirectoryPath(dod.Folder, true);
                 Engines.BudgetSegregationEngine bsEngine = new Engines.BudgetSegregationEngine();

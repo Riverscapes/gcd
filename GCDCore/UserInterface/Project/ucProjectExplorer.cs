@@ -94,7 +94,7 @@ namespace GCDCore.UserInterface.Project
             this.deriveErrorSurfaceToolStripMenuItem2.Click += DeriveErrorSurfaceToolStripMenuItem_Click;
 
             this.specifyErrorSurfaceToolStripMenuItem.Click += SpecifyErrorSurfaceToolStripMenuItem_Click;
-            
+
             this.specifyReferenceSurfaceToolStripMenuItem.Click += specifyReferenceSurface;
             this.addChangeDetectionIntercomparisonToolStripMenuItem.Click += addChangeDetectionIntercomparisonToolStripMenuItem_Click;
             this.addChangeDetectionInterComparisonToolStripMenuItem1.Click += addChangeDetectionIntercomparisonToolStripMenuItem_Click;
@@ -104,6 +104,7 @@ namespace GCDCore.UserInterface.Project
 
             this.collapseChildrenInGCDProjectTreeToolStripMenuItem.Click += CollapseChildren_Click;
             this.collapseChildrenInGCDProjectTreeToolStripMenuItem1.Click += CollapseChildren_Click;
+            this.editMaskPropertiesToolStripMenuItem.Click += EditMaskProperties_Click;
 
         }
 
@@ -455,6 +456,7 @@ namespace GCDCore.UserInterface.Project
                 case GCDNodeTypes.ReferenceSurfaceGroup: cms = cmsRefSurfaceGroup; break;
                 case GCDNodeTypes.ReferenceSurface: cms = cmsRefSurface; break;
                 case GCDNodeTypes.MasksGroup: cms = cmsMasks; break;
+                case GCDNodeTypes.Mask: cms = cmsMask; break;
                 case GCDNodeTypes.ChangeDetectionGroup: cms = cmsChangeDetectionGroup; break;
                 case GCDNodeTypes.DoD: cms = cmsChangeDetection; break;
                 case GCDNodeTypes.ChangeDetectionDEMPair: cms = cmsDEMSurveyPair; break;
@@ -1855,6 +1857,24 @@ namespace GCDCore.UserInterface.Project
             {
                 foreach (TreeNode nodChild in nodSelected.Nodes)
                     nodChild.Collapse();
+            }
+        }
+
+        public void EditMaskProperties_Click(object sender, EventArgs e)
+        {
+            TreeNode nodSelected = treProject.SelectedNode;
+            if (nodSelected is TreeNode)
+            {
+                GCDCore.Project.Masks.Mask mask = ((ProjectTreeNode)nodSelected.Tag).Item as GCDCore.Project.Masks.Mask;
+
+                if (mask is GCDCore.Project.Masks.RegularMask)
+                {
+                    UserInterface.Masks.frmMaskProperties frm = new Masks.frmMaskProperties((GCDCore.Project.Masks.RegularMask)mask);
+                    if (frm.ShowDialog() == DialogResult.OK)
+                    {
+                        LoadTree(new ProjectTreeNode(GCDNodeTypes.Mask, mask));
+                    }
+                }
             }
         }
     }
