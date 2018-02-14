@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -33,6 +34,7 @@ namespace GCDCore.UserInterface.SurveyLibrary.ReferenceSurfaces
             lblLower.Text = lblLower.Text.Replace(")", sUnits + ")");
             lblUpper.Text = lblUpper.Text.Replace(")", sUnits + ")");
             lblIncrement.Text = lblIncrement.Text.Replace(")", sUnits + ")");
+            lblError.Text = lblError.Text.Replace(")", sUnits + ")");
 
             UpdateControls(null, null);
         }
@@ -128,8 +130,6 @@ namespace GCDCore.UserInterface.SurveyLibrary.ReferenceSurfaces
                 return;
             }
 
-            System.IO.FileInfo fiOutput = ProjectManager.Project.GetAbsolutePath(txtPath.Text);
-            fiOutput.Directory.Create();
 
             GCDConsoleLib.Raster template = ((DEMSurvey)cboDEMSurvey.SelectedItem).Raster;
 
@@ -146,8 +146,8 @@ namespace GCDCore.UserInterface.SurveyLibrary.ReferenceSurfaces
                 {
                     Values.Add((float)aVal);
                 }
-                    successMsg = string.Format("{0} reference surfaces generated successfully.", Values.Count);
-    }
+                successMsg = string.Format("{0} reference surfaces generated successfully.", Values.Count);
+            }
 
             try
             {
@@ -156,9 +156,24 @@ namespace GCDCore.UserInterface.SurveyLibrary.ReferenceSurfaces
                 foreach (float value in Values)
                 {
                     string name = GetUniqueName(value);
+
+                    // Get a unique name and ensure directory exists
+                    FileInfo fiOutput = ProjectManager.OutputManager.GetReferenceSurfaceRasterPath(name);
+                    fiOutput.Directory.Create();
+
+                    // Generate reference surface
                     GCDConsoleLib.Raster rOut = GCDConsoleLib.RasterOperators.Uniform<float>(template, fiOutput, value);
                     ReferenceSurface = new Surface(name, rOut);
                     ProjectManager.Project.ReferenceSurfaces[ReferenceSurface.Name] = ReferenceSurface;
+
+                    // Error surface
+                    string errName = string.Format("Uniform Error at {0:0.000}", valError.Value);
+                    FileInfo fiError = ProjectManager.OutputManager.GetReferenceErrorSurfaceRasterPath(errName, fiOutput.Directory);
+                    fiError.Directory.Create();
+
+                    GCDConsoleLib.RasterOperators.Uniform<float>(template, fiError, (float)valError.Value);
+                    ErrorSurface errSurf = new ErrorSurface(errName, fiError, ReferenceSurface);
+                    ReferenceSurface.ErrorSurfaces.Add(errSurf);
                 }
 
                 ProjectManager.Project.Save();
@@ -197,7 +212,7 @@ namespace GCDCore.UserInterface.SurveyLibrary.ReferenceSurfaces
 
         private void numericUpDown_Enter(object sender, EventArgs e)
         {
-            ((NumericUpDown) sender).Select(0, ((NumericUpDown) sender).Text.Length);
+            ((NumericUpDown)sender).Select(0, ((NumericUpDown)sender).Text.Length);
         }
     }
 }

@@ -48,10 +48,17 @@
             this.lblIncrement = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.cboDEMSurvey = new System.Windows.Forms.ComboBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.lblError = new System.Windows.Forms.Label();
+            this.valError = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.valSingle)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.valUpper)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.valLower)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.valIncrement)).BeginInit();
+            this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.valError)).BeginInit();
             this.SuspendLayout();
             // 
             // txtPath
@@ -97,10 +104,10 @@
             // cmdHelp
             // 
             this.cmdHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.cmdHelp.Location = new System.Drawing.Point(12, 271);
+            this.cmdHelp.Location = new System.Drawing.Point(12, 353);
             this.cmdHelp.Name = "cmdHelp";
             this.cmdHelp.Size = new System.Drawing.Size(75, 23);
-            this.cmdHelp.TabIndex = 16;
+            this.cmdHelp.TabIndex = 10;
             this.cmdHelp.Text = "Help";
             this.cmdHelp.UseVisualStyleBackColor = true;
             // 
@@ -108,10 +115,12 @@
             // 
             this.cmdOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cmdOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.cmdOK.Location = new System.Drawing.Point(215, 271);
+            this.cmdOK.Image = global::GCDCore.Properties.Resources.Save;
+            this.cmdOK.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.cmdOK.Location = new System.Drawing.Point(215, 353);
             this.cmdOK.Name = "cmdOK";
             this.cmdOK.Size = new System.Drawing.Size(75, 23);
-            this.cmdOK.TabIndex = 14;
+            this.cmdOK.TabIndex = 8;
             this.cmdOK.Text = "Save";
             this.cmdOK.UseVisualStyleBackColor = true;
             this.cmdOK.Click += new System.EventHandler(this.cmdOK_Click);
@@ -120,10 +129,10 @@
             // 
             this.cmdCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cmdCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cmdCancel.Location = new System.Drawing.Point(296, 271);
+            this.cmdCancel.Location = new System.Drawing.Point(296, 353);
             this.cmdCancel.Name = "cmdCancel";
             this.cmdCancel.Size = new System.Drawing.Size(75, 23);
-            this.cmdCancel.TabIndex = 15;
+            this.cmdCancel.TabIndex = 9;
             this.cmdCancel.Text = "Cancel";
             this.cmdCancel.UseVisualStyleBackColor = true;
             // 
@@ -131,7 +140,7 @@
             // 
             this.rdoSingle.AutoSize = true;
             this.rdoSingle.Checked = true;
-            this.rdoSingle.Location = new System.Drawing.Point(130, 106);
+            this.rdoSingle.Location = new System.Drawing.Point(17, 19);
             this.rdoSingle.Name = "rdoSingle";
             this.rdoSingle.Size = new System.Drawing.Size(186, 17);
             this.rdoSingle.TabIndex = 4;
@@ -142,7 +151,7 @@
             // lblSingle
             // 
             this.lblSingle.AutoSize = true;
-            this.lblSingle.Location = new System.Drawing.Point(207, 134);
+            this.lblSingle.Location = new System.Drawing.Point(94, 47);
             this.lblSingle.Name = "lblSingle";
             this.lblSingle.Size = new System.Drawing.Size(60, 13);
             this.lblSingle.TabIndex = 5;
@@ -151,7 +160,12 @@
             // valSingle
             // 
             this.valSingle.DecimalPlaces = 2;
-            this.valSingle.Location = new System.Drawing.Point(277, 130);
+            this.valSingle.Location = new System.Drawing.Point(164, 43);
+            this.valSingle.Maximum = new decimal(new int[] {
+            30000,
+            0,
+            0,
+            0});
             this.valSingle.Name = "valSingle";
             this.valSingle.Size = new System.Drawing.Size(94, 20);
             this.valSingle.TabIndex = 6;
@@ -160,7 +174,7 @@
             // valUpper
             // 
             this.valUpper.DecimalPlaces = 2;
-            this.valUpper.Location = new System.Drawing.Point(277, 183);
+            this.valUpper.Location = new System.Drawing.Point(164, 96);
             this.valUpper.Maximum = new decimal(new int[] {
             30000,
             0,
@@ -174,7 +188,7 @@
             // lblUpper
             // 
             this.lblUpper.AutoSize = true;
-            this.lblUpper.Location = new System.Drawing.Point(176, 187);
+            this.lblUpper.Location = new System.Drawing.Point(63, 100);
             this.lblUpper.Name = "lblUpper";
             this.lblUpper.Size = new System.Drawing.Size(91, 13);
             this.lblUpper.TabIndex = 8;
@@ -183,7 +197,7 @@
             // rdoMultiple
             // 
             this.rdoMultiple.AutoSize = true;
-            this.rdoMultiple.Location = new System.Drawing.Point(130, 159);
+            this.rdoMultiple.Location = new System.Drawing.Point(17, 72);
             this.rdoMultiple.Name = "rdoMultiple";
             this.rdoMultiple.Size = new System.Drawing.Size(193, 17);
             this.rdoMultiple.TabIndex = 7;
@@ -194,7 +208,7 @@
             // valLower
             // 
             this.valLower.DecimalPlaces = 2;
-            this.valLower.Location = new System.Drawing.Point(277, 209);
+            this.valLower.Location = new System.Drawing.Point(164, 122);
             this.valLower.Maximum = new decimal(new int[] {
             30000,
             0,
@@ -208,7 +222,7 @@
             // lblLower
             // 
             this.lblLower.AutoSize = true;
-            this.lblLower.Location = new System.Drawing.Point(176, 213);
+            this.lblLower.Location = new System.Drawing.Point(63, 126);
             this.lblLower.Name = "lblLower";
             this.lblLower.Size = new System.Drawing.Size(91, 13);
             this.lblLower.TabIndex = 10;
@@ -222,7 +236,7 @@
             0,
             0,
             131072});
-            this.valIncrement.Location = new System.Drawing.Point(277, 237);
+            this.valIncrement.Location = new System.Drawing.Point(164, 150);
             this.valIncrement.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -246,7 +260,7 @@
             // lblIncrement
             // 
             this.lblIncrement.AutoSize = true;
-            this.lblIncrement.Location = new System.Drawing.Point(204, 241);
+            this.lblIncrement.Location = new System.Drawing.Point(91, 154);
             this.lblIncrement.Name = "lblIncrement";
             this.lblIncrement.Size = new System.Drawing.Size(63, 13);
             this.lblIncrement.TabIndex = 12;
@@ -258,7 +272,7 @@
             this.label3.Location = new System.Drawing.Point(6, 74);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(118, 13);
-            this.label3.TabIndex = 17;
+            this.label3.TabIndex = 4;
             this.label3.Text = "Reference DEM survey";
             // 
             // cboDEMSurvey
@@ -270,7 +284,70 @@
             this.cboDEMSurvey.Location = new System.Drawing.Point(130, 70);
             this.cboDEMSurvey.Name = "cboDEMSurvey";
             this.cboDEMSurvey.Size = new System.Drawing.Size(241, 21);
-            this.cboDEMSurvey.TabIndex = 18;
+            this.cboDEMSurvey.TabIndex = 5;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.rdoSingle);
+            this.groupBox1.Controls.Add(this.lblSingle);
+            this.groupBox1.Controls.Add(this.valSingle);
+            this.groupBox1.Controls.Add(this.valIncrement);
+            this.groupBox1.Controls.Add(this.rdoMultiple);
+            this.groupBox1.Controls.Add(this.lblIncrement);
+            this.groupBox1.Controls.Add(this.lblUpper);
+            this.groupBox1.Controls.Add(this.valLower);
+            this.groupBox1.Controls.Add(this.valUpper);
+            this.groupBox1.Controls.Add(this.lblLower);
+            this.groupBox1.Location = new System.Drawing.Point(12, 102);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(359, 181);
+            this.groupBox1.TabIndex = 6;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Reference Surface Elevations";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.valError);
+            this.groupBox2.Controls.Add(this.lblError);
+            this.groupBox2.Location = new System.Drawing.Point(12, 289);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(359, 53);
+            this.groupBox2.TabIndex = 7;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Error Surface(s)";
+            // 
+            // lblError
+            // 
+            this.lblError.AutoSize = true;
+            this.lblError.Location = new System.Drawing.Point(78, 23);
+            this.lblError.Name = "lblError";
+            this.lblError.Size = new System.Drawing.Size(76, 13);
+            this.lblError.TabIndex = 0;
+            this.lblError.Text = "Uniform error ()";
+            // 
+            // valError
+            // 
+            this.valError.DecimalPlaces = 3;
+            this.valError.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            this.valError.Location = new System.Drawing.Point(164, 19);
+            this.valError.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.valError.Name = "valError";
+            this.valError.Size = new System.Drawing.Size(94, 20);
+            this.valError.TabIndex = 14;
+            this.valError.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            this.valError.Enter += new System.EventHandler(this.numericUpDown_Enter);
             // 
             // frmReferenceSurfaceFromConstant
             // 
@@ -278,19 +355,11 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cmdCancel;
-            this.ClientSize = new System.Drawing.Size(383, 306);
+            this.ClientSize = new System.Drawing.Size(383, 388);
+            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.cboDEMSurvey);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.valIncrement);
-            this.Controls.Add(this.lblIncrement);
-            this.Controls.Add(this.valLower);
-            this.Controls.Add(this.lblLower);
-            this.Controls.Add(this.valUpper);
-            this.Controls.Add(this.lblUpper);
-            this.Controls.Add(this.rdoMultiple);
-            this.Controls.Add(this.valSingle);
-            this.Controls.Add(this.lblSingle);
-            this.Controls.Add(this.rdoSingle);
             this.Controls.Add(this.txtPath);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtName);
@@ -307,6 +376,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.valUpper)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.valLower)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.valIncrement)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.valError)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -333,5 +407,9 @@
         private System.Windows.Forms.Label lblIncrement;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox cboDEMSurvey;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.NumericUpDown valError;
+        private System.Windows.Forms.Label lblError;
     }
 }
