@@ -168,7 +168,7 @@ namespace GCDCore.Engines
                 int iNewExpandedRowCount = iOrigExpandedRowCount + 2*(DoDCount - 1); //add new row twice (once for area, once for volume)
                 TableNode.Attributes["ss:ExpandedRowCount"].Value = iNewExpandedRowCount.ToString();
 
-                //Update sum formulas
+                //Update areal formulas
                 SetSumFormula(xmlDoc, nsmgr, "SumRawArealSurfaceLowering", DoDCount);
                 SetSumFormula(xmlDoc, nsmgr, "SumThresholdedArealSurfaceLowering", DoDCount);
                 SetSumFormula(xmlDoc, nsmgr, "SumPctTotalArealLowering", DoDCount);
@@ -179,10 +179,28 @@ namespace GCDCore.Engines
                 SetSumFormula(xmlDoc, nsmgr, "SumPctTotalDetecableChange", DoDCount);
                 SetSumFormula(xmlDoc, nsmgr, "SumTotalAreaOfInterest", DoDCount);
 
-                //update names range
+                //Update volume formulas
+                SetSumFormula(xmlDoc, nsmgr, "SumRawVolumeSurfaceLowering", DoDCount);
+                SetSumFormula(xmlDoc, nsmgr, "SumThresholdedVolumeSurfaceLowering", DoDCount);
+                SetSumFormula(xmlDoc, nsmgr, "SumPctTotalVolumeLowering", DoDCount);
+                SetSumFormula(xmlDoc, nsmgr, "SumRawVolumeSurfaceRaising", DoDCount);
+                SetSumFormula(xmlDoc, nsmgr, "SumThresholdedVolumeSurfaceRaising", DoDCount);
+                SetSumFormula(xmlDoc, nsmgr, "SumPctTotalVolumeRaising", DoDCount);
+                SetSumFormula(xmlDoc, nsmgr, "SumRawVolumeOfDifference", DoDCount);
+                SetSumFormula(xmlDoc, nsmgr, "SumThresholdedVolumeOfDifference", DoDCount);
+                SetSumFormula(xmlDoc, nsmgr, "SumPctVolumeOfDifference", DoDCount);
+                SetSumFormula(xmlDoc, nsmgr, "SumRawNetVolumeDifference", DoDCount);
+                SetSumFormula(xmlDoc, nsmgr, "SumThresholdedNetVolumeDifference", DoDCount);
+
+                //update areal names range
                 UpdateNamedRangeRefersTo(xmlDoc, nsmgr, "SumThresholdedArealSurfaceLowering", DoDCount - 1);
                 UpdateNamedRangeRefersTo(xmlDoc, nsmgr, "SumThresholdedArealSurfaceRaising", DoDCount - 1);
                 UpdateNamedRangeRefersTo(xmlDoc, nsmgr, "SumThresholdedArealDetectableChange", DoDCount - 1);
+
+                //update volume names range
+                UpdateNamedRangeRefersTo(xmlDoc, nsmgr, "SumThresholdedVolumeSurfaceLowering", DoDCount - 1);
+                UpdateNamedRangeRefersTo(xmlDoc, nsmgr, "SumThresholdedVolumeSurfaceRaising", DoDCount - 1);
+                UpdateNamedRangeRefersTo(xmlDoc, nsmgr, "SumThresholdedVolumeOfDifference", DoDCount - 1);
 
             }
             catch (Exception ex)
