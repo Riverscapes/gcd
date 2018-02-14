@@ -40,13 +40,13 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.Label6 = new System.Windows.Forms.Label();
             this.Label7 = new System.Windows.Forms.Label();
             this.GroupBox2 = new System.Windows.Forms.GroupBox();
-            this.cboField = new System.Windows.Forms.ComboBox();
             this.Label8 = new System.Windows.Forms.Label();
             this.txtOutputFolder = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.cmdOK = new System.Windows.Forms.Button();
             this.cmdHelp = new System.Windows.Forms.Button();
-            this.ucPolygon = new GCDCore.UserInterface.UtilityForms.ucVectorInput();
+            this.cboMasks = new System.Windows.Forms.ComboBox();
+            this.txtField = new System.Windows.Forms.TextBox();
             this.GroupBox1.SuspendLayout();
             this.GroupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -123,11 +123,11 @@ namespace GCDCore.UserInterface.BudgetSegregation
             // Label4
             // 
             this.Label4.AutoSize = true;
-            this.Label4.Location = new System.Drawing.Point(61, 92);
+            this.Label4.Location = new System.Drawing.Point(50, 92);
             this.Label4.Name = "Label4";
-            this.Label4.Size = new System.Drawing.Size(50, 13);
+            this.Label4.Size = new System.Drawing.Size(61, 13);
             this.Label4.TabIndex = 4;
-            this.Label4.Text = "Old DEM";
+            this.Label4.Text = "Old surface";
             // 
             // txtNewDEM
             // 
@@ -141,11 +141,11 @@ namespace GCDCore.UserInterface.BudgetSegregation
             // Label3
             // 
             this.Label3.AutoSize = true;
-            this.Label3.Location = new System.Drawing.Point(55, 62);
+            this.Label3.Location = new System.Drawing.Point(44, 62);
             this.Label3.Name = "Label3";
-            this.Label3.Size = new System.Drawing.Size(56, 13);
+            this.Label3.Size = new System.Drawing.Size(67, 13);
             this.Label3.TabIndex = 2;
-            this.Label3.Text = "New DEM";
+            this.Label3.Text = "New surface";
             // 
             // Label2
             // 
@@ -176,8 +176,8 @@ namespace GCDCore.UserInterface.BudgetSegregation
             // 
             // GroupBox2
             // 
-            this.GroupBox2.Controls.Add(this.ucPolygon);
-            this.GroupBox2.Controls.Add(this.cboField);
+            this.GroupBox2.Controls.Add(this.txtField);
+            this.GroupBox2.Controls.Add(this.cboMasks);
             this.GroupBox2.Controls.Add(this.Label7);
             this.GroupBox2.Controls.Add(this.Label6);
             this.GroupBox2.Location = new System.Drawing.Point(13, 200);
@@ -186,15 +186,6 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.GroupBox2.TabIndex = 3;
             this.GroupBox2.TabStop = false;
             this.GroupBox2.Text = "Polygon Mask";
-            // 
-            // cboField
-            // 
-            this.cboField.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboField.FormattingEnabled = true;
-            this.cboField.Location = new System.Drawing.Point(120, 53);
-            this.cboField.Name = "cboField";
-            this.cboField.Size = new System.Drawing.Size(355, 21);
-            this.cboField.TabIndex = 3;
             // 
             // Label8
             // 
@@ -246,12 +237,23 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.cmdHelp.UseVisualStyleBackColor = true;
             this.cmdHelp.Click += new System.EventHandler(this.cmdHelp_Click);
             // 
-            // ucPolygon
+            // cboMasks
             // 
-            this.ucPolygon.Location = new System.Drawing.Point(120, 22);
-            this.ucPolygon.Name = "ucPolygon";
-            this.ucPolygon.Size = new System.Drawing.Size(355, 23);
-            this.ucPolygon.TabIndex = 1;
+            this.cboMasks.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboMasks.FormattingEnabled = true;
+            this.cboMasks.Location = new System.Drawing.Point(120, 23);
+            this.cboMasks.Name = "cboMasks";
+            this.cboMasks.Size = new System.Drawing.Size(355, 21);
+            this.cboMasks.TabIndex = 1;
+            this.cboMasks.SelectedIndexChanged += new System.EventHandler(this.cboMasks_SelectedIndexChanged);
+            // 
+            // txtField
+            // 
+            this.txtField.Location = new System.Drawing.Point(120, 53);
+            this.txtField.Name = "txtField";
+            this.txtField.ReadOnly = true;
+            this.txtField.Size = new System.Drawing.Size(355, 20);
+            this.txtField.TabIndex = 3;
             // 
             // frmBudgetSegProperties
             // 
@@ -294,16 +296,16 @@ namespace GCDCore.UserInterface.BudgetSegregation
         internal System.Windows.Forms.TextBox txtNewDEM;
         internal System.Windows.Forms.Label Label3;
         internal System.Windows.Forms.Label Label2;
-        internal UtilityForms.ucVectorInput ucPolygon;
         internal System.Windows.Forms.Button button1;
         internal System.Windows.Forms.Button cmdOK;
         internal System.Windows.Forms.Button cmdHelp;
         internal System.Windows.Forms.Label Label6;
         internal System.Windows.Forms.Label Label7;
         internal System.Windows.Forms.GroupBox GroupBox2;
-        internal System.Windows.Forms.ComboBox cboField;
         internal System.Windows.Forms.Label Label8;
         internal System.Windows.Forms.TextBox txtOutputFolder;
         internal System.Windows.Forms.ComboBox cboDoD;
+        private System.Windows.Forms.TextBox txtField;
+        private System.Windows.Forms.ComboBox cboMasks;
     }
 }

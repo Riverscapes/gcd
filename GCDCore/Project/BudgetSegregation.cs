@@ -9,7 +9,7 @@ namespace GCDCore.Project
     {
         public readonly DoDBase DoD;
         public readonly DirectoryInfo Folder;
-        public readonly FileInfo PolygonMask;
+        public readonly Masks.Mask Mask;
         public readonly FileInfo ClassLegend;
         public readonly FileInfo SummaryXML;
         public readonly string MaskField;
@@ -22,15 +22,14 @@ namespace GCDCore.Project
         /// <param name="folder"></param>
         /// <param name="maskField"></param>
         /// <param name="dod"></param>
-        public BudgetSegregation(string name, DirectoryInfo folder, string maskField, DoDBase dod)
+        public BudgetSegregation(string name, DirectoryInfo folder, Masks.Mask mask, DoDBase dod)
             : base(name)
         {
             DoD = dod;
             Folder = folder;
-            PolygonMask = new FileInfo(Path.Combine(folder.FullName));
+            Mask = mask;
             ClassLegend = new FileInfo(Path.Combine(Folder.FullName, "ClassLegend.csv"));
             SummaryXML = new FileInfo(Path.Combine(Folder.FullName, "Summary.xml"));
-            MaskField = maskField;
             Classes = new Dictionary<string, BudgetSegregationClass>();
         }
 
@@ -44,15 +43,14 @@ namespace GCDCore.Project
         /// <param name="dod"></param>
         /// <param name="summaryXML"></param>
         /// <param name="classLegend"></param>
-        public BudgetSegregation(string name, DirectoryInfo folder, FileInfo polygonMask, string maskField, DoDBase dod, FileInfo summaryXML, FileInfo classLegend)
+        public BudgetSegregation(string name, DirectoryInfo folder, Masks.Mask mask, DoDBase dod, FileInfo summaryXML, FileInfo classLegend)
             : base(name)
         {
             DoD = dod;
             Folder = folder;
-            PolygonMask = polygonMask;
+            Mask = mask;
             ClassLegend = classLegend;
             SummaryXML = summaryXML;
-            MaskField = maskField;
             Classes = new Dictionary<string, BudgetSegregationClass>();
         }
 
@@ -61,7 +59,7 @@ namespace GCDCore.Project
             XmlNode nodBS = nodParent.AppendChild(nodParent.OwnerDocument.CreateElement("BudgetSegregation"));
             nodBS.AppendChild(nodParent.OwnerDocument.CreateElement("Name")).InnerText = Name;
             nodBS.AppendChild(nodParent.OwnerDocument.CreateElement("Folder")).InnerText = ProjectManager.Project.GetRelativePath(Folder.FullName);
-            nodBS.AppendChild(nodParent.OwnerDocument.CreateElement("PolygonMask")).InnerText = ProjectManager.Project.GetRelativePath(PolygonMask);
+            nodBS.AppendChild(nodParent.OwnerDocument.CreateElement("Mask")).InnerText = Mask.Name;
             nodBS.AppendChild(nodParent.OwnerDocument.CreateElement("SummaryXML")).InnerText = ProjectManager.Project.GetRelativePath(SummaryXML);
             nodBS.AppendChild(nodParent.OwnerDocument.CreateElement("ClassLegend")).InnerText = ProjectManager.Project.GetRelativePath(ClassLegend);
             nodBS.AppendChild(nodParent.OwnerDocument.CreateElement("MaskField")).InnerText = MaskField;
@@ -75,12 +73,11 @@ namespace GCDCore.Project
         {
             string name = nodBS.SelectSingleNode("Name").InnerText;
             DirectoryInfo folder = ProjectManager.Project.GetAbsoluteDir(nodBS.SelectSingleNode("Folder").InnerText);
-            FileInfo polygonMask = ProjectManager.Project.GetAbsolutePath(nodBS.SelectSingleNode("PolygonMask").InnerText);
+            Masks.Mask mask = ProjectManager.Project.Masks[nodBS.SelectSingleNode("Mask").InnerText];
             FileInfo summaryXML = ProjectManager.Project.GetAbsolutePath(nodBS.SelectSingleNode("SummaryXML").InnerText);
             FileInfo classLegend = ProjectManager.Project.GetAbsolutePath(nodBS.SelectSingleNode("ClassLegend").InnerText);
-            string maskField = nodBS.SelectSingleNode("MaskField").InnerText;
 
-            BudgetSegregation bs = new BudgetSegregation(name, folder, polygonMask, maskField, dod, summaryXML, classLegend);
+            BudgetSegregation bs = new BudgetSegregation(name, folder, mask, dod, summaryXML, classLegend);
 
             foreach (XmlNode nodClass in nodBS.SelectNodes("Classes/Class"))
             {
@@ -93,19 +90,7 @@ namespace GCDCore.Project
 
         public void Delete()
         {
-            try
-            {
-                // Raise the event to say that a GIS layer is about to be deleted.
-                // This should bubble to ArcGIS so that the layer is removed from the ArcMap ToC
-                ProjectManager.OnGISLayerDelete(new ProjectManager.GISLayerEventArgs(PolygonMask));
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Unable to delete budget segregation folder", Folder.FullName);
-                Console.WriteLine(ex.Message);
-            }
-
-            try
+             try
             {
                 Folder.Delete();
             }

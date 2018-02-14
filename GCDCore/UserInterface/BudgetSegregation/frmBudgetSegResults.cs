@@ -39,8 +39,8 @@ namespace GCDCore.UserInterface.BudgetSegregation
             cboRaw.Items.Add("Budget Class Area of Intereset");
             cboRaw.SelectedIndex = 0;
 
-            txtPolygonMask.Text = ProjectManager.Project.GetRelativePath(BudgetSeg.PolygonMask.FullName);
-            txtField.Text = BudgetSeg.MaskField;
+            ucProperties.AddDoDProperty("Mask", BudgetSeg.Mask.Name);
+            ucProperties.AddDoDProperty("Mask Field", BudgetSeg.Mask._Field);
 
             //Hide Report tab for now
             tabMain.TabPages.Remove(TabPage4);

@@ -19,8 +19,6 @@ namespace GCDCore.UserInterface.BudgetSegregation
             // This call is required by the designer.
             InitializeComponent();
             InitialDoD = parentDoD;
-
-            ucPolygon.Initialize("Budget Segregation Polygon Mask", GCDConsoleLib.GDalGeometryType.SimpleTypes.Polygon);
         }
 
         private void frmBudgetSegProperties_Load(object sender, EventArgs e)
@@ -30,10 +28,9 @@ namespace GCDCore.UserInterface.BudgetSegregation
             cboDoD.DataSource = new BindingList<DoDBase>(ProjectManager.Project.DoDs.Values.ToList<DoDBase>());
             cboDoD.SelectedItem = InitialDoD;
 
-            ucPolygon.PathChanged += this.PolygonChanged;
-
-            ucPolygon.SelectVector += ProjectManager.OnSelectVector;
-            ucPolygon.BrowseVector += ProjectManager.OnBrowseVector;
+            cboMasks.DataSource = new BindingList<GCDCore.Project.Masks.Mask>(ProjectManager.Project.Masks.Values.ToList<GCDCore.Project.Masks.Mask>());
+            if (cboMasks.Items.Count > 0)
+                cboMasks.SelectedIndex = 0;
         }
 
         private void cmdOK_Click(Object sender, EventArgs e)
@@ -48,10 +45,12 @@ namespace GCDCore.UserInterface.BudgetSegregation
             {
                 Cursor.Current = Cursors.WaitCursor;
 
-                DoDBase dod = (DoDBase)cboDoD.SelectedItem;
+                DoDBase dod = cboDoD.SelectedItem as DoDBase;
+                GCDCore.Project.Masks.Mask mask = cboMasks.SelectedItem as GCDCore.Project.Masks.Mask;
+
                 System.IO.DirectoryInfo bsFolder = ProjectManager.OutputManager.GetBudgetSegreationDirectoryPath(dod.Folder, true);
                 Engines.BudgetSegregationEngine bsEngine = new Engines.BudgetSegregationEngine();
-                BudgetSeg = bsEngine.Calculate(txtName.Text, bsFolder, dod, ucPolygon.SelectedItem, cboField.Text);
+                BudgetSeg = bsEngine.Calculate(txtName.Text, bsFolder, dod, mask);
                 dod.BudgetSegregations[BudgetSeg.Name] = BudgetSeg;
 
                 ProjectManager.Project.Save();
@@ -94,44 +93,10 @@ namespace GCDCore.UserInterface.BudgetSegregation
                 }
             }
 
-            if (ucPolygon.SelectedItem is GCDConsoleLib.Vector)
+            if (cboMasks.SelectedItem == null)
             {
-                if (ucPolygon.SelectedItem.Features.Count() < 1)
-                {
-                    MessageBox.Show("The polygon mask feature class is empty and contains no features. You must choose a polygon feature class with at least one feature.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    ucPolygon.Select();
-                    return false;
-                }
-
-                DoDBase dod = (DoDBase)cboDoD.SelectedItem;
-
-                if (ucPolygon.SelectedItem.Proj.PrettyWkt.ToLower().Contains("unknown"))
-                {
-                    MessageBox.Show("The selected feature class appears to be missing a spatial reference. All GCD inputs must possess a spatial reference and it must be the same spatial reference for all datasets in a GCD project." + " If the selected feature class exists in the same coordinate system, " + dod.RawDoD.Raster.Proj.PrettyWkt + ", but the coordinate system has not yet been defined for the feature class." + " Use the ArcToolbox 'Define Projection' geoprocessing tool in the 'Data Management -> Projection & Transformations' Toolbox to correct the problem with the selected datasets by defining the coordinate system as:" + Environment.NewLine + Environment.NewLine + dod.RawDoD.Raster.Proj.PrettyWkt + Environment.NewLine + Environment.NewLine + "Then try using it with the GCD again.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    ucPolygon.Select();
-                    return false;
-                }
-                else
-                {
-                    if (!dod.RawDoD.Raster.Proj.IsSame(ucPolygon.SelectedItem.Proj))
-                    {
-                        MessageBox.Show("The coordinate system of the selected feature class:" + Environment.NewLine + Environment.NewLine + ucPolygon.SelectedItem.Proj.PrettyWkt + Environment.NewLine + Environment.NewLine + "does not match that of the GCD project:" + Environment.NewLine + Environment.NewLine + dod.RawDoD.Raster.Proj.PrettyWkt + Environment.NewLine + Environment.NewLine + "All datasets within a GCD project must have the identical coordinate system. However, small discrepencies in coordinate system names might cause the two coordinate systems to appear different. " + "If you believe that the selected dataset does in fact possess the same coordinate system as the GCD project then use the ArcToolbox 'Define Projection' geoprocessing tool in the " + "'Data Management -> Projection & Transformations' Toolbox to correct the problem with the selected dataset by defining the coordinate system as:" + Environment.NewLine + Environment.NewLine + dod.RawDoD.Raster.Proj.PrettyWkt + Environment.NewLine + Environment.NewLine + "Then try importing it into the GCD again.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        ucPolygon.Select();
-                        return false;
-                    }
-                }
-            }
-            else
-            {
-                MessageBox.Show("Please choose a polygon mask on which you wish to base this budget segregation.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                ucPolygon.Select();
-                return false;
-            }
-
-            if (string.IsNullOrEmpty(cboField.Text))
-            {
-                MessageBox.Show("Please choose a polygon mask field. Or add a \"string\" field to the feature class if one does not exist.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                cboField.Select();
+                MessageBox.Show("Please choose a mask on which you wish to base this budget segregation.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                cboMasks.Select();
                 return false;
             }
 
@@ -161,27 +126,15 @@ namespace GCDCore.UserInterface.BudgetSegregation
             txtOutputFolder.Text = ProjectManager.Project.GetRelativePath(ProjectManager.OutputManager.GetBudgetSegreationDirectoryPath(dod.Folder, false).FullName);
         }
 
-        private void PolygonChanged(object sender, naru.ui.PathEventArgs e)
-        {
-            cboField.Items.Clear();
-
-            if (ucPolygon.SelectedItem == null)
-            {
-                return;
-            }
-
-            Cursor = Cursors.WaitCursor;
-            List<GCDConsoleLib.VectorField> stringFields = ucPolygon.SelectedItem.Fields.Values.Where(x => x.Type.Equals(GCDConsoleLib.GDalFieldType.StringField)).ToList<GCDConsoleLib.VectorField>();
-            cboField.Items.AddRange(stringFields.ToArray());
-            if (cboField.Items.Count == 1)
-                cboField.SelectedIndex = 0;
-
-            Cursor = Cursors.Default;
-        }
 
         private void cmdHelp_Click(Object sender, EventArgs e)
         {
             Process.Start(Properties.Resources.HelpBaseURL + "gcd-command-reference/gcd-project-explorer/l-individual-change-detection-context-menu/v-add-budget-segregation");
+        }
+
+        private void cboMasks_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            txtField.Text = ((GCDCore.Project.Masks.Mask)cboMasks.SelectedItem)._Field;
         }
     }
 }

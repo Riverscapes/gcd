@@ -267,7 +267,7 @@ namespace GCDCore.UserInterface.Project
                         nodDoD.Expand();
 
                         // Loop through and find all the unique polygon masks used
-                        sMaskDict[rBS.PolygonMask.FullName] = System.IO.Path.GetFileNameWithoutExtension(rBS.PolygonMask.FullName);
+                        sMaskDict[rBS.Mask.Name] = System.IO.Path.GetFileNameWithoutExtension(rBS.Mask._ShapeFile.FullName);
                     }
 
                     // Now loop through all the BS and add them under the appropriate mask polygon node
@@ -277,7 +277,7 @@ namespace GCDCore.UserInterface.Project
 
                         foreach (GCDCore.Project.BudgetSegregation rBS in rDoD.BudgetSegregations.Values)
                         {
-                            if (string.Compare(sPolygonMask, rBS.PolygonMask.FullName, true) == 0)
+                            if (string.Compare(sPolygonMask, rBS.Mask.Name, true) == 0)
                             {
                                 if (!(nodBSGroup is TreeNode))
                                 {
@@ -1667,7 +1667,6 @@ namespace GCDCore.UserInterface.Project
                 TreeNode nodSelected = treProject.SelectedNode;
                 if (nodSelected is TreeNode)
                 {
-                    int nID = GetNodeID(nodSelected);
                     GCDNodeTypes eType = GetNodeType(nodSelected);
                     TreeNode nodDoD = null;
                     switch (eType)

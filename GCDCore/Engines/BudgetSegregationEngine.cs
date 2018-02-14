@@ -9,21 +9,19 @@ namespace GCDCore.Engines
 {
     public class BudgetSegregationEngine : EngineBase
     {
-        public BudgetSegregation Calculate(string dodName, DirectoryInfo analysisFolder, DoDBase dod, Vector polygonMask, string fieldName)
+        public BudgetSegregation Calculate(string dodName, DirectoryInfo analysisFolder, DoDBase dod, Project.Masks.Mask mask)
         {
             // Build the budget segregation result set object that will be returned. This determines paths
-            BudgetSegregation bsResult = new BudgetSegregation(dodName, analysisFolder, fieldName, dod);
-
-            // Copy the budget segregation mask ShapeFile into the folder
-            polygonMask.Copy(bsResult.PolygonMask);
-            Vector Mask = new Vector(bsResult.PolygonMask);
+            BudgetSegregation bsResult = new BudgetSegregation(dodName, analysisFolder, mask, dod);
 
             // Retrieve the segregated statistics from the DoD rasters depending on the thresholding type used.
             Dictionary<string, GCDConsoleLib.GCD.DoDStats> results = null;
 
+            Vector polygons = new Vector(mask._ShapeFile);
+
             if (dod is DoDMinLoD)
             {
-                results = RasterOperators.GetStatsMinLoD(dod.RawDoD.Raster, dod.RawDoD.Raster, ((DoDMinLoD)dod).Threshold, Mask, fieldName, ProjectManager.Project.Units);
+                results = RasterOperators.GetStatsMinLoD(dod.RawDoD.Raster, dod.RawDoD.Raster, ((DoDMinLoD)dod).Threshold, polygons, mask._Field, ProjectManager.Project.Units);
             }
             else
             {
@@ -31,17 +29,17 @@ namespace GCDCore.Engines
 
                 if (dod is DoDProbabilistic)
                 {
-                    results = RasterOperators.GetStatsProbalistic(dod.RawDoD.Raster, dod.ThrDoD.Raster, propErr, Mask, fieldName, ProjectManager.Project.Units);
+                    results = RasterOperators.GetStatsProbalistic(dod.RawDoD.Raster, dod.ThrDoD.Raster, propErr, polygons, mask._Field, ProjectManager.Project.Units);
                 }
                 else
                 {
-                    results = RasterOperators.GetStatsPropagated(dod.RawDoD.Raster, propErr, Mask, fieldName, ProjectManager.Project.Units);
+                    results = RasterOperators.GetStatsPropagated(dod.RawDoD.Raster, propErr, polygons, mask._Field, ProjectManager.Project.Units);
                 }
             }
-
+            
             // Retrieve the histograms for all budget segregation classes
-            Dictionary<string, Histogram> rawHistos = RasterOperators.BinRaster(dod.RawDoD.Raster, DEFAULTHISTOGRAMNUMBER, Mask, fieldName);
-            Dictionary<string, Histogram> thrHistos = RasterOperators.BinRaster(dod.ThrDoD.Raster, DEFAULTHISTOGRAMNUMBER, Mask, fieldName);
+            Dictionary<string, Histogram> rawHistos = RasterOperators.BinRaster(dod.RawDoD.Raster, DEFAULTHISTOGRAMNUMBER, polygons, mask._Field);
+            Dictionary<string, Histogram> thrHistos = RasterOperators.BinRaster(dod.ThrDoD.Raster, DEFAULTHISTOGRAMNUMBER, polygons, mask._Field);
 
             // Make sure that the output folder and the folder for the figures exist
             analysisFolder.Create();

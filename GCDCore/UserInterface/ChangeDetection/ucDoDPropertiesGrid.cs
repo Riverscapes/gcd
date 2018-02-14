@@ -28,6 +28,12 @@ namespace GCDCore.UserInterface.ChangeDetection
             grdData.DataSource = DoDProperties;
         }
 
+        public void AddDoDProperty(string property, string value)
+        {
+            DoDProperties.Add(new DoDProperty(property, value));
+            DoDProperties.ResetBindings();
+        }
+
         public void Initialize(DoDBase dod)
         {
             DoDProperties.Add(new DoDPropertyRaster("New Surface", dod.NewSurface.Name, dod.NewSurface.Raster.GISFileInfo));

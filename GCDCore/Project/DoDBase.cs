@@ -124,7 +124,7 @@ namespace GCDCore.Project
         private void SerializeSurface(XmlNode nodDoD, Surface surface, string nodName)
         {
             XmlNode nodSurface = nodDoD.AppendChild(nodDoD.OwnerDocument.CreateElement(nodName));
-            nodSurface.InnerText = NewSurface.Name;
+            nodSurface.InnerText = surface.Name;
 
             // Track whether the surface is a DEM or reference surface as an attribute.
             // This is needed for derserialization to look in the correct dictionary.
