@@ -86,6 +86,7 @@
     <Compile Include="Project\GCDProjectRasterItem.cs" />
     <Compile Include="Project\HistogramPair.cs" />
     <Compile Include="Project\InterComparison.cs" />
+    <Compile Include="Project\Masks\DirectionalMask.cs" />
     <Compile Include="Project\Masks\Mask.cs" />
     <Compile Include="Project\Masks\MaskItem.cs" />
     <Compile Include="Project\Masks\RegularMask.cs" />

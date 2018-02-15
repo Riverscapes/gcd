@@ -35,7 +35,6 @@ namespace GCDCore.UserInterface.Masks
                 fiShapeFile = Mask._ShapeFile;
 
                 ucPolygon.Initialize("Mask Polygon ShapeFile", fiShapeFile, true);
-                ucPolygon.ReadOnly = true;
 
                 cboField.DataSource = new BindingList<string>() { Mask._Field };
                 cboField.SelectedIndex = 0;
@@ -47,6 +46,7 @@ namespace GCDCore.UserInterface.Masks
                 grdData.Select();
             }
 
+            ucPolygon.ReadOnly = Mask != null;
 
             // subscribe to the even when the user changes the input ShapeFile
             ucPolygon.PathChanged += InputShapeFileChanged;

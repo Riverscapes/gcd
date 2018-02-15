@@ -198,16 +198,17 @@ namespace GCDCore.UserInterface.Project
             this.imgTreeImageList.Images.SetKeyName(9, "Reservoir.png");
             this.imgTreeImageList.Images.SetKeyName(10, "BrowseFolder.png");
             this.imgTreeImageList.Images.SetKeyName(11, "mask.png");
-            this.imgTreeImageList.Images.SetKeyName(12, "AOI.png");
-            this.imgTreeImageList.Images.SetKeyName(13, "BrowseFolder.png");
+            this.imgTreeImageList.Images.SetKeyName(12, "BrowseFolder.png");
+            this.imgTreeImageList.Images.SetKeyName(13, "AOI.png");
             this.imgTreeImageList.Images.SetKeyName(14, "BrowseFolder.png");
             this.imgTreeImageList.Images.SetKeyName(15, "BrowseFolder.png");
-            this.imgTreeImageList.Images.SetKeyName(16, "About.png");
-            this.imgTreeImageList.Images.SetKeyName(17, "ConcaveHull.png");
-            this.imgTreeImageList.Images.SetKeyName(18, "BudgetSeg.png");
-            this.imgTreeImageList.Images.SetKeyName(19, "BrowseFolder.png");
+            this.imgTreeImageList.Images.SetKeyName(16, "BrowseFolder.png");
+            this.imgTreeImageList.Images.SetKeyName(17, "About.png");
+            this.imgTreeImageList.Images.SetKeyName(18, "ConcaveHull.png");
+            this.imgTreeImageList.Images.SetKeyName(19, "BudgetSeg.png");
             this.imgTreeImageList.Images.SetKeyName(20, "BrowseFolder.png");
-            this.imgTreeImageList.Images.SetKeyName(21, "comparison.png");
+            this.imgTreeImageList.Images.SetKeyName(21, "BrowseFolder.png");
+            this.imgTreeImageList.Images.SetKeyName(22, "comparison.png");
             // 
             // cmsProject
             // 
@@ -967,7 +968,7 @@ namespace GCDCore.UserInterface.Project
             this.deleteMaskToolStripMenuItem,
             this.addMaskToMapToolStripMenuItem});
             this.cmsMask.Name = "cmsMask";
-            this.cmsMask.Size = new System.Drawing.Size(182, 92);
+            this.cmsMask.Size = new System.Drawing.Size(182, 70);
             // 
             // editMaskPropertiesToolStripMenuItem
             // 
