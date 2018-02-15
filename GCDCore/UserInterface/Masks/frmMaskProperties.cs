@@ -26,15 +26,13 @@ namespace GCDCore.UserInterface.Masks
 
         private void frmMaskProperties_Load(object sender, EventArgs e)
         {
-            FileInfo fiShapeFile = null;
-
             if (Mask is GCDCore.Project.Masks.RegularMask)
             {
                 txtName.Text = Mask.Name;
                 txtPath.Text = ProjectManager.Project.GetRelativePath(Mask._ShapeFile);
-                fiShapeFile = Mask._ShapeFile;
 
-                ucPolygon.Initialize("Mask Polygon ShapeFile", fiShapeFile, true);
+                ucPolygon.Initialize("Mask Polygon ShapeFile", Mask._ShapeFile, true);
+                ucPolygon.SetReadOnly();
 
                 cboField.DataSource = new BindingList<string>() { Mask._Field };
                 cboField.SelectedIndex = 0;
@@ -46,7 +44,6 @@ namespace GCDCore.UserInterface.Masks
                 grdData.Select();
             }
 
-            ucPolygon.ReadOnly = Mask != null;
 
             // subscribe to the even when the user changes the input ShapeFile
             ucPolygon.PathChanged += InputShapeFileChanged;
@@ -126,78 +123,14 @@ namespace GCDCore.UserInterface.Masks
 
         private bool ValidateForm()
         {
-            // Sanity check to prevent empty names
-            txtName.Text = txtName.Text.Trim();
-
-            if (string.IsNullOrEmpty(txtName.Text))
-            {
-                MessageBox.Show("You must provide a name for the mask.", "Missing Name", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (!MaskValidation.ValidateMaskName(txtName, Mask))
                 return false;
-            }
 
-            if (!GCDCore.Project.ProjectManager.Project.IsMaskNameUnique(txtName.Text, Mask))
-            {
-                MessageBox.Show("This project already contains a mask with this name. Please choose a unique name.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                txtName.Select();
+            if (!MaskValidation.ValidateShapeFile(ucPolygon))
                 return false;
-            }
 
-            if (!(ucPolygon.SelectedItem is GCDConsoleLib.Vector))
-            {
-                MessageBox.Show("You must choose a mask ShapeFile to continue.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                ucPolygon.Select();
+            if (!MaskValidation.ValidateField(cboField))
                 return false;
-            }
-
-            // Should be safe after Validate call above
-            GCDConsoleLib.Vector shp = ucPolygon.SelectedItem;
-
-            if (shp.Features.Count < 1)
-            {
-                MessageBox.Show("The ShapeFile does not contain any features. You must choose a polygon ShapeFile with one or more feature.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                ucPolygon.Select();
-                return false;
-            }
-
-            // Validate that hte user actually chose a POLYGON ShapeFile
-            if (shp.GeometryType.SimpleType != GCDConsoleLib.GDalGeometryType.SimpleTypes.Polygon)
-            {
-                MessageBox.Show(string.Format("The selected ShapeFile appears to be of {0} geometry type. Only polygon ShapeFiles can be used as masks.", shp.GeometryType.SimpleType), "Invalid Geometry Type", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                ucPolygon.Select();
-                return false;
-            }
-
-            if (shp.Proj.PrettyWkt.ToLower().Contains("unknown"))
-            {
-                MessageBox.Show("The selected ShapeFile appears to be missing a spatial reference." +
-                    " All GCD ShapeFiles must possess a spatial reference and it must be the same spatial reference for all rasters in a GCD project.", "Missing Spatial Reference", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                ucPolygon.Select();
-                return false;
-            }
-
-            if (ProjectManager.Project.DEMSurveys.Count > 0)
-            {
-                if (!ProjectManager.Project.DEMSurveys.Values.First<DEMSurvey>().Raster.Proj.IsSame(shp.Proj))
-                {
-                    string wkt = ProjectManager.Project.DEMSurveys.Values.First<DEMSurvey>().Raster.Proj.Wkt;
-
-                    MessageBox.Show("The coordinate system of the selected ShapeFile:" + Environment.NewLine + Environment.NewLine + shp.Proj.PrettyWkt + Environment.NewLine + Environment.NewLine +
-                       "does not match that of the GCD project:" + Environment.NewLine + Environment.NewLine + wkt + Environment.NewLine + Environment.NewLine +
-                       "All ShapeFiles and rasters within a GCD project must have the identical coordinate system. However, small discrepencies in coordinate system names might cause the two coordinate systems to appear different. " +
-                       "If you believe that the selected ShapeFile does in fact possess the same coordinate system as the GCD project then use the ArcToolbox 'Define Projection' geoprocessing tool in the " +
-                       "'Data Management -> Projection & Transformations' Toolbox to correct the problem with the selected raster by defining the coordinate system as:"
-                       + Environment.NewLine + Environment.NewLine + wkt + Environment.NewLine + Environment.NewLine + "Then try importing it into the GCD again.",
-                       Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return false;
-                }
-            }
-
-            if (string.IsNullOrEmpty(cboField.Text))
-            {
-                MessageBox.Show("You must select the field in the ShapeFile that identifies the mask values.", "Missing Mask Field", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                cboField.Select();
-                return false;
-            }
 
             if (MaskItems.Count < 1)
             {

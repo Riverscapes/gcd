@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GCDCore.Project.Masks
 {
-    public class Mask : GCDProjectItem
+    public abstract class Mask : GCDProjectItem
     {
         public readonly string _Field;
         public readonly System.IO.FileInfo _ShapeFile;

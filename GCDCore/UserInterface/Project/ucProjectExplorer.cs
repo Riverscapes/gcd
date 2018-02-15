@@ -1767,7 +1767,7 @@ namespace GCDCore.UserInterface.Project
 
         private void addRegularMaskToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            GCDCore.UserInterface.Masks.frmMaskProperties frm = new Masks.frmMaskProperties();
+            Masks.frmMaskProperties frm = new Masks.frmMaskProperties();
             if (frm.ShowDialog() == DialogResult.OK)
             {
                 LoadTree(new ProjectTreeNode(GCDNodeTypes.Mask, frm.Mask));
@@ -1776,8 +1776,11 @@ namespace GCDCore.UserInterface.Project
 
         private void addDirectionalMaskToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            GCDCore.UserInterface.Masks.frmDirectionalMaskProps frm = new Masks.frmDirectionalMaskProps();
-            frm.ShowDialog();
+            Masks.frmDirectionalMaskProps frm = new Masks.frmDirectionalMaskProps();
+            if (frm.ShowDialog() == DialogResult.OK)
+            {
+                LoadTree(new ProjectTreeNode(GCDNodeTypes.Mask, frm.Mask));
+            }
         }
 
         private void addReferenceSurfaceFromDEMs(object sender, EventArgs e)

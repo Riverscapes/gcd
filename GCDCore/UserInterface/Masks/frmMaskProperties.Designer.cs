@@ -133,7 +133,6 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ucPolygon.Location = new System.Drawing.Point(120, 22);
             this.ucPolygon.Name = "ucPolygon";
-            this.ucPolygon.ReadOnly = false;
             this.ucPolygon.Size = new System.Drawing.Size(355, 23);
             this.ucPolygon.TabIndex = 1;
             // 

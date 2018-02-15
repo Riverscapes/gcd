@@ -269,6 +269,7 @@
     <Compile Include="UserInterface\Masks\frmMaskProperties.Designer.cs">
       <DependentUpon>frmMaskProperties.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserInterface\Masks\MaskValidation.cs" />
     <Compile Include="UserInterface\Project\ucProjectExplorer.cs">
       <SubType>UserControl</SubType>
     </Compile>
