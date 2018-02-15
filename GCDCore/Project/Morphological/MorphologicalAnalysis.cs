@@ -16,6 +16,8 @@ namespace GCDCore.Project.Morphological
         public readonly BudgetSegregation BS;
         public readonly DirectoryInfo OutputFolder;
 
+        public UnitsNet.Units.DurationUnit DurationDisplayUnits { get; set; }
+
         public int ZeroFluxCell { get; set; }
 
         public readonly BindingList<MorphologicalUnit> Units;
@@ -25,6 +27,11 @@ namespace GCDCore.Project.Morphological
             Name = name;
             OutputFolder = outputFolder;
             BS = bs;
+            DurationDisplayUnits = UnitsNet.Units.DurationUnit.Hour;
+            _duration = UnitsNet.Duration.From(1, DurationDisplayUnits);
+            _porosity = 0.26m;
+            _density = 2.5m;
+            _competency = 1m;
 
             Units = new BindingList<MorphologicalUnit>();
 
@@ -154,7 +161,5 @@ namespace GCDCore.Project.Morphological
             nodDuration.InnerText = Duration.ToString();
             // nodDuration.Attributes.Append(nodParent.OwnerDocument.CreateAttribute("units")).InnerText = Duration.GetAbbreviation(_duration);
         }
-
-
     }
 }

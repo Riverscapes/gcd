@@ -22,6 +22,7 @@ namespace GCDCore
         private const string m_sInterComparison = "InterCompare";
         private const string m_sRefSurfaceFolder = "RefSurfaces";
         private const string m_sProjectMaskFolder = "Masks";
+        private const string m_sMorphologicalFolder = "Morph";
 
         private const string m_sFiguresSubfolder = "Figs";
         private string m_sOutputDriver = "GTiff";
@@ -945,6 +946,38 @@ namespace GCDCore
         {
             string sMaskPath = GetProjectMaskFolder(maskName);
             return naru.os.File.GetNewSafeName(sMaskPath, maskName, "shp");
+        }
+
+        public DirectoryInfo GetMorphologicalDirectory(DirectoryInfo bsFolder, bool bCreate)
+        {
+            DirectoryInfo groupFolder = new DirectoryInfo(Path.Combine(bsFolder.FullName, m_sMorphologicalFolder));
+
+            if (!groupFolder.Exists && bCreate)
+                groupFolder.Create();
+
+            // Find unique folder on disk
+            int maxExisting = 0;
+
+            if (groupFolder.Exists)
+            {
+                foreach (DirectoryInfo existingFolder in groupFolder.GetDirectories("MA*", SearchOption.TopDirectoryOnly))
+                {
+                    System.Text.RegularExpressions.Match match = System.Text.RegularExpressions.Regex.Match(existingFolder.FullName, "([0-9]*)$");
+                    if (match.Groups.Count > 1)
+                    {
+                        int folderSuffix = int.Parse(match.Groups[1].Value);
+                        if (folderSuffix > maxExisting)
+                            maxExisting = folderSuffix;
+                    }
+                }
+            }
+
+            DirectoryInfo maFolder = new DirectoryInfo(Path.Combine(groupFolder.FullName, string.Format("MA{0:0000}", maxExisting + 1)));
+
+            if (bCreate)
+                maFolder.Create();
+
+            return maFolder;
         }
     }
 }

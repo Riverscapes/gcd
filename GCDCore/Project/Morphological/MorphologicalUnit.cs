@@ -17,14 +17,14 @@ namespace GCDCore.Project.Morphological
         public UnitsNet.Volume VolDeposition { get; internal set; }
         public UnitsNet.Volume VolDepositionErr { get; internal set; }
 
-        public UnitsNet.Volume VolChange {  get { return VolDeposition - VolErosion; } }
+        public UnitsNet.Volume VolChange { get { return VolDeposition - VolErosion; } }
         public UnitsNet.Volume VolChangeErr
         {
             get
             {
-                double vol = Math.Sqrt(Math.Pow(VolDeposition.As(UnitsNet.Units.VolumeUnit.CubicMeter), 2) 
+                double vol = Math.Sqrt(Math.Pow(VolDeposition.As(UnitsNet.Units.VolumeUnit.CubicMeter), 2)
                     + Math.Pow(VolErsionErr.As(UnitsNet.Units.VolumeUnit.CubicMeter), 2));
-                             
+
                 return Volume.FromCubicMeters(vol);
             }
         }
@@ -34,11 +34,11 @@ namespace GCDCore.Project.Morphological
 
         public decimal Work { get; internal set; }
         public UnitsNet.Volume CumulativeVolume { get; internal set; }
-        
+
         public MorphologicalUnit(string name)
         {
             Name = name;
-        }        
+        }
 
         // Default constructor for binding to grid control
         public MorphologicalUnit()
@@ -48,7 +48,7 @@ namespace GCDCore.Project.Morphological
 
         public void CalculateWork(decimal porosity, decimal duration, decimal pcCompetent)
         {
-            decimal volume = (1m - porosity) * (decimal) VolOut.As(UnitsNet.Units.VolumeUnit.CubicMeter);
+            decimal volume = (1m - porosity) * (decimal)VolOut.As(UnitsNet.Units.VolumeUnit.CubicMeter);
             decimal effectiveDuration = duration * (pcCompetent / 100m);
             Work = volume / effectiveDuration;
         }

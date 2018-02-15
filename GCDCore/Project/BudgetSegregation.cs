@@ -17,6 +17,8 @@ namespace GCDCore.Project
         public readonly string MaskField;
         public readonly Dictionary<string, BudgetSegregationClass> Classes;
 
+        public bool IsMaskDirectional { get { return Mask is GCDCore.Project.Masks.DirectionalMask; } }
+
         public BindingList<BudgetSegregationClass> FilteredClasses
         {
             get
@@ -24,14 +26,14 @@ namespace GCDCore.Project
                 BindingList<BudgetSegregationClass> result = new BindingList<BudgetSegregationClass>();
 
                 // Loop over all distinct field values that are flagged to be included
-                foreach(KeyValuePair<string, string> kvp in Mask.ActiveFieldValues)
+                foreach (KeyValuePair<string, string> kvp in Mask.ActiveFieldValues)
                 {
                     if (Classes.ContainsKey(kvp.Value))
                     {
                         BudgetSegregationClass existingClass = Classes[kvp.Key];
                         result.Add(new BudgetSegregationClass(kvp.Value, existingClass.Statistics, existingClass.Histograms, existingClass.SummaryXML));
                     }
-                }             
+                }
 
                 return result;
             }
@@ -65,7 +67,7 @@ namespace GCDCore.Project
         /// <param name="dod"></param>
         /// <param name="summaryXML"></param>
         /// <param name="classLegend"></param>
-        public BudgetSegregation(string name, DirectoryInfo folder, Masks.RegularMask mask, DoDBase dod, FileInfo summaryXML, FileInfo classLegend)
+        public BudgetSegregation(string name, DirectoryInfo folder, Masks.Mask mask, DoDBase dod, FileInfo summaryXML, FileInfo classLegend)
             : base(name)
         {
             DoD = dod;
@@ -95,7 +97,7 @@ namespace GCDCore.Project
         {
             string name = nodBS.SelectSingleNode("Name").InnerText;
             DirectoryInfo folder = ProjectManager.Project.GetAbsoluteDir(nodBS.SelectSingleNode("Folder").InnerText);
-            Masks.RegularMask mask = (Masks.RegularMask)ProjectManager.Project.Masks[nodBS.SelectSingleNode("Mask").InnerText];
+            Masks.Mask mask = ProjectManager.Project.Masks[nodBS.SelectSingleNode("Mask").InnerText];
             FileInfo summaryXML = ProjectManager.Project.GetAbsolutePath(nodBS.SelectSingleNode("SummaryXML").InnerText);
             FileInfo classLegend = ProjectManager.Project.GetAbsolutePath(nodBS.SelectSingleNode("ClassLegend").InnerText);
 

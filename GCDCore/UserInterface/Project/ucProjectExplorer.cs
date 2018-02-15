@@ -1758,11 +1758,18 @@ namespace GCDCore.UserInterface.Project
 
         private void addMorphologicalAnalysisToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            UserInterface.BudgetSegregation.Morphological.frmMorpProperties frm1 = new BudgetSegregation.Morphological.frmMorpProperties();
-            frm1.ShowDialog();
+            TreeNode nodSelected = treProject.SelectedNode;
+            GCDCore.Project.BudgetSegregation bs = ((ProjectTreeNode)nodSelected.Tag).Item as GCDCore.Project.BudgetSegregation;
 
-            UserInterface.BudgetSegregation.Morphological.frmMorphResults frm2 = new BudgetSegregation.Morphological.frmMorphResults();
-            frm2.ShowDialog();
+            UserInterface.BudgetSegregation.Morphological.frmMorpProperties frm1 = new BudgetSegregation.Morphological.frmMorpProperties(bs);
+            if (frm1.ShowDialog() == DialogResult.OK)
+            {
+                UserInterface.BudgetSegregation.Morphological.frmMorphResults frm2 = new BudgetSegregation.Morphological.frmMorphResults(frm1.Analysis);
+                if (frm2.ShowDialog() == DialogResult.OK)
+                {
+                    LoadTree(new ProjectTreeNode(GCDNodeTypes.MorphologicalAnalysis, frm2.Analysis));
+                }
+            }
         }
 
         private void addRegularMaskToolStripMenuItem_Click(object sender, EventArgs e)
