@@ -938,7 +938,7 @@ namespace GCDCore
         private string GetProjectMaskFolder(string maskName)
         {
             maskName = naru.os.File.RemoveDangerousCharacters(maskName);
-            return Path.Combine(Path.Combine(GCDProjectFolder(), m_sProjectMaskFolder), maskName);
+            return Path.Combine(GCDProjectFolder(), m_sInputsFolder, m_sProjectMaskFolder, maskName);
         }
 
         public System.IO.FileInfo GetMaskShapeFilePath(string maskName)

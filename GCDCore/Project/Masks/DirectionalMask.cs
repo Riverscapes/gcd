@@ -14,6 +14,34 @@ namespace GCDCore.Project.Masks
         public readonly string DirectionField;
         public readonly string DistanceField;
 
+        public override Dictionary<string, string> ActiveFieldValues
+        {
+            get
+            {
+                Dictionary<string, string> result = new Dictionary<string, string>();
+
+                bool bUseLabel = !string.IsNullOrEmpty(LabelField);
+
+                GCDConsoleLib.Vector polygons = new GCDConsoleLib.Vector(_ShapeFile);
+                foreach (GCDConsoleLib.VectorFeature feat in polygons.Features.Values)
+                {
+                    if (!feat.IsNull(_Field))
+                    {
+                        string value = feat.GetFieldAsString(_Field);
+                        if (!result.ContainsKey(value))
+                        {
+                            if (bUseLabel)
+                                result[value] = feat.IsNull(LabelField) ? value : feat.GetFieldAsString(LabelField);
+                            else
+                                result[value] = value;
+                        }
+                    }
+                }              
+
+                return result;
+            }
+        }
+
         public DirectionalMask(string name, FileInfo shapefile, string field, string labelField, string directionField, string distanceField)
             : base(name, shapefile, field)
         {
@@ -22,7 +50,25 @@ namespace GCDCore.Project.Masks
             DistanceField = distanceField;
         }
 
-        new public XmlNode Serialize(XmlNode nodParent)
+        public DirectionalMask(XmlNode nodParent)
+            : base(nodParent)
+        {
+            DirectionField = nodParent.SelectSingleNode("DirectionField").InnerText;
+
+            XmlNode nodLabel = nodParent.SelectSingleNode("LabelField");
+            if (nodLabel is XmlNode)
+            {
+                LabelField = nodLabel.InnerText;
+            }
+
+            XmlNode nodDistance = nodParent.SelectSingleNode("DistanceField");
+            if (nodDistance is XmlNode)
+            {
+                DistanceField = nodDistance.InnerText;
+            }
+        }
+
+        public override XmlNode Serialize(XmlNode nodParent)
         {
             XmlNode nodMask = base.Serialize(nodParent);
 

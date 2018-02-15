@@ -18,6 +18,21 @@ namespace GCDCore.Project.Masks
             _Items = items;
         }
 
+        public override Dictionary<string, string> ActiveFieldValues
+        {
+            get
+            {
+                Dictionary<string, string> result = new Dictionary<string, string>();
+                foreach(MaskItem item in _Items.Where(x=>x.Include))
+                {
+                    if (!result.ContainsKey(item.FieldValue))
+                        result[item.FieldValue] = string.IsNullOrEmpty(item.Label) ? item.FieldValue : item.Label;
+                }
+
+                return result;
+            }
+        }
+
         public RegularMask(XmlNode nodParent)
             : base(nodParent)
         {
@@ -36,17 +51,17 @@ namespace GCDCore.Project.Masks
             }
         }
 
-        new public XmlNode Serialize(XmlNode nodParent)
+        public override XmlNode Serialize(XmlNode nodParent)
         {
             XmlNode nodMask = base.Serialize(nodParent);
 
             XmlNode nodItems = nodMask.AppendChild(nodMask.OwnerDocument.CreateElement("Items"));
-            foreach(MaskItem item in _Items)
+            foreach (MaskItem item in _Items)
             {
                 XmlNode nodItem = nodItems.AppendChild(nodItems.OwnerDocument.CreateElement("Item"));
                 nodItem.AppendChild(nodItem.OwnerDocument.CreateElement("FieldValue")).InnerText = item.FieldValue;
                 nodItem.AppendChild(nodItem.OwnerDocument.CreateElement("Include")).InnerText = item.Include.ToString();
-                if (string.Compare(item.FieldValue, item.Label,true) != 0)
+                if (string.Compare(item.FieldValue, item.Label, true) != 0)
                 {
                     nodItem.AppendChild(nodItem.OwnerDocument.CreateElement("Label")).InnerText = item.Label;
                 }

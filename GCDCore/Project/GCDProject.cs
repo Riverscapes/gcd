@@ -166,11 +166,7 @@ namespace GCDCore.Project
             if (Masks.Count > 0)
             {
                 XmlNode nodMasks = nodProject.AppendChild(xmlDoc.CreateElement("Masks"));
-                foreach(GCDCore.Project.Masks.Mask mask in Masks.Values)
-                {
-                    if (mask is GCDCore.Project.Masks.RegularMask)
-                        ((GCDCore.Project.Masks.RegularMask)mask).Serialize(nodMasks);
-                }
+                Masks.Values.ToList().ForEach(x => x.Serialize(nodMasks));
             }
 
             if (DoDs.Count > 0)
@@ -236,12 +232,17 @@ namespace GCDCore.Project
                 ProjectManager.Project.ReferenceSurfaces[surf.Name] = surf;
             }
 
-            foreach(XmlNode nodMask in nodProject.SelectNodes("Masks/Mask"))
+            foreach (XmlNode nodMask in nodProject.SelectNodes("Masks/Mask"))
             {
                 if (nodMask.SelectSingleNode("Items") is XmlNode)
                 {
                     GCDCore.Project.Masks.RegularMask regMask = new Project.Masks.RegularMask(nodMask);
-                    ProjectManager.Project.Masks[regMask.Name] = regMask; 
+                    ProjectManager.Project.Masks[regMask.Name] = regMask;
+                }
+                else
+                {
+                    GCDCore.Project.Masks.DirectionalMask dirMask = new Project.Masks.DirectionalMask(nodMask);
+                    ProjectManager.Project.Masks[dirMask.Name] = dirMask;
                 }
             }
 

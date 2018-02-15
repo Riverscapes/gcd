@@ -11,7 +11,7 @@ namespace GCDCore.Project
     {
         public readonly DoDBase DoD;
         public readonly DirectoryInfo Folder;
-        public readonly Masks.RegularMask Mask;
+        public readonly Masks.Mask Mask;
         public readonly FileInfo ClassLegend;
         public readonly FileInfo SummaryXML;
         public readonly string MaskField;
@@ -23,15 +23,15 @@ namespace GCDCore.Project
             {
                 BindingList<BudgetSegregationClass> result = new BindingList<BudgetSegregationClass>();
 
-                // Loop through field values that are flagged to be included
-                foreach (Masks.MaskItem item in Mask._Items.Where(x => x.Include))
+                // Loop over all distinct field values that are flagged to be included
+                foreach(KeyValuePair<string, string> kvp in Mask.ActiveFieldValues)
                 {
-                    if (Classes.ContainsKey(item.FieldValue))
+                    if (Classes.ContainsKey(kvp.Value))
                     {
-                        BudgetSegregationClass existingClass = Classes[item.FieldValue];
-                        result.Add(new BudgetSegregationClass(item.Label, existingClass.Statistics, existingClass.Histograms,existingClass.SummaryXML));                        
+                        BudgetSegregationClass existingClass = Classes[kvp.Key];
+                        result.Add(new BudgetSegregationClass(kvp.Value, existingClass.Statistics, existingClass.Histograms, existingClass.SummaryXML));
                     }
-                }
+                }             
 
                 return result;
             }
@@ -44,7 +44,7 @@ namespace GCDCore.Project
         /// <param name="folder"></param>
         /// <param name="maskField"></param>
         /// <param name="dod"></param>
-        public BudgetSegregation(string name, DirectoryInfo folder, Masks.RegularMask mask, DoDBase dod)
+        public BudgetSegregation(string name, DirectoryInfo folder, Masks.Mask mask, DoDBase dod)
             : base(name)
         {
             DoD = dod;
@@ -95,7 +95,7 @@ namespace GCDCore.Project
         {
             string name = nodBS.SelectSingleNode("Name").InnerText;
             DirectoryInfo folder = ProjectManager.Project.GetAbsoluteDir(nodBS.SelectSingleNode("Folder").InnerText);
-            Masks.RegularMask mask = (Masks.RegularMask) ProjectManager.Project.Masks[nodBS.SelectSingleNode("Mask").InnerText];
+            Masks.RegularMask mask = (Masks.RegularMask)ProjectManager.Project.Masks[nodBS.SelectSingleNode("Mask").InnerText];
             FileInfo summaryXML = ProjectManager.Project.GetAbsolutePath(nodBS.SelectSingleNode("SummaryXML").InnerText);
             FileInfo classLegend = ProjectManager.Project.GetAbsolutePath(nodBS.SelectSingleNode("ClassLegend").InnerText);
 
