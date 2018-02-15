@@ -35,5 +35,20 @@ namespace GCDConsoleLib
         {
             return Feat.GetFieldAsString(fieldName);
         }
+
+        public int GetFieldAsInt(string fieldName)
+        {
+            return Feat.GetFieldAsInteger(fieldName);
+        }
+
+        public double GetFieldAsDouble(String fieldName)
+        {
+            return Feat.GetFieldAsDouble(fieldName);
+        }
+
+        public bool IsNull(string fieldName)
+        {
+            return Feat.IsFieldNull(fieldName);
+        }
     }
 }
