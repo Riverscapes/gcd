@@ -198,9 +198,9 @@ namespace GCDCore.Engines
                 UpdateNamedRangeRefersTo(xmlDoc, nsmgr, "SumThresholdedArealDetectableChange", DoDCount - 1);
 
                 //update volume names range
-                UpdateNamedRangeRefersTo(xmlDoc, nsmgr, "SumThresholdedVolumeSurfaceLowering", DoDCount - 1);
-                UpdateNamedRangeRefersTo(xmlDoc, nsmgr, "SumThresholdedVolumeSurfaceRaising", DoDCount - 1);
-                UpdateNamedRangeRefersTo(xmlDoc, nsmgr, "SumThresholdedVolumeOfDifference", DoDCount - 1);
+                UpdateNamedRangeRefersTo(xmlDoc, nsmgr, "SumThresholdedVolumeSurfaceLowering", 2 * (DoDCount - 1));
+                UpdateNamedRangeRefersTo(xmlDoc, nsmgr, "SumThresholdedVolumeSurfaceRaising", 2 * (DoDCount - 1));
+                UpdateNamedRangeRefersTo(xmlDoc, nsmgr, "SumThresholdedVolumeOfDifference", 2 * (DoDCount - 1));
 
             }
             catch (Exception ex)
