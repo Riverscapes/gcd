@@ -69,6 +69,8 @@ namespace GCDCore.Engines
                 var nsmgr = new XmlNamespaceManager(xmlDoc.NameTable);
                 nsmgr.AddNamespace("ss", "urn:schemas-microsoft-com:office:spreadsheet");
 
+                Dictionary<string, NamedRange> dicNamedRanges = ParseNamedRanges(xmlDoc, nsmgr);
+
                 int DoDCount = 0;
                 XmlNode ArealRow;
 
@@ -88,6 +90,10 @@ namespace GCDCore.Engines
 
                     if (DoDCount > 1)
                     {
+                        NamedRange oNamedRange = dicNamedRanges[NamedCell];
+                        int row = oNamedRange.row;
+                        dicNamedRanges = InsertRow(dicNamedRanges, row);
+
                         //find areal row
                         XmlNode ArealRowClone = ArealRow.Clone();
                         XmlNode parent = ArealRow.ParentNode;
@@ -165,7 +171,7 @@ namespace GCDCore.Engines
 
                 string OrigExpandedRowCount = TableNode.Attributes["ss:ExpandedRowCount"].Value;
                 int iOrigExpandedRowCount = int.Parse(OrigExpandedRowCount);
-                int iNewExpandedRowCount = iOrigExpandedRowCount + 2*(DoDCount - 1); //add new row twice (once for area, once for volume)
+                int iNewExpandedRowCount = iOrigExpandedRowCount + 2 * (DoDCount - 1); //add new row twice (once for area, once for volume)
                 TableNode.Attributes["ss:ExpandedRowCount"].Value = iNewExpandedRowCount.ToString();
 
                 //Update areal formulas
@@ -195,6 +201,7 @@ namespace GCDCore.Engines
                 SetSumFormula(xmlDoc, nsmgr, "SumRawNetVolumeDifference", DoDCount);
                 SetSumFormula(xmlDoc, nsmgr, "SumThresholdedNetVolumeDifference", DoDCount);
 
+
                 //update areal names range
                 UpdateNamedRangeRefersTo(xmlDoc, nsmgr, "SumThresholdedArealSurfaceLowering", DoDCount - 1);
                 UpdateNamedRangeRefersTo(xmlDoc, nsmgr, "SumThresholdedArealSurfaceRaising", DoDCount - 1);
@@ -204,6 +211,8 @@ namespace GCDCore.Engines
                 UpdateNamedRangeRefersTo(xmlDoc, nsmgr, "SumThresholdedVolumeSurfaceLowering", 2 * (DoDCount - 1));
                 UpdateNamedRangeRefersTo(xmlDoc, nsmgr, "SumThresholdedVolumeSurfaceRaising", 2 * (DoDCount - 1));
                 UpdateNamedRangeRefersTo(xmlDoc, nsmgr, "SumThresholdedVolumeOfDifference", 2 * (DoDCount - 1));
+
+                UpdateNamedRangesXML(xmlDoc, nsmgr,  dicNamedRanges);
 
             }
             catch (Exception ex)
@@ -215,6 +224,79 @@ namespace GCDCore.Engines
 
 
         }
+
+        private static void UpdateNamedRangesXML(XmlNode xmlDoc, XmlNamespaceManager nsmgr, Dictionary<string, NamedRange> dicNamedRanges)
+        {
+            foreach(NamedRange oNamedRange in dicNamedRanges.Values)
+            {
+
+                XmlNode NamedRangeNode = xmlDoc.SelectSingleNode("//ss:Names/ss:NamedRange[@ss:Name='" + oNamedRange.name + "']", nsmgr); // gets the cell with the named cell name
+                string refersto = NamedRangeNode.Attributes["ss:RefersTo"].Value;
+
+                //match R*C*
+                /*
+                Regex r = new Regex(@".*!R(.+)C.", RegexOptions.IgnoreCase);
+                Match m = r.Match(refersto);
+                string sRow = m.Groups[1].Value;
+                int iRow = int.Parse(sRow);
+
+                iRow = iRow + AddedRows;
+                */
+                var pattern = @"(.*!)R(.+)C(.+)";
+                var replaced = Regex.Replace(refersto, pattern, "$1R" + oNamedRange.row + "C" + oNamedRange.col);
+
+                NamedRangeNode.Attributes["ss:RefersTo"].Value = replaced;
+            }
+        }
+
+
+        private static Dictionary<string, NamedRange> InsertRow(Dictionary<string, NamedRange> dicNamedRanges, int rownumber)
+        {
+            Dictionary<string, NamedRange> dicUpdatedNamedRanges = new Dictionary<string, NamedRange>();
+            foreach (NamedRange oNamedRange in dicNamedRanges.Values)
+            {
+                if(oNamedRange.row > rownumber)
+                {
+                    oNamedRange.row += 1;
+                }
+                dicUpdatedNamedRanges.Add(oNamedRange.name, oNamedRange);
+            }
+            return dicUpdatedNamedRanges;
+        }
+
+
+
+        private static Dictionary<string, NamedRange> ParseNamedRanges(XmlNode xmlDoc, XmlNamespaceManager nsmgr)
+        {
+            Dictionary<string, NamedRange> NamedRanges = new Dictionary<string, NamedRange>();
+
+            XmlNodeList NamedRangeNodes = xmlDoc.SelectNodes("//ss:Names/ss:NamedRange", nsmgr); // gets the cell with the named cell name
+
+            foreach(XmlNode NamedRange in NamedRangeNodes)
+            {
+                string name = NamedRange.Attributes["ss:Name"].Value;
+
+                string refersto = NamedRange.Attributes["ss:RefersTo"].Value;
+                //match R*C*
+                Regex r = new Regex(@".*!R(.+)C(.+)", RegexOptions.IgnoreCase);
+                Match m = r.Match(refersto);
+                string sRow = m.Groups[1].Value;
+                int iRow = int.Parse(sRow);
+
+                string sCol= m.Groups[2].Value;
+                int iCol= int.Parse(sCol);
+
+                NamedRange oNamedRange = new Engines.NamedRange();
+                oNamedRange.name = name;
+                oNamedRange.col = iCol;
+                oNamedRange.row = iRow;
+
+                NamedRanges.Add(name, oNamedRange);
+            }
+
+            return (NamedRanges);
+        }
+
 
         private static void SetNameCellValue(XmlNode xmlDoc, XmlNamespaceManager nsmgr, string NamedCell, string value)
         {
@@ -255,4 +337,19 @@ namespace GCDCore.Engines
 
         }
     }
+
+
+    #region "support classes"
+    class NamedRange
+    {
+        public int row;
+        public int col;
+        public string name;
+
+    }
+        
+
+    #endregion
+
+
 }
