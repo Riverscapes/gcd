@@ -80,7 +80,7 @@ namespace GCDCore.Project.Morphological
             muTotal.VolOut = Units[Units.Count - 1].VolOut;
             muTotal.CumulativeVolume = Units[Units.Count - 1].CumulativeVolume;
 
-            foreach(MorphologicalUnit unit in Units)
+            foreach (MorphologicalUnit unit in Units)
             {
                 muTotal.VolErosion += unit.VolErosion;
                 muTotal.VolErosionErr += unit.VolErosionErr;
@@ -163,6 +163,8 @@ namespace GCDCore.Project.Morphological
 
         }
 
+        public UnitsNet.Duration CompetentDuration { get { return UnitsNet.Duration.From(this.Duration.As(DurationDisplayUnits) * (double)Competency, DurationDisplayUnits); } }
+
         private decimal _competency;
         public decimal Competency
         {
@@ -179,22 +181,7 @@ namespace GCDCore.Project.Morphological
 
         private void CalculateWork()
         {
-
-            MorphologicalUnit MaxDepsotionUnit = null;
-            UnitsNet.Volume MaxDeposition = new Volume(0);
-
-            UnitsNet.Volume cumulativeVol = new Volume(0);
-            foreach (MorphologicalUnit unit in Units)
-            {
-                cumulativeVol += (unit.VolIn - unit.VolOut);
-
-                if (unit.VolOut > new Volume(0) && unit.VolOut > MaxDeposition)
-                {
-                    MaxDepsotionUnit = unit;
-                    MaxDeposition = unit.VolOut;
-                }
-            }
-
+            Units.ToList<MorphologicalUnit>().ForEach(x => x.Work = (1m - Porosity) * (decimal)x.VolOut.As(ProjectManager.Project.Units.VolUnit) / (decimal)CompetentDuration.As(DurationDisplayUnits));
             Units.ResetBindings();
         }
 

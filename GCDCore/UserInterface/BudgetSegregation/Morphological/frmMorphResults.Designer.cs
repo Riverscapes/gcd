@@ -53,6 +53,7 @@
             this.cboDuration = new System.Windows.Forms.ComboBox();
             this.grdData = new System.Windows.Forms.DataGridView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cboVolumeUnits = new System.Windows.Forms.ComboBox();
             this.cmdReset = new System.Windows.Forms.Button();
             this.valMinFlux = new System.Windows.Forms.NumericUpDown();
             this.label5 = new System.Windows.Forms.Label();
@@ -66,6 +67,7 @@
             this.label8 = new System.Windows.Forms.Label();
             this.txtPath = new System.Windows.Forms.TextBox();
             this.cmdBrowse = new System.Windows.Forms.Button();
+            this.ucDoDPropertiesGrid1 = new GCDCore.UserInterface.ChangeDetection.ucDoDPropertiesGrid();
             this.colMorphUnit = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colVolErosion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.volErosionError = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -76,7 +78,6 @@
             this.colVolumeOut = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colWork = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colCumulative = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cboVolumeUnits = new System.Windows.Forms.ComboBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -90,6 +91,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.valMinFlux)).BeginInit();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chtData)).BeginInit();
+            this.tabPage3.SuspendLayout();
             this.SuspendLayout();
             // 
             // button3
@@ -187,7 +189,17 @@
             // valPorosity
             // 
             this.valPorosity.DecimalPlaces = 2;
+            this.valPorosity.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
             this.valPorosity.Location = new System.Drawing.Point(73, 19);
+            this.valPorosity.Maximum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.valPorosity.Name = "valPorosity";
             this.valPorosity.Size = new System.Drawing.Size(120, 20);
             this.valPorosity.TabIndex = 1;
@@ -343,6 +355,15 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Paramters";
             // 
+            // cboVolumeUnits
+            // 
+            this.cboVolumeUnits.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboVolumeUnits.FormattingEnabled = true;
+            this.cboVolumeUnits.Location = new System.Drawing.Point(321, 50);
+            this.cboVolumeUnits.Name = "cboVolumeUnits";
+            this.cboVolumeUnits.Size = new System.Drawing.Size(131, 21);
+            this.cboVolumeUnits.TabIndex = 15;
+            // 
             // cmdReset
             // 
             this.cmdReset.Image = global::GCDCore.Properties.Resources.refresh;
@@ -422,6 +443,7 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.ucDoDPropertiesGrid1);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
@@ -473,6 +495,14 @@
             this.cmdBrowse.UseVisualStyleBackColor = true;
             this.cmdBrowse.Click += new System.EventHandler(this.cmdBrowse_Click);
             // 
+            // ucDoDPropertiesGrid1
+            // 
+            this.ucDoDPropertiesGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucDoDPropertiesGrid1.Location = new System.Drawing.Point(3, 3);
+            this.ucDoDPropertiesGrid1.Name = "ucDoDPropertiesGrid1";
+            this.ucDoDPropertiesGrid1.Size = new System.Drawing.Size(832, 350);
+            this.ucDoDPropertiesGrid1.TabIndex = 0;
+            // 
             // colMorphUnit
             // 
             this.colMorphUnit.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
@@ -485,21 +515,21 @@
             // colVolErosion
             // 
             this.colVolErosion.DataPropertyName = "VolErosion";
-            this.colVolErosion.HeaderText = "Volume of Lowering";
+            this.colVolErosion.HeaderText = "Volume of Lowering ()";
             this.colVolErosion.Name = "colVolErosion";
             this.colVolErosion.ReadOnly = true;
             // 
             // volErosionError
             // 
             this.volErosionError.DataPropertyName = "VolErosionErr";
-            this.volErosionError.HeaderText = "Volume of Erosion Error";
+            this.volErosionError.HeaderText = "Volume of Erosion Error ()";
             this.volErosionError.Name = "volErosionError";
             this.volErosionError.ReadOnly = true;
             // 
             // colVolDeposition
             // 
             this.colVolDeposition.DataPropertyName = "VolDeposition";
-            this.colVolDeposition.HeaderText = "Volume of Deposition";
+            this.colVolDeposition.HeaderText = "Volume of Deposition ()";
             this.colVolDeposition.Name = "colVolDeposition";
             this.colVolDeposition.ReadOnly = true;
             // 
@@ -509,28 +539,28 @@
             dataGridViewCellStyle1.Format = "± #,0";
             dataGridViewCellStyle1.NullValue = null;
             this.colVolDepositionError.DefaultCellStyle = dataGridViewCellStyle1;
-            this.colVolDepositionError.HeaderText = "Volume of Deposition Error";
+            this.colVolDepositionError.HeaderText = "Volume of Deposition Error ()";
             this.colVolDepositionError.Name = "colVolDepositionError";
             this.colVolDepositionError.ReadOnly = true;
             // 
             // volChange
             // 
             this.volChange.DataPropertyName = "VolChange";
-            this.volChange.HeaderText = "Volume of Change";
+            this.volChange.HeaderText = "Volume of Change ()";
             this.volChange.Name = "volChange";
             this.volChange.ReadOnly = true;
             // 
             // colVolumeIn
             // 
             this.colVolumeIn.DataPropertyName = "VolIn";
-            this.colVolumeIn.HeaderText = "Volume In";
+            this.colVolumeIn.HeaderText = "Volume In ()";
             this.colVolumeIn.Name = "colVolumeIn";
             this.colVolumeIn.ReadOnly = true;
             // 
             // colVolumeOut
             // 
             this.colVolumeOut.DataPropertyName = "VolOut";
-            this.colVolumeOut.HeaderText = "VolumeOut";
+            this.colVolumeOut.HeaderText = "VolumeOut ()";
             this.colVolumeOut.Name = "colVolumeOut";
             this.colVolumeOut.ReadOnly = true;
             // 
@@ -544,18 +574,9 @@
             // colCumulative
             // 
             this.colCumulative.DataPropertyName = "CumulativeVolume";
-            this.colCumulative.HeaderText = "Cumulative Volume Change";
+            this.colCumulative.HeaderText = "Cumulative Volume Change ()";
             this.colCumulative.Name = "colCumulative";
             this.colCumulative.ReadOnly = true;
-            // 
-            // cboVolumeUnits
-            // 
-            this.cboVolumeUnits.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboVolumeUnits.FormattingEnabled = true;
-            this.cboVolumeUnits.Location = new System.Drawing.Point(321, 50);
-            this.cboVolumeUnits.Name = "cboVolumeUnits";
-            this.cboVolumeUnits.Size = new System.Drawing.Size(131, 21);
-            this.cboVolumeUnits.TabIndex = 15;
             // 
             // frmMorphResults
             // 
@@ -591,6 +612,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.valMinFlux)).EndInit();
             this.tabPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chtData)).EndInit();
+            this.tabPage3.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -631,6 +653,8 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.TextBox txtCriticalDuration;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.ComboBox cboVolumeUnits;
+        private ChangeDetection.ucDoDPropertiesGrid ucDoDPropertiesGrid1;
         private System.Windows.Forms.DataGridViewTextBoxColumn colMorphUnit;
         private System.Windows.Forms.DataGridViewTextBoxColumn colVolErosion;
         private System.Windows.Forms.DataGridViewTextBoxColumn volErosionError;
@@ -641,6 +665,5 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colVolumeOut;
         private System.Windows.Forms.DataGridViewTextBoxColumn colWork;
         private System.Windows.Forms.DataGridViewTextBoxColumn colCumulative;
-        private System.Windows.Forms.ComboBox cboVolumeUnits;
     }
 }

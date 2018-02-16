@@ -27,6 +27,8 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
 
         private void frmMorphResults_Load(object sender, EventArgs e)
         {
+            ucDoDPropertiesGrid1.Initialize(Analysis.BS.DoD);
+
             foreach (UnitsNet.Units.DurationUnit val in Enum.GetValues(typeof(UnitsNet.Units.DurationUnit)))
                 cboDuration.Items.Add(val);
 
@@ -53,20 +55,20 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
             // Bold the last row for the totals
             grdData.Rows[grdData.Rows.Count - 1].DefaultCellStyle.Font = new Font(grdData.Font, FontStyle.Bold);
 
+            valPorosity.ValueChanged += PorosityChanged;
+            cboVolumeUnits.SelectedIndexChanged += VolumeUnitsChanged;
+
             UpdateChart();
         }
 
-        private void cboBS_SelectedIndexChanged(object sender, EventArgs e)
+        private void PorosityChanged(object sender, EventArgs e)
         {
-            //if (Analysis == null)
-            //{
-            //    GCDCore.Project.BudgetSegregation bs = cboBS.SelectedItem as GCDCore.Project.BudgetSegregation;
-            //    txtPath.Text = ProjectManager.Project.GetRelativePath(ProjectManager.OutputManager.GetMorphologicalDirectory(bs.Folder, false).FullName);
-            //}
-            //else
-            //{
-            //    txtPath.Text = ProjectManager.Project.GetRelativePath(Analysis.OutputFolder);
-            //}
+            Analysis.Porosity = valPorosity.Value;
+        }
+
+        private void DurationChanged(object sender, EventArgs e)
+        {
+            Analysis.Duration = UnitsNet.Duration.From((double)valDuration.Value, Analysis.DurationDisplayUnits);
         }
 
         private void cboDuration_SelectedIndexChanged(object sender, EventArgs e)
@@ -101,6 +103,18 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
             txtCriticalDuration.Text = string.Format("{0:F} {1}{2}", value, cboDuration.SelectedItem.ToString(), value > 0 ? "s" : "");
         }
 
+        private void VolumeUnitsChanged(object sender, EventArgs e)
+        {
+            foreach (DataGridViewColumn col in grdData.Columns)
+            {
+                if (col.HeaderText.ToLower().Contains("vol"))
+                {
+                    col.HeaderText = string.Format("{0} ({1})", col.HeaderText.Substring(0, col.HeaderText.IndexOf("(")), UnitsNet.Volume.GetAbbreviation((UnitsNet.Units.VolumeUnit)cboVolumeUnits.SelectedItem));
+                }
+
+            }
+        }
+
         private void UpdateChart()
         {
             UnitsNet.Units.VolumeUnit volUnit = ProjectManager.Project.Units.VolUnit;
@@ -124,6 +138,11 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
             chtArea2.AxisY.Title = chtArea1.AxisY.Title;
             chtArea2.AxisX.MajorGrid.Enabled = false;
             chtArea1.AxisY.MajorGrid.LineColor = chtArea1.AxisY.MajorGrid.LineColor;
+            chtArea2.AxisY.MinorGrid.Interval = chtArea2.AxisY.MajorGrid.Interval / 5;
+            chtArea2.AxisY.MinorGrid.LineColor = Color.LightGray;
+            chtArea2.AxisY.MinorGrid.Enabled = true;
+            chtArea2.AxisY.MinorTickMark.Enabled = true;
+            chtArea2.AxisY.MinorTickMark.LineColor = chtArea1.AxisY.MinorGrid.LineColor;
 
 
             Series serErosion = chtData.Series.Add("Erosion");
