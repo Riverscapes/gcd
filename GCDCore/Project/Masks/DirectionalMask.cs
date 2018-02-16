@@ -36,14 +36,42 @@ namespace GCDCore.Project.Masks
                                 result[value] = value;
                         }
                     }
-                }              
+                }
+
+                return result;
+            }
+        }
+
+        public SortedList<int, Tuple<string, string>> SortedFieldValues
+        {
+            get
+            {
+                SortedList<int, Tuple<string, string>> result = new SortedList<int, Tuple<string, string>>();
+
+                bool bUseLabel = !string.IsNullOrEmpty(LabelField);
+
+                GCDConsoleLib.Vector polygons = new GCDConsoleLib.Vector(_ShapeFile);
+                foreach (GCDConsoleLib.VectorFeature feat in polygons.Features.Values)
+                {
+                    if (!feat.IsNull(_Field) && !feat.IsNull(DirectionField))
+                    {
+                        int directionValue = feat.GetFieldAsInt(DirectionField);
+                        string fieldValue = feat.GetFieldAsString(_Field);
+                        string labelValue = fieldValue;
+
+                        if (bUseLabel && !feat.IsNull(LabelField))
+                            labelValue = feat.GetFieldAsString(LabelField);
+
+                        result.Add(directionValue, new Tuple<string, string>(fieldValue, labelValue));
+                    }
+                }
 
                 return result;
             }
         }
 
         public DirectionalMask(string name, FileInfo shapefile, string field, string labelField, string directionField, string distanceField)
-            : base(name, shapefile, field)
+                : base(name, shapefile, field)
         {
             LabelField = labelField;
             DirectionField = directionField;
@@ -51,7 +79,7 @@ namespace GCDCore.Project.Masks
         }
 
         public DirectionalMask(XmlNode nodParent)
-            : base(nodParent)
+                        : base(nodParent)
         {
             DirectionField = nodParent.SelectSingleNode("DirectionField").InnerText;
 

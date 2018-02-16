@@ -18,7 +18,8 @@ namespace GCDCore.Project.Morphological
 
         public UnitsNet.Units.DurationUnit DurationDisplayUnits { get; set; }
 
-        public int ZeroFluxCell { get; set; }
+        public MorphologicalUnit MinimumFluxCell { get; set; }
+        public UnitsNet.Volume MinimumFlux { get; set; }
 
         public readonly BindingList<MorphologicalUnit> Units;
 
@@ -35,30 +36,81 @@ namespace GCDCore.Project.Morphological
 
             Units = new BindingList<MorphologicalUnit>();
 
-            MorphologicalUnit muPos = null;
-            foreach (BudgetSegregationClass bsc in bs.Classes.Values)
+            foreach (KeyValuePair<int, Tuple<string, string>> maskValue in ((GCDCore.Project.Masks.DirectionalMask)bs.Mask).SortedFieldValues)
             {
-                MorphologicalUnit mu = new MorphologicalUnit(bsc.Name);
-                mu.VolErosion = bsc.Statistics.ErosionThr.GetVolume(ProjectManager.Project.CellArea, ProjectManager.Project.Units.VertUnit);
-                mu.VolErsionErr = bsc.Statistics.ErosionErr.GetVolume(ProjectManager.Project.CellArea, ProjectManager.Project.Units.VertUnit);
+                if (bs.Classes.ContainsKey(maskValue.Value.Item1))
+                {
+                    BudgetSegregationClass bsc = bs.Classes[maskValue.Value.Item1];
 
-                mu.VolDeposition = bsc.Statistics.DepositionThr.GetVolume(ProjectManager.Project.CellArea, ProjectManager.Project.Units.VertUnit);
-                mu.VolDepositionErr = bsc.Statistics.DepositionErr.GetVolume(ProjectManager.Project.CellArea, ProjectManager.Project.Units.VertUnit);
+                    MorphologicalUnit mu = new MorphologicalUnit(bsc.Name);
+                    mu.VolErosion = bsc.Statistics.ErosionThr.GetVolume(ProjectManager.Project.CellArea, ProjectManager.Project.Units.VertUnit);
+                    mu.VolErosionErr = bsc.Statistics.ErosionErr.GetVolume(ProjectManager.Project.CellArea, ProjectManager.Project.Units.VertUnit);
 
-                // Track the first unit that possesses a positive exit volume
-                if (mu.VolOut > new Volume(0))
-                    muPos = mu;
+                    mu.VolDeposition = bsc.Statistics.DepositionThr.GetVolume(ProjectManager.Project.CellArea, ProjectManager.Project.Units.VertUnit);
+                    mu.VolDepositionErr = bsc.Statistics.DepositionErr.GetVolume(ProjectManager.Project.CellArea, ProjectManager.Project.Units.VertUnit);
 
-                Units.Add(mu);
+                    Units.Add(mu);
+                }
             }
 
-            // The volume entering the first unit is the volume change of that first unit
-            // plus the volume exiting the unit with the first positive volume out
-            Units[0].VolIn = Units[0].VolChange + muPos.VolOut;
 
-            // All remaining units should have their volumes in and out adjusted
+
+            Units[0].VolIn = Units[0].VolChange;
+            Units[0].VolOut = (-1 * Units[0].VolChange) + Units[0].VolIn;
+            Units[0].CumulativeVolume = Units[0].VolChange;
+
             for (int i = 1; i < Units.Count; i++)
+            {
+                Units[i].CumulativeVolume = Units[i].VolChange + Units[i - 1].CumulativeVolume;
+
                 Units[i].VolIn = Units[i - 1].VolOut;
+                Units[i].VolOut = Units[i].VolIn - Units[i].VolChange;
+
+                // Track the first unit that possesses a positive exit volume
+                if (Units[i].VolOut > new Volume(0))
+                {
+                    MinimumFluxCell = Units[i];
+                    MinimumFlux = Units[i].VolIn;
+                }
+            }
+
+            // Total row
+            MorphologicalUnit muTotal = new MorphologicalUnit("Reach Total", true);
+            muTotal.VolIn = Units[0].VolIn;
+            muTotal.VolOut = Units[Units.Count - 1].VolOut;
+            muTotal.CumulativeVolume = Units[Units.Count - 1].CumulativeVolume;
+
+            foreach(MorphologicalUnit unit in Units)
+            {
+                muTotal.VolErosion += unit.VolErosion;
+                muTotal.VolErosionErr += unit.VolErosionErr;
+                muTotal.VolDeposition += unit.VolDeposition;
+                muTotal.VolDepositionErr += unit.VolDepositionErr;
+            }
+            Units.Add(muTotal);
+
+            // Add back in the VolIn to the start of the reach to make the output of first positve
+            //Units[0].VolIn = muPos.VolIn + Units[0].VolIn;
+            //Units[0].VolOut = (-1 * Units[0].VolChange) + Units[0].VolIn;
+
+            //for (int i = 1; i < Units.Count; i++)
+            //{
+            //    Units[i].VolIn = Units[i - 1].VolOut;
+            //    Units[i].VolOut = Units[i].VolIn - Units[i].VolChange;
+            //}
+
+
+
+
+
+
+            //// The volume entering the first unit is the volume change of that first unit
+            //// plus the volume exiting the unit with the first positive volume out
+            //Units[0].VolIn = Units[0].VolChange + muPos.VolOut;
+
+            //// All remaining units should have their volumes in and out adjusted
+            //for (int i = 1; i < Units.Count; i++)
+            //    Units[i].VolIn = Units[i - 1].VolOut;
 
             // Calculate the work performed in each cell now that the values are adjusted
             CalculateWork();

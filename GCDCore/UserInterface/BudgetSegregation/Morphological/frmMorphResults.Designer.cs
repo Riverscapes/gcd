@@ -31,6 +31,7 @@
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMorphResults));
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
@@ -53,9 +54,9 @@
             this.grdData = new System.Windows.Forms.DataGridView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.cmdReset = new System.Windows.Forms.Button();
-            this.numericUpDown4 = new System.Windows.Forms.NumericUpDown();
+            this.valMinFlux = new System.Windows.Forms.NumericUpDown();
             this.label5 = new System.Windows.Forms.Label();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.cboMinFluxUnit = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.chtData = new System.Windows.Forms.DataVisualization.Charting.Chart();
@@ -67,12 +68,15 @@
             this.cmdBrowse = new System.Windows.Forms.Button();
             this.colMorphUnit = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colVolErosion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.volErosionError = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colVolDeposition = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colVolDepositionError = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.volChange = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colVolumeIn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colVolumeOut = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colWork = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colCumulative = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cboVolumeUnits = new System.Windows.Forms.ComboBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -83,7 +87,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.valDuration)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdData)).BeginInit();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.valMinFlux)).BeginInit();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chtData)).BeginInit();
             this.SuspendLayout();
@@ -102,11 +106,13 @@
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.button2.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.button2.Image = global::GCDCore.Properties.Resources.Save;
+            this.button2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button2.Location = new System.Drawing.Point(704, 459);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 8;
-            this.button2.Text = "Save";
+            this.button2.Text = "    Save";
             this.button2.UseVisualStyleBackColor = true;
             // 
             // button1
@@ -306,7 +312,9 @@
             this.grdData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colMorphUnit,
             this.colVolErosion,
+            this.volErosionError,
             this.colVolDeposition,
+            this.colVolDepositionError,
             this.volChange,
             this.colVolumeIn,
             this.colVolumeOut,
@@ -322,10 +330,11 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.cboVolumeUnits);
             this.groupBox1.Controls.Add(this.cmdReset);
-            this.groupBox1.Controls.Add(this.numericUpDown4);
+            this.groupBox1.Controls.Add(this.valMinFlux);
             this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Controls.Add(this.comboBox2);
+            this.groupBox1.Controls.Add(this.cboMinFluxUnit);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Location = new System.Drawing.Point(12, 110);
             this.groupBox1.Name = "groupBox1";
@@ -337,19 +346,24 @@
             // cmdReset
             // 
             this.cmdReset.Image = global::GCDCore.Properties.Resources.refresh;
-            this.cmdReset.Location = new System.Drawing.Point(321, 50);
+            this.cmdReset.Location = new System.Drawing.Point(321, 19);
             this.cmdReset.Name = "cmdReset";
             this.cmdReset.Size = new System.Drawing.Size(23, 23);
             this.cmdReset.TabIndex = 14;
             this.cmdReset.UseVisualStyleBackColor = true;
             // 
-            // numericUpDown4
+            // valMinFlux
             // 
-            this.numericUpDown4.DecimalPlaces = 2;
-            this.numericUpDown4.Location = new System.Drawing.Point(194, 51);
-            this.numericUpDown4.Name = "numericUpDown4";
-            this.numericUpDown4.Size = new System.Drawing.Size(120, 20);
-            this.numericUpDown4.TabIndex = 13;
+            this.valMinFlux.DecimalPlaces = 2;
+            this.valMinFlux.Location = new System.Drawing.Point(194, 51);
+            this.valMinFlux.Maximum = new decimal(new int[] {
+            1215752192,
+            23,
+            0,
+            0});
+            this.valMinFlux.Name = "valMinFlux";
+            this.valMinFlux.Size = new System.Drawing.Size(120, 20);
+            this.valMinFlux.TabIndex = 13;
             // 
             // label5
             // 
@@ -360,14 +374,14 @@
             this.label5.TabIndex = 9;
             this.label5.Text = "Top of reach minimum flux volume in";
             // 
-            // comboBox2
+            // cboMinFluxUnit
             // 
-            this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(194, 20);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(120, 21);
-            this.comboBox2.TabIndex = 8;
+            this.cboMinFluxUnit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboMinFluxUnit.FormattingEnabled = true;
+            this.cboMinFluxUnit.Location = new System.Drawing.Point(194, 20);
+            this.cboMinFluxUnit.Name = "cboMinFluxUnit";
+            this.cboMinFluxUnit.Size = new System.Drawing.Size(120, 21);
+            this.cboMinFluxUnit.TabIndex = 8;
             // 
             // label4
             // 
@@ -457,6 +471,7 @@
             this.cmdBrowse.Size = new System.Drawing.Size(23, 23);
             this.cmdBrowse.TabIndex = 6;
             this.cmdBrowse.UseVisualStyleBackColor = true;
+            this.cmdBrowse.Click += new System.EventHandler(this.cmdBrowse_Click);
             // 
             // colMorphUnit
             // 
@@ -474,12 +489,29 @@
             this.colVolErosion.Name = "colVolErosion";
             this.colVolErosion.ReadOnly = true;
             // 
+            // volErosionError
+            // 
+            this.volErosionError.DataPropertyName = "VolErosionErr";
+            this.volErosionError.HeaderText = "Volume of Erosion Error";
+            this.volErosionError.Name = "volErosionError";
+            this.volErosionError.ReadOnly = true;
+            // 
             // colVolDeposition
             // 
             this.colVolDeposition.DataPropertyName = "VolDeposition";
             this.colVolDeposition.HeaderText = "Volume of Deposition";
             this.colVolDeposition.Name = "colVolDeposition";
             this.colVolDeposition.ReadOnly = true;
+            // 
+            // colVolDepositionError
+            // 
+            this.colVolDepositionError.DataPropertyName = "VolDepositionErr";
+            dataGridViewCellStyle1.Format = "± #,0";
+            dataGridViewCellStyle1.NullValue = null;
+            this.colVolDepositionError.DefaultCellStyle = dataGridViewCellStyle1;
+            this.colVolDepositionError.HeaderText = "Volume of Deposition Error";
+            this.colVolDepositionError.Name = "colVolDepositionError";
+            this.colVolDepositionError.ReadOnly = true;
             // 
             // volChange
             // 
@@ -516,6 +548,15 @@
             this.colCumulative.Name = "colCumulative";
             this.colCumulative.ReadOnly = true;
             // 
+            // cboVolumeUnits
+            // 
+            this.cboVolumeUnits.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboVolumeUnits.FormattingEnabled = true;
+            this.cboVolumeUnits.Location = new System.Drawing.Point(321, 50);
+            this.cboVolumeUnits.Name = "cboVolumeUnits";
+            this.cboVolumeUnits.Size = new System.Drawing.Size(131, 21);
+            this.cboVolumeUnits.TabIndex = 15;
+            // 
             // frmMorphResults
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -547,7 +588,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.grdData)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.valMinFlux)).EndInit();
             this.tabPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chtData)).EndInit();
             this.ResumeLayout(false);
@@ -569,7 +610,7 @@
         private System.Windows.Forms.NumericUpDown valDensity;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.ComboBox cboMinFluxUnit;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.NumericUpDown valPercentCompetent;
         private System.Windows.Forms.Label label3;
@@ -583,7 +624,7 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox txtPath;
         private System.Windows.Forms.Button cmdBrowse;
-        private System.Windows.Forms.NumericUpDown numericUpDown4;
+        private System.Windows.Forms.NumericUpDown valMinFlux;
         private System.Windows.Forms.DataVisualization.Charting.Chart chtData;
         private System.Windows.Forms.Button cmdReset;
         private System.Windows.Forms.GroupBox groupBox3;
@@ -592,11 +633,14 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.DataGridViewTextBoxColumn colMorphUnit;
         private System.Windows.Forms.DataGridViewTextBoxColumn colVolErosion;
+        private System.Windows.Forms.DataGridViewTextBoxColumn volErosionError;
         private System.Windows.Forms.DataGridViewTextBoxColumn colVolDeposition;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colVolDepositionError;
         private System.Windows.Forms.DataGridViewTextBoxColumn volChange;
         private System.Windows.Forms.DataGridViewTextBoxColumn colVolumeIn;
         private System.Windows.Forms.DataGridViewTextBoxColumn colVolumeOut;
         private System.Windows.Forms.DataGridViewTextBoxColumn colWork;
         private System.Windows.Forms.DataGridViewTextBoxColumn colCumulative;
+        private System.Windows.Forms.ComboBox cboVolumeUnits;
     }
 }

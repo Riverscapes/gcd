@@ -10,9 +10,12 @@ namespace GCDCore.Project.Morphological
     public class MorphologicalUnit
     {
         public string Name { get; internal set; }
+        public override string ToString() { return Name; }
+
+        public readonly bool IsTotal;
 
         public UnitsNet.Volume VolErosion { get; internal set; }
-        public UnitsNet.Volume VolErsionErr { get; internal set; }
+        public UnitsNet.Volume VolErosionErr { get; internal set; }
 
         public UnitsNet.Volume VolDeposition { get; internal set; }
         public UnitsNet.Volume VolDepositionErr { get; internal set; }
@@ -23,21 +26,21 @@ namespace GCDCore.Project.Morphological
             get
             {
                 double vol = Math.Sqrt(Math.Pow(VolDeposition.As(UnitsNet.Units.VolumeUnit.CubicMeter), 2)
-                    + Math.Pow(VolErsionErr.As(UnitsNet.Units.VolumeUnit.CubicMeter), 2));
+                    + Math.Pow(VolErosionErr.As(UnitsNet.Units.VolumeUnit.CubicMeter), 2));
 
                 return Volume.FromCubicMeters(vol);
             }
         }
 
         public UnitsNet.Volume VolIn { get; set; }
-        public UnitsNet.Volume VolOut { get { return VolIn - VolChange; } }
+        public UnitsNet.Volume VolOut { get; set; }
+        public decimal Work { get; set; }
+        public UnitsNet.Volume CumulativeVolume { get; set; }
 
-        public decimal Work { get; internal set; }
-        public UnitsNet.Volume CumulativeVolume { get; internal set; }
-
-        public MorphologicalUnit(string name)
+        public MorphologicalUnit(string name, bool isTotal = false)
         {
             Name = name;
+            IsTotal = isTotal;
         }
 
         // Default constructor for binding to grid control
@@ -46,11 +49,11 @@ namespace GCDCore.Project.Morphological
 
         }
 
-        public void CalculateWork(decimal porosity, decimal duration, decimal pcCompetent)
-        {
-            decimal volume = (1m - porosity) * (decimal)VolOut.As(UnitsNet.Units.VolumeUnit.CubicMeter);
-            decimal effectiveDuration = duration * (pcCompetent / 100m);
-            Work = volume / effectiveDuration;
-        }
+        //public void CalculateWork(decimal porosity, decimal duration, decimal pcCompetent)
+        //{
+        //    decimal volume = (1m - porosity) * (decimal)VolOut.As(UnitsNet.Units.VolumeUnit.CubicMeter);
+        //    decimal effectiveDuration = duration * (pcCompetent / 100m);
+        //    Work = volume / effectiveDuration;
+        //}
     }
 }
