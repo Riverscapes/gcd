@@ -20,7 +20,7 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
             InitializeComponent();
 
             // Load all budget segregations that are part of the same DoD 
-            cboBS.DataSource = new BindingList<GCDCore.Project.BudgetSegregation>(bs.DoD.BudgetSegregations.Values.ToList<GCDCore.Project.BudgetSegregation>());
+            cboBS.DataSource = new BindingList<GCDCore.Project.BudgetSegregation>(bs.DoD.BudgetSegregations.Values.ToList<GCDCore.Project.BudgetSegregation>().Where(x=>x.IsMaskDirectional).ToList<GCDCore.Project.BudgetSegregation>());
             cboBS.SelectedItem = bs;
         }
 
