@@ -182,12 +182,15 @@ namespace GCDCore.Engines
                 //Update volume formulas
                 SetSumFormula(xmlDoc, nsmgr, "SumRawVolumeSurfaceLowering", DoDCount);
                 SetSumFormula(xmlDoc, nsmgr, "SumThresholdedVolumeSurfaceLowering", DoDCount);
+                SetSumFormula(xmlDoc, nsmgr, "SumErrorVolumeLowering", DoDCount);
                 SetSumFormula(xmlDoc, nsmgr, "SumPctTotalVolumeLowering", DoDCount);
                 SetSumFormula(xmlDoc, nsmgr, "SumRawVolumeSurfaceRaising", DoDCount);
                 SetSumFormula(xmlDoc, nsmgr, "SumThresholdedVolumeSurfaceRaising", DoDCount);
+                SetSumFormula(xmlDoc, nsmgr, "SumErrorVolumeRaising", DoDCount);
                 SetSumFormula(xmlDoc, nsmgr, "SumPctTotalVolumeRaising", DoDCount);
                 SetSumFormula(xmlDoc, nsmgr, "SumRawVolumeOfDifference", DoDCount);
                 SetSumFormula(xmlDoc, nsmgr, "SumThresholdedVolumeOfDifference", DoDCount);
+                SetSumFormula(xmlDoc, nsmgr, "SumErrorVolumeOfDifference", DoDCount);
                 SetSumFormula(xmlDoc, nsmgr, "SumPctVolumeOfDifference", DoDCount);
                 SetSumFormula(xmlDoc, nsmgr, "SumRawNetVolumeDifference", DoDCount);
                 SetSumFormula(xmlDoc, nsmgr, "SumThresholdedNetVolumeDifference", DoDCount);
