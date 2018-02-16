@@ -78,7 +78,6 @@
             this.label8 = new System.Windows.Forms.Label();
             this.txtPath = new System.Windows.Forms.TextBox();
             this.cmdBrowse = new System.Windows.Forms.Button();
-            this.ucDoDPropertiesGrid1 = new GCDCore.UserInterface.ChangeDetection.ucDoDPropertiesGrid();
             this.colMorphUnit = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colVolErosion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.volErosionError = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -89,6 +88,7 @@
             this.colVolumeOut = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colWork = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colCumulative = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ucDoDPropertiesGrid1 = new GCDCore.UserInterface.ChangeDetection.ucDoDPropertiesGrid();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -332,6 +332,7 @@
             // 
             this.grdData.AllowUserToAddRows = false;
             this.grdData.AllowUserToDeleteRows = false;
+            this.grdData.AllowUserToResizeRows = false;
             this.grdData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -527,14 +528,6 @@
             this.cmdBrowse.UseVisualStyleBackColor = true;
             this.cmdBrowse.Click += new System.EventHandler(this.cmdBrowse_Click);
             // 
-            // ucDoDPropertiesGrid1
-            // 
-            this.ucDoDPropertiesGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucDoDPropertiesGrid1.Location = new System.Drawing.Point(3, 3);
-            this.ucDoDPropertiesGrid1.Name = "ucDoDPropertiesGrid1";
-            this.ucDoDPropertiesGrid1.Size = new System.Drawing.Size(832, 350);
-            this.ucDoDPropertiesGrid1.TabIndex = 0;
-            // 
             // colMorphUnit
             // 
             this.colMorphUnit.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
@@ -634,6 +627,14 @@
             this.colCumulative.HeaderText = "Cumulative Volume Change ()";
             this.colCumulative.Name = "colCumulative";
             this.colCumulative.ReadOnly = true;
+            // 
+            // ucDoDPropertiesGrid1
+            // 
+            this.ucDoDPropertiesGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucDoDPropertiesGrid1.Location = new System.Drawing.Point(3, 3);
+            this.ucDoDPropertiesGrid1.Name = "ucDoDPropertiesGrid1";
+            this.ucDoDPropertiesGrid1.Size = new System.Drawing.Size(832, 350);
+            this.ucDoDPropertiesGrid1.TabIndex = 0;
             // 
             // frmMorphResults
             // 
