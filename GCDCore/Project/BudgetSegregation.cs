@@ -30,7 +30,7 @@ namespace GCDCore.Project
                 // Loop over all distinct field values that are flagged to be included
                 foreach (KeyValuePair<string, string> kvp in Mask.ActiveFieldValues)
                 {
-                    if (Classes.ContainsKey(kvp.Value))
+                    if (Classes.ContainsKey(kvp.Key))
                     {
                         BudgetSegregationClass existingClass = Classes[kvp.Key];
                         result.Add(new BudgetSegregationClass(kvp.Value, existingClass.Statistics, existingClass.Histograms, existingClass.SummaryXML));
