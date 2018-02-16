@@ -144,8 +144,23 @@ namespace GCDCore.UserInterface.Project
                 newNode = treProject.Nodes.Add(displayText);
             }
 
-            newNode.ImageIndex = (int)eType;
-            newNode.SelectedImageIndex = (int)eType;
+            newNode.ImageIndex = 0;
+            switch (eType)
+            {
+                case GCDNodeTypes.Project: newNode.ImageIndex = 1; break;
+                case GCDNodeTypes.DEMSurvey: newNode.ImageIndex = 2; break;
+                case GCDNodeTypes.AssociatedSurface: newNode.ImageIndex = 3; break;
+                case GCDNodeTypes.ErrorSurface: newNode.ImageIndex = 4; break;
+                case GCDNodeTypes.ReferenceSurface: newNode.ImageIndex = 5; break;
+                case GCDNodeTypes.Mask: newNode.ImageIndex = 6; break;
+                case GCDNodeTypes.DoD: newNode.ImageIndex = 7; break;
+                case GCDNodeTypes.BudgetSegregationMask: newNode.ImageIndex = 8; break;
+                case GCDNodeTypes.BudgetSegregation: newNode.ImageIndex = 9; break;
+                case GCDNodeTypes.InterComparison: newNode.ImageIndex = 10; break;
+                case GCDNodeTypes.MorphologicalAnalysis: newNode.ImageIndex = 11; break;
+            }
+
+            newNode.SelectedImageIndex = newNode.ImageIndex;
             newNode.Tag = new ProjectTreeNode(eType, projectItem);
 
             if (selItem is ProjectTreeNode && selItem.Equals((ProjectTreeNode)newNode.Tag))
@@ -295,11 +310,11 @@ namespace GCDCore.UserInterface.Project
                                 }
 
                                 // Budget Segregation
-                                AddTreeNode(nodMask, GCDNodeTypes.BudgetSegregation, rBS.Name, rBS, selectItem);
+                                TreeNode nodBS = AddTreeNode(nodMask, GCDNodeTypes.BudgetSegregation, rBS.Name, rBS, selectItem);
 
                                 if (rBS.MorphologicalAnalyses.Count > 0)
                                 {
-                                    TreeNode nodMAGroup = AddTreeNode(nodMask, GCDNodeTypes.MorphologicalAnalysisGroup, m_sMorphological, null, selectItem);
+                                    TreeNode nodMAGroup = AddTreeNode(nodBS, GCDNodeTypes.MorphologicalAnalysisGroup, m_sMorphological, null, selectItem);
                                     rBS.MorphologicalAnalyses.Values.ToList<GCDCore.Project.Morphological.MorphologicalAnalysis>().ForEach(x =>
                                         AddTreeNode(nodMAGroup, GCDNodeTypes.MorphologicalAnalysis, x.Name, x, selectItem));
                                 }

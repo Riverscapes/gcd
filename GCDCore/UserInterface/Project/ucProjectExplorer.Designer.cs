@@ -190,29 +190,18 @@ namespace GCDCore.UserInterface.Project
             // 
             this.imgTreeImageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imgTreeImageList.ImageStream")));
             this.imgTreeImageList.TransparentColor = System.Drawing.Color.Transparent;
-            this.imgTreeImageList.Images.SetKeyName(0, "Delta.png");
-            this.imgTreeImageList.Images.SetKeyName(1, "BrowseFolder.png");
-            this.imgTreeImageList.Images.SetKeyName(2, "BrowseFolder.png");
-            this.imgTreeImageList.Images.SetKeyName(3, "DEMSurveys.png");
-            this.imgTreeImageList.Images.SetKeyName(4, "BrowseFolder.png");
-            this.imgTreeImageList.Images.SetKeyName(5, "AssociatedSurfaces.png");
-            this.imgTreeImageList.Images.SetKeyName(6, "BrowseFolder.png");
-            this.imgTreeImageList.Images.SetKeyName(7, "sigma.png");
-            this.imgTreeImageList.Images.SetKeyName(8, "BrowseFolder.png");
-            this.imgTreeImageList.Images.SetKeyName(9, "Reservoir.png");
-            this.imgTreeImageList.Images.SetKeyName(10, "BrowseFolder.png");
-            this.imgTreeImageList.Images.SetKeyName(11, "mask.png");
-            this.imgTreeImageList.Images.SetKeyName(12, "BrowseFolder.png");
-            this.imgTreeImageList.Images.SetKeyName(13, "AOI.png");
-            this.imgTreeImageList.Images.SetKeyName(14, "BrowseFolder.png");
-            this.imgTreeImageList.Images.SetKeyName(15, "BrowseFolder.png");
-            this.imgTreeImageList.Images.SetKeyName(16, "BrowseFolder.png");
-            this.imgTreeImageList.Images.SetKeyName(17, "About.png");
-            this.imgTreeImageList.Images.SetKeyName(18, "ConcaveHull.png");
-            this.imgTreeImageList.Images.SetKeyName(19, "BudgetSeg.png");
-            this.imgTreeImageList.Images.SetKeyName(20, "BrowseFolder.png");
-            this.imgTreeImageList.Images.SetKeyName(21, "BrowseFolder.png");
-            this.imgTreeImageList.Images.SetKeyName(22, "comparison.png");
+            this.imgTreeImageList.Images.SetKeyName(0, "BrowseFolder.png");
+            this.imgTreeImageList.Images.SetKeyName(1, "Delta.png");
+            this.imgTreeImageList.Images.SetKeyName(2, "DEMSurveys.png");
+            this.imgTreeImageList.Images.SetKeyName(3, "AssociatedSurfaces.png");
+            this.imgTreeImageList.Images.SetKeyName(4, "sigma.png");
+            this.imgTreeImageList.Images.SetKeyName(5, "Reservoir.png");
+            this.imgTreeImageList.Images.SetKeyName(6, "mask.png");
+            this.imgTreeImageList.Images.SetKeyName(7, "About.png");
+            this.imgTreeImageList.Images.SetKeyName(8, "ConcaveHull.png");
+            this.imgTreeImageList.Images.SetKeyName(9, "BudgetSeg.png");
+            this.imgTreeImageList.Images.SetKeyName(10, "comparison.png");
+            this.imgTreeImageList.Images.SetKeyName(11, "bars.png");
             // 
             // cmsProject
             // 
@@ -1001,7 +990,7 @@ namespace GCDCore.UserInterface.Project
             this.viewMorphologicalAnalysisToolStripMenuItem,
             this.deleteMorphologicalAnalysisToolStripMenuItem});
             this.cmsMorphological.Name = "cmsMorphological";
-            this.cmsMorphological.Size = new System.Drawing.Size(235, 70);
+            this.cmsMorphological.Size = new System.Drawing.Size(235, 48);
             // 
             // viewMorphologicalAnalysisToolStripMenuItem
             // 
