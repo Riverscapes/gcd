@@ -63,7 +63,7 @@ namespace GCDCore.Project
             {
                 foreach (XmlNode nodBS in nodBSes.SelectNodes("BudgetSegregation"))
                 {
-                    BudgetSegregation bs = BudgetSegregation.Deserialize(nodBS, this);
+                    BudgetSegregation bs = new BudgetSegregation(nodBS, this);
                     BudgetSegregations[bs.Name] = bs;
                 }
             }

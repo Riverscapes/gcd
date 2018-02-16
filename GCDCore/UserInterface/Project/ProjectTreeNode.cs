@@ -25,6 +25,7 @@
             BudgetSegregationGroup,
             BudgetSegregationMask,
             BudgetSegregation,
+            MorphologicalAnalysisGroup,
             MorphologicalAnalysis,
             InterComparisonGroup,
             InterComparison,

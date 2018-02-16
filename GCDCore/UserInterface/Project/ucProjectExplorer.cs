@@ -21,6 +21,7 @@ namespace GCDCore.UserInterface.Project
         private const string m_sBudgetSegs = "Budget Segregations";
         private const string m_sMasks = "Masks";
         private const string m_sReferenceSurfaces = "Reference Surfaces";
+        private const string m_sMorphological = "Morphological Analyses";
 
         private static SortSurveyBy m_eSortBy = SortSurveyBy.SurveyDateDsc;
 
@@ -105,6 +106,8 @@ namespace GCDCore.UserInterface.Project
             this.collapseChildrenInGCDProjectTreeToolStripMenuItem.Click += CollapseChildren_Click;
             this.collapseChildrenInGCDProjectTreeToolStripMenuItem1.Click += CollapseChildren_Click;
             this.editMaskPropertiesToolStripMenuItem.Click += EditMaskProperties_Click;
+
+            this.viewMorphologicalAnalysisToolStripMenuItem.Click += EditMorphological_Click;
 
         }
 
@@ -293,6 +296,13 @@ namespace GCDCore.UserInterface.Project
 
                                 // Budget Segregation
                                 AddTreeNode(nodMask, GCDNodeTypes.BudgetSegregation, rBS.Name, rBS, selectItem);
+
+                                if (rBS.MorphologicalAnalyses.Count > 0)
+                                {
+                                    TreeNode nodMAGroup = AddTreeNode(nodMask, GCDNodeTypes.MorphologicalAnalysisGroup, m_sMorphological, null, selectItem);
+                                    rBS.MorphologicalAnalyses.Values.ToList<GCDCore.Project.Morphological.MorphologicalAnalysis>().ForEach(x =>
+                                        AddTreeNode(nodMAGroup, GCDNodeTypes.MorphologicalAnalysis, x.Name, x, selectItem));
+                                }
                             }
                         }
                     }
@@ -463,6 +473,7 @@ namespace GCDCore.UserInterface.Project
                 case GCDNodeTypes.BudgetSegregationGroup: cms = cmsBSGroup; break;
                 case GCDNodeTypes.BudgetSegregation: cms = cmsBS; break;
                 case GCDNodeTypes.BudgetSegregationMask: cms = cmsBSGroup; break;
+                case GCDNodeTypes.MorphologicalAnalysis: cms = cmsMorphological; break;
                 case GCDNodeTypes.InterComparisonGroup: cms = cmsInterComparison; break;
             }
 
@@ -1884,6 +1895,20 @@ namespace GCDCore.UserInterface.Project
                     {
                         LoadTree(new ProjectTreeNode(GCDNodeTypes.Mask, mask));
                     }
+                }
+            }
+        }
+
+        public void EditMorphological_Click(object sender, EventArgs e)
+        {
+            TreeNode nodSelected = treProject.SelectedNode;
+            if (nodSelected is TreeNode)
+            {
+                GCDCore.Project.Morphological.MorphologicalAnalysis ma = ((ProjectTreeNode)nodSelected.Tag).Item as GCDCore.Project.Morphological.MorphologicalAnalysis;
+                UserInterface.BudgetSegregation.Morphological.frmMorphResults frm = new BudgetSegregation.Morphological.frmMorphResults(ma);
+                if (frm.ShowDialog() == DialogResult.OK)
+                {
+                    LoadTree(new ProjectTreeNode(GCDNodeTypes.MorphologicalAnalysis, ma));
                 }
             }
         }

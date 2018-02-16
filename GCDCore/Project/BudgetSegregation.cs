@@ -17,6 +17,8 @@ namespace GCDCore.Project
         public readonly string MaskField;
         public readonly Dictionary<string, BudgetSegregationClass> Classes;
 
+        public readonly Dictionary<string, Morphological.MorphologicalAnalysis> MorphologicalAnalyses;
+
         public bool IsMaskDirectional { get { return Mask is GCDCore.Project.Masks.DirectionalMask; } }
 
         public BindingList<BudgetSegregationClass> FilteredClasses
@@ -55,6 +57,7 @@ namespace GCDCore.Project
             ClassLegend = new FileInfo(Path.Combine(Folder.FullName, "ClassLegend.csv"));
             SummaryXML = new FileInfo(Path.Combine(Folder.FullName, "Summary.xml"));
             Classes = new Dictionary<string, BudgetSegregationClass>();
+            MorphologicalAnalyses = new Dictionary<string, Morphological.MorphologicalAnalysis>();
         }
 
         /// <summary>
@@ -76,6 +79,36 @@ namespace GCDCore.Project
             ClassLegend = classLegend;
             SummaryXML = summaryXML;
             Classes = new Dictionary<string, BudgetSegregationClass>();
+            MorphologicalAnalyses = new Dictionary<string, Morphological.MorphologicalAnalysis>();
+        }
+
+        public BudgetSegregation(XmlNode nodBS, DoDBase dod)
+            : base(nodBS.SelectSingleNode("Name").InnerText)
+        {
+            DoD = dod;
+            Folder = ProjectManager.Project.GetAbsoluteDir(nodBS.SelectSingleNode("Folder").InnerText);
+            Mask = ProjectManager.Project.Masks[nodBS.SelectSingleNode("Mask").InnerText];
+            SummaryXML = ProjectManager.Project.GetAbsolutePath(nodBS.SelectSingleNode("SummaryXML").InnerText);
+            ClassLegend = ProjectManager.Project.GetAbsolutePath(nodBS.SelectSingleNode("ClassLegend").InnerText);
+
+            Classes = new Dictionary<string, BudgetSegregationClass>();
+            foreach (XmlNode nodClass in nodBS.SelectNodes("Classes/Class"))
+            {
+                BudgetSegregationClass bsClass = new BudgetSegregationClass(nodClass);
+                Classes[bsClass.Name] = bsClass;
+            }
+
+            MorphologicalAnalyses = new Dictionary<string, Morphological.MorphologicalAnalysis>();
+            foreach (XmlNode nodMA in nodBS.SelectNodes("MorphologicalAnalyses/MorphologicalAnalysis"))
+            {
+                Morphological.MorphologicalAnalysis ma = new Morphological.MorphologicalAnalysis(nodMA, this);
+                MorphologicalAnalyses[ma.Name] = ma;
+            }
+        }
+        
+        public bool IsMorphologicalAnalysisNameUnique(string name, Morphological.MorphologicalAnalysis ignore)
+        {
+            return MorphologicalAnalyses.ContainsKey(name) ? MorphologicalAnalyses[name] == ignore : true;
         }
 
         public void Serialize(XmlNode nodParent)
@@ -91,25 +124,15 @@ namespace GCDCore.Project
             XmlNode nodClasses = nodBS.AppendChild(nodParent.OwnerDocument.CreateElement("Classes"));
             foreach (BudgetSegregationClass segClass in Classes.Values)
                 segClass.Serialize(nodClasses);
-        }
 
-        public static BudgetSegregation Deserialize(XmlNode nodBS, DoDBase dod)
-        {
-            string name = nodBS.SelectSingleNode("Name").InnerText;
-            DirectoryInfo folder = ProjectManager.Project.GetAbsoluteDir(nodBS.SelectSingleNode("Folder").InnerText);
-            Masks.Mask mask = ProjectManager.Project.Masks[nodBS.SelectSingleNode("Mask").InnerText];
-            FileInfo summaryXML = ProjectManager.Project.GetAbsolutePath(nodBS.SelectSingleNode("SummaryXML").InnerText);
-            FileInfo classLegend = ProjectManager.Project.GetAbsolutePath(nodBS.SelectSingleNode("ClassLegend").InnerText);
-
-            BudgetSegregation bs = new BudgetSegregation(name, folder, mask, dod, summaryXML, classLegend);
-
-            foreach (XmlNode nodClass in nodBS.SelectNodes("Classes/Class"))
+            if (MorphologicalAnalyses.Count > 0)
             {
-                BudgetSegregationClass bsClass = BudgetSegregationClass.Deserialize(nodClass);
-                bs.Classes[bsClass.Name] = bsClass;
+                XmlNode nodMA = nodBS.AppendChild(nodParent.OwnerDocument.CreateElement("MorphologicalAnalyses"));
+                foreach (Morphological.MorphologicalAnalysis ma in MorphologicalAnalyses.Values)
+                {
+                    ma.Serialize(nodMA);
+                }
             }
-
-            return bs;
         }
 
         public void Delete()

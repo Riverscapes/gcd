@@ -149,6 +149,9 @@ namespace GCDCore.UserInterface.Project
             this.editMaskPropertiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteMaskToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addMaskToMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmsMorphological = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.viewMorphologicalAnalysisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteMorphologicalAnalysisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsProject.SuspendLayout();
             this.cmsDEMSurvey.SuspendLayout();
             this.cmsAssociatedSurface.SuspendLayout();
@@ -167,6 +170,7 @@ namespace GCDCore.UserInterface.Project
             this.cmsInterComparison.SuspendLayout();
             this.cmsRefSurface.SuspendLayout();
             this.cmsMask.SuspendLayout();
+            this.cmsMorphological.SuspendLayout();
             this.SuspendLayout();
             // 
             // treProject
@@ -991,6 +995,28 @@ namespace GCDCore.UserInterface.Project
             this.addMaskToMapToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
             this.addMaskToMapToolStripMenuItem.Text = "Add To Map";
             // 
+            // cmsMorphological
+            // 
+            this.cmsMorphological.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.viewMorphologicalAnalysisToolStripMenuItem,
+            this.deleteMorphologicalAnalysisToolStripMenuItem});
+            this.cmsMorphological.Name = "cmsMorphological";
+            this.cmsMorphological.Size = new System.Drawing.Size(235, 70);
+            // 
+            // viewMorphologicalAnalysisToolStripMenuItem
+            // 
+            this.viewMorphologicalAnalysisToolStripMenuItem.Image = global::GCDCore.Properties.Resources.Options;
+            this.viewMorphologicalAnalysisToolStripMenuItem.Name = "viewMorphologicalAnalysisToolStripMenuItem";
+            this.viewMorphologicalAnalysisToolStripMenuItem.Size = new System.Drawing.Size(234, 22);
+            this.viewMorphologicalAnalysisToolStripMenuItem.Text = "View Morphological Analysis";
+            // 
+            // deleteMorphologicalAnalysisToolStripMenuItem
+            // 
+            this.deleteMorphologicalAnalysisToolStripMenuItem.Image = global::GCDCore.Properties.Resources.Delete;
+            this.deleteMorphologicalAnalysisToolStripMenuItem.Name = "deleteMorphologicalAnalysisToolStripMenuItem";
+            this.deleteMorphologicalAnalysisToolStripMenuItem.Size = new System.Drawing.Size(234, 22);
+            this.deleteMorphologicalAnalysisToolStripMenuItem.Text = "Delete Morphological Analysis";
+            // 
             // ucProjectExplorer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1016,6 +1042,7 @@ namespace GCDCore.UserInterface.Project
             this.cmsInterComparison.ResumeLayout(false);
             this.cmsRefSurface.ResumeLayout(false);
             this.cmsMask.ResumeLayout(false);
+            this.cmsMorphological.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1129,5 +1156,8 @@ namespace GCDCore.UserInterface.Project
         private System.Windows.Forms.ToolStripMenuItem editMaskPropertiesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteMaskToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addMaskToMapToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip cmsMorphological;
+        private System.Windows.Forms.ToolStripMenuItem viewMorphologicalAnalysisToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteMorphologicalAnalysisToolStripMenuItem;
     }
 }

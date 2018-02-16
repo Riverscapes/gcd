@@ -72,8 +72,8 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
 
             valPorosity.ValueChanged += PorosityChanged;
 
-            // Bold the last row for the totals
-            grdData.Rows[grdData.RowCount - 1].DefaultCellStyle.Font = new Font(grdData.Font, FontStyle.Bold);
+            // Make the grid the default control
+            grdData.Select();
         }
 
         private void PorosityChanged(object sender, EventArgs e)
@@ -223,6 +223,14 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
             {
                 e.Value = ((UnitsNet.Volume)e.Value).As(((FormattedVolumeUnit)cboVolumeUnits.SelectedItem).VolumeUnit);
             }
+
+            if (grdData.Rows[e.RowIndex].DataBoundItem is GCDCore.Project.Morphological.MorphologicalUnit)
+            {
+                if (((GCDCore.Project.Morphological.MorphologicalUnit)grdData.Rows[e.RowIndex].DataBoundItem).IsTotal)
+                {
+                    grdData.Rows[e.RowIndex].DefaultCellStyle.Font = new Font(grdData.Font, FontStyle.Bold);
+                }
+            }
         }
 
         private class FormattedVolumeUnit
@@ -243,6 +251,34 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
         private void NumericUpDown_Enter(object sender, EventArgs e)
         {
             ((NumericUpDown)sender).Select(0, ((NumericUpDown)sender).Text.Length);
+        }
+
+        private void cmdOK_Click(object sender, EventArgs e)
+        {
+            if (!ValidateForm())
+            {
+                DialogResult = DialogResult.None;
+                return;
+            }
+
+            // The name should be the only property that is not already synchronized with the analysis object
+            Analysis.Name = txtName.Text;
+
+            if (!Analysis.BS.MorphologicalAnalyses.ContainsValue(Analysis))
+                Analysis.BS.MorphologicalAnalyses[Analysis.Name] = Analysis;
+
+            ProjectManager.Project.Save();
+        }
+
+        private bool ValidateForm()
+        {
+            // Sanity check to avoid empty names
+            txtName.Text = txtName.Text.Trim();
+
+            if (!frmMorpProperties.ValidateName(txtName, Analysis.BS, Analysis))
+                return false;
+
+            return true;
         }
     }
 }

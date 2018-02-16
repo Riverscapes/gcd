@@ -65,7 +65,7 @@ namespace GCDCore.Engines
 
                 HistogramPair histograms = new HistogramPair(rawHistos[segClass.Key], rawHstPth, thrHistos[segClass.Key], thrHstPth);
 
-                BudgetSegregationClass bsClass = new BudgetSegregationClass(segClass.Key, analysisFolder, filePrefix, segClass.Value, histograms, sumaryXML);
+                BudgetSegregationClass bsClass = new BudgetSegregationClass(segClass.Key, segClass.Value, histograms, sumaryXML);
                 bsResult.Classes[segClass.Key] = bsClass;
 
                 classIndex++;

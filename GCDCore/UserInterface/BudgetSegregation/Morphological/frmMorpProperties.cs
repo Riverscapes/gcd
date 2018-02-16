@@ -45,7 +45,8 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
             // Sanity check to avoid duplicate name
             txtName.Text = txtName.Text.Trim();
 
-
+            if (!ValidateName(txtName, (GCDCore.Project.BudgetSegregation)cboBS.SelectedItem, null))
+                return false;
 
             return true;
         }
@@ -58,6 +59,26 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
             txtUncertainty.Text = bs.DoD.UncertaintyAnalysisLabel;
 
             txtPath.Text = ProjectManager.Project.GetRelativePath(ProjectManager.OutputManager.GetMorphologicalDirectory(bs.Folder, false).FullName);
+        }
+
+        public static bool ValidateName(TextBox txtName, GCDCore.Project.BudgetSegregation bs, GCDCore.Project.Morphological.MorphologicalAnalysis ma)
+        {
+            if (string.IsNullOrEmpty(txtName.Text))
+            {
+                MessageBox.Show("The morphological analysis name cannot be blank.", "Missing Name", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                txtName.Select();
+                return false;
+            }
+
+            if (!bs.IsMorphologicalAnalysisNameUnique(txtName.Text, ma))
+            {
+                MessageBox.Show(string.Format("The {0} budget segregation already possesses a morphological analysis called \"{1}\"." +
+                    " Please enter a unique name for the analysis.", bs.Name, txtName.Text), "Duplicate Name", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                txtName.Select();
+                return false;
+            }
+
+            return true;
         }
     }
 }
