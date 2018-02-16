@@ -22,11 +22,16 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
         private const string VOLOUT__CHART_SERIES = "VolOut";
         private const string EROSERR_CHART_SERIES = "Erosion Error";
 
+        UserInterface.UtilityForms.ChartContextMenu cmsChart;
+
         public readonly GCDCore.Project.Morphological.MorphologicalAnalysis Analysis;
 
         public frmMorphResults(GCDCore.Project.Morphological.MorphologicalAnalysis ma)
         {
             InitializeComponent();
+
+            cmsChart = new UtilityForms.ChartContextMenu();
+            chtData.ContextMenuStrip = cmsChart.CMS;
 
             Analysis = ma;
         }
@@ -279,6 +284,11 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
                 return false;
 
             return true;
+        }
+
+        private void exportTablularDataToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

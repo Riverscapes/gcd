@@ -332,6 +332,7 @@
     <Compile Include="UserInterface\SurveyLibrary\ReferenceSurfaces\frmRefErrorSurface.Designer.cs">
       <DependentUpon>frmRefErrorSurface.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserInterface\UtilityForms\ChartContextMenu.cs" />
     <Compile Include="UserInterface\UtilityForms\frmInformation.cs">
       <SubType>Form</SubType>
     </Compile>

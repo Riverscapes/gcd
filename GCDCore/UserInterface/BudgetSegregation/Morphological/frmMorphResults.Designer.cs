@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -70,6 +71,8 @@
             this.colVolumeOut = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colWork = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colCumulative = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cmsDataGrid = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.exportTablularDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.cboVolumeUnits = new System.Windows.Forms.ComboBox();
             this.cmdReset = new System.Windows.Forms.Button();
@@ -80,12 +83,12 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.chtData = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.ucDoDPropertiesGrid1 = new GCDCore.UserInterface.ChangeDetection.ucDoDPropertiesGrid();
             this.label7 = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.txtPath = new System.Windows.Forms.TextBox();
             this.cmdBrowse = new System.Windows.Forms.Button();
-            this.ucDoDPropertiesGrid1 = new GCDCore.UserInterface.ChangeDetection.ucDoDPropertiesGrid();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -95,6 +98,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.valPercentCompetent)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.valDuration)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdData)).BeginInit();
+            this.cmsDataGrid.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.valMinFlux)).BeginInit();
             this.tabPage2.SuspendLayout();
@@ -343,6 +347,7 @@
             this.colVolumeOut,
             this.colWork,
             this.colCumulative});
+            this.grdData.ContextMenuStrip = this.cmsDataGrid;
             this.grdData.Location = new System.Drawing.Point(12, 194);
             this.grdData.Name = "grdData";
             this.grdData.ReadOnly = true;
@@ -451,6 +456,21 @@
             this.colCumulative.HeaderText = "Cumulative Volume Change ()";
             this.colCumulative.Name = "colCumulative";
             this.colCumulative.ReadOnly = true;
+            // 
+            // cmsDataGrid
+            // 
+            this.cmsDataGrid.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.exportTablularDataToolStripMenuItem});
+            this.cmsDataGrid.Name = "cmsDataGrid";
+            this.cmsDataGrid.Size = new System.Drawing.Size(180, 26);
+            // 
+            // exportTablularDataToolStripMenuItem
+            // 
+            this.exportTablularDataToolStripMenuItem.Image = global::GCDCore.Properties.Resources.Save;
+            this.exportTablularDataToolStripMenuItem.Name = "exportTablularDataToolStripMenuItem";
+            this.exportTablularDataToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.exportTablularDataToolStripMenuItem.Text = "Export Tablular Data";
+            this.exportTablularDataToolStripMenuItem.Click += new System.EventHandler(this.exportTablularDataToolStripMenuItem_Click);
             // 
             // groupBox1
             // 
@@ -564,6 +584,14 @@
             this.tabPage3.Text = "Inputs";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // ucDoDPropertiesGrid1
+            // 
+            this.ucDoDPropertiesGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucDoDPropertiesGrid1.Location = new System.Drawing.Point(3, 3);
+            this.ucDoDPropertiesGrid1.Name = "ucDoDPropertiesGrid1";
+            this.ucDoDPropertiesGrid1.Size = new System.Drawing.Size(832, 350);
+            this.ucDoDPropertiesGrid1.TabIndex = 0;
+            // 
             // label7
             // 
             this.label7.AutoSize = true;
@@ -607,14 +635,6 @@
             this.cmdBrowse.UseVisualStyleBackColor = true;
             this.cmdBrowse.Click += new System.EventHandler(this.cmdBrowse_Click);
             // 
-            // ucDoDPropertiesGrid1
-            // 
-            this.ucDoDPropertiesGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucDoDPropertiesGrid1.Location = new System.Drawing.Point(3, 3);
-            this.ucDoDPropertiesGrid1.Name = "ucDoDPropertiesGrid1";
-            this.ucDoDPropertiesGrid1.Size = new System.Drawing.Size(832, 350);
-            this.ucDoDPropertiesGrid1.TabIndex = 0;
-            // 
             // frmMorphResults
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -644,6 +664,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.valPercentCompetent)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.valDuration)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdData)).EndInit();
+            this.cmsDataGrid.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.valMinFlux)).EndInit();
@@ -702,5 +723,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colVolumeOut;
         private System.Windows.Forms.DataGridViewTextBoxColumn colWork;
         private System.Windows.Forms.DataGridViewTextBoxColumn colCumulative;
+        private System.Windows.Forms.ContextMenuStrip cmsDataGrid;
+        private System.Windows.Forms.ToolStripMenuItem exportTablularDataToolStripMenuItem;
     }
 }
