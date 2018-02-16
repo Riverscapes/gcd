@@ -141,7 +141,7 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
                 }
                 else if (string.Compare(col.Name, "colWork", true) == 0)
                 {
-                    col.HeaderText = string.Format("{0} ({1}/{2})", col.HeaderText.Substring(0, col.HeaderText.IndexOf("(")), abbr,
+                    col.HeaderText = string.Format("{0}({1}/{2})", col.HeaderText.Substring(0, col.HeaderText.IndexOf("(")), abbr,
                        UnitsNet.Duration.GetAbbreviation(((UnitsNet.Units.DurationUnit)cboDuration.SelectedItem)));
                 }
             }
@@ -288,7 +288,68 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
 
         private void exportTablularDataToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            SaveFileDialog frm = new SaveFileDialog();
+            frm.Title = "Save Tabular Data To File";
+            frm.Filter = "Comma Separated Value (CSV) Files (*.csv)|*.csv";
 
+            if (frm.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+
+            StringBuilder sb = new StringBuilder();
+
+            try
+            {
+
+                // Header row
+                List<string> values = new List<string>();
+                foreach (DataGridViewColumn col in grdData.Columns)
+                {
+                    values.Add(col.HeaderText.ToString().Replace(",", ""));
+                }
+                sb.AppendLine(string.Join(",", values));
+
+                // Data rows
+                foreach (DataGridViewRow dgvr in grdData.Rows)
+                {
+                    values = new List<string>();
+                    for (int i = 0; i < grdData.Columns.Count; i++)
+                    {
+                        values.Add(dgvr.Cells[i].FormattedValue.ToString().Replace(",", ""));
+                    }
+
+                    sb.AppendLine(string.Join(",", values));
+                }
+            }
+            catch (Exception ex)
+            {
+                naru.error.ExceptionUI.HandleException(ex, "Error serializing data table");
+            }
+
+            try
+            {
+                using (StreamWriter file = new System.IO.StreamWriter(frm.FileName))
+                {
+                    file.WriteLine(sb.ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                naru.error.ExceptionUI.HandleException(ex, "Error Writing Tabular Data To CSV File");
+            }
+
+            if (File.Exists(frm.FileName))
+            {
+                try
+                {
+                    System.Diagnostics.Process.Start(frm.FileName);
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(string.Format("The tabular data file was created at {0} but an error occured attempting to open the file.", frm.FileName), Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
         }
     }
 }
