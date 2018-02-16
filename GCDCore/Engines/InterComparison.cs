@@ -238,14 +238,14 @@ namespace GCDCore.Engines
             string refersto = NamedRangeNode.Attributes["ss:RefersTo"].Value;
 
             //match R*C*
-            Regex r = new Regex(@".*!R(.)C.", RegexOptions.IgnoreCase);
+            Regex r = new Regex(@".*!R(.+)C.", RegexOptions.IgnoreCase);
             Match m = r.Match(refersto);
             string sRow = m.Groups[1].Value;
             int iRow = int.Parse(sRow);
 
             iRow = iRow + AddedRows;
 
-            var pattern = @"(.*!)(R)(.)(C.)";
+            var pattern = @"(.*!)(R)(.+)(C.)";
             var replaced = Regex.Replace(refersto, pattern, "$1R" + iRow + "$4");
 
             NamedRangeNode.Attributes["ss:RefersTo"].Value = replaced;
