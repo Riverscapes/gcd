@@ -153,11 +153,17 @@ namespace GCDCore.UserInterface.Project
                 case GCDNodeTypes.ErrorSurface: newNode.ImageIndex = 4; break;
                 case GCDNodeTypes.ReferenceSurface: newNode.ImageIndex = 5; break;
                 case GCDNodeTypes.Mask: newNode.ImageIndex = 6; break;
-                case GCDNodeTypes.DoD: newNode.ImageIndex = 7; break;
                 case GCDNodeTypes.BudgetSegregationMask: newNode.ImageIndex = 8; break;
                 case GCDNodeTypes.BudgetSegregation: newNode.ImageIndex = 9; break;
                 case GCDNodeTypes.InterComparison: newNode.ImageIndex = 10; break;
                 case GCDNodeTypes.MorphologicalAnalysis: newNode.ImageIndex = 11; break;
+                case GCDNodeTypes.DoD:
+                    DoDBase dod = (GCDCore.Project.DoDBase)projectItem;
+                    if (dod.NewSurface is DEMSurvey && dod.OldSurface is DEMSurvey)
+                        newNode.ImageIndex = 7;
+                    else
+                        newNode.ImageIndex = 12;
+                    break;
             }
 
             newNode.SelectedImageIndex = newNode.ImageIndex;

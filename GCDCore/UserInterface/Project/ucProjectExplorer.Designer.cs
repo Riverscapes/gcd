@@ -202,6 +202,7 @@ namespace GCDCore.UserInterface.Project
             this.imgTreeImageList.Images.SetKeyName(9, "BudgetSeg.png");
             this.imgTreeImageList.Images.SetKeyName(10, "comparison.png");
             this.imgTreeImageList.Images.SetKeyName(11, "bars.png");
+            this.imgTreeImageList.Images.SetKeyName(12, "GCDFilled.png");
             // 
             // cmsProject
             // 
