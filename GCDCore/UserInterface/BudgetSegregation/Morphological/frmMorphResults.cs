@@ -111,8 +111,9 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
                 {
                     col.HeaderText = string.Format("{0} ({1})", col.HeaderText.Substring(0, col.HeaderText.IndexOf("(")), UnitsNet.Volume.GetAbbreviation((UnitsNet.Units.VolumeUnit)cboVolumeUnits.SelectedItem));
                 }
-
             }
+
+            Analysis.Units.ResetBindings();
         }
 
         private void UpdateChart()
@@ -185,6 +186,14 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
             DirectoryInfo dir = ProjectManager.Project.GetAbsoluteDir(txtPath.Text);
             if (dir.Exists)
                 System.Diagnostics.Process.Start(dir.FullName);
+        }
+
+        private void grdData_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (grdData.Columns[e.ColumnIndex].HeaderText.ToLower().Contains("vol"))
+            {
+                e.Value = ((UnitsNet.Volume) e.Value).As((UnitsNet.Units.VolumeUnit) cboVolumeUnits.SelectedItem);
+            }
         }
     }
 }

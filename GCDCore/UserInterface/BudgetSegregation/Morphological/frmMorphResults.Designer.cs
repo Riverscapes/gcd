@@ -32,6 +32,14 @@
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMorphResults));
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
@@ -339,6 +347,7 @@
             this.grdData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.grdData.Size = new System.Drawing.Size(820, 156);
             this.grdData.TabIndex = 1;
+            this.grdData.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.grdData_CellFormatting);
             // 
             // groupBox1
             // 
@@ -515,6 +524,9 @@
             // colVolErosion
             // 
             this.colVolErosion.DataPropertyName = "VolErosion";
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle1.Format = "#,##0.00";
+            this.colVolErosion.DefaultCellStyle = dataGridViewCellStyle1;
             this.colVolErosion.HeaderText = "Volume of Lowering ()";
             this.colVolErosion.Name = "colVolErosion";
             this.colVolErosion.ReadOnly = true;
@@ -522,6 +534,9 @@
             // volErosionError
             // 
             this.volErosionError.DataPropertyName = "VolErosionErr";
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle2.Format = "±#,##0.00";
+            this.volErosionError.DefaultCellStyle = dataGridViewCellStyle2;
             this.volErosionError.HeaderText = "Volume of Erosion Error ()";
             this.volErosionError.Name = "volErosionError";
             this.volErosionError.ReadOnly = true;
@@ -529,6 +544,9 @@
             // colVolDeposition
             // 
             this.colVolDeposition.DataPropertyName = "VolDeposition";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle3.Format = "#,##0.00";
+            this.colVolDeposition.DefaultCellStyle = dataGridViewCellStyle3;
             this.colVolDeposition.HeaderText = "Volume of Deposition ()";
             this.colVolDeposition.Name = "colVolDeposition";
             this.colVolDeposition.ReadOnly = true;
@@ -536,9 +554,10 @@
             // colVolDepositionError
             // 
             this.colVolDepositionError.DataPropertyName = "VolDepositionErr";
-            dataGridViewCellStyle1.Format = "± #,0";
-            dataGridViewCellStyle1.NullValue = null;
-            this.colVolDepositionError.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle4.Format = "± #,##0.00";
+            dataGridViewCellStyle4.NullValue = null;
+            this.colVolDepositionError.DefaultCellStyle = dataGridViewCellStyle4;
             this.colVolDepositionError.HeaderText = "Volume of Deposition Error ()";
             this.colVolDepositionError.Name = "colVolDepositionError";
             this.colVolDepositionError.ReadOnly = true;
@@ -546,6 +565,9 @@
             // volChange
             // 
             this.volChange.DataPropertyName = "VolChange";
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle5.Format = "#,##0.00";
+            this.volChange.DefaultCellStyle = dataGridViewCellStyle5;
             this.volChange.HeaderText = "Volume of Change ()";
             this.volChange.Name = "volChange";
             this.volChange.ReadOnly = true;
@@ -553,6 +575,9 @@
             // colVolumeIn
             // 
             this.colVolumeIn.DataPropertyName = "VolIn";
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle6.Format = "#,##0.00";
+            this.colVolumeIn.DefaultCellStyle = dataGridViewCellStyle6;
             this.colVolumeIn.HeaderText = "Volume In ()";
             this.colVolumeIn.Name = "colVolumeIn";
             this.colVolumeIn.ReadOnly = true;
@@ -560,6 +585,9 @@
             // colVolumeOut
             // 
             this.colVolumeOut.DataPropertyName = "VolOut";
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle7.Format = "#,##0.00";
+            this.colVolumeOut.DefaultCellStyle = dataGridViewCellStyle7;
             this.colVolumeOut.HeaderText = "VolumeOut ()";
             this.colVolumeOut.Name = "colVolumeOut";
             this.colVolumeOut.ReadOnly = true;
@@ -567,6 +595,9 @@
             // colWork
             // 
             this.colWork.DataPropertyName = "Work";
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle8.Format = "#,##0.00";
+            this.colWork.DefaultCellStyle = dataGridViewCellStyle8;
             this.colWork.HeaderText = "Work?";
             this.colWork.Name = "colWork";
             this.colWork.ReadOnly = true;
@@ -574,6 +605,9 @@
             // colCumulative
             // 
             this.colCumulative.DataPropertyName = "CumulativeVolume";
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle9.Format = "#,##0.00";
+            this.colCumulative.DefaultCellStyle = dataGridViewCellStyle9;
             this.colCumulative.HeaderText = "Cumulative Volume Change ()";
             this.colCumulative.Name = "colCumulative";
             this.colCumulative.ReadOnly = true;
