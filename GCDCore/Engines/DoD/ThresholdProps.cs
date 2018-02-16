@@ -41,14 +41,15 @@ namespace GCDCore.Engines.DoD
             {
                 switch (Method)
                 {
+                    case ThresholdMethods.Propagated: return "Propagated";
                     case ThresholdMethods.MinLoD: return string.Format("{0:0.00}{1}", Threshold, UnitsNet.Length.GetAbbreviation(ProjectManager.Project.Units.VertUnit));
-                    case ThresholdMethods.Probabilistic: return string.Format("{0:0.00}% Confidence Level", Threshold);
+                    case ThresholdMethods.Probabilistic: return string.Format("{0:0.00}% Confidence Level{1}", Threshold, SpatialCoherenceProps == null ? "" : " Spat Co.");
                     default: return string.Empty;
                 }
 
             }
         }
-        
+
         public ThresholdProps(decimal minLoD)
         {
             Threshold = minLoD;
