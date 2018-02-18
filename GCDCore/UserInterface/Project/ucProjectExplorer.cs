@@ -366,7 +366,7 @@ namespace GCDCore.UserInterface.Project
                     switch (tag.NodeType)
                     {
                         case GCDNodeTypes.DEMSurvey:
-                            frm = new frmDEMSurveyProperties((DEMSurvey)tag.Item);
+                            frm = new frmDEMProperties((DEMSurvey)tag.Item);
                             break;
 
                         case GCDNodeTypes.AssociatedSurface:
@@ -545,14 +545,7 @@ namespace GCDCore.UserInterface.Project
                     ProjectManager.Project.Save();
 
                     LoadTree(new ProjectTreeNode(GCDNodeTypes.DEMSurvey, dem));
-
-                    frmDEMSurveyProperties frm = new frmDEMSurveyProperties(dem);
-                    frm.ShowDialog();
-
                     ProjectManager.OnAddToMap(dem);
-
-                    // Load the tree again because the use may have added Assoc or error surfaces
-                    // while the form was open (and since the tree was last loaded)
                 }
             }
 
@@ -690,7 +683,9 @@ namespace GCDCore.UserInterface.Project
 
                     if (parent is DEMSurvey)
                     {
-                        frmDEMSurveyProperties.CalculateErrorSurface(parent as DEMSurvey);
+                        frmErrorSurfaceProperties frm = new frmErrorSurfaceProperties(parent as DEMSurvey, null);
+                        if (frm.ShowDialog() == DialogResult.OK)
+                            err = frm.ErrorSurf;
                     }
                     else
                     {
@@ -733,7 +728,9 @@ namespace GCDCore.UserInterface.Project
 
                     if (parent is DEMSurvey)
                     {
-                        err = frmDEMSurveyProperties.SpecifyErrorSurface(parent as DEMSurvey);
+                        frmErrorSurfaceProperties frm = new frmErrorSurfaceProperties(parent as DEMSurvey, null);
+                        if (frm.ShowDialog() == DialogResult.OK)
+                            err = frm.ErrorSurf;
                     }
                     else
                     {
@@ -800,7 +797,8 @@ namespace GCDCore.UserInterface.Project
                     if (eType == GCDNodeTypes.ErrorSurface)
                     {
                         ErrorSurface errSurf = (ErrorSurface)((ProjectTreeNode)selNode.Tag).Item;
-                        if (frmDEMSurveyProperties.ViewErrorSurfaceProperties(errSurf) == DialogResult.OK)
+                        frmErrorSurfaceProperties frm = new frmErrorSurfaceProperties((DEMSurvey)errSurf.Surf, errSurf);
+                        if (frm.ShowDialog() == DialogResult.OK)
                             LoadTree((ProjectTreeNode)selNode.Tag);
                     }
                 }
@@ -932,10 +930,7 @@ namespace GCDCore.UserInterface.Project
                     if (eType == GCDNodeTypes.DEMSurvey)
                     {
                         DEMSurvey dem = (DEMSurvey)((ProjectTreeNode)selNode.Tag).Item;
-                        frmDEMSurveyProperties frm = new frmDEMSurveyProperties(dem);
-
-                        if (ProjectManager.IsArcMap)
-                            frm.cmdAddDEMToMap.Click += this.AddToMapToolStripMenuItem_Click;
+                        frmDEMProperties frm = new frmDEMProperties(dem);
 
                         if (frm.ShowDialog() == DialogResult.OK)
                         {
