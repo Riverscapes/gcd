@@ -31,6 +31,9 @@ namespace GCDCore.UserInterface.BudgetSegregation
             cboMasks.DataSource = new BindingList<GCDCore.Project.Masks.Mask>(ProjectManager.Project.Masks.Values.ToList<GCDCore.Project.Masks.Mask>());
             if (cboMasks.Items.Count > 0)
                 cboMasks.SelectedIndex = 0;
+
+            // Default the focus to the mask.
+            cboMasks.Select();
         }
 
         private void cmdOK_Click(Object sender, EventArgs e)
@@ -135,6 +138,27 @@ namespace GCDCore.UserInterface.BudgetSegregation
         private void cboMasks_SelectedIndexChanged(object sender, EventArgs e)
         {
             txtField.Text = ((GCDCore.Project.Masks.Mask)cboMasks.SelectedItem)._Field;
+            txtName.Text = GetUniqueName(cboMasks.Text);
+        }
+
+        private string GetUniqueName(string maskName)
+        {
+            DoDBase dod = cboDoD.SelectedItem as DoDBase;
+
+            int index = 0;
+            string result = string.Empty;
+
+            do
+            {
+                result = string.Format("Budget Segregation via {0}", maskName);
+                if (index > 0)
+                    result = string.Format("{0} ({1})", result, index);
+
+                index++;
+
+            } while (dod.BudgetSegregations.ContainsKey(result));
+
+            return result;
         }
     }
 }
