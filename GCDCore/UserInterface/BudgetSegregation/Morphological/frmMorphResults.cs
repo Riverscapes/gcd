@@ -20,7 +20,7 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
         private const string EROSION_CHART_SERIES = "Erosion";
         private const string DEPOSIT_CHART_SERIES = "Deposition";
         private const string VOLOUT__CHART_SERIES = "VolOut";
-        private const string EROSERR_CHART_SERIES = "Erosion Error";
+        private const string ERROR___CHART_SERIES = "Error";
 
         UserInterface.UtilityForms.ChartContextMenu cmsChart;
 
@@ -165,6 +165,7 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
             chtArea1.AxisY.MinorGrid.Enabled = true;
             chtArea1.AxisY.MinorTickMark.Enabled = true;
             chtArea1.AxisY.MinorTickMark.LineColor = chtArea1.AxisY.MinorGrid.LineColor;
+            chtArea1.AxisX.Interval = 3;
 
             ChartArea chtArea2 = chtData.ChartAreas.Add("Out");
             chtArea2.AxisX.Title = chtArea1.AxisX.Title;
@@ -176,25 +177,32 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
             chtArea2.AxisY.MinorTickMark.Enabled = true;
             chtArea2.AxisY.MinorTickMark.LineColor = chtArea1.AxisY.MinorGrid.LineColor;
 
-            Series serErosion = chtData.Series.Add(EROSION_CHART_SERIES);
-            serErosion.LegendText = "Surface Lowering";
-            serErosion.ChartArea = chtArea1.Name;
-            serErosion.Color = Properties.Settings.Default.Erosion;
+            // Add series in reverse order that they will appear in legend
 
-            Series serErosionErr = chtData.Series.Add(EROSERR_CHART_SERIES);
-            serErosionErr.IsVisibleInLegend = false;
-            serErosionErr.ChartType = SeriesChartType.ErrorBar;
-            serErosionErr.ChartArea = chtArea1.Name;
-
-            Series serDeposit = chtData.Series.Add(DEPOSIT_CHART_SERIES);
-            serDeposit.LegendText = "Surface Raising";
-            serDeposit.ChartArea = chtArea1.Name;
-            serDeposit.Color = Properties.Settings.Default.Deposition;
-
+   
             Series serVolOut = chtData.Series.Add(VOLOUT__CHART_SERIES);
             serVolOut.LegendText = "Volume Out";
             serVolOut.ChartArea = chtArea2.Name;
-        }
+   
+            Series serDeposit = chtData.Series.Add(DEPOSIT_CHART_SERIES);
+            serDeposit.LegendText = "Deposition";
+            serDeposit.ChartArea = chtArea1.Name;
+            serDeposit.Color = Properties.Settings.Default.Deposition;
+            serDeposit.ChartType = SeriesChartType.StackedColumn;
+
+            Series serErosion = chtData.Series.Add(EROSION_CHART_SERIES);
+            serErosion.LegendText = "Erosion";
+            serErosion.ChartArea = chtArea1.Name;
+            serErosion.Color = Properties.Settings.Default.Erosion;
+            serErosion.ChartType = SeriesChartType.StackedColumn;
+
+            // Error bars should always be last to ensure they draw on top
+            Series serErosionErr = chtData.Series.Add(ERROR___CHART_SERIES);
+            serErosionErr.IsVisibleInLegend = false;
+            serErosionErr.ChartType = SeriesChartType.ErrorBar;
+            serErosionErr.ChartArea = chtArea1.Name;
+            serErosionErr.Color = Color.Black;
+    }
 
         private void UpdateChart()
         {
@@ -205,15 +213,36 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
             // Clear all series data points
             chtData.Series.ToList<Series>().ForEach(x => x.Points.Clear());
 
+            CustomLabelsCollection xAxisLabels = chtData.ChartAreas[0].AxisX.CustomLabels;
+            double maxY = 0;
+
             foreach (GCDCore.Project.Morphological.MorphologicalUnit unit in Analysis.Units.Where(x => !x.IsTotal))
             {
-                chtData.Series[EROSION_CHART_SERIES].Points.AddXY(unit.Name, unit.VolErosion.As(volUnit));
+                double labelStart = chtData.Series[EROSION_CHART_SERIES].Points.Count;
+                double labelEnd = labelStart + 3;
+                xAxisLabels.Add(new CustomLabel(labelStart, labelEnd, unit.Name, 0, LabelMarkStyle.Box));
 
-                chtData.Series[EROSERR_CHART_SERIES].Points.AddXY(unit.Name, new object[] { unit.VolErosion.As(volUnit), (unit.VolErosion - unit.VolErosionErr).As(volUnit), (unit.VolErosion + unit.VolErosionErr).As(volUnit) });
+                chtData.Series[EROSION_CHART_SERIES].Points.AddY(unit.VolErosion.As(volUnit));
+                chtData.Series[EROSION_CHART_SERIES].Points.AddY(0);
+                chtData.Series[EROSION_CHART_SERIES].Points.AddY(0);
 
-                chtData.Series[DEPOSIT_CHART_SERIES].Points.AddXY(unit.Name, unit.VolDeposition.As(volUnit));
+                chtData.Series[DEPOSIT_CHART_SERIES].Points.AddY(0);
+                chtData.Series[DEPOSIT_CHART_SERIES].Points.AddY(unit.VolDeposition.As(volUnit));
+                chtData.Series[DEPOSIT_CHART_SERIES].Points.AddY(0);
+
+                chtData.Series[ERROR___CHART_SERIES].Points.AddY(new object[] { unit.VolErosion.As(volUnit), (unit.VolErosion - unit.VolErosionErr).As(volUnit), (unit.VolErosion + unit.VolErosionErr).As(volUnit) });
+                chtData.Series[ERROR___CHART_SERIES].Points.AddY(new object[] { unit.VolDeposition.As(volUnit), (unit.VolDeposition - unit.VolDepositionErr).As(volUnit), (unit.VolDeposition + unit.VolDepositionErr).As(volUnit) });
+                chtData.Series[ERROR___CHART_SERIES].Points.AddY(new object[] { 0, 0, 0 });
+
+                maxY = Math.Max(maxY, (unit.VolErosion + unit.VolErosionErr).As(volUnit));
+                maxY = Math.Max(maxY, (unit.VolDeposition + unit.VolDepositionErr).As(volUnit));
+
                 chtData.Series[VOLOUT__CHART_SERIES].Points.AddXY(unit.Name, unit.VolOut.As(volUnit));
+
             }
+
+            chtData.ChartAreas[0].AxisY.Maximum = Math.Ceiling(maxY);
+            chtData.ChartAreas[0].AxisY.RoundAxisValues();
         }
 
         private void cmdBrowse_Click(object sender, EventArgs e)
