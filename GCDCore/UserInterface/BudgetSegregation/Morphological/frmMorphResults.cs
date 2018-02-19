@@ -92,6 +92,11 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
             Analysis.Duration = UnitsNet.Duration.From((double)valDuration.Value, Analysis.DurationDisplayUnits);
         }
 
+        private void valDensity_ValueChanged(object sender, EventArgs e)
+        {
+            Analysis.Density = valDensity.Value;
+        }
+
         private void cboDuration_SelectedIndexChanged(object sender, EventArgs e)
         {
             // Get the existing duration units from the analysis
@@ -121,6 +126,8 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
             UpdateCriticalDuration();
         }
 
+
+
         private void UpdateCriticalDuration()
         {
             decimal value = 0;
@@ -134,16 +141,26 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
         private void UnitsChanged(object sender, EventArgs e)
         {
             string abbr = UnitsNet.Volume.GetAbbreviation(((FormattedVolumeUnit)cboVolumeUnits.SelectedItem).VolumeUnit);
+
+            // This will cause the analysis to recalculate the flux volume and flux mass
+            Analysis.DisplayVolumeUnits = ((FormattedVolumeUnit)cboVolumeUnits.SelectedItem).VolumeUnit;
+
             foreach (DataGridViewColumn col in grdData.Columns)
             {
-                if (col.HeaderText.ToLower().Contains("vol"))
-                {
-                    col.HeaderText = string.Format("{0}({1})", col.HeaderText.Substring(0, col.HeaderText.IndexOf("(")), abbr);
-                }
-                else if (string.Compare(col.Name, "colWork", true) == 0)
+                if (string.Compare(col.Name, "colFuxVolume", true) == 0)
                 {
                     col.HeaderText = string.Format("{0}({1}/{2})", col.HeaderText.Substring(0, col.HeaderText.IndexOf("(")), abbr,
                        UnitsNet.Duration.GetAbbreviation(((UnitsNet.Units.DurationUnit)cboDuration.SelectedItem)));
+                }
+                else if (string.Compare(col.Name, "colFluxMass", true) == 0)
+                {
+                    col.HeaderText = string.Format("{0}({1}/{2})", col.HeaderText.Substring(0, col.HeaderText.IndexOf("(")), UnitsNet.Mass.GetAbbreviation(UnitsNet.Units.MassUnit.Kilogram),
+                               UnitsNet.Duration.GetAbbreviation(((UnitsNet.Units.DurationUnit)cboDuration.SelectedItem)));
+
+                }
+                else if (col.HeaderText.ToLower().Contains("vol"))
+                {
+                    col.HeaderText = string.Format("{0}({1})", col.HeaderText.Substring(0, col.HeaderText.IndexOf("(")), abbr);
                 }
             }
 
@@ -179,11 +196,11 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
 
             // Add series in reverse order that they will appear in legend
 
-   
+
             Series serVolOut = chtData.Series.Add(VOLOUT__CHART_SERIES);
             serVolOut.LegendText = "Volume Out";
             serVolOut.ChartArea = chtArea2.Name;
-   
+
             Series serDeposit = chtData.Series.Add(DEPOSIT_CHART_SERIES);
             serDeposit.LegendText = "Deposition";
             serDeposit.ChartArea = chtArea1.Name;
@@ -202,7 +219,7 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
             serErosionErr.ChartType = SeriesChartType.ErrorBar;
             serErosionErr.ChartArea = chtArea1.Name;
             serErosionErr.Color = Color.Black;
-    }
+        }
 
         private void UpdateChart()
         {
@@ -254,7 +271,12 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
 
         private void grdData_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            if (grdData.Columns[e.ColumnIndex].HeaderText.ToLower().Contains("vol"))
+            if (e.Value == null)
+                return;
+
+            string colName = grdData.Columns[e.ColumnIndex].HeaderText.ToLower();
+
+            if (e.Value is UnitsNet.Volume)
             {
                 e.Value = ((UnitsNet.Volume)e.Value).As(((FormattedVolumeUnit)cboVolumeUnits.SelectedItem).VolumeUnit);
             }
@@ -381,5 +403,6 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
                 }
             }
         }
+
     }
 }

@@ -23,7 +23,7 @@ namespace GCDCore.Project.Morphological
 
         public readonly BindingList<MorphologicalUnit> Units;
 
-        public MorphologicalAnalysis(string name, DirectoryInfo outputFolder, BudgetSegregation bs)
+        public MorphologicalAnalysis(string name, DirectoryInfo outputFolder, BudgetSegregation bs, UnitsNet.Units.VolumeUnit eVolumeUnits)
         {
             Name = name;
             OutputFolder = outputFolder;
@@ -33,6 +33,7 @@ namespace GCDCore.Project.Morphological
             _porosity = 0.26m;
             _density = 2.65m;
             _competency = 1m;
+            _DisplayVolumeUnits = eVolumeUnits;
 
             Units = new BindingList<MorphologicalUnit>();
             InitializeMorphologicalUnits();
@@ -184,6 +185,24 @@ namespace GCDCore.Project.Morphological
 
         }
 
+        private UnitsNet.Units.VolumeUnit _DisplayVolumeUnits;
+        public UnitsNet.Units.VolumeUnit DisplayVolumeUnits
+        {
+            get
+            {
+                return _DisplayVolumeUnits;
+            }
+
+            set
+            {
+                if (_DisplayVolumeUnits != value)
+                {
+                    _DisplayVolumeUnits = value;
+                    CalculateWork();
+                }
+            }
+        }
+
         public UnitsNet.Duration CompetentDuration { get { return UnitsNet.Duration.From(this.Duration.As(DurationDisplayUnits) * (double)Competency, DurationDisplayUnits); } }
 
         private decimal _competency;
@@ -200,16 +219,30 @@ namespace GCDCore.Project.Morphological
             }
         }
 
-        private void CalculateWork()
+        public void CalculateWork()
         {
             decimal duration = (decimal)CompetentDuration.As(DurationDisplayUnits);
+
+            UnitsNet.Density density = UnitsNet.Density.From((double)Density, UnitsNet.Units.DensityUnit.GramPerCubicCentimeter);
+            decimal massPerUnitVolume = (decimal)density.As(UnitsNet.Units.DensityUnit.KilogramPerCubicMeter);
+
             if (duration > 0)
             {
-                Units.ToList<MorphologicalUnit>().ForEach(x => x.Work = (1m - Porosity) * (decimal)x.VolOut.As(ProjectManager.Project.Units.VolUnit) / duration);
+                foreach (MorphologicalUnit unit in Units)
+                {
+                    // The volume flux per unit time. THIS IS IN DISPLAY VOLUME UNITS
+                    unit.FluxVolume = (1m - Porosity) * (decimal)unit.VolOut.As(DisplayVolumeUnits) / duration;
+
+                    // The volume flux per unit volume and per unit time. THIS IS IN CUBIC METRES
+                    decimal volumeFluxPerUnitVolume = (decimal) UnitsNet.Volume.From((double) unit.FluxVolume, DisplayVolumeUnits).As(UnitsNet.Units.VolumeUnit.CubicMeter);
+
+                    // Mass of material per unit time. (Should be independent of volume)
+                    unit.FluxMass = volumeFluxPerUnitVolume * massPerUnitVolume;
+                }
             }
             else
             {
-                Units.ToList<MorphologicalUnit>().ForEach(x => x.Work = 0m);
+                Units.ToList<MorphologicalUnit>().ForEach(x => x.FluxVolume = 0m);
             }
             Units.ResetBindings();
         }

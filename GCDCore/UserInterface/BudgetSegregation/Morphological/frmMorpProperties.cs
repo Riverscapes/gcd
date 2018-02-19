@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using GCDCore.Project;
+using GCDCore.Project.Morphological;
 
 namespace GCDCore.UserInterface.BudgetSegregation.Morphological
 {
@@ -20,7 +21,7 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
             InitializeComponent();
 
             // Load all budget segregations that are part of the same DoD 
-            cboBS.DataSource = new BindingList<GCDCore.Project.BudgetSegregation>(bs.DoD.BudgetSegregations.Values.ToList<GCDCore.Project.BudgetSegregation>().Where(x=>x.IsMaskDirectional).ToList<GCDCore.Project.BudgetSegregation>());
+            cboBS.DataSource = new BindingList<GCDCore.Project.BudgetSegregation>(bs.DoD.BudgetSegregations.Values.ToList<GCDCore.Project.BudgetSegregation>().Where(x => x.IsMaskDirectional).ToList<GCDCore.Project.BudgetSegregation>());
             cboBS.SelectedItem = bs;
         }
 
@@ -37,7 +38,8 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
                 return;
             }
 
-            Analysis = new GCDCore.Project.Morphological.MorphologicalAnalysis(txtName.Text, ProjectManager.Project.GetAbsoluteDir(txtPath.Text), cboBS.SelectedItem as GCDCore.Project.BudgetSegregation);
+            Analysis = new MorphologicalAnalysis(txtName.Text, ProjectManager.Project.GetAbsoluteDir(txtPath.Text), cboBS.SelectedItem as GCDCore.Project.BudgetSegregation,
+                ProjectManager.Project.Units.VolUnit);
         }
 
         private bool ValidateForm()

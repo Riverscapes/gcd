@@ -34,7 +34,8 @@ namespace GCDCore.Project.Morphological
 
         public UnitsNet.Volume VolIn { get; set; }
         public UnitsNet.Volume VolOut { get; set; }
-        public decimal Work { get; set; }
+        public decimal FluxVolume { get; set; }
+        public decimal FluxMass { get; set; }
         public UnitsNet.Volume CumulativeVolume { get; set; }
 
         public MorphologicalUnit(string name, bool isTotal = false)

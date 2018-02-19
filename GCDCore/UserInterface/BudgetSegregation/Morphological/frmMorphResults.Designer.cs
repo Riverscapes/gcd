@@ -41,6 +41,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMorphResults));
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
@@ -73,7 +74,6 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.chtData = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.ucDoDPropertiesGrid1 = new GCDCore.UserInterface.ChangeDetection.ucDoDPropertiesGrid();
             this.label7 = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -87,8 +87,10 @@
             this.volChange = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colVolumeIn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colVolumeOut = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colWork = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colFuxVolume = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colFluxMass = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colCumulative = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ucDoDPropertiesGrid1 = new GCDCore.UserInterface.ChangeDetection.ucDoDPropertiesGrid();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -109,7 +111,7 @@
             // button3
             // 
             this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button3.Location = new System.Drawing.Point(12, 459);
+            this.button3.Location = new System.Drawing.Point(12, 512);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 8;
@@ -122,7 +124,7 @@
             this.button2.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.button2.Image = global::GCDCore.Properties.Resources.Save;
             this.button2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button2.Location = new System.Drawing.Point(704, 459);
+            this.button2.Location = new System.Drawing.Point(921, 512);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 6;
@@ -134,7 +136,7 @@
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.button1.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.button1.Location = new System.Drawing.Point(785, 459);
+            this.button1.Location = new System.Drawing.Point(1002, 512);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 7;
@@ -152,7 +154,7 @@
             this.tabControl1.Location = new System.Drawing.Point(12, 71);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(846, 382);
+            this.tabControl1.Size = new System.Drawing.Size(1063, 435);
             this.tabControl1.TabIndex = 5;
             // 
             // tabPage1
@@ -164,7 +166,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(838, 356);
+            this.tabPage1.Size = new System.Drawing.Size(1055, 409);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Tabular Results";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -184,11 +186,17 @@
             // 
             // valDensity
             // 
-            this.valDensity.DecimalPlaces = 3;
-            this.valDensity.Location = new System.Drawing.Point(131, 45);
+            this.valDensity.DecimalPlaces = 2;
+            this.valDensity.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            this.valDensity.Location = new System.Drawing.Point(139, 45);
             this.valDensity.Name = "valDensity";
-            this.valDensity.Size = new System.Drawing.Size(120, 20);
+            this.valDensity.Size = new System.Drawing.Size(112, 20);
             this.valDensity.TabIndex = 3;
+            this.valDensity.ValueChanged += new System.EventHandler(this.valDensity_ValueChanged);
             this.valDensity.Enter += new System.EventHandler(this.NumericUpDown_Enter);
             // 
             // label1
@@ -208,14 +216,14 @@
             0,
             0,
             131072});
-            this.valPorosity.Location = new System.Drawing.Point(131, 19);
+            this.valPorosity.Location = new System.Drawing.Point(139, 19);
             this.valPorosity.Maximum = new decimal(new int[] {
             1,
             0,
             0,
             0});
             this.valPorosity.Name = "valPorosity";
-            this.valPorosity.Size = new System.Drawing.Size(120, 20);
+            this.valPorosity.Size = new System.Drawing.Size(112, 20);
             this.valPorosity.TabIndex = 1;
             this.valPorosity.Enter += new System.EventHandler(this.NumericUpDown_Enter);
             // 
@@ -224,9 +232,9 @@
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(9, 49);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(118, 13);
+            this.label6.Size = new System.Drawing.Size(124, 13);
             this.label6.TabIndex = 2;
-            this.label6.Text = "Sediment density (g/m³)";
+            this.label6.Text = "Sediment density (g/cm³)";
             // 
             // groupBox2
             // 
@@ -346,7 +354,8 @@
             this.volChange,
             this.colVolumeIn,
             this.colVolumeOut,
-            this.colWork,
+            this.colFuxVolume,
+            this.colFluxMass,
             this.colCumulative});
             this.grdData.ContextMenuStrip = this.cmsDataGrid;
             this.grdData.Location = new System.Drawing.Point(12, 194);
@@ -354,7 +363,7 @@
             this.grdData.ReadOnly = true;
             this.grdData.RowHeadersVisible = false;
             this.grdData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.grdData.Size = new System.Drawing.Size(820, 156);
+            this.grdData.Size = new System.Drawing.Size(1037, 209);
             this.grdData.TabIndex = 3;
             this.grdData.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.grdData_CellFormatting);
             // 
@@ -452,7 +461,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(838, 356);
+            this.tabPage2.Size = new System.Drawing.Size(1055, 409);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Graphical Results";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -470,7 +479,7 @@
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             this.chtData.Series.Add(series1);
-            this.chtData.Size = new System.Drawing.Size(832, 350);
+            this.chtData.Size = new System.Drawing.Size(1049, 403);
             this.chtData.TabIndex = 0;
             this.chtData.Text = "chart1";
             // 
@@ -480,18 +489,10 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(838, 356);
+            this.tabPage3.Size = new System.Drawing.Size(1055, 409);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Inputs";
             this.tabPage3.UseVisualStyleBackColor = true;
-            // 
-            // ucDoDPropertiesGrid1
-            // 
-            this.ucDoDPropertiesGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucDoDPropertiesGrid1.Location = new System.Drawing.Point(3, 3);
-            this.ucDoDPropertiesGrid1.Name = "ucDoDPropertiesGrid1";
-            this.ucDoDPropertiesGrid1.Size = new System.Drawing.Size(832, 350);
-            this.ucDoDPropertiesGrid1.TabIndex = 0;
             // 
             // label7
             // 
@@ -617,31 +618,49 @@
             this.colVolumeOut.Name = "colVolumeOut";
             this.colVolumeOut.ReadOnly = true;
             // 
-            // colWork
+            // colFuxVolume
             // 
-            this.colWork.DataPropertyName = "Work";
+            this.colFuxVolume.DataPropertyName = "FluxVolume";
             dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
             dataGridViewCellStyle8.Format = "#,##0.00";
-            this.colWork.DefaultCellStyle = dataGridViewCellStyle8;
-            this.colWork.HeaderText = "Qb Out ()";
-            this.colWork.Name = "colWork";
-            this.colWork.ReadOnly = true;
+            this.colFuxVolume.DefaultCellStyle = dataGridViewCellStyle8;
+            this.colFuxVolume.HeaderText = "Qb Out Volume Flux ()";
+            this.colFuxVolume.Name = "colFuxVolume";
+            this.colFuxVolume.ReadOnly = true;
+            // 
+            // colFluxMass
+            // 
+            this.colFluxMass.DataPropertyName = "FluxMass";
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle9.Format = "#,##0.00";
+            this.colFluxMass.DefaultCellStyle = dataGridViewCellStyle9;
+            this.colFluxMass.HeaderText = "Qb Out Mass Flux ()";
+            this.colFluxMass.Name = "colFluxMass";
+            this.colFluxMass.ReadOnly = true;
             // 
             // colCumulative
             // 
             this.colCumulative.DataPropertyName = "CumulativeVolume";
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle9.Format = "#,##0.00";
-            this.colCumulative.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle10.Format = "#,##0.00";
+            this.colCumulative.DefaultCellStyle = dataGridViewCellStyle10;
             this.colCumulative.HeaderText = "Cumulative Volume Change ()";
             this.colCumulative.Name = "colCumulative";
             this.colCumulative.ReadOnly = true;
+            // 
+            // ucDoDPropertiesGrid1
+            // 
+            this.ucDoDPropertiesGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucDoDPropertiesGrid1.Location = new System.Drawing.Point(3, 3);
+            this.ucDoDPropertiesGrid1.Name = "ucDoDPropertiesGrid1";
+            this.ucDoDPropertiesGrid1.Size = new System.Drawing.Size(1049, 403);
+            this.ucDoDPropertiesGrid1.TabIndex = 0;
             // 
             // frmMorphResults
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(870, 494);
+            this.ClientSize = new System.Drawing.Size(1087, 547);
             this.Controls.Add(this.cmdBrowse);
             this.Controls.Add(this.txtPath);
             this.Controls.Add(this.label8);
@@ -725,7 +744,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn volChange;
         private System.Windows.Forms.DataGridViewTextBoxColumn colVolumeIn;
         private System.Windows.Forms.DataGridViewTextBoxColumn colVolumeOut;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colWork;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colFuxVolume;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colFluxMass;
         private System.Windows.Forms.DataGridViewTextBoxColumn colCumulative;
     }
 }
