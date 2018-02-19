@@ -31,7 +31,7 @@ namespace GCDCore.Project.Morphological
             DurationDisplayUnits = UnitsNet.Units.DurationUnit.Hour;
             _duration = UnitsNet.Duration.From(1, DurationDisplayUnits);
             _porosity = 0.26m;
-            _density = 2.5m;
+            _density = 2.65m;
             _competency = 1m;
 
             Units = new BindingList<MorphologicalUnit>();
