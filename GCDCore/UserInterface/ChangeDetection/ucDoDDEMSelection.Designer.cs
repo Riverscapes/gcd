@@ -58,14 +58,14 @@
             this.GroupBox4.TabStop = false;
             this.GroupBox4.Text = "Old DEM Survey or Reference Surface";
             // 
-            // cboOldDEM
+            // cboOldSurface
             // 
             this.cboOldSurface.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cboOldSurface.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboOldSurface.FormattingEnabled = true;
             this.cboOldSurface.Location = new System.Drawing.Point(52, 21);
-            this.cboOldSurface.Name = "cboOldDEM";
+            this.cboOldSurface.Name = "cboOldSurface";
             this.cboOldSurface.Size = new System.Drawing.Size(184, 21);
             this.cboOldSurface.TabIndex = 1;
             this.cboOldSurface.SelectedIndexChanged += new System.EventHandler(this.SurfaceComboSelectedIndexChanged);
@@ -111,16 +111,16 @@
             this.GroupBox1.Size = new System.Drawing.Size(242, 83);
             this.GroupBox1.TabIndex = 6;
             this.GroupBox1.TabStop = false;
-            this.GroupBox1.Text = "New Or Current DEM Survey";
+            this.GroupBox1.Text = "New or Current DEM Survey";
             // 
-            // cboNewDEM
+            // cboNewSurface
             // 
             this.cboNewSurface.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cboNewSurface.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboNewSurface.FormattingEnabled = true;
             this.cboNewSurface.Location = new System.Drawing.Point(54, 21);
-            this.cboNewSurface.Name = "cboNewDEM";
+            this.cboNewSurface.Name = "cboNewSurface";
             this.cboNewSurface.Size = new System.Drawing.Size(182, 21);
             this.cboNewSurface.TabIndex = 1;
             this.cboNewSurface.SelectedIndexChanged += new System.EventHandler(this.SurfaceComboSelectedIndexChanged);
