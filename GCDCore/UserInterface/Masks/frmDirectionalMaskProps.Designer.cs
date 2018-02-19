@@ -125,19 +125,19 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cboDistance.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboDistance.FormattingEnabled = true;
-            this.cboDistance.Location = new System.Drawing.Point(114, 44);
+            this.cboDistance.Location = new System.Drawing.Point(148, 46);
             this.cboDistance.Name = "cboDistance";
-            this.cboDistance.Size = new System.Drawing.Size(374, 21);
+            this.cboDistance.Size = new System.Drawing.Size(346, 21);
             this.cboDistance.TabIndex = 3;
             // 
             // chkDistance
             // 
             this.chkDistance.AutoSize = true;
-            this.chkDistance.Location = new System.Drawing.Point(21, 46);
+            this.chkDistance.Location = new System.Drawing.Point(9, 48);
             this.chkDistance.Name = "chkDistance";
-            this.chkDistance.Size = new System.Drawing.Size(90, 17);
+            this.chkDistance.Size = new System.Drawing.Size(136, 17);
             this.chkDistance.TabIndex = 2;
-            this.chkDistance.Text = "Distance field";
+            this.chkDistance.Text = "Distance field (optional)";
             this.chkDistance.UseVisualStyleBackColor = true;
             this.chkDistance.CheckedChanged += new System.EventHandler(this.UpdateControls);
             // 
@@ -147,15 +147,15 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cboDirection.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboDirection.FormattingEnabled = true;
-            this.cboDirection.Location = new System.Drawing.Point(114, 17);
+            this.cboDirection.Location = new System.Drawing.Point(148, 16);
             this.cboDirection.Name = "cboDirection";
-            this.cboDirection.Size = new System.Drawing.Size(374, 21);
+            this.cboDirection.Size = new System.Drawing.Size(346, 21);
             this.cboDirection.TabIndex = 1;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(40, 21);
+            this.label2.Location = new System.Drawing.Point(70, 20);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(71, 13);
             this.label2.TabIndex = 0;
@@ -164,11 +164,11 @@
             // chkLabel
             // 
             this.chkLabel.AutoSize = true;
-            this.chkLabel.Location = new System.Drawing.Point(37, 84);
+            this.chkLabel.Location = new System.Drawing.Point(25, 84);
             this.chkLabel.Name = "chkLabel";
-            this.chkLabel.Size = new System.Drawing.Size(74, 17);
+            this.chkLabel.Size = new System.Drawing.Size(120, 17);
             this.chkLabel.TabIndex = 4;
-            this.chkLabel.Text = "Label field";
+            this.chkLabel.Text = "Label field (optional)";
             this.chkLabel.UseVisualStyleBackColor = true;
             this.chkLabel.CheckedChanged += new System.EventHandler(this.UpdateControls);
             // 
@@ -178,18 +178,18 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cboLabel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboLabel.FormattingEnabled = true;
-            this.cboLabel.Location = new System.Drawing.Point(120, 82);
+            this.cboLabel.Location = new System.Drawing.Point(154, 82);
             this.cboLabel.Name = "cboLabel";
-            this.cboLabel.Size = new System.Drawing.Size(377, 21);
+            this.cboLabel.Size = new System.Drawing.Size(346, 21);
             this.cboLabel.TabIndex = 5;
             // 
             // ucPolygon
             // 
             this.ucPolygon.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.ucPolygon.Location = new System.Drawing.Point(120, 22);
+            this.ucPolygon.Location = new System.Drawing.Point(154, 22);
             this.ucPolygon.Name = "ucPolygon";
-            this.ucPolygon.Size = new System.Drawing.Size(377, 23);
+            this.ucPolygon.Size = new System.Drawing.Size(346, 23);
             this.ucPolygon.TabIndex = 1;
             // 
             // cboField
@@ -198,15 +198,15 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cboField.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboField.FormattingEnabled = true;
-            this.cboField.Location = new System.Drawing.Point(120, 53);
+            this.cboField.Location = new System.Drawing.Point(154, 53);
             this.cboField.Name = "cboField";
-            this.cboField.Size = new System.Drawing.Size(377, 21);
+            this.cboField.Size = new System.Drawing.Size(346, 21);
             this.cboField.TabIndex = 3;
             // 
             // Label7
             // 
             this.Label7.AutoSize = true;
-            this.Label7.Location = new System.Drawing.Point(82, 57);
+            this.Label7.Location = new System.Drawing.Point(113, 57);
             this.Label7.Name = "Label7";
             this.Label7.Size = new System.Drawing.Size(29, 13);
             this.Label7.TabIndex = 2;
@@ -215,7 +215,7 @@
             // Label6
             // 
             this.Label6.AutoSize = true;
-            this.Label6.Location = new System.Drawing.Point(40, 27);
+            this.Label6.Location = new System.Drawing.Point(70, 27);
             this.Label6.Name = "Label6";
             this.Label6.Size = new System.Drawing.Size(71, 13);
             this.Label6.TabIndex = 0;

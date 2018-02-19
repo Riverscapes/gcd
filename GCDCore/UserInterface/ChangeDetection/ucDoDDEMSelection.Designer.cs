@@ -56,7 +56,7 @@
             this.GroupBox4.Size = new System.Drawing.Size(242, 83);
             this.GroupBox4.TabIndex = 7;
             this.GroupBox4.TabStop = false;
-            this.GroupBox4.Text = "Old DEM Survey or Reference Surface";
+            this.GroupBox4.Text = "Old DEM or Reference Surface";
             // 
             // cboOldSurface
             // 
@@ -111,7 +111,7 @@
             this.GroupBox1.Size = new System.Drawing.Size(242, 83);
             this.GroupBox1.TabIndex = 6;
             this.GroupBox1.TabStop = false;
-            this.GroupBox1.Text = "New or Current DEM Survey";
+            this.GroupBox1.Text = "New DEM or Reference Surface";
             // 
             // cboNewSurface
             // 
