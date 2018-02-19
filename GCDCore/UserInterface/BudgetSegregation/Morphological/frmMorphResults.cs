@@ -44,6 +44,7 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
             ucDoDPropertiesGrid1.AddDoDProperty("Budget Segregation", Analysis.BS.Name);
             ucDoDPropertiesGrid1.AddDoDProperty("Directional Mask", Analysis.BS.Mask.Name);
             ucDoDPropertiesGrid1.AddDoDProperty("Directional Mask Field", Analysis.BS.Mask._Field);
+            ucDoDPropertiesGrid1.AddDoDProperty("Mask Type", Analysis.BS.Mask.MaskTypeLabel);
 
             foreach (UnitsNet.Units.DurationUnit val in Enum.GetValues(typeof(UnitsNet.Units.DurationUnit)))
                 cboDuration.Items.Add(val);
@@ -345,7 +346,7 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
                 {
                     System.Diagnostics.Process.Start(frm.FileName);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     MessageBox.Show(string.Format("The tabular data file was created at {0} but an error occured attempting to open the file.", frm.FileName), Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }

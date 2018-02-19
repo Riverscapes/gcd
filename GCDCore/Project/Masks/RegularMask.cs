@@ -12,6 +12,8 @@ namespace GCDCore.Project.Masks
     {
         public readonly List<MaskItem> _Items;
 
+        public override string MaskTypeLabel { get { return "Regular Mask"; } }
+
         public RegularMask(string name, FileInfo shapeFile, string field, List<MaskItem> items)
             : base(name, shapeFile, field)
         {
@@ -23,7 +25,7 @@ namespace GCDCore.Project.Masks
             get
             {
                 Dictionary<string, string> result = new Dictionary<string, string>();
-                foreach(MaskItem item in _Items.Where(x=>x.Include))
+                foreach (MaskItem item in _Items.Where(x => x.Include))
                 {
                     if (!result.ContainsKey(item.FieldValue))
                         result[item.FieldValue] = string.IsNullOrEmpty(item.Label) ? item.FieldValue : item.Label;

@@ -32,6 +32,11 @@ namespace GCDCore.Project.Masks
         public abstract Dictionary<string, string> ActiveFieldValues { get; }
 
         /// <summary>
+        /// Returns a read only label indicating if the mask is "Regular Mask" or "Directional Mask"
+        /// </summary>
+        public abstract string MaskTypeLabel { get; }
+
+        /// <summary>
         /// Deserialize from XML
         /// </summary>
         /// <param name="nodParent"></param>

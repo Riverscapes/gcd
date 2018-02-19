@@ -14,6 +14,8 @@ namespace GCDCore.Project.Masks
         public readonly string DirectionField;
         public readonly string DistanceField;
 
+        public override string MaskTypeLabel { get { return "Directional Mask"; } }
+
         public override Dictionary<string, string> ActiveFieldValues
         {
             get
