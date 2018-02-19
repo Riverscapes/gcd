@@ -82,7 +82,7 @@ namespace GCDCore.UserInterface.Masks
             // Use the ShapeFile file name if the user hasn't specified one yet
             if (string.IsNullOrEmpty(txtName.Text))
             {
-                txtName.Text = naru.os.File.RemoveDangerousCharacters(System.IO.Path.GetFileNameWithoutExtension(shapeFile.GISFileInfo.FullName));
+                txtName.Text = Path.GetFileNameWithoutExtension(shapeFile.GISFileInfo.FullName);
             }
 
             cboField.DataSource = shapeFile.Fields.Values.Where(x => x.Type.Equals(GCDConsoleLib.GDalFieldType.StringField)).ToList<GCDConsoleLib.VectorField>();
@@ -139,7 +139,7 @@ namespace GCDCore.UserInterface.Masks
                 return false;
             }
 
-            if (MaskItems.Count(x => !x.Include) < 1)
+            if (MaskItems.Count(x => x.Include) < 1)
             {
                 MessageBox.Show("You must check the box beside at least one field value.", "No Field Values Included", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 grdData.Select();

@@ -208,7 +208,7 @@ namespace GCDCore.UserInterface.ChangeDetection
                 }
                 else
                 {
-                    txtOutputFolder.Text = ProjectManager.Project.GetRelativePath(ProjectManager.OutputManager.GetDoDOutputFolder(txtName.Text).FullName);
+                    txtOutputFolder.Text = ProjectManager.Project.GetRelativePath(ProjectManager.OutputManager.GetDoDOutputFolder().FullName);
                 }
 
             }

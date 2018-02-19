@@ -165,199 +165,7 @@ namespace GCDCore
         }
 
         #endregion
-
-        //Public Function GetErrorRasterPath(sFolder As String, ByVal sSurveyName As String, ByVal sErrorName As String) As String
-        //    'structure: Inputs/Surveyname/ErrorSurfaces/ErrorSurfaceName/RasterName
-
-        //    'input directory
-        //    Dim inputsDirectoryPath As String = Path.Combine(sFolder, "Inputs")
-        //    If Not Directory.Exists(inputsDirectoryPath) Then
-        //        Directory.CreateDirectory(inputsDirectoryPath)
-        //    End If
-
-        //    'Survey directory
-        //    Dim sSafeSurveyName As String = naru.os.File.RemoveDangerousCharacters(sSurveyName)
-        //    Dim surveyDirectoryPath As String = Path.Combine(inputsDirectoryPath, sSafeSurveyName)
-        //    If Not Directory.Exists(surveyDirectoryPath) Then
-        //        Directory.CreateDirectory(surveyDirectoryPath)
-        //    End If
-
-        //    'Error Surfaces directory
-        //    Dim ErrorSurfacesDirectoryPath As String = Path.Combine(surveyDirectoryPath, "ErrorSurfaces")
-        //    If Not Directory.Exists(ErrorSurfacesDirectoryPath) Then
-        //        Directory.CreateDirectory(ErrorSurfacesDirectoryPath)
-        //    End If
-
-        //    'ErrorSurfaceName directory
-        //    Dim sSafeErrorName As String = naru.os.File.RemoveDangerousCharacters(sErrorName)
-        //    Dim ErrorNameDirectoryPath As String = Path.Combine(ErrorSurfacesDirectoryPath, sSafeErrorName)
-        //    If Not Directory.Exists(ErrorNameDirectoryPath) Then
-        //        Directory.CreateDirectory(ErrorNameDirectoryPath)
-        //    End If
-
-        //    ' PGB 14 Sep 2011 - trying to avoid these characters now and use io.path.combine instread
-        //    'errorCalcDirectoryPath &= Path.DirectorySeparatorChar
-        //    'generate error name
-        //    Dim errorCalcPath As String = GISCode.GCDConsoleLib.Raster.GetNewSafeName(ErrorNameDirectoryPath, RasterType, sErrorName, 12)
-        //    Return errorCalcPath
-        //End Function
-
-        //Public Function GetMethodErrorSurfarcePath(sFolder As String, ByVal sSurveyName As String, ByVal sErrorName As String, ByVal sMethod As String) As String
-        //    'structure: Inputs/Surveyname/ErrorSurfaces/ErrorSurfaceName/Method/RasterName
-
-        //    'input directory
-        //    Dim inputsDirectoryPath As String = Path.Combine(sFolder, "Inputs")
-        //    If Not Directory.Exists(inputsDirectoryPath) Then
-        //        Directory.CreateDirectory(inputsDirectoryPath)
-        //    End If
-
-        //    'Survey directory
-        //    Dim sSafeSurveyName As String = naru.os.File.RemoveDangerousCharacters(sSurveyName)
-        //    Dim surveyDirectoryPath As String = Path.Combine(inputsDirectoryPath, sSafeSurveyName)
-        //    If Not Directory.Exists(surveyDirectoryPath) Then
-        //        Directory.CreateDirectory(surveyDirectoryPath)
-        //    End If
-
-        //    'Error Surfaces directory
-        //    Dim ErrorSurfacesDirectoryPath As String = Path.Combine(surveyDirectoryPath, "ErrorSurfaces")
-        //    If Not Directory.Exists(ErrorSurfacesDirectoryPath) Then
-        //        Directory.CreateDirectory(ErrorSurfacesDirectoryPath)
-        //    End If
-
-        //    'ErrorSurfaceName directory
-        //    Dim sSafeErrorName As String = naru.os.File.RemoveDangerousCharacters(sErrorName)
-        //    Dim ErrorNameDirectoryPath As String = Path.Combine(ErrorSurfacesDirectoryPath, sSafeErrorName)
-        //    If Not Directory.Exists(ErrorNameDirectoryPath) Then
-        //        Directory.CreateDirectory(ErrorNameDirectoryPath)
-        //    End If
-
-        //    'MethodName directory
-        //    Dim sSafeMethodName As String = naru.os.File.RemoveDangerousCharacters(sMethod)
-        //    Dim sMethodNameDirectory As String = Path.Combine(ErrorNameDirectoryPath, sSafeMethodName)
-        //    If Not Directory.Exists(sMethodNameDirectory) Then
-        //        Directory.CreateDirectory(sMethodNameDirectory)
-        //    End If
-
-        //    ' PGB 14 Sep 2011 - trying to avoid these characters now and use io.path.combine instread
-        //    'errorCalcDirectoryPath &= Path.DirectorySeparatorChar
-        //    'generate error name
-        //    Dim sMethodErrorSurfacePath As String = GCDConsoleLib.Raster.GetNewSafeName(sMethodNameDirectory, RasterType, sMethod, 12)
-        //    Return sMethodErrorSurfacePath
-        //End Function
-
-        //Public Function GetDoDThresholdPath(sFolder As String, ByVal sDoDName As String) As String
-        //    Dim safeDoDName As String = naru.os.File.RemoveDangerousCharacters(sDoDName)
-        //    'get DoD output path
-        //    Dim dodDirectoryPath As String = GetDoDOutputPath(sFolder, sDoDName)
-        //    'generate error name
-        //    Dim dodThresholdPath As String = GCDConsoleLib.Raster.GetNewSafeName(dodDirectoryPath, RasterType, safeDoDName, 12)
-        //    Return dodThresholdPath
-        //End Function
-
-        //Public Function GetCsvThresholdPath(sFolder As String, ByVal sDoDName As String) As String
-        //    Dim safeDoDName As String = naru.os.File.RemoveDangerousCharacters(sDoDName)
-        //    'get DoD output path
-        //    Dim dodDirectoryPath As String = GetDoDOutputPath(sFolder, sDoDName)
-        //    'generate error name
-        //    Dim csvThresholdPath As String = FileSystem.GetNewSafeFileName(dodDirectoryPath, safeDoDName, "csv")
-        //    Return csvThresholdPath
-        //End Function
-
-        //Public Function GetPropagatedErrorPath(sFolder As String, sDoDName As String) As String
-        //    Dim safeDoDName As String = naru.os.File.RemoveDangerousCharacters(sDoDName)
-        //    'get DoD output path
-        //    Dim dodDirectoryPath As String = GetDoDOutputPath(sFolder, sDoDName)
-        //    'generate error name
-        //    Dim dodThresholdPath As String = GCDConsoleLib.Raster.GetNewSafeName(dodDirectoryPath, RasterType, safeDoDName, 12)
-        //    Return dodThresholdPath
-        //End Function
-
-        //Public Function GetCsvRawPath(sFolder As String, ByVal sDoDName As String) As String
-        //    Dim safeDoDName As String = naru.os.File.RemoveDangerousCharacters(sDoDName)
-        //    'get DoD output path
-        //    Dim dodDirectoryPath As String = GetDoDOutputPath(sFolder, sDoDName)
-        //    'generate error name
-        //    Dim csvThresholdPath As String = FileSystem.GetNewSafeFileName(dodDirectoryPath, "raw", "csv")
-        //    Return csvThresholdPath
-        //End Function
-
-        //Public Function GetDoDRawPath(sFolder As String, ByVal sDoDName As String) As String
-        //    Dim safeDoDName As String = naru.os.File.RemoveDangerousCharacters(sDoDName)
-        //    'get DoD output path
-        //    Dim dodDirectoryPath As String = GetDoDOutputPath(sFolder, sDoDName)
-        //    'generate error name
-        //    Dim csvThresholdPath As String = GCDConsoleLib.Raster.GetNewSafeName(dodDirectoryPath, RasterType, "dod", 12)
-        //    Return csvThresholdPath
-        //End Function
-
-        //Public Function GetDoDOutputPath(sFolder As String, ByVal sDoDName As String) As String
-
-        //    'setup folder for analysis
-        //    Dim analysisDirectoryPath As String = Path.Combine(sFolder, m_sAnalysesFolder)
-        //    If Not Directory.Exists(analysisDirectoryPath) Then
-        //        Directory.CreateDirectory(analysisDirectoryPath)
-        //    End If
-
-        //    'setup folder for dods
-        //    Dim dodsDirectoryPath As String = Path.Combine(analysisDirectoryPath, m_sChangeDetectionFolder)
-        //    If Not Directory.Exists(dodsDirectoryPath) Then
-        //        Directory.CreateDirectory(dodsDirectoryPath)
-        //    End If
-
-        //    'setup folder for dods
-        //    Dim safeDoDName As String = naru.os.File.RemoveDangerousCharacters(sDoDName)
-        //    Dim dodDirectoryPath As String = Path.Combine(dodsDirectoryPath, safeDoDName)
-        //    If Not Directory.Exists(dodDirectoryPath) Then
-        //        Directory.CreateDirectory(dodDirectoryPath)
-        //    End If
-
-        //    dodDirectoryPath &= Path.DirectorySeparatorChar
-        //    Return dodDirectoryPath
-        //End Function
-
-
-
-
-        //Public Function GetChangeDetectionDirectoryPath(ByVal NewSurveyName As String, OldSurveyName As String, ByVal sDoDName As String) As String
-        //    'structure: Analyses/ChangeDetection/Dods_NewSurveyName-OldSurveyName/DoDName
-
-        //    Dim safeDoDName As String = naru.os.File.RemoveDangerousCharacters(sDoDName)
-        //    Dim sDoDFolder As String = GetDoDOutputFolder(safeDoDName)
-
-        //    'setup folder for dods directory
-        //    Dim DoDsDirectoryName As String = "DoDs_" & NewSurveyName & "-" & OldSurveyName
-        //    Dim SafeDoDsDirectoryName As String = naru.os.File.RemoveDangerousCharacters(DoDsDirectoryName)
-        //    Dim DoDsDirectoryPath As String = Path.Combine(ChangeDetectionDirectoryPath, SafeDoDsDirectoryName)
-        //    If Not Directory.Exists(DoDsDirectoryPath) Then
-        //        Directory.CreateDirectory(DoDsDirectoryPath)
-        //    End If
-
-        //    'setup folder for dod
-        //    Dim DoDDirectoryPath As String = Path.Combine(DoDsDirectoryPath, safeDoDName)
-        //    If Not Directory.Exists(DoDDirectoryPath) Then
-        //        Directory.CreateDirectory(DoDDirectoryPath)
-        //    End If
-
-        //    Return DoDDirectoryPath
-        //End Function
-
-        //Public Function GetGeomorphOutputPath(sFolder As String, ByVal sDoDName As String) As String
-
-        //    'get DoD folder 
-        //    Dim dodDirectoryPath As String = GetDoDOutputPath(sFolder, sDoDName)
-
-        //    'setup folder for Geomorph (based on GCD 4 naming convention
-        //    Dim GeomorphDirectoryPath As String = Path.Combine(dodDirectoryPath, "Geomorph")
-        //    If Not Directory.Exists(GeomorphDirectoryPath) Then
-        //        Directory.CreateDirectory(GeomorphDirectoryPath)
-        //    End If
-
-        //    GeomorphDirectoryPath &= Path.DirectorySeparatorChar
-        //    Return GeomorphDirectoryPath
-        //End Function
-
-
-
+    
         public object GetMethodMaskCopyPath(string sFolder, string sSurveyName, string OrigMethodMaskName)
         {
             //structure: Inputs/Surveyname/MethodMasks/MethodMaskName
@@ -573,34 +381,7 @@ namespace GCDCore
 
         public DirectoryInfo GetBudgetSegreationDirectoryPath(DirectoryInfo dodFolder, bool bCreate)
         {
-            DirectoryInfo bsGroupFolder = new DirectoryInfo(Path.Combine(dodFolder.FullName, m_sBudgetSegregationFolder));
-
-            if (!bsGroupFolder.Exists && bCreate)
-                bsGroupFolder.Create();
-
-            // Find unique folder on disk
-            int maxExisting = 0;
-
-            if (bsGroupFolder.Exists)
-            {
-                foreach (DirectoryInfo existingFolder in bsGroupFolder.GetDirectories("BS*", SearchOption.TopDirectoryOnly))
-                {
-                    System.Text.RegularExpressions.Match match = System.Text.RegularExpressions.Regex.Match(existingFolder.FullName, "([0-9]*)$");
-                    if (match.Groups.Count > 1)
-                    {
-                        int folderSuffix = int.Parse(match.Groups[1].Value);
-                        if (folderSuffix > maxExisting)
-                            maxExisting = folderSuffix;
-                    }
-                }
-            }
-
-            DirectoryInfo bsFolder = new DirectoryInfo(Path.Combine(bsGroupFolder.FullName, string.Format("BS{0:0000}", maxExisting + 1)));
-
-            if (bCreate)
-                bsFolder.Create();
-
-            return bsFolder;
+            return GetIndexedSubDirectory(dodFolder, m_sBudgetSegregationFolder, "BS", bCreate);
         }
 
         #region "Change Detection"
@@ -639,123 +420,23 @@ namespace GCDCore
         /// <summary>
         /// Determine the output folder for a DoD Analysis
         /// </summary>
-        /// <param name="sDoDName">Raw Name of the DoD. This method will ensure it is safe.</param>
-        /// <param name="bCreateIfMissing">True will create the necessary folder structure. False will just return the path without creating anything.</param>
+        /// <param name="bCreate">True will create the necessary folder structure. False will just return the path without creating anything.</param>
         /// <returns></returns>
         /// <remarks>Note that the user interface should call this with bCreateIfMissing as False.
         /// That way it can determine the output folder and show it to users without actually
         /// creating the folder. Then the change detection engine code can call this method with
         /// the value of True to ensure that the folder exists when it is time to create files in it.</remarks>
-        public DirectoryInfo GetDoDOutputFolder(string sDoDName, bool bCreateIfMissing = false)
+        public DirectoryInfo GetDoDOutputFolder(bool bCreate = false)
         {
-            string sDoDFolder = string.Empty;
-            int nFolderIndex = 0;
+            DirectoryInfo diParent = new DirectoryInfo(Path.Combine(ProjectManager.Project.ProjectFile.DirectoryName, m_sAnalysesFolder));
 
-            string sAnalysesFolder = Path.Combine(GCDProjectFolder(), m_sAnalysesFolder);
-            if (bCreateIfMissing && !Directory.Exists(sAnalysesFolder))
-            {
-                Directory.CreateDirectory(sAnalysesFolder);
-            }
+            if (!diParent.Exists && bCreate)
+                diParent.Create();
 
-            string sChangeDetectionFolder = Path.Combine(sAnalysesFolder, m_sChangeDetectionFolder);
-            if (bCreateIfMissing && !Directory.Exists(sChangeDetectionFolder))
-            {
-                Directory.CreateDirectory(sChangeDetectionFolder);
-            }
-
-            // By now nFolder index should hold an integer that represents either the max DoD ID or the 
-            // max folder integer suffix. Create the new DoD folder with the next biggest integer
-            do
-            {
-                nFolderIndex += 1;
-                sDoDFolder = Path.Combine(sChangeDetectionFolder, m_sDoDFolderPrefix + (nFolderIndex).ToString("0000"));
-            } while (Directory.Exists(sDoDFolder) && nFolderIndex < 9999);
-
-            if (bCreateIfMissing)
-            {
-                Directory.CreateDirectory(sDoDFolder);
-            }
-
-            return new DirectoryInfo(sDoDFolder);
+            return GetIndexedSubDirectory(diParent, m_sChangeDetectionFolder, m_sDoDFolderPrefix, bCreate);
         }
 
-        private string GetSafeDoDName(string sOriginalName)
-        {
-            return naru.os.File.RemoveDangerousCharacters(sOriginalName);
-        }
-
-        #endregion
-
-        //Public Shared Function GetErrorRasterPath(ByVal sSurveyName As String, ByVal sErrorName As String) As String
-        //    'structure: Inputs/Surveyname/ErrorSurfaces/ErrorSurfaceName/RasterName
-
-        //    'input directory
-        //    Dim inputsDirectoryPath As String = Path.Combine(outputdirectory, "Inputs")
-        //    If Not Directory.Exists(inputsDirectoryPath) Then
-        //        Directory.CreateDirectory(inputsDirectoryPath)
-        //    End If
-
-        //    'Survey directory
-        //    Dim sSafeSurveyName As String = naru.os.File.RemoveDangerousCharacters(sSurveyName)
-        //    Dim surveyDirectoryPath As String = Path.Combine(inputsDirectoryPath, sSafeSurveyName)
-        //    If Not Directory.Exists(surveyDirectoryPath) Then
-        //        Directory.CreateDirectory(surveyDirectoryPath)
-        //    End If
-
-        //    'Error Surfaces directory
-        //    Dim ErrorSurfacesDirectoryPath As String = Path.Combine(surveyDirectoryPath, "ErrorSurfaces")
-        //    If Not Directory.Exists(ErrorSurfacesDirectoryPath) Then
-        //        Directory.CreateDirectory(ErrorSurfacesDirectoryPath)
-        //    End If
-
-        //    'ErrorSurfaceName directory
-        //    Dim sSafeErrorName As String = naru.os.File.RemoveDangerousCharacters(sErrorName)
-        //    Dim ErrorNameDirectoryPath As String = Path.Combine(ErrorSurfacesDirectoryPath, sSafeErrorName)
-        //    If Not Directory.Exists(ErrorNameDirectoryPath) Then
-        //        Directory.CreateDirectory(ErrorNameDirectoryPath)
-        //    End If
-
-        //    ' PGB 14 Sep 2011 - trying to avoid these characters now and use io.path.combine instread
-        //    'errorCalcDirectoryPath &= Path.DirectorySeparatorChar
-        //    'generate error name
-        //    Dim errorCalcPath As String = GetNewSafeNameRaster(ErrorNameDirectoryPath, GISCode.GCDConsoleLib.Raster.GetDefaultRasterType(), sErrorName, 12)
-        //    Return errorCalcPath
-        //End Function
-
-
-        //Public Function GetChangeDetectionDirectoryPath(ByVal NewSurveyName As String, OldSurveyName As String, ByVal sDoDName As String) As String
-        //    'structure: Analyses/ChangeDetection/Dods_NewSurveyName-OldSurveyName/DoDName
-
-        //    Dim safeDoDName As String = naru.os.File.RemoveDangerousCharacters(sDoDName)
-
-        //    'setup folder for analysis
-        //    Dim analysisDirectoryPath As String = Path.Combine(GCDProjectFolder, "Analyses")
-        //    If Not Directory.Exists(analysisDirectoryPath) Then
-        //        Directory.CreateDirectory(analysisDirectoryPath)
-        //    End If
-
-        //    'setup folder for ChangeDetection
-        //    Dim ChangeDetectionDirectoryPath As String = Path.Combine(analysisDirectoryPath, "ChangeDetection")
-        //    If Not Directory.Exists(ChangeDetectionDirectoryPath) Then
-        //        Directory.CreateDirectory(ChangeDetectionDirectoryPath)
-        //    End If
-
-        //    'setup folder for dods directory
-        //    Dim DoDsDirectoryName As String = "DoDs_" & NewSurveyName & "-" & OldSurveyName
-        //    Dim SafeDoDsDirectoryName As String = naru.os.File.RemoveDangerousCharacters(DoDsDirectoryName)
-        //    Dim DoDsDirectoryPath As String = Path.Combine(ChangeDetectionDirectoryPath, SafeDoDsDirectoryName)
-        //    If Not Directory.Exists(DoDsDirectoryPath) Then
-        //        Directory.CreateDirectory(DoDsDirectoryPath)
-        //    End If
-
-        //    'setup folder for dod
-        //    Dim DoDDirectoryPath As String = Path.Combine(DoDsDirectoryPath, safeDoDName)
-        //    If Not Directory.Exists(DoDDirectoryPath) Then
-        //        Directory.CreateDirectory(DoDDirectoryPath)
-        //    End If
-
-        //    Return DoDDirectoryPath
-        //End Function
+        #endregion 
 
         public string GetErrorRasterPath(string sSurveyName, string sErrorName)
         {
@@ -837,63 +518,7 @@ namespace GCDCore
             return AssociatedSurfaceCopyPath;
         }
 
-        public string GetWaterSurfaceRasterPath(string sWaterSurfaceName)
-        {
-
-            //structure: Inputs/WaterSurfaces/rastername
-
-            //input directory
-            string inputsDirectoryPath = Path.Combine(GCDProjectFolder(), "Inputs");
-            if (!Directory.Exists(inputsDirectoryPath))
-            {
-                CreateDirectory(inputsDirectoryPath);
-            }
-
-            // Water Surfaces directory
-            string sSurfacesDirectoryPath = Path.Combine(inputsDirectoryPath, "WaterSurfaces");
-            if (!Directory.Exists(sSurfacesDirectoryPath))
-            {
-                CreateDirectory(sSurfacesDirectoryPath);
-            }
-
-            //Dim sExtension As String = GISCode.Raster.GetRasterType(My.Settings.DefaultRasterFormat)
-            //Dim eType As GCDConsoleLib.Raster.RasterTypes = Me.GetDefaultRasterTyp
-            string sRasterPath = naru.os.File.GetNewSafeName(sSurfacesDirectoryPath, sWaterSurfaceName, RasterExtension).FullName;
-            //sRasterPath = Path.Combine(sSurfacesDirectoryPath, sRasterPath)
-            //sRasterPath = Path.ChangeExtension(sRasterPath, GISCode.Raster.GetRasterExtension(sExtension))
-
-            return sRasterPath;
-
-        }
-
-        public string GetReservoirPath(string sDEMName, string sWaterSurfaceName)
-        {
-
-            string sReservoirPath = null;
-            string sTopfolder = GetReservoirParentFolder();
-
-            sReservoirPath = Path.Combine(sTopfolder, naru.os.File.RemoveDangerousCharacters(sDEMName) + "_" + naru.os.File.RemoveDangerousCharacters(sWaterSurfaceName));
-            if (!Directory.Exists(sReservoirPath))
-            {
-                CreateDirectory(sReservoirPath);
-            }
-
-            return sReservoirPath;
-        }
-
-        public string GetReservoirParentFolder()
-        {
-
-            string sTopFolder = Path.Combine(GCDProjectFolder(), "Reservoir");
-            if (!Directory.Exists(sTopFolder))
-            {
-                CreateDirectory(sTopFolder);
-            }
-
-            return sTopFolder;
-        }
-
-        public System.IO.DirectoryInfo GetChangeDetectionFiguresFolder(System.IO.DirectoryInfo parentFolder, bool bCreate)
+        public DirectoryInfo GetChangeDetectionFiguresFolder(System.IO.DirectoryInfo parentFolder, bool bCreate)
         {
 
             string sResult = null;
@@ -936,48 +561,54 @@ namespace GCDCore
             return naru.os.File.GetNewSafeName(subDir, errorName, RasterExtension);
         }
 
-        private string GetProjectMaskFolder(string maskName)
+        private DirectoryInfo GetProjectMaskFolder()
         {
-            maskName = naru.os.File.RemoveDangerousCharacters(maskName);
-            return Path.Combine(GCDProjectFolder(), m_sInputsFolder, m_sProjectMaskFolder, maskName);
+            DirectoryInfo diParent = new DirectoryInfo(Path.Combine(ProjectManager.Project.ProjectFile.DirectoryName, m_sInputsFolder));
+
+            return GetIndexedSubDirectory(diParent, m_sProjectMaskFolder, "Mask", false);
         }
 
-        public System.IO.FileInfo GetMaskShapeFilePath(string maskName)
+        public FileInfo GetMaskShapeFilePath(string maskName)
         {
-            string sMaskPath = GetProjectMaskFolder(maskName);
-            return naru.os.File.GetNewSafeName(sMaskPath, maskName, "shp");
+            DirectoryInfo diFolder = GetProjectMaskFolder();
+            return naru.os.File.GetNewSafeName(diFolder.FullName, maskName, "shp");
         }
 
         public DirectoryInfo GetMorphologicalDirectory(DirectoryInfo bsFolder, bool bCreate)
         {
-            DirectoryInfo groupFolder = new DirectoryInfo(Path.Combine(bsFolder.FullName, m_sMorphologicalFolder));
+            return GetIndexedSubDirectory(bsFolder, m_sMorphologicalFolder, "MA", bCreate);
+        }
 
-            if (!groupFolder.Exists && bCreate)
-                groupFolder.Create();
+        public DirectoryInfo GetIndexedSubDirectory(DirectoryInfo parentFolder, string groupFolder, string prefix, bool bCreate)
+        {
+            DirectoryInfo diGroupFolder = new DirectoryInfo(Path.Combine(parentFolder.FullName, groupFolder));
+
+            if (!diGroupFolder.Exists && bCreate)
+                diGroupFolder.Create();
 
             // Find unique folder on disk
-            int maxExisting = 0;
+            int existingIndex = 0;
 
-            if (groupFolder.Exists)
+            if (diGroupFolder.Exists)
             {
-                foreach (DirectoryInfo existingFolder in groupFolder.GetDirectories("MA*", SearchOption.TopDirectoryOnly))
+                foreach (DirectoryInfo existingFolder in diGroupFolder.GetDirectories(string.Format("{0}*", prefix), SearchOption.TopDirectoryOnly))
                 {
                     System.Text.RegularExpressions.Match match = System.Text.RegularExpressions.Regex.Match(existingFolder.FullName, "([0-9]*)$");
                     if (match.Groups.Count > 1)
                     {
                         int folderSuffix = int.Parse(match.Groups[1].Value);
-                        if (folderSuffix > maxExisting)
-                            maxExisting = folderSuffix;
+                        if (folderSuffix > existingIndex)
+                            existingIndex = folderSuffix;
                     }
                 }
             }
 
-            DirectoryInfo maFolder = new DirectoryInfo(Path.Combine(groupFolder.FullName, string.Format("MA{0:0000}", maxExisting + 1)));
+            DirectoryInfo finalFolder = new DirectoryInfo(Path.Combine(diGroupFolder.FullName, string.Format("{0}{1:0000}", prefix, existingIndex + 1)));
 
             if (bCreate)
-                maFolder.Create();
+                finalFolder.Create();
 
-            return maFolder;
+            return finalFolder;
         }
     }
 }
