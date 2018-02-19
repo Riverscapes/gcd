@@ -156,6 +156,22 @@ namespace GCDCore.UserInterface.Masks
                 MessageBox.Show("You must provide a non-empty label for every field value.", "Empty Label", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 e.Cancel = true;
             }
+
+            string msg = "Labels must be unique and cannot be reused for multiple field values. Also, labels cannot duplicate any field value other than" +
+                " the field value that they represent.";
+
+            // Ensure that the new label text does not match any other field values
+            string fieldValue = grdData.Rows[e.RowIndex].Cells[1].Value.ToString();
+            if (MaskItems.Any(x => string.Compare(x.FieldValue, fieldValue, true) != 0 && string.Compare(x.FieldValue, e.FormattedValue.ToString(), true) == 0))
+            {
+                MessageBox.Show(string.Format("The label matches another field value in the {0} attribute field of the ShapeFile. {1}", cboField.Text, msg), "Invalid Label", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                e.Cancel = true;
+            }
+            else if (MaskItems.Any(x => string.Compare(x.FieldValue, fieldValue, true) != 0 && string.Compare(x.Label, e.FormattedValue.ToString(), true) == 0))
+            {
+                MessageBox.Show(string.Format("The label matches another label value. {0}", msg), "Invalid Label", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                e.Cancel = true;
+            }
         }
 
         private void cmdOK_Click(object sender, EventArgs e)
