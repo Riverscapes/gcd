@@ -128,6 +128,35 @@ namespace GCDConsoleLib
             });
         }
 
+
+        /// <summary>
+        /// Substract two rasters
+        /// </summary>
+        /// <param name="rInputA"></param>
+        /// <param name="rInputB"></param>
+        /// <param name="sOutputRaster"></param>
+        /// <returns></returns>
+        public static Raster SubtractWithMask(Raster rInputA, Raster rInputB, Vector PolygonMask, FileInfo sOutputRaster, bool RasterizeFirst = true)
+        {
+            Raster retval;
+            if (RasterizeFirst)
+            {
+                using (VectorRaster tmp = new VectorRaster(rInputA, PolygonMask))
+                {
+                    retval = (Raster)GenericRunWithOutput(typeof(RasterMath<>), rInputA.Datatype.CSType, new object[] {
+                        MathOpType.Subtraction, rInputA, rInputB, tmp, new Raster(rInputA, sOutputRaster)
+                    });
+                }
+            }
+            else
+            {
+                retval = (Raster)GenericRunWithOutput(typeof(RasterMath<>), rInputA.Datatype.CSType, new object[] {
+                    MathOpType.Subtraction, rInputA, rInputB, PolygonMask, new Raster(rInputA, sOutputRaster)
+                });
+            }
+            return retval;
+        }
+
         /// <summary>
         /// Multiply two rasters
         /// </summary>
@@ -158,7 +187,8 @@ namespace GCDConsoleLib
 
 
 
-        public enum MultiMathOpType : byte { Maximum, Minimum, Mean, Addition, StandardDeviation }
+        public enum MultiMathOpType : byte { Maximum, Minimum, Mean, Addition, StandardDeviation, RootSumSquares }
+        public enum MultiMathErrOpType : byte { Maximum, Minimum }
 
         /// <summary>
         /// Maximum of a series of rasters
@@ -173,6 +203,19 @@ namespace GCDConsoleLib
         }
 
         /// <summary>
+        /// Returns the error raster value corresponding to the maximum value of a group of rasters
+        /// </summary>
+        /// <param name="rasters">Input values to be used for the max and min</param>
+        /// <param name="rasters">Error Rasters that will be used for the value of the output raster</param>
+        /// <param name="sOutputRaster"></param>
+        /// <returns></returns>
+        public static Raster MaximumErr(List<Raster> rasters, List<Raster> errors, FileInfo sOutputRaster)
+        {
+            RasterMultiMathError op = new RasterMultiMathError(MultiMathErrOpType.Maximum, rasters, errors, new Raster(rasters[0], sOutputRaster));
+            return op.RunWithOutput();
+        }
+
+        /// <summary>
         /// Minimum of a series of rasters
         /// </summary>
         /// <param name="rasters"></param>
@@ -181,6 +224,19 @@ namespace GCDConsoleLib
         public static Raster Minimum(List<Raster> rasters, FileInfo sOutputRaster)
         {
             RasterMultiMath op = new RasterMultiMath(MultiMathOpType.Minimum, rasters, new Raster(rasters[0], sOutputRaster));
+            return op.RunWithOutput();
+        }
+
+        /// <summary>
+        /// Returns the error raster value corresponding to the minimum value of a group of rasters
+        /// </summary>
+        /// <param name="rasters">Input values to be used for the max and min</param>
+        /// <param name="rasters">Error Rasters that will be used for the value of the output raster</param>
+        /// <param name="sOutputRaster"></param>
+        /// <returns></returns>
+        public static Raster MinimumErr(List<Raster> rasters, List<Raster> errors, FileInfo sOutputRaster)
+        {
+            RasterMultiMathError op = new RasterMultiMathError(MultiMathErrOpType.Minimum, rasters, errors, new Raster(rasters[0], sOutputRaster));
             return op.RunWithOutput();
         }
 
@@ -561,7 +617,7 @@ namespace GCDConsoleLib
         /// <param name="RasterizeFirst">Set to false to allow overlaps (much slower)</param>
         /// <returns></returns>
         public static Raster CreateErrorRaster(Raster rawDEM, Vector PolygonMask, string MaskFieldName,
-            Dictionary<string, ErrorRasterProperties> props, FileInfo sOutputRaster, 
+            Dictionary<string, ErrorRasterProperties> props, FileInfo sOutputRaster,
             bool RasterizeFirst = true, EventHandler<int> progressHandler = null)
         {
             Raster returnRaster;
@@ -745,7 +801,7 @@ namespace GCDConsoleLib
         /// <param name="FieldName"></param>
         /// <param name="RasterizeFirst">Set to false to allow overlaps (much slower)</param>
         /// <returns></returns>
-        public static Dictionary<string, Histogram> BinRaster(Raster rInput, int numberofBins, 
+        public static Dictionary<string, Histogram> BinRaster(Raster rInput, int numberofBins,
             Vector polygonMask, string FieldName, bool RasterizeFirst = true)
         {
             BinRaster histOp;

@@ -73,6 +73,32 @@ namespace GCDConsoleLib.Internal.Operators.Tests
 
         [TestMethod()]
         [TestCategory("Functional")]
+        public void MathMaskTest()
+        {
+            Raster rOld = new Raster(new FileInfo(DirHelpers.GetTestRootPath(@"VerificationProject\inputs\2005DecDEM\2005DecDEM.tif")));
+            Raster rNew = new Raster(new FileInfo(DirHelpers.GetTestRootPath(@"VerificationProject\inputs\2006FebDEM\2006FebDEM.tif")));
+
+            Raster rOldErr = new Raster(new FileInfo(DirHelpers.GetTestRootPath(@"VerificationProject\inputs\2005DecDEM\ErrorSurfaces\Constant01\Constant01.tif")));
+            Raster rNewErr = new Raster(new FileInfo(DirHelpers.GetTestRootPath(@"VerificationProject\inputs\2006FebDEM\ErrorSurfaces\Constant02\Constant02.tif")));
+
+            // And now the budget seg case
+            Vector vPolyMask = new Vector(new FileInfo(DirHelpers.GetTestRootPath(@"SulphurGCDMASK\Sulphur_SimpleReducedGCDMask.shp")));
+
+            using (ITempDir tmp = TempDir.Create())
+            {
+                FileInfo fiPolyMaskCopy = new FileInfo(Path.Combine(tmp.Name, "Sulphur_SimpleReducedGCDMask.shp"));
+                vPolyMask.Copy(fiPolyMaskCopy);
+                Vector vPolyMaskCopy = new Vector(fiPolyMaskCopy);
+
+                Raster rSub1 = RasterOperators.SubtractWithMask(rNew, rOld, vPolyMaskCopy, new FileInfo(Path.Combine(tmp.Name, "RasterSubtractVectorMask.tif")), false);
+                Raster rSub2 = RasterOperators.SubtractWithMask(rNew, rOld, vPolyMaskCopy, new FileInfo(Path.Combine(tmp.Name, "RasterSubtractRasterizedMask.tif")));
+            }
+
+        }
+
+
+        [TestMethod()]
+        [TestCategory("Functional")]
         public void GetStatsMinLoDTest()
         {
             Raster rRaw = new Raster(new FileInfo(DirHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2005Dec_DEM\2005Dec_DEM.img")));

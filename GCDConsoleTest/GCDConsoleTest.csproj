@@ -122,6 +122,7 @@
     <Compile Include="ProjectionTests.cs" />
     <Compile Include="RasterOperators\BaseOperatorTests.cs" />
     <Compile Include="RasterOperators\CellByCellOperatorTests.cs" />
+    <Compile Include="RasterOperators\Operators\RasterMultiMathErrorTests.cs" />
     <Compile Include="RasterOperators\RasterMultiMathTests.cs" />
     <Compile Include="RasterOperators\PointDensityTests.cs" />
     <Compile Include="RasterOperators\RasterOperatorsTests.cs" />

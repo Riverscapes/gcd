@@ -51,6 +51,11 @@ namespace GCDConsoleLib.Internal.Operators
                 case RasterOperators.MultiMathOpType.StandardDeviation:
                     val = StandardDeviation(data, id, inNodataVals, outNodataVals[0]);
                     break;
+                case RasterOperators.MultiMathOpType.RootSumSquares:
+                    val = RootSumSquares(data, id, inNodataVals, outNodataVals[0]);
+                    break;
+                default:
+                    throw new ArgumentException("Operator not supported");
             }
 
             outputs[0][id] = val;
@@ -181,6 +186,32 @@ namespace GCDConsoleLib.Internal.Operators
             }
 
             return Math.Sqrt(newsum / (count - 1));
+        }
+
+
+        /// <summary>
+        /// Root Sum Squares
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static double RootSumSquares(List<double[]> data, int id, List<double> inNodata, double outnodata)
+        {
+            double retVal = 0;
+
+            int count = 0;
+            for (int did = 0; did < data.Count; did++)
+            {
+                if (data[did][id] != inNodata[did])
+                {
+                    count++;
+                    retVal += Math.Pow(data[did][id],2);
+                }
+            }
+
+            if (count == 0) retVal = outnodata;
+            else retVal = Math.Sqrt(retVal);
+            return retVal;
         }
     }
 

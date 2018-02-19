@@ -93,5 +93,23 @@ namespace GCDConsoleLib.Internal.Operators.Tests
             Assert.AreEqual(RasterMultiMath.StandardDeviation(inputs1, 2, inputs1Nodata, -2.0), 0.0);
             Assert.AreEqual(RasterMultiMath.StandardDeviation(inputs1, 3, inputs1Nodata, -2.0), -2.0);
         }
+
+
+        [TestMethod()]
+        [TestCategory("Unit")]
+        public void MultiMath_RootSumSquaresTest()
+        {
+            List<double[]> inputs1 = new List<double[]> {
+                new double[]{ 1, 4, -1, -1}, // Raster 1
+                new double[]{ 14, -2, 40, -2}, // Raster 2
+                new double[]{ 3, 3, 40, -3},  // Raster 3
+                new double[]{ -4, 5, 40, -4}  // Raster 4
+            };
+            List<double> inputs1Nodata = new List<double> { -1, -2, -3, -4 };
+            Assert.AreEqual(RasterMultiMath.RootSumSquares(inputs1, 0, inputs1Nodata, -2.0), 14.352700, 0.01);
+            Assert.AreEqual(RasterMultiMath.RootSumSquares(inputs1, 1, inputs1Nodata, -2.0), 7.071068, 0.01);
+            Assert.AreEqual(RasterMultiMath.RootSumSquares(inputs1, 2, inputs1Nodata, -2.0), 69.2820, 0.01);
+            Assert.AreEqual(RasterMultiMath.RootSumSquares(inputs1, 3, inputs1Nodata, -2.0), -2.0);
+        }
     }
 }
