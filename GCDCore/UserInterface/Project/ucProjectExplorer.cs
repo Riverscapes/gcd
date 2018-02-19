@@ -1788,6 +1788,13 @@ namespace GCDCore.UserInterface.Project
             TreeNode nodSelected = treProject.SelectedNode;
             GCDCore.Project.BudgetSegregation bs = ((ProjectTreeNode)nodSelected.Tag).Item as GCDCore.Project.BudgetSegregation;
 
+            if (!(bs.Mask is GCDCore.Project.Masks.DirectionalMask))
+            {
+                MessageBox.Show("You can only perform morphological approach sediment analyses on budget segregations that were" +
+                    " generated using directional mask. The selected budget segregation was generated using a regular mask.", "Invalid Budget Segregation", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
             UserInterface.BudgetSegregation.Morphological.frmMorpProperties frm1 = new BudgetSegregation.Morphological.frmMorpProperties(bs);
             if (frm1.ShowDialog() == DialogResult.OK)
             {
