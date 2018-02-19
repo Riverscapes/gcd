@@ -37,8 +37,11 @@ namespace GCDCore.Project
         public delegate void GISSelectingVector(System.Windows.Forms.TextBox txt, naru.ui.PathEventArgs e, GCDConsoleLib.GDalGeometryType.SimpleTypes geometryType);
         public static event GISSelectingVector GISSelectingVectorEventHandler;
 
-        public delegate void GISAddToMapEvent(GCDProjectRasterItem raster);
-        public static event GISAddToMapEvent GISAddToMapEventHandler;
+        public delegate void GISAddRasterToMapEvent(GCDProjectRasterItem raster);
+        public static event GISAddRasterToMapEvent GISAddRasterToMapEventHandler;
+
+        public delegate void GISAddVectorToMapEvent(Masks.Mask mask);
+        public static event GISAddVectorToMapEvent GISAddVectorToMapEventHandler;
 
         public static Dictionary<string, SurveyType> SurveyTypes
         {
@@ -260,10 +263,16 @@ namespace GCDCore.Project
                 ProjectManager.GISSelectingVectorEventHandler(txt, e, geometryType);
         }
 
-        public static void OnAddToMap(GCDCore.Project.GCDProjectRasterItem raster)
+        public static void OnAddRasterToMap(GCDCore.Project.GCDProjectRasterItem raster)
         {
-            if (GISAddToMapEventHandler != null)
-                ProjectManager.GISAddToMapEventHandler(raster);
+            if (GISAddRasterToMapEventHandler != null)
+                ProjectManager.GISAddRasterToMapEventHandler(raster);
+        }
+
+        public static void OnAddVectorToMap(GCDCore.Project.Masks.Mask mask)
+        {
+            if (GISAddVectorToMapEventHandler != null)
+                ProjectManager.GISAddVectorToMapEventHandler(mask);
         }
 
         public class GISLayerEventArgs : EventArgs

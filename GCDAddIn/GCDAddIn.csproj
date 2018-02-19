@@ -170,6 +170,7 @@
     <Compile Include="ucProjectManager.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="VectorSymbolization.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\ext\Deploy\ExcelTemplates\BudgetSegregationSummaryTemplate.xml">

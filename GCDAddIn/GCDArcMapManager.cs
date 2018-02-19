@@ -23,6 +23,7 @@ namespace GCDAddIn
         private const string AssociatedSurfacesGroupLayer = "Associated Surfaces";
         private const string ErrorSurfacesGroupLayer = "Error Surfaces";
         private const string AnalysesGroupLayer = "Analyses";
+        private const string MasksGroupLayer = "Masks";
 
         public GCDArcMapManager(short fDefaultDEMTransparency = 40, IMapDocument pMapDocument = null)
         {
@@ -160,7 +161,7 @@ namespace GCDAddIn
                     if (rasterMax <= 2 & rasterMax > 0.25m)
                     {
                         rasterRenderer = RasterSymbolization.CreateClassifyRenderer(assocRow.Raster, 11, "Green to Blue", 1.1, true);
-                   }
+                    }
                     else
                     {
                         rasterRenderer = RasterSymbolization.CreateClassifyRenderer(assocRow.Raster, 11, "Green to Blue", true);
@@ -186,6 +187,30 @@ namespace GCDAddIn
             }
 
             AddRasterLayer(assocRow.Raster, rasterRenderer, assocRow.Name, pAssocGrpLyr, assocRow.LayerHeader, dTransparency);
+        }
+
+        public void AddMask(GCDCore.Project.Masks.Mask mask)
+        {
+            IGroupLayer pProjLyr = AddProjectGroupLayer();
+            IGroupLayer pMasksGrpLyr = ArcMapUtilities.GetGroupLayer(MasksGroupLayer, pProjLyr);
+
+            IFeatureRenderer pRenderer = null;
+            string queryFilter = string.Empty;
+            if (mask is GCDCore.Project.Masks.RegularMask)
+            {
+                GCDCore.Project.Masks.RegularMask rMask = mask as GCDCore.Project.Masks.RegularMask;
+
+                pRenderer = VectorSymbolization.GetMaskRenderer(rMask) as IFeatureRenderer;
+
+                // Create a definition query if some features are not included
+
+                if (rMask._Items.Any(x => !x.Include))
+                {
+                    queryFilter = string.Format("\"{0}\" IN ('{1}')", mask._Field, string.Join("','", rMask._Items.Where(x => x.Include).Select(y=> y.FieldValue)));
+                }
+            }
+
+            VectorSymbolization.AddToMapVector(mask._ShapeFile, mask.Name, pMasksGrpLyr, mask._Field, pRenderer, queryFilter);
         }
 
         public void AddDoD(GCDProjectRasterItem dod, bool bThresholded = true)
@@ -225,7 +250,7 @@ namespace GCDAddIn
 
         public void AddErrSurface(ErrorSurface errRow)
         {
-            IGroupLayer pErrGrpLyr = AddErrorSurfacesGroupLayer(errRow.DEM);
+            IGroupLayer pErrGrpLyr = AddErrorSurfacesGroupLayer(errRow.Surf as DEMSurvey);
             string sHeader = string.Format("Error ({0})", UnitsNet.Length.GetAbbreviation(ProjectManager.Project.Units.VertUnit));
 
             short dTransparency = -1;

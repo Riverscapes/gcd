@@ -38,7 +38,6 @@ namespace GCDCore.UserInterface.Masks
 
             // subscribe to the even when the user changes the input ShapeFile
             ucPolygon.PathChanged += InputShapeFileChanged;
-
             UpdateControls(sender, e);
         }
 

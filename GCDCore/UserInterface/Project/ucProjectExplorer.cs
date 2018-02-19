@@ -106,7 +106,8 @@ namespace GCDCore.UserInterface.Project
             this.collapseChildrenInGCDProjectTreeToolStripMenuItem.Click += CollapseChildren_Click;
             this.collapseChildrenInGCDProjectTreeToolStripMenuItem1.Click += CollapseChildren_Click;
             this.editMaskPropertiesToolStripMenuItem.Click += EditMaskProperties_Click;
-
+            this.addMaskToMapToolStripMenuItem.Click += AddMaskToMap_Click;
+            this.addAllMasksToTheMapToolStripMenuItem.Click += AllAllMasksToMap_Click;
             this.viewMorphologicalAnalysisToolStripMenuItem.Click += EditMorphological_Click;
 
         }
@@ -545,7 +546,7 @@ namespace GCDCore.UserInterface.Project
                     ProjectManager.Project.Save();
 
                     LoadTree(new ProjectTreeNode(GCDNodeTypes.DEMSurvey, dem));
-                    ProjectManager.OnAddToMap(dem);
+                    ProjectManager.OnAddRasterToMap(dem);
                 }
             }
 
@@ -571,7 +572,7 @@ namespace GCDCore.UserInterface.Project
                         frmAssocSurfaceProperties frm = new frmAssocSurfaceProperties(dem, null);
                         if (frm.ShowDialog() == DialogResult.OK)
                         {
-                            ProjectManager.OnAddToMap(frm.m_Assoc);
+                            ProjectManager.OnAddRasterToMap(frm.m_Assoc);
                             LoadTree(new ProjectTreeNode(GCDNodeTypes.AssociatedSurface, frm.m_Assoc));
                         }
                     }
@@ -596,7 +597,7 @@ namespace GCDCore.UserInterface.Project
                         DEMSurvey dem = (DEMSurvey)((ProjectTreeNode)selNode.Parent.Tag).Item;
                         foreach (AssocSurface assoc in dem.AssocSurfaces)
                         {
-                            ProjectManager.OnAddToMap(assoc);
+                            ProjectManager.OnAddRasterToMap(assoc);
                         }
                     }
                 }
@@ -698,7 +699,7 @@ namespace GCDCore.UserInterface.Project
 
                     if (err is ErrorSurface)
                     {
-                        ProjectManager.OnAddToMap(err);
+                        ProjectManager.OnAddRasterToMap(err);
                         LoadTree(new ProjectTreeNode(GCDNodeTypes.ErrorSurface, err));
                     }
                 }
@@ -746,7 +747,7 @@ namespace GCDCore.UserInterface.Project
 
                     if (err is ErrorSurface)
                     {
-                        ProjectManager.OnAddToMap(err);
+                        ProjectManager.OnAddRasterToMap(err);
                         LoadTree(new ProjectTreeNode(GCDNodeTypes.ErrorSurface, err));
                     }
                 }
@@ -770,7 +771,7 @@ namespace GCDCore.UserInterface.Project
                         DEMSurvey dem = (DEMSurvey)((ProjectTreeNode)selNode.Parent.Tag).Item;
                         foreach (ErrorSurface errSurf in dem.ErrorSurfaces)
                         {
-                            ProjectManager.OnAddToMap(errSurf);
+                            ProjectManager.OnAddRasterToMap(errSurf);
                         }
                     }
                 }
@@ -881,17 +882,17 @@ namespace GCDCore.UserInterface.Project
 
                 foreach (DEMSurvey dem in ProjectManager.Project.DEMSurveys.Values)
                 {
-                    ProjectManager.OnAddToMap(dem);
+                    ProjectManager.OnAddRasterToMap(dem);
 
                     foreach (AssocSurface assoc in dem.AssocSurfaces)
-                        ProjectManager.OnAddToMap(assoc);
+                        ProjectManager.OnAddRasterToMap(assoc);
 
                     foreach (ErrorSurface err in dem.ErrorSurfaces)
-                        ProjectManager.OnAddToMap(err);
+                        ProjectManager.OnAddRasterToMap(err);
                 }
 
                 foreach (DoDBase dod in ProjectManager.Project.DoDs.Values)
-                    ProjectManager.OnAddToMap(dod.ThrDoD);
+                    ProjectManager.OnAddRasterToMap(dod.ThrDoD);
             }
             catch (Exception ex)
             {
@@ -957,7 +958,7 @@ namespace GCDCore.UserInterface.Project
                     {
                         if (((ProjectTreeNode)selNode.Tag).Item is GCDProjectRasterItem)
                         {
-                            ProjectManager.OnAddToMap((GCDProjectRasterItem)((ProjectTreeNode)selNode.Tag).Item);
+                            ProjectManager.OnAddRasterToMap((GCDProjectRasterItem)((ProjectTreeNode)selNode.Tag).Item);
                         }
                     }
                 }
@@ -1094,7 +1095,7 @@ namespace GCDCore.UserInterface.Project
                     {
                         foreach (DoDBase rDoD in ProjectManager.Project.DoDs.Values)
                         {
-                            ProjectManager.OnAddToMap(rDoD.ThrDoD);
+                            ProjectManager.OnAddRasterToMap(rDoD.ThrDoD);
                         }
                     }
                 }
@@ -1120,7 +1121,7 @@ namespace GCDCore.UserInterface.Project
                     if (eType == GCDNodeTypes.DoD)
                     {
                         DoDBase dod = (DoDBase)((ProjectTreeNode)selNode.Tag).Item;
-                        ProjectManager.OnAddToMap(dod.ThrDoD);
+                        ProjectManager.OnAddRasterToMap(dod.ThrDoD);
                     }
                 }
             }
@@ -1142,7 +1143,7 @@ namespace GCDCore.UserInterface.Project
                     if (eType == GCDNodeTypes.DoD)
                     {
                         DoDBase dod = (DoDBase)((ProjectTreeNode)selNode.Tag).Item;
-                        ProjectManager.OnAddToMap(dod.RawDoD);
+                        ProjectManager.OnAddRasterToMap(dod.RawDoD);
                     }
                 }
             }
@@ -1554,7 +1555,7 @@ namespace GCDCore.UserInterface.Project
             {
                 try
                 {
-                    ProjectManager.OnAddToMap(dem);
+                    ProjectManager.OnAddRasterToMap(dem);
                 }
                 catch (Exception ex)
                 {
@@ -1933,6 +1934,25 @@ namespace GCDCore.UserInterface.Project
                 {
                     LoadTree(new ProjectTreeNode(GCDNodeTypes.MorphologicalAnalysis, ma));
                 }
+            }
+        }
+
+        public void AddMaskToMap_Click(object sender, EventArgs e)
+        {
+            TreeNode nodSelected = treProject.SelectedNode;
+            if (nodSelected is TreeNode)
+            {
+                GCDCore.Project.Masks.Mask mask = ((ProjectTreeNode)nodSelected.Tag).Item as GCDCore.Project.Masks.Mask;
+                ProjectManager.OnAddVectorToMap(mask);
+            }
+        }
+
+        public void AllAllMasksToMap_Click(object sender, EventArgs e)
+        {
+            TreeNode nodSelected = treProject.SelectedNode;
+            if (nodSelected is TreeNode)
+            {
+                ProjectManager.Project.Masks.Values.ToList<GCDCore.Project.Masks.Mask>().ForEach(x => ProjectManager.OnAddVectorToMap(x));
             }
         }
     }

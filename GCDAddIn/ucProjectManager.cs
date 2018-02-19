@@ -49,7 +49,8 @@ namespace GCDAddIn
                 ProjectManager.GISLayerBrowsingEventHandler += OnGISBrowseRaster;
                 ProjectManager.GISBrowseVectorEventHandler += OnGISBrowseVector;
                 ProjectManager.GISSelectingVectorEventHandler += OnGISSelectingVector;
-                ProjectManager.GISAddToMapEventHandler += OnAddRasterToMap;
+                ProjectManager.GISAddRasterToMapEventHandler += OnAddRasterToMap;
+                ProjectManager.GISAddVectorToMapEventHandler += OnAddVectorToMap;
 
                 ArcMapManager = new GCDArcMapManager();
 
@@ -152,6 +153,11 @@ namespace GCDAddIn
 
                 ArcMap.Document.ActivatedView.Refresh();
                 ArcMap.Document.UpdateContents();
+            }
+
+            public void OnAddVectorToMap(GCDCore.Project.Masks.Mask mask)
+            {
+                ArcMapManager.AddMask(mask);
             }
         }
     }

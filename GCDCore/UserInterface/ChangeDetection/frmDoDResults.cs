@@ -57,7 +57,7 @@ namespace GCDCore.UserInterface.ChangeDetection
         {
             try
             {
-                ProjectManager.OnAddToMap(DoD.ThrDoD);
+                ProjectManager.OnAddRasterToMap(DoD.ThrDoD);
             }
             catch (Exception ex)
             {
