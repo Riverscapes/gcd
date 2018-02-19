@@ -40,6 +40,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.chkLabel = new System.Windows.Forms.CheckBox();
             this.cboLabel = new System.Windows.Forms.ComboBox();
+            this.ucPolygon = new GCDCore.UserInterface.UtilityForms.ucVectorInput();
             this.cboField = new System.Windows.Forms.ComboBox();
             this.Label7 = new System.Windows.Forms.Label();
             this.Label6 = new System.Windows.Forms.Label();
@@ -47,7 +48,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtPath = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.ucPolygon = new GCDCore.UserInterface.UtilityForms.ucVectorInput();
             this.GroupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -183,6 +183,15 @@
             this.cboLabel.Size = new System.Drawing.Size(377, 21);
             this.cboLabel.TabIndex = 5;
             // 
+            // ucPolygon
+            // 
+            this.ucPolygon.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ucPolygon.Location = new System.Drawing.Point(120, 22);
+            this.ucPolygon.Name = "ucPolygon";
+            this.ucPolygon.Size = new System.Drawing.Size(377, 23);
+            this.ucPolygon.TabIndex = 1;
+            // 
             // cboField
             // 
             this.cboField.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -217,7 +226,7 @@
             this.txtName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtName.Location = new System.Drawing.Point(86, 12);
-            this.txtName.MaxLength = 255;
+            this.txtName.MaxLength = 100;
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(445, 20);
             this.txtName.TabIndex = 1;
@@ -251,15 +260,6 @@
             this.label3.Size = new System.Drawing.Size(64, 13);
             this.label3.TabIndex = 2;
             this.label3.Text = "Project path";
-            // 
-            // ucPolygon
-            // 
-            this.ucPolygon.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.ucPolygon.Location = new System.Drawing.Point(120, 22);
-            this.ucPolygon.Name = "ucPolygon";
-            this.ucPolygon.Size = new System.Drawing.Size(377, 23);
-            this.ucPolygon.TabIndex = 1;
             // 
             // frmDirectionalMaskProps
             // 

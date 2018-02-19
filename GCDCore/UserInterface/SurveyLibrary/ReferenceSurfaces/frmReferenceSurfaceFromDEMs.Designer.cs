@@ -39,14 +39,14 @@
             this.txtPath = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.grdData = new System.Windows.Forms.DataGridView();
+            this.colInclude = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.colDEM = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colError = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.cmsList = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.selectAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.selectNoneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label3 = new System.Windows.Forms.Label();
             this.cboMethod = new System.Windows.Forms.ComboBox();
-            this.colInclude = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.colDEM = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colError = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdData)).BeginInit();
             this.cmsList.SuspendLayout();
@@ -99,7 +99,7 @@
             this.txtName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtName.Location = new System.Drawing.Point(83, 13);
-            this.txtName.MaxLength = 255;
+            this.txtName.MaxLength = 100;
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(316, 20);
             this.txtName.TabIndex = 1;
@@ -156,6 +156,27 @@
             this.grdData.Size = new System.Drawing.Size(381, 158);
             this.grdData.TabIndex = 0;
             // 
+            // colInclude
+            // 
+            this.colInclude.DataPropertyName = "Include";
+            this.colInclude.HeaderText = "Include";
+            this.colInclude.Name = "colInclude";
+            this.colInclude.Width = 60;
+            // 
+            // colDEM
+            // 
+            this.colDEM.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colDEM.DataPropertyName = "DEMName";
+            this.colDEM.HeaderText = "DEM Survey";
+            this.colDEM.Name = "colDEM";
+            this.colDEM.ReadOnly = true;
+            // 
+            // colError
+            // 
+            this.colError.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colError.HeaderText = "Error Surface";
+            this.colError.Name = "colError";
+            // 
             // cmsList
             // 
             this.cmsList.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -197,27 +218,6 @@
             this.cboMethod.Name = "cboMethod";
             this.cboMethod.Size = new System.Drawing.Size(316, 21);
             this.cboMethod.TabIndex = 3;
-            // 
-            // colInclude
-            // 
-            this.colInclude.DataPropertyName = "Include";
-            this.colInclude.HeaderText = "Include";
-            this.colInclude.Name = "colInclude";
-            this.colInclude.Width = 60;
-            // 
-            // colDEM
-            // 
-            this.colDEM.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colDEM.DataPropertyName = "DEMName";
-            this.colDEM.HeaderText = "DEM Survey";
-            this.colDEM.Name = "colDEM";
-            this.colDEM.ReadOnly = true;
-            // 
-            // colError
-            // 
-            this.colError.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colError.HeaderText = "Error Surface";
-            this.colError.Name = "colError";
             // 
             // frmReferenceSurfaceFromDEMs
             // 

@@ -102,6 +102,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             // txtName
             // 
             this.txtName.Location = new System.Drawing.Point(113, 9);
+            this.txtName.MaxLength = 100;
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(491, 20);
             this.txtName.TabIndex = 1;

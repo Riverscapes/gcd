@@ -40,13 +40,13 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.Label6 = new System.Windows.Forms.Label();
             this.Label7 = new System.Windows.Forms.Label();
             this.GroupBox2 = new System.Windows.Forms.GroupBox();
+            this.txtField = new System.Windows.Forms.TextBox();
+            this.cboMasks = new System.Windows.Forms.ComboBox();
             this.Label8 = new System.Windows.Forms.Label();
             this.txtOutputFolder = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.cmdOK = new System.Windows.Forms.Button();
             this.cmdHelp = new System.Windows.Forms.Button();
-            this.cboMasks = new System.Windows.Forms.ComboBox();
-            this.txtField = new System.Windows.Forms.TextBox();
             this.GroupBox1.SuspendLayout();
             this.GroupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -63,6 +63,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
             // txtName
             // 
             this.txtName.Location = new System.Drawing.Point(95, 9);
+            this.txtName.MaxLength = 100;
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(411, 20);
             this.txtName.TabIndex = 1;
@@ -187,6 +188,24 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.GroupBox2.TabStop = false;
             this.GroupBox2.Text = "Polygon Mask";
             // 
+            // txtField
+            // 
+            this.txtField.Location = new System.Drawing.Point(120, 53);
+            this.txtField.Name = "txtField";
+            this.txtField.ReadOnly = true;
+            this.txtField.Size = new System.Drawing.Size(355, 20);
+            this.txtField.TabIndex = 3;
+            // 
+            // cboMasks
+            // 
+            this.cboMasks.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboMasks.FormattingEnabled = true;
+            this.cboMasks.Location = new System.Drawing.Point(120, 23);
+            this.cboMasks.Name = "cboMasks";
+            this.cboMasks.Size = new System.Drawing.Size(355, 21);
+            this.cboMasks.TabIndex = 1;
+            this.cboMasks.SelectedIndexChanged += new System.EventHandler(this.cboMasks_SelectedIndexChanged);
+            // 
             // Label8
             // 
             this.Label8.AutoSize = true;
@@ -236,24 +255,6 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.cmdHelp.Text = "Help";
             this.cmdHelp.UseVisualStyleBackColor = true;
             this.cmdHelp.Click += new System.EventHandler(this.cmdHelp_Click);
-            // 
-            // cboMasks
-            // 
-            this.cboMasks.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboMasks.FormattingEnabled = true;
-            this.cboMasks.Location = new System.Drawing.Point(120, 23);
-            this.cboMasks.Name = "cboMasks";
-            this.cboMasks.Size = new System.Drawing.Size(355, 21);
-            this.cboMasks.TabIndex = 1;
-            this.cboMasks.SelectedIndexChanged += new System.EventHandler(this.cboMasks_SelectedIndexChanged);
-            // 
-            // txtField
-            // 
-            this.txtField.Location = new System.Drawing.Point(120, 53);
-            this.txtField.Name = "txtField";
-            this.txtField.ReadOnly = true;
-            this.txtField.Size = new System.Drawing.Size(355, 20);
-            this.txtField.TabIndex = 3;
             // 
             // frmBudgetSegProperties
             // 

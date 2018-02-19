@@ -50,8 +50,8 @@
             this.cboDEMSurvey = new System.Windows.Forms.ComboBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.lblError = new System.Windows.Forms.Label();
             this.valError = new System.Windows.Forms.NumericUpDown();
+            this.lblError = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.valSingle)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.valUpper)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.valLower)).BeginInit();
@@ -86,7 +86,7 @@
             this.txtName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtName.Location = new System.Drawing.Point(130, 12);
-            this.txtName.MaxLength = 255;
+            this.txtName.MaxLength = 100;
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(241, 20);
             this.txtName.TabIndex = 1;
@@ -316,15 +316,6 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Error Surface(s)";
             // 
-            // lblError
-            // 
-            this.lblError.AutoSize = true;
-            this.lblError.Location = new System.Drawing.Point(78, 23);
-            this.lblError.Name = "lblError";
-            this.lblError.Size = new System.Drawing.Size(76, 13);
-            this.lblError.TabIndex = 0;
-            this.lblError.Text = "Uniform error ()";
-            // 
             // valError
             // 
             this.valError.DecimalPlaces = 3;
@@ -348,6 +339,15 @@
             0,
             131072});
             this.valError.Enter += new System.EventHandler(this.numericUpDown_Enter);
+            // 
+            // lblError
+            // 
+            this.lblError.AutoSize = true;
+            this.lblError.Location = new System.Drawing.Point(78, 23);
+            this.lblError.Name = "lblError";
+            this.lblError.Size = new System.Drawing.Size(76, 13);
+            this.lblError.TabIndex = 0;
+            this.lblError.Text = "Uniform error ()";
             // 
             // frmReferenceSurfaceFromConstant
             // 

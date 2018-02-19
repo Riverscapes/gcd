@@ -61,6 +61,9 @@ namespace GCDCore.UserInterface.ChangeDetection
         {
             InitializeComponent();
 
+            if (ProjectManager.Project == null)
+                return;
+
             NewSurfaces = new BindingList<Surface>();
             OldSurfaces = new BindingList<Surface>();
 

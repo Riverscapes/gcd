@@ -68,6 +68,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.txtDoDName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtDoDName.Location = new System.Drawing.Point(48, 12);
+            this.txtDoDName.MaxLength = 100;
             this.txtDoDName.Name = "txtDoDName";
             this.txtDoDName.ReadOnly = true;
             this.txtDoDName.Size = new System.Drawing.Size(550, 20);

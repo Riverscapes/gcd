@@ -54,12 +54,12 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.ucBars = new GCDCore.UserInterface.ChangeDetection.ucChangeBars();
             this.ucHistogram = new GCDCore.UserInterface.ChangeDetection.ucDoDHistogram();
             this.TabPage3 = new System.Windows.Forms.TabPage();
-            this.cmsBasicRaster = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.AddToMapToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.ucProperties = new GCDCore.UserInterface.ChangeDetection.ucDoDPropertiesGrid();
             this.TabPage4 = new System.Windows.Forms.TabPage();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.chtPieCharts = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.cmsBasicRaster = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.AddToMapToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.Label1 = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
             this.cmdBrowse = new System.Windows.Forms.Button();
@@ -72,9 +72,9 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.TabPage2.SuspendLayout();
             this.TableLayoutPanel1.SuspendLayout();
             this.TabPage3.SuspendLayout();
-            this.cmsBasicRaster.SuspendLayout();
             this.tabPage5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chtPieCharts)).BeginInit();
+            this.cmsBasicRaster.SuspendLayout();
             this.SuspendLayout();
             // 
             // cmdCancel
@@ -194,20 +194,6 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.TabPage3.Text = "Analysis Inputs";
             this.TabPage3.UseVisualStyleBackColor = true;
             // 
-            // cmsBasicRaster
-            // 
-            this.cmsBasicRaster.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.AddToMapToolStripMenuItem1});
-            this.cmsBasicRaster.Name = "cmsBasicRaster";
-            this.cmsBasicRaster.Size = new System.Drawing.Size(138, 26);
-            // 
-            // AddToMapToolStripMenuItem1
-            // 
-            this.AddToMapToolStripMenuItem1.Image = global::GCDCore.Properties.Resources.AddToMap;
-            this.AddToMapToolStripMenuItem1.Name = "AddToMapToolStripMenuItem1";
-            this.AddToMapToolStripMenuItem1.Size = new System.Drawing.Size(137, 22);
-            this.AddToMapToolStripMenuItem1.Text = "Add to Map";
-            // 
             // ucProperties
             // 
             this.ucProperties.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -254,6 +240,20 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.chtPieCharts.TabIndex = 0;
             this.chtPieCharts.Text = "chart1";
             // 
+            // cmsBasicRaster
+            // 
+            this.cmsBasicRaster.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.AddToMapToolStripMenuItem1});
+            this.cmsBasicRaster.Name = "cmsBasicRaster";
+            this.cmsBasicRaster.Size = new System.Drawing.Size(138, 26);
+            // 
+            // AddToMapToolStripMenuItem1
+            // 
+            this.AddToMapToolStripMenuItem1.Image = global::GCDCore.Properties.Resources.AddToMap;
+            this.AddToMapToolStripMenuItem1.Name = "AddToMapToolStripMenuItem1";
+            this.AddToMapToolStripMenuItem1.Size = new System.Drawing.Size(137, 22);
+            this.AddToMapToolStripMenuItem1.Text = "Add to Map";
+            // 
             // Label1
             // 
             this.Label1.AutoSize = true;
@@ -268,6 +268,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.txtName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtName.Location = new System.Drawing.Point(91, 10);
+            this.txtName.MaxLength = 100;
             this.txtName.Name = "txtName";
             this.txtName.ReadOnly = true;
             this.txtName.Size = new System.Drawing.Size(546, 20);
@@ -349,9 +350,9 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.TabPage2.ResumeLayout(false);
             this.TableLayoutPanel1.ResumeLayout(false);
             this.TabPage3.ResumeLayout(false);
-            this.cmsBasicRaster.ResumeLayout(false);
             this.tabPage5.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chtPieCharts)).EndInit();
+            this.cmsBasicRaster.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
