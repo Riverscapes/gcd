@@ -24,6 +24,7 @@ namespace GCDAddIn
         private const string ErrorSurfacesGroupLayer = "Error Surfaces";
         private const string AnalysesGroupLayer = "Analyses";
         private const string MasksGroupLayer = "Masks";
+        private const string RefSurfGroupLayer = "Reference Surfaces";
 
         public GCDArcMapManager(short fDefaultDEMTransparency = 40, IMapDocument pMapDocument = null)
         {
@@ -86,6 +87,13 @@ namespace GCDAddIn
             return pSurveyLyr;
         }
 
+        private IGroupLayer AddReferenceSurfaceGroupLayer(Surface surf)
+        {
+            IGroupLayer pInputsGrpLyr = AddInputsGroupLayer();
+            IGroupLayer pRefSurfGrpLyr = ArcMapUtilities.GetGroupLayer(RefSurfGroupLayer, pInputsGrpLyr);
+            return ArcMapUtilities.GetGroupLayer(surf.Name, pRefSurfGrpLyr);
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -107,20 +115,15 @@ namespace GCDAddIn
 
             IRasterRenderer demRenderer = RasterSymbolization.CreateDEMColorRamp(dem.Raster);
             AddRasterLayer(dem.Raster, demRenderer, dem.Name, pSurveyLyr, dem.LayerHeader, fDEMTransparency);
+        }
 
-            // Collapse the Hillshade legend in the TOC
-            //if (pHSLayer is IRasterLayer)
-            //{
-            //    ((ILegendGroup)((ILegendInfo)pHSLayer).LegendGroup[0]).Visible = false;
-            //}
+        public void AddReferenceSurface(Surface surf)
+        {
+            short fDEMTransparency = (short)-1;
+            IGroupLayer pSurveyLyr = AddReferenceSurfaceGroupLayer(surf);
 
-            //if (pDEMLyr is IDataLayer2)
-            //{
-            //    ((IDataLayer2)pDEMLyr).Disconnect();
-            //}
-
-            //System.Runtime.InteropServices.Marshal.ReleaseComObject(pDEMLyr);
-            //System.Runtime.InteropServices.Marshal.ReleaseComObject(pHSLayer);
+            IRasterRenderer demRenderer = RasterSymbolization.CreateDEMColorRamp(surf.Raster);
+            AddRasterLayer(surf.Raster, demRenderer, surf.Name, pSurveyLyr, surf.LayerHeader, fDEMTransparency);
         }
 
         private IGroupLayer AddAssociatedSurfaceGroupLayer(DEMSurvey dem)
@@ -206,7 +209,7 @@ namespace GCDAddIn
 
                 if (rMask._Items.Any(x => !x.Include))
                 {
-                    queryFilter = string.Format("\"{0}\" IN ('{1}')", mask._Field, string.Join("','", rMask._Items.Where(x => x.Include).Select(y=> y.FieldValue)));
+                    queryFilter = string.Format("\"{0}\" IN ('{1}')", mask._Field, string.Join("','", rMask._Items.Where(x => x.Include).Select(y => y.FieldValue)));
                 }
             }
 
@@ -250,7 +253,17 @@ namespace GCDAddIn
 
         public void AddErrSurface(ErrorSurface errRow)
         {
-            IGroupLayer pErrGrpLyr = AddErrorSurfacesGroupLayer(errRow.Surf as DEMSurvey);
+            IGroupLayer pErrGrpLyr = null;
+
+            if (errRow.Surf is DEMSurvey)
+            {
+                pErrGrpLyr = AddErrorSurfacesGroupLayer(errRow.Surf as DEMSurvey);
+            }
+            else
+            {
+                pErrGrpLyr = AddReferenceErrorSurfacesGroupLayer(errRow.Surf);
+            }
+
             string sHeader = string.Format("Error ({0})", UnitsNet.Length.GetAbbreviation(ProjectManager.Project.Units.VertUnit));
 
             short dTransparency = -1;
@@ -284,6 +297,13 @@ namespace GCDAddIn
         private IGroupLayer AddErrorSurfacesGroupLayer(DEMSurvey dem)
         {
             IGroupLayer pSurveyGrpLyr = AddSurveyGroupLayer(dem);
+            IGroupLayer pErrGrpLyr = ArcMapUtilities.GetGroupLayer(ErrorSurfacesGroupLayer, pSurveyGrpLyr);
+            return pErrGrpLyr;
+        }
+
+        private IGroupLayer AddReferenceErrorSurfacesGroupLayer(Surface surf)
+        {
+            IGroupLayer pSurveyGrpLyr = AddReferenceSurfaceGroupLayer(surf);
             IGroupLayer pErrGrpLyr = ArcMapUtilities.GetGroupLayer(ErrorSurfacesGroupLayer, pSurveyGrpLyr);
             return pErrGrpLyr;
         }

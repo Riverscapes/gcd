@@ -126,7 +126,14 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
         private void cmdAddTopMap_Click(object sender, EventArgs e)
         {
-
+            try
+            {
+                ProjectManager.OnAddRasterToMap(Surface);
+            }
+            catch(Exception ex)
+            {
+                naru.error.ExceptionUI.HandleException(ex);
+            }
         }
 
         private class ItemProperty

@@ -103,6 +103,7 @@ namespace GCDCore.UserInterface.Project
             this.addReferenceSurfaceToMapToolStripMenuItem.Click += AddToMapToolStripMenuItem_Click;
             this.deleteToolStripMenuItem.Click += btnDelete_Click;
             this.editReferenceSurfacePropertiesToolStripMenuItem.Click += EditSurface_Click;
+            this.addAllReferenceSurfacesToTheMapToolStripMenuItem.Click += AddAllReferenceSurfacesToMap_Click;
 
             this.collapseChildrenInGCDProjectTreeToolStripMenuItem.Click += CollapseChildren_Click;
             this.collapseChildrenInGCDProjectTreeToolStripMenuItem1.Click += CollapseChildren_Click;
@@ -1976,6 +1977,15 @@ namespace GCDCore.UserInterface.Project
             if (nodSelected is TreeNode)
             {
                 ProjectManager.Project.Masks.Values.ToList<GCDCore.Project.Masks.Mask>().ForEach(x => ProjectManager.OnAddVectorToMap(x));
+            }
+        }
+
+        public void AddAllReferenceSurfacesToMap_Click(object sender, EventArgs e)
+        {
+            TreeNode nodSelected = treProject.SelectedNode;
+            if (nodSelected is TreeNode)
+            {
+                ProjectManager.Project.ReferenceSurfaces.Values.ToList<GCDCore.Project.Surface>().ForEach(x => ProjectManager.OnAddRasterToMap(x));
             }
         }
     }
