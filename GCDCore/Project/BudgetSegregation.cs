@@ -11,7 +11,7 @@ namespace GCDCore.Project
     {
         public readonly DoDBase DoD;
         public readonly DirectoryInfo Folder;
-        public readonly Masks.Mask Mask;
+        public readonly Masks.AttributeFieldMask Mask;
         public readonly FileInfo ClassLegend;
         public readonly FileInfo SummaryXML;
         public readonly string MaskField;
@@ -48,7 +48,7 @@ namespace GCDCore.Project
         /// <param name="folder"></param>
         /// <param name="maskField"></param>
         /// <param name="dod"></param>
-        public BudgetSegregation(string name, DirectoryInfo folder, Masks.Mask mask, DoDBase dod)
+        public BudgetSegregation(string name, DirectoryInfo folder, Masks.AttributeFieldMask mask, DoDBase dod)
             : base(name)
         {
             DoD = dod;
@@ -70,7 +70,7 @@ namespace GCDCore.Project
         /// <param name="dod"></param>
         /// <param name="summaryXML"></param>
         /// <param name="classLegend"></param>
-        public BudgetSegregation(string name, DirectoryInfo folder, Masks.Mask mask, DoDBase dod, FileInfo summaryXML, FileInfo classLegend)
+        public BudgetSegregation(string name, DirectoryInfo folder, Masks.AttributeFieldMask mask, DoDBase dod, FileInfo summaryXML, FileInfo classLegend)
             : base(name)
         {
             DoD = dod;
@@ -87,7 +87,7 @@ namespace GCDCore.Project
         {
             DoD = dod;
             Folder = ProjectManager.Project.GetAbsoluteDir(nodBS.SelectSingleNode("Folder").InnerText);
-            Mask = ProjectManager.Project.Masks[nodBS.SelectSingleNode("Mask").InnerText];
+            Mask = ProjectManager.Project.Masks[nodBS.SelectSingleNode("Mask").InnerText] as Masks.AttributeFieldMask;
             SummaryXML = ProjectManager.Project.GetAbsolutePath(nodBS.SelectSingleNode("SummaryXML").InnerText);
             ClassLegend = ProjectManager.Project.GetAbsolutePath(nodBS.SelectSingleNode("ClassLegend").InnerText);
 
@@ -105,7 +105,7 @@ namespace GCDCore.Project
                 MorphologicalAnalyses[ma.Name] = ma;
             }
         }
-        
+
         public bool IsMorphologicalAnalysisNameUnique(string name, Morphological.MorphologicalAnalysis ignore)
         {
             return MorphologicalAnalyses.ContainsKey(name) ? MorphologicalAnalyses[name] == ignore : true;

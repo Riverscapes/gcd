@@ -8,7 +8,7 @@ using System.Xml;
 
 namespace GCDCore.Project.Masks
 {
-    public class DirectionalMask : Mask
+    public class DirectionalMask : AttributeFieldMask
     {
         public readonly string LabelField;
         public readonly string DirectionField;

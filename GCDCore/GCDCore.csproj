@@ -86,6 +86,8 @@
     <Compile Include="Project\GCDProjectRasterItem.cs" />
     <Compile Include="Project\HistogramPair.cs" />
     <Compile Include="Project\InterComparison.cs" />
+    <Compile Include="Project\Masks\AOIMask.cs" />
+    <Compile Include="Project\Masks\AttributeFieldMask.cs" />
     <Compile Include="Project\Masks\DirectionalMask.cs" />
     <Compile Include="Project\Masks\Mask.cs" />
     <Compile Include="Project\Masks\MaskItem.cs" />
@@ -257,6 +259,12 @@
       <DependentUpon>frmOptions.cs</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\GIS\BrowseGISLayerEventArgs.cs" />
+    <Compile Include="UserInterface\Masks\frmAOIProperties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\Masks\frmAOIProperties.Designer.cs">
+      <DependentUpon>frmAOIProperties.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserInterface\Masks\frmDirectionalMaskProps.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -507,6 +515,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\frmOptions.resx">
       <DependentUpon>frmOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\Masks\frmAOIProperties.resx">
+      <DependentUpon>frmAOIProperties.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\Masks\frmDirectionalMaskProps.resx">
       <DependentUpon>frmDirectionalMaskProps.cs</DependentUpon>

@@ -49,7 +49,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
                 Cursor.Current = Cursors.WaitCursor;
 
                 DoDBase dod = cboDoD.SelectedItem as DoDBase;
-                GCDCore.Project.Masks.Mask mask = cboMasks.SelectedItem as GCDCore.Project.Masks.Mask;
+                GCDCore.Project.Masks.AttributeFieldMask mask = cboMasks.SelectedItem as GCDCore.Project.Masks.AttributeFieldMask;
 
                 System.IO.DirectoryInfo bsFolder = ProjectManager.OutputManager.GetBudgetSegreationDirectoryPath(dod.Folder, true);
                 Engines.BudgetSegregationEngine bsEngine = new Engines.BudgetSegregationEngine();
@@ -137,7 +137,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
 
         private void cboMasks_SelectedIndexChanged(object sender, EventArgs e)
         {
-            txtField.Text = ((GCDCore.Project.Masks.Mask)cboMasks.SelectedItem)._Field;
+            txtField.Text = ((GCDCore.Project.Masks.AttributeFieldMask)cboMasks.SelectedItem)._Field;
             txtName.Text = GetUniqueName(cboMasks.Text);
         }
 

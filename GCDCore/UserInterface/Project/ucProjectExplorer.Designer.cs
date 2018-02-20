@@ -129,6 +129,7 @@ namespace GCDCore.UserInterface.Project
             this.cmsMasks = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addRegularMaskToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addDirectionalMaskToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addAreaOfInterestAOIMaskToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addAllMasksToTheMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsRefSurfaceGroup = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.specifyReferenceSurfaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -141,6 +142,7 @@ namespace GCDCore.UserInterface.Project
             this.addChangeDetectionInterComparisonToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.openInterComparisonFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsRefSurface = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.editReferenceSurfacePropertiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addReferenceSurfaceToMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
@@ -153,7 +155,6 @@ namespace GCDCore.UserInterface.Project
             this.cmsMorphological = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.viewMorphologicalAnalysisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteMorphologicalAnalysisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.editReferenceSurfacePropertiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsProject.SuspendLayout();
             this.cmsDEMSurvey.SuspendLayout();
             this.cmsAssociatedSurface.SuspendLayout();
@@ -206,6 +207,7 @@ namespace GCDCore.UserInterface.Project
             this.imgTreeImageList.Images.SetKeyName(11, "bars.png");
             this.imgTreeImageList.Images.SetKeyName(12, "GCDFilled.png");
             this.imgTreeImageList.Images.SetKeyName(13, "mask_dir.png");
+            this.imgTreeImageList.Images.SetKeyName(14, "AOI.png");
             // 
             // cmsProject
             // 
@@ -821,15 +823,16 @@ namespace GCDCore.UserInterface.Project
             this.cmsMasks.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addRegularMaskToolStripMenuItem,
             this.addDirectionalMaskToolStripMenuItem,
+            this.addAreaOfInterestAOIMaskToolStripMenuItem,
             this.addAllMasksToTheMapToolStripMenuItem});
             this.cmsMasks.Name = "cmsMasks";
-            this.cmsMasks.Size = new System.Drawing.Size(211, 70);
+            this.cmsMasks.Size = new System.Drawing.Size(242, 92);
             // 
             // addRegularMaskToolStripMenuItem
             // 
             this.addRegularMaskToolStripMenuItem.Image = global::GCDCore.Properties.Resources.mask;
             this.addRegularMaskToolStripMenuItem.Name = "addRegularMaskToolStripMenuItem";
-            this.addRegularMaskToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.addRegularMaskToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
             this.addRegularMaskToolStripMenuItem.Text = "Add Regular Mask";
             this.addRegularMaskToolStripMenuItem.Click += new System.EventHandler(this.addRegularMaskToolStripMenuItem_Click);
             // 
@@ -837,15 +840,22 @@ namespace GCDCore.UserInterface.Project
             // 
             this.addDirectionalMaskToolStripMenuItem.Image = global::GCDCore.Properties.Resources.mask_dir;
             this.addDirectionalMaskToolStripMenuItem.Name = "addDirectionalMaskToolStripMenuItem";
-            this.addDirectionalMaskToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.addDirectionalMaskToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
             this.addDirectionalMaskToolStripMenuItem.Text = "Add Directional Mask";
             this.addDirectionalMaskToolStripMenuItem.Click += new System.EventHandler(this.addDirectionalMaskToolStripMenuItem_Click);
+            // 
+            // addAreaOfInterestAOIMaskToolStripMenuItem
+            // 
+            this.addAreaOfInterestAOIMaskToolStripMenuItem.Image = global::GCDCore.Properties.Resources.AOI;
+            this.addAreaOfInterestAOIMaskToolStripMenuItem.Name = "addAreaOfInterestAOIMaskToolStripMenuItem";
+            this.addAreaOfInterestAOIMaskToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
+            this.addAreaOfInterestAOIMaskToolStripMenuItem.Text = "Add Area of Interest (AOI) Mask";
             // 
             // addAllMasksToTheMapToolStripMenuItem
             // 
             this.addAllMasksToTheMapToolStripMenuItem.Image = global::GCDCore.Properties.Resources.AddToMap;
             this.addAllMasksToTheMapToolStripMenuItem.Name = "addAllMasksToTheMapToolStripMenuItem";
-            this.addAllMasksToTheMapToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.addAllMasksToTheMapToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
             this.addAllMasksToTheMapToolStripMenuItem.Text = "Add All Masks to the Map";
             // 
             // cmsRefSurfaceGroup
@@ -932,7 +942,14 @@ namespace GCDCore.UserInterface.Project
             this.specifyErrorSurfaceToolStripMenuItem,
             this.deriveErrorSurfaceToolStripMenuItem2});
             this.cmsRefSurface.Name = "cmsRefSurface";
-            this.cmsRefSurface.Size = new System.Drawing.Size(248, 142);
+            this.cmsRefSurface.Size = new System.Drawing.Size(248, 120);
+            // 
+            // editReferenceSurfacePropertiesToolStripMenuItem
+            // 
+            this.editReferenceSurfacePropertiesToolStripMenuItem.Image = global::GCDCore.Properties.Resources.Settings;
+            this.editReferenceSurfacePropertiesToolStripMenuItem.Name = "editReferenceSurfacePropertiesToolStripMenuItem";
+            this.editReferenceSurfacePropertiesToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            this.editReferenceSurfacePropertiesToolStripMenuItem.Text = "Edit Reference Surface Properties";
             // 
             // addReferenceSurfaceToMapToolStripMenuItem
             // 
@@ -1018,13 +1035,6 @@ namespace GCDCore.UserInterface.Project
             this.deleteMorphologicalAnalysisToolStripMenuItem.Name = "deleteMorphologicalAnalysisToolStripMenuItem";
             this.deleteMorphologicalAnalysisToolStripMenuItem.Size = new System.Drawing.Size(234, 22);
             this.deleteMorphologicalAnalysisToolStripMenuItem.Text = "Delete Morphological Analysis";
-            // 
-            // editReferenceSurfacePropertiesToolStripMenuItem
-            // 
-            this.editReferenceSurfacePropertiesToolStripMenuItem.Image = global::GCDCore.Properties.Resources.Settings;
-            this.editReferenceSurfacePropertiesToolStripMenuItem.Name = "editReferenceSurfacePropertiesToolStripMenuItem";
-            this.editReferenceSurfacePropertiesToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
-            this.editReferenceSurfacePropertiesToolStripMenuItem.Text = "Edit Reference Surface Properties";
             // 
             // ucProjectExplorer
             // 
@@ -1170,5 +1180,6 @@ namespace GCDCore.UserInterface.Project
         private System.Windows.Forms.ToolStripMenuItem deleteMorphologicalAnalysisToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addAllMasksToTheMapToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem editReferenceSurfacePropertiesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addAreaOfInterestAOIMaskToolStripMenuItem;
     }
 }

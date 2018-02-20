@@ -234,15 +234,25 @@ namespace GCDCore.Project
 
             foreach (XmlNode nodMask in nodProject.SelectNodes("Masks/Mask"))
             {
-                if (nodMask.SelectSingleNode("Items") is XmlNode)
+                if (nodMask.SelectSingleNode("Field") is XmlNode)
                 {
-                    GCDCore.Project.Masks.RegularMask regMask = new Project.Masks.RegularMask(nodMask);
-                    ProjectManager.Project.Masks[regMask.Name] = regMask;
+                    // Regular or directional mask
+                    if (nodMask.SelectSingleNode("Items") is XmlNode)
+                    {
+                        GCDCore.Project.Masks.RegularMask regMask = new Project.Masks.RegularMask(nodMask);
+                        ProjectManager.Project.Masks[regMask.Name] = regMask;
+                    }
+                    else
+                    {
+                        GCDCore.Project.Masks.DirectionalMask dirMask = new Project.Masks.DirectionalMask(nodMask);
+                        ProjectManager.Project.Masks[dirMask.Name] = dirMask;
+                    }
                 }
                 else
                 {
-                    GCDCore.Project.Masks.DirectionalMask dirMask = new Project.Masks.DirectionalMask(nodMask);
-                    ProjectManager.Project.Masks[dirMask.Name] = dirMask;
+                    // Area of interest
+                    GCDCore.Project.Masks.AOIMask aoiMask = new Project.Masks.AOIMask(nodMask);
+                    ProjectManager.Project.Masks[aoiMask.Name] = aoiMask;
                 }
             }
 

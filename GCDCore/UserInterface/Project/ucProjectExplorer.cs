@@ -113,6 +113,8 @@ namespace GCDCore.UserInterface.Project
             this.deleteMaskToolStripMenuItem.Click += btnDelete_Click;
             this.viewMorphologicalAnalysisToolStripMenuItem.Click += EditMorphological_Click;
 
+            this.addAreaOfInterestAOIMaskToolStripMenuItem.Click += AddAOI_Click;
+
         }
 
         public void LoadTree(object sender, EventArgs e)
@@ -160,6 +162,7 @@ namespace GCDCore.UserInterface.Project
                 case GCDNodeTypes.BudgetSegregation: newNode.ImageIndex = 9; break;
                 case GCDNodeTypes.InterComparison: newNode.ImageIndex = 10; break;
                 case GCDNodeTypes.MorphologicalAnalysis: newNode.ImageIndex = 11; break;
+                case GCDNodeTypes.AOI: newNode.ImageIndex = 14; break;
                 case GCDNodeTypes.DoD:
                     DoDBase dod = (GCDCore.Project.DoDBase)projectItem;
                     if (dod.NewSurface is DEMSurvey && dod.OldSurface is DEMSurvey)
@@ -168,13 +171,13 @@ namespace GCDCore.UserInterface.Project
                         newNode.ImageIndex = 12;
                     break;
 
-                   case GCDNodeTypes.Mask:
+                case GCDNodeTypes.Mask:
                     if (projectItem is GCDCore.Project.Masks.RegularMask)
                         newNode.ImageIndex = 6;
                     else
                         newNode.ImageIndex = 13;
                     break;
-         }
+            }
 
             newNode.SelectedImageIndex = newNode.ImageIndex;
             newNode.Tag = new ProjectTreeNode(eType, projectItem);
@@ -260,9 +263,13 @@ namespace GCDCore.UserInterface.Project
                 nodReferenceSurfaces.Expand();
 
                 TreeNode nodMaskGroup = AddTreeNode(nodProject, GCDNodeTypes.MasksGroup, m_sMasks, null, selectItem);
-                foreach (GCDCore.Project.Masks.Mask aMask in ProjectManager.Project.Masks.Values)
+                if (ProjectManager.Project.Masks.Count > 0)
                 {
-                    AddTreeNode(nodMaskGroup, GCDNodeTypes.Mask, aMask.Name, aMask, selectItem);
+                    foreach (GCDCore.Project.Masks.Mask aMask in ProjectManager.Project.Masks.Values)
+                    {
+                        AddTreeNode(nodMaskGroup, aMask is GCDCore.Project.Masks.AOIMask ? GCDNodeTypes.AOI : GCDNodeTypes.Mask, aMask.Name, aMask, selectItem);
+                    }
+                    nodMaskGroup.Expand();
                 }
 
                 nodInputs.Expand();
@@ -497,6 +504,7 @@ namespace GCDCore.UserInterface.Project
                 case GCDNodeTypes.ReferenceSurfaceGroup: cms = cmsRefSurfaceGroup; break;
                 case GCDNodeTypes.ReferenceSurface: cms = cmsRefSurface; break;
                 case GCDNodeTypes.MasksGroup: cms = cmsMasks; break;
+                case GCDNodeTypes.AOI:
                 case GCDNodeTypes.Mask: cms = cmsMask; break;
                 case GCDNodeTypes.ChangeDetectionGroup: cms = cmsChangeDetectionGroup; break;
                 case GCDNodeTypes.DoD: cms = cmsChangeDetection; break;
@@ -1934,15 +1942,26 @@ namespace GCDCore.UserInterface.Project
             TreeNode nodSelected = treProject.SelectedNode;
             if (nodSelected is TreeNode)
             {
-                GCDCore.Project.Masks.Mask mask = ((ProjectTreeNode)nodSelected.Tag).Item as GCDCore.Project.Masks.Mask;
+                ProjectTreeNode ptn = nodSelected.Tag as ProjectTreeNode;
+                GCDCore.Project.Masks.Mask mask = ptn.Item as GCDCore.Project.Masks.Mask;
+                Form frm = null;
 
                 if (mask is GCDCore.Project.Masks.RegularMask)
                 {
-                    UserInterface.Masks.frmMaskProperties frm = new Masks.frmMaskProperties((GCDCore.Project.Masks.RegularMask)mask);
-                    if (frm.ShowDialog() == DialogResult.OK)
-                    {
-                        LoadTree(new ProjectTreeNode(GCDNodeTypes.Mask, mask));
-                    }
+                    frm = new Masks.frmMaskProperties((GCDCore.Project.Masks.RegularMask)mask);
+                }
+                else if (mask is GCDCore.Project.Masks.DirectionalMask)
+                {
+                    frm = new Masks.frmDirectionalMaskProps(mask as GCDCore.Project.Masks.DirectionalMask);
+                }
+                else if (mask is GCDCore.Project.Masks.AOIMask)
+                {
+                    frm = new Masks.frmAOIProperties(mask as GCDCore.Project.Masks.AOIMask);
+                }
+
+                if (frm.ShowDialog() == DialogResult.OK)
+                {
+                    LoadTree(new ProjectTreeNode(ptn.NodeType, mask));
                 }
             }
         }
@@ -1986,6 +2005,22 @@ namespace GCDCore.UserInterface.Project
             if (nodSelected is TreeNode)
             {
                 ProjectManager.Project.ReferenceSurfaces.Values.ToList<GCDCore.Project.Surface>().ForEach(x => ProjectManager.OnAddRasterToMap(x));
+            }
+        }
+
+        public void AddAOI_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Masks.frmAOIProperties frm = new Masks.frmAOIProperties(null);
+                if (frm.ShowDialog() == DialogResult.OK)
+                {
+                    LoadTree(new ProjectTreeNode(GCDNodeTypes.AOI, frm.AOIMask));
+                }
+            }
+            catch (Exception ex)
+            {
+                naru.error.ExceptionUI.HandleException(ex);
             }
         }
     }

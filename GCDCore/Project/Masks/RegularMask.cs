@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GCDCore.Project.Masks
 {
-    public class RegularMask : Mask
+    public class RegularMask : AttributeFieldMask
     {
         public readonly List<MaskItem> _Items;
 

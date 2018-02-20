@@ -192,7 +192,7 @@ namespace GCDAddIn
             AddRasterLayer(assocRow.Raster, rasterRenderer, assocRow.Name, pAssocGrpLyr, assocRow.LayerHeader, dTransparency);
         }
 
-        public void AddMask(GCDCore.Project.Masks.Mask mask)
+        public void AddMask(GCDCore.Project.Masks.AttributeFieldMask mask)
         {
             IGroupLayer pProjLyr = AddProjectGroupLayer();
             IGroupLayer pMasksGrpLyr = ArcMapUtilities.GetGroupLayer(MasksGroupLayer, pProjLyr);
@@ -214,6 +214,16 @@ namespace GCDAddIn
             }
 
             VectorSymbolization.AddToMapVector(mask._ShapeFile, mask.Name, pMasksGrpLyr, mask._Field, pRenderer, queryFilter);
+        }
+
+        public void AddAOI(GCDCore.Project.Masks.AOIMask mask)
+        {
+            IGroupLayer pProjLyr = AddProjectGroupLayer();
+            IGroupLayer pMasksGrpLyr = ArcMapUtilities.GetGroupLayer(MasksGroupLayer, pProjLyr);
+
+            IFeatureRenderer pRenderer  = VectorSymbolization.GetAOIRenderer(mask) as IFeatureRenderer;
+
+            VectorSymbolization.AddToMapVector(mask._ShapeFile, mask.Name, pMasksGrpLyr, string.Empty, pRenderer, string.Empty);
         }
 
         public void AddDoD(GCDProjectRasterItem dod, bool bThresholded = true)

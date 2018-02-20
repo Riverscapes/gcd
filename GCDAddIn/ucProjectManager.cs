@@ -159,7 +159,10 @@ namespace GCDAddIn
 
             public void OnAddVectorToMap(GCDCore.Project.Masks.Mask mask)
             {
-                ArcMapManager.AddMask(mask);
+                if (mask is GCDCore.Project.Masks.AttributeFieldMask)
+                    ArcMapManager.AddMask(mask as GCDCore.Project.Masks.AttributeFieldMask);
+                else
+                    ArcMapManager.AddAOI(mask as GCDCore.Project.Masks.AOIMask);
             }
         }
     }

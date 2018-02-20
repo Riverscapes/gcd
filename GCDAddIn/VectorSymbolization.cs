@@ -49,12 +49,15 @@ namespace GCDAddIn
                 pMapLayers.InsertLayerInGroup(pGrpLyr, pResultLayer, true, 0);
             }
 
+            if (pRenderer != null)
+            {
+                ((IGeoFeatureLayer)pResultLayer).Renderer = pRenderer;
+            }
+
             if (pRenderer is IUniqueValueRenderer)
             {
-                // If you didn't use a color ramp that was predefined
-                // in a style, you need to use "Custom" here, otherwise
-                // use the name of the color ramp you chose.
-                ((IGeoFeatureLayer)pResultLayer).Renderer = pRenderer;
+                // If you didn't use a color ramp that was predefined in a style,
+                // you need to use "Custom" here, otherwise use the name of the color ramp you chose.
                 ((IGeoFeatureLayer)pResultLayer).DisplayField = displayField;
 
                 // This makes the layer properties symbology tab show the correct interface
@@ -175,6 +178,29 @@ namespace GCDAddIn
             // use the name of the color ramp you chose.
             pRender.ColorScheme = "Custom";
             pRender.set_FieldType(0, true);
+
+            return pRender;
+        }
+
+        public static ISimpleRenderer GetAOIRenderer(GCDCore.Project.Masks.AOIMask mask)
+        {
+            RgbColor rgb = new RgbColor();
+            rgb.Red = 255;
+            rgb.Blue = 0;
+            rgb.Green = 0;
+
+            ISimpleFillSymbol symbol = new SimpleFillSymbol();
+            symbol.Style = esriSimpleFillStyle.esriSFSHollow;
+            symbol.Outline.Width = 1.0;
+            ILineSymbol pLineSymbol = symbol.Outline;
+            pLineSymbol.Color = rgb;
+            pLineSymbol.Width = 1;
+            symbol.Outline = pLineSymbol;
+
+            // These properties should be set prior to adding values
+            ISimpleRenderer pRender = new SimpleRenderer();
+            pRender.Label = "Area of Interest";
+            pRender.Symbol = symbol as ISymbol;
 
             return pRender;
         }
