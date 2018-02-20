@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using GCDConsoleLib.Common.Extensons;
 using GCDConsoleLib.Utility;
+using System.Diagnostics;
 
 namespace GCDConsoleLib.Internal.Operators
 {
     class BilinearResample<T> : BaseOperator<T>
     {
-        decimal fy;
-        decimal fx;
+        decimal fy; // old cell height  / new cellheight
+        decimal fx; // old cell width / new cellwidth
 
         /// <summary>
         /// Constructor
@@ -22,17 +23,7 @@ namespace GCDConsoleLib.Internal.Operators
             fy = rInput.Extent.CellHeight / newRect.CellHeight;
             fx = rInput.Extent.CellWidth / newRect.CellWidth;
 
-            int newRows = Convert.ToInt32(Math.Ceiling(rInput.Extent.Rows * fy));
-            int newCols = Convert.ToInt32(Math.Ceiling(rInput.Extent.Cols * fx));
-
-            ExtentRectangle newOpRect = rInput.Extent;
-            newOpRect.Left = newRect.Left;
-            newOpRect.Top = newRect.Top;
-
-            newOpRect.Cols = Convert.ToInt32((newRect.Top - newRect.Bottom) / rInput.Extent.Width);
-            newOpRect.Rows = Convert.ToInt32((newRect.Left - newRect.Right) / rInput.Extent.CellHeight);
-
-            SetOpExtent(newOpRect);
+            SetOpExtent(newRect);
         }
 
         /// <summary>
@@ -58,34 +49,45 @@ namespace GCDConsoleLib.Internal.Operators
         /// </summary>
         public new void Run()
         {
-            int oldCols = _inputRasters[0].Extent.Cols;
             int oldRows = _inputRasters[0].Extent.Rows;
-
+            int oldCols = _inputRasters[0].Extent.Cols;
+            double dInNodata = (double)Convert.ChangeType(inNodataVals[0], typeof(double));
             T[] outBuffer = new T[OpExtent.Cols];
-            List<T[]> indata = new List<T[]>() { new T[_inputRasters[0].Extent.Cols], new T[_inputRasters[0].Extent.Cols] };
+            List<double[]> indata = new List<double[]>() { new double[_inputRasters[0].Extent.Cols], new double[_inputRasters[0].Extent.Cols] };
+
+            // Pre-populate our input data with nodatavals
+            foreach (double[] arr in indata)
+                arr.Fill(dInNodata);
 
             // This is a two-line cycling buffer. Either array el 1 or array el 0 is the first row.
             int topBit = 0;
-
+            int bottomBit = 0;
             int topBitRow = 0;
 
+            double oldCW = (double)_inputRasters[0].Extent.CellWidth;
+            double oldCH = (double)_inputRasters[0].Extent.CellHeight;
+
+            // Now we loop over the output space
             for (int nrow = 0; nrow < OpExtent.Rows; nrow++)
             {
+                int progress = (int)((double)nrow / OpExtent.Rows * 100);
+                ProgressInvoke(progress);
+
                 outBuffer.Fill(outNodataVals[0]);
                 for (int ncol = 0; ncol < OpExtent.Cols; ncol++)
                 {
+                    int ix1 = translateCoord(ncol, fy, OpExtent.Cols); // This gives us the old COL
+                    int iy1 = translateCoord(nrow, fx, OpExtent.Rows); // This gives us the old ROW
 
-                    int ix1 = translateCoord(ncol, fy, OpExtent.Cols);
-                    int iy1 = translateCoord(nrow, fx, OpExtent.Rows);
-
-                    // Increment both by 1 to get 4 coords we need
+                    // Increment both by 1 to get 4 coords we need ix2, iy2 are in the old COL and ROW space
                     int ix2 = ix1 + 1;
                     int iy2 = iy1 + 1;
 
                     // Advance the cache if we need to
-                    if (ix2 > topBitRow)
+                    if (iy2 > topBitRow && iy2 < oldRows)
                     {
                         topBit = (topBit + 1) % 2;
+                        bottomBit = (topBit + 1) % 2;
                         topBitRow += 1;
                         _inputRasters[0].Read(0, iy2, _inputRasters[0].Extent.Cols, 1, indata[topBit]);
                     }
@@ -93,28 +95,25 @@ namespace GCDConsoleLib.Internal.Operators
                     // Test if we're within the raster midpoints
                     if ((ix1 >= 0) && (iy1 >= 0) && (ix2 < oldCols) && (iy2 < oldRows))
                     {
-                        // get the 4 values we need
-                        T[] vals = new T[4] {
-                            indata[topBit][ix1],
-                            indata[(topBit + 1) % 2][ix1],
-                            indata[topBit][ix2],
-                            indata[(topBit + 1)%2 ][ix2]
-                        };
+                        // get the 4 values we need (these correspond to Z01, Z11, Z00 and Z10 in the old system
+                        double Z01 = indata[topBit][ix1];
+                        double Z11 = indata[topBit][ix2];
+                        double Z00 = indata[bottomBit][ix1];
+                        double Z10 = indata[bottomBit][ix2];
+
                         // Bail if anything is NODATAVAL
-                        if (!vals[0].Equals(inNodataVals[0])
-                            && !vals[1].Equals(inNodataVals[0])
-                            && !vals[2].Equals(inNodataVals[0])
-                            && !vals[3].Equals(inNodataVals[0]))
+                        if (Z01 != dInNodata  && Z11 != dInNodata  && Z00 != dInNodata && Z10 != dInNodata)
                         {
                             // Finally, here's the resample:
-                            // The conversion here is unfortunate but since we don't know what kind of thing we're
+                            // The multi[le casts here is unfortunate but since we don't know what kind of thing we're
                             // dealing with before we load it, this needs to happen.
-                            outBuffer[ncol] = (
-                                DynamicMath.Multiply(vals[0], (T)Convert.ChangeType((ix2 - fx) * (iy2 - fy), typeof(T)))
-                                + DynamicMath.Multiply(vals[1], (T)Convert.ChangeType((fx - ix1) * (iy2 - fy), typeof(T)))
-                                + DynamicMath.Multiply(vals[2], (T)Convert.ChangeType((ix2 - fx) * (fy - iy1), typeof(T)))
-                                + DynamicMath.Multiply(vals[3], (T)Convert.ChangeType((fx - ix1) * (fy - iy1), typeof(T)))
-                                / ((ix2 - ix1) * (iy2 - iy1)));
+                            double Z1 = Z01 + (Z11 - Z01) * ((ncol - ix1) * oldCW);
+                            double Z0 = Z00 + (Z10 - Z00) * ((ncol - ix1) * oldCW);
+
+                            double Z = Z1 - (Z1 - Z0) * ((nrow - iy1) * oldCH);
+
+                            outBuffer[ncol] = (T)Convert.ChangeType(Z, typeof(T));
+ 
                         }
                     }
                 }

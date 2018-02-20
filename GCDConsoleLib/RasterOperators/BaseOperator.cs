@@ -34,6 +34,7 @@ namespace GCDConsoleLib.Internal
         protected int _vOffset;
 
         public event EventHandler<int> ProgressEvent;
+        private int lastReportedProgress;
 
         /// <summary>
         /// Report back an integer between 0 and 100
@@ -58,6 +59,7 @@ namespace GCDConsoleLib.Internal
             _outputRasters = new List<Raster>();
             inNodataVals = new List<T>();
             outNodataVals = new List<T>();
+            lastReportedProgress = -1;
 
             List<Raster> tempOut = new List<Raster>();
             if (rOutputRaster != null)
@@ -82,6 +84,8 @@ namespace GCDConsoleLib.Internal
             _outputRasters = new List<Raster>();
             inNodataVals = new List<T>();
             outNodataVals = new List<T>();
+            lastReportedProgress = -1;
+
 
             if (rOutputRasters == null)
                 rOutputRasters = new List<Raster>();
@@ -248,8 +252,6 @@ namespace GCDConsoleLib.Internal
             }
             else
                 OpDone = true;
-
-            Debug.WriteLine(string.Format("Operation: {0}%", Progress));
         }
 
         /// <summary>
@@ -289,13 +291,27 @@ namespace GCDConsoleLib.Internal
         }
 
         /// <summary>
+        /// We need a little shim to handle the ProgressEvent?.Invoke()
+        /// </summary>
+        /// <param name="prog"></param>
+        protected void ProgressInvoke(int prog)
+        {
+            if (prog != lastReportedProgress)
+            {
+                Debug.WriteLine(string.Format("Operation: {0}%", prog));
+                ProgressEvent?.Invoke(this, prog);
+            }
+            lastReportedProgress = prog;
+        }
+
+        /// <summary>
         /// Run an operation over every cell individually
         /// </summary>
         public void Run()
         {
             List<T[]> data = new List<T[]>(_inputRasters.Count);
 
-            ProgressEvent?.Invoke(this, 0);
+            ProgressInvoke(0);
 
             // Set up an array with nodatavals to be populated (or not)
             for (int idx = 0; idx < _inputRasters.Count; idx++)
@@ -308,7 +324,7 @@ namespace GCDConsoleLib.Internal
             while (!OpDone)
             {
                 GetChunk(data);
-                ProgressEvent?.Invoke(this, Progress);
+                ProgressInvoke(Progress);
                 ChunkOp(data, outBuffer);
 
                 for (int idx = 0; idx < _outputRasters.Count; idx++)
@@ -322,7 +338,7 @@ namespace GCDConsoleLib.Internal
                 // We always increment to the next one
                 nextChunk();
             }
-            ProgressEvent?.Invoke(this, 100);
+            ProgressInvoke(100);
 
             Cleanup();
 
