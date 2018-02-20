@@ -15,12 +15,12 @@ namespace GCDAddIn
     {
         public ArcMapBrowse.BrowseGISTypes BrowseType { get; internal set; }
 
-        public GCDConsoleLib.GISDataset SelectedLayer
+        public LayerInfo SelectedLayer
         {
             get
             {
-                if (lstLayers.SelectedItem is GCDConsoleLib.GISDataset)
-                    return (GCDConsoleLib.GISDataset)lstLayers.SelectedItem;
+                if (lstLayers.SelectedItem is LayerInfo)
+                    return (LayerInfo)lstLayers.SelectedItem;
                 else
                     return null;
             }
@@ -108,7 +108,7 @@ namespace GCDAddIn
             }
         }
 
-        private class LayerInfo
+        public class LayerInfo
         {
             public string Name { get; internal set; }
             public System.IO.FileSystemInfo FullPath { get; internal set; }

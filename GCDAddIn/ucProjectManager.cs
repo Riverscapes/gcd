@@ -68,7 +68,7 @@ namespace GCDAddIn
             public void OnGISLayerDeleting(GCDCore.Project.ProjectManager.GISLayerEventArgs e)
             {
                 ArcMapUtilities.RemoveLayer(e.RasterPath);
-            }       
+            }
 
             public void OnGISBrowseRaster(System.Windows.Forms.TextBox txt, naru.ui.PathEventArgs e)
             {
@@ -131,7 +131,7 @@ namespace GCDAddIn
                     frmLayerSelector frm = new frmLayerSelector(eType);
                     if (frm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                     {
-                        txt.Text = frm.SelectedLayer.GISFileInfo.FullName;
+                        txt.Text = frm.SelectedLayer.FullPath.FullName;
                     }
                 }
                 catch (Exception ex)

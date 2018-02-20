@@ -305,6 +305,8 @@ namespace GCDAddIn
                     {
                         sPath = Path.ChangeExtension(sPath, "shp");
                     }
+
+                    siResult = new FileInfo(sPath);
                 }
             }
             else if (pL is IRasterLayer)

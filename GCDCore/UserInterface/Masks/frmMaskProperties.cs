@@ -57,6 +57,15 @@ namespace GCDCore.UserInterface.Masks
             cboField.SelectedIndexChanged += cboField_SelectedIndexChanged;
 
             grdData.DataSource = MaskItems;
+
+            // The singleton project manager subscribes to the browse raster event
+            // So that the browse can bubble to ArcMap
+            if (ProjectManager.IsArcMap)
+            {
+                ucPolygon.Initialize("Mask Polygon ShapeFile", GCDConsoleLib.GDalGeometryType.SimpleTypes.Polygon);
+                ucPolygon.BrowseVector += ProjectManager.OnBrowseVector;
+                ucPolygon.SelectVector += ProjectManager.OnSelectVector;
+            }
         }
 
         private void txtName_TextChanged(object sender, EventArgs e)

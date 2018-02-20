@@ -39,6 +39,15 @@ namespace GCDCore.UserInterface.Masks
             // subscribe to the even when the user changes the input ShapeFile
             ucPolygon.PathChanged += InputShapeFileChanged;
             UpdateControls(sender, e);
+
+            // The singleton project manager subscribes to the browse raster event
+            // So that the browse can bubble to ArcMap
+            if (ProjectManager.IsArcMap)
+            {
+                ucPolygon.Initialize("Mask Polygon ShapeFile", GCDConsoleLib.GDalGeometryType.SimpleTypes.Polygon);
+                ucPolygon.BrowseVector += ProjectManager.OnBrowseVector;
+                ucPolygon.SelectVector += ProjectManager.OnSelectVector;
+            }
         }
 
         private void cmdOK_Click(object sender, EventArgs e)
