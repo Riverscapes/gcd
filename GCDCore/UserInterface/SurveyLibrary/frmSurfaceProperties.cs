@@ -4,7 +4,7 @@ using GCDCore.Project;
 
 namespace GCDCore.UserInterface.SurveyLibrary
 {
-    public partial class frmDEMProperties : Form
+    public partial class frmSurfaceProperties : Form
     {
         public readonly Surface Surface;
         private SurveyDateTime SurveyDate { get; set; }
@@ -21,7 +21,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             }
         }
 
-        public frmDEMProperties(Surface surface)
+        public frmSurfaceProperties(Surface surface)
         {
             InitializeComponent();
             ItemProperties = new naru.ui.SortableBindingList<ItemProperty>();
@@ -34,7 +34,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
         private void frmDEMProperties_Load(object sender, EventArgs e)
         {
-            Name = string.Format("{0} Properties", Noun);
+            Text = string.Format("{0} Properties", Noun);
 
             txtName.Text = Surface.Name;
             txtPath.Text = ProjectManager.Project.GetRelativePath(Surface.Raster.GISFileInfo);
@@ -56,6 +56,12 @@ namespace GCDCore.UserInterface.SurveyLibrary
                 txtSurveyDate.Visible = false;
                 cmdSurveyDate.Visible = false;
                 grpProperties.Top = txtSurveyDate.Top;
+            }
+
+            if (!ProjectManager.IsArcMap)
+            {
+                cmdAddTopMap.Visible = false;
+                txtPath.Width = cmdAddTopMap.Right - txtPath.Left;
             }
 
             grdData.DataSource = ItemProperties;

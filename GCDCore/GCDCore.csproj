@@ -283,11 +283,11 @@
     <Compile Include="UserInterface\SurveyLibrary\frmAssocSurfaceProperties.Designer.cs">
       <DependentUpon>frmAssocSurfaceProperties.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserInterface\SurveyLibrary\frmDEMProperties.cs">
+    <Compile Include="UserInterface\SurveyLibrary\frmSurfaceProperties.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UserInterface\SurveyLibrary\frmDEMProperties.Designer.cs">
-      <DependentUpon>frmDEMProperties.cs</DependentUpon>
+    <Compile Include="UserInterface\SurveyLibrary\frmSurfaceProperties.Designer.cs">
+      <DependentUpon>frmSurfaceProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\SurveyLibrary\frmErrorSurfaceProperties.cs">
       <SubType>Form</SubType>
@@ -520,8 +520,8 @@
     <EmbeddedResource Include="UserInterface\SurveyLibrary\frmAssocSurfaceProperties.resx">
       <DependentUpon>frmAssocSurfaceProperties.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserInterface\SurveyLibrary\frmDEMProperties.resx">
-      <DependentUpon>frmDEMProperties.cs</DependentUpon>
+    <EmbeddedResource Include="UserInterface\SurveyLibrary\frmSurfaceProperties.resx">
+      <DependentUpon>frmSurfaceProperties.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\SurveyLibrary\frmErrorSurfaceProperties.resx">
       <DependentUpon>frmErrorSurfaceProperties.cs</DependentUpon>

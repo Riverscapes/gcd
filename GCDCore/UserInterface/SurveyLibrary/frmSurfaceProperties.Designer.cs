@@ -1,6 +1,6 @@
 ﻿namespace GCDCore.UserInterface.SurveyLibrary
 {
-    partial class frmDEMProperties
+    partial class frmSurfaceProperties
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmDEMProperties));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmSurfaceProperties));
             this.label1 = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
             this.txtPath = new System.Windows.Forms.TextBox();

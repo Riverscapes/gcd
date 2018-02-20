@@ -48,7 +48,7 @@ namespace GCDCore.UserInterface.Project
             this.ExploreGCDProjectFolderToolStripMenuItem.Click += ExploreGCDProjectFolderToolStripMenuItem_Click;
             this.refreshProjectTreeToolStripMenuItem.Click += LoadTree;
             this.ToolStripMenuItem1.Click += ToolStripMenuItem1_Click;
-            this.EditDEMSurveyProperatieToolStripMenuItem.Click += EditDEMSurveyProperatieToolStripMenuItem_Click;
+            this.EditDEMSurveyProperatieToolStripMenuItem.Click += EditSurface_Click;
             this.AddToMapToolStripMenuItem.Click += AddToMapToolStripMenuItem_Click;
             this.DeleteDEMSurveyToolStripMenuItem.Click += btnDelete_Click;
             this.AddAssociatedSurfaceToolStripMenuItem.Click += AddAssociatedSurfaceToolStripMenuItem_Click;
@@ -102,6 +102,7 @@ namespace GCDCore.UserInterface.Project
             this.openInterComparisonFolderToolStripMenuItem.Click += openInterComparisonFolderToolStripMenuItem_Click;
             this.addReferenceSurfaceToMapToolStripMenuItem.Click += AddToMapToolStripMenuItem_Click;
             this.deleteToolStripMenuItem.Click += btnDelete_Click;
+            this.editReferenceSurfacePropertiesToolStripMenuItem.Click += EditSurface_Click;
 
             this.collapseChildrenInGCDProjectTreeToolStripMenuItem.Click += CollapseChildren_Click;
             this.collapseChildrenInGCDProjectTreeToolStripMenuItem1.Click += CollapseChildren_Click;
@@ -374,7 +375,7 @@ namespace GCDCore.UserInterface.Project
                     switch (tag.NodeType)
                     {
                         case GCDNodeTypes.DEMSurvey:
-                            frm = new frmDEMProperties((DEMSurvey)tag.Item);
+                            frm = new frmSurfaceProperties((DEMSurvey)tag.Item);
                             break;
 
                         case GCDNodeTypes.AssociatedSurface:
@@ -927,7 +928,7 @@ namespace GCDCore.UserInterface.Project
 
         #region "DEM Survey Menu Items"
 
-        private void EditDEMSurveyProperatieToolStripMenuItem_Click(System.Object sender, System.EventArgs e)
+        private void EditSurface_Click(System.Object sender, System.EventArgs e)
         {
             try
             {
@@ -935,10 +936,11 @@ namespace GCDCore.UserInterface.Project
                 if (selNode is TreeNode)
                 {
                     GCDNodeTypes eType = GetNodeType(selNode);
-                    if (eType == GCDNodeTypes.DEMSurvey)
+
+                    if (((ProjectTreeNode)selNode.Tag).Item is Surface)
                     {
-                        DEMSurvey dem = (DEMSurvey)((ProjectTreeNode)selNode.Tag).Item;
-                        frmDEMProperties frm = new frmDEMProperties(dem);
+                        Surface surf = (Surface)((ProjectTreeNode)selNode.Tag).Item;
+                        frmSurfaceProperties frm = new frmSurfaceProperties(surf);
 
                         if (frm.ShowDialog() == DialogResult.OK)
                         {

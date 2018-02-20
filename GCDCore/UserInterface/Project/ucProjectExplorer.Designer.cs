@@ -153,6 +153,7 @@ namespace GCDCore.UserInterface.Project
             this.cmsMorphological = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.viewMorphologicalAnalysisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteMorphologicalAnalysisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editReferenceSurfacePropertiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsProject.SuspendLayout();
             this.cmsDEMSurvey.SuspendLayout();
             this.cmsAssociatedSurface.SuspendLayout();
@@ -924,45 +925,46 @@ namespace GCDCore.UserInterface.Project
             // cmsRefSurface
             // 
             this.cmsRefSurface.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.editReferenceSurfacePropertiesToolStripMenuItem,
             this.addReferenceSurfaceToMapToolStripMenuItem,
             this.deleteToolStripMenuItem,
             this.toolStripSeparator10,
             this.specifyErrorSurfaceToolStripMenuItem,
             this.deriveErrorSurfaceToolStripMenuItem2});
             this.cmsRefSurface.Name = "cmsRefSurface";
-            this.cmsRefSurface.Size = new System.Drawing.Size(235, 98);
+            this.cmsRefSurface.Size = new System.Drawing.Size(248, 142);
             // 
             // addReferenceSurfaceToMapToolStripMenuItem
             // 
             this.addReferenceSurfaceToMapToolStripMenuItem.Image = global::GCDCore.Properties.Resources.AddToMap;
             this.addReferenceSurfaceToMapToolStripMenuItem.Name = "addReferenceSurfaceToMapToolStripMenuItem";
-            this.addReferenceSurfaceToMapToolStripMenuItem.Size = new System.Drawing.Size(234, 22);
+            this.addReferenceSurfaceToMapToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
             this.addReferenceSurfaceToMapToolStripMenuItem.Text = "Add Reference Surface to Map";
             // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Image = global::GCDCore.Properties.Resources.Delete;
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(234, 22);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
             this.deleteToolStripMenuItem.Text = "Delete Reference Surface";
             // 
             // toolStripSeparator10
             // 
             this.toolStripSeparator10.Name = "toolStripSeparator10";
-            this.toolStripSeparator10.Size = new System.Drawing.Size(231, 6);
+            this.toolStripSeparator10.Size = new System.Drawing.Size(244, 6);
             // 
             // specifyErrorSurfaceToolStripMenuItem
             // 
             this.specifyErrorSurfaceToolStripMenuItem.Image = global::GCDCore.Properties.Resources.Add;
             this.specifyErrorSurfaceToolStripMenuItem.Name = "specifyErrorSurfaceToolStripMenuItem";
-            this.specifyErrorSurfaceToolStripMenuItem.Size = new System.Drawing.Size(234, 22);
+            this.specifyErrorSurfaceToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
             this.specifyErrorSurfaceToolStripMenuItem.Text = "Specify Error Surface";
             // 
             // deriveErrorSurfaceToolStripMenuItem2
             // 
             this.deriveErrorSurfaceToolStripMenuItem2.Image = global::GCDCore.Properties.Resources.sigma;
             this.deriveErrorSurfaceToolStripMenuItem2.Name = "deriveErrorSurfaceToolStripMenuItem2";
-            this.deriveErrorSurfaceToolStripMenuItem2.Size = new System.Drawing.Size(234, 22);
+            this.deriveErrorSurfaceToolStripMenuItem2.Size = new System.Drawing.Size(247, 22);
             this.deriveErrorSurfaceToolStripMenuItem2.Text = "Derive Error Surface";
             // 
             // cmsMask
@@ -1016,6 +1018,13 @@ namespace GCDCore.UserInterface.Project
             this.deleteMorphologicalAnalysisToolStripMenuItem.Name = "deleteMorphologicalAnalysisToolStripMenuItem";
             this.deleteMorphologicalAnalysisToolStripMenuItem.Size = new System.Drawing.Size(234, 22);
             this.deleteMorphologicalAnalysisToolStripMenuItem.Text = "Delete Morphological Analysis";
+            // 
+            // editReferenceSurfacePropertiesToolStripMenuItem
+            // 
+            this.editReferenceSurfacePropertiesToolStripMenuItem.Image = global::GCDCore.Properties.Resources.Settings;
+            this.editReferenceSurfacePropertiesToolStripMenuItem.Name = "editReferenceSurfacePropertiesToolStripMenuItem";
+            this.editReferenceSurfacePropertiesToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            this.editReferenceSurfacePropertiesToolStripMenuItem.Text = "Edit Reference Surface Properties";
             // 
             // ucProjectExplorer
             // 
@@ -1160,5 +1169,6 @@ namespace GCDCore.UserInterface.Project
         private System.Windows.Forms.ToolStripMenuItem viewMorphologicalAnalysisToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteMorphologicalAnalysisToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addAllMasksToTheMapToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editReferenceSurfacePropertiesToolStripMenuItem;
     }
 }
