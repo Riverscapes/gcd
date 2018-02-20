@@ -228,6 +228,11 @@ namespace GCDCore.Project
             Project = GCDProject.Load(projectFile);
         }
 
+        public static void RefreshProject()
+        {
+            Project = GCDProject.Load(Project.ProjectFile);
+        }
+
         public static void OpenProject(GCDProject project)
         {
             Project = project;

@@ -119,6 +119,7 @@ namespace GCDCore.UserInterface.Project
 
         public void LoadTree(object sender, EventArgs e)
         {
+            ProjectManager.RefreshProject();
             LoadTree(null, SortSurveyBy.NameAsc);
         }
 
