@@ -90,20 +90,21 @@ namespace GCDCore.Engines
             // Ensure the output path exists
             outputPath.Directory.Create();
 
+            List<GCDConsoleLib.Raster> demRasters = new List<GCDConsoleLib.Raster>(DEMSurveys.Select(x => x.Item1.Raster));
             List<GCDConsoleLib.Raster> errRasters = new List<GCDConsoleLib.Raster>(DEMSurveys.Select(x => x.Item2.Raster));
 
             switch (Method)
             {
                 case GCDConsoleLib.RasterOperators.MultiMathOpType.Maximum:
-                    return GCDConsoleLib.RasterOperators.Maximum(errRasters, outputPath);
+                    return GCDConsoleLib.RasterOperators.MaximumErr(demRasters, errRasters, outputPath);
 
                 case GCDConsoleLib.RasterOperators.MultiMathOpType.Minimum:
-                    return GCDConsoleLib.RasterOperators.Minimum(errRasters, outputPath);
+                    return GCDConsoleLib.RasterOperators.MinimumErr(demRasters, errRasters, outputPath);
 
                 // Both the mean and standard deviation use the mean
                 case GCDConsoleLib.RasterOperators.MultiMathOpType.Mean:
                 case GCDConsoleLib.RasterOperators.MultiMathOpType.StandardDeviation:
-                    return GCDConsoleLib.RasterOperators.Mean(errRasters, outputPath);
+                    return GCDConsoleLib.RasterOperators.MultiRootSumSquares(errRasters, outputPath);
 
                 default:
                     throw new Exception("Unhandled math operation type " + Method.ToString());

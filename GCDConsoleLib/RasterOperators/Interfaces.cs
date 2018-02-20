@@ -203,6 +203,18 @@ namespace GCDConsoleLib
         }
 
         /// <summary>
+        /// Root sum squares of a series of rasters
+        /// </summary>
+        /// <param name="rasters"></param>
+        /// <param name="sOutputRaster"></param>
+        /// <returns></returns>
+        public static Raster MultiRootSumSquares(List<Raster> rasters, FileInfo sOutputRaster)
+        {
+            RasterMultiMath op = new RasterMultiMath(MultiMathOpType.RootSumSquares, rasters, new Raster(rasters[0], sOutputRaster));
+            return op.RunWithOutput();
+        }
+
+        /// <summary>
         /// Returns the error raster value corresponding to the maximum value of a group of rasters
         /// </summary>
         /// <param name="rasters">Input values to be used for the max and min</param>
