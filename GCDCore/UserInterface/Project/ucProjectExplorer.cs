@@ -154,7 +154,6 @@ namespace GCDCore.UserInterface.Project
                 case GCDNodeTypes.AssociatedSurface: newNode.ImageIndex = 3; break;
                 case GCDNodeTypes.ErrorSurface: newNode.ImageIndex = 4; break;
                 case GCDNodeTypes.ReferenceSurface: newNode.ImageIndex = 5; break;
-                case GCDNodeTypes.Mask: newNode.ImageIndex = 6; break;
                 case GCDNodeTypes.BudgetSegregationMask: newNode.ImageIndex = 8; break;
                 case GCDNodeTypes.BudgetSegregation: newNode.ImageIndex = 9; break;
                 case GCDNodeTypes.InterComparison: newNode.ImageIndex = 10; break;
@@ -166,7 +165,14 @@ namespace GCDCore.UserInterface.Project
                     else
                         newNode.ImageIndex = 12;
                     break;
-            }
+
+                   case GCDNodeTypes.Mask:
+                    if (projectItem is GCDCore.Project.Masks.RegularMask)
+                        newNode.ImageIndex = 6;
+                    else
+                        newNode.ImageIndex = 13;
+                    break;
+         }
 
             newNode.SelectedImageIndex = newNode.ImageIndex;
             newNode.Tag = new ProjectTreeNode(eType, projectItem);

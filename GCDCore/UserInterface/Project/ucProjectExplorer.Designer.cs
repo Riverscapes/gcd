@@ -129,6 +129,7 @@ namespace GCDCore.UserInterface.Project
             this.cmsMasks = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addRegularMaskToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addDirectionalMaskToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addAllMasksToTheMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsRefSurfaceGroup = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.specifyReferenceSurfaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deriveReferenceSurfaceFromDEMSurveysToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -152,7 +153,6 @@ namespace GCDCore.UserInterface.Project
             this.cmsMorphological = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.viewMorphologicalAnalysisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteMorphologicalAnalysisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.addAllMasksToTheMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsProject.SuspendLayout();
             this.cmsDEMSurvey.SuspendLayout();
             this.cmsAssociatedSurface.SuspendLayout();
@@ -204,6 +204,7 @@ namespace GCDCore.UserInterface.Project
             this.imgTreeImageList.Images.SetKeyName(10, "comparison.png");
             this.imgTreeImageList.Images.SetKeyName(11, "bars.png");
             this.imgTreeImageList.Images.SetKeyName(12, "GCDFilled.png");
+            this.imgTreeImageList.Images.SetKeyName(13, "mask_dir.png");
             // 
             // cmsProject
             // 
@@ -821,7 +822,7 @@ namespace GCDCore.UserInterface.Project
             this.addDirectionalMaskToolStripMenuItem,
             this.addAllMasksToTheMapToolStripMenuItem});
             this.cmsMasks.Name = "cmsMasks";
-            this.cmsMasks.Size = new System.Drawing.Size(211, 92);
+            this.cmsMasks.Size = new System.Drawing.Size(211, 70);
             // 
             // addRegularMaskToolStripMenuItem
             // 
@@ -838,6 +839,13 @@ namespace GCDCore.UserInterface.Project
             this.addDirectionalMaskToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
             this.addDirectionalMaskToolStripMenuItem.Text = "Add Directional Mask";
             this.addDirectionalMaskToolStripMenuItem.Click += new System.EventHandler(this.addDirectionalMaskToolStripMenuItem_Click);
+            // 
+            // addAllMasksToTheMapToolStripMenuItem
+            // 
+            this.addAllMasksToTheMapToolStripMenuItem.Image = global::GCDCore.Properties.Resources.AddToMap;
+            this.addAllMasksToTheMapToolStripMenuItem.Name = "addAllMasksToTheMapToolStripMenuItem";
+            this.addAllMasksToTheMapToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.addAllMasksToTheMapToolStripMenuItem.Text = "Add All Masks to the Map";
             // 
             // cmsRefSurfaceGroup
             // 
@@ -1008,13 +1016,6 @@ namespace GCDCore.UserInterface.Project
             this.deleteMorphologicalAnalysisToolStripMenuItem.Name = "deleteMorphologicalAnalysisToolStripMenuItem";
             this.deleteMorphologicalAnalysisToolStripMenuItem.Size = new System.Drawing.Size(234, 22);
             this.deleteMorphologicalAnalysisToolStripMenuItem.Text = "Delete Morphological Analysis";
-            // 
-            // addAllMasksToTheMapToolStripMenuItem
-            // 
-            this.addAllMasksToTheMapToolStripMenuItem.Image = global::GCDCore.Properties.Resources.AddToMap;
-            this.addAllMasksToTheMapToolStripMenuItem.Name = "addAllMasksToTheMapToolStripMenuItem";
-            this.addAllMasksToTheMapToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
-            this.addAllMasksToTheMapToolStripMenuItem.Text = "Add All Masks to the Map";
             // 
             // ucProjectExplorer
             // 
