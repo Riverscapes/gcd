@@ -6,7 +6,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
 {
     public partial class frmSurfaceProperties : Form
     {
-        public readonly Surface Surface;
+        public readonly GCDProjectRasterItem Surface;
         private SurveyDateTime SurveyDate { get; set; }
         private readonly naru.ui.SortableBindingList<ItemProperty> ItemProperties;
 
@@ -16,12 +16,16 @@ namespace GCDCore.UserInterface.SurveyLibrary
             {
                 if (Surface is DEMSurvey)
                     return "DEM Survey";
-                else
+                else if (Surface is ErrorSurface)
+                    return "Reference Error Surface";
+                else if (Surface is Surface)
                     return "Reference Surface";
+                else
+                    return string.Empty;
             }
         }
 
-        public frmSurfaceProperties(Surface surface)
+        public frmSurfaceProperties(GCDProjectRasterItem surface)
         {
             InitializeComponent();
             ItemProperties = new naru.ui.SortableBindingList<ItemProperty>();
@@ -101,9 +105,13 @@ namespace GCDCore.UserInterface.SurveyLibrary
             {
                 bUnique = ProjectManager.Project.IsDEMNameUnique(txtName.Text, (DEMSurvey)Surface);
             }
+            else if (Surface is Surface)
+            {
+                bUnique = ProjectManager.Project.IsReferenceSurfaceNameUnique(txtName.Text, (Surface) Surface);
+            }
             else
             {
-                bUnique = ProjectManager.Project.IsReferenceSurfaceNameUnique(txtName.Text, Surface);
+                bUnique = ((ErrorSurface)Surface).Surf.IsErrorNameUnique(txtName.Text, (ErrorSurface) Surface);
             }
 
             if (!bUnique)

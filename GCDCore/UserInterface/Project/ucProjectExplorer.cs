@@ -806,7 +806,16 @@ namespace GCDCore.UserInterface.Project
                     if (eType == GCDNodeTypes.ErrorSurface)
                     {
                         ErrorSurface errSurf = (ErrorSurface)((ProjectTreeNode)selNode.Tag).Item;
-                        frmErrorSurfaceProperties frm = new frmErrorSurfaceProperties((DEMSurvey)errSurf.Surf, errSurf);
+                        Form frm = null;
+                        if (errSurf.Surf is DEMSurvey)
+                        {
+                            frm = new frmErrorSurfaceProperties((DEMSurvey)errSurf.Surf, errSurf);
+                        }
+                        else
+                        {
+                            frm = new frmSurfaceProperties(errSurf);
+                        }
+
                         if (frm.ShowDialog() == DialogResult.OK)
                             LoadTree((ProjectTreeNode)selNode.Tag);
                     }
