@@ -28,7 +28,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
             cboDoD.DataSource = new BindingList<DoDBase>(ProjectManager.Project.DoDs.Values.ToList<DoDBase>());
             cboDoD.SelectedItem = InitialDoD;
 
-            cboMasks.DataSource = new BindingList<GCDCore.Project.Masks.Mask>(ProjectManager.Project.Masks.Values.ToList<GCDCore.Project.Masks.Mask>());
+            cboMasks.DataSource = new BindingList<GCDCore.Project.Masks.Mask>(ProjectManager.Project.Masks.Values.Where(x=>x is GCDCore.Project.Masks.AttributeFieldMask).ToList<GCDCore.Project.Masks.Mask>());
             if (cboMasks.Items.Count > 0)
                 cboMasks.SelectedIndex = 0;
 

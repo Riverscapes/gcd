@@ -304,7 +304,6 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.cboBudgetClass.Name = "cboBudgetClass";
             this.cboBudgetClass.Size = new System.Drawing.Size(546, 21);
             this.cboBudgetClass.TabIndex = 4;
-            this.cboBudgetClass.SelectedIndexChanged += new System.EventHandler(this.cboBudgetClass_SelectedIndexChanged);
             // 
             // cboRaw
             // 
@@ -316,7 +315,6 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.cboRaw.Name = "cboRaw";
             this.cboRaw.Size = new System.Drawing.Size(546, 21);
             this.cboRaw.TabIndex = 6;
-            this.cboRaw.SelectedIndexChanged += new System.EventHandler(this.cboBudgetClass_SelectedIndexChanged);
             // 
             // label2
             // 
