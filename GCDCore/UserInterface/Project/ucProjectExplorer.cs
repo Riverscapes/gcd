@@ -108,6 +108,7 @@ namespace GCDCore.UserInterface.Project
             this.editMaskPropertiesToolStripMenuItem.Click += EditMaskProperties_Click;
             this.addMaskToMapToolStripMenuItem.Click += AddMaskToMap_Click;
             this.addAllMasksToTheMapToolStripMenuItem.Click += AllAllMasksToMap_Click;
+            this.deleteMaskToolStripMenuItem.Click += btnDelete_Click;
             this.viewMorphologicalAnalysisToolStripMenuItem.Click += EditMorphological_Click;
 
         }
@@ -1237,6 +1238,11 @@ namespace GCDCore.UserInterface.Project
                     case GCDNodeTypes.DoD:
                         DoDBase dod = (DoDBase)ptn.Item;
                         dod.Delete();
+                        break;
+
+                    case GCDNodeTypes.Mask:
+                        GCDCore.Project.Masks.Mask mask = ptn.Item as GCDCore.Project.Masks.Mask;
+                        mask.Delete();
                         break;
 
                     default:
