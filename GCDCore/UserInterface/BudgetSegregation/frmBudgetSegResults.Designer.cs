@@ -283,6 +283,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.cmdBrowse.Size = new System.Drawing.Size(23, 23);
             this.cmdBrowse.TabIndex = 2;
             this.cmdBrowse.UseVisualStyleBackColor = true;
+            this.cmdBrowse.Click += new System.EventHandler(this.cmdBrowse_Click_1);
             // 
             // label6
             // 

@@ -63,18 +63,6 @@ namespace GCDCore.UserInterface.BudgetSegregation
             ucHistogram.LoadHistograms(rawHist, classResult.Histograms.Thr.Data);
         }
 
-        private void cmdBrowse_Click(System.Object sender, System.EventArgs e)
-        {
-            if (BudgetSeg.Folder.Exists)
-            {
-                Process.Start("explorer.exe", BudgetSeg.Folder.FullName);
-            }
-            else
-            {
-                MessageBox.Show("The budget segregation folder does not exist: " + BudgetSeg.Folder.FullName, Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
-
         private void cmdHelp_Click(System.Object sender, System.EventArgs e)
         {
             Process.Start(Properties.Resources.HelpBaseURL + "gcd-command-reference/gcd-project-explorer/n-individual-budget-segregation-context-menu/i-view-budget-segregation-results");
@@ -97,6 +85,21 @@ namespace GCDCore.UserInterface.BudgetSegregation
                 catch (Exception ex)
                 {
                     //Pass
+                }
+            }
+        }
+
+        private void cmdBrowse_Click_1(object sender, EventArgs e)
+        {
+            if (BudgetSeg.Folder.Exists)
+            {
+                try
+                {
+                    System.Diagnostics.Process.Start(BudgetSeg.Folder.FullName);
+                }
+                catch(Exception ex)
+                {
+                    // Do nothing
                 }
             }
         }
