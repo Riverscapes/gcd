@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
 using GCDCore.Project;
+using GCDCore.Project.Masks;
 
 namespace GCDCore.UserInterface.ChangeDetection
 {
@@ -54,6 +55,14 @@ namespace GCDCore.UserInterface.ChangeDetection
             get
             {
                 return (ErrorSurface)cboOldError.SelectedItem;
+            }
+        }
+
+        public AOIMask AOIMask
+        {
+            get
+            {
+                return ucAOI1.AOIMask;
             }
         }
 

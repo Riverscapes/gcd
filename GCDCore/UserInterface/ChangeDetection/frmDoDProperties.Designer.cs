@@ -47,8 +47,8 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.cmdHelp = new System.Windows.Forms.Button();
             this.txtOutputFolder = new System.Windows.Forms.TextBox();
             this.Label2 = new System.Windows.Forms.Label();
-            this.ucDEMs = new GCDCore.UserInterface.ChangeDetection.ucDoDDEMSelection();
             this.ucThresholding = new GCDCore.UserInterface.ChangeDetection.ucThresholding();
+            this.ucDEMs = new GCDCore.UserInterface.ChangeDetection.ucDoDDEMSelection();
             this.SuspendLayout();
             // 
             // Label5
@@ -73,7 +73,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             // 
             this.cmdCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cmdCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cmdCancel.Location = new System.Drawing.Point(474, 358);
+            this.cmdCancel.Location = new System.Drawing.Point(474, 389);
             this.cmdCancel.Name = "cmdCancel";
             this.cmdCancel.Size = new System.Drawing.Size(75, 23);
             this.cmdCancel.TabIndex = 9;
@@ -84,7 +84,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             // 
             this.cmdOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cmdOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.cmdOK.Location = new System.Drawing.Point(393, 358);
+            this.cmdOK.Location = new System.Drawing.Point(393, 389);
             this.cmdOK.Name = "cmdOK";
             this.cmdOK.Size = new System.Drawing.Size(75, 23);
             this.cmdOK.TabIndex = 8;
@@ -95,7 +95,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             // cmdHelp
             // 
             this.cmdHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.cmdHelp.Location = new System.Drawing.Point(12, 358);
+            this.cmdHelp.Location = new System.Drawing.Point(12, 389);
             this.cmdHelp.Name = "cmdHelp";
             this.cmdHelp.Size = new System.Drawing.Size(75, 23);
             this.cmdHelp.TabIndex = 10;
@@ -120,21 +120,21 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.Label2.TabIndex = 2;
             this.Label2.Text = "Output folder";
             // 
+            // ucThresholding
+            // 
+            this.ucThresholding.Location = new System.Drawing.Point(15, 209);
+            this.ucThresholding.Name = "ucThresholding";
+            this.ucThresholding.Size = new System.Drawing.Size(535, 171);
+            this.ucThresholding.TabIndex = 12;
+            // 
             // ucDEMs
             // 
             this.ucDEMs.Location = new System.Drawing.Point(15, 75);
             this.ucDEMs.Name = "ucDEMs";
             this.ucDEMs.NewSurface = null;
             this.ucDEMs.OldSurface = null;
-            this.ucDEMs.Size = new System.Drawing.Size(535, 89);
+            this.ucDEMs.Size = new System.Drawing.Size(535, 132);
             this.ucDEMs.TabIndex = 11;
-            // 
-            // ucThresholding
-            // 
-            this.ucThresholding.Location = new System.Drawing.Point(15, 166);
-            this.ucThresholding.Name = "ucThresholding";
-            this.ucThresholding.Size = new System.Drawing.Size(535, 186);
-            this.ucThresholding.TabIndex = 12;
             // 
             // frmDoDProperties
             // 
@@ -142,7 +142,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cmdCancel;
-            this.ClientSize = new System.Drawing.Size(562, 395);
+            this.ClientSize = new System.Drawing.Size(562, 426);
             this.Controls.Add(this.ucThresholding);
             this.Controls.Add(this.ucDEMs);
             this.Controls.Add(this.txtOutputFolder);

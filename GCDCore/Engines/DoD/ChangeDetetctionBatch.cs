@@ -16,16 +16,18 @@ namespace GCDCore.Engines.DoD
         public readonly Surface OldSurface;
         public readonly ErrorSurface NewError;
         public readonly ErrorSurface OldError;
+        public readonly Project.Masks.AOIMask AOIMask;
 
         private readonly Dictionary<ThresholdProps.ThresholdMethods, ChangeDetectionEngineBase> DoDEngines;
 
-        public ChangeDetetctionBatch(Surface newSurface, Surface oldSurface, ErrorSurface newError, ErrorSurface oldError, List<ThresholdProps> tProps)
+        public ChangeDetetctionBatch(Surface newSurface, Surface oldSurface, Project.Masks.AOIMask aoi, ErrorSurface newError, ErrorSurface oldError, List<ThresholdProps> tProps)
         {
             NewSurface = newSurface;
             OldSurface = oldSurface;
             NewError = newError;
             OldError = oldError;
             Thresholds = tProps;
+            AOIMask = aoi;
 
             DoDEngines = new Dictionary<ThresholdProps.ThresholdMethods, ChangeDetectionEngineBase>();
         }
@@ -50,15 +52,15 @@ namespace GCDCore.Engines.DoD
             switch (tProps.Method)
             {
                 case ThresholdProps.ThresholdMethods.MinLoD:
-                    cdEngine = new ChangeDetectionEngineMinLoD(NewSurface, OldSurface, tProps.Threshold);
+                    cdEngine = new ChangeDetectionEngineMinLoD(NewSurface, OldSurface, AOIMask, tProps.Threshold);
                     break;
 
                 case ThresholdProps.ThresholdMethods.Propagated:
-                    cdEngine = new ChangeDetectionEnginePropProb(NewSurface, OldSurface, NewError, OldError);
+                    cdEngine = new ChangeDetectionEnginePropProb(NewSurface, OldSurface, NewError, OldError, AOIMask);
                     break;
 
                 case ThresholdProps.ThresholdMethods.Probabilistic:
-                    cdEngine = new ChangeDetectionEngineProbabilistic(NewSurface, OldSurface, NewError, OldError, tProps.Threshold, tProps.SpatialCoherenceProps);
+                    cdEngine = new ChangeDetectionEngineProbabilistic(NewSurface, OldSurface, AOIMask, NewError, OldError, tProps.Threshold, tProps.SpatialCoherenceProps);
                     break;
             }
 

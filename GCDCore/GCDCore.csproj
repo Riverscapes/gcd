@@ -198,6 +198,12 @@
     <Compile Include="UserInterface\ChangeDetection\MultiEpoch\frmMultiEpoch.Designer.cs">
       <DependentUpon>frmMultiEpoch.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserInterface\ChangeDetection\ucAOI.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserInterface\ChangeDetection\ucAOI.Designer.cs">
+      <DependentUpon>ucAOI.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserInterface\ChangeDetection\ucChangeBars.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -485,6 +491,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\ChangeDetection\MultiEpoch\frmMultiEpoch.resx">
       <DependentUpon>frmMultiEpoch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\ChangeDetection\ucAOI.resx">
+      <DependentUpon>ucAOI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\ChangeDetection\ucChangeBars.resx">
       <DependentUpon>ucChangeBars.cs</DependentUpon>

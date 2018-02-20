@@ -32,8 +32,8 @@ namespace GCDCore.Project
         /// <param name="thrHist"></param>
         /// <param name="threshold"></param>
         /// <param name="stats"></param>
-        public DoDMinLoD(string name, DirectoryInfo folder, Surface newSurface, Surface oldSurface, Raster rawDoD, Raster thrDoD, HistogramPair histograms, FileInfo summaryXML, decimal threshold, DoDStats stats)
-            : base(name, folder, newSurface, oldSurface, rawDoD, thrDoD, histograms, summaryXML, stats)
+        public DoDMinLoD(string name, DirectoryInfo folder, Surface newSurface, Surface oldSurface, Project.Masks.AOIMask aoi, Raster rawDoD, Raster thrDoD, HistogramPair histograms, FileInfo summaryXML, decimal threshold, DoDStats stats)
+            : base(name, folder, newSurface, oldSurface, aoi, rawDoD, thrDoD, histograms, summaryXML, stats)
         {
             Threshold = threshold;
         }
@@ -41,7 +41,7 @@ namespace GCDCore.Project
         public DoDMinLoD(XmlNode nodDoD)
             : base(nodDoD)
         {
-           Threshold = decimal.Parse(nodDoD.SelectSingleNode("Threshold").InnerText);
+            Threshold = decimal.Parse(nodDoD.SelectSingleNode("Threshold").InnerText);
         }
 
         public override XmlNode Serialize(XmlNode nodParent)

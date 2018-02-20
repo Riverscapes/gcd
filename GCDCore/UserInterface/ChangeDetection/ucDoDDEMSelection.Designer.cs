@@ -39,9 +39,12 @@
             this.lblNewError = new System.Windows.Forms.Label();
             this.Label1 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.pnlAOI = new System.Windows.Forms.Panel();
+            this.ucAOI1 = new GCDCore.UserInterface.ChangeDetection.ucAOI();
             this.GroupBox4.SuspendLayout();
             this.GroupBox1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            this.pnlAOI.SuspendLayout();
             this.SuspendLayout();
             // 
             // GroupBox4
@@ -53,7 +56,7 @@
             this.GroupBox4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GroupBox4.Location = new System.Drawing.Point(251, 3);
             this.GroupBox4.Name = "GroupBox4";
-            this.GroupBox4.Size = new System.Drawing.Size(242, 83);
+            this.GroupBox4.Size = new System.Drawing.Size(242, 74);
             this.GroupBox4.TabIndex = 7;
             this.GroupBox4.TabStop = false;
             this.GroupBox4.Text = "Old DEM or Reference Surface";
@@ -108,7 +111,7 @@
             this.GroupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GroupBox1.Location = new System.Drawing.Point(3, 3);
             this.GroupBox1.Name = "GroupBox1";
-            this.GroupBox1.Size = new System.Drawing.Size(242, 83);
+            this.GroupBox1.Size = new System.Drawing.Size(242, 74);
             this.GroupBox1.TabIndex = 6;
             this.GroupBox1.TabStop = false;
             this.GroupBox1.Text = "New DEM or Reference Surface";
@@ -161,13 +164,33 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.Controls.Add(this.GroupBox1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.GroupBox4, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.pnlAOI, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(496, 89);
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(496, 137);
             this.tableLayoutPanel1.TabIndex = 8;
+            // 
+            // pnlAOI
+            // 
+            this.tableLayoutPanel1.SetColumnSpan(this.pnlAOI, 2);
+            this.pnlAOI.Controls.Add(this.ucAOI1);
+            this.pnlAOI.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlAOI.Location = new System.Drawing.Point(3, 83);
+            this.pnlAOI.Name = "pnlAOI";
+            this.pnlAOI.Size = new System.Drawing.Size(490, 51);
+            this.pnlAOI.TabIndex = 8;
+            // 
+            // ucAOI1
+            // 
+            this.ucAOI1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucAOI1.Location = new System.Drawing.Point(0, 0);
+            this.ucAOI1.Name = "ucAOI1";
+            this.ucAOI1.Size = new System.Drawing.Size(490, 51);
+            this.ucAOI1.TabIndex = 0;
             // 
             // ucDoDDEMSelection
             // 
@@ -175,13 +198,14 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "ucDoDDEMSelection";
-            this.Size = new System.Drawing.Size(496, 89);
+            this.Size = new System.Drawing.Size(496, 137);
             this.Load += new System.EventHandler(this.ucDoDDEMSelection_Load);
             this.GroupBox4.ResumeLayout(false);
             this.GroupBox4.PerformLayout();
             this.GroupBox1.ResumeLayout(false);
             this.GroupBox1.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
+            this.pnlAOI.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -199,5 +223,7 @@
         internal System.Windows.Forms.Label lblNewError;
         internal System.Windows.Forms.Label Label1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.Panel pnlAOI;
+        private ucAOI ucAOI1;
     }
 }

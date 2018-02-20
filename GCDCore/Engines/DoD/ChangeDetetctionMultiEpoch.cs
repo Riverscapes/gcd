@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GCDCore.Project;
+using GCDCore.Project.Masks;
 using GCDCore.UserInterface.ChangeDetection;
 using GCDCore.UserInterface.ChangeDetection.MultiEpoch;
 
@@ -14,8 +15,9 @@ namespace GCDCore.Engines.DoD
     {
         public readonly ThresholdProps Thresholds;
         public readonly List<Epoch> Epochs;
+        public readonly AOIMask AOIMask;
 
-        public  Boolean Cancelled
+        public Boolean Cancelled
         {
             get { return _Cancelled; }
         }
@@ -25,10 +27,11 @@ namespace GCDCore.Engines.DoD
 
         private readonly Dictionary<ThresholdProps.ThresholdMethods, ChangeDetectionEngineBase> DoDEngines;
 
-        public ChangeDetectionMultiEpoch(List<Epoch> lEpochs, ThresholdProps tProps)
+        public ChangeDetectionMultiEpoch(List<Epoch> lEpochs, Project.Masks.AOIMask aoi, ThresholdProps tProps)
         {
             Epochs = lEpochs;
             Thresholds = tProps;
+            AOIMask = aoi;
 
             DoDEngines = new Dictionary<ThresholdProps.ThresholdMethods, ChangeDetectionEngineBase>();
         }
@@ -62,15 +65,15 @@ namespace GCDCore.Engines.DoD
             switch (tProps.Method)
             {
                 case ThresholdProps.ThresholdMethods.MinLoD:
-                    cdEngine = new ChangeDetectionEngineMinLoD(NewDEM, OldDEM, tProps.Threshold);
+                    cdEngine = new ChangeDetectionEngineMinLoD(NewDEM, OldDEM, AOIMask, tProps.Threshold);
                     break;
 
                 case ThresholdProps.ThresholdMethods.Propagated:
-                    cdEngine = new ChangeDetectionEnginePropProb(NewDEM, OldDEM, DoDEpoch.NewDEMErrorSurface, DoDEpoch.OldDEMErrorSurface);
+                    cdEngine = new ChangeDetectionEnginePropProb(NewDEM, OldDEM, DoDEpoch.NewDEMErrorSurface, DoDEpoch.OldDEMErrorSurface, AOIMask);
                     break;
 
                 case ThresholdProps.ThresholdMethods.Probabilistic:
-                    cdEngine = new ChangeDetectionEngineProbabilistic(NewDEM, OldDEM, DoDEpoch.NewDEMErrorSurface, DoDEpoch.OldDEMErrorSurface, tProps.Threshold, tProps.SpatialCoherenceProps);
+                    cdEngine = new ChangeDetectionEngineProbabilistic(NewDEM, OldDEM, AOIMask, DoDEpoch.NewDEMErrorSurface, DoDEpoch.OldDEMErrorSurface, tProps.Threshold, tProps.SpatialCoherenceProps);
                     break;
             }
 

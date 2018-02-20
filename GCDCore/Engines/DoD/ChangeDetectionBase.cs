@@ -11,8 +11,9 @@ namespace GCDCore.Engines
     {
         protected Surface NewSurface;
         protected Surface OldSurface;
+        protected Project.Masks.AOIMask AOIMask;
 
-        public ChangeDetectionEngineBase(Surface newSurface, Surface oldSurface)
+        public ChangeDetectionEngineBase(Surface newSurface, Surface oldSurface, Project.Masks.AOIMask aoi)
             : base()
         {
             if (!newSurface.Raster.Extent.HasOverlap(oldSurface.Raster.Extent))
@@ -27,6 +28,7 @@ namespace GCDCore.Engines
 
             NewSurface = newSurface;
             OldSurface = oldSurface;
+            AOIMask = aoi;
         }
 
         public DoDBase Calculate(string dodName, DirectoryInfo analysisFolder, bool bBuildPyramids, UnitGroup units)
@@ -40,7 +42,16 @@ namespace GCDCore.Engines
             analysisFolder.Create();
 
             // Subtract the new and old rasters to produce the raw DoD
-            Raster rawDoD = RasterOperators.Subtract(NewSurface.Raster, OldSurface.Raster, rawDoDPath);
+            Raster rawDoD;
+            if (AOIMask == null)
+            {
+                rawDoD = RasterOperators.Subtract(NewSurface.Raster, OldSurface.Raster, rawDoDPath);
+            }
+            else
+            {
+                Vector vAOI = new Vector(AOIMask._ShapeFile);
+                rawDoD = RasterOperators.SubtractWithMask(NewSurface.Raster, OldSurface.Raster, vAOI, rawDoDPath);
+            }
 
             // Build pyraminds
             ProjectManager.PyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.DoDRaw, rawDoDPath);

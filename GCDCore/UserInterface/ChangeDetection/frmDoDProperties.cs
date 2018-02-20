@@ -78,17 +78,17 @@ namespace GCDCore.UserInterface.ChangeDetection
 
                 if (ucThresholding.ThresholdProperties.Method == Engines.DoD.ThresholdProps.ThresholdMethods.MinLoD)
                 {
-                    cdEngine = new Engines.ChangeDetectionEngineMinLoD(ucDEMs.NewSurface, ucDEMs.OldSurface, ucThresholding.ThresholdProperties.Threshold);
+                    cdEngine = new Engines.ChangeDetectionEngineMinLoD(ucDEMs.NewSurface, ucDEMs.OldSurface, ucDEMs.AOIMask, ucThresholding.ThresholdProperties.Threshold);
                 }
                 else
                 {
                     if (ucThresholding.ThresholdProperties.Method == Engines.DoD.ThresholdProps.ThresholdMethods.Propagated)
                     {
-                        cdEngine = new Engines.ChangeDetectionEnginePropProb(ucDEMs.NewSurface, ucDEMs.OldSurface, ucDEMs.NewError, ucDEMs.OldError);
+                        cdEngine = new Engines.ChangeDetectionEnginePropProb(ucDEMs.NewSurface, ucDEMs.OldSurface, ucDEMs.NewError, ucDEMs.OldError, ucDEMs.AOIMask);
                     }
                     else
                     {
-                        cdEngine = new Engines.ChangeDetectionEngineProbabilistic(ucDEMs.NewSurface, ucDEMs.OldSurface, ucDEMs.NewError, ucDEMs.OldError, ucThresholding.ThresholdProperties.Threshold, ucThresholding.ThresholdProperties.SpatialCoherenceProps);
+                        cdEngine = new Engines.ChangeDetectionEngineProbabilistic(ucDEMs.NewSurface, ucDEMs.OldSurface, ucDEMs.AOIMask, ucDEMs.NewError, ucDEMs.OldError, ucThresholding.ThresholdProperties.Threshold, ucThresholding.ThresholdProperties.SpatialCoherenceProps);
                     }
                 }
 

@@ -52,6 +52,7 @@
             this.ucThresholding1 = new GCDCore.UserInterface.ChangeDetection.ucThresholding();
             this.pnlBottom = new System.Windows.Forms.Panel();
             this.bgWorker = new System.ComponentModel.BackgroundWorker();
+            this.ucAOI1 = new GCDCore.UserInterface.ChangeDetection.ucAOI();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdDEMs)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -65,7 +66,7 @@
             // 
             this.cmdCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cmdCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cmdCancel.Location = new System.Drawing.Point(494, 213);
+            this.cmdCancel.Location = new System.Drawing.Point(494, 234);
             this.cmdCancel.Name = "cmdCancel";
             this.cmdCancel.Size = new System.Drawing.Size(75, 23);
             this.cmdCancel.TabIndex = 0;
@@ -76,7 +77,7 @@
             // cmdOK
             // 
             this.cmdOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmdOK.Location = new System.Drawing.Point(413, 213);
+            this.cmdOK.Location = new System.Drawing.Point(413, 234);
             this.cmdOK.Name = "cmdOK";
             this.cmdOK.Size = new System.Drawing.Size(75, 23);
             this.cmdOK.TabIndex = 1;
@@ -87,7 +88,7 @@
             // cmdHelp
             // 
             this.cmdHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.cmdHelp.Location = new System.Drawing.Point(8, 213);
+            this.cmdHelp.Location = new System.Drawing.Point(8, 234);
             this.cmdHelp.Name = "cmdHelp";
             this.cmdHelp.Size = new System.Drawing.Size(75, 23);
             this.cmdHelp.TabIndex = 2;
@@ -102,10 +103,10 @@
             this.groupBox1.Controls.Add(this.cmdMoveUp);
             this.groupBox1.Controls.Add(this.cmdMoveDown);
             this.groupBox1.Controls.Add(this.grdDEMs);
-            this.groupBox1.Location = new System.Drawing.Point(8, 9);
+            this.groupBox1.Location = new System.Drawing.Point(8, 5);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(561, 171);
-            this.groupBox1.TabIndex = 3;
+            this.groupBox1.Size = new System.Drawing.Size(561, 154);
+            this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "DEM Surveys in Chronological Order";
             // 
@@ -149,7 +150,7 @@
             this.grdDEMs.Name = "grdDEMs";
             this.grdDEMs.RowHeadersVisible = false;
             this.grdDEMs.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.grdDEMs.Size = new System.Drawing.Size(520, 146);
+            this.grdDEMs.Size = new System.Drawing.Size(520, 129);
             this.grdDEMs.TabIndex = 0;
             this.grdDEMs.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdDEMs_CellEnter);
             this.grdDEMs.CellMouseUp += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.grdDEMs_CellMouseUp);
@@ -191,8 +192,8 @@
             this.groupBox2.Controls.Add(this.chkNewest);
             this.groupBox2.Location = new System.Drawing.Point(8, 3);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(560, 204);
-            this.groupBox2.TabIndex = 5;
+            this.groupBox2.Size = new System.Drawing.Size(560, 225);
+            this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "DEM Survey Epoch Queue";
             // 
@@ -213,7 +214,7 @@
             this.grdEpochs.MultiSelect = false;
             this.grdEpochs.Name = "grdEpochs";
             this.grdEpochs.RowHeadersVisible = false;
-            this.grdEpochs.Size = new System.Drawing.Size(540, 115);
+            this.grdEpochs.Size = new System.Drawing.Size(540, 136);
             this.grdEpochs.TabIndex = 3;
             // 
             // colIsActive
@@ -291,27 +292,28 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 60F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 40F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(584, 612);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(584, 664);
             this.tableLayoutPanel1.TabIndex = 6;
             // 
             // pnlTop
             // 
+            this.pnlTop.Controls.Add(this.ucAOI1);
             this.pnlTop.Controls.Add(this.groupBox1);
             this.pnlTop.Controls.Add(this.ucThresholding1);
             this.pnlTop.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlTop.Location = new System.Drawing.Point(3, 3);
             this.pnlTop.Name = "pnlTop";
-            this.pnlTop.Size = new System.Drawing.Size(578, 361);
+            this.pnlTop.Size = new System.Drawing.Size(578, 392);
             this.pnlTop.TabIndex = 0;
             // 
             // ucThresholding1
             // 
             this.ucThresholding1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.ucThresholding1.Location = new System.Drawing.Point(8, 186);
+            this.ucThresholding1.Location = new System.Drawing.Point(8, 217);
             this.ucThresholding1.Name = "ucThresholding1";
             this.ucThresholding1.Size = new System.Drawing.Size(560, 169);
-            this.ucThresholding1.TabIndex = 4;
+            this.ucThresholding1.TabIndex = 2;
             // 
             // pnlBottom
             // 
@@ -320,9 +322,9 @@
             this.pnlBottom.Controls.Add(this.cmdCancel);
             this.pnlBottom.Controls.Add(this.cmdOK);
             this.pnlBottom.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlBottom.Location = new System.Drawing.Point(3, 370);
+            this.pnlBottom.Location = new System.Drawing.Point(3, 401);
             this.pnlBottom.Name = "pnlBottom";
-            this.pnlBottom.Size = new System.Drawing.Size(578, 239);
+            this.pnlBottom.Size = new System.Drawing.Size(578, 260);
             this.pnlBottom.TabIndex = 1;
             // 
             // bgWorker
@@ -333,11 +335,20 @@
             this.bgWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.bgWorker_ProgressChanged);
             this.bgWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgWorker_RunWorkerCompleted);
             // 
+            // ucAOI1
+            // 
+            this.ucAOI1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ucAOI1.Location = new System.Drawing.Point(8, 165);
+            this.ucAOI1.Name = "ucAOI1";
+            this.ucAOI1.Size = new System.Drawing.Size(561, 46);
+            this.ucAOI1.TabIndex = 1;
+            // 
             // frmMultiEpoch
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(584, 612);
+            this.ClientSize = new System.Drawing.Size(584, 664);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmMultiEpoch";
@@ -380,5 +391,6 @@
         private System.Windows.Forms.DataGridViewCheckBoxColumn colActive;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDEMSurvey;
         private System.Windows.Forms.DataGridViewComboBoxColumn colErrorSurface;
+        private ucAOI ucAOI1;
     }
 }

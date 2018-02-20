@@ -55,14 +55,14 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
             DEMSBindingSource.DataSource = DEMs;
             grdDEMs.DataSource = DEMSBindingSource;
             grdEpochs.DataSource = Epochs;
-     
+
             // Update the status of the move up and down buttons
             grdDEMs_SelectionChanged(sender, e);
 
             //hook up handler for when DEM IsActive property is changed
-            foreach(DEMSurveyItem SurveyItem in DEMs)
+            foreach (DEMSurveyItem SurveyItem in DEMs)
             {
-                SurveyItem.PropertyChanged+= DEMIsActive_Changed;
+                SurveyItem.PropertyChanged += DEMIsActive_Changed;
             }
 
             //Setup error surfaces for DEM grid
@@ -118,7 +118,7 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
         {
             //Get selected error surface
             ComboBox cbo = (ComboBox)sender;
-            ErrorSurface selectedDEMErrorSurface = (ErrorSurface) cbo.SelectedItem;
+            ErrorSurface selectedDEMErrorSurface = (ErrorSurface)cbo.SelectedItem;
 
             //set selected error surface on relevant DEMSurveyItem
             DEMSurveyItem selectedDEM = (DEMSurveyItem)grdDEMs.SelectedRows[0].DataBoundItem;
@@ -238,7 +238,7 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
                 DisableForm();
 
                 //set chronological order
-                for (int i=0; i<DEMs.Count; i++)
+                for (int i = 0; i < DEMs.Count; i++)
                 {
                     DEMSurveyItem currentSurveyItem = DEMs[i];
                     DEMSurvey currentDEMSurvey = currentSurveyItem.DEM;
@@ -249,7 +249,7 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
                 //setup and run batch engine
                 ThresholdProps threshold = ucThresholding1.ThresholdProperties;
                 List<Epoch> ActiveEpochs = Epochs.Where(epoch => epoch.IsActive == true).ToList();
-                BatchEngine = new ChangeDetectionMultiEpoch(ActiveEpochs, threshold);
+                BatchEngine = new ChangeDetectionMultiEpoch(ActiveEpochs, ucAOI1.AOIMask, threshold);
                 bgWorker.RunWorkerAsync();
 
             }
@@ -318,7 +318,7 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
         {
             bgWorker.CancelAsync();
         }
-        
+
         #endregion
 
         #region "Methods"
@@ -394,13 +394,13 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
         /// <param name="NewEpochs"></param>
         private void AddEpochsWithoutDuplicates(List<Epoch> NewEpochs, List<Epoch> InActiveEpochs)
         {
-            foreach(Epoch currentEpoch in NewEpochs)
+            foreach (Epoch currentEpoch in NewEpochs)
             {
                 //if epoch is not already in grid, add it
-                if(!EpochIsCurrentInList(currentEpoch))
+                if (!EpochIsCurrentInList(currentEpoch))
                 {
                     //check if its inactive
-                    if(InActiveEpochs.Where(IAEpochs => IAEpochs.NewDEMName == currentEpoch.NewDEMName && IAEpochs.OldDEMName == currentEpoch.OldDEMName).Count() > 0)
+                    if (InActiveEpochs.Where(IAEpochs => IAEpochs.NewDEMName == currentEpoch.NewDEMName && IAEpochs.OldDEMName == currentEpoch.OldDEMName).Count() > 0)
                     {
                         currentEpoch.IsActive = false;
                     }
@@ -417,9 +417,9 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
         /// <returns></returns>
         private Boolean EpochIsCurrentInList(Epoch newEpoch)
         {
-            foreach(Epoch CurrentEpoch in Epochs)
+            foreach (Epoch CurrentEpoch in Epochs)
             {
-                if(CurrentEpoch.NewDEMName == newEpoch.NewDEMName & CurrentEpoch.OldDEMName == newEpoch.OldDEMName) //each DEM must have a unique name so we can compare DEM names
+                if (CurrentEpoch.NewDEMName == newEpoch.NewDEMName & CurrentEpoch.OldDEMName == newEpoch.OldDEMName) //each DEM must have a unique name so we can compare DEM names
                 {
                     return (true);
                 }
@@ -443,7 +443,7 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
             }
 
             DEMSurveyItem NewestDEM = ActiveDEMs[0];
-            for (int i = 1; i< ActiveDEMs.Count; i++)
+            for (int i = 1; i < ActiveDEMs.Count; i++)
             {
                 DEMSurveyItem OlderDEM = ActiveDEMs[i];
                 Epoch FirstEpoch = new Epoch(NewestDEM.DEM, NewestDEM.SelectedErrorSurface, OlderDEM.DEM, OlderDEM.SelectedErrorSurface);
@@ -497,7 +497,7 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
             for (int i = 0; i < ActiveDEMs.Count - 1; i++)
             {
                 DEMSurveyItem newDEM = ActiveDEMs[i];
-                DEMSurveyItem oldDEM = ActiveDEMs[i+1];
+                DEMSurveyItem oldDEM = ActiveDEMs[i + 1];
                 Epoch NewEpoch = new Epoch(newDEM.DEM, newDEM.SelectedErrorSurface, oldDEM.DEM, oldDEM.SelectedErrorSurface);
                 AllDEMsMinusThePreviousDEM.Add(NewEpoch);
             }
@@ -513,11 +513,11 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
         {
             List<DEMSurveyItem> ActiveDEMs = new List<DEMSurveyItem>();
 
-            for(int i=0; i<DEMs.Count; i++) //loop through all surveys
+            for (int i = 0; i < DEMs.Count; i++) //loop through all surveys
             {
                 DEMSurveyItem CurrentDEM = DEMs[i];
                 //if active, add to list of active DEMs
-                if(CurrentDEM.IsActive)
+                if (CurrentDEM.IsActive)
                 {
                     ActiveDEMs.Add(CurrentDEM);
                 }
@@ -535,18 +535,18 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
         {
             //Check there is at least one active epoch to analyse
             List<Epoch> ActiveEpochs = Epochs.Where(epoch => epoch.IsActive == true).ToList();
-            if(ActiveEpochs.Count == 0)
+            if (ActiveEpochs.Count == 0)
             {
                 MessageBox.Show("Please select at least one one active epoch for analysis .", "No Active Epochs", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return false;
             }
 
             //check for surveys without error surfaces if uncertainty analysis method is propagated or probabilistic thresholding
-            if(ucThresholding1.ThresholdProperties.Method != ThresholdProps.ThresholdMethods.MinLoD) //if method is not minimum level of detection
+            if (ucThresholding1.ThresholdProperties.Method != ThresholdProps.ThresholdMethods.MinLoD) //if method is not minimum level of detection
             {
-                foreach(Epoch currentEpoch in Epochs)
+                foreach (Epoch currentEpoch in Epochs)
                 {
-                    if(currentEpoch.NewDEMErrorSurface == null || currentEpoch.OldDEMErrorSurface == null)
+                    if (currentEpoch.NewDEMErrorSurface == null || currentEpoch.OldDEMErrorSurface == null)
                     {
                         MessageBox.Show("Please specify an error surface for each included survey if your uncertainty analysis method is not minimum level of detection.", "Missing Error Surface", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         return false;
@@ -566,9 +566,9 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
 
             List<DEMSurvey> AllSurveys = ProjectManager.Project.DEMSurveys.Values.ToList();
 
-            List<DEMSurvey> SurveysWithChronologicalOrder = AllSurveys.Where(survey => survey.ChronologicalOrder.HasValue).OrderBy(survey =>survey.ChronologicalOrder).ToList();
-            List<DEMSurvey> SurveysWithSurveyDate= AllSurveys.Where(survey => !survey.ChronologicalOrder.HasValue && survey.SurveyDate != null).OrderByDescending(survey => survey.SurveyDate).ToList();
-            List<DEMSurvey> RemainingSurveys= AllSurveys.Where(survey => !survey.ChronologicalOrder.HasValue && survey.SurveyDate == null).OrderByDescending(survey => survey.Name).ToList();
+            List<DEMSurvey> SurveysWithChronologicalOrder = AllSurveys.Where(survey => survey.ChronologicalOrder.HasValue).OrderBy(survey => survey.ChronologicalOrder).ToList();
+            List<DEMSurvey> SurveysWithSurveyDate = AllSurveys.Where(survey => !survey.ChronologicalOrder.HasValue && survey.SurveyDate != null).OrderByDescending(survey => survey.SurveyDate).ToList();
+            List<DEMSurvey> RemainingSurveys = AllSurveys.Where(survey => !survey.ChronologicalOrder.HasValue && survey.SurveyDate == null).OrderByDescending(survey => survey.Name).ToList();
 
             //First add sorted surveys with chronological orders (the user has specified the order)
             SortedSurveys.AddRange(SurveysWithChronologicalOrder);
@@ -597,7 +597,7 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
             try
             {
                 BatchEngine.Run(bgWorker);
-                if(BatchEngine.Cancelled) //if analysis is cancelled, set cancel flag on DoWorkEventArgs
+                if (BatchEngine.Cancelled) //if analysis is cancelled, set cancel flag on DoWorkEventArgs
                 {
                     e.Cancel = true;
                 }
@@ -630,11 +630,13 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
         private void bgWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             //if cancelled, let the user know and enable the form
-            if(e.Cancelled)
+            if (e.Cancelled)
             {
                 MessageBox.Show("Batch Change Detection cancelled.");
                 EnableForm();
-            } else {
+            }
+            else
+            {
                 ///Otherwise that the user know the analysis completed
                 cmdCancel.DialogResult = DialogResult.OK;
                 cmdCancel.Text = "Close";

@@ -16,9 +16,9 @@ namespace GCDCore.Engines
 
         private FileInfo m_SpatialCoDepositionRaster;
 
-        public ChangeDetectionEngineProbabilistic(Surface newDEM, Surface oldDEM, ErrorSurface newError, ErrorSurface oldError,
+        public ChangeDetectionEngineProbabilistic(Surface newDEM, Surface oldDEM, Project.Masks.AOIMask aoi, ErrorSurface newError, ErrorSurface oldError,
             decimal fThreshold, CoherenceProperties spatCoherence = null)
-        : base(newDEM, oldDEM, newError, oldError)
+        : base(newDEM, oldDEM, newError, oldError, aoi)
         {
             Threshold = fThreshold;
             SpatialCoherence = spatCoherence;
@@ -89,7 +89,7 @@ namespace GCDCore.Engines
                 nFilter = SpatialCoherence.BufferSize;
             }
 
-            return new DoDProbabilistic(dodName, rawDoD.GISFileInfo.Directory, NewSurface, OldSurface, histograms, summaryXML, rawDoD, thrDoD, NewError, OldError,
+            return new DoDProbabilistic(dodName, rawDoD.GISFileInfo.Directory, NewSurface, OldSurface, AOIMask, histograms, summaryXML, rawDoD, thrDoD, NewError, OldError,
                 PropagatedErrRaster, m_PriorProbRaster, m_PosteriorRaster, m_ConditionalRaster, m_SpatialCoErosionRaster, m_SpatialCoDepositionRaster,
                 SpatialCoherence, Threshold, changeStats);
         }

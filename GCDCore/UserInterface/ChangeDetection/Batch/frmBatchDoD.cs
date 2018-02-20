@@ -95,7 +95,7 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
                 {
                     // If the user clicks OK the child form will
                     // append the appropriate ThresholdProps to the binding list
-                    frmBatchDoDProperties frm = new frmBatchDoDProperties(Thresholds,tsmi.Text, (ThresholdTypes)tsmi.Tag);
+                    frmBatchDoDProperties frm = new frmBatchDoDProperties(Thresholds, tsmi.Text, (ThresholdTypes)tsmi.Tag);
                     frm.ShowDialog();
                 }
             }
@@ -129,7 +129,7 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
                 Cursor.Current = Cursors.WaitCursor;
                 cmdOK.Enabled = false;
                 cmdCancel.DialogResult = DialogResult.None;
-                BatchEngine = new ChangeDetetctionBatch(ucDEMs.NewSurface, ucDEMs.OldSurface, ucDEMs.NewError, ucDEMs.OldError, Thresholds.ToList<ThresholdProps>());
+                BatchEngine = new ChangeDetetctionBatch(ucDEMs.NewSurface, ucDEMs.OldSurface, ucDEMs.AOIMask, ucDEMs.NewError, ucDEMs.OldError, Thresholds.ToList<ThresholdProps>());
                 bgWorker.RunWorkerAsync();
             }
             catch (Exception ex)

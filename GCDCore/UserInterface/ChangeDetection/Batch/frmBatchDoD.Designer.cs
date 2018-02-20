@@ -48,7 +48,7 @@
             // 
             this.cmdCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cmdCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cmdCancel.Location = new System.Drawing.Point(534, 298);
+            this.cmdCancel.Location = new System.Drawing.Point(534, 336);
             this.cmdCancel.Name = "cmdCancel";
             this.cmdCancel.Size = new System.Drawing.Size(75, 23);
             this.cmdCancel.TabIndex = 0;
@@ -58,7 +58,7 @@
             // cmdOK
             // 
             this.cmdOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmdOK.Location = new System.Drawing.Point(453, 298);
+            this.cmdOK.Location = new System.Drawing.Point(453, 336);
             this.cmdOK.Name = "cmdOK";
             this.cmdOK.Size = new System.Drawing.Size(75, 23);
             this.cmdOK.TabIndex = 1;
@@ -69,7 +69,7 @@
             // cmdHelp
             // 
             this.cmdHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.cmdHelp.Location = new System.Drawing.Point(12, 298);
+            this.cmdHelp.Location = new System.Drawing.Point(12, 336);
             this.cmdHelp.Name = "cmdHelp";
             this.cmdHelp.Size = new System.Drawing.Size(75, 23);
             this.cmdHelp.TabIndex = 2;
@@ -84,9 +84,9 @@
             this.groupBox1.Controls.Add(this.cmdAdd);
             this.groupBox1.Controls.Add(this.cmdDelete);
             this.groupBox1.Controls.Add(this.grdMethods);
-            this.groupBox1.Location = new System.Drawing.Point(12, 107);
+            this.groupBox1.Location = new System.Drawing.Point(12, 147);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(597, 185);
+            this.groupBox1.Size = new System.Drawing.Size(597, 183);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Uncertainty Analysis Method Queue";
@@ -129,7 +129,7 @@
             this.grdMethods.Name = "grdMethods";
             this.grdMethods.ReadOnly = true;
             this.grdMethods.RowHeadersVisible = false;
-            this.grdMethods.Size = new System.Drawing.Size(585, 138);
+            this.grdMethods.Size = new System.Drawing.Size(585, 136);
             this.grdMethods.TabIndex = 0;
             // 
             // colMethod
@@ -164,14 +164,14 @@
             this.ucDEMs.Name = "ucDEMs";
             this.ucDEMs.NewSurface = null;
             this.ucDEMs.OldSurface = null;
-            this.ucDEMs.Size = new System.Drawing.Size(597, 89);
+            this.ucDEMs.Size = new System.Drawing.Size(597, 129);
             this.ucDEMs.TabIndex = 3;
             // 
             // frmBatchDoD
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(621, 333);
+            this.ClientSize = new System.Drawing.Size(621, 371);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.ucDEMs);
             this.Controls.Add(this.cmdHelp);

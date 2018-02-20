@@ -39,6 +39,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             DoDProperties.Add(new DoDPropertyRaster("New Surface", dod.NewSurface.Name, dod.NewSurface.Raster.GISFileInfo));
             DoDProperties.Add(new DoDPropertyRaster("Old Surface", dod.NewSurface.Name, dod.OldSurface.Raster.GISFileInfo));
             DoDProperties.Add(new DoDProperty("Uncertainty Analysis", dod.UncertaintyAnalysisLabel));
+            DoDProperties.Add(new DoDProperty("Area of Interest", dod.AOILabel));
 
             if (dod is DoDPropagated)
             {

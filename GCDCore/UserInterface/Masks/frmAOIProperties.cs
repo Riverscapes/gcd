@@ -43,6 +43,8 @@ namespace GCDCore.UserInterface.Masks
                 cmdAddToMap.Visible = false;
                 txtPath.Width = cmdAddToMap.Right - txtPath.Left;
                 ucPolygon.PathChanged += InputShapeFileChanged;
+                ucPolygon.BrowseVector += ProjectManager.OnBrowseVector;
+                ucPolygon.SelectVector += ProjectManager.OnSelectVector;
             }
         }
 

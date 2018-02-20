@@ -15,6 +15,7 @@ namespace GCDCore.Project
         public readonly DirectoryInfo Folder;
         public readonly Surface NewSurface;
         public readonly Surface OldSurface;
+        public readonly Masks.AOIMask AOIMask;
 
         public GCDProjectRasterItem RawDoD { get; internal set; }
         public GCDProjectRasterItem ThrDoD { get; internal set; }
@@ -30,12 +31,15 @@ namespace GCDCore.Project
             get;
         }
 
-        protected DoDBase(string name, DirectoryInfo folder, Surface newSurface, Surface oldSurface, Raster rawDoD, Raster thrDoD, HistogramPair histograms, FileInfo summaryXML, DoDStats stats)
+        public string AOILabel { get { return AOIMask == null ? Masks.AOIMask.SurfaceDataExtentIntersection : AOIMask.Name; } }
+
+        protected DoDBase(string name, DirectoryInfo folder, Surface newSurface, Surface oldSurface, Masks.AOIMask aoi, Raster rawDoD, Raster thrDoD, HistogramPair histograms, FileInfo summaryXML, DoDStats stats)
             : base(name)
         {
             Folder = folder;
             NewSurface = newSurface;
             OldSurface = oldSurface;
+            AOIMask = aoi;
             RawDoD = new GCDProjectRasterItem(RawRasterName, rawDoD);
             ThrDoD = new GCDProjectRasterItem(ThrRasterName, thrDoD);
             Histograms = histograms;
@@ -50,6 +54,13 @@ namespace GCDCore.Project
             Folder = ProjectManager.Project.GetAbsoluteDir(nodDoD.SelectSingleNode("Folder").InnerText);
             NewSurface = DeserializeSurface(nodDoD, "NewSurface");
             OldSurface = DeserializeSurface(nodDoD, "OldSurface");
+
+            XmlNode nodAOI = nodDoD.SelectSingleNode("AOI");
+            if (nodAOI is XmlNode)
+            {
+                AOIMask = ProjectManager.Project.Masks[nodAOI.InnerText] as Masks.AOIMask;
+            }
+
             RawDoD = new GCDProjectRasterItem(RawRasterName, ProjectManager.Project.GetAbsolutePath(nodDoD.SelectSingleNode("RawDoD").InnerText));
             ThrDoD = new GCDProjectRasterItem(ThrRasterName, ProjectManager.Project.GetAbsolutePath(nodDoD.SelectSingleNode("ThrDoD").InnerText));
             Histograms = new HistogramPair(ProjectManager.Project.GetAbsolutePath(nodDoD.SelectSingleNode("RawHistogram").InnerText),
@@ -81,6 +92,12 @@ namespace GCDCore.Project
             nodDoD.AppendChild(nodParent.OwnerDocument.CreateElement("Folder")).InnerText = ProjectManager.Project.GetRelativePath(Folder.FullName);
             SerializeSurface(nodDoD, NewSurface, "NewSurface");
             SerializeSurface(nodDoD, OldSurface, "OldSurface");
+
+            if (AOIMask != null)
+            {
+                nodDoD.AppendChild(nodParent.OwnerDocument.CreateElement("AOI")).InnerText = AOIMask.Name;
+            }
+
             nodDoD.AppendChild(nodParent.OwnerDocument.CreateElement("RawDoD")).InnerText = ProjectManager.Project.GetRelativePath(RawDoD.Raster.GISFileInfo);
             nodDoD.AppendChild(nodParent.OwnerDocument.CreateElement("ThrDoD")).InnerText = ProjectManager.Project.GetRelativePath(ThrDoD.Raster.GISFileInfo);
             nodDoD.AppendChild(nodParent.OwnerDocument.CreateElement("RawHistogram")).InnerText = ProjectManager.Project.GetRelativePath(Histograms.Raw.Path);
@@ -136,7 +153,7 @@ namespace GCDCore.Project
             string surfaceName = nodDoD.SelectSingleNode(nodDEMName).InnerText;
             string surfaceType = nodDoD.SelectSingleNode(nodDEMName).Attributes["type"].InnerText;
 
-            if (string.Compare(surfaceType, "dem", true) ==0)
+            if (string.Compare(surfaceType, "dem", true) == 0)
             {
                 return ProjectManager.Project.DEMSurveys[surfaceName];
             }
