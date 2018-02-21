@@ -22,7 +22,7 @@ namespace GCDCore.Project
         {
             get
             {
-                return string.Format("Probabilistic Thresholding at the {0}% confidence level", (100 * ConfidenceLevel).ToString("0") + "%");
+                return string.Format("Probabilistic Thresholding at the {0}% confidence level", (100 * ConfidenceLevel).ToString("0"));
             }
         }
 
