@@ -135,9 +135,8 @@ namespace GCDCore.Project
             nodBS.AppendChild(nodParent.OwnerDocument.CreateElement("MaskField")).InnerText = MaskField;
 
             XmlNode nodClasses = nodBS.AppendChild(nodParent.OwnerDocument.CreateElement("Classes"));
-            foreach (BudgetSegregationClass segClass in Classes.Values)
-                segClass.Serialize(nodClasses);
-
+            Classes.Values.ToList().ForEach(x => x.Serialize(nodClasses));
+            
             if (MorphologicalAnalyses.Count > 0)
             {
                 XmlNode nodMA = nodBS.AppendChild(nodParent.OwnerDocument.CreateElement("MorphologicalAnalyses"));

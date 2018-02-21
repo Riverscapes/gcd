@@ -11,8 +11,14 @@ namespace GCDCore.Project
         public readonly FileInfo SummaryXML;
         public readonly DoDStats Statistics;
 
+        public override string ToString()
+        {
+            return Name;
+        }
+
         public BudgetSegregationClass(string name, DoDStats stats, HistogramPair histograms, FileInfo summaryXML)
         {
+            Name = name;
             Statistics = stats;
             Histograms = histograms;
             SummaryXML = summaryXML;

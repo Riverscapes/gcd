@@ -20,8 +20,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
         }
 
         private GCDCore.Project.BudgetSegregation BudgetSeg;
-
-        private DoDSummaryDisplayOptions m_Options;
+         private DoDSummaryDisplayOptions m_Options;
         private Visualization.BudgetSegPieChartViewer PieChartViewer;
 
         private RawRepresents SelectedRawRepresents { get { return (RawRepresents)((naru.db.NamedObject)cboRaw.SelectedItem).ID; } }
@@ -41,7 +40,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
         private void BudgetSegResultsForm_Load(object sender, System.EventArgs e)
         {
             txtName.Text = BudgetSeg.Name;
-            cboBudgetClass.DataSource = new BindingList<BudgetSegregationClass>(BudgetSeg.FilteredClasses);
+            cboBudgetClass.DataSource = BudgetSeg.FilteredClasses;
 
             cboRaw.Items.Add(new naru.db.NamedObject((long)RawRepresents.RawDoDAreaOfInterest, "Raw DoD Area of Intereset"));
             cboRaw.Items.Add(new naru.db.NamedObject((long)RawRepresents.ThrDoDAreaDetectableChange, "Thresholded DoD Area of Detectable Change"));
@@ -81,10 +80,10 @@ namespace GCDCore.UserInterface.BudgetSegregation
                 case RawRepresents.RawDoDAreaOfInterest: rawHist = BudgetSeg.DoD.Histograms.Raw.Data; break;
                 case RawRepresents.ThrDoDAreaDetectableChange: rawHist = BudgetSeg.DoD.Histograms.Thr.Data; break;
                 case RawRepresents.RawClassAreaOfInterest: rawHist = classResult.Histograms.Raw.Data; break;
-                case RawRepresents.ThrClassAreaDetectableChange: rawHist = classResult.Histograms.Thr.Data;break;
+                case RawRepresents.ThrClassAreaDetectableChange: rawHist = classResult.Histograms.Thr.Data; break;
                 default:
                     throw new Exception("Unhandled raw represents type");
-            }            
+            }
             ucHistogram.LoadHistograms(rawHist, classResult.Histograms.Thr.Data);
         }
 
@@ -99,7 +98,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
             {
                 try
                 {
-                    System.Diagnostics.Process.Start(BudgetSeg.Folder.FullName);
+                    Process.Start(BudgetSeg.Folder.FullName);
                 }
                 catch (Exception ex)
                 {
