@@ -88,7 +88,7 @@ namespace GCDCore.Project
         public ErrorSurface(XmlNode nodError, Surface surf)
             : base(nodError)
         {
-            bool bIsDefault = bool.Parse(nodError.SelectSingleNode("IsDefault").InnerText);
+            _IsDefault = bool.Parse(nodError.SelectSingleNode("IsDefault").InnerText);
             Surf = surf;
 
             // There might not be any error surface properties if the error raster was "specified" raster than calculated

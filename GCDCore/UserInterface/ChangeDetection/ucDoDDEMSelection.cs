@@ -122,15 +122,34 @@ namespace GCDCore.UserInterface.ChangeDetection
             if (bEnabled)
             {
                 if (cboNewError.Items.Count > 0 && cboNewError.SelectedItem == null)
-                    cboNewError.SelectedIndex = 0;
+                {
+                    SelectDefaultErrorSurface(cboNewSurface, cboNewError);
+                }
 
                 if (cboOldError.Items.Count > 0 && cboOldError.SelectedItem == null)
-                    cboOldError.SelectedIndex = 0;
+                {
+                    SelectDefaultErrorSurface(cboOldSurface, cboOldError);
+                }
             }
             else
             {
                 cboNewError.SelectedIndex = -1;
                 cboOldError.SelectedIndex = -1;
+            }
+        }
+
+        private void SelectDefaultErrorSurface(ComboBox cboSurface, ComboBox cboError)
+        {
+            Surface surf = cboSurface.SelectedItem as Surface;
+            cboError.DataSource = surf.ErrorSurfaces;
+
+            if (cboError.Items.Count == 1)
+            {
+                cboError.SelectedIndex = 0;
+            }
+            else if (cboError.Items.Count > 1 && surf.ErrorSurfaces.Any(x => x.IsDefault))
+            {
+                cboError.SelectedItem = ((Surface)cboSurface.SelectedItem).ErrorSurfaces.First(x => x.IsDefault);
             }
         }
 
@@ -141,17 +160,7 @@ namespace GCDCore.UserInterface.ChangeDetection
 
             if (cboSurface.SelectedItem is Surface)
             {
-                Surface surf = cboSurface.SelectedItem as Surface;
-                cboError.DataSource = surf.ErrorSurfaces;
-
-                if (cboError.Items.Count == 1)
-                {
-                    cboError.SelectedIndex = 0;
-                }
-                else if (cboError.Items.Count > 1 && surf.ErrorSurfaces.Count<ErrorSurface>(x => x.IsDefault) > 0)
-                {
-                    cboError.SelectedItem = ((Surface)cboSurface.SelectedItem).ErrorSurfaces.First<ErrorSurface>(x => x.IsDefault);
-                }
+                SelectDefaultErrorSurface(cboSurface, cboError);
             }
 
             if (SelectedSurfacesChanged != null)

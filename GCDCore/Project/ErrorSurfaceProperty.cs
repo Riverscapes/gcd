@@ -106,15 +106,15 @@ namespace GCDCore.Project
 
         public ErrorSurfaceProperty(XmlNode nodProperty, Surface surf)
         {
-            ErrorSurfaceProperty errProp = new ErrorSurfaceProperty(nodProperty.SelectSingleNode("Name").InnerText);
-
+            Name = nodProperty.SelectSingleNode("Name").InnerText;
+            
             XmlNode nodUni = nodProperty.SelectSingleNode("UniformValue");
             XmlNode nodAss = nodProperty.SelectSingleNode("AssociatedSurface");
             XmlNode nodFIS = nodProperty.SelectSingleNode("FISRuleFile");
 
             if (nodUni is XmlNode)
             {
-                errProp.UniformValue = decimal.Parse(nodUni.InnerText);
+                UniformValue = decimal.Parse(nodUni.InnerText);
             }
             else if (surf is DEMSurvey)
             {
@@ -123,15 +123,15 @@ namespace GCDCore.Project
                 if (nodAss is XmlNode)
                 {
 
-                    errProp.AssociatedSurface = dem.AssocSurfaces.First<AssocSurface>(x => string.Compare(nodAss.InnerText, x.Name, true) == 0);
+                    AssociatedSurface = dem.AssocSurfaces.First<AssocSurface>(x => string.Compare(nodAss.InnerText, x.Name, true) == 0);
                 }
                 else if (nodFIS is XmlNode)
                 {
-                    errProp.FISRuleFile = ProjectManager.Project.GetAbsolutePath(nodFIS.InnerText);
+                    FISRuleFile = ProjectManager.Project.GetAbsolutePath(nodFIS.InnerText);
                     foreach (XmlNode nodInput in nodProperty.SelectNodes("FISInputs/Input"))
                     {
                         AssocSurface assoc = dem.AssocSurfaces.First<AssocSurface>(x => string.Compare(nodInput.SelectSingleNode("AssociatedSurface").InnerText, x.Name, true) == 0);
-                        errProp.FISInputs.Add(new FISInput(nodInput.SelectSingleNode("Name").InnerText, assoc));
+                        FISInputs.Add(new FISInput(nodInput.SelectSingleNode("Name").InnerText, assoc));
                     }
                 }
             }
