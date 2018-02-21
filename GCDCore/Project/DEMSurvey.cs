@@ -20,6 +20,8 @@ namespace GCDCore.Project
         public string MethodMaskField { get; set; } // Multi-method field in ShapeFile
         public int? ChronologicalOrder { get; set; } // Optional zero-based index of chronological order maintain by the Multi-Epoch GCD Analysis
 
+        public override string Noun { get { return "DEM Survey"; } }
+
         public DEMSurvey(string name, SurveyDateTime surveyDate, FileInfo rasterPath)
             : base(name, rasterPath)
         {
