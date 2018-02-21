@@ -22,6 +22,17 @@ namespace GCDCore.Project
         public readonly Dictionary<string, InterComparison> InterComparisons;
         public readonly Dictionary<string, Masks.Mask> Masks;
 
+        /// <summary>
+        /// Projects are never considered in use
+        /// </summary>
+        public override bool IsItemInUse
+        {
+            get
+            {
+                return false;
+            }
+        }
+
         public GCDProject(string name, string description, FileInfo projectFile,
             DateTime dtCreated, string gcdVersion, UnitsNet.Area cellArea, GCDConsoleLib.GCD.UnitGroup units)
             : base(name)
@@ -222,13 +233,13 @@ namespace GCDCore.Project
 
             foreach (XmlNode nodDEM in nodProject.SelectNodes("DEMSurveys/DEM"))
             {
-                DEMSurvey dem = DEMSurvey.Deserialize(nodDEM);
+                DEMSurvey dem = new DEMSurvey(nodDEM);
                 ProjectManager.Project.DEMSurveys[dem.Name] = dem;
             }
 
             foreach (XmlNode nodRefSurf in nodProject.SelectNodes("ReferenceSurfaces/ReferenceSurface"))
             {
-                Surface surf = Surface.Deserialize(nodRefSurf);
+                Surface surf = new Surface(nodRefSurf);
                 ProjectManager.Project.ReferenceSurfaces[surf.Name] = surf;
             }
 

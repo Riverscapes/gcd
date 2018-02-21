@@ -13,6 +13,17 @@ namespace GCDCore.Project
         public readonly FileInfo _SummaryXML;
         public readonly naru.ui.SortableBindingList<DoDBase> _DoDs;
 
+        /// <summary>
+        /// Inter-comparisons are never considered in use
+        /// </summary>
+        public override bool IsItemInUse
+        {
+            get
+            {
+                return false;
+            }
+        }
+
         public InterComparison(string name, FileInfo summaryXML, List<DoDBase> dods)
             : base(name)
         {

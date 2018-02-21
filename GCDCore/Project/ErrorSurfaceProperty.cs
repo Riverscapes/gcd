@@ -6,8 +6,10 @@ using System.Linq;
 
 namespace GCDCore.Project
 {
-    public class ErrorSurfaceProperty : GCDProjectItem
+    public class ErrorSurfaceProperty
     {
+        public string Name { get; set; }
+
         private decimal? _UniformValue;
         public decimal? UniformValue
         {
@@ -65,7 +67,6 @@ namespace GCDCore.Project
             }
         }
 
-
         /// <summary>
         /// Return the error raster properties in the format needed by the raster processor
         /// </summary>
@@ -93,42 +94,17 @@ namespace GCDCore.Project
         /// Default constructor needed for binding lists of this class to DataGridView
         /// </summary>
         public ErrorSurfaceProperty()
-            : base(string.Empty)
         {
             _UniformValue = new decimal?(0);
         }
 
-        public ErrorSurfaceProperty(string name) : base(name)
+        public ErrorSurfaceProperty(string name)
         {
+            Name = name;
             _UniformValue = new decimal?(0);
         }
 
-        public void Serialize(XmlNode nodParent)
-        {
-            nodParent.AppendChild(nodParent.OwnerDocument.CreateElement("Name")).InnerText = Name;
-
-            if (UniformValue.HasValue)
-                nodParent.AppendChild(nodParent.OwnerDocument.CreateElement("UniformValue")).InnerText = UniformValue.Value.ToString();
-
-            if (AssociatedSurface != null)
-                nodParent.AppendChild(nodParent.OwnerDocument.CreateElement("AssociatedSurface")).InnerText = AssociatedSurface.Name;
-
-            if (FISRuleFile is FileInfo)
-                nodParent.AppendChild(nodParent.OwnerDocument.CreateElement("FISRuleFile")).InnerText = ProjectManager.Project.GetRelativePath(FISRuleFile);
-
-            if (FISInputs != null)
-            {
-                XmlNode nodInputs = nodParent.AppendChild(nodParent.OwnerDocument.CreateElement("FISInputs"));
-                foreach (FISInput input in FISInputs)
-                {
-                    XmlNode nodInput = nodInputs.AppendChild(nodParent.OwnerDocument.CreateElement("Input"));
-                    nodInput.AppendChild(nodParent.OwnerDocument.CreateElement("Name")).InnerText = input.FISInputName;
-                    nodInput.AppendChild(nodParent.OwnerDocument.CreateElement("AssociatedSurface")).InnerText = input.AssociatedSurface.Name;
-                }
-            }
-        }
-
-        public static ErrorSurfaceProperty Deserialize(XmlNode nodProperty, Surface surf)
+        public ErrorSurfaceProperty(XmlNode nodProperty, Surface surf)
         {
             ErrorSurfaceProperty errProp = new ErrorSurfaceProperty(nodProperty.SelectSingleNode("Name").InnerText);
 
@@ -159,8 +135,31 @@ namespace GCDCore.Project
                     }
                 }
             }
+        }
 
-            return errProp;
+        public void Serialize(XmlNode nodParent)
+        {
+            nodParent.AppendChild(nodParent.OwnerDocument.CreateElement("Name")).InnerText = Name;
+
+            if (UniformValue.HasValue)
+                nodParent.AppendChild(nodParent.OwnerDocument.CreateElement("UniformValue")).InnerText = UniformValue.Value.ToString();
+
+            if (AssociatedSurface != null)
+                nodParent.AppendChild(nodParent.OwnerDocument.CreateElement("AssociatedSurface")).InnerText = AssociatedSurface.Name;
+
+            if (FISRuleFile is FileInfo)
+                nodParent.AppendChild(nodParent.OwnerDocument.CreateElement("FISRuleFile")).InnerText = ProjectManager.Project.GetRelativePath(FISRuleFile);
+
+            if (FISInputs != null)
+            {
+                XmlNode nodInputs = nodParent.AppendChild(nodParent.OwnerDocument.CreateElement("FISInputs"));
+                foreach (FISInput input in FISInputs)
+                {
+                    XmlNode nodInput = nodInputs.AppendChild(nodParent.OwnerDocument.CreateElement("Input"));
+                    nodInput.AppendChild(nodParent.OwnerDocument.CreateElement("Name")).InnerText = input.FISInputName;
+                    nodInput.AppendChild(nodParent.OwnerDocument.CreateElement("AssociatedSurface")).InnerText = input.AssociatedSurface.Name;
+                }
+            }
         }
     }
 }

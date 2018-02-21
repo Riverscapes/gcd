@@ -36,7 +36,18 @@ namespace GCDCore.Project
             }
         }
 
-        public Surface(string name, System.IO.FileInfo rasterPath)
+        /// <summary>
+        /// A surface is in use if it is used as the new or old surface in a DoD
+        /// </summary>
+        public override bool IsItemInUse
+        {
+            get
+            {
+                return ProjectManager.Project.DoDs.Values.Any(x => x.NewSurface == this || x.OldSurface == this);
+            }
+        }
+
+        public Surface(string name, FileInfo rasterPath)
             : base(name, rasterPath)
         {
             ErrorSurfaces = new naru.ui.SortableBindingList<ErrorSurface>();
@@ -46,6 +57,17 @@ namespace GCDCore.Project
          : base(name, raster)
         {
             ErrorSurfaces = new naru.ui.SortableBindingList<ErrorSurface>();
+        }
+
+        public Surface(XmlNode nodSurface)
+            : base(nodSurface)
+        {
+            ErrorSurfaces = new naru.ui.SortableBindingList<ErrorSurface>();
+            foreach (XmlNode nodError in nodSurface.SelectNodes("ErrorSurfaces/ErrorSurface"))
+            {
+                ErrorSurface error = new ErrorSurface(nodError, this);
+                ErrorSurfaces.Add(error);
+            }
         }
 
         public bool IsErrorNameUnique(string name, ErrorSurface ignore)
@@ -65,7 +87,7 @@ namespace GCDCore.Project
             finally
             {
                 ErrorSurfaces.Clear();
-            }          
+            }
 
             // Delete the raster
             try
@@ -129,22 +151,6 @@ namespace GCDCore.Project
                 foreach (ErrorSurface error in ErrorSurfaces)
                     error.Serialize(nodError);
             }
-        }
-
-        public static Surface Deserialize(XmlNode nodItem)
-        {
-            string name = nodItem.SelectSingleNode("Name").InnerText;
-            FileInfo path = ProjectManager.Project.GetAbsolutePath(nodItem.SelectSingleNode("Path").InnerText);
-
-            Surface surf = new Surface(name, path);
-
-            foreach (XmlNode nodError in nodItem.SelectNodes("ErrorSurfaces/ErrorSurface"))
-            {
-                ErrorSurface error = ErrorSurface.Deserialize(nodError, surf);
-                surf.ErrorSurfaces.Add(error);
-            }
-
-            return surf;
         }
     }
 }

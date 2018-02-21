@@ -265,5 +265,10 @@ namespace GCDCore.Project.Morphological
             XmlNode nodMinFlux = nodMA.AppendChild(nodParent.OwnerDocument.CreateElement("MinimumFluxVolume"));
             nodMinFlux.InnerText = MinimumFlux.As(ProjectManager.Project.Units.VolUnit).ToString("R");
         }
+
+        public void Delete()
+        {
+            throw new NotImplementedException("deleting morphological analysis is not implemented.");
+        }
     }
 }

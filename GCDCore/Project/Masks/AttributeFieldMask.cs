@@ -2,8 +2,6 @@
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 
 namespace GCDCore.Project.Masks
@@ -27,6 +25,23 @@ namespace GCDCore.Project.Masks
             : base(name, shapeFile)
         {
             _Field = field;
+        }
+
+        /// <summary>
+        /// An attribute mask is in use if it is used by any budget segregation
+        /// </summary>
+        public override bool IsItemInUse
+        {
+            get
+            {
+                foreach (DoDBase dod in ProjectManager.Project.DoDs.Values)
+                {
+                    if (dod.BudgetSegregations.Values.Any(x => x.Mask == this))
+                        return true;
+                }
+
+                return false;
+            }
         }
 
         /// <summary>

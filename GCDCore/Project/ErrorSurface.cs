@@ -1,8 +1,8 @@
 ﻿using System.IO;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml;
 using GCDConsoleLib;
-using System;
 
 namespace GCDCore.Project
 {
@@ -39,6 +39,22 @@ namespace GCDCore.Project
             }
         }
 
+        /// <summary>
+        /// An error surface is in use if it is used by a propagated or probabilistic DoD
+        /// </summary>
+        public override bool IsItemInUse
+        {
+            get
+            {
+                foreach (DoDPropagated dod in ProjectManager.Project.DoDs.Values.Where(x=> x is DoDPropagated))
+                {
+                    if (dod.NewError == this || dod.OldError == this)
+                        return true;
+                }
+
+                return false;
+            }
+        }
 
         /// <summary>
         /// Constructor for specifying error surface raster. i.e. has not error properties dictionary
@@ -66,6 +82,21 @@ namespace GCDCore.Project
             ErrorProperties = errProperties;
         }
 
+        public ErrorSurface(XmlNode nodError, Surface surf)
+            : base(nodError)
+        {
+            bool bIsDefault = bool.Parse(nodError.SelectSingleNode("IsDefault").InnerText);
+            Surf = surf;
+
+            // There might not be any error surface properties if the error raster was "specified" raster than calculated
+            Dictionary<string, ErrorSurfaceProperty> properties = new Dictionary<string, ErrorSurfaceProperty>();
+            foreach (XmlNode nodProperty in nodError.SelectNodes("ErrorSurfaceProperties/ErrorSurfaceProperty"))
+            {
+                ErrorSurfaceProperty prop = new ErrorSurfaceProperty(nodProperty, surf);
+                properties[prop.Name] = prop;
+            }
+        }
+
         public void Serialize(XmlNode nodParent)
         {
             XmlNode nodError = nodParent.AppendChild(nodParent.OwnerDocument.CreateElement("ErrorSurface"));
@@ -83,23 +114,5 @@ namespace GCDCore.Project
                 }
             }
         }
-
-        public static ErrorSurface Deserialize(XmlNode nodError, Surface surf)
-        {
-            string name = nodError.SelectSingleNode("Name").InnerText;
-            FileInfo path = ProjectManager.Project.GetAbsolutePath(nodError.SelectSingleNode("Path").InnerText);
-            bool bIsDefault = bool.Parse(nodError.SelectSingleNode("IsDefault").InnerText);
-
-            // There might not be any error surface properties if the error raster was "specified" raster than calculated
-            Dictionary<string, ErrorSurfaceProperty> properties = new Dictionary<string, ErrorSurfaceProperty>();
-            foreach (XmlNode nodProperty in nodError.SelectNodes("ErrorSurfaceProperties/ErrorSurfaceProperty"))
-            {
-                ErrorSurfaceProperty prop = ErrorSurfaceProperty.Deserialize(nodProperty, surf);
-                properties[prop.Name] = prop;
-            }
-
-            return new ErrorSurface(name, path, surf, bIsDefault, properties); ;
-        }
-
     }
 }

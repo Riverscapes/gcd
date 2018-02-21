@@ -4,14 +4,14 @@ using System.Xml;
 
 namespace GCDCore.Project
 {
-    public class BudgetSegregationClass : GCDProjectItem
+    public class BudgetSegregationClass
     {
+        public readonly string Name;
         public readonly HistogramPair Histograms;
         public readonly FileInfo SummaryXML;
         public readonly DoDStats Statistics;
 
         public BudgetSegregationClass(string name, DoDStats stats, HistogramPair histograms, FileInfo summaryXML)
-            : base(name)
         {
             Statistics = stats;
             Histograms = histograms;
@@ -19,8 +19,8 @@ namespace GCDCore.Project
         }
 
         public BudgetSegregationClass(XmlNode nodClass)
-            : base(nodClass.SelectSingleNode("Name").InnerText)
         {
+            Name = nodClass.SelectSingleNode("Name").InnerText;
             FileInfo rawHist = ProjectManager.Project.GetAbsolutePath(nodClass.SelectSingleNode("RawHistogram").InnerText);
             FileInfo thrHist = ProjectManager.Project.GetAbsolutePath(nodClass.SelectSingleNode("ThrHistogram").InnerText);
 

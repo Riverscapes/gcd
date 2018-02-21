@@ -78,12 +78,14 @@
     <Compile Include="Project\DoDMinLoD.cs" />
     <Compile Include="Project\DoDProbabilistic.cs" />
     <Compile Include="Project\DoDPropagated.cs" />
+    <Compile Include="Project\DoDRaster.cs" />
     <Compile Include="Project\ErrorSurface.cs" />
     <Compile Include="Project\ErrorSurfaceProperty.cs" />
     <Compile Include="Project\FISInput.cs" />
     <Compile Include="Project\GCDProject.cs" />
     <Compile Include="Project\GCDProjectItem.cs" />
     <Compile Include="Project\GCDProjectRasterItem.cs" />
+    <Compile Include="Project\HillShade.cs" />
     <Compile Include="Project\HistogramPair.cs" />
     <Compile Include="Project\InterComparison.cs" />
     <Compile Include="Project\Masks\AOIMask.cs" />

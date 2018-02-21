@@ -10,7 +10,7 @@ namespace GCDCore.Project
 {
     public class DEMSurvey : Surface
     {
-        public readonly GCDProjectRasterItem Hillshade;
+        public readonly HillShade Hillshade;
         public readonly naru.ui.SortableBindingList<AssocSurface> AssocSurfaces;
 
         public string SurveyMethod { get; set; } // Single survey methods
@@ -30,7 +30,65 @@ namespace GCDCore.Project
             FileInfo hsPath = Project.ProjectManager.OutputManager.DEMSurveyHillShadeRasterPath(name);
             if (hsPath.Exists)
             {
-                Hillshade = new GCDProjectRasterItem("DEM Hillshade", hsPath);
+                Hillshade = new HillShade(hsPath);
+            }
+        }
+
+        public DEMSurvey(XmlNode nodDEM)
+            : base(nodDEM)
+        {
+            SurveyDateTime surveyDT = null;
+            XmlNode nodSurveyDate = nodDEM.SelectSingleNode("SurveyDate");
+            if (nodSurveyDate is XmlNode)
+            {
+                surveyDT = new SurveyDateTime();
+                if (!string.IsNullOrEmpty(nodDEM.SelectSingleNode("SurveyDate/Year").InnerText))
+                    surveyDT.Year = ushort.Parse(nodDEM.SelectSingleNode("SurveyDate/Year").InnerText);
+
+                if (!string.IsNullOrEmpty(nodDEM.SelectSingleNode("SurveyDate/Month").InnerText))
+                    surveyDT.Month = byte.Parse(nodDEM.SelectSingleNode("SurveyDate/Month").InnerText);
+
+                if (!string.IsNullOrEmpty(nodDEM.SelectSingleNode("SurveyDate/Day").InnerText))
+                    surveyDT.Day = byte.Parse(nodDEM.SelectSingleNode("SurveyDate/Day").InnerText);
+
+                if (!string.IsNullOrEmpty(nodDEM.SelectSingleNode("SurveyDate/Hour").InnerText))
+                    surveyDT.Hour = short.Parse(nodDEM.SelectSingleNode("SurveyDate/Hour").InnerText);
+
+                if (!string.IsNullOrEmpty(nodDEM.SelectSingleNode("SurveyDate/Minute").InnerText))
+                    surveyDT.Minute = short.Parse(nodDEM.SelectSingleNode("SurveyDate/Minute").InnerText);
+            }
+ 
+            //read Chronological Order, if set
+            XmlNode nodChronologicalOrder = nodDEM.SelectSingleNode("ChronologicalOrder");
+            if (nodChronologicalOrder is XmlNode)
+            {
+                string sChronologicalOrder = nodChronologicalOrder.InnerText;
+                int iChronologicalOrder;
+                Boolean bParseSuccessful = int.TryParse(sChronologicalOrder, out iChronologicalOrder);
+                if (bParseSuccessful)
+                {
+                    ChronologicalOrder = iChronologicalOrder;
+                }
+            }
+
+            // Single survey method DEM surveys
+            XmlNode nodSurveyMethod = nodDEM.SelectSingleNode("SurveyMethod");
+            if (nodSurveyMethod is XmlNode)
+                SurveyMethod = nodSurveyMethod.InnerText;
+
+            // Multi-method DEM surveys
+            XmlNode nodMethodMask = nodDEM.SelectSingleNode("MethodMask");
+            if (nodMethodMask is XmlNode)
+            {
+                MethodMask = ProjectManager.Project.GetAbsolutePath(nodMethodMask.SelectSingleNode("Path").InnerText);
+                MethodMaskField = nodMethodMask.SelectSingleNode("Field").InnerText;
+            }
+
+            AssocSurfaces = new naru.ui.SortableBindingList<AssocSurface>();
+            foreach (XmlNode nodAssoc in nodDEM.SelectNodes("AssociatedSurfaces/AssociatedSurface"))
+            {
+                AssocSurface assoc = new AssocSurface(nodAssoc, this);
+                AssocSurfaces.Add(assoc);
             }
         }
 
@@ -180,76 +238,6 @@ namespace GCDCore.Project
                 foreach (AssocSurface assoc in AssocSurfaces)
                     assoc.Serialize(nodAssoc);
             }
-        }
-
-        new public static DEMSurvey Deserialize(XmlNode nodDEM)
-        {
-            string name = nodDEM.SelectSingleNode("Name").InnerText;
-            FileInfo path = ProjectManager.Project.GetAbsolutePath(nodDEM.SelectSingleNode("Path").InnerText);
-
-            SurveyDateTime surveyDT = null;
-            XmlNode nodSurveyDate = nodDEM.SelectSingleNode("SurveyDate");
-            if (nodSurveyDate is XmlNode)
-            {
-                surveyDT = new SurveyDateTime();
-                if (!string.IsNullOrEmpty(nodDEM.SelectSingleNode("SurveyDate/Year").InnerText))
-                    surveyDT.Year = ushort.Parse(nodDEM.SelectSingleNode("SurveyDate/Year").InnerText);
-
-                if (!string.IsNullOrEmpty(nodDEM.SelectSingleNode("SurveyDate/Month").InnerText))
-                    surveyDT.Month = byte.Parse(nodDEM.SelectSingleNode("SurveyDate/Month").InnerText);
-
-                if (!string.IsNullOrEmpty(nodDEM.SelectSingleNode("SurveyDate/Day").InnerText))
-                    surveyDT.Day = byte.Parse(nodDEM.SelectSingleNode("SurveyDate/Day").InnerText);
-
-                if (!string.IsNullOrEmpty(nodDEM.SelectSingleNode("SurveyDate/Hour").InnerText))
-                    surveyDT.Hour = short.Parse(nodDEM.SelectSingleNode("SurveyDate/Hour").InnerText);
-
-                if (!string.IsNullOrEmpty(nodDEM.SelectSingleNode("SurveyDate/Minute").InnerText))
-                    surveyDT.Minute = short.Parse(nodDEM.SelectSingleNode("SurveyDate/Minute").InnerText);
-            }
-
-            DEMSurvey dem = new DEMSurvey(name, surveyDT, path);
-
-            //read Chronological Order, if set
-            XmlNode nodChronologicalOrder = nodDEM.SelectSingleNode("ChronologicalOrder");
-            if (nodChronologicalOrder is XmlNode)
-            {
-                string sChronologicalOrder = nodChronologicalOrder.InnerText;
-                int iChronologicalOrder;
-                Boolean bParseSuccessful = int.TryParse(sChronologicalOrder, out iChronologicalOrder);
-                if (bParseSuccessful)
-                {
-                    dem.ChronologicalOrder = iChronologicalOrder;
-                }
-            }
-
-
-            // Single survey method DEM surveys
-            XmlNode nodSurveyMethod = nodDEM.SelectSingleNode("SurveyMethod");
-            if (nodSurveyMethod is XmlNode)
-                dem.SurveyMethod = nodSurveyMethod.InnerText;
-
-            // Multi-method DEM surveys
-            XmlNode nodMethodMask = nodDEM.SelectSingleNode("MethodMask");
-            if (nodMethodMask is XmlNode)
-            {
-                dem.MethodMask = ProjectManager.Project.GetAbsolutePath(nodMethodMask.SelectSingleNode("Path").InnerText);
-                dem.MethodMaskField = nodMethodMask.SelectSingleNode("Field").InnerText;
-            }
-
-            foreach (XmlNode nodAssoc in nodDEM.SelectNodes("AssociatedSurfaces/AssociatedSurface"))
-            {
-                AssocSurface assoc = AssocSurface.Deserialize(nodAssoc, dem);
-                dem.AssocSurfaces.Add(assoc);
-            }
-
-            foreach (XmlNode nodError in nodDEM.SelectNodes("ErrorSurfaces/ErrorSurface"))
-            {
-                ErrorSurface error = ErrorSurface.Deserialize(nodError, dem);
-                dem.ErrorSurfaces.Add(error);
-            }
-
-            return dem;
         }
     }
 }

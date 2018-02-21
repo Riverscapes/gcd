@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Xml;
 using System.IO;
 using System.Linq;
 using GCDConsoleLib;
 
 namespace GCDCore.Project
 {
-    public class GCDProjectRasterItem : GCDProjectItem
+    public abstract class GCDProjectRasterItem : GCDProjectItem
     {
         public readonly Raster Raster;
 
@@ -19,6 +20,12 @@ namespace GCDCore.Project
             : base(name)
         {
             Raster = raster;
+        }
+
+        public GCDProjectRasterItem(XmlNode nodItem)
+            : base(nodItem)
+        {
+            Raster = new Raster(ProjectManager.Project.GetAbsolutePath(nodItem.SelectSingleNode("Path").InnerText));
         }
 
         public void Delete()

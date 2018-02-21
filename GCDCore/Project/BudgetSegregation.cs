@@ -21,6 +21,17 @@ namespace GCDCore.Project
 
         public bool IsMaskDirectional { get { return Mask is GCDCore.Project.Masks.DirectionalMask; } }
 
+        /// <summary>
+        /// Budget segregations are not used by other items
+        /// </summary>
+        public override bool IsItemInUse
+        {
+            get
+            {
+                return false;
+            }
+        }
+
         public BindingList<BudgetSegregationClass> FilteredClasses
         {
             get
@@ -137,6 +148,20 @@ namespace GCDCore.Project
 
         public void Delete()
         {
+            // Delete child morphological analyses
+            foreach (Morphological.MorphologicalAnalysis ma in MorphologicalAnalyses.Values)
+            {
+                try
+                {
+                    ma.Delete();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Unable to delete morphological analysis " + ma.Name);
+                }
+            }
+            MorphologicalAnalyses.Clear();
+
             try
             {
                 Folder.Delete();

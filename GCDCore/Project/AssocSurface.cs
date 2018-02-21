@@ -31,6 +31,26 @@ namespace GCDCore.Project
         public AssocSurface This { get { return this; } }
 
         /// <summary>
+        /// Associated surface is in use if any of the error surfaces for the same DEM refer to it
+        /// </summary>
+        public override bool IsItemInUse
+        {
+            get
+            {
+                foreach (ErrorSurface errSurf  in DEM.ErrorSurfaces)
+                {
+                    foreach (ErrorSurfaceProperty errProp in errSurf.ErrorProperties.Values)
+                    {
+                        if (errProp.AssociatedSurface == this)
+                            return true;
+                    }
+                }
+
+                return false;
+            }
+        }
+
+        /// <summary>
         /// GIS legend label for the associated surface
         /// </summary>
         /// <remarks>This isn't the ToC label, but instead it's the label
@@ -97,19 +117,9 @@ namespace GCDCore.Project
             DEM = dem;
         }
 
-        public void Serialize(XmlNode nodParent)
+        public AssocSurface(XmlNode nodAssoc, DEMSurvey dem)
+            : base(nodAssoc)
         {
-            XmlNode nodAssoc = nodParent.AppendChild(nodParent.OwnerDocument.CreateElement("AssociatedSurface"));
-            nodAssoc.AppendChild(nodParent.OwnerDocument.CreateElement("Name")).InnerText = Name;
-            nodAssoc.AppendChild(nodParent.OwnerDocument.CreateElement("Type")).InnerText = AssocSurfaceType.ToString();
-            nodAssoc.AppendChild(nodParent.OwnerDocument.CreateElement("Path")).InnerText = ProjectManager.Project.GetRelativePath(Raster.GISFileInfo);
-        }
-
-        public static AssocSurface Deserialize(XmlNode nodAssoc, DEMSurvey dem)
-        {
-            string name = nodAssoc.SelectSingleNode("Name").InnerText;
-            FileInfo path = ProjectManager.Project.GetAbsolutePath(nodAssoc.SelectSingleNode("Path").InnerText);
-
             AssociatedSurfaceTypes eType = AssociatedSurfaceTypes.Other;
             XmlNode nodType = nodAssoc.SelectSingleNode("Type");
             if (nodType is XmlNode && !string.IsNullOrEmpty(nodType.InnerText))
@@ -123,8 +133,14 @@ namespace GCDCore.Project
                     eType = AssociatedSurfaceTypes.Other;
                 }
             }
+        }
 
-            return new AssocSurface(name, path, dem, eType);
+        public void Serialize(XmlNode nodParent)
+        {
+            XmlNode nodAssoc = nodParent.AppendChild(nodParent.OwnerDocument.CreateElement("AssociatedSurface"));
+            nodAssoc.AppendChild(nodParent.OwnerDocument.CreateElement("Name")).InnerText = Name;
+            nodAssoc.AppendChild(nodParent.OwnerDocument.CreateElement("Type")).InnerText = AssocSurfaceType.ToString();
+            nodAssoc.AppendChild(nodParent.OwnerDocument.CreateElement("Path")).InnerText = ProjectManager.Project.GetRelativePath(Raster.GISFileInfo);
         }
 
         new public void Delete()

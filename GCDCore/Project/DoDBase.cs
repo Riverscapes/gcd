@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Collections.Generic;
 using GCDConsoleLib;
 using GCDConsoleLib.GCD;
@@ -17,8 +18,8 @@ namespace GCDCore.Project
         public readonly Surface OldSurface;
         public readonly Masks.AOIMask AOIMask;
 
-        public GCDProjectRasterItem RawDoD { get; internal set; }
-        public GCDProjectRasterItem ThrDoD { get; internal set; }
+        public DoDRaster RawDoD { get; internal set; }
+        public DoDRaster ThrDoD { get; internal set; }
 
         public HistogramPair Histograms { get; set; }
         public FileInfo SummaryXML { get; set; }
@@ -31,6 +32,17 @@ namespace GCDCore.Project
             get;
         }
 
+        /// <summary>
+        /// A DoD is in use if any inter-comparisons refer to it
+        /// </summary>
+        public override bool IsItemInUse
+        {
+            get
+            {
+                return ProjectManager.Project.InterComparisons.Values.Any(x => x._DoDs.Contains(this));
+            }
+        }
+
         public string AOILabel { get { return AOIMask == null ? Masks.AOIMask.SurfaceDataExtentIntersection : AOIMask.Name; } }
 
         protected DoDBase(string name, DirectoryInfo folder, Surface newSurface, Surface oldSurface, Masks.AOIMask aoi, Raster rawDoD, Raster thrDoD, HistogramPair histograms, FileInfo summaryXML, DoDStats stats)
@@ -40,8 +52,8 @@ namespace GCDCore.Project
             NewSurface = newSurface;
             OldSurface = oldSurface;
             AOIMask = aoi;
-            RawDoD = new GCDProjectRasterItem(RawRasterName, rawDoD);
-            ThrDoD = new GCDProjectRasterItem(ThrRasterName, thrDoD);
+            RawDoD = new DoDRaster(RawRasterName, rawDoD);
+            ThrDoD = new DoDRaster(ThrRasterName, thrDoD);
             Histograms = histograms;
             SummaryXML = summaryXML;
             Statistics = stats;
@@ -61,8 +73,8 @@ namespace GCDCore.Project
                 AOIMask = ProjectManager.Project.Masks[nodAOI.InnerText] as Masks.AOIMask;
             }
 
-            RawDoD = new GCDProjectRasterItem(RawRasterName, ProjectManager.Project.GetAbsolutePath(nodDoD.SelectSingleNode("RawDoD").InnerText));
-            ThrDoD = new GCDProjectRasterItem(ThrRasterName, ProjectManager.Project.GetAbsolutePath(nodDoD.SelectSingleNode("ThrDoD").InnerText));
+            RawDoD = new DoDRaster(RawRasterName, ProjectManager.Project.GetAbsolutePath(nodDoD.SelectSingleNode("RawDoD").InnerText));
+            ThrDoD = new DoDRaster(ThrRasterName, ProjectManager.Project.GetAbsolutePath(nodDoD.SelectSingleNode("ThrDoD").InnerText));
             Histograms = new HistogramPair(ProjectManager.Project.GetAbsolutePath(nodDoD.SelectSingleNode("RawHistogram").InnerText),
                 ProjectManager.Project.GetAbsolutePath(nodDoD.SelectSingleNode("ThrHistogram").InnerText));
             SummaryXML = ProjectManager.Project.GetAbsolutePath(nodDoD.SelectSingleNode("SummaryXML").InnerText);
