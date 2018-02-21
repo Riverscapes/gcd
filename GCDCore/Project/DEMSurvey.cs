@@ -194,7 +194,7 @@ namespace GCDCore.Project
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Failed to delete associate surface directory" + assoc.Raster.GISFileInfo.Directory.Parent);
+                    Console.WriteLine(string.Format("Failed to delete associate surface directory {0}\n\n{1}" + assoc.Raster.GISFileInfo.Directory.Parent, ex.Message));
                 }
             }
         }

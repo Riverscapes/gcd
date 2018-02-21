@@ -11,26 +11,25 @@ namespace GCDCore.UserInterface.FISLibrary
 {
     partial class frmEditFIS : System.Windows.Forms.Form
     {
-        //Form overrides dispose to clean up the component list.
-        [System.Diagnostics.DebuggerNonUserCode()]
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            try
+            if (disposing && (components != null))
             {
-                if (disposing && components != null)
-                {
-                    components.Dispose();
-                }
+                components.Dispose();
             }
-            finally
-            {
-                base.Dispose(disposing);
-            }
+            base.Dispose(disposing);
         }
 
         //Required by the Windows Form Designer
-
-        private System.ComponentModel.IContainer components;
         //NOTE: The following procedure is required by the Windows Form Designer
         //It can be modified using the Windows Form Designer.  
         //Do not modify it using the code editor.
@@ -138,7 +137,6 @@ namespace GCDCore.UserInterface.FISLibrary
 
         }
         internal System.Windows.Forms.TextBox txtEditor;
-        internal System.Windows.Forms.ToolTip ttpTooltip;
         internal System.Windows.Forms.Button btnHelp;
         internal System.Windows.Forms.Button btnOK;
         internal System.Windows.Forms.Button btnSaveAs;

@@ -2,26 +2,24 @@ namespace GCDCore.UserInterface.ChangeDetection
 {
     partial class frmDoDResults : System.Windows.Forms.Form
     {
-        //Form overrides dispose to clean up the component list.
-        [System.Diagnostics.DebuggerNonUserCode()]
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            try
+            if (disposing && (components != null))
             {
-                if (disposing && components != null)
-                {
-                    components.Dispose();
-                }
+                components.Dispose();
             }
-            finally
-            {
-                base.Dispose(disposing);
-            }
+            base.Dispose(disposing);
         }
 
-        //Required by the Windows Form Designer
-
-        private System.ComponentModel.IContainer components;
         //NOTE: The following procedure is required by the Windows Form Designer
         //It can be modified using the Windows Form Designer.  
         //Do not modify it using the code editor.
@@ -42,9 +40,9 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.ucSummary = new GCDCore.UserInterface.ChangeDetection.ucDoDSummary();
             this.tabProperties = new System.Windows.Forms.TabControl();
             this.cmdHelp = new System.Windows.Forms.Button();
-            this.cmdBrowse2 = new System.Windows.Forms.Button();
+            this.cmdBrowse = new System.Windows.Forms.Button();
             this.cmdProperties = new System.Windows.Forms.Button();
-            this.cmdAddToMap2 = new System.Windows.Forms.Button();
+            this.cmdAddToMap = new System.Windows.Forms.Button();
             this.TabPage3.SuspendLayout();
             this.tbpElevationChangeDistribution.SuspendLayout();
             this.TableLayoutPanel1.SuspendLayout();
@@ -65,7 +63,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             // 
             // txtDoDName
             // 
-            this.txtDoDName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.txtDoDName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtDoDName.Location = new System.Drawing.Point(48, 12);
             this.txtDoDName.MaxLength = 100;
@@ -170,8 +168,8 @@ namespace GCDCore.UserInterface.ChangeDetection
             // 
             // tabProperties
             // 
-            this.tabProperties.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.tabProperties.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabProperties.Controls.Add(this.TabPage1);
             this.tabProperties.Controls.Add(this.tbpElevationChangeDistribution);
@@ -195,14 +193,14 @@ namespace GCDCore.UserInterface.ChangeDetection
             // 
             // cmdBrowse2
             // 
-            this.cmdBrowse2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmdBrowse2.Image = global::GCDCore.Properties.Resources.BrowseFolder;
-            this.cmdBrowse2.Location = new System.Drawing.Point(603, 11);
-            this.cmdBrowse2.Name = "cmdBrowse2";
-            this.cmdBrowse2.Size = new System.Drawing.Size(23, 23);
-            this.cmdBrowse2.TabIndex = 2;
-            this.cmdBrowse2.UseVisualStyleBackColor = true;
-            this.cmdBrowse2.Click += new System.EventHandler(this.cmdBrowse_Click);
+            this.cmdBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmdBrowse.Image = global::GCDCore.Properties.Resources.BrowseFolder;
+            this.cmdBrowse.Location = new System.Drawing.Point(603, 11);
+            this.cmdBrowse.Name = "cmdBrowse2";
+            this.cmdBrowse.Size = new System.Drawing.Size(23, 23);
+            this.cmdBrowse.TabIndex = 2;
+            this.cmdBrowse.UseVisualStyleBackColor = true;
+            this.cmdBrowse.Click += new System.EventHandler(this.cmdBrowse_Click);
             // 
             // cmdProperties
             // 
@@ -217,14 +215,14 @@ namespace GCDCore.UserInterface.ChangeDetection
             // 
             // cmdAddToMap2
             // 
-            this.cmdAddToMap2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmdAddToMap2.Image = global::GCDCore.Properties.Resources.AddToMap;
-            this.cmdAddToMap2.Location = new System.Drawing.Point(660, 11);
-            this.cmdAddToMap2.Name = "cmdAddToMap2";
-            this.cmdAddToMap2.Size = new System.Drawing.Size(23, 23);
-            this.cmdAddToMap2.TabIndex = 4;
-            this.cmdAddToMap2.UseVisualStyleBackColor = true;
-            this.cmdAddToMap2.Click += new System.EventHandler(this.cmdAddToMap_Click);
+            this.cmdAddToMap.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmdAddToMap.Image = global::GCDCore.Properties.Resources.AddToMap;
+            this.cmdAddToMap.Location = new System.Drawing.Point(660, 11);
+            this.cmdAddToMap.Name = "cmdAddToMap2";
+            this.cmdAddToMap.Size = new System.Drawing.Size(23, 23);
+            this.cmdAddToMap.TabIndex = 4;
+            this.cmdAddToMap.UseVisualStyleBackColor = true;
+            this.cmdAddToMap.Click += new System.EventHandler(this.cmdAddToMap_Click);
             // 
             // frmDoDResults
             // 
@@ -233,9 +231,9 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cmdOK;
             this.ClientSize = new System.Drawing.Size(695, 530);
-            this.Controls.Add(this.cmdAddToMap2);
+            this.Controls.Add(this.cmdAddToMap);
             this.Controls.Add(this.cmdProperties);
-            this.Controls.Add(this.cmdBrowse2);
+            this.Controls.Add(this.cmdBrowse);
             this.Controls.Add(this.cmdHelp);
             this.Controls.Add(this.txtDoDName);
             this.Controls.Add(this.Label6);
@@ -259,10 +257,6 @@ namespace GCDCore.UserInterface.ChangeDetection
         internal System.Windows.Forms.Button cmdOK;
         internal System.Windows.Forms.TextBox txtDoDName;
         internal System.Windows.Forms.Label Label6;
-        private System.Windows.Forms.Button withEventsField_cmdAddToMap;
-        internal System.Windows.Forms.Button cmdAddToMap;
-        private System.Windows.Forms.Button withEventsField_cmdBrowse;
-        internal System.Windows.Forms.Button cmdBrowse;
         internal System.Windows.Forms.TabPage TabPage3;
         internal System.Windows.Forms.TabPage tbpElevationChangeDistribution;
         internal System.Windows.Forms.TableLayoutPanel TableLayoutPanel1;
@@ -271,12 +265,10 @@ namespace GCDCore.UserInterface.ChangeDetection
         internal System.Windows.Forms.TabPage TabPage1;
         internal ucDoDSummary ucSummary;
         internal System.Windows.Forms.TabControl tabProperties;
-        private System.Windows.Forms.Button withEventsField_cmdSettings;
-        internal System.Windows.Forms.Button cmdSettings;
         private System.Windows.Forms.Button cmdHelp;
-        private System.Windows.Forms.Button cmdBrowse2;
+        private System.Windows.Forms.Button cmdBrowse;
         private System.Windows.Forms.Button cmdProperties;
-        private System.Windows.Forms.Button cmdAddToMap2;
+        private System.Windows.Forms.Button cmdAddToMap;
         private ucDoDPropertiesGrid ucProperties;
     }
 }

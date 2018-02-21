@@ -47,7 +47,7 @@ namespace GCDCore.UserInterface.UtilityForms
         /// <param name="sNoun"></param>
         /// <param name="eBrowseType"></param>
         /// <remarks></remarks>
-        public new void Initialize(string sNoun, GCDConsoleLib.GDalGeometryType.SimpleTypes eBrowseType)
+        public void Initialize(string sNoun, GCDConsoleLib.GDalGeometryType.SimpleTypes eBrowseType)
         {
             Noun = sNoun;
             GeometryType = eBrowseType;

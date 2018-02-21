@@ -399,7 +399,7 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(string.Format("The tabular data file was created at {0} but an error occured attempting to open the file.", frm.FileName), Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(string.Format("The tabular data file was created at {0} but an error occured attempting to open the file.\n\n{1}", frm.FileName, ex.Message), Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }

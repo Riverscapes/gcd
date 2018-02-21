@@ -201,8 +201,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
                     }
                     catch (Exception ex2)
                     {
-                        Debug.Print("ERROR attempting to delete associated surface raster after an error during its creation");
-                        Debug.Print(ex.Message);
+                        Console.WriteLine(string.Format("ERROR attempting to delete associated surface raster at {0} after an error during its creation\n\n{1}\n\n", fiOutput.FullName, ex.Message, ex2.Message));
                     }
                 }
             }
@@ -297,10 +296,6 @@ namespace GCDCore.UserInterface.SurveyLibrary
             MessageBox.Show("The slope raster will be generated after you click OK.", GCDCore.Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
             btnOK.Select();
         }
-
-
-        public event BrowseVectorEventHandler BrowseVector;
-        public delegate void BrowseVectorEventHandler(TextBox txtPath, naru.ui.PathEventArgs e);
 
         private void btnDensity_Click(System.Object sender, System.EventArgs e)
         {

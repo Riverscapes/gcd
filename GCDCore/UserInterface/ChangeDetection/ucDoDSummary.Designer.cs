@@ -9,31 +9,32 @@ using System.Xml.Linq;
 using System.Threading.Tasks;
 namespace GCDCore.UserInterface.ChangeDetection
 {
-	partial class ucDoDSummary : System.Windows.Forms.UserControl
-	{
+    partial class ucDoDSummary : System.Windows.Forms.UserControl
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
 
-		//UserControl overrides dispose to clean up the component list.
-		[System.Diagnostics.DebuggerNonUserCode()]
-		protected override void Dispose(bool disposing)
-		{
-			try {
-				if (disposing && components != null) {
-					components.Dispose();
-				}
-			} finally {
-				base.Dispose(disposing);
-			}
-		}
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
 
-		//Required by the Windows Form Designer
-
-		private System.ComponentModel.IContainer components;
-		//NOTE: The following procedure is required by the Windows Form Designer
-		//It can be modified using the Windows Form Designer.  
-		//Do not modify it using the code editor.
-		[System.Diagnostics.DebuggerStepThrough()]
-		private void InitializeComponent()
-		{
+        //NOTE: The following procedure is required by the Windows Form Designer
+        //It can be modified using the Windows Form Designer.  
+        //Do not modify it using the code editor.
+        [System.Diagnostics.DebuggerStepThrough()]
+        private void InitializeComponent()
+        {
             this.grdData = new System.Windows.Forms.DataGridView();
             this.colAttribute = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colRaw = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -126,8 +127,8 @@ namespace GCDCore.UserInterface.ChangeDetection
             ((System.ComponentModel.ISupportInitialize)(this.grdData)).EndInit();
             this.ResumeLayout(false);
 
-		}
-		internal System.Windows.Forms.DataGridView grdData;
+        }
+        internal System.Windows.Forms.DataGridView grdData;
         private System.Windows.Forms.DataGridViewTextBoxColumn colAttribute;
         private System.Windows.Forms.DataGridViewTextBoxColumn colRaw;
         private System.Windows.Forms.DataGridViewTextBoxColumn colThresholded;

@@ -1109,7 +1109,6 @@ namespace GCDCore.UserInterface.Project
         internal System.Windows.Forms.ToolStripMenuItem ExploreGCDProjectFolderToolStripMenuItem;
         internal System.Windows.Forms.ToolStripMenuItem AddAOIToolStripMenuItem;
         internal System.Windows.Forms.ToolStripMenuItem AddAllAOIsToTheMapToolStripMenuItem;
-        internal System.Windows.Forms.ToolStripMenuItem EditAOIPropertiesToolStripMenuItem;
         internal System.Windows.Forms.ToolStripMenuItem AddToMapToolStripMenuItem2;
         internal System.Windows.Forms.ToolStripSeparator ToolStripSeparator4;
         internal System.Windows.Forms.ContextMenuStrip cmsDEMSurveyPair;

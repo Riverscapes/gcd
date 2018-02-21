@@ -114,7 +114,7 @@ namespace GCDCore.Project
                 }
                 catch (Exception ex)
                 {
-                    Console.Write("Failed to delete empty reference surface directory " + Raster.GISFileInfo.Directory.Parent.FullName);
+                    Console.Write(string.Format("Failed to delete empty reference surface directory {0}\n\n{1}", Raster.GISFileInfo.Directory.Parent.FullName, ex.Message));
                 }
             }
 

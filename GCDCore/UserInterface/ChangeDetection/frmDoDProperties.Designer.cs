@@ -12,27 +12,8 @@ namespace GCDCore.UserInterface.ChangeDetection
 {
     partial class frmDoDProperties : System.Windows.Forms.Form
     {
-
-        //Form overrides dispose to clean up the component list.
-        [System.Diagnostics.DebuggerNonUserCode()]
-        protected override void Dispose(bool disposing)
-        {
-            try
-            {
-                if (disposing && components != null)
-                {
-                    components.Dispose();
-                }
-            }
-            finally
-            {
-                base.Dispose(disposing);
-            }
-        }
-
         //Required by the Windows Form Designer
 
-        private System.ComponentModel.IContainer components;
         //NOTE: The following procedure is required by the Windows Form Designer
         //It can be modified using the Windows Form Designer.  
         //Do not modify it using the code editor.
@@ -163,8 +144,6 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.PerformLayout();
 
         }
-        private System.Windows.Forms.ComboBox withEventsField_cboNewDEM;
-        private System.Windows.Forms.Button withEventsField_cmdBayesianProperties;
         internal System.Windows.Forms.Label Label5;
         internal System.Windows.Forms.TextBox txtName;
         internal System.Windows.Forms.Button cmdCancel;

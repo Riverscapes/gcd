@@ -205,7 +205,8 @@ namespace GCDCore.UserInterface.Options
             }
             catch (Exception ex)
             {
-                //GISCode.ExceptionHandling.HandleException(ex, "Could not clear workspace")
+                ex.Data["Workspace"] = WorkspaceManager.WorkspacePath;
+                naru.error.ExceptionUI.HandleException(ex, "Error attempting to clear GCD temporary workspace");
             }
             finally
             {

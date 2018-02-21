@@ -11,27 +11,24 @@ namespace GCDCore.UserInterface.ChangeDetection
 {
     partial class frmDoDSummaryProperties : System.Windows.Forms.Form
     {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
 
-        //Form overrides dispose to clean up the component list.
-        [System.Diagnostics.DebuggerNonUserCode()]
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            try
+            if (disposing && (components != null))
             {
-                if (disposing && components != null)
-                {
-                    components.Dispose();
-                }
+                components.Dispose();
             }
-            finally
-            {
-                base.Dispose(disposing);
-            }
+            base.Dispose(disposing);
         }
 
-        //Required by the Windows Form Designer
-
-        private System.ComponentModel.IContainer components;
         //NOTE: The following procedure is required by the Windows Form Designer
         //It can be modified using the Windows Form Designer.  
         //Do not modify it using the code editor.
@@ -406,20 +403,16 @@ namespace GCDCore.UserInterface.ChangeDetection
         internal System.Windows.Forms.CheckBox chkVertical;
         internal System.Windows.Forms.CheckBox chkVolumetric;
         internal System.Windows.Forms.CheckBox chkRowsAreal;
-        private System.Windows.Forms.RadioButton withEventsField_rdoRowsSpecific;
         internal System.Windows.Forms.RadioButton rdoRowsSpecific;
         internal System.Windows.Forms.RadioButton rdoRowsNormalized;
         internal System.Windows.Forms.RadioButton rdoRowsAll;
         internal System.Windows.Forms.GroupBox GroupBox2;
         internal System.Windows.Forms.CheckBox chkColsPercentage;
         internal System.Windows.Forms.CheckBox chkColsError;
-        private System.Windows.Forms.CheckBox withEventsField_chkColsThresholded;
         internal System.Windows.Forms.CheckBox chkColsThresholded;
         internal System.Windows.Forms.CheckBox chkColsRaw;
-        private System.Windows.Forms.Button withEventsField_cmdOK;
         internal System.Windows.Forms.Button cmdOK;
         internal System.Windows.Forms.Button cmdCancel;
-        private System.Windows.Forms.Button withEventsField_cmdHelp;
         internal System.Windows.Forms.Button cmdHelp;
         internal System.Windows.Forms.Label Label2;
         internal System.Windows.Forms.Label Label3;

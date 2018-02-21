@@ -11,27 +11,28 @@ namespace GCDCore.UserInterface.FISLibrary
 {
 	partial class frmAddFIS : System.Windows.Forms.Form
 	{
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
 
-		//Form overrides dispose to clean up the component list.
-		[System.Diagnostics.DebuggerNonUserCode()]
-		protected override void Dispose(bool disposing)
-		{
-			try {
-				if (disposing && components != null) {
-					components.Dispose();
-				}
-			} finally {
-				base.Dispose(disposing);
-			}
-		}
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
 
-		//Required by the Windows Form Designer
-
-		private System.ComponentModel.IContainer components;
-		//NOTE: The following procedure is required by the Windows Form Designer
-		//It can be modified using the Windows Form Designer.  
-		//Do not modify it using the code editor.
-		[System.Diagnostics.DebuggerStepThrough()]
+        //NOTE: The following procedure is required by the Windows Form Designer
+        //It can be modified using the Windows Form Designer.  
+        //Do not modify it using the code editor.
+        [System.Diagnostics.DebuggerStepThrough()]
 		private void InitializeComponent()
 		{
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAddFIS));

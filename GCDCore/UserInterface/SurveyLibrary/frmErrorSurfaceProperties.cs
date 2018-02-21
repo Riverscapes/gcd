@@ -112,7 +112,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             catch (Exception ex)
             {
                 // Don't show an error in release mode
-                System.Diagnostics.Debug.Assert(false, "Error retrieving linear units from DEM");
+                System.Diagnostics.Debug.Assert(false, "Error retrieving linear units from DEM: " + ex.Message);
             }
         }
 

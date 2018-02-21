@@ -38,10 +38,10 @@ namespace GCDCore.UserInterface.ChangeDetection
         {
             if (!ProjectManager.IsArcMap)
             {
-                cmdAddToMap2.Visible = false;
-                txtDoDName.Width = txtDoDName.Width + (cmdAddToMap2.Right - cmdProperties.Right);
-                cmdBrowse2.Left = cmdProperties.Left;
-                cmdProperties.Left = cmdAddToMap2.Left;
+                cmdAddToMap.Visible = false;
+                txtDoDName.Width = txtDoDName.Width + (cmdAddToMap.Right - cmdProperties.Right);
+                cmdBrowse.Left = cmdProperties.Left;
+                cmdProperties.Left = cmdAddToMap.Left;
             }
 
             txtDoDName.Text = DoD.Name;

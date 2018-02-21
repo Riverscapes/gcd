@@ -157,7 +157,7 @@ namespace GCDStandalone
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(string.Format("Error reading the GCD project file '{0}'. Ensure that the file is a valid GCD project file with valid and complete XML contents.", f.FileName), GCDCore.Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(string.Format("Error reading the GCD project file '{0}'. Ensure that the file is a valid GCD project file with valid and complete XML contents.\n\n{1}", f.FileName, ex.Message), GCDCore.Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
 
@@ -182,6 +182,7 @@ namespace GCDStandalone
             }
             catch (Exception ex)
             {
+                Console.WriteLine(string.Format("Error reading GCD most recent used (MRU) items {0}", ex.Message));
                 // Something went wrong loading MRU list. Clear them all to start fresh
                 GCDCore.Properties.Settings.Default.MRU1 = string.Empty;
                 GCDCore.Properties.Settings.Default.MRU2 = string.Empty;

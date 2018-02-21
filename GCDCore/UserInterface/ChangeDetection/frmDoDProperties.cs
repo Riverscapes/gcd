@@ -214,6 +214,9 @@ namespace GCDCore.UserInterface.ChangeDetection
             }
             catch (Exception ex)
             {
+                ex.Data["DoD Name"] = txtName.Text;
+                ex.Data["Project Path"] = ProjectManager.Project.ProjectFile.Directory.FullName;
+                naru.error.ExceptionUI.HandleException(ex, "Error attempting to generate change detection directory");
             }
         }
 
