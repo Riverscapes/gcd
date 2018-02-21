@@ -135,6 +135,10 @@ namespace GCDCore.Engines
 
                     if (DoDCount > 1)
                     {
+                        NamedRange oNamedRange = dicNamedRanges[NamedCell];
+                        int row = oNamedRange.row;
+                        dicNamedRanges = InsertRow(dicNamedRanges, row);
+
                         //find areal row
                         XmlNode VolumeRowClone = VolumeRow.Clone();
                         XmlNode parent = VolumeRow.ParentNode;
@@ -163,6 +167,8 @@ namespace GCDCore.Engines
                     string VolumeErrorRaising = dodStat.DepositionErr.GetVolume(ca, vunit).As(options.VolumeUnits).ToString();
                     SetNameCellValue(xmlDoc, nsmgr, "VolumeErrorRaising", VolumeErrorRaising);
                 }
+
+
 
                 //need to set after adding rows
                 //pattern:
