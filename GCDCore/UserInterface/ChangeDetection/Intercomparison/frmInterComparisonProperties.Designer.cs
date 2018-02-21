@@ -62,7 +62,7 @@
             this.txtName.Location = new System.Drawing.Point(79, 15);
             this.txtName.MaxLength = 100;
             this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(357, 20);
+            this.txtName.Size = new System.Drawing.Size(361, 20);
             this.txtName.TabIndex = 1;
             this.txtName.TextChanged += new System.EventHandler(this.txtName_TextChanged);
             // 
@@ -82,7 +82,7 @@
             this.txtPath.Location = new System.Drawing.Point(79, 44);
             this.txtPath.Name = "txtPath";
             this.txtPath.ReadOnly = true;
-            this.txtPath.Size = new System.Drawing.Size(357, 20);
+            this.txtPath.Size = new System.Drawing.Size(361, 20);
             this.txtPath.TabIndex = 3;
             this.txtPath.TabStop = false;
             // 
@@ -90,7 +90,7 @@
             // 
             this.cmdCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cmdCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cmdCancel.Location = new System.Drawing.Point(361, 370);
+            this.cmdCancel.Location = new System.Drawing.Point(365, 332);
             this.cmdCancel.Name = "cmdCancel";
             this.cmdCancel.Size = new System.Drawing.Size(75, 23);
             this.cmdCancel.TabIndex = 6;
@@ -101,18 +101,20 @@
             // 
             this.cmdOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cmdOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.cmdOK.Location = new System.Drawing.Point(280, 370);
+            this.cmdOK.Image = global::GCDCore.Properties.Resources.Save;
+            this.cmdOK.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.cmdOK.Location = new System.Drawing.Point(284, 332);
             this.cmdOK.Name = "cmdOK";
             this.cmdOK.Size = new System.Drawing.Size(75, 23);
             this.cmdOK.TabIndex = 5;
-            this.cmdOK.Text = "Save";
+            this.cmdOK.Text = "   Save";
             this.cmdOK.UseVisualStyleBackColor = true;
             this.cmdOK.Click += new System.EventHandler(this.cmdOK_Click);
             // 
             // cmdHelp
             // 
             this.cmdHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.cmdHelp.Location = new System.Drawing.Point(12, 370);
+            this.cmdHelp.Location = new System.Drawing.Point(12, 332);
             this.cmdHelp.Name = "cmdHelp";
             this.cmdHelp.Size = new System.Drawing.Size(75, 23);
             this.cmdHelp.TabIndex = 7;
@@ -127,7 +129,7 @@
             this.groupBox1.Controls.Add(this.lstDoDs);
             this.groupBox1.Location = new System.Drawing.Point(12, 70);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(424, 294);
+            this.groupBox1.Size = new System.Drawing.Size(428, 256);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Change Detections";
@@ -140,7 +142,7 @@
             this.lstDoDs.FormattingEnabled = true;
             this.lstDoDs.Location = new System.Drawing.Point(3, 16);
             this.lstDoDs.Name = "lstDoDs";
-            this.lstDoDs.Size = new System.Drawing.Size(418, 275);
+            this.lstDoDs.Size = new System.Drawing.Size(422, 237);
             this.lstDoDs.TabIndex = 0;
             // 
             // cmsDoDList
@@ -171,7 +173,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cmdCancel;
-            this.ClientSize = new System.Drawing.Size(448, 405);
+            this.ClientSize = new System.Drawing.Size(452, 367);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.cmdHelp);
             this.Controls.Add(this.cmdOK);
@@ -181,6 +183,7 @@
             this.Controls.Add(this.txtName);
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(450, 250);
             this.Name = "frmInterComparisonProperties";
             this.Text = "Change Detection Inter-Comparison";
             this.Load += new System.EventHandler(this.frmInterComparisonProperties_Load);

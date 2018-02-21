@@ -539,8 +539,8 @@ namespace GCDCore
 
         public FileInfo GetInterComparisonPath(string name)
         {
-            string sTopFolder = Path.Combine(GCDProjectFolder(), m_sInterComparison);
-            return naru.os.File.GetNewSafeName(sTopFolder, "ic" + name, "xml");
+            string sTopFolder = Path.Combine(GCDProjectFolder(), m_sAnalysesFolder, m_sInterComparison);
+            return naru.os.File.GetNewSafeName(sTopFolder, name, "xml");
         }
 
         private string GetReferenceSurfaceFolder(string surfaceName)
