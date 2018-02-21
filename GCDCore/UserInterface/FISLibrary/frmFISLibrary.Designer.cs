@@ -177,8 +177,6 @@ namespace GCDCore.UserInterface.FISLibrary
 		internal System.Windows.Forms.DataGridView grdFIS;
 		internal System.Windows.Forms.BindingSource FISTableBindingSource;
 		internal System.Windows.Forms.ToolTip ttpTooltip;
-		internal System.Windows.Forms.DataGridViewTextBoxColumn NameDataGridViewTextBoxColumn;
-		internal System.Windows.Forms.DataGridViewTextBoxColumn PathDataGridViewTextBoxColumn;
         internal System.Windows.Forms.Button btnFISRepo;
         private System.Windows.Forms.DataGridViewTextBoxColumn colName;
         private System.Windows.Forms.DataGridViewTextBoxColumn colFilePath;

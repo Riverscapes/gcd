@@ -107,6 +107,7 @@ namespace GCDCore.UserInterface.Options
             }
             catch (Exception ex)
             {
+                Console.WriteLine("Error building automated pymarids options list.\n\n{0}", ex.Message);
                 lstPyramids.Items.Clear();
             }
         }

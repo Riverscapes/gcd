@@ -55,7 +55,8 @@ namespace GCDAddIn.Project
                     }
                     catch (Exception ex)
                     {
-                        // Do nothing if it fails. It's just a treat.
+                        Console.WriteLine(string.Format("Error attempting to open project explorer {0}", ex.Message));
+                        // Do nothing if it fails.
                     }
                 }
             }

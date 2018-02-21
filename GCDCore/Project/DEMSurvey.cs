@@ -57,7 +57,7 @@ namespace GCDCore.Project
                 if (!string.IsNullOrEmpty(nodDEM.SelectSingleNode("SurveyDate/Minute").InnerText))
                     surveyDT.Minute = short.Parse(nodDEM.SelectSingleNode("SurveyDate/Minute").InnerText);
             }
- 
+
             //read Chronological Order, if set
             XmlNode nodChronologicalOrder = nodDEM.SelectSingleNode("ChronologicalOrder");
             if (nodChronologicalOrder is XmlNode)
@@ -138,6 +138,7 @@ namespace GCDCore.Project
             }
             catch (Exception ex)
             {
+                Console.WriteLine(string.Format("Error attempting to delete hillshade at {0}\n\n{1}", this.Hillshade.Raster.GISFileInfo.FullName, ex.Message));
                 // Do nothing try and continue with the delete.
             }
 
@@ -166,7 +167,7 @@ namespace GCDCore.Project
                 }
                 catch (Exception ex)
                 {
-                    Console.Write("Failed to delete empty DEM Survey directory " + Raster.GISFileInfo.Directory.Parent.FullName);
+                    Console.Write(string.Format("Failed to delete empty DEM Survey directory at {0}\n\n{1}", Raster.GISFileInfo.Directory.Parent.FullName, ex.Message));
                 }
             }
 

@@ -93,28 +93,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
             Process.Start(Properties.Resources.HelpBaseURL + "gcd-command-reference/gcd-project-explorer/n-individual-budget-segregation-context-menu/i-view-budget-segregation-results");
         }
 
-        private void AddToMapToolStripMenuItem1_Click(System.Object sender, System.EventArgs e)
-        {
-            ToolStripMenuItem myItem = (ToolStripMenuItem)sender;
-            ContextMenuStrip cms = (ContextMenuStrip)myItem.Owner;
-
-            System.IO.FileInfo path = ProjectManager.Project.GetAbsolutePath(cms.SourceControl.Text);
-            if (path.Exists)
-            {
-                try
-                {
-                    GCDConsoleLib.Vector gPolygon = new GCDConsoleLib.Vector(path);
-                    throw new NotImplementedException("not implemented");
-                    //GCDProject.ProjectManagerUI.ArcMapManager.AddBSMaskVector(gPolygon, m_rBS)
-                }
-                catch (Exception ex)
-                {
-                    //Pass
-                }
-            }
-        }
-
-        private void cmdBrowse_Click_1(object sender, EventArgs e)
+        private void cmdBrowse_Click(object sender, EventArgs e)
         {
             if (BudgetSeg.Folder.Exists)
             {
@@ -124,7 +103,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
                 }
                 catch (Exception ex)
                 {
-                    // Do nothing
+                    Console.WriteLine(string.Format("Error attempting to browse to budget segregation folder at {0}\n\n", BudgetSeg.Folder, ex.Message));
                 }
             }
         }

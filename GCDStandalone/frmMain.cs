@@ -266,7 +266,7 @@ namespace GCDStandalone
                         case "exitToolStripMenuItem":
                         case "customizeToolStripMenuItem":
                             break; // do nothing. Always enabled.
-         
+
                         // Skip specific tool strip items here
                         case "tsiNewProject":
                         case "tsiOpenProject":
@@ -413,7 +413,7 @@ namespace GCDStandalone
                 }
                 catch (InvalidOperationException ioe)
                 {
-                    MessageBox.Show("This application cannot be updated. It is likely not a ClickOnce application. Error: " + ioe.Message, 
+                    MessageBox.Show("This application cannot be updated. It is likely not a ClickOnce application. Error: " + ioe.Message,
                         GCDCore.Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
@@ -433,8 +433,8 @@ namespace GCDStandalone
                     else
                     {
                         // Display a message that the app MUST reboot. Display the minimum required version.
-                        MessageBox.Show("This application has detected a mandatory update from your current " + "version to version " 
-                            + info.MinimumRequiredVersion.ToString() + ". The application will now install the update and restart.", "Update Available", 
+                        MessageBox.Show("This application has detected a mandatory update from your current " + "version to version "
+                            + info.MinimumRequiredVersion.ToString() + ". The application will now install the update and restart.", "Update Available",
                             MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
 
@@ -448,7 +448,7 @@ namespace GCDStandalone
                         }
                         catch (DeploymentDownloadException dde)
                         {
-                            MessageBox.Show("Cannot install the latest version of the application.\n\nPlease check your network connection, or try again later.",
+                            MessageBox.Show(string.Format("Cannot install the latest version of the application.\n\nPlease check your network connection, or try again later.\n\n{0}", dde.Message),
                                 GCDCore.Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
                             return;
                         }

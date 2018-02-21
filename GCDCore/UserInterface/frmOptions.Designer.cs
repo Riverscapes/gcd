@@ -637,9 +637,6 @@ namespace GCDCore.UserInterface.Options
 		internal System.Windows.Forms.TabPage TabPage3;
 		internal System.Windows.Forms.ToolTip ttpTooltip;
 		internal System.Windows.Forms.BindingSource SurveyTypesBindingSource;
-		internal System.Windows.Forms.DataGridViewTextBoxColumn NameDataGridViewTextBoxColumn;
-		internal System.Windows.Forms.DataGridViewTextBoxColumn ErrorDataGridViewTextBoxColumn;
-		internal System.Windows.Forms.DataGridViewTextBoxColumn TypeIDDataGridViewTextBoxColumn;
 		internal System.Windows.Forms.TabPage TabPage4;
 		internal System.Windows.Forms.Label lblHeight;
 		internal System.Windows.Forms.Label lblWidth;

@@ -129,7 +129,7 @@ namespace GCDCore.Visualization
             }
             catch(Exception ex)
             {
-                Console.Write("stop");
+                throw new Exception("Error refreshing elevation bar charts.", ex);
             }
         }
 

@@ -164,7 +164,7 @@ namespace GCDCore.Project
                 }
                 catch (Exception ex)
                 {
-                    Exception ex2 = new Exception("Failed to create directory.");
+                    Exception ex2 = new Exception("Failed to create directory.", ex);
                     ex2.Data["Directory"] = destPath;
                     throw ex2;
                 }

@@ -157,7 +157,7 @@ namespace GCDCore.Project
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Unable to delete morphological analysis " + ma.Name);
+                    Console.WriteLine(string.Format("Unable to delete morphological analysis {0}n\n{1}" ,ma.Name,ex.Message));
                 }
             }
             MorphologicalAnalyses.Clear();

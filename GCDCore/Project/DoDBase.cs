@@ -214,7 +214,7 @@ namespace GCDCore.Project
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Unable to delete budget segregation " + bs.Name);
+                    Console.WriteLine(string.Format("Unable to delete budget segregation ", bs.Name, ex.Message));
                 }
             }
             BudgetSegregations.Clear();

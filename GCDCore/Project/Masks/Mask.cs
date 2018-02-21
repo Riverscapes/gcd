@@ -18,7 +18,7 @@ namespace GCDCore.Project.Masks
             _ShapeFile = shapeFile;
         }
 
-         /// <summary>
+        /// <summary>
         /// Returns a read only label indicating if the mask is "Regular Mask" or "Directional Mask"
         /// </summary>
         public abstract string MaskTypeLabel { get; }
@@ -71,7 +71,7 @@ namespace GCDCore.Project.Masks
             }
             catch (Exception ex)
             {
-                Console.Write("Failed to delete the mask directory " + _ShapeFile.Directory.FullName);
+                Console.Write(string.Format("Failed to delete the mask directory {0}\n\n{1}", _ShapeFile.Directory.FullName, ex.Message));
             }
 
             // If no more masks then delete the project masks folder
@@ -83,7 +83,7 @@ namespace GCDCore.Project.Masks
                 }
                 catch (Exception ex)
                 {
-                    Console.Write("Failed to delete empty mask directory " + _ShapeFile.Directory.Parent.FullName);
+                    Console.Write(string.Format("Failed to delete empty mask directory {0}\n\n{1}" , _ShapeFile.Directory.Parent.FullName, ex.Message));
                 }
             }
 

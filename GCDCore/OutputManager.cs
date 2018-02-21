@@ -165,7 +165,7 @@ namespace GCDCore
         }
 
         #endregion
-    
+
         public object GetMethodMaskCopyPath(string sFolder, string sSurveyName, string OrigMethodMaskName)
         {
             //structure: Inputs/Surveyname/MethodMasks/MethodMaskName
@@ -375,7 +375,7 @@ namespace GCDCore
             catch (Exception ex)
             {
                 string ErrorMessage = "Could not create directory '" + DirectoryPath + "'";
-                throw new Exception(ErrorMessage);
+                throw new Exception(ErrorMessage, ex);
             }
         }
 

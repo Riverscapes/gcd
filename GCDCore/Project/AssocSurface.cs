@@ -37,7 +37,7 @@ namespace GCDCore.Project
         {
             get
             {
-                foreach (ErrorSurface errSurf  in DEM.ErrorSurfaces)
+                foreach (ErrorSurface errSurf in DEM.ErrorSurfaces)
                 {
                     foreach (ErrorSurfaceProperty errProp in errSurf.ErrorProperties.Values)
                     {
@@ -131,6 +131,7 @@ namespace GCDCore.Project
                 catch (Exception ex)
                 {
                     eType = AssociatedSurfaceTypes.Other;
+                    Console.WriteLine(string.Format("Error reading associated surface type from project XML. Defaulting to {0}\n\n{1}", eType, ex.Message));
                 }
             }
         }

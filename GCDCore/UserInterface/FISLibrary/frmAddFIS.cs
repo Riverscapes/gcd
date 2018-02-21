@@ -73,14 +73,14 @@ namespace GCDCore.UserInterface.FISLibrary
                 return false;
             }
 
-            if (GCDCore.Project.ProjectManager.FISLibrary.Count<FISLibraryItem>(x => string.Compare(x.Name, txtName.Text,true)==0) > 0)
+            if (GCDCore.Project.ProjectManager.FISLibrary.Count<FISLibraryItem>(x => string.Compare(x.Name, txtName.Text, true) == 0) > 0)
             {
                 MessageBox.Show("A FIS library item already exists with this name. Each FIS library item must have a unique name.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 txtName.Select();
                 return false;
             }
-            
-            if (GCDCore.Project.ProjectManager.FISLibrary.Count<FISLibraryItem>(x => string.Compare(txtFISFile.Text, x.FilePathString,true)==0) > 0)
+
+            if (GCDCore.Project.ProjectManager.FISLibrary.Count<FISLibraryItem>(x => string.Compare(txtFISFile.Text, x.FilePathString, true) == 0) > 0)
             {
                 MessageBox.Show("A FIS library item already refers to this FIS rule file. Each FIS library item must refere to a different file.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return false;
@@ -88,11 +88,12 @@ namespace GCDCore.UserInterface.FISLibrary
 
             try
             {
-                ErrorCalculation.FIS.FISRuleFile theFile = new ErrorCalculation.FIS.FISRuleFile(new System.IO.FileInfo(txtFISFile.Text));
+                FISRuleFile theFile = new FISRuleFile(new System.IO.FileInfo(txtFISFile.Text));
             }
             catch (Exception ex)
             {
-                System.Windows.Forms.MessageBox.Show("The FIS file is invalid and/or badly formatted. Check that the formatting of the file contents match the MatLab fully inference toolbox specifications and try again.", GCDCore.Properties.Resources.ApplicationNameLong, System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information);
+                MessageBox.Show(string.Format("The FIS file is invalid and/or badly formatted." +
+                    " Check that the formatting of the file contents match the MatLab fully inference toolbox specifications and try again.\n\n{0}", ex.Message), GCDCore.Properties.Resources.ApplicationNameLong, System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information);
                 return false;
             }
 

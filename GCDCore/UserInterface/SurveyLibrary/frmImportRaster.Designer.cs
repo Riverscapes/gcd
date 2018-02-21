@@ -639,9 +639,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
         internal System.Windows.Forms.TextBox txtRasterPath;
         internal System.Windows.Forms.GroupBox grpOriginalRaster;
         internal System.Windows.Forms.GroupBox grpProjectRaaster;
-        private System.Windows.Forms.Button withEventsField_cmdHelp;
         internal System.Windows.Forms.Button cmdHelp;
-        private System.Windows.Forms.Button withEventsField_cmdOK;
         internal System.Windows.Forms.Button cmdOK;
         internal System.Windows.Forms.Button cmdCancel;
         internal System.Windows.Forms.Label Label12;

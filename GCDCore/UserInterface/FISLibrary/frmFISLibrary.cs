@@ -28,11 +28,10 @@ namespace GCDCore.UserInterface.FISLibrary
 
         private void btnDeleteFIS_Click(System.Object sender, System.EventArgs e)
         {
-            throw new NotImplementedException();
             if (MessageBox.Show("Are you sure you want to remove the selected FIS file from the GCD Software? Note that this will not delete the associated *.fis file.",
             Properties.Resources.ApplicationNameLong, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-
+                throw new NotImplementedException();
             }
         }
 

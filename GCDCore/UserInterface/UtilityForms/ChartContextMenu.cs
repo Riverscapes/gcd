@@ -94,10 +94,11 @@ namespace GCDCore.UserInterface.UtilityForms
                         {
                             System.Diagnostics.Process.Start(sFilePath);
                         }
-                        catch(Exception ex)
+                        catch (Exception ex)
                         {
                             MessageBox.Show("The image file was created at {0}, but an error occurred attempting to open the image file.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }        
+                            Console.WriteLine(string.Format("Error attempting to open chart image file at {0}\n\n{1}", sFilePath, ex.Message));
+                        }
                     }
                 }
             }
