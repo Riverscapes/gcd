@@ -35,7 +35,7 @@ namespace GCDCore.UserInterface.ChangeDetection
 			// TODO need Acre feet
 			//AddUnitsToCombo(UnitsNet.Units.VolumeUnit.acrefeet)
 
-			NumericUpDown1.Value = Options.m_nPrecision;
+			valPrecision.Value = Options.m_nPrecision;
 
 			// Do the row check boxes first with the specifc box checked so that they are enabled.
 			rdoRowsSpecific.Checked = true;
@@ -87,7 +87,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             Options.AreaUnits = (UnitsNet.Units.AreaUnit)Enum.Parse(typeof(UnitsNet.Units.AreaUnit), cboArea.Text);
             Options.VolumeUnits= (UnitsNet.Units.VolumeUnit)Enum.Parse(typeof(UnitsNet.Units.VolumeUnit), cboVolume.Text);
                         
-			Options.m_nPrecision = Convert.ToInt32(NumericUpDown1.Value);
+			Options.m_nPrecision = Convert.ToInt32(valPrecision.Value);
 
 			if (rdoRowsAll.Checked) {
 				Options.m_eRowGroups = DoDSummaryDisplayOptions.RowGroups.ShowAll;
@@ -123,6 +123,12 @@ namespace GCDCore.UserInterface.ChangeDetection
             cboLinear.Text = ProjectManager.Project.Units.VertUnit.ToString();
             cboArea.Text = ProjectManager.Project.Units.ArUnit.ToString();
             cboVolume.Text = ProjectManager.Project.Units.VolUnit.ToString();
+            valPrecision.Value = Options.m_nPrecision;
+            rdoRowsAll.Checked = true;
+            chkColsRaw.Checked = true;
+            chkColsThresholded.Checked = true;
+            chkColsError.Checked = true;
+            chkColsPercentage.Checked = true;
         }
     }
 }

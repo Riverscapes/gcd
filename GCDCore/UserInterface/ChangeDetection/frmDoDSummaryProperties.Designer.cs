@@ -56,7 +56,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.Label4 = new System.Windows.Forms.Label();
             this.GroupBox3 = new System.Windows.Forms.GroupBox();
             this.cmdReset = new System.Windows.Forms.Button();
-            this.NumericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.valPrecision = new System.Windows.Forms.NumericUpDown();
             this.Label5 = new System.Windows.Forms.Label();
             this.cboVolume = new System.Windows.Forms.ComboBox();
             this.cboArea = new System.Windows.Forms.ComboBox();
@@ -64,7 +64,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.GroupBox1.SuspendLayout();
             this.GroupBox2.SuspendLayout();
             this.GroupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.NumericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.valPrecision)).BeginInit();
             this.SuspendLayout();
             // 
             // GroupBox1
@@ -140,6 +140,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.rdoRowsSpecific.TabIndex = 2;
             this.rdoRowsSpecific.Text = "Specific Groups";
             this.rdoRowsSpecific.UseVisualStyleBackColor = true;
+            this.rdoRowsSpecific.CheckedChanged += new System.EventHandler(this.rdoRows_CheckedChanged);
             // 
             // rdoRowsNormalized
             // 
@@ -152,6 +153,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.rdoRowsNormalized.TabStop = true;
             this.rdoRowsNormalized.Text = "Normalized only";
             this.rdoRowsNormalized.UseVisualStyleBackColor = true;
+            this.rdoRowsNormalized.CheckedChanged += new System.EventHandler(this.rdoRows_CheckedChanged);
             // 
             // rdoRowsAll
             // 
@@ -162,6 +164,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.rdoRowsAll.TabIndex = 0;
             this.rdoRowsAll.Text = "Show all";
             this.rdoRowsAll.UseVisualStyleBackColor = true;
+            this.rdoRowsAll.CheckedChanged += new System.EventHandler(this.rdoRows_CheckedChanged);
             // 
             // GroupBox2
             // 
@@ -211,6 +214,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.chkColsThresholded.TabIndex = 1;
             this.chkColsThresholded.Text = "Thresholded";
             this.chkColsThresholded.UseVisualStyleBackColor = true;
+            this.chkColsThresholded.CheckedChanged += new System.EventHandler(this.chkColsThresholded_CheckedChanged);
             // 
             // chkColsRaw
             // 
@@ -287,7 +291,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             // GroupBox3
             // 
             this.GroupBox3.Controls.Add(this.cmdReset);
-            this.GroupBox3.Controls.Add(this.NumericUpDown1);
+            this.GroupBox3.Controls.Add(this.valPrecision);
             this.GroupBox3.Controls.Add(this.Label5);
             this.GroupBox3.Controls.Add(this.cboVolume);
             this.GroupBox3.Controls.Add(this.cboArea);
@@ -314,18 +318,18 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.cmdReset.UseVisualStyleBackColor = true;
             this.cmdReset.Click += new System.EventHandler(this.cmdReset_Click);
             // 
-            // NumericUpDown1
+            // valPrecision
             // 
-            this.NumericUpDown1.Location = new System.Drawing.Point(139, 111);
-            this.NumericUpDown1.Maximum = new decimal(new int[] {
+            this.valPrecision.Location = new System.Drawing.Point(139, 111);
+            this.valPrecision.Maximum = new decimal(new int[] {
             10,
             0,
             0,
             0});
-            this.NumericUpDown1.Name = "NumericUpDown1";
-            this.NumericUpDown1.Size = new System.Drawing.Size(53, 20);
-            this.NumericUpDown1.TabIndex = 9;
-            this.NumericUpDown1.Value = new decimal(new int[] {
+            this.valPrecision.Name = "valPrecision";
+            this.valPrecision.Size = new System.Drawing.Size(53, 20);
+            this.valPrecision.TabIndex = 9;
+            this.valPrecision.Value = new decimal(new int[] {
             2,
             0,
             0,
@@ -394,7 +398,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.GroupBox2.PerformLayout();
             this.GroupBox3.ResumeLayout(false);
             this.GroupBox3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.NumericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.valPrecision)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -418,7 +422,7 @@ namespace GCDCore.UserInterface.ChangeDetection
         internal System.Windows.Forms.Label Label3;
         internal System.Windows.Forms.Label Label4;
         internal System.Windows.Forms.GroupBox GroupBox3;
-        internal System.Windows.Forms.NumericUpDown NumericUpDown1;
+        internal System.Windows.Forms.NumericUpDown valPrecision;
         internal System.Windows.Forms.Label Label5;
         internal System.Windows.Forms.ComboBox cboVolume;
         internal System.Windows.Forms.ComboBox cboArea;
