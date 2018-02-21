@@ -6,6 +6,9 @@ namespace GCDCore.Project
     {
         public string Name { get; set; }
 
+        // This is the type of thing being represented that must be implemented by all inherited types
+        public abstract string Noun { get; }
+
         // Inherited classes need to implement their own logic to determine if the item can be deleted
         public abstract bool IsItemInUse { get; }
 
@@ -22,7 +25,7 @@ namespace GCDCore.Project
             Name = name;
         }
 
-        public GCDProjectItem (XmlNode nodItem)
+        public GCDProjectItem(XmlNode nodItem)
         {
             Name = nodItem.SelectSingleNode("Name").InnerText;
         }

@@ -12,6 +12,8 @@ namespace GCDCore.Project
     {
         public readonly naru.ui.SortableBindingList<ErrorSurface> ErrorSurfaces;
 
+        public override string Noun { get { return "Reference Surface"; } }
+
         public ErrorSurface DefaultErrorSurface
         {
             get

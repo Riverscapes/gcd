@@ -10,7 +10,7 @@ namespace GCDCore.Project.Masks
     {
         public readonly List<MaskItem> _Items;
 
-        public override string MaskTypeLabel { get { return "Regular Mask"; } }
+        public override string Noun { get { return "Regular Mask"; } }
 
         public RegularMask(string name, FileInfo shapeFile, string field, List<MaskItem> items)
             : base(name, shapeFile, field)

@@ -27,6 +27,8 @@ namespace GCDCore.Project
 
         public Dictionary<string, BudgetSegregation> BudgetSegregations { get; internal set; }
 
+        public override string Noun { get { return "Change Detection"; } }
+
         public abstract string UncertaintyAnalysisLabel
         {
             get;

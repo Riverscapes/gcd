@@ -22,6 +22,8 @@ namespace GCDCore.Project
         public readonly Dictionary<string, InterComparison> InterComparisons;
         public readonly Dictionary<string, Masks.Mask> Masks;
 
+        public override string Noun { get { return "GCD Project"; } }
+
         /// <summary>
         /// Projects are never considered in use
         /// </summary>

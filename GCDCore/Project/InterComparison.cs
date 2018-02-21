@@ -13,6 +13,8 @@ namespace GCDCore.Project
         public readonly FileInfo _SummaryXML;
         public readonly naru.ui.SortableBindingList<DoDBase> _DoDs;
 
+        public override string Noun { get { return "Inter Comparison"; } }
+
         /// <summary>
         /// Inter-comparisons are never considered in use
         /// </summary>

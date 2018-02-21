@@ -9,7 +9,7 @@ namespace GCDCore.Project.Masks
     {
         public const string SurfaceDataExtentIntersection = "Intersection of new and old surface data extents";
 
-        public override string MaskTypeLabel { get { return "Area of Interest Mask"; } }
+        public override string Noun { get { return "Area of Interest Mask"; } }
 
         // An AOI is in use if it is referred to by any DoD
         public override bool IsItemInUse

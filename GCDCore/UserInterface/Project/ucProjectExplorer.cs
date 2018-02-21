@@ -1215,24 +1215,17 @@ namespace GCDCore.UserInterface.Project
 
             GCDNodeTypes eType = GetNodeType(nodSelected);
             ProjectTreeNode ptn = (ProjectTreeNode)nodSelected.Tag;
-            string additionalInfo = string.Empty;
+            GCDProjectItem item = (GCDProjectItem)ptn.Item;
 
-            switch (eType)
+            if (item.IsItemInUse)
             {
-                case GCDNodeTypes.DEMSurvey:
-                    DEMSurvey dem = (DEMSurvey)ptn.Item;
-                    if (ProjectManager.Project.DoDs.Values.Any(x => x.NewSurface == dem || x.OldSurface == dem))
-                    {
-                        MessageBox.Show("DEM Surveys that are used by one or more change detection analyses cannot be deleted." +
-                            " Delete all change detection analyses that use this DEM survey before attempting to delete this item.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        return;
-                    }
+                MessageBox.Show(string.Format("The {0} {1} is currently in use and cannot be deleted. Before you can delete this {1}," +
+                    " you must delete all {2} within the GCD project that refer to the {0} {1} before it can be deleted.", item.Name, item.Noun), 
+                    string.Format("{0} In Use", item.Noun), MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }           
 
-                    additionalInfo = " All associated surfaces and error surfaces that belong to this DEM survey will also be deleted.";
-                    break;
-            }
-
-            if (MessageBox.Show(string.Format("Are you sure that you want to delete {0}?{1} The item will be deleted permanently.", nodSelected.Text, additionalInfo),
+            if (MessageBox.Show(string.Format("Are you sure that you want to delete the {0} {1}? The {0} and all its underlying data will be deleted permanently.", item.Name, item.Noun),
                 Properties.Resources.ApplicationNameLong, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.No)
             {
                 return;

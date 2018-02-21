@@ -10,6 +10,7 @@ namespace GCDCore.Project
 {
     public class HillShade : GCDProjectRasterItem
     {
+        public override string Noun { get { return "DEM Hillshade"; } }
 
         /// <summary>
         /// Hillshades are never considered in use

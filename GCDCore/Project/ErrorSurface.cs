@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
 using GCDConsoleLib;
+using System;
 
 namespace GCDCore.Project
 {
@@ -10,6 +11,8 @@ namespace GCDCore.Project
     {
         public readonly Surface Surf;
         public readonly Dictionary<string, ErrorSurfaceProperty> ErrorProperties;
+
+        public override string Noun { get { return "Error Surface"; } }
 
         private bool _IsDefault;
         public bool IsDefault
@@ -46,7 +49,7 @@ namespace GCDCore.Project
         {
             get
             {
-                foreach (DoDPropagated dod in ProjectManager.Project.DoDs.Values.Where(x=> x is DoDPropagated))
+                foreach (DoDPropagated dod in ProjectManager.Project.DoDs.Values.Where(x => x is DoDPropagated))
                 {
                     if (dod.NewError == this || dod.OldError == this)
                         return true;

@@ -30,6 +30,8 @@ namespace GCDCore.Project
         /// </summary>
         public AssocSurface This { get { return this; } }
 
+        public override string Noun { get { return "Associated Surface"; } }
+
         /// <summary>
         /// Associated surface is in use if any of the error surfaces for the same DEM refer to it
         /// </summary>

@@ -9,6 +9,8 @@ namespace GCDCore.Project
 {
     public class DoDRaster : GCDProjectRasterItem
     {
+        public override string Noun { get { return "DoD Raster"; } }
+
         /// <summary>
         /// DoD Rasters are never considered in use.
         /// </summary>
