@@ -44,7 +44,7 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
             ucDoDPropertiesGrid1.AddDoDProperty("Budget Segregation", Analysis.BS.Name);
             ucDoDPropertiesGrid1.AddDoDProperty("Directional Mask", Analysis.BS.Mask.Name);
             ucDoDPropertiesGrid1.AddDoDProperty("Directional Mask Field", Analysis.BS.Mask._Field);
-            ucDoDPropertiesGrid1.AddDoDProperty("Mask Type", Analysis.BS.Mask.MaskTypeLabel);
+            ucDoDPropertiesGrid1.AddDoDProperty("Mask Type", Analysis.BS.Mask.Noun);
 
             foreach (UnitsNet.Units.DurationUnit val in Enum.GetValues(typeof(UnitsNet.Units.DurationUnit)))
                 cboDuration.Items.Add(val);

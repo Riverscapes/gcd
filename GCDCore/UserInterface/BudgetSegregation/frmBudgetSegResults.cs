@@ -55,7 +55,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
 
             ucProperties.AddDoDProperty("Mask", BudgetSeg.Mask.Name);
             ucProperties.AddDoDProperty("Mask Field", BudgetSeg.Mask._Field);
-            ucProperties.AddDoDProperty("Mask Type", BudgetSeg.Mask.MaskTypeLabel);
+            ucProperties.AddDoDProperty("Mask Type", BudgetSeg.Mask.Noun);
 
             //Hide Report tab for now
             tabMain.TabPages.Remove(TabPage4);
