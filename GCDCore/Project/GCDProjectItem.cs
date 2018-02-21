@@ -1,6 +1,6 @@
 ﻿namespace GCDCore.Project
 {
-  public   class GCDProjectItem
+    public class GCDProjectItem
     {
         public string Name { get; set; }
 
