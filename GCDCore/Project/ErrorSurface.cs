@@ -117,5 +117,19 @@ namespace GCDCore.Project
                 }
             }
         }
+
+        public override void Delete()
+        {
+            base.Delete();
+
+            // delete the associated surfaces group folder if this was the last associated surface
+            if (!Directory.EnumerateFileSystemEntries(Raster.GISFileInfo.Directory.Parent.FullName).Any())
+            {
+                Raster.GISFileInfo.Directory.Parent.Delete();
+            }
+
+            Surf.ErrorSurfaces.Remove(this);
+            ProjectManager.Project.Save();
+        }
     }
 }

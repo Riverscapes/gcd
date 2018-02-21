@@ -99,31 +99,23 @@ namespace GCDCore.Project
             return AssocSurfaces.Count<AssocSurface>(x => x != ignore && string.Compare(name, x.Name, true) == 0) == 0;
         }
 
-        new public void Delete()
+
+        /// <summary>
+        /// Delete a DEM Survery
+        /// </summary>
+        /// <remarks>Note that the Surface base class is responsible for deleting child error surfaces</remarks>
+        public override void Delete()
         {
             try
             {
-                foreach (AssocSurface assoc in AssocSurfaces)
-                {
-                    assoc.Delete();
-                }
+                AssocSurfaces.ToList().ForEach(x => x.Delete());
             }
             finally
             {
                 AssocSurfaces.Clear();
             }
 
-            try
-            {
-                foreach (ErrorSurface errSurf in ErrorSurfaces)
-                {
-                    errSurf.Delete();
-                }
-            }
-            finally
-            {
-                ErrorSurfaces.Clear();
-            }
+
 
             // Delete the vector mask if it exists
             if (MethodMask is FileInfo)
@@ -141,7 +133,6 @@ namespace GCDCore.Project
             catch (Exception ex)
             {
                 Console.WriteLine(string.Format("Error attempting to delete hillshade at {0}\n\n{1}", this.Hillshade.Raster.GISFileInfo.FullName, ex.Message));
-                // Do nothing try and continue with the delete.
             }
 
             // Delete the DEM raster
@@ -157,8 +148,6 @@ namespace GCDCore.Project
                 throw ex2;
             }
 
-            // Remove the DEM from the project
-            ProjectManager.Project.DEMSurveys.Remove(Name);
 
             // If no more inputs then delete the folder
             if (ProjectManager.Project.DEMSurveys.Count < 1 && !Directory.EnumerateFileSystemEntries(Raster.GISFileInfo.Directory.Parent.FullName).Any())
@@ -173,32 +162,9 @@ namespace GCDCore.Project
                 }
             }
 
+            // Remove the DEM from the project
+            ProjectManager.Project.DEMSurveys.Remove(Name);
             ProjectManager.Project.Save();
-        }
-
-        public void DeleteAssociatedSurface(AssocSurface assoc)
-        {
-
-            try
-            {
-                assoc.Delete();
-            }
-            finally
-            {
-                AssocSurfaces.Remove(assoc);
-            }
-
-            if (AssocSurfaces.Count < 1)
-            {
-                try
-                {
-                    assoc.Raster.GISFileInfo.Directory.Parent.Delete();
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(string.Format("Failed to delete associate surface directory {0}\n\n{1}" + assoc.Raster.GISFileInfo.Directory.Parent, ex.Message));
-                }
-            }
         }
 
         new public void Serialize(XmlNode nodDEM)

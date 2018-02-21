@@ -68,6 +68,7 @@ namespace GCDCore.Project
         public override void Delete()
         {
             throw new NotImplementedException("ability to delete inter-comparisons has not been implemented");
+            ProjectManager.Project.Save();
         }
     }
 }

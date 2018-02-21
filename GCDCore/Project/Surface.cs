@@ -81,10 +81,7 @@ namespace GCDCore.Project
         {
             try
             {
-                foreach (ErrorSurface errSurf in ErrorSurfaces)
-                {
-                    errSurf.Delete();
-                }
+                ErrorSurfaces.ToList().ForEach(x => x.Delete());
             }
             finally
             {
@@ -104,34 +101,22 @@ namespace GCDCore.Project
                 throw ex2;
             }
 
-            // Remove the DEM from the project
-            ProjectManager.Project.ReferenceSurfaces.Remove(Name);
-
-            // If no more inputs then delete the folder
-            if (ProjectManager.Project.ReferenceSurfaces.Count < 1 && !Directory.EnumerateFileSystemEntries(Raster.GISFileInfo.Directory.Parent.FullName).Any())
+            if (!(this is DEMSurvey))
             {
-                try
+                // Remove the DEM from the project
+                ProjectManager.Project.ReferenceSurfaces.Remove(Name);
+                // If no more inputs then delete the folder
+                if (ProjectManager.Project.ReferenceSurfaces.Count < 1 && !Directory.EnumerateFileSystemEntries(Raster.GISFileInfo.Directory.Parent.FullName).Any())
                 {
-                    Raster.GISFileInfo.Directory.Parent.Delete();
+                    try
+                    {
+                        Raster.GISFileInfo.Directory.Parent.Delete();
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.Write(string.Format("Failed to delete empty reference surface directory {0}\n\n{1}", Raster.GISFileInfo.Directory.Parent.FullName, ex.Message));
+                    }
                 }
-                catch (Exception ex)
-                {
-                    Console.Write(string.Format("Failed to delete empty reference surface directory {0}\n\n{1}", Raster.GISFileInfo.Directory.Parent.FullName, ex.Message));
-                }
-            }
-
-            ProjectManager.Project.Save();
-        }
-
-        public void DeleteErrorSurface(ErrorSurface err)
-        {
-            try
-            {
-                err.Delete();
-            }
-            finally
-            {
-                ErrorSurfaces.Remove(err);
             }
         }
 

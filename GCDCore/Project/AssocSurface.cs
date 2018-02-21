@@ -122,6 +122,7 @@ namespace GCDCore.Project
         public AssocSurface(XmlNode nodAssoc, DEMSurvey dem)
             : base(nodAssoc)
         {
+            DEM = dem;
             AssociatedSurfaceTypes eType = AssociatedSurfaceTypes.Other;
             XmlNode nodType = nodAssoc.SelectSingleNode("Type");
             if (nodType is XmlNode && !string.IsNullOrEmpty(nodType.InnerText))
@@ -146,7 +147,7 @@ namespace GCDCore.Project
             nodAssoc.AppendChild(nodParent.OwnerDocument.CreateElement("Path")).InnerText = ProjectManager.Project.GetRelativePath(Raster.GISFileInfo);
         }
 
-        new public void Delete()
+        public override void Delete()
         {
             base.Delete();
 
@@ -155,6 +156,9 @@ namespace GCDCore.Project
             {
                 Raster.GISFileInfo.Directory.Parent.Delete();
             }
+
+            DEM.AssocSurfaces.Remove(this);
+            ProjectManager.Project.Save();
         }
     }
 }

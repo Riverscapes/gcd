@@ -150,19 +150,14 @@ namespace GCDCore.Project
 
         public override void Delete()
         {
-            // Delete child morphological analyses
-            foreach (Morphological.MorphologicalAnalysis ma in MorphologicalAnalyses.Values)
+            try
             {
-                try
-                {
-                    ma.Delete();
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(string.Format("Unable to delete morphological analysis {0}n\n{1}", ma.Name, ex.Message));
-                }
+                MorphologicalAnalyses.Values.ToList().ForEach(x => x.Delete());
             }
-            MorphologicalAnalyses.Clear();
+            finally
+            {
+                MorphologicalAnalyses.Clear();
+            }
 
             try
             {
@@ -173,6 +168,9 @@ namespace GCDCore.Project
                 Console.WriteLine("Unable to delete budget segregation folder", Folder.FullName);
                 Console.WriteLine(ex.Message);
             }
+
+            DoD.BudgetSegregations.Remove(Name);
+            ProjectManager.Project.Save();
         }
     }
 }

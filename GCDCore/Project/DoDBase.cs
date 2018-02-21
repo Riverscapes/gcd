@@ -177,6 +177,14 @@ namespace GCDCore.Project
             }
         }
 
+        /// <summary>
+        /// Deserialize change statistics
+        /// </summary>
+        /// <param name="nodStatistics"></param>
+        /// <param name="cellArea"></param>
+        /// <param name="units"></param>
+        /// <returns></returns>
+        /// <remarks>This is used by budget segregations and so needs to be static and public</remarks>
         public static DoDStats DeserializeStatistics(XmlNode nodStatistics, UnitsNet.Area cellArea, UnitGroup units)
         {
             UnitsNet.Area AreaErosion_Raw = UnitsNet.Area.From(double.Parse(nodStatistics.SelectSingleNode("Erosion/Raw/Area").InnerText), units.ArUnit);
@@ -207,19 +215,14 @@ namespace GCDCore.Project
 
         public override void Delete()
         {
-            // Delete child budget segregations first
-            foreach (BudgetSegregation bs in BudgetSegregations.Values)
+            try
             {
-                try
-                {
-                    bs.Delete();
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(string.Format("Unable to delete budget segregation ", bs.Name, ex.Message));
-                }
+                BudgetSegregations.Values.ToList().ForEach(x => x.Delete());
             }
-            BudgetSegregations.Clear();
+            finally
+            {
+                BudgetSegregations.Clear();
+            }
 
             // Delete the raw and thresholded rasters
             RawDoD.Delete();

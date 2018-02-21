@@ -1220,10 +1220,10 @@ namespace GCDCore.UserInterface.Project
             if (item.IsItemInUse)
             {
                 MessageBox.Show(string.Format("The {0} {1} is currently in use and cannot be deleted. Before you can delete this {1}," +
-                    " you must delete all GCD project items that refer to this {1} before it can be deleted.", item.Name, item.Noun), 
+                    " you must delete all GCD project items that refer to this {1} before it can be deleted.", item.Name, item.Noun),
                     string.Format("{0} In Use", item.Noun), MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
-            }           
+            }
 
             if (MessageBox.Show(string.Format("Are you sure that you want to delete the {0} {1}? The {0} {1} and all its underlying data will be deleted permanently.", item.Name, item.Noun),
                 Properties.Resources.ApplicationNameLong, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.No)
@@ -1233,8 +1233,7 @@ namespace GCDCore.UserInterface.Project
 
             try
             {
-                ((GCDProjectItem)ptn.Item).Delete();
-
+                item.Delete();
                 ProjectManager.Project.Save();
                 LoadTree((ProjectTreeNode)nodSelected.Parent.Tag);
             }
