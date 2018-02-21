@@ -42,6 +42,7 @@ namespace GCDCore.UserInterface.Masks
             {
                 cmdAddToMap.Visible = false;
                 txtPath.Width = cmdAddToMap.Right - txtPath.Left;
+                ucPolygon.Initialize("Area of Interest Mask", GCDConsoleLib.GDalGeometryType.SimpleTypes.Polygon);
                 ucPolygon.PathChanged += InputShapeFileChanged;
                 ucPolygon.BrowseVector += ProjectManager.OnBrowseVector;
                 ucPolygon.SelectVector += ProjectManager.OnSelectVector;
