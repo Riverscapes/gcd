@@ -32,8 +32,13 @@ namespace GCDCore.UserInterface.Masks
             {
                 txtName.Text = Mask.Name;
 
-                ucPolygon.Initialize("Directional Mask", Mask._ShapeFile, true);
-                ucPolygon.SetReadOnly();
+                ucPolygon.Visible = false;
+                lblPolygons.Visible = false;
+
+                Height -= cboField.Top - ucPolygon.Top;
+
+                //ucPolygon.Initialize("Directional Mask", Mask._ShapeFile, true);
+                //ucPolygon.SetReadOnly();
             }
 
             // subscribe to the even when the user changes the input ShapeFile
@@ -95,8 +100,11 @@ namespace GCDCore.UserInterface.Masks
             if (!MaskValidation.ValidateMaskName(txtName, Mask))
                 return false;
 
-            if (!MaskValidation.ValidateShapeFile(ucPolygon))
-                return false;
+            if (Mask == null)
+            {
+                if (!MaskValidation.ValidateShapeFile(ucPolygon))
+                    return false;
+            }
 
             if (!MaskValidation.ValidateField(cboField))
                 return false;
@@ -128,10 +136,13 @@ namespace GCDCore.UserInterface.Masks
                     return false;
                 }
 
-                if (ucPolygon.SelectedItem.Features.Values.Any(x => x.IsNull(cboDistance.Text)))
+                if (Mask == null)
                 {
-                    MessageBox.Show(string.Format("One or more features in the ShapeFile have null or invalid values in the {0} field. A valid distance field must possess valid floating point values for all features.", cboDistance.Text), "Invalid Distance Values", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return false;
+                    if (ucPolygon.SelectedItem.Features.Values.Any(x => x.IsNull(cboDistance.Text)))
+                    {
+                        MessageBox.Show(string.Format("One or more features in the ShapeFile have null or invalid values in the {0} field. A valid distance field must possess valid floating point values for all features.", cboDistance.Text), "Invalid Distance Values", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return false;
+                    }
                 }
             }
 
@@ -142,11 +153,14 @@ namespace GCDCore.UserInterface.Masks
                 return false;
             }
 
-            if (ucPolygon.SelectedItem.Features.Values.Any(x => x.IsNull(cboDirection.Text)))
+            if (Mask == null)
             {
-                MessageBox.Show(string.Format("One or more features in the ShapeFile have null or invalid values in the {0} field. {1}",
-                    cboDistance.Text, DirectionFieldInfo), "Invalid Direction Values", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return false;
+                if (ucPolygon.SelectedItem.Features.Values.Any(x => x.IsNull(cboDirection.Text)))
+                {
+                    MessageBox.Show(string.Format("One or more features in the ShapeFile have null or invalid values in the {0} field. {1}",
+                        cboDistance.Text, DirectionFieldInfo), "Invalid Direction Values", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return false;
+                }
             }
 
             if (!ValidateDirectionFieldValues())
