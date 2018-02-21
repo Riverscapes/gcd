@@ -41,7 +41,7 @@ namespace GCDCore.Project.Masks
             return nodMask;
         }
 
-        public void Delete()
+        public override void Delete()
         {
             try
             {

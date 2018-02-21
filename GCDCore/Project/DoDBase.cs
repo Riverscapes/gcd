@@ -203,7 +203,7 @@ namespace GCDCore.Project
             return UnitsNet.Area.From(value, unit);
         }
 
-        public virtual void Delete()
+        public override void Delete()
         {
             // Delete child budget segregations first
             foreach (BudgetSegregation bs in BudgetSegregations.Values)

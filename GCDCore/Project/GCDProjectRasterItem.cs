@@ -28,7 +28,7 @@ namespace GCDCore.Project
             Raster = new Raster(ProjectManager.Project.GetAbsolutePath(nodItem.SelectSingleNode("Path").InnerText));
         }
 
-        public void Delete()
+        public override void Delete()
         {
             // Get the folder
             DirectoryInfo dir = Raster.GISFileInfo.Directory;
@@ -57,7 +57,7 @@ namespace GCDCore.Project
             }
         }
 
-        public static void DeleteRaster(Raster raster)
+        private void DeleteRaster(Raster raster)
         {
             try
             {

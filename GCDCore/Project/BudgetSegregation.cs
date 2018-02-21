@@ -146,7 +146,7 @@ namespace GCDCore.Project
             }
         }
 
-        public void Delete()
+        public override void Delete()
         {
             // Delete child morphological analyses
             foreach (Morphological.MorphologicalAnalysis ma in MorphologicalAnalyses.Values)

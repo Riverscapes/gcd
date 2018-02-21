@@ -1240,41 +1240,7 @@ namespace GCDCore.UserInterface.Project
 
             try
             {
-                switch (eType)
-                {
-                    case GCDNodeTypes.DEMSurvey:
-                        DEMSurvey dem = (DEMSurvey)ptn.Item;
-                        dem.Delete();
-                        break;
-
-                    case GCDNodeTypes.AssociatedSurface:
-                        AssocSurface assoc = (AssocSurface)ptn.Item;
-                        assoc.DEM.DeleteAssociatedSurface(assoc);
-                        break;
-
-                    case GCDNodeTypes.ErrorSurface:
-                        ErrorSurface errSurf = (ErrorSurface)ptn.Item;
-                        errSurf.Surf.DeleteErrorSurface(errSurf);
-                        break;
-
-                    case GCDNodeTypes.ReferenceSurface:
-                        Surface surf = (Surface)ptn.Item;
-                        surf.Delete();
-                        break;
-
-                    case GCDNodeTypes.DoD:
-                        DoDBase dod = (DoDBase)ptn.Item;
-                        dod.Delete();
-                        break;
-
-                    case GCDNodeTypes.Mask:
-                        GCDCore.Project.Masks.Mask mask = ptn.Item as GCDCore.Project.Masks.Mask;
-                        mask.Delete();
-                        break;
-
-                    default:
-                        throw new NotImplementedException("delete not implemented for this node type");
-                }
+                ((GCDProjectItem)ptn.Item).Delete();
 
                 ProjectManager.Project.Save();
                 LoadTree((ProjectTreeNode)nodSelected.Parent.Tag);

@@ -75,7 +75,7 @@ namespace GCDCore.Project
             return ErrorSurfaces.Count<ErrorSurface>(x => x != ignore && string.Compare(name, x.Name, true) == 0) == 0;
         }
 
-        new public void Delete()
+        public override void Delete()
         {
             try
             {

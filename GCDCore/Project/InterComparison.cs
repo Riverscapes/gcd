@@ -62,5 +62,10 @@ namespace GCDCore.Project
             foreach (DoDBase dod in _DoDs)
                 nodDoDs.AppendChild(nodParent.OwnerDocument.CreateElement("DoD")).InnerText = dod.Name;
         }
+
+        public override void Delete()
+        {
+            throw new NotImplementedException("ability to delete inter-comparisons has not been implemented");
+        }
     }
 }

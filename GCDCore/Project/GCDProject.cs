@@ -293,5 +293,10 @@ namespace GCDCore.Project
 
             return ProjectManager.Project;
         }
+
+        public override void Delete()
+        {
+            throw new NotImplementedException("Deleting entire projects is not implemented");
+        }
     }
 }
