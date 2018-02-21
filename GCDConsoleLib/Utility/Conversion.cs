@@ -287,7 +287,7 @@ namespace GCDConsoleLib.Utility
                 lUnit = Length.ParseUnit(u);
                 bFound = true;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 // Didn't work. Do it the hard way
                 foreach (LengthUnit iterUnit in Enum.GetValues(typeof(LengthUnit)))
