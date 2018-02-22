@@ -435,6 +435,13 @@ namespace GCDConsoleLib
 
             // Spatial is way harder than it needs to be:
             OSGeo.OSR.SpatialReference sRef = mLayer.GetSpatialRef();
+            if (sRef == null)
+            {
+                Exception ex = new Exception("Feature class is missing spatial reference");
+                ex.Data["Path"] = GISFileInfo.FullName;
+                throw ex;
+            }
+
             string sRefstring = "";
             sRef.ExportToWkt(out sRefstring);
             _Init(sRefstring);

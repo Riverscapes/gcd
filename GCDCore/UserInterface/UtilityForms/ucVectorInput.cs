@@ -72,7 +72,23 @@ namespace GCDCore.UserInterface.UtilityForms
             }
             catch (Exception ex)
             {
-                naru.error.ExceptionUI.HandleException(ex, "Error browsing to raster");
+                if (ex.Message.ToLower().Contains("missing spatial reference"))
+                {
+                    string msg = string.Format("The selected feature class appears to be missing a spatial reference. All GCD feature classes must possess a spatial reference and it must be the same spatial reference for all GIS datasets in a GCD project.");
+
+                    GCDConsoleLib.Projection refProj = ProjectManager.Project.ReferenceProjection;
+                    if (refProj != null)
+                    {
+                        msg += string.Format("{1}{1}If the selected feature class does in fact exist in the GCD project coordinate system, but the feature class coordinate system has not yet been defined, then" +
+                                    " use a GIS 'Define Projection' geoprocessing tool to correct the problem with the selected feature class by defining the spatial reference as follows. " +
+                                    "Then try importing it into the GCD again:{1}{1}{1}{0}", refProj.PrettyWkt, Environment.NewLine);
+                    }
+
+                    txtPath.Text = string.Empty;
+                    MessageBox.Show(msg, "Missing Spatial Reference", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                    naru.error.ExceptionUI.HandleException(ex, "Error browsing to raster");
             }
         }
 
