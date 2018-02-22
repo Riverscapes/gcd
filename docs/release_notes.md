@@ -2,6 +2,26 @@
 title: Release Notes
 ---
 
+## 7.0.06 - 22 Feb 2018
+
+* Reference surfaces and reference error surfaces
+    * From a set of DEMs the error surface is derived from the min, max from the corresponding error surface value, or the root mean square of the error surface values.
+* Regular, directional and area of interest masks
+* Change detection with AOI
+* Vector based operations use GDAL to convert the polygons into a temporary raster layer
+    * Budget segregation
+    * Multi-method error
+    * AOI change detection
+* Morphological approach
+* Budget segregation % totals column added to tabular display
+* Simplified DEM properties form
+
+*Known Issues*
+
+* Multi-method error surfaces not working
+* FIS error surfaces not working
+* Morphological approach min flux cell identification not working
+
 ## 7.0.03 - 30 Jan 2018
 
 * Fixed change detection with probabilistic thresholding when no spatial coherence in use ([issue #30](https://github.com/Riverscapes/gcd/issues/30)).
