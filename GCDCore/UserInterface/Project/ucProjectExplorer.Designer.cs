@@ -47,8 +47,6 @@ namespace GCDCore.UserInterface.Project
             this.cmsAddProjectToMap = new System.Windows.Forms.ToolStripMenuItem();
             this.ExploreGCDProjectFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.refreshProjectTreeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ToolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsDEMSurvey = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.EditDEMSurveyProperatieToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AddToMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -215,11 +213,9 @@ namespace GCDCore.UserInterface.Project
             this.EditGCDProjectPropertiesToolStripMenuItem,
             this.cmsAddProjectToMap,
             this.ExploreGCDProjectFolderToolStripMenuItem,
-            this.refreshProjectTreeToolStripMenuItem,
-            this.ToolStripSeparator2,
-            this.ToolStripMenuItem1});
+            this.refreshProjectTreeToolStripMenuItem});
             this.cmsProject.Name = "cmsProject";
-            this.cmsProject.Size = new System.Drawing.Size(231, 120);
+            this.cmsProject.Size = new System.Drawing.Size(231, 114);
             // 
             // EditGCDProjectPropertiesToolStripMenuItem
             // 
@@ -248,18 +244,6 @@ namespace GCDCore.UserInterface.Project
             this.refreshProjectTreeToolStripMenuItem.Name = "refreshProjectTreeToolStripMenuItem";
             this.refreshProjectTreeToolStripMenuItem.Size = new System.Drawing.Size(230, 22);
             this.refreshProjectTreeToolStripMenuItem.Text = "Refresh Project Tree";
-            // 
-            // ToolStripSeparator2
-            // 
-            this.ToolStripSeparator2.Name = "ToolStripSeparator2";
-            this.ToolStripSeparator2.Size = new System.Drawing.Size(227, 6);
-            // 
-            // ToolStripMenuItem1
-            // 
-            this.ToolStripMenuItem1.Image = global::GCDCore.Properties.Resources.Add;
-            this.ToolStripMenuItem1.Name = "ToolStripMenuItem1";
-            this.ToolStripMenuItem1.Size = new System.Drawing.Size(230, 22);
-            this.ToolStripMenuItem1.Text = "Specify DEM Survey";
             // 
             // cmsDEMSurvey
             // 
@@ -1067,7 +1051,6 @@ namespace GCDCore.UserInterface.Project
         }
         internal System.Windows.Forms.ImageList imgTreeImageList;
         internal System.Windows.Forms.ContextMenuStrip cmsProject;
-        internal System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem1;
         internal System.Windows.Forms.ToolStripMenuItem cmsAddProjectToMap;
         internal System.Windows.Forms.ContextMenuStrip cmsDEMSurvey;
         internal System.Windows.Forms.ToolStripMenuItem AddAssociatedSurfaceToolStripMenuItem;
@@ -1076,7 +1059,6 @@ namespace GCDCore.UserInterface.Project
         internal System.Windows.Forms.ToolStripSeparator ToolStripSeparator1;
         internal System.Windows.Forms.ToolStripMenuItem DeleteDEMSurveyToolStripMenuItem;
         internal System.Windows.Forms.ToolStripMenuItem EditGCDProjectPropertiesToolStripMenuItem;
-        internal System.Windows.Forms.ToolStripSeparator ToolStripSeparator2;
         internal System.Windows.Forms.ToolStripMenuItem EditDEMSurveyProperatieToolStripMenuItem;
         internal System.Windows.Forms.ContextMenuStrip cmsAssociatedSurface;
         internal System.Windows.Forms.ToolStripMenuItem EditPropertiesToolStripMenuItem;

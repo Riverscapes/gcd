@@ -47,7 +47,6 @@ namespace GCDCore.UserInterface.Project
             this.cmsAddProjectToMap.Click += AddProjectToMap_Click;
             this.ExploreGCDProjectFolderToolStripMenuItem.Click += ExploreGCDProjectFolderToolStripMenuItem_Click;
             this.refreshProjectTreeToolStripMenuItem.Click += LoadTree;
-            this.ToolStripMenuItem1.Click += ToolStripMenuItem1_Click;
             this.EditDEMSurveyProperatieToolStripMenuItem.Click += EditSurface_Click;
             this.AddToMapToolStripMenuItem.Click += AddToMapToolStripMenuItem_Click;
             this.DeleteDEMSurveyToolStripMenuItem.Click += btnDelete_Click;
