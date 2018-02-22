@@ -126,7 +126,9 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
 
             try
             {
-                Cursor.Current = Cursors.WaitCursor;
+                //Change state of UI
+                this.UseWaitCursor = true;
+
                 cmdOK.Enabled = false;
                 cmdCancel.DialogResult = DialogResult.None;
                 BatchEngine = new ChangeDetetctionBatch(ucDEMs.NewSurface, ucDEMs.OldSurface, ucDEMs.AOIMask, ucDEMs.NewError, ucDEMs.OldError, Thresholds.ToList<ThresholdProps>());
@@ -182,7 +184,9 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
         {
             cmdCancel.DialogResult = DialogResult.OK;
             cmdCancel.Text = "Close";
-            MessageBox.Show("Batch Change Detection Complete.");
+            Cursor.Current = Cursors.Default;
+            MessageBox.Show("Batch Change Detection Complete.", "Process Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            DialogResult = DialogResult.OK;
         }
     }
 }
