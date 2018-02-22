@@ -30,7 +30,9 @@
             InterComparisonGroup,
             InterComparison,
             ReservoirGroup,
-            Reservoir
+            Reservoir,
+            ProfileRoutesGroup,
+            ProfileRoute
         }
 
         private GCDNodeTypes m_Type;

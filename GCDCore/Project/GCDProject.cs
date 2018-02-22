@@ -21,6 +21,7 @@ namespace GCDCore.Project
         public readonly Dictionary<string, string> MetaData;
         public readonly Dictionary<string, InterComparison> InterComparisons;
         public readonly Dictionary<string, Masks.Mask> Masks;
+        public readonly Dictionary<string, ProfileRoutes.ProfileRoute> ProfileRoutes;
 
         public override string Noun { get { return "GCD Project"; } }
 

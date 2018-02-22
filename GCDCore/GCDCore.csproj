@@ -97,6 +97,7 @@
     <Compile Include="Project\Masks\RegularMask.cs" />
     <Compile Include="Project\Morphological\MorphologicalAnalysis.cs" />
     <Compile Include="Project\Morphological\MorphologicalUnit.cs" />
+    <Compile Include="Project\ProfileRoutes\ProfileRoute.cs" />
     <Compile Include="Project\ProjectManager.cs" />
     <Compile Include="Project\Surface.cs" />
     <Compile Include="Project\SurveyDateTime.cs" />
@@ -287,6 +288,12 @@
       <DependentUpon>frmMaskProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\Masks\MaskValidation.cs" />
+    <Compile Include="UserInterface\ProfileRoutes\frmProfileRouteProperties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\ProfileRoutes\frmProfileRouteProperties.Designer.cs">
+      <DependentUpon>frmProfileRouteProperties.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserInterface\Project\ucProjectExplorer.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -537,6 +544,9 @@
     <EmbeddedResource Include="UserInterface\Masks\frmMaskProperties.resx">
       <DependentUpon>frmMaskProperties.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\ProfileRoutes\frmProfileRouteProperties.resx">
+      <DependentUpon>frmProfileRouteProperties.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\Project\ucProjectExplorer.resx">
       <DependentUpon>ucProjectExplorer.cs</DependentUpon>
     </EmbeddedResource>
@@ -586,6 +596,7 @@
   <ItemGroup>
     <None Include="Resources\collapse.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

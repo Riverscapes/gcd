@@ -22,6 +22,7 @@ namespace GCDCore.UserInterface.Project
         private const string m_sMasks = "Masks";
         private const string m_sReferenceSurfaces = "Reference Surfaces";
         private const string m_sMorphological = "Morphological Analyses";
+        private const string m_sProfileRoutes = "Profile Routes";
 
         private static SortSurveyBy m_eSortBy = SortSurveyBy.SurveyDateDsc;
 
@@ -270,6 +271,13 @@ namespace GCDCore.UserInterface.Project
                         AddTreeNode(nodMaskGroup, aMask is GCDCore.Project.Masks.AOIMask ? GCDNodeTypes.AOI : GCDNodeTypes.Mask, aMask.Name, aMask, selectItem);
                     }
                     nodMaskGroup.Expand();
+                }
+
+                TreeNode nodRoutes = AddTreeNode(nodInputs, GCDNodeTypes.ProfileRoutesGroup, m_sProfileRoutes, null, selectItem);
+                if (ProjectManager.Project.ProfileRoutes.Count >0)
+                {
+                    ProjectManager.Project.ProfileRoutes.Values.ToList().ForEach(x => AddTreeNode(nodRoutes, GCDNodeTypes.ProfileRoute, x.Name, x, selectItem));
+                    nodRoutes.Expand();
                 }
 
                 nodInputs.Expand();
