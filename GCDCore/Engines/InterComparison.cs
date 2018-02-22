@@ -168,7 +168,7 @@ namespace GCDCore.Engines
                     SetNameCellValue(xmlDoc, nsmgr, "VolumeErrorRaising", VolumeErrorRaising);
                 }
 
-                //Find VolumeDoDName
+                //Find VerticalDoDName
                 string VerticalDoDNamedCell = "VerticalDoDName";
                 XmlNode VerticalRow;
                 VerticalRow = xmlDoc.SelectSingleNode("//ss:Row[ss:Cell[ss:NamedCell[@ss:Name='" + VerticalDoDNamedCell + "']]]", nsmgr); // gets the cell with the named cell name
@@ -199,6 +199,36 @@ namespace GCDCore.Engines
 
                 }
 
+                //Find VerticalDoDName
+                string PercentagesDoDNamedCell = "PercentagesDoDName";
+                XmlNode PercentageRow;
+                PercentageRow = xmlDoc.SelectSingleNode("//ss:Row[ss:Cell[ss:NamedCell[@ss:Name='" + PercentagesDoDNamedCell + "']]]", nsmgr); // gets the cell with the named cell name
+                DoDCount = 0;
+
+                foreach (KeyValuePair<string, GCDConsoleLib.GCD.DoDStats> kvp in dodStats)
+                {
+                    string DoDName = kvp.Key;
+                    GCDConsoleLib.GCD.DoDStats dodStat = kvp.Value;
+
+                    DoDCount += 1;
+
+
+                    if (DoDCount > 1)
+                    {
+                        NamedRange oNamedRange = dicNamedRanges[PercentagesDoDNamedCell];
+                        int row = oNamedRange.row;
+                        dicNamedRanges = InsertRow(xmlDoc, nsmgr, dicNamedRanges, row);
+
+                        //find areal row
+                        XmlNode PercentageRowClone = PercentageRow.Clone();
+                        XmlNode parent = PercentageRow.ParentNode;
+                        parent.InsertAfter(PercentageRowClone, PercentageRow);
+                        PercentageRow = PercentageRowClone;
+                    }
+
+                    SetNameCellValue(PercentageRow, nsmgr, "PercentagesDoDName", DoDName);
+
+                }
 
 
                 //need to set after adding rows
@@ -208,7 +238,7 @@ namespace GCDCore.Engines
 
                 string OrigExpandedRowCount = TableNode.Attributes["ss:ExpandedRowCount"].Value;
                 int iOrigExpandedRowCount = int.Parse(OrigExpandedRowCount);
-                int iNewExpandedRowCount = iOrigExpandedRowCount + 3 * (DoDCount - 1); //add new row twice (once for area, once for volume)
+                int iNewExpandedRowCount = iOrigExpandedRowCount + 4 * (DoDCount - 1); //add new row twice (once for area, once for volume)
                 TableNode.Attributes["ss:ExpandedRowCount"].Value = iNewExpandedRowCount.ToString();
 
                 //Update areal formulas
