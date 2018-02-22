@@ -66,6 +66,10 @@
     <Compile Include="Engines\InterComparison\InterComparison.cs" />
     <Compile Include="Engines\ReferenceSurfaceEngine.cs" />
     <Compile Include="GCDUnits.cs" />
+    <Compile Include="Project\LinearExtraction\LinearExtraction.cs" />
+    <Compile Include="Project\LinearExtraction\LinearExtractionFromDEM.cs" />
+    <Compile Include="Project\LinearExtraction\LinearExtractionFromDoD.cs" />
+    <Compile Include="Project\LinearExtraction\LinearExtractionFromSurface.cs" />
     <Compile Include="Project\CoherenceProperties.cs" />
     <Compile Include="Engines\EngineBase.cs" />
     <Compile Include="ErrorCalculation\FIS\FISLibraryItem.cs" />
@@ -269,6 +273,12 @@
       <DependentUpon>frmOptions.cs</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\GIS\BrowseGISLayerEventArgs.cs" />
+    <Compile Include="UserInterface\LinearExtraction\frmLinearExtractionProperties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\LinearExtraction\frmLinearExtractionProperties.Designer.cs">
+      <DependentUpon>frmLinearExtractionProperties.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserInterface\Masks\frmAOIProperties.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -535,6 +545,9 @@
     <EmbeddedResource Include="UserInterface\frmOptions.resx">
       <DependentUpon>frmOptions.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\LinearExtraction\frmLinearExtractionProperties.resx">
+      <DependentUpon>frmLinearExtractionProperties.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\Masks\frmAOIProperties.resx">
       <DependentUpon>frmAOIProperties.cs</DependentUpon>
     </EmbeddedResource>
@@ -596,7 +609,9 @@
   <ItemGroup>
     <None Include="Resources\collapse.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\linear_extraction.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

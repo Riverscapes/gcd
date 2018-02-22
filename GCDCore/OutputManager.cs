@@ -24,6 +24,8 @@ namespace GCDCore
         private const string m_sProjectMaskFolder = "Masks";
         private const string m_sMorphologicalFolder = "Morph";
         private const string m_sSurveysFolder = "Surveys";
+        private const string m_sProfileRoutesFolder = "Routes";
+        private const string m_sLinearExtractionFolder = "Extract";
 
         private const string m_sFiguresSubfolder = "Figs";
         private string m_sOutputDriver = "GTiff";
@@ -575,10 +577,35 @@ namespace GCDCore
             return naru.os.File.GetNewSafeName(diFolder.FullName, maskName, "shp");
         }
 
+        private DirectoryInfo GetProjectProfileRouteFolder()
+        {
+            DirectoryInfo diParent = new DirectoryInfo(Path.Combine(ProjectManager.Project.ProjectFile.DirectoryName, m_sInputsFolder));
+            return GetIndexedSubDirectory(diParent, m_sProfileRoutesFolder, "Route", false);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="diParent"></param>
+        /// <returns></returns>
+        /// <remarks>Linear extracts can belong to DEM, reference surface or DoD therefore
+        /// the parent folder needs to come in as an argument</remarks>
+        public DirectoryInfo GetLinearExtractionFolder(DirectoryInfo diParent)
+        {
+            return GetIndexedSubDirectory(diParent, m_sLinearExtractionFolder, "LE", false);
+        }
+
+        public FileInfo GetProfilerouteFilePath(string name)
+        {
+            DirectoryInfo diFolder = GetProjectProfileRouteFolder();
+            return naru.os.File.GetNewSafeName(diFolder.FullName, name, "shp");
+        }
+
         public DirectoryInfo GetMorphologicalDirectory(DirectoryInfo bsFolder, bool bCreate)
         {
             return GetIndexedSubDirectory(bsFolder, m_sMorphologicalFolder, "MA", bCreate);
         }
+
 
         public DirectoryInfo GetIndexedSubDirectory(DirectoryInfo parentFolder, string groupFolder, string prefix, bool bCreate)
         {

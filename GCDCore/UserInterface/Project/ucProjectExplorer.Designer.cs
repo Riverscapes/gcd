@@ -55,6 +55,7 @@ namespace GCDCore.UserInterface.Project
             this.AddAssociatedSurfaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AddErrorSurfaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DeriveErrorSurfaceToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.deriveProfileFromDEMSurveyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsAssociatedSurface = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.EditPropertiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AddToMapToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -216,6 +217,7 @@ namespace GCDCore.UserInterface.Project
             this.imgTreeImageList.Images.SetKeyName(13, "mask_dir.png");
             this.imgTreeImageList.Images.SetKeyName(14, "AOI.png");
             this.imgTreeImageList.Images.SetKeyName(15, "profile_routes.png");
+            this.imgTreeImageList.Images.SetKeyName(16, "linear_extraction.png");
             // 
             // cmsProject
             // 
@@ -264,56 +266,64 @@ namespace GCDCore.UserInterface.Project
             this.ToolStripSeparator1,
             this.AddAssociatedSurfaceToolStripMenuItem,
             this.AddErrorSurfaceToolStripMenuItem,
-            this.DeriveErrorSurfaceToolStripMenuItem1});
+            this.DeriveErrorSurfaceToolStripMenuItem1,
+            this.deriveProfileFromDEMSurveyToolStripMenuItem});
             this.cmsDEMSurvey.Name = "cmsDEMSurvey";
-            this.cmsDEMSurvey.Size = new System.Drawing.Size(217, 142);
+            this.cmsDEMSurvey.Size = new System.Drawing.Size(240, 164);
             // 
             // EditDEMSurveyProperatieToolStripMenuItem
             // 
             this.EditDEMSurveyProperatieToolStripMenuItem.Image = global::GCDCore.Properties.Resources.Settings;
             this.EditDEMSurveyProperatieToolStripMenuItem.Name = "EditDEMSurveyProperatieToolStripMenuItem";
-            this.EditDEMSurveyProperatieToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
+            this.EditDEMSurveyProperatieToolStripMenuItem.Size = new System.Drawing.Size(239, 22);
             this.EditDEMSurveyProperatieToolStripMenuItem.Text = "Edit DEM Survey Properties";
             // 
             // AddToMapToolStripMenuItem
             // 
             this.AddToMapToolStripMenuItem.Image = global::GCDCore.Properties.Resources.AddToMap;
             this.AddToMapToolStripMenuItem.Name = "AddToMapToolStripMenuItem";
-            this.AddToMapToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
+            this.AddToMapToolStripMenuItem.Size = new System.Drawing.Size(239, 22);
             this.AddToMapToolStripMenuItem.Text = "Add to Map";
             // 
             // DeleteDEMSurveyToolStripMenuItem
             // 
             this.DeleteDEMSurveyToolStripMenuItem.Image = global::GCDCore.Properties.Resources.Delete;
             this.DeleteDEMSurveyToolStripMenuItem.Name = "DeleteDEMSurveyToolStripMenuItem";
-            this.DeleteDEMSurveyToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
+            this.DeleteDEMSurveyToolStripMenuItem.Size = new System.Drawing.Size(239, 22);
             this.DeleteDEMSurveyToolStripMenuItem.Text = "Delete DEM Survey";
             // 
             // ToolStripSeparator1
             // 
             this.ToolStripSeparator1.Name = "ToolStripSeparator1";
-            this.ToolStripSeparator1.Size = new System.Drawing.Size(213, 6);
+            this.ToolStripSeparator1.Size = new System.Drawing.Size(236, 6);
             // 
             // AddAssociatedSurfaceToolStripMenuItem
             // 
             this.AddAssociatedSurfaceToolStripMenuItem.Image = global::GCDCore.Properties.Resources.Add;
             this.AddAssociatedSurfaceToolStripMenuItem.Name = "AddAssociatedSurfaceToolStripMenuItem";
-            this.AddAssociatedSurfaceToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
+            this.AddAssociatedSurfaceToolStripMenuItem.Size = new System.Drawing.Size(239, 22);
             this.AddAssociatedSurfaceToolStripMenuItem.Text = "Add Associated Surface";
             // 
             // AddErrorSurfaceToolStripMenuItem
             // 
             this.AddErrorSurfaceToolStripMenuItem.Image = global::GCDCore.Properties.Resources.Add;
             this.AddErrorSurfaceToolStripMenuItem.Name = "AddErrorSurfaceToolStripMenuItem";
-            this.AddErrorSurfaceToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
+            this.AddErrorSurfaceToolStripMenuItem.Size = new System.Drawing.Size(239, 22);
             this.AddErrorSurfaceToolStripMenuItem.Text = "Specify Error Surface";
             // 
             // DeriveErrorSurfaceToolStripMenuItem1
             // 
             this.DeriveErrorSurfaceToolStripMenuItem1.Image = global::GCDCore.Properties.Resources.sigma;
             this.DeriveErrorSurfaceToolStripMenuItem1.Name = "DeriveErrorSurfaceToolStripMenuItem1";
-            this.DeriveErrorSurfaceToolStripMenuItem1.Size = new System.Drawing.Size(216, 22);
+            this.DeriveErrorSurfaceToolStripMenuItem1.Size = new System.Drawing.Size(239, 22);
             this.DeriveErrorSurfaceToolStripMenuItem1.Text = "Derive Error Surface";
+            // 
+            // deriveProfileFromDEMSurveyToolStripMenuItem
+            // 
+            this.deriveProfileFromDEMSurveyToolStripMenuItem.Image = global::GCDCore.Properties.Resources.linear_extraction;
+            this.deriveProfileFromDEMSurveyToolStripMenuItem.Name = "deriveProfileFromDEMSurveyToolStripMenuItem";
+            this.deriveProfileFromDEMSurveyToolStripMenuItem.Size = new System.Drawing.Size(239, 22);
+            this.deriveProfileFromDEMSurveyToolStripMenuItem.Text = "Derive Profile from DEM Survey";
             // 
             // cmsAssociatedSurface
             // 
@@ -1030,7 +1040,7 @@ namespace GCDCore.UserInterface.Project
             this.deleteMorphologicalAnalysisToolStripMenuItem.Size = new System.Drawing.Size(234, 22);
             this.deleteMorphologicalAnalysisToolStripMenuItem.Text = "Delete Morphological Analysis";
             // 
-            // cmdProfileRouteGroup
+            // cmsProfileRouteGroup
             // 
             this.cmsProfileRouteGroup.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addProfileGroupToolStripMenuItem,
@@ -1059,7 +1069,7 @@ namespace GCDCore.UserInterface.Project
             this.deleteProfileRouteToolStripMenuItem,
             this.addProfileRouteToMapToolStripMenuItem});
             this.cmsProfileRoute.Name = "cmsProfileRoute";
-            this.cmsProfileRoute.Size = new System.Drawing.Size(222, 92);
+            this.cmsProfileRoute.Size = new System.Drawing.Size(222, 70);
             // 
             // editProfileRoutePropertiesToolStripMenuItem
             // 
@@ -1233,5 +1243,6 @@ namespace GCDCore.UserInterface.Project
         private System.Windows.Forms.ToolStripMenuItem editProfileRoutePropertiesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteProfileRouteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addProfileRouteToMapToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deriveProfileFromDEMSurveyToolStripMenuItem;
     }
 }

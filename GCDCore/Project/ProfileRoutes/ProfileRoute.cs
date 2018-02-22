@@ -16,7 +16,6 @@ namespace GCDCore.Project.ProfileRoutes
         public readonly string LabelField;
         public override string Noun { get { return "Profile Route"; } }
 
-
         public ProfileRoute(string name, FileInfo shpPath, string distanceField, string labelField)
             : base(name)
         {
@@ -49,6 +48,19 @@ namespace GCDCore.Project.ProfileRoutes
         public override void Delete()
         {
             throw new NotImplementedException();
+        }
+
+        public void Serialize(XmlNode nodParent)
+        {
+            XmlNode nodItem = nodParent.AppendChild(nodParent.OwnerDocument.CreateElement("ProfileRoute"));
+            nodItem.AppendChild(nodParent.OwnerDocument.CreateElement("Name")).InnerText = Name;
+            nodItem.AppendChild(nodParent.OwnerDocument.CreateElement("Path")).InnerText = ProjectManager.Project.GetRelativePath(FeatureClass.GISFileInfo);
+            nodItem.AppendChild(nodParent.OwnerDocument.CreateElement("DistanceField")).InnerText = DistanceField;
+
+            if (!string.IsNullOrEmpty(LabelField))
+            {
+                nodItem.AppendChild(nodParent.OwnerDocument.CreateElement("LabelField")).InnerText = LabelField;
+            }
         }
     }
 }

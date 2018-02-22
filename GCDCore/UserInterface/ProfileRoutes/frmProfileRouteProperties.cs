@@ -112,6 +112,24 @@ namespace GCDCore.UserInterface.ProfileRoutes
 
             if (ProfileRoute == null)
             {
+                if (!(ucPolyline.SelectedItem is GCDConsoleLib.Vector))
+                {
+                    MessageBox.Show("You must choose a ShapeFile to continue.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    ucPolyline.Select();
+                    return false;
+                }
+
+                // Should be safe after Validate call above
+                GCDConsoleLib.Vector shp = ucPolyline.SelectedItem;
+
+                // Validate that hte user actually chose a POLYGON ShapeFile
+                if (shp.GeometryType.SimpleType != GCDConsoleLib.GDalGeometryType.SimpleTypes.LineString)
+                {
+                    MessageBox.Show(string.Format("The selected ShapeFile appears to be of {0} geometry type. Only polyline ShapeFiles can be used as profile routes.", shp.GeometryType.SimpleType), "Invalid Geometry Type", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    ucPolyline.Select();
+                    return false;
+                }
+
                 if (!UserInterface.SurveyLibrary.GISDatasetValidation.ValidateVector(ucPolyline.SelectedItem))
                     return false;
             }
@@ -147,7 +165,10 @@ namespace GCDCore.UserInterface.ProfileRoutes
 
         private void txtName_TextChanged(object sender, EventArgs e)
         {
-
+            if (string.IsNullOrEmpty(txtName.Text))
+                txtPath.Text = string.Empty;
+            else
+                txtPath.Text = ProjectManager.Project.GetRelativePath(ProjectManager.OutputManager.GetProfilerouteFilePath(txtName.Text));
         }
 
         private void InputShapeFileChanged(object sender, naru.ui.PathEventArgs e)

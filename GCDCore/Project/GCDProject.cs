@@ -22,6 +22,7 @@ namespace GCDCore.Project
         public readonly Dictionary<string, InterComparison> InterComparisons;
         public readonly Dictionary<string, Masks.Mask> Masks;
         public readonly Dictionary<string, ProfileRoutes.ProfileRoute> ProfileRoutes;
+        public readonly Dictionary<string, LinearExtraction.LinearExtraction> LinearExtractions;
 
         public override string Noun { get { return "GCD Project"; } }
 
@@ -74,6 +75,7 @@ namespace GCDCore.Project
             InterComparisons = new Dictionary<string, InterComparison>();
             MetaData = new Dictionary<string, string>();
             ProfileRoutes = new Dictionary<string, Project.ProfileRoutes.ProfileRoute>();
+            LinearExtractions = new Dictionary<string, LinearExtraction.LinearExtraction>();
         }
 
         public string GetRelativePath(FileInfo FullPath)
@@ -214,11 +216,23 @@ namespace GCDCore.Project
                 Masks.Values.ToList().ForEach(x => x.Serialize(nodMasks));
             }
 
+            if (ProfileRoutes.Count > 0)
+            {
+                XmlNode nodRoutes = nodProject.AppendChild(xmlDoc.CreateElement("ProfileRoutes"));
+                ProfileRoutes.Values.ToList().ForEach(x => x.Serialize(nodRoutes));
+            }
+
             if (DoDs.Count > 0)
             {
                 XmlNode nodDoDs = nodProject.AppendChild(xmlDoc.CreateElement("DoDs"));
                 foreach (DoDBase dod in DoDs.Values)
                     dod.Serialize(nodDoDs);
+            }
+
+            if (LinearExtractions.Count > 0)
+            {
+                XmlNode nodLE = nodProject.AppendChild(xmlDoc.CreateElement("LinearExtractions"));
+                LinearExtractions.Values.ToList().ForEach(x => x.Serialize(nodLE));
             }
 
             if (InterComparisons.Count > 0)
@@ -277,6 +291,12 @@ namespace GCDCore.Project
                 ProjectManager.Project.ReferenceSurfaces[surf.Name] = surf;
             }
 
+            foreach(XmlNode nodRoute in nodProject.SelectNodes("ProfileRoutes/ProfileRoute"))
+            {
+                GCDCore.Project.ProfileRoutes.ProfileRoute route = new Project.ProfileRoutes.ProfileRoute(nodRoute);
+                ProjectManager.Project.ProfileRoutes[route.Name] = route;
+            }
+
             foreach (XmlNode nodMask in nodProject.SelectNodes("Masks/Mask"))
             {
                 if (nodMask.SelectSingleNode("Field") is XmlNode)
@@ -318,6 +338,20 @@ namespace GCDCore.Project
             {
                 InterComparison inter = new InterComparison(nodInter, ProjectManager.Project.DoDs);
                 ProjectManager.Project.InterComparisons[inter.Name] = inter;
+            }
+
+            foreach (XmlNode nodLE in nodProject.SelectNodes("LinearExtractions/LinearExtraction"))
+            {
+                LinearExtraction.LinearExtraction le;
+                if (nodLE.SelectSingleNode("DEM") is XmlNode)
+                    le = new LinearExtraction.LinearExtractionFromDEM(nodLE);
+                else if (nodLE.SelectSingleNode("Surface") is XmlNode)
+                    le = new LinearExtraction.LinearExtractionFromSurface(nodLE);
+
+                else
+                    le = new LinearExtraction.LinearExtractionFromDoD(nodLE);
+                
+                ProjectManager.Project.LinearExtractions[le.Name] = le;
             }
 
             foreach (XmlNode nodItem in nodProject.SelectNodes("MetaData/Item"))

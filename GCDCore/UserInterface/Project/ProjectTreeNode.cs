@@ -32,7 +32,9 @@
             ReservoirGroup,
             Reservoir,
             ProfileRoutesGroup,
-            ProfileRoute
+            ProfileRoute,
+            LinearExtractionGroup,
+            LinearExtraction
         }
 
         private GCDNodeTypes m_Type;

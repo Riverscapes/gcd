@@ -23,6 +23,9 @@ namespace GCDCore.UserInterface.Project
         private const string m_sReferenceSurfaces = "Reference Surfaces";
         private const string m_sMorphological = "Morphological Analyses";
         private const string m_sProfileRoutes = "Profile Routes";
+        private const string m_sLinearExtractionDEM = "Linear DEM Profile Results";
+        private const string m_sLinearExtractionSurf = "Linear Reference Surface Profile Results";
+        private const string m_sLinearExtractionDoD = "Linear Change Detection Results";
 
         private static SortSurveyBy m_eSortBy = SortSurveyBy.SurveyDateDsc;
 
@@ -115,7 +118,10 @@ namespace GCDCore.UserInterface.Project
 
             this.addAreaOfInterestAOIMaskToolStripMenuItem.Click += AddAOI_Click;
 
-            this.addProfileGroupToolStripMenuItem.Click += AddProfileGroup_Click;
+            this.addProfileGroupToolStripMenuItem.Click += AddEditProfile_Click;
+            this.editProfileRoutePropertiesToolStripMenuItem.Click += AddEditProfile_Click;
+
+            this.deriveProfileFromDEMSurveyToolStripMenuItem.Click += AddLinearExtraction_Click;
 
         }
 
@@ -167,6 +173,7 @@ namespace GCDCore.UserInterface.Project
                 case GCDNodeTypes.MorphologicalAnalysis: newNode.ImageIndex = 11; break;
                 case GCDNodeTypes.AOI: newNode.ImageIndex = 14; break;
                 case GCDNodeTypes.ProfileRoute: newNode.ImageIndex = 15; break;
+                case GCDNodeTypes.LinearExtraction: newNode.ImageIndex = 16; break;
                 case GCDNodeTypes.DoD:
                     DoDBase dod = (GCDCore.Project.DoDBase)projectItem;
                     if (dod.NewSurface is DEMSurvey && dod.OldSurface is DEMSurvey)
@@ -246,6 +253,16 @@ namespace GCDCore.UserInterface.Project
                         nodSurvey.Expand();
                 }
 
+                if (ProjectManager.Project.LinearExtractions.Values.Any(x => x is GCDCore.Project.LinearExtraction.LinearExtractionFromDEM))
+                {
+                    TreeNode nodLinear = AddTreeNode(nodSurveys, GCDNodeTypes.LinearExtractionGroup, m_sLinearExtractionDEM, null, selectItem);
+                    foreach (GCDCore.Project.LinearExtraction.LinearExtraction le in ProjectManager.Project.LinearExtractions.Values.Where(x => x is GCDCore.Project.LinearExtraction.LinearExtractionFromDEM))
+                    {
+                        AddTreeNode(nodLinear, GCDNodeTypes.LinearExtraction, le.Name, le, selectItem);
+                    }
+                    nodLinear.Expand();
+                }
+
                 // Reference Surfaces
                 TreeNode nodReferenceSurfaces = AddTreeNode(nodInputs, GCDNodeTypes.ReferenceSurfaceGroup, m_sReferenceSurfaces, null, selectItem);
                 foreach (Surface surf in ProjectManager.Project.ReferenceSurfaces.Values)
@@ -264,6 +281,17 @@ namespace GCDCore.UserInterface.Project
                     if (bExpandSurfNode)
                         nodSurface.Expand();
                 }
+
+                if (ProjectManager.Project.LinearExtractions.Values.Any(x => x.GCDProjectItem is Surface && !(x.GCDProjectItem is DEMSurvey)))
+                {
+                    TreeNode nodLinear = AddTreeNode(nodReferenceSurfaces, GCDNodeTypes.LinearExtractionGroup, m_sLinearExtractionSurf, null, selectItem);
+                    foreach (GCDCore.Project.LinearExtraction.LinearExtraction le in ProjectManager.Project.LinearExtractions.Values.Where(x => x.GCDProjectItem is Surface && !(x.GCDProjectItem is DEMSurvey)))
+                    {
+                        AddTreeNode(nodLinear, GCDNodeTypes.LinearExtraction, le.Name, le, selectItem);
+                    }
+                    nodLinear.Expand();
+                }
+
                 nodReferenceSurfaces.Expand();
 
                 TreeNode nodMaskGroup = AddTreeNode(nodInputs, GCDNodeTypes.MasksGroup, m_sMasks, null, selectItem);
@@ -357,6 +385,16 @@ namespace GCDCore.UserInterface.Project
                     }
 ;
                     nodDoD.ExpandAll();
+                }
+
+                if (ProjectManager.Project.LinearExtractions.Values.Any(x => x is GCDCore.Project.LinearExtraction.LinearExtractionFromDoD))
+                {
+                    TreeNode nodLinear = AddTreeNode(nodReferenceSurfaces, GCDNodeTypes.LinearExtractionGroup, m_sLinearExtractionDoD, null, selectItem);
+                    foreach (GCDCore.Project.LinearExtraction.LinearExtraction le in ProjectManager.Project.LinearExtractions.Values.Where(x => x is GCDCore.Project.LinearExtraction.LinearExtractionFromDoD))
+                    {
+                        AddTreeNode(nodLinear, GCDNodeTypes.LinearExtraction, le.Name, le, selectItem);
+                    }
+                    nodLinear.Expand();
                 }
 
                 TreeNode nodInter = AddTreeNode(AnalNode, GCDNodeTypes.InterComparisonGroup, "Inter-Comparisons", null, selectItem);
@@ -2000,9 +2038,45 @@ namespace GCDCore.UserInterface.Project
             }
         }
 
-        public void AddProfileGroup_Click(object sender, EventArgs e)
+        public void AddEditProfile_Click(object sender, EventArgs e)
         {
+            try
+            {
+                ProjectTreeNode ptn = treProject.SelectedNode.Tag as ProjectTreeNode;
+                GCDCore.Project.ProfileRoutes.ProfileRoute route = null;
+                if (ptn.Item is GCDCore.Project.ProfileRoutes.ProfileRoute)
+                    route = ptn.Item as GCDCore.Project.ProfileRoutes.ProfileRoute;
 
+                ProfileRoutes.frmProfileRouteProperties frm = new ProfileRoutes.frmProfileRouteProperties(route);
+                if (frm.ShowDialog() == DialogResult.OK)
+                {
+                    LoadTree(new ProjectTreeNode(GCDNodeTypes.ProfileRoute, frm.ProfileRoute));
+                }
+            }
+            catch (Exception ex)
+            {
+                naru.error.ExceptionUI.HandleException(ex);
+            }
+        }
+
+        public void AddLinearExtraction_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                ProjectTreeNode ptn = treProject.SelectedNode.Tag as ProjectTreeNode;
+                if (ptn.Item is GCDProjectItem)
+                {
+                    LinearExtraction.frmLinearExtractionProperties frm = new LinearExtraction.frmLinearExtractionProperties(ptn.Item as GCDProjectItem);
+                    if (frm.ShowDialog() == DialogResult.OK)
+                    {
+                        LoadTree(new ProjectTreeNode(GCDNodeTypes.LinearExtraction, frm.LinearExtraction));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                naru.error.ExceptionUI.HandleException(ex);
+            }
         }
     }
 }
