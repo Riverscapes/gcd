@@ -45,14 +45,14 @@
             this.Label6 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.grdData = new System.Windows.Forms.DataGridView();
-            this.colInclude = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.colFieldValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colLabel = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cmsSelectAllNone = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.selectAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.selectNoneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.txtPath = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.colInclude = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.colFieldValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colLabel = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.GroupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdData)).BeginInit();
@@ -224,32 +224,6 @@
             this.grdData.TabIndex = 0;
             this.grdData.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.grdData_CellValidating);
             // 
-            // colInclude
-            // 
-            this.colInclude.DataPropertyName = "Include";
-            this.colInclude.HeaderText = "Include";
-            this.colInclude.Name = "colInclude";
-            this.colInclude.Width = 50;
-            // 
-            // colFieldValue
-            // 
-            this.colFieldValue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colFieldValue.DataPropertyName = "FieldValue";
-            this.colFieldValue.HeaderText = "Field Value";
-            this.colFieldValue.Name = "colFieldValue";
-            this.colFieldValue.ReadOnly = true;
-            this.colFieldValue.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colFieldValue.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // colLabel
-            // 
-            this.colLabel.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colLabel.DataPropertyName = "Label";
-            this.colLabel.HeaderText = "Label";
-            this.colLabel.Name = "colLabel";
-            this.colLabel.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colLabel.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
             // cmsSelectAllNone
             // 
             this.cmsSelectAllNone.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -291,6 +265,33 @@
             this.label2.Size = new System.Drawing.Size(64, 13);
             this.label2.TabIndex = 7;
             this.label2.Text = "Project path";
+            // 
+            // colInclude
+            // 
+            this.colInclude.DataPropertyName = "Include";
+            this.colInclude.HeaderText = "Include";
+            this.colInclude.Name = "colInclude";
+            this.colInclude.Width = 50;
+            // 
+            // colFieldValue
+            // 
+            this.colFieldValue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colFieldValue.DataPropertyName = "FieldValue";
+            this.colFieldValue.HeaderText = "Field Value";
+            this.colFieldValue.Name = "colFieldValue";
+            this.colFieldValue.ReadOnly = true;
+            this.colFieldValue.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colFieldValue.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // colLabel
+            // 
+            this.colLabel.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colLabel.DataPropertyName = "Label";
+            this.colLabel.HeaderText = "Label";
+            this.colLabel.MaxInputLength = 50;
+            this.colLabel.Name = "colLabel";
+            this.colLabel.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colLabel.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // frmMaskProperties
             // 
