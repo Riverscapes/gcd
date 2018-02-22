@@ -497,6 +497,8 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
         public GCDConsoleLib.Raster ProcessRaster()
         {
+            Cursor = Cursors.WaitCursor;
+
             GCDConsoleLib.Raster gResult = null;
             if (!string.IsNullOrEmpty(txtRasterPath.Text))
             {
@@ -541,6 +543,8 @@ namespace GCDCore.UserInterface.SurveyLibrary
                     }
                 }
             }
+
+            Cursor = Cursors.Default;
 
             return gResult;
         }
