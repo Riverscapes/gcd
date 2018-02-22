@@ -148,6 +148,11 @@ namespace GCDCore.Project
             return Masks.ContainsKey(name) ? Masks[name] == ignore : true;
         }
 
+        public bool IsProfileRouteNameUnique(string name, GCDCore.Project.ProfileRoutes.ProfileRoute ignore)
+        {
+            return ProfileRoutes.ContainsKey(name) ? ProfileRoutes[name] == ignore : true;
+        }
+
         public bool IsInterComparisonNameUnique(string name, InterComparison ignore)
         {
             return InterComparisons.ContainsKey(name) ? InterComparisons[name] == ignore : true;
