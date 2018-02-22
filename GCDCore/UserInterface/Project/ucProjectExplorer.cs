@@ -115,6 +115,8 @@ namespace GCDCore.UserInterface.Project
 
             this.addAreaOfInterestAOIMaskToolStripMenuItem.Click += AddAOI_Click;
 
+            this.addProfileGroupToolStripMenuItem.Click += AddProfileGroup_Click;
+
         }
 
         public void LoadTree(object sender, EventArgs e)
@@ -164,6 +166,7 @@ namespace GCDCore.UserInterface.Project
                 case GCDNodeTypes.InterComparison: newNode.ImageIndex = 10; break;
                 case GCDNodeTypes.MorphologicalAnalysis: newNode.ImageIndex = 11; break;
                 case GCDNodeTypes.AOI: newNode.ImageIndex = 14; break;
+                case GCDNodeTypes.ProfileRoute: newNode.ImageIndex = 15; break;
                 case GCDNodeTypes.DoD:
                     DoDBase dod = (GCDCore.Project.DoDBase)projectItem;
                     if (dod.NewSurface is DEMSurvey && dod.OldSurface is DEMSurvey)
@@ -274,7 +277,7 @@ namespace GCDCore.UserInterface.Project
                 }
 
                 TreeNode nodRoutes = AddTreeNode(nodInputs, GCDNodeTypes.ProfileRoutesGroup, m_sProfileRoutes, null, selectItem);
-                if (ProjectManager.Project.ProfileRoutes.Count >0)
+                if (ProjectManager.Project.ProfileRoutes.Count > 0)
                 {
                     ProjectManager.Project.ProfileRoutes.Values.ToList().ForEach(x => AddTreeNode(nodRoutes, GCDNodeTypes.ProfileRoute, x.Name, x, selectItem));
                     nodRoutes.Expand();
@@ -524,6 +527,8 @@ namespace GCDCore.UserInterface.Project
                 case GCDNodeTypes.BudgetSegregationMask: cms = cmsBSGroup; break;
                 case GCDNodeTypes.MorphologicalAnalysis: cms = cmsMorphological; break;
                 case GCDNodeTypes.InterComparisonGroup: cms = cmsInterComparison; break;
+                case GCDNodeTypes.ProfileRoutesGroup: cms = cmsProfileRouteGroup; break;
+                case GCDNodeTypes.ProfileRoute: cms = cmsProfileRoute; break;
             }
 
             if (cms is ContextMenuStrip)
@@ -1993,6 +1998,11 @@ namespace GCDCore.UserInterface.Project
             {
                 naru.error.ExceptionUI.HandleException(ex);
             }
+        }
+
+        public void AddProfileGroup_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

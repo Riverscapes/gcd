@@ -73,6 +73,7 @@ namespace GCDCore.Project
             DoDs = new Dictionary<string, DoDBase>();
             InterComparisons = new Dictionary<string, InterComparison>();
             MetaData = new Dictionary<string, string>();
+            ProfileRoutes = new Dictionary<string, Project.ProfileRoutes.ProfileRoute>();
         }
 
         public string GetRelativePath(FileInfo FullPath)

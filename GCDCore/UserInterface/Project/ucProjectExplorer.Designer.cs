@@ -153,6 +153,13 @@ namespace GCDCore.UserInterface.Project
             this.cmsMorphological = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.viewMorphologicalAnalysisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteMorphologicalAnalysisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmsProfileRouteGroup = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.addProfileGroupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addAllProfileRoutesToMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmsProfileRoute = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.editProfileRoutePropertiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteProfileRouteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addProfileRouteToMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsProject.SuspendLayout();
             this.cmsDEMSurvey.SuspendLayout();
             this.cmsAssociatedSurface.SuspendLayout();
@@ -172,6 +179,8 @@ namespace GCDCore.UserInterface.Project
             this.cmsRefSurface.SuspendLayout();
             this.cmsMask.SuspendLayout();
             this.cmsMorphological.SuspendLayout();
+            this.cmsProfileRouteGroup.SuspendLayout();
+            this.cmsProfileRoute.SuspendLayout();
             this.SuspendLayout();
             // 
             // treProject
@@ -206,6 +215,7 @@ namespace GCDCore.UserInterface.Project
             this.imgTreeImageList.Images.SetKeyName(12, "GCDFilled.png");
             this.imgTreeImageList.Images.SetKeyName(13, "mask_dir.png");
             this.imgTreeImageList.Images.SetKeyName(14, "AOI.png");
+            this.imgTreeImageList.Images.SetKeyName(15, "profile_routes.png");
             // 
             // cmsProject
             // 
@@ -215,7 +225,7 @@ namespace GCDCore.UserInterface.Project
             this.ExploreGCDProjectFolderToolStripMenuItem,
             this.refreshProjectTreeToolStripMenuItem});
             this.cmsProject.Name = "cmsProject";
-            this.cmsProject.Size = new System.Drawing.Size(231, 114);
+            this.cmsProject.Size = new System.Drawing.Size(231, 92);
             // 
             // EditGCDProjectPropertiesToolStripMenuItem
             // 
@@ -1020,6 +1030,58 @@ namespace GCDCore.UserInterface.Project
             this.deleteMorphologicalAnalysisToolStripMenuItem.Size = new System.Drawing.Size(234, 22);
             this.deleteMorphologicalAnalysisToolStripMenuItem.Text = "Delete Morphological Analysis";
             // 
+            // cmdProfileRouteGroup
+            // 
+            this.cmsProfileRouteGroup.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addProfileGroupToolStripMenuItem,
+            this.addAllProfileRoutesToMapToolStripMenuItem});
+            this.cmsProfileRouteGroup.Name = "cmdProfileRouteGroup";
+            this.cmsProfileRouteGroup.Size = new System.Drawing.Size(231, 48);
+            // 
+            // addProfileGroupToolStripMenuItem
+            // 
+            this.addProfileGroupToolStripMenuItem.Image = global::GCDCore.Properties.Resources.Add;
+            this.addProfileGroupToolStripMenuItem.Name = "addProfileGroupToolStripMenuItem";
+            this.addProfileGroupToolStripMenuItem.Size = new System.Drawing.Size(230, 22);
+            this.addProfileGroupToolStripMenuItem.Text = "Add Profile Route";
+            // 
+            // addAllProfileRoutesToMapToolStripMenuItem
+            // 
+            this.addAllProfileRoutesToMapToolStripMenuItem.Image = global::GCDCore.Properties.Resources.AddToMap;
+            this.addAllProfileRoutesToMapToolStripMenuItem.Name = "addAllProfileRoutesToMapToolStripMenuItem";
+            this.addAllProfileRoutesToMapToolStripMenuItem.Size = new System.Drawing.Size(230, 22);
+            this.addAllProfileRoutesToMapToolStripMenuItem.Text = "Add All Profile Routes to Map";
+            // 
+            // cmsProfileRoute
+            // 
+            this.cmsProfileRoute.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.editProfileRoutePropertiesToolStripMenuItem,
+            this.deleteProfileRouteToolStripMenuItem,
+            this.addProfileRouteToMapToolStripMenuItem});
+            this.cmsProfileRoute.Name = "cmsProfileRoute";
+            this.cmsProfileRoute.Size = new System.Drawing.Size(222, 92);
+            // 
+            // editProfileRoutePropertiesToolStripMenuItem
+            // 
+            this.editProfileRoutePropertiesToolStripMenuItem.Image = global::GCDCore.Properties.Resources.Settings;
+            this.editProfileRoutePropertiesToolStripMenuItem.Name = "editProfileRoutePropertiesToolStripMenuItem";
+            this.editProfileRoutePropertiesToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.editProfileRoutePropertiesToolStripMenuItem.Text = "Edit Profile Route Properties";
+            // 
+            // deleteProfileRouteToolStripMenuItem
+            // 
+            this.deleteProfileRouteToolStripMenuItem.Image = global::GCDCore.Properties.Resources.Delete;
+            this.deleteProfileRouteToolStripMenuItem.Name = "deleteProfileRouteToolStripMenuItem";
+            this.deleteProfileRouteToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.deleteProfileRouteToolStripMenuItem.Text = "Delete Profile Route";
+            // 
+            // addProfileRouteToMapToolStripMenuItem
+            // 
+            this.addProfileRouteToMapToolStripMenuItem.Image = global::GCDCore.Properties.Resources.AddToMap;
+            this.addProfileRouteToMapToolStripMenuItem.Name = "addProfileRouteToMapToolStripMenuItem";
+            this.addProfileRouteToMapToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.addProfileRouteToMapToolStripMenuItem.Text = "Add Profile Route To Map";
+            // 
             // ucProjectExplorer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1046,6 +1108,8 @@ namespace GCDCore.UserInterface.Project
             this.cmsRefSurface.ResumeLayout(false);
             this.cmsMask.ResumeLayout(false);
             this.cmsMorphological.ResumeLayout(false);
+            this.cmsProfileRouteGroup.ResumeLayout(false);
+            this.cmsProfileRoute.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1162,5 +1226,12 @@ namespace GCDCore.UserInterface.Project
         private System.Windows.Forms.ToolStripMenuItem addAllMasksToTheMapToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem editReferenceSurfacePropertiesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addAreaOfInterestAOIMaskToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip cmsProfileRouteGroup;
+        private System.Windows.Forms.ToolStripMenuItem addProfileGroupToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addAllProfileRoutesToMapToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip cmsProfileRoute;
+        private System.Windows.Forms.ToolStripMenuItem editProfileRoutePropertiesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteProfileRouteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addProfileRouteToMapToolStripMenuItem;
     }
 }
