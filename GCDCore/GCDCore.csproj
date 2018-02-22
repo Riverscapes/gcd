@@ -329,6 +329,7 @@
     <Compile Include="UserInterface\SurveyLibrary\frmSurveyDateTime.Designer.cs">
       <DependentUpon>frmSurveyDateTime.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserInterface\SurveyLibrary\GISDatasetValidation.cs" />
     <Compile Include="UserInterface\SurveyLibrary\ReferenceSurfaces\DEMItem.cs" />
     <Compile Include="UserInterface\SurveyLibrary\ReferenceSurfaces\frmReferenceSurfaceFromConstant.cs">
       <SubType>Form</SubType>

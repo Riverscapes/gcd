@@ -35,6 +35,26 @@ namespace GCDCore.Project
             }
         }
 
+        /// <summary>
+        /// Get the spatial reference of the first GIS dataset in the project.
+        /// </summary>
+        public GCDConsoleLib.Projection ReferenceProjection
+        {
+            get
+            {
+                if (DEMSurveys.Count > 0)
+                    return DEMSurveys.Values.First().Raster.Proj;
+
+                if (ReferenceSurfaces.Values.Count > 0)
+                    return ReferenceSurfaces.Values.First().Raster.Proj;
+
+                if (Masks.Count > 0)
+                    return new GCDConsoleLib.Vector(Masks.Values.First()._ShapeFile).Proj;
+
+                return null;
+            }
+        }
+
         public GCDProject(string name, string description, FileInfo projectFile,
             DateTime dtCreated, string gcdVersion, UnitsNet.Area cellArea, GCDConsoleLib.GCD.UnitGroup units)
             : base(name)

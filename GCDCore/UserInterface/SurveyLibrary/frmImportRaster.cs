@@ -266,40 +266,12 @@ namespace GCDCore.UserInterface.SurveyLibrary
                     break;
             }
 
-            // Verify that the raster has a spatial reference
-            if (ExtImporter.Purpose != ExtentImporter.Purposes.Standalone && ucRaster.SelectedItem.Proj.PrettyWkt.ToLower().Contains("unknown"))
+            if (!UserInterface.SurveyLibrary.GISDatasetValidation.ValidateRaster(ucRaster.SelectedItem))
             {
-                string msg = "The selected raster appears to be missing a spatial reference. All GCD rasters must possess a spatial reference and it must be the same spatial reference for all rasters in a GCD project.";
-
-                if (ReferenceSurface is DEMSurvey)
-                {
-                    string wkt = ReferenceSurface.Raster.Proj.PrettyWkt;
-                    msg += " If the selected raster exists in the GCD project coordinate system (" + wkt + "), but the coordinate system has not yet been defined for the raster, then" +
-                                " use the ArcToolbox 'Define Projection' geoprocessing tool in the 'Data Management -> Projection & Transformations' Toolbox to correct the problem with the selected raster by defining the coordinate system as:" +
-                                Environment.NewLine + Environment.NewLine + wkt + Environment.NewLine + Environment.NewLine + "Then try importing it into the GCD again.";
-                }
-
-                MessageBox.Show(msg, Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                ucRaster.Select();
                 return false;
             }
-
-            // Compare the reference DEM projection against the new raster
-            if (ReferenceSurface is Surface)
-            {
-                string wkt = ReferenceSurface.Raster.Proj.PrettyWkt;
-                if (!ReferenceSurface.Raster.Proj.IsSame(ucRaster.SelectedItem.Proj))
-                {
-                    MessageBox.Show("The coordinate system of the selected raster:" + Environment.NewLine + Environment.NewLine + ucRaster.SelectedItem.Proj.PrettyWkt + Environment.NewLine + Environment.NewLine +
-                        "does not match that of the GCD project:" + Environment.NewLine + Environment.NewLine + wkt + Environment.NewLine + Environment.NewLine +
-                        "All rasters within a GCD project must have the identical coordinate system. However, small discrepencies in coordinate system names might cause the two coordinate systems to appear different. " +
-                        "If you believe that the selected raster does in fact possess the same coordinate system as the GCD project then use the ArcToolbox 'Define Projection' geoprocessing tool in the " +
-                        "'Data Management -> Projection & Transformations' Toolbox to correct the problem with the selected raster by defining the coordinate system as:"
-                        + Environment.NewLine + Environment.NewLine + wkt + Environment.NewLine + Environment.NewLine + "Then try importing it into the GCD again.",
-                        Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return false;
-                }
-            }
-
+           
             // Importing rasters into GCD projects reuires some unit checks
             if (ExtImporter.Purpose != ExtentImporter.Purposes.Standalone)
             {

@@ -46,13 +46,6 @@ namespace GCDCore.UserInterface.Masks
             // Should be safe after Validate call above
             GCDConsoleLib.Vector shp = ucInput.SelectedItem;
 
-            if (shp.Features.Count < 1)
-            {
-                MessageBox.Show("The ShapeFile does not contain any features. You must choose a polygon ShapeFile with one or more feature.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                ucInput.Select();
-                return false;
-            }
-
             // Validate that hte user actually chose a POLYGON ShapeFile
             if (shp.GeometryType.SimpleType != GCDConsoleLib.GDalGeometryType.SimpleTypes.Polygon)
             {
@@ -61,29 +54,10 @@ namespace GCDCore.UserInterface.Masks
                 return false;
             }
 
-            if (shp.Proj.PrettyWkt.ToLower().Contains("unknown"))
+            if (!GCDCore.UserInterface.SurveyLibrary.GISDatasetValidation.ValidateVector(shp))
             {
-                MessageBox.Show("The selected ShapeFile appears to be missing a spatial reference." +
-                    " All GCD ShapeFiles must possess a spatial reference and it must be the same spatial reference for all rasters in a GCD project.", "Missing Spatial Reference", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 ucInput.Select();
                 return false;
-            }
-
-            if (ProjectManager.Project.DEMSurveys.Count > 0)
-            {
-                if (!ProjectManager.Project.DEMSurveys.Values.First<DEMSurvey>().Raster.Proj.IsSame(shp.Proj))
-                {
-                    string wkt = ProjectManager.Project.DEMSurveys.Values.First<DEMSurvey>().Raster.Proj.Wkt;
-
-                    MessageBox.Show("The coordinate system of the selected ShapeFile:" + Environment.NewLine + Environment.NewLine + shp.Proj.PrettyWkt + Environment.NewLine + Environment.NewLine +
-                       "does not match that of the GCD project:" + Environment.NewLine + Environment.NewLine + wkt + Environment.NewLine + Environment.NewLine +
-                       "All ShapeFiles and rasters within a GCD project must have the identical coordinate system. However, small discrepencies in coordinate system names might cause the two coordinate systems to appear different. " +
-                       "If you believe that the selected ShapeFile does in fact possess the same coordinate system as the GCD project then use the ArcToolbox 'Define Projection' geoprocessing tool in the " +
-                       "'Data Management -> Projection & Transformations' Toolbox to correct the problem with the selected raster by defining the coordinate system as:"
-                       + Environment.NewLine + Environment.NewLine + wkt + Environment.NewLine + Environment.NewLine + "Then try importing it into the GCD again.",
-                       Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return false;
-                }
             }
 
             return true;
