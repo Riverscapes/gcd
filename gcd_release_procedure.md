@@ -31,6 +31,24 @@
 
 1. *Unload* the `GCDAddIn` project in Visual Studio.
 2. Clean Solution.
-3. Rebuild solution.
-4. Review binary output folder and ensure all the necessary dependencies are present.
-5. ​
+3. Review `Deploy` tab in Standalone project and ensure that `Sign Manifests` is turned on and that the `GCDStandalone `certificate is active.
+4. Rebuild solution.
+5. Review binary output folder and ensure all the necessary dependencies are present.
+6. Publish to local `Deploy` folder.
+7. Review deploy folder and ensure all necessary dependencies are present.
+8. Run batch file to deploy to AWS.
+
+## Phase 4 - Git
+
+1. Close Visual Studio (forces some changes to project files to get saved).
+2. Review changes to `GCDStandalone` project and **discard the hunk** that turns on the manifest signing.
+3. Commit changes with the message `release preparation`
+4. Push.
+5. Tag with release number `7.x.xx_BETA`
+
+## Phase 5 - GitHub
+
+1. Draft a new release using the tag created in the previous phase.
+2. Make a copy of the GCD `setup.exe` file from the `deploy` folder and call it `YYYY_MM_DD_GCDStandalone_7_0_03.exe`.
+3. Attach **both** the GCDAddin binary **and** the renamed setup EXE file to the release in GitHub.
+4. Publish.
