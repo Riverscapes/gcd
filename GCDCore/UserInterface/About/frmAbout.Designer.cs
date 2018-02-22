@@ -90,10 +90,10 @@
             this.lnkWebSite.AutoSize = true;
             this.lnkWebSite.Location = new System.Drawing.Point(78, 20);
             this.lnkWebSite.Name = "lnkWebSite";
-            this.lnkWebSite.Size = new System.Drawing.Size(132, 13);
+            this.lnkWebSite.Size = new System.Drawing.Size(131, 13);
             this.lnkWebSite.TabIndex = 4;
             this.lnkWebSite.TabStop = true;
-            this.lnkWebSite.Text = "http://gcd.joewheaton.org";
+            this.lnkWebSite.Text = "http://gcd.riverscapes.xyz";
             // 
             // Label5
             // 

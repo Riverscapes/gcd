@@ -358,7 +358,7 @@ namespace GCDCore.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to https://riverscapes.github.io/gcd6temp.
+        ///   Looks up a localized string similar to http://gcd.riverscapes.xyz/.
         /// </summary>
         public static string GCDWebSiteURL {
             get {
@@ -377,7 +377,7 @@ namespace GCDCore.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to https://riverscapes.github.io/gcd6temp/gcd-command-reference/.
+        ///   Looks up a localized string similar to http://gcd.riverscapes.xyz/gcd-command-reference/.
         /// </summary>
         public static string HelpBaseURL {
             get {
