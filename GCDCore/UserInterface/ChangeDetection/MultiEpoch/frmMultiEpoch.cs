@@ -632,7 +632,7 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
             //if cancelled, let the user know and enable the form
             if (e.Cancelled)
             {
-                MessageBox.Show("Batch Change Detection cancelled.");
+                MessageBox.Show("Batch change detection cancelled.", "Process Aborted", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 EnableForm();
             }
             else
@@ -640,13 +640,11 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
                 ///Otherwise that the user know the analysis completed
                 cmdCancel.DialogResult = DialogResult.OK;
                 cmdCancel.Text = "Close";
-                MessageBox.Show("Batch Change Detection Complete.");
+                MessageBox.Show("Batch Change Detection completed successfully.", "Batch Change Detection", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                DialogResult = DialogResult.OK;
             }
-
         }
 
         #endregion
-
     }
-
 }
