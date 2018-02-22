@@ -243,7 +243,7 @@ namespace GCDCore.UserInterface.Project
                 }
 
                 // Reference Surfaces
-                TreeNode nodReferenceSurfaces = AddTreeNode(nodProject, GCDNodeTypes.ReferenceSurfaceGroup, m_sReferenceSurfaces, null, selectItem);
+                TreeNode nodReferenceSurfaces = AddTreeNode(nodInputs, GCDNodeTypes.ReferenceSurfaceGroup, m_sReferenceSurfaces, null, selectItem);
                 foreach (Surface surf in ProjectManager.Project.ReferenceSurfaces.Values)
                 {
                     bool bExpandSurfNode = false;
@@ -262,7 +262,7 @@ namespace GCDCore.UserInterface.Project
                 }
                 nodReferenceSurfaces.Expand();
 
-                TreeNode nodMaskGroup = AddTreeNode(nodProject, GCDNodeTypes.MasksGroup, m_sMasks, null, selectItem);
+                TreeNode nodMaskGroup = AddTreeNode(nodInputs, GCDNodeTypes.MasksGroup, m_sMasks, null, selectItem);
                 if (ProjectManager.Project.Masks.Count > 0)
                 {
                     foreach (GCDCore.Project.Masks.Mask aMask in ProjectManager.Project.Masks.Values)
