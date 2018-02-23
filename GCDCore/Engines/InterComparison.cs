@@ -75,7 +75,7 @@ namespace GCDCore.Engines
                 XmlNode ArealRow;
 
                 string NamedCell = "ArealDoDName";
-                ArealRow = xmlDoc.SelectSingleNode("//ss:Row[ss:Cell[ss:NamedCell[@ss:Name='" + NamedCell + "']]]", nsmgr); // gets the cell with the named cell name
+                ArealRow = xmlDoc.SelectSingleNode(".//ss:Row[ss:Cell[ss:NamedCell[@ss:Name='" + NamedCell + "']]]", nsmgr); // gets the cell with the named cell name
 
                 UnitsNet.Area ca = ProjectManager.Project.CellArea;
                 DoDSummaryDisplayOptions options = new DoDSummaryDisplayOptions(ProjectManager.Project.Units);
@@ -121,7 +121,7 @@ namespace GCDCore.Engines
                 //Find VolumeDoDName
                 string VolumeDoDNamedCell = "VolumeDoDName";
                 XmlNode VolumeRow;
-                VolumeRow = xmlDoc.SelectSingleNode("//ss:Row[ss:Cell[ss:NamedCell[@ss:Name='" + VolumeDoDNamedCell + "']]]", nsmgr); // gets the cell with the named cell name
+                VolumeRow = xmlDoc.SelectSingleNode(".//ss:Row[ss:Cell[ss:NamedCell[@ss:Name='" + VolumeDoDNamedCell + "']]]", nsmgr); // gets the cell with the named cell name
                 UnitsNet.Units.LengthUnit vunit = ProjectManager.Project.Units.VertUnit;
                 DoDCount = 0;
 
@@ -147,31 +147,31 @@ namespace GCDCore.Engines
                     }
                     //using same pattern as ucDoDSummary
 
-                    SetNameCellValue(xmlDoc, nsmgr, "VolumeDoDName", DoDName);
+                    SetNameCellValue(VolumeRow, nsmgr, "VolumeDoDName", DoDName);
 
                     string VolumeLoweringRaw = dodStat.ErosionRaw.GetVolume(ca, vunit).As(options.VolumeUnits).ToString();
-                    SetNameCellValue(xmlDoc, nsmgr, "VolumeLoweringRaw", VolumeLoweringRaw);
+                    SetNameCellValue(VolumeRow, nsmgr, "VolumeLoweringRaw", VolumeLoweringRaw);
 
                     string VolumeLoweringThresholded = dodStat.ErosionThr.GetVolume(ca, vunit).As(options.VolumeUnits).ToString();
-                    SetNameCellValue(xmlDoc, nsmgr, "VolumeLoweringThresholded", VolumeLoweringThresholded);
+                    SetNameCellValue(VolumeRow, nsmgr, "VolumeLoweringThresholded", VolumeLoweringThresholded);
 
                     string VolumeErrorLowering = dodStat.ErosionErr.GetVolume(ca, vunit).As(options.VolumeUnits).ToString();
-                    SetNameCellValue(xmlDoc, nsmgr, "VolumeErrorLowering", VolumeErrorLowering);
+                    SetNameCellValue(VolumeRow, nsmgr, "VolumeErrorLowering", VolumeErrorLowering);
 
                     string VolumeRaisingRaw = dodStat.DepositionRaw.GetVolume(ca, vunit).As(options.VolumeUnits).ToString();
-                    SetNameCellValue(xmlDoc, nsmgr, "VolumeRaisingRaw", VolumeRaisingRaw);
+                    SetNameCellValue(VolumeRow, nsmgr, "VolumeRaisingRaw", VolumeRaisingRaw);
 
                     string VolumeRaisingThresholded = dodStat.DepositionThr.GetVolume(ca, vunit).As(options.VolumeUnits).ToString();
-                    SetNameCellValue(xmlDoc, nsmgr, "VolumeRaisingThresholded", VolumeRaisingThresholded);
+                    SetNameCellValue(VolumeRow, nsmgr, "VolumeRaisingThresholded", VolumeRaisingThresholded);
 
                     string VolumeErrorRaising = dodStat.DepositionErr.GetVolume(ca, vunit).As(options.VolumeUnits).ToString();
-                    SetNameCellValue(xmlDoc, nsmgr, "VolumeErrorRaising", VolumeErrorRaising);
+                    SetNameCellValue(VolumeRow, nsmgr, "VolumeErrorRaising", VolumeErrorRaising);
                 }
 
                 //Find VerticalDoDName
                 string VerticalDoDNamedCell = "VerticalDoDName";
                 XmlNode VerticalRow;
-                VerticalRow = xmlDoc.SelectSingleNode("//ss:Row[ss:Cell[ss:NamedCell[@ss:Name='" + VerticalDoDNamedCell + "']]]", nsmgr); // gets the cell with the named cell name
+                VerticalRow = xmlDoc.SelectSingleNode(".//ss:Row[ss:Cell[ss:NamedCell[@ss:Name='" + VerticalDoDNamedCell + "']]]", nsmgr); // gets the cell with the named cell name
                 DoDCount = 0;
 
                 foreach (KeyValuePair<string, GCDConsoleLib.GCD.DoDStats> kvp in dodStats)
@@ -202,7 +202,7 @@ namespace GCDCore.Engines
                 //Find VerticalDoDName
                 string PercentagesDoDNamedCell = "PercentagesDoDName";
                 XmlNode PercentageRow;
-                PercentageRow = xmlDoc.SelectSingleNode("//ss:Row[ss:Cell[ss:NamedCell[@ss:Name='" + PercentagesDoDNamedCell + "']]]", nsmgr); // gets the cell with the named cell name
+                PercentageRow = xmlDoc.SelectSingleNode(".//ss:Row[ss:Cell[ss:NamedCell[@ss:Name='" + PercentagesDoDNamedCell + "']]]", nsmgr); // gets the cell with the named cell name
                 DoDCount = 0;
 
                 foreach (KeyValuePair<string, GCDConsoleLib.GCD.DoDStats> kvp in dodStats)
@@ -234,7 +234,7 @@ namespace GCDCore.Engines
                 //need to set after adding rows
                 //pattern:
                 //<Table ss:ExpandedColumnCount="52" ss:ExpandedRowCount="29" x:FullColumns="1" x:FullRows="1" ss:DefaultRowHeight="15">
-                XmlNode TableNode = xmlDoc.SelectSingleNode("//ss:Table", nsmgr); // gets the cell with the named cell name
+                XmlNode TableNode = xmlDoc.SelectSingleNode(".//ss:Table", nsmgr); // gets the cell with the named cell name
 
                 string OrigExpandedRowCount = TableNode.Attributes["ss:ExpandedRowCount"].Value;
                 int iOrigExpandedRowCount = int.Parse(OrigExpandedRowCount);
@@ -297,7 +297,7 @@ namespace GCDCore.Engines
             foreach(NamedRange oNamedRange in dicNamedRanges.Values)
             {
 
-                XmlNode NamedRangeNode = xmlDoc.SelectSingleNode("//ss:Names/ss:NamedRange[@ss:Name='" + oNamedRange.name + "']", nsmgr); // gets the cell with the named cell name
+                XmlNode NamedRangeNode = xmlDoc.SelectSingleNode(".//ss:Names/ss:NamedRange[@ss:Name='" + oNamedRange.name + "']", nsmgr); // gets the cell with the named cell name
                 string refersto = NamedRangeNode.Attributes["ss:RefersTo"].Value;
 
                 //match R*C*
@@ -333,7 +333,7 @@ namespace GCDCore.Engines
 
             //first, find all rows, the loop through rows that are > rownumber
             XmlNodeList AllRows;
-            AllRows = xmlDoc.SelectNodes("//ss:Row", nsmgr); // gets the cell with the named cell name
+            AllRows = xmlDoc.SelectNodes(".//ss:Row", nsmgr); // gets the cell with the named cell name
 
             try
             {
@@ -345,7 +345,7 @@ namespace GCDCore.Engines
 
                         //select cells with formulas
 
-                            XmlNodeList CellsWithFormulas = CurrentRow.SelectNodes("./ss:Cell[@ss:Formula]", nsmgr);
+                            XmlNodeList CellsWithFormulas = CurrentRow.SelectNodes(".//ss:Cell[@ss:Formula]", nsmgr);
 
                         //for each formula, check if it contains a relative reference, pattern "=R[-5]C[-4]/R[-10]C10", e.g. R[-5]C[-4]
                         foreach(XmlNode currentCell in CellsWithFormulas)
@@ -433,7 +433,7 @@ namespace GCDCore.Engines
         {
             Dictionary<string, NamedRange> NamedRanges = new Dictionary<string, NamedRange>();
 
-            XmlNodeList NamedRangeNodes = xmlDoc.SelectNodes("//ss:Names/ss:NamedRange", nsmgr); // gets the cell with the named cell name
+            XmlNodeList NamedRangeNodes = xmlDoc.SelectNodes(".//ss:Names/ss:NamedRange", nsmgr); // gets the cell with the named cell name
 
             foreach(XmlNode NamedRange in NamedRangeNodes)
             {
@@ -463,7 +463,7 @@ namespace GCDCore.Engines
 
         private static void SetNameCellValue(XmlNode xmlDoc, XmlNamespaceManager nsmgr, string NamedCell, string value)
         {
-            XmlNodeList NamedCells = xmlDoc.SelectNodes("//ss:Cell[ss:NamedCell[@ss:Name='" + NamedCell + "']]", nsmgr); // gets the cell with the named cell name
+            XmlNodeList NamedCells = xmlDoc.SelectNodes(".//ss:Cell[ss:NamedCell[@ss:Name='" + NamedCell + "']]", nsmgr); // gets the cell with the named cell name
 
             XmlNode CellData = NamedCells[0].SelectSingleNode("ss:Data", nsmgr);
 
@@ -473,7 +473,7 @@ namespace GCDCore.Engines
 
         private static void SetSumFormula(XmlNode xmlDoc, XmlNamespaceManager nsmgr, string SumFormularNamedCell, int SumCount)
         {
-            XmlNode SumFormulaCell = xmlDoc.SelectSingleNode("//ss:Cell[ss:NamedCell[@ss:Name='" + SumFormularNamedCell + "']]", nsmgr); // gets the cell with the named cell name
+            XmlNode SumFormulaCell = xmlDoc.SelectSingleNode(".//ss:Cell[ss:NamedCell[@ss:Name='" + SumFormularNamedCell + "']]", nsmgr); // gets the cell with the named cell name
 
             string SumFormula = "=SUM(R[-" + SumCount + "]C:R[-1]C)";
             SumFormulaCell.Attributes["ss:Formula"].Value = SumFormula;
@@ -482,7 +482,7 @@ namespace GCDCore.Engines
 
         private static void UpdateNamedRangeRefersTo(XmlNode xmlDoc, XmlNamespaceManager nsmgr, string NamedRange, int AddedRows)
         {
-            XmlNode NamedRangeNode = xmlDoc.SelectSingleNode("//ss:Names/ss:NamedRange[@ss:Name='" + NamedRange + "']", nsmgr); // gets the cell with the named cell name
+            XmlNode NamedRangeNode = xmlDoc.SelectSingleNode(".//ss:Names/ss:NamedRange[@ss:Name='" + NamedRange + "']", nsmgr); // gets the cell with the named cell name
             string refersto = NamedRangeNode.Attributes["ss:RefersTo"].Value;
 
             //match R*C*
