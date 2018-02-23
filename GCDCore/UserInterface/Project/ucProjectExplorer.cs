@@ -1873,7 +1873,10 @@ namespace GCDCore.UserInterface.Project
             }
 
             ChangeDetection.Intercomparison.frmInterComparisonProperties frm = new ChangeDetection.Intercomparison.frmInterComparisonProperties();
-            frm.ShowDialog();
+            if (frm.ShowDialog() == DialogResult.OK)
+            {
+                LoadTree(new ProjectTreeNode(GCDNodeTypes.InterComparisonGroup, null));
+            }
         }
 
         private void openInterComparisonFolderToolStripMenuItem_Click(object sender, EventArgs e)
