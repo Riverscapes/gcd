@@ -302,7 +302,7 @@ namespace GCDCore.Project
                 ProjectManager.Project.DoDs[dod.Name] = dod;
             }
 
-            foreach (XmlNode nodInter in nodProject.SelectNodes("InterComparisons/InterComparisons"))
+            foreach (XmlNode nodInter in nodProject.SelectNodes("InterComparisons/InterComparison"))
             {
                 InterComparison inter = new InterComparison(nodInter, ProjectManager.Project.DoDs);
                 ProjectManager.Project.InterComparisons[inter.Name] = inter;
