@@ -54,6 +54,13 @@ namespace GCDCore.UserInterface.ChangeDetection.Intercomparison
         {
             try
             {
+                //validate form
+                if (!ValidateForm())
+                {
+                    this.DialogResult = DialogResult.None;
+                    return;
+                }
+
                 Cursor = Cursors.WaitCursor;
 
                 Dictionary<string, GCDConsoleLib.GCD.DoDStats> dodStats = new Dictionary<string, GCDConsoleLib.GCD.DoDStats>();
