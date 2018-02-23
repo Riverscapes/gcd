@@ -35,6 +35,8 @@ namespace GCDCore.Engines
                 throw new Exception("The GCD intercomparison spreadsheet template cannot be found at " + template.FullName);
             }
 
+            ExcelXMLDocument xmlExcelDoc = new ExcelXMLDocument(template.FullName);
+
             //read template into XML document
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.Load(template.FullName);
@@ -43,46 +45,91 @@ namespace GCDCore.Engines
             var nsmgr = new XmlNamespaceManager(xmlDoc.NameTable);
             nsmgr.AddNamespace("ss", "urn:schemas-microsoft-com:office:spreadsheet");
 
+            //get named ranges
             Dictionary<string, NamedRange> dicNamedRanges = ParseNamedRanges(xmlDoc, nsmgr);
 
-
+            //clone Areal stats row
 
             int DoDCount = 0;
             XmlNode ArealRow;
 
+            //get template row
             string NamedCell = "ArealDoDName";
             ArealRow = xmlDoc.SelectSingleNode(".//ss:Row[ss:Cell[ss:NamedCell[@ss:Name='" + NamedCell + "']]]", nsmgr); // gets the cell with the named cell name
-
-            UnitsNet.Area ca = ProjectManager.Project.CellArea;
-            DoDSummaryDisplayOptions options = new DoDSummaryDisplayOptions(ProjectManager.Project.Units);
 
             foreach (KeyValuePair<string, GCDConsoleLib.GCD.DoDStats> kvp in dodStats)
             {
                 string DoDName = kvp.Key;
                 GCDConsoleLib.GCD.DoDStats dodStat = kvp.Value;
 
-                DoDCount += 1;
+                Dictionary<string, string> dicStatValues = GetStatValues(dodStat);
+                dicStatValues.Add("ArealDoDName", DoDName);
 
+                DoDCount += 1;
 
                 if (DoDCount > 1)
                 {
-                    NamedRange oNamedRange = dicNamedRanges[NamedCell];
-                    int row = oNamedRange.row;
-                    dicNamedRanges = InsertRow(xmlDoc, nsmgr, dicNamedRanges, row);
-
-                    //find areal row
-                    XmlNode ArealRowClone = ArealRow.Clone();
-                    XmlNode parent = ArealRow.ParentNode;
-                    parent.InsertAfter(ArealRowClone, ArealRow);
-                    ArealRow = ArealRowClone;
+                    xmlExcelDoc.CloneRow("ArealDoDName", DoDCount, dicStatValues);
+                }
+                else
+                {
+                    xmlExcelDoc.UpdateRow("ArealDoDName", dicStatValues);
                 }
 
-                SetNameCellValue(ArealRow, nsmgr, "ArealDoDName", DoDName);
 
-                Dictionary<string, string> dicStatValues = GetStatValues(dodStat);
-                SetNamedCellValue(ArealRow, nsmgr, dicStatValues);
+                //if (DoDCount > 1)
+                //{
+                //    NamedRange oNamedRange = dicNamedRanges[NamedCell];
+                //    int row = oNamedRange.row;
+                //    dicNamedRanges = InsertRow(xmlDoc, nsmgr, dicNamedRanges, row);
+
+                //    //find areal row
+                //    XmlNode ArealRowClone = ArealRow.Clone();
+                //    XmlNode parent = ArealRow.ParentNode;
+                //    parent.InsertAfter(ArealRowClone, ArealRow);
+                //    ArealRow = ArealRowClone;
+                //}
+
+                //get values for named ranges
+
+                //update named ranges
+                //SetNamedCellValue(ArealRow, nsmgr, dicStatValues);
 
             }
+
+            //get template row
+            //string NamedCell = "ArealDoDName";
+            //ArealRow = xmlDoc.SelectSingleNode(".//ss:Row[ss:Cell[ss:NamedCell[@ss:Name='" + NamedCell + "']]]", nsmgr); // gets the cell with the named cell name
+
+            //foreach (KeyValuePair<string, GCDConsoleLib.GCD.DoDStats> kvp in dodStats)
+            //{
+            //    string DoDName = kvp.Key;
+            //    GCDConsoleLib.GCD.DoDStats dodStat = kvp.Value;
+
+            //    DoDCount += 1;
+
+
+            //    if (DoDCount > 1)
+            //    {
+            //        NamedRange oNamedRange = dicNamedRanges[NamedCell];
+            //        int row = oNamedRange.row;
+            //        dicNamedRanges = InsertRow(xmlDoc, nsmgr, dicNamedRanges, row);
+
+            //        //find areal row
+            //        XmlNode ArealRowClone = ArealRow.Clone();
+            //        XmlNode parent = ArealRow.ParentNode;
+            //        parent.InsertAfter(ArealRowClone, ArealRow);
+            //        ArealRow = ArealRowClone;
+            //    }
+
+            //    //get values for named ranges
+            //    Dictionary<string, string> dicStatValues = GetStatValues(dodStat);
+            //    dicStatValues.Add("ArealDoDName", DoDName);
+
+            //    //update named ranges
+            //    SetNamedCellValue(ArealRow, nsmgr, dicStatValues);
+
+            //}
 
             //Find VolumeDoDName
             string VolumeDoDNamedCell = "VolumeDoDName";
@@ -233,8 +280,8 @@ namespace GCDCore.Engines
             UpdateNamedRangesXML(xmlDoc, nsmgr,  dicNamedRanges);
 
             //save output
-            xmlDoc.Save(output.FullName);
-
+            //xmlDoc.Save(output.FullName);
+            xmlExcelDoc.Save(output.FullName);
         }
 
         private static void UpdateNamedRangesXML(XmlNode xmlDoc, XmlNamespaceManager nsmgr, Dictionary<string, NamedRange> dicNamedRanges)

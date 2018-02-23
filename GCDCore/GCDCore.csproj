@@ -62,7 +62,8 @@
     <Compile Include="Engines\DoD\ChangeDetectionPropProb.cs" />
     <Compile Include="Engines\DoD\ChangeDetetctionMultiEpoch.cs" />
     <Compile Include="Engines\DoD\ChangeDetetctionBatch.cs" />
-    <Compile Include="Engines\InterComparison.cs" />
+    <Compile Include="Engines\InterComparison\ExcelXMLDocument.cs" />
+    <Compile Include="Engines\InterComparison\InterComparison.cs" />
     <Compile Include="Engines\ReferenceSurfaceEngine.cs" />
     <Compile Include="GCDUnits.cs" />
     <Compile Include="Project\CoherenceProperties.cs" />
