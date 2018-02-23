@@ -40,6 +40,13 @@ namespace GCDCore.UserInterface.ChangeDetection.Intercomparison
                 return false;
             }
 
+            if (!ProjectManager.Project.IsInterComparisonNameUnique(txtName.Text, null))
+            {
+                MessageBox.Show("A change detection inter-comparison already exists with this name. Please choose a unique name.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                txtName.Select();
+                return false;
+            }
+
             if (lstDoDs.CheckedItems.Count < 2)
             {
                 MessageBox.Show("You must select at least two change detections to perform an inter-comparison.", "Insufficient Change Detections", MessageBoxButtons.OK, MessageBoxIcon.Information);

@@ -147,6 +147,11 @@ namespace GCDCore.Project
             return Masks.ContainsKey(name) ? Masks[name] == ignore : true;
         }
 
+        public bool IsInterComparisonNameUnique(string name, InterComparison ignore)
+        {
+            return InterComparisons.ContainsKey(name) ? InterComparisons[name] == ignore : true;
+        }
+
         public void Save()
         {
             XmlDocument xmlDoc = new XmlDocument();
