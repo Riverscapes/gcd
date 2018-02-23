@@ -45,9 +45,6 @@ namespace GCDCore.Engines
             var nsmgr = new XmlNamespaceManager(xmlDoc.NameTable);
             nsmgr.AddNamespace("ss", "urn:schemas-microsoft-com:office:spreadsheet");
 
-            //get named ranges
-            Dictionary<string, NamedRange> dicNamedRanges = ParseNamedRanges(xmlDoc, nsmgr);
-
             //clone Areal stats row
 
             int DoDCount = 0;
@@ -63,181 +60,26 @@ namespace GCDCore.Engines
                 GCDConsoleLib.GCD.DoDStats dodStat = kvp.Value;
 
                 Dictionary<string, string> dicStatValues = GetStatValues(dodStat);
-                dicStatValues.Add("ArealDoDName", DoDName);
+                dicStatValues.Add("TemplateRowName", DoDName);
 
                 DoDCount += 1;
 
                 if (DoDCount > 1)
                 {
                     xmlExcelDoc.CloneRow("ArealDoDName", DoDCount, dicStatValues);
+                    xmlExcelDoc.CloneRow("VolumeDoDName", DoDCount, dicStatValues);
+                    xmlExcelDoc.CloneRow("VerticalDoDName", DoDCount, dicStatValues);
+                    xmlExcelDoc.CloneRow("PercentagesDoDName", DoDCount, dicStatValues);
                 }
                 else
                 {
                     xmlExcelDoc.UpdateRow("ArealDoDName", dicStatValues);
+                    xmlExcelDoc.UpdateRow("VolumeDoDName", dicStatValues);
+                    xmlExcelDoc.UpdateRow("VerticalDoDName", dicStatValues);
+                    xmlExcelDoc.UpdateRow("PercentagesDoDName", dicStatValues);
                 }
 
-
-                //if (DoDCount > 1)
-                //{
-                //    NamedRange oNamedRange = dicNamedRanges[NamedCell];
-                //    int row = oNamedRange.row;
-                //    dicNamedRanges = InsertRow(xmlDoc, nsmgr, dicNamedRanges, row);
-
-                //    //find areal row
-                //    XmlNode ArealRowClone = ArealRow.Clone();
-                //    XmlNode parent = ArealRow.ParentNode;
-                //    parent.InsertAfter(ArealRowClone, ArealRow);
-                //    ArealRow = ArealRowClone;
-                //}
-
-                //get values for named ranges
-
-                //update named ranges
-                //SetNamedCellValue(ArealRow, nsmgr, dicStatValues);
-
             }
-
-            //get template row
-            //string NamedCell = "ArealDoDName";
-            //ArealRow = xmlDoc.SelectSingleNode(".//ss:Row[ss:Cell[ss:NamedCell[@ss:Name='" + NamedCell + "']]]", nsmgr); // gets the cell with the named cell name
-
-            //foreach (KeyValuePair<string, GCDConsoleLib.GCD.DoDStats> kvp in dodStats)
-            //{
-            //    string DoDName = kvp.Key;
-            //    GCDConsoleLib.GCD.DoDStats dodStat = kvp.Value;
-
-            //    DoDCount += 1;
-
-
-            //    if (DoDCount > 1)
-            //    {
-            //        NamedRange oNamedRange = dicNamedRanges[NamedCell];
-            //        int row = oNamedRange.row;
-            //        dicNamedRanges = InsertRow(xmlDoc, nsmgr, dicNamedRanges, row);
-
-            //        //find areal row
-            //        XmlNode ArealRowClone = ArealRow.Clone();
-            //        XmlNode parent = ArealRow.ParentNode;
-            //        parent.InsertAfter(ArealRowClone, ArealRow);
-            //        ArealRow = ArealRowClone;
-            //    }
-
-            //    //get values for named ranges
-            //    Dictionary<string, string> dicStatValues = GetStatValues(dodStat);
-            //    dicStatValues.Add("ArealDoDName", DoDName);
-
-            //    //update named ranges
-            //    SetNamedCellValue(ArealRow, nsmgr, dicStatValues);
-
-            //}
-
-            //Find VolumeDoDName
-            string VolumeDoDNamedCell = "VolumeDoDName";
-            XmlNode VolumeRow;
-            VolumeRow = xmlDoc.SelectSingleNode(".//ss:Row[ss:Cell[ss:NamedCell[@ss:Name='" + VolumeDoDNamedCell + "']]]", nsmgr); // gets the cell with the named cell name
-            DoDCount = 0;
-
-            foreach (KeyValuePair<string, GCDConsoleLib.GCD.DoDStats> kvp in dodStats)
-            {
-                string DoDName = kvp.Key;
-                GCDConsoleLib.GCD.DoDStats dodStat = kvp.Value;
-
-                DoDCount += 1;
-
-
-                if (DoDCount > 1)
-                {
-                    NamedRange oNamedRange = dicNamedRanges[VolumeDoDNamedCell];
-                    int row = oNamedRange.row;
-                    dicNamedRanges = InsertRow(xmlDoc, nsmgr, dicNamedRanges, row);
-
-                    //find areal row
-                    XmlNode VolumeRowClone = VolumeRow.Clone();
-                    XmlNode parent = VolumeRow.ParentNode;
-                    parent.InsertAfter(VolumeRowClone, VolumeRow);
-                    VolumeRow = VolumeRowClone;
-                }
-                //using same pattern as ucDoDSummary
-
-                SetNameCellValue(VolumeRow, nsmgr, "VolumeDoDName", DoDName);
-
-                Dictionary<string, string> dicStatValues = GetStatValues(dodStat);
-                SetNamedCellValue(VolumeRow, nsmgr, dicStatValues);
-
-            }
-
-            //Find VerticalDoDName
-            string VerticalDoDNamedCell = "VerticalDoDName";
-            XmlNode VerticalRow;
-            VerticalRow = xmlDoc.SelectSingleNode(".//ss:Row[ss:Cell[ss:NamedCell[@ss:Name='" + VerticalDoDNamedCell + "']]]", nsmgr); // gets the cell with the named cell name
-            DoDCount = 0;
-
-            foreach (KeyValuePair<string, GCDConsoleLib.GCD.DoDStats> kvp in dodStats)
-            {
-                string DoDName = kvp.Key;
-                GCDConsoleLib.GCD.DoDStats dodStat = kvp.Value;
-
-                DoDCount += 1;
-
-
-                if (DoDCount > 1)
-                {
-                    NamedRange oNamedRange = dicNamedRanges[VerticalDoDNamedCell];
-                    int row = oNamedRange.row;
-                    dicNamedRanges = InsertRow(xmlDoc, nsmgr, dicNamedRanges, row+DoDCount-1);
-
-                    //find areal row
-                    XmlNode VerticalRowClone = VerticalRow.Clone();
-                    XmlNode parent = VerticalRow.ParentNode;
-                    parent.InsertAfter(VerticalRowClone, VerticalRow);
-                    VerticalRow = VerticalRowClone;
-                }
-
-                SetNameCellValue(VerticalRow, nsmgr, "VerticalDoDName", DoDName);
-
-            }
-
-            //Find VerticalDoDName
-            string PercentagesDoDNamedCell = "PercentagesDoDName";
-            XmlNode PercentageRow;
-            PercentageRow = xmlDoc.SelectSingleNode(".//ss:Row[ss:Cell[ss:NamedCell[@ss:Name='" + PercentagesDoDNamedCell + "']]]", nsmgr); // gets the cell with the named cell name
-            DoDCount = 0;
-
-            foreach (KeyValuePair<string, GCDConsoleLib.GCD.DoDStats> kvp in dodStats)
-            {
-                string DoDName = kvp.Key;
-                GCDConsoleLib.GCD.DoDStats dodStat = kvp.Value;
-
-                DoDCount += 1;
-
-
-                if (DoDCount > 1)
-                {
-                    NamedRange oNamedRange = dicNamedRanges[PercentagesDoDNamedCell];
-                    int row = oNamedRange.row;
-                    dicNamedRanges = InsertRow(xmlDoc, nsmgr, dicNamedRanges, row + DoDCount - 1);
-
-                    //find areal row
-                    XmlNode PercentageRowClone = PercentageRow.Clone();
-                    XmlNode parent = PercentageRow.ParentNode;
-                    parent.InsertAfter(PercentageRowClone, PercentageRow);
-                    PercentageRow = PercentageRowClone;
-                }
-
-                SetNameCellValue(PercentageRow, nsmgr, "PercentagesDoDName", DoDName);
-
-            }
-
-
-            //need to set after adding rows
-            //pattern:
-            //<Table ss:ExpandedColumnCount="52" ss:ExpandedRowCount="29" x:FullColumns="1" x:FullRows="1" ss:DefaultRowHeight="15">
-            XmlNode TableNode = xmlDoc.SelectSingleNode(".//ss:Table", nsmgr); // gets the cell with the named cell name
-
-            string OrigExpandedRowCount = TableNode.Attributes["ss:ExpandedRowCount"].Value;
-            int iOrigExpandedRowCount = int.Parse(OrigExpandedRowCount);
-            int iNewExpandedRowCount = iOrigExpandedRowCount + 4 * (DoDCount - 1); //add new row twice (once for area, once for volume)
-            TableNode.Attributes["ss:ExpandedRowCount"].Value = iNewExpandedRowCount.ToString();
 
             //Update areal formulas
             SetSumFormula(xmlDoc, nsmgr, "SumRawArealSurfaceLowering", DoDCount);
@@ -266,222 +108,8 @@ namespace GCDCore.Engines
             SetSumFormula(xmlDoc, nsmgr, "SumRawNetVolumeDifference", DoDCount);
             SetSumFormula(xmlDoc, nsmgr, "SumThresholdedNetVolumeDifference", DoDCount);
 
-
-            //update areal names range
-            UpdateNamedRangeRefersTo(xmlDoc, nsmgr, "SumThresholdedArealSurfaceLowering", DoDCount - 1);
-            UpdateNamedRangeRefersTo(xmlDoc, nsmgr, "SumThresholdedArealSurfaceRaising", DoDCount - 1);
-            UpdateNamedRangeRefersTo(xmlDoc, nsmgr, "SumThresholdedArealDetectableChange", DoDCount - 1);
-
-            //update volume names range
-            UpdateNamedRangeRefersTo(xmlDoc, nsmgr, "SumThresholdedVolumeSurfaceLowering", 2 * (DoDCount - 1));
-            UpdateNamedRangeRefersTo(xmlDoc, nsmgr, "SumThresholdedVolumeSurfaceRaising", 2 * (DoDCount - 1));
-            UpdateNamedRangeRefersTo(xmlDoc, nsmgr, "SumThresholdedVolumeOfDifference", 2 * (DoDCount - 1));
-
-            UpdateNamedRangesXML(xmlDoc, nsmgr,  dicNamedRanges);
-
             //save output
-            //xmlDoc.Save(output.FullName);
             xmlExcelDoc.Save(output.FullName);
-        }
-
-        private static void UpdateNamedRangesXML(XmlNode xmlDoc, XmlNamespaceManager nsmgr, Dictionary<string, NamedRange> dicNamedRanges)
-        {
-            foreach(NamedRange oNamedRange in dicNamedRanges.Values)
-            {
-
-                XmlNode NamedRangeNode = xmlDoc.SelectSingleNode(".//ss:Names/ss:NamedRange[@ss:Name='" + oNamedRange.name + "']", nsmgr); // gets the cell with the named cell name
-                string refersto = NamedRangeNode.Attributes["ss:RefersTo"].Value;
-
-                //match R*C*
-                /*
-                Regex r = new Regex(@".*!R(.+)C.", RegexOptions.IgnoreCase);
-                Match m = r.Match(refersto);
-                string sRow = m.Groups[1].Value;
-                int iRow = int.Parse(sRow);
-
-                iRow = iRow + AddedRows;
-                */
-                var pattern = @"(.*!)R(.+)C(.+)";
-                var replaced = Regex.Replace(refersto, pattern, "$1R" + oNamedRange.row + "C" + oNamedRange.col);
-
-                NamedRangeNode.Attributes["ss:RefersTo"].Value = replaced;
-            }
-        }
-
-        private static Dictionary<string, NamedRange> InsertRow(XmlNode xmlDoc, XmlNamespaceManager nsmgr, Dictionary<string, NamedRange> dicNamedRanges, int rownumber)
-        {
-            Dictionary<string, NamedRange> dicUpdatedNamedRanges = new Dictionary<string, NamedRange>();
-            foreach (NamedRange oNamedRange in dicNamedRanges.Values)
-            {
-                if(oNamedRange.row > rownumber)
-                {
-                    oNamedRange.row += 1;
-                }
-                dicUpdatedNamedRanges.Add(oNamedRange.name, oNamedRange);
-            }
-
-            //update formulas
-
-            //first, find all rows, the loop through rows that are > rownumber
-            XmlNodeList AllRows;
-            AllRows = xmlDoc.SelectNodes(".//ss:Row", nsmgr); // gets the cell with the named cell name
-
-            try
-            {
-
-                for (int RowIndex=0; RowIndex < AllRows.Count; RowIndex++)
-                {
-                        //get row
-                        XmlNode CurrentRow = AllRows[RowIndex];
-
-                        //select cells with formulas
-
-                        XmlNodeList CellsWithFormulas = CurrentRow.SelectNodes(".//ss:Cell[@ss:Formula]", nsmgr);
-
-                        //for each formula, check if it contains a relative reference, pattern "=R[-5]C[-4]/R[-10]C10", e.g. R[-5]C[-4]
-                        foreach(XmlNode currentCell in CellsWithFormulas)
-                        {
-                            //get formula
-                            string formula = currentCell.Attributes["ss:Formula"].Value;
-
-                            //match for R
-                            //var pattern = @"R\[-(\d+)\]C"; //matches only one in =SUM(R[-1]C:R[-1]C)
-                            var pattern = @"(R\[-)(\d+)(\]C)";
-
-                            Regex r = new Regex(pattern, RegexOptions.IgnoreCase);
-                            MatchCollection mc = r.Matches(formula);
-
-                            if(mc.Count > 0)
-                            {
-
-                                string NewFormula = "";
-                                int textindex = 0;
-                                for(int matchindex = 0; matchindex < mc.Count; matchindex++)
-                                {
-                                    Match m = mc[matchindex];
-                                    NewFormula = NewFormula + formula.Substring(textindex, m.Index - textindex);
-
-                                    string sRow = m.Groups[2].Value;
-                                    int iRow = int.Parse(sRow);
-                                    int correctionrow = 0;
-                                    int referencerow = RowIndex - iRow;
-                                    if (referencerow <= rownumber && RowIndex > rownumber)
-                                    {
-                                        correctionrow = 1;
-                                    }
-
-                                    string replace = m.Groups[1].Value + (iRow + correctionrow) + m.Groups[3].Value;
-
-                                    NewFormula = NewFormula + replace;
-
-                                    textindex = m.Index + m.Length;
-
-                                }
-
-                                NewFormula = NewFormula + formula.Substring(textindex);
-
-                                currentCell.Attributes["ss:Formula"].Value = NewFormula;
-                            }
-
-                            //foreach (Match m in mc)
-                            //{
-                            //    string sRow = m.Groups[2].Value;
-                            //    int iRow = int.Parse(sRow);
-                            //    string search = m.Groups[1].Value + m.Groups[2].Value + m.Groups[3].Value;
-                            //    string replace = m.Groups[1].Value + (iRow+1) + m.Groups[3].Value;
-                            //    NewFormula = Regex.Replace(NewFormula, search, replace);
-
-                            //}
-
-                            //if(m.Groups.Count > 1)
-                            //{
-                            //    Console.WriteLine(m.Groups[1].Value);
-                            //}
-
-                            //replace
-                            //var pattern = @"(.*!)(R)(.+)(C.)";
-                            //var replaced = Regex.Replace(refersto, pattern, "$1R" + iRow + "$4");
-
-                            //NamedRangeNode.Attributes["ss:RefersTo"].Value = replaced;
-
-
-                        }
-
-                    }
-
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-            return dicUpdatedNamedRanges;
-        }
-
-        private static Dictionary<string, NamedRange> ParseNamedRanges(XmlNode xmlDoc, XmlNamespaceManager nsmgr)
-        {
-            Dictionary<string, NamedRange> NamedRanges = new Dictionary<string, NamedRange>();
-
-            XmlNodeList NamedRangeNodes = xmlDoc.SelectNodes(".//ss:Names/ss:NamedRange", nsmgr); // gets the cell with the named cell name
-
-            foreach(XmlNode NamedRange in NamedRangeNodes)
-            {
-                string name = NamedRange.Attributes["ss:Name"].Value;
-
-                string refersto = NamedRange.Attributes["ss:RefersTo"].Value;
-                //match R*C*
-                Regex r = new Regex(@".*!R(.+)C(.+)", RegexOptions.IgnoreCase);
-                Match m = r.Match(refersto);
-                string sRow = m.Groups[1].Value;
-                int iRow = int.Parse(sRow);
-
-                string sCol= m.Groups[2].Value;
-                int iCol= int.Parse(sCol);
-
-                NamedRange oNamedRange = new Engines.NamedRange();
-                oNamedRange.name = name;
-                oNamedRange.col = iCol;
-                oNamedRange.row = iRow;
-
-                NamedRanges.Add(name, oNamedRange);
-            }
-
-            return (NamedRanges);
-        }
-
-        /// <summary>
-        /// Updates named cells in the node with the values in StatValues
-        /// </summary>
-        /// <param name="xmlNode"></param>
-        /// <param name="nsmgr"></param>
-        /// <param name="StatValues"></param>
-        private static void SetNamedCellValue(XmlNode xmlNode, XmlNamespaceManager nsmgr, Dictionary<string, string> StatValues)
-        {
-            foreach(KeyValuePair<string, string> kvp in StatValues)
-            {
-                String NamedCell = kvp.Key;
-                String Value = kvp.Value;
-
-                //find named cells
-                XmlNodeList NamedCells = xmlNode.SelectNodes(".//ss:Cell[ss:NamedCell[@ss:Name='" + NamedCell + "']]", nsmgr); // gets the cell with the named cell name
-                if(NamedCells.Count == 1)
-                {
-                    //if there is exactly one match, update data
-                    XmlNode CellData = NamedCells[0].SelectSingleNode("ss:Data", nsmgr);
-                    CellData.InnerText = Value;
-                }
-
-            }
-        }
-
-
-        private static void SetNameCellValue(XmlNode xmlDoc, XmlNamespaceManager nsmgr, string NamedCell, string value)
-        {
-            XmlNodeList NamedCells = xmlDoc.SelectNodes(".//ss:Cell[ss:NamedCell[@ss:Name='" + NamedCell + "']]", nsmgr); // gets the cell with the named cell name
-
-            XmlNode CellData = NamedCells[0].SelectSingleNode("ss:Data", nsmgr);
-
-            CellData.InnerText = value;
-
         }
 
         private static void SetSumFormula(XmlNode xmlDoc, XmlNamespaceManager nsmgr, string SumFormularNamedCell, int SumCount)
@@ -490,26 +118,6 @@ namespace GCDCore.Engines
 
             string SumFormula = "=SUM(R[-" + SumCount + "]C:R[-1]C)";
             SumFormulaCell.Attributes["ss:Formula"].Value = SumFormula;
-
-        }
-
-        private static void UpdateNamedRangeRefersTo(XmlNode xmlDoc, XmlNamespaceManager nsmgr, string NamedRange, int AddedRows)
-        {
-            XmlNode NamedRangeNode = xmlDoc.SelectSingleNode(".//ss:Names/ss:NamedRange[@ss:Name='" + NamedRange + "']", nsmgr); // gets the cell with the named cell name
-            string refersto = NamedRangeNode.Attributes["ss:RefersTo"].Value;
-
-            //match R*C*
-            Regex r = new Regex(@".*!R(.+)C.", RegexOptions.IgnoreCase);
-            Match m = r.Match(refersto);
-            string sRow = m.Groups[1].Value;
-            int iRow = int.Parse(sRow);
-
-            iRow = iRow + AddedRows;
-
-            var pattern = @"(.*!)(R)(.+)(C.)";
-            var replaced = Regex.Replace(refersto, pattern, "$1R" + iRow + "$4");
-
-            NamedRangeNode.Attributes["ss:RefersTo"].Value = replaced;
 
         }
 

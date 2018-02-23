@@ -29,8 +29,6 @@ namespace GCDCore.Engines
 
             //get named ranges
             ParseNamedRanges();
-
-
         }
 
         private void ParseNamedRanges()
@@ -66,12 +64,16 @@ namespace GCDCore.Engines
         public void UpdateRow(string NamedRange, Dictionary<string, string> NamedRangeValues)
         {
             //get row
+            NamedRangeValues[NamedRange] = NamedRangeValues["TemplateRowName"];
+
             XmlNode TemplateRow = xmlDoc.SelectSingleNode(".//ss:Row[ss:Cell[ss:NamedCell[@ss:Name='" + NamedRange + "']]]", nsmgr); // gets the cell with the named cell name
             SetNamedCellValue(TemplateRow, NamedRangeValues);
         }
 
         public void CloneRow(string NamedRange, int offset, Dictionary<string, string> NamedRangeValues)
         {
+            NamedRangeValues[NamedRange] = NamedRangeValues["TemplateRowName"];
+
             NamedRange oNamedRange = dicNamedRanges[NamedRange];
             int row = oNamedRange.row;
             InsertRow(row);
@@ -208,7 +210,26 @@ namespace GCDCore.Engines
                 Console.WriteLine(ex.Message);
             }
             dicNamedRanges =  dicUpdatedNamedRanges;
+
+            UpdateNamedRangesXML();
+
         }
 
+        private void UpdateNamedRangesXML()
+        {
+            foreach (NamedRange oNamedRange in dicNamedRanges.Values)
+            {
+
+                XmlNode NamedRangeNode = xmlDoc.SelectSingleNode(".//ss:Names/ss:NamedRange[@ss:Name='" + oNamedRange.name + "']", nsmgr); // gets the cell with the named cell name
+                string refersto = NamedRangeNode.Attributes["ss:RefersTo"].Value;
+
+                var pattern = @"(.*!)R(.+)C(.+)";
+                var replaced = Regex.Replace(refersto, pattern, "$1R" + oNamedRange.row + "C" + oNamedRange.col);
+
+                NamedRangeNode.Attributes["ss:RefersTo"].Value = replaced;
+            }
+        }
     }
+
+
 }
