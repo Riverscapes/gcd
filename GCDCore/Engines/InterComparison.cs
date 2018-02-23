@@ -137,7 +137,7 @@ namespace GCDCore.Engines
                 {
                     NamedRange oNamedRange = dicNamedRanges[VerticalDoDNamedCell];
                     int row = oNamedRange.row;
-                    dicNamedRanges = InsertRow(xmlDoc, nsmgr, dicNamedRanges, row);
+                    dicNamedRanges = InsertRow(xmlDoc, nsmgr, dicNamedRanges, row+DoDCount-1);
 
                     //find areal row
                     XmlNode VerticalRowClone = VerticalRow.Clone();
@@ -168,7 +168,7 @@ namespace GCDCore.Engines
                 {
                     NamedRange oNamedRange = dicNamedRanges[PercentagesDoDNamedCell];
                     int row = oNamedRange.row;
-                    dicNamedRanges = InsertRow(xmlDoc, nsmgr, dicNamedRanges, row);
+                    dicNamedRanges = InsertRow(xmlDoc, nsmgr, dicNamedRanges, row + DoDCount - 1);
 
                     //find areal row
                     XmlNode PercentageRowClone = PercentageRow.Clone();
@@ -289,7 +289,7 @@ namespace GCDCore.Engines
 
                         //select cells with formulas
 
-                            XmlNodeList CellsWithFormulas = CurrentRow.SelectNodes(".//ss:Cell[@ss:Formula]", nsmgr);
+                        XmlNodeList CellsWithFormulas = CurrentRow.SelectNodes(".//ss:Cell[@ss:Formula]", nsmgr);
 
                         //for each formula, check if it contains a relative reference, pattern "=R[-5]C[-4]/R[-10]C10", e.g. R[-5]C[-4]
                         foreach(XmlNode currentCell in CellsWithFormulas)
@@ -307,7 +307,6 @@ namespace GCDCore.Engines
                             if(mc.Count > 0)
                             {
 
-
                                 string NewFormula = "";
                                 int textindex = 0;
                                 for(int matchindex = 0; matchindex < mc.Count; matchindex++)
@@ -318,7 +317,7 @@ namespace GCDCore.Engines
                                     string sRow = m.Groups[2].Value;
                                     int iRow = int.Parse(sRow);
                                     int correctionrow = 0;
-                                int referencerow = RowIndex - iRow;
+                                    int referencerow = RowIndex - iRow;
                                     if (referencerow <= rownumber && RowIndex > rownumber)
                                     {
                                         correctionrow = 1;
