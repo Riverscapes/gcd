@@ -20,6 +20,7 @@ namespace GCDAddIn
         // These constants are the names for the group layers that should be greated
         // and the appropriate rasters created inside them
         private const string InputsGroupLayer = "Inputs";
+        private const string SurveysGroupLayer = "Surveys";
         private const string AssociatedSurfacesGroupLayer = "Associated Surfaces";
         private const string ErrorSurfacesGroupLayer = "Error Surfaces";
         private const string AnalysesGroupLayer = "Analyses";
@@ -66,7 +67,8 @@ namespace GCDAddIn
         private IGroupLayer AddSurveyGroupLayer(DEMSurvey dem)
         {
             IGroupLayer pInputsGrpLyr = AddInputsGroupLayer();
-            return ArcMapUtilities.GetGroupLayer(dem.Name, pInputsGrpLyr);
+            IGroupLayer pSurveysGrpLyr = ArcMapUtilities.GetGroupLayer(SurveysGroupLayer, pInputsGrpLyr);
+            return  ArcMapUtilities.GetGroupLayer(dem.Name, pSurveysGrpLyr);
         }
 
         public IGroupLayer AddSurvey(DEMSurvey dem)
@@ -221,7 +223,7 @@ namespace GCDAddIn
             IGroupLayer pProjLyr = AddProjectGroupLayer();
             IGroupLayer pMasksGrpLyr = ArcMapUtilities.GetGroupLayer(MasksGroupLayer, pProjLyr);
 
-            IFeatureRenderer pRenderer  = VectorSymbolization.GetAOIRenderer(mask) as IFeatureRenderer;
+            IFeatureRenderer pRenderer = VectorSymbolization.GetAOIRenderer(mask) as IFeatureRenderer;
 
             VectorSymbolization.AddToMapVector(mask._ShapeFile, mask.Name, pMasksGrpLyr, string.Empty, pRenderer, string.Empty);
         }

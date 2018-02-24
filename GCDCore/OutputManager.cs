@@ -23,6 +23,7 @@ namespace GCDCore
         private const string m_sRefSurfaceFolder = "RefSurfaces";
         private const string m_sProjectMaskFolder = "Masks";
         private const string m_sMorphologicalFolder = "Morph";
+        private const string m_sSurveysFolder = "Surveys";
 
         private const string m_sFiguresSubfolder = "Figs";
         private string m_sOutputDriver = "GTiff";
@@ -56,7 +57,7 @@ namespace GCDCore
         public string DEMSurveyFolder(string sSurveyName)
         {
             sSurveyName = naru.os.File.RemoveDangerousCharacters(sSurveyName);
-            return Path.Combine(Path.Combine(GCDProjectFolder(), m_sInputsFolder), sSurveyName);
+            return Path.Combine(Path.Combine(GCDProjectFolder(), m_sInputsFolder, m_sSurveysFolder), sSurveyName);
         }
 
         public string AssociatedSurfaceFolder(string sSurveyName, string sAssociatedSurfaceName)
