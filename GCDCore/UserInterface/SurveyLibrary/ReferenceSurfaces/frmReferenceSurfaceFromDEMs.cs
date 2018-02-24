@@ -110,6 +110,23 @@ namespace GCDCore.UserInterface.SurveyLibrary.ReferenceSurfaces
                 return false;
             }
 
+            // Validate that every DEM has an error surface selected
+            foreach(DataGridViewRow dgvr in grdData.Rows)
+            {
+                DEMItem dem = dgvr.DataBoundItem as DEMItem;
+                if (dem.Include)
+                {
+                    DataGridViewComboBoxCell comboCell = dgvr.Cells["colError"] as DataGridViewComboBoxCell;
+                    if (comboCell.Value== null)
+                    {
+                        grdData.Select();
+                        comboCell.Selected = true;
+                        MessageBox.Show("You must select an error surface for all DEM Surveys that are to be included in the operation.", "Missing Error Surface", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return false;
+                    }
+                }
+            }
+
             if (!GCDCore.Project.ProjectManager.Project.IsReferenceSurfaceNameUnique(txtName.Text, null))
             {
                 MessageBox.Show("The GCD project already contains a reference surface with this name. Please choose a unique name for the reference surface.", "Name Already Exists", MessageBoxButtons.OK, MessageBoxIcon.Information);
