@@ -527,8 +527,24 @@ namespace GCDCore.UserInterface.SurveyLibrary
                     }
                     else
                     {
-                        gResult = GCDConsoleLib.RasterOperators.ExtendedCopy(ucRaster.SelectedItem, fiOutput, ExtImporter.Output);
-                        Debug.WriteLine("Copying raster:" + ExtImporter.Output.ToString());
+                        if (ucRaster.SelectedItem.Extent.Equals(ExtImporter.Output))
+                        {
+                            // Output extent is same as original raster. Simple dataset copy
+                            if (ucRaster.SelectedItem.driver == GCDConsoleLib.Raster.RasterDriver.GTiff)
+                            {
+                                ucRaster.SelectedItem.Copy(fiOutput);
+                                gResult = new GCDConsoleLib.Raster(fiOutput);
+                            }
+                            else
+                            {
+                                gResult = GCDConsoleLib.RasterOperators.ExtendedCopy(ucRaster.SelectedItem, fiOutput);
+                            }
+                        }
+                        else
+                        {
+                            // Output extent differs from original raster. Use extended copy
+                            gResult = GCDConsoleLib.RasterOperators.ExtendedCopy(ucRaster.SelectedItem, fiOutput, ExtImporter.Output);
+                        }
                     }
 
                     // This method will check to see if pyrmaids are need and then build if necessary.
