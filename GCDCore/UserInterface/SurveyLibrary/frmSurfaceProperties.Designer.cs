@@ -122,14 +122,14 @@
             this.cmdHelp.Text = "Help";
             this.cmdHelp.UseVisualStyleBackColor = true;
             // 
-            // groupBox1
+            // grpProperties
             // 
             this.grpProperties.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.grpProperties.Controls.Add(this.grdData);
             this.grpProperties.Location = new System.Drawing.Point(12, 109);
-            this.grpProperties.Name = "groupBox1";
+            this.grpProperties.Name = "grpProperties";
             this.grpProperties.Size = new System.Drawing.Size(460, 180);
             this.grpProperties.TabIndex = 8;
             this.grpProperties.TabStop = false;
@@ -191,6 +191,8 @@
             // 
             // txtSurveyDate
             // 
+            this.txtSurveyDate.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtSurveyDate.Location = new System.Drawing.Point(82, 81);
             this.txtSurveyDate.Name = "txtSurveyDate";
             this.txtSurveyDate.ReadOnly = true;
@@ -209,7 +211,7 @@
             this.cmdSurveyDate.UseVisualStyleBackColor = true;
             this.cmdSurveyDate.Click += new System.EventHandler(this.cmdSurveyDate_Click);
             // 
-            // frmDEMProperties
+            // frmSurfaceProperties
             // 
             this.AcceptButton = this.cmdOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -230,7 +232,7 @@
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(280, 230);
-            this.Name = "frmDEMProperties";
+            this.Name = "frmSurfaceProperties";
             this.Text = "DEM Properties";
             this.Load += new System.EventHandler(this.frmDEMProperties_Load);
             this.grpProperties.ResumeLayout(false);
