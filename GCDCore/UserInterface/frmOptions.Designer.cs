@@ -40,34 +40,25 @@ namespace GCDCore.UserInterface.Options
             this.btnHelp = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
             this.TabControl1 = new System.Windows.Forms.TabControl();
-            this.TabPage1 = new System.Windows.Forms.TabPage();
-            this.GroupBox2 = new System.Windows.Forms.GroupBox();
-            this.cmdDefault = new System.Windows.Forms.Button();
-            this.txtWorkspace = new System.Windows.Forms.TextBox();
-            this.btnBrowse = new System.Windows.Forms.Button();
-            this.btnExploreWorkspace = new System.Windows.Forms.Button();
-            this.btnClearWorkspace = new System.Windows.Forms.Button();
-            this.chkBoxValidateProjectOnLoad = new System.Windows.Forms.CheckBox();
-            this.chkClearWorkspaceOnStartup = new System.Windows.Forms.CheckBox();
             this.TabPage2 = new System.Windows.Forms.TabPage();
             this.grdSurveyTypes = new System.Windows.Forms.DataGridView();
             this.colSurveyType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colUncertainty = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TabPage3 = new System.Windows.Forms.TabPage();
+            this.chkComparativeSymbology = new System.Windows.Forms.CheckBox();
+            this.chkAutoApplyTransparency = new System.Windows.Forms.CheckBox();
             this.grbTransparencyLayer = new System.Windows.Forms.GroupBox();
             this.chkErrorSurfacesTransparency = new System.Windows.Forms.CheckBox();
             this.Label7 = new System.Windows.Forms.Label();
             this.chkAnalysesTransparency = new System.Windows.Forms.CheckBox();
             this.chkAssociatedSurfacesTransparency = new System.Windows.Forms.CheckBox();
             this.nudTransparency = new System.Windows.Forms.NumericUpDown();
-            this.chkAutoApplyTransparency = new System.Windows.Forms.CheckBox();
             this.grbComparitiveLayers = new System.Windows.Forms.GroupBox();
             this.chkPointDensityComparative = new System.Windows.Forms.CheckBox();
             this.chkDoDComparative = new System.Windows.Forms.CheckBox();
             this.chkFISErrorComparative = new System.Windows.Forms.CheckBox();
             this.chkInterpolationErrorComparative = new System.Windows.Forms.CheckBox();
             this.chk3DPointQualityComparative = new System.Windows.Forms.CheckBox();
-            this.chkComparativeSymbology = new System.Windows.Forms.CheckBox();
             this.TabPage4 = new System.Windows.Forms.TabPage();
             this.GroupBox1 = new System.Windows.Forms.GroupBox();
             this.lblWidth = new System.Windows.Forms.Label();
@@ -80,8 +71,6 @@ namespace GCDCore.UserInterface.Options
             this.SurveyTypesBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.ttpTooltip = new System.Windows.Forms.ToolTip(this.components);
             this.TabControl1.SuspendLayout();
-            this.TabPage1.SuspendLayout();
-            this.GroupBox2.SuspendLayout();
             this.TabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdSurveyTypes)).BeginInit();
             this.TabPage3.SuspendLayout();
@@ -122,7 +111,6 @@ namespace GCDCore.UserInterface.Options
             this.TabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TabControl1.Controls.Add(this.TabPage1);
             this.TabControl1.Controls.Add(this.TabPage2);
             this.TabControl1.Controls.Add(this.TabPage3);
             this.TabControl1.Controls.Add(this.TabPage4);
@@ -132,106 +120,6 @@ namespace GCDCore.UserInterface.Options
             this.TabControl1.SelectedIndex = 0;
             this.TabControl1.Size = new System.Drawing.Size(508, 309);
             this.TabControl1.TabIndex = 0;
-            // 
-            // TabPage1
-            // 
-            this.TabPage1.Controls.Add(this.GroupBox2);
-            this.TabPage1.Controls.Add(this.chkBoxValidateProjectOnLoad);
-            this.TabPage1.Controls.Add(this.chkClearWorkspaceOnStartup);
-            this.TabPage1.Location = new System.Drawing.Point(4, 22);
-            this.TabPage1.Name = "TabPage1";
-            this.TabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage1.Size = new System.Drawing.Size(500, 283);
-            this.TabPage1.TabIndex = 0;
-            this.TabPage1.Text = "Workspace";
-            this.TabPage1.UseVisualStyleBackColor = true;
-            // 
-            // GroupBox2
-            // 
-            this.GroupBox2.Controls.Add(this.cmdDefault);
-            this.GroupBox2.Controls.Add(this.txtWorkspace);
-            this.GroupBox2.Controls.Add(this.btnBrowse);
-            this.GroupBox2.Controls.Add(this.btnExploreWorkspace);
-            this.GroupBox2.Controls.Add(this.btnClearWorkspace);
-            this.GroupBox2.Location = new System.Drawing.Point(11, 9);
-            this.GroupBox2.Name = "GroupBox2";
-            this.GroupBox2.Size = new System.Drawing.Size(483, 80);
-            this.GroupBox2.TabIndex = 0;
-            this.GroupBox2.TabStop = false;
-            this.GroupBox2.Text = "Temporary Workspace Folder";
-            // 
-            // cmdDefault
-            // 
-            this.cmdDefault.Location = new System.Drawing.Point(328, 45);
-            this.cmdDefault.Name = "cmdDefault";
-            this.cmdDefault.Size = new System.Drawing.Size(148, 23);
-            this.cmdDefault.TabIndex = 4;
-            this.cmdDefault.Text = "Use Default Workspace";
-            this.cmdDefault.UseVisualStyleBackColor = true;
-            this.cmdDefault.Click += new System.EventHandler(this.cmdDefault_Click);
-            // 
-            // txtWorkspace
-            // 
-            this.txtWorkspace.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtWorkspace.Location = new System.Drawing.Point(6, 19);
-            this.txtWorkspace.Name = "txtWorkspace";
-            this.txtWorkspace.ReadOnly = true;
-            this.txtWorkspace.Size = new System.Drawing.Size(436, 20);
-            this.txtWorkspace.TabIndex = 0;
-            // 
-            // btnBrowse
-            // 
-            this.btnBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnBrowse.Image = ((System.Drawing.Image)(resources.GetObject("btnBrowse.Image")));
-            this.btnBrowse.Location = new System.Drawing.Point(448, 18);
-            this.btnBrowse.Name = "btnBrowse";
-            this.btnBrowse.Size = new System.Drawing.Size(29, 23);
-            this.btnBrowse.TabIndex = 1;
-            this.btnBrowse.UseVisualStyleBackColor = true;
-            this.btnBrowse.Click += new System.EventHandler(this.btnBrowseChangeWorkspace_Click);
-            // 
-            // btnExploreWorkspace
-            // 
-            this.btnExploreWorkspace.Location = new System.Drawing.Point(6, 45);
-            this.btnExploreWorkspace.Name = "btnExploreWorkspace";
-            this.btnExploreWorkspace.Size = new System.Drawing.Size(148, 23);
-            this.btnExploreWorkspace.TabIndex = 2;
-            this.btnExploreWorkspace.Text = "Open In Explorer";
-            this.btnExploreWorkspace.UseVisualStyleBackColor = true;
-            this.btnExploreWorkspace.Click += new System.EventHandler(this.btnExploreWorkspace_Click);
-            // 
-            // btnClearWorkspace
-            // 
-            this.btnClearWorkspace.Location = new System.Drawing.Point(167, 45);
-            this.btnClearWorkspace.Name = "btnClearWorkspace";
-            this.btnClearWorkspace.Size = new System.Drawing.Size(148, 23);
-            this.btnClearWorkspace.TabIndex = 3;
-            this.btnClearWorkspace.Text = "Clear Workspace";
-            this.btnClearWorkspace.UseVisualStyleBackColor = true;
-            this.btnClearWorkspace.Click += new System.EventHandler(this.btnClearWorkspace_Click);
-            // 
-            // chkBoxValidateProjectOnLoad
-            // 
-            this.chkBoxValidateProjectOnLoad.AutoSize = true;
-            this.chkBoxValidateProjectOnLoad.Location = new System.Drawing.Point(11, 118);
-            this.chkBoxValidateProjectOnLoad.Name = "chkBoxValidateProjectOnLoad";
-            this.chkBoxValidateProjectOnLoad.Size = new System.Drawing.Size(163, 17);
-            this.chkBoxValidateProjectOnLoad.TabIndex = 4;
-            this.chkBoxValidateProjectOnLoad.Text = "Validate GCD project on load";
-            this.chkBoxValidateProjectOnLoad.UseVisualStyleBackColor = true;
-            // 
-            // chkClearWorkspaceOnStartup
-            // 
-            this.chkClearWorkspaceOnStartup.AutoSize = true;
-            this.chkClearWorkspaceOnStartup.Checked = true;
-            this.chkClearWorkspaceOnStartup.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkClearWorkspaceOnStartup.Location = new System.Drawing.Point(11, 97);
-            this.chkClearWorkspaceOnStartup.Name = "chkClearWorkspaceOnStartup";
-            this.chkClearWorkspaceOnStartup.Size = new System.Drawing.Size(155, 17);
-            this.chkClearWorkspaceOnStartup.TabIndex = 1;
-            this.chkClearWorkspaceOnStartup.Text = "Clear workspace on startup";
-            this.chkClearWorkspaceOnStartup.UseVisualStyleBackColor = true;
             // 
             // TabPage2
             // 
@@ -284,6 +172,29 @@ namespace GCDCore.UserInterface.Options
             this.TabPage3.TabIndex = 2;
             this.TabPage3.Text = "Symbology";
             this.TabPage3.UseVisualStyleBackColor = true;
+            // 
+            // chkComparativeSymbology
+            // 
+            this.chkComparativeSymbology.AutoSize = true;
+            this.chkComparativeSymbology.Enabled = false;
+            this.chkComparativeSymbology.Location = new System.Drawing.Point(214, 12);
+            this.chkComparativeSymbology.Margin = new System.Windows.Forms.Padding(2);
+            this.chkComparativeSymbology.Name = "chkComparativeSymbology";
+            this.chkComparativeSymbology.Size = new System.Drawing.Size(15, 14);
+            this.chkComparativeSymbology.TabIndex = 6;
+            this.chkComparativeSymbology.UseVisualStyleBackColor = true;
+            this.chkComparativeSymbology.CheckedChanged += new System.EventHandler(this.chkComparativeSymbology_CheckedChanged);
+            // 
+            // chkAutoApplyTransparency
+            // 
+            this.chkAutoApplyTransparency.AutoSize = true;
+            this.chkAutoApplyTransparency.Location = new System.Drawing.Point(27, 12);
+            this.chkAutoApplyTransparency.Margin = new System.Windows.Forms.Padding(2);
+            this.chkAutoApplyTransparency.Name = "chkAutoApplyTransparency";
+            this.chkAutoApplyTransparency.Size = new System.Drawing.Size(15, 14);
+            this.chkAutoApplyTransparency.TabIndex = 8;
+            this.chkAutoApplyTransparency.UseVisualStyleBackColor = true;
+            this.chkAutoApplyTransparency.CheckedChanged += new System.EventHandler(this.chkAutoApplyTransparency_CheckedChanged);
             // 
             // grbTransparencyLayer
             // 
@@ -372,17 +283,6 @@ namespace GCDCore.UserInterface.Options
             0,
             0});
             // 
-            // chkAutoApplyTransparency
-            // 
-            this.chkAutoApplyTransparency.AutoSize = true;
-            this.chkAutoApplyTransparency.Location = new System.Drawing.Point(27, 12);
-            this.chkAutoApplyTransparency.Margin = new System.Windows.Forms.Padding(2);
-            this.chkAutoApplyTransparency.Name = "chkAutoApplyTransparency";
-            this.chkAutoApplyTransparency.Size = new System.Drawing.Size(15, 14);
-            this.chkAutoApplyTransparency.TabIndex = 8;
-            this.chkAutoApplyTransparency.UseVisualStyleBackColor = true;
-            this.chkAutoApplyTransparency.CheckedChanged += new System.EventHandler(this.chkAutoApplyTransparency_CheckedChanged);
-            // 
             // grbComparitiveLayers
             // 
             this.grbComparitiveLayers.Controls.Add(this.chkPointDensityComparative);
@@ -454,18 +354,6 @@ namespace GCDCore.UserInterface.Options
             this.chk3DPointQualityComparative.TabIndex = 0;
             this.chk3DPointQualityComparative.Text = "3D Point Quality";
             this.chk3DPointQualityComparative.UseVisualStyleBackColor = true;
-            // 
-            // chkComparativeSymbology
-            // 
-            this.chkComparativeSymbology.AutoSize = true;
-            this.chkComparativeSymbology.Enabled = false;
-            this.chkComparativeSymbology.Location = new System.Drawing.Point(214, 12);
-            this.chkComparativeSymbology.Margin = new System.Windows.Forms.Padding(2);
-            this.chkComparativeSymbology.Name = "chkComparativeSymbology";
-            this.chkComparativeSymbology.Size = new System.Drawing.Size(15, 14);
-            this.chkComparativeSymbology.TabIndex = 6;
-            this.chkComparativeSymbology.UseVisualStyleBackColor = true;
-            this.chkComparativeSymbology.CheckedChanged += new System.EventHandler(this.chkComparativeSymbology_CheckedChanged);
             // 
             // TabPage4
             // 
@@ -601,10 +489,6 @@ namespace GCDCore.UserInterface.Options
             this.Text = "GCD Options";
             this.Load += new System.EventHandler(this.frmOptions_Load);
             this.TabControl1.ResumeLayout(false);
-            this.TabPage1.ResumeLayout(false);
-            this.TabPage1.PerformLayout();
-            this.GroupBox2.ResumeLayout(false);
-            this.GroupBox2.PerformLayout();
             this.TabPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.grdSurveyTypes)).EndInit();
             this.TabPage3.ResumeLayout(false);
@@ -628,11 +512,6 @@ namespace GCDCore.UserInterface.Options
         internal System.Windows.Forms.Button btnHelp;
         internal System.Windows.Forms.Button btnClose;
 		internal System.Windows.Forms.TabControl TabControl1;
-		internal System.Windows.Forms.TabPage TabPage1;
-        internal System.Windows.Forms.TextBox txtWorkspace;
-		internal System.Windows.Forms.CheckBox chkClearWorkspaceOnStartup;
-        internal System.Windows.Forms.Button btnClearWorkspace;
-        internal System.Windows.Forms.Button btnBrowse;
 		internal System.Windows.Forms.TabPage TabPage2;
 		internal System.Windows.Forms.TabPage TabPage3;
 		internal System.Windows.Forms.ToolTip ttpTooltip;
@@ -642,9 +521,7 @@ namespace GCDCore.UserInterface.Options
 		internal System.Windows.Forms.Label lblWidth;
 		internal System.Windows.Forms.NumericUpDown numChartHeight;
 		internal System.Windows.Forms.NumericUpDown numChartWidth;
-        internal System.Windows.Forms.Button btnExploreWorkspace;
 		internal System.Windows.Forms.GroupBox GroupBox1;
-		internal System.Windows.Forms.CheckBox chkBoxValidateProjectOnLoad;
 		internal System.Windows.Forms.GroupBox grbComparitiveLayers;
 		internal System.Windows.Forms.CheckBox chkPointDensityComparative;
 		internal System.Windows.Forms.CheckBox chkDoDComparative;
@@ -659,8 +536,6 @@ namespace GCDCore.UserInterface.Options
 		internal System.Windows.Forms.Label Label7;
 		internal System.Windows.Forms.NumericUpDown nudTransparency;
 		internal System.Windows.Forms.CheckBox chkErrorSurfacesTransparency;
-		internal System.Windows.Forms.GroupBox GroupBox2;
-        internal System.Windows.Forms.Button cmdDefault;
 		internal System.Windows.Forms.TabPage TabPage5;
         internal System.Windows.Forms.LinkLabel lnkPyramidsHelp;
 		internal System.Windows.Forms.CheckedListBox lstPyramids;

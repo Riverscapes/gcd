@@ -33,22 +33,6 @@ namespace GCDCore.UserInterface.Project
 
         private void frmProjectProperties_Load(System.Object sender, System.EventArgs e)
         {
-            if (WorkspaceManager.WorkspacePath.Contains(" "))
-            {
-                MessageBox.Show(string.Format("The specified temp workspace directory contains spaces ({0}). You must specify a temp workspace that does not contain spaces or punctuation characters in the GCD Options before you create or open a GCD project.", WorkspaceManager.WorkspacePath), GCDCore.Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                DialogResult = DialogResult.Abort;
-                return;
-            }
-            else
-            {
-                if (!Directory.Exists(WorkspaceManager.WorkspacePath))
-                {
-                    MessageBox.Show("The temporary workspace directory does not exist. Change the temporary workspace path in GCD Options before creating or opening a GCD project.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    DialogResult = DialogResult.Abort;
-                    return;
-                }
-            }
-
             grdMetaData.AllowUserToResizeRows = false;
             grdMetaData.AllowUserToOrderColumns = false;
 

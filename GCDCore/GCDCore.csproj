@@ -373,7 +373,6 @@
     <Compile Include="Visualization\DoDHistogramViewer.cs" />
     <Compile Include="Visualization\ElevationChangeBarViewer.cs" />
     <Compile Include="Visualization\ViewerBase.cs" />
-    <Compile Include="WorkspaceManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GCDConsoleLib\GCDConsoleLib.csproj">

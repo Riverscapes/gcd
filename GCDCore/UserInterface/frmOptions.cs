@@ -51,9 +51,7 @@ namespace GCDCore.UserInterface.Options
 
             //ttpTooltip.SetToolTip(nbrError, My.Resources.ttpOptionsFormSurveyTypeError)
 
-            txtWorkspace.Text = WorkspaceManager.WorkspacePath;
-            chkClearWorkspaceOnStartup.Checked = Properties.Settings.Default.ClearWorkspaceOnStartup;
-            chkBoxValidateProjectOnLoad.Checked = Properties.Settings.Default.ValidateProjectOnLoad;
+            //chkBoxValidateProjectOnLoad.Checked = Properties.Settings.Default.ValidateProjectOnLoad;
             chkComparativeSymbology.Checked = Properties.Settings.Default.ApplyComparativeSymbology;
             chkAutoApplyTransparency.Checked = Properties.Settings.Default.ApplyTransparencySymbology;
 
@@ -113,22 +111,10 @@ namespace GCDCore.UserInterface.Options
         }
 
         private void btnOK_Click(System.Object sender, System.EventArgs e)
-        {
-            if (WorkspaceManager.ValidateWorkspace(txtWorkspace.Text))
-            {
-                WorkspaceManager.SetWorkspacePath(txtWorkspace.Text);
-                Properties.Settings.Default.TempWorkspace = txtWorkspace.Text;
-            }
-            else
-            {
-                this.DialogResult = System.Windows.Forms.DialogResult.None;
-                return;
-            }
-
-            Properties.Settings.Default.ClearWorkspaceOnStartup = chkClearWorkspaceOnStartup.Checked;
+        {         
             //GCDCore.Properties.Settings.Default.AddInputLayersToMap = chkAddInputLayersToMap.Checked
             //GCDCore.Properties.Settings.Default.AddOutputLayersToMap = chkAddOutputLayersToMap.Checked
-            Properties.Settings.Default.ValidateProjectOnLoad = chkBoxValidateProjectOnLoad.Checked;
+            //Properties.Settings.Default.ValidateProjectOnLoad = chkBoxValidateProjectOnLoad.Checked;
             Properties.Settings.Default.ApplyComparativeSymbology = chkComparativeSymbology.Checked;
             Properties.Settings.Default.ApplyTransparencySymbology = chkAutoApplyTransparency.Checked;
 
@@ -168,86 +154,7 @@ namespace GCDCore.UserInterface.Options
             // Save the project settings
             Properties.Settings.Default.Save();
             this.Close();
-        }
-
-        private void btnBrowseChangeWorkspace_Click(System.Object sender, System.EventArgs e)
-        {
-            FolderBrowserDialog pFolderBrowserDialog = new FolderBrowserDialog();
-            pFolderBrowserDialog.Description = string.Format("Select {0} Temporary Workspace", Properties.Resources.ApplicationNameShort);
-            if (pFolderBrowserDialog.ShowDialog() == DialogResult.OK)
-            {
-                if (WorkspaceManager.ValidateWorkspace(pFolderBrowserDialog.SelectedPath))
-                {
-                    txtWorkspace.Text = pFolderBrowserDialog.SelectedPath;
-                }
-            }
-        }
-
-        private void btnClearWorkspace_Click(System.Object sender, System.EventArgs e)
-        {
-            if (!(txtWorkspace.Text == WorkspaceManager.WorkspacePath))
-            {
-                MessageBox.Show("Please save your settings before clearing workspace", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
-            if (MessageBox.Show("Are you sure you want to clear the workspace?", Properties.Resources.ApplicationNameLong, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2)
-                == DialogResult.No)
-            {
-                return;
-            }
-
-            try
-            {
-                Cursor.Current = Cursors.WaitCursor;
-                WorkspaceManager.ClearWorkspace();
-                Cursor.Current = Cursors.Default;
-                MessageBox.Show("Workspace cleared successfully.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            catch (Exception ex)
-            {
-                ex.Data["Workspace"] = WorkspaceManager.WorkspacePath;
-                naru.error.ExceptionUI.HandleException(ex, "Error attempting to clear GCD temporary workspace");
-            }
-            finally
-            {
-                Cursor.Current = Cursors.Default;
-            }
-        }
-
-        private void btnExploreWorkspace_Click(System.Object sender, System.EventArgs e)
-        {
-            if (string.IsNullOrEmpty(txtWorkspace.Text))
-            {
-                MessageBox.Show("You must define a temporary workspace before you can open it in Windows Explorer.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
-            else
-            {
-                if (!System.IO.Directory.Exists(txtWorkspace.Text))
-                {
-                    MessageBox.Show("The temporary workspace is not a valid folder. Browse and set the temporary workspace to an existing folder on your computer. This should preferably be a folder without spaces or periods in the path.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
-                }
-            }
-
-            // Should only get to here if the path is valid.
-            Process.Start("explorer.exe", txtWorkspace.Text);
-        }
-
-        private void cmdDefault_Click(System.Object sender, System.EventArgs e)
-        {
-            string sNewWorkspacePath = WorkspaceManager.GetDefaultWorkspace(Properties.Resources.ApplicationNameShort);
-            if (WorkspaceManager.ValidateWorkspace(sNewWorkspacePath))
-            {
-                txtWorkspace.Text = sNewWorkspacePath;
-            }
-        }
-
-        private void txtWorkspace_TextChanged(System.Object sender, System.EventArgs e)
-        {
-            btnBrowse.Enabled = (!string.IsNullOrEmpty(txtWorkspace.Text)) && System.IO.Directory.Exists(txtWorkspace.Text);
-            btnClearWorkspace.Enabled = btnBrowse.Enabled;
-        }
+        }  
 
         private void chkComparativeSymbology_CheckedChanged(System.Object sender, System.EventArgs e)
         {
