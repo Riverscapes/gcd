@@ -42,7 +42,17 @@ namespace GCDStandalone
                     string[] gcdFiles = System.IO.Directory.GetFiles(lastGCD, "*.gcd", System.IO.SearchOption.TopDirectoryOnly);
                     if (gcdFiles.Length == 1)
                     {
-                        OpenGCDProject(gcdFiles[0]);
+                        try
+                        {
+                            OpenGCDProject(gcdFiles[0]);
+                        }
+                        catch (Exception ex)
+                        {
+                            // Something went wrong with the last opened project. Ensure it doesn't try to get opened again.
+                            GCDCore.Properties.Settings.Default.LastUsedProjectFolder = string.Empty;
+                            GCDCore.Properties.Settings.Default.Save();
+                            closeGCDProjectToolStripMenuItem_Click(null, null);
+                        }
                     }
                 }
             }
