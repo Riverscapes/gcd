@@ -40,7 +40,7 @@ namespace GCDCore.UserInterface.Project
 
         private void ProjectExplorerUC_Load(object sender, System.EventArgs e)
         {
-            LoadTree(null);
+            //LoadTree(null);
 
             // AddToMapToolStripMenuItem_Click
             this.treProject.MouseDown += treProject_MouseDown;
@@ -143,7 +143,8 @@ namespace GCDCore.UserInterface.Project
 
             if (ProjectManager.Project is GCDProject)
             {
-                LoadTree(treProject, false, selectItem, eSortSurveyBy);
+                //LoadTree(treProject, false, selectItem, eSortSurveyBy);
+                LoadTree(selectItem);
             }
         }
 
@@ -200,6 +201,23 @@ namespace GCDCore.UserInterface.Project
             }
 
             return newNode;
+        }
+
+        public void LoadTree(ProjectTreeNode selectItem)
+        {
+            TreeNodeTypes.TreeNodeGroup nodProject = new TreeNodeTypes.TreeNodeGroup(ProjectManager.Project.Name, "Project", "Project", components, true, 1);
+
+            TreeNodeTypes.TreeNodeGroup nodInputs = new TreeNodeTypes.TreeNodeGroup(m_sGroupInputs, "Input", "Inputs", components, true);
+            nodProject.Nodes.Add(nodInputs);
+
+            TreeNodeTypes.TreeNodeGroup nodDEMSurveys = new TreeNodeTypes.TreeNodeGroup("DEM Surveys", "DEM Survey", "DEM Surveys", components, true);
+            nodInputs.Nodes.Add(nodDEMSurveys);
+
+            nodDEMSurveys.Nodes.Add(new TreeNodeTypes.LinearExtractionGroup<GCDCore.Project.LinearExtraction.LinearExtractionFromDEM>("Linear Extractions From DEM Surveys", "Linear Extraction", "Linear Extractions", components));
+
+            nodInputs.Nodes.Add(new TreeNodeTypes.ReferenceSurfaceGroup(components));
+
+            treProject.Nodes.Add(nodProject);
         }
 
         public void LoadTree(TreeView tre, bool bCheckboxes, ProjectTreeNode selectItem, SortSurveyBy eSortSurveyBy = SortSurveyBy.SurveyDateDsc)
@@ -532,6 +550,8 @@ namespace GCDCore.UserInterface.Project
 
         private void treProject_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
         {
+            return;
+
             if (e.Button != MouseButtons.Right)
                 return;
 

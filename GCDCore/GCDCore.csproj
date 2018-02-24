@@ -304,6 +304,13 @@
     <Compile Include="UserInterface\ProfileRoutes\frmProfileRouteProperties.Designer.cs">
       <DependentUpon>frmProfileRouteProperties.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserInterface\Project\TreeNodeTypes\DEMSurveysGroup.cs" />
+    <Compile Include="UserInterface\Project\TreeNodeTypes\GCDProjectGroup.cs" />
+    <Compile Include="UserInterface\Project\TreeNodeTypes\LinearExtractionGroup.cs" />
+    <Compile Include="UserInterface\Project\TreeNodeTypes\ReferenceSurfaceGroup.cs" />
+    <Compile Include="UserInterface\Project\TreeNodeTypes\TreeNodeBase.cs" />
+    <Compile Include="UserInterface\Project\TreeNodeTypes\TreeNodeGroup.cs" />
+    <Compile Include="UserInterface\Project\TreeNodeTypes\TreeNodeItem.cs" />
     <Compile Include="UserInterface\Project\ucProjectExplorer.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -612,6 +619,7 @@
   <ItemGroup>
     <None Include="Resources\linear_extraction.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
