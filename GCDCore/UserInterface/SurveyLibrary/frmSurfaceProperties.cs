@@ -39,6 +39,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
         private void frmDEMProperties_Load(object sender, EventArgs e)
         {
             Text = string.Format("{0} Properties", Noun);
+            grpProperties.Text = string.Format("{0} Raster Properties", Noun);
 
             txtName.Text = Surface.Name;
             txtPath.Text = ProjectManager.Project.GetRelativePath(Surface.Raster.GISFileInfo);
