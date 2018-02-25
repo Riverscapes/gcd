@@ -107,7 +107,7 @@ namespace GCDAddIn
             short fDEMTransparency = (short)-1;
             IGroupLayer pSurveyLyr = AddSurveyGroupLayer(dem);
 
-            FileInfo hillshade = ProjectManager.OutputManager.DEMSurveyHillShadeRasterPath(dem.Name);
+            FileInfo hillshade = ProjectManager.OutputManager.HillShadeRasterPath(dem.Raster.GISFileInfo);
             if (hillshade.Exists)
             {
                 Raster gHillshade = new Raster(hillshade);
@@ -123,6 +123,14 @@ namespace GCDAddIn
         {
             short fDEMTransparency = (short)-1;
             IGroupLayer pSurveyLyr = AddReferenceSurfaceGroupLayer(surf);
+
+            FileInfo hillshade = ProjectManager.OutputManager.HillShadeRasterPath(surf.Raster.GISFileInfo);
+            if (hillshade.Exists)
+            {
+                Raster gHillshade = new Raster(hillshade);
+                AddRasterLayer(gHillshade, null, surf.Name + " Hillshade", pSurveyLyr, "Aspect", -1, ExpandLegend: false);
+                fDEMTransparency = DefaultTransparency;
+            }
 
             IRasterRenderer demRenderer = RasterSymbolization.CreateDEMColorRamp(surf.Raster);
             AddRasterLayer(surf.Raster, demRenderer, surf.Name, pSurveyLyr, surf.LayerHeader, fDEMTransparency);

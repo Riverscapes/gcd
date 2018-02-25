@@ -10,7 +10,6 @@ namespace GCDCore.Project
 {
     public class DEMSurvey : Surface
     {
-        public readonly HillShade Hillshade;
         public readonly naru.ui.SortableBindingList<AssocSurface> AssocSurfaces;
 
         public string SurveyMethod { get; set; } // Single survey methods
@@ -28,12 +27,6 @@ namespace GCDCore.Project
             SurveyDate = surveyDate;
 
             AssocSurfaces = new naru.ui.SortableBindingList<AssocSurface>();
-
-            FileInfo hsPath = Project.ProjectManager.OutputManager.DEMSurveyHillShadeRasterPath(name);
-            if (hsPath.Exists)
-            {
-                Hillshade = new HillShade(hsPath);
-            }
         }
 
         public DEMSurvey(XmlNode nodDEM)

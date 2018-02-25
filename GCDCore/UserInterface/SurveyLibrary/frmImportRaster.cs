@@ -553,7 +553,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
                     if (ExtImporter.Purpose == ExtentImporter.Purposes.FirstDEM || ExtImporter.Purpose == ExtentImporter.Purposes.SubsequentDEM)
                     {
                         // Now try the hillshade for DEM Surveys
-                        System.IO.FileInfo sHillshadePath = ProjectManager.OutputManager.DEMSurveyHillShadeRasterPath(txtName.Text);
+                        System.IO.FileInfo sHillshadePath = ProjectManager.OutputManager.HillShadeRasterPath(fiOutput);
                         GCDConsoleLib.RasterOperators.Hillshade(gResult, sHillshadePath);
                         ProjectManager.PyramidManager.PerformRasterPyramids(GCDCore.RasterPyramidManager.PyramidRasterTypes.Hillshade, sHillshadePath);
                     }

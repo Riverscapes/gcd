@@ -10,6 +10,8 @@ namespace GCDCore.Project
 {
     public class Surface : GCDProjectRasterItem
     {
+        public readonly HillShade Hillshade;
+
         public readonly naru.ui.SortableBindingList<ErrorSurface> ErrorSurfaces;
 
         public override string Noun { get { return "Reference Surface"; } }
@@ -53,6 +55,12 @@ namespace GCDCore.Project
             : base(name, rasterPath)
         {
             ErrorSurfaces = new naru.ui.SortableBindingList<ErrorSurface>();
+
+            FileInfo hsPath = Project.ProjectManager.OutputManager.HillShadeRasterPath(rasterPath);
+            if (hsPath.Exists)
+            {
+                Hillshade = new HillShade(hsPath);
+            }
         }
 
         public Surface(string name, GCDConsoleLib.Raster raster)

@@ -50,6 +50,9 @@ namespace GCDCore.Engines
             GCDConsoleLib.Raster rSurface = BuildReferenceSurface(rsPath);
             GCDConsoleLib.Raster rError = BuildErrorSurface(errPath);
 
+            // Generate hillshade
+            GCDConsoleLib.RasterOperators.Hillshade(rSurface, ProjectManager.OutputManager.HillShadeRasterPath(rsPath));
+
             Surface refSurf = new GCDCore.Project.Surface(Name, rSurface);
             refSurf.ErrorSurfaces.Add(new ErrorSurface(ErrorSurfaceName, rError.GISFileInfo, refSurf));
 
