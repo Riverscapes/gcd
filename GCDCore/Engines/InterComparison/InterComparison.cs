@@ -28,6 +28,8 @@ namespace GCDCore.Engines
         /// The processing in this class is identical for both cases.</remarks>
         public static void Generate(Dictionary<string, GCDConsoleLib.GCD.DoDStats> dodStats, FileInfo output)
         {
+            int DoDCount = 0;
+
             //get template and throw error if it doesnt exists
             FileInfo template = new FileInfo(Path.Combine(Project.ProjectManager.ExcelTemplatesFolder.FullName, "InterComparison.xml"));
             if (!template.Exists)
@@ -35,35 +37,23 @@ namespace GCDCore.Engines
                 throw new Exception("The GCD intercomparison spreadsheet template cannot be found at " + template.FullName);
             }
 
+            //setup ExcelXMLDocument which does the heavy lifting of updating the XML
             ExcelXMLDocument xmlExcelDoc = new ExcelXMLDocument(template.FullName);
-
-            //read template into XML document
-            XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.Load(template.FullName);
-
-            //xpaths needs to be specified with namespace, see e.g. https://stackoverflow.com/questions/36504656/how-to-select-xml-nodes-by-position-linq-or-xpath
-            var nsmgr = new XmlNamespaceManager(xmlDoc.NameTable);
-            nsmgr.AddNamespace("ss", "urn:schemas-microsoft-com:office:spreadsheet");
-
-            //clone Areal stats row
-
-            int DoDCount = 0;
-            XmlNode ArealRow;
-
-            //get template row
-            string NamedCell = "ArealDoDName";
-            ArealRow = xmlDoc.SelectSingleNode(".//ss:Row[ss:Cell[ss:NamedCell[@ss:Name='" + NamedCell + "']]]", nsmgr); // gets the cell with the named cell name
 
             foreach (KeyValuePair<string, GCDConsoleLib.GCD.DoDStats> kvp in dodStats)
             {
+                //get name and stats from input
                 string DoDName = kvp.Key;
                 GCDConsoleLib.GCD.DoDStats dodStat = kvp.Value;
 
+                //turn these into a dictionary of named values to replace in XML
                 Dictionary<string, string> dicStatValues = GetStatValues(dodStat);
-                dicStatValues.Add("TemplateRowName", DoDName);
+                dicStatValues.Add("TemplateRowName", DoDName); //Add name so the Named Range for the name (e.g. ArealDoDName) is updated
 
                 DoDCount += 1;
 
+                //update or clone all template rows. All references are maintained by the ExcelXMLDocument
+                //e.g. relative references, sum formulas and named ranges
                 if (DoDCount > 1)
                 {
                     xmlExcelDoc.CloneRow("ArealDoDName", DoDCount - 1, dicStatValues);
@@ -85,15 +75,11 @@ namespace GCDCore.Engines
             xmlExcelDoc.Save(output.FullName);
         }
 
-        private static void SetSumFormula(XmlNode xmlDoc, XmlNamespaceManager nsmgr, string SumFormularNamedCell, int SumCount)
-        {
-            XmlNode SumFormulaCell = xmlDoc.SelectSingleNode(".//ss:Cell[ss:NamedCell[@ss:Name='" + SumFormularNamedCell + "']]", nsmgr); // gets the cell with the named cell name
-
-            string SumFormula = "=SUM(R[-" + SumCount + "]C:R[-1]C)";
-            SumFormulaCell.Attributes["ss:Formula"].Value = SumFormula;
-
-        }
-
+        /// <summary>
+        /// Returns a dictionary of named range values in the XML spreadsheet to replace with stat values
+        /// </summary>
+        /// <param name="dodStat"></param>
+        /// <returns></returns>
         private static Dictionary<string, string> GetStatValues(GCDConsoleLib.GCD.DoDStats dodStat)
         {
             Dictionary<string, string> StatValues = new Dictionary<string, string>();
@@ -119,15 +105,5 @@ namespace GCDCore.Engines
             return StatValues;
         }
     }
-
-    #region "support classes"
-    class NamedRange
-    {
-        public int row;
-        public int col;
-        public string name;
-    }      
-
-    #endregion
 
 }

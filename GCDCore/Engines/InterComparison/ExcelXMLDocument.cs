@@ -10,13 +10,23 @@ namespace GCDCore.Engines
 {
     class ExcelXMLDocument
     {
-        private string _template;
-        private XmlDocument xmlDoc;
-        private XmlNamespaceManager nsmgr;
-        private Dictionary<string, NamedRange> dicNamedRanges;
+        #region "Members"
 
+            private string _template;
+            private XmlDocument xmlDoc;
+            private XmlNamespaceManager nsmgr;
+            private Dictionary<string, NamedRange> dicNamedRanges;
+
+        #endregion
+
+        #region "Constructor"
+
+        /// <summary>
+        /// Constructor. Initializes XML document and load in template, sets up namespace manager and parses named ranges
+        /// </summary>
+        /// <param name="template"></param>
         public ExcelXMLDocument(string template)
-       {
+        {
             _template = template;
 
             //read template into XML document
@@ -27,57 +37,51 @@ namespace GCDCore.Engines
             nsmgr = new XmlNamespaceManager(xmlDoc.NameTable);
             nsmgr.AddNamespace("ss", "urn:schemas-microsoft-com:office:spreadsheet");
 
-            //get named ranges
+            //parse named ranges from XML
             ParseNamedRanges();
         }
 
-        private void ParseNamedRanges()
-        {
-            dicNamedRanges = new Dictionary<string, NamedRange>();
+        #endregion
 
-            XmlNodeList NamedRangeNodes = xmlDoc.SelectNodes(".//ss:Names/ss:NamedRange", nsmgr); // gets the cell with the named cell name
+        #region "Public methods"
 
-            foreach (XmlNode NamedRange in NamedRangeNodes)
-            {
-                string name = NamedRange.Attributes["ss:Name"].Value;
-
-                string refersto = NamedRange.Attributes["ss:RefersTo"].Value;
-                //match R*C*
-                Regex r = new Regex(@".*!R(.+)C(.+)", RegexOptions.IgnoreCase);
-                Match m = r.Match(refersto);
-                string sRow = m.Groups[1].Value;
-                int iRow = int.Parse(sRow);
-
-                string sCol = m.Groups[2].Value;
-                int iCol = int.Parse(sCol);
-
-                NamedRange oNamedRange = new Engines.NamedRange();
-                oNamedRange.name = name;
-                oNamedRange.col = iCol;
-                oNamedRange.row = iRow;
-
-                dicNamedRanges.Add(name, oNamedRange);
-            }
-
-        }
-
+        /// <summary>
+        /// Updates the named values in row identified by named range using the NamedRangeValues dictionary
+        /// </summary>
+        /// <param name="NamedRange"></param>
+        /// <param name="NamedRangeValues"></param>
         public void UpdateRow(string NamedRange, Dictionary<string, string> NamedRangeValues)
         {
-            //get row
+            //Add name to dictionary
             NamedRangeValues[NamedRange] = NamedRangeValues["TemplateRowName"];
 
+            //Get temlate row
             XmlNode TemplateRow = xmlDoc.SelectSingleNode(".//ss:Row[ss:Cell[ss:NamedCell[@ss:Name='" + NamedRange + "']]]", nsmgr); // gets the cell with the named cell name
+
+            //Update all named values that match a key in the dictionary
             SetNamedCellValue(TemplateRow, NamedRangeValues);
         }
 
+        /// <summary>
+        /// Clones a row identified by NamedRange, updates the template rows named range using the NamedRangeValues dicitonary and inserts it offset rows down
+        /// </summary>
+        /// <param name="NamedRange"></param>
+        /// <param name="offset"></param>
+        /// <param name="NamedRangeValues"></param>
+        /// <remarks>
+        /// References are maintain in the UpdateReferences method 
+        /// </remarks>
         public void CloneRow(string NamedRange, int offset, Dictionary<string, string> NamedRangeValues)
         {
+            //Add name to dictionary
+
             NamedRangeValues[NamedRange] = NamedRangeValues["TemplateRowName"];
 
-            //find areal row
+            //find template row
             XmlNode TemplateRow = xmlDoc.SelectSingleNode(".//ss:Row[ss:Cell[ss:NamedCell[@ss:Name='" + NamedRange + "']]]", nsmgr); // gets the cell with the named cell name
             XmlNode TemplateRowClone = TemplateRow.Clone();
 
+            //Update all named values that match a key in the dictionary
             SetNamedCellValue(TemplateRowClone, NamedRangeValues);
 
             //Find reference row
@@ -87,13 +91,91 @@ namespace GCDCore.Engines
             int ReferenceRowBeforeInsert = NamedRangeRow + offset - 1;
             int InsertRowNumber = NamedRangeRow + offset; //we are inserting the row just below the reference row
 
+            //get reference and before nodes and insert our cloned reference row
             XmlNode ReferenceRowNode = xmlDoc.SelectSingleNode(".//ss:Row[position() >= " + ReferenceRowBeforeInsert + "]", nsmgr);
-
             XmlNode parent = TemplateRow.ParentNode;
             parent.InsertAfter(TemplateRowClone, TemplateRow);
 
+            //Maintain references
+            UpdateReferences(InsertRowNumber);
+        }
 
-            UpdateReference(InsertRowNumber);
+        /// <summary>
+        /// Write Excel XML document to filepath
+        /// </summary>
+        /// <param name="path"></param>
+        public void Save(string path)
+        {
+            xmlDoc.Save(path);
+        }
+
+        #endregion
+
+        #region "Private methods"
+
+        /// <summary>
+        /// Creates a dictionary of named ranges from XML
+        /// </summary>
+        private void ParseNamedRanges()
+        {
+            dicNamedRanges = new Dictionary<string, NamedRange>();
+
+            XmlNodeList NamedRangeNodes = xmlDoc.SelectNodes(".//ss:Names/ss:NamedRange", nsmgr); // gets the cell with the named cell name
+
+            foreach (XmlNode NamedRange in NamedRangeNodes)
+            {
+                string name = NamedRange.Attributes["ss:Name"].Value;
+                string refersto = NamedRange.Attributes["ss:RefersTo"].Value;
+
+                //match R*C*
+                Regex r = new Regex(@".*!R(.+)C(.+)", RegexOptions.IgnoreCase);
+                Match m = r.Match(refersto);
+
+                //parse row and column
+                string sRow = m.Groups[1].Value;
+                int iRow = int.Parse(sRow);
+                string sCol = m.Groups[2].Value;
+                int iCol = int.Parse(sCol);
+
+                //create named range object and add to dictionary
+                NamedRange oNamedRange = new Engines.NamedRange();
+                oNamedRange.name = name;
+                oNamedRange.col = iCol;
+                oNamedRange.row = iRow;
+                dicNamedRanges.Add(name, oNamedRange);
+            }
+
+        }
+
+        /// <summary>
+        /// Updates all references, e.g. relative references, sum formulas and named ranges, after inserting row
+        /// </summary>
+        /// <param name="InsertRowNumber"></param>
+        private void UpdateReferences(int InsertRowNumber)
+        {
+            //update named range
+            Dictionary<string, NamedRange> dicUpdatedNamedRanges = new Dictionary<string, NamedRange>();
+            foreach (NamedRange oNamedRange in dicNamedRanges.Values)
+            {
+                if (oNamedRange.row >= InsertRowNumber)
+                {
+                    oNamedRange.row += 1;
+                }
+                dicUpdatedNamedRanges.Add(oNamedRange.name, oNamedRange);
+            }
+            dicNamedRanges = dicUpdatedNamedRanges;
+            UpdateNamedRangesXML();
+
+            //Update total number of rows in spreadsheet
+            XmlNode TableNode = xmlDoc.SelectSingleNode(".//ss:Table", nsmgr); // gets the cell with the named cell name
+            string OrigExpandedRowCount = TableNode.Attributes["ss:ExpandedRowCount"].Value;
+            int iOrigExpandedRowCount = int.Parse(OrigExpandedRowCount);
+            int iNewExpandedRowCount = iOrigExpandedRowCount + 1; //add new row twice (once for area, once for volume)
+            TableNode.Attributes["ss:ExpandedRowCount"].Value = iNewExpandedRowCount.ToString();
+
+            //update formulas
+            UpdateFormulaReferences(InsertRowNumber);
+            UpdateSumFormulaRange(InsertRowNumber);
 
         }
 
@@ -122,40 +204,10 @@ namespace GCDCore.Engines
             }
         }
 
-        public void Save(string path)
-        {
-            xmlDoc.Save(path);
-        }
-
-        private void UpdateReference(int InsertRowNumber)
-        {
-            Dictionary<string, NamedRange> dicUpdatedNamedRanges = new Dictionary<string, NamedRange>();
-            foreach (NamedRange oNamedRange in dicNamedRanges.Values)
-            {
-                if (oNamedRange.row >= InsertRowNumber)
-                {
-                    oNamedRange.row += 1;
-                }
-                dicUpdatedNamedRanges.Add(oNamedRange.name, oNamedRange);
-            }
-
-            XmlNode TableNode = xmlDoc.SelectSingleNode(".//ss:Table", nsmgr); // gets the cell with the named cell name
-            string OrigExpandedRowCount = TableNode.Attributes["ss:ExpandedRowCount"].Value;
-            int iOrigExpandedRowCount = int.Parse(OrigExpandedRowCount);
-            int iNewExpandedRowCount = iOrigExpandedRowCount + 1; //add new row twice (once for area, once for volume)
-            TableNode.Attributes["ss:ExpandedRowCount"].Value = iNewExpandedRowCount.ToString();
-
-            //update formulas
-            UpdateFormulaReferences(InsertRowNumber);
-
-            UpdateSumFormulaRange(InsertRowNumber);
-
-            dicNamedRanges =  dicUpdatedNamedRanges;
-
-            UpdateNamedRangesXML();
-
-        }
-
+        /// <summary>
+        /// updates references in the form of R[-1]C
+        /// </summary>
+        /// <param name="rownumber"></param>
         private void UpdateFormulaReferences(int rownumber)
         {
             //first, find all rows, the loop through rows that are > rownumber
@@ -177,10 +229,7 @@ namespace GCDCore.Engines
                     //get formula
                     string formula = currentCell.Attributes["ss:Formula"].Value;
 
-                    //match for R
-                    //var pattern = @"R\[-(\d+)\]C"; //matches only one in =SUM(R[-1]C:R[-1]C)
                     var pattern = @"(R\[-)(\d+)(\]C)";
-
                     Regex r = new Regex(pattern, RegexOptions.IgnoreCase);
                     MatchCollection mc = r.Matches(formula);
 
@@ -216,13 +265,16 @@ namespace GCDCore.Engines
                         currentCell.Attributes["ss:Formula"].Value = NewFormula;
                     }
 
-
                 }
 
             }
 
         }
 
+        /// <summary>
+        /// Update sum formulas
+        /// </summary>
+        /// <param name="InsertRowNumber"></param>
         private void UpdateSumFormulaRange(int InsertRowNumber)
         {
             //first, find all rows, the loop through all rows to find formulas
@@ -247,6 +299,7 @@ namespace GCDCore.Engines
                     int FormulaRow = RowIndex + 1; //RowIndex is zero based, Excel Rows are one-based
                     ExcelSumFormula oExcelFormula = ParseSumFormula(formula, FormulaRow);
 
+                    //if formula is a sum formula, updates if necessary
                     if(oExcelFormula != null)
                     {
                         ExcelSumFormula oUpdatedExcelFormula = UpdateSumFormula(oExcelFormula, InsertRowNumber);
@@ -321,6 +374,9 @@ namespace GCDCore.Engines
 
         }
 
+        /// <summary>
+        /// Updates named ranges in XML spreadsheet based on the private dictionary dicNamedRanges
+        /// </summary>
         private void UpdateNamedRangesXML()
         {
             foreach (NamedRange oNamedRange in dicNamedRanges.Values)
@@ -335,6 +391,9 @@ namespace GCDCore.Engines
                 NamedRangeNode.Attributes["ss:RefersTo"].Value = replaced;
             }
         }
+
+        #endregion
+
     }
 
     #region "Support Classess"
@@ -360,6 +419,14 @@ namespace GCDCore.Engines
             return (formula);
         }
     }
+
+    class NamedRange
+    {
+        public int row;
+        public int col;
+        public string name;
+    }
+
 
     #endregion
 }
