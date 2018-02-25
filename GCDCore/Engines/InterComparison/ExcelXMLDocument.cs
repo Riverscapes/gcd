@@ -74,18 +74,27 @@ namespace GCDCore.Engines
         {
             NamedRangeValues[NamedRange] = NamedRangeValues["TemplateRowName"];
 
-            NamedRange oNamedRange = dicNamedRanges[NamedRange];
-            int row = oNamedRange.row;
-            InsertRow(row);
-
             //find areal row
             XmlNode TemplateRow = xmlDoc.SelectSingleNode(".//ss:Row[ss:Cell[ss:NamedCell[@ss:Name='" + NamedRange + "']]]", nsmgr); // gets the cell with the named cell name
             XmlNode TemplateRowClone = TemplateRow.Clone();
 
             SetNamedCellValue(TemplateRowClone, NamedRangeValues);
 
+            //Find reference row
+            //Example: Our template row is row 4, offset is one, we will insert at row 5, and use row for as the node before
+            NamedRange oNamedRange = dicNamedRanges[NamedRange];
+            int NamedRangeRow = oNamedRange.row;
+            int ReferenceRowBeforeInsert = NamedRangeRow + offset - 1;
+            int InsertRowNumber = NamedRangeRow + offset; //we are inserting the row just below the reference row
+
+            XmlNode ReferenceRowNode = xmlDoc.SelectSingleNode(".//ss:Row[position() >= " + ReferenceRowBeforeInsert + "]", nsmgr);
+
             XmlNode parent = TemplateRow.ParentNode;
             parent.InsertAfter(TemplateRowClone, TemplateRow);
+
+
+            UpdateReference(InsertRowNumber);
+
         }
 
         /// <summary>
@@ -118,7 +127,7 @@ namespace GCDCore.Engines
             xmlDoc.Save(path);
         }
 
-        private void InsertRow(int rownumber)
+        private void UpdateReference(int rownumber)
         {
             Dictionary<string, NamedRange> dicUpdatedNamedRanges = new Dictionary<string, NamedRange>();
             foreach (NamedRange oNamedRange in dicNamedRanges.Values)
@@ -137,81 +146,178 @@ namespace GCDCore.Engines
             TableNode.Attributes["ss:ExpandedRowCount"].Value = iNewExpandedRowCount.ToString();
 
             //update formulas
+            UpdateFormulaReferences(rownumber);
 
+            UpdateSumFormulaRange(rownumber);
+
+            dicNamedRanges =  dicUpdatedNamedRanges;
+
+            UpdateNamedRangesXML();
+
+        }
+
+        private void UpdateFormulaReferences(int rownumber)
+        {
             //first, find all rows, the loop through rows that are > rownumber
             XmlNodeList AllRows;
             AllRows = xmlDoc.SelectNodes(".//ss:Row", nsmgr); // gets the cell with the named cell name
 
-            try
+            for (int RowIndex = 0; RowIndex < AllRows.Count; RowIndex++)
             {
+                //get row
+                XmlNode CurrentRow = AllRows[RowIndex];
 
-                for (int RowIndex = 0; RowIndex < AllRows.Count; RowIndex++)
+                //select cells with formulas
+
+                XmlNodeList CellsWithFormulas = CurrentRow.SelectNodes(".//ss:Cell[@ss:Formula]", nsmgr);
+
+                //for each formula, check if it contains a relative reference, pattern "=R[-5]C[-4]/R[-10]C10", e.g. R[-5]C[-4]
+                foreach (XmlNode currentCell in CellsWithFormulas)
                 {
-                    //get row
-                    XmlNode CurrentRow = AllRows[RowIndex];
+                    //get formula
+                    string formula = currentCell.Attributes["ss:Formula"].Value;
 
-                    //select cells with formulas
+                    //match for R
+                    //var pattern = @"R\[-(\d+)\]C"; //matches only one in =SUM(R[-1]C:R[-1]C)
+                    var pattern = @"(R\[-)(\d+)(\]C)";
 
-                    XmlNodeList CellsWithFormulas = CurrentRow.SelectNodes(".//ss:Cell[@ss:Formula]", nsmgr);
+                    Regex r = new Regex(pattern, RegexOptions.IgnoreCase);
+                    MatchCollection mc = r.Matches(formula);
 
-                    //for each formula, check if it contains a relative reference, pattern "=R[-5]C[-4]/R[-10]C10", e.g. R[-5]C[-4]
-                    foreach (XmlNode currentCell in CellsWithFormulas)
+                    if (mc.Count > 0)
                     {
-                        //get formula
-                        string formula = currentCell.Attributes["ss:Formula"].Value;
 
-                        //match for R
-                        //var pattern = @"R\[-(\d+)\]C"; //matches only one in =SUM(R[-1]C:R[-1]C)
-                        var pattern = @"(R\[-)(\d+)(\]C)";
-
-                        Regex r = new Regex(pattern, RegexOptions.IgnoreCase);
-                        MatchCollection mc = r.Matches(formula);
-
-                        if (mc.Count > 0)
+                        string NewFormula = "";
+                        int textindex = 0;
+                        for (int matchindex = 0; matchindex < mc.Count; matchindex++)
                         {
+                            Match m = mc[matchindex];
+                            NewFormula = NewFormula + formula.Substring(textindex, m.Index - textindex);
 
-                            string NewFormula = "";
-                            int textindex = 0;
-                            for (int matchindex = 0; matchindex < mc.Count; matchindex++)
+                            string sRow = m.Groups[2].Value;
+                            int iRow = int.Parse(sRow);
+                            int correctionrow = 0;
+                            int referencerow = RowIndex - iRow;
+                            if (referencerow <= rownumber && RowIndex > rownumber)
                             {
-                                Match m = mc[matchindex];
-                                NewFormula = NewFormula + formula.Substring(textindex, m.Index - textindex);
-
-                                string sRow = m.Groups[2].Value;
-                                int iRow = int.Parse(sRow);
-                                int correctionrow = 0;
-                                int referencerow = RowIndex - iRow;
-                                if (referencerow <= rownumber && RowIndex > rownumber)
-                                {
-                                    correctionrow = 1;
-                                }
-
-                                string replace = m.Groups[1].Value + (iRow + correctionrow) + m.Groups[3].Value;
-
-                                NewFormula = NewFormula + replace;
-
-                                textindex = m.Index + m.Length;
-
+                                correctionrow = 1;
                             }
 
-                            NewFormula = NewFormula + formula.Substring(textindex);
+                            string replace = m.Groups[1].Value + (iRow + correctionrow) + m.Groups[3].Value;
 
-                            currentCell.Attributes["ss:Formula"].Value = NewFormula;
+                            NewFormula = NewFormula + replace;
+
+                            textindex = m.Index + m.Length;
+
                         }
 
+                        NewFormula = NewFormula + formula.Substring(textindex);
 
+                        currentCell.Attributes["ss:Formula"].Value = NewFormula;
+                    }
+
+
+                }
+
+            }
+
+        }
+
+        private void UpdateSumFormulaRange(int InsertRowNumber)
+        {
+            //first, find all rows, the loop through all rows to find formulas
+            //we need to do it this way to know what the row number is
+
+            XmlNodeList AllRows;
+            AllRows = xmlDoc.SelectNodes(".//ss:Row", nsmgr); // gets the cell with the named cell name
+
+            for (int RowIndex = 0; RowIndex < AllRows.Count; RowIndex++)
+            {
+                //get row
+                XmlNode CurrentRow = AllRows[RowIndex];
+
+                //select cells with formulas
+                XmlNodeList CellsWithFormulas = CurrentRow.SelectNodes(".//ss:Cell[@ss:Formula]", nsmgr);
+
+                //for each formula, check if it contains a relative reference, pattern "=R[-5]C[-4]/R[-10]C10", e.g. R[-5]C[-4]
+                foreach (XmlNode currentCell in CellsWithFormulas)
+                {
+                    //get formula
+                    string formula = currentCell.Attributes["ss:Formula"].Value;
+                    int FormulaRow = RowIndex + 1; //RowIndex is zero based, Excel Rows are one-based
+                    ExcelSumFormula oExcelFormula = ParseSumFormula(formula, FormulaRow);
+
+                    if(oExcelFormula != null)
+                    {
+                        ExcelSumFormula oUpdatedExcelFormula = UpdateSumFormula(oExcelFormula, InsertRowNumber);
+                        currentCell.Attributes["ss:Formula"].Value = oUpdatedExcelFormula.GetFormula();
                     }
 
                 }
 
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-            dicNamedRanges =  dicUpdatedNamedRanges;
 
-            UpdateNamedRangesXML();
+        }
+
+        /// <summary>
+        /// Updates the sum formula range if a new row is added just below the range or inside the range
+        /// </summary>
+        /// <param name="oExcelSumFormula"></param>
+        /// <param name="InsertRow"></param>
+        /// <returns></returns>
+        private ExcelSumFormula UpdateSumFormula(ExcelSumFormula oExcelSumFormula, int InsertRow)
+        {
+            Boolean ExpandRange = false;
+
+            //if new row is inserted just below range, expand range
+            //Example a. Range is from 5:5, new row inserted at row 5, range exanded to 4:5
+            //Example a. Range is from 2:3, new row inserted at row 4, range exanded to 2:4
+            if (InsertRow == oExcelSumFormula.ToAbsoluteRow) 
+            {
+                ExpandRange = true;
+            }
+
+            if(ExpandRange)
+            {
+                oExcelSumFormula.FromRelativeRow = oExcelSumFormula.FromRelativeRow + 1;
+            }
+
+            return (oExcelSumFormula);
+        }
+
+        /// <summary>
+        /// Parse an XML sum formula and returns a SumFormulaObject
+        /// </summary>
+        /// <remarks>
+        /// Only sums in the format =SUM(R[-1]C:R[-1]C) is currently match to lock down the system
+        /// </remarks>
+        private ExcelSumFormula ParseSumFormula(string formula, int FormulaRow)
+        {
+            //this patter will match e.g. =SUM(R[-1]C:R[-1]C) and return 2 groups, one for the first row reference and one for the second, without sign
+            string pattern = @"=SUM\(R\[-(\d+)\]C:R\[-(\d+)\]C\)"; 
+
+            Regex r = new Regex(pattern, RegexOptions.IgnoreCase);
+            MatchCollection mc = r.Matches(formula);
+
+            //return null if formula doesnt match
+            if (mc.Count != 1)
+            {
+                return (null);
+            }
+
+            //parse FromRow and ToRow
+            Match m = mc[0]; //We've alread checked that the MatchCollection only contains one match, so this is safe
+            string sFromRow = m.Groups[1].Value;
+            int iFromRow = int.Parse(sFromRow);
+            string sToRow = m.Groups[2].Value;
+            int iToRow = int.Parse(sToRow);
+
+            ExcelSumFormula oExcelSumFormula = new ExcelSumFormula();
+            oExcelSumFormula.FormulaRow = FormulaRow;
+            oExcelSumFormula.FromRelativeRow = iFromRow;
+            oExcelSumFormula.ToRelativeRow = iToRow;
+
+            return (oExcelSumFormula);
 
         }
 
@@ -231,5 +337,29 @@ namespace GCDCore.Engines
         }
     }
 
+    #region "Support Classess"
+    class ExcelSumFormula
+    {
+        public int FormulaRow { get; set; }
+        public int FromRelativeRow { get; set; }
+        public int ToRelativeRow { get; set; }
 
+        public int FromAbsoluteRow
+        {
+            get { return (FormulaRow - FromRelativeRow); }
+        }
+
+        public int ToAbsoluteRow
+        {
+            get { return (FormulaRow - ToRelativeRow); }
+        }
+
+        public string GetFormula()
+        {
+            string formula = "=SUM(R[-" + this.FromRelativeRow + "]C:R[-" + this.ToRelativeRow + "]C)";
+            return (formula);
+        }
+    }
+
+    #endregion
 }

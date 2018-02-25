@@ -66,10 +66,10 @@ namespace GCDCore.Engines
 
                 if (DoDCount > 1)
                 {
-                    xmlExcelDoc.CloneRow("ArealDoDName", DoDCount, dicStatValues);
-                    xmlExcelDoc.CloneRow("VolumeDoDName", DoDCount, dicStatValues);
-                    xmlExcelDoc.CloneRow("VerticalDoDName", DoDCount, dicStatValues);
-                    xmlExcelDoc.CloneRow("PercentagesDoDName", DoDCount, dicStatValues);
+                    xmlExcelDoc.CloneRow("ArealDoDName", DoDCount - 1, dicStatValues);
+                    xmlExcelDoc.CloneRow("VolumeDoDName", DoDCount - 1, dicStatValues);
+                    xmlExcelDoc.CloneRow("VerticalDoDName", DoDCount - 1, dicStatValues);
+                    xmlExcelDoc.CloneRow("PercentagesDoDName", DoDCount - 1, dicStatValues);
                 }
                 else
                 {
@@ -80,33 +80,6 @@ namespace GCDCore.Engines
                 }
 
             }
-
-            //Update areal formulas
-            SetSumFormula(xmlDoc, nsmgr, "SumRawArealSurfaceLowering", DoDCount);
-            SetSumFormula(xmlDoc, nsmgr, "SumThresholdedArealSurfaceLowering", DoDCount);
-            SetSumFormula(xmlDoc, nsmgr, "SumPctTotalArealLowering", DoDCount);
-            SetSumFormula(xmlDoc, nsmgr, "SumRawArealSurfaceRaising", DoDCount);
-            SetSumFormula(xmlDoc, nsmgr, "SumThresholdedArealSurfaceRaising", DoDCount);
-            SetSumFormula(xmlDoc, nsmgr, "SumPctTotalArealRaising", DoDCount);
-            SetSumFormula(xmlDoc, nsmgr, "SumThresholdedArealDetectableChange", DoDCount);
-            SetSumFormula(xmlDoc, nsmgr, "SumPctTotalDetecableChange", DoDCount);
-            SetSumFormula(xmlDoc, nsmgr, "SumTotalAreaOfInterest", DoDCount);
-
-            //Update volume formulas
-            SetSumFormula(xmlDoc, nsmgr, "SumRawVolumeSurfaceLowering", DoDCount);
-            SetSumFormula(xmlDoc, nsmgr, "SumThresholdedVolumeSurfaceLowering", DoDCount);
-            SetSumFormula(xmlDoc, nsmgr, "SumErrorVolumeLowering", DoDCount);
-            SetSumFormula(xmlDoc, nsmgr, "SumPctTotalVolumeLowering", DoDCount);
-            SetSumFormula(xmlDoc, nsmgr, "SumRawVolumeSurfaceRaising", DoDCount);
-            SetSumFormula(xmlDoc, nsmgr, "SumThresholdedVolumeSurfaceRaising", DoDCount);
-            SetSumFormula(xmlDoc, nsmgr, "SumErrorVolumeRaising", DoDCount);
-            SetSumFormula(xmlDoc, nsmgr, "SumPctTotalVolumeRaising", DoDCount);
-            SetSumFormula(xmlDoc, nsmgr, "SumRawVolumeOfDifference", DoDCount);
-            SetSumFormula(xmlDoc, nsmgr, "SumThresholdedVolumeOfDifference", DoDCount);
-            SetSumFormula(xmlDoc, nsmgr, "SumErrorVolumeOfDifference", DoDCount);
-            SetSumFormula(xmlDoc, nsmgr, "SumPctVolumeOfDifference", DoDCount);
-            SetSumFormula(xmlDoc, nsmgr, "SumRawNetVolumeDifference", DoDCount);
-            SetSumFormula(xmlDoc, nsmgr, "SumThresholdedNetVolumeDifference", DoDCount);
 
             //save output
             xmlExcelDoc.Save(output.FullName);
