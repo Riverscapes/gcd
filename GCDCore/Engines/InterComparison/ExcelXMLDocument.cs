@@ -127,12 +127,12 @@ namespace GCDCore.Engines
             xmlDoc.Save(path);
         }
 
-        private void UpdateReference(int rownumber)
+        private void UpdateReference(int InsertRowNumber)
         {
             Dictionary<string, NamedRange> dicUpdatedNamedRanges = new Dictionary<string, NamedRange>();
             foreach (NamedRange oNamedRange in dicNamedRanges.Values)
             {
-                if (oNamedRange.row > rownumber)
+                if (oNamedRange.row >= InsertRowNumber)
                 {
                     oNamedRange.row += 1;
                 }
@@ -146,9 +146,9 @@ namespace GCDCore.Engines
             TableNode.Attributes["ss:ExpandedRowCount"].Value = iNewExpandedRowCount.ToString();
 
             //update formulas
-            UpdateFormulaReferences(rownumber);
+            UpdateFormulaReferences(InsertRowNumber);
 
-            UpdateSumFormulaRange(rownumber);
+            UpdateSumFormulaRange(InsertRowNumber);
 
             dicNamedRanges =  dicUpdatedNamedRanges;
 
