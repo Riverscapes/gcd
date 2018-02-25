@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using GCDCore.Project;
+using System.Collections.Generic;
 
 namespace GCDCore.UserInterface.SurveyLibrary
 {
@@ -50,6 +51,21 @@ namespace GCDCore.UserInterface.SurveyLibrary
             ItemProperties.Add(new ItemProperty("Height", UnitsNet.Length.From((double)Surface.Raster.Extent.Height, Surface.Raster.Proj.HorizontalUnit).ToString()));
             ItemProperties.Add(new ItemProperty("Width", UnitsNet.Length.From((double)Surface.Raster.Extent.Width, Surface.Raster.Proj.HorizontalUnit).ToString()));
             ItemProperties.Add(new ItemProperty("Spatial Reference", Surface.Raster.Proj.Wkt));
+
+            // Values from raster stats are optional
+            try
+            {
+                Surface.Raster.ComputeStatistics();
+                Dictionary<string, decimal> stats = Surface.Raster.GetStatistics();
+                ItemProperties.Add(new ItemProperty("Maximum raster value", stats["max"].ToString("n2")));
+                ItemProperties.Add(new ItemProperty("Minimum raster value", stats["min"].ToString("n2")));
+                ItemProperties.Add(new ItemProperty("Mean raster value", stats["mean"].ToString("n2")));
+                ItemProperties.Add(new ItemProperty("Standard deviation of raster values", stats["stddev"].ToString("n2")));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(string.Format("Error calculating statistics from {0}, {1}", Surface.Raster.GISFileInfo.FullName,ex.Message));
+            }
 
             if (Surface is DEMSurvey)
             {
@@ -108,11 +124,11 @@ namespace GCDCore.UserInterface.SurveyLibrary
             }
             else if (Surface is Surface)
             {
-                bUnique = ProjectManager.Project.IsReferenceSurfaceNameUnique(txtName.Text, (Surface) Surface);
+                bUnique = ProjectManager.Project.IsReferenceSurfaceNameUnique(txtName.Text, (Surface)Surface);
             }
             else
             {
-                bUnique = ((ErrorSurface)Surface).Surf.IsErrorNameUnique(txtName.Text, (ErrorSurface) Surface);
+                bUnique = ((ErrorSurface)Surface).Surf.IsErrorNameUnique(txtName.Text, (ErrorSurface)Surface);
             }
 
             if (!bUnique)
@@ -131,7 +147,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             {
                 ProjectManager.OnAddRasterToMap(Surface);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 naru.error.ExceptionUI.HandleException(ex);
             }
