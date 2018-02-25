@@ -15,15 +15,6 @@ namespace GCDAddIn
         {
             try
             {
-                GCDCore.WorkspaceManager.Initialize();
-            }
-            catch (Exception ex)
-            {
-                naru.error.ExceptionUI.HandleException(ex, "Error initializing temporary workspace.");
-            }
-
-            try
-            {
                 GCDCore.Project.ProjectManager.CopyDeployFolder();
                 GCDCore.Project.ProjectManager.Init(GCDCore.Properties.Settings.Default.AutomaticPyramids);
             }
