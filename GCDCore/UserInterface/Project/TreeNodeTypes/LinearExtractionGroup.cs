@@ -5,13 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GCDCore.Project;
+using System.Windows.Forms;
 
 namespace GCDCore.UserInterface.Project.TreeNodeTypes
 {
     public class LinearExtractionGroup<T> : TreeNodeGroup
     {
-        public LinearExtractionGroup(string name, string nounSingle, string nounPlural, IContainer container)
-            : base(name, nounSingle, nounPlural, container, ProjectManager.Project.LinearExtractions.Values.OfType<T>().Count<T>() > 0)
+        public LinearExtractionGroup(TreeNodeCollection parentNodes, string name, string nounSingle, string nounPlural, IContainer container)
+            : base(parentNodes, name, nounSingle, nounPlural, container, ProjectManager.Project.LinearExtractions.Values.OfType<T>().Count<T>() > 0)
         {
             foreach (T le in ProjectManager.Project.LinearExtractions.Values.OfType<T>())
             {

@@ -5,13 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GCDCore.Project;
+using System.Windows.Forms;
 
 namespace GCDCore.UserInterface.Project.TreeNodeTypes
 {
     public class ReferenceSurfaceGroup : TreeNodeGroup
     {
-        public ReferenceSurfaceGroup(IContainer container)
-             : base("Reference Surfaces", "Reference Surface", "Reference Surfaces", container, ProjectManager.Project.ReferenceSurfaces.Count > 0)
+        public ReferenceSurfaceGroup(TreeNodeCollection parentNodes, IContainer container)
+             : base(parentNodes, "Reference Surfaces", "Reference Surface", "Reference Surfaces", container, ProjectManager.Project.ReferenceSurfaces.Count > 0)
         {
             ContextMenuStrip.Items.Add("Derive Reference Surface From DEM Surveys", Properties.Resources.sigma, OnDeriveFromDEMs);
             ContextMenuStrip.Items.Add("Derive Constant Reference Surface", Properties.Resources.sigma, OnDeriveConstant);
@@ -21,7 +22,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
                 TreeNodeItem nodSurface = new TreeNodeItem(surf, 5, container);
                 Nodes.Add(nodSurface);
 
-                TreeNodeGroup nodError = new TreeNodeGroup("Error Surfaces", "Error Surface", "Error Surfaces", container, surf.ErrorSurfaces.Count > 0);
+                TreeNodeGroup nodError = new TreeNodeGroup(Nodes, "Error Surfaces", "Error Surface", "Error Surfaces", container, surf.ErrorSurfaces.Count > 0);
                 nodSurface.Nodes.Add(nodError);
                 surf.ErrorSurfaces.ToList().ForEach(x => nodError.Nodes.Add(new TreeNodeItem(x, 4, container)));
             }

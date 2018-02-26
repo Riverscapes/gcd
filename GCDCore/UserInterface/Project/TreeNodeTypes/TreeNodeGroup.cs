@@ -10,7 +10,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
 {
     public class TreeNodeGroup : TreeNodeBase
     {
-        public TreeNodeGroup(string name, string nounSingle, string nounPlural, System.ComponentModel.IContainer container, bool expand = true, int imageIndex = 0)
+        public TreeNodeGroup(TreeNodeCollection parentNodes, string name, string nounSingle, string nounPlural, System.ComponentModel.IContainer container, bool expand = true, int imageIndex = 0)
             : base(name, nounSingle, nounPlural, imageIndex)
         {
             ContextMenuStrip = new ContextMenuStrip(container);
@@ -20,6 +20,8 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
 
             if (expand)
                 Expand();
+
+            parentNodes.Add(this);
         }
 
         public void OnAdd(object sender, EventArgs e)

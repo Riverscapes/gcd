@@ -205,19 +205,13 @@ namespace GCDCore.UserInterface.Project
 
         public void LoadTree(ProjectTreeNode selectItem)
         {
-            TreeNodeTypes.TreeNodeGroup nodProject = new TreeNodeTypes.TreeNodeGroup(ProjectManager.Project.Name, "Project", "Project", components, true, 1);
-
-            TreeNodeTypes.TreeNodeGroup nodInputs = new TreeNodeTypes.TreeNodeGroup(m_sGroupInputs, "Input", "Inputs", components, true);
-            nodProject.Nodes.Add(nodInputs);
-
-            TreeNodeTypes.TreeNodeGroup nodDEMSurveys = new TreeNodeTypes.TreeNodeGroup("DEM Surveys", "DEM Survey", "DEM Surveys", components, true);
-            nodInputs.Nodes.Add(nodDEMSurveys);
-
-            nodDEMSurveys.Nodes.Add(new TreeNodeTypes.LinearExtractionGroup<GCDCore.Project.LinearExtraction.LinearExtractionFromDEM>("Linear Extractions From DEM Surveys", "Linear Extraction", "Linear Extractions", components));
-
-            nodInputs.Nodes.Add(new TreeNodeTypes.ReferenceSurfaceGroup(components));
-
-            treProject.Nodes.Add(nodProject);
+            TreeNodeTypes.TreeNodeGroup nodProj = new TreeNodeTypes.TreeNodeGroup(treProject.Nodes, ProjectManager.Project.Name, "Project", "Project", components, true, 1);
+            TreeNodeTypes.TreeNodeGroup nodInpt = new TreeNodeTypes.TreeNodeGroup(nodProj.Nodes, m_sGroupInputs, "Input", "Inputs", components, true);
+            TreeNodeTypes.TreeNodeGroup nodSurv = new TreeNodeTypes.DEMSurveysGroup(nodInpt.Nodes, components);
+            TreeNodeTypes.TreeNodeGroup nodRefs = new TreeNodeTypes.ReferenceSurfaceGroup(nodInpt.Nodes, components);
+            TreeNodeTypes.TreeNodeGroup nodMask = new TreeNodeTypes.MasksGroup(nodInpt.Nodes, components);
+            TreeNodeTypes.TreeNodeGroup nodAnal = new TreeNodeTypes.TreeNodeGroup(nodProj.Nodes, "Analyses", "Analysis", "Analyses", components, true);
+            TreeNodeTypes.TreeNodeGroup nodIntr = new TreeNodeTypes.TreeNodeGroup(nodProj.Nodes, "Inter-Comparisons", "Inter-Comparison", "Inter-Comparisons", components, true);
         }
 
         public void LoadTree(TreeView tre, bool bCheckboxes, ProjectTreeNode selectItem, SortSurveyBy eSortSurveyBy = SortSurveyBy.SurveyDateDsc)
