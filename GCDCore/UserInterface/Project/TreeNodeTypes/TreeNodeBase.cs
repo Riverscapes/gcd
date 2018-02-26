@@ -18,5 +18,30 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             NounSingle = nounSingle;
             NounPlural = noundPlural;
         }
+
+        protected void LoadTree()
+        {
+            ucProjectExplorer pe = TreeView.Parent as ucProjectExplorer;
+            pe.LoadTree(null, null);
+        }
+
+        protected DialogResult EditTreeItem(Form frm, bool treeReload = true)
+        {
+            DialogResult eResult = DialogResult.OK;
+            try
+            {
+                eResult = frm.ShowDialog();
+                if (eResult == DialogResult.OK && treeReload)
+                {
+                    LoadTree();
+                }
+            }
+            catch (Exception ex)
+            {
+                naru.error.ExceptionUI.HandleException(ex, "Error Editing GCD Project Item");
+            }
+
+            return eResult;
+        }
     }
 }

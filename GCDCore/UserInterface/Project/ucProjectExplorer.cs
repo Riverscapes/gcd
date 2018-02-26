@@ -205,13 +205,21 @@ namespace GCDCore.UserInterface.Project
 
         public void LoadTree(ProjectTreeNode selectItem)
         {
-            TreeNodeTypes.TreeNodeGroup nodProj = new TreeNodeTypes.TreeNodeGroup(treProject.Nodes, ProjectManager.Project.Name, "Project", "Project", components, true, 1);
-            TreeNodeTypes.TreeNodeGroup nodInpt = new TreeNodeTypes.TreeNodeGroup(nodProj.Nodes, m_sGroupInputs, "Input", "Inputs", components, true);
+            TreeNodeTypes.TreeNodeGroup nodProj = new TreeNodeTypes.GCDProjectGroup(treProject, components);
+            TreeNodeTypes.TreeNodeGroup nodInpt = new TreeNodeTypes.GenericNodeGroup(nodProj.Nodes, m_sGroupInputs, "Input", "Inputs", components, true);
             TreeNodeTypes.TreeNodeGroup nodSurv = new TreeNodeTypes.DEMSurveysGroup(nodInpt.Nodes, components);
             TreeNodeTypes.TreeNodeGroup nodRefs = new TreeNodeTypes.ReferenceSurfaceGroup(nodInpt.Nodes, components);
             TreeNodeTypes.TreeNodeGroup nodMask = new TreeNodeTypes.MasksGroup(nodInpt.Nodes, components);
-            TreeNodeTypes.TreeNodeGroup nodAnal = new TreeNodeTypes.TreeNodeGroup(nodProj.Nodes, "Analyses", "Analysis", "Analyses", components, true);
-            TreeNodeTypes.TreeNodeGroup nodIntr = new TreeNodeTypes.TreeNodeGroup(nodProj.Nodes, "Inter-Comparisons", "Inter-Comparison", "Inter-Comparisons", components, true);
+            TreeNodeTypes.TreeNodeGroup nodAnal = new TreeNodeTypes.GenericNodeGroup(nodProj.Nodes, "Analyses", "Analysis", "Analyses", components, true);
+            TreeNodeTypes.TreeNodeGroup nodChng = new TreeNodeTypes.GenericNodeGroup(nodAnal.Nodes, "Change Detections", "Change Detection", "Change Detection Analyses", components, true);
+            TreeNodeTypes.TreeNodeGroup nodIntr = new TreeNodeTypes.GenericNodeGroup(nodAnal.Nodes, "Inter-Comparisons", "Inter-Comparison", "Inter-Comparisons", components, true);
+
+            // NodInputs has no right click menu items
+            nodInpt.ContextMenuStrip.Items.Clear();
+
+            nodProj.Expand();
+            nodInpt.Expand();
+            nodAnal.Expand();
         }
 
         public void LoadTree(TreeView tre, bool bCheckboxes, ProjectTreeNode selectItem, SortSurveyBy eSortSurveyBy = SortSurveyBy.SurveyDateDsc)

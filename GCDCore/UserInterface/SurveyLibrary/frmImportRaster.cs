@@ -144,8 +144,8 @@ namespace GCDCore.UserInterface.SurveyLibrary
             }
             else
             {
-                this.Text = "Specify GCD " + ucRaster.Noun;
-                cmdOK.Text = "Import Raster";
+                this.Text = "Adding Existing " + ucRaster.Noun;
+                cmdOK.Text = "Add Raster";
                 grpProjectRaaster.Text = "GCD " + ucRaster.Noun;
                 txtRasterPath.Width = txtName.Width;
                 cmdSave.Visible = false;

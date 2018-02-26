@@ -19,5 +19,10 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
                 Nodes.Add(new TreeNodeItem(le as GCDCore.Project.LinearExtraction.LinearExtraction, 16, container));
             }
         }
+
+        public override void OnAdd(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
