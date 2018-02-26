@@ -44,6 +44,14 @@ namespace GCDCore.UserInterface.SurveyLibrary.ReferenceSurfaces
                 {
                     comboCell.Value = dem.ErrorSurfaces.First(x => x.IsDefault).NameWithDefault;
                 }
+                else
+                {
+                    // No default error surface. Simply select the first.
+                    if (comboCell.Items.Count == 1)
+                    {
+                        comboCell.Value = dem.ErrorSurfaces.First().NameWithDefault;
+                    }
+                }
             }
 
             cboMethod.Items.Add(new naru.db.NamedObject((long)RasterOperators.MultiMathOpType.Maximum, "Maximum"));
@@ -111,13 +119,13 @@ namespace GCDCore.UserInterface.SurveyLibrary.ReferenceSurfaces
             }
 
             // Validate that every DEM has an error surface selected
-            foreach(DataGridViewRow dgvr in grdData.Rows)
+            foreach (DataGridViewRow dgvr in grdData.Rows)
             {
                 DEMItem dem = dgvr.DataBoundItem as DEMItem;
                 if (dem.Include)
                 {
                     DataGridViewComboBoxCell comboCell = dgvr.Cells["colError"] as DataGridViewComboBoxCell;
-                    if (comboCell.Value== null)
+                    if (comboCell.Value == null)
                     {
                         grdData.Select();
                         comboCell.Selected = true;
