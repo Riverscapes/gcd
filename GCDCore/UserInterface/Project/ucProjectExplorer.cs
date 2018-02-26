@@ -350,6 +350,8 @@ namespace GCDCore.UserInterface.Project
 
                 TreeNode nodInter = AddTreeNode(AnalNode, GCDNodeTypes.InterComparisonGroup, "Inter-Comparisons", null, selectItem);
                 ProjectManager.Project.InterComparisons.Values.ToList<InterComparison>().ForEach(x => AddTreeNode(nodInter, GCDNodeTypes.InterComparison, x.Name, x, selectItem));
+                if (nodInter.Nodes.Count > 0)
+                    nodInter.Expand();
 
                 AnalNode.Expand();
 
