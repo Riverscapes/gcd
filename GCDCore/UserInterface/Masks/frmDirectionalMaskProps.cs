@@ -28,22 +28,41 @@ namespace GCDCore.UserInterface.Masks
 
         private void frmDirectionalMaskProps_Load(object sender, EventArgs e)
         {
+            // subscribe to the event when the user changes the input ShapeFile
+            ucPolygon.PathChanged += InputShapeFileChanged;
+            UpdateControls(sender, e);
+
             if (Mask != null)
             {
                 txtName.Text = Mask.Name;
+                txtPath.Text = ProjectManager.Project.GetRelativePath(Mask._ShapeFile);
+                ucPolygon.Initialize("Directional Mask", Mask._ShapeFile, true);
 
-                ucPolygon.Visible = false;
-                lblPolygons.Visible = false;
+                cboField.Text = Mask._Field;
+                cboField.Enabled = false;
 
-                Height -= cboField.Top - ucPolygon.Top;
+                if (!string.IsNullOrEmpty(Mask.LabelField))
+                {
+                    chkLabel.Checked = true;
+                    cboLabel.Text = Mask.LabelField;
+                }
+
+                cboDirection.Text = Mask.DirectionField;
+                cboDirection.Enabled = false;
+
+                if (!string.IsNullOrEmpty(Mask.DistanceField))
+                {
+                    cboDistance.Text = Mask.DistanceField;
+                }
+
+                //ucPolygon.Visible = false;
+                //lblPolygons.Visible = false;
+
+                //Height -= cboField.Top - ucPolygon.Top;
 
                 //ucPolygon.Initialize("Directional Mask", Mask._ShapeFile, true);
                 //ucPolygon.SetReadOnly();
             }
-
-            // subscribe to the even when the user changes the input ShapeFile
-            ucPolygon.PathChanged += InputShapeFileChanged;
-            UpdateControls(sender, e);
 
             // The singleton project manager subscribes to the browse raster event
             // So that the browse can bubble to ArcMap
@@ -83,6 +102,8 @@ namespace GCDCore.UserInterface.Masks
                 else
                 {
                     Mask.Name = txtName.Text;
+                    Mask.LabelField = chkLabel.Checked ? cboLabel.Text : string.Empty;
+                    Mask.DistanceField= chkDistance.Checked ? cboDistance.Text : string.Empty;
                 }
 
                 ProjectManager.Project.Save();

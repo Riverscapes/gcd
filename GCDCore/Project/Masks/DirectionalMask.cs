@@ -10,9 +10,9 @@ namespace GCDCore.Project.Masks
 {
     public class DirectionalMask : AttributeFieldMask
     {
-        public readonly string LabelField;
+        public string LabelField { get; set; }
         public readonly string DirectionField;
-        public readonly string DistanceField;
+        public string DistanceField { get; set; }
 
         public override string Noun { get { return "Directional Mask"; } }
 
