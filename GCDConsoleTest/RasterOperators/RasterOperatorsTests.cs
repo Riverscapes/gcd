@@ -102,6 +102,38 @@ namespace GCDConsoleLib.Internal.Operators.Tests
 
         }
 
+        [TestMethod()]
+        [TestCategory("Functional")]
+        public void MultiMathTest()
+        {
+            Raster rOld = new Raster(new FileInfo(DirHelpers.GetTestRootPath(@"VerificationProject\inputs\2005DecDEM\2005DecDEM.tif")));
+            Raster rNew = new Raster(new FileInfo(DirHelpers.GetTestRootPath(@"VerificationProject\inputs\2006FebDEM\2006FebDEM.tif")));
+
+            using (ITempDir tmp = TempDir.Create())
+            {
+                Raster rSub1 = RasterOperators.Maximum(new List<Raster> { rOld, rNew }, new FileInfo(Path.Combine(tmp.Name, "Max.tif")));
+                Raster rSub2 = RasterOperators.Minimum(new List<Raster> { rOld, rNew }, new FileInfo(Path.Combine(tmp.Name, "Min.tif")));
+            }
+
+        }
+
+        [TestMethod()]
+        [TestCategory("Functional")]
+        public void MultiMathErrorTest()
+        {
+            Raster rOld = new Raster(new FileInfo(DirHelpers.GetTestRootPath(@"VerificationProject\inputs\2005DecDEM\2005DecDEM.tif")));
+            Raster rNew = new Raster(new FileInfo(DirHelpers.GetTestRootPath(@"VerificationProject\inputs\2006FebDEM\2006FebDEM.tif")));
+
+            Raster rOldErr = new Raster(new FileInfo(DirHelpers.GetTestRootPath(@"VerificationProject\inputs\2005DecDEM\ErrorSurfaces\Constant01\Constant01.tif")));
+            Raster rNewErr = new Raster(new FileInfo(DirHelpers.GetTestRootPath(@"VerificationProject\inputs\2006FebDEM\ErrorSurfaces\Constant02\Constant02.tif")));
+
+            using (ITempDir tmp = TempDir.Create())
+            {
+                Raster rSub2 = RasterOperators.MinimumErr(new List<Raster> { rOld, rNew }, new List<Raster> { rOldErr, rNewErr }, new FileInfo(Path.Combine(tmp.Name, "MinErr.tif")));
+                Raster rSub1 = RasterOperators.MaximumErr(new List<Raster> { rOld, rNew }, new List<Raster> { rOldErr, rNewErr }, new FileInfo(Path.Combine(tmp.Name, "MaxErr.tif")));
+            }
+
+        }
 
         [TestMethod()]
         [TestCategory("Functional")]

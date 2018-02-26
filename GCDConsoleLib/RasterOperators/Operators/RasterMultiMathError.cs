@@ -28,8 +28,8 @@ namespace GCDConsoleLib.Internal.Operators
             if (rasters.Count != errrasters.Count)
                 throw new ArgumentException("number of Rasters and Error Rasters mut be equal");
 
-            _inputids = Enumerable.Range(0, rasters.Count - 1).ToList();
-            _errids = Enumerable.Range(rasters.Count, 2* rasters.Count -1 ).ToList();
+            _inputids = Enumerable.Range(0, rasters.Count).ToList();
+            _errids = Enumerable.Range(rasters.Count, errrasters.Count).ToList();
 
             // There could be a lot of rasters here so let's make our window size small-ish
             chunkRows = 10;
@@ -74,14 +74,17 @@ namespace GCDConsoleLib.Internal.Operators
         /// <returns></returns>
         public static double Minimum(List<double[]> data, int id, List<double> inNodata, List<int> _inputids, List<int> _errids, double outnodata)
         {
-            double retVal = double.MaxValue;
+            double compareVal = double.MaxValue;
+            double retVal = outnodata;
             bool bfound = false;
+            
             foreach (int did in _inputids)
             {
-                if (data[did][id] != inNodata[did] && 
-                    data[did][id] < retVal)
+                if (data[_inputids[did]][id] != inNodata[_inputids[did]] && 
+                    data[_inputids[did]][id] < compareVal)
                 {
                     bfound = true;
+                    compareVal = data[_inputids[did]][id];
                     retVal = data[_errids[did]][id];
                 }
             }
@@ -97,14 +100,16 @@ namespace GCDConsoleLib.Internal.Operators
         /// <returns></returns>
         public static double Maximum(List<double[]> data, int id, List<double> inNodata, List<int> _inputids, List<int> _errids, double outnodata)
         {
-            double retVal = double.MinValue;
+            double compareVal = double.MinValue;
+            double retVal = outnodata;
             bool bfound = false;
             foreach (int did in _inputids)
             {
-                if (data[did][id] != inNodata[did] && 
-                    data[did][id] > retVal)
+                if (data[_inputids[did]][id] != inNodata[_inputids[did]] && 
+                    data[_inputids[did]][id] > compareVal)
                 {
                     bfound = true;
+                    compareVal = data[_inputids[did]][id];
                     retVal = data[_errids[did]][id];
                 }
             }
