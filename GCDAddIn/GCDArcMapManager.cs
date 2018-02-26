@@ -68,7 +68,7 @@ namespace GCDAddIn
         {
             IGroupLayer pInputsGrpLyr = AddInputsGroupLayer();
             IGroupLayer pSurveysGrpLyr = ArcMapUtilities.GetGroupLayer(SurveysGroupLayer, pInputsGrpLyr);
-            return  ArcMapUtilities.GetGroupLayer(dem.Name, pSurveysGrpLyr);
+            return ArcMapUtilities.GetGroupLayer(dem.Name, pSurveysGrpLyr);
         }
 
         public IGroupLayer AddSurvey(DEMSurvey dem)
@@ -209,11 +209,12 @@ namespace GCDAddIn
 
             IFeatureRenderer pRenderer = null;
             string queryFilter = string.Empty;
+            string labelField = string.Empty;
             if (mask is GCDCore.Project.Masks.RegularMask)
             {
                 GCDCore.Project.Masks.RegularMask rMask = mask as GCDCore.Project.Masks.RegularMask;
 
-                pRenderer = VectorSymbolization.GetMaskRenderer(rMask) as IFeatureRenderer;
+                pRenderer = VectorSymbolization.GetRegularMaskRenderer(rMask) as IFeatureRenderer;
 
                 // Create a definition query if some features are not included
 
@@ -222,8 +223,16 @@ namespace GCDAddIn
                     queryFilter = string.Format("\"{0}\" IN ('{1}')", mask._Field, string.Join("','", rMask._Items.Where(x => x.Include).Select(y => y.FieldValue)));
                 }
             }
+            else if (mask is GCDCore.Project.Masks.DirectionalMask)
+            {
+                GCDCore.Project.Masks.DirectionalMask dirMask = mask as GCDCore.Project.Masks.DirectionalMask;
+                // Directional mask. Black outline with labels
+                pRenderer = VectorSymbolization.GetDirectionalMaskRenderer(dirMask) as IFeatureRenderer;
 
-            VectorSymbolization.AddToMapVector(mask._ShapeFile, mask.Name, pMasksGrpLyr, mask._Field, pRenderer, queryFilter);
+                labelField = string.IsNullOrEmpty(dirMask.LabelField) ? dirMask._Field : dirMask.LabelField;
+            }
+
+            VectorSymbolization.AddToMapVector(mask._ShapeFile, mask.Name, pMasksGrpLyr, mask._Field, pRenderer, queryFilter, labelField);
         }
 
         public void AddAOI(GCDCore.Project.Masks.AOIMask mask)
@@ -233,7 +242,7 @@ namespace GCDAddIn
 
             IFeatureRenderer pRenderer = VectorSymbolization.GetAOIRenderer(mask) as IFeatureRenderer;
 
-            VectorSymbolization.AddToMapVector(mask._ShapeFile, mask.Name, pMasksGrpLyr, string.Empty, pRenderer, string.Empty);
+            VectorSymbolization.AddToMapVector(mask._ShapeFile, mask.Name, pMasksGrpLyr, string.Empty, pRenderer, string.Empty, string.Empty);
         }
 
         public void AddDoD(GCDProjectRasterItem dod, bool bThresholded = true)

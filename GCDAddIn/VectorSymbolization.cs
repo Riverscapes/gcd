@@ -14,7 +14,7 @@ namespace GCDAddIn
 {
     public class VectorSymbolization
     {
-        public static void AddToMapVector(FileInfo sSource, string sDisplayName, IGroupLayer pGrpLyr, string displayField, IFeatureRenderer pRenderer, string queryFilter, short fTransparency = -1)
+        public static void AddToMapVector(FileInfo sSource, string sDisplayName, IGroupLayer pGrpLyr, string displayField, IFeatureRenderer pRenderer, string queryFilter, string labelField, short fTransparency = -1)
         {
             if (string.IsNullOrEmpty(sDisplayName))
             {
@@ -22,6 +22,7 @@ namespace GCDAddIn
             }
 
             IFeatureLayer pResultLayer = IsFeatureLayerInGroupLayer(sSource.FullName, pGrpLyr);
+
 
             IFeatureWorkspace pWS = (IFeatureWorkspace)ArcMapUtilities.GetWorkspace(sSource);
             IFeatureClass pFC = pWS.OpenFeatureClass(Path.GetFileNameWithoutExtension(sSource.FullName));
@@ -52,6 +53,47 @@ namespace GCDAddIn
             if (pRenderer != null)
             {
                 ((IGeoFeatureLayer)pResultLayer).Renderer = pRenderer;
+            }
+
+            if (!string.IsNullOrEmpty(labelField))
+            {
+                IGeoFeatureLayer pGFL = pResultLayer as IGeoFeatureLayer;
+            
+                // This first attempt seems to set the label field, but doesn't
+                // cause the labeling to refresh and take effect
+                //IDisplayString displayString = pGFL as IDisplayString;
+                //IDisplayExpressionProperties properties = displayString.ExpressionProperties;
+                //properties.Expression = string.Format("[{0}]", labelField);
+
+                // This second attempt takes more effort but actually works
+                // https://community.esri.com/thread/19005
+                IAnnotateLayerPropertiesCollection labelPropsCollection = pGFL.AnnotationProperties;
+                labelPropsCollection.Clear();
+
+                //IBasicOverposterLayerProperties pBOLayerProps = new BasicOverposterLayerProperties();
+                //pBOLayerProps.FeatureType = esriBasicOverposterFeatureType.esriOverposterPolygon
+                //pBOLayerProps.NumLabelsOption = esriBasicNumLabelsOption.esriOneLabelPerShape
+                //pBOLayerProps.FeatureWeight = esriBasicOverposterWeight.esriNoWeight
+                //pBOLayerProps.LabelWeight = esriBasicOverposterWeight.esriLowWeight
+
+                //Dim tSym As ITextSymbol
+                //Set tSym = New TextSymbol
+                //Dim font As IFontDisp
+                //Set font = tSym.font
+                //font.Bold = False
+                //font.size = 6
+                //tSym.font = font
+
+                ILabelEngineLayerProperties aLELayerProps = (ILabelEngineLayerProperties)new LabelEngineLayerProperties();
+                aLELayerProps.Expression = string.Format("[{0}]", labelField);
+
+                //Set aLELayerProps.Symbol = tSym
+                //Set aLELayerProps.BasicOverposterLayerProperties = pBOLayerProps
+                IAnnotateLayerProperties lProps = aLELayerProps as IAnnotateLayerProperties;
+                lProps.Class = "Any Name";
+                labelPropsCollection.Add(lProps);
+
+                pGFL.DisplayAnnotation = true;
             }
 
             if (pRenderer is IUniqueValueRenderer)
@@ -124,7 +166,7 @@ namespace GCDAddIn
         /// <remarks>https://gis.stackexchange.com/questions/58728/set-unique-values-to-different-groups-programmatically
         /// http://edndoc.esri.com/arcobjects/9.0/ComponentHelp/esriCarto/IUniqueValueRenderer_Example.htm
         /// </remarks>
-        public static IUniqueValueRenderer GetMaskRenderer(GCDCore.Project.Masks.RegularMask mask)
+        public static IUniqueValueRenderer GetRegularMaskRenderer(GCDCore.Project.Masks.RegularMask mask)
         {
             ISimpleFillSymbol symbol = new SimpleFillSymbol();
             symbol.Style = esriSimpleFillStyle.esriSFSSolid;
@@ -200,6 +242,29 @@ namespace GCDAddIn
             // These properties should be set prior to adding values
             ISimpleRenderer pRender = new SimpleRenderer();
             pRender.Label = "Area of Interest";
+            pRender.Symbol = symbol as ISymbol;
+
+            return pRender;
+        }
+
+        public static ISimpleRenderer GetDirectionalMaskRenderer(GCDCore.Project.Masks.DirectionalMask mask)
+        {
+            RgbColor rgb = new RgbColor();
+            rgb.Red = 0;
+            rgb.Blue = 0;
+            rgb.Green = 0;
+
+            ISimpleFillSymbol symbol = new SimpleFillSymbol();
+            symbol.Style = esriSimpleFillStyle.esriSFSHollow;
+            symbol.Outline.Width = 1.0;
+            ILineSymbol pLineSymbol = symbol.Outline;
+            pLineSymbol.Color = rgb;
+            pLineSymbol.Width = 1;
+            symbol.Outline = pLineSymbol;
+
+            // These properties should be set prior to adding values
+            ISimpleRenderer pRender = new SimpleRenderer();
+            pRender.Label = "Directional Mask";
             pRender.Symbol = symbol as ISymbol;
 
             return pRender;
