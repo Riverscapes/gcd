@@ -151,7 +151,6 @@ namespace GCDConsoleLib.Internal.Operators
                     }
                 }
             }
-
             outputs[0][id] = val;
         }
     }

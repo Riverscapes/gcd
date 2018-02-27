@@ -148,7 +148,9 @@ namespace GCDConsoleLib.Internal.Operators
             }
             if (count==0) retVal = outnodata;
             else retVal = retVal / count;
-            return retVal;
+
+            if (Double.IsNaN(retVal)) return outnodata;
+            else return retVal;
         }
 
 
@@ -185,7 +187,10 @@ namespace GCDConsoleLib.Internal.Operators
                 newsum += Math.Pow(val - mean, 2);
             }
 
-            return Math.Sqrt(newsum / (count - 1));
+            double retVal = Math.Sqrt(newsum / (count - 1));
+
+            if (Double.IsNaN(retVal)) return outnodata;
+            else return retVal;
         }
 
 
@@ -210,6 +215,7 @@ namespace GCDConsoleLib.Internal.Operators
             }
 
             if (count == 0) retVal = outnodata;
+
             else retVal = Math.Sqrt(retVal);
             return retVal;
         }
