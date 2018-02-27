@@ -45,7 +45,6 @@ namespace GCDCore.UserInterface.Project
             // AddToMapToolStripMenuItem_Click
             this.treProject.MouseDown += treProject_MouseDown;
             this.treProject.DoubleClick += treProject_DoubleClick;
-            this.treProject.MouseDown += treProject_MouseDown;
             this.treProject.AfterSelect += treProject_AfterSelect;
             this.EditGCDProjectPropertiesToolStripMenuItem.Click += EditGCDProjectPropertiesToolStripMenuItem_Click;
             this.cmsAddProjectToMap.Click += AddProjectToMap_Click;
@@ -552,17 +551,16 @@ namespace GCDCore.UserInterface.Project
 
         private void treProject_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            return;
-
-            if (e.Button != MouseButtons.Right)
+             if (e.Button != MouseButtons.Right)
                 return;
 
             TreeNode theNode = treProject.GetNodeAt(e.X, e.Y);
             if (!(theNode is TreeNode))
                 return;
 
-
             treProject.SelectedNode = theNode;
+            return;
+
             ContextMenuStrip cms = null;
             switch (((ProjectTreeNode)theNode.Tag).NodeType)
             {

@@ -41,7 +41,10 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
                 }
                 else if (tsmi.Text.ToLower().Contains("explore"))
                 {
-                    // TODO: disable explore menu item if the folder doesn't exist
+                    ContextMenuStrip cms = sender as ContextMenuStrip;                    
+                    TreeView treProject = cms.SourceControl as TreeView;
+                    TreeNodeGroup nodGroup = treProject.SelectedNode as TreeNodeGroup;
+                    tsmi.Enabled = nodGroup.Folder.Exists;
                 }
             }
         }
