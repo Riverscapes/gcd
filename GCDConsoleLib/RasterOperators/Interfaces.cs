@@ -749,14 +749,34 @@ namespace GCDConsoleLib
         /// <param name="fSize"></param>
         /// <param name="progressHandler"></param>
         /// <returns></returns>
-        public static void LinearExtractor(Vector vLineShp, List<Raster> rRasters, FileInfo sOutCSV, EventHandler<int> progressHandler = null)
+        //public static void LinearExtractor(Vector vLineShp, List<Raster> rRasters, FileInfo sOutCSV, EventHandler<int> progressHandler = null)
+        //{
+        //    LinearExtractor<double> theExtractOp = new LinearExtractor<double>(vLineShp, rRasters, sOutCSV);
+
+        //    if (progressHandler != null)
+        //        theExtractOp.ProgressEvent += progressHandler;
+
+        //    theExtractOp.Run();
+        //}
+
+        /// <summary>
+        /// Extract the values of the raster that occur under regular intervals of the input vector lines
+        /// </summary>
+        /// <param name="vLineShp"></param>
+        /// <param name="rRasters"></param>
+        /// <param name="sOutCSV"></param>
+        /// <param name="intervallength"></param>
+        /// <param name="progressHandler"></param>
+        public static void LinearExtractor(Vector vLineShp, List<Raster> rRasters, FileInfo sOutCSV, 
+            decimal intervallength, string sFieldName, EventHandler<int> progressHandler = null)
         {
-            LinearExtractor<double> theExtractOp = new LinearExtractor<double>(vLineShp, rRasters, sOutCSV);
+            LinearExtractor<double> theExtractOp = new LinearExtractor<double>(vLineShp, rRasters, sOutCSV, intervallength, sFieldName);
 
             if (progressHandler != null)
                 theExtractOp.ProgressEvent += progressHandler;
 
-            theExtractOp.Run();
+            //This is the magic sauce. This method doesn't use the base operator's run method at all.
+            theExtractOp.RunWithSpacing();
         }
 
         /// <summary>
@@ -767,7 +787,8 @@ namespace GCDConsoleLib
         /// <param name="sOutCSV"></param>
         /// <param name="intervallength"></param>
         /// <param name="progressHandler"></param>
-        public static void LinearExtractor(Vector vLineShp, List<Raster> rRasters, FileInfo sOutCSV, decimal intervallength, EventHandler<int> progressHandler = null)
+        public static void LinearExtractor(Vector vLineShp, List<Raster> rRasters, FileInfo sOutCSV,
+            decimal intervallength, EventHandler<int> progressHandler = null)
         {
             LinearExtractor<double> theExtractOp = new LinearExtractor<double>(vLineShp, rRasters, sOutCSV, intervallength);
 

@@ -297,10 +297,10 @@ namespace GCDConsoleLib
         /// Is a extent intersecting a feature?
         /// </summary>
         /// <returns>returns a double array [x,y]</returns>
-        public List<VectorFeature> FeaturesIntersectExtent(ExtentRectangle ext)
+        public Dictionary<long, VectorFeature> FeaturesIntersectExtent(ExtentRectangle ext)
         {
             Open();
-            List<VectorFeature> retVal = new List<VectorFeature>();
+            Dictionary<long, VectorFeature> retVal = new Dictionary<long, VectorFeature>();
 
             Geometry ring = new Geometry(wkbGeometryType.wkbLinearRing);
             ring.AddPoint((double)ext.Left, (double)ext.Top, 0);
@@ -316,7 +316,7 @@ namespace GCDConsoleLib
             {
                 Geometry feat = kvp.Value.Feat.GetGeometryRef();
                 if (feat != null && extrect.Intersects(feat))
-                    retVal.Add(kvp.Value);
+                    retVal.Add(kvp.Key, kvp.Value);
             }
             return retVal;
         }
@@ -352,7 +352,7 @@ namespace GCDConsoleLib
 
         public List<Geometry> GeometriesIntersectExtent(ExtentRectangle ext)
         {
-            List<VectorFeature> feats = FeaturesIntersectExtent(ext);
+            List<VectorFeature> feats = FeaturesIntersectExtent(ext).Values.ToList();
             return feats.Select(x => x.Feat.GetGeometryRef()).ToList();
         }
 
