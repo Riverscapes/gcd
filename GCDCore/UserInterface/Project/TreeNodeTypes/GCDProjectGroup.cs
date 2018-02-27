@@ -28,11 +28,12 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             TreeNodeGroup nodMask = new MasksGroup(nodInpt.Nodes, ContextMenuStrip.Container);
             TreeNodeGroup nodRout = new ProfileRouteGroup(nodInpt.Nodes, ContextMenuStrip.Container);
             TreeNodeGroup nodAnal = new GenericNodeGroup(Nodes, "Analyses", "Analysis", "Analyses", ProjectManager.Project.AnalysesFolder, ContextMenuStrip.Container, true);
-            TreeNodeGroup nodChng = new GenericNodeGroup(nodAnal.Nodes, "Change Detections", "Change Detection", "Change Detection Analyses", ProjectManager.Project.ChangeDetectionFolder, ContextMenuStrip.Container, true);
+            TreeNodeGroup nodChng = new ChangeDetectionGroup(nodAnal.Nodes, ContextMenuStrip.Container);
             TreeNodeGroup nodIntr = new InterComparisonGroup(nodAnal.Nodes, ContextMenuStrip.Container);
 
-            // NodInputs has no right click menu items
+            // Inputs and analyses nodes have no right click menu items
             nodInpt.ContextMenuStrip.Items.Clear();
+            nodAnal.ContextMenuStrip.Items.Clear();
 
             nodInpt.Expand();
             nodAnal.Expand();

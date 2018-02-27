@@ -305,7 +305,11 @@
       <DependentUpon>frmProfileRouteProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\Project\TreeNodeTypes\AssocGroup.cs" />
+    <Compile Include="UserInterface\Project\TreeNodeTypes\BudgetSegGroup.cs" />
     <Compile Include="UserInterface\Project\TreeNodeTypes\DEMSurveysGroup.cs" />
+    <Compile Include="UserInterface\Project\TreeNodeTypes\ChangeDetectionGroup.cs" />
+    <Compile Include="UserInterface\Project\TreeNodeTypes\DoDGroup.cs" />
+    <Compile Include="UserInterface\Project\TreeNodeTypes\DoDPairGroup.cs" />
     <Compile Include="UserInterface\Project\TreeNodeTypes\ErrorSurfaceGroup.cs" />
     <Compile Include="UserInterface\Project\TreeNodeTypes\GCDProjectGroup.cs" />
     <Compile Include="UserInterface\Project\TreeNodeTypes\GenericNodeGroup.cs" />

@@ -10,9 +10,8 @@ using System.Xml;
 
 namespace GCDCore.Project.Morphological
 {
-    public class MorphologicalAnalysis
+    public class MorphologicalAnalysis : GCDProjectItem
     {
-        public string Name { get; set; }
         public readonly BudgetSegregation BS;
         public readonly DirectoryInfo OutputFolder;
 
@@ -23,9 +22,14 @@ namespace GCDCore.Project.Morphological
 
         public readonly BindingList<MorphologicalUnit> Units;
 
+        public override bool IsItemInUse { get { return false; } }
+
+        public override string Noun { get { return "Morphological Analysis"; } }
+
+  
         public MorphologicalAnalysis(string name, DirectoryInfo outputFolder, BudgetSegregation bs, UnitsNet.Units.VolumeUnit eVolumeUnits)
+            : base(name)
         {
-            Name = name;
             OutputFolder = outputFolder;
             BS = bs;
             DurationDisplayUnits = UnitsNet.Units.DurationUnit.Hour;
@@ -40,8 +44,8 @@ namespace GCDCore.Project.Morphological
         }
 
         public MorphologicalAnalysis(XmlNode nodAnalysis, BudgetSegregation bs)
+            : base(nodAnalysis)
         {
-            Name = nodAnalysis.SelectSingleNode("Name").InnerText;
             OutputFolder = ProjectManager.Project.GetAbsoluteDir(nodAnalysis.SelectSingleNode("Folder").InnerText);
             BS = bs;
 
@@ -234,7 +238,7 @@ namespace GCDCore.Project.Morphological
                     unit.FluxVolume = (1m - Porosity) * (decimal)unit.VolOut.As(DisplayVolumeUnits) / duration;
 
                     // The volume flux per unit volume and per unit time. THIS IS IN CUBIC METRES
-                    decimal volumeFluxPerUnitVolume = (decimal) UnitsNet.Volume.From((double) unit.FluxVolume, DisplayVolumeUnits).As(UnitsNet.Units.VolumeUnit.CubicMeter);
+                    decimal volumeFluxPerUnitVolume = (decimal)UnitsNet.Volume.From((double)unit.FluxVolume, DisplayVolumeUnits).As(UnitsNet.Units.VolumeUnit.CubicMeter);
 
                     // Mass of material per unit time. (Should be independent of volume)
                     unit.FluxMass = volumeFluxPerUnitVolume * massPerUnitVolume;
@@ -266,7 +270,7 @@ namespace GCDCore.Project.Morphological
             nodMinFlux.InnerText = MinimumFlux.As(ProjectManager.Project.Units.VolUnit).ToString("R");
         }
 
-        public void Delete()
+        public override void Delete()
         {
             throw new NotImplementedException("deleting morphological analysis is not implemented.");
         }

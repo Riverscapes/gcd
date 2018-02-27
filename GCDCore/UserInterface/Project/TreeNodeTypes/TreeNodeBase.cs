@@ -44,7 +44,14 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
                     ContextMenuStrip cms = sender as ContextMenuStrip;                    
                     TreeView treProject = cms.SourceControl as TreeView;
                     TreeNodeGroup nodGroup = treProject.SelectedNode as TreeNodeGroup;
-                    tsmi.Enabled = nodGroup.Folder.Exists;
+                    if (nodGroup.Folder is System.IO.DirectoryInfo)
+                    {
+                        tsmi.Enabled = nodGroup.Folder.Exists;
+                    }
+                    else
+                    {
+                        tsmi.Visible = false;
+                    }
                 }
             }
         }
