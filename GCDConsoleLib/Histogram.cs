@@ -356,7 +356,7 @@ namespace GCDConsoleLib
                         bLowerDec,
                         bUpper,
                         bCenter,
-                        cellArea, vol, BinCounts[bid], _binSums[bid]);
+                        cellArea.As(theUnits.ArUnit), vol, BinCounts[bid], _binSums[bid]);
                     stream.WriteLine(binstr);
                 }
             }
