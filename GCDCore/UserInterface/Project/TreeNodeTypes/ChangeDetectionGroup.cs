@@ -17,9 +17,11 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
         {
             ContextMenuStrip.Items[0].Text = "Add Change Detection";
 
+            int totalSurfaces = ProjectManager.Project.DEMSurveys.Count + ProjectManager.Project.ReferenceSurfaces.Count;
+
             ToolStripMenuItem tsmiBatch = new ToolStripMenuItem("Batch Change Detection");
-            tsmiBatch.DropDownItems.Add("Multi-Epoch Change Detection", Properties.Resources.Add, OnMultiEpoch);
-            tsmiBatch.DropDownItems.Add("Multi-Uncertainty Change Detection", Properties.Resources.Add, OnMultiUncertainty);
+            tsmiBatch.DropDownItems.Add("Multiple Epoch", Properties.Resources.Add, OnMultiEpoch).Enabled = ProjectManager.Project.DEMSurveys.Count > 2;
+            tsmiBatch.DropDownItems.Add("Multiple Uncertainty Analysis", Properties.Resources.Add, OnMultiUncertainty).Enabled = totalSurfaces > 1;
             ContextMenuStrip.Items.Insert(1, tsmiBatch);
 
             LoadChildNodes();

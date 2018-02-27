@@ -397,7 +397,6 @@
     <Compile Include="UserInterface\Project\frmProjectProperties.Designer.cs">
       <DependentUpon>frmProjectProperties.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserInterface\Project\ProjectTreeNode.cs" />
     <Compile Include="UserInterface\UtilityForms\ucRasterInput.cs">
       <SubType>UserControl</SubType>
     </Compile>

@@ -207,7 +207,7 @@ namespace GCDStandalone
                 throw new Exception("Error validating GCD project", ex);
             }
 
-            ucProjectExplorer1.cmdRefresh_Click(null, null);
+            ucProjectExplorer1.LoadTree();
             UpdateMenusAndToolstrips(null, null);
         }
 
@@ -349,7 +349,7 @@ namespace GCDStandalone
             try
             {
                 ProjectManager.CloseCurrentProject();
-                ucProjectExplorer1.cmdRefresh_Click(sender, e);
+                ucProjectExplorer1.LoadTree();
                 UpdateMenusAndToolstrips(sender, e);
 
                 // Now update the tool status strip
@@ -373,10 +373,6 @@ namespace GCDStandalone
 
                     case Keys.N:
                         ProjectProperties_Click(newGCDProjectToolStripMenuItem, null);
-                        break;
-
-                    case Keys.S:
-                        ucProjectExplorer1.AddDEMSurvey();
                         break;
                 }
             }

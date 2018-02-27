@@ -219,7 +219,6 @@ namespace GCDCore.UserInterface.Project
                     }
 
                     UpdateProjectMetdata(ProjectManager.Project);
-
                     ProjectManager.Project.Save();
                 }
 

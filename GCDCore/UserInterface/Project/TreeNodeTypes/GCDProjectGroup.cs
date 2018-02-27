@@ -37,6 +37,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
 
             nodInpt.Expand();
             nodAnal.Expand();
+            Expand();
         }
 
         public void OnEditProperties(object sender, EventArgs e)

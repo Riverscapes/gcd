@@ -20,26 +20,32 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             BudgetSeg = bs;
 
             ContextMenuStrip.Items[0].Text = "Add Morphological Analysis";
-            ContextMenuStrip.Items[0].Enabled = bs.IsMaskDirectional;
+             ContextMenuStrip.Items.Insert(0, new ToolStripMenuItem("View Budget Segregation Results", Properties.Resources.GCD, OnViewResults));
 
-            ContextMenuStrip.Items.Insert(0, new ToolStripMenuItem("View Budget Segregation Results", Properties.Resources.GCD, OnViewResults));
-            
             LoadChildNodes();
         }
 
         public override void LoadChildNodes()
         {
             Nodes.Clear();
-            
+
             BudgetSeg.MorphologicalAnalyses.Values.ToList().ForEach(x => new TreeNodeItem(x, 11, ContextMenuStrip.Container));
-            
+
             if (Nodes.Count > 0)
                 Expand();
         }
 
         public override void OnAdd(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            if (!BudgetSeg.IsMaskDirectional)
+            {
+                MessageBox.Show("You can only perform morphological approach sediment analyses on budget segregations that were" +
+           " generated using directional mask. The selected budget segregation was generated using a regular mask.", "Invalid Budget Segregation", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            BudgetSegregation.Morphological.frmMorpProperties frm = new BudgetSegregation.Morphological.frmMorpProperties(BudgetSeg);
+            EditTreeItem(frm);
         }
 
         public void OnViewResults(object sender, EventArgs e)
@@ -49,7 +55,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
                 BudgetSegregation.frmBudgetSegResults frm = new BudgetSegregation.frmBudgetSegResults(BudgetSeg);
                 frm.ShowDialog();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 naru.error.ExceptionUI.HandleException(ex);
             }
