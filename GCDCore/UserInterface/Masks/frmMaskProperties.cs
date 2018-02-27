@@ -73,7 +73,7 @@ namespace GCDCore.UserInterface.Masks
             if (string.IsNullOrEmpty(txtName.Text))
                 txtPath.Text = string.Empty;
             else
-                txtPath.Text = GCDCore.Project.ProjectManager.Project.GetRelativePath(GCDCore.Project.ProjectManager.OutputManager.GetMaskShapeFilePath(txtName.Text));
+                txtPath.Text = ProjectManager.Project.GetRelativePath(ProjectManager.Project.MaskPath(txtName.Text));
         }
 
         private void InputShapeFileChanged(object sender, naru.ui.PathEventArgs e)

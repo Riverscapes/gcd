@@ -271,7 +271,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
                 ucRaster.Select();
                 return false;
             }
-           
+
             // Importing rasters into GCD projects reuires some unit checks
             if (ExtImporter.Purpose != ExtentImporter.Purposes.Standalone)
             {
@@ -474,23 +474,20 @@ namespace GCDCore.UserInterface.SurveyLibrary
             {
                 case ExtentImporter.Purposes.FirstDEM:
                 case ExtentImporter.Purposes.SubsequentDEM:
-                    txtRasterPath.Text = ProjectManager.Project.GetRelativePath(ProjectManager.OutputManager.DEMSurveyRasterPath(txtName.Text));
+                    txtRasterPath.Text = ProjectManager.Project.GetRelativePath(ProjectManager.Project.DEMSurveyPath(txtName.Text));
                     break;
 
                 case ExtentImporter.Purposes.AssociatedSurface:
-                    txtRasterPath.Text = ProjectManager.Project.GetRelativePath(ProjectManager.OutputManager.AssociatedSurfaceRasterPath(ReferenceSurface.Name, txtName.Text));
+                    txtRasterPath.Text = ProjectManager.Project.GetRelativePath(((DEMSurvey)ReferenceSurface).AssocSurfacePath(txtName.Text));
                     break;
 
                 case ExtentImporter.Purposes.ErrorSurface:
-                    txtRasterPath.Text = ProjectManager.Project.GetRelativePath(ProjectManager.OutputManager.ErrorSurfaceRasterPath(ReferenceSurface.Name, txtName.Text));
+                case ExtentImporter.Purposes.ReferenceErrorSurface:
+                    txtRasterPath.Text = ProjectManager.Project.GetRelativePath(ReferenceSurface.ErrorSurfacePath(txtName.Text));
                     break;
 
                 case ExtentImporter.Purposes.ReferenceSurface:
-                    txtRasterPath.Text = ProjectManager.Project.GetRelativePath(ProjectManager.OutputManager.GetReferenceSurfaceRasterPath(txtName.Text));
-                    break;
-
-                case ExtentImporter.Purposes.ReferenceErrorSurface:
-                    txtRasterPath.Text = ProjectManager.Project.GetRelativePath(ProjectManager.OutputManager.GetReferenceErrorSurfaceRasterPath(txtName.Text, ReferenceSurface.Raster.GISFileInfo.Directory));
+                    txtRasterPath.Text = ProjectManager.Project.GetRelativePath(ProjectManager.Project.ReferenceSurfacePath(txtName.Text));
                     break;
             }
         }

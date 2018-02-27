@@ -50,6 +50,21 @@ namespace GCDCore.Project
             }
         }
 
+        public FileInfo DEMSurveyPath(string name)
+        {
+            return ProjectManager.GetProjectItemPath(SurveysFolder, "DEM", name, "tif");
+        }
+
+        public FileInfo ReferenceSurfacePath(string name)
+        {
+            return ProjectManager.GetProjectItemPath(ReferenceSurfacesFolder, "Ref", name, "tif");
+        }
+
+        public FileInfo MaskPath(string name)
+        {
+            return ProjectManager.GetProjectItemPath(MasksFolder, "Mask", name, "shp");
+        }
+
         /// <summary>
         /// Get the spatial reference of the first GIS dataset in the project.
         /// </summary>

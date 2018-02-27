@@ -41,6 +41,35 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             {
                 frm = new SurveyLibrary.frmSurfaceProperties(Item as Surface);
             }
+            else if (Item is AssocSurface)
+            {
+                AssocSurface assoc = Item as AssocSurface;
+                frm = new SurveyLibrary.frmAssocSurfaceProperties(assoc.DEM, assoc);
+            }
+            else if (Item is ErrorSurface)
+            {
+                ErrorSurface err = Item as ErrorSurface;
+                if (err.Surf is DEMSurvey)
+                {
+                    frm = new SurveyLibrary.frmErrorSurfaceProperties(err.Surf as DEMSurvey, err);
+                }
+            }
+            else if (Item is GCDCore.Project.ProfileRoutes.ProfileRoute)
+            {
+                frm = new UserInterface.ProfileRoutes.frmProfileRouteProperties(Item as GCDCore.Project.ProfileRoutes.ProfileRoute);
+            }
+            else if (Item is GCDCore.Project.Masks.DirectionalMask)
+            {
+                frm = new Masks.frmDirectionalMaskProps(Item as GCDCore.Project.Masks.DirectionalMask);
+            }
+            else if (Item is GCDCore.Project.Masks.AOIMask )
+            {
+                frm = new Masks.frmAOIProperties(Item as GCDCore.Project.Masks.AOIMask);
+            }
+            else if (Item is GCDCore.Project.Masks.RegularMask)
+            {
+                frm = new Masks.frmMaskProperties(Item as GCDCore.Project.Masks.RegularMask);
+            }
             else
             {
                 throw new NotImplementedException("Unhandled editing of project type");

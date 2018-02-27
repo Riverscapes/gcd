@@ -535,8 +535,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
                 string sRasterPath = string.Empty;
                 if (!string.IsNullOrEmpty(txtName.Text))
                 {
-                    sRasterPath = ProjectManager.OutputManager.ErrorSurfaceRasterPath(DEM.Name, txtName.Text, false).FullName;
-                    sRasterPath = ProjectManager.Project.GetRelativePath(sRasterPath);
+                    sRasterPath = ProjectManager.Project.GetRelativePath(DEM.ErrorSurfacePath(txtName.Text));
                 }
                 txtRasterPath.Text = sRasterPath;
             }

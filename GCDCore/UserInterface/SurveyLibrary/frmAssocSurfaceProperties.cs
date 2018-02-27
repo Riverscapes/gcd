@@ -320,7 +320,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
         {
             if (m_Assoc == null)
             {
-                txtProjectRaster.Text = ProjectManager.OutputManager.AssociatedSurfaceRasterPath(DEM.Name, txtName.Text).FullName;
+                txtProjectRaster.Text = ProjectManager.Project.GetRelativePath(DEM.AssocSurfacePath(txtName.Text));
             }
         }
 

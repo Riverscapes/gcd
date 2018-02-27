@@ -27,8 +27,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
                 TreeNodeItem nodSurface = new TreeNodeItem(surf, 5, ContextMenuStrip.Container);
                 Nodes.Add(nodSurface);
 
-                TreeNodeGroup nodError = new GenericNodeGroup(nodSurface.Nodes, "Error Surfaces", "Error Surface", "Error Surfaces", surf.ErrorSurfacesFolder, ContextMenuStrip.Container, surf.ErrorSurfaces.Count > 0);
-                surf.ErrorSurfaces.ToList().ForEach(x => nodError.Nodes.Add(new TreeNodeItem(x, 4, ContextMenuStrip.Container)));
+                TreeNodeGroup nodError = new ErrorSurfaceGroup(nodSurface.Nodes, ContextMenuStrip.Container, surf);
             }
 
             if (Nodes.Count > 0)

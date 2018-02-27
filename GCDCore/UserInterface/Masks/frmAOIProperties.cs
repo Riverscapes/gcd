@@ -127,7 +127,7 @@ namespace GCDCore.UserInterface.Masks
             if (string.IsNullOrEmpty(txtName.Text))
                 txtPath.Text = string.Empty;
             else
-                txtPath.Text = ProjectManager.Project.GetRelativePath(ProjectManager.OutputManager.GetMaskShapeFilePath(txtName.Text));
+                txtPath.Text = ProjectManager.Project.GetRelativePath(ProjectManager.Project.MaskPath(txtName.Text));
         }
 
         private void cmdAddToMap_Click(object sender, EventArgs e)

@@ -34,6 +34,9 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
                 TreeNodeItem nodMask = new TreeNodeTypes.TreeNodeItem(mask, imageIndex, ContextMenuStrip.Container);
                 Nodes.Add(nodMask);
             }
+
+            if (Nodes.Count > 0)
+                Expand();
         }
 
         public override void OnAdd(object sender, EventArgs e)

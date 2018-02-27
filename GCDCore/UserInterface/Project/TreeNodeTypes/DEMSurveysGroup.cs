@@ -26,20 +26,14 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
                 TreeNodeItem nodDEM = new TreeNodeTypes.TreeNodeItem(dem, 2, ContextMenuStrip.Container);
                 Nodes.Add(nodDEM);
 
-                TreeNodeGroup nodAssoc = new GenericNodeGroup(nodDEM.Nodes, "Associated Surfaces", "Associated Surface", "Associated Surfaces", dem.AssocSurfacesFolder, ContextMenuStrip.Container, dem.AssocSurfaces.Count > 0);
-                dem.AssocSurfaces.ToList().ForEach(x => nodAssoc.Nodes.Add(new TreeNodeItem(x, 3, ContextMenuStrip.Container)));
-
-                // Associated surface uses the same form for browsing to existing as well as calculating new
-                nodAssoc.ContextMenuStrip.Items[0].Text = "Add Associated Surface";
-
-                TreeNodeGroup nodError = new GenericNodeGroup(nodDEM.Nodes, "Error Surfaces", "Error Surface", "Error Surfaces", dem.ErrorSurfacesFolder, ContextMenuStrip.Container, dem.ErrorSurfaces.Count > 0);
-                dem.ErrorSurfaces.ToList().ForEach(x => nodError.Nodes.Add(new TreeNodeItem(x, 4, ContextMenuStrip.Container)));
+                TreeNodeGroup nodAssoc = new AssocGroup(nodDEM.Nodes, ContextMenuStrip.Container, dem);
+                TreeNodeGroup nodError = new ErrorSurfaceGroup(nodDEM.Nodes, ContextMenuStrip.Container, dem);
 
                 //Nodes.Add(new LinearExtractionGroup<GCDCore.Project.LinearExtraction.LinearExtractionFromDEM>("Linear Extractions From DEM Surveys", "Linear Extraction", "Linear Extractions", container));
-
-                if (Nodes.Count > 0)
-                    Expand();
             }
+
+            if (Nodes.Count > 0)
+                Expand();
         }
 
         public override void OnAdd(object sender, EventArgs e)

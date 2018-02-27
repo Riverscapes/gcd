@@ -59,9 +59,9 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
 
         public void OnExplore(object sender, EventArgs e)
         {
-            if (ProjectManager.Project.ProjectFile.Directory.Exists)
+            if (Folder.Exists)
             {
-                System.Diagnostics.Process.Start(ProjectManager.Project.ProjectFile.Directory.FullName);
+                System.Diagnostics.Process.Start(Folder.FullName);
             }
         }
 
