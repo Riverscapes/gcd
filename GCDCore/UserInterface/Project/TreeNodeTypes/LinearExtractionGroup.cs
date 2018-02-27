@@ -14,10 +14,20 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
         public LinearExtractionGroup(TreeNodeCollection parentNodes, string name, string nounSingle, string nounPlural, IContainer container)
             : base(parentNodes, name, nounSingle, nounPlural, container, ProjectManager.Project.LinearExtractions.Values.OfType<T>().Count<T>() > 0)
         {
+            LoadChildNodes();
+        }
+
+        public override void LoadChildNodes()
+        {
+            Nodes.Clear();
+
             foreach (T le in ProjectManager.Project.LinearExtractions.Values.OfType<T>())
             {
-                Nodes.Add(new TreeNodeItem(le as GCDCore.Project.LinearExtraction.LinearExtraction, 16, container));
+                Nodes.Add(new TreeNodeItem(le as GCDCore.Project.LinearExtraction.LinearExtraction, 16, ContextMenuStrip.Container));
             }
+
+            if (Nodes.Count > 0)
+                Expand();
         }
 
         public override void OnAdd(object sender, EventArgs e)

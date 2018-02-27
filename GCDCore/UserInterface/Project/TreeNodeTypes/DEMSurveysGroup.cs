@@ -14,27 +14,32 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
         public DEMSurveysGroup(TreeNodeCollection parentNodes, IContainer container)
             : base(parentNodes, "DEM Surveys", "DEM Survey", "DEM Surveys", container, ProjectManager.Project.DEMSurveys.Count > 0)
         {
+            LoadChildNodes();
+        }
+
+        public override void LoadChildNodes()
+        {
+            Nodes.Clear();
+
             foreach (DEMSurvey dem in ProjectManager.Project.DEMSurveys.Values)
             {
-                TreeNodeItem nodDEM = new TreeNodeTypes.TreeNodeItem(dem, 2, container);
+                TreeNodeItem nodDEM = new TreeNodeTypes.TreeNodeItem(dem, 2, ContextMenuStrip.Container);
                 Nodes.Add(nodDEM);
 
-                TreeNodeGroup nodAssoc = new GenericNodeGroup(nodDEM.Nodes, "Associated Surfaces", "Associated Surface", "Associated Surfaces", container, dem.AssocSurfaces.Count > 0);
-                dem.AssocSurfaces.ToList().ForEach(x => nodAssoc.Nodes.Add(new TreeNodeItem(x, 3, container)));
+                TreeNodeGroup nodAssoc = new GenericNodeGroup(nodDEM.Nodes, "Associated Surfaces", "Associated Surface", "Associated Surfaces", ContextMenuStrip.Container, dem.AssocSurfaces.Count > 0);
+                dem.AssocSurfaces.ToList().ForEach(x => nodAssoc.Nodes.Add(new TreeNodeItem(x, 3, ContextMenuStrip.Container)));
 
                 // Associated surface uses the same form for browsing to existing as well as calculating new
                 nodAssoc.ContextMenuStrip.Items[0].Text = "Add Associated Surface";
 
-                TreeNodeGroup nodError = new GenericNodeGroup(nodDEM.Nodes, "Error Surfaces", "Error Surface", "Error Surfaces", container, dem.ErrorSurfaces.Count > 0);
-                dem.ErrorSurfaces.ToList().ForEach(x => nodError.Nodes.Add(new TreeNodeItem(x, 4, container)));
+                TreeNodeGroup nodError = new GenericNodeGroup(nodDEM.Nodes, "Error Surfaces", "Error Surface", "Error Surfaces", ContextMenuStrip.Container, dem.ErrorSurfaces.Count > 0);
+                dem.ErrorSurfaces.ToList().ForEach(x => nodError.Nodes.Add(new TreeNodeItem(x, 4, ContextMenuStrip.Container)));
+
+                //Nodes.Add(new LinearExtractionGroup<GCDCore.Project.LinearExtraction.LinearExtractionFromDEM>("Linear Extractions From DEM Surveys", "Linear Extraction", "Linear Extractions", container));
+
+                if (Nodes.Count > 0)
+                    Expand();
             }
-
-            //TreeNodeGroup nodLinear = new linear
-
-            //Nodes.Add(new LinearExtractionGroup<GCDCore.Project.LinearExtraction.LinearExtractionFromDEM>("Linear Extractions From DEM Surveys", "Linear Extraction", "Linear Extractions", container));
-
-            if (Nodes.Count > 0)
-                Expand();
         }
 
         public override void OnAdd(object sender, EventArgs e)
@@ -57,10 +62,10 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
                     DEMSurvey dem = new DEMSurvey(frm.txtName.Text, null, ProjectManager.Project.GetAbsolutePath(frm.txtRasterPath.Text));
                     ProjectManager.Project.DEMSurveys[dem.Name] = dem;
                     ProjectManager.Project.Save();
-                    LoadTree();
+                    LoadChildNodes();
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 naru.error.ExceptionUI.HandleException(ex, "Error Importing DEM Survey");
             }

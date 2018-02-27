@@ -19,9 +19,14 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             Item = item;
 
             ContextMenuStrip = new ContextMenuStrip(container);
-            ContextMenuStrip.Items.Add(string.Format("Edit {0} Properties", NounSingle), Properties.Resources.Add, OnEdit);
+            ContextMenuStrip.Items.Add(string.Format("Edit {0} Properties", NounSingle), Properties.Resources.Options, OnEdit);
             ContextMenuStrip.Items.Add(string.Format("Add {0} to the Map", NounSingle), Properties.Resources.AddToMap, OnAddToMap);
             ContextMenuStrip.Items.Add(string.Format("Delete {0}", NounSingle), Properties.Resources.Delete, OnDelete);
+        }
+
+        public override void LoadChildNodes()
+        {
+            ((TreeNodeBase)Parent).LoadChildNodes();
         }
 
         public void OnEdit(object sender, EventArgs e)
@@ -40,17 +45,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
 
             if (frm is Form)
             {
-                try
-                {
-                    if (frm.ShowDialog() == DialogResult.OK)
-                    {
-                        LoadTree();
-                    }
-                }
-                catch(Exception ex)
-                {
-                    naru.error.ExceptionUI.HandleException(ex, "Error editing GCD project item.");
-                }
+                EditTreeItem(frm);
             }
         }
 
@@ -81,7 +76,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             try
             {
                 Item.Delete();
-                LoadTree();
+                Remove();
             }
             catch (Exception ex)
             {

@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace GCDCore.UserInterface.Project.TreeNodeTypes
 {
-    public class TreeNodeBase : TreeNode
+    public abstract class TreeNodeBase : TreeNode
     {
         public readonly string NounSingle;
         public readonly string NounPlural;
@@ -19,11 +19,19 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             NounPlural = noundPlural;
         }
 
-        protected void LoadTree()
-        {
-            ucProjectExplorer pe = TreeView.Parent as ucProjectExplorer;
-            pe.LoadTree(null, null);
-        }
+        /// <summary>
+        /// Each inherited class must implement the LoadChildNodes method that knows
+        /// how to load the child nodes of the relevant type. This is called during
+        /// construction and also after OnAdd 
+        /// </summary>
+        public abstract void LoadChildNodes();
+
+
+        //protected void LoadTree()
+        //{
+        //    ucProjectExplorer pe = TreeView.Parent as ucProjectExplorer;
+        //    pe.LoadTree(null, null);
+        //}
 
         protected DialogResult EditTreeItem(Form frm, bool treeReload = true)
         {
@@ -33,7 +41,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
                 eResult = frm.ShowDialog();
                 if (eResult == DialogResult.OK && treeReload)
                 {
-                    LoadTree();
+                    LoadChildNodes();
                 }
             }
             catch (Exception ex)

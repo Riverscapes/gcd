@@ -17,6 +17,11 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
 
         }
 
+        public override void LoadChildNodes()
+        {
+            throw new NotImplementedException();
+        }
+
         public override void OnAdd(object sender, EventArgs e)
         {
             throw new NotImplementedException();

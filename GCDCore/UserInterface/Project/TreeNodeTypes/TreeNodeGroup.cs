@@ -17,6 +17,8 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             ContextMenuStrip.Items.Add(string.Format("Add Existing {0}", NounSingle), Properties.Resources.Add, OnAdd);
 
             ContextMenuStrip.Items.Add("-"); // Separator
+            ContextMenuStrip.Items.Add(string.Format("Explore {0} Folder", NounPlural), Properties.Resources.BrowseFolder, OnExplore);
+
             ContextMenuStrip.Items.Add(string.Format("Add all {0} to the Map", NounPlural), Properties.Resources.AddToMap, OnAddToMap);
             ContextMenuStrip.Items.Add("Collapse Child Items", Properties.Resources.collapse, OnCollapseChildren);
 
@@ -26,6 +28,12 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
                 Expand();
         }
 
+        /// <summary>
+        /// Each interited class must implement the OnAdd method that instantiates the 
+        /// Appropriate form to add an item of the relevant type 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public abstract void OnAdd(object sender, EventArgs e);
 
         public void OnAddToMap(object sender, EventArgs e)
@@ -36,6 +44,14 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
                 {
                     ProjectManager.OnAddRasterToMap(childNode.Tag as GCDProjectRasterItem);
                 }
+            }
+        }
+
+        public void OnExplore(object sender, EventArgs e)
+        {
+            if (ProjectManager.Project.ProjectFile.Directory.Exists)
+            {
+                System.Diagnostics.Process.Start(ProjectManager.Project.ProjectFile.Directory.FullName);
             }
         }
 
