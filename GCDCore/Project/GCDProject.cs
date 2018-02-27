@@ -26,6 +26,19 @@ namespace GCDCore.Project
 
         public override string Noun { get { return "GCD Project"; } }
 
+        // Project Inputs Folder Paths
+        public DirectoryInfo Folder { get { return ProjectFile.Directory; } }
+        public DirectoryInfo InputsFolder { get { return ProjectManager.CombinePaths(Folder, "Inputs"); } }
+        public DirectoryInfo SurveysFolder { get { return ProjectManager.CombinePaths(InputsFolder, "Surveys"); } }
+        public DirectoryInfo ReferenceSurfacesFolder { get { return ProjectManager.CombinePaths(InputsFolder, "RefSurf"); } }
+        public DirectoryInfo MasksFolder { get { return ProjectManager.CombinePaths(InputsFolder, "Masks"); } }
+        public DirectoryInfo ProfileRoutesFolder { get { return ProjectManager.CombinePaths(InputsFolder, "Routes"); } }
+
+        // Project Analyses Folder Paths
+        public DirectoryInfo AnalysesFolder { get { return ProjectManager.CombinePaths(Folder, "Analyses"); } }
+        public DirectoryInfo ChangeDetectionFolder { get { return ProjectManager.CombinePaths(AnalysesFolder, "CD"); } }
+        public DirectoryInfo InterComparisonsFolder { get { return ProjectManager.CombinePaths(AnalysesFolder, "IC"); } }
+    
         /// <summary>
         /// Projects are never considered in use
         /// </summary>
@@ -291,7 +304,7 @@ namespace GCDCore.Project
                 ProjectManager.Project.ReferenceSurfaces[surf.Name] = surf;
             }
 
-            foreach(XmlNode nodRoute in nodProject.SelectNodes("ProfileRoutes/ProfileRoute"))
+            foreach (XmlNode nodRoute in nodProject.SelectNodes("ProfileRoutes/ProfileRoute"))
             {
                 GCDCore.Project.ProfileRoutes.ProfileRoute route = new Project.ProfileRoutes.ProfileRoute(nodRoute);
                 ProjectManager.Project.ProfileRoutes[route.Name] = route;
@@ -350,7 +363,7 @@ namespace GCDCore.Project
 
                 else
                     le = new LinearExtraction.LinearExtractionFromDoD(nodLE);
-                
+
                 ProjectManager.Project.LinearExtractions[le.Name] = le;
             }
 

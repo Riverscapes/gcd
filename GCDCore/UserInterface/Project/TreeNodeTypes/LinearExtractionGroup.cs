@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -11,8 +12,8 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
 {
     public class LinearExtractionGroup<T> : TreeNodeGroup
     {
-        public LinearExtractionGroup(TreeNodeCollection parentNodes, string name, string nounSingle, string nounPlural, IContainer container)
-            : base(parentNodes, name, nounSingle, nounPlural, container, ProjectManager.Project.LinearExtractions.Values.OfType<T>().Count<T>() > 0)
+        public LinearExtractionGroup(TreeNodeCollection parentNodes, string name, string nounSingle, string nounPlural, DirectoryInfo folder, IContainer container)
+            : base(parentNodes, name, nounSingle, nounPlural, folder, container, ProjectManager.Project.LinearExtractions.Values.OfType<T>().Count<T>() > 0)
         {
             LoadChildNodes();
         }

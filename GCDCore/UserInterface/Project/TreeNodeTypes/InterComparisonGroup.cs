@@ -12,7 +12,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
     public class InterComparisonGroup : TreeNodeGroup
     {
         public InterComparisonGroup(TreeNodeCollection parentNodes, IContainer container)
-            : base(parentNodes, "Inter-Comparisons", "Inter-Comparison", "Inter-Comparisons", container)
+            : base(parentNodes, "Inter-Comparisons", "Inter-Comparison", "Inter-Comparisons", ProjectManager.Project.InterComparisonsFolder, container)
         {
             // Inter-comparisons are "calculated not added
             ContextMenuStrip.Items.Clear();

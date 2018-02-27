@@ -12,7 +12,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
     public class DEMSurveysGroup : TreeNodeGroup
     {
         public DEMSurveysGroup(TreeNodeCollection parentNodes, IContainer container)
-            : base(parentNodes, "DEM Surveys", "DEM Survey", "DEM Surveys", container, ProjectManager.Project.DEMSurveys.Count > 0)
+            : base(parentNodes, "DEM Surveys", "DEM Survey", "DEM Surveys", ProjectManager.Project.SurveysFolder, container, ProjectManager.Project.DEMSurveys.Count > 0)
         {
             LoadChildNodes();
         }
@@ -26,13 +26,13 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
                 TreeNodeItem nodDEM = new TreeNodeTypes.TreeNodeItem(dem, 2, ContextMenuStrip.Container);
                 Nodes.Add(nodDEM);
 
-                TreeNodeGroup nodAssoc = new GenericNodeGroup(nodDEM.Nodes, "Associated Surfaces", "Associated Surface", "Associated Surfaces", ContextMenuStrip.Container, dem.AssocSurfaces.Count > 0);
+                TreeNodeGroup nodAssoc = new GenericNodeGroup(nodDEM.Nodes, "Associated Surfaces", "Associated Surface", "Associated Surfaces", dem.AssocSurfacesFolder, ContextMenuStrip.Container, dem.AssocSurfaces.Count > 0);
                 dem.AssocSurfaces.ToList().ForEach(x => nodAssoc.Nodes.Add(new TreeNodeItem(x, 3, ContextMenuStrip.Container)));
 
                 // Associated surface uses the same form for browsing to existing as well as calculating new
                 nodAssoc.ContextMenuStrip.Items[0].Text = "Add Associated Surface";
 
-                TreeNodeGroup nodError = new GenericNodeGroup(nodDEM.Nodes, "Error Surfaces", "Error Surface", "Error Surfaces", ContextMenuStrip.Container, dem.ErrorSurfaces.Count > 0);
+                TreeNodeGroup nodError = new GenericNodeGroup(nodDEM.Nodes, "Error Surfaces", "Error Surface", "Error Surfaces", dem.ErrorSurfacesFolder, ContextMenuStrip.Container, dem.ErrorSurfaces.Count > 0);
                 dem.ErrorSurfaces.ToList().ForEach(x => nodError.Nodes.Add(new TreeNodeItem(x, 4, ContextMenuStrip.Container)));
 
                 //Nodes.Add(new LinearExtractionGroup<GCDCore.Project.LinearExtraction.LinearExtractionFromDEM>("Linear Extractions From DEM Surveys", "Linear Extraction", "Linear Extractions", container));

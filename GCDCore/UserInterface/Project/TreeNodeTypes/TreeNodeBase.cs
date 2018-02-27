@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using GCDCore.Project;
 
 namespace GCDCore.UserInterface.Project.TreeNodeTypes
 {
@@ -25,13 +26,25 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
         /// construction and also after OnAdd 
         /// </summary>
         public abstract void LoadChildNodes();
+        
+        public void cms_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            foreach (ToolStripItem tsmi in ContextMenuStrip.Items)
+            {
+                // ignore separator
+                if (!(tsmi is ToolStripMenuItem))
+                    continue;
 
-
-        //protected void LoadTree()
-        //{
-        //    ucProjectExplorer pe = TreeView.Parent as ucProjectExplorer;
-        //    pe.LoadTree(null, null);
-        //}
+                if (tsmi.Text.ToLower().Contains("map"))
+                {
+                    tsmi.Visible = ProjectManager.IsArcMap;
+                }
+                else if (tsmi.Text.ToLower().Contains("explore"))
+                {
+                    // TODO: disable explore menu item if the folder doesn't exist
+                }
+            }
+        }
 
         protected DialogResult EditTreeItem(Form frm, bool treeReload = true)
         {

@@ -23,6 +23,9 @@ namespace GCDCore.Project
 
         public static bool IsArcMap { get { return System.Reflection.Assembly.GetEntryAssembly() == null; } }
 
+        // Simplifies the path combinations above
+        public static DirectoryInfo CombinePaths(DirectoryInfo parentDir, string subDir) { return new DirectoryInfo(Path.Combine(parentDir.FullName, subDir)); }
+
         // Public event for ArcGIS to listen to when a GIS layer is about to be deleted
         // ArcGIS should search for this path in the map and then remove the layer
         public delegate void GISLayerDeletingEvent(GISLayerEventArgs e);
@@ -288,6 +291,76 @@ namespace GCDCore.Project
             {
                 RasterPath = rasterPath;
             }
+        }
+
+        //public static DirectoryInfo GetIndexedSubDirectory(DirectoryInfo parentFolder, string groupFolder, string prefix, bool bCreate)
+        //{
+        //    DirectoryInfo diGroupFolder = new DirectoryInfo(Path.Combine(parentFolder.FullName, groupFolder));
+
+        //    if (!diGroupFolder.Exists && bCreate)
+        //        diGroupFolder.Create();
+
+        //    // Find unique folder on disk
+        //    int existingIndex = 0;
+
+        //    if (diGroupFolder.Exists)
+        //    {
+        //        foreach (DirectoryInfo existingFolder in diGroupFolder.GetDirectories(string.Format("{0}*", prefix), SearchOption.TopDirectoryOnly))
+        //        {
+        //            System.Text.RegularExpressions.Match match = System.Text.RegularExpressions.Regex.Match(existingFolder.FullName, "([0-9]*)$");
+        //            if (match.Groups.Count > 1)
+        //            {
+        //                int folderSuffix = int.Parse(match.Groups[1].Value);
+        //                if (folderSuffix > existingIndex)
+        //                    existingIndex = folderSuffix;
+        //            }
+        //        }
+        //    }
+
+        //    DirectoryInfo finalFolder = new DirectoryInfo(Path.Combine(diGroupFolder.FullName, string.Format("{0}{1:0000}", prefix, existingIndex + 1)));
+
+        //    if (bCreate)
+        //        finalFolder.Create();
+
+        //    return finalFolder;
+        //}
+
+        public static FileInfo GetProjectItemPath(DirectoryInfo parentFolder, string groupFolderPrefix, string name, string fileExtension)
+        {
+            DirectoryInfo itemDir = GetIndexedSubDirectory(parentFolder, groupFolderPrefix, false);
+            string path = Path.Combine(itemDir.FullName, naru.os.File.RemoveDangerousCharacters(name));
+            path = Path.ChangeExtension(path, fileExtension);
+            return new FileInfo(path);
+        }
+
+        public static DirectoryInfo GetIndexedSubDirectory(DirectoryInfo parentFolder, string prefix, bool bCreate)
+        {
+            if (!parentFolder.Exists && bCreate)
+                parentFolder.Create();
+
+            // Find unique folder on disk
+            int existingIndex = 0;
+
+            if (parentFolder.Exists)
+            {
+                foreach (DirectoryInfo existingFolder in parentFolder.GetDirectories(string.Format("{0}*", prefix), SearchOption.TopDirectoryOnly))
+                {
+                    System.Text.RegularExpressions.Match match = System.Text.RegularExpressions.Regex.Match(existingFolder.FullName, "([0-9]*)$");
+                    if (match.Groups.Count > 1)
+                    {
+                        int folderSuffix = int.Parse(match.Groups[1].Value);
+                        if (folderSuffix > existingIndex)
+                            existingIndex = folderSuffix;
+                    }
+                }
+            }
+
+            DirectoryInfo finalFolder = new DirectoryInfo(Path.Combine(parentFolder.FullName, string.Format("{0}{1:0000}", prefix, existingIndex + 1)));
+
+            if (bCreate)
+                finalFolder.Create();
+
+            return finalFolder;
         }
     }
 }

@@ -12,7 +12,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
     public class ReferenceSurfaceGroup : TreeNodeGroup
     {
         public ReferenceSurfaceGroup(TreeNodeCollection parentNodes, IContainer container)
-             : base(parentNodes, "Reference Surfaces", "Reference Surface", "Reference Surfaces", container, ProjectManager.Project.ReferenceSurfaces.Count > 0)
+             : base(parentNodes, "Reference Surfaces", "Reference Surface", "Reference Surfaces", ProjectManager.Project.ReferenceSurfacesFolder, container, ProjectManager.Project.ReferenceSurfaces.Count > 0)
         {
             ContextMenuStrip.Items.Insert(1, new ToolStripMenuItem("Calculate New Reference Surface From DEM Surveys", Properties.Resources.sigma, OnDeriveFromDEMs));
             ContextMenuStrip.Items.Insert(2, new ToolStripMenuItem("Calculate New Constant Reference Surface(s)", Properties.Resources.sigma, OnDeriveConstant));
@@ -27,7 +27,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
                 TreeNodeItem nodSurface = new TreeNodeItem(surf, 5, ContextMenuStrip.Container);
                 Nodes.Add(nodSurface);
 
-                TreeNodeGroup nodError = new GenericNodeGroup(nodSurface.Nodes, "Error Surfaces", "Error Surface", "Error Surfaces", ContextMenuStrip.Container, surf.ErrorSurfaces.Count > 0);
+                TreeNodeGroup nodError = new GenericNodeGroup(nodSurface.Nodes, "Error Surfaces", "Error Surface", "Error Surfaces", surf.ErrorSurfacesFolder, ContextMenuStrip.Container, surf.ErrorSurfaces.Count > 0);
                 surf.ErrorSurfaces.ToList().ForEach(x => nodError.Nodes.Add(new TreeNodeItem(x, 4, ContextMenuStrip.Container)));
             }
 

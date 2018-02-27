@@ -22,6 +22,9 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             ContextMenuStrip.Items.Add(string.Format("Edit {0} Properties", NounSingle), Properties.Resources.Options, OnEdit);
             ContextMenuStrip.Items.Add(string.Format("Add {0} to the Map", NounSingle), Properties.Resources.AddToMap, OnAddToMap);
             ContextMenuStrip.Items.Add(string.Format("Delete {0}", NounSingle), Properties.Resources.Delete, OnDelete);
+
+            // Hookup the opening event to handle status
+            ContextMenuStrip.Opening += cms_Opening;
         }
 
         public override void LoadChildNodes()

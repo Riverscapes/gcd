@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,9 +11,13 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
 {
     public abstract class TreeNodeGroup : TreeNodeBase
     {
-        public TreeNodeGroup(TreeNodeCollection parentNodes, string name, string nounSingle, string nounPlural, System.ComponentModel.IContainer container, bool expand = true, int imageIndex = 0)
+        public readonly DirectoryInfo Folder;
+
+        public TreeNodeGroup(TreeNodeCollection parentNodes, string name, string nounSingle, string nounPlural, DirectoryInfo folder, System.ComponentModel.IContainer container, bool expand = true, int imageIndex = 0)
             : base(name, nounSingle, nounPlural, imageIndex)
         {
+            Folder = folder;
+
             ContextMenuStrip = new ContextMenuStrip(container);
             ContextMenuStrip.Items.Add(string.Format("Add Existing {0}", NounSingle), Properties.Resources.Add, OnAdd);
 
@@ -22,11 +27,16 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             ContextMenuStrip.Items.Add(string.Format("Add all {0} to the Map", NounPlural), Properties.Resources.AddToMap, OnAddToMap);
             ContextMenuStrip.Items.Add("Collapse Child Items", Properties.Resources.collapse, OnCollapseChildren);
 
+            // Hookup the opening event to handle status
+            ContextMenuStrip.Opening += cms_Opening;
+
             parentNodes.Add(this);
 
             if (expand)
                 Expand();
         }
+
+
 
         /// <summary>
         /// Each interited class must implement the OnAdd method that instantiates the 

@@ -21,6 +21,13 @@ namespace GCDCore.Project
 
         public override string Noun { get { return "DEM Survey"; } }
 
+        public DirectoryInfo AssocSurfacesFolder { get { return ProjectManager.CombinePaths(Raster.GISFileInfo.Directory, "AssocSurfaces"); } }
+
+        public FileInfo AssocSurfacePath(string name)
+        {
+            return ProjectManager.GetProjectItemPath(AssocSurfacesFolder, "Ass", name, "tif");
+        }
+
         public DEMSurvey(string name, SurveyDateTime surveyDate, FileInfo rasterPath)
             : base(name, rasterPath)
         {

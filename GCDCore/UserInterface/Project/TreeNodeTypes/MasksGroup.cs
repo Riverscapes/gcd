@@ -10,7 +10,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
     public class MasksGroup : TreeNodeGroup
     {
         public MasksGroup(TreeNodeCollection parentNodes, IContainer container)
-            : base(parentNodes, "Masks", "Mask", "Masks", container, ProjectManager.Project.Masks.Count > 0)
+            : base(parentNodes, "Masks", "Mask", "Masks", ProjectManager.Project.MasksFolder, container, ProjectManager.Project.Masks.Count > 0)
         {
             ContextMenuStrip.Items[0].Text = "Add Existing Regular Mask";
             ContextMenuStrip.Items.Insert(1, new ToolStripMenuItem("Add Existing Directional Mask", Properties.Resources.Add, OnAddDirectionalMask));

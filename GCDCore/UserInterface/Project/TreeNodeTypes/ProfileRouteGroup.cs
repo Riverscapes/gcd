@@ -12,7 +12,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
     public class ProfileRouteGroup : TreeNodeGroup
     {
         public ProfileRouteGroup(TreeNodeCollection parentNodes, IContainer container)
-            : base(parentNodes, "Profile Routes", "Profile Route", "Profile Routes", container)
+            : base(parentNodes, "Profile Routes", "Profile Route", "Profile Routes", ProjectManager.Project.ProfileRoutesFolder, container)
         {
             LoadChildNodes();
         }

@@ -16,6 +16,13 @@ namespace GCDCore.Project
 
         public override string Noun { get { return "Reference Surface"; } }
 
+        public DirectoryInfo ErrorSurfacesFolder { get { return ProjectManager.CombinePaths(Raster.GISFileInfo.Directory, "ErrorSurfaces"); } }
+
+        public FileInfo ErrorSurfacePath(string name)
+        {
+            return ProjectManager.GetProjectItemPath(ErrorSurfacesFolder, "Err", name, "tif");
+        }
+
         public ErrorSurface DefaultErrorSurface
         {
             get
