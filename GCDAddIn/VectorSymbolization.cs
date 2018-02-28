@@ -188,7 +188,7 @@ namespace GCDAddIn
             pRender.FieldCount = 1;
             pRender.Field[0] = mask._Field;
             pRender.DefaultSymbol = (ISymbol)symbol;
-            pRender.UseDefaultSymbol = true;
+            pRender.UseDefaultSymbol = false; // prevents "All other values" legend entry
 
             foreach (GCDCore.Project.Masks.MaskItem item in mask._Items.Where(x => x.Include))
             {
