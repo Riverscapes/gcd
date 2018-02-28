@@ -155,45 +155,55 @@ namespace GCDCore.Engines
                 //set top border weight to 1
                 string TopBorderPattern = ".//ss:Border[@ss:Position='Top']"; //find all nodes of type "Style" anywhere in document with an attribute called ss:ID equivalent to variable styleid
                 XmlNode TopBorderNode = StyleNode.SelectSingleNode(TopBorderPattern, nsmgr);
-                if(HasAttribute(TopBorderNode, "ss:Weight"))
+                if (TopBorderNode != null)
                 {
-                    TopBorderNode.Attributes["ss:Weight"].Value = "1";
-                }
 
-                if (HasAttribute(TopBorderNode, "ss:Color"))
-                {
-                    TopBorderNode.Attributes["ss:Color"].Value = "#E7E6E6";
-                } else {
-                    //Create a new attribute
-                    //XmlAttribute attr = xmlDoc.CreateAttribute("ss:Color");
-                    //XmlAttribute attr = xmlDoc.CreateAttribute("ss", "Color", "");
-                    XmlAttribute attr = xmlDoc.CreateAttribute("ss", "Color", "urn:schemas-microsoft-com:office:spreadsheet");
+                    if (HasAttribute(TopBorderNode, "ss:Weight"))
+                    {
+                        TopBorderNode.Attributes["ss:Weight"].Value = "1";
+                    }
+
+                    if (HasAttribute(TopBorderNode, "ss:Color"))
+                    {
+                        TopBorderNode.Attributes["ss:Color"].Value = "#E7E6E6";
+                    }
+                    else
+                    {
+                        //Create a new attribute
+                        //XmlAttribute attr = xmlDoc.CreateAttribute("ss:Color");
+                        //XmlAttribute attr = xmlDoc.CreateAttribute("ss", "Color", "");
+                        XmlAttribute attr = xmlDoc.CreateAttribute("ss", "Color", "urn:schemas-microsoft-com:office:spreadsheet");
                         attr.Value = "#E7E6E6";
 
-                    //Add the attribute to the node     
-                    TopBorderNode.Attributes.SetNamedItem(attr);
-                    TopBorderNode.Attributes.Append(attr);
+                        //Add the attribute to the node     
+                        TopBorderNode.Attributes.SetNamedItem(attr);
+                        TopBorderNode.Attributes.Append(attr);
+                    }
                 }
 
-                //set top bottom weight to 1
-                string BottomBorderPattern = ".//ss:Border[@ss:Position='Bottom']"; //find all nodes of type "Style" anywhere in document with an attribute called ss:ID equivalent to variable styleid
+                    //set top bottom weight to 1
+                    string BottomBorderPattern = ".//ss:Border[@ss:Position='Bottom']"; //find all nodes of type "Style" anywhere in document with an attribute called ss:ID equivalent to variable styleid
                 XmlNode BottomBorderNode = StyleNode.SelectSingleNode(BottomBorderPattern, nsmgr);
-                if (HasAttribute(BottomBorderNode, "ss:Weight"))
+                if(BottomBorderNode != null)
                 {
-                    BottomBorderNode.Attributes["ss:Weight"].Value = "1";
-                }
-                if (HasAttribute(BottomBorderNode, "ss:Color"))
-                {
-                    BottomBorderNode.Attributes["ss:Color"].Value = "#E7E6E6";
-                }
-                else
-                {
-                    //Create a new attribute
-                    XmlAttribute attr = xmlDoc.CreateAttribute("ss:Color");
-                    attr.Value = "#E7E6E6";
 
-                    //Add the attribute to the node     
-                    BottomBorderNode.Attributes.SetNamedItem(attr);
+                    if (HasAttribute(BottomBorderNode, "ss:Weight"))
+                    {
+                        BottomBorderNode.Attributes["ss:Weight"].Value = "1";
+                    }
+                    if (HasAttribute(BottomBorderNode, "ss:Color"))
+                    {
+                        BottomBorderNode.Attributes["ss:Color"].Value = "#E7E6E6";
+                    }
+                    else
+                    {
+                        //Create a new attribute
+                        XmlAttribute attr = xmlDoc.CreateAttribute("ss", "Color", "urn:schemas-microsoft-com:office:spreadsheet");
+                        attr.Value = "#E7E6E6";
+
+                        //Add the attribute to the node     
+                        BottomBorderNode.Attributes.SetNamedItem(attr);
+                    }
                 }
 
             }
