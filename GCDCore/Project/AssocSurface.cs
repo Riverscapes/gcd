@@ -152,7 +152,7 @@ namespace GCDCore.Project
             base.Delete();
 
             // delete the associated surfaces group folder if this was the last associated surface
-            if (!Directory.EnumerateFileSystemEntries(Raster.GISFileInfo.Directory.Parent.FullName).Any())
+            if (Raster.GISFileInfo.Directory.Parent.Exists && !Directory.EnumerateFileSystemEntries(Raster.GISFileInfo.Directory.Parent.FullName).Any())
             {
                 Raster.GISFileInfo.Directory.Parent.Delete();
             }

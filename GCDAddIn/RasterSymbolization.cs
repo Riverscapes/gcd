@@ -284,13 +284,13 @@ namespace GCDAddIn
             double interval = maxRasterValue / iClassCount;
             interval = GetFormattedRange(interval);
 
-            int iRound = GetMagnitude(maxRasterValue);
-            interval = Math.Round(interval * Math.Abs(iRound), Math.Abs(iRound) + 1) / Math.Abs(iRound);
+            int iRound = Math.Abs(GetMagnitude(maxRasterValue));
+            interval = Math.Round(interval * iRound, iRound + 1) / iRound;
 
             string sFormat = "#,#0";
             if (iRound < 0)
             {
-                sFormat = string.Format("{0}.{1}", sFormat, new string('0', Math.Abs(iRound) + 1));
+                sFormat = string.Format("{0}.{1}", sFormat, new string('0', iRound + 1));
             }
             else
             {

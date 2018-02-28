@@ -26,6 +26,8 @@ namespace GCDCore.UserInterface.SurveyLibrary.ReferenceSurfaces
 
         private void frmRefErrorSurface_Load(object sender, EventArgs e)
         {
+            cmdOK.Text = Properties.Resources.CreateButtonText;
+
             string sUnits = UnitsNet.Length.GetAbbreviation(GCDCore.Project.ProjectManager.Project.Units.VertUnit);
             lblSingle.Text = lblSingle.Text.Replace(")", sUnits + ")");
             lblLower.Text = lblLower.Text.Replace(")", sUnits + ")");

@@ -46,7 +46,7 @@ namespace GCDCore.Project
             try
             {
                 // Delete empty directory 
-                if (!Directory.EnumerateFileSystemEntries(dir.FullName).Any())
+                if (dir.Exists && !Directory.EnumerateFileSystemEntries(dir.FullName).Any())
                 {
                     dir.Delete();
                 }
@@ -66,7 +66,8 @@ namespace GCDCore.Project
                 ProjectManager.OnGISLayerDelete(new ProjectManager.GISLayerEventArgs(raster.GISFileInfo));
 
                 // Delete the actual raster
-                raster.Delete();
+                if (raster.GISFileInfo.Exists)
+                    raster.Delete();
             }
             catch (Exception ex)
             {

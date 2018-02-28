@@ -51,7 +51,7 @@ namespace GCDAddIn.Project
                     {
                         // Try and refresh the project window.
                         ucProjectManager.AddinImpl winImpl = ESRI.ArcGIS.Desktop.AddIns.AddIn.FromID<ucProjectManager.AddinImpl>(ThisAddIn.IDs.GCDAddIn_ucProjectManager);
-                        winImpl.UI.LoadTree(null);
+                        winImpl.UI.LoadTree();
                     }
                     catch (Exception ex)
                     {

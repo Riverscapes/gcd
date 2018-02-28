@@ -26,6 +26,8 @@ namespace GCDCore.UserInterface.SurveyLibrary.ReferenceSurfaces
 
         private void frmReferenceSurfaceFromConstant_Load(object sender, EventArgs e)
         {
+            cmdOK.Text = Properties.Resources.CreateButtonText;
+
             // Add all the project DEM surveys to the list and then bind to checked listbox
             DEMSurveys = new naru.ui.SortableBindingList<GCDCore.Project.DEMSurvey>(GCDCore.Project.ProjectManager.Project.DEMSurveys.Values.ToList<GCDCore.Project.DEMSurvey>());
             cboDEMSurvey.DataSource = DEMSurveys;
@@ -66,7 +68,7 @@ namespace GCDCore.UserInterface.SurveyLibrary.ReferenceSurfaces
                 if (string.IsNullOrEmpty(txtName.Text))
                     txtPath.Text = string.Empty;
                 else
-                    txtPath.Text = GCDCore.Project.ProjectManager.Project.GetRelativePath(GCDCore.Project.ProjectManager.OutputManager.GetReferenceSurfaceRasterPath(txtName.Text));
+                    txtPath.Text = ProjectManager.Project.GetRelativePath(ProjectManager.Project.ReferenceSurfacePath(txtName.Text));
             }
             else
             {
@@ -160,7 +162,7 @@ namespace GCDCore.UserInterface.SurveyLibrary.ReferenceSurfaces
                     string name = GetUniqueName(value);
 
                     // Get a unique name and ensure directory exists
-                    FileInfo fiOutput = ProjectManager.OutputManager.GetReferenceSurfaceRasterPath(name);
+                    FileInfo fiOutput = ProjectManager.Project.ReferenceSurfacePath(name);
                     fiOutput.Directory.Create();
 
                     // Generate reference surface

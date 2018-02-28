@@ -32,6 +32,9 @@ namespace GCDAddIn.Project
                     try
                     {
                         GCDCore.Project.ProjectManager.OpenProject(new System.IO.FileInfo(f.FileName));
+                        GCDCore.Properties.Settings.Default.LastUsedProjectFolder = System.IO.Path.GetDirectoryName(f.FileName);
+                        GCDCore.Properties.Settings.Default.Save();
+
                         btnProjectExplorer.ShowProjectExplorer(true);
                     }
                     catch (Exception ex)

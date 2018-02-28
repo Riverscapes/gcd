@@ -237,11 +237,13 @@
             // 
             this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnOK.Location = new System.Drawing.Point(659, 328);
+            this.btnOK.Image = global::GCDCore.Properties.Resources.Save;
+            this.btnOK.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnOK.Location = new System.Drawing.Point(698, 328);
             this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(119, 23);
+            this.btnOK.Size = new System.Drawing.Size(80, 23);
             this.btnOK.TabIndex = 7;
-            this.btnOK.Text = "Derive Error Surface";
+            this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
@@ -305,8 +307,10 @@
             // 
             // frmErrorSurfaceProperties
             // 
+            this.AcceptButton = this.btnOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(874, 363);
             this.Controls.Add(this.chkIsDefault);
             this.Controls.Add(this.GroupBox2);

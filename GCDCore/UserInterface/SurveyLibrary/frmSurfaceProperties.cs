@@ -45,6 +45,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
             Text = string.Format("{0} Properties", Noun);
             grpProperties.Text = string.Format("{0} Raster Properties", Noun);
+            cmdOK.Text = Properties.Resources.UpdateButtonText;
 
             txtName.Text = Surface.Name;
             txtPath.Text = ProjectManager.Project.GetRelativePath(Surface.Raster.GISFileInfo);
@@ -68,7 +69,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             }
             catch (Exception ex)
             {
-                Console.WriteLine(string.Format("Error calculating statistics from {0}, {1}", Surface.Raster.GISFileInfo.FullName,ex.Message));
+                Console.WriteLine(string.Format("Error calculating statistics from {0}, {1}", Surface.Raster.GISFileInfo.FullName, ex.Message));
             }
 
             if (Surface is DEMSurvey)

@@ -151,7 +151,7 @@
             // lblSingle
             // 
             this.lblSingle.AutoSize = true;
-            this.lblSingle.Location = new System.Drawing.Point(94, 47);
+            this.lblSingle.Location = new System.Drawing.Point(90, 47);
             this.lblSingle.Name = "lblSingle";
             this.lblSingle.Size = new System.Drawing.Size(60, 13);
             this.lblSingle.TabIndex = 5;
@@ -188,7 +188,7 @@
             // lblUpper
             // 
             this.lblUpper.AutoSize = true;
-            this.lblUpper.Location = new System.Drawing.Point(63, 100);
+            this.lblUpper.Location = new System.Drawing.Point(59, 100);
             this.lblUpper.Name = "lblUpper";
             this.lblUpper.Size = new System.Drawing.Size(91, 13);
             this.lblUpper.TabIndex = 8;
@@ -222,7 +222,7 @@
             // lblLower
             // 
             this.lblLower.AutoSize = true;
-            this.lblLower.Location = new System.Drawing.Point(63, 126);
+            this.lblLower.Location = new System.Drawing.Point(59, 126);
             this.lblLower.Name = "lblLower";
             this.lblLower.Size = new System.Drawing.Size(91, 13);
             this.lblLower.TabIndex = 10;
@@ -260,7 +260,7 @@
             // lblIncrement
             // 
             this.lblIncrement.AutoSize = true;
-            this.lblIncrement.Location = new System.Drawing.Point(91, 154);
+            this.lblIncrement.Location = new System.Drawing.Point(87, 154);
             this.lblIncrement.Name = "lblIncrement";
             this.lblIncrement.Size = new System.Drawing.Size(63, 13);
             this.lblIncrement.TabIndex = 12;

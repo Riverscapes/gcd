@@ -48,8 +48,14 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
             btnRoughness.Enabled = ProjectManager.IsArcMap;
 
-            if (m_Assoc != null)
+            if (m_Assoc == null)
             {
+                btnOK.Text = Properties.Resources.CreateButtonText;
+            }
+            else
+            {
+                btnOK.Text = Properties.Resources.UpdateButtonText;
+
                 txtName.Text = m_Assoc.Name;
                 txtProjectRaster.Text = ProjectManager.Project.GetRelativePath(m_Assoc.Raster.GISFileInfo);
                 txtProjectRaster.ReadOnly = true;
@@ -140,56 +146,39 @@ namespace GCDCore.UserInterface.SurveyLibrary
         private bool ImportRaster()
         {
             var bRasterImportSuccessful = false;
-            System.IO.FileInfo fiOutput = new System.IO.FileInfo(txtProjectRaster.Text);
+            FileInfo fiOutput = ProjectManager.Project.GetAbsolutePath(txtProjectRaster.Text);
 
             try
             {
-                // Make sure that the destination folder exists where the associated surface will be output
-                string sWorkspacePath = System.IO.Path.GetDirectoryName(txtProjectRaster.Text);
-                System.IO.Directory.CreateDirectory(sWorkspacePath);
+                fiOutput.Directory.Create();
 
-                // Create the slope surface or point density rasters
                 switch (SelectedAssociatedSurfaceType)
                 {
                     case AssocSurface.AssociatedSurfaceTypes.SlopeDegree:
+                        GCDConsoleLib.RasterOperators.SlopeDegrees(DEM.Raster, fiOutput);
+                        break;
+
                     case AssocSurface.AssociatedSurfaceTypes.SlopePercent:
+                        GCDConsoleLib.RasterOperators.SlopePercent(DEM.Raster, fiOutput);
+                        break;
+
                     case AssocSurface.AssociatedSurfaceTypes.PointDensity:
+                        GCDConsoleLib.RasterOperators.PointDensity(DEM.Raster, PointCloud, new FileInfo(txtProjectRaster.Text), PointDensityShape, PointDensitySize);
+                        break;
+
                     case AssocSurface.AssociatedSurfaceTypes.Roughness:
-
-                        switch (SelectedAssociatedSurfaceType)
-                        {
-                            case AssocSurface.AssociatedSurfaceTypes.SlopeDegree:
-                                GCDConsoleLib.RasterOperators.SlopeDegrees(DEM.Raster, fiOutput);
-
-                                break;
-                            case AssocSurface.AssociatedSurfaceTypes.SlopePercent:
-                                GCDConsoleLib.RasterOperators.SlopePercent(DEM.Raster, fiOutput);
-
-                                break;
-                            case AssocSurface.AssociatedSurfaceTypes.PointDensity:
-                                GCDConsoleLib.RasterOperators.PointDensity(DEM.Raster, PointCloud, new FileInfo(txtProjectRaster.Text), PointDensityShape, PointDensitySize);
-
-                                break;
-                            case AssocSurface.AssociatedSurfaceTypes.Roughness:
-                                break;
-                                //m_SurfaceRoughnessForm.CalculateRoughness(txtProjectRaster.Text, gDEMRaster)
-                        }
-
-                        // Build raster pyramids
-                        if (ProjectManager.PyramidManager.AutomaticallyBuildPyramids(GCDCore.RasterPyramidManager.PyramidRasterTypes.AssociatedSurfaces))
-                        {
-                            ProjectManager.PyramidManager.PerformRasterPyramids(GCDCore.RasterPyramidManager.PyramidRasterTypes.AssociatedSurfaces, fiOutput);
-                        }
-
+                        throw new NotImplementedException("Roughness raster is not implemented");
+                        //m_SurfaceRoughnessForm.CalculateRoughness(txtProjectRaster.Text, gDEMRaster)
                         break;
+
                     default:
-                        m_ImportForm.ProcessRaster();
-
-                        break;
+                        throw new NotImplementedException("Unhandled associated surface type");
                 }
 
-                bRasterImportSuccessful = true;
+                // Build raster pyramids if they are needed
+                ProjectManager.PyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.AssociatedSurfaces, fiOutput);
 
+                bRasterImportSuccessful = true;
             }
             catch (Exception ex)
             {

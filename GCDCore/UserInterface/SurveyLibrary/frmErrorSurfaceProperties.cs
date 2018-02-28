@@ -70,6 +70,8 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
             if (ErrorSurf is ErrorSurface)
             {
+                btnOK.Text = Properties.Resources.UpdateButtonText;
+
                 // Existing error surface. Disable editing.
                 txtName.Text = ErrorSurf.Name;
                 txtRasterPath.Text = ProjectManager.Project.GetRelativePath(ErrorSurf.Raster.GISFileInfo);
@@ -79,6 +81,8 @@ namespace GCDCore.UserInterface.SurveyLibrary
             }
             else
             {
+                btnOK.Text = Properties.Resources.CreateButtonText;
+
                 // The first error surface is always the default.
                 chkIsDefault.Checked = DEM.ErrorSurfaces.Count == 0;
                 chkIsDefault.Enabled = !chkIsDefault.Checked;

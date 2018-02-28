@@ -50,9 +50,11 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
         {
             foreach (TreeNode childNode in Nodes)
             {
-                if (childNode.Tag is GCDProjectRasterItem)
+                if (childNode is TreeNodeItem)
                 {
-                    ProjectManager.OnAddRasterToMap(childNode.Tag as GCDProjectRasterItem);
+                    TreeNodeItem nodItem = childNode as TreeNodeItem;
+                    if (nodItem.Item is GCDProjectRasterItem)
+                        ProjectManager.OnAddRasterToMap(nodItem.Item as GCDProjectRasterItem);
                 }
             }
         }

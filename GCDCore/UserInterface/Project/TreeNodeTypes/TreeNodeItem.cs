@@ -37,22 +37,15 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             TreeNodeItem node = sender as TreeNodeItem;
             Form frm = null;
 
-            if (Item is Surface)
-            {
-                frm = new SurveyLibrary.frmSurfaceProperties(Item as Surface);
-            }
-            else if (Item is AssocSurface)
+            if (Item is AssocSurface)
             {
                 AssocSurface assoc = Item as AssocSurface;
                 frm = new SurveyLibrary.frmAssocSurfaceProperties(assoc.DEM, assoc);
             }
-            else if (Item is ErrorSurface)
+            else if (Item is ErrorSurface && ((ErrorSurface)Item).Surf is DEMSurvey)
             {
                 ErrorSurface err = Item as ErrorSurface;
-                if (err.Surf is DEMSurvey)
-                {
-                    frm = new SurveyLibrary.frmErrorSurfaceProperties(err.Surf as DEMSurvey, err);
-                }
+                frm = new SurveyLibrary.frmErrorSurfaceProperties(err.Surf as DEMSurvey, err);
             }
             else if (Item is GCDCore.Project.ProfileRoutes.ProfileRoute)
             {
@@ -62,7 +55,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             {
                 frm = new Masks.frmDirectionalMaskProps(Item as GCDCore.Project.Masks.DirectionalMask);
             }
-            else if (Item is GCDCore.Project.Masks.AOIMask )
+            else if (Item is GCDCore.Project.Masks.AOIMask)
             {
                 frm = new Masks.frmAOIProperties(Item as GCDCore.Project.Masks.AOIMask);
             }
@@ -72,7 +65,15 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             }
             else
             {
-                throw new NotImplementedException("Unhandled editing of project type");
+                // Generic raster properties form
+                if (Item is GCDProjectRasterItem)
+                {
+                    frm = new SurveyLibrary.frmSurfaceProperties(Item as GCDProjectRasterItem);
+                }
+                else
+                {
+                    throw new NotImplementedException("Unhandled editing of project type");
+                }
             }
 
             if (frm is Form)
@@ -83,9 +84,9 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
 
         public void OnAddToMap(object sender, EventArgs e)
         {
-            if (Tag is GCDProjectRasterItem)
+            if (Item is GCDProjectRasterItem)
             {
-                ProjectManager.OnAddRasterToMap(Tag as GCDProjectRasterItem);
+                ProjectManager.OnAddRasterToMap(Item as GCDProjectRasterItem);
             }
         }
 
