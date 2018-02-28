@@ -25,8 +25,13 @@ namespace GCDCore.UserInterface.ProfileRoutes
 
         private void frmProfileRouteProperties_Load(object sender, EventArgs e)
         {
-            if (ProfileRoute != null)
+            if (ProfileRoute == null)
             {
+                cmdOK.Text = Properties.Resources.CreateButtonText;
+            }
+            else
+            {
+                cmdOK.Text = Properties.Resources.UpdateButtonText;
                 txtName.Text = ProfileRoute.Name;
 
                 ucPolyline.Visible = false;

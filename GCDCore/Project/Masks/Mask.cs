@@ -36,6 +36,32 @@ namespace GCDCore.Project.Masks
             return nodMask;
         }
 
+        public override bool IsItemInUse
+        {
+            get
+            {
+                foreach (DoDBase dod in ProjectManager.Project.DoDs.Values)
+                {
+                    // Check if any DoDs use this mask as an AOI
+                    if (dod.AOIMask != null && dod.AOIMask.Equals(this))
+                    {
+                        return true;
+                    }
+
+                    // Check if any budget segregations use this mask
+                    foreach (BudgetSegregation bs in dod.BudgetSegregations.Values)
+                    {
+                        if (bs.Mask.Equals(this))
+                        {
+                            return true;
+                        }
+                    }
+                }
+
+                return false;
+            }
+        }
+
         public override void Delete()
         {
             try
@@ -78,7 +104,7 @@ namespace GCDCore.Project.Masks
                 }
                 catch (Exception ex)
                 {
-                    Console.Write(string.Format("Failed to delete empty mask directory {0}\n\n{1}" , _ShapeFile.Directory.Parent.FullName, ex.Message));
+                    Console.Write(string.Format("Failed to delete empty mask directory {0}\n\n{1}", _ShapeFile.Directory.Parent.FullName, ex.Message));
                 }
             }
 

@@ -50,6 +50,13 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
 
         public override void OnAdd(object sender, EventArgs e)
         {
+            if (ProjectManager.Project.ReferenceSurfaces.Count + ProjectManager.Project.DEMSurveys.Count < 2)
+            {
+                MessageBox.Show("You must have at least two surfaces in your GCD project before you can perform a change detection analysis." +
+                    " This could be two DEM surveys or two reference surfaces or a combination of both.", "Insufficient Surfaces", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
             ChangeDetection.frmDoDProperties frm = new ChangeDetection.frmDoDProperties();
             EditTreeItem(frm);
         }
