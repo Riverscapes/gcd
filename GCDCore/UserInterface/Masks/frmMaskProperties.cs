@@ -29,6 +29,8 @@ namespace GCDCore.UserInterface.Masks
         {
             if (Mask is GCDCore.Project.Masks.RegularMask)
             {
+                cmdOK.Text = Properties.Resources.UpdateButtonText;
+
                 txtName.Text = Mask.Name;
                 txtPath.Text = ProjectManager.Project.GetRelativePath(Mask._ShapeFile);
 
@@ -44,7 +46,10 @@ namespace GCDCore.UserInterface.Masks
 
                 grdData.Select();
             }
-
+            else
+            {
+                cmdOK.Text = Properties.Resources.CreateButtonText;
+            }
 
             // subscribe to the even when the user changes the input ShapeFile
             ucPolygon.PathChanged += InputShapeFileChanged;

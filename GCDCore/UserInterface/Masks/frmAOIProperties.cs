@@ -28,6 +28,8 @@ namespace GCDCore.UserInterface.Masks
         {
             if (AOIMask is GCDCore.Project.Masks.AOIMask)
             {
+                cmdOK.Text = Properties.Resources.UpdateButtonText;
+
                 txtName.Text = AOIMask.Name;
                 txtPath.Text = ProjectManager.Project.GetRelativePath(AOIMask._ShapeFile);
 
@@ -42,6 +44,8 @@ namespace GCDCore.UserInterface.Masks
             }
             else
             {
+                cmdOK.Text = Properties.Resources.CreateButtonText;
+
                 cmdAddToMap.Visible = false;
                 txtPath.Width = cmdAddToMap.Right - txtPath.Left;
                 ucPolygon.Initialize("Area of Interest Mask", GCDConsoleLib.GDalGeometryType.SimpleTypes.Polygon);

@@ -54,7 +54,13 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
                 {
                     TreeNodeItem nodItem = childNode as TreeNodeItem;
                     if (nodItem.Item is GCDProjectRasterItem)
+                    {
                         ProjectManager.OnAddRasterToMap(nodItem.Item as GCDProjectRasterItem);
+                    }
+                    else if (nodItem.Item is GCDCore.Project.Masks.Mask)
+                    {
+                        ProjectManager.OnAddVectorToMap(nodItem.Item as GCDCore.Project.Masks.Mask);
+                    }
                 }
             }
         }

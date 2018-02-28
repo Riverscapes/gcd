@@ -88,6 +88,13 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             {
                 ProjectManager.OnAddRasterToMap(Item as GCDProjectRasterItem);
             }
+            else
+            {
+                if (Item is GCDCore.Project.Masks.Mask)
+                {
+                    ProjectManager.OnAddVectorToMap(Item as GCDCore.Project.Masks.Mask);
+                }
+            }
         }
 
         public void OnDelete(object sender, EventArgs e)

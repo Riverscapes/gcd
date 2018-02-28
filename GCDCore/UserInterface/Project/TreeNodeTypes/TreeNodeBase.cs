@@ -42,6 +42,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
                     TreeNodeGroup nodGroup = treProject.SelectedNode as TreeNodeGroup;
                     if (nodGroup.Folder is System.IO.DirectoryInfo)
                     {
+                        nodGroup.Folder.Refresh();
                         tsmi.Enabled = nodGroup.Folder.Exists;
                     }
                     else

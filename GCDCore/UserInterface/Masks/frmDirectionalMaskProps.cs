@@ -34,8 +34,14 @@ namespace GCDCore.UserInterface.Masks
             ucPolygon.PathChanged += InputShapeFileChanged;
             UpdateControls(sender, e);
 
-            if (Mask != null)
+            if (Mask == null)
             {
+                cmdOK.Text = Properties.Resources.CreateButtonText;
+            }
+            else
+            {
+                cmdOK.Text = Properties.Resources.UpdateButtonText;
+
                 txtName.Text = Mask.Name;
                 txtPath.Text = ProjectManager.Project.GetRelativePath(Mask._ShapeFile);
                 ucPolygon.Initialize("Directional Mask", Mask._ShapeFile, true);
