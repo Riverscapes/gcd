@@ -8,8 +8,17 @@ using System.Xml;
 
 namespace GCDCore.Engines
 {
+    public enum enumRowFormat
+    {
+        None = 0,
+        TopRow = 1,
+        MiddleRow = 2,
+        BottomRow = 3
+    }
+
     class ExcelXMLDocument
     {
+
         #region "Members"
 
             private string _template;
@@ -108,6 +117,100 @@ namespace GCDCore.Engines
         {
             xmlDoc.Save(path);
         }
+
+        public void FormatRow(string NamedRange, int offset, enumRowFormat RowFormat)
+        {
+            //get row node
+            NamedRange oNamedRange = dicNamedRanges[NamedRange];
+            int NamedRangeRow = oNamedRange.row;
+            int ReferenceRow = NamedRangeRow + offset;
+            //get reference and before nodes and insert our cloned reference row
+            XmlNode ReferenceRowNode = xmlDoc.SelectSingleNode(".//ss:Row[position() >= " + ReferenceRow + "]", nsmgr);
+
+            XmlNodeList CellNodes = ReferenceRowNode.SelectNodes(".//ss:Cell", nsmgr);
+
+            XmlNode CellNode;
+
+            for(int i=0; i<CellNodes.Count; i++)
+            {
+                CellNode = CellNodes[i];
+                FormatCell(ref CellNode, RowFormat);
+            }
+
+        }
+
+        public void FormatCell(ref XmlNode CellNode, enumRowFormat RowFormat)
+        {
+            //get style id, if available
+            if(HasAttribute(CellNode, "ss:StyleID"))
+            {
+                string styleid = CellNode.Attributes["ss:StyleID"].Value;
+
+                //get style
+                string pattern = "//ss:Style[@ss:ID='" + styleid + "']"; //find all nodes of type "Style" anywhere in document with an attribute called ss:ID equivalent to variable styleid
+                XmlNode StyleNode = xmlDoc.SelectSingleNode(pattern, nsmgr);
+
+                //modify style
+
+                //set top border weight to 1
+                string TopBorderPattern = ".//ss:Border[@ss:Position='Top']"; //find all nodes of type "Style" anywhere in document with an attribute called ss:ID equivalent to variable styleid
+                XmlNode TopBorderNode = StyleNode.SelectSingleNode(TopBorderPattern, nsmgr);
+                if(HasAttribute(TopBorderNode, "ss:Weight"))
+                {
+                    TopBorderNode.Attributes["ss:Weight"].Value = "1";
+                }
+
+                if (HasAttribute(TopBorderNode, "ss:Color"))
+                {
+                    TopBorderNode.Attributes["ss:Color"].Value = "#E7E6E6";
+                } else {
+                    //Create a new attribute
+                    //XmlAttribute attr = xmlDoc.CreateAttribute("ss:Color");
+                    //XmlAttribute attr = xmlDoc.CreateAttribute("ss", "Color", "");
+                    XmlAttribute attr = xmlDoc.CreateAttribute("ss", "Color", "urn:schemas-microsoft-com:office:spreadsheet");
+                        attr.Value = "#E7E6E6";
+
+                    //Add the attribute to the node     
+                    TopBorderNode.Attributes.SetNamedItem(attr);
+                    TopBorderNode.Attributes.Append(attr);
+                }
+
+                //set top bottom weight to 1
+                string BottomBorderPattern = ".//ss:Border[@ss:Position='Bottom']"; //find all nodes of type "Style" anywhere in document with an attribute called ss:ID equivalent to variable styleid
+                XmlNode BottomBorderNode = StyleNode.SelectSingleNode(BottomBorderPattern, nsmgr);
+                if (HasAttribute(BottomBorderNode, "ss:Weight"))
+                {
+                    BottomBorderNode.Attributes["ss:Weight"].Value = "1";
+                }
+                if (HasAttribute(BottomBorderNode, "ss:Color"))
+                {
+                    BottomBorderNode.Attributes["ss:Color"].Value = "#E7E6E6";
+                }
+                else
+                {
+                    //Create a new attribute
+                    XmlAttribute attr = xmlDoc.CreateAttribute("ss:Color");
+                    attr.Value = "#E7E6E6";
+
+                    //Add the attribute to the node     
+                    BottomBorderNode.Attributes.SetNamedItem(attr);
+                }
+
+            }
+        }
+
+        private Boolean HasAttribute(XmlNode CellNode, string AttributeName)
+        {
+            foreach(XmlAttribute oAttribute in CellNode.Attributes)
+            {
+                if(oAttribute.Name == AttributeName)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
 
         #endregion
 

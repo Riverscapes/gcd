@@ -71,6 +71,26 @@ namespace GCDCore.Engines
 
             }
 
+            //format rows
+            enumRowFormat RowFormat = enumRowFormat.None;
+            for (int i=0; i<dodStats.Count; i++)
+            {
+                RowFormat = enumRowFormat.MiddleRow;
+                if (i == 0)
+                {
+                    RowFormat = enumRowFormat.TopRow;
+                }
+                if (i == (dodStats.Count-1))
+                {
+                    RowFormat = enumRowFormat.BottomRow;
+                }
+
+                xmlExcelDoc.FormatRow("ArealDoDName", i, RowFormat);
+                xmlExcelDoc.FormatRow("VolumeDoDName", i, RowFormat);
+                xmlExcelDoc.FormatRow("VerticalDoDName", i, RowFormat);
+                xmlExcelDoc.FormatRow("PercentagesDoDName", i, RowFormat);
+            }
+
             //save output
             xmlExcelDoc.Save(output.FullName);
         }
