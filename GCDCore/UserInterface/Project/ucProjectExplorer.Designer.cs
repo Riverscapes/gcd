@@ -61,6 +61,7 @@ namespace GCDCore.UserInterface.Project
             this.treProject.ShowRootLines = false;
             this.treProject.Size = new System.Drawing.Size(187, 151);
             this.treProject.TabIndex = 0;
+            this.treProject.MouseDown += new System.Windows.Forms.MouseEventHandler(this.treProject_MouseDown);
             // 
             // imgTreeImageList
             // 
