@@ -42,6 +42,8 @@ namespace GCDCore.UserInterface.BudgetSegregation
 
         private void BudgetSegResultsForm_Load(object sender, System.EventArgs e)
         {
+            Cursor = Cursors.WaitCursor;
+
             txtName.Text = BudgetSeg.Name;
             cboBudgetClass.DataSource = BudgetSeg.FilteredClasses;
 
@@ -63,6 +65,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
             tabMain.TabPages.Remove(TabPage4);
 
             PieChartViewer.RefreshPieCharts(m_Options.Units);
+            Cursor = Cursors.Default;
         }
 
         private void cboBudgetClass_SelectedIndexChanged(object sender, EventArgs e)

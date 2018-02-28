@@ -236,7 +236,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.cmdOK.Name = "cmdOK";
             this.cmdOK.Size = new System.Drawing.Size(75, 23);
             this.cmdOK.TabIndex = 3;
-            this.cmdOK.Text = "OK";
+            this.cmdOK.Text = "Update";
             this.cmdOK.UseVisualStyleBackColor = true;
             this.cmdOK.Click += new System.EventHandler(this.cmdOK_Click);
             // 

@@ -41,7 +41,11 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
         public override void OnAdd(object sender, EventArgs e)
         {
             BudgetSegregation.frmBudgetSegProperties frm = new BudgetSegregation.frmBudgetSegProperties(DoD);
-            EditTreeItem(frm);
+            if (EditTreeItem(frm) == DialogResult.OK)
+            {
+                BudgetSegregation.frmBudgetSegResults frmResults = new BudgetSegregation.frmBudgetSegResults(frm.BudgetSeg);
+                frmResults.ShowDialog();
+            }
         }
 
         public void OnViewResults(object sender, EventArgs e)

@@ -48,6 +48,8 @@ namespace GCDCore.UserInterface.ChangeDetection
         {
             EnableDisableControls();
 
+            cmdOK.Text = Properties.Resources.CreateButtonText;
+
             // Subscribe to the event when DEM selection changes
             ucDEMs.SelectedSurfacesChanged += UpdateAnalysisName;
             ucThresholding.OnThresholdingMethodChanged += ThresholdMethodChanged;

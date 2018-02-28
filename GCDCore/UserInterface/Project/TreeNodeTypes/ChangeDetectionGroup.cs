@@ -58,7 +58,11 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             }
 
             ChangeDetection.frmDoDProperties frm = new ChangeDetection.frmDoDProperties();
-            EditTreeItem(frm);
+            if (EditTreeItem(frm) == DialogResult.OK)
+            {
+                ChangeDetection.frmDoDResults frmResults = new ChangeDetection.frmDoDResults(frm.DoD);
+                frmResults.ShowDialog();
+            }
         }
 
         public void OnMultiEpoch(object sender, EventArgs e)

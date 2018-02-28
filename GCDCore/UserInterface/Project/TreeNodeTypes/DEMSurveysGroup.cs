@@ -55,6 +55,11 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
                     frm.ProcessRaster();
                     DEMSurvey dem = new DEMSurvey(frm.txtName.Text, null, ProjectManager.Project.GetAbsolutePath(frm.txtRasterPath.Text));
                     ProjectManager.Project.DEMSurveys[dem.Name] = dem;
+
+                    // If this was the first raster then we need to store the cell resolution on the project
+                    if (ePurpose == SurveyLibrary.ExtentImporter.Purposes.FirstDEM)
+                        ProjectManager.Project.CellArea = dem.Raster.Extent.CellArea(ProjectManager.Project.Units);
+                    
                     ProjectManager.Project.Save();
                     LoadChildNodes();
                     

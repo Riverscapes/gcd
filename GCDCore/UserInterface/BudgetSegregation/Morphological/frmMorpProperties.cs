@@ -14,7 +14,7 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
 {
     public partial class frmMorpProperties : Form
     {
-        public GCDCore.Project.Morphological.MorphologicalAnalysis Analysis { get; internal set; }
+        public MorphologicalAnalysis Analysis { get; internal set; }
 
         public frmMorpProperties(GCDCore.Project.BudgetSegregation bs)
         {
@@ -27,7 +27,7 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
 
         private void frmMorpProperties_Load(object sender, EventArgs e)
         {
-
+            cmdOK.Text = Properties.Resources.CreateButtonText;
         }
 
         private void cmdOK_Click(object sender, EventArgs e)
@@ -38,8 +38,21 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
                 return;
             }
 
-            Analysis = new MorphologicalAnalysis(txtName.Text, ProjectManager.Project.GetAbsoluteDir(txtPath.Text), cboBS.SelectedItem as GCDCore.Project.BudgetSegregation,
-                ProjectManager.Project.Units.VolUnit);
+            try
+            {
+                Analysis = new MorphologicalAnalysis(txtName.Text, ProjectManager.Project.GetAbsoluteDir(txtPath.Text), cboBS.SelectedItem as GCDCore.Project.BudgetSegregation,
+                    ProjectManager.Project.Units.VolUnit);
+
+                GCDCore.Project.BudgetSegregation bs = cboBS.SelectedItem as GCDCore.Project.BudgetSegregation;
+                bs.MorphologicalAnalyses[Analysis.Name] = Analysis;
+                ProjectManager.Project.Save();
+                Cursor = Cursors.Default;
+            }
+            catch(Exception ex)
+            {
+                DialogResult = DialogResult.None;
+                naru.error.ExceptionUI.HandleException(ex, "Error generating morphological analysis.");
+            }
         }
 
         private bool ValidateForm()

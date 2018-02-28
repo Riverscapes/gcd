@@ -63,6 +63,8 @@
             // 
             this.cmdOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cmdOK.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.cmdOK.Image = global::GCDCore.Properties.Resources.Save;
+            this.cmdOK.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.cmdOK.Location = new System.Drawing.Point(382, 242);
             this.cmdOK.Name = "cmdOK";
             this.cmdOK.Size = new System.Drawing.Size(75, 23);
@@ -222,7 +224,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmMorpProperties";
-            this.Text = "Create New Morpological Analysis";
+            this.Text = "Create Morpological Analysis";
             this.Load += new System.EventHandler(this.frmMorpProperties_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

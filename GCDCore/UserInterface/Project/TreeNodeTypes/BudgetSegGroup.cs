@@ -20,7 +20,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             BudgetSeg = bs;
 
             ContextMenuStrip.Items[0].Text = "Add Morphological Analysis";
-             ContextMenuStrip.Items.Insert(0, new ToolStripMenuItem("View Budget Segregation Results", Properties.Resources.GCD, OnViewResults));
+            ContextMenuStrip.Items.Insert(0, new ToolStripMenuItem("View Budget Segregation Results", Properties.Resources.GCD, OnViewResults));
 
             LoadChildNodes();
         }
@@ -29,7 +29,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
         {
             Nodes.Clear();
 
-            BudgetSeg.MorphologicalAnalyses.Values.ToList().ForEach(x => new TreeNodeItem(x, 11, ContextMenuStrip.Container));
+            BudgetSeg.MorphologicalAnalyses.Values.ToList().ForEach(x => Nodes.Add(new MorphologicalItem(x, ContextMenuStrip.Container)));
 
             if (Nodes.Count > 0)
                 Expand();
@@ -45,7 +45,11 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             }
 
             BudgetSegregation.Morphological.frmMorpProperties frm = new BudgetSegregation.Morphological.frmMorpProperties(BudgetSeg);
-            EditTreeItem(frm);
+            if (EditTreeItem(frm) == DialogResult.OK)
+            {
+                BudgetSegregation.Morphological.frmMorphResults frmResults = new BudgetSegregation.Morphological.frmMorphResults(frm.Analysis);
+                frmResults.ShowDialog();
+            }
         }
 
         public void OnViewResults(object sender, EventArgs e)

@@ -25,6 +25,8 @@ namespace GCDCore.UserInterface.BudgetSegregation
 
         private void frmBudgetSegProperties_Load(object sender, EventArgs e)
         {
+            cmdOK.Text = Properties.Resources.CreateButtonText;
+
             // Add the event handling after data binding to reduce false firing
             cboDoD.SelectedIndexChanged += cboDoD_SelectedIndexChanged;
             cboDoD.DataSource = new BindingList<DoDBase>(ProjectManager.Project.DoDs.Values.ToList<DoDBase>());

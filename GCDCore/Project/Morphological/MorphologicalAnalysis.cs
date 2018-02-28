@@ -33,6 +33,7 @@ namespace GCDCore.Project.Morphological
             OutputFolder = outputFolder;
             BS = bs;
             DurationDisplayUnits = UnitsNet.Units.DurationUnit.Hour;
+            _DisplayVolumeUnits = ProjectManager.Project.Units.VolUnit;
             _duration = UnitsNet.Duration.From(1, DurationDisplayUnits);
             _porosity = 0.26m;
             _density = 2.65m;
@@ -51,6 +52,8 @@ namespace GCDCore.Project.Morphological
 
             XmlNode nodDuration = nodAnalysis.SelectSingleNode("Duration");
             DurationDisplayUnits = (UnitsNet.Units.DurationUnit)Enum.Parse(typeof(UnitsNet.Units.DurationUnit), nodDuration.Attributes["units"].InnerText);
+            _DisplayVolumeUnits = ProjectManager.Project.Units.VolUnit;
+
             _duration = UnitsNet.Duration.From(double.Parse(nodDuration.InnerText), DurationDisplayUnits);
             _porosity = decimal.Parse(nodAnalysis.SelectSingleNode("Porosity").InnerText);
             _density = decimal.Parse(nodAnalysis.SelectSingleNode("Density").InnerText);

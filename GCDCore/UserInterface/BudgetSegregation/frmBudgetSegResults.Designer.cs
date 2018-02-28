@@ -327,8 +327,10 @@ namespace GCDCore.UserInterface.BudgetSegregation
             // 
             // frmBudgetSegResults
             // 
+            this.AcceptButton = this.cmdCancel;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.cmdCancel;
             this.ClientSize = new System.Drawing.Size(678, 510);
             this.Controls.Add(this.cboRaw);
             this.Controls.Add(this.label2);

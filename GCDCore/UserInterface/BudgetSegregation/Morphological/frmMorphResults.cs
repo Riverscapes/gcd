@@ -42,6 +42,8 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
         {
             InitializeChart();
 
+            cmdOK.Text = Properties.Resources.UpdateButtonText;
+
             ucDoDPropertiesGrid1.Initialize(Analysis.BS.DoD);
             ucDoDPropertiesGrid1.AddDoDProperty("Budget Segregation", Analysis.BS.Name);
             ucDoDPropertiesGrid1.AddDoDProperty("Directional Mask", Analysis.BS.Mask.Name);

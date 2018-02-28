@@ -76,12 +76,15 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
                         LoadChildNodes();
 
                         // Loop through the child nodes and select the item that was just added
-                        foreach (TreeNodeItem childNode in Nodes)
+                        foreach (TreeNode childNode in Nodes)
                         {
-                            if (childNode.Item.Equals(changedItem))
+                            if (childNode is TreeNodeItem)
                             {
-                                TreeView.SelectedNode = childNode;
-                                break;
+                                if (((TreeNodeItem) childNode).Item.Equals(changedItem))
+                                {
+                                    TreeView.SelectedNode = childNode;
+                                    break;
+                                }
                             }
                         }
                     }

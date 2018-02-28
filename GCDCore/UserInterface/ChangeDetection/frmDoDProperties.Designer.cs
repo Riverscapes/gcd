@@ -65,11 +65,13 @@ namespace GCDCore.UserInterface.ChangeDetection
             // 
             this.cmdOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cmdOK.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.cmdOK.Image = global::GCDCore.Properties.Resources.Save;
+            this.cmdOK.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.cmdOK.Location = new System.Drawing.Point(393, 389);
             this.cmdOK.Name = "cmdOK";
             this.cmdOK.Size = new System.Drawing.Size(75, 23);
             this.cmdOK.TabIndex = 8;
-            this.cmdOK.Text = "Calculate";
+            this.cmdOK.Text = "   Create";
             this.cmdOK.UseVisualStyleBackColor = true;
             this.cmdOK.Click += new System.EventHandler(this.cmdOK_Click);
             // 
@@ -138,7 +140,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmDoDProperties";
-            this.Text = "Change Detection Configuration";
+            this.Text = "Create Change Detection";
             this.Load += new System.EventHandler(this.DoDPropertiesForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
