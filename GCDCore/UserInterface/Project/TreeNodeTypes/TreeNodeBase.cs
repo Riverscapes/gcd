@@ -60,17 +60,28 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
                 eResult = frm.ShowDialog();
                 if (eResult == DialogResult.OK && treeReload)
                 {
-                    // Polymorphic loading of relevant child nodes
-                    LoadChildNodes();
 
-                    // Loop through the child nodes and select the item that was just edited
-                    foreach(TreeNodeItem childNode in Nodes)
+                    // Get the GCD project item that was just added or edited
+                    GCDProjectItem changedItem = (frm as IProjectItemForm).GCDProjectItem;
+
+                    // Selected this node if it is an item node and was just edited
+                    if (this is TreeNodeItem && ((TreeNodeItem)this).Item.Equals(changedItem))
                     {
-                        GCDProjectItem editedItem = (frm as IProjectItemForm).GCDProjectItem;
-                        if (childNode.Item.Equals(editedItem))
+                        Text = changedItem.Name;
+                    }
+                    else
+                    {
+                        // Polymorphic loading of relevant child nodes
+                        LoadChildNodes();
+
+                        // Loop through the child nodes and select the item that was just added
+                        foreach (TreeNodeItem childNode in Nodes)
                         {
-                            TreeView.SelectedNode = childNode;
-                            break;
+                            if (childNode.Item.Equals(changedItem))
+                            {
+                                TreeView.SelectedNode = childNode;
+                                break;
+                            }
                         }
                     }
                 }

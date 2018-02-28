@@ -42,12 +42,17 @@ namespace GCDCore.UserInterface.Project
 
         private void treProject_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
         {
+        }
+
+        private void treProject_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
             if (e.Button != MouseButtons.Right)
                 return;
 
             TreeNode theNode = treProject.GetNodeAt(e.X, e.Y);
             if (theNode is TreeNode)
                 treProject.SelectedNode = theNode;
+
         }
     }
 }

@@ -29,7 +29,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
 
         public override void LoadChildNodes()
         {
-            ((TreeNodeBase)Parent).LoadChildNodes();
+            //((TreeNodeBase)Parent).LoadChildNodes();
         }
 
         public void OnEdit(object sender, EventArgs e)

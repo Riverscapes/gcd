@@ -57,6 +57,16 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
                     ProjectManager.Project.DEMSurveys[dem.Name] = dem;
                     ProjectManager.Project.Save();
                     LoadChildNodes();
+                    
+                    // Loop through the child nodes and select the item that was just added
+                    foreach (TreeNodeItem childNode in Nodes)
+                    {
+                        if (childNode.Item.Equals(dem))
+                        {
+                            TreeView.SelectedNode = childNode;
+                            break;
+                        }
+                    }
                 }
             }
             catch (Exception ex)
