@@ -41,6 +41,8 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
         private void frmDEMProperties_Load(object sender, EventArgs e)
         {
+            Cursor = Cursors.WaitCursor;
+
             Text = string.Format("{0} Properties", Noun);
             grpProperties.Text = string.Format("{0} Raster Properties", Noun);
 
@@ -89,6 +91,8 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
             grdData.DataSource = ItemProperties;
             grdData.Select();
+
+            Cursor = Cursors.Default;
         }
 
         private void cmdOK_Click(object sender, EventArgs e)

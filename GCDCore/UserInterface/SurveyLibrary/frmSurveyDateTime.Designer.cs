@@ -115,11 +115,13 @@ namespace GCDCore.UserInterface.SurveyLibrary
             // 
             this.cmdSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cmdSave.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.cmdSave.Image = global::GCDCore.Properties.Resources.Save;
+            this.cmdSave.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.cmdSave.Location = new System.Drawing.Point(144, 87);
             this.cmdSave.Name = "cmdSave";
             this.cmdSave.Size = new System.Drawing.Size(75, 23);
             this.cmdSave.TabIndex = 7;
-            this.cmdSave.Text = "Save";
+            this.cmdSave.Text = "   Update";
             this.cmdSave.UseVisualStyleBackColor = true;
             this.cmdSave.Click += new System.EventHandler(this.cmdSave_Click);
             // 

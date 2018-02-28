@@ -46,6 +46,8 @@ namespace GCDCore.UserInterface.Project
             if (CreateMode)
             {
                 this.Text = "Create New GCD Projeect";
+                btnOK.Text = "   Create";
+              btnOK.Text = Properties.Resources.CreateButtonText;
 
                 // Default the directory to the parent folder of the last project used.
                 if (!string.IsNullOrEmpty(GCDCore.Properties.Settings.Default.LastUsedProjectFolder))
@@ -65,6 +67,7 @@ namespace GCDCore.UserInterface.Project
             else
             {
                 this.Text = "GCD Project Properties";
+                btnOK.Text = Properties.Resources.UpdateButtonText;
 
                 var _with1 = ProjectManager.Project;
                 txtName.Text = _with1.Name;

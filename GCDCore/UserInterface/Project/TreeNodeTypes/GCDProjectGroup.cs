@@ -22,6 +22,8 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
 
         public override void LoadChildNodes()
         {
+            Nodes.Clear();
+
             TreeNodeGroup nodInpt = new GenericNodeGroup(Nodes, "Inputs", "Input", "Inputs", ProjectManager.Project.InputsFolder, ContextMenuStrip.Container, true);
             TreeNodeGroup nodSurv = new DEMSurveysGroup(nodInpt.Nodes, ContextMenuStrip.Container);
             TreeNodeGroup nodRefs = new ReferenceSurfaceGroup(nodInpt.Nodes, ContextMenuStrip.Container);

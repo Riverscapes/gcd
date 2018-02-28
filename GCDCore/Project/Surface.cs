@@ -79,6 +79,10 @@ namespace GCDCore.Project
         public Surface(XmlNode nodSurface)
             : base(nodSurface)
         {
+            XmlNode nodHillshade = nodSurface.SelectSingleNode("Hillshade");
+            if (nodHillshade is XmlNode)
+                Hillshade = new HillShade(ProjectManager.Project.GetAbsolutePath(nodHillshade.InnerText));
+
             ErrorSurfaces = new naru.ui.SortableBindingList<ErrorSurface>();
             foreach (XmlNode nodError in nodSurface.SelectNodes("ErrorSurfaces/ErrorSurface"))
             {
@@ -146,6 +150,9 @@ namespace GCDCore.Project
         {
             nodItem.AppendChild(nodItem.OwnerDocument.CreateElement("Name")).InnerText = Name;
             nodItem.AppendChild(nodItem.OwnerDocument.CreateElement("Path")).InnerText = ProjectManager.Project.GetRelativePath(Raster.GISFileInfo);
+
+            if (Hillshade != null)
+                nodItem.AppendChild(nodItem.OwnerDocument.CreateElement("Hillshade")).InnerText = ProjectManager.Project.GetRelativePath(Hillshade.Raster.GISFileInfo);
 
             if (ErrorSurfaces.Count > 0)
             {

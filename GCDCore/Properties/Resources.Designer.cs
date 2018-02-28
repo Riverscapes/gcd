@@ -229,6 +229,15 @@ namespace GCDCore.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to    Create.
+        /// </summary>
+        public static string CreateButtonText {
+            get {
+                return ResourceManager.GetString("CreateButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         public static System.Drawing.Bitmap CurrentFunders {
@@ -689,6 +698,15 @@ namespace GCDCore.Properties {
             get {
                 object obj = ResourceManager.GetObject("up", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to    Update.
+        /// </summary>
+        public static string UpdateButtonText {
+            get {
+                return ResourceManager.GetString("UpdateButtonText", resourceCulture);
             }
         }
         

@@ -239,7 +239,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             }
             else
             {
-                if (m_Assoc == null && File.Exists(txtProjectRaster.Text))
+                if (m_Assoc == null && ProjectManager.Project.GetAbsolutePath(txtProjectRaster.Text).Exists)
                 {
                     MessageBox.Show("The associated surface project raster path already exists. Changing the name of the associated surface will change the raster path.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return false;
