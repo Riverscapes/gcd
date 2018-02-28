@@ -11,10 +11,12 @@ using GCDCore.Project;
 
 namespace GCDCore.UserInterface.SurveyLibrary.ReferenceSurfaces
 {
-    public partial class frmRefErrorSurface : Form
+    public partial class frmRefErrorSurface : Form, IProjectItemForm
     {
         public readonly Surface ReferenceSurface;
         public ErrorSurface ErrorSurface { get; internal set; }
+
+        public GCDProjectItem GCDProjectItem { get { return ErrorSurface; } }
 
         public frmRefErrorSurface(Surface parent)
         {

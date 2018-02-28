@@ -273,6 +273,7 @@
       <DependentUpon>frmOptions.cs</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\GIS\BrowseGISLayerEventArgs.cs" />
+    <Compile Include="UserInterface\IProjectItemForm.cs" />
     <Compile Include="UserInterface\LinearExtraction\frmLinearExtractionProperties.cs">
       <SubType>Form</SubType>
     </Compile>

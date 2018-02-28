@@ -12,9 +12,11 @@ using GCDCore.Project;
 
 namespace GCDCore.UserInterface.Masks
 {
-    public partial class frmAOIProperties : Form
+    public partial class frmAOIProperties : Form, IProjectItemForm
     {
         public GCDCore.Project.Masks.AOIMask AOIMask { get; internal set; }
+
+        public GCDProjectItem GCDProjectItem { get { return AOIMask; } }
 
         public frmAOIProperties(GCDCore.Project.Masks.AOIMask aoi)
         {

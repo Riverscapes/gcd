@@ -12,9 +12,10 @@ using GCDCore.Project;
 
 namespace GCDCore.UserInterface.ProfileRoutes
 {
-    public partial class frmProfileRouteProperties : Form
+    public partial class frmProfileRouteProperties : Form, IProjectItemForm
     {
         public GCDCore.Project.ProfileRoutes.ProfileRoute ProfileRoute { get; internal set; }
+        public GCDProjectItem GCDProjectItem { get { return ProfileRoute; } }
 
         public frmProfileRouteProperties(GCDCore.Project.ProfileRoutes.ProfileRoute route)
         {

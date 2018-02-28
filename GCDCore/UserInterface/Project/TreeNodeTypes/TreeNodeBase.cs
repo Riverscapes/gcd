@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using GCDCore.Project;
 
@@ -26,7 +22,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
         /// construction and also after OnAdd 
         /// </summary>
         public abstract void LoadChildNodes();
-        
+
         public void cms_Opening(object sender, System.ComponentModel.CancelEventArgs e)
         {
             foreach (ToolStripItem tsmi in ContextMenuStrip.Items)
@@ -41,7 +37,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
                 }
                 else if (tsmi.Text.ToLower().Contains("explore"))
                 {
-                    ContextMenuStrip cms = sender as ContextMenuStrip;                    
+                    ContextMenuStrip cms = sender as ContextMenuStrip;
                     TreeView treProject = cms.SourceControl as TreeView;
                     TreeNodeGroup nodGroup = treProject.SelectedNode as TreeNodeGroup;
                     if (nodGroup.Folder is System.IO.DirectoryInfo)
@@ -64,7 +60,19 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
                 eResult = frm.ShowDialog();
                 if (eResult == DialogResult.OK && treeReload)
                 {
+                    // Polymorphic loading of relevant child nodes
                     LoadChildNodes();
+
+                    // Loop through the child nodes and select the item that was just edited
+                    foreach(TreeNodeItem childNode in Nodes)
+                    {
+                        GCDProjectItem editedItem = (frm as IProjectItemForm).GCDProjectItem;
+                        if (childNode.Item.Equals(editedItem))
+                        {
+                            TreeView.SelectedNode = childNode;
+                            break;
+                        }
+                    }
                 }
             }
             catch (Exception ex)

@@ -12,10 +12,12 @@ using GCDConsoleLib;
 
 namespace GCDCore.UserInterface.SurveyLibrary.ReferenceSurfaces
 {
-    public partial class frmReferenceSurfaceFromDEMs : Form
+    public partial class frmReferenceSurfaceFromDEMs : Form, IProjectItemForm
     {
         public naru.ui.SortableBindingList<DEMItem> DEMSurveys;
         public GCDCore.Project.Surface ReferenceSurface { get; internal set; }
+
+        public GCDProjectItem GCDProjectItem { get { return ReferenceSurface; } }
 
         public frmReferenceSurfaceFromDEMs()
         {

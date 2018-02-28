@@ -12,10 +12,11 @@ using GCDCore.Project;
 
 namespace GCDCore.UserInterface.Masks
 {
-    public partial class frmMaskProperties : Form
+    public partial class frmMaskProperties : Form, IProjectItemForm
     {
         public readonly naru.ui.SortableBindingList<GCDCore.Project.Masks.MaskItem> MaskItems;
         public GCDCore.Project.Masks.RegularMask Mask { get; internal set; }
+        public GCDProjectItem GCDProjectItem { get { return Mask; } }
 
         public frmMaskProperties(GCDCore.Project.Masks.RegularMask mask = null)
         {

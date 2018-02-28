@@ -9,7 +9,7 @@ using GCDCore.UserInterface.ChangeDetection;
 
 namespace GCDCore.UserInterface.BudgetSegregation
 {
-    public partial class frmBudgetSegResults
+    public partial class frmBudgetSegResults : Form, IProjectItemForm
     {
         public enum RawRepresents
         {
@@ -20,8 +20,11 @@ namespace GCDCore.UserInterface.BudgetSegregation
         }
 
         private GCDCore.Project.BudgetSegregation BudgetSeg;
-         private DoDSummaryDisplayOptions m_Options;
+        private DoDSummaryDisplayOptions m_Options;
         private Visualization.BudgetSegPieChartViewer PieChartViewer;
+
+        public GCDProjectItem GCDProjectItem { get { return BudgetSeg; } }
+
 
         private RawRepresents SelectedRawRepresents { get { return (RawRepresents)((naru.db.NamedObject)cboRaw.SelectedItem).ID; } }
 

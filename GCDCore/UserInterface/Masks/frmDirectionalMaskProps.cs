@@ -13,12 +13,14 @@ using GCDCore.Project;
 
 namespace GCDCore.UserInterface.Masks
 {
-    public partial class frmDirectionalMaskProps : Form
+    public partial class frmDirectionalMaskProps : Form, IProjectItemForm
     {
         private const string DirectionFieldInfo = "The lowest integer should be at the top of the reach and the highest integer the most downstream." +
             " All features must have a valid value (i.e. null values are not permitted), but gaps in the numbering are permitted.";
 
         public DirectionalMask Mask { get; internal set; }
+
+        public GCDProjectItem GCDProjectItem { get { return Mask; } }
 
         public frmDirectionalMaskProps(DirectionalMask mask = null)
         {

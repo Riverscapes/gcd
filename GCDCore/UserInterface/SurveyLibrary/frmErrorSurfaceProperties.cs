@@ -10,12 +10,14 @@ using GCDCore.ErrorCalculation.FIS;
 
 namespace GCDCore.UserInterface.SurveyLibrary
 {
-    public partial class frmErrorSurfaceProperties : Form
+    public partial class frmErrorSurfaceProperties : Form, IProjectItemForm
     {
         public readonly DEMSurvey DEM;
         public ErrorSurface ErrorSurf { get; internal set; }
 
         public const string m_sEntireDEMExtent = "Entire DEM Extent";
+
+        public GCDProjectItem GCDProjectItem {  get { return ErrorSurf; } }
 
         // This dictionary stores the definitions of the error surface properties for each survey method polygon
         private naru.ui.SortableBindingList<ErrorSurfaceProperty> ErrorCalcProps;

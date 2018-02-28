@@ -9,10 +9,12 @@ using GCDCore.Project;
 
 namespace GCDCore.UserInterface.BudgetSegregation
 {
-    public partial class frmBudgetSegProperties : Form
+    public partial class frmBudgetSegProperties : Form, IProjectItemForm
     {
         public GCDCore.Project.BudgetSegregation BudgetSeg { get; internal set; }
         private DoDBase InitialDoD;
+
+        public GCDProjectItem GCDProjectItem { get { return BudgetSeg; } }
 
         public frmBudgetSegProperties(DoDBase parentDoD)
         {

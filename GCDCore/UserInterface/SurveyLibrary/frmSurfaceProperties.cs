@@ -5,11 +5,13 @@ using System.Collections.Generic;
 
 namespace GCDCore.UserInterface.SurveyLibrary
 {
-    public partial class frmSurfaceProperties : Form
+    public partial class frmSurfaceProperties : Form, IProjectItemForm
     {
         public readonly GCDProjectRasterItem Surface;
         private SurveyDateTime SurveyDate { get; set; }
         private readonly naru.ui.SortableBindingList<ItemProperty> ItemProperties;
+
+        public GCDProjectItem GCDProjectItem { get { return Surface; } }
 
         private string Noun
         {

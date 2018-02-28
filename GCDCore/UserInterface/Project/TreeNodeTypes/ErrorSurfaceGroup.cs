@@ -22,7 +22,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             ToolStripMenuItem tsmi = null;
             if (Surface is DEMSurvey)
             {
-                tsmi= new ToolStripMenuItem("Calculate New Error Surface", Properties.Resources.sigma, OnCalculateDEMErrorSurface);
+                tsmi = new ToolStripMenuItem("Calculate New Error Surface", Properties.Resources.sigma, OnCalculateDEMErrorSurface);
             }
             else
             {
@@ -56,7 +56,6 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             SurveyLibrary.frmImportRaster frm = new SurveyLibrary.frmImportRaster(Surface, ePurpose, noun);
             EditTreeItem(frm);
         }
-
 
         public void OnCalculateDEMErrorSurface(object sender, EventArgs e)
         {

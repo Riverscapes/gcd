@@ -6,7 +6,7 @@ using System.IO;
 
 namespace GCDCore.UserInterface.SurveyLibrary
 {
-    public partial class frmAssocSurfaceProperties
+    public partial class frmAssocSurfaceProperties : Form, IProjectItemForm
     {
         public AssocSurface m_Assoc { get; internal set; }
         private DEMSurvey DEM;
@@ -17,6 +17,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
         private GCDConsoleLib.RasterOperators.KernelShapes PointDensityShape;
         private decimal PointDensitySize;
 
+        public GCDProjectItem GCDProjectItem { get { return m_Assoc; } }
 
         public frmAssocSurfaceProperties(DEMSurvey parentDEM, AssocSurface assoc)
         {

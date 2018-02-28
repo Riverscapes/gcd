@@ -15,7 +15,7 @@ using System.Text.RegularExpressions;
 
 namespace GCDCore.UserInterface.BudgetSegregation.Morphological
 {
-    public partial class frmMorphResults : Form
+    public partial class frmMorphResults : Form, IProjectItemForm
     {
         private const string EROSION_CHART_SERIES = "Erosion";
         private const string DEPOSIT_CHART_SERIES = "Deposition";
@@ -25,6 +25,8 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
         UserInterface.UtilityForms.ChartContextMenu cmsChart;
 
         public readonly GCDCore.Project.Morphological.MorphologicalAnalysis Analysis;
+
+        public GCDProjectItem GCDProjectItem { get { return Analysis; } }
 
         public frmMorphResults(GCDCore.Project.Morphological.MorphologicalAnalysis ma)
         {

@@ -13,10 +13,12 @@ using GCDConsoleLib;
 
 namespace GCDCore.UserInterface.LinearExtraction
 {
-    public partial class frmLinearExtractionProperties : Form
+    public partial class frmLinearExtractionProperties : Form, IProjectItemForm
     {
         public readonly GCDProjectItem ElevationSurface;
         public GCDCore.Project.LinearExtraction.LinearExtraction LinearExtraction;
+
+        public GCDProjectItem GCDProjectItem { get { return LinearExtraction; } }
 
         public frmLinearExtractionProperties(GCDProjectItem surface)
         {
