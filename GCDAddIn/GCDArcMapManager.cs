@@ -107,11 +107,9 @@ namespace GCDAddIn
             short fDEMTransparency = (short)-1;
             IGroupLayer pSurveyLyr = AddSurveyGroupLayer(dem);
 
-            FileInfo hillshade = ProjectManager.OutputManager.HillShadeRasterPath(dem.Raster.GISFileInfo);
-            if (hillshade.Exists)
+            if (dem.Hillshade != null && dem.Hillshade.Raster.GISFileInfo.Exists)
             {
-                Raster gHillshade = new Raster(hillshade);
-                AddRasterLayer(gHillshade, null, dem.Name + " Hillshade", pSurveyLyr, "Aspect", -1, ExpandLegend: false);
+                AddRasterLayer(dem.Hillshade.Raster, null, dem.Name + " Hillshade", pSurveyLyr, "Aspect", -1, ExpandLegend: false);
                 fDEMTransparency = DefaultTransparency;
             }
 
@@ -123,12 +121,10 @@ namespace GCDAddIn
         {
             short fDEMTransparency = (short)-1;
             IGroupLayer pSurveyLyr = AddReferenceSurfaceGroupLayer(surf);
-
-            FileInfo hillshade = ProjectManager.OutputManager.HillShadeRasterPath(surf.Raster.GISFileInfo);
-            if (hillshade.Exists)
+            
+            if (surf.Hillshade != null && surf.Hillshade.Raster.GISFileInfo.Exists)
             {
-                Raster gHillshade = new Raster(hillshade);
-                AddRasterLayer(gHillshade, null, surf.Name + " Hillshade", pSurveyLyr, "Aspect", -1, ExpandLegend: false);
+                AddRasterLayer(surf.Hillshade.Raster, null, surf.Name + " Hillshade", pSurveyLyr, "Aspect", -1, ExpandLegend: false);
                 fDEMTransparency = DefaultTransparency;
             }
 
@@ -232,7 +228,7 @@ namespace GCDAddIn
                 labelField = string.IsNullOrEmpty(dirMask.LabelField) ? dirMask._Field : dirMask.LabelField;
             }
 
-            VectorSymbolization.AddToMapVector(mask._ShapeFile, mask.Name, pMasksGrpLyr, mask._Field, pRenderer, queryFilter, labelField);
+            VectorSymbolization.AddToMapVector(mask.Vector.GISFileInfo, mask.Name, pMasksGrpLyr, mask._Field, pRenderer, queryFilter, labelField);
         }
 
         public void AddAOI(GCDCore.Project.Masks.AOIMask mask)
@@ -242,7 +238,7 @@ namespace GCDAddIn
 
             IFeatureRenderer pRenderer = VectorSymbolization.GetAOIRenderer(mask) as IFeatureRenderer;
 
-            VectorSymbolization.AddToMapVector(mask._ShapeFile, mask.Name, pMasksGrpLyr, string.Empty, pRenderer, string.Empty, string.Empty);
+            VectorSymbolization.AddToMapVector(mask.Vector.GISFileInfo, mask.Name, pMasksGrpLyr, string.Empty, pRenderer, string.Empty, string.Empty);
         }
 
         public void AddDoD(GCDProjectRasterItem dod, bool bThresholded = true)
