@@ -51,7 +51,7 @@ namespace GCDCore.Project
 
         public DirectoryInfo BudgetSegPath()
         {
-            return ProjectManager.GetIndexedSubDirectory(BudgetSegFolder, "BS", false);
+            return ProjectManager.GetIndexedSubDirectory(BudgetSegFolder, "BS");
         }
 
         public static DirectoryInfo FiguresFolderPath(DirectoryInfo dodDir)

@@ -201,7 +201,7 @@ namespace GCDCore.Project
 
         public DirectoryInfo GetDoDFolder()
         {
-            return ProjectManager.GetIndexedSubDirectory(ChangeDetectionFolder, "DoD", false);
+            return ProjectManager.GetIndexedSubDirectory(ChangeDetectionFolder, "DoD");
         }
 
         public void Save()

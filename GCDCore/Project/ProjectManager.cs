@@ -295,17 +295,14 @@ namespace GCDCore.Project
 
         public static FileInfo GetProjectItemPath(DirectoryInfo parentFolder, string groupFolderPrefix, string name, string fileExtension)
         {
-            DirectoryInfo itemDir = GetIndexedSubDirectory(parentFolder, groupFolderPrefix, false);
+            DirectoryInfo itemDir = GetIndexedSubDirectory(parentFolder, groupFolderPrefix);
             string path = Path.Combine(itemDir.FullName, naru.os.File.RemoveDangerousCharacters(name));
             path = Path.ChangeExtension(path, fileExtension);
             return new FileInfo(path);
         }
 
-        public static DirectoryInfo GetIndexedSubDirectory(DirectoryInfo parentFolder, string prefix, bool bCreate)
+        public static DirectoryInfo GetIndexedSubDirectory(DirectoryInfo parentFolder, string prefix)
         {
-            if (!parentFolder.Exists && bCreate)
-                parentFolder.Create();
-
             // Find unique folder on disk
             int existingIndex = 0;
 
@@ -324,10 +321,6 @@ namespace GCDCore.Project
             }
 
             DirectoryInfo finalFolder = new DirectoryInfo(Path.Combine(parentFolder.FullName, string.Format("{0}{1:0000}", prefix, existingIndex + 1)));
-
-            if (bCreate)
-                finalFolder.Create();
-
             return finalFolder;
         }
     }

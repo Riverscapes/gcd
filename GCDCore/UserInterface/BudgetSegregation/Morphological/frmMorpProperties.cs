@@ -73,7 +73,7 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
             txtDoD.Text = bs.DoD.Name;
             txtUncertainty.Text = bs.DoD.UncertaintyAnalysisLabel;
 
-            txtPath.Text = ProjectManager.Project.GetRelativePath(ProjectManager.GetIndexedSubDirectory(bs.MorphologicalFolder, "MA", false).FullName);
+            txtPath.Text = ProjectManager.Project.GetRelativePath(ProjectManager.GetIndexedSubDirectory(bs.MorphologicalFolder, "MA").FullName);
         }
 
         public static bool ValidateName(TextBox txtName, GCDCore.Project.BudgetSegregation bs, GCDCore.Project.Morphological.MorphologicalAnalysis ma)
