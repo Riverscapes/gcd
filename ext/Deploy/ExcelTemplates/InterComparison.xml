@@ -35,7 +35,7 @@
     <Style ss:ID="s20" ss:Name="Percent">
       <NumberFormat ss:Format="0%"/>
     </Style>
-    <Style ss:ID="m53905600">
+    <Style ss:ID="m56223040">
       <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
       <Borders>
         <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
@@ -45,7 +45,7 @@
       <Font ss:FontName="Calibri" x:Family="Swiss" ss:Color="#000000"/>
       <Interior ss:Color="#E7E6E6" ss:Pattern="Solid"/>
     </Style>
-    <Style ss:ID="m53905620">
+    <Style ss:ID="m56223060">
       <Alignment ss:Horizontal="Center" ss:Vertical="Top"/>
       <Borders>
         <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
@@ -55,7 +55,7 @@
       <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11" ss:Color="#000000"/>
       <Interior ss:Color="#E7E6E6" ss:Pattern="Solid"/>
     </Style>
-    <Style ss:ID="m53905640">
+    <Style ss:ID="m56223080">
       <Alignment ss:Horizontal="Center" ss:Vertical="Top"/>
       <Borders>
         <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
@@ -65,7 +65,7 @@
       <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11" ss:Color="#000000"/>
       <Interior ss:Color="#E7E6E6" ss:Pattern="Solid"/>
     </Style>
-    <Style ss:ID="m53905660">
+    <Style ss:ID="m56223100">
       <Alignment ss:Horizontal="Center" ss:Vertical="Top" ss:WrapText="1"/>
       <Borders>
         <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
@@ -74,7 +74,7 @@
       </Borders>
       <Interior ss:Color="#E7E6E6" ss:Pattern="Solid"/>
     </Style>
-    <Style ss:ID="m53905680">
+    <Style ss:ID="m56223120">
       <Alignment ss:Horizontal="Center" ss:Vertical="Top" ss:WrapText="1"/>
       <Borders>
         <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
@@ -83,7 +83,7 @@
       </Borders>
       <Interior ss:Color="#E7E6E6" ss:Pattern="Solid"/>
     </Style>
-    <Style ss:ID="m56223264">
+    <Style ss:ID="m56225280">
       <Alignment ss:Horizontal="Center" ss:Vertical="Top"/>
       <Borders>
         <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
@@ -93,7 +93,7 @@
       <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11" ss:Color="#000000"/>
       <Interior ss:Color="#E7E6E6" ss:Pattern="Solid"/>
     </Style>
-    <Style ss:ID="m56223284">
+    <Style ss:ID="m56225300">
       <Alignment ss:Horizontal="Center" ss:Vertical="Top"/>
       <Borders>
         <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
@@ -103,7 +103,7 @@
       <Font ss:FontName="Calibri" x:Family="Swiss" ss:Color="#000000"/>
       <Interior ss:Color="#E7E6E6" ss:Pattern="Solid"/>
     </Style>
-    <Style ss:ID="m56223304">
+    <Style ss:ID="m56225320">
       <Alignment ss:Horizontal="Center" ss:Vertical="Top"/>
       <Borders>
         <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
@@ -113,7 +113,7 @@
       <Font ss:FontName="Calibri" x:Family="Swiss" ss:Color="#000000"/>
       <Interior ss:Color="#E7E6E6" ss:Pattern="Solid"/>
     </Style>
-    <Style ss:ID="m56223324">
+    <Style ss:ID="m56225340">
       <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
       <Borders>
         <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
@@ -123,7 +123,7 @@
       <Font ss:FontName="Calibri" x:Family="Swiss" ss:Color="#000000"/>
       <Interior ss:Color="#E7E6E6" ss:Pattern="Solid"/>
     </Style>
-    <Style ss:ID="m56223344">
+    <Style ss:ID="m56225360">
       <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
       <Borders>
         <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
@@ -133,7 +133,7 @@
       <Font ss:FontName="Calibri" x:Family="Swiss" ss:Color="#000000"/>
       <Interior ss:Color="#E7E6E6" ss:Pattern="Solid"/>
     </Style>
-    <Style ss:ID="m56223364">
+    <Style ss:ID="m56225380">
       <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
       <Borders>
         <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
@@ -143,7 +143,7 @@
       <Font ss:FontName="Calibri" x:Family="Swiss" ss:Color="#000000"/>
       <Interior ss:Color="#E7E6E6" ss:Pattern="Solid"/>
     </Style>
-    <Style ss:ID="m56221920">
+    <Style ss:ID="m53906496">
       <Alignment ss:Horizontal="Center" ss:Vertical="Top"/>
       <Borders>
         <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
@@ -153,7 +153,7 @@
       <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11" ss:Color="#000000"/>
       <Interior ss:Color="#E7E6E6" ss:Pattern="Solid"/>
     </Style>
-    <Style ss:ID="m56221940">
+    <Style ss:ID="m53906516">
       <Alignment ss:Horizontal="Center" ss:Vertical="Top"/>
       <Borders>
         <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
@@ -163,7 +163,7 @@
       <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11" ss:Color="#000000"/>
       <Interior ss:Color="#E7E6E6" ss:Pattern="Solid"/>
     </Style>
-    <Style ss:ID="m56221960">
+    <Style ss:ID="m53906536">
       <Alignment ss:Horizontal="Center" ss:Vertical="Top" ss:WrapText="1"/>
       <Borders>
         <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
@@ -173,7 +173,7 @@
       <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11" ss:Color="#000000"/>
       <Interior ss:Color="#E7E6E6" ss:Pattern="Solid"/>
     </Style>
-    <Style ss:ID="m56221980">
+    <Style ss:ID="m53906556">
       <Alignment ss:Horizontal="Center" ss:Vertical="Top" ss:WrapText="1"/>
       <Borders>
         <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="2"/>
@@ -183,7 +183,7 @@
       <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11" ss:Color="#000000"/>
       <Interior ss:Color="#E7E6E6" ss:Pattern="Solid"/>
     </Style>
-    <Style ss:ID="m56222000">
+    <Style ss:ID="m53906576">
       <Alignment ss:Horizontal="Center" ss:Vertical="Top" ss:WrapText="1"/>
       <Borders>
         <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="2"/>
@@ -193,7 +193,7 @@
       <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11" ss:Color="#000000"/>
       <Interior ss:Color="#E7E6E6" ss:Pattern="Solid"/>
     </Style>
-    <Style ss:ID="m56222020">
+    <Style ss:ID="m53906596">
       <Alignment ss:Horizontal="Center" ss:Vertical="Top"/>
       <Borders>
         <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
@@ -203,7 +203,7 @@
       <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11" ss:Color="#000000"/>
       <Interior ss:Color="#E7E6E6" ss:Pattern="Solid"/>
     </Style>
-    <Style ss:ID="m56222040">
+    <Style ss:ID="m53906616">
       <Alignment ss:Horizontal="Center" ss:Vertical="Top"/>
       <Borders>
         <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
@@ -213,7 +213,7 @@
       <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11" ss:Color="#000000"/>
       <Interior ss:Color="#E7E6E6" ss:Pattern="Solid"/>
     </Style>
-    <Style ss:ID="m56222060">
+    <Style ss:ID="m53906636">
       <Alignment ss:Horizontal="Center" ss:Vertical="Top"/>
       <Borders>
         <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
@@ -526,6 +526,14 @@
       <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="9" ss:Color="#000000"/>
       <Interior ss:Color="#E7E6E6" ss:Pattern="Solid"/>
     </Style>
+    <Style ss:ID="s136">
+      <Borders>
+        <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+        <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="2"/>
+      </Borders>
+      <Interior/>
+      <NumberFormat ss:Format="Fixed"/>
+    </Style>
     <Style ss:ID="s137">
       <Borders>
         <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"
@@ -631,9 +639,19 @@
       </Borders>
       <NumberFormat ss:Format="\±\ #,##0.00"/>
     </Style>
+    <Style ss:ID="s146">
+      <Borders>
+        <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="2"/>
+        <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="2"/>
+      </Borders>
+      <Interior ss:Color="#E7E6E6" ss:Pattern="Solid"/>
+      <NumberFormat ss:Format="\±\ #,##0.00"/>
+    </Style>
     <Style ss:ID="s147">
       <Borders>
         <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="2"/>
+        <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"
+         ss:Color="#E7E6E6"/>
         <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="2"/>
       </Borders>
       <Interior ss:Color="#E7E6E6" ss:Pattern="Solid"/>
@@ -642,16 +660,6 @@
     <Style ss:ID="s148">
       <Borders>
         <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="2"/>
-        <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"
-         ss:Color="#E7E6E6"/>
-        <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="2"/>
-      </Borders>
-      <Interior ss:Color="#E7E6E6" ss:Pattern="Solid"/>
-      <NumberFormat ss:Format="\±\ #,##0.00"/>
-    </Style>
-    <Style ss:ID="s149">
-      <Borders>
-        <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="2"/>
         <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"
          ss:Color="#E7E6E6"/>
         <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
@@ -660,7 +668,7 @@
       <Interior ss:Color="#E7E6E6" ss:Pattern="Solid"/>
       <NumberFormat ss:Format="Fixed"/>
     </Style>
-    <Style ss:ID="s150">
+    <Style ss:ID="s149">
       <Borders>
         <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="2"/>
         <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
@@ -669,7 +677,7 @@
       <Interior ss:Color="#E7E6E6" ss:Pattern="Solid"/>
       <NumberFormat ss:Format="\±\ #,##0.00"/>
     </Style>
-    <Style ss:ID="s151">
+    <Style ss:ID="s150">
       <Borders>
         <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="2"/>
         <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="2"/>
@@ -678,18 +686,18 @@
       <Interior ss:Color="#E7E6E6" ss:Pattern="Solid"/>
       <NumberFormat ss:Format="\±\ #,##0.00"/>
     </Style>
-    <Style ss:ID="s161">
+    <Style ss:ID="s160">
       <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
       <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="9" ss:Color="#000000"/>
     </Style>
-    <Style ss:ID="s162">
+    <Style ss:ID="s161">
       <Borders>
         <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"
          ss:Color="#E7E6E6"/>
         <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="2"/>
       </Borders>
     </Style>
-    <Style ss:ID="s163" ss:Parent="s20">
+    <Style ss:ID="s162" ss:Parent="s20">
       <Borders>
         <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"
          ss:Color="#E7E6E6"/>
@@ -701,7 +709,7 @@
       <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11" ss:Color="#000000"/>
       <Interior/>
     </Style>
-    <Style ss:ID="s164" ss:Parent="s20">
+    <Style ss:ID="s163" ss:Parent="s20">
       <Borders>
         <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"
          ss:Color="#E7E6E6"/>
@@ -714,7 +722,7 @@
       <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11" ss:Color="#000000"/>
       <Interior/>
     </Style>
-    <Style ss:ID="s165">
+    <Style ss:ID="s164">
       <Borders>
         <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"
          ss:Color="#E7E6E6"/>
@@ -727,7 +735,7 @@
       <Interior ss:Color="#E7E6E6" ss:Pattern="Solid"/>
       <NumberFormat ss:Format="Fixed"/>
     </Style>
-    <Style ss:ID="s166" ss:Parent="s20">
+    <Style ss:ID="s165" ss:Parent="s20">
       <Borders>
         <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"
          ss:Color="#E7E6E6"/>
@@ -738,7 +746,7 @@
       </Borders>
       <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11" ss:Color="#000000"/>
     </Style>
-    <Style ss:ID="s167" ss:Parent="s20">
+    <Style ss:ID="s166" ss:Parent="s20">
       <Borders>
         <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"
          ss:Color="#E7E6E6"/>
@@ -748,10 +756,18 @@
       </Borders>
       <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11" ss:Color="#000000"/>
     </Style>
-    <Style ss:ID="s168" ss:Parent="s20">
+    <Style ss:ID="s167" ss:Parent="s20">
       <Borders>
         <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="2"/>
         <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+        <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="2"/>
+      </Borders>
+      <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11" ss:Color="#000000"/>
+      <Interior ss:Color="#E7E6E6" ss:Pattern="Solid"/>
+    </Style>
+    <Style ss:ID="s168" ss:Parent="s20">
+      <Borders>
+        <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="2"/>
         <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="2"/>
       </Borders>
       <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11" ss:Color="#000000"/>
@@ -760,36 +776,11 @@
     <Style ss:ID="s169" ss:Parent="s20">
       <Borders>
         <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="2"/>
-        <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="2"/>
-      </Borders>
-      <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11" ss:Color="#000000"/>
-      <Interior ss:Color="#E7E6E6" ss:Pattern="Solid"/>
-    </Style>
-    <Style ss:ID="s170" ss:Parent="s20">
-      <Borders>
-        <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="2"/>
         <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="2"/>
         <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="2"/>
       </Borders>
       <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11" ss:Color="#000000"/>
       <Interior ss:Color="#E7E6E6" ss:Pattern="Solid"/>
-    </Style>
-    <Style ss:ID="s171">
-      <Borders>
-        <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
-        <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="2"/>
-      </Borders>
-      <Interior/>
-      <NumberFormat ss:Format="Fixed"/>
-    </Style>
-    <Style ss:ID="s172">
-      <Borders>
-        <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="2"/>
-        <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
-        <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="2"/>
-      </Borders>
-      <Interior ss:Color="#E7E6E6" ss:Pattern="Solid"/>
-      <NumberFormat ss:Format="Fixed"/>
     </Style>
   </Styles>
   <Names>
@@ -890,7 +881,7 @@
       </Row>
       <Row ss:AutoFitHeight="0" ss:Height="32.25">
         <Cell ss:StyleID="s63"/>
-        <Cell ss:MergeAcross="3" ss:StyleID="m56221920">
+        <Cell ss:MergeAcross="3" ss:StyleID="m53906496">
           <Data ss:Type="String">Total Area of Surface Lowering (m²)</Data>
           <Comment
       ss:Author="philip">
@@ -904,16 +895,16 @@
             </ss:Data>
           </Comment>
         </Cell>
-        <Cell ss:MergeAcross="3" ss:StyleID="m56221940">
+        <Cell ss:MergeAcross="3" ss:StyleID="m53906516">
           <Data ss:Type="String">Total Area of Surface Raising (m²)</Data>
         </Cell>
-        <Cell ss:MergeAcross="1" ss:StyleID="m56221960">
+        <Cell ss:MergeAcross="1" ss:StyleID="m53906536">
           <Data ss:Type="String">Total Area of Detectable Change (m²)</Data>
         </Cell>
-        <Cell ss:MergeDown="1" ss:StyleID="m56221980">
+        <Cell ss:MergeDown="1" ss:StyleID="m53906556">
           <Data ss:Type="String">Total Area of Interest (m²)</Data>
         </Cell>
-        <Cell ss:MergeDown="1" ss:StyleID="m56222000">
+        <Cell ss:MergeDown="1" ss:StyleID="m53906576">
           <Data ss:Type="String">AOI % with Detectable Change</Data>
         </Cell>
       </Row>
@@ -1073,16 +1064,16 @@
       </Row>
       <Row ss:AutoFitHeight="0">
         <Cell ss:StyleID="s63"/>
-        <Cell ss:MergeAcross="3" ss:StyleID="m56222020">
+        <Cell ss:MergeAcross="3" ss:StyleID="m53906596">
           <Data ss:Type="String">Total Volume of Surface Lowering (m³)</Data>
         </Cell>
-        <Cell ss:MergeAcross="3" ss:StyleID="m56222040">
+        <Cell ss:MergeAcross="3" ss:StyleID="m53906616">
           <Data ss:Type="String">Total Volume of Surface Raising (m³)</Data>
         </Cell>
-        <Cell ss:MergeAcross="3" ss:StyleID="m56222060">
+        <Cell ss:MergeAcross="3" ss:StyleID="m53906636">
           <Data ss:Type="String">Total Volume of Difference (m³)</Data>
         </Cell>
-        <Cell ss:MergeAcross="2" ss:StyleID="m56223264">
+        <Cell ss:MergeAcross="2" ss:StyleID="m56225280">
           <Data ss:Type="String">Total Net Volume Difference (m³)</Data>
         </Cell>
       </Row>
@@ -1304,22 +1295,22 @@
       </Row>
       <Row ss:AutoFitHeight="0" ss:Height="12.75" ss:StyleID="s115">
         <Cell ss:StyleID="s116"/>
-        <Cell ss:MergeAcross="3" ss:StyleID="m56223284">
+        <Cell ss:MergeAcross="3" ss:StyleID="m56225300">
           <Data ss:Type="String">Average Depth of Surface Lowering (m)</Data>
         </Cell>
-        <Cell ss:MergeAcross="3" ss:StyleID="m56223304">
+        <Cell ss:MergeAcross="3" ss:StyleID="m56225320">
           <Data ss:Type="String">Average Depth of Surface Raising (m)</Data>
         </Cell>
-        <Cell ss:MergeAcross="3" ss:StyleID="m56223324">
+        <Cell ss:MergeAcross="3" ss:StyleID="m56225340">
           <Data ss:Type="String">AOI Average Total Thickness of Difference (m)</Data>
         </Cell>
-        <Cell ss:MergeAcross="2" ss:StyleID="m56223344">
+        <Cell ss:MergeAcross="2" ss:StyleID="m56225360">
           <Data ss:Type="String">AOI Average Net Thickness Difference (m)</Data>
         </Cell>
-        <Cell ss:MergeAcross="1" ss:StyleID="m56223364">
+        <Cell ss:MergeAcross="1" ss:StyleID="m56225380">
           <Data ss:Type="String">ADC Avg Total Thickness of Difference (m)</Data>
         </Cell>
-        <Cell ss:MergeAcross="1" ss:StyleID="m53905600">
+        <Cell ss:MergeAcross="1" ss:StyleID="m56223040">
           <Data ss:Type="String">ADC Average Net Thickness of Difference (m)</Data>
         </Cell>
       </Row>
@@ -1383,58 +1374,75 @@
           <NamedCell
       ss:Name="VerticalDoDName"/>
         </Cell>
-        <Cell ss:StyleID="s171" ss:Formula="=R[-5]C/R[-10]C">
-          <Data ss:Type="Number">0.4</Data>
+        <Cell ss:StyleID="s136" ss:Formula="=IF(R[-10]C&lt;&gt;0,R[-5]C/R[-10]C,0)">
+          <Data
+      ss:Type="Number">0.4</Data>
         </Cell>
-        <Cell ss:StyleID="s137" ss:Formula="=R[-5]C/R[-10]C">
-          <Data ss:Type="Number">0</Data>
+        <Cell ss:StyleID="s137" ss:Formula="=IF(R[-10]C &lt;&gt; 0, R[-5]C/R[-10]C, 0)">
+          <Data
+      ss:Type="Number">0</Data>
         </Cell>
-        <Cell ss:StyleID="s138" ss:Formula="=R[-5]C/R[-10]C[-1]">
-          <Data ss:Type="Number">0</Data>
-        </Cell>
-        <Cell ss:StyleID="s139"/>
-        <Cell ss:StyleID="s107" ss:Formula="=R[-5]C/R[-10]C">
-          <Data ss:Type="Number">1.383399209486166</Data>
-        </Cell>
-        <Cell ss:StyleID="s108" ss:Formula="=R[-5]C/R[-10]C">
-          <Data ss:Type="Number">1.5555555555555556</Data>
-        </Cell>
-        <Cell ss:StyleID="s138" ss:Formula="=R[-5]C/R[-10]C[-1]">
-          <Data ss:Type="Number">8.3333333333333329E-2</Data>
+        <Cell ss:StyleID="s138"
+         ss:Formula="=IF(R[-10]C[-1] &lt;&gt; 0, R[-5]C/R[-10]C[-1], 0)">
+          <Data
+      ss:Type="Number">0</Data>
         </Cell>
         <Cell ss:StyleID="s139"/>
-        <Cell ss:StyleID="s140" ss:Formula="=R[-5]C/R[-10]C[2]">
-          <Data ss:Type="Number">1.3643410852713178</Data>
+        <Cell ss:StyleID="s107" ss:Formula="=IF(R[-10]C &lt;&gt; 0, R[-5]C/R[-10]C, 0)">
+          <Data
+      ss:Type="Number">1.383399209486166</Data>
         </Cell>
-        <Cell ss:StyleID="s141" ss:Formula="=R[-5]C/R[-10]C[1]">
-          <Data ss:Type="Number">1.0852713178294573</Data>
+        <Cell ss:StyleID="s108" ss:Formula="=IF(R[-10]C &lt;&gt; 0, R[-5]C/R[-10]C, 0)">
+          <Data
+      ss:Type="Number">1.5555555555555556</Data>
         </Cell>
-        <Cell ss:StyleID="s142" ss:Formula="=R[-5]C/R[-10]C">
-          <Data ss:Type="Number">5.8139534883720929E-2</Data>
+        <Cell ss:StyleID="s138"
+         ss:Formula="=IF(R[-10]C[-1] &lt;&gt; 0, R[-5]C/R[-10]C[-1], 0)">
+          <Data
+      ss:Type="Number">8.3333333333333329E-2</Data>
+        </Cell>
+        <Cell ss:StyleID="s139"/>
+        <Cell ss:StyleID="s140" ss:Formula="=IF(R[-10]C[2] &lt;&gt; 0, R[-5]C/R[-10]C[2], 0)">
+          <Data
+      ss:Type="Number">1.3643410852713178</Data>
+        </Cell>
+        <Cell ss:StyleID="s141" ss:Formula="=IF(R[-10]C[1] &lt;&gt; 0, R[-5]C/R[-10]C[1], 0)">
+          <Data
+      ss:Type="Number">1.0852713178294573</Data>
+        </Cell>
+        <Cell ss:StyleID="s142" ss:Formula="=IF(R[-10]C &lt;&gt; 0, R[-5]C/R[-10]C, 0)">
+          <Data
+      ss:Type="Number">5.8139534883720929E-2</Data>
         </Cell>
         <Cell ss:StyleID="s143"/>
-        <Cell ss:StyleID="s140" ss:Formula="=R[-5]C/R[-10]C12">
-          <Data ss:Type="Number">1.3488372093023255</Data>
+        <Cell ss:StyleID="s140" ss:Formula="=IF(R[-10]C12 &lt;&gt; 0, R[-5]C/R[-10]C12, 0)">
+          <Data
+      ss:Type="Number">1.3488372093023255</Data>
         </Cell>
-        <Cell ss:StyleID="s141" ss:Formula="=R[-5]C/R[-10]C12">
-          <Data ss:Type="Number">1.0852713178294573</Data>
+        <Cell ss:StyleID="s141" ss:Formula="=IF(R[-10]C12 &lt;&gt; 0, R[-5]C/R[-10]C12, 0)">
+          <Data
+      ss:Type="Number">1.0852713178294573</Data>
         </Cell>
-        <Cell ss:StyleID="s144" ss:Formula="=R[-5]C/R[-10]C12">
-          <Data ss:Type="Number">5.8139534883720929E-2</Data>
+        <Cell ss:StyleID="s144" ss:Formula="=IF(R[-10]C12 &lt;&gt; 0, R[-5]C/R[-10]C12, 0)">
+          <Data
+      ss:Type="Number">5.8139534883720929E-2</Data>
         </Cell>
-        <Cell ss:StyleID="s140" ss:Formula="=R[-5]C[-6]/R[-10]C10">
+        <Cell ss:StyleID="s140" ss:Formula="=IF(R[-10]C10&lt;&gt;0,R[-5]C[-6]/R[-10]C10,0)">
           <Data
       ss:Type="Number">1.5469613259668509</Data>
         </Cell>
-        <Cell ss:StyleID="s144" ss:Formula="=R[-5]C[-6]/R[-10]C10">
+        <Cell ss:StyleID="s144"
+         ss:Formula="=IF(R[-10]C10 &lt;&gt; 0, R[-5]C[-6]/R[-10]C10, 0)">
           <Data
       ss:Type="Number">8.2872928176795577E-2</Data>
         </Cell>
-        <Cell ss:StyleID="s140" ss:Formula="=R[-5]C[-4]/R[-10]C10">
+        <Cell ss:StyleID="s140"
+         ss:Formula="=IF(R[-10]C10 &lt;&gt; 0, R[-5]C[-4]/R[-10]C10, 0)">
           <Data
       ss:Type="Number">1.5469613259668509</Data>
         </Cell>
-        <Cell ss:StyleID="s145" ss:Formula="=R[-5]C[-4]/R[-10]C10">
+        <Cell ss:StyleID="s145"
+         ss:Formula="=IF(R[-10]C10 &lt;&gt; 0, R[-5]C[-4]/R[-10]C10, 0)">
           <Data
       ss:Type="Number">8.2872928176795577E-2</Data>
         </Cell>
@@ -1443,13 +1451,13 @@
         <Cell ss:StyleID="s96">
           <Data ss:Type="String">Total of All Compared</Data>
         </Cell>
-        <Cell ss:StyleID="s172" ss:Formula="=R[-5]C/R[-10]C">
+        <Cell ss:StyleID="s111" ss:Formula="=R[-5]C/R[-10]C">
           <Data ss:Type="Number">0.4</Data>
         </Cell>
         <Cell ss:StyleID="s112" ss:Formula="=R[-5]C/R[-10]C">
           <Data ss:Type="Number">0</Data>
         </Cell>
-        <Cell ss:StyleID="s147" ss:Formula="=R[-5]C/R[-10]C[-1]">
+        <Cell ss:StyleID="s146" ss:Formula="=R[-5]C/R[-10]C[-1]">
           <Data ss:Type="Number">0</Data>
         </Cell>
         <Cell ss:StyleID="s98"/>
@@ -1459,7 +1467,7 @@
         <Cell ss:StyleID="s112" ss:Formula="=R[-5]C/R[-10]C">
           <Data ss:Type="Number">1.5555555555555556</Data>
         </Cell>
-        <Cell ss:StyleID="s147" ss:Formula="=R[-5]C/R[-10]C[-1]">
+        <Cell ss:StyleID="s146" ss:Formula="=R[-5]C/R[-10]C[-1]">
           <Data ss:Type="Number">8.3333333333333329E-2</Data>
         </Cell>
         <Cell ss:StyleID="s98"/>
@@ -1469,24 +1477,24 @@
         <Cell ss:StyleID="s112" ss:Formula="=R[-5]C/R[-10]C[1]">
           <Data ss:Type="Number">1.0852713178294573</Data>
         </Cell>
-        <Cell ss:StyleID="s148" ss:Formula="=R[-5]C/R[-10]C">
+        <Cell ss:StyleID="s147" ss:Formula="=R[-5]C/R[-10]C">
           <Data ss:Type="Number">5.8139534883720929E-2</Data>
         </Cell>
-        <Cell ss:StyleID="s149"/>
+        <Cell ss:StyleID="s148"/>
         <Cell ss:StyleID="s111" ss:Formula="=R[-5]C/R[-10]C12">
           <Data ss:Type="Number">1.3488372093023255</Data>
         </Cell>
         <Cell ss:StyleID="s112" ss:Formula="=R[-5]C/R[-10]C12">
           <Data ss:Type="Number">1.0852713178294573</Data>
         </Cell>
-        <Cell ss:StyleID="s150" ss:Formula="=R[-5]C/R[-10]C12">
+        <Cell ss:StyleID="s149" ss:Formula="=R[-5]C/R[-10]C12">
           <Data ss:Type="Number">5.8139534883720929E-2</Data>
         </Cell>
         <Cell ss:StyleID="s111" ss:Formula="=R[-5]C[-6]/R[-10]C10">
           <Data
       ss:Type="Number">1.5469613259668509</Data>
         </Cell>
-        <Cell ss:StyleID="s150" ss:Formula="=R[-5]C[-6]/R[-10]C10">
+        <Cell ss:StyleID="s149" ss:Formula="=R[-5]C[-6]/R[-10]C10">
           <Data
       ss:Type="Number">8.2872928176795577E-2</Data>
         </Cell>
@@ -1494,7 +1502,7 @@
           <Data
       ss:Type="Number">1.5469613259668509</Data>
         </Cell>
-        <Cell ss:StyleID="s151" ss:Formula="=R[-5]C[-4]/R[-10]C10">
+        <Cell ss:StyleID="s150" ss:Formula="=R[-5]C[-4]/R[-10]C10">
           <Data
       ss:Type="Number">8.2872928176795577E-2</Data>
         </Cell>
@@ -1518,20 +1526,20 @@
       </Row>
       <Row ss:AutoFitHeight="0" ss:Height="32.25">
         <Cell ss:StyleID="s63"/>
-        <Cell ss:MergeAcross="3" ss:StyleID="m53905620">
+        <Cell ss:MergeAcross="3" ss:StyleID="m56223060">
           <Data ss:Type="String">Percent Elevation Lowering</Data>
         </Cell>
-        <Cell ss:MergeAcross="3" ss:StyleID="m53905640">
+        <Cell ss:MergeAcross="3" ss:StyleID="m56223080">
           <Data ss:Type="String">Percent Elevation Raising</Data>
         </Cell>
-        <Cell ss:MergeAcross="1" ss:StyleID="m53905660">
+        <Cell ss:MergeAcross="1" ss:StyleID="m56223100">
           <Data ss:Type="String">Percent Imbalance&#10;(departure from equilibrium)</Data>
         </Cell>
-        <Cell ss:MergeAcross="1" ss:StyleID="m53905680">
+        <Cell ss:MergeAcross="1" ss:StyleID="m56223120">
           <Data ss:Type="String">Net to Total Volume Ratio</Data>
         </Cell>
       </Row>
-      <Row ss:AutoFitHeight="0" ss:Height="12.75" ss:StyleID="s161">
+      <Row ss:AutoFitHeight="0" ss:Height="12.75" ss:StyleID="s160">
         <Cell ss:StyleID="s86"/>
         <Cell ss:StyleID="s87">
           <Data ss:Type="String">Raw</Data>
@@ -1563,40 +1571,51 @@
         </Cell>
       </Row>
       <Row ss:AutoFitHeight="0">
-        <Cell ss:StyleID="s162">
+        <Cell ss:StyleID="s161">
           <Data ss:Type="String">Channel Filling</Data>
           <NamedCell
       ss:Name="PercentagesDoDName"/>
         </Cell>
-        <Cell ss:StyleID="s163" ss:Formula="=R[-10]C/R[-10]C[8]">
-          <Data ss:Type="Number">5.681818181818182E-3</Data>
+        <Cell ss:StyleID="s162" ss:Formula="=IF(R[-10]C[8]&lt;&gt;0,R[-10]C/R[-10]C[8],0)">
+          <Data
+      ss:Type="Number">5.681818181818182E-3</Data>
         </Cell>
-        <Cell ss:StyleID="s164" ss:Formula="=R[-10]C/R[-10]C[8]">
-          <Data ss:Type="Number">0</Data>
+        <Cell ss:StyleID="s163"
+         ss:Formula="=IF(R[-10]C[8] &lt;&gt; 0, R[-10]C/R[-10]C[8], 0)">
+          <Data
+      ss:Type="Number">0</Data>
         </Cell>
-        <Cell ss:StyleID="s165"/>
+        <Cell ss:StyleID="s164"/>
         <Cell ss:StyleID="s139"/>
-        <Cell ss:StyleID="s163" ss:Formula="=R[-10]C/R[-10]C[4]">
-          <Data ss:Type="Number">0.99431818181818177</Data>
+        <Cell ss:StyleID="s162"
+         ss:Formula="=IF(R[-10]C[4] &lt;&gt; 0, R[-10]C/R[-10]C[4], 0)">
+          <Data
+      ss:Type="Number">0.99431818181818177</Data>
         </Cell>
-        <Cell ss:StyleID="s164" ss:Formula="=R[-10]C/R[-10]C[4]">
-          <Data ss:Type="Number">1</Data>
+        <Cell ss:StyleID="s163"
+         ss:Formula="=IF(R[-10]C[4] &lt;&gt; 0, R[-10]C/R[-10]C[4], 0)">
+          <Data
+      ss:Type="Number">1</Data>
         </Cell>
-        <Cell ss:StyleID="s165"/>
+        <Cell ss:StyleID="s164"/>
         <Cell ss:StyleID="s139"/>
-        <Cell ss:StyleID="s166" ss:Formula="=R[-10]C[4]/(2*R[-10]C)">
+        <Cell ss:StyleID="s165"
+         ss:Formula="=IF(R[-10]C &lt;&gt; 0, R[-10]C[4]/(2*R[-10]C), 0)">
           <Data
       ss:Type="Number">0.49431818181818182</Data>
         </Cell>
-        <Cell ss:StyleID="s167" ss:Formula="=R[-10]C[4]/(2*R[-10]C)">
+        <Cell ss:StyleID="s166"
+         ss:Formula="=IF(R[-10]C &lt;&gt; 0, R[-10]C[4]/(2*R[-10]C), )">
           <Data
       ss:Type="Number">0.5</Data>
         </Cell>
-        <Cell ss:StyleID="s166" ss:Formula="=R[-10]C[2]/R[-10]C[-2]">
+        <Cell ss:StyleID="s165"
+         ss:Formula="=IF(R[-10]C[-2] &lt;&gt; 0, R[-10]C[2]/R[-10]C[-2], 0)">
           <Data
       ss:Type="Number">0.98863636363636365</Data>
         </Cell>
-        <Cell ss:StyleID="s95" ss:Formula="=R[-10]C[2]/R[-10]C[-2]">
+        <Cell ss:StyleID="s95"
+         ss:Formula="=IF(R[-10]C[-2] &lt;&gt; 0, R[-10]C[2]/R[-10]C[-2], 0)">
           <Data
       ss:Type="Number">1</Data>
         </Cell>
@@ -1605,23 +1624,23 @@
         <Cell ss:StyleID="s96">
           <Data ss:Type="String">Total of All Compared</Data>
         </Cell>
-        <Cell ss:StyleID="s168" ss:Formula="=R[-10]C/R[-10]C[8]">
+        <Cell ss:StyleID="s167" ss:Formula="=R[-10]C/R[-10]C[8]">
           <Data ss:Type="Number">5.681818181818182E-3</Data>
         </Cell>
-        <Cell ss:StyleID="s169" ss:Formula="=R[-10]C/R[-10]C[8]">
+        <Cell ss:StyleID="s168" ss:Formula="=R[-10]C/R[-10]C[8]">
           <Data ss:Type="Number">0</Data>
         </Cell>
         <Cell ss:StyleID="s112"/>
         <Cell ss:StyleID="s98"/>
-        <Cell ss:StyleID="s168" ss:Formula="=R[-10]C/R[-10]C[4]">
+        <Cell ss:StyleID="s167" ss:Formula="=R[-10]C/R[-10]C[4]">
           <Data ss:Type="Number">0.99431818181818177</Data>
         </Cell>
-        <Cell ss:StyleID="s169" ss:Formula="=R[-10]C/R[-10]C[4]">
+        <Cell ss:StyleID="s168" ss:Formula="=R[-10]C/R[-10]C[4]">
           <Data ss:Type="Number">1</Data>
         </Cell>
         <Cell ss:StyleID="s112"/>
         <Cell ss:StyleID="s98"/>
-        <Cell ss:StyleID="s168" ss:Formula="=R[-10]C[4]/(2*R[-10]C)">
+        <Cell ss:StyleID="s167" ss:Formula="=R[-10]C[4]/(2*R[-10]C)">
           <Data
       ss:Type="Number">0.49431818181818182</Data>
         </Cell>
@@ -1629,11 +1648,11 @@
           <Data
       ss:Type="Number">0.5</Data>
         </Cell>
-        <Cell ss:StyleID="s168" ss:Formula="=R[-10]C[2]/R[-10]C[-2]">
+        <Cell ss:StyleID="s167" ss:Formula="=R[-10]C[2]/R[-10]C[-2]">
           <Data
       ss:Type="Number">0.98863636363636365</Data>
         </Cell>
-        <Cell ss:StyleID="s170" ss:Formula="=R[-10]C[2]/R[-10]C[-2]">
+        <Cell ss:StyleID="s169" ss:Formula="=R[-10]C[2]/R[-10]C[-2]">
           <Data
       ss:Type="Number">1</Data>
         </Cell>
@@ -1653,6 +1672,13 @@
       </Print>
       <Selected/>
       <DoNotDisplayGridlines/>
+      <Panes>
+        <Pane>
+          <Number>3</Number>
+          <ActiveRow>18</ActiveRow>
+          <ActiveCol>12</ActiveCol>
+        </Pane>
+      </Panes>
       <ProtectObjects>False</ProtectObjects>
       <ProtectScenarios>False</ProtectScenarios>
     </WorksheetOptions>
