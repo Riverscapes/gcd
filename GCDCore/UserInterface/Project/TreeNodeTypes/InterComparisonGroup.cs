@@ -16,7 +16,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
         {
             // Inter-comparisons are "calculated not added
             ContextMenuStrip.Items.Clear();
-            ContextMenuStrip.Items.Add("Calculate New Change Detection Inter-Comparison", Properties.Resources.sigma, OnAdd);
+            ContextMenuStrip.Items.Add("Create Change Detection Inter-Comparison", Properties.Resources.sigma, OnAdd);
             ContextMenuStrip.Items.Add("-"); // Separator
             ContextMenuStrip.Items.Add(string.Format("Explore {0} Folder", NounPlural), Properties.Resources.BrowseFolder, OnExplore);
 
@@ -28,10 +28,30 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             Nodes.Clear();
 
             // Add all the project inter-comparisons
-            ProjectManager.Project.InterComparisons.Values.ToList().ForEach(x => Nodes.Add(new TreeNodeItem(x, 10, ContextMenuStrip.Container)));
+
+            foreach (GCDCore.Project.InterComparison ic in ProjectManager.Project.InterComparisons.Values)
+            {
+                TreeNodeItem nodIC = new TreeNodeItem(ic, 10, ContextMenuStrip.Container);
+                nodIC.ContextMenuStrip.Items.RemoveAt(0);
+                nodIC.ContextMenuStrip.Items.Insert(0, new ToolStripMenuItem("View Inter-Comparison folder", Properties.Resources.GCD, OnViewResults));
+                Nodes.Add(nodIC);
+            }
 
             if (Nodes.Count > 0)
                 Expand();
+        }
+
+        public void OnViewResults(object sender, EventArgs e)
+        {
+            ToolStripMenuItem tsmi = sender as ToolStripMenuItem;
+            ContextMenuStrip cms = tsmi.Owner as ContextMenuStrip;
+            TreeView projectTree = cms.SourceControl as TreeView;
+            TreeNodeItem nodIC = projectTree.SelectedNode as TreeNodeItem;
+            InterComparison ic = nodIC.Item as InterComparison;
+            if (ic._SummaryXML.Directory.Exists)
+            {
+                System.Diagnostics.Process.Start(ic._SummaryXML.Directory.FullName);
+            }
         }
 
         public override void OnAdd(object sender, EventArgs e)

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using GCDCore.Project;
 using System.Windows.Forms;
+using System.IO;
 
 namespace GCDCore.UserInterface.Project.TreeNodeTypes
 {
@@ -117,6 +118,17 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             {
                 Item.Delete();
                 Remove();
+            }
+            catch (IOException ex)
+            {
+                string processes = string.Empty;
+                if (ex.Data.Contains("Processes"))
+                {
+                    processes = string.Format(" ({0})", ex.Data["Processes"]);
+                }
+
+                MessageBox.Show(string.Format("One or more files belonging to this {0} are being used by another process{1}." +
+                    " Close all applications that are using these files and try to delete this {0} again.", NounSingle.ToLower(), processes), "File Locked", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             catch (Exception ex)
             {

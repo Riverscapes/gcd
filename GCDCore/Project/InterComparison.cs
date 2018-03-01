@@ -67,7 +67,30 @@ namespace GCDCore.Project
 
         public override void Delete()
         {
-            throw new NotImplementedException("ability to delete inter-comparisons has not been implemented");
+            try
+            {
+                List<System.Diagnostics.Process> processes = naru.os.FileUtil.WhoIsLocking(_SummaryXML.FullName);
+                if (processes.Count > 0)
+                {
+                    IOException ex = new IOException("The file is in use by another process");
+                    ex.Data["Processes"] = string.Join(",", processes.Select(x => x.ProcessName).ToArray());
+                    throw ex;
+                }
+
+                _SummaryXML.Delete();
+            }
+            catch(IOException ex)
+            {
+                ex.Data["Path"] = _SummaryXML.FullName;
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Exception ex2 = new Exception("Error attempting to delete inter-comparison spreadsheet", ex);
+                ex2.Data["Path"] = _SummaryXML.FullName;
+                throw ex2;
+            }
+
             ProjectManager.Project.Save();
         }
     }

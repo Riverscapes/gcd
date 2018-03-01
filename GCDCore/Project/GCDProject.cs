@@ -65,6 +65,11 @@ namespace GCDCore.Project
             return ProjectManager.GetProjectItemPath(MasksFolder, "Mask", name, "shp");
         }
 
+        public FileInfo InterComparisonPath(string name)
+        {
+            return ProjectManager.GetProjectItemPath(InterComparisonsFolder, "IC", name, "xml");
+        }
+
         /// <summary>
         /// Get the spatial reference of the first GIS dataset in the project.
         /// </summary>

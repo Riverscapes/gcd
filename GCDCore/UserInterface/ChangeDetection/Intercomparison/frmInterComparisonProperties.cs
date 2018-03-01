@@ -7,9 +7,12 @@ using GCDCore.Project;
 
 namespace GCDCore.UserInterface.ChangeDetection.Intercomparison
 {
-    public partial class frmInterComparisonProperties : Form
+    public partial class frmInterComparisonProperties : Form, IProjectItemForm
     {
         BindingList<GCDCore.Project.DoDBase> DoDs;
+
+        public InterComparison InterComparison { get; internal set; }
+        public GCDProjectItem GCDProjectItem { get { return InterComparison as GCDProjectItem; } }
 
         public frmInterComparisonProperties()
         {
@@ -25,7 +28,7 @@ namespace GCDCore.UserInterface.ChangeDetection.Intercomparison
 
         private void txtName_TextChanged(object sender, EventArgs e)
         {
-            txtPath.Text = ProjectManager.Project.GetRelativePath(ProjectManager.OutputManager.GetInterComparisonPath(txtName.Text));
+            txtPath.Text = ProjectManager.Project.GetRelativePath(ProjectManager.Project.InterComparisonPath(txtName.Text));
         }
 
         private bool ValidateForm()
@@ -84,8 +87,8 @@ namespace GCDCore.UserInterface.ChangeDetection.Intercomparison
 
                 Engines.InterComparison.Generate(dodStats, fiOutput);
 
-                InterComparison inter = new InterComparison(txtName.Text, fiOutput, dods);
-                ProjectManager.Project.InterComparisons[inter.Name] = inter;
+                InterComparison = new InterComparison(txtName.Text, fiOutput, dods);
+                ProjectManager.Project.InterComparisons[InterComparison.Name] = InterComparison;
                 ProjectManager.Project.Save();
                 Cursor = Cursors.Default;
                 MessageBox.Show("Change detection inter-comparison generated successfully.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
