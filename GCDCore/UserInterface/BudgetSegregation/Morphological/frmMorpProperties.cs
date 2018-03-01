@@ -48,7 +48,7 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
                 ProjectManager.Project.Save();
                 Cursor = Cursors.Default;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 DialogResult = DialogResult.None;
                 naru.error.ExceptionUI.HandleException(ex, "Error generating morphological analysis.");
@@ -73,7 +73,7 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
             txtDoD.Text = bs.DoD.Name;
             txtUncertainty.Text = bs.DoD.UncertaintyAnalysisLabel;
 
-            txtPath.Text = ProjectManager.Project.GetRelativePath(ProjectManager.OutputManager.GetMorphologicalDirectory(bs.Folder, false).FullName);
+            txtPath.Text = ProjectManager.Project.GetRelativePath(ProjectManager.GetIndexedSubDirectory(bs.MorphologicalFolder, "MA", false).FullName);
         }
 
         public static bool ValidateName(TextBox txtName, GCDCore.Project.BudgetSegregation bs, GCDCore.Project.Morphological.MorphologicalAnalysis ma)

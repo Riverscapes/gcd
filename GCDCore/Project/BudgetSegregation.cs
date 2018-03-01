@@ -34,6 +34,8 @@ namespace GCDCore.Project
             }
         }
 
+        public DirectoryInfo MorphologicalFolder {  get { return new DirectoryInfo(Path.Combine(Folder.FullName, "Morph")); } }
+
         public BindingList<BudgetSegregationClass> FilteredClasses
         {
             get
