@@ -1,12 +1,7 @@
 using GCDCore.Project;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Data;
-using System.Diagnostics;
 using System.Linq;
-using System.Xml.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace GCDCore.UserInterface.ChangeDetection
@@ -29,10 +24,9 @@ namespace GCDCore.UserInterface.ChangeDetection
 
             grdData.Columns[1].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             grdData.Columns[2].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-            grdData.Columns[3].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            grdData.Columns[3].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             grdData.Columns[4].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             grdData.Columns[5].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-            grdData.Columns[6].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
         }
 
         private string GetFormatString(DoDSummaryDisplayOptions options)
@@ -53,7 +47,7 @@ namespace GCDCore.UserInterface.ChangeDetection
         public void RefreshDisplay(GCDConsoleLib.GCD.DoDStats dodStats, DoDSummaryDisplayOptions options)
         {
             // Hide the % total column in single DoD View
-            grdData.Columns[6].Visible = false;
+            grdData.Columns["colPCTotal"].Visible = false;
 
             // Build the string formatting based on the precision in the pop-up properties form
             string sFormat = GetFormatString(options);
@@ -64,7 +58,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             // Show/hide columns based on the properties pop-up
             grdData.Columns[1].Visible = options.m_bColsRaw;
             grdData.Columns[2].Visible = options.m_bColsThresholded;
-            grdData.Columns[3].Visible = options.m_bColsPMError;
+            //grdData.Columns[3].Visible = options.m_bColsPMError;
             grdData.Columns[4].Visible = options.m_bColsPCError;
             grdData.Columns[5].Visible = options.m_bColsPCError;
 
@@ -88,17 +82,17 @@ namespace GCDCore.UserInterface.ChangeDetection
             aRow.Cells[2].Style.Font = new System.Drawing.Font(grdData.Font, System.Drawing.FontStyle.Bold);
             aRow.Cells[2].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
-            aRow.Cells[4].Value = "± Error Volume";
+            aRow.Cells[3].Value = "± Error Volume";
+            aRow.Cells[3].Style.Font = new System.Drawing.Font(grdData.Font, System.Drawing.FontStyle.Bold);
+            aRow.Cells[3].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+            aRow.Cells[4].Value = "% Error";
             aRow.Cells[4].Style.Font = new System.Drawing.Font(grdData.Font, System.Drawing.FontStyle.Bold);
             aRow.Cells[4].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
-            aRow.Cells[5].Value = "% Error";
+            aRow.Cells[5].Value = "% Total";
             aRow.Cells[5].Style.Font = new System.Drawing.Font(grdData.Font, System.Drawing.FontStyle.Bold);
             aRow.Cells[5].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-
-            aRow.Cells[6].Value = "% Total";
-            aRow.Cells[6].Style.Font = new System.Drawing.Font(grdData.Font, System.Drawing.FontStyle.Bold);
-            aRow.Cells[6].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
             UnitsNet.Area ca = ProjectManager.Project.CellArea;
             UnitsNet.Units.LengthUnit vunit = ProjectManager.Project.Units.VertUnit;
@@ -124,7 +118,6 @@ namespace GCDCore.UserInterface.ChangeDetection
                 aRow.Cells[2].Value = dodStats.ErosionThr.GetArea(ca).As(options.AreaUnits).ToString(sFormat);
                 aRow.Cells[3].Style.BackColor = System.Drawing.Color.LightGray;
                 aRow.Cells[4].Style.BackColor = System.Drawing.Color.LightGray;
-                aRow.Cells[5].Style.BackColor = System.Drawing.Color.LightGray;
 
                 //Area of deposition
                 nIndex = grdData.Rows.Add(1);
@@ -135,7 +128,6 @@ namespace GCDCore.UserInterface.ChangeDetection
                 aRow.Cells[2].Value = dodStats.DepositionThr.GetArea(ca).As(options.AreaUnits).ToString(sFormat);
                 aRow.Cells[3].Style.BackColor = System.Drawing.Color.LightGray;
                 aRow.Cells[4].Style.BackColor = System.Drawing.Color.LightGray;
-                aRow.Cells[5].Style.BackColor = System.Drawing.Color.LightGray;
 
                 //Area of detectable change
                 nIndex = grdData.Rows.Add(1);
@@ -146,7 +138,6 @@ namespace GCDCore.UserInterface.ChangeDetection
                 aRow.Cells[2].Value = dodStats.AreaDetectableChange_Thresholded.As(options.AreaUnits).ToString(sFormat);
                 aRow.Cells[3].Style.BackColor = System.Drawing.Color.LightGray;
                 aRow.Cells[4].Style.BackColor = System.Drawing.Color.LightGray;
-                aRow.Cells[5].Style.BackColor = System.Drawing.Color.LightGray;
 
                 //Area of interest 
                 nIndex = grdData.Rows.Add(1);
@@ -158,7 +149,6 @@ namespace GCDCore.UserInterface.ChangeDetection
                 aRow.Cells[2].Style.BackColor = System.Drawing.Color.LightGray;
                 aRow.Cells[3].Style.BackColor = System.Drawing.Color.LightGray;
                 aRow.Cells[4].Style.BackColor = System.Drawing.Color.LightGray;
-                aRow.Cells[5].Style.BackColor = System.Drawing.Color.LightGray;
 
                 // Percent of area of interest with detectable change
                 nIndex = grdData.Rows.Add(1);
@@ -170,7 +160,6 @@ namespace GCDCore.UserInterface.ChangeDetection
                 aRow.Cells[2].Value = dodStats.AreaPercentAreaInterestWithDetectableChange.ToString(sFormat) + "%";
                 aRow.Cells[3].Style.BackColor = System.Drawing.Color.LightGray;
                 aRow.Cells[4].Style.BackColor = System.Drawing.Color.LightGray;
-                aRow.Cells[5].Style.BackColor = System.Drawing.Color.LightGray;
             }
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -197,9 +186,8 @@ namespace GCDCore.UserInterface.ChangeDetection
                 aRow.Cells[0].ToolTipText = "On a cell-by-cell basis, the DoD surface lowering depth (e.g. erosion, cut or deflation) multiplied by cell area and summed";
                 aRow.Cells[1].Value = dodStats.ErosionRaw.GetVolume(ca, vunit).As(options.VolumeUnits).ToString(sFormat);
                 aRow.Cells[2].Value = dodStats.ErosionThr.GetVolume(ca, vunit).As(options.VolumeUnits).ToString(sFormat);
-                aRow.Cells[3].Value = "±";
-                aRow.Cells[4].Value = dodStats.ErosionErr.GetVolume(ca, vunit).As(options.VolumeUnits).ToString(sFormat);
-                aRow.Cells[5].Value = dodStats.VolumeOfErosion_Percent.ToString(sFormat);
+                aRow.Cells[3].Value = dodStats.ErosionErr.GetVolume(ca, vunit).As(options.VolumeUnits).ToString("± " + sFormat);
+                aRow.Cells[4].Value = dodStats.VolumeOfErosion_Percent.ToString(sFormat) + "%";
 
                 //Volume of deposition
                 nIndex = grdData.Rows.Add(1);
@@ -208,9 +196,8 @@ namespace GCDCore.UserInterface.ChangeDetection
                 aRow.Cells[0].ToolTipText = "On a cell-by-cell basis, the DoD surface raising (e.g. deposition, fill or inflation) depth multiplied by cell area and summed";
                 aRow.Cells[1].Value = dodStats.DepositionRaw.GetVolume(ca, vunit).As(options.VolumeUnits).ToString(sFormat);
                 aRow.Cells[2].Value = dodStats.DepositionThr.GetVolume(ca, vunit).As(options.VolumeUnits).ToString(sFormat);
-                aRow.Cells[3].Value = "±";
-                aRow.Cells[4].Value = dodStats.DepositionErr.GetVolume(ca, vunit).As(options.VolumeUnits).ToString(sFormat);
-                aRow.Cells[5].Value = dodStats.VolumeOfDeposition_Percent.ToString(sFormat);
+                aRow.Cells[3].Value = dodStats.DepositionErr.GetVolume(ca, vunit).As(options.VolumeUnits).ToString("± " + sFormat);
+                aRow.Cells[4].Value = dodStats.VolumeOfDeposition_Percent.ToString(sFormat) + "%";
 
                 //Total volume of difference
                 nIndex = grdData.Rows.Add(1);
@@ -219,9 +206,8 @@ namespace GCDCore.UserInterface.ChangeDetection
                 aRow.Cells[0].ToolTipText = "The sum of lowering and raising volumes (a measure of total turnover)";
                 aRow.Cells[1].Value = dodStats.VolumeOfDifference_Raw.As(options.VolumeUnits).ToString(sFormat);
                 aRow.Cells[2].Value = dodStats.VolumeOfDifference_Thresholded.As(options.VolumeUnits).ToString(sFormat);
-                aRow.Cells[3].Value = "±";
-                aRow.Cells[4].Value = dodStats.VolumeOfDifference_Error.As(options.VolumeUnits).ToString(sFormat);
-                aRow.Cells[5].Value = dodStats.VolumeOfDifference_Percent.ToString(sFormat);
+                aRow.Cells[3].Value = dodStats.VolumeOfDifference_Error.As(options.VolumeUnits).ToString("± " + sFormat);
+                aRow.Cells[4].Value = dodStats.VolumeOfDifference_Percent.ToString(sFormat) + "%";
             }
 
 
@@ -234,9 +220,8 @@ namespace GCDCore.UserInterface.ChangeDetection
                 aRow.Cells[0].ToolTipText = "The net difference of erosion and depostion volumes (i.e. deposition minus erosion)";
                 aRow.Cells[1].Value = dodStats.NetVolumeOfDifference_Raw.As(options.VolumeUnits).ToString(sFormat);
                 aRow.Cells[2].Value = dodStats.NetVolumeOfDifference_Thresholded.As(options.VolumeUnits).ToString(sFormat);
-                aRow.Cells[3].Value = "±";
-                aRow.Cells[4].Value = dodStats.NetVolumeOfDifference_Error.As(options.VolumeUnits).ToString(sFormat);
-                aRow.Cells[5].Value = dodStats.NetVolumeOfDifference_Percent.ToString(sFormat);
+                aRow.Cells[3].Value = dodStats.NetVolumeOfDifference_Error.As(options.VolumeUnits).ToString("± " + sFormat);
+                aRow.Cells[4].Value = dodStats.NetVolumeOfDifference_Percent.ToString(sFormat) + "%";
             }
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -262,9 +247,8 @@ namespace GCDCore.UserInterface.ChangeDetection
                 aRow.Cells[0].ToolTipText = "The average depth of lowering (lowering volume divided by lowering area)";
                 aRow.Cells[1].Value = dodStats.AverageDepthErosion_Raw.As(options.LinearUnits).ToString(sFormat);
                 aRow.Cells[2].Value = dodStats.AverageDepthErosion_Thresholded.As(options.LinearUnits).ToString(sFormat);
-                aRow.Cells[3].Value = "±";
-                aRow.Cells[4].Value = dodStats.AverageDepthErosion_Error.As(options.LinearUnits).ToString(sFormat);
-                aRow.Cells[5].Value = dodStats.AverageDepthErosion_Percent.ToString(sFormat);
+                aRow.Cells[3].Value = dodStats.AverageDepthErosion_Error.As(options.LinearUnits).ToString("± " + sFormat);
+                aRow.Cells[4].Value = dodStats.AverageDepthErosion_Percent.ToString(sFormat) + "%";
 
                 // Average Depth of Deposition
                 nIndex = grdData.Rows.Add(1);
@@ -273,9 +257,8 @@ namespace GCDCore.UserInterface.ChangeDetection
                 aRow.Cells[0].ToolTipText = "The average depth of raising (raising volume divided by raising area)";
                 aRow.Cells[1].Value = dodStats.AverageDepthDeposition_Raw.As(options.LinearUnits).ToString(sFormat);
                 aRow.Cells[2].Value = dodStats.AverageDepthDeposition_Thresholded.As(options.LinearUnits).ToString(sFormat);
-                aRow.Cells[3].Value = "±";
-                aRow.Cells[4].Value = dodStats.AverageDepthDeposition_Error.As(options.LinearUnits).ToString(sFormat);
-                aRow.Cells[5].Value = dodStats.AverageDepthDeposition_Percent.ToString(sFormat);
+                aRow.Cells[3].Value = dodStats.AverageDepthDeposition_Error.As(options.LinearUnits).ToString("± " + sFormat);
+                aRow.Cells[4].Value = dodStats.AverageDepthDeposition_Percent.ToString(sFormat) + "%";
 
                 // Average Total Thickness of Difference for AOI
                 nIndex = grdData.Rows.Add(1);
@@ -284,9 +267,8 @@ namespace GCDCore.UserInterface.ChangeDetection
                 aRow.Cells[0].ToolTipText = "The total volume of difference divided by the area of interest (a measure of total turnover thickness in the analysis area)";
                 aRow.Cells[1].Value = dodStats.AverageThicknessOfDifferenceAOI_Raw.As(options.LinearUnits).ToString(sFormat);
                 aRow.Cells[2].Value = dodStats.AverageThicknessOfDifferenceAOI_Thresholded.As(options.LinearUnits).ToString(sFormat);
-                aRow.Cells[3].Value = "±";
-                aRow.Cells[4].Value = dodStats.AverageThicknessOfDifferenceAOI_Error.As(options.LinearUnits).ToString(sFormat);
-                aRow.Cells[5].Value = dodStats.AverageThicknessOfDifferenceAOI_Percent.ToString(sFormat);
+                aRow.Cells[3].Value = dodStats.AverageThicknessOfDifferenceAOI_Error.As(options.LinearUnits).ToString("± " + sFormat);
+                aRow.Cells[4].Value = dodStats.AverageThicknessOfDifferenceAOI_Percent.ToString(sFormat) + "%";
             }
 
 
@@ -299,9 +281,8 @@ namespace GCDCore.UserInterface.ChangeDetection
                 aRow.Cells[0].ToolTipText = "The total net volume of difference divided by the area of interest (a measure of resulting net change within the analysis area)";
                 aRow.Cells[1].Value = dodStats.AverageNetThicknessofDifferenceAOI_Raw.As(options.LinearUnits).ToString(sFormat);
                 aRow.Cells[2].Value = dodStats.AverageNetThicknessOfDifferenceAOI_Thresholded.As(options.LinearUnits).ToString(sFormat);
-                aRow.Cells[3].Value = "±";
-                aRow.Cells[4].Value = dodStats.AverageNetThicknessOfDifferenceAOI_Error.As(options.LinearUnits).ToString(sFormat);
-                aRow.Cells[5].Value = dodStats.AverageNetThicknessOfDifferenceAOI_Percent.ToString(sFormat);
+                aRow.Cells[3].Value = dodStats.AverageNetThicknessOfDifferenceAOI_Error.As(options.LinearUnits).ToString("± " + sFormat);
+                aRow.Cells[4].Value = dodStats.AverageNetThicknessOfDifferenceAOI_Percent.ToString(sFormat) + "%";
             }
 
 
@@ -315,9 +296,8 @@ namespace GCDCore.UserInterface.ChangeDetection
                 aRow.Cells[1].Value = "NA";
                 aRow.Cells[1].Style.BackColor = System.Drawing.Color.LightGray;
                 aRow.Cells[2].Value = dodStats.AverageThicknessOfDifferenceADC_Thresholded.As(options.LinearUnits).ToString(sFormat);
-                aRow.Cells[3].Value = "±";
-                aRow.Cells[4].Value = dodStats.AverageThicknessOfDifferenceADC_Error.As(options.LinearUnits).ToString(sFormat);
-                aRow.Cells[5].Value = dodStats.AverageThicknessOfDifferenceADC_Percent.ToString(sFormat);
+                aRow.Cells[3].Value = dodStats.AverageThicknessOfDifferenceADC_Error.As(options.LinearUnits).ToString("± " + sFormat);
+                aRow.Cells[4].Value = dodStats.AverageThicknessOfDifferenceADC_Percent.ToString(sFormat) + "%";
             }
 
 
@@ -331,9 +311,8 @@ namespace GCDCore.UserInterface.ChangeDetection
                 aRow.Cells[1].Value = "NA";
                 aRow.Cells[1].Style.BackColor = System.Drawing.Color.LightGray;
                 aRow.Cells[2].Value = dodStats.AverageNetThicknessOfDifferenceADC_Thresholded.As(options.LinearUnits).ToString(sFormat);
-                aRow.Cells[3].Value = "±";
-                aRow.Cells[4].Value = dodStats.AverageNetThicknessOfDifferenceADC_Error.As(options.LinearUnits).ToString(sFormat);
-                aRow.Cells[5].Value = dodStats.AverageNetThicknessOfDifferenceADC_Percent.ToString(sFormat);
+                aRow.Cells[3].Value = dodStats.AverageNetThicknessOfDifferenceADC_Error.As(options.LinearUnits).ToString("± " + sFormat);
+                aRow.Cells[4].Value = dodStats.AverageNetThicknessOfDifferenceADC_Percent.ToString(sFormat) + "%";
             }
 
             if (options.m_eRowGroups == DoDSummaryDisplayOptions.RowGroups.ShowAll || (options.m_eRowGroups == DoDSummaryDisplayOptions.RowGroups.SpecificGroups && options.m_bRowsPercentages))
@@ -398,7 +377,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             RefreshDisplay(activeStats, options);
 
             // Previous call will hide col 6. Make it visible for bs view
-            grdData.Columns[6].Visible = true;
+            grdData.Columns[5].Visible = true;
 
             // Build the string formatting based on the precision in the pop-up properties form
             string sFormat = GetFormatString(options);

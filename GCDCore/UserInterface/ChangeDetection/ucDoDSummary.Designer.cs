@@ -39,7 +39,6 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.colAttribute = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colRaw = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colThresholded = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SymbolCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colError = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colErrorPC = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colPCTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -55,7 +54,6 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.colAttribute,
             this.colRaw,
             this.colThresholded,
-            this.SymbolCol,
             this.colError,
             this.colErrorPC,
             this.colPCTotal});
@@ -87,14 +85,6 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.colThresholded.Name = "colThresholded";
             this.colThresholded.ReadOnly = true;
             this.colThresholded.Width = 70;
-            // 
-            // SymbolCol
-            // 
-            this.SymbolCol.HeaderText = "Symbol";
-            this.SymbolCol.Name = "SymbolCol";
-            this.SymbolCol.ReadOnly = true;
-            this.SymbolCol.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.SymbolCol.Width = 15;
             // 
             // colError
             // 
@@ -132,7 +122,6 @@ namespace GCDCore.UserInterface.ChangeDetection
         private System.Windows.Forms.DataGridViewTextBoxColumn colAttribute;
         private System.Windows.Forms.DataGridViewTextBoxColumn colRaw;
         private System.Windows.Forms.DataGridViewTextBoxColumn colThresholded;
-        private System.Windows.Forms.DataGridViewTextBoxColumn SymbolCol;
         private System.Windows.Forms.DataGridViewTextBoxColumn colError;
         private System.Windows.Forms.DataGridViewTextBoxColumn colErrorPC;
         private System.Windows.Forms.DataGridViewTextBoxColumn colPCTotal;
