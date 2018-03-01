@@ -37,7 +37,7 @@ namespace GCDCore.Engines
             Raster thrDoD = null;
 
             // Create the prior probability raster
-            m_PriorProbRaster = new FileInfo(Path.ChangeExtension(Path.Combine(thrDoDPath.DirectoryName, "priorprob"), OutputManager.RasterExtension));
+            m_PriorProbRaster = new FileInfo(Path.ChangeExtension(Path.Combine(thrDoDPath.DirectoryName, "priorprob"), ProjectManager.RasterExtension));
             Raster priorPRob = RasterOperators.CreatePriorProbabilityRaster(rawDoD, PropagatedErrRaster, m_PriorProbRaster);
 
             // Build Pyramids
@@ -49,10 +49,10 @@ namespace GCDCore.Engines
             }
             else
             {
-                m_PosteriorRaster = new FileInfo(Path.ChangeExtension(Path.Combine(thrDoDPath.DirectoryName, "postProb"), OutputManager.RasterExtension));
-                m_ConditionalRaster = new FileInfo(Path.ChangeExtension(Path.Combine(thrDoDPath.DirectoryName, "condProb"), OutputManager.RasterExtension));
-                m_SpatialCoErosionRaster = new FileInfo(Path.ChangeExtension(Path.Combine(thrDoDPath.DirectoryName, "nbrErosion"), OutputManager.RasterExtension));
-                m_SpatialCoDepositionRaster = new FileInfo(Path.ChangeExtension(Path.Combine(thrDoDPath.DirectoryName, "nbrDeposition"), OutputManager.RasterExtension));
+                m_PosteriorRaster = new FileInfo(Path.ChangeExtension(Path.Combine(thrDoDPath.DirectoryName, "postProb"), ProjectManager.RasterExtension));
+                m_ConditionalRaster = new FileInfo(Path.ChangeExtension(Path.Combine(thrDoDPath.DirectoryName, "condProb"), ProjectManager.RasterExtension));
+                m_SpatialCoErosionRaster = new FileInfo(Path.ChangeExtension(Path.Combine(thrDoDPath.DirectoryName, "nbrErosion"), ProjectManager.RasterExtension));
+                m_SpatialCoDepositionRaster = new FileInfo(Path.ChangeExtension(Path.Combine(thrDoDPath.DirectoryName, "nbrDeposition"), ProjectManager.RasterExtension));
 
                 // Count erosion and Deposition in a window around each cell
                 Raster rSpatialCoErosion = RasterOperators.NeighbourCount(rawDoD, RasterOperators.GCDWindowType.Erosion, SpatialCoherence.BufferSize, m_SpatialCoErosionRaster);

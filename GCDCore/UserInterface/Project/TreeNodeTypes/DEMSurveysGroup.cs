@@ -38,9 +38,9 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
 
         public override void OnAdd(object sender, EventArgs e)
         {
+            // Determine if this is the first DEM in the project or use the first existing DEM as a reference surface
             DEMSurvey referenceDEM = null;
             SurveyLibrary.ExtentImporter.Purposes ePurpose = SurveyLibrary.ExtentImporter.Purposes.FirstDEM;
-
             if (ProjectManager.Project.DEMSurveys.Count > 0)
             {
                 referenceDEM = ProjectManager.Project.DEMSurveys.Values.First();
@@ -52,17 +52,17 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
                 SurveyLibrary.frmImportRaster frm = new SurveyLibrary.frmImportRaster(referenceDEM, ePurpose, "DEM Survey");
                 if (EditTreeItem(frm, false) == DialogResult.OK)
                 {
-                    frm.ProcessRaster();
-                    DEMSurvey dem = new DEMSurvey(frm.txtName.Text, null, ProjectManager.Project.GetAbsolutePath(frm.txtRasterPath.Text));
+                    GCDConsoleLib.Raster rDEM = frm.ProcessRaster();
+                    DEMSurvey dem = new DEMSurvey(frm.txtName.Text, null, rDEM.GISFileInfo, Surface.HillShadeRasterPath(rDEM.GISFileInfo));
                     ProjectManager.Project.DEMSurveys[dem.Name] = dem;
 
                     // If this was the first raster then we need to store the cell resolution on the project
                     if (ePurpose == SurveyLibrary.ExtentImporter.Purposes.FirstDEM)
                         ProjectManager.Project.CellArea = dem.Raster.Extent.CellArea(ProjectManager.Project.Units);
-                    
+
                     ProjectManager.Project.Save();
                     LoadChildNodes();
-                    
+
                     // Loop through the child nodes and select the item that was just added
                     foreach (TreeNodeItem childNode in Nodes)
                     {

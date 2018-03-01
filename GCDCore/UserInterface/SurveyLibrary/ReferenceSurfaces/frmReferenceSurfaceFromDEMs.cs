@@ -92,7 +92,7 @@ namespace GCDCore.UserInterface.SurveyLibrary.ReferenceSurfaces
             Engines.ReferenceSurfaceEngine eng = new Engines.ReferenceSurfaceEngine(txtName.Text, rInputs, eMethod);
 
             System.IO.FileInfo fiOutput = ProjectManager.Project.GetAbsolutePath(txtPath.Text);
-            System.IO.FileInfo fiError = ProjectManager.OutputManager.GetReferenceErrorSurfaceRasterPath(eng.ErrorSurfaceName, fiOutput.Directory);
+            System.IO.FileInfo fiError = Surface.ErrorSurfaceRasterPath(fiOutput.Directory,txtName.Text);
 
             try
             {

@@ -28,8 +28,8 @@ namespace GCDCore.Project
             return ProjectManager.GetProjectItemPath(AssocSurfacesFolder, "Ass", name, "tif");
         }
 
-        public DEMSurvey(string name, SurveyDateTime surveyDate, FileInfo rasterPath)
-            : base(name, rasterPath)
+        public DEMSurvey(string name, SurveyDateTime surveyDate, FileInfo rasterPath, FileInfo hillshadePath)
+            : base(name, rasterPath, hillshadePath)
         {
             SurveyDate = surveyDate;
 

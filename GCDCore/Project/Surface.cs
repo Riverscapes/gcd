@@ -20,7 +20,7 @@ namespace GCDCore.Project
 
         public FileInfo ErrorSurfacePath(string name)
         {
-            return ProjectManager.GetProjectItemPath(ErrorSurfacesFolder, "Err", name, "tif");
+            return ProjectManager.GetProjectItemPath(ErrorSurfacesFolder, "Err", name, ProjectManager.RasterExtension);
         }
 
         public ErrorSurface DefaultErrorSurface
@@ -58,15 +58,27 @@ namespace GCDCore.Project
             }
         }
 
-        public Surface(string name, FileInfo rasterPath)
+        public static FileInfo HillShadeRasterPath(FileInfo surfaceRasterPath)
+        {
+            string path2 = Path.Combine(surfaceRasterPath.DirectoryName, Path.GetFileNameWithoutExtension(surfaceRasterPath.FullName) + "_HS");
+            path2 = Path.ChangeExtension(path2, surfaceRasterPath.Extension);
+            return new System.IO.FileInfo(path2);
+        }
+
+        public static FileInfo ErrorSurfaceRasterPath(DirectoryInfo surfaceDir, string name)
+        {
+            DirectoryInfo parentDir = new DirectoryInfo(Path.Combine(surfaceDir.FullName, "ErrorSurfaces"));
+            return ProjectManager.GetProjectItemPath(parentDir, "Err", name, ProjectManager.RasterExtension);
+        }
+
+        public Surface(string name, FileInfo rasterPath, FileInfo hillshadePath)
             : base(name, rasterPath)
         {
             ErrorSurfaces = new naru.ui.SortableBindingList<ErrorSurface>();
 
-            FileInfo hsPath = Project.ProjectManager.OutputManager.HillShadeRasterPath(rasterPath);
-            if (hsPath.Exists)
+            if (hillshadePath is FileInfo && hillshadePath.Exists)
             {
-                Hillshade = new HillShade(hsPath);
+                Hillshade = new HillShade(hillshadePath);
             }
         }
 

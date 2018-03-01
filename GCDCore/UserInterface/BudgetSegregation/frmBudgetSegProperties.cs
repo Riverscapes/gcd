@@ -55,7 +55,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
                 DoDBase dod = cboDoD.SelectedItem as DoDBase;
                 GCDCore.Project.Masks.AttributeFieldMask mask = cboMasks.SelectedItem as GCDCore.Project.Masks.AttributeFieldMask;
 
-                System.IO.DirectoryInfo bsFolder = ProjectManager.OutputManager.GetBudgetSegreationDirectoryPath(dod.Folder, true);
+                System.IO.DirectoryInfo bsFolder = ProjectManager.Project.GetAbsoluteDir(txtOutputFolder.Text);
                 Engines.BudgetSegregationEngine bsEngine = new Engines.BudgetSegregationEngine();
                 BudgetSeg = bsEngine.Calculate(txtName.Text, bsFolder, dod, mask);
                 dod.BudgetSegregations[BudgetSeg.Name] = BudgetSeg;
@@ -130,7 +130,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
                 txtUncertaintyAnalysis.Text = string.Format("Probabilistic at {0}% confidence level", ((DoDProbabilistic)dod).ConfidenceLevel * 100);
             }
 
-            txtOutputFolder.Text = ProjectManager.Project.GetRelativePath(ProjectManager.OutputManager.GetBudgetSegreationDirectoryPath(dod.Folder, false).FullName);
+            txtOutputFolder.Text = ProjectManager.Project.GetRelativePath(dod.BudgetSegPath().FullName);
         }
 
 

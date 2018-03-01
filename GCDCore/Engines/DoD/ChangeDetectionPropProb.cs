@@ -43,7 +43,7 @@ namespace GCDCore.Engines
         /// DoD removing any cells that have a value less than the propogated error.</remarks>
         protected void GeneratePropagatedErrorRaster(DirectoryInfo analysisFolder)
         {
-            FileInfo propErrPath = ProjectManager.OutputManager.PropagatedErrorPath(analysisFolder);
+            FileInfo propErrPath = BuildFilePath(analysisFolder, "PropErr", ProjectManager.RasterExtension);
             PropagatedErrRaster = RasterOperators.RootSumSquares(NewError.Raster, OldError.Raster, propErrPath);
 
             // Build Pyramids

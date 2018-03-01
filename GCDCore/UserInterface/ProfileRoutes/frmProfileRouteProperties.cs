@@ -174,7 +174,7 @@ namespace GCDCore.UserInterface.ProfileRoutes
             if (string.IsNullOrEmpty(txtName.Text))
                 txtPath.Text = string.Empty;
             else
-                txtPath.Text = ProjectManager.Project.GetRelativePath(ProjectManager.OutputManager.GetProfilerouteFilePath(txtName.Text));
+                txtPath.Text = ProjectManager.Project.GetRelativePath( ProjectManager.GetProjectItemPath(ProjectManager.Project.ProfileRoutesFolder, "Route", txtName.Text, "shp"));
         }
 
         private void InputShapeFileChanged(object sender, naru.ui.PathEventArgs e)

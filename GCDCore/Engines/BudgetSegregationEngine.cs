@@ -36,14 +36,14 @@ namespace GCDCore.Engines
                     results = RasterOperators.GetStatsPropagated(dod.RawDoD.Raster, propErr, polygons, mask._Field, ProjectManager.Project.Units);
                 }
             }
-            
+
             // Retrieve the histograms for all budget segregation classes
             Dictionary<string, Histogram> rawHistos = RasterOperators.BinRaster(dod.RawDoD.Raster, DEFAULTHISTOGRAMNUMBER, polygons, mask._Field);
             Dictionary<string, Histogram> thrHistos = RasterOperators.BinRaster(dod.ThrDoD.Raster, DEFAULTHISTOGRAMNUMBER, polygons, mask._Field);
 
             // Make sure that the output folder and the folder for the figures exist
             analysisFolder.Create();
-            FiguresFolder(analysisFolder).Create();
+            DoDBase.FiguresFolderPath(analysisFolder).Create();
 
             // Build the output necessary output files 
             int classIndex = 1;

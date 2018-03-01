@@ -59,7 +59,7 @@ namespace GCDCore.UserInterface.SurveyLibrary.ReferenceSurfaces
                 if (string.IsNullOrEmpty(txtName.Text))
                     txtPath.Text = string.Empty;
                 else
-                    txtPath.Text = ProjectManager.Project.GetRelativePath(ProjectManager.OutputManager.GetReferenceErrorSurfaceRasterPath(txtName.Text, ReferenceSurface.Raster.GISFileInfo.Directory));
+                    txtPath.Text = ProjectManager.Project.GetRelativePath(ReferenceSurface.ErrorSurfacePath(txtName.Text));
             }
             else
             {
@@ -104,7 +104,7 @@ namespace GCDCore.UserInterface.SurveyLibrary.ReferenceSurfaces
                 foreach (float errVal in errVals)
                 {
                     string name = GetUniqueName(errVal);
-                    System.IO.FileInfo fiOutput = ProjectManager.OutputManager.GetReferenceErrorSurfaceRasterPath(name, ReferenceSurface.Raster.GISFileInfo.Directory);
+                    System.IO.FileInfo fiOutput = ReferenceSurface.ErrorSurfacePath(name);
                     fiOutput.Directory.Create();
 
                     GCDConsoleLib.RasterOperators.Uniform<float>(ReferenceSurface.Raster, fiOutput, errVal);

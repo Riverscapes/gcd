@@ -11,11 +11,6 @@ namespace GCDCore.Engines
     {
         protected const int DEFAULTHISTOGRAMNUMBER = 100;
 
-        protected DirectoryInfo FiguresFolder(DirectoryInfo analysisFolder)
-        {
-            return Project.ProjectManager.OutputManager.GetChangeDetectionFiguresFolder(analysisFolder, false);
-        }
-
         /// <summary>
         /// 
         /// </summary>
@@ -90,7 +85,7 @@ namespace GCDCore.Engines
                 }
             }
 
-            DirectoryInfo figuresFolder = FiguresFolder(analysisFolder);
+            DirectoryInfo figuresFolder = Project.DoDBase.FiguresFolderPath(analysisFolder);
             figuresFolder.Create();
 
             UnitsNet.Area ca = GCDCore.Project.ProjectManager.Project.CellArea;
@@ -153,7 +148,7 @@ namespace GCDCore.Engines
 
         protected void GenerateHistogramGraphicFiles(DirectoryInfo analysisFolder, Histogram rawHisto, Histogram thrHisto, int fChartWidth, int fChartHeight)
         {
-            DirectoryInfo figuresFolder = FiguresFolder(analysisFolder);
+            DirectoryInfo figuresFolder = Project.DoDBase.FiguresFolderPath(analysisFolder);
             figuresFolder.Create();
 
             FileInfo areaHistPath = new FileInfo(Path.Combine(figuresFolder.FullName, "Histogram_Area.png"));

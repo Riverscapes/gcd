@@ -13,10 +13,11 @@ namespace GCDCore.Project
     /// the desktop software.</remarks>
     public class ProjectManager
     {
+        public const string RasterExtension = "tif";
+
         public static GCDProject Project { get; internal set; }
         public static DirectoryInfo ExcelTemplatesFolder { get; internal set; }
         public static DirectoryInfo ReportsFolder { get; internal set; }
-        public static OutputManager OutputManager { get; internal set; }
         public static RasterPyramidManager PyramidManager { get; internal set; }
         private static FileInfo SurveyTypesPath { get; set; }
         private static FileInfo FISLibraryPath { get; set; }
@@ -59,7 +60,6 @@ namespace GCDCore.Project
 
         public static void Init(string sAutomaticPyramids)
         {
-            OutputManager = new OutputManager();
             PyramidManager = new RasterPyramidManager(sAutomaticPyramids);
 
             SurveyTypesPath = new FileInfo(Path.Combine(ApplicationFolder, "SurveyTypes.xml"));
@@ -292,38 +292,6 @@ namespace GCDCore.Project
                 RasterPath = rasterPath;
             }
         }
-
-        //public static DirectoryInfo GetIndexedSubDirectory(DirectoryInfo parentFolder, string groupFolder, string prefix, bool bCreate)
-        //{
-        //    DirectoryInfo diGroupFolder = new DirectoryInfo(Path.Combine(parentFolder.FullName, groupFolder));
-
-        //    if (!diGroupFolder.Exists && bCreate)
-        //        diGroupFolder.Create();
-
-        //    // Find unique folder on disk
-        //    int existingIndex = 0;
-
-        //    if (diGroupFolder.Exists)
-        //    {
-        //        foreach (DirectoryInfo existingFolder in diGroupFolder.GetDirectories(string.Format("{0}*", prefix), SearchOption.TopDirectoryOnly))
-        //        {
-        //            System.Text.RegularExpressions.Match match = System.Text.RegularExpressions.Regex.Match(existingFolder.FullName, "([0-9]*)$");
-        //            if (match.Groups.Count > 1)
-        //            {
-        //                int folderSuffix = int.Parse(match.Groups[1].Value);
-        //                if (folderSuffix > existingIndex)
-        //                    existingIndex = folderSuffix;
-        //            }
-        //        }
-        //    }
-
-        //    DirectoryInfo finalFolder = new DirectoryInfo(Path.Combine(diGroupFolder.FullName, string.Format("{0}{1:0000}", prefix, existingIndex + 1)));
-
-        //    if (bCreate)
-        //        finalFolder.Create();
-
-        //    return finalFolder;
-        //}
 
         public static FileInfo GetProjectItemPath(DirectoryInfo parentFolder, string groupFolderPrefix, string name, string fileExtension)
         {

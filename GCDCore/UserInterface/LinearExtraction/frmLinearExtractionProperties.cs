@@ -68,7 +68,7 @@ namespace GCDCore.UserInterface.LinearExtraction
                 diParent = ((DoDBase)ElevationSurface).Folder;
             }
 
-            txtPath.Text = diParent == null ? string.Empty : txtPath.Text = ProjectManager.Project.GetRelativePath(ProjectManager.OutputManager.GetLinearExtractionFolder(diParent).FullName);
+            txtPath.Text = diParent == null ? string.Empty : txtPath.Text = ProjectManager.Project.GetRelativePath(ProjectManager.GetProjectItemPath(diParent, "LE", txtName.Text, "csv"));
         }
 
         private void cmdOK_Click(object sender, EventArgs e)

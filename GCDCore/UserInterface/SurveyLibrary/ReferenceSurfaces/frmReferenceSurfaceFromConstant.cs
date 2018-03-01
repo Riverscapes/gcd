@@ -172,7 +172,7 @@ namespace GCDCore.UserInterface.SurveyLibrary.ReferenceSurfaces
 
                     // Error surface
                     string errName = string.Format("Uniform Error at {0:0.000}", valError.Value);
-                    FileInfo fiError = ProjectManager.OutputManager.GetReferenceErrorSurfaceRasterPath(errName, fiOutput.Directory);
+                    FileInfo fiError = Surface.ErrorSurfaceRasterPath(fiOutput.Directory, errName);
                     fiError.Directory.Create();
 
                     GCDConsoleLib.RasterOperators.Uniform<float>(template, fiError, (float)valError.Value);

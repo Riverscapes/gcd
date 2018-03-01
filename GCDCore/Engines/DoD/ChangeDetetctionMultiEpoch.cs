@@ -59,7 +59,7 @@ namespace GCDCore.Engines.DoD
             DEMSurvey OldDEM = DoDEpoch.OldDEM;
 
             string dodName = frmDoDProperties.GetUniqueAnalysisName(NewDEM.Name, OldDEM.Name, tProps.ThresholdString);
-            System.IO.DirectoryInfo dFolder = ProjectManager.OutputManager.GetDoDOutputFolder();
+            System.IO.DirectoryInfo dFolder = ProjectManager.Project.GetDoDFolder();
 
             ChangeDetectionEngineBase cdEngine = null;
             switch (tProps.Method)

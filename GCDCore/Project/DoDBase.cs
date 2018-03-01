@@ -47,6 +47,18 @@ namespace GCDCore.Project
 
         public string AOILabel { get { return AOIMask == null ? Masks.AOIMask.SurfaceDataExtentIntersection : AOIMask.Name; } }
 
+        public DirectoryInfo BudgetSegFolder { get { return new DirectoryInfo(Path.Combine(Folder.FullName, "BS")); } }
+
+        public DirectoryInfo BudgetSegPath()
+        {
+            return ProjectManager.GetIndexedSubDirectory(BudgetSegFolder, "BS", false);
+        }
+
+        public static DirectoryInfo FiguresFolderPath(DirectoryInfo dodDir)
+        {
+            return new DirectoryInfo(Path.Combine(dodDir.FullName, "Figs"));
+        }
+
         protected DoDBase(string name, DirectoryInfo folder, Surface newSurface, Surface oldSurface, Masks.AOIMask aoi, Raster rawDoD, Raster thrDoD, HistogramPair histograms, FileInfo summaryXML, DoDStats stats)
             : base(name)
         {
@@ -243,7 +255,7 @@ namespace GCDCore.Project
             }
 
             // Delete the figures folder
-            DirectoryInfo dirFigs = ProjectManager.OutputManager.GetChangeDetectionFiguresFolder(Folder, false);
+            DirectoryInfo dirFigs = FiguresFolderPath(Folder);
             try
             {
                 System.IO.Directory.Delete(dirFigs.FullName, true);

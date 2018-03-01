@@ -33,11 +33,11 @@ namespace GCDCore.Engines
 
         public DoDBase Calculate(string dodName, DirectoryInfo analysisFolder, bool bBuildPyramids, UnitGroup units)
         {
-            FileInfo rawDoDPath = ProjectManager.OutputManager.RawDoDPath(analysisFolder);
-            FileInfo thrDoDPath = ProjectManager.OutputManager.ThrDoDPath(analysisFolder);
-            FileInfo rawHstPath = ProjectManager.OutputManager.RawHistPath(analysisFolder);
-            FileInfo thrHstPath = ProjectManager.OutputManager.ThrHistPath(analysisFolder);
-            FileInfo sumXMLPath = ProjectManager.OutputManager.SummaryXMLPath(analysisFolder);
+            FileInfo rawDoDPath = BuildFilePath(analysisFolder, "raw", ProjectManager.RasterExtension);
+            FileInfo thrDoDPath = BuildFilePath(analysisFolder, "tresh", ProjectManager.RasterExtension);
+            FileInfo rawHstPath = BuildFilePath(analysisFolder, "raw", "csv"); ;
+            FileInfo thrHstPath = BuildFilePath(analysisFolder, "thresh", "csv");
+            FileInfo sumXMLPath = BuildFilePath(analysisFolder, "summary", "xml");
 
             analysisFolder.Create();
 
@@ -88,5 +88,12 @@ namespace GCDCore.Engines
         protected abstract DoDStats CalculateChangeStats(Raster rawDoD, Raster thrDoD, UnitGroup units);
 
         protected abstract DoDBase GetDoDResult(string dodName, DoDStats changeStats, Raster rawDoD, Raster thrDoD, HistogramPair histograms, FileInfo summaryXML);
+
+        protected FileInfo BuildFilePath(DirectoryInfo folder, string RasterFileName, string extension)
+        {
+            string sPath = Path.Combine(folder.FullName, RasterFileName);
+            sPath = Path.ChangeExtension(sPath, extension);
+            return new FileInfo(sPath);
+        }
     }
 }

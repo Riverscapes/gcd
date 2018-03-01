@@ -46,7 +46,7 @@ namespace GCDCore.Engines.DoD
         private void PerformDoD(ThresholdProps tProps)
         {
             string dodName = frmDoDProperties.GetUniqueAnalysisName(NewSurface.Name, OldSurface.Name, tProps.ThresholdString);
-            System.IO.DirectoryInfo dFolder = ProjectManager.OutputManager.GetDoDOutputFolder();
+            System.IO.DirectoryInfo dFolder = ProjectManager.Project.GetDoDFolder();
 
             ChangeDetectionEngineBase cdEngine = null;
             switch (tProps.Method)

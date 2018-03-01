@@ -38,7 +38,7 @@ namespace GCDCore.Project
         public DirectoryInfo AnalysesFolder { get { return ProjectManager.CombinePaths(Folder, "Analyses"); } }
         public DirectoryInfo ChangeDetectionFolder { get { return ProjectManager.CombinePaths(AnalysesFolder, "CD"); } }
         public DirectoryInfo InterComparisonsFolder { get { return ProjectManager.CombinePaths(AnalysesFolder, "IC"); } }
-    
+
         /// <summary>
         /// Projects are never considered in use
         /// </summary>
@@ -52,12 +52,12 @@ namespace GCDCore.Project
 
         public FileInfo DEMSurveyPath(string name)
         {
-            return ProjectManager.GetProjectItemPath(SurveysFolder, "DEM", name, "tif");
+            return ProjectManager.GetProjectItemPath(SurveysFolder, "DEM", name, ProjectManager.RasterExtension);
         }
 
         public FileInfo ReferenceSurfacePath(string name)
         {
-            return ProjectManager.GetProjectItemPath(ReferenceSurfacesFolder, "Ref", name, "tif");
+            return ProjectManager.GetProjectItemPath(ReferenceSurfacesFolder, "Ref", name, ProjectManager.RasterExtension);
         }
 
         public FileInfo MaskPath(string name)
@@ -68,6 +68,11 @@ namespace GCDCore.Project
         public FileInfo InterComparisonPath(string name)
         {
             return ProjectManager.GetProjectItemPath(InterComparisonsFolder, "IC", name, "xml");
+        }
+
+        public FileInfo ProfileRoutePath(string name)
+        {
+            return ProjectManager.GetProjectItemPath(ProfileRoutesFolder, "Mask", name, ProjectManager.RasterExtension);
         }
 
         /// <summary>
@@ -192,6 +197,11 @@ namespace GCDCore.Project
         public bool IsInterComparisonNameUnique(string name, InterComparison ignore)
         {
             return InterComparisons.ContainsKey(name) ? InterComparisons[name] == ignore : true;
+        }
+
+        public DirectoryInfo GetDoDFolder()
+        {
+            return ProjectManager.GetIndexedSubDirectory(ChangeDetectionFolder, "DoD", false);
         }
 
         public void Save()
