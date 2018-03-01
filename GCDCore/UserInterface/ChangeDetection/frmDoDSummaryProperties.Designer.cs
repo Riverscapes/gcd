@@ -54,17 +54,42 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.Label2 = new System.Windows.Forms.Label();
             this.Label3 = new System.Windows.Forms.Label();
             this.Label4 = new System.Windows.Forms.Label();
-            this.GroupBox3 = new System.Windows.Forms.GroupBox();
             this.cmdReset = new System.Windows.Forms.Button();
             this.valPrecision = new System.Windows.Forms.NumericUpDown();
             this.Label5 = new System.Windows.Forms.Label();
             this.cboVolume = new System.Windows.Forms.ComboBox();
             this.cboArea = new System.Windows.Forms.ComboBox();
             this.cboLinear = new System.Windows.Forms.ComboBox();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.picErosion = new System.Windows.Forms.PictureBox();
+            this.picDeposition = new System.Windows.Forms.PictureBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.cboFonts = new System.Windows.Forms.ComboBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.valFontSize = new System.Windows.Forms.NumericUpDown();
+            this.chkBold = new System.Windows.Forms.CheckBox();
+            this.chkItalics = new System.Windows.Forms.CheckBox();
             this.GroupBox1.SuspendLayout();
             this.GroupBox2.SuspendLayout();
-            this.GroupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.valPrecision)).BeginInit();
+            this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            this.tabPage3.SuspendLayout();
+            this.groupBox5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picErosion)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picDeposition)).BeginInit();
+            this.groupBox6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.valFontSize)).BeginInit();
             this.SuspendLayout();
             // 
             // GroupBox1
@@ -76,7 +101,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.GroupBox1.Controls.Add(this.rdoRowsSpecific);
             this.GroupBox1.Controls.Add(this.rdoRowsNormalized);
             this.GroupBox1.Controls.Add(this.rdoRowsAll);
-            this.GroupBox1.Location = new System.Drawing.Point(10, 162);
+            this.GroupBox1.Location = new System.Drawing.Point(6, 6);
             this.GroupBox1.Name = "GroupBox1";
             this.GroupBox1.Size = new System.Drawing.Size(175, 190);
             this.GroupBox1.TabIndex = 1;
@@ -172,7 +197,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.GroupBox2.Controls.Add(this.chkColsError);
             this.GroupBox2.Controls.Add(this.chkColsThresholded);
             this.GroupBox2.Controls.Add(this.chkColsRaw);
-            this.GroupBox2.Location = new System.Drawing.Point(197, 162);
+            this.GroupBox2.Location = new System.Drawing.Point(193, 6);
             this.GroupBox2.Name = "GroupBox2";
             this.GroupBox2.Size = new System.Drawing.Size(175, 190);
             this.GroupBox2.TabIndex = 2;
@@ -232,7 +257,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             // 
             this.cmdOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cmdOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.cmdOK.Location = new System.Drawing.Point(216, 361);
+            this.cmdOK.Location = new System.Drawing.Point(564, 404);
             this.cmdOK.Name = "cmdOK";
             this.cmdOK.Size = new System.Drawing.Size(75, 23);
             this.cmdOK.TabIndex = 3;
@@ -244,7 +269,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             // 
             this.cmdCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cmdCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cmdCancel.Location = new System.Drawing.Point(297, 361);
+            this.cmdCancel.Location = new System.Drawing.Point(645, 404);
             this.cmdCancel.Name = "cmdCancel";
             this.cmdCancel.Size = new System.Drawing.Size(75, 23);
             this.cmdCancel.TabIndex = 4;
@@ -254,7 +279,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             // cmdHelp
             // 
             this.cmdHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.cmdHelp.Location = new System.Drawing.Point(12, 361);
+            this.cmdHelp.Location = new System.Drawing.Point(12, 404);
             this.cmdHelp.Name = "cmdHelp";
             this.cmdHelp.Size = new System.Drawing.Size(75, 23);
             this.cmdHelp.TabIndex = 5;
@@ -264,7 +289,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             // Label2
             // 
             this.Label2.AutoSize = true;
-            this.Label2.Location = new System.Drawing.Point(39, 22);
+            this.Label2.Location = new System.Drawing.Point(37, 17);
             this.Label2.Name = "Label2";
             this.Label2.Size = new System.Drawing.Size(94, 13);
             this.Label2.TabIndex = 2;
@@ -273,7 +298,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             // Label3
             // 
             this.Label3.AutoSize = true;
-            this.Label3.Location = new System.Drawing.Point(41, 53);
+            this.Label3.Location = new System.Drawing.Point(39, 48);
             this.Label3.Name = "Label3";
             this.Label3.Size = new System.Drawing.Size(92, 13);
             this.Label3.TabIndex = 4;
@@ -282,35 +307,17 @@ namespace GCDCore.UserInterface.ChangeDetection
             // Label4
             // 
             this.Label4.AutoSize = true;
-            this.Label4.Location = new System.Drawing.Point(16, 84);
+            this.Label4.Location = new System.Drawing.Point(14, 79);
             this.Label4.Name = "Label4";
             this.Label4.Size = new System.Drawing.Size(117, 13);
             this.Label4.TabIndex = 6;
             this.Label4.Text = "Display volumetric units";
             // 
-            // GroupBox3
-            // 
-            this.GroupBox3.Controls.Add(this.cmdReset);
-            this.GroupBox3.Controls.Add(this.valPrecision);
-            this.GroupBox3.Controls.Add(this.Label5);
-            this.GroupBox3.Controls.Add(this.cboVolume);
-            this.GroupBox3.Controls.Add(this.cboArea);
-            this.GroupBox3.Controls.Add(this.cboLinear);
-            this.GroupBox3.Controls.Add(this.Label4);
-            this.GroupBox3.Controls.Add(this.Label3);
-            this.GroupBox3.Controls.Add(this.Label2);
-            this.GroupBox3.Location = new System.Drawing.Point(10, 10);
-            this.GroupBox3.Name = "GroupBox3";
-            this.GroupBox3.Size = new System.Drawing.Size(362, 144);
-            this.GroupBox3.TabIndex = 0;
-            this.GroupBox3.TabStop = false;
-            this.GroupBox3.Text = "Units";
-            // 
             // cmdReset
             // 
             this.cmdReset.Image = global::GCDCore.Properties.Resources.refresh;
             this.cmdReset.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdReset.Location = new System.Drawing.Point(281, 110);
+            this.cmdReset.Location = new System.Drawing.Point(279, 105);
             this.cmdReset.Name = "cmdReset";
             this.cmdReset.Size = new System.Drawing.Size(75, 23);
             this.cmdReset.TabIndex = 10;
@@ -320,7 +327,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             // 
             // valPrecision
             // 
-            this.valPrecision.Location = new System.Drawing.Point(139, 111);
+            this.valPrecision.Location = new System.Drawing.Point(137, 106);
             this.valPrecision.Maximum = new decimal(new int[] {
             10,
             0,
@@ -338,7 +345,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             // Label5
             // 
             this.Label5.AutoSize = true;
-            this.Label5.Location = new System.Drawing.Point(83, 115);
+            this.Label5.Location = new System.Drawing.Point(81, 110);
             this.Label5.Name = "Label5";
             this.Label5.Size = new System.Drawing.Size(50, 13);
             this.Label5.TabIndex = 8;
@@ -348,7 +355,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             // 
             this.cboVolume.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboVolume.FormattingEnabled = true;
-            this.cboVolume.Location = new System.Drawing.Point(139, 80);
+            this.cboVolume.Location = new System.Drawing.Point(137, 75);
             this.cboVolume.Name = "cboVolume";
             this.cboVolume.Size = new System.Drawing.Size(217, 21);
             this.cboVolume.TabIndex = 7;
@@ -357,7 +364,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             // 
             this.cboArea.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboArea.FormattingEnabled = true;
-            this.cboArea.Location = new System.Drawing.Point(139, 49);
+            this.cboArea.Location = new System.Drawing.Point(137, 44);
             this.cboArea.Name = "cboArea";
             this.cboArea.Size = new System.Drawing.Size(217, 21);
             this.cboArea.TabIndex = 5;
@@ -366,10 +373,215 @@ namespace GCDCore.UserInterface.ChangeDetection
             // 
             this.cboLinear.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboLinear.FormattingEnabled = true;
-            this.cboLinear.Location = new System.Drawing.Point(139, 18);
+            this.cboLinear.Location = new System.Drawing.Point(137, 13);
             this.cboLinear.Name = "cboLinear";
             this.cboLinear.Size = new System.Drawing.Size(217, 21);
             this.cboLinear.TabIndex = 3;
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Location = new System.Drawing.Point(12, 12);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(708, 386);
+            this.tabControl1.TabIndex = 6;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.cmdReset);
+            this.tabPage1.Controls.Add(this.cboVolume);
+            this.tabPage1.Controls.Add(this.valPrecision);
+            this.tabPage1.Controls.Add(this.Label2);
+            this.tabPage1.Controls.Add(this.Label5);
+            this.tabPage1.Controls.Add(this.Label3);
+            this.tabPage1.Controls.Add(this.Label4);
+            this.tabPage1.Controls.Add(this.cboArea);
+            this.tabPage1.Controls.Add(this.cboLinear);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(481, 313);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "Units";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.GroupBox1);
+            this.tabPage2.Controls.Add(this.GroupBox2);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(481, 313);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Table";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.groupBox6);
+            this.tabPage3.Controls.Add(this.groupBox5);
+            this.tabPage3.Controls.Add(this.groupBox4);
+            this.tabPage3.Controls.Add(this.groupBox3);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(700, 360);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "Charts";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Location = new System.Drawing.Point(6, 132);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(200, 100);
+            this.groupBox3.TabIndex = 0;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Histogram X Axis";
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Location = new System.Drawing.Point(218, 132);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(256, 100);
+            this.groupBox4.TabIndex = 1;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Histogram ";
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.picDeposition);
+            this.groupBox5.Controls.Add(this.label6);
+            this.groupBox5.Controls.Add(this.picErosion);
+            this.groupBox5.Controls.Add(this.label1);
+            this.groupBox5.Location = new System.Drawing.Point(6, 6);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(200, 120);
+            this.groupBox5.TabIndex = 2;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Colors";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(12, 24);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(50, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Lowering";
+            // 
+            // picErosion
+            // 
+            this.picErosion.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.picErosion.Location = new System.Drawing.Point(71, 19);
+            this.picErosion.Name = "picErosion";
+            this.picErosion.Size = new System.Drawing.Size(23, 23);
+            this.picErosion.TabIndex = 1;
+            this.picErosion.TabStop = false;
+            // 
+            // picDeposition
+            // 
+            this.picDeposition.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.picDeposition.Location = new System.Drawing.Point(71, 47);
+            this.picDeposition.Name = "picDeposition";
+            this.picDeposition.Size = new System.Drawing.Size(23, 23);
+            this.picDeposition.TabIndex = 3;
+            this.picDeposition.TabStop = false;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(20, 52);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(42, 13);
+            this.label6.TabIndex = 2;
+            this.label6.Text = "Raising";
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.chkItalics);
+            this.groupBox6.Controls.Add(this.chkBold);
+            this.groupBox6.Controls.Add(this.valFontSize);
+            this.groupBox6.Controls.Add(this.label8);
+            this.groupBox6.Controls.Add(this.cboFonts);
+            this.groupBox6.Controls.Add(this.label7);
+            this.groupBox6.Location = new System.Drawing.Point(218, 6);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(256, 120);
+            this.groupBox6.TabIndex = 3;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Fonts";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(10, 23);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(57, 13);
+            this.label7.TabIndex = 0;
+            this.label7.Text = "Font family";
+            // 
+            // cboFonts
+            // 
+            this.cboFonts.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboFonts.FormattingEnabled = true;
+            this.cboFonts.Location = new System.Drawing.Point(74, 19);
+            this.cboFonts.Name = "cboFonts";
+            this.cboFonts.Size = new System.Drawing.Size(166, 21);
+            this.cboFonts.TabIndex = 1;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(40, 51);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(27, 13);
+            this.label8.TabIndex = 2;
+            this.label8.Text = "Size";
+            // 
+            // valFontSize
+            // 
+            this.valFontSize.Location = new System.Drawing.Point(74, 47);
+            this.valFontSize.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.valFontSize.Name = "valFontSize";
+            this.valFontSize.Size = new System.Drawing.Size(48, 20);
+            this.valFontSize.TabIndex = 3;
+            this.valFontSize.Value = new decimal(new int[] {
+            12,
+            0,
+            0,
+            0});
+            // 
+            // chkBold
+            // 
+            this.chkBold.AutoSize = true;
+            this.chkBold.Location = new System.Drawing.Point(74, 74);
+            this.chkBold.Name = "chkBold";
+            this.chkBold.Size = new System.Drawing.Size(47, 17);
+            this.chkBold.TabIndex = 4;
+            this.chkBold.Text = "Bold";
+            this.chkBold.UseVisualStyleBackColor = true;
+            // 
+            // chkItalics
+            // 
+            this.chkItalics.AutoSize = true;
+            this.chkItalics.Location = new System.Drawing.Point(74, 98);
+            this.chkItalics.Name = "chkItalics";
+            this.chkItalics.Size = new System.Drawing.Size(48, 17);
+            this.chkItalics.TabIndex = 5;
+            this.chkItalics.Text = "Italic";
+            this.chkItalics.UseVisualStyleBackColor = true;
             // 
             // frmDoDSummaryProperties
             // 
@@ -377,13 +589,11 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cmdCancel;
-            this.ClientSize = new System.Drawing.Size(384, 396);
-            this.Controls.Add(this.GroupBox3);
+            this.ClientSize = new System.Drawing.Size(732, 439);
+            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.cmdHelp);
             this.Controls.Add(this.cmdCancel);
             this.Controls.Add(this.cmdOK);
-            this.Controls.Add(this.GroupBox2);
-            this.Controls.Add(this.GroupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -396,9 +606,19 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.GroupBox1.PerformLayout();
             this.GroupBox2.ResumeLayout(false);
             this.GroupBox2.PerformLayout();
-            this.GroupBox3.ResumeLayout(false);
-            this.GroupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.valPrecision)).EndInit();
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage3.ResumeLayout(false);
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picErosion)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picDeposition)).EndInit();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.valFontSize)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -421,12 +641,29 @@ namespace GCDCore.UserInterface.ChangeDetection
         internal System.Windows.Forms.Label Label2;
         internal System.Windows.Forms.Label Label3;
         internal System.Windows.Forms.Label Label4;
-        internal System.Windows.Forms.GroupBox GroupBox3;
         internal System.Windows.Forms.NumericUpDown valPrecision;
         internal System.Windows.Forms.Label Label5;
         internal System.Windows.Forms.ComboBox cboVolume;
         internal System.Windows.Forms.ComboBox cboArea;
         internal System.Windows.Forms.ComboBox cboLinear;
         private System.Windows.Forms.Button cmdReset;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.CheckBox chkItalics;
+        private System.Windows.Forms.CheckBox chkBold;
+        private System.Windows.Forms.NumericUpDown valFontSize;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.ComboBox cboFonts;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.PictureBox picDeposition;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.PictureBox picErosion;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.GroupBox groupBox3;
     }
 }
