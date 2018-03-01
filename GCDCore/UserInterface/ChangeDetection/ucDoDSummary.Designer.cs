@@ -37,7 +37,7 @@ namespace GCDCore.UserInterface.ChangeDetection
         {
             this.grdData = new System.Windows.Forms.DataGridView();
             this.colAttribute = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colRaw = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colRawDoD = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colThresholded = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colError = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colErrorPC = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -52,7 +52,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.grdData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grdData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colAttribute,
-            this.colRaw,
+            this.colRawDoD,
             this.colThresholded,
             this.colError,
             this.colErrorPC,
@@ -63,6 +63,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.grdData.ReadOnly = true;
             this.grdData.Size = new System.Drawing.Size(722, 400);
             this.grdData.TabIndex = 3;
+            this.grdData.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.grdData_CellMouseDown);
             // 
             // colAttribute
             // 
@@ -72,12 +73,12 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.colAttribute.ReadOnly = true;
             this.colAttribute.Width = 300;
             // 
-            // colRaw
+            // colRawDoD
             // 
-            this.colRaw.HeaderText = "Raw";
-            this.colRaw.Name = "colRaw";
-            this.colRaw.ReadOnly = true;
-            this.colRaw.Width = 70;
+            this.colRawDoD.HeaderText = "Raw";
+            this.colRawDoD.Name = "colRawDoD";
+            this.colRawDoD.ReadOnly = true;
+            this.colRawDoD.Width = 70;
             // 
             // colThresholded
             // 
@@ -95,7 +96,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             // 
             // colErrorPC
             // 
-            this.colErrorPC.HeaderText = "Error PC";
+            this.colErrorPC.HeaderText = "% Error";
             this.colErrorPC.Name = "colErrorPC";
             this.colErrorPC.ReadOnly = true;
             this.colErrorPC.Width = 70;
@@ -120,7 +121,7 @@ namespace GCDCore.UserInterface.ChangeDetection
         }
         internal System.Windows.Forms.DataGridView grdData;
         private System.Windows.Forms.DataGridViewTextBoxColumn colAttribute;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colRaw;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colRawDoD;
         private System.Windows.Forms.DataGridViewTextBoxColumn colThresholded;
         private System.Windows.Forms.DataGridViewTextBoxColumn colError;
         private System.Windows.Forms.DataGridViewTextBoxColumn colErrorPC;
