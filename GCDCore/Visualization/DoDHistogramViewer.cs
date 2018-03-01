@@ -10,12 +10,7 @@ namespace GCDCore.Visualization
 {
     public class DoDHistogramViewer : ViewerBase
     {
-        // Names for data series
-        private const string EROSION = "Erosion";
-        private const string DEPOSITION = "Deposition";
-        private const string RAW = "Raw";
-
-        // Raw histogram data
+         // Raw histogram data
         Histogram _rawHist;
         Histogram _thrHist;
 
@@ -60,17 +55,17 @@ namespace GCDCore.Visualization
 
             foreach (KeyValuePair<string, Color> aDef in seriesDefs)
             {
-                Series series = m_Chart.Series.Add(aDef.Key);
+                Series series = Chart.Series.Add(aDef.Key);
                 series.ChartType = SeriesChartType.StackedColumn;
                 series.Color = aDef.Value;
-                series.ChartArea = m_Chart.ChartAreas.First().Name;
+                series.ChartArea = Chart.ChartAreas.First().Name;
             }
 
-            Axis x = m_Chart.ChartAreas[0].AxisX;
+            Axis x = Chart.ChartAreas[0].AxisX;
             x.MajorGrid.LineColor = Color.LightSlateGray;
             x.MinorTickMark.Enabled = false;
 
-            Axis y = m_Chart.ChartAreas[0].AxisY;
+            Axis y = Chart.ChartAreas[0].AxisY;
             y.MajorGrid.LineColor = Color.LightSlateGray;
             y.MinorTickMark.Enabled = true;
 
@@ -83,7 +78,7 @@ namespace GCDCore.Visualization
             depositionArea.Interval = 0;
             depositionArea.IntervalOffset = 0;
             depositionArea.StripWidth = 10;
-            m_Chart.ChartAreas[0].AxisX.StripLines.Add(depositionArea);
+            Chart.ChartAreas[0].AxisX.StripLines.Add(depositionArea);
 
             // Strip line is used to emphasize deposition
             StripLine erosionArea = new StripLine();
@@ -91,7 +86,7 @@ namespace GCDCore.Visualization
             erosionArea.Interval = 0;
             erosionArea.IntervalOffset = 0;
             erosionArea.StripWidth = 10;
-            m_Chart.ChartAreas[0].AxisX.StripLines.Add(erosionArea);
+            Chart.ChartAreas[0].AxisX.StripLines.Add(erosionArea);
 
             UpdateDisplay(true);
         }
@@ -110,13 +105,13 @@ namespace GCDCore.Visualization
             // Go recalc our values
             GetDisplayValues(bArea);
 
-            m_Chart.Series.FindByName(EROSION).Points.DataBindXY(histoData.Values, "Elevation", histoData.Values, "Erosion");
-            m_Chart.Series.FindByName(DEPOSITION).Points.DataBindXY(histoData.Values, "Elevation", histoData.Values, "Deposition");
-            m_Chart.Series.FindByName(RAW).Points.DataBindXY(histoData.Values, "Elevation", histoData.Values, "Raw");
+            Chart.Series.FindByName(EROSION).Points.DataBindXY(histoData.Values, "Elevation", histoData.Values, "Erosion");
+            Chart.Series.FindByName(DEPOSITION).Points.DataBindXY(histoData.Values, "Elevation", histoData.Values, "Deposition");
+            Chart.Series.FindByName(RAW).Points.DataBindXY(histoData.Values, "Elevation", histoData.Values, "Raw");
 
             double binWidth = _thrHist.BinWidth(Project.ProjectManager.Project.Units).As(DisplayUnits.VertUnit);
 
-            Axis axisX = m_Chart.ChartAreas[0].AxisX;
+            Axis axisX = Chart.ChartAreas[0].AxisX;
             axisX.Title = string.Format("Elevation Change ({0})", UnitsNet.Length.GetAbbreviation(DisplayUnits.VertUnit));
             axisX.Minimum = _thrHist.BinLower(_thrHist.FirstBinId, Project.ProjectManager.Project.Units).As(DisplayUnits.VertUnit);
             axisX.Maximum = _thrHist.BinLower(_thrHist.LastBinId, Project.ProjectManager.Project.Units).As(DisplayUnits.VertUnit) + binWidth;
@@ -127,9 +122,9 @@ namespace GCDCore.Visualization
             axisX.MinorGrid.Interval = binWidth;
 
             if (bArea)
-                m_Chart.ChartAreas[0].AxisY.Title = string.Format("Area ({0})", UnitsNet.Area.GetAbbreviation(DisplayUnits.ArUnit));
+                Chart.ChartAreas[0].AxisY.Title = string.Format("Area ({0})", UnitsNet.Area.GetAbbreviation(DisplayUnits.ArUnit));
             else
-                m_Chart.ChartAreas[0].AxisY.Title = string.Format("Volume ({0})", UnitsNet.Volume.GetAbbreviation(DisplayUnits.VolUnit));
+                Chart.ChartAreas[0].AxisY.Title = string.Format("Volume ({0})", UnitsNet.Volume.GetAbbreviation(DisplayUnits.VolUnit));
 
             axisX.StripLines[0].StripWidth = axisX.Maximum;
             axisX.StripLines[1].StripWidth = axisX.Maximum;
@@ -172,8 +167,8 @@ namespace GCDCore.Visualization
 
         public void ExportCharts(FileInfo AreaGraphPath, FileInfo VolumeGraphPath, int ChartWidth, int ChartHeight)
         {
-            m_Chart.Width = ChartWidth;
-            m_Chart.Height = ChartHeight;
+            Chart.Width = ChartWidth;
+            Chart.Height = ChartHeight;
 
             UpdateDisplay(true, DataUnits);
             SaveImage(AreaGraphPath);

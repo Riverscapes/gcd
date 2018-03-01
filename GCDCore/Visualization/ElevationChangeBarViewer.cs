@@ -25,15 +25,28 @@ namespace GCDCore.Visualization
         public ElevationChangeBarViewer(Chart chtControl = null)
             : base(chtControl)
         {
-            var _with1 = m_Chart.ChartAreas[0].AxisX;
+            var _with1 = Chart.ChartAreas[0].AxisX;
             _with1.MajorGrid.Enabled = false;
             _with1.MajorTickMark.Enabled = false;
 
-            var _with2 = m_Chart.ChartAreas[0].AxisY;
+            var _with2 = Chart.ChartAreas[0].AxisY;
             _with2.MinorTickMark.Enabled = true;
             _with2.MajorGrid.LineColor = Color.LightSlateGray;
             _with2.MinorGrid.Enabled = true;
             _with2.MinorGrid.LineColor = Color.LightGray;
+
+            Series errSeries = Chart.Series.Add(ViewerBase.EROSION);
+            errSeries.Color = Properties.Settings.Default.Erosion;
+            errSeries.ChartArea = Chart.ChartAreas.First().Name;
+            errSeries.ChartType = SeriesChartType.StackedColumn;
+
+            Series depSeries = Chart.Series.Add(ViewerBase.DEPOSITION);
+            depSeries.Color = Properties.Settings.Default.Deposition;
+            depSeries.ChartArea = Chart.ChartAreas.First().Name;
+            depSeries.ChartType = SeriesChartType.StackedColumn;
+
+
+
         }
 
         public void Refresh(double fErosion, double fDeposition, string sDisplayUnitsAbbreviation, BarTypes eType, bool bAbsolute)
@@ -52,8 +65,6 @@ namespace GCDCore.Visualization
 
         bool bAbsolute)
         {
-            m_Chart.Series.Clear();
-
             if (bAbsolute)
             {
                 // Bars should have their correct sign. Erosion should be negative
@@ -78,7 +89,7 @@ namespace GCDCore.Visualization
                     sYAxisLabel = string.Format("Elevation ({0})", sDisplayUnitsAbbreviation);
                     break;
             }
-            m_Chart.ChartAreas[0].AxisY.Title = sYAxisLabel;
+            Chart.ChartAreas[0].AxisY.Title = sYAxisLabel;
 
             Dictionary<string, Color> dSeries = new Dictionary<string, Color> {
                 {
@@ -95,25 +106,24 @@ namespace GCDCore.Visualization
                 dSeries.Add("Net", Color.Black);
             }
 
-            Series errSeries = m_Chart.Series.Add("erosion");
-            errSeries.Color = Properties.Settings.Default.Erosion;
-            errSeries.ChartArea = m_Chart.ChartAreas.First().Name;
-            errSeries.ChartType = SeriesChartType.StackedColumn;
+            Series errSeries = Chart.Series[ViewerBase.EROSION];
+            errSeries.Points.Clear();
             errSeries.Points.AddXY(GetXAxisLabel(eType, SeriesType.Erosion), fErosion);
             errSeries.Points.AddXY(GetXAxisLabel(eType, SeriesType.Depositon), 0);
 
-            Series depSeries = m_Chart.Series.Add("deposition");
-            depSeries.Color = Properties.Settings.Default.Deposition;
-            depSeries.ChartArea = m_Chart.ChartAreas.First().Name;
-            depSeries.ChartType = SeriesChartType.StackedColumn;
+            Series depSeries = Chart.Series[ViewerBase.DEPOSITION];
+            depSeries.Points.Clear();
             depSeries.Points.AddXY(GetXAxisLabel(eType, SeriesType.Erosion), 0);
             depSeries.Points.AddXY(GetXAxisLabel(eType, SeriesType.Depositon), fDeposition);
 
+            Series netSeries = Chart.Series.FindByName(ViewerBase.NET);
             if (bShowNet)
             {
-                Series netSeries = m_Chart.Series.Add("net");
-                netSeries.Color = (fNet >= 0 ? Properties.Settings.Default.Deposition : Properties.Settings.Default.Erosion);
-                netSeries.ChartArea = m_Chart.ChartAreas.First().Name;
+                if (netSeries == null)
+                    netSeries = Chart.Series.Add(ViewerBase.NET);
+
+                netSeries.Color = (fNet >= 0 ? depSeries.Color : errSeries.Color);
+                netSeries.ChartArea = Chart.ChartAreas.First().Name;
                 netSeries.Points.AddXY(GetXAxisLabel(eType, SeriesType.Erosion), 0);
                 netSeries.Points.AddXY(GetXAxisLabel(eType, SeriesType.Depositon), 0);
                 netSeries.Points.AddXY(GetXAxisLabel(eType, SeriesType.Net), fNet);
@@ -121,13 +131,18 @@ namespace GCDCore.Visualization
                 errSeries.Points.AddXY(GetXAxisLabel(eType, SeriesType.Net), 0);
                 depSeries.Points.AddXY(GetXAxisLabel(eType, SeriesType.Net), 0);
             }
+            else
+            {
+                if (netSeries is Series)
+                    Chart.Series.Remove(netSeries);
+            }
 
             try
             {
-                m_Chart.ChartAreas[0].RecalculateAxesScale();
-                m_Chart.AlignDataPointsByAxisLabel();
+                Chart.ChartAreas[0].RecalculateAxesScale();
+                Chart.AlignDataPointsByAxisLabel();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception("Error refreshing elevation bar charts.", ex);
             }

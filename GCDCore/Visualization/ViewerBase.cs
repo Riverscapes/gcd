@@ -10,26 +10,34 @@ namespace GCDCore.Visualization
 {
     public class ViewerBase
     {
-        public readonly Chart m_Chart;
+        // Names for data series.
+        // They are public to allow inherited classes and
+        // forms to use them to access the data series
+        public const string EROSION = "Erosion";
+        public const string DEPOSITION = "Deposition";
+        protected const string RAW = "Raw";
+        public const string NET = "Net";
+
+        public readonly Chart Chart;
 
         public ViewerBase(Chart cht)
         {
             if (cht == null)
-                m_Chart = new Chart();
+                Chart = new Chart();
             else
-                m_Chart = cht;
+                Chart = cht;
 
-            m_Chart.ChartAreas.Clear();
-            m_Chart.ChartAreas.Add(new ChartArea());
+            Chart.ChartAreas.Clear();
+            Chart.ChartAreas.Add(new ChartArea());
 
-            m_Chart.Series.Clear();
-            m_Chart.Palette = ChartColorPalette.None;
-            m_Chart.Legends.Clear();
+            Chart.Series.Clear();
+            Chart.Palette = ChartColorPalette.None;
+            Chart.Legends.Clear();
         }
 
         protected void SaveImage(FileInfo filePath)
         {
-            m_Chart.SaveImage(filePath.FullName, ChartImageFormat.Png);
+            Chart.SaveImage(filePath.FullName, ChartImageFormat.Png);
         }
     }
 }

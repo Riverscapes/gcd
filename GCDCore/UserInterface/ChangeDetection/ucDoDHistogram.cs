@@ -11,10 +11,10 @@ namespace GCDCore.UserInterface.ChangeDetection
 {
     public partial class ucDoDHistogram
     {
-        private DoDHistogramViewer m_HistogramViewer;
+        public DoDHistogramViewer HistogramViewer;
         private void rdoVolume_CheckedChanged(object sender, System.EventArgs e)
         {
-            m_HistogramViewer.SetChartType(rdoArea.Checked);
+            HistogramViewer.SetChartType(rdoArea.Checked);
         }
 
         public ContextMenuStrip ChartContextMenuStrip
@@ -32,16 +32,18 @@ namespace GCDCore.UserInterface.ChangeDetection
 
         public void SetHistogramUnits(GCDConsoleLib.GCD.UnitGroup displayUnits)
         {
-            m_HistogramViewer.UpdateDisplay(rdoArea.Checked, displayUnits);
+            HistogramViewer.UpdateDisplay(rdoArea.Checked, displayUnits);
         }
 
         public void LoadHistograms(GCDConsoleLib.Histogram rawHistogram, GCDConsoleLib.Histogram thrHistogram)
         {
-            m_HistogramViewer = new DoDHistogramViewer(rawHistogram, thrHistogram, ProjectManager.Project.Units, chtData);
+            HistogramViewer = new DoDHistogramViewer(rawHistogram, thrHistogram, ProjectManager.Project.Units, chtData);
         }
         public ucDoDHistogram()
         {
             InitializeComponent();
+
+            rdoVolume.CheckedChanged += rdoVolume_CheckedChanged;
         }
     }
 }

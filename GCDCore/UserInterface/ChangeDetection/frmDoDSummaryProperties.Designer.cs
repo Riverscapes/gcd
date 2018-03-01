@@ -64,20 +64,30 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.txtFont = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.picErosion = new System.Windows.Forms.PictureBox();
             this.picDeposition = new System.Windows.Forms.PictureBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.picErosion = new System.Windows.Forms.PictureBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.valInterval = new System.Windows.Forms.NumericUpDown();
+            this.valMinimum = new System.Windows.Forms.NumericUpDown();
+            this.label10 = new System.Windows.Forms.Label();
+            this.valMaximum = new System.Windows.Forms.NumericUpDown();
+            this.label9 = new System.Windows.Forms.Label();
+            this.frmColourPicker = new System.Windows.Forms.ColorDialog();
+            this.frmFont = new System.Windows.Forms.FontDialog();
             this.label7 = new System.Windows.Forms.Label();
-            this.cboFonts = new System.Windows.Forms.ComboBox();
+            this.valYInterval = new System.Windows.Forms.NumericUpDown();
+            this.valYMinimum = new System.Windows.Forms.NumericUpDown();
             this.label8 = new System.Windows.Forms.Label();
-            this.valFontSize = new System.Windows.Forms.NumericUpDown();
-            this.chkBold = new System.Windows.Forms.CheckBox();
-            this.chkItalics = new System.Windows.Forms.CheckBox();
+            this.valYMaximum = new System.Windows.Forms.NumericUpDown();
+            this.label12 = new System.Windows.Forms.Label();
             this.GroupBox1.SuspendLayout();
             this.GroupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.valPrecision)).BeginInit();
@@ -85,11 +95,18 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
-            this.groupBox5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picErosion)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picDeposition)).BeginInit();
             this.groupBox6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.valFontSize)).BeginInit();
+            this.groupBox5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picDeposition)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picErosion)).BeginInit();
+            this.groupBox4.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.valInterval)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.valMinimum)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.valMaximum)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.valYInterval)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.valYMinimum)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.valYMaximum)).BeginInit();
             this.SuspendLayout();
             // 
             // GroupBox1
@@ -257,7 +274,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             // 
             this.cmdOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cmdOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.cmdOK.Location = new System.Drawing.Point(564, 404);
+            this.cmdOK.Location = new System.Drawing.Point(349, 249);
             this.cmdOK.Name = "cmdOK";
             this.cmdOK.Size = new System.Drawing.Size(75, 23);
             this.cmdOK.TabIndex = 3;
@@ -269,7 +286,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             // 
             this.cmdCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cmdCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cmdCancel.Location = new System.Drawing.Point(645, 404);
+            this.cmdCancel.Location = new System.Drawing.Point(430, 249);
             this.cmdCancel.Name = "cmdCancel";
             this.cmdCancel.Size = new System.Drawing.Size(75, 23);
             this.cmdCancel.TabIndex = 4;
@@ -279,7 +296,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             // cmdHelp
             // 
             this.cmdHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.cmdHelp.Location = new System.Drawing.Point(12, 404);
+            this.cmdHelp.Location = new System.Drawing.Point(12, 249);
             this.cmdHelp.Name = "cmdHelp";
             this.cmdHelp.Size = new System.Drawing.Size(75, 23);
             this.cmdHelp.TabIndex = 5;
@@ -389,7 +406,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(708, 386);
+            this.tabControl1.Size = new System.Drawing.Size(493, 231);
             this.tabControl1.TabIndex = 6;
             // 
             // tabPage1
@@ -406,7 +423,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(481, 313);
+            this.tabPage1.Size = new System.Drawing.Size(485, 205);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Units";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -418,7 +435,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(481, 313);
+            this.tabPage2.Size = new System.Drawing.Size(485, 205);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Table";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -432,28 +449,39 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(700, 360);
+            this.tabPage3.Size = new System.Drawing.Size(485, 205);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Charts";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // groupBox3
+            // groupBox6
             // 
-            this.groupBox3.Location = new System.Drawing.Point(6, 132);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(200, 100);
-            this.groupBox3.TabIndex = 0;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Histogram X Axis";
+            this.groupBox6.Controls.Add(this.txtFont);
+            this.groupBox6.Controls.Add(this.button1);
+            this.groupBox6.Location = new System.Drawing.Point(218, 6);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(256, 53);
+            this.groupBox6.TabIndex = 3;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Fonts";
             // 
-            // groupBox4
+            // txtFont
             // 
-            this.groupBox4.Location = new System.Drawing.Point(218, 132);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(256, 100);
-            this.groupBox4.TabIndex = 1;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Histogram ";
+            this.txtFont.Location = new System.Drawing.Point(11, 20);
+            this.txtFont.Name = "txtFont";
+            this.txtFont.ReadOnly = true;
+            this.txtFont.Size = new System.Drawing.Size(207, 20);
+            this.txtFont.TabIndex = 7;
+            // 
+            // button1
+            // 
+            this.button1.Image = global::GCDCore.Properties.Resources.Options;
+            this.button1.Location = new System.Drawing.Point(224, 19);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(23, 23);
+            this.button1.TabIndex = 6;
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // groupBox5
             // 
@@ -463,125 +491,180 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.groupBox5.Controls.Add(this.label1);
             this.groupBox5.Location = new System.Drawing.Point(6, 6);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(200, 120);
+            this.groupBox5.Size = new System.Drawing.Size(200, 53);
             this.groupBox5.TabIndex = 2;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Colors";
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 24);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(50, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Lowering";
-            // 
-            // picErosion
-            // 
-            this.picErosion.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.picErosion.Location = new System.Drawing.Point(71, 19);
-            this.picErosion.Name = "picErosion";
-            this.picErosion.Size = new System.Drawing.Size(23, 23);
-            this.picErosion.TabIndex = 1;
-            this.picErosion.TabStop = false;
-            // 
             // picDeposition
             // 
             this.picDeposition.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.picDeposition.Location = new System.Drawing.Point(71, 47);
+            this.picDeposition.Location = new System.Drawing.Point(156, 19);
             this.picDeposition.Name = "picDeposition";
             this.picDeposition.Size = new System.Drawing.Size(23, 23);
             this.picDeposition.TabIndex = 3;
             this.picDeposition.TabStop = false;
+            this.picDeposition.Click += new System.EventHandler(this.OnColorBoxClicked);
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(20, 52);
+            this.label6.Location = new System.Drawing.Point(106, 24);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(42, 13);
             this.label6.TabIndex = 2;
             this.label6.Text = "Raising";
             // 
-            // groupBox6
+            // picErosion
             // 
-            this.groupBox6.Controls.Add(this.chkItalics);
-            this.groupBox6.Controls.Add(this.chkBold);
-            this.groupBox6.Controls.Add(this.valFontSize);
-            this.groupBox6.Controls.Add(this.label8);
-            this.groupBox6.Controls.Add(this.cboFonts);
-            this.groupBox6.Controls.Add(this.label7);
-            this.groupBox6.Location = new System.Drawing.Point(218, 6);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(256, 120);
-            this.groupBox6.TabIndex = 3;
-            this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "Fonts";
+            this.picErosion.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.picErosion.Location = new System.Drawing.Point(75, 19);
+            this.picErosion.Name = "picErosion";
+            this.picErosion.Size = new System.Drawing.Size(23, 23);
+            this.picErosion.TabIndex = 1;
+            this.picErosion.TabStop = false;
+            this.picErosion.Click += new System.EventHandler(this.OnColorBoxClicked);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(17, 24);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(50, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Lowering";
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.label7);
+            this.groupBox4.Controls.Add(this.valYInterval);
+            this.groupBox4.Controls.Add(this.valYMinimum);
+            this.groupBox4.Controls.Add(this.label8);
+            this.groupBox4.Controls.Add(this.valYMaximum);
+            this.groupBox4.Controls.Add(this.label12);
+            this.groupBox4.Location = new System.Drawing.Point(218, 63);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(256, 100);
+            this.groupBox4.TabIndex = 1;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Histogram Y Axis";
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.label11);
+            this.groupBox3.Controls.Add(this.valInterval);
+            this.groupBox3.Controls.Add(this.valMinimum);
+            this.groupBox3.Controls.Add(this.label10);
+            this.groupBox3.Controls.Add(this.valMaximum);
+            this.groupBox3.Controls.Add(this.label9);
+            this.groupBox3.Location = new System.Drawing.Point(6, 63);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(200, 100);
+            this.groupBox3.TabIndex = 0;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Histogram X Axis";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(25, 74);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(42, 13);
+            this.label11.TabIndex = 5;
+            this.label11.Text = "Interval";
+            // 
+            // valInterval
+            // 
+            this.valInterval.DecimalPlaces = 2;
+            this.valInterval.Location = new System.Drawing.Point(75, 70);
+            this.valInterval.Name = "valInterval";
+            this.valInterval.Size = new System.Drawing.Size(77, 20);
+            this.valInterval.TabIndex = 4;
+            // 
+            // valMinimum
+            // 
+            this.valMinimum.DecimalPlaces = 2;
+            this.valMinimum.Location = new System.Drawing.Point(75, 44);
+            this.valMinimum.Name = "valMinimum";
+            this.valMinimum.Size = new System.Drawing.Size(77, 20);
+            this.valMinimum.TabIndex = 3;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(16, 48);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(48, 13);
+            this.label10.TabIndex = 2;
+            this.label10.Text = "Minimum";
+            // 
+            // valMaximum
+            // 
+            this.valMaximum.DecimalPlaces = 2;
+            this.valMaximum.Location = new System.Drawing.Point(75, 18);
+            this.valMaximum.Name = "valMaximum";
+            this.valMaximum.Size = new System.Drawing.Size(77, 20);
+            this.valMaximum.TabIndex = 1;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(19, 22);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(51, 13);
+            this.label9.TabIndex = 0;
+            this.label9.Text = "Maximum";
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(10, 23);
+            this.label7.Location = new System.Drawing.Point(20, 74);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(57, 13);
-            this.label7.TabIndex = 0;
-            this.label7.Text = "Font family";
+            this.label7.Size = new System.Drawing.Size(42, 13);
+            this.label7.TabIndex = 11;
+            this.label7.Text = "Interval";
             // 
-            // cboFonts
+            // valYInterval
             // 
-            this.cboFonts.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboFonts.FormattingEnabled = true;
-            this.cboFonts.Location = new System.Drawing.Point(74, 19);
-            this.cboFonts.Name = "cboFonts";
-            this.cboFonts.Size = new System.Drawing.Size(166, 21);
-            this.cboFonts.TabIndex = 1;
+            this.valYInterval.DecimalPlaces = 2;
+            this.valYInterval.Location = new System.Drawing.Point(70, 70);
+            this.valYInterval.Name = "valYInterval";
+            this.valYInterval.Size = new System.Drawing.Size(77, 20);
+            this.valYInterval.TabIndex = 10;
+            // 
+            // valYMinimum
+            // 
+            this.valYMinimum.DecimalPlaces = 2;
+            this.valYMinimum.Location = new System.Drawing.Point(70, 44);
+            this.valYMinimum.Name = "valYMinimum";
+            this.valYMinimum.Size = new System.Drawing.Size(77, 20);
+            this.valYMinimum.TabIndex = 9;
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(40, 51);
+            this.label8.Location = new System.Drawing.Point(11, 48);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(27, 13);
-            this.label8.TabIndex = 2;
-            this.label8.Text = "Size";
+            this.label8.Size = new System.Drawing.Size(48, 13);
+            this.label8.TabIndex = 8;
+            this.label8.Text = "Minimum";
             // 
-            // valFontSize
+            // valYMaximum
             // 
-            this.valFontSize.Location = new System.Drawing.Point(74, 47);
-            this.valFontSize.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.valFontSize.Name = "valFontSize";
-            this.valFontSize.Size = new System.Drawing.Size(48, 20);
-            this.valFontSize.TabIndex = 3;
-            this.valFontSize.Value = new decimal(new int[] {
-            12,
-            0,
-            0,
-            0});
+            this.valYMaximum.DecimalPlaces = 2;
+            this.valYMaximum.Location = new System.Drawing.Point(70, 18);
+            this.valYMaximum.Name = "valYMaximum";
+            this.valYMaximum.Size = new System.Drawing.Size(77, 20);
+            this.valYMaximum.TabIndex = 7;
             // 
-            // chkBold
+            // label12
             // 
-            this.chkBold.AutoSize = true;
-            this.chkBold.Location = new System.Drawing.Point(74, 74);
-            this.chkBold.Name = "chkBold";
-            this.chkBold.Size = new System.Drawing.Size(47, 17);
-            this.chkBold.TabIndex = 4;
-            this.chkBold.Text = "Bold";
-            this.chkBold.UseVisualStyleBackColor = true;
-            // 
-            // chkItalics
-            // 
-            this.chkItalics.AutoSize = true;
-            this.chkItalics.Location = new System.Drawing.Point(74, 98);
-            this.chkItalics.Name = "chkItalics";
-            this.chkItalics.Size = new System.Drawing.Size(48, 17);
-            this.chkItalics.TabIndex = 5;
-            this.chkItalics.Text = "Italic";
-            this.chkItalics.UseVisualStyleBackColor = true;
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(14, 22);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(51, 13);
+            this.label12.TabIndex = 6;
+            this.label12.Text = "Maximum";
             // 
             // frmDoDSummaryProperties
             // 
@@ -589,7 +672,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cmdCancel;
-            this.ClientSize = new System.Drawing.Size(732, 439);
+            this.ClientSize = new System.Drawing.Size(517, 284);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.cmdHelp);
             this.Controls.Add(this.cmdCancel);
@@ -612,13 +695,22 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
-            this.groupBox5.ResumeLayout(false);
-            this.groupBox5.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picErosion)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picDeposition)).EndInit();
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.valFontSize)).EndInit();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picDeposition)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picErosion)).EndInit();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.valInterval)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.valMinimum)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.valMaximum)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.valYInterval)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.valYMinimum)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.valYMaximum)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -652,12 +744,6 @@ namespace GCDCore.UserInterface.ChangeDetection
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.GroupBox groupBox6;
-        private System.Windows.Forms.CheckBox chkItalics;
-        private System.Windows.Forms.CheckBox chkBold;
-        private System.Windows.Forms.NumericUpDown valFontSize;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.ComboBox cboFonts;
-        private System.Windows.Forms.Label label7;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.PictureBox picDeposition;
         private System.Windows.Forms.Label label6;
@@ -665,5 +751,21 @@ namespace GCDCore.UserInterface.ChangeDetection
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.NumericUpDown valInterval;
+        private System.Windows.Forms.NumericUpDown valMinimum;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.NumericUpDown valMaximum;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.ColorDialog frmColourPicker;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.FontDialog frmFont;
+        private System.Windows.Forms.TextBox txtFont;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.NumericUpDown valYInterval;
+        private System.Windows.Forms.NumericUpDown valYMinimum;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.NumericUpDown valYMaximum;
+        private System.Windows.Forms.Label label12;
     }
 }

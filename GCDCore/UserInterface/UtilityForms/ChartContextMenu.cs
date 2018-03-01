@@ -10,9 +10,13 @@ namespace GCDCore.UserInterface.UtilityForms
     public class ChartContextMenu
     {
         public readonly ContextMenuStrip CMS;
+        public readonly DirectoryInfo DefaultDir;
+        public readonly string DefaultFileName;
 
-        public ChartContextMenu()
+        public ChartContextMenu(DirectoryInfo dir, string name)
         {
+            DefaultDir = dir;
+            DefaultFileName = name;
             CMS = new ContextMenuStrip();
 
             CMS.Items.Add(new ToolStripMenuItem("Copy Chart Image To The ClipBoard", Properties.Resources.Copy, CopyChartToClipBoard_Click));
@@ -43,6 +47,7 @@ namespace GCDCore.UserInterface.UtilityForms
             {
                 Chart cht = ((ContextMenuStrip)(((ToolStripMenuItem)sender).Owner)).SourceControl as Chart;
 
+
                 List<string> lFormats = new List<string>();
                 lFormats.Add("Bitmap (*.bmp)|*.bmp");
                 lFormats.Add("GIF (*.gif)|*.gif");
@@ -50,22 +55,23 @@ namespace GCDCore.UserInterface.UtilityForms
                 lFormats.Add("PNG (*.png)|*.png");
                 lFormats.Add("TIFF (*.tiff)|*.tif");
                 lFormats.Add("WMF (*.wmf)|*.wmf");
+
                 SaveFileDialog dlgSave = new SaveFileDialog();
+                dlgSave.Filter = string.Join("|", lFormats.ToArray());
                 dlgSave.Title = "Save Chart Image";
                 dlgSave.AddExtension = true;
-                foreach (string sFormat in lFormats)
+                dlgSave.FilterIndex = 4;
+
+                if (DefaultDir is DirectoryInfo && DefaultDir.Exists)
                 {
-                    if (string.IsNullOrEmpty(dlgSave.Filter))
-                    {
-                        dlgSave.Filter = sFormat;
-                    }
-                    else
-                    {
-                        dlgSave.Filter = dlgSave.Filter + "|" + sFormat;
-                    }
+                    dlgSave.InitialDirectory = DefaultDir.FullName;
+                    dlgSave.FileName = Path.GetFileNameWithoutExtension(naru.os.File.GetNewSafeName(DefaultDir.FullName, DefaultFileName, "png").FullName);
+                }
+                else
+                {
+                    dlgSave.FileName = string.Format("{0}.png", naru.os.File.RemoveDangerousCharacters(DefaultFileName));
                 }
 
-                dlgSave.FilterIndex = 3;
                 if (dlgSave.ShowDialog() == DialogResult.OK)
                 {
                     string sFilePath = dlgSave.FileName;

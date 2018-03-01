@@ -28,8 +28,8 @@ namespace GCDCore.UserInterface.ChangeDetection
             m_Options = new DoDSummaryDisplayOptions(ProjectManager.Project.Units);
             ucProperties.Initialize(DoD);
 
-            cmsChart = new UtilityForms.ChartContextMenu();
-  
+            cmsChart = new UtilityForms.ChartContextMenu(DoD.Folder, "change_detection");
+
             // Select the tab control to make it easy for user to quickly pan results
             tabProperties.Select();
         }
@@ -75,12 +75,51 @@ namespace GCDCore.UserInterface.ChangeDetection
             try
             {
                 frmDoDSummaryProperties frm = new frmDoDSummaryProperties(m_Options);
+
+                frm.XAxisMinimum = ucHistogram.HistogramViewer.Chart.ChartAreas[0].AxisX.Minimum;
+                frm.XAxisMaximum = ucHistogram.HistogramViewer.Chart.ChartAreas[0].AxisX.Maximum;
+                frm.XAxisInterval = ucHistogram.HistogramViewer.Chart.ChartAreas[0].AxisX.Interval;
+                ucHistogram.HistogramViewer.Chart.ChartAreas[0].RecalculateAxesScale();
+
+                frm.YAxisMinimum = ucHistogram.HistogramViewer.Chart.ChartAreas[0].AxisY.Minimum;
+                frm.YAxisMaximum = ucHistogram.HistogramViewer.Chart.ChartAreas[0].AxisY.Maximum;
+                frm.YAxisInterval = ucHistogram.HistogramViewer.Chart.ChartAreas[0].AxisY.Interval;
+
                 if (frm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
+                    ucHistogram.HistogramViewer.Chart.ChartAreas[0].AxisX.Minimum = frm.XAxisMinimum;
+                    ucHistogram.HistogramViewer.Chart.ChartAreas[0].AxisX.Maximum = frm.XAxisMaximum;
+                    ucHistogram.HistogramViewer.Chart.ChartAreas[0].AxisX.Interval = frm.XAxisInterval;
+
+                    ucHistogram.HistogramViewer.Chart.ChartAreas[0].AxisY.Minimum = frm.YAxisMinimum;
+                    ucHistogram.HistogramViewer.Chart.ChartAreas[0].AxisY.Maximum = frm.YAxisMaximum;
+                    ucHistogram.HistogramViewer.Chart.ChartAreas[0].AxisY.Interval = frm.YAxisInterval;
+
+                    ucHistogram.HistogramViewer.Chart.ChartAreas[0].AxisX.TitleFont = m_Options.Font;
+                    ucHistogram.HistogramViewer.Chart.ChartAreas[0].AxisX.LabelStyle.Font = m_Options.Font;
+                    ucHistogram.HistogramViewer.Chart.ChartAreas[0].AxisY.TitleFont = m_Options.Font;
+                    ucHistogram.HistogramViewer.Chart.ChartAreas[0].AxisY.LabelStyle.Font = m_Options.Font;
+
+                    ucHistogram.HistogramViewer.Chart.Series[Visualization.ViewerBase.EROSION].Color = m_Options.Erosion;
+                    ucHistogram.HistogramViewer.Chart.Series[Visualization.ViewerBase.DEPOSITION].Color = m_Options.Deposition;
+                    ucHistogram.HistogramViewer.Chart.DataBind();
+
                     ucSummary.RefreshDisplay(DoD.Statistics, m_Options);
                     ucHistogram.SetHistogramUnits(m_Options.Units);
                     ucBars.DisplayUnits = new GCDConsoleLib.GCD.UnitGroup(m_Options.VolumeUnits, m_Options.AreaUnits, m_Options.LinearUnits, m_Options.LinearUnits);
+
+                    ucBars.chtControl.ChartAreas[0].AxisX.TitleFont = m_Options.Font;
+                    ucBars.chtControl.ChartAreas[0].AxisX.LabelStyle.Font = m_Options.Font;
+                    ucBars.chtControl.ChartAreas[0].AxisY.TitleFont = m_Options.Font;
+                    ucBars.chtControl.ChartAreas[0].AxisY.LabelStyle.Font = m_Options.Font;
+                    ucBars.chtControl.Series[Visualization.ViewerBase.EROSION].Color = m_Options.Erosion;
+                    ucBars.chtControl.Series[Visualization.ViewerBase.DEPOSITION].Color = m_Options.Deposition;
+
+                    Series serNet = ucBars.chtControl.Series.FindByName(Visualization.ViewerBase.NET);
+                    if (serNet is Series)
+                        serNet.Color = serNet.Points[0].YValues[0] > 0 ? m_Options.Deposition :  m_Options.Deposition;
                 }
+
             }
             catch (Exception ex)
             {
@@ -91,6 +130,6 @@ namespace GCDCore.UserInterface.ChangeDetection
         private void cmdHelp_Click(System.Object sender, System.EventArgs e)
         {
             Process.Start(GCDCore.Properties.Resources.HelpBaseURL + "gcd-command-reference/gcd-project-explorer/l-individual-change-detection-context-menu/i-view-change-detection-results");
-        }      
+        }
     }
 }

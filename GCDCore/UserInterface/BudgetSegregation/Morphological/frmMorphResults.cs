@@ -32,7 +32,7 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
         {
             InitializeComponent();
 
-            cmsChart = new UtilityForms.ChartContextMenu();
+            cmsChart = new UtilityForms.ChartContextMenu(Analysis.OutputFolder, "morphological");
             chtData.ContextMenuStrip = cmsChart.CMS;
 
             Analysis = ma;

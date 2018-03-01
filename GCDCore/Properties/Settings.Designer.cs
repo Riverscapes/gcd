@@ -382,5 +382,17 @@ namespace GCDCore.Properties {
                 this["MRU5"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Microsoft Sans Serif, 8.25pt")]
+        public global::System.Drawing.Font ChartFont {
+            get {
+                return ((global::System.Drawing.Font)(this["ChartFont"]));
+            }
+            set {
+                this["ChartFont"] = value;
+            }
+        }
     }
 }
