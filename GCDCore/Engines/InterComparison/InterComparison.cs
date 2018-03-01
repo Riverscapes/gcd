@@ -71,24 +71,20 @@ namespace GCDCore.Engines
 
             }
 
-            //format rows
-            enumRowFormat RowFormat = enumRowFormat.None;
+            //cells should be formatted with grey, single weight top and bottom border
+            CellStyle oCellStyle = new CellStyle();
+            oCellStyle.TopBorder.Weight = 1;
+            oCellStyle.TopBorder.Color= "#E7E6E6";
+            oCellStyle.BottomBorder.Weight = 1;
+            oCellStyle.BottomBorder.Color = "#E7E6E6";
+            
+            //loop through all cells and format
             for (int i=0; i<dodStats.Count; i++)
             {
-                RowFormat = enumRowFormat.MiddleRow;
-                if (i == 0)
-                {
-                    RowFormat = enumRowFormat.TopRow;
-                }
-                if (i == (dodStats.Count-1))
-                {
-                    RowFormat = enumRowFormat.BottomRow;
-                }
-
-                xmlExcelDoc.FormatRow("ArealDoDName", i, RowFormat);
-                xmlExcelDoc.FormatRow("VolumeDoDName", i, RowFormat);
-                xmlExcelDoc.FormatRow("VerticalDoDName", i, RowFormat);
-                xmlExcelDoc.FormatRow("PercentagesDoDName", i, RowFormat);
+                xmlExcelDoc.FormatRow("ArealDoDName", i, oCellStyle);
+                xmlExcelDoc.FormatRow("VolumeDoDName", i, oCellStyle);
+                xmlExcelDoc.FormatRow("VerticalDoDName", i, oCellStyle);
+                xmlExcelDoc.FormatRow("PercentagesDoDName", i, oCellStyle);
             }
 
             //save output
