@@ -43,8 +43,8 @@ namespace GCDCore.UserInterface.Masks
                 cmdOK.Text = Properties.Resources.UpdateButtonText;
 
                 txtName.Text = Mask.Name;
-                txtPath.Text = ProjectManager.Project.GetRelativePath(Mask._ShapeFile);
-                ucPolygon.Initialize("Directional Mask", Mask._ShapeFile, true);
+                txtPath.Text = ProjectManager.Project.GetRelativePath(Mask.Vector.GISFileInfo);
+                ucPolygon.Initialize("Directional Mask", Mask.Vector.GISFileInfo, true);
 
                 cboField.Text = Mask._Field;
                 cboField.Enabled = false;

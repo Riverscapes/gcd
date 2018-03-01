@@ -24,8 +24,7 @@ namespace GCDCore.Project.Masks
 
                 bool bUseLabel = !string.IsNullOrEmpty(LabelField);
 
-                GCDConsoleLib.Vector polygons = new GCDConsoleLib.Vector(_ShapeFile);
-                foreach (GCDConsoleLib.VectorFeature feat in polygons.Features.Values)
+               foreach (GCDConsoleLib.VectorFeature feat in Vector.Features.Values)
                 {
                     if (!feat.IsNull(_Field))
                     {
@@ -52,8 +51,7 @@ namespace GCDCore.Project.Masks
 
                 bool bUseLabel = !string.IsNullOrEmpty(LabelField);
 
-                GCDConsoleLib.Vector polygons = new GCDConsoleLib.Vector(_ShapeFile);
-                foreach (GCDConsoleLib.VectorFeature feat in polygons.Features.Values)
+                foreach (GCDConsoleLib.VectorFeature feat in Vector.Features.Values)
                 {
                     if (!feat.IsNull(_Field) && !feat.IsNull(DirectionField))
                     {

@@ -32,9 +32,9 @@ namespace GCDCore.UserInterface.Masks
                 cmdOK.Text = Properties.Resources.UpdateButtonText;
 
                 txtName.Text = Mask.Name;
-                txtPath.Text = ProjectManager.Project.GetRelativePath(Mask._ShapeFile);
+                txtPath.Text = ProjectManager.Project.GetRelativePath(Mask.Vector.GISFileInfo);
 
-                ucPolygon.Initialize("Mask Polygon ShapeFile", Mask._ShapeFile, true);
+                ucPolygon.Initialize("Mask Polygon ShapeFile", Mask.Vector.GISFileInfo, true);
                 ucPolygon.SetReadOnly();
 
                 cboField.DataSource = new BindingList<string>() { Mask._Field };

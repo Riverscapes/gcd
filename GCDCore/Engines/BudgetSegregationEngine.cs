@@ -17,11 +17,9 @@ namespace GCDCore.Engines
             // Retrieve the segregated statistics from the DoD rasters depending on the thresholding type used.
             Dictionary<string, GCDConsoleLib.GCD.DoDStats> results = null;
 
-            Vector polygons = new Vector(mask._ShapeFile);
-
             if (dod is DoDMinLoD)
             {
-                results = RasterOperators.GetStatsMinLoD(dod.RawDoD.Raster, dod.RawDoD.Raster, ((DoDMinLoD)dod).Threshold, polygons, mask._Field, ProjectManager.Project.Units);
+                results = RasterOperators.GetStatsMinLoD(dod.RawDoD.Raster, dod.RawDoD.Raster, ((DoDMinLoD)dod).Threshold, mask.Vector, mask._Field, ProjectManager.Project.Units);
             }
             else
             {
@@ -29,17 +27,17 @@ namespace GCDCore.Engines
 
                 if (dod is DoDProbabilistic)
                 {
-                    results = RasterOperators.GetStatsProbalistic(dod.RawDoD.Raster, dod.ThrDoD.Raster, propErr, polygons, mask._Field, ProjectManager.Project.Units);
+                    results = RasterOperators.GetStatsProbalistic(dod.RawDoD.Raster, dod.ThrDoD.Raster, propErr, mask.Vector, mask._Field, ProjectManager.Project.Units);
                 }
                 else
                 {
-                    results = RasterOperators.GetStatsPropagated(dod.RawDoD.Raster, propErr, polygons, mask._Field, ProjectManager.Project.Units);
+                    results = RasterOperators.GetStatsPropagated(dod.RawDoD.Raster, propErr, mask.Vector, mask._Field, ProjectManager.Project.Units);
                 }
             }
 
             // Retrieve the histograms for all budget segregation classes
-            Dictionary<string, Histogram> rawHistos = RasterOperators.BinRaster(dod.RawDoD.Raster, DEFAULTHISTOGRAMNUMBER, polygons, mask._Field);
-            Dictionary<string, Histogram> thrHistos = RasterOperators.BinRaster(dod.ThrDoD.Raster, DEFAULTHISTOGRAMNUMBER, polygons, mask._Field);
+            Dictionary<string, Histogram> rawHistos = RasterOperators.BinRaster(dod.RawDoD.Raster, DEFAULTHISTOGRAMNUMBER, mask.Vector, mask._Field);
+            Dictionary<string, Histogram> thrHistos = RasterOperators.BinRaster(dod.ThrDoD.Raster, DEFAULTHISTOGRAMNUMBER, mask.Vector, mask._Field);
 
             // Make sure that the output folder and the folder for the figures exist
             analysisFolder.Create();

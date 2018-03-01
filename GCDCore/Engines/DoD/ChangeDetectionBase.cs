@@ -49,8 +49,7 @@ namespace GCDCore.Engines
             }
             else
             {
-                Vector vAOI = new Vector(AOIMask._ShapeFile);
-                rawDoD = RasterOperators.SubtractWithMask(NewSurface.Raster, OldSurface.Raster, vAOI, rawDoDPath);
+                rawDoD = RasterOperators.SubtractWithMask(NewSurface.Raster, OldSurface.Raster, AOIMask.Vector, rawDoDPath);
             }
 
             // Build pyraminds

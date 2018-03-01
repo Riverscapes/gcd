@@ -31,7 +31,7 @@ namespace GCDCore.UserInterface.Masks
                 cmdOK.Text = Properties.Resources.UpdateButtonText;
 
                 txtName.Text = AOIMask.Name;
-                txtPath.Text = ProjectManager.Project.GetRelativePath(AOIMask._ShapeFile);
+                txtPath.Text = ProjectManager.Project.GetRelativePath(AOIMask.Vector.GISFileInfo);
 
                 grpShapeFile.Visible = false;
                 Height -= (grpShapeFile.Height + grpShapeFile.Top - txtPath.Bottom);

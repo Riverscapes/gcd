@@ -66,6 +66,7 @@
     <Compile Include="Engines\InterComparison\InterComparison.cs" />
     <Compile Include="Engines\ReferenceSurfaceEngine.cs" />
     <Compile Include="GCDUnits.cs" />
+    <Compile Include="Project\GCDProjectVectorItem.cs" />
     <Compile Include="Project\LinearExtraction\LinearExtraction.cs" />
     <Compile Include="Project\LinearExtraction\LinearExtractionFromDEM.cs" />
     <Compile Include="Project\LinearExtraction\LinearExtractionFromDoD.cs" />

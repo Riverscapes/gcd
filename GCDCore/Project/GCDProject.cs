@@ -89,7 +89,7 @@ namespace GCDCore.Project
                     return ReferenceSurfaces.Values.First().Raster.Proj;
 
                 if (Masks.Count > 0)
-                    return new GCDConsoleLib.Vector(Masks.Values.First()._ShapeFile).Proj;
+                    return Masks.Values.First().Vector.Proj;
 
                 return null;
             }

@@ -8,14 +8,11 @@ using System.Threading.Tasks;
 
 namespace GCDCore.Project.Masks
 {
-    public abstract class Mask : GCDProjectItem
+    public abstract class Mask : GCDProjectVectorItem
     {
-        public readonly FileInfo _ShapeFile;
-
         public Mask(string name, FileInfo shapeFile)
-            : base(name)
+            : base(name, shapeFile)
         {
-            _ShapeFile = shapeFile;
         }
 
         /// <summary>
@@ -23,16 +20,15 @@ namespace GCDCore.Project.Masks
         /// </summary>
         /// <param name="nodParent"></param>
         public Mask(XmlNode nodParent)
-            : base(nodParent.SelectSingleNode("Name").InnerText)
+            : base(nodParent)
         {
-            _ShapeFile = ProjectManager.Project.GetAbsolutePath(nodParent.SelectSingleNode("ShapeFile").InnerText);
         }
 
         public virtual XmlNode Serialize(XmlNode nodParent)
         {
             XmlNode nodMask = nodParent.AppendChild(nodParent.OwnerDocument.CreateElement("Mask"));
             nodMask.AppendChild(nodParent.OwnerDocument.CreateElement("Name")).InnerText = Name;
-            nodMask.AppendChild(nodParent.OwnerDocument.CreateElement("ShapeFile")).InnerText = ProjectManager.Project.GetRelativePath(_ShapeFile);
+            nodMask.AppendChild(nodParent.OwnerDocument.CreateElement("Path")).InnerText = ProjectManager.Project.GetRelativePath(Vector.GISFileInfo);
             return nodMask;
         }
 
@@ -66,21 +62,12 @@ namespace GCDCore.Project.Masks
         {
             try
             {
-                // Raise the event to say that a GIS layer is about to be deleted.
-                // This should bubble to ArcGIS so that the layer is removed from the ArcMap ToC
-                ProjectManager.OnGISLayerDelete(new ProjectManager.GISLayerEventArgs(_ShapeFile));
-
-                // Delete the actual raster
-                GCDConsoleLib.Vector vShapeFile = new GCDConsoleLib.Vector(_ShapeFile);
-                vShapeFile.Delete();
+                base.Delete();
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error attempting to delete mask ShapeFile " + _ShapeFile.FullName);
-                Console.WriteLine("ShapeFile Path: ", _ShapeFile.FullName);
-                Console.WriteLine(ex.Message);
+                Console.Write(string.Format("Failed to shapefile associated with the {0} at {1}", Noun, Vector.GISFileInfo.Directory.FullName, ex.Message));
             }
-
 
             // Remove the mask from the project
             ProjectManager.Project.Masks.Remove(Name);
@@ -88,23 +75,23 @@ namespace GCDCore.Project.Masks
             // Delete the individual mask folder
             try
             {
-                _ShapeFile.Directory.Delete();
+                Vector.GISFileInfo.Directory.Delete();
             }
             catch (Exception ex)
             {
-                Console.Write(string.Format("Failed to delete the mask directory {0}\n\n{1}", _ShapeFile.Directory.FullName, ex.Message));
+                Console.Write(string.Format("Failed to delete the {0} directory {1}\n\n{2}", Noun, Vector.GISFileInfo.Directory.FullName, ex.Message));
             }
 
             // If no more masks then delete the project masks folder
-            if (ProjectManager.Project.Masks.Count < 1 && !Directory.EnumerateFileSystemEntries(_ShapeFile.Directory.Parent.FullName).Any())
+            if (ProjectManager.Project.Masks.Count < 1 && !Directory.EnumerateFileSystemEntries(Vector.GISFileInfo.Directory.Parent.FullName).Any())
             {
                 try
                 {
-                    _ShapeFile.Directory.Parent.Delete();
+                    Vector.GISFileInfo.Directory.Parent.Delete();
                 }
                 catch (Exception ex)
                 {
-                    Console.Write(string.Format("Failed to delete empty mask directory {0}\n\n{1}", _ShapeFile.Directory.Parent.FullName, ex.Message));
+                    Console.Write(string.Format("Failed to delete empty mask directory {0}\n\n{1}", Vector.GISFileInfo.Directory.Parent.FullName, ex.Message));
                 }
             }
 

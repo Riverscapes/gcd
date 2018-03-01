@@ -109,7 +109,7 @@ namespace GCDCore.UserInterface.LinearExtraction
                 FileInfo fiOutput = ProjectManager.Project.GetAbsolutePath(Path.Combine(txtPath.Text, "extraction.csv"));
                 fiOutput.Directory.Create();
 
-                RasterOperators.LinearExtractor(route.FeatureClass, rasters, fiOutput, valSampleDistance.Value, route.DistanceField);
+                RasterOperators.LinearExtractor(route.Vector, rasters, fiOutput, valSampleDistance.Value, route.DistanceField);
 
                 GCDCore.Project.LinearExtraction.LinearExtraction le;
                 if (ElevationSurface is DEMSurvey)
