@@ -61,29 +61,32 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
                 eResult = frm.ShowDialog();
                 if (eResult == DialogResult.OK && treeReload)
                 {
-
-                    // Get the GCD project item that was just added or edited
-                    GCDProjectItem changedItem = (frm as IProjectItemForm).GCDProjectItem;
-
-                    // Selected this node if it is an item node and was just edited
-                    if (this is TreeNodeItem && ((TreeNodeItem)this).Item.Equals(changedItem))
+                    IProjectItemForm iForm = frm as IProjectItemForm;
+                    if (iForm != null)
                     {
-                        Text = changedItem.Name;
-                    }
-                    else
-                    {
-                        // Polymorphic loading of relevant child nodes
-                        LoadChildNodes();
+                        // Get the GCD project item that was just added or edited
+                        GCDProjectItem changedItem = iForm.GCDProjectItem;
 
-                        // Loop through the child nodes and select the item that was just added
-                        foreach (TreeNode childNode in Nodes)
+                        // Selected this node if it is an item node and was just edited
+                        if (this is TreeNodeItem && ((TreeNodeItem)this).Item.Equals(changedItem))
                         {
-                            if (childNode is TreeNodeItem)
+                            Text = changedItem.Name;
+                        }
+                        else
+                        {
+                            // Polymorphic loading of relevant child nodes
+                            LoadChildNodes();
+
+                            // Loop through the child nodes and select the item that was just added
+                            foreach (TreeNode childNode in Nodes)
                             {
-                                if (((TreeNodeItem) childNode).Item.Equals(changedItem))
+                                if (childNode is TreeNodeItem)
                                 {
-                                    TreeView.SelectedNode = childNode;
-                                    break;
+                                    if (((TreeNodeItem)childNode).Item.Equals(changedItem))
+                                    {
+                                        TreeView.SelectedNode = childNode;
+                                        break;
+                                    }
                                 }
                             }
                         }
