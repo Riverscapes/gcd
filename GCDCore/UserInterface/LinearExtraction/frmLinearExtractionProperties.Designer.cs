@@ -42,7 +42,7 @@
             this.lblErrorSurface = new System.Windows.Forms.Label();
             this.cboError = new System.Windows.Forms.ComboBox();
             this.txtElevationSurface = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
+            this.lblSampleDistance = new System.Windows.Forms.Label();
             this.valSampleDistance = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.valSampleDistance)).BeginInit();
             this.SuspendLayout();
@@ -128,6 +128,7 @@
             this.label3.Size = new System.Drawing.Size(63, 13);
             this.label3.TabIndex = 4;
             this.label3.Text = "Profile route";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // cboRoute
             // 
@@ -179,14 +180,14 @@
             this.txtElevationSurface.Size = new System.Drawing.Size(380, 20);
             this.txtElevationSurface.TabIndex = 9;
             // 
-            // label5
+            // lblSampleDistance
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(21, 105);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(94, 13);
-            this.label5.TabIndex = 6;
-            this.label5.Text = "Sample distance ()";
+            this.lblSampleDistance.Location = new System.Drawing.Point(-2, 105);
+            this.lblSampleDistance.Name = "lblSampleDistance";
+            this.lblSampleDistance.Size = new System.Drawing.Size(117, 13);
+            this.lblSampleDistance.TabIndex = 6;
+            this.lblSampleDistance.Text = "Sample distance ()";
+            this.lblSampleDistance.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // valSampleDistance
             // 
@@ -220,7 +221,7 @@
             this.CancelButton = this.cmdCancel;
             this.ClientSize = new System.Drawing.Size(513, 228);
             this.Controls.Add(this.valSampleDistance);
-            this.Controls.Add(this.label5);
+            this.Controls.Add(this.lblSampleDistance);
             this.Controls.Add(this.txtElevationSurface);
             this.Controls.Add(this.lblErrorSurface);
             this.Controls.Add(this.cboError);
@@ -260,7 +261,7 @@
         private System.Windows.Forms.Label lblErrorSurface;
         private System.Windows.Forms.ComboBox cboError;
         private System.Windows.Forms.TextBox txtElevationSurface;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label lblSampleDistance;
         private System.Windows.Forms.NumericUpDown valSampleDistance;
     }
 }

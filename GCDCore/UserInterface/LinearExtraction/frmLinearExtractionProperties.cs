@@ -52,6 +52,8 @@ namespace GCDCore.UserInterface.LinearExtraction
 
             txtElevationSurface.Text = ElevationSurface.Name;
 
+            lblSampleDistance.Text = lblSampleDistance.Text.Replace("(", string.Format("({0}", UnitsNet.Length.GetAbbreviation(ProjectManager.Project.Units.HorizUnit)));
+
             cboRoute.DataSource = ProjectManager.Project.ProfileRoutes.Values.ToList();
             cboRoute.SelectedIndex = cboRoute.Items.Count > 0 ? 0 : -1;
         }
@@ -123,14 +125,22 @@ namespace GCDCore.UserInterface.LinearExtraction
                 else
                     le = new GCDCore.Project.LinearExtraction.LinearExtractionFromDoD(txtName.Text, route, fiOutput, ElevationSurface as DoDBase);
 
-                ProjectManager.Project.LinearExtractions[le.Name] = le;
+                if (GCDProjectItem is Surface)
+                {
+                    ((Surface)GCDProjectItem).LinearExtractions[le.Name] = le;
+                }
+                else
+                {
+                    ((DoDBase)GCDProjectItem).LinearExtractions[le.Name] = le;
+                }
+
                 ProjectManager.Project.Save();
 
                 Cursor = Cursors.Default;
             }
             catch (Exception ex)
             {
-                naru.error.ExceptionUI.HandleException(ex, "Error creating regular mask.");
+                naru.error.ExceptionUI.HandleException(ex, "Error performing linear extraction.");
             }
         }
 

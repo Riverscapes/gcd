@@ -26,6 +26,7 @@ namespace GCDCore.Project
         public readonly DoDStats Statistics;
 
         public Dictionary<string, BudgetSegregation> BudgetSegregations { get; internal set; }
+        public readonly Dictionary<string, LinearExtraction.LinearExtraction> LinearExtractions;
 
         public override string Noun { get { return "Change Detection"; } }
 
@@ -72,6 +73,7 @@ namespace GCDCore.Project
             SummaryXML = summaryXML;
             Statistics = stats;
             BudgetSegregations = new Dictionary<string, BudgetSegregation>();
+            LinearExtractions = new Dictionary<string, LinearExtraction.LinearExtraction>();
         }
 
         protected DoDBase(XmlNode nodDoD)
@@ -103,6 +105,21 @@ namespace GCDCore.Project
                     BudgetSegregation bs = new BudgetSegregation(nodBS, this);
                     BudgetSegregations[bs.Name] = bs;
                 }
+            }
+
+            LinearExtractions = new Dictionary<string, LinearExtraction.LinearExtraction>();
+            foreach (XmlNode nodLE in nodDoD.SelectNodes("LinearExtractions/LinearExtraction"))
+            {
+                LinearExtraction.LinearExtraction le;
+                if (nodLE.SelectSingleNode("DEM") is XmlNode)
+                    le = new LinearExtraction.LinearExtractionFromDEM(nodLE);
+                else if (nodLE.SelectSingleNode("Surface") is XmlNode)
+                    le = new LinearExtraction.LinearExtractionFromSurface(nodLE);
+
+                else
+                    le = new LinearExtraction.LinearExtractionFromDoD(nodLE);
+
+                LinearExtractions[le.Name] = le;
             }
         }
 
@@ -137,6 +154,12 @@ namespace GCDCore.Project
                 XmlNode nodBS = nodDoD.AppendChild(nodParent.OwnerDocument.CreateElement("BudgetSegregations"));
                 foreach (BudgetSegregation bs in BudgetSegregations.Values)
                     bs.Serialize(nodBS);
+            }
+
+            if (LinearExtractions.Count > 0)
+            {
+                XmlNode nodLE = nodDoD.AppendChild(nodDoD.OwnerDocument.CreateElement("LinearExtractions"));
+                LinearExtractions.Values.ToList().ForEach(x => x.Serialize(nodLE));
             }
 
             // Return this so inherited classes can append to it.

@@ -28,8 +28,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
 
                 TreeNodeGroup nodAssoc = new AssocGroup(nodDEM.Nodes, ContextMenuStrip.Container, dem);
                 TreeNodeGroup nodError = new ErrorSurfaceGroup(nodDEM.Nodes, ContextMenuStrip.Container, dem);
-
-                //Nodes.Add(new LinearExtractionGroup<GCDCore.Project.LinearExtraction.LinearExtractionFromDEM>("Linear Extractions From DEM Surveys", "Linear Extraction", "Linear Extractions", container));
+                TreeNodeGroup nodLinea = new LinearExtractionGrp(nodDEM.Nodes, dem, dem.Raster.GISFileInfo.Directory, ContextMenuStrip.Container);
             }
 
             if (Nodes.Count > 0)

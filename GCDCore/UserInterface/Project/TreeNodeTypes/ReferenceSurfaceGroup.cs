@@ -28,6 +28,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
                 Nodes.Add(nodSurface);
 
                 TreeNodeGroup nodError = new ErrorSurfaceGroup(nodSurface.Nodes, ContextMenuStrip.Container, surf);
+                TreeNodeGroup nodLinea = new LinearExtractionGrp(nodSurface.Nodes, surf, surf.Raster.GISFileInfo.Directory, ContextMenuStrip.Container);
             }
 
             if (Nodes.Count > 0)
@@ -49,7 +50,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
 
             try
             {
-                SurveyLibrary.frmImportRaster frm = new SurveyLibrary.frmImportRaster(referenceDEM,  SurveyLibrary.ExtentImporter.Purposes.ReferenceSurface, "Reference Surface");
+                SurveyLibrary.frmImportRaster frm = new SurveyLibrary.frmImportRaster(referenceDEM, SurveyLibrary.ExtentImporter.Purposes.ReferenceSurface, "Reference Surface");
                 if (EditTreeItem(frm, false) == DialogResult.OK)
                 {
                     GCDConsoleLib.Raster rDEM = frm.ProcessRaster();

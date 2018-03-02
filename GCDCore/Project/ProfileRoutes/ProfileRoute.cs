@@ -39,7 +39,24 @@ namespace GCDCore.Project.ProfileRoutes
             get
             {
                 // Check if any linear extractions use this profile route
-                return ProjectManager.Project.LinearExtractions.Values.Any(x => x.Equals(this));
+                foreach(DEMSurvey dem in ProjectManager.Project.DEMSurveys.Values)
+                {
+                    if (dem.LinearExtractions.Values.Any(x => x.Equals(this)))
+                        return true; 
+                }
+                
+                foreach (Surface surf in ProjectManager.Project.ReferenceSurfaces.Values)
+                {
+                    if (surf.LinearExtractions.Values.Any(x => x.Equals(this)))
+                        return true;
+                }
+                foreach (DoDBase dod in ProjectManager.Project.DoDs.Values)
+                {
+                    if (dod.LinearExtractions.Values.Any(x => x.Equals(this)))
+                        return true;
+                }
+
+                return false;
             }
         }
 

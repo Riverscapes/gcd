@@ -13,6 +13,7 @@ namespace GCDCore.Project
         public readonly HillShade Hillshade;
 
         public readonly naru.ui.SortableBindingList<ErrorSurface> ErrorSurfaces;
+        public readonly Dictionary<string, LinearExtraction.LinearExtraction> LinearExtractions;
 
         public override string Noun { get { return "Reference Surface"; } }
 
@@ -75,6 +76,7 @@ namespace GCDCore.Project
             : base(name, rasterPath)
         {
             ErrorSurfaces = new naru.ui.SortableBindingList<ErrorSurface>();
+            LinearExtractions = new Dictionary<string, LinearExtraction.LinearExtraction>();
 
             if (hillshadePath is FileInfo && hillshadePath.Exists)
             {
@@ -86,6 +88,7 @@ namespace GCDCore.Project
          : base(name, raster)
         {
             ErrorSurfaces = new naru.ui.SortableBindingList<ErrorSurface>();
+            LinearExtractions = new Dictionary<string, LinearExtraction.LinearExtraction>();
         }
 
         public Surface(XmlNode nodSurface)
@@ -100,6 +103,21 @@ namespace GCDCore.Project
             {
                 ErrorSurface error = new ErrorSurface(nodError, this);
                 ErrorSurfaces.Add(error);
+            }
+
+            LinearExtractions = new Dictionary<string, LinearExtraction.LinearExtraction>();
+            foreach (XmlNode nodLE in nodSurface.SelectNodes("LinearExtractions/LinearExtraction"))
+            {
+                LinearExtraction.LinearExtraction le;
+                if (nodLE.SelectSingleNode("DEM") is XmlNode)
+                    le = new LinearExtraction.LinearExtractionFromDEM(nodLE);
+                else if (nodLE.SelectSingleNode("Surface") is XmlNode)
+                    le = new LinearExtraction.LinearExtractionFromSurface(nodLE);
+
+                else
+                    le = new LinearExtraction.LinearExtractionFromDoD(nodLE);
+
+                LinearExtractions[le.Name] = le;
             }
         }
 
@@ -171,6 +189,12 @@ namespace GCDCore.Project
                 XmlNode nodError = nodItem.AppendChild(nodItem.OwnerDocument.CreateElement("ErrorSurfaces"));
                 foreach (ErrorSurface error in ErrorSurfaces)
                     error.Serialize(nodError);
+            }
+
+            if (LinearExtractions.Count > 0)
+            {
+                XmlNode nodLE = nodItem.AppendChild(nodItem.OwnerDocument.CreateElement("LinearExtractions"));
+                LinearExtractions.Values.ToList().ForEach(x => x.Serialize(nodLE));
             }
         }
     }

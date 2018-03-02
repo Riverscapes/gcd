@@ -318,7 +318,7 @@
     <Compile Include="UserInterface\Project\TreeNodeTypes\GCDProjectGroup.cs" />
     <Compile Include="UserInterface\Project\TreeNodeTypes\GenericNodeGroup.cs" />
     <Compile Include="UserInterface\Project\TreeNodeTypes\InterComparisonGroup.cs" />
-    <Compile Include="UserInterface\Project\TreeNodeTypes\LinearExtractionGroup.cs" />
+    <Compile Include="UserInterface\Project\TreeNodeTypes\LinearExtractionGrp.cs" />
     <Compile Include="UserInterface\Project\TreeNodeTypes\MasksGroup.cs" />
     <Compile Include="UserInterface\Project\TreeNodeTypes\MorphologicalItem.cs" />
     <Compile Include="UserInterface\Project\TreeNodeTypes\ProfileRouteGroup.cs" />
