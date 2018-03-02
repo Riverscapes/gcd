@@ -70,6 +70,8 @@ namespace GCDCore.UserInterface.ChangeDetection
             rdoAbsolute.CheckedChanged += RefreshBars;
             cboType.SelectedIndexChanged += RefreshBars;
             cboType.SelectedIndex = 0;
+
+            Viewer.SetFont(Properties.Settings.Default.ChartFont);
         }
 
         private void RefreshBars(object sender, EventArgs e)

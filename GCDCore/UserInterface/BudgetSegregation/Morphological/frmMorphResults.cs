@@ -31,11 +31,11 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
         public frmMorphResults(GCDCore.Project.Morphological.MorphologicalAnalysis ma)
         {
             InitializeComponent();
+            Analysis = ma;
 
             cmsChart = new UtilityForms.ChartContextMenu(Analysis.OutputFolder, "morphological");
             chtData.ContextMenuStrip = cmsChart.CMS;
 
-            Analysis = ma;
         }
 
         private void frmMorphResults_Load(object sender, EventArgs e)
@@ -129,8 +129,6 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
             Analysis.Competency = valPercentCompetent.Value;
             UpdateCriticalDuration();
         }
-
-
 
         private void UpdateCriticalDuration()
         {
@@ -259,11 +257,19 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
                 maxY = Math.Max(maxY, (unit.VolDeposition + unit.VolDepositionErr).As(volUnit));
 
                 chtData.Series[VOLOUT__CHART_SERIES].Points.AddXY(unit.Name, unit.VolOut.As(volUnit));
-
             }
 
             chtData.ChartAreas[0].AxisY.Maximum = Math.Ceiling(maxY);
             chtData.ChartAreas[0].AxisY.RoundAxisValues();
+
+            foreach (int i in new List<int> { 0, 1 })
+            {
+                chtData.ChartAreas[i].AxisX.TitleFont = Properties.Settings.Default.ChartFont;
+                chtData.ChartAreas[i].AxisX.LabelStyle.Font = Properties.Settings.Default.ChartFont;
+                chtData.ChartAreas[i].AxisY.TitleFont = Properties.Settings.Default.ChartFont;
+                chtData.ChartAreas[i].AxisY.LabelStyle.Font = Properties.Settings.Default.ChartFont;
+            }
+            chtData.Legends[0].Font = Properties.Settings.Default.ChartFont;
         }
 
         private void cmdBrowse_Click(object sender, EventArgs e)

@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Linq;
+using System.Drawing;
 
 namespace GCDCore.UserInterface.Options
 {
@@ -18,12 +19,21 @@ namespace GCDCore.UserInterface.Options
 
             SurveyTypes = new naru.ui.SortableBindingList<SurveyType>(ProjectManager.SurveyTypes.Values.ToList<SurveyType>());
             grdSurveyTypes.DataSource = SurveyTypes;
+
+            frmColourPicker.SolidColorOnly = true;
+            frmColourPicker.ShowHelp = false;
         }
 
         private void frmOptions_Load(System.Object sender, System.EventArgs e)
         {
             // New method to upgrade the GCD user configuration settings
             Properties.Settings.Default.Upgrade();
+
+            frmFont.Font = Properties.Settings.Default.ChartFont;
+            txtFont.Text = FontString(frmFont.Font);
+
+            picErosion.BackColor = Properties.Settings.Default.Erosion;
+            picDeposition.BackColor = Properties.Settings.Default.Deposition;
 
             //TOOLTIPS
             //Workspace Tab
@@ -111,7 +121,11 @@ namespace GCDCore.UserInterface.Options
         }
 
         private void btnOK_Click(System.Object sender, System.EventArgs e)
-        {         
+        {
+            Properties.Settings.Default.Erosion = picErosion.BackColor;
+            Properties.Settings.Default.Deposition = picDeposition.BackColor;
+            Properties.Settings.Default.ChartFont = frmFont.Font;
+
             //GCDCore.Properties.Settings.Default.AddInputLayersToMap = chkAddInputLayersToMap.Checked
             //GCDCore.Properties.Settings.Default.AddOutputLayersToMap = chkAddOutputLayersToMap.Checked
             //Properties.Settings.Default.ValidateProjectOnLoad = chkBoxValidateProjectOnLoad.Checked;
@@ -154,7 +168,7 @@ namespace GCDCore.UserInterface.Options
             // Save the project settings
             Properties.Settings.Default.Save();
             this.Close();
-        }  
+        }
 
         private void chkComparativeSymbology_CheckedChanged(System.Object sender, System.EventArgs e)
         {
@@ -200,6 +214,36 @@ namespace GCDCore.UserInterface.Options
         private void btnHelp_Click(System.Object sender, System.EventArgs e)
         {
             Process.Start(Properties.Resources.HelpBaseURL + "customize-menu/options.html");
+        }
+
+        private void picBox_Click(object sender, EventArgs e)
+        {
+            PictureBox pic = sender as PictureBox;
+            frmColourPicker.Color = pic.BackColor;
+            if (frmColourPicker.ShowDialog() == DialogResult.OK)
+            {
+                pic.BackColor = frmColourPicker.Color;
+            }
+        }
+
+        private void cmdFont_Click(object sender, EventArgs e)
+        {
+            frmFont.Font = Properties.Settings.Default.ChartFont;
+            if (frmFont.ShowDialog() == DialogResult.OK)
+            {
+                txtFont.Text = FontString(frmFont.Font);
+            }
+        }
+
+        public static string FontString(Font font)
+        {
+            string fontstring = string.Format("{0}, {1}pts", font.Name, font.Size);
+            if (font.Bold || font.Italic)
+            {
+                fontstring = string.Format("{0},{1}{2}", fontstring, font.Bold ? " bold" : "", font.Italic ? " italic" : "");
+            }
+
+            return fontstring;
         }
     }
 }

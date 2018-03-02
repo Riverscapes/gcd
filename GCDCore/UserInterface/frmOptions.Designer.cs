@@ -60,6 +60,11 @@ namespace GCDCore.UserInterface.Options
             this.chkInterpolationErrorComparative = new System.Windows.Forms.CheckBox();
             this.chk3DPointQualityComparative = new System.Windows.Forms.CheckBox();
             this.TabPage4 = new System.Windows.Forms.TabPage();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.picDeposition = new System.Windows.Forms.PictureBox();
+            this.picErosion = new System.Windows.Forms.PictureBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.GroupBox1 = new System.Windows.Forms.GroupBox();
             this.lblWidth = new System.Windows.Forms.Label();
             this.numChartHeight = new System.Windows.Forms.NumericUpDown();
@@ -70,6 +75,11 @@ namespace GCDCore.UserInterface.Options
             this.lnkPyramidsHelp = new System.Windows.Forms.LinkLabel();
             this.SurveyTypesBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.ttpTooltip = new System.Windows.Forms.ToolTip(this.components);
+            this.frmColourPicker = new System.Windows.Forms.ColorDialog();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.txtFont = new System.Windows.Forms.TextBox();
+            this.cmdFont = new System.Windows.Forms.Button();
+            this.frmFont = new System.Windows.Forms.FontDialog();
             this.TabControl1.SuspendLayout();
             this.TabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdSurveyTypes)).BeginInit();
@@ -78,11 +88,15 @@ namespace GCDCore.UserInterface.Options
             ((System.ComponentModel.ISupportInitialize)(this.nudTransparency)).BeginInit();
             this.grbComparitiveLayers.SuspendLayout();
             this.TabPage4.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picDeposition)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picErosion)).BeginInit();
             this.GroupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numChartHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numChartWidth)).BeginInit();
             this.TabPage5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SurveyTypesBindingSource)).BeginInit();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnHelp
@@ -357,6 +371,8 @@ namespace GCDCore.UserInterface.Options
             // 
             // TabPage4
             // 
+            this.TabPage4.Controls.Add(this.groupBox3);
+            this.TabPage4.Controls.Add(this.groupBox2);
             this.TabPage4.Controls.Add(this.GroupBox1);
             this.TabPage4.Location = new System.Drawing.Point(4, 22);
             this.TabPage4.Name = "TabPage4";
@@ -365,6 +381,57 @@ namespace GCDCore.UserInterface.Options
             this.TabPage4.TabIndex = 3;
             this.TabPage4.Text = "Graphs";
             this.TabPage4.UseVisualStyleBackColor = true;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.picDeposition);
+            this.groupBox2.Controls.Add(this.picErosion);
+            this.groupBox2.Controls.Add(this.label2);
+            this.groupBox2.Controls.Add(this.label1);
+            this.groupBox2.Location = new System.Drawing.Point(6, 90);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(479, 80);
+            this.groupBox2.TabIndex = 5;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Colors";
+            // 
+            // picDeposition
+            // 
+            this.picDeposition.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.picDeposition.Location = new System.Drawing.Point(96, 49);
+            this.picDeposition.Name = "picDeposition";
+            this.picDeposition.Size = new System.Drawing.Size(70, 23);
+            this.picDeposition.TabIndex = 3;
+            this.picDeposition.TabStop = false;
+            this.picDeposition.Click += new System.EventHandler(this.picBox_Click);
+            // 
+            // picErosion
+            // 
+            this.picErosion.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.picErosion.Location = new System.Drawing.Point(96, 23);
+            this.picErosion.Name = "picErosion";
+            this.picErosion.Size = new System.Drawing.Size(70, 23);
+            this.picErosion.TabIndex = 2;
+            this.picErosion.TabStop = false;
+            this.picErosion.Click += new System.EventHandler(this.picBox_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(49, 54);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(42, 13);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Raising";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(41, 28);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(50, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Lowering";
             // 
             // GroupBox1
             // 
@@ -473,6 +540,36 @@ namespace GCDCore.UserInterface.Options
             this.SurveyTypesBindingSource.AllowNew = true;
             this.SurveyTypesBindingSource.DataMember = "SurveyTypes";
             // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.cmdFont);
+            this.groupBox3.Controls.Add(this.txtFont);
+            this.groupBox3.Location = new System.Drawing.Point(6, 176);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(479, 51);
+            this.groupBox3.TabIndex = 6;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Font";
+            // 
+            // txtFont
+            // 
+            this.txtFont.Location = new System.Drawing.Point(7, 20);
+            this.txtFont.Name = "txtFont";
+            this.txtFont.ReadOnly = true;
+            this.txtFont.Size = new System.Drawing.Size(435, 20);
+            this.txtFont.TabIndex = 0;
+            // 
+            // cmdFont
+            // 
+            this.cmdFont.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmdFont.Image = global::GCDCore.Properties.Resources.Options;
+            this.cmdFont.Location = new System.Drawing.Point(448, 19);
+            this.cmdFont.Name = "cmdFont";
+            this.cmdFont.Size = new System.Drawing.Size(23, 23);
+            this.cmdFont.TabIndex = 1;
+            this.cmdFont.UseVisualStyleBackColor = true;
+            this.cmdFont.Click += new System.EventHandler(this.cmdFont_Click);
+            // 
             // frmOptions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -499,6 +596,10 @@ namespace GCDCore.UserInterface.Options
             this.grbComparitiveLayers.ResumeLayout(false);
             this.grbComparitiveLayers.PerformLayout();
             this.TabPage4.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picDeposition)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picErosion)).EndInit();
             this.GroupBox1.ResumeLayout(false);
             this.GroupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numChartHeight)).EndInit();
@@ -506,6 +607,8 @@ namespace GCDCore.UserInterface.Options
             this.TabPage5.ResumeLayout(false);
             this.TabPage5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SurveyTypesBindingSource)).EndInit();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
 
 		}
@@ -542,5 +645,15 @@ namespace GCDCore.UserInterface.Options
         private System.Windows.Forms.DataGridView grdSurveyTypes;
         private System.Windows.Forms.DataGridViewTextBoxColumn colSurveyType;
         private System.Windows.Forms.DataGridViewTextBoxColumn colUncertainty;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.PictureBox picDeposition;
+        private System.Windows.Forms.PictureBox picErosion;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ColorDialog frmColourPicker;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Button cmdFont;
+        private System.Windows.Forms.TextBox txtFont;
+        private System.Windows.Forms.FontDialog frmFont;
     }
 }

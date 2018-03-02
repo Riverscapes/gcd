@@ -39,7 +39,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             frmFont.FontMustExist = true;
             frmFont.ShowHelp = false;
             frmFont.ShowColor = false;
-            txtFont.Text = FontString(Options.Font);
+            txtFont.Text = UserInterface.Options.frmOptions.FontString(Options.Font);
 
             frmColourPicker.SolidColorOnly = true;
             frmColourPicker.ShowHelp = false;
@@ -228,22 +228,13 @@ namespace GCDCore.UserInterface.ChangeDetection
             }
         }
 
-        private string FontString(Font font)
-        {
-            string fontstring = string.Format("{0}, {1}pts", font.Name, font.Size);
-            if (font.Bold || font.Italic)
-            {
-                fontstring = string.Format("{0},{1}{2}", fontstring, font.Bold ? " bold" : "", font.Italic ? " italic" : "");
-            }
-
-            return fontstring;
-        }
+   
 
         private void button1_Click(object sender, EventArgs e)
         {
             if (frmFont.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                txtFont.Text = FontString(frmFont.Font);
+                txtFont.Text = UserInterface.Options.frmOptions.FontString(frmFont.Font);
             }
         }
     }
