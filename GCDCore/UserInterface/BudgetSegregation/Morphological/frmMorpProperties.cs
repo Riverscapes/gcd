@@ -12,9 +12,11 @@ using GCDCore.Project.Morphological;
 
 namespace GCDCore.UserInterface.BudgetSegregation.Morphological
 {
-    public partial class frmMorpProperties : Form
+    public partial class frmMorpProperties : Form, IProjectItemForm
     {
         public MorphologicalAnalysis Analysis { get; internal set; }
+
+        public GCDProjectItem GCDProjectItem { get { return Analysis as GCDProjectItem; } }
 
         public frmMorpProperties(GCDCore.Project.BudgetSegregation bs)
         {

@@ -2,8 +2,6 @@
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnitsNet;
 using System.ComponentModel;
 using System.Xml;
@@ -87,6 +85,10 @@ namespace GCDCore.Project.Morphological
                 }
             }
 
+            ////////////////////////////////////////////////////////////////////////////////////////////////////
+            // Uncomment next line to clear the morph unit data and load the debug data
+            //LoadFeshieData();
+            ////////////////////////////////////////////////////////////////////////////////////////////////////
 
             Units[0].VolIn = Units[0].VolChange;
             Units[0].VolOut = (-1 * Units[0].VolChange) + Units[0].VolIn;
@@ -100,22 +102,27 @@ namespace GCDCore.Project.Morphological
                 Units[i].VolOut = Units[i].VolIn - Units[i].VolChange;
 
                 // Track the first unit that possesses a positive volume change
-                if (Units[i].VolChange > new Volume(0))
+                if (MinimumFluxCell == null && Units[i].VolChange > new Volume(0))
                 {
                     MinimumFluxCell = Units[i];
-                    MinimumFlux = Units[i].VolIn;
+                    MinimumFlux = UnitsNet.Volume.From(Math.Abs(Units[i].VolOut.As(UnitsNet.Units.VolumeUnit.CubicMeter)), UnitsNet.Units.VolumeUnit.CubicMeter);
                 }
             }
 
-            // Add back in the VolOut for the minimum flux cell, then recalculate the VolOut for each unit
-            //Units[0].VolIn = MinimumFluxCell.VolIn + Units[0].VolIn;
-            //Units[0].VolOut = Units[0].VolIn + Units[0].VolChange;
+            // Add back in the VolOut for the minimum flux cell (or the whole reach if there was no min flux cell)
+            if (MinimumFluxCell == null)
+                MinimumFlux = Units.Last().VolOut;
 
-            //for (int i = 1; i < Units.Count; i++)
-            //{
-            //    Units[i].VolIn = Units[i - 1].VolOut;
-            //    Units[i].VolOut = Units[i].VolIn - Units[i].VolChange;
-            //}
+            Units[0].VolIn = -1 * Units[0].VolChange + MinimumFlux;
+
+            Units[0].VolOut = Units[0].VolIn + Units[0].VolChange;
+
+            // Recalculate the VolOut for each unit now we know the reach input flux
+            for (int i = 1; i < Units.Count; i++)
+            {
+                Units[i].VolIn = Units[i - 1].VolOut;
+                Units[i].VolOut = Units[i].VolIn - Units[i].VolChange;
+            }
 
             // Total row
             MorphologicalUnit muTotal = new MorphologicalUnit("Reach Total", true);
@@ -268,6 +275,59 @@ namespace GCDCore.Project.Morphological
         public override void Delete()
         {
             throw new NotImplementedException("deleting morphological analysis is not implemented.");
+        }
+
+        private void LoadFeshieData()
+        {
+            Units.Clear();
+
+            for (int i = 0; i < 9; i++)
+                Units.Add(new MorphologicalUnit(i.ToString()));
+
+            Units[0].VolErosion = new UnitsNet.Volume(8495.756690979);
+            Units[0].VolErosionErr = new UnitsNet.Volume(2277.76617275923);
+            Units[0].VolDeposition = new UnitsNet.Volume(8462.97969818115);
+            Units[0].VolDepositionErr = new UnitsNet.Volume(2040.09397353604);
+
+            Units[1].VolErosion = new UnitsNet.Volume(13145.7649154663);
+            Units[1].VolErosionErr = new UnitsNet.Volume(3363.22726191208);
+            Units[1].VolDeposition = new UnitsNet.Volume(14018.8771057129);
+            Units[1].VolDepositionErr = new UnitsNet.Volume(3323.17051564902);
+
+            Units[2].VolErosion = new UnitsNet.Volume(10800.1524581909);
+            Units[2].VolErosionErr = new UnitsNet.Volume(3358.31976071373);
+            Units[2].VolDeposition = new UnitsNet.Volume(9090.47595977783);
+            Units[2].VolDepositionErr = new UnitsNet.Volume(2271.5536907278);
+
+            Units[3].VolErosion = new UnitsNet.Volume(17021.1651306152);
+            Units[3].VolErosionErr = new UnitsNet.Volume(4407.54704015329);
+            Units[3].VolDeposition = new UnitsNet.Volume(9055.04878997803);
+            Units[3].VolDepositionErr = new UnitsNet.Volume(2638.86314678937);
+
+            Units[4].VolErosion = new UnitsNet.Volume(16371.3544235229);
+            Units[4].VolErosionErr = new UnitsNet.Volume(4382.48134100437);
+            Units[4].VolDeposition = new UnitsNet.Volume(9054.64354705811);
+            Units[4].VolDepositionErr = new UnitsNet.Volume(2556.30508193001);
+
+            Units[5].VolErosion = new UnitsNet.Volume(15129.2975006104);
+            Units[5].VolErosionErr = new UnitsNet.Volume(3913.95101860911);
+            Units[5].VolDeposition = new UnitsNet.Volume(5790.98097229004);
+            Units[5].VolDepositionErr = new UnitsNet.Volume(1933.64249853417);
+
+            Units[6].VolErosion = new UnitsNet.Volume(11400.3183135986);
+            Units[6].VolErosionErr = new UnitsNet.Volume(2502.36957178637);
+            Units[6].VolDeposition = new UnitsNet.Volume(4151.42811584473);
+            Units[6].VolDepositionErr = new UnitsNet.Volume(1316.84695769101);
+
+            Units[7].VolErosion = new UnitsNet.Volume(7477.41519927979);
+            Units[7].VolErosionErr = new UnitsNet.Volume(2253.93063607067);
+            Units[7].VolDeposition = new UnitsNet.Volume(3493.41770172119);
+            Units[7].VolDepositionErr = new UnitsNet.Volume(1302.82937397808);
+
+            Units[8].VolErosion = new UnitsNet.Volume(8546.26876068115);
+            Units[8].VolErosionErr = new UnitsNet.Volume(2326.89401529357);
+            Units[8].VolDeposition = new UnitsNet.Volume(8882.98578643799);
+            Units[8].VolDepositionErr = new UnitsNet.Volume(2608.83717241883);
         }
     }
 }
