@@ -37,6 +37,7 @@ namespace GCDCore.UserInterface.Masks
             if (Mask == null)
             {
                 cmdOK.Text = Properties.Resources.CreateButtonText;
+                ucPolygon.InitializeBrowseNew("Directional Mask", GCDConsoleLib.GDalGeometryType.SimpleTypes.Polygon);
             }
             else
             {
@@ -44,7 +45,8 @@ namespace GCDCore.UserInterface.Masks
 
                 txtName.Text = Mask.Name;
                 txtPath.Text = ProjectManager.Project.GetRelativePath(Mask.Vector.GISFileInfo);
-                ucPolygon.Initialize("Directional Mask", Mask.Vector.GISFileInfo, true);
+                ucPolygon.InitializeExisting("Directional Mask", Mask.Vector);
+                ucPolygon.AddToMap += cmdAddToMap_Click;
 
                 cboField.Text = Mask._Field;
                 cboField.Enabled = false;
@@ -63,22 +65,9 @@ namespace GCDCore.UserInterface.Masks
                     cboDistance.Text = Mask.DistanceField;
                 }
 
-                //ucPolygon.Visible = false;
-                //lblPolygons.Visible = false;
-
-                //Height -= cboField.Top - ucPolygon.Top;
-
-                //ucPolygon.Initialize("Directional Mask", Mask._ShapeFile, true);
-                //ucPolygon.SetReadOnly();
-            }
-
-            // The singleton project manager subscribes to the browse raster event
-            // So that the browse can bubble to ArcMap
-            if (ProjectManager.IsArcMap)
-            {
-                ucPolygon.Initialize("Mask Polygon ShapeFile", GCDConsoleLib.GDalGeometryType.SimpleTypes.Polygon);
-                ucPolygon.BrowseVector += ProjectManager.OnBrowseVector;
-                ucPolygon.SelectVector += ProjectManager.OnSelectVector;
+                lblPath.Visible = false;
+                txtPath.Visible = false;
+                Height -= (grpFeatureClass.Top - txtPath.Top);
             }
         }
 
@@ -111,7 +100,7 @@ namespace GCDCore.UserInterface.Masks
                 {
                     Mask.Name = txtName.Text;
                     Mask.LabelField = chkLabel.Checked ? cboLabel.Text : string.Empty;
-                    Mask.DistanceField= chkDistance.Checked ? cboDistance.Text : string.Empty;
+                    Mask.DistanceField = chkDistance.Checked ? cboDistance.Text : string.Empty;
                 }
 
                 ProjectManager.Project.Save();
@@ -266,6 +255,18 @@ namespace GCDCore.UserInterface.Masks
                 txtPath.Text = string.Empty;
             else
                 txtPath.Text = ProjectManager.Project.GetRelativePath(ProjectManager.Project.MaskPath(txtName.Text));
+        }
+
+        private void cmdAddToMap_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                ProjectManager.OnAddVectorToMap(Mask);
+            }
+            catch (Exception ex)
+            {
+                naru.error.ExceptionUI.HandleException(ex, "Error adding directional mask to the map.");
+            }
         }
     }
 }

@@ -26,32 +26,24 @@ namespace GCDCore.UserInterface.Masks
 
         private void frmAOIProperties_Load(object sender, EventArgs e)
         {
+            ucPolygon.PathChanged += InputShapeFileChanged;
+
             if (AOIMask is GCDCore.Project.Masks.AOIMask)
             {
                 cmdOK.Text = Properties.Resources.UpdateButtonText;
 
                 txtName.Text = AOIMask.Name;
-                txtPath.Text = ProjectManager.Project.GetRelativePath(AOIMask.Vector.GISFileInfo);
+                ucPolygon.InitializeExisting("AOI Mask", AOIMask.Vector);
+                ucPolygon.AddToMap += cmdAddToMap_Click;
 
-                grpShapeFile.Visible = false;
-                Height -= (grpShapeFile.Height + grpShapeFile.Top - txtPath.Bottom);
-
-                if (!ProjectManager.IsArcMap)
-                {
-                    cmdAddToMap.Visible = false;
-                    txtPath.Width = cmdAddToMap.Right - txtPath.Left;
-                }
+                lblPath.Visible = false;
+                txtPath.Visible = false;
+                Height -= (grpShapeFile.Top - txtPath.Top);
             }
             else
             {
                 cmdOK.Text = Properties.Resources.CreateButtonText;
-
-                cmdAddToMap.Visible = false;
-                txtPath.Width = cmdAddToMap.Right - txtPath.Left;
-                ucPolygon.Initialize("Area of Interest Mask", GCDConsoleLib.GDalGeometryType.SimpleTypes.Polygon);
-                ucPolygon.PathChanged += InputShapeFileChanged;
-                ucPolygon.BrowseVector += ProjectManager.OnBrowseVector;
-                ucPolygon.SelectVector += ProjectManager.OnSelectVector;
+                ucPolygon.InitializeBrowseNew("AOI Mask", GCDConsoleLib.GDalGeometryType.SimpleTypes.Polygon);
             }
         }
 

@@ -99,14 +99,24 @@ namespace GCDCore.Project.Morphological
                 Units[i].VolIn = Units[i - 1].VolOut;
                 Units[i].VolOut = Units[i].VolIn - Units[i].VolChange;
 
-                // Track the first unit that possesses a positive exit volume
-                if (Units[i].VolOut > new Volume(0))
+                // Track the first unit that possesses a positive volume change
+                if (Units[i].VolChange > new Volume(0))
                 {
                     MinimumFluxCell = Units[i];
                     MinimumFlux = Units[i].VolIn;
                 }
             }
 
+            // Add back in the VolOut for the minimum flux cell, then recalculate the VolOut for each unit
+            //Units[0].VolIn = MinimumFluxCell.VolIn + Units[0].VolIn;
+            //Units[0].VolOut = Units[0].VolIn + Units[0].VolChange;
+
+            //for (int i = 1; i < Units.Count; i++)
+            //{
+            //    Units[i].VolIn = Units[i - 1].VolOut;
+            //    Units[i].VolOut = Units[i].VolIn - Units[i].VolChange;
+            //}
+            
             // Total row
             MorphologicalUnit muTotal = new MorphologicalUnit("Reach Total", true);
             muTotal.VolIn = Units[0].VolIn;
@@ -121,27 +131,7 @@ namespace GCDCore.Project.Morphological
                 muTotal.VolDepositionErr += unit.VolDepositionErr;
             }
             Units.Add(muTotal);
-
-            // Add back in the VolIn to the start of the reach to make the output of first positve
-            //Units[0].VolIn = muPos.VolIn + Units[0].VolIn;
-            //Units[0].VolOut = (-1 * Units[0].VolChange) + Units[0].VolIn;
-
-            //for (int i = 1; i < Units.Count; i++)
-            //{
-            //    Units[i].VolIn = Units[i - 1].VolOut;
-            //    Units[i].VolOut = Units[i].VolIn - Units[i].VolChange;
-            //}
-
-
-            //// The volume entering the first unit is the volume change of that first unit
-            //// plus the volume exiting the unit with the first positive volume out
-            //Units[0].VolIn = Units[0].VolChange + muPos.VolOut;
-
-            //// All remaining units should have their volumes in and out adjusted
-            //for (int i = 1; i < Units.Count; i++)
-            //    Units[i].VolIn = Units[i - 1].VolOut;
-
-            // Calculate the work performed in each cell now that the values are adjusted
+      
             CalculateWork();
         }
 

@@ -25,33 +25,27 @@ namespace GCDCore.UserInterface.ProfileRoutes
 
         private void frmProfileRouteProperties_Load(object sender, EventArgs e)
         {
+            // subscribe to the even when the user changes the input ShapeFile
+            ucPolyline.PathChanged += InputShapeFileChanged;
+
             if (ProfileRoute == null)
             {
                 cmdOK.Text = Properties.Resources.CreateButtonText;
+                ucPolyline.InitializeBrowseNew("Profile Route", GCDConsoleLib.GDalGeometryType.SimpleTypes.LineString);
             }
             else
             {
                 cmdOK.Text = Properties.Resources.UpdateButtonText;
                 txtName.Text = ProfileRoute.Name;
+                ucPolyline.InitializeExisting("Profile Route", ProfileRoute.Vector);
+                ucPolyline.AddToMap += cmdAddToMap_Click;
 
-                ucPolyline.Visible = false;
-                lblPolylines.Visible = false;
-
-                Height -= cboDistance.Top - ucPolyline.Top;
+                lblPath.Visible = false;
+                txtPath.Visible = false;
+                Height -= grpFeatureClass.Top - txtPath.Top;            
             }
 
-            // subscribe to the even when the user changes the input ShapeFile
-            ucPolyline.PathChanged += InputShapeFileChanged;
             UpdateControls(sender, e);
-
-            // The singleton project manager subscribes to the browse raster event
-            // So that the browse can bubble to ArcMap
-            if (ProjectManager.IsArcMap)
-            {
-                ucPolyline.Initialize("Profile Route ShapeFile", GCDConsoleLib.GDalGeometryType.SimpleTypes.LineString);
-                ucPolyline.BrowseVector += ProjectManager.OnBrowseVector;
-                ucPolyline.SelectVector += ProjectManager.OnSelectVector;
-            }
         }
 
         private void UpdateControls(object sender, EventArgs e)
@@ -79,7 +73,7 @@ namespace GCDCore.UserInterface.ProfileRoutes
                     ucPolyline.SelectedItem.Copy(fiMask);
 
                     string lablField = chkLabel.Checked ? cboLabel.Text : string.Empty;
-                    
+
                     ProfileRoute = new GCDCore.Project.ProfileRoutes.ProfileRoute(txtName.Text, fiMask, cboDistance.Text, lablField);
                     ProjectManager.Project.ProfileRoutes[ProfileRoute.Name] = ProfileRoute;
                 }
@@ -174,7 +168,7 @@ namespace GCDCore.UserInterface.ProfileRoutes
             if (string.IsNullOrEmpty(txtName.Text))
                 txtPath.Text = string.Empty;
             else
-                txtPath.Text = ProjectManager.Project.GetRelativePath( ProjectManager.GetProjectItemPath(ProjectManager.Project.ProfileRoutesFolder, "Route", txtName.Text, "shp"));
+                txtPath.Text = ProjectManager.Project.GetRelativePath(ProjectManager.GetProjectItemPath(ProjectManager.Project.ProfileRoutesFolder, "Route", txtName.Text, "shp"));
         }
 
         private void InputShapeFileChanged(object sender, naru.ui.PathEventArgs e)
@@ -196,6 +190,18 @@ namespace GCDCore.UserInterface.ProfileRoutes
             cboLabel.DataSource = shapeFile.Fields.Values.Where(x => x.Type.Equals(GCDConsoleLib.GDalFieldType.StringField)).ToList<GCDConsoleLib.VectorField>();
             cboDistance.DataSource = shapeFile.Fields.Values.Where(x => x.Type.Equals(GCDConsoleLib.GDalFieldType.RealField)).ToList<GCDConsoleLib.VectorField>();
             Cursor = Cursors.Default;
+        }
+
+        private void cmdAddToMap_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                ProjectManager.OnAddVectorToMap(ProfileRoute);
+            }
+            catch (Exception ex)
+            {
+                naru.error.ExceptionUI.HandleException(ex, "Error adding directional mask to the map.");
+            }
         }
     }
 }

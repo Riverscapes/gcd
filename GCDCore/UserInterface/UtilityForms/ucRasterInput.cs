@@ -12,15 +12,19 @@ namespace GCDCore.UserInterface.UtilityForms
         public event SelectRasterFromArcMapEventHandler SelectRasterFromArcMap;
         public delegate void SelectRasterFromArcMapEventHandler(System.Windows.Forms.TextBox txtPath, naru.ui.PathEventArgs e);
 
-        //Public Event RasterSelected(e As naru)
+        new public void InitializeBrowseNew(string sNoun)
+        {
+            base.InitializeBrowseNew(sNoun);
+            BrowseRaster += ProjectManager.OnBrowseRaster;
+        }
 
         public GCDConsoleLib.Raster SelectedItem
         {
             get
             {
-                if (Path is System.IO.FileInfo)
+                if (FullPath is System.IO.FileInfo)
                 {
-                    return new GCDConsoleLib.Raster(Path);
+                    return new GCDConsoleLib.Raster(FullPath);
                 }
                 else
                 {

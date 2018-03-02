@@ -27,7 +27,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
                     cboNeighbourhood.SelectedIndex = index;
             }
 
-            ucPointCloud.Initialize("Point Cloud", GCDConsoleLib.GDalGeometryType.SimpleTypes.Point);
+            ucPointCloud.InitializeBrowseNew("Point Cloud", GCDConsoleLib.GDalGeometryType.SimpleTypes.Point);
         }
 
         private void btnOK_Click(object sender, System.EventArgs e)

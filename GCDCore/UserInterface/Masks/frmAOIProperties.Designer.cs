@@ -34,12 +34,11 @@
             this.cmdHelp = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
+            this.lblPath = new System.Windows.Forms.Label();
             this.txtPath = new System.Windows.Forms.TextBox();
             this.grpShapeFile = new System.Windows.Forms.GroupBox();
             this.label3 = new System.Windows.Forms.Label();
             this.ucPolygon = new GCDCore.UserInterface.UtilityForms.ucVectorInput();
-            this.cmdAddToMap = new System.Windows.Forms.Button();
             this.grpShapeFile.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -97,14 +96,14 @@
             this.txtName.TabIndex = 1;
             this.txtName.TextChanged += new System.EventHandler(this.txtName_TextChanged);
             // 
-            // label2
+            // lblPath
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(59, 54);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(64, 13);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Project path";
+            this.lblPath.AutoSize = true;
+            this.lblPath.Location = new System.Drawing.Point(59, 54);
+            this.lblPath.Name = "lblPath";
+            this.lblPath.Size = new System.Drawing.Size(64, 13);
+            this.lblPath.TabIndex = 2;
+            this.lblPath.Text = "Project path";
             // 
             // txtPath
             // 
@@ -113,7 +112,7 @@
             this.txtPath.Location = new System.Drawing.Point(130, 50);
             this.txtPath.Name = "txtPath";
             this.txtPath.ReadOnly = true;
-            this.txtPath.Size = new System.Drawing.Size(363, 20);
+            this.txtPath.Size = new System.Drawing.Size(392, 20);
             this.txtPath.TabIndex = 3;
             // 
             // grpShapeFile
@@ -147,16 +146,6 @@
             this.ucPolygon.Size = new System.Drawing.Size(386, 23);
             this.ucPolygon.TabIndex = 1;
             // 
-            // cmdAddToMap
-            // 
-            this.cmdAddToMap.Image = global::GCDCore.Properties.Resources.AddToMap;
-            this.cmdAddToMap.Location = new System.Drawing.Point(499, 49);
-            this.cmdAddToMap.Name = "cmdAddToMap";
-            this.cmdAddToMap.Size = new System.Drawing.Size(23, 23);
-            this.cmdAddToMap.TabIndex = 4;
-            this.cmdAddToMap.UseVisualStyleBackColor = true;
-            this.cmdAddToMap.Click += new System.EventHandler(this.cmdAddToMap_Click);
-            // 
             // frmAOIProperties
             // 
             this.AcceptButton = this.cmdOK;
@@ -164,10 +153,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cmdCancel;
             this.ClientSize = new System.Drawing.Size(534, 189);
-            this.Controls.Add(this.cmdAddToMap);
             this.Controls.Add(this.grpShapeFile);
             this.Controls.Add(this.txtPath);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.lblPath);
             this.Controls.Add(this.txtName);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cmdHelp);
@@ -191,11 +179,10 @@
         private System.Windows.Forms.Button cmdHelp;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtName;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblPath;
         private System.Windows.Forms.TextBox txtPath;
         private System.Windows.Forms.GroupBox grpShapeFile;
         private System.Windows.Forms.Label label3;
         private UtilityForms.ucVectorInput ucPolygon;
-        private System.Windows.Forms.Button cmdAddToMap;
     }
 }

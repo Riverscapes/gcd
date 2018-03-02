@@ -32,7 +32,7 @@
             this.cmdCancel = new System.Windows.Forms.Button();
             this.cmdOK = new System.Windows.Forms.Button();
             this.cmdHelp = new System.Windows.Forms.Button();
-            this.GroupBox2 = new System.Windows.Forms.GroupBox();
+            this.grpFeatureClass = new System.Windows.Forms.GroupBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.cboDistance = new System.Windows.Forms.ComboBox();
             this.chkDistance = new System.Windows.Forms.CheckBox();
@@ -47,8 +47,8 @@
             this.txtName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.txtPath = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.GroupBox2.SuspendLayout();
+            this.lblPath = new System.Windows.Forms.Label();
+            this.grpFeatureClass.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -87,24 +87,24 @@
             this.cmdHelp.Text = "Help";
             this.cmdHelp.UseVisualStyleBackColor = true;
             // 
-            // GroupBox2
+            // grpFeatureClass
             // 
-            this.GroupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.grpFeatureClass.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.GroupBox2.Controls.Add(this.groupBox1);
-            this.GroupBox2.Controls.Add(this.chkLabel);
-            this.GroupBox2.Controls.Add(this.cboLabel);
-            this.GroupBox2.Controls.Add(this.ucPolygon);
-            this.GroupBox2.Controls.Add(this.cboField);
-            this.GroupBox2.Controls.Add(this.Label7);
-            this.GroupBox2.Controls.Add(this.lblPolygons);
-            this.GroupBox2.Location = new System.Drawing.Point(16, 77);
-            this.GroupBox2.Name = "GroupBox2";
-            this.GroupBox2.Size = new System.Drawing.Size(506, 196);
-            this.GroupBox2.TabIndex = 4;
-            this.GroupBox2.TabStop = false;
-            this.GroupBox2.Text = "Feature Class";
+            this.grpFeatureClass.Controls.Add(this.groupBox1);
+            this.grpFeatureClass.Controls.Add(this.chkLabel);
+            this.grpFeatureClass.Controls.Add(this.cboLabel);
+            this.grpFeatureClass.Controls.Add(this.ucPolygon);
+            this.grpFeatureClass.Controls.Add(this.cboField);
+            this.grpFeatureClass.Controls.Add(this.Label7);
+            this.grpFeatureClass.Controls.Add(this.lblPolygons);
+            this.grpFeatureClass.Location = new System.Drawing.Point(16, 77);
+            this.grpFeatureClass.Name = "grpFeatureClass";
+            this.grpFeatureClass.Size = new System.Drawing.Size(506, 196);
+            this.grpFeatureClass.TabIndex = 4;
+            this.grpFeatureClass.TabStop = false;
+            this.grpFeatureClass.Text = "Feature Class";
             // 
             // groupBox1
             // 
@@ -256,14 +256,14 @@
             this.txtPath.TabIndex = 3;
             this.txtPath.TabStop = false;
             // 
-            // label3
+            // lblPath
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(16, 48);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(64, 13);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "Project path";
+            this.lblPath.AutoSize = true;
+            this.lblPath.Location = new System.Drawing.Point(16, 48);
+            this.lblPath.Name = "lblPath";
+            this.lblPath.Size = new System.Drawing.Size(64, 13);
+            this.lblPath.TabIndex = 2;
+            this.lblPath.Text = "Project path";
             // 
             // frmDirectionalMaskProps
             // 
@@ -273,8 +273,8 @@
             this.CancelButton = this.cmdCancel;
             this.ClientSize = new System.Drawing.Size(534, 321);
             this.Controls.Add(this.txtPath);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.GroupBox2);
+            this.Controls.Add(this.lblPath);
+            this.Controls.Add(this.grpFeatureClass);
             this.Controls.Add(this.txtName);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cmdHelp);
@@ -285,8 +285,8 @@
             this.Name = "frmDirectionalMaskProps";
             this.Text = "Directional Mask Properties";
             this.Load += new System.EventHandler(this.frmDirectionalMaskProps_Load);
-            this.GroupBox2.ResumeLayout(false);
-            this.GroupBox2.PerformLayout();
+            this.grpFeatureClass.ResumeLayout(false);
+            this.grpFeatureClass.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
@@ -299,7 +299,7 @@
         private System.Windows.Forms.Button cmdCancel;
         private System.Windows.Forms.Button cmdOK;
         private System.Windows.Forms.Button cmdHelp;
-        internal System.Windows.Forms.GroupBox GroupBox2;
+        internal System.Windows.Forms.GroupBox grpFeatureClass;
         internal System.Windows.Forms.ComboBox cboDistance;
         private System.Windows.Forms.CheckBox chkLabel;
         internal System.Windows.Forms.ComboBox cboDirection;
@@ -314,6 +314,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox txtPath;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lblPath;
     }
 }

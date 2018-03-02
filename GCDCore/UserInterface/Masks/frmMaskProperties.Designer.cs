@@ -38,23 +38,23 @@
             this.cmdHelp = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
-            this.GroupBox2 = new System.Windows.Forms.GroupBox();
+            this.grpFeatureClass = new System.Windows.Forms.GroupBox();
             this.ucPolygon = new GCDCore.UserInterface.UtilityForms.ucVectorInput();
             this.cboField = new System.Windows.Forms.ComboBox();
             this.Label7 = new System.Windows.Forms.Label();
             this.Label6 = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.grpFieldValues = new System.Windows.Forms.GroupBox();
             this.grdData = new System.Windows.Forms.DataGridView();
+            this.colInclude = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.colFieldValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colLabel = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cmsSelectAllNone = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.selectAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.selectNoneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.txtPath = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.colInclude = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.colFieldValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colLabel = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.GroupBox2.SuspendLayout();
-            this.groupBox1.SuspendLayout();
+            this.lblPath = new System.Windows.Forms.Label();
+            this.grpFeatureClass.SuspendLayout();
+            this.grpFieldValues.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdData)).BeginInit();
             this.cmsSelectAllNone.SuspendLayout();
             this.SuspendLayout();
@@ -113,20 +113,20 @@
             this.txtName.Size = new System.Drawing.Size(423, 20);
             this.txtName.TabIndex = 1;
             // 
-            // GroupBox2
+            // grpFeatureClass
             // 
-            this.GroupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.grpFeatureClass.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.GroupBox2.Controls.Add(this.ucPolygon);
-            this.GroupBox2.Controls.Add(this.cboField);
-            this.GroupBox2.Controls.Add(this.Label7);
-            this.GroupBox2.Controls.Add(this.Label6);
-            this.GroupBox2.Location = new System.Drawing.Point(12, 70);
-            this.GroupBox2.Name = "GroupBox2";
-            this.GroupBox2.Size = new System.Drawing.Size(493, 88);
-            this.GroupBox2.TabIndex = 2;
-            this.GroupBox2.TabStop = false;
-            this.GroupBox2.Text = "Polygon Mask";
+            this.grpFeatureClass.Controls.Add(this.ucPolygon);
+            this.grpFeatureClass.Controls.Add(this.cboField);
+            this.grpFeatureClass.Controls.Add(this.Label7);
+            this.grpFeatureClass.Controls.Add(this.Label6);
+            this.grpFeatureClass.Location = new System.Drawing.Point(12, 70);
+            this.grpFeatureClass.Name = "grpFeatureClass";
+            this.grpFeatureClass.Size = new System.Drawing.Size(493, 88);
+            this.grpFeatureClass.TabIndex = 2;
+            this.grpFeatureClass.TabStop = false;
+            this.grpFeatureClass.Text = "Polygon Mask";
             // 
             // ucPolygon
             // 
@@ -166,18 +166,18 @@
             this.Label6.TabIndex = 0;
             this.Label6.Text = "Feature Class";
             // 
-            // groupBox1
+            // grpFieldValues
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.grpFieldValues.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.Controls.Add(this.grdData);
-            this.groupBox1.Location = new System.Drawing.Point(12, 164);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(493, 283);
-            this.groupBox1.TabIndex = 3;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Field Values";
+            this.grpFieldValues.Controls.Add(this.grdData);
+            this.grpFieldValues.Location = new System.Drawing.Point(12, 164);
+            this.grpFieldValues.Name = "grpFieldValues";
+            this.grpFieldValues.Size = new System.Drawing.Size(493, 283);
+            this.grpFieldValues.TabIndex = 3;
+            this.grpFieldValues.TabStop = false;
+            this.grpFieldValues.Text = "Field Values";
             // 
             // grdData
             // 
@@ -224,6 +224,33 @@
             this.grdData.TabIndex = 0;
             this.grdData.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.grdData_CellValidating);
             // 
+            // colInclude
+            // 
+            this.colInclude.DataPropertyName = "Include";
+            this.colInclude.HeaderText = "Include";
+            this.colInclude.Name = "colInclude";
+            this.colInclude.Width = 50;
+            // 
+            // colFieldValue
+            // 
+            this.colFieldValue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colFieldValue.DataPropertyName = "FieldValue";
+            this.colFieldValue.HeaderText = "Field Value";
+            this.colFieldValue.Name = "colFieldValue";
+            this.colFieldValue.ReadOnly = true;
+            this.colFieldValue.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colFieldValue.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // colLabel
+            // 
+            this.colLabel.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colLabel.DataPropertyName = "Label";
+            this.colLabel.HeaderText = "Label";
+            this.colLabel.MaxInputLength = 50;
+            this.colLabel.Name = "colLabel";
+            this.colLabel.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colLabel.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
             // cmsSelectAllNone
             // 
             this.cmsSelectAllNone.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -257,41 +284,14 @@
             this.txtPath.TabIndex = 8;
             this.txtPath.TabStop = false;
             // 
-            // label2
+            // lblPath
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 45);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(64, 13);
-            this.label2.TabIndex = 7;
-            this.label2.Text = "Project path";
-            // 
-            // colInclude
-            // 
-            this.colInclude.DataPropertyName = "Include";
-            this.colInclude.HeaderText = "Include";
-            this.colInclude.Name = "colInclude";
-            this.colInclude.Width = 50;
-            // 
-            // colFieldValue
-            // 
-            this.colFieldValue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colFieldValue.DataPropertyName = "FieldValue";
-            this.colFieldValue.HeaderText = "Field Value";
-            this.colFieldValue.Name = "colFieldValue";
-            this.colFieldValue.ReadOnly = true;
-            this.colFieldValue.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colFieldValue.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // colLabel
-            // 
-            this.colLabel.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colLabel.DataPropertyName = "Label";
-            this.colLabel.HeaderText = "Label";
-            this.colLabel.MaxInputLength = 50;
-            this.colLabel.Name = "colLabel";
-            this.colLabel.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colLabel.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.lblPath.AutoSize = true;
+            this.lblPath.Location = new System.Drawing.Point(12, 45);
+            this.lblPath.Name = "lblPath";
+            this.lblPath.Size = new System.Drawing.Size(64, 13);
+            this.lblPath.TabIndex = 7;
+            this.lblPath.Text = "Project path";
             // 
             // frmMaskProperties
             // 
@@ -301,9 +301,9 @@
             this.CancelButton = this.cmdCancel;
             this.ClientSize = new System.Drawing.Size(519, 488);
             this.Controls.Add(this.txtPath);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.GroupBox2);
+            this.Controls.Add(this.lblPath);
+            this.Controls.Add(this.grpFieldValues);
+            this.Controls.Add(this.grpFeatureClass);
             this.Controls.Add(this.txtName);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cmdHelp);
@@ -313,9 +313,9 @@
             this.Name = "frmMaskProperties";
             this.Text = "Mask Properties";
             this.Load += new System.EventHandler(this.frmMaskProperties_Load);
-            this.GroupBox2.ResumeLayout(false);
-            this.GroupBox2.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
+            this.grpFeatureClass.ResumeLayout(false);
+            this.grpFeatureClass.PerformLayout();
+            this.grpFieldValues.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.grdData)).EndInit();
             this.cmsSelectAllNone.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -330,15 +330,15 @@
         private System.Windows.Forms.Button cmdHelp;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtName;
-        internal System.Windows.Forms.GroupBox GroupBox2;
+        internal System.Windows.Forms.GroupBox grpFeatureClass;
         internal UtilityForms.ucVectorInput ucPolygon;
         internal System.Windows.Forms.ComboBox cboField;
         internal System.Windows.Forms.Label Label7;
         internal System.Windows.Forms.Label Label6;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox grpFieldValues;
         private System.Windows.Forms.DataGridView grdData;
         private System.Windows.Forms.TextBox txtPath;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblPath;
         private System.Windows.Forms.ContextMenuStrip cmsSelectAllNone;
         private System.Windows.Forms.ToolStripMenuItem selectAllToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem selectNoneToolStripMenuItem;

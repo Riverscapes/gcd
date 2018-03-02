@@ -18,9 +18,9 @@ namespace GCDCore.UserInterface.UtilityForms
         {
             get
             {
-                if (Path is System.IO.FileInfo)
+                if (FullPath is System.IO.FileInfo)
                 {
-                    return new GCDConsoleLib.Vector(Path);
+                    return new GCDConsoleLib.Vector(FullPath);
                 }
                 else
                 {
@@ -47,10 +47,18 @@ namespace GCDCore.UserInterface.UtilityForms
         /// <param name="sNoun"></param>
         /// <param name="eBrowseType"></param>
         /// <remarks></remarks>
-        public void Initialize(string sNoun, GCDConsoleLib.GDalGeometryType.SimpleTypes eBrowseType)
+        public void InitializeBrowseNew(string sNoun, GCDConsoleLib.GDalGeometryType.SimpleTypes eBrowseType)
         {
-            Noun = sNoun;
+            base.InitializeBrowseNew(sNoun);
             GeometryType = eBrowseType;
+            BrowseVector += ProjectManager.OnBrowseVector;
+            SelectVector += ProjectManager.OnSelectVector;
+        }
+
+        public void InitializeExisting(string sNoun, GCDConsoleLib.Vector vector)
+        {
+            base.InitializeExisting(sNoun, vector.GISFileInfo, ProjectManager.Project.GetRelativePath(vector.GISFileInfo));
+            GeometryType = vector.GeometryType.SimpleType;
         }
 
         public void cmdBrowse_Click(object sender, naru.ui.PathEventArgs e)
@@ -88,7 +96,7 @@ namespace GCDCore.UserInterface.UtilityForms
                     MessageBox.Show(msg, "Missing Spatial Reference", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
-                    naru.error.ExceptionUI.HandleException(ex, "Error browsing to raster");
+                    naru.error.ExceptionUI.HandleException(ex, string.Format("Error browsing to vector {0}", Noun));
             }
         }
 
@@ -106,8 +114,26 @@ namespace GCDCore.UserInterface.UtilityForms
             }
             catch (Exception ex)
             {
-                naru.error.ExceptionUI.HandleException(ex, "Error browsing to raster");
+                naru.error.ExceptionUI.HandleException(ex, string.Format("Error selecting vector {0} from ArcMap table of contents", Noun));
             }
         }
+
+        //public void cmdAddToMap_Click(object sender, naru.ui.PathEventArgs e)
+        //{
+        //    try
+        //    {
+        //        if (ProjectManager.IsArcMap)
+        //        {
+        //            if (AddToMap != null)
+        //            {
+        //                SelectVector((TextBox)sender, e, m_GeometryType);
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        naru.error.ExceptionUI.HandleException(ex, string.Format("Error selecting vector {0} from ArcMap table of contents", Noun));
+        //    }
+        //}
     }
 }

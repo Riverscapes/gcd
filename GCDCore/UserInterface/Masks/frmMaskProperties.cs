@@ -32,10 +32,15 @@ namespace GCDCore.UserInterface.Masks
                 cmdOK.Text = Properties.Resources.UpdateButtonText;
 
                 txtName.Text = Mask.Name;
-                txtPath.Text = ProjectManager.Project.GetRelativePath(Mask.Vector.GISFileInfo);
 
-                ucPolygon.Initialize("Mask Polygon ShapeFile", Mask.Vector.GISFileInfo, true);
-                ucPolygon.SetReadOnly();
+                lblPath.Visible = false;
+                txtPath.Visible = false;
+
+                grpFieldValues.Top -= grpFieldValues.Top - txtPath.Top;
+                grpFieldValues.Top -= grpFieldValues.Top - txtPath.Top;
+
+                ucPolygon.InitializeExisting("Mask Polygon ShapeFile", Mask.Vector);
+                ucPolygon.AddToMap += cmdAddToMap_Click;
 
                 cboField.DataSource = new BindingList<string>() { Mask._Field };
                 cboField.SelectedIndex = 0;
@@ -49,6 +54,7 @@ namespace GCDCore.UserInterface.Masks
             else
             {
                 cmdOK.Text = Properties.Resources.CreateButtonText;
+                ucPolygon.InitializeBrowseNew("Directional Mask", GCDConsoleLib.GDalGeometryType.SimpleTypes.Polygon);
             }
 
             // subscribe to the even when the user changes the input ShapeFile
@@ -63,15 +69,6 @@ namespace GCDCore.UserInterface.Masks
             cboField.SelectedIndexChanged += cboField_SelectedIndexChanged;
 
             grdData.DataSource = MaskItems;
-
-            // The singleton project manager subscribes to the browse raster event
-            // So that the browse can bubble to ArcMap
-            if (ProjectManager.IsArcMap)
-            {
-                ucPolygon.Initialize("Mask Polygon ShapeFile", GCDConsoleLib.GDalGeometryType.SimpleTypes.Polygon);
-                ucPolygon.BrowseVector += ProjectManager.OnBrowseVector;
-                ucPolygon.SelectVector += ProjectManager.OnSelectVector;
-            }
         }
 
         private void txtName_TextChanged(object sender, EventArgs e)
@@ -223,6 +220,18 @@ namespace GCDCore.UserInterface.Masks
             catch (Exception ex)
             {
                 naru.error.ExceptionUI.HandleException(ex, "Error creating regular mask.");
+            }
+        }
+
+        private void cmdAddToMap_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                ProjectManager.OnAddVectorToMap(Mask);
+            }
+            catch (Exception ex)
+            {
+                naru.error.ExceptionUI.HandleException(ex, "Error adding directional mask to the map.");
             }
         }
     }

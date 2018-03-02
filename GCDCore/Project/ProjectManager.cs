@@ -44,7 +44,7 @@ namespace GCDCore.Project
         public delegate void GISAddRasterToMapEvent(GCDProjectRasterItem raster);
         public static event GISAddRasterToMapEvent GISAddRasterToMapEventHandler;
 
-        public delegate void GISAddVectorToMapEvent(Masks.Mask mask);
+        public delegate void GISAddVectorToMapEvent(GCDProjectVectorItem vector);
         public static event GISAddVectorToMapEvent GISAddVectorToMapEventHandler;
 
         public static Dictionary<string, SurveyType> SurveyTypes
@@ -277,10 +277,10 @@ namespace GCDCore.Project
                 ProjectManager.GISAddRasterToMapEventHandler(raster);
         }
 
-        public static void OnAddVectorToMap(GCDCore.Project.Masks.Mask mask)
+        public static void OnAddVectorToMap(GCDProjectVectorItem vector)
         {
             if (GISAddVectorToMapEventHandler != null)
-                ProjectManager.GISAddVectorToMapEventHandler(mask);
+                ProjectManager.GISAddVectorToMapEventHandler(vector);
         }
 
         public class GISLayerEventArgs : EventArgs
