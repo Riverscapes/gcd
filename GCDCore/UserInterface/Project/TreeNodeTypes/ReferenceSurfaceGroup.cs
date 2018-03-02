@@ -36,19 +36,49 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
 
         public override void OnAdd(object sender, EventArgs e)
         {
-            if (ProjectManager.Project.DEMSurveys.Count < 1)
+            DEMSurvey referenceDEM = null;
+            if (ProjectManager.Project.DEMSurveys.Count > 0)
+            {
+                referenceDEM = ProjectManager.Project.DEMSurveys.Values.First();
+            }
+            else
             {
                 MessageBox.Show("You must have at least one DEM survey in your GCD project before you can generate a constant reference surface.", "DEM Surveys Required", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
-            SurveyLibrary.frmImportRaster frm = new SurveyLibrary.frmImportRaster(ProjectManager.Project.DEMSurveys.Values.First(), SurveyLibrary.ExtentImporter.Purposes.ReferenceSurface, "Reference Surface");
-            EditTreeItem(frm);
+            try
+            {
+                SurveyLibrary.frmImportRaster frm = new SurveyLibrary.frmImportRaster(referenceDEM,  SurveyLibrary.ExtentImporter.Purposes.ReferenceSurface, "Reference Surface");
+                if (EditTreeItem(frm, false) == DialogResult.OK)
+                {
+                    GCDConsoleLib.Raster rDEM = frm.ProcessRaster();
+                    GCDCore.Project.Surface surf = new Surface(frm.txtName.Text, rDEM.GISFileInfo, Surface.HillShadeRasterPath(rDEM.GISFileInfo));
+                    ProjectManager.Project.ReferenceSurfaces[surf.Name] = surf;
+
+                    ProjectManager.Project.Save();
+                    LoadChildNodes();
+
+                    // Loop through the child nodes and select the item that was just added
+                    foreach (TreeNodeItem childNode in Nodes)
+                    {
+                        if (childNode.Item.Equals(surf))
+                        {
+                            TreeView.SelectedNode = childNode;
+                            break;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                naru.error.ExceptionUI.HandleException(ex, "Error Importing DEM Survey");
+            }
         }
 
         public void OnDeriveFromDEMs(object sender, EventArgs e)
         {
-            if (ProjectManager.Project.DEMSurveys.Count<2)
+            if (ProjectManager.Project.DEMSurveys.Count < 2)
             {
                 MessageBox.Show("You must have at least two DEM surveys in your GCD project before you can generate a reference surface from DEM surveys.",
                     "DEM Surveys Required", MessageBoxButtons.OK, MessageBoxIcon.Information);
