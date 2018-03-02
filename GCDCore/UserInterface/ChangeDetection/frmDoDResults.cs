@@ -95,11 +95,7 @@ namespace GCDCore.UserInterface.ChangeDetection
                     ucHistogram.HistogramViewer.Chart.ChartAreas[0].AxisY.Maximum = frm.YAxisMaximum;
                     ucHistogram.HistogramViewer.Chart.ChartAreas[0].AxisY.Interval = frm.YAxisInterval;
 
-                    ucHistogram.HistogramViewer.Chart.ChartAreas[0].AxisX.TitleFont = m_Options.Font;
-                    ucHistogram.HistogramViewer.Chart.ChartAreas[0].AxisX.LabelStyle.Font = m_Options.Font;
-                    ucHistogram.HistogramViewer.Chart.ChartAreas[0].AxisY.TitleFont = m_Options.Font;
-                    ucHistogram.HistogramViewer.Chart.ChartAreas[0].AxisY.LabelStyle.Font = m_Options.Font;
-
+                    ucHistogram.HistogramViewer.SetFont(m_Options.Font);
                     ucHistogram.HistogramViewer.Chart.Series[Visualization.ViewerBase.EROSION].Color = m_Options.Erosion;
                     ucHistogram.HistogramViewer.Chart.Series[Visualization.ViewerBase.DEPOSITION].Color = m_Options.Deposition;
                     ucHistogram.HistogramViewer.Chart.DataBind();
@@ -108,10 +104,7 @@ namespace GCDCore.UserInterface.ChangeDetection
                     ucHistogram.SetHistogramUnits(m_Options.Units);
                     ucBars.DisplayUnits = new GCDConsoleLib.GCD.UnitGroup(m_Options.VolumeUnits, m_Options.AreaUnits, m_Options.LinearUnits, m_Options.LinearUnits);
 
-                    ucBars.chtControl.ChartAreas[0].AxisX.TitleFont = m_Options.Font;
-                    ucBars.chtControl.ChartAreas[0].AxisX.LabelStyle.Font = m_Options.Font;
-                    ucBars.chtControl.ChartAreas[0].AxisY.TitleFont = m_Options.Font;
-                    ucBars.chtControl.ChartAreas[0].AxisY.LabelStyle.Font = m_Options.Font;
+                    ucBars.Viewer.SetFont(m_Options.Font);
                     ucBars.chtControl.Series[Visualization.ViewerBase.EROSION].Color = m_Options.Erosion;
                     ucBars.chtControl.Series[Visualization.ViewerBase.DEPOSITION].Color = m_Options.Deposition;
 

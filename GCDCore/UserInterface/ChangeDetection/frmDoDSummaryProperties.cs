@@ -22,9 +22,9 @@ namespace GCDCore.UserInterface.ChangeDetection
 
             valMinimum.Minimum = decimal.MinValue;
             valMinimum.Maximum = decimal.MaxValue;
-            valMaximum.Minimum= decimal.MinValue;
+            valMaximum.Minimum = decimal.MinValue;
             valMaximum.Maximum = decimal.MaxValue;
-            
+
             valYMinimum.Minimum = decimal.MinValue;
             valYMinimum.Maximum = decimal.MaxValue;
             valYMaximum.Minimum = decimal.MinValue;
@@ -44,17 +44,14 @@ namespace GCDCore.UserInterface.ChangeDetection
             frmColourPicker.SolidColorOnly = true;
             frmColourPicker.ShowHelp = false;
 
-            cboLinear.DataSource = GCDUnits.GCDLinearUnitsAsString();
-            cboArea.DataSource = GCDUnits.GCDAreaUnitsAsString();
-            cboVolume.DataSource = GCDUnits.GCDVolumeUnitsAsString();
+            cboLinear.DataSource = GCDUnits.GCDLinearUnits();
+            cboArea.DataSource = GCDUnits.GCDAreaUnits();
+            cboVolume.DataSource = GCDUnits.GCDVolumeUnits();
 
-            cboLinear.Text = Options.LinearUnits.ToString();
-            cboArea.Text = Options.AreaUnits.ToString();
-            cboVolume.Text = Options.VolumeUnits.ToString();
+            GCDUnits.SelectUnit(cboLinear, Options.LinearUnits);
+            GCDUnits.SelectUnit(cboArea, Options.AreaUnits);
+            GCDUnits.SelectUnit(cboVolume, Options.VolumeUnits);
 
-            // TODO need Acre feet
-            //AddUnitsToCombo(UnitsNet.Units.VolumeUnit.acrefeet)
-                        
             picErosion.BackColor = Options.Erosion;
             picDeposition.BackColor = Options.Deposition;
 
@@ -117,9 +114,9 @@ namespace GCDCore.UserInterface.ChangeDetection
             Options.Erosion = picErosion.BackColor;
             Options.Deposition = picDeposition.BackColor;
 
-            Options.LinearUnits = (UnitsNet.Units.LengthUnit)Enum.Parse(typeof(UnitsNet.Units.LengthUnit), cboLinear.Text);
-            Options.AreaUnits = (UnitsNet.Units.AreaUnit)Enum.Parse(typeof(UnitsNet.Units.AreaUnit), cboArea.Text);
-            Options.VolumeUnits = (UnitsNet.Units.VolumeUnit)Enum.Parse(typeof(UnitsNet.Units.VolumeUnit), cboVolume.Text);
+            Options.LinearUnits = ((GCDUnits.FormattedUnit<UnitsNet.Units.LengthUnit>)cboLinear.SelectedItem).Unit;
+            Options.AreaUnits = ((GCDUnits.FormattedUnit<UnitsNet.Units.AreaUnit>)cboArea.SelectedItem).Unit;
+            Options.VolumeUnits = ((GCDUnits.FormattedUnit<UnitsNet.Units.VolumeUnit>)cboVolume.SelectedItem).Unit;
 
             Options.m_nPrecision = Convert.ToInt32(valPrecision.Value);
 
@@ -159,9 +156,10 @@ namespace GCDCore.UserInterface.ChangeDetection
 
         private void cmdReset_Click(object sender, EventArgs e)
         {
-            cboLinear.Text = ProjectManager.Project.Units.VertUnit.ToString();
-            cboArea.Text = ProjectManager.Project.Units.ArUnit.ToString();
-            cboVolume.Text = ProjectManager.Project.Units.VolUnit.ToString();
+            GCDUnits.SelectUnit(cboLinear, ProjectManager.Project.Units.HorizUnit);
+            GCDUnits.SelectUnit(cboArea, ProjectManager.Project.Units.VertUnit);
+            GCDUnits.SelectUnit(cboVolume, ProjectManager.Project.Units.ArUnit);
+
             valPrecision.Value = Options.m_nPrecision;
             rdoRowsAll.Checked = true;
             chkColsRaw.Checked = true;

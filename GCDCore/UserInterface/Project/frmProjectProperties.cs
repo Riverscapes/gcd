@@ -38,16 +38,16 @@ namespace GCDCore.UserInterface.Project
 
             SetToolTips();
 
-            cboHorizontalUnits.DataSource = GCDUnits.GCDLinearUnitsAsString();
-            cboVerticalUnits.DataSource = GCDUnits.GCDLinearUnitsAsString();
-            cboAreaUnits.DataSource = GCDUnits.GCDAreaUnitsAsString();
-            cboVolumeUnits.DataSource = GCDUnits.GCDVolumeUnitsAsString();
+            cboHorizontalUnits.DataSource = GCDUnits.GCDLinearUnits();
+            cboVerticalUnits.DataSource = GCDUnits.GCDLinearUnits();
+            cboAreaUnits.DataSource = GCDUnits.GCDAreaUnits();
+            cboVolumeUnits.DataSource = GCDUnits.GCDVolumeUnits();
 
             if (CreateMode)
             {
                 this.Text = "Create New GCD Projeect";
                 btnOK.Text = "   Create";
-              btnOK.Text = Properties.Resources.CreateButtonText;
+                btnOK.Text = Properties.Resources.CreateButtonText;
 
                 // Default the directory to the parent folder of the last project used.
                 if (!string.IsNullOrEmpty(GCDCore.Properties.Settings.Default.LastUsedProjectFolder))
@@ -59,34 +59,33 @@ namespace GCDCore.UserInterface.Project
                     }
                 }
 
-                cboHorizontalUnits.SelectedItem = "Meter";
-                cboVerticalUnits.SelectedItem = "Meter";
-                cboAreaUnits.SelectedItem = "SquareMeter";
-                cboVolumeUnits.SelectedItem = "CubicMeter";
+                GCDUnits.SelectUnit(cboHorizontalUnits, UnitsNet.Units.LengthUnit.Meter);
+                GCDUnits.SelectUnit(cboVerticalUnits, UnitsNet.Units.LengthUnit.Meter);
+                GCDUnits.SelectUnit(cboAreaUnits, UnitsNet.Units.AreaUnit.SquareMeter);
+                GCDUnits.SelectUnit(cboVolumeUnits, UnitsNet.Units.VolumeUnit.CubicMeter);
             }
             else
             {
                 this.Text = "GCD Project Properties";
                 btnOK.Text = Properties.Resources.UpdateButtonText;
 
-                var _with1 = ProjectManager.Project;
-                txtName.Text = _with1.Name;
-                txtDirectory.Text = _with1.ProjectFile.DirectoryName;
-                txtGCDPath.Text = _with1.ProjectFile.FullName;
-                txtDescription.Text = _with1.Description;
+                txtName.Text = ProjectManager.Project.Name;
+                txtDirectory.Text = ProjectManager.Project.ProjectFile.DirectoryName;
+                txtGCDPath.Text = ProjectManager.Project.ProjectFile.FullName;
+                txtDescription.Text = ProjectManager.Project.Description;
 
-                cboHorizontalUnits.Text = _with1.Units.HorizUnit.ToString();
-                cboVerticalUnits.Text = _with1.Units.VertUnit.ToString();
-                cboAreaUnits.Text = _with1.Units.ArUnit.ToString();
-                cboVolumeUnits.Text = _with1.Units.VolUnit.ToString();
-
+                GCDUnits.SelectUnit(cboHorizontalUnits, ProjectManager.Project.Units.HorizUnit);
+                GCDUnits.SelectUnit(cboVerticalUnits, ProjectManager.Project.Units.VertUnit);
+                GCDUnits.SelectUnit(cboAreaUnits, ProjectManager.Project.Units.ArUnit);
+                GCDUnits.SelectUnit(cboVolumeUnits, ProjectManager.Project.Units.VolUnit);
+                
                 // Only allow the units to be changed if no DEMs have been defined
-                int demCount = _with1.DEMSurveys.Count;
+                int demCount = ProjectManager.Project.DEMSurveys.Count;
                 cboHorizontalUnits.Enabled = demCount == 0;
                 cboVerticalUnits.Enabled = demCount == 0;
 
                 // Copy the project meta into the binding list
-                foreach (KeyValuePair<string, string> kvp in _with1.MetaData)
+                foreach (KeyValuePair<string, string> kvp in ProjectManager.Project.MetaData)
                 {
                     MetaData.Add(new ProjectMetaData(kvp.Key, kvp.Value));
                 }
@@ -252,10 +251,11 @@ namespace GCDCore.UserInterface.Project
         private UnitGroup GetSelectedUnits()
         {
             return new UnitGroup(
-                (UnitsNet.Units.VolumeUnit)Enum.Parse(typeof(UnitsNet.Units.VolumeUnit), cboVolumeUnits.SelectedItem.ToString()),
-                (UnitsNet.Units.AreaUnit)Enum.Parse(typeof(UnitsNet.Units.AreaUnit), cboAreaUnits.SelectedItem.ToString()),
-                (UnitsNet.Units.LengthUnit)Enum.Parse(typeof(UnitsNet.Units.LengthUnit), cboVerticalUnits.SelectedItem.ToString()),
-                (UnitsNet.Units.LengthUnit)Enum.Parse(typeof(UnitsNet.Units.LengthUnit), cboHorizontalUnits.SelectedItem.ToString()));
+                ((GCDUnits.FormattedUnit<UnitsNet.Units.VolumeUnit>)cboVolumeUnits.SelectedItem).Unit,
+                ((GCDUnits.FormattedUnit<UnitsNet.Units.AreaUnit>)cboAreaUnits.SelectedItem).Unit,
+                ((GCDUnits.FormattedUnit<UnitsNet.Units.LengthUnit>)cboVerticalUnits.SelectedItem).Unit,
+                ((GCDUnits.FormattedUnit<UnitsNet.Units.LengthUnit>)cboHorizontalUnits.SelectedItem).Unit
+            );
         }
 
         private bool ValidateForm()

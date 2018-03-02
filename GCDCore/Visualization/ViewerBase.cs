@@ -35,6 +35,14 @@ namespace GCDCore.Visualization
             Chart.Legends.Clear();
         }
 
+        public void SetFont(System.Drawing.Font font)
+        {
+            Chart.ChartAreas[0].AxisX.TitleFont = font;
+            Chart.ChartAreas[0].AxisX.LabelStyle.Font = font;
+            Chart.ChartAreas[0].AxisY.TitleFont = font;
+            Chart.ChartAreas[0].AxisY.LabelStyle.Font = font;
+        }
+
         protected void SaveImage(FileInfo filePath)
         {
             Chart.SaveImage(filePath.FullName, ChartImageFormat.Png);
