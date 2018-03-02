@@ -35,6 +35,8 @@ namespace GCDCore.Visualization
             _with2.MinorGrid.Enabled = true;
             _with2.MinorGrid.LineColor = Color.LightGray;
 
+            Chart.Series.Clear();
+
             Series errSeries = Chart.Series.Add(ViewerBase.EROSION);
             errSeries.Color = Properties.Settings.Default.Erosion;
             errSeries.ChartArea = Chart.ChartAreas.First().Name;
@@ -44,9 +46,6 @@ namespace GCDCore.Visualization
             depSeries.Color = Properties.Settings.Default.Deposition;
             depSeries.ChartArea = Chart.ChartAreas.First().Name;
             depSeries.ChartType = SeriesChartType.StackedColumn;
-
-
-
         }
 
         public void Refresh(double fErosion, double fDeposition, string sDisplayUnitsAbbreviation, BarTypes eType, bool bAbsolute)
@@ -101,6 +100,7 @@ namespace GCDCore.Visualization
                     Properties.Settings.Default.Deposition
                 }
             };
+
             if (bShowNet)
             {
                 dSeries.Add("Net", Color.Black);
@@ -121,6 +121,8 @@ namespace GCDCore.Visualization
             {
                 if (netSeries == null)
                     netSeries = Chart.Series.Add(ViewerBase.NET);
+
+                netSeries.Points.Clear();
 
                 netSeries.Color = (fNet >= 0 ? depSeries.Color : errSeries.Color);
                 netSeries.ChartArea = Chart.ChartAreas.First().Name;
