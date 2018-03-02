@@ -62,11 +62,7 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
                     lblMin.Text = string.Format("Minimum MinLoD threshold ({0})", vertUnits);
                     lblMax.Text = string.Format("Maximum MinLoD threshold ({0})", vertUnits);
                     lblInterval.Text = string.Format("Interval ({0})", vertUnits);
-
-                    valMin.Maximum = 1;
-                    valMax.Maximum = 1;
-                    valInterval.Maximum = 1;
-
+            
                     chkBayesian.Visible = false;
                     cmdBayesian.Visible = false;
                     Height -= cmdOK.Top - chkBayesian.Top;
@@ -81,6 +77,9 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
                     lblMin.Text = "Minimum confidence level (0-1)";
                     lblMax.Text = "Maximum confidence level (0-1)";
                     lblInterval.Text = "Interval (0-1)";
+                    valMin.Maximum = 1;
+                    valMax.Maximum = 1;
+                    valInterval.Maximum = 1;
                     break;
 
                 default:
