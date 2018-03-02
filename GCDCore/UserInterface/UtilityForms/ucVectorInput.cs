@@ -9,9 +9,6 @@ namespace GCDCore.UserInterface.UtilityForms
         public event BrowseVectorEventHandler BrowseVector;
         public delegate void BrowseVectorEventHandler(TextBox txtPath, naru.ui.PathEventArgs e, GCDConsoleLib.GDalGeometryType.SimpleTypes geometryType);
 
-        public event SelectVectorEventHandler SelectVector;
-        public delegate void SelectVectorEventHandler(TextBox txtPath, naru.ui.PathEventArgs e, GCDConsoleLib.GDalGeometryType.SimpleTypes geometryType);
-
         private GCDConsoleLib.GDalGeometryType.SimpleTypes m_GeometryType;
 
         public GCDConsoleLib.Vector SelectedItem
@@ -37,8 +34,7 @@ namespace GCDCore.UserInterface.UtilityForms
 
         public ucVectorInput()
         {
-            BrowseFile += cmdBrowse_Click;
-            SelectLayer += cmdSelect_Click;
+            Browse += cmdBrowse_Click;
         }
 
         /// <summary>
@@ -52,7 +48,6 @@ namespace GCDCore.UserInterface.UtilityForms
             base.InitializeBrowseNew(sNoun);
             GeometryType = eBrowseType;
             BrowseVector += ProjectManager.OnBrowseVector;
-            SelectVector += ProjectManager.OnSelectVector;
         }
 
         public void InitializeExisting(string sNoun, GCDConsoleLib.Vector vector)
@@ -77,6 +72,10 @@ namespace GCDCore.UserInterface.UtilityForms
                     naru.ui.Textbox.BrowseOpenVector(txtPath, naru.ui.UIHelpers.WrapMessageWithNoun("Browse and Select a", Noun, "ShapeFile"));
                 }
 
+                if (!string.IsNullOrEmpty(txtPath.Text) && System.IO.File.Exists(txtPath.Text))
+                {
+                    FullPath = new System.IO.FileInfo(txtPath.Text);
+                }
             }
             catch (Exception ex)
             {
@@ -99,41 +98,5 @@ namespace GCDCore.UserInterface.UtilityForms
                     naru.error.ExceptionUI.HandleException(ex, string.Format("Error browsing to vector {0}", Noun));
             }
         }
-
-        public void cmdSelect_Click(object sender, naru.ui.PathEventArgs e)
-        {
-            try
-            {
-                if (ProjectManager.IsArcMap)
-                {
-                    if (SelectVector != null)
-                    {
-                        SelectVector((TextBox)sender, e, m_GeometryType);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                naru.error.ExceptionUI.HandleException(ex, string.Format("Error selecting vector {0} from ArcMap table of contents", Noun));
-            }
-        }
-
-        //public void cmdAddToMap_Click(object sender, naru.ui.PathEventArgs e)
-        //{
-        //    try
-        //    {
-        //        if (ProjectManager.IsArcMap)
-        //        {
-        //            if (AddToMap != null)
-        //            {
-        //                SelectVector((TextBox)sender, e, m_GeometryType);
-        //            }
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        naru.error.ExceptionUI.HandleException(ex, string.Format("Error selecting vector {0} from ArcMap table of contents", Noun));
-        //    }
-        //}
     }
 }

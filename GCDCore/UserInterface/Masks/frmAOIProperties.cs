@@ -114,6 +114,7 @@ namespace GCDCore.UserInterface.Masks
             }
 
             Cursor = Cursors.Default;
+            cmdOK.Select();
         }
 
         private void txtName_TextChanged(object sender, EventArgs e)

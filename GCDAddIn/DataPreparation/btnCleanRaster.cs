@@ -9,7 +9,6 @@ namespace GCDAddIn.DataPreparation
             GCDCore.UserInterface.SurveyLibrary.frmImportRaster frm = new GCDCore.UserInterface.SurveyLibrary.frmImportRaster(null, GCDCore.UserInterface.SurveyLibrary.ExtentImporter.Purposes.Standalone, string.Empty);
 
             frm.ucRaster.BrowseRaster += BrowseRaster;
-            frm.ucRaster.SelectRasterFromArcMap += SelectRasterFromArcMap;
             frm.GISBrowseSaveRasterHandler += BrowseSaveRaster;
 
             try
@@ -50,23 +49,7 @@ namespace GCDAddIn.DataPreparation
             string result = ArcMapBrowse.BrowseSaveRaster(formTitle, hParentWindowHandle);
             if (!string.IsNullOrEmpty(result))
                 txt.Text = result;
-        }
-
-        private void SelectRasterFromArcMap(object sender, naru.ui.PathEventArgs e)
-        {
-            try
-            {
-                frmLayerSelector frm = new frmLayerSelector(ArcMapBrowse.BrowseGISTypes.Raster);
-                if (frm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                {
-                    ((System.Windows.Forms.TextBox)sender).Text = frm.SelectedLayer.FullPath.FullName;
-                }
-            }
-            catch (Exception ex)
-            {
-                naru.error.ExceptionUI.HandleException(ex);
-            }
-        }
+        }    
 
         protected override void OnUpdate()
         {

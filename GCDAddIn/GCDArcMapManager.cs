@@ -26,6 +26,7 @@ namespace GCDAddIn
         private const string AnalysesGroupLayer = "Analyses";
         private const string MasksGroupLayer = "Masks";
         private const string RefSurfGroupLayer = "Reference Surfaces";
+        private const string ProfileRouteGroupLayer = "Profile Routes";
 
         public GCDArcMapManager(short fDefaultDEMTransparency = 40, IMapDocument pMapDocument = null)
         {
@@ -121,7 +122,7 @@ namespace GCDAddIn
         {
             short fDEMTransparency = (short)-1;
             IGroupLayer pSurveyLyr = AddReferenceSurfaceGroupLayer(surf);
-            
+
             if (surf.Hillshade != null && surf.Hillshade.Raster.GISFileInfo.Exists)
             {
                 AddRasterLayer(surf.Hillshade.Raster, null, surf.Name + " Hillshade", pSurveyLyr, "Aspect", -1, ExpandLegend: false);
@@ -201,7 +202,7 @@ namespace GCDAddIn
         public void AddMask(GCDCore.Project.Masks.AttributeFieldMask mask)
         {
             IGroupLayer pProjLyr = AddProjectGroupLayer();
-            IGroupLayer pMasksGrpLyr = ArcMapUtilities.GetGroupLayer(MasksGroupLayer, pProjLyr);
+            IGroupLayer pGrpLayer = ArcMapUtilities.GetGroupLayer(MasksGroupLayer, pProjLyr);
 
             IFeatureRenderer pRenderer = null;
             string queryFilter = string.Empty;
@@ -228,17 +229,27 @@ namespace GCDAddIn
                 labelField = string.IsNullOrEmpty(dirMask.LabelField) ? dirMask._Field : dirMask.LabelField;
             }
 
-            VectorSymbolization.AddToMapVector(mask.Vector.GISFileInfo, mask.Name, pMasksGrpLyr, mask._Field, pRenderer, queryFilter, labelField);
+            VectorSymbolization.AddToMapVector(mask.Vector.GISFileInfo, mask.Name, pGrpLayer, mask._Field, pRenderer, queryFilter, labelField);
         }
 
         public void AddAOI(GCDCore.Project.Masks.AOIMask mask)
         {
             IGroupLayer pProjLyr = AddProjectGroupLayer();
-            IGroupLayer pMasksGrpLyr = ArcMapUtilities.GetGroupLayer(MasksGroupLayer, pProjLyr);
+            IGroupLayer pGrpLayer = ArcMapUtilities.GetGroupLayer(MasksGroupLayer, pProjLyr);
 
             IFeatureRenderer pRenderer = VectorSymbolization.GetAOIRenderer(mask) as IFeatureRenderer;
 
-            VectorSymbolization.AddToMapVector(mask.Vector.GISFileInfo, mask.Name, pMasksGrpLyr, string.Empty, pRenderer, string.Empty, string.Empty);
+            VectorSymbolization.AddToMapVector(mask.Vector.GISFileInfo, mask.Name, pGrpLayer, string.Empty, pRenderer, string.Empty, string.Empty);
+        }
+
+        public void AddProfileRoute(GCDCore.Project.ProfileRoutes.ProfileRoute route)
+        {
+            IGroupLayer pProjLyr = AddProjectGroupLayer();
+            IGroupLayer pGrpLayer = ArcMapUtilities.GetGroupLayer(ProfileRouteGroupLayer, pProjLyr);
+
+            IFeatureRenderer pRenderer = null;// VectorSymbolization.GetAOIRenderer(mask) as IFeatureRenderer;
+
+            VectorSymbolization.AddToMapVector(route.Vector.GISFileInfo, route.Name, pGrpLayer, string.Empty, pRenderer, string.Empty, string.Empty);
         }
 
         public void AddDoD(GCDProjectRasterItem dod, bool bThresholded = true)

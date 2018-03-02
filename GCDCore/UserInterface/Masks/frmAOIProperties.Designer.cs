@@ -114,10 +114,11 @@
             this.txtPath.ReadOnly = true;
             this.txtPath.Size = new System.Drawing.Size(392, 20);
             this.txtPath.TabIndex = 3;
+            this.txtPath.TabStop = false;
             // 
             // grpShapeFile
             // 
-            this.grpShapeFile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.grpShapeFile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.grpShapeFile.Controls.Add(this.label3);
             this.grpShapeFile.Controls.Add(this.ucPolygon);
@@ -141,6 +142,7 @@
             // 
             this.ucPolygon.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.ucPolygon.FullPath = null;
             this.ucPolygon.Location = new System.Drawing.Point(118, 21);
             this.ucPolygon.Name = "ucPolygon";
             this.ucPolygon.Size = new System.Drawing.Size(386, 23);

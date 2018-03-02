@@ -103,8 +103,7 @@
             // 
             // grpFeatureClass
             // 
-            this.grpFeatureClass.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.grpFeatureClass.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.grpFeatureClass.Controls.Add(this.label2);
             this.grpFeatureClass.Controls.Add(this.cboDistance);
@@ -167,6 +166,7 @@
             // 
             this.ucPolyline.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.ucPolyline.FullPath = null;
             this.ucPolyline.Location = new System.Drawing.Point(154, 22);
             this.ucPolyline.Name = "ucPolyline";
             this.ucPolyline.Size = new System.Drawing.Size(337, 23);

@@ -182,11 +182,6 @@ namespace GCDCore.UserInterface.SurveyLibrary
             ucRaster.PathChanged += OnRasterChanged;
             valCellSize.ValueChanged += valCellSize_ValueChanged;
 
-            // The singleton project manager subscribes to the browse raster event
-            // So that the browse can bubble to ArcMap
-            if (ProjectManager.IsArcMap)
-                ucRaster.BrowseRaster += ProjectManager.OnBrowseRaster;
-
             // Select the input raster control to make it quicker for user
             ucRaster.Select();
         }

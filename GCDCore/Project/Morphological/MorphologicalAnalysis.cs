@@ -26,7 +26,7 @@ namespace GCDCore.Project.Morphological
 
         public override string Noun { get { return "Morphological Analysis"; } }
 
-  
+
         public MorphologicalAnalysis(string name, DirectoryInfo outputFolder, BudgetSegregation bs, UnitsNet.Units.VolumeUnit eVolumeUnits)
             : base(name)
         {
@@ -116,7 +116,7 @@ namespace GCDCore.Project.Morphological
             //    Units[i].VolIn = Units[i - 1].VolOut;
             //    Units[i].VolOut = Units[i].VolIn - Units[i].VolChange;
             //}
-            
+
             // Total row
             MorphologicalUnit muTotal = new MorphologicalUnit("Reach Total", true);
             muTotal.VolIn = Units[0].VolIn;
@@ -131,7 +131,7 @@ namespace GCDCore.Project.Morphological
                 muTotal.VolDepositionErr += unit.VolDepositionErr;
             }
             Units.Add(muTotal);
-      
+
             CalculateWork();
         }
 
@@ -257,7 +257,9 @@ namespace GCDCore.Project.Morphological
             nodDuration.InnerText = Duration.As(DurationDisplayUnits).ToString("R");
             nodDuration.Attributes.Append(nodParent.OwnerDocument.CreateAttribute("units")).InnerText = DurationDisplayUnits.ToString();
 
-            nodMA.AppendChild(nodParent.OwnerDocument.CreateElement("MinimumFluxUnit")).InnerText = MinimumFluxCell.Name;
+            XmlNode nodMinFluxCell = nodMA.AppendChild(nodParent.OwnerDocument.CreateElement("MinimumFluxUnit"));
+            if (MinimumFluxCell != null)
+                nodMinFluxCell.InnerText = MinimumFluxCell.Name;
 
             XmlNode nodMinFlux = nodMA.AppendChild(nodParent.OwnerDocument.CreateElement("MinimumFluxVolume"));
             nodMinFlux.InnerText = MinimumFlux.As(ProjectManager.Project.Units.VolUnit).ToString("R");

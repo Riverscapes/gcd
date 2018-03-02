@@ -63,7 +63,7 @@
             // 
             this.cmdCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cmdCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cmdCancel.Location = new System.Drawing.Point(432, 453);
+            this.cmdCancel.Location = new System.Drawing.Point(360, 428);
             this.cmdCancel.Name = "cmdCancel";
             this.cmdCancel.Size = new System.Drawing.Size(75, 23);
             this.cmdCancel.TabIndex = 5;
@@ -76,7 +76,7 @@
             this.cmdOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.cmdOK.Image = global::GCDCore.Properties.Resources.Save;
             this.cmdOK.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdOK.Location = new System.Drawing.Point(351, 453);
+            this.cmdOK.Location = new System.Drawing.Point(279, 428);
             this.cmdOK.Name = "cmdOK";
             this.cmdOK.Size = new System.Drawing.Size(75, 23);
             this.cmdOK.TabIndex = 4;
@@ -87,7 +87,7 @@
             // cmdHelp
             // 
             this.cmdHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.cmdHelp.Location = new System.Drawing.Point(12, 453);
+            this.cmdHelp.Location = new System.Drawing.Point(12, 428);
             this.cmdHelp.Name = "cmdHelp";
             this.cmdHelp.Size = new System.Drawing.Size(75, 23);
             this.cmdHelp.TabIndex = 6;
@@ -110,7 +110,7 @@
             this.txtName.Location = new System.Drawing.Point(82, 13);
             this.txtName.MaxLength = 100;
             this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(423, 20);
+            this.txtName.Size = new System.Drawing.Size(351, 20);
             this.txtName.TabIndex = 1;
             // 
             // grpFeatureClass
@@ -123,7 +123,7 @@
             this.grpFeatureClass.Controls.Add(this.Label6);
             this.grpFeatureClass.Location = new System.Drawing.Point(12, 70);
             this.grpFeatureClass.Name = "grpFeatureClass";
-            this.grpFeatureClass.Size = new System.Drawing.Size(493, 88);
+            this.grpFeatureClass.Size = new System.Drawing.Size(421, 88);
             this.grpFeatureClass.TabIndex = 2;
             this.grpFeatureClass.TabStop = false;
             this.grpFeatureClass.Text = "Polygon Mask";
@@ -132,9 +132,10 @@
             // 
             this.ucPolygon.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.ucPolygon.FullPath = null;
             this.ucPolygon.Location = new System.Drawing.Point(120, 22);
             this.ucPolygon.Name = "ucPolygon";
-            this.ucPolygon.Size = new System.Drawing.Size(355, 23);
+            this.ucPolygon.Size = new System.Drawing.Size(283, 23);
             this.ucPolygon.TabIndex = 1;
             // 
             // cboField
@@ -145,7 +146,7 @@
             this.cboField.FormattingEnabled = true;
             this.cboField.Location = new System.Drawing.Point(120, 53);
             this.cboField.Name = "cboField";
-            this.cboField.Size = new System.Drawing.Size(355, 21);
+            this.cboField.Size = new System.Drawing.Size(283, 21);
             this.cboField.TabIndex = 3;
             // 
             // Label7
@@ -174,7 +175,7 @@
             this.grpFieldValues.Controls.Add(this.grdData);
             this.grpFieldValues.Location = new System.Drawing.Point(12, 164);
             this.grpFieldValues.Name = "grpFieldValues";
-            this.grpFieldValues.Size = new System.Drawing.Size(493, 283);
+            this.grpFieldValues.Size = new System.Drawing.Size(421, 258);
             this.grpFieldValues.TabIndex = 3;
             this.grpFieldValues.TabStop = false;
             this.grpFieldValues.Text = "Field Values";
@@ -220,7 +221,7 @@
             this.grdData.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.grdData.RowHeadersVisible = false;
             this.grdData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.grdData.Size = new System.Drawing.Size(487, 264);
+            this.grdData.Size = new System.Drawing.Size(415, 239);
             this.grdData.TabIndex = 0;
             this.grdData.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.grdData_CellValidating);
             // 
@@ -280,7 +281,7 @@
             this.txtPath.Location = new System.Drawing.Point(82, 41);
             this.txtPath.Name = "txtPath";
             this.txtPath.ReadOnly = true;
-            this.txtPath.Size = new System.Drawing.Size(423, 20);
+            this.txtPath.Size = new System.Drawing.Size(351, 20);
             this.txtPath.TabIndex = 8;
             this.txtPath.TabStop = false;
             // 
@@ -299,7 +300,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cmdCancel;
-            this.ClientSize = new System.Drawing.Size(519, 488);
+            this.ClientSize = new System.Drawing.Size(447, 463);
             this.Controls.Add(this.txtPath);
             this.Controls.Add(this.lblPath);
             this.Controls.Add(this.grpFieldValues);
@@ -310,6 +311,7 @@
             this.Controls.Add(this.cmdOK);
             this.Controls.Add(this.cmdCancel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(310, 330);
             this.Name = "frmMaskProperties";
             this.Text = "Mask Properties";
             this.Load += new System.EventHandler(this.frmMaskProperties_Load);

@@ -9,13 +9,15 @@ namespace GCDCore.UserInterface.UtilityForms
         public event BrowseRasterEventHandler BrowseRaster;
         public delegate void BrowseRasterEventHandler(System.Windows.Forms.TextBox txtPath, naru.ui.PathEventArgs e);
 
-        public event SelectRasterFromArcMapEventHandler SelectRasterFromArcMap;
-        public delegate void SelectRasterFromArcMapEventHandler(System.Windows.Forms.TextBox txtPath, naru.ui.PathEventArgs e);
-
         new public void InitializeBrowseNew(string sNoun)
         {
             base.InitializeBrowseNew(sNoun);
             BrowseRaster += ProjectManager.OnBrowseRaster;
+        }
+
+        public void InitializeExisting(string sNoun, GCDConsoleLib.Raster raster)
+        {
+            base.InitializeExisting(sNoun, raster.GISFileInfo, ProjectManager.Project.GetRelativePath(raster.GISFileInfo));
         }
 
         public GCDConsoleLib.Raster SelectedItem
@@ -49,6 +51,10 @@ namespace GCDCore.UserInterface.UtilityForms
                     naru.ui.Textbox.BrowseOpenRaster(txtPath, naru.ui.UIHelpers.WrapMessageWithNoun("Browse and Select a", Noun, "Raster"));
                 }
 
+                if (!string.IsNullOrEmpty(txtPath.Text) && System.IO.File.Exists(txtPath.Text))
+                {
+                    FullPath = new System.IO.FileInfo(txtPath.Text);
+                }
             }
             catch (Exception ex)
             {
@@ -56,38 +62,10 @@ namespace GCDCore.UserInterface.UtilityForms
             }
         }
 
-        public void cmdSelectRaster_Click(object sender, naru.ui.PathEventArgs e)
-        {
-            try
-            {
-                if (SelectRasterFromArcMap != null)
-                {
-                    SelectRasterFromArcMap((TextBox)sender, e);
-                }
-
-            }
-            catch (Exception ex)
-            {
-                naru.error.ExceptionUI.HandleException(ex, "Error selecting raster from ArcMap");
-            }
-        }
-
         public ucRasterInput()
         {
-            SelectLayer += cmdSelectRaster_Click;
-            BrowseFile += cmdBrowseRaster_Click;
+            Browse += cmdBrowseRaster_Click;
         }
-
-        //Public Overrides Function Validate() As Boolean
-
-        //    If Not TypeOf SelectedItem Is GCDConsoleLib.Raster Then
-        //        System.Windows.Forms.MessageBox.Show(naru.ui.UIHelpers.WrapMessageWithNoun("Please select a", Noun, " to continue."), GCDCore.Properties.Resources.ApplicationNameLong, System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information)
-        //        Return False
-        //    End If
-
-        //    Return True
-
-        //End Function
     }
 }
 

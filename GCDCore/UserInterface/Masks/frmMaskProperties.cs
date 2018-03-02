@@ -36,8 +36,8 @@ namespace GCDCore.UserInterface.Masks
                 lblPath.Visible = false;
                 txtPath.Visible = false;
 
-                grpFieldValues.Top -= grpFieldValues.Top - txtPath.Top;
-                grpFieldValues.Top -= grpFieldValues.Top - txtPath.Top;
+                grpFieldValues.Top -= grpFeatureClass.Top - txtPath.Top;
+                grpFeatureClass.Top -= grpFeatureClass.Top - txtPath.Top;
 
                 ucPolygon.InitializeExisting("Mask Polygon ShapeFile", Mask.Vector);
                 ucPolygon.AddToMap += cmdAddToMap_Click;

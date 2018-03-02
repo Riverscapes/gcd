@@ -157,12 +157,14 @@ namespace GCDAddIn
                 ArcMap.Document.UpdateContents();
             }
 
-            public void OnAddVectorToMap(GCDCore.Project.Masks.Mask mask)
+            public void OnAddVectorToMap(GCDCore.Project.GCDProjectVectorItem vector)
             {
-                if (mask is GCDCore.Project.Masks.AttributeFieldMask)
-                    ArcMapManager.AddMask(mask as GCDCore.Project.Masks.AttributeFieldMask);
-                else
-                    ArcMapManager.AddAOI(mask as GCDCore.Project.Masks.AOIMask);
+                if (vector is GCDCore.Project.Masks.AttributeFieldMask)
+                    ArcMapManager.AddMask(vector as GCDCore.Project.Masks.AttributeFieldMask);
+                else if (vector is GCDCore.Project.Masks.AOIMask)
+                    ArcMapManager.AddAOI(vector as GCDCore.Project.Masks.AOIMask);
+                else if (vector is GCDCore.Project.ProfileRoutes.ProfileRoute)
+                    ArcMapManager.AddProfileRoute(vector as GCDCore.Project.ProfileRoutes.ProfileRoute);
             }
         }
     }
