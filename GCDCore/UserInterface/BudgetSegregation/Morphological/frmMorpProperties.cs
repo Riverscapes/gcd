@@ -42,8 +42,21 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
 
             try
             {
+                // Create the morphological analysis
                 Analysis = new MorphologicalAnalysis(txtName.Text, ProjectManager.Project.GetAbsoluteDir(txtPath.Text), cboBS.SelectedItem as GCDCore.Project.BudgetSegregation,
                     ProjectManager.Project.Units.VolUnit);
+
+                try
+                {
+                    // Save the morphological spreadsheet to file
+                    Analysis.OutputFolder.Create();
+                    Analysis.SaveExcelSpreadsheet();
+                }
+                catch(Exception ex)
+                {
+                    // We can live without the spreadsheet
+                    Console.Write("Morphological analysis spreadsheet error saving to " + Analysis.Spreadsheet.FullName);
+                }
 
                 GCDCore.Project.BudgetSegregation bs = cboBS.SelectedItem as GCDCore.Project.BudgetSegregation;
                 bs.MorphologicalAnalyses[Analysis.Name] = Analysis;

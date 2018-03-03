@@ -331,6 +331,18 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
             // The name should be the only property that is not already synchronized with the analysis object
             Analysis.Name = txtName.Text;
 
+            try
+            {
+                Analysis.SaveExcelSpreadsheet();
+            }
+            catch(Exception ex)
+            {
+                ex.Data["Path"] = Analysis.Spreadsheet.FullName;
+                naru.error.ExceptionUI.HandleException(ex, "Error saving morphological spreadsheet");
+                DialogResult = DialogResult.None;
+                return;
+            }
+
             if (!Analysis.BS.MorphologicalAnalyses.ContainsValue(Analysis))
                 Analysis.BS.MorphologicalAnalyses[Analysis.Name] = Analysis;
 

@@ -12,6 +12,7 @@ namespace GCDCore.Project.Morphological
     {
         public readonly BudgetSegregation BS;
         public readonly DirectoryInfo OutputFolder;
+        public readonly FileInfo Spreadsheet;
 
         public UnitsNet.Units.DurationUnit DurationDisplayUnits { get; set; }
 
@@ -29,6 +30,7 @@ namespace GCDCore.Project.Morphological
             : base(name)
         {
             OutputFolder = outputFolder;
+            Spreadsheet = new FileInfo(Path.Combine(OutputFolder.FullName, "Morphological.xml"));
             BS = bs;
             DurationDisplayUnits = UnitsNet.Units.DurationUnit.Hour;
             _DisplayVolumeUnits = ProjectManager.Project.Units.VolUnit;
@@ -46,6 +48,8 @@ namespace GCDCore.Project.Morphological
             : base(nodAnalysis)
         {
             OutputFolder = ProjectManager.Project.GetAbsoluteDir(nodAnalysis.SelectSingleNode("Folder").InnerText);
+            Spreadsheet = ProjectManager.Project.GetAbsolutePath(nodAnalysis.SelectSingleNode("Spreadsheet").InnerText);
+
             BS = bs;
 
             XmlNode nodDuration = nodAnalysis.SelectSingleNode("Duration");
@@ -277,6 +281,52 @@ namespace GCDCore.Project.Morphological
             throw new NotImplementedException("deleting morphological analysis is not implemented.");
         }
 
+        public void SaveExcelSpreadsheet()
+        {
+            //get template and throw error if it doesnt exists
+            FileInfo template = new FileInfo(Path.Combine(ProjectManager.ExcelTemplatesFolder.FullName, "Morphological.xml"));
+            if (!template.Exists)
+            {
+                throw new Exception("The GCD morphological approach spreadsheet template cannot be found at " + template.FullName);
+            }
+
+            // Verify if file already exists and if so, can it be deleted and replaced
+            if (Spreadsheet.Exists)
+            {
+                // Will throw exception if locked
+                IsFileLocked(Spreadsheet);
+
+                Spreadsheet.Delete();
+            }
+
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            // TODO: write morphological spreadsheet here
+
+            foreach (MorphologicalUnit unit in Units)
+            {
+                // TODO: write values to spreadsheet
+            }
+        }
+
+        private bool IsFileLocked(FileInfo fiPath)
+        {
+            if (!fiPath.Exists)
+                return false;
+
+            List<System.Diagnostics.Process> processes = naru.os.FileUtil.WhoIsLocking(fiPath.FullName);
+            if (processes.Count > 0)
+            {
+                IOException ex = new IOException("The file is in use by another process");
+                ex.Data["Processes"] = string.Join(",", processes.Select(x => x.ProcessName).ToArray());
+                throw ex;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Debug information for verifying the morphological results
+        /// </summary>
         private void LoadFeshieData()
         {
             Units.Clear();
