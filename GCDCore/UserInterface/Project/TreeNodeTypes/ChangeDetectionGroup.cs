@@ -20,8 +20,8 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             int totalSurfaces = ProjectManager.Project.DEMSurveys.Count + ProjectManager.Project.ReferenceSurfaces.Count;
 
             ToolStripMenuItem tsmiBatch = new ToolStripMenuItem("Batch Change Detection");
-            tsmiBatch.DropDownItems.Add("Multiple Epoch", Properties.Resources.Add, OnMultiEpoch).Enabled = ProjectManager.Project.DEMSurveys.Count > 2;
-            tsmiBatch.DropDownItems.Add("Multiple Uncertainty Analysis", Properties.Resources.Add, OnMultiUncertainty).Enabled = totalSurfaces > 1;
+            tsmiBatch.DropDownItems.Add("Multiple Epoch", Properties.Resources.Add, OnMultiEpoch);
+            tsmiBatch.DropDownItems.Add("Multiple Uncertainty Analysis", Properties.Resources.Add, OnMultiUncertainty);
             ContextMenuStrip.Items.Insert(1, tsmiBatch);
 
             LoadChildNodes();
@@ -50,10 +50,10 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
 
         public override void OnAdd(object sender, EventArgs e)
         {
-            if (ProjectManager.Project.ReferenceSurfaces.Count + ProjectManager.Project.DEMSurveys.Count < 2)
+            if (ProjectManager.Project.DEMSurveys.Count + ProjectManager.Project.ReferenceSurfaces.Count < 2)
             {
-                MessageBox.Show("You must have at least two surfaces in your GCD project before you can perform a change detection analysis." +
-                    " This could be two DEM surveys or two reference surfaces or a combination of both.", "Insufficient Surfaces", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("You must have at least two DEM surveys in your GCD project before you can perform a change detection analysis." +
+                                        " These could be two DEM surveys or two reference surfaces or a combination of both.", "Insufficient Surfaces", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -67,12 +67,25 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
 
         public void OnMultiEpoch(object sender, EventArgs e)
         {
+            if (ProjectManager.Project.DEMSurveys.Count < 2)
+            {
+                MessageBox.Show("You must have at least DEM surveys in your GCD project before you can perform a change detection analysis.", "Insufficient DEM Surveys", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
             ChangeDetection.MultiEpoch.frmMultiEpoch frm = new ChangeDetection.MultiEpoch.frmMultiEpoch();
             EditTreeItem(frm);
         }
 
         public void OnMultiUncertainty(object sender, EventArgs e)
         {
+            if (ProjectManager.Project.DEMSurveys.Count < 2)
+            {
+                MessageBox.Show("You must have at least two surface in your GCD project before you can perform a change detection analysis." +
+                         " These could be two DEM surveys or two reference surfaces or a combination of both.", "Insufficient Surfaces", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
             ChangeDetection.Batch.frmBatchDoD frm = new ChangeDetection.Batch.frmBatchDoD();
             EditTreeItem(frm);
         }
