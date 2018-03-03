@@ -24,7 +24,10 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             ContextMenuStrip.Items.Add("-"); // Separator
             ContextMenuStrip.Items.Add(string.Format("Explore {0} Folder", NounPlural), Properties.Resources.BrowseFolder, OnExplore);
 
-            ContextMenuStrip.Items.Add(string.Format("Add all {0} to the Map", NounPlural), Properties.Resources.AddToMap, OnAddToMap);
+            ToolStripItem tsiAddToMap = new ToolStripMenuItem(string.Format("Add all {0} to the Map", NounPlural), Properties.Resources.AddToMap, OnAddToMap);
+            tsiAddToMap.Name = "AddToMap"; // Name needed by inherited classes
+            ContextMenuStrip.Items.Add(tsiAddToMap);
+
             ContextMenuStrip.Items.Add("Collapse Child Items", Properties.Resources.collapse, OnCollapseChildren);
 
             // Hookup the opening event to handle status

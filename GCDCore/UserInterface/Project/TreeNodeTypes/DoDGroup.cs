@@ -1,9 +1,4 @@
 ﻿using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using GCDCore.Project;
 using System.Windows.Forms;
 using System.ComponentModel;
@@ -15,12 +10,15 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
         DoDBase DoD;
 
         public DoDGroup(TreeNodeCollection parentNodes, DoDBase dod, IContainer container)
-            : base(parentNodes, dod.Name, string.Empty , "Change Detection", dod.Folder, container, true, 7)
+            : base(parentNodes, dod.Name, string.Empty, "Change Detection", dod.Folder, container, true, 7)
         {
             DoD = dod;
 
             ContextMenuStrip.Items[0].Text = "Add Budget Segregation";
             ContextMenuStrip.Items.Insert(0, new ToolStripMenuItem("View Change Detection Results", Properties.Resources.GCD, OnViewResults));
+            ContextMenuStrip.Items.Remove(ContextMenuStrip.Items.Find("AddToMap",false)[0]);
+            ContextMenuStrip.Items.Insert(ContextMenuStrip.Items.Count - 2, new ToolStripMenuItem("Add Raw DoD Raster To Map", Properties.Resources.AddToMap, OnAddRawDoDToMap));
+            ContextMenuStrip.Items.Insert(ContextMenuStrip.Items.Count - 2, new ToolStripMenuItem("Add Thresholded DoD Raster To Map", Properties.Resources.AddToMap, OnAddThrDoDToMap));
 
             LoadChildNodes();
         }
@@ -57,10 +55,20 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             {
                 frm.ShowDialog();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 naru.error.ExceptionUI.HandleException(ex, "Error viewing change detection results");
             }
+        }
+
+        public void OnAddThrDoDToMap(object sender, EventArgs e)
+        {
+            ProjectManager.OnAddRasterToMap(DoD.ThrDoD);
+        }
+
+        public void OnAddRawDoDToMap(object sender, EventArgs e)
+        {
+            ProjectManager.OnAddRasterToMap(DoD.RawDoD);
         }
     }
 }
