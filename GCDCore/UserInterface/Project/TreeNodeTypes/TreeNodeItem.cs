@@ -91,9 +91,9 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             }
             else
             {
-                if (Item is GCDCore.Project.Masks.Mask)
+                if (Item is GCDCore.Project.GCDProjectVectorItem)
                 {
-                    ProjectManager.OnAddVectorToMap(Item as GCDCore.Project.Masks.Mask);
+                    ProjectManager.OnAddVectorToMap(Item as GCDCore.Project.GCDProjectVectorItem);
                 }
             }
         }
