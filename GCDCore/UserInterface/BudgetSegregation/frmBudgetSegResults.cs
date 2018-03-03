@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows.Forms;
 using GCDCore.UserInterface.ChangeDetection;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace GCDCore.UserInterface.BudgetSegregation
 {
@@ -110,6 +111,56 @@ namespace GCDCore.UserInterface.BudgetSegregation
                 {
                     Console.WriteLine(string.Format("Error attempting to browse to budget segregation folder at {0}\n\n", BudgetSeg.Folder, ex.Message));
                 }
+            }
+        }
+
+        private void cmdSettings_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                frmDoDSummaryProperties frm = new frmDoDSummaryProperties(m_Options);
+
+                frm.XAxisMinimum = ucHistogram.HistogramViewer.Chart.ChartAreas[0].AxisX.Minimum;
+                frm.XAxisMaximum = ucHistogram.HistogramViewer.Chart.ChartAreas[0].AxisX.Maximum;
+                frm.XAxisInterval = ucHistogram.HistogramViewer.Chart.ChartAreas[0].AxisX.Interval;
+                ucHistogram.HistogramViewer.Chart.ChartAreas[0].RecalculateAxesScale();
+
+                frm.YAxisMinimum = ucHistogram.HistogramViewer.Chart.ChartAreas[0].AxisY.Minimum;
+                frm.YAxisMaximum = ucHistogram.HistogramViewer.Chart.ChartAreas[0].AxisY.Maximum;
+                frm.YAxisInterval = ucHistogram.HistogramViewer.Chart.ChartAreas[0].AxisY.Interval;
+
+                if (frm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    ucHistogram.HistogramViewer.Chart.ChartAreas[0].AxisX.Minimum = frm.XAxisMinimum;
+                    ucHistogram.HistogramViewer.Chart.ChartAreas[0].AxisX.Maximum = frm.XAxisMaximum;
+                    ucHistogram.HistogramViewer.Chart.ChartAreas[0].AxisX.Interval = frm.XAxisInterval;
+
+                    ucHistogram.HistogramViewer.Chart.ChartAreas[0].AxisY.Minimum = frm.YAxisMinimum;
+                    ucHistogram.HistogramViewer.Chart.ChartAreas[0].AxisY.Maximum = frm.YAxisMaximum;
+                    ucHistogram.HistogramViewer.Chart.ChartAreas[0].AxisY.Interval = frm.YAxisInterval;
+
+                    ucHistogram.HistogramViewer.SetFont(m_Options.Font);
+                    ucHistogram.HistogramViewer.Chart.Series[Visualization.ViewerBase.EROSION].Color = m_Options.Erosion;
+                    ucHistogram.HistogramViewer.Chart.Series[Visualization.ViewerBase.DEPOSITION].Color = m_Options.Deposition;
+                    ucHistogram.HistogramViewer.Chart.DataBind();
+
+                    ucSummary.RefreshDisplay(((BudgetSegregationClass)cboBudgetClass.SelectedItem).Statistics, m_Options);
+                    ucHistogram.SetHistogramUnits(m_Options.Units);
+                    ucBars.DisplayUnits = new GCDConsoleLib.GCD.UnitGroup(m_Options.VolumeUnits, m_Options.AreaUnits, m_Options.LinearUnits, m_Options.LinearUnits);
+
+                    ucBars.Viewer.SetFont(m_Options.Font);
+                    ucBars.chtControl.Series[Visualization.ViewerBase.EROSION].Color = m_Options.Erosion;
+                    ucBars.chtControl.Series[Visualization.ViewerBase.DEPOSITION].Color = m_Options.Deposition;
+
+                    Series serNet = ucBars.chtControl.Series.FindByName(Visualization.ViewerBase.NET);
+                    if (serNet is Series)
+                        serNet.Color = serNet.Points[0].YValues[0] > 0 ? m_Options.Deposition : m_Options.Deposition;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                naru.error.ExceptionUI.HandleException(ex);
             }
         }
     }

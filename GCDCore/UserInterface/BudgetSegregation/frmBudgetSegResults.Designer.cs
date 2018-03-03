@@ -67,6 +67,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.cboBudgetClass = new System.Windows.Forms.ComboBox();
             this.cboRaw = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.cmdSettings = new System.Windows.Forms.Button();
             this.tabMain.SuspendLayout();
             this.TabPage1.SuspendLayout();
             this.TabPage2.SuspendLayout();
@@ -271,14 +272,14 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.txtName.MaxLength = 100;
             this.txtName.Name = "txtName";
             this.txtName.ReadOnly = true;
-            this.txtName.Size = new System.Drawing.Size(546, 20);
+            this.txtName.Size = new System.Drawing.Size(517, 20);
             this.txtName.TabIndex = 1;
             // 
             // cmdBrowse
             // 
             this.cmdBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cmdBrowse.Image = global::GCDCore.Properties.Resources.BrowseFolder;
-            this.cmdBrowse.Location = new System.Drawing.Point(643, 9);
+            this.cmdBrowse.Location = new System.Drawing.Point(614, 9);
             this.cmdBrowse.Name = "cmdBrowse";
             this.cmdBrowse.Size = new System.Drawing.Size(23, 23);
             this.cmdBrowse.TabIndex = 2;
@@ -325,6 +326,17 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.label2.TabIndex = 5;
             this.label2.Text = "Raw represents";
             // 
+            // cmdSettings
+            // 
+            this.cmdSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmdSettings.Image = global::GCDCore.Properties.Resources.Options;
+            this.cmdSettings.Location = new System.Drawing.Point(643, 9);
+            this.cmdSettings.Name = "cmdSettings";
+            this.cmdSettings.Size = new System.Drawing.Size(23, 23);
+            this.cmdSettings.TabIndex = 10;
+            this.cmdSettings.UseVisualStyleBackColor = true;
+            this.cmdSettings.Click += new System.EventHandler(this.cmdSettings_Click);
+            // 
             // frmBudgetSegResults
             // 
             this.AcceptButton = this.cmdCancel;
@@ -332,6 +344,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cmdCancel;
             this.ClientSize = new System.Drawing.Size(678, 510);
+            this.Controls.Add(this.cmdSettings);
             this.Controls.Add(this.cboRaw);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.cboBudgetClass);
@@ -381,5 +394,6 @@ namespace GCDCore.UserInterface.BudgetSegregation
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TabPage tabPage5;
         private System.Windows.Forms.DataVisualization.Charting.Chart chtPieCharts;
+        internal System.Windows.Forms.Button cmdSettings;
     }
 }
