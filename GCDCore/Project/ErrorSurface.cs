@@ -85,6 +85,15 @@ namespace GCDCore.Project
             ErrorProperties = errProperties;
         }
 
+        public ErrorSurface(string name, FileInfo rasterPath, Surface surf, bool isDefault, ErrorSurfaceProperty errProperty)
+            : base(name, rasterPath)
+        {
+            Surf = surf;
+            _IsDefault = isDefault;
+            ErrorProperties = new Dictionary<string, ErrorSurfaceProperty>();
+            ErrorProperties[errProperty.Name] = errProperty;
+        }
+
         public ErrorSurface(XmlNode nodError, Surface surf)
             : base(nodError)
         {

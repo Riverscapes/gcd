@@ -107,7 +107,7 @@ namespace GCDCore.Project
         public ErrorSurfaceProperty(XmlNode nodProperty, Surface surf)
         {
             Name = nodProperty.SelectSingleNode("Name").InnerText;
-            
+
             XmlNode nodUni = nodProperty.SelectSingleNode("UniformValue");
             XmlNode nodAss = nodProperty.SelectSingleNode("AssociatedSurface");
             XmlNode nodFIS = nodProperty.SelectSingleNode("FISRuleFile");
@@ -158,6 +158,27 @@ namespace GCDCore.Project
                     XmlNode nodInput = nodInputs.AppendChild(nodParent.OwnerDocument.CreateElement("Input"));
                     nodInput.AppendChild(nodParent.OwnerDocument.CreateElement("Name")).InnerText = input.FISInputName;
                     nodInput.AppendChild(nodParent.OwnerDocument.CreateElement("AssociatedSurface")).InnerText = input.AssociatedSurface.Name;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Return the error surface property in the format required by the GCD ConsoleLib
+        /// </summary>
+        public GCDConsoleLib.GCD.ErrorRasterProperties GCDErrSurfPropery
+        {
+            get
+            {
+                if (UniformValue.HasValue)
+                    return new GCDConsoleLib.GCD.ErrorRasterProperties(UniformValue.Value);
+                else if (AssociatedSurface is AssocSurface)
+                    return new GCDConsoleLib.GCD.ErrorRasterProperties(AssociatedSurface.Raster);
+                else
+                {
+                    Dictionary<string, GCDConsoleLib.Raster> inputs = new Dictionary<string, GCDConsoleLib.Raster>();
+                    FISInputs.ToList().ForEach(x => inputs.Add(x.FISInputName, x.AssociatedSurface.Raster));
+
+                    return new GCDConsoleLib.GCD.ErrorRasterProperties(FISRuleFile, inputs);
                 }
             }
         }

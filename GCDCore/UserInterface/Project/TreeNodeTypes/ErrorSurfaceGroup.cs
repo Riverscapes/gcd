@@ -23,6 +23,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             if (Surface is DEMSurvey)
             {
                 tsmi = new ToolStripMenuItem("Calculate New Error Surface", Properties.Resources.sigma, OnCalculateDEMErrorSurface);
+                tsmi = new ToolStripMenuItem("Calculate New Error Surface For Entire DEM Extent", Properties.Resources.sigma, OnCalculateDEMErrorSurface_SingleMethod);
             }
             else
             {
@@ -37,7 +38,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
         {
             Nodes.Clear();
 
-            Surface.ErrorSurfaces.ToList().ForEach(x => Nodes.Add(new TreeNodeItem(x, 4, ContextMenuStrip.Container)));
+            Surface.ErrorSurfaces.ToList().ForEach(x => Nodes.Add(new TreeNodeItem(x.NameWithDefault, x, 4, ContextMenuStrip.Container)));
 
             if (Nodes.Count > 0)
                 Expand();
@@ -66,6 +67,12 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
         public void OnCalculateReferenceErrorSurface(object sender, EventArgs e)
         {
             SurveyLibrary.ReferenceSurfaces.frmRefErrorSurface frm = new SurveyLibrary.ReferenceSurfaces.frmRefErrorSurface(Surface);
+            EditTreeItem(frm);
+        }
+
+        public void OnCalculateDEMErrorSurface_SingleMethod(object sender, EventArgs e)
+        {
+            SurveyLibrary.ErrorSurfaces.frmSingleMethodError frm = new SurveyLibrary.ErrorSurfaces.frmSingleMethodError(Surface as DEMSurvey);
             EditTreeItem(frm);
         }
     }

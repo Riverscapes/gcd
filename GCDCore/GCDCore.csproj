@@ -332,6 +332,18 @@
     <Compile Include="UserInterface\Project\ucProjectExplorer.Designer.cs">
       <DependentUpon>ucProjectExplorer.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserInterface\SurveyLibrary\ErrorSurfaces\frmSingleMethodError.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\SurveyLibrary\ErrorSurfaces\frmSingleMethodError.Designer.cs">
+      <DependentUpon>frmSingleMethodError.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\SurveyLibrary\ErrorSurfaces\ucErrorSurfaceProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserInterface\SurveyLibrary\ErrorSurfaces\ucErrorSurfaceProperties.Designer.cs">
+      <DependentUpon>ucErrorSurfaceProperties.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserInterface\SurveyLibrary\ExtentImporter.cs" />
     <Compile Include="UserInterface\SurveyLibrary\frmAssocSurfaceProperties.cs">
       <SubType>Form</SubType>
@@ -388,6 +400,12 @@
     </Compile>
     <Compile Include="UserInterface\SurveyLibrary\ReferenceSurfaces\frmRefErrorSurface.Designer.cs">
       <DependentUpon>frmRefErrorSurface.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\ucProjectItemName.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserInterface\ucProjectItemName.Designer.cs">
+      <DependentUpon>ucProjectItemName.cs</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\UtilityForms\ChartContextMenu.cs" />
     <Compile Include="UserInterface\UtilityForms\frmInformation.cs">
@@ -584,6 +602,12 @@
     <EmbeddedResource Include="UserInterface\Project\ucProjectExplorer.resx">
       <DependentUpon>ucProjectExplorer.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\SurveyLibrary\ErrorSurfaces\frmSingleMethodError.resx">
+      <DependentUpon>frmSingleMethodError.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\SurveyLibrary\ErrorSurfaces\ucErrorSurfaceProperties.resx">
+      <DependentUpon>ucErrorSurfaceProperties.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\SurveyLibrary\frmAssocSurfaceProperties.resx">
       <DependentUpon>frmAssocSurfaceProperties.cs</DependentUpon>
     </EmbeddedResource>
@@ -610,6 +634,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\SurveyLibrary\ReferenceSurfaces\frmRefErrorSurface.resx">
       <DependentUpon>frmRefErrorSurface.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\ucProjectItemName.resx">
+      <DependentUpon>ucProjectItemName.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\UtilityForms\frmInformation.resx">
       <DependentUpon>frmInformation.cs</DependentUpon>

@@ -18,7 +18,25 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             : base(item.Name, item.Noun, item.Noun, imageindex)
         {
             Item = item;
+            Init(container);
+        }
 
+        /// <summary>
+        /// Constructor when a custom name is required for the item (e.g. Error Surfaces with default)
+        /// </summary>
+        /// <param name="customName"></param>
+        /// <param name="item"></param>
+        /// <param name="imageindex"></param>
+        /// <param name="container"></param>
+        public TreeNodeItem(string customName, GCDProjectItem item, int imageindex, IContainer container)
+        : base(customName, item.Noun, item.Noun, imageindex)
+        {
+            Item = item;
+            Init(container);
+        }
+
+        private void Init(IContainer container)
+        {
             ContextMenuStrip = new ContextMenuStrip(container);
             ContextMenuStrip.Items.Add(string.Format("Edit {0} Properties", NounSingle), Properties.Resources.Options, OnEdit);
             ContextMenuStrip.Items.Add(string.Format("Add {0} to the Map", NounSingle), Properties.Resources.AddToMap, OnAddToMap);
