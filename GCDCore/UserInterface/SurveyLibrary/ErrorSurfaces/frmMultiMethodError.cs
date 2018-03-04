@@ -25,7 +25,7 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
             InitializeComponent();
             DEM = dem;
             ErrProps = new naru.ui.SortableBindingList<ErrorSurfaceProperty>();
-            ucName.InitializeNewRaster("Error Surface", dem.ErrorSurfaces.Select(x => x.Name).ToList<string>(), DEM.Raster.GISFileInfo.Directory, "Err");
+            ucName.InitializeNewRaster("Error Surface", dem.ErrorSurfaces.Select(x => x.Name).ToList<string>(), DEM.ErrorSurfacesFolder, "Err");
         }
 
         public frmMultiMethodError(ErrorSurface errSurf)
@@ -41,8 +41,9 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
 
         private void frmMultiMethodError_Load(object sender, EventArgs e)
         {
+            cmdOK.Text = Properties.Resources.CreateButtonText;
             chkDefault.Checked = (ErrorSurface != null && ErrorSurface.IsDefault) || DEM.ErrorSurfaces.Count == 0;
-            chkDefault.Enabled = DEM.ErrorSurfaces.Count > 1;
+            chkDefault.Enabled = DEM.ErrorSurfaces.Count > 0;
 
             if (!ProjectManager.IsArcMap)
             {

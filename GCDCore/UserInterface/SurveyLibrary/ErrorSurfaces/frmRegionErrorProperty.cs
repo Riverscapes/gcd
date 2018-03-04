@@ -12,8 +12,8 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
         public frmRegionErrorProperty(string region, ErrorSurfaceProperty errProp, List<AssocSurface> assocs)
         {
             InitializeComponent();
-            txtRegion.Text = region;
 
+            txtRegion.Text = region;
             ucErrProp.InitializeExisting(errProp, assocs);
         }
 
@@ -24,6 +24,11 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
                 DialogResult = DialogResult.None;
                 return;
             }
+        }
+
+        private void frmRegionErrorProperty_Load(object sender, EventArgs e)
+        {
+            cmdOK.Text = Properties.Resources.UpdateButtonText;
         }
     }
 }

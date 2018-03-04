@@ -42,9 +42,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(12, 22);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(65, 13);
+            this.label1.Size = new System.Drawing.Size(62, 13);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Mask region";
+            this.label1.Text = "Mask value";
             // 
             // txtRegion
             // 
@@ -72,6 +72,8 @@
             // 
             this.cmdOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cmdOK.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.cmdOK.Image = global::GCDCore.Properties.Resources.Save;
+            this.cmdOK.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.cmdOK.Location = new System.Drawing.Point(288, 274);
             this.cmdOK.Name = "cmdOK";
             this.cmdOK.Size = new System.Drawing.Size(75, 23);
@@ -116,6 +118,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmRegionErrorProperty";
             this.Text = "Mask Region Error Surface Properties";
+            this.Load += new System.EventHandler(this.frmRegionErrorProperty_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

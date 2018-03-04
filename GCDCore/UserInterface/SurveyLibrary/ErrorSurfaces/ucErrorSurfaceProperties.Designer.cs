@@ -138,10 +138,10 @@
             this.rdoUniform.Checked = true;
             this.rdoUniform.Location = new System.Drawing.Point(0, 0);
             this.rdoUniform.Name = "rdoUniform";
-            this.rdoUniform.Size = new System.Drawing.Size(114, 17);
+            this.rdoUniform.Size = new System.Drawing.Size(123, 17);
             this.rdoUniform.TabIndex = 0;
             this.rdoUniform.TabStop = true;
-            this.rdoUniform.Text = "Uniform error value";
+            this.rdoUniform.Text = "Uniform error value ()";
             this.rdoUniform.UseVisualStyleBackColor = true;
             // 
             // ucErrorSurfaceProperties

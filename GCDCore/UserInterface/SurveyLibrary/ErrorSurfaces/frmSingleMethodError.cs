@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
             DEM = parentDEM;
 
             ucErrProps.InitializeNew(m_sEntireDEMExtent, DEM.AssocSurfaces.ToList());
-            ucName.InitializeNewRaster("Error Surface", DEM.ErrorSurfaces.Select(x => x.Name).ToList<string>(), DEM.Raster.GISFileInfo.Directory, "Err");
+            ucName.InitializeNewRaster("Error Surface", DEM.ErrorSurfaces.Select(x => x.Name).ToList<string>(), DEM.ErrorSurfacesFolder, "Err");
         }
 
         public frmSingleMethodError(ErrorSurface errSurface)
@@ -39,8 +40,9 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
 
         protected void frmSingleMethodError_Load(object sender, EventArgs e)
         {
+            cmdOK.Text = Properties.Resources.CreateButtonText;
             chkDefault.Checked = (ErrorSurface != null && ErrorSurface.IsDefault) || DEM.ErrorSurfaces.Count == 0;
-            chkDefault.Enabled = DEM.ErrorSurfaces.Count > 1;
+            chkDefault.Enabled = DEM.ErrorSurfaces.Count > 0;
         }
 
         private void cmdOK_Click(object sender, EventArgs e)

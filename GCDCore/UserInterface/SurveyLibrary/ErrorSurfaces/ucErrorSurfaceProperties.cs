@@ -37,6 +37,11 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
 
         private void ucErrorSurfaceProperties_Load(object sender, EventArgs e)
         {
+            // Needed by visual studio designer
+            if (ProjectManager.Project == null)
+                return;
+
+            rdoUniform.Text = rdoUniform.Text.Replace("(", string.Format("({0}", UnitsNet.Length.GetAbbreviation(ProjectManager.Project.Units.VertUnit)));
             grdFISInputs.AutoGenerateColumns = false;
 
             // required by Visual Studio designer
@@ -162,7 +167,7 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
             }
             else
             {
-                ErrSurfProperty.FISRuleFile = ((FISRuleFile)cboFIS.SelectedItem).RuleFilePath;
+                ErrSurfProperty.FISRuleFile = ((FISLibraryItem)cboFIS.SelectedItem).FilePath;
                 // The FIS inputs should already be updated
             }
 
