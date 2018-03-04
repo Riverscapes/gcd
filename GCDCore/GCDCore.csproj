@@ -332,6 +332,18 @@
     <Compile Include="UserInterface\Project\ucProjectExplorer.Designer.cs">
       <DependentUpon>ucProjectExplorer.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserInterface\SurveyLibrary\ErrorSurfaces\frmMultiMethodError.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\SurveyLibrary\ErrorSurfaces\frmMultiMethodError.Designer.cs">
+      <DependentUpon>frmMultiMethodError.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\SurveyLibrary\ErrorSurfaces\frmRegionErrorProperty.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\SurveyLibrary\ErrorSurfaces\frmRegionErrorProperty.Designer.cs">
+      <DependentUpon>frmRegionErrorProperty.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserInterface\SurveyLibrary\ErrorSurfaces\frmSingleMethodError.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -601,6 +613,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\Project\ucProjectExplorer.resx">
       <DependentUpon>ucProjectExplorer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\SurveyLibrary\ErrorSurfaces\frmMultiMethodError.resx">
+      <DependentUpon>frmMultiMethodError.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\SurveyLibrary\ErrorSurfaces\frmRegionErrorProperty.resx">
+      <DependentUpon>frmRegionErrorProperty.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\SurveyLibrary\ErrorSurfaces\frmSingleMethodError.resx">
       <DependentUpon>frmSingleMethodError.cs</DependentUpon>

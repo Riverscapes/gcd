@@ -67,6 +67,25 @@ namespace GCDCore.Project
             }
         }
 
+        public string ErrorPropertyString
+        {
+            get
+            {
+                if (UniformValue.HasValue)
+                {
+                    return string.Format("Uniform error value of {0}{1}", UniformValue.ToString(), UnitsNet.Length.GetAbbreviation(ProjectManager.Project.Units.VertUnit));
+                }
+                else if (AssociatedSurface is AssocSurface)
+                {
+                    return string.Format("{0} associated surface", AssociatedSurface);
+                }
+                else
+                {
+                    return string.Format("{0} {1} input FIS", System.IO.Path.GetFileNameWithoutExtension(FISRuleFile.FullName), FISInputs.Count);
+                }
+            }
+        }
+
         /// <summary>
         /// Return the error raster properties in the format needed by the raster processor
         /// </summary>

@@ -43,6 +43,13 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
             if (ProjectManager.Project == null)
                 return;
 
+
+            // Load all the associated surfaces in the survey library to the grid combo box
+            DataGridViewComboBoxColumn colCombo = (DataGridViewComboBoxColumn)grdFISInputs.Columns[1];
+            colCombo.DataSource = new BindingList<AssocSurface>(AssociatedSurfaces.ToList());
+            colCombo.DisplayMember = "Name";
+            colCombo.ValueMember = "This"; // needed to support binding column to complex object
+
             cboAssociated.DataSource = AssociatedSurfaces;
             cboFIS.DataSource = ProjectManager.FISLibrary;
 
@@ -143,6 +150,20 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
                     grdFISInputs.Select();
                     return false;
                 }
+            }
+
+            // Update the member error surface property now we know everything is OK
+            // This is so that parent forms can use the updated properties after calling validate
+            if (rdoUniform.Checked)
+                ErrSurfProperty.UniformValue = valUniform.Value;
+            else if (rdoAssociated.Checked)
+            {
+                ErrSurfProperty.AssociatedSurface = cboAssociated.SelectedItem as AssocSurface;
+            }
+            else
+            {
+                ErrSurfProperty.FISRuleFile = ((FISRuleFile)cboFIS.SelectedItem).RuleFilePath;
+                // The FIS inputs should already be updated
             }
 
             return true;

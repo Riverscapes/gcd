@@ -22,14 +22,13 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             ToolStripMenuItem tsmi = null;
             if (Surface is DEMSurvey)
             {
-                tsmi = new ToolStripMenuItem("Calculate New Error Surface", Properties.Resources.sigma, OnCalculateDEMErrorSurface);
-                tsmi = new ToolStripMenuItem("Calculate New Error Surface For Entire DEM Extent", Properties.Resources.sigma, OnCalculateDEMErrorSurface_SingleMethod);
+                ContextMenuStrip.Items.Insert(1, new ToolStripMenuItem("Calculate New Error Surface For Entire DEM Extent", Properties.Resources.sigma, OnCalculateDEMErrorSurface_SingleMethod));
+                ContextMenuStrip.Items.Insert(1, new ToolStripMenuItem("Calculate New Error Surface With Mask", Properties.Resources.sigma, OnCalculateDEMErrorSurface_MaskMethod));
             }
             else
             {
-                tsmi = new ToolStripMenuItem("Calculate New Reference Error Surface", Properties.Resources.sigma, OnCalculateReferenceErrorSurface);
+                ContextMenuStrip.Items.Insert(1, new ToolStripMenuItem("Calculate New Reference Error Surface", Properties.Resources.sigma, OnCalculateReferenceErrorSurface));
             }
-            ContextMenuStrip.Items.Insert(1, tsmi);
 
             LoadChildNodes();
         }
@@ -73,6 +72,18 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
         public void OnCalculateDEMErrorSurface_SingleMethod(object sender, EventArgs e)
         {
             SurveyLibrary.ErrorSurfaces.frmSingleMethodError frm = new SurveyLibrary.ErrorSurfaces.frmSingleMethodError(Surface as DEMSurvey);
+            EditTreeItem(frm);
+        }
+
+        public void OnCalculateDEMErrorSurface_MaskMethod(object sender, EventArgs e)
+        {
+            if (!ProjectManager.Project.Masks.Values.Any(x => x is GCDCore.Project.Masks.RegularMask))
+            {
+                MessageBox.Show("You must add at least one regular mask to this GCD project before you can create an error surface using a mask.", "Insufficient Regular Masks", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            SurveyLibrary.ErrorSurfaces.frmMultiMethodError frm = new SurveyLibrary.ErrorSurfaces.frmMultiMethodError(Surface as DEMSurvey);
             EditTreeItem(frm);
         }
     }

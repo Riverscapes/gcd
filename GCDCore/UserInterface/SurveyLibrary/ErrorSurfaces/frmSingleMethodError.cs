@@ -16,15 +16,13 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
         public ErrorSurface ErrorSurface { get; internal set; }
         public GCDProjectItem GCDProjectItem { get { return ErrorSurface as GCDProjectItem; } }
 
-        private List<string> ExistingNames { get { return DEM.ErrorSurfaces.Select(x => x.Name).ToList<string>(); } }
-
-        public frmSingleMethodError(DEMSurvey parentDEM)
+         public frmSingleMethodError(DEMSurvey parentDEM)
         {
             InitializeComponent();
             DEM = parentDEM;
 
             ucErrProps.InitializeNew(m_sEntireDEMExtent, DEM.AssocSurfaces.ToList());
-            ucName.InitializeNewRaster("Error Surface", ExistingNames, DEM.Raster.GISFileInfo.Directory, "Err");
+            ucName.InitializeNewRaster("Error Surface", DEM.ErrorSurfaces.Select(x => x.Name).ToList<string>(), DEM.Raster.GISFileInfo.Directory, "Err");
         }
 
         public frmSingleMethodError(ErrorSurface errSurface)
@@ -32,7 +30,11 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
             InitializeComponent();
             DEM = errSurface.Surf as DEMSurvey;
             ErrorSurface = errSurface;
-            ucName.InitializeExisting("Error Surface", ExistingNames, ErrorSurface.Name, ErrorSurface.Raster.GISFileInfo);
+
+            // Need to exclude the current item from this list
+            List<string> existingNames = DEM.ErrorSurfaces.Where(x => !x.Equals(errSurface)).Select(x => x.Name).ToList();
+
+            ucName.InitializeExisting("Error Surface", existingNames, ErrorSurface.Name, ErrorSurface.Raster.GISFileInfo);
         }
 
         protected void frmSingleMethodError_Load(object sender, EventArgs e)
