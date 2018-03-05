@@ -10,7 +10,7 @@ namespace GCDCore.Visualization
 {
     public class DoDHistogramViewer : ViewerBase
     {
-         // Raw histogram data
+        // Raw histogram data
         Histogram _rawHist;
         Histogram _thrHist;
 
@@ -64,13 +64,19 @@ namespace GCDCore.Visualization
             Axis x = Chart.ChartAreas[0].AxisX;
             x.MajorGrid.LineColor = Color.LightSlateGray;
             x.MinorTickMark.Enabled = false;
-
+            x.ScaleView.Zoomable = true;
+            
             Axis y = Chart.ChartAreas[0].AxisY;
             y.MajorGrid.LineColor = Color.LightSlateGray;
             y.MinorTickMark.Enabled = true;
+            y.ScaleView.Zoomable = true;
+
+            // Allow the user to swipe across the X axis to zoom
+            Chart.ChartAreas[0].CursorX.IsUserSelectionEnabled = true;
+            Chart.ChartAreas[0].CursorY.IsUserSelectionEnabled = true;
 
             _rawHist = rawHisto;
-            _thrHist = thrHisto;      
+            _thrHist = thrHisto;
 
             UpdateDisplay(true);
         }

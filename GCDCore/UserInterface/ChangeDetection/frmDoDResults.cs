@@ -87,13 +87,14 @@ namespace GCDCore.UserInterface.ChangeDetection
 
                 if (frm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
-                    ucHistogram.HistogramViewer.Chart.ChartAreas[0].AxisX.Minimum = frm.XAxisMinimum;
-                    ucHistogram.HistogramViewer.Chart.ChartAreas[0].AxisX.Maximum = frm.XAxisMaximum;
-                    ucHistogram.HistogramViewer.Chart.ChartAreas[0].AxisX.Interval = frm.XAxisInterval;
+                    //ucHistogram.HistogramViewer.Chart.ChartAreas[0].AxisX.Minimum = frm.XAxisMinimum;
+                    //ucHistogram.HistogramViewer.Chart.ChartAreas[0].AxisX.Maximum = frm.XAxisMaximum;
+                    //ucHistogram.HistogramViewer.Chart.ChartAreas[0].AxisX.Interval = frm.XAxisInterval;
 
                     ucHistogram.HistogramViewer.Chart.ChartAreas[0].AxisY.Minimum = frm.YAxisMinimum;
                     ucHistogram.HistogramViewer.Chart.ChartAreas[0].AxisY.Maximum = frm.YAxisMaximum;
                     ucHistogram.HistogramViewer.Chart.ChartAreas[0].AxisY.Interval = frm.YAxisInterval;
+                    ucHistogram.HistogramViewer.Chart.ChartAreas[0].AxisY.IntervalType = DateTimeIntervalType.Number;
 
                     ucHistogram.HistogramViewer.SetFont(m_Options.Font);
                     ucHistogram.HistogramViewer.Chart.Series[Visualization.ViewerBase.EROSION].Color = m_Options.Erosion;
@@ -110,7 +111,7 @@ namespace GCDCore.UserInterface.ChangeDetection
 
                     Series serNet = ucBars.chtControl.Series.FindByName(Visualization.ViewerBase.NET);
                     if (serNet is Series)
-                        serNet.Color = serNet.Points[0].YValues[0] > 0 ? m_Options.Deposition :  m_Options.Deposition;
+                        serNet.Color = serNet.Points[0].YValues[0] > 0 ? m_Options.Deposition : m_Options.Deposition;
                 }
 
             }

@@ -608,6 +608,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.groupBox3.Controls.Add(this.label10);
             this.groupBox3.Controls.Add(this.valMaximum);
             this.groupBox3.Controls.Add(this.label9);
+            this.groupBox3.Enabled = false;
             this.groupBox3.Location = new System.Drawing.Point(6, 63);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(200, 100);
