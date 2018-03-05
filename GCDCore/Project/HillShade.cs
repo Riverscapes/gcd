@@ -10,7 +10,7 @@ namespace GCDCore.Project
 {
     public class HillShade : GCDProjectRasterItem
     {
-        public override string Noun { get { return "DEM Hillshade"; } }
+        public override string Noun { get { return "Hillshade"; } }
 
         /// <summary>
         /// Hillshades are never considered in use
@@ -23,10 +23,16 @@ namespace GCDCore.Project
             }
         }
 
-        public HillShade(FileInfo rasterPath)
-            : base("DEM Hillshade", rasterPath)
+        public HillShade(string name, FileInfo rasterPath)
+            : base(name, rasterPath)
         {
 
-        }        
+        }
+
+        public HillShade(string name, GCDConsoleLib.Raster raster)
+            : base(name, raster)
+        {
+
+        }
     }
 }

@@ -80,13 +80,16 @@ namespace GCDCore.Project
 
             if (hillshadePath is FileInfo && hillshadePath.Exists)
             {
-                Hillshade = new HillShade(hillshadePath);
+                Hillshade = new HillShade(string.Format("{0} Hillshade", Noun), hillshadePath);
             }
         }
 
-        public Surface(string name, GCDConsoleLib.Raster raster)
+        public Surface(string name, GCDConsoleLib.Raster raster, GCDConsoleLib.Raster rHillShade)
          : base(name, raster)
         {
+            if (rHillShade != null)
+                Hillshade = new HillShade(string.Format("{0} Hillshade", Noun), rHillShade);
+
             ErrorSurfaces = new naru.ui.SortableBindingList<ErrorSurface>();
             LinearExtractions = new Dictionary<string, LinearExtraction.LinearExtraction>();
         }
@@ -96,7 +99,7 @@ namespace GCDCore.Project
         {
             XmlNode nodHillshade = nodSurface.SelectSingleNode("Hillshade");
             if (nodHillshade is XmlNode)
-                Hillshade = new HillShade(ProjectManager.Project.GetAbsolutePath(nodHillshade.InnerText));
+                Hillshade = new HillShade(string.Format("{0} Hillshade", Noun), ProjectManager.Project.GetAbsolutePath(nodHillshade.InnerText));
 
             ErrorSurfaces = new naru.ui.SortableBindingList<ErrorSurface>();
             foreach (XmlNode nodError in nodSurface.SelectNodes("ErrorSurfaces/ErrorSurface"))

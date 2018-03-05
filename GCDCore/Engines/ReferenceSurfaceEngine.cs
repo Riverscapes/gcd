@@ -48,13 +48,11 @@ namespace GCDCore.Engines
         public Surface Run(FileInfo rsPath, FileInfo errPath)
         {
             GCDConsoleLib.Raster rSurface = BuildReferenceSurface(rsPath);
-            GCDConsoleLib.Raster rError = BuildErrorSurface(errPath);
+            GCDConsoleLib.Raster rErrorSf = BuildErrorSurface(errPath);
+            GCDConsoleLib.Raster rHillshd = GCDConsoleLib.RasterOperators.Hillshade(rSurface, Surface.HillShadeRasterPath(rsPath));
 
-            // Generate hillshade
-            GCDConsoleLib.RasterOperators.Hillshade(rSurface, Surface.HillShadeRasterPath(rsPath));
-
-            Surface refSurf = new GCDCore.Project.Surface(Name, rSurface);
-            refSurf.ErrorSurfaces.Add(new ErrorSurface(ErrorSurfaceName, rError.GISFileInfo, refSurf));
+            Surface refSurf = new GCDCore.Project.Surface(Name, rSurface, rHillshd);
+            refSurf.ErrorSurfaces.Add(new ErrorSurface(ErrorSurfaceName, errPath, refSurf));
 
             ProjectManager.Project.ReferenceSurfaces[refSurf.Name] = refSurf;
             ProjectManager.Project.Save();

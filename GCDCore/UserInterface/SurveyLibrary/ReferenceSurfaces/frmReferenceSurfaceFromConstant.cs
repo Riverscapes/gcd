@@ -167,7 +167,7 @@ namespace GCDCore.UserInterface.SurveyLibrary.ReferenceSurfaces
 
                     // Generate reference surface
                     GCDConsoleLib.Raster rOut = GCDConsoleLib.RasterOperators.Uniform<float>(template, fiOutput, value);
-                    ReferenceSurface = new Surface(name, rOut);
+                    ReferenceSurface = new Surface(name, rOut, null);
                     ProjectManager.Project.ReferenceSurfaces[ReferenceSurface.Name] = ReferenceSurface;
 
                     // Error surface
