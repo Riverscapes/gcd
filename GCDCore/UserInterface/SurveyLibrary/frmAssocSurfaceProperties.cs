@@ -163,7 +163,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
                         break;
 
                     case AssocSurface.AssociatedSurfaceTypes.PointDensity:
-                        GCDConsoleLib.RasterOperators.PointDensity(DEM.Raster, PointCloud, new FileInfo(txtProjectRaster.Text), PointDensityShape, PointDensitySize);
+                        GCDConsoleLib.RasterOperators.PointDensity(DEM.Raster, PointCloud, fiOutput, PointDensityShape, PointDensitySize);
                         break;
 
                     case AssocSurface.AssociatedSurfaceTypes.Roughness:
