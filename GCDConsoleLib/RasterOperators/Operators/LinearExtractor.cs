@@ -362,12 +362,21 @@ namespace GCDConsoleLib.Internal.Operators
             }
             for (int did = 0; did < _inputRasters.Count; did++)
             {
-                T[] _buffer = new T[1];
-                _inputRasters[did].Read(rowcol[1], rowcol[0], 1, 1, _buffer);
-                if (_buffer[0].Equals(inNodataVals[did]))
-                    csvcols.Add("");
+                if (rowcol[1] > 0 && rowcol[1] < _inputRasters[did].Extent.Cols &&
+                    rowcol[0] > 0 && rowcol[0] < _inputRasters[did].Extent.Rows)
+                {
+                    T[] _buffer = new T[1];
+                    _inputRasters[did].Read(rowcol[1], rowcol[0], 1, 1, _buffer);
+                    if (_buffer[0].Equals(inNodataVals[did]))
+                        csvcols.Add("");
+                    else
+                        csvcols.Add(_buffer[0].ToString());
+
+                }
                 else
-                    csvcols.Add(_buffer[0].ToString());
+                {
+                    csvcols.Add("");
+                }
             }
             csvRows.Add(String.Join(",", csvcols));
             WriteLinesToCSV(csvRows);

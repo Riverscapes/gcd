@@ -372,7 +372,6 @@ namespace GCDConsoleLib.Internal.Operators.Tests
             }
         }
 
-
         [TestMethod()]
         [TestCategory("Functional")]
         public void BinRasterTest()
