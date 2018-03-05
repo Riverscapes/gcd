@@ -15,7 +15,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
         public readonly DEMSurvey DEM;
 
         public AssocGroup(TreeNodeCollection parentNodes, IContainer container, DEMSurvey dem)
-            : base(parentNodes, "Associatd Surfaces", "Associated Surface", "Associated Surfaces", dem.AssocSurfacesFolder, container)
+            : base(parentNodes, "Associated Surfaces", "Associated Surface", "Associated Surfaces", dem.AssocSurfacesFolder, container)
         {
             DEM = dem;
 
