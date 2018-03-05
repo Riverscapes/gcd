@@ -213,7 +213,7 @@ namespace GCDCore.UserInterface.ChangeDetection
                 aRow.Cells[colRaw].Value = dodStats.ErosionRaw.GetVolume(ca, vunit).As(options.VolumeUnits);
                 aRow.Cells[colThr].Value = dodStats.ErosionThr.GetVolume(ca, vunit).As(options.VolumeUnits);
                 aRow.Cells[colErr].Value = dodStats.ErosionErr.GetVolume(ca, vunit).As(options.VolumeUnits);
-                aRow.Cells[colEPC].Value = dodStats.VolumeOfErosion_Percent;
+                aRow.Cells[colEPC].Value = dodStats.VolumeOfErosion_Percent / 100m;
 
                 // Volume of deposition
                 aRow = grdData.Rows[grdData.Rows.Add()];
@@ -222,7 +222,7 @@ namespace GCDCore.UserInterface.ChangeDetection
                 aRow.Cells[colRaw].Value = dodStats.DepositionRaw.GetVolume(ca, vunit).As(options.VolumeUnits);
                 aRow.Cells[colThr].Value = dodStats.DepositionThr.GetVolume(ca, vunit).As(options.VolumeUnits);
                 aRow.Cells[colErr].Value = dodStats.DepositionErr.GetVolume(ca, vunit).As(options.VolumeUnits);
-                aRow.Cells[colEPC].Value = dodStats.VolumeOfDeposition_Percent;
+                aRow.Cells[colEPC].Value = dodStats.VolumeOfDeposition_Percent / 100m;
 
                 // Total volume of difference
                 aRow = grdData.Rows[grdData.Rows.Add()];
@@ -231,7 +231,7 @@ namespace GCDCore.UserInterface.ChangeDetection
                 aRow.Cells[colRaw].Value = dodStats.VolumeOfDifference_Raw.As(options.VolumeUnits);
                 aRow.Cells[colThr].Value = dodStats.VolumeOfDifference_Thresholded.As(options.VolumeUnits);
                 aRow.Cells[colErr].Value = dodStats.VolumeOfDifference_Error.As(options.VolumeUnits);
-                aRow.Cells[colEPC].Value = dodStats.VolumeOfDifference_Percent;
+                aRow.Cells[colEPC].Value = dodStats.VolumeOfDifference_Percent / 100m;
             }
 
 
@@ -244,7 +244,7 @@ namespace GCDCore.UserInterface.ChangeDetection
                 aRow.Cells[colRaw].Value = dodStats.NetVolumeOfDifference_Raw.As(options.VolumeUnits);
                 aRow.Cells[colThr].Value = dodStats.NetVolumeOfDifference_Thresholded.As(options.VolumeUnits);
                 aRow.Cells[colErr].Value = dodStats.NetVolumeOfDifference_Error.As(options.VolumeUnits);
-                aRow.Cells[colEPC].Value = dodStats.NetVolumeOfDifference_Percent;
+                aRow.Cells[colEPC].Value = dodStats.NetVolumeOfDifference_Percent / 100m;
             }
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -267,7 +267,7 @@ namespace GCDCore.UserInterface.ChangeDetection
                 aRow.Cells[colRaw].Value = dodStats.AverageDepthErosion_Raw.As(options.LinearUnits);
                 aRow.Cells[colThr].Value = dodStats.AverageDepthErosion_Thresholded.As(options.LinearUnits);
                 aRow.Cells[colErr].Value = dodStats.AverageDepthErosion_Error.As(options.LinearUnits);
-                aRow.Cells[colEPC].Value = dodStats.AverageDepthErosion_Percent;
+                aRow.Cells[colEPC].Value = dodStats.AverageDepthErosion_Percent / 100m;
 
                 // Average Depth of Deposition
                 aRow = grdData.Rows[grdData.Rows.Add()];
@@ -276,7 +276,7 @@ namespace GCDCore.UserInterface.ChangeDetection
                 aRow.Cells[colRaw].Value = dodStats.AverageDepthDeposition_Raw.As(options.LinearUnits);
                 aRow.Cells[colThr].Value = dodStats.AverageDepthDeposition_Thresholded.As(options.LinearUnits);
                 aRow.Cells[colErr].Value = dodStats.AverageDepthDeposition_Error.As(options.LinearUnits);
-                aRow.Cells[colEPC].Value = dodStats.AverageDepthDeposition_Percent;
+                aRow.Cells[colEPC].Value = dodStats.AverageDepthDeposition_Percent / 100m;
 
                 // Average Total Thickness of Difference for AOI
                 aRow = grdData.Rows[grdData.Rows.Add()];
@@ -285,7 +285,7 @@ namespace GCDCore.UserInterface.ChangeDetection
                 aRow.Cells[colRaw].Value = dodStats.AverageThicknessOfDifferenceAOI_Raw.As(options.LinearUnits);
                 aRow.Cells[colThr].Value = dodStats.AverageThicknessOfDifferenceAOI_Thresholded.As(options.LinearUnits);
                 aRow.Cells[colErr].Value = dodStats.AverageThicknessOfDifferenceAOI_Error.As(options.LinearUnits);
-                aRow.Cells[colEPC].Value = dodStats.AverageThicknessOfDifferenceAOI_Percent;
+                aRow.Cells[colEPC].Value = dodStats.AverageThicknessOfDifferenceAOI_Percent / 100m;
             }
 
             if (options.m_eRowGroups == DoDSummaryDisplayOptions.RowGroups.ShowAll || options.m_eRowGroups == DoDSummaryDisplayOptions.RowGroups.Normalized || (options.m_eRowGroups == DoDSummaryDisplayOptions.RowGroups.SpecificGroups && options.m_bRowsVerticalAverages))
@@ -297,7 +297,7 @@ namespace GCDCore.UserInterface.ChangeDetection
                 aRow.Cells[colRaw].Value = dodStats.AverageNetThicknessofDifferenceAOI_Raw.As(options.LinearUnits);
                 aRow.Cells[colThr].Value = dodStats.AverageNetThicknessOfDifferenceAOI_Thresholded.As(options.LinearUnits);
                 aRow.Cells[colErr].Value = dodStats.AverageNetThicknessOfDifferenceAOI_Error.As(options.LinearUnits);
-                aRow.Cells[colEPC].Value = dodStats.AverageNetThicknessOfDifferenceAOI_Percent;
+                aRow.Cells[colEPC].Value = dodStats.AverageNetThicknessOfDifferenceAOI_Percent / 100m;
             }
 
             if (options.m_eRowGroups == DoDSummaryDisplayOptions.RowGroups.ShowAll || options.m_eRowGroups == DoDSummaryDisplayOptions.RowGroups.SpecificGroups && options.m_bRowsVerticalAverages)
@@ -310,7 +310,7 @@ namespace GCDCore.UserInterface.ChangeDetection
                 aRow.Cells[colRaw].Style.BackColor = System.Drawing.Color.LightGray;
                 aRow.Cells[colThr].Value = dodStats.AverageThicknessOfDifferenceADC_Thresholded.As(options.LinearUnits);
                 aRow.Cells[colErr].Value = dodStats.AverageThicknessOfDifferenceADC_Error.As(options.LinearUnits);
-                aRow.Cells[colEPC].Value = dodStats.AverageThicknessOfDifferenceADC_Percent;
+                aRow.Cells[colEPC].Value = dodStats.AverageThicknessOfDifferenceADC_Percent / 100m;
             }
 
             if (options.m_eRowGroups == DoDSummaryDisplayOptions.RowGroups.ShowAll || options.m_eRowGroups == DoDSummaryDisplayOptions.RowGroups.Normalized || (options.m_eRowGroups == DoDSummaryDisplayOptions.RowGroups.SpecificGroups && options.m_bRowsVerticalAverages))
@@ -323,7 +323,7 @@ namespace GCDCore.UserInterface.ChangeDetection
                 aRow.Cells[colRaw].Style.BackColor = System.Drawing.Color.LightGray;
                 aRow.Cells[colThr].Value = dodStats.AverageNetThicknessOfDifferenceADC_Thresholded.As(options.LinearUnits);
                 aRow.Cells[colErr].Value = dodStats.AverageNetThicknessOfDifferenceADC_Error.As(options.LinearUnits);
-                aRow.Cells[colEPC].Value = dodStats.AverageNetThicknessOfDifferenceADC_Percent;
+                aRow.Cells[colEPC].Value = dodStats.AverageNetThicknessOfDifferenceADC_Percent / 100m;
             }
 
             if (options.m_eRowGroups == DoDSummaryDisplayOptions.RowGroups.ShowAll || (options.m_eRowGroups == DoDSummaryDisplayOptions.RowGroups.SpecificGroups && options.m_bRowsPercentages))
