@@ -94,19 +94,26 @@ namespace GCDCore.Project
             LinearExtractions = new Dictionary<string, LinearExtraction.LinearExtraction>();
         }
 
-        public Surface(XmlNode nodSurface)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="nodSurface"></param>
+        /// <param name="bLoadErrorSurfaces">See remarks</param>
+        /// <remarks>
+        /// DEM Survey error surfaces can be defined by assoc surface or FIS that uses
+        /// assoc surface. But When this base constructor for Surfaces get's called the associated
+        /// surface dictionary has not been loaded yet. DEM Surveys therefore override the following call
+        /// </remarks>
+        public Surface(XmlNode nodSurface, bool bLoadErrorSurfaces)
             : base(nodSurface)
         {
             XmlNode nodHillshade = nodSurface.SelectSingleNode("Hillshade");
             if (nodHillshade is XmlNode)
                 Hillshade = new HillShade(string.Format("{0} Hillshade", Noun), ProjectManager.Project.GetAbsolutePath(nodHillshade.InnerText));
-
+  
             ErrorSurfaces = new naru.ui.SortableBindingList<ErrorSurface>();
-            foreach (XmlNode nodError in nodSurface.SelectNodes("ErrorSurfaces/ErrorSurface"))
-            {
-                ErrorSurface error = new ErrorSurface(nodError, this);
-                ErrorSurfaces.Add(error);
-            }
+            if (bLoadErrorSurfaces)
+                LoadErrorSurfaces(nodSurface);
 
             LinearExtractions = new Dictionary<string, LinearExtraction.LinearExtraction>();
             foreach (XmlNode nodLE in nodSurface.SelectNodes("LinearExtractions/LinearExtraction"))
@@ -121,6 +128,15 @@ namespace GCDCore.Project
                     le = new LinearExtraction.LinearExtractionFromDoD(nodLE);
 
                 LinearExtractions[le.Name] = le;
+            }
+        }
+
+        protected void LoadErrorSurfaces(XmlNode nodSurface)
+        {
+            foreach (XmlNode nodError in nodSurface.SelectNodes("ErrorSurfaces/ErrorSurface"))
+            {
+                ErrorSurface error = new ErrorSurface(nodError, this);
+                ErrorSurfaces.Add(error);
             }
         }
 

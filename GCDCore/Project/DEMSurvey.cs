@@ -37,7 +37,7 @@ namespace GCDCore.Project
         }
 
         public DEMSurvey(XmlNode nodDEM)
-            : base(nodDEM)
+            : base(nodDEM, false)
         {
             SurveyDateTime surveyDT = null;
             XmlNode nodSurveyDate = nodDEM.SelectSingleNode("SurveyDate");
@@ -92,6 +92,9 @@ namespace GCDCore.Project
                 AssocSurface assoc = new AssocSurface(nodAssoc, this);
                 AssocSurfaces.Add(assoc);
             }
+
+            // Load the error surfaces now that the associated surfaces have been loaded
+            LoadErrorSurfaces(nodDEM);
         }
 
         public bool IsAssocNameUnique(string name, AssocSurface ignore)
