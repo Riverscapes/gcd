@@ -73,6 +73,12 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.picErosion = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.valYInterval = new System.Windows.Forms.NumericUpDown();
+            this.valYMinimum = new System.Windows.Forms.NumericUpDown();
+            this.label8 = new System.Windows.Forms.Label();
+            this.valYMaximum = new System.Windows.Forms.NumericUpDown();
+            this.label12 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label11 = new System.Windows.Forms.Label();
             this.valInterval = new System.Windows.Forms.NumericUpDown();
@@ -82,12 +88,6 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.label9 = new System.Windows.Forms.Label();
             this.frmColourPicker = new System.Windows.Forms.ColorDialog();
             this.frmFont = new System.Windows.Forms.FontDialog();
-            this.label7 = new System.Windows.Forms.Label();
-            this.valYInterval = new System.Windows.Forms.NumericUpDown();
-            this.valYMinimum = new System.Windows.Forms.NumericUpDown();
-            this.label8 = new System.Windows.Forms.Label();
-            this.valYMaximum = new System.Windows.Forms.NumericUpDown();
-            this.label12 = new System.Windows.Forms.Label();
             this.GroupBox1.SuspendLayout();
             this.GroupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.valPrecision)).BeginInit();
@@ -100,13 +100,13 @@ namespace GCDCore.UserInterface.ChangeDetection
             ((System.ComponentModel.ISupportInitialize)(this.picDeposition)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picErosion)).BeginInit();
             this.groupBox4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.valYInterval)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.valYMinimum)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.valYMaximum)).BeginInit();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.valInterval)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.valMinimum)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.valMaximum)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.valYInterval)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.valYMinimum)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.valYMaximum)).BeginInit();
             this.SuspendLayout();
             // 
             // GroupBox1
@@ -549,6 +549,57 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Histogram Y Axis";
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(6, 74);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(70, 13);
+            this.label7.TabIndex = 11;
+            this.label7.Text = "Label interval";
+            // 
+            // valYInterval
+            // 
+            this.valYInterval.DecimalPlaces = 2;
+            this.valYInterval.Location = new System.Drawing.Point(80, 70);
+            this.valYInterval.Name = "valYInterval";
+            this.valYInterval.Size = new System.Drawing.Size(77, 20);
+            this.valYInterval.TabIndex = 10;
+            // 
+            // valYMinimum
+            // 
+            this.valYMinimum.DecimalPlaces = 2;
+            this.valYMinimum.Location = new System.Drawing.Point(80, 44);
+            this.valYMinimum.Name = "valYMinimum";
+            this.valYMinimum.Size = new System.Drawing.Size(77, 20);
+            this.valYMinimum.TabIndex = 9;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(28, 48);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(48, 13);
+            this.label8.TabIndex = 8;
+            this.label8.Text = "Minimum";
+            // 
+            // valYMaximum
+            // 
+            this.valYMaximum.DecimalPlaces = 2;
+            this.valYMaximum.Location = new System.Drawing.Point(80, 18);
+            this.valYMaximum.Name = "valYMaximum";
+            this.valYMaximum.Size = new System.Drawing.Size(77, 20);
+            this.valYMaximum.TabIndex = 7;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(25, 22);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(51, 13);
+            this.label12.TabIndex = 6;
+            this.label12.Text = "Maximum";
+            // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.label11);
@@ -567,16 +618,16 @@ namespace GCDCore.UserInterface.ChangeDetection
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(25, 74);
+            this.label11.Location = new System.Drawing.Point(6, 74);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(42, 13);
+            this.label11.Size = new System.Drawing.Size(70, 13);
             this.label11.TabIndex = 5;
-            this.label11.Text = "Interval";
+            this.label11.Text = "Label interval";
             // 
             // valInterval
             // 
             this.valInterval.DecimalPlaces = 2;
-            this.valInterval.Location = new System.Drawing.Point(75, 70);
+            this.valInterval.Location = new System.Drawing.Point(80, 70);
             this.valInterval.Name = "valInterval";
             this.valInterval.Size = new System.Drawing.Size(77, 20);
             this.valInterval.TabIndex = 4;
@@ -584,7 +635,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             // valMinimum
             // 
             this.valMinimum.DecimalPlaces = 2;
-            this.valMinimum.Location = new System.Drawing.Point(75, 44);
+            this.valMinimum.Location = new System.Drawing.Point(80, 44);
             this.valMinimum.Name = "valMinimum";
             this.valMinimum.Size = new System.Drawing.Size(77, 20);
             this.valMinimum.TabIndex = 3;
@@ -592,7 +643,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(16, 48);
+            this.label10.Location = new System.Drawing.Point(28, 48);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(48, 13);
             this.label10.TabIndex = 2;
@@ -601,7 +652,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             // valMaximum
             // 
             this.valMaximum.DecimalPlaces = 2;
-            this.valMaximum.Location = new System.Drawing.Point(75, 18);
+            this.valMaximum.Location = new System.Drawing.Point(80, 18);
             this.valMaximum.Name = "valMaximum";
             this.valMaximum.Size = new System.Drawing.Size(77, 20);
             this.valMaximum.TabIndex = 1;
@@ -609,62 +660,11 @@ namespace GCDCore.UserInterface.ChangeDetection
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(19, 22);
+            this.label9.Location = new System.Drawing.Point(25, 22);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(51, 13);
             this.label9.TabIndex = 0;
             this.label9.Text = "Maximum";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(20, 74);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(42, 13);
-            this.label7.TabIndex = 11;
-            this.label7.Text = "Interval";
-            // 
-            // valYInterval
-            // 
-            this.valYInterval.DecimalPlaces = 2;
-            this.valYInterval.Location = new System.Drawing.Point(70, 70);
-            this.valYInterval.Name = "valYInterval";
-            this.valYInterval.Size = new System.Drawing.Size(77, 20);
-            this.valYInterval.TabIndex = 10;
-            // 
-            // valYMinimum
-            // 
-            this.valYMinimum.DecimalPlaces = 2;
-            this.valYMinimum.Location = new System.Drawing.Point(70, 44);
-            this.valYMinimum.Name = "valYMinimum";
-            this.valYMinimum.Size = new System.Drawing.Size(77, 20);
-            this.valYMinimum.TabIndex = 9;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(11, 48);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(48, 13);
-            this.label8.TabIndex = 8;
-            this.label8.Text = "Minimum";
-            // 
-            // valYMaximum
-            // 
-            this.valYMaximum.DecimalPlaces = 2;
-            this.valYMaximum.Location = new System.Drawing.Point(70, 18);
-            this.valYMaximum.Name = "valYMaximum";
-            this.valYMaximum.Size = new System.Drawing.Size(77, 20);
-            this.valYMaximum.TabIndex = 7;
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(14, 22);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(51, 13);
-            this.label12.TabIndex = 6;
-            this.label12.Text = "Maximum";
             // 
             // frmDoDSummaryProperties
             // 
@@ -703,14 +703,14 @@ namespace GCDCore.UserInterface.ChangeDetection
             ((System.ComponentModel.ISupportInitialize)(this.picErosion)).EndInit();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.valYInterval)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.valYMinimum)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.valYMaximum)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.valInterval)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.valMinimum)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.valMaximum)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.valYInterval)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.valYMinimum)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.valYMaximum)).EndInit();
             this.ResumeLayout(false);
 
         }
