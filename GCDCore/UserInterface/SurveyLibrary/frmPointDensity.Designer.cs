@@ -167,7 +167,6 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.ShowIcon = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "Generate Point Density Raster";
-            this.Load += new System.EventHandler(this.frmPointDensity_Load);
             ((System.ComponentModel.ISupportInitialize)(this.valSampleDistance)).EndInit();
             this.GroupBox1.ResumeLayout(false);
             this.GroupBox1.PerformLayout();

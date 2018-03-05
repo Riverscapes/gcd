@@ -60,13 +60,5 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
             lblDistance.Text = string.Format("{0} ({1})", label, UnitsNet.Length.GetAbbreviation(m_eLinearUnits));
         }
-
-        private void frmPointDensity_Load(object sender, EventArgs e)
-        {
-            if (ProjectManager.IsArcMap)
-            {
-                ucPointCloud.BrowseVector += ProjectManager.OnBrowseVector;
-            }
-        }
     }
 }
