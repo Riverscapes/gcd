@@ -11,6 +11,7 @@ namespace GCDCore.Project
     {
         public readonly Surface Surf;
         public readonly Dictionary<string, ErrorSurfaceProperty> ErrorProperties;
+        public readonly Masks.RegularMask Mask;
 
         public override string Noun { get { return "Error Surface"; } }
 
@@ -77,10 +78,20 @@ namespace GCDCore.Project
             ErrorProperties = new Dictionary<string, ErrorSurfaceProperty>();
         }
 
-        public ErrorSurface(string name, FileInfo rasterPath, Surface surf, bool isDefault, Dictionary<string, ErrorSurfaceProperty> errProperties)
+        /// <summary>
+        /// Constructor for masked error surfaces
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="rasterPath"></param>
+        /// <param name="surf"></param>
+        /// <param name="isDefault"></param>
+        /// <param name="errProperties"></param>
+        /// <param name="mask"></param>
+        public ErrorSurface(string name, FileInfo rasterPath, Surface surf, bool isDefault, Dictionary<string, ErrorSurfaceProperty> errProperties, Masks.RegularMask mask)
             : base(name, rasterPath)
         {
             Surf = surf;
+            Mask = mask;
             _IsDefault = isDefault;
             ErrorProperties = errProperties;
         }
@@ -100,6 +111,16 @@ namespace GCDCore.Project
             _IsDefault = bool.Parse(nodError.SelectSingleNode("IsDefault").InnerText);
             Surf = surf;
 
+            XmlNode nodMask = nodError.SelectSingleNode("Mask");
+            if (nodMask is XmlNode)
+            {
+                // Must be a regular mask with the same name
+                if (ProjectManager.Project.Masks.Values.Any(x => x is Masks.RegularMask && string.Compare(x.Name, nodMask.InnerText, true) == 0))
+                {
+                    Mask = ProjectManager.Project.Masks[nodMask.InnerText] as Masks.RegularMask;
+                }
+            }
+
             // There might not be any error surface properties if the error raster was "specified" raster than calculated
             Dictionary<string, ErrorSurfaceProperty> properties = new Dictionary<string, ErrorSurfaceProperty>();
             foreach (XmlNode nodProperty in nodError.SelectNodes("ErrorSurfaceProperties/ErrorSurfaceProperty"))
@@ -115,6 +136,11 @@ namespace GCDCore.Project
             nodError.AppendChild(nodParent.OwnerDocument.CreateElement("Name")).InnerText = Name;
             nodError.AppendChild(nodParent.OwnerDocument.CreateElement("Path")).InnerText = ProjectManager.Project.GetRelativePath(Raster.GISFileInfo);
             nodError.AppendChild(nodParent.OwnerDocument.CreateElement("IsDefault")).InnerText = _IsDefault.ToString();
+
+            if (Mask != null)
+            {
+                nodError.AppendChild(nodParent.OwnerDocument.CreateElement("Mask")).InnerText = Mask.Name;
+            }
 
             if (ErrorProperties != null)
             {

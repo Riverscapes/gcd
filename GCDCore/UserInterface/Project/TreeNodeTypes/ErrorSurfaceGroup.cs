@@ -57,12 +57,6 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             EditTreeItem(frm);
         }
 
-        public void OnCalculateDEMErrorSurface(object sender, EventArgs e)
-        {
-            SurveyLibrary.frmErrorSurfaceProperties frm = new SurveyLibrary.frmErrorSurfaceProperties(Surface as DEMSurvey, null);
-            EditTreeItem(frm);
-        }
-
         public void OnCalculateReferenceErrorSurface(object sender, EventArgs e)
         {
             SurveyLibrary.ReferenceSurfaces.frmRefErrorSurface frm = new SurveyLibrary.ReferenceSurfaces.frmRefErrorSurface(Surface);

@@ -110,7 +110,7 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
                     ErrProps.ToList().ForEach(x => errProps.Add(x.Name, x));
 
                     RasterOperators.CreateErrorRaster(DEM.Raster, mask.Vector, mask._Field, gcdErrProps, ucName.AbsolutePath);
-                    ErrorSurface = new ErrorSurface(ucName.ItemName, ucName.AbsolutePath, DEM, chkDefault.Checked, errProps);
+                    ErrorSurface = new ErrorSurface(ucName.ItemName, ucName.AbsolutePath, DEM, chkDefault.Checked, errProps, mask);
                     DEM.ErrorSurfaces.Add(ErrorSurface);
                 }
                 else

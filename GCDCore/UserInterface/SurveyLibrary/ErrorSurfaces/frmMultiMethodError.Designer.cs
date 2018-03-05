@@ -41,9 +41,9 @@
             this.grdRegions = new System.Windows.Forms.DataGridView();
             this.colMaskValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colErrProperty = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.chkDefault = new System.Windows.Forms.CheckBox();
             this.cmsEditGrid = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.editErrorPropertyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.chkDefault = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdRegions)).BeginInit();
             this.cmsEditGrid.SuspendLayout();
@@ -134,7 +134,7 @@
             this.groupBox1.Size = new System.Drawing.Size(474, 272);
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Mas Regions";
+            this.groupBox1.Text = "Mask Regions";
             // 
             // grdRegions
             // 
@@ -177,16 +177,6 @@
             this.colErrProperty.Name = "colErrProperty";
             this.colErrProperty.ReadOnly = true;
             // 
-            // chkDefault
-            // 
-            this.chkDefault.AutoSize = true;
-            this.chkDefault.Location = new System.Drawing.Point(79, 98);
-            this.chkDefault.Name = "chkDefault";
-            this.chkDefault.Size = new System.Drawing.Size(125, 17);
-            this.chkDefault.TabIndex = 4;
-            this.chkDefault.Text = "Default Error Surface";
-            this.chkDefault.UseVisualStyleBackColor = true;
-            // 
             // cmsEditGrid
             // 
             this.cmsEditGrid.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -201,6 +191,16 @@
             this.editErrorPropertyToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
             this.editErrorPropertyToolStripMenuItem.Text = "Edit Error Property";
             this.editErrorPropertyToolStripMenuItem.Click += new System.EventHandler(this.EditErrorProperty);
+            // 
+            // chkDefault
+            // 
+            this.chkDefault.AutoSize = true;
+            this.chkDefault.Location = new System.Drawing.Point(79, 98);
+            this.chkDefault.Name = "chkDefault";
+            this.chkDefault.Size = new System.Drawing.Size(125, 17);
+            this.chkDefault.TabIndex = 4;
+            this.chkDefault.Text = "Default Error Surface";
+            this.chkDefault.UseVisualStyleBackColor = true;
             // 
             // frmMultiMethodError
             // 

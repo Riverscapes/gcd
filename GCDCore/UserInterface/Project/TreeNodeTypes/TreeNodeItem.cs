@@ -64,7 +64,10 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             else if (Item is ErrorSurface && ((ErrorSurface)Item).Surf is DEMSurvey)
             {
                 ErrorSurface err = Item as ErrorSurface;
-                frm = new SurveyLibrary.frmErrorSurfaceProperties(err.Surf as DEMSurvey, err);
+                if (err.Mask == null)
+                    frm = new SurveyLibrary.ErrorSurfaces.frmSingleMethodError(err);
+                else
+                    frm = new SurveyLibrary.ErrorSurfaces.frmMultiMethodError(err);
             }
             else if (Item is GCDCore.Project.ProfileRoutes.ProfileRoute)
             {

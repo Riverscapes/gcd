@@ -369,12 +369,6 @@
     <Compile Include="UserInterface\SurveyLibrary\frmSurfaceProperties.Designer.cs">
       <DependentUpon>frmSurfaceProperties.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserInterface\SurveyLibrary\frmErrorSurfaceProperties.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UserInterface\SurveyLibrary\frmErrorSurfaceProperties.Designer.cs">
-      <DependentUpon>frmErrorSurfaceProperties.cs</DependentUpon>
-    </Compile>
     <Compile Include="UserInterface\SurveyLibrary\frmImportRaster.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -631,9 +625,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\SurveyLibrary\frmSurfaceProperties.resx">
       <DependentUpon>frmSurfaceProperties.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UserInterface\SurveyLibrary\frmErrorSurfaceProperties.resx">
-      <DependentUpon>frmErrorSurfaceProperties.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\SurveyLibrary\frmImportRaster.resx">
       <DependentUpon>frmImportRaster.cs</DependentUpon>

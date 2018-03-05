@@ -167,8 +167,7 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
             }
             else
             {
-                ErrSurfProperty.FISRuleFile = ((FISLibraryItem)cboFIS.SelectedItem).FilePath;
-                // The FIS inputs should already be updated
+                // The FIS file and inputs should already be updated
             }
 
             return true;
