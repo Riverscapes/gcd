@@ -60,6 +60,7 @@ namespace GCDConsoleLib
                 if (!FieldValues.ContainsKey(maskid))
                     FieldValues.Add(maskid, val);
             }
+            vectorInput.Dispose();
         }
 
         /// <summary>

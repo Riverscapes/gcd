@@ -154,6 +154,10 @@ namespace GCDConsoleLib.Internal
                 // Do a union on the inputextent
                 foreach (Raster rRout in rOutputRasters)
                     AddOutputRaster(rRout);
+            else
+                // Sometimes we need an output nodataval even when we don't have an output raster
+                // (think FIS for error rasters
+                outNodataVals.Add(rRasters[0].NodataValue<T>());
 
             // Last thing we do is set the nodata value (which is suprisingly hard to do)
             SetNodataValue();

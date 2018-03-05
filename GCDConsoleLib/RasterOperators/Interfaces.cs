@@ -637,7 +637,7 @@ namespace GCDConsoleLib
             {
                 using (VectorRaster tmp = new VectorRaster(rawDEM, PolygonMask, MaskFieldName))
                 {
-                    CreateErrorRaster theStatsOp = new CreateErrorRaster(rawDEM, PolygonMask, MaskFieldName, props, new Raster(rawDEM, sOutputRaster));
+                    CreateErrorRaster theStatsOp = new CreateErrorRaster(rawDEM, tmp, MaskFieldName, props, new Raster(rawDEM, sOutputRaster));
                     if (progressHandler != null)
                         theStatsOp.ProgressEvent += progressHandler;
                     returnRaster = theStatsOp.RunWithOutput();

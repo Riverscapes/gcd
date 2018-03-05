@@ -184,8 +184,9 @@ namespace GCDConsoleLib.Internal.Operators
             }
             else if (_hasRasterizedPolymask)
             {
-                double rPolymaskVal = data[_inputRasters.Count - 1][id];
-                if (rPolymaskVal != inNodataVals[_inputRasters.Count - 1])
+                // The rasterized polymask layer will always be Raster [1].
+                double rPolymaskVal = data[1][id];
+                if (rPolymaskVal != inNodataVals[1])
                 {
                     string fldVal = _rasterVectorFieldVals[(int)rPolymaskVal];
                     outputs[0][id] = CellChangeCalc(fldVal, data, id);

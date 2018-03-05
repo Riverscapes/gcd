@@ -433,6 +433,42 @@ namespace GCDConsoleLib.Internal.Operators.Tests
 
         [TestMethod()]
         [TestCategory("Functional")]
+        public void CreateErrorRasterFis()
+        {
+            Raster rOld = new Raster(new FileInfo(DirHelpers.GetTestRootPath(@"VerificationProject\inputs\2005DecDEM\2005DecDEM.tif")));
+            Raster rNew = new Raster(new FileInfo(DirHelpers.GetTestRootPath(@"VerificationProject\inputs\2006FebDEM\2006FebDEM.tif")));
+            FileInfo fisFile = new FileInfo(DirHelpers.GetTestRootPath(@"FIS\FuzzyChinookJuvenile_03.fis"));
+
+            // And now the budget seg case
+            Vector vPolyMask = new Vector(new FileInfo(DirHelpers.GetTestRootPath(@"SulphurGCDMASK\Sulphur_SimpleGCDMask.shp")));
+
+            using (ITempDir tmp = TempDir.Create())
+            {
+                FileInfo fiPolyMaskCopy = new FileInfo(Path.Combine(tmp.Name, "Sulphur_SimpleGCDMask.shp"));
+                vPolyMask.Copy(fiPolyMaskCopy);
+                Vector vPolyMaskCopy = new Vector(fiPolyMaskCopy);
+
+                Dictionary<string, Raster> fisinputs = new Dictionary<string, Raster>()
+                {
+                    {"Depth", rOld},
+                    {"Velocity", rNew},
+                    {"GrainSize_mm",  rOld}
+                };
+
+                Dictionary<string, ErrorRasterProperties> props = new Dictionary<string, ErrorRasterProperties>
+                {
+                    {"LiDAR", new ErrorRasterProperties(0.1m) },
+                    {"Total Station", new ErrorRasterProperties(0.2m) },
+                    {"Unknown",  new ErrorRasterProperties(fisFile, fisinputs) }
+                };
+
+
+                Raster r2006Error = RasterOperators.CreateErrorRaster(rOld, vPolyMaskCopy, "Method", props, new FileInfo(Path.Combine(tmp.Name, "2006Feb_DEM_CONSTERR01.tif")));
+            }
+        }
+
+        [TestMethod()]
+        [TestCategory("Functional")]
         public void PosteriorProbabilityTest()
         {
             using (ITempDir tmp = TempDir.Create())
