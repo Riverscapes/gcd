@@ -70,23 +70,7 @@ namespace GCDCore.Visualization
             y.MinorTickMark.Enabled = true;
 
             _rawHist = rawHisto;
-            _thrHist = thrHisto;
-
-            // Strip line is used to emphasize deposition
-            StripLine depositionArea = new StripLine();
-            depositionArea.BackColor = Color.FromArgb(10, GCDCore.Properties.Settings.Default.Deposition);
-            depositionArea.Interval = 0;
-            depositionArea.IntervalOffset = 0;
-            depositionArea.StripWidth = 10;
-            Chart.ChartAreas[0].AxisX.StripLines.Add(depositionArea);
-
-            // Strip line is used to emphasize deposition
-            StripLine erosionArea = new StripLine();
-            erosionArea.BackColor = Color.FromArgb(10, GCDCore.Properties.Settings.Default.Erosion);
-            erosionArea.Interval = 0;
-            erosionArea.IntervalOffset = 0;
-            erosionArea.StripWidth = 10;
-            Chart.ChartAreas[0].AxisX.StripLines.Add(erosionArea);
+            _thrHist = thrHisto;      
 
             UpdateDisplay(true);
         }
@@ -125,10 +109,6 @@ namespace GCDCore.Visualization
                 Chart.ChartAreas[0].AxisY.Title = string.Format("Area ({0})", UnitsNet.Area.GetAbbreviation(DisplayUnits.ArUnit));
             else
                 Chart.ChartAreas[0].AxisY.Title = string.Format("Volume ({0})", UnitsNet.Volume.GetAbbreviation(DisplayUnits.VolUnit));
-
-            axisX.StripLines[0].StripWidth = axisX.Maximum;
-            axisX.StripLines[1].StripWidth = axisX.Maximum;
-            axisX.StripLines[1].IntervalOffset = axisX.Minimum;
         }
 
         private void GetDisplayValues(bool bArea)
