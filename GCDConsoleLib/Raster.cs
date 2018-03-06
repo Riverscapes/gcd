@@ -449,6 +449,7 @@ namespace GCDConsoleLib
             _ds.GetDriver().CopyFiles(destPath.FullName, GISFileInfo.FullName);
             UnloadDS();
             RefreshFileInfo();
+            destPath.Refresh();
         }
 
         /// <summary>
