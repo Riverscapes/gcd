@@ -92,14 +92,14 @@ namespace GCDCore.UserInterface.SurveyLibrary.ReferenceSurfaces
             Engines.ReferenceSurfaceEngine eng = new Engines.ReferenceSurfaceEngine(txtName.Text, rInputs, eMethod);
 
             System.IO.FileInfo fiOutput = ProjectManager.Project.GetAbsolutePath(txtPath.Text);
-            System.IO.FileInfo fiError = Surface.ErrorSurfaceRasterPath(fiOutput.Directory,txtName.Text);
+            System.IO.FileInfo fiError = Surface.ErrorSurfaceRasterPath(fiOutput.Directory, txtName.Text);
 
             try
             {
                 Cursor = Cursors.WaitCursor;
 
-                eng.Run(fiOutput, fiError);
-
+                Surface surf = eng.Run(fiOutput, fiError);
+                ProjectManager.AddNewProjectItemToMap(surf);
                 Cursor = Cursors.Default;
                 MessageBox.Show("Reference surface generated successfully.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
