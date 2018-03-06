@@ -105,7 +105,7 @@ namespace GCDCore.Project
                 new naru.db.NamedObject((long)AssociatedSurfaceTypes.Roughness, "Roughness"),
                 new naru.db.NamedObject((long)AssociatedSurfaceTypes.PointQuality3D, "3D Point Quality"),
                 new naru.db.NamedObject((long)AssociatedSurfaceTypes.InterpolationError, "Interpolation Error"),
-                new naru.db.NamedObject((long)AssociatedSurfaceTypes.InterpolationError, "Elevation Uncertainty"),
+                new naru.db.NamedObject((long)AssociatedSurfaceTypes.ElevationUncertainty, "Elevation Uncertainty"),
                 new naru.db.NamedObject((long)AssociatedSurfaceTypes.Other, "Unknown")
             };
 

@@ -54,7 +54,28 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             }
 
             SurveyLibrary.frmImportRaster frm = new SurveyLibrary.frmImportRaster(Surface, ePurpose, noun);
-            EditTreeItem(frm);
+            if (EditTreeItem(frm) == DialogResult.OK)
+            {
+                GCDConsoleLib.Raster raster = frm.ProcessRaster();
+                ErrorSurface err = new ErrorSurface(frm.txtName.Text, raster.GISFileInfo, Surface, Surface.ErrorSurfaces.Count == 0, null);
+                Surface.ErrorSurfaces.Add(err);
+                ProjectManager.Project.Save();
+
+                LoadChildNodes();
+
+                // Loop through the child nodes and select the item that was just added
+                foreach (TreeNode childNode in Nodes)
+                {
+                    if (childNode is TreeNodeItem)
+                    {
+                        if (((TreeNodeItem)childNode).Item.Equals(err))
+                        {
+                            TreeView.SelectedNode = childNode;
+                            break;
+                        }
+                    }
+                }
+            }
         }
 
         public void OnCalculateReferenceErrorSurface(object sender, EventArgs e)

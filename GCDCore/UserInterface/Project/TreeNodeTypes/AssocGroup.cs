@@ -20,7 +20,11 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             DEM = dem;
 
             // Associated surface uses the same form for browsing to existing as well as calculating new
-            ContextMenuStrip.Items[0].Text = "Add Associated Surface";
+            // ContextMenuStrip.Items[0].Text = "Add Associated Surface";
+
+            ContextMenuStrip.Items.Insert(1, new ToolStripMenuItem("Calculate New Percent Slope Associated Surface", Properties.Resources.sigma, OnCalculateSlopePercent));
+            ContextMenuStrip.Items.Insert(1, new ToolStripMenuItem("Calculate New Slope Degrees Associated Surface", Properties.Resources.sigma, OnCalculateSlopeDegrees));
+            ContextMenuStrip.Items.Insert(1, new ToolStripMenuItem("Calculate New Point Density Associated Surface", Properties.Resources.sigma, OnCalculatePointDensity));
 
             LoadChildNodes();
         }
@@ -36,7 +40,45 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
 
         public override void OnAdd(object sender, EventArgs e)
         {
-            Form frm = new SurveyLibrary.frmAssocSurfaceProperties(DEM, null);
+            SurveyLibrary.frmImportRaster frm = new SurveyLibrary.frmImportRaster(DEM, SurveyLibrary.ExtentImporter.Purposes.AssociatedSurface, "Associated Surface");
+            if (EditTreeItem(frm) == DialogResult.OK)
+            {
+                GCDConsoleLib.Raster rAssoc = frm.ProcessRaster();
+                AssocSurface assoc = new AssocSurface(frm.txtName.Text, rAssoc.GISFileInfo, DEM, AssocSurface.AssociatedSurfaceTypes.Other);
+                DEM.AssocSurfaces.Add(assoc);
+                ProjectManager.Project.Save();
+                LoadChildNodes();
+
+                // Loop through the child nodes and select the item that was just added
+                foreach (TreeNode childNode in Nodes)
+                {
+                    if (childNode is TreeNodeItem)
+                    {
+                        if (((TreeNodeItem)childNode).Item.Equals(assoc))
+                        {
+                            TreeView.SelectedNode = childNode;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void OnCalculateSlopePercent(object sender, EventArgs e)
+        {
+            SurveyLibrary.frmAssociatedSurface frm = new SurveyLibrary.frmAssociatedSurface(DEM, AssocSurface.AssociatedSurfaceTypes.SlopePercent);
+            EditTreeItem(frm);
+        }
+
+        private void OnCalculateSlopeDegrees(object sender, EventArgs e)
+        {
+            SurveyLibrary.frmAssociatedSurface frm = new SurveyLibrary.frmAssociatedSurface(DEM, AssocSurface.AssociatedSurfaceTypes.SlopeDegree);
+            EditTreeItem(frm);
+        }
+
+        private void OnCalculatePointDensity(object sender, EventArgs e)
+        {
+            SurveyLibrary.frmPointDensity frm = new SurveyLibrary.frmPointDensity(DEM);
             EditTreeItem(frm);
         }
     }

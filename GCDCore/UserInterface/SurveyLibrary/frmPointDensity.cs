@@ -1,42 +1,100 @@
 using System.Diagnostics;
 using GCDConsoleLib;
 using System;
+using System.Linq;
+using System.Collections.Generic;
 using GCDCore.Project;
+using System.Windows.Forms;
+using System.IO;
 
 namespace GCDCore.UserInterface.SurveyLibrary
 {
-    public partial class frmPointDensity
+    public partial class frmPointDensity : IProjectItemForm
     {
-        private UnitsNet.Units.LengthUnit m_eLinearUnits;
+        public readonly DEMSurvey DEM;
+        public AssocSurface Assoc { get; internal set; }
+        public GCDProjectItem GCDProjectItem { get { return Assoc as GCDProjectItem; } }
 
-        public RasterOperators.KernelShapes KernelShape { get { return (RasterOperators.KernelShapes)cboNeighbourhood.SelectedItem; } }
-        public decimal KernerlSize { get { return valSampleDistance.Value; } }
-        public Vector PointCloud { get { return ucPointCloud.SelectedItem; } }
+        private RasterOperators.KernelShapes KernelShape { get { return (RasterOperators.KernelShapes)cboNeighbourhood.SelectedItem; } }
 
-        public frmPointDensity(UnitsNet.Units.LengthUnit eLinearUnits, RasterOperators.KernelShapes kernelShape, decimal kernelSize)
+        public frmPointDensity(DEMSurvey dem)
         {
             InitializeComponent();
 
-            m_eLinearUnits = eLinearUnits;
-            valSampleDistance.Value = kernelSize;
+            DEM = dem;
 
             foreach (RasterOperators.KernelShapes shape in Enum.GetValues(typeof(RasterOperators.KernelShapes)))
             {
                 int index = cboNeighbourhood.Items.Add(shape);
-                if (shape == kernelShape)
-                    cboNeighbourhood.SelectedIndex = index;
             }
+            cboNeighbourhood.SelectedIndex = 0;
 
             ucPointCloud.InitializeBrowseNew("Point Cloud", GCDConsoleLib.GDalGeometryType.SimpleTypes.Point);
         }
 
         private void btnOK_Click(object sender, System.EventArgs e)
         {
-            if (!ucPointCloud.Validate())
+            if (!ValidateForm())
             {
-                this.DialogResult = System.Windows.Forms.DialogResult.None;
+                DialogResult = DialogResult.None;
                 return;
             }
+
+            try
+            {
+                Cursor = Cursors.WaitCursor;
+
+                FileInfo fiOutput = ProjectManager.Project.GetAbsolutePath(txtPath.Text);
+                fiOutput.Directory.Create();
+
+                RasterOperators.PointDensity(DEM.Raster, ucPointCloud.SelectedItem, fiOutput, KernelShape, valSampleDistance.Value);
+
+                Assoc = new AssocSurface(txtName.Text, fiOutput, DEM, AssocSurface.AssociatedSurfaceTypes.PointDensity);
+                DEM.AssocSurfaces.Add(Assoc);
+                ProjectManager.Project.Save();
+
+                Cursor = Cursors.Default;
+            }
+            catch (Exception ex)
+            {
+                DialogResult = DialogResult.None;
+                naru.error.ExceptionUI.HandleException(ex, "Error generating point density associated surface raster.");
+            }
+        }
+
+        private bool ValidateForm()
+        {
+            // Sanity check to avoid empty names
+            txtName.Text = txtName.Text.Trim();
+
+            if (string.IsNullOrEmpty(txtName.Text))
+            {
+                MessageBox.Show("You must provide a name for the point density associated surface.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return false;
+            }
+
+            if (!DEM.IsAssocNameUnique(txtName.Text, Assoc))
+            {
+                MessageBox.Show("The name '" + txtName.Text + "' is already in use by another associated surface within this survey. Please choose a unique name.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                txtName.Select();
+                return false;
+            }
+
+            if (ucPointCloud.SelectedItem is GCDConsoleLib.Vector)
+            {
+                if (!GISDatasetValidation.ValidateVector(ucPointCloud.SelectedItem))
+                {
+                    ucPointCloud.Select();
+                    return false;
+                }
+            }
+            else
+            {
+                MessageBox.Show("You must select a point cloud Shape File to continue.", "Missing Point Shape File", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return false;
+            }
+
+            return true;
         }
 
         private void btnHelp_Click(System.Object sender, System.EventArgs e)
@@ -46,19 +104,34 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
         private void cboNeighbourhood_SelectedIndexChanged(object sender, EventArgs e)
         {
+            UnitsNet.Units.LengthUnit lUnits = ProjectManager.Project.Units.HorizUnit;
+
             string label;
             if ((RasterOperators.KernelShapes)cboNeighbourhood.SelectedItem == RasterOperators.KernelShapes.Circle)
             {
                 label = "Diameter";
-                ttpToolTip.SetToolTip(valSampleDistance, string.Format("Diameter of the circular sample window (in {0}) over which point density is calculated", m_eLinearUnits));
+                ttpToolTip.SetToolTip(valSampleDistance, string.Format("Diameter of the circular sample window (in {0}) over which point density is calculated", lUnits));
             }
             else
             {
                 label = "Length";
-                ttpToolTip.SetToolTip(valSampleDistance, string.Format("Size of the square sample window (in {0}) over which point density is calculated", m_eLinearUnits));
+                ttpToolTip.SetToolTip(valSampleDistance, string.Format("Size of the square sample window (in {0}) over which point density is calculated", lUnits));
             }
 
-            lblDistance.Text = string.Format("{0} ({1})", label, UnitsNet.Length.GetAbbreviation(m_eLinearUnits));
+            lblDistance.Text = string.Format("{0} ({1})", label, UnitsNet.Length.GetAbbreviation(lUnits));
         }
+
+        private void txtName_TextChanged(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtName.Text))
+            {
+                txtPath.Text = string.Empty;
+            }
+            else
+            {
+                txtPath.Text = ProjectManager.Project.GetRelativePath(DEM.AssocSurfacePath(txtName.Text));
+            }
+        }
+
     }
 }

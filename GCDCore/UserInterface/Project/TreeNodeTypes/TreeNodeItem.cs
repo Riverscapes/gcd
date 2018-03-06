@@ -59,7 +59,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             if (Item is AssocSurface)
             {
                 AssocSurface assoc = Item as AssocSurface;
-                frm = new SurveyLibrary.frmAssocSurfaceProperties(assoc.DEM, assoc);
+                frm = new SurveyLibrary.frmAssociatedSurface(assoc.DEM, assoc);
             }
             else if (Item is ErrorSurface && ((ErrorSurface)Item).Surf is DEMSurvey)
             {

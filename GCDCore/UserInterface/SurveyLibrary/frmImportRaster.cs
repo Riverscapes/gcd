@@ -310,7 +310,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             }
             else
             {
-                if (System.IO.File.Exists(txtRasterPath.Text))
+                if (ProjectManager.Project.GetAbsolutePath(txtRasterPath.Text).Exists)
                 {
                     MessageBox.Show("The project raster path already exists. Try using a different name for the raster.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return false;
@@ -494,7 +494,14 @@ namespace GCDCore.UserInterface.SurveyLibrary
             GCDConsoleLib.Raster gResult = null;
             if (!string.IsNullOrEmpty(txtRasterPath.Text))
             {
-                if (System.IO.File.Exists(txtRasterPath.Text))
+                System.IO.FileInfo fiOutput;
+                if (ExtImporter.Purpose == ExtentImporter.Purposes.Standalone)
+                    fiOutput = new System.IO.FileInfo(txtRasterPath.Text);
+                else
+                    fiOutput = ProjectManager.Project.GetAbsolutePath(txtRasterPath.Text);
+
+
+                if (fiOutput.Exists)
                 {
                     Exception ex = new Exception("The raster path already exists.");
                     ex.Data.Add("Raster path", txtRasterPath.Text);
@@ -502,12 +509,6 @@ namespace GCDCore.UserInterface.SurveyLibrary
                 }
                 else
                 {
-                    System.IO.FileInfo fiOutput;
-                    if (ExtImporter.Purpose == ExtentImporter.Purposes.Standalone)
-                        fiOutput = new System.IO.FileInfo(txtRasterPath.Text);
-                    else
-                        fiOutput = ProjectManager.Project.GetAbsolutePath(txtRasterPath.Text);
-
                     fiOutput.Directory.Create();
 
                     // GCDConsoleLib.Raster gOrigRaster = new GCDConsoleLib.Raster(ucRaster.SelectedItem.GISFileInfo);

@@ -357,11 +357,11 @@
       <DependentUpon>ucErrorSurfaceProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\SurveyLibrary\ExtentImporter.cs" />
-    <Compile Include="UserInterface\SurveyLibrary\frmAssocSurfaceProperties.cs">
+    <Compile Include="UserInterface\SurveyLibrary\frmAssociatedSurface.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UserInterface\SurveyLibrary\frmAssocSurfaceProperties.Designer.cs">
-      <DependentUpon>frmAssocSurfaceProperties.cs</DependentUpon>
+    <Compile Include="UserInterface\SurveyLibrary\frmAssociatedSurface.Designer.cs">
+      <DependentUpon>frmAssociatedSurface.cs</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\SurveyLibrary\frmSurfaceProperties.cs">
       <SubType>Form</SubType>
@@ -620,8 +620,8 @@
     <EmbeddedResource Include="UserInterface\SurveyLibrary\ErrorSurfaces\ucErrorSurfaceProperties.resx">
       <DependentUpon>ucErrorSurfaceProperties.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserInterface\SurveyLibrary\frmAssocSurfaceProperties.resx">
-      <DependentUpon>frmAssocSurfaceProperties.cs</DependentUpon>
+    <EmbeddedResource Include="UserInterface\SurveyLibrary\frmAssociatedSurface.resx">
+      <DependentUpon>frmAssociatedSurface.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\SurveyLibrary\frmSurfaceProperties.resx">
       <DependentUpon>frmSurfaceProperties.cs</DependentUpon>
