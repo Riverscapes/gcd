@@ -263,6 +263,7 @@ namespace GCDCore.Project.Morphological
             nodMA.AppendChild(nodParent.OwnerDocument.CreateElement("Porosity")).InnerText = Porosity.ToString();
             nodMA.AppendChild(nodParent.OwnerDocument.CreateElement("Density")).InnerText = Density.ToString();
             nodMA.AppendChild(nodParent.OwnerDocument.CreateElement("Competency")).InnerText = Competency.ToString();
+            nodMA.AppendChild(nodParent.OwnerDocument.CreateElement("Spreadsheet")).InnerText = ProjectManager.Project.GetRelativePath(Spreadsheet);
 
             XmlNode nodDuration = nodMA.AppendChild(nodParent.OwnerDocument.CreateElement("Duration"));
             nodDuration.InnerText = Duration.As(DurationDisplayUnits).ToString("R");
