@@ -2,7 +2,7 @@
 title: Release Notes
 ---
 
-## ## 7.0.07 - 6 Mar 2018
+## 7.0.07 - 6 Mar 2018
 
 * Internal test release.
 * Refactored project tree with more consistent menus.
