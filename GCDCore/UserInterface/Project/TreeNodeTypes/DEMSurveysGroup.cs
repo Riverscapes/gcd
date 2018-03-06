@@ -11,9 +11,30 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
 {
     public class DEMSurveysGroup : TreeNodeGroup
     {
+        private enum SortOrders
+        {
+            AlphaAsc,
+            AlphaDsc,
+            ChronAsc,
+            ChronDsc
+        };
+
+        private SortOrders SortOrder;
+
         public DEMSurveysGroup(TreeNodeCollection parentNodes, IContainer container)
             : base(parentNodes, "DEM Surveys", "DEM Survey", "DEM Surveys", ProjectManager.Project.SurveysFolder, container, ProjectManager.Project.DEMSurveys.Count > 0)
         {
+
+            ToolStripMenuItem tsmiSort = new ToolStripMenuItem("Sort DEM Surveys");
+            tsmiSort.DropDownItems.Add(new ToolStripMenuItem("Sort Alphabetical Ascending", Properties.Resources.alphabetical, OnSort));
+            tsmiSort.DropDownItems.Add(new ToolStripMenuItem("Sort Alphabetical Descending", Properties.Resources.alphabetical, OnSort));
+            //tsmiSort.DropDownItems.Add(new ToolStripMenuItem("Sort Chronological Ascending", Properties.Resources.alphabetical, OnSort));
+            //tsmiSort.DropDownItems.Add(new ToolStripMenuItem("Sort Chronological Descending", Properties.Resources.alphabetical, OnSort));
+            ContextMenuStrip.Items.Insert(ContextMenuStrip.Items.Count - 2, tsmiSort);
+
+            // Default is ascending alphabetical
+            SortOrder = SortOrders.AlphaAsc;
+
             LoadChildNodes();
         }
 
@@ -21,7 +42,28 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
         {
             Nodes.Clear();
 
-            foreach (DEMSurvey dem in ProjectManager.Project.DEMSurveys.Values)
+            List<DEMSurvey> dems = ProjectManager.Project.DEMSurveys.Values.ToList();
+
+            switch (SortOrder)
+            {
+                case SortOrders.AlphaAsc:
+                    dems.Sort((a, b) => a.CompareTo(b)); // ascending sort
+                    break;
+
+                case SortOrders.AlphaDsc:
+                    dems.Sort((a, b) => -1 * a.CompareTo(b)); // descending sort
+                    break;
+
+                case SortOrders.ChronAsc:
+                    dems.Sort();
+                    break;
+
+                case SortOrders.ChronDsc:
+                    dems.Sort();
+                    break;
+            }
+
+            foreach (DEMSurvey dem in dems)
             {
                 TreeNodeItem nodDEM = new TreeNodeTypes.TreeNodeItem(dem, 2, ContextMenuStrip.Container);
                 Nodes.Add(nodDEM);
@@ -78,6 +120,21 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             {
                 naru.error.ExceptionUI.HandleException(ex, "Error Importing DEM Survey");
             }
+        }
+
+        private void OnSort(object sender, EventArgs e)
+        {
+            ToolStripDropDownItem ctrl = sender as ToolStripDropDownItem;
+            if (ctrl.Text.ToLower().Contains("alpha"))
+            {
+                SortOrder = ctrl.Text.ToLower().Contains("asc") ? SortOrders.AlphaAsc : SortOrders.AlphaDsc;
+            }
+            else
+            {
+                SortOrder = ctrl.Text.ToLower().Contains("asc") ? SortOrders.AlphaAsc : SortOrders.AlphaDsc;
+            }
+
+            LoadChildNodes();
         }
     }
 }

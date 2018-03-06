@@ -1,8 +1,9 @@
-﻿using System.Xml;
+﻿using System;
+using System.Xml;
 
 namespace GCDCore.Project
 {
-    public abstract class GCDProjectItem
+    public abstract class GCDProjectItem : IComparable<GCDProjectItem>
     {
         public string Name { get; set; }
 
@@ -28,6 +29,11 @@ namespace GCDCore.Project
         public GCDProjectItem(XmlNode nodItem)
         {
             Name = nodItem.SelectSingleNode("Name").InnerText;
+        }
+
+        public int CompareTo(GCDProjectItem item)
+        {
+            return string.Compare(Name, item.Name);
         }
     }
 }
