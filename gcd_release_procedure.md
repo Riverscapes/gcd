@@ -31,6 +31,7 @@
 
 1. *Unload* the `GCDAddIn` project in Visual Studio.
 2. Clean Solution.
+3. Ensure `x64` architecture.
 3. Review `Deploy` tab in Standalone project and ensure that `Sign Manifests` is turned on and that the `GCDStandalone `certificate is active.
 4. Rebuild solution.
 5. Review binary output folder and ensure all the necessary dependencies are present.
@@ -45,6 +46,7 @@
 3. Commit changes with the message `release preparation`
 4. Push.
 5. Tag with release number `7.x.xx_BETA`
+6. Push the tag to origin.
 
 ## Phase 5 - GitHub
 

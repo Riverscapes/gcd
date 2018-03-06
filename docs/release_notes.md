@@ -2,6 +2,21 @@
 title: Release Notes
 ---
 
+## ## 7.0.07 - 6 Mar 2018
+
+* Internal test release.
+* Refactored project tree with more consistent menus.
+  * Simplified associated surface user interface
+  * Refactored error surface generation.
+* Profile routes.
+* Linear extractions.
+* Inter-comparison spreadsheets
+* Morphological change identifying minimum flux cell
+* Customizable change detection plots
+  * Error bars on elevation change bar plots.
+  * Simplified tabular change detection results.
+* Add to map for all new project items.
+
 ## 7.0.06 - 22 Feb 2018
 
 * Reference surfaces and reference error surfaces
