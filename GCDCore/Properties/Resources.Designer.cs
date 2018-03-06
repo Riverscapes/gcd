@@ -83,6 +83,16 @@ namespace GCDCore.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap alpha_descending {
+            get {
+                object obj = ResourceManager.GetObject("alpha_descending", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap alphabetical {
             get {
                 object obj = ResourceManager.GetObject("alphabetical", resourceCulture);
@@ -174,6 +184,26 @@ namespace GCDCore.Properties {
         public static System.Drawing.Bitmap Check {
             get {
                 object obj = ResourceManager.GetObject("Check", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap chrono_ascending {
+            get {
+                object obj = ResourceManager.GetObject("chrono_ascending", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap chrono_descending {
+            get {
+                object obj = ResourceManager.GetObject("chrono_descending", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

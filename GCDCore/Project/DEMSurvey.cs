@@ -8,7 +8,7 @@ using GCDConsoleLib;
 
 namespace GCDCore.Project
 {
-    public class DEMSurvey : Surface
+    public class DEMSurvey : Surface, IComparable<DEMSurvey>
     {
         public readonly naru.ui.SortableBindingList<AssocSurface> AssocSurfaces;
 
@@ -43,21 +43,21 @@ namespace GCDCore.Project
             XmlNode nodSurveyDate = nodDEM.SelectSingleNode("SurveyDate");
             if (nodSurveyDate is XmlNode)
             {
-                surveyDT = new SurveyDateTime();
+                SurveyDate = new SurveyDateTime();
                 if (!string.IsNullOrEmpty(nodDEM.SelectSingleNode("SurveyDate/Year").InnerText))
-                    surveyDT.Year = ushort.Parse(nodDEM.SelectSingleNode("SurveyDate/Year").InnerText);
+                    SurveyDate.Year = ushort.Parse(nodDEM.SelectSingleNode("SurveyDate/Year").InnerText);
 
                 if (!string.IsNullOrEmpty(nodDEM.SelectSingleNode("SurveyDate/Month").InnerText))
-                    surveyDT.Month = byte.Parse(nodDEM.SelectSingleNode("SurveyDate/Month").InnerText);
+                    SurveyDate.Month = byte.Parse(nodDEM.SelectSingleNode("SurveyDate/Month").InnerText);
 
                 if (!string.IsNullOrEmpty(nodDEM.SelectSingleNode("SurveyDate/Day").InnerText))
-                    surveyDT.Day = byte.Parse(nodDEM.SelectSingleNode("SurveyDate/Day").InnerText);
+                    SurveyDate.Day = byte.Parse(nodDEM.SelectSingleNode("SurveyDate/Day").InnerText);
 
                 if (!string.IsNullOrEmpty(nodDEM.SelectSingleNode("SurveyDate/Hour").InnerText))
-                    surveyDT.Hour = short.Parse(nodDEM.SelectSingleNode("SurveyDate/Hour").InnerText);
+                    SurveyDate.Hour = short.Parse(nodDEM.SelectSingleNode("SurveyDate/Hour").InnerText);
 
                 if (!string.IsNullOrEmpty(nodDEM.SelectSingleNode("SurveyDate/Minute").InnerText))
-                    surveyDT.Minute = short.Parse(nodDEM.SelectSingleNode("SurveyDate/Minute").InnerText);
+                    SurveyDate.Minute = short.Parse(nodDEM.SelectSingleNode("SurveyDate/Minute").InnerText);
             }
 
             //read Chronological Order, if set
@@ -209,6 +209,20 @@ namespace GCDCore.Project
                 XmlNode nodAssoc = nodDEM.AppendChild(nodDEM.OwnerDocument.CreateElement("AssociatedSurfaces"));
                 foreach (AssocSurface assoc in AssocSurfaces)
                     assoc.Serialize(nodAssoc);
+            }
+        }
+
+        public int CompareTo(DEMSurvey dem)
+        {
+            System.Diagnostics.Debug.WriteLine("Comparing '{0}' with {1} to '{2}' with {3}", Name, SurveyDate, dem.Name, dem.SurveyDate);
+            
+            if (SurveyDate == null || dem.SurveyDate == null)
+            {
+                return -1;
+            }
+            else
+            {
+                return SurveyDate.CompareTo(dem.SurveyDate);
             }
         }
     }

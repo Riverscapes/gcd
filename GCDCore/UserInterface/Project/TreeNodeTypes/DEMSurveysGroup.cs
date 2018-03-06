@@ -27,9 +27,9 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
 
             ToolStripMenuItem tsmiSort = new ToolStripMenuItem("Sort DEM Surveys");
             tsmiSort.DropDownItems.Add(new ToolStripMenuItem("Sort Alphabetical Ascending", Properties.Resources.alphabetical, OnSort));
-            tsmiSort.DropDownItems.Add(new ToolStripMenuItem("Sort Alphabetical Descending", Properties.Resources.alphabetical, OnSort));
-            //tsmiSort.DropDownItems.Add(new ToolStripMenuItem("Sort Chronological Ascending", Properties.Resources.alphabetical, OnSort));
-            //tsmiSort.DropDownItems.Add(new ToolStripMenuItem("Sort Chronological Descending", Properties.Resources.alphabetical, OnSort));
+            tsmiSort.DropDownItems.Add(new ToolStripMenuItem("Sort Alphabetical Descending", Properties.Resources.alpha_descending, OnSort));
+            tsmiSort.DropDownItems.Add(new ToolStripMenuItem("Sort Chronological Ascending", Properties.Resources.chrono_ascending, OnSort));
+            tsmiSort.DropDownItems.Add(new ToolStripMenuItem("Sort Chronological Descending", Properties.Resources.chrono_descending, OnSort));
             ContextMenuStrip.Items.Insert(ContextMenuStrip.Items.Count - 2, tsmiSort);
 
             // Default is ascending alphabetical
@@ -47,19 +47,19 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             switch (SortOrder)
             {
                 case SortOrders.AlphaAsc:
-                    dems.Sort((a, b) => a.CompareTo(b)); // ascending sort
+                    dems.Sort((a, b) => a.CompareTo(b as GCDProjectItem));
                     break;
 
                 case SortOrders.AlphaDsc:
-                    dems.Sort((a, b) => -1 * a.CompareTo(b)); // descending sort
+                    dems.Sort((a, b) => -1 * a.CompareTo(b as GCDProjectItem));
                     break;
 
                 case SortOrders.ChronAsc:
-                    dems.Sort();
+                    dems.Sort((a, b) => a.CompareTo(b));
                     break;
 
                 case SortOrders.ChronDsc:
-                    dems.Sort();
+                    dems.Sort((a, b) => -1 * a.CompareTo(b));
                     break;
             }
 
@@ -131,7 +131,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             }
             else
             {
-                SortOrder = ctrl.Text.ToLower().Contains("asc") ? SortOrders.AlphaAsc : SortOrders.AlphaDsc;
+                SortOrder = ctrl.Text.ToLower().Contains("asc") ? SortOrders.ChronAsc : SortOrders.ChronDsc;
             }
 
             LoadChildNodes();

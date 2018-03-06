@@ -322,4 +322,13 @@
   <data name="UpdateButtonText" xml:space="preserve">
     <value>   Update</value>
   </data>
+  <data name="alpha_descending" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\alpha_descending.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="chrono_ascending" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\chrono_ascending.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="chrono_descending" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\chrono_descending.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>
