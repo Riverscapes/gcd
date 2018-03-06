@@ -75,6 +75,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
 
             ChangeDetection.MultiEpoch.frmMultiEpoch frm = new ChangeDetection.MultiEpoch.frmMultiEpoch();
             EditTreeItem(frm);
+            LoadChildNodes();
         }
 
         public void OnMultiUncertainty(object sender, EventArgs e)
@@ -88,6 +89,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
 
             ChangeDetection.Batch.frmBatchDoD frm = new ChangeDetection.Batch.frmBatchDoD();
             EditTreeItem(frm);
+            LoadChildNodes();
         }
     }
 }
