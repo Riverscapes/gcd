@@ -55,14 +55,11 @@ namespace GCDCore.Visualization
 
         public void Refresh(double fErosion, double fDeposition, double fNet, double fErosionError, double fDepositionError, double fNetError, string sDisplayUnitsAbbreviation, BarTypes eType, bool bAbsolute)
         {
-            Refresh(fErosion, fDeposition, fNet, fErosionError, fDepositionError, fNetError, sDisplayUnitsAbbreviation, true, true, eType,
-            bAbsolute);
+            Refresh(fErosion, fDeposition, fNet, fErosionError, fDepositionError, fNetError, sDisplayUnitsAbbreviation, true, true, eType, bAbsolute);
         }
 
         private void Refresh(double fErosion, double fDeposition, double fNet, double fErosionError, double fDepositionError, double fNetError,
-            string sDisplayUnitsAbbreviation, bool bShowErrorBars, bool bShowNet, BarTypes eType,
-
-        bool bAbsolute)
+            string sDisplayUnitsAbbreviation, bool bShowErrorBars, bool bShowNet, BarTypes eType, bool bAbsolute)
         {
             if (bAbsolute)
             {
@@ -137,6 +134,35 @@ namespace GCDCore.Visualization
             {
                 if (netSeries is Series)
                     Chart.Series.Remove(netSeries);
+            }
+
+            Series errorSeries = Chart.Series.FindByName(ViewerBase.ERROR);
+            if (eType != BarTypes.Area)
+            {
+                if (errorSeries == null)
+                {
+                    errorSeries = Chart.Series.Add(ViewerBase.ERROR);
+                    errorSeries.ChartType = SeriesChartType.ErrorBar;
+                    errorSeries.Color = Color.Black;
+                }
+
+                errorSeries.Points.Clear();
+
+                errorSeries.Points.AddXY(GetXAxisLabel(eType, SeriesType.Erosion), fErosion, fErosion - fErosionError, fErosion + fErosionError);
+                errorSeries.Points.AddXY(GetXAxisLabel(eType, SeriesType.Depositon), fDeposition, fDeposition - fDepositionError, fDeposition + fDepositionError);
+
+                if (netSeries is Series)
+                    errorSeries.Points.AddXY(GetXAxisLabel(eType, SeriesType.Net), fNet, fNet - fNetError, fNet + fNetError);
+
+                Chart.ChartAreas[0].RecalculateAxesScale();
+
+                Chart.ChartAreas[0].AxisY.Maximum = Math.Ceiling(Math.Max(fErosion + fErosionError, fDeposition + fDepositionError) * Chart.ChartAreas[0].AxisY.Interval) / Chart.ChartAreas[0].AxisY.Interval;
+                Chart.ChartAreas[0].AxisY.Minimum = Math.Floor(Math.Min(fErosion - fErosionError, fDeposition - fDepositionError) * Chart.ChartAreas[0].AxisY.Interval) / Chart.ChartAreas[0].AxisY.Interval;
+            }
+            else
+            {
+                if (errorSeries is Series)
+                    Chart.Series.Remove(errorSeries);
             }
 
             try

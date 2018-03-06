@@ -17,6 +17,7 @@ namespace GCDCore.Visualization
         public const string DEPOSITION = "Deposition";
         protected const string RAW = "Raw";
         public const string NET = "Net";
+        public const string ERROR = "Error";
 
         public readonly Chart Chart;
 
