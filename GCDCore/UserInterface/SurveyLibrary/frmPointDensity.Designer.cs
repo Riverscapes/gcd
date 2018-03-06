@@ -97,6 +97,8 @@ namespace GCDCore.UserInterface.SurveyLibrary
             // 
             this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.btnOK.Image = global::GCDCore.Properties.Resources.Save;
+            this.btnOK.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnOK.Location = new System.Drawing.Point(315, 202);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
@@ -109,7 +111,6 @@ namespace GCDCore.UserInterface.SurveyLibrary
             // 
             this.btnHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnHelp.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnHelp.Enabled = false;
             this.btnHelp.Location = new System.Drawing.Point(12, 202);
             this.btnHelp.Name = "btnHelp";
             this.btnHelp.Size = new System.Drawing.Size(75, 23);
@@ -216,6 +217,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.MinimizeBox = false;
             this.Name = "frmPointDensity";
             this.Text = "Generate Point Density Raster";
+            this.Load += new System.EventHandler(this.frmPointDensity_Load);
             ((System.ComponentModel.ISupportInitialize)(this.valSampleDistance)).EndInit();
             this.GroupBox1.ResumeLayout(false);
             this.GroupBox1.PerformLayout();

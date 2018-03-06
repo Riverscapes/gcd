@@ -133,5 +133,20 @@ namespace GCDCore.UserInterface.SurveyLibrary
             }
         }
 
+        private void frmPointDensity_Load(object sender, EventArgs e)
+        {
+            btnOK.Text = Properties.Resources.CreateButtonText;
+
+            ucPointCloud.PathChanged += OnPointCloudChanged;
+
+        }
+
+        private void OnPointCloudChanged(object sender, naru.ui.PathEventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtName.Text))
+            {
+                txtName.Text = Path.GetFileNameWithoutExtension(e.Path.FullName);
+            }
+        }
     }
 }
