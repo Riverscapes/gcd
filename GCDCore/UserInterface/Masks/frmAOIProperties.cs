@@ -67,6 +67,7 @@ namespace GCDCore.UserInterface.Masks
 
                     AOIMask = new GCDCore.Project.Masks.AOIMask(txtName.Text, fiDestination);
                     ProjectManager.Project.Masks[AOIMask.Name] = AOIMask;
+                    ProjectManager.AddNewProjectItemToMap(AOIMask);
                 }
                 else
                 {

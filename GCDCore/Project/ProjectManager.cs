@@ -283,6 +283,28 @@ namespace GCDCore.Project
                 ProjectManager.GISAddVectorToMapEventHandler(vector);
         }
 
+        public static void AddNewProjectItemToMap(GCDProjectItem item)
+        {
+            if (IsArcMap && Properties.Settings.Default.AddOutputLayersToMap)
+            {
+                try
+                {
+                    if (item is GCDProjectRasterItem)
+                    {
+                        OnAddRasterToMap(item as GCDProjectRasterItem);
+                    }
+                    else if (item is GCDProjectVectorItem)
+                    {
+                        OnAddVectorToMap(item as GCDProjectVectorItem);
+                    }
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine("Error adding new project item to the map " + item.Name + ex.Message); 
+                }
+            }
+        }
+
         public class GISLayerEventArgs : EventArgs
         {
             public readonly FileInfo RasterPath;

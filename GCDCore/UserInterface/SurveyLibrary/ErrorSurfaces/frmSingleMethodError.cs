@@ -70,6 +70,7 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
                     RasterOperators.CreateErrorRaster(DEM.Raster, ucErrProps.ErrSurfProperty.GCDErrSurfPropery, ucName.AbsolutePath);
                     ErrorSurface = new ErrorSurface(ucName.ItemName, ucName.AbsolutePath, DEM, chkDefault.Checked, ucErrProps.ErrSurfProperty);
                     DEM.ErrorSurfaces.Add(ErrorSurface);
+                    ProjectManager.AddNewProjectItemToMap(ErrorSurface);
                 }
                 else
                 {

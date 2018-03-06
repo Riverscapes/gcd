@@ -76,6 +76,7 @@ namespace GCDCore.UserInterface.ProfileRoutes
 
                     ProfileRoute = new GCDCore.Project.ProfileRoutes.ProfileRoute(txtName.Text, fiMask, cboDistance.Text, lablField);
                     ProjectManager.Project.ProfileRoutes[ProfileRoute.Name] = ProfileRoute;
+                    ProjectManager.AddNewProjectItemToMap(ProfileRoute);
                 }
                 else
                 {

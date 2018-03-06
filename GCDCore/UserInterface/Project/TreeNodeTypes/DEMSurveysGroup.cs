@@ -60,6 +60,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
                         ProjectManager.Project.CellArea = dem.Raster.Extent.CellArea(ProjectManager.Project.Units);
 
                     ProjectManager.Project.Save();
+                    ProjectManager.AddNewProjectItemToMap(dem);
                     LoadChildNodes();
 
                     // Loop through the child nodes and select the item that was just added

@@ -60,7 +60,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
                 ErrorSurface err = new ErrorSurface(frm.txtName.Text, raster.GISFileInfo, Surface, Surface.ErrorSurfaces.Count == 0, null);
                 Surface.ErrorSurfaces.Add(err);
                 ProjectManager.Project.Save();
-
+                ProjectManager.AddNewProjectItemToMap(err);
                 LoadChildNodes();
 
                 // Loop through the child nodes and select the item that was just added

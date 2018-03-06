@@ -47,6 +47,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
                 AssocSurface assoc = new AssocSurface(frm.txtName.Text, rAssoc.GISFileInfo, DEM, AssocSurface.AssociatedSurfaceTypes.Other);
                 DEM.AssocSurfaces.Add(assoc);
                 ProjectManager.Project.Save();
+                ProjectManager.AddNewProjectItemToMap(assoc);
                 LoadChildNodes();
 
                 // Loop through the child nodes and select the item that was just added

@@ -114,6 +114,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
                     Assoc = new AssocSurface(txtName.Text, fiOutput, DEM, SelectedAssociatedSurfaceType);
                     DEM.AssocSurfaces.Add(Assoc);
+                    ProjectManager.AddNewProjectItemToMap(Assoc);
                 }
                 else
                 {

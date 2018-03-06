@@ -95,6 +95,7 @@ namespace GCDCore.UserInterface.Masks
 
                     Mask = new DirectionalMask(txtName.Text, fiMask, cboField.Text, lablField, cboDirection.Text, distField);
                     ProjectManager.Project.Masks[Mask.Name] = Mask;
+                    ProjectManager.AddNewProjectItemToMap(Mask);
                 }
                 else
                 {
@@ -104,7 +105,6 @@ namespace GCDCore.UserInterface.Masks
                 }
 
                 ProjectManager.Project.Save();
-
                 Cursor = Cursors.Default;
             }
             catch (Exception ex)

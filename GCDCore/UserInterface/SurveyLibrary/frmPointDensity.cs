@@ -52,7 +52,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
                 Assoc = new AssocSurface(txtName.Text, fiOutput, DEM, AssocSurface.AssociatedSurfaceTypes.PointDensity);
                 DEM.AssocSurfaces.Add(Assoc);
                 ProjectManager.Project.Save();
-
+                ProjectManager.AddNewProjectItemToMap(Assoc);
                 Cursor = Cursors.Default;
             }
             catch (Exception ex)

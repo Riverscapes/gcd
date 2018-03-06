@@ -98,6 +98,7 @@ namespace GCDCore.UserInterface.ChangeDetection
 
                 ProjectManager.Project.DoDs[txtName.Text] = DoD;
                 ProjectManager.Project.Save();
+                ProjectManager.AddNewProjectItemToMap(DoD);
             }
             catch (Exception ex)
             {

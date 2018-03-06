@@ -207,6 +207,7 @@ namespace GCDCore.UserInterface.Masks
 
                     Mask = new GCDCore.Project.Masks.RegularMask(txtName.Text, fiMask, cboField.Text, MaskItems.ToList<GCDCore.Project.Masks.MaskItem>());
                     ProjectManager.Project.Masks[Mask.Name] = Mask;
+                    ProjectManager.AddNewProjectItemToMap(Mask);
                 }
                 else
                 {

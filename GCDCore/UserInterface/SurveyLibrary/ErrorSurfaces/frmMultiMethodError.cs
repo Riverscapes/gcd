@@ -112,6 +112,7 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
                     RasterOperators.CreateErrorRaster(DEM.Raster, mask.Vector, mask._Field, gcdErrProps, ucName.AbsolutePath);
                     ErrorSurface = new ErrorSurface(ucName.ItemName, ucName.AbsolutePath, DEM, chkDefault.Checked, errProps, mask);
                     DEM.ErrorSurfaces.Add(ErrorSurface);
+                    ProjectManager.AddNewProjectItemToMap(ErrorSurface);
                 }
                 else
                 {
