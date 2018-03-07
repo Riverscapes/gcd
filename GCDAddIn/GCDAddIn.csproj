@@ -193,6 +193,14 @@
       <Link>Deploy\ExcelTemplates\SummaryTemplate.xml</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="..\ext\Deploy\ExcelTemplates\InterComparison.xml">
+      <Link>Deploy\ExcelTemplates\InterComparison.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\ext\Deploy\ExcelTemplates\Morphological.xml">
+      <Link>Deploy\ExcelTemplates\Morphological.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="..\ext\Deploy\SurveyTypes.xml">
       <Link>Deploy\SurveyTypes.xml</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
