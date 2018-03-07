@@ -22,8 +22,8 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             ToolStripMenuItem tsmi = null;
             if (Surface is DEMSurvey)
             {
-                ContextMenuStrip.Items.Insert(1, new ToolStripMenuItem("Calculate New Error Surface For Entire DEM Extent", Properties.Resources.sigma, OnCalculateDEMErrorSurface_SingleMethod));
                 ContextMenuStrip.Items.Insert(1, new ToolStripMenuItem("Calculate New Error Surface With Mask", Properties.Resources.sigma, OnCalculateDEMErrorSurface_MaskMethod));
+                ContextMenuStrip.Items.Insert(1, new ToolStripMenuItem("Calculate New Error Surface", Properties.Resources.sigma, OnCalculateDEMErrorSurface_SingleMethod));
             }
             else
             {
