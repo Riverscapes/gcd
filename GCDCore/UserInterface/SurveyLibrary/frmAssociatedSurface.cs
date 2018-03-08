@@ -47,6 +47,11 @@ namespace GCDCore.UserInterface.SurveyLibrary
             AssocType = assoc.AssocSurfaceType;
         }
 
+        /// <summary>
+        /// Constructor for new type
+        /// </summary>
+        /// <param name="dem"></param>
+        /// <param name="eType"></param>
         public frmAssociatedSurface(DEMSurvey dem, AssocSurface.AssociatedSurfaceTypes eType)
         {
             InitializeComponent();
@@ -66,6 +71,13 @@ namespace GCDCore.UserInterface.SurveyLibrary
                 txtPath.Width = ucRaster.Right - txtPath.Left;
                 cboType.Enabled = false;
                 this.txtName.TextChanged += txtName_TextChanged;
+
+                switch (AssocType)
+                {
+                    case AssocSurface.AssociatedSurfaceTypes.SlopeDegree: txtName.Text = "Slope Degrees"; break;
+                    case AssocSurface.AssociatedSurfaceTypes.SlopePercent: txtName.Text = "Slope Percent"; break;
+                    case AssocSurface.AssociatedSurfaceTypes.PointDensity: txtName.Text = "Point Density"; break;
+                }
             }
             else
             {

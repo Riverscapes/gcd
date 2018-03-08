@@ -12,6 +12,8 @@ title: Release Notes
 * Removed test "for entire DEM extent" from create error surface menu.
 * Bug fixing serialization of morphological spreadsheet into XML.
 * Fixing creating regular mask when the user changes field.
+* Fixed bug adding existing error surface.
+* Fixing editing both single and multi-method error surfaces.
 
 ## 7.0.07 - 6 Mar 2018
 
