@@ -10,9 +10,6 @@ namespace GCDCore.Project
 {
     public abstract class DoDBase : GCDProjectItem
     {
-        private const string RawRasterName = "Raw DoD";
-        private const string ThrRasterName = "Thresholded DoD";
-
         public readonly DirectoryInfo Folder;
         public readonly Surface NewSurface;
         public readonly Surface OldSurface;
@@ -67,8 +64,8 @@ namespace GCDCore.Project
             NewSurface = newSurface;
             OldSurface = oldSurface;
             AOIMask = aoi;
-            RawDoD = new DoDRaster(RawRasterName, rawDoD);
-            ThrDoD = new DoDRaster(ThrRasterName, thrDoD);
+            RawDoD = new DoDRaster(string.Format(Name + " - Raw"), rawDoD);
+            ThrDoD = new DoDRaster(string.Format(Name + " - Thresholded"), thrDoD);
             Histograms = histograms;
             SummaryXML = summaryXML;
             Statistics = stats;
@@ -89,8 +86,8 @@ namespace GCDCore.Project
                 AOIMask = ProjectManager.Project.Masks[nodAOI.InnerText] as Masks.AOIMask;
             }
 
-            RawDoD = new DoDRaster(RawRasterName, ProjectManager.Project.GetAbsolutePath(nodDoD.SelectSingleNode("RawDoD").InnerText));
-            ThrDoD = new DoDRaster(ThrRasterName, ProjectManager.Project.GetAbsolutePath(nodDoD.SelectSingleNode("ThrDoD").InnerText));
+            RawDoD = new DoDRaster(string.Format(Name + " - Raw"), ProjectManager.Project.GetAbsolutePath(nodDoD.SelectSingleNode("RawDoD").InnerText));
+            ThrDoD = new DoDRaster(string.Format(Name + " - Thresholded"), ProjectManager.Project.GetAbsolutePath(nodDoD.SelectSingleNode("ThrDoD").InnerText));
             Histograms = new HistogramPair(ProjectManager.Project.GetAbsolutePath(nodDoD.SelectSingleNode("RawHistogram").InnerText),
                 ProjectManager.Project.GetAbsolutePath(nodDoD.SelectSingleNode("ThrHistogram").InnerText));
             SummaryXML = ProjectManager.Project.GetAbsolutePath(nodDoD.SelectSingleNode("SummaryXML").InnerText);

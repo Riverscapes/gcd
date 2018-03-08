@@ -252,21 +252,9 @@ namespace GCDAddIn
             VectorSymbolization.AddToMapVector(route.Vector.GISFileInfo, route.Name, pGrpLayer, string.Empty, pRenderer, string.Empty, string.Empty);
         }
 
-        public void AddDoD(GCDProjectRasterItem dod, bool bThresholded = true)
+        public void AddDoD(GCDProjectRasterItem dod)
         {
-            Raster gDoDRaster;
-            string sLayerName = dod.Name;
-
-            if (bThresholded)
-            {
-                gDoDRaster = dod.Raster;
-                sLayerName += " (Thresholded)";
-            }
-            else
-            {
-                gDoDRaster = dod.Raster;
-                sLayerName += " (Raw)";
-            }
+            Raster gDoDRaster = dod.Raster;
 
             IGroupLayer pAnalGrpLayer = AddAnalysesGroupLayer();
             short dTransparency = -1;
@@ -277,7 +265,7 @@ namespace GCDAddIn
 
             IRasterRenderer rasterRenderer = RasterSymbolization.CreateDoDClassifyRenderer(gDoDRaster, 20);
             string sHeader = string.Format("Elevation Difference ({0})", UnitsNet.Length.GetAbbreviation(ProjectManager.Project.Units.VertUnit));
-            AddRasterLayer(gDoDRaster, rasterRenderer, sLayerName, pAnalGrpLayer, sHeader, dTransparency);
+            AddRasterLayer(gDoDRaster, rasterRenderer, dod.Name, pAnalGrpLayer, sHeader, dTransparency);
         }
 
         private IGroupLayer AddAnalysesGroupLayer()
