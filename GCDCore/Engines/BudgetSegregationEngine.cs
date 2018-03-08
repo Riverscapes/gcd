@@ -71,7 +71,15 @@ namespace GCDCore.Engines
 
             // Generate the new inter-comparison spreadsheet
             FileInfo interCompare = new FileInfo(Path.Combine(analysisFolder.FullName, "InterCompare.xml"));
-            InterComparison.Generate(results, interCompare);
+            try
+            {
+                InterComparison.Generate(results, interCompare);
+            }
+            catch(Exception ex)
+            {
+                // Do nothing. Essentially optional
+                Console.WriteLine("Error generating inter-comparison as part of a budget segregation " + ex.Message);
+            }
 
             // Write the class legend to file          
             File.WriteAllText(bsResult.ClassLegend.FullName, legendText.ToString());

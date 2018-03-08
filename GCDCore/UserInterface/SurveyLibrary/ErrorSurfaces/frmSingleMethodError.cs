@@ -17,7 +17,7 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
         public ErrorSurface ErrorSurface { get; internal set; }
         public GCDProjectItem GCDProjectItem { get { return ErrorSurface as GCDProjectItem; } }
 
-         public frmSingleMethodError(DEMSurvey parentDEM)
+        public frmSingleMethodError(DEMSurvey parentDEM)
         {
             InitializeComponent();
             DEM = parentDEM;
@@ -35,12 +35,13 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
             // Need to exclude the current item from this list
             List<string> existingNames = DEM.ErrorSurfaces.Where(x => !x.Equals(errSurface)).Select(x => x.Name).ToList();
 
+            ucErrProps.InitializeExisting(errSurface.ErrorProperties.Values.First(), DEM.AssocSurfaces.ToList(), errSurface == null);
             ucName.InitializeExisting("Error Surface", existingNames, ErrorSurface.Name, ErrorSurface.Raster.GISFileInfo);
         }
 
         protected void frmSingleMethodError_Load(object sender, EventArgs e)
         {
-            cmdOK.Text = Properties.Resources.CreateButtonText;
+            cmdOK.Text = ErrorSurface == null ? Properties.Resources.CreateButtonText : Properties.Resources.UpdateButtonText;
             chkDefault.Checked = (ErrorSurface != null && ErrorSurface.IsDefault) || DEM.ErrorSurfaces.Count == 0;
             chkDefault.Enabled = DEM.ErrorSurfaces.Count > 0;
         }
@@ -78,7 +79,7 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
                     ErrorSurface.IsDefault = chkDefault.Checked;
                 }
 
-  
+
                 ProjectManager.Project.Save();
                 Cursor = Cursors.Default;
                 MessageBox.Show("Error Surface Created Successfully.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);

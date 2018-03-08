@@ -64,10 +64,17 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             else if (Item is ErrorSurface && ((ErrorSurface)Item).Surf is DEMSurvey)
             {
                 ErrorSurface err = Item as ErrorSurface;
-                if (err.Mask == null)
-                    frm = new SurveyLibrary.ErrorSurfaces.frmSingleMethodError(err);
+                if (err.ErrorProperties.Count < 1)
+                {
+                    frm = new SurveyLibrary.frmSurfaceProperties(Item as GCDProjectRasterItem);
+                }
                 else
-                    frm = new SurveyLibrary.ErrorSurfaces.frmMultiMethodError(err);
+                {
+                    if (err.Mask == null)
+                        frm = new SurveyLibrary.ErrorSurfaces.frmSingleMethodError(err);
+                    else
+                        frm = new SurveyLibrary.ErrorSurfaces.frmMultiMethodError(err);
+                }
             }
             else if (Item is GCDCore.Project.ProfileRoutes.ProfileRoute)
             {

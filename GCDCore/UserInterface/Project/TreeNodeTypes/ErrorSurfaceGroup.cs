@@ -31,6 +31,16 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             }
 
             LoadChildNodes();
+
+        }
+
+        private void SetDefaultErrorSurface(object sender, EventArgs e)
+        {
+            ErrorSurface selectedErr = ((TreeNodeItem)TreeView.SelectedNode).Item as ErrorSurface;
+            selectedErr.IsDefault = true;
+            ProjectManager.Project.Save();
+
+            LoadChildNodes();
         }
 
         public override void LoadChildNodes()
@@ -38,6 +48,14 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             Nodes.Clear();
 
             Surface.ErrorSurfaces.ToList().ForEach(x => Nodes.Add(new TreeNodeItem(x.NameWithDefault, x, 4, ContextMenuStrip.Container)));
+
+            // Add the menu item to set default error surface
+            foreach (TreeNode nod in Nodes)
+            {
+                ErrorSurface err = ((TreeNodeItem)nod).Item as ErrorSurface;
+                if (!err.IsDefault)
+                    nod.ContextMenuStrip.Items.Insert(1, new ToolStripMenuItem("Set As Default Error Surface", null, SetDefaultErrorSurface));
+            }
 
             if (Nodes.Count > 0)
                 Expand();

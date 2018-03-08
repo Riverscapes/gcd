@@ -15,6 +15,7 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
     public partial class ucErrorSurfaceProperties : UserControl
     {
         public ErrorSurfaceProperty ErrSurfProperty { get; internal set; }
+        public bool Editable { get; internal set; }
 
         private BindingList<AssocSurface> AssociatedSurfaces;
 
@@ -27,12 +28,20 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
         {
             AssociatedSurfaces = new BindingList<AssocSurface>(assocs);
             ErrSurfProperty = new ErrorSurfaceProperty(regionName);
+            Editable = true;
         }
 
-        public void InitializeExisting(ErrorSurfaceProperty errProp, List<AssocSurface> assocs)
+        public void InitializeExisting(ErrorSurfaceProperty errProp, List<AssocSurface> assocs, bool editable = true)
         {
             AssociatedSurfaces = new BindingList<AssocSurface>(assocs);
             ErrSurfProperty = errProp;
+            Editable = editable;
+
+            rdoUniform.Enabled = false;
+            rdoAssociated.Enabled = false;
+            rdoUniform.Enabled = false;
+            valUniform.Enabled = false;
+            grdFISInputs.Enabled = false;
         }
 
         private void ucErrorSurfaceProperties_Load(object sender, EventArgs e)
@@ -76,7 +85,7 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
             else
             {
                 // Assoc requires at least one DEM associated surface
-                rdoAssociated.Enabled = AssociatedSurfaces.Count() > 0;
+                rdoAssociated.Enabled = Editable && AssociatedSurfaces.Count() > 0;
             }
 
             if (ErrSurfProperty.FISRuleFile is System.IO.FileInfo)
@@ -87,7 +96,7 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
             else
             {
                 // FIS requires 2 or more DEM associated surfaces
-                rdoFIS.Enabled = AssociatedSurfaces.Count() > 1;
+                rdoFIS.Enabled = Editable && AssociatedSurfaces.Count() > 1;
             }
 
             // Finally call the update to put the controls in the correct state
@@ -96,10 +105,10 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
 
         private void ErrorSurfaceTypeChanged(object sender, EventArgs e)
         {
-            valUniform.Enabled = rdoUniform.Checked;
-            cboAssociated.Enabled = rdoAssociated.Checked;
-            cboFIS.Enabled = rdoFIS.Checked;
-            grdFISInputs.Enabled = rdoFIS.Checked;
+            valUniform.Enabled = Editable && rdoUniform.Checked;
+            cboAssociated.Enabled = Editable && rdoAssociated.Checked;
+            cboFIS.Enabled = Editable && rdoFIS.Checked;
+            grdFISInputs.Enabled = Editable && rdoFIS.Checked;
 
             if (!rdoAssociated.Checked)
                 cboAssociated.SelectedIndex = -1;

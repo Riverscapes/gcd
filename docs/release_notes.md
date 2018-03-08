@@ -2,7 +2,7 @@
 title: Release Notes
 ---
 
-## 7.0.08 -
+## 7.0.08 - 8 Mar 2018
 
 * Including the Morphological and InterComparison spreadsheets in the deployments.
 * Raw and thresholded layers in the map now have the name of the DoD.
@@ -11,6 +11,7 @@ title: Release Notes
 * Changed order of create new error surface and create from mask.
 * Removed test "for entire DEM extent" from create error surface menu.
 * Bug fixing serialization of morphological spreadsheet into XML.
+* Fixing creating regular mask when the user changes field.
 
 ## 7.0.07 - 6 Mar 2018
 

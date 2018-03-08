@@ -102,7 +102,8 @@ namespace GCDCore.Project
             Surf = surf;
             _IsDefault = isDefault;
             ErrorProperties = new Dictionary<string, ErrorSurfaceProperty>();
-            ErrorProperties[errProperty.Name] = errProperty;
+            if (errProperty != null)
+                ErrorProperties[errProperty.Name] = errProperty;
         }
 
         public ErrorSurface(XmlNode nodError, Surface surf)
@@ -122,11 +123,11 @@ namespace GCDCore.Project
             }
 
             // There might not be any error surface properties if the error raster was "specified" raster than calculated
-            Dictionary<string, ErrorSurfaceProperty> properties = new Dictionary<string, ErrorSurfaceProperty>();
+            ErrorProperties = new Dictionary<string, ErrorSurfaceProperty>();
             foreach (XmlNode nodProperty in nodError.SelectNodes("ErrorSurfaceProperties/ErrorSurfaceProperty"))
             {
                 ErrorSurfaceProperty prop = new ErrorSurfaceProperty(nodProperty, surf);
-                properties[prop.Name] = prop;
+                ErrorProperties[prop.Name] = prop;
             }
         }
 
