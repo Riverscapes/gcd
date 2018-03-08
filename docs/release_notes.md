@@ -14,6 +14,7 @@ title: Release Notes
 * Fixing creating regular mask when the user changes field.
 * Fixed bug adding existing error surface.
 * Fixing editing both single and multi-method error surfaces.
+* Slope and point density associated surfaces getting default names.
 
 ## 7.0.07 - 6 Mar 2018
 
