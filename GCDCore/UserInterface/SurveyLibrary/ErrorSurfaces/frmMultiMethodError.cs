@@ -32,6 +32,7 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
         {
             InitializeComponent();
             DEM = errSurf.Surf as DEMSurvey;
+            ErrorSurface = errSurf;
             ErrProps = new naru.ui.SortableBindingList<ErrorSurfaceProperty>(errSurf.ErrorProperties.Values.ToList());
 
             // Need to exclude the current item from this list
@@ -60,15 +61,23 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
             if (ErrorSurface != null)
             {
                 cboMask.Enabled = false;
+                grdRegions.Enabled = false;
             }
 
         }
 
         private void cboMask_SelectedIndexChanged(object sender, EventArgs e)
         {
-            GCDCore.Project.Masks.RegularMask mask = cboMask.SelectedItem as GCDCore.Project.Masks.RegularMask;
-            ErrProps.Clear();
-            mask.ActiveFieldValues.Values.ToList().ForEach(x => ErrProps.Add(new ErrorSurfaceProperty(x)));
+            if (ErrorSurface == null)
+            {
+                GCDCore.Project.Masks.RegularMask mask = cboMask.SelectedItem as GCDCore.Project.Masks.RegularMask;
+                ErrProps.Clear();
+                mask.ActiveFieldValues.Values.ToList().ForEach(x => ErrProps.Add(new ErrorSurfaceProperty(x)));
+            }
+            else
+            {
+                ErrProps = new naru.ui.SortableBindingList<ErrorSurfaceProperty>(ErrorSurface.ErrorProperties.Values.ToList());
+            }
         }
 
         private void cmdAddMaskToMap_Click(object sender, EventArgs e)

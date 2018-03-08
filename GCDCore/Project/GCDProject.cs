@@ -316,24 +316,7 @@ namespace GCDCore.Project
 
             ProjectManager.Project = new GCDProject(name, desc, projectFile, dtCreated, gcdv, cellArea, units);
 
-            foreach (XmlNode nodDEM in nodProject.SelectNodes("DEMSurveys/DEM"))
-            {
-                DEMSurvey dem = new DEMSurvey(nodDEM);
-                ProjectManager.Project.DEMSurveys[dem.Name] = dem;
-            }
-
-            foreach (XmlNode nodRefSurf in nodProject.SelectNodes("ReferenceSurfaces/ReferenceSurface"))
-            {
-                Surface surf = new Surface(nodRefSurf, true);
-                ProjectManager.Project.ReferenceSurfaces[surf.Name] = surf;
-            }
-
-            foreach (XmlNode nodRoute in nodProject.SelectNodes("ProfileRoutes/ProfileRoute"))
-            {
-                GCDCore.Project.ProfileRoutes.ProfileRoute route = new Project.ProfileRoutes.ProfileRoute(nodRoute);
-                ProjectManager.Project.ProfileRoutes[route.Name] = route;
-            }
-
+            // Load masks before DEMs. DEMs will load error surfaces that refer to masks
             foreach (XmlNode nodMask in nodProject.SelectNodes("Masks/Mask"))
             {
                 if (nodMask.SelectSingleNode("Field") is XmlNode)
@@ -356,6 +339,24 @@ namespace GCDCore.Project
                     GCDCore.Project.Masks.AOIMask aoiMask = new Project.Masks.AOIMask(nodMask);
                     ProjectManager.Project.Masks[aoiMask.Name] = aoiMask;
                 }
+            }
+
+            foreach (XmlNode nodDEM in nodProject.SelectNodes("DEMSurveys/DEM"))
+            {
+                DEMSurvey dem = new DEMSurvey(nodDEM);
+                ProjectManager.Project.DEMSurveys[dem.Name] = dem;
+            }
+
+            foreach (XmlNode nodRefSurf in nodProject.SelectNodes("ReferenceSurfaces/ReferenceSurface"))
+            {
+                Surface surf = new Surface(nodRefSurf, true);
+                ProjectManager.Project.ReferenceSurfaces[surf.Name] = surf;
+            }
+
+            foreach (XmlNode nodRoute in nodProject.SelectNodes("ProfileRoutes/ProfileRoute"))
+            {
+                GCDCore.Project.ProfileRoutes.ProfileRoute route = new Project.ProfileRoutes.ProfileRoute(nodRoute);
+                ProjectManager.Project.ProfileRoutes[route.Name] = route;
             }
 
             foreach (XmlNode nodDoD in nodProject.SelectNodes("DoDs/DoD"))

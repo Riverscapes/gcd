@@ -57,8 +57,6 @@ namespace GCDCore.UserInterface
             ExistingNames = existingNames;
             txtName.Text = name;
             AbsolutePath = fiPath;
-            lblPath.Visible = false;
-            txtPath.Visible = false;
         }
 
         public void InitializeNewRaster(string noun, List<string> existingNames, DirectoryInfo parentDir, string directoryPrefix)
