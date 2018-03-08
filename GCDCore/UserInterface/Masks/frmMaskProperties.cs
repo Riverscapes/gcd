@@ -112,11 +112,16 @@ namespace GCDCore.UserInterface.Masks
             foreach (KeyValuePair<long, GCDConsoleLib.VectorFeature> vFeature in ucPolygon.SelectedItem.Features)
             {
                 string fieldValue = vFeature.Value.GetFieldAsString(cboField.Text);
-                if (!MaskItems.Any<GCDCore.Project.Masks.MaskItem>(x => string.Compare(x.FieldValue, fieldValue, true) == 0))
+                if (!string.IsNullOrEmpty(fieldValue))
                 {
-                    MaskItems.Add(new GCDCore.Project.Masks.MaskItem(true, fieldValue, fieldValue));
+                    if (!MaskItems.Any<GCDCore.Project.Masks.MaskItem>(x => string.Compare(x.FieldValue, fieldValue, true) == 0))
+                    {
+                        MaskItems.Add(new GCDCore.Project.Masks.MaskItem(true, fieldValue, fieldValue));
+                    }
                 }
             }
+
+            Cursor = Cursors.Default;
         }
 
         private void selectToolStripMenuItem_Click(object sender, EventArgs e)

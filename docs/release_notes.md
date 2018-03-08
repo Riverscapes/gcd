@@ -2,6 +2,16 @@
 title: Release Notes
 ---
 
+## 7.0.08 -
+
+* Including the Morphological and InterComparison spreadsheets in the deployments.
+* Raw and thresholded layers in the map now have the name of the DoD.
+* Fixed DoD results - clicking the reset button.
+* Changed order or raw and threshdolded add to map menu items on DoD right click menu
+* Changed order of create new error surface and create from mask.
+* Removed test "for entire DEM extent" from create error surface menu.
+* Bug fixing serialization of morphological spreadsheet into XML.
+
 ## 7.0.07 - 6 Mar 2018
 
 * Internal test release.
@@ -57,4 +67,3 @@ title: Release Notes
 
 * [GCD 6 Release Notes](/_releasenotes/gcd6_releasenotes.html)
 * [GCD 5 Release Notes]()
-
