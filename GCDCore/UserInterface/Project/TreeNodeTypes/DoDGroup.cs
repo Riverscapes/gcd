@@ -16,9 +16,9 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
 
             ContextMenuStrip.Items[0].Text = "Add Budget Segregation";
             ContextMenuStrip.Items.Insert(0, new ToolStripMenuItem("View Change Detection Results", Properties.Resources.GCD, OnViewResults));
-            ContextMenuStrip.Items.Remove(ContextMenuStrip.Items.Find("AddToMap",false)[0]);
-            ContextMenuStrip.Items.Insert(ContextMenuStrip.Items.Count - 2, new ToolStripMenuItem("Add Raw DoD Raster To Map", Properties.Resources.AddToMap, OnAddRawDoDToMap));
+            ContextMenuStrip.Items.Remove(ContextMenuStrip.Items.Find("AddToMap", false)[0]);
             ContextMenuStrip.Items.Insert(ContextMenuStrip.Items.Count - 2, new ToolStripMenuItem("Add Thresholded DoD Raster To Map", Properties.Resources.AddToMap, OnAddThrDoDToMap));
+            ContextMenuStrip.Items.Insert(ContextMenuStrip.Items.Count - 2, new ToolStripMenuItem("Add Raw DoD Raster To Map", Properties.Resources.AddToMap, OnAddRawDoDToMap));
 
             LoadChildNodes();
         }
