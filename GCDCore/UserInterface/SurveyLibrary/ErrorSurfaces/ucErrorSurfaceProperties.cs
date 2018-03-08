@@ -36,12 +36,6 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
             AssociatedSurfaces = new BindingList<AssocSurface>(assocs);
             ErrSurfProperty = errProp;
             Editable = editable;
-
-            rdoUniform.Enabled = false;
-            rdoAssociated.Enabled = false;
-            rdoUniform.Enabled = false;
-            valUniform.Enabled = false;
-            grdFISInputs.Enabled = false;
         }
 
         private void ucErrorSurfaceProperties_Load(object sender, EventArgs e)
@@ -82,21 +76,12 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
                 rdoAssociated.Checked = true;
                 cboAssociated.SelectedItem = ErrSurfProperty.AssociatedSurface;
             }
-            else
-            {
-                // Assoc requires at least one DEM associated surface
-                rdoAssociated.Enabled = Editable && AssociatedSurfaces.Count() > 0;
-            }
 
             if (ErrSurfProperty.FISRuleFile is System.IO.FileInfo)
             {
                 rdoFIS.Checked = true;
                 cboFIS.SelectedItem = ErrSurfProperty.FISRuleFile;
-            }
-            else
-            {
-                // FIS requires 2 or more DEM associated surfaces
-                rdoFIS.Enabled = Editable && AssociatedSurfaces.Count() > 1;
+                cboFIS_SelectedIndexChanged(sender, e);
             }
 
             // Finally call the update to put the controls in the correct state
@@ -105,14 +90,17 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
 
         private void ErrorSurfaceTypeChanged(object sender, EventArgs e)
         {
+            rdoUniform.Enabled = rdoUniform.Checked ? true : Editable;
             valUniform.Enabled = Editable && rdoUniform.Checked;
-            cboAssociated.Enabled = Editable && rdoAssociated.Checked;
-            cboFIS.Enabled = Editable && rdoFIS.Checked;
-            grdFISInputs.Enabled = Editable && rdoFIS.Checked;
 
-            if (!rdoAssociated.Checked)
+            rdoAssociated.Enabled = rdoAssociated.Checked ? true : Editable && AssociatedSurfaces.Count() > 0;
+            cboAssociated.Enabled = Editable && rdoAssociated.Checked;
+           if (!rdoAssociated.Checked)
                 cboAssociated.SelectedIndex = -1;
 
+            rdoFIS.Enabled = rdoFIS.Checked ? true : Editable && AssociatedSurfaces.Count() > 1;
+            cboFIS.Enabled = rdoFIS.Checked && Editable;
+            grdFISInputs.Enabled = cboFIS.Enabled;
             if (!rdoFIS.Checked)
                 cboFIS.SelectedIndex = -1;
         }
@@ -130,14 +118,14 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
             FISRuleFile selectedFIS = new FISRuleFile(((FISLibraryItem)cboFIS.SelectedItem).FilePath);
 
             // Detect if this is already the identified FIS
-            if (ErrSurfProperty.FISRuleFile is System.IO.FileInfo && string.Compare(ErrSurfProperty.FISRuleFile.FullName, selectedFIS.RuleFilePath.FullName, true) == 0)
-                return;
-
-            // Load the inputs for the newly selected FIS rule file into the error properties
-            ErrSurfProperty.FISRuleFile = selectedFIS.RuleFilePath;
-            ErrSurfProperty.FISInputs.Clear();
-            foreach (string input in selectedFIS.FISInputs)
-                ErrSurfProperty.FISInputs.Add(new FISInput(input));
+            if (!(ErrSurfProperty.FISRuleFile is System.IO.FileInfo && string.Compare(ErrSurfProperty.FISRuleFile.FullName, selectedFIS.RuleFilePath.FullName, true) == 0))
+            {
+                // Load the inputs for the newly selected FIS rule file into the error properties
+                ErrSurfProperty.FISRuleFile = selectedFIS.RuleFilePath;
+                ErrSurfProperty.FISInputs.Clear();
+                foreach (string input in selectedFIS.FISInputs)
+                    ErrSurfProperty.FISInputs.Add(new FISInput(input));
+            }
 
             grdFISInputs.DataSource = ErrSurfProperty.FISInputs;
         }

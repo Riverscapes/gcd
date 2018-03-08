@@ -31,7 +31,6 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             }
 
             LoadChildNodes();
-
         }
 
         private void SetDefaultErrorSurface(object sender, EventArgs e)
