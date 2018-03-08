@@ -157,8 +157,8 @@ namespace GCDCore.UserInterface.ChangeDetection
         private void cmdReset_Click(object sender, EventArgs e)
         {
             GCDUnits.SelectUnit(cboLinear, ProjectManager.Project.Units.HorizUnit);
-            GCDUnits.SelectUnit(cboArea, ProjectManager.Project.Units.VertUnit);
-            GCDUnits.SelectUnit(cboVolume, ProjectManager.Project.Units.ArUnit);
+            GCDUnits.SelectUnit(cboArea, ProjectManager.Project.Units.ArUnit);
+            GCDUnits.SelectUnit(cboVolume, ProjectManager.Project.Units.VolUnit);
 
             valPrecision.Value = Options.m_nPrecision;
             rdoRowsAll.Checked = true;
