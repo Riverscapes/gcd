@@ -10,11 +10,14 @@ This exercise shows how GCD can be used to produce a multi-method error surface 
 
 #### Datasets
 
-[J_ErrorEstimation.zip](http://etalweb.joewheaton.org/etal_workshops/GCD/2015_USU/J_ErrorEstimation.zip) File of Data for this Exercise 
+- [Multi-Method Error Modelling in GCD (Rees)](https://s3-us-west-2.amazonaws.com/etalweb.joewheaton.org/GCD/Workshop/2017/Bologna/Exercise/I_MultiMethod.zip) 
+- [J_ErrorEstimation.zip](http://etalweb.joewheaton.org/etal_workshops/GCD/2015_USU/J_ErrorEstimation.zip) File of Data for this Exercise from Grand Canyon (courtesy of [GCMRC](https://www.gcmrc.gov/))
 
-- Data from: 
 
-- - Kaplinski, M., Hazel, J.E., Grams, P.E. and Davis, P.A. (2014). [Monitoring Fine-Sediment Volume in the Colorado River Ecosystem, Arizona—Construction and Analysis of Digital Elevation Models](http://pubs.usgs.gov/of/2014/1052/). Open File Report 2014-1052. Flagstaff, AZ, US Geological Survey, Grand Canyon Monitoring Research Center: 29 pp.
+
+Data from: 
+
+Kaplinski, M., Hazel, J.E., Grams, P.E. and Davis, P.A. (2014). [Monitoring Fine-Sediment Volume in the Colorado River Ecosystem, Arizona—Construction and Analysis of Digital Elevation Models](http://pubs.usgs.gov/of/2014/1052/). Open File Report 2014-1052. Flagstaff, AZ, US Geological Survey, Grand Canyon Monitoring Research Center: 29 pp.
 
   - #### Prerequisite for this Exercise
 
