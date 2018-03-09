@@ -24,27 +24,27 @@ This exercise is intended to contrast how to build a DoD (DEM of Difference) wit
 
 #### Part 1A Raster Calculator
 
-![ExcerciseG1A]({{ site.baseurl }}assets/images/ExcerciseG1A.png)
+![ExcerciseG1A]({{ site.baseurl }}/assets/images/ExcerciseG1A.png)
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/rda6aVCPF9Q" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
 
 #### Part 1B Threshold
 
-![ExcerciseG1B]({{ site.baseurl }}assets/images/ExcerciseG1B.png)
+![ExcerciseG1B]({{ site.baseurl }}/assets/images/ExcerciseG1B.png)
 
-![ExcerciseG1B_steps]({{ site.baseurl }}assets/images/ExcerciseG1B_steps.png)
+![ExcerciseG1B_steps]({{ site.baseurl }}/assets/images/ExcerciseG1B_steps.png)
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/_lbqCraoi0U" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
 
 #### Part 2 GCD
 
-![ExcerciseG2]({{ site.baseurl }}assets/images/ExcerciseG2.png)
+![ExcerciseG2]({{ site.baseurl }}/assets/images/ExcerciseG2.png)
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/8KrOMnpBATY" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
 
 #### Part 3 Practice in GCD
 
-![ExcerciseG3]({{ site.baseurl }}assets/images/ExcerciseG3.png)
+![ExcerciseG3]({{ site.baseurl }}/assets/images/ExcerciseG3.png)
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/khJE7dRsIKQ" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
 
