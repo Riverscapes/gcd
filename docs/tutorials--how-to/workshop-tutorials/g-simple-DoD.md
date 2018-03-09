@@ -46,6 +46,9 @@ This exercise is intended to contrast how to build a DoD (DEM of Difference) wit
 
 ![ExcerciseG3]({{ site.baseurl }}/assets/images/ExcerciseG3.png)
 
+##### GCD 7 Tutorial Video
+<iframe width="560" height="315" src="https://www.youtube.com/embed/MI6p4DfT3Sk" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
+##### GCD 6 Tutorial Video
 <iframe width="560" height="315" src="https://www.youtube.com/embed/khJE7dRsIKQ" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
 
 ### Related Online Help or Tutorials for this Topic
