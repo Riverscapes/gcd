@@ -26,7 +26,7 @@ This exercise contrasts the three most common forms of thresholding DoDs: i) Sim
 
 #### Part 1 - Simple minLoD
 
-![ExcerciseI1]({{ site.baseurl }/}assets/images/ExcerciseI1.png)
+![ExcerciseI1]({{ site.baseurl }}/assets/images/ExcerciseI1.png)
 How to do in GCD 7:
 <iframe width="560" height="315" src="https://www.youtube.com/embed/olZiDNeg8Q4" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
 
