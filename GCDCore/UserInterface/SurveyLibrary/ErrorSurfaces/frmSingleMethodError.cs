@@ -43,7 +43,7 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
         {
             cmdOK.Text = ErrorSurface == null ? Properties.Resources.CreateButtonText : Properties.Resources.UpdateButtonText;
             chkDefault.Checked = (ErrorSurface != null && ErrorSurface.IsDefault) || DEM.ErrorSurfaces.Count == 0;
-            chkDefault.Enabled = DEM.ErrorSurfaces.Count > 0;
+            chkDefault.Enabled = ErrorSurface == null ? DEM.ErrorSurfaces.Count > 0 : DEM.ErrorSurfaces.Count > 1;
         }
 
         private void cmdOK_Click(object sender, EventArgs e)

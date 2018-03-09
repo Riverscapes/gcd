@@ -42,9 +42,9 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
 
         private void frmMultiMethodError_Load(object sender, EventArgs e)
         {
-            cmdOK.Text = Properties.Resources.CreateButtonText;
+            cmdOK.Text = ErrorSurface == null ? Properties.Resources.CreateButtonText : Properties.Resources.UpdateButtonText;
             chkDefault.Checked = (ErrorSurface != null && ErrorSurface.IsDefault) || DEM.ErrorSurfaces.Count == 0;
-            chkDefault.Enabled = DEM.ErrorSurfaces.Count > 0;
+            chkDefault.Enabled = ErrorSurface == null ? DEM.ErrorSurfaces.Count > 0 : DEM.ErrorSurfaces.Count > 1;
 
             if (!ProjectManager.IsArcMap)
             {
