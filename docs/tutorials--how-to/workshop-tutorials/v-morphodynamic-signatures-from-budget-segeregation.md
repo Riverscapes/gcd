@@ -36,6 +36,10 @@ Suggested path: `C:\0_GCD\Exercises\V_BudgetSeg`
 4. Add a budget segregation using provided shapefile
 5. Explore results
 
+How to do in gCD 7
+<iframe width="560" height="315" src="https://www.youtube.com/embed/2A2R4L8yiq8" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe> 
+
+How to do in GCD 6:
 <iframe width="560" height="315" src="https://www.youtube.com/embed/IYUyBzTGMAA" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
 
 #### **Exercise V: Part 2: Derive GI Budget Segregation**
