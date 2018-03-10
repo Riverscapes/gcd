@@ -6,7 +6,7 @@ title: V. Morphodynamic Signatures from Budget Segeregation
 
 This exercise is to show you how DoDs can be easily interrogated to support . In GIS, this is basically a zonal statistics exercise, but in GCD we call it budget segregation and in addition to summary statistics you can derive all the standard GCD outputs for any polygon class (e.g. elevation change distributions, summary.xml, etc.). This provides an excellent means of hypothesis testing.
 
-![Fig_16]({{ site.baseurl }}assets/images/Fig_16.png)
+![Fig_16]({{ site.baseurl }}/assets/images/Fig_16.png)
 
 Example from Wheaton et al. (2013) of morphodynamic signatures derived from four DoDs that help in separating braiding mechanisms from other mechanisms of change. 
 
@@ -28,17 +28,13 @@ Example from Wheaton et al. (2013) of morphodynamic signatures derived from four
 
 #### **Exercise V: Part 1: Perform Budget Segregation**
 
-C:\0_GCD\Exercises\V_BudgetSeg
+Suggested path: `C:\0_GCD\Exercises\V_BudgetSeg`
 
-**1. **Start new ArcMap Document
-
-**2. **Start a new GCD Project - Sulphur Creek in V
-
-**3. **Add 2005 and 2006 DEM, perform DoD with threholding of your choosing
-
-**4. **Add a budget segregation using provided shapefile
-
-**5. **Explore results
+1. Start new ArcMap Document
+2. Start a new GCD Project - Sulphur Creek in V
+3. Add 2005 and 2006 DEM, perform DoD with threholding of your choosing
+4. Add a budget segregation using provided shapefile
+5. Explore results
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/IYUyBzTGMAA" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
 
