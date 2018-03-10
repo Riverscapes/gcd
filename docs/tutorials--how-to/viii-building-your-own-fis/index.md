@@ -49,12 +49,13 @@ If you do make your own FIS, and want to produce some production quality plots o
 
 ### Further Reading on Fuzzy Inference Systems
 
-- See pages 97-108 of: 
+See pages 97-108 of: 
 
-- - Chapter 4 of Wheaton JM. 2008. [Uncertainty in Morphological Sediment Budgeting of Rivers](http://www.joewheaton.org/Home/research/projects-1/morphological-sediment-budgeting/phdthesis). Unpublished PhD Thesis, University of Southampton, Southampton, 412 pp.
+- Chapter 4 of Wheaton JM. 2008. [Uncertainty in Morphological Sediment Budgeting of Rivers](http://www.joewheaton.org/Home/research/projects-1/morphological-sediment-budgeting/phdthesis). Unpublished PhD Thesis, University of Southampton, Southampton, 412 pp.
 
-- See page 142-146 of:
+See page 142-146 of:
+- Wheaton JM, Brasington J, Darby SE and Sear D. 2010. [Accounting for Uncertainty in DEMs from Repeat Topographic Surveys: Improved Sediment Budgets](http://dx.doi.org/10.1002/esp.1886). Earth Surface Processes and Landforms. 35 (2): 136-156. DOI: [10.1002/esp.1886](http://dx.doi.org/10.1002/esp.1886).
 
-- - Wheaton JM, Brasington J, Darby SE and Sear D. 2010. [Accounting for Uncertainty in DEMs from Repeat Topographic Surveys: Improved Sediment Budgets](http://dx.doi.org/10.1002/esp.1886). Earth Surface Processes and Landforms. 35 (2): 136-156. DOI: [10.1002/esp.1886](http://dx.doi.org/10.1002/esp.1886).
-
-- [Matlab Fuzzy Logic Toolbox Documentation](http://www.mathworks.com/help/toolbox/fuzzy/)
+- 2016.  Bangen S‡ , Hensleigh J‡, McHugh P, and Wheaton JM.  [Error modeling of DEMs from topographic surveys of rivers using Fuzzy Inference Systems](https://www.researchgate.net/publication/292210478_Error_modeling_of_DEMs_from_topographic_surveys_of_rivers_using_fuzzy_inference_systems).  Water Resources Research. DOI: [10.1002/2015WR018299](http://dx.doi.org/10.1002/2015WR018299).
+- 
+[Matlab Fuzzy Logic Toolbox Documentation](http://www.mathworks.com/help/toolbox/fuzzy/)

@@ -14,7 +14,13 @@ This exercise will show you how to use GCD to build a spatially variable error m
 
 #### Datasets
 
-[N_FIS_Intro.zip](http://etalweb.joewheaton.org/etal_workshops/GCD/2015_USU/N_FIS_Intro.zip) File of Data for this Exercise 
+1. Feshie Example [N_FIS_Intro.zip](http://etalweb.joewheaton.org/etal_workshops/GCD/2015_USU/N_FIS_Intro.zip) File of Data for this Exercise 
+2. CHaMP Example
+
+Data for 1 (above) is from Wheaton et al. (2010) & for 2 (above) is from Bangen et al. (2016)
+
+- 2016.  Bangen S‡ , Hensleigh J‡, McHugh P, and Wheaton JM.  [Error modeling of DEMs from topographic surveys of rivers using Fuzzy Inference Systems](https://www.researchgate.net/publication/292210478_Error_modeling_of_DEMs_from_topographic_surveys_of_rivers_using_fuzzy_inference_systems).  Water Resources Research. DOI: [10.1002/2015WR018299](http://dx.doi.org/10.1002/2015WR018299).
+- Wheaton JM, Brasington J, Darby SE and Sear D. 2010. [Accounting for Uncertainty in DEMs from Repeat Topographic Surveys: Improved Sediment Budgets](https://www.researchgate.net/publication/227747150_Accounting_for_uncertainty_in_DEMs_from_repeat_topographic_surveys_Improved_sediment_budgets). Earth Surface Processes and Landforms. 35 (2): 136-156. DOI: [10.1002/esp.1886](http://dx.doi.org/10.1002/esp.1886).  
 
 #### Prerequisite for this Exercise
 
