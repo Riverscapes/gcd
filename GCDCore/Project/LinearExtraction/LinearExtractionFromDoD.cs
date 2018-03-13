@@ -16,8 +16,8 @@ namespace GCDCore.Project.LinearExtraction
 
         public override GCDProjectItem GCDProjectItem { get { return DoD; } }
 
-        public LinearExtractionFromDoD(string name, ProfileRoute route, FileInfo db, DoDBase dod)
-            : base(name, route, db)
+        public LinearExtractionFromDoD(string name, ProfileRoute route, FileInfo db, decimal sampleDistance, DoDBase dod)
+            : base(name, route, db, sampleDistance)
         {
             DoD = dod;
         }

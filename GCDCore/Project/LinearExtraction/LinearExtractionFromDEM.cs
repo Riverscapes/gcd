@@ -10,14 +10,14 @@ namespace GCDCore.Project.LinearExtraction
 {
     public class LinearExtractionFromDEM : LinearExtractionFromSurface
     {
-        public LinearExtractionFromDEM(string name, ProfileRoutes.ProfileRoute route, FileInfo db, DEMSurvey dem, ErrorSurface err)
-            : base(name, route, db, dem, err)
+        public LinearExtractionFromDEM(string name, ProfileRoutes.ProfileRoute route, FileInfo db, decimal sampleDistance, DEMSurvey dem, ErrorSurface err)
+            : base(name, route, db, sampleDistance, dem, err)
         {
 
         }
 
-        public LinearExtractionFromDEM(XmlNode nodItem)
-            : base(nodItem)
+        public LinearExtractionFromDEM(XmlNode nodItem, DEMSurvey dem)
+            : base(nodItem, dem)
         {
 
         }

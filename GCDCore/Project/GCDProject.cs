@@ -341,6 +341,15 @@ namespace GCDCore.Project
                 }
             }
 
+            // Load profile routes before DEMs, Ref Surfs and DoDs that might refer to
+            // routes in their linear extractions
+            foreach (XmlNode nodRoute in nodProject.SelectNodes("ProfileRoutes/ProfileRoute"))
+            {
+                GCDCore.Project.ProfileRoutes.ProfileRoute route = new Project.ProfileRoutes.ProfileRoute(nodRoute);
+                ProjectManager.Project.ProfileRoutes[route.Name] = route;
+            }
+
+
             foreach (XmlNode nodDEM in nodProject.SelectNodes("DEMSurveys/DEM"))
             {
                 DEMSurvey dem = new DEMSurvey(nodDEM);
@@ -353,11 +362,7 @@ namespace GCDCore.Project
                 ProjectManager.Project.ReferenceSurfaces[surf.Name] = surf;
             }
 
-            foreach (XmlNode nodRoute in nodProject.SelectNodes("ProfileRoutes/ProfileRoute"))
-            {
-                GCDCore.Project.ProfileRoutes.ProfileRoute route = new Project.ProfileRoutes.ProfileRoute(nodRoute);
-                ProjectManager.Project.ProfileRoutes[route.Name] = route;
-            }
+
 
             foreach (XmlNode nodDoD in nodProject.SelectNodes("DoDs/DoD"))
             {

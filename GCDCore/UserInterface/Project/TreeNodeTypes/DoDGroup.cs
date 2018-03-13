@@ -20,14 +20,19 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             ContextMenuStrip.Items.Insert(ContextMenuStrip.Items.Count - 2, new ToolStripMenuItem("Add Thresholded DoD Raster To Map", Properties.Resources.AddToMap, OnAddThrDoDToMap));
             ContextMenuStrip.Items.Insert(ContextMenuStrip.Items.Count - 2, new ToolStripMenuItem("Add Raw DoD Raster To Map", Properties.Resources.AddToMap, OnAddRawDoDToMap));
 
+            ContextMenuStrip.Items.Insert(2, new ToolStripMenuItem("Add Linear Extraction From Profile Route", Properties.Resources.Add, OnLinear));
+
             LoadChildNodes();
         }
 
         public override void LoadChildNodes()
         {
             Nodes.Clear();
-
-            TreeNodeGroup nodLinea = new LinearExtractionGrp(Nodes, DoD, DoD.Folder, ContextMenuStrip.Container);
+            
+            if (DoD.LinearExtractions.Count > 0)
+            {
+                TreeNodeGroup nodLinea = new LinearExtractionGrp(Nodes, DoD, DoD.Folder, ContextMenuStrip.Container);
+            }
 
             foreach (GCDCore.Project.BudgetSegregation bs in DoD.BudgetSegregations.Values)
             {
@@ -69,6 +74,17 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
         public void OnAddRawDoDToMap(object sender, EventArgs e)
         {
             ProjectManager.OnAddRasterToMap(DoD.RawDoD);
+        }
+
+        private void OnLinear(object sender, EventArgs e)
+        {
+            ToolStripDropDownItem ctrl = sender as ToolStripDropDownItem;
+            ContextMenuStrip cms = ctrl.Owner as ContextMenuStrip;
+            TreeView tre = cms.SourceControl as TreeView;
+            DoDGroup nodDoD = tre.SelectedNode as DoDGroup;
+
+            LinearExtraction.frmLinearExtractionProperties frm = new LinearExtraction.frmLinearExtractionProperties(nodDoD.DoD as GCDProjectItem);
+            EditTreeItem(frm);
         }
     }
 }

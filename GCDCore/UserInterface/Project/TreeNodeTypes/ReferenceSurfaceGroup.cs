@@ -28,7 +28,11 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
                 Nodes.Add(nodSurface);
 
                 TreeNodeGroup nodError = new ErrorSurfaceGroup(nodSurface.Nodes, ContextMenuStrip.Container, surf);
-                TreeNodeGroup nodLinea = new LinearExtractionGrp(nodSurface.Nodes, surf, surf.Raster.GISFileInfo.Directory, ContextMenuStrip.Container);
+
+                if (surf.LinearExtractions.Count > 0)
+                {
+                    TreeNodeGroup nodLinea = new LinearExtractionGrp(nodSurface.Nodes, surf, surf.Raster.GISFileInfo.Directory, ContextMenuStrip.Container);
+                }
             }
 
             if (Nodes.Count > 0)

@@ -24,7 +24,6 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
         public DEMSurveysGroup(TreeNodeCollection parentNodes, IContainer container)
             : base(parentNodes, "DEM Surveys", "DEM Survey", "DEM Surveys", ProjectManager.Project.SurveysFolder, container, ProjectManager.Project.DEMSurveys.Count > 0)
         {
-
             ToolStripMenuItem tsmiSort = new ToolStripMenuItem("Sort DEM Surveys");
             tsmiSort.DropDownItems.Add(new ToolStripMenuItem("Sort Alphabetical Ascending", Properties.Resources.alphabetical, OnSort));
             tsmiSort.DropDownItems.Add(new ToolStripMenuItem("Sort Alphabetical Descending", Properties.Resources.alpha_descending, OnSort));
@@ -67,10 +66,15 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             {
                 TreeNodeItem nodDEM = new TreeNodeTypes.TreeNodeItem(dem, 2, ContextMenuStrip.Container);
                 Nodes.Add(nodDEM);
+                nodDEM.ContextMenuStrip.Items.Insert(1, new ToolStripMenuItem("Calculate Linear Extraction From Profile Route", Properties.Resources.Add, OnLinear));
 
                 TreeNodeGroup nodAssoc = new AssocGroup(nodDEM.Nodes, ContextMenuStrip.Container, dem);
                 TreeNodeGroup nodError = new ErrorSurfaceGroup(nodDEM.Nodes, ContextMenuStrip.Container, dem);
-                TreeNodeGroup nodLinea = new LinearExtractionGrp(nodDEM.Nodes, dem, dem.Raster.GISFileInfo.Directory, ContextMenuStrip.Container);
+
+                if (dem.LinearExtractions.Count > 0)
+                {
+                    TreeNodeGroup nodLinea = new LinearExtractionGrp(nodDEM.Nodes, dem, dem.LinearExtractions.Values.First().Database.Directory.Parent, ContextMenuStrip.Container);
+                }
             }
 
             if (Nodes.Count > 0)
@@ -135,6 +139,17 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             }
 
             LoadChildNodes();
+        }
+
+        private void OnLinear(object sender, EventArgs e)
+        {
+            ToolStripDropDownItem ctrl = sender as ToolStripDropDownItem;
+            ContextMenuStrip cms = ctrl.Owner as ContextMenuStrip;
+            TreeView tre = cms.SourceControl as TreeView;
+            TreeNodeItem nodDEM = tre.SelectedNode as TreeNodeItem; 
+
+            LinearExtraction.frmLinearExtractionProperties frm = new LinearExtraction.frmLinearExtractionProperties(nodDEM.Item as GCDProjectItem);
+            EditTreeItem(frm);
         }
     }
 }

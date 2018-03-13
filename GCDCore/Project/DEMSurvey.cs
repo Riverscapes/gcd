@@ -95,6 +95,7 @@ namespace GCDCore.Project
 
             // Load the error surfaces now that the associated surfaces have been loaded
             LoadErrorSurfaces(nodDEM);
+            LoadLinearExtractions(nodDEM);
         }
 
         public bool IsAssocNameUnique(string name, AssocSurface ignore)

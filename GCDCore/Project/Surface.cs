@@ -110,25 +110,12 @@ namespace GCDCore.Project
             XmlNode nodHillshade = nodSurface.SelectSingleNode("Hillshade");
             if (nodHillshade is XmlNode)
                 Hillshade = new HillShade(string.Format("{0} Hillshade", Noun), ProjectManager.Project.GetAbsolutePath(nodHillshade.InnerText));
-  
+
             ErrorSurfaces = new naru.ui.SortableBindingList<ErrorSurface>();
             if (bLoadErrorSurfaces)
                 LoadErrorSurfaces(nodSurface);
 
             LinearExtractions = new Dictionary<string, LinearExtraction.LinearExtraction>();
-            foreach (XmlNode nodLE in nodSurface.SelectNodes("LinearExtractions/LinearExtraction"))
-            {
-                LinearExtraction.LinearExtraction le;
-                if (nodLE.SelectSingleNode("DEM") is XmlNode)
-                    le = new LinearExtraction.LinearExtractionFromDEM(nodLE);
-                else if (nodLE.SelectSingleNode("Surface") is XmlNode)
-                    le = new LinearExtraction.LinearExtractionFromSurface(nodLE);
-
-                else
-                    le = new LinearExtraction.LinearExtractionFromDoD(nodLE);
-
-                LinearExtractions[le.Name] = le;
-            }
         }
 
         protected void LoadErrorSurfaces(XmlNode nodSurface)
@@ -137,6 +124,23 @@ namespace GCDCore.Project
             {
                 ErrorSurface error = new ErrorSurface(nodError, this);
                 ErrorSurfaces.Add(error);
+            }
+        }
+
+        protected void LoadLinearExtractions(XmlNode nodItem)
+        {
+            foreach (XmlNode nodLE in nodItem.SelectNodes("LinearExtractions/LinearExtraction"))
+            {
+                LinearExtraction.LinearExtraction le;
+                if (nodLE.SelectSingleNode("DEM") is XmlNode)
+                    le = new LinearExtraction.LinearExtractionFromDEM(nodLE, this as DEMSurvey);
+                else if (nodLE.SelectSingleNode("Surface") is XmlNode)
+                    le = new LinearExtraction.LinearExtractionFromSurface(nodLE, this);
+
+                else
+                    le = new LinearExtraction.LinearExtractionFromDoD(nodLE);
+
+                LinearExtractions[le.Name] = le;
             }
         }
 

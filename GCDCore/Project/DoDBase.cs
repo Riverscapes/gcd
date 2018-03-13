@@ -107,15 +107,7 @@ namespace GCDCore.Project
             LinearExtractions = new Dictionary<string, LinearExtraction.LinearExtraction>();
             foreach (XmlNode nodLE in nodDoD.SelectNodes("LinearExtractions/LinearExtraction"))
             {
-                LinearExtraction.LinearExtraction le;
-                if (nodLE.SelectSingleNode("DEM") is XmlNode)
-                    le = new LinearExtraction.LinearExtractionFromDEM(nodLE);
-                else if (nodLE.SelectSingleNode("Surface") is XmlNode)
-                    le = new LinearExtraction.LinearExtractionFromSurface(nodLE);
-
-                else
-                    le = new LinearExtraction.LinearExtractionFromDoD(nodLE);
-
+                LinearExtraction.LinearExtraction le = new LinearExtraction.LinearExtractionFromDoD(nodLE);
                 LinearExtractions[le.Name] = le;
             }
         }
