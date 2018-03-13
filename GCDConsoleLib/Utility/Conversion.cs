@@ -308,6 +308,17 @@ namespace GCDConsoleLib.Utility
                         break;
                     }
                 }
+
+                if (!bFound)
+                {
+                    if (string.Compare(u, "us survey foot", true)==0)
+                    {
+                        lUnit = LengthUnit.UsSurveyFoot;
+                        bFound = true;                    
+                    }
+                }
+
+
                 if (!bFound) throw new ArgumentException(String.Format("Could not parse unit string: {0}", u));
             }
             return lUnit;
