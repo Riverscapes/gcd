@@ -15,6 +15,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             ContextMenuStrip.Items.Clear();
             ContextMenuStrip.Items.Add("Edit Project Properties", Properties.Resources.Options, OnEditProperties);
             ContextMenuStrip.Items.Add("Explore Project Folder", Properties.Resources.BrowseFolder, OnExplore);
+            ContextMenuStrip.Items.Add("Export Project to Cross Section Viewer", Properties.Resources.import, OnExplore);
             ContextMenuStrip.Items.Add("Refresh Project Tree", Properties.Resources.refresh, OnRefresh);
 
             LoadChildNodes();
@@ -53,6 +54,24 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             if (ProjectManager.Project.ProjectFile.Directory.Exists)
             {
                 System.Diagnostics.Process.Start(ProjectManager.Project.ProjectFile.Directory.FullName);
+            }
+        }
+
+        private void OnCrossSectionViewer(object sender, EventArgs e)
+        {
+            if (ProjectManager.Project.ProjectFile.Directory.Exists)
+            {
+                try
+                {
+                    string publisher_name = "North Arrow Research";
+                    string product_name = "Cross Section Viewer";
+                    string shortcut = string.Concat(Environment.GetFolderPath(Environment.SpecialFolder.Programs), "\\", publisher_name, "\\", product_name, ".appref-ms");
+                    System.Diagnostics.Process.Start(shortcut, ProjectManager.Project.ProjectFile.FullName);
+                }
+                catch(Exception ex)
+                {
+                    naru.error.ExceptionUI.HandleException(ex);
+                }
             }
         }
 
