@@ -104,7 +104,7 @@ namespace GCDCore.Project
         /// assoc surface. But When this base constructor for Surfaces get's called the associated
         /// surface dictionary has not been loaded yet. DEM Surveys therefore override the following call
         /// </remarks>
-        public Surface(XmlNode nodSurface, bool bLoadErrorSurfaces)
+        public Surface(XmlNode nodSurface, bool bLoadErrorSurfaces, bool bLoadLinearExtractions)
             : base(nodSurface)
         {
             XmlNode nodHillshade = nodSurface.SelectSingleNode("Hillshade");
@@ -116,6 +116,8 @@ namespace GCDCore.Project
                 LoadErrorSurfaces(nodSurface);
 
             LinearExtractions = new Dictionary<string, LinearExtraction.LinearExtraction>();
+            if (bLoadLinearExtractions)
+                LoadLinearExtractions(nodSurface);
         }
 
         protected void LoadErrorSurfaces(XmlNode nodSurface)

@@ -26,12 +26,15 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             {
                 TreeNodeItem nodSurface = new TreeNodeItem(surf, 5, ContextMenuStrip.Container);
                 Nodes.Add(nodSurface);
+                nodSurface.ContextMenuStrip.Items.Insert(1, new ToolStripMenuItem("Calculate Linear Extraction From Profile Route", Properties.Resources.Add, OnLinear));
+
 
                 TreeNodeGroup nodError = new ErrorSurfaceGroup(nodSurface.Nodes, ContextMenuStrip.Container, surf);
 
                 if (surf.LinearExtractions.Count > 0)
                 {
                     TreeNodeGroup nodLinea = new LinearExtractionGrp(nodSurface.Nodes, surf, surf.Raster.GISFileInfo.Directory, ContextMenuStrip.Container);
+                    nodLinea.Expand();
                 }
             }
 
@@ -103,6 +106,17 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             }
 
             SurveyLibrary.ReferenceSurfaces.frmReferenceSurfaceFromConstant frm = new SurveyLibrary.ReferenceSurfaces.frmReferenceSurfaceFromConstant();
+            EditTreeItem(frm);
+        }
+
+        private void OnLinear(object sender, EventArgs e)
+        {
+            ToolStripDropDownItem ctrl = sender as ToolStripDropDownItem;
+            ContextMenuStrip cms = ctrl.Owner as ContextMenuStrip;
+            TreeView tre = cms.SourceControl as TreeView;
+            TreeNodeItem nodSurf = tre.SelectedNode as TreeNodeItem;
+
+            LinearExtraction.frmLinearExtractionProperties frm = new LinearExtraction.frmLinearExtractionProperties(nodSurf.Item as GCDProjectItem);
             EditTreeItem(frm);
         }
     }

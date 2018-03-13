@@ -74,6 +74,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
                 if (dem.LinearExtractions.Count > 0)
                 {
                     TreeNodeGroup nodLinea = new LinearExtractionGrp(nodDEM.Nodes, dem, dem.LinearExtractions.Values.First().Database.Directory.Parent, ContextMenuStrip.Container);
+                    nodLinea.Expand();
                 }
             }
 

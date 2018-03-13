@@ -358,7 +358,7 @@ namespace GCDCore.Project
 
             foreach (XmlNode nodRefSurf in nodProject.SelectNodes("ReferenceSurfaces/ReferenceSurface"))
             {
-                Surface surf = new Surface(nodRefSurf, true);
+                Surface surf = new Surface(nodRefSurf, true, true);
                 ProjectManager.Project.ReferenceSurfaces[surf.Name] = surf;
             }
 

@@ -37,7 +37,7 @@ namespace GCDCore.Project
         }
 
         public DEMSurvey(XmlNode nodDEM)
-            : base(nodDEM, false)
+            : base(nodDEM, false, false)
         {
             SurveyDateTime surveyDT = null;
             XmlNode nodSurveyDate = nodDEM.SelectSingleNode("SurveyDate");

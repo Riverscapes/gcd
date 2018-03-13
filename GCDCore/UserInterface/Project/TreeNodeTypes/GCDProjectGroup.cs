@@ -15,7 +15,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             ContextMenuStrip.Items.Clear();
             ContextMenuStrip.Items.Add("Edit Project Properties", Properties.Resources.Options, OnEditProperties);
             ContextMenuStrip.Items.Add("Explore Project Folder", Properties.Resources.BrowseFolder, OnExplore);
-            ContextMenuStrip.Items.Add("Export Project to Cross Section Viewer", Properties.Resources.import, OnExplore);
+            ContextMenuStrip.Items.Add("Export Project to Cross Section Viewer", Properties.Resources.import, OnCrossSectionViewer);
             ContextMenuStrip.Items.Add("Refresh Project Tree", Properties.Resources.refresh, OnRefresh);
 
             LoadChildNodes();
@@ -57,20 +57,37 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <remarks>
+        /// https://robindotnet.wordpress.com/2010/03/21/how-to-pass-arguments-to-an-offline-clickonce-application/
+        /// </remarks>
         private void OnCrossSectionViewer(object sender, EventArgs e)
         {
             if (ProjectManager.Project.ProjectFile.Directory.Exists)
             {
+                string publisher_name = "North Arrow Research";
+                string product_name = "Cross Section Viewer";
+
                 try
                 {
-                    string publisher_name = "North Arrow Research";
-                    string product_name = "Cross Section Viewer";
                     string shortcut = string.Concat(Environment.GetFolderPath(Environment.SpecialFolder.Programs), "\\", publisher_name, "\\", product_name, ".appref-ms");
                     System.Diagnostics.Process.Start(shortcut, ProjectManager.Project.ProjectFile.FullName);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
-                    naru.error.ExceptionUI.HandleException(ex);
+                    if (ex.Message.Contains("system cannot find the file specified"))
+                    {
+                        MessageBox.Show(string.Format("Unable to find the product called {0} by the publisher {1}." +
+                            " Ensure that you have the product installed and then try again.", product_name, publisher_name), "Missing Application", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    }
+                    else
+                    {
+                        naru.error.ExceptionUI.HandleException(ex);
+                    }
                 }
             }
         }

@@ -27,7 +27,6 @@ namespace GCDCore.Project.LinearExtraction
         public LinearExtractionFromSurface(XmlNode nodItem, Surface surf)
             : base(nodItem)
         {
-            XmlNode nodDEM = nodItem.SelectSingleNode("DEM");
             Surface = surf;
 
             if (nodItem.SelectSingleNode("ErrorSurface") is XmlNode)
@@ -38,7 +37,7 @@ namespace GCDCore.Project.LinearExtraction
         {
             XmlNode nodItem = base.Serialize(nodParent);
 
-            string nodName = this is LinearExtractionFromDEM ? "DEM" : "Surface";
+            string nodName = this is LinearExtractionFromDEM ? "DEM" : "ReferenceSurface";
             nodItem.AppendChild(nodParent.OwnerDocument.CreateElement(nodName)).InnerText = GCDProjectItem.Name;
 
             if (ErrorSurface != null)
