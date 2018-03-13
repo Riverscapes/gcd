@@ -134,11 +134,8 @@ namespace GCDCore.Project
                 LinearExtraction.LinearExtraction le;
                 if (nodLE.SelectSingleNode("DEM") is XmlNode)
                     le = new LinearExtraction.LinearExtractionFromDEM(nodLE, this as DEMSurvey);
-                else if (nodLE.SelectSingleNode("Surface") is XmlNode)
-                    le = new LinearExtraction.LinearExtractionFromSurface(nodLE, this);
-
                 else
-                    le = new LinearExtraction.LinearExtractionFromDoD(nodLE);
+                    le = new LinearExtraction.LinearExtractionFromSurface(nodLE, this);
 
                 LinearExtractions[le.Name] = le;
             }

@@ -107,7 +107,7 @@ namespace GCDCore.Project
             LinearExtractions = new Dictionary<string, LinearExtraction.LinearExtraction>();
             foreach (XmlNode nodLE in nodDoD.SelectNodes("LinearExtractions/LinearExtraction"))
             {
-                LinearExtraction.LinearExtraction le = new LinearExtraction.LinearExtractionFromDoD(nodLE);
+                LinearExtraction.LinearExtraction le = new LinearExtraction.LinearExtractionFromDoD(nodLE, this);
                 LinearExtractions[le.Name] = le;
             }
         }

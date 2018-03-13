@@ -22,10 +22,10 @@ namespace GCDCore.Project.LinearExtraction
             DoD = dod;
         }
 
-        public LinearExtractionFromDoD(XmlNode nodItem)
+        public LinearExtractionFromDoD(XmlNode nodItem, DoDBase dod)
             : base(nodItem)
         {
-            DoD = ProjectManager.Project.DoDs[nodItem.SelectSingleNode("DoD").InnerText];
+            DoD = dod;
         }
 
         public override XmlNode Serialize(XmlNode nodParent)
