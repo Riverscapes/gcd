@@ -298,11 +298,11 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(21, 49);
+            this.label3.Location = new System.Drawing.Point(14, 49);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(117, 13);
+            this.label3.Size = new System.Drawing.Size(124, 13);
             this.label3.TabIndex = 3;
-            this.label3.Text = "Percent comptetent (%)";
+            this.label3.Text = "Percent comptetent (0-1)";
             // 
             // label2
             // 
