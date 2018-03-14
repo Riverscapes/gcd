@@ -307,8 +307,22 @@ namespace GCDCore.Project.Morphological
             /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             // TODO: write morphological spreadsheet here
 
+            int UnitCount = 0;
             foreach (MorphologicalUnit unit in Units)
             {
+                UnitCount = UnitCount + 1;
+
+                if(UnitCount == 1)
+                {
+                    Dictionary<string, string> dicStatValues = new Dictionary<string, string>();
+                    dicStatValues.Add("TemplateRowName", unit.Name);
+                    dicStatValues.Add("VolumeErosion", unit.VolErosion.CubicMeters.ToString());
+                    dicStatValues.Add("VolumeErosionError", unit.VolErosionErr.CubicMeters.ToString());
+                    dicStatValues.Add("VolumeDeposition", unit.VolDeposition.CubicMeters.ToString());
+                    dicStatValues.Add("VolumeDepositionError", unit.VolDepositionErr.CubicMeters.ToString());
+                    xmlExcelDoc.UpdateRow("ReachName", dicStatValues);
+
+                }
                 // TODO: write values to spreadsheet
             }
 

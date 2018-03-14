@@ -228,7 +228,27 @@ namespace GCDCore.Engines
                 {
                     //if there is exactly one match, update data
                     XmlNode CellData = NamedCells[0].SelectSingleNode("ss:Data", nsmgr);
-                    CellData.InnerText = Value;
+                    if(CellData != null)
+                    {
+                        CellData.InnerText = Value;
+                    } else {
+                        //need to add data node
+                        XmlNode NewCellData = xmlDoc.CreateNode("element", "Data", "urn:schemas-microsoft-com:office:spreadsheet");
+                        NewCellData.InnerText = Value;
+
+                        //Create a new attribute
+                        //ss:Type="Number"
+                        XmlAttribute attr = xmlDoc.CreateAttribute("ss", "Type", "urn:schemas-microsoft-com:office:spreadsheet");
+                        attr.Value = "Number";
+
+                        //Add the attribute to the node     
+                        NewCellData.Attributes.SetNamedItem(attr);
+
+
+                        //Add the attribute to the node     
+                        NamedCells[0].AppendChild(NewCellData);
+
+                    }
                 }
 
             }
