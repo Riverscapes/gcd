@@ -5,6 +5,7 @@ using System.Linq;
 using UnitsNet;
 using System.ComponentModel;
 using System.Xml;
+using GCDCore.Engines;
 
 namespace GCDCore.Project.Morphological
 {
@@ -300,6 +301,9 @@ namespace GCDCore.Project.Morphological
                 Spreadsheet.Delete();
             }
 
+            //setup ExcelXMLDocument which does the heavy lifting of updating the XML
+            ExcelXMLDocument xmlExcelDoc = new ExcelXMLDocument(template.FullName);
+
             /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             // TODO: write morphological spreadsheet here
 
@@ -307,6 +311,10 @@ namespace GCDCore.Project.Morphological
             {
                 // TODO: write values to spreadsheet
             }
+
+            //save output
+            xmlExcelDoc.Save(Spreadsheet.FullName);
+
         }
 
         private bool IsFileLocked(FileInfo fiPath)
