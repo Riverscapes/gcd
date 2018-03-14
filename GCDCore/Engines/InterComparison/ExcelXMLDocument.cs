@@ -96,7 +96,7 @@ namespace GCDCore.Engines
             //get reference and before nodes and insert our cloned reference row
             XmlNode ReferenceRowNode = xmlDoc.SelectSingleNode(".//ss:Row[position() >= " + ReferenceRowBeforeInsert + "]", nsmgr);
             XmlNode parent = TemplateRow.ParentNode;
-            parent.InsertAfter(TemplateRowClone, TemplateRow);
+            parent.InsertAfter(TemplateRowClone, ReferenceRowNode);
 
             //Maintain references
             UpdateReferences(InsertRowNumber);

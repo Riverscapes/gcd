@@ -307,23 +307,33 @@ namespace GCDCore.Project.Morphological
             /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             // TODO: write morphological spreadsheet here
 
-            int UnitCount = 0;
-            foreach (MorphologicalUnit unit in Units)
+            //int UnitCount = 0;
+            for(int UnitIndex= 0; UnitIndex < (Units.Count - 1); UnitIndex++)
             {
-                UnitCount = UnitCount + 1;
 
-                if(UnitCount == 1)
+                //        }
+                //            foreach (MorphologicalUnit unit in Units)
+                //          {
+                MorphologicalUnit unit = Units[UnitIndex];
+
+                //UnitCount = UnitCount + 1;
+
+                Dictionary<string, string> dicStatValues = new Dictionary<string, string>();
+                dicStatValues.Add("TemplateRowName", unit.Name);
+                dicStatValues.Add("VolumeErosion", unit.VolErosion.CubicMeters.ToString());
+                dicStatValues.Add("VolumeErosionError", unit.VolErosionErr.CubicMeters.ToString());
+                dicStatValues.Add("VolumeDeposition", unit.VolDeposition.CubicMeters.ToString());
+                dicStatValues.Add("VolumeDepositionError", unit.VolDepositionErr.CubicMeters.ToString());
+
+                if (UnitIndex > 0)
                 {
-                    Dictionary<string, string> dicStatValues = new Dictionary<string, string>();
-                    dicStatValues.Add("TemplateRowName", unit.Name);
-                    dicStatValues.Add("VolumeErosion", unit.VolErosion.CubicMeters.ToString());
-                    dicStatValues.Add("VolumeErosionError", unit.VolErosionErr.CubicMeters.ToString());
-                    dicStatValues.Add("VolumeDeposition", unit.VolDeposition.CubicMeters.ToString());
-                    dicStatValues.Add("VolumeDepositionError", unit.VolDepositionErr.CubicMeters.ToString());
-                    xmlExcelDoc.UpdateRow("ReachName", dicStatValues);
-
+                    xmlExcelDoc.CloneRow("ReachName", UnitIndex, dicStatValues);
                 }
-                // TODO: write values to spreadsheet
+                else
+                {
+                    xmlExcelDoc.UpdateRow("ReachName", dicStatValues);
+                }
+
             }
 
             //save output
