@@ -35,7 +35,7 @@
     <Style ss:ID="s16" ss:Name="Comma">
       <NumberFormat ss:Format="_(* #,##0.00_);_(* \(#,##0.00\);_(* &quot;-&quot;??_);_(@_)"/>
     </Style>
-    <Style ss:ID="m48768544">
+    <Style ss:ID="m44291392">
       <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
       <Borders>
         <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
@@ -43,7 +43,7 @@
       </Borders>
       <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="12"/>
     </Style>
-    <Style ss:ID="m48768564">
+    <Style ss:ID="m44291412">
       <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
       <Borders>
         <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
@@ -51,7 +51,7 @@
       </Borders>
       <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="12"/>
     </Style>
-    <Style ss:ID="m48768584">
+    <Style ss:ID="m44291432">
       <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
       <Borders>
         <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
@@ -59,7 +59,7 @@
       </Borders>
       <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="12"/>
     </Style>
-    <Style ss:ID="m48768624">
+    <Style ss:ID="m44291472">
       <Alignment ss:Horizontal="Center" ss:Vertical="Center"/>
       <Borders>
         <Border ss:Position="Bottom" ss:LineStyle="Double" ss:Weight="3"/>
@@ -68,7 +68,7 @@
       </Borders>
       <Font ss:FontName="Arial Narrow" x:Family="Swiss" ss:Size="8"/>
     </Style>
-    <Style ss:ID="m48768644">
+    <Style ss:ID="m44291492">
       <Alignment ss:Horizontal="Center" ss:Vertical="Center"/>
       <Borders>
         <Border ss:Position="Bottom" ss:LineStyle="Double" ss:Weight="3"/>
@@ -268,7 +268,7 @@
       <Font ss:FontName="Arial Narrow" x:Family="Swiss" ss:Color="#000000"/>
       <NumberFormat ss:Format="Fixed"/>
     </Style>
-    <Style ss:ID="s109">
+    <Style ss:ID="s98">
       <Borders>
         <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="3"/>
         <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
@@ -276,7 +276,44 @@
       </Borders>
       <Font ss:FontName="Arial Narrow" x:Family="Swiss" ss:Color="#000000"/>
     </Style>
-    <Style ss:ID="s114">
+    <Style ss:ID="s99">
+      <Alignment ss:Horizontal="Right" ss:Vertical="Center" ss:WrapText="1"/>
+      <Borders>
+        <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="3"/>
+        <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+        <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+      </Borders>
+      <Font ss:FontName="Arial Narrow" x:Family="Swiss" ss:Color="#000000"/>
+      <NumberFormat ss:Format="#,##0"/>
+    </Style>
+    <Style ss:ID="s100">
+      <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
+      <Borders>
+        <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="3"/>
+        <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+      </Borders>
+      <Font ss:FontName="Arial Narrow" x:Family="Swiss" ss:Color="#000000"/>
+    </Style>
+    <Style ss:ID="s101">
+      <Alignment ss:Horizontal="Left" ss:Vertical="Bottom"/>
+      <Borders>
+        <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="3"/>
+        <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+      </Borders>
+      <Font ss:FontName="Arial Narrow" x:Family="Swiss" ss:Color="#000000"/>
+      <NumberFormat ss:Format="#,##0"/>
+    </Style>
+    <Style ss:ID="s102">
+      <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
+      <Borders>
+        <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="3"/>
+        <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+        <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+      </Borders>
+      <Font ss:FontName="Arial Narrow" x:Family="Swiss" ss:Color="#000000"/>
+      <NumberFormat ss:Format="#,##0"/>
+    </Style>
+    <Style ss:ID="s103">
       <Alignment ss:Horizontal="Right" ss:Vertical="Bottom"/>
       <Borders>
         <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="3"/>
@@ -286,15 +323,17 @@
       <Font ss:FontName="Arial Narrow" x:Family="Swiss" ss:Color="#000000"/>
       <NumberFormat ss:Format="#,##0"/>
     </Style>
-    <Style ss:ID="s115">
-      <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
+    <Style ss:ID="s104">
+      <Alignment ss:Horizontal="Right" ss:Vertical="Bottom"/>
       <Borders>
         <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="3"/>
-        <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+        <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+        <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="3"/>
       </Borders>
       <Font ss:FontName="Arial Narrow" x:Family="Swiss" ss:Color="#000000"/>
+      <NumberFormat ss:Format="#,##0"/>
     </Style>
-    <Style ss:ID="s117">
+    <Style ss:ID="s105">
       <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
       <Borders>
         <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="3"/>
@@ -305,7 +344,7 @@
       <Font ss:FontName="Arial Narrow" x:Family="Swiss" ss:Color="#000000"/>
       <NumberFormat ss:Format="#,##0"/>
     </Style>
-    <Style ss:ID="s118">
+    <Style ss:ID="s106">
       <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
       <Borders>
         <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="3"/>
@@ -316,7 +355,7 @@
       <Font ss:FontName="Arial Narrow" x:Family="Swiss" ss:Color="#000000"/>
       <NumberFormat ss:Format="0"/>
     </Style>
-    <Style ss:ID="s119">
+    <Style ss:ID="s107">
       <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
       <Borders>
         <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="3"/>
@@ -325,65 +364,29 @@
       <Font ss:FontName="Arial Narrow" x:Family="Swiss" ss:Color="#000000"/>
       <NumberFormat ss:Format="#,##0"/>
     </Style>
-    <Style ss:ID="s120">
-      <Alignment ss:Horizontal="Right" ss:Vertical="Center" ss:WrapText="1"/>
-      <Borders>
-        <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="3"/>
-        <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
-        <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
-      </Borders>
-      <Font ss:FontName="Arial Narrow" x:Family="Swiss" ss:Color="#000000"/>
-      <NumberFormat ss:Format="#,##0"/>
-    </Style>
-    <Style ss:ID="s121">
-      <Alignment ss:Horizontal="Left" ss:Vertical="Bottom"/>
-      <Borders>
-        <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="3"/>
-        <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
-      </Borders>
-      <Font ss:FontName="Arial Narrow" x:Family="Swiss" ss:Color="#000000"/>
-      <NumberFormat ss:Format="#,##0"/>
-    </Style>
-    <Style ss:ID="s122">
-      <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
-      <Borders>
-        <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="3"/>
-        <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
-        <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
-      </Borders>
-      <Font ss:FontName="Arial Narrow" x:Family="Swiss" ss:Color="#000000"/>
-      <NumberFormat ss:Format="#,##0"/>
-    </Style>
-    <Style ss:ID="s123">
-      <Alignment ss:Horizontal="Right" ss:Vertical="Bottom"/>
-      <Borders>
-        <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="3"/>
-        <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
-        <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="3"/>
-      </Borders>
-      <Font ss:FontName="Arial Narrow" x:Family="Swiss" ss:Color="#000000"/>
-      <NumberFormat ss:Format="#,##0"/>
-    </Style>
-    <Style ss:ID="s124">
+    <Style ss:ID="s108">
       <Alignment ss:Horizontal="Right" ss:Vertical="Bottom"/>
       <Font ss:FontName="Arial Narrow" x:Family="Swiss" ss:Color="#000000"/>
       <NumberFormat ss:Format="#,##0"/>
     </Style>
-    <Style ss:ID="s125">
+    <Style ss:ID="s109">
       <Font ss:FontName="Arial Narrow" x:Family="Swiss" ss:Color="#000000"/>
       <Interior ss:Color="#FFF2CC" ss:Pattern="Solid"/>
     </Style>
-    <Style ss:ID="s126">
+    <Style ss:ID="s110">
       <Font ss:FontName="Arial Narrow" x:Family="Swiss" ss:Color="#000000"/>
       <Interior ss:Color="#FFF2CC" ss:Pattern="Solid"/>
       <NumberFormat ss:Format="0.0"/>
     </Style>
-    <Style ss:ID="s127">
+    <Style ss:ID="s111">
       <Alignment ss:Horizontal="Right" ss:Vertical="Bottom"/>
       <Font ss:FontName="Arial Narrow" x:Family="Swiss" ss:Color="#000000"/>
     </Style>
   </Styles>
   <Names>
+    <NamedRange ss:Name="FlowDuration" ss:RefersTo="=Sheet1!R8C2"/>
+    <NamedRange ss:Name="InitialVIn" ss:RefersTo="=Sheet1!R4C11"/>
+    <NamedRange ss:Name="Porosity" ss:RefersTo="=Sheet1!R7C2"/>
     <NamedRange ss:Name="ReachName" ss:RefersTo="=Sheet1!R4C1"/>
     <NamedRange ss:Name="VolumeDeposition" ss:RefersTo="=Sheet1!R4C5"/>
     <NamedRange ss:Name="VolumeDepositionError" ss:RefersTo="=Sheet1!R4C7"/>
@@ -427,89 +430,89 @@
       </Row>
       <Row ss:AutoFitHeight="0" ss:Height="27.75">
         <Cell ss:StyleID="s65"/>
-        <Cell ss:MergeAcross="2" ss:StyleID="m48768544">
+        <Cell ss:MergeAcross="2" ss:StyleID="m44291392">
           <ss:Data ss:Type="String"
       xmlns="http://www.w3.org/TR/REC-html40">
             <Font html:Color="#000000">∑V</Font>
-            <Font>             </Font>
+            <Font>                                                                                                                                                                         </Font>
             <Sub>
               <Font
         html:Color="#000000">E</Font>
-              <Font>             </Font>
+              <Font>                                                                                                                                                                                     </Font>
             </Sub>
-            <Font>           </Font>
+            <Font>                                                                                                                                                           </Font>
           </ss:Data>
         </Cell>
-        <Cell ss:MergeAcross="2" ss:StyleID="m48768564">
+        <Cell ss:MergeAcross="2" ss:StyleID="m44291412">
           <ss:Data ss:Type="String"
       xmlns="http://www.w3.org/TR/REC-html40">
             <Font html:Color="#000000">∑V</Font>
-            <Font>             </Font>
+            <Font>                                                                                                                                                                         </Font>
             <Sub>
               <Font
         html:Color="#000000">D</Font>
-              <Font>             </Font>
+              <Font>                                                                                                                                                                                     </Font>
             </Sub>
-            <Font>           </Font>
+            <Font>                                                                                                                                                           </Font>
           </ss:Data>
         </Cell>
-        <Cell ss:MergeAcross="2" ss:StyleID="m48768584">
+        <Cell ss:MergeAcross="2" ss:StyleID="m44291432">
           <ss:Data ss:Type="String"
       xmlns="http://www.w3.org/TR/REC-html40">
             <Font html:Color="#000000">Δ</Font>
-            <Font>             </Font>
+            <Font>                                                                                                                                                                         </Font>
             <Font
        html:Face="Arial Narrow" x:Family="Swiss" html:Color="#000000">V</Font>
-            <Font>           </Font>
+            <Font>                                                                                                                                                           </Font>
           </ss:Data>
         </Cell>
         <Cell ss:StyleID="s71">
           <ss:Data ss:Type="String"
       xmlns="http://www.w3.org/TR/REC-html40">
             <Font html:Color="#000000">V</Font>
-            <Font>             </Font>
+            <Font>                                                                                                                                                                         </Font>
             <Sub>
               <Font
         html:Color="#000000">in</Font>
-              <Font>             </Font>
+              <Font>                                                                                                                                                                                     </Font>
             </Sub>
-            <Font>           </Font>
+            <Font>                                                                                                                                                           </Font>
           </ss:Data>
         </Cell>
         <Cell ss:StyleID="s71">
           <ss:Data ss:Type="String"
       xmlns="http://www.w3.org/TR/REC-html40">
             <Font html:Color="#000000">V</Font>
-            <Font>             </Font>
+            <Font>                                                                                                                                                                         </Font>
             <Sub>
               <Font
         html:Color="#000000">out</Font>
-              <Font>             </Font>
+              <Font>                                                                                                                                                                                     </Font>
             </Sub>
-            <Font>           </Font>
+            <Font>                                                                                                                                                           </Font>
           </ss:Data>
         </Cell>
         <Cell ss:StyleID="s72">
           <ss:Data ss:Type="String"
       xmlns="http://www.w3.org/TR/REC-html40">
             <Font html:Color="#000000">Q</Font>
-            <Font>             </Font>
+            <Font>                                                                                                                                                                         </Font>
             <Sub>
               <Font
         html:Color="#000000">b Out</Font>
-              <Font>             </Font>
+              <Font>                                                                                                                                                                                     </Font>
             </Sub>
-            <Font>           </Font>
+            <Font>                                                                                                                                                           </Font>
           </ss:Data>
         </Cell>
         <Cell ss:StyleID="s73">
           <ss:Data ss:Type="String"
       xmlns="http://www.w3.org/TR/REC-html40">
             <Font html:Color="#000000">Δ</Font>
-            <Font>             </Font>
+            <Font>                                                                                                                                                                         </Font>
             <Font
        html:Face="Arial Narrow" x:Family="Swiss" html:Color="#000000">V Cummulative</Font>
-            <Font>           </Font>
+            <Font>                                                                                                                                                           </Font>
           </ss:Data>
         </Cell>
       </Row>
@@ -523,66 +526,49 @@
             <I>
               <Font
         html:Color="#000000">m</Font>
-              <Font>               </Font>
+              <Font>                                                                                                                                                                                                   </Font>
               <Sup>
                 <Font
          html:Color="#000000">3</Font>
-                <Font>               </Font>
+                <Font>                                                                                                                                                                                                               </Font>
               </Sup>
-              <Font>             </Font>
+              <Font>                                                                                                                                                                                     </Font>
             </I>
-            <Font>           </Font>
+            <Font>                                                                                                                                                           </Font>
           </ss:Data>
         </Cell>
-        <Cell ss:MergeAcross="2" ss:StyleID="m48768624">
+        <Cell ss:MergeAcross="2" ss:StyleID="m44291472">
           <ss:Data ss:Type="String"
       xmlns="http://www.w3.org/TR/REC-html40">
             <I>
               <Font
         html:Color="#000000">m</Font>
-              <Font>               </Font>
+              <Font>                                                                                                                                                                                                   </Font>
               <Sup>
                 <Font
          html:Color="#000000">3</Font>
-                <Font>               </Font>
+                <Font>                                                                                                                                                                                                               </Font>
               </Sup>
-              <Font>             </Font>
+              <Font>                                                                                                                                                                                     </Font>
             </I>
-            <Font>           </Font>
+            <Font>                                                                                                                                                           </Font>
           </ss:Data>
         </Cell>
-        <Cell ss:MergeAcross="2" ss:StyleID="m48768644">
+        <Cell ss:MergeAcross="2" ss:StyleID="m44291492">
           <ss:Data ss:Type="String"
       xmlns="http://www.w3.org/TR/REC-html40">
             <I>
               <Font
         html:Color="#000000">m</Font>
-              <Font>               </Font>
+              <Font>                                                                                                                                                                                                   </Font>
               <Sup>
                 <Font
          html:Color="#000000">3</Font>
-                <Font>               </Font>
+                <Font>                                                                                                                                                                                                               </Font>
               </Sup>
-              <Font>             </Font>
+              <Font>                                                                                                                                                                                     </Font>
             </I>
-            <Font>           </Font>
-          </ss:Data>
-        </Cell>
-        <Cell ss:StyleID="s80">
-          <ss:Data ss:Type="String"
-      xmlns="http://www.w3.org/TR/REC-html40">
-            <I>
-              <Font
-        html:Color="#000000">m</Font>
-              <Font>               </Font>
-              <Sup>
-                <Font
-         html:Color="#000000">3</Font>
-                <Font>               </Font>
-              </Sup>
-              <Font>             </Font>
-            </I>
-            <Font>           </Font>
+            <Font>                                                                                                                                                           </Font>
           </ss:Data>
         </Cell>
         <Cell ss:StyleID="s80">
@@ -591,15 +577,32 @@
             <I>
               <Font
         html:Color="#000000">m</Font>
-              <Font>               </Font>
+              <Font>                                                                                                                                                                                                   </Font>
               <Sup>
                 <Font
          html:Color="#000000">3</Font>
-                <Font>               </Font>
+                <Font>                                                                                                                                                                                                               </Font>
               </Sup>
-              <Font>             </Font>
+              <Font>                                                                                                                                                                                     </Font>
             </I>
-            <Font>           </Font>
+            <Font>                                                                                                                                                           </Font>
+          </ss:Data>
+        </Cell>
+        <Cell ss:StyleID="s80">
+          <ss:Data ss:Type="String"
+      xmlns="http://www.w3.org/TR/REC-html40">
+            <I>
+              <Font
+        html:Color="#000000">m</Font>
+              <Font>                                                                                                                                                                                                   </Font>
+              <Sup>
+                <Font
+         html:Color="#000000">3</Font>
+                <Font>                                                                                                                                                                                                               </Font>
+              </Sup>
+              <Font>                                                                                                                                                                                     </Font>
+            </I>
+            <Font>                                                                                                                                                           </Font>
           </ss:Data>
         </Cell>
         <Cell ss:StyleID="s83">
@@ -608,18 +611,18 @@
             <I>
               <Font
         html:Color="#000000">m</Font>
-              <Font>               </Font>
+              <Font>                                                                                                                                                                                                   </Font>
               <Sup>
                 <Font
          html:Color="#000000">3</Font>
-                <Font>               </Font>
+                <Font>                                                                                                                                                                                                               </Font>
               </Sup>
-              <Font>               </Font>
+              <Font>                                                                                                                                                                                                   </Font>
               <Font
         html:Color="#000000">/day</Font>
-              <Font>             </Font>
+              <Font>                                                                                                                                                                                     </Font>
             </I>
-            <Font>           </Font>
+            <Font>                                                                                                                                                           </Font>
           </ss:Data>
         </Cell>
         <Cell ss:StyleID="s84">
@@ -628,15 +631,15 @@
             <I>
               <Font
         html:Color="#000000">m</Font>
-              <Font>               </Font>
+              <Font>                                                                                                                                                                                                   </Font>
               <Sup>
                 <Font
          html:Color="#000000">3</Font>
-                <Font>               </Font>
+                <Font>                                                                                                                                                                                                               </Font>
               </Sup>
-              <Font>             </Font>
+              <Font>                                                                                                                                                                                     </Font>
             </I>
-            <Font>           </Font>
+            <Font>                                                                                                                                                           </Font>
           </ss:Data>
         </Cell>
       </Row>
@@ -682,74 +685,76 @@
           <Data
       ss:Type="Number">0</Data>
         </Cell>
-        <Cell ss:StyleID="s93" ss:Formula="=9999+RC[-3]">
-          <Data ss:Type="Number">9999</Data>
+        <Cell ss:StyleID="s93" ss:Formula="=R[-1]C[1]">
+          <Data ss:Type="String">                            m                                                                                                                                                                                                                    3                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               </Data>
+          <NamedCell
+      ss:Name="InitialVIn"/>
         </Cell>
-        <Cell ss:StyleID="s94" ss:Formula="=-RC[-4]+RC[-1]">
-          <Data ss:Type="Number">9999</Data>
+        <Cell ss:StyleID="s94" ss:Formula="=RC[-4]+RC[-1]">
+          <Data ss:Type="Error">#VALUE!</Data>
         </Cell>
-        <Cell ss:StyleID="s96" ss:Formula="=((1-R7C2)*RC[-1])/R8C2">
+        <Cell ss:StyleID="s96" ss:Formula="=((1-Porosity)*RC[-1])/FlowDuration">
           <Data
-      ss:Type="Number">862.04970873786408</Data>
+      ss:Type="Error">#VALUE!</Data>
         </Cell>
         <Cell ss:StyleID="s97" ss:Formula="=RC[-6]">
           <Data ss:Type="Number">0</Data>
         </Cell>
       </Row>
       <Row ss:AutoFitHeight="0" ss:Height="16.5">
-        <Cell ss:StyleID="s109">
+        <Cell ss:StyleID="s98">
           <Data ss:Type="String">Reach Total</Data>
         </Cell>
-        <Cell ss:StyleID="s120" ss:Formula="=SUM(R[-1]C:R[-1]C)">
+        <Cell ss:StyleID="s99" ss:Formula="=SUM(R[-1]C:R[-1]C)">
           <Data ss:Type="Number">0</Data>
         </Cell>
-        <Cell ss:StyleID="s115">
+        <Cell ss:StyleID="s100">
           <Data ss:Type="String">±</Data>
         </Cell>
-        <Cell ss:StyleID="s121" ss:Formula="=SUM(R[-1]C:R[-1]C)">
+        <Cell ss:StyleID="s101" ss:Formula="=SUM(R[-1]C:R[-1]C)">
           <Data ss:Type="Number">0</Data>
         </Cell>
-        <Cell ss:StyleID="s120" ss:Formula="=SUM(R[-1]C:R[-1]C)">
+        <Cell ss:StyleID="s99" ss:Formula="=SUM(R[-1]C:R[-1]C)">
           <Data ss:Type="Number">0</Data>
         </Cell>
-        <Cell ss:StyleID="s115">
+        <Cell ss:StyleID="s100">
           <Data ss:Type="String">±</Data>
         </Cell>
-        <Cell ss:StyleID="s122" ss:Formula="=SUM(R[-1]C:R[-1]C)">
+        <Cell ss:StyleID="s102" ss:Formula="=SUM(R[-1]C:R[-1]C)">
           <Data ss:Type="Number">0</Data>
         </Cell>
-        <Cell ss:StyleID="s114" ss:Formula="=SUM(R[-1]C:R[-1]C)">
+        <Cell ss:StyleID="s103" ss:Formula="=SUM(R[-1]C:R[-1]C)">
           <Data ss:Type="Number">0</Data>
         </Cell>
-        <Cell ss:StyleID="s115">
+        <Cell ss:StyleID="s100">
           <Data ss:Type="String">±</Data>
         </Cell>
-        <Cell ss:StyleID="s123" ss:Formula="=SUM(R[-1]C:R[-1]C)">
+        <Cell ss:StyleID="s104" ss:Formula="=SUM(R[-1]C:R[-1]C)">
           <Data ss:Type="Number">0</Data>
         </Cell>
-        <Cell ss:StyleID="s117" ss:Formula="=R[-1]C">
-          <Data ss:Type="Number">9999</Data>
+        <Cell ss:StyleID="s105" ss:Formula="=R[-1]C">
+          <Data ss:Type="String">                            m                                                                                                                                                                                                                    3                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               </Data>
         </Cell>
-        <Cell ss:StyleID="s117" ss:Formula="=#REF!">
+        <Cell ss:StyleID="s105" ss:Formula="=#REF!">
           <Data ss:Type="Error">#REF!</Data>
         </Cell>
-        <Cell ss:StyleID="s118" ss:Formula="=((1-R7C2)*RC[-1])/R8C2">
+        <Cell ss:StyleID="s106" ss:Formula="=((1-R7C2)*RC[-1])/R8C2">
           <Data
       ss:Type="Error">#REF!</Data>
         </Cell>
-        <Cell ss:StyleID="s119" ss:Formula="=#REF!">
+        <Cell ss:StyleID="s107" ss:Formula="=#REF!">
           <Data ss:Type="Error">#REF!</Data>
         </Cell>
       </Row>
       <Row ss:AutoFitHeight="0" ss:Height="15.75">
         <Cell ss:StyleID="s63"/>
-        <Cell ss:StyleID="s124"/>
+        <Cell ss:StyleID="s108"/>
         <Cell ss:StyleID="s63"/>
-        <Cell ss:StyleID="s124"/>
-        <Cell ss:StyleID="s124"/>
+        <Cell ss:StyleID="s108"/>
+        <Cell ss:StyleID="s108"/>
         <Cell ss:StyleID="s63"/>
-        <Cell ss:StyleID="s124"/>
-        <Cell ss:StyleID="s124"/>
+        <Cell ss:StyleID="s108"/>
+        <Cell ss:StyleID="s108"/>
         <Cell ss:StyleID="s63"/>
         <Cell ss:StyleID="s63"/>
         <Cell ss:StyleID="s63"/>
@@ -759,8 +764,10 @@
       </Row>
       <Row ss:AutoFitHeight="0">
         <Cell ss:StyleID="s63"/>
-        <Cell ss:StyleID="s125">
+        <Cell ss:StyleID="s109">
           <Data ss:Type="Number">0.26</Data>
+          <NamedCell
+      ss:Name="Porosity"/>
         </Cell>
         <Cell ss:StyleID="s63">
           <Data ss:Type="String">Porosity (%)</Data>
@@ -779,8 +786,10 @@
       </Row>
       <Row ss:AutoFitHeight="0">
         <Cell ss:StyleID="s63"/>
-        <Cell ss:StyleID="s126" ss:Formula="=206/24">
-          <Data ss:Type="Number">8.5833333333333339</Data>
+        <Cell ss:StyleID="s110">
+          <Data ss:Type="Number">14</Data>
+          <NamedCell
+      ss:Name="FlowDuration"/>
         </Cell>
         <Cell ss:StyleID="s63">
           <Data ss:Type="String">Competent flow duration (days)</Data>
@@ -788,7 +797,7 @@
         <Cell ss:StyleID="s63"/>
         <Cell ss:StyleID="s63"/>
         <Cell ss:StyleID="s63"/>
-        <Cell ss:StyleID="s127"/>
+        <Cell ss:StyleID="s111"/>
         <Cell ss:StyleID="s63"/>
         <Cell ss:StyleID="s63"/>
         <Cell ss:StyleID="s63"/>
@@ -815,8 +824,8 @@
       <Panes>
         <Pane>
           <Number>3</Number>
-          <ActiveRow>15</ActiveRow>
-          <ActiveCol>7</ActiveCol>
+          <ActiveRow>7</ActiveRow>
+          <ActiveCol>1</ActiveCol>
         </Pane>
       </Panes>
       <ProtectObjects>False</ProtectObjects>

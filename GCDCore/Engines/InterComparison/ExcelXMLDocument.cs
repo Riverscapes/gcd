@@ -130,6 +130,35 @@ namespace GCDCore.Engines
 
         }
 
+        public void SetFormula(string NamedRange, string formula)
+        {
+            //get row for named range
+            if (!dicNamedRanges.ContainsKey(NamedRange))
+            {
+                return;
+            }
+
+            NamedRange oNamedRange = dicNamedRanges[NamedRange];
+
+            //get reference and before nodes and insert our cloned reference row
+            XmlNode ReferenceRowNode = xmlDoc.SelectSingleNode(".//ss:Row[position() >= " + oNamedRange.row + "]", nsmgr);
+
+            //find named cells
+            XmlNodeList NamedCells = ReferenceRowNode.SelectNodes(".//ss:Cell[ss:NamedCell[@ss:Name='" + NamedRange + "']]", nsmgr); // gets the cell with the named cell name
+            if (NamedCells.Count == 1)
+            {
+                NamedCells[0].Attributes["ss:Formula"].Value = formula;
+            }
+        }
+
+        public void SetNamedCellValue(string NamedCell, string value)
+        {
+            Dictionary<string, string> NamedCellValues = new Dictionary<string, string>();
+            NamedCellValues.Add(NamedCell, value);
+            SetNamedCellValue(xmlDoc, NamedCellValues);
+        }
+
+
         /// <summary>
         /// Write Excel XML document to filepath
         /// </summary>
