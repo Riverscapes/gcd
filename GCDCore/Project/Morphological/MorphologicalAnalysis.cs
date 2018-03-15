@@ -336,9 +336,14 @@ namespace GCDCore.Project.Morphological
 
             }
 
-            string formula = "=" + MinimumFlux.CubicMeters + "-RC[-3]";
+            string InitialVInformula = "=" + MinimumFlux.CubicMeters + "-RC[-3]";
+            xmlExcelDoc.SetFormula("InitialVIn", InitialVInformula);
 
-            xmlExcelDoc.SetFormula("InitialVIn", formula);
+            string InitialVOutformula = "=RC[-4]+RC[-1]";
+            xmlExcelDoc.SetFormula("InitialVOut", InitialVOutformula);
+
+            string InitialVCumulativeformula = "=RC[-6]";
+            xmlExcelDoc.SetFormula("InitialVCumulative", InitialVCumulativeformula);
 
             xmlExcelDoc.SetNamedCellValue("FlowDuration", CompetentDuration.Hours.ToString());
             xmlExcelDoc.SetNamedCellValue("Porosity", Porosity.ToString());
