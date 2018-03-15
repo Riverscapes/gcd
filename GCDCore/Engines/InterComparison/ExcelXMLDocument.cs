@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -167,6 +168,19 @@ namespace GCDCore.Engines
         {
             xmlDoc.Save(path);
         }
+
+        public string GetXML()
+        {
+            StringWriter stringWriter = new StringWriter();
+            XmlTextWriter xmlTextWriter = new XmlTextWriter(stringWriter);
+
+            xmlDoc.WriteTo(xmlTextWriter);
+
+            return stringWriter.ToString();
+
+            //return (xmlDoc.ToString());
+        }
+
 
         #endregion
 

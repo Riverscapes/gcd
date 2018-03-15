@@ -349,7 +349,8 @@ namespace GCDCore.Project.Morphological
             xmlExcelDoc.SetNamedCellValue("Porosity", Porosity.ToString());
 
             //save output
-            xmlExcelDoc.Save(Spreadsheet.FullName);
+            string xml = xmlExcelDoc.GetXML();
+            File.WriteAllText(Spreadsheet.FullName, xml);
 
         }
 
