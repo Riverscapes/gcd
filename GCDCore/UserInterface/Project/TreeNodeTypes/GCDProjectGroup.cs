@@ -75,6 +75,10 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
                 try
                 {
                     string shortcut = string.Concat(Environment.GetFolderPath(Environment.SpecialFolder.Programs), "\\", publisher_name, "\\", product_name, ".appref-ms");
+
+#if DEBUG
+                    shortcut = @"D:\Code\xsviewer\CrossSectionViewer\bin\x64\Debug\CrossSectionViewer.exe";
+#endif
                     System.Diagnostics.Process.Start(shortcut, ProjectManager.Project.ProjectFile.FullName);
                 }
                 catch (Exception ex)
