@@ -304,20 +304,12 @@ namespace GCDCore.Project.Morphological
             //setup ExcelXMLDocument which does the heavy lifting of updating the XML
             ExcelXMLDocument xmlExcelDoc = new ExcelXMLDocument(template.FullName);
 
-            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            // TODO: write morphological spreadsheet here
-
-            //int UnitCount = 0;
+            //loop through all the units and update spreadsheet
             for(int UnitIndex= 0; UnitIndex < (Units.Count - 1); UnitIndex++)
             {
-
-                //        }
-                //            foreach (MorphologicalUnit unit in Units)
-                //          {
                 MorphologicalUnit unit = Units[UnitIndex];
 
-                //UnitCount = UnitCount + 1;
-
+                //get values and write to dictionary to update named ranges in spreadsheet
                 Dictionary<string, string> dicStatValues = new Dictionary<string, string>();
                 dicStatValues.Add("TemplateRowName", unit.Name);
                 dicStatValues.Add("VolumeErosion", unit.VolErosion.CubicMeters.ToString());
@@ -325,6 +317,7 @@ namespace GCDCore.Project.Morphological
                 dicStatValues.Add("VolumeDeposition", unit.VolDeposition.CubicMeters.ToString());
                 dicStatValues.Add("VolumeDepositionError", unit.VolDepositionErr.CubicMeters.ToString());
 
+                //clone or update template row
                 if (UnitIndex > 0)
                 {
                     xmlExcelDoc.CloneRow("ReachName", UnitIndex, dicStatValues);
@@ -336,6 +329,8 @@ namespace GCDCore.Project.Morphological
 
             }
 
+            //The formulas in the first row is different from the remaining rows, so they need to be update
+            //Results match the UI
             string InitialVInformula = "=" + MinimumFlux.CubicMeters + "-RC[-3]";
             xmlExcelDoc.SetFormula("InitialVIn", InitialVInformula);
 
@@ -345,10 +340,26 @@ namespace GCDCore.Project.Morphological
             string InitialVCumulativeformula = "=RC[-6]";
             xmlExcelDoc.SetFormula("InitialVCumulative", InitialVCumulativeformula);
 
+            //Set duration adn porosity values in spreadsheet
             xmlExcelDoc.SetNamedCellValue("FlowDuration", CompetentDuration.Hours.ToString());
             xmlExcelDoc.SetNamedCellValue("Porosity", Porosity.ToString());
 
+            //cells should be formatted with black, single weight top and bottom border
+            CellStyle oCellStyle = new CellStyle();
+            oCellStyle.TopBorder.Weight = 1;
+            oCellStyle.TopBorder.Color = "#000000";
+            oCellStyle.BottomBorder.Weight = 1;
+            oCellStyle.BottomBorder.Color = "#000000";
+
+            //loop through all cells and format
+            for (int i = 0; i < (Units.Count-2); i++)
+            {
+                xmlExcelDoc.FormatRow("ReachName", i, oCellStyle);
+            }
+
             //save output
+            //xml cant be saved using the easier readable format with line breaks between nodes
+            //because it mangles the header with subscript. Excel interprets the line breaks as new lines in the cell
             string xml = xmlExcelDoc.GetXML();
             File.WriteAllText(Spreadsheet.FullName, xml);
 

@@ -131,20 +131,24 @@ namespace GCDCore.Engines
 
         }
 
+        /// <summary>
+        /// Sets the formula for the named range
+        /// </summary>
+        /// <param name="NamedRange"></param>
+        /// <param name="formula"></param>
         public void SetFormula(string NamedRange, string formula)
         {
-            //get row for named range
+            //check the named range exists
             if (!dicNamedRanges.ContainsKey(NamedRange))
             {
                 return;
             }
 
+            //get row node based on the row number of the named ranged
             NamedRange oNamedRange = dicNamedRanges[NamedRange];
-
-            //get reference and before nodes and insert our cloned reference row
             XmlNode ReferenceRowNode = xmlDoc.SelectSingleNode(".//ss:Row[position() >= " + oNamedRange.row + "]", nsmgr);
 
-            //find named cells
+            //find named cells and update formula, if cell exists
             XmlNodeList NamedCells = ReferenceRowNode.SelectNodes(".//ss:Cell[ss:NamedCell[@ss:Name='" + NamedRange + "']]", nsmgr); // gets the cell with the named cell name
             if (NamedCells.Count == 1)
             {
@@ -152,13 +156,17 @@ namespace GCDCore.Engines
             }
         }
 
+        /// <summary>
+        /// Sets the value if the named cell
+        /// </summary>
+        /// <param name="NamedCell"></param>
+        /// <param name="value"></param>
         public void SetNamedCellValue(string NamedCell, string value)
         {
             Dictionary<string, string> NamedCellValues = new Dictionary<string, string>();
             NamedCellValues.Add(NamedCell, value);
             SetNamedCellValue(xmlDoc, NamedCellValues);
         }
-
 
         /// <summary>
         /// Write Excel XML document to filepath
@@ -169,18 +177,17 @@ namespace GCDCore.Engines
             xmlDoc.Save(path);
         }
 
+        /// <summary>
+        /// returns the xml of the xml document as a string
+        /// </summary>
+        /// <returns></returns>
         public string GetXML()
         {
             StringWriter stringWriter = new StringWriter();
             XmlTextWriter xmlTextWriter = new XmlTextWriter(stringWriter);
-
             xmlDoc.WriteTo(xmlTextWriter);
-
             return stringWriter.ToString();
-
-            //return (xmlDoc.ToString());
         }
-
 
         #endregion
 
@@ -493,6 +500,7 @@ namespace GCDCore.Engines
         private void FormatCell(XmlNode CellNode, CellStyle RowFormat)
         {
             //get style id, if available
+            //need to clone a new style so it doesnt affect other cells using the same format
             if (HasAttribute(CellNode, "ss:StyleID"))
             {
                 string styleid = CellNode.Attributes["ss:StyleID"].Value;
@@ -501,25 +509,41 @@ namespace GCDCore.Engines
                 string pattern = "//ss:Style[@ss:ID='" + styleid + "']"; //find all nodes of type "Style" anywhere in document with an attribute called ss:ID equivalent to variable styleid
                 XmlNode StyleNode = xmlDoc.SelectSingleNode(pattern, nsmgr);
 
+                //generate new style id
+                string newstyleid = Guid.NewGuid().ToString();
+
+                //copy style
+                XmlNode StyleNodeClone = StyleNode.Clone();
+
+                //insert cloned style
+                XmlNode parent = StyleNode.ParentNode;
+                parent.InsertAfter(StyleNodeClone, StyleNode);
+
+                //set new style id
+                StyleNodeClone.Attributes["ss:ID"].Value = newstyleid;
+
+                //point the cell to new style
+                CellNode.Attributes["ss:StyleID"].Value = newstyleid;
+
                 //modify style
                 if (RowFormat.TopBorder.Weight != null)
                 {
-                    FormatBorder(StyleNode, "Top", "Weight", RowFormat.TopBorder.Weight.ToString());
+                    FormatBorder(StyleNodeClone, "Top", "Weight", RowFormat.TopBorder.Weight.ToString());
                 }
 
                 if (RowFormat.TopBorder.Color != null)
                 {
-                    FormatBorder(StyleNode, "Top", "Color", RowFormat.TopBorder.Color);
+                    FormatBorder(StyleNodeClone, "Top", "Color", RowFormat.TopBorder.Color);
                 }
 
                 if (RowFormat.BottomBorder.Weight != null)
                 {
-                    FormatBorder(StyleNode, "Bottom", "Weight", RowFormat.TopBorder.Weight.ToString());
+                    FormatBorder(StyleNodeClone, "Bottom", "Weight", RowFormat.TopBorder.Weight.ToString());
                 }
 
                 if (RowFormat.BottomBorder.Color != null)
                 {
-                    FormatBorder(StyleNode, "Bottom", "Color", RowFormat.TopBorder.Color);
+                    FormatBorder(StyleNodeClone, "Bottom", "Color", RowFormat.TopBorder.Color);
                 }
 
             }
