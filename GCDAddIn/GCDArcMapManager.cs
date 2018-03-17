@@ -203,6 +203,7 @@ namespace GCDAddIn
         {
             IGroupLayer pProjLyr = AddProjectGroupLayer();
             IGroupLayer pGrpLayer = ArcMapUtilities.GetGroupLayer(MasksGroupLayer, pProjLyr);
+            short dTransparency = GCDCore.Properties.Settings.Default.TransparencyAssociatedLayers ? GCDCore.Properties.Settings.Default.AutoTransparencyValue : (short)-1;
 
             IFeatureRenderer pRenderer = null;
             string queryFilter = string.Empty;
@@ -229,7 +230,7 @@ namespace GCDAddIn
                 labelField = string.IsNullOrEmpty(dirMask.LabelField) ? dirMask._Field : dirMask.LabelField;
             }
 
-            VectorSymbolization.AddToMapVector(mask.Vector.GISFileInfo, mask.Name, pGrpLayer, mask._Field, pRenderer, queryFilter, labelField);
+            VectorSymbolization.AddToMapVector(mask.Vector.GISFileInfo, mask.Name, pGrpLayer, mask._Field, pRenderer, queryFilter, labelField, dTransparency);
         }
 
         public void AddAOI(GCDCore.Project.Masks.AOIMask mask)
