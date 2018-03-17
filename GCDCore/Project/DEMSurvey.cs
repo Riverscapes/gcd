@@ -11,12 +11,7 @@ namespace GCDCore.Project
     public class DEMSurvey : Surface, IComparable<DEMSurvey>
     {
         public readonly naru.ui.SortableBindingList<AssocSurface> AssocSurfaces;
-
-        public string SurveyMethod { get; set; } // Single survey methods
-        public bool IsSingleSurveyMethod { get { return MethodMask == null; } }
         public SurveyDateTime SurveyDate { get; set; }
-        public FileInfo MethodMask { get; set; } // Multi-method polygon ShapeFile
-        public string MethodMaskField { get; set; } // Multi-method field in ShapeFile
         public int? ChronologicalOrder { get; set; } // Optional zero-based index of chronological order maintain by the Multi-Epoch GCD Analysis
 
         public override string Noun { get { return "DEM Survey"; } }
@@ -73,19 +68,6 @@ namespace GCDCore.Project
                 }
             }
 
-            // Single survey method DEM surveys
-            XmlNode nodSurveyMethod = nodDEM.SelectSingleNode("SurveyMethod");
-            if (nodSurveyMethod is XmlNode)
-                SurveyMethod = nodSurveyMethod.InnerText;
-
-            // Multi-method DEM surveys
-            XmlNode nodMethodMask = nodDEM.SelectSingleNode("MethodMask");
-            if (nodMethodMask is XmlNode)
-            {
-                MethodMask = ProjectManager.Project.GetAbsolutePath(nodMethodMask.SelectSingleNode("Path").InnerText);
-                MethodMaskField = nodMethodMask.SelectSingleNode("Field").InnerText;
-            }
-
             AssocSurfaces = new naru.ui.SortableBindingList<AssocSurface>();
             foreach (XmlNode nodAssoc in nodDEM.SelectNodes("AssociatedSurfaces/AssociatedSurface"))
             {
@@ -117,16 +99,6 @@ namespace GCDCore.Project
             finally
             {
                 AssocSurfaces.Clear();
-            }
-
-
-
-            // Delete the vector mask if it exists
-            if (MethodMask is FileInfo)
-            {
-                ProjectManager.OnGISLayerDelete(new ProjectManager.GISLayerEventArgs(MethodMask));
-                Vector mask = new Vector(MethodMask);
-                mask.Delete();
             }
 
             try
@@ -176,12 +148,6 @@ namespace GCDCore.Project
             // Serialize the surface properties first.
             base.Serialize(nodDEM);
 
-            // Now serialize the DEM-specific member properties
-            if (!string.IsNullOrEmpty(SurveyMethod))
-            {
-                nodDEM.AppendChild(nodDEM.OwnerDocument.CreateElement("SurveyMethod")).InnerText = SurveyMethod;
-            }
-
             if (SurveyDate != null)
             {
                 XmlNode nodSurveyDate = nodDEM.AppendChild(nodDEM.OwnerDocument.CreateElement("SurveyDate"));
@@ -197,14 +163,6 @@ namespace GCDCore.Project
                 nodDEM.AppendChild(nodDEM.OwnerDocument.CreateElement("ChronologicalOrder")).InnerText = ChronologicalOrder.ToString();
             }
 
-
-            if (MethodMask != null)
-            {
-                XmlNode nodMethodMask = nodDEM.AppendChild(nodDEM.OwnerDocument.CreateElement("MethodMask"));
-                nodMethodMask.AppendChild(nodDEM.OwnerDocument.CreateElement("Path")).InnerText = ProjectManager.Project.GetRelativePath(MethodMask);
-                nodMethodMask.AppendChild(nodDEM.OwnerDocument.CreateElement("Field")).InnerText = MethodMaskField;
-            }
-
             if (AssocSurfaces.Count > 0)
             {
                 XmlNode nodAssoc = nodDEM.AppendChild(nodDEM.OwnerDocument.CreateElement("AssociatedSurfaces"));
@@ -216,7 +174,7 @@ namespace GCDCore.Project
         public int CompareTo(DEMSurvey dem)
         {
             System.Diagnostics.Debug.WriteLine("Comparing '{0}' with {1} to '{2}' with {3}", Name, SurveyDate, dem.Name, dem.SurveyDate);
-            
+
             if (SurveyDate == null || dem.SurveyDate == null)
             {
                 return -1;
