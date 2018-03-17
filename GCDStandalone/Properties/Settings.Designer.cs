@@ -22,17 +22,5 @@ namespace GCDStandalone.Properties {
                 return defaultInstance;
             }
         }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool LoadLastProjectAtStart {
-            get {
-                return ((bool)(this["LoadLastProjectAtStart"]));
-            }
-            set {
-                this["LoadLastProjectAtStart"] = value;
-            }
-        }
     }
 }

@@ -394,5 +394,17 @@ namespace GCDCore.Properties {
                 this["ChartFont"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool LoadLastProjectAtStartUp {
+            get {
+                return ((bool)(this["LoadLastProjectAtStartUp"]));
+            }
+            set {
+                this["LoadLastProjectAtStartUp"] = value;
+            }
+        }
     }
 }

@@ -95,5 +95,8 @@
     <Setting Name="ChartFont" Type="System.Drawing.Font" Scope="User">
       <Value Profile="(Default)">Microsoft Sans Serif, 8.25pt</Value>
     </Setting>
+    <Setting Name="LoadLastProjectAtStartUp" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

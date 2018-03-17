@@ -34,7 +34,15 @@ namespace GCDStandalone
             ucProjectExplorer1.ProjectTreeNodeSelectionChange += UpdateMenusAndToolstrips;
             UpdateMenusAndToolstrips(sender, e);
 
-            if (Properties.Settings.Default.LoadLastProjectAtStart)
+            // User setting for loading the last project
+            bool bLoadLastProject = GCDCore.Properties.Settings.Default.LoadLastProjectAtStartUp;
+
+#if DEBUG
+            // Developers always try to last the load project
+            bLoadLastProject = true;
+#endif
+
+            if (bLoadLastProject)
             {
                 string lastGCD = GCDCore.Properties.Settings.Default.LastUsedProjectFolder;
                 if (!string.IsNullOrEmpty(lastGCD) && System.IO.Directory.Exists(lastGCD))
