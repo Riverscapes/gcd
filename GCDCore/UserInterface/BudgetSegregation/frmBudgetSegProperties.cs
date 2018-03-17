@@ -27,12 +27,13 @@ namespace GCDCore.UserInterface.BudgetSegregation
         {
             cmdOK.Text = Properties.Resources.CreateButtonText;
 
-            // Add the event handling after data binding to reduce false firing
-            cboDoD.SelectedIndexChanged += cboDoD_SelectedIndexChanged;
-            cboDoD.DataSource = new BindingList<DoDBase>(ProjectManager.Project.DoDs.Values.ToList<DoDBase>());
-            cboDoD.SelectedItem = InitialDoD;
+            txtDoDName.Text = InitialDoD.Name;
+            txtNewDEM.Text = InitialDoD.NewSurface.Name;
+            txtOldDEM.Text = InitialDoD.OldSurface.Name;
+            txtOutputFolder.Text = ProjectManager.Project.GetRelativePath(InitialDoD.BudgetSegPath().FullName);
+            txtUncertaintyAnalysis.Text = InitialDoD.UncertaintyAnalysisLabel;
 
-            cboMasks.DataSource = new BindingList<GCDCore.Project.Masks.Mask>(ProjectManager.Project.Masks.Values.Where(x=>x is GCDCore.Project.Masks.AttributeFieldMask).ToList<GCDCore.Project.Masks.Mask>());
+            cboMasks.DataSource = new BindingList<GCDCore.Project.Masks.Mask>(ProjectManager.Project.Masks.Values.Where(x => x is GCDCore.Project.Masks.AttributeFieldMask).ToList<GCDCore.Project.Masks.Mask>());
             if (cboMasks.Items.Count > 0)
                 cboMasks.SelectedIndex = 0;
 
@@ -51,14 +52,12 @@ namespace GCDCore.UserInterface.BudgetSegregation
             try
             {
                 Cursor.Current = Cursors.WaitCursor;
-
-                DoDBase dod = cboDoD.SelectedItem as DoDBase;
                 GCDCore.Project.Masks.AttributeFieldMask mask = cboMasks.SelectedItem as GCDCore.Project.Masks.AttributeFieldMask;
 
                 System.IO.DirectoryInfo bsFolder = ProjectManager.Project.GetAbsoluteDir(txtOutputFolder.Text);
                 Engines.BudgetSegregationEngine bsEngine = new Engines.BudgetSegregationEngine();
-                BudgetSeg = bsEngine.Calculate(txtName.Text, bsFolder, dod, mask);
-                dod.BudgetSegregations[BudgetSeg.Name] = BudgetSeg;
+                BudgetSeg = bsEngine.Calculate(txtName.Text, bsFolder, InitialDoD, mask);
+                InitialDoD.BudgetSegregations[BudgetSeg.Name] = BudgetSeg;
 
                 ProjectManager.Project.Save();
             }
@@ -77,13 +76,6 @@ namespace GCDCore.UserInterface.BudgetSegregation
             // Sanity check to avoid names with only empty spaces
             txtName.Text = txtName.Text.Trim();
 
-            if (!(cboDoD.SelectedItem is DoDBase))
-            {
-                MessageBox.Show("Please choose a change detection analysis on which you want to base this budget segregation.", "Missing Change Detection", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                cboDoD.Select();
-                return false;
-            }
-
             if (string.IsNullOrEmpty(txtName.Text))
             {
                 MessageBox.Show("Please enter a name for the budget segregation analysis.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -92,7 +84,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
             }
             else
             {
-                if (!((DoDBase)cboDoD.SelectedItem).IsBudgetSegNameUnique(txtName.Text, null))
+                if (!InitialDoD.IsBudgetSegNameUnique(txtName.Text, null))
                 {
                     MessageBox.Show("Another budget segregation already uses the name '" + txtName.Text + "'. Please choose a unique name.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     txtName.Select();
@@ -110,30 +102,6 @@ namespace GCDCore.UserInterface.BudgetSegregation
             return true;
         }
 
-        private void cboDoD_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            DoDBase dod = (DoDBase)cboDoD.SelectedItem;
-
-            txtNewDEM.Text = dod.NewSurface.Name;
-            txtOldDEM.Text = dod.OldSurface.Name;
-
-            if (dod is DoDMinLoD)
-            {
-                txtUncertaintyAnalysis.Text = string.Format("Minimum Level of Detection at {0:#0.00}{1}", ((DoDMinLoD)dod).Threshold, UnitsNet.Length.GetAbbreviation(ProjectManager.Project.Units.VertUnit));
-            }
-            else if (dod is DoDPropagated)
-            {
-                txtUncertaintyAnalysis.Text = "Propagated Error";
-            }
-            else
-            {
-                txtUncertaintyAnalysis.Text = string.Format("Probabilistic at {0}% confidence level", ((DoDProbabilistic)dod).ConfidenceLevel * 100);
-            }
-
-            txtOutputFolder.Text = ProjectManager.Project.GetRelativePath(dod.BudgetSegPath().FullName);
-        }
-
-
         private void cmdHelp_Click(Object sender, EventArgs e)
         {
             Process.Start(Properties.Resources.HelpBaseURL + "gcd-command-reference/gcd-project-explorer/l-individual-change-detection-context-menu/v-add-budget-segregation");
@@ -147,8 +115,6 @@ namespace GCDCore.UserInterface.BudgetSegregation
 
         private string GetUniqueName(string maskName)
         {
-            DoDBase dod = cboDoD.SelectedItem as DoDBase;
-
             int index = 0;
             string result = string.Empty;
 
@@ -160,7 +126,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
 
                 index++;
 
-            } while (dod.BudgetSegregations.ContainsKey(result));
+            } while (InitialDoD.BudgetSegregations.ContainsKey(result));
 
             return result;
         }
