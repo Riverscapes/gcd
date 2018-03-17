@@ -66,7 +66,23 @@ namespace GCDCore.UserInterface.ChangeDetection
                         DoDProperties.Add(new DoDPropertyRaster("Surface Raising Count", dodProb.SpatialCoherenceDeposition.GISFileInfo));
                     }
                 }
-            }    
+            }
+
+            // Values from the thresholded DoD raster stats are optional
+            try
+            {
+                string vUnits = UnitsNet.Length.GetAbbreviation(ProjectManager.Project.Units.VertUnit);
+                dod.ThrDoD.Raster.ComputeStatistics();
+                Dictionary<string, decimal> stats = dod.ThrDoD.Raster.GetStatistics();
+                DoDProperties.Add(new DoDProperty("Thresholded DoD maximum raster value", stats["max"].ToString("n2") + vUnits));
+                DoDProperties.Add(new DoDProperty("Thresholded DoD minimum raster value", stats["min"].ToString("n2") + vUnits));
+                DoDProperties.Add(new DoDProperty("Thresholded DoD mean raster value", stats["mean"].ToString("n2") + vUnits));
+                DoDProperties.Add(new DoDProperty("Thresholded DoD standard deviation of raster values", stats["stddev"].ToString("n2") + vUnits));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(string.Format("Error calculating statistics from {0}, {1}", dod.ThrDoD.Raster.GISFileInfo.FullName, ex.Message));
+            }
         }
 
         private class DoDProperty
