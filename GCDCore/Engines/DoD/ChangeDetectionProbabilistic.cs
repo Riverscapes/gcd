@@ -75,15 +75,10 @@ namespace GCDCore.Engines
             return thrDoD;
         }
 
-        protected override Raster GenerateErrorRaster(FileInfo errDoDPath)
-        {
-            //Raster r = RasterOperators.Multiply(PropagatedErrRaster, CITRaster);
-
-
-
-
-            return new Raster(errDoDPath);
-        }
+        //protected override Raster GenerateErrorRaster(FileInfo thrErrorPath)
+        //{
+        //   // TODO: Need to override propagated error with process for probabilistic
+        //}
 
         protected override DoDStats CalculateChangeStats(Raster rawDoD, Raster thrDoD, UnitGroup units)
         {
