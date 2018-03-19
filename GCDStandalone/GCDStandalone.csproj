@@ -96,6 +96,18 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="gcd_multi_resolution.ico" />
+    <Content Include="..\fis-dem-error\CHaMP\**\*.*">
+      <Link>Deploy\FISLibrary\CHaMP\%(RecursiveDir)%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\fis-dem-error\BySurveyType\**\*.*">
+      <Link>Deploy\FISLibrary\BySurveyType\%(RecursiveDir)%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\fis-dem-error\FISLibraryXML.xml">
+      <Link>Deploy\FISLibrary\FISLibraryXML.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\extlib\GDAL221\data\pci_datum.txt">

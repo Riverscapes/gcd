@@ -1,3 +1,6 @@
 [submodule "naru"]
 	path = naru
 	url = git@github.com:NorthArrowResearch/naru.git
+[submodule "fis-dem-error"]
+	path = fis-dem-error
+	url = git@github.com:Riverscapes/fis-dem-error.git
