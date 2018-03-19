@@ -8,7 +8,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
 {
     public class DoDGroup : TreeNodeGroup
     {
-        DoDBase DoD;
+        public DoDBase DoD { get; internal set; }
 
         public DoDGroup(TreeNodeCollection parentNodes, DoDBase dod, IContainer container)
             : base(parentNodes, dod.Name, string.Empty, "Change Detection", dod.Folder, container, true, 7)
@@ -31,7 +31,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
         public override void LoadChildNodes()
         {
             Nodes.Clear();
-            
+
             if (DoD.LinearExtractions.Count > 0)
             {
                 TreeNodeGroup nodLinea = new LinearExtractionGrp(Nodes, DoD, DoD.Folder, ContextMenuStrip.Container);

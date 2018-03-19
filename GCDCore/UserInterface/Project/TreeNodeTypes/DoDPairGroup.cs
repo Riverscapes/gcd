@@ -19,7 +19,8 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             : base(parentNodes, name, string.Empty, string.Empty, null, container)
         {
             ContextMenuStrip.Items[0].Text = "Add Change Detection With These New And Old Surfaces";
-
+            ContextMenuStrip.Items.Insert(1, new ToolStripMenuItem("Add Change Detection With These Surfaces To The Map", Properties.Resources.AddToMap, OnAddPairToMap));
+            
             NewSurface = newSurf;
             OldSurface = oldSurf;
 
@@ -43,6 +44,14 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
         {
             ChangeDetection.frmDoDProperties frm = new ChangeDetection.frmDoDProperties(NewSurface, OldSurface);
             EditTreeItem(frm);
+        }
+
+        public void OnAddPairToMap(object sender, EventArgs e)
+        {
+            foreach (DoDGroup dod in Nodes)
+            {
+                ProjectManager.OnAddRasterToMap(dod.DoD.ThrDoD as GCDProjectRasterItem);
+            }
         }
     }
 }
