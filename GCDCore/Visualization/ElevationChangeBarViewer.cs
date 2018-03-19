@@ -154,10 +154,8 @@ namespace GCDCore.Visualization
                 if (netSeries is Series)
                     errorSeries.Points.AddXY(GetXAxisLabel(eType, SeriesType.Net), fNet, fNet - fNetError, fNet + fNetError);
 
-                Chart.ChartAreas[0].RecalculateAxesScale();
-
-                Chart.ChartAreas[0].AxisY.Maximum = Math.Ceiling(Math.Max(fErosion + fErosionError, fDeposition + fDepositionError) * Chart.ChartAreas[0].AxisY.Interval) / Chart.ChartAreas[0].AxisY.Interval;
-                Chart.ChartAreas[0].AxisY.Minimum = Math.Floor(Math.Min(fErosion - fErosionError, fDeposition - fDepositionError) * Chart.ChartAreas[0].AxisY.Interval) / Chart.ChartAreas[0].AxisY.Interval;
+                Chart.ChartAreas[0].AxisY.Maximum = Math.Ceiling(Math.Max(fErosion + fErosionError, fDeposition + fDepositionError));
+                Chart.ChartAreas[0].AxisY.Minimum = Math.Floor(Math.Min(fErosion - fErosionError, fDeposition - fDepositionError));
             }
             else
             {
