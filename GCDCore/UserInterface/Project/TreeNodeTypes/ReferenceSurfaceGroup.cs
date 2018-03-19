@@ -22,6 +22,8 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
 
         public override void LoadChildNodes()
         {
+            Nodes.Clear();
+
             foreach (Surface surf in ProjectManager.Project.ReferenceSurfaces.Values)
             {
                 TreeNodeItem nodSurface = new TreeNodeItem(surf, 5, ContextMenuStrip.Container);
