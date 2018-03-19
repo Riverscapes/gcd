@@ -34,7 +34,7 @@ namespace GCDCore.Project
             }
         }
 
-        public DirectoryInfo MorphologicalFolder {  get { return new DirectoryInfo(Path.Combine(Folder.FullName, "Morph")); } }
+        public DirectoryInfo MorphologicalFolder { get { return new DirectoryInfo(Path.Combine(Folder.FullName, "Morph")); } }
 
         public BindingList<BudgetSegregationClass> FilteredClasses
         {
@@ -138,7 +138,7 @@ namespace GCDCore.Project
 
             XmlNode nodClasses = nodBS.AppendChild(nodParent.OwnerDocument.CreateElement("Classes"));
             Classes.Values.ToList().ForEach(x => x.Serialize(nodClasses));
-            
+
             if (MorphologicalAnalyses.Count > 0)
             {
                 XmlNode nodMA = nodBS.AppendChild(nodParent.OwnerDocument.CreateElement("MorphologicalAnalyses"));
@@ -160,6 +160,16 @@ namespace GCDCore.Project
                 MorphologicalAnalyses.Clear();
             }
 
+            foreach (FileInfo file in Folder.GetFiles("*.*", SearchOption.AllDirectories))
+            {
+                file.Delete();
+            }
+
+            foreach(DirectoryInfo dir in Folder.GetDirectories("*", SearchOption.AllDirectories))
+            {
+                dir.Delete();
+            }
+
             try
             {
                 Folder.Delete();
@@ -172,6 +182,12 @@ namespace GCDCore.Project
 
             DoD.BudgetSegregations.Remove(Name);
             ProjectManager.Project.Save();
+
+            // Remove the "BS" folder if this was the last budget segregation
+            if (DoD.BudgetSegregations.Count < 1)
+            {
+                DoD.BudgetSegFolder.Delete();
+            }
         }
     }
 }

@@ -74,6 +74,12 @@ namespace GCDCore.Project
         /// </remarks>
         protected void DeleteRaster(Raster r)
         {
+            if (r == null)
+                return;
+
+            if (!r.GISFileInfo.Exists)
+                return;
+
             ProjectManager.OnGISLayerDelete(new ProjectManager.GISLayerEventArgs(r.GISFileInfo));
             r.Delete();
         }

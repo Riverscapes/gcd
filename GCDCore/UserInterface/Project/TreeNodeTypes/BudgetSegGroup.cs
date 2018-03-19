@@ -21,6 +21,8 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
 
             ContextMenuStrip.Items[0].Text = "Add Morphological Analysis";
             ContextMenuStrip.Items.Insert(0, new ToolStripMenuItem("View Budget Segregation Results", Properties.Resources.GCD, OnViewResults));
+            ContextMenuStrip.Items.Insert(3, new ToolStripMenuItem("Delete Budget Segregation", Properties.Resources.Delete, OnDelete));
+            ContextMenuStrip.Items.Insert(4, new ToolStripSeparator());
 
             LoadChildNodes();
         }
@@ -58,6 +60,44 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             {
                 BudgetSegregation.frmBudgetSegResults frm = new BudgetSegregation.frmBudgetSegResults(BudgetSeg);
                 frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                naru.error.ExceptionUI.HandleException(ex);
+            }
+        }
+
+        public void OnDelete(object sender, EventArgs e)
+        {
+            if (BudgetSeg.IsItemInUse)
+            {
+                MessageBox.Show(string.Format("The {0} {1} is currently in use and cannot be deleted. Before you can delete this {1}," +
+                    " you must delete all GCD project items that refer to this {1} before it can be deleted.", BudgetSeg.Name, BudgetSeg.Noun),
+                    string.Format("{0} In Use", BudgetSeg.Noun), MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            if (MessageBox.Show(string.Format("Are you sure that you want to delete the {0} {1}? The {0} {1} and all its underlying data will be deleted permanently.", BudgetSeg.Name, BudgetSeg.Noun),
+                Properties.Resources.ApplicationNameLong, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.No)
+            {
+                return;
+            }
+
+            try
+            {
+                BudgetSeg.Delete();
+                Remove();
+            }
+            catch (IOException ex)
+            {
+                string processes = string.Empty;
+                if (ex.Data.Contains("Processes"))
+                {
+                    processes = string.Format(" ({0})", ex.Data["Processes"]);
+                }
+
+                MessageBox.Show(string.Format("One or more files belonging to this {0} are being used by another process{1}." +
+                    " Close all applications that are using these files and try to delete this {0} again.", NounSingle.ToLower(), processes), "File Locked", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             catch (Exception ex)
             {
