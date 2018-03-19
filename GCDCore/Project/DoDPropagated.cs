@@ -22,9 +22,9 @@ namespace GCDCore.Project
             }
         }
 
-        public DoDPropagated(string name, DirectoryInfo folder, Surface newSurface, Surface oldSurface, Project.Masks.AOIMask aoi, Raster rawDoD, Raster thrDoD,
+        public DoDPropagated(string name, DirectoryInfo folder, Surface newSurface, Surface oldSurface, Project.Masks.AOIMask aoi, Raster rawDoD, Raster thrDoD, Raster thrErr,
          HistogramPair histograms, FileInfo summaryXML, ErrorSurface newError, ErrorSurface oldError, Raster propErr, DoDStats stats)
-            : base(name, folder, newSurface, oldSurface, aoi, rawDoD, thrDoD, histograms, summaryXML, stats)
+            : base(name, folder, newSurface, oldSurface, aoi, rawDoD, thrDoD, thrErr, histograms, summaryXML, stats)
         {
             NewError = newError;
             OldError = oldError;

@@ -27,14 +27,19 @@ namespace GCDCore.Engines
             return RasterOperators.SetNull(rawDoD, RasterOperators.ThresholdOps.GreaterThanOrEqual, -Threshold, RasterOperators.ThresholdOps.LessThanOrEqual, Threshold, thrDoDPath);
         }
 
+        protected override Raster GenerateErrorRaster(FileInfo errDoDPath)
+        {
+            return RasterOperators.Uniform<float>(NewSurface.Raster, errDoDPath, (float)Threshold);
+        }
+
         protected override DoDStats CalculateChangeStats(Raster rawDoD, Raster thrDoD, UnitGroup units)
         {
             return RasterOperators.GetStatsMinLoD(rawDoD, thrDoD, Threshold, units);
         }
 
-        protected override DoDBase GetDoDResult(string dodName, DoDStats changeStats, Raster rawDoD, Raster thrDoD, HistogramPair histograms, FileInfo summaryXML)
+        protected override DoDBase GetDoDResult(string dodName, DoDStats changeStats, Raster rawDoD, Raster thrDoD, Raster errDoD, HistogramPair histograms, FileInfo summaryXML)
         {
-            return new DoDMinLoD(dodName, rawDoD.GISFileInfo.Directory, NewSurface, OldSurface, AOIMask, rawDoD, thrDoD, histograms, summaryXML, Threshold, changeStats);
+            return new DoDMinLoD(dodName, rawDoD.GISFileInfo.Directory, NewSurface, OldSurface, AOIMask, rawDoD, thrDoD, errDoD, histograms, summaryXML, Threshold, changeStats);
         }
     }
 }

@@ -27,11 +27,11 @@ namespace GCDCore.Project
         }
 
         public DoDProbabilistic(string name, DirectoryInfo folder, Surface newSurface, Surface oldSurface, Project.Masks.AOIMask aoi, HistogramPair histograms, FileInfo summaryXML,
-            Raster rawDoD, Raster thrDoD,
+            Raster rawDoD, Raster thrDoD, Raster thrErr,
             ErrorSurface newError, ErrorSurface oldError, Raster propErr, FileInfo priorProb,
             FileInfo postProb, FileInfo cond, FileInfo spatCoEr, FileInfo spatCoDep, CoherenceProperties spatCoProps,
             decimal confidenceLevel, DoDStats stats)
-            : base(name, folder, newSurface, oldSurface, aoi, rawDoD, thrDoD, histograms, summaryXML, newError, oldError, propErr, stats)
+            : base(name, folder, newSurface, oldSurface, aoi, rawDoD, thrDoD, thrErr, histograms, summaryXML, newError, oldError, propErr, stats)
         {
             ConfidenceLevel = confidenceLevel;
             PriorProbability = new Raster(priorProb);

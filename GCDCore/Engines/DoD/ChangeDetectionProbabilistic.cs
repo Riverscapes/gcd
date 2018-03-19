@@ -75,12 +75,22 @@ namespace GCDCore.Engines
             return thrDoD;
         }
 
+        protected override Raster GenerateErrorRaster(FileInfo errDoDPath)
+        {
+            //Raster r = RasterOperators.Multiply(PropagatedErrRaster, CITRaster);
+
+
+
+
+            return new Raster(errDoDPath);
+        }
+
         protected override DoDStats CalculateChangeStats(Raster rawDoD, Raster thrDoD, UnitGroup units)
         {
             return RasterOperators.GetStatsProbalistic(rawDoD, thrDoD, PropagatedErrRaster, units);
         }
 
-        protected override DoDBase GetDoDResult(string dodName, DoDStats changeStats, Raster rawDoD, Raster thrDoD, HistogramPair histograms, FileInfo summaryXML)
+        protected override DoDBase GetDoDResult(string dodName, DoDStats changeStats, Raster rawDoD, Raster thrDoD, Raster thrErr, HistogramPair histograms, FileInfo summaryXML)
         {
             bool bBayesian = SpatialCoherence is CoherenceProperties;
             int nFilter = 0;
@@ -89,7 +99,7 @@ namespace GCDCore.Engines
                 nFilter = SpatialCoherence.BufferSize;
             }
 
-            return new DoDProbabilistic(dodName, rawDoD.GISFileInfo.Directory, NewSurface, OldSurface, AOIMask, histograms, summaryXML, rawDoD, thrDoD, NewError, OldError,
+            return new DoDProbabilistic(dodName, rawDoD.GISFileInfo.Directory, NewSurface, OldSurface, AOIMask, histograms, summaryXML, rawDoD, thrDoD, thrErr, NewError, OldError,
                 PropagatedErrRaster, m_PriorProbRaster, m_PosteriorRaster, m_ConditionalRaster, m_SpatialCoErosionRaster, m_SpatialCoDepositionRaster,
                 SpatialCoherence, Threshold, changeStats);
         }

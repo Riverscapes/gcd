@@ -25,14 +25,20 @@ namespace GCDCore.Engines
             return thrDoD;
         }
 
+        protected override Raster GenerateErrorRaster(FileInfo errDoDPath)
+        {
+            PropagatedErrRaster.Copy(errDoDPath);
+            return new Raster(errDoDPath);
+        }
+
         protected override DoDStats CalculateChangeStats(Raster rawDoD, Raster thrDoD, UnitGroup units)
         {
             return RasterOperators.GetStatsPropagated(rawDoD, PropagatedErrRaster, units);
         }
 
-        protected override DoDBase GetDoDResult(string dodName, DoDStats changeStats, Raster rawDoD, Raster thrDoD, HistogramPair histograms, FileInfo summaryXML)
+        protected override DoDBase GetDoDResult(string dodName, DoDStats changeStats, Raster rawDoD, Raster thrDoD, Raster thrErr, HistogramPair histograms, FileInfo summaryXML)
         {
-            return new DoDPropagated(dodName, rawDoD.GISFileInfo.Directory, NewSurface, OldSurface, AOIMask, rawDoD, thrDoD, histograms, summaryXML, NewError, OldError, PropagatedErrRaster, changeStats);
+            return new DoDPropagated(dodName, rawDoD.GISFileInfo.Directory, NewSurface, OldSurface, AOIMask, rawDoD, thrDoD, thrErr, histograms, summaryXML, NewError, OldError, PropagatedErrRaster, changeStats);
         }
 
         /// <summary>

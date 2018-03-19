@@ -17,6 +17,7 @@ namespace GCDCore.Project
 
         public DoDRaster RawDoD { get; internal set; }
         public DoDRaster ThrDoD { get; internal set; }
+        public DoDRaster ThrErr { get; internal set; }
 
         public HistogramPair Histograms { get; set; }
         public FileInfo SummaryXML { get; set; }
@@ -57,7 +58,7 @@ namespace GCDCore.Project
             return new DirectoryInfo(Path.Combine(dodDir.FullName, "Figs"));
         }
 
-        protected DoDBase(string name, DirectoryInfo folder, Surface newSurface, Surface oldSurface, Masks.AOIMask aoi, Raster rawDoD, Raster thrDoD, HistogramPair histograms, FileInfo summaryXML, DoDStats stats)
+        protected DoDBase(string name, DirectoryInfo folder, Surface newSurface, Surface oldSurface, Masks.AOIMask aoi, Raster rawDoD, Raster thrDoD, Raster thrErr, HistogramPair histograms, FileInfo summaryXML, DoDStats stats)
             : base(name)
         {
             Folder = folder;
@@ -66,6 +67,7 @@ namespace GCDCore.Project
             AOIMask = aoi;
             RawDoD = new DoDRaster(string.Format(Name + " - Raw"), rawDoD);
             ThrDoD = new DoDRaster(string.Format(Name + " - Thresholded"), thrDoD);
+            ThrErr = new DoDRaster(string.Format(Name + " - Thresholded Error"), thrErr);
             Histograms = histograms;
             SummaryXML = summaryXML;
             Statistics = stats;
@@ -88,6 +90,7 @@ namespace GCDCore.Project
 
             RawDoD = new DoDRaster(string.Format(Name + " - Raw"), ProjectManager.Project.GetAbsolutePath(nodDoD.SelectSingleNode("RawDoD").InnerText));
             ThrDoD = new DoDRaster(string.Format(Name + " - Thresholded"), ProjectManager.Project.GetAbsolutePath(nodDoD.SelectSingleNode("ThrDoD").InnerText));
+            ThrErr = new DoDRaster(string.Format(Name + " - Thresholded Error"), ProjectManager.Project.GetAbsolutePath(nodDoD.SelectSingleNode("ThrErr").InnerText));
             Histograms = new HistogramPair(ProjectManager.Project.GetAbsolutePath(nodDoD.SelectSingleNode("RawHistogram").InnerText),
                 ProjectManager.Project.GetAbsolutePath(nodDoD.SelectSingleNode("ThrHistogram").InnerText));
             SummaryXML = ProjectManager.Project.GetAbsolutePath(nodDoD.SelectSingleNode("SummaryXML").InnerText);
@@ -132,6 +135,7 @@ namespace GCDCore.Project
 
             nodDoD.AppendChild(nodParent.OwnerDocument.CreateElement("RawDoD")).InnerText = ProjectManager.Project.GetRelativePath(RawDoD.Raster.GISFileInfo);
             nodDoD.AppendChild(nodParent.OwnerDocument.CreateElement("ThrDoD")).InnerText = ProjectManager.Project.GetRelativePath(ThrDoD.Raster.GISFileInfo);
+            nodDoD.AppendChild(nodParent.OwnerDocument.CreateElement("ThrErr")).InnerText = ProjectManager.Project.GetRelativePath(ThrErr.Raster.GISFileInfo);
             nodDoD.AppendChild(nodParent.OwnerDocument.CreateElement("RawHistogram")).InnerText = ProjectManager.Project.GetRelativePath(Histograms.Raw.Path);
             nodDoD.AppendChild(nodParent.OwnerDocument.CreateElement("ThrHistogram")).InnerText = ProjectManager.Project.GetRelativePath(Histograms.Thr.Path);
             nodDoD.AppendChild(nodParent.OwnerDocument.CreateElement("SummaryXML")).InnerText = ProjectManager.Project.GetRelativePath(SummaryXML);

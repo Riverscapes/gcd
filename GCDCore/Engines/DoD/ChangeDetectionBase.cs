@@ -35,6 +35,7 @@ namespace GCDCore.Engines
         {
             FileInfo rawDoDPath = BuildFilePath(analysisFolder, "raw", ProjectManager.RasterExtension);
             FileInfo thrDoDPath = BuildFilePath(analysisFolder, "tresh", ProjectManager.RasterExtension);
+            FileInfo errDoDPath = BuildFilePath(analysisFolder, "threrr", ProjectManager.RasterExtension);
             FileInfo rawHstPath = BuildFilePath(analysisFolder, "raw", "csv"); ;
             FileInfo thrHstPath = BuildFilePath(analysisFolder, "thresh", "csv");
             FileInfo sumXMLPath = BuildFilePath(analysisFolder, "summary", "xml");
@@ -64,7 +65,7 @@ namespace GCDCore.Engines
             // Call the polymorphic method to threshold the DoD depending on the thresholding method
             Raster thrDoD = ThresholdRawDoD(rawDoD, thrDoDPath);
 
-            // Build pyraminds
+            // Build pyraminds for the thresholded raster
             ProjectManager.PyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.DoDThresholded, thrDoDPath);
 
             // Calculate the thresholded histogram
@@ -79,14 +80,19 @@ namespace GCDCore.Engines
             GenerateChangeBarGraphicFiles(analysisFolder, changeStats, 0, 0);
             GenerateHistogramGraphicFiles(analysisFolder, rawHisto, thrHisto, 1920, 1080);
 
-            return GetDoDResult(dodName, changeStats, rawDoD, thrDoD, new HistogramPair(rawHisto, rawHstPath, thrHisto, thrHstPath), sumXMLPath);
+            // Calculate the thresholded error raster
+            Raster errDoD = GenerateErrorRaster(errDoDPath);
+
+            return GetDoDResult(dodName, changeStats, rawDoD, thrDoD, errDoD, new HistogramPair(rawHisto, rawHstPath, thrHisto, thrHstPath), sumXMLPath);
         }
 
         protected abstract Raster ThresholdRawDoD(Raster rawDoD, FileInfo thrDoDPath);
 
+        protected abstract Raster GenerateErrorRaster(FileInfo errDoDPath);
+
         protected abstract DoDStats CalculateChangeStats(Raster rawDoD, Raster thrDoD, UnitGroup units);
 
-        protected abstract DoDBase GetDoDResult(string dodName, DoDStats changeStats, Raster rawDoD, Raster thrDoD, HistogramPair histograms, FileInfo summaryXML);
+        protected abstract DoDBase GetDoDResult(string dodName, DoDStats changeStats, Raster rawDoD, Raster thrDoD, Raster errDoDPath, HistogramPair histograms, FileInfo summaryXML);
 
         protected FileInfo BuildFilePath(DirectoryInfo folder, string RasterFileName, string extension)
         {
