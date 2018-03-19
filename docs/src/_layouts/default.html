@@ -10,6 +10,7 @@
       <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/app.css">
       <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/custom.css">
       <script src="https://use.fontawesome.com/586b1e1322.js"></script>
+      <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
 
       <link rel="apple-touch-icon" sizes="57x57" href="{{ site.baseurl }}/assets/images/favicons/apple-icon-57x57.png">
       <link rel="apple-touch-icon" sizes="60x60" href="{{ site.baseurl }}/assets/images/favicons/apple-icon-60x60.png">
@@ -29,23 +30,26 @@
       <meta name="msapplication-TileImage" content="{{ site.baseurl }}/assets/images/favicons/ms-icon-144x144.png">
       <meta name="theme-color" content="#ffffff">
 
-      {% include analytics.html %}
-
+      <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+      <![endif]-->
   </head>
 
   <body>
 
-  <div id="topbarnav"></div>
   <header>
+    <div id="topbarnav"></div>
     <div class="text-center callout large">
       {% if page.url == "/" %}
-      <h1>{{ site.title }}</h1>
+      <h1>{{ site.title | replace: 'Riverscapes Consortium', '<div class="RCLogo">Riverscapes Consortium</div>' }}</h1>
         {% if page.subtitle %}
           <h3 class="post-subtitle subheader">{{ site.description }}</h3>    
         {% endif %}
       {% else %}
-      <h4 class="subheader show-for-medium"><a href="{{ site.baseurl }}/">{{ site.title }}</a></h4>   
-      <h1>{{ page.title }}</h1>
+
+      
+      <h4 class="subheader show-for-medium"><a href="{{ site.baseurl }}/">{{  site.title }}</a></h4>   
+      <h1>{{ page.title | replace: 'Riverscapes Consortium', '<div class="RCLogo">Riverscapes Consortium</div>' }}</h1>
         {% if page.subtitle %}
           <h3 class="post-subtitle subheader">{{ page.subtitle }}</h3>    
         {% endif %}    

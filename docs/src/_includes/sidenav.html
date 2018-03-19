@@ -15,4 +15,17 @@
 			</div>	
 	</div>
 </div>
-<div id="sidenav"></div>
+<div id="sidenav">
+	{% capture html %}
+
+	{% assign entries = site.pages | sort: "path" %}
+	<ul id='HTMLOnlyNav'>
+	{% for entry in entries %}
+		{% capture slug    %}{{ entry.url | split: "/"   | last                       }}{% endcapture %}
+		{% capture current %}{{ entry.url | remove: slug | remove: "//" | append: "/" }}{% endcapture %}
+		<li><a href='{{ site.baseurl }}{{ entry.url }}'>{{entry.title}}</a></li>
+	{% endfor %}
+	</ul>
+
+	{% endcapture %}{{ html | strip_newlines | replace:'    ','' | replace:'    ','' | replace:'  ',' ' }}
+</div>
