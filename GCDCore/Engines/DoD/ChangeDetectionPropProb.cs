@@ -31,7 +31,14 @@ namespace GCDCore.Engines
             return new Raster(errDoDPath);
         }
 
-        protected override DoDStats CalculateChangeStats(Raster rawDoD, Raster thrDoD, UnitGroup units)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="rawDoD"></param>
+        /// <param name="thrDoD">NEVER USED IN THIS CASE</param>
+        /// <param name="units"></param>
+        /// <returns></returns>
+        protected override DoDStats CalculateChangeStats(Raster rawDoD, Raster thrDoD,UnitGroup units)
         {
             return RasterOperators.GetStatsPropagated(rawDoD, PropagatedErrRaster, units);
         }

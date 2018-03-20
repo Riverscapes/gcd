@@ -27,8 +27,8 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="thrDoD"></param>
         /// <param name="thresh"></param>
         /// <param name="theStats"></param>
-        public GetDodMinLodStats(Raster rawDoD, Raster thrDoD, decimal thresh, DoDStats theStats) :
-            base(new List<Raster> { rawDoD, thrDoD })
+        public GetDodMinLodStats(Raster rawDoD, decimal thresh, DoDStats theStats) :
+            base(new List<Raster> { rawDoD })
         {
             Stats = theStats;
             _thresh = (double)thresh;
@@ -44,9 +44,9 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="theStats"></param>
         /// <param name="PolygonMask"></param>
         /// <param name="FieldName"></param>
-        public GetDodMinLodStats(Raster rawDoD, Raster thrDoD,
+        public GetDodMinLodStats(Raster rawDoD,
             decimal thresh, DoDStats theStats, Vector PolygonMask, string FieldName) :
-           base(new List<Raster> { rawDoD, thrDoD }, PolygonMask)
+           base(new List<Raster> { rawDoD }, PolygonMask)
         {
             Stats = theStats;
             _thresh = (double)thresh;
@@ -63,9 +63,9 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="theStats"></param>
         /// <param name="PolygonMask"></param>
         /// <param name="FieldName"></param>
-        public GetDodMinLodStats(Raster rawDoD, Raster thrDoD,
+        public GetDodMinLodStats(Raster rawDoD,
             decimal thresh, DoDStats theStats, VectorRaster rPolymask, string FieldName) :
-           base(new List<Raster> { rawDoD, thrDoD }, rPolymask)
+           base(new List<Raster> { rawDoD }, rPolymask)
         {
             Stats = theStats;
             _thresh = (double)thresh;

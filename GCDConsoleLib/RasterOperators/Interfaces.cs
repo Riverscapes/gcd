@@ -356,17 +356,18 @@ namespace GCDConsoleLib
         #endregion
 
         #region Statistics Calculation Operation (DoD stuff and Histogram Binning) --------------------------------------------------------------------------------
+
         /// <summary>
         /// Retrieve the Change Statistics from a pair of DoD rasters that were thresholded using minimum level of detection
         /// </summary>
-        /// <param name="rawDoD">Raw DoD Raster Path</param>
-        /// <param name="thrDoD">Thresholded DoD Raster Path</param>
-        /// <param name="minLoD">Minimum Level of Detection</param>
+        /// <param name="rawDoD"></param>
+        /// <param name="minLoD"></param>
+        /// <param name="units"></param>
         /// <returns></returns>
-        public static DoDStats GetStatsMinLoD(Raster rawDoD, Raster thrDoD, decimal minLoD, UnitGroup units)
+        public static DoDStats GetStatsMinLoD(Raster rawDoD, decimal minLoD, UnitGroup units)
         {
             Area cellArea = rawDoD.Extent.CellArea(units);
-            GetDodMinLodStats theStatsOp = new GetDodMinLodStats(rawDoD, thrDoD, minLoD, new DoDStats(cellArea, units));
+            GetDodMinLodStats theStatsOp = new GetDodMinLodStats(rawDoD, minLoD, new DoDStats(cellArea, units));
             theStatsOp.Run();
             return theStatsOp.Stats;
         }
@@ -376,13 +377,12 @@ namespace GCDConsoleLib
         /// THIS IS THE PURE VECTOR APPROACH
         /// </summary>
         /// <param name="rawDoD">Raw DoD Raster Path</param>
-        /// <param name="thrDoD">Thresholded DoD Raster Path</param>
         /// <param name="minLoD">Minimum Level of Detection</param>
         /// <param name="PolygonMask">Vector layer containing the mask polygons</param>
         /// <param name="FieldName">Name of the field in the PolygonMask that contains the distinguishing property on which to group statistics</param>
         /// <param name="RasterizeFirst">Set to false to allow overlaps (much slower)</param>
         /// <returns></returns>
-        public static Dictionary<string, DoDStats> GetStatsMinLoD(Raster rawDoD, Raster thrDoD, decimal minLoD,
+        public static Dictionary<string, DoDStats> GetStatsMinLoD(Raster rawDoD, decimal minLoD,
             Vector PolygonMask, string FieldName, UnitGroup units, bool RasterizeFirst = true)
         {
             Area cellArea = rawDoD.Extent.CellArea(units);
@@ -392,13 +392,13 @@ namespace GCDConsoleLib
             {
                 using (VectorRaster tmp = new VectorRaster(rawDoD, PolygonMask, FieldName))
                 {
-                    theStatsOp = new GetDodMinLodStats(rawDoD, thrDoD, minLoD, new DoDStats(cellArea, units), tmp, FieldName);
+                    theStatsOp = new GetDodMinLodStats(rawDoD, minLoD, new DoDStats(cellArea, units), tmp, FieldName);
                     theStatsOp.Run();
                 }
             }
             else
             {
-                theStatsOp = new GetDodMinLodStats(rawDoD, thrDoD, minLoD, new DoDStats(cellArea, units), PolygonMask, FieldName);
+                theStatsOp = new GetDodMinLodStats(rawDoD, minLoD, new DoDStats(cellArea, units), PolygonMask, FieldName);
                 theStatsOp.Run();
             }
             return theStatsOp.SegStats;
@@ -525,7 +525,15 @@ namespace GCDConsoleLib
         }
 
 
-
+        /// <summary>
+        /// This is a helper method for the above GetStatsProbalistic
+        /// </summary>
+        /// <param name="raw"></param>
+        /// <param name="thr"></param>
+        /// <param name="err"></param>
+        /// <param name="cellArea"></param>
+        /// <param name="units"></param>
+        /// <returns></returns>
         public static Dictionary<string, DoDStats> StatsProbabilisticCombine(GetChangeStats raw, GetChangeStats thr, GetChangeStats err,
             Area cellArea, UnitGroup units)
         {

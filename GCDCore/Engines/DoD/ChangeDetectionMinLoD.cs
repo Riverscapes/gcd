@@ -32,10 +32,18 @@ namespace GCDCore.Engines
             return RasterOperators.Uniform<float>(NewSurface.Raster, errDoDPath, (float)Threshold);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="rawDoD"></param>
+        /// <param name="thrDoD">NEVER USED IN THIS CASE.</param>
+        /// <param name="units"></param>
+        /// <returns></returns>
         protected override DoDStats CalculateChangeStats(Raster rawDoD, Raster thrDoD, UnitGroup units)
         {
-            return RasterOperators.GetStatsMinLoD(rawDoD, thrDoD, Threshold, units);
+            return RasterOperators.GetStatsMinLoD(rawDoD, Threshold, units);
         }
+
 
         protected override DoDBase GetDoDResult(string dodName, DoDStats changeStats, Raster rawDoD, Raster thrDoD, Raster errDoD, HistogramPair histograms, FileInfo summaryXML)
         {

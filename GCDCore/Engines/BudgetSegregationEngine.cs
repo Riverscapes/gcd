@@ -19,7 +19,7 @@ namespace GCDCore.Engines
 
             if (dod is DoDMinLoD)
             {
-                results = RasterOperators.GetStatsMinLoD(dod.RawDoD.Raster, dod.RawDoD.Raster, ((DoDMinLoD)dod).Threshold, mask.Vector, mask._Field, ProjectManager.Project.Units);
+                results = RasterOperators.GetStatsMinLoD(dod.RawDoD.Raster, ((DoDMinLoD)dod).Threshold, mask.Vector, mask._Field, ProjectManager.Project.Units);
             }
             else
             {

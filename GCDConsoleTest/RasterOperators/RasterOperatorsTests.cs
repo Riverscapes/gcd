@@ -143,7 +143,7 @@ namespace GCDConsoleLib.Internal.Operators.Tests
             Raster rThresh = new Raster(new FileInfo(DirHelpers.GetTestRootPath(@"BudgetSeg\SulphurCreek\2006Feb_DEM\2006Feb_DEM.img")));
 
             UnitGroup ug = new UnitGroup(VolumeUnit.CubicMeter, AreaUnit.SquareMeter, LengthUnit.Meter, LengthUnit.Meter);
-            DoDStats test = RasterOperators.GetStatsMinLoD(rRaw, rThresh, 73.0m, ug);
+            DoDStats test = RasterOperators.GetStatsMinLoD(rRaw, 73.0m, ug);
         }
 
         [TestMethod()]
@@ -164,7 +164,7 @@ namespace GCDConsoleLib.Internal.Operators.Tests
                 vPolyMask.Copy(fiPolyMaskCopy);
                 Vector vPolyMaskCopy = new Vector(fiPolyMaskCopy);
 
-                Dictionary<string, DoDStats> testBudgetSeg = RasterOperators.GetStatsMinLoD(rRaw, rThresh, 73.0m, vPolyMaskCopy, "Category", ug);
+                Dictionary<string, DoDStats> testBudgetSeg = RasterOperators.GetStatsMinLoD(rRaw, 73.0m, vPolyMaskCopy, "Category", ug);
             }
         }
 
@@ -614,11 +614,11 @@ namespace GCDConsoleLib.Internal.Operators.Tests
                     Assert.IsTrue(kvp.Value.Equals(statsPropR[kvp.Key]));
 
                 watch.Restart();
-                Dictionary<string, DoDStats> minlodV = RasterOperators.GetStatsMinLoD(rDoD, rThresh, 0.2m, vPolyMaskCopy, "Method", ug, false);
+                Dictionary<string, DoDStats> minlodV = RasterOperators.GetStatsMinLoD(rDoD, 0.2m, vPolyMaskCopy, "Method", ug, false);
                 times.Add(string.Format("GetStatsMinLoD, Vector, {0}.{1}", watch.Elapsed.Seconds, watch.Elapsed.Milliseconds));
 
                 watch.Restart();
-                Dictionary<string, DoDStats> minlodR = RasterOperators.GetStatsMinLoD(rDoD, rThresh, 0.2m, vPolyMaskCopy, "Method", ug, true);
+                Dictionary<string, DoDStats> minlodR = RasterOperators.GetStatsMinLoD(rDoD, 0.2m, vPolyMaskCopy, "Method", ug, true);
                 times.Add(string.Format("GetStatsMinLoD, Rasterized, {0}.{1}", watch.Elapsed.Seconds, watch.Elapsed.Milliseconds));
 
                 foreach (KeyValuePair<string, DoDStats> kvp in minlodV)
@@ -712,11 +712,11 @@ namespace GCDConsoleLib.Internal.Operators.Tests
                 times.Add(string.Format("GetStatsPropagated, Rasterized, {0}.{1}", watch.Elapsed.Seconds, watch.Elapsed.Milliseconds));
 
                 watch.Restart();
-                Dictionary<string, DoDStats> minlodV = RasterOperators.GetStatsMinLoD(rDoD, rThresh, 0.2m, vPolyMaskCopy, "Desc_", ug, false);
+                Dictionary<string, DoDStats> minlodV = RasterOperators.GetStatsMinLoD(rDoD, 0.2m, vPolyMaskCopy, "Desc_", ug, false);
                 times.Add(string.Format("GetStatsMinLoD, Vector, {0}.{1}", watch.Elapsed.Seconds, watch.Elapsed.Milliseconds));
 
                 watch.Restart();
-                Dictionary<string, DoDStats> minlodR = RasterOperators.GetStatsMinLoD(rDoD, rThresh, 0.2m, vPolyMaskCopy, "Desc_", ug);
+                Dictionary<string, DoDStats> minlodR = RasterOperators.GetStatsMinLoD(rDoD, 0.2m, vPolyMaskCopy, "Desc_", ug);
                 times.Add(string.Format("GetStatsMinLoD, Rasterized, {0}.{1}", watch.Elapsed.Seconds, watch.Elapsed.Milliseconds));
 
                 watch.Restart();

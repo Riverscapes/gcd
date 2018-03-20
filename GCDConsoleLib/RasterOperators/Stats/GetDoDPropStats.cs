@@ -78,7 +78,7 @@ namespace GCDConsoleLib.Internal.Operators
         protected override void CellOp(List<double[]> data, List<double[]> outputs, int id)
         {
             // Speed things up by ignoring nodatas
-            if (data[0][id] == inNodataVals[0])
+            if (data[0][id] == inNodataVals[0] || data[1][id] == inNodataVals[1])
                 return;
 
             // Pure vector method
