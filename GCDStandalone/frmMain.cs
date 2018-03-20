@@ -20,7 +20,6 @@ namespace GCDStandalone
 
             try
             {
-                ProjectManager.CopyDeployFolder();
                 ProjectManager.Init(GCDCore.Properties.Settings.Default.AutomaticPyramids);
             }
             catch (Exception ex)

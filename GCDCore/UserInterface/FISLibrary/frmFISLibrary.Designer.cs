@@ -33,13 +33,12 @@ namespace GCDCore.UserInterface.FISLibrary
             this.btnHelp = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
             this.grdFIS = new System.Windows.Forms.DataGridView();
-            this.FISTableBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.ttpTooltip = new System.Windows.Forms.ToolTip(this.components);
             this.btnFISRepo = new System.Windows.Forms.Button();
             this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colFilePath = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.grdFIS)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.FISTableBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // btnAddFIS
@@ -107,7 +106,8 @@ namespace GCDCore.UserInterface.FISLibrary
             this.grdFIS.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grdFIS.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colName,
-            this.colFilePath});
+            this.colFilePath,
+            this.colType});
             this.grdFIS.Location = new System.Drawing.Point(12, 41);
             this.grdFIS.MultiSelect = false;
             this.grdFIS.Name = "grdFIS";
@@ -134,6 +134,7 @@ namespace GCDCore.UserInterface.FISLibrary
             // 
             this.colName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.colName.DataPropertyName = "Name";
+            this.colName.FillWeight = 35.7868F;
             this.colName.HeaderText = "Name";
             this.colName.Name = "colName";
             this.colName.ReadOnly = true;
@@ -142,9 +143,20 @@ namespace GCDCore.UserInterface.FISLibrary
             // 
             this.colFilePath.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.colFilePath.DataPropertyName = "FilePathString";
+            this.colFilePath.FillWeight = 35.7868F;
             this.colFilePath.HeaderText = "File Path";
             this.colFilePath.Name = "colFilePath";
             this.colFilePath.ReadOnly = true;
+            // 
+            // colType
+            // 
+            this.colType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colType.DataPropertyName = "FISTypeString";
+            this.colType.FillWeight = 228.4264F;
+            this.colType.HeaderText = "Type";
+            this.colType.Name = "colType";
+            this.colType.ReadOnly = true;
+            this.colType.Width = 150;
             // 
             // frmFISLibrary
             // 
@@ -165,7 +177,6 @@ namespace GCDCore.UserInterface.FISLibrary
             this.Text = "Fuzzy Inference System Library";
             this.Load += new System.EventHandler(this.FISLibraryForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.grdFIS)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.FISTableBindingSource)).EndInit();
             this.ResumeLayout(false);
 
 		}
@@ -175,10 +186,10 @@ namespace GCDCore.UserInterface.FISLibrary
         internal System.Windows.Forms.Button btnHelp;
 		internal System.Windows.Forms.Button btnClose;
 		internal System.Windows.Forms.DataGridView grdFIS;
-		internal System.Windows.Forms.BindingSource FISTableBindingSource;
 		internal System.Windows.Forms.ToolTip ttpTooltip;
         internal System.Windows.Forms.Button btnFISRepo;
         private System.Windows.Forms.DataGridViewTextBoxColumn colName;
         private System.Windows.Forms.DataGridViewTextBoxColumn colFilePath;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colType;
     }
 }

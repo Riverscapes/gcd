@@ -151,11 +151,11 @@ namespace GCDCore.Project
             if (SurveyDate != null)
             {
                 XmlNode nodSurveyDate = nodDEM.AppendChild(nodDEM.OwnerDocument.CreateElement("SurveyDate"));
-                naru.xml.XMLHelpers.AddNode(nodDEM.OwnerDocument, nodSurveyDate, "Year", SurveyDate.Year > 0 ? SurveyDate.Year.ToString() : string.Empty);
-                naru.xml.XMLHelpers.AddNode(nodDEM.OwnerDocument, nodSurveyDate, "Month", SurveyDate.Month > 0 ? SurveyDate.Month.ToString() : string.Empty);
-                naru.xml.XMLHelpers.AddNode(nodDEM.OwnerDocument, nodSurveyDate, "Day", SurveyDate.Day > 0 ? SurveyDate.Day.ToString() : string.Empty);
-                naru.xml.XMLHelpers.AddNode(nodDEM.OwnerDocument, nodSurveyDate, "Hour", SurveyDate.Hour > -1 ? SurveyDate.Hour.ToString() : string.Empty);
-                naru.xml.XMLHelpers.AddNode(nodDEM.OwnerDocument, nodSurveyDate, "Minute", SurveyDate.Minute > -1 ? SurveyDate.Minute.ToString() : string.Empty);
+                naru.xml.XMLHelpers.AddNode(nodSurveyDate, "Year", SurveyDate.Year > 0 ? SurveyDate.Year.ToString() : string.Empty);
+                naru.xml.XMLHelpers.AddNode(nodSurveyDate, "Month", SurveyDate.Month > 0 ? SurveyDate.Month.ToString() : string.Empty);
+                naru.xml.XMLHelpers.AddNode(nodSurveyDate, "Day", SurveyDate.Day > 0 ? SurveyDate.Day.ToString() : string.Empty);
+                naru.xml.XMLHelpers.AddNode(nodSurveyDate, "Hour", SurveyDate.Hour > -1 ? SurveyDate.Hour.ToString() : string.Empty);
+                naru.xml.XMLHelpers.AddNode(nodSurveyDate, "Minute", SurveyDate.Minute > -1 ? SurveyDate.Minute.ToString() : string.Empty);
             }
 
             if (ChronologicalOrder.HasValue)

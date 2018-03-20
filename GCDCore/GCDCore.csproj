@@ -68,6 +68,9 @@
     <Compile Include="Engines\InterComparison\ExcelXMLDocument.cs" />
     <Compile Include="Engines\InterComparison\InterComparison.cs" />
     <Compile Include="Engines\ReferenceSurfaceEngine.cs" />
+    <Compile Include="ErrorCalculation\FIS\FISInputMeta.cs" />
+    <Compile Include="ErrorCalculation\FIS\FISLibrary.cs" />
+    <Compile Include="ErrorCalculation\FIS\FISMetaItem.cs" />
     <Compile Include="GCDUnits.cs" />
     <Compile Include="Project\GCDProjectVectorItem.cs" />
     <Compile Include="Project\LinearExtraction\LinearExtraction.cs" />
@@ -251,23 +254,17 @@
     <Compile Include="UserInterface\ChangeDetection\ucThresholding.Designer.cs">
       <DependentUpon>ucThresholding.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserInterface\FISLibrary\frmAddFIS.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UserInterface\FISLibrary\frmAddFIS.Designer.cs">
-      <DependentUpon>frmAddFIS.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UserInterface\FISLibrary\frmEditFIS.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UserInterface\FISLibrary\frmEditFIS.Designer.cs">
-      <DependentUpon>frmEditFIS.cs</DependentUpon>
-    </Compile>
     <Compile Include="UserInterface\FISLibrary\frmFISLibrary.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="UserInterface\FISLibrary\frmFISLibrary.Designer.cs">
       <DependentUpon>frmFISLibrary.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\FISLibrary\frmFISProperties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\FISLibrary\frmFISProperties.Designer.cs">
+      <DependentUpon>frmFISProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\frmOptions.cs">
       <SubType>Form</SubType>
@@ -578,14 +575,11 @@
     <EmbeddedResource Include="UserInterface\ChangeDetection\ucThresholding.resx">
       <DependentUpon>ucThresholding.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserInterface\FISLibrary\frmAddFIS.resx">
-      <DependentUpon>frmAddFIS.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UserInterface\FISLibrary\frmEditFIS.resx">
-      <DependentUpon>frmEditFIS.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\FISLibrary\frmFISLibrary.resx">
       <DependentUpon>frmFISLibrary.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\FISLibrary\frmFISProperties.resx">
+      <DependentUpon>frmFISProperties.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\frmOptions.resx">
       <DependentUpon>frmOptions.cs</DependentUpon>
@@ -680,6 +674,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\import.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\edit.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

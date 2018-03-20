@@ -117,29 +117,59 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <metadata name="colInputName.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="colInputUnits.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="colInputDescription.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="colInputSource.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="colCitation.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="colPURL.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="colTitle.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="colURL.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="colProperty.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="colValue.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAA
-        AAABAQEBAQAAAgAAAAADAgIFAAAAAD8nJ3VzPT30dDg4/HU6O/84GxudAAAAAAMBAQgAAAAAAAAAAAEA
-        AAEAAAAAAQAAAQAAAABRKSq+cjY2/xIICCEeDg92bjg5/7RcW/mkT0//GwwNjTYbGhKsUlDYXCgp5HY5
-        OYMAAAAAAQAAAZ5dXll4P0DNrGVm/89+fv9pNTTlRBYX75JMTv/Pb2/+tFlY/1opKe1FHiDhlEhJ/5xK
-        S/93ODn6ajIymAAAAAC4amufnlVV99yLjP/nk5P9xHV1/7BmZf/Eb27/znBw/8loaP+tV1f/kEhI/6xU
-        U//CXVz9rVRT/2QxMukAAAAA14eIwNmJivrIfn7/346O/+SPj/3diIj/3YOD/dp8fPvVdXT+y2tq/8Fi
-        Yv3IYmL+uVlY/5BFRf+PQ0OsAAEBBSofIBUoHyAkoWNk6OKSk//olpb93oiJ/blsbf6gWlv/r2Bh/sdq
-        av7ObGv/wmJh/ZtNTf9VKivfAAAAAAAAAAJaJiaOSh4ef5pKTPDklJX/6Zqb/Z9dXv+wb2/s1ImK18F+
-        f++9dXb/x2pp/sprav6uVlb/Zyor8CoWF41DICGd43x+/+6Ulv/XhYb/9amq/qxoaP+jZmbwh15dfVQ4
-        OC6WaGmGv31+8a1eXv/WdnT+x2Zl/7BUU/+uVVf/gT9B/9eFhfT8w8X0/sHD/v+/v/2DQED/1YuMyG1R
-        UTQAAAAAaUdIP8V9ftKcVlb/2n19/M1wb//ObGz+sVdY83g7O/T3k5P/7KOk/++qq///u7z+vHRz/714
-        euyHYWF0SDU0IY9mZn24d3jwsGRl/96Eg/3OdHX/umVm/6JUVf+TS0v/g0pKpdiJip3OeXr08Kiq//y0
-        tf24d3j/s3Fy6NCGhs+5e3vruHd4/9iEhP7choX+u2tr/3k+PvBeMzSLYjMzpgAAAADPf4A8zHBx7e+n
-        qP//wcL8+7O0/blyc/6FRUb/uHBy/u2dnv3pl5f+4o6O/btubv9cKyzmAwAAFAEAAAH/yss4vVVV7vSq
-        q///w8T9/7W2//Wsrf/5t7j+/72//fWsrP7lmpr/4JCR/9+Oj//mkZH8xHR1/28yM+oCAQEC0pWWJfGh
-        oNr9s7T//8LE/8N7fOWsXV7z5pue///Cw/7elpf/mVpb8ZNZWufPhIX/4ZCQ/8R2dv+YU1PLAAAAAAAA
-        AADNkpND2ZeX1eKSk/8bEhEcd0tNm/+xs///v7/z5ZOV/0ghI4oqHh8exn9/6oxVVPGfXF3RpWZmEwAA
-        AAEAAAAAAAAAAAAAAAAGBAQHAAAAAI1dXbDom5z/x4KD8+KJi/9/TU2dAAAAAAYEBAgAAAAAAAAAAAAA
-        AAAAAAAA/D8AAMwjAACAAQAAAAEAAAABAADAAwAAQAAAAAMAAAADgAAAA4AAAAAAAADAAwAAgAEAAIAB
-        AADIIwAA+D8AAA==
+        AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAC4AAAA/wAAAP8AAAA8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAuAAAAP8AAAD/AAAAPAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALgAAAD/AAAA/wAAADwAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC4AAAA/wAAAP8AAAA8AAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAuAAAAP8AAAD/AAAAdgAAANwAAAD/AAAAhQAA
+        ALgAAAD/AAAA/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALgAAAD/AAAA/wAAAP8AAAD/AAAA/wAA
+        AP8AAAD/AAAA/wAAAP8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC4AAAA/wAAAP8AAADLAAAAIgAA
+        ABMAAACoAAAA/wAAAP8AAAD/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAuAAAAP8AAAD/AAAAWAAA
+        AAAAAAAAAAAAIgAAAP8AAAD/AAAA/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALgAAAD/AAAA/wAA
+        ADwAAAAAAAAAAAAAAAAAAAD/AAAA/wAAAP8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC4AAAA/wAA
+        AP8AAAA8AAAAAAAAAAAAAAAAAAAA/wAAAP8AAAD/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAuAAA
+        AP8AAAD/AAAAPAAAAAAAAAAAAAAAAAAAAP8AAAD/AAAA/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        ALgAAAD/AAAA/wAAADwAAAAAAAAAAAAAAAAAAAD/AAAA/wAAAP8AAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAC4AAAA/wAAAP8AAAA8AAAAAAAAAAAAAAAAAAAA/wAAAP8AAAD/AAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAuAAAAP8AAAD/AAAAPAAAAAAAAAAAAAAAAAAAAP8AAAD/AAAA/wAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAALgAAAD/AAAA/wAAADwAAAAAAAAAAAAAAAAAAAD/AAAA/wAAAP8AAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAA4f8AAOH/AADh/wAA4f8AAOAHAADgBwAA4AcAAOGHAADhxwAA4ccAAOHHAADhxwAA4ccAAOHH
+        AADhxwAA//8AAA==
 </value>
   </data>
 </root>
