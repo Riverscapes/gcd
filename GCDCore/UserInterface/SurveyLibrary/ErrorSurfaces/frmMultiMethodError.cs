@@ -108,11 +108,24 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
                     // Create the raster then add it to the DEM survey
                     ucName.AbsolutePath.Directory.Create();
 
+                    // Get the mask values dictionary
                     GCDCore.Project.Masks.RegularMask mask = cboMask.SelectedItem as GCDCore.Project.Masks.RegularMask;
+                    Dictionary<string, string> maskValues = mask.ActiveFieldValues;
 
                     // Build dictionary of GCDConsole error properties
                     Dictionary<string, ErrorRasterProperties> gcdErrProps = new Dictionary<string, ErrorRasterProperties>();
-                    ErrProps.ToList().ForEach(x => gcdErrProps.Add(x.Name, x.GCDErrSurfPropery));
+                    foreach (KeyValuePair<string, string> kvp in maskValues)
+                    {
+                        foreach (ErrorSurfaceProperty prop in ErrProps)
+                        {
+                            if (string.Compare(prop.Name, kvp.Key, true) == 0 || string.Compare(prop.Name, kvp.Value, true) == 0)
+                            {
+                                // For GCDConsole always add using mask value (not label)
+                                gcdErrProps.Add(kvp.Key, prop.GCDErrSurfPropery);
+                                break;
+                            }
+                        }
+                    }
 
                     // Build dictionary of GCD project error properties
                     Dictionary<string, ErrorSurfaceProperty> errProps = new Dictionary<string, ErrorSurfaceProperty>();
