@@ -103,9 +103,9 @@ namespace GCDCore.UserInterface.LinearExtraction
                 {
                     DoDBase dod = ElevationSurface as DoDBase;
                     rasters.Add(dod.ThrDoD.Raster);
-                    if (dod is DoDPropagated)
+                    if (dod.ThrErr != null)
                     {
-                        rasters.Add(((DoDPropagated)dod).PropagatedError);
+                        rasters.Add(dod.ThrErr.Raster);
                     }
                 }
 
