@@ -67,8 +67,8 @@ namespace GCDCore.Project
             // The FIS library doesn't need to exist
             FISLibrary = new ErrorCalculation.FIS.FISLibrary(ApplicationFolder);
             FISLibrary.Load();
-            
-            ExcelTemplatesFolder = new DirectoryInfo(Path.Combine(ApplicationFolder.FullName, "ExcelTemplates"));
+
+            ExcelTemplatesFolder = new DirectoryInfo(Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "Deploy", "ExcelTemplates"));
             if (!ExcelTemplatesFolder.Exists)
             {
                 Exception ex = new Exception("The GCD Excel template folder path does not exist.");
