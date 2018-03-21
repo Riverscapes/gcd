@@ -67,6 +67,7 @@ namespace GCDCore.UserInterface.FISLibrary
             grdPublications.DataSource = FISLibraryItem.Publications;
             grdDatasets.DataSource = FISLibraryItem.ExampleDatasets;
             txtDescription.Text = FISLibraryItem.Description;
+            grdMetaData.DataSource = FISLibraryItem.Metadata;
 
             try
             {

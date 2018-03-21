@@ -42,6 +42,10 @@ namespace GCDCore.ErrorCalculation.FIS
             Metadata = new naru.ui.SortableBindingList<FISMetaItem>();
         }
 
+        /// <summary>
+        /// Creating new custom, user FIS item from an existing FIS rule file
+        /// </summary>
+        /// <param name="fisfilePath"></param>
         public FISLibraryItem(string fisfilePath)
         {
             FISType = FISLibrary.FISLibraryItemTypes.User;
@@ -50,6 +54,24 @@ namespace GCDCore.ErrorCalculation.FIS
             Publications = new naru.ui.SortableBindingList<FISMetaItem>();
             ExampleDatasets = new naru.ui.SortableBindingList<FISMetaItem>();
             Metadata = new naru.ui.SortableBindingList<FISMetaItem>();
+
+            // ensure that the metadata list contains the essential items
+            AddMetadataItem("Contributor");
+            AddMetadataItem("Contributor Email");
+            AddMetadataItem("Organization");
+            AddMetadataItem("Purpose");
+            AddMetadataItem("URL");
+            AddMetadataItem("Survey Type");
+        }
+
+        /// <summary>
+        /// Ensure that the metadata item contains the essential fields
+        /// </summary>
+        /// <param name="key"></param>
+        private void AddMetadataItem(string key)
+        {
+            if (!Metadata.Any(x => string.Compare(x.Title, key, true) == 0))
+                Metadata.Add(new FISMetaItem(key, string.Empty));
         }
 
         public FISLibraryItem(XmlNode nodFISItem, FISLibrary.FISLibraryItemTypes eType, System.IO.DirectoryInfo rootDir)
