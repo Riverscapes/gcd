@@ -19,10 +19,10 @@ From the *Project Menu*, you can create` New... `projects, `Open...` existing pr
 
 #### Commands
 
-- [A. New GCD Project]({{ site.baseurl }}/gcd-command-reference/project-menu/new-project)
-- [B. Open GCD Project]({{ site.baseurl }}/gcd-command-reference/project-menu/open-project)
-- [C. Close GCD Project]({{ site.baseurl }}/gcd-command-reference/project-menu/close-project)
-- [D. GCD Project Report]({{ site.baseurl }}/gcd-command-reference/project-menu/d-gcd-project-report)
+- [New GCD Project]({{ site.baseurl }}/gcd-command-reference/project-menu/new-project)
+- [Open GCD Project]({{ site.baseurl }}/gcd-command-reference/project-menu/open-project)
+- [Close GCD Project]({{ site.baseurl }}/gcd-command-reference/project-menu/close-project)
+- [GCD Project Report]({{ site.baseurl }}/gcd-command-reference/project-menu/d-gcd-project-report)
 
 In addition to the above commands, the [GCD Project Explorer]({{ site.baseurl }}/gcd-command-reference/gcd-project-explorer) can be accessed from the Project Menu, the Project Properties can be reviewed and the description edited, and you can [Browse GCD Project Folder]({{ site.baseurl }}/gcd-command-reference/gcd-project-explorer/project-context-menu/iii-explore-gcd-project-folder).
 
