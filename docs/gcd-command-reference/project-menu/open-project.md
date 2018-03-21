@@ -1,5 +1,6 @@
 ---
-title: B. Open GCD Project
+title: Open GCD Project
+weight: 2
 ---
 
 If you have previously created a [GCD project]({{ site.baseurl }}/gcd-concepts/project), you can reload it at any time to add to it or browse through it using the `Open Project` command. The command brings up the `Open GCD Project` dialog, which is a standard browse dialog to locate the `*.gcd` [project file]({{ site.baseurl }}/gcd-concepts/project/-gcd-files) you wish to load.
