@@ -38,6 +38,7 @@ GCD Standalone is a desktop software version that performs all the core GCD func
 
 </div>
 
+# Stand Alone vs. ArcGIS Add In
 ## GCD AddIn for ArcGIS
 
 ### AddIn Prerequisities
@@ -45,8 +46,7 @@ GCD Standalone is a desktop software version that performs all the core GCD func
 * ArcGIS 10.4 or newer version of ArcGIS 10.x. Unfortunately, the older versions (10.3 and lower) of ArcGIS are not supported for GCD 7.X. Note that GCD 6.0 will work on ArcGIS 10.0 - 10.5. Also note that in 10.4 and 10.5, both GCD 6.0 and GCD 7.0 can be installed concurrently. Currently GCD projects from 6.0 and 7.0 are not compatabile.  ArcPro is also **not** supported (yet).
 * [Microsoft .Net Framework 4.5.2](https://www.microsoft.com/en-ca/download/details.aspx?id=42642). This should already be installed if you are running Windows 10. It's also required by ArcGIS 10.4.
 
-<a class="button large expanded" href="https://github.com/Riverscapes/gcd/releases">
-        <span class="fa fa-cloud-download">
+
 
 ## GCD Standalone
 
@@ -56,8 +56,7 @@ GCD standalone is available as a **64 bit** application only. It therefore shoul
 
 GCD standalone is a deployed using Microsoft's ClickOnce technology. This allows the application to install itself in your user profile folder on your computer. You should **not** need administrator privileges to install it. That said, when you click on the above link to download the setup.exe installation you will need to read the prompts in your web browser carefully, since most browsers will warn you about downloading executable files.
 
-<a class="button large expanded" href="https://github.com/Riverscapes/gcd/releases">
-        <span class="fa fa-cloud-download">
+
 
 ### Standalone Prerequisites
 
