@@ -1,5 +1,5 @@
 ---
-title: A. Clean Raster Tool
+title: Clean Raster Tool
 ---
 
 The `Clean Raster` tool is a very powerful tool for checking if a raster has *internal divisible consistency* and resizing and/or resampling rasters. 
