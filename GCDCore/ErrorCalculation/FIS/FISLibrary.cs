@@ -65,6 +65,11 @@ namespace GCDCore.ErrorCalculation.FIS
                 return;
             }
 
+            // System FIS Library contains relative paths and the directory storing the manifest XML is needed
+            DirectoryInfo rootDir = null;
+            if (eType == FISLibraryItemTypes.System)
+                rootDir = filePath.Directory;
+
             XmlDocument xmlDoc = new XmlDocument();
             try
             {
@@ -74,7 +79,7 @@ namespace GCDCore.ErrorCalculation.FIS
                 {
                     try
                     {
-                        FISLibraryItem item = new FISLibraryItem(nodItem, eType);
+                        FISLibraryItem item = new FISLibraryItem(nodItem, eType, rootDir);
                         FISItems.Add(item);
                     }
                     catch (Exception ex)

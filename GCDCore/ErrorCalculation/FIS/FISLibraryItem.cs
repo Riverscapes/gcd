@@ -52,12 +52,23 @@ namespace GCDCore.ErrorCalculation.FIS
             Metadata = new naru.ui.SortableBindingList<FISMetaItem>();
         }
 
-        public FISLibraryItem(XmlNode nodFISItem, FISLibrary.FISLibraryItemTypes eType)
+        public FISLibraryItem(XmlNode nodFISItem, FISLibrary.FISLibraryItemTypes eType, System.IO.DirectoryInfo rootDir)
         {
             Name = nodFISItem.SelectSingleNode("Name").InnerText;
             FISType = eType;
-            FilePath = new System.IO.FileInfo(nodFISItem.SelectSingleNode("FilePath").InnerText);
             Description = GetSafeNodeValue(nodFISItem, "Description");
+
+            if (rootDir is System.IO.DirectoryInfo)
+            {
+                // System FIS Library XML stores relative paths to the FIS Library XML manfiest
+                FilePath = new System.IO.FileInfo(System.IO.Path.Combine(rootDir.FullName, nodFISItem.SelectSingleNode("FilePath").InnerText));
+            }
+            else
+            {
+                // User FIS items store absolute file paths in the custom FIS Library XML
+                FilePath = new System.IO.FileInfo(nodFISItem.SelectSingleNode("FilePath").InnerText);
+            }
+            System.Diagnostics.Debug.Assert(FilePath.Exists, "This constructor should only be called if the FIS file actually exists");
 
             Inputs = new List<FISInputMeta>();
             Publications = new naru.ui.SortableBindingList<FISMetaItem>();
