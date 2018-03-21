@@ -1,5 +1,6 @@
 ---
-title: 1. Project Menu
+title: Project Menu
+weight: 1
 ---
 
 The main entry point to begin using the GCD Software is the *Project Menu*:
