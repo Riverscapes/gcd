@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using GCDCore.Project;
 using GCDConsoleLib.GCD;
 using GCDConsoleLib;
+using System.IO;
 
 namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
 {
@@ -135,6 +136,9 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
                     ErrorSurface = new ErrorSurface(ucName.ItemName, ucName.AbsolutePath, DEM, chkDefault.Checked, errProps, mask);
                     DEM.ErrorSurfaces.Add(ErrorSurface);
                     ProjectManager.AddNewProjectItemToMap(ErrorSurface);
+
+                    // If there are any FIS file(s), copy them next to the error raster to aid reproducability
+                    ErrProps.ToList().ForEach(x => frmSingleMethodError.CopyFISFileToFolder(x, ucName.AbsolutePath.Directory));
                 }
                 else
                 {

@@ -72,6 +72,9 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
                     ErrorSurface = new ErrorSurface(ucName.ItemName, ucName.AbsolutePath, DEM, chkDefault.Checked, ucErrProps.ErrSurfProperty);
                     DEM.ErrorSurfaces.Add(ErrorSurface);
                     ProjectManager.AddNewProjectItemToMap(ErrorSurface);
+
+                    // If there's a FIS file, copy it next to the error raster to aid reproducability
+                    CopyFISFileToFolder(ucErrProps.ErrSurfProperty, ucName.AbsolutePath.Directory);
                 }
                 else
                 {
@@ -88,6 +91,26 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
             {
                 DialogResult = DialogResult.None;
                 naru.error.ExceptionUI.HandleException(ex, "Error editing single region error surface");
+            }
+        }
+
+        public static void CopyFISFileToFolder(ErrorSurfaceProperty errProp, DirectoryInfo dir)
+        {
+            if (errProp.FISRuleFile is FileInfo)
+            {
+                try
+                {
+                    // Should already exist because it was used for the error surface
+                    dir.Create();
+
+                    FileInfo newPath = naru.os.File.GetNewSafeName(dir.FullName, Path.GetFileNameWithoutExtension(errProp.FISRuleFile.FullName), Path.GetExtension(errProp.FISRuleFile.FullName));
+                    errProp.FISRuleFile.CopyTo(newPath.FullName);
+                }
+                catch (Exception ex)
+                {
+                    // Do nothing. This is non-essential copy of non-project registered file
+                    Console.WriteLine("Error copying FIS file next to error surface", ex.Message);
+                }
             }
         }
     }

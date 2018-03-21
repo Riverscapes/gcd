@@ -59,7 +59,7 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
             colCombo.ValueMember = "This"; // needed to support binding column to complex object
 
             cboAssociated.DataSource = AssociatedSurfaces;
-            cboFIS.DataSource = ProjectManager.FISLibrary;
+            cboFIS.DataSource = ProjectManager.FISLibrary.FISItems;
 
             cboFIS.SelectedIndexChanged += cboFIS_SelectedIndexChanged;
             rdoAssociated.CheckedChanged += ErrorSurfaceTypeChanged;
