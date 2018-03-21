@@ -48,14 +48,23 @@ namespace GCDCore.Project
         {
             Dictionary<string, SurveyType> dSurveyTypes = new Dictionary<string, SurveyType>();
 
-            XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.Load(filePath.FullName);
-
-            foreach (XmlNode nodType in xmlDoc.SelectNodes("SurveyTypes/SurveyType"))
+            // Default to custom survey types, but look in software deployment folder if that's not present
+            string path = filePath.FullName;
+            if (!File.Exists(path))
             {
-                string sName = nodType.SelectSingleNode("Name").InnerText;
-                decimal fError = decimal.Parse(nodType.SelectSingleNode("Error").InnerText);
-                dSurveyTypes[sName] = new SurveyType(sName, fError);
+                path = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "Deploy", "SurveyTypes.xml");
+            }
+
+            if (File.Exists(path))
+            {
+                XmlDocument xmlDoc = new XmlDocument();
+                xmlDoc.Load(path);
+                foreach (XmlNode nodType in xmlDoc.SelectNodes("SurveyTypes/SurveyType"))
+                {
+                    string sName = nodType.SelectSingleNode("Name").InnerText;
+                    decimal fError = decimal.Parse(nodType.SelectSingleNode("Error").InnerText);
+                    dSurveyTypes[sName] = new SurveyType(sName, fError);
+                }
             }
 
             return dSurveyTypes;
