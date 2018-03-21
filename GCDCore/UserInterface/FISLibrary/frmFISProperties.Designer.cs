@@ -43,10 +43,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.grpInputs = new System.Windows.Forms.GroupBox();
             this.grdInputs = new System.Windows.Forms.DataGridView();
-            this.colInputName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colInputUnits = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colInputDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colInputSource = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.txtFilePath = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
@@ -71,6 +67,10 @@
             this.colURL = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colProperty = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colInputName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colInputUnits = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colInputDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colInputSource = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -242,6 +242,7 @@
             // 
             // grdInputs
             // 
+            this.grdInputs.AllowUserToResizeRows = false;
             this.grdInputs.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grdInputs.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colInputName,
@@ -253,30 +254,6 @@
             this.grdInputs.Name = "grdInputs";
             this.grdInputs.Size = new System.Drawing.Size(467, 295);
             this.grdInputs.TabIndex = 0;
-            // 
-            // colInputName
-            // 
-            this.colInputName.DataPropertyName = "Title";
-            this.colInputName.HeaderText = "Name";
-            this.colInputName.Name = "colInputName";
-            // 
-            // colInputUnits
-            // 
-            this.colInputUnits.DataPropertyName = "Units";
-            this.colInputUnits.HeaderText = "Units";
-            this.colInputUnits.Name = "colInputUnits";
-            // 
-            // colInputDescription
-            // 
-            this.colInputDescription.DataPropertyName = "Description";
-            this.colInputDescription.HeaderText = "Description";
-            this.colInputDescription.Name = "colInputDescription";
-            // 
-            // colInputSource
-            // 
-            this.colInputSource.DataPropertyName = "Source";
-            this.colInputSource.HeaderText = "Source";
-            this.colInputSource.Name = "colInputSource";
             // 
             // txtFilePath
             // 
@@ -517,6 +494,31 @@
             this.colValue.HeaderText = "Value";
             this.colValue.Name = "colValue";
             // 
+            // colInputName
+            // 
+            this.colInputName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colInputName.DataPropertyName = "Name";
+            this.colInputName.HeaderText = "Name";
+            this.colInputName.Name = "colInputName";
+            // 
+            // colInputUnits
+            // 
+            this.colInputUnits.DataPropertyName = "Units";
+            this.colInputUnits.HeaderText = "Units";
+            this.colInputUnits.Name = "colInputUnits";
+            // 
+            // colInputDescription
+            // 
+            this.colInputDescription.DataPropertyName = "Description";
+            this.colInputDescription.HeaderText = "Description";
+            this.colInputDescription.Name = "colInputDescription";
+            // 
+            // colInputSource
+            // 
+            this.colInputSource.DataPropertyName = "Source";
+            this.colInputSource.HeaderText = "Source";
+            this.colInputSource.Name = "colInputSource";
+            // 
             // frmFISProperties
             // 
             this.AcceptButton = this.cmdOK;
@@ -575,10 +577,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.GroupBox grpInputs;
         private System.Windows.Forms.DataGridView grdInputs;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colInputName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colInputUnits;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colInputDescription;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colInputSource;
         private System.Windows.Forms.TextBox txtFilePath;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtName;
@@ -599,5 +597,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colURL;
         private System.Windows.Forms.DataGridViewTextBoxColumn colProperty;
         private System.Windows.Forms.DataGridViewTextBoxColumn colValue;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colInputName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colInputUnits;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colInputDescription;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colInputSource;
     }
 }

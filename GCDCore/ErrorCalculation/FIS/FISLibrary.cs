@@ -75,7 +75,7 @@ namespace GCDCore.ErrorCalculation.FIS
             {
                 xmlDoc.Load(filePath.FullName);
 
-                foreach (XmlNode nodItem in xmlDoc.DocumentElement.SelectNodes("Item"))
+                foreach (XmlNode nodItem in xmlDoc.DocumentElement.SelectNodes("FISLibraryItem"))
                 {
                     try
                     {

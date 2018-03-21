@@ -17,5 +17,12 @@ namespace GCDCore.ErrorCalculation.FIS
         {
             Name = name;
         }
+
+        /// <summary>
+        /// Default constructor required for binding
+        /// </summary>
+        public FISInputMeta()
+        {
+        }
     }
 }

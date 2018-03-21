@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
+using System.ComponentModel;
 
 namespace GCDCore.ErrorCalculation.FIS
 {
@@ -17,7 +18,7 @@ namespace GCDCore.ErrorCalculation.FIS
         public string OutputDescription { get; set; }
 
         // Note FIS Inputs are not sortable
-        public readonly List<FISInputMeta> Inputs;
+        public readonly BindingList<FISInputMeta> Inputs;
         public readonly naru.ui.SortableBindingList<FISMetaItem> Publications;
         public readonly naru.ui.SortableBindingList<FISMetaItem> ExampleDatasets;
         public readonly naru.ui.SortableBindingList<FISMetaItem> Metadata;
@@ -36,7 +37,7 @@ namespace GCDCore.ErrorCalculation.FIS
             FISType = eType;
             Name = sName;
             FilePath = fiPath;
-            Inputs = new List<FISInputMeta>();
+            Inputs = new BindingList<FISInputMeta>();
             Publications = new naru.ui.SortableBindingList<FISMetaItem>();
             ExampleDatasets = new naru.ui.SortableBindingList<FISMetaItem>();
             Metadata = new naru.ui.SortableBindingList<FISMetaItem>();
@@ -50,7 +51,7 @@ namespace GCDCore.ErrorCalculation.FIS
         {
             FISType = FISLibrary.FISLibraryItemTypes.User;
             FilePath = new System.IO.FileInfo(fisfilePath);
-            Inputs = new List<FISInputMeta>();
+            Inputs = new BindingList<FISInputMeta>();
             Publications = new naru.ui.SortableBindingList<FISMetaItem>();
             ExampleDatasets = new naru.ui.SortableBindingList<FISMetaItem>();
             Metadata = new naru.ui.SortableBindingList<FISMetaItem>();
@@ -92,7 +93,7 @@ namespace GCDCore.ErrorCalculation.FIS
             }
             System.Diagnostics.Debug.Assert(FilePath.Exists, "This constructor should only be called if the FIS file actually exists");
 
-            Inputs = new List<FISInputMeta>();
+            Inputs = new BindingList<FISInputMeta>();
             Publications = new naru.ui.SortableBindingList<FISMetaItem>();
             ExampleDatasets = new naru.ui.SortableBindingList<FISMetaItem>();
             Metadata = new naru.ui.SortableBindingList<FISMetaItem>();
