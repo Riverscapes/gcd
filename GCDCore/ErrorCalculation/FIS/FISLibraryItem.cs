@@ -134,7 +134,7 @@ namespace GCDCore.ErrorCalculation.FIS
 
         public void Serialize(XmlNode nodParent)
         {
-            XmlNode nodItem = nodParent.AppendChild(nodParent.OwnerDocument.CreateElement("Item"));
+            XmlNode nodItem = nodParent.AppendChild(nodParent.OwnerDocument.CreateElement("FISLibraryItem"));
             nodItem.AppendChild(nodParent.OwnerDocument.CreateElement("Name")).InnerText = Name;
             nodItem.AppendChild(nodParent.OwnerDocument.CreateElement("FilePath")).InnerText = FilePath.FullName;
             naru.xml.XMLHelpers.AddNode(nodItem, "Description", Description);

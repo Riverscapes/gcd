@@ -15,7 +15,6 @@ namespace GCDAddIn
         {
             try
             {
-                GCDCore.Project.ProjectManager.CopyDeployFolder();
                 GCDCore.Project.ProjectManager.Init(GCDCore.Properties.Settings.Default.AutomaticPyramids);
             }
             catch (Exception ex)
