@@ -1,10 +1,11 @@
 ---
-title: 3. Analysis Menu
+title: Where did the Analysis Menu go?
+weight: 9
 ---
-
+In GCD 6, there was a GCD Analysis Menu:
 ![GCD6_Menu_Analysis]({{ site.baseurl }}/assets/images/GCD6_Menu_Analysis.png)
 
-The `GCD Analysis` menu is a portal to a variety of stand-alone and GCD Project specific analysis commands:
+The `GCD Analysis` menu was a portal to a variety of stand-alone and GCD Project specific analysis commands. Those stand-alone tools that can help in preparing data for subsequent use in a GCD Project. The tools have more generic applications than their use within the context of a GCD project. As such, in GCD 7 we moved these to their own Add-in we call TAT - Topographic Analysis Tools. 
 
 #### Commands
 
