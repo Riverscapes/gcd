@@ -1,5 +1,6 @@
 ---
-title: A. New GCD Project
+title: New GCD Project
+weight: 1
 ---
 
 The `Create New Project` dialog is where you create a new [project]({{ site.baseurl }}/gcd-concepts/project) by specifying the following information: 
