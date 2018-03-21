@@ -93,6 +93,14 @@ namespace GCDCore.UserInterface.FISLibrary
                 return false;
             }
 
+            if (IsEditMode && !txtFISFile.ReadOnly)
+            {
+                MessageBox.Show("You must save your changes to the FIS rule file before you can continue.", "Editing FIS File", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                tabControl1.SelectedTab = tabFISFile;
+                cmdSaveFISFile.Select();
+                return false;
+            }
+
             return true;
         }
 

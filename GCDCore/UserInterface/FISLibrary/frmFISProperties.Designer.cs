@@ -43,40 +43,42 @@
             this.label3 = new System.Windows.Forms.Label();
             this.grpInputs = new System.Windows.Forms.GroupBox();
             this.grdInputs = new System.Windows.Forms.DataGridView();
-            this.txtFilePath = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.txtName = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.cmdEditFISFile = new System.Windows.Forms.Button();
-            this.cmdSaveFISFile = new System.Windows.Forms.Button();
-            this.txtFISFile = new System.Windows.Forms.TextBox();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.grdPublications = new System.Windows.Forms.DataGridView();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.grdDatasets = new System.Windows.Forms.DataGridView();
-            this.tabPage5 = new System.Windows.Forms.TabPage();
-            this.grdMetaData = new System.Windows.Forms.DataGridView();
-            this.tabPage6 = new System.Windows.Forms.TabPage();
-            this.txtDescription = new System.Windows.Forms.TextBox();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.colCitation = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPURL = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colURL = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colProperty = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colInputName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colInputUnits = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colInputDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colInputSource = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.txtFilePath = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txtName = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.tabFISFile = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.txtFISFile = new System.Windows.Forms.TextBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.cmdSaveFISFile = new System.Windows.Forms.Button();
+            this.cmdEditFISFile = new System.Windows.Forms.Button();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.grdPublications = new System.Windows.Forms.DataGridView();
+            this.colCitation = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPURL = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.grdDatasets = new System.Windows.Forms.DataGridView();
+            this.colTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colURL = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.grdMetaData = new System.Windows.Forms.DataGridView();
+            this.colProperty = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.txtDescription = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.grpInputs.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdInputs)).BeginInit();
-            this.tabPage2.SuspendLayout();
+            this.tabFISFile.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdPublications)).BeginInit();
             this.tabPage4.SuspendLayout();
@@ -84,8 +86,6 @@
             this.tabPage5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdMetaData)).BeginInit();
             this.tabPage6.SuspendLayout();
-            this.tableLayoutPanel1.SuspendLayout();
-            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // cmdCancel
@@ -129,7 +129,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabFISFile);
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Controls.Add(this.tabPage5);
@@ -255,6 +255,31 @@
             this.grdInputs.Size = new System.Drawing.Size(467, 295);
             this.grdInputs.TabIndex = 0;
             // 
+            // colInputName
+            // 
+            this.colInputName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colInputName.DataPropertyName = "Name";
+            this.colInputName.HeaderText = "Name";
+            this.colInputName.Name = "colInputName";
+            // 
+            // colInputUnits
+            // 
+            this.colInputUnits.DataPropertyName = "Units";
+            this.colInputUnits.HeaderText = "Units";
+            this.colInputUnits.Name = "colInputUnits";
+            // 
+            // colInputDescription
+            // 
+            this.colInputDescription.DataPropertyName = "Description";
+            this.colInputDescription.HeaderText = "Description";
+            this.colInputDescription.Name = "colInputDescription";
+            // 
+            // colInputSource
+            // 
+            this.colInputSource.DataPropertyName = "Source";
+            this.colInputSource.HeaderText = "Source";
+            this.colInputSource.Name = "colInputSource";
+            // 
             // txtFilePath
             // 
             this.txtFilePath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -293,28 +318,51 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Name";
             // 
-            // tabPage2
+            // tabFISFile
             // 
-            this.tabPage2.Controls.Add(this.tableLayoutPanel1);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(485, 501);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "FIS Definition";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.tabFISFile.Controls.Add(this.tableLayoutPanel1);
+            this.tabFISFile.Location = new System.Drawing.Point(4, 22);
+            this.tabFISFile.Name = "tabFISFile";
+            this.tabFISFile.Padding = new System.Windows.Forms.Padding(3);
+            this.tabFISFile.Size = new System.Drawing.Size(485, 501);
+            this.tabFISFile.TabIndex = 1;
+            this.tabFISFile.Text = "FIS Definition";
+            this.tabFISFile.UseVisualStyleBackColor = true;
             // 
-            // cmdEditFISFile
+            // tableLayoutPanel1
             // 
-            this.cmdEditFISFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmdEditFISFile.Image = global::GCDCore.Properties.Resources.edit;
-            this.cmdEditFISFile.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdEditFISFile.Location = new System.Drawing.Point(422, 0);
-            this.cmdEditFISFile.Name = "cmdEditFISFile";
-            this.cmdEditFISFile.Size = new System.Drawing.Size(23, 23);
-            this.cmdEditFISFile.TabIndex = 2;
-            this.cmdEditFISFile.UseVisualStyleBackColor = true;
-            this.cmdEditFISFile.Click += new System.EventHandler(this.cmdEditFISFile_Click);
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Controls.Add(this.txtFISFile, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 0);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(479, 495);
+            this.tableLayoutPanel1.TabIndex = 3;
+            // 
+            // txtFISFile
+            // 
+            this.txtFISFile.AcceptsReturn = true;
+            this.txtFISFile.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtFISFile.Location = new System.Drawing.Point(3, 33);
+            this.txtFISFile.Multiline = true;
+            this.txtFISFile.Name = "txtFISFile";
+            this.txtFISFile.Size = new System.Drawing.Size(473, 459);
+            this.txtFISFile.TabIndex = 0;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.cmdSaveFISFile);
+            this.panel1.Controls.Add(this.cmdEditFISFile);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(3, 3);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(473, 24);
+            this.panel1.TabIndex = 1;
             // 
             // cmdSaveFISFile
             // 
@@ -327,14 +375,17 @@
             this.cmdSaveFISFile.UseVisualStyleBackColor = true;
             this.cmdSaveFISFile.Click += new System.EventHandler(this.cmdSaveFISFile_Click);
             // 
-            // txtFISFile
+            // cmdEditFISFile
             // 
-            this.txtFISFile.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtFISFile.Location = new System.Drawing.Point(3, 33);
-            this.txtFISFile.Multiline = true;
-            this.txtFISFile.Name = "txtFISFile";
-            this.txtFISFile.Size = new System.Drawing.Size(473, 459);
-            this.txtFISFile.TabIndex = 0;
+            this.cmdEditFISFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmdEditFISFile.Image = global::GCDCore.Properties.Resources.edit;
+            this.cmdEditFISFile.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.cmdEditFISFile.Location = new System.Drawing.Point(422, 0);
+            this.cmdEditFISFile.Name = "cmdEditFISFile";
+            this.cmdEditFISFile.Size = new System.Drawing.Size(23, 23);
+            this.cmdEditFISFile.TabIndex = 2;
+            this.cmdEditFISFile.UseVisualStyleBackColor = true;
+            this.cmdEditFISFile.Click += new System.EventHandler(this.cmdEditFISFile_Click);
             // 
             // tabPage3
             // 
@@ -360,6 +411,20 @@
             this.grdPublications.Size = new System.Drawing.Size(479, 495);
             this.grdPublications.TabIndex = 0;
             // 
+            // colCitation
+            // 
+            this.colCitation.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colCitation.DataPropertyName = "Title";
+            this.colCitation.HeaderText = "Citation";
+            this.colCitation.Name = "colCitation";
+            // 
+            // colPURL
+            // 
+            this.colPURL.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colPURL.DataPropertyName = "Value";
+            this.colPURL.HeaderText = "URL";
+            this.colPURL.Name = "colPURL";
+            // 
             // tabPage4
             // 
             this.tabPage4.Controls.Add(this.grdDatasets);
@@ -384,6 +449,20 @@
             this.grdDatasets.Size = new System.Drawing.Size(479, 495);
             this.grdDatasets.TabIndex = 0;
             // 
+            // colTitle
+            // 
+            this.colTitle.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colTitle.DataPropertyName = "Title";
+            this.colTitle.HeaderText = "Title";
+            this.colTitle.Name = "colTitle";
+            // 
+            // colURL
+            // 
+            this.colURL.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colURL.DataPropertyName = "Value";
+            this.colURL.HeaderText = "URL";
+            this.colURL.Name = "colURL";
+            // 
             // tabPage5
             // 
             this.tabPage5.Controls.Add(this.grdMetaData);
@@ -407,6 +486,20 @@
             this.grdMetaData.Size = new System.Drawing.Size(479, 495);
             this.grdMetaData.TabIndex = 0;
             // 
+            // colProperty
+            // 
+            this.colProperty.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colProperty.DataPropertyName = "Title";
+            this.colProperty.HeaderText = "Property";
+            this.colProperty.Name = "colProperty";
+            // 
+            // colValue
+            // 
+            this.colValue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colValue.DataPropertyName = "Value";
+            this.colValue.HeaderText = "Value";
+            this.colValue.Name = "colValue";
+            // 
             // tabPage6
             // 
             this.tabPage6.Controls.Add(this.txtDescription);
@@ -426,98 +519,6 @@
             this.txtDescription.Name = "txtDescription";
             this.txtDescription.Size = new System.Drawing.Size(479, 495);
             this.txtDescription.TabIndex = 0;
-            // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.txtFISFile, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(479, 495);
-            this.tableLayoutPanel1.TabIndex = 3;
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.cmdSaveFISFile);
-            this.panel1.Controls.Add(this.cmdEditFISFile);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(3, 3);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(473, 24);
-            this.panel1.TabIndex = 1;
-            // 
-            // colCitation
-            // 
-            this.colCitation.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colCitation.DataPropertyName = "Title";
-            this.colCitation.HeaderText = "Citation";
-            this.colCitation.Name = "colCitation";
-            // 
-            // colPURL
-            // 
-            this.colPURL.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colPURL.DataPropertyName = "Value";
-            this.colPURL.HeaderText = "URL";
-            this.colPURL.Name = "colPURL";
-            // 
-            // colTitle
-            // 
-            this.colTitle.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colTitle.DataPropertyName = "Title";
-            this.colTitle.HeaderText = "Title";
-            this.colTitle.Name = "colTitle";
-            // 
-            // colURL
-            // 
-            this.colURL.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colURL.DataPropertyName = "Value";
-            this.colURL.HeaderText = "URL";
-            this.colURL.Name = "colURL";
-            // 
-            // colProperty
-            // 
-            this.colProperty.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colProperty.DataPropertyName = "Title";
-            this.colProperty.HeaderText = "Property";
-            this.colProperty.Name = "colProperty";
-            // 
-            // colValue
-            // 
-            this.colValue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colValue.DataPropertyName = "Value";
-            this.colValue.HeaderText = "Value";
-            this.colValue.Name = "colValue";
-            // 
-            // colInputName
-            // 
-            this.colInputName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colInputName.DataPropertyName = "Name";
-            this.colInputName.HeaderText = "Name";
-            this.colInputName.Name = "colInputName";
-            // 
-            // colInputUnits
-            // 
-            this.colInputUnits.DataPropertyName = "Units";
-            this.colInputUnits.HeaderText = "Units";
-            this.colInputUnits.Name = "colInputUnits";
-            // 
-            // colInputDescription
-            // 
-            this.colInputDescription.DataPropertyName = "Description";
-            this.colInputDescription.HeaderText = "Description";
-            this.colInputDescription.Name = "colInputDescription";
-            // 
-            // colInputSource
-            // 
-            this.colInputSource.DataPropertyName = "Source";
-            this.colInputSource.HeaderText = "Source";
-            this.colInputSource.Name = "colInputSource";
             // 
             // frmFISProperties
             // 
@@ -541,7 +542,10 @@
             this.groupBox2.PerformLayout();
             this.grpInputs.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.grdInputs)).EndInit();
-            this.tabPage2.ResumeLayout(false);
+            this.tabFISFile.ResumeLayout(false);
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
+            this.panel1.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.grdPublications)).EndInit();
             this.tabPage4.ResumeLayout(false);
@@ -550,9 +554,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.grdMetaData)).EndInit();
             this.tabPage6.ResumeLayout(false);
             this.tabPage6.PerformLayout();
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel1.PerformLayout();
-            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -564,7 +565,7 @@
         private System.Windows.Forms.Button cmdHelp;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage tabFISFile;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.DataGridView grdDatasets;
