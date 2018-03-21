@@ -68,17 +68,7 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
             //Setup error surfaces for DEM grid
             for (int i = 0; i < grdDEMs.Rows.Count; i++)
             {
-                DataGridViewComboBoxCell comboCell = grdDEMs[2, i] as DataGridViewComboBoxCell;
-
-                comboCell.DataSource = new BindingSource(DEMs[i].ErrorSurfaces, null);
-                comboCell.DisplayMember = "NameWithDefault";
-
-                //select first item
-                if (DEMs[i].ErrorSurfaces.Count > 0) //check if any error surfaces are available
-                {
-                    comboCell.Value = DEMs[i].ErrorSurfaces[0].NameWithDefault;
-                }
-
+                UpdateDEMErrorSurface(i);
             }
 
             //setup handler for when error surfaces changes
@@ -116,6 +106,7 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
         /// <param name="e"></param>
         private void ComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+
             //Get selected error surface
             ComboBox cbo = (ComboBox)sender;
             ErrorSurface selectedDEMErrorSurface = (ErrorSurface)cbo.SelectedItem;
@@ -126,6 +117,7 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
 
             //Update list of epochs (necessary because we need to make sure the epoch has the correct error surface
             UpdateEpochQueue();
+
         }
 
         /// <summary>
@@ -135,17 +127,32 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
         /// <param name="e"></param>
         private void cmdMoveUp_Click(object sender, EventArgs e)
         {
+            //disable cellenter event and reenable after operation is done to prevent cellenter events from firing
+            grdDEMs.CellEnter -= grdDEMs_CellEnter;
+
+
             DEMSurveyItem selectedDEM = (DEMSurveyItem)grdDEMs.SelectedRows[0].DataBoundItem;
             int index = DEMs.IndexOf(selectedDEM);
+
+            //disable all combobox event handlers
+            DataGridViewComboBoxCell comboCell = grdDEMs[2, index] as DataGridViewComboBoxCell;
+
             if (index > 0)
             {
                 DEMs.Remove(selectedDEM);
                 DEMs.Insert(index - 1, selectedDEM);
+
+                //populate error surfaces
+                UpdateDEMErrorSurface(index - 1);
+
                 grdDEMs.Rows[index - 1].Selected = true;
             }
 
             //Update list of epochs
             UpdateEpochQueue();
+
+            grdDEMs.CellEnter += grdDEMs_CellEnter;
+
         }
 
         /// <summary>
@@ -155,17 +162,44 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
         /// <param name="e"></param>
         private void cmdMoveDown_Click(object sender, EventArgs e)
         {
+            //disable cellenter event and reenable after operation is done to prevent cellenter events from firing
+            grdDEMs.CellEnter -= grdDEMs_CellEnter;
+
             DEMSurveyItem selectedDEM = (DEMSurveyItem)grdDEMs.SelectedRows[0].DataBoundItem;
             int index = DEMs.IndexOf(selectedDEM);
             if (index < DEMs.Count - 1)
             {
                 DEMs.Remove(selectedDEM);
                 DEMs.Insert(index + 1, selectedDEM);
+
+                //populate error surfaces
+                UpdateDEMErrorSurface(index + 1);
+
                 grdDEMs.Rows[index + 1].Selected = true;
             }
 
             //Update list of epochs
             UpdateEpochQueue();
+
+            grdDEMs.CellEnter += grdDEMs_CellEnter;
+
+        }
+
+        /// <summary>
+        /// updates error surface on DEM
+        /// </summary>
+        /// <param name="DEMIndex"></param>
+        private void UpdateDEMErrorSurface(int DEMIndex)
+        {
+            DataGridViewComboBoxCell comboCell = grdDEMs[2, DEMIndex] as DataGridViewComboBoxCell;
+            comboCell.DataSource = new BindingSource(DEMs[DEMIndex].ErrorSurfaces, null);
+            comboCell.DisplayMember = "NameWithDefault";
+            if (DEMs[DEMIndex].ErrorSurfaces.Count > 0) //check if any error surfaces are available
+            {
+                //comboCell.Value = DEMs[DEMIndex].ErrorSurfaces[0].NameWithDefault;
+                comboCell.Value = DEMs[DEMIndex].SelectedErrorSurface.NameWithDefault;
+            }
+
         }
 
         /// <summary>
