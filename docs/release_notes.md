@@ -4,26 +4,26 @@ title: Release Notes
 
 ## 7.0.09 - 22 Mar 2018
 
-* Error Surfaces
-  * Fixed default checkbox
-  * Fixed bug when error surface has no value for cells 
+* Error Surfaces:
+  * Fixed default checkbox.
+  * Fixed bug when error surface has no value for cells. 
   * FIS file copied next to error surface raster.
   where there is valid change between two surfaces.
-* Linear Extractions from DoDs implemented
-* GCD now handles "US Survey Foot" linear units
-* Disabled opening of last project in GCD standalone
-* Morphological analysis now produces spreadsheet
-* Fixed multi-epoch bug when sorting DEMs
-* Regular masks added to map with 30% transparency
-* New FIS library features
-  * System and user FIS shown in library
-  * ET-AL FIS repo included in deployment
-* DoD elevation change bars y axis accounts for error bars
-* Change Detection
-  * Produces thresholded error raster
-  * Adding all DoDs to map
-  * Adding all DoDs with the same surfaces to the map
-  * User can edit DoD name
+* Linear Extractions from DoDs implemented.
+* GCD now handles "US Survey Foot" linear units.
+* Disabled opening of last project in GCD standalone.
+* Morphological analysis now produces a spreadsheet.
+* Fixed multi-epoch bug when sorting DEMs.
+* Regular masks added to map with 30% transparency.
+* New FIS library features:
+  * System and user FIS shown in library.
+  * ET-AL FIS repo included in deployment.
+* DoD elevation change bars y axis accounts for error bars.
+* Change Detection:
+  * Produces thresholded error raster.
+  * Adding all DoDs to map.
+  * Adding all DoDs with the same surfaces to the map.
+  * User can edit DoD name.
 * GCD does not copy `Deploy` folder to `AppData` folder at start-up.
 
 *Known Issues*
