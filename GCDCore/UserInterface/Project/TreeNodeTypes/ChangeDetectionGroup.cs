@@ -24,6 +24,9 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             tsmiBatch.DropDownItems.Add("Multiple Uncertainty Analysis", Properties.Resources.Add, OnMultiUncertainty);
             ContextMenuStrip.Items.Insert(1, tsmiBatch);
 
+            // Override default handling of adding to map
+            ContextMenuStrip.Items[ContextMenuStrip.Items.Count - 2].Click += OnAddAllDoDsToMap;
+
             LoadChildNodes();
         }
 
@@ -90,6 +93,14 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             ChangeDetection.Batch.frmBatchDoD frm = new ChangeDetection.Batch.frmBatchDoD();
             EditTreeItem(frm);
             LoadChildNodes();
+        }
+
+        public void OnAddAllDoDsToMap(object sender, EventArgs e)
+        {
+            foreach (DoDBase dod in ProjectManager.Project.DoDs.Values)
+            {
+                ProjectManager.OnAddRasterToMap(dod.ThrDoD as GCDProjectRasterItem);
+            }
         }
     }
 }

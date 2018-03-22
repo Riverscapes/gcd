@@ -19,8 +19,11 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             : base(parentNodes, name, string.Empty, string.Empty, null, container)
         {
             ContextMenuStrip.Items[0].Text = "Add Change Detection With These New And Old Surfaces";
-            ContextMenuStrip.Items.Insert(1, new ToolStripMenuItem("Add Change Detection With These Surfaces To The Map", Properties.Resources.AddToMap, OnAddPairToMap));
-            
+            // Hide the default Add To Map
+            ContextMenuStrip.Items.RemoveAt(ContextMenuStrip.Items.Count - 2);
+            // Add custom add to map for all DoDs of this pair
+            ContextMenuStrip.Items.Insert(ContextMenuStrip.Items.Count - 1, new ToolStripMenuItem("Add Change Detection With These Surfaces To The Map", Properties.Resources.AddToMap, OnAddPairToMap));
+
             NewSurface = newSurf;
             OldSurface = oldSurf;
 
