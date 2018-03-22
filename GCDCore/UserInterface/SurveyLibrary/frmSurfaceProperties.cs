@@ -104,7 +104,29 @@ namespace GCDCore.UserInterface.SurveyLibrary
                 return;
             }
 
-            Surface.Name = txtName.Text;
+            // Detect if name has been changed - need to update owner dictionaries
+            if (string.Compare(Surface.Name, txtName.Text, false) != 0)
+            {
+                if (Surface is DEMSurvey)
+                {
+                    ProjectManager.Project.DEMSurveys.Remove(Surface.Name);
+                    Surface.Name = txtName.Text;
+                    ProjectManager.Project.DEMSurveys[Surface.Name] = Surface as DEMSurvey;
+                }
+                else if (Surface is Surface)
+                {
+                    ProjectManager.Project.ReferenceSurfaces.Remove(Surface.Name);
+                    Surface.Name = txtName.Text;
+                    ProjectManager.Project.ReferenceSurfaces[Surface.Name] = Surface as Surface;
+                }
+                else if (Surface is ErrorSurface)
+                {
+                    ErrorSurface err = Surface as ErrorSurface;
+                    err.Surf.ErrorSurfaces.Remove(err);
+                    err.Name = txtName.Text;
+                    err.Surf.ErrorSurfaces.Add(err);
+                }
+            }
 
             if (Surface is DEMSurvey)
                 ((DEMSurvey)Surface).SurveyDate = SurveyDate;
@@ -133,9 +155,13 @@ namespace GCDCore.UserInterface.SurveyLibrary
             {
                 bUnique = ProjectManager.Project.IsReferenceSurfaceNameUnique(txtName.Text, (Surface)Surface);
             }
-            else
+            else if (Surface is ErrorSurface)
             {
                 bUnique = ((ErrorSurface)Surface).Surf.IsErrorNameUnique(txtName.Text, (ErrorSurface)Surface);
+            }
+            else
+            {
+                throw new Exception("Unhandled surface type");
             }
 
             if (!bUnique)
