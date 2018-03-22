@@ -23,4 +23,3 @@ The various ways to load an associated surface are shown in the sub commands:
 - [2. Deriving a Slope Analysis](http://gcd6help.joewheaton.org/gcd-command-reference/gcd-project-explorer/d-dem-context-menu/iv-add-associated-surface/2-deriving-a-slope-analysis)
 - [3. Deriving Point Density](http://gcd6help.joewheaton.org/gcd-command-reference/gcd-project-explorer/d-dem-context-menu/iv-add-associated-surface/3-deriving-point-density)
 - [4. Deriving Roughness](http://gcd6help.joewheaton.org/gcd-command-reference/gcd-project-explorer/d-dem-context-menu/iv-add-associated-surface/4-deriving-roughness)
-
