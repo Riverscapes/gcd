@@ -2,6 +2,7 @@
 using System.Xml;
 using System.IO;
 using System.Linq;
+using System.Xml.Schema;
 
 namespace GCDCore.ErrorCalculation.FIS
 {
@@ -48,8 +49,9 @@ namespace GCDCore.ErrorCalculation.FIS
         public void Save()
         {
             XmlDocument xmlDoc = new XmlDocument();
-            XmlNode nodRoot = xmlDoc.AppendChild(xmlDoc.CreateElement("FISLibrary"));
-            xmlDoc.InsertBefore(xmlDoc.CreateXmlDeclaration("1.0", null, null), nodRoot);
+            XmlNode nodRoot = xmlDoc.AppendChild(xmlDoc.CreateElement("FISLibrary", "http://www.w3.org/2001/XMLSchema-instance"));
+            nodRoot.Attributes.Append(xmlDoc.CreateAttribute("noNamespaceSchemaLocation")).InnerText = "https://raw.githubusercontent.com/Riverscapes/fis-dem-error/master/FISLibrary.xsd";
+            xmlDoc.InsertBefore(xmlDoc.CreateXmlDeclaration("1.0", "utf-8", null), nodRoot);
 
             FISItems.Where(x => x.FISType == FISLibraryItemTypes.User).ToList().ForEach(x => x.Serialize(nodRoot));
 
@@ -112,7 +114,7 @@ namespace GCDCore.ErrorCalculation.FIS
                         FISItems.Add(new FISLibraryItem(name, fis, FISLibraryItemTypes.System));
                     }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Console.WriteLine("Error loading unreferenced system FIS file " + fis.FullName);
                 }

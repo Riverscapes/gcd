@@ -121,8 +121,8 @@ namespace GCDCore.UserInterface.FISLibrary
             if (!IsEditMode)
             {
                 GCDCore.Project.ProjectManager.FISLibrary.FISItems.Add(FISLibraryItem);
-                GCDCore.Project.ProjectManager.FISLibrary.Save();
             }
+            GCDCore.Project.ProjectManager.FISLibrary.Save();
         }
 
         private void cmdEditFISFile_Click(object sender, EventArgs e)

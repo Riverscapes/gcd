@@ -132,6 +132,12 @@ namespace GCDCore.ErrorCalculation.FIS
             }
         }
 
+        /// <summary>
+        /// Save the FIS Library item to XML
+        /// </summary>
+        /// <param name="nodParent"></param>
+        /// <remarks>THE ORDER OF THE XML ELEMENTS IS IMPORTANT
+        /// The XSD specifies the order of each element, so don't rearrange the items below</remarks>
         public void Serialize(XmlNode nodParent)
         {
             XmlNode nodItem = nodParent.AppendChild(nodParent.OwnerDocument.CreateElement("FISLibraryItem"));
@@ -139,9 +145,7 @@ namespace GCDCore.ErrorCalculation.FIS
             nodItem.AppendChild(nodParent.OwnerDocument.CreateElement("FilePath")).InnerText = FilePath.FullName;
             naru.xml.XMLHelpers.AddNode(nodItem, "Description", Description);
 
-            SerializeMetaDataList(nodItem, Metadata, "Metadata", "Item", "Key", "Value");
-            SerializeMetaDataList(nodItem, Publications, "Publications", "Publication", "Citation", "URL");
-            SerializeMetaDataList(nodItem, ExampleDatasets, "ExampleDatasets", "ExampleDataset", "Title", "URL");
+           SerializeMetaDataList(nodItem, Metadata, "Metadata", "Item", "Key", "Value");
 
             XmlNode nodInputs = nodItem.AppendChild(nodParent.OwnerDocument.CreateElement("Inputs"));
             foreach (FISInputMeta input in Inputs)
@@ -151,13 +155,18 @@ namespace GCDCore.ErrorCalculation.FIS
                 naru.xml.XMLHelpers.AddNode(nodInput, "Description", input.Description);
                 naru.xml.XMLHelpers.AddNode(nodInput, "Source", input.Source);
             }
+
+            XmlNode nodOutput = nodItem.AppendChild(nodParent.OwnerDocument.CreateElement("Output"));
+            naru.xml.XMLHelpers.AddNode(nodOutput, "Name", OutputName);
+            naru.xml.XMLHelpers.AddNode(nodOutput, "Units", OutputUnits);
+            naru.xml.XMLHelpers.AddNode(nodOutput, "Description", OutputDescription);
+            
+            SerializeMetaDataList(nodItem, Publications, "Publications", "Publication", "Citation", "URL");
+            SerializeMetaDataList(nodItem, ExampleDatasets, "ExampleDatasets", "ExampleDataset", "Title", "URL");
         }
 
         private void SerializeMetaDataList(XmlNode nodParent, naru.ui.SortableBindingList<FISMetaItem> items, string groupNode, string ItemNode, string keyNode, string valueNode)
         {
-            if (items.Count < 1)
-                return;
-
             XmlNode nodList = nodParent.AppendChild(nodParent.OwnerDocument.CreateElement(groupNode));
             foreach (FISMetaItem ds in items)
             {
