@@ -38,7 +38,7 @@ Within this folder are the following files and folders that contain the results 
 
 - - summary of numerical results of the change detection in tabular/.xml format.
   - contains results without applying any thresholding techniques and with applying thresholding techniques.
-  - Same table accessed within ArcMap from the *Change Detection Results Panel*. That is accessed by right clicking an existing Change Detection and clicking the View Change Detection Results [![img](http://gcd6help.joewheaton.org/_/rsrc/1472842987873/gcd-command-reference/gcd-project-explorer/l-individual-change-detection-context-menu/iii-explore-change-detection-folder/GCD.png)](http://gcd6help.joewheaton.org/gcd-command-reference/gcd-project-explorer/l-individual-change-detection-context-menu/iii-explore-change-detection-folder/GCD.png?attredirects=0) button.
+  - Same table accessed within ArcMap from the *Change Detection Results Panel*. That is accessed by right clicking an existing Change Detection and clicking the View Change Detection Results [![img]({{ site.baseurl }}/_/rsrc/1472842987873/gcd-command-reference/gcd-project-explorer/l-individual-change-detection-context-menu/iii-explore-change-detection-folder/GCD.png)]({{ site.baseurl }}/gcd-command-reference/gcd-project-explorer/l-individual-change-detection-context-menu/iii-explore-change-detection-folder/GCD.png?attredirects=0) button.
 
 
 - thresholded.csv

@@ -2,7 +2,7 @@
 title: Edit DEM Survey Properties
 ---
 
-[![img](https://sites.google.com/a/joewheaton.org/gcd-6-help/_/rsrc/1427821296709/gcd-command-reference/gcd-project-explorer/project-context-menu/edit-gcd-project-properties/Settings.png)](http://gcd6help.joewheaton.org/gcd-command-reference/gcd-project-explorer/project-context-menu/edit-gcd-project-properties/Settings.png?attredirects=0) The `Edit DEM Survey Properties` allows the user to edit the DEM survey properties by bringing up the DEM Survey Properties Form.  From here a user can edit the DEM survey properties, add, edit, and add to map associated surfaces, and add, edit, and add to map error surfaces that are associated with that DEM. To access the menu right click the DEM name within the GCD Project Explorer and select Edit DEM Survey Properties from the drop-down menu.
+[![img](https://sites.google.com/a/joewheaton.org/gcd-6-help/_/rsrc/1427821296709/gcd-command-reference/gcd-project-explorer/project-context-menu/edit-gcd-project-properties/Settings.png)]({{ site.baseurl }}/gcd-command-reference/gcd-project-explorer/project-context-menu/edit-gcd-project-properties/Settings.png?attredirects=0) The `Edit DEM Survey Properties` allows the user to edit the DEM survey properties by bringing up the DEM Survey Properties Form.  From here a user can edit the DEM survey properties, add, edit, and add to map associated surfaces, and add, edit, and add to map error surfaces that are associated with that DEM. To access the menu right click the DEM name within the GCD Project Explorer and select Edit DEM Survey Properties from the drop-down menu.
 
 ![EditDEM_SurveyProperties_DropDown]({{ site.baseurl }}/assets/images/EditDEM_SurveyProperties_DropDown.png)
 

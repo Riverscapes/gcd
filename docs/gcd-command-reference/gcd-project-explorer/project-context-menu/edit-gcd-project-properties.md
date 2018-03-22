@@ -2,7 +2,7 @@
 title: Edit GCD Project Properties
 ---
 
-[![img](http://gcd6help.joewheaton.org/_/rsrc/1472842991456/gcd-command-reference/gcd-project-explorer/project-context-menu/edit-gcd-project-properties/Settings.png)](http://gcd6help.joewheaton.org/gcd-command-reference/gcd-project-explorer/project-context-menu/edit-gcd-project-properties/Settings.png?attredirects=0) The `Edit GCD Project Properties` allows the user to edit the GCD project properties by bringing up the GCD Project Properties Form in edit mode.  To access the menu right click the project name within the GCD Project Explorer and select Edit GCD Project Properties from the drop-down menu.
+[![img]({{ site.baseurl }}/_/rsrc/1472842991456/gcd-command-reference/gcd-project-explorer/project-context-menu/edit-gcd-project-properties/Settings.png)]({{ site.baseurl }}/gcd-command-reference/gcd-project-explorer/project-context-menu/edit-gcd-project-properties/Settings.png?attredirects=0) The `Edit GCD Project Properties` allows the user to edit the GCD project properties by bringing up the GCD Project Properties Form in edit mode.  To access the menu right click the project name within the GCD Project Explorer and select Edit GCD Project Properties from the drop-down menu.
 
 ![EditGCD_ProjectProperties_DropDown]({{ site.baseurl }}/assets/images/EditGCD_ProjectProperties_DropDown.png)
 

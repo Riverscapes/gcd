@@ -2,7 +2,7 @@
 title: Edit Associated Surface Properties
 ---
 
-The properties of an associated surface can be edited with the [![img](http://gcd6help.joewheaton.org/_/rsrc/1472842990766/gcd-command-reference/gcd-project-explorer/f-individual-associated-surface-context-menu/i-edit-associated-surface-properties/Options.png)](http://gcd6help.joewheaton.org/gcd-command-reference/gcd-project-explorer/f-individual-associated-surface-context-menu/i-edit-associated-surface-properties/Options.png?attredirects=0) Edit Associated Surfaces Properties command. The *Edit Associated Surface Properties* dialog is accessed by right clicking an associated surface in the *GCD Project Explorer *to bring up the Associated Surface context menu and then single clicking the command, as in the image below.
+The properties of an associated surface can be edited with the [![img]({{ site.baseurl }}/_/rsrc/1472842990766/gcd-command-reference/gcd-project-explorer/f-individual-associated-surface-context-menu/i-edit-associated-surface-properties/Options.png)]({{ site.baseurl }}/gcd-command-reference/gcd-project-explorer/f-individual-associated-surface-context-menu/i-edit-associated-surface-properties/Options.png?attredirects=0) Edit Associated Surfaces Properties command. The *Edit Associated Surface Properties* dialog is accessed by right clicking an associated surface in the *GCD Project Explorer *to bring up the Associated Surface context menu and then single clicking the command, as in the image below.
 
 ![AccessEditAssociatedSurfacePropertiesDialog]({{ site.baseurl }}/assets/images/AccessEditAssociatedSurfacePropertiesDialog.png)
 

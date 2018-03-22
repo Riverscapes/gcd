@@ -8,7 +8,7 @@ With a right click from the GCD Project in the Project Explorer, you can access 
 
 #### Commands
 
-- [i. Edit GCD Project Properties](http://gcd6help.joewheaton.org/gcd-command-reference/gcd-project-explorer/project-context-menu/edit-gcd-project-properties)
-- [ii. Add Entire Project to Map](http://gcd6help.joewheaton.org/gcd-command-reference/gcd-project-explorer/project-context-menu/ii-add-entire-project-to-map)
-- [iii. Explore GCD Project Folder](http://gcd6help.joewheaton.org/gcd-command-reference/gcd-project-explorer/project-context-menu/iii-explore-gcd-project-folder)
+- [i. Edit GCD Project Properties]({{ site.baseurl }}/gcd-command-reference/gcd-project-explorer/project-context-menu/edit-gcd-project-properties)
+- [ii. Add Entire Project to Map]({{ site.baseurl }}/gcd-command-reference/gcd-project-explorer/project-context-menu/ii-add-entire-project-to-map)
+- [iii. Explore GCD Project Folder]({{ site.baseurl }}/gcd-command-reference/gcd-project-explorer/project-context-menu/iii-explore-gcd-project-folder)
 
