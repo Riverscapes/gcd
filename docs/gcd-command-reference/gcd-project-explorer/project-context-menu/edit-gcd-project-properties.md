@@ -10,4 +10,5 @@ This will bring up the GCD Project Properties Form in edit mode.
 
 ![GCD_ProjectPropertiesForm_EditMode]({{ site.baseurl }}/assets/images/GCD_ProjectPropertiesForm_EditMode.png)
 
-From the GCD Project Properties Form in edit mode the project properties: *Name, Description, *and *Horizontal Precision *can be edited. **Currently only *Description* can be edited.**
+From the GCD Project Properties Form in edit mode the project properties: *Name, Description,* and *Horizontal Precision* can be edited. **Currently only *Description* can be edited.**
+
