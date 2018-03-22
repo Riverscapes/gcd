@@ -61,7 +61,11 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             ChangeDetection.frmDoDResults frm = new ChangeDetection.frmDoDResults(DoD);
             try
             {
-                frm.ShowDialog();
+                if (frm.ShowDialog() == DialogResult.OK)
+                {
+                    // User might have edited the name
+                    Text = DoD.Name;
+                }
             }
             catch (Exception ex)
             {

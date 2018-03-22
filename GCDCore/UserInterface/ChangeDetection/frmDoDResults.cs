@@ -51,6 +51,8 @@ namespace GCDCore.UserInterface.ChangeDetection
             ucHistogram.LoadHistograms(DoD.Histograms.Raw.Data, DoD.Histograms.Thr.Data);
             ucHistogram.ChartContextMenuStrip = cmsChart.CMS;
             ucSummary.RefreshDisplay(DoD.Statistics, m_Options);
+
+            cmdOK.Text = GCDCore.Properties.Resources.UpdateButtonText;
         }
 
         private void cmdAddToMap_Click(System.Object sender, System.EventArgs e)
@@ -123,7 +125,37 @@ namespace GCDCore.UserInterface.ChangeDetection
 
         private void cmdHelp_Click(System.Object sender, System.EventArgs e)
         {
-            Process.Start(GCDCore.Properties.Resources.HelpBaseURL + "gcd-command-reference/gcd-project-explorer/l-individual-change-detection-context-menu/i-view-change-detection-results");
+            Process.Start(Properties.Resources.HelpBaseURL + "gcd-command-reference/gcd-project-explorer/l-individual-change-detection-context-menu/i-view-change-detection-results");
+        }
+
+        private void cmdOK_Click(object sender, EventArgs e)
+        {
+            // Sanity check to avoid blank names
+            txtDoDName.Text = txtDoDName.Text.Trim();
+
+            if (string.IsNullOrEmpty(txtDoDName.Text))
+            {
+                MessageBox.Show("The change detection name cannot be empty.", "Empty Change Detection Name", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                txtDoDName.Select();
+                DialogResult = DialogResult.None;
+                return;
+            }
+
+            if (!ProjectManager.Project.IsDoDNameUnique(txtDoDName.Text, DoD))
+            {
+                MessageBox.Show("This GCD project already contains a change detection with this name. Please choose a unique name for this change detection.", "Change Detection Name Already Exists", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                txtDoDName.Select();
+                DialogResult = DialogResult.None;
+                return;
+            }
+
+            if (string.Compare(DoD.Name, txtDoDName.Text, false) != 0)
+            {
+                ProjectManager.Project.DoDs.Remove(DoD.Name);
+                DoD.Name = txtDoDName.Text;
+                ProjectManager.Project.DoDs[DoD.Name] = DoD;
+                ProjectManager.Project.Save();
+            }
         }
     }
 }
