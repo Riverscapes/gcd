@@ -49,21 +49,27 @@ settings:
   # Arbitrary multi-level topbar menu
   # IF you don't need this just comment out everything below
   # ----------------------------------
-  # topmenu:
-  #   - title: About
-  #     url: ThingsA
-  #   - title: Submenu
-  #     children:
-  #       - title: subsub
-  #         url: ThingsB/subpageB.html
-  #       - title: SubSUBmenu
-  #         children:
-  #           - title: Google
-  #             url: https://google.com
-  #   - title: Config
-  #     url: index.html
-  #   - title: Deploy
-  #     url: index.html
+  topmenu:
+    - title: "Riverscapes"
+      childern:
+        - title: "Model Home"
+          url: index
+        - title: "Riverscapes Home"
+          url: http://riverscapes.xyz
+        - title: "About Riverscapes"
+          url: http://riverscapes.xyz/about.html
+        - title: "Who We Are"
+          url: http://riverscapes.xyz/who-we-are.html
+        - title: "News"
+          url: http://riverscapes.xyz/news.html
+    - title: "RC Tools"
+      url: http://riverscapes.xyz/rc-tools.html
+    - title: "RC Science"
+      url: http://riverscapes.xyz/rc-science.html
+    - title: "RC Data"
+      url: http://riverscapes.xyz/rc-data.html
+    - title: "RC Help"
+      url: http://riverscapes.xyz/rc-help.html
 
 collections:
   releasenotes:

@@ -10,7 +10,6 @@
       <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/app.css">
       <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/custom.css">
       <script src="https://use.fontawesome.com/586b1e1322.js"></script>
-      <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
 
       <link rel="apple-touch-icon" sizes="57x57" href="{{ site.baseurl }}/assets/images/favicons/apple-icon-57x57.png">
       <link rel="apple-touch-icon" sizes="60x60" href="{{ site.baseurl }}/assets/images/favicons/apple-icon-60x60.png">
@@ -39,7 +38,7 @@
 
   <header>
     <div id="topbarnav"></div>
-    <div class="text-center callout large">
+    <div id="headcallout" class="text-center callout large">
       {% if page.url == "/" %}
       <h1>{{ site.title | replace: 'Riverscapes Consortium', '<div class="RCLogo">Riverscapes Consortium</div>' }}</h1>
         {% if page.subtitle %}
@@ -57,14 +56,17 @@
     </div>
   </header>
 
-  <div id="inner" class="row">
-    <div id="main" class="large-8 columns large-push-4">
-      <section>{{ content }}</section>
-    </div>
-    <div id="sidebar" class="large-4 columns large-pull-8">
-        {% include sidenav.html %}
+  <div id="inner-wrapper">
+    <div id="inner" class="row">
+      <div id="main" class="large-8 columns large-push-4">
+        <section>{{ content }}</section>
       </div>
+      <div id="sidebar" class="large-4 columns large-pull-8">
+          {% include sidenav.html %}
+        </div>
+    </div>
   </div>
+
 
     {% include footer.html %}
     {% include navigation.html context="/" %}

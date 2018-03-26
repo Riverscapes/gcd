@@ -121,14 +121,6 @@ $(document).ready(function (){
 	function topbarize() {
 		// The Mobile menu
 		$topbarContainer = $('<div></div>')
-		
-		if (!SiteSettings.topmenu || SiteSettings.topmenu.length < 1){
-			// No menu found or there was a problem
-			$mobilediv = $('<div class="title-bar hide-for-medium"></div>');
-			$mobilediv.append($('<div class="title-bar-title"><a href="' + NAVHome + '/">'+NAVTitle+'</a></div>'))
-			$topbarContainer.append($mobilediv)
-			return $topbarContainer						
-		}
 
 		var tree = SiteSettings.topmenu
 
@@ -140,10 +132,9 @@ $(document).ready(function (){
 		$topbarContainer.append($mobilediv)
 
 		var $topbar = $('<div class="top-bar" id="responsive-menu"></div>');
-		var $topbarleft = $('<div class="top-bar-left"><ul class="dropdown menu" data-dropdown-menu><li class="show-for-medium"><a id="topbarLogo" href="'+NAVHome+'/">'+NAVTitle+'</a></li></ul></div>')
+		var $topbarleft = $('<div class="top-bar-left"><ul class="dropdown menu" data-dropdown-menu><li class="show-for-medium"><a id="topbarLogo" href="http://riverscapes.xyz/">Riverscapes Consortium</a></li></ul></div>')
 		var $topbarright = $('<div class="top-bar-right"></div>');
 		$topbar.append($topbarleft);
-		$topbar.append($topbarright);
 		
 		function menutraverse(t, first=false) {
 			// First time round
@@ -181,16 +172,22 @@ $(document).ready(function (){
 				}
 				else {
 					var $mLi = $('<li></li>');
-					$mLi.append(urlize(t[cind]))
+					$mLi.append(urlize(t[cind]));
 					$mUL.append($mLi);
 				}
 			}
 			return $mUL;			
 		}
 
-		$topbarright.append(menutraverse(tree, true));
-		$topbarContainer.append($topbar)
-		return $topbarContainer
+		// Only build the menu if it's specified in the config.yaml file
+		if (tree){
+			$topbarright.append(menutraverse(tree, true));
+			$topbar.append($topbarright);	
+		}
+
+
+		$topbarContainer.append($topbar);
+		return $topbarContainer;
 	}
 
 	/**
