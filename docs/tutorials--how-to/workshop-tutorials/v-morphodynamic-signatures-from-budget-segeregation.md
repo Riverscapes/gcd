@@ -26,7 +26,7 @@ Example from Wheaton et al. (2013) of morphodynamic signatures derived from four
 
 ### Step by Step
 
-#### **Exercise V: Part 1: Perform Budget Segregation**
+#### Exercise V: Part 1: Perform Budget Segregation
 
 Suggested path: `C:\0_GCD\Exercises\V_BudgetSeg`
 
@@ -67,8 +67,7 @@ C:\0_GCD\Exercises\V_BudgetSeg
 - [Parent Workshop Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/3-day-workshop/3-Day3/v-budget-segregation)
 
 - [GCD 6 Help]({{ site.baseurl }}/)
-
-- - [11. Budget Segregation]({{ site.baseurl }}/tutorials--how-to/11-budget-segregation) - GCD 6 Online Help Tutorial
+  - [11. Budget Segregation]({{ site.baseurl }}/tutorials--how-to/11-budget-segregation) - GCD 6 Online Help Tutorial
   - [Add Budget Segregation]({{ site.baseurl }}/gcd-command-reference/gcd-project-explorer/l-individual-change-detection-context-menu/v-add-budget-segregation)  - GCD 6 Online Help Command Reference
   - [View Budget Segregation Results]({{ site.baseurl }}/gcd-command-reference/gcd-project-explorer/n-individual-budget-segregation-context-menu/i-view-budget-segregation-results) - GCD 6 Online Help Command Reference
 
