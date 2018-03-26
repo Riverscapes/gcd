@@ -42,23 +42,17 @@ How to do in gCD 7
 How to do in GCD 6:
 <iframe width="560" height="315" src="https://www.youtube.com/embed/IYUyBzTGMAA" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
 
-#### **Exercise V: Part 2: Derive GI Budget Segregation**
+#### Exercise V: Part 2: Derive GI Budget Segregation
 
 C:\0_GCD\Exercises\V_BudgetSeg
 
-#### **1.**Choose a GCD Project or Create a new one
-
-#### 2. **Run raster calculator on thresholded DoD to get erosion and deposition areas**
-
-#### **3. Convert integer raster output into polygon**
-
-#### 4. **Add text field(s) to polygon**
-
-#### 5. Start classifying...
-
-#### 6. Use classified polygon in a budget segregation
-
-#### 7. Interrogate results
+1. Choose a GCD Project or Create a new one
+2. Run raster calculator on thresholded DoD to get erosion and deposition areas
+3. Convert integer raster output into polygon
+4. Add text field(s) to polygon
+5. Start classifying...
+6. Use classified polygon in a budget segregation
+7. Interrogate results
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/W_zJNJ85dmc" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
 
