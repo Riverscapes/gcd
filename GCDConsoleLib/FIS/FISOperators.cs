@@ -69,7 +69,7 @@ namespace GCDConsoleLib.FIS
             {
                 if (inMf.Coords[i][1] > n)
                 {
-                    // Note: passing the ideces in backwards is fine and tested
+                    // Note: passing the indeces in backwards is fine and tested
                     outMf.Coords.Add(new double[] { inMf.getX(i, i - 1, n), n * weight });
                     break;
                 }

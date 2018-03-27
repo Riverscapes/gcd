@@ -74,7 +74,7 @@ namespace GCDConsoleLib.FIS
             {
                 if (sName != null && "NULL" != sName)
                 {
-                    rule.Inputs.Add(i);
+                    rule.InputInd.Add(i);
                     rule.MFSInd.Add(Inputs[inputName].Indices[sName]);
                 }
             }
@@ -183,7 +183,7 @@ namespace GCDConsoleLib.FIS
                 double impValue = getFuzzyVal(rule, 0, _fuzzyInputs);
                 // Loop over rule items (probably same as number of inputs but not
                 // if some are 0 value
-                for (int i = 1; i < rule.Inputs.Count; i++)
+                for (int i = 1; i < rule.InputInd.Count; i++)
                 {
                     // For now this is "and" or "or"
                     double fuzzyInput = getFuzzyVal(rule, i, _fuzzyInputs);
@@ -240,10 +240,11 @@ namespace GCDConsoleLib.FIS
                     for (int r = 0; r < Rules.Count; r++)
                     {
                         rule = Rules[r];
-                        // This is where the NOT calculation happens.
-                        impValue = _fuzzyInputs[rule.Inputs[0]][rule.MFSInd[0]];
-                        for (int m = 1; m < rule.Inputs.Count; m++)
-                            impValue = RuleOperator(rule, impValue, _fuzzyInputs[rule.Inputs[m]][rule.MFSInd[m]]);
+                        // This is where the NOT calculation happens. First pick the first fuzzified value
+                        impValue = _fuzzyInputs[rule.InputInd[0]][rule.MFSInd[0]];
+                        // Now operate 
+                        for (int m = 1; m < rule.InputInd.Count; m++)
+                            impValue = RuleOperator(rule, impValue, _fuzzyInputs[rule.InputInd[m]][rule.MFSInd[m]]);
                         impMf = ImplicatorOp(rule.Output, impValue, rule.Weight);
                         AggregatorOp(impMf, aggMf);
                     }
@@ -265,9 +266,9 @@ namespace GCDConsoleLib.FIS
                 {
                     rule = Rules[r];
                     // This is where the NOT calculation happens.
-                    impValue = _fuzzyInputs[rule.Inputs[0]][rule.MFSInd[0]];
-                    for (int m = 1; m < rule.Inputs.Count; m++)
-                        impValue = RuleOperator(rule, impValue, _fuzzyInputs[rule.Inputs[m]][rule.MFSInd[m]]);
+                    impValue = _fuzzyInputs[rule.InputInd[0]][rule.MFSInd[0]];
+                    for (int m = 1; m < rule.InputInd.Count; m++)
+                        impValue = RuleOperator(rule, impValue, _fuzzyInputs[rule.InputInd[m]][rule.MFSInd[m]]);
                     impMf = ImplicatorOp(rule.Output, impValue, rule.Weight);
                     AggregatorOp(impMf, aggMf);
                 }
@@ -330,7 +331,7 @@ namespace GCDConsoleLib.FIS
         /// <returns></returns>
         public double getFuzzyVal(Rule rule, int ruleItemInd, List<List<double>> fuzzyInputs)
         {
-            int inputInd = rule.Inputs[ruleItemInd];
+            int inputInd = rule.InputInd[ruleItemInd];
             int mfsInd = rule.MFSInd[ruleItemInd];
             double fuzzyInput = fuzzyInputs[inputInd][mfsInd];
 

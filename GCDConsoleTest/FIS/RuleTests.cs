@@ -13,7 +13,7 @@ namespace GCDConsoleLib.FIS.Tests
         public void RuleTest()
         {
             Rule testRule = new Rule();
-            Assert.AreEqual(testRule.Inputs.Count, 0);
+            Assert.AreEqual(testRule.InputInd.Count, 0);
             Assert.AreEqual(testRule.MFSInd.Count, 0);
             Assert.AreEqual(testRule.MFSNot.Count, 0);
             Assert.AreEqual(testRule.Weight, 1.0);
@@ -27,8 +27,8 @@ namespace GCDConsoleLib.FIS.Tests
             testRule.addMf(1, 2);
             testRule.addMf(2, -2);
 
-            Assert.AreEqual(testRule.Inputs[0], 1);
-            Assert.AreEqual(testRule.Inputs[1], 2);
+            Assert.AreEqual(testRule.InputInd[0], 1);
+            Assert.AreEqual(testRule.InputInd[1], 2);
 
             Assert.AreEqual(testRule.MFSInd[0], 1);
             Assert.AreEqual(testRule.MFSInd[1], 1);

@@ -194,7 +194,7 @@ namespace GCDConsoleLib.FIS
         /// This is the version that the machine deals with. The first column in this structure 
         /// corresponds to the input variable, the second column corresponds to the output variable,
         /// the third column displays the weight applied to each rule, and the fourth column is 
-        /// shorthand that indicates whether this is an OR (2) rule or an AND (1) rule. 
+        /// shorthand that indicates whether this is an OR 2 rule or an AND 1 rule. 
         /// The numbers in the first two columns refer to the index number of the membership function.
         /// A literal interpretation of rule 1 is: "If input 1 is MF1 (the first membership function 
         /// associated with input 1) then output 1 should be MF1 (the first membership function 
@@ -234,9 +234,9 @@ namespace GCDConsoleLib.FIS
             // 1 <==> (1)
             string[] rsSplit3 = rsSplit2[1].Trim().Split();
 
-            // Now figure out the weight of this Rule
+            // Now figure out the Output of this Rule
             if (!int.TryParse(rsSplit3[0].Trim(), out outNum))
-                throw new Exception("Could not parse the weight: " + ruleString);
+                throw new Exception("Could not parse the output: " + ruleString);
 
             // There is only ever one output for this case
             theRule.Output = ruleset.Outputs.MFunctions[outNum -1];

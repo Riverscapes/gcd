@@ -5,7 +5,7 @@ namespace GCDConsoleLib.FIS
 {
     public class Rule
     {
-        public List<int> Inputs;
+        public List<int> InputInd;
         public List<int> MFSInd;
         public List<bool> MFSNot;
 
@@ -19,7 +19,7 @@ namespace GCDConsoleLib.FIS
         public Rule()
         {
             Weight = 1;
-            Inputs = new List<int>();
+            InputInd = new List<int>();
             MFSInd = new List<int>();
             MFSNot = new List<bool>();
         }
@@ -27,26 +27,26 @@ namespace GCDConsoleLib.FIS
         /// <summary>
         /// Add a member function to this rule
         /// </summary>
-        /// <param name="inputIndex"></param>
-        /// <param name="mfIndex"></param>
-        public void addMf(int inputIndex, int mfIndex)
+        /// <param name="inputIndex">The input order index of this input</param>
+        /// <param name="mfNum">The number (base 1) of the MF</param>
+        public void addMf(int inputIndex, int mfNum)
         {
-            if (mfIndex == 0)
+            if (mfNum == 0)
                 return;
 
-            Inputs.Add(inputIndex);
+            InputInd.Add(inputIndex);
 
             // Here's where we parse the NOT rule when the mfIndex is negative
             // mfsNOT is a flag that means "Use the NOT operator here"
             // Also note that we're storing the ARRAY INDEX, not the rule number
-            if (mfIndex < 0)
+            if (mfNum < 0)
             {
-                MFSInd.Add(Math.Abs(mfIndex) - 1);
+                MFSInd.Add(Math.Abs(mfNum) - 1);
                 MFSNot.Add(true);
             }
             else
             {
-                MFSInd.Add(mfIndex - 1);
+                MFSInd.Add(mfNum - 1);
                 MFSNot.Add(false);
             }
         }
