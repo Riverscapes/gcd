@@ -169,8 +169,10 @@ namespace GCDConsoleLib.FIS
             for (idx = 0; idx < Inputs.Count; idx++)
             {
                 string inputName = InputLookupMap.Forward[idx];
+                List<double> _fin = new List<double>();
                 for (jdx = 0; jdx < Inputs[inputName].Count; jdx++)
-                    _fuzzyInputs[idx][jdx] = Inputs[inputName].MFunctions[jdx].fuzzify(lInputs[idx]);
+                    _fin.Add(Inputs[inputName].MFunctions[jdx].fuzzify(lInputs[idx]));
+                _fuzzyInputs.Add(_fin);
             }
 
             MemberFunction impMf = new MemberFunction();
@@ -394,9 +396,9 @@ namespace GCDConsoleLib.FIS
             switch (theRule.Operator)
             {
                 case FISOperator.FISOp_And:
-                    return OrOp(d1, d2);
-                case FISOperator.FISOp_Or:
                     return AndOp(d1, d2);
+                case FISOperator.FISOp_Or:
+                    return OrOp(d1, d2);
                 default:
                     throw new ArgumentException("Invalid operator");
             }
