@@ -2,6 +2,11 @@
 title: Release Notes
 ---
 
+## 7.0.10 - 28 Mar 2018
+
+* Fixed FIS calculations
+* Fixed row indexing in the budget segregation stat % totals column.
+
 ## 7.0.09 - 22 Mar 2018
 
 * Error Surfaces:
