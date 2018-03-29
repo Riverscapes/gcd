@@ -39,6 +39,7 @@ GCD Standalone is a desktop software version that performs all the core GCD func
 </div>
 
 # Stand Alone vs. ArcGIS Add In
+
 ## GCD AddIn for ArcGIS
 
 ### AddIn Prerequisities
@@ -62,6 +63,8 @@ GCD standalone is a deployed using Microsoft's ClickOnce technology. This allows
 
 * [Microsoft .Net Framework 4.5.2](https://www.microsoft.com/en-ca/download/details.aspx?id=42642). This should already be installed if you are running Windows 10. It's also required by ArcGIS 10.4.
 
-## GCD Source Code
+## Running Both
+The GCD Standalone and AddIn are independent of each other and installed in separate locations on your machine. Their only shared resource is the FIS Library, and they are able to both access the same `*.gcd` project simultaneously. It is not necessary or required that the Standalone and AddIn are both concurrent versions. For more information, see [here](https://github.com/Riverscapes/gcd/issues/196).
+# GCD Source Code
 With GCD 7, the entire code is now fully open source and available in the [Riverscapes Consoritum](http://riverscapes.xyz) [Github Organization](https://github.com/Riverscapes). 
 <a class="button large expanded" href="https://github.com/Riverscapes/gcd/"><i class="fa fa-github"/> GCD Github Repository</a>
