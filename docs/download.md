@@ -17,7 +17,7 @@ GCD Standalone is a desktop software version that performs all the core GCD func
 <div class="columns small-6">
   <img src="{{ site.baseurl }}/assets/images/gcd_addin.png" style="height:200px">
     <div>
-    	<a class="button large expanded" href="https://github.com/Riverscapes/gcd/releases">
+    	<a class="button large expanded" href="https://github.com/Riverscapes/gcd/releases/latest">
         <span class="fa fa-cloud-download"></span>
         &nbsp;&nbsp;GCD AddIn for ArcGIS 10.x</a>
     </div>  
@@ -28,7 +28,7 @@ GCD Standalone is a desktop software version that performs all the core GCD func
   
   <img src="{{ site.baseurl }}/assets/images/gcd_standalone.png" style="height:200px">
     <div>
-    	<a class="button large expanded" href="https://github.com/Riverscapes/gcd/releases">
+    	<a class="button large expanded" href="https://github.com/Riverscapes/gcd/releases/latest">
         <span class="fa fa-cloud-download"></span>
         &nbsp;&nbsp;GCD Standalone</a>
     </div>
@@ -39,6 +39,7 @@ GCD Standalone is a desktop software version that performs all the core GCD func
 </div>
 
 # Stand Alone vs. ArcGIS Add In
+
 ## GCD AddIn for ArcGIS
 
 ### AddIn Prerequisities
@@ -62,6 +63,29 @@ GCD standalone is a deployed using Microsoft's ClickOnce technology. This allows
 
 * [Microsoft .Net Framework 4.5.2](https://www.microsoft.com/en-ca/download/details.aspx?id=42642). This should already be installed if you are running Windows 10. It's also required by ArcGIS 10.4.
 
-## GCD Source Code
+## Running Both
+The GCD Standalone and AddIn are independent of each other and installed in separate locations on your machine. Their only shared resource is the FIS Library, and they are able to both access the same `*.gcd` project simultaneously. It is not necessary or required that the Standalone and AddIn are both concurrent versions. For more information, see [here](https://github.com/Riverscapes/gcd/issues/196).
+
+# Installation & Updates
+
+## Add-In
+To install GCD Add-In for first time to ArcGIS 10.4 or later, simply double-click on [downloaded](https://github.com/Riverscapes/gcd/releases/latest) `*.ESRIAddin` file, while **NOT** in an active ArcMap sesssion. To update, remove the existing, earlier GCD 7.X add-in from your `Customize → AddIn Manager` menu, close ArcMap and install as per above. The video below walks you through this process of updating:
+<iframe width="560" height="315" src="https://www.youtube.com/embed/9F3k6pn_3RI?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+## Standalone
+### Clean Install
+To install GCD 7, Standalone for the first time, simply download the latest `2018_03_28_GCDStandAlone_7_0_*.exe` stand-alone executable install file from [GitHub](https://github.com/Riverscapes/gcd/releases/latest) and run the application. You will need to push pass some security warnings, as shown in the video below:
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/gRSMHbi8-xs?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+### Update
+To update an existing instalation of the GCD standalone, simply navigate to `Tools → Check for Updates`, if an update exists, click `Yes`, restart GCD, and follow prompts as illustrated in this video:
+<iframe width="560" height="315" src="https://www.youtube.com/embed/T0v8NkOg2zc?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+### Uninstall
+To unintsall the standalone GCD, simply navigate in your Windows Control Panel to `Uninstall or Change Program` and find GCD and uinstall it.
+<iframe width="560" height="315" src="https://www.youtube.com/embed/668-0ZtoOzo?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+# GCD Source Code
 With GCD 7, the entire code is now fully open source and available in the [Riverscapes Consoritum](http://riverscapes.xyz) [Github Organization](https://github.com/Riverscapes). 
 <a class="button large expanded" href="https://github.com/Riverscapes/gcd/"><i class="fa fa-github"/> GCD Github Repository</a>
