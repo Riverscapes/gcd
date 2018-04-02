@@ -1,5 +1,6 @@
 ---
-title: F. Essential Best Practices to Support Change Detection
+title: Essential Best Practices to Support Change Detection
+weight: 2
 ---
 
 ### Overview
@@ -46,4 +47,8 @@ This exercise is meant to help you understand how best to prepare raster DEMs to
 ------
 
 ← [Back to Previous Tutorial]({{ site.baseurl }}/tutorials--how-to/workshop-tutorials/d-review-of-building-surfaces-from-raw-topographic-data)    [Ahead to Next Tutorial]({{ site.baseurl }}/tutorials--how-to/workshop-tutorials/g-simple-DoD) →
-
+------
+<div align="center">  
+<a class="button" href="{{ site.baseurl }}/tutorials--how-to/workshop-tutorials/d-review-of-building-surfaces-from-raw-topographic-data"> ← Previous Tutorial </a>
+<a class="button" href="{{ site.baseurl }}/tutorials--how-to/workshop-tutorials/g-simple-DoD"> Next Tutorial →</a>  
+</div>
