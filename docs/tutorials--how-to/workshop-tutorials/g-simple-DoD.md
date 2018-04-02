@@ -1,6 +1,8 @@
 ---
-title: G. Simple Change Detection in Raster Calculator vs. GCD
+title: Simple Change Detection in Raster Calculator vs. GCD
+weight: 3
 ---
+
 
 ### Overview
 
@@ -10,9 +12,14 @@ This exercise is intended to contrast how to build a DoD (DEM of Difference) wit
 
 #### Datasets
 
-[G_SimpleDoD.Zip](http://etalweb.joewheaton.org/etal_workshops/GCD/2015_USU/G_SimpleDoD.zip) File of Data for Exercise Part 1 and 2.
-
- [G_IntroGCD.zip](http://etal.usu.edu/GCD/Workshop/2015_RRNW/Excercises/G_IntroGCD.zip) File of Data for Exercise Part 3.
+ File of Data for Exercise Part 1 and 2:
+ <div align="center">
+<a class="button" href="http://etalweb.joewheaton.org/etal_workshops/GCD/2015_USU/G_SimpleDoD.zip"><i class="fas fa-file-archive"></i> G_SimpleDoD.Zip </a>
+ </div>
+ File of Data for Exercise Part 3:
+  <div align="center">
+ <a class="button" href="http://etal.usu.edu/GCD/Workshop/2015_RRNW/Excercises/G_IntroGCD.zip"><i class="fas fa-file-archive"></i> G_IntroGCD.zip </a>
+</div>
 
 #### Prerequisite for this Exercise
 
@@ -63,7 +70,10 @@ This exercise is intended to contrast how to build a DoD (DEM of Difference) wit
 
 - [Building DEMs](http://gis.joewheaton.org/assignments/labs/lab-07---building-dems) Lab - From my [Advanced GIS course](http://gis.joewheaton.org/)
 
+
+
 ------
-
-← [Back to Previous Tutorial]({{ site.baseurl }}/tutorials--how-to/workshop-tutorials/f-essential-best-practices-to-support-change-detection)        [Ahead to Next Tutorial]({{ site.baseurl }}/tutorials--how-to/workshop-tutorials/i-dod-thresholding) →
-
+<div align="center">  
+<a class="button" href="{{ site.baseurl }}/tutorials--how-to/workshop-tutorials/f-essential-best-practices-to-support-change-detection"> ← Previous Tutorial </a>
+<a class="button" href="{{ site.baseurl }}/tutorials--how-to/workshop-tutorials/i-dod-thresholding"> Next Tutorial →</a>  
+</div>
