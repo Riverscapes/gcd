@@ -6,9 +6,9 @@ title: W. Morphological Approach to Estimating Sediment Transport
 
 - ![]({{ site.baseurl }}/assets/images/winzip_icon_16.gif) [Excercise Data](https://s3-us-west-2.amazonaws.com/etalweb.joewheaton.org/GCD/GCD7/Tutorials/O_MorphologicalApproach.zip)
 <div align="center">
-<a class="button" href="https://s3-us-west-2.amazonaws.com/etalweb.joewheaton.org/GCD/GCD7/Tutorials/O_MorphologicalApproach.zip"><i class="fa fa-home"></i> Excercise Data </a>
+<a class="button" href="https://s3-us-west-2.amazonaws.com/etalweb.joewheaton.org/GCD/GCD7/Tutorials/O_MorphologicalApproach.zip"><i class="fa fa-home"></i> Excercise Data </a><br>
 
-<a class="button" href="https://s3-us-west-2.amazonaws.com/etalweb.joewheaton.org/GCD/GCD7/Tutorials/O_MorphologicalApproach.zip"><i class="fas fa-file-archive"></i> Excercise Data </a>
+<a class="button" href="https://s3-us-west-2.amazonaws.com/etalweb.joewheaton.org/GCD/GCD7/Tutorials/O_MorphologicalApproach.zip"><i class="fa fa-file-archive"></i> Excercise Data </a><br>
 
 <a class="button" href="https://s3-us-west-2.amazonaws.com/etalweb.joewheaton.org/GCD/GCD7/Tutorials/O_MorphologicalApproach.zip"><img src="{{ site.baseurl }}/assets/images/winzip_icon_16.gif"> 'home' icon </a>
 </div>
