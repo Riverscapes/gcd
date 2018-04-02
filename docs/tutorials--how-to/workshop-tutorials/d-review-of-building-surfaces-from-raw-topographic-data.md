@@ -37,6 +37,7 @@ See this [GIS Tutorial](http://gis.joewheaton.org/assignments/labs/lab-07---buil
 
 
 
+------
 
 <div align="center">  
 <a class="button" href="{{ site.baseurl }}/tutorials--how-to/workshop-tutorials/f-essential-best-practices-to-support-change-detection"> Next Tutorial →</a>
