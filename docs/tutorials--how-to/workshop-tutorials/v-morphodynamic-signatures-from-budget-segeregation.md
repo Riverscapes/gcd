@@ -14,7 +14,7 @@ Example from Wheaton et al. (2013) of morphodynamic signatures derived from four
 
 #### Datasets
 
-[V_BudgetSeg.zip](http://etalweb.joewheaton.org/etal_workshops/GCD/2015_USU/V_BudgetSeg.zip) File of Data for this Exercise 
+- [V_BudgetSeg.zip](https://s3-us-west-2.amazonaws.com/etalweb.joewheaton.org/GCD/GCD7/Tutorials/V_BudgetSeg.zip) File of Data for this Exercise 
 
 #### Prerequisite for this Exercise
 
