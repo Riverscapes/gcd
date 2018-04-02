@@ -34,7 +34,7 @@ This topic will help fulfill the following [primary learning outcome(s)](http://
 #### Relevant Online Help or Tutorials for this Topic
 
 - [Budget Segregation Tutorial]({{ site.baseurl }}/tutorials--how-to/workshop-tutorials/v-morphodynamic-signatures-from-budget-segeregation) - GCD 7 Online Help Tutorial
-[11. Budget Segregation](http://gcd6help.joewheaton.org/tutorials--how-to/11-budget-segregation) - GCD 6 Online Help Tutorial
+- [11. Budget Segregation](http://gcd6help.joewheaton.org/tutorials--how-to/11-budget-segregation) - GCD 6 Online Help Tutorial
 - [Add Budget Segregation](http://gcd6help.joewheaton.org/gcd-command-reference/gcd-project-explorer/l-individual-change-detection-context-menu/v-add-budget-segregation)  - GCD 6 Online Help Command Reference
 - [View Budget Segregation Results](http://gcd6help.joewheaton.org/gcd-command-reference/gcd-project-explorer/n-individual-budget-segregation-context-menu/i-view-budget-segregation-results) - GCD 6 Online Help Command Reference
 
