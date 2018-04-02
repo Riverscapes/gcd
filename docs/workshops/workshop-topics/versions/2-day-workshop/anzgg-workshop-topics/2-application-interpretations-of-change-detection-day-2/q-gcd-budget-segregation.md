@@ -43,7 +43,12 @@ This topic will help fulfill the following [primary learning outcome(s)](http://
 
 #### Slides and/or Handouts
 
-- ![img](http://gcdworkshop.joewheaton.org/_/rsrc/1429977984627/workshop-topics/versions/3-day-workshop/3-Day3/v-budget-segregation/pdfIcon.png)  [Lecture](http://etal.usu.edu/GCD/Workshop/2014_ANZGG/Q_BudgetSegregation.pdf)  
+- ![img](http://gcdworkshop.joewheaton.org/_/rsrc/1429977984627/workshop-topics/versions/3-day-workshop/3-Day3/v-budget-segregation/pdfIcon.png)  [Lecture](http://etal.usu.edu/GCD/Workshop/2014_ANZGG/Q_BudgetSegregation.pdf)
+
+See slides below for some background on Budget Segregation (from 2018:
+
+<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vQ730SFqqmUorMxH1JU5qjquiuZh3zJ8yYCn6AjDhayBASIcQuOmyS7N5ByqoEJIf_lEOwMjYtQhj39/embed?start=false&loop=false&delayms=3000" frameborder="0" width="960" height="749" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+- ![img](http://gcdworkshop.joewheaton.org/_/rsrc/1429977984627/workshop-topics/versions/3-day-workshop/3-Day3/v-budget-segregation/pdfIcon.png)  [Lecture Sides](https://s3-us-west-2.amazonaws.com/etalweb.joewheaton.org/Courses/WATS4950/2018_GCD/Lectures/Week10_GCD_Interpretation_BudgetSeg_Braiding.pdf)
 
 #### Relevant or Cited Literature
 
