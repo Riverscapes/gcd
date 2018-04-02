@@ -4,7 +4,7 @@ title: W. Morphological Approach to Estimating Sediment Transport
 
 # Excercise Data
 
-- [Excercise Data](https://s3-us-west-2.amazonaws.com/etalweb.joewheaton.org/GCD/GCD7/Tutorials/O_MorphologicalApproach.zip)
+- ![]({{ site.baseurl }}/assets/images/winzip_icon_16.gif) [Excercise Data](https://s3-us-west-2.amazonaws.com/etalweb.joewheaton.org/GCD/GCD7/Tutorials/O_MorphologicalApproach.zip)
 
 # Lecture Slides
 
