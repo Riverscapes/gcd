@@ -3,6 +3,14 @@ title: Release Notes
 weight: 4
 ---
 
+# GCD 7
+
+Note, see the [Commit History](https://github.com/Riverscapes/gcd/commits) in Github for fuller documentation of changes (by [release](https://github.com/Riverscapes/gcd/releases).
+
+
+<a class="button" href="https://github.com/Riverscapes/gcd/commits"><i class="fa fa-github"/> GCD Github Repository Commit History</a>
+
+
 ## 7.0.10 - 28 Mar 2018
 
 * Fixed FIS calculations
@@ -103,7 +111,15 @@ weight: 4
 * All core GCD 6 functionality
 * Multiple uncertainty analysis batch change detection
 
+------
+
 # Prior Versions
 
 * [GCD 6 Release Notes](/_releasenotes/gcd6_releasenotes.html)
-* [GCD 5 Release Notes]()
+* [GCD 5 Release Notes](http://gcd.joewheaton.org/downloads/older-versions)
+
+------
+<div align="center">
+    <a class="hollow button" href="{{ site.baseurl }}/Download"><i class="fa fa-chevron-circle-left"></i>  Back to Download </a>  
+
+</div>

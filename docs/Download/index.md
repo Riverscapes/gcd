@@ -1,5 +1,6 @@
 ---
 title: Download
+weight: 1
 ---
 
 <div class="callout alert">
@@ -8,7 +9,7 @@ title: Download
   <p>
   Latest stable release of GCD 6: <a class="hollow button secondary" href=" http://releases.northarrowresearch.com/GCD/Desktop/2015_11_26_GCDAddIn_6_1_14.esriAddIn" ><i class="fa fa-download"></i>&nbsp;&nbsp;  GCD 6.1.14</a>
  </p>
-  
+
 </div>
 
 The GCD 7 software is now available in two different flavors. The GCD Addin for ArcGIS provides full GCD functionality, including map display of GCD inputs and outputs. If you have ArcGIS 10.0 or newer (not ArcPro) then this version will give you 'Add to Map' and spatial visualization functionality embedded within ArcGIS. The downside is ArcGIS is a 32 Bit Application and can only use 4 GB of RAM, so it is slower. 
@@ -42,8 +43,9 @@ GCD Standalone is a desktop software version that performs all the core GCD func
 
 ------
 <div align="center">
-    <a class="button" href="{{ site.baseurl }}/download/about"><i class="fa fa-question"></i>  Learn More about Differences Between GCD Installations </a>  
-    <a class="button" href="{{ site.baseurl }}/download/release_notes"><i class="fa fa-sticky-note"></i>   See Release Notes </a>
+    <a class="hollow button" href="{{ site.baseurl }}/Help/install"><i class="fa fa-question"></i>  Installation Instructions </a> 
+    <a class="hollow button" href="{{ site.baseurl }}/Download/about"><i class="fa fa-question"></i>  Learn More about Differences Between GCD Installations </a>  
+    <a class="hollow button" href="{{ site.baseurl }}/Download/release_notes"><i class="fa fa-sticky-note"></i>   See Release Notes </a>
 </div>
 
 
