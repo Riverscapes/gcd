@@ -51,7 +51,7 @@ This topic will help fulfill the following [primary learning outcome(s)](http://
 
 #### Other Resources
 
-#### For a review of some of the aerial imagery see [this topic](http://gis.joewheaton.org/topics/data#TOC-Raster-Imagery-Data-Sources-Intro-to-Remote-Sensing) in my GIS class, or this [Podcast](http://gis.joewheaton.org/topics/data/raster-data-podcast).For a review of TLS, see [this topic](http://gis.joewheaton.org/topics/data#TOC-TLS-Demo---Getting-Lots-of-Vector-Data) in my GIS classFor a review of Total Station and rtkGPS, see [this topic](http://gis.joewheaton.org/topics/data-colleciton) in my GIS class
+For a review of some of the aerial imagery see [this topic](http://gis.joewheaton.org/topics/data#TOC-Raster-Imagery-Data-Sources-Intro-to-Remote-Sensing) in my GIS class, or this [Podcast](http://gis.joewheaton.org/topics/data/raster-data-podcast).For a review of TLS, see [this topic](http://gis.joewheaton.org/topics/data#TOC-TLS-Demo---Getting-Lots-of-Vector-Data) in my GIS classFor a review of Total Station and rtkGPS, see [this topic](http://gis.joewheaton.org/topics/data-colleciton) in my GIS class
 
 #### References
 
