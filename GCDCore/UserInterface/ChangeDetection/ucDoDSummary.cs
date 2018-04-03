@@ -42,6 +42,9 @@ namespace GCDCore.UserInterface.ChangeDetection
             cmsCopy = new ContextMenuStrip();
             cmsCopy.Items.Add("Copy Value To Clipboard", Properties.Resources.Copy, OnCopyCellValue);
             cmsCopy.Items.Add("Copy Row To Clipboard", Properties.Resources.Copy, OnCopyRow);
+
+            // Prevent sorting
+            grdData.Columns.Cast<DataGridViewColumn>().ToList().ForEach(f => f.SortMode = DataGridViewColumnSortMode.NotSortable);
         }
 
         /// <summary>
@@ -541,7 +544,7 @@ namespace GCDCore.UserInterface.ChangeDetection
 
         private void grdData_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Right)
+            if (e.Button == MouseButtons.Right && e.RowIndex >= 0)
             {
                 if (grdData.Rows[e.RowIndex].Cells[e.ColumnIndex].ContextMenuStrip == cmsCopy)
                 {
