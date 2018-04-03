@@ -1,28 +1,29 @@
 ---
 title: GCD Help
+weight: 1
 ---
 
 The GCD is open-source, freeware and their are a variety of ways you can get help and training. The first thing to identify is what type of help you need.
 
 # Free Support
 
-## GCD Documentation
+## GCD Concepts
 
+
+## GCD Documentation
 
 
 ## GCD Tutorials
 
 
-
-## GCD Concepts
-
+## GCD Installation
 
 
 ## GCD Literature
 
 # Community Support
 
-## GCD Training, Courses & Workshops
+## GCD Workshops & Courses
 
 ## GCD Datasets
 

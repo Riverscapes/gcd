@@ -1,12 +1,9 @@
 ---
-title: Geomorphic Change Detection Workshop
+title: Workshops & Courses
+weight: 4
 ---
 
-Welcome to the 
-
-Geomorphic Change Detection Workshop
-
-  website. 
+Welcome to the Geomorphic Change Detection Workshop Pages.
 
 #### Enrolled Participants:
 

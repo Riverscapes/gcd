@@ -1,5 +1,6 @@
 ---
-title: Tutorials & How To...
+title: Tutorials
+weight: 3
 ---
 
 Some of the most common procedures and analsyes in both GIS and GCD are elaborated in these video tutorials. The tutorials act as a reference for the exercises used in the [GCD Workshop](http://gcdworkshop.joewheaton.org/), taught at [Utah State University](http://cnr.usu.edu/streamrestoration/htm/course-information).

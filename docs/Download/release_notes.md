@@ -1,5 +1,6 @@
 ---
 title: Release Notes
+weight: 4
 ---
 
 ## 7.0.10 - 28 Mar 2018

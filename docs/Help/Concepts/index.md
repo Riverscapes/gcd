@@ -1,5 +1,6 @@
 ---
-title: GCD Concept Reference
+title: Concepts
+weight: 1
 ---
 
 This is a reference list of concepts underpinning the GCD Software.
