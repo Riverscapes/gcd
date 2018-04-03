@@ -57,7 +57,7 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
             valDuration.Value = (decimal)Analysis.Duration.As(Analysis.DurationDisplayUnits);
             valPorosity.Value = Analysis.Porosity;
             valDensity.Value = Analysis.Density;
-            valMinFlux.Value = (decimal)Analysis.MinimumFlux.As(ProjectManager.Project.Units.VolUnit);
+            valBoundaryFlux.Value = (decimal)Analysis.MinimumFlux.As(ProjectManager.Project.Units.VolUnit);
 
             txtName.Text = Analysis.Name;
             txtPath.Text = ProjectManager.Project.GetRelativePath(Analysis.OutputFolder.FullName);
@@ -77,13 +77,16 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
             valDuration.ValueChanged += valDuration_ValueChanged;
             UpdateCriticalDuration();
 
-            cboMinFluxUnit.DataSource = new BindingList<GCDCore.Project.Morphological.MorphologicalUnit>(Analysis.Units);
-            cboMinFluxUnit.SelectedItem = Analysis.MinimumFluxCell;
+            cboBoundaryUnit.DataSource = new BindingList<GCDCore.Project.Morphological.MorphologicalUnit>(Analysis.Units.Where(x => !x.IsTotal).ToList());
+            cboBoundaryUnit.SelectedItem = Analysis.MinimumFluxCell;
 
             valPorosity.ValueChanged += PorosityChanged;
 
             // Make the grid the default control
             grdData.Select();
+
+            valBoundaryFlux.ValueChanged += MinFlux_Changed;
+            cboBoundaryUnit.SelectedIndexChanged += MinFlux_Changed;
         }
 
         private void PorosityChanged(object sender, EventArgs e)
@@ -335,7 +338,7 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
             {
                 Analysis.SaveExcelSpreadsheet();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ex.Data["Path"] = Analysis.Spreadsheet.FullName;
                 naru.error.ExceptionUI.HandleException(ex, "Error saving morphological spreadsheet");
@@ -426,5 +429,26 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
             }
         }
 
+        private void MinFlux_Changed(object sender, EventArgs e)
+        {
+            GCDCore.Project.Morphological.MorphologicalUnit unit = cboBoundaryUnit.SelectedItem as GCDCore.Project.Morphological.MorphologicalUnit;
+            Analysis.CalculateMinFlux(unit, Volume.From((double)valBoundaryFlux.Value, ((FormattedVolumeUnit)cboVolumeUnits.SelectedItem).VolumeUnit));
+            Analysis.Units.ResetBindings();
+        }
+
+        private void cmdReset_Click(object sender, EventArgs e)
+        {
+            // Disconnect event firing    
+            cboBoundaryUnit.SelectedIndexChanged -= MinFlux_Changed;
+            valBoundaryFlux.ValueChanged -= MinFlux_Changed;
+
+            Analysis.InitializeMorphologicalUnits();
+            cboBoundaryUnit.SelectedIndex = Analysis.Units.IndexOf(Analysis.MinimumFluxCell);
+            valBoundaryFlux.Value = (decimal)Analysis.MinimumFlux.As((cboVolumeUnits.SelectedItem as FormattedVolumeUnit).VolumeUnit);
+
+            // Re-attach event firing
+            cboBoundaryUnit.SelectedIndexChanged += MinFlux_Changed;
+            valBoundaryFlux.ValueChanged += MinFlux_Changed;
+        }
     }
 }

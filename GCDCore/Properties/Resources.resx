@@ -208,9 +208,6 @@
   <data name="GCD" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\GCD.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="IdahoPower_63height" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\IdahoPower_63height.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="polygon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\polygon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -220,14 +217,14 @@
   <data name="OpenProject" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\OpenProject.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="import" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\import.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="chrono_descending" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\chrono_descending.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Settings" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Settings.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="alpha_descending" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\alpha_descending.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="AddToMap" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\AddToMap.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -301,8 +298,8 @@
   <data name="SaveGIS" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SaveGIS.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="alpha_descending" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\alpha_descending.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="import" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\import.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="mask" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\mask.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -312,6 +309,9 @@
   </data>
   <data name="sigma" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\sigma.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="vdod" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vdod.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="USGS" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\USGS.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -325,6 +325,9 @@
   <data name="BrowseFolder" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\BrowseFolder.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="IdahoPower_63height" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\IdahoPower_63height.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Reservoir" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Reservoir.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -336,5 +339,8 @@
   </data>
   <data name="edit" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\edit.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="vol_deposition_erosion" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vol_deposition_erosion.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

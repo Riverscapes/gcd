@@ -69,8 +69,10 @@ namespace GCDCore.Project.Morphological
             InitializeMorphologicalUnits();
         }
 
-        private void InitializeMorphologicalUnits()
+        public void InitializeMorphologicalUnits()
         {
+            Units.Clear();
+
             // Loop over the sorted list of mask values IN ASCENDING DIRECTIONAL ORDER
             foreach (KeyValuePair<int, Tuple<string, string>> maskValue in ((GCDCore.Project.Masks.DirectionalMask)BS.Mask).SortedFieldValues)
             {
@@ -99,6 +101,9 @@ namespace GCDCore.Project.Morphological
             Units[0].VolOut = (-1 * Units[0].VolChange) + Units[0].VolIn;
             Units[0].CumulativeVolume = Units[0].VolChange;
 
+            MorphologicalUnit initialMinFluxUnit = null;
+            Volume initialMinFlux = new Volume(0);
+
             for (int i = 1; i < Units.Count; i++)
             {
                 Units[i].CumulativeVolume = Units[i].VolChange + Units[i - 1].CumulativeVolume;
@@ -107,19 +112,37 @@ namespace GCDCore.Project.Morphological
                 Units[i].VolOut = Units[i].VolIn - Units[i].VolChange;
 
                 // Track the first unit that possesses a positive volume change
-                if (MinimumFluxCell == null && Units[i].VolChange > new Volume(0))
+                if (initialMinFluxUnit == null && Units[i].VolChange > new Volume(0))
                 {
-                    MinimumFluxCell = Units[i];
-                    MinimumFlux = UnitsNet.Volume.From(Math.Abs(Units[i].VolOut.As(UnitsNet.Units.VolumeUnit.CubicMeter)), UnitsNet.Units.VolumeUnit.CubicMeter);
+                    initialMinFluxUnit = Units[i];
+                    initialMinFlux = UnitsNet.Volume.From(Math.Abs(Units[i].VolOut.As(UnitsNet.Units.VolumeUnit.CubicMeter)), UnitsNet.Units.VolumeUnit.CubicMeter);
                 }
             }
 
+            // Total row
+            MorphologicalUnit muTotal = new MorphologicalUnit("Reach Total", true);
+            foreach (MorphologicalUnit unit in Units)
+            {
+                muTotal.VolErosion += unit.VolErosion;
+                muTotal.VolErosionErr += unit.VolErosionErr;
+                muTotal.VolDeposition += unit.VolDeposition;
+                muTotal.VolDepositionErr += unit.VolDepositionErr;
+            }
+            Units.Add(muTotal);
+
+            CalculateMinFlux(initialMinFluxUnit, initialMinFlux);
+        }
+
+        public void CalculateMinFlux(MorphologicalUnit minFluxUnit, Volume minFlux)
+        {
             // Add back in the VolOut for the minimum flux cell (or the whole reach if there was no min flux cell)
-            if (MinimumFluxCell == null)
+            MinimumFluxCell = minFluxUnit;
+            if (minFluxUnit == null)
                 MinimumFlux = Units.Last().VolOut;
+            else
+                MinimumFlux = minFlux;
 
             Units[0].VolIn = -1 * Units[0].VolChange + MinimumFlux;
-
             Units[0].VolOut = Units[0].VolIn + Units[0].VolChange;
 
             // Recalculate the VolOut for each unit now we know the reach input flux
@@ -129,20 +152,10 @@ namespace GCDCore.Project.Morphological
                 Units[i].VolOut = Units[i].VolIn - Units[i].VolChange;
             }
 
-            // Total row
-            MorphologicalUnit muTotal = new MorphologicalUnit("Reach Total", true);
+            MorphologicalUnit muTotal = Units.Last();
             muTotal.VolIn = Units[0].VolIn;
             muTotal.VolOut = Units[Units.Count - 1].VolOut;
             muTotal.CumulativeVolume = Units[Units.Count - 1].CumulativeVolume;
-
-            foreach (MorphologicalUnit unit in Units)
-            {
-                muTotal.VolErosion += unit.VolErosion;
-                muTotal.VolErosionErr += unit.VolErosionErr;
-                muTotal.VolDeposition += unit.VolDeposition;
-                muTotal.VolDepositionErr += unit.VolDepositionErr;
-            }
-            Units.Add(muTotal);
 
             CalculateWork();
         }
@@ -305,7 +318,7 @@ namespace GCDCore.Project.Morphological
             ExcelXMLDocument xmlExcelDoc = new ExcelXMLDocument(template.FullName);
 
             //loop through all the units and update spreadsheet
-            for(int UnitIndex= 0; UnitIndex < (Units.Count - 1); UnitIndex++)
+            for (int UnitIndex = 0; UnitIndex < (Units.Count - 1); UnitIndex++)
             {
                 MorphologicalUnit unit = Units[UnitIndex];
 
@@ -352,7 +365,7 @@ namespace GCDCore.Project.Morphological
             oCellStyle.BottomBorder.Color = "#000000";
 
             //loop through all cells and format
-            for (int i = 0; i < (Units.Count-2); i++)
+            for (int i = 0; i < (Units.Count - 2); i++)
             {
                 xmlExcelDoc.FormatRow("ReachName", i, oCellStyle);
             }

@@ -42,12 +42,24 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMorphResults));
             this.cmdHelp = new System.Windows.Forms.Button();
             this.cmdOK = new System.Windows.Forms.Button();
             this.cmdCancel = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.cboBoundaryType = new System.Windows.Forms.ComboBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.cmdReset = new System.Windows.Forms.Button();
+            this.valBoundaryFlux = new System.Windows.Forms.NumericUpDown();
+            this.label5 = new System.Windows.Forms.Label();
+            this.cboBoundaryUnit = new System.Windows.Forms.ComboBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.valDensity = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
@@ -65,21 +77,18 @@
             this.cmsDataGrid = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.exportTablularDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.cboVolumeUnits = new System.Windows.Forms.ComboBox();
-            this.cmdReset = new System.Windows.Forms.Button();
-            this.valMinFlux = new System.Windows.Forms.NumericUpDown();
-            this.label5 = new System.Windows.Forms.Label();
-            this.cboMinFluxUnit = new System.Windows.Forms.ComboBox();
+            this.txtMinFlux = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.chtData = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.ucDoDPropertiesGrid1 = new GCDCore.UserInterface.ChangeDetection.ucDoDPropertiesGrid();
+            this.cboVolumeUnits = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.txtPath = new System.Windows.Forms.TextBox();
             this.cmdBrowse = new System.Windows.Forms.Button();
+            this.ucDoDPropertiesGrid1 = new GCDCore.UserInterface.ChangeDetection.ucDoDPropertiesGrid();
             this.colMorphUnit = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colVolErosion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.volErosionError = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -94,6 +103,11 @@
             this.colCumulative = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.groupBox5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.groupBox4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.valBoundaryFlux)).BeginInit();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.valDensity)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.valPorosity)).BeginInit();
@@ -103,7 +117,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.grdData)).BeginInit();
             this.cmsDataGrid.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.valMinFlux)).BeginInit();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chtData)).BeginInit();
             this.tabPage3.SuspendLayout();
@@ -160,6 +173,8 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.groupBox5);
+            this.tabPage1.Controls.Add(this.groupBox4);
             this.tabPage1.Controls.Add(this.groupBox3);
             this.tabPage1.Controls.Add(this.groupBox2);
             this.tabPage1.Controls.Add(this.grdData);
@@ -171,6 +186,121 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Tabular Results";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.pictureBox2);
+            this.groupBox5.Controls.Add(this.pictureBox1);
+            this.groupBox5.Location = new System.Drawing.Point(12, 112);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(612, 114);
+            this.groupBox5.TabIndex = 8;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Summary";
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Image = global::GCDCore.Properties.Resources.vol_deposition_erosion;
+            this.pictureBox2.Location = new System.Drawing.Point(340, 13);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(159, 45);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBox2.TabIndex = 1;
+            this.pictureBox2.TabStop = false;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::GCDCore.Properties.Resources.vdod;
+            this.pictureBox1.Location = new System.Drawing.Point(7, 13);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(154, 58);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.label11);
+            this.groupBox4.Controls.Add(this.cboBoundaryType);
+            this.groupBox4.Controls.Add(this.label10);
+            this.groupBox4.Controls.Add(this.cmdReset);
+            this.groupBox4.Controls.Add(this.valBoundaryFlux);
+            this.groupBox4.Controls.Add(this.label5);
+            this.groupBox4.Controls.Add(this.cboBoundaryUnit);
+            this.groupBox4.Location = new System.Drawing.Point(630, 58);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(422, 168);
+            this.groupBox4.TabIndex = 7;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Imposed Boundary Condition";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(74, 31);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(72, 13);
+            this.label11.TabIndex = 5;
+            this.label11.Text = "Boundary unit";
+            // 
+            // cboBoundaryType
+            // 
+            this.cboBoundaryType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboBoundaryType.FormattingEnabled = true;
+            this.cboBoundaryType.Location = new System.Drawing.Point(152, 57);
+            this.cboBoundaryType.Name = "cboBoundaryType";
+            this.cboBoundaryType.Size = new System.Drawing.Size(248, 21);
+            this.cboBoundaryType.TabIndex = 1;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(71, 61);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(75, 13);
+            this.label10.TabIndex = 0;
+            this.label10.Text = "Boundary type";
+            // 
+            // cmdReset
+            // 
+            this.cmdReset.Image = global::GCDCore.Properties.Resources.refresh;
+            this.cmdReset.Location = new System.Drawing.Point(377, 86);
+            this.cmdReset.Name = "cmdReset";
+            this.cmdReset.Size = new System.Drawing.Size(23, 23);
+            this.cmdReset.TabIndex = 2;
+            this.cmdReset.UseVisualStyleBackColor = true;
+            this.cmdReset.Click += new System.EventHandler(this.cmdReset_Click);
+            // 
+            // valBoundaryFlux
+            // 
+            this.valBoundaryFlux.DecimalPlaces = 2;
+            this.valBoundaryFlux.Location = new System.Drawing.Point(152, 87);
+            this.valBoundaryFlux.Maximum = new decimal(new int[] {
+            1215752192,
+            23,
+            0,
+            0});
+            this.valBoundaryFlux.Name = "valBoundaryFlux";
+            this.valBoundaryFlux.Size = new System.Drawing.Size(112, 20);
+            this.valBoundaryFlux.TabIndex = 4;
+            // 
+            // label5
+            // 
+            this.label5.Location = new System.Drawing.Point(12, 90);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(134, 14);
+            this.label5.TabIndex = 3;
+            this.label5.Text = "Boundary volume ()";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // cboBoundaryUnit
+            // 
+            this.cboBoundaryUnit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboBoundaryUnit.FormattingEnabled = true;
+            this.cboBoundaryUnit.Location = new System.Drawing.Point(152, 27);
+            this.cboBoundaryUnit.Name = "cboBoundaryUnit";
+            this.cboBoundaryUnit.Size = new System.Drawing.Size(248, 21);
+            this.cboBoundaryUnit.TabIndex = 1;
             // 
             // groupBox3
             // 
@@ -360,12 +490,12 @@
             this.colFluxMass,
             this.colCumulative});
             this.grdData.ContextMenuStrip = this.cmsDataGrid;
-            this.grdData.Location = new System.Drawing.Point(12, 194);
+            this.grdData.Location = new System.Drawing.Point(12, 232);
             this.grdData.Name = "grdData";
             this.grdData.ReadOnly = true;
             this.grdData.RowHeadersVisible = false;
             this.grdData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.grdData.Size = new System.Drawing.Size(1037, 209);
+            this.grdData.Size = new System.Drawing.Size(1037, 171);
             this.grdData.TabIndex = 3;
             this.grdData.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.grdData_CellFormatting);
             // 
@@ -386,76 +516,30 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.cboVolumeUnits);
-            this.groupBox1.Controls.Add(this.cmdReset);
-            this.groupBox1.Controls.Add(this.valMinFlux);
-            this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Controls.Add(this.cboMinFluxUnit);
+            this.groupBox1.Controls.Add(this.txtMinFlux);
             this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Location = new System.Drawing.Point(12, 110);
+            this.groupBox1.Location = new System.Drawing.Point(630, 6);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(612, 78);
+            this.groupBox1.Size = new System.Drawing.Size(419, 46);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Parameters";
+            this.groupBox1.Text = "Top of Reach Boundary Condition";
             // 
-            // cboVolumeUnits
+            // txtMinFlux
             // 
-            this.cboVolumeUnits.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboVolumeUnits.FormattingEnabled = true;
-            this.cboVolumeUnits.Location = new System.Drawing.Point(321, 50);
-            this.cboVolumeUnits.Name = "cboVolumeUnits";
-            this.cboVolumeUnits.Size = new System.Drawing.Size(131, 21);
-            this.cboVolumeUnits.TabIndex = 5;
-            // 
-            // cmdReset
-            // 
-            this.cmdReset.Image = global::GCDCore.Properties.Resources.refresh;
-            this.cmdReset.Location = new System.Drawing.Point(321, 19);
-            this.cmdReset.Name = "cmdReset";
-            this.cmdReset.Size = new System.Drawing.Size(23, 23);
-            this.cmdReset.TabIndex = 2;
-            this.cmdReset.UseVisualStyleBackColor = true;
-            // 
-            // valMinFlux
-            // 
-            this.valMinFlux.DecimalPlaces = 2;
-            this.valMinFlux.Location = new System.Drawing.Point(194, 51);
-            this.valMinFlux.Maximum = new decimal(new int[] {
-            1215752192,
-            23,
-            0,
-            0});
-            this.valMinFlux.Name = "valMinFlux";
-            this.valMinFlux.Size = new System.Drawing.Size(120, 20);
-            this.valMinFlux.TabIndex = 4;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(11, 55);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(178, 13);
-            this.label5.TabIndex = 3;
-            this.label5.Text = "Top of reach minimum flux volume in";
-            // 
-            // cboMinFluxUnit
-            // 
-            this.cboMinFluxUnit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboMinFluxUnit.FormattingEnabled = true;
-            this.cboMinFluxUnit.Location = new System.Drawing.Point(194, 20);
-            this.cboMinFluxUnit.Name = "cboMinFluxUnit";
-            this.cboMinFluxUnit.Size = new System.Drawing.Size(120, 21);
-            this.cboMinFluxUnit.TabIndex = 1;
+            this.txtMinFlux.Location = new System.Drawing.Point(311, 17);
+            this.txtMinFlux.Name = "txtMinFlux";
+            this.txtMinFlux.Size = new System.Drawing.Size(98, 20);
+            this.txtMinFlux.TabIndex = 6;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(102, 24);
+            this.label4.Location = new System.Drawing.Point(11, 20);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(87, 13);
+            this.label4.Size = new System.Drawing.Size(297, 13);
             this.label4.TabIndex = 0;
-            this.label4.Text = "Minimum flux unit";
+            this.label4.Text = "Minimum flux at upstream reach to satisfy boundary conditions";
             // 
             // tabPage2
             // 
@@ -496,13 +580,14 @@
             this.tabPage3.Text = "Inputs";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // ucDoDPropertiesGrid1
+            // cboVolumeUnits
             // 
-            this.ucDoDPropertiesGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucDoDPropertiesGrid1.Location = new System.Drawing.Point(3, 3);
-            this.ucDoDPropertiesGrid1.Name = "ucDoDPropertiesGrid1";
-            this.ucDoDPropertiesGrid1.Size = new System.Drawing.Size(1049, 403);
-            this.ucDoDPropertiesGrid1.TabIndex = 0;
+            this.cboVolumeUnits.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboVolumeUnits.FormattingEnabled = true;
+            this.cboVolumeUnits.Location = new System.Drawing.Point(875, 26);
+            this.cboVolumeUnits.Name = "cboVolumeUnits";
+            this.cboVolumeUnits.Size = new System.Drawing.Size(131, 21);
+            this.cboVolumeUnits.TabIndex = 5;
             // 
             // label7
             // 
@@ -547,6 +632,14 @@
             this.cmdBrowse.TabIndex = 4;
             this.cmdBrowse.UseVisualStyleBackColor = true;
             this.cmdBrowse.Click += new System.EventHandler(this.cmdBrowse_Click);
+            // 
+            // ucDoDPropertiesGrid1
+            // 
+            this.ucDoDPropertiesGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucDoDPropertiesGrid1.Location = new System.Drawing.Point(3, 3);
+            this.ucDoDPropertiesGrid1.Name = "ucDoDPropertiesGrid1";
+            this.ucDoDPropertiesGrid1.Size = new System.Drawing.Size(1049, 403);
+            this.ucDoDPropertiesGrid1.TabIndex = 0;
             // 
             // colMorphUnit
             // 
@@ -610,16 +703,20 @@
             // 
             // colVolChangeErr
             // 
-            this.colVolChangeErr.HeaderText = "Total Net Volume Difference Error";
+            this.colVolChangeErr.DataPropertyName = "VolChangeErr";
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle6.Format = "#,##0.00";
+            this.colVolChangeErr.DefaultCellStyle = dataGridViewCellStyle6;
+            this.colVolChangeErr.HeaderText = "Total Net Volume Difference Error ()";
             this.colVolChangeErr.Name = "colVolChangeErr";
             this.colVolChangeErr.ReadOnly = true;
             // 
             // colVolumeIn
             // 
             this.colVolumeIn.DataPropertyName = "VolIn";
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle6.Format = "#,##0.00";
-            this.colVolumeIn.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle7.Format = "#,##0.00";
+            this.colVolumeIn.DefaultCellStyle = dataGridViewCellStyle7;
             this.colVolumeIn.HeaderText = "Volume In ()";
             this.colVolumeIn.Name = "colVolumeIn";
             this.colVolumeIn.ReadOnly = true;
@@ -627,9 +724,9 @@
             // colVolumeOut
             // 
             this.colVolumeOut.DataPropertyName = "VolOut";
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle7.Format = "#,##0.00";
-            this.colVolumeOut.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle8.Format = "#,##0.00";
+            this.colVolumeOut.DefaultCellStyle = dataGridViewCellStyle8;
             this.colVolumeOut.HeaderText = "VolumeOut ()";
             this.colVolumeOut.Name = "colVolumeOut";
             this.colVolumeOut.ReadOnly = true;
@@ -637,9 +734,9 @@
             // colFuxVolume
             // 
             this.colFuxVolume.DataPropertyName = "FluxVolume";
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle8.Format = "#,##0.00";
-            this.colFuxVolume.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle9.Format = "#,##0.00";
+            this.colFuxVolume.DefaultCellStyle = dataGridViewCellStyle9;
             this.colFuxVolume.HeaderText = "Qb Out Volume Flux ()";
             this.colFuxVolume.Name = "colFuxVolume";
             this.colFuxVolume.ReadOnly = true;
@@ -647,9 +744,9 @@
             // colFluxMass
             // 
             this.colFluxMass.DataPropertyName = "FluxMass";
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle9.Format = "#,##0.00";
-            this.colFluxMass.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle10.Format = "#,##0.00";
+            this.colFluxMass.DefaultCellStyle = dataGridViewCellStyle10;
             this.colFluxMass.HeaderText = "Qb Out Mass Flux ()";
             this.colFluxMass.Name = "colFluxMass";
             this.colFluxMass.ReadOnly = true;
@@ -657,9 +754,9 @@
             // colCumulative
             // 
             this.colCumulative.DataPropertyName = "CumulativeVolume";
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle10.Format = "#,##0.00";
-            this.colCumulative.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle11.Format = "#,##0.00";
+            this.colCumulative.DefaultCellStyle = dataGridViewCellStyle11;
             this.colCumulative.HeaderText = "Cumulative Volume Change ()";
             this.colCumulative.Name = "colCumulative";
             this.colCumulative.ReadOnly = true;
@@ -670,6 +767,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1087, 547);
             this.Controls.Add(this.cmdBrowse);
+            this.Controls.Add(this.cboVolumeUnits);
             this.Controls.Add(this.txtPath);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.txtName);
@@ -684,6 +782,13 @@
             this.Load += new System.EventHandler(this.frmMorphResults_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.valBoundaryFlux)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.valDensity)).EndInit();
@@ -696,7 +801,6 @@
             this.cmsDataGrid.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.valMinFlux)).EndInit();
             this.tabPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chtData)).EndInit();
             this.tabPage3.ResumeLayout(false);
@@ -719,7 +823,7 @@
         private System.Windows.Forms.NumericUpDown valDensity;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.ComboBox cboMinFluxUnit;
+        private System.Windows.Forms.ComboBox cboBoundaryUnit;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.NumericUpDown valPercentCompetent;
         private System.Windows.Forms.Label label3;
@@ -733,7 +837,7 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox txtPath;
         private System.Windows.Forms.Button cmdBrowse;
-        private System.Windows.Forms.NumericUpDown valMinFlux;
+        private System.Windows.Forms.NumericUpDown valBoundaryFlux;
         private System.Windows.Forms.DataVisualization.Charting.Chart chtData;
         private System.Windows.Forms.Button cmdReset;
         private System.Windows.Forms.GroupBox groupBox3;
@@ -744,6 +848,14 @@
         private ChangeDetection.ucDoDPropertiesGrid ucDoDPropertiesGrid1;
         private System.Windows.Forms.ContextMenuStrip cmsDataGrid;
         private System.Windows.Forms.ToolStripMenuItem exportTablularDataToolStripMenuItem;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.ComboBox cboBoundaryType;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TextBox txtMinFlux;
+        private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.DataGridViewTextBoxColumn colMorphUnit;
         private System.Windows.Forms.DataGridViewTextBoxColumn colVolErosion;
         private System.Windows.Forms.DataGridViewTextBoxColumn volErosionError;
