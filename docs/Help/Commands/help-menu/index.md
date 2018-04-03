@@ -1,6 +1,6 @@
 ---
 title: Help Menu
-weight: 10
+weight: 5
 ---
 
 ![GCD_Menu_Help]({{ site.baseurl }}/assets/images/GCD6_Menu_Help.png)
