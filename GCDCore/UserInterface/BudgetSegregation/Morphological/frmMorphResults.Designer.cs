@@ -29,6 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -39,9 +42,6 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMorphResults));
             this.cmdHelp = new System.Windows.Forms.Button();
             this.cmdOK = new System.Windows.Forms.Button();
@@ -62,17 +62,6 @@
             this.valDuration = new System.Windows.Forms.NumericUpDown();
             this.cboDuration = new System.Windows.Forms.ComboBox();
             this.grdData = new System.Windows.Forms.DataGridView();
-            this.colMorphUnit = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colVolErosion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.volErosionError = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colVolDeposition = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colVolDepositionError = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.volChange = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colVolumeIn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colVolumeOut = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colFuxVolume = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colFluxMass = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colCumulative = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cmsDataGrid = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.exportTablularDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -91,6 +80,18 @@
             this.label8 = new System.Windows.Forms.Label();
             this.txtPath = new System.Windows.Forms.TextBox();
             this.cmdBrowse = new System.Windows.Forms.Button();
+            this.colMorphUnit = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colVolErosion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.volErosionError = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colVolDeposition = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colVolDepositionError = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.volChange = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colVolChangeErr = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colVolumeIn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colVolumeOut = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colFuxVolume = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colFluxMass = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCumulative = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -204,9 +205,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(66, 23);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(61, 13);
+            this.label1.Size = new System.Drawing.Size(68, 13);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Porosity (%)";
+            this.label1.Text = "Porosity (0-1)";
             // 
             // valPorosity
             // 
@@ -298,11 +299,11 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(14, 49);
+            this.label3.Location = new System.Drawing.Point(3, 49);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(124, 13);
+            this.label3.Size = new System.Drawing.Size(135, 13);
             this.label3.TabIndex = 3;
-            this.label3.Text = "Percent comptetent (0-1)";
+            this.label3.Text = "Proportion comptetent (0-1)";
             // 
             // label2
             // 
@@ -352,6 +353,7 @@
             this.colVolDeposition,
             this.colVolDepositionError,
             this.volChange,
+            this.colVolChangeErr,
             this.colVolumeIn,
             this.colVolumeOut,
             this.colFuxVolume,
@@ -366,116 +368,6 @@
             this.grdData.Size = new System.Drawing.Size(1037, 209);
             this.grdData.TabIndex = 3;
             this.grdData.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.grdData_CellFormatting);
-            // 
-            // colMorphUnit
-            // 
-            this.colMorphUnit.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colMorphUnit.DataPropertyName = "Name";
-            this.colMorphUnit.HeaderText = "Morphological Unit";
-            this.colMorphUnit.Name = "colMorphUnit";
-            this.colMorphUnit.ReadOnly = true;
-            this.colMorphUnit.Width = 110;
-            // 
-            // colVolErosion
-            // 
-            this.colVolErosion.DataPropertyName = "VolErosion";
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle1.Format = "#,##0.00";
-            this.colVolErosion.DefaultCellStyle = dataGridViewCellStyle1;
-            this.colVolErosion.HeaderText = "Volume of Erosion ()";
-            this.colVolErosion.Name = "colVolErosion";
-            this.colVolErosion.ReadOnly = true;
-            // 
-            // volErosionError
-            // 
-            this.volErosionError.DataPropertyName = "VolErosionErr";
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle2.Format = "±#,##0.00";
-            this.volErosionError.DefaultCellStyle = dataGridViewCellStyle2;
-            this.volErosionError.HeaderText = "Volume of Erosion Error ()";
-            this.volErosionError.Name = "volErosionError";
-            this.volErosionError.ReadOnly = true;
-            // 
-            // colVolDeposition
-            // 
-            this.colVolDeposition.DataPropertyName = "VolDeposition";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle3.Format = "#,##0.00";
-            this.colVolDeposition.DefaultCellStyle = dataGridViewCellStyle3;
-            this.colVolDeposition.HeaderText = "Volume of Deposition ()";
-            this.colVolDeposition.Name = "colVolDeposition";
-            this.colVolDeposition.ReadOnly = true;
-            // 
-            // colVolDepositionError
-            // 
-            this.colVolDepositionError.DataPropertyName = "VolDepositionErr";
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle4.Format = "±#,##0.00";
-            dataGridViewCellStyle4.NullValue = null;
-            this.colVolDepositionError.DefaultCellStyle = dataGridViewCellStyle4;
-            this.colVolDepositionError.HeaderText = "Volume of Deposition Error ()";
-            this.colVolDepositionError.Name = "colVolDepositionError";
-            this.colVolDepositionError.ReadOnly = true;
-            // 
-            // volChange
-            // 
-            this.volChange.DataPropertyName = "VolChange";
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle5.Format = "#,##0.00";
-            this.volChange.DefaultCellStyle = dataGridViewCellStyle5;
-            this.volChange.HeaderText = "Volume of Change ()";
-            this.volChange.Name = "volChange";
-            this.volChange.ReadOnly = true;
-            // 
-            // colVolumeIn
-            // 
-            this.colVolumeIn.DataPropertyName = "VolIn";
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle6.Format = "#,##0.00";
-            this.colVolumeIn.DefaultCellStyle = dataGridViewCellStyle6;
-            this.colVolumeIn.HeaderText = "Volume In ()";
-            this.colVolumeIn.Name = "colVolumeIn";
-            this.colVolumeIn.ReadOnly = true;
-            // 
-            // colVolumeOut
-            // 
-            this.colVolumeOut.DataPropertyName = "VolOut";
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle7.Format = "#,##0.00";
-            this.colVolumeOut.DefaultCellStyle = dataGridViewCellStyle7;
-            this.colVolumeOut.HeaderText = "VolumeOut ()";
-            this.colVolumeOut.Name = "colVolumeOut";
-            this.colVolumeOut.ReadOnly = true;
-            // 
-            // colFuxVolume
-            // 
-            this.colFuxVolume.DataPropertyName = "FluxVolume";
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle8.Format = "#,##0.00";
-            this.colFuxVolume.DefaultCellStyle = dataGridViewCellStyle8;
-            this.colFuxVolume.HeaderText = "Qb Out Volume Flux ()";
-            this.colFuxVolume.Name = "colFuxVolume";
-            this.colFuxVolume.ReadOnly = true;
-            // 
-            // colFluxMass
-            // 
-            this.colFluxMass.DataPropertyName = "FluxMass";
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle9.Format = "#,##0.00";
-            this.colFluxMass.DefaultCellStyle = dataGridViewCellStyle9;
-            this.colFluxMass.HeaderText = "Qb Out Mass Flux ()";
-            this.colFluxMass.Name = "colFluxMass";
-            this.colFluxMass.ReadOnly = true;
-            // 
-            // colCumulative
-            // 
-            this.colCumulative.DataPropertyName = "CumulativeVolume";
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle10.Format = "#,##0.00";
-            this.colCumulative.DefaultCellStyle = dataGridViewCellStyle10;
-            this.colCumulative.HeaderText = "Cumulative Volume Change ()";
-            this.colCumulative.Name = "colCumulative";
-            this.colCumulative.ReadOnly = true;
             // 
             // cmsDataGrid
             // 
@@ -656,6 +548,122 @@
             this.cmdBrowse.UseVisualStyleBackColor = true;
             this.cmdBrowse.Click += new System.EventHandler(this.cmdBrowse_Click);
             // 
+            // colMorphUnit
+            // 
+            this.colMorphUnit.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colMorphUnit.DataPropertyName = "Name";
+            this.colMorphUnit.HeaderText = "Sub Reach";
+            this.colMorphUnit.Name = "colMorphUnit";
+            this.colMorphUnit.ReadOnly = true;
+            this.colMorphUnit.Width = 86;
+            // 
+            // colVolErosion
+            // 
+            this.colVolErosion.DataPropertyName = "VolErosion";
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle1.Format = "#,##0.00";
+            this.colVolErosion.DefaultCellStyle = dataGridViewCellStyle1;
+            this.colVolErosion.HeaderText = "Volume of Erosion ()";
+            this.colVolErosion.Name = "colVolErosion";
+            this.colVolErosion.ReadOnly = true;
+            // 
+            // volErosionError
+            // 
+            this.volErosionError.DataPropertyName = "VolErosionErr";
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle2.Format = "±#,##0.00";
+            this.volErosionError.DefaultCellStyle = dataGridViewCellStyle2;
+            this.volErosionError.HeaderText = "Volume of Erosion Error ()";
+            this.volErosionError.Name = "volErosionError";
+            this.volErosionError.ReadOnly = true;
+            // 
+            // colVolDeposition
+            // 
+            this.colVolDeposition.DataPropertyName = "VolDeposition";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle3.Format = "#,##0.00";
+            this.colVolDeposition.DefaultCellStyle = dataGridViewCellStyle3;
+            this.colVolDeposition.HeaderText = "Volume of Deposition ()";
+            this.colVolDeposition.Name = "colVolDeposition";
+            this.colVolDeposition.ReadOnly = true;
+            // 
+            // colVolDepositionError
+            // 
+            this.colVolDepositionError.DataPropertyName = "VolDepositionErr";
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle4.Format = "±#,##0.00";
+            dataGridViewCellStyle4.NullValue = null;
+            this.colVolDepositionError.DefaultCellStyle = dataGridViewCellStyle4;
+            this.colVolDepositionError.HeaderText = "Volume of Deposition Error ()";
+            this.colVolDepositionError.Name = "colVolDepositionError";
+            this.colVolDepositionError.ReadOnly = true;
+            // 
+            // volChange
+            // 
+            this.volChange.DataPropertyName = "VolChange";
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle5.Format = "#,##0.00";
+            this.volChange.DefaultCellStyle = dataGridViewCellStyle5;
+            this.volChange.HeaderText = "Total Net Volume Difference ()";
+            this.volChange.Name = "volChange";
+            this.volChange.ReadOnly = true;
+            // 
+            // colVolChangeErr
+            // 
+            this.colVolChangeErr.HeaderText = "Total Net Volume Difference Error";
+            this.colVolChangeErr.Name = "colVolChangeErr";
+            this.colVolChangeErr.ReadOnly = true;
+            // 
+            // colVolumeIn
+            // 
+            this.colVolumeIn.DataPropertyName = "VolIn";
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle6.Format = "#,##0.00";
+            this.colVolumeIn.DefaultCellStyle = dataGridViewCellStyle6;
+            this.colVolumeIn.HeaderText = "Volume In ()";
+            this.colVolumeIn.Name = "colVolumeIn";
+            this.colVolumeIn.ReadOnly = true;
+            // 
+            // colVolumeOut
+            // 
+            this.colVolumeOut.DataPropertyName = "VolOut";
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle7.Format = "#,##0.00";
+            this.colVolumeOut.DefaultCellStyle = dataGridViewCellStyle7;
+            this.colVolumeOut.HeaderText = "VolumeOut ()";
+            this.colVolumeOut.Name = "colVolumeOut";
+            this.colVolumeOut.ReadOnly = true;
+            // 
+            // colFuxVolume
+            // 
+            this.colFuxVolume.DataPropertyName = "FluxVolume";
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle8.Format = "#,##0.00";
+            this.colFuxVolume.DefaultCellStyle = dataGridViewCellStyle8;
+            this.colFuxVolume.HeaderText = "Qb Out Volume Flux ()";
+            this.colFuxVolume.Name = "colFuxVolume";
+            this.colFuxVolume.ReadOnly = true;
+            // 
+            // colFluxMass
+            // 
+            this.colFluxMass.DataPropertyName = "FluxMass";
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle9.Format = "#,##0.00";
+            this.colFluxMass.DefaultCellStyle = dataGridViewCellStyle9;
+            this.colFluxMass.HeaderText = "Qb Out Mass Flux ()";
+            this.colFluxMass.Name = "colFluxMass";
+            this.colFluxMass.ReadOnly = true;
+            // 
+            // colCumulative
+            // 
+            this.colCumulative.DataPropertyName = "CumulativeVolume";
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle10.Format = "#,##0.00";
+            this.colCumulative.DefaultCellStyle = dataGridViewCellStyle10;
+            this.colCumulative.HeaderText = "Cumulative Volume Change ()";
+            this.colCumulative.Name = "colCumulative";
+            this.colCumulative.ReadOnly = true;
+            // 
             // frmMorphResults
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -742,6 +750,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colVolDeposition;
         private System.Windows.Forms.DataGridViewTextBoxColumn colVolDepositionError;
         private System.Windows.Forms.DataGridViewTextBoxColumn volChange;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colVolChangeErr;
         private System.Windows.Forms.DataGridViewTextBoxColumn colVolumeIn;
         private System.Windows.Forms.DataGridViewTextBoxColumn colVolumeOut;
         private System.Windows.Forms.DataGridViewTextBoxColumn colFuxVolume;
