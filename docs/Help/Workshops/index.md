@@ -20,3 +20,13 @@ No public GCD  workshops are planned at this time. Check back for Spring 2018 or
 
 ![StudySites]({{ site.baseurl}}/assets/images/StudySites.jpg)
 
+
+# Sign-up For Annoucements
+
+We do maintain a [MailChimp email list serve](http://eepurl.com/QanZ1), which we use for annoucements of new releases and new public workshops.
+
+<div align="center">
+    <a class="hollow button" href="http://eepurl.com/QanZ1"><i class="fa fa-envelope"></i>  Join GCD Email List for Annoucements </a>  
+
+</div>
+

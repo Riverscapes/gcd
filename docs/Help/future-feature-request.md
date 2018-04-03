@@ -1,5 +1,6 @@
 ---
 title: Future Feature Request
+weight: 4
 ---
 
 ### Making Feature Requests
@@ -8,7 +9,8 @@ We would like to hear what you have to say about the future direction of GCD dev
 
 ### How Features are Funded
 
-The GCD Software is free and always will be under the [GNU Public License](https://github.com/Riverscapes/gcd/blob/master/LICENSE). Both the ArcGIS Addin and Standalone versions are freeware. However, nothing is ever really for free. We have been able to complete this works thanks to the generous grants and contracts of our partners. The research and software development to date has been funded from a mix of public and private funds. Future software development and features are partly dependent on our ability to continue to secure grants and contracts to do this work. However, many small features, bug fixes and improvements can be made with smaller investments and donations from users. 
+<img class="float-left" src="{{ site.baseurl }}/assets/images/NA_Logo_150pxTall.png">
+The GCD Software is free and always will be under the [GNU Public License](https://github.com/Riverscapes/gcd/blob/master/LICENSE). Both the [ArcGIS Addin and Standalone]({{ site.baseurl }}/Download) versions are freeware. However, nothing actually gets done truely for free. Somone end up paying for it. We have been able to complete this works thanks to the [generous grants and contracts]({{ site.baseurl }}/Acknowledgements)  from our sponsors and partners. The research and software development to date has been funded from a mix of [public and private funds]({{ site.baseurl }}/Acknowledgements). Future software development and features are partly dependent on our ability to continue to secure grants and contracts to [North Arrow Research](http://northarrowresearch.com) to do this work. However, many small features, bug fixes and improvements can be made with smaller investments and donations from users. 
 
 ### Want to Donate to the Cause?
 
@@ -41,3 +43,6 @@ We have started a PayPal donation account for users who want to see specific fea
 ### Want Something More Specific and Concrete
 
 If you want to see specific features definitely incorporated into the GCD, get in touch [with us](http://joewheaton.org/contact) and we can discuss setting up a contract or grant.
+
+------
+<a class="hollow button" href="{{ site.baseurl }}/Help"><i class="fa fa-chevron-circle-left"></i>  Back to GCD Help </a>  
