@@ -432,7 +432,7 @@ namespace GCDCore.UserInterface.ChangeDetection
                     totalErosionArea = activeStats.ErosionRaw.GetArea(ca).As(options.AreaUnits);
                     break;
             }
-            grdData.Rows[1].Cells[colTot].Value = SafePercent(classErosionArea, totalErosionArea).ToString(sFormat);
+            grdData.Rows[1].Cells[colTot].Value = SafePercent(classErosionArea, totalErosionArea) / 100f;
 
             // Deposition
             double classDepositionArea = activeStats.DepositionThr.GetArea(ca).As(options.AreaUnits);
@@ -451,7 +451,7 @@ namespace GCDCore.UserInterface.ChangeDetection
                     totalDepositionArea = activeStats.DepositionRaw.GetArea(ca).As(options.AreaUnits);
                     break;
             }
-            grdData.Rows[2].Cells[colTot].Value = SafePercent(classDepositionArea, totalDepositionArea).ToString(sFormat);
+            grdData.Rows[2].Cells[colTot].Value = SafePercent(classDepositionArea, totalDepositionArea) / 100f;
 
             // VOLUME
 
@@ -472,7 +472,7 @@ namespace GCDCore.UserInterface.ChangeDetection
                     totalErosionVol = activeStats.ErosionRaw.GetVolume(ca, lu).As(options.VolumeUnits);
                     break;
             }
-            grdData.Rows[7].Cells[colTot].Value = SafePercent(classErosionVol, totalErosionVol).ToString(sFormat);
+            grdData.Rows[7].Cells[colTot].Value = SafePercent(classErosionVol, totalErosionVol) / 100f;
 
             // Deposition
             double classDepositionVol = activeStats.DepositionThr.GetArea(ca).As(options.AreaUnits);
@@ -491,7 +491,7 @@ namespace GCDCore.UserInterface.ChangeDetection
                     totalDepositionVol = activeStats.DepositionRaw.GetVolume(ca, lu).As(options.VolumeUnits);
                     break;
             }
-            grdData.Rows[8].Cells[colTot].Value = SafePercent(classDepositionArea, totalDepositionVol).ToString(sFormat);
+            grdData.Rows[8].Cells[colTot].Value = SafePercent(classDepositionArea, totalDepositionVol) / 100f;
 
             // Vol of Difference
             double classVolDiff = activeStats.VolumeOfDifference_Thresholded.As(options.VolumeUnits);
@@ -510,7 +510,7 @@ namespace GCDCore.UserInterface.ChangeDetection
                     totalVolDiff = activeStats.VolumeOfDifference_Raw.As(options.VolumeUnits);
                     break;
             }
-            grdData.Rows[9].Cells[colTot].Value = SafePercent(classVolDiff, totalVolDiff).ToString(sFormat);
+            grdData.Rows[9].Cells[colTot].Value = SafePercent(classVolDiff, totalVolDiff) / 100f;
 
             // Net Vol of Difference
             double classNetVolDiff = activeStats.NetVolumeOfDifference_Thresholded.As(options.VolumeUnits);
@@ -529,7 +529,7 @@ namespace GCDCore.UserInterface.ChangeDetection
                     totalNetVolDiff = activeStats.NetVolumeOfDifference_Thresholded.As(options.VolumeUnits);
                     break;
             }
-            grdData.Rows[10].Cells[colTot].Value = SafePercent(classNetVolDiff, totalNetVolDiff).ToString(sFormat);
+            grdData.Rows[10].Cells[colTot].Value = SafePercent(classNetVolDiff, totalNetVolDiff) / 100f;
         }
 
         private double SafePercent(double numerator, double denomenator)
