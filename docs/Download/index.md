@@ -15,22 +15,23 @@ GCD Standalone is a desktop software version that performs all the core GCD func
 
 
 
-
 <div class="row" align="center">
-
-<div class="columns small-6">
-  <img src="{{ site.baseurl }}/assets/images/gcd_addin.png" style="height:200px"><br>
+	<div class="columns small-6">
+  		<img src="{{ site.baseurl }}/assets/images/gcd_addin.png" style="height:200px">
+    </div>
+     <div> <br></div>
     <div>
     	<a class="button large expanded" href="https://github.com/Riverscapes/gcd/releases/latest">
         <span class="fa fa-cloud-download"></span>
         &nbsp;&nbsp;GCD AddIn for ArcGIS 10.x</a>
     </div>  
-</div>
 
-<div class="columns small-6">
-	<div>
 
-  <img src="{{ site.baseurl }}/assets/images/gcd_standalone.png" style="height:200px"><br>
+	<div class="columns small-6">
+		<div>
+      		<img src="{{ site.baseurl }}/assets/images/gcd_standalone.png" style="height:200px">
+    	</div>
+    <div> <br></div>
     <div>
     	<a class="button large expanded" href="https://github.com/Riverscapes/gcd/releases/latest">
         <span class="fa fa-cloud-download"></span>
@@ -38,12 +39,12 @@ GCD Standalone is a desktop software version that performs all the core GCD func
     </div>
 </div>
 
-</div>
-
-</div>
 
 -----
-| <a class="button" href="{{ site.baseurl }}/download/about"><i class="fa fa-question"></i> Learn More about Differences Between GCD Installations </a> | <a class="button" href="{{ site.baseurl }}/download/release_notes"><i class="fa fa-sticky-note"></i> See Release Notes </a>|
+<div align="center">
+    <a class="button" href="{{ site.baseurl }}/download/about"><i class="fa fa-question"></i>  Learn More about Differences Between GCD Installations </a>  
+    <a class="button" href="{{ site.baseurl }}/download/release_notes"><i class="fa fa-sticky-note"></i>   See Release Notes </a>
+</div>
 
 
 
