@@ -29,7 +29,7 @@ As each DEM has an uncertain surface representation (which might vary in space a
 
 The methodological development is described in ([Wheaton et al., 2010a](http://dx.doi.org/10.1002/esp.1886)), the Wheaton ([2008](http://sites.google.com/a/joewheaton.org/www/Home/research/projects-1/morphological-sediment-budgeting/phdthesis)) thesis, and the Wheaton et al. ([2010b](http://dx.doi.org/10.1002/rra.1305)) RRA paper. The [Matlab version of the code]({{ site.baseurl}}/Download/old_versions.html#dod-3-matlab--gcd-3) (DoD 3) is provided as supplemental information with the [ESPL paper](http://dx.doi.org/10.1002/esp.1886) so that readers can test or extend the code as they see fit for their purposes.
 
-<div align="center>
+<div align="center">
 	<a class="hollow button" href="https://www.researchgate.net/project/Geomorphic-Change-Detection" ><img src="{{ site.baseurl }}/assets/images/icons/ResearchGate_Icon.png">&nbsp;&nbsp; Check out GCD ResearchGate Project for Publications</a>
 </div>
 
