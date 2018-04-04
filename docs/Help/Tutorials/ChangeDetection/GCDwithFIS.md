@@ -1,5 +1,6 @@
 ---
-title: Q. Running a Change Detection w/ FIS
+title: Running GCD w/ FIS
+weight: 3
 ---
 
 ### Overview
@@ -28,29 +29,18 @@ This exercise is simply about putting together what you've done in [M. Deriving 
 
 C:\0_GCD\Exercises\R_BridgeCreek
 
-**1. **Start new ArcMap Document
-
-**2. **Create New GCD Project - "Lower Owens D" in R
-
-**3. **Add two DEM Surveys (2010, 2014)
-
-**4. **Generate Associated Surfaces
-
-- Slope degrees
-
-- Point density
-
-- - use Topo_Points.shp
-
-- Interpolation Error
-
-- - use provided surface or generate it with interpolation error tool
-
-**5. **Generate 3 Input FIS error surfaces
-
-- Using CHaMP_TLS_ZError_PD_SLPdeg_IntErr
-
-**6. **Perform change detection using probabilistic thresholding at 80% confidence
+1. Start new ArcMap Document
+2. Create New GCD Project - "Lower Owens D" in R
+3. Add two DEM Surveys (2010, 2014)
+4. Generate Associated Surfaces
+  - Slope degrees
+  - Point density
+  - use Topo_Points.shp
+  - Interpolation Error
+  - use provided surface or generate it with interpolation error tool
+5. Generate 3 Input FIS error surfaces
+  - Using CHaMP_TLS_ZError_PD_SLPdeg_IntErr
+6. Perform change detection using probabilistic thresholding at 80% confidence
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/vzsDEEwVVMk" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
 
@@ -59,8 +49,7 @@ C:\0_GCD\Exercises\R_BridgeCreek
 - [Parent Workshop Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/3-day-workshop/2-errors-uncertainties/q-changedetection)
 
 - [GCD 6 Help]({{ site.baseurl }}/)
-
-- - [Fuzzy Inference Systems for Modeling DEM Error]({{ site.baseurl }}/gcd-concepts/fuzzy-inference-systems-for-modeling-dem-error)
+  - [Fuzzy Inference Systems for Modeling DEM Error]({{ site.baseurl }}/gcd-concepts/fuzzy-inference-systems-for-modeling-dem-error)
   - [ii. Derive Error Surface]({{ site.baseurl }}/gcd-command-reference/gcd-project-explorer/g-error-surfaces-context-menu/ii-derive-error-surface)
   - [F. Individual Associated Surface Context Menu]({{ site.baseurl }}/gcd-command-reference/gcd-project-explorer/f-individual-associated-surface-context-menu)
   - [Add Change Detection]({{ site.baseurl }}/gcd-command-reference/gcd-analysis-menu/c-geomorphic-change-detection-submenu/change-detection)

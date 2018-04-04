@@ -1,5 +1,6 @@
 ---
-title: P. Building your own FIS
+title: Building your own FIS with Text Editor
+weight: 1
 ---
 
 ### Overview

@@ -1,5 +1,6 @@
 ---
-title: 11. Budget Segregation
+title: Basic Budget Segregation
+weight: 2
 ---
 
 The [`Budget Segregation`]({{ site.baseurl }}/gcd-command-reference/gcd-analysis-menu/c-geomorphic-change-detection-submenu/budget-segregation) tool's application is illustrated in the video below:

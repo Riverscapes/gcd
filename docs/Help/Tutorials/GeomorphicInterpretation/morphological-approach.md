@@ -1,5 +1,6 @@
 ---
-title: W. Morphological Approach to Estimating Sediment Transport
+title: Morphological Approach to Estimating Sediment Transport
+weight: 5
 ---
 ## Materials
 ### Excercise Data

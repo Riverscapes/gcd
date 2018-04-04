@@ -1,5 +1,6 @@
 ---
-title: Building your own FIS
+title: Building your own FIS using Matlab
+weight: 2
 ---
 
 ### Customizing Fuzzy Inference Systems using Matlab Fuzzy Logic Toolbox

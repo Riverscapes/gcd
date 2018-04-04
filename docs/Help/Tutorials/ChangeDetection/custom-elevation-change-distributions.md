@@ -1,5 +1,6 @@
 ---
 title: Custom Elevation Change Distributions
+weight: 5
 ---
 
 #### Simply Customize Elevation Change Distributions in Excel

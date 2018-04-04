@@ -1,5 +1,6 @@
 ---
-title: V. Morphodynamic Signatures from Budget Segeregation
+title: Morphodynamic Signatures from Budget Segregation
+weight: 4
 ---
 
 ### Overview

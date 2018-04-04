@@ -1,12 +1,12 @@
 ---
 title: Simple Change Detection in Raster Calculator vs. GCD
-weight: 3
+weight: 1
 ---
 
 
 ### Overview
 
-This exercise is intended to contrast how to build a DoD (DEM of Difference) with simple change detection minimum level of detection thresholding in ArcGIS's raster calculator versus using the GCD Add-In.
+This exercise is intended to contrast how to build a DoD (DEM of Difference) with simple change detection minimum level of detection thresholding in ArcGIS's raster calculator versus using the GCD..
 
 ### Data and Materials for Exercises
 
@@ -34,6 +34,15 @@ This exercise is intended to contrast how to build a DoD (DEM of Difference) wit
 ![ExcerciseG1A]({{ site.baseurl }}/assets/images/ExcerciseG1A.png)
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/rda6aVCPF9Q" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
+
+In this video tutorial, we show you how to do a simple DoD Analysis in ArcGIS 10 just using the rater calculator.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/YHbDByz6HO4" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
+
+The example data used in this tutorial are from Sulphur Creek, Napa County, California.
+
+For corresponding lecture slides and more context, see [this topic](http://gcdworkshop.joewheaton.org/workshop-topics/1-Principles/e-traditional-approaches-to-change-detection) from [GCD Workshop](http://gcdworkshop.joewheaton.org/).
+
 
 #### Part 1B Threshold
 

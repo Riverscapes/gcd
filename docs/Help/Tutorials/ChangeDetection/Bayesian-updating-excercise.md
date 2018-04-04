@@ -1,5 +1,6 @@
 ---
-title: S. Bayesian Updating Exercise
+title: Spatial Coherence Filter & Bayesian Updating Exercise
+weight: 4
 ---
 
 ### Overview
@@ -56,6 +57,11 @@ C:\0_GCD\Exercises\S_SpatialCoherence
 - - [06. Spatial Coherence & Bayesian Updating]({{ site.baseurl }}/tutorials--how-to/vi-spatial-coherence-bayesian-updaing)
   - [Add Change Detection]({{ site.baseurl }}/gcd-command-reference/gcd-analysis-menu/c-geomorphic-change-detection-submenu/change-detection)
   - [i. Add Change Detection]({{ site.baseurl }}/gcd-command-reference/gcd-project-explorer/j-change-detection-context-menu/i-add-change-detection)
+
+#### References:
+
+- Wheaton JM, Brasington J, Darby SE and Sear D. 2010. [Accounting for Uncertainty in DEMs from Repeat Topographic Surveys: Improved Sediment Budgets](http://www.joewheaton.org/Home/research/paper-downloads/Wheaton_etal_ESPL_DoD.pdf). Earth Surface Processes and Landforms. 35 (2): 136-156. DOI: [10.1002/esp.1886](http://dx.doi.org/10.1002/esp.1886).
+- Wheaton JM. 2008. [Uncertainty in Morphological Sediment Budgeting of Rivers](http://www.joewheaton.org/Home/research/projects-1/morphological-sediment-budgeting/phdthesis). Unpublished PhD Thesis, University of Southampton, Southampton, 412 pp. Chapters 4 & 5.
 
 ------
 
