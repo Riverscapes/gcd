@@ -50,6 +50,10 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
             ucDoDPropertiesGrid1.AddDoDProperty("Directional Mask Field", Analysis.BS.Mask._Field);
             ucDoDPropertiesGrid1.AddDoDProperty("Mask Type", Analysis.BS.Mask.Noun);
 
+            cboBoundaryType.Items.Add(GCDCore.Project.Morphological.MorphologicalAnalysis.FluxDirection.Input);
+            cboBoundaryType.Items.Add(GCDCore.Project.Morphological.MorphologicalAnalysis.FluxDirection.Output);
+            cboBoundaryType.SelectedIndex = 1;
+
             foreach (UnitsNet.Units.DurationUnit val in Enum.GetValues(typeof(UnitsNet.Units.DurationUnit)))
                 cboDuration.Items.Add(val);
 
@@ -57,7 +61,7 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
             valDuration.Value = (decimal)Analysis.Duration.As(Analysis.DurationDisplayUnits);
             valPorosity.Value = Analysis.Porosity;
             valDensity.Value = Analysis.Density;
-            valBoundaryFlux.Value = (decimal)Analysis.MinimumFlux.As(ProjectManager.Project.Units.VolUnit);
+            valBoundaryFlux.Value = (decimal)Analysis.BoundaryFlux.As(ProjectManager.Project.Units.VolUnit);
 
             txtName.Text = Analysis.Name;
             txtPath.Text = ProjectManager.Project.GetRelativePath(Analysis.OutputFolder.FullName);
@@ -78,7 +82,7 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
             UpdateCriticalDuration();
 
             cboBoundaryUnit.DataSource = new BindingList<GCDCore.Project.Morphological.MorphologicalUnit>(Analysis.Units.Where(x => !x.IsTotal).ToList());
-            cboBoundaryUnit.SelectedItem = Analysis.MinimumFluxCell;
+            cboBoundaryUnit.SelectedItem = Analysis.BoundaryFluxUnit;
 
             valPorosity.ValueChanged += PorosityChanged;
 
@@ -87,6 +91,7 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
 
             valBoundaryFlux.ValueChanged += MinFlux_Changed;
             cboBoundaryUnit.SelectedIndexChanged += MinFlux_Changed;
+            cboBoundaryType.SelectedIndexChanged += MinFlux_Changed;
         }
 
         private void PorosityChanged(object sender, EventArgs e)
@@ -147,6 +152,9 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
         {
             string abbr = UnitsNet.Volume.GetAbbreviation(((FormattedVolumeUnit)cboVolumeUnits.SelectedItem).VolumeUnit);
 
+            lblBoundaryVolume.Text = lblBoundaryVolume.Text.Replace(")", string.Format("{0})", abbr));
+            txtMinFlux.Text = Analysis.ReachInputFlux.As(((FormattedVolumeUnit)cboVolumeUnits.SelectedItem).VolumeUnit).ToString("#,##0.00");
+            
             // This will cause the analysis to recalculate the flux volume and flux mass
             Analysis.DisplayVolumeUnits = ((FormattedVolumeUnit)cboVolumeUnits.SelectedItem).VolumeUnit;
 
@@ -432,8 +440,12 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
         private void MinFlux_Changed(object sender, EventArgs e)
         {
             GCDCore.Project.Morphological.MorphologicalUnit unit = cboBoundaryUnit.SelectedItem as GCDCore.Project.Morphological.MorphologicalUnit;
-            Analysis.CalculateMinFlux(unit, Volume.From((double)valBoundaryFlux.Value, ((FormattedVolumeUnit)cboVolumeUnits.SelectedItem).VolumeUnit));
-            Analysis.Units.ResetBindings();
+            GCDCore.Project.Morphological.MorphologicalAnalysis.FluxDirection eDir = (GCDCore.Project.Morphological.MorphologicalAnalysis.FluxDirection)cboBoundaryType.SelectedItem;
+
+            Analysis.ImposeBoundaryCondition(eDir, unit, Volume.From((double)valBoundaryFlux.Value, ((FormattedVolumeUnit)cboVolumeUnits.SelectedItem).VolumeUnit));
+            txtMinFlux.Text = Analysis.ReachInputFlux.As(((FormattedVolumeUnit)cboVolumeUnits.SelectedItem).VolumeUnit).ToString("#,##0.00");
+
+            //Analysis.Units.ResetBindings();
         }
 
         private void cmdReset_Click(object sender, EventArgs e)
@@ -441,14 +453,26 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
             // Disconnect event firing    
             cboBoundaryUnit.SelectedIndexChanged -= MinFlux_Changed;
             valBoundaryFlux.ValueChanged -= MinFlux_Changed;
+            cboBoundaryType.SelectedIndexChanged -= MinFlux_Changed;
 
-            Analysis.InitializeMorphologicalUnits();
-            cboBoundaryUnit.SelectedIndex = Analysis.Units.IndexOf(Analysis.MinimumFluxCell);
-            valBoundaryFlux.Value = (decimal)Analysis.MinimumFlux.As((cboVolumeUnits.SelectedItem as FormattedVolumeUnit).VolumeUnit);
+            Analysis.ImposeMinimumFlux();
+            cboBoundaryUnit.SelectedIndex = Analysis.Units.IndexOf(Analysis.BoundaryFluxUnit);
+            valBoundaryFlux.Value = (decimal)Analysis.BoundaryFlux.As((cboVolumeUnits.SelectedItem as FormattedVolumeUnit).VolumeUnit);
+            cboBoundaryType.SelectedIndex = 1;
+
+            txtMinFlux.Text = Analysis.ReachInputFlux.As(((FormattedVolumeUnit)cboVolumeUnits.SelectedItem).VolumeUnit).ToString("#,##0.00");
 
             // Re-attach event firing
             cboBoundaryUnit.SelectedIndexChanged += MinFlux_Changed;
             valBoundaryFlux.ValueChanged += MinFlux_Changed;
+            cboBoundaryType.SelectedIndexChanged += MinFlux_Changed;
+        }
+
+        private void UpdateFormulae()
+        {
+            GCDCore.Project.Morphological.MorphologicalUnit muTotal = Analysis.Units.First(x => x.IsTotal);
+
+            //string txtF2_Dep = Analysis.
         }
     }
 }

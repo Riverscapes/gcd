@@ -11,14 +11,22 @@ namespace GCDCore.Project.Morphological
 {
     public class MorphologicalAnalysis : GCDProjectItem
     {
+        public enum FluxDirection
+        {
+            Input,
+            Output
+        };
+
         public readonly BudgetSegregation BS;
         public readonly DirectoryInfo OutputFolder;
         public readonly FileInfo Spreadsheet;
 
         public UnitsNet.Units.DurationUnit DurationDisplayUnits { get; set; }
 
-        public MorphologicalUnit MinimumFluxCell { get; set; }
-        public UnitsNet.Volume MinimumFlux { get; set; }
+        public MorphologicalUnit BoundaryFluxUnit { get; internal set; }
+        public UnitsNet.Volume BoundaryFlux { get; internal set; }
+        public FluxDirection BoundaryFluxDirection { get; internal set; }
+        public UnitsNet.Volume ReachInputFlux { get; internal set; }
 
         public readonly BindingList<MorphologicalUnit> Units;
 
@@ -42,7 +50,7 @@ namespace GCDCore.Project.Morphological
             _DisplayVolumeUnits = eVolumeUnits;
 
             Units = new BindingList<MorphologicalUnit>();
-            InitializeMorphologicalUnits();
+            LoadMorphologicalUnitData();
         }
 
         public MorphologicalAnalysis(XmlNode nodAnalysis, BudgetSegregation bs)
@@ -63,13 +71,13 @@ namespace GCDCore.Project.Morphological
             _competency = decimal.Parse(nodAnalysis.SelectSingleNode("Competency").InnerText);
 
             double minFluxValue = double.Parse(nodAnalysis.SelectSingleNode("MinimumFluxVolume").InnerText);
-            MinimumFlux = UnitsNet.Volume.From(minFluxValue, ProjectManager.Project.Units.VolUnit);
+            BoundaryFlux = UnitsNet.Volume.From(minFluxValue, ProjectManager.Project.Units.VolUnit);
 
             Units = new BindingList<MorphologicalUnit>();
-            InitializeMorphologicalUnits();
+            LoadMorphologicalUnitData();
         }
 
-        public void InitializeMorphologicalUnits()
+        public void LoadMorphologicalUnitData()
         {
             Units.Clear();
 
@@ -94,33 +102,83 @@ namespace GCDCore.Project.Morphological
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////
             // Uncomment next line to clear the morph unit data and load the debug data
-            //LoadFeshieData();
+            LoadFeshieData();
             ////////////////////////////////////////////////////////////////////////////////////////////////////
 
+            // Add the total row
+            Units.Add(new MorphologicalUnit("Reach Total", true));
+
+            ImposeMinimumFlux();
+        }
+
+        public void ImposeMinimumFlux()
+        {
+            // Make sure that the reach is reset with zero boundary condition flux
+            ResetFluxes();
+
+            MorphologicalUnit minFluxUnit = null;
+
+            // Find the first unit with positive volume change
+            if (Units.Where(x => !x.IsTotal).Any(x => x.VolChange >= new Volume(0)))
+            {
+                minFluxUnit = Units.Where(x => !x.IsTotal).First(x => x.VolChange >= new Volume(0));
+            }
+            else
+            {
+                // No positive change, so find the least negative change
+                minFluxUnit = Units.Where(x => !x.IsTotal).OrderByDescending(x => x.VolChange).First();
+            }
+
+            // Update the reach fluxes with the min flux volume
+            UpdateFluxes(FluxDirection.Output, minFluxUnit, new Volume(0));
+        }
+
+        public void ImposeBoundaryCondition(FluxDirection eDir, MorphologicalUnit unit, Volume boundaryVol)
+        {
+            // Make sure to remove any existing boundary condition flux
+            ResetFluxes();
+
+            // Update all units with the new flux as the reach input
+            UpdateFluxes(eDir, unit, boundaryVol);
+        }
+
+        /// <summary>
+        /// Reset the reach input flux to zero and calculate all the downstream unit vol in and out
+        /// </summary>
+        private void ResetFluxes()
+        {
             Units[0].VolIn = Units[0].VolChange;
             Units[0].VolOut = (-1 * Units[0].VolChange) + Units[0].VolIn;
-            Units[0].CumulativeVolume = Units[0].VolChange;
-
-            MorphologicalUnit initialMinFluxUnit = null;
-            Volume initialMinFlux = new Volume(0);
 
             for (int i = 1; i < Units.Count; i++)
             {
-                Units[i].CumulativeVolume = Units[i].VolChange + Units[i - 1].CumulativeVolume;
-
                 Units[i].VolIn = Units[i - 1].VolOut;
                 Units[i].VolOut = Units[i].VolIn - Units[i].VolChange;
+            }
+        }
 
-                // Track the first unit that possesses a positive volume change
-                if (initialMinFluxUnit == null && Units[i].VolChange > new Volume(0))
-                {
-                    initialMinFluxUnit = Units[i];
-                    initialMinFlux = UnitsNet.Volume.From(Math.Abs(Units[i].VolOut.As(UnitsNet.Units.VolumeUnit.CubicMeter)), UnitsNet.Units.VolumeUnit.CubicMeter);
-                }
+        private void UpdateFluxes(FluxDirection eDir, MorphologicalUnit boundaryUnit, Volume boundaryFlux)
+        {
+            BoundaryFluxDirection = eDir;
+            BoundaryFluxUnit = boundaryUnit;
+            BoundaryFlux = boundaryFlux;
+            ReachInputFlux = boundaryFlux - (eDir == FluxDirection.Input ? boundaryUnit.VolIn : boundaryUnit.VolOut);
+
+            // Add back in the VolOut for the minimum flux cell (or the whole reach if there was no min flux cell)
+            Units[0].VolIn = -1 * Units[0].VolChange + ReachInputFlux;
+            Units[0].VolOut = Units[0].VolIn + Units[0].VolChange;
+            Units[0].CumulativeVolume = Units[0].VolChange;
+
+            // Recalculate the VolOut for each downstream unit now we know the reach input flux
+            for (int i = 1; i < Units.Count; i++)
+            {
+                Units[i].VolIn = Units[i - 1].VolOut;
+                Units[i].VolOut = Units[i].VolIn - Units[i].VolChange;
+                Units[i].CumulativeVolume = Units[i - 1].CumulativeVolume + Units[i].VolChange;
             }
 
-            // Total row
-            MorphologicalUnit muTotal = new MorphologicalUnit("Reach Total", true);
+            // Loop 
+            MorphologicalUnit muTotal = Units.Last();
             foreach (MorphologicalUnit unit in Units)
             {
                 muTotal.VolErosion += unit.VolErosion;
@@ -128,31 +186,7 @@ namespace GCDCore.Project.Morphological
                 muTotal.VolDeposition += unit.VolDeposition;
                 muTotal.VolDepositionErr += unit.VolDepositionErr;
             }
-            Units.Add(muTotal);
 
-            CalculateMinFlux(initialMinFluxUnit, initialMinFlux);
-        }
-
-        public void CalculateMinFlux(MorphologicalUnit minFluxUnit, Volume minFlux)
-        {
-            // Add back in the VolOut for the minimum flux cell (or the whole reach if there was no min flux cell)
-            MinimumFluxCell = minFluxUnit;
-            if (minFluxUnit == null)
-                MinimumFlux = Units.Last().VolOut;
-            else
-                MinimumFlux = minFlux;
-
-            Units[0].VolIn = -1 * Units[0].VolChange + MinimumFlux;
-            Units[0].VolOut = Units[0].VolIn + Units[0].VolChange;
-
-            // Recalculate the VolOut for each unit now we know the reach input flux
-            for (int i = 1; i < Units.Count; i++)
-            {
-                Units[i].VolIn = Units[i - 1].VolOut;
-                Units[i].VolOut = Units[i].VolIn - Units[i].VolChange;
-            }
-
-            MorphologicalUnit muTotal = Units.Last();
             muTotal.VolIn = Units[0].VolIn;
             muTotal.VolOut = Units[Units.Count - 1].VolOut;
             muTotal.CumulativeVolume = Units[Units.Count - 1].CumulativeVolume;
@@ -284,11 +318,11 @@ namespace GCDCore.Project.Morphological
             nodDuration.Attributes.Append(nodParent.OwnerDocument.CreateAttribute("units")).InnerText = DurationDisplayUnits.ToString();
 
             XmlNode nodMinFluxCell = nodMA.AppendChild(nodParent.OwnerDocument.CreateElement("MinimumFluxUnit"));
-            if (MinimumFluxCell != null)
-                nodMinFluxCell.InnerText = MinimumFluxCell.Name;
+            if (BoundaryFluxUnit != null)
+                nodMinFluxCell.InnerText = BoundaryFluxUnit.Name;
 
             XmlNode nodMinFlux = nodMA.AppendChild(nodParent.OwnerDocument.CreateElement("MinimumFluxVolume"));
-            nodMinFlux.InnerText = MinimumFlux.As(ProjectManager.Project.Units.VolUnit).ToString("R");
+            nodMinFlux.InnerText = BoundaryFlux.As(ProjectManager.Project.Units.VolUnit).ToString("R");
         }
 
         public override void Delete()
@@ -344,7 +378,7 @@ namespace GCDCore.Project.Morphological
 
             //The formulas in the first row is different from the remaining rows, so they need to be update
             //Results match the UI
-            string InitialVInformula = "=" + MinimumFlux.CubicMeters + "-RC[-3]";
+            string InitialVInformula = "=" + BoundaryFlux.CubicMeters + "-RC[-3]";
             xmlExcelDoc.SetFormula("InitialVIn", InitialVInformula);
 
             string InitialVOutformula = "=RC[-4]+RC[-1]";

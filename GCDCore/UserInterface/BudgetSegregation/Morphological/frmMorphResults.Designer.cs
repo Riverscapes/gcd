@@ -58,7 +58,7 @@
             this.label10 = new System.Windows.Forms.Label();
             this.cmdReset = new System.Windows.Forms.Button();
             this.valBoundaryFlux = new System.Windows.Forms.NumericUpDown();
-            this.label5 = new System.Windows.Forms.Label();
+            this.lblBoundaryVolume = new System.Windows.Forms.Label();
             this.cboBoundaryUnit = new System.Windows.Forms.ComboBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.valDensity = new System.Windows.Forms.NumericUpDown();
@@ -88,7 +88,6 @@
             this.label8 = new System.Windows.Forms.Label();
             this.txtPath = new System.Windows.Forms.TextBox();
             this.cmdBrowse = new System.Windows.Forms.Button();
-            this.ucDoDPropertiesGrid1 = new GCDCore.UserInterface.ChangeDetection.ucDoDPropertiesGrid();
             this.colMorphUnit = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colVolErosion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.volErosionError = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -101,6 +100,9 @@
             this.colFuxVolume = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colFluxMass = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colCumulative = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ucDoDPropertiesGrid1 = new GCDCore.UserInterface.ChangeDetection.ucDoDPropertiesGrid();
+            this.txtF1 = new System.Windows.Forms.RichTextBox();
+            this.txtF2 = new System.Windows.Forms.RichTextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox5.SuspendLayout();
@@ -189,6 +191,8 @@
             // 
             // groupBox5
             // 
+            this.groupBox5.Controls.Add(this.txtF2);
+            this.groupBox5.Controls.Add(this.txtF1);
             this.groupBox5.Controls.Add(this.pictureBox2);
             this.groupBox5.Controls.Add(this.pictureBox1);
             this.groupBox5.Location = new System.Drawing.Point(12, 112);
@@ -225,7 +229,7 @@
             this.groupBox4.Controls.Add(this.label10);
             this.groupBox4.Controls.Add(this.cmdReset);
             this.groupBox4.Controls.Add(this.valBoundaryFlux);
-            this.groupBox4.Controls.Add(this.label5);
+            this.groupBox4.Controls.Add(this.lblBoundaryVolume);
             this.groupBox4.Controls.Add(this.cboBoundaryUnit);
             this.groupBox4.Location = new System.Drawing.Point(630, 58);
             this.groupBox4.Name = "groupBox4";
@@ -280,18 +284,23 @@
             23,
             0,
             0});
+            this.valBoundaryFlux.Minimum = new decimal(new int[] {
+            1215752192,
+            23,
+            0,
+            -2147483648});
             this.valBoundaryFlux.Name = "valBoundaryFlux";
             this.valBoundaryFlux.Size = new System.Drawing.Size(112, 20);
             this.valBoundaryFlux.TabIndex = 4;
             // 
-            // label5
+            // lblBoundaryVolume
             // 
-            this.label5.Location = new System.Drawing.Point(12, 90);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(134, 14);
-            this.label5.TabIndex = 3;
-            this.label5.Text = "Boundary volume ()";
-            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lblBoundaryVolume.Location = new System.Drawing.Point(12, 90);
+            this.lblBoundaryVolume.Name = "lblBoundaryVolume";
+            this.lblBoundaryVolume.Size = new System.Drawing.Size(134, 14);
+            this.lblBoundaryVolume.TabIndex = 3;
+            this.lblBoundaryVolume.Text = "Boundary volume ()";
+            this.lblBoundaryVolume.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // cboBoundaryUnit
             // 
@@ -633,14 +642,6 @@
             this.cmdBrowse.UseVisualStyleBackColor = true;
             this.cmdBrowse.Click += new System.EventHandler(this.cmdBrowse_Click);
             // 
-            // ucDoDPropertiesGrid1
-            // 
-            this.ucDoDPropertiesGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucDoDPropertiesGrid1.Location = new System.Drawing.Point(3, 3);
-            this.ucDoDPropertiesGrid1.Name = "ucDoDPropertiesGrid1";
-            this.ucDoDPropertiesGrid1.Size = new System.Drawing.Size(1049, 403);
-            this.ucDoDPropertiesGrid1.TabIndex = 0;
-            // 
             // colMorphUnit
             // 
             this.colMorphUnit.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
@@ -761,6 +762,36 @@
             this.colCumulative.Name = "colCumulative";
             this.colCumulative.ReadOnly = true;
             // 
+            // ucDoDPropertiesGrid1
+            // 
+            this.ucDoDPropertiesGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucDoDPropertiesGrid1.Location = new System.Drawing.Point(3, 3);
+            this.ucDoDPropertiesGrid1.Name = "ucDoDPropertiesGrid1";
+            this.ucDoDPropertiesGrid1.Size = new System.Drawing.Size(1049, 403);
+            this.ucDoDPropertiesGrid1.TabIndex = 0;
+            // 
+            // txtF1
+            // 
+            this.txtF1.BackColor = System.Drawing.SystemColors.Window;
+            this.txtF1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtF1.Location = new System.Drawing.Point(6, 85);
+            this.txtF1.Name = "txtF1";
+            this.txtF1.ReadOnly = true;
+            this.txtF1.Size = new System.Drawing.Size(253, 23);
+            this.txtF1.TabIndex = 2;
+            this.txtF1.Text = "";
+            // 
+            // txtF2
+            // 
+            this.txtF2.BackColor = System.Drawing.SystemColors.Window;
+            this.txtF2.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtF2.Location = new System.Drawing.Point(338, 85);
+            this.txtF2.Name = "txtF2";
+            this.txtF2.ReadOnly = true;
+            this.txtF2.Size = new System.Drawing.Size(253, 23);
+            this.txtF2.TabIndex = 3;
+            this.txtF2.Text = "";
+            // 
             // frmMorphResults
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -822,7 +853,7 @@
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.NumericUpDown valDensity;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label lblBoundaryVolume;
         private System.Windows.Forms.ComboBox cboBoundaryUnit;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.NumericUpDown valPercentCompetent;
@@ -868,5 +899,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colFuxVolume;
         private System.Windows.Forms.DataGridViewTextBoxColumn colFluxMass;
         private System.Windows.Forms.DataGridViewTextBoxColumn colCumulative;
+        private System.Windows.Forms.RichTextBox txtF2;
+        private System.Windows.Forms.RichTextBox txtF1;
     }
 }
