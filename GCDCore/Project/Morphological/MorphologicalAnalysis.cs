@@ -21,7 +21,10 @@ namespace GCDCore.Project.Morphological
         public readonly DirectoryInfo OutputFolder;
         public readonly FileInfo Spreadsheet;
 
-        public UnitsNet.Units.DurationUnit DurationDisplayUnits { get; set; }
+        public UnitsNet.Units.DurationUnit DurationDataUnits { get; set; }
+
+        public UnitsNet.Units.VolumeUnit DisplayVolumeUnits { get; set; }
+        public UnitsNet.Units.DurationUnit DisplayDurationUnits { get; set; }
 
         public MorphologicalUnit BoundaryFluxUnit { get; internal set; }
         public UnitsNet.Volume BoundaryFlux { get; internal set; }
@@ -41,13 +44,16 @@ namespace GCDCore.Project.Morphological
             OutputFolder = outputFolder;
             Spreadsheet = new FileInfo(Path.Combine(OutputFolder.FullName, "Morphological.xml"));
             BS = bs;
-            DurationDisplayUnits = UnitsNet.Units.DurationUnit.Hour;
-            _DisplayVolumeUnits = ProjectManager.Project.Units.VolUnit;
-            _duration = UnitsNet.Duration.From(1, DurationDisplayUnits);
+            DurationDataUnits = UnitsNet.Units.DurationUnit.Hour;
+            _DataVolumeUnits = ProjectManager.Project.Units.VolUnit;
+
+            DisplayVolumeUnits = _DataVolumeUnits;
+
+            _duration = UnitsNet.Duration.From(1, DurationDataUnits);
             _porosity = 0.26m;
             _density = 2.65m;
             _competency = 1m;
-            _DisplayVolumeUnits = eVolumeUnits;
+            _DataVolumeUnits = eVolumeUnits;
 
             Units = new BindingList<MorphologicalUnit>();
             LoadMorphologicalUnitData();
@@ -62,10 +68,10 @@ namespace GCDCore.Project.Morphological
             BS = bs;
 
             XmlNode nodDuration = nodAnalysis.SelectSingleNode("Duration");
-            DurationDisplayUnits = (UnitsNet.Units.DurationUnit)Enum.Parse(typeof(UnitsNet.Units.DurationUnit), nodDuration.Attributes["units"].InnerText);
-            _DisplayVolumeUnits = ProjectManager.Project.Units.VolUnit;
+            DurationDataUnits = (UnitsNet.Units.DurationUnit)Enum.Parse(typeof(UnitsNet.Units.DurationUnit), nodDuration.Attributes["units"].InnerText);
+            _DataVolumeUnits = ProjectManager.Project.Units.VolUnit;
 
-            _duration = UnitsNet.Duration.From(double.Parse(nodDuration.InnerText), DurationDisplayUnits);
+            _duration = UnitsNet.Duration.From(double.Parse(nodDuration.InnerText), DurationDataUnits);
             _porosity = decimal.Parse(nodAnalysis.SelectSingleNode("Porosity").InnerText);
             _density = decimal.Parse(nodAnalysis.SelectSingleNode("Density").InnerText);
             _competency = decimal.Parse(nodAnalysis.SelectSingleNode("Competency").InnerText);
@@ -241,25 +247,25 @@ namespace GCDCore.Project.Morphological
 
         }
 
-        private UnitsNet.Units.VolumeUnit _DisplayVolumeUnits;
-        public UnitsNet.Units.VolumeUnit DisplayVolumeUnits
+        private UnitsNet.Units.VolumeUnit _DataVolumeUnits;
+        public UnitsNet.Units.VolumeUnit DataVolumeUnits
         {
             get
             {
-                return _DisplayVolumeUnits;
+                return _DataVolumeUnits;
             }
 
             set
             {
-                if (_DisplayVolumeUnits != value)
+                if (_DataVolumeUnits != value)
                 {
-                    _DisplayVolumeUnits = value;
+                    _DataVolumeUnits = value;
                     CalculateWork();
                 }
             }
         }
 
-        public UnitsNet.Duration CompetentDuration { get { return UnitsNet.Duration.From(this.Duration.As(DurationDisplayUnits) * (double)Competency, DurationDisplayUnits); } }
+        public UnitsNet.Duration CompetentDuration { get { return UnitsNet.Duration.From(this.Duration.As(DurationDataUnits) * (double)Competency, DurationDataUnits); } }
 
         private decimal _competency;
         public decimal Competency
@@ -277,7 +283,7 @@ namespace GCDCore.Project.Morphological
 
         public void CalculateWork()
         {
-            decimal duration = (decimal)CompetentDuration.As(DurationDisplayUnits);
+            decimal duration = (decimal)CompetentDuration.As(DurationDataUnits);
 
             UnitsNet.Density density = UnitsNet.Density.From((double)Density, UnitsNet.Units.DensityUnit.GramPerCubicCentimeter);
             decimal massPerUnitVolume = (decimal)density.As(UnitsNet.Units.DensityUnit.KilogramPerCubicMeter);
@@ -287,10 +293,10 @@ namespace GCDCore.Project.Morphological
                 foreach (MorphologicalUnit unit in Units)
                 {
                     // The volume flux per unit time. THIS IS IN DISPLAY VOLUME UNITS
-                    unit.FluxVolume = (1m - Porosity) * (decimal)unit.VolOut.As(DisplayVolumeUnits) / duration;
+                    unit.FluxVolume = (1m - Porosity) * (decimal)unit.VolOut.As(DataVolumeUnits) / duration;
 
                     // The volume flux per unit volume and per unit time. THIS IS IN CUBIC METRES
-                    decimal volumeFluxPerUnitVolume = (decimal)UnitsNet.Volume.From((double)unit.FluxVolume, DisplayVolumeUnits).As(UnitsNet.Units.VolumeUnit.CubicMeter);
+                    decimal volumeFluxPerUnitVolume = (decimal)UnitsNet.Volume.From((double)unit.FluxVolume, DataVolumeUnits).As(UnitsNet.Units.VolumeUnit.CubicMeter);
 
                     // Mass of material per unit time. (Should be independent of volume)
                     unit.FluxMass = volumeFluxPerUnitVolume * massPerUnitVolume;
@@ -314,8 +320,8 @@ namespace GCDCore.Project.Morphological
             nodMA.AppendChild(nodParent.OwnerDocument.CreateElement("Spreadsheet")).InnerText = ProjectManager.Project.GetRelativePath(Spreadsheet);
 
             XmlNode nodDuration = nodMA.AppendChild(nodParent.OwnerDocument.CreateElement("Duration"));
-            nodDuration.InnerText = Duration.As(DurationDisplayUnits).ToString("R");
-            nodDuration.Attributes.Append(nodParent.OwnerDocument.CreateAttribute("units")).InnerText = DurationDisplayUnits.ToString();
+            nodDuration.InnerText = Duration.As(DurationDataUnits).ToString("R");
+            nodDuration.Attributes.Append(nodParent.OwnerDocument.CreateAttribute("units")).InnerText = DurationDataUnits.ToString();
 
             XmlNode nodMinFluxCell = nodMA.AppendChild(nodParent.OwnerDocument.CreateElement("MinimumFluxUnit"));
             if (BoundaryFluxUnit != null)

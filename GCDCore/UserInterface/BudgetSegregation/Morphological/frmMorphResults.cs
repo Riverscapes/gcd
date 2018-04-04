@@ -22,16 +22,24 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
         private const string VOLOUT__CHART_SERIES = "VolOut";
         private const string ERROR___CHART_SERIES = "Error";
 
+        private Color colDoD = Color.FromArgb(255, 0, 255);
+        private Color colVIn = Color.FromArgb(180, 95, 6);
+        private Color colVOu = Color.FromArgb(56, 118, 29);
+        private Color colDep = Color.FromArgb(0, 0, 255);
+        private Color colErr = Color.FromArgb(255, 0, 0);
+
         UserInterface.UtilityForms.ChartContextMenu cmsChart;
 
         public readonly GCDCore.Project.Morphological.MorphologicalAnalysis Analysis;
 
         public GCDProjectItem GCDProjectItem { get { return Analysis; } }
 
+ 
         public frmMorphResults(GCDCore.Project.Morphological.MorphologicalAnalysis ma)
         {
             InitializeComponent();
             Analysis = ma;
+ 
 
             cmsChart = new UtilityForms.ChartContextMenu(Analysis.OutputFolder, "morphological");
             chtData.ContextMenuStrip = cmsChart.CMS;
@@ -57,8 +65,8 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
             foreach (UnitsNet.Units.DurationUnit val in Enum.GetValues(typeof(UnitsNet.Units.DurationUnit)))
                 cboDuration.Items.Add(val);
 
-            cboDuration.SelectedItem = Analysis.DurationDisplayUnits;
-            valDuration.Value = (decimal)Analysis.Duration.As(Analysis.DurationDisplayUnits);
+            cboDuration.SelectedItem = Analysis.DurationDataUnits;
+            valDuration.Value = (decimal)Analysis.Duration.As(Analysis.DurationDataUnits);
             valPorosity.Value = Analysis.Porosity;
             valDensity.Value = Analysis.Density;
             valBoundaryFlux.Value = (decimal)Analysis.BoundaryFlux.As(ProjectManager.Project.Units.VolUnit);
@@ -69,12 +77,12 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
             grdData.AutoGenerateColumns = false;
             grdData.DataSource = Analysis.Units;
 
-            cboVolumeUnits.SelectedIndexChanged += UnitsChanged;
+            cboBoundaryUnits.SelectedIndexChanged += UnitsChanged;
             foreach (UnitsNet.Units.VolumeUnit val in Enum.GetValues(typeof(UnitsNet.Units.VolumeUnit)))
             {
-                int i = cboVolumeUnits.Items.Add(new FormattedVolumeUnit(val));
+                int i = cboBoundaryUnits.Items.Add(new FormattedVolumeUnit(val));
                 if (val == ProjectManager.Project.Units.VolUnit)
-                    cboVolumeUnits.SelectedIndex = i;
+                    cboBoundaryUnits.SelectedIndex = i;
             }
 
             cboDuration.SelectedIndexChanged += cboDuration_SelectedIndexChanged;
@@ -92,6 +100,13 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
             valBoundaryFlux.ValueChanged += MinFlux_Changed;
             cboBoundaryUnit.SelectedIndexChanged += MinFlux_Changed;
             cboBoundaryType.SelectedIndexChanged += MinFlux_Changed;
+            UpdateFormulae();
+
+            grdData.Rows[grdData.Rows.Count - 1].Cells["volChange"].Style.ForeColor = colDoD;
+            grdData.Rows[grdData.Rows.Count - 1].Cells["colVolDeposition"].Style.ForeColor = colDep;
+            grdData.Rows[grdData.Rows.Count - 1].Cells["colVolErosion"].Style.ForeColor = colErr;
+            grdData.Rows[grdData.Rows.Count - 1].Cells["colVolumeIn"].Style.ForeColor = colVIn;
+            grdData.Rows[grdData.Rows.Count - 1].Cells["colVolumeOut"].Style.ForeColor = colVOu;
         }
 
         private void PorosityChanged(object sender, EventArgs e)
@@ -101,7 +116,7 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
 
         private void DurationChanged(object sender, EventArgs e)
         {
-            Analysis.Duration = UnitsNet.Duration.From((double)valDuration.Value, Analysis.DurationDisplayUnits);
+            Analysis.Duration = UnitsNet.Duration.From((double)valDuration.Value, Analysis.DurationDataUnits);
         }
 
         private void valDensity_ValueChanged(object sender, EventArgs e)
@@ -112,10 +127,10 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
         private void cboDuration_SelectedIndexChanged(object sender, EventArgs e)
         {
             // Get the existing duration units from the analysis
-            UnitsNet.Units.DurationUnit oldUnits = Analysis.DurationDisplayUnits;
+            UnitsNet.Units.DurationUnit oldUnits = Analysis.DurationDataUnits;
 
             // Must set this before duration, because setting the duration triggers work calculation that needs correct units
-            Analysis.DurationDisplayUnits = (UnitsNet.Units.DurationUnit)cboDuration.SelectedItem;
+            Analysis.DurationDataUnits = (UnitsNet.Units.DurationUnit)cboDuration.SelectedItem;
 
             // Changing the duration value on the analysis will trigger work calculation. Make sure duration units are already set.
             decimal newValue = (decimal)UnitsNet.Duration.From((double)valDuration.Value, oldUnits).As((UnitsNet.Units.DurationUnit)cboDuration.SelectedItem);
@@ -150,13 +165,13 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
 
         private void UnitsChanged(object sender, EventArgs e)
         {
-            string abbr = UnitsNet.Volume.GetAbbreviation(((FormattedVolumeUnit)cboVolumeUnits.SelectedItem).VolumeUnit);
+            string abbr = UnitsNet.Volume.GetAbbreviation(((FormattedVolumeUnit)cboBoundaryUnits.SelectedItem).VolumeUnit);
 
             lblBoundaryVolume.Text = lblBoundaryVolume.Text.Replace(")", string.Format("{0})", abbr));
-            txtMinFlux.Text = Analysis.ReachInputFlux.As(((FormattedVolumeUnit)cboVolumeUnits.SelectedItem).VolumeUnit).ToString("#,##0.00");
-            
+            txtMinFlux.Text = Analysis.ReachInputFlux.As(((FormattedVolumeUnit)cboBoundaryUnits.SelectedItem).VolumeUnit).ToString("#,##0.00");
+
             // This will cause the analysis to recalculate the flux volume and flux mass
-            Analysis.DisplayVolumeUnits = ((FormattedVolumeUnit)cboVolumeUnits.SelectedItem).VolumeUnit;
+            Analysis.DataVolumeUnits = ((FormattedVolumeUnit)cboBoundaryUnits.SelectedItem).VolumeUnit;
 
             foreach (DataGridViewColumn col in grdData.Columns)
             {
@@ -179,6 +194,7 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
 
             Analysis.Units.ResetBindings();
             UpdateChart();
+            UpdateFormulae();
         }
 
         private void InitializeChart()
@@ -237,7 +253,7 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
         private void UpdateChart()
         {
             // Update the Y axis volume units
-            UnitsNet.Units.VolumeUnit volUnit = ((FormattedVolumeUnit)cboVolumeUnits.SelectedItem).VolumeUnit;
+            UnitsNet.Units.VolumeUnit volUnit = ((FormattedVolumeUnit)cboBoundaryUnits.SelectedItem).VolumeUnit;
             chtData.ChartAreas.ToList<ChartArea>().ForEach(x => x.AxisY.Title = string.Format("Volume ({0})", Volume.GetAbbreviation(volUnit)));
 
             // Clear all series data points
@@ -299,7 +315,7 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
 
             if (e.Value is UnitsNet.Volume)
             {
-                e.Value = ((UnitsNet.Volume)e.Value).As(((FormattedVolumeUnit)cboVolumeUnits.SelectedItem).VolumeUnit);
+                e.Value = ((UnitsNet.Volume)e.Value).As(((FormattedVolumeUnit)cboBoundaryUnits.SelectedItem).VolumeUnit);
             }
 
             if (grdData.Rows[e.RowIndex].DataBoundItem is GCDCore.Project.Morphological.MorphologicalUnit)
@@ -442,8 +458,9 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
             GCDCore.Project.Morphological.MorphologicalUnit unit = cboBoundaryUnit.SelectedItem as GCDCore.Project.Morphological.MorphologicalUnit;
             GCDCore.Project.Morphological.MorphologicalAnalysis.FluxDirection eDir = (GCDCore.Project.Morphological.MorphologicalAnalysis.FluxDirection)cboBoundaryType.SelectedItem;
 
-            Analysis.ImposeBoundaryCondition(eDir, unit, Volume.From((double)valBoundaryFlux.Value, ((FormattedVolumeUnit)cboVolumeUnits.SelectedItem).VolumeUnit));
-            txtMinFlux.Text = Analysis.ReachInputFlux.As(((FormattedVolumeUnit)cboVolumeUnits.SelectedItem).VolumeUnit).ToString("#,##0.00");
+            Analysis.ImposeBoundaryCondition(eDir, unit, Volume.From((double)valBoundaryFlux.Value, ((FormattedVolumeUnit)cboBoundaryUnits.SelectedItem).VolumeUnit));
+            txtMinFlux.Text = Analysis.ReachInputFlux.As(((FormattedVolumeUnit)cboBoundaryUnits.SelectedItem).VolumeUnit).ToString("#,##0.00");
+            UpdateFormulae();
 
             //Analysis.Units.ResetBindings();
         }
@@ -457,10 +474,11 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
 
             Analysis.ImposeMinimumFlux();
             cboBoundaryUnit.SelectedIndex = Analysis.Units.IndexOf(Analysis.BoundaryFluxUnit);
-            valBoundaryFlux.Value = (decimal)Analysis.BoundaryFlux.As((cboVolumeUnits.SelectedItem as FormattedVolumeUnit).VolumeUnit);
+            valBoundaryFlux.Value = (decimal)Analysis.BoundaryFlux.As((cboBoundaryUnits.SelectedItem as FormattedVolumeUnit).VolumeUnit);
             cboBoundaryType.SelectedIndex = 1;
 
-            txtMinFlux.Text = Analysis.ReachInputFlux.As(((FormattedVolumeUnit)cboVolumeUnits.SelectedItem).VolumeUnit).ToString("#,##0.00");
+            txtMinFlux.Text = Analysis.ReachInputFlux.As(((FormattedVolumeUnit)cboBoundaryUnits.SelectedItem).VolumeUnit).ToString("#,##0.00");
+            UpdateFormulae();
 
             // Re-attach event firing
             cboBoundaryUnit.SelectedIndexChanged += MinFlux_Changed;
@@ -470,9 +488,24 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
 
         private void UpdateFormulae()
         {
+            string sFormat = "#,##0.00";
             GCDCore.Project.Morphological.MorphologicalUnit muTotal = Analysis.Units.First(x => x.IsTotal);
+            UnitsNet.Units.VolumeUnit volUnit = ((FormattedVolumeUnit)cboBoundaryUnits.SelectedItem).VolumeUnit;
 
-            //string txtF2_Dep = Analysis.
+            SetFormulaTextbox(txtVDoD, muTotal.VolChange.As(volUnit).ToString(sFormat), colDoD);
+            SetFormulaTextbox(txtVIn, Analysis.Units[0].VolIn.As(volUnit).ToString(sFormat), colVIn);
+            SetFormulaTextbox(txtVOut, muTotal.VolOut.As(volUnit).ToString(sFormat), colVOu);
+            SetFormulaTextbox(txtVD, muTotal.VolDeposition.As(volUnit).ToString(sFormat), colDep);
+            SetFormulaTextbox(txtVE, muTotal.VolErosion.As(volUnit).ToString(sFormat), colErr);
+        }
+
+        private void SetFormulaTextbox(TextBox txt, string text, Color col)
+        {
+            txt.Text = text;
+            txt.BorderStyle = BorderStyle.None;
+            txt.ForeColor = col;
+            txt.Font = new Font(txtVDoD.Font, FontStyle.Bold);
+
         }
     }
 }

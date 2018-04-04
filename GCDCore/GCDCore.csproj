@@ -684,6 +684,30 @@
   <ItemGroup>
     <None Include="Resources\vol_deposition_erosion.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\vdod1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\vdod2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\vdod3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\vdod4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\vdod5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\vdod6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\vdod61.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\vdod7.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
