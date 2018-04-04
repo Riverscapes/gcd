@@ -21,3 +21,9 @@ Once the Import Raster form has been cleared, by clicking the Import Raster butt
 A video tutorial explaining this process is shown below:
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/g9Oo0NNvMac" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+------
+<div align="center">
+	<a class="hollow button" href="{{ site.baseurl }}/Help"><i class="fa fa-chevron-circle-left"></i>  Back to GCD Help </a>  
+	<a class="hollow button" href="{{ site.baseurl }}/"><img src="{{ site.baseurl}}/assets/images/icons/GCDAddIn.png">  Back to GCD Home </a>  
+</div>

@@ -76,3 +76,8 @@ Once you've populated your project with inputs and analyses, your project explor
 
 ![GCD6_ProjectExplorer_Feshie]({{ site.baseurl }}/assets/images/GCD6_ProjectExplorer_Feshie.png)
 
+------
+<div align="center">
+	<a class="hollow button" href="{{ site.baseurl }}/Help"><i class="fa fa-chevron-circle-left"></i>  Back to GCD Help </a>  
+	<a class="hollow button" href="{{ site.baseurl }}/"><img src="{{ site.baseurl}}/assets/images/icons/GCDAddIn.png">  Back to GCD Home </a>  
+</div>

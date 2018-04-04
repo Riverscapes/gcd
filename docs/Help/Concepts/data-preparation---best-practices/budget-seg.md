@@ -16,3 +16,9 @@ Here is a little description of how bugdet seggregation works "under the hood". 
 ### Why do I see `GCDFID` in my shapefile when I add it to a project?
 
 The [ESRI Shapefile specification](https://www.esri.com/library/whitepapers/pdfs/shapefile.pdf) allows for inconsistent handling of FID fields. Combining that with limitations in the GDaL Rasterization algorithm, in order to do Rasterization of an ESRI shapefile using the FID field we need an internally consistent (to GCD) unique ID field to identify shapes in our workflow.
+
+------
+<div align="center">
+	<a class="hollow button" href="{{ site.baseurl }}/Help"><i class="fa fa-chevron-circle-left"></i>  Back to GCD Help </a>  
+	<a class="hollow button" href="{{ site.baseurl }}/"><img src="{{ site.baseurl}}/assets/images/icons/GCDAddIn.png">  Back to GCD Home </a>  
+</div>

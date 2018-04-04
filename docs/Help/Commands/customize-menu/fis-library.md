@@ -80,3 +80,8 @@ This video shows you how to edit an FIS using the Fuzzy Inference System Editor:
 
 For more information on how fuzzy inference systems for elevation uncertainty work and can be created and modified, see the GCD Concept Reference documentation [here]({{ site.baseurl }}/gcd-concepts/fuzzy-inference-systems-for-modeling-dem-error).
 
+------
+<div align="center">
+	<a class="hollow button" href="{{ site.baseurl }}/Help"><i class="fa fa-chevron-circle-left"></i>  Back to GCD Help </a>  
+	<a class="hollow button" href="{{ site.baseurl }}/"><img src="{{ site.baseurl}}/assets/images/icons/GCDAddIn.png">  Back to GCD Home </a>  
+</div>

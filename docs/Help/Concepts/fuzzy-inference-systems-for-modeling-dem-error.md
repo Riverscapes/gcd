@@ -20,3 +20,9 @@ This video tutorial goes through a portion of the background covered in the [Geo
 
 - [Matlab Fuzzy Logic Toolbox Documentation](http://www.mathworks.com/help/toolbox/fuzzy/)
 
+
+------
+<div align="center">
+	<a class="hollow button" href="{{ site.baseurl }}/Help"><i class="fa fa-chevron-circle-left"></i>  Back to GCD Help </a>  
+	<a class="hollow button" href="{{ site.baseurl }}/"><img src="{{ site.baseurl}}/assets/images/icons/GCDAddIn.png">  Back to GCD Home </a>  
+</div>

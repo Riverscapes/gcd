@@ -43,3 +43,9 @@ The outputs for the tool are:
 For a demonstration of this tool (run in [MBES Tools](http://mbes.joewheaton.org/)) and an explanation of why or why not to create the two outputs see the video below:
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/OyVlYZJmtIg" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
+
+------
+<div align="center">
+	<a class="hollow button" href="{{ site.baseurl }}/Help"><i class="fa fa-chevron-circle-left"></i>  Back to GCD Help </a>  
+	<a class="hollow button" href="{{ site.baseurl }}/"><img src="{{ site.baseurl}}/assets/images/icons/GCDAddIn.png">  Back to GCD Home </a>  
+</div>

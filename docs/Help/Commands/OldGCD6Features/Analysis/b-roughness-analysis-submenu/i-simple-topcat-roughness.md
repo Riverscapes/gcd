@@ -52,3 +52,9 @@ The outputs for the tool are:
 - - raster whose values are the locally detrended standard deviation of the cell.
   - *****If a user selects a different value from the Raster Value drop-down menu, the value selected from this drop-down will be used to create the output raster.
 
+
+------
+<div align="center">
+	<a class="hollow button" href="{{ site.baseurl }}/Help"><i class="fa fa-chevron-circle-left"></i>  Back to GCD Help </a>  
+	<a class="hollow button" href="{{ site.baseurl }}/"><img src="{{ site.baseurl}}/assets/images/icons/GCDAddIn.png">  Back to GCD Home </a>  
+</div>

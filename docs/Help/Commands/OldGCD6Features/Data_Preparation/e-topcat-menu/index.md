@@ -15,3 +15,8 @@ Brasington et al.'s (2012) [ToPCAT algorithm]({{ site.baseurl }}/gcd-concepts/to
 
 - Brasington, J., D. Vericat, and I. Rychkov. 2012. Modeling river bed morphology, roughness, and surface sedimentology using high resolution terrestrial laser scanning. Water Resources Research 48. DOI: [10.1029/2012wr012223](http://dx.doi.org/10.0.4.5/2012wr012223).
 
+------
+<div align="center">
+	<a class="hollow button" href="{{ site.baseurl }}/Help"><i class="fa fa-chevron-circle-left"></i>  Back to GCD Help </a>  
+	<a class="hollow button" href="{{ site.baseurl }}/"><img src="{{ site.baseurl}}/assets/images/icons/GCDAddIn.png">  Back to GCD Home </a>  
+</div>

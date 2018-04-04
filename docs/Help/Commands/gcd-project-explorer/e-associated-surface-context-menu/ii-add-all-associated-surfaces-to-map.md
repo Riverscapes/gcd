@@ -8,3 +8,9 @@ To  access the[![img]({{ site.baseurl }}/_/rsrc/1472842988539/gcd-command-refere
 
 ![ProjectExplorer_AddAllAssociatedSurfacesToMap]({{ site.baseurl }}/assets/images/ProjectExplorer_AddAllAssociatedSurfacesToMap.png)
 
+------
+<div align="center">
+	<a class="hollow button" href="{{ site.baseurl }}/Help"><i class="fa fa-chevron-circle-left"></i>  Back to GCD Help </a>  
+	<a class="hollow button" href="{{ site.baseurl }}/"><img src="{{ site.baseurl}}/assets/images/icons/GCDAddIn.png">  Back to GCD Home </a>  
+</div>
+

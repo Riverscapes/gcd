@@ -12,3 +12,8 @@ The Point Cloud Based Uncertainty Analysis sub menu is located under the Analysi
 
 - [i. Coincident Points Tool]({{ site.baseurl }}/gcd-command-reference/gcd-analysis-menu/a-uncertainty-analysis-submenu/b-point-cloud-based/i-coincident-points-tool)
 
+------
+<div align="center">
+	<a class="hollow button" href="{{ site.baseurl }}/Help"><i class="fa fa-chevron-circle-left"></i>  Back to GCD Help </a>  
+	<a class="hollow button" href="{{ site.baseurl }}/"><img src="{{ site.baseurl}}/assets/images/icons/GCDAddIn.png">  Back to GCD Home </a>  
+</div>

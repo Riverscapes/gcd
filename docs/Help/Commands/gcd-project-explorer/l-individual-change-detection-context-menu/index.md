@@ -14,3 +14,9 @@ From an individual Change Detection Analysis in the [GCD Project Explorer]({{ si
 - [iv. Delete Change Detection]({{ site.baseurl }}/gcd-command-reference/gcd-project-explorer/l-individual-change-detection-context-menu/iv-delete-change-detection)
 - [v. Add Budget Segregation]({{ site.baseurl }}/gcd-command-reference/gcd-project-explorer/l-individual-change-detection-context-menu/v-add-budget-segregation)
 
+------
+<div align="center">
+	<a class="hollow button" href="{{ site.baseurl }}/Help"><i class="fa fa-chevron-circle-left"></i>  Back to GCD Help </a>  
+	<a class="hollow button" href="{{ site.baseurl }}/"><img src="{{ site.baseurl}}/assets/images/icons/GCDAddIn.png">  Back to GCD Home </a>  
+</div>
+

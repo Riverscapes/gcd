@@ -50,4 +50,10 @@ The command-line version of ToPCAT is straight forward to use, but requires a fa
   - [PCTools Windows Console Version](http://www.google.com/url?q=http%3A%2F%2Fwww.gis.usu.edu%2F%257Ejwheaton%2Fet_al%2FWorkshops%2FGCD_IdahoPower%2FPcTools_0.1.2_x32.zip&sa=D&sntz=1&usg=AFrqEzdcM8EKFRdmahx17uA-1Au2wIu40g) (32-bit version, non PYTHON command prompt version; instructions below)
   - [Documentation](http://code.google.com/p/point-cloud-tools/downloads/detail?name=1.5.pdf&can=2&q=)
 
-- ​
+  ​
+
+------
+<div align="center">
+	<a class="hollow button" href="{{ site.baseurl }}/Help"><i class="fa fa-chevron-circle-left"></i>  Back to GCD Help </a>  
+	<a class="hollow button" href="{{ site.baseurl }}/"><img src="{{ site.baseurl}}/assets/images/icons/GCDAddIn.png">  Back to GCD Home </a>  
+</div>

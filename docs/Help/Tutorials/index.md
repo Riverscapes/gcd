@@ -51,3 +51,8 @@ Some of the most common procedures and analsyes in both GIS and GCD are elaborat
   - [S. Bayesian Updating Excercise]({{ site.baseurl }}/tutorials--how-to/workshop-tutorials/s-bayesian-updating-excercise)
   - [V. Morphodynamic Signatures from Budget Segeregation]({{ site.baseurl }}/tutorials--how-to/workshop-tutorials/v-morphodynamic-signatures-from-budget-segeregation)
 
+------
+<div align="center">
+	<a class="hollow button" href="{{ site.baseurl }}/Help"><i class="fa fa-chevron-circle-left"></i>  Back to GCD Help </a>  
+	<a class="hollow button" href="{{ site.baseurl }}/"><img src="{{ site.baseurl}}/assets/images/icons/GCDAddIn.png">  Back to GCD Home </a>  
+</div>

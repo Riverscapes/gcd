@@ -31,3 +31,9 @@ The outputs for the tool are:
 - - contains x, y, z fields from the original surveyed points.
 
 Ahead to: [ii. Create Survey Extent Polygon Tool]({{ site.baseurl }}/gcd-command-reference/data-prep-menu/c-survey-preparation-menu/ii-create-survey-extent-polygon)→
+
+------
+<div align="center">
+	<a class="hollow button" href="{{ site.baseurl }}/Help"><i class="fa fa-chevron-circle-left"></i>  Back to GCD Help </a>  
+	<a class="hollow button" href="{{ site.baseurl }}/"><img src="{{ site.baseurl}}/assets/images/icons/GCDAddIn.png">  Back to GCD Home </a>  
+</div>

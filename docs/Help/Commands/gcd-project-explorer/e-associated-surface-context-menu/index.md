@@ -11,3 +11,8 @@ From the Associated Surfaces folder in the [GCD Project Explorer]({{ site.baseur
 - [i. Add Associated Surface]({{ site.baseurl }}/gcd-command-reference/gcd-project-explorer/e-associated-surface-context-menu/i-add-associated-surface)
 - [ii. Add All Associated Surfaces to Map]({{ site.baseurl }}/gcd-command-reference/gcd-project-explorer/e-associated-surface-context-menu/ii-add-all-associated-surfaces-to-map)
 
+------
+<div align="center">
+	<a class="hollow button" href="{{ site.baseurl }}/Help"><i class="fa fa-chevron-circle-left"></i>  Back to GCD Help </a>  
+	<a class="hollow button" href="{{ site.baseurl }}/"><img src="{{ site.baseurl}}/assets/images/icons/GCDAddIn.png">  Back to GCD Home </a>  
+</div>

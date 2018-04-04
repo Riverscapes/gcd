@@ -20,3 +20,9 @@ This is a reference list of concepts underpinning the GCD Software.
   - [Inputs Folder]({{ site.baseurl }}/gcd-concepts/project/inputs-folder)
 - [ToPCAT Decimation]({{ site.baseurl }}/gcd-concepts/topcat-decimation)
 
+
+------
+<div align="center">
+	<a class="hollow button" href="{{ site.baseurl }}/Help"><i class="fa fa-chevron-circle-left"></i>  Back to GCD Help </a>  
+	<a class="hollow button" href="{{ site.baseurl }}/"><img src="{{ site.baseurl}}/assets/images/icons/GCDAddIn.png">  Back to GCD Home </a>  
+</div>

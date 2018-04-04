@@ -53,3 +53,9 @@ The outputs for the tool are:
 - **CDF Folder**
 
 - - The folder to store the cumulative distribution plots to. Each file is named as a combination of the unique field name and its value. For example if a field called Id was used for the unique channel field then the figure for the polygon with an Id of 23 would be named Id_23.png
+
+------
+<div align="center">
+	<a class="hollow button" href="{{ site.baseurl }}/Help"><i class="fa fa-chevron-circle-left"></i>  Back to GCD Help </a>  
+	<a class="hollow button" href="{{ site.baseurl }}/"><img src="{{ site.baseurl}}/assets/images/icons/GCDAddIn.png">  Back to GCD Home </a>  
+</div>

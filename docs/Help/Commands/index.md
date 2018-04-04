@@ -112,3 +112,8 @@ The command reference is linked from the help within the tool and acts as a refe
   - [i. View Budget Segregation Results]({{ site.baseurl }}/gcd-command-reference/gcd-project-explorer/n-individual-budget-segregation-context-menu/i-view-budget-segregation-results)
   - [ii. Browse Budget Segregation]({{ site.baseurl }}/gcd-command-reference/gcd-project-explorer/n-individual-budget-segregation-context-menu/ii-browse-budget-segregation)
 
+------
+<div align="center">
+	<a class="hollow button" href="{{ site.baseurl }}/Help"><i class="fa fa-chevron-circle-left"></i>  Back to GCD Help </a>  
+	<a class="hollow button" href="{{ site.baseurl }}/"><img src="{{ site.baseurl}}/assets/images/icons/GCDAddIn.png">  Back to GCD Home </a>  
+</div>

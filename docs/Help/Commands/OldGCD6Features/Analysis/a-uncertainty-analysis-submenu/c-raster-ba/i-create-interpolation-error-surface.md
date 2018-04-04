@@ -58,3 +58,8 @@ The outputs for the tool are:
 
 - - This raster is created from the average difference between surveyed points and the cell that they are within the DEM they were used to create. The absolute value of difference is taken because statistical analysis of the overall distribution of the difference between surveyed points and DEM values is more robust when positive and negative values do not cancel each other out.
 
+------
+<div align="center">
+	<a class="hollow button" href="{{ site.baseurl }}/Help"><i class="fa fa-chevron-circle-left"></i>  Back to GCD Help </a>  
+	<a class="hollow button" href="{{ site.baseurl }}/"><img src="{{ site.baseurl}}/assets/images/icons/GCDAddIn.png">  Back to GCD Home </a>  
+</div>

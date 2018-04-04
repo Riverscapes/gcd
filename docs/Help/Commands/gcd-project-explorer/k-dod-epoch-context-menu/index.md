@@ -10,3 +10,9 @@ A DoD Epoch is just a time period bounded by the two DEM surveys used in the DoD
 
 - [i. Add Change Detection (With These Surveys)]({{ site.baseurl }}/gcd-command-reference/gcd-project-explorer/k-dod-epoch-context-menu/i-add-change-detection-with-these-surveys)
 - [ii. Add All Change Detections (With These DEM Surveys) to the Map]({{ site.baseurl }}/gcd-command-reference/gcd-project-explorer/k-dod-epoch-context-menu/ii-add-all-change-detections-with-these-dem-surveys-to-the-map)
+
+------
+<div align="center">
+	<a class="hollow button" href="{{ site.baseurl }}/Help"><i class="fa fa-chevron-circle-left"></i>  Back to GCD Help </a>  
+	<a class="hollow button" href="{{ site.baseurl }}/"><img src="{{ site.baseurl}}/assets/images/icons/GCDAddIn.png">  Back to GCD Home </a>  
+</div>

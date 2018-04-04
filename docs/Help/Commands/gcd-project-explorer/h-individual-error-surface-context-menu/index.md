@@ -12,3 +12,9 @@ From an individual error surface in the [GCD Project Explorer]({{ site.baseurl }
 - [ii. Add Error Surfaces to Map]({{ site.baseurl }}/gcd-command-reference/gcd-project-explorer/h-individual-error-surface-context-menu/ii-add-error-surfaces-to-map)
 - [iii. Delete Error Surface]({{ site.baseurl }}/gcd-command-reference/gcd-project-explorer/h-individual-error-surface-context-menu/iii-delete-error-surface)
 
+
+------
+<div align="center">
+	<a class="hollow button" href="{{ site.baseurl }}/Help"><i class="fa fa-chevron-circle-left"></i>  Back to GCD Help </a>  
+	<a class="hollow button" href="{{ site.baseurl }}/"><img src="{{ site.baseurl}}/assets/images/icons/GCDAddIn.png">  Back to GCD Home </a>  
+</div>

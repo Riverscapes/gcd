@@ -11,3 +11,9 @@ This will bring up the DEM Survey Properties Form.
 ![DEMSurveyPropertiesForm_EditMode]({{ site.baseurl }}/assets/images/DEMSurveyPropertiesForm_EditMode.png)
 
 From the DEM Survey Properties Form  a user can edit the *Survey Date,* choose whether or not they want to use a *single survey* or *multi-method survey*, and select the associated information with either survey method. Additionally a user can inspect different attributes *Survey Name, Folder,* and *Survey Raster Properties.* Within this form the user can also access the *Associated Surfaces* and *Error Surfaces* tabs of which they can add or edit these surfaces as well as add them to the map.
+
+------
+<div align="center">
+	<a class="hollow button" href="{{ site.baseurl }}/Help"><i class="fa fa-chevron-circle-left"></i>  Back to GCD Help </a>  
+	<a class="hollow button" href="{{ site.baseurl }}/"><img src="{{ site.baseurl}}/assets/images/icons/GCDAddIn.png">  Back to GCD Home </a>  
+</div>

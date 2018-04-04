@@ -57,3 +57,9 @@ The outputs for the tool are:
 - **Output Raster Path**
 
 - - path to save the output bootstrap roughness raster to. The output raster is comprised of the mean delta Z between each iteration of sub-setting points and the original DEM.
+
+------
+<div align="center">
+	<a class="hollow button" href="{{ site.baseurl }}/Help"><i class="fa fa-chevron-circle-left"></i>  Back to GCD Help </a>  
+	<a class="hollow button" href="{{ site.baseurl }}/"><img src="{{ site.baseurl}}/assets/images/icons/GCDAddIn.png">  Back to GCD Home </a>  
+</div>

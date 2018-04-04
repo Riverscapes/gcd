@@ -12,3 +12,9 @@ The Raster Based Uncertainty Analysis sub menu is located under the Analysis -->
 
 - [i. Create Interpolation Error Surface]({{ site.baseurl }}/gcd-command-reference/gcd-analysis-menu/a-uncertainty-analysis-submenu/c-raster-ba/i-create-interpolation-error-surface)
 
+
+------
+<div align="center">
+	<a class="hollow button" href="{{ site.baseurl }}/Help"><i class="fa fa-chevron-circle-left"></i>  Back to GCD Help </a>  
+	<a class="hollow button" href="{{ site.baseurl }}/"><img src="{{ site.baseurl}}/assets/images/icons/GCDAddIn.png">  Back to GCD Home </a>  
+</div>

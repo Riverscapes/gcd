@@ -26,3 +26,9 @@ The Point Cloud Based tools include two tools: the Coincident Point Tools and Br
 The Raster Based tools include Creating an FIS Error Surface (works the same as within the Project Explorer, except you specify where to store the output), and the Create Interpolation Error Surface.
 
 ![GCD6_Menu_Analysis_Uncertainty_RasterBasedt]({{ site.baseurl }}/assets/images/GCD6_Menu_Analysis_Uncertainty_RasterBasedt.png)
+
+------
+<div align="center">
+	<a class="hollow button" href="{{ site.baseurl }}/Help"><i class="fa fa-chevron-circle-left"></i>  Back to GCD Help </a>  
+	<a class="hollow button" href="{{ site.baseurl }}/"><img src="{{ site.baseurl}}/assets/images/icons/GCDAddIn.png">  Back to GCD Home </a>  
+</div>

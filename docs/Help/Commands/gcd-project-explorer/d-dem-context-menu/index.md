@@ -18,3 +18,11 @@ From any DEM Survey in the DEM Surveys folder in the [GCD Project Explorer]({{ s
   - [4. Deriving Roughness]({{ site.baseurl }}/gcd-command-reference/gcd-project-explorer/d-dem-context-menu/iv-add-associated-surface/4-deriving-roughness)
 
 Note that, when an individual DEM Survey is highlighted, the first three commands are enabled across the top of the Project Explorer and bring up the same commands. 
+
+
+
+------
+<div align="center">
+	<a class="hollow button" href="{{ site.baseurl }}/Help"><i class="fa fa-chevron-circle-left"></i>  Back to GCD Help </a>  
+	<a class="hollow button" href="{{ site.baseurl }}/"><img src="{{ site.baseurl}}/assets/images/icons/GCDAddIn.png">  Back to GCD Home </a>  
+</div>

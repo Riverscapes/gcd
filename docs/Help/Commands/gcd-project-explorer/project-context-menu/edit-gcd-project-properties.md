@@ -12,3 +12,8 @@ This will bring up the GCD Project Properties Form in edit mode.
 
 From the GCD Project Properties Form in edit mode the project properties: *Name, Description,* and *Horizontal Precision* can be edited. **Currently only *Description* can be edited.**
 
+------
+<div align="center">
+	<a class="hollow button" href="{{ site.baseurl }}/Help"><i class="fa fa-chevron-circle-left"></i>  Back to GCD Help </a>  
+	<a class="hollow button" href="{{ site.baseurl }}/"><img src="{{ site.baseurl}}/assets/images/icons/GCDAddIn.png">  Back to GCD Home </a>  
+</div>

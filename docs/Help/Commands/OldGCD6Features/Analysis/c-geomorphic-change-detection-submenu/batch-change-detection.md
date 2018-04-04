@@ -185,3 +185,11 @@ Download this [XML example](http://www.gis.usu.edu/~jwheaton/et_al/GCD/GCD5/XML_
 `</BatchChangeDetectionDS>`
 
 Download this [XML example](http://www.gis.usu.edu/~jwheaton/et_al/GCD/GCD5/XML_BatchExamples/Multiple_ChangeDetectionAnalysisTemplate.xml) as a template.
+
+
+
+------
+<div align="center">
+	<a class="hollow button" href="{{ site.baseurl }}/Help"><i class="fa fa-chevron-circle-left"></i>  Back to GCD Help </a>  
+	<a class="hollow button" href="{{ site.baseurl }}/"><img src="{{ site.baseurl}}/assets/images/icons/GCDAddIn.png">  Back to GCD Home </a>  
+</div>

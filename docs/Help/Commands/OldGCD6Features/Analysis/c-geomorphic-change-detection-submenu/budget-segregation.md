@@ -10,3 +10,8 @@ The `Budget Segregation` tool allows you to choose an existing *DoD *(from the c
 
 See the [Budget Segregation]({{ site.baseurl }}/tutorials--how-to/11-budget-segregation) tutorial for videos on how to undertake an analysis.
 
+------
+<div align="center">
+	<a class="hollow button" href="{{ site.baseurl }}/Help"><i class="fa fa-chevron-circle-left"></i>  Back to GCD Help </a>  
+	<a class="hollow button" href="{{ site.baseurl }}/"><img src="{{ site.baseurl}}/assets/images/icons/GCDAddIn.png">  Back to GCD Home </a>  
+</div>

@@ -12,3 +12,8 @@ The Roughness Analysis Sub-Menu will include a variety of roughness estimation t
 - [ii. Bootstrap Roughness Modeler]({{ site.baseurl }}/gcd-command-reference/gcd-analysis-menu/b-roughness-analysis-submenu/bootstrap-roughness-modeler)
 - [iii. Grain Size Distribution Estimator]({{ site.baseurl }}/gcd-command-reference/gcd-analysis-menu/b-roughness-analysis-submenu/grain-size-distribution-estimator)
 
+------
+<div align="center">
+	<a class="hollow button" href="{{ site.baseurl }}/Help"><i class="fa fa-chevron-circle-left"></i>  Back to GCD Help </a>  
+	<a class="hollow button" href="{{ site.baseurl }}/"><img src="{{ site.baseurl}}/assets/images/icons/GCDAddIn.png">  Back to GCD Home </a>  
+</div>

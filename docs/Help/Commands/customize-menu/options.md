@@ -1,5 +1,6 @@
 ---
 title: Options
+weight: 2
 ---
 
 The Options dialog has five tabs for customizing different aspects of the GCD software. All options are user-specific, meaning that any changes are saved for the current user only.
@@ -60,3 +61,9 @@ NOTE: All graphs produced in GCD can also be exported manually from their respec
 This tab determines how GCD checks for [grid orthogonality and dimensional divisibility]({{ site.baseurl }}/gcd-concepts/data-preparation---best-practices). ArcGIS introduces small rounding errors in raster dimensions (width and height) as well as raster resolution. The result is a raster intended to be `0.1` m in cell resolution, is actually stored and treated as either `0.0999999999999998372` or `0.10000000000000003432` (even though when you check the raster properties it may still say `0.1`), and this can lead to the recorded height and width of the raster not being evenly divisible by the cell resolution. Although most users can ignore this issue, it is critical during change detection, because it leads to unnecessary re-sampling of rasters and introduction of minor interpolation errors in your data.  When we run Orthogonality, Divisibility and Concurrency checks in the software, we round the ESRI-reported values (by default) to 4 decimal places so that these minor precision inaccuracies do not propagate. In the above example this will treat what gets reported as 0.1 as 0.1000, despite how the value is actually stored in memory. You can change that precision here:
 
 ![Dialog_GCD_Options_CoordinatePrecision]({{ site.baseurl }}/assets/images/Dialog_GCD_Options_CoordinatePrecision.png)
+
+------
+<div align="center">
+	<a class="hollow button" href="{{ site.baseurl }}/Help"><i class="fa fa-chevron-circle-left"></i>  Back to GCD Help </a>  
+	<a class="hollow button" href="{{ site.baseurl }}/"><img src="{{ site.baseurl}}/assets/images/icons/GCDAddIn.png">  Back to GCD Home </a>  
+</div>

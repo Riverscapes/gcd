@@ -22,3 +22,9 @@ This video walks through the creation of a new project using the `Create New Pro
 When [project XML file]({{ site.baseurl }}/gcd-concepts/project/-gcd-files) (*.gcd) gets created, these are the XML tags that get populated in the project (example below is what gets saved when the dialog is filled out as specified above:
 
 ![GCDSnipett]({{ site.baseurl}}/assets/images/GCDSnipett.png)
+
+------
+<div align="center">
+	<a class="hollow button" href="{{ site.baseurl }}/Help"><i class="fa fa-chevron-circle-left"></i>  Back to GCD Help </a>  
+	<a class="hollow button" href="{{ site.baseurl }}/"><img src="{{ site.baseurl}}/assets/images/icons/GCDAddIn.png">  Back to GCD Home </a>  
+</div>
