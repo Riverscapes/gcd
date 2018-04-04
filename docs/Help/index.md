@@ -31,3 +31,8 @@ The GCD is open-source, freeware and their are a variety of ways you can get hel
 # GCD Analysts for Hire
 
 # GCD Development & Extension
+
+------
+<div align="center">
+    <a class="hollow button" href="{{ site.baseurl }}/"><i class="fa fa-chevron-circle-left"></i>  Back to Home </a>  
+</div>

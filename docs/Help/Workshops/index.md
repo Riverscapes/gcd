@@ -5,11 +5,11 @@ weight: 4
 
 Welcome to the Geomorphic Change Detection Workshop Pages.
 
-#### Enrolled Participants:
+## Enrolled Participants:
 
-This website is the primary hub of resources for the Geomorphic Change Detection workshop. 
+This website is the primary hub of resources for the Geomorphic Change Detection workshop or courses.. 
 
-#### Prospective Participants:
+## Prospective Participants:
 
 The next GCD workshop(s) will be taught:
 

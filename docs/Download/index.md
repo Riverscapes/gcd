@@ -43,11 +43,11 @@ GCD Standalone is a desktop software version that performs all the core GCD func
 
 ------
 <div align="center">
+    <a class="hollow button" href="{{ site.baseurl }}/"><img src="{{ site.baseurl}}/assets/images/icons/GCDAddIn.png">  Back to GCD Home </a>  
     <a class="hollow button" href="{{ site.baseurl }}/Help/install"><i class="fa fa-question"></i>  Installation Instructions </a> 
     <a class="hollow button" href="{{ site.baseurl }}/Download/about"><i class="fa fa-question"></i>  Learn More about Differences Between GCD Installations </a>  
     <a class="hollow button" href="{{ site.baseurl }}/Download/release_notes"><i class="fa fa-sticky-note"></i>   See Release Notes </a>
 </div>
-
 
 
 

@@ -19,9 +19,8 @@ Not all of the [old GCD versions]({{ site.baseurl}}/Download/old_versions) sourc
 <a class="hollow button" href="https://github.com/NorthArrowResearch/rasterman"><i class="fa fa-github"></i>  RasterMan on GitHub </a>  
 <a class="hollow button" href="https://github.com/joewheaton/DoD"><i class="fa fa-github"></i>  DoD 3 - Matlab Source Code on GitHub </a>  
 
-
 ------
 <div align="center">
-    <a class="hollow button" href="{{ site.baseurl }}/Download"><i class="fa fa-chevron-circle-left"></i>  Back to Download </a>  
-
+	<a class="hollow button" href="{{ site.baseurl }}/Download"><i class="fa fa-chevron-circle-left"></i>  Back to GCD Downloads </a>  
+	<a class="hollow button" href="{{ site.baseurl }}/"><img src="{{ site.baseurl}}/assets/images/icons/GCDAddIn.png">  Back to GCD Home </a>  
 </div>
