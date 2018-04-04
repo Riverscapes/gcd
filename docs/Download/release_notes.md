@@ -10,6 +10,10 @@ Note, see the [Commit History](https://github.com/Riverscapes/gcd/commits) in Gi
 
 <a class="button" href="https://github.com/Riverscapes/gcd/commits"><i class="fa fa-github"/> GCD Github Repository Commit History</a>
 
+## 7.0.11 - 4 Apr 2018
+
+* Fixed clicking on DoD tabular results table header.
+* Revised morphological analysis user interface.
 
 ## 7.0.10 - 28 Mar 2018
 
