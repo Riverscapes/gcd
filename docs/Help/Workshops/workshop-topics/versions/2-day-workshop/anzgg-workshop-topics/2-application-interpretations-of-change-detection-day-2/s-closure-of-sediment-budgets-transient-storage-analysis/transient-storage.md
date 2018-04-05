@@ -12,7 +12,7 @@ This is a useful tool for identifying hotspots of change.
 
 #### Learning Outcomes Supported
 
-This topic will help fulfill the following [primary learning outcome(s)](http://gcdworkshop.joewheaton.org/syllabus/primary-learning-outcomes) for the workshop:
+This topic will help fulfill the following [primary learning outcome(s)]({{ site.baseurl }}/Help/Workshops/syllabus/primary-learning-outcomes) for the workshop:
 
 - Methods for interpreting and segregating morphological sediment budgets quantitatively in terms of both geomorphic processes and changes in physical habitat
 
@@ -32,4 +32,4 @@ This topic will help fulfill the following [primary learning outcome(s)](http://
 
 ------
 
-↑ [Parent Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/2-application-interpretations-of-change-detection-day-2/s-closure-of-sediment-budgets-transient-storage-analysis)           
+↑ [Parent Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/2-application-interpretations-of-change-detection-day-2/s-closure-of-sediment-budgets-transient-storage-analysis)           

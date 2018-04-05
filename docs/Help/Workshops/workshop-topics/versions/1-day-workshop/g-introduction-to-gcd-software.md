@@ -4,7 +4,7 @@ title: Introduction to GCD Software
 
 #### Synopsis of Topic
 
-Everything we have done up until this point has been in the absence of the [Geomorphic Change Detection Software](http://gcd.joewheaton.org/) (GCD 6.0). You do not need the GCD Software to do meaningful change detection analyses. The principles and methods are straight forward to apply in a GIS environment, or to code up independently. However, the GCD Software exists to facilitate these tasks and analysis by making them easier to undertake and promoting more consistency in the processing. Here we will talk briefly about the history of GCD software development, explain what the software does, show you around in the software, and then go through the same exercises we did in [topic E,](http://gcdworkshop.joewheaton.org/workshop-topics/versions/3-day-workshop/1-Principles/g_traditionalGCD) but with the GCD software.
+Everything we have done up until this point has been in the absence of the [Geomorphic Change Detection Software](http://gcd.joewheaton.org/) (GCD 6.0). You do not need the GCD Software to do meaningful change detection analyses. The principles and methods are straight forward to apply in a GIS environment, or to code up independently. However, the GCD Software exists to facilitate these tasks and analysis by making them easier to undertake and promoting more consistency in the processing. Here we will talk briefly about the history of GCD software development, explain what the software does, show you around in the software, and then go through the same exercises we did in [topic E,]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/3-day-workshop/1-Principles/g_traditionalGCD) but with the GCD software.
 
 #### Why we're Covering it
 
@@ -12,7 +12,7 @@ Everything we have done up until this point has been in the absence of the [Geom
 
 #### Learning Outcomes Supported
 
- This topic will help fulfill the following [primary learning outcome(s)](http://gcdworkshop.joewheaton.org/syllabus/primary-learning-outcomes) for the workshop: 
+ This topic will help fulfill the following [primary learning outcome(s)]({{ site.baseurl }}/Help/Workshops/syllabus/primary-learning-outcomes) for the workshop: 
 
 - Hands-on instruction on use of the [GCD software](http://www.joewheaton.org/Home/research/software/GCD) through group-led and self-paced exercises
 
@@ -26,11 +26,11 @@ Everything we have done up until this point has been in the absence of the [Geom
 
 #### Datasets
 
-- [G_IntroGCD.zip](http://etal.usu.edu/GCD/Workshop/2015_RRNW/Excercises/G_IntroGCD.zip) [![img](http://gcdworkshop.joewheaton.org/_/rsrc/1422836929299/workshop-topics/versions/1-day-workshop/g-introduction-to-gcd-software/winzip_icon_16.gif)](http://gcdworkshop.joewheaton.org/workshop-topics/versions/1-day-workshop/g-introduction-to-gcd-software/winzip_icon_16.gif?attredirects=0)
+- [G_IntroGCD.zip](http://etal.usu.edu/GCD/Workshop/2015_RRNW/Excercises/G_IntroGCD.zip) [![img](http://gcdworkshop.joewheaton.org/_/rsrc/1422836929299/workshop-topics/versions/1-day-workshop/g-introduction-to-gcd-software/winzip_icon_16.gif)]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/1-day-workshop/g-introduction-to-gcd-software/winzip_icon_16.gif?attredirects=0)
 
 #### Prerequisite for this Exercise
 
-- Completed Exercise in Topics [C](http://gcdworkshop.joewheaton.org/workshop-topics/versions/3-day-workshop/1-Principles/c-review-of-building-surfaces-from-raw-data) & [E](http://gcdworkshop.joewheaton.org/workshop-topics/versions/3-day-workshop/1-Principles/g_traditionalGCD)
+- Completed Exercise in Topics [C]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/3-day-workshop/1-Principles/c-review-of-building-surfaces-from-raw-data) & [E]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/3-day-workshop/1-Principles/g_traditionalGCD)
 
 #### Relevant Online Help or Tutorials for this Topic
 
@@ -39,5 +39,5 @@ Everything we have done up until this point has been in the absence of the [Geom
 
 ------
 
-← [Previous Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/1-day-workshop/f-traditional-approaches-to-change-detection)            [Next Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/1-day-workshop/h-thresholding-alternatives) →
+← [Previous Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/1-day-workshop/f-traditional-approaches-to-change-detection)            [Next Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/1-day-workshop/h-thresholding-alternatives) →
 

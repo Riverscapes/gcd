@@ -15,7 +15,7 @@ In this final segment, we will briefly summarize and review the main concepts we
 
 #### Learning Outcomes Supported
 
-This topic will help fulfill the following [primary learning outcome(s)](http://gcdworkshop.joewheaton.org/syllabus/primary-learning-outcomes) for the workshop:
+This topic will help fulfill the following [primary learning outcome(s)]({{ site.baseurl }}/Help/Workshops/syllabus/primary-learning-outcomes) for the workshop:
 
 - The fundamental background necessary to design effective repeat topographic monitoring campaigns and distinguish geomorphic changes from noise (with particular focus on restoration applications)
 - An opportunity to interact with experts on geomorphic monitoring and the software developers of GCD to help you make better use of your own data
@@ -38,4 +38,4 @@ This topic will help fulfill the following [primary learning outcome(s)](http://
 
 ------
 
-← [Previous Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/2-application-interpretations-of-change-detection-day-2/t-self-paced-problems-with-own-data)    
+← [Previous Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/2-application-interpretations-of-change-detection-day-2/t-self-paced-problems-with-own-data)    

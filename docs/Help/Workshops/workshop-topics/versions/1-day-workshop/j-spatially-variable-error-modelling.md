@@ -16,7 +16,7 @@ As spatial extent of surveys expands and the number of topographic methods explo
 
 #### Learning Outcomes Supported
 
-This topic will help fulfill the following [primary learning outcome(s)](http://gcdworkshop.joewheaton.org/syllabus/primary-learning-outcomes) for the workshop:
+This topic will help fulfill the following [primary learning outcome(s)]({{ site.baseurl }}/Help/Workshops/syllabus/primary-learning-outcomes) for the workshop:
 
 - The fundamental background necessary to design effective repeat topographic monitoring campaigns and distinguish geomorphic changes from noise (with particular focus on restoration applications)
 - Hands-on instruction on use of the [GCD software](http://www.joewheaton.org/Home/research/software/GCD) through group-led and self-paced exercises
@@ -31,7 +31,7 @@ This topic will help fulfill the following [primary learning outcome(s)](http://
 
 #### Datasets
 
-- [`J_MultiMethod.zip`](http://etal.usu.edu/GCD/Workshop/2015_RRNW/Excercises/J_MultiMethod.zip) [![img](http://gcdworkshop.joewheaton.org/_/rsrc/1422837214438/workshop-topics/versions/1-day-workshop/j-spatially-variable-error-modelling/winzip_icon_16.gif)](http://gcdworkshop.joewheaton.org/workshop-topics/versions/1-day-workshop/j-spatially-variable-error-modelling/winzip_icon_16.gif?attredirects=0)
+- [`J_MultiMethod.zip`](http://etal.usu.edu/GCD/Workshop/2015_RRNW/Excercises/J_MultiMethod.zip) [![img](http://gcdworkshop.joewheaton.org/_/rsrc/1422837214438/workshop-topics/versions/1-day-workshop/j-spatially-variable-error-modelling/winzip_icon_16.gif)]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/1-day-workshop/j-spatially-variable-error-modelling/winzip_icon_16.gif?attredirects=0)
 
 
 
@@ -44,4 +44,4 @@ This topic will help fulfill the following [primary learning outcome(s)](http://
 
 ------
 
-← [Previous Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/1-day-workshop/i-approaches-to-estimating-dem-error)            [Next Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/1-day-workshop/k-spatially-variable---introduction-to-fuzzy-error-modelling) →
+← [Previous Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/1-day-workshop/i-approaches-to-estimating-dem-error)            [Next Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/1-day-workshop/k-spatially-variable---introduction-to-fuzzy-error-modelling) →

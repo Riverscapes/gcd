@@ -18,7 +18,7 @@ As spatial extent of surveys expands and the number of topographic methods explo
 
 #### Learning Outcomes Supported
 
-This topic will help fulfill the following [primary learning outcome(s)](http://gcdworkshop.joewheaton.org/syllabus/primary-learning-outcomes) for the workshop:
+This topic will help fulfill the following [primary learning outcome(s)]({{ site.baseurl }}/Help/Workshops/syllabus/primary-learning-outcomes) for the workshop:
 
 - The fundamental background necessary to design effective repeat topographic monitoring campaigns and distinguish geomorphic changes from noise (with particular focus on restoration applications)
 - Hands-on instruction on use of the [GCD software](http://www.joewheaton.org/Home/research/software/GCD) through group-led and self-paced exercises
@@ -35,7 +35,7 @@ This topic will help fulfill the following [primary learning outcome(s)](http://
 
 #### Prerequisites for this Exercise
 
-- Completed Exercises in Topics [C](http://gcdworkshop.joewheaton.org/workshop-topics/versions/3-day-workshop/1-Principles/c-review-of-building-surfaces-from-raw-data), [E](http://gcdworkshop.joewheaton.org/workshop-topics/versions/3-day-workshop/1-Principles/g_traditionalGCD), [F](http://gcdworkshop.joewheaton.org/system/errors/NodeNotFound?suri=wuid:gx:27d471080239b4a) & [G](http://gcdworkshop.joewheaton.org/workshop-topics/versions/3-day-workshop/2-errors-uncertainties/i-thresholding-alternatives)
+- Completed Exercises in Topics [C]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/3-day-workshop/1-Principles/c-review-of-building-surfaces-from-raw-data), [E]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/3-day-workshop/1-Principles/g_traditionalGCD), [F](http://gcdworkshop.joewheaton.org/system/errors/NodeNotFound?suri=wuid:gx:27d471080239b4a) & [G]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/3-day-workshop/2-errors-uncertainties/i-thresholding-alternatives)
 
 #### Relevant Online Help or Tutorials for this Topic
 
@@ -46,4 +46,4 @@ This topic will help fulfill the following [primary learning outcome(s)](http://
 
 ------
 
-← [Previous Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/1-surveying-principles-change-detection/j-statistical-methods-for-error-modelling)            [Next Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/1-surveying-principles-change-detection/l-recap-of-day-preview-of-day-2) →
+← [Previous Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/1-surveying-principles-change-detection/j-statistical-methods-for-error-modelling)            [Next Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/1-surveying-principles-change-detection/l-recap-of-day-preview-of-day-2) →

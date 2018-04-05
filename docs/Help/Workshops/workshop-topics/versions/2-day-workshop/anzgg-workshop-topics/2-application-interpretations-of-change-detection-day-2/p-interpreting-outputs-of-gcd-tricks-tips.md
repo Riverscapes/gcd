@@ -12,7 +12,7 @@ Any monkey can press the buttons of the GCD software... we want to make sure you
 
 #### Learning Outcomes Supported
 
-This topic will help fulfill the following [primary learning outcome(s)](http://gcdworkshop.joewheaton.org/syllabus/primary-learning-outcomes) for the workshop:
+This topic will help fulfill the following [primary learning outcome(s)]({{ site.baseurl }}/Help/Workshops/syllabus/primary-learning-outcomes) for the workshop:
 
 - Methods for interpreting and segregating morphological sediment budgets quantitatively in terms of both geomorphic processes and changes in physical habitat
 - Hands-on instruction on use of the [GCD software](http://www.joewheaton.org/Home/research/software/GCD)through group-led and self-paced exercises
@@ -34,5 +34,5 @@ This topic will help fulfill the following [primary learning outcome(s)](http://
 
 ------
 
-← [Previous Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/2-application-interpretations-of-change-detection-day-2/o-self--paced-exercise--running-change-detection-in-gcd)            [Next Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/2-application-interpretations-of-change-detection-day-2/q-gcd-budget-segregation) →
+← [Previous Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/2-application-interpretations-of-change-detection-day-2/o-self--paced-exercise--running-change-detection-in-gcd)            [Next Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/2-application-interpretations-of-change-detection-day-2/q-gcd-budget-segregation) →
 

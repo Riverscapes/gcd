@@ -14,7 +14,7 @@ Even though the GCD Software and ArcGIS will 'take care' of the problem of compa
 
 #### Learning Outcome Supported
 
-This topic will help fulfill the following [primary learning outcome](http://gcdworkshop.joewheaton.org/syllabus/primary-learning-outcomes) for the workshop
+This topic will help fulfill the following [primary learning outcome]({{ site.baseurl }}/Help/Workshops/syllabus/primary-learning-outcomes) for the workshop
 
 - The fundamental background necessary to design effective repeat topographic monitoring campaigns and distinguish geomorphic changes from noise (with particular focus on restoration applications)
 
@@ -24,11 +24,11 @@ This topic will help fulfill the following [primary learning outcome](http://gcd
 
 #### Datasets
 
-### `E_BestPractices.zip` File of Data for this Exercise [![img](http://gcdworkshop.joewheaton.org/_/rsrc/1422836703269/workshop-topics/versions/1-day-workshop/e-essential-best-practices-to-support-change-detection/winzip_icon_16.gif)](http://gcdworkshop.joewheaton.org/workshop-topics/versions/1-day-workshop/e-essential-best-practices-to-support-change-detection/winzip_icon_16.gif?attredirects=0)
+### `E_BestPractices.zip` File of Data for this Exercise [![img](http://gcdworkshop.joewheaton.org/_/rsrc/1422836703269/workshop-topics/versions/1-day-workshop/e-essential-best-practices-to-support-change-detection/winzip_icon_16.gif)]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/1-day-workshop/e-essential-best-practices-to-support-change-detection/winzip_icon_16.gif?attredirects=0)
 
 #### Prerequisite for this Exercise
 
-### Some ArcGIS experienceTopic [C](http://gcdworkshop.joewheaton.org/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/1-surveying-principles-change-detection/c-review-of-building-surfaces-from-raw-topographic-data)
+### Some ArcGIS experienceTopic [C]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/1-surveying-principles-change-detection/c-review-of-building-surfaces-from-raw-topographic-data)
 
 #### Relevant Online Help or Tutorials for this Topic
 
@@ -50,4 +50,4 @@ This topic will help fulfill the following [primary learning outcome](http://gcd
 
 ------
 
-← [Previous Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/1-day-workshop/c-review-of-building-surfaces-from-raw-topographic-data)            [Next Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/1-day-workshop/f-traditional-approaches-to-change-detection) →
+← [Previous Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/1-day-workshop/c-review-of-building-surfaces-from-raw-topographic-data)            [Next Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/1-day-workshop/f-traditional-approaches-to-change-detection) →

@@ -35,7 +35,7 @@ Although the majority of workshop participants will have some familiarity with t
 
 #### Learning Outcomes Supported
 
-This topic will help fulfill the following [primary learning outcome(s)](http://gcdworkshop.joewheaton.org/syllabus/primary-learning-outcomes) for the workshop:
+This topic will help fulfill the following [primary learning outcome(s)]({{ site.baseurl }}/Help/Workshops/syllabus/primary-learning-outcomes) for the workshop:
 
 - A comprehensive overview of the theory underpinning geomorphic change detection
 - The fundamental background necessary to design effective repeat topographic monitoring campaigns and distinguish geomorphic changes from noise (with particular focus on restoration applications)
@@ -62,4 +62,4 @@ For a review of some of the aerial imagery see [this topic](http://gis.joewheato
 
 ------
 
-←[Previous Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/3-day-workshop/1-Principles/b-overview-of-change-detection-applications)            [Next Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/3-day-workshop/1-Principles/c-review-of-building-surfaces-from-raw-data) →
+←[Previous Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/3-day-workshop/1-Principles/b-overview-of-change-detection-applications)            [Next Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/3-day-workshop/1-Principles/c-review-of-building-surfaces-from-raw-data) →

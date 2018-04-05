@@ -10,11 +10,11 @@ Fuzzy inference systems are a powerful and flexible tool that have a lot of util
 
 #### Why we're Covering it
 
-Fuzzy inference systems are supported in the GCD Software and the appropriate construction, calibration and applications of FIS is a critical skill to develop. In this section we focus on understanding how they work and their application; whereas in the [next topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/3-day-workshop/2-errors-uncertainties/p-building-your-own-fis), we work on the construction and calibration aspects. 
+Fuzzy inference systems are supported in the GCD Software and the appropriate construction, calibration and applications of FIS is a critical skill to develop. In this section we focus on understanding how they work and their application; whereas in the [next topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/3-day-workshop/2-errors-uncertainties/p-building-your-own-fis), we work on the construction and calibration aspects. 
 
 #### Learning Outcomes Supported
 
-This topic will help fulfill the following [primary learning outcome(s)](http://gcdworkshop.joewheaton.org/syllabus/primary-learning-outcomes) for the workshop:
+This topic will help fulfill the following [primary learning outcome(s)]({{ site.baseurl }}/Help/Workshops/syllabus/primary-learning-outcomes) for the workshop:
 
 - A comprehensive overview of the theory underpinning geomorphic change detection
 - The fundamental background necessary to design effective repeat topographic monitoring campaigns and distinguish geomorphic changes from noise (with particular focus on restoration applications)
@@ -26,7 +26,7 @@ This topic will help fulfill the following [primary learning outcome(s)](http://
 
 #### Datasets
 
-- [K_FIS_Intro.zip](http://etal.usu.edu/GCD/Workshop/2015_RRNW/Excercises/K_FIS_Intro.zip) [![img](http://gcdworkshop.joewheaton.org/_/rsrc/1422837322216/workshop-topics/versions/1-day-workshop/k-spatially-variable---introduction-to-fuzzy-error-modelling/winzip_icon_16.gif)](http://gcdworkshop.joewheaton.org/workshop-topics/versions/1-day-workshop/k-spatially-variable---introduction-to-fuzzy-error-modelling/winzip_icon_16.gif?attredirects=0)
+- [K_FIS_Intro.zip](http://etal.usu.edu/GCD/Workshop/2015_RRNW/Excercises/K_FIS_Intro.zip) [![img](http://gcdworkshop.joewheaton.org/_/rsrc/1422837322216/workshop-topics/versions/1-day-workshop/k-spatially-variable---introduction-to-fuzzy-error-modelling/winzip_icon_16.gif)]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/1-day-workshop/k-spatially-variable---introduction-to-fuzzy-error-modelling/winzip_icon_16.gif?attredirects=0)
 
 #### Relevant Online Help or Tutorials for this Topic
 
@@ -42,7 +42,7 @@ This topic will help fulfill the following [primary learning outcome(s)](http://
 
 - ​
 
-  [![img](http://gcdworkshop.joewheaton.org/_/rsrc/1429979231746/workshop-topics/versions/3-day-workshop/2-errors-uncertainties/n-fuzzy-inference-systems/pdfIcon.png)](http://gcdworkshop.joewheaton.org/workshop-topics/versions/3-day-workshop/2-errors-uncertainties/n-fuzzy-inference-systems/pdfIcon.png?attredirects=0) [Lecture Slides](http://etal.usu.edu/GCD/Workshop/2015_RRNW/Lectures/K_FuzzyInferenceSystems.pdf)
+  [![img](http://gcdworkshop.joewheaton.org/_/rsrc/1429979231746/workshop-topics/versions/3-day-workshop/2-errors-uncertainties/n-fuzzy-inference-systems/pdfIcon.png)]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/3-day-workshop/2-errors-uncertainties/n-fuzzy-inference-systems/pdfIcon.png?attredirects=0) [Lecture Slides](http://etal.usu.edu/GCD/Workshop/2015_RRNW/Lectures/K_FuzzyInferenceSystems.pdf)
 
 #### 
 
@@ -55,4 +55,4 @@ This topic will help fulfill the following [primary learning outcome(s)](http://
 
 ------
 
-← [Previous Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/1-day-workshop/j-spatially-variable-error-modelling)            [Next Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/1-day-workshop/l-gcd-budget-segregation) →
+← [Previous Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/1-day-workshop/j-spatially-variable-error-modelling)            [Next Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/1-day-workshop/l-gcd-budget-segregation) →

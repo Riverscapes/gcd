@@ -56,7 +56,7 @@ We are right next door to the [Quadside Cafe](http://www.usu.edu/dining/htm/the-
 Participants will be responsible for their own lunches on Tuesday and Wednesday. We will provide box lunches for our field excursion on Monday afternoon. You will be able to select from a variety of menu options. On Days 2 and 3, there are a variety of options on campus including:
 
 - [Quadside Cafe](http://www.usu.edu/dining/htm/the-quadside-cafe)
-- [Artists Block Cafe and Bakery](http://gcdworkshop.joewheaton.org/syllabus/goog_1365199944)
+- [Artists Block Cafe and Bakery]({{ site.baseurl }}/Help/Workshops/syllabus/goog_1365199944)
 - [Cafe on the Quad](http://usu.edu/dining/htm/cafe-on-the-quad)
 - [The Hub](http://usu.edu/dining/htm/the-hub)
 - [The Junction](http://usu.edu/dining/htm/the-junction)

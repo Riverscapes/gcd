@@ -29,5 +29,5 @@ We will have three brief presentations on other topics related to GCD:
 
 ------
 
-← [Previous Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/3-day-workshop/3-Day3/v-budget-segregation)            [Next Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/3-day-workshop/3-Day3/x-workshop-synthesis) →
+← [Previous Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/3-day-workshop/3-Day3/v-budget-segregation)            [Next Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/3-day-workshop/3-Day3/x-workshop-synthesis) →
 

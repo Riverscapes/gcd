@@ -50,7 +50,7 @@ C:\0_GCD\Exercises\S_SpatialCoherence
 
 ### Related Online Help or Tutorials for this Topic
 
-- [Parent Workshop Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/3-day-workshop/3-Day3/s-spatial-coherence-bayesian-updating)
+- [Parent Workshop Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/3-day-workshop/3-Day3/s-spatial-coherence-bayesian-updating)
 
 - [GCD 6 Help]({{ site.baseurl }}/)
 

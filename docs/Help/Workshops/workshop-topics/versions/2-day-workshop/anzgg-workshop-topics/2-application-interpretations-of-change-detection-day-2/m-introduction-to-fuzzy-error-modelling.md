@@ -10,11 +10,11 @@ Fuzzy inference systems are a powerful and flexible tool that have a lot of util
 
 #### Why we're Covering it
 
-Fuzzy inference systems are supported in the GCD Software and the appropriate construction, calibration and applications of FIS is a critical skill to develop. In this section we focus on understanding how they work and their application; whereas in the [next topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/3-day-workshop/2-errors-uncertainties/p-building-your-own-fis), we work on the construction and calibration aspects.
+Fuzzy inference systems are supported in the GCD Software and the appropriate construction, calibration and applications of FIS is a critical skill to develop. In this section we focus on understanding how they work and their application; whereas in the [next topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/3-day-workshop/2-errors-uncertainties/p-building-your-own-fis), we work on the construction and calibration aspects.
 
 #### Learning Outcomes Supported
 
-This topic will help fulfill the following [primary learning outcome(s)](http://gcdworkshop.joewheaton.org/syllabus/primary-learning-outcomes) for the workshop:
+This topic will help fulfill the following [primary learning outcome(s)]({{ site.baseurl }}/Help/Workshops/syllabus/primary-learning-outcomes) for the workshop:
 
 - A comprehensive overview of the theory underpinning geomorphic change detection
 - The fundamental background necessary to design effective repeat topographic monitoring campaigns and distinguish geomorphic changes from noise (with particular focus on restoration applications)
@@ -30,7 +30,7 @@ This topic will help fulfill the following [primary learning outcome(s)](http://
 
 #### Prerequisites for this Exercise
 
-- Completed Exercises in Topics  [C](http://gcdworkshop.joewheaton.org/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/1-surveying-principles-change-detection/c-review-of-building-surfaces-from-raw-topographic-data), [E](http://gcdworkshop.joewheaton.org/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/1-surveying-principles-change-detection/e-traditional-approaches-to-change-detection), [H](http://gcdworkshop.joewheaton.org/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/1-surveying-principles-change-detection/h-thresholding-alternatives) , [I](http://gcdworkshop.joewheaton.org/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/1-surveying-principles-change-detection/i-approaches-to-estimating-dem-error) & [J](http://gcdworkshop.joewheaton.org/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/1-surveying-principles-change-detection/j-statistical-methods-for-error-modelling)
+- Completed Exercises in Topics  [C]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/1-surveying-principles-change-detection/c-review-of-building-surfaces-from-raw-topographic-data), [E]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/1-surveying-principles-change-detection/e-traditional-approaches-to-change-detection), [H]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/1-surveying-principles-change-detection/h-thresholding-alternatives) , [I]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/1-surveying-principles-change-detection/i-approaches-to-estimating-dem-error) & [J]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/1-surveying-principles-change-detection/j-statistical-methods-for-error-modelling)
 
 #### Relevant Online Help or Tutorials for this Topic
 
@@ -44,8 +44,8 @@ This topic will help fulfill the following [primary learning outcome(s)](http://
 
 #### Slides and/or Handouts
 
-- This topic will help fulfill the following [primary learning outcome(s)](http://gcdworkshop.joewheaton.org/syllabus/primary-learning-outcomes) for the workshop:
-- [![img](http://gcdworkshop.joewheaton.org/_/rsrc/1429979231746/workshop-topics/versions/3-day-workshop/2-errors-uncertainties/n-fuzzy-inference-systems/pdfIcon.png)](http://gcdworkshop.joewheaton.org/workshop-topics/versions/3-day-workshop/2-errors-uncertainties/n-fuzzy-inference-systems/pdfIcon.png?attredirects=0) [Lecture Slides](http://etal.usu.edu/GCD/Workshop/2014_ANZGG/M_FuzzyInferenceSystems.pdf)
+- This topic will help fulfill the following [primary learning outcome(s)]({{ site.baseurl }}/Help/Workshops/syllabus/primary-learning-outcomes) for the workshop:
+- [![img](http://gcdworkshop.joewheaton.org/_/rsrc/1429979231746/workshop-topics/versions/3-day-workshop/2-errors-uncertainties/n-fuzzy-inference-systems/pdfIcon.png)]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/3-day-workshop/2-errors-uncertainties/n-fuzzy-inference-systems/pdfIcon.png?attredirects=0) [Lecture Slides](http://etal.usu.edu/GCD/Workshop/2014_ANZGG/M_FuzzyInferenceSystems.pdf)
 
 #### Relevant or Cited Literature
 
@@ -56,4 +56,4 @@ This topic will help fulfill the following [primary learning outcome(s)](http://
 
 ------
 
-← [Previous Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/1-surveying-principles-change-detection/l-recap-of-day-preview-of-day-2)            [Next Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/2-application-interpretations-of-change-detection-day-2/n-building-your-own-fis-error-models) →
+← [Previous Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/1-surveying-principles-change-detection/l-recap-of-day-preview-of-day-2)            [Next Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/2-application-interpretations-of-change-detection-day-2/n-building-your-own-fis-error-models) →

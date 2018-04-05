@@ -26,7 +26,7 @@ This exercise shows how GCD can be used for coming up with statistical models of
 
 ### Related Online Help or Tutorials for this Topic
 
-- [Parent Workshop Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/3-day-workshop/2-errors-uncertainties/k-statistical-methods-for-error-modelling)
+- [Parent Workshop Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/3-day-workshop/2-errors-uncertainties/k-statistical-methods-for-error-modelling)
 
 - [GCD 6 Help]({{ site.baseurl }}/)
 

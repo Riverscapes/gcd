@@ -14,7 +14,7 @@ Budget segregation is a powerful tool for getting more out of your DoDs. We want
 
 #### Learning Outcomes Supported
 
-This topic will help fulfill the following [primary learning outcome(s)](http://gcdworkshop.joewheaton.org/syllabus/primary-learning-outcomes) for the workshop:
+This topic will help fulfill the following [primary learning outcome(s)]({{ site.baseurl }}/Help/Workshops/syllabus/primary-learning-outcomes) for the workshop:
 
 - Methods for interpreting and segregating morphological sediment budgets quantitatively in terms of both geomorphic processes and changes in physical habitat
 
@@ -24,7 +24,7 @@ This topic will help fulfill the following [primary learning outcome(s)](http://
 
 #### Datasets
 
-- [`L_BudgetSeg.zip`](http://etal.usu.edu/GCD/Workshop/2015_RRNW/Excercises/L_BudgetSeg.zip) [![img](http://gcdworkshop.joewheaton.org/_/rsrc/1422837396127/workshop-topics/versions/1-day-workshop/l-gcd-budget-segregation/winzip_icon_16.gif)](http://gcdworkshop.joewheaton.org/workshop-topics/versions/1-day-workshop/l-gcd-budget-segregation/winzip_icon_16.gif?attredirects=0)
+- [`L_BudgetSeg.zip`](http://etal.usu.edu/GCD/Workshop/2015_RRNW/Excercises/L_BudgetSeg.zip) [![img](http://gcdworkshop.joewheaton.org/_/rsrc/1422837396127/workshop-topics/versions/1-day-workshop/l-gcd-budget-segregation/winzip_icon_16.gif)]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/1-day-workshop/l-gcd-budget-segregation/winzip_icon_16.gif?attredirects=0)
 - [Sulphur Creek Context Blimp Aerial Photos](http://etal.usu.edu/GCD/Workshop/2012May/APs.zip) (optional)
 
 #### Relevant Online Help or Tutorials for this Topic
@@ -52,4 +52,4 @@ This topic will help fulfill the following [primary learning outcome(s)](http://
 
 ------
 
-← [Previous Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/1-day-workshop/k-spatially-variable---introduction-to-fuzzy-error-modelling)            [Next Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/1-day-workshop/m-interpreting-outputs-of-gcd) →
+← [Previous Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/1-day-workshop/k-spatially-variable---introduction-to-fuzzy-error-modelling)            [Next Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/1-day-workshop/m-interpreting-outputs-of-gcd) →

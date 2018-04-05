@@ -17,7 +17,7 @@ In this section we will go through the basics of creating topographic surfaces a
 
 #### Learning Outcomes Supported
 
-This topic will help fulfill the following [primary learning outcome(s)](http://gcdworkshop.joewheaton.org/syllabus/primary-learning-outcomes) for the workshop:
+This topic will help fulfill the following [primary learning outcome(s)]({{ site.baseurl }}/Help/Workshops/syllabus/primary-learning-outcomes) for the workshop:
 
 - The fundamental background necessary to design effective repeat topographic monitoring campaigns and distinguish geomorphic changes from noise (with particular focus on restoration applications)
 
@@ -32,7 +32,7 @@ This topic will help fulfill the following [primary learning outcome(s)](http://
 #### Prerequisite for this Exercise
 
 - Some ArcGIS experience
-- Some familiarity with DEMs (e.g. [Topic B](http://gcdworkshop.joewheaton.org/workshop-topics/versions/3-day-workshop/1-Principles/b-review-of-topographic-data-sources-surveys).)
+- Some familiarity with DEMs (e.g. [Topic B]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/3-day-workshop/1-Principles/b-review-of-topographic-data-sources-surveys).)
 
 #### Relevant Online Help or Tutorials for this Topic
 
@@ -50,4 +50,4 @@ This topic will help fulfill the following [primary learning outcome(s)](http://
 
 ------
 
-← [Previous Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/1-surveying-principles-change-detection/b-review-of-topographic-data-sources-surveys)            [Next Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/1-surveying-principles-change-detection/d-essential-best-practices-to-support-change-detection) →
+← [Previous Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/1-surveying-principles-change-detection/b-review-of-topographic-data-sources-surveys)            [Next Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/1-surveying-principles-change-detection/d-essential-best-practices-to-support-change-detection) →

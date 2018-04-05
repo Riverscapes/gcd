@@ -14,13 +14,13 @@ You have to learn to crawl before you can walk. And in a lot of circumstances, s
 
 ![GCD6_Toolbar]({{ site.baseurl }}/assets/images/GCD6_Toolbar.png)
 
-You do not need the GCD Software to do meaningful change detection analyses. The principles and methods are straight forward to apply in a GIS environment, or to code up independently. However, the GCD Software exists to facilitate these tasks and analysis by making them easier to undertake and promoting more consistency in the processing. Here we will talk briefly about the history of GCD software development, explain what the software does, show you around in the software, and then go through the same exercises we did in [topic E,](http://gcdworkshop.joewheaton.org/workshop-topics/versions/3-day-workshop/1-Principles/g_traditionalGCD) but with the GCD software.
+You do not need the GCD Software to do meaningful change detection analyses. The principles and methods are straight forward to apply in a GIS environment, or to code up independently. However, the GCD Software exists to facilitate these tasks and analysis by making them easier to undertake and promoting more consistency in the processing. Here we will talk briefly about the history of GCD software development, explain what the software does, show you around in the software, and then go through the same exercises we did in [topic E,]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/3-day-workshop/1-Principles/g_traditionalGCD) but with the GCD software.
 
 ![L_GCD6_ContextMenu_ChangeDetection_DoD]({{ site.baseurl }}/assets/images/L_GCD6_ContextMenu_ChangeDetection_DoD.png)
 
 #### Learning Outcomes Supported
 
-This topic will help fulfill the following [primary learning outcome(s)](http://gcdworkshop.joewheaton.org/syllabus/primary-learning-outcomes) for the workshop:
+This topic will help fulfill the following [primary learning outcome(s)]({{ site.baseurl }}/Help/Workshops/syllabus/primary-learning-outcomes) for the workshop:
 
 - A comprehensive overview of the theory underpinning geomorphic change detection
 - The fundamental background necessary to design effective repeat topographic monitoring campaigns and distinguish geomorphic changes from noise (with particular focus on restoration applications)
@@ -50,4 +50,4 @@ This topic will help fulfill the following [primary learning outcome(s)](http://
 
 ------
 
-← [Previous Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/3-day-workshop/1-Principles/f-essential-best-practices-to-support-change-detection)            [Next Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/3-day-workshop/1-Principles/h-recap-of-day-preview-of-tomorrow) →
+← [Previous Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/3-day-workshop/1-Principles/f-essential-best-practices-to-support-change-detection)            [Next Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/3-day-workshop/1-Principles/h-recap-of-day-preview-of-tomorrow) →

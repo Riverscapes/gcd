@@ -4,7 +4,7 @@ title: System Checks We Will Do
 
 ### Make Sure you Have Dot NET Installed
 
-If you're using Windows 7 or 8 this check is unnecessary. If using Windows XP see [here](http://gcdworkshop.joewheaton.org/syllabus/pre-requisites/checking-for-dotnet).
+If you're using Windows 7 or 8 this check is unnecessary. If using Windows XP see [here]({{ site.baseurl }}/Help/Workshops/syllabus/pre-requisites/checking-for-dotnet).
 
 ### Make Sure you Have ArcGIS10.1 Service Pack 1 Installed
 

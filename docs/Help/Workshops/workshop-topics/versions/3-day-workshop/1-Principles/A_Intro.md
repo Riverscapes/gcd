@@ -28,4 +28,4 @@ In this first half hour we will make introductions of all the participants and i
 
 ------
 
-[Next Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/3-day-workshop/1-Principles/b-overview-of-change-detection-applications) →
+[Next Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/3-day-workshop/1-Principles/b-overview-of-change-detection-applications) →

@@ -18,7 +18,7 @@ Figure from Vericat et al. (In Review).
 
 #### Learning Outcomes Supported
 
-This topic will help fulfill the following [primary learning outcome(s)](http://gcdworkshop.joewheaton.org/syllabus/primary-learning-outcomes) for the workshop:
+This topic will help fulfill the following [primary learning outcome(s)]({{ site.baseurl }}/Help/Workshops/syllabus/primary-learning-outcomes) for the workshop:
 
 - Methods for interpreting and segregating morphological sediment budgets quantitatively in terms of both geomorphic processes and changes in physical habitat
 
@@ -26,7 +26,7 @@ This topic will help fulfill the following [primary learning outcome(s)](http://
 
 #### Other Related Topics
 
-- [Transient Storage Analysis](http://gcdworkshop.joewheaton.org/workshop-topics/versions/3-day-workshop/3-Day3/u-sediment-budgets/r-transient-storage-analysis)
+- [Transient Storage Analysis]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/3-day-workshop/3-Day3/u-sediment-budgets/r-transient-storage-analysis)
 
 ------
 
@@ -46,4 +46,4 @@ This topic will help fulfill the following [primary learning outcome(s)](http://
 
 ------
 
-← [Previous Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/3-day-workshop/3-Day3/t-interpreting-outputs-of-gcd)           [Next Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/3-day-workshop/3-Day3/v-budget-segregation) →
+← [Previous Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/3-day-workshop/3-Day3/t-interpreting-outputs-of-gcd)           [Next Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/3-day-workshop/3-Day3/v-budget-segregation) →

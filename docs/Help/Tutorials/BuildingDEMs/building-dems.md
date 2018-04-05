@@ -28,7 +28,7 @@ Although not covered in the video tutorial, I would suggest exporting the `PatsC
 
 - Some ArcGIS experience
 - ArcGIS 10.X w/ 3D Analyst Extension
-- Some familiarity with DEMs (e.g. [Topic C](http://gcdworkshop.joewheaton.org/workshop-topics/versions/3-day-workshop/1-Principles/b-review-of-topographic-data-sources-surveys).)
+- Some familiarity with DEMs (e.g. [Topic C]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/3-day-workshop/1-Principles/b-review-of-topographic-data-sources-surveys).)
 
 ------
 
@@ -86,7 +86,7 @@ The above exercise comes from a [Lab](http://gis.joewheaton.org/assignments/labs
 
 ### Related Online Help or Tutorials for this Topic
 
-- [Parent Workshop Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/3-day-workshop/1-Principles/c-review-of-building-surfaces-from-raw-data)
+- [Parent Workshop Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/3-day-workshop/1-Principles/c-review-of-building-surfaces-from-raw-data)
 - [Tutorial Topic: ii. Building DEMs]({{ site.baseurl }}/tutorials--how-to/ii-building-dems)
 - [Working with DEMs](http://gis.joewheaton.org/assignments/labs/lab06-1) Lab - From my [Advanced GIS course](http://gis.joewheaton.org/)
 - [Building DEMs](http://gis.joewheaton.org/assignments/labs/lab-07---building-dems) Lab - From my [Advanced GIS course](http://gis.joewheaton.org/)

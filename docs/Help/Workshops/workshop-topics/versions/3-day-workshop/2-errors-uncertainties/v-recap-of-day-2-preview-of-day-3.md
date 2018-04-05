@@ -22,4 +22,4 @@ To make sure that workshop participants are confident in understanding the basic
 
 ------
 
-> > > ← [Back to Previous Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/3-day-workshop/2-errors-uncertainties/q-changedetection)               [Ahead to Next Day](http://gcdworkshop.joewheaton.org/workshop-topics/versions/3-day-workshop/3-Day3)  →
+> > > ← [Back to Previous Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/3-day-workshop/2-errors-uncertainties/q-changedetection)               [Ahead to Next Day]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/3-day-workshop/3-Day3)  →

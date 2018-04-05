@@ -16,7 +16,7 @@ Fuzzy inference systems are supported in the GCD Software and the appropriate co
 
 #### Learning Outcomes Supported
 
-This topic will help fulfill the following [primary learning outcome(s)](http://gcdworkshop.joewheaton.org/syllabus/primary-learning-outcomes) for the workshop:
+This topic will help fulfill the following [primary learning outcome(s)]({{ site.baseurl }}/Help/Workshops/syllabus/primary-learning-outcomes) for the workshop:
 
 - A comprehensive overview of the theory underpinning geomorphic change detection
 - The fundamental background necessary to design effective repeat topographic monitoring campaigns and distinguish geomorphic changes from noise (with particular focus on restoration applications)
@@ -32,7 +32,7 @@ This topic will help fulfill the following [primary learning outcome(s)](http://
 
 #### Prerequisites for this Exercise
 
-- Completed Exercises in Topics [C](http://gcdworkshop.joewheaton.org/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/1-surveying-principles-change-detection/c-review-of-building-surfaces-from-raw-topographic-data), [E](http://gcdworkshop.joewheaton.org/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/1-surveying-principles-change-detection/e-traditional-approaches-to-change-detection), [H](http://gcdworkshop.joewheaton.org/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/1-surveying-principles-change-detection/h-thresholding-alternatives) , [I](http://gcdworkshop.joewheaton.org/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/1-surveying-principles-change-detection/i-approaches-to-estimating-dem-error) & [J](http://gcdworkshop.joewheaton.org/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/1-surveying-principles-change-detection/j-statistical-methods-for-error-modelling)
+- Completed Exercises in Topics [C]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/1-surveying-principles-change-detection/c-review-of-building-surfaces-from-raw-topographic-data), [E]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/1-surveying-principles-change-detection/e-traditional-approaches-to-change-detection), [H]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/1-surveying-principles-change-detection/h-thresholding-alternatives) , [I]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/1-surveying-principles-change-detection/i-approaches-to-estimating-dem-error) & [J]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/1-surveying-principles-change-detection/j-statistical-methods-for-error-modelling)
 
 #### Relevant Online Help or Tutorials for this Topic
 
@@ -52,7 +52,7 @@ This topic will help fulfill the following [primary learning outcome(s)](http://
 
 - ​
 
-  [![img](http://gcdworkshop.joewheaton.org/_/rsrc/1429979102347/workshop-topics/versions/3-day-workshop/2-errors-uncertainties/p-building-your-own-fis/pdfIcon.png)](http://gcdworkshop.joewheaton.org/workshop-topics/versions/3-day-workshop/2-errors-uncertainties/p-building-your-own-fis/pdfIcon.png?attredirects=0) [Lecture Slides](http://etal.usu.edu/GCD/Workshop/2014_ANZGG/M_FuzzyInferenceSystems.pdf)
+  [![img](http://gcdworkshop.joewheaton.org/_/rsrc/1429979102347/workshop-topics/versions/3-day-workshop/2-errors-uncertainties/p-building-your-own-fis/pdfIcon.png)]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/3-day-workshop/2-errors-uncertainties/p-building-your-own-fis/pdfIcon.png?attredirects=0) [Lecture Slides](http://etal.usu.edu/GCD/Workshop/2014_ANZGG/M_FuzzyInferenceSystems.pdf)
 
 #### 
 
@@ -65,4 +65,4 @@ This topic will help fulfill the following [primary learning outcome(s)](http://
 
 ------
 
-← [Previous Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/2-application-interpretations-of-change-detection-day-2/m-introduction-to-fuzzy-error-modelling)            [Next Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/2-application-interpretations-of-change-detection-day-2/o-self--paced-exercise--running-change-detection-in-gcd) →
+← [Previous Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/2-application-interpretations-of-change-detection-day-2/m-introduction-to-fuzzy-error-modelling)            [Next Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/2-application-interpretations-of-change-detection-day-2/o-self--paced-exercise--running-change-detection-in-gcd) →

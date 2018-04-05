@@ -29,7 +29,7 @@ This exercise will teach you how to build your own FIS DEM error model from scra
 
 ### Related Online Help or Tutorials for this Topic
 
-- [Parent Workshop Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/3-day-workshop/2-errors-uncertainties/p-building-your-own-fis)
+- [Parent Workshop Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/3-day-workshop/2-errors-uncertainties/p-building-your-own-fis)
 
 - [GCD 6 Help]({{ site.baseurl }}/)
 

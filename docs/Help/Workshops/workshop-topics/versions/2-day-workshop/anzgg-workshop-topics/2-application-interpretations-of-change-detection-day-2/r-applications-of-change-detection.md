@@ -16,7 +16,7 @@ It is easy to forget as we've focused so much on methods and software why we do 
 
 #### Learning Outcomes Supported
 
- This topic will help fulfill the following [primary learning outcome(s)](http://gcdworkshop.joewheaton.org/syllabus/primary-learning-outcomes) for the workshop:
+ This topic will help fulfill the following [primary learning outcome(s)]({{ site.baseurl }}/Help/Workshops/syllabus/primary-learning-outcomes) for the workshop:
 
 - Methods for interpreting and segregating morphological sediment budgets quantitatively in terms of both geomorphic processes and changes in physical habitat
 - An opportunity to interact with experts on geomorphic monitoring and the software developers of GCD to help you make better use of your own data
@@ -42,4 +42,4 @@ It is easy to forget as we've focused so much on methods and software why we do 
 
 ------
 
-← Back to [Previous Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/2-application-interpretations-of-change-detection-day-2/q-gcd-budget-segregation)[ ](http://gcdworkshop.joewheaton.org/system/errors/NodeNotFound?suri=wuid:gx:7c046a548956bd8e)               Ahead to [Next Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/2-application-interpretations-of-change-detection-day-2/s-closure-of-sediment-budgets-transient-storage-analysis)  →
+← Back to [Previous Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/2-application-interpretations-of-change-detection-day-2/q-gcd-budget-segregation)[ ](http://gcdworkshop.joewheaton.org/system/errors/NodeNotFound?suri=wuid:gx:7c046a548956bd8e)               Ahead to [Next Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/2-application-interpretations-of-change-detection-day-2/s-closure-of-sediment-budgets-transient-storage-analysis)  →

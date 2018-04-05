@@ -49,4 +49,4 @@ primary learning outcome(s)
 
 
 
-← Back to [Previous Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/1-day-workshop/a---introl)[ ](http://gcdworkshop.joewheaton.org/system/errors/NodeNotFound?suri=wuid:gx:7c046a548956bd8e)               Ahead to [Next Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/1-day-workshop/b-review-of-topographic-data-sources-surveys)  →
+← Back to [Previous Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/1-day-workshop/a---introl)[ ](http://gcdworkshop.joewheaton.org/system/errors/NodeNotFound?suri=wuid:gx:7c046a548956bd8e)               Ahead to [Next Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/1-day-workshop/b-review-of-topographic-data-sources-surveys)  →

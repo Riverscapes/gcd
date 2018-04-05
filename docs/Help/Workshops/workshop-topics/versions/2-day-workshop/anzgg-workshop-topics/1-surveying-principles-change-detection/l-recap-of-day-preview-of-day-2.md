@@ -8,7 +8,7 @@ title: Recap of Day / Preview of day 2
 
 #### Why we're Covering it
 
-- To make sure that workshop participants are confident in understanding the basics of change detection and surveying principles, before doing more sophisticated error analyses & change detection or using these techniques in any sort of interpretative fashion ([Day 2](http://gcdworkshop.joewheaton.org/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/2-application-interpretations-of-change-detection-day-2)) .
+- To make sure that workshop participants are confident in understanding the basics of change detection and surveying principles, before doing more sophisticated error analyses & change detection or using these techniques in any sort of interpretative fashion ([Day 2]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/2-application-interpretations-of-change-detection-day-2)) .
 
 #### Resources
 
@@ -16,4 +16,4 @@ title: Recap of Day / Preview of day 2
 
 ------
 
-← [Previous Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/1-surveying-principles-change-detection/k-error-modelling-for-hybrid-surveys)            [Next Day](http://gcdworkshop.joewheaton.org/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/2-application-interpretations-of-change-detection-day-2) →
+← [Previous Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/1-surveying-principles-change-detection/k-error-modelling-for-hybrid-surveys)            [Next Day]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/2-application-interpretations-of-change-detection-day-2) →

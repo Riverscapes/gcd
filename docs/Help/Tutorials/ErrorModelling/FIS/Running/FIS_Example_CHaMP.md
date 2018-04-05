@@ -52,7 +52,7 @@ C:\0_GCD\Exercises\O_CHaMP_FIS
 
 ### Related Online Help or Tutorials for this Topic
 
-- [Parent Workshop Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/3-day-workshop/2-errors-uncertainties/o-fis-error-modelling-in-champ-bitbucket-repository)
+- [Parent Workshop Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/3-day-workshop/2-errors-uncertainties/o-fis-error-modelling-in-champ-bitbucket-repository)
 
 - [GCD 6 Help]({{ site.baseurl }}/)
 

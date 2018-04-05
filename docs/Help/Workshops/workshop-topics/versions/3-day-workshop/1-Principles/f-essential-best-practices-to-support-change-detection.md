@@ -12,7 +12,7 @@ Even though the GCD Software and ArcGIS will 'take care' of the problem of compa
 
 #### Learning Outcome Supported
 
-This topic will help fulfill the following [primary learning outcome](http://gcdworkshop.joewheaton.org/syllabus/primary-learning-outcomes) for the workshop:
+This topic will help fulfill the following [primary learning outcome]({{ site.baseurl }}/Help/Workshops/syllabus/primary-learning-outcomes) for the workshop:
 
 - The fundamental background necessary to design effective repeat topographic monitoring campaigns and distinguish geomorphic changes from noise (with particular focus on restoration applications)
 
@@ -37,4 +37,4 @@ This topic will help fulfill the following [primary learning outcome](http://gcd
 
 ------
 
-← [Previous Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/3-day-workshop/1-Principles/e-field-trip-to-logan-river)            [Next Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/3-day-workshop/1-Principles/g_traditionalGCD) →
+← [Previous Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/3-day-workshop/1-Principles/e-field-trip-to-logan-river)            [Next Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/3-day-workshop/1-Principles/g_traditionalGCD) →

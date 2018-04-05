@@ -16,7 +16,7 @@ A brief justification.
 
 #### Learning Outcomes Supported
 
-This topic will help fulfill the following [primary learning outcome](http://gcdworkshop.joewheaton.org/syllabus/primary-learning-outcomes) for the workshop:
+This topic will help fulfill the following [primary learning outcome]({{ site.baseurl }}/Help/Workshops/syllabus/primary-learning-outcomes) for the workshop:
 
 - A comprehensive overview of the theory underpinning geomorphic change detection
 - The fundamental background necessary to design effective repeat topographic monitoring campaigns and distinguish geomorphic changes from noise (with particular focus on restoration applications)
@@ -46,7 +46,7 @@ This topic will help fulfill the following [primary learning outcome](http://gcd
 
 #### Slides and/or Handouts
 
-- [![img](http://gcdworkshop.joewheaton.org/_/rsrc/1429979629174/workshop-topics/versions/3-day-workshop/2-errors-uncertainties/k-statistical-methods-for-error-modelling/pdfIcon.png)](http://gcdworkshop.joewheaton.org/workshop-topics/versions/3-day-workshop/2-errors-uncertainties/k-statistical-methods-for-error-modelling/pdfIcon.png?attredirects=0) [Lecture Slides](http://etal.usu.edu/GCD/Workshop/2014/Lectures/N_SpatiallyVariableDEMError2.pdf)
+- [![img](http://gcdworkshop.joewheaton.org/_/rsrc/1429979629174/workshop-topics/versions/3-day-workshop/2-errors-uncertainties/k-statistical-methods-for-error-modelling/pdfIcon.png)]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/3-day-workshop/2-errors-uncertainties/k-statistical-methods-for-error-modelling/pdfIcon.png?attredirects=0) [Lecture Slides](http://etal.usu.edu/GCD/Workshop/2014/Lectures/N_SpatiallyVariableDEMError2.pdf)
 
 #### Relevant or Cited Literature
 
@@ -58,4 +58,4 @@ This topic will help fulfill the following [primary learning outcome](http://gcd
 
 ------
 
-← Back to [Previous Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/1-surveying-principles-change-detection/i-approaches-to-estimating-dem-error)                Ahead to [Next Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/1-surveying-principles-change-detection/k-error-modelling-for-hybrid-surveys)  →
+← Back to [Previous Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/1-surveying-principles-change-detection/i-approaches-to-estimating-dem-error)                Ahead to [Next Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/1-surveying-principles-change-detection/k-error-modelling-for-hybrid-surveys)  →

@@ -4,7 +4,7 @@ title: Fuzzy Inference Systems for Modeling DEM Error
 
 ### Background on Fuzzy Inference Systems
 
-This video tutorial goes through a portion of the background covered in the [Geomorphic Change Detection workshop](http://gcdworkshop.joewheaton.org/) on fuzzy inferences systems as they are applied in deriving spatially variable elevation uncertainty rasters.
+This video tutorial goes through a portion of the background covered in the [Geomorphic Change Detection workshop]({{ site.baseurl }}) on fuzzy inferences systems as they are applied in deriving spatially variable elevation uncertainty rasters.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/gR-hwUkfJzc" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
 

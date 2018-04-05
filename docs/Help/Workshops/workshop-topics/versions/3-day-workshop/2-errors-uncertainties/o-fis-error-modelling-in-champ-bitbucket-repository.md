@@ -4,7 +4,7 @@ title: FIS Error Modelling in CHaMP & BitBucket Repository
 
 #### Synopsis of Topic
 
-An FIS can be constructed and implemented in a variety of ways. Before learning how to build our own FIS in the [next session](http://gcdworkshop.joewheaton.org/workshop-topics/versions/3-day-workshop/2-errors-uncertainties/p-building-your-own-fis), we will focus on how the outputs vary based on what combination of inputs you decide to use. We will look at a variety of FIS outputs by combining different inputs:
+An FIS can be constructed and implemented in a variety of ways. Before learning how to build our own FIS in the [next session]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/3-day-workshop/2-errors-uncertainties/p-building-your-own-fis), we will focus on how the outputs vary based on what combination of inputs you decide to use. We will look at a variety of FIS outputs by combining different inputs:
 
 1. Point Density
 2. Slope
@@ -26,7 +26,7 @@ This session is intended to help you understand how flexible the GCD framework i
 
 #### Learning Outcomes Supported
 
-This topic will help fulfill the following [primary learning outcome(s)](http://gcdworkshop.joewheaton.org/syllabus/primary-learning-outcomes) for the workshop:
+This topic will help fulfill the following [primary learning outcome(s)]({{ site.baseurl }}/Help/Workshops/syllabus/primary-learning-outcomes) for the workshop:
 
 - A comprehensive overview of the theory underpinning geomorphic change detection
 - The fundamental background necessary to design effective repeat topographic monitoring campaigns and distinguish geomorphic changes from noise (with particular focus on restoration applications)
@@ -42,7 +42,7 @@ This topic will help fulfill the following [primary learning outcome(s)](http://
 
 #### Slides and/or Handouts
 
-- [![img](http://gcdworkshop.joewheaton.org/_/rsrc/1429979102347/workshop-topics/versions/3-day-workshop/2-errors-uncertainties/p-building-your-own-fis/pdfIcon.png)](http://gcdworkshop.joewheaton.org/workshop-topics/versions/3-day-workshop/2-errors-uncertainties/p-building-your-own-fis/pdfIcon.png?attredirects=0) Lecture Slides?
+- [![img](http://gcdworkshop.joewheaton.org/_/rsrc/1429979102347/workshop-topics/versions/3-day-workshop/2-errors-uncertainties/p-building-your-own-fis/pdfIcon.png)]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/3-day-workshop/2-errors-uncertainties/p-building-your-own-fis/pdfIcon.png?attredirects=0) Lecture Slides?
 
 #### Other Resources
 
@@ -56,4 +56,4 @@ This topic will help fulfill the following [primary learning outcome(s)](http://
 
 ------
 
-← [Previous Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/3-day-workshop/2-errors-uncertainties/n-fuzzy-inference-systems)            [Next Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/3-day-workshop/2-errors-uncertainties/p-building-your-own-fis) →
+← [Previous Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/3-day-workshop/2-errors-uncertainties/n-fuzzy-inference-systems)            [Next Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/3-day-workshop/2-errors-uncertainties/p-building-your-own-fis) →

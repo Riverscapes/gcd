@@ -59,7 +59,7 @@ C:\0_GCD\Exercises\V_BudgetSeg
 
 ### Related Online Help or Tutorials for this Topic
 
-- [Parent Workshop Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/3-day-workshop/3-Day3/v-budget-segregation)
+- [Parent Workshop Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/3-day-workshop/3-Day3/v-budget-segregation)
 
 - [GCD 6 Help]({{ site.baseurl }}/)
   - [11. Budget Segregation]({{ site.baseurl }}/tutorials--how-to/11-budget-segregation) - GCD 6 Online Help Tutorial

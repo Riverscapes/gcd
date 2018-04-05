@@ -48,7 +48,7 @@ C:\0_GCD\Exercises\M_ToPCATRoughness\TLS_Flume\Exercise
 
 ### Related Online Help or Tutorials for this Topic
 
-- [Parent Workshop Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/3-day-workshop/2-errors-uncertainties/m-using-topcat-gcd-for-roughness-estimation-surface-construction)
+- [Parent Workshop Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/3-day-workshop/2-errors-uncertainties/m-using-topcat-gcd-for-roughness-estimation-surface-construction)
 
 - [GCD 6 Help]({{ site.baseurl }}/)
 

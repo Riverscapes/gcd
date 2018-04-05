@@ -27,4 +27,4 @@ In this first half hour we will make introductions of all the participants and i
 
 ------
 
-[Next Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/1-surveying-principles-change-detection/b-review-of-topographic-data-sources-surveys) →
+[Next Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/1-surveying-principles-change-detection/b-review-of-topographic-data-sources-surveys) →

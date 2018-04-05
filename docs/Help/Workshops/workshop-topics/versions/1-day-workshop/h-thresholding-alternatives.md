@@ -14,7 +14,7 @@ Thresholding is a key concept in developing estimates of net change and volumetr
 
 #### Learning Outcomes Supported
 
-This topic will help fulfill the following [primary learning outcome(s)](http://gcdworkshop.joewheaton.org/syllabus/primary-learning-outcomes) for the workshop:
+This topic will help fulfill the following [primary learning outcome(s)]({{ site.baseurl }}/Help/Workshops/syllabus/primary-learning-outcomes) for the workshop:
 
 - A comprehensive overview of the theory underpinning geomorphic change detection
 - The fundamental background necessary to design effective repeat topographic monitoring campaigns and distinguish geomorphic changes from noise (with particular focus on restoration applications)
@@ -26,11 +26,11 @@ This topic will help fulfill the following [primary learning outcome(s)](http://
 
 #### Datasets
 
-- [`H_Thresholding.zip`](http://etal.usu.edu/GCD/Workshop/2015_RRNW/Excercises/H_Thresholding.zip) [![img](http://gcdworkshop.joewheaton.org/_/rsrc/1422837060873/workshop-topics/versions/1-day-workshop/h-thresholding-alternatives/winzip_icon_16.gif)](http://gcdworkshop.joewheaton.org/workshop-topics/versions/1-day-workshop/h-thresholding-alternatives/winzip_icon_16.gif?attredirects=0)
+- [`H_Thresholding.zip`](http://etal.usu.edu/GCD/Workshop/2015_RRNW/Excercises/H_Thresholding.zip) [![img](http://gcdworkshop.joewheaton.org/_/rsrc/1422837060873/workshop-topics/versions/1-day-workshop/h-thresholding-alternatives/winzip_icon_16.gif)]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/1-day-workshop/h-thresholding-alternatives/winzip_icon_16.gif?attredirects=0)
 
 #### Prerequisite for this Exercise
 
-- Completed Exercise in Topics [C](http://gcdworkshop.joewheaton.org/workshop-topics/versions/3-day-workshop/1-Principles/c-review-of-building-surfaces-from-raw-data),  [E](http://gcdworkshop.joewheaton.org/workshop-topics/versions/3-day-workshop/1-Principles/g_traditionalGCD), & [F](http://gcdworkshop.joewheaton.org/system/errors/NodeNotFound?suri=wuid:gx:27d471080239b4a)
+- Completed Exercise in Topics [C]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/3-day-workshop/1-Principles/c-review-of-building-surfaces-from-raw-data),  [E]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/3-day-workshop/1-Principles/g_traditionalGCD), & [F](http://gcdworkshop.joewheaton.org/system/errors/NodeNotFound?suri=wuid:gx:27d471080239b4a)
 
 #### Relevant Online Help or Tutorials for this Topic
 
@@ -64,4 +64,4 @@ This topic will help fulfill the following [primary learning outcome(s)](http://
 
 ------
 
-← [Previous Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/1-day-workshop/g-introduction-to-gcd-software)            [Next Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/1-day-workshop/i-approaches-to-estimating-dem-error) →
+← [Previous Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/1-day-workshop/g-introduction-to-gcd-software)            [Next Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/1-day-workshop/i-approaches-to-estimating-dem-error) →

@@ -22,4 +22,4 @@ The workshop is designed as a firehose of information, but this website is organ
 
 ------
 
-← [Previous Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/3-day-workshop/3-Day3/w-OtherTopics)
+← [Previous Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/3-day-workshop/3-Day3/w-OtherTopics)

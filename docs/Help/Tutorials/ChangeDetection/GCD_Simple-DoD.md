@@ -41,7 +41,7 @@ In this video tutorial, we show you how to do a simple DoD Analysis in ArcGIS 10
 
 The example data used in this tutorial are from Sulphur Creek, Napa County, California.
 
-For corresponding lecture slides and more context, see [this topic](http://gcdworkshop.joewheaton.org/workshop-topics/1-Principles/e-traditional-approaches-to-change-detection) from [GCD Workshop](http://gcdworkshop.joewheaton.org/).
+For corresponding lecture slides and more context, see [this topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/1-Principles/e-traditional-approaches-to-change-detection) from [GCD Workshop]({{ site.baseurl }}).
 
 
 #### Part 1B Threshold
@@ -69,7 +69,7 @@ For corresponding lecture slides and more context, see [this topic](http://gcdwo
 
 ### Related Online Help or Tutorials for this Topic
 
-- [Parent Workshop Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/3-day-workshop/1-Principles/f-essential-best-practices-to-support-change-detection)
+- [Parent Workshop Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/3-day-workshop/1-Principles/f-essential-best-practices-to-support-change-detection)
 
 - GCD Tutorial Topics:
 

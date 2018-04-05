@@ -59,7 +59,7 @@ Suggested Path: `C:\0_GCD\Exercises\N_FIS_Intro`
 
 ### Related Online Help or Tutorials for this Topic
 
-- [Parent Workshop Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/3-day-workshop/2-errors-uncertainties/n-fuzzy-inference-systems)
+- [Parent Workshop Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/3-day-workshop/2-errors-uncertainties/n-fuzzy-inference-systems)
 
 - [GCD 6 Help]({{ site.baseurl }}/)
 

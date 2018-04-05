@@ -40,7 +40,7 @@ If you are unable to get ArcGIS installed prior to the workshop, it typically ta
 
 We will install the GCD 6 Add in during the workshop.
 
-- - GCD 6.  The most recent release of [GCD software](http://gcd.joewheaton.org/) we will be using for the workshop will be provided to you when you register in person in Logan.  We will show you how to install the software in the workshop.  Contact us if you can not make this session. See the [System Checks](http://gcdworkshop.joewheaton.org/syllabus/pre-requisites/system-checks-we-will-do) page for detailed instructions on the System Checks we will go through in the Pre Registration Session.
+- - GCD 6.  The most recent release of [GCD software](http://gcd.joewheaton.org/) we will be using for the workshop will be provided to you when you register in person in Logan.  We will show you how to install the software in the workshop.  Contact us if you can not make this session. See the [System Checks]({{ site.baseurl }}/Help/Workshops/syllabus/pre-requisites/system-checks-we-will-do) page for detailed instructions on the System Checks we will go through in the Pre Registration Session.
 
 ### Bringing Your Own Data
 

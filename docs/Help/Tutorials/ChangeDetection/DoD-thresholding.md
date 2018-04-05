@@ -45,7 +45,7 @@ In this video tutorial we explain how to use the GCD [`Change Detection`]({{ sit
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/IUaicRVUsog" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
 
-This tutorial corresponds with topic [G. Thresholding Alternatives](http://gcdworkshop.joewheaton.org/workshop-topics/1-Principles/g-thresholding-alternatives) in the [GCD Workshop](http://gcdworkshop.joewheaton.org/). See the lecture materials [there](http://gcdworkshop.joewheaton.org/workshop-topics/1-Principles/g-thresholding-alternatives) for more background on the underlying theories for these methods.
+This tutorial corresponds with topic [G. Thresholding Alternatives]({{ site.baseurl }}/Help/Workshops/workshop-topics/1-Principles/g-thresholding-alternatives) in the [GCD Workshop]({{ site.baseurl }}). See the lecture materials [there]({{ site.baseurl }}/Help/Workshops/workshop-topics/1-Principles/g-thresholding-alternatives) for more background on the underlying theories for these methods.
 
 #### Extra:
 [How to Make your own Elevation Change Distribtuions]({{ site.baseurl }}/tutorials--how-to/v-thresholding-w-raster-calculator/custom-elevation-change-distributions)
@@ -84,7 +84,7 @@ How to do in GCD 6:
 
 ### Related Online Help or Tutorials for this Topic
 
-- [Parent Workshop Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/3-day-workshop/2-errors-uncertainties/i-thresholding-alternatives)
+- [Parent Workshop Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/3-day-workshop/2-errors-uncertainties/i-thresholding-alternatives)
 
 - GCD Tutorial Topics:
 

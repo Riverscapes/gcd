@@ -41,7 +41,7 @@ Kaplinski, M., Hazel, J.E., Grams, P.E. and Davis, P.A. (2014). [Monitoring Fine
 
 ### Related Online Help or Tutorials for this Topic
 
-- [Parent Workshop Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/3-day-workshop/2-errors-uncertainties/j-approaches-to-estimating-dem-errors)
+- [Parent Workshop Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/3-day-workshop/2-errors-uncertainties/j-approaches-to-estimating-dem-errors)
 
 - GCD Tutorial Topics:
 

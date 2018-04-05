@@ -12,7 +12,7 @@ title: Approaches to Estimating DEM Error
 
 #### Learning Outcomes Supported
 
-This topic will help fulfill the following [primary learning outcome(s)](http://gcdworkshop.joewheaton.org/syllabus/primary-learning-outcomes) for the workshop:
+This topic will help fulfill the following [primary learning outcome(s)]({{ site.baseurl }}/Help/Workshops/syllabus/primary-learning-outcomes) for the workshop:
 
 - A comprehensive overview of the theory underpinning geomorphic change detection
 - The fundamental background necessary to design effective repeat topographic monitoring campaigns and distinguish geomorphic changes from noise (with particular focus on restoration applications)
@@ -26,7 +26,7 @@ In this exercise we will look at using the ToPCAT tool to derive roughness from 
 
 #### Datasets
 
-- [I_ToPCAT.zip](http://etal.usu.edu/GCD/Workshop/2015_RRNW/Excercises/I_ToPCAT.zip) [![img](http://gcdworkshop.joewheaton.org/_/rsrc/1422837159323/workshop-topics/versions/1-day-workshop/i-approaches-to-estimating-dem-error/winzip_icon_16.gif)](http://gcdworkshop.joewheaton.org/workshop-topics/versions/1-day-workshop/i-approaches-to-estimating-dem-error/winzip_icon_16.gif?attredirects=0)
+- [I_ToPCAT.zip](http://etal.usu.edu/GCD/Workshop/2015_RRNW/Excercises/I_ToPCAT.zip) [![img](http://gcdworkshop.joewheaton.org/_/rsrc/1422837159323/workshop-topics/versions/1-day-workshop/i-approaches-to-estimating-dem-error/winzip_icon_16.gif)]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/1-day-workshop/i-approaches-to-estimating-dem-error/winzip_icon_16.gif?attredirects=0)
 
 #### Relevant Online Help or Tutorials for this Topic
 
@@ -50,4 +50,4 @@ In this exercise we will look at using the ToPCAT tool to derive roughness from 
 
 ------
 
-← Back to [Previous Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/1-day-workshop/h-thresholding-alternatives)         Ahead to [Next Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/1-day-workshop/j-spatially-variable-error-modelling) →
+← Back to [Previous Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/1-day-workshop/h-thresholding-alternatives)         Ahead to [Next Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/1-day-workshop/j-spatially-variable-error-modelling) →

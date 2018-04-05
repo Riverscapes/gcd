@@ -14,7 +14,7 @@ Budget segregation is a powerful tool for getting more out of your DoDs. We want
 
 #### Learning Outcomes Supported
 
-This topic will help fulfill the following [primary learning outcome(s)](http://gcdworkshop.joewheaton.org/syllabus/primary-learning-outcomes) for the workshop:
+This topic will help fulfill the following [primary learning outcome(s)]({{ site.baseurl }}/Help/Workshops/syllabus/primary-learning-outcomes) for the workshop:
 
 - Methods for interpreting and segregating morphological sediment budgets quantitatively in terms of both geomorphic processes and changes in physical habitat
 
@@ -29,7 +29,7 @@ This topic will help fulfill the following [primary learning outcome(s)](http://
 
 #### Prerequisites for this Exercise
 
-- Completed [Day 1 Exercises](http://gcdworkshop.joewheaton.org/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/1-surveying-principles-change-detection)
+- Completed [Day 1 Exercises]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/1-surveying-principles-change-detection)
 
 #### Relevant Online Help or Tutorials for this Topic
 
@@ -60,4 +60,4 @@ See slides below for some background on Budget Segregation (from 2018:
 
 ------
 
-← [Previous Day](http://gcdworkshop.joewheaton.org/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/2-application-interpretations-of-change-detection-day-2/p-interpreting-outputs-of-gcd-tricks-tips)            [Next Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/2-application-interpretations-of-change-detection-day-2/r-applications-of-change-detection) →
+← [Previous Day]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/2-application-interpretations-of-change-detection-day-2/p-interpreting-outputs-of-gcd-tricks-tips)            [Next Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/2-application-interpretations-of-change-detection-day-2/r-applications-of-change-detection) →

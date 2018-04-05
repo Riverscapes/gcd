@@ -22,4 +22,4 @@ Slides and/or Handouts
 
 [Lecture Slides](http://etal.usu.edu/GCD/Workshop/2015_RRNW/Lectures/A_Intro.pdf)
 
-[Next Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/1-day-workshop/b-restoration-applications-of-change-detection) →
+[Next Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/1-day-workshop/b-restoration-applications-of-change-detection) →

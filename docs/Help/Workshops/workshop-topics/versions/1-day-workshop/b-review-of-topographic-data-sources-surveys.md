@@ -35,7 +35,7 @@ Although the majority of workshop participants will have some familiarity with t
 
 #### Learning Outcomes Supported
 
- This topic will help fulfill the following [primary learning outcome(s)](http://gcdworkshop.joewheaton.org/syllabus/primary-learning-outcomes) for the workshop:
+ This topic will help fulfill the following [primary learning outcome(s)]({{ site.baseurl }}/Help/Workshops/syllabus/primary-learning-outcomes) for the workshop:
 
 - A comprehensive overview of the theory underpinning geomorphic change detection
 - The fundamental background necessary to design effective repeat topographic monitoring campaigns and distinguish geomorphic changes from noise (with particular focus on restoration applications)
@@ -46,7 +46,7 @@ Although the majority of workshop participants will have some familiarity with t
 
 #### Slides and/or Handouts
 
-- [![img](http://gcdworkshop.joewheaton.org/_/rsrc/1422833527384/workshop-topics/versions/1-day-workshop/b-review-of-topographic-data-sources-surveys/pdfIcon.png)](http://gcdworkshop.joewheaton.org/workshop-topics/versions/1-day-workshop/b-review-of-topographic-data-sources-surveys/pdfIcon.png?attredirects=0)  [Lecture Slides](http://etal.usu.edu/GCD/Workshop/2015_RRNW/Lectures/C_TopoDataSurveys.pdf)
+- [![img](http://gcdworkshop.joewheaton.org/_/rsrc/1422833527384/workshop-topics/versions/1-day-workshop/b-review-of-topographic-data-sources-surveys/pdfIcon.png)]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/1-day-workshop/b-review-of-topographic-data-sources-surveys/pdfIcon.png?attredirects=0)  [Lecture Slides](http://etal.usu.edu/GCD/Workshop/2015_RRNW/Lectures/C_TopoDataSurveys.pdf)
 
 #### Other Resources
 
@@ -64,4 +64,4 @@ Although the majority of workshop participants will have some familiarity with t
 
 ------
 
-←[Previous Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/1-day-workshop/b-restoration-applications-of-change-detection)            [Next Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/1-day-workshop/c-review-of-building-surfaces-from-raw-topographic-data) →
+←[Previous Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/1-day-workshop/b-restoration-applications-of-change-detection)            [Next Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/1-day-workshop/c-review-of-building-surfaces-from-raw-topographic-data) →

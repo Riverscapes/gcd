@@ -44,7 +44,7 @@ This exercise is meant to help you understand how best to prepare raster DEMs to
 
 #### Related Online Help or Tutorials for this Topic
 
-- [Parent Workshop Topic](http://gcdworkshop.joewheaton.org/workshop-topics/versions/3-day-workshop/1-Principles/f-essential-best-practices-to-support-change-detection)
+- [Parent Workshop Topic]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/3-day-workshop/1-Principles/f-essential-best-practices-to-support-change-detection)
 - [Raster Data Models Podcast](http://gis.joewheaton.org/topics/digitalmaps/1-podcast#TOC-Raster-Data-Models) - From my [Advanced GIS course](http://gis.joewheaton.org/)
 - [Data Preparation Best Practices]({{ site.baseurl }}/gcd-concepts/data-preparation---best-practices) - Concept Reference
 
