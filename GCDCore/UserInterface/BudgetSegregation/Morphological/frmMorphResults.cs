@@ -506,6 +506,16 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
             txt.ForeColor = col;
             txt.Font = new Font(txtVDoD.Font, FontStyle.Bold);
 
+            foreach(DataGridViewRow dgvr in grdData.Rows)
+            {
+                GCDCore.Project.Morphological.MorphologicalUnit mu = dgvr.DataBoundItem as GCDCore.Project.Morphological.MorphologicalUnit;
+                if (mu.IsTotal)
+                    continue;
+
+                dgvr.Cells[colVolumeIn.Index].Style.ForeColor = mu.VolIn.As(UnitsNet.Units.VolumeUnit.CubicMeter) < 0 ? Color.Red : Color.Black;
+                dgvr.Cells[colVolumeOut.Index].Style.ForeColor = mu.VolOut.As(UnitsNet.Units.VolumeUnit.CubicMeter) < 0 ? Color.Red : Color.Black;
+            }
+
         }
     }
 }
