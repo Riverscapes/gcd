@@ -75,6 +75,11 @@ namespace GCDCore.Visualization
             Chart.ChartAreas[0].CursorX.IsUserSelectionEnabled = true;
             Chart.ChartAreas[0].CursorY.IsUserSelectionEnabled = true;
 
+            UpdateHistograms(rawHisto, thrHisto);
+        }
+
+        public void UpdateHistograms(Histogram rawHisto, Histogram thrHisto)
+        {
             _rawHist = rawHisto;
             _thrHist = thrHisto;
 
