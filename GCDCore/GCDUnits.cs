@@ -160,6 +160,61 @@ namespace GCDCore
             return units;
         }
 
+        public static void SelectUnit(System.Windows.Forms.ComboBox cbo, UnitsNet.Units.DurationUnit unit)
+        {
+            foreach (FormattedUnit<UnitsNet.Units.DurationUnit> cboUnit in cbo.Items)
+            {
+                if (cboUnit.Unit == unit)
+                {
+                    cbo.SelectedItem = cboUnit;
+                    return;
+                }
+            }
+        }
+
+        public static List<FormattedUnit<UnitsNet.Units.DurationUnit>> GCDDurationUnits()
+        {
+            List<FormattedUnit<UnitsNet.Units.DurationUnit>> units = new List<FormattedUnit<UnitsNet.Units.DurationUnit>> {
+                new FormattedUnit<UnitsNet.Units.DurationUnit>(UnitsNet.Units.DurationUnit.Day),
+                new FormattedUnit<UnitsNet.Units.DurationUnit>(UnitsNet.Units.DurationUnit.Hour),
+                new FormattedUnit<UnitsNet.Units.DurationUnit>(UnitsNet.Units.DurationUnit.Minute),
+                new FormattedUnit<UnitsNet.Units.DurationUnit>(UnitsNet.Units.DurationUnit.Month),
+                new FormattedUnit<UnitsNet.Units.DurationUnit>(UnitsNet.Units.DurationUnit.Second),
+                new FormattedUnit<UnitsNet.Units.DurationUnit>(UnitsNet.Units.DurationUnit.Week),
+                new FormattedUnit<UnitsNet.Units.DurationUnit>(UnitsNet.Units.DurationUnit.Year)
+            };
+
+            return units;
+        }
+
+        public static void SelectUnit(System.Windows.Forms.ComboBox cbo, UnitsNet.Units.MassUnit unit)
+        {
+            foreach (FormattedUnit<UnitsNet.Units.MassUnit> cboUnit in cbo.Items)
+            {
+                if (cboUnit.Unit == unit)
+                {
+                    cbo.SelectedItem = cboUnit;
+                    return;
+                }
+            }
+        }
+
+        public static List<FormattedUnit<UnitsNet.Units.MassUnit>> GCDMassUnits()
+        {
+            List<FormattedUnit<UnitsNet.Units.MassUnit>> units = new List<FormattedUnit<UnitsNet.Units.MassUnit>> {
+                new FormattedUnit<UnitsNet.Units.MassUnit>(UnitsNet.Units.MassUnit.Gram),
+                new FormattedUnit<UnitsNet.Units.MassUnit>(UnitsNet.Units.MassUnit.Kilogram),
+                new FormattedUnit<UnitsNet.Units.MassUnit>(UnitsNet.Units.MassUnit.Kilotonne),
+                new FormattedUnit<UnitsNet.Units.MassUnit>(UnitsNet.Units.MassUnit.LongTon),
+                new FormattedUnit<UnitsNet.Units.MassUnit>(UnitsNet.Units.MassUnit.Pound),
+                new FormattedUnit<UnitsNet.Units.MassUnit>(UnitsNet.Units.MassUnit.Tonne),
+                new FormattedUnit<UnitsNet.Units.MassUnit>(UnitsNet.Units.MassUnit.ShortTon),
+                new FormattedUnit<UnitsNet.Units.MassUnit>(UnitsNet.Units.MassUnit.Milligram)
+            };
+
+            return units;
+        }
+
         //public static List<string> GCDVolumeUnitsAsString()
         //{
         //    return GCDVolumeUnits().Select((UnitsNet.Units.VolumeUnit p) => p.ToString()).ToList(),

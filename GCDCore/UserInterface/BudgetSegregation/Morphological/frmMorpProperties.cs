@@ -43,8 +43,7 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
             try
             {
                 // Create the morphological analysis
-                Analysis = new MorphologicalAnalysis(txtName.Text, ProjectManager.Project.GetAbsoluteDir(txtPath.Text), cboBS.SelectedItem as GCDCore.Project.BudgetSegregation,
-                    ProjectManager.Project.Units.VolUnit);
+                Analysis = new MorphologicalAnalysis(txtName.Text, ProjectManager.Project.GetAbsoluteDir(txtPath.Text), cboBS.SelectedItem as GCDCore.Project.BudgetSegregation);
 
                 try
                 {

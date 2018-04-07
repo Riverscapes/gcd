@@ -149,6 +149,12 @@
     <Compile Include="UserInterface\BudgetSegregation\frmBudgetSegResults.Designer.cs">
       <DependentUpon>frmBudgetSegResults.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserInterface\BudgetSegregation\Morphological\frmMorphologicalUnits.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\BudgetSegregation\Morphological\frmMorphologicalUnits.Designer.cs">
+      <DependentUpon>frmMorphologicalUnits.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserInterface\BudgetSegregation\Morphological\frmMorphResults.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -523,6 +529,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\BudgetSegregation\frmBudgetSegResults.resx">
       <DependentUpon>frmBudgetSegResults.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\BudgetSegregation\Morphological\frmMorphologicalUnits.resx">
+      <DependentUpon>frmMorphologicalUnits.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\BudgetSegregation\Morphological\frmMorphResults.resx">
       <DependentUpon>frmMorphResults.cs</DependentUpon>
