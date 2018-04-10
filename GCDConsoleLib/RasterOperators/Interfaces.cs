@@ -775,16 +775,12 @@ namespace GCDConsoleLib
         /// <param name="sOutCSV"></param>
         /// <param name="intervallength"></param>
         /// <param name="progressHandler"></param>
-        public static void LinearExtractor(Vector vLineShp, List<Raster> rRasters, FileInfo sOutCSV, 
-            decimal intervallength, string sFieldName, EventHandler<int> progressHandler = null)
+        public static void LinearExtractor(Vector vLineShp, List<Raster> rRasters, FileInfo sOutCSV,
+            decimal intervallength, string sFieldName)
         {
-            LinearExtractor<double> theExtractOp = new LinearExtractor<double>(vLineShp, rRasters, sOutCSV, intervallength, sFieldName);
-
-            if (progressHandler != null)
-                theExtractOp.ProgressEvent += progressHandler;
-
-            //This is the magic sauce. This method doesn't use the base operator's run method at all.
-            theExtractOp.RunWithSpacing();
+            GenericRunWithSpacing(typeof(LinearExtractor<>), rRasters[0].Datatype.CSType, new object[] {
+                 vLineShp, rRasters, sOutCSV, intervallength, sFieldName
+            });
         }
 
         /// <summary>
@@ -1044,6 +1040,21 @@ namespace GCDConsoleLib
         {
             object myGenericClass = MakeGenericType(generic, innerType, args);
             MethodInfo method = myGenericClass.GetType().GetMethod("RunWithOutput",
+                BindingFlags.Public | BindingFlags.Instance);
+            return method.Invoke(myGenericClass, null);
+
+        }
+        /// <summary>
+        /// The linear extractor is a special case and needs its own method
+        /// </summary>
+        /// <param name="generic"></param>
+        /// <param name="innerType"></param>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        private static object GenericRunWithSpacing(Type generic, Type innerType, params object[] args)
+        {
+            object myGenericClass = MakeGenericType(generic, innerType, args);
+            MethodInfo method = myGenericClass.GetType().GetMethod("RunWithSpacing",
                 BindingFlags.Public | BindingFlags.Instance);
             return method.Invoke(myGenericClass, null);
 
