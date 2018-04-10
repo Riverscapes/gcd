@@ -104,9 +104,9 @@ namespace GCDCore.Project.Morphological
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////
             // Uncomment next line to clear the morph unit data and load the debug data
-            //#if DEBUG
-            // LoadFeshieData();
-            //#endif
+#if DEBUG
+            LoadFeshieData();
+#endif
             ////////////////////////////////////////////////////////////////////////////////////////////////////
 
             // Add the total row
@@ -179,8 +179,12 @@ namespace GCDCore.Project.Morphological
                 Units[i].CumulativeVolume = Units[i - 1].CumulativeVolume + Units[i].VolChange;
             }
 
-            // Loop 
+            // Loop over all units and recalc the erosion and deposition.
             MorphologicalUnit muTotal = Units.Last();
+            muTotal.VolErosion = new Volume(0);
+            muTotal.VolErosionErr = new Volume(0);
+            muTotal.VolDeposition = new Volume(0);
+            muTotal.VolDepositionErr = new Volume(0);
             foreach (MorphologicalUnit unit in Units)
             {
                 muTotal.VolErosion += unit.VolErosion;
@@ -322,8 +326,9 @@ namespace GCDCore.Project.Morphological
         {
             decimal duration = (decimal)CompetentDuration.As(DisplayUnits_Duration);
 
-            Density density = UnitsNet.Density.From((double)Density, UnitsNet.Units.DensityUnit.GramPerCubicCentimeter);
-            decimal massPerUnitVolume = (decimal)density.As(UnitsNet.Units.DensityUnit.KilogramPerCubicMeter);
+            decimal gramConvert = (decimal)Mass.FromGrams(1).As(DisplayUnits_Mass);
+            decimal volConvert = (decimal)Volume.FromCubicCentimeters(1).As(DisplayUnits_Volume);
+            decimal densityConvert = this.Density * (gramConvert / volConvert);
 
             if (duration > 0)
             {
@@ -333,10 +338,10 @@ namespace GCDCore.Project.Morphological
                     unit.FluxVolume = (1m - Porosity) * (decimal)unit.VolOut.As(DisplayUnits_Volume) / duration;
 
                     // The volume flux per unit volume and per unit time. THIS IS IN CUBIC METRES
-                    decimal volumeFluxPerUnitVolume = (decimal)Volume.From((double)unit.FluxVolume, DisplayUnits_Volume).As(UnitsNet.Units.VolumeUnit.CubicMeter);
+                    //decimal volumeFluxPerUnitVolume = (decimal)Volume.From((double)unit.FluxVolume, DisplayUnits_Volume).As(UnitsNet.Units.VolumeUnit.CubicMeter);
 
                     // Mass of material per unit time. (Should be independent of volume)
-                    unit.FluxMass = volumeFluxPerUnitVolume * massPerUnitVolume;
+                    unit.FluxMass = unit.FluxVolume * densityConvert;
                 }
             }
             else

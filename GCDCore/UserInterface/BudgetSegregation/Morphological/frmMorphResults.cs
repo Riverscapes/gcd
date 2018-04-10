@@ -41,10 +41,8 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
             InitializeComponent();
             Analysis = ma;
 
-
             cmsChart = new UtilityForms.ChartContextMenu(Analysis.OutputFolder, "morphological");
             chtData.ContextMenuStrip = cmsChart.CMS;
-
         }
 
         private void frmMorphResults_Load(object sender, EventArgs e)
@@ -63,10 +61,8 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
             cboBoundaryType.Items.Add(GCDCore.Project.Morphological.MorphologicalAnalysis.FluxDirection.Output);
             cboBoundaryType.SelectedIndex = 1;
 
-            foreach (UnitsNet.Units.DurationUnit val in Enum.GetValues(typeof(UnitsNet.Units.DurationUnit)))
-                cboDuration.Items.Add(val);
-
-            cboDuration.SelectedItem = Analysis.DisplayUnits_Duration;
+            cboDuration.DataSource = GCDUnits.GCDDurationUnits();
+            GCDUnits.SelectUnit(cboDuration, Analysis.DisplayUnits_Duration);
             valDuration.Value = (decimal)Analysis.Duration.As(Analysis.DisplayUnits_Duration);
             valPorosity.Value = Analysis.Porosity;
             valDensity.Value = Analysis.Density;
@@ -102,12 +98,6 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
             cboBoundaryUnit.SelectedIndexChanged += MinFlux_Changed;
             cboBoundaryType.SelectedIndexChanged += MinFlux_Changed;
             //UpdateFormulae();
-
-            grdData.Rows[grdData.Rows.Count - 1].Cells["volChange"].Style.ForeColor = colDoD;
-            grdData.Rows[grdData.Rows.Count - 1].Cells["colVolDeposition"].Style.ForeColor = colDep;
-            grdData.Rows[grdData.Rows.Count - 1].Cells["colVolErosion"].Style.ForeColor = colErr;
-            grdData.Rows[grdData.Rows.Count - 1].Cells["colVolumeIn"].Style.ForeColor = colVIn;
-            grdData.Rows[grdData.Rows.Count - 1].Cells["colVolumeOut"].Style.ForeColor = colVOu;
 
             UnitsChanged(null, null);
             cmdReset_Click(null, null);
@@ -146,9 +136,12 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
             UpdateCriticalDuration();
         }
 
+        private UnitsNet.Units.DurationUnit SelectedDurationUnit { get { return ((GCDUnits.FormattedUnit<UnitsNet.Units.DurationUnit>)cboDuration.SelectedItem).Unit; } }
+        private UnitsNet.Units.VolumeUnit SelectedBoundaryUnit { get { return ((GCDUnits.FormattedUnit<UnitsNet.Units.VolumeUnit>)cboBoundaryUnits.SelectedItem).Unit; } }
+
         private void valDuration_ValueChanged(object sender, EventArgs e)
         {
-            Analysis.Duration = UnitsNet.Duration.From((double)valDuration.Value, (UnitsNet.Units.DurationUnit)cboDuration.SelectedItem);
+            Analysis.Duration = UnitsNet.Duration.From((double)valDuration.Value, SelectedDurationUnit);
             UpdateCriticalDuration();
         }
 
@@ -175,7 +168,7 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
             string abbrDur = Duration.GetAbbreviation(Analysis.DisplayUnits_Duration);
 
             lblBoundaryVolume.Text = lblBoundaryVolume.Text.Replace(")", string.Format("{0})", abbrVol));
-            txtMinFlux.Text = Analysis.ReachInputFlux.As(Analysis.DisplayUnits_Volume).ToString("#,##0.00");
+            UpdateMinFluxDisplay();
 
             // This will cause the analysis to recalculate the flux volume and flux mass
             // Analysis.DisplayUnits_Volume = ((FormattedVolumeUnit)cboBoundaryUnits.SelectedItem).VolumeUnit;
@@ -199,6 +192,15 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
             Analysis.Units.ResetBindings();
             UpdateChart();
             UpdateFormulae();
+        }
+
+        private void UpdateMinFluxDisplay()
+        {
+            txtMinFlux.Text = string.Format("{0:#,##0.00} {1}", Analysis.ReachInputFlux.As(Analysis.DisplayUnits_Volume), UnitsNet.Volume.GetAbbreviation(Analysis.DisplayUnits_Volume));
+            // Need to set back color first for read only textboxes
+            // https://stackoverflow.com/questions/20688408/how-do-you-change-the-text-color-of-a-readonly-textbox
+            txtMinFlux.BackColor = txtMinFlux.BackColor;
+            txtMinFlux.ForeColor = Analysis.ReachInputFlux < new Volume(0) ? Color.Red : Color.Black;
         }
 
         private void InitializeChart()
@@ -257,7 +259,7 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
         private void UpdateChart()
         {
             // Update the Y axis volume units
-            UnitsNet.Units.VolumeUnit volUnit = ((GCDUnits.FormattedUnit<UnitsNet.Units.VolumeUnit>)cboBoundaryUnits.SelectedItem).Unit;
+            UnitsNet.Units.VolumeUnit volUnit = Analysis.DisplayUnits_Volume;
             chtData.ChartAreas.ToList<ChartArea>().ForEach(x => x.AxisY.Title = string.Format("Volume ({0})", Volume.GetAbbreviation(volUnit)));
 
             // Clear all series data points
@@ -324,10 +326,30 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
 
             if (grdData.Rows[e.RowIndex].DataBoundItem is GCDCore.Project.Morphological.MorphologicalUnit)
             {
+                Color foreColor = Color.Black;
                 if (((GCDCore.Project.Morphological.MorphologicalUnit)grdData.Rows[e.RowIndex].DataBoundItem).IsTotal)
                 {
                     grdData.Rows[e.RowIndex].DefaultCellStyle.Font = new Font(grdData.Font, FontStyle.Bold);
+                    // Special total row colours
+                    switch (grdData.Columns[e.ColumnIndex].Name)
+                    {
+                        case "volChange": foreColor = colDoD; break;
+                        case "colVolDeposition": foreColor = colDep; break;
+                        case "colVolErosion": foreColor = colErr; break;
+                        case "colVolumeIn": foreColor = colVIn; break;
+                        case "colVolumeOut": foreColor = colVOu; break;
+                    }
                 }
+                else if (grdData.Columns[e.ColumnIndex] == colVolumeIn && (double) e.Value < 0)
+                {
+                    foreColor = Color.Red;
+                }
+                else if (grdData.Columns[e.ColumnIndex] == colVolumeOut && (double)e.Value < 0)
+                {
+                    foreColor = Color.Red;
+                }
+
+                e.CellStyle.ForeColor = foreColor;
             }
         }
 
@@ -448,7 +470,7 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
             GCDCore.Project.Morphological.MorphologicalAnalysis.FluxDirection eDir = (GCDCore.Project.Morphological.MorphologicalAnalysis.FluxDirection)cboBoundaryType.SelectedItem;
 
             Analysis.ImposeBoundaryCondition(eDir, unit, Volume.From((double)valBoundaryFlux.Value, ((GCDUnits.FormattedUnit<UnitsNet.Units.VolumeUnit>)cboBoundaryUnits.SelectedItem).Unit));
-            txtMinFlux.Text = Analysis.ReachInputFlux.ToString(Analysis.DisplayUnits_Volume, CultureInfo.InvariantCulture, "#,##0.00");
+            UpdateMinFluxDisplay();
             UpdateFormulae();
 
             //Analysis.Units.ResetBindings();
@@ -466,7 +488,7 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
             valBoundaryFlux.Value = (decimal)Analysis.BoundaryFlux.As(((GCDUnits.FormattedUnit<UnitsNet.Units.VolumeUnit>)cboBoundaryUnits.SelectedItem).Unit);
             cboBoundaryType.SelectedIndex = 1;
 
-            txtMinFlux.Text = Analysis.ReachInputFlux.As(((GCDUnits.FormattedUnit<UnitsNet.Units.VolumeUnit>)cboBoundaryUnits.SelectedItem).Unit).ToString("#,##0.00");
+            UpdateMinFluxDisplay();
             UpdateFormulae();
 
             // Re-attach event firing
@@ -493,17 +515,6 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
             txt.BorderStyle = BorderStyle.None;
             txt.ForeColor = col;
             txt.Font = new Font(txtVDoD.Font, FontStyle.Bold);
-
-            foreach (DataGridViewRow dgvr in grdData.Rows)
-            {
-                GCDCore.Project.Morphological.MorphologicalUnit mu = dgvr.DataBoundItem as GCDCore.Project.Morphological.MorphologicalUnit;
-                if (mu.IsTotal)
-                    continue;
-
-                dgvr.Cells[colVolumeIn.Index].Style.ForeColor = mu.VolIn.As(UnitsNet.Units.VolumeUnit.CubicMeter) < 0 ? Color.Red : Color.Black;
-                dgvr.Cells[colVolumeOut.Index].Style.ForeColor = mu.VolOut.As(UnitsNet.Units.VolumeUnit.CubicMeter) < 0 ? Color.Red : Color.Black;
-            }
-
         }
 
         private void cmdOptions_Click(object sender, EventArgs e)
@@ -532,7 +543,6 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
             valBoundaryFlux.Value = (decimal)Analysis.BoundaryFlux.As(newVolUnit);
 
             valBoundaryFlux.ValueChanged += MinFlux_Changed;
-
         }
     }
 }

@@ -105,7 +105,6 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.chtData = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.ucDoDPropertiesGrid1 = new GCDCore.UserInterface.ChangeDetection.ucDoDPropertiesGrid();
             this.label7 = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -113,6 +112,7 @@
             this.cmdBrowse = new System.Windows.Forms.Button();
             this.tTip = new System.Windows.Forms.ToolTip(this.components);
             this.cmdOptions = new System.Windows.Forms.Button();
+            this.ucDoDPropertiesGrid1 = new GCDCore.UserInterface.ChangeDetection.ucDoDPropertiesGrid();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox5.SuspendLayout();
@@ -145,7 +145,7 @@
             this.cmdHelp.Location = new System.Drawing.Point(12, 512);
             this.cmdHelp.Name = "cmdHelp";
             this.cmdHelp.Size = new System.Drawing.Size(75, 23);
-            this.cmdHelp.TabIndex = 8;
+            this.cmdHelp.TabIndex = 9;
             this.cmdHelp.Text = "Help";
             this.cmdHelp.UseVisualStyleBackColor = true;
             // 
@@ -158,7 +158,7 @@
             this.cmdOK.Location = new System.Drawing.Point(921, 512);
             this.cmdOK.Name = "cmdOK";
             this.cmdOK.Size = new System.Drawing.Size(75, 23);
-            this.cmdOK.TabIndex = 6;
+            this.cmdOK.TabIndex = 7;
             this.cmdOK.Text = "    Save";
             this.cmdOK.UseVisualStyleBackColor = true;
             this.cmdOK.Click += new System.EventHandler(this.cmdOK_Click);
@@ -170,7 +170,7 @@
             this.cmdCancel.Location = new System.Drawing.Point(1002, 512);
             this.cmdCancel.Name = "cmdCancel";
             this.cmdCancel.Size = new System.Drawing.Size(75, 23);
-            this.cmdCancel.TabIndex = 7;
+            this.cmdCancel.TabIndex = 8;
             this.cmdCancel.Text = "Cancel";
             this.cmdCancel.UseVisualStyleBackColor = true;
             // 
@@ -186,7 +186,7 @@
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(1063, 435);
-            this.tabControl1.TabIndex = 5;
+            this.tabControl1.TabIndex = 6;
             // 
             // tabPage1
             // 
@@ -220,8 +220,8 @@
             this.groupBox5.Controls.Add(this.picVDoD);
             this.groupBox5.Location = new System.Drawing.Point(12, 112);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(612, 110);
-            this.groupBox5.TabIndex = 8;
+            this.groupBox5.Size = new System.Drawing.Size(612, 95);
+            this.groupBox5.TabIndex = 3;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Morphological Sediment Budget";
             // 
@@ -229,11 +229,11 @@
             // 
             this.txtVE.BackColor = System.Drawing.SystemColors.Window;
             this.txtVE.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtVE.Location = new System.Drawing.Point(239, 75);
+            this.txtVE.Location = new System.Drawing.Point(239, 72);
             this.txtVE.Name = "txtVE";
             this.txtVE.ReadOnly = true;
             this.txtVE.Size = new System.Drawing.Size(81, 20);
-            this.txtVE.TabIndex = 23;
+            this.txtVE.TabIndex = 2;
             this.txtVE.TabStop = false;
             this.txtVE.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -241,11 +241,11 @@
             // 
             this.txtVD.BackColor = System.Drawing.SystemColors.Window;
             this.txtVD.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtVD.Location = new System.Drawing.Point(139, 75);
+            this.txtVD.Location = new System.Drawing.Point(139, 72);
             this.txtVD.Name = "txtVD";
             this.txtVD.ReadOnly = true;
             this.txtVD.Size = new System.Drawing.Size(81, 20);
-            this.txtVD.TabIndex = 22;
+            this.txtVD.TabIndex = 1;
             this.txtVD.TabStop = false;
             this.txtVD.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -253,11 +253,11 @@
             // 
             this.txtVOut.BackColor = System.Drawing.SystemColors.Window;
             this.txtVOut.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtVOut.Location = new System.Drawing.Point(478, 75);
+            this.txtVOut.Location = new System.Drawing.Point(478, 72);
             this.txtVOut.Name = "txtVOut";
             this.txtVOut.ReadOnly = true;
             this.txtVOut.Size = new System.Drawing.Size(81, 20);
-            this.txtVOut.TabIndex = 21;
+            this.txtVOut.TabIndex = 4;
             this.txtVOut.TabStop = false;
             this.txtVOut.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -265,11 +265,11 @@
             // 
             this.txtVIn.BackColor = System.Drawing.SystemColors.Window;
             this.txtVIn.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtVIn.Location = new System.Drawing.Point(9, 75);
+            this.txtVIn.Location = new System.Drawing.Point(9, 72);
             this.txtVIn.Name = "txtVIn";
             this.txtVIn.ReadOnly = true;
             this.txtVIn.Size = new System.Drawing.Size(81, 20);
-            this.txtVIn.TabIndex = 20;
+            this.txtVIn.TabIndex = 0;
             this.txtVIn.TabStop = false;
             this.txtVIn.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -277,18 +277,18 @@
             // 
             this.txtVDoD.BackColor = System.Drawing.SystemColors.Window;
             this.txtVDoD.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtVDoD.Location = new System.Drawing.Point(350, 75);
+            this.txtVDoD.Location = new System.Drawing.Point(350, 72);
             this.txtVDoD.Name = "txtVDoD";
             this.txtVDoD.ReadOnly = true;
             this.txtVDoD.Size = new System.Drawing.Size(81, 20);
-            this.txtVDoD.TabIndex = 19;
+            this.txtVDoD.TabIndex = 3;
             this.txtVDoD.TabStop = false;
             this.txtVDoD.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // pictureBox7
             // 
             this.pictureBox7.Image = global::GCDCore.Properties.Resources.vdod4;
-            this.pictureBox7.Location = new System.Drawing.Point(227, 15);
+            this.pictureBox7.Location = new System.Drawing.Point(227, 12);
             this.pictureBox7.Name = "pictureBox7";
             this.pictureBox7.Size = new System.Drawing.Size(8, 57);
             this.pictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -298,7 +298,7 @@
             // picVE
             // 
             this.picVE.Image = global::GCDCore.Properties.Resources.vdod7;
-            this.picVE.Location = new System.Drawing.Point(257, 15);
+            this.picVE.Location = new System.Drawing.Point(257, 12);
             this.picVE.Name = "picVE";
             this.picVE.Size = new System.Drawing.Size(45, 57);
             this.picVE.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -308,7 +308,7 @@
             // picVD
             // 
             this.picVD.Image = global::GCDCore.Properties.Resources.vdod6;
-            this.picVD.Location = new System.Drawing.Point(158, 15);
+            this.picVD.Location = new System.Drawing.Point(158, 12);
             this.picVD.Name = "picVD";
             this.picVD.Size = new System.Drawing.Size(43, 57);
             this.picVD.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -318,7 +318,7 @@
             // picVOut
             // 
             this.picVOut.Image = global::GCDCore.Properties.Resources.vdod5;
-            this.picVOut.Location = new System.Drawing.Point(499, 15);
+            this.picVOut.Location = new System.Drawing.Point(499, 12);
             this.picVOut.Name = "picVOut";
             this.picVOut.Size = new System.Drawing.Size(39, 57);
             this.picVOut.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -328,7 +328,7 @@
             // picVIn
             // 
             this.picVIn.Image = global::GCDCore.Properties.Resources.vdod3;
-            this.picVIn.Location = new System.Drawing.Point(32, 15);
+            this.picVIn.Location = new System.Drawing.Point(32, 12);
             this.picVIn.Name = "picVIn";
             this.picVIn.Size = new System.Drawing.Size(34, 57);
             this.picVIn.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -338,7 +338,7 @@
             // pictureBox2
             // 
             this.pictureBox2.Image = global::GCDCore.Properties.Resources.vdod2;
-            this.pictureBox2.Location = new System.Drawing.Point(328, 15);
+            this.pictureBox2.Location = new System.Drawing.Point(328, 12);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(17, 57);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -348,7 +348,7 @@
             // picVDoD
             // 
             this.picVDoD.Image = global::GCDCore.Properties.Resources.vdod1;
-            this.picVDoD.Location = new System.Drawing.Point(361, 15);
+            this.picVDoD.Location = new System.Drawing.Point(361, 12);
             this.picVDoD.Name = "picVDoD";
             this.picVDoD.Size = new System.Drawing.Size(59, 57);
             this.picVDoD.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -368,7 +368,7 @@
             this.groupBox4.Location = new System.Drawing.Point(630, 58);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(422, 149);
-            this.groupBox4.TabIndex = 7;
+            this.groupBox4.TabIndex = 4;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Imposed Boundary Condition";
             // 
@@ -378,7 +378,7 @@
             this.label11.Location = new System.Drawing.Point(74, 31);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(72, 13);
-            this.label11.TabIndex = 5;
+            this.label11.TabIndex = 0;
             this.label11.Text = "Boundary unit";
             // 
             // cboBoundaryType
@@ -388,7 +388,7 @@
             this.cboBoundaryType.Location = new System.Drawing.Point(152, 57);
             this.cboBoundaryType.Name = "cboBoundaryType";
             this.cboBoundaryType.Size = new System.Drawing.Size(248, 21);
-            this.cboBoundaryType.TabIndex = 1;
+            this.cboBoundaryType.TabIndex = 3;
             // 
             // label10
             // 
@@ -396,7 +396,7 @@
             this.label10.Location = new System.Drawing.Point(71, 61);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(75, 13);
-            this.label10.TabIndex = 0;
+            this.label10.TabIndex = 2;
             this.label10.Text = "Boundary type";
             // 
             // cboBoundaryUnits
@@ -406,7 +406,7 @@
             this.cboBoundaryUnits.Location = new System.Drawing.Point(234, 86);
             this.cboBoundaryUnits.Name = "cboBoundaryUnits";
             this.cboBoundaryUnits.Size = new System.Drawing.Size(137, 21);
-            this.cboBoundaryUnits.TabIndex = 5;
+            this.cboBoundaryUnits.TabIndex = 6;
             // 
             // cmdReset
             // 
@@ -414,7 +414,7 @@
             this.cmdReset.Location = new System.Drawing.Point(377, 86);
             this.cmdReset.Name = "cmdReset";
             this.cmdReset.Size = new System.Drawing.Size(23, 23);
-            this.cmdReset.TabIndex = 2;
+            this.cmdReset.TabIndex = 7;
             this.cmdReset.UseVisualStyleBackColor = true;
             this.cmdReset.Click += new System.EventHandler(this.cmdReset_Click);
             // 
@@ -434,7 +434,8 @@
             -2147483648});
             this.valBoundaryFlux.Name = "valBoundaryFlux";
             this.valBoundaryFlux.Size = new System.Drawing.Size(76, 20);
-            this.valBoundaryFlux.TabIndex = 4;
+            this.valBoundaryFlux.TabIndex = 5;
+            this.valBoundaryFlux.Enter += new System.EventHandler(this.NumericUpDown_Enter);
             // 
             // lblBoundaryVolume
             // 
@@ -442,7 +443,7 @@
             this.lblBoundaryVolume.Location = new System.Drawing.Point(57, 90);
             this.lblBoundaryVolume.Name = "lblBoundaryVolume";
             this.lblBoundaryVolume.Size = new System.Drawing.Size(89, 13);
-            this.lblBoundaryVolume.TabIndex = 3;
+            this.lblBoundaryVolume.TabIndex = 4;
             this.lblBoundaryVolume.Text = "Boundary volume";
             // 
             // cboBoundaryUnit
@@ -648,7 +649,7 @@
             this.grdData.RowHeadersVisible = false;
             this.grdData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.grdData.Size = new System.Drawing.Size(1037, 175);
-            this.grdData.TabIndex = 3;
+            this.grdData.TabIndex = 5;
             this.grdData.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.grdData_CellFormatting);
             // 
             // colMorphUnit
@@ -658,7 +659,7 @@
             this.colMorphUnit.HeaderText = "Sub Reach";
             this.colMorphUnit.Name = "colMorphUnit";
             this.colMorphUnit.ReadOnly = true;
-            this.colMorphUnit.Width = 79;
+            this.colMorphUnit.Width = 86;
             // 
             // colVolDeposition
             // 
@@ -801,8 +802,9 @@
             // 
             this.txtMinFlux.Location = new System.Drawing.Point(311, 17);
             this.txtMinFlux.Name = "txtMinFlux";
+            this.txtMinFlux.ReadOnly = true;
             this.txtMinFlux.Size = new System.Drawing.Size(98, 20);
-            this.txtMinFlux.TabIndex = 6;
+            this.txtMinFlux.TabIndex = 1;
             // 
             // label4
             // 
@@ -851,14 +853,6 @@
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Inputs";
             this.tabPage3.UseVisualStyleBackColor = true;
-            // 
-            // ucDoDPropertiesGrid1
-            // 
-            this.ucDoDPropertiesGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucDoDPropertiesGrid1.Location = new System.Drawing.Point(3, 3);
-            this.ucDoDPropertiesGrid1.Name = "ucDoDPropertiesGrid1";
-            this.ucDoDPropertiesGrid1.Size = new System.Drawing.Size(1049, 403);
-            this.ucDoDPropertiesGrid1.TabIndex = 0;
             // 
             // label7
             // 
@@ -910,9 +904,17 @@
             this.cmdOptions.Location = new System.Drawing.Point(658, 43);
             this.cmdOptions.Name = "cmdOptions";
             this.cmdOptions.Size = new System.Drawing.Size(23, 23);
-            this.cmdOptions.TabIndex = 9;
+            this.cmdOptions.TabIndex = 5;
             this.cmdOptions.UseVisualStyleBackColor = true;
             this.cmdOptions.Click += new System.EventHandler(this.cmdOptions_Click);
+            // 
+            // ucDoDPropertiesGrid1
+            // 
+            this.ucDoDPropertiesGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucDoDPropertiesGrid1.Location = new System.Drawing.Point(3, 3);
+            this.ucDoDPropertiesGrid1.Name = "ucDoDPropertiesGrid1";
+            this.ucDoDPropertiesGrid1.Size = new System.Drawing.Size(1049, 403);
+            this.ucDoDPropertiesGrid1.TabIndex = 0;
             // 
             // frmMorphResults
             // 
