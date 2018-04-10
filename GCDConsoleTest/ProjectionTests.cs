@@ -1,5 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Diagnostics;
+using System.IO;
 
 namespace GCDConsoleLib.Tests
 {
@@ -96,6 +98,7 @@ namespace GCDConsoleLib.Tests
                 Assert.IsInstanceOfType(e, typeof(ArgumentException));
             }
         }
+
 
 
         [TestMethod()]

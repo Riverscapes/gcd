@@ -255,7 +255,8 @@ namespace GCDConsoleLib
         {
             LengthUnit retUnit = LengthUnit.Undefined;
             if (sUnit != "")
-                retUnit = Length.ParseUnit(sUnit);
+                retUnit = Utility.Conversion.ParseLengthUnit(sUnit);
+
             return retUnit;
         }
 
