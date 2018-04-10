@@ -37,7 +37,11 @@ namespace GCDCore.UserInterface.ChangeDetection
 
         public void LoadHistograms(GCDConsoleLib.Histogram rawHistogram, GCDConsoleLib.Histogram thrHistogram)
         {
-            HistogramViewer = new DoDHistogramViewer(rawHistogram, thrHistogram, ProjectManager.Project.Units, chtData);
+            if (HistogramViewer == null)
+                HistogramViewer = new DoDHistogramViewer(rawHistogram, thrHistogram, ProjectManager.Project.Units, chtData);
+            else
+                HistogramViewer.UpdateHistograms(rawHistogram, thrHistogram);
+
             HistogramViewer.SetFont(Properties.Settings.Default.ChartFont);
         }
         public ucDoDHistogram()
