@@ -104,9 +104,9 @@ namespace GCDCore.Project.Morphological
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////
             // Uncomment next line to clear the morph unit data and load the debug data
-#if DEBUG
-            LoadFeshieData();
-#endif
+//#if DEBUG
+//            LoadFeshieData();
+//#endif
             ////////////////////////////////////////////////////////////////////////////////////////////////////
 
             // Add the total row
@@ -246,24 +246,6 @@ namespace GCDCore.Project.Morphological
             }
 
         }
-
-        //private UnitsNet.Units.VolumeUnit _DataVolumeUnits;
-        //public UnitsNet.Units.VolumeUnit DataVolumeUnits
-        //{
-        //    get
-        //    {
-        //        return _DataVolumeUnits;
-        //    }
-
-        //    set
-        //    {
-        //        if (_DataVolumeUnits != value)
-        //        {
-        //            _DataVolumeUnits = value;
-        //            CalculateWork();
-        //        }
-        //    }
-        //}
 
         public Duration CompetentDuration { get { return Duration.From(this.Duration.As(DisplayUnits_Duration) * (double)Competency, DisplayUnits_Duration); } }
 
