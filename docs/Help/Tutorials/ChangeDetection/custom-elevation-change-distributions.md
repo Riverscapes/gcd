@@ -5,9 +5,9 @@ weight: 5
 
 #### Simply Customize Elevation Change Distributions in Excel
 
-If you don't like how the elevation change distribution graphics are produced by GCD, simply open up the threshold.csv and ```raw.csv``` files in your output folder and copy the contents of the volume column into the `ECD.xlsx`excel file below. You'll need to make sure you put the right values in the right places and then recalculate some of the files, but you will then be able to customize the size and layout of the fonts, bars, colors, sizes etc. You can of course do this in excel manually, but the template below is formatted to have a similar appearance to what you see in GCD. 
+If you don't like how the elevation change distribution graphics are produced by GCD, simply open up the threshold.csv and `raw.csv` files in your output folder and copy the contents of the volume column into the `ECD.xlsx`excel file below. You'll need to make sure you put the right values in the right places and then recalculate some of the files, but you will then be able to customize the size and layout of the fonts, bars, colors, sizes etc. You can of course do this in excel manually, but the template below is formatted to have a similar appearance to what you see in GCD. 
 
-![img]({{ site.baseurl }}/_/rsrc/1472842984592/tutorials--how-to/v-thresholding-w-raster-calculator/Excel_icon.gif)` `[`ECD.xlsx` ](http://etal.usu.edu/GCD/ECD.xlsx)
+[ECD.xlsx ](http://etal.usu.edu/GCD/ECD.xlsx)
 
 #### Fancier Elevation Change Distributions Plots in R
 
@@ -15,7 +15,7 @@ If you want to make more customizable and professional elevation change distribu
 
 
 
-[![box_zip]({{ site.baseurl }}assets/images/box_zip.png)](http://etal.usu.edu/GCD/Scripts/gcdbarplots.zip)
+[![box_zip]({{ site.baseurl }}/assets/images/box_zip.png)](http://etal.usu.edu/GCD/Scripts/gcdbarplots.zip)
 
 ```
 ECDplots_R.zip
@@ -25,7 +25,7 @@ What does the script(s) output?
 
 - ECD plots as a *.pdf.  These can be further customized using a graphics drawing program (e.g. Adobe Illustrator) or simply saved as a *.png to use in a report, etc. 
 
-![thresh_plots]({{ site.baseurl }}assets/images/thresh_plots.png)
+![thresh_plots]({{ site.baseurl }}/assets/images/thresh_plots.png)
 
 What's in the *.zip?
 
