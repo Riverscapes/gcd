@@ -80,8 +80,15 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
             if (ErrSurfProperty.FISRuleFile is System.IO.FileInfo)
             {
                 rdoFIS.Checked = true;
-                cboFIS.SelectedItem = ErrSurfProperty.FISRuleFile;
-                cboFIS_SelectedIndexChanged(sender, e);
+                // Make sure that the correct FIS rule file is selected. Bit clumsy but works!
+                for (int i = 0; i < cboFIS.Items.Count; i++)
+                {
+                    if (string.Compare(((FISLibraryItem)cboFIS.Items[i]).FilePath.FullName, ErrSurfProperty.FISRuleFile.FullName, true) == 0)
+                    {
+                        cboFIS.SelectedIndex = i;
+                        break;
+                    }
+                }
             }
 
             // Finally call the update to put the controls in the correct state
