@@ -77,7 +77,7 @@ namespace GCDCore.UserInterface.FISLibrary
             }
             catch (Exception ex)
             {
-                naru.error.ExceptionUI.HandleException(ex);
+                GCDException.HandleException(ex);
             }
 
             UpdateControls(sender, e);

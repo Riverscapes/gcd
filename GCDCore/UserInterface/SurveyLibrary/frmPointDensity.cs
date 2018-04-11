@@ -58,7 +58,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             catch (Exception ex)
             {
                 DialogResult = DialogResult.None;
-                naru.error.ExceptionUI.HandleException(ex, "Error generating point density associated surface raster.");
+                GCDException.HandleException(ex, "Error generating point density associated surface raster.");
             }
         }
 

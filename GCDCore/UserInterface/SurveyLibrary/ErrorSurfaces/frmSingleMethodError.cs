@@ -90,7 +90,7 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
             catch (Exception ex)
             {
                 DialogResult = DialogResult.None;
-                naru.error.ExceptionUI.HandleException(ex, "Error editing single region error surface");
+                GCDException.HandleException(ex, "Error editing single region error surface");
             }
         }
 

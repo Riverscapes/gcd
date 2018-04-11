@@ -90,7 +90,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
                     }
                     else
                     {
-                        naru.error.ExceptionUI.HandleException(ex);
+                        GCDException.HandleException(ex);
                     }
                 }
             }
@@ -104,7 +104,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             }
             catch (Exception ex)
             {
-                naru.error.ExceptionUI.HandleException(ex, "Error Editing GCD Project Item");
+                GCDException.HandleException(ex, "Error Editing GCD Project Item");
             }
         }
 

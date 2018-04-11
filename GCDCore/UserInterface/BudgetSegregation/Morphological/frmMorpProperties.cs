@@ -65,7 +65,7 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
             catch (Exception ex)
             {
                 DialogResult = DialogResult.None;
-                naru.error.ExceptionUI.HandleException(ex, "Error generating morphological analysis.");
+                GCDException.HandleException(ex, "Error generating morphological analysis.");
             }
         }
 

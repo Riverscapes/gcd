@@ -63,7 +63,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             }
             catch (Exception ex)
             {
-                naru.error.ExceptionUI.HandleException(ex);
+                GCDException.HandleException(ex);
             }
         }
 
@@ -119,7 +119,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             }
             catch (Exception ex)
             {
-                naru.error.ExceptionUI.HandleException(ex);
+                GCDException.HandleException(ex);
             }
         }
 

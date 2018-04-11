@@ -33,6 +33,10 @@ namespace GCDCore.UserInterface.Project
 
         private void frmProjectProperties_Load(System.Object sender, System.EventArgs e)
         {
+            Exception ex = new Exception("test error");
+            ex.Data["Test Data"] = "test data value";
+            GCDCore.GCDException.HandleException(ex);
+
             grdMetaData.AllowUserToResizeRows = false;
             grdMetaData.AllowUserToOrderColumns = false;
 
@@ -231,7 +235,7 @@ namespace GCDCore.UserInterface.Project
                 ex.Data["Project Name"] = txtName.Text;
                 ex.Data["XML File"] = txtGCDPath.Text;
                 ex.Data["Directory"] = txtDirectory.Text;
-                naru.error.ExceptionUI.HandleException(ex, "An error occured while trying to save the information");
+                GCDException.HandleException(ex, "An error occured while trying to save the information");
             }
         }
 

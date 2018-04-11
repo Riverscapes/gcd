@@ -24,7 +24,7 @@ namespace GCDStandalone
             }
             catch (Exception ex)
             {
-                naru.error.ExceptionUI.HandleException(ex, "Error setting up application files.");
+                GCDCore.GCDException.HandleException(ex, "Error setting up application files.");
             }
 
             // ensure this is empty in case there's no auto open project
@@ -130,7 +130,7 @@ namespace GCDStandalone
             }
             catch (Exception ex)
             {
-                naru.error.ExceptionUI.HandleException(ex);
+               GCDCore.GCDException.HandleException(ex);
             }
         }
 
@@ -308,7 +308,7 @@ namespace GCDStandalone
             }
             catch (Exception ex)
             {
-                naru.error.ExceptionUI.HandleException(ex);
+                GCDCore.GCDException.HandleException(ex);
             }
         }
 
@@ -321,7 +321,7 @@ namespace GCDStandalone
             }
             catch (Exception ex)
             {
-                naru.error.ExceptionUI.HandleException(ex);
+                GCDCore.GCDException.HandleException(ex);
             }
         }
 
@@ -334,7 +334,7 @@ namespace GCDStandalone
             }
             catch (Exception ex)
             {
-                naru.error.ExceptionUI.HandleException(ex);
+                GCDCore.GCDException.HandleException(ex);
             }
         }
 
@@ -347,7 +347,7 @@ namespace GCDStandalone
             }
             catch (Exception ex)
             {
-                naru.error.ExceptionUI.HandleException(ex);
+                GCDCore.GCDException.HandleException(ex);
             }
         }
 
@@ -364,7 +364,7 @@ namespace GCDStandalone
             }
             catch (Exception ex)
             {
-                naru.error.ExceptionUI.HandleException(ex);
+                GCDCore.GCDException.HandleException(ex);
             }
         }
 

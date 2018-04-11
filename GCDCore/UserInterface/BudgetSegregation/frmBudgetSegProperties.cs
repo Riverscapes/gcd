@@ -63,7 +63,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
             }
             catch (Exception ex)
             {
-                naru.error.ExceptionUI.HandleException(ex);
+                GCDException.HandleException(ex);
             }
             finally
             {

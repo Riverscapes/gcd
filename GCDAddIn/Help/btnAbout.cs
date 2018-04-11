@@ -13,7 +13,7 @@ namespace GCDAddIn.Help
             }
             catch (Exception ex)
             {
-                naru.error.ExceptionUI.HandleException(ex);
+                GCDCore.GCDException.HandleException(ex);
             }
 
             ArcMap.Application.CurrentTool = null;

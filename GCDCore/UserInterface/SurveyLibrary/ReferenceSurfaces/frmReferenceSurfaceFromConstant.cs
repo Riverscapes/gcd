@@ -186,7 +186,7 @@ namespace GCDCore.UserInterface.SurveyLibrary.ReferenceSurfaces
             }
             catch (Exception ex)
             {
-                naru.error.ExceptionUI.HandleException(ex, "Error generating reference surface.");
+                GCDException.HandleException(ex, "Error generating reference surface.");
                 this.DialogResult = DialogResult.None;
             }
         }

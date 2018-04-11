@@ -136,7 +136,7 @@ namespace GCDAddIn
                 }
                 catch (Exception ex)
                 {
-                    naru.error.ExceptionUI.HandleException(ex);
+                    GCDCore.GCDException.HandleException(ex);
                 }
             }
 

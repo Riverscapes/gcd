@@ -104,9 +104,9 @@ namespace GCDCore.Project.Morphological
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////
             // Uncomment next line to clear the morph unit data and load the debug data
-//#if DEBUG
-//            LoadFeshieData();
-//#endif
+#if DEBUG 
+            LoadFeshieData();
+#endif
             ////////////////////////////////////////////////////////////////////////////////////////////////////
 
             // Add the total row
@@ -358,7 +358,7 @@ namespace GCDCore.Project.Morphological
         public override void Delete()
         {
             // Will throw exception with file locking info
-            CheckFilesInUse(OutputFolder);
+            //CheckFilesInUse(OutputFolder);
 
             try
             {

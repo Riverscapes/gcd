@@ -182,7 +182,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             }
             catch (Exception ex)
             {
-                naru.error.ExceptionUI.HandleException(ex);
+                GCDException.HandleException(ex);
             }
         }
 

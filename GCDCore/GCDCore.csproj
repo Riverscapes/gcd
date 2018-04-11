@@ -72,6 +72,7 @@
     <Compile Include="ErrorCalculation\FIS\FISInputMeta.cs" />
     <Compile Include="ErrorCalculation\FIS\FISLibrary.cs" />
     <Compile Include="ErrorCalculation\FIS\FISMetaItem.cs" />
+    <Compile Include="GCDException.cs" />
     <Compile Include="GCDUnits.cs" />
     <Compile Include="Project\GCDProjectVectorItem.cs" />
     <Compile Include="Project\LinearExtraction\LinearExtraction.cs" />

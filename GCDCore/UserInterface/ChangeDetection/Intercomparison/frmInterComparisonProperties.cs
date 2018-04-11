@@ -95,7 +95,7 @@ namespace GCDCore.UserInterface.ChangeDetection.Intercomparison
             }
             catch (Exception ex)
             {
-                naru.error.ExceptionUI.HandleException(ex, "Error performing change detection inter-comparison.");
+                GCDException.HandleException(ex, "Error performing change detection inter-comparison.");
             }
         }
 
@@ -108,7 +108,7 @@ namespace GCDCore.UserInterface.ChangeDetection.Intercomparison
             }
             catch (Exception ex)
             {
-                naru.error.ExceptionUI.HandleException(ex);
+                GCDException.HandleException(ex);
             }
         }
     }

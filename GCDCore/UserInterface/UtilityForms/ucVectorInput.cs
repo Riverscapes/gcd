@@ -95,7 +95,7 @@ namespace GCDCore.UserInterface.UtilityForms
                     MessageBox.Show(msg, "Missing Spatial Reference", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
-                    naru.error.ExceptionUI.HandleException(ex, string.Format("Error browsing to vector {0}", Noun));
+                    GCDException.HandleException(ex, string.Format("Error browsing to vector {0}", Noun));
             }
         }
     }

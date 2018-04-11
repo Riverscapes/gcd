@@ -82,7 +82,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             }
             catch (Exception ex)
             {
-                naru.error.ExceptionUI.HandleException(ex, "Error Importing DEM Survey");
+                GCDException.HandleException(ex, "Error Importing DEM Survey");
             }
         }
 

@@ -289,7 +289,7 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
             }
             catch (Exception ex)
             {
-                naru.error.ExceptionUI.HandleException(ex);
+                GCDException.HandleException(ex);
             }
         }
 
@@ -638,7 +638,7 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
             }
             catch (Exception ex)
             {
-                naru.error.ExceptionUI.HandleException(ex);
+                GCDException.HandleException(ex);
             }
             finally
             {

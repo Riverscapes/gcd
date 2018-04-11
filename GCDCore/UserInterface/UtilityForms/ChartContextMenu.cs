@@ -37,7 +37,7 @@ namespace GCDCore.UserInterface.UtilityForms
             }
             catch (Exception ex)
             {
-                naru.error.ExceptionUI.HandleException(ex, "An error occurred copying the chart image to the clipboard");
+                GCDCore.GCDException.HandleException(ex, "An error occurred copying the chart image to the clipboard");
             }
         }
 
@@ -110,7 +110,7 @@ namespace GCDCore.UserInterface.UtilityForms
             }
             catch (Exception ex)
             {
-                naru.error.ExceptionUI.HandleException(ex, "An error occurred saving the chart image to file");
+                GCDException.HandleException(ex, "An error occurred saving the chart image to file");
             }
         }
     }

@@ -89,7 +89,7 @@ namespace GCDCore.UserInterface.ProfileRoutes
             }
             catch (Exception ex)
             {
-                naru.error.ExceptionUI.HandleException(ex, "Error creating regular mask.");
+                GCDException.HandleException(ex, "Error creating regular mask.");
             }
         }
 
@@ -201,7 +201,7 @@ namespace GCDCore.UserInterface.ProfileRoutes
             }
             catch (Exception ex)
             {
-                naru.error.ExceptionUI.HandleException(ex, "Error adding directional mask to the map.");
+                GCDException.HandleException(ex, "Error adding directional mask to the map.");
             }
         }
     }

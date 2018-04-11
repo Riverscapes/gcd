@@ -69,7 +69,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             }
             catch (Exception ex)
             {
-                naru.error.ExceptionUI.HandleException(ex, "Error viewing change detection results");
+                GCDException.HandleException(ex, "Error viewing change detection results");
             }
         }
 
@@ -128,7 +128,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             }
             catch (Exception ex)
             {
-                naru.error.ExceptionUI.HandleException(ex);
+                GCDException.HandleException(ex);
             }
         }
     }

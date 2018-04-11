@@ -376,7 +376,7 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
             catch (Exception ex)
             {
                 ex.Data["Path"] = Analysis.Spreadsheet.FullName;
-                naru.error.ExceptionUI.HandleException(ex, "Error saving morphological spreadsheet");
+                GCDException.HandleException(ex, "Error saving morphological spreadsheet");
                 DialogResult = DialogResult.None;
                 return;
             }
@@ -444,7 +444,7 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
             }
             catch (Exception ex)
             {
-                naru.error.ExceptionUI.HandleException(ex, "Error serializing data table");
+                GCDException.HandleException(ex, "Error serializing data table");
             }
 
             try
@@ -456,7 +456,7 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
             }
             catch (Exception ex)
             {
-                naru.error.ExceptionUI.HandleException(ex, "Error Writing Tabular Data To CSV File");
+                GCDException.HandleException(ex, "Error Writing Tabular Data To CSV File");
             }
 
             if (File.Exists(frm.FileName))

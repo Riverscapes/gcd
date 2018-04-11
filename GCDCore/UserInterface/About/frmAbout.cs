@@ -34,7 +34,7 @@ namespace GCDCore.UserInterface.About
             }
             catch (Exception ex)
             {
-                naru.error.ExceptionUI.HandleException(ex);
+                GCDException.HandleException(ex);
             }
         }
 

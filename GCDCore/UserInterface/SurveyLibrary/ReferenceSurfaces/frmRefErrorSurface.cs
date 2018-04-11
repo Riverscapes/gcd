@@ -119,7 +119,7 @@ namespace GCDCore.UserInterface.SurveyLibrary.ReferenceSurfaces
             catch(Exception ex)
             {
                 DialogResult = DialogResult.None;
-                naru.error.ExceptionUI.HandleException(ex);
+                GCDException.HandleException(ex);
             }
             finally
             {

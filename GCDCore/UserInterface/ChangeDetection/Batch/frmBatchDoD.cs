@@ -136,7 +136,7 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
             }
             catch (Exception ex)
             {
-                naru.error.ExceptionUI.HandleException(ex);
+                GCDException.HandleException(ex);
             }
             finally
             {
@@ -167,7 +167,7 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
             }
             catch (Exception ex)
             {
-                naru.error.ExceptionUI.HandleException(ex);
+                GCDException.HandleException(ex);
             }
             finally
             {

@@ -58,7 +58,7 @@ namespace GCDCore.UserInterface.UtilityForms
             }
             catch (Exception ex)
             {
-                naru.error.ExceptionUI.HandleException(ex, "Error browsing to raster");
+                GCDException.HandleException(ex, "Error browsing to raster");
             }
         }
 

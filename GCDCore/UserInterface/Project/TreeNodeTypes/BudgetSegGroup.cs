@@ -63,7 +63,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             }
             catch (Exception ex)
             {
-                naru.error.ExceptionUI.HandleException(ex);
+                GCDCore.GCDException.HandleException(ex);
             }
         }
 
@@ -101,7 +101,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             }
             catch (Exception ex)
             {
-                naru.error.ExceptionUI.HandleException(ex);
+                GCDCore.GCDException.HandleException(ex);
             }
         }
     }

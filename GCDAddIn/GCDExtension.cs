@@ -19,7 +19,7 @@ namespace GCDAddIn
             }
             catch (Exception ex)
             {
-                naru.error.ExceptionUI.HandleException(ex, "Error setting up application files.");
+                GCDCore.GCDException.HandleException(ex, "Error setting up application files.");
             }
         }
 

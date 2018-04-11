@@ -105,7 +105,7 @@ namespace GCDCore.UserInterface.SurveyLibrary.ReferenceSurfaces
             }
             catch (Exception ex)
             {
-                naru.error.ExceptionUI.HandleException(ex, "Error generating reference surface from DEM surveys.");
+                GCDException.HandleException(ex, "Error generating reference surface from DEM surveys.");
                 this.DialogResult = DialogResult.None;
             }
         }
@@ -172,7 +172,7 @@ namespace GCDCore.UserInterface.SurveyLibrary.ReferenceSurfaces
             }
             catch (Exception ex)
             {
-                naru.error.ExceptionUI.HandleException(ex);
+                GCDException.HandleException(ex);
             }
         }
     }

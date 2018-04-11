@@ -9,6 +9,10 @@ namespace GCDAddIn.Project
         {
             try
             {
+                Exception ex1 = new Exception("test error");
+                ex1.Data["Test Data"] = "test data value";
+                throw ex1;
+
                 OpenFileDialog f = new OpenFileDialog();
                 f.DefaultExt = "xml";
                 f.Filter = "GCD Project Files (*.gcd)|*.gcd";
@@ -45,7 +49,7 @@ namespace GCDAddIn.Project
             }
             catch (Exception ex)
             {
-                naru.error.ExceptionUI.HandleException(ex);
+                GCDCore.GCDException.HandleException(ex);
             }
 
             ArcMap.Application.CurrentTool = null;

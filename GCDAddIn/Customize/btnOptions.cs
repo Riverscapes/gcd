@@ -13,7 +13,7 @@ namespace GCDAddIn.Customize
             }
             catch (Exception ex)
             {
-                naru.error.ExceptionUI.HandleException(ex);
+                GCDCore.GCDException.HandleException(ex);
             }
         }
     }

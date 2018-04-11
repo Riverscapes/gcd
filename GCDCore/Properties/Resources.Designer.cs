@@ -515,6 +515,15 @@ namespace GCDCore.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to https://github.com/Riverscapes/gcd/issues.
+        /// </summary>
+        public static string NewIssueURL {
+            get {
+                return ResourceManager.GetString("NewIssueURL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         public static System.Drawing.Bitmap NewProject {

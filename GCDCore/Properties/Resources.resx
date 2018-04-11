@@ -358,4 +358,7 @@
   <data name="vdod7" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\vdod7.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="NewIssueURL" xml:space="preserve">
+    <value>https://github.com/Riverscapes/gcd/issues</value>
+  </data>
 </root>

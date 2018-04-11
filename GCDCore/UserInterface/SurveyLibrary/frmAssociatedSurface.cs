@@ -139,7 +139,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             }
             catch (Exception ex)
             {
-                naru.error.ExceptionUI.HandleException(ex, "Error generating associated surface raster.");
+                GCDException.HandleException(ex, "Error generating associated surface raster.");
                 DialogResult = DialogResult.None;
             }
         }

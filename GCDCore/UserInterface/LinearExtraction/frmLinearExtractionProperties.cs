@@ -141,7 +141,7 @@ namespace GCDCore.UserInterface.LinearExtraction
             }
             catch (Exception ex)
             {
-                naru.error.ExceptionUI.HandleException(ex, "Error performing linear extraction.");
+                GCDException.HandleException(ex, "Error performing linear extraction.");
                 DialogResult = DialogResult.None;
             }
         }

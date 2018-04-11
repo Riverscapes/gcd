@@ -81,7 +81,7 @@ namespace GCDCore.UserInterface.Masks
             catch (Exception ex)
             {
                 DialogResult = DialogResult.None;
-                naru.error.ExceptionUI.HandleException(ex, "Error saving area of interest mask.");
+                GCDException.HandleException(ex, "Error saving area of interest mask.");
             }
             finally
             {
@@ -138,7 +138,7 @@ namespace GCDCore.UserInterface.Masks
             }
             catch (Exception ex)
             {
-                naru.error.ExceptionUI.HandleException(ex, "Error adding area of interest to the map.");
+                GCDException.HandleException(ex, "Error adding area of interest to the map.");
             }
         }
     }
