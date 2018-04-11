@@ -41,7 +41,18 @@ namespace GCDConsoleLib
         public Histogram(int bins, Raster rRa)
         {
             rRa.ComputeStatistics();
-            Dictionary<string, decimal> stats = rRa.GetStatistics();
+            Dictionary<string, decimal> stats;
+            try
+            {
+                stats = rRa.GetStatistics();
+            }
+            catch (Exception e)
+            {
+                stats = new Dictionary<string, decimal>{
+                    { "max", 0 },
+                    { "min", 0 },
+                };
+            }
             Tuple<int, decimal> newDims;
 
             // No point calculating stats if there are no bins
