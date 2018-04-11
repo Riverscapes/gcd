@@ -10,6 +10,8 @@
 
             {% capture slug    %}{{ entry.url | split: "/"   | last                       }}{% endcapture %}
             {% capture current %}{{ entry.url | remove: slug | remove: "//" | append: "/" }}{% endcapture %}
+        {% if entry.ignore %}
+        {% else %}
         {
             url: "{{entry.url}}",
             absurl: "{{ site.baseurl }}{{ entry.url }}",
@@ -17,6 +19,7 @@
             title: "{{entry.title}}",
             weight: "{{entry.weight}}"
         },
+        {% endif %}
         {% endfor %}
     ];
     var SiteSettings = {{ site.settings | jsonify }};
