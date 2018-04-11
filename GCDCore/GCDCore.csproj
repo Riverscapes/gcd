@@ -133,12 +133,6 @@
     <Compile Include="UserInterface\About\frmAbout.Designer.cs">
       <DependentUpon>frmAbout.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserInterface\About\ucAcknowledgements.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UserInterface\About\ucAcknowledgements.Designer.cs">
-      <DependentUpon>ucAcknowledgements.cs</DependentUpon>
-    </Compile>
     <Compile Include="UserInterface\BudgetSegregation\frmBudgetSegProperties.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -523,9 +517,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\About\frmAbout.resx">
       <DependentUpon>frmAbout.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UserInterface\About\ucAcknowledgements.resx">
-      <DependentUpon>ucAcknowledgements.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\BudgetSegregation\frmBudgetSegProperties.resx">
       <DependentUpon>frmBudgetSegProperties.cs</DependentUpon>

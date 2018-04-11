@@ -15,42 +15,24 @@ namespace GCDCore.UserInterface.About
         private void AboutForm_Load(Object sender, EventArgs e)
         {
             Text = string.Format("About {0}", Properties.Resources.ApplicationNameLong);
-
-            Panel2.Controls.Add(new ucAcknowledgements());
-
-            string sProduct = "Standalone";
-            if (ProjectManager.IsArcMap)
-            {
-                sProduct = "Addin";
-            }
-
-            System.Reflection.Assembly ass = System.Reflection.Assembly.GetExecutingAssembly();
-            lblVersion.Text = string.Format("{0} {1}", sProduct, ass.GetName().Version);
-
-            try
-            {
-                //lblRMVersion.Text = RasterManager.GetFileVersion().FileVersion.ToString()
-                //lblGCDCoreVersion.Text = GCDCore.GetFileVersion().FileVersion.ToString()
-            }
-            catch (Exception ex)
-            {
-                GCDException.HandleException(ex);
-            }
-        }
-
-        private void lnkFrankPoulsen(System.Object sender, System.Windows.Forms.LinkLabelLinkClickedEventArgs e)
-        {
-            Process.Start("http://www.essa.com/team/index.html#fp");
-        }
-
-        private void lnkPhilipBailey(System.Object sender, System.Windows.Forms.LinkLabelLinkClickedEventArgs e)
-        {
-            Process.Start("http://northarrowresearch.com/north-arrow-research/people/");
+            webBrowser1.Url = new Uri("http://gcd.riverscapes.xyz/dotnetack.html");            
+            lblName.Text = string.Format("{0} {1}", Properties.Resources.ApplicationNameShort, ProjectManager.IsArcMap ? "AddIn" : "Standalone");
+            lblVersion.Text = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
         }
 
         private void lnkJoeWheaton(System.Object sender, System.Windows.Forms.LinkLabelLinkClickedEventArgs e)
         {
             Process.Start(Properties.Resources.PeopleJoeWheatonURL);
+        }
+
+        private void lnkWebSite_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start(lnkWebSite.Text);
+        }
+
+        private void lnkOnlineHelp_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start(lnkOnlineHelp.Text);
         }
     }
 }
