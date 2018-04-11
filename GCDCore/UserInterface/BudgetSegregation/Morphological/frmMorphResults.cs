@@ -340,7 +340,7 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
                         case "colVolumeOut": foreColor = colVOu; break;
                     }
                 }
-                else if (grdData.Columns[e.ColumnIndex] == colVolumeIn && (double) e.Value < 0)
+                else if (grdData.Columns[e.ColumnIndex] == colVolumeIn && (double)e.Value < 0)
                 {
                     foreColor = Color.Red;
                 }
@@ -394,6 +394,14 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
 
             if (!frmMorpProperties.ValidateName(txtName, Analysis.BS, Analysis))
                 return false;
+
+            List<System.Diagnostics.Process> proc = naru.os.FileUtil.WhoIsLocking(Analysis.Spreadsheet.FullName);
+            if (proc.Count > 0)
+            {
+                MessageBox.Show("Unable to update the morphological analysis spreadsheet because it is in use by another application." +
+                    " Close all applications using this file and then attempt to save again.", "File Locked", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return false;
+            }
 
             return true;
         }

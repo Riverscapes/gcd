@@ -255,6 +255,7 @@ namespace GCDCore.Project
             // Delete the raw and thresholded rasters
             RawDoD.Delete();
             ThrDoD.Delete();
+            ThrErr.Delete();
 
             // Now delete all the meta files associated with the DoD
             foreach (FileInfo file in RawDoD.Raster.GISFileInfo.Directory.GetFiles("*.*", SearchOption.AllDirectories))

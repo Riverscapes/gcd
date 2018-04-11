@@ -150,13 +150,18 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             catch (IOException ex)
             {
                 string processes = string.Empty;
-                if (ex.Data.Contains("Processes"))
+
+                if (ex.Data.Contains("Locks"))
+                {
+                    MessageBox.Show(string.Format("The following files are being used by other process." +
+                        " Close all applications that are using these files and try to delete this {0} again.\n\n{1}", NounSingle.ToLower(), ex.Data["Locks"]), "File Locked", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
+                else if (ex.Data.Contains("Processes"))
                 {
                     processes = string.Format(" ({0})", ex.Data["Processes"]);
+                    MessageBox.Show(string.Format("One or more files belonging to this {0} are being used by another process{1}." +
+                        " Close all applications that are using these files and try to delete this {0} again.", NounSingle.ToLower(), processes), "File Locked", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
-
-                MessageBox.Show(string.Format("One or more files belonging to this {0} are being used by another process{1}." +
-                    " Close all applications that are using these files and try to delete this {0} again.", NounSingle.ToLower(), processes), "File Locked", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             catch (Exception ex)
             {

@@ -39,9 +39,9 @@ namespace GCDCore.Project.Morphological
             Spreadsheet = new FileInfo(Path.Combine(OutputFolder.FullName, "Morphological.xml"));
             BS = bs;
 
-            DisplayUnits_Duration = UnitsNet.Units.DurationUnit.Hour;
-            DisplayUnits_Volume = ProjectManager.Project.Units.VolUnit;
-            DisplayUnits_Mass = UnitsNet.Units.MassUnit.Kilogram;
+            _DisplayUnits_Duration = UnitsNet.Units.DurationUnit.Hour;
+            _DisplayUnits_Volume = ProjectManager.Project.Units.VolUnit;
+            _DisplayUnits_Mass = UnitsNet.Units.MassUnit.Kilogram;
 
             _duration = Duration.From(1, DisplayUnits_Duration);
             _porosity = 0.26m;
@@ -357,7 +357,39 @@ namespace GCDCore.Project.Morphological
 
         public override void Delete()
         {
-            throw new NotImplementedException("deleting morphological analysis is not implemented.");
+            // Will throw exception with file locking info
+            CheckFilesInUse(OutputFolder);
+
+            try
+            {
+                Spreadsheet.Refresh();
+                if (Spreadsheet.Exists)
+                {
+                    Spreadsheet.Delete();
+                    Spreadsheet.Refresh();
+                }
+            }
+            catch (Exception ex)
+            {
+                Exception ex2 = new Exception("Error attempting to delete morphological spreadsheet.", ex);
+                ex2.Data["File Path"] = Spreadsheet.FullName;
+                throw ex2;
+            }
+
+            // Delete the morphological analysis folder
+            if (!OutputFolder.EnumerateFileSystemInfos().Any())
+            {
+                OutputFolder.Delete();
+                OutputFolder.Refresh();
+            }
+
+            if (!OutputFolder.Parent.EnumerateFileSystemInfos().Any())
+            {
+                OutputFolder.Parent.Delete();
+            }
+
+            BS.MorphologicalAnalyses.Remove(this.Name);
+            ProjectManager.Project.Save();
         }
 
         public void SaveExcelSpreadsheet()

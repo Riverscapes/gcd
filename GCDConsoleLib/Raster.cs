@@ -311,7 +311,7 @@ namespace GCDConsoleLib
             if (write)
             {
                 // File exists AND we can overwrite it
-                if (GISFileInfo.Exists && Utility.FileHelpers.IsFileLocked(GISFileInfo.FullName, permission))
+                if (GISFileInfo.Exists && Utility.FileHelpers.IsGDALFileLocked(GISFileInfo.FullName, permission))
                     throw new IOException(string.Format("File `{0}` was locked for `{1}` operation", GISFileInfo, Enum.GetName(typeof(Access), permission)));
                 // File does not exist but there is no directory to put it in.
                 else if (!GISFileInfo.Exists && !Directory.Exists(GISFileInfo.DirectoryName))

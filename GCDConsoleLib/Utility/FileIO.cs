@@ -44,7 +44,7 @@ namespace GCDConsoleLib.Utility
         /// <param name="file"></param>
         /// <param name="GdalAccess"></param>
         /// <returns></returns>
-        public static bool IsFileLocked(string filepath, Access GdalAccess = Access.GA_ReadOnly)
+        public static bool IsGDALFileLocked(string filepath, Access GdalAccess = Access.GA_ReadOnly)
         {
             FileAccess myAccess = FileAccess.Read;
             if (GdalAccess == Access.GA_Update)
