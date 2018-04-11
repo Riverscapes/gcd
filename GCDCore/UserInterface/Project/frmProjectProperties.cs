@@ -33,10 +33,6 @@ namespace GCDCore.UserInterface.Project
 
         private void frmProjectProperties_Load(System.Object sender, System.EventArgs e)
         {
-            Exception ex = new Exception("test error");
-            ex.Data["Test Data"] = "test data value";
-            GCDCore.GCDException.HandleException(ex);
-
             grdMetaData.AllowUserToResizeRows = false;
             grdMetaData.AllowUserToOrderColumns = false;
 
