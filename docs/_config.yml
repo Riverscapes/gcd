@@ -82,7 +82,7 @@ collections:
 # The url you have to call is: http://siteurl.com/baseurl/?APPKEY=KEY1
 # ---------------------------------------------------------------
 AppRedirects:
-  - key: KEY1
-    url: Download
+  - key: NewProject
+    url: Help/Commands/project-menu/new-project.html
   - key: KEY2
     url: Download/release_notes.html
