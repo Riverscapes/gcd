@@ -102,7 +102,7 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
 
             rdoAssociated.Enabled = rdoAssociated.Checked ? true : Editable && AssociatedSurfaces.Count() > 0;
             cboAssociated.Enabled = Editable && rdoAssociated.Checked;
-           if (!rdoAssociated.Checked)
+            if (!rdoAssociated.Checked)
                 cboAssociated.SelectedIndex = -1;
 
             rdoFIS.Enabled = rdoFIS.Checked ? true : Editable && AssociatedSurfaces.Count() > 1;

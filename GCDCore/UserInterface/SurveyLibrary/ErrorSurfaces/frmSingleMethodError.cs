@@ -43,7 +43,10 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
         {
             cmdOK.Text = ErrorSurface == null ? Properties.Resources.CreateButtonText : Properties.Resources.UpdateButtonText;
             chkDefault.Checked = (ErrorSurface != null && ErrorSurface.IsDefault) || DEM.ErrorSurfaces.Count == 0;
-            chkDefault.Enabled = ErrorSurface == null ? DEM.ErrorSurfaces.Count > 0 : DEM.ErrorSurfaces.Count > 1;
+
+            // Changing default status disabled for existing error rasters because the project tree doesn't reload all error rasters again 
+            // leaving a stale default raster
+            chkDefault.Enabled = ErrorSurface == null ? DEM.ErrorSurfaces.Count > 0 : false;
         }
 
         private void cmdOK_Click(object sender, EventArgs e)

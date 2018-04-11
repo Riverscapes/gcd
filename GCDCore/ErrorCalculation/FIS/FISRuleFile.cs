@@ -11,7 +11,7 @@ namespace GCDCore.ErrorCalculation.FIS
 
         public override string ToString()
         {
-            return string.Format("{0} ({1} Inputs)", RuleFilePath.FullName, FISInputs.Count);
+            return string.Format("{0} ({1} Inputs)", System.IO.Path.GetFileName(RuleFilePath.FullName), FISInputs.Count);
         }
 
         public FISRuleFile(System.IO.FileInfo filePath)
