@@ -732,6 +732,15 @@ namespace GCDCore.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to http://tat.riverscapes.xyz/.
+        /// </summary>
+        public static string TATWebSite {
+            get {
+                return ResourceManager.GetString("TATWebSite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         public static System.Drawing.Bitmap TopCat {

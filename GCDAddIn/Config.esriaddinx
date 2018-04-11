@@ -28,11 +28,12 @@
         <!-- Data Preparation Menu -->
         <Button id="GCD7_AddIn_CleanRasterButton" class="GCDAddIn.DataPreparation.btnCleanRaster" message="Clean a raster to fix cell extent and divisibility issues" caption="Clean Raster" category="GCD" image="Images\CleanRaster.png" />
         <Button id="GCD7_AddIn_ConcaveHull" class="ConcaveHullButton" message="Create a bounding polygon around a set of survey points." caption="Creating Bounding Polygon" category="GCD" image="Resources\ConcaveHull.png" />
-        
+
         <!-- Help Menu-->
         <Button id="GCD7_AddIn_AboutButton" class="GCDAddIn.Help.btnAbout" message="Provides information about the version, authors and funding for the Geomorphic Change Detection (GCD)." caption="About GCD" tip="Information About the GCD" category="GCD" image="Images\GCD.png" />
         <Button id="GCD7_AddIn_OnlineHelp" class="GCDAddIn.Help.btnOnlineHelp" message="Open the GCD Online Help" caption="Online GCD 6 Help" category="GCD" image="Images\Help.png" />
         <Button id="GCD7_AddIn_WebSite" class="GCDAddIn.Help.btnWebSite" message="Open the GCD Software Web Site" caption="GCD Web Site" category="GCD" image="Images\Help.png" />
+        <Button id="GCD7_AddIn_TATWebSite" class="GCDAddIn.Help.btnTATWebSite" message="Open the Topographic Analysis Tools Software Web Site" caption="Topographic Analysis Tools Web Site" category="GCD" image="Images\Help.png" />
       </Commands>
       <DockableWindows>
         <DockableWindow id="GCD7_ucProjectManager" class="GCDAddIn.ucProjectManager+AddinImpl" caption="GCD Project Explorer" image="Images\GCD.png">
@@ -66,6 +67,7 @@
             <Button refID="GCD7_AddIn_OnlineHelp" />
             <Button refID="GCD7_AddIn_WebSite" />
             <Button refID="GCD7_AddIn_AboutButton" />
+            <Button refID="GCD7_AddIn_TATWebSite" separator="true"/>
           </Items>
         </Menu>
       </Menus>

@@ -361,4 +361,7 @@
   <data name="NewIssueURL" xml:space="preserve">
     <value>https://github.com/Riverscapes/gcd/issues</value>
   </data>
+  <data name="TATWebSite" xml:space="preserve">
+    <value>http://tat.riverscapes.xyz/</value>
+  </data>
 </root>

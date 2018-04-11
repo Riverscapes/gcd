@@ -95,6 +95,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="ESRI.ArcGIS.Desktop.AddIns, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
     </Reference>
     <Reference Include="ESRI.ArcGIS.Display, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
@@ -159,6 +160,7 @@
     <Compile Include="GCDExtension.cs" />
     <Compile Include="Help\btnAbout.cs" />
     <Compile Include="Help\btnOnlineHelp.cs" />
+    <Compile Include="Help\btnTATWebSite.cs" />
     <Compile Include="Help\btnWebSite.cs" />
     <Compile Include="Project\btnCloseProject.cs" />
     <Compile Include="Project\btnNewProject.cs" />
