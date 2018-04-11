@@ -78,8 +78,8 @@ namespace GCDConsoleLib.FIS.Tests
                 // [2] Roughness
                 // [3] PointQuality3D
                 // [4] InterpolationError
-                // [5] GPSZErrorPDSLPdegPQ
-                // [6] CHaMPTSZErrorPDSLPdeg3DQIntErr
+                // [5] CHaMPTSZErrorPDSLPdeg3DQIntErr
+                // [6] CHaMPTSZErrorPDSLPdegIntErr
                 // [7] CHaMPTSZErrorPDSLPdegSR3DQIntErr
                 new double[] { 0.2928451002, 0.3055774868, 0.3055774868, 0.2801127136, 0.3055774868, 0.3055774868, 0.2801127136, 0.2928451002, 0.2928451002 },
                 new double[] { 25.52311134, 25.1586895, 24.2785244, 25.34467316, 24.90020752, 24.01894188, 25.16471291, 24.6658268, 23.80186081 },
@@ -87,9 +87,9 @@ namespace GCDConsoleLib.FIS.Tests
                 new double[] { 0.04005853832, 0.04163705185, 0.04321556166, 0.03906433657, 0.0406428501, 0.04222136363, 0.03807013854, 0.03964864835, 0.04122716188 },
                 new double[] { 0.0009646805702, 0.001046532765, 0.001128385076, 0.0009387636674, 0.00102061592, 0.001102468115, 0.0009128467646, 0.0009946989594, 0.001076551271 },
                 // These are the GCD6 numbers
-                new double[] { 0.05000000075, 0.1103881523, 0.1230156422, 0.4148696959, 0.4498254061, 0.3266140521, 0.3981432021, 0.1513022482, 0.1058925837 },
                 new double[] { 0.5009201765, 0.3019917905, 0.1466666609, 0.4215319157, 0.1466666609, 0.1466666609, 0.3067083955, 0.1466666609, 0.1466666609 },
-                new double[] { 0.6965144277, 0.4653637111, 0.05000000075, 0.6237809062, 0.05000000075, 0.05000000075, 0.4732590318, 0.05000000075, 0.05000000075 },
+                new double[] { 0.5009201765, 0.3019917905, 0.1466666609, 0.4215319157, 0.1466666609, 0.1466666609, 0.3067083955, 0.1466666609, 0.1466666609 },
+                new double[] { 0.6965144277, 0.4653637111, 0.05000000075, 0.6237809062, 0.05000000075, 0.05000000075, 0.4732590318, 0.05000000075, 0.05000000075 }
             };
 
 
@@ -106,11 +106,11 @@ namespace GCDConsoleLib.FIS.Tests
 
                 // Now verify them against the spreadsheet
                 Debug.WriteLine(result1);
-                Assert.AreEqual(result1, Feshie[4][idx], Feshie[4][idx] * ACCEPTABLE_DELTA);
+                Assert.AreEqual(result1, UGR[5][idx], UGR[5][idx] * ACCEPTABLE_DELTA);
             }
 
 
-            // TEST 3: CHaMP_TS_ZError_PD_SLPdeg_IntErr
+            // TEST 4: CHaMP_TS_ZError_PD_SLPdeg_IntErr
             // We need just PointDensity and SlopeDegrees
             Debug.WriteLine("CHaMP_TS_ZError_PD_SLPdeg_IntErr");
             FisFile CHaMP_TS_ZError_PD_SLPdeg_IntErr = new FisFile(new FileInfo(DirHelpers.GetTestRootPath(@"FIS\CHaMP_TS_ZError_PD_SLPdeg_IntErr.fis")));
@@ -123,10 +123,10 @@ namespace GCDConsoleLib.FIS.Tests
 
                 // Now verify them against the spreadsheet
                 Debug.WriteLine(result1);
-                Assert.AreEqual(result1, Feshie[4][idx], Feshie[4][idx] * ACCEPTABLE_DELTA);
+                Assert.AreEqual(result1, UGR[6][idx], UGR[6][idx] * ACCEPTABLE_DELTA);
             }
 
-            // TEST 3: CHaMP_TS_ZError_PD_SLPdeg_SR_3DQ_IntErr
+            // TEST 5: CHaMP_TS_ZError_PD_SLPdeg_SR_3DQ_IntErr
             // We need just PointDensity and SlopeDegrees
             Debug.WriteLine("CHaMP_TS_ZError_PD_SLPdeg_SR_3DQ_IntErr");
             FisFile CHaMP_TS_ZError_PD_SLPdeg_SR_3DQ_IntErr = new FisFile(new FileInfo(DirHelpers.GetTestRootPath(@"FIS\CHaMP_TS_ZError_PD_SLPdeg_SR_3DQ_IntErr.fis")));
@@ -139,7 +139,40 @@ namespace GCDConsoleLib.FIS.Tests
 
                 // Now verify them against the spreadsheet
                 Debug.WriteLine(result1);
-                Assert.AreEqual(result1, Feshie[4][idx], Feshie[4][idx] * ACCEPTABLE_DELTA);
+                Assert.AreEqual(result1, UGR[7][idx], UGR[7][idx] * ACCEPTABLE_DELTA);
+            }
+
+
+            /// We found some extreme value problems for individual pixels (pixel 9 is the problem here)
+            /// Let's add this to the set
+            List<double[]> Feshie2 = new List<double[]>
+            {
+                // ROWS (from the spreadsheet: https://docs.google.com/spreadsheets/d/1v6abeYaKZXQAyN25VEuN3NvffOTFth0cl1cJ24zNfLE/edit#gid=1712652478): 
+                // [0] PointDensityZZ
+                // [1] SlopeZZ
+                // [2] pyFuzzy (RESULT)
+                new double[] { 0.200, 0.240, 0.240, 0.240, 0.280, 0.240, 0.200, 0.200, 0.160 },
+                new double[] { 3.182, 8.891, 4.504, 3.410, 8.744, 7.074, 2.888, 7.251, 8.773 },
+                // These are the scikit-fuzzy numbers
+                new double[] { 0.081, 0.222, 0.131, 0.097, 0.147, 0.147, 0.048, 0.151, 0.270 },               
+            };
+
+
+
+            // TEST 5: CHaMP_TS_ZError_PD_SLPdeg_SR_3DQ_IntErr
+            // We need just PointDensity and SlopeDegrees
+            Debug.WriteLine("GPS_ZError_PD_SLPdeg_ZZ");
+            FisFile GPS_ZError_PD_SLPdeg_ZZ = new FisFile(new FileInfo(DirHelpers.GetTestRootPath(@"FIS\GPS_ZError_PD_SLPdeg_ZZ.fis")));
+            for (int idx = 0; idx < Feshie2[0].Length; idx++)
+            {
+                // Input order in the fis file is: SlopeZZ, PointDensityZZ
+                double result1 = GPS_ZError_PD_SLPdeg_ZZ.ruleset.calculate(new List<double[]> { Feshie2[1], Feshie2[0] }, idx, true, nodatas, -2);
+                double result2 = GPS_ZError_PD_SLPdeg_ZZ.ruleset.calculate(new List<double> { Feshie2[1][idx], Feshie2[0][idx] }, true);
+                Assert.AreEqual(result1, result2);
+
+                // Now verify them against the spreadsheet
+                Debug.WriteLine(result1);
+                //Assert.AreEqual(result1, Feshie2[2][idx], Feshie2[2][idx] * ACCEPTABLE_DELTA);
             }
 
         }

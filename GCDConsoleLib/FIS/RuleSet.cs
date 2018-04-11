@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using GCDConsoleLib.Extensions;
 
 namespace GCDConsoleLib.FIS
@@ -158,7 +160,7 @@ namespace GCDConsoleLib.FIS
         /// </summary>
         /// <param name="lInputs">Inputs The list of input values. These MUST be in the same order that the input variables</param>
         /// <returns></returns>
-        public double calculate(List<double> lInputs)
+        public double calculate(List<double> lInputs, bool debug = false)
         {
             List<List<double>> _fuzzyInputs = new List<List<double>>();
             if (lInputs.Count != Inputs.Count)
@@ -173,6 +175,12 @@ namespace GCDConsoleLib.FIS
                 for (jdx = 0; jdx < Inputs[inputName].Count; jdx++)
                     _fin.Add(Inputs[inputName].MFunctions[jdx].fuzzify(lInputs[idx]));
                 _fuzzyInputs.Add(_fin);
+            }
+
+            if (debug == true)
+            {
+                Debug.WriteLine("Debug=================");
+                _fuzzyInputs.ForEach(x => Debug.WriteLine(String.Format("INPUT: Fuzzy: ({0})", String.Join(", ", x))));
             }
 
             MemberFunction impMf = new MemberFunction();
@@ -193,11 +201,31 @@ namespace GCDConsoleLib.FIS
                 }
                 impMf = ImplicatorOp(rule.Output, impValue, rule.Weight);
                 AggregatorOp(impMf, aggMf);
+
+                if (debug == true)
+                {
+                    List<string> coords = new List<string>();
+                    impMf.Coords.ForEach(x => coords.Add(String.Format("({0})", String.Join(", ", x))));
+                    Debug.WriteLine(String.Format("IMP Coords Rule{1}: {0}", String.Join(" ", coords), r));
+                }
+
+            }
+
+            double defuzzed = DefuzzifierOp(aggMf);
+
+            if (debug == true)
+            {
+                List<string> coords = new List<string>();
+                aggMf.Coords.ForEach(x => coords.Add(String.Format("({0})", String.Join(", ", x))));
+                Debug.WriteLine(String.Format("Aggregated Coords: {0}", String.Join(" ", coords)));
+
+                Debug.WriteLine(String.Format("Defuzzified: {0}", DefuzzifierOp(aggMf)));
+                Debug.WriteLine("ENDDebug=================");
             }
 
             // The defuzzifier is where composite shape gets reduced
             // to a single number
-            return DefuzzifierOp(aggMf);
+            return defuzzed;
         }
 
         /// <summary>
