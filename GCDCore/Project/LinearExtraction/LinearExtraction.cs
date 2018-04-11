@@ -50,7 +50,35 @@ namespace GCDCore.Project.LinearExtraction
 
         public override void Delete()
         {
-            throw new NotImplementedException();
+            if (GCDConsoleLib.Utility.FileHelpers.IsFileLocked(Database.FullName, FileAccess.ReadWrite))
+            {
+                Exception ex = new IOException("File locked and in use.");
+                ex.Data["Locks"] = Database.FullName;
+                throw ex;
+            }
+
+            Database.Delete();
+            Database.Refresh();
+
+            if (!Directory.EnumerateFileSystemEntries(Database.DirectoryName).Any())
+            {
+                Database.Directory.Delete();
+            }
+
+            if (!Directory.EnumerateFileSystemEntries(Database.Directory.Parent.FullName).Any())
+            {
+                Database.Directory.Parent.Delete();
+            }
+
+            if (GCDProjectItem is DoDBase)
+            {
+                ((DoDBase)GCDProjectItem).LinearExtractions.Remove(Name);
+            }
+            else
+            {
+                ((Surface)GCDProjectItem).LinearExtractions.Remove(Name);
+            }
+            ProjectManager.Project.Save();
         }
     }
 }
