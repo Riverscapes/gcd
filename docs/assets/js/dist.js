@@ -136,7 +136,8 @@ $(document).ready(function (){
 		var $topbarright = $('<div class="top-bar-right"></div>');
 		$topbar.append($topbarleft);
 		
-		function menutraverse(t, first=false) {
+		function menutraverse(t, first) {
+			if (!first) first = false;
 			// First time round
 			var $mUL = $('<ul class="submenu menu vertical" data-submenu></ul>');
 			if (first){
@@ -190,6 +191,14 @@ $(document).ready(function (){
 		return $topbarContainer;
 	}
 
+// Extract the url parameter from the name you want
+function getUrlParameter(name) {
+	name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+	var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+	var results = regex.exec(location.search);
+	return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+};
+
 	/**
 	 * Turn a tree structure from treeize into a foundation sidebar accordion 
 	 * @param  {[type]}
@@ -233,6 +242,18 @@ $(document).ready(function (){
 			accordionize(br, $newmUl);
 		}
 		return $mUL;			
+	}
+
+
+	/**
+	 * The redirector only does its job if we have a valid query string
+	 * @param {*} appkey 
+	 */
+	function redirector(){
+		var appkey = getUrlParameter("APPKEY");
+		if (appkey && appkey.length > 0 && APPREDIRECTS && APPREDIRECTS[appkey]){
+			window.location.replace(NAVHome + "/" + APPREDIRECTS[appkey]);
+		}
 	}
 
 	/**
@@ -292,7 +313,12 @@ $(document).ready(function (){
 	$('#toc').toc();
 	// $('#toc').prepend('<h4 class="show-for-medium"><span class="fa fa-file-text"></span> Page Contents:</h4>')
 
+	// See if we need to do a redirect
+	redirector();	
+
 	// Now turn off the dumb nav and turn on the smart one 
 	$('#sidenav #topmenu').removeClass('hide');
 	$('#sidenav #HTMLOnlyNav').addClass('hide');
 });
+
+

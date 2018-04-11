@@ -27,7 +27,9 @@ $(document).ready(function (){
 				key = key.replace("_"," ").replace("%20", " ");
 				var newDir = null;
 
-				var thebranch = pointer.branches.filter(br => br.key == key)
+				var thebranch = pointer.branches.filter(function(br){
+					return br.key == key
+				})
 				if (thebranch.length > 0){
 					newDir = thebranch[0];
 				}
@@ -100,14 +102,6 @@ $(document).ready(function (){
 	function topbarize() {
 		// The Mobile menu
 		$topbarContainer = $('<div></div>')
-		
-		if (!SiteSettings.topmenu || SiteSettings.topmenu.length < 1){
-			// No menu found or there was a problem
-			$mobilediv = $('<div class="title-bar hide-for-medium"></div>');
-			$mobilediv.append($('<div class="title-bar-title"><a href="' + NAVHome + '/">'+NAVTitle+'</a></div>'))
-			$topbarContainer.append($mobilediv)
-			return $topbarContainer						
-		}
 
 		var tree = SiteSettings.topmenu
 
@@ -119,18 +113,18 @@ $(document).ready(function (){
 		$topbarContainer.append($mobilediv)
 
 		var $topbar = $('<div class="top-bar" id="responsive-menu"></div>');
-		var $topbarleft = $('<div class="top-bar-left"></div>');
+		var $topbarleft = $('<div class="top-bar-left"><ul class="dropdown menu" data-dropdown-menu><li class="show-for-medium"><a id="topbarLogo" href="http://riverscapes.xyz/">Riverscapes Consortium</a></li></ul></div>')
+		var $topbarright = $('<div class="top-bar-right"></div>');
 		$topbar.append($topbarleft);
 		
-		function menutraverse(t, first=false) {
+		function menutraverse(t, first) {
+			if (!first) first = false;
 			// First time round
 			var $mUL = $('<ul class="submenu menu vertical" data-submenu></ul>');
 			if (first){
 				var $mUL = $('<ul class="dropdown menu" data-dropdown-menu></ul>');
-				var $title = $('<li class="show-for-medium"><a href="'+NAVHome+'/">'+NAVTitle+'</li>');
-				$mUL.append($title);
 			}
-		
+				
 			function urlize(item){
 				var newurl = "#";
 				var target = "";
@@ -160,18 +154,31 @@ $(document).ready(function (){
 				}
 				else {
 					var $mLi = $('<li></li>');
-					$mLi.append(urlize(t[cind]))
+					$mLi.append(urlize(t[cind]));
 					$mUL.append($mLi);
 				}
 			}
-
 			return $mUL;			
 		}
 
-		$topbarleft.append(menutraverse(tree, true));
-		$topbarContainer.append($topbar)
-		return $topbarContainer
+		// Only build the menu if it's specified in the config.yaml file
+		if (tree){
+			$topbarright.append(menutraverse(tree, true));
+			$topbar.append($topbarright);	
+		}
+
+
+		$topbarContainer.append($topbar);
+		return $topbarContainer;
 	}
+
+// Extract the url parameter from the name you want
+function getUrlParameter(name) {
+	name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+	var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+	var results = regex.exec(location.search);
+	return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+};
 
 	/**
 	 * Turn a tree structure from treeize into a foundation sidebar accordion 
@@ -181,7 +188,7 @@ $(document).ready(function (){
 	function accordionize(t, $mUL) {
 		// The first time we have to build the ul
 		if (!$mUL) {
-			$mUL = $('<ul id="topmenu" class="vertical menu accordion-menu" data-accordion-menu data-submenu-toggle="true"></ul>');
+			$mUL = $('<ul id="topmenu" class="vertical menu accordion-menu hide" data-accordion-menu data-submenu-toggle="true"></ul>');
 			// If we've elected to have a home item then use it
 			try {
 				if (SiteSettings.sideMenu.homeItem === true){
@@ -218,6 +225,18 @@ $(document).ready(function (){
 		return $mUL;			
 	}
 
+
+	/**
+	 * The redirector only does its job if we have a valid query string
+	 * @param {*} appkey 
+	 */
+	function redirector(){
+		var appkey = getUrlParameter("APPKEY");
+		if (appkey && appkey.length > 0 && APPREDIRECTS && APPREDIRECTS[appkey]){
+			window.location.replace(NAVHome + "/" + APPREDIRECTS[appkey]);
+		}
+	}
+
 	/**
 	 * This  is our function for expanding to the current item (page)
 	 * 
@@ -250,12 +269,12 @@ $(document).ready(function (){
 	expandCurentAccordion($sidebarnav);
 
 	// Rewrite a few of the interactions with the menu3
-	$('#topmenu i.icon').click(e => {
+	$('#topmenu i.icon').click(function(e){
 			e.stopPropagation();
 			e.preventDefault();
 			$(e.toElement).parent().siblings('button').click();
 	})
-	$('#topmenu li.branch a.nolink').click(e => {
+	$('#topmenu li.branch a.nolink').click(function(e){
 		e.preventDefault();
 		$(e.toElement).siblings('button').click();
 })
@@ -275,4 +294,12 @@ $(document).ready(function (){
 	$('#toc').toc();
 	// $('#toc').prepend('<h4 class="show-for-medium"><span class="fa fa-file-text"></span> Page Contents:</h4>')
 
+	// See if we need to do a redirect
+	redirector();	
+
+	// Now turn off the dumb nav and turn on the smart one 
+	$('#sidenav #topmenu').removeClass('hide');
+	$('#sidenav #HTMLOnlyNav').addClass('hide');
 });
+
+

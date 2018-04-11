@@ -19,7 +19,10 @@
     "grunt-sass": "^1.1.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "grunt",
+    "watch": "grunt watch",
+    "start": "cd ..; jekyll serve"
   },
   "repository": "git+https://github.com/NorthArrowResearch/web_anabranch.git",
   "author": "",

@@ -20,5 +20,10 @@
         {% endfor %}
     ];
     var SiteSettings = {{ site.settings | jsonify }};
+    var APPREDIRECTS = {
+    {% for redir in site.AppRedirects %}
+        {{redir.key}}: "{{redir.url}}",
+    {% endfor %}
+    }
 </script>
 {% endcapture %}{{ html | strip_newlines | replace:'    ','' | replace:'    ','' | replace:'  ',' ' }}

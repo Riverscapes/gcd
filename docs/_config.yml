@@ -74,3 +74,15 @@ settings:
 collections:
   releasenotes:
     output: true
+
+# Redirecting from apps can be tricky so we use a key-value system
+# key: must be in the set [A-Za-z0-9_] (no spaces, no dashes)
+# url: must be relative url, no leading slash.
+# 
+# The url you have to call is: http://siteurl.com/baseurl/?APPKEY=KEY1
+# ---------------------------------------------------------------
+AppRedirects:
+  - key: KEY1
+    url: Download
+  - key: KEY2
+    url: Download/release_notes.html
