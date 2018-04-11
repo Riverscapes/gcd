@@ -109,8 +109,39 @@ namespace GCDCore.Project
             return result;
         }
 
+        /// <summary>
+        /// Remove layers from the map to ensure the locks are released        
+        /// </summary>
+        new public void RemoveLayersFromMap()
+        {
+            // Remove layers from the map to ensure the locks are released
+            ProjectManager.OnGISLayerDelete(new ProjectManager.GISLayerEventArgs(PropagatedError.GISFileInfo));
+
+            ProjectManager.OnGISLayerDelete(new ProjectManager.GISLayerEventArgs(PriorProbability.GISFileInfo));
+
+            if (PosteriorProbability != null)
+                ProjectManager.OnGISLayerDelete(new ProjectManager.GISLayerEventArgs(PosteriorProbability.GISFileInfo));
+
+            if (ConditionalRaster != null)
+                ProjectManager.OnGISLayerDelete(new ProjectManager.GISLayerEventArgs(ConditionalRaster.GISFileInfo));
+
+            if (SpatialCoherenceErosion != null)
+                ProjectManager.OnGISLayerDelete(new ProjectManager.GISLayerEventArgs(SpatialCoherenceErosion.GISFileInfo));
+
+            if (SpatialCoherenceDeposition != null)
+                ProjectManager.OnGISLayerDelete(new ProjectManager.GISLayerEventArgs(SpatialCoherenceDeposition.GISFileInfo));
+
+            base.RemoveLayersFromMap();
+        }
+
         public override void Delete()
         {
+            RemoveLayersFromMap();
+
+            // recursively check all files under the DoD are not locked. Throws exception if they are
+            // Do this before attempting to delete any files so you don't end up in partial dataset
+            CheckFilesInUse(Folder);
+
             DeleteRaster(PriorProbability);
             DeleteRaster(PosteriorProbability);
             DeleteRaster(ConditionalRaster);

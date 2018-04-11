@@ -151,6 +151,8 @@ namespace GCDCore.Project
 
         public override void Delete()
         {
+            CheckFilesInUse(Folder);
+
             try
             {
                 MorphologicalAnalyses.Values.ToList().ForEach(x => x.Delete());

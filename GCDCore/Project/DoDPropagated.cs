@@ -58,8 +58,23 @@ namespace GCDCore.Project
             return ErrorSurfaces.First<ErrorSurface>(x => string.Compare(errorName, x.Name, true) == 0);
         }
 
+        /// <summary>
+        /// Remove layers from the map to ensure the locks are released        
+        /// </summary>
+        new public void RemoveLayersFromMap()
+        {
+            ProjectManager.OnGISLayerDelete(new ProjectManager.GISLayerEventArgs(PropagatedError.GISFileInfo));
+            base.RemoveLayersFromMap();
+        }
+
         public override void Delete()
         {
+            RemoveLayersFromMap();
+
+            // recursively check all files under the DoD are not locked. Throws exception if they are
+            // Do this before attempting to delete any files so you don't end up in partial dataset
+            CheckFilesInUse(Folder);
+
             DeleteRaster(PropagatedError);
             base.Delete();
         }

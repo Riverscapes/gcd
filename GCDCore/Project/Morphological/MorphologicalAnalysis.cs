@@ -358,7 +358,7 @@ namespace GCDCore.Project.Morphological
         public override void Delete()
         {
             // Will throw exception with file locking info
-            //CheckFilesInUse(OutputFolder);
+            CheckFilesInUse(OutputFolder);
 
             try
             {
