@@ -295,19 +295,11 @@ namespace GCDCore.UserInterface.Project
             }
 
             return true;
-
         }
 
         private void btnHelp_Click(System.Object sender, System.EventArgs e)
         {
-            if (CreateMode)
-            {
-                System.Diagnostics.Process.Start(Properties.Resources.HelpBaseURL + "project-menu/new-project");
-            }
-            else
-            {
-                System.Diagnostics.Process.Start(Properties.Resources.HelpBaseURL + "gcd-command-reference/gcd-project-explorer/project-context-menu/edit-gcd-project-properties");
-            }
+            OnlineHelp.Show(CreateMode ? "NewProject" : "ProjectProperties");
         }
 
         private void cmdHelpPrecision_Click(System.Object sender, System.EventArgs e)
@@ -319,7 +311,6 @@ namespace GCDCore.UserInterface.Project
 
         private class ProjectMetaData
         {
-
             private string m_Key;
 
             private string m_Value;

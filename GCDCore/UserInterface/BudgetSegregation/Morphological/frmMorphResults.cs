@@ -552,5 +552,10 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
 
             valBoundaryFlux.ValueChanged += MinFlux_Changed;
         }
+
+        private void cmdHelp_Click(object sender, EventArgs e)
+        {
+            OnlineHelp.Show(Name);
+        }
     }
 }

@@ -245,5 +245,10 @@ namespace GCDCore.UserInterface.Options
 
             return fontstring;
         }
+
+        private void btnHelp_Click_1(object sender, EventArgs e)
+        {
+            OnlineHelp.Show(Name);
+        }
     }
 }

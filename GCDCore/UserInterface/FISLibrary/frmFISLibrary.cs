@@ -106,7 +106,7 @@ namespace GCDCore.UserInterface.FISLibrary
 
         private void btnHelp_Click(System.Object sender, System.EventArgs e)
         {
-            Process.Start(Properties.Resources.HelpBaseURL + "gcd-command-reference/customize-menu/fis-library");
+            OnlineHelp.Show(Name);
         }
 
         private void btnFISRepo_Click(System.Object sender, System.EventArgs e)

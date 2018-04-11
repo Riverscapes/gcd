@@ -50,7 +50,7 @@ namespace GCDCore.UserInterface.ChangeDetection
 
         private void btnHelp_Click(object sender, EventArgs e)
         {
-
+            OnlineHelp.Show(Name);
         }
     }
 }

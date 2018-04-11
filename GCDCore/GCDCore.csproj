@@ -307,6 +307,7 @@
       <DependentUpon>frmMaskProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\Masks\MaskValidation.cs" />
+    <Compile Include="UserInterface\OnlineHelp.cs" />
     <Compile Include="UserInterface\ProfileRoutes\frmProfileRouteProperties.cs">
       <SubType>Form</SubType>
     </Compile>

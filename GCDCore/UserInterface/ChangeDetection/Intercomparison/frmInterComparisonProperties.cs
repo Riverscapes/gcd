@@ -111,5 +111,10 @@ namespace GCDCore.UserInterface.ChangeDetection.Intercomparison
                 GCDException.HandleException(ex);
             }
         }
+
+        private void cmdHelp_Click(object sender, EventArgs e)
+        {
+            OnlineHelp.Show(Name);
+        }
     }
 }

@@ -91,6 +91,7 @@
             this.cmdHelp.TabIndex = 5;
             this.cmdHelp.Text = "Help";
             this.cmdHelp.UseVisualStyleBackColor = true;
+            this.cmdHelp.Click += new System.EventHandler(this.cmdHelp_Click);
             // 
             // ucErrProp
             // 

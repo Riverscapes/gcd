@@ -204,5 +204,10 @@ namespace GCDCore.UserInterface.ProfileRoutes
                 GCDException.HandleException(ex, "Error adding directional mask to the map.");
             }
         }
+
+        private void cmdHelp_Click(object sender, EventArgs e)
+        {
+            OnlineHelp.Show(Name);
+        }
     }
 }

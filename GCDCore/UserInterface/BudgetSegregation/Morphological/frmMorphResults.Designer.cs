@@ -105,6 +105,7 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.chtData = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.ucDoDPropertiesGrid1 = new GCDCore.UserInterface.ChangeDetection.ucDoDPropertiesGrid();
             this.label7 = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -112,7 +113,6 @@
             this.cmdBrowse = new System.Windows.Forms.Button();
             this.tTip = new System.Windows.Forms.ToolTip(this.components);
             this.cmdOptions = new System.Windows.Forms.Button();
-            this.ucDoDPropertiesGrid1 = new GCDCore.UserInterface.ChangeDetection.ucDoDPropertiesGrid();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox5.SuspendLayout();
@@ -148,6 +148,7 @@
             this.cmdHelp.TabIndex = 9;
             this.cmdHelp.Text = "Help";
             this.cmdHelp.UseVisualStyleBackColor = true;
+            this.cmdHelp.Click += new System.EventHandler(this.cmdHelp_Click);
             // 
             // cmdOK
             // 
@@ -659,7 +660,7 @@
             this.colMorphUnit.HeaderText = "Sub Reach";
             this.colMorphUnit.Name = "colMorphUnit";
             this.colMorphUnit.ReadOnly = true;
-            this.colMorphUnit.Width = 86;
+            this.colMorphUnit.Width = 79;
             // 
             // colVolDeposition
             // 
@@ -854,6 +855,14 @@
             this.tabPage3.Text = "Inputs";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // ucDoDPropertiesGrid1
+            // 
+            this.ucDoDPropertiesGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucDoDPropertiesGrid1.Location = new System.Drawing.Point(3, 3);
+            this.ucDoDPropertiesGrid1.Name = "ucDoDPropertiesGrid1";
+            this.ucDoDPropertiesGrid1.Size = new System.Drawing.Size(1049, 403);
+            this.ucDoDPropertiesGrid1.TabIndex = 0;
+            // 
             // label7
             // 
             this.label7.AutoSize = true;
@@ -907,14 +916,6 @@
             this.cmdOptions.TabIndex = 5;
             this.cmdOptions.UseVisualStyleBackColor = true;
             this.cmdOptions.Click += new System.EventHandler(this.cmdOptions_Click);
-            // 
-            // ucDoDPropertiesGrid1
-            // 
-            this.ucDoDPropertiesGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucDoDPropertiesGrid1.Location = new System.Drawing.Point(3, 3);
-            this.ucDoDPropertiesGrid1.Name = "ucDoDPropertiesGrid1";
-            this.ucDoDPropertiesGrid1.Size = new System.Drawing.Size(1049, 403);
-            this.ucDoDPropertiesGrid1.TabIndex = 0;
             // 
             // frmMorphResults
             // 

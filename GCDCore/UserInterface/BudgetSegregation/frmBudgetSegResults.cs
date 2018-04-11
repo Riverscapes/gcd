@@ -163,5 +163,10 @@ namespace GCDCore.UserInterface.BudgetSegregation
                 GCDException.HandleException(ex);
             }
         }
+
+        private void cmdHelp_Click_1(object sender, EventArgs e)
+        {
+            OnlineHelp.Show(Name);
+        }
     }
 }

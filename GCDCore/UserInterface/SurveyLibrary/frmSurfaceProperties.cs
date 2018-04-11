@@ -215,5 +215,10 @@ namespace GCDCore.UserInterface.SurveyLibrary
                 txtSurveyDate.Text = SurveyDate is SurveyDateTime ? SurveyDate.ToString() : SurveyDateTime.NotSetString;
             }
         }
+
+        private void cmdHelp_Click(object sender, EventArgs e)
+        {
+            OnlineHelp.Show(Name);
+        }
     }
 }

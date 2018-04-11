@@ -226,9 +226,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             {
                 valYInterval.Value = (decimal)value;
             }
-        }
-
-   
+        }  
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -236,6 +234,11 @@ namespace GCDCore.UserInterface.ChangeDetection
             {
                 txtFont.Text = UserInterface.Options.frmOptions.FontString(frmFont.Font);
             }
+        }
+
+        private void cmdHelp_Click_1(object sender, EventArgs e)
+        {
+            OnlineHelp.Show(Name);
         }
     }
 }

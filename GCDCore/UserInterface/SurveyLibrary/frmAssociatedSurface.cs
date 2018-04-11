@@ -172,5 +172,10 @@ namespace GCDCore.UserInterface.SurveyLibrary
         {
             txtPath.Text = ProjectManager.Project.GetRelativePath(DEM.AssocSurfacePath(txtName.Text));
         }
+
+        private void cmdHelp_Click(object sender, EventArgs e)
+        {
+            OnlineHelp.Show(Name);
+        }
     }
 }

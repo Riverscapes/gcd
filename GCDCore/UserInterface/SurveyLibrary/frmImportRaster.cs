@@ -740,5 +740,36 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
             ProjectManager.PyramidManager.PerformRasterPyramids(ePyramidRasterType, sRasterPath);
         }
+
+        private void cmdHelp_Click_1(object sender, EventArgs e)
+        {
+            string helpKey;
+            switch (ExtImporter.Purpose)
+            {
+                case ExtentImporter.Purposes.AssociatedSurface:
+                    helpKey = "AssocSurface";
+                    break;
+
+                case ExtentImporter.Purposes.ErrorSurface:
+                    helpKey = "ErrorSurface";
+                    break;
+
+                case ExtentImporter.Purposes.ReferenceErrorSurface:
+                    helpKey = "ReferenceSurface";
+                    break;
+
+                case ExtentImporter.Purposes.Standalone:
+                    helpKey = "CleanRaster";
+                    break;
+
+                case ExtentImporter.Purposes.FirstDEM:
+                case ExtentImporter.Purposes.SubsequentDEM:
+                default:
+                    helpKey = "NewDEM";
+                    break;
+            }
+
+            OnlineHelp.Show(helpKey);
+        }
     }
 }

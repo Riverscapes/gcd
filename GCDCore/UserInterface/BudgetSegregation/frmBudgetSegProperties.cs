@@ -104,7 +104,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
 
         private void cmdHelp_Click(Object sender, EventArgs e)
         {
-            Process.Start(Properties.Resources.HelpBaseURL + "gcd-command-reference/gcd-project-explorer/l-individual-change-detection-context-menu/v-add-budget-segregation");
+            OnlineHelp.Show(Name);
         }
 
         private void cboMasks_SelectedIndexChanged(object sender, EventArgs e)

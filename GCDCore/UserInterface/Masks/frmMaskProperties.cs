@@ -240,5 +240,10 @@ namespace GCDCore.UserInterface.Masks
                 GCDException.HandleException(ex, "Error adding directional mask to the map.");
             }
         }
+
+        private void cmdHelp_Click(object sender, EventArgs e)
+        {
+            OnlineHelp.Show(Name);
+        }
     }
 }

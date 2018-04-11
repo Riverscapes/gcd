@@ -117,6 +117,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.btnHelp.TabIndex = 9;
             this.btnHelp.Text = "Help";
             this.btnHelp.UseVisualStyleBackColor = true;
+            this.btnHelp.Click += new System.EventHandler(this.btnHelp_Click_1);
             // 
             // GroupBox1
             // 

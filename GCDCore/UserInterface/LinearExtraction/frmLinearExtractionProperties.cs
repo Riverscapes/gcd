@@ -169,5 +169,10 @@ namespace GCDCore.UserInterface.LinearExtraction
         {
             valSampleDistance.Select(0, valSampleDistance.Text.Length);
         }
+
+        private void cmdHelp_Click(object sender, EventArgs e)
+        {
+            OnlineHelp.Show(Name);
+        }
     }
 }

@@ -60,6 +60,9 @@ namespace GCDCore.UserInterface.Options
             this.chkInterpolationErrorComparative = new System.Windows.Forms.CheckBox();
             this.chk3DPointQualityComparative = new System.Windows.Forms.CheckBox();
             this.TabPage4 = new System.Windows.Forms.TabPage();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.cmdFont = new System.Windows.Forms.Button();
+            this.txtFont = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.picDeposition = new System.Windows.Forms.PictureBox();
             this.picErosion = new System.Windows.Forms.PictureBox();
@@ -76,9 +79,6 @@ namespace GCDCore.UserInterface.Options
             this.SurveyTypesBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.ttpTooltip = new System.Windows.Forms.ToolTip(this.components);
             this.frmColourPicker = new System.Windows.Forms.ColorDialog();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.txtFont = new System.Windows.Forms.TextBox();
-            this.cmdFont = new System.Windows.Forms.Button();
             this.frmFont = new System.Windows.Forms.FontDialog();
             this.TabControl1.SuspendLayout();
             this.TabPage2.SuspendLayout();
@@ -88,6 +88,7 @@ namespace GCDCore.UserInterface.Options
             ((System.ComponentModel.ISupportInitialize)(this.nudTransparency)).BeginInit();
             this.grbComparitiveLayers.SuspendLayout();
             this.TabPage4.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picDeposition)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picErosion)).BeginInit();
@@ -96,7 +97,6 @@ namespace GCDCore.UserInterface.Options
             ((System.ComponentModel.ISupportInitialize)(this.numChartWidth)).BeginInit();
             this.TabPage5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SurveyTypesBindingSource)).BeginInit();
-            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnHelp
@@ -108,6 +108,7 @@ namespace GCDCore.UserInterface.Options
             this.btnHelp.TabIndex = 2;
             this.btnHelp.Text = "Help";
             this.btnHelp.UseVisualStyleBackColor = true;
+            this.btnHelp.Click += new System.EventHandler(this.btnHelp_Click_1);
             // 
             // btnClose
             // 
@@ -382,6 +383,36 @@ namespace GCDCore.UserInterface.Options
             this.TabPage4.Text = "Graphs";
             this.TabPage4.UseVisualStyleBackColor = true;
             // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.cmdFont);
+            this.groupBox3.Controls.Add(this.txtFont);
+            this.groupBox3.Location = new System.Drawing.Point(6, 176);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(479, 51);
+            this.groupBox3.TabIndex = 6;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Font";
+            // 
+            // cmdFont
+            // 
+            this.cmdFont.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmdFont.Image = global::GCDCore.Properties.Resources.Options;
+            this.cmdFont.Location = new System.Drawing.Point(448, 19);
+            this.cmdFont.Name = "cmdFont";
+            this.cmdFont.Size = new System.Drawing.Size(23, 23);
+            this.cmdFont.TabIndex = 1;
+            this.cmdFont.UseVisualStyleBackColor = true;
+            this.cmdFont.Click += new System.EventHandler(this.cmdFont_Click);
+            // 
+            // txtFont
+            // 
+            this.txtFont.Location = new System.Drawing.Point(7, 20);
+            this.txtFont.Name = "txtFont";
+            this.txtFont.ReadOnly = true;
+            this.txtFont.Size = new System.Drawing.Size(435, 20);
+            this.txtFont.TabIndex = 0;
+            // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.picDeposition);
@@ -540,36 +571,6 @@ namespace GCDCore.UserInterface.Options
             this.SurveyTypesBindingSource.AllowNew = true;
             this.SurveyTypesBindingSource.DataMember = "SurveyTypes";
             // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.cmdFont);
-            this.groupBox3.Controls.Add(this.txtFont);
-            this.groupBox3.Location = new System.Drawing.Point(6, 176);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(479, 51);
-            this.groupBox3.TabIndex = 6;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Font";
-            // 
-            // txtFont
-            // 
-            this.txtFont.Location = new System.Drawing.Point(7, 20);
-            this.txtFont.Name = "txtFont";
-            this.txtFont.ReadOnly = true;
-            this.txtFont.Size = new System.Drawing.Size(435, 20);
-            this.txtFont.TabIndex = 0;
-            // 
-            // cmdFont
-            // 
-            this.cmdFont.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmdFont.Image = global::GCDCore.Properties.Resources.Options;
-            this.cmdFont.Location = new System.Drawing.Point(448, 19);
-            this.cmdFont.Name = "cmdFont";
-            this.cmdFont.Size = new System.Drawing.Size(23, 23);
-            this.cmdFont.TabIndex = 1;
-            this.cmdFont.UseVisualStyleBackColor = true;
-            this.cmdFont.Click += new System.EventHandler(this.cmdFont_Click);
-            // 
             // frmOptions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -596,6 +597,8 @@ namespace GCDCore.UserInterface.Options
             this.grbComparitiveLayers.ResumeLayout(false);
             this.grbComparitiveLayers.PerformLayout();
             this.TabPage4.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picDeposition)).EndInit();
@@ -607,8 +610,6 @@ namespace GCDCore.UserInterface.Options
             this.TabPage5.ResumeLayout(false);
             this.TabPage5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SurveyTypesBindingSource)).EndInit();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
 
 		}

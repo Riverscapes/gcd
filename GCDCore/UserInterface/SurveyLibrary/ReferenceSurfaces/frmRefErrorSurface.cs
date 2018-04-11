@@ -198,5 +198,10 @@ namespace GCDCore.UserInterface.SurveyLibrary.ReferenceSurfaces
 
             return name;
         }
+
+        private void cmdHelp_Click(object sender, EventArgs e)
+        {
+            OnlineHelp.Show(Name);
+        }
     }
 }

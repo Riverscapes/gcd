@@ -49,10 +49,10 @@
             this.chkNewest = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.pnlTop = new System.Windows.Forms.Panel();
-            this.pnlBottom = new System.Windows.Forms.Panel();
-            this.bgWorker = new System.ComponentModel.BackgroundWorker();
             this.ucAOI1 = new GCDCore.UserInterface.ChangeDetection.ucAOI();
             this.ucThresholding1 = new GCDCore.UserInterface.ChangeDetection.ucThresholding();
+            this.pnlBottom = new System.Windows.Forms.Panel();
+            this.bgWorker = new System.ComponentModel.BackgroundWorker();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdDEMs)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -94,6 +94,7 @@
             this.cmdHelp.TabIndex = 2;
             this.cmdHelp.Text = "Help";
             this.cmdHelp.UseVisualStyleBackColor = true;
+            this.cmdHelp.Click += new System.EventHandler(this.cmdHelp_Click);
             // 
             // groupBox1
             // 
@@ -306,6 +307,24 @@
             this.pnlTop.Size = new System.Drawing.Size(544, 386);
             this.pnlTop.TabIndex = 0;
             // 
+            // ucAOI1
+            // 
+            this.ucAOI1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ucAOI1.Location = new System.Drawing.Point(8, 159);
+            this.ucAOI1.Name = "ucAOI1";
+            this.ucAOI1.Size = new System.Drawing.Size(527, 46);
+            this.ucAOI1.TabIndex = 1;
+            // 
+            // ucThresholding1
+            // 
+            this.ucThresholding1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ucThresholding1.Location = new System.Drawing.Point(8, 211);
+            this.ucThresholding1.Name = "ucThresholding1";
+            this.ucThresholding1.Size = new System.Drawing.Size(526, 169);
+            this.ucThresholding1.TabIndex = 2;
+            // 
             // pnlBottom
             // 
             this.pnlBottom.Controls.Add(this.groupBox2);
@@ -325,24 +344,6 @@
             this.bgWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgWorker_DoWork);
             this.bgWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.bgWorker_ProgressChanged);
             this.bgWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgWorker_RunWorkerCompleted);
-            // 
-            // ucAOI1
-            // 
-            this.ucAOI1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.ucAOI1.Location = new System.Drawing.Point(8, 159);
-            this.ucAOI1.Name = "ucAOI1";
-            this.ucAOI1.Size = new System.Drawing.Size(527, 46);
-            this.ucAOI1.TabIndex = 1;
-            // 
-            // ucThresholding1
-            // 
-            this.ucThresholding1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.ucThresholding1.Location = new System.Drawing.Point(8, 211);
-            this.ucThresholding1.Name = "ucThresholding1";
-            this.ucThresholding1.Size = new System.Drawing.Size(526, 169);
-            this.ucThresholding1.TabIndex = 2;
             // 
             // frmMultiEpoch
             // 

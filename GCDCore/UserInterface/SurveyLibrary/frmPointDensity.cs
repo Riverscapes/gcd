@@ -148,5 +148,10 @@ namespace GCDCore.UserInterface.SurveyLibrary
                 txtName.Text = Path.GetFileNameWithoutExtension(e.Path.FullName);
             }
         }
+
+        private void btnHelp_Click_1(object sender, EventArgs e)
+        {
+            OnlineHelp.Show(Name);
+        }
     }
 }

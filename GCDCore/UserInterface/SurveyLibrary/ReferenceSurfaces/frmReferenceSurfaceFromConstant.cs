@@ -218,5 +218,10 @@ namespace GCDCore.UserInterface.SurveyLibrary.ReferenceSurfaces
         {
             ((NumericUpDown)sender).Select(0, ((NumericUpDown)sender).Text.Length);
         }
+
+        private void cmdHelp_Click(object sender, EventArgs e)
+        {
+            OnlineHelp.Show(Name);
+        }
     }
 }

@@ -176,5 +176,10 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
             if (e.RowIndex >= 0 && e.Button == MouseButtons.Right)
                 grdRegions.Rows[e.RowIndex].Selected = true;
         }
+
+        private void cmdHelp_Click(object sender, EventArgs e)
+        {
+            OnlineHelp.Show(Name);
+        }
     }
 }

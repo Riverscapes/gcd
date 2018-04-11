@@ -125,7 +125,7 @@ namespace GCDCore.UserInterface.ChangeDetection
 
         private void cmdHelp_Click(System.Object sender, System.EventArgs e)
         {
-            Process.Start(Properties.Resources.HelpBaseURL + "gcd-command-reference/gcd-project-explorer/l-individual-change-detection-context-menu/i-view-change-detection-results");
+            OnlineHelp.Show(Name);
         }
 
         private void cmdOK_Click(object sender, EventArgs e)

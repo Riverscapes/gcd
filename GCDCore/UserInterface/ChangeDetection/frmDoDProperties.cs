@@ -223,7 +223,7 @@ namespace GCDCore.UserInterface.ChangeDetection
 
         private void cmdHelp_Click(System.Object sender, System.EventArgs e)
         {
-            Process.Start(GCDCore.Properties.Resources.HelpBaseURL + "gcd-command-reference/gcd-project-explorer/j-change-detection-context-menu/i-add-change-detection");
+            OnlineHelp.Show(Name);
         }
     }
 }

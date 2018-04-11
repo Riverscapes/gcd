@@ -152,5 +152,10 @@ namespace GCDCore.UserInterface.FISLibrary
                 MessageBox.Show(ex.Message, "Error Writing FIS Rule File", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
+
+        private void cmdHelp_Click(object sender, EventArgs e)
+        {
+            OnlineHelp.Show(Name);
+        }
     }
 }

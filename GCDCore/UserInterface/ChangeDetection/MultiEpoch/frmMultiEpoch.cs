@@ -680,5 +680,10 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
         }
 
         #endregion
+
+        private void cmdHelp_Click(object sender, EventArgs e)
+        {
+            OnlineHelp.Show(Name);
+        }
     }
 }

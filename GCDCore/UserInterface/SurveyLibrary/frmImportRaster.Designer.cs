@@ -318,6 +318,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             // 
             // ucRaster
             // 
+            this.ucRaster.FullPath = null;
             this.ucRaster.Location = new System.Drawing.Point(101, 19);
             this.ucRaster.Name = "ucRaster";
             this.ucRaster.Size = new System.Drawing.Size(491, 25);
@@ -571,6 +572,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.cmdHelp.TabIndex = 6;
             this.cmdHelp.Text = "Help";
             this.cmdHelp.UseVisualStyleBackColor = true;
+            this.cmdHelp.Click += new System.EventHandler(this.cmdHelp_Click_1);
             // 
             // cmdOK
             // 

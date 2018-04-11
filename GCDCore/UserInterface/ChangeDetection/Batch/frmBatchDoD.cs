@@ -188,5 +188,10 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
             MessageBox.Show("Batch Change Detection Complete.", "Process Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
             DialogResult = DialogResult.OK;
         }
+
+        private void cmdHelp_Click(object sender, EventArgs e)
+        {
+            OnlineHelp.Show(Name);
+        }
     }
 }
