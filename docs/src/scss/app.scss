@@ -1,26 +1,46 @@
 @charset 'utf-8';
 
 // Extra fonts we bring in form google
-@import url('https://fonts.googleapis.com/css?family=Raleway');
-@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+@import url('https://fonts.googleapis.com/css?family=News+Cycle');
+@import url('https://fonts.googleapis.com/css?family=Oswald:700');
+
 
 // This grabs all our foundation settings
 @import 'settings';
 @import 'font-awesome';
 @import 'github';
 
+// Main sections
+body{
+  background-color: #EEEEEE;
+}
+#headcallout {
+  margin: 0;
+}
+#inner-wrapper {
+  padding-top: 1rem;
+  background-color: white;
+  #main{
+    padding-bottom: 3rem;
+    img.float-left{
+      margin-right: 0.5rem;
+    }
+    img.float-right{
+      margin-left: 0.5rem;
+    }
+  }
+}
+#footer {
+  padding: 3rem 0;
+  #rightslogo{
+    float: right;
+    clear: both;
+  }
+}
 // SECTION is the tag denoting where all the 
 // content is. It's how we style the article content
 // without styling the header, menu etc.
 section {
-  h2 {
-    color: #333333;
-    font-family: 'Raleway', serif;
-    font-weight: 400;
-  }
-  h3{
-    border-bottom: 1px solid black;
-  }
 
   .imgleft{
     float: left;
@@ -51,18 +71,34 @@ section {
 
 // The Header 
 header { 
+
   text-shadow: 3px 3px 3px rgba(0,0,0,0.7);
+  background-image: url('../images/HeaderBackground.png');
   background-repeat: no-repeat;
   background-position: 0% 50%;
   background-size: cover;
   background-color: #444444;
-  a { color: white; }
+
+  a { 
+    color: white;
+  }
   a:hover{ color: #eeeeee; }
   h1 {
     font-size: 2rem;
-    font-weight: bold;
     color: white;
     text-transform: uppercase;    
+
+    .RCLogo{
+      display: inline-block;
+      width: 19rem;
+      height: 5rem;
+      overflow: hidden;
+      background-image: url('../images/RC.png');
+      background-size: cover;
+      padding: 0;
+      color: transparent;
+      text-shadow: none;
+    }    
   }
   h3.subheader {
     color: #eeeeee;
@@ -72,9 +108,10 @@ header {
     font-size: 1.2rem;
     color: #eeeeee;
   }
-  .callout { 
+  .callout.large { 
     background: transparent; 
     border: none;
+    padding: 3rem 3rem 4rem 3rem;
   }
   .callout.home { 
     padding: 6rem 3rem 9rem 3rem;
@@ -87,13 +124,17 @@ header {
 
 }
 
+/**
+  Table of contents on the left side
+
+**/
 #toc {
     display: block;
-    padding: 1.25rem; 
+    padding: 0.75rem; 
     margin-bottom: 0.75rem;
     background-color: #fff;
     background: #eceeef;
-    border-radius: 0.25rem;  
+    border: 1px solid #e5e5e5;
     ul {
       list-style: none;
       margin-left: 0;
@@ -102,12 +143,39 @@ header {
     li.toc-h1 { padding-left: 0rem; font-size: 1rem; }
     li.toc-h2 { padding-left: 1rem; font-size: 0.9rem; }
     li.toc-h3 { padding-left: 2rem; font-size: 0.8rem; }
-    li.toc-h4 { padding-left: 3rem; font-size: 0.7rem; }
-    li.toc-h5 { padding-left: 4rem; font-size: 0.6rem; }
+    li.toc-h4 { padding-left: 3rem; font-size: 0.8rem; }
+    li.toc-h5 { padding-left: 4rem; font-size: 0.8rem; }
+
 }
-#topbarnav a { color: white; }
+
+
+/**
+  Topbar contents
+
+**/
+#topbarnav a { 
+  color: white; 
+}
 .top-bar {
-  &, & ul { background-color: #333333; }
+  #topbarLogo {
+    width: 40px;
+    height: 40px;
+    overflow: hidden;
+    background-image: url('../images/RiverscapesLogo.png');
+    background-size: cover;
+    padding: 0;
+    color: transparent;
+    text-shadow: none;
+  }
+  a {
+    color: white;
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.875rem; 
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+  &, ul {background-color: transparent;}
+  ul ul { background-color: black; }
   .menu .menu-text { color: white; }
   .dropdown.menu a { color: white; }
   .dropdown.menu>li.is-dropdown-submenu-parent>a::after{
@@ -121,10 +189,23 @@ header {
   }
 }
 
+
+/**
+  SideBar styling
+
+**/
 #sidebar {
   .title-bar {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 300;
+    text-transform:uppercase;   
     background: $secondary-color;
     position: relative;
+
+    i.fa {
+      margin-right: 0.5rem;
+    }
   }
   #menuCtls {
     margin-bottom: 0;
@@ -134,13 +215,21 @@ header {
     span { border-bottom: none; }
     .button{
       padding: 0.45em 0.5em;
+      background-color: white;
     }  
   }  
 }
 
 #sidenav {
+  // hide the dumb menu if javascript hasn't died on the way to a menu
+  #sidenav #topmenu.hide{
+    display: none;
+  }
+  #sidenav #HTMLOnlyNav.hide{
+    display: none;
+  }
   display: block;
-  padding: 1.25rem;   
+  padding: 0.75rem;   
   margin-bottom: 0.75rem;
   background-color: #f5f5f5;
   border: 1px solid #e5e5e5;
@@ -151,6 +240,7 @@ header {
   li a {
     padding: 0.3rem 1rem 0.3rem 1rem;
     line-height: 1.2;
+ 
   }
   li>a:before{
     color: $primary-color;
@@ -247,4 +337,38 @@ code.highlighter-rouge {
 
 div.highlighter-rouge {
   margin-bottom: 1.5rem;
+}
+
+
+.demogrid{
+  .row{ 
+    position: relative;
+    &:before{
+      font-size: 10px;
+      background:blue;
+      color: white;
+      content: "ROW";
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    padding: 1rem 0;
+    border: 1px dashed #DDDDFF;
+  }
+  .columns{ 
+    position: relative;
+    &:before{
+      font-size: 10px;
+      font-family: monospace;
+      font-weight: bold;
+      background:red;
+      color: white;
+      content: "COL";
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    padding: 2rem 0;
+    border: 1px dashed #FFDDDD; 
+  }
 }
