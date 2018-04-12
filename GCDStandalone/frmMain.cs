@@ -130,7 +130,7 @@ namespace GCDStandalone
             }
             catch (Exception ex)
             {
-               GCDCore.GCDException.HandleException(ex);
+                GCDCore.GCDException.HandleException(ex);
             }
         }
 
@@ -402,7 +402,7 @@ namespace GCDStandalone
             UpdateCheckInfo info = null;
             Cursor.Current = Cursors.WaitCursor;
 
-            if ((ApplicationDeployment.IsNetworkDeployed))
+            if (ApplicationDeployment.IsNetworkDeployed)
             {
                 ApplicationDeployment AD = ApplicationDeployment.CurrentDeployment;
 
@@ -423,27 +423,27 @@ namespace GCDStandalone
                     return;
                 }
 
-                if ((info.UpdateAvailable))
+                if (info.UpdateAvailable)
                 {
                     bool doUpdate = true;
 
-                    if ((!info.IsUpdateRequired))
-                    {
-                        DialogResult dr = MessageBox.Show("An update is available. Would you like to update the application now?", "Update Available", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
-                        if ((!(System.Windows.Forms.DialogResult.OK == dr)))
-                        {
-                            doUpdate = false;
-                        }
-                    }
-                    else
+                    if (info.IsUpdateRequired)
                     {
                         // Display a message that the app MUST reboot. Display the minimum required version.
                         MessageBox.Show("This application has detected a mandatory update from your current " + "version to version "
                             + info.MinimumRequiredVersion.ToString() + ". The application will now install the update and restart.", "Update Available",
                             MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
+                    else
+                    {
+                        DialogResult dr = MessageBox.Show("An update is available. Would you like to update the application now?", "Update Available", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
+                        if (dr != DialogResult.Yes)
+                        {
+                            doUpdate = false;
+                        }
+                    }
 
-                    if ((doUpdate))
+                    if (doUpdate)
                     {
                         try
                         {
