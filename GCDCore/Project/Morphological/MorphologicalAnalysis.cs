@@ -304,13 +304,39 @@ namespace GCDCore.Project.Morphological
             }
         }
 
+        /// <summary>
+        /// Returns the value that should be multiplied by volumes to produce a rate of mass
+        /// </summary>
+        private decimal FluxRateConversionFactor
+        {
+            get
+            {
+                decimal gramConvert = (decimal)Mass.FromGrams(1).As(DisplayUnits_Mass);
+                decimal volConvert = (decimal)Volume.FromCubicCentimeters(1).As(DisplayUnits_Volume);
+                decimal densityConvert = this.Density * (gramConvert / volConvert);
+                return densityConvert;
+            }
+        }
+
+        public decimal ReachFluxRate
+        {
+            get
+            {
+                return (decimal)(ReachInputFlux.As(DisplayUnits_Volume) / Duration.As(DisplayUnits_Duration)) * FluxRateConversionFactor;
+            }
+        }
+
+        public string ReachFluxRateUnits
+        {
+            get
+            {
+                return string.Format("{0}/{1}", UnitsNet.Mass.GetAbbreviation(DisplayUnits_Mass), UnitsNet.Duration.GetAbbreviation(DisplayUnits_Duration));
+            }
+        }
+
         public void CalculateWork()
         {
             decimal duration = (decimal)CompetentDuration.As(DisplayUnits_Duration);
-
-            decimal gramConvert = (decimal)Mass.FromGrams(1).As(DisplayUnits_Mass);
-            decimal volConvert = (decimal)Volume.FromCubicCentimeters(1).As(DisplayUnits_Volume);
-            decimal densityConvert = this.Density * (gramConvert / volConvert);
 
             if (duration > 0)
             {
@@ -323,7 +349,7 @@ namespace GCDCore.Project.Morphological
                     //decimal volumeFluxPerUnitVolume = (decimal)Volume.From((double)unit.FluxVolume, DisplayUnits_Volume).As(UnitsNet.Units.VolumeUnit.CubicMeter);
 
                     // Mass of material per unit time. (Should be independent of volume)
-                    unit.FluxMass = unit.FluxVolume * densityConvert;
+                    unit.FluxMass = unit.FluxVolume * FluxRateConversionFactor;
                 }
             }
             else

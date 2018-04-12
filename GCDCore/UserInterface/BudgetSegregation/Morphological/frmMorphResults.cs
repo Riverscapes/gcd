@@ -201,6 +201,9 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
             // https://stackoverflow.com/questions/20688408/how-do-you-change-the-text-color-of-a-readonly-textbox
             txtMinFlux.BackColor = txtMinFlux.BackColor;
             txtMinFlux.ForeColor = Analysis.ReachInputFlux < new Volume(0) ? Color.Red : Color.Black;
+
+            // Distribute the reach flux over the critical duration
+            txtMinFluxRate.Text = string.Format("{0:#,##0.00} {1}", Analysis.ReachFluxRate, Analysis.ReachFluxRateUnits);
         }
 
         private void InitializeChart()

@@ -105,7 +105,6 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.chtData = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.ucDoDPropertiesGrid1 = new GCDCore.UserInterface.ChangeDetection.ucDoDPropertiesGrid();
             this.label7 = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -113,6 +112,9 @@
             this.cmdBrowse = new System.Windows.Forms.Button();
             this.tTip = new System.Windows.Forms.ToolTip(this.components);
             this.cmdOptions = new System.Windows.Forms.Button();
+            this.txtMinFluxRate = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.ucDoDPropertiesGrid1 = new GCDCore.UserInterface.ChangeDetection.ucDoDPropertiesGrid();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox5.SuspendLayout();
@@ -366,9 +368,9 @@
             this.groupBox4.Controls.Add(this.valBoundaryFlux);
             this.groupBox4.Controls.Add(this.lblBoundaryVolume);
             this.groupBox4.Controls.Add(this.cboBoundaryUnit);
-            this.groupBox4.Location = new System.Drawing.Point(630, 58);
+            this.groupBox4.Location = new System.Drawing.Point(630, 80);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(422, 149);
+            this.groupBox4.Size = new System.Drawing.Size(422, 127);
             this.groupBox4.TabIndex = 4;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Imposed Boundary Condition";
@@ -660,7 +662,7 @@
             this.colMorphUnit.HeaderText = "Sub Reach";
             this.colMorphUnit.Name = "colMorphUnit";
             this.colMorphUnit.ReadOnly = true;
-            this.colMorphUnit.Width = 79;
+            this.colMorphUnit.Width = 86;
             // 
             // colVolDeposition
             // 
@@ -790,21 +792,23 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.txtMinFluxRate);
+            this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.txtMinFlux);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Location = new System.Drawing.Point(630, 6);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(419, 46);
+            this.groupBox1.Size = new System.Drawing.Size(419, 68);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Top of Reach Boundary Condition";
             // 
             // txtMinFlux
             // 
-            this.txtMinFlux.Location = new System.Drawing.Point(311, 17);
+            this.txtMinFlux.Location = new System.Drawing.Point(293, 17);
             this.txtMinFlux.Name = "txtMinFlux";
             this.txtMinFlux.ReadOnly = true;
-            this.txtMinFlux.Size = new System.Drawing.Size(98, 20);
+            this.txtMinFlux.Size = new System.Drawing.Size(116, 20);
             this.txtMinFlux.TabIndex = 1;
             // 
             // label4
@@ -812,9 +816,9 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(11, 20);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(297, 13);
+            this.label4.Size = new System.Drawing.Size(256, 13);
             this.label4.TabIndex = 0;
-            this.label4.Text = "Minimum flux at upstream reach to satisfy boundary conditions";
+            this.label4.Text = "Flux at upstream reach to satisfy boundary conditions";
             // 
             // tabPage2
             // 
@@ -854,14 +858,6 @@
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Inputs";
             this.tabPage3.UseVisualStyleBackColor = true;
-            // 
-            // ucDoDPropertiesGrid1
-            // 
-            this.ucDoDPropertiesGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucDoDPropertiesGrid1.Location = new System.Drawing.Point(3, 3);
-            this.ucDoDPropertiesGrid1.Name = "ucDoDPropertiesGrid1";
-            this.ucDoDPropertiesGrid1.Size = new System.Drawing.Size(1049, 403);
-            this.ucDoDPropertiesGrid1.TabIndex = 0;
             // 
             // label7
             // 
@@ -916,6 +912,31 @@
             this.cmdOptions.TabIndex = 5;
             this.cmdOptions.UseVisualStyleBackColor = true;
             this.cmdOptions.Click += new System.EventHandler(this.cmdOptions_Click);
+            // 
+            // txtMinFluxRate
+            // 
+            this.txtMinFluxRate.Location = new System.Drawing.Point(293, 43);
+            this.txtMinFluxRate.Name = "txtMinFluxRate";
+            this.txtMinFluxRate.ReadOnly = true;
+            this.txtMinFluxRate.Size = new System.Drawing.Size(116, 20);
+            this.txtMinFluxRate.TabIndex = 3;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(10, 46);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(277, 13);
+            this.label5.TabIndex = 2;
+            this.label5.Text = "Flux rate at upstream reach to satisfy boundary conditions";
+            // 
+            // ucDoDPropertiesGrid1
+            // 
+            this.ucDoDPropertiesGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucDoDPropertiesGrid1.Location = new System.Drawing.Point(3, 3);
+            this.ucDoDPropertiesGrid1.Name = "ucDoDPropertiesGrid1";
+            this.ucDoDPropertiesGrid1.Size = new System.Drawing.Size(1049, 403);
+            this.ucDoDPropertiesGrid1.TabIndex = 0;
             // 
             // frmMorphResults
             // 
@@ -1041,5 +1062,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colFuxVolume;
         private System.Windows.Forms.DataGridViewTextBoxColumn colFluxMass;
         private System.Windows.Forms.DataGridViewTextBoxColumn colCumulative;
+        private System.Windows.Forms.TextBox txtMinFluxRate;
+        private System.Windows.Forms.Label label5;
     }
 }
