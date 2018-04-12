@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnitsNet;
 
 namespace GCDCore.Project.Morphological
@@ -11,17 +7,16 @@ namespace GCDCore.Project.Morphological
     {
         public string Name { get; internal set; }
         public override string ToString() { return Name; }
-
         public readonly bool IsTotal;
 
-        public UnitsNet.Volume VolErosion { get; internal set; }
-        public UnitsNet.Volume VolErosionErr { get; internal set; }
+        public Volume VolErosion { get; internal set; }
+        public Volume VolErosionErr { get; internal set; }
 
-        public UnitsNet.Volume VolDeposition { get; internal set; }
-        public UnitsNet.Volume VolDepositionErr { get; internal set; }
+        public Volume VolDeposition { get; internal set; }
+        public Volume VolDepositionErr { get; internal set; }
 
-        public UnitsNet.Volume VolChange { get { return VolDeposition - VolErosion; } }
-        public UnitsNet.Volume VolChangeErr
+        public Volume VolChange { get { return VolDeposition - VolErosion; } }
+        public Volume VolChangeErr
         {
             get
             {
@@ -32,11 +27,13 @@ namespace GCDCore.Project.Morphological
             }
         }
 
-        public UnitsNet.Volume VolIn { get; set; }
-        public UnitsNet.Volume VolOut { get; set; }
+        public Volume VolIn { get; set; }
+        public Volume VolOut { get; set; }
+
         public decimal FluxVolume { get; set; }
         public decimal FluxMass { get; set; }
-        public UnitsNet.Volume CumulativeVolume { get; set; }
+
+        public Volume CumulativeVolume { get; set; }
 
         public MorphologicalUnit(string name, bool isTotal = false)
         {
@@ -49,12 +46,5 @@ namespace GCDCore.Project.Morphological
         {
 
         }
-
-        //public void CalculateWork(decimal porosity, decimal duration, decimal pcCompetent)
-        //{
-        //    decimal volume = (1m - porosity) * (decimal)VolOut.As(UnitsNet.Units.VolumeUnit.CubicMeter);
-        //    decimal effectiveDuration = duration * (pcCompetent / 100m);
-        //    Work = volume / effectiveDuration;
-        //}
     }
 }

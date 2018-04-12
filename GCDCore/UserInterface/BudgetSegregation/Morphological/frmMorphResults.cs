@@ -106,16 +106,19 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
         private void PorosityChanged(object sender, EventArgs e)
         {
             Analysis.Porosity = valPorosity.Value;
+            UpdateMinFluxDisplay();
         }
 
-        private void DurationChanged(object sender, EventArgs e)
-        {
-            Analysis.Duration = UnitsNet.Duration.From((double)valDuration.Value, Analysis.DisplayUnits_Duration);
-        }
+        //private void DurationChanged(object sender, EventArgs e)
+        //{
+        //    Analysis.Duration = UnitsNet.Duration.From((double)valDuration.Value, Analysis.DisplayUnits_Duration);
+        //    UpdateMinFluxDisplay();
+        //}
 
         private void valDensity_ValueChanged(object sender, EventArgs e)
         {
             Analysis.Density = valDensity.Value;
+            UpdateMinFluxDisplay();
         }
 
         /// <summary>
@@ -159,6 +162,7 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
 
             txtCriticalDuration.Text = string.Format("{0:F} {1}{2}", value, cboDuration.SelectedItem.ToString(), value != 1m ? "s" : "");
             UpdateChart();
+            UpdateMinFluxDisplay();
         }
 
         private void UnitsChanged(object sender, EventArgs e)

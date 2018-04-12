@@ -322,7 +322,8 @@ namespace GCDCore.Project.Morphological
         {
             get
             {
-                return (decimal)(ReachInputFlux.As(DisplayUnits_Volume) / Duration.As(DisplayUnits_Duration)) * FluxRateConversionFactor;
+                decimal duration = (decimal)CompetentDuration.As(DisplayUnits_Duration);
+                return ((decimal)ReachInputFlux.As(DisplayUnits_Volume) / duration) * FluxRateConversionFactor;
             }
         }
 
