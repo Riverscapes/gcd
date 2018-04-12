@@ -170,7 +170,8 @@ namespace GCDCore.Visualization
             }
             catch (Exception ex)
             {
-                throw new Exception("Error refreshing elevation bar charts.", ex);
+                Console.WriteLine("Error calculating change bar chart axes: " + ex.Message);
+                //throw new Exception("Error refreshing elevation bar charts.", ex);
             }
         }
 
@@ -217,7 +218,14 @@ namespace GCDCore.Visualization
 
         public void Save(System.IO.FileInfo filePath, int nChartWidth, int nChartHeight)
         {
-            SaveImage(filePath);
+            try
+            {
+                SaveImage(filePath);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Error saving elevation change bar chart: " + ex.Message);
+            }
         }
     }
 }
