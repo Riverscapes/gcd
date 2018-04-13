@@ -10,6 +10,17 @@ Note, see the [Commit History](https://github.com/Riverscapes/gcd/commits) in Gi
 
 <a class="button" href="https://github.com/Riverscapes/gcd/commits"><i class="fa fa-github"/> GCD Github Repository Commit History</a>
 
+## 7.0.12 - 12 Apr 2018
+
+* Click Once deployment fixed for StandAlone.
+* Launching Cross Section Viewer now works correctly.
+* Web-based acknowledgements form.
+* Online help buttons.
+* Exceptions now have GCD and ArcMap versions.
+* Deleting morphological analyses and linear extractions implemented.
+* Deleting DoDs and budget segregations checks for file locks first.
+* Viewing FIS error surface properties now works.
+
 ## 7.0.11 - 4 Apr 2018
 
 * Fixed clicking on DoD tabular results table header.
