@@ -10,6 +10,10 @@ Note, see the [Commit History](https://github.com/Riverscapes/gcd/commits) in Gi
 
 <a class="button" href="https://github.com/Riverscapes/gcd/commits"><i class="fa fa-github"/> GCD Github Repository Commit History</a>
 
+## 7.0.13 - 13 Apr 2018
+
+* AnyCPU architecture.
+
 ## 7.0.12 - 12 Apr 2018
 
 * Click Once deployment fixed for StandAlone.
