@@ -15,6 +15,9 @@ namespace GCDCore.Project
         public UnitsNet.Area CellArea { get; set; }
         public GCDConsoleLib.GCD.UnitGroup Units { get; set; }
 
+        // Variables we need access to from the online stuff
+        public Dictionary<string, string> OnlineParams;
+
         public readonly Dictionary<string, DEMSurvey> DEMSurveys;
         public readonly Dictionary<string, Surface> ReferenceSurfaces;
         public readonly Dictionary<string, DoDBase> DoDs;
@@ -112,6 +115,8 @@ namespace GCDCore.Project
             InterComparisons = new Dictionary<string, InterComparison>();
             MetaData = new Dictionary<string, string>();
             ProfileRoutes = new Dictionary<string, Project.ProfileRoutes.ProfileRoute>();
+
+            OnlineParams = new Dictionary<string, string>();
         }
 
         public string GetRelativePath(FileInfo FullPath)
@@ -219,6 +224,16 @@ namespace GCDCore.Project
             nodProject.AppendChild(xmlDoc.CreateElement("DateTimeCreated")).InnerText = DateTimeCreated.ToString("o");
             nodProject.AppendChild(xmlDoc.CreateElement("GCDVersion")).InnerText = GCDVersion;
 
+            if (OnlineParams.Count > 0)
+            {
+                XmlNode nodUpload = nodProject.AppendChild(xmlDoc.CreateElement("Online"));
+                foreach (KeyValuePair<string, string> kvp in OnlineParams)
+                {
+                    XmlNode kvpItem = nodUpload.AppendChild(xmlDoc.CreateElement(kvp.Key));
+                    kvpItem.InnerText = kvp.Value;
+                }
+            }
+
             XmlNode nodDescription = nodProject.AppendChild(xmlDoc.CreateElement("Description"));
             if (!string.IsNullOrEmpty(Description))
                 nodDescription.InnerText = Description;
@@ -315,6 +330,9 @@ namespace GCDCore.Project
                 cellArea = UnitsNet.Area.From(double.Parse(nodCellArea.InnerText), area);
 
             ProjectManager.Project = new GCDProject(name, desc, projectFile, dtCreated, gcdv, cellArea, units);
+
+            foreach (XmlNode nodOnline in nodProject.SelectNodes("Online/*"))
+                ProjectManager.Project.OnlineParams[nodOnline.Name] = nodOnline.InnerText;
 
             // Load masks before DEMs. DEMs will load error surfaces that refer to masks
             foreach (XmlNode nodMask in nodProject.SelectNodes("Masks/Mask"))

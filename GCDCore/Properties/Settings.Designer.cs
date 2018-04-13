@@ -406,5 +406,17 @@ namespace GCDCore.Properties {
                 this["LoadLastProjectAtStartUp"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool DeveloperPreview {
+            get {
+                return ((bool)(this["DeveloperPreview"]));
+            }
+            set {
+                this["DeveloperPreview"] = value;
+            }
+        }
     }
 }

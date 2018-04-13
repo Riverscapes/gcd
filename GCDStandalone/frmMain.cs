@@ -235,6 +235,20 @@ namespace GCDStandalone
         {
             UpdateMenuItemStatus(toolStrip1.Items);
             UpdateMenuItemStatus(menuStrip1.Items);
+
+            // Control whether uploader is visible using developer preview mode.
+            // Add the following to the user.config file to turn this feature on
+            //<setting name="DeveloperPreview" serializeAs="String">
+            //<value>True</value>
+            //</setting>
+
+            bool bShowUpload = GCDCore.Properties.Settings.Default.DeveloperPreview;
+
+#if DEBUG
+            bShowUpload = true;
+#endif
+
+            uploadThisProjectToGCDOnlineToolStripMenuItem.Visible = bShowUpload;
         }
 
         private void UpdateMenuItemStatus(ToolStripItemCollection aMenu)
@@ -473,6 +487,12 @@ namespace GCDStandalone
             }
 
             Cursor.Current = Cursors.Default;
+        }
+
+        private void uploadThisProjectToGCDOnlineToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            GCDCore.UserInterface.Tools.frmOnlineManager frm = new GCDCore.UserInterface.Tools.frmOnlineManager();
+            frm.ShowDialog();
         }
     }
 }
