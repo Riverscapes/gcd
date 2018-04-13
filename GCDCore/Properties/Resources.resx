@@ -364,4 +364,10 @@
   <data name="TATWebSite" xml:space="preserve">
     <value>http://tat.riverscapes.xyz/</value>
   </data>
+  <data name="UploadAPIUrl" xml:space="preserve">
+    <value>https://jntwr1slel.execute-api.us-west-2.amazonaws.com/production</value>
+  </data>
+  <data name="UploadPublicUrl" xml:space="preserve">
+    <value>http://1645323425123462.s3-website-us-west-2.amazonaws.com/</value>
+  </data>
 </root>

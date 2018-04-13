@@ -760,6 +760,15 @@ namespace GCDCore.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to http://1645323425123462.s3-website-us-west-2.amazonaws.com/.
+        /// </summary>
+        public static string UploadPublicUrl {
+            get {
+                return ResourceManager.GetString("UploadPublicUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         public static System.Drawing.Bitmap up {
@@ -775,6 +784,15 @@ namespace GCDCore.Properties {
         public static string UpdateButtonText {
             get {
                 return ResourceManager.GetString("UpdateButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to https://jntwr1slel.execute-api.us-west-2.amazonaws.com/production.
+        /// </summary>
+        public static string UploadAPIUrl {
+            get {
+                return ResourceManager.GetString("UploadAPIUrl", resourceCulture);
             }
         }
         
