@@ -155,7 +155,7 @@ namespace GCDCore.Visualization
                     errorSeries.Points.AddXY(GetXAxisLabel(eType, SeriesType.Net), fNet, fNet - fNetError, fNet + fNetError);
 
                 Chart.ChartAreas[0].AxisY.Maximum = Math.Ceiling(Math.Max(fErosion + fErosionError, fDeposition + fDepositionError));
-                Chart.ChartAreas[0].AxisY.Minimum = Math.Floor(Math.Min(fErosion - fErosionError, fDeposition - fDepositionError));
+                Chart.ChartAreas[0].AxisY.Minimum = Math.Floor(Math.Min(fErosion - fErosionError, Math.Min(0, fDeposition - fDepositionError)));
             }
             else
             {
