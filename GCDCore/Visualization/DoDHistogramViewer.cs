@@ -75,15 +75,15 @@ namespace GCDCore.Visualization
             Chart.ChartAreas[0].CursorX.IsUserSelectionEnabled = true;
             Chart.ChartAreas[0].CursorY.IsUserSelectionEnabled = true;
 
-            UpdateHistograms(rawHisto, thrHisto);
+            UpdateHistograms(rawHisto, thrHisto, true);
         }
 
-        public void UpdateHistograms(Histogram rawHisto, Histogram thrHisto)
+        public void UpdateHistograms(Histogram rawHisto, Histogram thrHisto, bool bArea)
         {
             _rawHist = rawHisto;
             _thrHist = thrHisto;
 
-            UpdateDisplay(true);
+            UpdateDisplay(bArea);
         }
 
         public void SetChartType(bool bSetArea)

@@ -40,7 +40,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             if (HistogramViewer == null)
                 HistogramViewer = new DoDHistogramViewer(rawHistogram, thrHistogram, ProjectManager.Project.Units, chtData);
             else
-                HistogramViewer.UpdateHistograms(rawHistogram, thrHistogram);
+                HistogramViewer.UpdateHistograms(rawHistogram, thrHistogram, rdoArea.Checked);
 
             HistogramViewer.SetFont(Properties.Settings.Default.ChartFont);
         }
