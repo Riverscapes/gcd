@@ -80,7 +80,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
 #if DEBUG
                     shortcut = @"D:\Code\xsviewer\CrossSectionViewer\bin\x64\Debug\CrossSectionViewer.exe";
 #endif
-                    System.Diagnostics.Process.Start(shortcut, projectFileURL.ToString());
+                    System.Diagnostics.Process.Start(shortcut, projectFileURL.AbsoluteUri);
                 }
                 catch (Exception ex)
                 {
