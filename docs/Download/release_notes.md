@@ -10,6 +10,12 @@ Note, see the [Commit History](https://github.com/Riverscapes/gcd/commits) in Gi
 
 <a class="button" href="https://github.com/Riverscapes/gcd/commits"><i class="fa fa-github"/> GCD Github Repository Commit History</a>
 
+## 7.0.14 - 16 Apr 2018
+
+* Fixed y axis label when switching between area and volume DoD histogram plots.
+* Enforces zero as the minimum of the elevation change DoD bar charts.
+* HTML encoding GCD project file path when exporting to the Cross Section Viewer (allows for spaces in the path).
+
 ## 7.0.13 - 13 Apr 2018
 
 * AnyCPU architecture.
