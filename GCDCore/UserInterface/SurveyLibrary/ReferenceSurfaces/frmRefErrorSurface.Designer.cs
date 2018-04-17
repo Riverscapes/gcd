@@ -137,12 +137,12 @@
             // 
             // lblSingle
             // 
-            this.lblSingle.AutoSize = true;
-            this.lblSingle.Location = new System.Drawing.Point(78, 102);
+            this.lblSingle.Location = new System.Drawing.Point(25, 102);
             this.lblSingle.Name = "lblSingle";
-            this.lblSingle.Size = new System.Drawing.Size(76, 13);
+            this.lblSingle.Size = new System.Drawing.Size(135, 16);
             this.lblSingle.TabIndex = 5;
             this.lblSingle.Text = "Uniform error ()";
+            this.lblSingle.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // valSingle
             // 
@@ -200,21 +200,21 @@
             // 
             // lblIncrement
             // 
-            this.lblIncrement.AutoSize = true;
-            this.lblIncrement.Location = new System.Drawing.Point(91, 209);
+            this.lblIncrement.Location = new System.Drawing.Point(25, 205);
             this.lblIncrement.Name = "lblIncrement";
-            this.lblIncrement.Size = new System.Drawing.Size(63, 13);
+            this.lblIncrement.Size = new System.Drawing.Size(135, 20);
             this.lblIncrement.TabIndex = 12;
             this.lblIncrement.Text = "Increment ()";
+            this.lblIncrement.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // lblUpper
             // 
-            this.lblUpper.AutoSize = true;
-            this.lblUpper.Location = new System.Drawing.Point(85, 155);
+            this.lblUpper.Location = new System.Drawing.Point(25, 155);
             this.lblUpper.Name = "lblUpper";
-            this.lblUpper.Size = new System.Drawing.Size(69, 13);
+            this.lblUpper.Size = new System.Drawing.Size(135, 16);
             this.lblUpper.TabIndex = 8;
             this.lblUpper.Text = "Upper error ()";
+            this.lblUpper.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // valLower
             // 
@@ -246,12 +246,12 @@
             // 
             // lblLower
             // 
-            this.lblLower.AutoSize = true;
-            this.lblLower.Location = new System.Drawing.Point(85, 181);
+            this.lblLower.Location = new System.Drawing.Point(25, 181);
             this.lblLower.Name = "lblLower";
-            this.lblLower.Size = new System.Drawing.Size(69, 13);
+            this.lblLower.Size = new System.Drawing.Size(135, 16);
             this.lblLower.TabIndex = 10;
             this.lblLower.Text = "Lower error ()";
+            this.lblLower.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // frmRefErrorSurface
             // 
