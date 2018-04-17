@@ -75,10 +75,11 @@ namespace GCDCore.Engines
             return thrDoD;
         }
 
-        //protected override Raster GenerateErrorRaster(FileInfo thrErrorPath)
-        //{
-        //   // TODO: Need to override propagated error with process for probabilistic
-        //}
+        protected override Raster GenerateErrorRaster(FileInfo thrErrorPath)
+        {
+            decimal zval = (decimal)GCDConsoleLib.Utility.Probability.ltqnorm((double)Threshold);
+            return RasterOperators.Multiply(PropagatedErrRaster, zval, thrErrorPath);
+        }
 
         protected override DoDStats CalculateChangeStats(Raster rawDoD, Raster thrDoD, UnitGroup units)
         {
