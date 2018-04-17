@@ -10,6 +10,11 @@ Note, see the [Commit History](https://github.com/Riverscapes/gcd/commits) in Gi
 
 <a class="button" href="https://github.com/Riverscapes/gcd/commits"><i class="fa fa-github"/> GCD Github Repository Commit History</a>
 
+## 7.0.15 - 17 Apr 2018
+
+* Projection mismatches presented as warning instead of error.
+* Browsing to *.tiff files.
+
 ## 7.0.14 - 16 Apr 2018
 
 * Fixed y axis label when switching between area and volume DoD histogram plots.

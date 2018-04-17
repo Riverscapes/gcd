@@ -2,11 +2,11 @@
   <Name>Geomorphic Change Detection (GCD) 7</Name>
   <AddInID>{f8ca7dea-22fb-40a3-8412-b84a4b528602}</AddInID>
   <Description>Geomorphic Change Detection (GCD) Software</Description>
-  <Version>7.0.14</Version>
+  <Version>7.0.15</Version>
   <Image>Images\GCDAddIn.png</Image>
   <Author>Philip Bailey</Author>
   <Company>North Arrow Research</Company>
-  <Date>16/04/2018</Date>
+  <Date>17/04/2018</Date>
   <Targets>
     <Target name="Desktop" version="10.4" />
   </Targets>
