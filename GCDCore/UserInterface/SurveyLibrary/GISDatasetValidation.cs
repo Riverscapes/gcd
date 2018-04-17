@@ -66,12 +66,15 @@ namespace GCDCore.UserInterface.SurveyLibrary
             {
                 string msg = string.Format("The coordinate system of the selected {1}:{0}{0}{2}{0}{0} does not match that of the GCD project:{0}{0}{3}{0}{0}" +
                    "All {4} within a GCD project must have the identical coordinate system. However, small discrepencies in coordinate system names might cause the two coordinate systems to appear different. " +
-                   "If you believe that the selected {1} does in fact possess the same coordinate system as the GCD project then use the ArcToolbox 'Define Projection' geoprocessing tool in the " +
-                   "'Data Management -> Projection & Transformations' Toolbox to correct the problem with the selected {1} using the GCD project coordinate system specified above.",
-                   Environment.NewLine, sTypeSingle, gisDS.Proj.PrettyWkt, referenceProjection.PrettyWkt, sTypePlural);
+                   //"If you believe that the selected {1} does in fact possess the same coordinate system as the GCD project then use the ArcToolbox 'Define Projection' geoprocessing tool in the " +
+                   //"'Data Management -> Projection & Transformations' Toolbox to correct the problem with the selected {1} using the GCD project coordinate system specified above.",
+                    "If you believe that these projections are the same (or equivalent) choose \"Yes\" to continue anyway. Otherwise choose \"No\" to abort.",    
+                Environment.NewLine, sTypeSingle, gisDS.Proj.PrettyWkt, referenceProjection.PrettyWkt, sTypePlural);
 
-                MessageBox.Show(msg, Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return false;
+                DialogResult result = MessageBox.Show(msg, Properties.Resources.ApplicationNameLong, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                if (result == DialogResult.No)
+                    return false;
             }
 
             //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -83,8 +86,12 @@ namespace GCDCore.UserInterface.SurveyLibrary
                 {
                     msg += " You can change the GCD project horizontal units by canceling this form and opening the GCD project properties form.";
                 }
-                MessageBox.Show(msg, "HorizontalUnits Mismatch", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return false;
+                msg += "Choose \"Yes\" to continue anyway. Otherwise choose \"No\" to abort.";
+                DialogResult result = MessageBox.Show(msg, "HorizontalUnits Mismatch", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                if (result == DialogResult.No)
+                    return false;
+
             }
 
             return true;
