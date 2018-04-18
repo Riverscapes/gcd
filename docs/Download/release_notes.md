@@ -10,6 +10,12 @@ Note, see the [Commit History](https://github.com/Riverscapes/gcd/commits) in Gi
 
 <a class="button" href="https://github.com/Riverscapes/gcd/commits"><i class="fa fa-github"/> GCD Github Repository Commit History</a>
 
+## 7.0.16 - 17 Apr 2018
+
+* Probabilistic thresholded error raster.
+* Fixing DoD and budget segregation analysis inputs property grid to reference correct new and old surfaces.
+* Links to [TAT](http://tat.riverscapes.xyz) and [Cross Section Viewer](http://xsviewer.northarrowresearch.com) online help web sites.
+
 ## 7.0.15 - 17 Apr 2018
 
 * Projection mismatches presented as warning instead of error.
