@@ -43,10 +43,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.grpInputs = new System.Windows.Forms.GroupBox();
             this.grdInputs = new System.Windows.Forms.DataGridView();
-            this.colInputName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colInputUnits = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colInputDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colInputSource = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.txtFilePath = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
@@ -71,6 +67,10 @@
             this.colValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.txtDescription = new System.Windows.Forms.TextBox();
+            this.colInputName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colInputUnits = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colInputDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colInputSource = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -255,31 +255,6 @@
             this.grdInputs.Name = "grdInputs";
             this.grdInputs.Size = new System.Drawing.Size(467, 295);
             this.grdInputs.TabIndex = 0;
-            // 
-            // colInputName
-            // 
-            this.colInputName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colInputName.DataPropertyName = "Name";
-            this.colInputName.HeaderText = "Name";
-            this.colInputName.Name = "colInputName";
-            // 
-            // colInputUnits
-            // 
-            this.colInputUnits.DataPropertyName = "Units";
-            this.colInputUnits.HeaderText = "Units";
-            this.colInputUnits.Name = "colInputUnits";
-            // 
-            // colInputDescription
-            // 
-            this.colInputDescription.DataPropertyName = "Description";
-            this.colInputDescription.HeaderText = "Description";
-            this.colInputDescription.Name = "colInputDescription";
-            // 
-            // colInputSource
-            // 
-            this.colInputSource.DataPropertyName = "Source";
-            this.colInputSource.HeaderText = "Source";
-            this.colInputSource.Name = "colInputSource";
             // 
             // txtFilePath
             // 
@@ -520,6 +495,31 @@
             this.txtDescription.Name = "txtDescription";
             this.txtDescription.Size = new System.Drawing.Size(479, 495);
             this.txtDescription.TabIndex = 0;
+            // 
+            // colInputName
+            // 
+            this.colInputName.DataPropertyName = "Name";
+            this.colInputName.HeaderText = "Name";
+            this.colInputName.Name = "colInputName";
+            this.colInputName.Width = 124;
+            // 
+            // colInputUnits
+            // 
+            this.colInputUnits.DataPropertyName = "Units";
+            this.colInputUnits.HeaderText = "Units";
+            this.colInputUnits.Name = "colInputUnits";
+            // 
+            // colInputDescription
+            // 
+            this.colInputDescription.DataPropertyName = "Description";
+            this.colInputDescription.HeaderText = "Description";
+            this.colInputDescription.Name = "colInputDescription";
+            // 
+            // colInputSource
+            // 
+            this.colInputSource.DataPropertyName = "Source";
+            this.colInputSource.HeaderText = "Source";
+            this.colInputSource.Name = "colInputSource";
             // 
             // frmFISProperties
             // 
