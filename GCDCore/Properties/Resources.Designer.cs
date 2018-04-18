@@ -268,6 +268,15 @@ namespace GCDCore.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to http://xsviewer.northarrowresearch.com.
+        /// </summary>
+        public static string CrossSectionViewerWebSite {
+            get {
+                return ResourceManager.GetString("CrossSectionViewerWebSite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         public static System.Drawing.Bitmap CurrentFunders {
@@ -760,15 +769,6 @@ namespace GCDCore.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to http://1645323425123462.s3-website-us-west-2.amazonaws.com/.
-        /// </summary>
-        public static string UploadPublicUrl {
-            get {
-                return ResourceManager.GetString("UploadPublicUrl", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         public static System.Drawing.Bitmap up {
@@ -793,6 +793,15 @@ namespace GCDCore.Properties {
         public static string UploadAPIUrl {
             get {
                 return ResourceManager.GetString("UploadAPIUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to http://1645323425123462.s3-website-us-west-2.amazonaws.com/.
+        /// </summary>
+        public static string UploadPublicUrl {
+            get {
+                return ResourceManager.GetString("UploadPublicUrl", resourceCulture);
             }
         }
         

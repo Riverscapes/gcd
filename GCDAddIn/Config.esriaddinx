@@ -34,6 +34,7 @@
         <Button id="GCD7_AddIn_OnlineHelp" class="GCDAddIn.Help.btnOnlineHelp" message="Open the GCD Online Help" caption="Online GCD 6 Help" category="GCD" image="Images\Help.png" />
         <Button id="GCD7_AddIn_WebSite" class="GCDAddIn.Help.btnWebSite" message="Open the GCD Software Web Site" caption="GCD Web Site" category="GCD" image="Images\Help.png" />
         <Button id="GCD7_AddIn_TATWebSite" class="GCDAddIn.Help.btnTATWebSite" message="Open the Topographic Analysis Tools Software Web Site" caption="Topographic Analysis Tools Web Site" category="GCD" image="Images\Help.png" />
+        <Button id="GCD7_AddIn_XSWebSite" class="GCDAddIn.Help.btnCrossSectionViewerWebSite" message="Open the Cross Section Viewer Software Web Site" caption="Cross Section Viewer Web Site" category="GCD" image="Images\Help.png" />
       </Commands>
       <DockableWindows>
         <DockableWindow id="GCD7_ucProjectManager" class="GCDAddIn.ucProjectManager+AddinImpl" caption="GCD Project Explorer" image="Images\GCD.png">
@@ -66,8 +67,9 @@
           <Items>
             <Button refID="GCD7_AddIn_OnlineHelp" />
             <Button refID="GCD7_AddIn_WebSite" />
-            <Button refID="GCD7_AddIn_AboutButton" />
             <Button refID="GCD7_AddIn_TATWebSite" separator="true"/>
+            <Button refID="GCD7_AddIn_XSWebSite"/>
+            <Button refID="GCD7_AddIn_AboutButton" separator="true"/>
           </Items>
         </Menu>
       </Menus>

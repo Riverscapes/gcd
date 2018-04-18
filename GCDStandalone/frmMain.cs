@@ -494,5 +494,15 @@ namespace GCDStandalone
             GCDCore.UserInterface.Tools.frmOnlineManager frm = new GCDCore.UserInterface.Tools.frmOnlineManager();
             frm.ShowDialog();
         }
+
+        private void topographicAnalysisToolkitTATToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(GCDCore.Properties.Resources.TATWebSite);
+        }
+
+        private void crossSectionViewerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(GCDCore.Properties.Resources.CrossSectionViewerWebSite);
+        }
     }
 }

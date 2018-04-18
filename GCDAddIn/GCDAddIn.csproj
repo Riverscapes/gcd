@@ -159,6 +159,7 @@
     <Compile Include="GCDArcMapManager.cs" />
     <Compile Include="GCDExtension.cs" />
     <Compile Include="Help\btnAbout.cs" />
+    <Compile Include="Help\btnCrossSectionViewerWebSite.cs" />
     <Compile Include="Help\btnOnlineHelp.cs" />
     <Compile Include="Help\btnTATWebSite.cs" />
     <Compile Include="Help\btnWebSite.cs" />

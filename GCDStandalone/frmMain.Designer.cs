@@ -61,6 +61,10 @@
             this.ucProjectExplorer1 = new GCDCore.UserInterface.Project.ucProjectExplorer();
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.topographicAnalysisToolkitTATToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.crossSectionViewerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -225,6 +229,10 @@
             this.helpToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.onlineGCDHelpToolStripMenuItem,
             this.gCDWebSiteToolStripMenuItem,
+            this.toolStripSeparator3,
+            this.topographicAnalysisToolkitTATToolStripMenuItem,
+            this.crossSectionViewerToolStripMenuItem,
+            this.toolStripSeparator4,
             this.aboutGCDToolStripMenuItem});
             this.helpToolStripMenuItem1.Name = "helpToolStripMenuItem1";
             this.helpToolStripMenuItem1.Size = new System.Drawing.Size(44, 20);
@@ -234,7 +242,7 @@
             // 
             this.onlineGCDHelpToolStripMenuItem.Image = global::GCDStandalone.Properties.Resources.Help;
             this.onlineGCDHelpToolStripMenuItem.Name = "onlineGCDHelpToolStripMenuItem";
-            this.onlineGCDHelpToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.onlineGCDHelpToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
             this.onlineGCDHelpToolStripMenuItem.Text = "Online GCD Help";
             this.onlineGCDHelpToolStripMenuItem.Click += new System.EventHandler(this.onlineGCDHelpToolStripMenuItem_Click);
             // 
@@ -242,7 +250,7 @@
             // 
             this.gCDWebSiteToolStripMenuItem.Image = global::GCDStandalone.Properties.Resources.Help;
             this.gCDWebSiteToolStripMenuItem.Name = "gCDWebSiteToolStripMenuItem";
-            this.gCDWebSiteToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.gCDWebSiteToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
             this.gCDWebSiteToolStripMenuItem.Text = "GCD Web Site";
             this.gCDWebSiteToolStripMenuItem.Click += new System.EventHandler(this.gCDWebSiteToolStripMenuItem_Click);
             // 
@@ -250,7 +258,7 @@
             // 
             this.aboutGCDToolStripMenuItem.Image = global::GCDStandalone.Properties.Resources.GCD;
             this.aboutGCDToolStripMenuItem.Name = "aboutGCDToolStripMenuItem";
-            this.aboutGCDToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.aboutGCDToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
             this.aboutGCDToolStripMenuItem.Text = "About GCD";
             this.aboutGCDToolStripMenuItem.Click += new System.EventHandler(this.aboutGCDToolStripMenuItem_Click);
             // 
@@ -371,6 +379,32 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(907, 392);
             this.tableLayoutPanel1.TabIndex = 5;
             // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(254, 6);
+            // 
+            // topographicAnalysisToolkitTATToolStripMenuItem
+            // 
+            this.topographicAnalysisToolkitTATToolStripMenuItem.Image = global::GCDStandalone.Properties.Resources.Help;
+            this.topographicAnalysisToolkitTATToolStripMenuItem.Name = "topographicAnalysisToolkitTATToolStripMenuItem";
+            this.topographicAnalysisToolkitTATToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
+            this.topographicAnalysisToolkitTATToolStripMenuItem.Text = "Topographic Analysis Toolkit (TAT)";
+            this.topographicAnalysisToolkitTATToolStripMenuItem.Click += new System.EventHandler(this.topographicAnalysisToolkitTATToolStripMenuItem_Click);
+            // 
+            // crossSectionViewerToolStripMenuItem
+            // 
+            this.crossSectionViewerToolStripMenuItem.Image = global::GCDStandalone.Properties.Resources.Help;
+            this.crossSectionViewerToolStripMenuItem.Name = "crossSectionViewerToolStripMenuItem";
+            this.crossSectionViewerToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
+            this.crossSectionViewerToolStripMenuItem.Text = "Cross Section Viewer";
+            this.crossSectionViewerToolStripMenuItem.Click += new System.EventHandler(this.crossSectionViewerToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(254, 6);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -435,6 +469,10 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem checkForUpdatesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem uploadThisProjectToGCDOnlineToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripMenuItem topographicAnalysisToolkitTATToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem crossSectionViewerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
     }
 }
 
