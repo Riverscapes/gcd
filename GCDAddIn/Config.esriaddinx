@@ -31,7 +31,7 @@
 
         <!-- Help Menu-->
         <Button id="GCD7_AddIn_AboutButton" class="GCDAddIn.Help.btnAbout" message="Provides information about the version, authors and funding for the Geomorphic Change Detection (GCD)." caption="About GCD" tip="Information About the GCD" category="GCD" image="Images\GCD.png" />
-        <Button id="GCD7_AddIn_OnlineHelp" class="GCDAddIn.Help.btnOnlineHelp" message="Open the GCD Online Help" caption="Online GCD 6 Help" category="GCD" image="Images\Help.png" />
+        <Button id="GCD7_AddIn_OnlineHelp" class="GCDAddIn.Help.btnOnlineHelp" message="Open the GCD Online Help" caption="Online GCD Help" category="GCD" image="Images\Help.png" />
         <Button id="GCD7_AddIn_WebSite" class="GCDAddIn.Help.btnWebSite" message="Open the GCD Software Web Site" caption="GCD Web Site" category="GCD" image="Images\Help.png" />
         <Button id="GCD7_AddIn_TATWebSite" class="GCDAddIn.Help.btnTATWebSite" message="Open the Topographic Analysis Tools Software Web Site" caption="Topographic Analysis Tools Web Site" category="GCD" image="Images\Help.png" />
         <Button id="GCD7_AddIn_XSWebSite" class="GCDAddIn.Help.btnCrossSectionViewerWebSite" message="Open the Cross Section Viewer Software Web Site" caption="Cross Section Viewer Web Site" category="GCD" image="Images\Help.png" />
