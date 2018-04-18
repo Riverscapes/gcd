@@ -26,13 +26,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
         private void frmBudgetSegProperties_Load(object sender, EventArgs e)
         {
             cmdOK.Text = Properties.Resources.CreateButtonText;
-
-            txtDoDName.Text = InitialDoD.Name;
-            txtNewDEM.Text = InitialDoD.NewSurface.Name;
-            txtOldDEM.Text = InitialDoD.OldSurface.Name;
             txtOutputFolder.Text = ProjectManager.Project.GetRelativePath(InitialDoD.BudgetSegPath().FullName);
-            txtUncertaintyAnalysis.Text = InitialDoD.UncertaintyAnalysisLabel;
-
             cboMasks.DataSource = new BindingList<GCDCore.Project.Masks.Mask>(ProjectManager.Project.Masks.Values.Where(x => x is GCDCore.Project.Masks.AttributeFieldMask).ToList<GCDCore.Project.Masks.Mask>());
             if (cboMasks.Items.Count > 0)
                 cboMasks.SelectedIndex = 0;
@@ -109,7 +103,6 @@ namespace GCDCore.UserInterface.BudgetSegregation
 
         private void cboMasks_SelectedIndexChanged(object sender, EventArgs e)
         {
-            txtField.Text = ((GCDCore.Project.Masks.AttributeFieldMask)cboMasks.SelectedItem)._Field;
             txtName.Text = GetUniqueName(cboMasks.Text);
         }
 
