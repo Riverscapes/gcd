@@ -6,7 +6,11 @@ weight: 5
 ### Excercise Data
 This is an excercise for the [River Rees](https://sites.google.com/site/reesscan/) in New Zealand. It is the same excerise data from the Vericat et al. (2017) paper.
 <div align="center">
-<a class="button" href="https://s3-us-west-2.amazonaws.com/etalweb.joewheaton.org/GCD/GCD7/Tutorials/O_MorphologicalApproach.zip"><i class="fas fa-file-archive"></i> Excercise Data </a><br>
+  <a class="button" href="https://s3-us-west-2.amazonaws.com/etalweb.joewheaton.org/GCD/GCD7/Tutorials/O_MorphologicalApproach.zip"><i class="fas fa-file-archive"></i> Excercise Data (DEMs & Shapefile)</a>
+  <a class="button" href="https://usu.box.com/v/ReesMorphApproach-MaskOnly"><i class="fas fa-file-archive"></i> Excercise Data (Shapefile Mask Only)</a>
+	
+	
+	
 </div>
 
 ### Lecture Slides
