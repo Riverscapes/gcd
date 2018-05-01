@@ -338,6 +338,7 @@ namespace GCDConsoleLib.Internal
                     // Write this window tot he file
                     // it goes (colNum, rowNum, COLS, ROWS, buffer);
                     _outputRasters[idx].Write(offset[1], offset[0] + _vOffset, ChunkExtent.Cols, ChunkExtent.Rows, outBuffer[idx]);
+                    
                 }
                 // We always increment to the next one
                 nextChunk();

@@ -387,7 +387,6 @@ namespace GCDConsoleLib
             {
                 _ds.Dispose();
                 _ds = null;
-                RefreshFileInfo();
             }
         }
 
@@ -649,6 +648,7 @@ namespace GCDConsoleLib
                 _ds.GetRasterBand(1).WriteRaster(xOff, yOff, xSize, ySize, buffer as byte[], xSize, ySize, 0, 0);
             else
                 throw new Exception("Unsupported type");
+            _ds.FlushCache();
         }
 
         /// <summary>
@@ -673,6 +673,7 @@ namespace GCDConsoleLib
                 _ds.GetRasterBand(1).ReadRaster(xOff, yOff, xSize, ySize, buffer as byte[], xSize, ySize, 0, 0);
             else
                 throw new Exception("Unsupported type");
+            _ds.FlushCache();
         }
     }
 
