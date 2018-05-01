@@ -46,7 +46,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -73,6 +73,11 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+    <!-- Properties group for Determining 64bit Architecture -->
+  <PropertyGroup>
+    <GDALPath>..\extlib\release-1800-x64-gdal-2-2-1-mapserver-7-0-6\bin</GDALPath>
+    <GDALPath Condition="'$(Platform)'!='x64'">..\extlib\release-1800-gdal-2-2-1-mapserver-7-0-6\bin</GDALPath>
   </PropertyGroup>
   <PropertyGroup>
     <SignManifests>true</SignManifests>
@@ -134,129 +139,129 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\extlib\GDAL221\data\pci_datum.txt">
+    <Content Include="$(GDALPath)\gdal-data\pci_datum.txt">
       <Link>lib\data\pci_datum.txt</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\extlib\GDAL221\data\pci_ellips.txt">
+    <Content Include="$(GDALPath)\gdal-data\pci_ellips.txt">
       <Link>lib\data\pci_ellips.txt</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\extlib\GDAL221\expat.dll">
+    <Content Include="$(GDALPath)\expat.dll">
       <Link>lib\expat.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\extlib\GDAL221\freexl.dll">
+    <Content Include="$(GDALPath)\freexl.dll">
       <Link>lib\freexl.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\extlib\GDAL221\gdal202.dll">
+    <Content Include="$(GDALPath)\gdal202.dll">
       <Link>lib\gdal202.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\extlib\GDAL221\gdal_wrap.dll">
+    <Content Include="$(GDALPath)\gdal\csharp\gdal_wrap.dll">
       <Link>lib\gdal_wrap.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\extlib\GDAL221\geos.dll">
+    <Content Include="$(GDALPath)\geos.dll">
       <Link>lib\geos.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\extlib\GDAL221\geos_c.dll">
+    <Content Include="$(GDALPath)\geos_c.dll">
       <Link>lib\geos_c.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\extlib\GDAL221\iconv.dll">
+    <Content Include="$(GDALPath)\iconv.dll">
       <Link>lib\iconv.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\extlib\GDAL221\libcurl.dll">
+    <Content Include="$(GDALPath)\libcurl.dll">
       <Link>lib\libcurl.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\extlib\GDAL221\libeay32.dll">
+    <Content Include="$(GDALPath)\libeay32.dll">
       <Link>lib\libeay32.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\extlib\GDAL221\libmysql.dll">
+    <Content Include="$(GDALPath)\libmysql.dll">
       <Link>lib\libmysql.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\extlib\GDAL221\libpq.dll">
+    <Content Include="$(GDALPath)\libpq.dll">
       <Link>lib\libpq.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\extlib\GDAL221\libxml2.dll">
+    <Content Include="$(GDALPath)\libxml2.dll">
       <Link>lib\libxml2.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\extlib\GDAL221\msvcp120.dll">
+    <Content Include="$(GDALPath)\msvcp120.dll">
       <Link>lib\msvcp120.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\extlib\GDAL221\msvcr120.dll">
+    <Content Include="$(GDALPath)\msvcr120.dll">
       <Link>lib\msvcr120.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\extlib\GDAL221\ogr_wrap.dll">
+    <Content Include="$(GDALPath)\gdal\csharp\ogr_wrap.dll">
       <Link>lib\ogr_wrap.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\extlib\GDAL221\openjp2.dll">
+    <Content Include="$(GDALPath)\openjp2.dll">
       <Link>lib\openjp2.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\extlib\GDAL221\osr_wrap.dll">
+    <Content Include="$(GDALPath)\gdal\csharp\osr_wrap.dll">
       <Link>lib\osr_wrap.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\extlib\GDAL221\proj.dll">
+    <Content Include="$(GDALPath)\proj.dll">
       <Link>lib\proj.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\extlib\GDAL221\spatialite.dll">
+    <Content Include="$(GDALPath)\spatialite.dll">
       <Link>lib\spatialite.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\extlib\GDAL221\sqlite3.dll">
+    <Content Include="$(GDALPath)\sqlite3.dll">
       <Link>lib\sqlite3.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\extlib\GDAL221\ssleay32.dll">
+    <Content Include="$(GDALPath)\ssleay32.dll">
       <Link>lib\ssleay32.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\extlib\GDAL221\xerces-c_3_1.dll">
+    <Content Include="$(GDALPath)\xerces-c_3_1.dll">
       <Link>lib\xerces-c_3_1.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\extlib\GDAL221\zlib1.dll">
+    <Content Include="$(GDALPath)\zlib1.dll">
       <Link>lib\zlib1.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\extlib\GDAL221\data\compdcs.csv">
+    <Content Include="$(GDALPath)\gdal-data\compdcs.csv">
       <Link>lib\data\compdcs.csv</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\extlib\GDAL221\data\gcs.csv">
+    <Content Include="$(GDALPath)\gdal-data\gcs.csv">
       <Link>lib\data\gcs.csv</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\extlib\GDAL221\data\gdal_datum.csv">
+    <Content Include="$(GDALPath)\gdal-data\gdal_datum.csv">
       <Link>lib\data\gdal_datum.csv</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\extlib\GDAL221\data\ozi_datum.csv">
+    <Content Include="$(GDALPath)\gdal-data\ozi_datum.csv">
       <Link>lib\data\ozi_datum.csv</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\extlib\GDAL221\data\ozi_ellips.csv">
+    <Content Include="$(GDALPath)\gdal-data\ozi_ellips.csv">
       <Link>lib\data\ozi_ellips.csv</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\extlib\GDAL221\data\pcs.csv">
+    <Content Include="$(GDALPath)\gdal-data\pcs.csv">
       <Link>lib\data\pcs.csv</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

@@ -25,7 +25,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -40,7 +40,7 @@
     <OutputPath>bin\x64\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DebugType>full</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
@@ -71,19 +71,24 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <!-- Properties group for Determining 64bit Architecture -->
+  <PropertyGroup>
+    <GDALPath>..\extlib\release-1800-x64-gdal-2-2-1-mapserver-7-0-6\bin</GDALPath>
+    <GDALPath Condition="'$(Platform)'!='x64'">..\extlib\release-1800-gdal-2-2-1-mapserver-7-0-6\bin</GDALPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="gdalconst_csharp">
-      <HintPath>..\extlib\GDAL221\csharp\gdalconst_csharp.dll</HintPath>
+      <HintPath>$(GDALPath)\gdal\csharp\gdalconst_csharp.dll</HintPath>
     </Reference>
     <Reference Include="gdal_csharp">
-      <HintPath>..\extlib\GDAL221\csharp\gdal_csharp.dll</HintPath>
+      <HintPath>$(GDALPath)\gdal\csharp\gdal_csharp.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="ogr_csharp">
-      <HintPath>..\extlib\GDAL221\csharp\ogr_csharp.dll</HintPath>
+      <HintPath>$(GDALPath)\gdal\csharp\ogr_csharp.dll</HintPath>
     </Reference>
     <Reference Include="osr_csharp">
-      <HintPath>..\extlib\GDAL221\csharp\osr_csharp.dll</HintPath>
+      <HintPath>$(GDALPath)\gdal\csharp\osr_csharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="UnitsNet, Version=3.77.0.0, Culture=neutral, processorArchitecture=MSIL">
