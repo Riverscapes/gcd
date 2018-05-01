@@ -67,7 +67,7 @@ namespace GCDConsoleLib.Tests
             Vector shp = new Vector(new FileInfo(DirHelpers.GetTestRootPath(@"vectors\StressTest.shp")));
             Assert.IsTrue(shp.Features.Count > 10);
 
-            Vector geojson = new Vector(new FileInfo(DirHelpers.GetTestRootPath(@"geojson\3squares.json")));
+            Vector geojson = new Vector(new FileInfo(DirHelpers.GetTestRootPath(@"geojson\3squares.geojson")));
             Assert.IsTrue(geojson.Features.Count > 2);
 
         }
