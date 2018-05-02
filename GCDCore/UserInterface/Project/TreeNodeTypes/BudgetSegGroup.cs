@@ -31,7 +31,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
         {
             Nodes.Clear();
 
-            BudgetSeg.MorphologicalAnalyses.Values.ToList().ForEach(x => Nodes.Add(new MorphologicalItem(x, ContextMenuStrip.Container)));
+            BudgetSeg.MorphologicalAnalyses.ForEach(x => Nodes.Add(new MorphologicalItem(x, ContextMenuStrip.Container)));
 
             if (Nodes.Count > 0)
                 Expand();

@@ -39,20 +39,20 @@ namespace GCDCore.Project.ProfileRoutes
             get
             {
                 // Check if any linear extractions use this profile route
-                foreach(DEMSurvey dem in ProjectManager.Project.DEMSurveys.Values)
+                foreach(DEMSurvey dem in ProjectManager.Project.DEMSurveys)
                 {
-                    if (dem.LinearExtractions.Values.Any(x => x.Equals(this)))
+                    if (dem.LinearExtractions.Any(x => x.Equals(this)))
                         return true; 
                 }
                 
-                foreach (Surface surf in ProjectManager.Project.ReferenceSurfaces.Values)
+                foreach (Surface surf in ProjectManager.Project.ReferenceSurfaces)
                 {
-                    if (surf.LinearExtractions.Values.Any(x => x.Equals(this)))
+                    if (surf.LinearExtractions.Any(x => x.Equals(this)))
                         return true;
                 }
-                foreach (DoDBase dod in ProjectManager.Project.DoDs.Values)
+                foreach (DoDBase dod in ProjectManager.Project.DoDs)
                 {
-                    if (dod.LinearExtractions.Values.Any(x => x.Equals(this)))
+                    if (dod.LinearExtractions.Any(x => x.Equals(this)))
                         return true;
                 }
 
@@ -71,7 +71,7 @@ namespace GCDCore.Project.ProfileRoutes
                 Console.Write(string.Format("Failed to shapefile associated with the {0} at {1}", Noun, Vector.GISFileInfo.Directory.FullName, ex.Message));
             }
 
-            ProjectManager.Project.ProfileRoutes.Remove(Name);
+            ProjectManager.Project.ProfileRoutes.Remove(this);
 
             // If no more profile routes then delete the project routes folder
             if (ProjectManager.Project.Masks.Count < 1 && !Directory.EnumerateFileSystemEntries(Vector.GISFileInfo.Directory.Parent.FullName).Any())

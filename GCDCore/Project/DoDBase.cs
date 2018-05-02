@@ -23,8 +23,8 @@ namespace GCDCore.Project
         public FileInfo SummaryXML { get; set; }
         public readonly DoDStats Statistics;
 
-        public Dictionary<string, BudgetSegregation> BudgetSegregations { get; internal set; }
-        public readonly Dictionary<string, LinearExtraction.LinearExtraction> LinearExtractions;
+        public List<BudgetSegregation> BudgetSegregations { get; internal set; }
+        public readonly List<LinearExtraction.LinearExtraction> LinearExtractions;
 
         public override string Noun { get { return "Change Detection"; } }
 
@@ -40,7 +40,7 @@ namespace GCDCore.Project
         {
             get
             {
-                return ProjectManager.Project.InterComparisons.Values.Any(x => x._DoDs.Contains(this));
+                return ProjectManager.Project.InterComparisons.Any(x => x._DoDs.Contains(this));
             }
         }
 
@@ -71,8 +71,8 @@ namespace GCDCore.Project
             Histograms = histograms;
             SummaryXML = summaryXML;
             Statistics = stats;
-            BudgetSegregations = new Dictionary<string, BudgetSegregation>();
-            LinearExtractions = new Dictionary<string, LinearExtraction.LinearExtraction>();
+            BudgetSegregations = new List<BudgetSegregation>();
+            LinearExtractions = new List<LinearExtraction.LinearExtraction>();
         }
 
         protected DoDBase(XmlNode nodDoD)
@@ -85,7 +85,7 @@ namespace GCDCore.Project
             XmlNode nodAOI = nodDoD.SelectSingleNode("AOI");
             if (nodAOI is XmlNode)
             {
-                AOIMask = ProjectManager.Project.Masks[nodAOI.InnerText] as Masks.AOIMask;
+                AOIMask = ProjectManager.Project.Masks.First(x => string.Compare(x.Name, nodAOI.InnerText, true) == 0) as Masks.AOIMask;
             }
 
             RawDoD = new DoDRaster(string.Format(Name + " - Raw"), ProjectManager.Project.GetAbsolutePath(nodDoD.SelectSingleNode("RawDoD").InnerText));
@@ -96,28 +96,28 @@ namespace GCDCore.Project
             SummaryXML = ProjectManager.Project.GetAbsolutePath(nodDoD.SelectSingleNode("SummaryXML").InnerText);
             Statistics = DeserializeStatistics(nodDoD.SelectSingleNode("Statistics"), ProjectManager.Project.CellArea, ProjectManager.Project.Units);
 
-            BudgetSegregations = new Dictionary<string, BudgetSegregation>();
+            BudgetSegregations = new List<BudgetSegregation>();
             XmlNode nodBSes = nodDoD.SelectSingleNode("BudgetSegregations");
             if (nodBSes is XmlNode)
             {
                 foreach (XmlNode nodBS in nodBSes.SelectNodes("BudgetSegregation"))
                 {
                     BudgetSegregation bs = new BudgetSegregation(nodBS, this);
-                    BudgetSegregations[bs.Name] = bs;
+                    BudgetSegregations.Add(bs);
                 }
             }
 
-            LinearExtractions = new Dictionary<string, LinearExtraction.LinearExtraction>();
+            LinearExtractions = new List<LinearExtraction.LinearExtraction>();
             foreach (XmlNode nodLE in nodDoD.SelectNodes("LinearExtractions/LinearExtraction"))
             {
                 LinearExtraction.LinearExtraction le = new LinearExtraction.LinearExtractionFromDoD(nodLE, this);
-                LinearExtractions[le.Name] = le;
+                LinearExtractions.Add(le);
             }
         }
 
         public bool IsBudgetSegNameUnique(string name, BudgetSegregation ignore)
         {
-            return BudgetSegregations.ContainsKey(name) ? BudgetSegregations[name] == ignore : true;
+            return !BudgetSegregations.Any(x => x != ignore && string.Compare(name, x.Name, true) == 0);
         }
 
         public virtual XmlNode Serialize(XmlNode nodParent)
@@ -145,14 +145,13 @@ namespace GCDCore.Project
             if (BudgetSegregations.Count > 0)
             {
                 XmlNode nodBS = nodDoD.AppendChild(nodParent.OwnerDocument.CreateElement("BudgetSegregations"));
-                foreach (BudgetSegregation bs in BudgetSegregations.Values)
-                    bs.Serialize(nodBS);
+                BudgetSegregations.ForEach(x => x.Serialize(nodBS));
             }
 
             if (LinearExtractions.Count > 0)
             {
                 XmlNode nodLE = nodDoD.AppendChild(nodDoD.OwnerDocument.CreateElement("LinearExtractions"));
-                LinearExtractions.Values.ToList().ForEach(x => x.Serialize(nodLE));
+                LinearExtractions.ForEach(x => x.Serialize(nodLE));
             }
 
             // Return this so inherited classes can append to it.
@@ -197,11 +196,11 @@ namespace GCDCore.Project
 
             if (string.Compare(surfaceType, "dem", true) == 0)
             {
-                return ProjectManager.Project.DEMSurveys[surfaceName];
+                return ProjectManager.Project.DEMSurveys.First(x => string.Compare(x.Name, surfaceName, true) == 0);
             }
             else
             {
-                return ProjectManager.Project.ReferenceSurfaces[surfaceName];
+                return ProjectManager.Project.ReferenceSurfaces.First(x => string.Compare(x.Name, surfaceName, true) == 0);
             }
         }
 
@@ -261,7 +260,7 @@ namespace GCDCore.Project
 
             try
             {
-                BudgetSegregations.Values.ToList().ForEach(x => x.Delete());
+                BudgetSegregations.ForEach(x => x.Delete());
             }
             finally
             {
@@ -323,7 +322,7 @@ namespace GCDCore.Project
             }
 
             // Remove the DoD from the project
-            ProjectManager.Project.DoDs.Remove(Name);
+            ProjectManager.Project.DoDs.Remove(this);
             ProjectManager.Project.Save();
         }
     }

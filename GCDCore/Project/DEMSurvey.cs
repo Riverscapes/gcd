@@ -139,7 +139,7 @@ namespace GCDCore.Project
             }
 
             // Remove the DEM from the project
-            ProjectManager.Project.DEMSurveys.Remove(Name);
+            ProjectManager.Project.DEMSurveys.Remove(this);
             ProjectManager.Project.Save();
         }
 

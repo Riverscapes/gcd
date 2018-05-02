@@ -107,25 +107,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             // Detect if name has been changed - need to update owner dictionaries
             if (string.Compare(Surface.Name, txtName.Text, false) != 0)
             {
-                if (Surface is DEMSurvey)
-                {
-                    ProjectManager.Project.DEMSurveys.Remove(Surface.Name);
-                    Surface.Name = txtName.Text;
-                    ProjectManager.Project.DEMSurveys[Surface.Name] = Surface as DEMSurvey;
-                }
-                else if (Surface is Surface)
-                {
-                    ProjectManager.Project.ReferenceSurfaces.Remove(Surface.Name);
-                    Surface.Name = txtName.Text;
-                    ProjectManager.Project.ReferenceSurfaces[Surface.Name] = Surface as Surface;
-                }
-                else if (Surface is ErrorSurface)
-                {
-                    ErrorSurface err = Surface as ErrorSurface;
-                    err.Surf.ErrorSurfaces.Remove(err);
-                    err.Name = txtName.Text;
-                    err.Surf.ErrorSurfaces.Add(err);
-                }
+                Surface.Name = txtName.Text;                
             }
 
             if (Surface is DEMSurvey)

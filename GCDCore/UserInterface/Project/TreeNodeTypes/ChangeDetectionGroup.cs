@@ -35,7 +35,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             Nodes.Clear();
 
             Dictionary<string, DoDPairGroup> dDoD = new Dictionary<string, DoDPairGroup>();
-            foreach (DoDBase rDoD in ProjectManager.Project.DoDs.Values)
+            foreach (DoDBase rDoD in ProjectManager.Project.DoDs)
             {
                 string sDEMPair = rDoD.NewSurface.Name + " - " + rDoD.OldSurface.Name;
 
@@ -97,10 +97,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
 
         public void OnAddAllDoDsToMap(object sender, EventArgs e)
         {
-            foreach (DoDBase dod in ProjectManager.Project.DoDs.Values)
-            {
-                ProjectManager.OnAddRasterToMap(dod.ThrDoD as GCDProjectRasterItem);
-            }
+            ProjectManager.Project.DoDs.ForEach(x => ProjectManager.OnAddRasterToMap(x.ThrDoD as GCDProjectRasterItem));
         }
     }
 }

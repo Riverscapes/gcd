@@ -388,9 +388,6 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
                 return;
             }
 
-            if (!Analysis.BS.MorphologicalAnalyses.ContainsValue(Analysis))
-                Analysis.BS.MorphologicalAnalyses[Analysis.Name] = Analysis;
-
             ProjectManager.Project.Save();
         }
 

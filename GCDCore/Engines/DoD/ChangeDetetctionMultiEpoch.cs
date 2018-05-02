@@ -78,7 +78,7 @@ namespace GCDCore.Engines.DoD
             }
 
             DoDBase dod = cdEngine.Calculate(dodName, dFolder, true, ProjectManager.Project.Units);
-            ProjectManager.Project.DoDs[dodName] = dod;
+            ProjectManager.Project.DoDs.Add(dod);
         }
     }
 }

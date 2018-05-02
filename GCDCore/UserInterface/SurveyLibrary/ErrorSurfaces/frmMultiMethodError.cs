@@ -54,7 +54,7 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
             }
 
             cboMask.SelectedIndexChanged += cboMask_SelectedIndexChanged;
-            cboMask.DataSource = ProjectManager.Project.Masks.Values.Where(x => x is GCDCore.Project.Masks.RegularMask).ToList();
+            cboMask.DataSource = ProjectManager.Project.Masks.Where(x => x is GCDCore.Project.Masks.RegularMask).ToList();
 
             grdRegions.AutoGenerateColumns = false;
             grdRegions.DataSource = ErrProps;

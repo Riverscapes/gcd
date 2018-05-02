@@ -29,7 +29,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
 
             // Add all the project inter-comparisons
 
-            foreach (GCDCore.Project.InterComparison ic in ProjectManager.Project.InterComparisons.Values)
+            foreach (InterComparison ic in ProjectManager.Project.InterComparisons)
             {
                 TreeNodeItem nodIC = new TreeNodeItem(ic, 10, ContextMenuStrip.Container);
                 nodIC.ContextMenuStrip.Items.RemoveAt(0);

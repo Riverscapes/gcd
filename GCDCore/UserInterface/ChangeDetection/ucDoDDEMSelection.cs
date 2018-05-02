@@ -77,12 +77,12 @@ namespace GCDCore.UserInterface.ChangeDetection
             OldSurfaces = new BindingList<Surface>();
 
             // Add all DEM Surveys
-            ProjectManager.Project.DEMSurveys.Values.ToList<Surface>().ForEach(x => NewSurfaces.Add(x));
-            ProjectManager.Project.DEMSurveys.Values.ToList<Surface>().ForEach(x => OldSurfaces.Add(x));
+            ProjectManager.Project.DEMSurveys.ForEach(x => NewSurfaces.Add(x));
+            ProjectManager.Project.DEMSurveys.ForEach(x => OldSurfaces.Add(x));
 
             // Add all reference surfaces
-            ProjectManager.Project.ReferenceSurfaces.Values.ToList<Surface>().ForEach(x => NewSurfaces.Add(x));
-            ProjectManager.Project.ReferenceSurfaces.Values.ToList<Surface>().ForEach(x => OldSurfaces.Add(x));
+            ProjectManager.Project.ReferenceSurfaces.ForEach(x => NewSurfaces.Add(x));
+            ProjectManager.Project.ReferenceSurfaces.ForEach(x => OldSurfaces.Add(x));
 
             cboNewSurface.DataSource = NewSurfaces;
             cboOldSurface.DataSource = OldSurfaces;

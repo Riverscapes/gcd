@@ -33,7 +33,7 @@ namespace GCDCore.Project
             _DoDs = new naru.ui.SortableBindingList<DoDBase>(dods);
         }
 
-        public InterComparison(XmlNode nodParent, Dictionary<string, DoDBase> dods)
+        public InterComparison(XmlNode nodParent, List<DoDBase> dods)
             : base(nodParent.SelectSingleNode("Name").InnerText)
         {
             _SummaryXML = ProjectManager.Project.GetAbsolutePath(nodParent.SelectSingleNode("SummaryXML").InnerText);
@@ -41,15 +41,14 @@ namespace GCDCore.Project
             _DoDs = new naru.ui.SortableBindingList<DoDBase>();
             foreach (XmlNode nodDoD in nodParent.SelectNodes("DoDs/DoD"))
             {
-                string dodName = nodDoD.InnerText;
-                if (dods.ContainsKey(dodName))
+                if (dods.Any(x => string.Compare(x.Name, nodDoD.InnerText, true) == 0))
                 {
-                    _DoDs.Add(dods[dodName]);
+                    _DoDs.Add(dods.First(x => string.Compare(x.Name, nodDoD.InnerText, true) == 0));
                 }
                 else
                 {
                     // TODO: don't really know what to do here? Should not occur if deleting DoDs checks intercomparisons first!
-                    throw new Exception(string.Format("Unable to find DoD \"{0}\" that's part of inter-comparison.", dodName));
+                    throw new Exception(string.Format("Unable to find DoD \"{0}\" that's part of inter-comparison.", nodDoD.InnerText));
                 }
             }
         }
@@ -79,7 +78,7 @@ namespace GCDCore.Project
 
                 _SummaryXML.Delete();
             }
-            catch(IOException ex)
+            catch (IOException ex)
             {
                 ex.Data["Path"] = _SummaryXML.FullName;
                 throw;

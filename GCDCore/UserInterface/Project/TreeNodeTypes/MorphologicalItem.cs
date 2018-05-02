@@ -24,6 +24,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
         {
             BudgetSegregation.Morphological.frmMorphResults frm = new BudgetSegregation.Morphological.frmMorphResults(Item as GCDCore.Project.Morphological.MorphologicalAnalysis);
             frm.ShowDialog();
+            Text = Item.Name;
         }
     }
 }

@@ -94,7 +94,7 @@ namespace GCDCore.UserInterface.Masks
                     string distField = chkDistance.Checked ? cboDistance.Text : string.Empty;
 
                     Mask = new DirectionalMask(txtName.Text, fiMask, cboField.Text, lablField, cboDirection.Text, distField);
-                    ProjectManager.Project.Masks[Mask.Name] = Mask;
+                    ProjectManager.Project.Masks.Add(Mask);
                     ProjectManager.AddNewProjectItemToMap(Mask);
                 }
                 else

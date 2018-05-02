@@ -24,7 +24,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
         {
             Nodes.Clear();
 
-            foreach (Surface surf in ProjectManager.Project.ReferenceSurfaces.Values)
+            foreach (Surface surf in ProjectManager.Project.ReferenceSurfaces)
             {
                 TreeNodeItem nodSurface = new TreeNodeItem(surf, 5, ContextMenuStrip.Container);
                 Nodes.Add(nodSurface);
@@ -49,7 +49,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             DEMSurvey referenceDEM = null;
             if (ProjectManager.Project.DEMSurveys.Count > 0)
             {
-                referenceDEM = ProjectManager.Project.DEMSurveys.Values.First();
+                referenceDEM = ProjectManager.Project.DEMSurveys.First();
             }
             else
             {
@@ -64,7 +64,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
                 {
                     GCDConsoleLib.Raster rDEM = frm.ProcessRaster();
                     GCDCore.Project.Surface surf = new Surface(frm.txtName.Text, rDEM.GISFileInfo, Surface.HillShadeRasterPath(rDEM.GISFileInfo));
-                    ProjectManager.Project.ReferenceSurfaces[surf.Name] = surf;
+                    ProjectManager.Project.ReferenceSurfaces.Add(surf);
 
                     ProjectManager.Project.Save();
                     LoadChildNodes();

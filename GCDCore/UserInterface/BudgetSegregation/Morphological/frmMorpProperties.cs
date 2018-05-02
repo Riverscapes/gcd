@@ -23,7 +23,7 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
             InitializeComponent();
 
             // Load all budget segregations that are part of the same DoD 
-            cboBS.DataSource = new BindingList<GCDCore.Project.BudgetSegregation>(bs.DoD.BudgetSegregations.Values.ToList<GCDCore.Project.BudgetSegregation>().Where(x => x.IsMaskDirectional).ToList<GCDCore.Project.BudgetSegregation>());
+            cboBS.DataSource = new BindingList<GCDCore.Project.BudgetSegregation>(bs.DoD.BudgetSegregations.Where(x => x.IsMaskDirectional).ToList<GCDCore.Project.BudgetSegregation>());
             cboBS.SelectedItem = bs;
         }
 
@@ -51,14 +51,14 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
                     Analysis.OutputFolder.Create();
                     Analysis.SaveExcelSpreadsheet();
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     // We can live without the spreadsheet
                     Console.Write("Morphological analysis spreadsheet error saving to " + Analysis.Spreadsheet.FullName);
                 }
 
                 GCDCore.Project.BudgetSegregation bs = cboBS.SelectedItem as GCDCore.Project.BudgetSegregation;
-                bs.MorphologicalAnalyses[Analysis.Name] = Analysis;
+                bs.MorphologicalAnalyses.Add(Analysis);
                 ProjectManager.Project.Save();
                 Cursor = Cursors.Default;
             }

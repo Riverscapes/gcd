@@ -33,7 +33,7 @@ namespace GCDCore.Project.LinearExtraction
         public LinearExtraction(XmlNode nodItem)
             : base(nodItem)
         {
-            ProfileRoute = ProjectManager.Project.ProfileRoutes[nodItem.SelectSingleNode("ProfileRoute").InnerText];
+            ProfileRoute = ProjectManager.Project.ProfileRoutes.First(x => string.Compare(x.Name, nodItem.SelectSingleNode("ProfileRoute").InnerText, true) == 0);
             Database = ProjectManager.Project.GetAbsolutePath(nodItem.SelectSingleNode("Database").InnerText);
             SampleDistance = decimal.Parse(nodItem.SelectSingleNode("SampleDistance").InnerText);
         }
@@ -72,11 +72,11 @@ namespace GCDCore.Project.LinearExtraction
 
             if (GCDProjectItem is DoDBase)
             {
-                ((DoDBase)GCDProjectItem).LinearExtractions.Remove(Name);
+                ((DoDBase)GCDProjectItem).LinearExtractions.Remove(this);
             }
             else
             {
-                ((Surface)GCDProjectItem).LinearExtractions.Remove(Name);
+                ((Surface)GCDProjectItem).LinearExtractions.Remove(this);
             }
             ProjectManager.Project.Save();
         }

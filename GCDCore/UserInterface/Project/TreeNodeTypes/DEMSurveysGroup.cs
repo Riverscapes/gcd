@@ -41,7 +41,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
         {
             Nodes.Clear();
 
-            List<DEMSurvey> dems = ProjectManager.Project.DEMSurveys.Values.ToList();
+            List<DEMSurvey> dems = ProjectManager.Project.DEMSurveys;
 
             switch (SortOrder)
             {
@@ -73,7 +73,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
 
                 if (dem.LinearExtractions.Count > 0)
                 {
-                    TreeNodeGroup nodLinea = new LinearExtractionGrp(nodDEM.Nodes, dem, dem.LinearExtractions.Values.First().Database.Directory.Parent, ContextMenuStrip.Container);
+                    TreeNodeGroup nodLinea = new LinearExtractionGrp(nodDEM.Nodes, dem, dem.LinearExtractions.First().Database.Directory.Parent, ContextMenuStrip.Container);
                     nodLinea.Expand();
                 }
             }
@@ -89,7 +89,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             SurveyLibrary.ExtentImporter.Purposes ePurpose = SurveyLibrary.ExtentImporter.Purposes.FirstDEM;
             if (ProjectManager.Project.DEMSurveys.Count > 0)
             {
-                referenceDEM = ProjectManager.Project.DEMSurveys.Values.First();
+                referenceDEM = ProjectManager.Project.DEMSurveys.First();
                 ePurpose = SurveyLibrary.ExtentImporter.Purposes.SubsequentDEM;
             }
 
@@ -100,7 +100,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
                 {
                     GCDConsoleLib.Raster rDEM = frm.ProcessRaster();
                     DEMSurvey dem = new DEMSurvey(frm.txtName.Text, null, rDEM.GISFileInfo, Surface.HillShadeRasterPath(rDEM.GISFileInfo));
-                    ProjectManager.Project.DEMSurveys[dem.Name] = dem;
+                    ProjectManager.Project.DEMSurveys.Add(dem);
 
                     // If this was the first raster then we need to store the cell resolution on the project
                     if (ePurpose == SurveyLibrary.ExtentImporter.Purposes.FirstDEM)
@@ -147,7 +147,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             ToolStripDropDownItem ctrl = sender as ToolStripDropDownItem;
             ContextMenuStrip cms = ctrl.Owner as ContextMenuStrip;
             TreeView tre = cms.SourceControl as TreeView;
-            TreeNodeItem nodDEM = tre.SelectedNode as TreeNodeItem; 
+            TreeNodeItem nodDEM = tre.SelectedNode as TreeNodeItem;
 
             LinearExtraction.frmLinearExtractionProperties frm = new LinearExtraction.frmLinearExtractionProperties(nodDEM.Item as GCDProjectItem);
             EditTreeItem(frm);

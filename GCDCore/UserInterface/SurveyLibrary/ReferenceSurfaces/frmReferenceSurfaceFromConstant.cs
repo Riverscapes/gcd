@@ -29,11 +29,11 @@ namespace GCDCore.UserInterface.SurveyLibrary.ReferenceSurfaces
             cmdOK.Text = Properties.Resources.CreateButtonText;
 
             // Add all the project DEM surveys to the list and then bind to checked listbox
-            DEMSurveys = new naru.ui.SortableBindingList<GCDCore.Project.DEMSurvey>(GCDCore.Project.ProjectManager.Project.DEMSurveys.Values.ToList<GCDCore.Project.DEMSurvey>());
+            DEMSurveys = new naru.ui.SortableBindingList<DEMSurvey>(ProjectManager.Project.DEMSurveys);
             cboDEMSurvey.DataSource = DEMSurveys;
             cboDEMSurvey.SelectedIndex = 0;
 
-            string sUnits = UnitsNet.Length.GetAbbreviation(GCDCore.Project.ProjectManager.Project.Units.VertUnit);
+            string sUnits = UnitsNet.Length.GetAbbreviation(ProjectManager.Project.Units.VertUnit);
             lblSingle.Text = lblSingle.Text.Replace(")", sUnits + ")");
             lblLower.Text = lblLower.Text.Replace(")", sUnits + ")");
             lblUpper.Text = lblUpper.Text.Replace(")", sUnits + ")");
@@ -168,7 +168,7 @@ namespace GCDCore.UserInterface.SurveyLibrary.ReferenceSurfaces
                     // Generate reference surface
                     GCDConsoleLib.Raster rOut = GCDConsoleLib.RasterOperators.Uniform<float>(template, fiOutput, value);
                     ReferenceSurface = new Surface(name, rOut, null);
-                    ProjectManager.Project.ReferenceSurfaces[ReferenceSurface.Name] = ReferenceSurface;
+                    ProjectManager.Project.ReferenceSurfaces.Add(ReferenceSurface);
 
                     // Error surface
                     string errName = string.Format("Uniform Error at {0:0.000}", valError.Value);

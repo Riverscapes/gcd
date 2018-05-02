@@ -23,7 +23,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
         {
             Nodes.Clear();
 
-            foreach (GCDCore.Project.Masks.Mask mask in ProjectManager.Project.Masks.Values)
+            foreach (GCDCore.Project.Masks.Mask mask in ProjectManager.Project.Masks)
             {
                 int imageIndex = 6;
                 if (mask is GCDCore.Project.Masks.DirectionalMask)

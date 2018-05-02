@@ -54,7 +54,7 @@ namespace GCDCore.Engines
             Surface refSurf = new GCDCore.Project.Surface(Name, rSurface, rHillshd);
             refSurf.ErrorSurfaces.Add(new ErrorSurface(ErrorSurfaceName, errPath, refSurf));
 
-            ProjectManager.Project.ReferenceSurfaces[refSurf.Name] = refSurf;
+            ProjectManager.Project.ReferenceSurfaces.Add(refSurf);
             ProjectManager.Project.Save();
 
             return refSurf;

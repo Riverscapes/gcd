@@ -54,7 +54,7 @@ namespace GCDCore.UserInterface.LinearExtraction
 
             lblSampleDistance.Text = lblSampleDistance.Text.Replace("(", string.Format("({0}", UnitsNet.Length.GetAbbreviation(ProjectManager.Project.Units.HorizUnit)));
 
-            cboRoute.DataSource = ProjectManager.Project.ProfileRoutes.Values.ToList();
+            cboRoute.DataSource = ProjectManager.Project.ProfileRoutes;
             cboRoute.SelectedIndex = cboRoute.Items.Count > 0 ? 0 : -1;
         }
 
@@ -128,11 +128,11 @@ namespace GCDCore.UserInterface.LinearExtraction
 
                 if (ElevationSurface is Surface)
                 {
-                    ((Surface)ElevationSurface).LinearExtractions[le.Name] = le;
+                    ((Surface)ElevationSurface).LinearExtractions.Add(le);
                 }
                 else
                 {
-                    ((DoDBase)ElevationSurface).LinearExtractions[le.Name] = le;
+                    ((DoDBase)ElevationSurface).LinearExtractions.Add(le);
                 }
 
                 ProjectManager.Project.Save();

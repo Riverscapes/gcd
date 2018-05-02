@@ -18,13 +18,13 @@ namespace GCDCore.Project
         // Variables we need access to from the online stuff
         public Dictionary<string, string> OnlineParams;
 
-        public readonly Dictionary<string, DEMSurvey> DEMSurveys;
-        public readonly Dictionary<string, Surface> ReferenceSurfaces;
-        public readonly Dictionary<string, DoDBase> DoDs;
+        public readonly List<DEMSurvey> DEMSurveys;
+        public readonly List<Surface> ReferenceSurfaces;
+        public readonly List<DoDBase> DoDs;
+        public readonly List<InterComparison> InterComparisons;
+        public readonly List<Masks.Mask> Masks;
+        public readonly List<ProfileRoutes.ProfileRoute> ProfileRoutes;
         public readonly Dictionary<string, string> MetaData;
-        public readonly Dictionary<string, InterComparison> InterComparisons;
-        public readonly Dictionary<string, Masks.Mask> Masks;
-        public readonly Dictionary<string, ProfileRoutes.ProfileRoute> ProfileRoutes;
 
         public override string Noun { get { return "GCD Project"; } }
 
@@ -85,13 +85,13 @@ namespace GCDCore.Project
             get
             {
                 if (DEMSurveys.Count > 0)
-                    return DEMSurveys.Values.First().Raster.Proj;
+                    return DEMSurveys.First().Raster.Proj;
 
-                if (ReferenceSurfaces.Values.Count > 0)
-                    return ReferenceSurfaces.Values.First().Raster.Proj;
+                if (ReferenceSurfaces.Count > 0)
+                    return ReferenceSurfaces.First().Raster.Proj;
 
                 if (Masks.Count > 0)
-                    return Masks.Values.First().Vector.Proj;
+                    return Masks.First().Vector.Proj;
 
                 return null;
             }
@@ -108,13 +108,13 @@ namespace GCDCore.Project
             Units = units;
             CellArea = cellArea;
 
-            DEMSurveys = new Dictionary<string, DEMSurvey>();
-            ReferenceSurfaces = new Dictionary<string, Surface>();
-            Masks = new Dictionary<string, Project.Masks.Mask>();
-            DoDs = new Dictionary<string, DoDBase>();
-            InterComparisons = new Dictionary<string, InterComparison>();
+            DEMSurveys = new List<DEMSurvey>();
+            ReferenceSurfaces = new List<Surface>();
+            Masks = new List<Masks.Mask>();
+            DoDs = new List<DoDBase>();
+            InterComparisons = new List<InterComparison>();
+            ProfileRoutes = new List<ProfileRoutes.ProfileRoute>();
             MetaData = new Dictionary<string, string>();
-            ProfileRoutes = new Dictionary<string, Project.ProfileRoutes.ProfileRoute>();
 
             OnlineParams = new Dictionary<string, string>();
         }
@@ -141,7 +141,7 @@ namespace GCDCore.Project
 
         public IEnumerable<DEMSurvey> DEMsSortByName(bool bAscending)
         {
-            List<DEMSurvey> dems = DEMSurveys.Values.ToList<DEMSurvey>().OrderBy(x => x.Name).ToList<DEMSurvey>();
+            List<DEMSurvey> dems = DEMSurveys.OrderBy(x => x.Name).ToList<DEMSurvey>();
 
             if (!bAscending)
                 dems.Reverse();
@@ -151,7 +151,7 @@ namespace GCDCore.Project
 
         public IEnumerable<DEMSurvey> DEMsSortByDate(bool bAscending)
         {
-            List<DEMSurvey> dems = DEMSurveys.Values.ToList<DEMSurvey>().OrderBy(x => x.SurveyDate).ToList<DEMSurvey>();
+            List<DEMSurvey> dems = DEMSurveys.OrderBy(x => x.SurveyDate).ToList<DEMSurvey>();
 
             if (!bAscending)
                 dems.Reverse();
@@ -174,34 +174,39 @@ namespace GCDCore.Project
             return new DirectoryInfo(Path.Combine(ProjectFile.DirectoryName, sRelativeDir));
         }
 
+        public bool IsNameUnique(string name, List<GCDProjectItem> items, GCDProjectItem ignore)
+        {
+            return !items.Any(x => x != ignore && string.Compare(name, x.Name, true) == 0);
+        }
+
         public bool IsDEMNameUnique(string name, DEMSurvey ignore)
         {
-            return DEMSurveys.ContainsKey(name) ? DEMSurveys[name] == ignore : true;
+            return IsNameUnique(name, DEMSurveys.Select(x => x as GCDProjectItem).ToList<GCDProjectItem>(), ignore);
         }
 
         public bool IsReferenceSurfaceNameUnique(string name, Surface ignore)
         {
-            return ReferenceSurfaces.ContainsKey(name) ? ReferenceSurfaces[name] == ignore : true;
+            return IsNameUnique(name, ReferenceSurfaces.Select(x => x as GCDProjectItem).ToList<GCDProjectItem>(), ignore);
         }
 
         public bool IsDoDNameUnique(string name, DoDBase ignore)
         {
-            return DoDs.ContainsKey(name) ? DoDs[name] == ignore : true;
+            return IsNameUnique(name, DoDs.Select(x => x as GCDProjectItem).ToList<GCDProjectItem>(), ignore);
         }
 
         public bool IsMaskNameUnique(string name, Masks.Mask ignore)
         {
-            return Masks.ContainsKey(name) ? Masks[name] == ignore : true;
+            return IsNameUnique(name, Masks.Select(x => x as GCDProjectItem).ToList<GCDProjectItem>(), ignore);
         }
 
         public bool IsProfileRouteNameUnique(string name, GCDCore.Project.ProfileRoutes.ProfileRoute ignore)
         {
-            return ProfileRoutes.ContainsKey(name) ? ProfileRoutes[name] == ignore : true;
+            return IsNameUnique(name, ProfileRoutes.Select(x => x as GCDProjectItem).ToList<GCDProjectItem>(), ignore);
         }
 
         public bool IsInterComparisonNameUnique(string name, InterComparison ignore)
         {
-            return InterComparisons.ContainsKey(name) ? InterComparisons[name] == ignore : true;
+            return IsNameUnique(name, InterComparisons.Select(x => x as GCDProjectItem).ToList<GCDProjectItem>(), ignore);
         }
 
         public DirectoryInfo GetDoDFolder()
@@ -251,7 +256,7 @@ namespace GCDCore.Project
             if (DEMSurveys.Count > 0)
             {
                 XmlNode nodDEMs = nodProject.AppendChild(xmlDoc.CreateElement("DEMSurveys"));
-                foreach (DEMSurvey dem in DEMSurveys.Values)
+                foreach (DEMSurvey dem in DEMSurveys)
                 {
                     XmlNode nodItem = nodDEMs.AppendChild(xmlDoc.CreateElement("DEM"));
                     dem.Serialize(nodItem);
@@ -261,7 +266,7 @@ namespace GCDCore.Project
             if (ReferenceSurfaces.Count > 0)
             {
                 XmlNode nodSurfaces = nodProject.AppendChild(xmlDoc.CreateElement("ReferenceSurfaces"));
-                foreach (Surface surf in ReferenceSurfaces.Values)
+                foreach (Surface surf in ReferenceSurfaces)
                 {
                     XmlNode nodItem = nodSurfaces.AppendChild(xmlDoc.CreateElement("ReferenceSurface"));
                     surf.Serialize(nodItem);
@@ -271,26 +276,26 @@ namespace GCDCore.Project
             if (Masks.Count > 0)
             {
                 XmlNode nodMasks = nodProject.AppendChild(xmlDoc.CreateElement("Masks"));
-                Masks.Values.ToList().ForEach(x => x.Serialize(nodMasks));
+                Masks.ForEach(x => x.Serialize(nodMasks));
             }
 
             if (ProfileRoutes.Count > 0)
             {
                 XmlNode nodRoutes = nodProject.AppendChild(xmlDoc.CreateElement("ProfileRoutes"));
-                ProfileRoutes.Values.ToList().ForEach(x => x.Serialize(nodRoutes));
+                ProfileRoutes.ForEach(x => x.Serialize(nodRoutes));
             }
 
             if (DoDs.Count > 0)
             {
                 XmlNode nodDoDs = nodProject.AppendChild(xmlDoc.CreateElement("DoDs"));
-                foreach (DoDBase dod in DoDs.Values)
+                foreach (DoDBase dod in DoDs)
                     dod.Serialize(nodDoDs);
             }
 
             if (InterComparisons.Count > 0)
             {
                 XmlNode nodInter = nodProject.AppendChild(xmlDoc.CreateElement("InterComparisons"));
-                InterComparisons.Values.ToList<InterComparison>().ForEach(x => x.Serialize(nodInter));
+                InterComparisons.ForEach(x => x.Serialize(nodInter));
             }
 
             if (MetaData.Count > 0)
@@ -342,20 +347,17 @@ namespace GCDCore.Project
                     // Regular or directional mask
                     if (nodMask.SelectSingleNode("Items") is XmlNode)
                     {
-                        GCDCore.Project.Masks.RegularMask regMask = new Project.Masks.RegularMask(nodMask);
-                        ProjectManager.Project.Masks[regMask.Name] = regMask;
+                        ProjectManager.Project.Masks.Add(new Masks.RegularMask(nodMask));
                     }
                     else
                     {
-                        GCDCore.Project.Masks.DirectionalMask dirMask = new Project.Masks.DirectionalMask(nodMask);
-                        ProjectManager.Project.Masks[dirMask.Name] = dirMask;
+                        ProjectManager.Project.Masks.Add(new Project.Masks.DirectionalMask(nodMask));
                     }
                 }
                 else
                 {
                     // Area of interest
-                    GCDCore.Project.Masks.AOIMask aoiMask = new Project.Masks.AOIMask(nodMask);
-                    ProjectManager.Project.Masks[aoiMask.Name] = aoiMask;
+                    ProjectManager.Project.Masks.Add(new Project.Masks.AOIMask(nodMask));
                 }
             }
 
@@ -363,24 +365,20 @@ namespace GCDCore.Project
             // routes in their linear extractions
             foreach (XmlNode nodRoute in nodProject.SelectNodes("ProfileRoutes/ProfileRoute"))
             {
-                GCDCore.Project.ProfileRoutes.ProfileRoute route = new Project.ProfileRoutes.ProfileRoute(nodRoute);
-                ProjectManager.Project.ProfileRoutes[route.Name] = route;
+                ProjectManager.Project.ProfileRoutes.Add(new Project.ProfileRoutes.ProfileRoute(nodRoute));
             }
-
 
             foreach (XmlNode nodDEM in nodProject.SelectNodes("DEMSurveys/DEM"))
             {
                 DEMSurvey dem = new DEMSurvey(nodDEM);
-                ProjectManager.Project.DEMSurveys[dem.Name] = dem;
+                ProjectManager.Project.DEMSurveys.Add(dem);
             }
 
             foreach (XmlNode nodRefSurf in nodProject.SelectNodes("ReferenceSurfaces/ReferenceSurface"))
             {
                 Surface surf = new Surface(nodRefSurf, true, true);
-                ProjectManager.Project.ReferenceSurfaces[surf.Name] = surf;
+                ProjectManager.Project.ReferenceSurfaces.Add(surf);
             }
-
-
 
             foreach (XmlNode nodDoD in nodProject.SelectNodes("DoDs/DoD"))
             {
@@ -392,13 +390,13 @@ namespace GCDCore.Project
                 else
                     dod = new DoDPropagated(nodDoD);
 
-                ProjectManager.Project.DoDs[dod.Name] = dod;
+                ProjectManager.Project.DoDs.Add(dod);
             }
 
             foreach (XmlNode nodInter in nodProject.SelectNodes("InterComparisons/InterComparison"))
             {
                 InterComparison inter = new InterComparison(nodInter, ProjectManager.Project.DoDs);
-                ProjectManager.Project.InterComparisons[inter.Name] = inter;
+                ProjectManager.Project.InterComparisons.Add(inter);
             }
 
             foreach (XmlNode nodItem in nodProject.SelectNodes("MetaData/Item"))

@@ -34,7 +34,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
         {
             Nodes.Clear();
 
-            foreach (DoDBase dod in ProjectManager.Project.DoDs.Values.Where(x => x.NewSurface == NewSurface && x.OldSurface == OldSurface))
+            foreach (DoDBase dod in ProjectManager.Project.DoDs.Where(x => x.NewSurface == NewSurface && x.OldSurface == OldSurface))
             {
                 DoDGroup dodGroup = new DoDGroup(Nodes, dod, ContextMenuStrip.Container);
             }

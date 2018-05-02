@@ -38,7 +38,7 @@ namespace GCDCore.UserInterface.ChangeDetection
 
             // Add all the AOIs to the dropdown
             cboAOI.Items.Add(AOIMask.SurfaceDataExtentIntersection);
-            ProjectManager.Project.Masks.Values.ToList<Mask>().Where(x => x is AOIMask).ToList<Mask>().ForEach(x => cboAOI.Items.Add(x));
+            ProjectManager.Project.Masks.Where(x => x is AOIMask).ToList<Mask>().ForEach(x => cboAOI.Items.Add(x));
             cboAOI.SelectedIndex = 0;
         }
     }

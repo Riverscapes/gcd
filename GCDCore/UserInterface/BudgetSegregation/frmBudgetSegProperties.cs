@@ -27,7 +27,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
         {
             cmdOK.Text = Properties.Resources.CreateButtonText;
             txtOutputFolder.Text = ProjectManager.Project.GetRelativePath(InitialDoD.BudgetSegPath().FullName);
-            cboMasks.DataSource = new BindingList<GCDCore.Project.Masks.Mask>(ProjectManager.Project.Masks.Values.Where(x => x is GCDCore.Project.Masks.AttributeFieldMask).ToList<GCDCore.Project.Masks.Mask>());
+            cboMasks.DataSource = new BindingList<GCDCore.Project.Masks.Mask>(ProjectManager.Project.Masks.Where(x => x is GCDCore.Project.Masks.AttributeFieldMask).ToList<GCDCore.Project.Masks.Mask>());
             if (cboMasks.Items.Count > 0)
                 cboMasks.SelectedIndex = 0;
 
@@ -51,7 +51,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
                 System.IO.DirectoryInfo bsFolder = ProjectManager.Project.GetAbsoluteDir(txtOutputFolder.Text);
                 Engines.BudgetSegregationEngine bsEngine = new Engines.BudgetSegregationEngine();
                 BudgetSeg = bsEngine.Calculate(txtName.Text, bsFolder, InitialDoD, mask);
-                InitialDoD.BudgetSegregations[BudgetSeg.Name] = BudgetSeg;
+                InitialDoD.BudgetSegregations.Add(BudgetSeg);
 
                 ProjectManager.Project.Save();
             }
@@ -119,7 +119,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
 
                 index++;
 
-            } while (InitialDoD.BudgetSegregations.ContainsKey(result));
+            } while (InitialDoD.BudgetSegregations.Any(x => string.Compare(x.Name, result, true) == 0));
 
             return result;
         }

@@ -17,7 +17,7 @@ namespace GCDCore.Project
         public readonly string MaskField;
         public readonly Dictionary<string, BudgetSegregationClass> Classes;
 
-        public readonly Dictionary<string, Morphological.MorphologicalAnalysis> MorphologicalAnalyses;
+        public readonly List<Morphological.MorphologicalAnalysis> MorphologicalAnalyses;
 
         public bool IsMaskDirectional { get { return Mask is GCDCore.Project.Masks.DirectionalMask; } }
 
@@ -72,7 +72,7 @@ namespace GCDCore.Project
             ClassLegend = new FileInfo(Path.Combine(Folder.FullName, "ClassLegend.csv"));
             SummaryXML = new FileInfo(Path.Combine(Folder.FullName, "Summary.xml"));
             Classes = new Dictionary<string, BudgetSegregationClass>();
-            MorphologicalAnalyses = new Dictionary<string, Morphological.MorphologicalAnalysis>();
+            MorphologicalAnalyses = new List<Morphological.MorphologicalAnalysis>();
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace GCDCore.Project
             ClassLegend = classLegend;
             SummaryXML = summaryXML;
             Classes = new Dictionary<string, BudgetSegregationClass>();
-            MorphologicalAnalyses = new Dictionary<string, Morphological.MorphologicalAnalysis>();
+            MorphologicalAnalyses = new List<Morphological.MorphologicalAnalysis>();
         }
 
         public BudgetSegregation(XmlNode nodBS, DoDBase dod)
@@ -102,7 +102,7 @@ namespace GCDCore.Project
         {
             DoD = dod;
             Folder = ProjectManager.Project.GetAbsoluteDir(nodBS.SelectSingleNode("Folder").InnerText);
-            Mask = ProjectManager.Project.Masks[nodBS.SelectSingleNode("Mask").InnerText] as Masks.AttributeFieldMask;
+            Mask = ProjectManager.Project.Masks.First(x => x.Name == nodBS.SelectSingleNode("Mask").InnerText) as Masks.AttributeFieldMask;
             SummaryXML = ProjectManager.Project.GetAbsolutePath(nodBS.SelectSingleNode("SummaryXML").InnerText);
             ClassLegend = ProjectManager.Project.GetAbsolutePath(nodBS.SelectSingleNode("ClassLegend").InnerText);
 
@@ -113,17 +113,17 @@ namespace GCDCore.Project
                 Classes[bsClass.Name] = bsClass;
             }
 
-            MorphologicalAnalyses = new Dictionary<string, Morphological.MorphologicalAnalysis>();
+            MorphologicalAnalyses = new List<Morphological.MorphologicalAnalysis>();
             foreach (XmlNode nodMA in nodBS.SelectNodes("MorphologicalAnalyses/MorphologicalAnalysis"))
             {
                 Morphological.MorphologicalAnalysis ma = new Morphological.MorphologicalAnalysis(nodMA, this);
-                MorphologicalAnalyses[ma.Name] = ma;
+                MorphologicalAnalyses.Add(ma);
             }
         }
 
         public bool IsMorphologicalAnalysisNameUnique(string name, Morphological.MorphologicalAnalysis ignore)
         {
-            return MorphologicalAnalyses.ContainsKey(name) ? MorphologicalAnalyses[name] == ignore : true;
+            return !MorphologicalAnalyses.Any(x => x != ignore && string.Compare(name, x.Name, true) == 0);
         }
 
         public void Serialize(XmlNode nodParent)
@@ -142,10 +142,7 @@ namespace GCDCore.Project
             if (MorphologicalAnalyses.Count > 0)
             {
                 XmlNode nodMA = nodBS.AppendChild(nodParent.OwnerDocument.CreateElement("MorphologicalAnalyses"));
-                foreach (Morphological.MorphologicalAnalysis ma in MorphologicalAnalyses.Values)
-                {
-                    ma.Serialize(nodMA);
-                }
+                MorphologicalAnalyses.ForEach(x => x.Serialize(nodMA));
             }
         }
 
@@ -155,7 +152,7 @@ namespace GCDCore.Project
 
             try
             {
-                MorphologicalAnalyses.Values.ToList().ForEach(x => x.Delete());
+                MorphologicalAnalyses.ForEach(x => x.Delete());
             }
             finally
             {
@@ -167,7 +164,7 @@ namespace GCDCore.Project
                 file.Delete();
             }
 
-            foreach(DirectoryInfo dir in Folder.GetDirectories("*", SearchOption.AllDirectories))
+            foreach (DirectoryInfo dir in Folder.GetDirectories("*", SearchOption.AllDirectories))
             {
                 dir.Delete();
             }
@@ -182,7 +179,7 @@ namespace GCDCore.Project
                 Console.WriteLine(ex.Message);
             }
 
-            DoD.BudgetSegregations.Remove(Name);
+            DoD.BudgetSegregations.Remove(this);
             ProjectManager.Project.Save();
 
             // Remove the "BS" folder if this was the last budget segregation

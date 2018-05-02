@@ -16,7 +16,7 @@ namespace GCDCore.Project.Masks
         {
             get
             {
-                return ProjectManager.Project.DoDs.Values.Any(x => x.AOIMask == this);
+                return ProjectManager.Project.DoDs.Any(x => x.AOIMask == this);
             }
         }
 

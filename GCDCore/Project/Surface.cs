@@ -13,7 +13,7 @@ namespace GCDCore.Project
         public readonly HillShade Hillshade;
 
         public readonly naru.ui.SortableBindingList<ErrorSurface> ErrorSurfaces;
-        public readonly Dictionary<string, LinearExtraction.LinearExtraction> LinearExtractions;
+        public readonly List<LinearExtraction.LinearExtraction> LinearExtractions;
 
         public override string Noun { get { return "Reference Surface"; } }
 
@@ -55,7 +55,7 @@ namespace GCDCore.Project
         {
             get
             {
-                return ProjectManager.Project.DoDs.Values.Any(x => x.NewSurface == this || x.OldSurface == this);
+                return ProjectManager.Project.DoDs.Any(x => x.NewSurface == this || x.OldSurface == this);
             }
         }
 
@@ -76,7 +76,7 @@ namespace GCDCore.Project
             : base(name, rasterPath)
         {
             ErrorSurfaces = new naru.ui.SortableBindingList<ErrorSurface>();
-            LinearExtractions = new Dictionary<string, LinearExtraction.LinearExtraction>();
+            LinearExtractions = new List<LinearExtraction.LinearExtraction>();
 
             if (hillshadePath is FileInfo && hillshadePath.Exists)
             {
@@ -91,7 +91,7 @@ namespace GCDCore.Project
                 Hillshade = new HillShade(string.Format("{0} Hillshade", Noun), rHillShade);
 
             ErrorSurfaces = new naru.ui.SortableBindingList<ErrorSurface>();
-            LinearExtractions = new Dictionary<string, LinearExtraction.LinearExtraction>();
+            LinearExtractions = new List<LinearExtraction.LinearExtraction>();
         }
 
         /// <summary>
@@ -115,7 +115,7 @@ namespace GCDCore.Project
             if (bLoadErrorSurfaces)
                 LoadErrorSurfaces(nodSurface);
 
-            LinearExtractions = new Dictionary<string, LinearExtraction.LinearExtraction>();
+            LinearExtractions = new List<LinearExtraction.LinearExtraction>();
             if (bLoadLinearExtractions)
                 LoadLinearExtractions(nodSurface);
         }
@@ -139,7 +139,7 @@ namespace GCDCore.Project
                 else
                     le = new LinearExtraction.LinearExtractionFromSurface(nodLE, this);
 
-                LinearExtractions[le.Name] = le;
+                LinearExtractions.Add(le);
             }
         }
 
@@ -175,7 +175,7 @@ namespace GCDCore.Project
             if (!(this is DEMSurvey))
             {
                 // Remove the DEM from the project
-                ProjectManager.Project.ReferenceSurfaces.Remove(Name);
+                ProjectManager.Project.ReferenceSurfaces.Remove(this);
                 // If no more inputs then delete the folder
                 if (ProjectManager.Project.ReferenceSurfaces.Count < 1 && !Directory.EnumerateFileSystemEntries(Raster.GISFileInfo.Directory.Parent.FullName).Any())
                 {
@@ -216,7 +216,7 @@ namespace GCDCore.Project
             if (LinearExtractions.Count > 0)
             {
                 XmlNode nodLE = nodItem.AppendChild(nodItem.OwnerDocument.CreateElement("LinearExtractions"));
-                LinearExtractions.Values.ToList().ForEach(x => x.Serialize(nodLE));
+                LinearExtractions.ForEach(x => x.Serialize(nodLE));
             }
         }
     }

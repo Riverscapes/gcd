@@ -18,7 +18,7 @@ namespace GCDCore.UserInterface.ChangeDetection.Intercomparison
         {
             InitializeComponent();
 
-            DoDs = new BindingList<DoDBase>(ProjectManager.Project.DoDs.Values.ToList<DoDBase>());
+            DoDs = new BindingList<DoDBase>(ProjectManager.Project.DoDs);
         }
 
         private void frmInterComparisonProperties_Load(object sender, EventArgs e)
@@ -88,7 +88,7 @@ namespace GCDCore.UserInterface.ChangeDetection.Intercomparison
                 Engines.InterComparison.Generate(dodStats, fiOutput);
 
                 InterComparison = new InterComparison(txtName.Text, fiOutput, dods);
-                ProjectManager.Project.InterComparisons[InterComparison.Name] = InterComparison;
+                ProjectManager.Project.InterComparisons.Add(InterComparison);
                 ProjectManager.Project.Save();
                 Cursor = Cursors.Default;
                 MessageBox.Show("Change detection inter-comparison generated successfully.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);

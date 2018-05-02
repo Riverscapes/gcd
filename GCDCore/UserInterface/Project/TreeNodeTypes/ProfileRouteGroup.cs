@@ -21,7 +21,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
         {
             Nodes.Clear();
 
-            foreach (GCDCore.Project.ProfileRoutes.ProfileRoute route in ProjectManager.Project.ProfileRoutes.Values)
+            foreach (GCDCore.Project.ProfileRoutes.ProfileRoute route in ProjectManager.Project.ProfileRoutes)
             {
                 TreeNodeItem nodMask = new TreeNodeTypes.TreeNodeItem(route, 15, ContextMenuStrip.Container);
                 Nodes.Add(nodMask);

@@ -37,7 +37,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
                 TreeNodeGroup nodLinea = new LinearExtractionGrp(Nodes, DoD, DoD.Folder, ContextMenuStrip.Container);
             }
 
-            foreach (GCDCore.Project.BudgetSegregation bs in DoD.BudgetSegregations.Values)
+            foreach (GCDCore.Project.BudgetSegregation bs in DoD.BudgetSegregations)
             {
                 BudgetSegGroup bsGroup = new BudgetSegGroup(Nodes, bs, ContextMenuStrip.Container);
             }

@@ -28,11 +28,11 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             List<GCDCore.Project.LinearExtraction.LinearExtraction> LEs = null;
             if (Surface is Surface)
             {
-                LEs = ((Surface)Surface).LinearExtractions.Values.ToList();
+                LEs = ((Surface)Surface).LinearExtractions;
             }
             else if (Surface is DoDBase)
             {
-                LEs = ((DoDBase)Surface).LinearExtractions.Values.ToList();
+                LEs = ((DoDBase)Surface).LinearExtractions;
             }
 
             foreach (GCDCore.Project.LinearExtraction.LinearExtraction le in LEs)

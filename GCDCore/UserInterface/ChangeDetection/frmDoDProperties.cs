@@ -96,7 +96,7 @@ namespace GCDCore.UserInterface.ChangeDetection
 
                 ProjectManager.OnAddRasterToMap(DoD.ThrDoD);
 
-                ProjectManager.Project.DoDs[txtName.Text] = DoD;
+                ProjectManager.Project.DoDs.Add(DoD);
                 ProjectManager.Project.Save();
                 ProjectManager.AddNewProjectItemToMap(DoD);
             }

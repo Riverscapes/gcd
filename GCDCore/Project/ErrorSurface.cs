@@ -50,7 +50,7 @@ namespace GCDCore.Project
         {
             get
             {
-                foreach (DoDPropagated dod in ProjectManager.Project.DoDs.Values.Where(x => x is DoDPropagated))
+                foreach (DoDPropagated dod in ProjectManager.Project.DoDs.Where(x => x is DoDPropagated))
                 {
                     if (dod.NewError == this || dod.OldError == this)
                         return true;
@@ -116,9 +116,9 @@ namespace GCDCore.Project
             if (nodMask is XmlNode)
             {
                 // Must be a regular mask with the same name
-                if (ProjectManager.Project.Masks.Values.Any(x => x is Masks.RegularMask && string.Compare(x.Name, nodMask.InnerText, true) == 0))
+                if (ProjectManager.Project.Masks.Any(x => x is Masks.RegularMask && string.Compare(x.Name, nodMask.InnerText, true) == 0))
                 {
-                    Mask = ProjectManager.Project.Masks[nodMask.InnerText] as Masks.RegularMask;
+                    Mask = ProjectManager.Project.Masks.First(x => string.Compare(x.Name, nodMask.InnerText, true) == 0) as Masks.RegularMask;
                 }
             }
 

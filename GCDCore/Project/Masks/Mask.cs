@@ -36,7 +36,7 @@ namespace GCDCore.Project.Masks
         {
             get
             {
-                foreach (DoDBase dod in ProjectManager.Project.DoDs.Values)
+                foreach (DoDBase dod in ProjectManager.Project.DoDs)
                 {
                     // Check if any DoDs use this mask as an AOI
                     if (dod.AOIMask != null && dod.AOIMask.Equals(this))
@@ -45,7 +45,7 @@ namespace GCDCore.Project.Masks
                     }
 
                     // Check if any budget segregations use this mask
-                    foreach (BudgetSegregation bs in dod.BudgetSegregations.Values)
+                    foreach (BudgetSegregation bs in dod.BudgetSegregations)
                     {
                         if (bs.Mask.Equals(this))
                         {
@@ -70,7 +70,7 @@ namespace GCDCore.Project.Masks
             }
 
             // Remove the mask from the project
-            ProjectManager.Project.Masks.Remove(Name);
+            ProjectManager.Project.Masks.Remove(this);
 
             // Delete the individual mask folder
             try

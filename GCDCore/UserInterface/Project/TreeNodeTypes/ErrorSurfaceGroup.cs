@@ -109,7 +109,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
 
         public void OnCalculateDEMErrorSurface_MaskMethod(object sender, EventArgs e)
         {
-            if (!ProjectManager.Project.Masks.Values.Any(x => x is GCDCore.Project.Masks.RegularMask))
+            if (!ProjectManager.Project.Masks.Any(x => x is GCDCore.Project.Masks.RegularMask))
             {
                 MessageBox.Show("You must add at least one regular mask to this GCD project before you can create an error surface using a mask.", "Insufficient Regular Masks", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;

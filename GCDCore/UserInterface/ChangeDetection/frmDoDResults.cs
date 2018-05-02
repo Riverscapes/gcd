@@ -151,9 +151,7 @@ namespace GCDCore.UserInterface.ChangeDetection
 
             if (string.Compare(DoD.Name, txtDoDName.Text, false) != 0)
             {
-                ProjectManager.Project.DoDs.Remove(DoD.Name);
                 DoD.Name = txtDoDName.Text;
-                ProjectManager.Project.DoDs[DoD.Name] = DoD;
                 ProjectManager.Project.Save();
             }
         }

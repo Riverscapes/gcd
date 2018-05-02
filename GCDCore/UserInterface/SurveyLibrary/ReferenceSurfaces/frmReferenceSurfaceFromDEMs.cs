@@ -29,7 +29,7 @@ namespace GCDCore.UserInterface.SurveyLibrary.ReferenceSurfaces
             cmdOK.Text = Properties.Resources.CreateButtonText;
 
             // Add all the project DEM surveys to the list and then bind to checked listbox
-            List<DEMItem> items = new List<DEMItem>(ProjectManager.Project.DEMSurveys.Values.Select(x => new DEMItem(x)));
+            List<DEMItem> items = new List<DEMItem>(ProjectManager.Project.DEMSurveys.Select(x => new DEMItem(x)));
             DEMSurveys = new naru.ui.SortableBindingList<DEMItem>(items);
             grdData.DataSource = DEMSurveys;
 

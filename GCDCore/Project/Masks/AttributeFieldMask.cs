@@ -34,9 +34,9 @@ namespace GCDCore.Project.Masks
         {
             get
             {
-                foreach (DoDBase dod in ProjectManager.Project.DoDs.Values)
+                foreach (DoDBase dod in ProjectManager.Project.DoDs)
                 {
-                    if (dod.BudgetSegregations.Values.Any(x => x.Mask == this))
+                    if (dod.BudgetSegregations.Any(x => x.Mask == this))
                         return true;
                 }
 

@@ -415,7 +415,7 @@ namespace GCDCore.Project.Morphological
                 OutputFolder.Parent.Delete();
             }
 
-            BS.MorphologicalAnalyses.Remove(this.Name);
+            BS.MorphologicalAnalyses.Remove(this);
             ProjectManager.Project.Save();
         }
 

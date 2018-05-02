@@ -42,7 +42,7 @@ namespace GCDCore.UserInterface.ProfileRoutes
 
                 lblPath.Visible = false;
                 txtPath.Visible = false;
-                Height -= grpFeatureClass.Top - txtPath.Top;            
+                Height -= grpFeatureClass.Top - txtPath.Top;
             }
 
             UpdateControls(sender, e);
@@ -75,7 +75,7 @@ namespace GCDCore.UserInterface.ProfileRoutes
                     string lablField = chkLabel.Checked ? cboLabel.Text : string.Empty;
 
                     ProfileRoute = new GCDCore.Project.ProfileRoutes.ProfileRoute(txtName.Text, fiMask, cboDistance.Text, lablField);
-                    ProjectManager.Project.ProfileRoutes[ProfileRoute.Name] = ProfileRoute;
+                    ProjectManager.Project.ProfileRoutes.Add(ProfileRoute);
                     ProjectManager.AddNewProjectItemToMap(ProfileRoute);
                 }
                 else
