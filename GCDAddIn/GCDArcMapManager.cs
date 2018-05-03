@@ -46,15 +46,9 @@ namespace GCDAddIn
         public IGroupLayer AddProject()
         {
             IGroupLayer pProjectGrpLyr = AddProjectGroupLayer();
-            foreach (DEMSurvey dem in ProjectManager.Project.DEMSurveys.Values)
-            {
-                AddSurvey(dem);
-            }
 
-            foreach (DoDBase dod in ProjectManager.Project.DoDs.Values)
-            {
-                AddDoD(dod.RawDoD);
-            }
+            ProjectManager.Project.DEMSurveys.ForEach(x => AddSurvey(x));
+            ProjectManager.Project.DoDs.ForEach(x => AddDoD(x.RawDoD));
 
             return pProjectGrpLyr;
         }
