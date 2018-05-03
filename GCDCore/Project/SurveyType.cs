@@ -91,6 +91,8 @@ namespace GCDCore.Project
                 nodType.AppendChild(nodError);
             }
 
+            System.Diagnostics.Debug.WriteLine(string.Format("Saving Survey Types to {0}", filePath.FullName));
+            filePath.Directory.Create();
             xmlDoc.Save(filePath.FullName);
         }
     }
