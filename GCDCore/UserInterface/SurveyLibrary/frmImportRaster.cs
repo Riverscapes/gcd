@@ -27,6 +27,8 @@ namespace GCDCore.UserInterface.SurveyLibrary
             None
         }
 
+        private bool bNeedsForcedProjection;
+
         public readonly Surface ReferenceSurface;
         public ExtentImporter ExtImporter { get; internal set; }
         private readonly int NoInterpolationIndex; // the combobox index of the straight cell-wise copy
@@ -49,6 +51,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
         {
             // This call is required by the designer.
             InitializeComponent();
+            bNeedsForcedProjection = false;
 
             if (refSurface is Surface)
             {
@@ -261,11 +264,44 @@ namespace GCDCore.UserInterface.SurveyLibrary
                     break;
             }
 
-            if (!UserInterface.SurveyLibrary.GISDatasetValidation.ValidateRaster(ucRaster.SelectedItem))
+            if (!GISDatasetValidation.DSHasSpatialRef(ucRaster.SelectedItem, "raster", "rasters"))
             {
                 ucRaster.Select();
                 return false;
             }
+
+
+            if (!GISDatasetValidation.DSSpatialRefMatchesProject(ucRaster.SelectedItem))
+            {
+                string msg = string.Format(
+                    "{0}{1}{0}If you believe that these projections are the same (or equivalent) choose \"Yes\" to continue anyway. Otherwise choose \"No\" to abort.",
+                    Environment.NewLine, GISDatasetValidation.SpatialRefNoMatchString(ucRaster.SelectedItem, "raster", "rasters"));
+
+                DialogResult result = MessageBox.Show(msg, Properties.Resources.ApplicationNameLong, MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+
+                if (result == DialogResult.No)
+                {
+                    ucRaster.Select();
+                    bNeedsForcedProjection = false;
+                    return false;
+                }
+                else
+                {
+                    bNeedsForcedProjection = true;
+                }
+            }
+            else
+            {
+                bNeedsForcedProjection = false;
+            }
+
+
+            if (!GISDatasetValidation.DSHorizUnitsMatchProject(ucRaster.SelectedItem, "raster", "rasters"))
+            {
+                ucRaster.Select();
+                return false;
+            }
+
 
             // Importing rasters into GCD projects reuires some unit checks
             if (ExtImporter.Purpose != ExtentImporter.Purposes.Standalone)
@@ -554,6 +590,11 @@ namespace GCDCore.UserInterface.SurveyLibrary
             }
 
             Cursor = Cursors.Default;
+
+            GCDConsoleLib.Projection projRef = GISDatasetValidation.GetProjectProjection();
+
+            if (projRef != null && bNeedsForcedProjection)
+                gResult.SetProjection(projRef);
 
             return gResult;
         }

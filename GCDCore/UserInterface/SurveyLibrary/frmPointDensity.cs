@@ -82,11 +82,14 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
             if (ucPointCloud.SelectedItem is GCDConsoleLib.Vector)
             {
-                if (!GISDatasetValidation.ValidateVector(ucPointCloud.SelectedItem))
+                if (!UserInterface.SurveyLibrary.GISDatasetValidation.DSHasSpatialRef(ucPointCloud.SelectedItem, "feature class", "feature classes") ||
+                    !UserInterface.SurveyLibrary.GISDatasetValidation.DSSpatialRefMatchesProjectWithMsgbox(ucPointCloud.SelectedItem, "feature class", "feature classes") ||
+                    !UserInterface.SurveyLibrary.GISDatasetValidation.DSHorizUnitsMatchProject(ucPointCloud.SelectedItem, "feature class", "feature classes"))
                 {
                     ucPointCloud.Select();
                     return false;
                 }
+
             }
             else
             {

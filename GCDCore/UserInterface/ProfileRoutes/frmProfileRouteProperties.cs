@@ -27,7 +27,6 @@ namespace GCDCore.UserInterface.ProfileRoutes
         {
             // subscribe to the even when the user changes the input ShapeFile
             ucPolyline.PathChanged += InputShapeFileChanged;
-
             if (ProfileRoute == null)
             {
                 cmdOK.Text = Properties.Resources.CreateButtonText;
@@ -131,8 +130,14 @@ namespace GCDCore.UserInterface.ProfileRoutes
                     return false;
                 }
 
-                if (!UserInterface.SurveyLibrary.GISDatasetValidation.ValidateVector(ucPolyline.SelectedItem))
+                if (!UserInterface.SurveyLibrary.GISDatasetValidation.DSHasSpatialRef(ucPolyline.SelectedItem, "feature class", "feature classes") ||
+                    !UserInterface.SurveyLibrary.GISDatasetValidation.DSSpatialRefMatchesProjectWithMsgbox(ucPolyline.SelectedItem, "feature class", "feature classes") ||
+                    !UserInterface.SurveyLibrary.GISDatasetValidation.DSHorizUnitsMatchProject(ucPolyline.SelectedItem, "feature class", "feature classes"))
+                {
+                    ucPolyline.Select();
                     return false;
+                }
+
             }
 
             if (cboDistance.SelectedIndex < 0)

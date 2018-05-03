@@ -22,6 +22,7 @@ namespace GCDCore.UserInterface.Masks
 
         public GCDProjectItem GCDProjectItem { get { return Mask; } }
 
+
         public frmDirectionalMaskProps(DirectionalMask mask = null)
         {
             InitializeComponent();
@@ -120,7 +121,7 @@ namespace GCDCore.UserInterface.Masks
 
             if (Mask == null)
             {
-                if (!MaskValidation.ValidateShapeFile(ucPolygon))
+                if (!MaskValidation.ValidateShapeFile(ucPolygon) || !MaskValidation.ValidateShapefileProjection(ucPolygon))
                     return false;
             }
 

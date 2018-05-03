@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using GCDConsoleLib;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using GCDConsoleTest.Helpers;
 using System.Collections.Generic;
@@ -201,5 +202,6 @@ namespace GCDConsoleLib.Tests
             Assert.IsFalse(new FileInfo(filepath2).Exists);
 
         }
+
     }
 }

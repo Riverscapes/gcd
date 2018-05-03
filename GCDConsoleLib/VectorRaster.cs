@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using OSGeo.GDAL;
 using System.Linq;
 using System.Diagnostics;
-using GCDConsoleLib.Internal.Operators;
 
 namespace GCDConsoleLib
 {
@@ -20,6 +19,9 @@ namespace GCDConsoleLib
         /// <param name="FieldName"></param>
         public VectorRaster(Raster Template, Vector vectorInput) : base(Template)
         {
+            // For slight mismatches in the projection we absolutely need the raster to match the projection of the vector
+            Proj = vectorInput.Proj;
+
             // This won't get populated 
             FieldValues = new Dictionary<int, string> { };
             Datatype = new GdalDataType(typeof(int));

@@ -133,6 +133,7 @@ namespace GCDConsoleLib
                 UnloadDS();
         }
 
+
         /// <summary>
         /// Explicit Constructor to create a new raster
         /// </summary>
@@ -324,7 +325,7 @@ namespace GCDConsoleLib
                 if (!GISFileInfo.Exists)
                     throw new IOException(string.Format("File not found: `{0}`", GISFileInfo, Enum.GetName(typeof(Access), permission)));
             }
-            
+
             GdalConfiguration.ConfigureGdal();
             if (GISFileInfo.Exists)
             {
@@ -374,7 +375,8 @@ namespace GCDConsoleLib
         /// <summary>
         /// Here's our destructor. It's Pretty simple.
         /// </summary>
-        ~Raster() {
+        ~Raster()
+        {
             Dispose(false);
         }
 
@@ -413,12 +415,25 @@ namespace GCDConsoleLib
             if (GISFileInfo.Exists)
             {
                 try { Delete(); }
-                catch(Exception e) {
+                catch (Exception e)
+                {
                     Debug.WriteLine(e.ToString());
                 } // best effort only
                 GISFileInfo.Refresh();
             }
         }
+
+        /// <summary>
+        /// Manually force the projection. This is crude but good for projections that "almost" match
+        /// </summary>
+        /// <param name="newProj"></param>
+        public void SetProjection(Projection newProj)
+        {
+            Open(true);
+            _ds.SetProjection(newProj.OriginalString);
+            UnloadDS();
+        }
+
 
         /// <summary>
         /// Turn a string into a driver enumeration

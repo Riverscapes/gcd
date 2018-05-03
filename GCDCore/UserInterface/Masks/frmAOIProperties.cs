@@ -1,12 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using GCDCore.Project;
 
@@ -63,6 +56,7 @@ namespace GCDCore.UserInterface.Masks
                 {
                     FileInfo fiDestination = ProjectManager.Project.GetAbsolutePath(txtPath.Text);
                     fiDestination.Directory.Create();
+
                     ucPolygon.SelectedItem.Copy(fiDestination);
 
                     AOIMask = new GCDCore.Project.Masks.AOIMask(txtName.Text, fiDestination);
@@ -96,10 +90,9 @@ namespace GCDCore.UserInterface.Masks
 
             if (AOIMask == null)
             {
-                if (!MaskValidation.ValidateShapeFile(ucPolygon))
+                if (!MaskValidation.ValidateShapeFile(ucPolygon) || !MaskValidation.ValidateShapefileProjection(ucPolygon))
                     return false;
             }
-
             return true;
         }
 

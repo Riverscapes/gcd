@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using GCDCore.Project;
+using GCDCore.UserInterface.SurveyLibrary;
 
 namespace GCDCore.UserInterface.Masks
 {
@@ -54,13 +55,35 @@ namespace GCDCore.UserInterface.Masks
                 return false;
             }
 
-            if (!GCDCore.UserInterface.SurveyLibrary.GISDatasetValidation.ValidateVector(shp))
-            {
-                ucInput.Select();
-                return false;
-            }
-
             return true;
+        }
+
+        /// <summary>
+        /// NOTE: This will throw an ArgumentException that MUST be caught. This was done because we need a trinary variable.
+        /// </summary>
+        /// <param name="ucInput"></param>
+        /// <returns>returns true if needed, false if not, throws in any other case</returns>
+        public static bool ValidateShapefileProjection(UtilityForms.ucVectorInput ucInput)
+        {
+            if (!GISDatasetValidation.DSSpatialRefMatchesProject(ucInput.SelectedItem))
+            {
+                string msg = string.Format(
+                    "{0}{1}{0}If you believe that these projections are the same (or equivalent) choose \"Yes\" to continue anyway. Otherwise choose \"No\" to abort.",
+                    Environment.NewLine, GISDatasetValidation.SpatialRefNoMatchString(ucInput.SelectedItem, "raster", "rasters"));
+
+                DialogResult result = MessageBox.Show(msg, Properties.Resources.ApplicationNameLong, MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+
+                if (result == DialogResult.No)
+                {
+                    ucInput.Select();
+                    return false;
+                }
+                else
+                    return true;
+            }
+            else
+                return false;
+
         }
 
         public static bool ValidateField(ComboBox cboField)

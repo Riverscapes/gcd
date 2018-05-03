@@ -3,10 +3,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using GCDCore.Project;
 
@@ -143,7 +140,7 @@ namespace GCDCore.UserInterface.Masks
             if (!MaskValidation.ValidateMaskName(txtName, Mask))
                 return false;
 
-            if (!MaskValidation.ValidateShapeFile(ucPolygon))
+            if (!MaskValidation.ValidateShapeFile(ucPolygon) || !MaskValidation.ValidateShapefileProjection(ucPolygon))
                 return false;
 
             if (!MaskValidation.ValidateField(cboField))

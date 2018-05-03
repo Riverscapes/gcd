@@ -452,64 +452,6 @@ namespace GCDConsoleLib
             }
         }
 
-        /// <summary>
-        /// In order to deal with projections being different 
-        /// </summary>
-        /// <param name="outVector"></param>
-        /// <param name="toProj"></param>
-        public void Reproject(FileInfo outVector, Projection toProj)
-        {
-            Open();
-            OSGeo.OSR.CoordinateTransformation transf = new OSGeo.OSR.CoordinateTransformation(Proj.mSRef, toProj.mSRef);
-
-            Layer mLayer = _ds.GetLayerByIndex(0);
-            FeatureDefn inDef = mLayer.GetLayerDefn();
-
-            DataSource outDS = _drv.CreateDataSource(outVector.FullName, new string[] { });
-
-            Layer outLayer = outDS.CreateLayer(mLayer.GetName(), toProj.mSRef, mLayer.GetGeomType(), new string[] { });
-
-            // Create field definitions in the new file
-            foreach (KeyValuePair<string, VectorField> kvp in Fields)
-                outLayer.CreateField(inDef.GetFieldDefn(kvp.Value.FieldID), 0);
-
-            FeatureDefn outDef = outLayer.GetLayerDefn();
-
-            foreach (KeyValuePair<long, VectorFeature> kvpFeat in Features)
-            {
-                Geometry geom = kvpFeat.Value.Feat.GetGeometryRef();
-                geom.Transform(transf);
-                Feature outFeat = kvpFeat.Value.Feat.Clone();
-                outFeat.SetGeometry(geom);
-                outLayer.CreateFeature(outFeat);
-                outFeat = null;
-            }
-
-            // Now we add our Unique GCDFID field
-            CreateGCDFID(outDS);
-
-            outDS.Dispose();
-            Dispose();
-        }
-
-        /// <summary>
-        /// Fix this later: chicken and egg problem/ The constructor for VectorField needs
-        /// an ID that you don't get until you create it.
-        /// </summary>
-        //public int AddField(string sName, GDalFieldType fType, int? precision)
-        //{
-        //    Open();
-        //    Layer mLayer = _ds.GetLayerByIndex(0);
-        //    FieldDefn fDef = new FieldDefn(sName, fType._origType);
-        //    if (precision != null)
-        //    {
-        //        fDef.SetPrecision((int)precision);
-        //    }
-
-        //    Fields.Add(fDef.GetName(), new VectorField(fDef));
-
-        //    return mLayer.CreateField(fDef, 0); // 0 => Approx ok
-        //}
 
         protected override void _initfromfile()
         {
