@@ -34,7 +34,7 @@ namespace GCDCore.Engines
         public DoDBase Calculate(string dodName, DirectoryInfo analysisFolder, bool bBuildPyramids, UnitGroup units)
         {
             FileInfo rawDoDPath = BuildFilePath(analysisFolder, "raw", ProjectManager.RasterExtension);
-            FileInfo thrDoDPath = BuildFilePath(analysisFolder, "tresh", ProjectManager.RasterExtension);
+            FileInfo thrDoDPath = BuildFilePath(analysisFolder, "thresh", ProjectManager.RasterExtension);
             FileInfo errDoDPath = BuildFilePath(analysisFolder, "threrr", ProjectManager.RasterExtension);
             FileInfo rawHstPath = BuildFilePath(analysisFolder, "raw", "csv"); ;
             FileInfo thrHstPath = BuildFilePath(analysisFolder, "thresh", "csv");
