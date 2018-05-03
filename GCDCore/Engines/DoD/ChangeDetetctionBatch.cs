@@ -45,7 +45,8 @@ namespace GCDCore.Engines.DoD
 
         private void PerformDoD(ThresholdProps tProps)
         {
-            string dodName = frmDoDProperties.GetUniqueAnalysisName(NewSurface.Name, OldSurface.Name, tProps.ThresholdString);
+            string aoiName = AOIMask is Project.Masks.AOIMask ? AOIMask.Name : string.Empty;
+            string dodName = frmDoDProperties.GetUniqueAnalysisName(NewSurface.Name, OldSurface.Name, tProps.ThresholdString, aoiName);
             System.IO.DirectoryInfo dFolder = ProjectManager.Project.GetDoDFolder();
 
             ChangeDetectionEngineBase cdEngine = null;

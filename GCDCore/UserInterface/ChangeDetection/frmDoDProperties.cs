@@ -58,6 +58,9 @@ namespace GCDCore.UserInterface.ChangeDetection
             ucDEMs.SelectedSurfacesChanged += UpdateAnalysisName;
             ucThresholding.OnThresholdingMethodChanged += ThresholdMethodChanged;
 
+            // Subscribe to the event when the AOI selection changes;
+            ucDEMs.SelectedAOIChanged += UpdateAnalysisName;
+
             UpdateAnalysisName(sender, e);
         }
 
@@ -171,14 +174,17 @@ namespace GCDCore.UserInterface.ChangeDetection
                 return;
             }
 
-            txtName.Text = GetUniqueAnalysisName(ucDEMs.NewSurface.Name, ucDEMs.OldSurface.Name, ucThresholding.ThresholdProperties.ThresholdString);
+            txtName.Text = GetUniqueAnalysisName(ucDEMs.NewSurface.Name, ucDEMs.OldSurface.Name, ucThresholding.ThresholdProperties.ThresholdString, ucDEMs.AOIName);
         }
 
-        public static string GetUniqueAnalysisName(string newDEM, string oldDEM, string Threshold)
+        public static string GetUniqueAnalysisName(string newDEM, string oldDEM, string Threshold, string aoiName)
         {
-
             int index = 0;
             string rootName = string.Format("{0}_{1} {2}", newDEM, oldDEM, Threshold);
+
+            if (!string.IsNullOrEmpty(aoiName))
+                rootName = string.Format("{0} within {1}", rootName, aoiName);
+
             string dodName = string.Empty;
             do
             {

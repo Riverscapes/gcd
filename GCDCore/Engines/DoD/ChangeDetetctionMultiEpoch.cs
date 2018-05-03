@@ -57,8 +57,9 @@ namespace GCDCore.Engines.DoD
         {
             DEMSurvey NewDEM = DoDEpoch.NewDEM;
             DEMSurvey OldDEM = DoDEpoch.OldDEM;
+            string aoiName = AOIMask is Project.Masks.AOIMask ? AOIMask.Name : string.Empty;
 
-            string dodName = frmDoDProperties.GetUniqueAnalysisName(NewDEM.Name, OldDEM.Name, tProps.ThresholdString);
+            string dodName = frmDoDProperties.GetUniqueAnalysisName(NewDEM.Name, OldDEM.Name, tProps.ThresholdString, aoiName);
             System.IO.DirectoryInfo dFolder = ProjectManager.Project.GetDoDFolder();
 
             ChangeDetectionEngineBase cdEngine = null;

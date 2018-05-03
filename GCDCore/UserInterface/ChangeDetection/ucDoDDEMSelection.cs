@@ -12,6 +12,7 @@ namespace GCDCore.UserInterface.ChangeDetection
     {
         // Event so that parent form can be alerted when DEM names change
         public EventHandler SelectedSurfacesChanged;
+        public EventHandler SelectedAOIChanged;
 
         private BindingList<Surface> NewSurfaces;
         private BindingList<Surface> OldSurfaces;
@@ -66,6 +67,11 @@ namespace GCDCore.UserInterface.ChangeDetection
             }
         }
 
+        /// <summary>
+        /// Get the name of the currently selected AOI or empty string if none
+        /// </summary>
+        public string AOIName { get { return ucAOI1.AOIName; } }
+
         public ucDoDDEMSelection()
         {
             InitializeComponent();
@@ -86,6 +92,22 @@ namespace GCDCore.UserInterface.ChangeDetection
 
             cboNewSurface.DataSource = NewSurfaces;
             cboOldSurface.DataSource = OldSurfaces;
+
+            // Subscribe the user control event when the user changes the AOI selection
+            ucAOI1.AOIMask_Changed += AOIMask_Changed;
+        }
+
+        /// <summary>
+        /// Handles the AOI user control event when the user changes the AOI
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AOIMask_Changed(object sender, EventArgs e)
+        {
+            if (SelectedAOIChanged != null)
+            {
+                SelectedAOIChanged(sender, e);
+            }
         }
 
         private void ucDoDDEMSelection_Load(object sender, EventArgs e)

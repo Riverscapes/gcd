@@ -54,6 +54,7 @@
             this.cboAOI.Name = "cboAOI";
             this.cboAOI.Size = new System.Drawing.Size(756, 21);
             this.cboAOI.TabIndex = 0;
+            this.cboAOI.SelectedIndexChanged += new System.EventHandler(this.cboAOI_SelectedIndexChanged);
             // 
             // ucAOI
             // 

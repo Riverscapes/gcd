@@ -11,6 +11,8 @@ namespace GCDCore.UserInterface.ChangeDetection
 {
     public partial class ucAOI : UserControl
     {
+        public event EventHandler AOIMask_Changed;
+
         public AOIMask AOIMask
         {
             get
@@ -22,6 +24,24 @@ namespace GCDCore.UserInterface.ChangeDetection
                 else
                 {
                     return null;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the name of the currently selected AOI or empty string if none
+        /// </summary>
+        public string AOIName
+        {
+            get
+            {
+                if (cboAOI.SelectedItem is AOIMask)
+                {
+                    return ((AOIMask)cboAOI.SelectedItem).Name;
+                }
+                else
+                {
+                    return string.Empty;
                 }
             }
         }
@@ -40,6 +60,14 @@ namespace GCDCore.UserInterface.ChangeDetection
             cboAOI.Items.Add(AOIMask.SurfaceDataExtentIntersection);
             ProjectManager.Project.Masks.Where(x => x is AOIMask).ToList<Mask>().ForEach(x => cboAOI.Items.Add(x));
             cboAOI.SelectedIndex = 0;
+        }
+
+        private void cboAOI_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (AOIMask_Changed != null)
+            {
+                AOIMask_Changed(sender, e);
+            }
         }
     }
 }
