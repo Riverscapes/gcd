@@ -24,6 +24,8 @@ namespace GCDCore.UserInterface.BudgetSegregation
         private DoDSummaryDisplayOptions m_Options;
         private Visualization.BudgetSegPieChartViewer PieChartViewer;
 
+        private UserInterface.UtilityForms.ChartContextMenu cmsChart;
+
         public GCDProjectItem GCDProjectItem { get { return BudgetSeg; } }
 
 
@@ -39,6 +41,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
             m_Options = new DoDSummaryDisplayOptions(ProjectManager.Project.Units);
 
             PieChartViewer = new Visualization.BudgetSegPieChartViewer(BudgetSeg.Classes.Values.ToList<BudgetSegregationClass>(), chtPieCharts);
+            cmsChart = new UtilityForms.ChartContextMenu(BudgetSeg.Folder, "budget_seg");
         }
 
         private void BudgetSegResultsForm_Load(object sender, System.EventArgs e)
@@ -62,6 +65,8 @@ namespace GCDCore.UserInterface.BudgetSegregation
             ucProperties.AddDoDProperty("Mask Field", BudgetSeg.Mask._Field);
             ucProperties.AddDoDProperty("Mask Type", BudgetSeg.Mask.Noun);
 
+            ucHistogram.ChartContextMenuStrip = cmsChart.CMS;
+
             //Hide Report tab for now
             tabMain.TabPages.Remove(TabPage4);
 
@@ -79,6 +84,9 @@ namespace GCDCore.UserInterface.BudgetSegregation
 
             ucSummary.RefreshDisplay(classResult.Statistics, allStats, SelectedRawRepresents, m_Options);
             ucBars.ChangeStats = classResult.Statistics;
+
+            // Incorporate the class name into the proposed image file name if the user attempts to save the chart image
+            cmsChart.DefaultFileName = string.Format("budget_seg_{0}", classResult.Name);
 
             // The raw histogram is either that for the whole DoD or just the budget seg class
             GCDConsoleLib.Histogram rawHist;

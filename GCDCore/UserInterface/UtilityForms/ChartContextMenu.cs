@@ -11,7 +11,7 @@ namespace GCDCore.UserInterface.UtilityForms
     {
         public readonly ContextMenuStrip CMS;
         public readonly DirectoryInfo DefaultDir;
-        public readonly string DefaultFileName;
+        public string DefaultFileName { get; set; }
 
         public ChartContextMenu(DirectoryInfo dir, string name)
         {
@@ -71,7 +71,7 @@ namespace GCDCore.UserInterface.UtilityForms
                 {
                     dlgSave.FileName = string.Format("{0}.png", naru.os.File.RemoveDangerousCharacters(DefaultFileName));
                 }
-                
+
                 try
                 {
                     // Attempt to make the proposed file name unique
