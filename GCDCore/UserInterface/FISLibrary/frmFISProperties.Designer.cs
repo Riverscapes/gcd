@@ -43,6 +43,10 @@
             this.label3 = new System.Windows.Forms.Label();
             this.grpInputs = new System.Windows.Forms.GroupBox();
             this.grdInputs = new System.Windows.Forms.DataGridView();
+            this.colInputName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colInputUnits = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colInputDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colInputSource = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.txtFilePath = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
@@ -67,10 +71,6 @@
             this.colValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.txtDescription = new System.Windows.Forms.TextBox();
-            this.colInputName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colInputUnits = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colInputDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colInputSource = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -256,6 +256,31 @@
             this.grdInputs.Size = new System.Drawing.Size(467, 295);
             this.grdInputs.TabIndex = 0;
             // 
+            // colInputName
+            // 
+            this.colInputName.DataPropertyName = "Name";
+            this.colInputName.HeaderText = "Name";
+            this.colInputName.Name = "colInputName";
+            this.colInputName.Width = 124;
+            // 
+            // colInputUnits
+            // 
+            this.colInputUnits.DataPropertyName = "Units";
+            this.colInputUnits.HeaderText = "Units";
+            this.colInputUnits.Name = "colInputUnits";
+            // 
+            // colInputDescription
+            // 
+            this.colInputDescription.DataPropertyName = "Description";
+            this.colInputDescription.HeaderText = "Description";
+            this.colInputDescription.Name = "colInputDescription";
+            // 
+            // colInputSource
+            // 
+            this.colInputSource.DataPropertyName = "Source";
+            this.colInputSource.HeaderText = "Source";
+            this.colInputSource.Name = "colInputSource";
+            // 
             // txtFilePath
             // 
             this.txtFilePath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -270,11 +295,11 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(15, 51);
+            this.label2.Location = new System.Drawing.Point(31, 51);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(39, 13);
             this.label2.TabIndex = 2;
-            this.label2.Text = "File file";
+            this.label2.Text = "FIS file";
             // 
             // txtName
             // 
@@ -288,7 +313,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(19, 21);
+            this.label1.Location = new System.Drawing.Point(35, 21);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(35, 13);
             this.label1.TabIndex = 0;
@@ -495,31 +520,6 @@
             this.txtDescription.Name = "txtDescription";
             this.txtDescription.Size = new System.Drawing.Size(479, 495);
             this.txtDescription.TabIndex = 0;
-            // 
-            // colInputName
-            // 
-            this.colInputName.DataPropertyName = "Name";
-            this.colInputName.HeaderText = "Name";
-            this.colInputName.Name = "colInputName";
-            this.colInputName.Width = 124;
-            // 
-            // colInputUnits
-            // 
-            this.colInputUnits.DataPropertyName = "Units";
-            this.colInputUnits.HeaderText = "Units";
-            this.colInputUnits.Name = "colInputUnits";
-            // 
-            // colInputDescription
-            // 
-            this.colInputDescription.DataPropertyName = "Description";
-            this.colInputDescription.HeaderText = "Description";
-            this.colInputDescription.Name = "colInputDescription";
-            // 
-            // colInputSource
-            // 
-            this.colInputSource.DataPropertyName = "Source";
-            this.colInputSource.HeaderText = "Source";
-            this.colInputSource.Name = "colInputSource";
             // 
             // frmFISProperties
             // 
