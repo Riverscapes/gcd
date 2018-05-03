@@ -120,6 +120,9 @@ namespace GCDCore.Visualization
                 Chart.ChartAreas[0].AxisY.Title = string.Format("Area ({0})", UnitsNet.Area.GetAbbreviation(DisplayUnits.ArUnit));
             else
                 Chart.ChartAreas[0].AxisY.Title = string.Format("Volume ({0})", UnitsNet.Volume.GetAbbreviation(DisplayUnits.VolUnit));
+
+            Chart.ChartAreas[0].RecalculateAxesScale();
+            Chart.ChartAreas[0].AxisY.RoundAxisValues();
         }
 
         private void GetDisplayValues(bool bArea)

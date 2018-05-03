@@ -106,6 +106,15 @@ namespace GCDCore.UserInterface.ChangeDetection
 
             chkColsError.Enabled = chkColsThresholded.Checked;
             chkColsPercentage.Enabled = chkColsThresholded.Checked;
+
+            // Y Axis scale controls
+            bool bManualScale = rdoManualYScale.Checked;
+            lblMaxYScale.Enabled = bManualScale;
+            lblMinYScale.Enabled = bManualScale;
+            lblIntervalYScale.Enabled = bManualScale;
+            valYMinimum.Enabled = bManualScale;
+            valYMaximum.Enabled = bManualScale;
+            valYInterval.Enabled = bManualScale;
         }
 
         private void cmdOK_Click(object sender, System.EventArgs e)
@@ -142,6 +151,8 @@ namespace GCDCore.UserInterface.ChangeDetection
             Options.m_bColsThresholded = chkColsThresholded.Checked;
             Options.m_bColsPMError = chkColsError.Checked;
             Options.m_bColsPCError = chkColsPercentage.Checked;
+
+            Options.AutomatedYAxisScale = rdoAutomatedYScale.Checked;
         }
 
         private void chkColsThresholded_CheckedChanged(System.Object sender, System.EventArgs e)
@@ -239,6 +250,11 @@ namespace GCDCore.UserInterface.ChangeDetection
         private void cmdHelp_Click_1(object sender, EventArgs e)
         {
             OnlineHelp.Show(Name);
+        }
+
+        private void YAxisMethod_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateControls();
         }
     }
 }

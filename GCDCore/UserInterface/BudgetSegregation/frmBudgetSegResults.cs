@@ -139,13 +139,20 @@ namespace GCDCore.UserInterface.BudgetSegregation
 
                 if (frm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
-                    ucHistogram.HistogramViewer.Chart.ChartAreas[0].AxisX.Minimum = frm.XAxisMinimum;
-                    ucHistogram.HistogramViewer.Chart.ChartAreas[0].AxisX.Maximum = frm.XAxisMaximum;
-                    ucHistogram.HistogramViewer.Chart.ChartAreas[0].AxisX.Interval = frm.XAxisInterval;
+                    //ucHistogram.HistogramViewer.Chart.ChartAreas[0].AxisX.Minimum = frm.XAxisMinimum;
+                    //ucHistogram.HistogramViewer.Chart.ChartAreas[0].AxisX.Maximum = frm.XAxisMaximum;
+                    //ucHistogram.HistogramViewer.Chart.ChartAreas[0].AxisX.Interval = frm.XAxisInterval;
 
-                    ucHistogram.HistogramViewer.Chart.ChartAreas[0].AxisY.Minimum = frm.YAxisMinimum;
-                    ucHistogram.HistogramViewer.Chart.ChartAreas[0].AxisY.Maximum = frm.YAxisMaximum;
-                    ucHistogram.HistogramViewer.Chart.ChartAreas[0].AxisY.Interval = frm.YAxisInterval;
+                    if (m_Options.AutomatedYAxisScale)
+                    {
+                        ucHistogram.HistogramViewer.Chart.ChartAreas[0].RecalculateAxesScale();
+                    }
+                    else
+                    {
+                        ucHistogram.HistogramViewer.Chart.ChartAreas[0].AxisY.Minimum = frm.YAxisMinimum;
+                        ucHistogram.HistogramViewer.Chart.ChartAreas[0].AxisY.Maximum = frm.YAxisMaximum;
+                        ucHistogram.HistogramViewer.Chart.ChartAreas[0].AxisY.Interval = frm.YAxisInterval;
+                    }
 
                     ucHistogram.HistogramViewer.SetFont(m_Options.Font);
                     ucHistogram.HistogramViewer.Chart.Series[Visualization.ViewerBase.EROSION].Color = m_Options.Erosion;

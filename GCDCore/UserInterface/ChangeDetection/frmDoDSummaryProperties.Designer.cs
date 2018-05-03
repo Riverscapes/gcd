@@ -73,12 +73,14 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.picErosion = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.label7 = new System.Windows.Forms.Label();
+            this.rdoManualYScale = new System.Windows.Forms.RadioButton();
+            this.rdoAutomatedYScale = new System.Windows.Forms.RadioButton();
+            this.lblIntervalYScale = new System.Windows.Forms.Label();
             this.valYInterval = new System.Windows.Forms.NumericUpDown();
             this.valYMinimum = new System.Windows.Forms.NumericUpDown();
-            this.label8 = new System.Windows.Forms.Label();
+            this.lblMinYScale = new System.Windows.Forms.Label();
             this.valYMaximum = new System.Windows.Forms.NumericUpDown();
-            this.label12 = new System.Windows.Forms.Label();
+            this.lblMaxYScale = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label11 = new System.Windows.Forms.Label();
             this.valInterval = new System.Windows.Forms.NumericUpDown();
@@ -537,32 +539,58 @@ namespace GCDCore.UserInterface.ChangeDetection
             // 
             // groupBox4
             // 
-            this.groupBox4.Controls.Add(this.label7);
+            this.groupBox4.Controls.Add(this.rdoManualYScale);
+            this.groupBox4.Controls.Add(this.rdoAutomatedYScale);
+            this.groupBox4.Controls.Add(this.lblIntervalYScale);
             this.groupBox4.Controls.Add(this.valYInterval);
             this.groupBox4.Controls.Add(this.valYMinimum);
-            this.groupBox4.Controls.Add(this.label8);
+            this.groupBox4.Controls.Add(this.lblMinYScale);
             this.groupBox4.Controls.Add(this.valYMaximum);
-            this.groupBox4.Controls.Add(this.label12);
+            this.groupBox4.Controls.Add(this.lblMaxYScale);
             this.groupBox4.Location = new System.Drawing.Point(218, 63);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(256, 100);
+            this.groupBox4.Size = new System.Drawing.Size(256, 136);
             this.groupBox4.TabIndex = 1;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Histogram Y Axis";
             // 
-            // label7
+            // rdoManualYScale
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(6, 74);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(70, 13);
-            this.label7.TabIndex = 11;
-            this.label7.Text = "Label interval";
+            this.rdoManualYScale.AutoSize = true;
+            this.rdoManualYScale.Location = new System.Drawing.Point(16, 39);
+            this.rdoManualYScale.Name = "rdoManualYScale";
+            this.rdoManualYScale.Size = new System.Drawing.Size(78, 17);
+            this.rdoManualYScale.TabIndex = 13;
+            this.rdoManualYScale.Text = "Fixed scale";
+            this.rdoManualYScale.UseVisualStyleBackColor = true;
+            this.rdoManualYScale.CheckedChanged += new System.EventHandler(this.YAxisMethod_CheckedChanged);
+            // 
+            // rdoAutomatedYScale
+            // 
+            this.rdoAutomatedYScale.AutoSize = true;
+            this.rdoAutomatedYScale.Checked = true;
+            this.rdoAutomatedYScale.Location = new System.Drawing.Point(16, 18);
+            this.rdoAutomatedYScale.Name = "rdoAutomatedYScale";
+            this.rdoAutomatedYScale.Size = new System.Drawing.Size(104, 17);
+            this.rdoAutomatedYScale.TabIndex = 12;
+            this.rdoAutomatedYScale.TabStop = true;
+            this.rdoAutomatedYScale.Text = "Automated scale";
+            this.rdoAutomatedYScale.UseVisualStyleBackColor = true;
+            this.rdoAutomatedYScale.CheckedChanged += new System.EventHandler(this.YAxisMethod_CheckedChanged);
+            // 
+            // lblIntervalYScale
+            // 
+            this.lblIntervalYScale.AutoSize = true;
+            this.lblIntervalYScale.Location = new System.Drawing.Point(33, 115);
+            this.lblIntervalYScale.Name = "lblIntervalYScale";
+            this.lblIntervalYScale.Size = new System.Drawing.Size(70, 13);
+            this.lblIntervalYScale.TabIndex = 11;
+            this.lblIntervalYScale.Text = "Label interval";
             // 
             // valYInterval
             // 
             this.valYInterval.DecimalPlaces = 2;
-            this.valYInterval.Location = new System.Drawing.Point(80, 70);
+            this.valYInterval.Location = new System.Drawing.Point(107, 111);
             this.valYInterval.Name = "valYInterval";
             this.valYInterval.Size = new System.Drawing.Size(77, 20);
             this.valYInterval.TabIndex = 10;
@@ -570,36 +598,36 @@ namespace GCDCore.UserInterface.ChangeDetection
             // valYMinimum
             // 
             this.valYMinimum.DecimalPlaces = 2;
-            this.valYMinimum.Location = new System.Drawing.Point(80, 44);
+            this.valYMinimum.Location = new System.Drawing.Point(107, 85);
             this.valYMinimum.Name = "valYMinimum";
             this.valYMinimum.Size = new System.Drawing.Size(77, 20);
             this.valYMinimum.TabIndex = 9;
             // 
-            // label8
+            // lblMinYScale
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(28, 48);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(48, 13);
-            this.label8.TabIndex = 8;
-            this.label8.Text = "Minimum";
+            this.lblMinYScale.AutoSize = true;
+            this.lblMinYScale.Location = new System.Drawing.Point(55, 89);
+            this.lblMinYScale.Name = "lblMinYScale";
+            this.lblMinYScale.Size = new System.Drawing.Size(48, 13);
+            this.lblMinYScale.TabIndex = 8;
+            this.lblMinYScale.Text = "Minimum";
             // 
             // valYMaximum
             // 
             this.valYMaximum.DecimalPlaces = 2;
-            this.valYMaximum.Location = new System.Drawing.Point(80, 18);
+            this.valYMaximum.Location = new System.Drawing.Point(107, 59);
             this.valYMaximum.Name = "valYMaximum";
             this.valYMaximum.Size = new System.Drawing.Size(77, 20);
             this.valYMaximum.TabIndex = 7;
             // 
-            // label12
+            // lblMaxYScale
             // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(25, 22);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(51, 13);
-            this.label12.TabIndex = 6;
-            this.label12.Text = "Maximum";
+            this.lblMaxYScale.AutoSize = true;
+            this.lblMaxYScale.Location = new System.Drawing.Point(52, 63);
+            this.lblMaxYScale.Name = "lblMaxYScale";
+            this.lblMaxYScale.Size = new System.Drawing.Size(51, 13);
+            this.lblMaxYScale.TabIndex = 6;
+            this.lblMaxYScale.Text = "Maximum";
             // 
             // groupBox3
             // 
@@ -612,7 +640,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.groupBox3.Enabled = false;
             this.groupBox3.Location = new System.Drawing.Point(6, 63);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(200, 100);
+            this.groupBox3.Size = new System.Drawing.Size(200, 136);
             this.groupBox3.TabIndex = 0;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Histogram X Axis";
@@ -763,11 +791,13 @@ namespace GCDCore.UserInterface.ChangeDetection
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.FontDialog frmFont;
         private System.Windows.Forms.TextBox txtFont;
-        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label lblIntervalYScale;
         private System.Windows.Forms.NumericUpDown valYInterval;
         private System.Windows.Forms.NumericUpDown valYMinimum;
-        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label lblMinYScale;
         private System.Windows.Forms.NumericUpDown valYMaximum;
-        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label lblMaxYScale;
+        private System.Windows.Forms.RadioButton rdoManualYScale;
+        private System.Windows.Forms.RadioButton rdoAutomatedYScale;
     }
 }

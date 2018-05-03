@@ -27,6 +27,8 @@ namespace GCDCore.UserInterface.ChangeDetection
         public System.Drawing.Color Deposition { get; set; }
         public System.Drawing.Font Font { get; set; }
 
+        public bool AutomatedYAxisScale { get; set; }
+
         public GCDConsoleLib.GCD.UnitGroup Units { get { return m_Units; } }
 
         public UnitsNet.Units.LengthUnit LinearUnits
@@ -67,6 +69,8 @@ namespace GCDCore.UserInterface.ChangeDetection
             Erosion = Properties.Settings.Default.Erosion;
             Deposition = Properties.Settings.Default.Deposition;
             Font = Properties.Settings.Default.ChartFont;
+
+            AutomatedYAxisScale = true;
         }
     }
 }
