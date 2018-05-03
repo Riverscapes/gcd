@@ -23,8 +23,6 @@ namespace GCDCore.UserInterface.ChangeDetection
         public bool m_bColsPMError;
         public bool m_bColsPCError;
 
-        public System.Drawing.Color Erosion { get; set; }
-        public System.Drawing.Color Deposition { get; set; }
         public System.Drawing.Font Font { get; set; }
 
         public bool AutomatedYAxisScale { get; set; }
@@ -66,8 +64,6 @@ namespace GCDCore.UserInterface.ChangeDetection
             m_bColsPMError = true;
             m_bColsPCError = true;
 
-            Erosion = Properties.Settings.Default.Erosion;
-            Deposition = Properties.Settings.Default.Deposition;
             Font = Properties.Settings.Default.ChartFont;
 
             AutomatedYAxisScale = true;

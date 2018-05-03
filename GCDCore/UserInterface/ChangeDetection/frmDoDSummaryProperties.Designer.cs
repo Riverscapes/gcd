@@ -90,6 +90,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.label9 = new System.Windows.Forms.Label();
             this.frmColourPicker = new System.Windows.Forms.ColorDialog();
             this.frmFont = new System.Windows.Forms.FontDialog();
+            this.cmdResetColours = new System.Windows.Forms.Button();
             this.GroupBox1.SuspendLayout();
             this.GroupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.valPrecision)).BeginInit();
@@ -488,6 +489,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             // 
             // groupBox5
             // 
+            this.groupBox5.Controls.Add(this.cmdResetColours);
             this.groupBox5.Controls.Add(this.picDeposition);
             this.groupBox5.Controls.Add(this.label6);
             this.groupBox5.Controls.Add(this.picErosion);
@@ -502,7 +504,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             // picDeposition
             // 
             this.picDeposition.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.picDeposition.Location = new System.Drawing.Point(156, 19);
+            this.picDeposition.Location = new System.Drawing.Point(140, 19);
             this.picDeposition.Name = "picDeposition";
             this.picDeposition.Size = new System.Drawing.Size(23, 23);
             this.picDeposition.TabIndex = 3;
@@ -512,7 +514,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(106, 24);
+            this.label6.Location = new System.Drawing.Point(95, 24);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(42, 13);
             this.label6.TabIndex = 2;
@@ -521,7 +523,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             // picErosion
             // 
             this.picErosion.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.picErosion.Location = new System.Drawing.Point(75, 19);
+            this.picErosion.Location = new System.Drawing.Point(67, 19);
             this.picErosion.Name = "picErosion";
             this.picErosion.Size = new System.Drawing.Size(23, 23);
             this.picErosion.TabIndex = 1;
@@ -531,7 +533,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(17, 24);
+            this.label1.Location = new System.Drawing.Point(9, 24);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(50, 13);
             this.label1.TabIndex = 0;
@@ -696,6 +698,16 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.label9.TabIndex = 0;
             this.label9.Text = "Maximum";
             // 
+            // cmdResetColours
+            // 
+            this.cmdResetColours.Image = global::GCDCore.Properties.Resources.refresh;
+            this.cmdResetColours.Location = new System.Drawing.Point(171, 19);
+            this.cmdResetColours.Name = "cmdResetColours";
+            this.cmdResetColours.Size = new System.Drawing.Size(23, 23);
+            this.cmdResetColours.TabIndex = 8;
+            this.cmdResetColours.UseVisualStyleBackColor = true;
+            this.cmdResetColours.Click += new System.EventHandler(this.cmdResetColours_Click);
+            // 
             // frmDoDSummaryProperties
             // 
             this.AcceptButton = this.cmdOK;
@@ -799,5 +811,6 @@ namespace GCDCore.UserInterface.ChangeDetection
         private System.Windows.Forms.Label lblMaxYScale;
         private System.Windows.Forms.RadioButton rdoManualYScale;
         private System.Windows.Forms.RadioButton rdoAutomatedYScale;
+        private System.Windows.Forms.Button cmdResetColours;
     }
 }

@@ -22,6 +22,10 @@ namespace GCDCore.Project
         private static FileInfo SurveyTypesPath { get; set; }
         public static ErrorCalculation.FIS.FISLibrary FISLibrary { get; internal set; }
 
+        // Used for display but not saved to project XML
+        public static System.Drawing.Color ColorDeposition { get; set; }
+        public static System.Drawing.Color ColorErosion { get; set; }
+
         public static bool IsArcMap { get { return System.Reflection.Assembly.GetEntryAssembly() == null; } }
 
         // Simplifies the path combinations above
@@ -75,6 +79,9 @@ namespace GCDCore.Project
                 ex.Data["GCD Excel Template Path"] = ExcelTemplatesFolder.FullName;
                 throw ex;
             }
+
+            ColorErosion = Properties.Settings.Default.Erosion;
+            ColorDeposition = Properties.Settings.Default.Deposition;
         }
 
         public static void CreateProject(GCDProject project)

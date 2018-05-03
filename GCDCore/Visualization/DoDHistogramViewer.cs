@@ -48,8 +48,8 @@ namespace GCDCore.Visualization
             DisplayUnits = dataUnits;
 
             Dictionary<string, Color> seriesDefs = new Dictionary<string, Color> {
-                {  EROSION, Properties.Settings.Default.Erosion },
-                {  DEPOSITION, Properties.Settings.Default.Deposition  },
+                {  EROSION, Project.ProjectManager.ColorErosion },
+                {  DEPOSITION, Project.ProjectManager.ColorDeposition },
                 { RAW, Color.LightGray }
             };
 

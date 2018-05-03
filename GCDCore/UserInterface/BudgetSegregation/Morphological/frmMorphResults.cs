@@ -246,13 +246,13 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
             Series serDeposit = chtData.Series.Add(DEPOSIT_CHART_SERIES);
             serDeposit.LegendText = "Deposition";
             serDeposit.ChartArea = chtArea1.Name;
-            serDeposit.Color = Properties.Settings.Default.Deposition;
+            serDeposit.Color = ProjectManager.ColorDeposition;
             serDeposit.ChartType = SeriesChartType.StackedColumn;
 
             Series serErosion = chtData.Series.Add(EROSION_CHART_SERIES);
             serErosion.LegendText = "Erosion";
             serErosion.ChartArea = chtArea1.Name;
-            serErosion.Color = Properties.Settings.Default.Erosion;
+            serErosion.Color = ProjectManager.ColorErosion;
             serErosion.ChartType = SeriesChartType.StackedColumn;
 
             // Error bars should always be last to ensure they draw on top

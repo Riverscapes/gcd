@@ -155,8 +155,8 @@ namespace GCDCore.UserInterface.BudgetSegregation
                     }
 
                     ucHistogram.HistogramViewer.SetFont(m_Options.Font);
-                    ucHistogram.HistogramViewer.Chart.Series[Visualization.ViewerBase.EROSION].Color = m_Options.Erosion;
-                    ucHistogram.HistogramViewer.Chart.Series[Visualization.ViewerBase.DEPOSITION].Color = m_Options.Deposition;
+                    ucHistogram.HistogramViewer.Chart.Series[Visualization.ViewerBase.EROSION].Color = ProjectManager.ColorErosion;
+                    ucHistogram.HistogramViewer.Chart.Series[Visualization.ViewerBase.DEPOSITION].Color = ProjectManager.ColorDeposition;
                     ucHistogram.HistogramViewer.Chart.DataBind();
 
                     ucSummary.RefreshDisplay(((BudgetSegregationClass)cboBudgetClass.SelectedItem).Statistics, m_Options);
@@ -164,12 +164,12 @@ namespace GCDCore.UserInterface.BudgetSegregation
                     ucBars.DisplayUnits = new GCDConsoleLib.GCD.UnitGroup(m_Options.VolumeUnits, m_Options.AreaUnits, m_Options.LinearUnits, m_Options.LinearUnits);
 
                     ucBars.Viewer.SetFont(m_Options.Font);
-                    ucBars.chtControl.Series[Visualization.ViewerBase.EROSION].Color = m_Options.Erosion;
-                    ucBars.chtControl.Series[Visualization.ViewerBase.DEPOSITION].Color = m_Options.Deposition;
+                    ucBars.chtControl.Series[Visualization.ViewerBase.EROSION].Color = ProjectManager.ColorErosion;
+                    ucBars.chtControl.Series[Visualization.ViewerBase.DEPOSITION].Color = ProjectManager.ColorDeposition;
 
                     Series serNet = ucBars.chtControl.Series.FindByName(Visualization.ViewerBase.NET);
                     if (serNet is Series)
-                        serNet.Color = serNet.Points[0].YValues[0] > 0 ? m_Options.Deposition : m_Options.Deposition;
+                        serNet.Color = serNet.Points[0].YValues[0] > 0 ? ProjectManager.ColorDeposition : ProjectManager.ColorErosion;
                 }
 
             }

@@ -52,8 +52,8 @@ namespace GCDCore.UserInterface.ChangeDetection
             GCDUnits.SelectUnit(cboArea, Options.AreaUnits);
             GCDUnits.SelectUnit(cboVolume, Options.VolumeUnits);
 
-            picErosion.BackColor = Options.Erosion;
-            picDeposition.BackColor = Options.Deposition;
+            picErosion.BackColor = ProjectManager.ColorErosion;
+            picDeposition.BackColor = ProjectManager.ColorDeposition;
 
             valPrecision.Value = Options.m_nPrecision;
 
@@ -120,8 +120,8 @@ namespace GCDCore.UserInterface.ChangeDetection
         private void cmdOK_Click(object sender, System.EventArgs e)
         {
             Options.Font = frmFont.Font;
-            Options.Erosion = picErosion.BackColor;
-            Options.Deposition = picDeposition.BackColor;
+            ProjectManager.ColorErosion = picErosion.BackColor;
+            ProjectManager.ColorDeposition = picDeposition.BackColor;
 
             Options.LinearUnits = ((GCDUnits.FormattedUnit<UnitsNet.Units.LengthUnit>)cboLinear.SelectedItem).Unit;
             Options.AreaUnits = ((GCDUnits.FormattedUnit<UnitsNet.Units.AreaUnit>)cboArea.SelectedItem).Unit;
@@ -255,6 +255,12 @@ namespace GCDCore.UserInterface.ChangeDetection
         private void YAxisMethod_CheckedChanged(object sender, EventArgs e)
         {
             UpdateControls();
+        }
+
+        private void cmdResetColours_Click(object sender, EventArgs e)
+        {
+            picErosion.BackColor = Properties.Settings.Default.Erosion;
+            picDeposition.BackColor = Properties.Settings.Default.Deposition;
         }
     }
 }

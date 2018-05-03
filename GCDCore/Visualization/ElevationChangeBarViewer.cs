@@ -38,12 +38,12 @@ namespace GCDCore.Visualization
             Chart.Series.Clear();
 
             Series errSeries = Chart.Series.Add(ViewerBase.EROSION);
-            errSeries.Color = Properties.Settings.Default.Erosion;
+            errSeries.Color = Project.ProjectManager.ColorErosion;
             errSeries.ChartArea = Chart.ChartAreas.First().Name;
             errSeries.ChartType = SeriesChartType.StackedColumn;
 
             Series depSeries = Chart.Series.Add(ViewerBase.DEPOSITION);
-            depSeries.Color = Properties.Settings.Default.Deposition;
+            depSeries.Color = Project.ProjectManager.ColorDeposition;
             depSeries.ChartArea = Chart.ChartAreas.First().Name;
             depSeries.ChartType = SeriesChartType.StackedColumn;
         }
