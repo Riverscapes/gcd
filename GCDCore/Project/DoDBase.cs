@@ -260,7 +260,10 @@ namespace GCDCore.Project
 
             try
             {
-                BudgetSegregations.ForEach(x => x.Delete());
+                for (int i = 0; i < BudgetSegregations.Count; i++)
+                {
+                    BudgetSegregations[0].Delete();
+                }
             }
             finally
             {
