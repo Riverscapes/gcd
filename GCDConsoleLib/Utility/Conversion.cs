@@ -268,7 +268,7 @@ namespace GCDConsoleLib.Utility
         /// Here's your lookup table. Keep it all lowercase. Don't put the standard spelling in there because we already try that
         /// </summary>
         private static Dictionary<LengthUnit, string[]> LengthAliases = new Dictionary<LengthUnit, string[]>() {
-            { LengthUnit.Meter, new string[] { "metre" } },
+            { LengthUnit.Meter, new string[] { "metre", "meters"} },
             { LengthUnit.Foot, new string[] { "feet", "ft-us" } },
         };
 
