@@ -40,6 +40,9 @@ namespace GCDCore.UserInterface.ChangeDetection
             DoDProperties.Add(new DoDPropertyRaster("Old Surface", dod.OldSurface.Name, dod.OldSurface.Raster.GISFileInfo));
             DoDProperties.Add(new DoDProperty("Uncertainty Analysis", dod.UncertaintyAnalysisLabel));
             DoDProperties.Add(new DoDProperty("Area of Interest", dod.AOILabel));
+            DoDProperties.Add(new DoDProperty("DoD Analysis Folder", ProjectManager.Project.GetRelativePath(dod.Folder.FullName)));
+            DoDProperties.Add(new DoDPropertyRaster("Thresholded DoD", ProjectManager.Project.GetRelativePath(dod.ThrDoD.Raster.GISFileInfo), dod.ThrDoD.Raster.GISFileInfo));
+            DoDProperties.Add(new DoDPropertyRaster("Raw DoD", ProjectManager.Project.GetRelativePath(dod.RawDoD.Raster.GISFileInfo), dod.RawDoD.Raster.GISFileInfo));
 
             if (dod is DoDPropagated)
             {
