@@ -570,12 +570,45 @@ namespace GCDConsoleLib
             Open();
             double dMin, dMax, dMean, dStdDev;
             _ds.GetRasterBand(1).GetStatistics(0, 1, out dMin, out dMax, out dMean, out dStdDev);
-            Dictionary<string, decimal> output = new Dictionary<string, decimal>()  {
-                {"min", (decimal)dMin},
-                {"max", (decimal)dMax},
-                {"mean", (decimal)dMean},
-                {"stddev", (decimal)dStdDev}
-            };
+
+            Dictionary<string, decimal> output = new Dictionary<string, decimal>();
+
+            try
+            {
+                output["min"] = (decimal)dMin;
+            }
+            catch (Exception)
+            {
+                output["min"] = decimal.MinValue;
+            }
+
+            try
+            {
+                output["max"] = (decimal)dMax;
+            }
+            catch (Exception)
+            {
+                output["max"] = decimal.MaxValue;
+            }
+
+            try
+            {
+                output["mean"] = (decimal)dMean;
+            }
+            catch (Exception)
+            {
+                output["mean"] = 0;
+            }
+
+            try
+            {
+                output["stddev"] = (decimal)dStdDev;
+            }
+            catch (Exception)
+            {
+                output["stddev"] = 0;
+            }
+
             return output;
         }
 
