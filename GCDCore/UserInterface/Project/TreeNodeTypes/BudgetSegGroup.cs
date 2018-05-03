@@ -20,6 +20,8 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             BudgetSeg = bs;
 
             ContextMenuStrip.Items[0].Text = "Add Morphological Analysis";
+            ContextMenuStrip.Items[0].Enabled = BudgetSeg.IsMaskDirectional;
+
             ContextMenuStrip.Items.Insert(0, new ToolStripMenuItem("View Budget Segregation Results", Properties.Resources.GCD, OnViewResults));
             ContextMenuStrip.Items.Insert(3, new ToolStripMenuItem("Delete Budget Segregation", Properties.Resources.Delete, OnDelete));
             ContextMenuStrip.Items.Insert(4, new ToolStripSeparator());

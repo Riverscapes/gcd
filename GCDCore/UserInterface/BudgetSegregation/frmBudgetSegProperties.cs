@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.ComponentModel;
 using System.Collections.Generic;
 using GCDCore.Project;
+using GCDCore.Project.Masks;
 
 namespace GCDCore.UserInterface.BudgetSegregation
 {
@@ -15,6 +16,17 @@ namespace GCDCore.UserInterface.BudgetSegregation
         private DoDBase InitialDoD;
 
         public GCDProjectItem GCDProjectItem { get { return BudgetSeg; } }
+
+        private AttributeFieldMask SelectedMask
+        {
+            get
+            {
+                if (rdoRegular.Checked)
+                    return cboRegularMasks.SelectedItem as AttributeFieldMask;
+                else
+                    return cboDirMasks.SelectedItem as AttributeFieldMask;
+            }
+        }
 
         public frmBudgetSegProperties(DoDBase parentDoD)
         {
@@ -27,12 +39,40 @@ namespace GCDCore.UserInterface.BudgetSegregation
         {
             cmdOK.Text = Properties.Resources.CreateButtonText;
             txtOutputFolder.Text = ProjectManager.Project.GetRelativePath(InitialDoD.BudgetSegPath().FullName);
-            cboMasks.DataSource = new BindingList<GCDCore.Project.Masks.Mask>(ProjectManager.Project.Masks.Where(x => x is GCDCore.Project.Masks.AttributeFieldMask).ToList<GCDCore.Project.Masks.Mask>());
-            if (cboMasks.Items.Count > 0)
-                cboMasks.SelectedIndex = 0;
 
-            // Default the focus to the mask.
-            cboMasks.Select();
+            cboRegularMasks.DataSource = new BindingList<Mask>(ProjectManager.Project.Masks.Where(x => x is RegularMask).ToList());
+            if (cboRegularMasks.Items.Count > 0)
+            {
+                cboRegularMasks.SelectedIndex = 0;
+                cboRegularMasks.Select();
+            }
+            else
+                rdoRegular.Enabled = false;
+
+            cboDirMasks.DataSource = new BindingList<Mask>(ProjectManager.Project.Masks.Where(x => x is DirectionalMask).ToList());
+            if (cboDirMasks.Items.Count > 0)
+            {
+                cboDirMasks.SelectedIndex = 0;
+                if (cboRegularMasks.Items.Count < 1)
+                {
+                    rdoDirectional.Checked = true;
+                    cboDirMasks.Select();
+                }
+            }
+            else
+            {
+                rdoDirectional.Enabled = false;
+            }
+
+            // Ensure the appropriate controls are checked
+            MaskTypeChanged(sender, e);
+        }
+
+        private void MaskTypeChanged(object sender, EventArgs e)
+        {
+            cboRegularMasks.Enabled = rdoRegular.Checked;
+            cboDirMasks.Enabled = rdoDirectional.Checked;
+            cboMasks_SelectedIndexChanged(sender, e);
         }
 
         private void cmdOK_Click(Object sender, EventArgs e)
@@ -46,7 +86,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
             try
             {
                 Cursor.Current = Cursors.WaitCursor;
-                GCDCore.Project.Masks.AttributeFieldMask mask = cboMasks.SelectedItem as GCDCore.Project.Masks.AttributeFieldMask;
+                AttributeFieldMask mask = SelectedMask;
 
                 System.IO.DirectoryInfo bsFolder = ProjectManager.Project.GetAbsoluteDir(txtOutputFolder.Text);
                 Engines.BudgetSegregationEngine bsEngine = new Engines.BudgetSegregationEngine();
@@ -86,10 +126,10 @@ namespace GCDCore.UserInterface.BudgetSegregation
                 }
             }
 
-            if (cboMasks.SelectedItem == null)
+            if (SelectedMask == null)
             {
                 MessageBox.Show("Please choose a mask on which you wish to base this budget segregation.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                cboMasks.Select();
+                cboRegularMasks.Select();
                 return false;
             }
 
@@ -103,7 +143,12 @@ namespace GCDCore.UserInterface.BudgetSegregation
 
         private void cboMasks_SelectedIndexChanged(object sender, EventArgs e)
         {
-            txtName.Text = GetUniqueName(cboMasks.Text);
+            string maskName = string.Empty;
+            AttributeFieldMask mask = SelectedMask;
+            if (mask != null)
+                maskName = mask.Name;
+            
+            txtName.Text = GetUniqueName(maskName);
         }
 
         private string GetUniqueName(string maskName)
