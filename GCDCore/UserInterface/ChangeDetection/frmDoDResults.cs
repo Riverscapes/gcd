@@ -159,6 +159,12 @@ namespace GCDCore.UserInterface.ChangeDetection
             if (string.Compare(DoD.Name, txtDoDName.Text, false) != 0)
             {
                 DoD.Name = txtDoDName.Text;
+
+                // The name of the DoD is also used as part of the name of the DoD rasters
+                DoD.ThrDoD.Name = DoD.Name + " - Thresholded";
+                DoD.RawDoD.Name = DoD.Name + " - Raw";
+                DoD.ThrErr.Name = DoD.Name + " - Thresholded Error";
+
                 ProjectManager.Project.Save();
             }
         }
