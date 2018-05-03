@@ -71,6 +71,18 @@ namespace GCDCore.UserInterface.UtilityForms
                 {
                     dlgSave.FileName = string.Format("{0}.png", naru.os.File.RemoveDangerousCharacters(DefaultFileName));
                 }
+                
+                try
+                {
+                    // Attempt to make the proposed file name unique
+                    FileInfo uniqueName = naru.os.File.GetNewSafeName(dlgSave.InitialDirectory, System.IO.Path.GetFileNameWithoutExtension(dlgSave.FileName), Path.GetExtension(dlgSave.FileName));
+                    dlgSave.FileName = Path.GetFileNameWithoutExtension(uniqueName.FullName);
+
+                }
+                catch (Exception ex)
+                {
+                    // Do Nothing
+                }
 
                 if (dlgSave.ShowDialog() == DialogResult.OK)
                 {
