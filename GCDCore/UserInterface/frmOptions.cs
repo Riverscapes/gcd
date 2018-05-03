@@ -250,5 +250,15 @@ namespace GCDCore.UserInterface.Options
         {
             OnlineHelp.Show(Name);
         }
+
+        private void cmdResetColours_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Do you want to reset colors used for surface raising and lowering in GCD graphs to the default values?",
+                "Reset Colors To Defaults", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+            {
+                picErosion.BackColor = Color.FromArgb(192, 0, 0);
+                picDeposition.BackColor = Color.FromArgb(27, 63, 139);
+            }
+        }
     }
 }

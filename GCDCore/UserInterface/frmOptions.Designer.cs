@@ -80,6 +80,7 @@ namespace GCDCore.UserInterface.Options
             this.ttpTooltip = new System.Windows.Forms.ToolTip(this.components);
             this.frmColourPicker = new System.Windows.Forms.ColorDialog();
             this.frmFont = new System.Windows.Forms.FontDialog();
+            this.cmdResetColours = new System.Windows.Forms.Button();
             this.TabControl1.SuspendLayout();
             this.TabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdSurveyTypes)).BeginInit();
@@ -102,7 +103,7 @@ namespace GCDCore.UserInterface.Options
             // btnHelp
             // 
             this.btnHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnHelp.Location = new System.Drawing.Point(13, 328);
+            this.btnHelp.Location = new System.Drawing.Point(13, 263);
             this.btnHelp.Name = "btnHelp";
             this.btnHelp.Size = new System.Drawing.Size(75, 23);
             this.btnHelp.TabIndex = 2;
@@ -113,7 +114,7 @@ namespace GCDCore.UserInterface.Options
             // btnClose
             // 
             this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClose.Location = new System.Drawing.Point(446, 328);
+            this.btnClose.Location = new System.Drawing.Point(446, 263);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
             this.btnClose.TabIndex = 1;
@@ -133,7 +134,7 @@ namespace GCDCore.UserInterface.Options
             this.TabControl1.Location = new System.Drawing.Point(13, 13);
             this.TabControl1.Name = "TabControl1";
             this.TabControl1.SelectedIndex = 0;
-            this.TabControl1.Size = new System.Drawing.Size(508, 309);
+            this.TabControl1.Size = new System.Drawing.Size(508, 244);
             this.TabControl1.TabIndex = 0;
             // 
             // TabPage2
@@ -142,7 +143,7 @@ namespace GCDCore.UserInterface.Options
             this.TabPage2.Location = new System.Drawing.Point(4, 22);
             this.TabPage2.Name = "TabPage2";
             this.TabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage2.Size = new System.Drawing.Size(500, 283);
+            this.TabPage2.Size = new System.Drawing.Size(500, 218);
             this.TabPage2.TabIndex = 1;
             this.TabPage2.Text = "Survey Types";
             this.TabPage2.UseVisualStyleBackColor = true;
@@ -157,7 +158,7 @@ namespace GCDCore.UserInterface.Options
             this.grdSurveyTypes.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grdSurveyTypes.Location = new System.Drawing.Point(3, 3);
             this.grdSurveyTypes.Name = "grdSurveyTypes";
-            this.grdSurveyTypes.Size = new System.Drawing.Size(494, 277);
+            this.grdSurveyTypes.Size = new System.Drawing.Size(494, 212);
             this.grdSurveyTypes.TabIndex = 0;
             // 
             // colSurveyType
@@ -183,7 +184,7 @@ namespace GCDCore.UserInterface.Options
             this.TabPage3.Location = new System.Drawing.Point(4, 22);
             this.TabPage3.Name = "TabPage3";
             this.TabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage3.Size = new System.Drawing.Size(500, 283);
+            this.TabPage3.Size = new System.Drawing.Size(500, 218);
             this.TabPage3.TabIndex = 2;
             this.TabPage3.Text = "Symbology";
             this.TabPage3.UseVisualStyleBackColor = true;
@@ -378,7 +379,7 @@ namespace GCDCore.UserInterface.Options
             this.TabPage4.Location = new System.Drawing.Point(4, 22);
             this.TabPage4.Name = "TabPage4";
             this.TabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage4.Size = new System.Drawing.Size(500, 283);
+            this.TabPage4.Size = new System.Drawing.Size(500, 218);
             this.TabPage4.TabIndex = 3;
             this.TabPage4.Text = "Graphs";
             this.TabPage4.UseVisualStyleBackColor = true;
@@ -387,7 +388,7 @@ namespace GCDCore.UserInterface.Options
             // 
             this.groupBox3.Controls.Add(this.cmdFont);
             this.groupBox3.Controls.Add(this.txtFont);
-            this.groupBox3.Location = new System.Drawing.Point(6, 176);
+            this.groupBox3.Location = new System.Drawing.Point(6, 154);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(479, 51);
             this.groupBox3.TabIndex = 6;
@@ -415,13 +416,14 @@ namespace GCDCore.UserInterface.Options
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.cmdResetColours);
             this.groupBox2.Controls.Add(this.picDeposition);
             this.groupBox2.Controls.Add(this.picErosion);
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Location = new System.Drawing.Point(6, 90);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(479, 80);
+            this.groupBox2.Size = new System.Drawing.Size(479, 58);
             this.groupBox2.TabIndex = 5;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Colors";
@@ -429,9 +431,9 @@ namespace GCDCore.UserInterface.Options
             // picDeposition
             // 
             this.picDeposition.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.picDeposition.Location = new System.Drawing.Point(96, 49);
+            this.picDeposition.Location = new System.Drawing.Point(296, 23);
             this.picDeposition.Name = "picDeposition";
-            this.picDeposition.Size = new System.Drawing.Size(70, 23);
+            this.picDeposition.Size = new System.Drawing.Size(146, 23);
             this.picDeposition.TabIndex = 3;
             this.picDeposition.TabStop = false;
             this.picDeposition.Click += new System.EventHandler(this.picBox_Click);
@@ -441,7 +443,7 @@ namespace GCDCore.UserInterface.Options
             this.picErosion.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.picErosion.Location = new System.Drawing.Point(96, 23);
             this.picErosion.Name = "picErosion";
-            this.picErosion.Size = new System.Drawing.Size(70, 23);
+            this.picErosion.Size = new System.Drawing.Size(146, 23);
             this.picErosion.TabIndex = 2;
             this.picErosion.TabStop = false;
             this.picErosion.Click += new System.EventHandler(this.picBox_Click);
@@ -449,7 +451,7 @@ namespace GCDCore.UserInterface.Options
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(49, 54);
+            this.label2.Location = new System.Drawing.Point(250, 28);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(42, 13);
             this.label2.TabIndex = 1;
@@ -536,7 +538,7 @@ namespace GCDCore.UserInterface.Options
             this.TabPage5.Location = new System.Drawing.Point(4, 22);
             this.TabPage5.Name = "TabPage5";
             this.TabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage5.Size = new System.Drawing.Size(500, 283);
+            this.TabPage5.Size = new System.Drawing.Size(500, 218);
             this.TabPage5.TabIndex = 4;
             this.TabPage5.Text = "Pyramids";
             this.TabPage5.UseVisualStyleBackColor = true;
@@ -550,7 +552,7 @@ namespace GCDCore.UserInterface.Options
             this.lstPyramids.FormattingEnabled = true;
             this.lstPyramids.Location = new System.Drawing.Point(15, 38);
             this.lstPyramids.Name = "lstPyramids";
-            this.lstPyramids.Size = new System.Drawing.Size(467, 229);
+            this.lstPyramids.Size = new System.Drawing.Size(467, 169);
             this.lstPyramids.TabIndex = 1;
             // 
             // lnkPyramidsHelp
@@ -571,11 +573,22 @@ namespace GCDCore.UserInterface.Options
             this.SurveyTypesBindingSource.AllowNew = true;
             this.SurveyTypesBindingSource.DataMember = "SurveyTypes";
             // 
+            // cmdResetColours
+            // 
+            this.cmdResetColours.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmdResetColours.Image = global::GCDCore.Properties.Resources.refresh;
+            this.cmdResetColours.Location = new System.Drawing.Point(448, 23);
+            this.cmdResetColours.Name = "cmdResetColours";
+            this.cmdResetColours.Size = new System.Drawing.Size(23, 23);
+            this.cmdResetColours.TabIndex = 2;
+            this.cmdResetColours.UseVisualStyleBackColor = true;
+            this.cmdResetColours.Click += new System.EventHandler(this.cmdResetColours_Click);
+            // 
             // frmOptions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(533, 363);
+            this.ClientSize = new System.Drawing.Size(533, 298);
             this.Controls.Add(this.TabControl1);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnHelp);
@@ -656,5 +669,6 @@ namespace GCDCore.UserInterface.Options
         private System.Windows.Forms.Button cmdFont;
         private System.Windows.Forms.TextBox txtFont;
         private System.Windows.Forms.FontDialog frmFont;
+        private System.Windows.Forms.Button cmdResetColours;
     }
 }
