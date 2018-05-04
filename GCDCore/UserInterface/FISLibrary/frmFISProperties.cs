@@ -53,6 +53,8 @@ namespace GCDCore.UserInterface.FISLibrary
 
         private void frmFISProperties_Load(object sender, EventArgs e)
         {
+            InitializeToolTips();
+
             grdDatasets.AutoGenerateColumns = false;
             grdPublications.AutoGenerateColumns = false;
             grdInputs.AutoGenerateColumns = false;
@@ -82,6 +84,23 @@ namespace GCDCore.UserInterface.FISLibrary
 
             txtFISFile.ReadOnly = true;
             cmdSaveFISFile.Enabled = false;
+        }
+
+        private void InitializeToolTips()
+        {
+            tTip.SetToolTip(txtName, "The name used to represent this FIS rule file in the GCD user interface.");
+            tTip.SetToolTip(txtFilePath, "The file path where the FIS rule file resides.");
+            tTip.SetToolTip(grdInputs, "Listing of the FIS rule file inputs, their units, description and source (where the input data come from).");
+            tTip.SetToolTip(txtOutputName, "The name of the one and only FIS rule output dataset.");
+            tTip.SetToolTip(txtOutputUnits, "The units for the FIS rule file output.");
+            tTip.SetToolTip(txtDescription, "Brief description of the FIS rule file output.");
+            tTip.SetToolTip(cmdEditFISFile, "Edit the FIS rule file contents text. Only user FIS rule files are editable.");
+            tTip.SetToolTip(cmdSaveFISFile, "Save edits to the FIS rule file back to the original FIS rule file path.");
+            tTip.SetToolTip(txtFISFile, "FIS rule file contents. Click edit to edit user FIS rule files only.");
+            tTip.SetToolTip(grdPublications, "List of citations and corresponding URLs if the FIS was part of an official publication.");
+            tTip.SetToolTip(grdDatasets, "List of publicly available datasets and the corresponding URLs that demonstrat the FIS rule file in use.");
+            tTip.SetToolTip(grdMetaData, "List of key value pairs of metadata attached to the FIS rule file.");
+            tTip.SetToolTip(txtDescription, "General remarks describing the FIS rule file.");
         }
 
         private bool ValidateForm()

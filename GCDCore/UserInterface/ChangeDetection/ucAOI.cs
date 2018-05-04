@@ -56,6 +56,8 @@ namespace GCDCore.UserInterface.ChangeDetection
             if (ProjectManager.Project == null)
                 return;
 
+            tTip.SetToolTip(cboAOI, "The area of interest used for the change detection. Choosing the intersection of the surfaces applies no area of interest.");
+
             // Add all the AOIs to the dropdown
             cboAOI.Items.Add(AOIMask.SurfaceDataExtentIntersection);
             ProjectManager.Project.Masks.Where(x => x is AOIMask).ToList<Mask>().ForEach(x => cboAOI.Items.Add(x));

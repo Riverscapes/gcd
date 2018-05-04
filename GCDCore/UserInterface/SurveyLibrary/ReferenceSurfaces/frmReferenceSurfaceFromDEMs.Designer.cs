@@ -47,6 +47,7 @@
             this.selectNoneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label3 = new System.Windows.Forms.Label();
             this.cboMethod = new System.Windows.Forms.ComboBox();
+            this.tTip = new System.Windows.Forms.ToolTip(this.components);
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdData)).BeginInit();
             this.cmsList.SuspendLayout();
@@ -271,5 +272,6 @@
         private System.Windows.Forms.DataGridViewCheckBoxColumn colInclude;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDEM;
         private System.Windows.Forms.DataGridViewComboBoxColumn colError;
+        private System.Windows.Forms.ToolTip tTip;
     }
 }

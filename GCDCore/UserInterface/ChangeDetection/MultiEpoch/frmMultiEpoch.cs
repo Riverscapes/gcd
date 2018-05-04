@@ -47,6 +47,8 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
         /// <param name="e"></param>
         private void frmInterComp_Load(object sender, EventArgs e)
         {
+            InitializeToolTips();
+
             //setup grids
             grdDEMs.AutoGenerateColumns = false;
             grdEpochs.AutoGenerateColumns = false;
@@ -77,6 +79,17 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
             //update the list of epochs
             UpdateEpochQueue();
 
+        }
+
+        private void InitializeToolTips()
+        {
+            tTip.SetToolTip(grdDEMs, "Chronological list of project DEM Surveys from newest to oldest. Use the arrow keys to the right to adjust the order. Check the box beside each DEM Survey to include it in the batch.");
+            tTip.SetToolTip(cmdMoveUp, "Move the selected DEM Survey up in the chronological order.");
+            tTip.SetToolTip(cmdMoveDown, "Move the selected DEM Survey down in the chronological order.");
+            tTip.SetToolTip(chkNewest, "Include pairs consisting of the newest DEM survey minus all other DEM Surveys.");
+            tTip.SetToolTip(chkEarliest, "Include pairs consisting of all DEM Surveys minus the earliest DEM Survey.");
+            tTip.SetToolTip(chkPrevious, "Include ever DEM Survey minus the preceding DEM Survey in the chronological order.");
+            tTip.SetToolTip(grdEpochs, "The list of DEM pairs that will be converted into change detections. Check the box beside each pair to include it in the batch run.");
         }
 
         /// <summary>

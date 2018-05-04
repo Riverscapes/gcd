@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.GroupBox3 = new System.Windows.Forms.GroupBox();
             this.valMinLodThreshold = new System.Windows.Forms.NumericUpDown();
             this.lblMinLodThreshold = new System.Windows.Forms.Label();
@@ -38,6 +39,7 @@
             this.rdoProbabilistic = new System.Windows.Forms.RadioButton();
             this.rdoPropagated = new System.Windows.Forms.RadioButton();
             this.rdoMinLOD = new System.Windows.Forms.RadioButton();
+            this.tTip = new System.Windows.Forms.ToolTip(this.components);
             this.GroupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.valMinLodThreshold)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.valConfidence)).BeginInit();
@@ -217,5 +219,6 @@
         internal System.Windows.Forms.RadioButton rdoProbabilistic;
         internal System.Windows.Forms.RadioButton rdoPropagated;
         internal System.Windows.Forms.RadioButton rdoMinLOD;
+        private System.Windows.Forms.ToolTip tTip;
     }
 }

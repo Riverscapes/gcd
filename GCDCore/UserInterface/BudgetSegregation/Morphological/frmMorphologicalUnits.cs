@@ -20,6 +20,10 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
 
         private void frmMorphologicalUnits_Load(object sender, EventArgs e)
         {
+            tTip.SetToolTip(cboVolume, "Display volume units used for tables and charts. Does not affect the underlying units of the data stored in the project.");
+            tTip.SetToolTip(cboMass, "Display units of mass used for tables and charts. Does not affect the underlying units of the data stored in the project.");
+            tTip.SetToolTip(cboDuration, "Display duration units used for tables and charts. Does not affect the underlying units of the data stored in the project.");
+            
             cboVolume.DataSource = GCDUnits.GCDVolumeUnits();
             cboMass.DataSource = GCDUnits.GCDMassUnits();
             cboDuration.DataSource = GCDUnits.GCDDurationUnits();

@@ -26,6 +26,7 @@ namespace GCDCore.UserInterface.ChangeDetection
         [System.Diagnostics.DebuggerStepThrough()]
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmDoDResults));
             this.cmdOK = new System.Windows.Forms.Button();
             this.txtDoDName = new System.Windows.Forms.TextBox();
@@ -44,6 +45,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.cmdProperties = new System.Windows.Forms.Button();
             this.cmdAddToMap = new System.Windows.Forms.Button();
             this.cmdCancel = new System.Windows.Forms.Button();
+            this.tTip = new System.Windows.Forms.ToolTip(this.components);
             this.TabPage3.SuspendLayout();
             this.tbpElevationChangeDistribution.SuspendLayout();
             this.TableLayoutPanel1.SuspendLayout();
@@ -285,5 +287,6 @@ namespace GCDCore.UserInterface.ChangeDetection
         private System.Windows.Forms.Button cmdAddToMap;
         private ucDoDPropertiesGrid ucProperties;
         private System.Windows.Forms.Button cmdCancel;
+        private System.Windows.Forms.ToolTip tTip;
     }
 }

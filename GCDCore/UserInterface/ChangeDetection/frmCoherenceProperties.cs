@@ -19,6 +19,10 @@ namespace GCDCore.UserInterface.ChangeDetection
 
         private void frmCoherenceProperties_Load(System.Object sender, System.EventArgs e)
         {
+            tTip.SetToolTip(cboFilterSize, "The size in pixels of the moving window (kernel) that will be passed over the raster.");
+            tTip.SetToolTip(numLess, "The percentage of pixels in the moving window at which the probability of change starts to be non-zero.");
+            tTip.SetToolTip(numGreater, "The percentage of pixels in the moving window at which the probability of change becomes 1.");
+
             // The filter sizes display as the diameter of the kernel but store the radius
             foreach (long kernelSize in new List<long> { 3, 5, 7, 9, 11, 13, 15 })
             {

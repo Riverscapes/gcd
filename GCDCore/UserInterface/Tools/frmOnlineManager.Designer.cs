@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.btnUpload = new System.Windows.Forms.Button();
             this.btnDelete = new naru.ui.MenuButton();
             this.prgUpload = new System.Windows.Forms.ProgressBar();
@@ -38,6 +39,7 @@
             this.lblProg = new System.Windows.Forms.Label();
             this.txtProg = new System.Windows.Forms.TextBox();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.tTip = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // btnUpload
@@ -161,6 +163,7 @@
             this.ShowIcon = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "Online Project";
+            this.Load += new System.EventHandler(this.frmOnlineManager_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -178,5 +181,6 @@
         private System.Windows.Forms.Label lblProg;
         private System.Windows.Forms.TextBox txtProg;
         private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.ToolTip tTip;
     }
 }

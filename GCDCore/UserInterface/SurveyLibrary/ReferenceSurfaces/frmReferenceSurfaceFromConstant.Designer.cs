@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmReferenceSurfaceFromConstant));
             this.txtPath = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -52,6 +53,7 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.valError = new System.Windows.Forms.NumericUpDown();
             this.lblError = new System.Windows.Forms.Label();
+            this.tTip = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.valSingle)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.valUpper)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.valLower)).BeginInit();
@@ -412,5 +414,6 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.NumericUpDown valError;
         private System.Windows.Forms.Label lblError;
+        private System.Windows.Forms.ToolTip tTip;
     }
 }

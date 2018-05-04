@@ -64,6 +64,7 @@ namespace GCDCore.UserInterface.Options
             this.cmdFont = new System.Windows.Forms.Button();
             this.txtFont = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.cmdResetColours = new System.Windows.Forms.Button();
             this.picDeposition = new System.Windows.Forms.PictureBox();
             this.picErosion = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -77,10 +78,9 @@ namespace GCDCore.UserInterface.Options
             this.lstPyramids = new System.Windows.Forms.CheckedListBox();
             this.lnkPyramidsHelp = new System.Windows.Forms.LinkLabel();
             this.SurveyTypesBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.ttpTooltip = new System.Windows.Forms.ToolTip(this.components);
+            this.tTip = new System.Windows.Forms.ToolTip(this.components);
             this.frmColourPicker = new System.Windows.Forms.ColorDialog();
             this.frmFont = new System.Windows.Forms.FontDialog();
-            this.cmdResetColours = new System.Windows.Forms.Button();
             this.TabControl1.SuspendLayout();
             this.TabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdSurveyTypes)).BeginInit();
@@ -428,6 +428,17 @@ namespace GCDCore.UserInterface.Options
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Colors";
             // 
+            // cmdResetColours
+            // 
+            this.cmdResetColours.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmdResetColours.Image = global::GCDCore.Properties.Resources.refresh;
+            this.cmdResetColours.Location = new System.Drawing.Point(448, 23);
+            this.cmdResetColours.Name = "cmdResetColours";
+            this.cmdResetColours.Size = new System.Drawing.Size(23, 23);
+            this.cmdResetColours.TabIndex = 2;
+            this.cmdResetColours.UseVisualStyleBackColor = true;
+            this.cmdResetColours.Click += new System.EventHandler(this.cmdResetColours_Click);
+            // 
             // picDeposition
             // 
             this.picDeposition.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -573,17 +584,6 @@ namespace GCDCore.UserInterface.Options
             this.SurveyTypesBindingSource.AllowNew = true;
             this.SurveyTypesBindingSource.DataMember = "SurveyTypes";
             // 
-            // cmdResetColours
-            // 
-            this.cmdResetColours.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmdResetColours.Image = global::GCDCore.Properties.Resources.refresh;
-            this.cmdResetColours.Location = new System.Drawing.Point(448, 23);
-            this.cmdResetColours.Name = "cmdResetColours";
-            this.cmdResetColours.Size = new System.Drawing.Size(23, 23);
-            this.cmdResetColours.TabIndex = 2;
-            this.cmdResetColours.UseVisualStyleBackColor = true;
-            this.cmdResetColours.Click += new System.EventHandler(this.cmdResetColours_Click);
-            // 
             // frmOptions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -631,7 +631,7 @@ namespace GCDCore.UserInterface.Options
 		internal System.Windows.Forms.TabControl TabControl1;
 		internal System.Windows.Forms.TabPage TabPage2;
 		internal System.Windows.Forms.TabPage TabPage3;
-		internal System.Windows.Forms.ToolTip ttpTooltip;
+		internal System.Windows.Forms.ToolTip tTip;
 		internal System.Windows.Forms.BindingSource SurveyTypesBindingSource;
 		internal System.Windows.Forms.TabPage TabPage4;
 		internal System.Windows.Forms.Label lblHeight;

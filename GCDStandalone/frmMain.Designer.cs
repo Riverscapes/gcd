@@ -50,6 +50,10 @@
             this.helpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.onlineGCDHelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gCDWebSiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.topographicAnalysisToolkitTATToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.crossSectionViewerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.aboutGCDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tssProjectPath = new System.Windows.Forms.ToolStripStatusLabel();
@@ -61,10 +65,6 @@
             this.ucProjectExplorer1 = new GCDCore.UserInterface.Project.ucProjectExplorer();
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.topographicAnalysisToolkitTATToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.crossSectionViewerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -254,6 +254,32 @@
             this.gCDWebSiteToolStripMenuItem.Text = "GCD Web Site";
             this.gCDWebSiteToolStripMenuItem.Click += new System.EventHandler(this.gCDWebSiteToolStripMenuItem_Click);
             // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(254, 6);
+            // 
+            // topographicAnalysisToolkitTATToolStripMenuItem
+            // 
+            this.topographicAnalysisToolkitTATToolStripMenuItem.Image = global::GCDStandalone.Properties.Resources.Help;
+            this.topographicAnalysisToolkitTATToolStripMenuItem.Name = "topographicAnalysisToolkitTATToolStripMenuItem";
+            this.topographicAnalysisToolkitTATToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
+            this.topographicAnalysisToolkitTATToolStripMenuItem.Text = "Topographic Analysis Toolkit (TAT)";
+            this.topographicAnalysisToolkitTATToolStripMenuItem.Click += new System.EventHandler(this.topographicAnalysisToolkitTATToolStripMenuItem_Click);
+            // 
+            // crossSectionViewerToolStripMenuItem
+            // 
+            this.crossSectionViewerToolStripMenuItem.Image = global::GCDStandalone.Properties.Resources.Help;
+            this.crossSectionViewerToolStripMenuItem.Name = "crossSectionViewerToolStripMenuItem";
+            this.crossSectionViewerToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
+            this.crossSectionViewerToolStripMenuItem.Text = "Cross Section Viewer";
+            this.crossSectionViewerToolStripMenuItem.Click += new System.EventHandler(this.crossSectionViewerToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(254, 6);
+            // 
             // aboutGCDToolStripMenuItem
             // 
             this.aboutGCDToolStripMenuItem.Image = global::GCDStandalone.Properties.Resources.GCD;
@@ -378,32 +404,6 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 417F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(907, 392);
             this.tableLayoutPanel1.TabIndex = 5;
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(254, 6);
-            // 
-            // topographicAnalysisToolkitTATToolStripMenuItem
-            // 
-            this.topographicAnalysisToolkitTATToolStripMenuItem.Image = global::GCDStandalone.Properties.Resources.Help;
-            this.topographicAnalysisToolkitTATToolStripMenuItem.Name = "topographicAnalysisToolkitTATToolStripMenuItem";
-            this.topographicAnalysisToolkitTATToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
-            this.topographicAnalysisToolkitTATToolStripMenuItem.Text = "Topographic Analysis Toolkit (TAT)";
-            this.topographicAnalysisToolkitTATToolStripMenuItem.Click += new System.EventHandler(this.topographicAnalysisToolkitTATToolStripMenuItem_Click);
-            // 
-            // crossSectionViewerToolStripMenuItem
-            // 
-            this.crossSectionViewerToolStripMenuItem.Image = global::GCDStandalone.Properties.Resources.Help;
-            this.crossSectionViewerToolStripMenuItem.Name = "crossSectionViewerToolStripMenuItem";
-            this.crossSectionViewerToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
-            this.crossSectionViewerToolStripMenuItem.Text = "Cross Section Viewer";
-            this.crossSectionViewerToolStripMenuItem.Click += new System.EventHandler(this.crossSectionViewerToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator4
-            // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(254, 6);
             // 
             // frmMain
             // 

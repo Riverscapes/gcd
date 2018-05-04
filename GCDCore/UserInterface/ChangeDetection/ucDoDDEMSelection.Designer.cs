@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.GroupBox4 = new System.Windows.Forms.GroupBox();
             this.cboOldSurface = new System.Windows.Forms.ComboBox();
             this.cboOldError = new System.Windows.Forms.ComboBox();
@@ -41,6 +42,7 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.pnlAOI = new System.Windows.Forms.Panel();
             this.ucAOI1 = new GCDCore.UserInterface.ChangeDetection.ucAOI();
+            this.tTip = new System.Windows.Forms.ToolTip(this.components);
             this.GroupBox4.SuspendLayout();
             this.GroupBox1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -225,5 +227,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Panel pnlAOI;
         private ucAOI ucAOI1;
+        private System.Windows.Forms.ToolTip tTip;
     }
 }

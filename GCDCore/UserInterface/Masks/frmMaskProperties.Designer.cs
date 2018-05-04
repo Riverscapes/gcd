@@ -53,6 +53,7 @@
             this.selectNoneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.txtPath = new System.Windows.Forms.TextBox();
             this.lblPath = new System.Windows.Forms.Label();
+            this.tTip = new System.Windows.Forms.ToolTip(this.components);
             this.grpFeatureClass.SuspendLayout();
             this.grpFieldValues.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdData)).BeginInit();
@@ -348,5 +349,6 @@
         private System.Windows.Forms.DataGridViewCheckBoxColumn colInclude;
         private System.Windows.Forms.DataGridViewTextBoxColumn colFieldValue;
         private System.Windows.Forms.DataGridViewTextBoxColumn colLabel;
+        private System.Windows.Forms.ToolTip tTip;
     }
 }

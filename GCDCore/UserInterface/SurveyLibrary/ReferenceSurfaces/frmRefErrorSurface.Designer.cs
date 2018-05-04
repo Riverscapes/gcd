@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmRefErrorSurface));
             this.cmdCancel = new System.Windows.Forms.Button();
             this.cmdOK = new System.Windows.Forms.Button();
@@ -46,6 +47,7 @@
             this.valLower = new System.Windows.Forms.NumericUpDown();
             this.valUpper = new System.Windows.Forms.NumericUpDown();
             this.lblLower = new System.Windows.Forms.Label();
+            this.tTip = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.valSingle)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.valIncrement)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.valLower)).BeginInit();
@@ -312,5 +314,6 @@
         private System.Windows.Forms.NumericUpDown valLower;
         private System.Windows.Forms.NumericUpDown valUpper;
         private System.Windows.Forms.Label lblLower;
+        private System.Windows.Forms.ToolTip tTip;
     }
 }

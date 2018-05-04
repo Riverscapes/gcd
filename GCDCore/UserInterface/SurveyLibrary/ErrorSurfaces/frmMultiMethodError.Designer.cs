@@ -44,6 +44,7 @@
             this.cmsEditGrid = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.editErrorPropertyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.chkDefault = new System.Windows.Forms.CheckBox();
+            this.tTip = new System.Windows.Forms.ToolTip(this.components);
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdRegions)).BeginInit();
             this.cmsEditGrid.SuspendLayout();
@@ -249,5 +250,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colErrProperty;
         private System.Windows.Forms.ContextMenuStrip cmsEditGrid;
         private System.Windows.Forms.ToolStripMenuItem editErrorPropertyToolStripMenuItem;
+        private System.Windows.Forms.ToolTip tTip;
     }
 }

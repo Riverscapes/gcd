@@ -20,6 +20,7 @@ namespace GCDCore.UserInterface.ChangeDetection
         [System.Diagnostics.DebuggerStepThrough()]
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmDoDProperties));
             this.Label5 = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
@@ -30,6 +31,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.Label2 = new System.Windows.Forms.Label();
             this.ucThresholding = new GCDCore.UserInterface.ChangeDetection.ucThresholding();
             this.ucDEMs = new GCDCore.UserInterface.ChangeDetection.ucDoDDEMSelection();
+            this.tTip = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // Label5
@@ -155,5 +157,7 @@ namespace GCDCore.UserInterface.ChangeDetection
         internal System.Windows.Forms.Label Label2;
         private ucDoDDEMSelection ucDEMs;
         private ucThresholding ucThresholding;
+        private System.Windows.Forms.ToolTip tTip;
+        private System.ComponentModel.IContainer components;
     }
 }

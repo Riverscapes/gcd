@@ -48,6 +48,12 @@ namespace GCDCore.UserInterface.BudgetSegregation
         {
             Cursor = Cursors.WaitCursor;
 
+            tTip.SetToolTip(txtName, "The unique name of this budget segregation.");
+            tTip.SetToolTip(cboBudgetClass,"The list of classes contained within this budget segregation. The tabular and graphical results for the selected class are shown below.");
+            tTip.SetToolTip(cboRaw, "Determines what the unthresholded, raw results represent in the graphical results by category tab.");
+            tTip.SetToolTip(cmdBrowse, "Explore the output folder for this budget segregation.");
+            tTip.SetToolTip(cmdSettings, "Change the display settings for how the tabular and graphical results are displayed.");
+
             txtName.Text = BudgetSeg.Name;
             cboBudgetClass.DataSource = BudgetSeg.FilteredClasses;
 

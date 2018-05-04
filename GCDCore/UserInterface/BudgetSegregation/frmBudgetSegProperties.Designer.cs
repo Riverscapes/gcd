@@ -25,6 +25,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
         //Do not modify it using the code editor.
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmBudgetSegProperties));
             this.Label1 = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
@@ -35,9 +36,10 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.cmdOK = new System.Windows.Forms.Button();
             this.cmdHelp = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.rdoRegular = new System.Windows.Forms.RadioButton();
             this.rdoDirectional = new System.Windows.Forms.RadioButton();
             this.cboDirMasks = new System.Windows.Forms.ComboBox();
+            this.rdoRegular = new System.Windows.Forms.RadioButton();
+            this.tTip = new System.Windows.Forms.ToolTip(this.components);
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -134,18 +136,6 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Mask";
             // 
-            // rdoRegular
-            // 
-            this.rdoRegular.AutoSize = true;
-            this.rdoRegular.Checked = true;
-            this.rdoRegular.Location = new System.Drawing.Point(10, 21);
-            this.rdoRegular.Name = "rdoRegular";
-            this.rdoRegular.Size = new System.Drawing.Size(95, 17);
-            this.rdoRegular.TabIndex = 0;
-            this.rdoRegular.Text = "Regular masks";
-            this.rdoRegular.UseVisualStyleBackColor = true;
-            this.rdoRegular.CheckedChanged += new System.EventHandler(this.MaskTypeChanged);
-            // 
             // rdoDirectional
             // 
             this.rdoDirectional.AutoSize = true;
@@ -165,6 +155,19 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.cboDirMasks.Name = "cboDirMasks";
             this.cboDirMasks.Size = new System.Drawing.Size(361, 21);
             this.cboDirMasks.TabIndex = 3;
+            // 
+            // rdoRegular
+            // 
+            this.rdoRegular.AutoSize = true;
+            this.rdoRegular.Checked = true;
+            this.rdoRegular.Location = new System.Drawing.Point(10, 21);
+            this.rdoRegular.Name = "rdoRegular";
+            this.rdoRegular.Size = new System.Drawing.Size(95, 17);
+            this.rdoRegular.TabIndex = 0;
+            this.rdoRegular.TabStop = true;
+            this.rdoRegular.Text = "Regular masks";
+            this.rdoRegular.UseVisualStyleBackColor = true;
+            this.rdoRegular.CheckedChanged += new System.EventHandler(this.MaskTypeChanged);
             // 
             // frmBudgetSegProperties
             // 
@@ -206,5 +209,6 @@ namespace GCDCore.UserInterface.BudgetSegregation
         private System.Windows.Forms.RadioButton rdoDirectional;
         private System.Windows.Forms.ComboBox cboDirMasks;
         private System.Windows.Forms.RadioButton rdoRegular;
+        private System.Windows.Forms.ToolTip tTip;
     }
 }

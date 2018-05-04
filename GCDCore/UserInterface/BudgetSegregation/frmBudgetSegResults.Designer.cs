@@ -68,6 +68,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.cboRaw = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.cmdSettings = new System.Windows.Forms.Button();
+            this.tTip = new System.Windows.Forms.ToolTip(this.components);
             this.tabMain.SuspendLayout();
             this.TabPage1.SuspendLayout();
             this.TabPage2.SuspendLayout();
@@ -396,5 +397,6 @@ namespace GCDCore.UserInterface.BudgetSegregation
         private System.Windows.Forms.TabPage tabPage5;
         private System.Windows.Forms.DataVisualization.Charting.Chart chtPieCharts;
         internal System.Windows.Forms.Button cmdSettings;
+        private System.Windows.Forms.ToolTip tTip;
     }
 }

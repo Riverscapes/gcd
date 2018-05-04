@@ -33,7 +33,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
             this.btnHelp = new System.Windows.Forms.Button();
-            this.ttpToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.tTip = new System.Windows.Forms.ToolTip(this.components);
             this.GroupBox1 = new System.Windows.Forms.GroupBox();
             this.Label3 = new System.Windows.Forms.Label();
             this.cboNeighbourhood = new System.Windows.Forms.ComboBox();
@@ -232,7 +232,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
 		internal System.Windows.Forms.Button btnCancel;
         internal System.Windows.Forms.Button btnOK;
         internal System.Windows.Forms.Button btnHelp;
-		internal System.Windows.Forms.ToolTip ttpToolTip;
+		internal System.Windows.Forms.ToolTip tTip;
 		internal System.Windows.Forms.GroupBox GroupBox1;
 		internal System.Windows.Forms.Label Label3;
 		internal System.Windows.Forms.ComboBox cboNeighbourhood;

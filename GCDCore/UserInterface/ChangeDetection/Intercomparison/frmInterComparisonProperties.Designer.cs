@@ -42,6 +42,7 @@
             this.cmsDoDList = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.selectAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.selectNoneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tTip = new System.Windows.Forms.ToolTip(this.components);
             this.groupBox1.SuspendLayout();
             this.cmsDoDList.SuspendLayout();
             this.SuspendLayout();
@@ -209,5 +210,6 @@
         private System.Windows.Forms.ContextMenuStrip cmsDoDList;
         private System.Windows.Forms.ToolStripMenuItem selectAllToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem selectNoneToolStripMenuItem;
+        private System.Windows.Forms.ToolTip tTip;
     }
 }

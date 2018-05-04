@@ -29,6 +29,8 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
         private void frmRegionErrorProperty_Load(object sender, EventArgs e)
         {
             cmdOK.Text = Properties.Resources.UpdateButtonText;
+
+            tTip.SetToolTip(txtRegion, "The name of the mask region where this error configuration will be applied.");
         }
 
         private void cmdHelp_Click(object sender, EventArgs e)

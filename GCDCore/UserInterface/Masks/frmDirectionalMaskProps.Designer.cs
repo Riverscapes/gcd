@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmDirectionalMaskProps));
             this.cmdCancel = new System.Windows.Forms.Button();
             this.cmdOK = new System.Windows.Forms.Button();
@@ -48,6 +49,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtPath = new System.Windows.Forms.TextBox();
             this.lblPath = new System.Windows.Forms.Label();
+            this.tTip = new System.Windows.Forms.ToolTip(this.components);
             this.grpFeatureClass.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -316,5 +318,6 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox txtPath;
         private System.Windows.Forms.Label lblPath;
+        private System.Windows.Forms.ToolTip tTip;
     }
 }

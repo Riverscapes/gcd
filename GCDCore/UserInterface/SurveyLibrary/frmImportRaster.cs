@@ -191,6 +191,29 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
         private void SetupToolTips()
         {
+            tTip.SetToolTip(txtName, "The name used to refer to this GCD project item. It cannot be empty and must be unique among all items of the same type.");
+            tTip.SetToolTip(txtTop, "The top, northern most extent of the original raster. Non-divislbe values apear in red.");
+            tTip.SetToolTip(txtLeft, "The left, western most extent of the original raster. Non-divislbe values apear in red.");
+            tTip.SetToolTip(txtRight, "The right, eastern most extent of the original raster. Non-divislbe values apear in red.");
+            tTip.SetToolTip(txtBottom, "The bottom, southern most extent of the original raster. Non-divislbe values apear in red.");
+            tTip.SetToolTip(txtOrigRows, "The number of rows in the original raster.");
+            tTip.SetToolTip(txtOrigCols, "The number of columns in the original raster.");
+            tTip.SetToolTip(txtOrigWidth, "The width of the original raster shown in the linear units of the raster.");
+            tTip.SetToolTip(txtOrigHeight, "The height of the original raster shown in the linear units of the raster.");
+            tTip.SetToolTip(txtOrigCellSize, "The width of each cell in the original raster shown in the linear units of the raster");
+            tTip.SetToolTip(txtRasterPath, "The raster file path where the output raster will get generated.");
+            tTip.SetToolTip(cmdSave,"Browse to specify the output raster file path where the cleaned raster will get generated.");
+            tTip.SetToolTip(valTop, "The top, northern most extent of the output raster. It must be wholely divisible by the output cell resolution.");
+            tTip.SetToolTip(valLeft, "The left, western most extent of the output raster. It must be wholely divisible by the output cell resolution.");
+            tTip.SetToolTip(valRight, "The right, eastern most extent of the output raster. It must be wholely divisible by the output cell resolution.");
+            tTip.SetToolTip(valBottom, "The bottom, southern most extent of the output raster. It must be wholely divisible by the output cell resolution.");
+            tTip.SetToolTip(txtProjRows, "The number of rows in the output raster.");
+            tTip.SetToolTip(txtProjCols, "The number of columns in the output raster.");
+            tTip.SetToolTip(txtProjWidth, "The width of the output raster shown in the linear units of the raster.");
+            tTip.SetToolTip(txtProjHeight, "The height of the output raster shown in the linear units of the raster.");
+            tTip.SetToolTip(valCellSize, "The size of each cell in the output raster specified in the linear units of the raster.");
+            tTip.SetToolTip(valPrecision, "The number of decimal places to consider when rounding the cell size of the original raster.");
+            tTip.SetToolTip(cboMethod, "Method used to generate the output raster. If the original raster extent is not evenly divisible by the cell resolution then bilinear sampling must be used. If the original raster is divisible by the cell resolution then the raster can simply be copied to the output path.");
         }
 
         private void cmdOK_Click(System.Object sender, System.EventArgs e)

@@ -24,6 +24,10 @@ namespace GCDCore.UserInterface.ChangeDetection.Intercomparison
         private void frmInterComparisonProperties_Load(object sender, EventArgs e)
         {
             lstDoDs.DataSource = DoDs;
+
+            tTip.SetToolTip(txtName, "The name for this inter-comparison. The name cannot be empty and it must be unique among all inter-comparisons within the current GCD project.");
+            tTip.SetToolTip(txtPath, "The relative output path where the inter-comparison will get created.");
+            tTip.SetToolTip(lstDoDs, "Select which change detections should be included. Right click to quickly select all or none of the listed items.");
         }
 
         private void txtName_TextChanged(object sender, EventArgs e)

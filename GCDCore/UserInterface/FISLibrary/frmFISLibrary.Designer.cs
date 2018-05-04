@@ -33,11 +33,11 @@ namespace GCDCore.UserInterface.FISLibrary
             this.btnHelp = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
             this.grdFIS = new System.Windows.Forms.DataGridView();
-            this.ttpTooltip = new System.Windows.Forms.ToolTip(this.components);
-            this.btnFISRepo = new System.Windows.Forms.Button();
             this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colFilePath = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tTip = new System.Windows.Forms.ToolTip(this.components);
+            this.btnFISRepo = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.grdFIS)).BeginInit();
             this.SuspendLayout();
             // 
@@ -119,17 +119,6 @@ namespace GCDCore.UserInterface.FISLibrary
             this.grdFIS.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdFIS_CellContentDoubleClick);
             this.grdFIS.SelectionChanged += new System.EventHandler(this.UpdateControls);
             // 
-            // btnFISRepo
-            // 
-            this.btnFISRepo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnFISRepo.Location = new System.Drawing.Point(470, 11);
-            this.btnFISRepo.Name = "btnFISRepo";
-            this.btnFISRepo.Size = new System.Drawing.Size(150, 23);
-            this.btnFISRepo.TabIndex = 3;
-            this.btnFISRepo.Text = "Visit ET-AL FIS Repository";
-            this.btnFISRepo.UseVisualStyleBackColor = true;
-            this.btnFISRepo.Click += new System.EventHandler(this.btnFISRepo_Click);
-            // 
             // colName
             // 
             this.colName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
@@ -157,6 +146,17 @@ namespace GCDCore.UserInterface.FISLibrary
             this.colType.Name = "colType";
             this.colType.ReadOnly = true;
             this.colType.Width = 150;
+            // 
+            // btnFISRepo
+            // 
+            this.btnFISRepo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnFISRepo.Location = new System.Drawing.Point(470, 11);
+            this.btnFISRepo.Name = "btnFISRepo";
+            this.btnFISRepo.Size = new System.Drawing.Size(150, 23);
+            this.btnFISRepo.TabIndex = 3;
+            this.btnFISRepo.Text = "Visit ET-AL FIS Repository";
+            this.btnFISRepo.UseVisualStyleBackColor = true;
+            this.btnFISRepo.Click += new System.EventHandler(this.btnFISRepo_Click);
             // 
             // frmFISLibrary
             // 
@@ -186,7 +186,7 @@ namespace GCDCore.UserInterface.FISLibrary
         internal System.Windows.Forms.Button btnHelp;
 		internal System.Windows.Forms.Button btnClose;
 		internal System.Windows.Forms.DataGridView grdFIS;
-		internal System.Windows.Forms.ToolTip ttpTooltip;
+		internal System.Windows.Forms.ToolTip tTip;
         internal System.Windows.Forms.Button btnFISRepo;
         private System.Windows.Forms.DataGridViewTextBoxColumn colName;
         private System.Windows.Forms.DataGridViewTextBoxColumn colFilePath;

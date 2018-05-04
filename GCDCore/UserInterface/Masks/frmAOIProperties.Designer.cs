@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAOIProperties));
             this.cmdCancel = new System.Windows.Forms.Button();
             this.cmdOK = new System.Windows.Forms.Button();
@@ -39,6 +40,7 @@
             this.grpShapeFile = new System.Windows.Forms.GroupBox();
             this.label3 = new System.Windows.Forms.Label();
             this.ucPolygon = new GCDCore.UserInterface.UtilityForms.ucVectorInput();
+            this.tTip = new System.Windows.Forms.ToolTip(this.components);
             this.grpShapeFile.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -187,5 +189,6 @@
         private System.Windows.Forms.GroupBox grpShapeFile;
         private System.Windows.Forms.Label label3;
         private UtilityForms.ucVectorInput ucPolygon;
+        private System.Windows.Forms.ToolTip tTip;
     }
 }

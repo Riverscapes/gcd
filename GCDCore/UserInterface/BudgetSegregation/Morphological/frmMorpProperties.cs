@@ -30,6 +30,13 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
         private void frmMorpProperties_Load(object sender, EventArgs e)
         {
             cmdOK.Text = Properties.Resources.CreateButtonText;
+
+            tTip.SetToolTip(txtName, "The name of the morphological analysis. Cannot be empty and must be unique within the parent budget segregation.");
+            tTip.SetToolTip(txtPath, "The relative output folder within this GCD project where the morphological analysis will get created.");
+            tTip.SetToolTip(cboBS, "The budget segregation on which the morphological analysis will be based. This must be a budget segregation using a directional mask.");
+            tTip.SetToolTip(txtMask, "The directional mask used to generate the selected budget segregation.");
+            tTip.SetToolTip(txtDoD,"The change detection on which the selected budget segregation was produced.");
+            tTip.SetToolTip(txtUncertainty,"The uncertainty analysis used for the change detection on which the selected budget segregation was produced.");
         }
 
         private void cmdOK_Click(object sender, EventArgs e)

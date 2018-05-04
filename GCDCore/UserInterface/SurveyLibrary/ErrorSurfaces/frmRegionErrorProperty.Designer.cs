@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmRegionErrorProperty));
             this.label1 = new System.Windows.Forms.Label();
             this.txtRegion = new System.Windows.Forms.TextBox();
@@ -35,6 +36,7 @@
             this.cmdOK = new System.Windows.Forms.Button();
             this.cmdHelp = new System.Windows.Forms.Button();
             this.ucErrProp = new GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces.ucErrorSurfaceProperties();
+            this.tTip = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // label1
@@ -133,5 +135,6 @@
         private System.Windows.Forms.Button cmdOK;
         private System.Windows.Forms.Button cmdHelp;
         private ucErrorSurfaceProperties ucErrProp;
+        private System.Windows.Forms.ToolTip tTip;
     }
 }

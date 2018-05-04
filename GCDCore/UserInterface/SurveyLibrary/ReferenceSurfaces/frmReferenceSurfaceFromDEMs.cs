@@ -63,6 +63,11 @@ namespace GCDCore.UserInterface.SurveyLibrary.ReferenceSurfaces
             cboMethod.Items.Add(new naru.db.NamedObject((long)RasterOperators.MultiMathOpType.Minimum, "Minimum"));
             cboMethod.Items.Add(new naru.db.NamedObject((long)RasterOperators.MultiMathOpType.StandardDeviation, "Standard Deviation"));
             cboMethod.SelectedIndex = 0;
+
+            tTip.SetToolTip(txtName, "The name that defines this reference surface within this GCD project. It cannot be empty and must be unique among all reference surfaces within this project.");
+            tTip.SetToolTip(cboMethod, "The statistical method used to extract values from the selected DEM surveys.");
+            tTip.SetToolTip(txtPath, "The relative file path within this GCD project where this reference surface will be generated.");
+            tTip.SetToolTip(grdData, "Check the box beside each DEM survey that should be included in this calculation. Unchecked DEM surveys will be ignored.");
         }
 
         private void cmdOK_Click(object sender, EventArgs e)

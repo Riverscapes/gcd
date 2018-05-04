@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmSingleMethodError));
             this.cmdCancel = new System.Windows.Forms.Button();
             this.cmdOK = new System.Windows.Forms.Button();
@@ -35,6 +36,7 @@
             this.chkDefault = new System.Windows.Forms.CheckBox();
             this.ucErrProps = new GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces.ucErrorSurfaceProperties();
             this.ucName = new GCDCore.UserInterface.ucProjectItemName();
+            this.tTip = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // cmdCancel
@@ -133,5 +135,6 @@
         private ucProjectItemName ucName;
         private ucErrorSurfaceProperties ucErrProps;
         private System.Windows.Forms.CheckBox chkDefault;
+        private System.Windows.Forms.ToolTip tTip;
     }
 }

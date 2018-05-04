@@ -93,6 +93,14 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
 
             // Finally call the update to put the controls in the correct state
             ErrorSurfaceTypeChanged(sender, e);
+
+            tTip.SetToolTip(rdoUniform, "A single floating point value is used for the entire error surface/region.");
+            tTip.SetToolTip(valUniform, "the single floating point value that is used for the entire error surface/region.");
+            tTip.SetToolTip(rdoAssociated, "The values within an associated surface raster are used as the error surface.");
+            tTip.SetToolTip(cboAssociated, "The associated surface that represents the error surface values.");
+            tTip.SetToolTip(rdoFIS, "The error surface/region is calculated using a fuzzy inference system.");
+            tTip.SetToolTip(cboFIS, "The FIS library entry that defines the FIS rule file to be used.");
+            tTip.SetToolTip(grdFISInputs, "The list of inputs for the selected FIS rule file and the associated surface that corresponds to each input.");
         }
 
         private void ErrorSurfaceTypeChanged(object sender, EventArgs e)

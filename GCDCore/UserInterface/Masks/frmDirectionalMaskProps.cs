@@ -70,6 +70,15 @@ namespace GCDCore.UserInterface.Masks
                 txtPath.Visible = false;
                 Height -= (grpFeatureClass.Top - txtPath.Top);
             }
+
+            tTip.SetToolTip(txtName, "The name that will be used to refer to this mask throughout the GCD.");
+            tTip.SetToolTip(txtPath, "The relative file path within this GCD project where this mask will be stored.");
+            tTip.SetToolTip(cboField, "The string attribute field that will be used to identify regions within the feature class.");
+            tTip.SetToolTip(chkLabel, "Check this box to use a different string field than the main mask field for display labels when viewing the mask items.");
+            tTip.SetToolTip(cboLabel, "The optional string attribute field that contains the display labels for each mask item.");
+            tTip.SetToolTip(cboDirection, "The integer attribute field that defines the order in which mask regions are arranged. Must be consecutive, non-zero integers, but not necessarily starting at zero or one.");
+            tTip.SetToolTip(chkDistance, "Check this box to include a floating point field that defines the distance downstream of each mask feature.");
+            tTip.SetToolTip(cboDistance, "The optional floating point attribute field that defines the distance downstream of each mask polygon.");
         }
 
         private void cmdOK_Click(object sender, EventArgs e)

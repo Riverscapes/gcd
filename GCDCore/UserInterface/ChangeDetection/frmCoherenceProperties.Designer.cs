@@ -39,7 +39,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.xHighPercentPrefixLabel = new System.Windows.Forms.Label();
             this.dimensionsLabel = new System.Windows.Forms.Label();
             this.cboFilterSize = new System.Windows.Forms.ComboBox();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.tTip = new System.Windows.Forms.ToolTip(this.components);
             this.okButton = new System.Windows.Forms.Button();
             this.grpInput = new System.Windows.Forms.GroupBox();
             this.numGreater = new System.Windows.Forms.NumericUpDown();
@@ -93,7 +93,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.fisPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.fisPictureBox.TabIndex = 23;
             this.fisPictureBox.TabStop = false;
-            this.toolTip1.SetToolTip(this.fisPictureBox, resources.GetString("fisPictureBox.ToolTip"));
+            this.tTip.SetToolTip(this.fisPictureBox, resources.GetString("fisPictureBox.ToolTip"));
             // 
             // xHighPercentSuffixLabel
             // 
@@ -132,7 +132,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.cboFilterSize.Name = "cboFilterSize";
             this.cboFilterSize.Size = new System.Drawing.Size(71, 21);
             this.cboFilterSize.TabIndex = 13;
-            this.toolTip1.SetToolTip(this.cboFilterSize, "Choose the size of your moving window.");
+            this.tTip.SetToolTip(this.cboFilterSize, "Choose the size of your moving window.");
             // 
             // okButton
             // 
@@ -238,7 +238,7 @@ namespace GCDCore.UserInterface.ChangeDetection
         }
 
         internal System.Windows.Forms.PictureBox fisPictureBox;
-        internal System.Windows.Forms.ToolTip toolTip1;
+        internal System.Windows.Forms.ToolTip tTip;
         internal System.Windows.Forms.Label xHighPercentSuffixLabel;
         internal System.Windows.Forms.Label xHighPercentPrefixLabel;
         internal System.Windows.Forms.Label dimensionsLabel;

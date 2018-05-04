@@ -48,6 +48,7 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
         private void frmMorphResults_Load(object sender, EventArgs e)
         {
             InitializeChart();
+            InitializeToolTips();
 
             cmdOK.Text = Properties.Resources.UpdateButtonText;
 
@@ -101,6 +102,38 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
 
             UnitsChanged(null, null);
             cmdReset_Click(null, null);
+        }
+
+        private void InitializeToolTips()
+        {
+            tTip.SetToolTip(txtName, "Name of the morphological analysis. Cannot be blank and must be unique within the project.");
+            tTip.SetToolTip(txtPath, Analysis.OutputFolder.FullName);
+            tTip.SetToolTip(cmdBrowse, "Explorer the morphological analysis output folder.");
+            tTip.SetToolTip(cmdOptions, "Configure the morphological display options.");
+            tTip.SetToolTip(valPorosity, "Porosity of the bed material. A value of zero represents all materal and a value of one represents all air.");
+            tTip.SetToolTip(valDensity, "The mass of material per unit volume. This is always specified in grams per cubic centimeter.");
+            tTip.SetToolTip(valDuration, "Total duration over which the event occured. Specified in the units shown beside the value.");
+            tTip.SetToolTip(cboDuration, "Units of time in which the duration value is specified.");
+            tTip.SetToolTip(valPercentCompetent, "Proportion of the duration during which competent flows occured that could move bed material. Zero represents no competent flows and one represents 100% competent flows.");
+            tTip.SetToolTip(txtCriticalDuration, "The duration of critical flows. This is the total duration multiplies by the proportion of competent flows.");
+            //tTip.SetToolTip(picVIn, "");
+            //tTip.SetToolTip(picVD, "");
+            //tTip.SetToolTip(picVE, "");
+            //tTip.SetToolTip(picVDoD, "");
+            //tTip.SetToolTip(picVOut, "");
+            //tTip.SetToolTip(txtVIn, "");
+            //tTip.SetToolTip(txtVD, "");
+            //tTip.SetToolTip(txtVE, "");
+            //tTip.SetToolTip(txtVDoD, "");
+            //tTip.SetToolTip(txtVOut, "");
+            //tTip.SetToolTip(txtMinFlux, "");
+            //tTip.SetToolTip(txtMinFluxRate, "");
+            //tTip.SetToolTip(cboBoundaryUnit, "");
+            //tTip.SetToolTip(cboBoundaryType, "");
+            //tTip.SetToolTip(valBoundaryFlux, "");
+            //tTip.SetToolTip(cboBoundaryUnits, "");
+            tTip.SetToolTip(cmdReset, "Reset and impose the minimum flux boundary condition.");
+            tTip.SetToolTip(cmdOK, "Update and save this morphological analysis. This also rewrites the accompanying morphological analysis spreadsheet.");
         }
 
         private void PorosityChanged(object sender, EventArgs e)

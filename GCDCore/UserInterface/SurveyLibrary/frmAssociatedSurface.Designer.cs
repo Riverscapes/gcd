@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAssociatedSurface));
             this.cmdCancel = new System.Windows.Forms.Button();
             this.cmdOK = new System.Windows.Forms.Button();
@@ -39,6 +40,7 @@
             this.lblPath = new System.Windows.Forms.Label();
             this.txtPath = new System.Windows.Forms.TextBox();
             this.ucRaster = new GCDCore.UserInterface.UtilityForms.ucRasterInput();
+            this.tTip = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // cmdCancel
@@ -179,5 +181,6 @@
         private System.Windows.Forms.Label lblPath;
         private System.Windows.Forms.TextBox txtPath;
         private UtilityForms.ucRasterInput ucRaster;
+        private System.Windows.Forms.ToolTip tTip;
     }
 }

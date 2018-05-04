@@ -89,6 +89,10 @@ namespace GCDCore.UserInterface.SurveyLibrary
                 ucRaster.Left = txtPath.Left;
                 ucRaster.InitializeExisting("Associated Surface", Assoc.Raster);
             }
+
+            tTip.SetToolTip(txtName, "The name used to refer to this associated surface within this GCD project. It cannot be empty and must be unique among all associated surfaces for the parent DEM survey.");
+            tTip.SetToolTip(txtPath, "The relative file path where this associated surface raster is stored.");
+            tTip.SetToolTip(cboType, "The type of values represented in this associated surface.");
         }
 
         private void cmdOK_Click(object sender, EventArgs e)

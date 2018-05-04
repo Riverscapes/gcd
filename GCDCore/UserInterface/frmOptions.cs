@@ -35,31 +35,14 @@ namespace GCDCore.UserInterface.Options
             picErosion.BackColor = Properties.Settings.Default.Erosion;
             picDeposition.BackColor = Properties.Settings.Default.Deposition;
 
-            //TOOLTIPS
-            //Workspace Tab
-            //ttpTooltip.SetToolTip(rdoDefault, My.Resources.ttpOptionsFormRdoDefault)
-            //ttpTooltip.SetToolTip(rdoUserDefined, My.Resources.ttpOptionsFormRdoUserDefined)
-            //ttpTooltip.SetToolTip(btnClearWorkspace, My.Resources.ttpOptionsFormClearWorkspace)
-            //ttpTooltip.SetToolTip(btnBrowseWorkspace, My.Resources.ttpOptionsFormBrowseWorkspace)
-            //ttpTooltip.SetToolTip(chkClearWorkspaceOnStartup, My.Resources.ttpOptionsFormClearOnStart)
-            //ttpTooltip.SetToolTip(chkAddInputLayersToMap, My.Resources.ttpOptionsFormAddSurveyTypeAddLayersToMap)
-            //ttpTooltip.SetToolTip(chkAddInputLayersToMap, My.Resources.ttpOptionsFormAddSurveyTypeAddInLayersToMap)
-            //ttpTooltip.SetToolTip(cboFormat, My.Resources.ttpOptionsFormCboFormat)
-
-            //'Survey Types Tab
-            //ttpTooltip.SetToolTip(btnAddSurveyType, My.Resources.ttpOptionsFormAddSurveyType)
-            //ttpTooltip.SetToolTip(btnDeleteSurveyType, My.Resources.ttpOptionsFormDeleteSurveyType)
-            //ttpTooltip.SetToolTip(btnSettingsSurveyType, My.Resources.ttpOptionsFormSettingSurveyType)
-            //ttpTooltip.SetToolTip(txtSurveyType, My.Resources.ttpOptionsFormSurveyTypeText)
-            //'Symbology Tab
-
-            //'Graphs Tab
-
-            //'Precision Tab
-            //'ttpTooltip.SetToolTip(numPrecision, My.Resources.ttpOptionsFormNumPrecision)
-
-
-            //ttpTooltip.SetToolTip(nbrError, My.Resources.ttpOptionsFormSurveyTypeError)
+            tTip.SetToolTip(grdSurveyTypes, "List of survey data collection methods and the corresponding default uncertainty values.");
+            tTip.SetToolTip(numChartWidth, "The default width, in pixels, of the charts saved as part of change detections.");
+            tTip.SetToolTip(numChartHeight, "The default height, in pixels, of the charts saved as part of change detections.");
+            tTip.SetToolTip(picErosion, "The default color used to display surface lowering in change detection charts.");
+            tTip.SetToolTip(picDeposition, "The default color used to display surface raising in change detection charts.");
+            tTip.SetToolTip(cmdResetColours, "Reset the chart colors to the defaults that are used when GCD is initially installed.");
+            tTip.SetToolTip(txtFont, "The default font used for change detection chart axes, titles and legends.");
+            tTip.SetToolTip(cmdFont, "Change the default font used for change detection chart axes, titles and legends.");       
 
             //chkBoxValidateProjectOnLoad.Checked = Properties.Settings.Default.ValidateProjectOnLoad;
             chkComparativeSymbology.Checked = Properties.Settings.Default.ApplyComparativeSymbology;

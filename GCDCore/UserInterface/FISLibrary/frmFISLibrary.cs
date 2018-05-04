@@ -64,9 +64,10 @@ namespace GCDCore.UserInterface.FISLibrary
 
         private void FISLibraryForm_Load(System.Object sender, System.EventArgs e)
         {
-            ttpTooltip.SetToolTip(btnAddFIS, "Add a FIS file to the GCD FIS Library.");
-            ttpTooltip.SetToolTip(btnEditFIS, "Edit the selected FIS file.");
-            ttpTooltip.SetToolTip(btnDeleteFIS, "Delete the selected FIS file.");
+            tTip.SetToolTip(btnAddFIS, "Add a FIS file to the GCD FIS Library.");
+            tTip.SetToolTip(btnEditFIS, "Edit the selected FIS file.");
+            tTip.SetToolTip(btnDeleteFIS, "Delete the selected FIS file.");
+            tTip.SetToolTip(btnFISRepo, "Open a web browser and view the contents of the online FIS repository.");
 
             grdFIS.AutoGenerateColumns = false;
 

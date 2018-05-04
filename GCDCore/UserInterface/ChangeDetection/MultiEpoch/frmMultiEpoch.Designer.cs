@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMultiEpoch));
             this.cmdCancel = new System.Windows.Forms.Button();
             this.cmdOK = new System.Windows.Forms.Button();
@@ -53,6 +54,7 @@
             this.ucThresholding1 = new GCDCore.UserInterface.ChangeDetection.ucThresholding();
             this.pnlBottom = new System.Windows.Forms.Panel();
             this.bgWorker = new System.ComponentModel.BackgroundWorker();
+            this.tTip = new System.Windows.Forms.ToolTip(this.components);
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdDEMs)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -394,5 +396,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colDEMSurvey;
         private System.Windows.Forms.DataGridViewComboBoxColumn colErrorSurface;
         private ucAOI ucAOI1;
+        private System.Windows.Forms.ToolTip tTip;
     }
 }

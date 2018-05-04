@@ -113,12 +113,12 @@ namespace GCDCore.UserInterface.SurveyLibrary
             if ((RasterOperators.KernelShapes)cboNeighbourhood.SelectedItem == RasterOperators.KernelShapes.Circle)
             {
                 label = "Diameter";
-                ttpToolTip.SetToolTip(valSampleDistance, string.Format("Diameter of the circular sample window (in {0}) over which point density is calculated", lUnits));
+                tTip.SetToolTip(valSampleDistance, string.Format("Diameter of the circular sample window (in {0}) over which point density is calculated", lUnits));
             }
             else
             {
                 label = "Length";
-                ttpToolTip.SetToolTip(valSampleDistance, string.Format("Size of the square sample window (in {0}) over which point density is calculated", lUnits));
+                tTip.SetToolTip(valSampleDistance, string.Format("Size of the square sample window (in {0}) over which point density is calculated", lUnits));
             }
 
             lblDistance.Text = string.Format("{0} ({1})", label, UnitsNet.Length.GetAbbreviation(lUnits));
@@ -142,6 +142,10 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
             ucPointCloud.PathChanged += OnPointCloudChanged;
 
+            tTip.SetToolTip(txtName, "The name used to refer to this point density associated surface raster within this GCD project. It cannot be empty and must be unique among all associated surfaces for the parent DEM survey.");
+            tTip.SetToolTip(txtPath, "The relative file path of the point density associated surface raster that will be generated.");
+            tTip.SetToolTip(cboNeighbourhood, "The shape of moving window kernel that will be used to count points in the point cloud ShapeFile.");
+            tTip.SetToolTip(valSampleDistance, "The size of the moving window. For circular kernels this is the radius and for squares this is half the width of the square. The units are determined by the linear units of the parent DEM survey raster.");
         }
 
         private void OnPointCloudChanged(object sender, naru.ui.PathEventArgs e)

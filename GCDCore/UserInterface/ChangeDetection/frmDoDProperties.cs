@@ -46,6 +46,9 @@ namespace GCDCore.UserInterface.ChangeDetection
 
         private void DoDPropertiesForm_Load(object sender, System.EventArgs e)
         {
+            tTip.SetToolTip(txtName, "Name used to identify the change detection. The name cannot be empty and must be unique within this GCD project.");
+            tTip.SetToolTip(txtOutputFolder, "The output folder within this project where the change detection will be stored.");
+
             EnableDisableControls();
 
             cmdOK.Text = Properties.Resources.CreateButtonText;

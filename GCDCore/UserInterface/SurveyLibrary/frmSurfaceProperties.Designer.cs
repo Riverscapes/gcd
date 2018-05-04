@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmSurfaceProperties));
             this.label1 = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
@@ -44,6 +45,7 @@
             this.lblSurveyDate = new System.Windows.Forms.Label();
             this.txtSurveyDate = new System.Windows.Forms.TextBox();
             this.cmdSurveyDate = new System.Windows.Forms.Button();
+            this.tTip = new System.Windows.Forms.ToolTip(this.components);
             this.grpProperties.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdData)).BeginInit();
             this.SuspendLayout();
@@ -260,5 +262,6 @@
         private System.Windows.Forms.Label lblSurveyDate;
         private System.Windows.Forms.TextBox txtSurveyDate;
         private System.Windows.Forms.Button cmdSurveyDate;
+        private System.Windows.Forms.ToolTip tTip;
     }
 }

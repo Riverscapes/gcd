@@ -50,7 +50,7 @@
             this.TabControl1 = new System.Windows.Forms.TabControl();
             this.txtGCDPath = new System.Windows.Forms.TextBox();
             this.Label4 = new System.Windows.Forms.Label();
-            this.ttpTooltip = new System.Windows.Forms.ToolTip(this.components);
+            this.tTip = new System.Windows.Forms.ToolTip(this.components);
             this.btnHelp = new System.Windows.Forms.Button();
             this.btnBrowseOutput = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
@@ -416,7 +416,7 @@
         internal System.Windows.Forms.TabControl TabControl1;
         internal System.Windows.Forms.TextBox txtGCDPath;
         internal System.Windows.Forms.Label Label4;
-        internal System.Windows.Forms.ToolTip ttpTooltip;
+        internal System.Windows.Forms.ToolTip tTip;
         internal System.Windows.Forms.Button btnHelp;
         internal System.Windows.Forms.Button btnBrowseOutput;
         internal System.Windows.Forms.Button btnOK;

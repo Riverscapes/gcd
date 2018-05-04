@@ -38,6 +38,10 @@ namespace GCDCore.UserInterface.Masks
                 cmdOK.Text = Properties.Resources.CreateButtonText;
                 ucPolygon.InitializeBrowseNew("AOI Mask", GCDConsoleLib.GDalGeometryType.SimpleTypes.Polygon);
             }
+
+            tTip.SetToolTip(txtName, "The name that will be used throughout GCD to refer to this mask.");
+            tTip.SetToolTip(txtPath, "The output file path location where this mask will be generated.");
+            tTip.SetToolTip(ucPolygon, "The input polygon ShapeFile that will be copied into this GCD project.");
         }
 
         private void cmdOK_Click(object sender, EventArgs e)

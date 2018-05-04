@@ -26,6 +26,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
         [System.Diagnostics.DebuggerStepThrough()]
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.lblName = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
             this.Label2 = new System.Windows.Forms.Label();
@@ -79,6 +80,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.cmdHelp = new System.Windows.Forms.Button();
             this.cmdOK = new System.Windows.Forms.Button();
             this.cmdCancel = new System.Windows.Forms.Button();
+            this.tTip = new System.Windows.Forms.ToolTip(this.components);
             this.grpOriginalRaster.SuspendLayout();
             this.grpProjectRaaster.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.valPrecision)).BeginInit();
@@ -686,5 +688,6 @@ namespace GCDCore.UserInterface.SurveyLibrary
         internal System.Windows.Forms.ComboBox cboMethod;
         internal System.Windows.Forms.Button cmdHelpPrecision;
         public UtilityForms.ucRasterInput ucRaster;
+        private System.Windows.Forms.ToolTip tTip;
     }
 }

@@ -56,6 +56,13 @@ namespace GCDCore.UserInterface.LinearExtraction
 
             cboRoute.DataSource = ProjectManager.Project.ProfileRoutes;
             cboRoute.SelectedIndex = cboRoute.Items.Count > 0 ? 0 : -1;
+
+            tTip.SetToolTip(txtName, "The name for this linear extraction. It cannot be empty and must be unique among all linear extractions for the parent DEM survey, reference surface or DoD.");
+            tTip.SetToolTip(txtPath, "The relative path where the linear extraction output will be generated within this GCD project.");
+            tTip.SetToolTip(cboRoute, "The ShapeFile containing the polyline features that will be traversed to extract values from the underlying raster.");
+            tTip.SetToolTip(valSampleDistance, "The distance interval along each polyline feature at which values will be sampled from the underlying raster.");
+            tTip.SetToolTip(txtElevationSurface, "The name of the underlying DEM survey, reference surface or DoD raster that will be sampled.");
+            tTip.SetToolTip(cboError, "The (optional) error surface raster that will also be sampled at the sample locations as the elevation surface and also written to the linear extraction output.");
         }
 
         private void txtName_TextChanged(object sender, EventArgs e)

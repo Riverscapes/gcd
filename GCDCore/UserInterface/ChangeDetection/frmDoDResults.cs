@@ -36,6 +36,11 @@ namespace GCDCore.UserInterface.ChangeDetection
 
         private void DoDResultsForm_Load(object sender, System.EventArgs e)
         {
+            tTip.SetToolTip(txtDoDName, "The name used to identify this change detection. It cannot be empty and it must be unique within this project.");
+            tTip.SetToolTip(cmdBrowse, "Explore the output folder for this change detection.");
+            tTip.SetToolTip(cmdProperties, "Change the tabular and chart display properties.");
+            tTip.SetToolTip(cmdAddToMap, "Add the thresholded raster for this change detection to the current map document.");
+
             if (!ProjectManager.IsArcMap)
             {
                 cmdAddToMap.Visible = false;

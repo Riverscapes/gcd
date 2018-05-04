@@ -35,6 +35,15 @@ namespace GCDCore.UserInterface.SurveyLibrary.ReferenceSurfaces
             lblIncrement.Text = lblIncrement.Text.Replace(")", sUnits + ")");
 
             UpdateControls(sender, e);
+
+            tTip.SetToolTip(txtName, "The name used to refer to this reference error surface within this GCD project. It cannot be empty and it must be unique among all error surfaces for the parent reference surface.");
+            tTip.SetToolTip(txtPath, "The relative file path within this GCD project where this reference error surface is generated.");
+            tTip.SetToolTip(rdoSingle, "A single, uniform, floating point value defines the entire reference surface raster.");
+            tTip.SetToolTip(valSingle, "The single, uniform, floating point value that defines the entire reference error surface raster.");
+            tTip.SetToolTip(rdoMultiple, "Multiple reference error surfaces will be generated at a series of increasing error values.");
+            tTip.SetToolTip(valUpper, "The maximum error value that will be used to generate a reference error surface raster. A raster with this value will only get produced if the range between the lower and upper values is evenly divisble by the specified increment.");
+            tTip.SetToolTip(valLower, "The minimum error value that will be used to generate a reference error surface raster. A raster with this value will always be produced.");
+            tTip.SetToolTip(valIncrement, "The value that is repeatedly added to the lower error to produce the series of reference error surface rasters.");
         }
 
         private void UpdateControls(object sender, EventArgs e)

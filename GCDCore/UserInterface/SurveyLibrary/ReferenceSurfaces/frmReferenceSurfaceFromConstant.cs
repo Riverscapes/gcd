@@ -41,6 +41,17 @@ namespace GCDCore.UserInterface.SurveyLibrary.ReferenceSurfaces
             lblError.Text = lblError.Text.Replace(")", sUnits + ")");
 
             UpdateControls(null, null);
+
+            tTip.SetToolTip(txtName, "The name used to identify this reference surface within this GCD project. It cannot be empty and it must be unique among all reference surfaces within this project.");
+            tTip.SetToolTip(txtPath, "The relative file path within this GCD project where the reference surface(s) will be produced.");
+            tTip.SetToolTip(cboDEMSurvey, "The DEM survey used to provide the spatial reference and extent of the output reference surface(s).");
+            tTip.SetToolTip(rdoSingle, "A single reference surface with a unfirom, constant elevation.");
+            tTip.SetToolTip(valSingle, "The floating point value that will be stored in the single reference surface raster that will be produced.");
+            tTip.SetToolTip(rdoMultiple, "Multiple reference surfaces will be generated.");
+            tTip.SetToolTip(valUpper, "The maximum elevation value used to generate a refereance surface raster. A raster with this value will only be generated if the difference between this value and the lower elevation is evenly divisble by the specified increment.");
+            tTip.SetToolTip(valLower, "The minimum elevation value used to generate a reference surface raster. A value with this value will always be generated.");
+            tTip.SetToolTip(valIncrement, "The elevation increment that is added to the specified lower elevation to produce the set of elevations at which reference surfaces will be generated.");
+            tTip.SetToolTip(valError, "The single, uniform error value used to generate an error raster for each reference surface produced.");
         }
 
         private void UpdateControls(object sender, EventArgs e)

@@ -45,6 +45,12 @@ namespace GCDCore.UserInterface.ProfileRoutes
             }
 
             UpdateControls(sender, e);
+
+            tTip.SetToolTip(txtName, "The name used to identify this profile route within this GCD project. It cannot be empty and it must be unique among all profile routes within this GCD project.");
+            tTip.SetToolTip(txtPath, "The relative file path where this profile route ShapeFile will get stored.");
+            tTip.SetToolTip(cboDistance, "The floating point field that identifies the distance downstream of each polyline feature in the profile route feature class.");
+            tTip.SetToolTip(chkLabel, "Toggles whether a separate field is used for the display labels for each profile route feature. Unchecking this box uses the distance values as the labels.");
+            tTip.SetToolTip(cboLabel, "Optional string label field that contains the string labels used to display each feature in the profile route feature class.");
         }
 
         private void UpdateControls(object sender, EventArgs e)

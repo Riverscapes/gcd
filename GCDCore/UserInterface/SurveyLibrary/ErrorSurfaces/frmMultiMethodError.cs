@@ -65,6 +65,9 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
                 grdRegions.Enabled = false;
             }
 
+            tTip.SetToolTip(cboMask, "The polygon mask that defines the regions where different error surface configurations will be applied.");
+            tTip.SetToolTip(chkDefault, "Specifies whether this is the default error surface that is used when the parent DEM survey is used within a change detection.");
+            tTip.SetToolTip(grdRegions, "List of mask regions and the error surface configuration that will be applied. Double click a row to edit the error configuration.");
         }
 
         private void cboMask_SelectedIndexChanged(object sender, EventArgs e)

@@ -104,18 +104,18 @@ namespace GCDCore.UserInterface.Project
 
         private void SetToolTips()
         {
-            ttpTooltip.SetToolTip(btnHelp, Properties.Resources.ttpHelp);
-            ttpTooltip.SetToolTip(txtName, "The name for the GCD project. The name will be used in the folder path for the GCD project parent directory.");
-            ttpTooltip.SetToolTip(txtDirectory, "The parent folder under which the GCD project folder will be created.");
-            ttpTooltip.SetToolTip(btnBrowseOutput, "Browse and select a parent directory for the GCD Project.");
-            ttpTooltip.SetToolTip(txtGCDPath, "Read only folder and file name of the GCD Project file.");
-            ttpTooltip.SetToolTip(txtDescription, "Information about the GCD project.");
-            ttpTooltip.SetToolTip(cboHorizontalUnits, "The default units for displaying and outputting change detection results.");
+            tTip.SetToolTip(btnHelp, Properties.Resources.ttpHelp);
+            tTip.SetToolTip(txtName, "The name for the GCD project. The name will be used in the folder path for the GCD project parent directory.");
+            tTip.SetToolTip(txtDirectory, "The parent folder under which the GCD project folder will be created.");
+            tTip.SetToolTip(btnBrowseOutput, "Browse and select a parent directory for the GCD Project.");
+            tTip.SetToolTip(txtGCDPath, "Read only folder and file name of the GCD Project file.");
+            tTip.SetToolTip(txtDescription, "Information about the GCD project.");
+            tTip.SetToolTip(cboHorizontalUnits, "The default units for displaying and outputting change detection results.");
 
-            ttpTooltip.SetToolTip(cboHorizontalUnits, "The horizontal, linear units of the raster datasets used in this project. i.e. this should be the same as the map coordinate units.");
-            ttpTooltip.SetToolTip(cboVerticalUnits, "The vertical units of the raster datasets in this project. i.e. this should be the same the raster cell value units.");
-            ttpTooltip.SetToolTip(cboAreaUnits, "The areal units for the project. This is typically the square equivalent of the horizontal units.");
-            ttpTooltip.SetToolTip(cboVolumeUnits, "The volume units for the project. This is typically related to the vertical and areal units.");
+            tTip.SetToolTip(cboHorizontalUnits, "The horizontal, linear units of the raster datasets used in this project. i.e. this should be the same as the map coordinate units.");
+            tTip.SetToolTip(cboVerticalUnits, "The vertical units of the raster datasets in this project. i.e. this should be the same the raster cell value units.");
+            tTip.SetToolTip(cboAreaUnits, "The areal units for the project. This is typically the square equivalent of the horizontal units.");
+            tTip.SetToolTip(cboVolumeUnits, "The volume units for the project. This is typically related to the vertical and areal units.");
         }
 
 

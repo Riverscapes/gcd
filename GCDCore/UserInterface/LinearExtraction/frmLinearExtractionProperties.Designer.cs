@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmLinearExtractionProperties));
             this.cmdCancel = new System.Windows.Forms.Button();
             this.cmdOK = new System.Windows.Forms.Button();
@@ -44,6 +45,7 @@
             this.txtElevationSurface = new System.Windows.Forms.TextBox();
             this.lblSampleDistance = new System.Windows.Forms.Label();
             this.valSampleDistance = new System.Windows.Forms.NumericUpDown();
+            this.tTip = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.valSampleDistance)).BeginInit();
             this.SuspendLayout();
             // 
@@ -264,5 +266,6 @@
         private System.Windows.Forms.TextBox txtElevationSurface;
         private System.Windows.Forms.Label lblSampleDistance;
         private System.Windows.Forms.NumericUpDown valSampleDistance;
+        private System.Windows.Forms.ToolTip tTip;
     }
 }

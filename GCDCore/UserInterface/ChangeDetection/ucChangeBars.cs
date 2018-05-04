@@ -62,6 +62,10 @@ namespace GCDCore.UserInterface.ChangeDetection
 
         private void ChangeBarsUC_Load(object sender, System.EventArgs e)
         {
+            tTip.SetToolTip(cboType, "Pick one of the elevation change chart types.");
+            tTip.SetToolTip(rdoAbsolute, "Elevation change is displayed using the true, absolute values. Surface lowering appears as negative values.");
+            tTip.SetToolTip(rdoRelative, "Elevation change is displayed using relative values. All values appear as positive values.");
+
             cboType.Items.Add(new naru.db.NamedObject((long)ElevationChangeBarViewer.BarTypes.Area, "Areal"));
             cboType.Items.Add(new naru.db.NamedObject((long)ElevationChangeBarViewer.BarTypes.Volume, "Volumetric"));
             cboType.Items.Add(new naru.db.NamedObject((long)ElevationChangeBarViewer.BarTypes.Vertical, "Vertical Averages"));

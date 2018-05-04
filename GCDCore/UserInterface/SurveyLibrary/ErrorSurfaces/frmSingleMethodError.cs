@@ -47,6 +47,8 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
             // Changing default status disabled for existing error rasters because the project tree doesn't reload all error rasters again 
             // leaving a stale default raster
             chkDefault.Enabled = ErrorSurface == null ? DEM.ErrorSurfaces.Count > 0 : false;
+
+            tTip.SetToolTip(chkDefault, "Specifies whether this is the default error surface that is used when the parent DEM survey is used within a change detection.");
         }
 
         private void cmdOK_Click(object sender, EventArgs e)

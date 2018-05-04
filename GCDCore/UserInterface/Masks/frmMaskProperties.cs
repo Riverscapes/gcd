@@ -66,6 +66,11 @@ namespace GCDCore.UserInterface.Masks
             cboField.SelectedIndexChanged += cboField_SelectedIndexChanged;
 
             grdData.DataSource = MaskItems;
+
+            tTip.SetToolTip(txtName, "The name used to refer to this mask within the GCD user interface. It cannot be empty and must be unique among all masks within this GCD project.");
+            tTip.SetToolTip(txtPath, "The relative file path within this GCD project where the mask ShapeFile will get copied.");
+            tTip.SetToolTip(cboField, "The string attribute field that distinguishes mask polygons.");
+            tTip.SetToolTip(grdData, "List of unique values from the mask field. Check the box beside each item to toggle its inclusion in the mask. Provide an optional label to override the display text used for each mask item.");
         }
 
         private void txtName_TextChanged(object sender, EventArgs e)

@@ -26,10 +26,12 @@ namespace GCDCore.UserInterface.ChangeDetection
         [System.Diagnostics.DebuggerStepThrough()]
 		private void InitializeComponent()
 		{
+            this.components = new System.ComponentModel.Container();
             this.chtControl = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.cboType = new System.Windows.Forms.ComboBox();
             this.rdoAbsolute = new System.Windows.Forms.RadioButton();
             this.rdoRelative = new System.Windows.Forms.RadioButton();
+            this.tTip = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.chtControl)).BeginInit();
             this.SuspendLayout();
             // 
@@ -97,5 +99,6 @@ namespace GCDCore.UserInterface.ChangeDetection
 		internal System.Windows.Forms.RadioButton rdoAbsolute;
 
 		internal System.Windows.Forms.RadioButton rdoRelative;
-	}
+        private System.Windows.Forms.ToolTip tTip;
+    }
 }

@@ -50,6 +50,11 @@ namespace GCDCore.UserInterface.ChangeDetection
 
         private void ucThresholding_Load(object sender, EventArgs e)
         {
+            tTip.SetToolTip(valMinLodThreshold, "The minimum level of detection specified in the same units as the surface elevation values");
+            tTip.SetToolTip(valConfidence, "The confidence interval from zero to one.");
+            tTip.SetToolTip(chkBayesian, "Check this box to enable Bayesian updating using spatial coherence.");
+            tTip.SetToolTip(cmdBayesianProperties, "Configure the spatial coherence properties.");
+
             UpdateControls(sender, e);
 
             // If statement needed for designer

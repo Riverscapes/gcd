@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmFISProperties));
             this.cmdCancel = new System.Windows.Forms.Button();
             this.cmdOK = new System.Windows.Forms.Button();
@@ -71,6 +72,7 @@
             this.colValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.txtDescription = new System.Windows.Forms.TextBox();
+            this.tTip = new System.Windows.Forms.ToolTip(this.components);
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -603,5 +605,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colInputUnits;
         private System.Windows.Forms.DataGridViewTextBoxColumn colInputDescription;
         private System.Windows.Forms.DataGridViewTextBoxColumn colInputSource;
+        private System.Windows.Forms.ToolTip tTip;
     }
 }

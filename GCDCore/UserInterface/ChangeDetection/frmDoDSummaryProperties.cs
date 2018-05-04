@@ -35,6 +35,8 @@ namespace GCDCore.UserInterface.ChangeDetection
 
         private void frmDoDSummaryProperties_Load(object sender, System.EventArgs e)
         {
+            InitializeToolTips();
+
             frmFont.Font = Options.Font;
             frmFont.FontMustExist = true;
             frmFont.ShowHelp = false;
@@ -74,6 +76,36 @@ namespace GCDCore.UserInterface.ChangeDetection
             chkColsThresholded.Checked = Options.m_bColsThresholded;
             chkColsError.Checked = Options.m_bColsPMError;
             chkColsPercentage.Checked = Options.m_bColsPCError;
+        }
+
+        private void InitializeToolTips()
+        {
+            tTip.SetToolTip(cboLinear, "The linear units used for the tabular and chart results.");
+            tTip.SetToolTip(cboArea, "The areal units used for the tabular and chart results.");
+            tTip.SetToolTip(cboVolume, "The volunetric units used for the tabular and chart results.");
+            tTip.SetToolTip(valPrecision, "The number of decimal places used in the tabular results.");
+            tTip.SetToolTip(cmdReset, "Reset the linear, areal and volumetric units back to the display unit settings of this project.");
+            tTip.SetToolTip(rdoRowsAll, "Display all rows in the tabular results.");
+            tTip.SetToolTip(rdoRowsNormalized, "Display only the rows in the tabular results that represent normalized values.");
+            tTip.SetToolTip(rdoRowsSpecific, "Display specific rows in the tabular results. This enables the controls for specific groups.");
+            tTip.SetToolTip(chkRowsAreal, "Display the areal tabular results.");
+            tTip.SetToolTip(chkVolumetric, "Display the volumetric tabular results.");
+            tTip.SetToolTip(chkVertical, "Display the vertical average tabular results.");
+            tTip.SetToolTip(chkPercentages, "Display the percentage tabular results.");
+            tTip.SetToolTip(chkColsRaw, "Display the columns in the tabular results that represent the raw raster.");
+            tTip.SetToolTip(chkColsThresholded, "Display the columns in the tabular results that represent the thresholded raster.");
+            tTip.SetToolTip(chkColsError, "Display the columns that represent the plus minus error values.");
+            tTip.SetToolTip(chkColsPercentage, "Display the columns that represent the plus minus error values as percentages.");
+            tTip.SetToolTip(picErosion, "The color used for surface lowering in the charts.");
+            tTip.SetToolTip(picDeposition, "The color used for surface raising in the charts.");
+            tTip.SetToolTip(cmdResetColours, "Reset the chart colors to those specified in the GCD Options.");
+            tTip.SetToolTip(txtFont, "The font used for chart axes, titles and legends.");
+            tTip.SetToolTip(cmdFonts, "Change the fonts used for the chart axes, titles and legends.");
+            tTip.SetToolTip(rdoAutomatedYScale, "The histogram Y axis scale is automated and determined by the data being displayed.");
+            tTip.SetToolTip(rdoManualYScale, "The histogram Y axis is controlled by the values specified on this form.");
+            tTip.SetToolTip(valMaximum, "The maximum value of the histogram y axis.");
+            tTip.SetToolTip(valMinimum, "The minimum value of the histogram y axis.");
+            tTip.SetToolTip(valInterval, "The interval used for the histogram y axis.");
         }
 
         private void OnColorBoxClicked(object sender, EventArgs e)

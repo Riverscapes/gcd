@@ -37,6 +37,13 @@ namespace GCDCore.UserInterface.BudgetSegregation
 
         private void frmBudgetSegProperties_Load(object sender, EventArgs e)
         {
+            tTip.SetToolTip(txtName, "The name for the budget segregation. It cannot be empty and must be unique across all budget segregations for the parent change detection.");
+            tTip.SetToolTip(txtOutputFolder, "The relative output folder within this GCD project where the budget segregation will get produced.");
+            tTip.SetToolTip(rdoRegular, "Choose this option to generate a budget segregation from a regular (non-directional) mask.");
+            tTip.SetToolTip(rdoDirectional, "Choose this option to generate a budget segregation from a directional mask.");
+            tTip.SetToolTip(cboRegularMasks, "Choose a mask from the list of all the regular masks in this GCD project.");
+            tTip.SetToolTip(cboDirMasks, "Choose a mask from the list of all the directional masks in this GCD project.");
+
             cmdOK.Text = Properties.Resources.CreateButtonText;
             txtOutputFolder.Text = ProjectManager.Project.GetRelativePath(InitialDoD.BudgetSegPath().FullName);
 

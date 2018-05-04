@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.cboAssociated = new System.Windows.Forms.ComboBox();
             this.rdoAssociated = new System.Windows.Forms.RadioButton();
             this.grdFISInputs = new System.Windows.Forms.DataGridView();
@@ -37,6 +38,7 @@
             this.rdoFIS = new System.Windows.Forms.RadioButton();
             this.valUniform = new System.Windows.Forms.NumericUpDown();
             this.rdoUniform = new System.Windows.Forms.RadioButton();
+            this.tTip = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.grdFISInputs)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.valUniform)).BeginInit();
             this.SuspendLayout();
@@ -176,5 +178,6 @@
         internal System.Windows.Forms.RadioButton rdoUniform;
         private System.Windows.Forms.DataGridViewTextBoxColumn FISInput;
         private System.Windows.Forms.DataGridViewComboBoxColumn AssociatedSurface;
+        private System.Windows.Forms.ToolTip tTip;
     }
 }

@@ -112,6 +112,10 @@ namespace GCDCore.UserInterface.ChangeDetection
 
         private void ucDoDDEMSelection_Load(object sender, EventArgs e)
         {
+            tTip.SetToolTip(cboNewSurface, "The new DEM survey or reference surface.");
+            tTip.SetToolTip(cboNewError, "The new error surface.");
+            tTip.SetToolTip(cboOldSurface, "The old DEM survey or reference surface.");
+
             if (cboNewSurface.Items.Count > 0)
             {
                 if (NewSurface is Surface)

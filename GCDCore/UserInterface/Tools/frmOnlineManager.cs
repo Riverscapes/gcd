@@ -396,6 +396,13 @@ namespace GCDCore.UserInterface.Tools
         {
             System.Diagnostics.Process.Start(lnklblurl.Text as String);
         }
+
+        private void frmOnlineManager_Load(object sender, EventArgs e)
+        {
+            tTip.SetToolTip(btnUpload, "Uploads the current GCD project into the cloud and returns the URL at which it can then be accessed.");
+            tTip.SetToolTip(btnDelete, "Delete the online copy of the project. This does not impact the local copy on your computer.");
+            tTip.SetToolTip(lnklblurl, "Click this link to open a web browser to view the online copy of this project once it has been uploaded.");
+        }
     }
 
     /// <summary>

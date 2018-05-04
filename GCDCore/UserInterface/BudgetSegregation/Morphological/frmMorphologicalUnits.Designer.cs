@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.cmdCancel = new System.Windows.Forms.Button();
             this.cmdOK = new System.Windows.Forms.Button();
             this.Volume = new System.Windows.Forms.Label();
@@ -36,6 +37,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.cboMass = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.tTip = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // cmdCancel
@@ -151,5 +153,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cboMass;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ToolTip tTip;
     }
 }

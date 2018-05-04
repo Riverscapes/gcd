@@ -35,6 +35,7 @@ namespace GCDCore.UserInterface.ChangeDetection
         [System.Diagnostics.DebuggerStepThrough()]
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.GroupBox1 = new System.Windows.Forms.GroupBox();
             this.chkPercentages = new System.Windows.Forms.CheckBox();
             this.chkVertical = new System.Windows.Forms.CheckBox();
@@ -66,8 +67,9 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.txtFont = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.cmdFonts = new System.Windows.Forms.Button();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.cmdResetColours = new System.Windows.Forms.Button();
             this.picDeposition = new System.Windows.Forms.PictureBox();
             this.label6 = new System.Windows.Forms.Label();
             this.picErosion = new System.Windows.Forms.PictureBox();
@@ -90,7 +92,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.label9 = new System.Windows.Forms.Label();
             this.frmColourPicker = new System.Windows.Forms.ColorDialog();
             this.frmFont = new System.Windows.Forms.FontDialog();
-            this.cmdResetColours = new System.Windows.Forms.Button();
+            this.tTip = new System.Windows.Forms.ToolTip(this.components);
             this.GroupBox1.SuspendLayout();
             this.GroupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.valPrecision)).BeginInit();
@@ -461,7 +463,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             // groupBox6
             // 
             this.groupBox6.Controls.Add(this.txtFont);
-            this.groupBox6.Controls.Add(this.button1);
+            this.groupBox6.Controls.Add(this.cmdFonts);
             this.groupBox6.Location = new System.Drawing.Point(218, 6);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(256, 53);
@@ -477,15 +479,15 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.txtFont.Size = new System.Drawing.Size(207, 20);
             this.txtFont.TabIndex = 7;
             // 
-            // button1
+            // cmdFonts
             // 
-            this.button1.Image = global::GCDCore.Properties.Resources.Options;
-            this.button1.Location = new System.Drawing.Point(224, 19);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(23, 23);
-            this.button1.TabIndex = 6;
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.cmdFonts.Image = global::GCDCore.Properties.Resources.Options;
+            this.cmdFonts.Location = new System.Drawing.Point(224, 19);
+            this.cmdFonts.Name = "cmdFonts";
+            this.cmdFonts.Size = new System.Drawing.Size(23, 23);
+            this.cmdFonts.TabIndex = 6;
+            this.cmdFonts.UseVisualStyleBackColor = true;
+            this.cmdFonts.Click += new System.EventHandler(this.button1_Click);
             // 
             // groupBox5
             // 
@@ -500,6 +502,16 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.groupBox5.TabIndex = 2;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Colors";
+            // 
+            // cmdResetColours
+            // 
+            this.cmdResetColours.Image = global::GCDCore.Properties.Resources.refresh;
+            this.cmdResetColours.Location = new System.Drawing.Point(171, 19);
+            this.cmdResetColours.Name = "cmdResetColours";
+            this.cmdResetColours.Size = new System.Drawing.Size(23, 23);
+            this.cmdResetColours.TabIndex = 8;
+            this.cmdResetColours.UseVisualStyleBackColor = true;
+            this.cmdResetColours.Click += new System.EventHandler(this.cmdResetColours_Click);
             // 
             // picDeposition
             // 
@@ -698,16 +710,6 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.label9.TabIndex = 0;
             this.label9.Text = "Maximum";
             // 
-            // cmdResetColours
-            // 
-            this.cmdResetColours.Image = global::GCDCore.Properties.Resources.refresh;
-            this.cmdResetColours.Location = new System.Drawing.Point(171, 19);
-            this.cmdResetColours.Name = "cmdResetColours";
-            this.cmdResetColours.Size = new System.Drawing.Size(23, 23);
-            this.cmdResetColours.TabIndex = 8;
-            this.cmdResetColours.UseVisualStyleBackColor = true;
-            this.cmdResetColours.Click += new System.EventHandler(this.cmdResetColours_Click);
-            // 
             // frmDoDSummaryProperties
             // 
             this.AcceptButton = this.cmdOK;
@@ -800,7 +802,7 @@ namespace GCDCore.UserInterface.ChangeDetection
         private System.Windows.Forms.NumericUpDown valMaximum;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.ColorDialog frmColourPicker;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button cmdFonts;
         private System.Windows.Forms.FontDialog frmFont;
         private System.Windows.Forms.TextBox txtFont;
         private System.Windows.Forms.Label lblIntervalYScale;
@@ -812,5 +814,6 @@ namespace GCDCore.UserInterface.ChangeDetection
         private System.Windows.Forms.RadioButton rdoManualYScale;
         private System.Windows.Forms.RadioButton rdoAutomatedYScale;
         private System.Windows.Forms.Button cmdResetColours;
+        private System.Windows.Forms.ToolTip tTip;
     }
 }

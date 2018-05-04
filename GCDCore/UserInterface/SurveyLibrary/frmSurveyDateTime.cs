@@ -72,6 +72,12 @@ namespace GCDCore.UserInterface.SurveyLibrary
                     cboMinute.SelectedIndex = nIndex;
                 }
             }
+
+            tTip.SetToolTip(cboYear, "The year in which the DEM survey was collected.");
+            tTip.SetToolTip(cboYear, "The month in which the DEM survey was collected.");
+            tTip.SetToolTip(cboYear, "The day on which the DEM survey was collected.");
+            tTip.SetToolTip(cboYear, "The hour - specified using the 24 hour clock - at which the DEM survey was collected.");
+            tTip.SetToolTip(cboYear, "The minute at which the DEM survey was collected.");
         }
 
         private bool ValidateForm()

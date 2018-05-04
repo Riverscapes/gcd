@@ -93,6 +93,13 @@ namespace GCDCore.UserInterface.SurveyLibrary
             grdData.DataSource = ItemProperties;
             grdData.Select();
 
+            tTip.SetToolTip(txtName, "The name used to refer to this item within the GCD project. It cannot be empty and it must be unique among all other items of this type.");
+            tTip.SetToolTip(txtPath, "The relative file path of this raster within the GCD project.");
+            tTip.SetToolTip(cmdAddTopMap, "Add the raster to the current map document.");
+            tTip.SetToolTip(txtSurveyDate, "The date on which the DEM survey was collected.");
+            tTip.SetToolTip(cmdSurveyDate, "Configure the date on which the DEM survey was collected.");
+            tTip.SetToolTip(grdData, "Properties of the raster associated with this item.");
+
             Cursor = Cursors.Default;
         }
 
