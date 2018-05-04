@@ -165,11 +165,11 @@ namespace GCDConsoleLib
         /// <param name="rTemplate"></param>
         /// <param name="sFilename"></param>
         /// <param name="leaveopen"></param>
-        public Raster(Raster rTemplate) : base(TempRasterFileInfo())
+        public Raster(Raster rTemplate, Projection proj) : base(TempRasterFileInfo())
         {
             _temporary = true;
             ExtentRectangle theExtent = new ExtentRectangle(rTemplate.Extent);
-            _Init(RasterDriver.GTiff, rTemplate.VerticalUnits, rTemplate.Proj, rTemplate.Datatype, theExtent, rTemplate.origNodataVal);
+            _Init(RasterDriver.GTiff, rTemplate.VerticalUnits, proj, rTemplate.Datatype, theExtent, rTemplate.origNodataVal);
             Create();
         }
 

@@ -1,5 +1,7 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using GCDConsoleTest.Helpers;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 
@@ -27,7 +29,7 @@ namespace GCDConsoleLib.Tests
                 Projection junk = new Projection("junk");
                 Assert.Fail();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Assert.IsInstanceOfType(e, typeof(ApplicationException));
             }
@@ -92,7 +94,7 @@ namespace GCDConsoleLib.Tests
                 Projection s1 = new Projection(String.Format(sUnitWKT, "gallops"));
                 Assert.Fail();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 // Not just any exception will do.
                 Assert.IsInstanceOfType(e, typeof(ArgumentException));
@@ -134,5 +136,82 @@ namespace GCDConsoleLib.Tests
             Assert.IsFalse(pWKT1.IsSame(junk));
 
         }
+
+
+
+
+        [TestMethod()]
+        [TestCategory("Unit")]
+        public void ValidityCheck()
+        {
+            Dictionary<string, Projection> projdict = new Dictionary<string, Projection>();
+
+            Dictionary<string, Raster> rasters = new Dictionary<string, Raster>()
+            { //"C:\dev\gcd\extlib\TestData\projectiontests\Dee\2011Dee1mDEM_BEFORE.tif"
+                { "Dee2011", new Raster(new FileInfo(DirHelpers.GetTestRootPath("projectiontests/Dee/2011Dee1mDEM.tif"))) },
+                { "Dee2011Weird", new Raster(new FileInfo(DirHelpers.GetTestRootPath("projectiontests/Dee/2011Dee1mDEM_weird.tif"))) },
+                { "Grilliot", new Raster(new FileInfo(DirHelpers.GetTestRootPath("projectiontests/Grilliot/WB2013610r.tif"))) },
+                { "Rees", new Raster(new FileInfo(DirHelpers.GetTestRootPath("projectiontests/Rees/Event08DEM.tif"))) },
+                { "Shotover2011", new Raster(new FileInfo(DirHelpers.GetTestRootPath("projectiontests/Shotover/Pr2011DEM.tif"))) },
+                { "ShotoverPre2011", new Raster(new FileInfo(DirHelpers.GetTestRootPath("projectiontests/Shotover/Pre2011DEM.tif"))) },
+                { "Sulpher2005", new Raster(new FileInfo(DirHelpers.GetTestRootPath("projectiontests/SulpherCreek/2005DecDEM.tif"))) },
+                { "SulpherPointDenisty", new Raster(new FileInfo(DirHelpers.GetTestRootPath("projectiontests/SulpherCreek/dec05allpoints.tif"))) },
+            };
+
+            Dictionary<string, Vector> vectors = new Dictionary<string, Vector>()
+            {
+                { "Dee", new Vector(new FileInfo(DirHelpers.GetTestRootPath("projectiontests/Dee/OSWaterAreaReachType.shp"))) },
+                { "ShotoverAOI", new Vector(new FileInfo(DirHelpers.GetTestRootPath("projectiontests/Shotover/AoI.shp"))) },
+                { "ShotoverCells", new Vector(new FileInfo(DirHelpers.GetTestRootPath("projectiontests/Shotover/Cells.shp"))) },
+                { "ShotoverSections", new Vector(new FileInfo(DirHelpers.GetTestRootPath("projectiontests/Shotover/Sections.shp"))) },
+                { "SulpherCreek", new Vector(new FileInfo(DirHelpers.GetTestRootPath("projectiontests/SulpherCreek/DoDGeomorphicInterpretation.shp"))) }
+            };
+
+            foreach (KeyValuePair<string, Raster> kvp in rasters)
+                projdict.Add(kvp.Value.GISFileInfo.FullName, kvp.Value.Proj);
+
+            foreach (KeyValuePair<string, Vector> kvp in vectors)
+                projdict.Add(kvp.Value.GISFileInfo.FullName, kvp.Value.Proj);
+
+            // First try it with a real file
+            using (ITempDir tmp = TempDir.Create())
+            {
+
+                foreach (KeyValuePair<string, Raster> kvp in rasters)
+                {
+                    string thing = "";
+                    kvp.Value.Proj.mSRef.ExportToPrettyWkt(out thing, 0);
+
+                    Raster rCopy = RasterOperators.ExtendedCopy(kvp.Value, new FileInfo(Path.Combine(tmp.Name, kvp.Value.GISFileInfo.Name)));
+
+                    string HSName = Path.GetFileNameWithoutExtension(kvp.Value.GISFileInfo.Name) + "_HS" + Path.GetExtension(kvp.Value.GISFileInfo.Name);
+                    Raster rHS = RasterOperators.Hillshade(rCopy, new FileInfo(Path.Combine(tmp.Name, HSName)));
+
+                    projdict.Add(rCopy.GISFileInfo.FullName, rCopy.Proj);
+                    projdict.Add(rHS.GISFileInfo.FullName, rHS.Proj);
+
+                    Assert.IsTrue(kvp.Value.Proj.IsSame(rCopy.Proj));
+                    Assert.IsTrue(kvp.Value.Proj.IsSame(rHS.Proj));
+                }
+
+                Debug.WriteLine("DONE");
+            }
+
+            Debug.WriteLine("Local, Projected, Geographic, GeoCentric, Path, HasWKT, HasProj, LinearUnits, WKTLength, HasProj4");
+            foreach(KeyValuePair<string, Projection> kvp in projdict)
+            {
+                Projection Proj = kvp.Value;
+                string proj4 = "";
+                Proj.mSRef.ExportToProj4(out proj4);
+                Debug.WriteLine(String.Format("{0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}",
+                    Proj.mSRef.IsLocal(), Proj.mSRef.IsProjected(), Proj.mSRef.IsGeographic(), 
+                    Proj.mSRef.IsGeocentric(), kvp.Key, Proj.mSRef.GetLinearUnitsName(),
+                    Proj.Wkt.Length, !String.IsNullOrEmpty(proj4)));
+
+            }
+
+            Debug.WriteLine("DONE");
+        }
+
     }
 }

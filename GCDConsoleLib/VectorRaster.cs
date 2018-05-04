@@ -13,15 +13,14 @@ namespace GCDConsoleLib
 
         /// <summary>
         /// Given a Template Raster, a vector and a field name, create a usable rasterized poly mask
+        /// Notice how we use everything from the template raster except the projection, which MUST
+        /// come from the vector in case there are slight differences.
         /// </summary>
         /// <param name="Template">Template will be used for Shape and projection only</param>
         /// <param name="input"></param>
         /// <param name="FieldName"></param>
-        public VectorRaster(Raster Template, Vector vectorInput) : base(Template)
+        public VectorRaster(Raster Template, Vector vectorInput) : base(Template, vectorInput.Proj)
         {
-            // For slight mismatches in the projection we absolutely need the raster to match the projection of the vector
-            Proj = vectorInput.Proj;
-
             // This won't get populated 
             FieldValues = new Dictionary<int, string> { };
             Datatype = new GdalDataType(typeof(int));
@@ -35,11 +34,13 @@ namespace GCDConsoleLib
 
         /// <summary>
         /// Given a Template Raster, a vector and a field name, create a usable rasterized poly mask
+        /// Notice how we use everything from the template raster except the projection, which MUST
+        /// come from the vector in case there are slight differences.
         /// </summary>
         /// <param name="Template">Template will be used for Shape and projection only</param>
         /// <param name="input"></param>
         /// <param name="FieldName"></param>
-        public VectorRaster(Raster Template, Vector vectorInput, string FieldName) : base(Template)
+        public VectorRaster(Raster Template, Vector vectorInput, string FieldName) : base(Template, vectorInput.Proj)
         {
             FieldValues = new Dictionary<int, string> { };
             Datatype = new GdalDataType(typeof(int));
