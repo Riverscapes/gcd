@@ -475,7 +475,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             grdData.Rows[7].Cells[colTot].Value = SafePercent(classErosionVol, totalErosionVol) / 100f;
 
             // Deposition
-            double classDepositionVol = activeStats.DepositionThr.GetArea(ca).As(options.AreaUnits);
+            double classDepositionVol = activeStats.DepositionThr.GetVolume(ca, lu).As(options.VolumeUnits);
             double totalDepositionVol = classDepositionVol;
             switch (raw)
             {
@@ -491,7 +491,7 @@ namespace GCDCore.UserInterface.ChangeDetection
                     totalDepositionVol = activeStats.DepositionRaw.GetVolume(ca, lu).As(options.VolumeUnits);
                     break;
             }
-            grdData.Rows[8].Cells[colTot].Value = SafePercent(classDepositionArea, totalDepositionVol) / 100f;
+            grdData.Rows[8].Cells[colTot].Value = SafePercent(classDepositionVol, totalDepositionVol) / 100f;
 
             // Vol of Difference
             double classVolDiff = activeStats.VolumeOfDifference_Thresholded.As(options.VolumeUnits);
@@ -518,7 +518,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             switch (raw)
             {
                 case BudgetSegregation.frmBudgetSegResults.RawRepresents.RawDoDAreaOfInterest:
-                    totalNetVolDiff = allStats.Sum(x => x.NetVolumeOfDifference_Thresholded.As(options.VolumeUnits));
+                    totalNetVolDiff = allStats.Sum(x => x.NetVolumeOfDifference_Raw.As(options.VolumeUnits));
                     break;
 
                 case BudgetSegregation.frmBudgetSegResults.RawRepresents.ThrDoDAreaDetectableChange:
@@ -526,7 +526,7 @@ namespace GCDCore.UserInterface.ChangeDetection
                     break;
 
                 case BudgetSegregation.frmBudgetSegResults.RawRepresents.RawClassAreaOfInterest:
-                    totalNetVolDiff = activeStats.NetVolumeOfDifference_Thresholded.As(options.VolumeUnits);
+                    totalNetVolDiff = activeStats.NetVolumeOfDifference_Raw.As(options.VolumeUnits);
                     break;
             }
             grdData.Rows[10].Cells[colTot].Value = SafePercent(classNetVolDiff, totalNetVolDiff) / 100f;
