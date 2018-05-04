@@ -1,0 +1,309 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="Project" type="ProjectType"/>
+  <xs:complexType name="ProjectType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="Name"/>
+      <xs:element type="xs:string" name="DateTimeCreated"/>
+      <xs:element type="xs:string" name="GCDVersion"/>
+      <xs:element type="xs:string" name="Description"/>
+      <xs:element type="UnitsType" name="Units"/>
+      <xs:element type="xs:string" name="CellArea"/>
+      <xs:element type="DEMSurveysType" name="DEMSurveys"/>
+      <xs:element type="MasksType" name="Masks"/>
+      <xs:element type="DoDsType" name="DoDs"/>
+      <xs:element type="InterComparisonsType" name="InterComparisons"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="UnitsType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="Horizontal"/>
+      <xs:element type="xs:string" name="Vertical"/>
+      <xs:element type="xs:string" name="Area"/>
+      <xs:element type="xs:string" name="Volume"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- ==============================================================
+     DEM Surveys
+     ============================================================== -->
+
+  <!-- Bucket for DEM -->
+  <xs:complexType name="DEMSurveysType">
+    <xs:sequence>
+      <xs:element type="DEMType" name="DEM" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="DEMType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="Name"/>
+      <xs:element type="xs:string" name="Path"/>
+      <xs:element type="xs:string" name="Hillshade"/>
+      <xs:element type="ErrorSurfacesType" name="ErrorSurfaces"/>
+      <xs:element type="AssociatedSurfacesType" name="AssociatedSurfaces"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ErrorSurfacesType">
+    <xs:sequence>
+      <xs:element type="ErrorSurfaceType" name="ErrorSurface"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ErrorSurfaceType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="Name"/>
+      <xs:element type="xs:string" name="Path"/>
+      <xs:element type="xs:string" name="IsDefault"/>
+      <xs:element type="ErrorSurfacePropertiesType" name="ErrorSurfaceProperties"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ErrorSurfacePropertiesType">
+    <xs:sequence>
+      <xs:element type="ErrorSurfacePropertyType" name="ErrorSurfaceProperty"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ErrorSurfacePropertyType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="Name"/>
+      <xs:element type="xs:string" name="FISRuleFile"/>
+      <xs:element type="FISInputsType" name="FISInputs"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="FISInputsType">
+    <xs:sequence>
+      <xs:element type="InputType" name="Input" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="InputType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="Name"/>
+      <xs:element type="xs:string" name="AssociatedSurface"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="AssociatedSurfacesType">
+    <xs:sequence>
+      <xs:element type="AssociatedSurfaceType" name="AssociatedSurface" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AssociatedSurfaceType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="Name"/>
+      <xs:element type="xs:string" name="Type"/>
+      <xs:element type="xs:string" name="Path"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- ==============================================================
+     MASKS
+     ============================================================== -->
+
+  <xs:complexType name="MasksType">
+    <xs:sequence>
+      <xs:element type="MaskType" name="Mask"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MaskType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="Name"/>
+      <xs:element type="xs:string" name="Path"/>
+      <xs:element type="xs:string" name="Field"/>
+      <xs:element type="ItemsType" name="Items"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ItemsType">
+    <xs:sequence>
+      <xs:element type="ItemType" name="Item" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+
+  <!-- ==============================================================
+     DoDs
+     ============================================================== -->
+
+  <xs:complexType name="DoDsType">
+    <xs:sequence>
+      <xs:element type="DoDType" name="DoD" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DoDType" mixed="true">
+    <xs:sequence>
+      <xs:element type="xs:string" name="Name"/>
+      <xs:element type="xs:string" name="Folder"/>
+
+      <xs:element type="NewSurfaceType" name="NewSurface" minOccurs="0"/>
+      <xs:element type="OldSurfaceType" name="OldSurface" minOccurs="0"/>
+
+      <xs:element type="xs:string" name="RawDoD"/>
+      <xs:element type="xs:string" name="ThrDoD"/>
+
+      <xs:element type="xs:string" name="ThrErr"/>
+      <xs:element type="xs:string" name="RawHistogram"/>
+      <xs:element type="xs:string" name="ThrHistogram"/>
+      <xs:element type="xs:string" name="SummaryXML"/>
+      <xs:element type="xs:string" name="PropagatedError"/>
+
+      <xs:element type="xs:string" name="NewError" minOccurs="0"/>
+      <xs:element type="xs:string" name="OldError" minOccurs="0"/>
+
+      <xs:element type="xs:decimal" name="ConfidenceLevel" minOccurs="0"/>
+
+      <xs:element type="StatisticsType" name="Statistics" minOccurs="0"/>
+      <xs:element type="BudgetSegregationsType" name="BudgetSegregations" minOccurs="0"/>
+      <xs:element type="xs:string" name="PriorProbability"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="NewSurfaceType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="type" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="OldSurfaceType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="type" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <!-- ==============================================================
+     Statistics
+     ============================================================== -->
+
+  <xs:complexType name="StatisticsType">
+    <xs:sequence>
+      <xs:element type="ErosionType" name="Erosion"/>
+      <xs:element type="DepositionType" name="Deposition"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ErosionType">
+    <xs:sequence>
+      <xs:element type="RawType" name="Raw"/>
+      <xs:element type="ThresholdedType" name="Thresholded"/>
+      <xs:element type="ErrorType" name="Error"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DepositionType">
+    <xs:sequence>
+      <xs:element type="RawType" name="Raw"/>
+      <xs:element type="ThresholdedType" name="Thresholded"/>
+      <xs:element type="ErrorType" name="Error"/>
+    </xs:sequence>
+  </xs:complexType>
+
+
+  <xs:complexType name="RawType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="Area"/>
+      <xs:element type="xs:string" name="Volume"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ThresholdedType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="Area"/>
+      <xs:element type="xs:string" name="Volume"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ErrorType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="Volume"/>
+    </xs:sequence>
+  </xs:complexType>
+
+
+  <!-- ==============================================================
+     Budget Seggregation
+     ============================================================== -->
+
+  <xs:complexType name="BudgetSegregationsType">
+    <xs:sequence>
+      <xs:element type="BudgetSegregationType" name="BudgetSegregation"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="BudgetSegregationType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="Name"/>
+      <xs:element type="xs:string" name="Folder"/>
+      <xs:element type="xs:string" name="Mask"/>
+      <xs:element type="xs:string" name="SummaryXML"/>
+      <xs:element type="xs:string" name="ClassLegend"/>
+      <xs:element type="xs:string" name="MaskField"/>
+      <xs:element type="ClassesType" name="Classes"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ClassesType">
+    <xs:sequence>
+      <xs:element type="ClassType" name="Class" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ClassType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="Name"/>
+      <xs:element type="xs:string" name="RawHistogram"/>
+      <xs:element type="xs:string" name="ThrHistogram"/>
+      <xs:element type="xs:string" name="SummaryXML"/>
+      <xs:element type="StatisticsType" name="Statistics"/>
+    </xs:sequence>
+  </xs:complexType>
+
+
+
+  <xs:complexType name="ItemType">
+    <xs:sequence>
+      <xs:element name="FieldValue">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="Bar Sculpting"/>
+            <xs:enumeration value="Bank Erosion"/>
+            <xs:enumeration value="Channel Scour"/>
+            <xs:enumeration value="Central Bar Development"/>
+            <xs:enumeration value="Eddie Deposition"/>
+            <xs:enumeration value="Channel Filling"/>
+            <xs:enumeration value="Pool Filling"/>
+            <xs:enumeration value="Questionable Edge Effect"/>
+            <xs:enumeration value="Point Bar Development"/>
+            <xs:enumeration value="Eddie Scour"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element type="xs:string" name="Include"/>
+    </xs:sequence>
+  </xs:complexType>
+
+
+
+  <!-- ==============================================================
+     Intercomparisons
+     ============================================================== -->
+
+  <xs:complexType name="InterComparisonsType">
+    <xs:sequence>
+      <xs:element type="InterComparisonType" name="InterComparison"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="InterComparisonType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="Name"/>
+      <xs:element type="xs:string" name="SummaryXML"/>
+      <xs:element type="InterDoDsType" name="DoDs"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="InterDoDsType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="DoD" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
