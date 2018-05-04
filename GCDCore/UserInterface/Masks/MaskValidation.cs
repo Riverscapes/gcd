@@ -59,10 +59,10 @@ namespace GCDCore.UserInterface.Masks
         }
 
         /// <summary>
-        /// NOTE: This will throw an ArgumentException that MUST be caught. This was done because we need a trinary variable.
+        /// 
         /// </summary>
         /// <param name="ucInput"></param>
-        /// <returns>returns true if needed, false if not, throws in any other case</returns>
+        /// <returns>returns true if needed, false if not</returns>
         public static bool ValidateShapefileProjection(UtilityForms.ucVectorInput ucInput)
         {
             if (!GISDatasetValidation.DSSpatialRefMatchesProject(ucInput.SelectedItem))
@@ -78,11 +78,13 @@ namespace GCDCore.UserInterface.Masks
                     ucInput.Select();
                     return false;
                 }
+                // The user says it's ok. Proceed anyway at their own risk
                 else
                     return true;
             }
+            // Everything is just fine
             else
-                return false;
+                return true;
 
         }
 
