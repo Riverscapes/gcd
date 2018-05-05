@@ -3,12 +3,20 @@ title: Recommended Readings
 ---
 
 ### Reading Ahead of Course:
+The methodological development is described in ([Wheaton et al., 2010a](http://dx.doi.org/10.1002/esp.1886)), the Wheaton ([2008](http://sites.google.com/a/joewheaton.org/www/Home/research/projects-1/morphological-sediment-budgeting/phdthesis)) thesis, and the Wheaton et al. ([2010b](http://dx.doi.org/10.1002/rra.1305)) RRA paper. The [Matlab version of the code]({{ site.baseurl}}/Download/old_versions.html#dod-3-matlab--gcd-3) (DoD 3) is provided as supplemental information with the [ESPL paper](http://dx.doi.org/10.1002/esp.1886) so that readers can test or extend the code as they see fit for their purposes. The Milan et al. (2011) paper provides a nice overview of basic change detection methods and Williams (2012) provides a nice overview of DEM of Differencing.
 
-- [![img](http://gcdworkshop.joewheaton.org/_/rsrc/1304630011509/syllabus/text-readings/PDF_Icon.png)](https://869789182725854870-a-joewheaton-org-s-sites.googlegroups.com/a/joewheaton.org/www/Home/research/paper-downloads/Wheaton_etal_ESPL_DoD.pdf?attachauth=ANoY7cpinZlpduiHyKH6mBqeqDkaeQfq8PMCqPgyp1_1cWAnWq6h4bNuQxI91iAzeXh0FLnzEAIRY8cDzOfXZUM8WVxzxx-G9XS7hHLX2W2zKf2XOsZ3d_HIUMu6hOtPj1fh_R8MfpfhvYAqCDQUJvu-jqX-G9jLRe77NuSo-ZQHhXJzhpc-yeNb25YXNsdcKKF0EE3n0tjSOfli--6ZlmWUcx73e_BUtHXQ0n4cgMAjuh76KShicvwC_DBNlxe2kVkPfLLgVzl1&attredirects=0)
-   Wheaton JM, Brasington J, Darby SE and Sear D. 2010. Accounting for Uncertainty in DEMs from Repeat Topographic Surveys: Improved Sediment Budgets. Earth Surface Processes and Landforms. 35 (2): 136-156. DOI:  10.1002/esp.1886.
+- <a href="https://www.researchgate.net/publication/227747150_Accounting_for_uncertainty_in_DEMs_from_repeat_topographic_surveys_Improved_sediment_budgets"><i class="fa fa-file-pdf-o"></i></a> Wheaton JM, Brasington J, Darby SE and Sear D. 2010. [Accounting for Uncertainty in DEMs from Repeat Topographic Surveys: Improved Sediment Budgets](https://www.researchgate.net/publication/227747150_Accounting_for_uncertainty_in_DEMs_from_repeat_topographic_surveys_Improved_sediment_budgets). Earth Surface Processes and Landforms. 35 (2): 136-156. DOI:  [10.1002/esp.1886](http://dx.doi.org/10.1002/esp.1886).
+- Milan DJ, Heritage GL, Large ARG and Fuller IC. 2011. Filtering spatial error from DEMs: Implications for morphological change estimation. Geomorphology. 125(1): 160-171. DOI: [10.1016/j.geomorph.2010.09.012](http://dx.doi.org/10.1016/j.geomorph.2010.09.012).
+- <a href="http://geomorphology.org.uk/sites/default/files/chapters/2.3.2_DEMsOfDifference.pdf"><i class="fa fa-file-pdf-o"></i></a> Williams RD. 2012. [DEMs of Difference](http://geomorphology.org.uk/sites/default/files/chapters/2.3.2_DEMsOfDifference.pdf). Clarke L and Nield JM (Eds), [Geomorphological Techniques](http://geomorphology.org.uk/geomorph_techniques). British Society for Geomorphology: London, UK.  
 
-- [![img](http://gcdworkshop.joewheaton.org/_/rsrc/1304630011509/syllabus/text-readings/PDF_Icon.png)](https://869789182725854870-a-joewheaton-org-s-sites.googlegroups.com/a/joewheaton.org/www/Home/research/paper-downloads/Wheaton_etal_ESPL_DoD.pdf?attachauth=ANoY7cpinZlpduiHyKH6mBqeqDkaeQfq8PMCqPgyp1_1cWAnWq6h4bNuQxI91iAzeXh0FLnzEAIRY8cDzOfXZUM8WVxzxx-G9XS7hHLX2W2zKf2XOsZ3d_HIUMu6hOtPj1fh_R8MfpfhvYAqCDQUJvu-jqX-G9jLRe77NuSo-ZQHhXJzhpc-yeNb25YXNsdcKKF0EE3n0tjSOfli--6ZlmWUcx73e_BUtHXQ0n4cgMAjuh76KShicvwC_DBNlxe2kVkPfLLgVzl1&attredirects=0)
-  Milan DJ, Heritage GL, Large ARG and Fuller IC. 2011. Filtering spatial error from DEMs: Implications for morphological change estimation. Geomorphology. 125(1): 160-171. DOI: 10.1016/j.geomorph.2010.09.012.
+
+
+
+<div align="center">
+	<a class="hollow button" href="https://www.researchgate.net/project/Geomorphic-Change-Detection" ><img src="{{ site.baseurl }}/assets/images/icons/ResearchGate_Icon.png">&nbsp;&nbsp; Check out GCD ResearchGate Project for Publications</a>
+</div>
+
+
 
 #### Follow Up Papers:
 

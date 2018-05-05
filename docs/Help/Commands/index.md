@@ -1,6 +1,6 @@
 ---
 title: Commands
-weight: 2
+weight: 3
 ---
 
 The command reference is linked from the help within the tool and acts as a reference for all the commands within the GCD Toolbar:
