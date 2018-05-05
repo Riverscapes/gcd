@@ -1,5 +1,6 @@
 ---
 title: Project Context Menu
+weight: 2
 ---
 
 ![GCD6_ContextMenu_ProjectExplorer_Project]({{ site.baseurl }}/assets/images/GCD6_ContextMenu_ProjectExplorer_Project.png)

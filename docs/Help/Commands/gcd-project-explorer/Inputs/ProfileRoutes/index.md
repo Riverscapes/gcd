@@ -1,8 +1,9 @@
 ---
-title: Add DEM Survey
+title: Profile Routes Library
+weight: 4
 ---
 
-This is the same Add DEM Survey command accessible from several other locations. See [i. Add DEM Survey]({{ site.baseurl }}/gcd-command-reference/gcd-project-explorer/b-inputs-context-menu/i-add-dem-survey) for command reference.
+
 
 ------
 <div align="center">

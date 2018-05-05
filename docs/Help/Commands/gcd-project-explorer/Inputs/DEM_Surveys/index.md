@@ -1,5 +1,6 @@
 ---
-title: DEM Context Menu
+title: DEM Surveys
+weight: 1
 ---
 
 ![D_GCD6_ContextMenu_ProjectExplorer_DEM]({{ site.baseurl }}/assets/images/D_GCD6_ContextMenu_ProjectExplorer_DEM.png)

@@ -1,5 +1,6 @@
 ---
-title: Inputs Context Menu
+title: Inputs
+weight: 3
 ---
 
 ![B_GCD6_ContextMenu_ProjectExplorer_Inputs]{{ site.baseurl }}/assets/imagesB_GCD6_ContextMenu_ProjectExplorer_Inputs.png)
