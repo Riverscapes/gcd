@@ -94,3 +94,5 @@ AppRedirects:
     url: Help/Commands/gcd-project-explorer/Inputs/DEM_Surveys/add-dem-survey.html
   - key: frmLinearExtractionProperties
     url: Help/Commands/gcd-project-explorer/Inputs/DEM_Surveys/DEMSurvey/CalculateLinearExtraction.html	
+  - key: frmSurfaceProperties
+    url: Help/Commands/gcd-project-explorer/Inputs/DEM_Surveys/DEMSurvey/edit-dem-survey-properties.html
