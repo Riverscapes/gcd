@@ -86,3 +86,5 @@ AppRedirects:
     url: Help/Commands/project-menu/new-project.html
   - key: KEY2
     url: Download/release_notes.html
+  - key: OpenProject
+    url: Help/Commands/project-menu/open-project.html  
