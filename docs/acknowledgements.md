@@ -11,7 +11,7 @@ We are grateful to generous grant support from multiple US and UK Federal Agenci
 
 ### GCD 7 Development
 
-Current funding for the Geomorphic Change Detection Software development (GCD 7) is being provided by:
+Funding for the Geomorphic Change Detection Software development (GCD 7) was provided by:
 - [NERC](https://nerc.ukri.org/) - UK Natural Enviornment Research Council - [Award NE/P016804/1](http://gotw.nerc.ac.uk/list_full.asp?pcode=NE%2FP016804%2F1&cookieConsent=A)
 - [USGS GCMRC](http://www.gcmrc.gov/gcmrc.aspx)
 
@@ -25,6 +25,45 @@ Current funding for the Geomorphic Change Detection Software development (GCD 7)
   </div> 
 </div>
 <br>
+
+#### GeoTERM NERC Project:
+Through the GeoTERM NERC project with NERC, our International Partners who have been extremely generous with their time, sharing their expertise, data, articulating their needs and in-kind funding and support:
+
+##### Agencies and Research Institutes
+- [Scottish Environmental Protection Agency](https://www.sepa.org.uk) - Alasdair Matheson & Helen Reid 
+- [NIWA](https://www.niwa.co.nz/) of New Zealand - [ Jo Hoyle](https://www.niwa.co.nz/people/jo-hoyle) 
+- [James Hutton Institute](http://www.hutton.ac.uk/) of Scotland  - [Stephen Addy](http://www.hutton.ac.uk/staff/stephen-addy)
+
+[![SEPA]({{ site.baseurl }}/assets/images/logos/SEPA_Logo.png)](https://www.waikato.ac.nz)
+[![NIWA]({{ site.baseurl }}/assets/images/logos/NIWA.jpg)](https://www.niwa.co.nz/)
+[![JHI]({{ site.baseurl }}/assets/images/logos/jhi.png)](http://www.hutton.ac.uk/)
+
+##### New Zealand Regional Councils:
+- [Hawkes Bay Regional Council](https://www.hbrc.govt.nz/)
+- [Ottago Regional Council](https://www.orc.govt.nz/) 
+- [Enviornment Cantebury Regional Council](https://www.ecan.govt.nz/)
+
+[![Hawkes]({{ site.baseurl }}/assets/images/logos/HawkesBay.png)](https://www.hbrc.govt.nz/)
+[![Ottago]({{ site.baseurl }}/assets/images/logos/OtagoRegionalCouncil_Logo.png)](https://www.orc.govt.nz/)
+[![ECAN]({{ site.baseurl }}/assets/images/logos/EnvironmentCanterbury_Logo.png)](https://www.ecan.govt.nz/)
+
+##### Consulting Firms
+- [Land River Sea Consulting](http://www.landriversea.com/) of New Zealand - Matthew Gardner (present)
+- [North Arrow Research](http://northarrowresearch.com) of Canada - Matt Reimer (present) & Philip Bailley
+
+[![NAR]({{ site.baseurl }}/assets/images/logos/NA_Logo_150pxTall.png)](http://northarrowresearch.com/)
+[![LRSC]({{ site.baseurl }}/assets/images/logos/LandRiverSea.png)](http://www.landriversea.com/)   
+
+
+##### Universities
+- [University of Waikato (New Zealand)](https://www.waikato.ac.nz)-  [James Brasington](https://www.waikato.ac.nz/staff-profiles/people/jbrasing) (PI).
+- [Utah State University](http://qcnr.usu.edu/wats/) - [Joe Wheaton](http://joewheaton.org)
+
+
+[![Waikato]({{ site.baseurl }}/assets/images/logos/Waikato_Logo.png)](https://www.waikato.ac.nz)
+[![USU]({{ site.baseurl }}/assets/images/logos/etal.png)](http://etal.joewheaton.org)
+
+
 
 ------
 
