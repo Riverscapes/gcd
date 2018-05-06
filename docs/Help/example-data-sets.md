@@ -17,7 +17,7 @@ The GeoTERM Working Group members each contributed datasets for the excercises.
 <div align="center">
     <a class="hollow button" href="https://s3-us-west-2.amazonaws.com/etalweb.joewheaton.org/GCD/GCD7/Tutorials/GeoTERM_Feshie.zip"><i class="fa fa-file-archive-o"></i>  River Feshie, Scotland  </a>  
     <a class="hollow button" href="https://s3-us-west-2.amazonaws.com/etalweb.joewheaton.org/GCD/GCD7/Tutorials/GeoTERM_HBRC.zip"><i class="fa fa-file-archive-o"></i>  Ngaruroro River, New Zealand </a>  
-    <a class="hollow button" href="http://tat.riverscapes.xyz/Download/"><i class="fa fa-file-archive-o"></i>  Shotover River, New Zealand </a>  
+    <a class="hollow button" href="https://s3-us-west-2.amazonaws.com/etalweb.joewheaton.org/GCD/GCD7/Tutorials/GeoTERM_ORC.zip"><i class="fa fa-file-archive-o"></i>  Shotover River, New Zealand </a>  
     <a class="hollow button" href="https://s3-us-west-2.amazonaws.com/etalweb.joewheaton.org/GCD/GCD7/Tutorials/GeoTERM_SEPA.zip"><i class="fa fa-file-archive-o"></i> River Dee, Scotland </a>  
     <a class="hollow button" href="https://s3-us-west-2.amazonaws.com/etalweb.joewheaton.org/GCD/GCD7/Tutorials/GeoTERM_Rees.zip"><i class="fa fa-file-archive-o"></i> River Rees, New Zealand </a> 
     <a class="hollow button" href="https://s3-us-west-2.amazonaws.com/etalweb.joewheaton.org/GCD/GCD7/Tutorials/MaskOnly_MorphologicalApproach.zip"><i class="fa fa-file-archive-o"></i> River Rees, New Zealand - Morphological Approach Mask Only</a> 
