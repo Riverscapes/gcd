@@ -16,7 +16,6 @@ DATES: April 18-20, 2018
 
 <div align="center">
     <a class="button" href="{{ site.baseurl }}/Help/Workshops/workshop-schedules/2018/Aberdeen/excercises.html"><i class="fa fa-coffee"></i>  Workshop Excercises </a>  
-    
 </div>
 
 
@@ -40,7 +39,6 @@ For the workshop, we presented the [Beta GCD 7 Software](https://github.com/Rive
     <a class="hollow button" href="http://releases.northarrowresearch.com/XSViewer/setup.exe"><i class="fa fa-cloud-download"></i> Cross Section Viewer 2.0 BETA </a>  
 </div>
 
-
 ------
 
 ## Participants & Partners
@@ -50,7 +48,7 @@ This workshop was made possible thanks to a NERC - [UK Natural Enviornment Resea
 <div align="center">
     <a href="https://nerc.ukri.org/"><img src="{{ site.baseurl }}/assets/images/logos/NERC.png" alt=""></a>
 </div>
-  
+
 Our International Partners who have been generous with their time, sharing their expertise, data, articulating their needs and in-kind funding and support.
 
 ### Agencies and Research Institutes

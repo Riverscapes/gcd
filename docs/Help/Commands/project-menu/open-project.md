@@ -7,7 +7,7 @@ If you have previously created a [GCD project]({{ site.baseurl }}/Help/Concepts/
 
 
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/-5kBJx-J-y8" frameborder="0" allowfullscreen align="center"></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/b4ht2G6wQ4M" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
 ------
 <div align="center">
