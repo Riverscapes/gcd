@@ -91,4 +91,6 @@ AppRedirects:
   - key: CleanRaster
     url: Help/Commands/data-prep-menu/a-clean-raster-tool.html
   - key: NewDEM
-    url: Help/Commands/gcd-project-explorer/Inputs/DEM_Surveys/add-dem-survey.html	
+    url: Help/Commands/gcd-project-explorer/Inputs/DEM_Surveys/add-dem-survey.html
+  - key: frmLinearExtractionProperties
+    url: Help/Commands/gcd-project-explorer/Inputs/DEM_Surveys/DEMSurvey/CalculateLinearExtraction.html	
