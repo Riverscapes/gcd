@@ -89,4 +89,6 @@ AppRedirects:
   - key: OpenProject
     url: Help/Commands/project-menu/open-project.html
   - key: CleanRaster
-    url: Help/Commands/data-prep-menu/a-clean-raster-tool.html   
+    url: Help/Commands/data-prep-menu/a-clean-raster-tool.html
+  - key: NewDEM
+    url: Help/Commands/gcd-project-explorer/Inputs/DEM_Surveys/add-dem-survey.html	
