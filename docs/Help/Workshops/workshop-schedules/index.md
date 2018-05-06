@@ -1,5 +1,6 @@
 ---
 title: Your Workshop
+weight: 1
 ---
 
 Below, you will find schedule, syllabus and details for your workshop:
@@ -22,3 +23,4 @@ Below, you will find schedule, syllabus and details for your workshop:
   - [USU Logan - Spring 2017 Semester Long](http://gcdworkshop.joewheaton.org/workshop-schedules/2017/usu-logan---spring-2017-semester-long)
 - 2018
   - [WATS 6850 - Spring 2018](http://gcdworkshop.joewheaton.org/workshop-schedules/2018/wats-6850---spring-2018)
+  - [GeoTERM Workshop - April 2018]({{ site.baseurl }}/Help/Workshops/workshop-schedules/2018/Aberdeen/) - Aberndeen, Scotland

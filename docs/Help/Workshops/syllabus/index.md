@@ -1,5 +1,6 @@
 ---
 title: About the Workshop (Syllabus)
+weight: 2
 ---
 
 #### Topics

@@ -1,5 +1,6 @@
 ---
 title: Workshop Topics
+weight: 3
 ---
 
 For every topic that we cover in this workshop there is a reference page where you can find the relevant materials, lecture slides, exercise data and follow-up information. You will use these pages as we work through topics during the workshop and they will be available to you later as a resource if you need them in the future.
