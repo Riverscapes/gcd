@@ -2,9 +2,11 @@
 title: Workshop Exercises 
 weight: 2
 ---
-During the workshop in Aberdeen, we worked through all of the GCD 7 Development deliverables by using excercises. The slides below walk us through each excercise and demo.
+During the [workshop in Aberdeen]({{ site.baseurl }}/Help/Workshops/workshop-schedules/2018/Aberdeen/), we worked through all of the GCD 7 Development deliverables by using excercises. The slides below walk us through each excercise and demo.
+
 
 <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vR9PFKbUyvs5fLcjFal2MPfy6fdRY7uNtQKeNo7Mpfmoe6Ft9U0F7-GSmqbZIN2ordqzCQBHBeyEZ1H/embed?loop=true&delayms=3000" frameborder="0" width="960" height="749" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+
 
 ## Workshop Datasets
 
