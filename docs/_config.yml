@@ -87,4 +87,6 @@ AppRedirects:
   - key: KEY2
     url: Download/release_notes.html
   - key: OpenProject
-    url: Help/Commands/project-menu/open-project.html  
+    url: Help/Commands/project-menu/open-project.html
+  - key: CleanRaster
+    url: Help/Commands/data-prep-menu/a-clean-raster-tool.html   
