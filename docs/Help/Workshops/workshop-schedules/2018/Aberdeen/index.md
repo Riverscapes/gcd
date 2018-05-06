@@ -43,7 +43,7 @@ For the workshop, we presented the [Beta GCD 7 Software](https://github.com/Rive
 
 ## Participants & Partners
 
-This workshop was made possible thanks to a NERC - [UK Natural Enviornment Research Council](https://nerc.ukri.org) - Award (NE/P016804/1), which funded participant and partner travel as well as [software development]({{ site/baseurl }}/acknowledgements).
+This workshop was made possible thanks to a NERC - [UK Natural Enviornment Research Council](https://nerc.ukri.org) - Award (NE/P016804/1), which funded participant and partner travel as well as [software development]({{ site.baseurl }}/acknowledgements).
 
 <div align="center">
     <a href="https://nerc.ukri.org/"><img src="{{ site.baseurl }}/assets/images/logos/NERC.png" alt=""></a>

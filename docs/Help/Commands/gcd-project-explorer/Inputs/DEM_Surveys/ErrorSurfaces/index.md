@@ -1,5 +1,6 @@
 ---
 title: Error Surfaces Context Menu
+weight: 3
 ---
 
 ![G_GCD6_ContextMenu_ProjectExplorer_ErrorSurf]({{ site.baseurl }}/assets/images/G_GCD6_ContextMenu_ProjectExplorer_ErrorSurf.png)
@@ -11,7 +12,6 @@ From the Error Surfaces folder in the [GCD Project Explorer]({{ site.baseurl }}/
 - [i. Specify Error Surface]({{ site.baseurl }}/gcd-command-reference/gcd-project-explorer/g-error-surfaces-context-menu/i-specify-error-surface)
 - [ii. Derive Error Surface]({{ site.baseurl }}/gcd-command-reference/gcd-project-explorer/g-error-surfaces-context-menu/ii-derive-error-surface)
 - [iii. Add All Error Surfaces to the Map]({{ site.baseurl }}/gcd-command-reference/gcd-project-explorer/g-error-surfaces-context-menu/iii-add-all-error-surfaces-to-the-map)
-
 
 
 

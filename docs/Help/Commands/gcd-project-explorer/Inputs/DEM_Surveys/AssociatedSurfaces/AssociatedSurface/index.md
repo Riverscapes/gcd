@@ -1,5 +1,5 @@
 ---
-title: Individual Associated Surface Context Menu
+title: Associated Surface Context Menu
 ---
 
 ![F_GCD6_ContextMenu_ProjectExplorer_AssocSurf_ind]({{ site.baseurl }}/assets/images/F_GCD6_ContextMenu_ProjectExplorer_AssocSurf_ind.png)

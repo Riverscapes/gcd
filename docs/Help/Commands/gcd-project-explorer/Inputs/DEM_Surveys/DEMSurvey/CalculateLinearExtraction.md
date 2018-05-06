@@ -1,10 +1,9 @@
 ---
-title: Add DEM Survey
+title: Calculate Linear Extraction from Profile Route
+weight: 3
 ---
 
-The Add DEM Survey form is accessible from several locations:
-
-![GCD6_Form_AddDEMSurvey]({{ site.baseurl }}/assets/images/GCD6_Form_AddDEMSurvey.png)
+Pending.
 
 ------
 <div align="center">

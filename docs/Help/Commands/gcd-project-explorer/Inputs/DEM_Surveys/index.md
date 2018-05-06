@@ -2,25 +2,28 @@
 title: DEM Surveys
 weight: 1
 ---
+### Commands from DEM Surveys Node
+![ContextMenu_ProjectExplorer_DEM]({{ site.baseurl }}/assets/images/CommandRefs/00_ProjectExplorer/DEMSurveys_Context.png)
 
-![D_GCD6_ContextMenu_ProjectExplorer_DEM]({{ site.baseurl }}/assets/images/D_GCD6_ContextMenu_ProjectExplorer_DEM.png)
+From the `DEM Surveys` node in the Project Exploer under `Inputs` in the [GCD Project Explorer]({{ site.baseurl }}/gcd-command-reference/gcd-project-explorer), a right-click context menu reveals five commands :
 
-From any DEM Survey in the DEM Surveys folder in the [GCD Project Explorer]({{ site.baseurl }}/gcd-command-reference/gcd-project-explorer), a right-click context menu reveals six commands:
+- **[Add Existing DEM Survey]({{ site.baseurl }}/Help/Commands/gcd-project-explorer/Inputs/DEM_Surveys/add-dem-survey.html)** - *This is how you add a DEM Survey to your project*
+- **Explore DEM Surveys Folder** - *Opens the `\Inputs\Surveys` folder in your GCD Proect in Windows Explorer*
+- Sort DEM Surveys
+  - **Sort Alphabetically Ascending** - *Sorts in ascending order (i.e. A-Z, 1-9) based on Survey Names* 
+  - **Sort Alphabetically Descending**- *Sorts in descending order (i.e. Z-A, 9-1) based on Survey Names*
+  - **Sort Chronologically Ascending** - *Sorts from Oldest to Newest if a survey date is specifed in surveys.*
+  - **Sort Chronoligically Descending**- *Sorts from Newest to Oldest if a survey date is specifed in surveys.*
+- **[Add all DEM Surveys to the Map]({{ site.baseurl}}/Help/Commands/gcd-project-explorer/Inputs/DEM_Surveys/ii-add-all-dem-surveys-to-map.html)** - *Adds all the DEM Surveys in your project with their hillshades to ArcMAP table of contents (only available in ArcGIS AddIn)*
+- **Collapse Child Items** - *If any DEM surveys are expanded to show their child contents, this command simply collapses them all down to tidy up tree view. *
 
-#### Commands
+One Survey node expanded:
 
-- [i. Edit DEM Survey Properties]({{ site.baseurl }}/gcd-command-reference/gcd-project-explorer/d-dem-context-menu/i-edit-dem-survey-properties)
-- [ii. Add to Map]({{ site.baseurl }}/gcd-command-reference/gcd-project-explorer/d-dem-context-menu/ii-add-to-map)
-- [iii. Delete DEM Survey]({{ site.baseurl }}/gcd-command-reference/gcd-project-explorer/d-dem-context-menu/iii-delete-dem-survey)
-- [iv. Add Associated Surface](({{ site.baseurl }}/gcd-command-reference/gcd-project-explorer/d-dem-context-menu/iv-add-associated-surface/index)
-  - [1. Loading User Defined Associated Surface]({{ site.baseurl }}/gcd-command-reference/gcd-project-explorer/d-dem-context-menu/iv-add-associated-surface/1-loading-user-defined-associated-surface)
-  - [2. Deriving a Slope Analysis]({{ site.baseurl }}/gcd-command-reference/gcd-project-explorer/d-dem-context-menu/iv-add-associated-surface/2-deriving-a-slope-analysis)
-  - [3. Deriving Point Density]({{ site.baseurl }}/gcd-command-reference/gcd-project-explorer/d-dem-context-menu/iv-add-associated-surface/3-deriving-point-density)
-  - [4. Deriving Roughness]({{ site.baseurl }}/gcd-command-reference/gcd-project-explorer/d-dem-context-menu/iv-add-associated-surface/4-deriving-roughness)
+![DEMSurvey_Expanded]({{ site.baseurl }}/assets/images/CommandRefs/00_ProjectExplorer/DEMSurvey_Expanded.png)
 
-Note that, when an individual DEM Survey is highlighted, the first three commands are enabled across the top of the Project Explorer and bring up the same commands. 
+All survey nodes collapsed:
 
-
+![DEMSurvey_Collapsed]({{ site.baseurl }}/assets/images/CommandRefs/00_ProjectExplorer/DEMSurvey_Collapsed.png)
 
 ------
 <div align="center">
