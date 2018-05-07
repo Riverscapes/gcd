@@ -94,7 +94,9 @@ namespace GCDCore.Project
         {
             try
             {
-                AssocSurfaces.ToList().ForEach(x => x.Delete());
+                // This is the safest way to delete from a list while iterating through it.
+                for (int i = AssocSurfaces.Count - 1; i >= 0; i--)
+                    AssocSurfaces[i].Delete();
             }
             finally
             {

@@ -260,10 +260,9 @@ namespace GCDCore.Project
 
             try
             {
-                for (int i = 0; i < BudgetSegregations.Count; i++)
-                {
-                    BudgetSegregations[0].Delete();
-                }
+                // This is the safest way to delete from a list while iterating through it.
+                for (int i = BudgetSegregations.Count -1; i >= 0; i--)
+                    BudgetSegregations[i].Delete();
             }
             finally
             {

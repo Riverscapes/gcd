@@ -152,7 +152,9 @@ namespace GCDCore.Project
         {
             try
             {
-                ErrorSurfaces.ToList().ForEach(x => x.Delete());
+                // This is the safest way to delete from a list while iterating through it.
+                for (int i = ErrorSurfaces.Count - 1; i >= 0; i--)
+                    ErrorSurfaces[i].Delete();
             }
             finally
             {
