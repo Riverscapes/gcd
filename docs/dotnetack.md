@@ -1,7 +1,7 @@
 ---
 title: Acknowledgements
 ignore: true
-layout: null
+layout: dotnetpane
 ---
 
 ## Funding
