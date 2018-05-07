@@ -17,6 +17,8 @@ namespace GCDCore.UserInterface.Project
         public frmProjectProperties()
         {
             InitializeComponent();
+            // New empty list for metadata
+            MetaData = new BindingList<ProjectMetaData>();
         }
 
         public frmProjectProperties(bool bCreateMode)
