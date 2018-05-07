@@ -608,7 +608,7 @@ namespace GCDConsoleLib
             {
                 output["stddev"] = 0;
             }
-
+            UnloadDS();
             return output;
         }
 
