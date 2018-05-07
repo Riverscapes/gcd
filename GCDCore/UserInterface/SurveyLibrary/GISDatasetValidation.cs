@@ -76,6 +76,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
         /// <returns></returns>
         public static bool DSSpatialRefMatchesProjectWithMsgbox(GISDataset gisDS, string sTypeSingle, string sTypePlural)
         {
+
             if (DSSpatialRefMatchesProject(gisDS))
             {
                 string msg = string.Format(

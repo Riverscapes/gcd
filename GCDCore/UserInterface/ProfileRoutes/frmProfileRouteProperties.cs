@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using GCDCore.Project;
+using GCDCore.UserInterface.Masks;
 
 namespace GCDCore.UserInterface.ProfileRoutes
 {
@@ -137,13 +138,28 @@ namespace GCDCore.UserInterface.ProfileRoutes
                 }
 
                 if (!UserInterface.SurveyLibrary.GISDatasetValidation.DSHasSpatialRef(ucPolyline.SelectedItem, "feature class", "feature classes") ||
-                    !UserInterface.SurveyLibrary.GISDatasetValidation.DSSpatialRefMatchesProjectWithMsgbox(ucPolyline.SelectedItem, "feature class", "feature classes") ||
                     !UserInterface.SurveyLibrary.GISDatasetValidation.DSHorizUnitsMatchProject(ucPolyline.SelectedItem, "feature class", "feature classes"))
                 {
                     ucPolyline.Select();
                     return false;
                 }
 
+                if (!SurveyLibrary.GISDatasetValidation.DSSpatialRefMatchesProject(ucPolyline.SelectedItem))
+                {
+                    string msg = string.Format(
+                        "{0}{1}{0}If you believe that these projections are the same (or equivalent) choose \"Yes\" to continue anyway. Otherwise choose \"No\" to abort.",
+                        Environment.NewLine, SurveyLibrary.GISDatasetValidation.SpatialRefNoMatchString(ucPolyline.SelectedItem, "raster", "rasters"));
+
+                    DialogResult result = MessageBox.Show(msg, Properties.Resources.ApplicationNameLong, MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+
+                    if (result == DialogResult.No)
+                    {
+                        ucPolyline.Select();
+                        return false;
+                    }
+                }
+
+                return true;
             }
 
             if (cboDistance.SelectedIndex < 0)

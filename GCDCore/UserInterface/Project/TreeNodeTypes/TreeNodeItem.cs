@@ -92,6 +92,10 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             {
                 frm = new Masks.frmMaskProperties(Item as GCDCore.Project.Masks.RegularMask);
             }
+            else if (Item is GCDCore.Project.LinearExtraction.LinearExtraction)
+            {
+                frm = new LinearExtraction.frmLinearExtractionProperties(Item as GCDCore.Project.LinearExtraction.LinearExtraction);
+            }
             else
             {
                 // Generic raster properties form

@@ -1,12 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using GCDCore.Project;
 using GCDConsoleLib;
@@ -26,36 +21,62 @@ namespace GCDCore.UserInterface.LinearExtraction
             ElevationSurface = surface;
         }
 
+        public frmLinearExtractionProperties(GCDCore.Project.LinearExtraction.LinearExtraction linExt = null)
+        {
+            InitializeComponent();
+            LinearExtraction = linExt;
+        }
+
         private void frmLinearExtractionProperties_Load(object sender, EventArgs e)
         {
-            if (ElevationSurface is Surface)
-            {
-                Surface surf = ElevationSurface as Surface;
+            cboRoute.DataSource = ProjectManager.Project.ProfileRoutes;
 
-                // Select default error surface
-                cboError.DataSource = surf.ErrorSurfaces;
-                if (cboError.Items.Count == 1)
+
+            if (LinearExtraction == null)
+            {
+                if (ElevationSurface is Surface)
                 {
-                    cboError.SelectedIndex = 0;
+                    Surface surf = ElevationSurface as Surface;
+
+                    // Select default error surface
+                    cboError.DataSource = surf.ErrorSurfaces;
+                    if (cboError.Items.Count == 1)
+                    {
+                        cboError.SelectedIndex = 0;
+                    }
+                    else if (cboError.Items.Count > 1 && surf.ErrorSurfaces.Any(x => x.IsDefault))
+                    {
+                        cboError.SelectedItem = surf.ErrorSurfaces.First(x => x.IsDefault);
+                    }
                 }
-                else if (cboError.Items.Count > 1 && surf.ErrorSurfaces.Any(x => x.IsDefault))
+                else
                 {
-                    cboError.SelectedItem = surf.ErrorSurfaces.First(x => x.IsDefault);
+                    lblErrorSurface.Visible = false;
+                    cboError.Visible = false;
+                    Height -= cboError.Bottom - txtElevationSurface.Bottom;
                 }
+
+                cmdOK.Text = Properties.Resources.CreateButtonText;
+                txtElevationSurface.Text = ElevationSurface.Name;
+                cboRoute.SelectedIndex = cboRoute.Items.Count > 0 ? 0 : -1;
             }
             else
             {
-                lblErrorSurface.Visible = false;
-                cboError.Visible = false;
-                Height -= cboError.Bottom - txtElevationSurface.Bottom;
+                cmdOK.Text = Properties.Resources.UpdateButtonText;
+                txtName.Text = LinearExtraction.Name;
+                txtPath.Text = ProjectManager.Project.GetRelativePath(LinearExtraction.Database.FullName);
+
+                txtElevationSurface.Visible = false;
+
+                valSampleDistance.Value = LinearExtraction.SampleDistance;
+                valSampleDistance.Enabled = false;
+                cboError.Enabled = false;
+                cboRoute.Enabled = false;
+                txtPath.Enabled = false;
+
             }
 
-            txtElevationSurface.Text = ElevationSurface.Name;
-
             lblSampleDistance.Text = lblSampleDistance.Text.Replace("(", string.Format("({0}", UnitsNet.Length.GetAbbreviation(ProjectManager.Project.Units.HorizUnit)));
-
-            cboRoute.DataSource = ProjectManager.Project.ProfileRoutes;
-            cboRoute.SelectedIndex = cboRoute.Items.Count > 0 ? 0 : -1;
 
             tTip.SetToolTip(txtName, "The name for this linear extraction. It cannot be empty and must be unique among all linear extractions for the parent DEM survey, reference surface or DoD.");
             tTip.SetToolTip(txtPath, "The relative path where the linear extraction output will be generated within this GCD project.");
@@ -77,8 +98,11 @@ namespace GCDCore.UserInterface.LinearExtraction
                 diParent = ((DoDBase)ElevationSurface).Folder;
             }
 
-            diParent = new DirectoryInfo(Path.Combine(diParent.FullName, "LinearExt"));
-            txtPath.Text = diParent == null ? string.Empty : txtPath.Text = ProjectManager.Project.GetRelativePath(ProjectManager.GetProjectItemPath(diParent, "LE", txtName.Text, "csv"));
+            if (diParent != null)
+            {
+                diParent = new DirectoryInfo(Path.Combine(diParent.FullName, "LinearExt"));
+                txtPath.Text = diParent == null ? string.Empty : txtPath.Text = ProjectManager.Project.GetRelativePath(ProjectManager.GetProjectItemPath(diParent, "LE", txtName.Text, "csv"));
+            }
         }
 
         private void cmdOK_Click(object sender, EventArgs e)
@@ -93,54 +117,66 @@ namespace GCDCore.UserInterface.LinearExtraction
             {
                 Cursor = Cursors.WaitCursor;
 
-                GCDCore.Project.ProfileRoutes.ProfileRoute route = cboRoute.SelectedItem as GCDCore.Project.ProfileRoutes.ProfileRoute;
-
-                ErrorSurface errSurf = null;
-                List<GCDConsoleLib.Raster> rasters = new List<Raster>();
-                if (ElevationSurface is Surface)
+                if (LinearExtraction == null)
                 {
-                    rasters.Add(((Surface)ElevationSurface).Raster);
-                    if (cboError.SelectedItem is ErrorSurface)
+                    GCDCore.Project.ProfileRoutes.ProfileRoute route = cboRoute.SelectedItem as GCDCore.Project.ProfileRoutes.ProfileRoute;
+
+                    ErrorSurface errSurf = null;
+                    List<GCDConsoleLib.Raster> rasters = new List<Raster>();
+
+
+                    if (ElevationSurface is Surface)
                     {
-                        errSurf = cboError.SelectedItem as ErrorSurface;
-                        rasters.Add(errSurf.Raster);
+                        rasters.Add(((Surface)ElevationSurface).Raster);
+                        if (cboError.SelectedItem is ErrorSurface)
+                        {
+                            errSurf = cboError.SelectedItem as ErrorSurface;
+                            rasters.Add(errSurf.Raster);
+                        }
                     }
-                }
-                else
-                {
-                    DoDBase dod = ElevationSurface as DoDBase;
-                    rasters.Add(dod.ThrDoD.Raster);
-                    if (dod.ThrErr != null)
+                    else
                     {
-                        rasters.Add(dod.ThrErr.Raster);
+                        DoDBase dod = ElevationSurface as DoDBase;
+                        rasters.Add(dod.ThrDoD.Raster);
+                        if (dod.ThrErr != null)
+                        {
+                            rasters.Add(dod.ThrErr.Raster);
+                        }
                     }
-                }
 
-                FileInfo fiOutput = ProjectManager.Project.GetAbsolutePath(txtPath.Text);
-                fiOutput.Directory.Create();
+                    FileInfo fiOutput = ProjectManager.Project.GetAbsolutePath(txtPath.Text);
+                    fiOutput.Directory.Create();
 
-                RasterOperators.LinearExtractor(route.Vector, rasters, fiOutput, valSampleDistance.Value, route.DistanceField);
+                    RasterOperators.LinearExtractor(route.Vector, rasters, fiOutput, valSampleDistance.Value, route.DistanceField);
 
-                GCDCore.Project.LinearExtraction.LinearExtraction le;
-                if (ElevationSurface is DEMSurvey)
-                {
-                    le = new GCDCore.Project.LinearExtraction.LinearExtractionFromDEM(txtName.Text, route, fiOutput, valSampleDistance.Value, ElevationSurface as DEMSurvey, errSurf);
-                }
-                else if (ElevationSurface is Surface)
-                {
-                    le = new GCDCore.Project.LinearExtraction.LinearExtractionFromSurface(txtName.Text, route, fiOutput, valSampleDistance.Value, ElevationSurface as Surface, errSurf);
+                    GCDCore.Project.LinearExtraction.LinearExtraction le;
+                    if (ElevationSurface is DEMSurvey)
+                    {
+                        le = new GCDCore.Project.LinearExtraction.LinearExtractionFromDEM(txtName.Text, route, fiOutput, valSampleDistance.Value, ElevationSurface as DEMSurvey, errSurf);
+                    }
+                    else if (ElevationSurface is Surface)
+                    {
+                        le = new GCDCore.Project.LinearExtraction.LinearExtractionFromSurface(txtName.Text, route, fiOutput, valSampleDistance.Value, ElevationSurface as Surface, errSurf);
+                    }
+                    else
+                        le = new GCDCore.Project.LinearExtraction.LinearExtractionFromDoD(txtName.Text, route, fiOutput, valSampleDistance.Value, ElevationSurface as DoDBase);
+
+                    if (ElevationSurface is Surface)
+                    {
+                        ((Surface)ElevationSurface).LinearExtractions.Add(le);
+                    }
+                    else
+                    {
+                        ((DoDBase)ElevationSurface).LinearExtractions.Add(le);
+                    }
+
+
                 }
                 else
-                    le = new GCDCore.Project.LinearExtraction.LinearExtractionFromDoD(txtName.Text, route, fiOutput, valSampleDistance.Value, ElevationSurface as DoDBase);
+                {
+                    LinearExtraction.Name = txtName.Text;
+                }
 
-                if (ElevationSurface is Surface)
-                {
-                    ((Surface)ElevationSurface).LinearExtractions.Add(le);
-                }
-                else
-                {
-                    ((DoDBase)ElevationSurface).LinearExtractions.Add(le);
-                }
 
                 ProjectManager.Project.Save();
 

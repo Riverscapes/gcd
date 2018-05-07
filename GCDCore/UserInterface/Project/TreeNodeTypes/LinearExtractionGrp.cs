@@ -25,6 +25,8 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
 
         public override void LoadChildNodes()
         {
+            Nodes.Clear();
+
             List<GCDCore.Project.LinearExtraction.LinearExtraction> LEs = null;
             if (Surface is Surface)
             {
