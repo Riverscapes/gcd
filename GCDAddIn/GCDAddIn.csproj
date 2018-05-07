@@ -167,6 +167,7 @@
     <Compile Include="Project\btnCloseProject.cs" />
     <Compile Include="Project\btnNewProject.cs" />
     <Compile Include="Project\btnOpenProject.cs" />
+    <Compile Include="Project\btnProjectExploreFolder.cs" />
     <Compile Include="Project\btnProjectExplorer.cs" />
     <Compile Include="Project\btnProjectExplorer2.cs" />
     <Compile Include="Project\btnProjectProperties.cs" />
@@ -226,6 +227,7 @@
       <Link>Deploy\FISLibrary\FISLibrary.xsd</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <AddInContent Include="Images\BrowseFolder.png" />
   </ItemGroup>
   <ItemGroup>
     <AddInContent Include="Config.esriaddinx">
