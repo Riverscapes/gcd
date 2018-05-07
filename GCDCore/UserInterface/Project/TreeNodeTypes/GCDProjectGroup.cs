@@ -101,6 +101,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
         {
             try
             {
+                ProjectManager.OpenProject(ProjectManager.Project.ProjectFile);
                 LoadChildNodes();
             }
             catch (Exception ex)
