@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.grpSupport = new System.Windows.Forms.GroupBox();
-            this.lnkEmail = new System.Windows.Forms.LinkLabel();
+            this.lnkIssues = new System.Windows.Forms.LinkLabel();
             this.lnkOnlineHelp = new System.Windows.Forms.LinkLabel();
             this.lnkWebSite = new System.Windows.Forms.LinkLabel();
             this.Label5 = new System.Windows.Forms.Label();
@@ -49,7 +49,7 @@
             // 
             // grpSupport
             // 
-            this.grpSupport.Controls.Add(this.lnkEmail);
+            this.grpSupport.Controls.Add(this.lnkIssues);
             this.grpSupport.Controls.Add(this.lnkOnlineHelp);
             this.grpSupport.Controls.Add(this.lnkWebSite);
             this.grpSupport.Controls.Add(this.Label5);
@@ -57,20 +57,21 @@
             this.grpSupport.Controls.Add(this.Label3);
             this.grpSupport.Location = new System.Drawing.Point(182, 63);
             this.grpSupport.Name = "grpSupport";
-            this.grpSupport.Size = new System.Drawing.Size(298, 90);
+            this.grpSupport.Size = new System.Drawing.Size(337, 90);
             this.grpSupport.TabIndex = 10;
             this.grpSupport.TabStop = false;
             this.grpSupport.Text = "Support";
             // 
-            // lnkEmail
+            // lnkIssues
             // 
-            this.lnkEmail.AutoSize = true;
-            this.lnkEmail.Location = new System.Drawing.Point(102, 66);
-            this.lnkEmail.Name = "lnkEmail";
-            this.lnkEmail.Size = new System.Drawing.Size(109, 13);
-            this.lnkEmail.TabIndex = 6;
-            this.lnkEmail.TabStop = true;
-            this.lnkEmail.Text = "gcd@joewheaton.org";
+            this.lnkIssues.AutoSize = true;
+            this.lnkIssues.Location = new System.Drawing.Point(102, 66);
+            this.lnkIssues.Name = "lnkIssues";
+            this.lnkIssues.Size = new System.Drawing.Size(221, 13);
+            this.lnkIssues.TabIndex = 6;
+            this.lnkIssues.TabStop = true;
+            this.lnkIssues.Text = "http://gcd.riverscapes.xyz/Help/known-bugs";
+            this.lnkIssues.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkIssues_LinkClicked);
             // 
             // lnkOnlineHelp
             // 
@@ -98,11 +99,11 @@
             // Label5
             // 
             this.Label5.AutoSize = true;
-            this.Label5.Location = new System.Drawing.Point(67, 66);
+            this.Label5.Location = new System.Drawing.Point(62, 66);
             this.Label5.Name = "Label5";
-            this.Label5.Size = new System.Drawing.Size(32, 13);
+            this.Label5.Size = new System.Drawing.Size(37, 13);
             this.Label5.TabIndex = 3;
-            this.Label5.Text = "Email";
+            this.Label5.Text = "Issues";
             // 
             // Label4
             // 
@@ -164,7 +165,7 @@
             // 
             this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnOK.Location = new System.Drawing.Point(407, 377);
+            this.btnOK.Location = new System.Drawing.Point(446, 377);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 2;
@@ -179,7 +180,7 @@
             this.grpAcknowledgements.Controls.Add(this.webBrowser1);
             this.grpAcknowledgements.Location = new System.Drawing.Point(12, 159);
             this.grpAcknowledgements.Name = "grpAcknowledgements";
-            this.grpAcknowledgements.Size = new System.Drawing.Size(468, 212);
+            this.grpAcknowledgements.Size = new System.Drawing.Size(507, 212);
             this.grpAcknowledgements.TabIndex = 11;
             this.grpAcknowledgements.TabStop = false;
             this.grpAcknowledgements.Text = "Acknowledgements";
@@ -190,7 +191,7 @@
             this.webBrowser1.Location = new System.Drawing.Point(3, 16);
             this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
             this.webBrowser1.Name = "webBrowser1";
-            this.webBrowser1.Size = new System.Drawing.Size(462, 193);
+            this.webBrowser1.Size = new System.Drawing.Size(501, 193);
             this.webBrowser1.TabIndex = 0;
             // 
             // frmAbout
@@ -199,7 +200,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnOK;
-            this.ClientSize = new System.Drawing.Size(494, 412);
+            this.ClientSize = new System.Drawing.Size(533, 412);
             this.Controls.Add(this.grpAcknowledgements);
             this.Controls.Add(this.lblVersion);
             this.Controls.Add(this.grpSupport);
@@ -223,7 +224,7 @@
         #endregion
 
         internal System.Windows.Forms.GroupBox grpSupport;
-        internal System.Windows.Forms.LinkLabel lnkEmail;
+        internal System.Windows.Forms.LinkLabel lnkIssues;
         internal System.Windows.Forms.LinkLabel lnkOnlineHelp;
         internal System.Windows.Forms.LinkLabel lnkWebSite;
         internal System.Windows.Forms.Label Label5;

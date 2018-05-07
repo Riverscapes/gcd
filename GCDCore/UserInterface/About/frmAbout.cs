@@ -34,5 +34,10 @@ namespace GCDCore.UserInterface.About
         {
             Process.Start(lnkOnlineHelp.Text);
         }
+
+        private void lnkIssues_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start(lnkIssues.Text);
+        }
     }
 }
