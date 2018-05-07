@@ -183,7 +183,7 @@ namespace GCDConsoleLib.Internal.Operators
                     case (ecols.FID): headerline.Add(FIELD_FID); break;
                     case (ecols.X): headerline.Add(FIELD_X); break;
                     case (ecols.Y): headerline.Add(FIELD_Y); break;
-                    case (ecols.DISTANCE): headerline.Add(sFieldName); break;
+                    case (ecols.DISTANCE): if (!String.IsNullOrEmpty(sFieldName)) headerline.Add(sFieldName); break;
                     case (ecols.STATION): headerline.Add(FIELD_STATION); break;
                 }
             }
@@ -356,7 +356,7 @@ namespace GCDConsoleLib.Internal.Operators
                     case (ecols.FID): csvcols.Add(fid.ToString()); break;
                     case (ecols.X): csvcols.Add((fractionalpt[0]).ToString()); break;
                     case (ecols.Y): csvcols.Add((fractionalpt[1]).ToString()); break;
-                    case (ecols.DISTANCE): csvcols.Add(feat.GetFieldAsDouble(sFieldName).ToString()); break;
+                    case (ecols.DISTANCE): if (!String.IsNullOrEmpty(sFieldName)) csvcols.Add(feat.GetFieldAsDouble(sFieldName).ToString()); break;
                     case (ecols.STATION): csvcols.Add((distance).ToString()); break;
                 }
             }
