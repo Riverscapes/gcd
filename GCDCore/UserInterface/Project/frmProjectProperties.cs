@@ -45,7 +45,7 @@ namespace GCDCore.UserInterface.Project
 
             if (CreateMode)
             {
-                this.Text = "Create New GCD Projeect";
+                this.Text = "Create New GCD Project";
                 btnOK.Text = "   Create";
                 btnOK.Text = Properties.Resources.CreateButtonText;
 
