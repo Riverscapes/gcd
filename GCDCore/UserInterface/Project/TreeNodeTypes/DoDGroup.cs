@@ -112,8 +112,12 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
 
             try
             {
+                // Grab the PArent so we can reload the children after the delete
+                ChangeDetectionGroup cdPArent = (ChangeDetectionGroup)Parent.Parent;
                 DoD.Delete();
                 Remove();
+                cdPArent.LoadChildNodes();
+
             }
             catch (IOException ex)
             {
