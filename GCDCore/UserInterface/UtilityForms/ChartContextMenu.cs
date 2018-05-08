@@ -64,8 +64,20 @@ namespace GCDCore.UserInterface.UtilityForms
 
                 if (DefaultDir is DirectoryInfo && DefaultDir.Exists)
                 {
-                    dlgSave.InitialDirectory = DefaultDir.FullName;
-                    dlgSave.FileName = Path.GetFileNameWithoutExtension(naru.os.File.GetNewSafeName(DefaultDir.FullName, DefaultFileName, "png").FullName);
+                    DirectoryInfo figsDir = new DirectoryInfo(Path.Combine(DefaultDir.FullName, "Figs"));
+                    string fName = "";
+                    if (figsDir.Exists)
+                    {
+                        fName = naru.os.File.GetNewSafeName(figsDir.FullName, DefaultFileName, "png").FullName;
+                        dlgSave.InitialDirectory = figsDir.FullName;
+                    }
+                    else
+                    {
+                        fName = naru.os.File.GetNewSafeName(DefaultDir.FullName, DefaultFileName, "png").FullName;
+                        dlgSave.InitialDirectory = DefaultDir.FullName;
+                    }
+
+                    dlgSave.FileName = Path.GetFileNameWithoutExtension(fName);
                 }
                 else
                 {
