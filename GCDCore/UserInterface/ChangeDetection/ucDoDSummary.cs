@@ -136,7 +136,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             // Show/hide columns based on the properties pop-up
             colRawDoD.Visible = options.m_bColsRaw;
             colThresholded.Visible = options.m_bColsThresholded;
-            colError.Visible = options.m_bColsPCError;
+            colError.Visible = options.m_bColsPMError;
             colErrorPC.Visible = options.m_bColsPCError;
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////
