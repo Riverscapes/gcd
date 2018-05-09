@@ -74,7 +74,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
-    <!-- Properties group for Determining 64bit Architecture -->
+  <!-- Properties group for Determining 64bit Architecture -->
   <PropertyGroup>
     <GDALPath>..\extlib\release-1800-x64-gdal-2-2-1-mapserver-7-0-6\bin</GDALPath>
     <GDALPath Condition="'$(Platform)'!='x64'">..\extlib\release-1800-gdal-2-2-1-mapserver-7-0-6\bin</GDALPath>
@@ -458,6 +458,14 @@
       <IncludeHash>True</IncludeHash>
       <FileType>File</FileType>
     </PublishFile>
+  </ItemGroup>
+  <ItemGroup>
+    <FileAssociation Include=".gcd">
+      <Visible>False</Visible>
+      <Description>GCD Project File</Description>
+      <Progid>GCD</Progid>
+      <DefaultIcon>gcd_multi_resolution.ico</DefaultIcon>
+    </FileAssociation>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
