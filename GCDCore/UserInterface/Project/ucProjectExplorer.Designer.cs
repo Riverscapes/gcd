@@ -85,6 +85,7 @@ namespace GCDCore.UserInterface.Project
             this.imgTreeImageList.Images.SetKeyName(14, "AOI.png");
             this.imgTreeImageList.Images.SetKeyName(15, "profile_routes.png");
             this.imgTreeImageList.Images.SetKeyName(16, "linear_extraction.png");
+            this.imgTreeImageList.Images.SetKeyName(17, "BudgetSeg.png");
             // 
             // AddAOIToolStripMenuItem
             // 

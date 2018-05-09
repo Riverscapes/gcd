@@ -15,7 +15,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
         public readonly GCDCore.Project.BudgetSegregation BudgetSeg;
 
         public BudgetSegGroup(TreeNodeCollection parentNodes, GCDCore.Project.BudgetSegregation bs, IContainer container)
-            : base(parentNodes, bs.Name, "Budget Segregation", "Budget Segregations", bs.Folder, container, true, 9)
+            : base(parentNodes, bs.Name, "Budget Segregation", "Budget Segregations", bs.Folder, container, true, 17)
         {
             BudgetSeg = bs;
 
