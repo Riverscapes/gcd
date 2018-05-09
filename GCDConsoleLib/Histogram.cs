@@ -170,7 +170,7 @@ namespace GCDConsoleLib
             decimal startwidth = (oneSideDataWidth * 2) / origBins;
 
             // First clean the width to the nearest 5 or 10 power
-            decimal newWidth = GetNearestFiveOrderWidth(startwidth);
+            decimal newWidth = Utility.IntervalMath.GetNearestFiveOrderWidth(startwidth);
             // Now re-adjust the bins to match
             int newBins = (int)Math.Ceiling((oneSideDataWidth * 2) / newWidth);
 
@@ -190,27 +190,7 @@ namespace GCDConsoleLib
                 BinCounts.SequenceEqual(second.BinCounts);
         }
 
-        /// <summary>
-        /// Choose a clean division that is a muliple of 5 or 10
-        /// </summary>
-        /// <param name="startWidth"></param>
-        /// <returns></returns>
-        public static decimal GetNearestFiveOrderWidth(decimal startWidth)
-        {
-            // Special case. Constant rasters will generate this.
-            if (startWidth == 0) return 0;
 
-            int order = (int)Math.Round(Math.Log10((double)startWidth));
-            decimal tener = (decimal)Math.Pow(10, order);
-
-            Dictionary<decimal, decimal> compares = new Dictionary<decimal, decimal>()
-            {
-                {tener, Math.Abs(tener - startWidth) },
-                {(tener/2), Math.Abs((tener/2) - startWidth) },
-                {(tener * 5),  Math.Abs((tener * 5) - startWidth) },
-            };
-            return compares.Aggregate((l, r) => l.Value < r.Value ? l : r).Key;
-        }
 
         /// <summary>
         /// Get a bin ID for a given value

@@ -58,9 +58,15 @@ namespace GCDCore.Visualization
             Refresh(fErosion, fDeposition, fNet, fErosionError, fDepositionError, fNetError, sDisplayUnitsAbbreviation, true, true, eType, bAbsolute);
         }
 
-        private void Refresh(double fErosion, double fDeposition, double fNet, double fErosionError, double fDepositionError, double fNetError,
+        private void Refresh(double fErosionOrig, double fDeposition, double fNetOrig, double fErosionError, double fDepositionError, double fNetError,
             string sDisplayUnitsAbbreviation, bool bShowErrorBars, bool bShowNet, BarTypes eType, bool bAbsolute)
         {
+            double max, min;
+
+            // We don't want to mutate our parameters so
+            double fNet = fNetOrig;
+            double fErosion = fErosionOrig;
+
             if (bAbsolute)
             {
                 // Bars should have their correct sign. Erosion should be negative
@@ -113,6 +119,9 @@ namespace GCDCore.Visualization
             depSeries.Points.AddXY(GetXAxisLabel(eType, SeriesType.Erosion), 0);
             depSeries.Points.AddXY(GetXAxisLabel(eType, SeriesType.Depositon), fDeposition);
 
+            max = Math.Max(fErosion, fDeposition);
+            min = Math.Min(Math.Min(fErosion, fDeposition), 0);
+
             Series netSeries = Chart.Series.FindByName(ViewerBase.NET);
             if (bShowNet)
             {
@@ -121,7 +130,7 @@ namespace GCDCore.Visualization
 
                 netSeries.Points.Clear();
 
-                netSeries.Color = (fNet >= 0 ? depSeries.Color : errSeries.Color);
+                netSeries.Color = (fNetOrig >= 0 ? depSeries.Color : errSeries.Color);
                 netSeries.ChartArea = Chart.ChartAreas.First().Name;
                 netSeries.Points.AddXY(GetXAxisLabel(eType, SeriesType.Erosion), 0);
                 netSeries.Points.AddXY(GetXAxisLabel(eType, SeriesType.Depositon), 0);
@@ -129,6 +138,9 @@ namespace GCDCore.Visualization
 
                 errSeries.Points.AddXY(GetXAxisLabel(eType, SeriesType.Net), 0);
                 depSeries.Points.AddXY(GetXAxisLabel(eType, SeriesType.Net), 0);
+
+                max = Math.Max(max, fNet);
+                min = Math.Min(min, fNet);
             }
             else
             {
@@ -151,11 +163,14 @@ namespace GCDCore.Visualization
                 errorSeries.Points.AddXY(GetXAxisLabel(eType, SeriesType.Erosion), fErosion, fErosion - fErosionError, fErosion + fErosionError);
                 errorSeries.Points.AddXY(GetXAxisLabel(eType, SeriesType.Depositon), fDeposition, fDeposition - fDepositionError, fDeposition + fDepositionError);
 
+                max = Math.Max(fErosion + fErosionError, fDeposition + fDepositionError);
+                min = Math.Min(0, Math.Min(fErosion - fErosionError, fDeposition - fDepositionError));
+
                 if (netSeries is Series)
                     errorSeries.Points.AddXY(GetXAxisLabel(eType, SeriesType.Net), fNet, fNet - fNetError, fNet + fNetError);
 
-                Chart.ChartAreas[0].AxisY.Maximum = Math.Ceiling(Math.Max(fErosion + fErosionError, fDeposition + fDepositionError));
-                Chart.ChartAreas[0].AxisY.Minimum = Math.Floor(Math.Min(fErosion - fErosionError, Math.Min(0, fDeposition - fDepositionError)));
+                max = Math.Max(max, fNet + fNetError);
+                min = Math.Min(min, fNet - fNetError);
             }
             else
             {
@@ -165,7 +180,21 @@ namespace GCDCore.Visualization
 
             try
             {
+                // Set an initial max and min so the autoscale can do its thing
+                Chart.ChartAreas[0].AxisY.Maximum = max;
+                Chart.ChartAreas[0].AxisY.Minimum = min;
                 Chart.ChartAreas[0].RecalculateAxesScale();
+
+                Tuple<decimal, decimal> maxmin = GCDConsoleLib.Utility.IntervalMath.GetRegularizedMaxMin((decimal)max, (decimal)min, 0.02m);
+
+                Chart.ChartAreas[0].AxisY.Maximum = (double)maxmin.Item1;
+                Chart.ChartAreas[0].AxisY.Minimum = (double)maxmin.Item2;
+
+                Chart.ChartAreas[0].AxisY.Interval = (double)GCDConsoleLib.Utility.IntervalMath.GetSensibleChartInterval(
+                    (decimal)Chart.ChartAreas[0].AxisY.Maximum,
+                    (decimal)Chart.ChartAreas[0].AxisY.Minimum,
+                    10);
+
                 Chart.AlignDataPointsByAxisLabel();
             }
             catch (Exception ex)
@@ -174,6 +203,7 @@ namespace GCDCore.Visualization
                 //throw new Exception("Error refreshing elevation bar charts.", ex);
             }
         }
+
 
         private object GetXAxisLabel(BarTypes eBarType, SeriesType eSeriesType)
         {

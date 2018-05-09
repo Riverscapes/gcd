@@ -223,41 +223,6 @@ namespace GCDConsoleLib.Tests
 
         }
 
-        [TestMethod()]
-        [TestCategory("Unit")]
-        public void GetNearestFiveOrderWidthTest()
-        {
-            Assert.AreEqual(Histogram.GetNearestFiveOrderWidth(0.1m), 0.1m);
-            Assert.AreEqual(Histogram.GetNearestFiveOrderWidth(0.11m), 0.1m);
-            Assert.AreEqual(Histogram.GetNearestFiveOrderWidth(0.2m), 0.1m);
-            Assert.AreEqual(Histogram.GetNearestFiveOrderWidth(0.1000000001m), 0.1m);
-            Assert.AreEqual(Histogram.GetNearestFiveOrderWidth(0.0900000000m), 0.1m);
-            Assert.AreEqual(Histogram.GetNearestFiveOrderWidth(0.0800000000m), 0.1m);
-
-            Assert.AreEqual(Histogram.GetNearestFiveOrderWidth(0.5m), 0.5m);
-            Assert.AreEqual(Histogram.GetNearestFiveOrderWidth(0.49999999m), 0.5m);
-            Assert.AreEqual(Histogram.GetNearestFiveOrderWidth(0.500000001m), 0.5m);
-            Assert.AreEqual(Histogram.GetNearestFiveOrderWidth(0.432342352352m), 0.5m);
-
-            Assert.AreEqual(Histogram.GetNearestFiveOrderWidth(1.49m), 1m);
-            Assert.AreEqual(Histogram.GetNearestFiveOrderWidth(1.0m), 1m);
-            Assert.AreEqual(Histogram.GetNearestFiveOrderWidth(1.234523451m), 1.0m);
-            Assert.AreEqual(Histogram.GetNearestFiveOrderWidth(0.756m), 1.0m);
-
-            Assert.AreEqual(Histogram.GetNearestFiveOrderWidth(50.500234234m), 50m);
-            Assert.AreEqual(Histogram.GetNearestFiveOrderWidth(64.500234234m), 50m);
-            Assert.AreEqual(Histogram.GetNearestFiveOrderWidth(80), 100m);
-
-            Assert.AreEqual(Histogram.GetNearestFiveOrderWidth(120), 100m);
-            Assert.AreEqual(Histogram.GetNearestFiveOrderWidth(124), 100m);
-            Assert.AreEqual(Histogram.GetNearestFiveOrderWidth(125), 100m);
-
-            Assert.AreEqual(Histogram.GetNearestFiveOrderWidth(250), 100m);
-            Assert.AreEqual(Histogram.GetNearestFiveOrderWidth(300), 500m);
-            Assert.AreEqual(Histogram.GetNearestFiveOrderWidth(500), 500m);
-            Assert.AreEqual(Histogram.GetNearestFiveOrderWidth(749), 500m);
-
-        }
 
         [TestMethod()]
         [TestCategory("Unit")]

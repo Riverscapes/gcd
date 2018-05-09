@@ -139,6 +139,7 @@
     <Compile Include="Helpers\RasterTests.cs" />
     <Compile Include="Helpers\TempGeoJSONFile.cs" />
     <Compile Include="Utility\DynamicMathTests.cs" />
+    <Compile Include="Utility\IntervalMathTests.cs" />
     <Compile Include="Utility\ProbabilityTests.cs" />
     <Compile Include="Helpers\TempDir.cs" />
     <Compile Include="Helpers\FakeRaster.cs" />

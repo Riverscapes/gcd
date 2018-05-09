@@ -155,6 +155,7 @@
     <Compile Include="RasterOperators\Operators\Slope.cs" />
     <Compile Include="RasterOperators\Operators\Uniform.cs" />
     <Compile Include="RasterOperators\WindowOverlapOperator.cs" />
+    <Compile Include="Utility\IntervalMath.cs" />
     <Compile Include="Utility\Conversion.cs" />
     <Compile Include="Utility\DynamicMath.cs" />
     <Compile Include="Utility\FileIO.cs" />
