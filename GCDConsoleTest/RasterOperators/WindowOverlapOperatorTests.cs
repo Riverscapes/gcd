@@ -40,7 +40,7 @@ namespace GCDConsoleLib.Internal.Tests
             Assert.AreEqual(ChunkExtent.Rows, 1);
         }
 
-        protected override void WindowOp(List<T[]> windowData, List<T[]> outputs, int id)
+        protected override void WindowOp(List<T[]> windowData, List<T[]> outputs, int id, bool containsNodata)
         {
             // We just return the middle cell for testing
             outputs[0][id] = windowData[0][BufferCenterID];

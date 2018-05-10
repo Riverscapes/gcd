@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace GCDConsoleLib.Internal.Operators
 {
@@ -9,6 +10,8 @@ namespace GCDConsoleLib.Internal.Operators
     class Hillshade : WindowOverlapOperator<float>
     {
         private double azimuth, zFactor, altDeg, zenDeg, zenRad, azimuthMath, azimuthRad, aspectRad;
+
+        private float fcellHeight;
 
         /// <summary>
         /// Pass-through constructor for Hillshade
@@ -20,6 +23,7 @@ namespace GCDConsoleLib.Internal.Operators
         {
             SetDefaultVars();
         }
+
 
         /// <summary>
         /// Give us a sensible default for shadow direction etc.
@@ -38,6 +42,8 @@ namespace GCDConsoleLib.Internal.Operators
                 azimuthMath = azimuthMath - 360;
 
             azimuthRad = azimuthMath * Math.PI / 180;
+
+            fcellHeight = (float)Math.Abs(WindowExtent.CellHeight);
         }
 
         /// <summary>
@@ -45,18 +51,17 @@ namespace GCDConsoleLib.Internal.Operators
         /// </summary>
         /// <param name="wd"></param>
         /// <returns></returns>
-        protected override void WindowOp(List<float[]> wd, List<float[]> outbuffers, int id)
+        protected override void WindowOp(List<float[]> wd, List<float[]> outbuffers, int id, bool containsNodata)
         {
             // Don't calculate if we have nodatas in the mix
-            for (int k = 0; k < BufferCellNum; k++)
-                if (wd[0][k].Equals(inNodataVals[0]))
-                {
-                    outbuffers[0][id] = outNodataVals[0];
-                    return;
-                }
+            if (containsNodata)
+            {
+                outbuffers[0][id] = outNodataVals[0];
+                return;
+            }
 
-            float dzdx = ((wd[0][2] + (2 * wd[0][5]) + wd[0][8]) - (wd[0][0] + (2 * wd[0][3]) + wd[0][6])) / (8 * (float)Math.Abs(WindowExtent.CellHeight));
-            float dzdy = ((wd[0][6] + (2 * wd[0][7]) + wd[0][8]) - (wd[0][0] + (2 * wd[0][1]) + wd[0][2])) / (8 * (float)Math.Abs(WindowExtent.CellHeight));
+            float dzdx = ((wd[0][2] + (2 * wd[0][5]) + wd[0][8]) - (wd[0][0] + (2 * wd[0][3]) + wd[0][6])) / (8 * fcellHeight);
+            float dzdy = ((wd[0][6] + (2 * wd[0][7]) + wd[0][8]) - (wd[0][0] + (2 * wd[0][1]) + wd[0][2])) / (8 * fcellHeight);
             double slopeRad = Math.Atan(zFactor * Math.Sqrt(Math.Pow(dzdx, 2.0) + Math.Pow(dzdy, 2.0)));
 
             if (dzdx != 0)
@@ -76,8 +81,10 @@ namespace GCDConsoleLib.Internal.Operators
                 //    //aspectRad = aspectRad;
                 //}
             }
+
             float val = (float)Math.Round(254 * ((Math.Cos(zenRad) * Math.Cos(slopeRad)) + (Math.Sin(zenRad) * Math.Sin(slopeRad) * Math.Cos(azimuthRad - aspectRad)))) + 1;
             // WEird edge effects at the bottom of some rasters. We want to enforce 0-255
+
             if (val < 0) val = 0;
             outbuffers[0][id] = val;
         }

@@ -24,6 +24,17 @@ namespace GCDConsoleLib.Internal
         protected readonly List<Raster> _inputRasters;
         protected readonly List<Raster> _outputRasters;
 
+#if DEBUG
+        protected Stopwatch tmr_overall;
+        protected Stopwatch tmr_rasterread;
+        protected Stopwatch tmr_rasterwrite;
+        protected Stopwatch tmr_calculations;
+        protected int num_reads;
+        protected int num_writes;
+        protected int num_calcs;
+
+#endif
+
         public readonly List<T> inNodataVals;
         public readonly List<T> outNodataVals;
 
@@ -136,6 +147,16 @@ namespace GCDConsoleLib.Internal
         {
             chunkRows = 10;
             _vOffset = 0;
+
+#if DEBUG
+            tmr_overall = Stopwatch.StartNew();
+            tmr_rasterread = new Stopwatch();
+            tmr_rasterwrite = new Stopwatch();
+            tmr_calculations = new Stopwatch();
+            num_reads = 0;
+            num_writes = 0;
+            num_calcs = 0;
+#endif
 
             OpDone = false;
 
@@ -282,7 +303,14 @@ namespace GCDConsoleLib.Internal
 
                     // Find the offset between the intersection and rRa
                     int[] offrRa = _interSectRect.GetTopCornerTranslationRowCol(rRa.Extent);
+#if DEBUG
+                    tmr_rasterread.Start();
+                    num_reads++;
+#endif
                     _inputRasters[idx].Read(offrRa[1], offrRa[0], _interSectRect.Cols, _interSectRect.Rows, _buffer);
+#if DEBUG
+                    tmr_rasterread.Stop();
+#endif
 
                     // Find the offset between the intersection and the chunkwindow
                     int[] offChunk = _interSectRect.GetTopCornerTranslationRowCol(ChunkExtent);
@@ -329,7 +357,14 @@ namespace GCDConsoleLib.Internal
             {
                 GetChunk(data);
                 ProgressInvoke(Progress);
+#if DEBUG
+                tmr_calculations.Start();
+                num_writes++;
+#endif
                 ChunkOp(data, outBuffer);
+#if DEBUG
+                tmr_calculations.Stop();
+#endif
 
                 for (int idx = 0; idx < _outputRasters.Count; idx++)
                 {
@@ -337,8 +372,13 @@ namespace GCDConsoleLib.Internal
                     int[] offset = ChunkExtent.GetTopCornerTranslationRowCol(OpExtent);
                     // Write this window tot he file
                     // it goes (colNum, rowNum, COLS, ROWS, buffer);
+#if DEBUG
+                    tmr_rasterwrite.Start();
+#endif
                     _outputRasters[idx].Write(offset[1], offset[0] + _vOffset, ChunkExtent.Cols, ChunkExtent.Rows, outBuffer[idx]);
-                    
+#if DEBUG
+                    tmr_rasterwrite.Stop();
+#endif              
                 }
                 // We always increment to the next one
                 nextChunk();
@@ -373,6 +413,20 @@ namespace GCDConsoleLib.Internal
         /// </summary>
         protected void Cleanup()
         {
+#if DEBUG
+            tmr_overall.Stop();
+            Debug.WriteLine("---------------------------OP TIMER---------------------------");
+            Debug.WriteLine(String.Format("Total Reads: {0}", num_reads));
+            Debug.WriteLine(String.Format("Total Writes: {0}", num_writes));
+            Debug.WriteLine(String.Format("Total Calculations: {0}", num_calcs));
+            Debug.WriteLine("");
+            Debug.WriteLine(String.Format("Raster Reading: {0}:{1}:{2}", tmr_rasterread.Elapsed.Minutes, tmr_rasterread.Elapsed.Seconds, tmr_rasterread.Elapsed.Milliseconds));
+            Debug.WriteLine(String.Format("Raster Writing: {0}:{1}:{2}", tmr_rasterwrite.Elapsed.Minutes, tmr_rasterwrite.Elapsed.Seconds, tmr_rasterwrite.Elapsed.Milliseconds));
+            Debug.WriteLine(String.Format("Calculations: {0}:{1}:{2}", tmr_calculations.Elapsed.Minutes, tmr_calculations.Elapsed.Seconds, tmr_calculations.Elapsed.Milliseconds));
+            Debug.WriteLine(String.Format("Total Time: {0}:{1}:{2}", tmr_overall.Elapsed.Minutes, tmr_overall.Elapsed.Seconds, tmr_overall.Elapsed.Milliseconds));
+            Debug.WriteLine("--------------------------------------------------------------");
+
+#endif
             foreach (Raster rRa in _inputRasters)
             {
                 if (rRa.IsOpen)

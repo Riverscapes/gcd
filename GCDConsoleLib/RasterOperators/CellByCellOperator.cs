@@ -83,7 +83,12 @@ namespace GCDConsoleLib.Internal
             else buffSize = outChunks[0].Length;
 
             for (int id = 0; id < buffSize; id++)
+            {
+#if DEBUG
+                num_calcs++;
+#endif
                 CellOp(data, outChunks, id);
+            }
         }
 
     }

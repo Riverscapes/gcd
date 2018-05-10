@@ -25,7 +25,7 @@ namespace GCDConsoleLib.Internal.Operators
         /// </summary>
         /// <param name="windowData"></param>
         /// <returns></returns>
-        protected override void WindowOp(List<double[]> windowData, List<double[]> outbuffers, int id)
+        protected override void WindowOp(List<double[]> windowData, List<double[]> outbuffers, int id, bool containsNodata)
         {
             double count = 0;
 

@@ -48,11 +48,11 @@ namespace GCDConsoleLib.Internal.Operators
         /// </summary>
         /// <param name="wd">Window Data. A list of double arrays</param>
         /// <returns></returns>
-        protected override void WindowOp(List<double[]> wd, List<double[]> outputs, int id)
+        protected override void WindowOp(List<double[]> wd, List<double[]> outputs, int id, bool containsNodata)
         {
             _buff = wd[0];
 
-            if (wd[0][BufferCenterID].Equals(outNodataVals[0]))
+            if (wd[0][BufferCenterID].Equals(inNodataVals[0]))
             {
                 outputs[0][id] = outNodataVals[0];
                 return;

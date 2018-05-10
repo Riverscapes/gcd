@@ -141,7 +141,7 @@ namespace GCDConsoleLib.Tests
 
 
         [TestMethod()]
-        [TestCategory("Unit")]
+        [TestCategory("Long")]
         public void ValidityCheck()
         {
             Dictionary<string, Projection> projdict = new Dictionary<string, Projection>();
@@ -183,7 +183,6 @@ namespace GCDConsoleLib.Tests
                     kvp.Value.Proj.mSRef.ExportToPrettyWkt(out thing, 0);
 
                     Raster rCopy = RasterOperators.ExtendedCopy(kvp.Value, new FileInfo(Path.Combine(tmp.Name, kvp.Value.GISFileInfo.Name)));
-
                     string HSName = Path.GetFileNameWithoutExtension(kvp.Value.GISFileInfo.Name) + "_HS" + Path.GetExtension(kvp.Value.GISFileInfo.Name);
                     Raster rHS = RasterOperators.Hillshade(rCopy, new FileInfo(Path.Combine(tmp.Name, HSName)));
 

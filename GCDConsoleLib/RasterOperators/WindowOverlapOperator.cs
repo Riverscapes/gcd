@@ -16,6 +16,7 @@ namespace GCDConsoleLib.Internal
         protected decimal OriginalOpBottom { get; private set; }
         public ExtentRectangle WindowExtent;
 
+
         private List<List<T[]>> _chunkCache;
         List<T[]> dWindow; // this is our nxn window over which we are doing our masth
         private int _cacheIdx;
@@ -72,7 +73,7 @@ namespace GCDConsoleLib.Internal
         /// <param name="windowData"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        protected abstract void WindowOp(List<T[]> windowData, List<T[]> outBuffers, int id);
+        protected abstract void WindowOp(List<T[]> windowData, List<T[]> outBuffers, int id, bool containsNodata);
 
         private List<T[]> NoDataChunkList()
         {
@@ -144,6 +145,7 @@ namespace GCDConsoleLib.Internal
             // Loop over the cells in the Chunk (line) 
             for (int id = 0; id < data[0].GetLength(0); id++)
             {
+                bool containsNodata = false;
                 // Now loop over cells in the window
                 for (int wId = 0; wId < BufferCellNum; wId++)
                 {
@@ -162,11 +164,19 @@ namespace GCDConsoleLib.Internal
                             dWindow[dId][wId] = inNodataVals[dId];
                         else
                             dWindow[dId][wId] = _chunkCache[cacheNum][dId][wid2cid];
+
+                        // This is done to save us checking later. We can decide whether to use
+                        // This information or not.
+                        if (dWindow[dId][wId].Equals(inNodataVals[dId]))
+                            containsNodata = true;
                     }
                 }
                 // DEBUG TEST
                 //dWindow[0].Make2DArray(BufferLength, BufferLength).DebugPrintGrid(OpNodataVal);
-                WindowOp(dWindow, outBuffers, id);
+#if DEBUG
+                num_calcs++;
+#endif
+                WindowOp(dWindow, outBuffers, id, containsNodata);
                 // Move the window by one cell to the right
                 WindowExtent.Left += ChunkExtent.CellWidth;
             }
