@@ -358,7 +358,7 @@ namespace GCDConsoleLib
         /// </summary>
         /// <param name="rR1"></param>
         /// <param name="rR2"></param>
-        public static void ValidateSameMeta(Raster rR1, Raster rR2)
+        public static void ValidateSameMeta(Raster rR1, Raster rR2, bool ignoreProj=false)
         {
             if (rR1.Extent.CellHeight != rR2.Extent.CellHeight)
                 throw new ArgumentException("Cellheights do not match");
@@ -366,7 +366,7 @@ namespace GCDConsoleLib
                 throw new ArgumentException("Cellwidths do not match");
             if (!rR1.IsDivisible() || !rR2.Extent.IsDivisible())
                 throw new ArgumentException("Both raster extents must be divisible");
-            if (!rR1.Proj.IsSame(rR2.Proj))
+            if (!ignoreProj && !rR1.Proj.IsSame(rR2.Proj))
                 throw new ArgumentException("Raster Projections do not match match");
             if (rR1.VerticalUnits != rR2.VerticalUnits)
                 throw new ArgumentException(string.Format("Both rasters must have the same vertical units: `{0}` vs. `{1}`", rR1.VerticalUnits, rR2.VerticalUnits));

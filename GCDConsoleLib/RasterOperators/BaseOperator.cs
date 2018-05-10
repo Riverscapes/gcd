@@ -103,7 +103,7 @@ namespace GCDConsoleLib.Internal
         protected void AddInputRaster(Raster rInput)
         {
             if (_inputRasters.Count > 1)
-                Raster.ValidateSameMeta(_inputRasters[0], rInput);
+                Raster.ValidateSameMeta(_inputRasters[0], rInput, true);
 
             _inputRasters.Add(rInput);
             inNodataVals.Add(rInput.NodataValue<T>());

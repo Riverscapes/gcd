@@ -27,23 +27,16 @@ namespace GCDConsoleLib.Tests
         {
             // First try with the using method
             Raster rOrig = new Raster(new FileInfo(DirHelpers.GetTestRasterPath("Slopey980-950.tif")));
-            string path = "";
+
             using (Raster tmpRaster = new Raster(rOrig)) {
-                path = tmpRaster.GISFileInfo.FullName;
                 Assert.IsTrue(tmpRaster.Extent.Equals(rOrig.Extent));
-                Assert.IsTrue(tmpRaster.FileExists());
             }
-            Assert.IsFalse(new FileInfo(path).Exists);
             // Make sure the original file is still there
             Assert.IsTrue(rOrig.FileExists());
 
 
             // Now try explicitly cleaning it up
             Raster tmpRaster2 = new Raster(rOrig);
-            string path2 = tmpRaster2.GISFileInfo.FullName;
-            Assert.IsTrue(tmpRaster2.FileExists());
-            tmpRaster2.Dispose();
-            Assert.IsFalse(new FileInfo(path2).Exists);
         }
 
         [TestMethod()]
