@@ -10,6 +10,24 @@ Note, see the [Commit History](https://github.com/Riverscapes/gcd/commits) in Gi
 
 <a class="button" href="https://github.com/Riverscapes/gcd/commits"><i class="fa fa-github"/> GCD Github Repository Commit History</a>
 
+## 7.1.0 - 11 May 2018
+
+This one is a big release that changes the platform of the Standalone so if you have the Standalone installed you will need to uninstall it and re-install it. Further updates should happen as usual.
+
+#### Nearly 50 bug fixes and enhancements including:
+
+* **64-bit support!** *(Standalone only)* We're thrilled to anounce the Standalone product is now working in full 64-bit.
+* Memory leaks: Fixed a nasty memory leak issue which should free up more RAM and allow for larger rasters to be processed.
+* Significant performance increases (in addition to the 64-bit) when doing windowed operations like Hillshading.
+* Lots of workflow issues to smooth out user experience
+* Many file locking issues.
+* Dozens of little UI glitches and typos.
+* Better help and tooltips overall.
+* Improved integrity checking when deleting project items.
+
+-----------------------------
+
+
 ## 7.0.16 - 17 Apr 2018
 
 * Probabilistic thresholded error raster.
@@ -153,7 +171,6 @@ Note, see the [Commit History](https://github.com/Riverscapes/gcd/commits) in Gi
 
 * [GCD 6 Release Notes](/_releasenotes/gcd6_releasenotes.html)
 * [GCD 5 Release Notes](http://gcd.joewheaton.org/downloads/older-versions)
-
 
 ------
 <div align="center">
