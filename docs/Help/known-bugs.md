@@ -32,11 +32,33 @@ This video shows you how to post an issue and some helpful things to include:
 
 ### Please always include following information:
 
+> ## The Problem
+>
+> What went wrong?
+>
+> ## Reproduction steps
+> 
+> 1. I did this
+> 2. Then I did that...
+> 
+> ## Exception message
+> 
+> ```text
+> 
+> Paste the exception message you are getting from the app here. It really helps us. 
+> 
+> ```
+> 
+> ## Anything else?
+> 
+> You can provide links to datasets.
+
+If you didn't get an Exception Message, please also include the:
 - Version of GCD you were using (e.g. `GCD 7.0.10`)
 - Version of ArcGIS  (e.g. `ArcGIS 10.5.1`)
 - What you were trying to do.
-- Copy of exception error thrown, if relevant (just copy and paste from error dialog)
 - Context
+
 
 The issue posting in GitHub uses [markdown syntax](https://guides.github.com/features/mastering-markdown/). Below is a template you can copy and paste if helpful:
 
