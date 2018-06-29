@@ -9,9 +9,10 @@ Note, see the [Commit History](https://github.com/Riverscapes/gcd/commits) in Gi
 
 <a class="button" href="https://github.com/Riverscapes/gcd/commits"><i class="fa fa-github"/> GCD Github Repository Commit History</a>
 
-## 7.1.1 - 25 Jun 2018
+## 7.1.1 - 29 Jun 2018
 
 * Fixed GCD calling the Cross Section Viewer by changing the publisher to `North Arrow Research Ltd.`
+* Fixed budget segregation issue when the thresholded histogram possesses no values.
 
 ## 7.1.0 - 11 May 2018
 
