@@ -9,6 +9,10 @@ Note, see the [Commit History](https://github.com/Riverscapes/gcd/commits) in Gi
 
 <a class="button" href="https://github.com/Riverscapes/gcd/commits"><i class="fa fa-github"/> GCD Github Repository Commit History</a>
 
+## 7.1.1 - 25 Jun 2018
+
+* Fixed GCD calling the Cross Section Viewer by changing the publisher to `North Arrow Research Ltd.`
+
 ## 7.1.0 - 11 May 2018
 
 This one is a big release that changes the platform of the Standalone so if you have the Standalone installed you will need to uninstall it and re-install it. Further updates should happen as usual.

@@ -69,7 +69,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
         {
             if (ProjectManager.Project.ProjectFile.Directory.Exists)
             {
-                string publisher_name = "North Arrow Research";
+                string publisher_name = "North Arrow Research Ltd.";
                 string product_name = "Cross Section Viewer";
 
                 try
