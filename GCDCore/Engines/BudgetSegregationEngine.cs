@@ -4,6 +4,7 @@ using System.Text;
 using GCDConsoleLib;
 using GCDCore.Project;
 using System;
+using System.Linq;
 
 namespace GCDCore.Engines
 {
@@ -39,6 +40,10 @@ namespace GCDCore.Engines
             Dictionary<string, Histogram> rawHistos = RasterOperators.BinRaster(dod.RawDoD.Raster, DEFAULTHISTOGRAMNUMBER, mask.Vector, mask._Field);
             Dictionary<string, Histogram> thrHistos = RasterOperators.BinRaster(dod.ThrDoD.Raster, DEFAULTHISTOGRAMNUMBER, mask.Vector, mask._Field);
 
+            decimal defaultBinWidth = 1;
+            if (rawHistos.Count > 0)
+                defaultBinWidth = (decimal)rawHistos.Values.First().BinWidth(ProjectManager.Project.Units).As(ProjectManager.Project.Units.VertUnit);
+
             // Make sure that the output folder and the folder for the figures exist
             analysisFolder.Create();
             DoDBase.FiguresFolderPath(analysisFolder).Create();
@@ -48,6 +53,12 @@ namespace GCDCore.Engines
             StringBuilder legendText = new StringBuilder("Class Index, Class Name");
             foreach (KeyValuePair<string, GCDConsoleLib.GCD.DoDStats> segClass in results)
             {
+                if (!rawHistos.ContainsKey(segClass.Key))
+                    rawHistos.Add(segClass.Key, new Histogram(DEFAULTHISTOGRAMNUMBER, defaultBinWidth));
+
+                if (!thrHistos.ContainsKey(segClass.Key))
+                    thrHistos.Add(segClass.Key, new Histogram(DEFAULTHISTOGRAMNUMBER, defaultBinWidth));
+
                 legendText.AppendLine(string.Format("{0},{1}", classIndex, segClass.Key));
 
                 string filePrefix = string.Format("c{0:000}", classIndex);
@@ -75,7 +86,7 @@ namespace GCDCore.Engines
             {
                 InterComparison.Generate(results, interCompare);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 // Do nothing. Essentially optional
                 Console.WriteLine("Error generating inter-comparison as part of a budget segregation " + ex.Message);

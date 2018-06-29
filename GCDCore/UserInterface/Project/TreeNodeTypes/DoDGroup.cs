@@ -51,8 +51,15 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             BudgetSegregation.frmBudgetSegProperties frm = new BudgetSegregation.frmBudgetSegProperties(DoD);
             if (EditTreeItem(frm) == DialogResult.OK)
             {
-                BudgetSegregation.frmBudgetSegResults frmResults = new BudgetSegregation.frmBudgetSegResults(frm.BudgetSeg);
-                frmResults.ShowDialog();
+                try
+                {
+                    BudgetSegregation.frmBudgetSegResults frmResults = new BudgetSegregation.frmBudgetSegResults(frm.BudgetSeg);
+                    frmResults.ShowDialog();
+                }
+                catch(Exception ex)
+                {
+                    GCDException.HandleException(ex);
+                }
             }
         }
 
