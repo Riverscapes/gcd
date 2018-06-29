@@ -178,29 +178,33 @@ namespace GCDCore.Visualization
                     Chart.Series.Remove(errorSeries);
             }
 
-            try
+            // Min and max are zero when there's no data in a histogram
+            if (min != max)
             {
-                // Set an initial max and min so the autoscale can do its thing
-                Chart.ChartAreas[0].AxisY.Maximum = max;
-                Chart.ChartAreas[0].AxisY.Minimum = min;
-                Chart.ChartAreas[0].RecalculateAxesScale();
+                try
+                {
+                    // Set an initial max and min so the autoscale can do its thing
+                    Chart.ChartAreas[0].AxisY.Maximum = max;
+                    Chart.ChartAreas[0].AxisY.Minimum = min;
+                    Chart.ChartAreas[0].RecalculateAxesScale();
 
-                Tuple<decimal, decimal> maxmin = GCDConsoleLib.Utility.IntervalMath.GetRegularizedMaxMin((decimal)max, (decimal)min, 0.02m);
+                    Tuple<decimal, decimal> maxmin = GCDConsoleLib.Utility.IntervalMath.GetRegularizedMaxMin((decimal)max, (decimal)min, 0.02m);
 
-                Chart.ChartAreas[0].AxisY.Maximum = (double)maxmin.Item1;
-                Chart.ChartAreas[0].AxisY.Minimum = (double)maxmin.Item2;
+                    Chart.ChartAreas[0].AxisY.Maximum = (double)maxmin.Item1;
+                    Chart.ChartAreas[0].AxisY.Minimum = (double)maxmin.Item2;
 
-                Chart.ChartAreas[0].AxisY.Interval = (double)GCDConsoleLib.Utility.IntervalMath.GetSensibleChartInterval(
-                    (decimal)Chart.ChartAreas[0].AxisY.Maximum,
-                    (decimal)Chart.ChartAreas[0].AxisY.Minimum,
-                    10);
+                    Chart.ChartAreas[0].AxisY.Interval = (double)GCDConsoleLib.Utility.IntervalMath.GetSensibleChartInterval(
+                        (decimal)Chart.ChartAreas[0].AxisY.Maximum,
+                        (decimal)Chart.ChartAreas[0].AxisY.Minimum,
+                        10);
 
-                Chart.AlignDataPointsByAxisLabel();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error calculating change bar chart axes: " + ex.Message);
-                //throw new Exception("Error refreshing elevation bar charts.", ex);
+                    Chart.AlignDataPointsByAxisLabel();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error calculating change bar chart axes: " + ex.Message);
+                    //throw new Exception("Error refreshing elevation bar charts.", ex);
+                }
             }
         }
 
@@ -252,7 +256,7 @@ namespace GCDCore.Visualization
             {
                 SaveImage(filePath);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine("Error saving elevation change bar chart: " + ex.Message);
             }
