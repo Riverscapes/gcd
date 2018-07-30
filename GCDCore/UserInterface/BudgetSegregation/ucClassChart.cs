@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using GCDCore.Project;
@@ -104,6 +100,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
 
             CustomLabelsCollection xAxisLabels = chtData.ChartAreas[0].AxisX.CustomLabels;
             double maxY = 0;
+            double cumVolume = 0;
 
             foreach (GCDCore.Project.Morphological.IBudgetGraphicalResults unit in units)
             {
@@ -126,7 +123,17 @@ namespace GCDCore.UserInterface.BudgetSegregation
                 maxY = Math.Max(maxY, (unit.VolErosion + unit.VolErosionErr).As(volUnit));
                 maxY = Math.Max(maxY, (unit.VolDeposition + unit.VolDepositionErr).As(volUnit));
 
-                chtData.Series[VOLOUT__CHART_SERIES].Points.AddXY(unit.Name, unit.SecondGraphValue.As(volUnit));
+                cumVolume += unit.VolDeposition.As(volUnit) - unit.VolErosion.As(volUnit);
+
+                if (secondChartType == SeriesChartType.Column)
+                {
+                    chtData.Series[VOLOUT__CHART_SERIES].Points.AddXY(unit.Name, unit.SecondGraphValue.As(volUnit));
+                }
+                else
+                {
+                    cumVolume += unit.VolDeposition.As(volUnit) - unit.VolErosion.As(volUnit);
+                    chtData.Series[VOLOUT__CHART_SERIES].Points.AddXY(unit.Name, cumVolume);
+                }
             }
 
             chtData.ChartAreas[0].AxisY.Maximum = Math.Ceiling(maxY);
@@ -142,7 +149,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
             chtData.Legends[0].Font = Properties.Settings.Default.ChartFont;
 
             // The data displayed on the second chart depends if this is being used for Morphological or Bs
-            chtData.Series[VOLOUT__CHART_SERIES].LegendText = secondChartType == SeriesChartType.Column ?  "Volume Out" : "Cumulative Volume";
+            chtData.Series[VOLOUT__CHART_SERIES].LegendText = secondChartType == SeriesChartType.Column ? "Volume Out" : "Cumulative Volume";
         }
     }
 }
