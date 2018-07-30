@@ -29,8 +29,7 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
         private Color colDep = Color.FromArgb(0, 0, 255);
         private Color colErr = Color.FromArgb(255, 0, 0);
 
-        UserInterface.UtilityForms.ChartContextMenu cmsChart;
-
+ 
         public readonly GCDCore.Project.Morphological.MorphologicalAnalysis Analysis;
 
         public GCDProjectItem GCDProjectItem { get { return Analysis; } }
@@ -40,14 +39,10 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
         {
             InitializeComponent();
             Analysis = ma;
-
-            cmsChart = new UtilityForms.ChartContextMenu(Analysis.OutputFolder, "morphological");
-            chtData.ContextMenuStrip = cmsChart.CMS;
-        }
+         }
 
         private void frmMorphResults_Load(object sender, EventArgs e)
         {
-            InitializeChart();
             InitializeToolTips();
 
             cmdOK.Text = Properties.Resources.UpdateButtonText;
@@ -243,106 +238,9 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
             txtMinFluxRate.Text = string.Format("{0:#,##0.00} {1}", Analysis.ReachFluxRate, Analysis.ReachFluxRateUnits);
         }
 
-        private void InitializeChart()
-        {
-            chtData.Series.Clear();
-            chtData.ChartAreas.Clear();
-
-            ChartArea chtArea1 = chtData.ChartAreas.Add("Volume");
-            chtArea1.AxisX.Title = "Sub Reach";
-            chtArea1.AxisX.MajorGrid.Enabled = false;
-            chtArea1.AxisY.MajorGrid.LineColor = Color.LightSlateGray;
-            chtArea1.AxisY.MinorGrid.Interval = chtArea1.AxisY.MajorGrid.Interval / 5;
-            chtArea1.AxisY.MinorGrid.LineColor = Color.LightGray;
-            chtArea1.AxisY.MinorGrid.Enabled = true;
-            chtArea1.AxisY.MinorTickMark.Enabled = true;
-            chtArea1.AxisY.MinorTickMark.LineColor = chtArea1.AxisY.MinorGrid.LineColor;
-            chtArea1.AxisX.Interval = 3;
-
-            ChartArea chtArea2 = chtData.ChartAreas.Add("Out");
-            chtArea2.AxisX.Title = chtArea1.AxisX.Title;
-            chtArea2.AxisX.MajorGrid.Enabled = false;
-            chtArea1.AxisY.MajorGrid.LineColor = chtArea1.AxisY.MajorGrid.LineColor;
-            chtArea2.AxisY.MinorGrid.Interval = chtArea2.AxisY.MajorGrid.Interval / 5;
-            chtArea2.AxisY.MinorGrid.LineColor = Color.LightGray;
-            chtArea2.AxisY.MinorGrid.Enabled = true;
-            chtArea2.AxisY.MinorTickMark.Enabled = true;
-            chtArea2.AxisY.MinorTickMark.LineColor = chtArea1.AxisY.MinorGrid.LineColor;
-
-            // Add series in reverse order that they will appear in legend
-
-
-            Series serVolOut = chtData.Series.Add(VOLOUT__CHART_SERIES);
-            serVolOut.LegendText = "Volume Out";
-            serVolOut.ChartArea = chtArea2.Name;
-
-            Series serDeposit = chtData.Series.Add(DEPOSIT_CHART_SERIES);
-            serDeposit.LegendText = "Deposition";
-            serDeposit.ChartArea = chtArea1.Name;
-            serDeposit.Color = ProjectManager.ColorDeposition;
-            serDeposit.ChartType = SeriesChartType.StackedColumn;
-
-            Series serErosion = chtData.Series.Add(EROSION_CHART_SERIES);
-            serErosion.LegendText = "Erosion";
-            serErosion.ChartArea = chtArea1.Name;
-            serErosion.Color = ProjectManager.ColorErosion;
-            serErosion.ChartType = SeriesChartType.StackedColumn;
-
-            // Error bars should always be last to ensure they draw on top
-            Series serErosionErr = chtData.Series.Add(ERROR___CHART_SERIES);
-            serErosionErr.IsVisibleInLegend = false;
-            serErosionErr.ChartType = SeriesChartType.ErrorBar;
-            serErosionErr.ChartArea = chtArea1.Name;
-            serErosionErr.Color = Color.Black;
-        }
-
         private void UpdateChart()
         {
-            // Update the Y axis volume units
-            UnitsNet.Units.VolumeUnit volUnit = Analysis.DisplayUnits_Volume;
-            chtData.ChartAreas.ToList<ChartArea>().ForEach(x => x.AxisY.Title = string.Format("Volume ({0})", Volume.GetAbbreviation(volUnit)));
-
-            // Clear all series data points
-            chtData.Series.ToList<Series>().ForEach(x => x.Points.Clear());
-
-            CustomLabelsCollection xAxisLabels = chtData.ChartAreas[0].AxisX.CustomLabels;
-            double maxY = 0;
-
-            foreach (GCDCore.Project.Morphological.MorphologicalUnit unit in Analysis.Units.Where(x => !x.IsTotal))
-            {
-                double labelStart = chtData.Series[EROSION_CHART_SERIES].Points.Count;
-                double labelEnd = labelStart + 3;
-                xAxisLabels.Add(new CustomLabel(labelStart, labelEnd, unit.Name, 0, LabelMarkStyle.Box));
-
-                chtData.Series[EROSION_CHART_SERIES].Points.AddY(unit.VolErosion.As(volUnit));
-                chtData.Series[EROSION_CHART_SERIES].Points.AddY(0);
-                chtData.Series[EROSION_CHART_SERIES].Points.AddY(0);
-
-                chtData.Series[DEPOSIT_CHART_SERIES].Points.AddY(0);
-                chtData.Series[DEPOSIT_CHART_SERIES].Points.AddY(unit.VolDeposition.As(volUnit));
-                chtData.Series[DEPOSIT_CHART_SERIES].Points.AddY(0);
-
-                chtData.Series[ERROR___CHART_SERIES].Points.AddY(new object[] { unit.VolErosion.As(volUnit), (unit.VolErosion - unit.VolErosionErr).As(volUnit), (unit.VolErosion + unit.VolErosionErr).As(volUnit) });
-                chtData.Series[ERROR___CHART_SERIES].Points.AddY(new object[] { unit.VolDeposition.As(volUnit), (unit.VolDeposition - unit.VolDepositionErr).As(volUnit), (unit.VolDeposition + unit.VolDepositionErr).As(volUnit) });
-                chtData.Series[ERROR___CHART_SERIES].Points.AddY(new object[] { 0, 0, 0 });
-
-                maxY = Math.Max(maxY, (unit.VolErosion + unit.VolErosionErr).As(volUnit));
-                maxY = Math.Max(maxY, (unit.VolDeposition + unit.VolDepositionErr).As(volUnit));
-
-                chtData.Series[VOLOUT__CHART_SERIES].Points.AddXY(unit.Name, unit.VolOut.As(volUnit));
-            }
-
-            chtData.ChartAreas[0].AxisY.Maximum = Math.Ceiling(maxY);
-            chtData.ChartAreas[0].AxisY.RoundAxisValues();
-
-            foreach (int i in new List<int> { 0, 1 })
-            {
-                chtData.ChartAreas[i].AxisX.TitleFont = Properties.Settings.Default.ChartFont;
-                chtData.ChartAreas[i].AxisX.LabelStyle.Font = Properties.Settings.Default.ChartFont;
-                chtData.ChartAreas[i].AxisY.TitleFont = Properties.Settings.Default.ChartFont;
-                chtData.ChartAreas[i].AxisY.LabelStyle.Font = Properties.Settings.Default.ChartFont;
-            }
-            chtData.Legends[0].Font = Properties.Settings.Default.ChartFont;
+            ucClassChart.UpdateChart(Analysis.OutputFolder, Analysis.Units.Where(x => !x.IsTotal), Analysis.DisplayUnits_Volume, SeriesChartType.Column);         
         }
 
         private void cmdBrowse_Click(object sender, EventArgs e)

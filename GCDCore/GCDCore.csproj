@@ -131,6 +131,7 @@
     <Compile Include="Project\Masks\Mask.cs" />
     <Compile Include="Project\Masks\MaskItem.cs" />
     <Compile Include="Project\Masks\RegularMask.cs" />
+    <Compile Include="Project\Morphological\IBudgetGraphicalResults.cs" />
     <Compile Include="Project\Morphological\MorphologicalAnalysis.cs" />
     <Compile Include="Project\Morphological\MorphologicalUnit.cs" />
     <Compile Include="Project\ProfileRoutes\ProfileRoute.cs" />
@@ -186,6 +187,12 @@
     </Compile>
     <Compile Include="UserInterface\BudgetSegregation\Morphological\frmMorpProperties.Designer.cs">
       <DependentUpon>frmMorpProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\BudgetSegregation\ucClassChart.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserInterface\BudgetSegregation\ucClassChart.Designer.cs">
+      <DependentUpon>ucClassChart.cs</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\ChangeDetection\Batch\frmBatchDoD.cs">
       <SubType>Form</SubType>
@@ -566,6 +573,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\BudgetSegregation\Morphological\frmMorpProperties.resx">
       <DependentUpon>frmMorpProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\BudgetSegregation\ucClassChart.resx">
+      <DependentUpon>ucClassChart.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\ChangeDetection\Batch\frmBatchDoD.resx">
       <DependentUpon>frmBatchDoD.cs</DependentUpon>

@@ -40,9 +40,6 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMorphResults));
             this.cmdHelp = new System.Windows.Forms.Button();
             this.cmdOK = new System.Windows.Forms.Button();
@@ -105,7 +102,6 @@
             this.txtMinFlux = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.chtData = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.ucDoDPropertiesGrid1 = new GCDCore.UserInterface.ChangeDetection.ucDoDPropertiesGrid();
             this.label7 = new System.Windows.Forms.Label();
@@ -115,6 +111,7 @@
             this.cmdBrowse = new System.Windows.Forms.Button();
             this.tTip = new System.Windows.Forms.ToolTip(this.components);
             this.cmdOptions = new System.Windows.Forms.Button();
+            this.ucClassChart = new GCDCore.UserInterface.BudgetSegregation.ucClassChart();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox5.SuspendLayout();
@@ -137,7 +134,6 @@
             this.cmsDataGrid.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabPage2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chtData)).BeginInit();
             this.tabPage3.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -839,7 +835,7 @@
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.chtData);
+            this.tabPage2.Controls.Add(this.ucClassChart);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -847,23 +843,6 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Graphical Results";
             this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // chtData
-            // 
-            chartArea1.Name = "ChartArea1";
-            this.chtData.ChartAreas.Add(chartArea1);
-            this.chtData.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend1.Name = "Legend1";
-            this.chtData.Legends.Add(legend1);
-            this.chtData.Location = new System.Drawing.Point(3, 3);
-            this.chtData.Name = "chtData";
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.chtData.Series.Add(series1);
-            this.chtData.Size = new System.Drawing.Size(1049, 403);
-            this.chtData.TabIndex = 0;
-            this.chtData.Text = "chart1";
             // 
             // tabPage3
             // 
@@ -938,6 +917,14 @@
             this.cmdOptions.UseVisualStyleBackColor = true;
             this.cmdOptions.Click += new System.EventHandler(this.cmdOptions_Click);
             // 
+            // ucClassChart
+            // 
+            this.ucClassChart.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucClassChart.Location = new System.Drawing.Point(3, 3);
+            this.ucClassChart.Name = "ucClassChart";
+            this.ucClassChart.Size = new System.Drawing.Size(1049, 403);
+            this.ucClassChart.TabIndex = 0;
+            // 
             // frmMorphResults
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -984,7 +971,6 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.chtData)).EndInit();
             this.tabPage3.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -1020,7 +1006,6 @@
         private System.Windows.Forms.TextBox txtPath;
         private System.Windows.Forms.Button cmdBrowse;
         private System.Windows.Forms.NumericUpDown valBoundaryFlux;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chtData;
         private System.Windows.Forms.Button cmdReset;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.GroupBox groupBox2;
@@ -1064,5 +1049,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colCumulative;
         private System.Windows.Forms.TextBox txtMinFluxRate;
         private System.Windows.Forms.Label label5;
+        private ucClassChart ucClassChart;
     }
 }

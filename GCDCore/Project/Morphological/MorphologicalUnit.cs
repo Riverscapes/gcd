@@ -3,7 +3,7 @@ using UnitsNet;
 
 namespace GCDCore.Project.Morphological
 {
-    public class MorphologicalUnit
+    public class MorphologicalUnit: IBudgetGraphicalResults
     {
         public string Name { get; internal set; }
         public override string ToString() { return Name; }
@@ -14,6 +14,9 @@ namespace GCDCore.Project.Morphological
 
         public Volume VolDeposition { get; internal set; }
         public Volume VolDepositionErr { get; internal set; }
+
+        // Morphological charts display the vol out as the second chart
+        public Volume SecondGraphValue { get { return VolOut; } }
 
         public Volume VolChange { get { return VolDeposition - VolErosion; } }
         public Volume VolChangeErr

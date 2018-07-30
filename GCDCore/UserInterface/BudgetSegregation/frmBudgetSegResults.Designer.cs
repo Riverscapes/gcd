@@ -48,13 +48,9 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.cmdHelp = new System.Windows.Forms.Button();
             this.tabMain = new System.Windows.Forms.TabControl();
             this.TabPage1 = new System.Windows.Forms.TabPage();
-            this.ucSummary = new GCDCore.UserInterface.ChangeDetection.ucDoDSummary();
             this.TabPage2 = new System.Windows.Forms.TabPage();
             this.TableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.ucBars = new GCDCore.UserInterface.ChangeDetection.ucChangeBars();
-            this.ucHistogram = new GCDCore.UserInterface.ChangeDetection.ucDoDHistogram();
             this.TabPage3 = new System.Windows.Forms.TabPage();
-            this.ucProperties = new GCDCore.UserInterface.ChangeDetection.ucDoDPropertiesGrid();
             this.TabPage4 = new System.Windows.Forms.TabPage();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.chtPieCharts = new System.Windows.Forms.DataVisualization.Charting.Chart();
@@ -69,6 +65,12 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.label2 = new System.Windows.Forms.Label();
             this.cmdSettings = new System.Windows.Forms.Button();
             this.tTip = new System.Windows.Forms.ToolTip(this.components);
+            this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.ucClassChart = new GCDCore.UserInterface.BudgetSegregation.ucClassChart();
+            this.ucSummary = new GCDCore.UserInterface.ChangeDetection.ucDoDSummary();
+            this.ucBars = new GCDCore.UserInterface.ChangeDetection.ucChangeBars();
+            this.ucHistogram = new GCDCore.UserInterface.ChangeDetection.ucDoDHistogram();
+            this.ucProperties = new GCDCore.UserInterface.ChangeDetection.ucDoDPropertiesGrid();
             this.tabMain.SuspendLayout();
             this.TabPage1.SuspendLayout();
             this.TabPage2.SuspendLayout();
@@ -77,6 +79,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.tabPage5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chtPieCharts)).BeginInit();
             this.cmsBasicRaster.SuspendLayout();
+            this.tabPage6.SuspendLayout();
             this.SuspendLayout();
             // 
             // cmdCancel
@@ -108,6 +111,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabMain.Controls.Add(this.TabPage1);
             this.tabMain.Controls.Add(this.TabPage2);
+            this.tabMain.Controls.Add(this.tabPage6);
             this.tabMain.Controls.Add(this.TabPage3);
             this.tabMain.Controls.Add(this.TabPage4);
             this.tabMain.Controls.Add(this.tabPage5);
@@ -127,14 +131,6 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.TabPage1.TabIndex = 0;
             this.TabPage1.Text = "Tabular Results By Category";
             this.TabPage1.UseVisualStyleBackColor = true;
-            // 
-            // ucSummary
-            // 
-            this.ucSummary.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucSummary.Location = new System.Drawing.Point(3, 3);
-            this.ucSummary.Name = "ucSummary";
-            this.ucSummary.Size = new System.Drawing.Size(648, 328);
-            this.ucSummary.TabIndex = 2;
             // 
             // TabPage2
             // 
@@ -164,28 +160,6 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.TableLayoutPanel1.Size = new System.Drawing.Size(648, 328);
             this.TableLayoutPanel1.TabIndex = 6;
             // 
-            // ucBars
-            // 
-            this.ucBars.ChangeStats = null;
-            this.ucBars.ChartContextMenuStrip = null;
-            this.ucBars.DisplayUnits = null;
-            this.ucBars.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucBars.Location = new System.Drawing.Point(504, 3);
-            this.ucBars.Name = "ucBars";
-            this.ucBars.Size = new System.Drawing.Size(141, 370);
-            this.ucBars.TabIndex = 5;
-            // 
-            // ucHistogram
-            // 
-            this.ucHistogram.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ucHistogram.ChartContextMenuStrip = null;
-            this.TableLayoutPanel1.SetColumnSpan(this.ucHistogram, 2);
-            this.ucHistogram.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucHistogram.Location = new System.Drawing.Point(3, 3);
-            this.ucHistogram.Name = "ucHistogram";
-            this.ucHistogram.Size = new System.Drawing.Size(495, 370);
-            this.ucHistogram.TabIndex = 4;
-            // 
             // TabPage3
             // 
             this.TabPage3.Controls.Add(this.ucProperties);
@@ -196,14 +170,6 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.TabPage3.TabIndex = 2;
             this.TabPage3.Text = "Analysis Inputs";
             this.TabPage3.UseVisualStyleBackColor = true;
-            // 
-            // ucProperties
-            // 
-            this.ucProperties.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucProperties.Location = new System.Drawing.Point(3, 3);
-            this.ucProperties.Name = "ucProperties";
-            this.ucProperties.Size = new System.Drawing.Size(648, 328);
-            this.ucProperties.TabIndex = 0;
             // 
             // TabPage4
             // 
@@ -339,6 +305,63 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.cmdSettings.UseVisualStyleBackColor = true;
             this.cmdSettings.Click += new System.EventHandler(this.cmdSettings_Click);
             // 
+            // tabPage6
+            // 
+            this.tabPage6.Controls.Add(this.ucClassChart);
+            this.tabPage6.Location = new System.Drawing.Point(4, 22);
+            this.tabPage6.Name = "tabPage6";
+            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage6.Size = new System.Drawing.Size(654, 334);
+            this.tabPage6.TabIndex = 5;
+            this.tabPage6.Text = "All Categories";
+            this.tabPage6.UseVisualStyleBackColor = true;
+            // 
+            // ucClassChart
+            // 
+            this.ucClassChart.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucClassChart.Location = new System.Drawing.Point(3, 3);
+            this.ucClassChart.Name = "ucClassChart";
+            this.ucClassChart.Size = new System.Drawing.Size(648, 328);
+            this.ucClassChart.TabIndex = 0;
+            // 
+            // ucSummary
+            // 
+            this.ucSummary.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucSummary.Location = new System.Drawing.Point(3, 3);
+            this.ucSummary.Name = "ucSummary";
+            this.ucSummary.Size = new System.Drawing.Size(648, 328);
+            this.ucSummary.TabIndex = 2;
+            // 
+            // ucBars
+            // 
+            this.ucBars.ChangeStats = null;
+            this.ucBars.ChartContextMenuStrip = null;
+            this.ucBars.DisplayUnits = null;
+            this.ucBars.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucBars.Location = new System.Drawing.Point(504, 3);
+            this.ucBars.Name = "ucBars";
+            this.ucBars.Size = new System.Drawing.Size(141, 370);
+            this.ucBars.TabIndex = 5;
+            // 
+            // ucHistogram
+            // 
+            this.ucHistogram.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.ucHistogram.ChartContextMenuStrip = null;
+            this.TableLayoutPanel1.SetColumnSpan(this.ucHistogram, 2);
+            this.ucHistogram.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucHistogram.Location = new System.Drawing.Point(3, 3);
+            this.ucHistogram.Name = "ucHistogram";
+            this.ucHistogram.Size = new System.Drawing.Size(495, 370);
+            this.ucHistogram.TabIndex = 4;
+            // 
+            // ucProperties
+            // 
+            this.ucProperties.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucProperties.Location = new System.Drawing.Point(3, 3);
+            this.ucProperties.Name = "ucProperties";
+            this.ucProperties.Size = new System.Drawing.Size(648, 328);
+            this.ucProperties.TabIndex = 0;
+            // 
             // frmBudgetSegResults
             // 
             this.AcceptButton = this.cmdCancel;
@@ -369,6 +392,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
             this.tabPage5.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chtPieCharts)).EndInit();
             this.cmsBasicRaster.ResumeLayout(false);
+            this.tabPage6.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -398,5 +422,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
         private System.Windows.Forms.DataVisualization.Charting.Chart chtPieCharts;
         internal System.Windows.Forms.Button cmdSettings;
         private System.Windows.Forms.ToolTip tTip;
+        private System.Windows.Forms.TabPage tabPage6;
+        private ucClassChart ucClassChart;
     }
 }

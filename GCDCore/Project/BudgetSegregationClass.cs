@@ -1,12 +1,13 @@
 ﻿using System.IO;
 using GCDConsoleLib.GCD;
 using System.Xml;
+using UnitsNet;
 
 namespace GCDCore.Project
 {
-    public class BudgetSegregationClass
+    public class BudgetSegregationClass : Morphological.IBudgetGraphicalResults
     {
-        public readonly string Name;
+        public string Name { get; private set; }
         public readonly HistogramPair Histograms;
         public readonly FileInfo SummaryXML;
         public readonly DoDStats Statistics;
@@ -45,5 +46,13 @@ namespace GCDCore.Project
             XmlNode nodStatistics = nodClass.AppendChild(nodParent.OwnerDocument.CreateElement("Statistics"));
             DoDBase.SerializeDoDStatistics(nodParent.OwnerDocument, nodStatistics, Statistics);
         }
+
+        public Volume VolErosion { get { return Statistics.ErosionThr.GetVolume(ProjectManager.Project.CellArea, ProjectManager.Project.Units.VertUnit); } }
+        public Volume VolErosionErr { get { return Statistics.ErosionErr.GetVolume(ProjectManager.Project.CellArea, ProjectManager.Project.Units.VertUnit); } }
+
+        public Volume VolDeposition { get { return Statistics.DepositionThr.GetVolume(ProjectManager.Project.CellArea, ProjectManager.Project.Units.VertUnit); } }
+        public Volume VolDepositionErr { get { return Statistics.DepositionErr.GetVolume(ProjectManager.Project.CellArea, ProjectManager.Project.Units.VertUnit); } }
+ 
+        public Volume SecondGraphValue { get; set; }
     }
 }
