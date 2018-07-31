@@ -85,6 +85,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Engines\BudgetSegregationEngine.cs" />
+    <Compile Include="Engines\DoD\BatchProps.cs" />
     <Compile Include="Engines\DoD\ChangeDetectionBase.cs" />
     <Compile Include="Engines\DoD\ChangeDetectionMinLoD.cs" />
     <Compile Include="Engines\DoD\ChangeDetectionProbabilistic.cs" />

@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using GCDCore.Project;
 using GCDCore.Engines.DoD;
 
 namespace GCDCore.UserInterface.ChangeDetection.Batch
@@ -23,13 +17,13 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
             ProbMulti
         }
 
-        public readonly naru.ui.SortableBindingList<ThresholdProps> Thresholds;
-        private GCDCore.Engines.DoD.ChangeDetetctionBatch BatchEngine;
+        public readonly naru.ui.SortableBindingList<BatchProps> Batches;
+        private ChangeDetetctionBatch BatchEngine;
 
         public frmBatchDoD()
         {
             InitializeComponent();
-            Thresholds = new naru.ui.SortableBindingList<ThresholdProps>();
+            Batches = new naru.ui.SortableBindingList<BatchProps>();
         }
 
         private void frmBatchDoD_Load(object sender, EventArgs e)
@@ -38,7 +32,7 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
             grdMethods.AutoGenerateColumns = false;
             grdMethods.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             grdMethods.SelectionChanged += UpdateControls;
-            grdMethods.DataSource = Thresholds;
+            grdMethods.DataSource = Batches;
 
             ContextMenuStrip cms = new ContextMenuStrip();
 
@@ -67,18 +61,6 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
             cms.Items.Add(tsi6);
 
             cmdAdd.Menu = cms;
-
-            Thresholds.ListChanged += Thresholds_ListChanged;
-        }
-
-        /// <summary>
-        /// Need to update where the error surface combo boxes should be enabled or disabled
-        /// </summary>
-        /// <remarks>
-        /// Call this method after changing the </remarks>
-        private void Thresholds_ListChanged(object sender, ListChangedEventArgs e)
-        {
-            ucDEMs.EnableErrorSurfaces(Thresholds.Any<ThresholdProps>(x => x.Method != ThresholdProps.ThresholdMethods.MinLoD));
         }
 
         private void cmdAdd_Click(object sender, EventArgs e)
@@ -86,18 +68,10 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
             ToolStripMenuItem tsmi = (ToolStripMenuItem)sender;
             if (tsmi.Tag is ThresholdTypes)
             {
-                if (((ThresholdTypes)tsmi.Tag) == ThresholdTypes.Propagated)
-                {
-                    // Simply add a new propagated
-                    Thresholds.Add(new ThresholdProps());
-                }
-                else
-                {
-                    // If the user clicks OK the child form will
-                    // append the appropriate ThresholdProps to the binding list
-                    frmBatchDoDProperties frm = new frmBatchDoDProperties(Thresholds, tsmi.Text, (ThresholdTypes)tsmi.Tag);
-                    frm.ShowDialog();
-                }
+                // If the user clicks OK the child form will
+                // append the appropriate ThresholdProps to the binding list
+                frmBatchDoDProperties frm = new frmBatchDoDProperties(Batches, tsmi.Text, (ThresholdTypes)tsmi.Tag);
+                frm.ShowDialog();
             }
             else
             {
@@ -108,7 +82,7 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
         private void cmdDelete_Click(object sender, EventArgs e)
         {
             foreach (DataGridViewRow row in grdMethods.SelectedRows)
-                Thresholds.Remove((ThresholdProps)row.DataBoundItem);
+                Batches.Remove((BatchProps)row.DataBoundItem);
         }
 
         private void UpdateControls(object sender, EventArgs e)
@@ -130,8 +104,9 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
                 this.UseWaitCursor = true;
 
                 cmdOK.Enabled = false;
+                cmdCancel.Enabled = false;
                 cmdCancel.DialogResult = DialogResult.None;
-                BatchEngine = new ChangeDetetctionBatch(ucDEMs.NewSurface, ucDEMs.OldSurface, ucDEMs.AOIMask, ucDEMs.NewError, ucDEMs.OldError, Thresholds.ToList<ThresholdProps>());
+                BatchEngine = new ChangeDetetctionBatch(Batches.ToList<BatchProps>());
                 bgWorker.RunWorkerAsync();
             }
             catch (Exception ex)
@@ -152,9 +127,6 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
                 cmdAdd.Select();
                 return false;
             }
-
-            if (!ucDEMs.ValidateForm())
-                return false;
 
             return true;
         }

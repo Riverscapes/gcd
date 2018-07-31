@@ -40,6 +40,7 @@
             this.cmdHelp = new System.Windows.Forms.Button();
             this.chkBayesian = new System.Windows.Forms.CheckBox();
             this.cmdBayesian = new System.Windows.Forms.Button();
+            this.ucDEMs = new GCDCore.UserInterface.ChangeDetection.ucDoDDEMSelection();
             ((System.ComponentModel.ISupportInitialize)(this.valMin)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.valMax)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.valInterval)).BeginInit();
@@ -49,7 +50,7 @@
             // 
             this.valMin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.valMin.DecimalPlaces = 2;
-            this.valMin.Location = new System.Drawing.Point(272, 12);
+            this.valMin.Location = new System.Drawing.Point(187, 144);
             this.valMin.Name = "valMin";
             this.valMin.Size = new System.Drawing.Size(68, 20);
             this.valMin.TabIndex = 5;
@@ -58,7 +59,7 @@
             // lblMin
             // 
             this.lblMin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblMin.Location = new System.Drawing.Point(97, 12);
+            this.lblMin.Location = new System.Drawing.Point(12, 144);
             this.lblMin.Name = "lblMin";
             this.lblMin.Size = new System.Drawing.Size(170, 20);
             this.lblMin.TabIndex = 4;
@@ -69,7 +70,7 @@
             // 
             this.valMax.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.valMax.DecimalPlaces = 2;
-            this.valMax.Location = new System.Drawing.Point(272, 38);
+            this.valMax.Location = new System.Drawing.Point(187, 170);
             this.valMax.Name = "valMax";
             this.valMax.Size = new System.Drawing.Size(68, 20);
             this.valMax.TabIndex = 7;
@@ -78,7 +79,7 @@
             // lblMax
             // 
             this.lblMax.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblMax.Location = new System.Drawing.Point(97, 38);
+            this.lblMax.Location = new System.Drawing.Point(12, 170);
             this.lblMax.Name = "lblMax";
             this.lblMax.Size = new System.Drawing.Size(170, 20);
             this.lblMax.TabIndex = 6;
@@ -89,7 +90,7 @@
             // 
             this.valInterval.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.valInterval.DecimalPlaces = 2;
-            this.valInterval.Location = new System.Drawing.Point(272, 64);
+            this.valInterval.Location = new System.Drawing.Point(187, 196);
             this.valInterval.Name = "valInterval";
             this.valInterval.Size = new System.Drawing.Size(68, 20);
             this.valInterval.TabIndex = 9;
@@ -98,7 +99,7 @@
             // lblInterval
             // 
             this.lblInterval.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblInterval.Location = new System.Drawing.Point(97, 64);
+            this.lblInterval.Location = new System.Drawing.Point(12, 196);
             this.lblInterval.Name = "lblInterval";
             this.lblInterval.Size = new System.Drawing.Size(170, 20);
             this.lblInterval.TabIndex = 8;
@@ -109,7 +110,7 @@
             // 
             this.cmdCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cmdCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cmdCancel.Location = new System.Drawing.Point(266, 128);
+            this.cmdCancel.Location = new System.Drawing.Point(493, 261);
             this.cmdCancel.Name = "cmdCancel";
             this.cmdCancel.Size = new System.Drawing.Size(75, 23);
             this.cmdCancel.TabIndex = 30;
@@ -120,7 +121,7 @@
             // 
             this.cmdOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cmdOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.cmdOK.Location = new System.Drawing.Point(169, 128);
+            this.cmdOK.Location = new System.Drawing.Point(396, 261);
             this.cmdOK.Name = "cmdOK";
             this.cmdOK.Size = new System.Drawing.Size(91, 23);
             this.cmdOK.TabIndex = 29;
@@ -141,7 +142,7 @@
             // 
             this.chkBayesian.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.chkBayesian.AutoSize = true;
-            this.chkBayesian.Location = new System.Drawing.Point(176, 94);
+            this.chkBayesian.Location = new System.Drawing.Point(91, 226);
             this.chkBayesian.Name = "chkBayesian";
             this.chkBayesian.Size = new System.Drawing.Size(135, 17);
             this.chkBayesian.TabIndex = 27;
@@ -153,12 +154,23 @@
             // 
             this.cmdBayesian.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cmdBayesian.Image = global::GCDCore.Properties.Resources.Settings;
-            this.cmdBayesian.Location = new System.Drawing.Point(317, 91);
+            this.cmdBayesian.Location = new System.Drawing.Point(232, 223);
             this.cmdBayesian.Name = "cmdBayesian";
             this.cmdBayesian.Size = new System.Drawing.Size(23, 23);
             this.cmdBayesian.TabIndex = 28;
             this.cmdBayesian.UseVisualStyleBackColor = true;
             this.cmdBayesian.Click += new System.EventHandler(this.cmdSProb_Click);
+            // 
+            // ucDEMs
+            // 
+            this.ucDEMs.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ucDEMs.Location = new System.Drawing.Point(12, 12);
+            this.ucDEMs.Name = "ucDEMs";
+            this.ucDEMs.NewSurface = null;
+            this.ucDEMs.OldSurface = null;
+            this.ucDEMs.Size = new System.Drawing.Size(556, 129);
+            this.ucDEMs.TabIndex = 32;
             // 
             // frmBatchDoDProperties
             // 
@@ -166,7 +178,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cmdCancel;
-            this.ClientSize = new System.Drawing.Size(353, 163);
+            this.ClientSize = new System.Drawing.Size(580, 296);
+            this.Controls.Add(this.ucDEMs);
             this.Controls.Add(this.cmdHelp);
             this.Controls.Add(this.cmdOK);
             this.Controls.Add(this.cmdCancel);
@@ -205,5 +218,6 @@
         private System.Windows.Forms.Button cmdHelp;
         private System.Windows.Forms.CheckBox chkBayesian;
         private System.Windows.Forms.Button cmdBayesian;
+        private ucDoDDEMSelection ucDEMs;
     }
 }

@@ -11,57 +11,38 @@ namespace GCDCore.Engines.DoD
 {
     public class ChangeDetetctionBatch
     {
-        public readonly List<ThresholdProps> Thresholds;
-        public readonly Surface NewSurface;
-        public readonly Surface OldSurface;
-        public readonly ErrorSurface NewError;
-        public readonly ErrorSurface OldError;
-        public readonly Project.Masks.AOIMask AOIMask;
+        public readonly List<BatchProps> Batches;
 
-        private readonly Dictionary<ThresholdProps.ThresholdMethods, ChangeDetectionEngineBase> DoDEngines;
-
-        public ChangeDetetctionBatch(Surface newSurface, Surface oldSurface, Project.Masks.AOIMask aoi, ErrorSurface newError, ErrorSurface oldError, List<ThresholdProps> tProps)
+        public ChangeDetetctionBatch(List<BatchProps> batches)
         {
-            NewSurface = newSurface;
-            OldSurface = oldSurface;
-            NewError = newError;
-            OldError = oldError;
-            Thresholds = tProps;
-            AOIMask = aoi;
-
-            DoDEngines = new Dictionary<ThresholdProps.ThresholdMethods, ChangeDetectionEngineBase>();
+            Batches = batches;
         }
 
         public void Run(BackgroundWorker bgWorker)
         {
-
-            foreach (ThresholdProps tp in Thresholds)
-            {
-                PerformDoD(tp);
-            }
-
+            Batches.ForEach(x => PerformDoD(x));
             ProjectManager.Project.Save();
         }
 
-        private void PerformDoD(ThresholdProps tProps)
+        private void PerformDoD(BatchProps props)
         {
-            string aoiName = AOIMask is Project.Masks.AOIMask ? AOIMask.Name : string.Empty;
-            string dodName = frmDoDProperties.GetUniqueAnalysisName(NewSurface.Name, OldSurface.Name, tProps.ThresholdString, aoiName);
+            string aoiName = props.AOIMask is Project.Masks.AOIMask ? props.AOIMask.Name : string.Empty;
+            string dodName = frmDoDProperties.GetUniqueAnalysisName(props.NewSurface.Name, props.OldSurface.Name, props.ThresholdProps.ThresholdString, aoiName);
             System.IO.DirectoryInfo dFolder = ProjectManager.Project.GetDoDFolder();
 
             ChangeDetectionEngineBase cdEngine = null;
-            switch (tProps.Method)
+            switch (props.ThresholdProps.Method)
             {
                 case ThresholdProps.ThresholdMethods.MinLoD:
-                    cdEngine = new ChangeDetectionEngineMinLoD(NewSurface, OldSurface, AOIMask, tProps.Threshold);
+                    cdEngine = new ChangeDetectionEngineMinLoD(props.NewSurface, props.OldSurface, props.AOIMask, props.ThresholdProps.Threshold);
                     break;
 
                 case ThresholdProps.ThresholdMethods.Propagated:
-                    cdEngine = new ChangeDetectionEnginePropProb(NewSurface, OldSurface, NewError, OldError, AOIMask);
+                    cdEngine = new ChangeDetectionEnginePropProb(props.NewSurface, props.OldSurface, props.NewError, props.OldError, props.AOIMask);
                     break;
 
                 case ThresholdProps.ThresholdMethods.Probabilistic:
-                    cdEngine = new ChangeDetectionEngineProbabilistic(NewSurface, OldSurface, AOIMask, NewError, OldError, tProps.Threshold, tProps.SpatialCoherenceProps);
+                    cdEngine = new ChangeDetectionEngineProbabilistic(props.NewSurface, props.OldSurface, props.AOIMask, props.NewError, props.OldError, props.ThresholdProps.Threshold, props.ThresholdProps.SpatialCoherenceProps);
                     break;
             }
 

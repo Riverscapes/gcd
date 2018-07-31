@@ -21,18 +21,9 @@ namespace GCDCore.Engines.DoD
         public bool BayesianUpdating { get; set; }
         public readonly GCDCore.Project.CoherenceProperties SpatialCoherenceProps;
 
-        public string MethodString
+        public override string ToString()
         {
-            get
-            {
-                switch (Method)
-                {
-                    case ThresholdMethods.MinLoD: return "Minimum Level of Detection";
-                    case ThresholdMethods.Propagated: return "Propagated Error";
-                    case ThresholdMethods.Probabilistic: return string.Format("Probabilistic{0}", BayesianUpdating ? " with Bayesian updating" : string.Empty);
-                    default: return string.Empty;
-                }
-            }
+            return ThresholdString;
         }
 
         public string ThresholdString
@@ -42,8 +33,8 @@ namespace GCDCore.Engines.DoD
                 switch (Method)
                 {
                     case ThresholdMethods.Propagated: return "Propagated";
-                    case ThresholdMethods.MinLoD: return string.Format("{0:0.00}{1}", Threshold, UnitsNet.Length.GetAbbreviation(ProjectManager.Project.Units.VertUnit));
-                    case ThresholdMethods.Probabilistic: return string.Format("{0:0.00}% Confidence Level{1}", Threshold, SpatialCoherenceProps == null ? "" : " Spat Co.");
+                    case ThresholdMethods.MinLoD: return string.Format("MinLoD at {0:0.00}{1}", Threshold, UnitsNet.Length.GetAbbreviation(ProjectManager.Project.Units.VertUnit));
+                    case ThresholdMethods.Probabilistic: return string.Format("Probabilistic at {0:0.00}% Confidence Level{1}", Threshold, SpatialCoherenceProps == null ? "" : " Spat Co.");
                     default: return string.Empty;
                 }
 

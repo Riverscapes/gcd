@@ -14,20 +14,21 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
     public partial class frmBatchDoDProperties : Form
     {
         public readonly frmBatchDoD.ThresholdTypes ThresholdType;
-        naru.ui.SortableBindingList<ThresholdProps> Thresholds;
+        naru.ui.SortableBindingList<BatchProps> Thresholds;
         GCDCore.Project.CoherenceProperties CoherenceProps;
 
-        public frmBatchDoDProperties(naru.ui.SortableBindingList<ThresholdProps> thresholds, string sType, frmBatchDoD.ThresholdTypes eType)
+        public frmBatchDoDProperties(naru.ui.SortableBindingList<BatchProps> thresholds, string sType, frmBatchDoD.ThresholdTypes eType)
         {
             InitializeComponent();
             Thresholds = thresholds;
             ThresholdType = eType;
             Text = string.Format("Add {0} To Batch", sType);
+
+            ucDEMs.EnableErrorSurfaces(eType != frmBatchDoD.ThresholdTypes.MinLoDSingle && eType != frmBatchDoD.ThresholdTypes.MinLoDMulti);
         }
 
         private void frmBatchDoDProperties_Load(object sender, EventArgs e)
         {
-
             if (ThresholdType == frmBatchDoD.ThresholdTypes.MinLoDSingle ||
                 ThresholdType == frmBatchDoD.ThresholdTypes.MinLoDMulti)
             {
@@ -62,7 +63,7 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
                     lblMin.Text = string.Format("Minimum MinLoD threshold ({0})", vertUnits);
                     lblMax.Text = string.Format("Maximum MinLoD threshold ({0})", vertUnits);
                     lblInterval.Text = string.Format("Interval ({0})", vertUnits);
-            
+
                     chkBayesian.Visible = false;
                     cmdBayesian.Visible = false;
                     Height -= cmdOK.Top - chkBayesian.Top;
@@ -83,7 +84,15 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
                     break;
 
                 default:
-                    MessageBox.Show("Not Implemented");
+                    lblMin.Visible = false;
+                    valMin.Visible = false;
+                    lblMax.Visible = false;
+                    valMax.Visible = false;
+                    lblInterval.Visible = false;
+                    valInterval.Visible = false;
+                    chkBayesian.Visible = false;
+                    cmdBayesian.Visible = false;
+                    Height -= cmdOK.Top - valMin.Top;
                     break;
             }
         }
@@ -100,21 +109,25 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
             switch (ThresholdType)
             {
                 case frmBatchDoD.ThresholdTypes.MinLoDSingle:
-                    Thresholds.Add(new ThresholdProps(valMin.Value));
+                    Thresholds.Add(new BatchProps(ucDEMs.NewSurface, null, ucDEMs.OldSurface, null, ucDEMs.AOIMask, new ThresholdProps(valMin.Value)));
                     break;
 
                 case frmBatchDoD.ThresholdTypes.MinLoDMulti:
                     for (decimal minlod = valMin.Value; minlod <= valMax.Value; minlod += valInterval.Value)
-                        Thresholds.Add(new ThresholdProps(minlod));
+                        Thresholds.Add(new BatchProps(ucDEMs.NewSurface, null, ucDEMs.OldSurface, null, ucDEMs.AOIMask, new ThresholdProps(minlod)));
+                    break;
+
+                case frmBatchDoD.ThresholdTypes.Propagated:
+                    Thresholds.Add(new BatchProps(ucDEMs.NewSurface, ucDEMs.NewError, ucDEMs.OldSurface, ucDEMs.OldError, ucDEMs.AOIMask, new ThresholdProps()));
                     break;
 
                 case frmBatchDoD.ThresholdTypes.ProbSingle:
-                    Thresholds.Add(new ThresholdProps(valMin.Value, CoherenceProps));
+                    Thresholds.Add(new BatchProps(ucDEMs.NewSurface, ucDEMs.NewError, ucDEMs.OldSurface, ucDEMs.OldError, ucDEMs.AOIMask, new ThresholdProps(valMin.Value, CoherenceProps)));
                     break;
 
                 case frmBatchDoD.ThresholdTypes.ProbMulti:
                     for (decimal conf = valMin.Value; conf <= valMax.Value; conf += valInterval.Value)
-                        Thresholds.Add(new ThresholdProps(conf, CoherenceProps));
+                        Thresholds.Add(new BatchProps(ucDEMs.NewSurface, ucDEMs.NewError, ucDEMs.OldSurface, ucDEMs.OldError, ucDEMs.AOIMask, new ThresholdProps(conf, CoherenceProps)));
                     break;
 
                 default:
@@ -125,6 +138,9 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
 
         private DialogResult ValidateForm()
         {
+            if (!ucDEMs.ValidateForm())
+                return DialogResult.None;
+
             if (ThresholdType == frmBatchDoD.ThresholdTypes.MinLoDMulti ||
                 ThresholdType == frmBatchDoD.ThresholdTypes.ProbMulti)
             {
@@ -166,7 +182,7 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
                 }
             }
 
-            return  DialogResult.OK;
+            return DialogResult.OK;
         }
 
         private void ConfigureProbNumericUpDown(NumericUpDown ctrl)
