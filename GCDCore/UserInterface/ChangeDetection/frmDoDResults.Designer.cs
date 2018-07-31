@@ -93,7 +93,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             this.TabPage3.Padding = new System.Windows.Forms.Padding(3);
             this.TabPage3.Size = new System.Drawing.Size(668, 411);
             this.TabPage3.TabIndex = 2;
-            this.TabPage3.Text = "Analysis Inputs";
+            this.TabPage3.Text = "Analysis Details";
             this.TabPage3.UseVisualStyleBackColor = true;
             // 
             // ucProperties

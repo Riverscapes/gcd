@@ -28,10 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.grdData = new System.Windows.Forms.DataGridView();
             this.colProperty = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.addToMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.grdData)).BeginInit();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // grdData
@@ -45,12 +49,15 @@
             this.colValue});
             this.grdData.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grdData.Location = new System.Drawing.Point(0, 0);
+            this.grdData.MultiSelect = false;
             this.grdData.Name = "grdData";
             this.grdData.ReadOnly = true;
             this.grdData.RowHeadersVisible = false;
             this.grdData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.grdData.Size = new System.Drawing.Size(522, 453);
             this.grdData.TabIndex = 0;
+            this.grdData.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.grdData_CellFormatting);
+            this.grdData.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.grdData_CellMouseDown);
             // 
             // colProperty
             // 
@@ -68,6 +75,21 @@
             this.colValue.Name = "colValue";
             this.colValue.ReadOnly = true;
             // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addToMapToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(140, 26);
+            // 
+            // addToMapToolStripMenuItem
+            // 
+            this.addToMapToolStripMenuItem.Image = global::GCDCore.Properties.Resources.AddToMap;
+            this.addToMapToolStripMenuItem.Name = "addToMapToolStripMenuItem";
+            this.addToMapToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.addToMapToolStripMenuItem.Text = "Add To Map";
+            this.addToMapToolStripMenuItem.Click += new System.EventHandler(this.addToMapToolStripMenuItem_Click);
+            // 
             // ucDoDPropertiesGrid
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -77,6 +99,7 @@
             this.Size = new System.Drawing.Size(522, 453);
             this.Load += new System.EventHandler(this.ucDoDPropertiesGrid_Load);
             ((System.ComponentModel.ISupportInitialize)(this.grdData)).EndInit();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -86,5 +109,7 @@
         private System.Windows.Forms.DataGridView grdData;
         private System.Windows.Forms.DataGridViewTextBoxColumn colProperty;
         private System.Windows.Forms.DataGridViewTextBoxColumn colValue;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem addToMapToolStripMenuItem;
     }
 }

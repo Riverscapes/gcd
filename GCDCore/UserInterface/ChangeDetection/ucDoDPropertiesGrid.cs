@@ -26,6 +26,8 @@ namespace GCDCore.UserInterface.ChangeDetection
         {
             grdData.AutoGenerateColumns = false;
             grdData.DataSource = DoDProperties;
+
+            addToMapToolStripMenuItem.Visible = ProjectManager.IsArcMap;
         }
 
         public void AddDoDProperty(string property, string value)
@@ -34,22 +36,56 @@ namespace GCDCore.UserInterface.ChangeDetection
             DoDProperties.ResetBindings();
         }
 
+        private void grdData_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (e.ColumnIndex == 0 && e.RowIndex > -1)
+            {
+                DoDProperty prop = (DoDProperty)grdData.Rows[e.RowIndex].DataBoundItem;
+
+                if (prop.Header)
+                {
+                    grdData.Rows[e.RowIndex].Cells[0].Style.Font = new Font(grdData.Font, FontStyle.Bold);
+                }
+                else
+                {
+                    grdData.Rows[e.RowIndex].Cells[0].Style.Padding = new Padding(prop.LeftPadding, 0, 0, 0);
+                }
+
+                if (prop is DoDPropertyProjectItem || prop is DoDPropertyRaster)
+                    grdData.Rows[e.RowIndex].ContextMenuStrip = contextMenuStrip1;
+            }
+        }
+
         public void Initialize(DoDBase dod)
         {
-            DoDProperties.Add(new DoDPropertyRaster("New Surface", dod.NewSurface.Name, dod.NewSurface.Raster.GISFileInfo));
-            DoDProperties.Add(new DoDPropertyRaster("Old Surface", dod.OldSurface.Name, dod.OldSurface.Raster.GISFileInfo));
-            DoDProperties.Add(new DoDProperty("Uncertainty Analysis", dod.UncertaintyAnalysisLabel));
-            DoDProperties.Add(new DoDProperty("Area of Interest", dod.AOILabel));
-            DoDProperties.Add(new DoDProperty("DoD Analysis Folder", ProjectManager.Project.GetRelativePath(dod.Folder.FullName)));
-            DoDProperties.Add(new DoDPropertyRaster("Thresholded DoD", ProjectManager.Project.GetRelativePath(dod.ThrDoD.Raster.GISFileInfo), dod.ThrDoD.Raster.GISFileInfo));
-            DoDProperties.Add(new DoDPropertyRaster("Raw DoD", ProjectManager.Project.GetRelativePath(dod.RawDoD.Raster.GISFileInfo), dod.RawDoD.Raster.GISFileInfo));
-
+            DoDProperties.Add(new DoDProperty("Input Datasets"));
+            DoDProperties.Add(new DoDPropertyProjectItem("New Surface", dod.NewSurface.Name, dod.NewSurface));
+            DoDProperties.Add(new DoDPropertyProjectItem("Old Surface", dod.OldSurface.Name, dod.OldSurface));
             if (dod is DoDPropagated)
             {
                 DoDPropagated dodProp = dod as DoDPropagated;
-                DoDProperties.Add(new DoDPropertyRaster("New Error Surface", dodProp.NewError.Name, dodProp.NewError.Raster.GISFileInfo));
-                DoDProperties.Add(new DoDPropertyRaster("Old Error Surface", dodProp.OldError.Name, dodProp.OldError.Raster.GISFileInfo));
-                DoDProperties.Add(new DoDPropertyRaster("Propagated Error Surface", dodProp.PropagatedError.GISFileInfo));
+                DoDProperties.Add(new DoDPropertyProjectItem("New Error Surface", dodProp.NewError.Name, dodProp.NewError));
+                DoDProperties.Add(new DoDPropertyProjectItem("Old Error Surface", dodProp.OldError.Name, dodProp.OldError));
+            }
+
+            if (dod.AOIMask == null)
+                DoDProperties.Add(new DoDProperty("Area Of Interest", dod.AOILabel));
+            else
+                DoDProperties.Add(new DoDPropertyProjectItem("Area Of Interest", dod.AOILabel, dod.AOIMask));
+
+            DoDProperties.Add(new DoDProperty("Input Parameters"));
+            DoDProperties.Add(new DoDProperty("Uncertainty Analysis", dod.UncertaintyAnalysisLabel));
+
+            DoDProperties.Add(new DoDProperty("Output Datasets"));
+            DoDProperties.Add(new DoDProperty("DoD Analysis Folder", ProjectManager.Project.GetRelativePath(dod.Folder.FullName)));
+            DoDProperties.Add(new DoDPropertyProjectItem("Thresholded DoD", ProjectManager.Project.GetRelativePath(dod.ThrDoD.Raster.GISFileInfo), dod.ThrDoD));
+            DoDProperties.Add(new DoDPropertyProjectItem("Raw DoD", ProjectManager.Project.GetRelativePath(dod.RawDoD.Raster.GISFileInfo), dod.RawDoD));
+
+            DoDProperties.Add(new DoDProperty("Intermediate Datasets"));
+            if (dod is DoDPropagated)
+            {
+                DoDPropagated dodProp = dod as DoDPropagated;
+                DoDProperties.Add(new DoDPropertyRaster("Propagated Error Surface", dodProp.PropagatedError));
 
                 if (dod is DoDProbabilistic)
                 {
@@ -57,23 +93,25 @@ namespace GCDCore.UserInterface.ChangeDetection
 
                     if (dodProb.SpatialCoherence == null)
                     {
-                        DoDProperties.Add(new DoDPropertyRaster("Probability Raster", dodProb.PriorProbability.GISFileInfo));
+                        DoDProperties.Add(new DoDPropertyRaster("Probability Raster", dodProb.PriorProbability));
                     }
                     else
                     {
                         DoDProperties.Add(new DoDProperty("Spatial Coherence", string.Format("Bayesian updating with filter size of {0} X {0} cells", ((DoDProbabilistic)dod).SpatialCoherence.BufferSize)));
-                        DoDProperties.Add(new DoDPropertyRaster("Probability Raster", dodProb.PriorProbability.GISFileInfo));
-                        DoDProperties.Add(new DoDPropertyRaster("Posterior Raster", dodProb.PosteriorProbability.GISFileInfo));
-                        DoDProperties.Add(new DoDPropertyRaster("Conditional Raster", dodProb.ConditionalRaster.GISFileInfo));
-                        DoDProperties.Add(new DoDPropertyRaster("Surface Lowering Count", dodProb.SpatialCoherenceErosion.GISFileInfo));
-                        DoDProperties.Add(new DoDPropertyRaster("Surface Raising Count", dodProb.SpatialCoherenceDeposition.GISFileInfo));
+                        DoDProperties.Add(new DoDPropertyRaster("Probability Raster", dodProb.PriorProbability));
+                        DoDProperties.Add(new DoDPropertyRaster("Posterior Raster", dodProb.PosteriorProbability));
+                        DoDProperties.Add(new DoDPropertyRaster("Conditional Raster", dodProb.ConditionalRaster));
+                        DoDProperties.Add(new DoDPropertyRaster("Surface Lowering Count", dodProb.SpatialCoherenceErosion));
+                        DoDProperties.Add(new DoDPropertyRaster("Surface Raising Count", dodProb.SpatialCoherenceDeposition));
                     }
                 }
             }
+            DoDProperties.Add(new DoDPropertyRaster("Effective Threshold Surface", dod.ThrErr.Raster));
 
             // Values from the thresholded DoD raster stats are optional
             try
             {
+                DoDProperties.Add(new DoDProperty("Output Raster Statistics"));
                 string vUnits = UnitsNet.Length.GetAbbreviation(ProjectManager.Project.Units.VertUnit);
                 dod.ThrDoD.Raster.ComputeStatistics();
                 Dictionary<string, decimal> stats = dod.ThrDoD.Raster.GetStatistics();
@@ -90,8 +128,12 @@ namespace GCDCore.UserInterface.ChangeDetection
 
         private class DoDProperty
         {
-            public string Property { get; set; }
-            public string Value { get; set; }
+            public string Property { get; protected set; }
+            public string Value { get; protected set; }
+            public readonly bool Header;
+
+            // Non-header cells are indented
+            public int LeftPadding { get { return Header ? 0 : 16; } }
 
             /// <summary>
             /// Default constructor required for grid binding
@@ -101,30 +143,89 @@ namespace GCDCore.UserInterface.ChangeDetection
 
             }
 
+            /// <summary>
+            /// Constructor for regular NON-HEADER items
+            /// </summary>
+            /// <param name="prop"></param>
+            /// <param name="value"></param>
             public DoDProperty(string prop, string value)
             {
                 Property = prop;
                 Value = value;
+                Header = false;
+            }
+
+            /// <summary>
+            /// Constructor for headers only
+            /// </summary>
+            /// <param name="header"></param>
+            public DoDProperty(string header)
+            {
+                Property = header;
+                Value = string.Empty;
+                Header = true;
+            }
+        }
+
+        private class DoDPropertyProjectItem : DoDProperty
+        {
+            public readonly GCDProjectItem ProjectItem;
+
+            public DoDPropertyProjectItem(string prop, string value, GCDProjectItem item)
+                : base(prop, value)
+            {
+                ProjectItem = item;
+            }
+
+            public DoDPropertyProjectItem(string prop, GCDProjectItem item)
+                : base(prop, string.Empty)
+            {
+                if (item is GCDProjectRasterItem)
+                    Value = ProjectManager.Project.GetRelativePath(((GCDProjectRasterItem)item).Raster.GISFileInfo);
+                else if (item is GCDProjectVectorItem)
+                    Value = ProjectManager.Project.GetRelativePath(((GCDProjectVectorItem)item).Vector.GISFileInfo);
             }
         }
 
         private class DoDPropertyRaster : DoDProperty
         {
-            public System.IO.FileInfo RasterPath { get; set; }
+            public readonly GCDConsoleLib.Raster Raster;
 
-            public DoDPropertyRaster(string prop, string value, System.IO.FileInfo rasterPath)
+            public DoDPropertyRaster(string prop, string value, GCDConsoleLib.Raster raster)
+                : base(prop, value)
             {
-                Property = prop;
-                Value = value;
-                RasterPath = rasterPath;
+                Raster = raster;
             }
 
-            public DoDPropertyRaster(string prop, System.IO.FileInfo rasterPath)
+            public DoDPropertyRaster(string prop, GCDConsoleLib.Raster raster)
+                : base(prop, string.Empty)
             {
-                Property = prop;
-                Value = GCDCore.Project.ProjectManager.Project.GetRelativePath(rasterPath);
-                RasterPath = rasterPath;
+                Raster = raster;
             }
+        }
+
+        private void addToMapToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (grdData.SelectedRows.Count < 1)
+                return;
+
+            if (grdData.SelectedRows[0].DataBoundItem is DoDPropertyProjectItem)
+            {
+                DoDPropertyProjectItem propItem = (DoDPropertyProjectItem)grdData.SelectedRows[0].DataBoundItem;
+                ProjectManager.AddNewProjectItemToMap(propItem.ProjectItem);
+            }
+        }
+
+        /// <summary>
+        /// Select the row that the user just right clicked on
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void grdData_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.Button == MouseButtons.Right)
+                grdData.Rows[e.RowIndex].Selected = true;
+
         }
     }
 }
