@@ -240,7 +240,7 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
 
         private void UpdateChart()
         {
-            ucClassChart.UpdateChart(Analysis.OutputFolder, Analysis.Units.Where(x => !x.IsTotal), Analysis.DisplayUnits_Volume, SeriesChartType.Column);         
+            ucClassChart.UpdateChart(Analysis.OutputFolder, Analysis.Units.Where(x => !x.IsTotal), Analysis.DisplayUnits_Volume, false, true);         
         }
 
         private void cmdBrowse_Click(object sender, EventArgs e)

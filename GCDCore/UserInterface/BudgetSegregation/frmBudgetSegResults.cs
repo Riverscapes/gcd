@@ -76,14 +76,8 @@ namespace GCDCore.UserInterface.BudgetSegregation
             //Hide Report tab for now
             tabMain.TabPages.Remove(TabPage4);
 
-            if (BudgetSeg.IsMaskDirectional)
-            {
-                ucClassChart.UpdateChart(BudgetSeg.Folder, BudgetSeg.Classes.Values, m_Options.VolumeUnits, SeriesChartType.Line);
-            }
-            else
-            {
-                tabMain.TabPages.Remove(tabPage6);
-            }
+            // Update the chart user control, letting it know this is a BS and whether it is directional
+            ucClassChart.UpdateChart(BudgetSeg.Folder, BudgetSeg.Classes.Values, m_Options.VolumeUnits, true, BudgetSeg.IsMaskDirectional);
 
             PieChartViewer.RefreshPieCharts(m_Options.Units);
             Cursor = Cursors.Default;

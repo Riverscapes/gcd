@@ -85,7 +85,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
         /// <param name="units"></param>
         /// <param name="volUnit"></param>
         /// <remarks>remember to filter out morphological totals</remarks>
-        public void UpdateChart(System.IO.DirectoryInfo outputDir, IEnumerable<GCDCore.Project.Morphological.IBudgetGraphicalResults> units, UnitsNet.Units.VolumeUnit volUnit, SeriesChartType secondChartType)
+        public void UpdateChart(System.IO.DirectoryInfo outputDir, IEnumerable<GCDCore.Project.Morphological.IBudgetGraphicalResults> units, UnitsNet.Units.VolumeUnit volUnit, bool bBudgetSeg, bool directional)
         {
             cmsChart = new UtilityForms.ChartContextMenu(outputDir, "morphological");
             chtData.ContextMenuStrip = cmsChart.CMS;
@@ -96,7 +96,8 @@ namespace GCDCore.UserInterface.BudgetSegregation
             // Clear all series data points
             chtData.Series.ToList<Series>().ForEach(x => x.Points.Clear());
 
-            chtData.Series[VOLOUT__CHART_SERIES].ChartType = secondChartType;
+            // Hide the second chart area if this is a non-directional budget seg
+            chtData.ChartAreas[1].Visible = !bBudgetSeg || (bBudgetSeg && directional);
 
             CustomLabelsCollection xAxisLabels = chtData.ChartAreas[0].AxisX.CustomLabels;
             double maxY = 0;
@@ -125,7 +126,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
 
                 cumVolume += unit.VolDeposition.As(volUnit) - unit.VolErosion.As(volUnit);
 
-                if (secondChartType == SeriesChartType.Column)
+                if (!bBudgetSeg)
                 {
                     chtData.Series[VOLOUT__CHART_SERIES].Points.AddXY(unit.Name, unit.SecondGraphValue.As(volUnit));
                 }
@@ -149,7 +150,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
             chtData.Legends[0].Font = Properties.Settings.Default.ChartFont;
 
             // The data displayed on the second chart depends if this is being used for Morphological or Bs
-            chtData.Series[VOLOUT__CHART_SERIES].LegendText = secondChartType == SeriesChartType.Column ? "Volume Out" : "Cumulative Volume";
+            chtData.Series[VOLOUT__CHART_SERIES].LegendText = !bBudgetSeg ? "Volume Out" : "Cumulative Volume Change";
         }
     }
 }
