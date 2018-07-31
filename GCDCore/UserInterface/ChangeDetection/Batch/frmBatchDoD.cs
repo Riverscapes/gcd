@@ -8,6 +8,8 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
 {
     public partial class frmBatchDoD : Form
     {
+        private frmBatchDoDProperties PropertiesForm;
+
         public enum ThresholdTypes
         {
             MinLoDSingle,
@@ -24,6 +26,8 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
         {
             InitializeComponent();
             Batches = new naru.ui.SortableBindingList<BatchProps>();
+
+            PropertiesForm = new frmBatchDoDProperties(Batches, "TEMP");
         }
 
         private void frmBatchDoD_Load(object sender, EventArgs e)
@@ -70,8 +74,10 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
             {
                 // If the user clicks OK the child form will
                 // append the appropriate ThresholdProps to the binding list
-                frmBatchDoDProperties frm = new frmBatchDoDProperties(Batches, tsmi.Text, (ThresholdTypes)tsmi.Tag);
-                frm.ShowDialog();
+                //frmBatchDoDProperties frm = new frmBatchDoDProperties(Batches, tsmi.Text, (ThresholdTypes)tsmi.Tag);
+
+                PropertiesForm.ThresholdType = (ThresholdTypes)tsmi.Tag;
+                PropertiesForm.ShowDialog();
             }
             else
             {

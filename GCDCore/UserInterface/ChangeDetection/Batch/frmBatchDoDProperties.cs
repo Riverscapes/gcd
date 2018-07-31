@@ -13,65 +13,74 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
 {
     public partial class frmBatchDoDProperties : Form
     {
-        public readonly frmBatchDoD.ThresholdTypes ThresholdType;
+        public frmBatchDoD.ThresholdTypes ThresholdType { get; set; }
         naru.ui.SortableBindingList<BatchProps> Thresholds;
         GCDCore.Project.CoherenceProperties CoherenceProps;
 
-        public frmBatchDoDProperties(naru.ui.SortableBindingList<BatchProps> thresholds, string sType, frmBatchDoD.ThresholdTypes eType)
+        private readonly int DesignHeight;
+        private readonly int Spacing;
+        private readonly int BayesianChkTop;
+        private readonly int BayesianCmdTop;
+
+        public frmBatchDoDProperties(naru.ui.SortableBindingList<BatchProps> thresholds, string sType)
         {
             InitializeComponent();
             Thresholds = thresholds;
-            ThresholdType = eType;
             Text = string.Format("Add {0} To Batch", sType);
-
-            ucDEMs.EnableErrorSurfaces(eType != frmBatchDoD.ThresholdTypes.MinLoDSingle && eType != frmBatchDoD.ThresholdTypes.MinLoDMulti);
+            DesignHeight = Height;
+            Spacing = Height - cmdBayesian.Bottom;
+            BayesianChkTop = chkBayesian.Top;
+            BayesianCmdTop = cmdBayesian.Top;
         }
 
         private void frmBatchDoDProperties_Load(object sender, EventArgs e)
         {
-            if (ThresholdType == frmBatchDoD.ThresholdTypes.MinLoDSingle ||
-                ThresholdType == frmBatchDoD.ThresholdTypes.MinLoDMulti)
-            {
-                chkBayesian.Visible = false;
-                cmdBayesian.Visible = false;
-                Height -= cmdOK.Top - chkBayesian.Top;
-            }
-
-            if (ThresholdType == frmBatchDoD.ThresholdTypes.MinLoDSingle ||
-                ThresholdType == frmBatchDoD.ThresholdTypes.ProbSingle)
-            {
-                lblMax.Visible = false;
-                valMax.Visible = false;
-                lblInterval.Visible = false;
-                valInterval.Visible = false;
-
-                Height -= chkBayesian.Top - valMax.Top;
-
-                chkBayesian.Top = valMax.Top;
-                cmdBayesian.Top = valMax.Top;
-            }
+            ucDEMs.EnableErrorSurfaces(ThresholdType != frmBatchDoD.ThresholdTypes.MinLoDSingle && ThresholdType != frmBatchDoD.ThresholdTypes.MinLoDMulti);
 
             string vertUnits = UnitsNet.Length.GetAbbreviation(GCDCore.Project.ProjectManager.Project.Units.VertUnit);
+
+            lblMin.Visible = ThresholdType != frmBatchDoD.ThresholdTypes.Propagated;
+            valMin.Visible = ThresholdType != frmBatchDoD.ThresholdTypes.Propagated;
+
+            valMin.Value = 0;
+            valMax.Value = 0;
+            valInterval.Value = 0;
+            chkBayesian.Checked = false;
+            CoherenceProps = null;
+
+            bool bRange =  ThresholdType == frmBatchDoD.ThresholdTypes.MinLoDMulti || ThresholdType == frmBatchDoD.ThresholdTypes.ProbMulti;
+            lblMax.Visible = bRange;
+            valMax.Visible = bRange;
+            lblInterval.Visible = bRange;
+            valInterval.Visible = bRange;
+
+            chkBayesian.Top = BayesianChkTop;
+            cmdBayesian.Top = BayesianCmdTop;
+            bool bProb =  ThresholdType == frmBatchDoD.ThresholdTypes.ProbSingle || ThresholdType == frmBatchDoD.ThresholdTypes.ProbMulti;
+            chkBayesian.Visible = bProb;
+            cmdBayesian.Visible = bProb;
 
             switch (ThresholdType)
             {
                 case frmBatchDoD.ThresholdTypes.MinLoDSingle:
                     lblMin.Text = string.Format("Minimum level of detection ({0})", vertUnits);
+                    Height = valMin.Bottom + Spacing;
                     break;
 
                 case frmBatchDoD.ThresholdTypes.MinLoDMulti:
                     lblMin.Text = string.Format("Minimum MinLoD threshold ({0})", vertUnits);
                     lblMax.Text = string.Format("Maximum MinLoD threshold ({0})", vertUnits);
                     lblInterval.Text = string.Format("Interval ({0})", vertUnits);
-
-                    chkBayesian.Visible = false;
-                    cmdBayesian.Visible = false;
-                    Height -= cmdOK.Top - chkBayesian.Top;
+                    Height = valMax.Bottom + Spacing;
                     break;
 
                 case frmBatchDoD.ThresholdTypes.ProbSingle:
                     lblMin.Text = "Confidence level (0-1)";
                     valMin.Maximum = 1;
+                    chkBayesian.Top = lblMax.Top;
+                    cmdBayesian.Top = valMax.Top;
+
+                    Height = valMax.Bottom + Spacing;
                     break;
 
                 case frmBatchDoD.ThresholdTypes.ProbMulti:
@@ -81,18 +90,11 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
                     valMin.Maximum = 1;
                     valMax.Maximum = 1;
                     valInterval.Maximum = 1;
+                    Height = chkBayesian.Bottom + Spacing;
                     break;
 
                 default:
-                    lblMin.Visible = false;
-                    valMin.Visible = false;
-                    lblMax.Visible = false;
-                    valMax.Visible = false;
-                    lblInterval.Visible = false;
-                    valInterval.Visible = false;
-                    chkBayesian.Visible = false;
-                    cmdBayesian.Visible = false;
-                    Height -= cmdOK.Top - valMin.Top;
+                    Height = ucDEMs.Bottom + Spacing;
                     break;
             }
         }

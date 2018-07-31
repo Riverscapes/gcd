@@ -20,8 +20,8 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             int totalSurfaces = ProjectManager.Project.DEMSurveys.Count + ProjectManager.Project.ReferenceSurfaces.Count;
 
             ToolStripMenuItem tsmiBatch = new ToolStripMenuItem("Batch Change Detection");
+            tsmiBatch.DropDownItems.Add("Generic Batch Change Detection", Properties.Resources.Add, OnMultiUncertainty);
             tsmiBatch.DropDownItems.Add("Multiple Epoch", Properties.Resources.Add, OnMultiEpoch);
-            tsmiBatch.DropDownItems.Add("Multiple Uncertainty Analysis", Properties.Resources.Add, OnMultiUncertainty);
             ContextMenuStrip.Items.Insert(1, tsmiBatch);
 
             // Override default handling of adding to map
