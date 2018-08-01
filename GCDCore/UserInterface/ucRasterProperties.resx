@@ -117,32 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="tTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
+  <metadata name="colProperty.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
   </metadata>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD///8Z////EQAA
-        AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD///9HZV9fpt/Z
-        00/Bv70DAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///xWZm6CbG0Ja/R9E
-        YPhkW1eq//34PgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///ylSZG7NLWN0/zRj
-        eP8qUWr/HjdO8n92c5D///8KqqqqAwAAAAAAAAAAAAAAAOvl5QcAAAAA//v5Bf///ylll53VMWt3/z97
-        i/84aX7/J0pj/xQ1UP+xtLmCAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAA////HbKVk3Rcg4bSN3qE/zt0
-        gf8vXnD/Ik5e/zZeb+uTqbSl////CgAAAAAAAAAAAAAAAAAAAAAAAAAA////LWiSks5DmZv9OXqF/zp4
-        fv87g4j/RYyV8sHGw4Tt2M1V//TtPsO8uAMAAAAAAAAAAAAAAAD///8J////MWOGg9NKkor/PXyA/0mH
-        f/9Jnpr/gKqsv8i5tXdPUlzBIzxR52hfWaT69fBBurm3A7u2wAPz7PhCnJach1d3beBGe27/SYJ3/0Fy
-        Zv9imY3lvNTSjKqXl4ImR1rwL2N5/ydQav8iPlXya2Jcof///yn///8+R1Q33jpPMP08VTz/SWRH/zxm
-        VP2uurWa////HpupsJ4jVmf9PXmI/zRhc/8wWXD/IUZl/zZIX9r///8aAAAAANfUw3R2eFvKg4dxvbO8
-        r5Po3dtezaytXICSlK4wcn79O3SA/zlwgP8oVGP/JExh/TdXau3///9PAAAAAAAAAAAAAAAAAAAAAAAA
-        AAD/+v8/X4OEx0KIi/M7hI3/O3uE/zyBh/81eoH8tsbKlv///yYAAAABAAAAAAAAAAAAAAAAwr7DA///
-        /xP53eRIVIiC50qUjP9BhYj/Pnp0/0aZk/+MsrC8////RAAAAAAAAAAAAAAAAAAAAAAAAAAA////Fby1
-        wmR+f3+mRWxg8EFxZv9Mhnv/PnBk/XyknNDk8fBw1qipAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALi6
-        sIQzPxz4OlEz/z1WPP9GX0P/VXZj7v3z82MAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAD///8F4NrRa767rYfX1sx0////Sf///wYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAA//EAAP/hAAD/gQAA/wAAAHQAAAD4AQAA8AEAAMAAAAAAAAAAAAAAAIABAADwAwAAgB8AAAA/
-        AAAA/wAAA/8AAA==
-</value>
-  </data>
+  <metadata name="colValue.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
 </root>

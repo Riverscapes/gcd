@@ -37,17 +37,12 @@
             this.cmdCancel = new System.Windows.Forms.Button();
             this.cmdOK = new System.Windows.Forms.Button();
             this.cmdHelp = new System.Windows.Forms.Button();
-            this.grpProperties = new System.Windows.Forms.GroupBox();
-            this.grdData = new System.Windows.Forms.DataGridView();
-            this.colProperty = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cmdAddTopMap = new System.Windows.Forms.Button();
             this.lblSurveyDate = new System.Windows.Forms.Label();
             this.txtSurveyDate = new System.Windows.Forms.TextBox();
             this.cmdSurveyDate = new System.Windows.Forms.Button();
             this.tTip = new System.Windows.Forms.ToolTip(this.components);
-            this.grpProperties.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.grdData)).BeginInit();
+            this.ucRasterProperties1 = new GCDCore.UserInterface.ucRasterProperties();
             this.SuspendLayout();
             // 
             // label1
@@ -125,54 +120,6 @@
             this.cmdHelp.UseVisualStyleBackColor = true;
             this.cmdHelp.Click += new System.EventHandler(this.cmdHelp_Click);
             // 
-            // grpProperties
-            // 
-            this.grpProperties.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.grpProperties.Controls.Add(this.grdData);
-            this.grpProperties.Location = new System.Drawing.Point(12, 109);
-            this.grpProperties.Name = "grpProperties";
-            this.grpProperties.Size = new System.Drawing.Size(460, 180);
-            this.grpProperties.TabIndex = 8;
-            this.grpProperties.TabStop = false;
-            this.grpProperties.Text = "Properties";
-            // 
-            // grdData
-            // 
-            this.grdData.AllowUserToAddRows = false;
-            this.grdData.AllowUserToDeleteRows = false;
-            this.grdData.AllowUserToResizeRows = false;
-            this.grdData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.grdData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colProperty,
-            this.colValue});
-            this.grdData.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.grdData.Location = new System.Drawing.Point(3, 16);
-            this.grdData.Name = "grdData";
-            this.grdData.ReadOnly = true;
-            this.grdData.RowHeadersVisible = false;
-            this.grdData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.grdData.Size = new System.Drawing.Size(454, 161);
-            this.grdData.TabIndex = 0;
-            this.grdData.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.grdData_CellFormatting);
-            // 
-            // colProperty
-            // 
-            this.colProperty.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colProperty.DataPropertyName = "Property";
-            this.colProperty.HeaderText = "Property";
-            this.colProperty.Name = "colProperty";
-            this.colProperty.ReadOnly = true;
-            // 
-            // colValue
-            // 
-            this.colValue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colValue.DataPropertyName = "Value";
-            this.colValue.HeaderText = "Value";
-            this.colValue.Name = "colValue";
-            this.colValue.ReadOnly = true;
-            // 
             // cmdAddTopMap
             // 
             this.cmdAddTopMap.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -215,6 +162,16 @@
             this.cmdSurveyDate.UseVisualStyleBackColor = true;
             this.cmdSurveyDate.Click += new System.EventHandler(this.cmdSurveyDate_Click);
             // 
+            // ucRasterProperties1
+            // 
+            this.ucRasterProperties1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ucRasterProperties1.Location = new System.Drawing.Point(12, 109);
+            this.ucRasterProperties1.Name = "ucRasterProperties1";
+            this.ucRasterProperties1.Size = new System.Drawing.Size(460, 180);
+            this.ucRasterProperties1.TabIndex = 12;
+            // 
             // frmSurfaceProperties
             // 
             this.AcceptButton = this.cmdOK;
@@ -222,11 +179,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cmdCancel;
             this.ClientSize = new System.Drawing.Size(484, 330);
+            this.Controls.Add(this.ucRasterProperties1);
             this.Controls.Add(this.cmdSurveyDate);
             this.Controls.Add(this.txtSurveyDate);
             this.Controls.Add(this.lblSurveyDate);
             this.Controls.Add(this.cmdAddTopMap);
-            this.Controls.Add(this.grpProperties);
             this.Controls.Add(this.cmdHelp);
             this.Controls.Add(this.cmdOK);
             this.Controls.Add(this.cmdCancel);
@@ -239,8 +196,6 @@
             this.Name = "frmSurfaceProperties";
             this.Text = "DEM Properties";
             this.Load += new System.EventHandler(this.frmDEMProperties_Load);
-            this.grpProperties.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.grdData)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -255,14 +210,11 @@
         private System.Windows.Forms.Button cmdCancel;
         private System.Windows.Forms.Button cmdOK;
         private System.Windows.Forms.Button cmdHelp;
-        private System.Windows.Forms.GroupBox grpProperties;
-        private System.Windows.Forms.DataGridView grdData;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colProperty;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colValue;
         private System.Windows.Forms.Button cmdAddTopMap;
         private System.Windows.Forms.Label lblSurveyDate;
         private System.Windows.Forms.TextBox txtSurveyDate;
         private System.Windows.Forms.Button cmdSurveyDate;
         private System.Windows.Forms.ToolTip tTip;
+        private ucRasterProperties ucRasterProperties1;
     }
 }

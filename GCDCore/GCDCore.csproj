@@ -454,6 +454,12 @@
     <Compile Include="UserInterface\ucProjectItemName.Designer.cs">
       <DependentUpon>ucProjectItemName.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserInterface\ucRasterProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserInterface\ucRasterProperties.Designer.cs">
+      <DependentUpon>ucRasterProperties.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserInterface\UtilityForms\ChartContextMenu.cs" />
     <Compile Include="UserInterface\UtilityForms\frmInformation.cs">
       <SubType>Form</SubType>
@@ -693,6 +699,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\ucProjectItemName.resx">
       <DependentUpon>ucProjectItemName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\ucRasterProperties.resx">
+      <DependentUpon>ucRasterProperties.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\UtilityForms\frmInformation.resx">
       <DependentUpon>frmInformation.cs</DependentUpon>
