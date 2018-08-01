@@ -30,14 +30,12 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMultiMethodError));
-            this.ucName = new GCDCore.UserInterface.ucProjectItemName();
             this.cmdCancel = new System.Windows.Forms.Button();
             this.cmdOK = new System.Windows.Forms.Button();
             this.cmdHelp = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.cboMask = new System.Windows.Forms.ComboBox();
             this.cmdAddMaskToMap = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.grdRegions = new System.Windows.Forms.DataGridView();
             this.colMaskValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colErrProperty = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -45,19 +43,17 @@
             this.editErrorPropertyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.chkDefault = new System.Windows.Forms.CheckBox();
             this.tTip = new System.Windows.Forms.ToolTip(this.components);
-            this.groupBox1.SuspendLayout();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.ucName = new GCDCore.UserInterface.ucProjectItemName();
+            this.ucRasterProperties1 = new GCDCore.UserInterface.ucRasterProperties();
             ((System.ComponentModel.ISupportInitialize)(this.grdRegions)).BeginInit();
             this.cmsEditGrid.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // ucName
-            // 
-            this.ucName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.ucName.Location = new System.Drawing.Point(12, 12);
-            this.ucName.Name = "ucName";
-            this.ucName.Size = new System.Drawing.Size(474, 45);
-            this.ucName.TabIndex = 0;
             // 
             // cmdCancel
             // 
@@ -126,19 +122,6 @@
             this.cmdAddMaskToMap.UseVisualStyleBackColor = true;
             this.cmdAddMaskToMap.Click += new System.EventHandler(this.cmdAddMaskToMap_Click);
             // 
-            // groupBox1
-            // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.Controls.Add(this.grdRegions);
-            this.groupBox1.Location = new System.Drawing.Point(12, 121);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(474, 272);
-            this.groupBox1.TabIndex = 5;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Mask Regions";
-            // 
             // grdRegions
             // 
             this.grdRegions.AllowUserToAddRows = false;
@@ -146,20 +129,18 @@
             this.grdRegions.AllowUserToOrderColumns = true;
             this.grdRegions.AllowUserToResizeColumns = false;
             this.grdRegions.AllowUserToResizeRows = false;
-            this.grdRegions.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.grdRegions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grdRegions.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colMaskValue,
             this.colErrProperty});
             this.grdRegions.ContextMenuStrip = this.cmsEditGrid;
-            this.grdRegions.Location = new System.Drawing.Point(6, 19);
+            this.grdRegions.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.grdRegions.Location = new System.Drawing.Point(3, 3);
             this.grdRegions.MultiSelect = false;
             this.grdRegions.Name = "grdRegions";
             this.grdRegions.RowHeadersVisible = false;
             this.grdRegions.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.grdRegions.Size = new System.Drawing.Size(462, 247);
+            this.grdRegions.Size = new System.Drawing.Size(460, 240);
             this.grdRegions.TabIndex = 0;
             this.grdRegions.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.grdRegions_CellMouseDoubleClick);
             this.grdRegions.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.grdRegions_CellMouseDown);
@@ -205,6 +186,58 @@
             this.chkDefault.Text = "Default Error Surface";
             this.chkDefault.UseVisualStyleBackColor = true;
             // 
+            // tabControl1
+            // 
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Location = new System.Drawing.Point(12, 121);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(474, 272);
+            this.tabControl1.TabIndex = 9;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.grdRegions);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(466, 246);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "Mask Regions";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.ucRasterProperties1);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(466, 246);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Raster Properties";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // ucName
+            // 
+            this.ucName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ucName.Location = new System.Drawing.Point(12, 12);
+            this.ucName.Name = "ucName";
+            this.ucName.Size = new System.Drawing.Size(474, 45);
+            this.ucName.TabIndex = 0;
+            // 
+            // ucRasterProperties1
+            // 
+            this.ucRasterProperties1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucRasterProperties1.Location = new System.Drawing.Point(3, 3);
+            this.ucRasterProperties1.Name = "ucRasterProperties1";
+            this.ucRasterProperties1.Size = new System.Drawing.Size(460, 240);
+            this.ucRasterProperties1.TabIndex = 0;
+            // 
             // frmMultiMethodError
             // 
             this.AcceptButton = this.cmdOK;
@@ -212,8 +245,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cmdCancel;
             this.ClientSize = new System.Drawing.Size(498, 434);
+            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.chkDefault);
-            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.cmdAddMaskToMap);
             this.Controls.Add(this.cboMask);
             this.Controls.Add(this.label1);
@@ -226,9 +259,11 @@
             this.Name = "frmMultiMethodError";
             this.Text = "Create Error Surface With Mask";
             this.Load += new System.EventHandler(this.frmMultiMethodError_Load);
-            this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.grdRegions)).EndInit();
             this.cmsEditGrid.ResumeLayout(false);
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -243,7 +278,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cboMask;
         private System.Windows.Forms.Button cmdAddMaskToMap;
-        private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.DataGridView grdRegions;
         private System.Windows.Forms.CheckBox chkDefault;
         private System.Windows.Forms.DataGridViewTextBoxColumn colMaskValue;
@@ -251,5 +285,9 @@
         private System.Windows.Forms.ContextMenuStrip cmsEditGrid;
         private System.Windows.Forms.ToolStripMenuItem editErrorPropertyToolStripMenuItem;
         private System.Windows.Forms.ToolTip tTip;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private ucRasterProperties ucRasterProperties1;
     }
 }

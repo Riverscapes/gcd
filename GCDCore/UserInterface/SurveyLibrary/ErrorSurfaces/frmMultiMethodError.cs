@@ -27,6 +27,9 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
             DEM = dem;
             ErrProps = new naru.ui.SortableBindingList<ErrorSurfaceProperty>();
             ucName.InitializeNewRaster("Error Surface", dem.ErrorSurfaces.Select(x => x.Name).ToList<string>(), DEM.ErrorSurfacesFolder, "Err");
+
+            // Don't show the raster properties when creating a new raster
+            tabControl1.TabPages.Remove(tabPage2);
         }
 
         public frmMultiMethodError(ErrorSurface errSurf)
@@ -39,6 +42,9 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
             // Need to exclude the current item from this list
             List<string> existingNames = DEM.ErrorSurfaces.Where(x => !x.Equals(errSurf)).Select(x => x.Name).ToList();
             ucName.InitializeExisting("Error Surface", existingNames, ErrorSurface.Name, ErrorSurface.Raster.GISFileInfo);
+
+            // Populate the raster statistics
+            ucRasterProperties1.Initialize(errSurf.Noun, errSurf.Raster);
         }
 
         private void frmMultiMethodError_Load(object sender, EventArgs e)
