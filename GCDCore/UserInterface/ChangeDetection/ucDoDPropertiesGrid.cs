@@ -158,7 +158,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             if (grdData.SelectedRows[0].DataBoundItem is GridViewGCDProjectItem)
             {
                 GridViewGCDProjectItem propItem = (GridViewGCDProjectItem)grdData.SelectedRows[0].DataBoundItem;
-                SurveyLibrary.frmSurfaceProperties frm = new SurveyLibrary.frmSurfaceProperties((GCDProjectRasterItem)propItem.ProjectItem);
+                SurveyLibrary.frmSurfaceProperties frm = new SurveyLibrary.frmSurfaceProperties((GCDProjectRasterItem)propItem.ProjectItem, false);
                 frm.ShowDialog();
             }
         }

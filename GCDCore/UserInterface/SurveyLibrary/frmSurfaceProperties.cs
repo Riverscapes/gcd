@@ -14,7 +14,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
         public GCDProjectItem GCDProjectItem { get { return Raster; } }
 
-        public frmSurfaceProperties(GCDProjectRasterItem surface)
+        public frmSurfaceProperties(GCDProjectRasterItem surface, bool editable)
         {
             InitializeComponent();
             ItemProperties = new naru.ui.SortableBindingList<GridViewPropertyValueItem>();
@@ -23,6 +23,13 @@ namespace GCDCore.UserInterface.SurveyLibrary
             {
                 SurveyDate = ((DEMSurvey)surface).SurveyDate;
             }
+
+            txtName.ReadOnly = !editable;
+            cmdSurveyDate.Enabled = editable;
+            cmdOK.Visible = editable;
+
+            if (!editable)
+                cmdCancel.Text = "Close";
         }
 
         private void frmDEMProperties_Load(object sender, EventArgs e)
@@ -69,6 +76,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
                 lblSurveyDate.Visible = false;
                 txtSurveyDate.Visible = false;
                 cmdSurveyDate.Visible = false;
+                grpProperties.Height += grpProperties.Top - txtSurveyDate.Top;
                 grpProperties.Top = txtSurveyDate.Top;
             }
 

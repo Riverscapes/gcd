@@ -66,7 +66,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
                 ErrorSurface err = Item as ErrorSurface;
                 if (err.ErrorProperties.Count < 1)
                 {
-                    frm = new SurveyLibrary.frmSurfaceProperties(Item as GCDProjectRasterItem);
+                    frm = new SurveyLibrary.frmSurfaceProperties(Item as GCDProjectRasterItem, true);
                 }
                 else
                 {
@@ -101,7 +101,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
                 // Generic raster properties form
                 if (Item is GCDProjectRasterItem)
                 {
-                    frm = new SurveyLibrary.frmSurfaceProperties(Item as GCDProjectRasterItem);
+                    frm = new SurveyLibrary.frmSurfaceProperties(Item as GCDProjectRasterItem, true);
                 }
                 else
                 {
