@@ -76,21 +76,4 @@ namespace GCDCore.UserInterface
                 Value = ProjectManager.Project.GetRelativePath(((GCDProjectVectorItem)item).Vector.GISFileInfo);
         }
     }
-
-    public class GridViewRasterItem : GridViewPropertyValueItem
-    {
-        public readonly GCDConsoleLib.Raster Raster;
-
-        public GridViewRasterItem(string prop, string value, GCDConsoleLib.Raster raster)
-            : base(prop, value)
-        {
-            Raster = raster;
-        }
-
-        public GridViewRasterItem(string prop, GCDConsoleLib.Raster raster)
-            : base(prop, string.Empty)
-        {
-            Raster = raster;
-        }
-    }
 }

@@ -51,7 +51,7 @@ namespace GCDCore.UserInterface.ChangeDetection
                     grdData.Rows[e.RowIndex].Cells[0].Style.Padding = new Padding(prop.LeftPadding, 0, 0, 0);
                 }
 
-                if (prop is GridViewGCDProjectItem || prop is GridViewRasterItem)
+                if (prop is GridViewGCDProjectItem)
                     grdData.Rows[e.RowIndex].ContextMenuStrip = contextMenuStrip1;
             }
         }
@@ -107,23 +107,6 @@ namespace GCDCore.UserInterface.ChangeDetection
                 }
             }
             DoDProperties.Add(new GridViewGCDProjectItem(new DoDIntermediateRaster("Effective Threshold Surface", dod.ThrErr.Raster)));
-
-            //// Values from the thresholded DoD raster stats are optional
-            //try
-            //{
-            //    DoDProperties.Add(new GridViewPropertyValueItem("Output Raster Statistics"));
-            //    string vUnits = UnitsNet.Length.GetAbbreviation(ProjectManager.Project.Units.VertUnit);
-            //    dod.ThrDoD.Raster.ComputeStatistics();
-            //    Dictionary<string, decimal> stats = dod.ThrDoD.Raster.GetStatistics();
-            //    DoDProperties.Add(new DoDIntermediateRaster( GridViewPropertyValueItem("Thresholded DoD maximum raster value", stats["max"].ToString("n2") + vUnits));
-            //    DoDProperties.Add(new GridViewPropertyValueItem("Thresholded DoD minimum raster value", stats["min"].ToString("n2") + vUnits));
-            //    DoDProperties.Add(new GridViewPropertyValueItem("Thresholded DoD mean raster value", stats["mean"].ToString("n2") + vUnits));
-            //    DoDProperties.Add(new GridViewPropertyValueItem("Thresholded DoD standard deviation of raster values", stats["stddev"].ToString("n2") + vUnits));
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine(string.Format("Error calculating statistics from {0}, {1}", dod.ThrDoD.Raster.GISFileInfo.FullName, ex.Message));
-            //}
         }
 
         private void addToMapToolStripMenuItem_Click(object sender, EventArgs e)
