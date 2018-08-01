@@ -24,6 +24,10 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
 
             ucErrProps.InitializeNew(m_sEntireDEMExtent, DEM.AssocSurfaces.ToList());
             ucName.InitializeNewRaster("Error Surface", DEM.ErrorSurfaces.Select(x => x.Name).ToList<string>(), DEM.ErrorSurfacesFolder, "Err");
+
+            // Hide raster properties
+            ucRasterProperties1.Visible = false;
+            Height -= cmdOK.Top - ucRasterProperties1.Top;
         }
 
         public frmSingleMethodError(ErrorSurface errSurface)
@@ -37,6 +41,9 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
 
             ucErrProps.InitializeExisting(errSurface.ErrorProperties.Values.First(), DEM.AssocSurfaces.ToList(), errSurface == null);
             ucName.InitializeExisting("Error Surface", existingNames, ErrorSurface.Name, ErrorSurface.Raster.GISFileInfo);
+
+            // Initialize raster properties
+            ucRasterProperties1.Initialize(errSurface.Noun, errSurface.Raster);
         }
 
         protected void frmSingleMethodError_Load(object sender, EventArgs e)

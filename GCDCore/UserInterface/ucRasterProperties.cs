@@ -25,7 +25,7 @@ namespace GCDCore.UserInterface
 
         public void Initialize(string noun, GCDConsoleLib.Raster raster)
         {
-            grpProperties.Text = string.Format("{0} Raster Properties", noun);
+            grpProperties.Text = string.Format("{0} {1}Properties", noun, noun.ToLower().EndsWith("raster") ? string.Empty : "Raster ");
 
             ItemProperties.Add(new GridViewPropertyValueItem("Raster Properties"));
             ItemProperties.Add(new GridViewPropertyValueItem("Cell size", UnitsNet.Length.From((double)raster.Extent.CellWidth, raster.Proj.HorizontalUnit).ToString()));

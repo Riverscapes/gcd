@@ -85,7 +85,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             if (dod is DoDPropagated)
             {
                 DoDPropagated dodProp = dod as DoDPropagated;
-                DoDProperties.Add(new GridViewRasterItem("Propagated Error Surface", dodProp.PropagatedError));
+                DoDProperties.Add(new GridViewGCDProjectItem(new DoDIntermediateRaster("Probability Raster", dodProp.PropagatedError)));
 
                 if (dod is DoDProbabilistic)
                 {
@@ -93,7 +93,7 @@ namespace GCDCore.UserInterface.ChangeDetection
 
                     if (dodProb.SpatialCoherence == null)
                     {
-                        DoDProperties.Add(new GridViewRasterItem("Probability Raster", dodProb.PriorProbability));
+                        DoDProperties.Add(new GridViewGCDProjectItem(new DoDIntermediateRaster("Probability Raster", dodProb.PriorProbability)));
                     }
                     else
                     {
@@ -106,7 +106,7 @@ namespace GCDCore.UserInterface.ChangeDetection
                     }
                 }
             }
-            DoDProperties.Add(new GridViewRasterItem("Effective Threshold Surface", dod.ThrErr.Raster));
+            DoDProperties.Add(new GridViewGCDProjectItem(new DoDIntermediateRaster("Effective Threshold Surface", dod.ThrErr.Raster)));
 
             //// Values from the thresholded DoD raster stats are optional
             //try

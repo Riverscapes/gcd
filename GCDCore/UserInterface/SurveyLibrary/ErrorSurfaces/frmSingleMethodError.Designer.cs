@@ -37,13 +37,14 @@
             this.ucErrProps = new GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces.ucErrorSurfaceProperties();
             this.ucName = new GCDCore.UserInterface.ucProjectItemName();
             this.tTip = new System.Windows.Forms.ToolTip(this.components);
+            this.ucRasterProperties1 = new GCDCore.UserInterface.ucRasterProperties();
             this.SuspendLayout();
             // 
             // cmdCancel
             // 
             this.cmdCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cmdCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cmdCancel.Location = new System.Drawing.Point(368, 293);
+            this.cmdCancel.Location = new System.Drawing.Point(368, 392);
             this.cmdCancel.Name = "cmdCancel";
             this.cmdCancel.Size = new System.Drawing.Size(75, 23);
             this.cmdCancel.TabIndex = 4;
@@ -56,7 +57,7 @@
             this.cmdOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.cmdOK.Image = global::GCDCore.Properties.Resources.Save;
             this.cmdOK.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdOK.Location = new System.Drawing.Point(287, 293);
+            this.cmdOK.Location = new System.Drawing.Point(287, 392);
             this.cmdOK.Name = "cmdOK";
             this.cmdOK.Size = new System.Drawing.Size(75, 23);
             this.cmdOK.TabIndex = 3;
@@ -67,7 +68,7 @@
             // cmdHelp
             // 
             this.cmdHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.cmdHelp.Location = new System.Drawing.Point(12, 293);
+            this.cmdHelp.Location = new System.Drawing.Point(12, 392);
             this.cmdHelp.Name = "cmdHelp";
             this.cmdHelp.Size = new System.Drawing.Size(75, 23);
             this.cmdHelp.TabIndex = 5;
@@ -87,12 +88,11 @@
             // 
             // ucErrProps
             // 
-            this.ucErrProps.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.ucErrProps.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ucErrProps.Location = new System.Drawing.Point(77, 89);
             this.ucErrProps.Name = "ucErrProps";
-            this.ucErrProps.Size = new System.Drawing.Size(366, 198);
+            this.ucErrProps.Size = new System.Drawing.Size(366, 200);
             this.ucErrProps.TabIndex = 2;
             // 
             // ucName
@@ -104,13 +104,24 @@
             this.ucName.Size = new System.Drawing.Size(431, 45);
             this.ucName.TabIndex = 0;
             // 
+            // ucRasterProperties1
+            // 
+            this.ucRasterProperties1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ucRasterProperties1.Location = new System.Drawing.Point(12, 295);
+            this.ucRasterProperties1.Name = "ucRasterProperties1";
+            this.ucRasterProperties1.Size = new System.Drawing.Size(431, 91);
+            this.ucRasterProperties1.TabIndex = 6;
+            // 
             // frmSingleMethodError
             // 
             this.AcceptButton = this.cmdOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cmdCancel;
-            this.ClientSize = new System.Drawing.Size(455, 328);
+            this.ClientSize = new System.Drawing.Size(455, 427);
+            this.Controls.Add(this.ucRasterProperties1);
             this.Controls.Add(this.chkDefault);
             this.Controls.Add(this.ucErrProps);
             this.Controls.Add(this.ucName);
@@ -136,5 +147,6 @@
         private ucErrorSurfaceProperties ucErrProps;
         private System.Windows.Forms.CheckBox chkDefault;
         private System.Windows.Forms.ToolTip tTip;
+        private ucRasterProperties ucRasterProperties1;
     }
 }
