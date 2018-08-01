@@ -34,6 +34,7 @@
             this.colValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addToMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rasterPropertiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.grdData)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -78,17 +79,26 @@
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addToMapToolStripMenuItem});
+            this.addToMapToolStripMenuItem,
+            this.rasterPropertiesToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(140, 26);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(163, 70);
             // 
             // addToMapToolStripMenuItem
             // 
             this.addToMapToolStripMenuItem.Image = global::GCDCore.Properties.Resources.AddToMap;
             this.addToMapToolStripMenuItem.Name = "addToMapToolStripMenuItem";
-            this.addToMapToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.addToMapToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             this.addToMapToolStripMenuItem.Text = "Add To Map";
             this.addToMapToolStripMenuItem.Click += new System.EventHandler(this.addToMapToolStripMenuItem_Click);
+            // 
+            // rasterPropertiesToolStripMenuItem
+            // 
+            this.rasterPropertiesToolStripMenuItem.Image = global::GCDCore.Properties.Resources.Settings;
+            this.rasterPropertiesToolStripMenuItem.Name = "rasterPropertiesToolStripMenuItem";
+            this.rasterPropertiesToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.rasterPropertiesToolStripMenuItem.Text = "Raster Properties";
+            this.rasterPropertiesToolStripMenuItem.Click += new System.EventHandler(this.rasterPropertiesToolStripMenuItem_Click);
             // 
             // ucDoDPropertiesGrid
             // 
@@ -111,5 +121,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colValue;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem addToMapToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem rasterPropertiesToolStripMenuItem;
     }
 }

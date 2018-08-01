@@ -78,8 +78,8 @@ namespace GCDCore.UserInterface.ChangeDetection
 
             DoDProperties.Add(new GridViewPropertyValueItem("Output Datasets"));
             DoDProperties.Add(new GridViewPropertyValueItem("DoD Analysis Folder", ProjectManager.Project.GetRelativePath(dod.Folder.FullName)));
-            DoDProperties.Add(new GridViewGCDProjectItem("Thresholded DoD", ProjectManager.Project.GetRelativePath(dod.ThrDoD.Raster.GISFileInfo), dod.ThrDoD));
-            DoDProperties.Add(new GridViewGCDProjectItem("Raw DoD", ProjectManager.Project.GetRelativePath(dod.RawDoD.Raster.GISFileInfo), dod.RawDoD));
+            DoDProperties.Add(new GridViewGCDProjectItem(dod.ThrDoD));
+            DoDProperties.Add(new GridViewGCDProjectItem(dod.RawDoD));
 
             DoDProperties.Add(new GridViewPropertyValueItem("Intermediate Datasets"));
             if (dod is DoDPropagated)
@@ -98,32 +98,32 @@ namespace GCDCore.UserInterface.ChangeDetection
                     else
                     {
                         DoDProperties.Add(new GridViewPropertyValueItem("Spatial Coherence", string.Format("Bayesian updating with filter size of {0} X {0} cells", ((DoDProbabilistic)dod).SpatialCoherence.BufferSize)));
-                        DoDProperties.Add(new GridViewRasterItem("Probability Raster", dodProb.PriorProbability));
-                        DoDProperties.Add(new GridViewRasterItem("Posterior Raster", dodProb.PosteriorProbability));
-                        DoDProperties.Add(new GridViewRasterItem("Conditional Raster", dodProb.ConditionalRaster));
-                        DoDProperties.Add(new GridViewRasterItem("Surface Lowering Count", dodProb.SpatialCoherenceErosion));
-                        DoDProperties.Add(new GridViewRasterItem("Surface Raising Count", dodProb.SpatialCoherenceDeposition));
+                        DoDProperties.Add(new GridViewGCDProjectItem(new DoDIntermediateRaster("Probability Raster", dodProb.PriorProbability)));
+                        DoDProperties.Add(new GridViewGCDProjectItem(new DoDIntermediateRaster("Posterior Raster", dodProb.PosteriorProbability)));
+                        DoDProperties.Add(new GridViewGCDProjectItem(new DoDIntermediateRaster("Conditional Raster", dodProb.ConditionalRaster)));
+                        DoDProperties.Add(new GridViewGCDProjectItem(new DoDIntermediateRaster("Surface Lowering Count", dodProb.SpatialCoherenceErosion)));
+                        DoDProperties.Add(new GridViewGCDProjectItem(new DoDIntermediateRaster("Surface Raising Count", dodProb.SpatialCoherenceDeposition)));
                     }
                 }
             }
             DoDProperties.Add(new GridViewRasterItem("Effective Threshold Surface", dod.ThrErr.Raster));
 
-            // Values from the thresholded DoD raster stats are optional
-            try
-            {
-                DoDProperties.Add(new GridViewPropertyValueItem("Output Raster Statistics"));
-                string vUnits = UnitsNet.Length.GetAbbreviation(ProjectManager.Project.Units.VertUnit);
-                dod.ThrDoD.Raster.ComputeStatistics();
-                Dictionary<string, decimal> stats = dod.ThrDoD.Raster.GetStatistics();
-                DoDProperties.Add(new GridViewPropertyValueItem("Thresholded DoD maximum raster value", stats["max"].ToString("n2") + vUnits));
-                DoDProperties.Add(new GridViewPropertyValueItem("Thresholded DoD minimum raster value", stats["min"].ToString("n2") + vUnits));
-                DoDProperties.Add(new GridViewPropertyValueItem("Thresholded DoD mean raster value", stats["mean"].ToString("n2") + vUnits));
-                DoDProperties.Add(new GridViewPropertyValueItem("Thresholded DoD standard deviation of raster values", stats["stddev"].ToString("n2") + vUnits));
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(string.Format("Error calculating statistics from {0}, {1}", dod.ThrDoD.Raster.GISFileInfo.FullName, ex.Message));
-            }
+            //// Values from the thresholded DoD raster stats are optional
+            //try
+            //{
+            //    DoDProperties.Add(new GridViewPropertyValueItem("Output Raster Statistics"));
+            //    string vUnits = UnitsNet.Length.GetAbbreviation(ProjectManager.Project.Units.VertUnit);
+            //    dod.ThrDoD.Raster.ComputeStatistics();
+            //    Dictionary<string, decimal> stats = dod.ThrDoD.Raster.GetStatistics();
+            //    DoDProperties.Add(new DoDIntermediateRaster( GridViewPropertyValueItem("Thresholded DoD maximum raster value", stats["max"].ToString("n2") + vUnits));
+            //    DoDProperties.Add(new GridViewPropertyValueItem("Thresholded DoD minimum raster value", stats["min"].ToString("n2") + vUnits));
+            //    DoDProperties.Add(new GridViewPropertyValueItem("Thresholded DoD mean raster value", stats["mean"].ToString("n2") + vUnits));
+            //    DoDProperties.Add(new GridViewPropertyValueItem("Thresholded DoD standard deviation of raster values", stats["stddev"].ToString("n2") + vUnits));
+            //}
+            //catch (Exception ex)
+            //{
+            //    Console.WriteLine(string.Format("Error calculating statistics from {0}, {1}", dod.ThrDoD.Raster.GISFileInfo.FullName, ex.Message));
+            //}
         }
 
         private void addToMapToolStripMenuItem_Click(object sender, EventArgs e)
@@ -137,7 +137,7 @@ namespace GCDCore.UserInterface.ChangeDetection
                 ProjectManager.AddNewProjectItemToMap(propItem.ProjectItem);
             }
         }
-        
+
         /// <summary>
         /// Select the row that the user just right clicked on
         /// </summary>
@@ -148,6 +148,19 @@ namespace GCDCore.UserInterface.ChangeDetection
             if (e.RowIndex >= 0 && e.Button == MouseButtons.Right)
                 grdData.Rows[e.RowIndex].Selected = true;
 
+        }
+
+        private void rasterPropertiesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (grdData.SelectedRows.Count < 1)
+                return;
+
+            if (grdData.SelectedRows[0].DataBoundItem is GridViewGCDProjectItem)
+            {
+                GridViewGCDProjectItem propItem = (GridViewGCDProjectItem)grdData.SelectedRows[0].DataBoundItem;
+                SurveyLibrary.frmSurfaceProperties frm = new SurveyLibrary.frmSurfaceProperties((GCDProjectRasterItem)propItem.ProjectItem);
+                frm.ShowDialog();
+            }
         }
     }
 }

@@ -60,9 +60,11 @@ namespace GCDCore.UserInterface
             ProjectItem = item;
         }
 
-        public GridViewGCDProjectItem(string prop, GCDProjectItem item)
-            : base(prop, string.Empty)
+        public GridViewGCDProjectItem(GCDProjectItem item)
+            : base(item.Noun, string.Empty)
         {
+            ProjectItem = item;
+
             if (item is GCDProjectRasterItem)
                 Value = ProjectManager.Project.GetRelativePath(((GCDProjectRasterItem)item).Raster.GISFileInfo);
             else if (item is GCDProjectVectorItem)
