@@ -41,13 +41,14 @@
             this.txtPath = new System.Windows.Forms.TextBox();
             this.ucRaster = new GCDCore.UserInterface.UtilityForms.ucRasterInput();
             this.tTip = new System.Windows.Forms.ToolTip(this.components);
+            this.ucRasterProperties1 = new GCDCore.UserInterface.ucRasterProperties();
             this.SuspendLayout();
             // 
             // cmdCancel
             // 
             this.cmdCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cmdCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cmdCancel.Location = new System.Drawing.Point(446, 107);
+            this.cmdCancel.Location = new System.Drawing.Point(446, 323);
             this.cmdCancel.Name = "cmdCancel";
             this.cmdCancel.Size = new System.Drawing.Size(75, 23);
             this.cmdCancel.TabIndex = 8;
@@ -60,7 +61,7 @@
             this.cmdOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.cmdOK.Image = global::GCDCore.Properties.Resources.Save;
             this.cmdOK.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdOK.Location = new System.Drawing.Point(365, 107);
+            this.cmdOK.Location = new System.Drawing.Point(365, 323);
             this.cmdOK.Name = "cmdOK";
             this.cmdOK.Size = new System.Drawing.Size(75, 23);
             this.cmdOK.TabIndex = 7;
@@ -71,7 +72,7 @@
             // cmdHelp
             // 
             this.cmdHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.cmdHelp.Location = new System.Drawing.Point(12, 107);
+            this.cmdHelp.Location = new System.Drawing.Point(12, 323);
             this.cmdHelp.Name = "cmdHelp";
             this.cmdHelp.Size = new System.Drawing.Size(75, 23);
             this.cmdHelp.TabIndex = 9;
@@ -140,13 +141,24 @@
             this.ucRaster.Size = new System.Drawing.Size(158, 23);
             this.ucRaster.TabIndex = 4;
             // 
+            // ucRasterProperties1
+            // 
+            this.ucRasterProperties1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ucRasterProperties1.Location = new System.Drawing.Point(12, 100);
+            this.ucRasterProperties1.Name = "ucRasterProperties1";
+            this.ucRasterProperties1.Size = new System.Drawing.Size(510, 217);
+            this.ucRasterProperties1.TabIndex = 10;
+            // 
             // frmAssociatedSurface
             // 
             this.AcceptButton = this.cmdOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cmdCancel;
-            this.ClientSize = new System.Drawing.Size(533, 142);
+            this.ClientSize = new System.Drawing.Size(533, 358);
+            this.Controls.Add(this.ucRasterProperties1);
             this.Controls.Add(this.ucRaster);
             this.Controls.Add(this.txtPath);
             this.Controls.Add(this.lblPath);
@@ -182,5 +194,6 @@
         private System.Windows.Forms.TextBox txtPath;
         private UtilityForms.ucRasterInput ucRaster;
         private System.Windows.Forms.ToolTip tTip;
+        private ucRasterProperties ucRasterProperties1;
     }
 }

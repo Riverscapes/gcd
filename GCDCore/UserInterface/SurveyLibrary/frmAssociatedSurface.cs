@@ -78,6 +78,10 @@ namespace GCDCore.UserInterface.SurveyLibrary
                     case AssocSurface.AssociatedSurfaceTypes.SlopePercent: txtName.Text = "Slope Percent"; break;
                     case AssocSurface.AssociatedSurfaceTypes.PointDensity: txtName.Text = "Point Density"; break;
                 }
+
+                ucRasterProperties1.Visible = false;
+                Height -= cmdOK.Top - ucRasterProperties1.Top;
+                FormBorderStyle = FormBorderStyle.FixedDialog;
             }
             else
             {
@@ -88,6 +92,8 @@ namespace GCDCore.UserInterface.SurveyLibrary
                 ucRaster.Width = ucRaster.Right - txtPath.Left;
                 ucRaster.Left = txtPath.Left;
                 ucRaster.InitializeExisting("Associated Surface", Assoc.Raster);
+
+                ucRasterProperties1.Initialize(Assoc.Noun, Assoc.Raster);
             }
 
             tTip.SetToolTip(txtName, "The name used to refer to this associated surface within this GCD project. It cannot be empty and must be unique among all associated surfaces for the parent DEM survey.");
