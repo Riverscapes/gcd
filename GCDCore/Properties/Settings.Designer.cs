@@ -418,5 +418,14 @@ namespace GCDCore.Properties {
                 this["DeveloperPreview"] = value;
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("16")]
+        public int PropertyGridLeftIndent {
+            get {
+                return ((int)(this["PropertyGridLeftIndent"]));
+            }
+        }
     }
 }

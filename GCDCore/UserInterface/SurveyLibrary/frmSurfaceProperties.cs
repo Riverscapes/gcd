@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using GCDCore.Project;
 using System.Collections.Generic;
+using System.Drawing;
 
 namespace GCDCore.UserInterface.SurveyLibrary
 {
@@ -9,7 +10,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
     {
         public readonly GCDProjectRasterItem Surface;
         private SurveyDateTime SurveyDate { get; set; }
-        private readonly naru.ui.SortableBindingList<ItemProperty> ItemProperties;
+        private readonly naru.ui.SortableBindingList<GridViewPropertyValueItem> ItemProperties;
 
         public GCDProjectItem GCDProjectItem { get { return Surface; } }
 
@@ -31,7 +32,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
         public frmSurfaceProperties(GCDProjectRasterItem surface)
         {
             InitializeComponent();
-            ItemProperties = new naru.ui.SortableBindingList<ItemProperty>();
+            ItemProperties = new naru.ui.SortableBindingList<GridViewPropertyValueItem>();
             Surface = surface;
             if (surface is DEMSurvey)
             {
@@ -50,22 +51,24 @@ namespace GCDCore.UserInterface.SurveyLibrary
             txtName.Text = Surface.Name;
             txtPath.Text = ProjectManager.Project.GetRelativePath(Surface.Raster.GISFileInfo);
 
-            ItemProperties.Add(new ItemProperty("Cell size", UnitsNet.Length.From((double)Surface.Raster.Extent.CellWidth, Surface.Raster.Proj.HorizontalUnit).ToString()));
-            ItemProperties.Add(new ItemProperty("Rows", Surface.Raster.Extent.Rows.ToString("N0")));
-            ItemProperties.Add(new ItemProperty("Columns", Surface.Raster.Extent.Cols.ToString("N0")));
-            ItemProperties.Add(new ItemProperty("Height", UnitsNet.Length.From((double)Surface.Raster.Extent.Height, Surface.Raster.Proj.HorizontalUnit).ToString()));
-            ItemProperties.Add(new ItemProperty("Width", UnitsNet.Length.From((double)Surface.Raster.Extent.Width, Surface.Raster.Proj.HorizontalUnit).ToString()));
-            ItemProperties.Add(new ItemProperty("Spatial Reference", Surface.Raster.Proj.Wkt));
+            ItemProperties.Add(new GridViewPropertyValueItem("Raster Properties"));
+            ItemProperties.Add(new GridViewPropertyValueItem("Cell size", UnitsNet.Length.From((double)Surface.Raster.Extent.CellWidth, Surface.Raster.Proj.HorizontalUnit).ToString()));
+            ItemProperties.Add(new GridViewPropertyValueItem("Rows", Surface.Raster.Extent.Rows.ToString("N0")));
+            ItemProperties.Add(new GridViewPropertyValueItem("Columns", Surface.Raster.Extent.Cols.ToString("N0")));
+            ItemProperties.Add(new GridViewPropertyValueItem("Height", UnitsNet.Length.From((double)Surface.Raster.Extent.Height, Surface.Raster.Proj.HorizontalUnit).ToString()));
+            ItemProperties.Add(new GridViewPropertyValueItem("Width", UnitsNet.Length.From((double)Surface.Raster.Extent.Width, Surface.Raster.Proj.HorizontalUnit).ToString()));
+            ItemProperties.Add(new GridViewPropertyValueItem("Spatial Reference", Surface.Raster.Proj.Wkt));
 
             // Values from raster stats are optional
             try
             {
                 Surface.Raster.ComputeStatistics();
                 Dictionary<string, decimal> stats = Surface.Raster.GetStatistics();
-                ItemProperties.Add(new ItemProperty("Maximum raster value", stats["max"].ToString("n2")));
-                ItemProperties.Add(new ItemProperty("Minimum raster value", stats["min"].ToString("n2")));
-                ItemProperties.Add(new ItemProperty("Mean raster value", stats["mean"].ToString("n2")));
-                ItemProperties.Add(new ItemProperty("Standard deviation of raster values", stats["stddev"].ToString("n2")));
+                ItemProperties.Add(new GridViewPropertyValueItem("Raster Statistics"));
+                ItemProperties.Add(new GridViewPropertyValueItem("Maximum raster value", stats["max"].ToString("n2")));
+                ItemProperties.Add(new GridViewPropertyValueItem("Minimum raster value", stats["min"].ToString("n2")));
+                ItemProperties.Add(new GridViewPropertyValueItem("Mean raster value", stats["mean"].ToString("n2")));
+                ItemProperties.Add(new GridViewPropertyValueItem("Standard deviation of raster values", stats["stddev"].ToString("n2")));
             }
             catch (Exception ex)
             {
@@ -90,6 +93,8 @@ namespace GCDCore.UserInterface.SurveyLibrary
                 txtPath.Width = cmdAddTopMap.Right - txtPath.Left;
             }
 
+            grdData.AutoGenerateColumns = false;
+            grdData.ColumnHeadersVisible = false;
             grdData.DataSource = ItemProperties;
             grdData.Select();
 
@@ -175,26 +180,6 @@ namespace GCDCore.UserInterface.SurveyLibrary
             }
         }
 
-        private class ItemProperty
-        {
-            public string Property { get; internal set; }
-            public string Value { get; internal set; }
-
-            public ItemProperty(string property, string value)
-            {
-                Property = property;
-                Value = value;
-            }
-
-            /// <summary>
-            /// Default constructor for binding
-            /// </summary>
-            public ItemProperty()
-            {
-
-            }
-        }
-
         private void cmdSurveyDate_Click(object sender, EventArgs e)
         {
             frmSurveyDateTime frm = new frmSurveyDateTime(SurveyDate);
@@ -208,6 +193,23 @@ namespace GCDCore.UserInterface.SurveyLibrary
         private void cmdHelp_Click(object sender, EventArgs e)
         {
             OnlineHelp.Show(Name);
+        }
+
+        private void grdData_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (e.ColumnIndex == 0 && e.RowIndex > -1)
+            {
+                GridViewPropertyValueItem prop = (GridViewPropertyValueItem)grdData.Rows[e.RowIndex].DataBoundItem;
+
+                if (prop.Header)
+                {
+                    grdData.Rows[e.RowIndex].Cells[0].Style.Font = new Font(grdData.Font, FontStyle.Bold);
+                }
+                else
+                {
+                    grdData.Rows[e.RowIndex].Cells[0].Style.Padding = new Padding(prop.LeftPadding, 0, 0, 0);
+                }                
+            }
         }
     }
 }

@@ -155,6 +155,7 @@
             this.grdData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.grdData.Size = new System.Drawing.Size(454, 161);
             this.grdData.TabIndex = 0;
+            this.grdData.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.grdData_CellFormatting);
             // 
             // colProperty
             // 

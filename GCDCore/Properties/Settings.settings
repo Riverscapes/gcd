@@ -101,5 +101,8 @@
     <Setting Name="DeveloperPreview" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="PropertyGridLeftIndent" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">16</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
