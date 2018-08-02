@@ -16,28 +16,39 @@ namespace GCDCore.Project.Masks
 
         public override string Noun { get { return "Directional Mask"; } }
 
-        public override Dictionary<string, string> ActiveFieldValues
+        /// <summary>
+        /// Returns a dictionary of field values keyed to their display text (either the field value or label)
+        /// </summary>
+        /// <remarks>
+        /// The dictionary will only contain fields that have a non-Null field value.
+        /// </remarks>
+        public override List<MaskItem> ActiveFieldValues
         {
             get
             {
-                Dictionary<string, string> result = new Dictionary<string, string>();
+                List<MaskItem> result = new List<MaskItem>();
 
                 bool bUseLabel = !string.IsNullOrEmpty(LabelField);
 
-               foreach (GCDConsoleLib.VectorFeature feat in Vector.Features.Values)
+
+                foreach (GCDConsoleLib.VectorFeature feat in Vector.Features.Values)
                 {
                     if (!feat.IsNull(_Field))
                     {
                         string value = feat.GetFieldAsString(_Field);
-                        if (!result.ContainsKey(value))
+                        int direction = feat.GetFieldAsInt(DirectionField);
+
+                        if (!result.Any(x => x.FieldValue == value))
                         {
-                            if (bUseLabel)
-                                result[value] = feat.IsNull(LabelField) ? value : feat.GetFieldAsString(LabelField);
-                            else
-                                result[value] = value;
+                            string label = bUseLabel ? feat.IsNull(LabelField) ? value : feat.GetFieldAsString(LabelField) : value;
+
+                            result.Add(new DirectionMaskItem(true, value, label, direction));
                         }
                     }
                 }
+
+                // Sort the items by their direction value.
+                result.Sort((a, b) => ((DirectionMaskItem)a).CompareTo((DirectionMaskItem)b));
 
                 return result;
             }

@@ -18,15 +18,15 @@ namespace GCDCore.Project.Masks
             _Items = items;
         }
 
-        public override Dictionary<string, string> ActiveFieldValues
+        public override List<MaskItem> ActiveFieldValues
         {
             get
             {
-                Dictionary<string, string> result = new Dictionary<string, string>();
+                List<MaskItem> result = new List<MaskItem>();
                 foreach (MaskItem item in _Items.Where(x => x.Include))
                 {
-                    if (!result.ContainsKey(item.FieldValue))
-                        result[item.FieldValue] = string.IsNullOrEmpty(item.Label) ? item.FieldValue : item.Label;
+                    if (!result.Any(x => x.FieldValue == item.FieldValue))
+                        result.Add(new MaskItem(true, item.FieldValue, string.IsNullOrEmpty(item.Label) ? item.FieldValue : item.Label));
                 }
 
                 return result;

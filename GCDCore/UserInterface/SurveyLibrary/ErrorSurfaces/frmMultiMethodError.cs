@@ -81,7 +81,7 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
             {
                 GCDCore.Project.Masks.RegularMask mask = cboMask.SelectedItem as GCDCore.Project.Masks.RegularMask;
                 ErrProps.Clear();
-                mask.ActiveFieldValues.Values.ToList().ForEach(x => ErrProps.Add(new ErrorSurfaceProperty(x)));
+                mask.ActiveFieldValues.ForEach(x => ErrProps.Add(new ErrorSurfaceProperty(x.Label)));
             }
             else
             {
@@ -119,18 +119,18 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
 
                     // Get the mask values dictionary
                     GCDCore.Project.Masks.RegularMask mask = cboMask.SelectedItem as GCDCore.Project.Masks.RegularMask;
-                    Dictionary<string, string> maskValues = mask.ActiveFieldValues;
+                    List<GCDCore.Project.Masks.MaskItem> maskValues = mask.ActiveFieldValues;
 
                     // Build dictionary of GCDConsole error properties
                     Dictionary<string, ErrorRasterProperties> gcdErrProps = new Dictionary<string, ErrorRasterProperties>();
-                    foreach (KeyValuePair<string, string> kvp in maskValues)
+                    foreach (GCDCore.Project.Masks.MaskItem item in maskValues)
                     {
                         foreach (ErrorSurfaceProperty prop in ErrProps)
                         {
-                            if (string.Compare(prop.Name, kvp.Key, true) == 0 || string.Compare(prop.Name, kvp.Value, true) == 0)
+                            if (string.Compare(prop.Name, item.FieldValue, true) == 0 || string.Compare(prop.Name, item.Label, true) == 0)
                             {
                                 // For GCDConsole always add using mask value (not label)
-                                gcdErrProps.Add(kvp.Key, prop.GCDErrSurfPropery);
+                                gcdErrProps.Add(item.FieldValue, prop.GCDErrSurfPropery);
                                 break;
                             }
                         }

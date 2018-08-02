@@ -19,7 +19,7 @@ namespace GCDCore.Project.Masks
         /// 
         /// Field values are keyed to labels to use in the user interface.
         /// There is always a label. It might be the same as the field value.</remarks>
-        public abstract Dictionary<string, string> ActiveFieldValues { get; }
+        public abstract List<MaskItem> ActiveFieldValues { get; }
         
         public AttributeFieldMask(string name, FileInfo shapeFile, string field)
             : base(name, shapeFile)

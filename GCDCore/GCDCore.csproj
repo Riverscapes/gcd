@@ -130,6 +130,7 @@
     <Compile Include="Project\Masks\AOIMask.cs" />
     <Compile Include="Project\Masks\AttributeFieldMask.cs" />
     <Compile Include="Project\Masks\DirectionalMask.cs" />
+    <Compile Include="Project\Masks\DirectionMaskItem.cs" />
     <Compile Include="Project\Masks\Mask.cs" />
     <Compile Include="Project\Masks\MaskItem.cs" />
     <Compile Include="Project\Masks\RegularMask.cs" />

@@ -43,12 +43,12 @@ namespace GCDCore.Project
                 BindingList<BudgetSegregationClass> result = new BindingList<BudgetSegregationClass>();
 
                 // Loop over all distinct field values that are flagged to be included
-                foreach (KeyValuePair<string, string> kvp in Mask.ActiveFieldValues)
+                foreach (GCDCore.Project.Masks.MaskItem item  in Mask.ActiveFieldValues)
                 {
-                    if (Classes.ContainsKey(kvp.Key))
+                    if (Classes.ContainsKey(item.FieldValue))
                     {
-                        BudgetSegregationClass existingClass = Classes[kvp.Key];
-                        result.Add(new BudgetSegregationClass(kvp.Value, existingClass.Statistics, existingClass.Histograms, existingClass.SummaryXML));
+                        BudgetSegregationClass existingClass = Classes[item.FieldValue];
+                        result.Add(new BudgetSegregationClass(item.Label, existingClass.Statistics, existingClass.Histograms, existingClass.SummaryXML));
                     }
                 }
 
