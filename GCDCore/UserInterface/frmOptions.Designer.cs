@@ -45,6 +45,8 @@ namespace GCDCore.UserInterface.Options
             this.colSurveyType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colUncertainty = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TabPage3 = new System.Windows.Forms.TabPage();
+            this.chkManualDoDRange = new System.Windows.Forms.CheckBox();
+            this.valManualDoDRange = new System.Windows.Forms.NumericUpDown();
             this.chkComparativeSymbology = new System.Windows.Forms.CheckBox();
             this.chkAutoApplyTransparency = new System.Windows.Forms.CheckBox();
             this.grbTransparencyLayer = new System.Windows.Forms.GroupBox();
@@ -85,6 +87,7 @@ namespace GCDCore.UserInterface.Options
             this.TabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdSurveyTypes)).BeginInit();
             this.TabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.valManualDoDRange)).BeginInit();
             this.grbTransparencyLayer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudTransparency)).BeginInit();
             this.grbComparitiveLayers.SuspendLayout();
@@ -177,6 +180,8 @@ namespace GCDCore.UserInterface.Options
             // 
             // TabPage3
             // 
+            this.TabPage3.Controls.Add(this.chkManualDoDRange);
+            this.TabPage3.Controls.Add(this.valManualDoDRange);
             this.TabPage3.Controls.Add(this.chkComparativeSymbology);
             this.TabPage3.Controls.Add(this.chkAutoApplyTransparency);
             this.TabPage3.Controls.Add(this.grbTransparencyLayer);
@@ -188,6 +193,45 @@ namespace GCDCore.UserInterface.Options
             this.TabPage3.TabIndex = 2;
             this.TabPage3.Text = "Symbology";
             this.TabPage3.UseVisualStyleBackColor = true;
+            // 
+            // chkManualDoDRange
+            // 
+            this.chkManualDoDRange.AutoSize = true;
+            this.chkManualDoDRange.Location = new System.Drawing.Point(15, 153);
+            this.chkManualDoDRange.Name = "chkManualDoDRange";
+            this.chkManualDoDRange.Size = new System.Drawing.Size(168, 17);
+            this.chkManualDoDRange.TabIndex = 12;
+            this.chkManualDoDRange.Text = "Manual DoD symbology range";
+            this.chkManualDoDRange.UseVisualStyleBackColor = true;
+            this.chkManualDoDRange.CheckedChanged += new System.EventHandler(this.chkManualDoDRange_CheckedChanged);
+            // 
+            // valManualDoDRange
+            // 
+            this.valManualDoDRange.DecimalPlaces = 1;
+            this.valManualDoDRange.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.valManualDoDRange.Location = new System.Drawing.Point(195, 151);
+            this.valManualDoDRange.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.valManualDoDRange.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.valManualDoDRange.Name = "valManualDoDRange";
+            this.valManualDoDRange.Size = new System.Drawing.Size(59, 20);
+            this.valManualDoDRange.TabIndex = 11;
+            this.valManualDoDRange.Value = new decimal(new int[] {
+            25,
+            0,
+            0,
+            65536});
             // 
             // chkComparativeSymbology
             // 
@@ -604,6 +648,7 @@ namespace GCDCore.UserInterface.Options
             ((System.ComponentModel.ISupportInitialize)(this.grdSurveyTypes)).EndInit();
             this.TabPage3.ResumeLayout(false);
             this.TabPage3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.valManualDoDRange)).EndInit();
             this.grbTransparencyLayer.ResumeLayout(false);
             this.grbTransparencyLayer.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudTransparency)).EndInit();
@@ -670,5 +715,7 @@ namespace GCDCore.UserInterface.Options
         private System.Windows.Forms.TextBox txtFont;
         private System.Windows.Forms.FontDialog frmFont;
         private System.Windows.Forms.Button cmdResetColours;
+        private System.Windows.Forms.CheckBox chkManualDoDRange;
+        private System.Windows.Forms.NumericUpDown valManualDoDRange;
     }
 }

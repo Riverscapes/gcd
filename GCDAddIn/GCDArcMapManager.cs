@@ -257,8 +257,8 @@ namespace GCDAddIn
             {
                 dTransparency = GCDCore.Properties.Settings.Default.AutoTransparencyValue;
             }
-
-            IRasterRenderer rasterRenderer = RasterSymbolization.CreateDoDClassifyRenderer(gDoDRaster, 20);
+            
+            IRasterRenderer rasterRenderer = RasterSymbolization.CreateDoDClassifyRenderer(gDoDRaster, 20, GCDCore.Properties.Settings.Default.DoDSymbologyRange);
             string sHeader = string.Format("Elevation Difference ({0})", UnitsNet.Length.GetAbbreviation(ProjectManager.Project.Units.VertUnit));
             AddRasterLayer(gDoDRaster, rasterRenderer, dod.Name, pAnalGrpLayer, sHeader, dTransparency);
         }

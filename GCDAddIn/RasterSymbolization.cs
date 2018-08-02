@@ -592,7 +592,7 @@ namespace GCDAddIn
         }
 
 
-        public static IRasterRenderer CreateDoDClassifyRenderer(Raster gRaster, int iClassCount)
+        public static IRasterRenderer CreateDoDClassifyRenderer(Raster gRaster, int iClassCount, double rampRange)
         {
             try
             {
@@ -609,10 +609,20 @@ namespace GCDAddIn
                 IFillSymbol fillSymbol = new SimpleFillSymbolClass();
                 IRaster raster = rasterDataset.CreateDefaultRaster();
 
-                gRaster.ComputeStatistics();
-                Dictionary<string, decimal> rasterStats = gRaster.GetStatistics();
-                double rMin = (double)rasterStats["min"];
-                double rMax = (double)rasterStats["max"];
+                double rMin = -2.5;
+                double rMax = 2.5;
+                if (rampRange == 0)
+                {
+                    gRaster.ComputeStatistics();
+                    Dictionary<string, decimal> rasterStats = gRaster.GetStatistics();
+                    rMin = (double)rasterStats["min"];
+                    rMax = (double)rasterStats["max"];
+                }
+                else
+                {
+                    rMin = rampRange * -1;
+                    rMax = rampRange;
+                }
 
                 rasterRenderer.Raster = raster;
                 if ((rMin == double.MinValue & rMax == double.MaxValue) | (rMin == double.MaxValue & rMax == double.MinValue) | (rMin == float.MinValue & rMax == float.MaxValue) | (rMin == float.MaxValue & rMax == float.MinValue))

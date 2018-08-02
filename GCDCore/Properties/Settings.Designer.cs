@@ -427,5 +427,17 @@ namespace GCDCore.Properties {
                 return ((int)(this["PropertyGridLeftIndent"]));
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double DoDSymbologyRange {
+            get {
+                return ((double)(this["DoDSymbologyRange"]));
+            }
+            set {
+                this["DoDSymbologyRange"] = value;
+            }
+        }
     }
 }
