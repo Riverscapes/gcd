@@ -41,7 +41,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.chkLabel = new System.Windows.Forms.CheckBox();
             this.cboLabel = new System.Windows.Forms.ComboBox();
-            this.ucPolygon = new GCDCore.UserInterface.UtilityForms.ucVectorInput();
             this.cboField = new System.Windows.Forms.ComboBox();
             this.Label7 = new System.Windows.Forms.Label();
             this.lblPolygons = new System.Windows.Forms.Label();
@@ -50,6 +49,10 @@
             this.txtPath = new System.Windows.Forms.TextBox();
             this.lblPath = new System.Windows.Forms.Label();
             this.tTip = new System.Windows.Forms.ToolTip(this.components);
+            this.ucPolygon = new GCDCore.UserInterface.UtilityForms.ucVectorInput();
+            this.label3 = new System.Windows.Forms.Label();
+            this.rdoAscending = new System.Windows.Forms.RadioButton();
+            this.rdoDescending = new System.Windows.Forms.RadioButton();
             this.grpFeatureClass.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -58,10 +61,10 @@
             // 
             this.cmdCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cmdCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cmdCancel.Location = new System.Drawing.Point(447, 286);
+            this.cmdCancel.Location = new System.Drawing.Point(447, 308);
             this.cmdCancel.Name = "cmdCancel";
             this.cmdCancel.Size = new System.Drawing.Size(75, 23);
-            this.cmdCancel.TabIndex = 6;
+            this.cmdCancel.TabIndex = 7;
             this.cmdCancel.Text = "Cancel";
             this.cmdCancel.UseVisualStyleBackColor = true;
             // 
@@ -71,10 +74,10 @@
             this.cmdOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.cmdOK.Image = global::GCDCore.Properties.Resources.Save;
             this.cmdOK.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdOK.Location = new System.Drawing.Point(366, 286);
+            this.cmdOK.Location = new System.Drawing.Point(366, 308);
             this.cmdOK.Name = "cmdOK";
             this.cmdOK.Size = new System.Drawing.Size(75, 23);
-            this.cmdOK.TabIndex = 5;
+            this.cmdOK.TabIndex = 6;
             this.cmdOK.Text = "   Save";
             this.cmdOK.UseVisualStyleBackColor = true;
             this.cmdOK.Click += new System.EventHandler(this.cmdOK_Click);
@@ -82,10 +85,10 @@
             // cmdHelp
             // 
             this.cmdHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.cmdHelp.Location = new System.Drawing.Point(12, 286);
+            this.cmdHelp.Location = new System.Drawing.Point(12, 308);
             this.cmdHelp.Name = "cmdHelp";
             this.cmdHelp.Size = new System.Drawing.Size(75, 23);
-            this.cmdHelp.TabIndex = 7;
+            this.cmdHelp.TabIndex = 0;
             this.cmdHelp.Text = "Help";
             this.cmdHelp.UseVisualStyleBackColor = true;
             this.cmdHelp.Click += new System.EventHandler(this.cmdHelp_Click);
@@ -101,10 +104,10 @@
             this.grpFeatureClass.Controls.Add(this.cboField);
             this.grpFeatureClass.Controls.Add(this.Label7);
             this.grpFeatureClass.Controls.Add(this.lblPolygons);
-            this.grpFeatureClass.Location = new System.Drawing.Point(16, 77);
+            this.grpFeatureClass.Location = new System.Drawing.Point(16, 76);
             this.grpFeatureClass.Name = "grpFeatureClass";
-            this.grpFeatureClass.Size = new System.Drawing.Size(506, 196);
-            this.grpFeatureClass.TabIndex = 4;
+            this.grpFeatureClass.Size = new System.Drawing.Size(506, 222);
+            this.grpFeatureClass.TabIndex = 5;
             this.grpFeatureClass.TabStop = false;
             this.grpFeatureClass.Text = "Feature Class";
             // 
@@ -112,13 +115,16 @@
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.rdoDescending);
+            this.groupBox1.Controls.Add(this.rdoAscending);
+            this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.cboDistance);
             this.groupBox1.Controls.Add(this.chkDistance);
             this.groupBox1.Controls.Add(this.cboDirection);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Location = new System.Drawing.Point(6, 109);
+            this.groupBox1.Location = new System.Drawing.Point(6, 112);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(491, 80);
+            this.groupBox1.Size = new System.Drawing.Size(491, 103);
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Topology";
@@ -129,18 +135,18 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cboDistance.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboDistance.FormattingEnabled = true;
-            this.cboDistance.Location = new System.Drawing.Point(148, 46);
+            this.cboDistance.Location = new System.Drawing.Point(148, 70);
             this.cboDistance.Name = "cboDistance";
             this.cboDistance.Size = new System.Drawing.Size(337, 21);
-            this.cboDistance.TabIndex = 3;
+            this.cboDistance.TabIndex = 6;
             // 
             // chkDistance
             // 
             this.chkDistance.AutoSize = true;
-            this.chkDistance.Location = new System.Drawing.Point(9, 48);
+            this.chkDistance.Location = new System.Drawing.Point(9, 72);
             this.chkDistance.Name = "chkDistance";
             this.chkDistance.Size = new System.Drawing.Size(136, 17);
-            this.chkDistance.TabIndex = 2;
+            this.chkDistance.TabIndex = 5;
             this.chkDistance.Text = "Distance field (optional)";
             this.chkDistance.UseVisualStyleBackColor = true;
             this.chkDistance.CheckedChanged += new System.EventHandler(this.UpdateControls);
@@ -169,7 +175,7 @@
             // 
             this.chkLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.chkLabel.AutoSize = true;
-            this.chkLabel.Location = new System.Drawing.Point(25, 84);
+            this.chkLabel.Location = new System.Drawing.Point(25, 82);
             this.chkLabel.Name = "chkLabel";
             this.chkLabel.Size = new System.Drawing.Size(120, 17);
             this.chkLabel.TabIndex = 4;
@@ -183,20 +189,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cboLabel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboLabel.FormattingEnabled = true;
-            this.cboLabel.Location = new System.Drawing.Point(154, 82);
+            this.cboLabel.Location = new System.Drawing.Point(154, 80);
             this.cboLabel.Name = "cboLabel";
             this.cboLabel.Size = new System.Drawing.Size(337, 21);
             this.cboLabel.TabIndex = 5;
-            // 
-            // ucPolygon
-            // 
-            this.ucPolygon.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.ucPolygon.FullPath = null;
-            this.ucPolygon.Location = new System.Drawing.Point(154, 22);
-            this.ucPolygon.Name = "ucPolygon";
-            this.ucPolygon.Size = new System.Drawing.Size(337, 23);
-            this.ucPolygon.TabIndex = 1;
             // 
             // cboField
             // 
@@ -204,7 +200,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cboField.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboField.FormattingEnabled = true;
-            this.cboField.Location = new System.Drawing.Point(154, 53);
+            this.cboField.Location = new System.Drawing.Point(154, 52);
             this.cboField.Name = "cboField";
             this.cboField.Size = new System.Drawing.Size(337, 21);
             this.cboField.TabIndex = 3;
@@ -213,7 +209,7 @@
             // 
             this.Label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.Label7.AutoSize = true;
-            this.Label7.Location = new System.Drawing.Point(113, 57);
+            this.Label7.Location = new System.Drawing.Point(113, 56);
             this.Label7.Name = "Label7";
             this.Label7.Size = new System.Drawing.Size(29, 13);
             this.Label7.TabIndex = 2;
@@ -268,13 +264,55 @@
             this.lblPath.TabIndex = 2;
             this.lblPath.Text = "Project path";
             // 
+            // ucPolygon
+            // 
+            this.ucPolygon.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ucPolygon.FullPath = null;
+            this.ucPolygon.Location = new System.Drawing.Point(154, 22);
+            this.ucPolygon.Name = "ucPolygon";
+            this.ucPolygon.Size = new System.Drawing.Size(337, 23);
+            this.ucPolygon.TabIndex = 1;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(73, 47);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(68, 13);
+            this.label3.TabIndex = 2;
+            this.label3.Text = "Display order";
+            // 
+            // rdoAscending
+            // 
+            this.rdoAscending.AutoSize = true;
+            this.rdoAscending.Checked = true;
+            this.rdoAscending.Location = new System.Drawing.Point(148, 45);
+            this.rdoAscending.Name = "rdoAscending";
+            this.rdoAscending.Size = new System.Drawing.Size(75, 17);
+            this.rdoAscending.TabIndex = 3;
+            this.rdoAscending.TabStop = true;
+            this.rdoAscending.Text = "Ascending";
+            this.rdoAscending.UseVisualStyleBackColor = true;
+            // 
+            // rdoDescending
+            // 
+            this.rdoDescending.AutoSize = true;
+            this.rdoDescending.Location = new System.Drawing.Point(229, 45);
+            this.rdoDescending.Name = "rdoDescending";
+            this.rdoDescending.Size = new System.Drawing.Size(82, 17);
+            this.rdoDescending.TabIndex = 4;
+            this.rdoDescending.TabStop = true;
+            this.rdoDescending.Text = "Descending";
+            this.rdoDescending.UseVisualStyleBackColor = true;
+            // 
             // frmDirectionalMaskProps
             // 
             this.AcceptButton = this.cmdOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cmdCancel;
-            this.ClientSize = new System.Drawing.Size(534, 321);
+            this.ClientSize = new System.Drawing.Size(534, 343);
             this.Controls.Add(this.txtPath);
             this.Controls.Add(this.lblPath);
             this.Controls.Add(this.grpFeatureClass);
@@ -319,5 +357,8 @@
         private System.Windows.Forms.TextBox txtPath;
         private System.Windows.Forms.Label lblPath;
         private System.Windows.Forms.ToolTip tTip;
+        private System.Windows.Forms.RadioButton rdoDescending;
+        private System.Windows.Forms.RadioButton rdoAscending;
+        private System.Windows.Forms.Label label3;
     }
 }

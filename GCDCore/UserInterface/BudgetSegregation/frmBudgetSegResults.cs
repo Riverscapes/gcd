@@ -40,7 +40,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
             ucProperties.Initialize(BudgetSeg.DoD);
             m_Options = new DoDSummaryDisplayOptions(ProjectManager.Project.Units);
 
-            PieChartViewer = new Visualization.BudgetSegPieChartViewer(BudgetSeg.Classes.Values.ToList<BudgetSegregationClass>(), chtPieCharts);
+            PieChartViewer = new Visualization.BudgetSegPieChartViewer(BudgetSeg.FilteredClasses.ToList(), chtPieCharts);
             cmsChart = new UtilityForms.ChartContextMenu(BudgetSeg.Folder, "budget_seg");
         }
 
@@ -77,7 +77,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
             tabMain.TabPages.Remove(TabPage4);
 
             // Update the chart user control, letting it know this is a BS and whether it is directional
-            ucClassChart.UpdateChart(BudgetSeg.Folder, BudgetSeg.Classes.Values, m_Options.VolumeUnits, true, BudgetSeg.IsMaskDirectional);
+            ucClassChart.UpdateChart(BudgetSeg.Folder, BudgetSeg.FilteredClasses, m_Options.VolumeUnits, true, BudgetSeg.IsMaskDirectional);
 
             PieChartViewer.RefreshPieCharts(m_Options.Units);
             Cursor = Cursors.Default;

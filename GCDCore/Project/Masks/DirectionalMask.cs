@@ -13,6 +13,7 @@ namespace GCDCore.Project.Masks
         public string LabelField { get; set; }
         public readonly string DirectionField;
         public string DistanceField { get; set; }
+        public bool Ascending { get; set; }
 
         public override string Noun { get { return "Directional Mask"; } }
 
@@ -50,6 +51,10 @@ namespace GCDCore.Project.Masks
                 // Sort the items by their direction value.
                 result.Sort((a, b) => ((DirectionMaskItem)a).CompareTo((DirectionMaskItem)b));
 
+                // Reverse the sorting if the values descend downstream
+                if (!Ascending)
+                    result.Reverse();
+
                 return result;
             }
         }
@@ -81,11 +86,12 @@ namespace GCDCore.Project.Masks
             }
         }
 
-        public DirectionalMask(string name, FileInfo shapefile, string field, string labelField, string directionField, string distanceField)
+        public DirectionalMask(string name, FileInfo shapefile, string field, string labelField, string directionField, bool ascending, string distanceField)
                 : base(name, shapefile, field)
         {
             LabelField = labelField;
             DirectionField = directionField;
+            Ascending = ascending;
             DistanceField = distanceField;
         }
 
@@ -105,6 +111,16 @@ namespace GCDCore.Project.Masks
             {
                 DistanceField = nodDistance.InnerText;
             }
+
+            XmlNode nodAscending = nodParent.SelectSingleNode("Ascending");
+            if (nodAscending is XmlNode)
+            {
+                Ascending = bool.Parse(nodAscending.InnerText);
+            }
+            else
+            {
+                Ascending = true;
+            }
         }
 
         public override XmlNode Serialize(XmlNode nodParent)
@@ -118,6 +134,8 @@ namespace GCDCore.Project.Masks
 
             if (!string.IsNullOrEmpty(DistanceField))
                 nodMask.AppendChild(nodParent.OwnerDocument.CreateElement("DistanceField")).InnerText = LabelField;
+
+            nodMask.AppendChild(nodParent.OwnerDocument.CreateElement("Ascending")).InnerText = Ascending.ToString();
 
             return nodMask;
         }

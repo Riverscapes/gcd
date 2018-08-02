@@ -60,6 +60,7 @@ namespace GCDCore.UserInterface.Masks
 
                 cboDirection.Text = Mask.DirectionField;
                 cboDirection.Enabled = false;
+                rdoDescending.Checked = !Mask.Ascending;
 
                 if (!string.IsNullOrEmpty(Mask.DistanceField))
                 {
@@ -103,7 +104,7 @@ namespace GCDCore.UserInterface.Masks
                     string lablField = chkLabel.Checked ? cboLabel.Text : string.Empty;
                     string distField = chkDistance.Checked ? cboDistance.Text : string.Empty;
 
-                    Mask = new DirectionalMask(txtName.Text, fiMask, cboField.Text, lablField, cboDirection.Text, distField);
+                    Mask = new DirectionalMask(txtName.Text, fiMask, cboField.Text, lablField, cboDirection.Text, rdoAscending.Checked, distField);
                     ProjectManager.Project.Masks.Add(Mask);
                     ProjectManager.AddNewProjectItemToMap(Mask);
                 }
@@ -112,6 +113,7 @@ namespace GCDCore.UserInterface.Masks
                     Mask.Name = txtName.Text;
                     Mask.LabelField = chkLabel.Checked ? cboLabel.Text : string.Empty;
                     Mask.DistanceField = chkDistance.Checked ? cboDistance.Text : string.Empty;
+                    Mask.Ascending = rdoAscending.Checked;
                 }
 
                 ProjectManager.Project.Save();
