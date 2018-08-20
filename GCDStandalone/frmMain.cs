@@ -66,6 +66,10 @@ namespace GCDStandalone
 
             // Most recently used GCD projects
             RefreshMRUItems();
+
+            ProjectManager.OnProgressChange += OnProgressChange;
+            tssProgress.Visible = false;
+            tspProgress.Visible = false;
         }
 
         private void RefreshMRUItems()
@@ -503,6 +507,14 @@ namespace GCDStandalone
         private void crossSectionViewerToolStripMenuItem_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start(GCDCore.Properties.Resources.CrossSectionViewerWebSite);
+        }
+
+        public void OnProgressChange(object sender, int progress)
+        {
+            tssProgress.Visible = true;
+            tspProgress.Visible = true;
+
+            tspProgress.Value = progress;
         }
     }
 }

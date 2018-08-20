@@ -51,6 +51,8 @@ namespace GCDCore.Project
         public delegate void GISAddVectorToMapEvent(GCDProjectVectorItem vector);
         public static event GISAddVectorToMapEvent GISAddVectorToMapEventHandler;
 
+        public static EventHandler<int> OnProgressChange;
+
         public static Dictionary<string, SurveyType> SurveyTypes
         {
             get { return SurveyType.Load(SurveyTypesPath); }
@@ -208,6 +210,6 @@ namespace GCDCore.Project
 
             DirectoryInfo finalFolder = new DirectoryInfo(Path.Combine(parentFolder.FullName, string.Format("{0}{1:0000}", prefix, existingIndex + 1)));
             return finalFolder;
-        }
+        }        
     }
 }

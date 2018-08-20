@@ -47,7 +47,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
                 FileInfo fiOutput = ProjectManager.Project.GetAbsolutePath(txtPath.Text);
                 fiOutput.Directory.Create();
 
-                RasterOperators.PointDensity(DEM.Raster, ucPointCloud.SelectedItem, fiOutput, KernelShape, valSampleDistance.Value);
+                RasterOperators.PointDensity(DEM.Raster, ucPointCloud.SelectedItem, fiOutput, KernelShape, valSampleDistance.Value, ProjectManager.OnProgressChange);
 
                 Assoc = new AssocSurface(txtName.Text, fiOutput, DEM, AssocSurface.AssociatedSurfaceTypes.PointDensity);
                 DEM.AssocSurfaces.Add(Assoc);

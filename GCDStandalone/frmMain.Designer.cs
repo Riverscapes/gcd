@@ -62,9 +62,11 @@
             this.tsiOpenProject = new System.Windows.Forms.ToolStripButton();
             this.tsiProjectProperties = new System.Windows.Forms.ToolStripButton();
             this.tsiBrowseProjectFolder = new System.Windows.Forms.ToolStripButton();
-            this.ucProjectExplorer1 = new GCDCore.UserInterface.Project.ucProjectExplorer();
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.tssProgress = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tspProgress = new System.Windows.Forms.ToolStripProgressBar();
+            this.ucProjectExplorer1 = new GCDCore.UserInterface.Project.ucProjectExplorer();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -292,7 +294,9 @@
             // 
             this.statusStrip1.Dock = System.Windows.Forms.DockStyle.None;
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tssProjectPath});
+            this.tssProjectPath,
+            this.tssProgress,
+            this.tspProgress});
             this.statusStrip1.Location = new System.Drawing.Point(0, 0);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(907, 22);
@@ -362,14 +366,6 @@
             this.tsiBrowseProjectFolder.Text = "Browse GCD Project Folder";
             this.tsiBrowseProjectFolder.Click += new System.EventHandler(this.browseGCDProjectFolderToolStripMenuItem_Click);
             // 
-            // ucProjectExplorer1
-            // 
-            this.ucProjectExplorer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucProjectExplorer1.Location = new System.Drawing.Point(3, 3);
-            this.ucProjectExplorer1.Name = "ucProjectExplorer1";
-            this.ucProjectExplorer1.Size = new System.Drawing.Size(901, 411);
-            this.ucProjectExplorer1.TabIndex = 3;
-            // 
             // toolStripContainer1
             // 
             // 
@@ -404,6 +400,26 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 417F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(907, 392);
             this.tableLayoutPanel1.TabIndex = 5;
+            // 
+            // tssProgress
+            // 
+            this.tssProgress.Name = "tssProgress";
+            this.tssProgress.Size = new System.Drawing.Size(118, 17);
+            this.tssProgress.Text = "toolStripStatusLabel1";
+            // 
+            // tspProgress
+            // 
+            this.tspProgress.Name = "tspProgress";
+            this.tspProgress.Size = new System.Drawing.Size(100, 16);
+            this.tspProgress.Step = 1;
+            // 
+            // ucProjectExplorer1
+            // 
+            this.ucProjectExplorer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucProjectExplorer1.Location = new System.Drawing.Point(3, 3);
+            this.ucProjectExplorer1.Name = "ucProjectExplorer1";
+            this.ucProjectExplorer1.Size = new System.Drawing.Size(901, 411);
+            this.ucProjectExplorer1.TabIndex = 3;
             // 
             // frmMain
             // 
@@ -473,6 +489,8 @@
         private System.Windows.Forms.ToolStripMenuItem topographicAnalysisToolkitTATToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem crossSectionViewerToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripStatusLabel tssProgress;
+        private System.Windows.Forms.ToolStripProgressBar tspProgress;
     }
 }
 
