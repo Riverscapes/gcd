@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Linq;
 using GCDConsoleLib.Internal.Operators;
 using System.IO;
 using UnitsNet;
-using UnitsNet.Units;
-using System.Diagnostics;
 using GCDConsoleLib.GCD;
 
 namespace GCDConsoleLib
@@ -25,7 +22,9 @@ namespace GCDConsoleLib
         /// <returns></returns>
         public static Raster ExtendedCopy(Raster rInput, FileInfo sOutputRaster)
         {
-            return (Raster)GenericRunWithOutput(typeof(ExtendedCopy<>), rInput.Datatype.CSType, new object[] {
+            return (Raster)GenericRunWithOutput(typeof(ExtendedCopy<>), rInput.Datatype.CSType,
+                "Copying Raster",
+                new object[] {
                 rInput, new Raster(rInput, sOutputRaster), rInput.Extent
             });
         }
@@ -39,7 +38,9 @@ namespace GCDConsoleLib
         /// <returns></returns>
         public static Raster ExtendedCopy(Raster rInput, FileInfo sOutputRaster, ExtentRectangle newRect)
         {
-            return (Raster)GenericRunWithOutput(typeof(ExtendedCopy<>), rInput.Datatype.CSType, new object[] {
+            return (Raster)GenericRunWithOutput(typeof(ExtendedCopy<>), rInput.Datatype.CSType,
+                "Copying Raster",
+                new object[] {
                 rInput, new Raster(rInput, sOutputRaster), newRect
             });
         }
@@ -53,7 +54,9 @@ namespace GCDConsoleLib
         /// <returns></returns>
         public static Raster Add(Raster rInput, decimal dOperand, FileInfo sOutputRaster)
         {
-            return (Raster)GenericRunWithOutput(typeof(RasterMath<>), rInput.Datatype.CSType, new object[] {
+            return (Raster)GenericRunWithOutput(typeof(RasterMath<>), rInput.Datatype.CSType, 
+                "Adding decimal value",
+                new object[] {
                 MathOpType.Addition, rInput, dOperand, new Raster(rInput, sOutputRaster)
             });
         }
@@ -67,7 +70,9 @@ namespace GCDConsoleLib
         /// <returns></returns>
         public static Raster Subtract(Raster rInput, decimal dOperand, FileInfo sOutputRaster)
         {
-            return (Raster)GenericRunWithOutput(typeof(RasterMath<>), rInput.Datatype.CSType, new object[] {
+            return (Raster)GenericRunWithOutput(typeof(RasterMath<>), rInput.Datatype.CSType, 
+                "Subtracting decimal value",
+                new object[] {
                 MathOpType.Subtraction, rInput, dOperand, new Raster(rInput, sOutputRaster)
             });
         }
@@ -81,7 +86,9 @@ namespace GCDConsoleLib
         /// <returns></returns>
         public static Raster Multiply(Raster rInput, decimal dOperand, FileInfo sOutputRaster)
         {
-            return (Raster)GenericRunWithOutput(typeof(RasterMath<>), rInput.Datatype.CSType, new object[] {
+            return (Raster)GenericRunWithOutput(typeof(RasterMath<>), rInput.Datatype.CSType, 
+                "Multiplying by decimal value",
+                new object[] {
                 MathOpType.Multipication, rInput, dOperand, new Raster(rInput, sOutputRaster)
             });
         }
@@ -95,7 +102,9 @@ namespace GCDConsoleLib
         /// <returns></returns>
         public static Raster Divide(Raster rInput, decimal dOperand, FileInfo sOutputRaster)
         {
-            return (Raster)GenericRunWithOutput(typeof(RasterMath<>), rInput.Datatype.CSType, new object[] {
+            return (Raster)GenericRunWithOutput(typeof(RasterMath<>), rInput.Datatype.CSType, 
+                "Dividing by decimal value",
+                new object[] {
                 MathOpType.Division, rInput, dOperand, new Raster(rInput, sOutputRaster)
             });
         }
@@ -109,7 +118,9 @@ namespace GCDConsoleLib
         /// <returns></returns>
         public static Raster Add(Raster rInputA, Raster rInputB, FileInfo sOutputRaster)
         {
-            return (Raster)GenericRunWithOutput(typeof(RasterMath<>), rInputA.Datatype.CSType, new object[] {
+            return (Raster)GenericRunWithOutput(typeof(RasterMath<>), rInputA.Datatype.CSType, 
+                "Adding decimal value",
+                new object[] {
                 MathOpType.Addition, rInputA, rInputB, new Raster(rInputA, sOutputRaster)
             });
         }
@@ -123,7 +134,9 @@ namespace GCDConsoleLib
         /// <returns></returns>
         public static Raster Subtract(Raster rInputA, Raster rInputB, FileInfo sOutputRaster)
         {
-            return (Raster)GenericRunWithOutput(typeof(RasterMath<>), rInputA.Datatype.CSType, new object[] {
+            return (Raster)GenericRunWithOutput(typeof(RasterMath<>), rInputA.Datatype.CSType, 
+                "Subtracting decimal value",
+                new object[] {
                 MathOpType.Subtraction, rInputA, rInputB, new Raster(rInputA, sOutputRaster)
             });
         }
@@ -143,14 +156,18 @@ namespace GCDConsoleLib
             {
                 using (VectorRaster tmp = new VectorRaster(rInputA, PolygonMask))
                 {
-                    retval = (Raster)GenericRunWithOutput(typeof(RasterMath<>), rInputA.Datatype.CSType, new object[] {
+                    retval = (Raster)GenericRunWithOutput(typeof(RasterMath<>), rInputA.Datatype.CSType, 
+                        "Subtracting with mask",
+                        new object[] {
                         MathOpType.Subtraction, rInputA, rInputB, tmp, new Raster(rInputA, sOutputRaster)
                     });
                 }
             }
             else
             {
-                retval = (Raster)GenericRunWithOutput(typeof(RasterMath<>), rInputA.Datatype.CSType, new object[] {
+                retval = (Raster)GenericRunWithOutput(typeof(RasterMath<>), rInputA.Datatype.CSType, 
+                    "Subtracting with mask",
+                    new object[] {
                     MathOpType.Subtraction, rInputA, rInputB, PolygonMask, new Raster(rInputA, sOutputRaster)
                 });
             }
@@ -166,7 +183,9 @@ namespace GCDConsoleLib
         /// <returns></returns>
         public static Raster Multiply(Raster rInputA, Raster rInputB, FileInfo sOutputRaster)
         {
-            return (Raster)GenericRunWithOutput(typeof(RasterMath<>), rInputA.Datatype.CSType, new object[] {
+            return (Raster)GenericRunWithOutput(typeof(RasterMath<>), rInputA.Datatype.CSType, 
+                "Multiplying two rasters",
+                new object[] {
                 MathOpType.Multipication, rInputA, rInputB, new Raster(rInputA, sOutputRaster)
             });
         }
@@ -180,7 +199,9 @@ namespace GCDConsoleLib
         /// <returns></returns>
         public static Raster Divide(Raster rInputA, Raster rInputB, FileInfo sOutputRaster)
         {
-            return (Raster)GenericRunWithOutput(typeof(RasterMath<>), rInputA.Datatype.CSType, new object[] {
+            return (Raster)GenericRunWithOutput(typeof(RasterMath<>), rInputA.Datatype.CSType, 
+                "Dividing two rasters",
+                new object[] {
                 MathOpType.Division, rInputA, rInputB, new Raster(rInputA, sOutputRaster)
             });
         }
@@ -199,6 +220,7 @@ namespace GCDConsoleLib
         public static Raster Maximum(List<Raster> rasters, FileInfo sOutputRaster)
         {
             RasterMultiMath op = new RasterMultiMath(MultiMathOpType.Maximum, rasters, new Raster(rasters[0], sOutputRaster));
+            op.OpDescription = "Calculating maximum raster";
             return op.RunWithOutput();
         }
 
@@ -211,6 +233,7 @@ namespace GCDConsoleLib
         public static Raster MultiRootSumSquares(List<Raster> rasters, FileInfo sOutputRaster)
         {
             RasterMultiMath op = new RasterMultiMath(MultiMathOpType.RootSumSquares, rasters, new Raster(rasters[0], sOutputRaster));
+            op.OpDescription = "Calculating root-sum-square";
             return op.RunWithOutput();
         }
 
@@ -224,6 +247,7 @@ namespace GCDConsoleLib
         public static Raster MaximumErr(List<Raster> rasters, List<Raster> errors, FileInfo sOutputRaster)
         {
             RasterMultiMathError op = new RasterMultiMathError(MultiMathErrOpType.Maximum, rasters, errors, new Raster(rasters[0], sOutputRaster));
+            op.OpDescription = "Calculating maximum error raster";
             return op.RunWithOutput();
         }
 
@@ -236,6 +260,7 @@ namespace GCDConsoleLib
         public static Raster Minimum(List<Raster> rasters, FileInfo sOutputRaster)
         {
             RasterMultiMath op = new RasterMultiMath(MultiMathOpType.Minimum, rasters, new Raster(rasters[0], sOutputRaster));
+            op.OpDescription = "Calculating minimum raster";
             return op.RunWithOutput();
         }
 
@@ -249,6 +274,7 @@ namespace GCDConsoleLib
         public static Raster MinimumErr(List<Raster> rasters, List<Raster> errors, FileInfo sOutputRaster)
         {
             RasterMultiMathError op = new RasterMultiMathError(MultiMathErrOpType.Minimum, rasters, errors, new Raster(rasters[0], sOutputRaster));
+            op.OpDescription = "Calculating minimum error raster";
             return op.RunWithOutput();
         }
 
@@ -261,6 +287,7 @@ namespace GCDConsoleLib
         public static Raster Mean(List<Raster> rasters, FileInfo sOutputRaster)
         {
             RasterMultiMath op = new RasterMultiMath(MultiMathOpType.Mean, rasters, new Raster(rasters[0], sOutputRaster));
+            op.OpDescription = "Calculating mean error raster";
             return op.RunWithOutput();
         }
 
@@ -273,6 +300,7 @@ namespace GCDConsoleLib
         public static Raster MultiAdd(List<Raster> rasters, FileInfo sOutputRaster)
         {
             RasterMultiMath op = new RasterMultiMath(MultiMathOpType.Addition, rasters, new Raster(rasters[0], sOutputRaster));
+            op.OpDescription = "Adding rasters";
             return op.RunWithOutput();
         }
 
@@ -285,6 +313,7 @@ namespace GCDConsoleLib
         public static Raster StandardDeviation(List<Raster> rasters, FileInfo sOutputRaster)
         {
             RasterMultiMath op = new RasterMultiMath(MultiMathOpType.StandardDeviation, rasters, new Raster(rasters[0], sOutputRaster));
+            op.OpDescription = "Calculating standard deviation";
             return op.RunWithOutput();
         }
 
@@ -297,7 +326,9 @@ namespace GCDConsoleLib
         /// <returns></returns>
         public static Raster BilinearResample(Raster rInput, FileInfo sOutputRaster, ExtentRectangle outputExtent)
         {
-            return (Raster)GenericRunWithOutput(typeof(BilinearResample<>), rInput.Datatype.CSType, new object[] {
+            return (Raster)GenericRunWithOutput(typeof(BilinearResample<>), rInput.Datatype.CSType, 
+                "Resampling raster",
+                new object[] {
                 rInput, outputExtent, new Raster(rInput, sOutputRaster)
             });
         }
@@ -311,8 +342,9 @@ namespace GCDConsoleLib
         /// <returns></returns>
         public static Raster RootSumSquares(Raster raster1, Raster raster2, FileInfo sOutputRaster)
         {
-            RootSumSquare theUniformOp = new RootSumSquare(raster1, raster2, new Raster(raster1, sOutputRaster));
-            return theUniformOp.RunWithOutput();
+            RootSumSquare op = new RootSumSquare(raster1, raster2, new Raster(raster1, sOutputRaster));
+            op.OpDescription = "Calculating root-sum-squares";
+            return op.RunWithOutput();
         }
 
         #endregion
@@ -334,7 +366,9 @@ namespace GCDConsoleLib
 
             Raster r0 = rlInputs[0];
 
-            return (Raster)GenericRunWithOutput(typeof(Mosaic<>), rlInputs[0].Datatype.CSType, new object[] {
+            return (Raster)GenericRunWithOutput(typeof(Mosaic<>), rlInputs[0].Datatype.CSType, 
+                "Calculating mosaic",
+                new object[] {
                 rlInputs, new Raster( r0, sOutputRaster)
             });
         }
@@ -348,7 +382,9 @@ namespace GCDConsoleLib
         /// <returns></returns>
         public static Raster Mask(Raster rUnmasked, Raster rMask, FileInfo sOutputRaster)
         {
-            return (Raster)GenericRunWithOutput(typeof(Mask<>), rUnmasked.Datatype.CSType, new object[] {
+            return (Raster)GenericRunWithOutput(typeof(Mask<>), rUnmasked.Datatype.CSType, 
+                "Masking raster",
+                new object[] {
                 rUnmasked, rMask, new Raster( rUnmasked, sOutputRaster)
             });
         }
@@ -368,6 +404,7 @@ namespace GCDConsoleLib
         {
             Area cellArea = rawDoD.Extent.CellArea(units);
             GetDodMinLodStats theStatsOp = new GetDodMinLodStats(rawDoD, minLoD, new DoDStats(cellArea, units));
+            theStatsOp.OpDescription = "Calculating MinLoD";
             theStatsOp.Run();
             return theStatsOp.Stats;
         }
@@ -393,12 +430,14 @@ namespace GCDConsoleLib
                 using (VectorRaster tmp = new VectorRaster(rawDoD, PolygonMask, FieldName))
                 {
                     theStatsOp = new GetDodMinLodStats(rawDoD, minLoD, new DoDStats(cellArea, units), tmp, FieldName);
+                    theStatsOp.OpDescription = "Calculating MinLoD";
                     theStatsOp.Run();
                 }
             }
             else
             {
                 theStatsOp = new GetDodMinLodStats(rawDoD, minLoD, new DoDStats(cellArea, units), PolygonMask, FieldName);
+                theStatsOp.OpDescription = "Calculating MinLoD";
                 theStatsOp.Run();
             }
             return theStatsOp.SegStats;
@@ -415,6 +454,7 @@ namespace GCDConsoleLib
         {
             Area cellArea = rawDoD.Extent.CellArea(units);
             GetDoDPropStats theStatsOp = new GetDoDPropStats(rawDoD, propErrRaster, new DoDStats(cellArea, units));
+            theStatsOp.OpDescription = "Calculating propagated stats";
             theStatsOp.Run();
             return theStatsOp.Stats;
         }
@@ -438,12 +478,14 @@ namespace GCDConsoleLib
                 using (VectorRaster tmp = new VectorRaster(rawDoD, PolygonMask, FieldName))
                 {
                     theStatsOp = new GetDoDPropStats(rawDoD, propErrRaster, new DoDStats(cellArea, units), tmp, FieldName);
+                    theStatsOp.OpDescription = "Calculating propagated stats";
                     theStatsOp.Run();
                 }
             }
             else
             {
                 theStatsOp = new GetDoDPropStats(rawDoD, propErrRaster, new DoDStats(cellArea, units), PolygonMask, FieldName);
+                theStatsOp.OpDescription = "Calculating propagated stats";
                 theStatsOp.Run();
             }
             return theStatsOp.SegStats;
@@ -461,15 +503,18 @@ namespace GCDConsoleLib
             Area cellArea = rawDoD.Extent.CellArea(units);
 
             GetChangeStats raw = new GetChangeStats(rawDoD, new DoDStats(cellArea, units));
+            raw.OpDescription = "Calculating raw DoD";
             raw.Run();
 
             GetChangeStats thr = new GetChangeStats(thrDoD, new DoDStats(cellArea, units));
+            thr.OpDescription = "Calculating thresholded DoD";
             thr.Run();
 
             GetChangeStats err = new GetChangeStats(propErrRaster, thrDoD, new DoDStats(cellArea, units));
+            err.OpDescription = "Calculating error DoD";
             err.Run();
 
-            return new GCD.DoDStats(
+            return new DoDStats(
                 raw.Stats.ErosionRaw.GetArea(cellArea), raw.Stats.DepositionRaw.GetArea(cellArea),
                 thr.Stats.ErosionRaw.GetArea(cellArea), thr.Stats.DepositionRaw.GetArea(cellArea),
                 raw.Stats.ErosionRaw.GetVolume(cellArea, units.VertUnit), raw.Stats.DepositionRaw.GetVolume(cellArea, units.VertUnit),
@@ -506,6 +551,10 @@ namespace GCDConsoleLib
                     thr = new GetChangeStats(thrDoD, new DoDStats(cellArea, units), tmp, FieldName);
                     err = new GetChangeStats(propErrRaster, thrDoD, new DoDStats(cellArea, units), tmp, FieldName);
 
+                    raw.OpDescription = "Calculating raw DoD";
+                    thr.OpDescription = "Calculating thresholded DoD";
+                    err.OpDescription = "Calculating error DoD";
+
                     raw.Run();
                     thr.Run();
                     err.Run();
@@ -516,6 +565,10 @@ namespace GCDConsoleLib
                 raw = new GetChangeStats(rawDoD, new DoDStats(cellArea, units), PolygonMask, FieldName);
                 thr = new GetChangeStats(thrDoD, new DoDStats(cellArea, units), PolygonMask, FieldName);
                 err = new GetChangeStats(propErrRaster, thrDoD, new DoDStats(cellArea, units), PolygonMask, FieldName);
+
+                raw.OpDescription = "Calculating raw DoD";
+                thr.OpDescription = "Calculating thresholded DoD";
+                err.OpDescription = "Calculating error DoD";
 
                 raw.Run();
                 thr.Run();
@@ -574,7 +627,7 @@ namespace GCDConsoleLib
                 // Note that the raw, thr and err stats calculated above are all stored in 
                 // the "raw" object of the returned stats dictionary. So the "thr" and "err"
                 // stats are **assigned** to the appropriate types but **originate** from the "raw" part of the object.
-                retVal[kvp.Key] = new GCD.DoDStats(
+                retVal[kvp.Key] = new DoDStats(
                             kvp.Value[statsType.raw].ErosionRaw.GetArea(cellArea),
                             kvp.Value[statsType.raw].DepositionRaw.GetArea(cellArea),
                             kvp.Value[statsType.thr].ErosionRaw.GetArea(cellArea),
@@ -602,9 +655,10 @@ namespace GCDConsoleLib
         /// captured the full range of the raster values.</remarks>
         public static Histogram BinRaster(Raster rInput, int numberofBins)
         {
-            BinRaster histOp = new BinRaster(rInput, numberofBins);
-            histOp.Run();
-            return histOp.theHistogram;
+            BinRaster op = new BinRaster(rInput, numberofBins);
+            op.OpDescription = "Calculating histograms";
+            op.Run();
+            return op.theHistogram;
         }
 
 
@@ -620,9 +674,10 @@ namespace GCDConsoleLib
         /// <param name="props"></param>
         /// <param name="outputPath"></param>
         /// <returns></returns>
-        public static Raster CreateErrorRaster(Raster rawDEM, ErrorRasterProperties props, FileInfo sOutputRaster, EventHandler<int> progressHandler = null)
+        public static Raster CreateErrorRaster(Raster rawDEM, ErrorRasterProperties props, FileInfo sOutputRaster, EventHandler<OpStatus> progressHandler = null)
         {
             CreateErrorRaster theStatsOp = new CreateErrorRaster(rawDEM, props, new Raster(rawDEM, sOutputRaster));
+            theStatsOp.OpDescription = "Creating error raster";
             if (progressHandler != null)
                 theStatsOp.ProgressEvent += progressHandler;
             return theStatsOp.RunWithOutput();
@@ -638,7 +693,7 @@ namespace GCDConsoleLib
         /// <returns></returns>
         public static Raster CreateErrorRaster(Raster rawDEM, Vector PolygonMask, string MaskFieldName,
             Dictionary<string, ErrorRasterProperties> props, FileInfo sOutputRaster,
-            bool RasterizeFirst = true, EventHandler<int> progressHandler = null)
+            bool RasterizeFirst = true, EventHandler<OpStatus> progressHandler = null)
         {
             Raster returnRaster;
             if (RasterizeFirst)
@@ -646,6 +701,7 @@ namespace GCDConsoleLib
                 using (VectorRaster tmp = new VectorRaster(rawDEM, PolygonMask, MaskFieldName))
                 {
                     CreateErrorRaster theStatsOp = new CreateErrorRaster(rawDEM, tmp, MaskFieldName, props, new Raster(rawDEM, sOutputRaster));
+                    theStatsOp.OpDescription = "Creating error raster";
                     if (progressHandler != null)
                         theStatsOp.ProgressEvent += progressHandler;
                     returnRaster = theStatsOp.RunWithOutput();
@@ -654,6 +710,7 @@ namespace GCDConsoleLib
             else
             {
                 CreateErrorRaster theStatsOp = new CreateErrorRaster(rawDEM, PolygonMask, MaskFieldName, props, new Raster(rawDEM, sOutputRaster));
+                theStatsOp.OpDescription = "Creating error raster";
                 if (progressHandler != null)
                     theStatsOp.ProgressEvent += progressHandler;
                 returnRaster = theStatsOp.RunWithOutput();
@@ -673,8 +730,9 @@ namespace GCDConsoleLib
         /// <returns></returns>
         public static Raster Uniform<T>(Raster rInput, FileInfo sOutputRaster, T value)
         {
-            UniformRaster<T> theUniformOp = new UniformRaster<T>(rInput, new Raster(rInput, sOutputRaster), value);
-            return theUniformOp.RunWithOutput();
+            UniformRaster<T> op = new UniformRaster<T>(rInput, new Raster(rInput, sOutputRaster), value);
+            op.OpDescription = "Creating uniform raster";
+            return op.RunWithOutput();
         }
 
         #endregion  
@@ -690,6 +748,7 @@ namespace GCDConsoleLib
         {
             Raster outputRaster = new Raster(rInput, sOutputRaster, new GdalDataType(typeof(int)));
             Hillshade theHSOp = new Hillshade(rInput, outputRaster);
+            theHSOp.OpDescription = "Creating hillshade";
             return theHSOp.RunWithOutput();
         }
 
@@ -703,6 +762,7 @@ namespace GCDConsoleLib
         {
             Raster outputRaster = new Raster(rInput, sOutputRaster, new GdalDataType(typeof(double)));
             Slope theSlopeOp = new Slope(rInput, outputRaster, Slope.SlopeType.Percent);
+            theSlopeOp.OpDescription = "Creating percent slope";
             return theSlopeOp.RunWithOutput();
         }
 
@@ -716,6 +776,7 @@ namespace GCDConsoleLib
         {
             Raster outputRaster = new Raster(rInput, sOutputRaster, new GdalDataType(typeof(double)));
             Slope theSlopeOp = new Slope(rInput, outputRaster, Slope.SlopeType.Degrees);
+            theSlopeOp.OpDescription = "Creating degree slope";
             return theSlopeOp.RunWithOutput();
         }
 
@@ -736,15 +797,15 @@ namespace GCDConsoleLib
         /// <param name="progressHandler">Event handler to hook into this so that you can update a progress bar</param>
         /// <returns></returns>
         public static Raster PointDensity(Raster rDEM, Vector vPointCloud, FileInfo sOutputRaster,
-            KernelShapes eKernel, decimal fSize, EventHandler<int> progressHandler = null)
+            KernelShapes eKernel, decimal fSize, EventHandler<OpStatus> progressHandler = null)
         {
             Raster outputRaster = new Raster(rDEM, sOutputRaster, new GdalDataType(typeof(double)));
-            PointDensity theSlopeOp = new PointDensity(rDEM, vPointCloud, outputRaster, eKernel, fSize);
-
+            PointDensity op = new PointDensity(rDEM, vPointCloud, outputRaster, eKernel, fSize);
+            op.OpDescription = "Calculating point Density";
             if (progressHandler != null)
-                theSlopeOp.ProgressEvent += progressHandler;
+                op.ProgressEvent += progressHandler;
 
-            return theSlopeOp.RunWithOutput();
+            return op.RunWithOutput();
         }
 
         /// <summary>
@@ -778,7 +839,9 @@ namespace GCDConsoleLib
         public static void LinearExtractor(Vector vLineShp, List<Raster> rRasters, FileInfo sOutCSV,
             decimal intervallength, string sFieldName)
         {
-            GenericRunWithSpacing(typeof(LinearExtractor<>), rRasters[0].Datatype.CSType, new object[] {
+            GenericRunWithSpacing(typeof(LinearExtractor<>), rRasters[0].Datatype.CSType, 
+                "Running linear extraction",
+                new object[] {
                  vLineShp, rRasters, sOutCSV, intervallength, sFieldName
             });
         }
@@ -792,10 +855,10 @@ namespace GCDConsoleLib
         /// <param name="intervallength"></param>
         /// <param name="progressHandler"></param>
         public static void LinearExtractor(Vector vLineShp, List<Raster> rRasters, FileInfo sOutCSV,
-            decimal intervallength, EventHandler<int> progressHandler = null)
+            decimal intervallength, EventHandler<OpStatus> progressHandler = null)
         {
             LinearExtractor<double> theExtractOp = new LinearExtractor<double>(vLineShp, rRasters, sOutCSV, intervallength);
-
+            theExtractOp.OpDescription = "Running linear extraction";
             if (progressHandler != null)
                 theExtractOp.ProgressEvent += progressHandler;
 
@@ -812,7 +875,7 @@ namespace GCDConsoleLib
         /// <param name="sOutputRaster"></param>
         /// <returns></returns>
         public static Raster FISRaster(Dictionary<string, FileInfo> fisInputs, FileInfo sFISRuleFile,
-            Raster rReference, FileInfo sOutputRaster, EventHandler<int> progressHandler = null)
+            Raster rReference, FileInfo sOutputRaster, EventHandler<OpStatus> progressHandler = null)
         {
             Dictionary<string, Raster> rFISInputs = new Dictionary<string, Raster>();
 
@@ -821,12 +884,12 @@ namespace GCDConsoleLib
                 rFISInputs[inp.Key] = new Raster(inp.Value);
 
             Raster outputRaster = new Raster(rReference, sOutputRaster, new GdalDataType(typeof(double)));
-            FISRasterOp theSlopeOp = new FISRasterOp(rFISInputs, sFISRuleFile, outputRaster);
-
+            FISRasterOp op = new FISRasterOp(rFISInputs, sFISRuleFile, outputRaster);
+            op.OpDescription = "Creating FIS error surface";
             if (progressHandler != null)
-                theSlopeOp.ProgressEvent += progressHandler;
+                op.ProgressEvent += progressHandler;
 
-            return theSlopeOp.RunWithOutput();
+            return op.RunWithOutput();
         }
 
         /// <summary>
@@ -847,12 +910,14 @@ namespace GCDConsoleLib
                 using (VectorRaster tmp = new VectorRaster(rInput, polygonMask, FieldName))
                 {
                     histOp = new BinRaster(rInput, numberofBins, tmp, FieldName);
+                    histOp.OpDescription = "Binning Raster";
                     histOp.Run();
                 }
             }
             else
             {
                 histOp = new BinRaster(rInput, numberofBins, polygonMask, FieldName);
+                histOp.OpDescription = "Binning Raster";
                 histOp.Run();
             }
             return histOp.SegHistograms;
@@ -872,8 +937,9 @@ namespace GCDConsoleLib
         public static Raster SetNull(Raster rInput, ThresholdOps fThresholdOp,
             decimal fThreshold, FileInfo sOutputRaster)
         {
-            Threshold threshOp = new Threshold(rInput, fThresholdOp, fThreshold, new Raster(rInput, sOutputRaster));
-            return threshOp.RunWithOutput();
+            Threshold op = new Threshold(rInput, fThresholdOp, fThreshold, new Raster(rInput, sOutputRaster));
+            op.OpDescription = "Setting null";
+            return op.RunWithOutput();
         }
 
         /// <summary>
@@ -886,8 +952,9 @@ namespace GCDConsoleLib
         /// <returns></returns>
         public static Raster SetNull(Raster rInput, ThresholdOps fThresholdOp, Raster rThreshold, FileInfo sOutputRaster)
         {
-            Threshold threshOp = new Threshold(rInput, fThresholdOp, rThreshold, new Raster(rInput, sOutputRaster));
-            return threshOp.RunWithOutput();
+            Threshold op = new Threshold(rInput, fThresholdOp, rThreshold, new Raster(rInput, sOutputRaster));
+            op.OpDescription = "Setting null";
+            return op.RunWithOutput();
         }
 
         /// <summary>
@@ -902,8 +969,9 @@ namespace GCDConsoleLib
         /// <returns></returns>
         public static Raster SetNull(Raster rInput, ThresholdOps fBottomOp, decimal fBottom, ThresholdOps fTopOp, decimal fTop, FileInfo sOutputRaster)
         {
-            Threshold threshOp = new Threshold(rInput, fBottomOp, fBottom, fTopOp, fTop, new Raster(rInput, sOutputRaster));
-            return threshOp.RunWithOutput();
+            Threshold op = new Threshold(rInput, fBottomOp, fBottom, fTopOp, fTop, new Raster(rInput, sOutputRaster));
+            op.OpDescription = "Setting null";
+            return op.RunWithOutput();
         }
 
         /// <summary>
@@ -916,8 +984,9 @@ namespace GCDConsoleLib
         /// <returns></returns>
         public static Raster AbsoluteSetNull(Raster rInput, ThresholdOps fThresholdOp, Raster rThreshold, FileInfo sOutputRaster)
         {
-            ThresholdAbs threshOp = new ThresholdAbs(rInput, fThresholdOp, rThreshold, new Raster(rInput, sOutputRaster));
-            return threshOp.RunWithOutput();
+            ThresholdAbs op = new ThresholdAbs(rInput, fThresholdOp, rThreshold, new Raster(rInput, sOutputRaster));
+            op.OpDescription = "Setting absolute null";
+            return op.RunWithOutput();
         }
 
         /// <summary>
@@ -930,8 +999,9 @@ namespace GCDConsoleLib
         /// <returns></returns>
         public static Raster CreatePriorProbabilityRaster(Raster rawDoD, Raster propError, FileInfo sOutputRaster)
         {
-            PriorProbRaster thePriorProb = new PriorProbRaster(rawDoD, propError, new Raster(rawDoD, sOutputRaster));
-            return thePriorProb.RunWithOutput();
+            PriorProbRaster op = new PriorProbRaster(rawDoD, propError, new Raster(rawDoD, sOutputRaster));
+            op.OpDescription = "Creating prior probability raster";
+            return op.RunWithOutput();
         }
 
 
@@ -945,8 +1015,9 @@ namespace GCDConsoleLib
         /// <returns></returns>
         public static Raster NeighbourCount(Raster rawDoD, GCDWindowType wType, int nMovingWindowWidth, FileInfo sOutputRaster)
         {
-            GCDNeighbourCount theCountRaster = new GCDNeighbourCount(rawDoD, new Raster(rawDoD, sOutputRaster, new GdalDataType(typeof(int))), nMovingWindowWidth, wType);
-            return theCountRaster.RunWithOutput();
+            GCDNeighbourCount op = new GCDNeighbourCount(rawDoD, new Raster(rawDoD, sOutputRaster, new GdalDataType(typeof(int))), nMovingWindowWidth, wType);
+            op.OpDescription = "Counting nearest neighbors";
+            return op.RunWithOutput();
         }
 
         /// <summary>
@@ -962,18 +1033,20 @@ namespace GCDConsoleLib
             FileInfo sConditionalRaster,
             int xMin,
             int xMax,
-            EventHandler<int> progressHandler = null)
+            EventHandler<OpStatus> progressHandler = null)
         {
-            PosteriorProbability thePostProb = new PosteriorProbability(rawDoD, priorProb,
+            PosteriorProbability op = new PosteriorProbability(rawDoD, priorProb,
                 sSpatialCoErosionRaster, sSpatialCoDepositionRaster,
                 new Raster(rawDoD, sPosteriorRaster),
                 new Raster(rawDoD, sConditionalRaster),
                 xMin, xMax);
 
-            if (progressHandler != null)
-                thePostProb.ProgressEvent += progressHandler;
+            op.OpDescription = "Calculating posterior probability";
 
-            return thePostProb.RunWithOutput();
+            if (progressHandler != null)
+                op.ProgressEvent += progressHandler;
+
+            return op.RunWithOutput();
         }
 
         /// <summary>
@@ -988,8 +1061,9 @@ namespace GCDConsoleLib
         /// <returns></returns>
         public static Raster ThresholdDoDProbability(Raster rawDoD, Raster rPriorProb, FileInfo thrHistPath, decimal fThreshold)
         {
-            CITThresholdRaster thePriorProb = new CITThresholdRaster(rawDoD, rPriorProb, new Raster(rawDoD, thrHistPath), fThreshold);
-            return thePriorProb.RunWithOutput();
+            CITThresholdRaster op = new CITThresholdRaster(rawDoD, rPriorProb, new Raster(rawDoD, thrHistPath), fThreshold);
+            op.OpDescription = "Calculating thresholded DoD probability";
+            return op.RunWithOutput();
         }
 
         /// <summary>
@@ -1028,19 +1102,21 @@ namespace GCDConsoleLib
         /// <param name="innerType"></param>
         /// <param name="args"></param>
         /// <returns></returns>
-        private static object GenericRun(Type generic, Type innerType, params object[] args)
+        private static object GenericRun(Type generic, Type innerType, string sDesc, params object[] args)
         {
             object myGenericClass = MakeGenericType(generic, innerType, args);
             MethodInfo method = myGenericClass.GetType().GetMethod("Run",
                 BindingFlags.Public | BindingFlags.Instance);
+            TrySetProperty(myGenericClass, "OpDescription", sDesc);
             method.Invoke(myGenericClass, null);
             return myGenericClass;
         }
-        private static object GenericRunWithOutput(Type generic, Type innerType, params object[] args)
+        private static object GenericRunWithOutput(Type generic, Type innerType, string sDesc, params object[] args)
         {
             object myGenericClass = MakeGenericType(generic, innerType, args);
             MethodInfo method = myGenericClass.GetType().GetMethod("RunWithOutput",
                 BindingFlags.Public | BindingFlags.Instance);
+            TrySetProperty(myGenericClass, "OpDescription", sDesc);
             return method.Invoke(myGenericClass, null);
 
         }
@@ -1051,13 +1127,27 @@ namespace GCDConsoleLib
         /// <param name="innerType"></param>
         /// <param name="args"></param>
         /// <returns></returns>
-        private static object GenericRunWithSpacing(Type generic, Type innerType, params object[] args)
+        private static object GenericRunWithSpacing(Type generic, Type innerType, string sDesc, params object[] args)
         {
             object myGenericClass = MakeGenericType(generic, innerType, args);
             MethodInfo method = myGenericClass.GetType().GetMethod("RunWithSpacing",
                 BindingFlags.Public | BindingFlags.Instance);
+            TrySetProperty(myGenericClass, "OpDescription", sDesc);
             return method.Invoke(myGenericClass, null);
 
+        }
+
+        /// <summary>
+        /// Setting a property on a generic object is tricky. This will set the property if it can find it.
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="property"></param>
+        /// <param name="value"></param>
+        private static void TrySetProperty(object obj, string property, object value)
+        {
+            var prop = obj.GetType().GetProperty(property, BindingFlags.Public | BindingFlags.Instance);
+            if (prop != null && prop.CanWrite)
+                prop.SetValue(obj, value, null);
         }
 
         #endregion  

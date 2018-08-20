@@ -24,6 +24,7 @@ namespace GCDConsoleLib.Internal
         /// <summary>
         /// Output Constructor
         /// </summary>
+        /// <param name="sDescription">Some descriptive text for the status bar / Log files</param>
         /// <param name="rRasters"></param>
         /// <param name="bufferCells"></param>
         /// <param name="rOutputRaster"></param>

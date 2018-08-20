@@ -142,6 +142,7 @@
     <Compile Include="RasterOperators\Operators\RasterMultiMathError.cs" />
     <Compile Include="RasterOperators\Operators\RasterMultiMath.cs" />
     <Compile Include="RasterOperators\Operators\ThresholdAbs.cs" />
+    <Compile Include="RasterOperators\OpStatus.cs" />
     <Compile Include="RasterOperators\Stats\GetChangeStats.cs" />
     <Compile Include="RasterOperators\Stats\GetDoDPropStats.cs" />
     <Compile Include="RasterOperators\Stats\GetDoDMinLodStats.cs" />

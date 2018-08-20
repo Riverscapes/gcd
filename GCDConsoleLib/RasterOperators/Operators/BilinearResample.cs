@@ -71,7 +71,7 @@ namespace GCDConsoleLib.Internal.Operators
             for (int nrow = 0; nrow < OpExtent.Rows; nrow++)
             {
                 int progress = (int)((double)nrow / OpExtent.Rows * 100);
-                ProgressInvoke(progress);
+                ProgressChange(progress);
 
                 outBuffer.Fill(outNodataVals[0]);
                 for (int ncol = 0; ncol < OpExtent.Cols; ncol++)

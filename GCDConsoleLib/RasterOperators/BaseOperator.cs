@@ -21,6 +21,19 @@ namespace GCDConsoleLib.Internal
         public ExtentRectangle ChunkExtent;
         public Boolean OpDone;
 
+        // The op description gets used in the status message to tell us what
+        // we're doing here. Example: "Creating Error Raster"
+        private string _opDesc;
+        public string OpDescription {
+            get { return _opDesc; }
+            set {
+                _opDesc = value;
+                MsgChange(_opDesc);
+            }
+        }
+
+        public event EventHandler<OpStatus> ProgressEvent;
+
         protected readonly List<Raster> _inputRasters;
         protected readonly List<Raster> _outputRasters;
 
@@ -32,7 +45,6 @@ namespace GCDConsoleLib.Internal
         protected int num_reads;
         protected int num_writes;
         protected int num_calcs;
-
 #endif
 
         public readonly List<T> inNodataVals;
@@ -44,8 +56,8 @@ namespace GCDConsoleLib.Internal
 
         protected int _vOffset;
 
-        public event EventHandler<int> ProgressEvent;
-        private int lastReportedProgress;
+        private OpStatus _opStatus;
+        private Stopwatch _lastStatusInvoke;
 
         /// <summary>
         /// Report back an integer between 0 and 100
@@ -70,7 +82,7 @@ namespace GCDConsoleLib.Internal
             _outputRasters = new List<Raster>();
             inNodataVals = new List<T>();
             outNodataVals = new List<T>();
-            lastReportedProgress = -1;
+            _opStatus = new OpStatus();
 
             List<Raster> tempOut = new List<Raster>();
             if (rOutputRaster != null)
@@ -95,7 +107,7 @@ namespace GCDConsoleLib.Internal
             _outputRasters = new List<Raster>();
             inNodataVals = new List<T>();
             outNodataVals = new List<T>();
-            lastReportedProgress = -1;
+            _opStatus = new OpStatus();
 
 
             if (rOutputRasters == null)
@@ -148,6 +160,8 @@ namespace GCDConsoleLib.Internal
             chunkRows = 10;
             _vOffset = 0;
 
+            _lastStatusInvoke = Stopwatch.StartNew();
+
 #if DEBUG
             tmr_overall = Stopwatch.StartNew();
             tmr_rasterread = new Stopwatch();
@@ -183,6 +197,7 @@ namespace GCDConsoleLib.Internal
             // Last thing we do is set the nodata value (which is suprisingly hard to do)
             SetNodataValue();
 
+            StateChange(OpStatus.States.Initialized);
         }
 
         private void SetNodataValue()
@@ -326,14 +341,29 @@ namespace GCDConsoleLib.Internal
         /// We need a little shim to handle the ProgressEvent?.Invoke()
         /// </summary>
         /// <param name="prog"></param>
-        protected void ProgressInvoke(int prog)
+        protected void ProgressChange(int newProgress)
         {
-            if (prog != lastReportedProgress)
+            if (newProgress != _opStatus.Progress)
             {
-                Debug.WriteLine(string.Format("Operation: {0}%", prog));
-                ProgressEvent?.Invoke(this, prog);
+                _opStatus.Progress = newProgress;
+                ProgressEvent?.Invoke(this, _opStatus);
             }
-            lastReportedProgress = prog;
+        }
+        protected void StateChange(OpStatus.States newState)
+        {
+            if (newState != _opStatus.State)
+            {
+                _opStatus.State = newState;
+                ProgressEvent?.Invoke(this, _opStatus);
+            }
+        }
+        protected void MsgChange(string newMsg)
+        {
+            if (newMsg != _opStatus.Message)
+            {
+                _opStatus.Message = newMsg;
+                ProgressEvent?.Invoke(this, _opStatus);
+            }
         }
 
         /// <summary>
@@ -342,8 +372,7 @@ namespace GCDConsoleLib.Internal
         public void Run()
         {
             List<T[]> data = new List<T[]>(_inputRasters.Count);
-
-            ProgressInvoke(0);
+            StateChange(OpStatus.States.Started);
 
             // Set up an array with nodatavals to be populated (or not)
             for (int idx = 0; idx < _inputRasters.Count; idx++)
@@ -356,7 +385,7 @@ namespace GCDConsoleLib.Internal
             while (!OpDone)
             {
                 GetChunk(data);
-                ProgressInvoke(Progress);
+                ProgressChange(Progress);
 #if DEBUG
                 tmr_calculations.Start();
                 num_writes++;
@@ -383,7 +412,8 @@ namespace GCDConsoleLib.Internal
                 // We always increment to the next one
                 nextChunk();
             }
-            ProgressInvoke(100);
+            ProgressChange(100);
+            StateChange(OpStatus.States.Complete);
 
             Cleanup();
 
