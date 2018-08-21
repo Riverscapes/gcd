@@ -135,7 +135,7 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
                     Dictionary<string, ErrorSurfaceProperty> errProps = new Dictionary<string, ErrorSurfaceProperty>();
                     ErrProps.ToList().ForEach(x => errProps.Add(x.Name, x));
 
-                    RasterOperators.CreateErrorRaster(DEM.Raster, mask.Vector, mask._Field, gcdErrProps, ucName.AbsolutePath);
+                    RasterOperators.CreateErrorRaster(DEM.Raster, mask.Vector, mask._Field, gcdErrProps, ucName.AbsolutePath, ProjectManager.OnProgressChange);
                     ErrorSurface = new ErrorSurface(ucName.ItemName, ucName.AbsolutePath, DEM, chkDefault.Checked, errProps, mask);
                     DEM.ErrorSurfaces.Add(ErrorSurface);
                     ProjectManager.AddNewProjectItemToMap(ErrorSurface);

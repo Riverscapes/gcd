@@ -574,8 +574,8 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
                     if (ExtImporter.RequiresResampling)
                     {
-                        gResult = GCDConsoleLib.RasterOperators.BilinearResample(ucRaster.SelectedItem, fiOutput, ExtImporter.Output, ProjectManager.OnProgressChange);
-                        Debug.WriteLine("Bilinear resample:" + ExtImporter.Output.ToString());
+                        gResult = GCDConsoleLib.RasterOperators.BilinearResample(ucRaster.SelectedItem, fiOutput, ExtImporter.Output, 
+                            ProjectManager.OnProgressChange);
                     }
                     else
                     {
@@ -589,13 +589,15 @@ namespace GCDCore.UserInterface.SurveyLibrary
                             }
                             else
                             {
-                                gResult = GCDConsoleLib.RasterOperators.ExtendedCopy(ucRaster.SelectedItem, fiOutput);
+                                gResult = GCDConsoleLib.RasterOperators.ExtendedCopy(ucRaster.SelectedItem, fiOutput, 
+                                    ProjectManager.OnProgressChange);
                             }
                         }
                         else
                         {
                             // Output extent differs from original raster. Use extended copy
-                            gResult = GCDConsoleLib.RasterOperators.ExtendedCopy(ucRaster.SelectedItem, fiOutput, ExtImporter.Output);
+                            gResult = GCDConsoleLib.RasterOperators.ExtendedCopy(ucRaster.SelectedItem, fiOutput, ExtImporter.Output, 
+                                ProjectManager.OnProgressChange);
                         }
                     }
 
@@ -606,8 +608,9 @@ namespace GCDCore.UserInterface.SurveyLibrary
                     {
                         // Now try the hillshade for DEM Surveys
                         System.IO.FileInfo sHillshadePath = Surface.HillShadeRasterPath(fiOutput);
-                        GCDConsoleLib.RasterOperators.Hillshade(gResult, sHillshadePath);
-                        ProjectManager.PyramidManager.PerformRasterPyramids(GCDCore.RasterPyramidManager.PyramidRasterTypes.Hillshade, sHillshadePath);
+                        GCDConsoleLib.RasterOperators.Hillshade(gResult, sHillshadePath, ProjectManager.OnProgressChange);
+                        ProjectManager.PyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.Hillshade, 
+                            sHillshadePath);
                     }
                 }
             }

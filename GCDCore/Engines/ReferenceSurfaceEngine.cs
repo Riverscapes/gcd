@@ -49,7 +49,7 @@ namespace GCDCore.Engines
         {
             GCDConsoleLib.Raster rSurface = BuildReferenceSurface(rsPath);
             GCDConsoleLib.Raster rErrorSf = BuildErrorSurface(errPath);
-            GCDConsoleLib.Raster rHillshd = GCDConsoleLib.RasterOperators.Hillshade(rSurface, Surface.HillShadeRasterPath(rsPath));
+            GCDConsoleLib.Raster rHillshd = GCDConsoleLib.RasterOperators.Hillshade(rSurface, Surface.HillShadeRasterPath(rsPath), ProjectManager.OnProgressChange);
 
             Surface refSurf = new GCDCore.Project.Surface(Name, rSurface, rHillshd);
             refSurf.ErrorSurfaces.Add(new ErrorSurface(ErrorSurfaceName, errPath, refSurf));
@@ -70,16 +70,16 @@ namespace GCDCore.Engines
             switch (Method)
             {
                 case GCDConsoleLib.RasterOperators.MultiMathOpType.Maximum:
-                    return GCDConsoleLib.RasterOperators.Maximum(demRasters, outputPath);
+                    return GCDConsoleLib.RasterOperators.Maximum(demRasters, outputPath, ProjectManager.OnProgressChange);
 
                 case GCDConsoleLib.RasterOperators.MultiMathOpType.Mean:
-                    return GCDConsoleLib.RasterOperators.Mean(demRasters, outputPath);
+                    return GCDConsoleLib.RasterOperators.Mean(demRasters, outputPath, ProjectManager.OnProgressChange);
 
                 case GCDConsoleLib.RasterOperators.MultiMathOpType.Minimum:
-                    return GCDConsoleLib.RasterOperators.Minimum(demRasters, outputPath);
+                    return GCDConsoleLib.RasterOperators.Minimum(demRasters, outputPath, ProjectManager.OnProgressChange);
 
                 case GCDConsoleLib.RasterOperators.MultiMathOpType.StandardDeviation:
-                    return GCDConsoleLib.RasterOperators.StandardDeviation(demRasters, outputPath);
+                    return GCDConsoleLib.RasterOperators.StandardDeviation(demRasters, outputPath, ProjectManager.OnProgressChange);
 
                 default:
                     throw new Exception("Unhandled math operation type " + Method.ToString());
@@ -97,15 +97,15 @@ namespace GCDCore.Engines
             switch (Method)
             {
                 case GCDConsoleLib.RasterOperators.MultiMathOpType.Maximum:
-                    return GCDConsoleLib.RasterOperators.MaximumErr(demRasters, errRasters, outputPath);
+                    return GCDConsoleLib.RasterOperators.MaximumErr(demRasters, errRasters, outputPath, ProjectManager.OnProgressChange);
 
                 case GCDConsoleLib.RasterOperators.MultiMathOpType.Minimum:
-                    return GCDConsoleLib.RasterOperators.MinimumErr(demRasters, errRasters, outputPath);
+                    return GCDConsoleLib.RasterOperators.MinimumErr(demRasters, errRasters, outputPath, ProjectManager.OnProgressChange);
 
                 // Both the mean and standard deviation use the mean
                 case GCDConsoleLib.RasterOperators.MultiMathOpType.Mean:
                 case GCDConsoleLib.RasterOperators.MultiMathOpType.StandardDeviation:
-                    return GCDConsoleLib.RasterOperators.MultiRootSumSquares(errRasters, outputPath);
+                    return GCDConsoleLib.RasterOperators.MultiRootSumSquares(errRasters, outputPath, ProjectManager.OnProgressChange);
 
                 default:
                     throw new Exception("Unhandled math operation type " + Method.ToString());

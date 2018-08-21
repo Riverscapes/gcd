@@ -21,7 +21,8 @@ namespace GCDCore.Engines
         protected override Raster ThresholdRawDoD(Raster rawDoD, FileInfo thrDoDPath)
         {
             GeneratePropagatedErrorRaster(thrDoDPath.Directory);
-            Raster thrDoD = RasterOperators.AbsoluteSetNull(rawDoD, RasterOperators.ThresholdOps.GreaterThan, PropagatedErrRaster, thrDoDPath);
+            Raster thrDoD = RasterOperators.AbsoluteSetNull(rawDoD, RasterOperators.ThresholdOps.GreaterThan, PropagatedErrRaster, thrDoDPath,
+                ProjectManager.OnProgressChange);
             return thrDoD;
         }
 
@@ -40,7 +41,7 @@ namespace GCDCore.Engines
         /// <returns></returns>
         protected override DoDStats CalculateChangeStats(Raster rawDoD, Raster thrDoD,UnitGroup units)
         {
-            return RasterOperators.GetStatsPropagated(rawDoD, PropagatedErrRaster, units);
+            return RasterOperators.GetStatsPropagated(rawDoD, PropagatedErrRaster, units, ProjectManager.OnProgressChange);
         }
 
         protected override DoDBase GetDoDResult(string dodName, DoDStats changeStats, Raster rawDoD, Raster thrDoD, Raster thrErr, HistogramPair histograms, FileInfo summaryXML)
@@ -57,7 +58,7 @@ namespace GCDCore.Engines
         protected void GeneratePropagatedErrorRaster(DirectoryInfo analysisFolder)
         {
             FileInfo propErrPath = BuildFilePath(analysisFolder, "PropErr", ProjectManager.RasterExtension);
-            PropagatedErrRaster = RasterOperators.RootSumSquares(NewError.Raster, OldError.Raster, propErrPath);
+            PropagatedErrRaster = RasterOperators.RootSumSquares(NewError.Raster, OldError.Raster, propErrPath, ProjectManager.OnProgressChange);
 
             // Build Pyramids
             ProjectManager.PyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.PropagatedError, propErrPath);

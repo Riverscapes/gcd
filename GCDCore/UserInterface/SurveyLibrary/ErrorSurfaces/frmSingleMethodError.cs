@@ -73,7 +73,7 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
                 {
                     // Create the raster then add it to the DEM survey
                     ucName.AbsolutePath.Directory.Create();
-                    RasterOperators.CreateErrorRaster(DEM.Raster, ucErrProps.ErrSurfProperty.GCDErrSurfPropery, ucName.AbsolutePath);
+                    RasterOperators.CreateErrorRaster(DEM.Raster, ucErrProps.ErrSurfProperty.GCDErrSurfPropery, ucName.AbsolutePath, ProjectManager.OnProgressChange);
                     ErrorSurface = new ErrorSurface(ucName.ItemName, ucName.AbsolutePath, DEM, chkDefault.Checked, ucErrProps.ErrSurfProperty);
                     DEM.ErrorSurfaces.Add(ErrorSurface);
                     ProjectManager.AddNewProjectItemToMap(ErrorSurface);

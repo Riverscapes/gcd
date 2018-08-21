@@ -96,7 +96,7 @@ namespace GCDConsoleLib.Internal.Operators.Tests
                 vPolyMask.Copy(fiPolyMaskCopy);
                 Vector vPolyMaskCopy = new Vector(fiPolyMaskCopy);
 
-                Raster rSub1 = RasterOperators.SubtractWithMask(rNew, rOld, vPolyMaskCopy, new FileInfo(Path.Combine(tmp.Name, "RasterSubtractVectorMask.tif")), false);
+                Raster rSub1 = RasterOperators.SubtractWithMask(rNew, rOld, vPolyMaskCopy, new FileInfo(Path.Combine(tmp.Name, "RasterSubtractVectorMask.tif")), null, false);
                 Raster rSub2 = RasterOperators.SubtractWithMask(rNew, rOld, vPolyMaskCopy, new FileInfo(Path.Combine(tmp.Name, "RasterSubtractRasterizedMask.tif")));
             }
 

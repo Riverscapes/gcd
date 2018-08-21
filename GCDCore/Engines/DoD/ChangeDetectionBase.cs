@@ -46,18 +46,18 @@ namespace GCDCore.Engines
             Raster rawDoD;
             if (AOIMask == null)
             {
-                rawDoD = RasterOperators.Subtract(NewSurface.Raster, OldSurface.Raster, rawDoDPath);
+                rawDoD = RasterOperators.Subtract(NewSurface.Raster, OldSurface.Raster, rawDoDPath, ProjectManager.OnProgressChange);
             }
             else
             {
-                rawDoD = RasterOperators.SubtractWithMask(NewSurface.Raster, OldSurface.Raster, AOIMask.Vector, rawDoDPath);
+                rawDoD = RasterOperators.SubtractWithMask(NewSurface.Raster, OldSurface.Raster, AOIMask.Vector, rawDoDPath, ProjectManager.OnProgressChange);
             }
 
             // Build pyraminds
             ProjectManager.PyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.DoDRaw, rawDoDPath);
 
             // Calculate the raw histogram
-            Histogram rawHisto = RasterOperators.BinRaster(rawDoD, DEFAULTHISTOGRAMNUMBER);
+            Histogram rawHisto = RasterOperators.BinRaster(rawDoD, DEFAULTHISTOGRAMNUMBER, ProjectManager.OnProgressChange);
 
             // Write the raw histogram
             WriteHistogram(rawHisto, rawHstPath);
@@ -69,7 +69,7 @@ namespace GCDCore.Engines
             ProjectManager.PyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.DoDThresholded, thrDoDPath);
 
             // Calculate the thresholded histogram
-            Histogram thrHisto = RasterOperators.BinRaster(thrDoD, DEFAULTHISTOGRAMNUMBER);
+            Histogram thrHisto = RasterOperators.BinRaster(thrDoD, DEFAULTHISTOGRAMNUMBER, ProjectManager.OnProgressChange);
 
             // Write the thresholded histogram
             WriteHistogram(thrHisto, thrHstPath);

@@ -20,7 +20,7 @@ namespace GCDCore.Engines
 
             if (dod is DoDMinLoD)
             {
-                results = RasterOperators.GetStatsMinLoD(dod.RawDoD.Raster, ((DoDMinLoD)dod).Threshold, mask.Vector, mask._Field, ProjectManager.Project.Units);
+                results = RasterOperators.GetStatsMinLoD(dod.RawDoD.Raster, ((DoDMinLoD)dod).Threshold, mask.Vector, mask._Field, ProjectManager.Project.Units, ProjectManager.OnProgressChange);
             }
             else
             {
@@ -28,17 +28,17 @@ namespace GCDCore.Engines
 
                 if (dod is DoDProbabilistic)
                 {
-                    results = RasterOperators.GetStatsProbalistic(dod.RawDoD.Raster, dod.ThrDoD.Raster, propErr, mask.Vector, mask._Field, ProjectManager.Project.Units);
+                    results = RasterOperators.GetStatsProbalistic(dod.RawDoD.Raster, dod.ThrDoD.Raster, propErr, mask.Vector, mask._Field, ProjectManager.Project.Units, ProjectManager.OnProgressChange);
                 }
                 else
                 {
-                    results = RasterOperators.GetStatsPropagated(dod.RawDoD.Raster, propErr, mask.Vector, mask._Field, ProjectManager.Project.Units);
+                    results = RasterOperators.GetStatsPropagated(dod.RawDoD.Raster, propErr, mask.Vector, mask._Field, ProjectManager.Project.Units, ProjectManager.OnProgressChange);
                 }
             }
 
             // Retrieve the histograms for all budget segregation classes
-            Dictionary<string, Histogram> rawHistos = RasterOperators.BinRaster(dod.RawDoD.Raster, DEFAULTHISTOGRAMNUMBER, mask.Vector, mask._Field);
-            Dictionary<string, Histogram> thrHistos = RasterOperators.BinRaster(dod.ThrDoD.Raster, DEFAULTHISTOGRAMNUMBER, mask.Vector, mask._Field);
+            Dictionary<string, Histogram> rawHistos = RasterOperators.BinRaster(dod.RawDoD.Raster, DEFAULTHISTOGRAMNUMBER, mask.Vector, mask._Field, ProjectManager.OnProgressChange);
+            Dictionary<string, Histogram> thrHistos = RasterOperators.BinRaster(dod.ThrDoD.Raster, DEFAULTHISTOGRAMNUMBER, mask.Vector, mask._Field, ProjectManager.OnProgressChange);
 
             decimal defaultBinWidth = 1;
             if (rawHistos.Count > 0)

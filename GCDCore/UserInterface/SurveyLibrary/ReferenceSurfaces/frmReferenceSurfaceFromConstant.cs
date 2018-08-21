@@ -177,7 +177,7 @@ namespace GCDCore.UserInterface.SurveyLibrary.ReferenceSurfaces
                     fiOutput.Directory.Create();
 
                     // Generate reference surface
-                    GCDConsoleLib.Raster rOut = GCDConsoleLib.RasterOperators.Uniform<float>(template, fiOutput, value);
+                    GCDConsoleLib.Raster rOut = GCDConsoleLib.RasterOperators.Uniform<float>(template, fiOutput, value, ProjectManager.OnProgressChange);
                     ReferenceSurface = new Surface(name, rOut, null);
                     ProjectManager.Project.ReferenceSurfaces.Add(ReferenceSurface);
 
@@ -186,7 +186,7 @@ namespace GCDCore.UserInterface.SurveyLibrary.ReferenceSurfaces
                     FileInfo fiError = Surface.ErrorSurfaceRasterPath(fiOutput.Directory, errName);
                     fiError.Directory.Create();
 
-                    GCDConsoleLib.RasterOperators.Uniform<float>(template, fiError, (float)valError.Value);
+                    GCDConsoleLib.RasterOperators.Uniform<float>(template, fiError, (float)valError.Value, ProjectManager.OnProgressChange);
                     ErrorSurface errSurf = new ErrorSurface(errName, fiError, ReferenceSurface);
                     ReferenceSurface.ErrorSurfaces.Add(errSurf);
                 }

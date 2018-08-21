@@ -115,11 +115,11 @@ namespace GCDCore.UserInterface.SurveyLibrary
                     switch (SelectedAssociatedSurfaceType)
                     {
                         case AssocSurface.AssociatedSurfaceTypes.SlopeDegree:
-                            GCDConsoleLib.RasterOperators.SlopeDegrees(DEM.Raster, fiOutput);
+                            GCDConsoleLib.RasterOperators.SlopeDegrees(DEM.Raster, fiOutput, ProjectManager.OnProgressChange);
                             break;
 
                         case AssocSurface.AssociatedSurfaceTypes.SlopePercent:
-                            GCDConsoleLib.RasterOperators.SlopePercent(DEM.Raster, fiOutput);
+                            GCDConsoleLib.RasterOperators.SlopePercent(DEM.Raster, fiOutput, ProjectManager.OnProgressChange);
 
                             break;
 

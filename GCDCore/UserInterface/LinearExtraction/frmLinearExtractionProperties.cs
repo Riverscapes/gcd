@@ -147,7 +147,7 @@ namespace GCDCore.UserInterface.LinearExtraction
                     FileInfo fiOutput = ProjectManager.Project.GetAbsolutePath(txtPath.Text);
                     fiOutput.Directory.Create();
 
-                    RasterOperators.LinearExtractor(route.Vector, rasters, fiOutput, valSampleDistance.Value, route.DistanceField);
+                    RasterOperators.LinearExtractor(route.Vector, rasters, fiOutput, valSampleDistance.Value, route.DistanceField, ProjectManager.OnProgressChange);
 
                     GCDCore.Project.LinearExtraction.LinearExtraction le;
                     if (ElevationSurface is DEMSurvey)

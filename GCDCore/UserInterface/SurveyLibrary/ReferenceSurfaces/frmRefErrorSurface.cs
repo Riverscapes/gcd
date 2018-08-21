@@ -116,7 +116,7 @@ namespace GCDCore.UserInterface.SurveyLibrary.ReferenceSurfaces
                     System.IO.FileInfo fiOutput = ReferenceSurface.ErrorSurfacePath(name);
                     fiOutput.Directory.Create();
 
-                    GCDConsoleLib.RasterOperators.Uniform<float>(ReferenceSurface.Raster, fiOutput, errVal);
+                    GCDConsoleLib.RasterOperators.Uniform<float>(ReferenceSurface.Raster, fiOutput, errVal, ProjectManager.OnProgressChange);
                     ErrorSurface = new ErrorSurface(name, fiOutput, ReferenceSurface);
                     ReferenceSurface.ErrorSurfaces.Add(ErrorSurface);
                 }

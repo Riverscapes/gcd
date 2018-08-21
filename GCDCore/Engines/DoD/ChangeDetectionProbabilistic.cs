@@ -38,14 +38,14 @@ namespace GCDCore.Engines
 
             // Create the prior probability raster
             m_PriorProbRaster = new FileInfo(Path.ChangeExtension(Path.Combine(thrDoDPath.DirectoryName, "priorprob"), ProjectManager.RasterExtension));
-            Raster priorPRob = RasterOperators.CreatePriorProbabilityRaster(rawDoD, PropagatedErrRaster, m_PriorProbRaster);
+            Raster priorPRob = RasterOperators.CreatePriorProbabilityRaster(rawDoD, PropagatedErrRaster, m_PriorProbRaster, ProjectManager.OnProgressChange);
 
             // Build Pyramids
             ProjectManager.PyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.ProbabilityRasters, m_PriorProbRaster);
 
             if (SpatialCoherence == null)
             {
-                thrDoD = RasterOperators.ThresholdDoDProbability(rawDoD, PropagatedErrRaster, thrDoDPath, Threshold);
+                thrDoD = RasterOperators.ThresholdDoDProbability(rawDoD, PropagatedErrRaster, thrDoDPath, Threshold, ProjectManager.OnProgressChange);
             }
             else
             {
@@ -55,15 +55,18 @@ namespace GCDCore.Engines
                 m_SpatialCoDepositionRaster = new FileInfo(Path.ChangeExtension(Path.Combine(thrDoDPath.DirectoryName, "nbrDeposition"), ProjectManager.RasterExtension));
 
                 // Count erosion and Deposition in a window around each cell
-                Raster rSpatialCoErosion = RasterOperators.NeighbourCount(rawDoD, RasterOperators.GCDWindowType.Erosion, SpatialCoherence.BufferSize, m_SpatialCoErosionRaster);
-                Raster rSpatialCoDeposition = RasterOperators.NeighbourCount(rawDoD, RasterOperators.GCDWindowType.Deposition, SpatialCoherence.BufferSize, m_SpatialCoDepositionRaster);
+                Raster rSpatialCoErosion = RasterOperators.NeighbourCount(rawDoD, RasterOperators.GCDWindowType.Erosion, SpatialCoherence.BufferSize, m_SpatialCoErosionRaster, 
+                    ProjectManager.OnProgressChange);
+                Raster rSpatialCoDeposition = RasterOperators.NeighbourCount(rawDoD, RasterOperators.GCDWindowType.Deposition, SpatialCoherence.BufferSize, m_SpatialCoDepositionRaster, 
+                    ProjectManager.OnProgressChange);
 
                 Raster PostProb = RasterOperators.PosteriorProbability(rawDoD, priorPRob,
                     rSpatialCoErosion, rSpatialCoDeposition,
                     m_PosteriorRaster, m_ConditionalRaster,
-                    SpatialCoherence.XMin, SpatialCoherence.XMax);
+                    SpatialCoherence.XMin, SpatialCoherence.XMax,
+                    ProjectManager.OnProgressChange);
 
-                thrDoD = RasterOperators.ThresholdDoDProbability(rawDoD, PostProb, new FileInfo(thrDoDPath.FullName), Threshold);
+                thrDoD = RasterOperators.ThresholdDoDProbability(rawDoD, PostProb, new FileInfo(thrDoDPath.FullName), Threshold, ProjectManager.OnProgressChange);
 
                 // Build Pyramids
                 ProjectManager.PyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.ProbabilityRasters, m_SpatialCoErosionRaster);
@@ -78,12 +81,12 @@ namespace GCDCore.Engines
         protected override Raster GenerateErrorRaster(FileInfo thrErrorPath)
         {
             decimal zval = (decimal)GCDConsoleLib.Utility.Probability.ltqnorm((double)Threshold);
-            return RasterOperators.Multiply(PropagatedErrRaster, zval, thrErrorPath);
+            return RasterOperators.Multiply(PropagatedErrRaster, zval, thrErrorPath, ProjectManager.OnProgressChange);
         }
 
         protected override DoDStats CalculateChangeStats(Raster rawDoD, Raster thrDoD, UnitGroup units)
         {
-            return RasterOperators.GetStatsProbalistic(rawDoD, thrDoD, PropagatedErrRaster, units);
+            return RasterOperators.GetStatsProbalistic(rawDoD, thrDoD, PropagatedErrRaster, units, ProjectManager.OnProgressChange);
         }
 
         protected override DoDBase GetDoDResult(string dodName, DoDStats changeStats, Raster rawDoD, Raster thrDoD, Raster thrErr, HistogramPair histograms, FileInfo summaryXML)

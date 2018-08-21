@@ -174,8 +174,9 @@ namespace GCDConsoleLib
         /// <param name="progressHandler">Optional Event handler</param>
         /// <returns></returns>
         public static Raster SubtractWithMask(Raster rInputA, Raster rInputB, Vector PolygonMask,
-            FileInfo sOutputRaster, bool RasterizeFirst = true,
-            EventHandler<OpStatus> progressHandler = null)
+            FileInfo sOutputRaster,
+            EventHandler<OpStatus> progressHandler = null,
+             bool RasterizeFirst = true)
         {
             Raster retval;
             if (RasterizeFirst)
