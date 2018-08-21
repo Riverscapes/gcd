@@ -4,11 +4,13 @@ using System.Windows.Forms;
 using GCDCore.Project;
 using System.Text.RegularExpressions;
 using System.Deployment.Application;
+using System.Drawing;
 
 namespace GCDStandalone
 {
     public partial class frmMain : Form
     {
+
         public frmMain()
         {
             InitializeComponent();
@@ -70,6 +72,7 @@ namespace GCDStandalone
             ProjectManager.OnProgressChange += OnProgressChange;
             tssProgress.Visible = false;
             tspProgress.Visible = false;
+
         }
 
         private void RefreshMRUItems()
@@ -511,13 +514,28 @@ namespace GCDStandalone
 
         public void OnProgressChange(object sender, GCDConsoleLib.OpStatus progress)
         {
-            tssProgress.Text = progress.Message;
-            tspProgress.Value = progress.Progress;
-
             bool bShow = progress.State != GCDConsoleLib.OpStatus.States.Complete;
 
             tssProgress.Visible = bShow;
             tspProgress.Visible = bShow;
+
+            if (tssProgress.Text != progress.Message)
+                tssProgress.Text = progress.Message;
+            tspProgress.Value = progress.Progress;
+
+            statusStrip1.Refresh();
+
+            using (Graphics gr = tspProgress.ProgressBar.CreateGraphics())
+            {
+                string theString = progress.Progress.ToString() + "%";
+                float top = tspProgress.Height / 2 - (gr.MeasureString(theString,  SystemFonts.DefaultFont).Height / 2.0F);
+                float left = tspProgress.Width / 2 - (gr.MeasureString(theString, SystemFonts.DefaultFont).Width / 2.0F);
+
+                PointF thePoint = new PointF(left, top);
+                gr.DrawString(theString,  SystemFonts.DefaultFont,  Brushes.Black,  thePoint);
+            }
+
+
         }
     }
 }

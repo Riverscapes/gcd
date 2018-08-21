@@ -57,6 +57,8 @@
             this.aboutGCDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tssProjectPath = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tssProgress = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tspProgress = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.tsiNewProject = new System.Windows.Forms.ToolStripButton();
             this.tsiOpenProject = new System.Windows.Forms.ToolStripButton();
@@ -64,8 +66,6 @@
             this.tsiBrowseProjectFolder = new System.Windows.Forms.ToolStripButton();
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.tssProgress = new System.Windows.Forms.ToolStripStatusLabel();
-            this.tspProgress = new System.Windows.Forms.ToolStripProgressBar();
             this.ucProjectExplorer1 = new GCDCore.UserInterface.Project.ucProjectExplorer();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -307,9 +307,22 @@
             // 
             this.tssProjectPath.DoubleClickEnabled = true;
             this.tssProjectPath.Name = "tssProjectPath";
-            this.tssProjectPath.Size = new System.Drawing.Size(118, 17);
-            this.tssProjectPath.Text = "toolStripStatusLabel1";
+            this.tssProjectPath.Size = new System.Drawing.Size(82, 17);
+            this.tssProjectPath.Text = "tssProjectPath";
             this.tssProjectPath.DoubleClick += new System.EventHandler(this.browseGCDProjectFolderToolStripMenuItem_Click);
+            // 
+            // tssProgress
+            // 
+            this.tssProgress.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.tssProgress.Name = "tssProgress";
+            this.tssProgress.Size = new System.Drawing.Size(70, 17);
+            this.tssProgress.Text = "tssProgress";
+            // 
+            // tspProgress
+            // 
+            this.tspProgress.Name = "tspProgress";
+            this.tspProgress.Size = new System.Drawing.Size(100, 16);
+            this.tspProgress.Step = 1;
             // 
             // toolStrip1
             // 
@@ -400,18 +413,6 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 417F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(907, 392);
             this.tableLayoutPanel1.TabIndex = 5;
-            // 
-            // tssProgress
-            // 
-            this.tssProgress.Name = "tssProgress";
-            this.tssProgress.Size = new System.Drawing.Size(118, 17);
-            this.tssProgress.Text = "toolStripStatusLabel1";
-            // 
-            // tspProgress
-            // 
-            this.tspProgress.Name = "tspProgress";
-            this.tspProgress.Size = new System.Drawing.Size(100, 16);
-            this.tspProgress.Step = 1;
             // 
             // ucProjectExplorer1
             // 
