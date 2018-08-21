@@ -574,7 +574,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
                     if (ExtImporter.RequiresResampling)
                     {
-                        gResult = GCDConsoleLib.RasterOperators.BilinearResample(ucRaster.SelectedItem, fiOutput, ExtImporter.Output);
+                        gResult = GCDConsoleLib.RasterOperators.BilinearResample(ucRaster.SelectedItem, fiOutput, ExtImporter.Output, ProjectManager.OnProgressChange);
                         Debug.WriteLine("Bilinear resample:" + ExtImporter.Output.ToString());
                     }
                     else

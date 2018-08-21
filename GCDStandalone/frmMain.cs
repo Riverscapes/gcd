@@ -509,12 +509,15 @@ namespace GCDStandalone
             System.Diagnostics.Process.Start(GCDCore.Properties.Resources.CrossSectionViewerWebSite);
         }
 
-        public void OnProgressChange(object sender, int progress)
+        public void OnProgressChange(object sender, GCDConsoleLib.OpStatus progress)
         {
-            tssProgress.Visible = true;
-            tspProgress.Visible = true;
+            tssProgress.Text = progress.Message;
+            tspProgress.Value = progress.Progress;
 
-            tspProgress.Value = progress;
+            bool bShow = progress.State != GCDConsoleLib.OpStatus.States.Complete;
+
+            tssProgress.Visible = bShow;
+            tspProgress.Visible = bShow;
         }
     }
 }
