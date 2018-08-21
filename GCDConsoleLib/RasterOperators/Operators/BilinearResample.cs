@@ -49,6 +49,8 @@ namespace GCDConsoleLib.Internal.Operators
         /// </summary>
         public new void Run()
         {
+            StateChange(OpStatus.States.Started);
+
             int oldRows = _inputRasters[0].Extent.Rows;
             int oldCols = _inputRasters[0].Extent.Cols;
             double dInNodata = (double)Convert.ChangeType(inNodataVals[0], typeof(double));
@@ -120,6 +122,7 @@ namespace GCDConsoleLib.Internal.Operators
                 _outputRasters[0].Write(0, nrow, ChunkExtent.Cols, 1, outBuffer);
             }
             Cleanup();
+            StateChange(OpStatus.States.Complete);
         }
 
         /// <summary>

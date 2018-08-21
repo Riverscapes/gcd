@@ -5,6 +5,7 @@ using GCDConsoleLib.Utility;
 using GCDConsoleLib.Common.Extensons;
 using System.IO;
 using GCDConsoleTest.Helpers;
+using System.Threading;
 
 namespace GCDConsoleLib.Internal.Tests
 {
@@ -52,6 +53,7 @@ namespace GCDConsoleLib.Internal.Tests
                             else
                                 val = DynamicMath.Add(val, data[idd][idx]);
                         }
+                        Thread.Sleep(300);
                         outputs[0][idx] = val;
                     }
                 }
@@ -87,16 +89,18 @@ namespace GCDConsoleLib.Internal.Tests
 
             // Now we define an action to run when the progress event fires. Do tjis in whatever function
             // You're calling Interface.cs from 
-            EventHandler<OpStatus> receivedEventsHandler = delegate (object sender, OpStatus e) { receivedEvents.Add(e.Progress); };
+            EventHandler<OpStatus> receivedEventsHandler = delegate (object sender, OpStatus e) {
+                receivedEvents.Add(e.Progress);
+            };
 
             ////////////////////////////////// <Interface.cs> ////////////////////////////////////////////
 
             // Now we fake what's happening inside Interface.cs"
             FakeRaster<int> Raster1 = new FakeRaster<int>(0, 0, -1, 1, new int[,] { { 1, 2, 3, 4 }, { 5, 6, 7, 8 }, { 9, 10, 11, 12 } });
             TestOp<int> theTest = new TestOp<int>(new List<Raster> { Raster1 });
+            theTest.ProgressEvent += receivedEventsHandler;
             theTest.OpDescription = "Running Test Event";
             // Here's where the delegate is assigned to the 
-            theTest.ProgressEvent += receivedEventsHandler;
 
             theTest.Run();
             ////////////////////////////////// </Interface.cs> ////////////////////////////////////////////

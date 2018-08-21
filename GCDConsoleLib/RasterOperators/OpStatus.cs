@@ -13,7 +13,7 @@ namespace GCDConsoleLib
 
         public OpStatus(string msg = "")
         {
-            _currProgress = -1;
+            _currProgress = 0;
             _currState = States.None;
             _currMsg = msg;
         }
@@ -24,7 +24,6 @@ namespace GCDConsoleLib
             set
             {
                 _currProgress = value;
-                Debug.WriteLine(string.Format("OpStatus:: Progress: {0}", _currProgress));
             }
         }
 
@@ -34,7 +33,6 @@ namespace GCDConsoleLib
             set
             {
                 _currState = value;
-                Debug.WriteLine(string.Format("OpStatus:: State Change to: '{0}'", Enum.GetName(typeof(States), _currState)));
             }
         }
 
@@ -43,10 +41,10 @@ namespace GCDConsoleLib
             get { return _currMsg; }
             set
             {
-                    _currMsg = value;
-                    Debug.WriteLine(string.Format("OpStatus:: Msg Change: '{0}'", _currMsg));
+                _currMsg = value;
             }
         }
+
 
     }
 }

@@ -24,9 +24,11 @@ namespace GCDConsoleLib.Internal
         // The op description gets used in the status message to tell us what
         // we're doing here. Example: "Creating Error Raster"
         private string _opDesc;
-        public string OpDescription {
+        public string OpDescription
+        {
             get { return _opDesc; }
-            set {
+            set
+            {
                 _opDesc = value;
                 MsgChange(_opDesc);
             }
@@ -266,7 +268,7 @@ namespace GCDConsoleLib.Internal
             if (OpExtent.Rows < chunkYsize) chunkYsize = OpExtent.Rows;
             ChunkExtent = new ExtentRectangle(OpExtent.Top, OpExtent.Left, OpExtent.CellHeight, OpExtent.CellWidth, chunkYsize, chunkXsize);
 
-            foreach(Raster outraster in _outputRasters)
+            foreach (Raster outraster in _outputRasters)
                 outraster.Extent = OpExtent;
         }
 
@@ -343,10 +345,11 @@ namespace GCDConsoleLib.Internal
         /// <param name="prog"></param>
         protected void ProgressChange(int newProgress)
         {
+            // Send status if it changes or if it's been more than a second since the last one.
             if (newProgress != _opStatus.Progress)
             {
                 _opStatus.Progress = newProgress;
-                ProgressEvent?.Invoke(this, _opStatus);
+                EventInvoke();
             }
         }
         protected void StateChange(OpStatus.States newState)
@@ -354,7 +357,7 @@ namespace GCDConsoleLib.Internal
             if (newState != _opStatus.State)
             {
                 _opStatus.State = newState;
-                ProgressEvent?.Invoke(this, _opStatus);
+                EventInvoke(true);
             }
         }
         protected void MsgChange(string newMsg)
@@ -362,7 +365,28 @@ namespace GCDConsoleLib.Internal
             if (newMsg != _opStatus.Message)
             {
                 _opStatus.Message = newMsg;
+                EventInvoke(true);
+            }
+        }
+
+        public void AddProgressEvent(EventHandler<OpStatus> progressHandler)
+        {
+            if (progressHandler != null)
+                ProgressEvent += progressHandler;
+        }
+
+        private void EventInvoke(bool force = false)
+        {
+            // Keep the noise down by capping the number of events we can get per second
+            if (force || _lastStatusInvoke.ElapsedMilliseconds >= 300)
+            {
                 ProgressEvent?.Invoke(this, _opStatus);
+                Debug.WriteLine(string.Format("BaseOperator OpStatus Event:: [{0}][{1}][{2}%]",
+                    _opStatus.Message,
+                    Enum.GetName(typeof(OpStatus.States), _opStatus.State),
+                    _opStatus.Progress
+                    ));
+                _lastStatusInvoke.Restart();
             }
         }
 
