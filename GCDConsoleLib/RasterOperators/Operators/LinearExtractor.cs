@@ -4,6 +4,7 @@ using OSGeo.OGR;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using GCDConsoleLib.Utility;
 
 namespace GCDConsoleLib.Internal.Operators
 {
@@ -42,6 +43,7 @@ namespace GCDConsoleLib.Internal.Operators
 
         // Spacing gets used only for the secondary method
         private double _spacing;
+        private int _spacingDecimals;
 
         /// <summary>
         /// 
@@ -108,6 +110,8 @@ namespace GCDConsoleLib.Internal.Operators
             _vinput = vLineShp;
             _csvfile = outCSV;
             _spacing = (double)ptsspacing;
+            // Write the last point. we need to round it a bit
+            _spacingDecimals = DynamicMath.numDecimals(ptsspacing);
 
             header = new List<ecols>() { ecols.FID, ecols.STATION, ecols.X, ecols.Y };
 
@@ -133,6 +137,8 @@ namespace GCDConsoleLib.Internal.Operators
             _vinput = vLineShp;
             _csvfile = outCSV;
             _spacing = (double)ptsspacing;
+            // Write the last point. we need to round it a bit
+            _spacingDecimals = DynamicMath.numDecimals(ptsspacing);
 
             header = new List<ecols>() { ecols.FID, ecols.DISTANCE, ecols.STATION, ecols.X, ecols.Y };
 
@@ -347,6 +353,8 @@ namespace GCDConsoleLib.Internal.Operators
 
             List<string> csvRows = new List<string>();
 
+            double finalDist =  Math.Round(distance, _spacingDecimals);
+
             // Now we write a line to the file
             List<string> csvcols = new List<string>();
             foreach (ecols item in header)
@@ -357,7 +365,7 @@ namespace GCDConsoleLib.Internal.Operators
                     case (ecols.X): csvcols.Add((fractionalpt[0]).ToString()); break;
                     case (ecols.Y): csvcols.Add((fractionalpt[1]).ToString()); break;
                     case (ecols.DISTANCE): if (!String.IsNullOrEmpty(sFieldName)) csvcols.Add(feat.GetFieldAsDouble(sFieldName).ToString()); break;
-                    case (ecols.STATION): csvcols.Add((distance).ToString()); break;
+                    case (ecols.STATION): csvcols.Add((finalDist).ToString()); break;
                 }
             }
             for (int did = 0; did < _inputRasters.Count; did++)
@@ -393,7 +401,6 @@ namespace GCDConsoleLib.Internal.Operators
                 double length = line.Length();
                 double totalDist = 0;
                 double remaining = _spacing;
-
 
                 double[] pt = new double[2];
                 line.GetPoint_2D(0, pt);
@@ -440,8 +447,7 @@ namespace GCDConsoleLib.Internal.Operators
                     pt = newpt;
                 }
 
-                // Write the last point
-                lineWrite(feat, new double[2] { pt[0], pt[1] }, 0);
+                lineWrite(feat, new double[2] { pt[0], pt[1] }, totalDist);
             }
             _stream.Close();
         }

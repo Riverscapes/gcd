@@ -1,4 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using GCDConsoleLib.Utility;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Diagnostics;
 using UnitsNet;
 
 namespace GCDConsoleLib.Utility.Tests
@@ -10,10 +12,10 @@ namespace GCDConsoleLib.Utility.Tests
         [TestCategory("Unit")]
         public void DynamicMathTest()
         {
-            Assert.AreEqual(DynamicMath.Add(0.5,4), 4.5);
+            Assert.AreEqual(DynamicMath.Add(0.5, 4), 4.5);
             Assert.AreEqual(DynamicMath.Add(0.5m, 4), 4.5m);
             Assert.AreEqual(DynamicMath.Add(0.5f, 4), 4.5f);
-            Assert.AreEqual(DynamicMath.Add(2,3), (int)5);
+            Assert.AreEqual(DynamicMath.Add(2, 3), (int)5);
 
             Assert.AreEqual(DynamicMath.Subtract(0.5, 4), -3.5);
             Assert.AreEqual(DynamicMath.Subtract(0.5m, 4), -3.5m);
@@ -70,8 +72,8 @@ namespace GCDConsoleLib.Utility.Tests
             Assert.AreEqual(DynamicMath.SafeDivision(za1, za2), -1.0m);
 
             // Now do very small numbers
-            Area zsm1 = Area.FromSquareMeters((double)(1/ decimal.MaxValue));
-            Area zsm2 = Area.FromSquareMeters((double)(1/ decimal.MinValue));
+            Area zsm1 = Area.FromSquareMeters((double)(1 / decimal.MaxValue));
+            Area zsm2 = Area.FromSquareMeters((double)(1 / decimal.MinValue));
 
             Assert.AreEqual(DynamicMath.SafeDivision(za0, zsm1), decimal.MaxValue); // 1/0 case
             Assert.AreEqual(DynamicMath.SafeDivision(za0, zsm2), decimal.MaxValue); // 1/0 case
@@ -84,6 +86,14 @@ namespace GCDConsoleLib.Utility.Tests
             Assert.AreEqual(DynamicMath.SafeDivision(za0, zero), decimal.MaxValue);
             Assert.AreEqual(DynamicMath.SafeDivision(zero, za0), 0);
 
+        }
+
+        [TestMethod()]
+        public void numDecimalsTest()
+        {
+            Assert.AreEqual(DynamicMath.numDecimals(2.1231m), 4);
+
+            Debug.WriteLine("done");
         }
     }
 }

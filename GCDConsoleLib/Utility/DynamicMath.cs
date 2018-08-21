@@ -51,7 +51,7 @@ namespace GCDConsoleLib.Utility
             if (fDenominator != 0)
                 val = fNumerator / fDenominator;
             else if (fNumerator != 0)
-                val = fNumerator > 0 ? decimal.MaxValue : decimal.MinValue; 
+                val = fNumerator > 0 ? decimal.MaxValue : decimal.MinValue;
 
             return val;
         }
@@ -140,5 +140,19 @@ namespace GCDConsoleLib.Utility
             return Area.FromSquareMeters((double)SafeDivision(vNummmm, vDenommm));
         }
 
+        /// <summary>
+        /// Finding the number of decimal places of a double is really hard.
+        /// This comes pretty lose
+        /// </summary>
+        /// <param name="num"></param>
+        /// <returns></returns>
+        public static int numDecimals(decimal num)
+        {
+            int precision = 0;
+            while (num * (decimal)Math.Pow(10, precision) !=
+                        Math.Round(num * (decimal)Math.Pow(10, precision)))
+                precision++;
+            return precision;
+        }
     }
 }
