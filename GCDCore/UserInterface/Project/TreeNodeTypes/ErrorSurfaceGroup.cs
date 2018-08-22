@@ -19,7 +19,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
         {
             Surface = surf;
 
-            ToolStripMenuItem tsmi = null;
+            //ToolStripMenuItem tsmi = null;
             if (Surface is DEMSurvey)
             {
                 ContextMenuStrip.Items.Insert(1, new ToolStripMenuItem("Calculate New Error Surface With Mask", Properties.Resources.sigma, OnCalculateDEMErrorSurface_MaskMethod));

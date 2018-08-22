@@ -7,10 +7,10 @@ namespace GCDCore.UserInterface.Project
 {
     public partial class ucProjectExplorer
     {
-        public event ProjectTreeNodeSelectionChangeEventHandler ProjectTreeNodeSelectionChange;
+        //public event ProjectTreeNodeSelectionChangeEventHandler ProjectTreeNodeSelectionChange;
         public delegate void ProjectTreeNodeSelectionChangeEventHandler(object sender, EventArgs e);
 
-        private static SortSurveyBy m_eSortBy = SortSurveyBy.SurveyDateDsc;
+        //private static SortSurveyBy m_eSortBy = SortSurveyBy.SurveyDateDsc;
 
         public enum SortSurveyBy
         {

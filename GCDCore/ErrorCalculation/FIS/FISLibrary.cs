@@ -3,6 +3,7 @@ using System.Xml;
 using System.IO;
 using System.Linq;
 using System.Xml.Schema;
+using System.Diagnostics;
 
 namespace GCDCore.ErrorCalculation.FIS
 {
@@ -92,6 +93,7 @@ namespace GCDCore.ErrorCalculation.FIS
                     }
                     catch (Exception ex)
                     {
+                        Debug.WriteLine(ex.Message);
                         Console.WriteLine(string.Format("Error reading {0} FIS library item from file {1}", eType.ToString(), filePath));
                     }
                 }
@@ -122,6 +124,7 @@ namespace GCDCore.ErrorCalculation.FIS
                 }
                 catch (Exception ex)
                 {
+                    Debug.WriteLine(ex.Message);
                     Console.WriteLine("Error loading unreferenced system FIS file " + fis.FullName);
                 }
             }

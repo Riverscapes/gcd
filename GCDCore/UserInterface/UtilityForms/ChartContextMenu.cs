@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
@@ -94,6 +95,7 @@ namespace GCDCore.UserInterface.UtilityForms
                 catch (Exception ex)
                 {
                     // Do Nothing
+                    Debug.WriteLine(ex.Message);
                 }
 
                 if (dlgSave.ShowDialog() == DialogResult.OK)

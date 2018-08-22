@@ -5,6 +5,7 @@ using GCDCore.Project;
 using System.Text.RegularExpressions;
 using System.Deployment.Application;
 using System.Drawing;
+using System.Diagnostics;
 
 namespace GCDStandalone
 {
@@ -32,7 +33,7 @@ namespace GCDStandalone
             // ensure this is empty in case there's no auto open project
             tssProjectPath.Text = string.Empty;
 
-            ucProjectExplorer1.ProjectTreeNodeSelectionChange += UpdateMenusAndToolstrips;
+            //ucProjectExplorer1.ProjectTreeNodeSelectionChange += UpdateMenusAndToolstrips;
             UpdateMenusAndToolstrips(sender, e);
 
             // User setting for loading the last project
@@ -57,6 +58,7 @@ namespace GCDStandalone
                         }
                         catch (Exception ex)
                         {
+                            Debug.WriteLine(ex.Message);
                             // Something went wrong with the last opened project. Ensure it doesn't try to get opened again.
                             GCDCore.Properties.Settings.Default.LastUsedProjectFolder = string.Empty;
                             GCDCore.Properties.Settings.Default.Save();

@@ -93,13 +93,13 @@ namespace GCDCore.UserInterface.Tools
             return System.Convert.ToBase64String(plainTextBytes);
         }
 
-        private async void btnDelete_Click(object sender, EventArgs e)
+        private void btnDelete_Click(object sender, EventArgs e)
         {
             // Now get and store the credentials we need to upload directly to S3
             SendLogMessage(String.Format("{0} Calling Delete API...", Environment.NewLine));
             SetText(lblProg, "");
 
-            WebRequest request = WebRequest.Create(String.Format("{0}/project/{1}", 
+            WebRequest request = WebRequest.Create(String.Format("{0}/project/{1}",
                 GCDCore.Properties.Resources.UploadAPIUrl,
                 GCDCore.Project.ProjectManager.Project.OnlineParams["GCDUUID"]));
             request.Headers.Add("GCDAUTH", GCDCore.Project.ProjectManager.Project.OnlineParams["PubKey"]);
@@ -208,8 +208,8 @@ namespace GCDCore.UserInterface.Tools
                     StreamReader responseReader = new StreamReader(webResponse.GetResponseStream());
 
                     //var readdata = new byte[fUp.contentLength];
-                    int currentIndex = 0;
-                    int bytesReceived = 0;
+                    //int currentIndex = 0;
+                    //int bytesReceived = 0;
                     var buffer = new char[256];
                     //do
                     //{
@@ -242,7 +242,7 @@ namespace GCDCore.UserInterface.Tools
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("EXCEPTION");
+                Debug.WriteLine(String.Format("EXCEPTION: {0}", ex.Message));
             }
             // Report something having changed.
             RecalcState();

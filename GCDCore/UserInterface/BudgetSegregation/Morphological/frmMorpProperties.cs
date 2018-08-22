@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -60,6 +61,7 @@ namespace GCDCore.UserInterface.BudgetSegregation.Morphological
                 }
                 catch (Exception ex)
                 {
+                    Debug.WriteLine(ex.Message);
                     // We can live without the spreadsheet
                     Console.Write("Morphological analysis spreadsheet error saving to " + Analysis.Spreadsheet.FullName);
                 }

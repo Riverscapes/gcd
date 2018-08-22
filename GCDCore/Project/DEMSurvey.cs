@@ -34,7 +34,7 @@ namespace GCDCore.Project
         public DEMSurvey(XmlNode nodDEM)
             : base(nodDEM, false, false)
         {
-            SurveyDateTime surveyDT = null;
+            //SurveyDateTime surveyDT = null;
             XmlNode nodSurveyDate = nodDEM.SelectSingleNode("SurveyDate");
             if (nodSurveyDate is XmlNode)
             {
@@ -60,8 +60,7 @@ namespace GCDCore.Project
             if (nodChronologicalOrder is XmlNode)
             {
                 string sChronologicalOrder = nodChronologicalOrder.InnerText;
-                int iChronologicalOrder;
-                Boolean bParseSuccessful = int.TryParse(sChronologicalOrder, out iChronologicalOrder);
+                Boolean bParseSuccessful = int.TryParse(sChronologicalOrder, out int iChronologicalOrder);
                 if (bParseSuccessful)
                 {
                     ChronologicalOrder = iChronologicalOrder;
