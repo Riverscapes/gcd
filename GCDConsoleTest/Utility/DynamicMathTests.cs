@@ -92,12 +92,13 @@ namespace GCDConsoleLib.Utility.Tests
         [TestCategory("Unit")]
         public void NumDecimalsTest()
         {
-            Assert.AreEqual(DynamicMath.numDecimals(2.1231m), 4);
-            Assert.AreEqual(DynamicMath.numDecimals(52352342.1231m), 4);
-            Assert.AreEqual(DynamicMath.numDecimals(52352342.12310m), 4);
-            Assert.AreEqual(DynamicMath.numDecimals(10000), 0);
-            Assert.AreEqual(DynamicMath.numDecimals(3), 0);
-            Assert.AreEqual(DynamicMath.numDecimals(3.0m), 0);
+            Assert.AreEqual(DynamicMath.NumDecimals(2.1231m), 4);
+            Assert.AreEqual(DynamicMath.NumDecimals(52352342.1231m), 4);
+            Assert.AreEqual(DynamicMath.NumDecimals(52352342.12310m), 4);
+            Assert.AreEqual(DynamicMath.NumDecimals(10000), 0);
+            Assert.AreEqual(DynamicMath.NumDecimals(3), 0);
+            Assert.AreEqual(DynamicMath.NumDecimals(3.0m), 0);
+            Assert.AreEqual(DynamicMath.NumDecimals(0.00000106103m), 11);
             Debug.WriteLine("done");
         }
     }

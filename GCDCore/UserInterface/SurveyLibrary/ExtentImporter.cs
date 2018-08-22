@@ -39,7 +39,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
                     cellSize = RefExtent.CellWidth;
                 else
                 {
-                    _Precision = CalculatePrecision(value.CellWidth);
+                    _Precision = (ushort)GCDConsoleLib.Utility.DynamicMath.NumDecimals(value.CellWidth);
                     cellSize = Math.Round(value.CellWidth, _Precision);
                 }
 
@@ -130,7 +130,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
         {
             Purpose = ePurpose;
             RefExtent = refExtent;
-            _Precision = CalculatePrecision(RefExtent.CellWidth);
+            _Precision = (ushort)GCDConsoleLib.Utility.DynamicMath.NumDecimals(RefExtent.CellWidth);
 
             if (ePurpose == Purposes.AssociatedSurface || ePurpose == Purposes.ErrorSurface || ePurpose == Purposes.ReferenceErrorSurface)
             {
@@ -172,29 +172,5 @@ namespace GCDCore.UserInterface.SurveyLibrary
             }
         }
 
-        /// <summary>
-        /// Try to determine the appropriate precision from the input raster.
-        /// Keep increasing the original cell resolution by powers of ten until it
-        /// is a whole number. This is the appropriate "initial" precision for the
-        /// output until the user overrides it.
-        /// </summary>
-        /// <param name="cellSize"></param>
-        /// <returns></returns>
-        public static ushort CalculatePrecision(decimal cellSize)
-        {
-            ushort precision = 1;
-            for (int i = 0; i <= 10; i++)
-            {
-                decimal fTest = cellSize * (decimal)Math.Pow(10, i);
-                fTest = Math.Round(fTest, 4);
-                if (fTest % 1 == 0)
-                {
-                    precision = Convert.ToUInt16(i);
-                    break;
-                }
-            }
-
-            return precision;
-        }
     }
 }

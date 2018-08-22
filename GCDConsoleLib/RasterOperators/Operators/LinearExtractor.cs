@@ -111,7 +111,7 @@ namespace GCDConsoleLib.Internal.Operators
             _csvfile = outCSV;
             _spacing = (double)ptsspacing;
             // Write the last point. we need to round it a bit
-            _spacingDecimals = DynamicMath.numDecimals(ptsspacing);
+            _spacingDecimals = DynamicMath.NumDecimals(ptsspacing);
 
             header = new List<ECols>() { ECols.FID, ECols.STATION, ECols.X, ECols.Y };
 
@@ -138,7 +138,7 @@ namespace GCDConsoleLib.Internal.Operators
             _csvfile = outCSV;
             _spacing = (double)ptsspacing;
             // Write the last point. we need to round it a bit
-            _spacingDecimals = DynamicMath.numDecimals(ptsspacing);
+            _spacingDecimals = DynamicMath.NumDecimals(ptsspacing);
 
             header = new List<ECols>() { ECols.FID, ECols.DISTANCE, ECols.STATION, ECols.X, ECols.Y };
 

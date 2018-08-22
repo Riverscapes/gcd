@@ -146,7 +146,7 @@ namespace GCDConsoleLib.Utility
         /// </summary>
         /// <param name="num"></param>
         /// <returns></returns>
-        public static int numDecimals(decimal num)
+        public static int NumDecimals(decimal num)
         {
             int precision = 0;
             while (num * (decimal)Math.Pow(10, precision) !=
