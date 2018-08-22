@@ -30,10 +30,22 @@ namespace GCDAddIn
 
         }
 
-        private void OnProgressChange(object sender, int prog)
+        private void OnProgressChange(object sender, GCDConsoleLib.OpStatus opStatus)
         {
-            ArcMap.Application.StatusBar.ShowProgressBar("Point Density", 0, 100, 1, true);
-            ArcMap.Application.StatusBar.ProgressBar.Position = prog;
+            switch (opStatus.State)
+            {
+                case GCDConsoleLib.OpStatus.States.Initialized:
+                    ArcMap.Application.StatusBar.ShowProgressBar(opStatus.Message, 0, 100, 1, true);
+                    break;
+
+                case GCDConsoleLib.OpStatus.States.Started:
+                    ArcMap.Application.StatusBar.ProgressBar.Position = opStatus.Progress;
+                    break;
+
+                default:
+                    ArcMap.Application.StatusBar.HideProgressBar();
+                    break;
+            }
         }
     }
 }
