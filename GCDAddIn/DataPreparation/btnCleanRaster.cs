@@ -8,7 +8,7 @@ namespace GCDAddIn.DataPreparation
         {
             GCDCore.UserInterface.SurveyLibrary.frmImportRaster frm = new GCDCore.UserInterface.SurveyLibrary.frmImportRaster(null, GCDCore.UserInterface.SurveyLibrary.ExtentImporter.Purposes.Standalone, string.Empty);
 
-            frm.ucRaster.BrowseRaster += BrowseRaster;
+            //frm.ucRaster.BrowseRaster += BrowseRaster;
             frm.GISBrowseSaveRasterHandler += BrowseSaveRaster;
 
             try
@@ -33,16 +33,16 @@ namespace GCDAddIn.DataPreparation
             ArcMap.Application.CurrentTool = null;
         }
 
-        private void BrowseRaster(object sender, naru.ui.PathEventArgs e)
-        {
-            System.IO.DirectoryInfo diWorkspace = ArcMapUtilities.GetWorkspacePath(e.Path.FullName);
-            string sDataset = System.IO.Path.GetFileNameWithoutExtension(e.Path.FullName);
-            GCDConsoleLib.Raster selectedRaster = ArcMapBrowse.BrowseOpenRaster(e.FormTitle, diWorkspace, sDataset, e.hWndParent);
-            if (!(selectedRaster == null))
-            {
-                ((System.Windows.Forms.TextBox)sender).Text = selectedRaster.GISFileInfo.FullName;
-            }
-        }
+        //private void BrowseRaster(object sender, naru.ui.PathEventArgs e)
+        //{
+        //    System.IO.DirectoryInfo diWorkspace = ArcMapUtilities.GetWorkspacePath(e.Path.FullName);
+        //    string sDataset = System.IO.Path.GetFileNameWithoutExtension(e.Path.FullName);
+        //    GCDConsoleLib.Raster selectedRaster = ArcMapBrowse.BrowseOpenRaster(e.FormTitle, diWorkspace, sDataset, e.hWndParent);
+        //    if (!(selectedRaster == null))
+        //    {
+        //        ((System.Windows.Forms.TextBox)sender).Text = selectedRaster.GISFileInfo.FullName;
+        //    }
+        //}
 
         private void BrowseSaveRaster(System.Windows.Forms.TextBox txt, string formTitle, IntPtr hParentWindowHandle)
         {

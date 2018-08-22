@@ -202,7 +202,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             tTip.SetToolTip(txtOrigHeight, "The height of the original raster shown in the linear units of the raster.");
             tTip.SetToolTip(txtOrigCellSize, "The width of each cell in the original raster shown in the linear units of the raster");
             tTip.SetToolTip(txtRasterPath, "The raster file path where the output raster will get generated.");
-            tTip.SetToolTip(cmdSave,"Browse to specify the output raster file path where the cleaned raster will get generated.");
+            tTip.SetToolTip(cmdSave, "Browse to specify the output raster file path where the cleaned raster will get generated.");
             tTip.SetToolTip(valTop, "The top, northern most extent of the output raster. It must be wholely divisible by the output cell resolution.");
             tTip.SetToolTip(valLeft, "The left, western most extent of the output raster. It must be wholely divisible by the output cell resolution.");
             tTip.SetToolTip(valRight, "The right, eastern most extent of the output raster. It must be wholely divisible by the output cell resolution.");
@@ -293,42 +293,38 @@ namespace GCDCore.UserInterface.SurveyLibrary
                 return false;
             }
 
-
-            if (!GISDatasetValidation.DSSpatialRefMatchesProject(ucRaster.SelectedItem))
-            {
-                string msg = string.Format(
-                    "{0}{1}{0}If you believe that these projections are the same (or equivalent) choose \"Yes\" to continue anyway. Otherwise choose \"No\" to abort.",
-                    Environment.NewLine, GISDatasetValidation.SpatialRefNoMatchString(ucRaster.SelectedItem, "raster", "rasters"));
-
-                DialogResult result = MessageBox.Show(msg, Properties.Resources.ApplicationNameLong, MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
-
-                if (result == DialogResult.No)
-                {
-                    ucRaster.Select();
-                    bNeedsForcedProjection = false;
-                    return false;
-                }
-                else
-                {
-                    bNeedsForcedProjection = true;
-                }
-            }
-            else
-            {
-                bNeedsForcedProjection = false;
-            }
-
-
-            if (!GISDatasetValidation.DSHorizUnitsMatchProject(ucRaster.SelectedItem, "raster", "rasters"))
-            {
-                ucRaster.Select();
-                return false;
-            }
-
+            bNeedsForcedProjection = false;
 
             // Importing rasters into GCD projects reuires some unit checks
             if (ExtImporter.Purpose != ExtentImporter.Purposes.Standalone)
             {
+                if (!GISDatasetValidation.DSSpatialRefMatchesProject(ucRaster.SelectedItem))
+                {
+                    string msg = string.Format(
+                        "{0}{1}{0}If you believe that these projections are the same (or equivalent) choose \"Yes\" to continue anyway. Otherwise choose \"No\" to abort.",
+                        Environment.NewLine, GISDatasetValidation.SpatialRefNoMatchString(ucRaster.SelectedItem, "raster", "rasters"));
+
+                    DialogResult result = MessageBox.Show(msg, Properties.Resources.ApplicationNameLong, MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+
+                    if (result == DialogResult.No)
+                    {
+                        ucRaster.Select();
+                        bNeedsForcedProjection = false;
+                        return false;
+                    }
+                    else
+                    {
+                        bNeedsForcedProjection = true;
+                    }
+                }
+
+                // TODO: This check appears to be VERY similar to the next block of code. Research and simplify if possible.
+                if (!GISDatasetValidation.DSHorizUnitsMatchProject(ucRaster.SelectedItem, "raster", "rasters"))
+                {
+                    ucRaster.Select();
+                    return false;
+                }
+
                 // Verify that the horizontal units match those of the project.
                 if (ProjectManager.Project.Units.HorizUnit != ucRaster.SelectedItem.Proj.HorizontalUnit)
                 {
@@ -369,7 +365,11 @@ namespace GCDCore.UserInterface.SurveyLibrary
             }
             else
             {
-                if (ProjectManager.Project.GetAbsolutePath(txtRasterPath.Text).Exists)
+                System.IO.FileInfo outputPath = new System.IO.FileInfo(txtRasterPath.Text);
+                if (ProjectManager.Project != null)
+                    outputPath = ProjectManager.Project.GetAbsolutePath(txtRasterPath.Text);
+
+                if (outputPath.Exists)
                 {
                     MessageBox.Show("The project raster path already exists. Try using a different name for the raster.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return false;
@@ -574,7 +574,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
                     if (ExtImporter.RequiresResampling)
                     {
-                        gResult = GCDConsoleLib.RasterOperators.BilinearResample(ucRaster.SelectedItem, fiOutput, ExtImporter.Output, 
+                        gResult = GCDConsoleLib.RasterOperators.BilinearResample(ucRaster.SelectedItem, fiOutput, ExtImporter.Output,
                             ProjectManager.OnProgressChange);
                     }
                     else
@@ -589,14 +589,14 @@ namespace GCDCore.UserInterface.SurveyLibrary
                             }
                             else
                             {
-                                gResult = GCDConsoleLib.RasterOperators.ExtendedCopy(ucRaster.SelectedItem, fiOutput, 
+                                gResult = GCDConsoleLib.RasterOperators.ExtendedCopy(ucRaster.SelectedItem, fiOutput,
                                     ProjectManager.OnProgressChange);
                             }
                         }
                         else
                         {
                             // Output extent differs from original raster. Use extended copy
-                            gResult = GCDConsoleLib.RasterOperators.ExtendedCopy(ucRaster.SelectedItem, fiOutput, ExtImporter.Output, 
+                            gResult = GCDConsoleLib.RasterOperators.ExtendedCopy(ucRaster.SelectedItem, fiOutput, ExtImporter.Output,
                                 ProjectManager.OnProgressChange);
                         }
                     }
@@ -609,7 +609,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
                         // Now try the hillshade for DEM Surveys
                         System.IO.FileInfo sHillshadePath = Surface.HillShadeRasterPath(fiOutput);
                         GCDConsoleLib.RasterOperators.Hillshade(gResult, sHillshadePath, ProjectManager.OnProgressChange);
-                        ProjectManager.PyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.Hillshade, 
+                        ProjectManager.PyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.Hillshade,
                             sHillshadePath);
                     }
                 }

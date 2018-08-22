@@ -66,6 +66,7 @@ namespace GCDAddIn
                     IRasterDataset pRDS = ((IRasterWorkspace)pWorkspace).OpenRasterDataset(fiFullPath.Name);
                     IRasterLayer pRLResult = new RasterLayer();
                     pRLResult.CreateFromDataset(pRDS);
+                    pResultLayer = pRLResult;
                     break;
 
                 case ArcMapBrowse.GISDataStorageTypes.CAD:
