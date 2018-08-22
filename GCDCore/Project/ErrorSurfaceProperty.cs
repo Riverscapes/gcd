@@ -36,15 +36,15 @@ namespace GCDCore.Project
             }
         }
 
-        private FileInfo _FISRuleFile;
-        public FileInfo FISRuleFile
+        private ErrorCalculation.FIS.FISLibraryItem _FISRuleFile;
+        public ErrorCalculation.FIS.FISLibraryItem FISRuleFile
         {
             get { return _FISRuleFile; }
             set
             {
                 _FISRuleFile = value;
                 FISInputs = new naru.ui.SortableBindingList<FISInput>();
-                if (_FISRuleFile is FileInfo)
+                if (_FISRuleFile is ErrorCalculation.FIS.FISLibraryItem)
                 {
                     _UniformValue = new decimal?();
                     _AssociatedSurface = null;
@@ -81,7 +81,7 @@ namespace GCDCore.Project
                 }
                 else
                 {
-                    return string.Format("{0} {1} input FIS", System.IO.Path.GetFileNameWithoutExtension(FISRuleFile.FullName), FISInputs.Count);
+                    return string.Format("{0} {1} input FIS", System.IO.Path.GetFileNameWithoutExtension(FISRuleFile.Name), FISInputs.Count);
                 }
             }
         }
@@ -104,7 +104,7 @@ namespace GCDCore.Project
                     {
                         fisinputs[input.FISInputName] = input.AssociatedSurface.Raster;
                     }
-                    return new GCDConsoleLib.GCD.ErrorRasterProperties(FISRuleFile, fisinputs);
+                    return new GCDConsoleLib.GCD.ErrorRasterProperties(FISRuleFile.FilePath, fisinputs);
                 }
             }
         }
@@ -146,7 +146,9 @@ namespace GCDCore.Project
                 }
                 else if (nodFIS is XmlNode)
                 {
-                    FISRuleFile = ProjectManager.Project.GetAbsolutePath(nodFIS.InnerText);
+                    FileInfo fisFile = ProjectManager.Project.GetAbsolutePath(nodFIS.InnerText);
+                    FISRuleFile = new ErrorCalculation.FIS.FISLibraryItem(fisFile.FullName, ErrorCalculation.FIS.FISLibrary.FISLibraryItemTypes.Project);
+
                     foreach (XmlNode nodInput in nodProperty.SelectNodes("FISInputs/Input"))
                     {
                         AssocSurface assoc = dem.AssocSurfaces.First<AssocSurface>(x => string.Compare(nodInput.SelectSingleNode("AssociatedSurface").InnerText, x.Name, true) == 0);
@@ -166,8 +168,8 @@ namespace GCDCore.Project
             if (AssociatedSurface != null)
                 nodParent.AppendChild(nodParent.OwnerDocument.CreateElement("AssociatedSurface")).InnerText = AssociatedSurface.Name;
 
-            if (FISRuleFile is FileInfo)
-                nodParent.AppendChild(nodParent.OwnerDocument.CreateElement("FISRuleFile")).InnerText = ProjectManager.Project.GetRelativePath(FISRuleFile);
+            if (FISRuleFile is ErrorCalculation.FIS.FISLibraryItem)
+                nodParent.AppendChild(nodParent.OwnerDocument.CreateElement("FISRuleFile")).InnerText = ProjectManager.Project.GetRelativePath(FISRuleFile.FilePath);
 
             if (FISInputs != null)
             {
@@ -197,9 +199,20 @@ namespace GCDCore.Project
                     Dictionary<string, GCDConsoleLib.Raster> inputs = new Dictionary<string, GCDConsoleLib.Raster>();
                     FISInputs.ToList().ForEach(x => inputs.Add(x.FISInputName, x.AssociatedSurface.Raster));
 
-                    return new GCDConsoleLib.GCD.ErrorRasterProperties(FISRuleFile, inputs);
+                    return new GCDConsoleLib.GCD.ErrorRasterProperties(FISRuleFile.FilePath, inputs);
                 }
             }
+        }
+
+        public void CloneToProject(string errSurfName, DirectoryInfo destinationDir)
+        {
+            if (FISRuleFile == null)
+                return;
+
+            // Copies the FIS rule file (and metadata as XML if exists) to the project folder
+            // and creaetes a clone copy FIS Library Item so that the GCD project can reference the local copy.
+            // CAUTION - SET THE PRIVATE PROPERTY TO BYPASS RESETTING THE FIS INPUTS
+            _FISRuleFile = FISRuleFile.Copy(errSurfName, destinationDir);
         }
     }
 }

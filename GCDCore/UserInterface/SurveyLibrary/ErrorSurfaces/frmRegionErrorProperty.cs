@@ -14,7 +14,7 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
             InitializeComponent();
 
             txtRegion.Text = region;
-            ucErrProp.InitializeExisting(errProp, assocs);
+            ucErrProp.InitializeExisting(errProp, assocs, false);
         }
 
         private void cmdOK_Click(object sender, EventArgs e)

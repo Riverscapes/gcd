@@ -14,14 +14,31 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
 {
     public partial class ucErrorSurfaceProperties : UserControl
     {
+        /// <summary>
+        /// This list contains the FIS available for existing or new FIS error properties.
+        /// The list is pre-populated with all the system and user FIS items. 
+        /// However, when viewing the properties of an existing FIS, it might not be
+        /// present in the FIS library, in which case a temporary FISLibraryItem is created
+        /// for this FIS rule file, selected in the combo and locked so the user can't edit it.
+        /// </summary>
+        private readonly BindingList<FISLibraryItem> FISList;
+        
         public ErrorSurfaceProperty ErrSurfProperty { get; internal set; }
         public bool Editable { get; internal set; }
+
+        /// <summary>
+        /// The selected FIS library item or NULL if none selected.
+        /// </summary>
+        public FISLibraryItem SelectedFIS { get { return rdoFIS.Checked ? cboFIS.SelectedItem as FISLibraryItem : null; } }
 
         private BindingList<AssocSurface> AssociatedSurfaces;
 
         public ucErrorSurfaceProperties()
         {
             InitializeComponent();
+
+            // List of FIS that the user can choose from
+            FISList = new BindingList<FISLibraryItem>();
         }
 
         public void InitializeNew(string regionName, List<AssocSurface> assocs)
@@ -59,7 +76,14 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
             colCombo.ValueMember = "This"; // needed to support binding column to complex object
 
             cboAssociated.DataSource = AssociatedSurfaces;
-            cboFIS.DataSource = ProjectManager.FISLibrary.FISItems;
+
+            // Add all the FIS library items to the FIS combo box. Don't bind the combo
+            // directly to the FIS library because we might need to add a temporary, project FIS
+            // item to the combo if an error surface uses an FIS that is not in the library
+            FISList.Clear();
+            ProjectManager.FISLibrary.FISItems.ToList().ForEach(x => FISList.Add(x));
+            cboFIS.DataSource = FISList;
+            cboFIS.SelectedIndex = -1;
 
             cboFIS.SelectedIndexChanged += cboFIS_SelectedIndexChanged;
             rdoAssociated.CheckedChanged += ErrorSurfaceTypeChanged;
@@ -77,18 +101,28 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
                 cboAssociated.SelectedItem = ErrSurfProperty.AssociatedSurface;
             }
 
-            if (ErrSurfProperty.FISRuleFile is System.IO.FileInfo)
+            if (ErrSurfProperty.FISRuleFile is FISLibraryItem)
             {
                 rdoFIS.Checked = true;
-                // Make sure that the correct FIS rule file is selected. Bit clumsy but works!
-                for (int i = 0; i < cboFIS.Items.Count; i++)
+
+                if (ErrSurfProperty.FISRuleFile.FISType == ErrorCalculation.FIS.FISLibrary.FISLibraryItemTypes.Project)
                 {
-                    if (string.Compare(((FISLibraryItem)cboFIS.Items[i]).FilePath.FullName, ErrSurfProperty.FISRuleFile.FullName, true) == 0)
-                    {
-                        cboFIS.SelectedIndex = i;
-                        break;
-                    }
+                    // Existing error surface with project FIS. The combo will be locked so simply add and selected the project FIS
+                    FISList.Add(ErrSurfProperty.FISRuleFile);
+                    cboFIS.SelectedItem = ErrSurfProperty.FISRuleFile;
                 }
+                else
+                {          
+                    // New error surface select the system or custom FIS library item
+                    for (int i = 0; i < cboFIS.Items.Count; i++)
+                    {
+                        if (string.Compare(((FISLibraryItem)cboFIS.Items[i]).FilePath.FullName, ErrSurfProperty.FISRuleFile.FilePath.FullName, true) == 0)
+                        {
+                            cboFIS.SelectedIndex = i;
+                            break;
+                        }
+                    }
+                }  
             }
 
             // Finally call the update to put the controls in the correct state
@@ -115,6 +149,7 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
 
             rdoFIS.Enabled = rdoFIS.Checked ? true : Editable && AssociatedSurfaces.Count() > 1;
             cboFIS.Enabled = rdoFIS.Checked && Editable;
+            cmdFISProperties.Enabled = rdoFIS.Checked && cboFIS.SelectedItem is FISLibraryItem;
             grdFISInputs.Enabled = cboFIS.Enabled;
             if (!rdoFIS.Checked)
                 cboFIS.SelectedIndex = -1;
@@ -130,19 +165,25 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
                 return;
             }
 
-            FISRuleFile selectedFIS = new FISRuleFile(((FISLibraryItem)cboFIS.SelectedItem).FilePath);
+            FISLibraryItem selectedFIS = cboFIS.SelectedItem as FISLibraryItem;
 
             // Detect if this is already the identified FIS
-            if (!(ErrSurfProperty.FISRuleFile is System.IO.FileInfo && string.Compare(ErrSurfProperty.FISRuleFile.FullName, selectedFIS.RuleFilePath.FullName, true) == 0))
+            if (!(ErrSurfProperty.FISRuleFile is FISLibraryItem && string.Compare(ErrSurfProperty.FISRuleFile.FilePath.FullName, selectedFIS.FilePath.FullName, true) == 0))
             {
                 // Load the inputs for the newly selected FIS rule file into the error properties
-                ErrSurfProperty.FISRuleFile = selectedFIS.RuleFilePath;
+                ErrSurfProperty.FISRuleFile = selectedFIS;
                 ErrSurfProperty.FISInputs.Clear();
-                foreach (string input in selectedFIS.FISInputs)
-                    ErrSurfProperty.FISInputs.Add(new FISInput(input));
+                foreach (FISInputMeta input in selectedFIS.Inputs)
+                    ErrSurfProperty.FISInputs.Add(new FISInput(input.Name));
             }
 
             grdFISInputs.DataSource = ErrSurfProperty.FISInputs;
+            cmdFISProperties.Enabled = rdoFIS.Checked && cboFIS.SelectedItem is FISLibraryItem;
+
+            // Select the inputs grid to speed up user input
+            grdFISInputs.Select();
+            if (grdFISInputs.Rows.Count > 0)
+                grdFISInputs.Rows[0].Cells[1].Selected = true;
         }
 
         public bool ValidateForm()
@@ -188,6 +229,15 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
         private void valUniform_Enter(object sender, EventArgs e)
         {
             valUniform.Select(0, valUniform.Text.Length);
+        }
+
+        private void cmdFISProperties_Click(object sender, EventArgs e)
+        {
+            if (cboFIS.SelectedItem is FISLibraryItem)
+            {
+                FISLibrary.frmFISProperties frm = new FISLibrary.frmFISProperties((FISLibraryItem) cboFIS.SelectedItem);
+                frm.ShowDialog();
+            }
         }
     }
 }

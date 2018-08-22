@@ -39,6 +39,7 @@
             this.valUniform = new System.Windows.Forms.NumericUpDown();
             this.rdoUniform = new System.Windows.Forms.RadioButton();
             this.tTip = new System.Windows.Forms.ToolTip(this.components);
+            this.cmdFISProperties = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.grdFISInputs)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.valUniform)).BeginInit();
             this.SuspendLayout();
@@ -84,7 +85,7 @@
             this.grdFISInputs.RowHeadersVisible = false;
             this.grdFISInputs.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.grdFISInputs.Size = new System.Drawing.Size(418, 100);
-            this.grdFISInputs.TabIndex = 6;
+            this.grdFISInputs.TabIndex = 7;
             // 
             // FISInput
             // 
@@ -111,7 +112,7 @@
             this.cboFIS.FormattingEnabled = true;
             this.cboFIS.Location = new System.Drawing.Point(155, 57);
             this.cboFIS.Name = "cboFIS";
-            this.cboFIS.Size = new System.Drawing.Size(291, 21);
+            this.cboFIS.Size = new System.Drawing.Size(262, 21);
             this.cboFIS.TabIndex = 5;
             // 
             // rdoFIS
@@ -146,10 +147,22 @@
             this.rdoUniform.Text = "Uniform error value ()";
             this.rdoUniform.UseVisualStyleBackColor = true;
             // 
+            // button1
+            // 
+            this.cmdFISProperties.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmdFISProperties.Image = global::GCDCore.Properties.Resources.Help;
+            this.cmdFISProperties.Location = new System.Drawing.Point(423, 56);
+            this.cmdFISProperties.Name = "button1";
+            this.cmdFISProperties.Size = new System.Drawing.Size(23, 23);
+            this.cmdFISProperties.TabIndex = 6;
+            this.cmdFISProperties.UseVisualStyleBackColor = true;
+            this.cmdFISProperties.Click += new System.EventHandler(this.cmdFISProperties_Click);
+            // 
             // ucErrorSurfaceProperties
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.cmdFISProperties);
             this.Controls.Add(this.cboAssociated);
             this.Controls.Add(this.rdoAssociated);
             this.Controls.Add(this.grdFISInputs);
@@ -179,5 +192,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn FISInput;
         private System.Windows.Forms.DataGridViewComboBoxColumn AssociatedSurface;
         private System.Windows.Forms.ToolTip tTip;
+        private System.Windows.Forms.Button cmdFISProperties;
     }
 }

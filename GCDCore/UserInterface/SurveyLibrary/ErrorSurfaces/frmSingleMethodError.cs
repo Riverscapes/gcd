@@ -71,15 +71,17 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
 
                 if (ErrorSurface == null)
                 {
+                    // If this is a FIS error surface then copy the FIS file to the project and point the error surface property to
+                    // this local file before saving the project. This will ensure that path to the FIS file is local to the project.
+                    // MUST BE DONE BEFORE SAVING ERROR PROPERTIES TO THE PROJECT
+                    ucErrProps.ErrSurfProperty.CloneToProject(ucName.ItemName, ucName.AbsolutePath.Directory);
+
                     // Create the raster then add it to the DEM survey
                     ucName.AbsolutePath.Directory.Create();
                     RasterOperators.CreateErrorRaster(DEM.Raster, ucErrProps.ErrSurfProperty.GCDErrSurfPropery, ucName.AbsolutePath, ProjectManager.OnProgressChange);
                     ErrorSurface = new ErrorSurface(ucName.ItemName, ucName.AbsolutePath, DEM, chkDefault.Checked, ucErrProps.ErrSurfProperty);
                     DEM.ErrorSurfaces.Add(ErrorSurface);
                     ProjectManager.AddNewProjectItemToMap(ErrorSurface);
-
-                    // If there's a FIS file, copy it next to the error raster to aid reproducability
-                    CopyFISFileToFolder(ucErrProps.ErrSurfProperty, ucName.AbsolutePath.Directory);
                 }
                 else
                 {
@@ -96,26 +98,6 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
             {
                 DialogResult = DialogResult.None;
                 GCDException.HandleException(ex, "Error editing single region error surface");
-            }
-        }
-
-        public static void CopyFISFileToFolder(ErrorSurfaceProperty errProp, DirectoryInfo dir)
-        {
-            if (errProp.FISRuleFile is FileInfo)
-            {
-                try
-                {
-                    // Should already exist because it was used for the error surface
-                    dir.Create();
-
-                    FileInfo newPath = naru.os.File.GetNewSafeName(dir.FullName, Path.GetFileNameWithoutExtension(errProp.FISRuleFile.FullName), Path.GetExtension(errProp.FISRuleFile.FullName));
-                    errProp.FISRuleFile.CopyTo(newPath.FullName);
-                }
-                catch (Exception ex)
-                {
-                    // Do nothing. This is non-essential copy of non-project registered file
-                    Console.WriteLine("Error copying FIS file next to error surface", ex.Message);
-                }
             }
         }
 

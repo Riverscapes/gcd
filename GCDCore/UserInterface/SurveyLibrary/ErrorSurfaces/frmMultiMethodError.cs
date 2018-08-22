@@ -62,7 +62,6 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
             if (ErrorSurface != null)
             {
                 cboMask.Enabled = false;
-                grdRegions.Enabled = false;
             }
 
             tTip.SetToolTip(cboMask, "The polygon mask that defines the regions where different error surface configurations will be applied.");
@@ -140,8 +139,10 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
                     DEM.ErrorSurfaces.Add(ErrorSurface);
                     ProjectManager.AddNewProjectItemToMap(ErrorSurface);
 
-                    // If there are any FIS file(s), copy them next to the error raster to aid reproducability
-                    ErrProps.ToList().ForEach(x => frmSingleMethodError.CopyFISFileToFolder(x, ucName.AbsolutePath.Directory));
+                    // If this is a FIS error surface then copy the FIS file to the project and point the error surface property to
+                    // this local file before saving the project. This will ensure that path to the FIS file is local to the project.
+                    // MUST BE DONE BEFORE SAVING ERROR PROPERTIES TO THE PROJECT
+                    ErrProps.ToList().ForEach(x => x.CloneToProject(string.Format("{0}_{1}", ucName.ItemName, x.Name), ucName.AbsolutePath.Directory));
                 }
                 else
                 {

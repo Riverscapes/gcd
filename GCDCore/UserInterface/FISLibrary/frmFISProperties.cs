@@ -46,7 +46,7 @@ namespace GCDCore.UserInterface.FISLibrary
         public frmFISProperties(string fisFilePath)
         {
             InitializeComponent();
-            FISLibraryItem = new FISLibraryItem(fisFilePath);
+            FISLibraryItem = new FISLibraryItem(fisFilePath, ErrorCalculation.FIS.FISLibrary.FISLibraryItemTypes.User);
             cmdOK.Text = Properties.Resources.CreateButtonText;
             IsEditMode = false;
         }

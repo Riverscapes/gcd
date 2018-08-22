@@ -156,6 +156,13 @@ namespace GCDCore.Project
 
         public override void Delete()
         {
+            // Delete any FIS (*.fis) and FIS (*.fis.xml) metadata files
+            // Do this before calling base class Delete so that the folder is empty and will get removed
+            foreach (FileInfo fis in Raster.GISFileInfo.Directory.GetFiles("*.fis*", SearchOption.TopDirectoryOnly))
+            {
+                fis.Delete();
+            }
+
             base.Delete();
 
             // delete the associated surfaces group folder if this was the last associated surface

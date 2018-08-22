@@ -107,7 +107,6 @@
     <Compile Include="Project\CoherenceProperties.cs" />
     <Compile Include="Engines\EngineBase.cs" />
     <Compile Include="ErrorCalculation\FIS\FISLibraryItem.cs" />
-    <Compile Include="ErrorCalculation\FIS\FISRuleFile.cs" />
     <Compile Include="Project\AssocSurface.cs" />
     <Compile Include="Project\BudgetSegregation.cs" />
     <Compile Include="Project\BudgetSegregationClass.cs" />

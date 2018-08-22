@@ -11,7 +11,8 @@ namespace GCDCore.ErrorCalculation.FIS
         public enum FISLibraryItemTypes
         {
             System,
-            User
+            User,
+            Project
         };
 
         public readonly naru.ui.SortableBindingList<FISLibraryItem> FISItems;
@@ -48,15 +49,20 @@ namespace GCDCore.ErrorCalculation.FIS
 
         public void Save()
         {
+            XmlNode parentNode = CreateFISLibraryXML();
+            FISItems.Where(x => x.FISType == FISLibraryItemTypes.User).ToList().ForEach(x => x.Serialize(parentNode));
+
+            CustomFISLibrary.Directory.Create();
+            parentNode.OwnerDocument.Save(CustomFISLibrary.FullName);
+        }
+
+        public static XmlNode CreateFISLibraryXML()
+        {
             XmlDocument xmlDoc = new XmlDocument();
             XmlNode nodRoot = xmlDoc.AppendChild(xmlDoc.CreateElement("FISLibrary", "http://www.w3.org/2001/XMLSchema-instance"));
             nodRoot.Attributes.Append(xmlDoc.CreateAttribute("noNamespaceSchemaLocation")).InnerText = "https://raw.githubusercontent.com/Riverscapes/fis-dem-error/master/FISLibrary.xsd";
             xmlDoc.InsertBefore(xmlDoc.CreateXmlDeclaration("1.0", "utf-8", null), nodRoot);
-
-            FISItems.Where(x => x.FISType == FISLibraryItemTypes.User).ToList().ForEach(x => x.Serialize(nodRoot));
-
-            CustomFISLibrary.Directory.Create();
-            xmlDoc.Save(CustomFISLibrary.FullName);
+            return nodRoot;
         }
 
         private void LoadFISLibrary(FileInfo filePath, FISLibraryItemTypes eType)
