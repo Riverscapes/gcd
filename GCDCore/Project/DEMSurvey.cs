@@ -60,7 +60,8 @@ namespace GCDCore.Project
             if (nodChronologicalOrder is XmlNode)
             {
                 string sChronologicalOrder = nodChronologicalOrder.InnerText;
-                Boolean bParseSuccessful = int.TryParse(sChronologicalOrder, out int iChronologicalOrder);
+                int iChronologicalOrder;
+                Boolean bParseSuccessful = int.TryParse(sChronologicalOrder, out iChronologicalOrder);
                 if (bParseSuccessful)
                 {
                     ChronologicalOrder = iChronologicalOrder;

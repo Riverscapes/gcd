@@ -179,7 +179,8 @@ namespace GCDConsoleLib.Tests
 
                 foreach (KeyValuePair<string, Raster> kvp in rasters)
                 {
-                    kvp.Value.Proj.mSRef.ExportToPrettyWkt(out string thing, 0);
+                    string thing;
+                    kvp.Value.Proj.mSRef.ExportToPrettyWkt(out thing, 0);
 
                     Raster rCopy = RasterOperators.ExtendedCopy(kvp.Value, new FileInfo(Path.Combine(tmp.Name, kvp.Value.GISFileInfo.Name)));
                     string HSName = Path.GetFileNameWithoutExtension(kvp.Value.GISFileInfo.Name) + "_HS" + Path.GetExtension(kvp.Value.GISFileInfo.Name);
@@ -199,7 +200,8 @@ namespace GCDConsoleLib.Tests
             foreach(KeyValuePair<string, Projection> kvp in projdict)
             {
                 Projection Proj = kvp.Value;
-                Proj.mSRef.ExportToProj4(out string proj4);
+                string proj4;
+                Proj.mSRef.ExportToProj4(out proj4);
                 Debug.WriteLine(String.Format("{0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}",
                     Proj.mSRef.IsLocal(), Proj.mSRef.IsProjected(), Proj.mSRef.IsGeographic(), 
                     Proj.mSRef.IsGeocentric(), kvp.Key, Proj.mSRef.GetLinearUnitsName(),
