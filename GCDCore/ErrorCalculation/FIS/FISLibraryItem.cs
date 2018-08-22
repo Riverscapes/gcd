@@ -78,7 +78,7 @@ namespace GCDCore.ErrorCalculation.FIS
             AddMetadataItem("Survey Type");
 
             FileInfo xmlMetaData = new FileInfo(Path.ChangeExtension(fisfilePath, "fis.xml"));
-            if (eType == FISLibrary.FISLibraryItemTypes.Project && xmlMetaData.Exists)
+            if (eType != FISLibrary.FISLibraryItemTypes.System && xmlMetaData.Exists)
             {
                 try
                 {
