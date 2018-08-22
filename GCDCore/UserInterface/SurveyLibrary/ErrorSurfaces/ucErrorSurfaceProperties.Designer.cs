@@ -147,12 +147,12 @@
             this.rdoUniform.Text = "Uniform error value ()";
             this.rdoUniform.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // cmdFISProperties
             // 
             this.cmdFISProperties.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmdFISProperties.Image = global::GCDCore.Properties.Resources.Help;
+            this.cmdFISProperties.Image = global::GCDCore.Properties.Resources.info;
             this.cmdFISProperties.Location = new System.Drawing.Point(423, 56);
-            this.cmdFISProperties.Name = "button1";
+            this.cmdFISProperties.Name = "cmdFISProperties";
             this.cmdFISProperties.Size = new System.Drawing.Size(23, 23);
             this.cmdFISProperties.TabIndex = 6;
             this.cmdFISProperties.UseVisualStyleBackColor = true;

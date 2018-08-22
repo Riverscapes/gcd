@@ -154,17 +154,14 @@
   <data name="refresh" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\refresh.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="BrowseFolder" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\BrowseFolder.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="BudgetSeg" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\BudgetSeg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="CreateButtonText" xml:space="preserve">
     <value>   Create</value>
   </data>
   <data name="GCD_SplashLogo_200" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\GCD_SplashLogo_200.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CurrentFunders2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CurrentFunders2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Excel" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Excel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -190,6 +187,9 @@
   <data name="SlopeDegree" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SlopeDegree.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="linear_extraction" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\linear_extraction.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Options" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Options.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -198,6 +198,9 @@
   </data>
   <data name="vdod2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\vdod2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="UploadAPIUrl" xml:space="preserve">
+    <value>https://jntwr1slel.execute-api.us-west-2.amazonaws.com/production</value>
   </data>
   <data name="mask_dir" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\mask_dir.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -214,9 +217,6 @@
   <data name="GCD" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\GCD.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="IdahoPower_63height" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\IdahoPower_63height.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="polygon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\polygon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -226,14 +226,20 @@
   <data name="OpenProject" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\OpenProject.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="import" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\import.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="chrono_descending" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\chrono_descending.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NewIssueURL" xml:space="preserve">
+    <value>https://github.com/Riverscapes/gcd/issues</value>
   </data>
   <data name="Settings" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Settings.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="alpha_descending" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\alpha_descending.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Reservoir" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Reservoir.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="SaveGIS" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SaveGIS.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -268,6 +274,9 @@
   <data name="Delta" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Delta.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="UploadPublicUrl" xml:space="preserve">
+    <value>http://1645323425123462.s3-website-us-west-2.amazonaws.com/</value>
+  </data>
   <data name="UpdateButtonText" xml:space="preserve">
     <value>   Update</value>
   </data>
@@ -280,17 +289,17 @@
   <data name="TopCat" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\TopCat.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="vdod7" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vdod7.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="GCDWebSiteURL" xml:space="preserve">
     <value>http://gcd.riverscapes.xyz/</value>
   </data>
-  <data name="vdod3" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\vdod3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="USGS" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\USGS.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="Roughness" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Roughness.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TATWebSite" xml:space="preserve">
+    <value>http://tat.riverscapes.xyz/</value>
   </data>
   <data name="AddToMap" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\AddToMap.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -313,11 +322,14 @@
   <data name="CoincidentPoints" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\CoincidentPoints.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="vdod5" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\vdod5.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="CrossSectionViewerWebSite" xml:space="preserve">
+    <value>http://xsviewer.northarrowresearch.com</value>
   </data>
-  <data name="import" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\import.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="vdod3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vdod3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="alpha_descending" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\alpha_descending.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="vdod6" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\vdod6.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -325,14 +337,17 @@
   <data name="mask" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\mask.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="CurrentFunders2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\CurrentFunders2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="vdod5" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vdod5.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="vdod1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\vdod1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="linear_extraction" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\linear_extraction.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="sigma" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\sigma.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="USGS" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\USGS.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="FISLibrary" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\FISLibrary.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -340,37 +355,25 @@
   <data name="CleanRaster" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\CleanRaster.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="BrowseFolder" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BrowseFolder.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="PrecisionHelp" xml:space="preserve">
     <value>The horizontal decimal precision refers to the number of decimals places used to define the raster extent and cell size. This value should be the minimum number of decimal places required to accurately store the raster cell size. e.g. a cell size of 0.01m (1cm) should use a precision of 2.</value>
   </data>
-  <data name="Reservoir" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Reservoir.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="IdahoPower_63height" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\IdahoPower_63height.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="SelectNone" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SelectNone.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="sigma" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\sigma.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="BudgetSeg" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BudgetSeg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="edit" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\edit.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="vdod7" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\vdod7.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="NewIssueURL" xml:space="preserve">
-    <value>https://github.com/Riverscapes/gcd/issues</value>
-  </data>
-  <data name="TATWebSite" xml:space="preserve">
-    <value>http://tat.riverscapes.xyz/</value>
-  </data>
-  <data name="UploadAPIUrl" xml:space="preserve">
-    <value>https://jntwr1slel.execute-api.us-west-2.amazonaws.com/production</value>
-  </data>
-  <data name="UploadPublicUrl" xml:space="preserve">
-    <value>http://1645323425123462.s3-website-us-west-2.amazonaws.com/</value>
-  </data>
-  <data name="CrossSectionViewerWebSite" xml:space="preserve">
-    <value>http://xsviewer.northarrowresearch.com</value>
+  <data name="info" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\info.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
