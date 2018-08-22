@@ -923,7 +923,7 @@ namespace GCDConsoleLib
             Raster outputRaster = new Raster(rDEM, sOutputRaster, new GdalDataType(typeof(double)));
             PointDensity op = new PointDensity(rDEM, vPointCloud, outputRaster, eKernel, fSize);
             op.AddProgressEvent(progressHandler);
-            op.OpDescription = "Calculating point Density";
+            op.OpDescription = "Calculating point density";
             if (progressHandler != null)
                 op.ProgressEvent += progressHandler;
 
