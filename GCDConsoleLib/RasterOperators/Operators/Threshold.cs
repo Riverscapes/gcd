@@ -7,9 +7,9 @@ namespace GCDConsoleLib.Internal.Operators
     {
         protected RasterOperators.ThresholdOps _botOp;
         protected double _botNum;
-        private RasterOperators.ThresholdOps _topOp;
-        private double _topNum;
-        private bool bTwoOps;
+        private readonly RasterOperators.ThresholdOps _topOp;
+        private readonly double _topNum;
+        private readonly bool bTwoOps;
 
         /// <summary>
         /// Constructor

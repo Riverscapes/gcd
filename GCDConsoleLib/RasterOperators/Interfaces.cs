@@ -629,7 +629,7 @@ namespace GCDConsoleLib
         /// <param name="progressHandler">Optional Event handler</param>
         /// <param name="RasterizeFirst">Set to false to allow overlaps (much slower)</param>
         /// <returns></returns>
-        enum statsType : byte { raw, thr, err };
+        enum StatsType : byte { raw, thr, err };
         public static Dictionary<string, DoDStats> GetStatsProbalistic(Raster rawDoD, Raster thrDoD, Raster propErrRaster,
             Vector PolygonMask, string FieldName, UnitGroup units,
             EventHandler<OpStatus> progressHandler = null,
@@ -695,33 +695,33 @@ namespace GCDConsoleLib
             DoDStats empty = new DoDStats(cellArea, units);
 
             // Now turn the dictionaries inside out [fieldvalue][raw/thr/err][DoDstats]
-            Dictionary<string, Dictionary<statsType, DoDStats>> statsflddic = new Dictionary<string, Dictionary<statsType, DoDStats>>();
+            Dictionary<string, Dictionary<StatsType, DoDStats>> statsflddic = new Dictionary<string, Dictionary<StatsType, DoDStats>>();
 
             foreach (KeyValuePair<string, DoDStats> kvp in raw.SegStats)
                 if (statsflddic.ContainsKey(kvp.Key))
-                    statsflddic[kvp.Key][statsType.raw] = kvp.Value;
+                    statsflddic[kvp.Key][StatsType.raw] = kvp.Value;
                 else
-                    statsflddic[kvp.Key] = new Dictionary<statsType, DoDStats>() { { statsType.raw, kvp.Value } };
+                    statsflddic[kvp.Key] = new Dictionary<StatsType, DoDStats>() { { StatsType.raw, kvp.Value } };
 
             foreach (KeyValuePair<string, DoDStats> kvp in thr.SegStats)
                 if (statsflddic.ContainsKey(kvp.Key))
-                    statsflddic[kvp.Key][statsType.thr] = kvp.Value;
+                    statsflddic[kvp.Key][StatsType.thr] = kvp.Value;
                 else
-                    statsflddic[kvp.Key] = new Dictionary<statsType, DoDStats>() { { statsType.thr, kvp.Value } };
+                    statsflddic[kvp.Key] = new Dictionary<StatsType, DoDStats>() { { StatsType.thr, kvp.Value } };
 
             foreach (KeyValuePair<string, DoDStats> kvp in err.SegStats)
                 if (statsflddic.ContainsKey(kvp.Key))
-                    statsflddic[kvp.Key][statsType.err] = kvp.Value;
+                    statsflddic[kvp.Key][StatsType.err] = kvp.Value;
                 else
-                    statsflddic[kvp.Key] = new Dictionary<statsType, DoDStats>() { { statsType.err, kvp.Value } };
+                    statsflddic[kvp.Key] = new Dictionary<StatsType, DoDStats>() { { StatsType.err, kvp.Value } };
 
             // Now we're ready to combine things and return a dictionary of values
             Dictionary<string, DoDStats> retVal = new Dictionary<string, DoDStats>();
-            foreach (KeyValuePair<string, Dictionary<statsType, DoDStats>> kvp in statsflddic)
+            foreach (KeyValuePair<string, Dictionary<StatsType, DoDStats>> kvp in statsflddic)
             {
                 // Now we need to fill in the blanks with an empty DoDstats object so we get 0's where 
                 // we expect them.
-                foreach (statsType tp in Enum.GetValues(typeof(statsType)))
+                foreach (StatsType tp in Enum.GetValues(typeof(StatsType)))
                     if (!kvp.Value.ContainsKey(tp))
                         kvp.Value[tp] = empty;
 
@@ -729,16 +729,16 @@ namespace GCDConsoleLib
                 // the "raw" object of the returned stats dictionary. So the "thr" and "err"
                 // stats are **assigned** to the appropriate types but **originate** from the "raw" part of the object.
                 retVal[kvp.Key] = new DoDStats(
-                            kvp.Value[statsType.raw].ErosionRaw.GetArea(cellArea),
-                            kvp.Value[statsType.raw].DepositionRaw.GetArea(cellArea),
-                            kvp.Value[statsType.thr].ErosionRaw.GetArea(cellArea),
-                            kvp.Value[statsType.thr].DepositionRaw.GetArea(cellArea),
-                            kvp.Value[statsType.raw].ErosionRaw.GetVolume(cellArea, units.VertUnit),
-                            kvp.Value[statsType.raw].DepositionRaw.GetVolume(cellArea, units.VertUnit),
-                            kvp.Value[statsType.thr].ErosionRaw.GetVolume(cellArea, units.VertUnit),
-                            kvp.Value[statsType.thr].DepositionRaw.GetVolume(cellArea, units.VertUnit),
-                            kvp.Value[statsType.err].ErosionRaw.GetVolume(cellArea, units.VertUnit),
-                            kvp.Value[statsType.err].DepositionRaw.GetVolume(cellArea, units.VertUnit),
+                            kvp.Value[StatsType.raw].ErosionRaw.GetArea(cellArea),
+                            kvp.Value[StatsType.raw].DepositionRaw.GetArea(cellArea),
+                            kvp.Value[StatsType.thr].ErosionRaw.GetArea(cellArea),
+                            kvp.Value[StatsType.thr].DepositionRaw.GetArea(cellArea),
+                            kvp.Value[StatsType.raw].ErosionRaw.GetVolume(cellArea, units.VertUnit),
+                            kvp.Value[StatsType.raw].DepositionRaw.GetVolume(cellArea, units.VertUnit),
+                            kvp.Value[StatsType.thr].ErosionRaw.GetVolume(cellArea, units.VertUnit),
+                            kvp.Value[StatsType.thr].DepositionRaw.GetVolume(cellArea, units.VertUnit),
+                            kvp.Value[StatsType.err].ErosionRaw.GetVolume(cellArea, units.VertUnit),
+                            kvp.Value[StatsType.err].DepositionRaw.GetVolume(cellArea, units.VertUnit),
                             cellArea, units);
 
             }

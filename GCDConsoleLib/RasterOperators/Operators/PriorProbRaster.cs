@@ -8,8 +8,8 @@ namespace GCDConsoleLib.Internal.Operators
     /// </summary>
     class PriorProbRaster : CellByCellOperator<double>
     {
-        private static int rawDod = 0;
-        private static int propError = 1;
+        private readonly static int rawDod = 0;
+        private readonly static int propError = 1;
 
         /// <summary>
         /// Pass-through constructor for Creating Prior Probability Rasters

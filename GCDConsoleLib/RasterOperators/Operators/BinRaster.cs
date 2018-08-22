@@ -11,11 +11,11 @@ namespace GCDConsoleLib.Internal.Operators
 
         // If we do budget seg we need the following
         public Dictionary<string, Histogram> SegHistograms;
-        private string _fieldname;
-        private int _segNumBins;
+        private readonly string _fieldname;
+        private readonly int _segNumBins;
 
         // When we use rasterized polygons we use this as the field vals
-        private Dictionary<int, string> _rasterVectorFieldVals;
+        private readonly Dictionary<int, string> _rasterVectorFieldVals;
 
         /// <summary>
         /// Constructor

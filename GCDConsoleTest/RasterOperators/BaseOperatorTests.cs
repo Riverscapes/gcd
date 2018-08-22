@@ -128,7 +128,7 @@ namespace GCDConsoleLib.Internal.Tests
                 Assert.IsFalse(theTest.OpDone);
 
                 // Now get the first chunk
-                theTest.nextChunk();
+                theTest.NextChunk();
                 Assert.AreEqual(theTest.InExtent.ToString(), "-9979 -10029.0 -9969.0 -10019");
                 Assert.AreEqual(theTest.OpExtent.ToString(), "-9979 -10029.0 -9969.0 -10019");
                 Assert.AreEqual(theTest.ChunkExtent.ToString(), "-9979 -10021.0 -9969.0 -10020");
@@ -140,7 +140,7 @@ namespace GCDConsoleLib.Internal.Tests
                 while (!theTest.OpDone && counter < 100)
                 {
                     counter++;
-                    theTest.nextChunk();
+                    theTest.NextChunk();
                 }
                 Assert.AreEqual(theTest.ChunkExtent.ToString(), "-9979 -10029.0 -9969.0 -10029");
                 Assert.IsTrue(theTest.OpDone);
@@ -154,7 +154,7 @@ namespace GCDConsoleLib.Internal.Tests
                 Assert.IsFalse(theTest2.OpDone);
 
                 // Now get the first chunk
-                theTest2.nextChunk();
+                theTest2.NextChunk();
                 Assert.AreEqual(theTest2.InExtent.ToString(), "-9979 -10029.0 -9969.0 -10019");
                 Assert.AreEqual(theTest2.OpExtent.ToString(), "-9989 -10039.0 -9959.0 -10009");
                 Assert.AreEqual(theTest2.ChunkExtent.ToString(), "-9989 -10011.0 -9959.0 -10010");
@@ -166,7 +166,7 @@ namespace GCDConsoleLib.Internal.Tests
                 while (!theTest2.OpDone && counter < 100)
                 {
                     counter++;
-                    theTest2.nextChunk();
+                    theTest2.NextChunk();
                 }
                 Assert.AreEqual(theTest2.ChunkExtent.ToString(), "-9989 -10039.0 -9959.0 -10039");
                 Assert.IsTrue(theTest2.OpDone);
@@ -177,7 +177,7 @@ namespace GCDConsoleLib.Internal.Tests
 
         [TestMethod()]
         [TestCategory("Unit")]
-        public void nextChunkTest()
+        public void NextChunkTest()
         {
             FakeRaster<int> Raster1 = new FakeRaster<int>(10, 20, -1, 1, new int[,] { { 1, 2, 3, 4 }, { 5, 6, 7, 8 }, { 9, 10, 11, 12 } });
             FakeRaster<int> rOutput = new FakeRaster<int>(10, 20, -1, 1, new int[,] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 } });
@@ -190,7 +190,7 @@ namespace GCDConsoleLib.Internal.Tests
             Assert.AreEqual(theTest.ChunkExtent.CellHeight, -1);
             Assert.AreEqual(theTest.ChunkExtent.CellWidth, 1);
 
-            theTest.nextChunk();
+            theTest.NextChunk();
             Assert.IsTrue(theTest.OpDone);
         }
 
@@ -209,37 +209,47 @@ namespace GCDConsoleLib.Internal.Tests
             doubleRaster.origNodataVal = double.MinValue;
             byteRaster.origNodataVal = byte.MinValue;
 
-            Raster OUTfloatRaster1 = new FakeRaster<float>(10, 20, -1, 1, new float[,] { { 0.0f } });
-            OUTfloatRaster1.origNodataVal = 0; // Set Purposely wrong
+            Raster OUTfloatRaster1 = new FakeRaster<float>(10, 20, -1, 1, new float[,] { { 0.0f } })
+            {
+                origNodataVal = 0 // Set Purposely wrong
+            };
             TestOp<float> theTest1 = new TestOp<float>(new List<Raster> { floatRaster }, OUTfloatRaster1);
             float expected = floatRaster.NodataValue<float>();
 
             Assert.AreEqual(theTest1.inNodataVals[0], expected);
             Assert.AreEqual(OUTfloatRaster1.NodataValue<float>(), expected);
 
-            Raster OUTdoubleRaster1 = new FakeRaster<double>(10, 20, -1, 1, new double[,] { { 0.0 } });
-            OUTdoubleRaster1.origNodataVal = 0; // Set Purposely wrong
+            Raster OUTdoubleRaster1 = new FakeRaster<double>(10, 20, -1, 1, new double[,] { { 0.0 } })
+            {
+                origNodataVal = 0 // Set Purposely wrong
+            };
             TestOp<double> theTest2 = new TestOp<double>(new List<Raster> { floatRaster }, OUTdoubleRaster1);
             double expected2 = floatRaster.NodataValue<double>();
             Assert.AreEqual(theTest2.outNodataVals[0], expected2);
             Assert.AreEqual(OUTdoubleRaster1.NodataValue<double>(), floatRaster.NodataValue<double>());
 
-            Raster OUTfloatRaster2 = new FakeRaster<float>(10, 20, -1, 1, new float[,] { { 0.0f } });
-            OUTfloatRaster2.origNodataVal = 0; // Set Purposely wrong
+            Raster OUTfloatRaster2 = new FakeRaster<float>(10, 20, -1, 1, new float[,] { { 0.0f } })
+            {
+                origNodataVal = 0 // Set Purposely wrong
+            };
             TestOp<double> theTest3 = new TestOp<double>(new List<Raster> { doubleRaster }, OUTfloatRaster2);
             double expected3 = floatRaster.NodataValue<double>();
             Assert.AreEqual(theTest3.outNodataVals[0], expected3);
             Assert.AreEqual(OUTfloatRaster2.NodataValue<double>(), expected3);
 
-            Raster OUTfloatRaster3 = new FakeRaster<float>(10, 20, -1, 1, new float[,] { { 0.0f } });
-            OUTfloatRaster3.origNodataVal = 0; // Set Purposely wrong
+            Raster OUTfloatRaster3 = new FakeRaster<float>(10, 20, -1, 1, new float[,] { { 0.0f } })
+            {
+                origNodataVal = 0 // Set Purposely wrong
+            };
             TestOp<float> theTest4 = new TestOp<float>(new List<Raster> { intRaster }, OUTfloatRaster3);
             float expected4 = intRaster.NodataValue<float>();
             Assert.AreEqual(theTest4.outNodataVals[0], expected4);
             Assert.AreEqual(OUTfloatRaster3.NodataValue<double>(), expected4);
 
-            Raster OUTintRaster = new FakeRaster<int>(10, 20, -1, 1, new int[,] { { 0 } });
-            OUTintRaster.origNodataVal = 0; // Set Purposely wrong
+            Raster OUTintRaster = new FakeRaster<int>(10, 20, -1, 1, new int[,] { { 0 } })
+            {
+                origNodataVal = 0 // Set Purposely wrong
+            };
             TestOp<float> theTest5 = new TestOp<float>(new List<Raster> { doubleRaster }, OUTintRaster);
             float expected5 = floatRaster.NodataValue<float>();
             Assert.AreEqual(theTest5.outNodataVals[0], expected5);

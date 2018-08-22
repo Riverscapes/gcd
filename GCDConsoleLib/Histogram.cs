@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnitsNet;
 using GCDConsoleLib.GCD;
+using System.Diagnostics;
 
 namespace GCDConsoleLib
 {
@@ -48,6 +49,7 @@ namespace GCDConsoleLib
             }
             catch (Exception e)
             {
+                Debug.WriteLine(e.Message);
                 stats = new Dictionary<string, decimal>{
                     { "max", 0 },
                     { "min", 0 },

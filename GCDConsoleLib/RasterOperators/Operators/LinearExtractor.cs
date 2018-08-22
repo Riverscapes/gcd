@@ -11,39 +11,39 @@ namespace GCDConsoleLib.Internal.Operators
     class LinearExtractor<T> : BaseOperator<T>
     {
         // define all the col names as static strings
-        private static string FIELD_FID = "fid";
-        private static string FIELD_X = "x";
-        private static string FIELD_Y = "y";
-        private static string FIELD_DISTANCE = "distance";
-        private static string FIELD_STATION = "station";
+        private static readonly string FIELD_FID = "fid";
+        private static readonly string FIELD_X = "x";
+        private static readonly string FIELD_Y = "y";
+        //private static string FIELD_DISTANCE = "distance";
+        private static readonly string FIELD_STATION = "station";
 
         // and also a useful enum 
-        private enum ecols { FID, X, Y, DISTANCE, STATION }
+        private enum ECols { FID, X, Y, DISTANCE, STATION }
 
         private static int CHUNKSIZE = 100;
         private FileInfo _csvfile;
-        string sFieldName;
+        private readonly string sFieldName;
         private Vector _vinput;
         private StreamWriter _stream;
 
         // Just a useful enum to use
         // Define all the non-variable column names as static
-        private static Dictionary<ecols, string> cols = new Dictionary<ecols, string>(){
-           {ecols.FID, "FID"},
-           {ecols.X, "X"},
-           {ecols.Y, "Y"},
-           {ecols.DISTANCE, "Distance"}, // This one will take on the field name later
-           {ecols.STATION, "Station"}
+        private static readonly Dictionary<ECols, string> cols = new Dictionary<ECols, string>(){
+           {ECols.FID, "FID"},
+           {ECols.X, "X"},
+           {ECols.Y, "Y"},
+           {ECols.DISTANCE, "Distance"}, // This one will take on the field name later
+           {ECols.STATION, "Station"}
         };
         // The final header list goes into this list
-        private List<ecols> header;
+        private readonly List<ECols> header;
 
         // We keep a list of the XY coords of each feature so we don't have to calculate it every time
         private Dictionary<long, double[]> fid0xy;
 
         // Spacing gets used only for the secondary method
-        private double _spacing;
-        private int _spacingDecimals;
+        private readonly double _spacing;
+        private readonly int _spacingDecimals;
 
         /// <summary>
         /// 
@@ -64,7 +64,7 @@ namespace GCDConsoleLib.Internal.Operators
             // Calling this again after setting the rows will give us a nicer chunk size
             SetOpExtent(OpExtent);
 
-            header = new List<ecols>() { ecols.FID, ecols.STATION, ecols.X, ecols.Y };
+            header = new List<ECols>() { ECols.FID, ECols.STATION, ECols.X, ECols.Y };
 
             _stream = new StreamWriter(_csvfile.FullName, true);
             WriteCSVHeaders();
@@ -89,7 +89,7 @@ namespace GCDConsoleLib.Internal.Operators
             SetOpExtent(OpExtent);
 
             sFieldName = FieldName;
-            header = new List<ecols>() { ecols.FID, ecols.STATION, ecols.DISTANCE, ecols.X, ecols.Y };
+            header = new List<ECols>() { ECols.FID, ECols.STATION, ECols.DISTANCE, ECols.X, ECols.Y };
 
             _stream = new StreamWriter(_csvfile.FullName, true);
             WriteCSVHeaders();
@@ -113,7 +113,7 @@ namespace GCDConsoleLib.Internal.Operators
             // Write the last point. we need to round it a bit
             _spacingDecimals = DynamicMath.numDecimals(ptsspacing);
 
-            header = new List<ecols>() { ecols.FID, ecols.STATION, ecols.X, ecols.Y };
+            header = new List<ECols>() { ECols.FID, ECols.STATION, ECols.X, ECols.Y };
 
             sFieldName = "";
 
@@ -140,7 +140,7 @@ namespace GCDConsoleLib.Internal.Operators
             // Write the last point. we need to round it a bit
             _spacingDecimals = DynamicMath.numDecimals(ptsspacing);
 
-            header = new List<ecols>() { ecols.FID, ecols.DISTANCE, ecols.STATION, ecols.X, ecols.Y };
+            header = new List<ECols>() { ECols.FID, ECols.DISTANCE, ECols.STATION, ECols.X, ECols.Y };
 
             sFieldName = FieldName;
 
@@ -182,15 +182,15 @@ namespace GCDConsoleLib.Internal.Operators
         private void WriteCSVHeaders()
         {
             List<string> headerline = new List<string>();
-            foreach (ecols item in header)
+            foreach (ECols item in header)
             {
                 switch (item)
                 {
-                    case (ecols.FID): headerline.Add(FIELD_FID); break;
-                    case (ecols.X): headerline.Add(FIELD_X); break;
-                    case (ecols.Y): headerline.Add(FIELD_Y); break;
-                    case (ecols.DISTANCE): if (!String.IsNullOrEmpty(sFieldName)) headerline.Add(sFieldName); break;
-                    case (ecols.STATION): headerline.Add(FIELD_STATION); break;
+                    case (ECols.FID): headerline.Add(FIELD_FID); break;
+                    case (ECols.X): headerline.Add(FIELD_X); break;
+                    case (ECols.Y): headerline.Add(FIELD_Y); break;
+                    case (ECols.DISTANCE): if (!String.IsNullOrEmpty(sFieldName)) headerline.Add(sFieldName); break;
+                    case (ECols.STATION): headerline.Add(FIELD_STATION); break;
                 }
             }
 
@@ -221,55 +221,55 @@ namespace GCDConsoleLib.Internal.Operators
         {
             throw new NotImplementedException("This operation has problems and was depprecated. Please use the other constructor");
             // Get all the lines in this chunk
-            Dictionary<long, VectorFeature> chunkFeats = _vinput.FeaturesIntersectExtent(ChunkExtent);
-            List<string> csvRows = new List<string>();
+            //Dictionary<long, VectorFeature> chunkFeats = _vinput.FeaturesIntersectExtent(ChunkExtent);
+            //List<string> csvRows = new List<string>();
 
-            if (chunkFeats.Count == 0) return;
+            //if (chunkFeats.Count == 0) return;
 
-            // Loop over all the cells in this chunk
-            for (int cid = 0; cid < data[0].Length; cid++)
-            {
-                // If all null then continue so we don't do the expensive stuff.
-                if (data.Select((x, i) => x[cid].Equals(inNodataVals[i])).All(i => i)) continue;
-                int[] rowcol = ChunkExtent.Id2RowCol(cid);
-                Geometry cellRect = Vector.CellToRect(rowcol[0], rowcol[1], ChunkExtent);
+            //// Loop over all the cells in this chunk
+            //for (int cid = 0; cid < data[0].Length; cid++)
+            //{
+            //    // If all null then continue so we don't do the expensive stuff.
+            //    if (data.Select((x, i) => x[cid].Equals(inNodataVals[i])).All(i => i)) continue;
+            //    int[] rowcol = ChunkExtent.Id2RowCol(cid);
+            //    Geometry cellRect = Vector.CellToRect(rowcol[0], rowcol[1], ChunkExtent);
 
-                // create a circle and then buffer it.
-                foreach (KeyValuePair<long, VectorFeature> feat in chunkFeats)
-                {
-                    if (cellRect.Intersects(feat.Value.Feat.GetGeometryRef()))
-                    {
-                        decimal[] xydec = ChunkExtent.Id2XY(cid);
-                        int fid = (int)feat.Value.Feat.GetFID();
+            //    // create a circle and then buffer it.
+            //    foreach (KeyValuePair<long, VectorFeature> feat in chunkFeats)
+            //    {
+            //        if (cellRect.Intersects(feat.Value.Feat.GetGeometryRef()))
+            //        {
+            //            decimal[] xydec = ChunkExtent.Id2XY(cid);
+            //            int fid = (int)feat.Value.Feat.GetFID();
 
-                        double station = ptDist(fid0xy[feat.Key], new double[] { (double)xydec[0], (double)xydec[1] });
+            //            double station = ptDist(fid0xy[feat.Key], new double[] { (double)xydec[0], (double)xydec[1] });
 
-                        List<string> csvline = new List<string>();
-                        foreach (ecols item in header)
-                        {
-                            switch (item)
-                            {
-                                case (ecols.FID): csvline.Add(fid.ToString()); break;
-                                case (ecols.X): csvline.Add((xydec[0]).ToString()); break;
-                                case (ecols.Y): csvline.Add((xydec[1]).ToString()); break;
-                                case (ecols.DISTANCE): csvline.Add((0).ToString()); break;
-                                case (ecols.STATION): csvline.Add(station.ToString()); break;
-                            }
-                        }
+            //            List<string> csvline = new List<string>();
+            //            foreach (ecols item in header)
+            //            {
+            //                switch (item)
+            //                {
+            //                    case (ecols.FID): csvline.Add(fid.ToString()); break;
+            //                    case (ecols.X): csvline.Add((xydec[0]).ToString()); break;
+            //                    case (ecols.Y): csvline.Add((xydec[1]).ToString()); break;
+            //                    case (ecols.DISTANCE): csvline.Add((0).ToString()); break;
+            //                    case (ecols.STATION): csvline.Add(station.ToString()); break;
+            //                }
+            //            }
 
-                        for (int did = 0; did < data.Count; did++)
-                        {
-                            string rVal = "";
-                            if (!data[did][cid].Equals(inNodataVals[did]))
-                                rVal = data[did][cid].ToString();
-                            csvline.Add(rVal);
+            //            for (int did = 0; did < data.Count; did++)
+            //            {
+            //                string rVal = "";
+            //                if (!data[did][cid].Equals(inNodataVals[did]))
+            //                    rVal = data[did][cid].ToString();
+            //                csvline.Add(rVal);
 
-                        }
-                        csvRows.Add(String.Join(",", csvline));
-                    }
-                }
-            }
-            WriteLinesToCSV(csvRows);
+            //            }
+            //            csvRows.Add(String.Join(",", csvline));
+            //        }
+            //    }
+            //}
+            //WriteLinesToCSV(csvRows);
         }
 
 
@@ -338,13 +338,13 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="pt1"></param>
         /// <param name="pt2"></param>
         /// <returns></returns>
-        public static double ptDist(double[] pt1, double[] pt2)
+        public static double PtDist(double[] pt1, double[] pt2)
         {
             return Math.Sqrt(Math.Pow(pt2[1] - pt1[1], 2) + Math.Pow(pt2[0] - pt1[0], 2));
         }
 
 
-        public void lineWrite(VectorFeature feat, double[] fractionalpt, double distance)
+        public void LineWrite(VectorFeature feat, double[] fractionalpt, double distance)
         {
             // Get the row and col of the cell we're looking for
             int[] rowcol = OpExtent.Pt2RowCol(fractionalpt);
@@ -357,15 +357,15 @@ namespace GCDConsoleLib.Internal.Operators
 
             // Now we write a line to the file
             List<string> csvcols = new List<string>();
-            foreach (ecols item in header)
+            foreach (ECols item in header)
             {
                 switch (item)
                 {
-                    case (ecols.FID): csvcols.Add(fid.ToString()); break;
-                    case (ecols.X): csvcols.Add((fractionalpt[0]).ToString()); break;
-                    case (ecols.Y): csvcols.Add((fractionalpt[1]).ToString()); break;
-                    case (ecols.DISTANCE): if (!String.IsNullOrEmpty(sFieldName)) csvcols.Add(feat.GetFieldAsDouble(sFieldName).ToString()); break;
-                    case (ecols.STATION): csvcols.Add((finalDist).ToString()); break;
+                    case (ECols.FID): csvcols.Add(fid.ToString()); break;
+                    case (ECols.X): csvcols.Add((fractionalpt[0]).ToString()); break;
+                    case (ECols.Y): csvcols.Add((fractionalpt[1]).ToString()); break;
+                    case (ECols.DISTANCE): if (!String.IsNullOrEmpty(sFieldName)) csvcols.Add(feat.GetFieldAsDouble(sFieldName).ToString()); break;
+                    case (ECols.STATION): csvcols.Add((finalDist).ToString()); break;
                 }
             }
             for (int did = 0; did < _inputRasters.Count; did++)
@@ -395,26 +395,32 @@ namespace GCDConsoleLib.Internal.Operators
         /// </summary>
         public void RunWithSpacing()
         {
+            StateChange(OpStatus.States.Started);
+            int counter = 0;
             foreach (VectorFeature feat in _vinput.Features.Values)
             {
+                counter++;
                 Geometry line = feat.Feat.GetGeometryRef();
                 double length = line.Length();
                 double totalDist = 0;
                 double remaining = _spacing;
+
+                ProgressChange((int)(100* (float)counter / _vinput.Features.Count));
+                MsgChange(String.Format("{0}: Feature {1}/{2}", OpDescription, (int)feat.Feat.GetFID(), _vinput.Features.Count));
 
                 double[] pt = new double[2];
                 line.GetPoint_2D(0, pt);
                 int ptCoint = line.GetPointCount();
 
                 // Write the zero point
-                lineWrite(feat, new double[2] { pt[0], pt[1] }, 0);
+                LineWrite(feat, new double[2] { pt[0], pt[1] }, 0);
 
                 for (int pti = 0; pti < ptCoint; pti++)
                 {
                     double[] newpt = new double[2];
                     line.GetPoint_2D(pti, newpt);
 
-                    double seglength = ptDist(pt, newpt);
+                    double seglength = PtDist(pt, newpt);
 
                     // Only if our desired spacing overshoots a point do we really care
                     if (seglength >= remaining || pti == 0 || pti == ptCoint)
@@ -429,7 +435,7 @@ namespace GCDConsoleLib.Internal.Operators
                                 pt[1] + ((newpt[1]-pt[1]) * fractionAlongSeg)
                             };
 
-                            lineWrite(feat, fractionalpt, partialdist + totalDist);
+                            LineWrite(feat, fractionalpt, partialdist + totalDist);
 
                             // Do this first so we can mutate partialdist
                             remaining = _spacing - (seglength - partialdist);
@@ -447,8 +453,9 @@ namespace GCDConsoleLib.Internal.Operators
                     pt = newpt;
                 }
 
-                lineWrite(feat, new double[2] { pt[0], pt[1] }, totalDist);
+                LineWrite(feat, new double[2] { pt[0], pt[1] }, totalDist);
             }
+            StateChange(OpStatus.States.Complete);
             _stream.Close();
         }
     }

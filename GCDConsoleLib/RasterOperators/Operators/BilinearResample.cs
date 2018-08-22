@@ -8,8 +8,8 @@ namespace GCDConsoleLib.Internal.Operators
 {
     class BilinearResample<T> : BaseOperator<T>
     {
-        decimal fy; // old cell height  / new cellheight
-        decimal fx; // old cell width / new cellwidth
+        private readonly decimal fy; // old cell height  / new cellheight
+        private readonly decimal fx; // old cell width / new cellwidth
 
         /// <summary>
         /// Constructor
@@ -33,7 +33,7 @@ namespace GCDConsoleLib.Internal.Operators
         /// <param name="factor"></param>
         /// <param name="size"></param>
         /// <returns></returns>
-        public static int translateCoord(int num, decimal factor, int size)
+        public static int TranslateCoord(int num, decimal factor, int size)
         {
             decimal f = num / factor;
             int i1 = (int)(Math.Floor(f));
@@ -78,8 +78,8 @@ namespace GCDConsoleLib.Internal.Operators
                 outBuffer.Fill(outNodataVals[0]);
                 for (int ncol = 0; ncol < OpExtent.Cols; ncol++)
                 {
-                    int ix1 = translateCoord(ncol, fy, OpExtent.Cols); // This gives us the old COL
-                    int iy1 = translateCoord(nrow, fx, OpExtent.Rows); // This gives us the old ROW
+                    int ix1 = TranslateCoord(ncol, fy, OpExtent.Cols); // This gives us the old COL
+                    int iy1 = TranslateCoord(nrow, fx, OpExtent.Rows); // This gives us the old ROW
 
                     // Increment both by 1 to get 4 coords we need ix2, iy2 are in the old COL and ROW space
                     int ix2 = ix1 + 1;

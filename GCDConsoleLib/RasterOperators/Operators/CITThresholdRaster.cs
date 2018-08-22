@@ -9,10 +9,10 @@ namespace GCDConsoleLib.Internal.Operators
     /// </summary>
     class CITThresholdRaster : CellByCellOperator<double>
     {
-        private static int rawDod = 0;
-        private static int propErr = 1;
+        private static readonly int rawDod = 0;
+        private static readonly int propErr = 1;
 
-        double zCutoff;
+        private readonly double zCutoff;
 
         /// <summary>
         /// Pass-through constructor for Creating Prior Probability Rasters

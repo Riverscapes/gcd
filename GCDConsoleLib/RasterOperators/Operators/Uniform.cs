@@ -5,7 +5,7 @@ namespace GCDConsoleLib.Internal.Operators
 
     public class UniformRaster<T> : CellByCellOperator<T>
     {
-        private T _val;
+        private readonly T _val;
 
         /// <summary>
         /// Constructor

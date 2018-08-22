@@ -8,10 +8,11 @@ namespace GCDConsoleLib.Internal.Operators
     /// </summary>
     class Slope : WindowOverlapOperator<double>
     {
-        double dzdx, dzdy, dzxy, riseRun, cellWidth, cellHeight, retval, theSlope;
-        double[] _buff;
+        private readonly double cellWidth, cellHeight;
+        private double dzdx, dzdy, dzxy, riseRun, retval, theSlope;
+        private double[] _buff;
         public enum SlopeType : byte { Percent, Degrees };
-        private SlopeType _slopetype;
+        private readonly SlopeType _slopetype;
 
         /// <summary>
         /// Pass-through constructor

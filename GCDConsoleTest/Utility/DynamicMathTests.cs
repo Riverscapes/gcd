@@ -89,7 +89,7 @@ namespace GCDConsoleLib.Utility.Tests
         }
 
         [TestMethod()]
-        public void numDecimalsTest()
+        public void NumDecimalsTest()
         {
             Assert.AreEqual(DynamicMath.numDecimals(2.1231m), 4);
 

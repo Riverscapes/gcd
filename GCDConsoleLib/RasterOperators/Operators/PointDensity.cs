@@ -9,13 +9,13 @@ namespace GCDConsoleLib.Internal.Operators
     {
         private static int NUMWINDOWS = 10;
 
-        private Raster _routput;
-        private double _fsize;
-        private decimal _fsizedec;
-        private RasterOperators.KernelShapes _kshape;
+        private readonly Raster _routput;
+        private readonly double _fsize;
+        private readonly decimal _fsizedec;
+        private readonly RasterOperators.KernelShapes _kshape;
         private ExtentRectangle VectorChunkExtent;
-        private Vector _vinput;
-        private double area;
+        private readonly Vector _vinput;
+        private readonly double area;
 
         /// <summary>
         /// Constructor

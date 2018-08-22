@@ -105,7 +105,7 @@ namespace GCDConsoleLib.Internal
             // Now try to fill the end of the window
             while (_chunkCache.Count < BufferLength)
             {
-                nextChunk();
+                NextChunk();
                 GetChunk(data);
                 _chunkCache.Add(data.Clone<T[]>());
             }

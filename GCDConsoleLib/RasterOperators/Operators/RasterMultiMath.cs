@@ -5,8 +5,7 @@ namespace GCDConsoleLib.Internal.Operators
 {
     public class RasterMultiMath : CellByCellOperator<double>
     {
-        private RasterOperators.MultiMathOpType _type;
-
+        private readonly RasterOperators.MultiMathOpType _type;
 
         /// <summary>
         /// Pass-through constructor for Raster Math with a scalar operand

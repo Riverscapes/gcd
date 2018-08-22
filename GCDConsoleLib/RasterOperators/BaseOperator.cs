@@ -58,8 +58,8 @@ namespace GCDConsoleLib.Internal
 
         protected int _vOffset;
 
-        private OpStatus _opStatus;
-        private Stopwatch _lastStatusInvoke;
+        protected OpStatus _opStatus;
+        protected Stopwatch _lastStatusInvoke;
 
         /// <summary>
         /// Report back an integer between 0 and 100
@@ -276,7 +276,7 @@ namespace GCDConsoleLib.Internal
         /// Advance the chunk rectangle to the next chunk
         /// </summary>
         /// <returns></returns>
-        public void nextChunk()
+        public void NextChunk()
         {
             // If the top of the chunk is lower than the bottom of the operational extent then we're done
             if ((ChunkExtent.Top / ChunkExtent.CellHeight) < (OpExtent.Bottom / ChunkExtent.CellHeight))
@@ -434,7 +434,7 @@ namespace GCDConsoleLib.Internal
 #endif              
                 }
                 // We always increment to the next one
-                nextChunk();
+                NextChunk();
             }
             ProgressChange(100);
             StateChange(OpStatus.States.Complete);

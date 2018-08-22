@@ -15,7 +15,7 @@ namespace GCDConsoleLib.Internal.Operators
         private string _fieldname;
 
         // When we use rasterized polygons we use this as the field vals
-        private Dictionary<int, string> _rasterVectorFieldVals;
+        private readonly Dictionary<int, string> _rasterVectorFieldVals;
 
         /// <summary>
         /// Single method Constructor
@@ -38,8 +38,10 @@ namespace GCDConsoleLib.Internal.Operators
             else if (prop.TheType == ErrorRasterProperties.ERPType.FIS)
             {
                 _fisinputs[""] = new List<int>();
-                _fisops = new Dictionary<string, FISRasterOp>();
-                _fisops[""] = new FISRasterOp(prop.FISInputs, prop.FISRuleFile);
+                _fisops = new Dictionary<string, FISRasterOp>
+                {
+                    [""] = new FISRasterOp(prop.FISInputs, prop.FISRuleFile)
+                };
                 // Add the FIS rasters to these inputs so we can use them and keep track of their indices
                 // so we can slice this data out and feed it to the FIS operator
                 foreach (Raster fisinput in prop.FISInputs.Values)

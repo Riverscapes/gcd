@@ -4,7 +4,7 @@ namespace GCDConsoleLib.Internal.Operators
 {
     public class GCDNeighbourCount : WindowOverlapOperator<double>
     {
-        RasterOperators.GCDWindowType wType;
+        private readonly RasterOperators.GCDWindowType wType;
 
         /// <summary>
         /// Constructor

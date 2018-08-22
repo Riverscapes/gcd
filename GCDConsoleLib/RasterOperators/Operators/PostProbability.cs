@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 namespace GCDConsoleLib.Internal.Operators
 {
     /// <summary>
@@ -8,17 +7,17 @@ namespace GCDConsoleLib.Internal.Operators
     public class PosteriorProbability : CellByCellOperator<double>
     {
         // Just helpful statics for reference
-        private static int rawDod = 0;
-        private static int priorProb = 1;
-        private static int spCoEro = 2;
-        private static int spCoDep = 3;
+        private readonly static int rawDod = 0;
+        private readonly static int priorProb = 1;
+        private readonly static int spCoEro = 2;
+        private readonly static int spCoDep = 3;
 
-        private static int postRaster = 0;
-        private static int condRaster = 1;
+        private readonly static int postRaster = 0;
+        private readonly static int condRaster = 1;
 
         // Some parameters we store
-        private int _XMin;
-        private int _XMax;
+        private readonly int _XMin;
+        private readonly int _XMax;
 
         /// <summary>
         /// Pass-through constructor for Creating Prior Probability Rasters

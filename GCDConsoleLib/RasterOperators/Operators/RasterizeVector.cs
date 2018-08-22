@@ -6,7 +6,7 @@ namespace GCDConsoleLib.Internal.Operators
     class RasterizeVector : CellByCellOperator<int>
     {
         private List<string> _fieldvals;
-        private string _fieldname;
+        private readonly string _fieldname;
 
         /// <summary>
         /// Rasterize a shp file. This is actually not doing the rasterization at all, just playing archaeology

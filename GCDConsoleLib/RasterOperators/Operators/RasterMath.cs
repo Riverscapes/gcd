@@ -6,11 +6,10 @@ namespace GCDConsoleLib.Internal.Operators
 {
     public class RasterMath<T> : CellByCellOperator<T>
     {
-        private bool _scalar;
-        private bool _masked;
-        private RasterOperators.MathOpType _type;
-        private double _origOperand;
-        private T _operand;
+        private readonly bool _scalar;
+        private readonly RasterOperators.MathOpType _type;
+        private readonly double _origOperand;
+        private readonly T _operand;
 
         /// <summary>
         /// Pass-through constructor for Raster Math with a scalar operand
@@ -24,7 +23,6 @@ namespace GCDConsoleLib.Internal.Operators
         {
             _type = otType;
             _scalar = true;
-            _masked = false;
             _origOperand = (double)dOperand;
             _operand = (T)Convert.ChangeType(dOperand, typeof(T));
         }
@@ -42,8 +40,6 @@ namespace GCDConsoleLib.Internal.Operators
         {
             _type = otType;
             _scalar = false;
-            _masked = false;
-
         }
 
 
@@ -61,7 +57,6 @@ namespace GCDConsoleLib.Internal.Operators
         {
             _type = otType;
             _scalar = false;
-            _masked = true;
         }
 
         /// <summary>
@@ -78,7 +73,6 @@ namespace GCDConsoleLib.Internal.Operators
         {
             _type = otType;
             _scalar = false;
-            _masked = true;
         }
 
         /// <summary>

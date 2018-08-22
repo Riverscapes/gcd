@@ -6,9 +6,9 @@ namespace GCDConsoleLib.Internal.Operators
 {
     public class RasterMultiMathError : CellByCellOperator<double>
     {
-        private RasterOperators.MultiMathErrOpType _type;
-        private List<int> _inputids;
-        private List<int> _errids;
+        private readonly RasterOperators.MultiMathErrOpType _type;
+        private readonly List<int> _inputids;
+        private readonly List<int> _errids;
 
         /// <summary>
         /// Pass-through constructor for Raster Math with a scalar operand

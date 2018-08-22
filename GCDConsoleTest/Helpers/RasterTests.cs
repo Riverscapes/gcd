@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using GCDConsoleLib;
+using System.Diagnostics;
 
 namespace GCDConsoleTest.Helpers
 {
@@ -47,6 +48,7 @@ namespace GCDConsoleTest.Helpers
                     }
                 }
                 catch (Exception e) {
+                    Debug.WriteLine(e.Message);
                     errs.Add("Raster encountered critical read error while verifying cells.");
                     break;
                 }
