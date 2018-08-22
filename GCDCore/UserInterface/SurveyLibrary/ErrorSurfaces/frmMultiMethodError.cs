@@ -170,7 +170,7 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
         {
             ErrorSurfaceProperty errProp = grdRegions.SelectedRows[0].DataBoundItem as ErrorSurfaceProperty;
 
-            frmRegionErrorProperty frm = new frmRegionErrorProperty(errProp.Name, errProp, DEM.AssocSurfaces.ToList());
+            frmRegionErrorProperty frm = new frmRegionErrorProperty(errProp.Name, errProp, DEM.AssocSurfaces.ToList(), ErrorSurface == null);
             if (frm.ShowDialog() == DialogResult.OK)
                 ErrProps.ResetBindings();
         }

@@ -9,12 +9,18 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
     {
         public ErrorSurfaceProperty ErrorSurProp { get { return ucErrProp.ErrSurfProperty; } }
 
-        public frmRegionErrorProperty(string region, ErrorSurfaceProperty errProp, List<AssocSurface> assocs)
+        public frmRegionErrorProperty(string region, ErrorSurfaceProperty errProp, List<AssocSurface> assocs, bool bEdit)
         {
             InitializeComponent();
 
             txtRegion.Text = region;
-            ucErrProp.InitializeExisting(errProp, assocs, false);
+            ucErrProp.InitializeExisting(errProp, assocs, bEdit);
+
+            if (!bEdit)
+            {
+                cmdOK.Visible = false;
+                cmdCancel.Text = "Close";
+            }
         }
 
         private void cmdOK_Click(object sender, EventArgs e)
