@@ -119,6 +119,7 @@
             this.Controls.Add(this.txtRegion);
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(472, 348);
             this.Name = "frmRegionErrorProperty";
             this.Text = "Mask Region Error Surface Properties";
             this.Load += new System.EventHandler(this.frmRegionErrorProperty_Load);
