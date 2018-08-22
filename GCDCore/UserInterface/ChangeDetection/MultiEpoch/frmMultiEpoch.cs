@@ -643,6 +643,11 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
         {
             try
             {
+                // Generate an inline event handler function to call our async progresschanged function below
+                EventHandler<GCDConsoleLib.OpStatus> receivedEventsHandler = delegate (object innerSender, GCDConsoleLib.OpStatus innerEvent) {
+                    bgWorker.ReportProgress(innerEvent.Progress, innerEvent);
+                };
+                ProjectManager.OnProgressChangeAsync += receivedEventsHandler;
                 BatchEngine.Run(bgWorker);
                 if (BatchEngine.Cancelled) //if analysis is cancelled, set cancel flag on DoWorkEventArgs
                 {
@@ -659,6 +664,7 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
             }
         }
 
+
         /// <summary>
         /// Stub for handling progress bar
         /// </summary>
@@ -666,7 +672,7 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
         /// <param name="e"></param>
         private void bgWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-
+            ProjectManager.OnProgressChange.Invoke(sender, (GCDConsoleLib.OpStatus)e.UserState);
         }
 
         /// <summary>

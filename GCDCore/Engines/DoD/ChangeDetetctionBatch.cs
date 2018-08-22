@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using GCDCore.Project;
 using GCDCore.UserInterface.ChangeDetection;
+using System.Diagnostics;
 
 namespace GCDCore.Engines.DoD
 {

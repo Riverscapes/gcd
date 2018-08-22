@@ -1,4 +1,7 @@
-﻿namespace GCDConsoleLib
+﻿using System;
+using System.ComponentModel;
+
+namespace GCDConsoleLib
 {
     /// <summary>
     /// Lightweight class for tracking the status of an individual operation
@@ -18,5 +21,9 @@
         public States State { get; set; }
         public string Message { get; set; }
 
+        public static explicit operator OpStatus(ProgressChangedEventArgs v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

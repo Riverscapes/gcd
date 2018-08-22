@@ -1,8 +1,10 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
 using GCDCore.Engines.DoD;
+using GCDCore.Project;
 
 namespace GCDCore.UserInterface.ChangeDetection.Batch
 {
@@ -141,6 +143,11 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
         {
             try
             {
+                // Generate an inline event handler function to call our async progresschanged function below
+                EventHandler<GCDConsoleLib.OpStatus> receivedEventsHandler = delegate (object innerSender, GCDConsoleLib.OpStatus innerEvent) {
+                    bgWorker.ReportProgress(innerEvent.Progress, innerEvent);
+                };
+                ProjectManager.OnProgressChangeAsync += receivedEventsHandler;
                 BatchEngine.Run(bgWorker);
             }
             catch (Exception ex)
@@ -155,7 +162,7 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
 
         private void bgWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-
+            ProjectManager.OnProgressChange.Invoke(sender, (GCDConsoleLib.OpStatus)e.UserState);
         }
 
         private void bgWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
