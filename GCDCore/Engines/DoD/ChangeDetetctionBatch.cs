@@ -34,15 +34,16 @@ namespace GCDCore.Engines.DoD
             switch (props.ThresholdProps.Method)
             {
                 case ThresholdProps.ThresholdMethods.MinLoD:
-                    cdEngine = new ChangeDetectionEngineMinLoD(props.NewSurface, props.OldSurface, props.AOIMask, props.ThresholdProps.Threshold);
+                    cdEngine = new ChangeDetectionEngineMinLoD(props.NewSurface, props.OldSurface, props.AOIMask, props.ThresholdProps.Threshold, true);
                     break;
 
                 case ThresholdProps.ThresholdMethods.Propagated:
-                    cdEngine = new ChangeDetectionEnginePropProb(props.NewSurface, props.OldSurface, props.NewError, props.OldError, props.AOIMask);
+                    cdEngine = new ChangeDetectionEnginePropProb(props.NewSurface, props.OldSurface, props.NewError, props.OldError, props.AOIMask, true);
                     break;
 
                 case ThresholdProps.ThresholdMethods.Probabilistic:
-                    cdEngine = new ChangeDetectionEngineProbabilistic(props.NewSurface, props.OldSurface, props.AOIMask, props.NewError, props.OldError, props.ThresholdProps.Threshold, props.ThresholdProps.SpatialCoherenceProps);
+                    cdEngine = new ChangeDetectionEngineProbabilistic(props.NewSurface, props.OldSurface, props.AOIMask, props.NewError, props.OldError, 
+                        props.ThresholdProps.Threshold, props.ThresholdProps.SpatialCoherenceProps, true);
                     break;
             }
 

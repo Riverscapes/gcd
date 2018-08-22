@@ -12,10 +12,16 @@ namespace GCDCore.Engines
         protected Surface NewSurface;
         protected Surface OldSurface;
         protected Project.Masks.AOIMask AOIMask;
+        public static EventHandler<OpStatus> OnProgressChangeDoD;
 
-        public ChangeDetectionEngineBase(Surface newSurface, Surface oldSurface, Project.Masks.AOIMask aoi)
+        public ChangeDetectionEngineBase(Surface newSurface, Surface oldSurface, Project.Masks.AOIMask aoi, bool isAsync)
             : base()
         {
+            if (isAsync)
+                OnProgressChangeDoD += ProjectManager.OnProgressChangeAsync;
+            else
+                OnProgressChangeDoD += ProjectManager.OnProgressChange;
+
             if (!newSurface.Raster.Extent.HasOverlap(oldSurface.Raster.Extent))
             {
                 Exception ex = new Exception("The two rasters do not overlap.");
@@ -46,18 +52,18 @@ namespace GCDCore.Engines
             Raster rawDoD;
             if (AOIMask == null)
             {
-                rawDoD = RasterOperators.Subtract(NewSurface.Raster, OldSurface.Raster, rawDoDPath, ProjectManager.OnProgressChange);
+                rawDoD = RasterOperators.Subtract(NewSurface.Raster, OldSurface.Raster, rawDoDPath, OnProgressChangeDoD);
             }
             else
             {
-                rawDoD = RasterOperators.SubtractWithMask(NewSurface.Raster, OldSurface.Raster, AOIMask.Vector, rawDoDPath, ProjectManager.OnProgressChange);
+                rawDoD = RasterOperators.SubtractWithMask(NewSurface.Raster, OldSurface.Raster, AOIMask.Vector, rawDoDPath, OnProgressChangeDoD);
             }
 
             // Build pyraminds
             ProjectManager.PyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.DoDRaw, rawDoDPath);
 
             // Calculate the raw histogram
-            Histogram rawHisto = RasterOperators.BinRaster(rawDoD, DEFAULTHISTOGRAMNUMBER, ProjectManager.OnProgressChange);
+            Histogram rawHisto = RasterOperators.BinRaster(rawDoD, DEFAULTHISTOGRAMNUMBER, OnProgressChangeDoD);
 
             // Write the raw histogram
             WriteHistogram(rawHisto, rawHstPath);
@@ -69,7 +75,7 @@ namespace GCDCore.Engines
             ProjectManager.PyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.DoDThresholded, thrDoDPath);
 
             // Calculate the thresholded histogram
-            Histogram thrHisto = RasterOperators.BinRaster(thrDoD, DEFAULTHISTOGRAMNUMBER, ProjectManager.OnProgressChange);
+            Histogram thrHisto = RasterOperators.BinRaster(thrDoD, DEFAULTHISTOGRAMNUMBER, OnProgressChangeDoD);
 
             // Write the thresholded histogram
             WriteHistogram(thrHisto, thrHstPath);

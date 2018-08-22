@@ -17,8 +17,8 @@ namespace GCDCore.Engines
         private FileInfo m_SpatialCoDepositionRaster;
 
         public ChangeDetectionEngineProbabilistic(Surface newDEM, Surface oldDEM, Project.Masks.AOIMask aoi, ErrorSurface newError, ErrorSurface oldError,
-            decimal fThreshold, CoherenceProperties spatCoherence = null)
-        : base(newDEM, oldDEM, newError, oldError, aoi)
+            decimal fThreshold, CoherenceProperties spatCoherence = null, bool isAsync = false)
+        : base(newDEM, oldDEM, newError, oldError, aoi, isAsync)
         {
             Threshold = fThreshold;
             SpatialCoherence = spatCoherence;
@@ -38,14 +38,14 @@ namespace GCDCore.Engines
 
             // Create the prior probability raster
             m_PriorProbRaster = new FileInfo(Path.ChangeExtension(Path.Combine(thrDoDPath.DirectoryName, "priorprob"), ProjectManager.RasterExtension));
-            Raster priorPRob = RasterOperators.CreatePriorProbabilityRaster(rawDoD, PropagatedErrRaster, m_PriorProbRaster, ProjectManager.OnProgressChange);
+            Raster priorPRob = RasterOperators.CreatePriorProbabilityRaster(rawDoD, PropagatedErrRaster, m_PriorProbRaster, OnProgressChangeDoD);
 
             // Build Pyramids
             ProjectManager.PyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.ProbabilityRasters, m_PriorProbRaster);
 
             if (SpatialCoherence == null)
             {
-                thrDoD = RasterOperators.ThresholdDoDProbability(rawDoD, PropagatedErrRaster, thrDoDPath, Threshold, ProjectManager.OnProgressChange);
+                thrDoD = RasterOperators.ThresholdDoDProbability(rawDoD, PropagatedErrRaster, thrDoDPath, Threshold, OnProgressChangeDoD);
             }
             else
             {
@@ -55,18 +55,18 @@ namespace GCDCore.Engines
                 m_SpatialCoDepositionRaster = new FileInfo(Path.ChangeExtension(Path.Combine(thrDoDPath.DirectoryName, "nbrDeposition"), ProjectManager.RasterExtension));
 
                 // Count erosion and Deposition in a window around each cell
-                Raster rSpatialCoErosion = RasterOperators.NeighbourCount(rawDoD, RasterOperators.GCDWindowType.Erosion, SpatialCoherence.BufferSize, m_SpatialCoErosionRaster, 
-                    ProjectManager.OnProgressChange);
-                Raster rSpatialCoDeposition = RasterOperators.NeighbourCount(rawDoD, RasterOperators.GCDWindowType.Deposition, SpatialCoherence.BufferSize, m_SpatialCoDepositionRaster, 
-                    ProjectManager.OnProgressChange);
+                Raster rSpatialCoErosion = RasterOperators.NeighbourCount(rawDoD, RasterOperators.GCDWindowType.Erosion, SpatialCoherence.BufferSize, m_SpatialCoErosionRaster,
+                    OnProgressChangeDoD);
+                Raster rSpatialCoDeposition = RasterOperators.NeighbourCount(rawDoD, RasterOperators.GCDWindowType.Deposition, SpatialCoherence.BufferSize, m_SpatialCoDepositionRaster,
+                    OnProgressChangeDoD);
 
                 Raster PostProb = RasterOperators.PosteriorProbability(rawDoD, priorPRob,
                     rSpatialCoErosion, rSpatialCoDeposition,
                     m_PosteriorRaster, m_ConditionalRaster,
                     SpatialCoherence.XMin, SpatialCoherence.XMax,
-                    ProjectManager.OnProgressChange);
+                    OnProgressChangeDoD);
 
-                thrDoD = RasterOperators.ThresholdDoDProbability(rawDoD, PostProb, new FileInfo(thrDoDPath.FullName), Threshold, ProjectManager.OnProgressChange);
+                thrDoD = RasterOperators.ThresholdDoDProbability(rawDoD, PostProb, new FileInfo(thrDoDPath.FullName), Threshold, OnProgressChangeDoD);
 
                 // Build Pyramids
                 ProjectManager.PyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.ProbabilityRasters, m_SpatialCoErosionRaster);
@@ -81,12 +81,12 @@ namespace GCDCore.Engines
         protected override Raster GenerateErrorRaster(FileInfo thrErrorPath)
         {
             decimal zval = (decimal)GCDConsoleLib.Utility.Probability.ltqnorm((double)Threshold);
-            return RasterOperators.Multiply(PropagatedErrRaster, zval, thrErrorPath, ProjectManager.OnProgressChange);
+            return RasterOperators.Multiply(PropagatedErrRaster, zval, thrErrorPath, OnProgressChangeDoD);
         }
 
         protected override DoDStats CalculateChangeStats(Raster rawDoD, Raster thrDoD, UnitGroup units)
         {
-            return RasterOperators.GetStatsProbalistic(rawDoD, thrDoD, PropagatedErrRaster, units, ProjectManager.OnProgressChange);
+            return RasterOperators.GetStatsProbalistic(rawDoD, thrDoD, PropagatedErrRaster, units, OnProgressChangeDoD);
         }
 
         protected override DoDBase GetDoDResult(string dodName, DoDStats changeStats, Raster rawDoD, Raster thrDoD, Raster thrErr, HistogramPair histograms, FileInfo summaryXML)

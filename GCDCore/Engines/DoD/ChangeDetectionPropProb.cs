@@ -11,8 +11,9 @@ namespace GCDCore.Engines
         protected readonly ErrorSurface OldError;
         public Raster PropagatedErrRaster;
 
-        public ChangeDetectionEnginePropProb(Surface newDEM, Surface oldDEM, ErrorSurface newError, ErrorSurface oldError, Project.Masks.AOIMask aoi)
-            : base(newDEM, oldDEM, aoi)
+        public ChangeDetectionEnginePropProb(Surface newDEM, Surface oldDEM, ErrorSurface newError, ErrorSurface oldError, Project.Masks.AOIMask aoi,
+            bool isAsync = false)
+            : base(newDEM, oldDEM, aoi, isAsync)
         {
             NewError = newError;
             OldError = oldError;
@@ -22,7 +23,7 @@ namespace GCDCore.Engines
         {
             GeneratePropagatedErrorRaster(thrDoDPath.Directory);
             Raster thrDoD = RasterOperators.AbsoluteSetNull(rawDoD, RasterOperators.ThresholdOps.GreaterThan, PropagatedErrRaster, thrDoDPath,
-                ProjectManager.OnProgressChange);
+                OnProgressChangeDoD);
             return thrDoD;
         }
 
@@ -41,7 +42,7 @@ namespace GCDCore.Engines
         /// <returns></returns>
         protected override DoDStats CalculateChangeStats(Raster rawDoD, Raster thrDoD,UnitGroup units)
         {
-            return RasterOperators.GetStatsPropagated(rawDoD, PropagatedErrRaster, units, ProjectManager.OnProgressChange);
+            return RasterOperators.GetStatsPropagated(rawDoD, PropagatedErrRaster, units, OnProgressChangeDoD);
         }
 
         protected override DoDBase GetDoDResult(string dodName, DoDStats changeStats, Raster rawDoD, Raster thrDoD, Raster thrErr, HistogramPair histograms, FileInfo summaryXML)
@@ -58,7 +59,7 @@ namespace GCDCore.Engines
         protected void GeneratePropagatedErrorRaster(DirectoryInfo analysisFolder)
         {
             FileInfo propErrPath = BuildFilePath(analysisFolder, "PropErr", ProjectManager.RasterExtension);
-            PropagatedErrRaster = RasterOperators.RootSumSquares(NewError.Raster, OldError.Raster, propErrPath, ProjectManager.OnProgressChange);
+            PropagatedErrRaster = RasterOperators.RootSumSquares(NewError.Raster, OldError.Raster, propErrPath, OnProgressChangeDoD);
 
             // Build Pyramids
             ProjectManager.PyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.PropagatedError, propErrPath);

@@ -52,6 +52,7 @@ namespace GCDCore.Project
         public static event GISAddVectorToMapEvent GISAddVectorToMapEventHandler;
 
         public static EventHandler<GCDConsoleLib.OpStatus> OnProgressChange;
+        public static EventHandler<GCDConsoleLib.OpStatus> OnProgressChangeAsync;
 
         public static Dictionary<string, SurveyType> SurveyTypes
         {
