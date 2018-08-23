@@ -507,6 +507,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\DirectionalBudgetSeg.png" />
     <None Include="Resources\down.png" />
     <None Include="Resources\up.png" />
     <None Include="Resources\USUlogo.bmp" />
@@ -553,7 +554,6 @@
     <None Include="Resources\CleanRaster.png" />
     <None Include="Resources\Check.png" />
     <None Include="Resources\chart.png" />
-    <None Include="Resources\BudgetSeg.png" />
     <None Include="Resources\BrowseFolder.png" />
     <None Include="Resources\AssociatedSurfaces.png" />
     <None Include="Resources\AOI.png" />
@@ -773,6 +773,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\info.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BudgetSeg.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

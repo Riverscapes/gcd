@@ -37,6 +37,10 @@ namespace GCDCore.UserInterface.BudgetSegregation
             InitializeComponent();
 
             BudgetSeg = BS;
+
+            System.Drawing.Bitmap formImage = BudgetSeg.IsMaskDirectional ? Properties.Resources.DirectionalBudgetSeg : Properties.Resources.BudgetSeg;
+            Icon = System.Drawing.Icon.FromHandle(formImage.GetHicon());
+
             ucProperties.Initialize(BudgetSeg.DoD);
             m_Options = new DoDSummaryDisplayOptions(ProjectManager.Project.Units);
 

@@ -339,6 +339,16 @@ namespace GCDCore.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap DirectionalBudgetSeg {
+            get {
+                object obj = ResourceManager.GetObject("DirectionalBudgetSeg", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap DoD_Logo {
             get {
                 object obj = ResourceManager.GetObject("DoD_Logo", resourceCulture);
