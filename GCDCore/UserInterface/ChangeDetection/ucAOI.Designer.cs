@@ -65,7 +65,6 @@
             this.Controls.Add(this.groupBox1);
             this.Name = "ucAOI";
             this.Size = new System.Drawing.Size(768, 50);
-            this.Load += new System.EventHandler(this.ucAOI_Load);
             this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
 
