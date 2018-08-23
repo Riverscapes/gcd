@@ -22,11 +22,10 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
         private readonly int BayesianChkTop;
         private readonly int BayesianCmdTop;
 
-        public frmBatchDoDProperties(naru.ui.SortableBindingList<BatchProps> thresholds, string sType)
+        public frmBatchDoDProperties(naru.ui.SortableBindingList<BatchProps> thresholds)
         {
             InitializeComponent();
             Thresholds = thresholds;
-            Text = string.Format("Add {0} To Batch", sType);
             DesignHeight = Height;
             Spacing = Height - cmdBayesian.Bottom;
             BayesianChkTop = chkBayesian.Top;

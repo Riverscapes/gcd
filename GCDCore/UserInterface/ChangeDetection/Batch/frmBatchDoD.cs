@@ -28,8 +28,7 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
         {
             InitializeComponent();
             Batches = new naru.ui.SortableBindingList<BatchProps>();
-
-            PropertiesForm = new frmBatchDoDProperties(Batches, "TEMP");
+            PropertiesForm = new frmBatchDoDProperties(Batches);
         }
 
         private void frmBatchDoD_Load(object sender, EventArgs e)
@@ -75,10 +74,7 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
             ToolStripMenuItem tsmi = (ToolStripMenuItem)sender;
             if (tsmi.Tag is ThresholdTypes)
             {
-                // If the user clicks OK the child form will
-                // append the appropriate ThresholdProps to the binding list
-                //frmBatchDoDProperties frm = new frmBatchDoDProperties(Batches, tsmi.Text, (ThresholdTypes)tsmi.Tag);
-
+                PropertiesForm.Text = Text = string.Format("Add {0} To Batch", tsmi.Text);
                 PropertiesForm.ThresholdType = (ThresholdTypes)tsmi.Tag;
                 PropertiesForm.ShowDialog();
             }
