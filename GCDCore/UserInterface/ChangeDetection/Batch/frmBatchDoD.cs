@@ -64,6 +64,7 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
 
             // Prescribed is distinguished by not having a tag
             ToolStripItem tsi6 = new ToolStripMenuItem("Prescribed Probabilistic Thresholds", null, cmdAdd_Click);
+            tsi6.Enabled = false;
             cms.Items.Add(tsi6);
 
             cmdAdd.Menu = cms;
