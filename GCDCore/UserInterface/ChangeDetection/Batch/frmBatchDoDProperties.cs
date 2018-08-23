@@ -47,7 +47,7 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
             chkBayesian.Checked = false;
             CoherenceProps = null;
 
-            bool bRange =  ThresholdType == frmBatchDoD.ThresholdTypes.MinLoDMulti || ThresholdType == frmBatchDoD.ThresholdTypes.ProbMulti;
+            bool bRange = ThresholdType == frmBatchDoD.ThresholdTypes.MinLoDMulti || ThresholdType == frmBatchDoD.ThresholdTypes.ProbMulti;
             lblMax.Visible = bRange;
             valMax.Visible = bRange;
             lblInterval.Visible = bRange;
@@ -55,7 +55,7 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
 
             chkBayesian.Top = BayesianChkTop;
             cmdBayesian.Top = BayesianCmdTop;
-            bool bProb =  ThresholdType == frmBatchDoD.ThresholdTypes.ProbSingle || ThresholdType == frmBatchDoD.ThresholdTypes.ProbMulti;
+            bool bProb = ThresholdType == frmBatchDoD.ThresholdTypes.ProbSingle || ThresholdType == frmBatchDoD.ThresholdTypes.ProbMulti;
             chkBayesian.Visible = bProb;
             cmdBayesian.Visible = bProb;
 
@@ -75,6 +75,8 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
 
                 case frmBatchDoD.ThresholdTypes.ProbSingle:
                     lblMin.Text = "Confidence level (0-1)";
+                    valMin.Minimum = 0.01m;
+                    valMin.Value = 0.8m;
                     valMin.Maximum = 1;
                     chkBayesian.Top = lblMax.Top;
                     cmdBayesian.Top = valMax.Top;
@@ -86,7 +88,9 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
                     lblMin.Text = "Minimum confidence level (0-1)";
                     lblMax.Text = "Maximum confidence level (0-1)";
                     lblInterval.Text = "Interval (0-1)";
+                    valMin.Minimum = 0.01m;
                     valMin.Maximum = 1;
+                    valMax.Minimum = 0.01m;
                     valMax.Maximum = 1;
                     valInterval.Maximum = 1;
                     Height = chkBayesian.Bottom + Spacing;
