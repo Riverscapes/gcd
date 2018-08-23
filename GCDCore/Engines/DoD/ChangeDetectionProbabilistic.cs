@@ -80,7 +80,12 @@ namespace GCDCore.Engines
 
         protected override Raster GenerateErrorRaster(FileInfo thrErrorPath)
         {
-            decimal zval = (decimal)GCDConsoleLib.Utility.Probability.ltqnorm((double)Threshold);
+            double zvalDbl = GCDConsoleLib.Utility.Probability.ltqnorm((double)Threshold);
+
+            decimal zval = decimal.MinValue;
+            if (!(double.IsNegativeInfinity(zvalDbl) || double.IsPositiveInfinity(zvalDbl)))
+                zval = (decimal) zvalDbl;
+
             return RasterOperators.Multiply(PropagatedErrRaster, zval, thrErrorPath, OnProgressChangeDoD);
         }
 
