@@ -210,7 +210,8 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
             if (DEMs[DEMIndex].ErrorSurfaces.Count > 0) //check if any error surfaces are available
             {
                 //comboCell.Value = DEMs[DEMIndex].ErrorSurfaces[0].NameWithDefault;
-                comboCell.Value = DEMs[DEMIndex].SelectedErrorSurface.NameWithDefault;
+                if (DEMs[DEMIndex].SelectedErrorSurface != null)
+                    comboCell.Value = DEMs[DEMIndex].SelectedErrorSurface.NameWithDefault;
             }
 
         }
@@ -644,7 +645,8 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
             try
             {
                 // Generate an inline event handler function to call our async progresschanged function below
-                EventHandler<GCDConsoleLib.OpStatus> receivedEventsHandler = delegate (object innerSender, GCDConsoleLib.OpStatus innerEvent) {
+                EventHandler<GCDConsoleLib.OpStatus> receivedEventsHandler = delegate (object innerSender, GCDConsoleLib.OpStatus innerEvent)
+                {
                     if (bgWorker.IsBusy)
                         bgWorker.ReportProgress(innerEvent.Progress, innerEvent);
                 };

@@ -29,7 +29,7 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
         public ErrorSurface ErrorSurf;
 
         public string DEMName { get { return DEM.Name; } }
-        public string ErrorName { get { return ErrorSurf.Name; } }
+        public string ErrorName { get { return ErrorSurf == null ? string.Empty : ErrorSurf.Name; } }
 
         public readonly naru.ui.SortableBindingList<ErrorSurface> ErrorSurfaces;
 
@@ -45,7 +45,7 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
             ErrorSurf = err;
 
             ErrorSurfaces = new naru.ui.SortableBindingList<ErrorSurface>();
-            foreach(ErrorSurface es in dem.ErrorSurfaces)
+            foreach (ErrorSurface es in dem.ErrorSurfaces)
             {
                 ErrorSurfaces.Add(es);
             }
