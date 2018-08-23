@@ -44,6 +44,38 @@ namespace GCDStandalone
             bLoadLastProject = true;
 #endif
 
+            // Attempt to read project path from application arguments
+            //string[] args = Environment.GetCommandLineArgs();
+            string[] activationData = new string[] { };
+            if (AppDomain.CurrentDomain.SetupInformation.ActivationArguments != null)
+                activationData = AppDomain.CurrentDomain.SetupInformation.ActivationArguments.ActivationData;
+            //activationData = new string[] { @"file:///D:/Testing/GCD/James/Shotover/Shotover.gcd" };
+
+            // First, try to get a path from the parameters
+            if (activationData != null && activationData.Length >= 1)
+            {
+                string lastGCD = GCDCore.Properties.Settings.Default.LastUsedProjectFolder;
+                if (!string.IsNullOrEmpty(lastGCD) && System.IO.Directory.Exists(lastGCD))
+                {
+                    Uri uri = new Uri(activationData[0]);
+                    string fileNamePassedIn = uri.LocalPath.ToString();
+                    try
+                    {
+                        OpenGCDProject(fileNamePassedIn);
+                        bLoadLastProject = false;
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine(ex.Message);
+                        // Something went wrong with the last opened project. Ensure it doesn't try to get opened again.
+                        GCDCore.Properties.Settings.Default.LastUsedProjectFolder = string.Empty;
+                        GCDCore.Properties.Settings.Default.Save();
+                        closeGCDProjectToolStripMenuItem_Click(null, null);
+                    }
+
+                }
+            }
+            // If the above fails or/and we want to load the last project do that instead
             if (bLoadLastProject)
             {
                 string lastGCD = GCDCore.Properties.Settings.Default.LastUsedProjectFolder;
@@ -530,11 +562,11 @@ namespace GCDStandalone
             using (Graphics gr = tspProgress.ProgressBar.CreateGraphics())
             {
                 string theString = progress.Progress.ToString() + "%";
-                float top = tspProgress.Height / 2 - (gr.MeasureString(theString,  SystemFonts.DefaultFont).Height / 2.0F);
+                float top = tspProgress.Height / 2 - (gr.MeasureString(theString, SystemFonts.DefaultFont).Height / 2.0F);
                 float left = tspProgress.Width / 2 - (gr.MeasureString(theString, SystemFonts.DefaultFont).Width / 2.0F);
 
                 PointF thePoint = new PointF(left, top);
-                gr.DrawString(theString,  SystemFonts.DefaultFont,  Brushes.Black,  thePoint);
+                gr.DrawString(theString, SystemFonts.DefaultFont, Brushes.Black, thePoint);
             }
 
 
