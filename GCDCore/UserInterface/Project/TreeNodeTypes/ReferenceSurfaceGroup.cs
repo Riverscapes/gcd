@@ -69,6 +69,8 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
                     ProjectManager.Project.Save();
                     LoadChildNodes();
 
+                    ProjectManager.AddNewProjectItemToMap(surf);
+
                     // Loop through the child nodes and select the item that was just added
                     foreach (TreeNodeItem childNode in Nodes)
                     {

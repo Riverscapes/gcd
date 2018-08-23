@@ -604,7 +604,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
                     // This method will check to see if pyrmaids are need and then build if necessary.
                     PerformRasterPyramids(new System.IO.FileInfo(txtRasterPath.Text));
 
-                    if (ExtImporter.Purpose == ExtentImporter.Purposes.FirstDEM || ExtImporter.Purpose == ExtentImporter.Purposes.SubsequentDEM)
+                    if (ExtImporter.Purpose == ExtentImporter.Purposes.FirstDEM || ExtImporter.Purpose == ExtentImporter.Purposes.SubsequentDEM || ExtImporter.Purpose == ExtentImporter.Purposes.ReferenceSurface)
                     {
                         // Now try the hillshade for DEM Surveys
                         System.IO.FileInfo sHillshadePath = Surface.HillShadeRasterPath(fiOutput);
