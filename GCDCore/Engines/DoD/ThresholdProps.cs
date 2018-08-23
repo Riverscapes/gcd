@@ -34,7 +34,7 @@ namespace GCDCore.Engines.DoD
                 {
                     case ThresholdMethods.Propagated: return "Propagated";
                     case ThresholdMethods.MinLoD: return string.Format("MinLoD at {0:0.00}{1}", Threshold, UnitsNet.Length.GetAbbreviation(ProjectManager.Project.Units.VertUnit));
-                    case ThresholdMethods.Probabilistic: return string.Format("Probabilistic at {0:0.00}% Confidence Level{1}", Threshold, SpatialCoherenceProps == null ? "" : " Spat Co.");
+                    case ThresholdMethods.Probabilistic: return string.Format("Probabilistic at {0:0.00} Confidence Level{1}", Threshold, SpatialCoherenceProps == null ? "" : " Spat Co.");
                     default: return string.Empty;
                 }
 
