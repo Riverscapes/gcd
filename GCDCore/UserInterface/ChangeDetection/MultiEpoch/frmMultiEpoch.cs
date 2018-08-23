@@ -645,7 +645,8 @@ namespace GCDCore.UserInterface.ChangeDetection.MultiEpoch
             {
                 // Generate an inline event handler function to call our async progresschanged function below
                 EventHandler<GCDConsoleLib.OpStatus> receivedEventsHandler = delegate (object innerSender, GCDConsoleLib.OpStatus innerEvent) {
-                    bgWorker.ReportProgress(innerEvent.Progress, innerEvent);
+                    if (bgWorker.IsBusy)
+                        bgWorker.ReportProgress(innerEvent.Progress, innerEvent);
                 };
                 ProjectManager.OnProgressChangeAsync += receivedEventsHandler;
                 BatchEngine.Run(bgWorker);
