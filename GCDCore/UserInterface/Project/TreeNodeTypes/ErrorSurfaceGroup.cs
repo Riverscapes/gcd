@@ -15,7 +15,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
         Surface Surface;
 
         public ErrorSurfaceGroup(TreeNodeCollection parentNodes, IContainer container, Surface surf)
-            : base(parentNodes, "Error Surfaces", "Error Surface", "Error Surfaces", surf.ErrorSurfacesFolder, container)
+            : base(parentNodes, "Error Surfaces", string.Format("{0}Error Surface", surf is DEMSurvey ? string.Empty : "Reference "), "Error Surfaces", surf.ErrorSurfacesFolder, container)
         {
             Surface = surf;
 
