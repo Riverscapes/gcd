@@ -57,6 +57,5 @@ This exercise is meant to help you understand how best to prepare raster DEMs to
 
 ------
 <div align="center">
-	<a class="hollow button" href="{{ site.baseurl }}/Help"><i class="fa fa-chevron-circle-left"></i>  Back to GCD Help </a>  
-	<a class="hollow button" href="{{ site.baseurl }}/"><img src="{{ site.baseurl}}/assets/images/icons/GCDAddIn.png">  Back to GCD Home </a>  
+	<a class="hollow button" href="{{ site.baseurl }}/Help/Tutorials/BuildingDEMs/building-dems.html"><i class="fa fa-chevron-circle-left"></i>  Back to GCD Help </a>   
 </div>
