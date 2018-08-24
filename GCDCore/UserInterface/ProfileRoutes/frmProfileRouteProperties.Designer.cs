@@ -145,12 +145,12 @@
             // 
             this.chkLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.chkLabel.AutoSize = true;
-            this.chkLabel.Location = new System.Drawing.Point(28, 86);
+            this.chkLabel.Location = new System.Drawing.Point(21, 86);
             this.chkLabel.Name = "chkLabel";
-            this.chkLabel.Size = new System.Drawing.Size(120, 17);
+            this.chkLabel.Size = new System.Drawing.Size(124, 19);
             this.chkLabel.TabIndex = 4;
             this.chkLabel.Text = "Label field (optional)";
+            this.chkLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.chkLabel.UseVisualStyleBackColor = true;
             this.chkLabel.CheckedChanged += new System.EventHandler(this.UpdateControls);
             // 
