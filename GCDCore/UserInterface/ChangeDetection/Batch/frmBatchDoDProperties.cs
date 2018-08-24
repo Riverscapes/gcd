@@ -41,9 +41,6 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
             lblMin.Visible = ThresholdType != frmBatchDoD.ThresholdTypes.Propagated;
             valMin.Visible = ThresholdType != frmBatchDoD.ThresholdTypes.Propagated;
 
-            valMin.Value = 0;
-            valMax.Value = 0;
-            valInterval.Value = 0;
             chkBayesian.Checked = false;
             CoherenceProps = null;
 
@@ -100,6 +97,10 @@ namespace GCDCore.UserInterface.ChangeDetection.Batch
                     Height = ucDEMs.Bottom + Spacing;
                     break;
             }
+
+            valMin.Value = valMin.Minimum;
+            valMax.Value = valMax.Minimum;
+            valInterval.Value = valInterval.Minimum;
         }
 
         private void cmdOK_Click(object sender, EventArgs e)
