@@ -39,6 +39,8 @@ namespace GCDCore.UserInterface.Masks
                 ucPolygon.InitializeBrowseNew("AOI Mask", GCDConsoleLib.GDalGeometryType.SimpleTypes.Polygon);
             }
 
+            MinimumSize = new System.Drawing.Size(277, Height);
+
             tTip.SetToolTip(txtName, "The name that will be used throughout GCD to refer to this mask.");
             tTip.SetToolTip(txtPath, "The output file path location where this mask will be generated.");
             tTip.SetToolTip(ucPolygon, "The input polygon ShapeFile that will be copied into this GCD project.");

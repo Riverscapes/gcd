@@ -72,6 +72,9 @@ namespace GCDCore.UserInterface.Masks
                 Height -= (grpFeatureClass.Top - txtPath.Top);
             }
 
+            grpFeatureClass.Anchor = (AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right);
+            MinimumSize = new Size(this.Width, this.Height);
+
             tTip.SetToolTip(txtName, "The name that will be used to refer to this mask throughout the GCD.");
             tTip.SetToolTip(txtPath, "The relative file path within this GCD project where this mask will be stored.");
             tTip.SetToolTip(cboField, "The string attribute field that will be used to identify regions within the feature class.");

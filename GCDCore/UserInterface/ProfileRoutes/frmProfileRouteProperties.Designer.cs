@@ -52,7 +52,7 @@
             // 
             this.cmdCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cmdCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cmdCancel.Location = new System.Drawing.Point(447, 209);
+            this.cmdCancel.Location = new System.Drawing.Point(397, 209);
             this.cmdCancel.Name = "cmdCancel";
             this.cmdCancel.Size = new System.Drawing.Size(75, 23);
             this.cmdCancel.TabIndex = 6;
@@ -65,7 +65,7 @@
             this.cmdOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.cmdOK.Image = global::GCDCore.Properties.Resources.Save;
             this.cmdOK.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdOK.Location = new System.Drawing.Point(366, 209);
+            this.cmdOK.Location = new System.Drawing.Point(316, 209);
             this.cmdOK.Name = "cmdOK";
             this.cmdOK.Size = new System.Drawing.Size(75, 23);
             this.cmdOK.TabIndex = 5;
@@ -91,7 +91,7 @@
             this.txtPath.Location = new System.Drawing.Point(84, 43);
             this.txtPath.Name = "txtPath";
             this.txtPath.ReadOnly = true;
-            this.txtPath.Size = new System.Drawing.Size(436, 20);
+            this.txtPath.Size = new System.Drawing.Size(386, 20);
             this.txtPath.TabIndex = 3;
             this.txtPath.TabStop = false;
             // 
@@ -116,7 +116,7 @@
             this.grpFeatureClass.Controls.Add(this.lblPolylines);
             this.grpFeatureClass.Location = new System.Drawing.Point(14, 76);
             this.grpFeatureClass.Name = "grpFeatureClass";
-            this.grpFeatureClass.Size = new System.Drawing.Size(506, 119);
+            this.grpFeatureClass.Size = new System.Drawing.Size(456, 119);
             this.grpFeatureClass.TabIndex = 4;
             this.grpFeatureClass.TabStop = false;
             this.grpFeatureClass.Text = "Feature Class";
@@ -138,7 +138,7 @@
             this.cboDistance.FormattingEnabled = true;
             this.cboDistance.Location = new System.Drawing.Point(154, 54);
             this.cboDistance.Name = "cboDistance";
-            this.cboDistance.Size = new System.Drawing.Size(337, 21);
+            this.cboDistance.Size = new System.Drawing.Size(287, 21);
             this.cboDistance.TabIndex = 3;
             // 
             // chkLabel
@@ -162,7 +162,7 @@
             this.cboLabel.FormattingEnabled = true;
             this.cboLabel.Location = new System.Drawing.Point(154, 84);
             this.cboLabel.Name = "cboLabel";
-            this.cboLabel.Size = new System.Drawing.Size(337, 21);
+            this.cboLabel.Size = new System.Drawing.Size(287, 21);
             this.cboLabel.TabIndex = 5;
             // 
             // ucPolyline
@@ -172,7 +172,7 @@
             this.ucPolyline.FullPath = null;
             this.ucPolyline.Location = new System.Drawing.Point(154, 22);
             this.ucPolyline.Name = "ucPolyline";
-            this.ucPolyline.Size = new System.Drawing.Size(337, 23);
+            this.ucPolyline.Size = new System.Drawing.Size(287, 23);
             this.ucPolyline.TabIndex = 1;
             // 
             // lblPolylines
@@ -191,7 +191,7 @@
             this.txtName.Location = new System.Drawing.Point(84, 11);
             this.txtName.MaxLength = 100;
             this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(436, 20);
+            this.txtName.Size = new System.Drawing.Size(386, 20);
             this.txtName.TabIndex = 1;
             this.txtName.TextChanged += new System.EventHandler(this.txtName_TextChanged);
             // 
@@ -210,7 +210,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cmdCancel;
-            this.ClientSize = new System.Drawing.Size(534, 244);
+            this.ClientSize = new System.Drawing.Size(484, 244);
             this.Controls.Add(this.txtPath);
             this.Controls.Add(this.lblPath);
             this.Controls.Add(this.grpFeatureClass);

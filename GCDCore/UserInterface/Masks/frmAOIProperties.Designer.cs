@@ -48,7 +48,7 @@
             // 
             this.cmdCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cmdCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cmdCancel.Location = new System.Drawing.Point(447, 154);
+            this.cmdCancel.Location = new System.Drawing.Point(397, 154);
             this.cmdCancel.Name = "cmdCancel";
             this.cmdCancel.Size = new System.Drawing.Size(75, 23);
             this.cmdCancel.TabIndex = 7;
@@ -61,7 +61,7 @@
             this.cmdOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.cmdOK.Image = global::GCDCore.Properties.Resources.Save;
             this.cmdOK.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdOK.Location = new System.Drawing.Point(366, 154);
+            this.cmdOK.Location = new System.Drawing.Point(316, 154);
             this.cmdOK.Name = "cmdOK";
             this.cmdOK.Size = new System.Drawing.Size(75, 23);
             this.cmdOK.TabIndex = 6;
@@ -95,7 +95,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtName.Location = new System.Drawing.Point(130, 17);
             this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(392, 20);
+            this.txtName.Size = new System.Drawing.Size(342, 20);
             this.txtName.TabIndex = 1;
             this.txtName.TextChanged += new System.EventHandler(this.txtName_TextChanged);
             // 
@@ -115,7 +115,7 @@
             this.txtPath.Location = new System.Drawing.Point(130, 50);
             this.txtPath.Name = "txtPath";
             this.txtPath.ReadOnly = true;
-            this.txtPath.Size = new System.Drawing.Size(392, 20);
+            this.txtPath.Size = new System.Drawing.Size(342, 20);
             this.txtPath.TabIndex = 3;
             this.txtPath.TabStop = false;
             // 
@@ -127,7 +127,7 @@
             this.grpShapeFile.Controls.Add(this.ucPolygon);
             this.grpShapeFile.Location = new System.Drawing.Point(12, 82);
             this.grpShapeFile.Name = "grpShapeFile";
-            this.grpShapeFile.Size = new System.Drawing.Size(510, 58);
+            this.grpShapeFile.Size = new System.Drawing.Size(460, 58);
             this.grpShapeFile.TabIndex = 5;
             this.grpShapeFile.TabStop = false;
             this.grpShapeFile.Text = "Feature Class";
@@ -148,7 +148,7 @@
             this.ucPolygon.FullPath = null;
             this.ucPolygon.Location = new System.Drawing.Point(118, 21);
             this.ucPolygon.Name = "ucPolygon";
-            this.ucPolygon.Size = new System.Drawing.Size(386, 23);
+            this.ucPolygon.Size = new System.Drawing.Size(336, 23);
             this.ucPolygon.TabIndex = 1;
             // 
             // frmAOIProperties
@@ -157,7 +157,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cmdCancel;
-            this.ClientSize = new System.Drawing.Size(534, 189);
+            this.ClientSize = new System.Drawing.Size(484, 189);
             this.Controls.Add(this.grpShapeFile);
             this.Controls.Add(this.txtPath);
             this.Controls.Add(this.lblPath);
