@@ -143,6 +143,7 @@
             this.cboRoute.Name = "cboRoute";
             this.cboRoute.Size = new System.Drawing.Size(380, 21);
             this.cboRoute.TabIndex = 5;
+            this.cboRoute.SelectedIndexChanged += new System.EventHandler(this.cboRoute_SelectedIndexChanged);
             // 
             // label4
             // 

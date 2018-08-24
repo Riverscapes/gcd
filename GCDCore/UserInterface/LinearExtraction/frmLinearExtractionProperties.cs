@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 using GCDCore.Project;
 using GCDConsoleLib;
+using GCDCore.Project.ProfileRoutes;
 
 namespace GCDCore.UserInterface.LinearExtraction
 {
@@ -30,7 +31,6 @@ namespace GCDCore.UserInterface.LinearExtraction
         private void frmLinearExtractionProperties_Load(object sender, EventArgs e)
         {
             cboRoute.DataSource = ProjectManager.Project.ProfileRoutes;
-
 
             if (LinearExtraction == null)
             {
@@ -216,6 +216,15 @@ namespace GCDCore.UserInterface.LinearExtraction
         private void cmdHelp_Click(object sender, EventArgs e)
         {
             OnlineHelp.Show(Name);
+        }
+
+        private void cboRoute_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!(cboRoute.SelectedItem is ProfileRoute))
+                return;
+
+            ProfileRoute route = cboRoute.SelectedItem as ProfileRoute;
+            txtName.Text = string.Format("{0} - {1} Linear Extraction", ElevationSurface.Name, route.ProfileRouteType.ToString());
         }
     }
 }
