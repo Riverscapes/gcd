@@ -151,6 +151,7 @@ namespace GCDCore.UserInterface.BudgetSegregation
 
             // The data displayed on the second chart depends if this is being used for Morphological or Bs
             chtData.Series[VOLOUT__CHART_SERIES].LegendText = !bBudgetSeg ? "Volume Out" : "Cumulative Volume Change";
+            chtData.Series[VOLOUT__CHART_SERIES].IsVisibleInLegend = !bBudgetSeg || directional;
         }
     }
 }
