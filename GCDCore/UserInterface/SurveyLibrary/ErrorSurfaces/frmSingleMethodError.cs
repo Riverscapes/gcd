@@ -49,11 +49,9 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
         protected void frmSingleMethodError_Load(object sender, EventArgs e)
         {
             cmdOK.Text = ErrorSurface == null ? Properties.Resources.CreateButtonText : Properties.Resources.UpdateButtonText;
-            chkDefault.Checked = (ErrorSurface != null && ErrorSurface.IsDefault) || DEM.ErrorSurfaces.Count == 0;
 
-            // Changing default status disabled for existing error rasters because the project tree doesn't reload all error rasters again 
-            // leaving a stale default raster
-            chkDefault.Enabled = ErrorSurface == null ? DEM.ErrorSurfaces.Count > 0 : false;
+            // Set up the IsDefault checkbox
+            InitializeDefaultCheckBox(chkDefault, ErrorSurface, DEM);
 
             tTip.SetToolTip(chkDefault, "Specifies whether this is the default error surface that is used when the parent DEM survey is used within a change detection.");
         }
@@ -111,6 +109,30 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
         private void cmdHelp_Click(object sender, EventArgs e)
         {
             OnlineHelp.Show(Name);
+        }
+
+        /// <summary>
+        /// One place that both the single and multi-method error surface forms enable/disable and check the default box
+        /// </summary>
+        /// <param name="chkDefault">Is default checkbox control</param>
+        /// <param name="errSurf">error surface being created (null) or edited</param>
+        /// <param name="surface">parent surface</param>
+        public static void InitializeDefaultCheckBox(CheckBox chkDefault, ErrorSurface errSurf, Surface surface)
+        {
+            if (errSurf == null)
+            {
+                chkDefault.Checked = surface.ErrorSurfaces.Count == 0;
+                chkDefault.Enabled = surface.ErrorSurfaces.Count > 0;
+            }
+            else
+            {
+                chkDefault.Checked = errSurf.IsDefault;
+
+                if (errSurf.IsDefault)
+                    chkDefault.Enabled = false;
+                else
+                    chkDefault.Enabled = surface.ErrorSurfaces.Count > 1;
+            }
         }
     }
 }
