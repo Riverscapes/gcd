@@ -49,13 +49,14 @@ This exercise is meant to help you understand how best to prepare raster DEMs to
 - [Data Preparation Best Practices]({{ site.baseurl }}/gcd-concepts/data-preparation---best-practices) - Concept Reference
 
 
+	<a class="hollow button" href="{{ site.baseurl }}/Help/Tutorials/BuildingDEMs/building-dems.html"><i class="fa fa-chevron-circle-left"></i>  Back to GCD Help </a>   
 ------
 <div align="center">  
-<a class="button" href="{{ site.baseurl }}/tutorials--how-to/workshop-tutorials/d-review-of-building-surfaces-from-raw-topographic-data"> ← Previous Tutorial </a>
-<a class="button" href="{{ site.baseurl }}/tutorials--how-to/workshop-tutorials/g-simple-DoD"> Next Tutorial →</a>  
+<a class="button" href="{{ site.baseurl }}/Help/Tutorials/BuildingDEMs/building-dems"> ← Previous Tutorial </a>
 </div>
 
 ------
 <div align="center">
-	<a class="hollow button" href="{{ site.baseurl }}/Help/Tutorials/BuildingDEMs/building-dems.html"><i class="fa fa-chevron-circle-left"></i>  Back to GCD Help </a>   
+	<a class="hollow button" href="{{ site.baseurl }}/Help"><i class="fa fa-chevron-circle-left"></i>  Back to GCD Help </a>  
+	<a class="hollow button" href="{{ site.baseurl }}/"><img src="{{ site.baseurl}}/assets/images/icons/GCDAddIn.png">  Back to GCD Home </a>  
 </div>
