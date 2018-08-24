@@ -78,7 +78,8 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             }
             else if (Item is GCDCore.Project.ProfileRoutes.ProfileRoute)
             {
-                frm = new UserInterface.ProfileRoutes.frmProfileRouteProperties(Item as GCDCore.Project.ProfileRoutes.ProfileRoute);
+                GCDCore.Project.ProfileRoutes.ProfileRoute route = Item as GCDCore.Project.ProfileRoutes.ProfileRoute;
+                frm = new UserInterface.ProfileRoutes.frmProfileRouteProperties(route.ProfileRouteType, route);
             }
             else if (Item is GCDCore.Project.Masks.DirectionalMask)
             {

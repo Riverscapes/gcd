@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using GCDCore.Project;
 using GCDCore.UserInterface.Masks;
+using GCDCore.Project.ProfileRoutes;
 
 namespace GCDCore.UserInterface.ProfileRoutes
 {
@@ -17,15 +18,31 @@ namespace GCDCore.UserInterface.ProfileRoutes
     {
         public GCDCore.Project.ProfileRoutes.ProfileRoute ProfileRoute { get; internal set; }
         public GCDProjectItem GCDProjectItem { get { return ProfileRoute; } }
+        public readonly GCDCore.Project.ProfileRoutes.ProfileRoute.ProfileRouteTypes ProfileRouteType;
 
-        public frmProfileRouteProperties(GCDCore.Project.ProfileRoutes.ProfileRoute route)
+        public frmProfileRouteProperties(ProfileRoute.ProfileRouteTypes eType, GCDCore.Project.ProfileRoutes.ProfileRoute route)
         {
             InitializeComponent();
             ProfileRoute = route;
+            ProfileRouteType = eType;
         }
 
         private void frmProfileRouteProperties_Load(object sender, EventArgs e)
         {
+            if (ProfileRouteType == ProfileRoute.ProfileRouteTypes.Transect)
+            {
+                Text = "Transect Profile Route Properties";
+                lblStation.Text = "Station values";
+            }
+            else
+            {
+                Text = "Longitudinal Profile Route Properties";
+                lblStation.Text = "Station offset values";
+
+                Bitmap formImage = Properties.Resources.longitudinal;
+                Icon = Icon.FromHandle(formImage.GetHicon());
+            }
+
             // subscribe to the even when the user changes the input ShapeFile
             ucPolyline.PathChanged += InputShapeFileChanged;
             if (ProfileRoute == null)
@@ -82,7 +99,7 @@ namespace GCDCore.UserInterface.ProfileRoutes
 
                     string lablField = chkLabel.Checked ? cboLabel.Text : string.Empty;
 
-                    ProfileRoute = new GCDCore.Project.ProfileRoutes.ProfileRoute(txtName.Text, fiMask, cboDistance.Text, lablField);
+                    ProfileRoute = new GCDCore.Project.ProfileRoutes.ProfileRoute(txtName.Text, fiMask, cboDistance.Text, lablField, ProfileRouteType);
                     ProjectManager.Project.ProfileRoutes.Add(ProfileRoute);
                     ProjectManager.AddNewProjectItemToMap(ProfileRoute);
                 }

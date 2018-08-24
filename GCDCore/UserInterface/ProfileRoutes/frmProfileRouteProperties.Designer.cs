@@ -36,7 +36,7 @@
             this.txtPath = new System.Windows.Forms.TextBox();
             this.lblPath = new System.Windows.Forms.Label();
             this.grpFeatureClass = new System.Windows.Forms.GroupBox();
-            this.label2 = new System.Windows.Forms.Label();
+            this.lblStation = new System.Windows.Forms.Label();
             this.cboDistance = new System.Windows.Forms.ComboBox();
             this.chkLabel = new System.Windows.Forms.CheckBox();
             this.cboLabel = new System.Windows.Forms.ComboBox();
@@ -108,7 +108,7 @@
             // 
             this.grpFeatureClass.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.grpFeatureClass.Controls.Add(this.label2);
+            this.grpFeatureClass.Controls.Add(this.lblStation);
             this.grpFeatureClass.Controls.Add(this.cboDistance);
             this.grpFeatureClass.Controls.Add(this.chkLabel);
             this.grpFeatureClass.Controls.Add(this.cboLabel);
@@ -121,14 +121,14 @@
             this.grpFeatureClass.TabStop = false;
             this.grpFeatureClass.Text = "Feature Class";
             // 
-            // label2
+            // lblStation
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(74, 58);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(71, 13);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Distance field";
+            this.lblStation.Location = new System.Drawing.Point(6, 56);
+            this.lblStation.Name = "lblStation";
+            this.lblStation.Size = new System.Drawing.Size(139, 17);
+            this.lblStation.TabIndex = 2;
+            this.lblStation.Text = "Station field";
+            this.lblStation.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // cboDistance
             // 
@@ -238,7 +238,7 @@
         private System.Windows.Forms.TextBox txtPath;
         private System.Windows.Forms.Label lblPath;
         internal System.Windows.Forms.GroupBox grpFeatureClass;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblStation;
         internal System.Windows.Forms.ComboBox cboDistance;
         private System.Windows.Forms.CheckBox chkLabel;
         internal System.Windows.Forms.ComboBox cboLabel;

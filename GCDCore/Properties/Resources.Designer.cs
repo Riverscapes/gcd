@@ -526,6 +526,16 @@ namespace GCDCore.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap longitudinal {
+            get {
+                object obj = ResourceManager.GetObject("longitudinal", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap mask {
             get {
                 object obj = ResourceManager.GetObject("mask", resourceCulture);

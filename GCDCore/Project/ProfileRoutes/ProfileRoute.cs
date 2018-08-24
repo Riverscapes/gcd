@@ -11,15 +11,23 @@ namespace GCDCore.Project.ProfileRoutes
 {
     public class ProfileRoute : GCDProjectVectorItem
     {
+        public enum ProfileRouteTypes
+        {
+            Transect,
+            Longitudinal
+        };
+
         public readonly string DistanceField;
         public readonly string LabelField;
         public override string Noun { get { return "Profile Route"; } }
+        public readonly ProfileRouteTypes ProfileRouteType;
 
-        public ProfileRoute(string name, FileInfo shpPath, string distanceField, string labelField)
+        public ProfileRoute(string name, FileInfo shpPath, string distanceField, string labelField, ProfileRouteTypes eType)
             : base(name, shpPath)
         {
             DistanceField = distanceField;
             LabelField = labelField;
+            ProfileRouteType = eType;
         }
 
         public ProfileRoute(XmlNode nodItem)
@@ -32,6 +40,17 @@ namespace GCDCore.Project.ProfileRoutes
             {
                 LabelField = nodLabel.InnerText;
             }
+
+            XmlNode nodType = nodItem.SelectSingleNode("Type");
+            if (nodType is XmlNode)
+            {
+                ProfileRouteType = (ProfileRouteTypes)Enum.Parse(typeof(ProfileRouteTypes), nodType.InnerText);
+            }
+            else
+            {
+                // Needed for backward compatibility
+                ProfileRouteType = ProfileRouteTypes.Transect;
+            }
         }
 
         public override bool IsItemInUse
@@ -39,12 +58,12 @@ namespace GCDCore.Project.ProfileRoutes
             get
             {
                 // Check if any linear extractions use this profile route
-                foreach(DEMSurvey dem in ProjectManager.Project.DEMSurveys)
+                foreach (DEMSurvey dem in ProjectManager.Project.DEMSurveys)
                 {
                     if (dem.LinearExtractions.Any(x => x.Equals(this)))
-                        return true; 
+                        return true;
                 }
-                
+
                 foreach (Surface surf in ProjectManager.Project.ReferenceSurfaces)
                 {
                     if (surf.LinearExtractions.Any(x => x.Equals(this)))
@@ -93,6 +112,7 @@ namespace GCDCore.Project.ProfileRoutes
         {
             XmlNode nodItem = nodParent.AppendChild(nodParent.OwnerDocument.CreateElement("ProfileRoute"));
             nodItem.AppendChild(nodParent.OwnerDocument.CreateElement("Name")).InnerText = Name;
+            nodItem.AppendChild(nodParent.OwnerDocument.CreateElement("Type")).InnerText = ProfileRouteType.ToString();
             nodItem.AppendChild(nodParent.OwnerDocument.CreateElement("Path")).InnerText = ProjectManager.Project.GetRelativePath(Vector.GISFileInfo);
             nodItem.AppendChild(nodParent.OwnerDocument.CreateElement("DistanceField")).InnerText = DistanceField;
 
