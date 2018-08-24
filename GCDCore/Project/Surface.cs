@@ -33,6 +33,12 @@ namespace GCDCore.Project
                 else
                     return null;
             }
+
+            set
+            {
+                ErrorSurfaces.Where(x => x != value).ToList().ForEach(x => x.IsDefault = false);
+                ErrorSurfaces.First(x => x == value).IsDefault = true;
+            }
         }
 
         /// <summary>

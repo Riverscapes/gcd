@@ -154,8 +154,10 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
                 else
                 {
                     ErrorSurface.Name = ucName.ItemName;
-                    ErrorSurface.IsDefault = chkDefault.Checked;
                 }
+
+                // Handles unsetting default on other error surface and setting it for this one
+                DEM.DefaultErrorSurface = ErrorSurface;
 
                 ProjectManager.Project.Save();
                 Cursor = Cursors.Default;
