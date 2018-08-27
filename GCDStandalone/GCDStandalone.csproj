@@ -29,7 +29,7 @@
     <ProductName>GCD Stand Alone</ProductName>
     <PublisherName>North Arrow Research Ltd.</PublisherName>
     <SuiteName>Geomorphic Change Detection Software</SuiteName>
-    <ApplicationRevision>28</ApplicationRevision>
+    <ApplicationRevision>29</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>

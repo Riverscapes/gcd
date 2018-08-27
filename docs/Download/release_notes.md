@@ -9,6 +9,24 @@ Note, see the [Commit History](https://github.com/Riverscapes/gcd/commits) in Gi
 
 <a class="button" href="https://github.com/Riverscapes/gcd/commits"><i class="fa fa-github"/> GCD Github Repository Commit History</a>
 
+## 7.2.0 - 27 Aug 2018
+
+* [Operational progress](https://github.com/Riverscapes/gcd/issues/41). Both the Stand alone and ArcGIS versions now display progress bar information during GCD operations.
+* [Profile route improvements](https://github.com/Riverscapes/gcd/issues/121). Profile routes have been broken out into *longitudinal* and *transect* profile routes to distinguish between different polyline orientations.
+* Budget Segregation
+  * Budget segregation results screen now includes [graphs showing the overall breakdown of surface raising and lowering](https://github.com/Riverscapes/gcd/issues/194) for all classes.
+  * Fixed [order that classes are displayed](https://github.com/Riverscapes/gcd/issues/235) when the budget segregation is performed using a directional mask.
+* [Generic batch tool](https://github.com/Riverscapes/gcd/issues/147) now allows user to select both surfaces and uncertainty method for each batch.
+* [Improved raster properties](https://github.com/Riverscapes/gcd/issues/232) dialog implemented throughout GCD.
+* [Morphological analysis has additional column](https://github.com/Riverscapes/gcd/issues/251) for material augmentation or extraction.
+* [FIS rule file and metadata are now packaged](https://github.com/Riverscapes/gcd/issues/234) with the GCD project.
+* Users can control the [default DoD symbology range](https://github.com/Riverscapes/gcd/issues/286).
+* GCD standalone can now be launched by [double clicking GCD project file](https://github.com/Riverscapes/gcd/issues/292).
+* Bug Fixes
+  * Fixed [duplicate zero station value](https://github.com/Riverscapes/gcd/issues/297) for some linear extraction results.
+  * Fixed crash importing rasters with [linear units that are in decimal degrees](https://github.com/Riverscapes/gcd/issues/300) (not recommended).
+  * Fixed error when attempting to use the [clean raster tool](https://github.com/Riverscapes/gcd/issues/301).
+
 ## 7.1.1 - 29 Jun 2018
 
 * Fixed GCD calling the Cross Section Viewer by changing the publisher to `North Arrow Research Ltd.`
