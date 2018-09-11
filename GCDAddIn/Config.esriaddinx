@@ -86,7 +86,7 @@
         </Toolbar>
       </Toolbars>
       <Extensions>
-        <Extension id="North_Arrow_Research_GCDAddIn_GCDExtension" class="GCDExtension" productName="Geomorphic Change Detection Software 7" autoLoad="true" />
+        <Extension id="North_Arrow_Research_GCDAddIn_GCDExtension" class="GCDExtension" productName="Geomorphic Change Detection Software 7" autoLoad="true" showInExtensionDialog="true" />
       </Extensions>
     </ArcMap>
   </AddIn>

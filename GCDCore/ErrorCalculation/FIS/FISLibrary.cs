@@ -68,12 +68,6 @@ namespace GCDCore.ErrorCalculation.FIS
 
         private void LoadFISLibrary(FileInfo filePath, FISLibraryItemTypes eType)
         {
-            if (!filePath.Exists)
-            {
-                Console.WriteLine("FIS library XML file not present " + filePath.FullName);
-                return;
-            }
-
             // System FIS Library contains relative paths and the directory storing the manifest XML is needed
             DirectoryInfo rootDir = null;
             if (eType == FISLibraryItemTypes.System)
@@ -82,6 +76,11 @@ namespace GCDCore.ErrorCalculation.FIS
             XmlDocument xmlDoc = new XmlDocument();
             try
             {
+                if (!filePath.Exists)
+                {
+                    throw new Exception("FIS library XML file missing.");
+                }
+
                 xmlDoc.Load(filePath.FullName);
 
                 foreach (XmlNode nodItem in xmlDoc.DocumentElement.SelectNodes("FISLibraryItem"))
@@ -100,7 +99,9 @@ namespace GCDCore.ErrorCalculation.FIS
             }
             catch (Exception ex)
             {
-                Console.WriteLine(string.Format("Error loading {0} FIS Library XML file: {1}\n{2}", eType.ToString(), filePath.FullName, ex.Message));
+                ex.Data["FIS Library File Path"] = filePath.FullName;
+                ex.Data["FIS Library Type"] = eType.ToString();
+                throw;
             }
         }
 

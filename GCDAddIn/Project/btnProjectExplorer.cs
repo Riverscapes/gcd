@@ -21,7 +21,7 @@ namespace GCDAddIn.Project
 
             ArcMap.Application.CurrentTool = null;
         }
-        
+
         protected override void OnUpdate()
         {
             Enabled = ArcMap.Application != null;
@@ -49,12 +49,16 @@ namespace GCDAddIn.Project
                     {
                         // Try and refresh the project window.
                         ucProjectManager.AddinImpl winImpl = ESRI.ArcGIS.Desktop.AddIns.AddIn.FromID<ucProjectManager.AddinImpl>(ThisAddIn.IDs.GCDAddIn_ucProjectManager);
+
+                        System.Windows.Forms.MessageBox.Show("Before Load Project Tree", "Diagnostic Message");
+
                         winImpl.UI.LoadTree();
+
+                        System.Windows.Forms.MessageBox.Show("After Load Project Tree", "Diagnostic Message");
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(string.Format("Error attempting to open project explorer {0}", ex.Message));
-                        // Do nothing if it fails.
+                        naru.error.ExceptionUI.HandleException(ex, "Error Opening Project Explorer", GCDCore.Properties.Resources.NewIssueURL);
                     }
                 }
             }

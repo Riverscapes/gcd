@@ -7,6 +7,8 @@ namespace GCDAddIn.Project
     {
         protected override void OnClick()
         {
+            MessageBox.Show("Open Project 1", "Diagnostic Message");
+
             try
             {
                 OpenFileDialog f = new OpenFileDialog();
@@ -27,15 +29,24 @@ namespace GCDAddIn.Project
                     }
                 }
 
+                MessageBox.Show("Open Project 2", "Diagnostic Message");
+
+
                 if (f.ShowDialog() == DialogResult.OK)
                 {
                     try
                     {
+                        MessageBox.Show("Open Project 3", "Diagnostic Message");
+
                         GCDCore.Project.ProjectManager.OpenProject(new System.IO.FileInfo(f.FileName));
                         GCDCore.Properties.Settings.Default.LastUsedProjectFolder = System.IO.Path.GetDirectoryName(f.FileName);
                         GCDCore.Properties.Settings.Default.Save();
 
+                        MessageBox.Show("Open Project 4", "Diagnostic Message");
+
                         btnProjectExplorer.ShowProjectExplorer(true);
+
+                        MessageBox.Show("Open Project 5", "Diagnostic Message");
                     }
                     catch (Exception ex)
                     {

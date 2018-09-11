@@ -14,6 +14,8 @@ namespace GCDAddIn
 
         protected override void OnStartup()
         {
+            System.Windows.Forms.MessageBox.Show("GCD Extension Start Up", "Diagnostic Message");
+
             try
             {
                 GCDCore.Project.ProjectManager.Init(GCDCore.Properties.Settings.Default.AutomaticPyramids);
@@ -23,6 +25,8 @@ namespace GCDAddIn
             {
                 GCDCore.GCDException.HandleException(ex, "Error setting up application files.");
             }
+
+            System.Windows.Forms.MessageBox.Show("GCD Extension Start Up Has Completed", "Diagnostic Message");
         }
 
         protected override void OnShutdown()
