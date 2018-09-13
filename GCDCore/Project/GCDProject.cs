@@ -314,13 +314,9 @@ namespace GCDCore.Project
 
         public static GCDProject Load(FileInfo projectFile)
         {
-            System.Windows.Forms.MessageBox.Show(projectFile.FullName, "Loading Project From File");
-
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.Load(projectFile.FullName);
-
-            System.Windows.Forms.MessageBox.Show("Project XML Loaded", "Diagnostic Message");
-            
+           
             XmlNode nodProject = xmlDoc.SelectSingleNode("Project");
             string name = nodProject.SelectSingleNode("Name").InnerText;
             string desc = nodProject.SelectSingleNode("Description").InnerText;
@@ -338,11 +334,7 @@ namespace GCDCore.Project
             if (!string.IsNullOrEmpty(nodCellArea.InnerText))
                 cellArea = UnitsNet.Area.From(double.Parse(nodCellArea.InnerText), area);
 
-            System.Windows.Forms.MessageBox.Show("About to Set Project Singleton", "Diagnostic Message");
-
             ProjectManager.Project = new GCDProject(name, desc, projectFile, dtCreated, gcdv, cellArea, units);
-
-            System.Windows.Forms.MessageBox.Show(ProjectManager.Project.ToString(), "Project Manager Singleton");
 
             foreach (XmlNode nodOnline in nodProject.SelectNodes("Online/*"))
                 ProjectManager.Project.OnlineParams[nodOnline.Name] = nodOnline.InnerText;

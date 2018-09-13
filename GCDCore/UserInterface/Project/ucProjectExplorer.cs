@@ -34,18 +34,10 @@ namespace GCDCore.UserInterface.Project
         {
             treProject.Nodes.Clear();
 
-            System.Windows.Forms.MessageBox.Show("Before Load Project Tree Object Check", "Diagnostic Message");
-
-            System.Windows.Forms.MessageBox.Show(ProjectManager.Project.ToString(), "Project Item Status");
-
             if (ProjectManager.Project == null)
                 return;
 
-            System.Windows.Forms.MessageBox.Show("After Load Project Tree Object Check", "Diagnostic Message");
-
             TreeNodeTypes.TreeNodeGroup nodProj = new TreeNodeTypes.GCDProjectGroup(treProject, components);
-
-            System.Windows.Forms.MessageBox.Show("After Project Tree Node Loading", "Diagnostic Message");
         }
 
         private void treProject_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)

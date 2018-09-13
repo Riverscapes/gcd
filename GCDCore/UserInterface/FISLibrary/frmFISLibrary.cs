@@ -73,13 +73,8 @@ namespace GCDCore.UserInterface.FISLibrary
 
             try
             {
-                System.Windows.Forms.MessageBox.Show("Before Retrieving FIS Library Items", "Diagnostic Message");
-                System.Windows.Forms.MessageBox.Show(ProjectManager.FISLibrary.ToString(), "FIS Library Object");
-
                 FISList = ProjectManager.FISLibrary.FISItems;
                 grdFIS.DataSource = FISList;
-
-                System.Windows.Forms.MessageBox.Show("After Retrieving FIS Library Items", "Diagnostic Message");
             }
             catch (Exception ex)
             {
