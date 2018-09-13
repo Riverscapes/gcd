@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -53,8 +53,7 @@ namespace GCDAddIn.Project
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(string.Format("Error attempting to open project explorer {0}", ex.Message));
-                        // Do nothing if it fails.
+                        naru.error.ExceptionUI.HandleException(ex, "Error Opening Project Explorer", GCDCore.Properties.Resources.NewIssueURL);
                     }
                 }
             }
