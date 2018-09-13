@@ -78,7 +78,10 @@ namespace GCDCore.ErrorCalculation.FIS
             {
                 if (!filePath.Exists)
                 {
-                    throw new Exception("FIS library XML file missing.");
+                    if (eType == FISLibraryItemTypes.System)
+                        throw new Exception("FIS library XML file missing.");
+                    else
+                        return;
                 }
 
                 xmlDoc.Load(filePath.FullName);
