@@ -9,6 +9,10 @@ Note, see the [Commit History](https://github.com/Riverscapes/gcd/commits) in Gi
 
 <a class="button" href="https://github.com/Riverscapes/gcd/commits"><i class="fa fa-github"/> GCD Github Repository Commit History</a>
 
+## 7.3.0 - 14 Sep 2018
+
+* Bug fix to user FIS library loading
+
 ## 7.2.0 - 27 Aug 2018
 
 * [Operational progress](https://github.com/Riverscapes/gcd/issues/41). Both the Stand alone and ArcGIS versions now display progress bar information during GCD operations.
