@@ -422,6 +422,16 @@ namespace GCDConsoleLib
             {
                 Features.Add(mFeat.GetFID(), new VectorFeature(mFeat));
                 mFeat = mLayer.GetNextFeature();
+
+                int count = mFeat.GetGeometryRef().GetGeometryCount();
+                if (count > 0)
+                {
+                    Exception ex = new Exception("ShapeFile contains one or more multipart features.");
+                    ex.Data["File Path"] = GISFileInfo.FullName;
+                    ex.Data["MultiPart"] = "true";
+                    ex.Data["Feature ID"] = mFeat.GetFID().ToString();
+                    throw ex;
+                }
             }
 
             // Now get our FIELD definitions

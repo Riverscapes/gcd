@@ -94,6 +94,12 @@ namespace GCDCore.UserInterface.UtilityForms
                     txtPath.Text = string.Empty;
                     MessageBox.Show(msg, "Missing Spatial Reference", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
+                else if (ex.Data.Contains("MultiPart"))
+                {
+                    MessageBox.Show("The Shapefile contains one or more multi-part features. Multi-part features are incompatible with the GCD." +
+                        " Remove or split all multi-part features and then try again.", "Multi-Part Features", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    txtPath.Text = string.Empty;
+                }
                 else
                     GCDException.HandleException(ex, string.Format("Error browsing to vector {0}", Noun));
             }
