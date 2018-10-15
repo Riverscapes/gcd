@@ -421,7 +421,6 @@ namespace GCDConsoleLib
             while (mFeat != null)
             {
                 Features.Add(mFeat.GetFID(), new VectorFeature(mFeat));
-                mFeat = mLayer.GetNextFeature();
 
                 int count = mFeat.GetGeometryRef().GetGeometryCount();
                 if (count > 0)
@@ -432,6 +431,8 @@ namespace GCDConsoleLib
                     ex.Data["Feature ID"] = mFeat.GetFID().ToString();
                     throw ex;
                 }
+
+                mFeat = mLayer.GetNextFeature();
             }
 
             // Now get our FIELD definitions
