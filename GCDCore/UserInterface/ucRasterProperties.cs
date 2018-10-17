@@ -28,11 +28,11 @@ namespace GCDCore.UserInterface
             grpProperties.Text = string.Format("{0} {1}Properties", noun, noun.ToLower().EndsWith("raster") ? string.Empty : "Raster ");
 
             ItemProperties.Add(new GridViewPropertyValueItem("Raster Properties"));
-            ItemProperties.Add(new GridViewPropertyValueItem("Cell size", UnitsNet.Length.From((double)raster.Extent.CellWidth, raster.Proj.HorizontalUnit).ToString()));
+            ItemProperties.Add(new GridViewPropertyValueItem("Cell size", UnitsNet.Length.From((double)raster.Extent.CellWidth, raster.Proj.HorizontalUnit).ToString(raster.Proj.HorizontalUnit)));
             ItemProperties.Add(new GridViewPropertyValueItem("Rows", raster.Extent.Rows.ToString("N0")));
             ItemProperties.Add(new GridViewPropertyValueItem("Columns", raster.Extent.Cols.ToString("N0")));
-            ItemProperties.Add(new GridViewPropertyValueItem("Height", UnitsNet.Length.From((double)raster.Extent.Height, raster.Proj.HorizontalUnit).ToString()));
-            ItemProperties.Add(new GridViewPropertyValueItem("Width", UnitsNet.Length.From((double)raster.Extent.Width, raster.Proj.HorizontalUnit).ToString()));
+            ItemProperties.Add(new GridViewPropertyValueItem("Height", UnitsNet.Length.From((double)raster.Extent.Height, raster.Proj.HorizontalUnit).ToString(raster.Proj.HorizontalUnit)));
+            ItemProperties.Add(new GridViewPropertyValueItem("Width", UnitsNet.Length.From((double)raster.Extent.Width, raster.Proj.HorizontalUnit).ToString(raster.Proj.HorizontalUnit)));
             ItemProperties.Add(new GridViewPropertyValueItem("Spatial Reference", raster.Proj.Wkt));
 
             try
