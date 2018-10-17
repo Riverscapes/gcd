@@ -39,8 +39,6 @@
             this.browseGCDProjectFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.dataPreparationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.cleanRasterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.customizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fISLibraryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -80,7 +78,6 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.projectToolStripMenuItem,
-            this.dataPreparationToolStripMenuItem,
             this.customizeToolStripMenuItem,
             this.helpToolStripMenuItem1});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
@@ -161,22 +158,6 @@
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
-            // 
-            // dataPreparationToolStripMenuItem
-            // 
-            this.dataPreparationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.cleanRasterToolStripMenuItem});
-            this.dataPreparationToolStripMenuItem.Name = "dataPreparationToolStripMenuItem";
-            this.dataPreparationToolStripMenuItem.Size = new System.Drawing.Size(107, 20);
-            this.dataPreparationToolStripMenuItem.Text = "Data Preparation";
-            // 
-            // cleanRasterToolStripMenuItem
-            // 
-            this.cleanRasterToolStripMenuItem.Image = global::GCDStandalone.Properties.Resources.CleanRaster;
-            this.cleanRasterToolStripMenuItem.Name = "cleanRasterToolStripMenuItem";
-            this.cleanRasterToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
-            this.cleanRasterToolStripMenuItem.Text = "Clean Raster...";
-            this.cleanRasterToolStripMenuItem.Click += new System.EventHandler(this.cleanRasterToolStripMenuItem_Click);
             // 
             // customizeToolStripMenuItem
             // 
@@ -456,7 +437,6 @@
 
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem projectToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem dataPreparationToolStripMenuItem;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private GCDCore.UserInterface.Project.ucProjectExplorer ucProjectExplorer1;
         private System.Windows.Forms.ToolStripMenuItem newGCDProjectToolStripMenuItem;
@@ -474,7 +454,6 @@
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripStatusLabel tssProjectPath;
-        private System.Windows.Forms.ToolStripMenuItem cleanRasterToolStripMenuItem;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton tsiNewProject;
         private System.Windows.Forms.ToolStripButton tsiOpenProject;
