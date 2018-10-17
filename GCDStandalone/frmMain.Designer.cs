@@ -168,8 +168,8 @@
             this.toolStripSeparator2,
             this.checkForUpdatesToolStripMenuItem});
             this.customizeToolStripMenuItem.Name = "customizeToolStripMenuItem";
-            this.customizeToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
-            this.customizeToolStripMenuItem.Text = "Tools";
+            this.customizeToolStripMenuItem.Size = new System.Drawing.Size(75, 20);
+            this.customizeToolStripMenuItem.Text = "Customize";
             // 
             // optionsToolStripMenuItem
             // 
