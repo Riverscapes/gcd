@@ -9,6 +9,15 @@ Note, see the [Commit History](https://github.com/Riverscapes/gcd/commits) in Gi
 
 <a class="button" href="https://github.com/Riverscapes/gcd/commits"><i class="fa fa-github"/> GCD Github Repository Commit History</a>
 
+## 7.x.x - ????
+
+* User now warned and prevented from using multi-part ShapeFiles for profile routes or masks.
+* Raster properties now appear in the correct raster units instead of always being converted to meters.
+* `foot_us` units now recognized as foot.
+* Import raster form improvements.
+* Removed Data Preparation menu from both ArcGIS AddIn and Standalone.
+* Renamed the `Tools` menu in the Standalone to `Customize` to be consistent within the ArcGIS AddIn.
+
 ## 7.3.0 - 14 Sep 2018
 
 * Bug fix to user FIS library loading
