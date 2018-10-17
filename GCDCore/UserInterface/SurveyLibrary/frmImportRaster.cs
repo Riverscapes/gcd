@@ -184,6 +184,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             //OriginalRasterChanged(sender, e);
             ucRaster.PathChanged += OnRasterChanged;
             valCellSize.ValueChanged += valCellSize_ValueChanged;
+            valPrecision.ValueChanged += valPrecision_ValueChanged;
 
             // Select the input raster control to make it quicker for user
             ucRaster.Select();
@@ -638,6 +639,11 @@ namespace GCDCore.UserInterface.SurveyLibrary
             Debug.Print("Cell size changed");
 
             //valCellSize.Value = Math.Round(valCellSize.Value, CInt(valPrecision.Value))
+            ExtImporter.CellSize = valCellSize.Value;
+            valTop.Value = ExtImporter.OutputTop;
+            valRight.Value = ExtImporter.OutputRight;
+            valBottom.Value = ExtImporter.OutputBottom;
+            valLeft.Value = ExtImporter.OutputLeft;
 
             UpdateOutputExtent();
             UpdateOriginalRasterExtentFormatting();
@@ -685,6 +691,9 @@ namespace GCDCore.UserInterface.SurveyLibrary
             // Recalculate the size of the output extent
             txtProjRows.Text = ExtImporter.Output.Rows.ToString("#,##0");
             txtProjCols.Text = ExtImporter.Output.Cols.ToString("#,##0");
+
+            txtProjWidth.Text = ExtImporter.Output.Width.ToString();
+            txtProjHeight.Text = ExtImporter.Output.Height.ToString();
 
             if (ucRaster.SelectedItem is GCDConsoleLib.Raster)
             {
