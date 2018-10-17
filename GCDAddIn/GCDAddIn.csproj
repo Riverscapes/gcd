@@ -150,7 +150,6 @@
     </Compile>
     <Compile Include="Customize\btnFISLibrary.cs" />
     <Compile Include="Customize\btnOptions.cs" />
-    <Compile Include="DataPreparation\btnCleanRaster.cs" />
     <Compile Include="frmLayerSelector.cs">
       <SubType>Form</SubType>
     </Compile>

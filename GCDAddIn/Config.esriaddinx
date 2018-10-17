@@ -26,10 +26,6 @@
         <Button id="GCD7_AddIn_OptionsButton" class="GCDAddIn.Customize.btnOptions" message="Manage GCD Options" caption="Options" tip="Manage GCD Options" category="GCD" image="Images\Options.png" />
         <Button id="GCD7_AddIn_FISLibraryButton" class="GCDAddIn.Customize.btnFISLibrary" message="Manage FIS files associated with the GCD" caption="FIS Library" tip="Add, edit and remove FIS files." category="GCD" image="Images\FISLibrary.png" />
 
-        <!-- Data Preparation Menu -->
-        <Button id="GCD7_AddIn_CleanRasterButton" class="GCDAddIn.DataPreparation.btnCleanRaster" message="Clean a raster to fix cell extent and divisibility issues" caption="Clean Raster" category="GCD" image="Images\CleanRaster.png" />
-        <Button id="GCD7_AddIn_ConcaveHull" class="ConcaveHullButton" message="Create a bounding polygon around a set of survey points." caption="Creating Bounding Polygon" category="GCD" image="Resources\ConcaveHull.png" />
-
         <!-- Help Menu-->
         <Button id="GCD7_AddIn_AboutButton" class="GCDAddIn.Help.btnAbout" message="Provides information about the version, authors and funding for the Geomorphic Change Detection (GCD)." caption="About GCD" tip="Information About the GCD" category="GCD" image="Images\GCD.png" />
         <Button id="GCD7_AddIn_OnlineHelp" class="GCDAddIn.Help.btnOnlineHelp" message="Open the GCD Online Help" caption="Online GCD Help" category="GCD" image="Images\Help.png" />
@@ -52,12 +48,7 @@
             <Button refID="GCD7_AddIn_CloseProjectButton"/>
             <Button refID="GCDAddIn_ExploreProjectButton" separator="true" />
           </Items>
-        </Menu>
-        <Menu caption="Data Preparation" isRootMenu="false" id="GCD7_AddIn_DataPreparationMenu">
-          <Items>
-            <Button refID="GCD7_AddIn_CleanRasterButton" separator="true" />
-          </Items>
-        </Menu>
+        </Menu>      
         <Menu caption="Customize" isRootMenu="false" id="GCD7_AddIn_CustomizeMenu">
           <Items>
             <Button refID="GCD7_AddIn_OptionsButton" />
@@ -79,7 +70,6 @@
           <Items>
             <Button refID="GCD7_AddIn_ToolbarExplorerButton" />
             <Menu refID="GCD7_AddIn_ProjectMenu" separator="true" />
-            <Menu refID="GCD7_AddIn_DataPreparationMenu" />
             <Menu refID="GCD7_AddIn_CustomizeMenu" />
             <Menu refID="GCD7_AddIn_HelpMenu" />
           </Items>
