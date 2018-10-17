@@ -380,19 +380,6 @@ namespace GCDStandalone
             }
         }
 
-        private void cleanRasterToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                GCDCore.UserInterface.SurveyLibrary.frmImportRaster frm = new GCDCore.UserInterface.SurveyLibrary.frmImportRaster(null, GCDCore.UserInterface.SurveyLibrary.ExtentImporter.Purposes.Standalone, string.Empty);
-                frm.ShowDialog();
-            }
-            catch (Exception ex)
-            {
-                GCDCore.GCDException.HandleException(ex);
-            }
-        }
-
         private void fISLibraryToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
