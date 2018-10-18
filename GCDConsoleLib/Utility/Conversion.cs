@@ -269,7 +269,8 @@ namespace GCDConsoleLib.Utility
         /// </summary>
         private static Dictionary<LengthUnit, string[]> LengthAliases = new Dictionary<LengthUnit, string[]>() {
             { LengthUnit.Meter, new string[] { "metre", "meters"} },
-            { LengthUnit.Foot, new string[] { "feet", "ft-us", "foot_us" } }
+            { LengthUnit.Foot, new string[] { "feet" } },
+            { LengthUnit.UsSurveyFoot, new string[] { "ft-us", "foot_us" } }
         };
 
         /// <summary>
