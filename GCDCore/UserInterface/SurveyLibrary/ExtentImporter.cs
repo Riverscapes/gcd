@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using GCDConsoleLib;
 
 namespace GCDCore.UserInterface.SurveyLibrary
@@ -11,7 +7,6 @@ namespace GCDCore.UserInterface.SurveyLibrary
     {
         public enum Purposes
         {
-            Standalone,
             FirstDEM,
             SubsequentDEM,
             AssociatedSurface,
@@ -33,13 +28,22 @@ namespace GCDCore.UserInterface.SurveyLibrary
                 _InputExtent = value;
 
                 decimal cellSize = 0;
-                if (Purpose == Purposes.SubsequentDEM || Purpose == Purposes.AssociatedSurface || Purpose == Purposes.ErrorSurface || 
+                if (Purpose == Purposes.SubsequentDEM || Purpose == Purposes.AssociatedSurface || Purpose == Purposes.ErrorSurface ||
                     Purpose == Purposes.ReferenceSurface || Purpose == Purposes.ReferenceErrorSurface)
-
+                {
                     cellSize = RefExtent.CellWidth;
+                    _Precision = (ushort)GCDConsoleLib.Utility.DynamicMath.NumDecimals(RefExtent.CellWidth);
+                }
                 else
                 {
-                    _Precision = (ushort)GCDConsoleLib.Utility.DynamicMath.NumDecimals(value.CellWidth);
+                    // Get the raw precision of the new extent. Override this raw precision if this
+                    // is the first DEM in a project and the raw precision is unacceptably high num of decimal places
+                    ushort rawPrecision = (ushort)GCDConsoleLib.Utility.DynamicMath.NumDecimals(value.CellWidth);
+                    if (Purpose == Purposes.FirstDEM && rawPrecision > 2)
+                        _Precision = 2;
+                    else
+                        _Precision = rawPrecision;
+
                     cellSize = Math.Round(value.CellWidth, _Precision);
                 }
 
@@ -152,7 +156,6 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
         public void Initialize(decimal cellWidth)
         {
-            if (Purpose == Purposes.Standalone && RefExtent != null) throw new Exception("Standalone mode should not have a reference raster.");
             if (Purpose == Purposes.FirstDEM && RefExtent != null) throw new Exception("First DEM mode should not have a reference raster.");
             if (Purpose == Purposes.SubsequentDEM && RefExtent == null) throw new Exception("Subsequent DEM mode requires a reference raster.");
             if (Purpose == Purposes.AssociatedSurface && RefExtent == null) throw new Exception("Associated surface mode requires a reference raster.");
@@ -171,6 +174,5 @@ namespace GCDCore.UserInterface.SurveyLibrary
                 Output = new ExtentRectangle(temp.GetDivisibleExtent());
             }
         }
-
     }
 }

@@ -51,12 +51,10 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.txtOrigHeight = new System.Windows.Forms.TextBox();
             this.txtTop = new System.Windows.Forms.TextBox();
             this.Label11 = new System.Windows.Forms.Label();
-            this.ucRaster = new GCDCore.UserInterface.UtilityForms.ucRasterInput();
             this.grpProjectRaaster = new System.Windows.Forms.GroupBox();
             this.cmdHelpPrecision = new System.Windows.Forms.Button();
             this.Label1 = new System.Windows.Forms.Label();
             this.cboMethod = new System.Windows.Forms.ComboBox();
-            this.cmdSave = new System.Windows.Forms.Button();
             this.valPrecision = new System.Windows.Forms.NumericUpDown();
             this.valCellSize = new System.Windows.Forms.NumericUpDown();
             this.valBottom = new System.Windows.Forms.NumericUpDown();
@@ -81,6 +79,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.cmdOK = new System.Windows.Forms.Button();
             this.cmdCancel = new System.Windows.Forms.Button();
             this.tTip = new System.Windows.Forms.ToolTip(this.components);
+            this.txtSourceRaster = new System.Windows.Forms.TextBox();
             this.grpOriginalRaster.SuspendLayout();
             this.grpProjectRaaster.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.valPrecision)).BeginInit();
@@ -112,7 +111,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             // Label2
             // 
             this.Label2.AutoSize = true;
-            this.Label2.Location = new System.Drawing.Point(24, 25);
+            this.Label2.Location = new System.Drawing.Point(30, 25);
             this.Label2.Name = "Label2";
             this.Label2.Size = new System.Drawing.Size(71, 13);
             this.Label2.TabIndex = 0;
@@ -132,12 +131,13 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.txtRasterPath.Location = new System.Drawing.Point(107, 21);
             this.txtRasterPath.Name = "txtRasterPath";
             this.txtRasterPath.ReadOnly = true;
-            this.txtRasterPath.Size = new System.Drawing.Size(456, 20);
+            this.txtRasterPath.Size = new System.Drawing.Size(485, 20);
             this.txtRasterPath.TabIndex = 1;
             this.txtRasterPath.TabStop = false;
             // 
             // grpOriginalRaster
             // 
+            this.grpOriginalRaster.Controls.Add(this.txtSourceRaster);
             this.grpOriginalRaster.Controls.Add(this.Label12);
             this.grpOriginalRaster.Controls.Add(this.txtOrigCellSize);
             this.grpOriginalRaster.Controls.Add(this.txtOrigRows);
@@ -157,7 +157,6 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.grpOriginalRaster.Controls.Add(this.txtTop);
             this.grpOriginalRaster.Controls.Add(this.Label11);
             this.grpOriginalRaster.Controls.Add(this.Label2);
-            this.grpOriginalRaster.Controls.Add(this.ucRaster);
             this.grpOriginalRaster.Location = new System.Drawing.Point(12, 37);
             this.grpOriginalRaster.Name = "grpOriginalRaster";
             this.grpOriginalRaster.Size = new System.Drawing.Size(606, 156);
@@ -318,20 +317,11 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.Label11.TabIndex = 2;
             this.Label11.Text = "Left";
             // 
-            // ucRaster
-            // 
-            this.ucRaster.FullPath = null;
-            this.ucRaster.Location = new System.Drawing.Point(101, 19);
-            this.ucRaster.Name = "ucRaster";
-            this.ucRaster.Size = new System.Drawing.Size(491, 25);
-            this.ucRaster.TabIndex = 1;
-            // 
             // grpProjectRaaster
             // 
             this.grpProjectRaaster.Controls.Add(this.cmdHelpPrecision);
             this.grpProjectRaaster.Controls.Add(this.Label1);
             this.grpProjectRaaster.Controls.Add(this.cboMethod);
-            this.grpProjectRaaster.Controls.Add(this.cmdSave);
             this.grpProjectRaaster.Controls.Add(this.valPrecision);
             this.grpProjectRaaster.Controls.Add(this.valCellSize);
             this.grpProjectRaaster.Controls.Add(this.valBottom);
@@ -390,16 +380,6 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.cboMethod.Name = "cboMethod";
             this.cboMethod.Size = new System.Drawing.Size(220, 21);
             this.cboMethod.TabIndex = 24;
-            // 
-            // cmdSave
-            // 
-            this.cmdSave.Image = global::GCDCore.Properties.Resources.SaveGIS;
-            this.cmdSave.Location = new System.Drawing.Point(569, 20);
-            this.cmdSave.Name = "cmdSave";
-            this.cmdSave.Size = new System.Drawing.Size(23, 23);
-            this.cmdSave.TabIndex = 23;
-            this.cmdSave.UseVisualStyleBackColor = true;
-            this.cmdSave.Click += new System.EventHandler(this.cmdSave_Click);
             // 
             // valPrecision
             // 
@@ -574,7 +554,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.cmdHelp.TabIndex = 6;
             this.cmdHelp.Text = "Help";
             this.cmdHelp.UseVisualStyleBackColor = true;
-            this.cmdHelp.Click += new System.EventHandler(this.cmdHelp_Click_1);
+            this.cmdHelp.Click += new System.EventHandler(this.cmdHelp_Click);
             // 
             // cmdOK
             // 
@@ -584,7 +564,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.cmdOK.Name = "cmdOK";
             this.cmdOK.Size = new System.Drawing.Size(119, 23);
             this.cmdOK.TabIndex = 4;
-            this.cmdOK.Text = "Import";
+            this.cmdOK.Text = "Add Raster";
             this.cmdOK.UseVisualStyleBackColor = true;
             this.cmdOK.Click += new System.EventHandler(this.cmdOK_Click);
             // 
@@ -598,6 +578,14 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.cmdCancel.TabIndex = 5;
             this.cmdCancel.Text = "Cancel";
             this.cmdCancel.UseVisualStyleBackColor = true;
+            // 
+            // txtSourceRaster
+            // 
+            this.txtSourceRaster.Location = new System.Drawing.Point(107, 21);
+            this.txtSourceRaster.Name = "txtSourceRaster";
+            this.txtSourceRaster.ReadOnly = true;
+            this.txtSourceRaster.Size = new System.Drawing.Size(485, 20);
+            this.txtSourceRaster.TabIndex = 1;
             // 
             // frmImportRaster
             // 
@@ -683,11 +671,10 @@ namespace GCDCore.UserInterface.SurveyLibrary
         internal System.Windows.Forms.Label Label15;
         internal System.Windows.Forms.TextBox txtProjWidth;
         internal System.Windows.Forms.NumericUpDown valPrecision;
-        internal System.Windows.Forms.Button cmdSave;
         internal System.Windows.Forms.Label Label1;
         internal System.Windows.Forms.ComboBox cboMethod;
         internal System.Windows.Forms.Button cmdHelpPrecision;
-        public UtilityForms.ucRasterInput ucRaster;
         private System.Windows.Forms.ToolTip tTip;
+        private System.Windows.Forms.TextBox txtSourceRaster;
     }
 }

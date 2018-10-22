@@ -59,7 +59,8 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
 
             try
             {
-                SurveyLibrary.frmImportRaster frm = new SurveyLibrary.frmImportRaster(referenceDEM, SurveyLibrary.ExtentImporter.Purposes.ReferenceSurface, "Reference Surface");
+                SurveyLibrary.frmImportRaster frm = SurveyLibrary.frmImportRaster.PrepareToImportRaster(referenceDEM, SurveyLibrary.ExtentImporter.Purposes.ReferenceSurface, "Reference Surface", new IntPtr(0));
+
                 if (EditTreeItem(frm, false) == DialogResult.OK)
                 {
                     GCDConsoleLib.Raster rDEM = frm.ProcessRaster();

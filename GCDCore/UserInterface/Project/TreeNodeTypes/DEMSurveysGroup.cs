@@ -95,7 +95,8 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
 
             try
             {
-                SurveyLibrary.frmImportRaster frm = new SurveyLibrary.frmImportRaster(referenceDEM, ePurpose, "DEM Survey");
+                SurveyLibrary.frmImportRaster frm = SurveyLibrary.frmImportRaster.PrepareToImportRaster(referenceDEM,ePurpose, "Associated Surface", new IntPtr(0));
+                
                 if (EditTreeItem(frm, false) == DialogResult.OK)
                 {
                     GCDConsoleLib.Raster rDEM = frm.ProcessRaster();

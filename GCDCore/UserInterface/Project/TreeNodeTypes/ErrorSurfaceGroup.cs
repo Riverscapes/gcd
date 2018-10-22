@@ -70,7 +70,8 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
                 noun = "Error Surface";
             }
 
-            SurveyLibrary.frmImportRaster frm = new SurveyLibrary.frmImportRaster(Surface, ePurpose, noun);
+            SurveyLibrary.frmImportRaster frm = SurveyLibrary.frmImportRaster.PrepareToImportRaster(Surface, ePurpose, noun, new IntPtr(0));
+
             if (EditTreeItem(frm) == DialogResult.OK)
             {
                 GCDConsoleLib.Raster raster = frm.ProcessRaster();
