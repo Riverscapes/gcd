@@ -256,6 +256,9 @@ namespace GCDConsoleLib.Tests
             Assert.AreEqual(eA1result.Right, eA1.Right);
             Assert.AreEqual(eA1result.Rows, eA1.Rows);
             Assert.AreEqual(eA1result.Cols, eA1.Cols);
+            Assert.IsTrue(eA1result.Width >= eA1.Width);
+            Assert.IsTrue(eA1result.Height >= eA1.Height);
+            Assert.IsTrue(eA1result.IsDivisible());
 
             ///
             /// NEGStep 1: Negative Cell Height, Positive Cell Width
@@ -271,6 +274,9 @@ namespace GCDConsoleLib.Tests
             Assert.AreEqual(eDivisible.Right, 26.6m);
             Assert.AreEqual(eDivisible.Rows, 101);
             Assert.AreEqual(eDivisible.Cols, 101);
+            Assert.IsTrue(eDivisible.Width >= eNotDivisible.Width);
+            Assert.IsTrue(eDivisible.Height >= eNotDivisible.Height);
+            Assert.IsTrue(eDivisible.IsDivisible());
 
             ///
             /// NEGStep 1: Negative Cell Height, Positive Cell Width
@@ -286,6 +292,9 @@ namespace GCDConsoleLib.Tests
             Assert.AreEqual(eNegStep1.Right, 26.4m);
             Assert.AreEqual(eNegStep1.Rows, 101);
             Assert.AreEqual(eNegStep1.Cols, 101);
+            Assert.IsTrue(eNegStep1.Width >= eNegStep1NonDivisible.Width);
+            Assert.IsTrue(eNegStep1.Height >= eNegStep1NonDivisible.Height);
+            Assert.IsTrue(eNegStep1.IsDivisible());
 
             ///
             /// NEGStep 2: Positive Cell Height, Negative Cell Width
@@ -301,6 +310,9 @@ namespace GCDConsoleLib.Tests
             Assert.AreEqual(eNegStep2.Right, -13.8m);
             Assert.AreEqual(eNegStep2.Rows, 101);
             Assert.AreEqual(eNegStep2.Cols, 101);
+            Assert.IsTrue(eNegStep2.Width >= eNegStep2NonDivisible.Width);
+            Assert.IsTrue(eNegStep2.Height >= eNegStep2NonDivisible.Height);
+            Assert.IsTrue(eNegStep2.IsDivisible());
 
             ///
             /// NegWorldNEGStep 1: Negative Coordinates, Negative Cell Height, Positive Cell Width
@@ -316,6 +328,9 @@ namespace GCDConsoleLib.Tests
             Assert.AreEqual(eNWNegStep1.Right, 13.8m);
             Assert.AreEqual(eNWNegStep1.Rows, 101);
             Assert.AreEqual(eNWNegStep1.Cols, 101);
+            Assert.IsTrue(eNWNegStep1.Width >= eNWNegStep1NonDivisible.Width);
+            Assert.IsTrue(eNWNegStep1.Height >= eNWNegStep1NonDivisible.Height);
+            Assert.IsTrue(eNWNegStep1.IsDivisible());
 
             ///
             /// NegWorldNEGStep 2: Negative Coordinates, Positive Cell Height, Negative Cell Width
@@ -331,7 +346,77 @@ namespace GCDConsoleLib.Tests
             Assert.AreEqual(eNWNegStep2.Right, -26.4m);
             Assert.AreEqual(eNWNegStep2.Rows, 101);
             Assert.AreEqual(eNWNegStep2.Cols, 101);
+            Assert.IsTrue(eNWNegStep2.Width >= eNWNegStep2NonDivisible.Width);
+            Assert.IsTrue(eNWNegStep2.Height >= eNWNegStep2NonDivisible.Height);
+            Assert.IsTrue(eNWNegStep2.IsDivisible());
 
+
+            // GCD user reported raster issue 2017/01/15 by P
+            ExtentRectangle user1_src = new ExtentRectangle(114.58069247m, 122.938517551m, -0.003m, 0.003m, 4410, 11487);
+            Assert.IsFalse(user1_src.IsDivisible());
+
+            ExtentRectangle user1_out = user1_src.GetDivisibleExtent();
+            Assert.AreEqual(user1_out.Top, 114.582m);
+            Assert.AreEqual(user1_out.Bottom, 101.349m);
+            Assert.AreEqual(user1_out.Left, 122.937m);
+            Assert.AreEqual(user1_out.Right, 157.401m);
+            Assert.AreEqual(user1_out.Rows, 4411);
+            Assert.AreEqual(user1_out.Cols, 11488);
+            Assert.IsTrue(user1_out.Width >= user1_src.Width);
+            Assert.IsTrue(user1_out.Height >= user1_src.Height);
+            Assert.IsTrue(user1_out.Rows >= user1_src.Rows);
+            Assert.IsTrue(user1_out.Cols >= user1_src.Cols);
+            Assert.IsTrue(user1_out.IsDivisible());
+
+            // GCD user reported raster issue 2017/11/15 by AT
+            ExtentRectangle user2_src = new ExtentRectangle(5629639.30575m, 558111.051499m, -1m, 1m, 47, 46);
+            Assert.IsFalse(user2_src.IsDivisible());
+
+            ExtentRectangle user2_out = user2_src.GetDivisibleExtent();
+            Assert.AreEqual(user2_out.Top, 5629640m);
+            Assert.AreEqual(user2_out.Bottom, 5629592m);
+            Assert.AreEqual(user2_out.Left, 558111m);
+            Assert.AreEqual(user2_out.Right, 558158m);
+            Assert.AreEqual(user2_out.Rows, 48);
+            Assert.AreEqual(user2_out.Cols, 47);
+            Assert.IsTrue(user2_out.Width >= user2_src.Width);
+            Assert.IsTrue(user2_out.Height >= user2_src.Height);
+            Assert.IsTrue(user2_out.Rows >= user2_src.Rows);
+            Assert.IsTrue(user2_out.Cols >= user2_src.Cols);
+            Assert.IsTrue(user2_out.IsDivisible());
+
+            // GCD user reported raster issue 2018/09/04 by M
+            ExtentRectangle user3_src = new ExtentRectangle(7111409.27802m, 445073.27318m, -0.05m, 0.05m, 11800, 10160);
+            Assert.IsFalse(user3_src.IsDivisible());
+
+            ExtentRectangle user3_out = user3_src.GetDivisibleExtent();
+            Assert.AreEqual(user3_out.Top, 7111409.3m);
+            Assert.AreEqual(user3_out.Bottom, 7110819.25m);
+            Assert.AreEqual(user3_out.Left, 445073.25m);
+            Assert.AreEqual(user3_out.Right, 445581.30m);
+            Assert.AreEqual(user3_out.Rows, 11801);
+            Assert.AreEqual(user3_out.Cols, 10161);
+            Assert.IsTrue(user3_out.Width >= user3_src.Width);
+            Assert.IsTrue(user3_out.Height >= user3_src.Height);
+            Assert.IsTrue(user3_out.Rows >= user3_src.Rows);
+            Assert.IsTrue(user3_out.Cols >= user3_src.Cols);
+            Assert.IsTrue(user3_out.IsDivisible());
+
+            // Sulphur Creek Sanity Check
+            ExtentRectangle user4_src = new ExtentRectangle(592252.5m, 1958980.5m, -0.5m, 0.5m, 583, 413);
+
+            ExtentRectangle user4_out = user4_src.GetDivisibleExtent();
+            Assert.AreEqual(user4_out.Top, 592252.5m);
+            Assert.AreEqual(user4_out.Bottom, 591961m);
+            Assert.AreEqual(user4_out.Left, 1958980.5m);
+            Assert.AreEqual(user4_out.Right, 1959187m);
+            Assert.AreEqual(user4_out.Rows, 583);
+            Assert.AreEqual(user4_out.Cols, 413);
+            Assert.IsTrue(user4_out.Width >= user4_src.Width);
+            Assert.IsTrue(user4_out.Height >= user4_src.Height);
+            Assert.IsTrue(user4_out.Rows >= user4_src.Rows);
+            Assert.IsTrue(user4_out.Cols >= user4_src.Cols);
+            Assert.IsTrue(user4_out.IsDivisible());
         }
 
         [TestMethod()]
