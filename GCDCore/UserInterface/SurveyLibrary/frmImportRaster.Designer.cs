@@ -53,9 +53,9 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.txtTop = new System.Windows.Forms.TextBox();
             this.Label11 = new System.Windows.Forms.Label();
             this.grpProjectRaaster = new System.Windows.Forms.GroupBox();
+            this.txtInterpolationMethod = new System.Windows.Forms.TextBox();
             this.cmdHelpPrecision = new System.Windows.Forms.Button();
             this.Label1 = new System.Windows.Forms.Label();
-            this.cboMethod = new System.Windows.Forms.ComboBox();
             this.valPrecision = new System.Windows.Forms.NumericUpDown();
             this.valCellSize = new System.Windows.Forms.NumericUpDown();
             this.valBottom = new System.Windows.Forms.NumericUpDown();
@@ -327,9 +327,9 @@ namespace GCDCore.UserInterface.SurveyLibrary
             // 
             // grpProjectRaaster
             // 
+            this.grpProjectRaaster.Controls.Add(this.txtInterpolationMethod);
             this.grpProjectRaaster.Controls.Add(this.cmdHelpPrecision);
             this.grpProjectRaaster.Controls.Add(this.Label1);
-            this.grpProjectRaaster.Controls.Add(this.cboMethod);
             this.grpProjectRaaster.Controls.Add(this.valPrecision);
             this.grpProjectRaaster.Controls.Add(this.valCellSize);
             this.grpProjectRaaster.Controls.Add(this.valBottom);
@@ -359,11 +359,21 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.grpProjectRaaster.TabStop = false;
             this.grpProjectRaaster.Text = "Project Raster";
             // 
+            // txtInterpolationMethod
+            // 
+            this.txtInterpolationMethod.Location = new System.Drawing.Point(372, 157);
+            this.txtInterpolationMethod.Name = "txtInterpolationMethod";
+            this.txtInterpolationMethod.ReadOnly = true;
+            this.txtInterpolationMethod.Size = new System.Drawing.Size(220, 20);
+            this.txtInterpolationMethod.TabIndex = 24;
+            // 
             // cmdHelpPrecision
             // 
+            this.cmdHelpPrecision.AutoSize = true;
             this.cmdHelpPrecision.FlatAppearance.BorderSize = 0;
             this.cmdHelpPrecision.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cmdHelpPrecision.Image = global::GCDCore.Properties.Resources.Help;
+            this.cmdHelpPrecision.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.cmdHelpPrecision.Location = new System.Drawing.Point(343, 129);
             this.cmdHelpPrecision.Name = "cmdHelpPrecision";
             this.cmdHelpPrecision.Size = new System.Drawing.Size(23, 23);
@@ -374,20 +384,11 @@ namespace GCDCore.UserInterface.SurveyLibrary
             // Label1
             // 
             this.Label1.AutoSize = true;
-            this.Label1.Location = new System.Drawing.Point(260, 161);
+            this.Label1.Location = new System.Drawing.Point(263, 161);
             this.Label1.Name = "Label1";
             this.Label1.Size = new System.Drawing.Size(103, 13);
             this.Label1.TabIndex = 23;
             this.Label1.Text = "Interpolation method";
-            // 
-            // cboMethod
-            // 
-            this.cboMethod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboMethod.FormattingEnabled = true;
-            this.cboMethod.Location = new System.Drawing.Point(372, 157);
-            this.cboMethod.Name = "cboMethod";
-            this.cboMethod.Size = new System.Drawing.Size(220, 21);
-            this.cboMethod.TabIndex = 24;
             // 
             // valPrecision
             // 
@@ -676,9 +677,9 @@ namespace GCDCore.UserInterface.SurveyLibrary
         internal System.Windows.Forms.TextBox txtProjWidth;
         internal System.Windows.Forms.NumericUpDown valPrecision;
         internal System.Windows.Forms.Label Label1;
-        internal System.Windows.Forms.ComboBox cboMethod;
         internal System.Windows.Forms.Button cmdHelpPrecision;
         private System.Windows.Forms.ToolTip tTip;
         private System.Windows.Forms.TextBox txtSourceRaster;
+        private System.Windows.Forms.TextBox txtInterpolationMethod;
     }
 }

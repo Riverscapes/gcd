@@ -34,23 +34,12 @@ namespace GCDCore.UserInterface.SurveyLibrary
             return frm;
         }
 
-        private enum ResamplingMethods
-        {
-            Bilinear,
-            Cubic,
-            NaturalNeighbours,
-            NearestNeighbour,
-            None
-        }
-
         private bool NeedsForcedProjection; // true if the source raster doesn't quite match project SRS but user wants to force it anyway
         public readonly Raster SourceRaster;
         public readonly Surface ReferenceSurface;
-        private readonly int NoInterpolationIndex; // the combobox index of the straight cell-wise copy
         public readonly Purposes Purpose;
 
         public ExtentAdjusterBase ExtImporter;
-
 
         public frmImportRaster(Raster sourceRaster, Surface refSurface, Purposes ePurpose, string sNoun)
         {
@@ -80,13 +69,6 @@ namespace GCDCore.UserInterface.SurveyLibrary
                     ExtImporter = new ExtentAdjusterFixed(sourceRaster.Extent, refSurface.Raster.Extent);
                 }
             }
-
-            // Fill the interpolation method in constructor so that selection index can be readonly
-            cboMethod.Items.Add(new naru.db.NamedObject((long)ResamplingMethods.Bilinear, "Bilinear Interpolation"));
-            cboMethod.Items.Add(new naru.db.NamedObject((long)ResamplingMethods.Cubic, "Cubic Convolution"));
-            cboMethod.Items.Add(new naru.db.NamedObject((long)ResamplingMethods.NaturalNeighbours, "Natural Neighbours"));
-            cboMethod.Items.Add(new naru.db.NamedObject((long)ResamplingMethods.NearestNeighbour, "Nearest Neighbour"));
-            NoInterpolationIndex = cboMethod.Items.Add(new naru.db.NamedObject((long)ResamplingMethods.None, "None (straight cell-wise copy)"));
         }
 
         private void ImportRasterForm_Load(object sender, EventArgs e)
@@ -113,7 +95,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             tTip.SetToolTip(txtProjHeight, "The height of the output raster shown in the linear units of the raster.");
             tTip.SetToolTip(valCellSize, "The size of each cell in the output raster specified in the linear units of the raster.");
             tTip.SetToolTip(valPrecision, "The number of decimal places to consider when rounding the cell size of the original raster.");
-            tTip.SetToolTip(cboMethod, "Method used to generate the output raster. If the original raster extent is not evenly divisible by the cell resolution then bilinear sampling must be used. If the original raster is divisible by the cell resolution then the raster can simply be copied to the output path.");
+            tTip.SetToolTip(txtInterpolationMethod, "Method used to generate the output raster. If the original raster extent is not evenly divisible by the cell resolution then bilinear sampling must be used. If the original raster is divisible by the cell resolution then the raster can simply be copied to the output path.");
 
             #endregion
 
@@ -233,7 +215,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             txtProjWidth.Text = string.Format("{0}{1}", ExtImporter.OutExtent.Width, UnitsNet.Length.GetAbbreviation(hUnits));
             txtProjHeight.Text = string.Format("{0}{1}", ExtImporter.OutExtent.Height, UnitsNet.Length.GetAbbreviation(hUnits));
 
-            cboMethod.SelectedIndex = ExtImporter.RequiresResampling ? 0 : NoInterpolationIndex;
+            txtInterpolationMethod.Text =  ExtImporter.RequiresResampling ? "Bilinear Interpolation" : "None (straight cell-wise copy)";
 
             // Turn on event firing
             valTop.ValueChanged += UpdateOutputExtent;
@@ -444,31 +426,6 @@ namespace GCDCore.UserInterface.SurveyLibrary
             {
                 MessageBox.Show("The top edge of the extent must be at least one cell width more than the bottom edge of the extent.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return false;
-            }
-
-            ResamplingMethods eType = (ResamplingMethods)((naru.db.NamedObject)cboMethod.SelectedItem).ID;
-            if (ExtImporter.RequiresResampling)
-            {
-                if (eType != ResamplingMethods.Bilinear)
-                {
-                    if (eType == ResamplingMethods.None)
-                    {
-                        MessageBox.Show("The input raster requires resampling. Please select the desired resampling method.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                    else
-                    {
-                        MessageBox.Show("Only bilinear interpolation is currently functional within the GCD.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                    return false;
-                }
-            }
-            else
-            {
-                if (cboMethod.SelectedIndex != NoInterpolationIndex)
-                {
-                    MessageBox.Show("The raster is orthogonal and divisible with the specified output. No interpolation is required. Select \"None\" in the interpolation method drop down.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return false;
-                }
             }
 
             return true;
