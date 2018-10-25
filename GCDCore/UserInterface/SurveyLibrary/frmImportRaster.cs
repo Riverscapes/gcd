@@ -108,7 +108,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             valPrecision.Enabled = valCellSize.Enabled;
 
             // Changing dimensions only possible for first DEM
-            valTop.Enabled = ExtImporter is ExtentAdjusterNoReference;
+            valTop.Enabled = !(ExtImporter is ExtentAdjusterFixed);
             valLeft.Enabled = valTop.Enabled;
             valBottom.Enabled = valTop.Enabled;
             valRight.Enabled = valTop.Enabled;
@@ -159,7 +159,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
         {
             ExtentAdjusterBase temp = ExtImporter;
 
-            if (sender == valTop || sender == valRight || sender == valBottom || sender == valBottom)
+            if (sender == valTop || sender == valRight || sender == valBottom || sender == valLeft)
             {
                 temp = ExtImporter.AdjustDimensions(valTop.Value, valRight.Value, valBottom.Value, valLeft.Value);
             }
@@ -182,7 +182,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             valTop.ValueChanged -= UpdateOutputExtent;
             valBottom.ValueChanged -= UpdateOutputExtent;
             valRight.ValueChanged -= UpdateOutputExtent;
-            valRight.ValueChanged -= UpdateOutputExtent;
+            valLeft.ValueChanged -= UpdateOutputExtent;
             valCellSize.ValueChanged -= UpdateOutputExtent;
             valPrecision.ValueChanged -= UpdateOutputExtent;
 
@@ -221,7 +221,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             valTop.ValueChanged += UpdateOutputExtent;
             valBottom.ValueChanged += UpdateOutputExtent;
             valRight.ValueChanged += UpdateOutputExtent;
-            valRight.ValueChanged += UpdateOutputExtent;
+            valLeft.ValueChanged += UpdateOutputExtent;
             valCellSize.ValueChanged += UpdateOutputExtent;
             valPrecision.ValueChanged += UpdateOutputExtent;
         }

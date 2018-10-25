@@ -23,8 +23,8 @@ namespace GCDConsoleLib.ExtentAdjusters
 
         public override ExtentAdjusterBase AdjustDimensions(decimal top, decimal right, decimal bottom, decimal left)
         {
-            int rows = (int)((top - bottom) / OutExtent.CellWidth);
-            int cols = (int)((right - left) / OutExtent.CellWidth);
+            int rows = (int)Utility.DynamicMath.SafeDivision(Math.Max(top - bottom, 0), OutExtent.CellWidth);
+            int cols = (int)Utility.DynamicMath.SafeDivision(Math.Max(right - left, 0), OutExtent.CellWidth);
 
             ExtentRectangle rawExtent = new ExtentRectangle(top, left, OutExtent.CellHeight, OutExtent.CellWidth, rows, cols);
             ExtentRectangle divExtent = rawExtent.GetDivisibleExtent();
