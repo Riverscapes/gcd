@@ -10,6 +10,11 @@ namespace GCDConsoleLib.ExtentAdjusters
     {
         ExtentRectangle SrcExtent { get; }
         ExtentRectangle OutExtent { get; }
+        ushort Precision { get; }
+        bool RequiresResampling { get; }
+
         IExtentAdjuster AdjustDimensions(decimal top, decimal right, decimal bottom, decimal left);
+        IExtentAdjuster AdjustCellSize(decimal cellSize);
+        IExtentAdjuster AdjustPrecision(ushort precision);
     }
 }

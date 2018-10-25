@@ -391,7 +391,6 @@
     <Compile Include="UserInterface\SurveyLibrary\ErrorSurfaces\ucErrorSurfaceProperties.Designer.cs">
       <DependentUpon>ucErrorSurfaceProperties.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserInterface\SurveyLibrary\ExtentImporter.cs" />
     <Compile Include="UserInterface\SurveyLibrary\frmAssociatedSurface.cs">
       <SubType>Form</SubType>
     </Compile>

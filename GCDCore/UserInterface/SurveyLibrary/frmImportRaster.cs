@@ -2,12 +2,23 @@ using System;
 using System.Windows.Forms;
 using GCDCore.Project;
 using GCDConsoleLib;
+using GCDConsoleLib.ExtentAdjusters;
 
 namespace GCDCore.UserInterface.SurveyLibrary
 {
     public partial class frmImportRaster
     {
-        public static frmImportRaster PrepareToImportRaster(Surface refSurface, ExtentImporter.Purposes purpose, string Noun, IntPtr parentWindow)
+        public enum Purposes
+        {
+            FirstDEM,
+            SubsequentDEM,
+            AssociatedSurface,
+            ErrorSurface,
+            ReferenceSurface,
+            ReferenceErrorSurface
+        };
+
+        public static frmImportRaster PrepareToImportRaster(Surface refSurface, Purposes purpose, string Noun, IntPtr parentWindow)
         {
             frmImportRaster frm = null;
             Raster source = ProjectManager.BrowseRaster(naru.ui.UIHelpers.WrapMessageWithNoun("Browse and Select a", Noun, "Raster"), parentWindow);
@@ -35,25 +46,29 @@ namespace GCDCore.UserInterface.SurveyLibrary
         private bool NeedsForcedProjection; // true if the source raster doesn't quite match project SRS but user wants to force it anyway
         public readonly Raster SourceRaster;
         public readonly Surface ReferenceSurface;
-        public readonly ExtentImporter ExtImporter;
         private readonly int NoInterpolationIndex; // the combobox index of the straight cell-wise copy
+        public readonly Purposes Purpose;
 
-        public frmImportRaster(Raster sourceRaster, Surface refSurface, ExtentImporter.Purposes ePurpose, string sNoun)
+        public IExtentAdjuster ExtImporter;
+
+
+        public frmImportRaster(Raster sourceRaster, Surface refSurface, Purposes ePurpose, string sNoun)
         {
             // This call is required by the designer.
             InitializeComponent();
             NeedsForcedProjection = false;
             Text = "Add Existing " + sNoun;
             grpProjectRaaster.Text = "GCD " + sNoun;
+            Purpose = ePurpose;
 
             if (refSurface is Surface)
             {
                 ReferenceSurface = refSurface;
-                ExtImporter = new ExtentImporter(ePurpose, refSurface.Raster.Extent);
+                ExtImporter = new ExtentAdjusterWithReference(sourceRaster.Extent, refSurface.Raster.Extent);
             }
             else
             {
-                ExtImporter = new ExtentImporter(ePurpose);
+                ExtImporter = new ExtentAdjusterNoReference(sourceRaster.Extent);
             }
 
             SourceRaster = sourceRaster;
@@ -74,12 +89,13 @@ namespace GCDCore.UserInterface.SurveyLibrary
             // This needs to be changed to a larger value or else rasters with cell sizes greater than 1 will cause an error to be thrown. Perhaps 1000 is more appropriate?
             valCellSize.Minimum = 0m;
             valCellSize.Maximum = 1000;
-            valCellSize.Value = 1;
-            valPrecision.Value = 2;
-            valCellSize.Enabled = ExtImporter.Purpose == ExtentImporter.Purposes.FirstDEM;
+            valCellSize.Value = ExtImporter.OutExtent.CellWidth;
+            valPrecision.Value = ExtImporter.Precision;
+            valCellSize.Enabled = Purpose == Purposes.FirstDEM;
             valPrecision.Enabled = valCellSize.Enabled;
 
-            valTop.Enabled = ExtImporter.IsOutputExtentEditable;
+            // Changing dimensions only possible for first DEM
+            valTop.Enabled = ExtImporter is ExtentAdjusterNoReference;
             valLeft.Enabled = valTop.Enabled;
             valBottom.Enabled = valTop.Enabled;
             valRight.Enabled = valTop.Enabled;
@@ -94,153 +110,126 @@ namespace GCDCore.UserInterface.SurveyLibrary
             valBottom.Maximum = decimal.MaxValue;
             valRight.Maximum = decimal.MaxValue;
 
-            valTop.ThousandsSeparator = true;
-            valLeft.ThousandsSeparator = true;
-            valBottom.ThousandsSeparator = true;
-            valRight.ThousandsSeparator = true;
-
             txtLeft.BackColor = this.BackColor;
             txtTop.BackColor = txtLeft.BackColor;
             txtBottom.BackColor = txtTop.BackColor;
             txtRight.BackColor = txtTop.BackColor;
 
-            // need to clear the original raster text box. User may have canceled the form
-            // with a selected raster (e.g. because spatial resolution doesn't match. This
-            // form persists on the parent form and then is shown again. 
-            txtLeft.Text = string.Empty;
-            txtTop.Text = string.Empty;
-            txtBottom.Text = string.Empty;
-            txtRight.Text = string.Empty;
-            txtOrigCellSize.Text = string.Empty;
-            txtOrigRows.Text = string.Empty;
-            txtOrigCols.Text = string.Empty;
-            txtOrigHeight.Text = string.Empty;
-            txtOrigWidth.Text = string.Empty;
+            // Source raster properties
+            txtLeft.Text = SourceRaster.Extent.Left.ToString();
+            txtTop.Text = SourceRaster.Extent.Top.ToString();
+            txtBottom.Text = SourceRaster.Extent.Bottom.ToString();
+            txtRight.Text = SourceRaster.Extent.Right.ToString();
+            txtOrigCellSize.Text = SourceRaster.Extent.CellWidth.ToString();
+            txtOrigRows.Text = SourceRaster.Extent.Rows.ToString("#,##0");
+            txtOrigCols.Text = SourceRaster.Extent.Cols.ToString();
+            txtOrigHeight.Text = SourceRaster.Extent.Height.ToString();
+            txtOrigWidth.Text = SourceRaster.Extent.Width.ToString();
 
+            // Input extent text is red when not divisible
+            txtTop.ForeColor = ExtentRectangle.DivideModuloOne(SourceRaster.Extent.Top, valCellSize.Value) == 0 ? Control.DefaultForeColor : System.Drawing.Color.Red;
+            txtLeft.ForeColor = ExtentRectangle.DivideModuloOne(SourceRaster.Extent.Left, valCellSize.Value) == 0 ? Control.DefaultForeColor : System.Drawing.Color.Red;
+            txtRight.ForeColor = ExtentRectangle.DivideModuloOne(SourceRaster.Extent.Right, valCellSize.Value) == 0 ? Control.DefaultForeColor : System.Drawing.Color.Red;
+            txtBottom.ForeColor = ExtentRectangle.DivideModuloOne(SourceRaster.Extent.Bottom, valCellSize.Value) == 0 ? Control.DefaultForeColor : System.Drawing.Color.Red;
 
-            if (ExtImporter.Purpose == ExtentImporter.Purposes.AssociatedSurface ||
-                ExtImporter.Purpose == ExtentImporter.Purposes.ErrorSurface ||
-                ExtImporter.Purpose == ExtentImporter.Purposes.ReferenceErrorSurface)
-            {
-                valTop.Value = ExtImporter.OutputTop;
-                valLeft.Value = ExtImporter.OutputLeft;
-                valRight.Value = ExtImporter.OutputRight;
-                valBottom.Value = ExtImporter.OutputBottom;
-            }
-
-            if (ExtImporter.Purpose == ExtentImporter.Purposes.AssociatedSurface ||
-                ExtImporter.Purpose == ExtentImporter.Purposes.SubsequentDEM ||
-                ExtImporter.Purpose == ExtentImporter.Purposes.ErrorSurface ||
-                ExtImporter.Purpose == ExtentImporter.Purposes.ReferenceErrorSurface)
-            {
-                valCellSize.DecimalPlaces = ExtImporter.Precision;
-                valTop.DecimalPlaces = ExtImporter.Precision;
-                valLeft.DecimalPlaces = ExtImporter.Precision;
-                valRight.DecimalPlaces = ExtImporter.Precision;
-                valBottom.DecimalPlaces = ExtImporter.Precision;
-
-                valCellSize.Value = ExtImporter.CellSize;
-                valPrecision.Value = ExtImporter.Precision;
-            }
-
-            ExtImporter.InputExtent = SourceRaster.Extent;
-
-            // There is no reference raster, or we are in DEM survey mode. So determine the
-            // orthogonal extent of the selected raster. Convert it to a GDAL raster first
-            // (if its not already) then "orthogonalize" it's extent.
-            if (valPrecision.Enabled)
-            {
-                valPrecision.Value = ExtImporter.Precision;
-                valCellSize.DecimalPlaces = ExtImporter.Precision;
-                valTop.DecimalPlaces = ExtImporter.Precision;
-                valLeft.DecimalPlaces = ExtImporter.Precision;
-                valRight.DecimalPlaces = ExtImporter.Precision;
-                valBottom.DecimalPlaces = ExtImporter.Precision;
-            }
-
-            //string sInputExtentFormat = "#,##0.0";
-            txtTop.Text = ExtImporter.InputExtent.Top.ToString();
-            txtLeft.Text = ExtImporter.InputExtent.Left.ToString();
-            txtBottom.Text = ExtImporter.InputExtent.Bottom.ToString();
-            txtRight.Text = ExtImporter.InputExtent.Right.ToString();
-
-            txtOrigRows.Text = ExtImporter.Output.Rows.ToString("#,##0");
-            txtOrigCols.Text = ExtImporter.Output.Cols.ToString("#,##0");
-            txtOrigWidth.Text = ExtImporter.Output.Width.ToString();
-            txtOrigHeight.Text = ExtImporter.Output.Height.ToString();
-            txtOrigCellSize.Text = ExtImporter.InputExtent.CellWidth.ToString();
-
-            valCellSize.Value = ExtImporter.CellSize;
-
-            if (string.IsNullOrEmpty(txtName.Text))
-            {
-                txtName.Text = System.IO.Path.GetFileNameWithoutExtension(SourceRaster.GISFileInfo.FullName);
-            }
-            else
-            {
-                UpdateRasterPath(sender, e);
-            }
-
-            // Turn off event firing
-            valTop.ValueChanged -= OutputTop_ValueChanged;
-            valLeft.ValueChanged -= OutputLeft_ValueChanged;
-            valRight.ValueChanged -= OutputRight_ValueChanged;
-            valBottom.ValueChanged -= OutputBottom_ValueChanged;
-
-            valTop.Value = ExtImporter.OutputTop;
-            valLeft.Value = ExtImporter.OutputLeft;
-            valRight.Value = ExtImporter.OutputRight;
-            valBottom.Value = ExtImporter.OutputBottom;
-
-            // Turn on event firing
-            valTop.ValueChanged += OutputTop_ValueChanged;
-            valLeft.ValueChanged += OutputLeft_ValueChanged;
-            valRight.ValueChanged += OutputRight_ValueChanged;
-            valBottom.ValueChanged += OutputBottom_ValueChanged;
-
-            UpdateOutputExtent();
+            // Initialize the output raster name and path
+            txtName.Text = System.IO.Path.GetFileNameWithoutExtension(SourceRaster.GISFileInfo.FullName);
+            UpdateRasterPath(sender, e);
 
             cmdOK.Select();
 
+            // Trigger the updating of the output raster properties
+            UpdateOutputExtent(sender, e);
+        }
+   
+        private void UpdateOutputExtent(object sender, EventArgs e)
+        {
+            // Turn off event firing
+            valTop.ValueChanged -= UpdateOutputExtent;
+            valBottom.ValueChanged -= UpdateOutputExtent;
+            valRight.ValueChanged -= UpdateOutputExtent;
+            valRight.ValueChanged -= UpdateOutputExtent;
+            valCellSize.ValueChanged -= UpdateOutputExtent;
+            valPrecision.ValueChanged -= UpdateOutputExtent;
 
-            // Input extent text is red when not divisible
-            txtTop.ForeColor = ExtentRectangle.DivideModuloOne(ExtImporter.InputExtent.Top, valCellSize.Value) == 0 ? Control.DefaultForeColor : System.Drawing.Color.Red;
-            txtLeft.ForeColor = ExtentRectangle.DivideModuloOne(ExtImporter.InputExtent.Left, valCellSize.Value) == 0 ? Control.DefaultForeColor : System.Drawing.Color.Red;
-            txtRight.ForeColor = ExtentRectangle.DivideModuloOne(ExtImporter.InputExtent.Right, valCellSize.Value) == 0 ? Control.DefaultForeColor : System.Drawing.Color.Red;
-            txtBottom.ForeColor = ExtentRectangle.DivideModuloOne(ExtImporter.InputExtent.Bottom, valCellSize.Value) == 0 ? Control.DefaultForeColor : System.Drawing.Color.Red;
+            if (sender == valTop || sender == valRight || sender == valBottom || sender == valBottom)
+            {
+                ExtImporter = ExtImporter.AdjustDimensions(valTop.Value, valRight.Value, valBottom.Value, valLeft.Value);
+            }
+            else if (sender == valCellSize)
+            {
+                ExtImporter = ExtImporter.AdjustCellSize(valCellSize.Value);
+            }
+            else if (sender == valPrecision)
+            {
+                ExtImporter = ExtImporter.AdjustPrecision(valPrecision.Value);
+            }
 
+            // Update output control values
+            valCellSize.DecimalPlaces = ExtImporter.Precision;
+            valTop.DecimalPlaces = ExtImporter.Precision;
+            valLeft.DecimalPlaces = ExtImporter.Precision;
+            valRight.DecimalPlaces = ExtImporter.Precision;
+            valBottom.DecimalPlaces = ExtImporter.Precision;
 
-            UpdateOutputExtent();
+            valTop.Value = ExtImporter.OutExtent.Top;
+            valLeft.Value = ExtImporter.OutExtent.Left;
+            valRight.Value = ExtImporter.OutExtent.Right;
+            valBottom.Value = ExtImporter.OutExtent.Bottom;
+            valCellSize.Value = ExtImporter.OutExtent.CellWidth;
+            valPrecision.Value = ExtImporter.Precision;
 
+            // Colour the numeric up down boxes based on whether they match the original extent
+            valTop.ForeColor = SourceRaster.Extent.Top == ExtImporter.OutExtent.Top ? System.Drawing.Color.DarkGreen : System.Drawing.Color.Black;
+            valLeft.ForeColor = SourceRaster.Extent.Left == ExtImporter.OutExtent.Left ? System.Drawing.Color.DarkGreen : System.Drawing.Color.Black;
+            valRight.ForeColor = SourceRaster.Extent.Right == ExtImporter.OutExtent.Right ? System.Drawing.Color.DarkGreen : System.Drawing.Color.Black;
+            valBottom.ForeColor = SourceRaster.Extent.Bottom == ExtImporter.OutExtent.Bottom ? System.Drawing.Color.DarkGreen : System.Drawing.Color.Black;
 
-            valCellSize.ValueChanged += valCellSize_ValueChanged;
-            valPrecision.ValueChanged += valPrecision_ValueChanged;
+            txtProjCols.Text = ExtImporter.OutExtent.Cols.ToString("#,##0");
+            txtProjRows.Text = ExtImporter.OutExtent.Rows.ToString("#,##0");
+            UnitsNet.Units.LengthUnit hUnits = SourceRaster.Proj.HorizontalUnit;
+            txtProjWidth.Text = string.Format("{0}{1}", ExtImporter.OutExtent.Width, UnitsNet.Length.GetAbbreviation(hUnits));
+            txtProjHeight.Text = string.Format("{0}{1}", ExtImporter.OutExtent.Height, UnitsNet.Length.GetAbbreviation(hUnits));
+
+            cboMethod.SelectedIndex = ExtImporter.RequiresResampling ? 0 : NoInterpolationIndex;
+
+            // Turn on event firing
+            valTop.ValueChanged += UpdateOutputExtent;
+            valBottom.ValueChanged += UpdateOutputExtent;
+            valRight.ValueChanged += UpdateOutputExtent;
+            valRight.ValueChanged += UpdateOutputExtent;
+            valCellSize.ValueChanged += UpdateOutputExtent;
+            valPrecision.ValueChanged += UpdateOutputExtent;
         }
 
-        private void SetupToolTips()
+        private void UpdateRasterPath(object sender, EventArgs e)
         {
-            tTip.SetToolTip(txtName, "The name used to refer to this GCD project item. It cannot be empty and must be unique among all items of the same type.");
-            tTip.SetToolTip(txtTop, "The top, northern most extent of the original raster. Non-divislbe values apear in red.");
-            tTip.SetToolTip(txtLeft, "The left, western most extent of the original raster. Non-divislbe values apear in red.");
-            tTip.SetToolTip(txtRight, "The right, eastern most extent of the original raster. Non-divislbe values apear in red.");
-            tTip.SetToolTip(txtBottom, "The bottom, southern most extent of the original raster. Non-divislbe values apear in red.");
-            tTip.SetToolTip(txtOrigRows, "The number of rows in the original raster.");
-            tTip.SetToolTip(txtOrigCols, "The number of columns in the original raster.");
-            tTip.SetToolTip(txtOrigWidth, "The width of the original raster shown in the linear units of the raster.");
-            tTip.SetToolTip(txtOrigHeight, "The height of the original raster shown in the linear units of the raster.");
-            tTip.SetToolTip(txtOrigCellSize, "The width of each cell in the original raster shown in the linear units of the raster");
-            tTip.SetToolTip(txtRasterPath, "The raster file path where the output raster will get generated.");
-            tTip.SetToolTip(valTop, "The top, northern most extent of the output raster. It must be wholely divisible by the output cell resolution.");
-            tTip.SetToolTip(valLeft, "The left, western most extent of the output raster. It must be wholely divisible by the output cell resolution.");
-            tTip.SetToolTip(valRight, "The right, eastern most extent of the output raster. It must be wholely divisible by the output cell resolution.");
-            tTip.SetToolTip(valBottom, "The bottom, southern most extent of the output raster. It must be wholely divisible by the output cell resolution.");
-            tTip.SetToolTip(txtProjRows, "The number of rows in the output raster.");
-            tTip.SetToolTip(txtProjCols, "The number of columns in the output raster.");
-            tTip.SetToolTip(txtProjWidth, "The width of the output raster shown in the linear units of the raster.");
-            tTip.SetToolTip(txtProjHeight, "The height of the output raster shown in the linear units of the raster.");
-            tTip.SetToolTip(valCellSize, "The size of each cell in the output raster specified in the linear units of the raster.");
-            tTip.SetToolTip(valPrecision, "The number of decimal places to consider when rounding the cell size of the original raster.");
-            tTip.SetToolTip(cboMethod, "Method used to generate the output raster. If the original raster extent is not evenly divisible by the cell resolution then bilinear sampling must be used. If the original raster is divisible by the cell resolution then the raster can simply be copied to the output path.");
+            txtRasterPath.Text = string.Empty;
+
+            if (string.IsNullOrEmpty(txtName.Text))
+                return;
+
+            // Get the appropriate raster path depending on the purpose of this window (DEM, associated surface, error surface)
+            switch (Purpose)
+            {
+                case Purposes.FirstDEM:
+                case Purposes.SubsequentDEM:
+                    txtRasterPath.Text = ProjectManager.Project.GetRelativePath(ProjectManager.Project.DEMSurveyPath(txtName.Text));
+                    break;
+
+                case Purposes.AssociatedSurface:
+                    txtRasterPath.Text = ProjectManager.Project.GetRelativePath(((DEMSurvey)ReferenceSurface).AssocSurfacePath(txtName.Text));
+                    break;
+
+                case Purposes.ErrorSurface:
+                case Purposes.ReferenceErrorSurface:
+                    txtRasterPath.Text = ProjectManager.Project.GetRelativePath(ReferenceSurface.ErrorSurfacePath(txtName.Text));
+                    break;
+
+                case Purposes.ReferenceSurface:
+                    txtRasterPath.Text = ProjectManager.Project.GetRelativePath(ProjectManager.Project.ReferenceSurfacePath(txtName.Text));
+                    break;
+            }
         }
 
         private void cmdOK_Click(Object sender, EventArgs e)
@@ -264,9 +253,9 @@ namespace GCDCore.UserInterface.SurveyLibrary
                 return false;
             }
 
-            switch (ExtImporter.Purpose)
+            switch (Purpose)
             {
-                case ExtentImporter.Purposes.SubsequentDEM:
+                case Purposes.SubsequentDEM:
                     if (!ProjectManager.Project.IsDEMNameUnique(txtName.Text, null))
                     {
                         MessageBox.Show(string.Format("There is already another DEM survey in this project with the name '{0}'. Each DEM Survey must have a unique name.", txtName.Text), Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -275,7 +264,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
                     }
                     break;
 
-                case ExtentImporter.Purposes.AssociatedSurface:
+                case Purposes.AssociatedSurface:
                     if (!((DEMSurvey)ReferenceSurface).IsAssocNameUnique(txtName.Text, null))
                     {
                         MessageBox.Show(string.Format("There is already another associated surface for this DEM with the name '{0}'. The associated surfaces for each DEM must have a unique name.", txtName.Text), Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -284,8 +273,8 @@ namespace GCDCore.UserInterface.SurveyLibrary
                     }
                     break;
 
-                case ExtentImporter.Purposes.ErrorSurface:
-                case ExtentImporter.Purposes.ReferenceErrorSurface:
+                case Purposes.ErrorSurface:
+                case Purposes.ReferenceErrorSurface:
                     if (!ReferenceSurface.IsErrorNameUnique(txtName.Text, null))
                     {
                         string parentType = "Reference Surface";
@@ -298,7 +287,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
                     }
                     break;
 
-                case ExtentImporter.Purposes.ReferenceSurface:
+                case Purposes.ReferenceSurface:
                     if (!ProjectManager.Project.IsReferenceSurfaceNameUnique(txtName.Text, null))
                     {
                         MessageBox.Show(string.Format("There is already another reference surface with the name '{0}'. Each reference surface must have a unique name.", txtName.Text), Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -350,7 +339,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             }
 
             // Verify the optional vertical units (if they are specified) for rasters that should share the project vertical units
-            if (ExtImporter.Purpose == ExtentImporter.Purposes.FirstDEM || ExtImporter.Purpose == ExtentImporter.Purposes.SubsequentDEM)
+            if (Purpose == Purposes.FirstDEM || Purpose == Purposes.SubsequentDEM)
             {
                 if (SourceRaster.VerticalUnits != UnitsNet.Units.LengthUnit.Undefined)
                 {
@@ -371,7 +360,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
                 //}
                 //else
                 //{
-                    MessageBox.Show("The output raster path cannot be empty. Try using a different name.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("The output raster path cannot be empty. Try using a different name.", Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 //}
                 return false;
             }
@@ -443,36 +432,6 @@ namespace GCDCore.UserInterface.SurveyLibrary
             return true;
         }
 
-        private void UpdateRasterPath(object sender, EventArgs e)
-        {
-            txtRasterPath.Text = string.Empty;
-
-            if (string.IsNullOrEmpty(txtName.Text))
-                return;
-
-            // Get the appropriate raster path depending on the purpose of this window (DEM, associated surface, error surface)
-            switch (ExtImporter.Purpose)
-            {
-                case ExtentImporter.Purposes.FirstDEM:
-                case ExtentImporter.Purposes.SubsequentDEM:
-                    txtRasterPath.Text = ProjectManager.Project.GetRelativePath(ProjectManager.Project.DEMSurveyPath(txtName.Text));
-                    break;
-
-                case ExtentImporter.Purposes.AssociatedSurface:
-                    txtRasterPath.Text = ProjectManager.Project.GetRelativePath(((DEMSurvey)ReferenceSurface).AssocSurfacePath(txtName.Text));
-                    break;
-
-                case ExtentImporter.Purposes.ErrorSurface:
-                case ExtentImporter.Purposes.ReferenceErrorSurface:
-                    txtRasterPath.Text = ProjectManager.Project.GetRelativePath(ReferenceSurface.ErrorSurfacePath(txtName.Text));
-                    break;
-
-                case ExtentImporter.Purposes.ReferenceSurface:
-                    txtRasterPath.Text = ProjectManager.Project.GetRelativePath(ProjectManager.Project.ReferenceSurfacePath(txtName.Text));
-                    break;
-            }
-        }
-
         public Raster ProcessRaster()
         {
             Cursor = Cursors.WaitCursor;
@@ -491,11 +450,11 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
             if (ExtImporter.RequiresResampling)
             {
-                gResult = RasterOperators.BilinearResample(SourceRaster, fiOutput, ExtImporter.Output, ProjectManager.OnProgressChange);
+                gResult = RasterOperators.BilinearResample(SourceRaster, fiOutput, ExtImporter.OutExtent, ProjectManager.OnProgressChange);
             }
             else
             {
-                if (SourceRaster.Extent.Equals(ExtImporter.Output))
+                if (SourceRaster.Extent.Equals(ExtImporter.OutExtent))
                 {
                     // Output extent is same as original raster. Simple dataset copy
                     if (SourceRaster.driver == Raster.RasterDriver.GTiff)
@@ -511,16 +470,16 @@ namespace GCDCore.UserInterface.SurveyLibrary
                 else
                 {
                     // Output extent differs from original raster. Use extended copy
-                    gResult = RasterOperators.ExtendedCopy(SourceRaster, fiOutput, ExtImporter.Output, ProjectManager.OnProgressChange);
+                    gResult = RasterOperators.ExtendedCopy(SourceRaster, fiOutput, ExtImporter.OutExtent, ProjectManager.OnProgressChange);
                 }
             }
 
             // This method will check to see if pyrmaids are need and then build if necessary.
             PerformRasterPyramids(new System.IO.FileInfo(txtRasterPath.Text));
 
-            if (ExtImporter.Purpose == ExtentImporter.Purposes.FirstDEM || ExtImporter.Purpose == ExtentImporter.Purposes.SubsequentDEM || ExtImporter.Purpose == ExtentImporter.Purposes.ReferenceSurface)
+            if (Purpose == Purposes.FirstDEM || Purpose == Purposes.SubsequentDEM || Purpose == Purposes.ReferenceSurface)
             {
-                // Now try the hillshade for DEM Surveys
+                // Now try the hillshade for DEM Surveys and reference surfaces
                 System.IO.FileInfo sHillshadePath = Surface.HillShadeRasterPath(fiOutput);
                 RasterOperators.Hillshade(gResult, sHillshadePath, ProjectManager.OnProgressChange);
                 ProjectManager.PyramidManager.PerformRasterPyramids(RasterPyramidManager.PyramidRasterTypes.Hillshade, sHillshadePath);
@@ -530,7 +489,6 @@ namespace GCDCore.UserInterface.SurveyLibrary
             Cursor = Cursors.Default;
 
             Projection projRef = GISDatasetValidation.GetProjectProjection();
-
             if (projRef != null && NeedsForcedProjection)
                 gResult.SetProjection(projRef);
 
@@ -544,81 +502,78 @@ namespace GCDCore.UserInterface.SurveyLibrary
         /// <param name="e"></param>
         /// <remarks>Note that changing the cell size requires that the extent be changed. This 
         /// in turn will trigger the updating of the rows/cols and width/height.</remarks>
-        private void valCellSize_ValueChanged(object sender, System.EventArgs e)
-        {
-            //valCellSize.Value = Math.Round(valCellSize.Value, CInt(valPrecision.Value))
-            ExtImporter.CellSize = valCellSize.Value;
-            valTop.Value = ExtImporter.OutputTop;
-            valRight.Value = ExtImporter.OutputRight;
-            valBottom.Value = ExtImporter.OutputBottom;
-            valLeft.Value = ExtImporter.OutputLeft;
+        //private void valCellSize_ValueChanged(object sender, System.EventArgs e)
+        //{
+        //    //valCellSize.Value = Math.Round(valCellSize.Value, CInt(valPrecision.Value))
+        //    ExtImporter.CellSize = valCellSize.Value;
+        //    valTop.Value = ExtImporter.OutputTop;
+        //    valRight.Value = ExtImporter.OutputRight;
+        //    valBottom.Value = ExtImporter.OutputBottom;
+        //    valLeft.Value = ExtImporter.OutputLeft;
 
-            UpdateOutputExtent();
+        //    UpdateOutputExtent();
 
-            valLeft.Increment = valCellSize.Value;
-            valTop.Increment = valCellSize.Value;
-            valRight.Increment = valCellSize.Value;
-            valBottom.Increment = valCellSize.Value;
-        }
+        //    valLeft.Increment = valCellSize.Value;
+        //    valTop.Increment = valCellSize.Value;
+        //    valRight.Increment = valCellSize.Value;
+        //    valBottom.Increment = valCellSize.Value;
+        //}
 
-        #region Control Events
+        //public void OutputLeft_ValueChanged(object sender, EventArgs e)
+        //{
+        //    ExtImporter.OutputLeft = valLeft.Value;
+        //    UpdateOutputExtent();
+        //}
 
-        public void OutputLeft_ValueChanged(object sender, EventArgs e)
-        {
-            ExtImporter.OutputLeft = valLeft.Value;
-            UpdateOutputExtent();
-        }
+        //public void OnDimensionsChanged(object sender, EventArgs e)
+        //{
+        //    ExtImporter.OutputTop = valTop.Value;
+        //    UpdateOutputExtent();
+        //}
 
-        public void OutputTop_ValueChanged(object sender, EventArgs e)
-        {
-            ExtImporter.OutputTop = valTop.Value;
-            UpdateOutputExtent();
-        }
+        //public void OutputRight_ValueChanged(object sender, EventArgs e)
+        //{
+        //    ExtImporter.OutputRight = valRight.Value;
+        //    UpdateOutputExtent();
+        //}
 
-        public void OutputRight_ValueChanged(object sender, EventArgs e)
-        {
-            ExtImporter.OutputRight = valRight.Value;
-            UpdateOutputExtent();
-        }
+        //public void OutputBottom_ValueChanged(object sender, EventArgs e)
+        //{
+        //    ExtImporter.OutputBottom = valBottom.Value;
+        //    UpdateOutputExtent();
+        //}
 
-        public void OutputBottom_ValueChanged(object sender, EventArgs e)
-        {
-            ExtImporter.OutputBottom = valBottom.Value;
-            UpdateOutputExtent();
-        }
 
-        #endregion
+        //private void UpdateOutputExtent()
+        //{
+        //    RequiresResampling();
 
-        private void UpdateOutputExtent()
-        {
-            RequiresResampling();
+        //    // Recalculate the size of the output extent
+        //    txtProjRows.Text = ExtImporter.Output.Rows.ToString("#,##0");
+        //    txtProjCols.Text = ExtImporter.Output.Cols.ToString("#,##0");
 
-            // Recalculate the size of the output extent
-            txtProjRows.Text = ExtImporter.Output.Rows.ToString("#,##0");
-            txtProjCols.Text = ExtImporter.Output.Cols.ToString("#,##0");
+        //    txtProjWidth.Text = ExtImporter.Output.Width.ToString();
+        //    txtProjHeight.Text = ExtImporter.Output.Height.ToString();
 
-            txtProjWidth.Text = ExtImporter.Output.Width.ToString();
-            txtProjHeight.Text = ExtImporter.Output.Height.ToString();
+        //    if (SourceRaster is Raster)
+        //    {
+        //        UnitsNet.Units.LengthUnit hUnits = SourceRaster.Proj.HorizontalUnit;
+        //        txtProjWidth.Text = string.Format("{0}{1}", ExtImporter.Output.Width, UnitsNet.Length.GetAbbreviation(hUnits));
+        //        txtProjHeight.Text = string.Format("{0}{1}", ExtImporter.Output.Height, UnitsNet.Length.GetAbbreviation(hUnits));
 
-            if (SourceRaster is Raster)
-            {
-                UnitsNet.Units.LengthUnit hUnits = SourceRaster.Proj.HorizontalUnit;
-                txtProjWidth.Text = string.Format("{0}{1}", ExtImporter.Output.Width, UnitsNet.Length.GetAbbreviation(hUnits));
-                txtProjHeight.Text = string.Format("{0}{1}", ExtImporter.Output.Height, UnitsNet.Length.GetAbbreviation(hUnits));
+        //        // Colour the numeric up down boxes based on whether they match the original extent
+        //        valTop.ForeColor = SourceRaster.Extent.Top == ExtImporter.OutputTop ? System.Drawing.Color.DarkGreen : System.Drawing.Color.Black;
+        //        valLeft.ForeColor = SourceRaster.Extent.Left == ExtImporter.OutputLeft ? System.Drawing.Color.DarkGreen : System.Drawing.Color.Black;
+        //        valRight.ForeColor = SourceRaster.Extent.Right == ExtImporter.OutputRight ? System.Drawing.Color.DarkGreen : System.Drawing.Color.Black;
+        //        valBottom.ForeColor = SourceRaster.Extent.Bottom == ExtImporter.OutputBottom ? System.Drawing.Color.DarkGreen : System.Drawing.Color.Black;
+        //    }
+        //}
 
-                // Colour the numeric up down boxes based on whether they match the original extent
-                valTop.ForeColor = SourceRaster.Extent.Top == ExtImporter.OutputTop ? System.Drawing.Color.DarkGreen : System.Drawing.Color.Black;
-                valLeft.ForeColor = SourceRaster.Extent.Left == ExtImporter.OutputLeft ? System.Drawing.Color.DarkGreen : System.Drawing.Color.Black;
-                valRight.ForeColor = SourceRaster.Extent.Right == ExtImporter.OutputRight ? System.Drawing.Color.DarkGreen : System.Drawing.Color.Black;
-                valBottom.ForeColor = SourceRaster.Extent.Bottom == ExtImporter.OutputBottom ? System.Drawing.Color.DarkGreen : System.Drawing.Color.Black;
-            }
-        }
-
-        private bool RequiresResampling()
-        {
-            cboMethod.SelectedIndex = ExtImporter.RequiresResampling ? 0 : NoInterpolationIndex;
-            return ExtImporter.RequiresResampling;
-        }
+        //private bool RequiresResampling()
+        //{
+        //    cboMethod.SelectedIndex = ExtImporter.RequiresResampling ? 0 : NoInterpolationIndex;
+        //    return ExtImporter.RequiresResampling;
+        //}
 
         /// <summary>
         /// Disable typing in the original raster extent text boxes
@@ -632,18 +587,18 @@ namespace GCDCore.UserInterface.SurveyLibrary
             e.Handled = true;
         }
 
-        private void valPrecision_ValueChanged(object sender, EventArgs e)
-        {
-            valCellSize.DecimalPlaces = (int)valPrecision.Value;
-            valCellSize.Increment = (decimal)Math.Pow(10, Convert.ToDouble(decimal.Negate(valPrecision.Value)));
-            valCellSize.Minimum = (decimal)Math.Pow(10, Convert.ToDouble(decimal.Negate(valPrecision.Value)));
-            valCellSize.Value = Math.Round(valCellSize.Value, Convert.ToInt32(valPrecision.Value));
-            valTop.DecimalPlaces = valCellSize.DecimalPlaces;
-            valLeft.DecimalPlaces = valCellSize.DecimalPlaces;
-            valBottom.DecimalPlaces = valCellSize.DecimalPlaces;
-            valRight.DecimalPlaces = valCellSize.DecimalPlaces;
-            //UpdateOriginalRasterExtentFormatting()
-        }
+        //private void valPrecision_ValueChanged(object sender, EventArgs e)
+        //{
+        //    valCellSize.DecimalPlaces = (int)valPrecision.Value;
+        //    valCellSize.Increment = (decimal)Math.Pow(10, Convert.ToDouble(decimal.Negate(valPrecision.Value)));
+        //    valCellSize.Minimum = (decimal)Math.Pow(10, Convert.ToDouble(decimal.Negate(valPrecision.Value)));
+        //    valCellSize.Value = Math.Round(valCellSize.Value, Convert.ToInt32(valPrecision.Value));
+        //    valTop.DecimalPlaces = valCellSize.DecimalPlaces;
+        //    valLeft.DecimalPlaces = valCellSize.DecimalPlaces;
+        //    valBottom.DecimalPlaces = valCellSize.DecimalPlaces;
+        //    valRight.DecimalPlaces = valCellSize.DecimalPlaces;
+        //    //UpdateOriginalRasterExtentFormatting()
+        //}
 
         private void cmdHelpPrecision_Click(Object sender, EventArgs e)
         {
@@ -655,14 +610,14 @@ namespace GCDCore.UserInterface.SurveyLibrary
         private void PerformRasterPyramids(System.IO.FileInfo sRasterPath)
         {
             RasterPyramidManager.PyramidRasterTypes ePyramidRasterType = default(RasterPyramidManager.PyramidRasterTypes);
-            switch (ExtImporter.Purpose)
+            switch (Purpose)
             {
-                case ExtentImporter.Purposes.FirstDEM:
-                case ExtentImporter.Purposes.SubsequentDEM:
+                case Purposes.FirstDEM:
+                case Purposes.SubsequentDEM:
                     ePyramidRasterType = RasterPyramidManager.PyramidRasterTypes.DEM;
                     break;
 
-                case ExtentImporter.Purposes.AssociatedSurface:
+                case Purposes.AssociatedSurface:
                     ePyramidRasterType = RasterPyramidManager.PyramidRasterTypes.AssociatedSurfaces;
                     break;
             }
@@ -673,28 +628,54 @@ namespace GCDCore.UserInterface.SurveyLibrary
         private void cmdHelp_Click(object sender, EventArgs e)
         {
             string helpKey;
-            switch (ExtImporter.Purpose)
+            switch (Purpose)
             {
-                case ExtentImporter.Purposes.AssociatedSurface:
+                case Purposes.AssociatedSurface:
                     helpKey = "AssocSurface";
                     break;
 
-                case ExtentImporter.Purposes.ErrorSurface:
+                case Purposes.ErrorSurface:
                     helpKey = "ErrorSurface";
                     break;
 
-                case ExtentImporter.Purposes.ReferenceErrorSurface:
+                case Purposes.ReferenceErrorSurface:
                     helpKey = "ReferenceSurface";
                     break;
 
-                case ExtentImporter.Purposes.FirstDEM:
-                case ExtentImporter.Purposes.SubsequentDEM:
+                case Purposes.FirstDEM:
+                case Purposes.SubsequentDEM:
                 default:
                     helpKey = "NewDEM";
                     break;
             }
 
             OnlineHelp.Show(helpKey);
+        }
+
+        private void SetupToolTips()
+        {
+            tTip.SetToolTip(txtName, "The name used to refer to this GCD project item. It cannot be empty and must be unique among all items of the same type.");
+            tTip.SetToolTip(txtTop, "The top, northern most extent of the original raster. Non-divislbe values apear in red.");
+            tTip.SetToolTip(txtLeft, "The left, western most extent of the original raster. Non-divislbe values apear in red.");
+            tTip.SetToolTip(txtRight, "The right, eastern most extent of the original raster. Non-divislbe values apear in red.");
+            tTip.SetToolTip(txtBottom, "The bottom, southern most extent of the original raster. Non-divislbe values apear in red.");
+            tTip.SetToolTip(txtOrigRows, "The number of rows in the original raster.");
+            tTip.SetToolTip(txtOrigCols, "The number of columns in the original raster.");
+            tTip.SetToolTip(txtOrigWidth, "The width of the original raster shown in the linear units of the raster.");
+            tTip.SetToolTip(txtOrigHeight, "The height of the original raster shown in the linear units of the raster.");
+            tTip.SetToolTip(txtOrigCellSize, "The width of each cell in the original raster shown in the linear units of the raster");
+            tTip.SetToolTip(txtRasterPath, "The raster file path where the output raster will get generated.");
+            tTip.SetToolTip(valTop, "The top, northern most extent of the output raster. It must be wholely divisible by the output cell resolution.");
+            tTip.SetToolTip(valLeft, "The left, western most extent of the output raster. It must be wholely divisible by the output cell resolution.");
+            tTip.SetToolTip(valRight, "The right, eastern most extent of the output raster. It must be wholely divisible by the output cell resolution.");
+            tTip.SetToolTip(valBottom, "The bottom, southern most extent of the output raster. It must be wholely divisible by the output cell resolution.");
+            tTip.SetToolTip(txtProjRows, "The number of rows in the output raster.");
+            tTip.SetToolTip(txtProjCols, "The number of columns in the output raster.");
+            tTip.SetToolTip(txtProjWidth, "The width of the output raster shown in the linear units of the raster.");
+            tTip.SetToolTip(txtProjHeight, "The height of the output raster shown in the linear units of the raster.");
+            tTip.SetToolTip(valCellSize, "The size of each cell in the output raster specified in the linear units of the raster.");
+            tTip.SetToolTip(valPrecision, "The number of decimal places to consider when rounding the cell size of the original raster.");
+            tTip.SetToolTip(cboMethod, "Method used to generate the output raster. If the original raster extent is not evenly divisible by the cell resolution then bilinear sampling must be used. If the original raster is divisible by the cell resolution then the raster can simply be copied to the output path.");
         }
     }
 }
