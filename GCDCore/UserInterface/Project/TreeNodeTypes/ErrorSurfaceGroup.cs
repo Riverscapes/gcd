@@ -63,10 +63,10 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
         public override void OnAdd(object sender, EventArgs e)
         {
             string noun = "Reference Error Surface";
-            SurveyLibrary.ExtentImporter.Purposes ePurpose = SurveyLibrary.ExtentImporter.Purposes.ReferenceErrorSurface;
+           SurveyLibrary.frmImportRaster.Purposes ePurpose = SurveyLibrary.frmImportRaster.Purposes.ReferenceErrorSurface;
             if (Surface is DEMSurvey)
             {
-                ePurpose = SurveyLibrary.ExtentImporter.Purposes.ErrorSurface;
+                ePurpose = SurveyLibrary.frmImportRaster.Purposes.ErrorSurface;
                 noun = "Error Surface";
             }
 

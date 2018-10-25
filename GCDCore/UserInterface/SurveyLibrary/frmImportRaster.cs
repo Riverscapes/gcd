@@ -49,7 +49,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
         private readonly int NoInterpolationIndex; // the combobox index of the straight cell-wise copy
         public readonly Purposes Purpose;
 
-        public IExtentAdjuster ExtImporter;
+        public ExtentAdjusterBase ExtImporter;
 
 
         public frmImportRaster(Raster sourceRaster, Surface refSurface, Purposes ePurpose, string sNoun)
@@ -60,18 +60,26 @@ namespace GCDCore.UserInterface.SurveyLibrary
             Text = "Add Existing " + sNoun;
             grpProjectRaaster.Text = "GCD " + sNoun;
             Purpose = ePurpose;
+            SourceRaster = sourceRaster;
+            txtSourceRaster.Text = sourceRaster.GISFileInfo.FullName;
 
-            if (refSurface is Surface)
-            {
-                ReferenceSurface = refSurface;
-                ExtImporter = new ExtentAdjusterWithReference(sourceRaster.Extent, refSurface.Raster.Extent);
-            }
-            else
+            if (ePurpose == Purposes.FirstDEM)
             {
                 ExtImporter = new ExtentAdjusterNoReference(sourceRaster.Extent);
             }
+            else
+            {
+                ReferenceSurface = refSurface;
 
-            SourceRaster = sourceRaster;
+                if (Purpose == Purposes.SubsequentDEM || Purpose == Purposes.ReferenceSurface)
+                {
+                    ExtImporter = new ExtentAdjusterWithReference(sourceRaster.Extent, refSurface.Raster.Extent);
+                }
+                else
+                {
+                    ExtImporter = new ExtentAdjusterFixed(sourceRaster.Extent, refSurface.Raster.Extent);
+                }
+            }
 
             // Fill the interpolation method in constructor so that selection index can be readonly
             cboMethod.Items.Add(new naru.db.NamedObject((long)ResamplingMethods.Bilinear, "Bilinear Interpolation"));
@@ -79,12 +87,35 @@ namespace GCDCore.UserInterface.SurveyLibrary
             cboMethod.Items.Add(new naru.db.NamedObject((long)ResamplingMethods.NaturalNeighbours, "Natural Neighbours"));
             cboMethod.Items.Add(new naru.db.NamedObject((long)ResamplingMethods.NearestNeighbour, "Nearest Neighbour"));
             NoInterpolationIndex = cboMethod.Items.Add(new naru.db.NamedObject((long)ResamplingMethods.None, "None (straight cell-wise copy)"));
-            cboMethod.SelectedIndex = 0;
         }
 
         private void ImportRasterForm_Load(object sender, EventArgs e)
         {
-            SetupToolTips();
+            #region Tool Tips
+            tTip.SetToolTip(txtName, "The name used to refer to this GCD project item. It cannot be empty and must be unique among all items of the same type.");
+            tTip.SetToolTip(txtTop, "The top, northern most extent of the original raster. Non-divislbe values apear in red.");
+            tTip.SetToolTip(txtLeft, "The left, western most extent of the original raster. Non-divislbe values apear in red.");
+            tTip.SetToolTip(txtRight, "The right, eastern most extent of the original raster. Non-divislbe values apear in red.");
+            tTip.SetToolTip(txtBottom, "The bottom, southern most extent of the original raster. Non-divislbe values apear in red.");
+            tTip.SetToolTip(txtOrigRows, "The number of rows in the original raster.");
+            tTip.SetToolTip(txtOrigCols, "The number of columns in the original raster.");
+            tTip.SetToolTip(txtOrigWidth, "The width of the original raster shown in the linear units of the raster.");
+            tTip.SetToolTip(txtOrigHeight, "The height of the original raster shown in the linear units of the raster.");
+            tTip.SetToolTip(txtOrigCellSize, "The width of each cell in the original raster shown in the linear units of the raster");
+            tTip.SetToolTip(txtRasterPath, "The raster file path where the output raster will get generated.");
+            tTip.SetToolTip(valTop, "The top, northern most extent of the output raster. It must be wholely divisible by the output cell resolution.");
+            tTip.SetToolTip(valLeft, "The left, western most extent of the output raster. It must be wholely divisible by the output cell resolution.");
+            tTip.SetToolTip(valRight, "The right, eastern most extent of the output raster. It must be wholely divisible by the output cell resolution.");
+            tTip.SetToolTip(valBottom, "The bottom, southern most extent of the output raster. It must be wholely divisible by the output cell resolution.");
+            tTip.SetToolTip(txtProjRows, "The number of rows in the output raster.");
+            tTip.SetToolTip(txtProjCols, "The number of columns in the output raster.");
+            tTip.SetToolTip(txtProjWidth, "The width of the output raster shown in the linear units of the raster.");
+            tTip.SetToolTip(txtProjHeight, "The height of the output raster shown in the linear units of the raster.");
+            tTip.SetToolTip(valCellSize, "The size of each cell in the output raster specified in the linear units of the raster.");
+            tTip.SetToolTip(valPrecision, "The number of decimal places to consider when rounding the cell size of the original raster.");
+            tTip.SetToolTip(cboMethod, "Method used to generate the output raster. If the original raster extent is not evenly divisible by the cell resolution then bilinear sampling must be used. If the original raster is divisible by the cell resolution then the raster can simply be copied to the output path.");
+
+            #endregion
 
             // This needs to be changed to a larger value or else rasters with cell sizes greater than 1 will cause an error to be thrown. Perhaps 1000 is more appropriate?
             valCellSize.Minimum = 0m;
@@ -141,9 +172,30 @@ namespace GCDCore.UserInterface.SurveyLibrary
             // Trigger the updating of the output raster properties
             UpdateOutputExtent(sender, e);
         }
-   
+
         private void UpdateOutputExtent(object sender, EventArgs e)
         {
+            ExtentAdjusterBase temp = ExtImporter;
+
+            if (sender == valTop || sender == valRight || sender == valBottom || sender == valBottom)
+            {
+                temp = ExtImporter.AdjustDimensions(valTop.Value, valRight.Value, valBottom.Value, valLeft.Value);
+            }
+            else if (sender == valCellSize)
+            {
+                if (valCellSize.Value <= 0m)
+                {
+                    valCellSize.Value = ExtImporter.OutExtent.CellWidth;
+                    return;
+                }
+
+                temp = ExtImporter.AdjustCellSize(valCellSize.Value);
+            }
+            else if (sender == valPrecision)
+            {
+                temp = ExtImporter.AdjustPrecision((ushort)valPrecision.Value);
+            }
+
             // Turn off event firing
             valTop.ValueChanged -= UpdateOutputExtent;
             valBottom.ValueChanged -= UpdateOutputExtent;
@@ -152,18 +204,8 @@ namespace GCDCore.UserInterface.SurveyLibrary
             valCellSize.ValueChanged -= UpdateOutputExtent;
             valPrecision.ValueChanged -= UpdateOutputExtent;
 
-            if (sender == valTop || sender == valRight || sender == valBottom || sender == valBottom)
-            {
-                ExtImporter = ExtImporter.AdjustDimensions(valTop.Value, valRight.Value, valBottom.Value, valLeft.Value);
-            }
-            else if (sender == valCellSize)
-            {
-                ExtImporter = ExtImporter.AdjustCellSize(valCellSize.Value);
-            }
-            else if (sender == valPrecision)
-            {
-                ExtImporter = ExtImporter.AdjustPrecision(valPrecision.Value);
-            }
+            // Update the extent adjustor
+            ExtImporter = temp;
 
             // Update output control values
             valCellSize.DecimalPlaces = ExtImporter.Precision;
@@ -650,32 +692,6 @@ namespace GCDCore.UserInterface.SurveyLibrary
             }
 
             OnlineHelp.Show(helpKey);
-        }
-
-        private void SetupToolTips()
-        {
-            tTip.SetToolTip(txtName, "The name used to refer to this GCD project item. It cannot be empty and must be unique among all items of the same type.");
-            tTip.SetToolTip(txtTop, "The top, northern most extent of the original raster. Non-divislbe values apear in red.");
-            tTip.SetToolTip(txtLeft, "The left, western most extent of the original raster. Non-divislbe values apear in red.");
-            tTip.SetToolTip(txtRight, "The right, eastern most extent of the original raster. Non-divislbe values apear in red.");
-            tTip.SetToolTip(txtBottom, "The bottom, southern most extent of the original raster. Non-divislbe values apear in red.");
-            tTip.SetToolTip(txtOrigRows, "The number of rows in the original raster.");
-            tTip.SetToolTip(txtOrigCols, "The number of columns in the original raster.");
-            tTip.SetToolTip(txtOrigWidth, "The width of the original raster shown in the linear units of the raster.");
-            tTip.SetToolTip(txtOrigHeight, "The height of the original raster shown in the linear units of the raster.");
-            tTip.SetToolTip(txtOrigCellSize, "The width of each cell in the original raster shown in the linear units of the raster");
-            tTip.SetToolTip(txtRasterPath, "The raster file path where the output raster will get generated.");
-            tTip.SetToolTip(valTop, "The top, northern most extent of the output raster. It must be wholely divisible by the output cell resolution.");
-            tTip.SetToolTip(valLeft, "The left, western most extent of the output raster. It must be wholely divisible by the output cell resolution.");
-            tTip.SetToolTip(valRight, "The right, eastern most extent of the output raster. It must be wholely divisible by the output cell resolution.");
-            tTip.SetToolTip(valBottom, "The bottom, southern most extent of the output raster. It must be wholely divisible by the output cell resolution.");
-            tTip.SetToolTip(txtProjRows, "The number of rows in the output raster.");
-            tTip.SetToolTip(txtProjCols, "The number of columns in the output raster.");
-            tTip.SetToolTip(txtProjWidth, "The width of the output raster shown in the linear units of the raster.");
-            tTip.SetToolTip(txtProjHeight, "The height of the output raster shown in the linear units of the raster.");
-            tTip.SetToolTip(valCellSize, "The size of each cell in the output raster specified in the linear units of the raster.");
-            tTip.SetToolTip(valPrecision, "The number of decimal places to consider when rounding the cell size of the original raster.");
-            tTip.SetToolTip(cboMethod, "Method used to generate the output raster. If the original raster extent is not evenly divisible by the cell resolution then bilinear sampling must be used. If the original raster is divisible by the cell resolution then the raster can simply be copied to the output path.");
         }
     }
 }

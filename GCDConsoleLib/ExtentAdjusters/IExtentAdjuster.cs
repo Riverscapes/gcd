@@ -16,5 +16,6 @@ namespace GCDConsoleLib.ExtentAdjusters
         IExtentAdjuster AdjustDimensions(decimal top, decimal right, decimal bottom, decimal left);
         IExtentAdjuster AdjustCellSize(decimal cellSize);
         IExtentAdjuster AdjustPrecision(ushort precision);
+
     }
 }

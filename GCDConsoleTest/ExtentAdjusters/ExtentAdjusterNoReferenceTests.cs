@@ -109,7 +109,7 @@ namespace GCDConsoleLib.ExtentAdjusters.Tests
 
             {
                 ExtentAdjusterNoReference t2 = new ExtentAdjusterNoReference(dummySrc2);
-                IExtentAdjuster t3 = t2.AdjustDimensions(t2.OutExtent.Top + (2m * 1.51m), t2.OutExtent.Right, t2.OutExtent.Bottom, t2.OutExtent.Left);
+                ExtentAdjusterBase t3 = t2.AdjustDimensions(t2.OutExtent.Top + (2m * 1.51m), t2.OutExtent.Right, t2.OutExtent.Bottom, t2.OutExtent.Left);
                 Assert.IsTrue(t3.OutExtent.IsDivisible());
                 Assert.AreEqual(t3.OutExtent.Top, 1603.62m); // 1600.61 + 3.02
                 Assert.AreEqual(t3.OutExtent.Right, 22.65m); // unchanged
@@ -121,7 +121,7 @@ namespace GCDConsoleLib.ExtentAdjusters.Tests
                 // Add irregular value to top and ensure output is divisible
                 ExtentAdjusterNoReference t3 = new ExtentAdjusterNoReference(dummySrc2);
                 Assert.IsTrue(t3.OutExtent.IsDivisible());
-                IExtentAdjuster t4 = t3.AdjustDimensions(t3.OutExtent.Top + 0.0003456m, t3.OutExtent.Right, t3.OutExtent.Bottom, t3.OutExtent.Left);
+                ExtentAdjusterBase t4 = t3.AdjustDimensions(t3.OutExtent.Top + 0.0003456m, t3.OutExtent.Right, t3.OutExtent.Bottom, t3.OutExtent.Left);
                 Assert.IsTrue(t4.OutExtent.IsDivisible());
             }
 
@@ -129,7 +129,7 @@ namespace GCDConsoleLib.ExtentAdjusters.Tests
                 // Add irregular value to all dimensions
                 ExtentAdjusterNoReference t3 = new ExtentAdjusterNoReference(dummySrc2);
                 Assert.IsTrue(t3.OutExtent.IsDivisible());
-                IExtentAdjuster t4 = t3.AdjustDimensions(t3.OutExtent.Top + 0.0003456m, t3.OutExtent.Right + 1.513334566m, t3.OutExtent.Bottom - 12.321m, t3.OutExtent.Left - 19.11111m);
+                ExtentAdjusterBase t4 = t3.AdjustDimensions(t3.OutExtent.Top + 0.0003456m, t3.OutExtent.Right + 1.513334566m, t3.OutExtent.Bottom - 12.321m, t3.OutExtent.Left - 19.11111m);
                 Assert.IsTrue(t4.OutExtent.IsDivisible());
             }
         }
@@ -143,7 +143,7 @@ namespace GCDConsoleLib.ExtentAdjusters.Tests
 
             {
                 ExtentAdjusterNoReference t2 = new ExtentAdjusterNoReference(dummySrc2);
-                IExtentAdjuster t3 = t2.AdjustCellSize(2m);
+                ExtentAdjusterBase t3 = t2.AdjustCellSize(2m);
                 Assert.IsTrue(t3.OutExtent.IsDivisible());
                 Assert.AreEqual(t3.OutExtent.Top, 1602m);
                 Assert.AreEqual(t3.OutExtent.Right, 26m);
@@ -161,13 +161,13 @@ namespace GCDConsoleLib.ExtentAdjusters.Tests
 
             // Reduce precision to 1
             ExtentAdjusterNoReference t2 = new ExtentAdjusterNoReference(dummySrc2);
-            IExtentAdjuster t3 = t2.AdjustPrecision(1);
+            ExtentAdjusterBase t3 = t2.AdjustPrecision(1);
             Assert.IsTrue(t3.OutExtent.IsDivisible());
             Assert.AreEqual(t3.OutExtent.CellWidth, 1.5m);
             Assert.AreEqual(t3.Precision, 1);
 
             // Now reduce it again to zero
-            IExtentAdjuster t4 = ((ExtentAdjusterNoReference)t3).AdjustPrecision(0);
+            ExtentAdjusterBase t4 = ((ExtentAdjusterNoReference)t3).AdjustPrecision(0);
             Assert.IsTrue(t4.OutExtent.IsDivisible());
             Assert.AreEqual(t4.OutExtent.CellWidth, 2m);
             Assert.AreEqual(t4.Precision, 0);

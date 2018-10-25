@@ -86,17 +86,17 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
         {
             // Determine if this is the first DEM in the project or use the first existing DEM as a reference surface
             DEMSurvey referenceDEM = null;
-            SurveyLibrary.ExtentImporter.Purposes ePurpose = SurveyLibrary.ExtentImporter.Purposes.FirstDEM;
+            SurveyLibrary.frmImportRaster.Purposes ePurpose = SurveyLibrary.frmImportRaster.Purposes.FirstDEM;
             if (ProjectManager.Project.DEMSurveys.Count > 0)
             {
                 referenceDEM = ProjectManager.Project.DEMSurveys.First();
-                ePurpose = SurveyLibrary.ExtentImporter.Purposes.SubsequentDEM;
+                ePurpose = SurveyLibrary.frmImportRaster.Purposes.SubsequentDEM;
             }
 
             try
             {
-                SurveyLibrary.frmImportRaster frm = SurveyLibrary.frmImportRaster.PrepareToImportRaster(referenceDEM,ePurpose, "Associated Surface", new IntPtr(0));
-                
+                SurveyLibrary.frmImportRaster frm = SurveyLibrary.frmImportRaster.PrepareToImportRaster(referenceDEM, ePurpose, "DEM Survey", new IntPtr(0));
+
                 if (EditTreeItem(frm, false) == DialogResult.OK)
                 {
                     GCDConsoleLib.Raster rDEM = frm.ProcessRaster();
@@ -104,7 +104,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
                     ProjectManager.Project.DEMSurveys.Add(dem);
 
                     // If this was the first raster then we need to store the cell resolution on the project
-                    if (ePurpose == SurveyLibrary.ExtentImporter.Purposes.FirstDEM)
+                    if (ePurpose == SurveyLibrary.frmImportRaster.Purposes.FirstDEM)
                         ProjectManager.Project.CellArea = dem.Raster.Extent.CellArea(ProjectManager.Project.Units);
 
                     ProjectManager.Project.Save();

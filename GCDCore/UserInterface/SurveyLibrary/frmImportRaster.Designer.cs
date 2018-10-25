@@ -220,7 +220,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.Label5.Location = new System.Drawing.Point(459, 60);
             this.Label5.Name = "Label5";
             this.Label5.Size = new System.Drawing.Size(47, 13);
-            this.Label5.TabIndex = 14;
+            this.Label5.TabIndex = 12;
             this.Label5.Text = "Columns";
             // 
             // Label8
@@ -238,23 +238,23 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.txtOrigCols.Name = "txtOrigCols";
             this.txtOrigCols.ReadOnly = true;
             this.txtOrigCols.Size = new System.Drawing.Size(80, 20);
-            this.txtOrigCols.TabIndex = 15;
+            this.txtOrigCols.TabIndex = 13;
             // 
             // txtLeft
             // 
             this.txtLeft.Location = new System.Drawing.Point(39, 91);
             this.txtLeft.Name = "txtLeft";
             this.txtLeft.Size = new System.Drawing.Size(100, 20);
-            this.txtLeft.TabIndex = 3;
+            this.txtLeft.TabIndex = 5;
             this.txtLeft.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OriginalExtentTextBoxes_KeyPress);
             // 
             // Label7
             // 
             this.Label7.AutoSize = true;
-            this.Label7.Location = new System.Drawing.Point(331, 87);
+            this.Label7.Location = new System.Drawing.Point(471, 87);
             this.Label7.Name = "Label7";
             this.Label7.Size = new System.Drawing.Size(35, 13);
-            this.Label7.TabIndex = 12;
+            this.Label7.TabIndex = 16;
             this.Label7.Text = "Width";
             // 
             // Label9
@@ -263,16 +263,16 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.Label9.Location = new System.Drawing.Point(75, 60);
             this.Label9.Name = "Label9";
             this.Label9.Size = new System.Drawing.Size(26, 13);
-            this.Label9.TabIndex = 4;
+            this.Label9.TabIndex = 2;
             this.Label9.Text = "Top";
             // 
             // txtOrigWidth
             // 
-            this.txtOrigWidth.Location = new System.Drawing.Point(372, 83);
+            this.txtOrigWidth.Location = new System.Drawing.Point(512, 83);
             this.txtOrigWidth.Name = "txtOrigWidth";
             this.txtOrigWidth.ReadOnly = true;
             this.txtOrigWidth.Size = new System.Drawing.Size(80, 20);
-            this.txtOrigWidth.TabIndex = 13;
+            this.txtOrigWidth.TabIndex = 17;
             // 
             // txtRight
             // 
@@ -285,10 +285,10 @@ namespace GCDCore.UserInterface.SurveyLibrary
             // Label6
             // 
             this.Label6.AutoSize = true;
-            this.Label6.Location = new System.Drawing.Point(468, 87);
+            this.Label6.Location = new System.Drawing.Point(328, 87);
             this.Label6.Name = "Label6";
             this.Label6.Size = new System.Drawing.Size(38, 13);
-            this.Label6.TabIndex = 16;
+            this.Label6.TabIndex = 14;
             this.Label6.Text = "Height";
             // 
             // Label10
@@ -302,18 +302,18 @@ namespace GCDCore.UserInterface.SurveyLibrary
             // 
             // txtOrigHeight
             // 
-            this.txtOrigHeight.Location = new System.Drawing.Point(512, 83);
+            this.txtOrigHeight.Location = new System.Drawing.Point(372, 83);
             this.txtOrigHeight.Name = "txtOrigHeight";
             this.txtOrigHeight.ReadOnly = true;
             this.txtOrigHeight.Size = new System.Drawing.Size(80, 20);
-            this.txtOrigHeight.TabIndex = 17;
+            this.txtOrigHeight.TabIndex = 15;
             // 
             // txtTop
             // 
             this.txtTop.Location = new System.Drawing.Point(107, 56);
             this.txtTop.Name = "txtTop";
             this.txtTop.Size = new System.Drawing.Size(100, 20);
-            this.txtTop.TabIndex = 5;
+            this.txtTop.TabIndex = 3;
             this.txtTop.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OriginalExtentTextBoxes_KeyPress);
             // 
             // Label11
@@ -322,7 +322,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.Label11.Location = new System.Drawing.Point(8, 95);
             this.Label11.Name = "Label11";
             this.Label11.Size = new System.Drawing.Size(25, 13);
-            this.Label11.TabIndex = 2;
+            this.Label11.TabIndex = 4;
             this.Label11.Text = "Left";
             // 
             // grpProjectRaaster
@@ -367,7 +367,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.cmdHelpPrecision.Location = new System.Drawing.Point(343, 129);
             this.cmdHelpPrecision.Name = "cmdHelpPrecision";
             this.cmdHelpPrecision.Size = new System.Drawing.Size(23, 23);
-            this.cmdHelpPrecision.TabIndex = 26;
+            this.cmdHelpPrecision.TabIndex = 20;
             this.cmdHelpPrecision.UseVisualStyleBackColor = true;
             this.cmdHelpPrecision.Click += new System.EventHandler(this.cmdHelpPrecision_Click);
             // 
@@ -377,7 +377,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.Label1.Location = new System.Drawing.Point(260, 161);
             this.Label1.Name = "Label1";
             this.Label1.Size = new System.Drawing.Size(103, 13);
-            this.Label1.TabIndex = 25;
+            this.Label1.TabIndex = 23;
             this.Label1.Text = "Interpolation method";
             // 
             // cboMethod
@@ -424,7 +424,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.valLeft.Location = new System.Drawing.Point(39, 86);
             this.valLeft.Name = "valLeft";
             this.valLeft.Size = new System.Drawing.Size(100, 20);
-            this.valLeft.TabIndex = 3;
+            this.valLeft.TabIndex = 5;
             this.valLeft.ThousandsSeparator = true;
             // 
             // valTop
@@ -432,7 +432,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.valTop.Location = new System.Drawing.Point(107, 51);
             this.valTop.Name = "valTop";
             this.valTop.Size = new System.Drawing.Size(100, 20);
-            this.valTop.TabIndex = 5;
+            this.valTop.TabIndex = 3;
             this.valTop.ThousandsSeparator = true;
             // 
             // lblPrecision
@@ -441,7 +441,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.lblPrecision.Location = new System.Drawing.Point(368, 134);
             this.lblPrecision.Name = "lblPrecision";
             this.lblPrecision.Size = new System.Drawing.Size(138, 13);
-            this.lblPrecision.TabIndex = 20;
+            this.lblPrecision.TabIndex = 21;
             this.lblPrecision.Text = "Horizontal decimal precision";
             // 
             // Label17
@@ -450,7 +450,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.Label17.Location = new System.Drawing.Point(459, 55);
             this.Label17.Name = "Label17";
             this.Label17.Size = new System.Drawing.Size(47, 13);
-            this.Label17.TabIndex = 14;
+            this.Label17.TabIndex = 12;
             this.Label17.Text = "Columns";
             // 
             // Label18
@@ -477,7 +477,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.Label19.Location = new System.Drawing.Point(75, 55);
             this.Label19.Name = "Label19";
             this.Label19.Size = new System.Drawing.Size(26, 13);
-            this.Label19.TabIndex = 4;
+            this.Label19.TabIndex = 2;
             this.Label19.Text = "Top";
             // 
             // Label20
@@ -503,7 +503,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.Label21.Location = new System.Drawing.Point(8, 90);
             this.Label21.Name = "Label21";
             this.Label21.Size = new System.Drawing.Size(25, 13);
-            this.Label21.TabIndex = 2;
+            this.Label21.TabIndex = 4;
             this.Label21.Text = "Left";
             // 
             // txtProjCols
@@ -512,7 +512,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.txtProjCols.Name = "txtProjCols";
             this.txtProjCols.ReadOnly = true;
             this.txtProjCols.Size = new System.Drawing.Size(80, 20);
-            this.txtProjCols.TabIndex = 15;
+            this.txtProjCols.TabIndex = 13;
             // 
             // Label14
             // 
@@ -525,37 +525,37 @@ namespace GCDCore.UserInterface.SurveyLibrary
             // 
             // txtProjHeight
             // 
-            this.txtProjHeight.Location = new System.Drawing.Point(512, 78);
+            this.txtProjHeight.Location = new System.Drawing.Point(372, 78);
             this.txtProjHeight.Name = "txtProjHeight";
             this.txtProjHeight.ReadOnly = true;
             this.txtProjHeight.Size = new System.Drawing.Size(80, 20);
-            this.txtProjHeight.TabIndex = 17;
+            this.txtProjHeight.TabIndex = 15;
             // 
             // Label16
             // 
             this.Label16.AutoSize = true;
-            this.Label16.Location = new System.Drawing.Point(468, 82);
+            this.Label16.Location = new System.Drawing.Point(328, 82);
             this.Label16.Name = "Label16";
             this.Label16.Size = new System.Drawing.Size(38, 13);
-            this.Label16.TabIndex = 16;
+            this.Label16.TabIndex = 14;
             this.Label16.Text = "Height";
             // 
             // Label15
             // 
             this.Label15.AutoSize = true;
-            this.Label15.Location = new System.Drawing.Point(331, 82);
+            this.Label15.Location = new System.Drawing.Point(471, 82);
             this.Label15.Name = "Label15";
             this.Label15.Size = new System.Drawing.Size(35, 13);
-            this.Label15.TabIndex = 12;
+            this.Label15.TabIndex = 16;
             this.Label15.Text = "Width";
             // 
             // txtProjWidth
             // 
-            this.txtProjWidth.Location = new System.Drawing.Point(372, 78);
+            this.txtProjWidth.Location = new System.Drawing.Point(512, 78);
             this.txtProjWidth.Name = "txtProjWidth";
             this.txtProjWidth.ReadOnly = true;
             this.txtProjWidth.Size = new System.Drawing.Size(80, 20);
-            this.txtProjWidth.TabIndex = 13;
+            this.txtProjWidth.TabIndex = 17;
             // 
             // cmdHelp
             // 

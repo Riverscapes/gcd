@@ -55,6 +55,9 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
 
         protected DialogResult EditTreeItem(Form frm, bool treeReload = true)
         {
+            if (frm == null)
+                return DialogResult.Abort;
+
             DialogResult eResult = DialogResult.OK;
             try
             {
