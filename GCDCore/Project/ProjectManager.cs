@@ -120,6 +120,31 @@ namespace GCDCore.Project
                 ProjectManager.GISLayerDeletingEventHandler(e);
         }
 
+        public static GCDConsoleLib.Raster BrowseRaster(string formTitle, IntPtr parentWindow)
+        {
+            FileInfo path = null;
+            if (IsArcMap)
+            {
+                if (GISLayerBrowsingEventHandler != null)
+                {
+                    naru.ui.PathEventArgs e = new naru.ui.PathEventArgs(path, formTitle, parentWindow);
+                    ProjectManager.GISLayerBrowsingEventHandler(null, e);
+                    if (e.Path is FileInfo)
+                        path = e.Path;
+                }
+            }
+            else
+            {
+                path = naru.os.File.BrowseOpenFile(formTitle, "Raster Files (*.tif, *.tiff, *.img)|*.tif;*.tiff;*.img");
+            }
+
+            GCDConsoleLib.Raster raster = null;
+            if (path is FileInfo)
+                raster = new GCDConsoleLib.Raster(path);
+
+            return raster;
+        }
+
         public static void OnBrowseRaster(System.Windows.Forms.TextBox txt, naru.ui.PathEventArgs e)
         {
             if (GISLayerBrowsingEventHandler != null)
@@ -211,6 +236,6 @@ namespace GCDCore.Project
 
             DirectoryInfo finalFolder = new DirectoryInfo(Path.Combine(parentFolder.FullName, string.Format("{0}{1:0000}", prefix, existingIndex + 1)));
             return finalFolder;
-        }        
+        }
     }
 }

@@ -40,7 +40,8 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
 
         public override void OnAdd(object sender, EventArgs e)
         {
-            SurveyLibrary.frmImportRaster frm = new SurveyLibrary.frmImportRaster(DEM, SurveyLibrary.ExtentImporter.Purposes.AssociatedSurface, "Associated Surface");
+            SurveyLibrary.frmImportRaster frm = SurveyLibrary.frmImportRaster.PrepareToImportRaster(DEM, SurveyLibrary.frmImportRaster.Purposes.AssociatedSurface, "Associated Surface", new IntPtr(0));
+
             if (EditTreeItem(frm) == DialogResult.OK)
             {
                 GCDConsoleLib.Raster rAssoc = frm.ProcessRaster();

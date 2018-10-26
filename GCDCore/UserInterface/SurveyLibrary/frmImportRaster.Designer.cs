@@ -33,6 +33,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.lblRasterPath = new System.Windows.Forms.Label();
             this.txtRasterPath = new System.Windows.Forms.TextBox();
             this.grpOriginalRaster = new System.Windows.Forms.GroupBox();
+            this.txtSourceRaster = new System.Windows.Forms.TextBox();
             this.Label12 = new System.Windows.Forms.Label();
             this.txtOrigCellSize = new System.Windows.Forms.TextBox();
             this.txtOrigRows = new System.Windows.Forms.TextBox();
@@ -51,12 +52,10 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.txtOrigHeight = new System.Windows.Forms.TextBox();
             this.txtTop = new System.Windows.Forms.TextBox();
             this.Label11 = new System.Windows.Forms.Label();
-            this.ucRaster = new GCDCore.UserInterface.UtilityForms.ucRasterInput();
             this.grpProjectRaaster = new System.Windows.Forms.GroupBox();
+            this.txtInterpolationMethod = new System.Windows.Forms.TextBox();
             this.cmdHelpPrecision = new System.Windows.Forms.Button();
             this.Label1 = new System.Windows.Forms.Label();
-            this.cboMethod = new System.Windows.Forms.ComboBox();
-            this.cmdSave = new System.Windows.Forms.Button();
             this.valPrecision = new System.Windows.Forms.NumericUpDown();
             this.valCellSize = new System.Windows.Forms.NumericUpDown();
             this.valBottom = new System.Windows.Forms.NumericUpDown();
@@ -112,7 +111,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             // Label2
             // 
             this.Label2.AutoSize = true;
-            this.Label2.Location = new System.Drawing.Point(24, 25);
+            this.Label2.Location = new System.Drawing.Point(30, 25);
             this.Label2.Name = "Label2";
             this.Label2.Size = new System.Drawing.Size(71, 13);
             this.Label2.TabIndex = 0;
@@ -132,12 +131,13 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.txtRasterPath.Location = new System.Drawing.Point(107, 21);
             this.txtRasterPath.Name = "txtRasterPath";
             this.txtRasterPath.ReadOnly = true;
-            this.txtRasterPath.Size = new System.Drawing.Size(456, 20);
+            this.txtRasterPath.Size = new System.Drawing.Size(485, 20);
             this.txtRasterPath.TabIndex = 1;
             this.txtRasterPath.TabStop = false;
             // 
             // grpOriginalRaster
             // 
+            this.grpOriginalRaster.Controls.Add(this.txtSourceRaster);
             this.grpOriginalRaster.Controls.Add(this.Label12);
             this.grpOriginalRaster.Controls.Add(this.txtOrigCellSize);
             this.grpOriginalRaster.Controls.Add(this.txtOrigRows);
@@ -157,13 +157,20 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.grpOriginalRaster.Controls.Add(this.txtTop);
             this.grpOriginalRaster.Controls.Add(this.Label11);
             this.grpOriginalRaster.Controls.Add(this.Label2);
-            this.grpOriginalRaster.Controls.Add(this.ucRaster);
             this.grpOriginalRaster.Location = new System.Drawing.Point(12, 37);
             this.grpOriginalRaster.Name = "grpOriginalRaster";
             this.grpOriginalRaster.Size = new System.Drawing.Size(606, 156);
             this.grpOriginalRaster.TabIndex = 2;
             this.grpOriginalRaster.TabStop = false;
             this.grpOriginalRaster.Text = "Original Raster";
+            // 
+            // txtSourceRaster
+            // 
+            this.txtSourceRaster.Location = new System.Drawing.Point(107, 21);
+            this.txtSourceRaster.Name = "txtSourceRaster";
+            this.txtSourceRaster.ReadOnly = true;
+            this.txtSourceRaster.Size = new System.Drawing.Size(485, 20);
+            this.txtSourceRaster.TabIndex = 1;
             // 
             // Label12
             // 
@@ -213,7 +220,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.Label5.Location = new System.Drawing.Point(459, 60);
             this.Label5.Name = "Label5";
             this.Label5.Size = new System.Drawing.Size(47, 13);
-            this.Label5.TabIndex = 14;
+            this.Label5.TabIndex = 12;
             this.Label5.Text = "Columns";
             // 
             // Label8
@@ -231,23 +238,23 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.txtOrigCols.Name = "txtOrigCols";
             this.txtOrigCols.ReadOnly = true;
             this.txtOrigCols.Size = new System.Drawing.Size(80, 20);
-            this.txtOrigCols.TabIndex = 15;
+            this.txtOrigCols.TabIndex = 13;
             // 
             // txtLeft
             // 
             this.txtLeft.Location = new System.Drawing.Point(39, 91);
             this.txtLeft.Name = "txtLeft";
             this.txtLeft.Size = new System.Drawing.Size(100, 20);
-            this.txtLeft.TabIndex = 3;
+            this.txtLeft.TabIndex = 5;
             this.txtLeft.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OriginalExtentTextBoxes_KeyPress);
             // 
             // Label7
             // 
             this.Label7.AutoSize = true;
-            this.Label7.Location = new System.Drawing.Point(331, 87);
+            this.Label7.Location = new System.Drawing.Point(471, 87);
             this.Label7.Name = "Label7";
             this.Label7.Size = new System.Drawing.Size(35, 13);
-            this.Label7.TabIndex = 12;
+            this.Label7.TabIndex = 16;
             this.Label7.Text = "Width";
             // 
             // Label9
@@ -256,16 +263,16 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.Label9.Location = new System.Drawing.Point(75, 60);
             this.Label9.Name = "Label9";
             this.Label9.Size = new System.Drawing.Size(26, 13);
-            this.Label9.TabIndex = 4;
+            this.Label9.TabIndex = 2;
             this.Label9.Text = "Top";
             // 
             // txtOrigWidth
             // 
-            this.txtOrigWidth.Location = new System.Drawing.Point(372, 83);
+            this.txtOrigWidth.Location = new System.Drawing.Point(512, 83);
             this.txtOrigWidth.Name = "txtOrigWidth";
             this.txtOrigWidth.ReadOnly = true;
             this.txtOrigWidth.Size = new System.Drawing.Size(80, 20);
-            this.txtOrigWidth.TabIndex = 13;
+            this.txtOrigWidth.TabIndex = 17;
             // 
             // txtRight
             // 
@@ -278,10 +285,10 @@ namespace GCDCore.UserInterface.SurveyLibrary
             // Label6
             // 
             this.Label6.AutoSize = true;
-            this.Label6.Location = new System.Drawing.Point(468, 87);
+            this.Label6.Location = new System.Drawing.Point(328, 87);
             this.Label6.Name = "Label6";
             this.Label6.Size = new System.Drawing.Size(38, 13);
-            this.Label6.TabIndex = 16;
+            this.Label6.TabIndex = 14;
             this.Label6.Text = "Height";
             // 
             // Label10
@@ -295,18 +302,18 @@ namespace GCDCore.UserInterface.SurveyLibrary
             // 
             // txtOrigHeight
             // 
-            this.txtOrigHeight.Location = new System.Drawing.Point(512, 83);
+            this.txtOrigHeight.Location = new System.Drawing.Point(372, 83);
             this.txtOrigHeight.Name = "txtOrigHeight";
             this.txtOrigHeight.ReadOnly = true;
             this.txtOrigHeight.Size = new System.Drawing.Size(80, 20);
-            this.txtOrigHeight.TabIndex = 17;
+            this.txtOrigHeight.TabIndex = 15;
             // 
             // txtTop
             // 
             this.txtTop.Location = new System.Drawing.Point(107, 56);
             this.txtTop.Name = "txtTop";
             this.txtTop.Size = new System.Drawing.Size(100, 20);
-            this.txtTop.TabIndex = 5;
+            this.txtTop.TabIndex = 3;
             this.txtTop.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OriginalExtentTextBoxes_KeyPress);
             // 
             // Label11
@@ -315,23 +322,14 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.Label11.Location = new System.Drawing.Point(8, 95);
             this.Label11.Name = "Label11";
             this.Label11.Size = new System.Drawing.Size(25, 13);
-            this.Label11.TabIndex = 2;
+            this.Label11.TabIndex = 4;
             this.Label11.Text = "Left";
-            // 
-            // ucRaster
-            // 
-            this.ucRaster.FullPath = null;
-            this.ucRaster.Location = new System.Drawing.Point(101, 19);
-            this.ucRaster.Name = "ucRaster";
-            this.ucRaster.Size = new System.Drawing.Size(491, 25);
-            this.ucRaster.TabIndex = 1;
             // 
             // grpProjectRaaster
             // 
+            this.grpProjectRaaster.Controls.Add(this.txtInterpolationMethod);
             this.grpProjectRaaster.Controls.Add(this.cmdHelpPrecision);
             this.grpProjectRaaster.Controls.Add(this.Label1);
-            this.grpProjectRaaster.Controls.Add(this.cboMethod);
-            this.grpProjectRaaster.Controls.Add(this.cmdSave);
             this.grpProjectRaaster.Controls.Add(this.valPrecision);
             this.grpProjectRaaster.Controls.Add(this.valCellSize);
             this.grpProjectRaaster.Controls.Add(this.valBottom);
@@ -361,45 +359,36 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.grpProjectRaaster.TabStop = false;
             this.grpProjectRaaster.Text = "Project Raster";
             // 
+            // txtInterpolationMethod
+            // 
+            this.txtInterpolationMethod.Location = new System.Drawing.Point(372, 157);
+            this.txtInterpolationMethod.Name = "txtInterpolationMethod";
+            this.txtInterpolationMethod.ReadOnly = true;
+            this.txtInterpolationMethod.Size = new System.Drawing.Size(220, 20);
+            this.txtInterpolationMethod.TabIndex = 24;
+            // 
             // cmdHelpPrecision
             // 
+            this.cmdHelpPrecision.AutoSize = true;
             this.cmdHelpPrecision.FlatAppearance.BorderSize = 0;
             this.cmdHelpPrecision.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cmdHelpPrecision.Image = global::GCDCore.Properties.Resources.Help;
+            this.cmdHelpPrecision.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.cmdHelpPrecision.Location = new System.Drawing.Point(343, 129);
             this.cmdHelpPrecision.Name = "cmdHelpPrecision";
             this.cmdHelpPrecision.Size = new System.Drawing.Size(23, 23);
-            this.cmdHelpPrecision.TabIndex = 26;
+            this.cmdHelpPrecision.TabIndex = 20;
             this.cmdHelpPrecision.UseVisualStyleBackColor = true;
             this.cmdHelpPrecision.Click += new System.EventHandler(this.cmdHelpPrecision_Click);
             // 
             // Label1
             // 
             this.Label1.AutoSize = true;
-            this.Label1.Location = new System.Drawing.Point(260, 161);
+            this.Label1.Location = new System.Drawing.Point(263, 161);
             this.Label1.Name = "Label1";
             this.Label1.Size = new System.Drawing.Size(103, 13);
-            this.Label1.TabIndex = 25;
+            this.Label1.TabIndex = 23;
             this.Label1.Text = "Interpolation method";
-            // 
-            // cboMethod
-            // 
-            this.cboMethod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboMethod.FormattingEnabled = true;
-            this.cboMethod.Location = new System.Drawing.Point(372, 157);
-            this.cboMethod.Name = "cboMethod";
-            this.cboMethod.Size = new System.Drawing.Size(220, 21);
-            this.cboMethod.TabIndex = 24;
-            // 
-            // cmdSave
-            // 
-            this.cmdSave.Image = global::GCDCore.Properties.Resources.SaveGIS;
-            this.cmdSave.Location = new System.Drawing.Point(569, 20);
-            this.cmdSave.Name = "cmdSave";
-            this.cmdSave.Size = new System.Drawing.Size(23, 23);
-            this.cmdSave.TabIndex = 23;
-            this.cmdSave.UseVisualStyleBackColor = true;
-            this.cmdSave.Click += new System.EventHandler(this.cmdSave_Click);
             // 
             // valPrecision
             // 
@@ -421,6 +410,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.valBottom.Name = "valBottom";
             this.valBottom.Size = new System.Drawing.Size(100, 20);
             this.valBottom.TabIndex = 9;
+            this.valBottom.ThousandsSeparator = true;
             // 
             // valRight
             // 
@@ -428,20 +418,23 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.valRight.Name = "valRight";
             this.valRight.Size = new System.Drawing.Size(100, 20);
             this.valRight.TabIndex = 7;
+            this.valRight.ThousandsSeparator = true;
             // 
             // valLeft
             // 
             this.valLeft.Location = new System.Drawing.Point(39, 86);
             this.valLeft.Name = "valLeft";
             this.valLeft.Size = new System.Drawing.Size(100, 20);
-            this.valLeft.TabIndex = 3;
+            this.valLeft.TabIndex = 5;
+            this.valLeft.ThousandsSeparator = true;
             // 
             // valTop
             // 
             this.valTop.Location = new System.Drawing.Point(107, 51);
             this.valTop.Name = "valTop";
             this.valTop.Size = new System.Drawing.Size(100, 20);
-            this.valTop.TabIndex = 5;
+            this.valTop.TabIndex = 3;
+            this.valTop.ThousandsSeparator = true;
             // 
             // lblPrecision
             // 
@@ -449,7 +442,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.lblPrecision.Location = new System.Drawing.Point(368, 134);
             this.lblPrecision.Name = "lblPrecision";
             this.lblPrecision.Size = new System.Drawing.Size(138, 13);
-            this.lblPrecision.TabIndex = 20;
+            this.lblPrecision.TabIndex = 21;
             this.lblPrecision.Text = "Horizontal decimal precision";
             // 
             // Label17
@@ -458,7 +451,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.Label17.Location = new System.Drawing.Point(459, 55);
             this.Label17.Name = "Label17";
             this.Label17.Size = new System.Drawing.Size(47, 13);
-            this.Label17.TabIndex = 14;
+            this.Label17.TabIndex = 12;
             this.Label17.Text = "Columns";
             // 
             // Label18
@@ -485,7 +478,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.Label19.Location = new System.Drawing.Point(75, 55);
             this.Label19.Name = "Label19";
             this.Label19.Size = new System.Drawing.Size(26, 13);
-            this.Label19.TabIndex = 4;
+            this.Label19.TabIndex = 2;
             this.Label19.Text = "Top";
             // 
             // Label20
@@ -511,7 +504,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.Label21.Location = new System.Drawing.Point(8, 90);
             this.Label21.Name = "Label21";
             this.Label21.Size = new System.Drawing.Size(25, 13);
-            this.Label21.TabIndex = 2;
+            this.Label21.TabIndex = 4;
             this.Label21.Text = "Left";
             // 
             // txtProjCols
@@ -520,7 +513,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.txtProjCols.Name = "txtProjCols";
             this.txtProjCols.ReadOnly = true;
             this.txtProjCols.Size = new System.Drawing.Size(80, 20);
-            this.txtProjCols.TabIndex = 15;
+            this.txtProjCols.TabIndex = 13;
             // 
             // Label14
             // 
@@ -533,37 +526,37 @@ namespace GCDCore.UserInterface.SurveyLibrary
             // 
             // txtProjHeight
             // 
-            this.txtProjHeight.Location = new System.Drawing.Point(512, 78);
+            this.txtProjHeight.Location = new System.Drawing.Point(372, 78);
             this.txtProjHeight.Name = "txtProjHeight";
             this.txtProjHeight.ReadOnly = true;
             this.txtProjHeight.Size = new System.Drawing.Size(80, 20);
-            this.txtProjHeight.TabIndex = 17;
+            this.txtProjHeight.TabIndex = 15;
             // 
             // Label16
             // 
             this.Label16.AutoSize = true;
-            this.Label16.Location = new System.Drawing.Point(468, 82);
+            this.Label16.Location = new System.Drawing.Point(328, 82);
             this.Label16.Name = "Label16";
             this.Label16.Size = new System.Drawing.Size(38, 13);
-            this.Label16.TabIndex = 16;
+            this.Label16.TabIndex = 14;
             this.Label16.Text = "Height";
             // 
             // Label15
             // 
             this.Label15.AutoSize = true;
-            this.Label15.Location = new System.Drawing.Point(331, 82);
+            this.Label15.Location = new System.Drawing.Point(471, 82);
             this.Label15.Name = "Label15";
             this.Label15.Size = new System.Drawing.Size(35, 13);
-            this.Label15.TabIndex = 12;
+            this.Label15.TabIndex = 16;
             this.Label15.Text = "Width";
             // 
             // txtProjWidth
             // 
-            this.txtProjWidth.Location = new System.Drawing.Point(372, 78);
+            this.txtProjWidth.Location = new System.Drawing.Point(512, 78);
             this.txtProjWidth.Name = "txtProjWidth";
             this.txtProjWidth.ReadOnly = true;
             this.txtProjWidth.Size = new System.Drawing.Size(80, 20);
-            this.txtProjWidth.TabIndex = 13;
+            this.txtProjWidth.TabIndex = 17;
             // 
             // cmdHelp
             // 
@@ -574,7 +567,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.cmdHelp.TabIndex = 6;
             this.cmdHelp.Text = "Help";
             this.cmdHelp.UseVisualStyleBackColor = true;
-            this.cmdHelp.Click += new System.EventHandler(this.cmdHelp_Click_1);
+            this.cmdHelp.Click += new System.EventHandler(this.cmdHelp_Click);
             // 
             // cmdOK
             // 
@@ -584,7 +577,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             this.cmdOK.Name = "cmdOK";
             this.cmdOK.Size = new System.Drawing.Size(119, 23);
             this.cmdOK.TabIndex = 4;
-            this.cmdOK.Text = "Import";
+            this.cmdOK.Text = "Add Raster";
             this.cmdOK.UseVisualStyleBackColor = true;
             this.cmdOK.Click += new System.EventHandler(this.cmdOK_Click);
             // 
@@ -683,11 +676,10 @@ namespace GCDCore.UserInterface.SurveyLibrary
         internal System.Windows.Forms.Label Label15;
         internal System.Windows.Forms.TextBox txtProjWidth;
         internal System.Windows.Forms.NumericUpDown valPrecision;
-        internal System.Windows.Forms.Button cmdSave;
         internal System.Windows.Forms.Label Label1;
-        internal System.Windows.Forms.ComboBox cboMethod;
         internal System.Windows.Forms.Button cmdHelpPrecision;
-        public UtilityForms.ucRasterInput ucRaster;
         private System.Windows.Forms.ToolTip tTip;
+        private System.Windows.Forms.TextBox txtSourceRaster;
+        private System.Windows.Forms.TextBox txtInterpolationMethod;
     }
 }

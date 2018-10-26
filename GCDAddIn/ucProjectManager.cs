@@ -82,7 +82,7 @@ namespace GCDAddIn
 
                 GCDConsoleLib.Raster result = ArcMapBrowse.BrowseOpenRaster(e.FormTitle, dir, RasterName, e.hWndParent);
                 if (result is GCDConsoleLib.Raster)
-                    txt.Text = result.GISFileInfo.FullName;
+                    e.Path = result.GISFileInfo;
             }
 
             public void OnGISBrowseVector(System.Windows.Forms.TextBox txt, naru.ui.PathEventArgs e, GCDConsoleLib.GDalGeometryType.SimpleTypes geometryType)
