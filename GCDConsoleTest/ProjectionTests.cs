@@ -84,7 +84,8 @@ namespace GCDConsoleLib.Tests
             Assert.AreEqual(new Projection(String.Format(sUnitWKT, "Feet")).HorizontalUnit, UnitsNet.Units.LengthUnit.Foot);
             Assert.AreEqual(new Projection(String.Format(sUnitWKT, "Foot")).HorizontalUnit, UnitsNet.Units.LengthUnit.Foot);
             Assert.AreEqual(new Projection(String.Format(sUnitWKT, "ft")).HorizontalUnit, UnitsNet.Units.LengthUnit.Foot);
-            Assert.AreEqual(new Projection(String.Format(sUnitWKT, "ft-us")).HorizontalUnit, UnitsNet.Units.LengthUnit.Foot);
+            Assert.AreEqual(new Projection(String.Format(sUnitWKT, "ft-us")).HorizontalUnit, UnitsNet.Units.LengthUnit.UsSurveyFoot);
+            Assert.AreEqual(new Projection(String.Format(sUnitWKT, "Foot_US")).HorizontalUnit, UnitsNet.Units.LengthUnit.UsSurveyFoot);
 
             Assert.AreEqual(new Projection(String.Format(sUnitWKT, "Centimeter")).HorizontalUnit, UnitsNet.Units.LengthUnit.Centimeter);
             Assert.AreEqual(new Projection(String.Format(sUnitWKT, "cm")).HorizontalUnit, UnitsNet.Units.LengthUnit.Centimeter);
