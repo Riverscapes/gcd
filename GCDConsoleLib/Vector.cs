@@ -422,7 +422,17 @@ namespace GCDConsoleLib
             {
                 Features.Add(mFeat.GetFID(), new VectorFeature(mFeat));
 
-                int count = mFeat.GetGeometryRef().GetGeometryCount();
+                Geometry geo = mFeat.GetGeometryRef();
+                if (geo == null)
+                {
+                    Exception ex = new Exception("ShapeFile is invalid. Please check for null features.");
+                    ex.Data["File Path"] = GISFileInfo.FullName;
+                    ex.Data["NullFeatures"] = "true";
+                    ex.Data["Feature ID"] = mFeat.GetFID().ToString();
+                    throw ex;
+                }
+
+                int count = geo.GetGeometryCount();
                 if (count > 1)
                 {
                     Exception ex = new Exception("ShapeFile contains one or more multipart features.");
