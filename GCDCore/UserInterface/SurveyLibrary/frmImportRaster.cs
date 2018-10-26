@@ -43,8 +43,12 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
         public frmImportRaster(Raster sourceRaster, Surface refSurface, Purposes ePurpose, string sNoun)
         {
+
             // This call is required by the designer.
             InitializeComponent();
+
+            Cursor = Cursors.WaitCursor;
+
             NeedsForcedProjection = false;
             Text = "Add Existing " + sNoun;
             grpProjectRaaster.Text = "GCD " + sNoun;
@@ -69,10 +73,14 @@ namespace GCDCore.UserInterface.SurveyLibrary
                     ExtImporter = new ExtentAdjusterFixed(sourceRaster.Extent, refSurface.Raster.Extent);
                 }
             }
+
+            Cursor = Cursors.Default;
         }
 
         private void ImportRasterForm_Load(object sender, EventArgs e)
         {
+            Cursor = Cursors.WaitCursor;
+
             #region Tool Tips
             tTip.SetToolTip(txtName, "The name used to refer to this GCD project item. It cannot be empty and must be unique among all items of the same type.");
             tTip.SetToolTip(txtTop, "The top, northern most extent of the original raster. Non-divislbe values apear in red.");
@@ -153,6 +161,8 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
             // Trigger the updating of the output raster properties
             UpdateOutputExtent(sender, e);
+
+            Cursor = Cursors.Default;
         }
 
         private void UpdateOutputExtent(object sender, EventArgs e)
@@ -215,7 +225,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             txtProjWidth.Text = string.Format("{0}{1}", ExtImporter.OutExtent.Width, UnitsNet.Length.GetAbbreviation(hUnits));
             txtProjHeight.Text = string.Format("{0}{1}", ExtImporter.OutExtent.Height, UnitsNet.Length.GetAbbreviation(hUnits));
 
-            txtInterpolationMethod.Text =  ExtImporter.RequiresResampling ? "Bilinear Interpolation" : "None (straight cell-wise copy)";
+            txtInterpolationMethod.Text = ExtImporter.RequiresResampling ? "Bilinear Interpolation" : "None (straight cell-wise copy)";
 
             // Turn on event firing
             valTop.ValueChanged += UpdateOutputExtent;
@@ -495,86 +505,6 @@ namespace GCDCore.UserInterface.SurveyLibrary
         }
 
         /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        /// <remarks>Note that changing the cell size requires that the extent be changed. This 
-        /// in turn will trigger the updating of the rows/cols and width/height.</remarks>
-        //private void valCellSize_ValueChanged(object sender, System.EventArgs e)
-        //{
-        //    //valCellSize.Value = Math.Round(valCellSize.Value, CInt(valPrecision.Value))
-        //    ExtImporter.CellSize = valCellSize.Value;
-        //    valTop.Value = ExtImporter.OutputTop;
-        //    valRight.Value = ExtImporter.OutputRight;
-        //    valBottom.Value = ExtImporter.OutputBottom;
-        //    valLeft.Value = ExtImporter.OutputLeft;
-
-        //    UpdateOutputExtent();
-
-        //    valLeft.Increment = valCellSize.Value;
-        //    valTop.Increment = valCellSize.Value;
-        //    valRight.Increment = valCellSize.Value;
-        //    valBottom.Increment = valCellSize.Value;
-        //}
-
-        //public void OutputLeft_ValueChanged(object sender, EventArgs e)
-        //{
-        //    ExtImporter.OutputLeft = valLeft.Value;
-        //    UpdateOutputExtent();
-        //}
-
-        //public void OnDimensionsChanged(object sender, EventArgs e)
-        //{
-        //    ExtImporter.OutputTop = valTop.Value;
-        //    UpdateOutputExtent();
-        //}
-
-        //public void OutputRight_ValueChanged(object sender, EventArgs e)
-        //{
-        //    ExtImporter.OutputRight = valRight.Value;
-        //    UpdateOutputExtent();
-        //}
-
-        //public void OutputBottom_ValueChanged(object sender, EventArgs e)
-        //{
-        //    ExtImporter.OutputBottom = valBottom.Value;
-        //    UpdateOutputExtent();
-        //}
-
-
-        //private void UpdateOutputExtent()
-        //{
-        //    RequiresResampling();
-
-        //    // Recalculate the size of the output extent
-        //    txtProjRows.Text = ExtImporter.Output.Rows.ToString("#,##0");
-        //    txtProjCols.Text = ExtImporter.Output.Cols.ToString("#,##0");
-
-        //    txtProjWidth.Text = ExtImporter.Output.Width.ToString();
-        //    txtProjHeight.Text = ExtImporter.Output.Height.ToString();
-
-        //    if (SourceRaster is Raster)
-        //    {
-        //        UnitsNet.Units.LengthUnit hUnits = SourceRaster.Proj.HorizontalUnit;
-        //        txtProjWidth.Text = string.Format("{0}{1}", ExtImporter.Output.Width, UnitsNet.Length.GetAbbreviation(hUnits));
-        //        txtProjHeight.Text = string.Format("{0}{1}", ExtImporter.Output.Height, UnitsNet.Length.GetAbbreviation(hUnits));
-
-        //        // Colour the numeric up down boxes based on whether they match the original extent
-        //        valTop.ForeColor = SourceRaster.Extent.Top == ExtImporter.OutputTop ? System.Drawing.Color.DarkGreen : System.Drawing.Color.Black;
-        //        valLeft.ForeColor = SourceRaster.Extent.Left == ExtImporter.OutputLeft ? System.Drawing.Color.DarkGreen : System.Drawing.Color.Black;
-        //        valRight.ForeColor = SourceRaster.Extent.Right == ExtImporter.OutputRight ? System.Drawing.Color.DarkGreen : System.Drawing.Color.Black;
-        //        valBottom.ForeColor = SourceRaster.Extent.Bottom == ExtImporter.OutputBottom ? System.Drawing.Color.DarkGreen : System.Drawing.Color.Black;
-        //    }
-        //}
-
-        //private bool RequiresResampling()
-        //{
-        //    cboMethod.SelectedIndex = ExtImporter.RequiresResampling ? 0 : NoInterpolationIndex;
-        //    return ExtImporter.RequiresResampling;
-        //}
-
-        /// <summary>
         /// Disable typing in the original raster extent text boxes
         /// </summary>
         /// <param name="sender"></param>
@@ -585,19 +515,6 @@ namespace GCDCore.UserInterface.SurveyLibrary
         {
             e.Handled = true;
         }
-
-        //private void valPrecision_ValueChanged(object sender, EventArgs e)
-        //{
-        //    valCellSize.DecimalPlaces = (int)valPrecision.Value;
-        //    valCellSize.Increment = (decimal)Math.Pow(10, Convert.ToDouble(decimal.Negate(valPrecision.Value)));
-        //    valCellSize.Minimum = (decimal)Math.Pow(10, Convert.ToDouble(decimal.Negate(valPrecision.Value)));
-        //    valCellSize.Value = Math.Round(valCellSize.Value, Convert.ToInt32(valPrecision.Value));
-        //    valTop.DecimalPlaces = valCellSize.DecimalPlaces;
-        //    valLeft.DecimalPlaces = valCellSize.DecimalPlaces;
-        //    valBottom.DecimalPlaces = valCellSize.DecimalPlaces;
-        //    valRight.DecimalPlaces = valCellSize.DecimalPlaces;
-        //    //UpdateOriginalRasterExtentFormatting()
-        //}
 
         private void cmdHelpPrecision_Click(Object sender, EventArgs e)
         {

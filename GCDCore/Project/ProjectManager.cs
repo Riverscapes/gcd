@@ -129,6 +129,8 @@ namespace GCDCore.Project
                 {
                     naru.ui.PathEventArgs e = new naru.ui.PathEventArgs(path, formTitle, parentWindow);
                     ProjectManager.GISLayerBrowsingEventHandler(null, e);
+                    if (e.Path is FileInfo)
+                        path = e.Path;
                 }
             }
             else

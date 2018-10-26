@@ -40,6 +40,11 @@ namespace GCDConsoleLib.ExtentAdjusters
             decimal rawCellWidth = (decimal)Math.Round((double)OutExtent.CellWidth, precision);
             decimal rawCellHeight = (decimal)Math.Round((double)OutExtent.CellHeight, precision);
 
+            // Abort if f the new precision causes the cell width or height to be zero.
+            // e.g. cell width is 0.5 and the user passes precision 0
+            if (rawCellWidth == 0m || rawCellHeight == 0m)
+                return this;
+
             ExtentRectangle rawExtent = new ExtentRectangle(OutExtent.Top, OutExtent.Left, rawCellHeight, rawCellWidth, OutExtent.Rows, OutExtent.Cols);
             ExtentRectangle divExtent = rawExtent.GetDivisibleExtent();
 
