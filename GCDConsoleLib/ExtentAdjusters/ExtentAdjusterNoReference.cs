@@ -2,11 +2,15 @@
 
 namespace GCDConsoleLib.ExtentAdjusters
 {
+    /// <summary>
+    /// Extent adjuster for the first DEM survey in a project.
+    /// </summary>
+    /// <remarks>
+    /// Users can change the dimensions, cell size and precision.</remarks>
     public class ExtentAdjusterNoReference : ExtentAdjusterBase
     {
         public ExtentAdjusterNoReference(ExtentRectangle srcextent) : base(srcextent)
         {
-
         }
 
         private ExtentAdjusterNoReference(ExtentRectangle srcextent, ExtentRectangle outextent, ushort precision) : base(srcextent)
@@ -17,8 +21,8 @@ namespace GCDConsoleLib.ExtentAdjusters
 
         public override ExtentAdjusterBase AdjustDimensions(decimal top, decimal right, decimal bottom, decimal left)
         {
-            int rows = (int)((top - bottom) / OutExtent.CellWidth);
-            int cols = (int)((right - left) / OutExtent.CellWidth);
+            int rows = (int)Utility.DynamicMath.SafeDivision(Math.Max(top - bottom, 0), OutExtent.CellWidth);
+            int cols = (int)Utility.DynamicMath.SafeDivision(Math.Max(right - left, 0), OutExtent.CellWidth);
 
             ExtentRectangle rawExtent = new ExtentRectangle(top, left, OutExtent.CellHeight, OutExtent.CellWidth, rows, cols);
             ExtentRectangle divExtent = rawExtent.GetDivisibleExtent();

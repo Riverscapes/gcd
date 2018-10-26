@@ -6,6 +6,7 @@ namespace GCDConsoleLib.ExtentAdjusters.Tests
     public class ExtentAdjusterNoReferenceTests
     {
         [TestMethod()]
+        [TestCategory("Functional")]
         public void ExtentAdjusterNoReferenceTest()
         {
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -101,6 +102,7 @@ namespace GCDConsoleLib.ExtentAdjusters.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Functional")]
         public void AdjustDimensions()
         {
             // Moving the top coordinate by two cells. Note other coordinates should not move.
@@ -135,6 +137,7 @@ namespace GCDConsoleLib.ExtentAdjusters.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Unit")]
         public void AdjustCellSize()
         {
             // Moving the top coordinate by two cells. Note other coordinates should not move.
@@ -153,6 +156,7 @@ namespace GCDConsoleLib.ExtentAdjusters.Tests
         }
 
         [TestMethod()]
+        [TestCategory("Functional")]
         public void AdjustPrecision()
         {
             // Moving the top coordinate by two cells. Note other coordinates should not move.

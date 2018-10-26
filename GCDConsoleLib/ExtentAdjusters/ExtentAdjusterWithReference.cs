@@ -2,7 +2,12 @@
 
 namespace GCDConsoleLib.ExtentAdjusters
 {
-    public class ExtentAdjusterWithReference : ExtentAdjusterBase
+    /// <summary>
+    /// Extent adjuster for subsequent DEMs and reference surfaces.
+    /// </summary>
+    /// <remarks>
+    /// Users can change the dimensions but not the cell size or precision.</remarks>
+    public class ExtentAdjusterWithReference : ExtentAdjusterNoReference
     {
         // Read only so that only constructores can alter them
         private readonly ExtentRectangle _RefExtent;
@@ -23,12 +28,8 @@ namespace GCDConsoleLib.ExtentAdjusters
 
         public override ExtentAdjusterBase AdjustDimensions(decimal top, decimal right, decimal bottom, decimal left)
         {
-            int rows = (int)Utility.DynamicMath.SafeDivision(Math.Max(top - bottom, 0), OutExtent.CellWidth);
-            int cols = (int)Utility.DynamicMath.SafeDivision(Math.Max(right - left, 0), OutExtent.CellWidth);
-
-            ExtentRectangle rawExtent = new ExtentRectangle(top, left, OutExtent.CellHeight, OutExtent.CellWidth, rows, cols);
-            ExtentRectangle divExtent = rawExtent.GetDivisibleExtent();
-            return new ExtentAdjusterWithReference(SrcExtent, divExtent, Precision);
+            ExtentAdjusterBase newExtent = base.AdjustDimensions(top, right, bottom, left);
+            return new ExtentAdjusterWithReference(SrcExtent, newExtent.OutExtent, newExtent.Precision);
         }
 
         public override ExtentAdjusterBase AdjustPrecision(ushort precision)
