@@ -203,5 +203,23 @@ namespace GCDConsoleLib.Tests
 
         }
 
+        [TestMethod()]
+        [TestCategory("Unit")]
+        public void VectorMultiPartTest()
+        {
+
+            try
+            {
+                Vector vPolyMask = new Vector(new FileInfo(DirHelpers.GetTestRootPath(@"vectors\MultiPart_Polygons.shp")));
+
+                // Should not get here because the multi-part ShapeFile should produce an exception.
+                Assert.IsTrue(false);
+            }
+            catch
+            {
+                // Opening multi-part ShapeFile should cause an exception!
+                Assert.IsTrue(true);
+            }
+        }
     }
 }

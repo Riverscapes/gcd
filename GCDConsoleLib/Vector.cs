@@ -423,7 +423,7 @@ namespace GCDConsoleLib
                 Features.Add(mFeat.GetFID(), new VectorFeature(mFeat));
 
                 int count = mFeat.GetGeometryRef().GetGeometryCount();
-                if (count > 0)
+                if (count > 1)
                 {
                     Exception ex = new Exception("ShapeFile contains one or more multipart features.");
                     ex.Data["File Path"] = GISFileInfo.FullName;
