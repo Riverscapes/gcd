@@ -235,7 +235,27 @@ namespace GCDCore.UserInterface.ProfileRoutes
             }
 
             cboLabel.DataSource = shapeFile.Fields.Values.Where(x => x.Type.Equals(GCDConsoleLib.GDalFieldType.StringField)).ToList<GCDConsoleLib.VectorField>();
-            cboDistance.DataSource = shapeFile.Fields.Values.Where(x => x.Type.Equals(GCDConsoleLib.GDalFieldType.RealField)).ToList<GCDConsoleLib.VectorField>();
+            List<GCDConsoleLib.VectorField> distanceFields = shapeFile.Fields.Values.Where(x => x.Type.Equals(GCDConsoleLib.GDalFieldType.RealField)).ToList<GCDConsoleLib.VectorField>();
+            cboDistance.DataSource = distanceFields;
+
+            // Help the user by finding default distance field
+            try
+            {
+                string[] defaults = { "Distance", "Station" };
+                foreach (string strField in defaults)
+                {
+                    if (distanceFields.Any(x => string.Compare(x.Name, strField, true) == 0))
+                    {
+                        cboDistance.SelectedIndex = distanceFields.IndexOf(distanceFields.First(x => string.Compare(x.Name, strField, true) == 0));
+                        break;
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Error attempting to auto-select the profile route distance field: " + ex.Message);
+            }
+
             Cursor = Cursors.Default;
         }
 
