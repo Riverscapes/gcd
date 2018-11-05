@@ -7,13 +7,13 @@ weight: 4
 
 Note, see the [Commit History](https://github.com/Riverscapes/gcd/commits) in Github for fuller documentation of changes (by [release](https://github.com/Riverscapes/gcd/releases).
 
-<a class="button" href="https://github.com/Riverscapes/gcd/commits"><i class="fa fa-github"/> GCD Github Repository Commit History</a>
+<a class="button" href="https://github.com/Riverscapes/gcd/commits"><img class="fa fa-github"/> GCD Github Repository Commit History</a>
 
-## 7.x.x - ????
+## 7.4.0 - 5 Nov 2018
 
-* User now warned and prevented from using multi-part ShapeFiles for profile routes or masks.
+* Fixed issue when attempting a linear extraction with ShapeFiles containing [null](https://github.com/Riverscapes/gcd/issues/326) and [multipart](https://github.com/Riverscapes/gcd/issues/324) geometries.
 * Raster properties now appear in the correct raster units instead of always being converted to meters.
-* `foot_us` units now recognized as foot.
+* `foot_us` units now recognized correctly as [US Survey Foot](https://en.wikipedia.org/wiki/Foot_(unit)#US_survey_foot) units.
 * Import raster form improvements.
 * Removed Data Preparation menu from both ArcGIS AddIn and Standalone.
 * Renamed the `Tools` menu in the Standalone to `Customize` to be consistent within the ArcGIS AddIn.
