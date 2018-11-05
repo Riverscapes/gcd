@@ -168,10 +168,15 @@ namespace GCDConsoleLib.Internal.Operators
             fid0xy = new Dictionary<long, double[]>();
             foreach (KeyValuePair<long, VectorFeature> kvp in _vinput.Features)
             {
-                double[] output = new double[2];
-                kvp.Value.Feat.GetGeometryRef().GetPoint_2D(0, output);
+                Geometry geo = kvp.Value.Feat.GetGeometryRef();
+                // we skip over null geometries
+                if (geo != null && geo.GetGeometryCount() > 0)
+                {
+                    double[] output = new double[2];
+                    geo.GetPoint_2D(0, output);
+                    fid0xy.Add(kvp.Key, (double[])output.Clone());
+                }
 
-                fid0xy.Add(kvp.Key, (double[])output.Clone());
             }
 
         }
@@ -401,6 +406,10 @@ namespace GCDConsoleLib.Internal.Operators
             {
                 counter++;
                 Geometry line = feat.Feat.GetGeometryRef();
+
+                // We skip over null geometries
+                if (line == null) continue;
+
                 double length = line.Length();
                 double totalDist = 0;
                 double remaining = _spacing;

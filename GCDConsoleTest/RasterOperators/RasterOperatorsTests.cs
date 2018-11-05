@@ -90,14 +90,37 @@ namespace GCDConsoleLib.Internal.Operators.Tests
             // And now the budget seg case
             Vector vPolyMask = new Vector(new FileInfo(DirHelpers.GetTestRootPath(@"SulphurGCDMASK\Sulphur_SimpleReducedGCDMask.shp")));
 
+            // Try this with edge case shapefiles too
+            Vector vMPMG = new Vector(new FileInfo(DirHelpers.GetTestVectorPath(@"MultiPart_MultiGeometry.shp")));
+            Vector vMPSG = new Vector(new FileInfo(DirHelpers.GetTestVectorPath(@"MultiPart_SingleGeometry.shp")));
+            Vector vSPMG = new Vector(new FileInfo(DirHelpers.GetTestVectorPath(@"SinglePart_MultiGeometry.shp")));
+
             using (ITempDir tmp = TempDir.Create())
             {
+                // We copy the shape files first so they get the right GCID fields
                 FileInfo fiPolyMaskCopy = new FileInfo(Path.Combine(tmp.Name, "Sulphur_SimpleReducedGCDMask.shp"));
                 vPolyMask.Copy(fiPolyMaskCopy);
                 Vector vPolyMaskCopy = new Vector(fiPolyMaskCopy);
 
                 Raster rSub1 = RasterOperators.SubtractWithMask(rNew, rOld, vPolyMaskCopy, new FileInfo(Path.Combine(tmp.Name, "RasterSubtractVectorMask.tif")), null, false);
                 Raster rSub2 = RasterOperators.SubtractWithMask(rNew, rOld, vPolyMaskCopy, new FileInfo(Path.Combine(tmp.Name, "RasterSubtractRasterizedMask.tif")));
+
+                FileInfo fiMPMG = new FileInfo(Path.Combine(tmp.Name, "MultiPart_MultiGeometry_Copy.shp"));
+                vMPMG.Copy(fiMPMG);
+                Vector vMPMGCopy = new Vector(fiMPMG);
+
+                FileInfo fiMPSG = new FileInfo(Path.Combine(tmp.Name, "MultiPart_SingleGeometr_Copy.shp"));
+                vMPSG.Copy(fiMPSG);
+                Vector vMPSGCopy = new Vector(fiMPSG);
+
+                FileInfo fiSPMG = new FileInfo(Path.Combine(tmp.Name, "SinglePart_MultiGeometry_Copy.shp"));
+                vSPMG.Copy(fiSPMG);
+                Vector vSPMGCopy = new Vector(fiSPMG);
+
+                Raster rMPMG = RasterOperators.SubtractWithMask(rNew, rOld, vMPMGCopy, new FileInfo(Path.Combine(tmp.Name, "MultiPart_MultiGeometry.tif")));
+                Raster rMPSG = RasterOperators.SubtractWithMask(rNew, rOld, vMPSGCopy, new FileInfo(Path.Combine(tmp.Name, "MultiPart_SingleGeometry.tif")));
+                Raster rSPMG = RasterOperators.SubtractWithMask(rNew, rOld, vSPMGCopy, new FileInfo(Path.Combine(tmp.Name, "SinglePart_MultiGeometry.tif")));
+                Debug.WriteLine("Done");
             }
 
         }
@@ -374,6 +397,24 @@ namespace GCDConsoleLib.Internal.Operators.Tests
 
         [TestMethod()]
         [TestCategory("Functional")]
+        public void LinearExtractorEdgeCasesTest()
+        {
+
+            Raster rTemplate = new Raster(new FileInfo(DirHelpers.GetTestRootPath(@"VerificationProject\inputs\2005DecDEM\2005DecDEM.tif")));
+
+            Vector vNullLine = new Vector(new FileInfo(DirHelpers.GetTestVectorPath(@"Null_Line.shp")));
+            // NB: Multipart lines aren't allowed so we don't need to test this
+            // Vector vMPLine = new Vector(new FileInfo(DirHelpers.GetTestVectorPath(@"MultiPart_Line.shp")));
+
+            using (ITempDir tmp = TempDir.Create())
+            {
+                FileInfo csvNullLine = new FileInfo(Path.Combine(tmp.Name, "Null_Line.csv"));
+                RasterOperators.LinearExtractor(vNullLine, new List<Raster> { rTemplate }, csvNullLine, 1.0m, "CATEGORY");
+            }
+        }
+
+        [TestMethod()]
+        [TestCategory("Functional")]
         public void BinRasterTest()
         {
             using (ITempDir tmp = TempDir.Create())
@@ -618,14 +659,14 @@ namespace GCDConsoleLib.Internal.Operators.Tests
                 times.Add(string.Format("GetStatsMinLoD, Vector, {0}.{1}", watch.Elapsed.Seconds, watch.Elapsed.Milliseconds));
 
                 watch.Restart();
-                Dictionary<string, DoDStats> minlodR = RasterOperators.GetStatsMinLoD(rDoD, 0.2m, vPolyMaskCopy, "Method", ug,null, true);
+                Dictionary<string, DoDStats> minlodR = RasterOperators.GetStatsMinLoD(rDoD, 0.2m, vPolyMaskCopy, "Method", ug, null, true);
                 times.Add(string.Format("GetStatsMinLoD, Rasterized, {0}.{1}", watch.Elapsed.Seconds, watch.Elapsed.Milliseconds));
 
                 foreach (KeyValuePair<string, DoDStats> kvp in minlodV)
                     Assert.IsTrue(kvp.Value.Equals(minlodR[kvp.Key]));
 
                 watch.Restart();
-                Dictionary<string, DoDStats> statsprobV = RasterOperators.GetStatsProbalistic(rDoD, rThresh, rPropErr, vPolyMaskCopy, "Method", ug,null, false);
+                Dictionary<string, DoDStats> statsprobV = RasterOperators.GetStatsProbalistic(rDoD, rThresh, rPropErr, vPolyMaskCopy, "Method", ug, null, false);
                 times.Add(string.Format("GetStatsProbalistic, Vector, {0}.{1}", watch.Elapsed.Seconds, watch.Elapsed.Milliseconds));
 
                 watch.Restart();
@@ -696,7 +737,7 @@ namespace GCDConsoleLib.Internal.Operators.Tests
                 Raster rPropErr = RasterOperators.RootSumSquares(rOldErr, rNewErr, new FileInfo(Path.Combine(tmp.Name, "PropErr.tif")));
 
                 watch.Restart();
-                Dictionary<string, Histogram> binRasterV = RasterOperators.BinRaster(rDoD, 100, vPolyMaskCopy, "Desc_",null,  false);
+                Dictionary<string, Histogram> binRasterV = RasterOperators.BinRaster(rDoD, 100, vPolyMaskCopy, "Desc_", null, false);
                 times.Add(string.Format("BinRaster, Vector, {0}.{1}", watch.Elapsed.Seconds, watch.Elapsed.Milliseconds));
 
                 watch.Restart();

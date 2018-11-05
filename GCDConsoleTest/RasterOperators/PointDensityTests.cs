@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using GCDConsoleTest.Helpers;
 using OSGeo.OGR;
+using System.Diagnostics;
 
 namespace GCDConsoleLib.Internal.Operators.FuncTests
 {
@@ -33,7 +34,7 @@ namespace GCDConsoleLib.Internal.Operators.FuncTests
 
 
         [TestMethod()]
-        [TestCategory("Functional")]
+        [TestCategory("Long")]
         public void PointDensityTest()
         {
             Raster rDEM = new Raster(new FileInfo(DirHelpers.GetTestRootPath(@"PointDensity\GrandCanyon\R02_DEM_Meters_2004_05.img")));
@@ -41,6 +42,9 @@ namespace GCDConsoleLib.Internal.Operators.FuncTests
 
             Raster rDEM2 = new Raster(new FileInfo(DirHelpers.GetTestRootPath(@"PointDensity\SulpherCreek\2006Feb_DEM.img")));
             Vector rPtDensity2 = new Vector(new FileInfo(DirHelpers.GetTestRootPath(@"PointDensity\SulpherCreek\feb06_all_points.shp")));
+
+            // Make sure we can handle null points
+            Vector rNullPoint = new Vector(new FileInfo(DirHelpers.GetTestVectorPath(@"Null_Point.shp")));
 
             using (ITempDir tmp = TempDir.Create())
             {
@@ -60,6 +64,11 @@ namespace GCDConsoleLib.Internal.Operators.FuncTests
                 PointDensity squaretest2 = new PointDensity(rDEM2, rPtDensity2, sqOut2, RasterOperators.KernelShapes.Square, 4.0m);
                 squaretest2.RunWithOutput();
 
+                Raster nullPt = new Raster(rDEM2, new FileInfo(Path.Combine(tmp.Name, "NullPointTest.tif")));
+                PointDensity nullPtTest = new PointDensity(rDEM2, rNullPoint, nullPt, RasterOperators.KernelShapes.Square, 4.0m);
+                nullPtTest.RunWithOutput();
+
+                Debug.WriteLine("done");
             }
 
         }

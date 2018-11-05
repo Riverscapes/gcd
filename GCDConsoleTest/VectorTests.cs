@@ -3,6 +3,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using GCDConsoleTest.Helpers;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System;
 
 namespace GCDConsoleLib.Tests
 {
@@ -22,6 +24,80 @@ namespace GCDConsoleLib.Tests
             Assert.IsNotNull(rVector.Proj);
 
             Assert.AreEqual(rVector.GeometryType.SimpleType, GDalGeometryType.SimpleTypes.LineString);
+
+            // Now let's make sure we can load verious broken shape files
+            string sMPMG = DirHelpers.GetTestVectorPath(@"MultiPart_MultiGeometry.shp");
+            Vector rMPMG = new Vector(new FileInfo(sMPMG));
+            Assert.IsTrue(rMPMG.Features.Count > 0);
+            Assert.IsTrue(rMPMG.Fields.Count > 0);
+
+            string sMPSG = DirHelpers.GetTestVectorPath(@"MultiPart_SingleGeometry.shp");
+            Vector rMPSG = new Vector(new FileInfo(sMPSG));
+            Assert.IsTrue(rMPSG.Features.Count > 0);
+            Assert.IsTrue(rMPSG.Fields.Count > 0);
+
+            string sSPMG = DirHelpers.GetTestVectorPath(@"SinglePart_MultiGeometry.shp");
+            Vector rSPMG = new Vector(new FileInfo(sSPMG));
+            Assert.IsTrue(rSPMG.Features.Count > 0);
+            Assert.IsTrue(rSPMG.Fields.Count > 0);
+
+            try
+            {
+                string sMPL = DirHelpers.GetTestVectorPath(@"MultiPart_Line.shp");
+                Vector rMPL = new Vector(new FileInfo(sMPL));
+                Assert.Fail();
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+
+            try
+            {
+                string sMPP = DirHelpers.GetTestVectorPath(@"MultiPart_Point.shp");
+                Vector rMPP = new Vector(new FileInfo(sMPP));
+                Assert.Fail();
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+
+            string sSPSG = DirHelpers.GetTestVectorPath(@"SinglePart_SingleGeometry.shp");
+            Vector rSPSG = new Vector(new FileInfo(sSPSG));
+            Assert.IsTrue(rSPSG.Features.Count > 0);
+            Assert.IsTrue(rSPSG.Fields.Count > 0);
+
+            string sNullPoint = DirHelpers.GetTestVectorPath(@"Null_Point.shp");
+            Vector rNullPoint = new Vector(new FileInfo(sNullPoint));
+            Assert.IsTrue(rNullPoint.Features.Count > 0);
+            Assert.IsTrue(rNullPoint.Fields.Count > 0);
+
+            string sNullLine = DirHelpers.GetTestVectorPath(@"Null_Line.shp");
+            Vector rNullLine = new Vector(new FileInfo(sNullLine));
+            Assert.IsTrue(rNullLine.Features.Count > 0);
+            Assert.IsTrue(rNullLine.Fields.Count > 0);
+
+            string sNullPolygon = DirHelpers.GetTestVectorPath(@"Null_Polygon.shp");
+            Vector rNullPolygon = new Vector(new FileInfo(sNullPolygon));
+            Assert.IsTrue(rNullPolygon.Features.Count > 0);
+            Assert.IsTrue(rNullPolygon.Fields.Count > 0);
+
+            string sEmptyNull = DirHelpers.GetTestVectorPath(@"Emply_Null_Polygon.shp");
+            Vector rEmptyNull = new Vector(new FileInfo(sEmptyNull));
+            Assert.IsTrue(rEmptyNull.Features.Count > 0);
+            Assert.IsTrue(rEmptyNull.Fields.Count > 0);
+
+            try
+            {
+                string sEmptyFile = DirHelpers.GetTestVectorPath(@"Empty_File.shp");
+                Vector vEmptyFile = new Vector(new FileInfo(sEmptyFile));
+                Assert.Fail();
+            }
+            catch(Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
 
         }
 
@@ -207,13 +283,11 @@ namespace GCDConsoleLib.Tests
         [TestCategory("Unit")]
         public void VectorMultiPartTest()
         {
-
             try
             {
                 Vector vPolyMask = new Vector(new FileInfo(DirHelpers.GetTestRootPath(@"vectors\MultiPart_Polygons.shp")));
-
                 // Should not get here because the multi-part ShapeFile should produce an exception.
-                Assert.IsTrue(false);
+                Assert.Fail();
             }
             catch
             {

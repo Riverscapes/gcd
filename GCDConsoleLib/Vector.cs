@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using OSGeo.OGR;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Diagnostics;
+using static GCDConsoleLib.GDalGeometryType;
 
 namespace GCDConsoleLib
 {
@@ -144,6 +146,13 @@ namespace GCDConsoleLib
             if (_ds == null)
             {
                 _ds = Ogr.Open(GISFileInfo.FullName, 0); // 0 => Read-only
+                if (_ds == null)
+                {
+                    Exception ex = new Exception("Could not open shapefile. Null dataset detected.");
+                    ex.Data["File Path"] = GISFileInfo.FullName;
+                    ex.Data["MultiPart"] = "true";
+                    throw ex;
+                }
                 _drv = _ds.GetDriver();
             }
         }
@@ -195,7 +204,9 @@ namespace GCDConsoleLib
 
             foreach (long fid in shapemask)
             {
-                if (Features[fid].Feat.GetGeometryRef().Contains(pt))
+                Geometry geo = Features[fid].Feat.GetGeometryRef();
+                // Make sure to skip over null geometries
+                if (geo != null && geo.Contains(pt))
                     retVal.Add(Features[fid].Feat.GetFieldAsString(fieldName));
             }
 
@@ -224,7 +235,8 @@ namespace GCDConsoleLib
 
             foreach (long fid in shapemask)
             {
-                if (Features[fid].Feat.GetGeometryRef().Contains(pt))
+                Geometry geo = Features[fid].Feat.GetGeometryRef();
+                if (geo != null && geo.Contains(pt))
                     retVal.Add(fid);
             }
 
@@ -254,12 +266,16 @@ namespace GCDConsoleLib
             {
                 Geometry geo = Features[fid].Feat.GetGeometryRef();
                 // Distance is slightly better
-                retval = fid;
-                if (geo.Contains(pt))
+                if (geo != null)
                 {
                     retval = fid;
-                    break;
+                    if (geo.Contains(pt))
+                    {
+                        retval = fid;
+                        break;
+                    }
                 }
+
             }
 
             return retval;
@@ -314,8 +330,8 @@ namespace GCDConsoleLib
 
             foreach (KeyValuePair<long, VectorFeature> kvp in Features)
             {
-                Geometry feat = kvp.Value.Feat.GetGeometryRef();
-                if (feat != null && extrect.Intersects(feat))
+                Geometry geo = kvp.Value.Feat.GetGeometryRef();
+                if (geo != null && extrect.Intersects(geo))
                     retVal.Add(kvp.Key, kvp.Value);
             }
             return retVal;
@@ -343,8 +359,8 @@ namespace GCDConsoleLib
 
             foreach (KeyValuePair<long, VectorFeature> kvp in Features)
             {
-                Geometry feat = kvp.Value.Feat.GetGeometryRef();
-                if (feat != null && extrect.Intersects(feat))
+                Geometry geo = kvp.Value.Feat.GetGeometryRef();
+                if (geo != null && extrect.Intersects(geo))
                     retVal.Add(kvp.Key);
             }
             return retVal;
@@ -420,27 +436,32 @@ namespace GCDConsoleLib
             Feature mFeat = mLayer.GetNextFeature();
             while (mFeat != null)
             {
-                Features.Add(mFeat.GetFID(), new VectorFeature(mFeat));
 
                 Geometry geo = mFeat.GetGeometryRef();
                 if (geo == null)
                 {
-                    Exception ex = new Exception("ShapeFile is invalid. Please check for null features.");
-                    ex.Data["File Path"] = GISFileInfo.FullName;
-                    ex.Data["NullFeatures"] = "true";
-                    ex.Data["Feature ID"] = mFeat.GetFID().ToString();
-                    throw ex;
+                    Debug.WriteLine(String.Format("Warning: Null Geometry Detected: FID:{0}", mFeat.GetFID()));
+                }
+                else
+                {
+                    int count = geo.GetGeometryCount();
+                    if (count > 1)
+                    {
+                        if (_geometryType.SimpleType == SimpleTypes.Point || _geometryType.SimpleType == SimpleTypes.LineString)
+                        {
+                            Exception ex = new Exception("Multi-part geometries are detected in this file. This is not allowed.");
+                            ex.Data["File Path"] = GISFileInfo.FullName;
+                            ex.Data["MultiPart"] = "true";
+                            throw ex;
+                        }
+                        else
+                        {
+                            Debug.WriteLine(String.Format("Warning: Multipart feature detected: FID:{0}", mFeat.GetFID()));
+                        }
+                    }
                 }
 
-                int count = geo.GetGeometryCount();
-                if (count > 1)
-                {
-                    Exception ex = new Exception("ShapeFile contains one or more multipart features.");
-                    ex.Data["File Path"] = GISFileInfo.FullName;
-                    ex.Data["MultiPart"] = "true";
-                    ex.Data["Feature ID"] = mFeat.GetFID().ToString();
-                    throw ex;
-                }
+                Features.Add(mFeat.GetFID(), new VectorFeature(mFeat));
 
                 mFeat = mLayer.GetNextFeature();
             }
