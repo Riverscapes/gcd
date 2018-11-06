@@ -31,15 +31,14 @@ namespace GCDAddIn.Project
                 {
                     try
                     {
-                        GCDCore.Project.ProjectManager.OpenProject(new System.IO.FileInfo(f.FileName));
-                        GCDCore.Properties.Settings.Default.LastUsedProjectFolder = System.IO.Path.GetDirectoryName(f.FileName);
-                        GCDCore.Properties.Settings.Default.Save();
-
-                        btnProjectExplorer.ShowProjectExplorer(true);
+                        if (GCDCore.Project.ProjectManager.OpenProject(new System.IO.FileInfo(f.FileName)))
+                        {
+                            btnProjectExplorer.ShowProjectExplorer(true);
+                        }
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(string.Format("Error reading the GCD project file '{0}'. Ensure that the file is a valid GCD project file with valid and complete XML contents.\n\n{1}", f.FileName, ex.Message), GCDCore.Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        GCDCore.GCDException.HandleException(ex);
                     }
                 }
             }

@@ -134,5 +134,26 @@ namespace GCDCore.UserInterface.SurveyLibrary
             return true;
         }
 
+        public static bool DSGeometryTypeMatches(Vector vectorDS, GDalGeometryType.SimpleTypes eGeometryType)
+        {
+            if (vectorDS.GeometryType.SimpleType != eGeometryType)
+            {
+                string requiredTypeName = string.Empty;
+                switch(eGeometryType)
+                {
+                    case GDalGeometryType.SimpleTypes.Point: requiredTypeName = "point"; break;
+                    case GDalGeometryType.SimpleTypes.LineString: requiredTypeName = "line";break;
+                    case GDalGeometryType.SimpleTypes.Polygon: requiredTypeName = "polygon"; break;
+                    default:
+                        throw new Exception("Unhandled geometry type");
+                }
+
+                MessageBox.Show(string.Format("The selected feature class does not contain {0} geometry features. Please choose a {0} ShapeFile.", requiredTypeName),
+                    "Geometry Type Mismatch", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+            
+            return true;
+        }
     }
 }

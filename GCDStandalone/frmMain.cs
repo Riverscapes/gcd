@@ -206,7 +206,7 @@ namespace GCDStandalone
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(string.Format("Error reading the GCD project file '{0}'. Ensure that the file is a valid GCD project file with valid and complete XML contents.\n\n{1}", f.FileName, ex.Message), GCDCore.Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    GCDCore.GCDException.HandleException(ex);
                 }
             }
 
@@ -217,8 +217,8 @@ namespace GCDStandalone
         {
             // Set the project file path first (which will attempt to read the XML file and throw an error if anything goes wrong)
             // Then set the settings if the read was successful.
-            ProjectManager.OpenProject(new System.IO.FileInfo(gcdProject));
-            GCDCore.Properties.Settings.Default.LastUsedProjectFolder = System.IO.Path.GetDirectoryName(gcdProject);
+            if (!ProjectManager.OpenProject(new System.IO.FileInfo(gcdProject)))
+                return;
 
             try
             {

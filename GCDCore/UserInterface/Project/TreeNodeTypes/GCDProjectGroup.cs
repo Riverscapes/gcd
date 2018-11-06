@@ -106,7 +106,7 @@ namespace GCDCore.UserInterface.Project.TreeNodeTypes
             }
             catch (Exception ex)
             {
-                GCDException.HandleException(ex, "Error Editing GCD Project Item");
+                GCDException.HandleException(ex, "Error refreshing GCD project explorer tree.");
             }
         }
 

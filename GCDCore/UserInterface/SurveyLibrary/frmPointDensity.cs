@@ -90,9 +90,10 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
             if (ucPointCloud.SelectedItem is GCDConsoleLib.Vector)
             {
-                if (!UserInterface.SurveyLibrary.GISDatasetValidation.DSHasSpatialRef(ucPointCloud.SelectedItem, "feature class", "feature classes") ||
-                    !UserInterface.SurveyLibrary.GISDatasetValidation.DSSpatialRefMatchesProjectWithMsgbox(ucPointCloud.SelectedItem, "feature class", "feature classes") ||
-                    !UserInterface.SurveyLibrary.GISDatasetValidation.DSHorizUnitsMatchProject(ucPointCloud.SelectedItem, "feature class", "feature classes"))
+                if (!GISDatasetValidation.DSHasSpatialRef(ucPointCloud.SelectedItem, "feature class", "feature classes") ||
+                    !GISDatasetValidation.DSSpatialRefMatchesProjectWithMsgbox(ucPointCloud.SelectedItem, "feature class", "feature classes") ||
+                    !GISDatasetValidation.DSHorizUnitsMatchProject(ucPointCloud.SelectedItem, "feature class", "feature classes") ||
+                    !GISDatasetValidation.DSGeometryTypeMatches((Vector) ucPointCloud.SelectedItem, GDalGeometryType.SimpleTypes.Point))
                 {
                     ucPointCloud.Select();
                     return false;

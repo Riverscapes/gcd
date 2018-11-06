@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Windows.Forms;
 
 namespace GCDCore.Project
 {
@@ -93,20 +94,39 @@ namespace GCDCore.Project
             Project = project;
         }
 
-        public static void OpenProject(FileInfo projectFile)
+        public static bool OpenProject(FileInfo projectFile)
         {
-            Project = GCDProject.Load(projectFile);
+            bool success = false;
+
+            try
+            {
+                Project = GCDProject.Load(projectFile);
+                Properties.Settings.Default.LastUsedProjectFolder = Path.GetDirectoryName(projectFile.FullName);
+                Properties.Settings.Default.Save();
+                success = true;
+            }
+            catch (Exception ex)
+            {
+                success = false;
+
+                string msg = string.Format("Failed to open the GCD project file:\n\n{0}", projectFile.FullName);
+
+                if (ex.Data.Contains("File Path"))
+                {
+                    msg += string.Format("\n\n{0}\n\n{1}", ex.Message, ex.Data["File Path"]);
+                }
+
+                if (ex.Data.Contains("Solution"))
+                {
+                    msg += string.Format("\n\n{0}",ex.Data["Solution"]);
+                }
+
+                MessageBox.Show(msg, Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
+            return success;
         }
 
-        public static void RefreshProject()
-        {
-            Project = GCDProject.Load(Project.ProjectFile);
-        }
-
-        public static void OpenProject(GCDProject project)
-        {
-            Project = project;
-        }
 
         public static void CloseCurrentProject()
         {

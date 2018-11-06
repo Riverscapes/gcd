@@ -150,7 +150,6 @@ namespace GCDConsoleLib
                 {
                     Exception ex = new Exception("Could not open shapefile. Null dataset detected.");
                     ex.Data["File Path"] = GISFileInfo.FullName;
-                    ex.Data["MultiPart"] = "true";
                     throw ex;
                 }
                 _drv = _ds.GetDriver();
@@ -451,7 +450,7 @@ namespace GCDConsoleLib
                         {
                             Exception ex = new Exception("Multi-part geometries are detected in this file. This is not allowed.");
                             ex.Data["File Path"] = GISFileInfo.FullName;
-                            ex.Data["MultiPart"] = "true";
+                            ex.Data["Solution"] = "Remove all multipart features from this ShapeFile.";
                             throw ex;
                         }
                         else
