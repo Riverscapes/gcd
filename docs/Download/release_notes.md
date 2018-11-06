@@ -9,7 +9,7 @@ Note, see the [Commit History](https://github.com/Riverscapes/gcd/commits) in Gi
 
 <a class="button" href="https://github.com/Riverscapes/gcd/commits"><img class="fa fa-github"/> GCD Github Repository Commit History</a>
 
-## 7.4.0 - 5 Nov 2018
+## 7.4.0 - 6 Nov 2018
 
 * Fixed issue when attempting a linear extraction with ShapeFiles containing [null](https://github.com/Riverscapes/gcd/issues/326) and [multipart](https://github.com/Riverscapes/gcd/issues/324) geometries.
 * Raster properties now appear in the correct raster units instead of always being converted to meters.
