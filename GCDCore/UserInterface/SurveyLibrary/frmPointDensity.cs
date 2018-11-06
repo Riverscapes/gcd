@@ -34,20 +34,20 @@ namespace GCDCore.UserInterface.SurveyLibrary
 
         private void btnOK_Click(object sender, System.EventArgs e)
         {
-            if (!ValidateForm())
-            {
-                DialogResult = DialogResult.None;
-                return;
-            }
-
             try
             {
+                if (!ValidateForm())
+                {
+                    DialogResult = DialogResult.None;
+                    return;
+                }
+
                 Cursor = Cursors.WaitCursor;
 
                 FileInfo fiOutput = ProjectManager.Project.GetAbsolutePath(txtPath.Text);
                 fiOutput.Directory.Create();
 
-                RasterOperators.PointDensity(DEM.Raster, ucPointCloud.SelectedItem, fiOutput, KernelShape, valSampleDistance.Value, 
+                RasterOperators.PointDensity(DEM.Raster, ucPointCloud.SelectedItem, fiOutput, KernelShape, valSampleDistance.Value,
                     ProjectManager.OnProgressChange);
 
                 Assoc = new AssocSurface(txtName.Text, fiOutput, DEM, AssocSurface.AssociatedSurfaceTypes.PointDensity);
@@ -58,8 +58,15 @@ namespace GCDCore.UserInterface.SurveyLibrary
             }
             catch (Exception ex)
             {
+                Cursor = Cursors.Default;
                 DialogResult = DialogResult.None;
-                GCDException.HandleException(ex, "Error generating point density associated surface raster.");
+
+                if (ex.Message.ToLower().Contains("multipart") || ex.Message.ToLower().Contains("multi-part"))
+                {
+                    MessageBox.Show("The ShapeFile contains multi-part features and is incompatible with the GCD. Please select a single part point ShapeFile.", "Multi-Part Features Detected", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
+                else
+                    GCDException.HandleException(ex, "Error generating point density associated surface raster.");
             }
         }
 
