@@ -40,7 +40,6 @@ The GCD is pretty well documented. See links below for help on understanding [GC
 	<br>
 	<a class="hollow button" href="https://www.researchgate.net/project/Geomorphic-Change-Detection" ><img src="{{ site.baseurl }}/assets/images/icons/ResearchGate_Icon.png">&nbsp;&nbsp; Check out GCD ResearchGate Project for Publications</a>
 </div>
-
 ------
 
 # Community Support
@@ -54,10 +53,10 @@ We have [taught five bespoke GCD workshops](http://www.joewheaton.org/workshops.
 
 ## Issue Forum 
 
-We use GitHub Issue tracking as a forum for [asking questions and getting help]({{ site.baseurl }}/Help/known-bugs#questions-or-help) as well as [reporting bugs]({{ site.baseurl }}/Help/known-bugs#bugs). You can search the forum for past issues without a login, but to post to the forum you will need to create a [free Github account](https://github.com/join).
+We use [GitHub Issue tracking](https://github.com/Riverscapes/gcd/issues) as a forum for [asking questions and getting help]({{ site.baseurl }}/Help/known-bugs#questions-or-help) as well as [reporting bugs]({{ site.baseurl }}/Help/known-bugs#bugs). You can search the forum for past issues without a login, but to post to the forum you will need to create a [free Github account](https://github.com/join).
 
 <div align="center">
-        <a class="hollow button" href="{{ site.baseurl }}Help/known-bugs"><i class="fa fa-github"></i>  GCD Issue Forum</a>  
+        <a class="hollow button" href="https://github.com/Riverscapes/gcd/issues"><i class="fa fa-github"></i>  GCD Issue Forum</a>  
 </div>
 
 
