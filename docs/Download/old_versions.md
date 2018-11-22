@@ -1,5 +1,5 @@
 ---
-title: Old Versions of GCD Software
+title: Old GCD Versions
 weight: 5
 ---
 

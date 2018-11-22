@@ -1,5 +1,5 @@
 ---
-title: Future Feature Request
+title: Feature Requests
 weight: 4
 ---
 

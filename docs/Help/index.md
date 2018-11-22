@@ -66,7 +66,6 @@ There are lots of ways to get your hands on repeat topgraphic datasets even if y
 
 <div align="center">
 	<a class="hollow button" href="{{ site.baseurl}}/Help/example-data-sets.html" ><i class="fa fa-database"></i> Repeat Topographic Datasets & GCD Projects</a>
-
 </div>
 
 ------
