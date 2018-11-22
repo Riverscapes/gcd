@@ -1,5 +1,5 @@
 ---
-title: Reporting Bugs & Getting Help
+title: Reporting Bugs & Getting Support
 weight: 10
 ---
 
