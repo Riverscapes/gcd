@@ -33,7 +33,9 @@ The [command-line version of ToPCAT](https://code.google.com/archive/p/point-clo
 
 ### Visualizing Decimated Point Clouds
 
+<div class="responsive-embed">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/yxz3NzRwDpA" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
+</div>
 
 -------
 

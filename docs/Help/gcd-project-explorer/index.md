@@ -5,7 +5,7 @@ weight: 1
 
 The GCD Project Explorer helps you navigate your project. The GCD Project Explorer is also the primary means by which you add data to your project, perform analyses, integrate settings, and access past results. Another very convenient feature of the project explorer is it allows you to Add to Map ![img]({{ site.baseurl }}/_/rsrc/1472842988204/gcd-command-reference/gcd-project-explorer/AddToMap.png) the map-based inputs and outputs that are part of your project to your map (*.mxd) table of contents in ArcGIS.
 
-![GCD6_ProjectExplorer_New]({{ site.baseurl }}/assets/images/GCD6_ProjectExplorer_New.png)
+![ProjectExplorer_Menu]({{ site.baseurl }}/assets/images/CommandRefs/00_ProjectExplorer/project_explorer_menu.png)
 
 The GCD project explorer is also accessible from the [1. Project Menu]({{ site.baseurl }}/gcd-command-reference/project-menu) or from the GCD Project Explorer button:
 

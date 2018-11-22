@@ -15,7 +15,8 @@
 			</div>	
 	</div>
 </div>
-<div id="sidenav">
+ <div id="sidenav">
+ {% comment %}
 	{% capture html %}
 
 	{% assign entries = site.pages | sort: "path" %}
@@ -28,4 +29,5 @@
 	</ul>
 
 	{% endcapture %}{{ html | strip_newlines | replace:'    ','' | replace:'    ','' | replace:'  ',' ' }}
+	 {% endcomment %}
 </div>

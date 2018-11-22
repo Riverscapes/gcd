@@ -3,9 +3,7 @@ title: Concepts
 weight: 1
 ---
 
-This is a reference list of concepts underpinning the GCD Software.
-
-#### GCD Concepts
+This sections is a reference of concepts underpinning the GCD Software:
 
 - **[Data Preparation - Best Practices]({{ site.baseurl }}/gcd-concepts/data-preparation---best-practices)**
   - [Concurrency]({{ site.baseurl }}/gcd-concepts/data-preparation---best-practices/concurrency)
@@ -19,7 +17,6 @@ This is a reference list of concepts underpinning the GCD Software.
   - [Analsyses Folder]({{ site.baseurl }}/gcd-concepts/project/analsyses-folder)
   - [Inputs Folder]({{ site.baseurl }}/gcd-concepts/project/inputs-folder)
 - [ToPCAT Decimation]({{ site.baseurl }}/gcd-concepts/topcat-decimation)
-
 
 ------
 <div align="center">
