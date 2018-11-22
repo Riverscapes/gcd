@@ -5,9 +5,7 @@ weight: 4
 
 # GCD 7
 
-Note, see the [Commit History](https://github.com/Riverscapes/gcd/commits) in Github for fuller documentation of changes (by [release](https://github.com/Riverscapes/gcd/releases).
-
-<a class="button" href="https://github.com/Riverscapes/gcd/commits"><img class="fa fa-github"/> GCD Github Repository Commit History</a>
+See the [commit history](https://github.com/Riverscapes/gcd/commits) in Github for fuller documentation of changes. Alternatively you can view the commits organized by each product [release](https://github.com/Riverscapes/gcd/releases). The release notes for [prior versions](#prior-versions) are linked at the bottom of this page.
 
 ## 7.4.0 - 6 Nov 2018
 
@@ -191,8 +189,6 @@ This one is a big release that changes the platform of the Standalone so if you 
 ## 7.0.03 - 30 Jan 2018
 
 * Fixed change detection with probabilistic thresholding when no spatial coherence in use ([issue #30](https://github.com/Riverscapes/gcd/issues/30)).
-
-[Download](https://github.com/Riverscapes/gcd/releases)
 
 ## 7.0.02 - 22 Jan 2018
 

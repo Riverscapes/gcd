@@ -3,18 +3,51 @@ title: About GCD Software
 weight: 2
 ---
 
-# Stand Alone vs. ArcGIS Add In
+GCD 7 is available as two separate products. The GCD AddIn is for users that possess a copy of ArcGIS. This version includes the ability to visualize GCD layers in ArcMap. The GCD Standalone version is completely independent of ESRI technology and you do not need a copy of ArcGIS to use it. The Standalone is fully functional and the only difference from the AddIn is that the Standalone does not possess any map display.
 
 ------
 
 ## GCD AddIn for ArcGIS
 
-### AddIn Prerequisities
+The following table summarizes the compatibiltiy of GCD versions with ArcGIS:
 
-* ArcGIS 10.4 or newer version of ArcGIS 10.x. Unfortunately, the older versions (10.3 and lower) of ArcGIS are not supported for GCD 7.X. Note that GCD 6.0 will work on ArcGIS 10.0 - 10.5. Also note that in 10.4 and 10.5, both GCD 6.0 and GCD 7.0 can be installed concurrently. Currently GCD projects from 6.0 and 7.0 are not compatabile.  ArcPro is also **not** supported (yet).
-* [Microsoft .Net Framework 4.5.2](https://www.microsoft.com/en-ca/download/details.aspx?id=42642). This should already be installed if you are running Windows 10. It's also required by ArcGIS 10.4.
-
-------
+<table class="tg">
+  <tr>
+    <th class="tg-0pky">GCD</th>
+    <th class="tg-c3ow" colspan="6">ArcGIS</th>
+    <th class="tg-0pky">ArcPro</th>
+  </tr>
+  <tr>
+    <th class="tg-0pky"></th>
+    <th class="tg-c3ow">10.1</th>
+    <th class="tg-c3ow">10.2</th>
+    <th class="tg-c3ow">10.3</th>
+    <th class="tg-c3ow">10.4</th>
+    <th class="tg-c3ow">10.5</th>
+    <th class="tg-c3ow">10.6</th>
+    <th class="tg-c3ow"></th>
+  </tr>
+  <tr>
+    <td class="tg-0pky">GCD 6</td>
+    <td class="tg-c3ow">&#x2714;</td>
+    <td class="tg-c3ow">&#x2714;</td>
+    <td class="tg-c3ow">&#x2714;</td>
+    <td class="tg-c3ow">&#x2714;</td>
+    <td class="tg-c3ow">&#x2714;</td>
+    <td class="tg-c3ow">&#x2714;</td>
+    <td class="tg-c3ow">&#x2716;</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">GCD 7</td>
+    <td class="tg-c3ow">&#x2716;</td>
+    <td class="tg-c3ow">&#x2716;</td>
+    <td class="tg-c3ow">&#x2716;</td>
+    <td class="tg-c3ow">&#x2714;</td>
+    <td class="tg-c3ow">&#x2714;</td>
+    <td class="tg-c3ow">&#x2714;</td>
+    <td class="tg-c3ow">&#x2716;</td>
+  </tr>
+</table>
 
 ## GCD Standalone
 
@@ -22,17 +55,19 @@ The GCD standalone software is a fully functional version of GCD that can be use
 
 GCD standalone is available as a **64 bit** application only. It therefore should possess better performance than the AddIn version which is only available as a 32 bit version (because ArcGIS 10.x is only available as 32 bit).
 
-GCD standalone is a deployed using Microsoft's ClickOnce technology. This allows the application to install itself in your user profile folder on your computer. You should **not** need administrator privileges to install it. That said, when you click on the above link to download the setup.exe installation you will need to read the prompts in your web browser carefully, since most browsers will warn you about downloading executable files.
+GCD standalone is a deployed using Microsoft's ClickOnce technology. This allows the application to be installed in your user profile folder on your computer. You should **not** need administrator privileges to install it. That said, when you click on the above link to download the setup.exe installation you will need to read the prompts in your web browser carefully, since most browsers will warn you about downloading executable files.
 
+## Standalone Prerequisites
 
-
-### Standalone Prerequisites
+Both the AddIn and Standalone versions require:
 
 * [Microsoft .Net Framework 4.5.2](https://www.microsoft.com/en-ca/download/details.aspx?id=42642). This should already be installed if you are running Windows 10. It's also required by ArcGIS 10.4.
 
-------
+## Other Notes
 
-## Running Both
+Note that currently GCD projects from 6 and 7 are incompatabile. i.e. projects created in GCD 6 cannot be opened in GCD 7 and vice versa.
+
+## Running Both Versions
 The GCD Standalone and AddIn are independent of each other and installed in separate locations on your machine. Their only shared resource is the FIS Library, and they are able to both access the same `*.gcd` project simultaneously. It is not necessary or required that the Standalone and AddIn are both concurrent versions. For more information, see [here](https://github.com/Riverscapes/gcd/issues/196).
 
 ------
