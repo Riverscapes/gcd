@@ -1,5 +1,5 @@
 ---
-title: Challenges
+title: Change Detection Challenges
 weight: 4
 ---
 

@@ -1,5 +1,5 @@
 ---
-title: Who is the GCD Team?
+title: Development Team
 weight: 3
 ---
 

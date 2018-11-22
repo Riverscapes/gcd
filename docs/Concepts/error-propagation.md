@@ -7,7 +7,9 @@ weight: 2
 
 #### Error Propagation Theory Based on Minimum Level of Detection Logic
 
+<div class="responsive-embed">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/boXszBr0RHQ" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
+</div>
 
 #### Representing Propagated Errors as Probabilities
 
