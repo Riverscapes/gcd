@@ -11,7 +11,7 @@ We are grateful to generous grant support from multiple US and UK Federal Agenci
 
 ### GCD 7 Development
 
-Funding for the Geomorphic Change Detection Software development (GCD 7) was provided by:
+Funding for the latest phase of Geomorphic Change Detection development was provided by:
 - [NERC](https://nerc.ukri.org/) - UK Natural Enviornment Research Council - [Award NE/P016804/1](http://gotw.nerc.ac.uk/list_full.asp?pcode=NE%2FP016804%2F1&cookieConsent=A)
 - [USGS GCMRC](http://www.gcmrc.gov/gcmrc.aspx)
 
@@ -26,8 +26,8 @@ Funding for the Geomorphic Change Detection Software development (GCD 7) was pro
 </div>
 <br>
 
-#### GeoTERM NERC Project:
-Through the GeoTERM NERC project with NERC, our International Partners who have been extremely generous with their time, sharing their expertise, data, articulating their needs and in-kind funding and support:
+#### GeoTERM NERC Project
+Through the GeoTERM NERC project with NERC, our international partners who have been extremely generous with their time, sharing their expertise, data, articulating their needs and in-kind funding and support:
 
 ##### Agencies and Research Institutes
 - [Scottish Environmental Protection Agency](https://www.sepa.org.uk) - Alasdair Matheson & Helen Reid 
@@ -38,7 +38,7 @@ Through the GeoTERM NERC project with NERC, our International Partners who have 
 [![NIWA]({{ site.baseurl }}/assets/images/logos/NIWA.jpg)](https://www.niwa.co.nz/)
 [![JHI]({{ site.baseurl }}/assets/images/logos/jhi.png)](http://www.hutton.ac.uk/)
 
-##### New Zealand Regional Councils:
+##### New Zealand Regional Councils
 - [Hawkes Bay Regional Council](https://www.hbrc.govt.nz/)
 - [Ottago Regional Council](https://www.orc.govt.nz/) 
 - [Enviornment Cantebury Regional Council](https://www.ecan.govt.nz/)
@@ -48,15 +48,15 @@ Through the GeoTERM NERC project with NERC, our International Partners who have 
 [![ECAN]({{ site.baseurl }}/assets/images/logos/EnvironmentCanterbury_Logo.png)](https://www.ecan.govt.nz/)
 
 ##### Consulting Firms
-- [Land River Sea Consulting](http://www.landriversea.com/) of New Zealand - Matthew Gardner (present)
-- [North Arrow Research](http://northarrowresearch.com) of Canada - Matt Reimer (present) & Philip Bailley
+- [Land River Sea Consulting](http://www.landriversea.com/) of New Zealand - Matthew Gardner
+- [North Arrow Research](http://northarrowresearch.com) of Canada - Matt Reimer & Philip Bailley
 
 [![NAR]({{ site.baseurl }}/assets/images/logos/NA_Logo_150pxTall.png)](http://northarrowresearch.com/)
 [![LRSC]({{ site.baseurl }}/assets/images/logos/LandRiverSea.png)](http://www.landriversea.com/)   
 
 
 ##### Universities
-- [University of Waikato (New Zealand)](https://www.waikato.ac.nz)-  [James Brasington](https://www.waikato.ac.nz/staff-profiles/people/jbrasing) (PI).
+- [University of Waikato (New Zealand)](https://www.waikato.ac.nz) -  [James Brasington](https://www.waikato.ac.nz/staff-profiles/people/jbrasing) (PI).
 - [Utah State University](http://qcnr.usu.edu/wats/) - [Joe Wheaton](http://joewheaton.org)
 
 
@@ -68,10 +68,7 @@ Through the GeoTERM NERC project with NERC, our International Partners who have 
 ------
 
 ### GCD 6 Development
-GCD 6 was primarily supported by NSF, with some support from Idaho Power, BPA and ELR:
-- The National Science Foundation (Geoinformatics: [Award #1226127](http://www.nsf.gov/awardsearch/showAward?AWD_ID=1226127) - '[Making Point Clouds Useful for Earth Science](http://etal.joewheaton.org/projects/current-projects/development-of-integrated-airborne-and-ground-based-lidar-tools-for-earth-sciences)')  - [ZCloudTools](http://zcloudtools.boisestate.edu/)
-- [Idaho Power Company](https://www.idahopower.com/about-us/environmental-stewardship/)
-- [Bonneville Power Administration](https://www.bpa.gov/efw/Pages/default.aspx) via [Eco Logical Research](http://https://www.eco-logical-research.com/)
+GCD 6 was primarily supported by The National Science Foundation (Geoinformatics: [Award #1226127](http://www.nsf.gov/awardsearch/showAward?AWD_ID=1226127) - 'Making Point Clouds Useful for Earth Science'), [Idaho Power Company](https://www.idahopower.com/about-us/environmental-stewardship/) and [Bonneville Power Administration](https://www.bpa.gov/efw/Pages/default.aspx) via [Eco Logical Research](http://https://www.eco-logical-research.com/).
 
 [![NSF]({{ site.baseurl }}/assets/images/logos/nsf1.gif)](http://www.nsf.gov/awardsearch/showAward?AWD_ID=1226127)
 [![IPC]({{ site.baseurl }}/assets/images/logos/IPC_GreenOnTransparent.png)](https://www.idahopower.com/about-us/environmental-stewardship/)
@@ -84,8 +81,8 @@ GCD 6 was primarily supported by NSF, with some support from Idaho Power, BPA an
 
 Earlier GCD Development support was provided by:
 
-- The USGS's [Grand Canyon Monitoring & Research Center](http://www.gcmrc.gov/gcmrc.aspx)
-- The [US Army Corps of Engineers Kansas City District](http://www.nwk.usace.army.mil/)
+- USGS [Grand Canyon Monitoring & Research Center](http://www.gcmrc.gov/gcmrc.aspx)
+- [US Army Corps of Engineers Kansas City District](http://www.nwk.usace.army.mil/)
 - Utah State University [ICRRR](https://www.cnr.usu.edu/icrrr/) (Intermountain Center for River Rehabilitation and Restoration)
 
 <div align="center">
