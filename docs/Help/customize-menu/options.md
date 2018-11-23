@@ -3,64 +3,47 @@ title: Options
 weight: 2
 ---
 
-The Options dialog has five tabs for customizing different aspects of the GCD software. All options are user-specific, meaning that any changes are saved for the current user only.
+The Options dialog includes tabs for customizing different aspects of the GCD software. All options are user-specific, meaning that any changes are saved for the current user only.
 
-The *Options* dialog is located under the *Customize* menu in the main tool bar as shown in the image below:
+# Survey Types
 
-![OptionsForm_AccessFromMainToolBar]({{ site.baseurl }}/assets/images/OptionsForm_AccessFromMainToolBar.png)
+Survey types can be customized to represent different topographic survey methods. Each survey type is associated with a default uncertainty method. These defaults are used during the calculation of multi-method error surfaces. If the [regular mask]() used to generate the [error surface]() contains mask values that match one of the survey types in the list then the corresponding uncertainty value is used as the default uncertainty value. Users can override this value and the default is simply intended as the initial value.
 
-### Workspace Tab
-
-The workspace tab controls several features that determine the default behavior of GCD.
-
-![OptionsForm_WorkspaceTab_Numbered]({{ site.baseurl }}/assets/images/OptionsForm_WorkspaceTab_Numbered.png)
-
-In the image above each number coincides to a different option. The options are described below:
-
-1. Determines if the temporary workspace should be cleared every time GCD is opened. (**recommended**)
-2. If checked when a GCD tool is being used its inputs will be automatically added to the map, unless they are already in the map.
-3. If checked outputs from GCD tools will be automatically added to the map.
-4. Determines if GCD should perform validation of a GCD project when it is loaded. Occasionally errors in writing to the .gcd project file when creating new inputs/ouputs and deleting inputs/outputs, these errors can cause unexpected behavior when navigating the GCD Project Explorer and other places in the software. To avoid these errors the project validates and fixes these errors when project is opened. (**recommended**)
-5. Generally Windows has a maximum length for paths of 256 characters. If an input or output is going to be created that exceeds this length checking this option will warn the user before it tries to complete the operation. (**recommended**)
-6. GCD is shipped with a repository of FIS for a range of surveying methods. Select this option to automatically have the FIS in this repo added to the [FIS Library]({{ site.baseurl }}/gcd-command-reference/customize-menu/fis-library). This will make all FIS in the repository automatically available to the user when creating a FIS. (**recommended**)
-7. Determines which raster format will be used when creating outputs from GCD tools.
-
-This video explains the different commands:
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/XIS_Iyk4kLI" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
-
-### Survey Types Tab
-
-Survey types can be customized to represent different topographic survey methods. This list controls which survey types are available as the *Survey Method*  int he `DEM Survey` Tab of the `DEM Survey Properties` dialog of the [`Survey Library`]({{ site.baseurl }}/system/errors/NodeNotFound?suri=wuid:gx:3ed05905e41de6f6). The error value is in map units (e.g. meters) and represents the default elevation uncertainty used for this survey method when it is a spatially uniform error estimate (i.e the `Error Calculations` tab of the `DEM Survey Properties` dialog). The default values shown are *very crude* rules of thumb from our experience and the literature, but can vary dramatically depending on the specifics of survey implementation, instrumentatoin, sampling design, post-processing, and surface creation.
-
-![Dialog_GCD_Options_SuveyTypes]({{ site.baseurl }}/assets/images/Dialog_GCD_Options_SuveyTypes.png)
+![Survey Types]({{ site.baseurl }}/assets/images/CommandRefs/03_Customize/options-survey-types.png)
 
 This video shows you how to modify and/or add new survey types.
 
+<div class="responsive-embed">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/ncR_m23hy18" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
+</div>
 
-### Symbology Tab
+# Symbology
 
-This tab has no functionality in the current release. It is a placeholder for allowing the user to over-ride the default symbology when rasters are loaded to the Survey Library or created by the GCD are added to the map.
+The symbology tab allow users to control display properties when layers are added to ArcMap. This tab only affects the GCD AddIn and serves no purpose for the GCD Standalone.
 
-![Dialog_GCD_Options_Symbology]({{ site.baseurl }}/assets/images/Dialog_GCD_Options_Symbology.png)
+* The **Auto Apply Transparency** set of controls allow users to control whether the selected surfaces are added to ArcMap with transparency applied. The transparency value specified is in percent where 0% represents solid and 100% represents totally transparent.
+* The **Comparative Symbology** set of controls applies to specific types of rasters and allows for fixed range symbology to be used where applicable. With these checkboxes unchecked the corresponding raster types are added to ArcMap with color ramps scaled to the data range of the corresponding raster data.
+* Checking the **Manual DoD symbology range** checkbox applies a fixed color ramp range to all DoD rasters as they are add to ArcMap. With the checkbox checked the value in the adjacent numeric control is used to fix the color ramp. The value is in the vertical units of the current GCD project. Unchecking the checkbox results in DoD raster color ramps scaling to the entire range of each individual DoD raster.
+
+![Dialog_GCD_Options_Symbology]({{ site.baseurl }}/assets/images/CommandRefs/03_Customize/options-symbology.png)
 
 ### Graphs Tab
 
-The Graphs tab simply controls the output resolution and dimensions (in pixels) of the output `*.png `graph image files that are automatically produced by GCD. The default is for a square graph at 1000 x 1000 pixels. The graphs currently exported by GCD include:
+The Graphs tab simply controls the output resolution and dimensions (in pixels) of the output `*.png` graphic image files that are automatically produced by GCD when generating a change detection analysis. The default is for a square graph at 600 x 600 pixels. The graphs currently exported by GCD include the volumetric and areal elevation change distributions associated with both the [Change Detection]({{ site.baseurl }}/gcd-command-reference/gcd-analysis-menu/c-geomorphic-change-detection-submenu/change-detection) and [Budget Segregation]({{ site.baseurl }}/gcd-command-reference/gcd-analysis-menu/c-geomorphic-change-detection-submenu/budget-segregation) panels.
 
-- Volumetric and Areal Elevation Change Distributions associated with both the [`Change Detection`]({{ site.baseurl }}/gcd-command-reference/gcd-analysis-menu/c-geomorphic-change-detection-submenu/change-detection) and [`Budget Segregation`]({{ site.baseurl }}/gcd-command-reference/gcd-analysis-menu/c-geomorphic-change-detection-submenu/budget-segregation) panels.
-- Pie-Charts from Budget Segregation Panel.
+NOTE: All graphs produced in GCD can also be exported manually from their respective panels/dialogs (with a right click) and that all the data required to produce these graphs automatically is also exported to the corresponding analysis output folder.
 
-NOTE: All graphs produced in GCD can also be exported manually from their respective panels/dialogs (with a right click) and that all the data required to produce these graphs automatically is also exported to the output folder.
+The **colors** section of this tab controls the default colors used for the change detection graphics generated by the software. The values specified on this form are used by default but can be overriden in the [change detection properties]() dialog. Clicking the **reset** button reverts to the system default red for surface lowering and blue for surface raising.
 
-![Dialog_GCD_Options_Graphs]({{ site.baseurl }}/assets/images/Dialog_GCD_Options_Graphs.png)
+The **font** specified is used as the default for all change detection graphics. The font specified on this form is used by default but can be overriden in the [change detection properties]() dialog. Click the settings button to pick a different font.
 
-### Coordinate Precision Tab
+![Dialog_GCD_Options_Graphs]({{ site.baseurl }}/assets/images/CommandRefs/03_Customize/options-graphs.png)
 
-This tab determines how GCD checks for [grid orthogonality and dimensional divisibility]({{ site.baseurl }}/gcd-concepts/data-preparation---best-practices). ArcGIS introduces small rounding errors in raster dimensions (width and height) as well as raster resolution. The result is a raster intended to be `0.1` m in cell resolution, is actually stored and treated as either `0.0999999999999998372` or `0.10000000000000003432` (even though when you check the raster properties it may still say `0.1`), and this can lead to the recorded height and width of the raster not being evenly divisible by the cell resolution. Although most users can ignore this issue, it is critical during change detection, because it leads to unnecessary re-sampling of rasters and introduction of minor interpolation errors in your data.  When we run Orthogonality, Divisibility and Concurrency checks in the software, we round the ESRI-reported values (by default) to 4 decimal places so that these minor precision inaccuracies do not propagate. In the above example this will treat what gets reported as 0.1 as 0.1000, despite how the value is actually stored in memory. You can change that precision here:
+# Pyramids
 
-![Dialog_GCD_Options_CoordinatePrecision]({{ site.baseurl }}/assets/images/Dialog_GCD_Options_CoordinatePrecision.png)
+Check the box beside a particular type of GCD raster to have [pyramids](http://desktop.arcgis.com/en/arcmap/10.3/manage-data/raster-and-images/raster-pyramids.htm) produced automatically whenever GCD generates a raster of the corresponding type. Note that pyramids are only beneficial to the display of rasters and have no affect on the actual raster values themselves. Generating pyramids does slow GCD slightly and also the pyramid files require additional file storage which can be a consideration if you intend to share your GCD project with others.
+
+![Dialog_GCD_Options_CoordinatePrecision]({{ site.baseurl }}/assets/images/CommandRefs/03_Customize/options-pyramids.png)
 
 ------
 <div align="center">
