@@ -1,38 +1,53 @@
 ---
-title: Building DEMs from Topographic Survey - Bridge Creek, OR
+title: Building DEMs from Topographic Survey Data
 weight: 1
 ---
 
-Having good DEMs is critical for effective change detection. In this series of video tutorials, we lay out how to build DEMs from raw topographic data (e.g. rtkGPS or total station data). A similar procedure is available for airborne LiDaR data [here](http://gis.joewheaton.org/assignments/labs/lab-07---building-dems/task-4).
+<div style="float: right;width:200px; margin:0 0 0 10px">
+    <div class="card">
+        <div style="text-align: center; padding: 5px 5px 0 5px">
+            <img src="{{ site.baseurl }}/assets/images/datasets/pats_cabin_200t.png">
+        </div>
+        <div class="card-section">
+            <h4>Pats Cabin</h4>
+            <p>500m channel in <i class="fa fa-map-marker"></i> <a href="https://www.google.com/maps/place/44%C2%B041'23.7%22N+120%C2%B017'00.4%22W/@44.6899308,-120.285625,776m/data=!3m1!1e3!4m5!3m4!1s0x0:0x0!8m2!3d44.689927!4d-120.283431">Bridge Creek, Oregon</a>
+            </p>
+            <a class="button" href="http://etalweb.joewheaton.org/etal_workshops/GCD/2015_USU/D_DEM.zip"><i class="fas fa-file-archive"></i> Exercise Data</a>
+        </div>
+    </div> 
+</div>
 
-### Overview
+<div>
+<p>Having good DEMs is critical for effective change detection. In this series of video tutorials, we lay out how to build DEMs from raw topographic data (e.g. rtkGPS or total station data). A similar procedure is <A href="http://gis.joewheaton.org/assignments/labs/lab-07---building-dems/task-4">available for airborne LiDaR data</a>.</p>
 
-This exercise is intended to highlight the fundamentals of building a DEM from raw topographic data. In this tutorial we are provided with some raw topographic survey data. Your job is to build a DEM from that data (of appropriate resolution), show the water depth overlaid on the DEM, and pull a longitudinal profile and some cross sections off the DEM. You will use a triangular irregular network (TIN) to interpolate between your raw topographic survey data and produce a continuous surface that you will later convert to a raster DEM.
+<h1>Overview</h1>
 
-NOTE: These instructions are for ArcGIS 10 and are primarily provided in the form of video tutorials. As an additional reference, you might find the 'Using ArcGIS 9.3.X to Construct and Manipulate DEMs' tutorial listed in the [main Lab 6 page](http://gis.joewheaton.org/assignments/labs/lab06-1#TOC-Follow-up-Activities:) helpful (it uses different data, and is for the old version of ArcGIS, but goes through a similar sequence of steps to arrive at the same end point in Part I of the document; one significant difference is the absence of TIN editing in ArcGIS 9.3.X). 
+<p>This exercise is intended to highlight the fundamentals of building a DEM from raw topographic data. In this tutorial we are provided with some raw topographic survey data. Your job is to build a DEM from that data (of appropriate resolution), show the water depth overlaid on the DEM, and pull a longitudinal profile and some cross sections off the DEM. You will use a triangular irregular network (TIN) to interpolate between your raw topographic survey data and produce a continuous surface that you will later convert to a raster DEM.</p>
 
-### Data
+<p>NOTE: These instructions are for ArcGIS 10 and are primarily provided in the form of video tutorials. As an additional reference, you might find the 'Using ArcGIS 9.3.X to Construct and Manipulate DEMs' tutorial listed in the <a href="http://gis.joewheaton.org/assignments/labs/lab06-1#TOC-Follow-up-Activities:">main Lab 6 page</a> helpful (it uses different data, and is for the old version of ArcGIS, but goes through a similar sequence of steps to arrive at the same end point in Part I of the document; one significant difference is the absence of TIN editing in ArcGIS 9.3.X).</p>
+</div>
 
-Everything you need to create a TIN can be found in the  `PatsCabinSurveyPoints.csv` file and the `Task3_PatsCabinShapefiles.zip`. This video tutorial goes through what is included in the data and how to import it into ArcGIS:
+# Data
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/jb-UY6S6r8I" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
+Everything you need to create a TIN can be found in the  `PatsCabinSurveyPoints.csv` file and the zip file link above. This video tutorial goes through what is included in the data and how to import it into ArcGIS.
 
-Although not covered in the video tutorial, I would suggest exporting the `PatsCabinSurveyPoints.csv` table you imported as X-Y points to a shapefile or feature class to use in the construction of the TIN (I named mine `TopoSurveyPoints`).
+Although not covered in the video tutorial, I would suggest exporting the `PatsCabinSurveyPoints.csv` table you imported as X-Y points to a ShapeFile or feature class to use in the construction of the TIN (I named mine `TopoSurveyPoints`).
 
-<div align="center">
-<a class="button" href="http://etalweb.joewheaton.org/etal_workshops/GCD/2015_USU/D_DEM.zip"><i class="fas fa-file-archive"></i> D_DEM.zip - Exercise Data </a>
-</div> 
+<div class="responsive-embed">
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/jb-UY6S6r8I" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
+</div>
 
-
-### Prerequisite for this Exercise
+## Prerequisite for this Exercise
 
 - Some ArcGIS experience
-- ArcGIS 10.X w/ 3D Analyst Extension
+- ArcGIS 10.x with 3D Analyst Extension
 - Some familiarity with DEMs (e.g. [Topic C]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/3-day-workshop/1-Principles/b-review-of-topographic-data-sources-surveys).)
 
 ------
 
-## Building TINS
+# Building TINS
+
+The following steps lead you through the process of creating an initial TIN and then how to refine it.
 
 ### Your First TIN
 
@@ -91,9 +106,9 @@ The above exercise comes from a [Lab](http://gis.joewheaton.org/assignments/labs
 - [Working with DEMs](http://gis.joewheaton.org/assignments/labs/lab06-1) Lab - From my [Advanced GIS course](http://gis.joewheaton.org/)
 - [Building DEMs](http://gis.joewheaton.org/assignments/labs/lab-07---building-dems) Lab - From my [Advanced GIS course](http://gis.joewheaton.org/)
 - Using ArcGIS to Manipulate DEMs and build Grading Plans - *The proper place to design grading plans is in a CAD environment, but it can be done in ArcGIS for those so inclined:*
-  - [Lecture](http://etal.usu.edu/ICRRR/PartII/2010/Part_II/D1_JMW.pdf)
-  - [Tutorial](http://etal.usu.edu/ICRRR/PartII/2010/Part_II/ICRRR_D2_Topo_Excercise.pdf)
-  - [Dataset](http://etal.usu.edu/ICRRR/PartII/2010/Part_II/ProvoTopoData.zip)
+- [Lecture](http://etal.usu.edu/ICRRR/PartII/2010/Part_II/D1_JMW.pdf)
+- [Tutorial](http://etal.usu.edu/ICRRR/PartII/2010/Part_II/ICRRR_D2_Topo_Excercise.pdf)
+- [Dataset](http://etal.usu.edu/ICRRR/PartII/2010/Part_II/ProvoTopoData.zip)
 
 
 ------
