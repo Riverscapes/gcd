@@ -45,7 +45,6 @@ The DEM Survey context menu is accessed by right clicking on any DEM in the GCD 
 
 ![edit]({{ site.baseurl }}/assets/images/CommandRefs/00_ProjectExplorer/inputs/dem-surveys/dem-menu-edit.png)
 
-
 # Edit Properties
 
 Editing displays several basic properties for a DEM Survey. Only the name is editable and this must be unique across all DEM Surveys within the current GCD project. The project path shows the path to the underlying raster, relative within the GCD project path. The raster properties and statistics display the fundamental properties of the underlying raster file.
