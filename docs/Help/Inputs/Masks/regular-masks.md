@@ -27,7 +27,9 @@ Provide a unique name for the mask and then click the plus icon to browse and se
 
 Pick the **string** attribute **field** in the ShapeFile that you want to use to distinguish the mask regions. A list of the unique values in this field is then displayed below. Checking or unchecking the box beside each of the unique values in this field determines whether GCD includes the polgons when it is used.
 
-Note that changing the status of fields can also be done after the mask has been added to the GCD project, during editing. Any budget segregations that use this mask will get updated to reflect this change.
+The righthand label column is editable and can be used to override the field value for the purposes of displaying results within the GCD. For example a field value of "total_station" might have the label "Total Station" applied so as to make tables and figures easier to read. All labels must be unique and cannot be blank, empty strings.
+
+Note that changing the status and labels of fields can also be done after the mask has been added to the GCD project, during editing. Any budget segregations that use this mask will get updated to reflect this change.
 
 ![Add mask]({{ site.baseurl }}/assets/images/CommandRefs/00_ProjectExplorer/inputs/masks/regular_mask.png)
 
@@ -47,6 +49,6 @@ Regular masks are added to the current ArcMap document with a  semi-transparent 
 
 # Delete
 
-Deleting regular mask removes it from the GCD project and permanently deletes the underlying ShpeFile within the GCD project. Note that you cannot delete a particular mask until all [budget segregations]() that refer to it have also been delete.
+Deleting a regular mask removes it from the GCD project and permanently deletes the underlying ShpeFile within the GCD project. Note that you cannot delete a particular mask until all [budget segregations]() that refer to it have also been deleted.
 
 ![mask cms]({{ site.baseurl }}/assets/images/CommandRefs/00_ProjectExplorer/inputs/masks/regular_inuse.png)
