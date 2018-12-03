@@ -55,7 +55,7 @@ GCD can calculate associated surface slope rasters in either decimal degrees or 
 
 # Context Menu
 
-right clicking on any associated surface brings up the context menu that allows you to perform the three operations described below. Note that the Add To Map option is only available in the ArcGIS Addin version of GCD and not the Standalone.
+Right clicking on any associated surface brings up the context menu that allows you to perform the three operations described below. Note that the Add To Map option is only available in the ArcGIS Addin version of GCD and not the Standalone.
 
 ![assoc context]({{ site.baseurl }}/assets/images/CommandRefs/00_ProjectExplorer/inputs/assoc/assoc_context.png)
 
@@ -84,6 +84,6 @@ Associated surfaces are added to the current ArcMap document with a symbology th
 
 # Delete
 
-Deleting an associated surface removes the GCD project reference to the raster and permanently deletes the corresponding raster within the GCD project.
+Deleting an associated surface removes the GCD project reference to the raster and permanently deletes the underlying raster file within the GCD project.
 
 ![Assoc properties]({{ site.baseurl }}/assets/images/CommandRefs/00_ProjectExplorer/inputs/assoc/assoc_delete.png)
