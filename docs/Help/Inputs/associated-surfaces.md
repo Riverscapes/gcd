@@ -6,7 +6,7 @@ weight: 2
 <div class="float-right">
 <img src="{{ site.baseurl }}/assets/images/datasets/feshie_200h.png">
 </div>
-Associated surfaces represent rasters that accompany a [DEM Survey](). They have exactly the same spatial extent as the parent DEM Survey and typically store some value that describes additional information about the DEM. For example, an associated surface might store slope values or point density of the original topographic survey data. These associated surfaces are optional and typically combined to generate [error surface rasters]().
+Associated surfaces represent rasters that accompany a [DEM Survey](). They must have exactly the same spatial extent as the parent DEM Survey and typically store some value that describes additional information about the DEM. For example, an associated surface might store slope values or point density of the original topographic survey data. These associated surfaces are optional and typically combined to generate [error surface rasters]().
 
 Since associated surfaces belong to a parent DEM survey there are  specific requirements regarding these rasters. Associated surface rasters and the parent DEM survey must have **identical**:
 
@@ -26,15 +26,38 @@ The same raster import form is displayed after the raster is selected as that us
 
 # Calculating Point Density
 
-# Calculating Slope
+GCD can calculate point density associated surface rasters providing that you have a point ShapeFile containing all the survey points that were used to generated the parent DEM survey. The surface raster will be created with the correct spatial extent, cell resolution and units. It will be stored in the appropriate folder within the GCD project and the correct type attached.
 
-This video shows you how to use the project explorer dockable window to calculate a slope raster from a DEM already loaded to a GCD project.
+![assoc context]({{ site.baseurl }}/assets/images/CommandRefs/00_ProjectExplorer/inputs/assoc/assoc_point_density_cms.png)
 
-<div class="responsive-embed">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/b9DQ-UbgePw" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+On the point density form, click the "plus" button to browse and choose a single ShapeFile that contains all the points that were used to generate the parent DEM. Provide a name and then specify how you want to define the point density neighbourhood. You can choose between a square and round kernal.
+
+![assoc context]({{ site.baseurl }}/assets/images/CommandRefs/00_ProjectExplorer/inputs/assoc/assoc_point_density.png)
+
+Square kernals are defined by the length of one side of the square. Round kernals are defined by the radius of the circle (not the diameter). The value entered is always in the same horizontal units of the parent DEM Survey spatial reference.
+
+Point density is calculated by first creating a blank template raster with an identical spatial extent and cell resolution of the parent DEM survey. The kernal is then placed over top of each cell that possesses elevation datain the DEM Survey (i.e. not `NoData`) and the number of points in the ShapeFile calculated. This talley is converted to a density by dividing by the area of the kernal.
+
+<div class="row">
+    <div class="columns medium-6 small-12">
+        <img src="{{ site.baseurl }}/assets/images/CommandRefs/00_ProjectExplorer/inputs/assoc/point_density_round_kernal.png" />
+    </div>
+    <div class="columns medium-6 small-12">
+        <img src="{{ site.baseurl }}/assets/images/CommandRefs/00_ProjectExplorer/inputs/assoc/point_density_square_kernal.png" />
+    </div>
 </div>
 
+# Calculating Slope
+
+GCD can calculate associated surface slope rasters in either decimal degrees or percent. Right click on the Associated Surface node under the parent DEM and choose the desired type. The surface raster will be created with the correct spatial extent, cell resolution and units. It will be stored in the appropriate folder within the GCD project and the correct type attached.
+
+![assoc context]({{ site.baseurl }}/assets/images/CommandRefs/00_ProjectExplorer/inputs/assoc/assoc_slope.png)
+
 # Context Menu
+
+right clicking on any associated surface brings up the context menu that allows you to perform the three operations described below. Note that the Add To Map option is only available in the ArcGIS Addin version of GCD and not the Standalone.
+
+![assoc context]({{ site.baseurl }}/assets/images/CommandRefs/00_ProjectExplorer/inputs/assoc/assoc_context.png)
 
 # Edit Properties
 
@@ -49,10 +72,18 @@ Editing the properties of an associated surface it is possible to change the nam
 - Grain Size Statistic
 - [Undefined]
 
+The only place that this choice of associated surface type impacts GCD is in determining which map symbolization is used when the raster is displayed in ArcMap (AddIn version only). For all other intents and purposes the choice of type is merely a label.
+
+![Assoc properties]({{ site.baseurl }}/assets/images/CommandRefs/00_ProjectExplorer/inputs/assoc/assoc_properties.png)
+
 # Add To Map
 
 Associated surfaces are added to the current ArcMap document with a symbology that depends on the specified type. See edit properties above. Associated surfaces that do not have a type specified as added with an orange continuous color ramp.
 
+![Assoc properties]({{ site.baseurl }}/assets/images/CommandRefs/00_ProjectExplorer/inputs/assoc/assoc_add_to_map.png)
+
 # Delete
 
 Deleting an associated surface removes the GCD project reference to the raster and permanently deletes the corresponding raster within the GCD project.
+
+![Assoc properties]({{ site.baseurl }}/assets/images/CommandRefs/00_ProjectExplorer/inputs/assoc/assoc_delete.png)

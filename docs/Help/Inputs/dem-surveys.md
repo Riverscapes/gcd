@@ -6,7 +6,7 @@ weight: 1
 <div class="float-right">
 <img src="{{ site.baseurl }}/assets/images/datasets/feshie_200h.png">
 </div>
-DEM Surveys are the fundamental building block of a GCD project. Project can contain multiple DEM surveys, each represented by a single raster file. Typically the surveys within a GCD project capture the same general location, although each raster can have slightly different extents. However all rasters within a GCD project **must** share some specific properties:
+DEM Surveys are the foundation of a GCD project. Projects can contain multiple DEM surveys, each representing a single topographic survey as a single raster file. Typically the surveys within a GCD project capture the same general location, although each raster can have slightly different extents. However all rasters within a GCD project **must** share some specific properties:
 
 * identical spatial reference (map projection)
 * the same cell resolution
