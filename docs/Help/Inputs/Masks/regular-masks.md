@@ -39,15 +39,15 @@ Right clicking on any regular mask brings up the context menu that allows you to
 
 ![mask cms]({{ site.baseurl }}/assets/images/CommandRefs/00_ProjectExplorer/inputs/masks/regular_cms.png)
 
-# Edit Properties
+## Edit Properties
 
 Editing the properties of a regular mask it is possible to change the name used to refer to it and also which field values are active. However, it is not possible to change which attribute field is used.
 
-# Add To Map
+## Add To Map
 
 Regular masks are added to the current ArcMap document with a  semi-transparent symbology and labels that identify each region.
 
-# Delete
+## Delete
 
 Deleting a regular mask removes it from the GCD project and permanently deletes the underlying ShpeFile within the GCD project. Note that you cannot delete a particular mask until all [budget segregations]() that refer to it have also been deleted.
 
