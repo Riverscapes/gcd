@@ -2,7 +2,7 @@
 title: Restoration Applications of Change Detection
 ---
 
-![Wheaton2013_JGR]({{ site.baseurl }}/assets/images/Wheaton2013_JGR.png)
+![Wheaton2013_JGR]({{ site.baseurl }}/assets/images/workshops/Wheaton2013_JGR.png)
 
 ### Background
 

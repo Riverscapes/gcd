@@ -6,7 +6,7 @@ title: Closure of Sediment Budgets & Transient Storage Analysis
 
 A morphological sediment budget is a statement of the conservation of mass - a fancy way of saying that the change in storage (i.e. the stuff from our DoD change detection) is equal to what came in to our area of interest minus what left our area of interest. In this lecture, we will learn about the challenges in closing sediment budgets  (i.e. quantifying all three terms and seeing if they add up correctly), and share with us her doctoral research on this topic. 
 
-![MorphologicalSedimentBudgetEquation]({{ site.baseurl}}/assets/images/MorphologicalSedimentBudgetEquation.png)
+![MorphologicalSedimentBudgetEquation]({{ site.baseurl}}/assets/images/workshops/MorphologicalSedimentBudgetEquation.png)
 
 #### Why we're Covering it
 

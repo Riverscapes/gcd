@@ -28,17 +28,17 @@ This exercise is meant to help you understand how best to prepare raster DEMs to
 
 #### Part 1 - Find Problem
 
-![ExcerciseF1]({{ site.baseurl }}/assets/images/ExcerciseF1.png)
+![ExcerciseF1]({{ site.baseurl }}/assets/images/tutorials/ExcerciseF1.png)
 
 #### Part 2 - Manual Fix
 
-![ExcerciseF2]({{ site.baseurl }}/assets/images/ExcerciseF2.png)
+![ExcerciseF2]({{ site.baseurl }}/assets/images/tutorials/ExcerciseF2.png)
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/HM9o_xK0iD4" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
 
 #### Part 3 - Clean Raster Tool Fix.. not ideal
 
-![ExcerciseF3]({{ site.baseurl }}/assets/images/ExcerciseF3.png)
+![ExcerciseF3]({{ site.baseurl }}/assets/images/tutorial/ExcerciseF3.png)
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/CWDE6mQPq-0" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
 

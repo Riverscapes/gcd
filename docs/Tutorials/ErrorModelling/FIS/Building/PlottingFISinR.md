@@ -29,7 +29,7 @@ In the [FIS_mfPlot.zip](http://etal.usu.edu/GCD/Scripts/FIS_mfPlot.zip) you will
 
 
 
-![2013-10-05_103647]({{ site.baseurl }}assets/images/2013-10-05_103647.png)
+![2013-10-05_103647]({{ site.baseurl }}assets/images/tutorials/2013-10-05_103647.png)
 
 ------
 <div align="center">

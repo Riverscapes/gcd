@@ -14,9 +14,9 @@ An FIS can be constructed and implemented in a variety of ways. Before learning 
 
 Each of these inputs can be [derived or loaded as an associated surface](http://gcd6help.joewheaton.org/gcd-command-reference/gcd-project-explorer/f-individual-associated-surface-context-menu) in GCD.
 
-![Figure_02]({{ site.baseurl }}/assets/images/Figure_02.png)
+![Figure_02]({{ site.baseurl }}/assets/images/workshops/Figure_02.png)
 
-![Figure_04]({{ site.baseurl }}/assets/images/Figure_04.png)
+![Figure_04]({{ site.baseurl }}/assets/images/workshops/Figure_04.png)
 
 Examples from two sites of the different inputs and how they vary spatially (Figure from Bangen et al (In Prep)).
 

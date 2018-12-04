@@ -20,7 +20,7 @@ This exercise shows how GCD can be used for coming up with statistical models of
 
 ### Step by Step
 
-![ExcerciseK]({{ site.baseurl }}assets/images/ExcerciseK.png)
+![ExcerciseK]({{ site.baseurl }}assets/images/tutorials/ExcerciseK.png)
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/Dqcd53aEozU" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
 

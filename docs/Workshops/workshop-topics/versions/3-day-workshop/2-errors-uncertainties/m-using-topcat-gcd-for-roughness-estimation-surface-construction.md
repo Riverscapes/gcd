@@ -8,13 +8,13 @@ title: Using ToPCAT & GCD for Roughness Estimation & Surface Construction
 
 Surface roughness is a primary driver in DEM error or uncertainty. In cases where , roughness alone may be the primary factor limiting in surface representation uncertainty for extremely dense point clouds (e.g. below) in which the individual grains are represented by 10's to 1000's of points. In other cases, roughness is at least a useful input into more complicated error models. 
 
-![PointCloudGrainscale]({{ site.baseurl }}/assets/images/PointCloudGrainscale.png)
+![PointCloudGrainscale]({{ site.baseurl }}/assets/images/workshops/PointCloudGrainscale.png)
 
 #### Why we're Covering it
 
 High resolution point clouds may capture roughness (e.g. above), but it has been difficult for many to make use of these point clouds (see [zCloud](http://zcloudtools.boisestate.edu/)). With the advent of algorithms like [ToPCAT](http://gcd6help.joewheaton.org/gcd-concepts/topcat-decimation) and [PySESA](https://dbuscombe-usgs.github.io/pysesa/index.html), it is now possible to extract highly accurate roughness models based either on detrended variance of the point clouds (e.g. topographic amplitude as illustrated below) and even perform spectral analyses with programs like PySESA. 
 
-![Fig2]({{ site.baseurl }}/assets/images/Fig2.png)
+![Fig2]({{ site.baseurl }}/assets/images/workshops/Fig2.png)
 
 #### Learning Outcomes Supported
 

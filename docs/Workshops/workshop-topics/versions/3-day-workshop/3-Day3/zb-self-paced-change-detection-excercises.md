@@ -17,7 +17,7 @@ This topic will help fulfill the following [primary learning outcome(s)]({{ site
 - Hands-on instruction on use of the [GCD software](http://www.joewheaton.org/Home/research/software/GCD) through group-led and **self-paced **exercises
 - An opportunity to interact with experts on geomorphic monitoring and the software developers of GCD to help you make better use of your own data
 
-![TS_Base]({{ site.baseurl }}/assets/images/TS_Base.JPG)
+![TS_Base]({{ site.baseurl }}/assets/images/workshops/TS_Base.JPG)
 
 ------
 

@@ -4,7 +4,7 @@ title: Instruction Team
 
 ### Lead Instructors
 
-![JoeBridgeCreek]({{ site.baseurl }}/assets/images/JoeBridgeCreek.png)
+![JoeBridgeCreek]({{ site.baseurl }}/assets/images/people/JoeBridgeCreek.png)
 
 - **Joe Wheaton** is an Associate Professor at Utah State University and a fluvial geomorphologist with over a decade of experience in river restoration. Joe developed the original [GCD software](http://gcd.joewheaton.org/) used in the course. 
 

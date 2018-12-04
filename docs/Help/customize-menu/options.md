@@ -25,7 +25,7 @@ The symbology tab allow users to control display properties when layers are adde
 * The **Comparative Symbology** set of controls applies to specific types of rasters and allows for fixed range symbology to be used where applicable. With these checkboxes unchecked the corresponding raster types are added to ArcMap with color ramps scaled to the data range of the corresponding raster data.
 * Checking the **Manual DoD symbology range** checkbox applies a fixed color ramp range to all DoD rasters as they are add to ArcMap. With the checkbox checked the value in the adjacent numeric control is used to fix the color ramp. The value is in the vertical units of the current GCD project. Unchecking the checkbox results in DoD raster color ramps scaling to the entire range of each individual DoD raster.
 
-![Dialog_GCD_Options_Symbology]({{ site.baseurl }}/assets/images/CommandRefs/03_Customize/options-symbology.png)
+![Symbology]({{ site.baseurl }}/assets/images/CommandRefs/03_Customize/options-symbology.png)
 
 ### Graphs Tab
 
@@ -37,13 +37,13 @@ The **colors** section of this tab controls the default colors used for the chan
 
 The **font** specified is used as the default for all change detection graphics. The font specified on this form is used by default but can be overriden in the [change detection properties]() dialog. Click the settings button to pick a different font.
 
-![Dialog_GCD_Options_Graphs]({{ site.baseurl }}/assets/images/CommandRefs/03_Customize/options-graphs.png)
+![Graphs]({{ site.baseurl }}/assets/images/CommandRefs/03_Customize/options-graphs.png)
 
 # Pyramids
 
 Check the box beside a particular type of GCD raster to have [pyramids](http://desktop.arcgis.com/en/arcmap/10.3/manage-data/raster-and-images/raster-pyramids.htm) produced automatically whenever GCD generates a raster of the corresponding type. Note that pyramids are only beneficial to the display of rasters and have no affect on the actual raster values themselves. Generating pyramids does slow GCD slightly and also the pyramid files require additional file storage which can be a consideration if you intend to share your GCD project with others.
 
-![Dialog_GCD_Options_CoordinatePrecision]({{ site.baseurl }}/assets/images/CommandRefs/03_Customize/options-pyramids.png)
+![Precision]({{ site.baseurl }}/assets/images/CommandRefs/03_Customize/options-pyramids.png)
 
 ------
 <div align="center">

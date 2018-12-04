@@ -13,7 +13,7 @@ This will be a brief guided discussion and demonstration on how to get more out 
 
 We will save the interpretation of the primary outputs of a change detection analysis for [U. The Morphological Method & Closure of Sediment Budgets]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/3-day-workshop/3-Day3/u-sediment-budgets) and [V. Interpreting Morphodynamic Signatures & GCD Budget Segregation]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/3-day-workshop/3-Day3/v-budget-segregation). But we will take a closer look at `Summary.xml `output tables, the elevation change distributions and the raster DoDs.
 
-![ChangeDetectionPanel]({{ site.baseurl }}/assets/images/ChangeDetectionPanel.png)
+![ChangeDetectionPanel]({{ site.baseurl }}/assets/images/workshops/ChangeDetectionPanel.png)
 
 #### Why we're Covering it
 

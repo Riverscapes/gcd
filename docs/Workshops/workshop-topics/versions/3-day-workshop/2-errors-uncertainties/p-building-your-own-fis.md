@@ -6,7 +6,7 @@ title: Building your own FIS Error Models
 
 An FIS can be constructed and implemented in a variety of ways. In the GCD software, we have adopted a standard format for fuzzy inference systems (*.fis) that is defined in Matlab's [Fuzzy Logic Toolbox](http://www.mathworks.com/products/fuzzylogic/). In this session, we show you how to build and edit your own FIS and emphasize the thought process behind choosing inputs, defining categories and their membership functions, building the rule table, calibrating the output, and verifying the behavior and performance of your FIS.
 
-![aggregation_2]({{ site.baseurl }}/assets/images/aggregation_2.png)
+![aggregation_2]({{ site.baseurl }}/assets/images/workshops/aggregation_2.png)
 
 An example from Matlab's [Fuzzy Logic Toolbox Support Documentation](http://www.mathworks.com/help/toolbox/fuzzy/fp351dup8.html) of an FIS for determining a tip.
 

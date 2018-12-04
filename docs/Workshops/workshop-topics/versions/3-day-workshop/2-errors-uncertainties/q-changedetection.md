@@ -6,7 +6,7 @@ title: Prepping Surveys & Building Error Models for Change Detection
 
 We've spent a full day talking about error modelling, and its easy to get lost in the weeds of uncertainty. This last topic is all about pulling the concepts together and putting your FIS error model into practice.
 
-![science-chaos]({{site.baseurl }}/assets/images/science-chaos.jpg)
+![science-chaos]({{site.baseurl }}/assets/images/workshops/science-chaos.jpg)
 
 #### Why we're Covering it
 

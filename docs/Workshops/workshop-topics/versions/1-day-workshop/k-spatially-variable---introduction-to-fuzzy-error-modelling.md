@@ -6,7 +6,7 @@ title: Spatially Variable - Introduction to Fuzzy Error Modelling
 
 Fuzzy inference systems are a powerful and flexible tool that have a lot of utility in their application to estimating spatially variable elevation uncertainty. In this session we introduce the concepts of fuzzy logic, and fuzzy inference systems and show how Wheaton et al. (2010) applied these to producing robust, spatially variable estimates of DEM elevation uncertainty.  The cartoon below  (click on for larger version), shows an FIS with three inputs used to estimate elevation uncertainty in meters. 
 
-![FIS_EuclidianDistance]({{ site.baseurl }}/assets/images/FIS_EuclidianDistance.png)
+![FIS_EuclidianDistance]({{ site.baseurl }}/assets/images/workshops/FIS_EuclidianDistance.png)
 
 #### Why we're Covering it
 

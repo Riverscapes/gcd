@@ -6,7 +6,7 @@ title: Interpreting Outputs of GCD
 
 This will be a brief guided discussion and exercise on how to interpret the primary outputs of a change detection analysis. Namely, we will look at `Summary.xml` output tables, the elevation change distributions and the raster DoDs.
 
-![ChangeDetectionPanel]({{ site.baseurl }}/assets/images/ChangeDetectionPanel.png)
+![ChangeDetectionPanel]({{ site.baseurl }}/assets/images/workshops/ChangeDetectionPanel.png)
 
 #### Why we're Covering it
 

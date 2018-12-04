@@ -35,7 +35,7 @@ Kaplinski, M., Hazel, J.E., Grams, P.E. and Davis, P.A. (2014). [Monitoring Fine
 
 ### Step by Step
 
-![ExcerciseJ]({{ site.baseurl }}assets/images/ExcerciseJ.png)
+![ExcerciseJ]({{ site.baseurl }}assets/images/tutorials/ExcerciseJ.png)
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/1MVNmbM99e4" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
 

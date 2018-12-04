@@ -6,7 +6,7 @@ title: N. Running an FIS DEM Error Model
 
 This exercise will show you how to use GCD to build a spatially variable error model using fuzzy inference systems. Before we dive into the details of what an FIS is, [how they work]({{ site.baseurl }}/tutorials--how-to/workshop-tutorials/o-champ-fis-error-modelling) and [how to build your own]({{ site.baseurl }}/tutorials--how-to/workshop-tutorials/p-building-your-own-fis), we will simply treat an FIS as a black box that takes spatially variable inputs we can model and think relate to surface error, and it will spit out an FIS error surface. This is a powerful and flexible technique for modelling spatially variable error as illustrated below.
 
-![Fig_2007-2006_FIS_Steps0001]({{ site.baseurl }}/assets/images/Fig_2007-2006_FIS_Steps0001.png)
+![Fig_2007-2006_FIS_Steps0001]({{ site.baseurl }}/assets/images/tutorials/Fig_2007-2006_FIS_Steps0001.png)
 
  Figure illustrating independent estimate of spatially variable error for two surveys from Wheaton et al. (2010).
 

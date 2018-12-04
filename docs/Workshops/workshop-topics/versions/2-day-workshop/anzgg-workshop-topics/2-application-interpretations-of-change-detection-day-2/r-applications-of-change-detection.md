@@ -8,7 +8,7 @@ title: Applications of Change Detection
 
 This lecture is intended to highlight some of the ways in which change detection can be used to explore geomorphic questions.
 
-![Wheaton2013_JGR]({{ site.baseurl}}/assets/images/Wheaton2013_JGR.png)
+![Wheaton2013_JGR]({{ site.baseurl}}/assets/images/workshops/Wheaton2013_JGR.png)
 
 #### Why we're Covering it
 

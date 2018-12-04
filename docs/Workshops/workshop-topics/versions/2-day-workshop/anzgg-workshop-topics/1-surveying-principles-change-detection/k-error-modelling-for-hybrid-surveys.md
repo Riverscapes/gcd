@@ -10,7 +10,7 @@ A hybrid survey is simply a term we use for surveys and DEMs that are derived fr
 
 Not that kind of hybrid...
 
-![images]({{ site.baseurl }}/assets/images/images.jpg)
+![images]({{ site.baseurl }}/assets/images/workshops/images.jpg)
 
 #### Why we're Covering it
 

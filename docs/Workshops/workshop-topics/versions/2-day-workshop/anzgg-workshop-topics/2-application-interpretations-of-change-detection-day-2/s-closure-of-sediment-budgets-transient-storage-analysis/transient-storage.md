@@ -16,7 +16,7 @@ This topic will help fulfill the following [primary learning outcome(s)]({{ site
 
 - Methods for interpreting and segregating morphological sediment budgets quantitatively in terms of both geomorphic processes and changes in physical habitat
 
-![TransientStorage]({{ site.baseurl }}/assets/images/TransientStorage.png)
+![TransientStorage]({{ site.baseurl }}/assets/images/workshops/TransientStorage.png)
 
 ### Resources
 

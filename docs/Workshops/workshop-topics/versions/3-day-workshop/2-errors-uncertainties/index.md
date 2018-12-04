@@ -6,7 +6,7 @@ After having established the foundations that enable us to undertake geomorphic 
 
 - Hands-on instruction on use of the [GCD software ](http://www.joewheaton.org/Home/research/software/GCD)through group-led and self-paced exercises
 
-![GCD%20Bayesian%20Workflow]({{ site.baseurl }}/assets/images/GCD%20Bayesian%20Workflow.png)
+![GCD%20Bayesian%20Workflow]({{ site.baseurl }}/assets/images/GCDBayesianWorkflow.png)
 
 #### Day 2 Topics
 

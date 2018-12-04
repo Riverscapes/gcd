@@ -20,7 +20,7 @@ This topic will help fulfill the following [primary learning outcome(s)]({{ site
 - The fundamental background necessary to design effective repeat topographic monitoring campaigns and distinguish geomorphic changes from noise (with particular focus on restoration applications)
 - Hands-on instruction on use of the [GCD software](http://www.joewheaton.org/Home/research/software/GCD) through group-led and self-paced exercises
 
-![Simple%20GCD%20Workflow]({{ site.baseurl }}/assets/images/Simple%20GCD%20Workflow.png)
+![Simple%20GCD%20Workflow]({{ site.baseurl }}/assets/images/workshops/SimpleGCDWorkflow.png)
 
 ### Resources
 
@@ -35,7 +35,7 @@ This topic will help fulfill the following [primary learning outcome(s)]({{ site
 - In Revision. Schaffrath K, Belmont P and Wheaton JM. Landscape-scale geomorphic change detection: Quantifying spatially-variable uncertainty and circumventing legacy data issues.
 - Lane, S.N., Westaway, R.M. and Hicks, D.M., 2003. Estimation of erosion and deposition volumes in a large, gravel-bed, braided river using synoptic remote sensing. Earth Surface Processes and Landforms, 28(3): 249-271. DOI: 10.1002/esp.483.
 
-![G_GCD6_ContextMenu_ProjectExplorer_ErrorSurf]({{ site.baseurl }}/assets/images/G_GCD6_ContextMenu_ProjectExplorer_ErrorSurf.png)
+![G_GCD6_ContextMenu_ProjectExplorer_ErrorSurf]({{ site.baseurl }}/assets/images/workshops/G_GCD6_ContextMenu_ProjectExplorer_ErrorSurf.png)
 
 #### Relevant Links
 
