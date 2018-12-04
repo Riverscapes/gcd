@@ -37,7 +37,7 @@ Associated error surfaces allow you to pick a raster that has already been speci
 
 ## FIS Error Surfaces
 
-GCD can calculate elevation uncertainty from a fuzzy inference system. Before performing this step you must first ensure that you have imported all the rasters that you want to use as FIS inputs as associated surfaces for the parent DEM.
+GCD can calculate elevation uncertainty from a [fuzzy inference system]({{ site.baseurl }}/Concepts/fuzzy-inference-systems-for-modeling-dem-error.html). Before performing this step you must first ensure that you have imported all the rasters that you want to use as FIS inputs as associated surfaces for the parent DEM.
 
 1. Check the box beside FIS error model.
 2. Choose an FIS rule set from the dropdown. This list is populated from the [GCD FIS Library](). You can learn more about each FIS rule set by first selecting the desired item in the drop down and then clicking the information button to the right.
