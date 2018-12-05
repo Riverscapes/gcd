@@ -68,7 +68,7 @@ Through the GeoTERM NERC project with NERC, our international partners who have 
 ------
 
 ### GCD 6 Development
-GCD 6 was primarily supported by The National Science Foundation (Geoinformatics: [Award #1226127](http://www.nsf.gov/awardsearch/showAward?AWD_ID=1226127) - 'Making Point Clouds Useful for Earth Science'), [Idaho Power Company](https://www.idahopower.com/about-us/environmental-stewardship/) and [Bonneville Power Administration](https://www.bpa.gov/efw/Pages/default.aspx) via [Eco Logical Research](http://https://www.eco-logical-research.com/).
+GCD 6 was primarily supported by The National Science Foundation (Geoinformatics: [Award #1226127](http://www.nsf.gov/awardsearch/showAward?AWD_ID=1226127) - 'Making Point Clouds Useful for Earth Science'), [Idaho Power Company](https://www.idahopower.com/about-us/environmental-stewardship/) and [Bonneville Power Administration](https://www.bpa.gov/efw/Pages/default.aspx) via [Eco Logical Research](https://www.eco-logical-research.com/).
 
 [![NSF]({{ site.baseurl }}/assets/images/logos/nsf1.gif)](http://www.nsf.gov/awardsearch/showAward?AWD_ID=1226127)
 [![IPC]({{ site.baseurl }}/assets/images/logos/IPC_GreenOnTransparent.png)](https://www.idahopower.com/about-us/environmental-stewardship/)
