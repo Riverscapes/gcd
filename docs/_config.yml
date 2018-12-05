@@ -83,7 +83,7 @@ collections:
 # ---------------------------------------------------------------
 AppRedirects:
   - key: NewProject
-    url: Help/Commands/project-menu/new-project.html
+    url: Help/project-menu/new-project.html
   - key: KEY2
     url: Download/release_notes.html
   - key: OpenProject
