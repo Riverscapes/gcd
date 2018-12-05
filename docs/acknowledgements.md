@@ -101,12 +101,5 @@ Earlier GCD Development support was provided by:
 
 <div align="center">
 	<a class="button success" href="{{ site.baseurl}}/Help/future-feature-request#want-to-donate-to-the-cause" ><i class="fa fa-paypal"></i>&nbsp;&nbsp; Donate Now</a>
-	<a class="hollow button" href="{{ site.baseurl}}/Help/future-feature-request#making-feature-requests" ><i class="fa fa-lightbulb-o"></i>&nbsp;&nbsp;  GCD Enhancements</a>
-</div>
-
-
-
-------
-<div align="center">
-    <a class="hollow button" href="{{ site.baseurl }}/"><i class="fa fa-chevron-circle-left"></i>  Back to Home </a>  
+	<a class="hollow button" href="{{ site.baseurl}}/Help/future-feature-request#making-feature-requests" ><i class="fa fa-lightbulb-o"></i>&nbsp;&nbsp; GCD Enhancements</a>
 </div>

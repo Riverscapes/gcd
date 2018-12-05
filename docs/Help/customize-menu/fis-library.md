@@ -29,9 +29,3 @@ Click the settings cog button to open the properties form for the selected FIS. 
 # Deleting User Defined FIS
 
 Select a user defined FIS and click the red delete button to delete the FIS from the library. The FIS will be completely removed and unavailable when generating [error surface rasters](). Deleting an FIS rule file does not affect any GCD projects that contain error surface rasters for which the rule file was used. These error rasters can still be viewed and used in change detection analyses.
-
-------
-<div align="center">
-	<a class="hollow button" href="{{ site.baseurl }}/Help"><i class="fa fa-chevron-circle-left"></i>  Back to GCD Help </a>  
-	<a class="hollow button" href="{{ site.baseurl }}/"><img src="{{ site.baseurl}}/assets/images/icons/GCDAddIn.png">  Back to GCD Home </a>  
-</div>

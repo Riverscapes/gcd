@@ -9,9 +9,3 @@ Opening an existing project brings up a standard browse dialog filtered to [GCD 
 <div class="responsive-embed">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/b4ht2G6wQ4M" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 </div>
-
-------
-<div align="center">
-	<a class="hollow button" href="{{ site.baseurl }}/Help"><i class="fa fa-chevron-circle-left"></i>  Back to GCD Help </a>  
-	<a class="hollow button" href="{{ site.baseurl }}/"><img src="{{ site.baseurl}}/assets/images/icons/GCDAddIn.png">  Back to GCD Home </a>  
-</div>

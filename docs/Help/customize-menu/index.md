@@ -26,8 +26,3 @@ The customize menu contains commands for managing the GCD software options and F
 
 - [FIS Library]({{ site.baseurl }}/gcd-command-reference/customize-menu/fis-library)
 - [Options]({{ site.baseurl }}/gcd-command-reference/customize-menu/options)
-
-------
-<div align="center">
-	<a class="hollow button" href="{{ site.baseurl }}/Help"><i class="fa fa-chevron-circle-left"></i>  Back to GCD Help </a>  
-	<a class="hollow button" href="{{ site.baseurl }}/"><img src="{{ site.baseurl}}/assets/images/icons/GCDAddIn.png">  Back to GCD Home </a>  

@@ -39,14 +39,6 @@ The GCD Software is free and will always be under the [GNU Public License](https
 <img alt="" border="0" height="1" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" />
 </form>
 
-
-
 ## Want Something More Specific and Concrete
 
 If you want to see specific features definitely incorporated into the GCD, get in touch [with us](http://joewheaton.org/contact) and we can discuss setting up a contract or grant.
-
-------
-<div align="center">
-	<a class="hollow button" href="{{ site.baseurl }}/Help"><i class="fa fa-chevron-circle-left"></i>  Back to GCD Help </a>  
-	<a class="hollow button" href="{{ site.baseurl }}/Help"><img src="{{ site.baseurl}}/assets/images/icons/GCDAddIn.png">  Back to GCD Home </a>  
-</div>

@@ -18,9 +18,3 @@ For more information, see pages 59-61 of in [Chapter 3](http://www.gis.usu.edu/~
 ## References
 
 Bangen SG and Wheaton JM. 2012. CHaMP Crew Variability: Influence on Topographic Surfaces & Derived Metrics, Report to Eco Logical Research, Inc. and the Columbia Habitat Monitoring Program, Logan, Utah, 79 pp.
-
-------
-<div align="center">
-	<a class="hollow button" href="{{ site.baseurl }}/Help"><i class="fa fa-chevron-circle-left"></i>  Back to GCD Help </a>  
-	<a class="hollow button" href="{{ site.baseurl }}/"><img src="{{ site.baseurl}}/assets/images/icons/GCDAddIn.png">  Back to GCD Home </a>  
-</div>

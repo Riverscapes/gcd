@@ -15,9 +15,3 @@ Although it might seem to be a simple task, producing concurrent grids in ArcGIS
 To avoid the problems, [Philip Bailey](http://northarrowresearch.com/people/) (North Arrow Research) has built an extremely simple spreadsheet extents calculator to help you ensure that your raster extents are orthogonal and concurrent:
 
 [Concurrency Calculator.xlsx](http://etal.usu.edu/GCD/Concurrency%20Calculator.xltx)
-
-------
-<div align="center">
-	<a class="hollow button" href="{{ site.baseurl }}/Help"><i class="fa fa-chevron-circle-left"></i>  Back to GCD Help </a>  
-	<a class="hollow button" href="{{ site.baseurl }}/"><img src="{{ site.baseurl}}/assets/images/icons/GCDAddIn.png">  Back to GCD Home </a>  
-</div>

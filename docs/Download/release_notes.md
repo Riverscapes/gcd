@@ -206,9 +206,3 @@ This one is a big release that changes the platform of the Standalone so if you 
 
 * [GCD 6 Release Notes](/releasenotes/gcd6_releasenotes)
 * [GCD 5 Release Notes](http://gcd.joewheaton.org/downloads/older_versions)
-
-------
-<div align="center">
-	<a class="hollow button" href="{{ site.baseurl }}/Download"><i class="fa fa-chevron-circle-left"></i>  Back to GCD Downloads </a>  
-	<a class="hollow button" href="{{ site.baseurl }}/"><img src="{{ site.baseurl}}/assets/images/icons/GCDAddIn.png">  Back to GCD Home </a>  
-</div>

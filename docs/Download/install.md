@@ -33,9 +33,3 @@ To unintsall the standalone GCD, simply navigate in your Windows Control Panel t
 <div>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/668-0ZtoOzo?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 </div>
-
-------
-<div align="center">
-    <a class="hollow button" href="{{ site.baseurl }}/Download/about"><i class="fa fa-question"></i>  Learn More about Differences Between GCD Installations </a>  
-    <a class="hollow button" href="{{ site.baseurl }}/Download/index"><i class="fa fa-download"></i>   Download </a>
-</div>

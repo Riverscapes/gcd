@@ -49,8 +49,3 @@ None of the GCD development or support happens without someone paying for it (co
 
 [![NAR]({{ site.baseurl }}/assets/images/logos/NA_Logo_150pxTall.png)](http://northarrowresearch.com/)
 [![USU]({{ site.baseurl }}/assets/images/logos/etal.png)](http://etal.joewheaton.org)
-
-------
-<div align="center">
-    <a class="hollow button" href="{{ site.baseurl }}/"><i class="fa fa-chevron-circle-left"></i>  Back to Home </a>  
-</div>

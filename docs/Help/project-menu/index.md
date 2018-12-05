@@ -36,9 +36,3 @@ See the following sections for help on the project menu commands:
 In addition to the above commands, the [GCD Project Explorer]({{ site.baseurl }}/Help/gcd-project-explorer) can be accessed within the AddIn by clicking the GCD icon at the left edge of the GCD toolbar.
 
 ![toolbar]({{ site.baseurl }}/assets/images/CommandRefs/addin_toolbar.png)
-
-------
-<div align="center">
-	<a class="hollow button" href="{{ site.baseurl }}/Help"><i class="fa fa-chevron-circle-left"></i>  Back to GCD Help </a>  
-	<a class="hollow button" href="{{ site.baseurl }}/"><img src="{{ site.baseurl}}/assets/images/icons/GCDAddIn.png">  Back to GCD Home </a>  
-</div>

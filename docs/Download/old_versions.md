@@ -57,9 +57,3 @@ For those of you Matlab hold-outs out there, [Joe](http://joewheaton.org) origin
 
 <a class="hollow button" href="https://github.com/joewheaton/DoD"><i class="fa fa-github"></i>  DoD 3 - Matlab Source Code on GitHub </a>  
 <a class=" button" href="https://github.com/joewheaton/DoD/releases/tag/DoD_3.0"><i class="fa fa-download"></i>  DoD 3 - Program, Tutorials & Documentation </a>  
-
-------
-<div align="center">
-	<a class="hollow button" href="{{ site.baseurl }}/Download"><i class="fa fa-chevron-circle-left"></i>  Back to GCD Downloads </a>  
-	<a class="hollow button" href="{{ site.baseurl }}/"><img src="{{ site.baseurl}}/assets/images/icons/GCDAddIn.png">  Back to GCD Home </a>  
-</div>

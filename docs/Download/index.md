@@ -28,11 +28,3 @@ GCD Standalone is a desktop software version that performs all the core GCD func
 		<a class="button large expanded" href="https://github.com/Riverscapes/gcd/releases/latest"> <i class="fa fa-cloud-download"></i>&nbsp;&nbsp;GCD 7 Standalone</a>
 	</div>
 </div>
-
-------
-<div align="center">
-    <a class="hollow button" href="{{ site.baseurl }}/"><img src="{{ site.baseurl}}/assets/images/icons/GCDAddIn.png">  Back to GCD Home </a>  
-    <a class="hollow button" href="{{ site.baseurl }}/Download/install"><i class="fa fa-question"></i>  Installation Instructions </a> 
-    <a class="hollow button" href="{{ site.baseurl }}/Download/about"><i class="fa fa-question"></i>  Learn More about Differences Between GCD Installations </a>  
-    <a class="hollow button" href="{{ site.baseurl }}/Download/release_notes"><i class="fa fa-sticky-note"></i>   See Release Notes </a>
-</div>

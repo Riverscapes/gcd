@@ -44,9 +44,3 @@ The **font** specified is used as the default for all change detection graphics.
 Check the box beside a particular type of GCD raster to have [pyramids](http://desktop.arcgis.com/en/arcmap/10.3/manage-data/raster-and-images/raster-pyramids.htm) produced automatically whenever GCD generates a raster of the corresponding type. Note that pyramids are only beneficial to the display of rasters and have no affect on the actual raster values themselves. Generating pyramids does slow GCD slightly and also the pyramid files require additional file storage which can be a consideration if you intend to share your GCD project with others.
 
 ![Precision]({{ site.baseurl }}/assets/images/CommandRefs/03_Customize/options-pyramids.png)
-
-------
-<div align="center">
-	<a class="hollow button" href="{{ site.baseurl }}/Help"><i class="fa fa-chevron-circle-left"></i>  Back to GCD Help </a>  
-	<a class="hollow button" href="{{ site.baseurl }}/"><img src="{{ site.baseurl}}/assets/images/icons/GCDAddIn.png">  Back to GCD Home </a>  
-</div>

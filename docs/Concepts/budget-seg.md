@@ -14,9 +14,3 @@ Here is a little description of how budget segregation works "under the hood". T
 ### Why do I see `GCDFID` in my ShapeFile when I add it to a project?
 
 The [ESRI ShapeFile specification](https://www.esri.com/library/whitepapers/pdfs/shapefile.pdf) allows for inconsistent handling of FID fields. Combining that with limitations in the GDaL Rasterization algorithm, in order to do Rasterization of an ESRI ShapeFile using the FID field we need an internally consistent (to GCD) unique ID field to identify shapes in our workflow.
-
-------
-<div align="center">
-	<a class="hollow button" href="{{ site.baseurl }}/Help"><i class="fa fa-chevron-circle-left"></i>  Back to GCD Help </a>  
-	<a class="hollow button" href="{{ site.baseurl }}/"><img src="{{ site.baseurl}}/assets/images/icons/GCDAddIn.png">  Back to GCD Home </a>  
-</div>

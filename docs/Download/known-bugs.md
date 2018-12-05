@@ -77,6 +77,3 @@ Date: 4/3/2018 2:34:05 PM
 - Information about the file paths where the problem occurred (e.g. `D:\0_GCD\GCD7.0.10\Rees\Analyses\CD\DoD0001\BS\BS0001\Morph\MA0001`) You'd be surprised how often problems are simply do to spaces or unsafe characters in a folder name or file name. 
 - If you don't want to provide a complete copy of the project, just making a copy of the `*.gcd` project file and changing the file extension to text and uploading it to your post can help a lot (see [video](https://youtu.be/EFAQgvZQY0s?t=5m14s))
 - Record a video of what is going wrong (we recommend [FastStone Capture](http://etal.joewheaton.org/faststone-capture.html)), post it to YouTube or Vimeo, and share the link (DO NOT SEND VIDEOS as attachments! No one wants to download your video, just stream it). Videos can be really helpful for helping us understand what you're doing and what is going wrong.
-
-------
-<a class="hollow button" href="{{ site.baseurl }}/Help"><i class="fa fa-chevron-circle-left"></i>  Back to GCD Help </a> 

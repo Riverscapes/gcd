@@ -10,8 +10,3 @@ A few years back, Joe was asked to give a talk on the Challenges and Trends in g
 </div>
 
 - (2014) *Invited Keynote Talk*: [Wheaton JM. Trends and Challenges in Geomorphic Change Detection](https://www.researchgate.net/publication/324189730_Trends_and_Challenges_in_Geomorphic_Change_Detection?_iepl%5BviewId%5D=LiJwbBCP0oPOs99UdAt1bQf1&_iepl%5Bcontexts%5D%5B0%5D=publicationCreationEOT&_iepl%5BtargetEntityId%5D=PB%3A324189730&_iepl%5BinteractionType%5D=publicationTitle). [Australia and New Zealand Geomorphology Group](https://www.anzgg.org/) Annual Conference. Queensland, Australia. DOI: [10.13140/RG.2.2.26758.68167](http://dx.doi.org/10.13140/RG.2.2.26758.68167)
-
-------
-<div align="center">
-    <a class="hollow button" href="{{ site.baseurl }}/"><i class="fa fa-chevron-circle-left"></i>  Back to Home </a>  
-</div>
