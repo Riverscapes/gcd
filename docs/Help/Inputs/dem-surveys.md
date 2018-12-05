@@ -75,9 +75,9 @@ The **Delete DEM Survey** command deletes a DEM Survey from the GCD Project. Thi
 
 ![DEMSurvey_InUse]({{ site.baseurl }}/assets/images/CommandRefs/00_ProjectExplorer/inputs/dem-surveys/dem-in-use.png)
 
-- Checks if there are any children associated surfaces or error surfaces. If user proceeds, the GCD removes the DEM as well as any associated surfaces or error surfaces from the table of contents (GCD AddIn version only).
-- After, it deletes the `Inputs\Surveys\DEM000n` folder associated with the selected DEM Survey from the project directory (note this does not impact where you loaded or copied the DEM survey from originally). This physically deletes the files from your system.
-- It then deletes all the project information about this DEM Survey from the GCD project.
+* Checks if there are any children associated surfaces or error surfaces. If user proceeds, the GCD removes the DEM as well as any associated surfaces or error surfaces from the table of contents (GCD AddIn version only).
+* After, it deletes the `Inputs\Surveys\DEM000n` folder associated with the selected DEM Survey from the project directory (note this does not impact where you loaded or copied the DEM survey from originally). This physically deletes the files from your system.
+* It then deletes all the project information about this DEM Survey from the GCD project.
 
 # Sorting DEM Surveys
 
