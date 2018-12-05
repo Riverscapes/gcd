@@ -92,16 +92,16 @@ AppRedirects:
     url: Help/customize-menu/fis-library.html
   - key: frmFISProperties
     url: Help/customize-menu/fis-library.html
-  - key: frmSurfaceProperties
-    url: index.html
-  - key: frmPointDensity
-    url: Help/Inputs/associated-surfaces.html#calculating-point-density
-  - key: frmAssociatedSurface
-    url: Help/Inputs/associated-surfaces.html
-  - key: frmSingleMethodError
-    url: Help/Inputs/error-surfaces.html
-  - key: frmMultiMethodError
-    url: Help/Inputs/error-surfaces.html#multi-method-error-surfaces
+  # - key: frmSurfaceProperties
+  #   url: index.html
+  # - key: frmPointDensity
+  #   url: Help/Inputs/associated-surfaces.html#calculating-point-density
+  # - key: frmAssociatedSurface
+  #   url: Help/Inputs/associated-surfaces.html
+  # - key: frmSingleMethodError
+  #   url: Help/Inputs/error-surfaces.html
+  # - key: frmMultiMethodError
+  #   url: Help/Inputs/error-surfaces.html#multi-method-error-surfaces
   # - key: frmLinearExtractionProperties
   #   url: Help/Inputs/linear-extractions.html
   # - key: frmReferenceSurfaceFromDEMs
