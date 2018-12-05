@@ -2,8 +2,6 @@
 title: Statistical Methods for Error Modelling
 ---
 
-![UnderConstruction]({{ site.baseurl }}/assets/images/UnderConstruction.png)
-
 ### Background
 
 #### Synopsis of Topic

@@ -12,7 +12,7 @@ Traditional geomorphic change detection is based on some pretty basic concepts a
 
 You have to learn to crawl before you can walk. And in a lot of circumstances, simply crawling maybe good enough to get you there. Plus, it is important to understand what so many previous investigators have done to perform these types of analyses.
 
-![GCD6_Toolbar]({{ site.baseurl }}/assets/images/GCD6_Toolbar.png)
+![GCD6_Toolbar]({{ site.baseurl }}/assets/images/workshops/GCD6_Toolbar.png)
 
 You do not need the GCD Software to do meaningful change detection analyses. The principles and methods are straight forward to apply in a GIS environment, or to code up independently. However, the GCD Software exists to facilitate these tasks and analysis by making them easier to undertake and promoting more consistency in the processing. Here we will talk briefly about the history of GCD software development, explain what the software does, show you around in the software, and then go through the same exercises we did in [topic E,]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/3-day-workshop/1-Principles/g_traditionalGCD) but with the GCD software.
 

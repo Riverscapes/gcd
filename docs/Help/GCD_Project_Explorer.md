@@ -1,25 +1,37 @@
 ---
-title: Project Context Menu
-weight: 2
+title: GCD Project Explorer
+weight: 1
 ---
+
+The GCD Project Explorer helps you navigate your project. It is also the primary means by which you add data to your project, perform analyses, integrate settings, and access past results. Another very convenient feature of the project explorer is it allows you to Add to Map ![add to map]({{ site.baseurl }}/assets/images/icons/AddToMap.png) the map-based inputs and outputs that are part of your project to your current ArcMap document table of contents in ArcGIS.
+
+![Project Explorer]({{ site.baseurl }}/assets/images/CommandRefs/00_ProjectExplorer/project_explorer.png)
+
+The GCD project explorer is also accessible by clicking the GCD logo ![ProjectExplorerButton]({{ site.baseurl }}/assets/images/icons/GCDAddIn.png) on the left edge of the GCD toolbar in the AddIn version:
+
+![Toolbar]({{ site.baseurl }}/assets/images/CommandRefs/addin_toolbar.png)
+
+The main way to interact with the GCD Project Explorer is to right click on items and use the context menu that appears. Each section within this documentation describes the individual context menu items. The menu when you right click on the topo level project item is described below.
+
+# Project Context Menu
 
 Right click the GCD Project item in the Project Explorer to access the **Project Context Menu** that provides access to several commands pertaining to the project itself.
 
 ![ProjectExplorer_Menu]({{ site.baseurl }}/assets/images/CommandRefs/00_ProjectExplorer/project_explorer_menu.png)
 
-# Edit Project Properties
+## Edit Project Properties
 
 Editing the project properties displays basic information about the project including the name, parent directory and project description etc. The name and parent directory cannot be edited once the project has been created but there are several properties that are always editable. Note that the raster units are only editable while there are no input DEM surveys in the project. You can change the raster units until the first raster is loaded, after which these values are no longer editable. Conversely, the GCD display units are always editable. See the section on adding new projects for information about each of the values on this form.
 
 ![Properties]({{ site.baseurl }}/assets/images/CommandRefs/00_ProjectExplorer/project_properties.png)
 
-# Explore Project Folder
+## Explore Project Folder
 
 The Explore GCD Project Folder command simply opens windows explorer and points directly to the GCD Project Folder. Typically, the contents will include the `*.gcd` project file (an XML file), a `Inputs `folder and an `Analyses` folder.
 
 ![Explore Project]({{ site.baseurl }}/assets/images/CommandRefs/00_ProjectExplorer/explore_project.png)
 
-# Export Project To Cross Section Viewer
+## Export Project To Cross Section Viewer
 
 GCD 7 introduced the ability to extract values from GCD rasters along vector [profile routes]() to produce what are called [linear extractions](). While the GCD software itself does not possess features to visualize these linear extractions, it is possible to export all linear extractions within a GCD project to the [Cross Section Viewer](http://xsviewer.northarrowresearch.com/Online_Help/File_Menu/import_gcd_project.html) software that possesses several powerful tools for analysing such data.
 
@@ -29,7 +41,7 @@ You must download and install the [Cross Section Viewer](http://xsviewer.northar
 
 Each time that the GCD project export is used will produce a **new** Cross Section Viewer database. It does not attempt to update the last exported database. In other words, if you generate an export and then decide that you want to a new linear extraction, you need to click export and produce an entire new database that will contain all the latest linear extraction data.
 
-# Refresh Project Tree
+## Refresh Project Tree
 
 The entire project tree can be refreshed and read from the GCD project file. This can be useful if the file has been altered by another program, or should anything go wrong with the GCD operation and it's necessary to confirm the correct contents of the project.
 
