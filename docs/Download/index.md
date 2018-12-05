@@ -7,9 +7,6 @@ The GCD 7 software is now available in two different flavors. The GCD Addin for 
 
 GCD Standalone is a desktop software version that performs all the core GCD functionality (building projects and perfoming change detection analyses etc) but does not include any map display. If you don't possess ArcGIS, or you want to use an alternative map display tool, such as [QGIS](https://www.qgis.org/en/site), then we recommend this version. It also works as a nice companion to the Add-In and you can go back and forth between the Add-In and Stand-Alone seamlessly. Note that GCD performs all spatial operations using the free and open source [GDAL](http://www.gdal.org/) library. Therefore you do not need ArcGIS to use GCD Standalone.
 
-
-
-
 <div class="row" align="center">
 	<div class="columns small-6">
   		<img src="{{ site.baseurl }}/assets/images/gcd_addin.png" style="height:200px">
@@ -35,12 +32,7 @@ GCD Standalone is a desktop software version that performs all the core GCD func
 ------
 <div align="center">
     <a class="hollow button" href="{{ site.baseurl }}/"><img src="{{ site.baseurl}}/assets/images/icons/GCDAddIn.png">  Back to GCD Home </a>  
-    <a class="hollow button" href="{{ site.baseurl }}/Help/install"><i class="fa fa-question"></i>  Installation Instructions </a> 
+    <a class="hollow button" href="{{ site.baseurl }}/Download/install"><i class="fa fa-question"></i>  Installation Instructions </a> 
     <a class="hollow button" href="{{ site.baseurl }}/Download/about"><i class="fa fa-question"></i>  Learn More about Differences Between GCD Installations </a>  
     <a class="hollow button" href="{{ site.baseurl }}/Download/release_notes"><i class="fa fa-sticky-note"></i>   See Release Notes </a>
 </div>
-
-
-
-
-

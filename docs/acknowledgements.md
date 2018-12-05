@@ -72,7 +72,7 @@ GCD 6 was primarily supported by The National Science Foundation (Geoinformatics
 
 [![NSF]({{ site.baseurl }}/assets/images/logos/nsf1.gif)](http://www.nsf.gov/awardsearch/showAward?AWD_ID=1226127)
 [![IPC]({{ site.baseurl }}/assets/images/logos/IPC_GreenOnTransparent.png)](https://www.idahopower.com/about-us/environmental-stewardship/)
-[![ELR]({{ site.baseurl }}/assets/images/logos/ELRLogo.png)](http://https://www.eco-logical-research.com/)
+[![ELR]({{ site.baseurl }}/assets/images/logos/ELRLogo.png)](https://www.eco-logical-research.com/)
 [![BPA]({{ site.baseurl }}/assets/images/logos/bpaTransparent.png)](https://www.bpa.gov/efw/Pages/default.aspx)
 
 ------

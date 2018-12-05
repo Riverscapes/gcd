@@ -35,7 +35,7 @@ The Windows 32 bit version of [GCD 6 Console GCDConsole_6_1_6_x86.zip](http://re
 
 <a href="https://essa.com/explore-essa/tools/geomorphic-change-detection/"><img class="float-right" src="{{ site.baseurl }}/assets/images/logos/essa_logo_blank.png"></a>  
 The GCD 5 was a complete redesign of the GUI, and it was refactored into VB.net by [ESSA Technologies](https://essa.com/explore-essa/tools/geomorphic-change-detection/). 
-GCD 5 is an ArcGIS Plug-In and is therefore, unfortunately, version specific to ArcGIS ([GCD 5.0.35](http://gcd.joewheaton.org/downloads/release-notes/5035-10july2012) and earlier works with 10.0.x and [GCD 5.2.07](http://gcd.joewheaton.org/downloads/release-notes/520713jan2014) works with 10.1.x).  
+GCD 5 is an ArcGIS Plug-In and is therefore, unfortunately, version specific to ArcGIS (GCD 5.0.35 and earlier works with 10.0.x and GCD 5.2.07 works with 10.1.x).  
 
 <a class=" hollow button" href="http://gcd.joewheaton.org/downloads/release-notes/520713jan2014"><i class="fa fa-download"></i>  Last Stable Release of GCD 5: GCD 5.2.07</a>  
 <a class="hollow button" href="http://gcd5help.joewheaton.org/"><i class="fa fa-question-circle"></i>  GCD 5 Help </a>  
