@@ -10,19 +10,19 @@ The budget segregation results user interface is displayed once the analysis has
 
 ![Same surfaces]({{ site.baseurl }}/assets/images/CommandRefs/05_Analyses/cd/budget/budget_right.png)
 
-The results user interface is virtually identical to that for [change detections]({{ site.baseurl }}/Help/Analyses/Change_Detection/change-detection-results.html#user-interface) with the primary difference being that budget segregation results are shown **per class**. This means that the tablular and charts displayed are for a set of polygons within the [mask]({{site.baseurl}}/Help/Inputs/Masks/regular-masks.html) that was used to generate the budget segregation.
+The results user interface is virtually identical to that for [change detections]({{ site.baseurl }}/Help/Analyses/Change_Detection/change-detection-results.html#user-interface) with the primary difference being that budget segregation results are shown **per class**. This means that the tabular and charts displayed are for a set of polygons within the [mask]({{site.baseurl}}/Help/Inputs/Masks/regular-masks.html) that was used to generate the budget segregation.
 
 ![Same surfaces]({{ site.baseurl }}/assets/images/CommandRefs/05_Analyses/cd/budget/budget_results_table.png)
 
 
-Below the class dropdown, the user can also change what the raw represents in each of the results tab. This is particularly useful for the histograms where this choice impacts what unthresholded data are shown as the grey backdrop data series. 
+Below the class dropdown, the user can also change what the raw represents in each of the results tab. This is particularly useful for the histograms where this choice impacts what unthresholded data are shown as the gray backdrop data series. 
 
 |---|---|---|
 |Raw Representing|Description|Example Histogram|
-|Raw DoD Area of Interest|The raw values in the table and grey area of the chart represent the unthresholded change in the original DEM of difference for the entire area of change, not just the current budget class.|![r1]({{ site.baseurl }}/assets/images/CommandRefs/05_Analyses/cd/budget/budget_raw1.png)|
-|Thresholded DoD Area of Detectable Change|The raw values in the table and the grey area of the cart represent the thresholded change in the original DEM of difference for the entire area of change, not just the current budget class.|![r1]({{ site.baseurl }}/assets/images/CommandRefs/05_Analyses/cd/budget/budget_raw2.png)|
-|Raw DoD Within Budget Class|The raw values in the table and the grey area in the chart represent the unthresholded change only within the currently selected budget class.|![r1]({{ site.baseurl }}/assets/images/CommandRefs/05_Analyses/cd/budget/budget_raw3.png)|
-|Thresholded DoD Within Budget Class|The raw values in the table and the grey area in the chart represent the thresholded change within the current budget class. This will always be the same as the thresholded values in the table and the colored areas of the chart. This included simply to demonstrate the concept of the "raw represents" input.|![r1]({{ site.baseurl }}/assets/images/CommandRefs/05_Analyses/cd/budget/budget_raw4.png)|
+|Raw DoD Area of Interest|The raw values in the table and gray area of the chart represent the unthresholded change in the original DEM of difference for the entire area of change, not just the current budget class.|![r1]({{ site.baseurl }}/assets/images/CommandRefs/05_Analyses/cd/budget/budget_raw1.png)|
+|Thresholded DoD Area of Detectable Change|The raw values in the table and the gray area of the cart represent the thresholded change in the original DEM of difference for the entire area of change, not just the current budget class.|![r1]({{ site.baseurl }}/assets/images/CommandRefs/05_Analyses/cd/budget/budget_raw2.png)|
+|Raw DoD Within Budget Class|The raw values in the table and the gray area in the chart represent the unthresholded change only within the currently selected budget class.|![r1]({{ site.baseurl }}/assets/images/CommandRefs/05_Analyses/cd/budget/budget_raw3.png)|
+|Thresholded DoD Within Budget Class|The raw values in the table and the gray area in the chart represent the thresholded change within the current budget class. This will always be the same as the thresholded values in the table and the colored areas of the chart. This included simply to demonstrate the concept of the "raw represents" input.|![r1]({{ site.baseurl }}/assets/images/CommandRefs/05_Analyses/cd/budget/budget_raw4.png)|
 
 ## Longitudinal Breakdown
 
@@ -38,4 +38,4 @@ Budget segregation results are stored in a folder called `BS` under that of the 
 <Change Detection Folder>\BS\BS0001
 ```
 
-The files generated are virtually the same as [those produced for a change detection]({{ site.baseurl }}/Help/Analyses/Change_Detection/change-detection-results.html#files-and-folders) with the primary exception being that a budget segregation does not possess any rasters. It is merely a mathematicall summation of the change detection results and does not produce an geospatial results.
+The files generated are virtually the same as [those produced for a change detection]({{ site.baseurl }}/Help/Analyses/Change_Detection/change-detection-results.html#files-and-folders) with the primary exception being that a budget segregation does not possess any rasters. It is merely a mathematical summation of the change detection results and does not produce an geospatial results.

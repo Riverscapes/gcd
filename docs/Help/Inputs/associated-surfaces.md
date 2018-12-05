@@ -30,13 +30,13 @@ GCD can calculate point density associated surface rasters providing that you ha
 
 ![assoc context]({{ site.baseurl }}/assets/images/CommandRefs/00_ProjectExplorer/inputs/assoc/assoc_point_density_cms.png)
 
-On the point density form, click the "plus" button to browse and choose a single ShapeFile that contains all the points that were used to generate the parent DEM. Provide a name and then specify how you want to define the point density neighbourhood. You can choose between a square and round kernal.
+On the point density form, click the "plus" button to browse and choose a single ShapeFile that contains all the points that were used to generate the parent DEM. Provide a name and then specify how you want to define the point density neighborhood. You can choose between a square and round kernel.
 
 ![assoc context]({{ site.baseurl }}/assets/images/CommandRefs/00_ProjectExplorer/inputs/assoc/assoc_point_density.png)
 
-Square kernals are defined by the length of one side of the square. Round kernals are defined by the radius of the circle (not the diameter). The value entered is always in the same horizontal units of the parent DEM Survey spatial reference.
+Square kernels are defined by the length of one side of the square. Round kernels are defined by the radius of the circle (not the diameter). The value entered is always in the same horizontal units of the parent DEM Survey spatial reference.
 
-Point density is calculated by first creating a blank template raster with an identical spatial extent and cell resolution of the parent DEM survey. The kernal is then placed over top of each cell that possesses elevation datain the DEM Survey (i.e. not `NoData`) and the number of points in the ShapeFile calculated. This talley is converted to a density by dividing by the area of the kernal.
+Point density is calculated by first creating a blank template raster with an identical spatial extent and cell resolution of the parent DEM survey. The kernel is then placed over top of each cell that possesses elevation data in the DEM Survey (i.e. not `NoData`) and the number of points in the ShapeFile calculated. This tally is converted to a density by dividing by the area of the kernel.
 
 <div class="row">
     <div class="columns medium-6 small-12">

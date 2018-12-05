@@ -2,7 +2,7 @@
 title: Multiple Epoch Batch
 ---
 
-It can be time consuming to set up and perform several change detection analyses. The GCD software simplifies this process with two batch change detection features. This section describes the multiple epoch batch intended for quickly analysing pre-defined pairings of surfaces that are sorted into chronological order. See the [generic batch]({{ site.baseurl }}/Help/Analyses/Change_Detection/batch-change-detection.html) documentation for information on the other kind.
+It can be time consuming to set up and perform several change detection analyses. The GCD software simplifies this process with two batch change detection features. This section describes the multiple epoch batch intended for quickly analyzing predefined pairings of surfaces that are sorted into chronological order. See the [generic batch]({{ site.baseurl }}/Help/Analyses/Change_Detection/batch-change-detection.html) documentation for information on the other kind.
 
 ![Add mask]({{ site.baseurl }}/assets/images/CommandRefs/05_Analyses/cd/batch/batch_cms.png)
 
@@ -21,12 +21,12 @@ Click the **Multiple Epoch** menu item shown above to launch the user interface 
     1. **Newest DEM minus all other DEMs** will take the DEM at the top of the list (1) above as the new DEM and pair it with each of the other DEMs that have a checkbox beside them.
     2. **All DEMs minus the earliest DEM** will take the DEM at the bottom of the list (1) above as the old DEM and pair it with each of the other DEMS that have the checkbox beside them.
     3. **All DEMs minus the previous DEM** will take all DEMs from the list above that have a checked box beside them and use them as the new DEM, then pair it with the next oldest DEM that also has a checked box.
-1. The final step is to review the DEM pairs in the epoch queue at the bottom of the form (7) and uncheck the box beside any that are not wanted.
+1. The final step is to review the DEM pairs in the epoch queue at the bottom of the form (7) and un-check the box beside any that are not wanted.
    
 ![Add mask]({{ site.baseurl }}/assets/images/CommandRefs/05_Analyses/cd/epoch/epoch_add.png)
 
 # Running the Batch
 
-Once you have configued the multiple epoch batch, click the **Run Batch** button (8 above). Large batches might take several minutes to process. Watch the status bar for an indication of progress.
+Once you have configured the multiple epoch batch, click the **Run Batch** button (8 above). Large batches might take several minutes to process. Watch the status bar for an indication of progress.
 
-Batch change detection results are stored and displayed in the GCD project explorer just like any other, manual, change detection. Click on any individual analysis to view the results or use the [intercomparison]({{site.baseurl}}/Help/Analyses/Change_Detection/intercomparison.html) feature to compare several analyses to each other.
+Batch change detection results are stored and displayed in the GCD project explorer just like any other, manual, change detection. Click on any individual analysis to view the results or use the [inter-comparison]({{site.baseurl}}/Help/Analyses/Change_Detection/intercomparison.html) feature to compare several analyses to each other.

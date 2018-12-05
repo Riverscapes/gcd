@@ -16,7 +16,7 @@ This section of the GCD help describes the basic process of performing a change 
 * [Multi-epoch change detection]()
 * [Budget segregating]({{site.baseurl}}/Help/Analyses/Budget_Segregation/budget-segregation.html) a change detection
 * [Morphological analysis]({{site.baseurl}}/Help/Analyses/Change_Detection/morphological.html) of a change detection
-* [Intercomparing]({{site.baseurl}}/Help/Analyses/Change_Detection/intercomparison.html) change detections
+* [Inter-comparing]({{site.baseurl}}/Help/Analyses/Change_Detection/intercomparison.html) change detections
 
 # Calculating a Change Detection
 
@@ -32,7 +32,7 @@ The change detection form requires the following inputs:
 * The output folder is defined by the GCD software and cannot be changed.
 * **Surfaces** - both [DEM Surveys]({{site.baseurl}}/Help/Inputs/dem-surveys.html) and [reference surfaces]({{site.baseurl}}/Help/Inputs/reference-surfaces.html) can be used as the new and old rasters in a change detection analysis.
 * **Error** surfaces are mandatory if choose the propagated error or probabilistic thresholding method, but are not required if you are using the minimum level of detection method.
-* **Area of Interest** - leave this option as the intersection of the new and old surface data extents to calculate change everywhere that both surfaces possess data. This is the default. Alternatively you can select an [area of interset]({{site.baseurl}}/Help/Inputs/Masks/aoi.html) to ignore certain areas of your data if you want to restrict the calculation.
+* **Area of Interest** - leave this option as the intersection of the new and old surface data extents to calculate change everywhere that both surfaces possess data. This is the default. Alternatively you can select an [area of interest]({{site.baseurl}}/Help/Inputs/Masks/aoi.html) to ignore certain areas of your data if you want to restrict the calculation.
 * **Uncertainty Analysis Method** - three methods of accounting for uncertainty are available. It is recommended that you research them using the links below. Note that you must specify [error surfaces]({{site.baseurl}}/Help/Inputs/error-surfaces.html) for the new and old surfaces if you choose the latter two methods.
     * [Minimum Level of Detection]()
     * [Propagated Errors]()

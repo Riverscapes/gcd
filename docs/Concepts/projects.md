@@ -6,7 +6,7 @@ GCD organizes data and analyses into "projects". GCD projects are self contained
 
 1. A folder (fixed path) on your file system where the project and its contents exist.
 2. A `*.gcd` [project file]({{ site.baseurl }}/gcd-concepts/project/-gcd-files) that defines the location of layers within the project.
-3. All the GCD [input]({{ site.baseurl }}/gcd-concepts/project/inputs-folder) and [output]({{ site.baseurl }}/gcd-concepts/project/analsyses-folder) files stored in subfolders of the project folder
+3. All the GCD [input]({{ site.baseurl }}/gcd-concepts/project/inputs-folder) and [output]({{ site.baseurl }}/gcd-concepts/project/analsyses-folder) files stored in sub-folders of the project folder
 
 # Sharing GCD Projects
 

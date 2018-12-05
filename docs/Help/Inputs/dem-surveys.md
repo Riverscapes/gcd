@@ -10,7 +10,7 @@ DEM Surveys are the foundation of a GCD project. Projects can contain multiple D
 
 * identical spatial reference (map projection)
 * the same cell resolution
-* be [divisble]() but not necessarily concurrent
+* be [divisible]() but not necessarily concurrent
 * possess the same vertical units
 
 The GCD project maintains a list of all DEM surveys within a project. This list is displayed under the **Inputs** node within the [project explorer](). Right clicking on the DEM Surveys node reveals a context menu for adding new DEM surveys to the project and adding all the existing DEM surveys to the current ArcMap document (GCD AddIn only).
@@ -27,7 +27,7 @@ The bottom half of the raster import form shows the same fundamental raster prop
 
 The GCD raster cell resolution and horizontal precision are only editable for the **first raster** imported into a GCD project. These inputs are fixed for subsequent rasters given that all rasters within a GCD project must share identical cell resolution (see above).
 
-The interpolation method refers to how the GCD will process the original raster as it copies it into the GCD project. If the original raster is divisible and the output cell resolution matches that of the input, then a "straight cell-wise copy" will be used. This involves no resampling and even if the output edge coordinates are adjusted the output cell values will precisely match those of the original raster. However, if the original raster is not divisible or the cell resolution chages then a bilinear interpolation will be used to resample the original raster. See the [best practices] on why resampling should be avoided if at all possible.
+The interpolation method refers to how the GCD will process the original raster as it copies it into the GCD project. If the original raster is divisible and the output cell resolution matches that of the input, then a "straight cell-wise copy" will be used. This involves no re-sampling and even if the output edge coordinates are adjusted the output cell values will precisely match those of the original raster. However, if the original raster is not divisible or the cell resolution changes then a bilinear interpolation will be used to re-sample the original raster. See the [best practices] on why re-sampling should be avoided if at all possible.
 
 Clicking **Add Raster** causes the form to validate all the inputs and copy the raster into the GCD Project, adding a new DEM Survey.
 
@@ -71,12 +71,12 @@ All DEM Surveys within a GCD project can be added to the map with a single opera
 
 The **Delete DEM Survey** command deletes a DEM Survey from the GCD Project. This does several things:
 
-- Checks to see if there are any analyses depdendent on this DEM Survey. If there are, GCD will not allow you to delete it from map. If any change detection analyses have been performed already, you will get a warning that you need to delete those first. GCD works on the principle that any analysis should be transparent and reproducible in the context of its inputs. Therefore, GCD prevents you from deleting inputs that were used in any analysis. 
+- Checks to see if there are any analyses dependent on this DEM Survey. If there are, GCD will not allow you to delete it from map. If any change detection analyses have been performed already, you will get a warning that you need to delete those first. GCD works on the principle that any analysis should be transparent and reproducible in the context of its inputs. Therefore, GCD prevents you from deleting inputs that were used in any analysis. 
 
 ![DEMSurvey_InUse]({{ site.baseurl }}/assets/images/CommandRefs/00_ProjectExplorer/inputs/dem-surveys/dem-in-use.png)
 
-- Checks if there are any childern associated surfaces or error surfaces. If user proceeds, the GCD removes the DEM as well as any associated surfaces or error surfaces from the table of contents (GCD AddIn version only).
-- After, it deletes the `Inputs\Surveys\DEM000n` folder associated with the selected DEM Survey from the project directory (note this does not impact where you loaded or copied the DEM survey from originally). This physcially deletes the files from your system.
+- Checks if there are any children associated surfaces or error surfaces. If user proceeds, the GCD removes the DEM as well as any associated surfaces or error surfaces from the table of contents (GCD AddIn version only).
+- After, it deletes the `Inputs\Surveys\DEM000n` folder associated with the selected DEM Survey from the project directory (note this does not impact where you loaded or copied the DEM survey from originally). This physically deletes the files from your system.
 - It then deletes all the project information about this DEM Survey from the GCD project.
 
 # Sorting DEM Surveys
@@ -85,4 +85,4 @@ The DEM Surveys within a GCD project can be organized in the project explorer tr
 
 ![DEMSurvey_InUse]({{ site.baseurl }}/assets/images/CommandRefs/00_ProjectExplorer/inputs/dem-surveys/sort-dems.png)
 
-The alaphabetical sorting is based on the name that is provided by the user. The chronological sorting relies on the user having set survey dates for each DEM Survey (see above).
+The alphabetical sorting is based on the name that is provided by the user. The chronological sorting relies on the user having set survey dates for each DEM Survey (see above).

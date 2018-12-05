@@ -9,7 +9,7 @@ title: GCD
 
 Welcome to the Geomorphic Change Detection (GCD) Software website. Here you will find [downloads]({{ site.baseurl }}/Download), [help]({{ site.baseurl }}/Help) and general information on the GCD software. GCD 7 is the current version of the software.
 
-GCD is part of the [Riverscapes Consortium's](http://riverscapes.xyz) much larger family of tools for analyzing riverscapes.  GCD is the Riverscapes Consoritm's  longest-standing, best developed software with the largest user base. GCD has users all over the world. 
+GCD is part of the [Riverscapes Consortium's](http://riverscapes.xyz) much larger family of tools for analyzing riverscapes.  GCD is the Riverscapes Consortium's  longest-standing, best developed software with the largest user base. GCD has users all over the world. 
 
 <a class="button large" href="https://github.com/Riverscapes/gcd/releases/latest">
         <img src="{{ site.baseurl}}/assets/images/icons/GCDAddIn.png">
@@ -38,7 +38,7 @@ The methodological development is described in ([Wheaton et al., 2010a](http://d
 
 ## What's Next for GCD
 
-GCD 7 is always in development. How active that develoment is depends on our [funding levels]({{ site.baseurl }}/acknowledgements). We post our wish list of enhancements on our [GCD GitHub Repository](https://github.com/Riverscapes/gcd/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement).  If you have ideas of your own, or would like to support these efforts click below:
+GCD 7 is always in development. How active that development is depends on our [funding levels]({{ site.baseurl }}/acknowledgements). We post our wish list of enhancements on our [GCD GitHub Repository](https://github.com/Riverscapes/gcd/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement).  If you have ideas of your own, or would like to support these efforts click below:
 <div align="center">
 	<a class="button success" href="{{ site.baseurl}}/Help/future-feature-request#want-to-donate-to-the-cause" ><i class="fa fa-paypal"></i>&nbsp;&nbsp; Donate Now</a>
 	<a class="hollow button" href="{{ site.baseurl}}/Help/future-feature-request#making-feature-requests" ><i class="fa fa-lightbulb-o"></i>&nbsp;&nbsp;  GCD Enhancements</a>
@@ -48,4 +48,4 @@ GCD 7 is always in development. How active that develoment is depends on our [fu
 
 ### Note on Terminology
 
-**DoD** is an acronym for DEM (digital elevation model) of Difference (not [Department of Defense](https://www.defense.gov/)). DoDs are derived from repeat topographic surveys and used in change detection studies and [morphological sediment budgeting](http://www.joewheaton.org/Home/research/projects-1/morphological-sediment-budgeting). We use **GCD** to mean geomorphic change detection, not [Glen Cannyon Dam](https://www.usbr.gov/uc/rm/crsp/gc/).
+**DoD** is an acronym for DEM (digital elevation model) of Difference (not [Department of Defense](https://www.defense.gov/)). DoDs are derived from repeat topographic surveys and used in change detection studies and [morphological sediment budgeting](http://www.joewheaton.org/Home/research/projects-1/morphological-sediment-budgeting). We use **GCD** to mean geomorphic change detection, not [Glen Canyon Dam](https://www.usbr.gov/uc/rm/crsp/gc/).

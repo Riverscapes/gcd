@@ -1,5 +1,5 @@
 ---
-title: Acknowledgements
+title: Acknowledgments
 ignore: true
 layout: dotnetpane
 ---
@@ -11,7 +11,7 @@ We are grateful to generous grant support from multiple US and UK Federal Agenci
 ### GCD 7 Development
 
 Current funding for the Geomorphic Change Detection Software development (GCD 7) is being provided by:
-- [NERC](https://nerc.ukri.org/) - UK Natural Enviornment Research Council - [Award NE/P016804/1](http://gotw.nerc.ac.uk/list_full.asp?pcode=NE%2FP016804%2F1&cookieConsent=A)
+- [NERC](https://nerc.ukri.org/) - UK Natural Environment Research Council - [Award NE/P016804/1](http://gotw.nerc.ac.uk/list_full.asp?pcode=NE%2FP016804%2F1&cookieConsent=A)
 - [USGS GCMRC](http://www.gcmrc.gov/gcmrc.aspx)
 
 

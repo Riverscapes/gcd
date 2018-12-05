@@ -9,7 +9,7 @@ GCD 7 is available as two separate products. The GCD AddIn is for users that pos
 
 ## GCD AddIn for ArcGIS
 
-The following table summarizes the compatibiltiy of GCD versions with ArcGIS:
+The following table summarizes the compatibility of GCD versions with ArcGIS:
 
 <table class="tg">
   <tr>
@@ -55,7 +55,7 @@ The GCD standalone software is a fully functional version of GCD that can be use
 
 GCD standalone is available as a **64 bit** application only. It therefore should possess better performance than the AddIn version which is only available as a 32 bit version (because ArcGIS 10.x is only available as 32 bit).
 
-GCD standalone is a deployed using Microsoft's ClickOnce technology. This allows the application to be installed in your user profile folder on your computer. You should **not** need administrator privileges to install it. That said, when you click on the above link to download the setup.exe installation you will need to read the prompts in your web browser carefully, since most browsers will warn you about downloading executable files.
+GCD standalone is a deployed using Microsoft's ClickOnce technology. This allows the application to be installed in your user profile folder on your computer. You should **not** need administrator privileges to install it. That said, when you click on the above link to download the `setup.exe` installation you will need to read the prompts in your web browser carefully, since most browsers will warn you about downloading executable files.
 
 ## Standalone Prerequisites
 
@@ -65,7 +65,7 @@ Both the AddIn and Standalone versions require:
 
 ## Other Notes
 
-Note that currently GCD projects from 6 and 7 are incompatabile. i.e. projects created in GCD 6 cannot be opened in GCD 7 and vice versa.
+Note that currently GCD projects from 6 and 7 are incompatible. i.e. projects created in GCD 6 cannot be opened in GCD 7 and vice versa.
 
 ## Running Both Versions
 The GCD Standalone and AddIn are independent of each other and installed in separate locations on your machine. Their only shared resource is the FIS Library, and they are able to both access the same `*.gcd` project simultaneously. It is not necessary or required that the Standalone and AddIn are both concurrent versions. For more information, see [here](https://github.com/Riverscapes/gcd/issues/196).

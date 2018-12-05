@@ -28,9 +28,9 @@ Specify a minimum, maximum and interval threshold. When the batch is run, the GC
 
 ![Add mask]({{ site.baseurl }}/assets/images/CommandRefs/05_Analyses/cd/batch/batch_multi_minlod.png)
 
-## Propadated Error 
+## Propagated Error 
 
-Specifiying a propagated error change detection only requires the new and old surfaces with corresponding error surfaces. Again, see the [manual change detection]({{ site.baseurl}}/Help/Analyses/Change_Detection/change-detection.html#calculating-a-change-detection) documentation for how to use these controls.
+Specifying a propagated error change detection only requires the new and old surfaces with corresponding error surfaces. Again, see the [manual change detection]({{ site.baseurl}}/Help/Analyses/Change_Detection/change-detection.html#calculating-a-change-detection) documentation for how to use these controls.
 
 ## Single Probabilistic
 
@@ -38,7 +38,7 @@ Much like the single MinLoD described above, this approach requires the surfaces
 
 ## Multiple Probabilistic
 
-The multiple probabilistic batch requires a range of confidence intervals to be specified, analagous to the multiple MinLoD approach described above. In this case, Bayesian updating can also be applied to all the change detections that will be added to the batch. Should you want to explore the impact of this Bayesian updating simply repeat adding multiple probabilistic items to the batch, once with and once without the Bayesian updating turned on.
+The multiple probabilistic batch requires a range of confidence intervals to be specified, analogous to the multiple MinLoD approach described above. In this case, Bayesian updating can also be applied to all the change detections that will be added to the batch. Should you want to explore the impact of this Bayesian updating simply repeat adding multiple probabilistic items to the batch, once with and once without the Bayesian updating turned on.
 
 ![Add mask]({{ site.baseurl }}/assets/images/CommandRefs/05_Analyses/cd/batch/batch_multi_prob.png)
 
@@ -46,4 +46,4 @@ The multiple probabilistic batch requires a range of confidence intervals to be 
 
 Once you have populated the table with the desired batch of change detection analyses click the **Run Batch** button. Large batches might take several minutes to process. Watch the status bar for an indication of progress.
 
-Batch change detection results are stored and displayed in the GCD project explorer just like any other, manual, change detection. Click on any individual analysis to view the results or use the [intercomparison]({{site.baseurl}}/Help/Analyses/Change_Detection/intercomparison.html) feature to compare several analyses to each other.
+Batch change detection results are stored and displayed in the GCD project explorer just like any other, manual, change detection. Click on any individual analysis to view the results or use the [inter-comparison]({{site.baseurl}}/Help/Analyses/Change_Detection/intercomparison.html) feature to compare several analyses to each other.

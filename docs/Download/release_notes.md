@@ -5,7 +5,7 @@ weight: 4
 
 # GCD 7
 
-See the [commit history](https://github.com/Riverscapes/gcd/commits) in Github for fuller documentation of changes. Alternatively you can view the commits organized by each product [release](https://github.com/Riverscapes/gcd/releases). The release notes for [prior versions](#prior-versions) are linked at the bottom of this page.
+See the [commit history](https://github.com/Riverscapes/gcd/commits) in GitHub for fuller documentation of changes. Alternatively you can view the commits organized by each product [release](https://github.com/Riverscapes/gcd/releases). The release notes for [prior versions](#prior-versions) are linked at the bottom of this page.
 
 ## 7.4.0 - 6 Nov 2018
 
@@ -49,7 +49,7 @@ This one is a big release that changes the platform of the Standalone so if you 
 
 #### Nearly 50 bug fixes and enhancements including:
 
-* **64-bit support!** *(Standalone only)* We're thrilled to anounce the Standalone product is now working in full 64-bit.
+* **64-bit support!** *(Standalone only)* We're thrilled to announce the Standalone product is now working in full 64-bit.
 * Memory leaks: Fixed a nasty memory leak issue which should free up more RAM and allow for larger rasters to be processed.
 * Significant performance increases (in addition to the 64-bit) when doing windowed operations like Hillshading.
 * Lots of workflow issues to smooth out user experience.

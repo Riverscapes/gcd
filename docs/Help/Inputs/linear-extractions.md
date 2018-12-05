@@ -4,11 +4,11 @@ title: Linear Extractions
 
 <div class="float-right">
 <img src="{{ site.baseurl }} /assets/images/CommandRefs/00_ProjectExplorer/inputs/profile/profile_routes.png"></div>
-Linear extractions are the product of reading the values of a [DEM survey](), [reference surface]({{site.baseurl}}/Help/Inputs/reference-surfaces.html) or [change detection]({{site.baseurl}}/Help/Analyses/Change_Detection/change-detection.html) raster along the polylines contained in a [profile route](). Each linear extraction operation produces a comma separated value (CSV) file that contains the raster values from the selected raster at user-defined stations along the polylines. Values from a corresponding error surface are also written to the linear exctration CSV file, taken from the same coincident points as the values from the DEM or DoD raster.
+Linear extractions are the product of reading the values of a [DEM survey](), [reference surface]({{site.baseurl}}/Help/Inputs/reference-surfaces.html) or [change detection]({{site.baseurl}}/Help/Analyses/Change_Detection/change-detection.html) raster along the polylines contained in a [profile route](). Each linear extraction operation produces a comma separated value (CSV) file that contains the raster values from the selected raster at user-defined stations along the polylines. Values from a corresponding error surface are also written to the linear extraction CSV file, taken from the same coincident points as the values from the DEM or DoD raster.
 
 Before you can use the linear extraction feature you must already have one or more rasters in your GCD project as well as imported a [profile route]({{site.baseurl}}/Help/Inputs/profile-routes.html) that possesses the polylines that you want to use.
 
-The GCD software itself does not possess features for viewing linear extractions. However, the [Cross Section Viewer](http://xsviewer.northarrowresearch.com/) can ingest entire GCD projects and does possess several sophisticated tools for viewing and analyszing these data.
+The GCD software itself does not possess features for viewing linear extractions. However, the [Cross Section Viewer](http://xsviewer.northarrowresearch.com/) can ingest entire GCD projects and does possess several sophisticated tools for viewing and analyzing these data.
 
 # DEM Survey & Reference Surface Extractions
 

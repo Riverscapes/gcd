@@ -3,7 +3,7 @@ title: New GCD Project
 weight: 1
 ---
 
-The `Create New GCD Project` dialog is where you create a new [project]({{ site.baseurl }}/Concepts/projects.html) by specifying the fileds described below.
+The `Create New GCD Project` dialog is where you create a new [project]({{ site.baseurl }}/Concepts/projects.html) by specifying the fields described below.
 
 ![New project]({{ site.baseurl}}/assets/images/CommandRefs/01_Project/new-project.png)
 

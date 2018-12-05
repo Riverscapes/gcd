@@ -6,7 +6,7 @@ Reference surfaces are elevation rasters that originate from some other source t
 
 The role of reference surfaces within the GCD software is intentionally flexible, enabling users to leverage them for several purposes:
 
-* Uniform constant reference planes for comparision with DEM surveys over time (e.g. a reservoir spill surface).
+* Uniform constant reference planes for comparison with DEM surveys over time (e.g. a reservoir spill surface).
 * Statistical summary of several DEM surveys over time (e.g. max, min or standard deviation from a series of DEMs).
 * User-specified raster than can represent any kind of reference imaginable (providing the cell values of the raster are in the same units at the DEM surveys within the GCD project).
 

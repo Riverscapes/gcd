@@ -12,7 +12,7 @@ We are grateful to generous grant support from multiple US and UK Federal Agenci
 ### GCD 7 Development
 
 Funding for the latest phase of Geomorphic Change Detection development was provided by:
-- [NERC](https://nerc.ukri.org/) - UK Natural Enviornment Research Council - [Award NE/P016804/1](http://gotw.nerc.ac.uk/list_full.asp?pcode=NE%2FP016804%2F1&cookieConsent=A)
+- [NERC](https://nerc.ukri.org/) - UK Natural Environment Research Council - [Award NE/P016804/1](http://gotw.nerc.ac.uk/list_full.asp?pcode=NE%2FP016804%2F1&cookieConsent=A)
 - [USGS GCMRC](http://www.gcmrc.gov/gcmrc.aspx)
 
 
@@ -41,7 +41,7 @@ Through the GeoTERM NERC project with NERC, our international partners who have 
 ##### New Zealand Regional Councils
 - [Hawkes Bay Regional Council](https://www.hbrc.govt.nz/)
 - [Ottago Regional Council](https://www.orc.govt.nz/) 
-- [Enviornment Cantebury Regional Council](https://www.ecan.govt.nz/)
+- [Environment Canterbury Regional Council](https://www.ecan.govt.nz/)
 
 [![Hawkes]({{ site.baseurl }}/assets/images/logos/HawkesBay.png)](https://www.hbrc.govt.nz/)
 [![Ottago]({{ site.baseurl }}/assets/images/logos/OtagoRegionalCouncil_Logo.png)](https://www.orc.govt.nz/)
@@ -49,7 +49,7 @@ Through the GeoTERM NERC project with NERC, our international partners who have 
 
 ##### Consulting Firms
 - [Land River Sea Consulting](http://www.landriversea.com/) of New Zealand - Matthew Gardner
-- [North Arrow Research](http://northarrowresearch.com) of Canada - Matt Reimer & Philip Bailley
+- [North Arrow Research](http://northarrowresearch.com) of Canada - Matt Reimer & Philip Bailey
 
 [![NAR]({{ site.baseurl }}/assets/images/logos/NA_Logo_150pxTall.png)](http://northarrowresearch.com/)
 [![LRSC]({{ site.baseurl }}/assets/images/logos/LandRiverSea.png)](http://www.landriversea.com/)   

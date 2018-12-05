@@ -4,9 +4,9 @@ title: Regular Masks
 
 <div class="float-right">
 <img src="{{ site.baseurl }} /assets/images/CommandRefs/00_ProjectExplorer/inputs/masks/regular.png"></div>
-Regular masks group together regions of a GCD project into different categories. Each regular mask is represented as a polygon ShapeFile. An attribute field in the ShapeFile is used to distinguish the different regions. Muliple polygons can have the same region category.
+Regular masks group together regions of a GCD project into different categories. Each regular mask is represented as a polygon ShapeFile. An attribute field in the ShapeFile is used to distinguish the different regions. Multiple polygons can have the same region category.
 
-Regular masks are used during [budget segregations]({{site.baseurl}}/Help/Analyses/Budget_Segregation/budget-segregation.html) to summarise [change detection analyses]().
+Regular masks are used during [budget segregations]({{site.baseurl}}/Help/Analyses/Budget_Segregation/budget-segregation.html) to summarize [change detection analyses]().
 
 The same basic requirements apply to all types of mask Polygon ShapeFiles:
 
@@ -25,9 +25,9 @@ To use an existing polygon ShapeFile as a regular mask right click on the Masks 
 
 Provide a unique name for the mask and then click the plus icon to browse and select the polygon ShapeFile that you want to use. The project path for the regular mask will be assigned automatically.
 
-Pick the **string** attribute **field** in the ShapeFile that you want to use to distinguish the mask regions. A list of the unique values in this field is then displayed below. Checking or unchecking the box beside each of the unique values in this field determines whether GCD includes the polgons when it is used.
+Pick the **string** attribute **field** in the ShapeFile that you want to use to distinguish the mask regions. A list of the unique values in this field is then displayed below. Checking or unchecking the box beside each of the unique values in this field determines whether GCD includes the polygons when it is used.
 
-The righthand label column is editable and can be used to override the field value for the purposes of displaying results within the GCD. For example a field value of "total_station" might have the label "Total Station" applied so as to make tables and figures easier to read. All labels must be unique and cannot be blank, empty strings.
+The right-hand label column is editable and can be used to override the field value for the purposes of displaying results within the GCD. For example a field value of "total_station" might have the label "Total Station" applied so as to make tables and figures easier to read. All labels must be unique and cannot be blank, empty strings.
 
 Note that changing the status and labels of fields can also be done after the mask has been added to the GCD project, during editing. Any budget segregations that use this mask will get updated to reflect this change.
 
