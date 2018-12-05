@@ -4,7 +4,7 @@ title: Morphological Analysis
 
 <div class="float-right">
 <img src="{{ site.baseurl }}/assets/images/CommandRefs/05_Analyses/cd/morph/morph.png"></div>
-A GCD morphological analysis is a sepcial sediment budgeting tool designed for fluvial environments. It takes a [budget segmentation]() that was generated using a [directional mask]() of **channel spanning** polygons and calculates the accumulation or loss of bed material down the channel. This is a fairly simply accounting operation and does not involve any additional geospatial operations.
+A GCD morphological analysis is a sepcial sediment budgeting tool designed for fluvial environments. It takes a [budget segragation]({{site.baseurl}}/Help/Analyses/Budget_Segregation/budget-segregation.html) that was generated using a [directional mask]({{site.baseurl}}/Help/Inputs/Masks/directional-masks.html) of **channel spanning** polygons and calculates the accumulation or loss of bed material down the channel. This is a fairly simply accounting operation and does not involve any additional geospatial operations.
 
 Users can interfact with morphological analyses and adjust the density, porosity and boundary conditions. This provides a simple but powerful way to quickly assess the movement of bedload within each channel "cell".
 

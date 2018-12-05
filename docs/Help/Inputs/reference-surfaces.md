@@ -2,7 +2,7 @@
 title: Reference Surfaces
 ---
 
-Reference surfaces are elevation rasters that originate from some other source than a topographic survey. They are very similar to [DEM Surveys]() in that they share the same vertical units, cell resolution and spatial reference. They can also be used as one or both surfaces in a [change detection ]() analysis.
+Reference surfaces are elevation rasters that originate from some other source than a topographic survey. They are very similar to [DEM Surveys]({{site.baseurl}}/Help/Inputs/dem-surveys.html) in that they share the same vertical units, cell resolution and spatial reference. They can also be used as one or both surfaces in a [change detection ]({{site.baseurl}}/Help/Analyses/Change_Detection/change-detection.html) analysis.
 
 The role of reference surfaces within the GCD software is intentionally flexible, enabling users to leverage them for several purposes:
 
@@ -10,7 +10,7 @@ The role of reference surfaces within the GCD software is intentionally flexible
 * Statistical summary of several DEM surveys over time (e.g. max, min or standard deviation from a series of DEMs).
 * User-specified raster than can represent any kind of reference imaginable (providing the cell values of the raster are in the same units at the DEM surveys within the GCD project).
 
-Each reference surface can have multiple error rasters associated with it. These error surfaces are then used when performing a [change detection]() analysis that uses spatially variable uncertainty.
+Each reference surface can have multiple error rasters associated with it. These error surfaces are then used when performing a [change detection]({{site.baseurl}}/Help/Analyses/Change_Detection/change-detection.html) analysis that uses spatially variable uncertainty.
 
 # Add Existing Reference Surface
 
@@ -53,7 +53,7 @@ A reference error surface ([see below](#reference-error-surfaces)) will be gener
 
 Uniform reference surfaces are constant rasters that possess the same value in every cell. They can be useful for representing engineered planes, safety thresholds, reservoir draw down levels and spill holes etc.
 
-Right click on the Reference Planes node in the GCD Project Explorer and choose to "Calculate New Constant Reference Surface(s)". Provide a unique name and then choose the [DEM Survey]() that possesses the spatial extent that you want to use. No values from the DEM are used, GCD merely takes the spatial extent, cell resolution and map projection and applies it to the reference surface.
+Right click on the Reference Planes node in the GCD Project Explorer and choose to "Calculate New Constant Reference Surface(s)". Provide a unique name and then choose the [DEM Survey]({{site.baseurl}}/Help/Inputs/dem-surveys.html) that possesses the spatial extent that you want to use. No values from the DEM are used, GCD merely takes the spatial extent, cell resolution and map projection and applies it to the reference surface.
 
 Next pick whether you want to create a single reference surface or multiple over a user-defined range of vertical values. If you pick the latter then you need to specify the range of vertical values over which rasters will get produced. Note that if the range of values (upper minus lower) is not evenly divisible by the increment then a raster at the upper elevation might not get generated.
 
@@ -63,7 +63,7 @@ Each reference surface will get a reference error surface generated with it usin
 
 # Reference Error Surfaces
 
-Each reference surface can have one or more error surfaces specified. These surfaces are managed much in the same way as regular [error surfaces]() for DEM surveys. 
+Each reference surface can have one or more error surfaces specified. These surfaces are managed much in the same way as regular [error surfaces]({{site.baseurl}}/Help/Inputs/error-surfaces.html) for DEM surveys. 
 
 # Context Menu
 

@@ -10,7 +10,7 @@ The budget segregation results user interface is displayed once the analysis has
 
 ![Same surfaces]({{ site.baseurl }}/assets/images/CommandRefs/05_Analyses/cd/budget/budget_right.png)
 
-The results user interface is virtually identical to that for [change detections]({{ site.baseurl }}/Help/Analyses/Change_Detection/change-detection-results.html#user-interface) with the primary difference being that budget segregation results are shown **per class**. This means that the tablular and charts displayed are for a set of polygons within the [mask]() that was used to generate the budget segregation.
+The results user interface is virtually identical to that for [change detections]({{ site.baseurl }}/Help/Analyses/Change_Detection/change-detection-results.html#user-interface) with the primary difference being that budget segregation results are shown **per class**. This means that the tablular and charts displayed are for a set of polygons within the [mask]({{site.baseurl}}/Help/Inputs/Masks/regular-masks.html) that was used to generate the budget segregation.
 
 ![Same surfaces]({{ site.baseurl }}/assets/images/CommandRefs/05_Analyses/cd/budget/budget_results_table.png)
 

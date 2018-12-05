@@ -33,7 +33,7 @@ Uniform error surfaces are simple rasters that possess the same value in all cel
 
 ## Associated Surface Error Surfaces
 
-Associated error surfaces allow you to pick a raster that has already been specified as an [associated surface]() as also representing error for the DEM Survey.
+Associated error surfaces allow you to pick a raster that has already been specified as an [associated surface]({{site.baseurl}}/Help/Inputs/associated-surfaces.html) as also representing error for the DEM Survey.
 
 ## FIS Error Surfaces
 
@@ -49,7 +49,7 @@ GCD can calculate elevation uncertainty from a [fuzzy inference system]({{ site.
 
 The methods of defining error surfaces described above presume that you want to apply the same method across the entire extent of the DEM survey. In many cases DEM Surveys might be an amalgamation of data from different topographic survey methods (e.g. total station on land and sonar under water). In these cases it is possible to generate an error surface that uses different error definitions for different areas.
 
-Before attempting to create a multi-method error surface you need to import a [regular mask]() into your GCD project. This polygon layer will be used to define the different areas where error surface methods should be applied. Note that a mask  can have multiple polygons with the same value. All polygons with the same mask value will have the same error surface calculation method applied.
+Before attempting to create a multi-method error surface you need to import a [regular mask]({{site.baseurl}}/Help/Inputs/Masks/regular-masks.html) into your GCD project. This polygon layer will be used to define the different areas where error surface methods should be applied. Note that a mask  can have multiple polygons with the same value. All polygons with the same mask value will have the same error surface calculation method applied.
 
 ![fis]({{ site.baseurl }}/assets/images/CommandRefs/00_ProjectExplorer/inputs/error/multi_method.png)
 

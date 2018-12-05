@@ -33,7 +33,7 @@ The Explore GCD Project Folder command simply opens windows explorer and points 
 
 ## Export Project To Cross Section Viewer
 
-GCD 7 introduced the ability to extract values from GCD rasters along vector [profile routes]() to produce what are called [linear extractions](). While the GCD software itself does not possess features to visualize these linear extractions, it is possible to export all linear extractions within a GCD project to the [Cross Section Viewer](http://xsviewer.northarrowresearch.com/Online_Help/File_Menu/import_gcd_project.html) software that possesses several powerful tools for analysing such data.
+GCD 7 introduced the ability to extract values from GCD rasters along vector [profile routes]({{site.baseurl}}/Help/Inputs/profile-routes.html) to produce what are called [linear extractions](). While the GCD software itself does not possess features to visualize these linear extractions, it is possible to export all linear extractions within a GCD project to the [Cross Section Viewer](http://xsviewer.northarrowresearch.com/Online_Help/File_Menu/import_gcd_project.html) software that possesses several powerful tools for analysing such data.
 
 ![Cross Section Viewer]({{ site.baseurl }}/assets/images/CommandRefs/00_ProjectExplorer/cross_section_Viewer.png)
 

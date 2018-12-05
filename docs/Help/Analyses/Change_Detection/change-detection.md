@@ -14,15 +14,15 @@ This section of the GCD help describes the basic process of performing a change 
 * Exploring [Change Detection Results]()
 * [Batch change detection]()
 * [Multi-epoch change detection]()
-* [Budget segregating]() a change detection
-* [Morphological analysis]() of a change detection
-* [Intercomparing]() change detections
+* [Budget segregating]({{site.baseurl}}/Help/Analyses/Budget_Segregation/budget-segregation.html) a change detection
+* [Morphological analysis]({{site.baseurl}}/Help/Analyses/Change_Detection/morphological.html) of a change detection
+* [Intercomparing]({{site.baseurl}}/Help/Analyses/Change_Detection/intercomparison.html) change detections
 
 # Calculating a Change Detection
 
-Before performing any kind of change detection you must have at least two [DEM Surveys]() in your GCD project and depending on the way that you want to represent uncertainty, each DEM might require an [error surface]().
+Before performing any kind of change detection you must have at least two [DEM Surveys]({{site.baseurl}}/Help/Inputs/dem-surveys.html) in your GCD project and depending on the way that you want to represent uncertainty, each DEM might require an [error surface]().
 
-Expand the Analyses section of the [GCD Explorer]() and right click on Change Detection. 
+Expand the Analyses section of the [GCD Project Explorer]({{site.baseurl}}/Help/GCD_Project_Explorer.html) and right click on Change Detection. 
 
 ![Change Detection]({{ site.baseurl }}/assets/images/CommandRefs/05_Analyses/cd/add_change_detection_cms.png)
 
@@ -30,10 +30,10 @@ The change detection form requires the following inputs:
 
 * Choose a unique **analysis name** that does not already exists in the GCD project. The GCD software will suggest a name based on the inputs selected below. You can override this should you choose.
 * The output folder is defined by the GCD software and cannot be changed.
-* **Surfaces** - both [DEM Surveys]() and [reference surfaces]() can be used as the new and old rasters in a change detection analysis.
+* **Surfaces** - both [DEM Surveys]({{site.baseurl}}/Help/Inputs/dem-surveys.html) and [reference surfaces]({{site.baseurl}}/Help/Inputs/reference-surfaces.html) can be used as the new and old rasters in a change detection analysis.
 * **Error** surfaces are mandatory if choose the propagated error or probabilistic thresholding method, but are not required if you are using the minimum level of detection method.
-* **Area of Interest** - leave this option as the intersection of the new and old surface data extents to calculate change everywhere that both surfaces possess data. This is the default. Alternatively you can select an [area of interset]() to ignore certain areas of your data if you want to restrict the calculation.
-* **Uncertainty Analysis Method** - three methods of accounting for uncertainty are available. It is recommended that you research them using the links below. Note that you must specify [error surfaces]() for the new and old surfaces if you choose the latter two methods.
+* **Area of Interest** - leave this option as the intersection of the new and old surface data extents to calculate change everywhere that both surfaces possess data. This is the default. Alternatively you can select an [area of interset]({{site.baseurl}}/Help/Inputs/Masks/aoi.html) to ignore certain areas of your data if you want to restrict the calculation.
+* **Uncertainty Analysis Method** - three methods of accounting for uncertainty are available. It is recommended that you research them using the links below. Note that you must specify [error surfaces]({{site.baseurl}}/Help/Inputs/error-surfaces.html) for the new and old surfaces if you choose the latter two methods.
     * [Minimum Level of Detection]()
     * [Propagated Errors]()
     * [Probabilistic Thresholding]()

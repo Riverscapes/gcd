@@ -6,7 +6,7 @@ title: Regular Masks
 <img src="{{ site.baseurl }} /assets/images/CommandRefs/00_ProjectExplorer/inputs/masks/regular.png"></div>
 Regular masks group together regions of a GCD project into different categories. Each regular mask is represented as a polygon ShapeFile. An attribute field in the ShapeFile is used to distinguish the different regions. Muliple polygons can have the same region category.
 
-Regular masks are used during [budget segregations]() to summarise [change detection analyses]().
+Regular masks are used during [budget segregations]({{site.baseurl}}/Help/Analyses/Budget_Segregation/budget-segregation.html) to summarise [change detection analyses]().
 
 The same basic requirements apply to all types of mask Polygon ShapeFiles:
 
@@ -49,6 +49,6 @@ Regular masks are added to the current ArcMap document with a  semi-transparent 
 
 ## Delete
 
-Deleting a regular mask removes it from the GCD project and permanently deletes the underlying ShpeFile within the GCD project. Note that you cannot delete a particular mask until all [budget segregations]() that refer to it have also been deleted.
+Deleting a regular mask removes it from the GCD project and permanently deletes the underlying ShpeFile within the GCD project. Note that you cannot delete a particular mask until all [budget segregations]({{site.baseurl}}/Help/Analyses/Budget_Segregation/budget-segregation.html) that refer to it have also been deleted.
 
 ![mask cms]({{ site.baseurl }}/assets/images/CommandRefs/00_ProjectExplorer/inputs/masks/regular_inuse.png)

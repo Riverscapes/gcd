@@ -2,7 +2,7 @@
 title: Budget Segregation
 ---
 
-A GCD budget segregation is a way of grouping regions of a [change detection]() together into separated results. A polygon [mask]() is used to aggregate together all the change together within one or more polygons and then present them as if they are a separate analysis.
+A GCD budget segregation is a way of grouping regions of a [change detection]({{site.baseurl}}/Help/Analyses/Change_Detection/change-detection.html) together into separated results. A polygon [mask]({{site.baseurl}}/Help/Inputs/Masks/regular-masks.html) is used to aggregate together all the change together within one or more polygons and then present them as if they are a separate analysis.
 
 This might be useful if you already know categorical regions within your study area, or alternatively you might study the results of a regular change detection and then want to group together regions that have a similar signal. For example, geomorphic units within a river channel make for an ideal budget segregation. With this approach you can look at the change within pools separately from bars and the area outside the channel.
 
@@ -18,7 +18,7 @@ Enter a name for the budget segregation in the form that appears. The GCD softwa
 
 The output folder is prescribed by the GCD and cannot be changed.
 
-Choose a regular or directional mask. The mask can be a [regular]() or a [directional](), but note that if you want to continue and perform a [morphological analysis]() on the budget segregation you must use a directional mask.
+Choose a regular or directional mask. The mask can be a [regular]({{site.baseurl}}/Help/Inputs/Masks/regular-masks.html) or a [directional]({{site.baseurl}}/Help/Inputs/Masks/directional-masks.html), but note that if you want to continue and perform a [morphological analysis]({{site.baseurl}}/Help/Analyses/Change_Detection/morphological.html) on the budget segregation you must use a directional mask.
 
 Click Create ![create]({{ site.baseurl }}/assets/images/icons/Save.png) to generate the budget segregation.
 
@@ -32,13 +32,13 @@ Right clicking on a budget segregation item in the GCD project explorer reveals 
 
 ## View Budget Segregation Results
 
-The budget segregation results form is very similar to the [change detection results]() results form, albeit with the added ability to distinguish between each class within the budget segregation. 
+The budget segregation results form is very similar to the [change detection results]({{site.baseurl}}/Help/Analyses/Change_Detection/change-detection-results.html) results form, albeit with the added ability to distinguish between each class within the budget segregation. 
 
-See the [budget segregation results]() documentation for more information.
+See the [budget segregation results]({{site.baseurl}}/Help/Inputs/Masks/directional-masks.html) documentation for more information.
 
 ## Add Morphplogical Analysis
 
-See the [morphological analysis]() section on how the GCD can perform a simplified sediment transport analysis on the results of a budget segregation providing that you used a [directional mask]() to generate the budget segregation itself.
+See the [morphological analysis]({{site.baseurl}}/Help/Analyses/Change_Detection/morphological.html) section on how the GCD can perform a simplified sediment transport analysis on the results of a budget segregation providing that you used a [directional mask]({{site.baseurl}}/Help/Inputs/Masks/directional-masks.html) to generate the budget segregation itself.
 
 ## Delete Budget Segregation
 

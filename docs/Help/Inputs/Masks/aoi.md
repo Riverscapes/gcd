@@ -4,7 +4,7 @@ title: Areas Of Interest
 
 <div class="float-right">
 <img src="{{ site.baseurl }} /assets/images/CommandRefs/00_ProjectExplorer/inputs/masks/aoi/aoi.png"></div>
-Area of Interest (AOI) allow you to control the regions within your data that are considered during [change detection]() analyses. This is useful if your data have a larger extent than the area of change that you are particularly interested in. This is common in river channels where you might want to ignore out-of-channel changes and focus on specific areas within the channel itself. Alternatively you might have [LiDAR]() data in which you want to ignore the vegetation and focus instead on real topographic change.
+Area of Interest (AOI) allow you to control the regions within your data that are considered during [change detection]({{site.baseurl}}/Help/Analyses/Change_Detection/change-detection.html) analyses. This is useful if your data have a larger extent than the area of change that you are particularly interested in. This is common in river channels where you might want to ignore out-of-channel changes and focus on specific areas within the channel itself. Alternatively you might have [LiDAR]() data in which you want to ignore the vegetation and focus instead on real topographic change.
 
 The same The same basic requirements apply to AOIs that apply to all types of mask Polygon ShapeFiles:
 
@@ -41,6 +41,6 @@ AOIs are added to the current ArcMap document with a red outline and a transpare
 
 # Delete
 
-Deleting an AOI removes it from the GCD project and permanently deletes the underlying ShpeFile within the GCD project. Note that you cannot delete a particular AOI until all [change detections]() that refer to it have also been deleted.
+Deleting an AOI removes it from the GCD project and permanently deletes the underlying ShpeFile within the GCD project. Note that you cannot delete a particular AOI until all [change detections]({{site.baseurl}}/Help/Analyses/Change_Detection/change-detection.html) that refer to it have also been deleted.
 
 ![Delete cms]({{ site.baseurl }}/assets/images/CommandRefs/00_ProjectExplorer/inputs/masks/aoi/aoi_inuse.png)

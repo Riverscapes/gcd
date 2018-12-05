@@ -46,4 +46,4 @@ The multiple probabilistic batch requires a range of confidence intervals to be 
 
 Once you have populated the table with the desired batch of change detection analyses click the **Run Batch** button. Large batches might take several minutes to process. Watch the status bar for an indication of progress.
 
-Batch change detection results are stored and displayed in the GCD project explorer just like any other, manual, change detection. Click on any individual analysis to view the results or use the [intercomparison]() feature to compare several analyses to each other.
+Batch change detection results are stored and displayed in the GCD project explorer just like any other, manual, change detection. Click on any individual analysis to view the results or use the [intercomparison]({{site.baseurl}}/Help/Analyses/Change_Detection/intercomparison.html) feature to compare several analyses to each other.
