@@ -21,7 +21,7 @@ This exercise contrasts the three most common forms of thresholding DoDs: i) Sim
 - ArcGIS 10.X w/ Spatial Analyst Extension
 - GCD Add-In
 
-![GCD6_Form_ChangeDetectionConfiguration]({{ site.baseurl }}/assets/images/GCD6_Form_ChangeDetectionConfiguration.png)
+![GCD6_Form_ChangeDetectionConfiguration]({{ site.baseurl }}/assets/images/workshops/GCD6_Form_ChangeDetectionConfiguration.png)
 
 ## Overview of Thresholding
 
@@ -56,7 +56,7 @@ This tutorial corresponds with topic [G. Thresholding Alternatives]({{ site.base
 
 #### Part 1 - Simple minLoD
 
-![ExcerciseI1]({{ site.baseurl }}/assets/images/ExcerciseI1.png)
+![ExcerciseI1]({{ site.baseurl }}/assets/images/tutorials/ExcerciseI1.png)
 How to do in GCD 7:
 <iframe width="560" height="315" src="https://www.youtube.com/embed/olZiDNeg8Q4" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
 
@@ -65,7 +65,7 @@ How to do in GCD 6:
 
 #### Part 2 - Propagated Error
 
-![ExcerciseI2]({{ site.baseurl }}/assets/images/ExcerciseI2.png)
+![ExcerciseI2]({{ site.baseurl }}/assets/images/tutorials/ExcerciseI2.png)
 
 How to do in GCD 7:
 <iframe width="560" height="315" src="https://www.youtube.com/embed/nqkamJv2KQ0" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
@@ -75,7 +75,7 @@ How to do in GCD 6:
 
 #### Part 3 - Probabilistic 
 
-![ExcerciseI3]({{ site.baseurl }}/assets/images/ExcerciseI3.png)
+![ExcerciseI3]({{ site.baseurl }}/assets/images/tutorials/ExcerciseI3.png)
 How to do in GCD 7:
 <iframe width="560" height="315" src="https://www.youtube.com/embed/HEJ8nOEwPiw" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
 

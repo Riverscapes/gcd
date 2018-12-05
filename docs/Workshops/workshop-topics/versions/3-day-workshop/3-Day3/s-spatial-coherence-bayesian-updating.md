@@ -6,7 +6,7 @@ title: Spatial Coherence & Bayesian Updating
 
 In Wheaton et al. (2010), a new method for looking at the spatial coherence of erosion and deposition was presented, which proposed that the probability that DoD predicted change is real depends in part on what is going on around you. In other words, if you are in a cell experiencing minor erosion (perhaps below the minimum level of detection), but every cell around you is also erosional, there is a higher probability that you actually are erosional. By contrast, if you are in a cell experiencing minor erosion and everything around you is depositional, then there is a lower probability that you are actually erosional. This simple concept was used to develop a 'spatial coherence filter', which is then converted into a conditional probability. Bayes theorem can then be evoked to modify the a priori probability and calculate a new probability (posterior) that change is real.
 
-![FIG_2007-2006_NbrHoodCompare0001]({{ site.baseurl }}/assets/images/FIG_2007-2006_NbrHoodCompare0001.png)
+![FIG_2007-2006_NbrHoodCompare0001]({{ site.baseurl }}/assets/images/tutorials/FIG_2007-2006_NbrHoodCompare0001.png)
 
 Although this is a powerful concept, it can be misapplied. If your dataset exhibits systematic errors and bias, this filter can be problematic.
 

@@ -8,7 +8,7 @@ title: Change Detection in Raster Calculator vs. GCD
 
 In this hands on exercise we will learn how to do a basic change detection using geoprocessing in ArcGIS, vs. in GCD 6. 
 
-![GCD6_Form_ChangeDetectionConfiguration]({{ site.baseurl }}/assets/images/GCD6_Form_ChangeDetectionConfiguration.png)
+![GCD6_Form_ChangeDetectionConfiguration]({{ site.baseurl }}/assets/images/workshops/GCD6_Form_ChangeDetectionConfiguration.png)
 
 #### Why we're Covering it
 

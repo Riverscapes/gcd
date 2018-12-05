@@ -12,7 +12,7 @@ DEM error is a function of many factors, and space (x-y location) is certainly o
 
 To give you the background and some of the tools to help you model DEM Error appropriately. In some instances, it may be appropriate to use the outputs from such analyses directly as a proxy for DEM error. In other cases, they may become inputs to more complicated error models. 
 
-![Fig_RandomError001]({{ site.baseurl }}/assets/images/Fig_RandomError001.png)
+![Fig_RandomError001]({{ site.baseurl }}/assets/images/workshops/Fig_RandomError001.png)
 
 #### Learning Outcomes Supported
 

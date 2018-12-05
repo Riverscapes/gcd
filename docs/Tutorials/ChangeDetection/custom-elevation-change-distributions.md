@@ -25,7 +25,7 @@ What does the script(s) output?
 
 - ECD plots as a *.pdf.  These can be further customized using a graphics drawing program (e.g. Adobe Illustrator) or simply saved as a *.png to use in a report, etc. 
 
-![thresh_plots]({{ site.baseurl }}/assets/images/thresh_plots.png)
+![thresh_plots]({{ site.baseurl }}/assets/images/tutorials/thresh_plots.png)
 
 What's in the *.zip?
 

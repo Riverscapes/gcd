@@ -7,7 +7,7 @@ weight: 4
 
 This exercise is to show you that you can use Bayes theorem to update the probability that change is real if you have other lines of evidence. In this case, we will assume that there are no systematic errors or bias , and look at the spatial coherence of erosion and deposition patterns. Below shows the contrast in spatial coherence filter outputs based on moving window size.
 
-![FIG_2007-2006_NbrHoodCompare0001]({{ site.baseurl }}assets/images/FIG_2007-2006_NbrHoodCompare0001.png)
+![FIG_2007-2006_NbrHoodCompare0001]({{ site.baseurl }}assets/images/tutorials/FIG_2007-2006_NbrHoodCompare0001.png)
 
 ### Data and Materials for Exercises
 

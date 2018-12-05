@@ -6,7 +6,7 @@ title: Essential Best Practices to Support Change Detection
 
 Aside from surveying, there are some very basic problems that have to do with raster compatibility, which can wreak havoc in change detection analyses.  A DEM of Difference is a simple subtraction operation. To do the simple math on a cell-by-cell basis, the cells must line up (i.e. their grids must be orthogonal). Here we discuss the concepts of dimensional divisibility, orthogonality, the special case of concurrency, and data extents. We also explain how problems typically arise and what you can do to avoid them.
 
-![NeedOrthogonalConcurrent]({{ site.baseurl }}/assets/images/NeedOrthogonalConcurrent.png)
+![NeedOrthogonalConcurrent]({{ site.baseurl }}/assets/images/workshops/NeedOrthogonalConcurrent.png)
 
 #### Why we're Covering it
 

@@ -2,7 +2,7 @@
 title: Approaches to Estimating DEM Error
 ---
 
-![GCD6_Form_AddAssociatedSurface_ALT]({{site.baseurl }}/assets/images/GCD6_Form_AddAssociatedSurface_ALT.png)
+![GCD6_Form_AddAssociatedSurface_ALT]({{site.baseurl }}/assets/images/workshops/GCD6_Form_AddAssociatedSurface_ALT.png)
 
 ### Background
 

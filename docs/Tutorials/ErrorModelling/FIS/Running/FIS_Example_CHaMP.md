@@ -6,7 +6,7 @@ title: O. CHaMP FIS Error Modelling
 
 This exercise shows the impact on error model predictions of using different combinations of inputs. By way of example, we use the Columbia Habitat Monitoring Program (CHaMP) data and examples. The exercise helps reinforce the concepts of how FIS error modelling works in GCD. 
 
-![Figure_05]({{ site.baseurl }}assets/images/Figure_05.png)
+![Figure_05]({{ site.baseurl }}assets/images/workshops/Figure_05.png)
 
 Figure from Bangen et al. (In Prep). 
 

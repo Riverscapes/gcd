@@ -53,7 +53,7 @@ Before we get used to GCD 6 as a black box that works, its important to understa
 
 - [F_SimpleDoD.zip](http://etal.usu.edu/GCD/Workshop/2015_RRNW/Excercises/F_SimpleDoD.zip) [![img](http://gcdworkshop.joewheaton.org/_/rsrc/1422836806362/workshop-topics/versions/1-day-workshop/f-traditional-approaches-to-change-detection/winzip_icon_16.gif)]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/1-day-workshop/f-traditional-approaches-to-change-detection/winzip_icon_16.gif?attredirects=0)
 
-![GCD6_Form_ChangeDetectionConfiguration]({{ site.baseurl }}/assets/images/GCD6_Form_ChangeDetectionConfiguration.png)
+![GCD6_Form_ChangeDetectionConfiguration]({{ site.baseurl }}/assets/images/workshops/GCD6_Form_ChangeDetectionConfiguration.png)
 
 #### Prerequisites for this Exercise
 

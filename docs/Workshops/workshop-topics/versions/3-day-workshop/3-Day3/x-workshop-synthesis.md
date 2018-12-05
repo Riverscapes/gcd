@@ -10,7 +10,7 @@ In this final segment, we will briefly summarize and review the main concepts we
 
 The workshop is designed as a firehose of information, but this website is organized to help you digest and access that information in a useful way as you move forward and potentially begin to apply the principles covered here. The synthesis is a chance to pull all that scattered information we've thrown at you in the past three days and put it back together into some coherent take home points. 
 
-![P1030488]({{ site.baseurl }}/assets/images/P1030488.JPG)
+![P1030488]({{ site.baseurl }}/assets/images/workshops/P1030488.JPG)
 
 ------
 

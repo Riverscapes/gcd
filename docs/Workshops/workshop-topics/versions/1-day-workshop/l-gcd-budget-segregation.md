@@ -6,7 +6,7 @@ title: GCD Budget Segregation
 
 In this lecture we will go over the principles of budget segregation - a simple process of breaking up your DoD sediment budgets spatially to better understand the geomorphic processes responsible for the reach. We will use a variety of case study examples to illustrate the various ways you can undertake budget segregation including standard classification and classification of difference. We will focus a lot of attention on how to develop coherent geomorphic interpretations.
 
-![GCD6_Form_BudgetSegResults_GraphicalResults]({{ site.baseurl }}/assets/images/GCD6_Form_BudgetSegResults_GraphicalResults.png)
+![GCD6_Form_BudgetSegResults_GraphicalResults]({{ site.baseurl }}/assets/images/workshops/GCD6_Form_BudgetSegResults_GraphicalResults.png)
 
 #### Why we're Covering it
 

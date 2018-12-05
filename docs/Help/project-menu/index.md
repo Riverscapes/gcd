@@ -1,31 +1,41 @@
 ---
 title: Project Menu
-weight: 1
+weight: 2
 ---
 
-The main entry point to begin using the GCD Software is the `Project` Menu:
+The Project menu is the main entry point to begin using the GCD software. The menu items differ slightly between the AddIn and standalone versions, with the main difference being that the standalone version maintains a list of recently opened projects.
 
-![Menu_Project]({{ site.baseurl }}/assets/images/CommandRefs/01_Project/ProjectMenu_AddIn.png)
+<div class="row">
+	<div class="columns medium-6 small-12" style="text-align: center">
+		<img src="{{ site.baseurl }}/assets/images/CommandRefs/01_Project/addin_project_menu.png">
+	</div>
+	<div class="columns medium-6 small-12" style="text-align: center">
+		<img src="{{ site.baseurl }}/assets/images/CommandRefs/01_Project/standalone_project_menu.png">
+	</div>
+</div>
+<div class="row">
+	<div class="columns medium-6 small-12" style="text-align: center">
+		GCD AddIn Project Menu
+	</div>
+	<div class="columns medium-6 small-12" style="text-align: center">
+		GCD Standalone Project Menu
+	</div>
+</div>
 
+------
 
-In the GCD Software, all change detection analyses that you do are performed within a specific project. A [GCD project]({{ site.baseurl }}/Help/Concepts/project) consists of three primary elements:
+See the following sections for help on the project menu commands:
 
-1. A folder (fixed path) on your file system where the project and its contents exist.
-2. A `*.gcd` [ Project File]({{ site.baseurl }}/Help/Concepts/project/-gcd-files)
-3. All the GCD input and output files (in `Inputs` and `Analyses` subfolders of project folder)
+- [New GCD Project]({{ site.baseurl }}/Help/project-menu/new-project.html)
+- [Open GCD Project]({{ site.baseurl }}/Help/project-menu/open-project.html)
+- [Recent GCD Projects]({{ site.baseurl }}/Help/project-menu/recent.html) (standalone only)
+- [Close GCD Project]({{ site.baseurl }}/Help/project-menu/close-project.html)
+- [Project Properties]({{ site.baseurl }}/Help/gcd-project-explorer/project_cms.html#edit-project-properties)
+- [Browse GCD Project Folder]({{ site.baseurl }}/Help/gcd-project-explorer/project_cms.html#explore-project-folder)
 
-From the`Project` Menu, you can create a `New GCD Projects`, `Open...` existing projects and `Close `the current project. You can always tell if a project is open because it will be listed by its name in the GCD [Project Explorer]({{ site.baseurl }}/Help/Commands/gcd-project-explorer/):
+In addition to the above commands, the [GCD Project Explorer]({{ site.baseurl }}/Help/gcd-project-explorer) can be accessed within the AddIn by clicking the GCD icon at the left edge of the GCD toolbar.
 
-![GCD6_GCDName]({{ site.baseurl }}/assets/images/GCD6_GCDName.png)
-
-#### Commands
-
-- [New GCD Project]({{ site.baseurl }}/Help/Commands/project-menu/new-project.html)
-- [Open GCD Project]({{ site.baseurl }}/Help/Commands/project-menu/open-project)
-- [Close GCD Project]({{ site.baseurl }}/Help/Commands/project-menu/close-project)
-- [GCD Project Report]({{ site.baseurl }}/Help/Commands/project-menu/project-menu/d-gcd-project-report)
-
-In addition to the above commands, the [GCD Project Explorer]({{ site.baseurl }}/gcd-command-reference/gcd-project-explorer) can be accessed from the Project Menu, the Project Properties can be reviewed and the description edited, and you can [Browse GCD Project Folder]({{ site.baseurl }}/gcd-command-reference/gcd-project-explorer/project-context-menu/iii-explore-gcd-project-folder).
+![toolbar]({{ site.baseurl }}/assets/images/CommandRefs/addin_toolbar.png)
 
 ------
 <div align="center">

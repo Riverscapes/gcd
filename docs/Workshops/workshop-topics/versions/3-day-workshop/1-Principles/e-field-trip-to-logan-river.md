@@ -18,7 +18,7 @@ We will split up into three groups and rotate through three hands-on instruction
 
 This will help highlight best survey practices for ground-based rtkGPS and total station surveys and the importance of robust control networks to facilitate repeat topographic surveys that can support change detection. 
 
-![IntroTopography]({{ site.baseurl }}/assets/images/IntroTopography.png)
+![IntroTopography]({{ site.baseurl }}/assets/images/workshops/IntroTopography.png)
 
 #### Learning Outcomes Supported
 
@@ -34,7 +34,7 @@ This topic will help fulfill the following [primary learning outcome(s)]({{ site
 
 - Raw Field Data
 
-![IntroToSurveying]({{ site.baseurl }}/assets/images/IntroToSurveying.png)
+![IntroToSurveying]({{ site.baseurl }}/assets/images/workshops/IntroToSurveying.png)
 
 Poster from CHaMP Camp.
 
@@ -42,11 +42,11 @@ Poster from CHaMP Camp.
 
 #### Selected Figures & Table from CHaMP Protocol
 
-![800]({{ site.baseurl }}/assets/images/800.png)
+![800]({{ site.baseurl }}/assets/images/workshops/800.png)
 
-![804]({{ site.baseurl }}/assets/images/804.png)
+![804]({{ site.baseurl }}/assets/images/workshops/804.png)
 
-![801]({{ site.baseurl }}/assets/images/801.png)
+![801]({{ site.baseurl }}/assets/images/workshops/801.png)
 
 #### Relevant or Cited Literature
 

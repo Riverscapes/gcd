@@ -6,7 +6,7 @@ There was a brief discussion about the Geomorphic Unit Toolkit ([GUT](https://ri
 
 
 <div align="center">
-    <a class=" button" href="https://riverscapes.github.io/pyGUT/"><img src="{{ site.baseurl }}/assets/images/GUT_32.png">   GUT - Geomorphic Unit Toolkit </a>  
+    <a class=" button" href="https://riverscapes.github.io/pyGUT/"><img src="{{ site.baseurl }}/assets/images/workshops/GUT_32.png">   GUT - Geomorphic Unit Toolkit </a>  
 </div>
 Joe gave a quick overview of GUT and bounced around different parts of these slides below (we didn't cover all these slides, but they are provided for reference and context) :
 

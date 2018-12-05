@@ -1,13 +1,28 @@
 ---
 title: Customize Menu
-weight: 3
+weight: 9
 ---
 
-There are two commands inside the `Customize` menu: `Options `and `FIS Library`. The [Options]({{ site.baseurl }}/gcd-command-reference/customize-menu/options) command allows you to customize program settings to your own preferences. The [FIS Library]({{ site.baseurl }}/gcd-command-reference/customize-menu/fis-library) is where you load and customize `*.fis` files for [fuzzy inference systems]({{ site.baseurl }}/gcd-concepts/fuzzy-inference-systems-for-modeling-dem-error) to use in the [Error Calculations]({{ site.baseurl }}/system/errors/NodeNotFound?suri=wuid:gx:3ed05905e41de6f6) tab of the [Survey Library]({{ site.baseurl }}/system/errors/NodeNotFound?suri=wuid:gx:3ed05905e41de6f6).
+The customize menu contains commands for managing the GCD software options and FIS library.
 
-![GCD6_Menu_Customize]({{ site.baseurl }}/assets/images/CommandRefs/03_Customize/CustomizeMenu.png)
+<div class="row">
+	<div class="columns medium-6 small-12" style="text-align: center">
+		<img src="{{ site.baseurl }}/assets/images/CommandRefs/03_Customize/addin-customize-menu.png">
+	</div>
+	<div class="columns medium-6 small-12" style="text-align: center">
+		<img src="{{ site.baseurl }}/assets/images/CommandRefs/03_Customize/standalone-customize-menu.png">
+	</div>
+</div>
+<div class="row">
+	<div class="columns medium-6 small-12" style="text-align: center">
+		GCD AddIn Project Menu
+	</div>
+	<div class="columns medium-6 small-12" style="text-align: center">
+		GCD Standalone Project Menu
+	</div>
+</div>
 
-#### Commands
+# Commands
 
 - [FIS Library]({{ site.baseurl }}/gcd-command-reference/customize-menu/fis-library)
 - [Options]({{ site.baseurl }}/gcd-command-reference/customize-menu/options)

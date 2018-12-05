@@ -17,7 +17,7 @@ This topic will help fulfill the following [primary learning outcome(s)]({{ site
 - Methods for interpreting and segregating morphological sediment budgets quantitatively in terms of both geomorphic processes and changes in physical habitat
 - Hands-on instruction on use of the [GCD software](http://www.joewheaton.org/Home/research/software/GCD)through group-led and self-paced exercises
 
-![ChangeDetectionPanel]({{ site.baseurl }}/assets/images/ChangeDetectionPanel.png)
+![ChangeDetectionPanel]({{ site.baseurl }}/assets/images/workshops/ChangeDetectionPanel.png)
 
 ------
 

@@ -13,7 +13,7 @@ In this first half hour we will make introductions of all the participants and i
 - To break the ice and get everyone talking to each other and in the mode of asking questions and being an active participant in discussion and lecture
 - To layout expectations for the workshop and highlight what we will and will not cover
 
-![USUBeaverCourse2011_JoeLecturing]({{ site.baseurl }}/assets/images/USUBeaverCourse2011_JoeLecturing.jpg)
+![USUBeaverCourse2011_JoeLecturing]({{ site.baseurl }}/assets/images/workshops/USUBeaverCourse2011_JoeLecturing.jpg)
 
 ------
 

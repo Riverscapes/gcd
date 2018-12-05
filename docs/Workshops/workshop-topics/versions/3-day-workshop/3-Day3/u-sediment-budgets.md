@@ -6,13 +6,13 @@ title: u-sediment-budgets
 
 The morphological approach is a technique of calculating sediment flux from changes in topography. By contrast, a morphological sediment budget is a statement of the conservation of mass - a fancy way of saying that the change in storage (i.e. the stuff from our DoD change detection) is equal to what came in to our area of interest minus what left our area of interest. In this lecture, we will learn about the challenges in closing sediment budgets  (i.e. quantifying all three terms and seeing if they add up correctly), and share with us her doctoral research on this topic. 
 
-![MorphologicalSedimentBudgetEquation]({{ site.baseurl }}/assets/images/MorphologicalSedimentBudgetEquation.png)
+![MorphologicalSedimentBudgetEquation]({{ site.baseurl }}/assets/images/workshops/MorphologicalSedimentBudgetEquation.png)
 
 #### Why we're Covering it
 
 One of the most common applications of geomorphic change detection is quantifying a morphological sediment budget.  However, the 'net' change in storage is one of the most potentially uncertain terms that comes out of geomorphic change detection. By contrast, the morphological approach only relies on the erosion terms from geomorphic change detection, which are typically those we have the most confidence in. 
 
-![Fig_02]({{ site.baseurl }}/assets/images/Fig_02.png)
+![Fig_02]({{ site.baseurl }}/assets/images/workshops/Fig_02.png)
 
 Figure from Vericat et al. (In Review). 
 

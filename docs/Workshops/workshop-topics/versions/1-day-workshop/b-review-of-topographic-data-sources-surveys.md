@@ -25,9 +25,9 @@ title: C. Review of Topographic Data Sources & Surveys
 
 Particularly in the fluvial environment, data from multiple platforms are combined to paint a complete topographic picture of an area. 
 
-![TS-SONAR]({{ site.baseurl}}/assets/images/TS-SONAR.png)
+![TS-SONAR]({{ site.baseurl}}/assets/images/workshops/TS-SONAR.png)
 
-![ALS-Photogrametry-rtkGPS]({{ site.baseurl}}/assets/images/ALS-Photogrametry-rtkGPS.png)
+![ALS-Photogrametry-rtkGPS]({{ site.baseurl}}/assets/images/workshops/ALS-Photogrametry-rtkGPS.png)
 
 #### Why we're Covering it
 

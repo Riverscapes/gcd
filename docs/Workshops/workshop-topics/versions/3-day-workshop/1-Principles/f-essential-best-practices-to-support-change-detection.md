@@ -16,7 +16,7 @@ This topic will help fulfill the following [primary learning outcome]({{ site.ba
 
 - The fundamental background necessary to design effective repeat topographic monitoring campaigns and distinguish geomorphic changes from noise (with particular focus on restoration applications)
 
-![NeedOrthogonalConcurrent]({{ site.baseurl }}/assets/images/NeedOrthogonalConcurrent.png)
+![NeedOrthogonalConcurrent]({{ site.baseurl }}/assets/images/workshops/NeedOrthogonalConcurrent.png)
 
 ------
 

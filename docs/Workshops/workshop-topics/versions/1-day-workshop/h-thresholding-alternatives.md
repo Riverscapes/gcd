@@ -6,7 +6,7 @@ title: Thresholding Alternatives
 
 In the morning, we introduced simple techniques for estimating errors and propagating errors. Once you have an uncertainty estimate for your DoD, how do you use this information to distinguish real change from noise? Typically some sort of threshold is established, such as a minimum level of detection or a confidence interval on a probability that change is real. Then there is the question of what to do with data below that threshold. Exclusion is the most common method, but subtraction and weighted sums are other possibilities. In this session, we cover these alternatives and show you how to interact with these in the GCD software. 
 
-![Fig_2007-2006_PW2_threshold]({{site.baseurl }}/assets/images/Fig_2007-2006_PW2_threshold.jpg)
+![Fig_2007-2006_PW2_threshold]({{site.baseurl }}/assets/images/tutorials/Fig_2007-2006_PW2_threshold.jpg)
 
 #### Why we're Covering it
 

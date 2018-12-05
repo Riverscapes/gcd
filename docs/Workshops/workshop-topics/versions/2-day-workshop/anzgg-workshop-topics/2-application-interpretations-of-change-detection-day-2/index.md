@@ -2,7 +2,7 @@
 title: Application & Interpretations of Change Detection (Day 2)
 ---
 
-![Ouija-hands-on-mouse-300dpi-do-not-link-to-me]({{ site.baseurl }}/assets/images/Ouija-hands-on-mouse-300dpi-do-not-link-to-me.jpg)
+![Ouija-hands-on-mouse-300dpi-do-not-link-to-me]({{ site.baseurl }}/assets/images/workshops/Ouija-hands-on-mouse-300dpi-do-not-link-to-me.jpg)
 
 In the morning we will wrap up some of the change detection principles we started with on [Day 1]({{ site.baseurl }}/Help/Workshops/workshop-topics/versions/2-day-workshop/anzgg-workshop-topics/1-surveying-principles-change-detection). After having established the foundations that enable us to undertake geomorphic change detection rigorously, we will get into the more interesting applications and interpretations of such analyses (mainly with fluvial and restoration monitoring examples). We will cover applications such as budget segregation, sediment budgeting, reservoir tools and a variety of examples of how case studies of change detection have been used to do various analyses. We will seek your feedback on ways we can improve them before they are finalized. 
 

@@ -24,11 +24,11 @@ This exercise shows how GCD can be used for coming up with statistical models of
 
 
 
-![ExcerciseM1]({{ site.baseurl }}assets/images/ExcerciseM1.png)
+![ExcerciseM1]({{ site.baseurl }}assets/images/tutorials/ExcerciseM1.png)
 
 #### Run ToPCAT as Associated Surface to Get Roughness
 
-![ExcerciseM2]({{ site.baseurl }}assets/images/ExcerciseM2.png)
+![ExcerciseM2]({{ site.baseurl }}assets/images/tutorials/ExcerciseM2.png)
 
 **Exercise M - Part 3: Use Associated Surface Panel to Create Roughness**
 

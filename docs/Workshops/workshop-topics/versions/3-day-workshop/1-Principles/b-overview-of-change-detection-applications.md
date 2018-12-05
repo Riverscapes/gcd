@@ -10,7 +10,7 @@ This introductory lecture is intended to highlight some of the ways in which cha
 
 We will also ask participants to provide brief pop-up presentations of how they have, are or plant to use change detection for their own problems. We will devote this session to 2 minute pop-ups from the workshop participants to show a quick image, map or two of a project or problem they're working on where geomorphic change detection may be helpful. Pop-ups by participants are not mandatory, but we encourage you to share your GCD problems, relevant insights, or cool applications of GCD with the group. We welcome as many contributions as there are participants!
 
-![Wheaton2013_JGR]({{ site.baseurl }}/assets/images/Wheaton2013_JGR.png)
+![Wheaton2013_JGR]({{ site.baseurl }}/assets/images/workshops/Wheaton2013_JGR.png)
 
 #### Why we're Covering it
 

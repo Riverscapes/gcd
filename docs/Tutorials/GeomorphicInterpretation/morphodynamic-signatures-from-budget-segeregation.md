@@ -7,7 +7,7 @@ weight: 4
 
 This exercise is to show you how DoDs can be easily interrogated to support . In GIS, this is basically a zonal statistics exercise, but in GCD we call it budget segregation and in addition to summary statistics you can derive all the standard GCD outputs for any polygon class (e.g. elevation change distributions, summary.xml, etc.). This provides an excellent means of hypothesis testing.
 
-![Fig_16]({{ site.baseurl }}/assets/images/Fig_16.png)
+![Fig_16]({{ site.baseurl }}/assets/images/tutorials/Fig_16.png)
 
 Example from Wheaton et al. (2013) of morphodynamic signatures derived from four DoDs that help in separating braiding mechanisms from other mechanisms of change. 
 

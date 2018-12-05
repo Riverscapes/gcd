@@ -8,7 +8,7 @@ title: Review of Building Surfaces from Raw Topographic Data
 
 In this section we will go through the basics of creating topographic surfaces as raster digital elevation models from raw topographic data. We will use a standard and accepted technique of deriving a TIN first, then editing it to remove problematic interpolations, and then converting this TIN surface to a raster DEM surface.
 
-![Feshie_LowQ]({{ site.baseurl }}/assets/images/Feshie_LowQ.gif)
+![Feshie_LowQ]({{ site.baseurl }}/assets/images/workshops/Feshie_LowQ.gif)
 
 #### Why we're Covering it
 
