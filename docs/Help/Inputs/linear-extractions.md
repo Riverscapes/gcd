@@ -54,7 +54,7 @@ Right click on a linear extraction and choose to view the folder. This will open
 
 See the [Cross Section Viewer](http://xsviewer.northarrowresearch.com/Online_Help/File_Menu/import_gcd_project.html) help for instructions on how to view the contents of GCD linear extractions.
 
-![Cross Section Viewer]({{ site.baseurl }}/assets/images/CommandRefs/00_ProjectExplorer/cross_section_Viewer.png)
+![Cross Section Viewer]({{ site.baseurl }}/assets/images/CommandRefs/00_ProjectExplorer/cross_section_viewer.png)
 
 # Edit Properties
 
