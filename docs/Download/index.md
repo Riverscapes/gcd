@@ -16,7 +16,7 @@ GCD Standalone is a desktop software version that performs all the core GCD func
     </div>
 </div>
 
-<br>
+------
 
 <div class="row" align="center">
 	<div class="columns small-6">

@@ -84,17 +84,57 @@ collections:
 AppRedirects:
   - key: NewProject
     url: Help/project-menu/new-project.html
-  - key: KEY2
-    url: Download/release_notes.html
-  - key: OpenProject
-    url: Help/Commands/project-menu/open-project.html
-  - key: CleanRaster
-    url: Help/Commands/data-prep-menu/a-clean-raster-tool.html
-  - key: NewDEM
-    url: Help/Commands/gcd-project-explorer/Inputs/DEM_Surveys/add-dem-survey.html
-  - key: frmLinearExtractionProperties
-    url: Help/Commands/gcd-project-explorer/Inputs/DEM_Surveys/DEMSurvey/CalculateLinearExtraction.html	
+  - key: ProjectProperties
+    url: Help/project-menu/new-project.html
+  - key: frmOptions
+    url: Help/customize-menu/options.html
+  - key: frmFISLibrary
+    url: Help/customize-menu/fis-library.html
+  - key: frmFISProperties
+    url: Help/customize-menu/fis-library.html
   - key: frmSurfaceProperties
-    url: Help/Commands/gcd-project-explorer/Inputs/DEM_Surveys/DEMSurvey/edit-dem-survey-properties.html
+    url: index.html
+  - key: frmPointDensity
+    url: Help/Inputs/associated-surfaces.html#calculating-point-density
+  - key: frmAssociatedSurface
+    url: Help/Inputs/associated-surfaces.html
+  - key: frmSingleMethodError
+    url: Help/Inputs/error-surfaces.html
+  - key: frmMultiMethodError
+    url: Help/Inputs/error-surfaces.html#multi-method-error-surfaces
+  - key: frmLinearExtractionProperties
+    url: Help/Inputs/linear-extractions.html
+  - key: frmReferenceSurfaceFromDEMs
+    url: Help/Inputs/reference-surfaces.html#reference-surfaces-from-dem-surveys
+  - key: frmReferenceSurfaceFromConstant
+    url: Help/Inputs/reference-surfaces.html#uniform-reference-surfaces
+  - key: frmRefErrorSurface
+    url: Help/Inputs/reference-surfaces.html#reference-error-surfaces
+  - key: frmMaskProperties
+    url: Help/Inputs/Masks/regular-masks.html
+  - key: frmDirectionalMaskProps
+    url: Help/Inputs/Masks/directional-masks.html
+  - key: frmAOIProperties
+    url: Help/Inputs/Masks/aoi.html
   - key: frmProfileRouteProperties
-    url: Help/Commands/gcd-project-explorer/Inputs/ProfileRoutes/
+    url: Help/Inputs/profile-routes.html
+  - key: frmDoDProperties
+    url: Help/Analyses/Change_Detection/change-detection.html
+  - key: frmBatchDoD
+    url: Help/Analyses/Change_Detection/batch-change-detection.html
+  - key: frmMultiEpoch
+    url: Help/Analyses/Change_Detection/multiple-epoch.html
+  - key: frmDoDResults
+    url: Help/Analyses/Change_Detection/change-detection-results.html
+  - key: frmDoDSummaryProperties
+    url: Help/Analyses/Change_Detection/change-detection-results.html#customize-display-settings
+  - key: frmBudgetSegProperties
+    url: Help/Analyses/Budget_Segregation/budget-segregation.html
+  - key: frmBudgetSegResults
+    url: Help/Analyses/Budget_Segregation/budget_segregation_results.html
+  - key: frmMorpProperties
+    url: Help/Analyses/Change_Detection/morphological.html
+  - key: frmMorphResults
+    url: Help/Analyses/Change_Detection/morphological.html#view-morphological-analysis-results
+  - key: frmInterComparisonProperties
+    url: Help/Analyses/Change_Detection/intercomparison.html
