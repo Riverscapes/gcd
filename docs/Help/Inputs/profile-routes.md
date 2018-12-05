@@ -7,7 +7,7 @@ title: Profile Routes
 Profile routes represent lines that can be used to extract values from the underlying GCD rasters via the [linear extraction]({{site.baseurl}}/Help/Inputs/linear-extractions.html) feature. The GCD uses two types of profile routes that are distinguished by their direction:
 
 * **Transect** profile routes can be thought of as passing *across* the data. In the context of rivers, these might be thought of as cross sections or river station transects.
-* **Longitudinal**  profile routes pass *along* the data and, as the name suggests are typically used to extract river long profiles.
+* **Longitudinal** profile routes pass *along* the data and, as the name suggests are typically used to extract river long profiles.
 
 The fields required to generate these two types of profile routes differ slightly, but apart from that the way that they are used to [extract values]({{site.baseurl}}/Help/Inputs/linear-extractions.html) from underlying rasters, as well as the way that they are managed within the GCD software, is identical.
 
