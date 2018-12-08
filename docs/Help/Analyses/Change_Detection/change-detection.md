@@ -1,5 +1,6 @@
 ---
 title: Change Detection
+weight: 1
 ---
 
 <div class="float-right">

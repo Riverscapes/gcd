@@ -1,5 +1,6 @@
 ---
 title: Directional Masks
+weight: 2
 ---
 
 Directional masks are very similar to [regular masks]({{site.baseurl}}/Help/Inputs/Masks/regular-masks.html) with the main difference being that directional masks are ordered. Regular masks are simply categorical, with the individual mask values occurring in any particular order. By contrast, directional masks uses distance field to specify the location of the polygon regions relative to a particular reference point. This can be useful when the polygons represent sequential sections along a path such as a river. 

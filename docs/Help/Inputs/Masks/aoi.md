@@ -1,5 +1,6 @@
 ---
 title: Areas Of Interest
+weight: 3
 ---
 
 <div class="float-right">

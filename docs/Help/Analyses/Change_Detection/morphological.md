@@ -1,5 +1,6 @@
 ---
 title: Morphological Analysis
+weight: 4
 ---
 
 <div class="float-right">

@@ -1,5 +1,6 @@
 ---
 title: Profile Routes
+weight: 5
 ---
 
 <div class="float-right">

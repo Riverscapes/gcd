@@ -1,5 +1,6 @@
 ---
 title: Multiple Epoch Batch
+weight: 6
 ---
 
 It can be time consuming to set up and perform several change detection analyses. The GCD software simplifies this process with two batch change detection features. This section describes the multiple epoch batch intended for quickly analyzing predefined pairings of surfaces that are sorted into chronological order. See the [generic batch]({{ site.baseurl }}/Help/Analyses/Change_Detection/batch-change-detection.html) documentation for information on the other kind.
@@ -23,6 +24,7 @@ Click the **Multiple Epoch** menu item shown above to launch the user interface 
     3. **All DEMs minus the previous DEM** will take all DEMs from the list above that have a checked box beside them and use them as the new DEM, then pair it with the next oldest DEM that also has a checked box.
 1. The final step is to review the DEM pairs in the epoch queue at the bottom of the form (7) and un-check the box beside any that are not wanted.
    
+
 ![Add mask]({{ site.baseurl }}/assets/images/CommandRefs/05_Analyses/cd/epoch/epoch_add.png)
 
 # Running the Batch

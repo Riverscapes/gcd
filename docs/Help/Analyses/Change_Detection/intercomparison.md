@@ -1,6 +1,6 @@
 ---
 title: Inter Comparisons
-weight: 3
+weight: 7
 ---
 
 Inter-comparisons quickly and easily summarize multiple [change detections]({{ site.baseurl}}/Help/Analyses/Change_Detection/change-detection.html) together. This does not involve any geospatial analysis but merely involves an accounting exercise to sum up the various results from the relevant analyses.

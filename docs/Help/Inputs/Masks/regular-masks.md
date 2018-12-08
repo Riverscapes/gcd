@@ -1,5 +1,6 @@
 ---
 title: Regular Masks
+weight: 1
 ---
 
 <div class="float-right">

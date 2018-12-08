@@ -1,5 +1,6 @@
 ---
 title: Batch Change Detection
+weight: 5
 ---
 
 It can be time consuming to set up and perform several change detection analyses. The GCD software simplifies this process with two batch change detection features. This section describes the generic batch intended for quickly adding multiple analyses with different surfaces and thresholding. See the [multi-epoch batch] documentation for information on the other kind.

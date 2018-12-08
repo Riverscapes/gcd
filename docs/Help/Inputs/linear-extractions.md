@@ -1,5 +1,6 @@
 ---
 title: Linear Extractions
+weight: 6
 ---
 
 <div class="float-right">

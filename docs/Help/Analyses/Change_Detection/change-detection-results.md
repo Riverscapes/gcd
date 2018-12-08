@@ -1,5 +1,6 @@
 ---
 title: Viewing Results
+weight: 2
 ---
 
 The GCD software produces a rich set of results with each [change detection]({{ site.baseurl }}/Help/Analyses/Change_Detection/change-detection.html) analysis. This section describes both the user interface for exploring results within the software as well as the files that are saved to the project folder structure as part of the analysis.
