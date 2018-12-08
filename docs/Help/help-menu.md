@@ -24,4 +24,4 @@ The Help menu provides links to this sites' online help as well as to several re
 
 The About GCD dialog provides basic information about the software as well as lists the current version of the GCD you have installed.
 
-![About]({{ site.baseurl }}/assets/images/CommandRefs/04_Help/about.png)
+![About]({{ site.baseurl }}/assets/images/CommandRefs/04_Help/About.png)
