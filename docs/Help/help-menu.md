@@ -1,5 +1,6 @@
 ---
 title: Help Menu
+weight: 6
 ---
 
 The Help menu provides links to this sites' online help as well as to several related tools.

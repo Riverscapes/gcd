@@ -1,6 +1,6 @@
 ---
 title: Customize Menu
-weight: 9
+weight: 5
 ---
 
 The customize menu contains commands for managing the GCD software options and FIS library.
