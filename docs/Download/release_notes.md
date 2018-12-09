@@ -205,4 +205,4 @@ This one is a big release that changes the platform of the Standalone so if you 
 # Prior Versions
 
 * [GCD 6 Release Notes](/releasenotes/gcd6_releasenotes)
-* [GCD 5 Release Notes](http://gcd.joewheaton.org/downloads/older_versions)
+* [GCD 5 Release Notes](old_versions)

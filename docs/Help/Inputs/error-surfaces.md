@@ -19,7 +19,7 @@ To use an existing raster as an error surface, first ensure that the project exp
 
 You will be prompted to browse to an existing raster file on your computer. GCD is compatible with GeoTiff (`*.tiff`) and Erdas Imagine (`*.img`) raster formats. It is not compatible with any other formats including rasters stored in geodatabases, PostGIS etc. 
 
-The same raster import form is displayed after the raster is selected as that used to [add an existing DEM survey](/Help/gcd-project-explorer/Inputs/dem-surveys.html#add-existing-dem-survey). The form appears slightly differently when used for adding error surfaces. First, the output edge coordinates and cell resolution are **fixed** and locked to those of the parent DEM Survey. This ensures that all error surfaces are perfectly concurrent with the parent DEM.
+The same raster import form is displayed after the raster is selected as that used to [add an existing DEM survey]({{site.baseurl}}/Help/Inputs/dem-surveys.html#add-existing-dem-survey). The form appears slightly differently when used for adding error surfaces. First, the output edge coordinates and cell resolution are **fixed** and locked to those of the parent DEM Survey. This ensures that all error surfaces are perfectly concurrent with the parent DEM.
 
 # Calculating Error Surfaces
 

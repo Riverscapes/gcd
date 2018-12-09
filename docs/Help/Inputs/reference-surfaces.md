@@ -21,7 +21,7 @@ To use an existing raster as a reference surface right click on the Reference Su
 
 You will be prompted to browse to an existing raster file on your computer. GCD is compatible with GeoTiff (`*.tiff`) and Erdas Imagine (`*.img`) raster formats. It is not compatible with any other formats including rasters stored in geodatabases, PostGIS etc. 
 
-The same raster import form is displayed after the raster is selected as that used to [add an existing DEM survey](/Help/gcd-project-explorer/Inputs/dem-surveys.html#add-existing-dem-survey). The form appears slightly differently when used for adding reference surfaces. The cell resolution and precision are both locked to those of the GCD project. This ensures that all reference surfaces are perfectly divisible with other rasters in the project. You can change the extent. Reference surfaces don't need to be concurrent with each other or DEM surveys.
+The same raster import form is displayed after the raster is selected as that used to [add an existing DEM survey]({{site.baseurl}}/Help/Inputs/dem-surveys.html#add-existing-dem-survey). The form appears slightly differently when used for adding reference surfaces. The cell resolution and precision are both locked to those of the GCD project. This ensures that all reference surfaces are perfectly divisible with other rasters in the project. You can change the extent. Reference surfaces don't need to be concurrent with each other or DEM surveys.
 
 # Reference Surfaces From DEM Surveys
 

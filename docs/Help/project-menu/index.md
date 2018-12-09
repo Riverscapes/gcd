@@ -33,6 +33,6 @@ See the following sections for help on the project menu commands:
 - [Project Properties]({{ site.baseurl }}/Help/gcd-project-explorer/project_cms.html#edit-project-properties)
 - [Browse GCD Project Folder]({{ site.baseurl }}/Help/gcd-project-explorer/project_cms.html#explore-project-folder)
 
-In addition to the above commands, the [GCD Project Explorer]({{ site.baseurl }}/Help/gcd-project-explorer) can be accessed within the AddIn by clicking the GCD icon at the left edge of the GCD toolbar.
+In addition to the above commands, the [GCD Project Explorer]({{ site.baseurl }}/Help/GCD_Project_Explorer) can be accessed within the AddIn by clicking the GCD icon at the left edge of the GCD toolbar.
 
 ![toolbar]({{ site.baseurl }}/assets/images/CommandRefs/addin_toolbar.png)

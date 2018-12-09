@@ -29,7 +29,7 @@ The symbology tab allow users to control display properties when layers are adde
 
 ### Graphs Tab
 
-The Graphs tab simply controls the output resolution and dimensions (in pixels) of the output `*.png` graphic image files that are automatically produced by GCD when generating a change detection analysis. The default is for a square graph at 600 x 600 pixels. The graphs currently exported by GCD include the volumetric and areal elevation change distributions associated with both the [Change Detection]({{ site.baseurl }}/gcd-command-reference/gcd-analysis-menu/c-geomorphic-change-detection-submenu/change-detection) and [Budget Segregation]({{ site.baseurl }}/gcd-command-reference/gcd-analysis-menu/c-geomorphic-change-detection-submenu/budget-segregation) panels.
+The Graphs tab simply controls the output resolution and dimensions (in pixels) of the output `*.png` graphic image files that are automatically produced by GCD when generating a change detection analysis. The default is for a square graph at 600 x 600 pixels. The graphs currently exported by GCD include the volumetric and areal elevation change distributions associated with both the [Change Detection]({{ site.baseurl }}/gcd-command-reference/gcd-analysis-menu/c-geomorphic-change-detection-submenu/change-detection) and [Budget Segregation]({{ site.baseurl }}/Help/Analyses/Budget_Segregation/budget-segregation) panels.
 
 NOTE: All graphs produced in GCD can also be exported manually from their respective panels/dialogs (with a right click) and that all the data required to produce these graphs automatically is also exported to the corresponding analysis output folder.
 

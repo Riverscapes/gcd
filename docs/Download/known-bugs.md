@@ -21,7 +21,7 @@ Before logging a suspected bug, please search [known open bugs](https://github.c
 
 If you find a bug, or simply want to report an issue with the software, please log a GitHub Issue. <a class="button" href="https://github.com/Riverscapes/gcd/issues"><i class="fa fa-github"/> GitHub Issues</a> 
 
-Anyone in the GCD community and a member of GitHub  can respond, and the development team will receive a notification. Please be patient in your response. We don't have any budget for [supporting users]({{ site.baseurl }}/Help/future-feature-request), but we do try and respond to most issues when we can. Just bare in mind that the [development team]({{ site.baseurl }}/devleopment-team), all have full-time jobs and any support we do of GCD users is usually on donated time. 
+Anyone in the GCD community and a member of GitHub  can respond, and the development team will receive a notification. Please be patient in your response. We don't have any budget for [supporting users]({{ site.baseurl }}/Download/future-feature-request), but we do try and respond to most issues when we can. Just bare in mind that the [development team]({{ site.baseurl }}/who), all have full-time jobs and any support we do of GCD users is usually on donated time. 
 
 This video shows you how to post an issue and some helpful things to include:
 <iframe width="560" height="315" src="https://www.youtube.com/embed/EFAQgvZQY0s?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
@@ -73,7 +73,7 @@ Date: 4/3/2018 2:34:05 PM
 [Rees.gcd.txt](https://github.com/Riverscapes/gcd/files/1873277/Rees.gcd.txt)
 
 ### Optional Information:
-- [Zipping up your `*.gcd` project]({{ site.baseurl}}/Help/Concepts/project/) and sending us a link of the complete project can really make it easier for someone to help you troubleshoot (e.g. this [Rees.GCD Project](https://drive.google.com/file/d/1OOcZBeE3TFKOFaLKh2l-rBsdeOQNV2-H/view?usp=sharing) ). 
+- [Zipping up your `*.gcd` project]({{ site.baseurl}}/Concepts/projects) and sending us a link of the complete project can really make it easier for someone to help you troubleshoot (e.g. this [Rees.GCD Project](https://drive.google.com/file/d/1OOcZBeE3TFKOFaLKh2l-rBsdeOQNV2-H/view?usp=sharing) ). 
 - Information about the file paths where the problem occurred (e.g. `D:\0_GCD\GCD7.0.10\Rees\Analyses\CD\DoD0001\BS\BS0001\Morph\MA0001`) You'd be surprised how often problems are simply do to spaces or unsafe characters in a folder name or file name. 
-- If you don't want to provide a complete copy of the project, just making a copy of the `*.gcd` project file and changing the file extension to text and uploading it to your post can help a lot (see [video](https://youtu.be/EFAQgvZQY0s?t=5m14s))
+- If you don't want to provide a complete copy of the project, just making a copy of the `*.gcd` project file and changing the file extension to text and uploading it to your post can help a lot (see [video](https://www.youtube.com/watch?v=EFAQgvZQY0s&feature=youtu.be&t=5m14s))
 - Record a video of what is going wrong (we recommend [FastStone Capture](http://etal.joewheaton.org/faststone-capture.html)), post it to YouTube or Vimeo, and share the link (DO NOT SEND VIDEOS as attachments! No one wants to download your video, just stream it). Videos can be really helpful for helping us understand what you're doing and what is going wrong.

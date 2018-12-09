@@ -44,7 +44,7 @@ GCD 5 is an ArcGIS Plug-In and is therefore, unfortunately, version specific to 
 # GCD 4
 
 <img class="float-right" src="{{ site.baseurl }}/assets/images/logos/ICRRR-Logo_64.gif">  
-The [GCD 4.0 beta](https://sites.google.com/a/joewheaton.org/gcd/downloads/older-versions/gcd-4-0) was the first non-MatLAB release of the Geomorphic Change Detection software. GCD 4  was developed by [Chris Garrard](http://www.cgarrard.com/) of the [RSGIS Lab](http://www.gis.usu.edu/) at Utah State University and Joe Wheaton. Plugins to [ArcGIS 9.3](http://etal.usu.edu/GCD/GCD4/Arc9_Plugin/GCDArc9Setup.msi) and [ArcGIS 10.x](http://etal.usu.edu/GCD/GCD4/Arc10_Plugin/GCDArc10Setup.msi) as well as a Windows [Standalone](http://etal.usu.edu/GCD/GCD4/StandAlone/GCDWinSetup.msi) flavor were all produce. Funding for the software development was provided by the now defunct Intermountain Center for River Restoration and Rehabilitation (ICRRR) that has been superseded by Utah State University's [Restoration Consortium](http://restoration.usu.edu).
+The [GCD 4.0 beta](https://sites.google.com/a/joewheaton.org/gcd/downloads/older-versions/gcd-4-0) was the first non-MatLAB release of the Geomorphic Change Detection software. GCD 4  was developed by [Chris Garrard](http://www.cgarrard.com/) of the [RSGIS Lab](https://www.gis.usu.edu) at Utah State University and Joe Wheaton. Plugins to [ArcGIS 9.3](http://etal.usu.edu/GCD/GCD4/Arc9_Plugin/GCDArc9Setup.msi) and [ArcGIS 10.x](http://etal.usu.edu/GCD/GCD4/Arc10_Plugin/GCDArc10Setup.msi) as well as a Windows [Standalone](http://etal.usu.edu/GCD/GCD4/StandAlone/GCDWinSetup.msi) flavor were all produce. Funding for the software development was provided by the now defunct Intermountain Center for River Restoration and Rehabilitation (ICRRR) that has been superseded by Utah State University's [Restoration Consortium](http://restoration.usu.edu).
 
 <a class="hollow button" href="https://sites.google.com/a/joewheaton.org/gcd/downloads/older-versions/gcd-4-0"><i class="fa fa-download"></i> GCD 4 - Downloads  </a>  
 <a class="hollow  button" href="https://sites.google.com/a/joewheaton.org/gcd/downloads/older-versions/gcd-4-0/gcd-4-help"><i class="fa fa-question-circle"></i>  GCD 4 - Help Pages </a>  
@@ -53,7 +53,7 @@ The [GCD 4.0 beta](https://sites.google.com/a/joewheaton.org/gcd/downloads/older
 
 # DoD 3 (Matlab) / GCD 3
 
-For those of you Matlab hold-outs out there, [Joe](http://joewheaton.org) originally coded the [GCD up in Matlab](https://github.com/joewheaton/DoD/). You can still access the source code here:
+For those of you Matlab hold-outs out there, [Joe](http://www.joewheaton.org) originally coded the [GCD up in Matlab](https://github.com/joewheaton/DoD/). You can still access the source code here:
 
 <a class="hollow button" href="https://github.com/joewheaton/DoD"><i class="fa fa-github"></i>  DoD 3 - Matlab Source Code on GitHub </a>  
 <a class=" button" href="https://github.com/joewheaton/DoD/releases/tag/DoD_3.0"><i class="fa fa-download"></i>  DoD 3 - Program, Tutorials & Documentation </a>  

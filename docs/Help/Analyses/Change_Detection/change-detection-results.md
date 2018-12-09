@@ -47,7 +47,7 @@ The settings button ![settings]({{ site.baseurl }}/assets/images/icons/Options.p
 
 ### Units Settings
 
-The linear, areal and volumetric units used on both the tabular and graphical results can be customized. The precision value controls how many decimal places are displayed. Clicking the reset ![settings]({{ site.baseurl }}/assets/images/icons/Refresh.png) button reverts the values back to those specified of the [GCD project]({{ site.baseurl }} /Help/gcd-project-explorer/project_cms.html#edit-project-properties).
+The linear, areal and volumetric units used on both the tabular and graphical results can be customized. The precision value controls how many decimal places are displayed. Clicking the reset ![settings]({{ site.baseurl }}/assets/images/icons/refresh.png) button reverts the values back to those specified of the [GCD project]({{ site.baseurl }}/Help/GCD_Project_Explorer.html#edit-project-properties).
 
 ![Same surfaces]({{ site.baseurl }}/assets/images/CommandRefs/05_Analyses/cd/change_props_units.png)
 

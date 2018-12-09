@@ -24,5 +24,5 @@ The customize menu contains commands for managing the GCD software options and F
 
 # Commands
 
-- [FIS Library]({{ site.baseurl }}/gcd-command-reference/customize-menu/fis-library)
-- [Options]({{ site.baseurl }}/gcd-command-reference/customize-menu/options)
+- [FIS Library]({{ site.baseurl }}/Help/customize-menu/fis-library)
+- [Options]({{ site.baseurl }}/Help/customize-menu/options)

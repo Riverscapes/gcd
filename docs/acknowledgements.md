@@ -13,7 +13,7 @@ We are grateful to generous grant support from multiple US and UK Federal Agenci
 
 Funding for the latest phase of Geomorphic Change Detection development was provided by:
 - [NERC](https://nerc.ukri.org/) - UK Natural Environment Research Council - [Award NE/P016804/1](http://gotw.nerc.ac.uk/list_full.asp?pcode=NE%2FP016804%2F1&cookieConsent=A)
-- [USGS GCMRC](http://www.gcmrc.gov/gcmrc.aspx)
+- [USGS GCMRC](https://www.gcmrc.gov/gcmrc.aspx)
 
 
 <div align="center">
@@ -21,7 +21,7 @@ Funding for the latest phase of Geomorphic Change Detection development was prov
     <a href="https://nerc.ukri.org/"><img src="{{ site.baseurl }}/assets/images/logos/NERC.png" alt=""></a>
   </div>
   <div class="columns small-6" align="middle">
-    <a href="http://www.gcmrc.gov/gcmrc.aspx"><img src="{{ site.baseurl }}/assets/images/logos/USGS_logo.png" alt=""></a>
+    <a href="https://www.gcmrc.gov/gcmrc.aspx"><img src="{{ site.baseurl }}/assets/images/logos/USGS_logo.png" alt=""></a>
   </div> 
 </div>
 <br>
@@ -32,11 +32,11 @@ Through the GeoTERM NERC project with NERC, our international partners who have 
 ##### Agencies and Research Institutes
 - [Scottish Environmental Protection Agency](https://www.sepa.org.uk) - Alasdair Matheson & Helen Reid 
 - [NIWA](https://www.niwa.co.nz/) of New Zealand - [ Jo Hoyle](https://www.niwa.co.nz/people/jo-hoyle) 
-- [James Hutton Institute](http://www.hutton.ac.uk/) of Scotland  - [Stephen Addy](http://www.hutton.ac.uk/staff/stephen-addy)
+- [James Hutton Institute](https://www.hutton.ac.uk) of Scotland  - [Stephen Addy](https://www.hutton.ac.uk/staff/stephen-addy)
 
 [![SEPA]({{ site.baseurl }}/assets/images/logos/SEPA_Logo.png)](https://www.waikato.ac.nz)
 [![NIWA]({{ site.baseurl }}/assets/images/logos/NIWA.jpg)](https://www.niwa.co.nz/)
-[![JHI]({{ site.baseurl }}/assets/images/logos/jhi.png)](http://www.hutton.ac.uk/)
+[![JHI]({{ site.baseurl }}/assets/images/logos/jhi.png)](https://www.hutton.ac.uk)
 
 ##### New Zealand Regional Councils
 - [Hawkes Bay Regional Council](https://www.hbrc.govt.nz/)
@@ -57,7 +57,7 @@ Through the GeoTERM NERC project with NERC, our international partners who have 
 
 ##### Universities
 - [University of Waikato (New Zealand)](https://www.waikato.ac.nz) -  [James Brasington](https://www.waikato.ac.nz/staff-profiles/people/jbrasing) (PI).
-- [Utah State University](http://qcnr.usu.edu/wats/) - [Joe Wheaton](http://joewheaton.org)
+- [Utah State University](https://qcnr.usu.edu) - [Joe Wheaton](http://www.joewheaton.org)
 
 
 [![Waikato]({{ site.baseurl }}/assets/images/logos/Waikato_Logo.png)](https://www.waikato.ac.nz)
@@ -68,9 +68,9 @@ Through the GeoTERM NERC project with NERC, our international partners who have 
 ------
 
 ### GCD 6 Development
-GCD 6 was primarily supported by The National Science Foundation (Geoinformatics: [Award #1226127](http://www.nsf.gov/awardsearch/showAward?AWD_ID=1226127) - 'Making Point Clouds Useful for Earth Science'), [Idaho Power Company](https://www.idahopower.com/about-us/environmental-stewardship/) and [Bonneville Power Administration](https://www.bpa.gov/efw/Pages/default.aspx) via [Eco Logical Research](https://www.eco-logical-research.com/).
+GCD 6 was primarily supported by The National Science Foundation (Geoinformatics: [Award #1226127](https://www.nsf.gov/awardsearch/showAward?AWD_ID=1226127) - 'Making Point Clouds Useful for Earth Science'), [Idaho Power Company](https://www.idahopower.com/about-us/environmental-stewardship/) and [Bonneville Power Administration](https://www.bpa.gov/efw/Pages/default.aspx) via [Eco Logical Research](https://www.eco-logical-research.com/).
 
-[![NSF]({{ site.baseurl }}/assets/images/logos/nsf1.gif)](http://www.nsf.gov/awardsearch/showAward?AWD_ID=1226127)
+[![NSF]({{ site.baseurl }}/assets/images/logos/nsf1.gif)](https://www.nsf.gov/awardsearch/showAward?AWD_ID=1226127)
 [![IPC]({{ site.baseurl }}/assets/images/logos/IPC_GreenOnTransparent.png)](https://www.idahopower.com/about-us/environmental-stewardship/)
 [![ELR]({{ site.baseurl }}/assets/images/logos/ELRLogo.png)](https://www.eco-logical-research.com/)
 [![BPA]({{ site.baseurl }}/assets/images/logos/bpaTransparent.png)](https://www.bpa.gov/efw/Pages/default.aspx)
@@ -81,16 +81,16 @@ GCD 6 was primarily supported by The National Science Foundation (Geoinformatics
 
 Earlier GCD Development support was provided by:
 
-- USGS [Grand Canyon Monitoring & Research Center](http://www.gcmrc.gov/gcmrc.aspx)
-- [US Army Corps of Engineers Kansas City District](http://www.nwk.usace.army.mil/)
+- USGS [Grand Canyon Monitoring & Research Center](https://www.gcmrc.gov/gcmrc.aspx)
+- [US Army Corps of Engineers Kansas City District](https://www.nwk.usace.army.mil)
 - Utah State University [ICRRR](https://www.cnr.usu.edu/icrrr/) (Intermountain Center for River Rehabilitation and Restoration)
 
 <div align="center">
 	<div class="columns small-6">
-		<a href="http://www.gcmrc.gov/gcmrc.aspx"><img src="{{ site.baseurl }}/assets/images/logos/USGS_logo.png"></a>
+		<a href="https://www.gcmrc.gov/gcmrc.aspx"><img src="{{ site.baseurl }}/assets/images/logos/USGS_logo.png"></a>
 	</div>
 	<div class="columns small-6">
-		 <a href="http://www.nwk.usace.army.mil/"><img src="{{ site.baseurl }}/assets/images/logos/612px-US-ArmyCorpsOfEngineers-Logo.svg.png" alt=""></a>
+		 <a href="https://www.nwk.usace.army.mil"><img src="{{ site.baseurl }}/assets/images/logos/612px-US-ArmyCorpsOfEngineers-Logo.svg.png" alt=""></a>
 	</div>
 	<div class="columns small-6">
 		 <img src="{{ site.baseurl }}/assets/images/logos/ICRRR-Logo_64.gif">

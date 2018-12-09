@@ -29,9 +29,9 @@ Current funding for the Geomorphic Change Detection Software development (GCD 7)
 
 ### GCD 6 Development
 GCD 6 was primarily supported by NSF, with some support from Idaho Power, BPA and ELR:
-- The National Science Foundation (Geoinformatics: [Award #1226127](http://www.nsf.gov/awardsearch/showAward?AWD_ID=1226127) - '[Making Point Clouds Useful for Earth Science](http://etal.joewheaton.org/projects/current-projects/development-of-integrated-airborne-and-ground-based-lidar-tools-for-earth-sciences)')  - [ZCloudTools](http://zcloudtools.boisestate.edu/)
+- The National Science Foundation (Geoinformatics: [Award #1226127](https://www.nsf.gov/awardsearch/showAward?AWD_ID=1226127) - '[Making Point Clouds Useful for Earth Science](http://etal.joewheaton.org/projects/current-projects/development-of-integrated-airborne-and-ground-based-lidar-tools-for-earth-sciences)')  - ZCloudTools
 - [Idaho Power Company](https://www.idahopower.com/about-us/environmental-stewardship/)
-- [Bonneville Power Administration](https://www.bpa.gov/efw/Pages/default.aspx) via [Eco Logical Research](http://https://www.eco-logical-research.com/)
+- [Bonneville Power Administration](https://www.bpa.gov/efw/Pages/default.aspx) via [Eco Logical Research](https://www.eco-logical-research.com/)
 
 [![NSF]({{ site.baseurl }}/assets/images/logos/nsf1.gif)](http://www.nsf.gov/awardsearch/showAward?AWD_ID=1226127)
 [![IPC]({{ site.baseurl }}/assets/images/logos/IPC_GreenOnTransparent.png)](https://www.idahopower.com/about-us/environmental-stewardship/)
@@ -44,16 +44,16 @@ GCD 6 was primarily supported by NSF, with some support from Idaho Power, BPA an
 
 Earlier GCD Development support was provided by:
 
-- The USGS's [Grand Canyon Monitoring & Research Center](http://www.gcmrc.gov/gcmrc.aspx)
-- The [US Army Corps of Engineers Kansas City District](http://www.nwk.usace.army.mil/)
-- Utah State University [ICRRR](https://www.cnr.usu.edu/icrrr/) (Intermountain Center for River Rehabilitation and Restoration)
+- The USGS's [Grand Canyon Monitoring & Research Center](https://www.gcmrc.gov/gcmrc.aspx)
+- The [US Army Corps of Engineers Kansas City District](https://www.nwk.usace.army.mil/)
+- Utah State University [ICRRR](https://qcnr.usu.edu) (Intermountain Center for River Rehabilitation and Restoration)
 
 <div align="center">
 	<div class="columns small-6">
-		<a href="http://www.gcmrc.gov/gcmrc.aspx"><img src="{{ site.baseurl }}/assets/images/logos/USGS_logo.png"></a>
+		<a href="https://www.gcmrc.gov/gcmrc.aspx"><img src="{{ site.baseurl }}/assets/images/logos/USGS_logo.png"></a>
 	</div>
 	<div class="columns small-6">
-		 <a href="http://www.nwk.usace.army.mil/"><img src="{{ site.baseurl }}/assets/images/logos/612px-US-ArmyCorpsOfEngineers-Logo.svg.png" alt=""></a>
+		 <a href="https://www.nwk.usace.army.mil/"><img src="{{ site.baseurl }}/assets/images/logos/612px-US-ArmyCorpsOfEngineers-Logo.svg.png" alt=""></a>
 	</div>
 	<div class="columns small-6">
 		 <img src="{{ site.baseurl }}/assets/images/logos/ICRRR-Logo_64.gif">

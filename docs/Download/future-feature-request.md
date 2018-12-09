@@ -5,14 +5,14 @@ weight: 4
 
 ## Making Feature Requests
 
-We would like to hear what you have to say about the future direction of GCD development! Please log feature requests as [issues on GitHub](https://github.com/Riverscapes/gcd/issues). Be sure to tag them as *enhancement* (if you need help on how to post an issue see [here]({{ site.baseurl }}/Help/known-bugs#posting-an-issue)).
+We would like to hear what you have to say about the future direction of GCD development! Please log feature requests as [issues on GitHub](https://github.com/Riverscapes/gcd/issues). Be sure to tag them as *enhancement* (if you need help on how to post an issue see [here]({{ site.baseurl }}/Download/known-bugs#posting-an-issue)).
 
 <a class="button" href="https://github.com/Riverscapes/gcd/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement" ><i class="fa fa-lightbulb-o"></i>&nbsp;&nbsp;  GCD Enhancements</a>
 
 ## How Features are Funded
 
 <a href="http://northarrowresearch.com"><img class="float-right" src="{{ site.baseurl }}/assets/images/logos/NA_Logo_150pxTall.png"></a> 
-The GCD Software is free and will always be under the [GNU Public License](https://github.com/Riverscapes/gcd/blob/master/LICENSE). Both the [ArcGIS Addin and Standalone]({{ site.baseurl }}/Download) versions are freeware. However, nothing actually gets done truly for free. Someone ends up paying for it. As faculty at Utah State University, [Joe Wheaton](http://joewheaton.org) and [Philip Bailey](http://northarrowresearch.com) have both donated a ton of hours to this cause. However, we have been able to complete this works thanks to the [generous grants and contracts]({{ site.baseurl }}/Acknowledgements)  from our sponsors and partners. The research and software development to date has been funded from a mix of [public and private funds]({{ site.baseurl }}/Acknowledgements). Future software development and features are partly dependent on our ability to continue to secure grants and contracts for [North Arrow Research](http://northarrowresearch.com) to do this work. However, many small features, bug fixes and improvements can be made with smaller investments and donations from users.  
+The GCD Software is free and will always be under the [GNU Public License](https://github.com/Riverscapes/gcd/blob/master/LICENSE). Both the [ArcGIS Addin and Standalone]({{ site.baseurl }}/Download) versions are freeware. However, nothing actually gets done truly for free. Someone ends up paying for it. As faculty at Utah State University, [Joe Wheaton](http://www.joewheaton.org) and [Philip Bailey](http://northarrowresearch.com) have both donated a ton of hours to this cause. However, we have been able to complete this works thanks to the [generous grants and contracts]({{ site.baseurl }}/acknowledgements.html)  from our sponsors and partners. The research and software development to date has been funded from a mix of [public and private funds]({{ site.baseurl }}/acknowledgements.html). Future software development and features are partly dependent on our ability to continue to secure grants and contracts for [North Arrow Research](http://northarrowresearch.com) to do this work. However, many small features, bug fixes and improvements can be made with smaller investments and donations from users.  
 
 ## Want to Donate to the Cause?
 
@@ -41,4 +41,4 @@ The GCD Software is free and will always be under the [GNU Public License](https
 
 ## Want Something More Specific and Concrete
 
-If you want to see specific features definitely incorporated into the GCD, get in touch [with us](http://joewheaton.org/contact) and we can discuss setting up a contract or grant.
+If you want to see specific features definitely incorporated into the GCD, get in touch [with us](http://www.joewheaton.org/contact) and we can discuss setting up a contract or grant.
