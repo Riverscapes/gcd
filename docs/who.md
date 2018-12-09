@@ -36,7 +36,7 @@ The newest version of the GCD is currently under development by [North Arrow Res
 - [Sara Bangen](http://etal.joewheaton.org/sara-bangen1.html) (USU ETAL) has been instrumental in developing FIS models and the CHaMP GCD Testing.
 - Nick Ochoski (ESSA) was part of the initial development of [GCD 5]({{ site.baseurl }}/Download/old_versions.html#gcd-5).
 -  [ESSA Technologies](https://essa.com) generously invested in kind donations of development time in [GCD 5]({{ site.baseurl }}/Download/old_versions.html#gcd-5) development. 
--  [Chris Garrard](http://www.gis.usu.edu/~chrisg/) (USU [RSGIS Lab](http://www.gis.usu.edu/)) was the primary developer of GCD 4.
+-  [Chris Garrard](https://www.gis.usu.edu/~chrisg) (USU [RSGIS Lab](https://www.gis.usu.edu)) was the primary developer of GCD 4.
 -  [Greg Pasternack](http://pasternack.ucdavis.edu/) has been an important sounding board throughout the development of GCD.
 
 [![NAR]({{ site.baseurl }}/assets/images/logos/NA_Logo_150pxTall.png)](http://northarrowresearch.com/)
