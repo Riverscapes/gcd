@@ -3,7 +3,7 @@ title: Example Datasets
 weight: 3
 ---
 
-These are example datasets that are used in the [tutorials]({{ site.baseurl }}/tutorials--how-to) and [command reference]({{ site.baseurl }}/gcd-command-reference) examples. Although all of the current examples here are fluvial, the principles and techniques can be applied to a broad range of physiographic settings and situations. The fluvial datasets are organized by river and then reach.
+These are example datasets that are used in the [tutorials]({{ site.baseurl }}/Tutorials) and [command reference]({{ site.baseurl }}/Help) examples. Although all of the current examples here are fluvial, the principles and techniques can be applied to a broad range of physiographic settings and situations. The fluvial datasets are organized by river and then reach.
 
 <div class="row">
     <div class="columns medium-4 small-12">

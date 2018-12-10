@@ -40,12 +40,12 @@ The methodological development is described in ([Wheaton et al., 2010a](http://d
 
 GCD 7 is always in development. How active that development is depends on our [funding levels]({{ site.baseurl }}/acknowledgements). We post our wish list of enhancements on our [GCD GitHub Repository](https://github.com/Riverscapes/gcd/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement).  If you have ideas of your own, or would like to support these efforts click below:
 <div align="center">
-	<a class="button success" href="{{ site.baseurl}}/Help/future-feature-request#want-to-donate-to-the-cause" ><i class="fa fa-paypal"></i>&nbsp;&nbsp; Donate Now</a>
-	<a class="hollow button" href="{{ site.baseurl}}/Help/future-feature-request#making-feature-requests" ><i class="fa fa-lightbulb-o"></i>&nbsp;&nbsp;  GCD Enhancements</a>
+	<a class="button success" href="{{ site.baseurl}}/Download/future-feature-request#want-to-donate-to-the-cause" ><i class="fa fa-paypal"></i>&nbsp;&nbsp;Donate Now</a>
+	<a class="hollow button" href="{{ site.baseurl}}/Download/future-feature-request#making-feature-requests" ><i class="fa fa-lightbulb-o"></i>&nbsp;&nbsp;GCD Enhancements</a>
 </div>
 
 ------
 
 ### Note on Terminology
 
-**DoD** is an acronym for DEM (digital elevation model) of Difference (not [Department of Defense](https://www.defense.gov/)). DoDs are derived from repeat topographic surveys and used in change detection studies and [morphological sediment budgeting](http://www.joewheaton.org/Home/research/projects-1/morphological-sediment-budgeting). We use **GCD** to mean geomorphic change detection, not [Glen Canyon Dam](https://www.usbr.gov/uc/rm/crsp/gc).
+**DoD** is an acronym for DEM (digital elevation model) of Difference (not [Department of Defense](https://www.defense.gov/)). DoDs are derived from repeat topographic surveys and used in change detection studies and morphological sediment budgeting. We use **GCD** to mean geomorphic change detection, not [Glen Canyon Dam](https://www.usbr.gov/uc/rm/crsp/gc).

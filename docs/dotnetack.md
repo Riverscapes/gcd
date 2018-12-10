@@ -35,7 +35,7 @@ GCD 6 was primarily supported by NSF, with some support from Idaho Power, BPA an
 
 [![NSF]({{ site.baseurl }}/assets/images/logos/nsf1.gif)](http://www.nsf.gov/awardsearch/showAward?AWD_ID=1226127)
 [![IPC]({{ site.baseurl }}/assets/images/logos/IPC_GreenOnTransparent.png)](https://www.idahopower.com/about-us/environmental-stewardship/)
-[![ELR]({{ site.baseurl }}/assets/images/logos/ELRLogo.png)](http://https://www.eco-logical-research.com/)
+[![ELR]({{ site.baseurl }}/assets/images/logos/ELRLogo.png)](https://www.eco-logical-research.com/)
 [![BPA]({{ site.baseurl }}/assets/images/logos/bpaTransparent.png)](https://www.bpa.gov/efw/Pages/default.aspx)
 
 ------
@@ -63,6 +63,6 @@ Earlier GCD Development support was provided by:
 ## Keep it Going
 
 <div align="center">
-	<a class="button success" href="{{ site.baseurl}}/Help/future-feature-request#want-to-donate-to-the-cause" ><i class="fa fa-paypal"></i>&nbsp;&nbsp; Donate Now</a>
-	<a class="hollow button" href="{{ site.baseurl}}/Help/future-feature-request#making-feature-requests" ><i class="fa fa-lightbulb-o"></i>&nbsp;&nbsp; GCD Enhancements</a>
+	<a class="button success" href="{{ site.baseurl}}/Download/future-feature-request#want-to-donate-to-the-cause" ><i class="fa fa-paypal"></i>&nbsp;&nbsp; Donate Now</a>
+	<a class="hollow button" href="{{ site.baseurl}}/Download/future-feature-request#making-feature-requests" ><i class="fa fa-lightbulb-o"></i>&nbsp;&nbsp; GCD Enhancements</a>
 </div>

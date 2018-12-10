@@ -3,7 +3,7 @@ title: Close GCD Project
 weight: 3
 ---
 
-The **Close Project** dialog allows you to close the current project. This is helpful if you want to clear the [GCD Project Explorer]({{ site.baseurl }}/gcd-command-reference/gcd-project-explorer). Note that closing the current ArcMap map document will also automatically close the current GCD project and *vice versa*, closing the GCD Project does not close the open ArcMap map document. 
+The **Close Project** dialog allows you to close the current project. This is helpful if you want to clear the [GCD Project Explorer]({{ site.baseurl }}/Help/GCD_Project_Explorer.html). Note that closing the current ArcMap map document will also automatically close the current GCD project and *vice versa*, closing the GCD Project does not close the open ArcMap map document. 
 
 <div class="row">
 	<div class="columns medium-6 small-12" style="text-align: center">
