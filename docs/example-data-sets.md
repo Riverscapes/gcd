@@ -3,7 +3,7 @@ title: Example Datasets
 weight: 3
 ---
 
-These are example datasets that are used in the [tutorials]({{ site.baseurl }}/Tutorials) and [command reference]({{ site.baseurl }}/Help) examples. Although all of the current examples here are fluvial, the principles and techniques can be applied to a broad range of physiographic settings and situations. The fluvial datasets are organized by river and then reach.
+These example datasets are used in the [tutorials]({{ site.baseurl }}/Tutorials) and [command reference]({{ site.baseurl }}/Help) examples. Although all of the current examples here are fluvial, the principles and techniques can be applied to a broad range of physiographic settings and situations.
 
 <div class="row">
     <div class="columns medium-4 small-12">
@@ -70,7 +70,7 @@ These are example datasets that are used in the [tutorials]({{ site.baseurl }}/T
                     <li>2.5km gravel bed, braided river near <i class="fa fa-map-marker"></i> <a href="https://www.google.com/maps/place/45%C2%B000'35.1%22S+168%C2%B045'56.3%22E/@-45.0103208,168.7612985,3923m/data=!3m1!1e3!4m5!3m4!1s0x0:0x0!8m2!3d-45.009756!4d168.765638">Queenstown, New Zealand</a></li>
                     <li>Two LiDAR surveys</li>
                     <li>1m cell resolution</li>
-                    <li><a href="https://s3-us-west-2.amazonaws.com/etalweb.joewheaton.org/GCD/GCD7/Tutorials/GeoTERM_ORC.zip">Download</a>></li>
+                    <li><a href="https://s3-us-west-2.amazonaws.com/etalweb.joewheaton.org/GCD/GCD7/Tutorials/GeoTERM_ORC.zip">Download</a></li>
                 </ul>
             </div>
         </div>     

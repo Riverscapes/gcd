@@ -7,7 +7,7 @@ weight: 2
 
 ## Funding
 
-We are grateful to generous grant support from multiple US and UK Federal Agencies and private companies who funded the professional software development of GCD.  Without their support, this free software would not exist.
+We are grateful to the generous grant support from multiple US and UK federal agencies as well as  private companies that have funded the professional software development of GCD. Without their support this free software would not exist.
 
 ### GCD 7 Development
 
@@ -27,7 +27,7 @@ Funding for the latest phase of Geomorphic Change Detection development was prov
 <br>
 
 #### GeoTERM NERC Project
-Through the GeoTERM NERC project with NERC, our international partners who have been extremely generous with their time, sharing their expertise, data, articulating their needs and in-kind funding and support:
+Through the GeoTERM project with NERC, our international partners have been extremely generous with their time, sharing their expertise, data, articulating their needs and in-kind funding and support:
 
 ##### Agencies and Research Institutes
 - [Scottish Environmental Protection Agency](https://www.sepa.org.uk) - Alasdair Matheson & Helen Reid 
@@ -79,7 +79,7 @@ GCD 6 was primarily supported by The National Science Foundation (Geoinformatics
 
 ### GCD 5, 4 and 3 Software Development 
 
-Earlier GCD Development support was provided by:
+Earlier GCD development support was provided by:
 
 - USGS [Grand Canyon Monitoring & Research Center](https://www.gcmrc.gov/gcmrc.aspx)
 - [US Army Corps of Engineers Kansas City District](https://www.nwk.usace.army.mil)
