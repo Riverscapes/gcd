@@ -11,7 +11,7 @@ Welcome to the Geomorphic Change Detection (GCD) Software website. Here you will
 
 GCD is part of the [Riverscapes Consortium's](https://riverscapes.xyz) much larger family of tools for analyzing riverscapes.  GCD is the Riverscapes Consortium's  longest-standing, best developed software with the largest user base. GCD has users all over the world. 
 
-<a class="button large" href="https://github.com/Riverscapes/gcd/releases/latest">
+<a class="button large" href="{{ site.baseurl }}/Download">
         <img src="{{ site.baseurl}}/assets/images/icons/GCDAddIn.png">
         &nbsp;&nbsp;Download GCD 7</a>
 <a class="button large" href="{{ site.baseurl}}/Help"> <i class="fa fa-question-circle"></i>&nbsp;&nbsp;GCD 7 Help</a>
@@ -43,7 +43,6 @@ GCD 7 is always in development. How active that development is depends on our [f
 	<a class="button success" href="{{ site.baseurl}}/Download/future-feature-request#want-to-donate-to-the-cause" ><i class="fa fa-paypal"></i>&nbsp;&nbsp;Donate Now</a>
 	<a class="hollow button" href="{{ site.baseurl}}/Download/future-feature-request#making-feature-requests" ><i class="fa fa-lightbulb-o"></i>&nbsp;&nbsp;GCD Enhancements</a>
 </div>
-
 ------
 
 ### Note on Terminology

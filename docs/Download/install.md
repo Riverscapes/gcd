@@ -9,7 +9,6 @@ To install GCD Add-In for first time to ArcGIS 10.4 or later, simply double-clic
 <div class="responsive-embed">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/9F3k6pn_3RI?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 </div>
-
 -----
 
 ## GCD Standalone
@@ -33,3 +32,4 @@ To unintsall the standalone GCD, simply navigate in your Windows Control Panel t
 <div>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/668-0ZtoOzo?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 </div>
+
