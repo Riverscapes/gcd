@@ -7,7 +7,7 @@ Below are the registration details for the next (or most recent) courses or work
 
 ## Professionals & Public - CEWA 6850
 
-The three day USU course is available to non students and professionals. The next [workshop]() will be offered April 29 to May 3, 2017 in Logan, UT. See [here](http://www.eventbee.com/event?eid=199043755&track=GCDwebsite) for more information and how to register. 
+This USU short course is available to non-students and professionals. The next [workshop]({{site.baseurl}}/Workshops/2019/wats6850) will be offered April 29 to May 3, 2017 in Logan, UT. See [here](-http://www.eventbee.com/event?eid=199043755&track=GCDwebsite) for more information and how to register. 
 
 [REGISTER for PUBLIC WORKSHOP](-http://www.eventbee.com/event?eid=199043755&track=GCDwebsite)
 
