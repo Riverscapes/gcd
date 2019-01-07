@@ -1,6 +1,6 @@
 ---
-title: Workshop Exercises 
-weight: 2
+title: In Class Exercises 
+weight: 3
 ---
 During the [workshop in Aberdeen]({{ site.baseurl }}/Help/Workshops/workshop-schedules/2018/Aberdeen/), we worked through all of the GCD 7 Development deliverables by using excercises. The slides below walk us through each excercise and demo.
 
@@ -8,7 +8,7 @@ During the [workshop in Aberdeen]({{ site.baseurl }}/Help/Workshops/workshop-sch
 <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vR9PFKbUyvs5fLcjFal2MPfy6fdRY7uNtQKeNo7Mpfmoe6Ft9U0F7-GSmqbZIN2ordqzCQBHBeyEZ1H/embed?loop=true&delayms=3000" frameborder="0" width="960" height="749" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
 
 
-## Workshop Datasets
+##  Datasets
 
 The GeoTERM Working Group members each contributed datasets for the excercises.
 
@@ -23,7 +23,8 @@ The GeoTERM Working Group members each contributed datasets for the excercises.
 
 ------
 <div align="center">
-    <a class="hollow button" href="{{ site.baseurl }}/"><i class="fa fa-chevron-circle-left"></i>  Back to GCD Home </a>  
-    
-        <a class="hollow button" href="{{ site.baseurl }}/Help/Workshops/"><i class="fa fa-graduation-cap"></i>  Back to Workshops </a>  
+    <a class="hollow button" href="{{ site.baseurl }}/Workshops/2019/wats5150/"><i class="fa fa-chevron-circle-left"></i>  Back to Course Home </a>  
+
+        <a class="hollow button" href="{{ site.baseurl }}/Workshops/"><i class="fa fa-graduation-cap"></i>  Back to Workshops </a>  
+
 </div>

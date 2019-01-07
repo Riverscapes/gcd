@@ -12,11 +12,19 @@ Welcome to the Geomorphic Change Detection (GCD) Software website. Here you will
 GCD is part of the [Riverscapes Consortium's](https://riverscapes.xyz) much larger family of tools for analyzing riverscapes.  GCD is the Riverscapes Consortium's  longest-standing, best developed software with the largest user base. GCD has users all over the world. 
 
 <a class="button large" href="{{ site.baseurl }}/Download">
-        <img src="{{ site.baseurl}}/assets/images/icons/GCDAddIn.png">
-        &nbsp;&nbsp;Download GCD 7</a>
+​        <img src="{{ site.baseurl}}/assets/images/icons/GCDAddIn.png">
+​        &nbsp;&nbsp;Download GCD 7</a>
 <a class="button large" href="{{ site.baseurl}}/Help"> <i class="fa fa-question-circle"></i>&nbsp;&nbsp;GCD 7 Help</a>
 
 
+
+##### Next Public Workshop
+
+We have not taught a publicly oferred workshop for GCD since [2016 in Spain]({{ site.baseurl }}/Workshops). Plus, this will be the first workshop to unveil the new [GCD 7 Software]({{ site.baseurl }}/Download) has been released, which is dramatically improved and has a lot of [new features]({{ site.baseurl }}Download/release_notes.html)! We will teach a [2019 GCD Worskhop]({{ site.baseurl }}/Workshops/2019/wats6850) in **Logan, Utah** from **April 29th to May 3rd**.
+
+<div align="center">
+	<a class="button alert" href="{{ site.baseurl }}/Workshops/2019/wats6850"> 2019 GCD Workshop</a>
+</div>
 
 ------
 
