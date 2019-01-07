@@ -4,7 +4,7 @@ weight: 1
 ---
 
 ![WATS-5150_GCD_GCC_Banner_We]({{ site.baseurl}}\assets\images\workshops\WATS-5150_GCD_GCC_Banner_We.png)
- 
+
 # Partial Syllabus
 
 January 7-  April 23, 2019 in Logan @ USU. Geomorphic Change Detection will be taught as part of [WATS 5150/6150]({{ site.baseurl }}/Workshops/About/how-to-register.html#usu-graduate--undergraduate-students---wats-51506150) Fluvial Geomorphology class for matriculated USU students. Undergraduates should register for 5150 and graduates for 6150. The course is focused on understanding the geomorphology of channel change, and we use the geomorphic chagne detection software as a tool for analyzing such processes.
@@ -15,7 +15,10 @@ Note: This is only a syllabus for the GCD Portion of WATS 5150/6150. See [Canvas
 ## Assignments & Course Materials
 All assignments for the GCD portion of fluvial geomorphology will be set and submitted in [Canvas](https://usu.instructure.com/courses/532404).
 
-<a class="button" href="https://usu.instructure.com/courses/532404">Canvas Page for Students</a>
+<div align="center">
+	<a class="button" href="https://usu.instructure.com/courses/532404"><i class="fa fa-spinner" aria-hidden="true"></i> Canvas Page for Students</a>
+	<a class="button" href="https://usu.instructure.com/courses/532404"><i class="fa fa-desktop" aria-hidden="true"></i> Course Topics, Slides and Materials</a>
+</div>
 
 -----
 ## Instructors:
@@ -46,7 +49,6 @@ We will rely heavily on the primary literature for [course readings](https://usu
 	<a class="hollow button" href="https://usu.verbacompare.com/comparison?id=615108"><i class="fa fa-book" aria-hidden="true"></i> USU Campus Store Text Book</a>
 	<a class="button" href="{{ site.baseurl }}/Workshops/About/text-readings"><i class="fa fa-book" aria-hidden="true"></i> Reccomended Readings</a>
 </div>
-
 
 -----
 ## About
