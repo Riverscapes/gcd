@@ -6,26 +6,56 @@ weight: 1
 
 ### Overview
 
-This exercise is intended to contrast how to build a DoD (DEM of Difference) with simple change detection minimum level of detection thresholding in ArcGIS's raster calculator versus using the GCD..
 
-### Data and Materials for Exercises
+This exercise is intended to contrast how to build a <a href="{{ site.baseurl }}/Concepts/dod.html">DoD</a> (DEM of Difference) with simple change detection minimum level of detection thresholding in ArcGIS's raster calculator versus using the GCD.
 
-#### Datasets
 
- File of Data for Exercise Part 1 and 2:
- <div align="center">
-<a class="button" href="http://etalweb.joewheaton.org/etal_workshops/GCD/2015_USU/G_SimpleDoD.zip"><i class="fas fa-file-archive"></i> G_SimpleDoD.Zip </a>
- </div>
- File of Data for Exercise Part 3:
-  <div align="center">
- <a class="button" href="http://etal.usu.edu/GCD/Workshop/2015_RRNW/Excercises/G_IntroGCD.zip"><i class="fas fa-file-archive"></i> G_IntroGCD.zip </a>
+
+<div class="row">
+    <div class="columns medium-4 small-12">
+        <div class="card">
+            <div style="text-align: center; padding: 5px 5px 0 5px">
+                <img src="{{ site.baseurl }}/assets/images/datasets/sulphur_200h.png">
+            </div>
+            <div class="card-section">
+                <h4>Sulphur Creek, CA</h4>
+                <ul>
+                    <li>300m of gravel bed river near <i class="fa fa-map-marker"></i> <a href="https://www.google.com/maps/place/38%C2%B029'44.0%22N+122%C2%B028'09.0%22W/@38.4958086,-122.4803136,4904m/data=!3m1!1e3!4m5!3m4!1s0x0:0x0!8m2!3d38.49555!4d-122.469166">St. Helena California</a> that underwent a flood in December 2005.</li>
+                    <li>Two surveys</li>
+                    <li>0.5m cell resolution</li>
+                    <li>RTKGPS and Total Station</li>
+                 </ul>
+                 <a class="button" href="http://etalweb.joewheaton.org/etal_workshops/GCD/2015_USU/G_SimpleDoD.zip"><i class="fa fa-file-archive-o" aria-hidden="true"></i> Excercise Data for Part 1 & 2</a>
+            </div>
+        </div>     
+    </div>
+    <div class="columns medium-4 small-12">
+        <div class="card">
+            <div style="text-align: center; padding: 5px 5px 0 5px">
+                <img src="{{ site.baseurl }}/assets/images/datasets/feshie_200h.png">
+            </div>
+            <div class="card-section">
+                <h4>River Feshie, Scotland, UK</h4>
+                <ul>
+                    <li>700m braided gravel bed river in the <i class="fa fa-map-marker"></i> <a href="https://www.google.com/maps/place/57%C2%B000'41.4%22N+3%C2%B054'16.1%22W/@57.0099348,-3.9000104,6821m/data=!3m1!1e3!4m5!3m4!1s0x0:0x0!8m2!3d57.01149!4d-3.90446">Scottish Cairngorm mountains</a>.</li>
+                    <li>5 annual surveys</li>
+                    <li>Mix of RTKGPS and Total Station</li>
+                    <li>1m cell resolution</li>
+                  </ul>
+                  <a class="button" href="https://s3-us-west-2.amazonaws.com/etalweb.joewheaton.org/GCD/GCD7/Tutorials/GeoTERM_Feshie.zip"><i class="fa fa-file-archive-o" aria-hidden="true"></i> Excercise Data for Part 3</a>
+            </div>
+        </div>
+    </div>
 </div>
+
 
 #### Prerequisite for this Exercise
 
 - Some ArcGIS experience
 - ArcGIS 10.X w/ Spatial Analyst Extension
 - GCD Add-In
+
+------
 
 ### Step by Step
 
