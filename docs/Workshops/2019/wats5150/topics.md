@@ -3,14 +3,9 @@ title: GCD Topics
 weight: 2
 ---
 
-During the semester, we will cover the following GCD topics in fluvial geomorphology during our extended Monday afternoon sessions:
+During the semester, we will cover the following GCD topics in fluvial geomorphology during our extended Monday afternoon sessions. Use the Page Contents navigation to find your topic. 
 
-- Topography & Change Detection Applications
-- Change Detection Principles
-- Error Modelling & Uncertainty Analyis- Introduction
-- Error Modelling Fuzzy Methods
-
-As we cover them, I will post and add slides below for your reference.
+As we cover topics, I will post and add slides below for your reference.
 
 ## Inroduction & Setup
 
