@@ -1,5 +1,6 @@
 ---
 title: Course Catalog Descriptions
+weight: 4
 ---
 ## Utah State University Courses
 

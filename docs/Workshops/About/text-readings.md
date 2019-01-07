@@ -1,5 +1,6 @@
 ---
 title: Recommended Readings
+weight: 7
 ---
 
 ### Reading Ahead of Course:

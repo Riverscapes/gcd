@@ -1,5 +1,6 @@
 ---
 title: Logan Venue
+weight: 8
 ---
 
 ## Workshop Class Room

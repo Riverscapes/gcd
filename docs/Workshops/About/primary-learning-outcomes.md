@@ -1,5 +1,6 @@
 ---
 title: Primary Learning Outcomes
+weight: 5
 ---
 
 Participants should come away with:

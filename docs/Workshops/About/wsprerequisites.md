@@ -1,5 +1,6 @@
 ---
 title: Course & Workshop Prerequisites 
+weight: 6
 ---
 
 ## Participant Background
