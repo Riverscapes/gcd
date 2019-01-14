@@ -7,6 +7,8 @@ During the semester, we will cover the following GCD topics in fluvial geomorpho
 
 As we cover topics, I will post and add slides below for your reference.
 
+----
+# Week 1
 ## Inroduction & Setup
 
 We covered some very basic background, and made sure we had [GCD properly installed]({{ site.baseurl }}/Download/install.html).
@@ -30,7 +32,6 @@ To motivate the interst in change detection, it is helpful to review a variety o
 </div>
 
 
-
 -----
 
 ## Traditional Geomorphic Change Detection
@@ -46,7 +47,9 @@ As to 'dive right in', and get your hands dirty with GCD, we did a quick demo of
 - <i class="fa fa-graduation-cap" aria-hidden="true"></i>
 [**TUTORIAL** Simple Change Detection in Raster Calculator vs. GCD]({{ site.baseurl }}/Tutorials/ChangeDetection/GCD_Simple-DoD)
 
------
+----
+# Week 2
+
 
 ## High Resolution Repeat Topography to Support Change Detection
 
