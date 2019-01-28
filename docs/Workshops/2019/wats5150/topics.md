@@ -82,6 +82,7 @@ High resolution topography (HRT) has become increasingly common from a variety o
 - Passalacqua P, Belmont P, Staley D, Simley J, Arrowsmith JR, Bodee C, Crosby C, DeLongg S, Glenn N, Kelly S, Lague D, Sangireddy H, Schaffrath K, Tarboton D, Wasklewicz T, Wheaton J. 2015. [Analyzing high resolution topography for advancing the understanding of mass and energy transfer through  landscapes: A review](https://www.researchgate.net/publication/277477904_Analyzing_high_resolution_topography_for_advancing_the_understanding_of_mass_and_energy_transfer_through_landscapes_A_review). Earth Science Reviews. 148. pp. 174-193. DOI: [10.1016/j.earscirev.2015.05.012](http://dx.doi.org/10.1016/j.earscirev.2015.05.012).
 
 -----
+# Week 4
 
 ## Managing Raster Data for GCD
 
@@ -95,6 +96,14 @@ Unfortunately, simple raster based change detection requires doing a really good
 - <i class="fa fa-graduation-cap" aria-hidden="true"></i>
 [**TUTORIAL** : Essential Best Practices to Support Change Detection]({{ site.baseurl }}/Tutorials/Building_DEMs/Building_DEMs/bestpractices.html)
 - <i class="fa fa-lightbulb-o" aria-hidden="true"></i> [**CONCEPT REFERENCE**: Data Preparation - Best Practices ]( {{ site.baseurl }}/Concepts/data-preparation---best-practices/)
+
+----
+## Thresholding
+
+<div  class="responsive-embed widescreen">
+<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vR54tDap2YGjboBidC98K9vvWtyZOjWFWZt7H2RY9ObR0xZJ2CxuV3hZPhbpgD_suc1UwNKRMn6J6Is/embed?start=false&loop=false&delayms=3000" frameborder="0" width="960" height="749" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+</div>
+
 
 ------
 <div align="center">
