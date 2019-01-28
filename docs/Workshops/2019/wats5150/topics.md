@@ -104,6 +104,10 @@ Unfortunately, simple raster based change detection requires doing a really good
 <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vR54tDap2YGjboBidC98K9vvWtyZOjWFWZt7H2RY9ObR0xZJ2CxuV3hZPhbpgD_suc1UwNKRMn6J6Is/embed?start=false&loop=false&delayms=3000" frameborder="0" width="960" height="749" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
 </div>
 
+### Related Resources
+- <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+[**TUTORIAL** : Traditional Thresholding in Change Detection]({{ site.baseurl }}/Tutorials/Building_DEMs/ChangeDetection/DoD-thresholding.html)
+
 
 ------
 <div align="center">
