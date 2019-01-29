@@ -18,9 +18,9 @@ GCD is part of the [Riverscapes Consortium's](https://riverscapes.xyz) much larg
 
 
 
-##### Next Public Workshop
+##### Public GCD Workshop
 
-We have not taught a publicly oferred workshop for GCD since [2016 in Spain]({{ site.baseurl }}/Workshops). Plus, this will be the first workshop to unveil the new [GCD 7 Software]({{ site.baseurl }}/Download) has been released, which is dramatically improved and has a lot of [new features]({{ site.baseurl }}Download/release_notes.html)! We will teach a [2019 GCD Worskhop]({{ site.baseurl }}/Workshops/2019/wats6850) in **Logan, Utah** from **April 29th to May 3rd**.
+Learn the new GCD 7 software at the upcoming GCD workshop in **Logan, Utah** from **April 29th to May 3rd** 2019. Meet the GCD developers and get their expert advice on your data and processing needs.
 
 <div align="center">
 	<a class="button alert" href="{{ site.baseurl }}/Workshops/2019/wats6850"> 2019 GCD Workshop</a>
