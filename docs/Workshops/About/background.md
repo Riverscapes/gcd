@@ -1,5 +1,5 @@
 ---
-title: Background & Target Audience
+title: Background and Target Audience
 weight: 2
 ---
 

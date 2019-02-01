@@ -53,13 +53,10 @@ Existing GCD users are encouraged to bring their own topographic data. Project-b
 and help take your GCD use to the next level. Example datasets will be provided for new GCD users.
 
 <div align="center">
-	<a class="hollow button" href="http://www.eventbee.com/event?eid=199043755&track=GCDwebsite">Public Registration for CEWA 6850</a>
-  <a class="hollow button" href="http://127.0.0.1:4001/Workshops/About/how-to-register#usu-graduate-students---wats-6850"> USU Student Registration for WATS 6850</a>
-	</div>
+  <a href="https://www.eventbrite.com/e/geomorphic-change-detection-workshop-tickets-55409760084?ref=ebtn" target="_blank"><img src="https://www.eventbrite.com/custombutton?eid=55409760084" alt="Eventbrite - Geomorphic Change Detection Workshop" /></a>
+</div>
 
-<div align="center">
-	    <a href="https://www.eventbrite.com/e/geomorphic-change-detection-workshop-tickets-55409760084?ref=ebtn" target="_blank"><img src="https://www.eventbrite.com/custombutton?eid=55409760084" alt="Eventbrite - Geomorphic Change Detection Workshop" /></a>
-	    </div>
+This course is available for one credit to USU graduate students as [WATS 6850]({{ site.baseurl }}/Workshops/2019/wats6850/) - Spring 2019 CRN 15043 USU students must register using [Banner](http://ssb.banner.usu.edu/).
 
 ## Date & Times 
 
