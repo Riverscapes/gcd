@@ -7,10 +7,10 @@ Below are the registration details for the next (or most recent) courses or work
 
 ## Professionals & Public - CEWA 6850
 
-This USU short course is available to non-students and professionals. The next [workshop]({{site.baseurl}}/Workshops/2019/wats6850) will be offered April 29 to May 3, 2019 in Logan, UT.
+This USU short course is available to non-students and professionals. The next [workshop]({{site.baseurl}}/Workshops/2019/wats6850) will be offered April 30 to May 3, 2019 in Logan, UT. 
 
 <div style="text-align:center">
-<a class="hollow button large" href="http://www.eventbee.com/event?eid=199043755&track=GCDwebsite">Register for Public Workshop</a>
+<a href="https://www.eventbrite.com/e/geomorphic-change-detection-workshop-tickets-55409760084?ref=ebtn" target="_blank"><img src="https://www.eventbrite.com/custombutton?eid=55409760084" alt="Eventbrite - Geomorphic Change Detection Workshop" /></a>
 </div>
 
 ## USU Graduate Students - WATS 6850
