@@ -62,7 +62,7 @@ This course is available for one credit to USU graduate students as [WATS 6850](
 
 This workshop will span five days from April 29th to May 3rd 2019.
 
-- Day 1: 9:00 - 5:00 - Topographic Surverying to Support Geomorphic Change Detection
+- Day 1: 9:00 - 5:00 - Topographic Surveying to Support Geomorphic Change Detection
   - 8:00 - 9:00 - Optional ArcGIS & Software Install Help Session
 - Day 2: 9:00 - 5:00 - Principles of Change Detection
 - Day 3: 9:00 - 5:00 - Applications of Change Detection
