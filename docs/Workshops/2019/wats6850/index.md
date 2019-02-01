@@ -16,6 +16,10 @@ and help take your GCD use to the next level. Example datasets will be provided 
   <a class="hollow button" href="http://127.0.0.1:4001/Workshops/About/how-to-register#usu-graduate-students---wats-6850"> USU Student Registration for WATS 6850</a>
 	</div>
 
+<div align="center">
+	    <a href="https://www.eventbrite.com/e/geomorphic-change-detection-workshop-tickets-55409760084?ref=ebtn" target="_blank"><img src="https://www.eventbrite.com/custombutton?eid=55409760084" alt="Eventbrite - Geomorphic Change Detection Workshop" /></a>
+	    </div>
+
 ## Date & Times 
 
 This workshop will span five days from April 29th to May 3rd 2019.
