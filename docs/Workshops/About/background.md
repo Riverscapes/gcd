@@ -1,5 +1,5 @@
 ---
-title: Background & Target Audience
+title: Background and Target Audience
 weight: 2
 ---
 
@@ -13,11 +13,11 @@ The [GCD software](http://www.joewheaton.org/Home/research/software/GCD) was dev
 
 ###  Learning Outcomes
 
-- A comprehensive overview of the theory underpinning geomorphic change detection.
-- The fundamental background necessary to design effective repeat topographic monitoring campaigns and distinguish geomorphic changes from noise (with particular focus on restoration applications).
-- Methods for interpreting and segregating morphological sediment budgets quantitatively in terms of both geomorphic processes and changes in physical habitat.
-- Hands-on instruction on use of the [GCD software](/) through group-led and self-paced exercises.
-- An opportunity to interact with experts on geomorphic monitoring and the software developers of GCD to help you make better use of your own data.
+* A comprehensive overview of the theory underpinning geomorphic change detection.
+* The fundamental background necessary to design effective repeat topographic monitoring campaigns and distinguish geomorphic changes from noise (with particular focus on restoration applications).
+* Methods for interpreting and segregating morphological sediment budgets quantitatively in terms of both geomorphic processes and changes in physical habitat
+* Hands-on instruction on use of the new [GCD 7](/) software through group-led and self-paced exercises.
+* An opportunity to interact with experts on geomorphic monitoring and the GCD software developers during sessions where you we can help you with your own data.
 
 ### Target Audience
 

@@ -5,6 +5,47 @@ weight: 1
 
 ![WATS-5150_GCD_GCC_Banner_We]({{ site.baseurl}}\assets\images\workshops\WATS-6850_GCD_GCC_Banner_Bl.png)
 
+<div class="orbit" role="region" aria-label="GCD Workshop" data-orbit>
+  <div class="orbit-wrapper">
+    <div class="orbit-controls">
+      <button class="orbit-previous"><span class="show-for-sr">Previous Slide</span>&#9664;&#xFE0E;</button>
+      <button class="orbit-next"><span class="show-for-sr">Next Slide</span>&#9654;&#xFE0E;</button>
+    </div>
+    <ul class="orbit-container">
+      <li class="is-active orbit-slide">
+        <figure class="orbit-figure">
+          <img class="orbit-image" src="{{ site.baseurl}}\assets\images\workshops\carousel\01_river.png" alt="Space">
+          <figcaption class="orbit-caption">Get out and learn about how to measure topographic change.</figcaption>
+        </figure>
+      </li>
+      <li class="orbit-slide">
+        <figure class="orbit-figure">
+          <img class="orbit-image" src="{{ site.baseurl}}\assets\images\workshops\carousel\02_teaching.png" alt="Space">
+          <figcaption class="orbit-caption">Practical real world examples.</figcaption>
+        </figure>
+      </li>
+      <li class="orbit-slide">
+        <figure class="orbit-figure">
+          <img class="orbit-image" src="{{ site.baseurl}}\assets\images\workshops\carousel\03_classroom.png" alt="Space">
+          <figcaption class="orbit-caption">Lectures on GCD theory together with hands-on exercises.</figcaption>
+        </figure>
+      </li>
+      <li class="orbit-slide">
+        <figure class="orbit-figure">
+          <img class="orbit-image" src="{{ site.baseurl}}\assets\images\workshops\carousel\04_totalstation.png" alt="Space">
+          <figcaption class="orbit-caption">Learn about equipment used to measure topographic change.</figcaption>
+        </figure>
+      </li>
+    </ul>
+  </div>
+  <nav class="orbit-bullets">
+    <button class="is-active" data-slide="0"><span class="show-for-sr">First slide details.</span><span class="show-for-sr">Current Slide</span></button>
+    <button data-slide="1"><span class="show-for-sr">Second slide details.</span></button>
+    <button data-slide="2"><span class="show-for-sr">Third slide details.</span></button>
+    <button data-slide="3"><span class="show-for-sr">Fourth slide details.</span></button>
+  </nav>
+</div>
+
 Join us to learn the latest version of the GCD Software, meet the GCD development team and take your data further in the first public GCD Workshop in two years.
 Over five days you will be taught change detection fundamentals as well a deep dive into the new features of the completely overhauled GCD 7 software. 
 
@@ -12,19 +53,16 @@ Existing GCD users are encouraged to bring their own topographic data. Project-b
 and help take your GCD use to the next level. Example datasets will be provided for new GCD users.
 
 <div align="center">
-	<a class="hollow button" href="http://www.eventbee.com/event?eid=199043755&track=GCDwebsite">Public Registration for CEWA 6850</a>
-  <a class="hollow button" href="http://127.0.0.1:4001/Workshops/About/how-to-register#usu-graduate-students---wats-6850"> USU Student Registration for WATS 6850</a>
-	</div>
+  <a href="https://www.eventbrite.com/e/geomorphic-change-detection-workshop-tickets-55409760084?ref=ebtn" target="_blank"><img src="https://www.eventbrite.com/custombutton?eid=55409760084" alt="Eventbrite - Geomorphic Change Detection Workshop" /></a>
+</div>
 
-<div align="center">
-	    <a href="https://www.eventbrite.com/e/geomorphic-change-detection-workshop-tickets-55409760084?ref=ebtn" target="_blank"><img src="https://www.eventbrite.com/custombutton?eid=55409760084" alt="Eventbrite - Geomorphic Change Detection Workshop" /></a>
-	    </div>
+This course is available for one credit to USU graduate students as [WATS 6850]({{ site.baseurl }}/Workshops/2019/wats6850/) - Spring 2019 CRN 15043 USU students must register using [Banner](http://ssb.banner.usu.edu/).
 
 ## Date & Times 
 
 This workshop will span five days from April 29th to May 3rd 2019.
 
-- Day 1: 9:00 - 5:00 - Topographic Surverying to Support Geomorphic Change Detection
+- Day 1: 9:00 - 5:00 - Topographic Surveying to Support Geomorphic Change Detection
   - 8:00 - 9:00 - Optional ArcGIS & Software Install Help Session
 - Day 2: 9:00 - 5:00 - Principles of Change Detection
 - Day 3: 9:00 - 5:00 - Applications of Change Detection
