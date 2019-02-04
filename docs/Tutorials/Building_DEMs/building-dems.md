@@ -87,13 +87,17 @@ Since we have a DEM that includes shots above the water and below the water, and
 
 The resulting water depth map can be overlaid on the DEM and provides a more intuitive context of the physcial habitat within the reach as the pools, bars, and beaver ponds jump out more clearly then from the topography alone. This video walks you through the sequence:
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/hSGW9p570Y8" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
+<div class="responsive-embed widescreen">
+	<iframe width="560" height="315" src="https://www.youtube.com/embed/hSGW9p570Y8" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
+</div>
 
 ## OPTIONAL: Pulling Some Cross Sections and a Long Profile Off DEM
 
 Using the 3D Analyst interpolate line and profile graph features, you can easily pull off a longitudinal profile and cross section(s) from the DEM. This video shows you how:
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/Kv263FBGJnE" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
+<div class="responsive-embed widescreen">
+	<iframe width="560" height="315" src="https://www.youtube.com/embed/Kv263FBGJnE" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
+</div>
 
 ## References
 
@@ -109,7 +113,6 @@ The above exercise comes from a [Lab](http://gis.joewheaton.org/assignments/labs
 - [Lecture](http://etal.usu.edu/ICRRR/PartII/2010/Part_II/D1_JMW.pdf)
 - [Tutorial](http://etal.usu.edu/ICRRR/PartII/2010/Part_II/ICRRR_D2_Topo_Excercise.pdf)
 - [Dataset](http://etal.usu.edu/ICRRR/PartII/2010/Part_II/ProvoTopoData.zip)
-
 
 ------
 <div align="center">
