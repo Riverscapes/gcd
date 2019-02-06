@@ -26,6 +26,11 @@ Learn the new GCD 7 software at the upcoming GCD workshop in **Logan, Utah** fro
 	<a class="button alert" href="{{ site.baseurl }}/Workshops/2019/wats6850"> 2019 GCD Workshop</a>
 </div>
 
+<img class="float-right" src="{{ site.baseurl}}\assets\images\workshops\early-bird-discount-100.png" pad="5px">
+
+[Register](https://www.eventbrite.com/e/geomorphic-change-detection-workshop-tickets-55409760084?aff=gcdwebsite) early (prior to February 28) and save <i class="fa fa-usd" aria-hidden="true"></i>:
+- First 15 will save **$300 off** 4 day registration with promotional code `earlybirdgcd`
+
 ------
 
 ## Background
