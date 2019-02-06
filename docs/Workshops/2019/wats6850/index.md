@@ -56,20 +56,29 @@ and help take your GCD use to the next level. Example datasets will be provided 
   <a href="https://www.eventbrite.com/e/geomorphic-change-detection-workshop-tickets-55409760084?ref=ebtn" target="_blank"><img src="https://www.eventbrite.com/custombutton?eid=55409760084" alt="Eventbrite - Geomorphic Change Detection Workshop" /></a>
 </div>
 
-This course is available for one credit to USU graduate students as [WATS 6850]({{ site.baseurl }}/Workshops/2019/wats6850/) - Spring 2019 CRN 15043 USU students must register using [Banner](http://ssb.banner.usu.edu/).
+#### Early-Bird Registration Discounts!
+<img class="float-right" src="{{ site.baseurl}}\assets\images\workshops\early-bird-discount-100.png" pad="5px">
 
+[Register](https://www.eventbrite.com/e/geomorphic-change-detection-workshop-tickets-55409760084?aff=gcdwebsite) early (prior to February 28) and save <i class="fa fa-usd" aria-hidden="true"></i>:
+- First 15 will save **$300 off** 4 day registration with promotional code `earlybirdgcd`
+
+To redeem discount, go to [register on eventbrite](https://www.eventbrite.com/e/geomorphic-change-detection-workshop-tickets-55409760084?aff=gcdwebsite), purchase ticket and enter code (only one code per purchase).
+
+
+#### Matriculated Graduate Students
+This course is available for one credit to USU graduate students as [WATS 6850]({{ site.baseurl }}/Workshops/2019/wats6850/) - Spring 2019 CRN `15043` USU students must register using [Banner](http://ssb.banner.usu.edu/).
+
+-----
 ## Date & Times 
 
-This workshop will span five days from April 29th to May 3rd 2019.
+Pre workshop:
+- *1 Day Pre-Workshop (April 29)*: 9:00 - 5:00 - Topographic Surveying to Support Geomorphic Change Detection
 
-- Day 1: 9:00 - 5:00 - Topographic Surveying to Support Geomorphic Change Detection
-  - 8:00 - 9:00 - Optional ArcGIS & Software Install Help Session
-- Day 2: 9:00 - 5:00 - Principles of Change Detection
-- Day 3: 9:00 - 5:00 - Applications of Change Detection
-- Day 4: 2:00 - 5:00 - Student Projects
-  - Morning: Time for students to do their projects
-  - 2:00 - 5:00 PM: Advanced Error Modelling  
-- Day 5: 10:00 - 2:00 - Advanced Error Modelling 
+This GCD worskhop will span four days from April 30th to May 3rd 2019.
+- *Day 1 (April 30)*: 9:00 - 5:00 - Principles of Change Detection
+- *Day 2*: 9:00 - 5:00 - Applications of Change Detection
+- *Day 3*: 2:00 - 5:00 - Student Projects (Morning: Time for students to do their projects)
+- *Day 4 (May 3rd)*: 10:00 - 2:00 - Advanced Error Modelling 
 
 For those with extensive experience in topographic surveying, they can opt out of Day 1 and just attend Days 2-5. 
 
