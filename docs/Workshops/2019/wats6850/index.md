@@ -45,7 +45,12 @@ weight: 1
     <button data-slide="3"><span class="show-for-sr">Fourth slide details.</span></button>
   </nav>
 </div>
-
+<br>
+<div class="float-right">
+<a href="{{ site.baseurl }}/assets/images/gcd_workshop_flyer_thumb.png"><img width="100px" src="{{ site.baseurl }}/assets/images/gcd_workshop_flyer_thumb.png"></a>
+<p style="text-align:center"><small>
+<a href="{{ site.baseurl }}/assets/images/gcd_workshop_flyer_thumb.png">Download Flyer</a></small></p>
+</div>
 Join us to learn the latest version of the GCD Software, meet the GCD development team and take your data further in the first public GCD Workshop in two years.
 Over five days you will be taught change detection fundamentals as well a deep dive into the new features of the completely overhauled GCD 7 software. 
 
