@@ -208,7 +208,7 @@ namespace GCDCore.UserInterface.Options
 
         private void lnkPyramidsHelp_LinkClicked(System.Object sender, System.Windows.Forms.LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start("http://blogs.esri.com/esri/arcgis/2012/11/14/should-i-build-pyramids-or-overviews");
+            Process.Start("http://desktop.arcgis.com/en/arcmap/10.3/manage-data/raster-and-images/raster-pyramids.htm");
         }
 
         private void btnHelp_Click(System.Object sender, System.EventArgs e)
