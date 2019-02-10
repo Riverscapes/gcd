@@ -58,6 +58,26 @@ namespace GCDConsoleLib.Tests
             Assert.AreEqual(rA3.Height, 100.0m);
             Assert.AreEqual(rA3.Width, 94.0m);
             Assert.AreEqual(rA3.MaxArrID, 9399);
+
+            // New tests for constructor that allows overriding cell size
+            ExtentRectangle rA4 = new ExtentRectangle(5, 6, -1, 1, 100, 94);
+            ExtentRectangle rA5 = new ExtentRectangle(rA4, -2, 2);
+
+            Assert.AreEqual(rA5.Top, rA4.Top);
+            Assert.AreEqual(rA5.Left, rA4.Left);
+            Assert.AreEqual(rA5.CellHeight, -2);
+            Assert.AreEqual(rA5.CellWidth, 2);
+            Assert.AreEqual(rA5.Rows, 50);
+            Assert.AreEqual(rA5.Cols, 47);
+
+            // Iregular case
+            ExtentRectangle rA6 = new ExtentRectangle(5, 6, -0.071123m, 0.835465m, 100, 94);
+            ExtentRectangle rA7 = new ExtentRectangle(rA6, -0.0534567m, 0.7898765m);
+
+            Assert.AreEqual(rA7.Top, rA6.Top);
+            Assert.AreEqual(rA7.Left, rA6.Left);
+            Assert.AreEqual(rA7.CellHeight, -0.0534567m);
+            Assert.AreEqual(rA7.CellWidth, 0.7898765m);
         }
 
         [TestMethod()]

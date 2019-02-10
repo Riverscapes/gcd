@@ -38,6 +38,18 @@ namespace GCDConsoleLib
         }
 
         /// <summary>
+        /// Create from existing rectangle but apply new cell size
+        /// </summary>
+        /// <param name="orig"></param>
+        public ExtentRectangle(ExtentRectangle orig, decimal mCellHeight, decimal mCellWidth)
+        {
+            int newRows = Convert.ToInt32(Math.Ceiling(orig.Height / Math.Abs(mCellHeight)));
+            int newCols = Convert.ToInt32(Math.Floor(orig.Width / Math.Abs(mCellWidth)));
+
+            _Init(orig.Top, orig.Left, mCellHeight, mCellWidth, newRows, newCols);
+        }
+
+        /// <summary>
         /// Load this rectangle from an already-open dataset
         /// </summary>
         /// <param name="dSet"></param>
@@ -373,7 +385,7 @@ namespace GCDConsoleLib
         {
             decimal newTop, newBottom, newLeft, newRight;
 
-            newTop = Math.Floor(Top / CellHeight) *CellHeight;
+            newTop = Math.Floor(Top / CellHeight) * CellHeight;
             newBottom = Math.Ceiling(Bottom / CellHeight) * CellHeight;
 
             newLeft = Math.Floor(Left / CellWidth) * CellWidth;

@@ -114,6 +114,7 @@
     <Compile Include="Extensions\BiDictionaryTests.cs" />
     <Compile Include="ExtentAdjusters\ExtentAdjusterBaseTests.cs" />
     <Compile Include="ExtentAdjusters\ExtentAdjusterNoReferenceTests.cs" />
+    <Compile Include="ExtentAdjusters\ExtentAdjusterWithReferenceTests.cs" />
     <Compile Include="ExtentRectangleTests.cs" />
     <Compile Include="FIS\DefuzzifyTests.cs" />
     <Compile Include="FIS\FisFileTests.cs" />

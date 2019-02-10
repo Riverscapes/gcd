@@ -15,7 +15,8 @@ namespace GCDConsoleLib.ExtentAdjusters
         // Interface properties that only allow setting
         public ExtentRectangle RefExtent { get { return _RefExtent; } }
 
-        public ExtentAdjusterWithReference(ExtentRectangle srcextent, ExtentRectangle refextent) : base(srcextent)
+        public ExtentAdjusterWithReference(ExtentRectangle srcextent, ExtentRectangle refextent)
+            : base(new ExtentRectangle(srcextent, refextent.CellHeight, refextent.CellWidth))
         {
             _RefExtent = refextent;
         }
