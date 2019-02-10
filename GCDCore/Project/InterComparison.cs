@@ -90,6 +90,8 @@ namespace GCDCore.Project
                 throw ex2;
             }
 
+            // Remove the intercomparison from the project
+            ProjectManager.Project.InterComparisons.Remove(this);
             ProjectManager.Project.Save();
         }
     }
