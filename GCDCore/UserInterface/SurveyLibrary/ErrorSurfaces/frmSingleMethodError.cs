@@ -27,7 +27,10 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
 
             // Hide raster properties
             ucRasterProperties1.Visible = false;
-            Height -= cmdOK.Top - ucRasterProperties1.Top;
+            int newHeight = Height + (ucRasterProperties1.Top - cmdOK.Top);
+            MinimumSize = new System.Drawing.Size(Width, newHeight);
+            Height = newHeight;
+            ucErrProps.Anchor = AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom | AnchorStyles.Left;
         }
 
         public frmSingleMethodError(ErrorSurface errSurface)

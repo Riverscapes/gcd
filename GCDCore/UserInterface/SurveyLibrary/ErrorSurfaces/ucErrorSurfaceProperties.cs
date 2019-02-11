@@ -71,11 +71,9 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
 
             // Load all the associated surfaces in the survey library to the grid combo box
             DataGridViewComboBoxColumn colCombo = (DataGridViewComboBoxColumn)grdFISInputs.Columns[1];
-            colCombo.DataSource = new BindingList<AssocSurface>(AssociatedSurfaces.ToList());
+            colCombo.DataSource = AssociatedSurfaces;
             colCombo.DisplayMember = "Name";
             colCombo.ValueMember = "This"; // needed to support binding column to complex object
-
-            cboAssociated.DataSource = AssociatedSurfaces;
 
             // Add all the FIS library items to the FIS combo box. Don't bind the combo
             // directly to the FIS library because we might need to add a temporary, project FIS
@@ -86,19 +84,12 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
             cboFIS.SelectedIndex = -1;
 
             cboFIS.SelectedIndexChanged += cboFIS_SelectedIndexChanged;
-            rdoAssociated.CheckedChanged += ErrorSurfaceTypeChanged;
             rdoFIS.CheckedChanged += ErrorSurfaceTypeChanged;
 
             if (ErrSurfProperty.UniformValue.HasValue)
             {
                 rdoUniform.Checked = true;
                 valUniform.Value = ErrSurfProperty.UniformValue.Value;
-            }
-
-            if (ErrSurfProperty.AssociatedSurface is AssocSurface)
-            {
-                rdoAssociated.Checked = true;
-                cboAssociated.SelectedItem = ErrSurfProperty.AssociatedSurface;
             }
 
             if (ErrSurfProperty.FISRuleFile is FISLibraryItem)
@@ -130,8 +121,6 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
 
             tTip.SetToolTip(rdoUniform, "A single floating point value is used for the entire error surface/region.");
             tTip.SetToolTip(valUniform, "the single floating point value that is used for the entire error surface/region.");
-            tTip.SetToolTip(rdoAssociated, "The values within an associated surface raster are used as the error surface.");
-            tTip.SetToolTip(cboAssociated, "The associated surface that represents the error surface values.");
             tTip.SetToolTip(rdoFIS, "The error surface/region is calculated using a fuzzy inference system.");
             tTip.SetToolTip(cboFIS, "The FIS library entry that defines the FIS rule file to be used.");
             tTip.SetToolTip(grdFISInputs, "The list of inputs for the selected FIS rule file and the associated surface that corresponds to each input.");
@@ -141,11 +130,6 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
         {
             rdoUniform.Enabled = rdoUniform.Checked ? true : Editable;
             valUniform.Enabled = Editable && rdoUniform.Checked;
-
-            rdoAssociated.Enabled = rdoAssociated.Checked ? true : Editable && AssociatedSurfaces.Count() > 0;
-            cboAssociated.Enabled = Editable && rdoAssociated.Checked;
-            if (!rdoAssociated.Checked)
-                cboAssociated.SelectedIndex = -1;
 
             rdoFIS.Enabled = rdoFIS.Checked ? true : Editable && AssociatedSurfaces.Count() > 1;
             cboFIS.Enabled = rdoFIS.Checked && Editable;
@@ -188,12 +172,6 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
 
         public bool ValidateForm()
         {
-            if (rdoAssociated.Checked && cboAssociated.SelectedIndex < 0)
-            {
-                MessageBox.Show("You must pick an existing associated surface or select a different error surface type.", "Invalid Associated Surface", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return false;
-            }
-
             if (rdoFIS.Checked)
             {
                 if (cboFIS.SelectedIndex < 0)
@@ -214,10 +192,6 @@ namespace GCDCore.UserInterface.SurveyLibrary.ErrorSurfaces
             // This is so that parent forms can use the updated properties after calling validate
             if (rdoUniform.Checked)
                 ErrSurfProperty.UniformValue = valUniform.Value;
-            else if (rdoAssociated.Checked)
-            {
-                ErrSurfProperty.AssociatedSurface = cboAssociated.SelectedItem as AssocSurface;
-            }
             else
             {
                 // The FIS file and inputs should already be updated

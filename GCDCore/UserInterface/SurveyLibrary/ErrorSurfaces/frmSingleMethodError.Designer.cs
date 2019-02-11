@@ -44,7 +44,7 @@
             // 
             this.cmdCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cmdCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cmdCancel.Location = new System.Drawing.Point(368, 392);
+            this.cmdCancel.Location = new System.Drawing.Point(368, 343);
             this.cmdCancel.Name = "cmdCancel";
             this.cmdCancel.Size = new System.Drawing.Size(75, 23);
             this.cmdCancel.TabIndex = 4;
@@ -57,7 +57,7 @@
             this.cmdOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.cmdOK.Image = global::GCDCore.Properties.Resources.Save;
             this.cmdOK.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdOK.Location = new System.Drawing.Point(287, 392);
+            this.cmdOK.Location = new System.Drawing.Point(287, 343);
             this.cmdOK.Name = "cmdOK";
             this.cmdOK.Size = new System.Drawing.Size(75, 23);
             this.cmdOK.TabIndex = 3;
@@ -68,7 +68,7 @@
             // cmdHelp
             // 
             this.cmdHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.cmdHelp.Location = new System.Drawing.Point(12, 392);
+            this.cmdHelp.Location = new System.Drawing.Point(12, 343);
             this.cmdHelp.Name = "cmdHelp";
             this.cmdHelp.Size = new System.Drawing.Size(75, 23);
             this.cmdHelp.TabIndex = 5;
@@ -92,7 +92,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ucErrProps.Location = new System.Drawing.Point(77, 89);
             this.ucErrProps.Name = "ucErrProps";
-            this.ucErrProps.Size = new System.Drawing.Size(366, 200);
+            this.ucErrProps.Size = new System.Drawing.Size(366, 148);
             this.ucErrProps.TabIndex = 2;
             // 
             // ucName
@@ -109,9 +109,9 @@
             this.ucRasterProperties1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.ucRasterProperties1.Location = new System.Drawing.Point(12, 295);
+            this.ucRasterProperties1.Location = new System.Drawing.Point(12, 243);
             this.ucRasterProperties1.Name = "ucRasterProperties1";
-            this.ucRasterProperties1.Size = new System.Drawing.Size(431, 91);
+            this.ucRasterProperties1.Size = new System.Drawing.Size(431, 94);
             this.ucRasterProperties1.TabIndex = 6;
             // 
             // frmSingleMethodError
@@ -120,7 +120,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cmdCancel;
-            this.ClientSize = new System.Drawing.Size(455, 427);
+            this.ClientSize = new System.Drawing.Size(455, 378);
             this.Controls.Add(this.ucRasterProperties1);
             this.Controls.Add(this.chkDefault);
             this.Controls.Add(this.ucErrProps);
@@ -129,7 +129,7 @@
             this.Controls.Add(this.cmdOK);
             this.Controls.Add(this.cmdCancel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(282, 340);
+            this.MinimumSize = new System.Drawing.Size(282, 417);
             this.Name = "frmSingleMethodError";
             this.Text = "Create Error Surface For Entire DEM Extent";
             this.Load += new System.EventHandler(this.frmSingleMethodError_Load);

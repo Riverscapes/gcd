@@ -17,20 +17,6 @@ namespace GCDCore.Project
             set
             {
                 _UniformValue = value;
-                _AssociatedSurface = null;
-                _FISRuleFile = null;
-                FISInputs = null;
-            }
-        }
-
-        private AssocSurface _AssociatedSurface;
-        public AssocSurface AssociatedSurface
-        {
-            get { return _AssociatedSurface; }
-            set
-            {
-                _AssociatedSurface = value;
-                _UniformValue = new decimal?();
                 _FISRuleFile = null;
                 FISInputs = null;
             }
@@ -47,7 +33,6 @@ namespace GCDCore.Project
                 if (_FISRuleFile is ErrorCalculation.FIS.FISLibraryItem)
                 {
                     _UniformValue = new decimal?();
-                    _AssociatedSurface = null;
                 }
             }
         }
@@ -60,8 +45,6 @@ namespace GCDCore.Project
             {
                 if (UniformValue.HasValue)
                     return "Uniform Error";
-                else if (AssociatedSurface is AssocSurface)
-                    return "Associated Surface";
                 else
                     return "FIS Error";
             }
@@ -74,10 +57,6 @@ namespace GCDCore.Project
                 if (UniformValue.HasValue)
                 {
                     return string.Format("Uniform error value of {0}{1}", UniformValue.ToString(), UnitsNet.Length.GetAbbreviation(ProjectManager.Project.Units.VertUnit));
-                }
-                else if (AssociatedSurface is AssocSurface)
-                {
-                    return string.Format("{0} associated surface", AssociatedSurface);
                 }
                 else
                 {
@@ -95,8 +74,6 @@ namespace GCDCore.Project
             {
                 if (UniformValue.HasValue)
                     return new GCDConsoleLib.GCD.ErrorRasterProperties(UniformValue.Value);
-                else if (AssociatedSurface is AssocSurface)
-                    return new GCDConsoleLib.GCD.ErrorRasterProperties(AssociatedSurface.Raster);
                 else
                 {
                     Dictionary<string, GCDConsoleLib.Raster> fisinputs = new Dictionary<string, GCDConsoleLib.Raster>();
@@ -139,12 +116,7 @@ namespace GCDCore.Project
             {
                 DEMSurvey dem = ((DEMSurvey)surf);
 
-                if (nodAss is XmlNode)
-                {
-
-                    AssociatedSurface = dem.AssocSurfaces.First<AssocSurface>(x => string.Compare(nodAss.InnerText, x.Name, true) == 0);
-                }
-                else if (nodFIS is XmlNode)
+                if (nodFIS is XmlNode)
                 {
                     FileInfo fisFile = ProjectManager.Project.GetAbsolutePath(nodFIS.InnerText);
                     FISRuleFile = new ErrorCalculation.FIS.FISLibraryItem(fisFile.FullName, ErrorCalculation.FIS.FISLibrary.FISLibraryItemTypes.Project);
@@ -164,9 +136,6 @@ namespace GCDCore.Project
 
             if (UniformValue.HasValue)
                 nodParent.AppendChild(nodParent.OwnerDocument.CreateElement("UniformValue")).InnerText = UniformValue.Value.ToString();
-
-            if (AssociatedSurface != null)
-                nodParent.AppendChild(nodParent.OwnerDocument.CreateElement("AssociatedSurface")).InnerText = AssociatedSurface.Name;
 
             if (FISRuleFile is ErrorCalculation.FIS.FISLibraryItem)
                 nodParent.AppendChild(nodParent.OwnerDocument.CreateElement("FISRuleFile")).InnerText = ProjectManager.Project.GetRelativePath(FISRuleFile.FilePath);
@@ -192,8 +161,6 @@ namespace GCDCore.Project
             {
                 if (UniformValue.HasValue)
                     return new GCDConsoleLib.GCD.ErrorRasterProperties(UniformValue.Value);
-                else if (AssociatedSurface is AssocSurface)
-                    return new GCDConsoleLib.GCD.ErrorRasterProperties(AssociatedSurface.Raster);
                 else
                 {
                     Dictionary<string, GCDConsoleLib.Raster> inputs = new Dictionary<string, GCDConsoleLib.Raster>();

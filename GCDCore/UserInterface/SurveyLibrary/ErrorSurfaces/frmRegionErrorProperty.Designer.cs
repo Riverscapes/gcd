@@ -63,7 +63,7 @@
             // 
             this.cmdCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cmdCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cmdCancel.Location = new System.Drawing.Point(369, 274);
+            this.cmdCancel.Location = new System.Drawing.Point(369, 194);
             this.cmdCancel.Name = "cmdCancel";
             this.cmdCancel.Size = new System.Drawing.Size(75, 23);
             this.cmdCancel.TabIndex = 4;
@@ -76,7 +76,7 @@
             this.cmdOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.cmdOK.Image = global::GCDCore.Properties.Resources.Save;
             this.cmdOK.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdOK.Location = new System.Drawing.Point(288, 274);
+            this.cmdOK.Location = new System.Drawing.Point(288, 194);
             this.cmdOK.Name = "cmdOK";
             this.cmdOK.Size = new System.Drawing.Size(75, 23);
             this.cmdOK.TabIndex = 3;
@@ -87,7 +87,7 @@
             // cmdHelp
             // 
             this.cmdHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.cmdHelp.Location = new System.Drawing.Point(12, 274);
+            this.cmdHelp.Location = new System.Drawing.Point(12, 194);
             this.cmdHelp.Name = "cmdHelp";
             this.cmdHelp.Size = new System.Drawing.Size(75, 23);
             this.cmdHelp.TabIndex = 5;
@@ -102,7 +102,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ucErrProp.Location = new System.Drawing.Point(85, 49);
             this.ucErrProp.Name = "ucErrProp";
-            this.ucErrProp.Size = new System.Drawing.Size(359, 219);
+            this.ucErrProp.Size = new System.Drawing.Size(359, 139);
             this.ucErrProp.TabIndex = 2;
             // 
             // frmRegionErrorProperty
@@ -111,7 +111,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cmdCancel;
-            this.ClientSize = new System.Drawing.Size(456, 309);
+            this.ClientSize = new System.Drawing.Size(456, 229);
             this.Controls.Add(this.ucErrProp);
             this.Controls.Add(this.cmdHelp);
             this.Controls.Add(this.cmdOK);
@@ -119,7 +119,7 @@
             this.Controls.Add(this.txtRegion);
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(472, 348);
+            this.MinimumSize = new System.Drawing.Size(472, 268);
             this.Name = "frmRegionErrorProperty";
             this.Text = "Mask Region Error Surface Properties";
             this.Load += new System.EventHandler(this.frmRegionErrorProperty_Load);
