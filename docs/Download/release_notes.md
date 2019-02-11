@@ -7,6 +7,13 @@ weight: 4
 
 See the [commit history](https://github.com/Riverscapes/gcd/commits) in GitHub for fuller documentation of changes. Alternatively you can view the commits organized by each product [release](https://github.com/Riverscapes/gcd/releases). The release notes for [prior versions](#prior-versions) are linked at the bottom of this page.
 
+## 7.4.1 - 11 Feb 2019
+
+* Fixed correctly using first DEM surveys cell size when adding subsequent DEMs to project ([#341](https://github.com/Riverscapes/gcd/issues/341)).
+* Fixed correctly reading associated surface type from GCD project XML file ([#343](https://github.com/Riverscapes/gcd/issues/343)).
+* Deleting inter-comparisons now working ([#332](https://github.com/Riverscapes/gcd/issues/332)).
+* Removing the ability to use an associated surface raster as an error surface ([#329](https://github.com/Riverscapes/gcd/issues/329)). Users should simply add the existing raster as an error surface directly.
+
 ## 7.4.0 - 6 Nov 2018
 
 * Fixed issue when attempting a linear extraction with ShapeFiles containing [null](https://github.com/Riverscapes/gcd/issues/326) and [multipart](https://github.com/Riverscapes/gcd/issues/324) geometries.
