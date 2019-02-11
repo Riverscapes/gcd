@@ -33,21 +33,12 @@ namespace GCDCore.Project
         public override string Noun { get { return "Associated Surface"; } }
 
         /// <summary>
-        /// Associated surface is in use if any of the error surfaces for the same DEM refer to it
+        /// Associated surface are not used by any other items
         /// </summary>
         public override bool IsItemInUse
         {
             get
             {
-                foreach (ErrorSurface errSurf in DEM.ErrorSurfaces)
-                {
-                    foreach (ErrorSurfaceProperty errProp in errSurf.ErrorProperties.Values)
-                    {
-                        if (errProp.AssociatedSurface == this)
-                            return true;
-                    }
-                }
-
                 return false;
             }
         }
@@ -123,18 +114,18 @@ namespace GCDCore.Project
             : base(nodAssoc)
         {
             DEM = dem;
-            AssociatedSurfaceTypes eType = AssociatedSurfaceTypes.Other;
+            AssocSurfaceType = AssociatedSurfaceTypes.Other;
             XmlNode nodType = nodAssoc.SelectSingleNode("Type");
             if (nodType is XmlNode && !string.IsNullOrEmpty(nodType.InnerText))
             {
                 try
                 {
-                    eType = (AssociatedSurfaceTypes)Enum.Parse(typeof(AssociatedSurfaceTypes), nodType.InnerText);
+                    AssocSurfaceType = (AssociatedSurfaceTypes)Enum.Parse(typeof(AssociatedSurfaceTypes), nodType.InnerText);
                 }
                 catch (Exception ex)
                 {
-                    eType = AssociatedSurfaceTypes.Other;
-                    Console.WriteLine(string.Format("Error reading associated surface type from project XML. Defaulting to {0}\n\n{1}", eType, ex.Message));
+                    AssocSurfaceType = AssociatedSurfaceTypes.Other;
+                    Console.WriteLine(string.Format("Error reading associated surface type from project XML. Defaulting to {0}\n\n{1}", AssociatedSurfaceTypes.Other, ex.Message));
                 }
             }
         }
