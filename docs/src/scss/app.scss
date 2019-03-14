@@ -164,6 +164,7 @@ header {
     background-image: url('../images/RiverscapesLogo.png');
     background-size: cover;
     padding: 0;
+    background-color: transparent;
     color: transparent;
     text-shadow: none;
   }
@@ -177,7 +178,7 @@ header {
   &, ul {background-color: transparent;}
   ul ul { background-color: black; }
   .menu .menu-text { color: white; }
-  .dropdown.menu a { color: white; }
+  .dropdown.menu a { color: white; background: transparent; }
   .dropdown.menu>li.is-dropdown-submenu-parent>a::after{
     border-color: white transparent transparent;
   }

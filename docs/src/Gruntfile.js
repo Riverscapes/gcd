@@ -1,3 +1,5 @@
+const sass = require('node-sass');
+
 module.exports = function(grunt) {
   grunt.initConfig({
 
@@ -5,6 +7,7 @@ module.exports = function(grunt) {
     // sass (libsass) config
     sass: {
         options: {
+            implementation: sass,
             sourceMap: true,
             relativeAssets: false,
             outputStyle: 'compressed',
@@ -52,7 +55,7 @@ module.exports = function(grunt) {
         dist: {
             src: [
                 'node_modules/jquery/dist/jquery.min.js',
-                'node_modules/foundation-sites/dist/js/foundation.min.js', 
+                'node_modules/foundation-sites/dist/js/foundation.js', 
                 'js/toc.js',
                 'js/app.js'
             ],

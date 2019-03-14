@@ -11,7 +11,8 @@ url: http://gcd.riverscapes.xyz
 port: 4001
 google_analytics: UA-60121403-8
 # Markdown style
-markdown: kramdown
+markdown: kramdown-parser-gfm
+
 # Syntax highlighter.
 highlighter: rouge
 
@@ -30,6 +31,7 @@ exclude:
   - LICENSE
   - README.md
   - _config.yml
+  - vendor
 
 # Where our layouts and templates are stored
 layouts_dir:  src/_layouts
