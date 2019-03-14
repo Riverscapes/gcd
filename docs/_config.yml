@@ -10,8 +10,6 @@ url: http://gcd.riverscapes.xyz
 # When serving locally what port should we use:
 port: 4001
 google_analytics: UA-60121403-8
-# Markdown style
-markdown: kramdown-parser-gfm
 
 # Syntax highlighter.
 highlighter: rouge
