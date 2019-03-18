@@ -117,6 +117,22 @@ Unfortunately, simple raster based change detection requires doing a really good
 	<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vTicgovBn4WPFYjbSR9Vkc45-mqERhksEK5z9X8pKA-iFXBFH5UxEn72eQm33LzR4nAckyyEwi1ZiC-/embed?start=false&loop=false&delayms=3000" frameborder="0" width="960" height="749" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
 </div>
 
+-----
+# Week After Spring Break
+## Morphological Approach
+
+<div class="responsive-embed widescreen">
+<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vT0mY9M9tFLL0VdQU3P1WRJ4VTJtax-TwvMkhjWALwT5uCSkotja36OgC0EAIcmkZDyNWNtHB9ROG4D/embed?start=false&loop=false&delayms=3000" frameborder="0" width="960" height="749" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+</div>
+
+### Related Resources
+- <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+[**TUTORIAL** Morphological Approach]({{ site.baseurl }}/Tutorials//GeomorphicInterpretation/morphological-approach.html)
+
+This is based on the reading of Vericat et al. (2017):
+- Vericat D, Wheaton JM and Brasington J. 2017. [Revisiting the Morphological Approach](https://www.researchgate.net/publication/316997409_5_Revisiting_the_Morphological_Approach_Opportunities_and_Challenges_with_Repeat_High-Resolution_Topography), Gravel-Bed Rivers. John Wiley & Sons, Ltd, pp. 121-158. DOI:  [10.1002/9781118971437.ch5](http://dx.doi.org/10.1002/9781118971437.ch5). (see Damia's talk from [GBR here](https://www.youtube.com/watch?v=JPuxqrXStNM))
+-  <i class="fa fa-book" aria-hidden="true"></i> [**READING ASSIGNMENT**: Canvas Prep Reading Assignment](https://usu.instructure.com/courses/532404/assignments/2616298)
+
 
 ------
 <div align="center">
