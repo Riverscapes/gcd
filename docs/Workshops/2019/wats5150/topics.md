@@ -116,9 +116,8 @@ Unfortunately, simple raster based change detection requires doing a really good
 <div  class="responsive-embed widescreen">
 	<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vTicgovBn4WPFYjbSR9Vkc45-mqERhksEK5z9X8pKA-iFXBFH5UxEn72eQm33LzR4nAckyyEwi1ZiC-/embed?start=false&loop=false&delayms=3000" frameborder="0" width="960" height="749" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
 </div>
-
 -----
-# Week After Spring Break
+# Week(s) After Spring Break
 ## Morphological Approach
 
 <div class="responsive-embed widescreen">
@@ -132,6 +131,37 @@ Unfortunately, simple raster based change detection requires doing a really good
 This is based on the reading of Vericat et al. (2017):
 - <i class="fa fa-file-pdf-o" aria-hidden="true"></i> Vericat D, Wheaton JM and Brasington J. 2017. [Revisiting the Morphological Approach](https://www.researchgate.net/publication/316997409_5_Revisiting_the_Morphological_Approach_Opportunities_and_Challenges_with_Repeat_High-Resolution_Topography), Gravel-Bed Rivers. John Wiley & Sons, Ltd, pp. 121-158. DOI:  [10.1002/9781118971437.ch5](http://dx.doi.org/10.1002/9781118971437.ch5). (see Damia's talk from [GBR here](https://www.youtube.com/watch?v=JPuxqrXStNM))
 -  <i class="fa fa-book" aria-hidden="true"></i> [**READING ASSIGNMENT**: Canvas Prep Reading Assignment](https://usu.instructure.com/courses/532404/assignments/2616298)
+
+## Budget Segregation
+<div class="responsive-embed widescreen">
+<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vQ730SFqqmUorMxH1JU5qjquiuZh3zJ8yYCn6AjDhayBASIcQuOmyS7N5ByqoEJIf_lEOwMjYtQhj39/embed?start=false&loop=false&delayms=3000" frameborder="0" width="960" height="749" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+</div>
+### Related Resources
+- <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+[**TUTORIAL** - Basic Budget Segregation]({{ site.baseurl }}/Tutorials//GeomorphicInterpretation/simple-budget-segregation.html)
+- <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+[**TUTORIAL** - Morphdynamic Signatures from Budget Segregation]({{ site.baseurl }}/Tutorials//GeomorphicInterpretation/morphodynamic-signatures-from-budget-segeregation.html)
+
+This is based on the reading of Wheaton et al. (2013):
+- <i class="fa fa-file-pdf-o" aria-hidden="true"></i> Wheaton JM, Brasington J, Darby SE, Sear DA, Vericat D., and Kasprak A. 2013. [Morphodynamic signatures of braiding mechanisms as expressed through change in sediment storage in a gravel-bed river](https://www.researchgate.net/publication/242653748_Morphodynamic_signatures_of_braiding_mechanisms_as_expressed_through_change_in_sediment_storage_in_a_gravel-bed_river). Journal of Geophysical Research - Earth Surface. DOI: [10.1002/jgrf.20060](http://dx.doi.org/10.1002/jgrf.20060). 
+-  <i class="fa fa-book" aria-hidden="true"></i> [**READING ASSIGNMENT**: Canvas Prep Reading Assignment](https://usu.instructure.com/courses/532404/assignments/2616294)
+
+ 
+-----
+# Week of March 25
+## Reading the Riverscape
+<a href="https://onlinelibrary.wiley.com/doi/book/10.1002/9781118305454"><img class="float-right" src="{{ site.baseurl }}/assets/images/workshops/GeomorphicAnalysis.png"></a> 
+
+-  <a href="https://s3-us-west-2.amazonaws.com/etalweb.joewheaton.org/Courses/WATS4950/2019/Week9_WATS_4950_FluvialTaxonomy_FieldTrip_2019.pdf"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a> [Field trip handout](https://s3-us-west-2.amazonaws.com/etalweb.joewheaton.org/Courses/WATS4950/2019/Week9_WATS_4950_FluvialTaxonomy_FieldTrip_2019.pdf)
+
+Our field trip is based on the Fryirs and Brierely (2013) textbook for reading the landscape, the fluvial taxonomy framework of Wheaton et al. (2015), which build off of [River Styles Framework](http://riverstyles.com), and the Fryirs et al. (2015) elaboration of confinement:
+
+- Fryirs, K.A. and Brierley, G.J., 2013. [Geomorphic Analysis of River Systems: An Approach to Reading the Landscape](https://onlinelibrary.wiley.com/doi/book/10.1002/9781118305454), First Edition. Blackwell Publishing Ltd., Chichester, U.K., 345 pp
+- Wheaton JM, Fryirs K, Brierley G, Bangen S, Bouwes N, and O’Brien G. [Geomorphic Mapping and Taxonomy of Fluvial Landforms](https://www.researchgate.net/publication/281321324_Geomorphic_Mapping_and_Taxonomy_of_Fluvial_Landforms). 2015. Geomorphology. 248: 273-295. DOI: [10.1016/j.geomorph.2015.07.010](http://dx.doi.org/10.1016/j.geomorph.2015.07.010)
+- Fryirs K, Wheaton JM, and Brierley G. 2015.  [An approach for measuring confinement and assessing the influence of valley setting on river forms and processes](https://www.researchgate.net/publication/287108944_An_approach_for_measuring_confinement_and_assessing_the_influence_of_valley_setting_on_river_forms_and_processes). Earth Surface Processes & Landforms. DOI: [10.1002/esp.3893](http://dx.doi.org/10.1002/esp.3893)
+
+-  <i class="fa fa-book" aria-hidden="true"></i> [**READING ASSIGNMENT**: Canvas Prep Reading Assignment](https://usu.instructure.com/courses/532404/assignments/2652920)
+
 
 
 ------
