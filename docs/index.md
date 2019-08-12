@@ -15,7 +15,7 @@ GCD is part of the [Riverscapes Consortium's](https://riverscapes.xyz) much larg
 ​        <img src="{{ site.baseurl}}/assets/images/icons/GCDAddIn.png">
 ​        &nbsp;&nbsp;Download GCD 7</a>
 <a class="button large" href="{{ site.baseurl}}/Help"> <i class="fa fa-question-circle"></i>&nbsp;&nbsp;GCD 7 Help</a>
-------
+
 <div class="responsive-embed">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/JjbXDDThqIg" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
 
