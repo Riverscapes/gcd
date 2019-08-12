@@ -15,10 +15,11 @@ GCD is part of the [Riverscapes Consortium's](https://riverscapes.xyz) much larg
 ​        <img src="{{ site.baseurl}}/assets/images/icons/GCDAddIn.png">
 ​        &nbsp;&nbsp;Download GCD 7</a>
 <a class="button large" href="{{ site.baseurl}}/Help"> <i class="fa fa-question-circle"></i>&nbsp;&nbsp;GCD 7 Help</a>
+------
+<div class="responsive-embed">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/JjbXDDThqIg" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
 
-
-
-
+<p class="caption">Animated GCD results produced by <a href="https://www.waikato.ac.nz/staff-profiles/people/jbrasing/">Prof. James Brasington</a> of the <a href="https://www.waikato.ac.nz/">University of Waikato</a>, New Zealand, illustrating changes on the <a href="https://en.wikipedia.org/wiki/Waiho_River">Waiho River</a>, New Zealand.</p>
 ------
 
 ## Background
