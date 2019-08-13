@@ -42,10 +42,10 @@ namespace GCDConsoleLib.GCD
         /// <param name="ar"></param>
         /// <param name="vol"></param>
         /// <param name="cellArea"></param>
-        public GCDAreaVolume(Area ar, Volume vol, Area cellArea)
+        public GCDAreaVolume(Area ar, Volume vol, Area cellArea, UnitGroup projectUnits)
         {
             SetArea(ar, cellArea);
-            SetVolume(vol, cellArea);
+            SetVolume(vol, cellArea, projectUnits);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace GCDConsoleLib.GCD
         /// </summary>
         /// <param name="theArea"></param>
         /// <param name="cellArea"></param>
-        public void SetArea(Area theArea, Area cellArea)  {  Count =(int)( theArea.SquareMeters / cellArea.SquareMeters); }
+        public void SetArea(Area theArea, Area cellArea) { Count = (int)(theArea.SquareMeters / cellArea.SquareMeters); }
 
         /// <summary>
         /// Get the Area in whatever unit you want
@@ -104,13 +104,19 @@ namespace GCDConsoleLib.GCD
         /// <param name="cellArea"></param>
         /// <param name="vUnit"></param>
         /// <returns></returns>
-        public Volume GetVolume(Area cellArea, LengthUnit vUnit) { return Volume.FromCubicMeters(Length.From(_sum, vUnit).Meters * cellArea.SquareMeters); }
+        public Volume GetVolume(Area cellArea, UnitGroup projectUnits)
+        {
+            return Volume.From(_sum * cellArea.As(projectUnits.ArUnit), projectUnits.VolUnit);
+        }
 
         /// <summary>
         /// Set the volume directly
         /// </summary>
         /// <param name="vol"></param>
         /// <param name="cellArea"></param>
-        public void SetVolume(Volume vol, Area cellArea) {  _sum = vol.CubicMeters / cellArea.SquareMeters;  }
+        public void SetVolume(Volume vol, Area cellArea, UnitGroup projectUnits)
+        {
+            _sum = vol.As(projectUnits.VolUnit) / cellArea.As(projectUnits.ArUnit);
+        }
     }
 }

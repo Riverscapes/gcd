@@ -103,7 +103,6 @@ namespace GCDCore.Engines
             //get settings and options
             UnitsNet.Area ca = ProjectManager.Project.CellArea;
             DoDSummaryDisplayOptions options = new DoDSummaryDisplayOptions(ProjectManager.Project.Units);
-            UnitsNet.Units.LengthUnit vunit = ProjectManager.Project.Units.VertUnit;
 
             //using same pattern as ucDoDSummary
             StatValues["ArealLoweringRaw"] = dodStat.ErosionRaw.GetArea(ca).As(options.AreaUnits).ToString();
@@ -111,12 +110,12 @@ namespace GCDCore.Engines
             StatValues["ArealRaisingRaw"] = dodStat.DepositionRaw.GetArea(ca).As(options.AreaUnits).ToString();
             StatValues["ArealRaisingThresholded"] = dodStat.DepositionThr.GetArea(ca).As(options.AreaUnits).ToString();
 
-            StatValues["VolumeLoweringRaw"] = dodStat.ErosionRaw.GetVolume(ca, vunit).As(options.VolumeUnits).ToString();
-            StatValues["VolumeLoweringThresholded"] = dodStat.ErosionThr.GetVolume(ca, vunit).As(options.VolumeUnits).ToString();
-            StatValues["VolumeErrorLowering"] = dodStat.ErosionErr.GetVolume(ca, vunit).As(options.VolumeUnits).ToString();
-            StatValues["VolumeRaisingRaw"] = dodStat.DepositionRaw.GetVolume(ca, vunit).As(options.VolumeUnits).ToString();
-            StatValues["VolumeRaisingThresholded"] = dodStat.DepositionThr.GetVolume(ca, vunit).As(options.VolumeUnits).ToString();
-            StatValues["VolumeErrorRaising"] = dodStat.DepositionErr.GetVolume(ca, vunit).As(options.VolumeUnits).ToString();
+            StatValues["VolumeLoweringRaw"] = dodStat.ErosionRaw.GetVolume(ca, ProjectManager.Project.Units).As(options.VolumeUnits).ToString();
+            StatValues["VolumeLoweringThresholded"] = dodStat.ErosionThr.GetVolume(ca, ProjectManager.Project.Units).As(options.VolumeUnits).ToString();
+            StatValues["VolumeErrorLowering"] = dodStat.ErosionErr.GetVolume(ca, ProjectManager.Project.Units).As(options.VolumeUnits).ToString();
+            StatValues["VolumeRaisingRaw"] = dodStat.DepositionRaw.GetVolume(ca, ProjectManager.Project.Units).As(options.VolumeUnits).ToString();
+            StatValues["VolumeRaisingThresholded"] = dodStat.DepositionThr.GetVolume(ca, ProjectManager.Project.Units).As(options.VolumeUnits).ToString();
+            StatValues["VolumeErrorRaising"] = dodStat.DepositionErr.GetVolume(ca, ProjectManager.Project.Units).As(options.VolumeUnits).ToString();
 
             return StatValues;
         }

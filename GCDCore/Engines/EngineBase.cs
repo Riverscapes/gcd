@@ -50,13 +50,13 @@ namespace GCDCore.Engines
             outputText.Replace("[TotalAreaOfDepositionRaw]", changeStats.DepositionRaw.GetArea(ca).As(au).ToString(CultureInfo.InvariantCulture));
             outputText.Replace("[TotalAreaOfDepositionThresholded]", changeStats.DepositionThr.GetArea(ca).As(au).ToString(CultureInfo.InvariantCulture));
 
-            outputText.Replace("[TotalVolumeOfErosionRaw]", changeStats.ErosionRaw.GetVolume(ca, lu).As(vu).ToString(CultureInfo.InvariantCulture));
-            outputText.Replace("[TotalVolumeOfErosionThresholded]", changeStats.ErosionThr.GetVolume(ca, lu).As(vu).ToString(CultureInfo.InvariantCulture));
-            outputText.Replace("[ErrorVolumeOfErosion]", changeStats.ErosionErr.GetVolume(ca, lu).As(vu).ToString(CultureInfo.InvariantCulture));
+            outputText.Replace("[TotalVolumeOfErosionRaw]", changeStats.ErosionRaw.GetVolume(ca, Project.ProjectManager.Project.Units).As(vu).ToString(CultureInfo.InvariantCulture));
+            outputText.Replace("[TotalVolumeOfErosionThresholded]", changeStats.ErosionThr.GetVolume(ca, Project.ProjectManager.Project.Units).As(vu).ToString(CultureInfo.InvariantCulture));
+            outputText.Replace("[ErrorVolumeOfErosion]", changeStats.ErosionErr.GetVolume(ca, Project.ProjectManager.Project.Units).As(vu).ToString(CultureInfo.InvariantCulture));
 
-            outputText.Replace("[TotalVolumeOfDepositionRaw]", changeStats.DepositionRaw.GetVolume(ca, lu).As(vu).ToString(CultureInfo.InvariantCulture));
-            outputText.Replace("[TotalVolumeOfDepositionThresholded]", changeStats.DepositionThr.GetVolume(ca, lu).As(vu).ToString(CultureInfo.InvariantCulture));
-            outputText.Replace("[ErrorVolumeOfDeposition]", changeStats.DepositionErr.GetVolume(ca, lu).As(vu).ToString(CultureInfo.InvariantCulture));
+            outputText.Replace("[TotalVolumeOfDepositionRaw]", changeStats.DepositionRaw.GetVolume(ca, Project.ProjectManager.Project.Units).As(vu).ToString(CultureInfo.InvariantCulture));
+            outputText.Replace("[TotalVolumeOfDepositionThresholded]", changeStats.DepositionThr.GetVolume(ca, Project.ProjectManager.Project.Units).As(vu).ToString(CultureInfo.InvariantCulture));
+            outputText.Replace("[ErrorVolumeOfDeposition]", changeStats.DepositionErr.GetVolume(ca, Project.ProjectManager.Project.Units).As(vu).ToString(CultureInfo.InvariantCulture));
 
             try
             {
@@ -105,20 +105,20 @@ namespace GCDCore.Engines
             barViewer.Save(new FileInfo(Path.Combine(figuresFolder.FullName, sFilePrefix + "ChangeBars_AreaRelative.png")), fChartWidth, fChartHeight);
 
             barViewer.Refresh(
-                stats.ErosionThr.GetVolume(ca, lu).As(vu),
-                stats.DepositionThr.GetVolume(ca, lu).As(vu),
+                stats.ErosionThr.GetVolume(ca, Project.ProjectManager.Project.Units).As(vu),
+                stats.DepositionThr.GetVolume(ca, Project.ProjectManager.Project.Units).As(vu),
                 stats.NetVolumeOfDifference_Thresholded.As(vu),
-                stats.ErosionErr.GetVolume(ca, lu).As(vu),
-                stats.DepositionErr.GetVolume(ca, lu).As(vu),
+                stats.ErosionErr.GetVolume(ca, Project.ProjectManager.Project.Units).As(vu),
+                stats.DepositionErr.GetVolume(ca, Project.ProjectManager.Project.Units).As(vu),
                 stats.NetVolumeOfDifference_Error.As(vu), abbr, ElevationChangeBarViewer.BarTypes.Volume, true);
             barViewer.Save(new FileInfo(Path.Combine(figuresFolder.FullName, sFilePrefix + "ChangeBars_VolumeAbsolute.png")), fChartWidth, fChartHeight);
 
             barViewer.Refresh(
-                stats.ErosionThr.GetVolume(ca, lu).As(vu),
-                stats.DepositionThr.GetVolume(ca, lu).As(vu),
+                stats.ErosionThr.GetVolume(ca, Project.ProjectManager.Project.Units).As(vu),
+                stats.DepositionThr.GetVolume(ca, Project.ProjectManager.Project.Units).As(vu),
                 stats.NetVolumeOfDifference_Thresholded.As(vu),
-                stats.ErosionErr.GetVolume(ca, lu).As(vu),
-                stats.DepositionErr.GetVolume(ca, lu).As(vu),
+                stats.ErosionErr.GetVolume(ca, Project.ProjectManager.Project.Units).As(vu),
+                stats.DepositionErr.GetVolume(ca, Project.ProjectManager.Project.Units).As(vu),
                 stats.NetVolumeOfDifference_Error.As(vu), abbr, ElevationChangeBarViewer.BarTypes.Volume, false);
             barViewer.Save(new FileInfo(Path.Combine(figuresFolder.FullName, sFilePrefix + "ChangeBars_VolumeRelative.png")), fChartWidth, fChartHeight);
 

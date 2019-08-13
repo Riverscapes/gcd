@@ -70,23 +70,23 @@ namespace GCDConsoleLib.GCD
         /// <param name="sUnits"></param>
         public DoDStats(Area AreaErosion_Raw, Area AreaDeposition_Raw, Area AreaErosion_Thresholded, Area AreaDeposition_Thresholded,
             Volume VolumeErosion_Raw, Volume VolumeDeposition_Raw, Volume VolumeErosion_Thresholded, Volume VolumeDeposition_Thresholded,
-            Volume VolumeErosion_Error, Volume VolumeDeposition_Error, 
+            Volume VolumeErosion_Error, Volume VolumeDeposition_Error,
             Area cellArea, UnitGroup sUnits)
         {
             StatsUnits = sUnits;
             CellArea = cellArea;
 
-            ErosionRaw = new GCDAreaVolume(AreaErosion_Raw, VolumeErosion_Raw, cellArea);
-            DepositionRaw = new GCDAreaVolume(AreaDeposition_Raw, VolumeDeposition_Raw, cellArea);
+            ErosionRaw = new GCDAreaVolume(AreaErosion_Raw, VolumeErosion_Raw, cellArea, sUnits);
+            DepositionRaw = new GCDAreaVolume(AreaDeposition_Raw, VolumeDeposition_Raw, cellArea, sUnits);
 
-            ErosionThr = new GCDAreaVolume(AreaErosion_Thresholded, VolumeErosion_Thresholded, cellArea);
-            DepositionThr = new GCDAreaVolume(AreaDeposition_Thresholded, VolumeDeposition_Thresholded, cellArea);
+            ErosionThr = new GCDAreaVolume(AreaErosion_Thresholded, VolumeErosion_Thresholded, cellArea, sUnits);
+            DepositionThr = new GCDAreaVolume(AreaDeposition_Thresholded, VolumeDeposition_Thresholded, cellArea, sUnits);
 
             // Note that we don't store Area for the error so let's just set it to 0
-            ErosionErr = new GCDAreaVolume(Area.FromSquareMeters(0), VolumeErosion_Error, cellArea);
-            DepositionErr = new GCDAreaVolume(Area.FromSquareMeters(0), VolumeDeposition_Error, cellArea);
+            ErosionErr = new GCDAreaVolume(Area.FromSquareMeters(0), VolumeErosion_Error, cellArea, sUnits);
+            DepositionErr = new GCDAreaVolume(Area.FromSquareMeters(0), VolumeDeposition_Error, cellArea, sUnits);
         }
-        
+
         /// <summary>
         /// Mainly used for testing and verification
         /// </summary>

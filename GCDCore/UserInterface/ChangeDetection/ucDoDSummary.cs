@@ -213,18 +213,18 @@ namespace GCDCore.UserInterface.ChangeDetection
                 aRow = grdData.Rows[grdData.Rows.Add()];
                 aRow.Cells[colAtt].Value = "Total Volume of Surface Lowering (" + UnitsNet.Volume.GetAbbreviation(options.VolumeUnits) + ")";
                 aRow.Cells[colAtt].ToolTipText = "On a cell-by-cell basis, the DoD surface lowering depth (e.g. erosion, cut or deflation) multiplied by cell area and summed";
-                aRow.Cells[colRaw].Value = dodStats.ErosionRaw.GetVolume(ca, vunit).As(options.VolumeUnits);
-                aRow.Cells[colThr].Value = dodStats.ErosionThr.GetVolume(ca, vunit).As(options.VolumeUnits);
-                aRow.Cells[colErr].Value = dodStats.ErosionErr.GetVolume(ca, vunit).As(options.VolumeUnits);
+                aRow.Cells[colRaw].Value = dodStats.ErosionRaw.GetVolume(ca, dodStats.StatsUnits).As(options.VolumeUnits);
+                aRow.Cells[colThr].Value = dodStats.ErosionThr.GetVolume(ca, dodStats.StatsUnits).As(options.VolumeUnits);
+                aRow.Cells[colErr].Value = dodStats.ErosionErr.GetVolume(ca, dodStats.StatsUnits).As(options.VolumeUnits);
                 aRow.Cells[colEPC].Value = dodStats.VolumeOfErosion_Percent / 100m;
 
                 // Volume of deposition
                 aRow = grdData.Rows[grdData.Rows.Add()];
                 aRow.Cells[colAtt].Value = "Total Volume of Surface Raising (" + UnitsNet.Volume.GetAbbreviation(options.VolumeUnits) + ")";
                 aRow.Cells[colAtt].ToolTipText = "On a cell-by-cell basis, the DoD surface raising (e.g. deposition, fill or inflation) depth multiplied by cell area and summed";
-                aRow.Cells[colRaw].Value = dodStats.DepositionRaw.GetVolume(ca, vunit).As(options.VolumeUnits);
-                aRow.Cells[colThr].Value = dodStats.DepositionThr.GetVolume(ca, vunit).As(options.VolumeUnits);
-                aRow.Cells[colErr].Value = dodStats.DepositionErr.GetVolume(ca, vunit).As(options.VolumeUnits);
+                aRow.Cells[colRaw].Value = dodStats.DepositionRaw.GetVolume(ca, dodStats.StatsUnits).As(options.VolumeUnits);
+                aRow.Cells[colThr].Value = dodStats.DepositionThr.GetVolume(ca, dodStats.StatsUnits).As(options.VolumeUnits);
+                aRow.Cells[colErr].Value = dodStats.DepositionErr.GetVolume(ca, dodStats.StatsUnits).As(options.VolumeUnits);
                 aRow.Cells[colEPC].Value = dodStats.VolumeOfDeposition_Percent / 100m;
 
                 // Total volume of difference
@@ -456,39 +456,39 @@ namespace GCDCore.UserInterface.ChangeDetection
             // VOLUME
 
             // Erosion
-            double classErosionVol = activeStats.ErosionThr.GetVolume(ca, lu).As(options.VolumeUnits);
+            double classErosionVol = activeStats.ErosionThr.GetVolume(ca, activeStats.StatsUnits).As(options.VolumeUnits);
             double totalErosionVol = classErosionVol;
             switch (raw)
             {
                 case BudgetSegregation.frmBudgetSegResults.RawRepresents.RawDoDAreaOfInterest:
-                    totalErosionVol = allStats.Sum(x => x.ErosionRaw.GetVolume(ca, lu).As(options.VolumeUnits));
+                    totalErosionVol = allStats.Sum(x => x.ErosionRaw.GetVolume(ca, activeStats.StatsUnits).As(options.VolumeUnits));
                     break;
 
                 case BudgetSegregation.frmBudgetSegResults.RawRepresents.ThrDoDAreaDetectableChange:
-                    totalErosionVol = allStats.Sum(x => x.ErosionThr.GetVolume(ca, lu).As(options.VolumeUnits));
+                    totalErosionVol = allStats.Sum(x => x.ErosionThr.GetVolume(ca, activeStats.StatsUnits).As(options.VolumeUnits));
                     break;
 
                 case BudgetSegregation.frmBudgetSegResults.RawRepresents.RawClassAreaOfInterest:
-                    totalErosionVol = activeStats.ErosionRaw.GetVolume(ca, lu).As(options.VolumeUnits);
+                    totalErosionVol = activeStats.ErosionRaw.GetVolume(ca, activeStats.StatsUnits).As(options.VolumeUnits);
                     break;
             }
             grdData.Rows[7].Cells[colTot].Value = SafePercent(classErosionVol, totalErosionVol) / 100f;
 
             // Deposition
-            double classDepositionVol = activeStats.DepositionThr.GetVolume(ca, lu).As(options.VolumeUnits);
+            double classDepositionVol = activeStats.DepositionThr.GetVolume(ca, activeStats.StatsUnits).As(options.VolumeUnits);
             double totalDepositionVol = classDepositionVol;
             switch (raw)
             {
                 case BudgetSegregation.frmBudgetSegResults.RawRepresents.RawDoDAreaOfInterest:
-                    totalDepositionVol = allStats.Sum(x => x.DepositionRaw.GetVolume(ca, lu).As(options.VolumeUnits));
+                    totalDepositionVol = allStats.Sum(x => x.DepositionRaw.GetVolume(ca, activeStats.StatsUnits).As(options.VolumeUnits));
                     break;
 
                 case BudgetSegregation.frmBudgetSegResults.RawRepresents.ThrDoDAreaDetectableChange:
-                    totalDepositionVol = allStats.Sum(x => x.DepositionThr.GetVolume(ca, lu).As(options.VolumeUnits));
+                    totalDepositionVol = allStats.Sum(x => x.DepositionThr.GetVolume(ca, activeStats.StatsUnits).As(options.VolumeUnits));
                     break;
 
                 case BudgetSegregation.frmBudgetSegResults.RawRepresents.RawClassAreaOfInterest:
-                    totalDepositionVol = activeStats.DepositionRaw.GetVolume(ca, lu).As(options.VolumeUnits);
+                    totalDepositionVol = activeStats.DepositionRaw.GetVolume(ca, activeStats.StatsUnits).As(options.VolumeUnits);
                     break;
             }
             grdData.Rows[8].Cells[colTot].Value = SafePercent(classDepositionVol, totalDepositionVol) / 100f;

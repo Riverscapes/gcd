@@ -611,9 +611,9 @@ namespace GCDConsoleLib
             return new DoDStats(
                 raw.Stats.ErosionRaw.GetArea(cellArea), raw.Stats.DepositionRaw.GetArea(cellArea),
                 thr.Stats.ErosionRaw.GetArea(cellArea), thr.Stats.DepositionRaw.GetArea(cellArea),
-                raw.Stats.ErosionRaw.GetVolume(cellArea, units.VertUnit), raw.Stats.DepositionRaw.GetVolume(cellArea, units.VertUnit),
-                thr.Stats.ErosionRaw.GetVolume(cellArea, units.VertUnit), thr.Stats.DepositionRaw.GetVolume(cellArea, units.VertUnit),
-                err.Stats.ErosionRaw.GetVolume(cellArea, units.VertUnit), err.Stats.DepositionRaw.GetVolume(cellArea, units.VertUnit),
+                raw.Stats.ErosionRaw.GetVolume(cellArea, units), raw.Stats.DepositionRaw.GetVolume(cellArea, units),
+                thr.Stats.ErosionRaw.GetVolume(cellArea, units), thr.Stats.DepositionRaw.GetVolume(cellArea, units),
+                err.Stats.ErosionRaw.GetVolume(cellArea, units), err.Stats.DepositionRaw.GetVolume(cellArea, units),
                 cellArea, units
                 );
         }
@@ -733,12 +733,12 @@ namespace GCDConsoleLib
                             kvp.Value[StatsType.raw].DepositionRaw.GetArea(cellArea),
                             kvp.Value[StatsType.thr].ErosionRaw.GetArea(cellArea),
                             kvp.Value[StatsType.thr].DepositionRaw.GetArea(cellArea),
-                            kvp.Value[StatsType.raw].ErosionRaw.GetVolume(cellArea, units.VertUnit),
-                            kvp.Value[StatsType.raw].DepositionRaw.GetVolume(cellArea, units.VertUnit),
-                            kvp.Value[StatsType.thr].ErosionRaw.GetVolume(cellArea, units.VertUnit),
-                            kvp.Value[StatsType.thr].DepositionRaw.GetVolume(cellArea, units.VertUnit),
-                            kvp.Value[StatsType.err].ErosionRaw.GetVolume(cellArea, units.VertUnit),
-                            kvp.Value[StatsType.err].DepositionRaw.GetVolume(cellArea, units.VertUnit),
+                            kvp.Value[StatsType.raw].ErosionRaw.GetVolume(cellArea, units),
+                            kvp.Value[StatsType.raw].DepositionRaw.GetVolume(cellArea, units),
+                            kvp.Value[StatsType.thr].ErosionRaw.GetVolume(cellArea, units),
+                            kvp.Value[StatsType.thr].DepositionRaw.GetVolume(cellArea, units),
+                            kvp.Value[StatsType.err].ErosionRaw.GetVolume(cellArea, units),
+                            kvp.Value[StatsType.err].DepositionRaw.GetVolume(cellArea, units),
                             cellArea, units);
 
             }

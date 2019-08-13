@@ -47,11 +47,11 @@ namespace GCDCore.Project
             DoDBase.SerializeDoDStatistics(nodParent.OwnerDocument, nodStatistics, Statistics);
         }
 
-        public Volume VolErosion { get { return Statistics.ErosionThr.GetVolume(ProjectManager.Project.CellArea, ProjectManager.Project.Units.VertUnit); } }
-        public Volume VolErosionErr { get { return Statistics.ErosionErr.GetVolume(ProjectManager.Project.CellArea, ProjectManager.Project.Units.VertUnit); } }
+        public Volume VolErosion { get { return Statistics.ErosionThr.GetVolume(ProjectManager.Project.CellArea, ProjectManager.Project.Units); } }
+        public Volume VolErosionErr { get { return Statistics.ErosionErr.GetVolume(ProjectManager.Project.CellArea, ProjectManager.Project.Units); } }
 
-        public Volume VolDeposition { get { return Statistics.DepositionThr.GetVolume(ProjectManager.Project.CellArea, ProjectManager.Project.Units.VertUnit); } }
-        public Volume VolDepositionErr { get { return Statistics.DepositionErr.GetVolume(ProjectManager.Project.CellArea, ProjectManager.Project.Units.VertUnit); } }
+        public Volume VolDeposition { get { return Statistics.DepositionThr.GetVolume(ProjectManager.Project.CellArea, ProjectManager.Project.Units); } }
+        public Volume VolDepositionErr { get { return Statistics.DepositionErr.GetVolume(ProjectManager.Project.CellArea, ProjectManager.Project.Units); } }
  
         public Volume SecondGraphValue { get; set; }
     }
