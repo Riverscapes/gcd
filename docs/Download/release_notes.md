@@ -7,6 +7,10 @@ weight: 4
 
 See the [commit history](https://github.com/Riverscapes/gcd/commits) in GitHub for fuller documentation of changes. Alternatively you can view the commits organized by each product [release](https://github.com/Riverscapes/gcd/releases). The release notes for [prior versions](#prior-versions) are linked at the bottom of this page.
 
+## 7.4.2 - 14 Aug 2019
+
+* Fixed issue for projects that use non-metric units whereby DoD and budget segregation volumes were changed to be incorrect with subsequent changes to the GCD project ([#355](https://github.com/Riverscapes/gcd/issues/355)). This issue only affected projects using non-metric units. Projects that used metric units were unaffected. It is recommended that users with projects using non-metric units and that that were created with GCD version 7.4.1 and earlier should delete all DoDs and budget segregations and recreate them using version 7.4.2 or newer).
+
 ## 7.4.1 - 11 Feb 2019
 
 * Fixed correctly using first DEM surveys cell size when adding subsequent DEMs to project ([#341](https://github.com/Riverscapes/gcd/issues/341)).
