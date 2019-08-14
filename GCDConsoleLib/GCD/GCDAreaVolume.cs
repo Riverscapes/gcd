@@ -42,6 +42,10 @@ namespace GCDConsoleLib.GCD
         /// <param name="ar"></param>
         /// <param name="vol"></param>
         /// <param name="cellArea"></param>
+        /// <param name="projectUnits">WARNING: Must always pass in the GCD project units.</param>
+        /// <returns></returns>
+        /// <remarks>Never pass in display units or any other units than the project units because
+        /// _sum member variable is stored in the project vertical units.</remarks>
         public GCDAreaVolume(Area ar, Volume vol, Area cellArea, UnitGroup projectUnits)
         {
             SetArea(ar, cellArea);
@@ -102,8 +106,10 @@ namespace GCDConsoleLib.GCD
         /// Get the actual volume value in any unit you choose
         /// </summary>
         /// <param name="cellArea"></param>
-        /// <param name="vUnit"></param>
+        /// <param name="projectUnits">WARNING: Must always pass in the GCD project units.</param>
         /// <returns></returns>
+        /// <remarks>Never pass in display units or any other units than the project units because
+        /// _sum member variable is stored in the project vertical units.</remarks>
         public Volume GetVolume(Area cellArea, UnitGroup projectUnits)
         {
             return Volume.From(_sum * cellArea.As(projectUnits.ArUnit), projectUnits.VolUnit);
@@ -114,6 +120,10 @@ namespace GCDConsoleLib.GCD
         /// </summary>
         /// <param name="vol"></param>
         /// <param name="cellArea"></param>
+        /// <param name="projectUnits">WARNING: Must always pass in the GCD project units.</param>
+        /// <returns></returns>
+        /// <remarks>Never pass in display units or any other units than the project units because
+        /// _sum member variable is stored in the project vertical units.</remarks>
         public void SetVolume(Volume vol, Area cellArea, UnitGroup projectUnits)
         {
             _sum = vol.As(projectUnits.VolUnit) / cellArea.As(projectUnits.ArUnit);
