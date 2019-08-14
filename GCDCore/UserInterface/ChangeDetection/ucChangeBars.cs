@@ -96,11 +96,11 @@ namespace GCDCore.UserInterface.ChangeDetection
 
                     break;
                 case ElevationChangeBarViewer.BarTypes.Volume:
-                    Viewer.Refresh(m_chngStats.ErosionThr.GetVolume(ca, m_chngStats.StatsUnits.VertUnit).As(DisplayUnits.VolUnit), 
-                        m_chngStats.DepositionThr.GetVolume(ca, m_chngStats.StatsUnits.VertUnit).As(DisplayUnits.VolUnit),
+                    Viewer.Refresh(m_chngStats.ErosionThr.GetVolume(ca, m_chngStats.StatsUnits).As(DisplayUnits.VolUnit), 
+                        m_chngStats.DepositionThr.GetVolume(ca, m_chngStats.StatsUnits).As(DisplayUnits.VolUnit),
                         m_chngStats.NetVolumeOfDifference_Thresholded.As(DisplayUnits.VolUnit), 
-                        m_chngStats.ErosionErr.GetVolume(ca, m_chngStats.StatsUnits.VertUnit).As(DisplayUnits.VolUnit), 
-                        m_chngStats.DepositionErr.GetVolume(ca, m_chngStats.StatsUnits.VertUnit).As(DisplayUnits.VolUnit), 
+                        m_chngStats.ErosionErr.GetVolume(ca, m_chngStats.StatsUnits).As(DisplayUnits.VolUnit), 
+                        m_chngStats.DepositionErr.GetVolume(ca, m_chngStats.StatsUnits).As(DisplayUnits.VolUnit), 
                         m_chngStats.NetVolumeOfDifference_Error.As(DisplayUnits.VolUnit), 
                         UnitsNet.Volume.GetAbbreviation(DisplayUnits.VolUnit), 
                         eType, rdoAbsolute.Checked);

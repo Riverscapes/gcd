@@ -60,14 +60,14 @@ namespace GCDCore.Visualization
             Series seriesErVol = Chart.Series.Add("EROSION_VOL");
             seriesErVol.ChartType = SeriesChartType.Pie;
             seriesErVol.ChartArea = seriesErVol.Name;
-            double sumErVol = BudgetSegClasses.Sum<BudgetSegregationClass>(x => x.Statistics.ErosionThr.GetVolume(ProjectManager.Project.CellArea, ProjectManager.Project.Units.VertUnit).As(displayUnits.VolUnit));
-            seriesErVol.Points.DataBindY(BudgetSegClasses.Select(x => x.Statistics.ErosionThr.GetVolume(ProjectManager.Project.CellArea, ProjectManager.Project.Units.VertUnit).As(displayUnits.VolUnit) / sumErVol).ToArray<double>());
+            double sumErVol = BudgetSegClasses.Sum<BudgetSegregationClass>(x => x.Statistics.ErosionThr.GetVolume(ProjectManager.Project.CellArea, ProjectManager.Project.Units).As(displayUnits.VolUnit));
+            seriesErVol.Points.DataBindY(BudgetSegClasses.Select(x => x.Statistics.ErosionThr.GetVolume(ProjectManager.Project.CellArea, ProjectManager.Project.Units).As(displayUnits.VolUnit) / sumErVol).ToArray<double>());
 
             Series seriesDepVol = Chart.Series.Add("DEPOSIT_VOL");
             seriesDepVol.ChartType = SeriesChartType.Pie;
             seriesDepVol.ChartArea = seriesDepVol.Name;
-            double sumDepVol = BudgetSegClasses.Sum<BudgetSegregationClass>(x => x.Statistics.DepositionThr.GetVolume(ProjectManager.Project.CellArea, ProjectManager.Project.Units.VertUnit).As(displayUnits.VolUnit));
-            seriesDepVol.Points.DataBindY(BudgetSegClasses.Select(x => x.Statistics.DepositionThr.GetVolume(ProjectManager.Project.CellArea, ProjectManager.Project.Units.VertUnit).As(displayUnits.VolUnit) / sumDepVol).ToArray<double>());
+            double sumDepVol = BudgetSegClasses.Sum<BudgetSegregationClass>(x => x.Statistics.DepositionThr.GetVolume(ProjectManager.Project.CellArea, ProjectManager.Project.Units).As(displayUnits.VolUnit));
+            seriesDepVol.Points.DataBindY(BudgetSegClasses.Select(x => x.Statistics.DepositionThr.GetVolume(ProjectManager.Project.CellArea, ProjectManager.Project.Units).As(displayUnits.VolUnit) / sumDepVol).ToArray<double>());
         }
     }
 }
