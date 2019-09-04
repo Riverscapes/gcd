@@ -30,10 +30,7 @@ exclude:
   - README.md
   - _config.yml
   - vendor
-
-# Where our layouts and templates are stored
-layouts_dir:  src/_layouts
-includes_dir: src/_includes
+  - Gemfile* 
 
 # These are theme settings that will be used to turn features on and off
 # They are not part of Jekyll, they are entirely custom.
@@ -138,3 +135,7 @@ AppRedirects:
     url: Help/Analyses/Change_Detection/morphological.html#view-morphological-analysis-results
   - key: frmInterComparisonProperties
     url: Help/Analyses/Change_Detection/intercomparison.html
+
+remote_theme: Riverscapes/riverscapes-jekyll-theme
+plugins:
+  - jekyll-remote-theme 
