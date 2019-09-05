@@ -112,7 +112,9 @@ namespace GCDConsoleLib.GCD
         /// _sum member variable is stored in the project vertical units.</remarks>
         public Volume GetVolume(Area cellArea, UnitGroup projectUnits)
         {
-            return Volume.From(_sum * cellArea.As(projectUnits.ArUnit), projectUnits.VolUnit);
+            double sumMetres = Length.From(_sum, projectUnits.VertUnit).As(LengthUnit.Meter);
+            double areaMetres = cellArea.As(AreaUnit.SquareMeter);
+            return Volume.From(sumMetres * areaMetres, VolumeUnit.CubicMeter);
         }
 
         /// <summary>
@@ -126,7 +128,9 @@ namespace GCDConsoleLib.GCD
         /// _sum member variable is stored in the project vertical units.</remarks>
         public void SetVolume(Volume vol, Area cellArea, UnitGroup projectUnits)
         {
-            _sum = vol.As(projectUnits.VolUnit) / cellArea.As(projectUnits.ArUnit);
+            double volMetres = vol.As(VolumeUnit.CubicMeter);
+            double areaMetres = cellArea.As(AreaUnit.SquareMeter);
+            _sum = Length.From(volMetres / areaMetres, LengthUnit.Meter).As(projectUnits.VertUnit);
         }
     }
 }
