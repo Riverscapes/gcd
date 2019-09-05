@@ -85,6 +85,8 @@ namespace GCDCore.UserInterface.Project
                 int demCount = ProjectManager.Project.DEMSurveys.Count;
                 cboHorizontalUnits.Enabled = demCount == 0;
                 cboVerticalUnits.Enabled = demCount == 0;
+                cboAreaUnits.Enabled = demCount == 0;
+                cboVolumeUnits.Enabled = demCount == 0;
 
                 // Copy the project meta into the binding list
                 foreach (KeyValuePair<string, string> kvp in ProjectManager.Project.MetaData)

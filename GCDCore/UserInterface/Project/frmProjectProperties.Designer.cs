@@ -229,7 +229,7 @@
             this.groGCDUnits.Size = new System.Drawing.Size(460, 76);
             this.groGCDUnits.TabIndex = 1;
             this.groGCDUnits.TabStop = false;
-            this.groGCDUnits.Text = "GCD Display Units";
+            this.groGCDUnits.Text = "Area and Volume Units";
             // 
             // TabPage1
             // 

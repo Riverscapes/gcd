@@ -12,6 +12,20 @@ namespace GCDConsoleLib.GCD.Tests
     [TestClass()]
     public class GCDAreaVolumeTests
     {
+        // These unit collections are named so the first suffix describes the linear units (vertical and horizontal) and the second suffix describes the area and volume units
+        private UnitGroup units_m_m = new UnitGroup(UnitsNet.Units.VolumeUnit.CubicMeter, UnitsNet.Units.AreaUnit.SquareMeter, UnitsNet.Units.LengthUnit.Meter, UnitsNet.Units.LengthUnit.Meter);
+        private UnitGroup units_m_ft = new UnitGroup(UnitsNet.Units.VolumeUnit.CubicFoot, UnitsNet.Units.AreaUnit.SquareFoot, UnitsNet.Units.LengthUnit.Meter, UnitsNet.Units.LengthUnit.Meter);
+        private UnitGroup units_m_yd = new UnitGroup(UnitsNet.Units.VolumeUnit.CubicYard, UnitsNet.Units.AreaUnit.SquareYard, UnitsNet.Units.LengthUnit.Meter, UnitsNet.Units.LengthUnit.Meter);
+        private UnitGroup units_ft_m = new UnitGroup(UnitsNet.Units.VolumeUnit.CubicMeter, UnitsNet.Units.AreaUnit.SquareMeter, UnitsNet.Units.LengthUnit.Foot, UnitsNet.Units.LengthUnit.Foot);
+        private UnitGroup units_ft_ft = new UnitGroup(UnitsNet.Units.VolumeUnit.CubicFoot, UnitsNet.Units.AreaUnit.SquareFoot, UnitsNet.Units.LengthUnit.Foot, UnitsNet.Units.LengthUnit.Foot);
+        private UnitGroup units_ft_yd = new UnitGroup(UnitsNet.Units.VolumeUnit.CubicYard, UnitsNet.Units.AreaUnit.SquareYard, UnitsNet.Units.LengthUnit.Foot, UnitsNet.Units.LengthUnit.Foot);
+        private UnitGroup units_usft_m = new UnitGroup(UnitsNet.Units.VolumeUnit.CubicMeter, UnitsNet.Units.AreaUnit.SquareMeter, UnitsNet.Units.LengthUnit.UsSurveyFoot, UnitsNet.Units.LengthUnit.UsSurveyFoot);
+        private UnitGroup units_usft_ft = new UnitGroup(UnitsNet.Units.VolumeUnit.CubicFoot, UnitsNet.Units.AreaUnit.SquareFoot, UnitsNet.Units.LengthUnit.UsSurveyFoot, UnitsNet.Units.LengthUnit.UsSurveyFoot);
+        private UnitGroup units_usft_yd = new UnitGroup(UnitsNet.Units.VolumeUnit.CubicYard, UnitsNet.Units.AreaUnit.SquareYard, UnitsNet.Units.LengthUnit.UsSurveyFoot, UnitsNet.Units.LengthUnit.UsSurveyFoot);
+        private UnitGroup units_yd_m = new UnitGroup(UnitsNet.Units.VolumeUnit.CubicMeter, UnitsNet.Units.AreaUnit.SquareMeter, UnitsNet.Units.LengthUnit.Yard, UnitsNet.Units.LengthUnit.Yard);
+        private UnitGroup units_yd_ft = new UnitGroup(UnitsNet.Units.VolumeUnit.CubicFoot, UnitsNet.Units.AreaUnit.SquareFoot, UnitsNet.Units.LengthUnit.Yard, UnitsNet.Units.LengthUnit.Yard);
+        private UnitGroup units_yd_yd = new UnitGroup(UnitsNet.Units.VolumeUnit.CubicYard, UnitsNet.Units.AreaUnit.SquareYard, UnitsNet.Units.LengthUnit.Yard, UnitsNet.Units.LengthUnit.Yard);
+
         [TestMethod()]
         [TestCategory("Unit")]
         public void GCDAreaVolumeTest()
@@ -80,17 +94,15 @@ namespace GCDConsoleLib.GCD.Tests
         /// 
         /// Turns out that the GCDVolume class was storing the count of cells based on metric units but was assuming it was derived from
         /// the project units when reconstituting it back to a volume for retrieval.
+        /// 
+        /// The code always worked when the project was in metric units. It was only broken for imperial units.
+        /// The following test performs the test on both metric and imperial to ensure that we haven't broken anything.
         /// </remarks>
         [TestMethod()]
         [TestCategory("Unit")]
         public void GetVolumeTest()
         {
-            // The code always worked when the project was in metric units. It was only broken for imperial units.
-            // The following test performs the test on both metric and imperial to ensure that we haven't broken anything.
-            UnitGroup metricUnits = new UnitGroup(UnitsNet.Units.VolumeUnit.CubicMeter, UnitsNet.Units.AreaUnit.SquareMeter, UnitsNet.Units.LengthUnit.Meter, UnitsNet.Units.LengthUnit.Meter);
-            UnitGroup imperiUnits = new UnitGroup(UnitsNet.Units.VolumeUnit.CubicYard, UnitsNet.Units.AreaUnit.SquareFoot, UnitsNet.Units.LengthUnit.UsSurveyFoot, UnitsNet.Units.LengthUnit.UsSurveyFoot);
-
-            foreach (UnitGroup testUnits in new List<UnitGroup>() { imperiUnits, metricUnits })
+            foreach (UnitGroup testUnits in new List<UnitGroup>() { units_ft_yd, units_m_m })
             {
                 // Raw values that will be converted to a GCD area and volume and then back to double to ensure we get the same values
                 double cellAreaVal = 2.2500099687832296;
@@ -110,6 +122,79 @@ namespace GCDConsoleLib.GCD.Tests
                 Assert.AreEqual(areaOriginal, areaResult, 0.00001);
                 Assert.AreEqual(volOriginal, volResult, 0.00001);
             }
+        }
+
+        /// <summary>
+        /// Mixed unit tests.
+        /// 
+        /// These texts were written in response to GCD bug #358 that relates to GCD projects having
+        /// linear units that don't match the area and volume units. Specifically when the linear units
+        /// are feet and the area and volume units are square yards and cubic yards. Again, the code
+        /// always worked with metres, square metres and cubic metres.
+        /// </summary>
+        /// <remarks>
+        /// The following Google spreadsheet was used to generate the expected results
+        /// https://docs.google.com/spreadsheets/d/1B97RX--t4kQm2y4MbmRus2Uk12_WE9jHEgaRrvJ9rTQ/edit?usp=sharing
+        /// </remarks>
+        [TestMethod()]
+        [TestCategory("Unit")]
+        public void GetVolumeMisMatchUnitsTest()
+        {
+            // All tests assume the same 4m² cell resolution (43 ft², 4.78 yd²)
+            Area cellArea = new Area(4);
+            
+            // All the tests use the same 1000 elevation, but interpret it differently depending on the units used.
+            GCDAreaVolume areaVol = new GCDAreaVolume();
+            for (int i = 0; i < 10; i++)
+                areaVol.AddToSumAndIncrementCounter(100d);
+
+            /////////////////////////////////////////////////////////////////////////////////////////////////
+            // Source elevation in metres
+
+            // 1000m elevation by 4m² is 4000 m³
+            Assert.AreEqual(4000, areaVol.GetVolume(cellArea, units_m_m).As(units_m_m.VolUnit));
+
+            // 1000m elevation by 4m² is 141,258 ft³
+            Assert.AreEqual(141258, areaVol.GetVolume(cellArea, units_m_ft).As(units_m_ft.VolUnit), 1);
+
+            // 1000m elevation by 4m² is 5,231.80 yd³
+            Assert.AreEqual(5231, areaVol.GetVolume(cellArea, units_m_yd).As(units_m_yd.VolUnit), 1);
+
+            /////////////////////////////////////////////////////////////////////////////////////////////////
+            // Source elevation in feet
+
+            // 1000ft elevation by 43ft² is 43,055 ft³
+            Assert.AreEqual(43055, areaVol.GetVolume(cellArea, units_ft_ft).As(units_ft_ft.VolUnit), 1);
+
+            // 1000ft elevation by 43ft² is 1,219 m³
+            Assert.AreEqual(1219, areaVol.GetVolume(cellArea, units_ft_m).As(units_ft_m.VolUnit), 1);
+
+            // 1000ft elevation by 43ft² is 1,594 ft³
+            Assert.AreEqual(1594, areaVol.GetVolume(cellArea, units_ft_yd).As(units_ft_yd.VolUnit), 1);
+
+            /////////////////////////////////////////////////////////////////////////////////////////////////
+            // Source elevation in yards
+
+            // 1000yd elevation by 4.78 yd² is 4,783 yd³
+            Assert.AreEqual(4783, areaVol.GetVolume(cellArea, units_yd_yd).As(units_yd_yd.VolUnit), 1);
+
+            // 1000yd elevation by 4.78 yd² is 129,166 ft³
+            Assert.AreEqual(129167, areaVol.GetVolume(cellArea, units_yd_ft).As(units_yd_ft.VolUnit), 1);
+
+            // 1000yd elevation by 4.78 yd² is 3,657 m³
+            Assert.AreEqual(3657, areaVol.GetVolume(cellArea, units_yd_m).As(units_yd_m.VolUnit), 1);
+
+            /////////////////////////////////////////////////////////////////////////////////////////////////
+            // Source elevation in US Survey Feet
+
+            // 1000 USft elevation by 43ft² is 43056 ft³
+            Assert.AreEqual(43055, areaVol.GetVolume(cellArea, units_usft_ft).As(units_usft_ft.VolUnit), 1);
+
+            // 1000 USft elevation by 43ft² is 1,219 m³
+            Assert.AreEqual(1219, areaVol.GetVolume(cellArea, units_usft_m).As(units_usft_m.VolUnit), 1);
+
+            // 1000 USft elevation by 43ft² is 1,595 yd³
+            Assert.AreEqual(1595, areaVol.GetVolume(cellArea, units_usft_yd).As(units_usft_yd.VolUnit), 1);
         }
 
         [TestMethod()]
