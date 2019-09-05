@@ -7,6 +7,10 @@ weight: 4
 
 See the [commit history](https://github.com/Riverscapes/gcd/commits) in GitHub for fuller documentation of changes. Alternatively you can view the commits organized by each product [release](https://github.com/Riverscapes/gcd/releases). The release notes for [prior versions](#prior-versions) are linked at the bottom of this page.
 
+## 7.4.3 - 5 Sep 2019
+
+* Fixing issue when GCD project are mixed ([#358](https://github.com/Riverscapes/gcd/issues/358)). i.e. the horizontal and vertical units are in feet but the area and volume units are in square yards and cubic yards. Note that although this wasn't explicitly a metric/imperial problem, this issue was not a problem for most users whose projects were entirely based in metres (linear, squared and cubed). It is recommended that users with projects using mixed units and that that were created with GCD version 7.4.2 and earlier should delete all DoDs and budget segregations and recreate them using version 7.4.3 or newer).
+
 ## 7.4.2 - 14 Aug 2019
 
 * Fixed issue for projects that use non-metric units whereby DoD and budget segregation volumes were changed to be incorrect with subsequent changes to the GCD project ([#355](https://github.com/Riverscapes/gcd/issues/355)). This issue only affected projects using non-metric units. Projects that used metric units were unaffected. It is recommended that users with projects using non-metric units and that that were created with GCD version 7.4.1 and earlier should delete all DoDs and budget segregations and recreate them using version 7.4.2 or newer).
