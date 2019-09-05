@@ -124,6 +124,18 @@ namespace GCDConsoleLib.GCD.Tests
             }
         }
 
+        /// <summary>
+        /// Mixed unit tests.
+        /// 
+        /// These texts were written in response to GCD bug #358 that relates to GCD projects having
+        /// linear units that don't match the area and volume units. Specifically when the linear units
+        /// are feet and the area and volume units are square yards and cubic yards. Again, the code
+        /// always worked with metres, square metres and cubic metres.
+        /// </summary>
+        /// <remarks>
+        /// The following Google spreadsheet was used to generate the expected results
+        /// https://docs.google.com/spreadsheets/d/1B97RX--t4kQm2y4MbmRus2Uk12_WE9jHEgaRrvJ9rTQ/edit?usp=sharing
+        /// </remarks>
         [TestMethod()]
         [TestCategory("Unit")]
         public void GetVolumeMisMatchUnitsTest()
