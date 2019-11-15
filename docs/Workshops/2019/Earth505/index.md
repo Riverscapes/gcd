@@ -40,11 +40,10 @@ Room G15, Bldg 303. The University of Auckland, [38 Princes Street, Auckland](ht
     * 14:00 - 15:00 - Spatial Error Modeling
     * 15:00 - 16:30 - My First GCD Project
 
-* Day 2
-
 ## What to Bring
 
-A laptop with ArcGIS v.10.4 or later
+* A laptop with ArcGIS v.10.4 or later.
+* [Setup and installation instructions](https://docs.google.com/presentation/d/e/2PACX-1vRlAbaBocPPUfE-aHqKvfsgar2EuV5N9MutZR4_e_40HOykvzRYxygaKLEmq-L3YRljX-KNfduMM_qH/pub?start=false&loop=false&delayms=3000)
 
 ## Workshop Data
 
