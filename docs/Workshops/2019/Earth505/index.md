@@ -23,6 +23,17 @@ Room G15, Bldg 303. The University of Auckland, [38 Princes Street, Auckland](ht
 ## Agenda
 
 * Day 1
+    * 9:00 - 9:30 - Software Installation & setup
+    * 9:30 - 9:45 - Introductions
+    * 9:45 - 10:15 - Introduction to applications of change detection
+    * 10:15 - 11:00 - Build a terrain model
+    * 11:00 - 11:20 - Coffee
+    * 11:20 - 12:20 - GCD by hand
+    * 12:20 - 13:00 - Introduction the GCD Software
+    * 13:00 - 14:00 - Lunch
+    * 14:00 - 15:00 - Spatial Error Modeling
+    * 15:00 - 16:30 - My First GCD Project
+
 * Day 2
 
 ## What to Bring
@@ -30,3 +41,5 @@ Room G15, Bldg 303. The University of Auckland, [38 Princes Street, Auckland](ht
 A laptop with ArcGIS v.10.4 or later
 
 ## Workshop Data
+
+* [Day 1 Data Download](http://releases.northarrowresearch.com/GCD/2019_GCDWorkshop/gcd_workshop_day1.zip)
