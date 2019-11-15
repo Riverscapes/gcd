@@ -14,17 +14,12 @@ Led by James Brasingon and
 
 ## Date & Times 
 
-* 9:00am Sat 16 Nov 2019
-* 4:30pm Sun 17 Nov 2019
-
-
+* 9:00am Sat 16 Nov 2019 - 9am to 4:30pm
+* 4:30pm Sun 17 Nov 2019 - 9am - 4:30pm
 
 ## Location
 
-
-
 Room G15, Bldg 303. The University of Auckland, [38 Princes Street, Auckland](https://www.google.com/maps/place/Department+of+Mathematics+The+University+of+Auckland/@-36.8514752,174.76422,15.82z/data=!4m5!3m4!1s0x6d0d47e37e2da323:0x3814e2ca50f16567!8m2!3d-36.8522366!4d174.768098)
-
 
 ## Agenda
 
@@ -45,9 +40,6 @@ Room G15, Bldg 303. The University of Auckland, [38 Princes Street, Auckland](ht
 * A laptop with ArcGIS v.10.4 or later.
 * [Setup and installation instructions](https://docs.google.com/presentation/d/e/2PACX-1vRlAbaBocPPUfE-aHqKvfsgar2EuV5N9MutZR4_e_40HOykvzRYxygaKLEmq-L3YRljX-KNfduMM_qH/pub?start=false&loop=false&delayms=3000)
 
-## Workshop Data
-
-* [Day 1 Data Download](http://releases.northarrowresearch.com/GCD/2019_GCDWorkshop/gcd_workshop_day1.zip)
 ## Workshop Materials
 <div align="center">
     <a class="button" href="{{ site.baseurl }}/Workshops/2019/Earth505/materials"><i class="fa fa-coffee"></i>  Workshop Materials </a>  
