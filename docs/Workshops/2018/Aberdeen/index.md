@@ -15,7 +15,7 @@ DATES: April 18-20, 2018
 6. With the exception of David, I have organized rooms (bed and breakfast) at the local [Aberdeen IBIS hotel](http://www.ibis.com/gb/hotel-5170-ibis-aberdeen-centre-quayside/index.shtml ) (Matt - Tues-Fri inclusive; Jo Weds-Thurs inclusive).  The address for this is: 15 Shiprow, Aberdeen AB11 5BY, Phone +44 1224 398800.  
 
 <div align="center">
-    <a class="button" href="{{ site.baseurl }}/Help/Workshops/workshop-schedules/2018/Aberdeen/excercises.html"><i class="fa fa-coffee"></i>  Workshop Exercises </a>  
+    <a class="button" href="{{ site.baseurl }}/Workshops/2018/Aberdeen/excercises"><i class="fa fa-coffee"></i>  Workshop Exercises </a>  
 </div>
 
 
