@@ -42,7 +42,10 @@ Room G15, Bldg 303. The University of Auckland, [38 Princes Street, Auckland](ht
 
 ## Workshop Materials
 <div align="center">
-    <a class="button" href="{{ site.baseurl }}/Workshops/2019/Earth505/materials"><i class="fa fa-coffee"></i>  Workshop Materials </a>  
+    <a class="button" href="{{ site.baseurl }}/Workshops/2019/Earth505/materials"><i class="fa fa-coffee"></i>  Workshop Materials </a> 
+     <a class="button" href="{{ site.baseurl }}/Workshops/About/text-readings"><i class="fa fa-book" aria-hidden="true"></i> Background Reading </a>
+    
+   
 </div>
 
 ### Instruction Team
