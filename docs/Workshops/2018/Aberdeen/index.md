@@ -15,7 +15,7 @@ DATES: April 18-20, 2018
 6. With the exception of David, I have organized rooms (bed and breakfast) at the local [Aberdeen IBIS hotel](http://www.ibis.com/gb/hotel-5170-ibis-aberdeen-centre-quayside/index.shtml ) (Matt - Tues-Fri inclusive; Jo Weds-Thurs inclusive).  The address for this is: 15 Shiprow, Aberdeen AB11 5BY, Phone +44 1224 398800.  
 
 <div align="center">
-    <a class="button" href="{{ site.baseurl }}/Help/Workshops/workshop-schedules/2018/Aberdeen/excercises.html"><i class="fa fa-coffee"></i>  Workshop Excercises </a>  
+    <a class="button" href="{{ site.baseurl }}/Help/Workshops/workshop-schedules/2018/Aberdeen/excercises.html"><i class="fa fa-coffee"></i>  Workshop Exercises </a>  
 </div>
 
 
@@ -23,7 +23,6 @@ DATES: April 18-20, 2018
 
 James went through these slides:
 <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vSs5gwaKqEyjnqOS4dYDNUO1PHklXMxgxyGUhS_LVvv5wUWwbLF9X486X-F8kvg_u2FMtRHKKGLVXc7/embed?loop=true&delayms=3000" frameborder="0" width="960" height="749" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
-
 ### Reminder of Scope of Work
 We were pleased to report that thanks to [North Arrow Research](http://northarrowresearch.com) deciding to dontate time and invest in the future of GCD, we got many new enhancements and features that were out of scope for the GeoTERM budget. 
 
@@ -96,7 +95,7 @@ GCD is a Riverscapes Project.
 ------
 <div align="center">
     <a class="hollow button" href="{{ site.baseurl }}/"><i class="fa fa-chevron-circle-left"></i>  Back to GCD Home </a>  
-    
+
         <a class="hollow button" href="{{ site.baseurl }}/Help/Workshops/"><i class="fa fa-graduation-cap"></i>  Back to Workshops </a>  
 </div>
 
