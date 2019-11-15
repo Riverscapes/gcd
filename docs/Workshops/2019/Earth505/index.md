@@ -14,13 +14,16 @@ Room G15, Bldg 303. The University of Auckland, [38 Princes Street, Auckland](ht
 
 ## Instructors
 
-<a href="https://www.waikato.ac.nz/staff-profiles/people/jbrasing"><img class="float-right" src="{{ site.baseurl }}/assets/images/people/Brasington_round.png"></a>James Brasington - Waikato Regional Council Chair of River Science
+<a href="https://www.waikato.ac.nz/staff-profiles/people/jbrasing"><img class="float-right" src="{{ site.baseurl }}/assets/images/people/Brasington_round.png"></a>James Brasington - Waikato Regional Council Chair of River Science.
 
-<a href="http://www.joewheaton.org"><img class="float-left" src="{{ site.baseurl }}/assets/images/people/Wheaton_round.png"></a>[Joe Wheaton](http://joewheaton.org) - Associate Professor in Department of Watershed Sciences @ Utah State University
+<a href="http://www.joewheaton.org"><img class="float-left" src="{{ site.baseurl }}/assets/images/people/Wheaton_round.png"></a>[Joe Wheaton](http://joewheaton.org) - Associate Professor in Department of Watershed Sciences @ Utah State University.
 
-<a href="http://northarrowresearch.com/#people"><img class="float-left" src="{{ site.baseurl }}/assets/images/people/Phlip_round.png"></a> [Philip Bailey](http://northarrowresearch.com/#people) - Adjunct Professor in Department of Watershed Sciences @ Utah State University & Owner of North Arrow Research
+<a href="http://northarrowresearch.com/#people"><img class="float-left" src="{{ site.baseurl }}/assets/images/people/Phlip_round.png"></a> [Philip Bailey](http://northarrowresearch.com/#people) - Adjunct Professor in Department of Watershed Sciences @ Utah State University & Owner of North Arrow Research.
 
-<a href="http://northarrowresearch.com/#people"><img class="float-left" src="{{ site.baseurl }}/assets/images/people/Matt_round.png"></a> [Matt Reimver](http://northarrowresearch.com/#people) - Software Engineer & Guru @ North Arrow Research
+## Agenda
+
+* Day 1
+* Day 2
 
 ## What to Bring
 
