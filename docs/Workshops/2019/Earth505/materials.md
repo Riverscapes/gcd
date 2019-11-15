@@ -22,11 +22,11 @@ For the RCEM workshop, we used
 - [<i class="fa fa-file-pdf-o" aria-hidden="true"></i> 1. Introductions & Overview](https://s3-us-west-2.amazonaws.com/etalweb.joewheaton.org/GCD/Workshop/2019/RCEM/01_RCEM_Introduction.pdf)
 - [<i class="fa fa-file-pdf-o" aria-hidden="true"></i> 2. Introduction to applications of change detection](https://s3-us-west-2.amazonaws.com/etalweb.joewheaton.org/GCD/Workshop/2019/RCEM/02_RCEM_DigitalElevationModelling.pdf)
 - [<i class="fa fa-file-pdf-o" aria-hidden="true"></i> 3. Introduction to Digital Terrain Models & Topographic Data](https://s3-us-west-2.amazonaws.com/etalweb.joewheaton.org/GCD/Workshop/2019/RCEM/03_RCEM_GCD_PRIMER.pdf)
+  - [Exercise on Building DEM from raw data]({{ site.baseurl }}/Tutorials/Building_DEMs/building-dems.html) 
 - [<i class="fa fa-file-pdf-o" aria-hidden="true"></i> 4. Geomorphic Change Detection without GCD Software](https://s3-us-west-2.amazonaws.com/etalweb.joewheaton.org/GCD/Workshop/2019/RCEM/04_RCEM_GCD_Software.pdf)
 - [<i class="fa fa-file-pdf-o" aria-hidden="true"></i> 5. My First GCD Project](https://s3-us-west-2.amazonaws.com/etalweb.joewheaton.org/GCD/Workshop/2019/RCEM/05_RCEM_YourFirstGCDProject.pdf)
 - 
 ### Day 2
-
 
 
 
