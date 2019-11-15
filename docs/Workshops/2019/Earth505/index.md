@@ -2,8 +2,6 @@
 title: EARTH505 - Analyzing Topographic Time Series
 ---
 
-https://papers.waikato.ac.nz/papers/EARTH505
-
 
 ## Date & Times 
 
@@ -16,11 +14,7 @@ Room G15, Bldg 303. The University of Auckland, [38 Princes Street, Auckland](ht
 
 ## Instructors
 
-
 <a href="https://www.waikato.ac.nz/staff-profiles/people/jbrasing"><img class="float-right" src="{{ site.baseurl }}/assets/images/people/Brasington_round.png"></a>James Brasington - Waikato Regional Council Chair of River Science
-
-
-
 
 <a href="http://www.joewheaton.org"><img class="float-left" src="{{ site.baseurl }}/assets/images/people/Wheaton_round.png"></a>[Joe Wheaton](http://joewheaton.org) - Associate Professor in Department of Watershed Sciences @ Utah State University
 
@@ -31,3 +25,5 @@ Room G15, Bldg 303. The University of Auckland, [38 Princes Street, Auckland](ht
 ## What to Bring
 
 A laptop with ArcGIS v.10.4 or later
+
+## Workshop Data
