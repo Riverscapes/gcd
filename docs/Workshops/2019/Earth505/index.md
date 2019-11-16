@@ -1,9 +1,8 @@
 ---
-title: EARTH505 - Analyzing Topographic Time Series
+title: RCEM 2019 - Analyzing Topographic Time Series
 ---
-Led by James Brasingon and 
-- [University of Waikato (New Zealand)](https://www.waikato.ac.nz)-  [James Brasington](https://www.waikato.ac.nz/staff-profiles/people/jbrasing) (PI).
-- [Utah State University](http://qcnr.usu.edu/wats/) - [Joe Wheaton](http://joewheaton.org)
+This workshop is part of [Pre Conference Workshops](https://www.rcem2019.co.nz/pre-conference-workshop) for the [RCEM 2019 Conference](https://www.rcem2019.co.nz/) convened in Auckland. The workshop is led by  [James Brasington](https://www.waikato.ac.nz/staff-profiles/people/jbrasing) ([University of Waikato](https://www.waikato.ac.nz)),  [Joe Wheaton](http://joewheaton.org) ([Utah State University](http://qcnr.usu.edu/wats/)), and Philip Bailey ([North Arrow Research](http://northwarrowresearch.com)).
+
 
 [![Waikato]({{ site.baseurl }}/assets/images/logos/Waikato_Logo.png)](https://www.waikato.ac.nz)
 [![USU]({{ site.baseurl }}/assets/images/logos/etal.png)](http://etal.joewheaton.org)
@@ -23,26 +22,37 @@ Room G15, Bldg 303. The University of Auckland, [38 Princes Street, Auckland](ht
 
 ## Agenda
 
-* Day 1
-    * 9:00 - 9:30 - Software Installation & setup
-    * 9:30 - 9:45 - Introductions
-    * 9:45 - 10:15 - Introduction to applications of change detection
-    * 10:15 - 11:00 - Build a terrain model
-    * 11:00 - 11:20 - Coffee
-    * 11:20 - 12:20 - GCD by hand
-    * 12:20 - 13:00 - Introduction the GCD Software
-    * 13:00 - 14:00 - Lunch
-    * 14:00 - 15:00 - Spatial Error Modeling
-    * 15:00 - 16:30 - My First GCD Project
+###  Day 1
+* 9:00 - 9:30 - Software Installation & setup
+* 9:30 - 9:45 - Introductions
+* 9:45 - 10:15 - Introduction to applications of change detection
+* 10:15 - 11:00 - Build a terrain model
+* 11:00 - 11:20 - Coffee
+* 11:20 - 12:20 - GCD by hand
+* 12:20 - 13:00 - Introduction the GCD Software
+* 13:00 - 14:00 - Lunch
+* 14:00 - 15:00 - Spatial Error Modeling
+* 15:00 - 16:30 - My First GCD Project
+
+### Day 2
+* 9:00 - 10:30 - Error Modelling
+* 10:30 - 11:00 - Coffee
+* 11:00 - 12:30 - Profiles, Cross Sections, Budget Segregation, Etc.
+* 12:30 - 1:30 - Lunch
+* Afternoon - Working on your own data in GCD
 
 ## What to Bring
 
 * A laptop with ArcGIS v.10.4 or later.
-* [Setup and installation instructions](https://docs.google.com/presentation/d/e/2PACX-1vRlAbaBocPPUfE-aHqKvfsgar2EuV5N9MutZR4_e_40HOykvzRYxygaKLEmq-L3YRljX-KNfduMM_qH/pub?start=false&loop=false&delayms=3000)
+* [Workshop setup and installation instructions](https://docs.google.com/presentation/d/e/2PACX-1vRlAbaBocPPUfE-aHqKvfsgar2EuV5N9MutZR4_e_40HOykvzRYxygaKLEmq-L3YRljX-KNfduMM_qH/pub?start=false&loop=false&delayms=3000)
+* [Installation Insturctions - Reference]({{ site.baseurl }}/Download/install.html)
 
 ## Workshop Materials
 <div align="center">
-    <a class="button" href="{{ site.baseurl }}/Workshops/2019/Earth505/materials"><i class="fa fa-coffee"></i>  Workshop Materials </a>  
+    <a class="button" href="{{ site.baseurl }}/Workshops/2019/Earth505/materials"><i class="fa fa-coffee"></i>  Workshop Materials </a> 
+     <a class="button" href="{{ site.baseurl }}/Workshops/About/text-readings"><i class="fa fa-book" aria-hidden="true"></i> Background Reading </a>
+​    
+
 </div>
 
 ### Instruction Team
@@ -59,7 +69,7 @@ Room G15, Bldg 303. The University of Auckland, [38 Princes Street, Auckland](ht
     <h4><a href="https://www.researchgate.net/profile/Joseph_Wheaton">Joseph Wheaton<sup>2</sup></a></h4>
     Associate Professor, Ecogeomorphologist
   </div>
-  
+
   <div class="column column-block">
     <a href="http://northarrowresearch.com/#people"><img class="float-left" src="{{ site.baseurl }}/assets/images/people/Phlip_round.png"></a> 
     <h4><a href="http://northarrowresearch.com/#people">Philip Bailey<sup>2,3</sup></a></h4>
