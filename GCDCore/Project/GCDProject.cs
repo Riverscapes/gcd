@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Collections.Generic;
 using System.Xml;
+using System.Globalization;
 
 namespace GCDCore.Project
 {
@@ -251,7 +252,7 @@ namespace GCDCore.Project
 
             XmlNode nodArea = nodProject.AppendChild(xmlDoc.CreateElement("CellArea"));
             if (CellArea.As(Units.ArUnit) > 0)
-                nodArea.InnerText = CellArea.As(Units.ArUnit).ToString("R");
+                nodArea.InnerText = CellArea.As(Units.ArUnit).ToString("R", CultureInfo.InvariantCulture);
 
             if (DEMSurveys.Count > 0)
             {

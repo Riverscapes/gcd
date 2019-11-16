@@ -6,6 +6,7 @@ using UnitsNet;
 using System.ComponentModel;
 using System.Xml;
 using GCDCore.Engines;
+using System.Globalization;
 
 namespace GCDCore.Project.Morphological
 {
@@ -371,7 +372,7 @@ namespace GCDCore.Project.Morphological
             nodMA.AppendChild(nodParent.OwnerDocument.CreateElement("Spreadsheet")).InnerText = ProjectManager.Project.GetRelativePath(Spreadsheet);
 
             XmlNode nodDuration = nodMA.AppendChild(nodParent.OwnerDocument.CreateElement("Duration"));
-            nodDuration.InnerText = Duration.As(DisplayUnits_Duration).ToString("R");
+            nodDuration.InnerText = Duration.As(DisplayUnits_Duration).ToString("R", CultureInfo.InvariantCulture);
             nodDuration.Attributes.Append(nodParent.OwnerDocument.CreateAttribute("units")).InnerText = DisplayUnits_Duration.ToString();
 
             XmlNode nodMinFluxCell = nodMA.AppendChild(nodParent.OwnerDocument.CreateElement("MinimumFluxUnit"));
@@ -379,7 +380,7 @@ namespace GCDCore.Project.Morphological
                 nodMinFluxCell.InnerText = BoundaryFluxUnit.Name;
 
             XmlNode nodMinFlux = nodMA.AppendChild(nodParent.OwnerDocument.CreateElement("MinimumFluxVolume"));
-            nodMinFlux.InnerText = BoundaryFlux.As(ProjectManager.Project.Units.VolUnit).ToString("R");
+            nodMinFlux.InnerText = BoundaryFlux.As(ProjectManager.Project.Units.VolUnit).ToString("R", CultureInfo.InvariantCulture);
         }
 
         public override void Delete()
