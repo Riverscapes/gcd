@@ -86,7 +86,7 @@ These example datasets are used in the [tutorials]({{ site.baseurl }}/Tutorials)
                     <li>6km of channel near <i class="fa fa-map-marker"></i> <a href="https://www.google.com/maps/place/57%C2%B002'53.9%22N+3%C2%B003'09.3%22W/@57.0490441,-3.0938372,8093m/data=!3m1!1e3!4m5!3m4!1s0x0:0x0!8m2!3d57.048317!4d-3.052569">Ballater, Scotland</a></li>
                     <li>Two LiDAR surveys</li>
                     <li>1m cell resolution</li>
-                    <li><a href="https://s3-us-west-2.amazonaws.com/etalweb.joewheaton.org/GCD/GCD7/Tutorials/GeoTERM_SEPA.zip">Download</a></li>
+                    <li><a href="http://releases.northarrowresearch.com/GCD/2019_GCDWorkshop/GeoTERM_SEPA.zip">Download</a></li>
                 </ul>
             </div>
         </div>
