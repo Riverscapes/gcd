@@ -1,5 +1,5 @@
 ---
-title: EARTH505 - Analyzing Topographic Time Series
+title: RCEM 2019 - Analyzing Topographic Time Series
 ---
 This workshop is part of [Pre Conference Workshops](https://www.rcem2019.co.nz/pre-conference-workshop) for the [RCEM 2019 Conference](https://www.rcem2019.co.nz/) convened in Auckland. The workshop is led by  [James Brasington](https://www.waikato.ac.nz/staff-profiles/people/jbrasing) ([University of Waikato](https://www.waikato.ac.nz)),  [Joe Wheaton](http://joewheaton.org) ([Utah State University](http://qcnr.usu.edu/wats/)), and Philip Bailey ([North Arrow Research](http://northwarrowresearch.com)).
 
@@ -44,8 +44,8 @@ Room G15, Bldg 303. The University of Auckland, [38 Princes Street, Auckland](ht
 <div align="center">
     <a class="button" href="{{ site.baseurl }}/Workshops/2019/Earth505/materials"><i class="fa fa-coffee"></i>  Workshop Materials </a> 
      <a class="button" href="{{ site.baseurl }}/Workshops/About/text-readings"><i class="fa fa-book" aria-hidden="true"></i> Background Reading </a>
-    
-   
+​    
+
 </div>
 
 ### Instruction Team
