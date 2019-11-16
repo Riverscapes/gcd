@@ -28,7 +28,8 @@ For the RCEM workshop, we used
 - 
 ### Day 2
 
-
+- [<i class="fa fa-file-pdf-o" aria-hidden="true"></i> 6. GCD: Quantifying DEM Uncertainty](https://s3-us-west-2.amazonaws.com/etalweb.joewheaton.org/GCD/Workshop/2019/RCEM/06_RCEM_ErrorModelling.pdf)
+- [<i class="fa fa-file-pdf-o" aria-hidden="true"></i> 7. GCD: an interpretative lens](https://s3-us-west-2.amazonaws.com/etalweb.joewheaton.org/GCD/Workshop/2019/RCEM/07_RCEM_DeeExamplar.pdf)
 
 ------
 <div align="center">
