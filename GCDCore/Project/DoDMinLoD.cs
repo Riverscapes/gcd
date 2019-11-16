@@ -4,6 +4,7 @@ using System.Xml;
 using System.Collections.Generic;
 using GCDConsoleLib;
 using GCDConsoleLib.GCD;
+using System.Globalization;
 
 namespace GCDCore.Project
 {
@@ -41,13 +42,13 @@ namespace GCDCore.Project
         public DoDMinLoD(XmlNode nodDoD)
             : base(nodDoD)
         {
-            Threshold = decimal.Parse(nodDoD.SelectSingleNode("Threshold").InnerText);
+            Threshold = decimal.Parse(nodDoD.SelectSingleNode("Threshold").InnerText, CultureInfo.InvariantCulture);
         }
 
         public override XmlNode Serialize(XmlNode nodParent)
         {
             XmlNode nodDoD = base.Serialize(nodParent);
-            nodDoD.InsertBefore(nodParent.OwnerDocument.CreateElement("Threshold"), nodDoD.SelectSingleNode("Statistics")).InnerText = Threshold.ToString();
+            nodDoD.InsertBefore(nodParent.OwnerDocument.CreateElement("Threshold"), nodDoD.SelectSingleNode("Statistics")).InnerText = Threshold.ToString(CultureInfo.InvariantCulture);
             return nodDoD;
         }
     }

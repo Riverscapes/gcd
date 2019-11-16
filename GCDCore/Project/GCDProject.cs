@@ -333,7 +333,7 @@ namespace GCDCore.Project
             UnitsNet.Area cellArea = UnitsNet.Area.From(0, area);
             XmlNode nodCellArea = nodProject.SelectSingleNode("CellArea");
             if (!string.IsNullOrEmpty(nodCellArea.InnerText))
-                cellArea = UnitsNet.Area.From(double.Parse(nodCellArea.InnerText), area);
+                cellArea = UnitsNet.Area.From(double.Parse(nodCellArea.InnerText, CultureInfo.InvariantCulture), area);
 
             ProjectManager.Project = new GCDProject(name, desc, projectFile, dtCreated, gcdv, cellArea, units);
 

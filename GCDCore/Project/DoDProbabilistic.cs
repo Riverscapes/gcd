@@ -4,6 +4,7 @@ using System.Xml;
 using System.Collections.Generic;
 using GCDConsoleLib;
 using GCDConsoleLib.GCD;
+using System.Globalization;
 
 namespace GCDCore.Project
 {
@@ -49,7 +50,7 @@ namespace GCDCore.Project
         public DoDProbabilistic(XmlNode nodDoD)
             : base(nodDoD)
         {
-            ConfidenceLevel = decimal.Parse(nodDoD.SelectSingleNode("ConfidenceLevel").InnerText);
+            ConfidenceLevel = decimal.Parse(nodDoD.SelectSingleNode("ConfidenceLevel").InnerText, CultureInfo.InvariantCulture);
             PriorProbability = DeserializeRaster(nodDoD, "PriorProbability");
 
             XmlNode nodSpatCo = nodDoD.SelectSingleNode("SpatialCoherence");
@@ -70,7 +71,7 @@ namespace GCDCore.Project
         public override XmlNode Serialize(XmlNode nodParent)
         {
             XmlNode nodDod = base.Serialize(nodParent);
-            nodDod.InsertBefore(nodParent.OwnerDocument.CreateElement("ConfidenceLevel"), nodDod.SelectSingleNode("Statistics")).InnerText = ConfidenceLevel.ToString();
+            nodDod.InsertBefore(nodParent.OwnerDocument.CreateElement("ConfidenceLevel"), nodDod.SelectSingleNode("Statistics")).InnerText = ConfidenceLevel.ToString(CultureInfo.InvariantCulture);
 
             // Prior probability always exists, regardless of whether spatial coherence was used.
             nodDod.AppendChild(nodParent.OwnerDocument.CreateElement("PriorProbability")).InnerText = ProjectManager.Project.GetRelativePath(PriorProbability.GISFileInfo);

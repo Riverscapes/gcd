@@ -67,13 +67,13 @@ namespace GCDCore.Project.Morphological
             _DisplayUnits_Volume = ProjectManager.Project.Units.VolUnit;
             _DisplayUnits_Mass = UnitsNet.Units.MassUnit.Kilogram;
 
-            _duration = Duration.From(double.Parse(nodDuration.InnerText), DisplayUnits_Duration);
+            _duration = Duration.From(double.Parse(nodDuration.InnerText, CultureInfo.InvariantCulture), DisplayUnits_Duration);
             _porosity = decimal.Parse(nodAnalysis.SelectSingleNode("Porosity").InnerText);
             _density = decimal.Parse(nodAnalysis.SelectSingleNode("Density").InnerText);
             _competency = decimal.Parse(nodAnalysis.SelectSingleNode("Competency").InnerText);
             //_DataVolumeUnits = ProjectManager.Project.Units.VolUnit;
 
-            double minFluxValue = double.Parse(nodAnalysis.SelectSingleNode("MinimumFluxVolume").InnerText);
+            double minFluxValue = double.Parse(nodAnalysis.SelectSingleNode("MinimumFluxVolume").InnerText, CultureInfo.InvariantCulture);
             BoundaryFlux = Volume.From(minFluxValue, ProjectManager.Project.Units.VolUnit);
 
             Units = new BindingList<MorphologicalUnit>();
