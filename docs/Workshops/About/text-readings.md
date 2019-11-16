@@ -31,8 +31,7 @@ The methodological development is described in ([Wheaton et al., 2010a](http://d
 
 
 - Martin Y and Church M. 1995. Bed-Material Transport Estimated from Channel Surveys - Vedder River, British-Columbia. Earth Surface Processes and Landforms. 20(4): 347-361. DOI: [10.1002/esp.3290200405](http://dx.doi.org/10.1002/esp.3290200405).
-
-
+-  Passalacqua P, Belmont P, Staley D, Simley J, Arrowsmith JR, Bodee C, Crosby C, DeLongg S, Glenn N, Kelly S, Lague D, Sangireddy H, Schaffrath K, Tarboton D, Wasklewicz T, Wheaton J. 2015. [Analyzing high resolution topography for advancing the understanding of mass and energy transfer through landscapes: A review](https://www.researchgate.net/publication/277477904_Analyzing_high_resolution_topography_for_advancing_the_understanding_of_mass_and_energy_transfer_through_landscapes_A_review). Earth Science Reviews. 148. pp. 174-193. DOI: [10.1016/j.earscirev.2015.05.012](http://dx.doi.org/10.1016/j.earscirev.2015.05.012) 
 - Wheaton JM, Brasington J, Darby SE, Merz JE, Pasternack GB, Sear DA and Vericat D. 2010. [Linking Geomorphic Changes to Salmonid Habitat at a Scale Relevant to Fish. River Research and Applications](http://www.joewheaton.org/Home/research/paper-downloads/Wheaton_EcohydraulicSI_RRA.pdf).26: 469-486. DOI: [10.1002/rra.1305](http://dx.doi.org/10.1002/rra.1305).
 - Wheaton JM. 2008. [Uncertainty in Morphological Sediment Budgeting of Rivers](http://www.joewheaton.org/Home/research/projects-1/morphological-sediment-budgeting/phdthesis). Unpublished PhD Thesis, University of Southampton, Southampton, 412 pp. Chapters 4 & 5.
 
