@@ -22,17 +22,24 @@ Room G15, Bldg 303. The University of Auckland, [38 Princes Street, Auckland](ht
 
 ## Agenda
 
-* Day 1
-    * 9:00 - 9:30 - Software Installation & setup
-    * 9:30 - 9:45 - Introductions
-    * 9:45 - 10:15 - Introduction to applications of change detection
-    * 10:15 - 11:00 - Build a terrain model
-    * 11:00 - 11:20 - Coffee
-    * 11:20 - 12:20 - GCD by hand
-    * 12:20 - 13:00 - Introduction the GCD Software
-    * 13:00 - 14:00 - Lunch
-    * 14:00 - 15:00 - Spatial Error Modeling
-    * 15:00 - 16:30 - My First GCD Project
+###  Day 1
+* 9:00 - 9:30 - Software Installation & setup
+* 9:30 - 9:45 - Introductions
+* 9:45 - 10:15 - Introduction to applications of change detection
+* 10:15 - 11:00 - Build a terrain model
+* 11:00 - 11:20 - Coffee
+* 11:20 - 12:20 - GCD by hand
+* 12:20 - 13:00 - Introduction the GCD Software
+* 13:00 - 14:00 - Lunch
+* 14:00 - 15:00 - Spatial Error Modeling
+* 15:00 - 16:30 - My First GCD Project
+
+### Day 2
+* 9:00 - 10:30 - Error Modelling
+* 10:30 - 11:00 - Coffee
+* 11:00 - 12:30 - Profiles, Cross Sections, Budget Segregation, Etc.
+* 12:30 - 1:30 - Lunch
+* Afternoon - Working on your own data in GCD
 
 ## What to Bring
 
