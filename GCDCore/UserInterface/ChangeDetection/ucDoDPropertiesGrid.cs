@@ -85,7 +85,7 @@ namespace GCDCore.UserInterface.ChangeDetection
             if (dod is DoDPropagated)
             {
                 DoDPropagated dodProp = dod as DoDPropagated;
-                DoDProperties.Add(new GridViewGCDProjectItem(new DoDIntermediateRaster("Probability Raster", dodProp.PropagatedError)));
+                DoDProperties.Add(new GridViewGCDProjectItem(new DoDIntermediateRaster("Propagated Error Raster", dodProp.PropagatedError)));
 
                 if (dod is DoDProbabilistic)
                 {
