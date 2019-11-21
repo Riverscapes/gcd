@@ -38,6 +38,8 @@
             this.cmdOK = new System.Windows.Forms.Button();
             this.cmdHelp = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cmdMoveDown = new System.Windows.Forms.Button();
+            this.cmdMoveUp = new System.Windows.Forms.Button();
             this.lstDoDs = new System.Windows.Forms.CheckedListBox();
             this.cmsDoDList = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.selectAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -64,7 +66,7 @@
             this.txtName.MaxLength = 100;
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(361, 20);
-            this.txtName.TabIndex = 1;
+            this.txtName.TabIndex = 2;
             this.txtName.TextChanged += new System.EventHandler(this.txtName_TextChanged);
             // 
             // label2
@@ -73,7 +75,7 @@
             this.label2.Location = new System.Drawing.Point(12, 48);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(64, 13);
-            this.label2.TabIndex = 2;
+            this.label2.TabIndex = 3;
             this.label2.Text = "Project path";
             // 
             // txtPath
@@ -84,7 +86,7 @@
             this.txtPath.Name = "txtPath";
             this.txtPath.ReadOnly = true;
             this.txtPath.Size = new System.Drawing.Size(361, 20);
-            this.txtPath.TabIndex = 3;
+            this.txtPath.TabIndex = 4;
             this.txtPath.TabStop = false;
             // 
             // cmdCancel
@@ -94,7 +96,7 @@
             this.cmdCancel.Location = new System.Drawing.Point(365, 332);
             this.cmdCancel.Name = "cmdCancel";
             this.cmdCancel.Size = new System.Drawing.Size(75, 23);
-            this.cmdCancel.TabIndex = 6;
+            this.cmdCancel.TabIndex = 7;
             this.cmdCancel.Text = "Cancel";
             this.cmdCancel.UseVisualStyleBackColor = true;
             // 
@@ -107,7 +109,7 @@
             this.cmdOK.Location = new System.Drawing.Point(284, 332);
             this.cmdOK.Name = "cmdOK";
             this.cmdOK.Size = new System.Drawing.Size(75, 23);
-            this.cmdOK.TabIndex = 5;
+            this.cmdOK.TabIndex = 6;
             this.cmdOK.Text = "   Save";
             this.cmdOK.UseVisualStyleBackColor = true;
             this.cmdOK.Click += new System.EventHandler(this.cmdOK_Click);
@@ -118,7 +120,7 @@
             this.cmdHelp.Location = new System.Drawing.Point(12, 332);
             this.cmdHelp.Name = "cmdHelp";
             this.cmdHelp.Size = new System.Drawing.Size(75, 23);
-            this.cmdHelp.TabIndex = 7;
+            this.cmdHelp.TabIndex = 0;
             this.cmdHelp.Text = "Help";
             this.cmdHelp.UseVisualStyleBackColor = true;
             this.cmdHelp.Click += new System.EventHandler(this.cmdHelp_Click);
@@ -128,24 +130,51 @@
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.cmdMoveDown);
+            this.groupBox1.Controls.Add(this.cmdMoveUp);
             this.groupBox1.Controls.Add(this.lstDoDs);
             this.groupBox1.Location = new System.Drawing.Point(12, 70);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(428, 256);
-            this.groupBox1.TabIndex = 4;
+            this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Change Detections";
             // 
+            // cmdMoveDown
+            // 
+            this.cmdMoveDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmdMoveDown.Image = global::GCDCore.Properties.Resources.down;
+            this.cmdMoveDown.Location = new System.Drawing.Point(370, 17);
+            this.cmdMoveDown.Name = "cmdMoveDown";
+            this.cmdMoveDown.Size = new System.Drawing.Size(23, 23);
+            this.cmdMoveDown.TabIndex = 0;
+            this.cmdMoveDown.UseVisualStyleBackColor = true;
+            this.cmdMoveDown.Click += new System.EventHandler(this.cmdMove);
+            // 
+            // cmdMoveUp
+            // 
+            this.cmdMoveUp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmdMoveUp.Image = global::GCDCore.Properties.Resources.up;
+            this.cmdMoveUp.Location = new System.Drawing.Point(397, 17);
+            this.cmdMoveUp.Name = "cmdMoveUp";
+            this.cmdMoveUp.Size = new System.Drawing.Size(23, 23);
+            this.cmdMoveUp.TabIndex = 1;
+            this.cmdMoveUp.UseVisualStyleBackColor = true;
+            this.cmdMoveUp.Click += new System.EventHandler(this.cmdMove);
+            // 
             // lstDoDs
             // 
+            this.lstDoDs.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lstDoDs.CheckOnClick = true;
             this.lstDoDs.ContextMenuStrip = this.cmsDoDList;
-            this.lstDoDs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lstDoDs.FormattingEnabled = true;
-            this.lstDoDs.Location = new System.Drawing.Point(3, 16);
+            this.lstDoDs.Location = new System.Drawing.Point(3, 46);
             this.lstDoDs.Name = "lstDoDs";
-            this.lstDoDs.Size = new System.Drawing.Size(422, 237);
-            this.lstDoDs.TabIndex = 0;
+            this.lstDoDs.Size = new System.Drawing.Size(422, 199);
+            this.lstDoDs.TabIndex = 2;
+            this.lstDoDs.SelectedIndexChanged += new System.EventHandler(this.lstDoDs_SelectedIndexChanged);
             // 
             // cmsDoDList
             // 
@@ -211,5 +240,7 @@
         private System.Windows.Forms.ToolStripMenuItem selectAllToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem selectNoneToolStripMenuItem;
         private System.Windows.Forms.ToolTip tTip;
+        private System.Windows.Forms.Button cmdMoveDown;
+        private System.Windows.Forms.Button cmdMoveUp;
     }
 }

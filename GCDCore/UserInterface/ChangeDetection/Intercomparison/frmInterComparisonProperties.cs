@@ -120,5 +120,21 @@ namespace GCDCore.UserInterface.ChangeDetection.Intercomparison
         {
             OnlineHelp.Show(Name);
         }
+
+        private void cmdMove(object sender, EventArgs e)
+        {
+            int original = lstDoDs.SelectedIndex;
+            int moved = original + (string.Compare(((Control)sender).Name, "cmdMoveUp", true) == 0 ? -1 : 1);
+            DoDBase dod = DoDs[original];
+            DoDs.Remove(dod);
+            DoDs.Insert(moved, dod);
+            lstDoDs.SelectedIndex = moved;
+        }
+
+        private void lstDoDs_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            cmdMoveUp.Enabled = lstDoDs.SelectedIndex > 0;
+            cmdMoveDown.Enabled = lstDoDs.SelectedIndex < DoDs.Count - 1;
+        }
     }
 }
