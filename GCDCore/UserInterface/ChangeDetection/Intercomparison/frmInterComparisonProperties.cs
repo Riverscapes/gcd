@@ -77,11 +77,11 @@ namespace GCDCore.UserInterface.ChangeDetection.Intercomparison
 
                 Cursor = Cursors.WaitCursor;
 
-                Dictionary<string, GCDConsoleLib.GCD.DoDStats> dodStats = new Dictionary<string, GCDConsoleLib.GCD.DoDStats>();
+                List<Tuple<string, GCDConsoleLib.GCD.DoDStats>> dodStats = new List<Tuple<string, GCDConsoleLib.GCD.DoDStats>>();
                 List<DoDBase> dods = new List<DoDBase>();
                 foreach (DoDBase dod in lstDoDs.CheckedItems)
                 {
-                    dodStats[dod.Name] = dod.Statistics;
+                    dodStats.Add(new Tuple<string, GCDConsoleLib.GCD.DoDStats>(dod.Name, dod.Statistics));
                     dods.Add(dod);
                 }
 

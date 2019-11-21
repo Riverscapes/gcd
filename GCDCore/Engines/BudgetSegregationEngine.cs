@@ -84,7 +84,9 @@ namespace GCDCore.Engines
             FileInfo interCompare = new FileInfo(Path.Combine(analysisFolder.FullName, "InterCompare.xml"));
             try
             {
-                InterComparison.Generate(results, interCompare);
+                List<Tuple<string, GCDConsoleLib.GCD.DoDStats>> dodStats = new List<Tuple<string, GCDConsoleLib.GCD.DoDStats>>();
+                bsResult.FilteredClasses.ToList().ForEach(x => dodStats.Add(new Tuple<string, GCDConsoleLib.GCD.DoDStats>(x.Name, x.Statistics)));
+                InterComparison.Generate(dodStats, interCompare);
             }
             catch (Exception ex)
             {

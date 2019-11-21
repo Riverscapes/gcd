@@ -26,7 +26,7 @@ namespace GCDCore.Engines
         /// the DoD name ("2006 - 2006 Min LoD 0.2m" etc).
         /// 
         /// The processing in this class is identical for both cases.</remarks>
-        public static void Generate(Dictionary<string, GCDConsoleLib.GCD.DoDStats> dodStats, FileInfo output)
+        public static void Generate(List<Tuple<string, GCDConsoleLib.GCD.DoDStats>> dodStats, FileInfo output)
         {
             int DoDCount = 0;
 
@@ -40,15 +40,11 @@ namespace GCDCore.Engines
             //setup ExcelXMLDocument which does the heavy lifting of updating the XML
             ExcelXMLDocument xmlExcelDoc = new ExcelXMLDocument(template.FullName);
 
-            foreach (KeyValuePair<string, GCDConsoleLib.GCD.DoDStats> kvp in dodStats)
+            foreach (Tuple<string, GCDConsoleLib.GCD.DoDStats> kvp in dodStats)
             {
-                //get name and stats from input
-                string DoDName = kvp.Key;
-                GCDConsoleLib.GCD.DoDStats dodStat = kvp.Value;
-
                 //turn these into a dictionary of named values to replace in XML
-                Dictionary<string, string> dicStatValues = GetStatValues(dodStat);
-                dicStatValues.Add("TemplateRowName", DoDName); //Add name so the Named Range for the name (e.g. ArealDoDName) is updated
+                Dictionary<string, string> dicStatValues = GetStatValues(kvp.Item2);
+                dicStatValues.Add("TemplateRowName", kvp.Item1); //Add name so the Named Range for the name (e.g. ArealDoDName) is updated
 
                 DoDCount += 1;
 
@@ -74,12 +70,12 @@ namespace GCDCore.Engines
             //cells should be formatted with grey, single weight top and bottom border
             CellStyle oCellStyle = new CellStyle();
             oCellStyle.TopBorder.Weight = 1;
-            oCellStyle.TopBorder.Color= "#E7E6E6";
+            oCellStyle.TopBorder.Color = "#E7E6E6";
             oCellStyle.BottomBorder.Weight = 1;
             oCellStyle.BottomBorder.Color = "#E7E6E6";
-            
+
             //loop through all cells and format
-            for (int i=0; i<dodStats.Count; i++)
+            for (int i = 0; i < dodStats.Count; i++)
             {
                 xmlExcelDoc.FormatRow("ArealDoDName", i, oCellStyle);
                 xmlExcelDoc.FormatRow("VolumeDoDName", i, oCellStyle);
