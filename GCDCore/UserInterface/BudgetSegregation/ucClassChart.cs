@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using GCDCore.Project;
 using UnitsNet;
+using GCDCore.UserInterface.ChangeDetection;
 
 namespace GCDCore.UserInterface.BudgetSegregation
 {
@@ -152,6 +153,22 @@ namespace GCDCore.UserInterface.BudgetSegregation
             // The data displayed on the second chart depends if this is being used for Morphological or Bs
             chtData.Series[VOLOUT__CHART_SERIES].LegendText = !bBudgetSeg ? "Volume Out" : "Cumulative Volume Change";
             chtData.Series[VOLOUT__CHART_SERIES].IsVisibleInLegend = !bBudgetSeg || directional;
+        }
+
+        public void SetChartOptions(DoDSummaryDisplayOptions option)
+        {
+            chtData.Series[DEPOSIT_CHART_SERIES].Color = ProjectManager.ColorDeposition;
+            chtData.Series[EROSION_CHART_SERIES].Color = ProjectManager.ColorErosion;
+
+            chtData.Legends.ToList<Legend>().ForEach(x => x.Font = option.Font);
+
+            foreach (ChartArea area in chtData.ChartAreas)
+            {
+                area.AxisX.TitleFont = option.Font;
+                area.AxisX.LabelStyle.Font = option.Font;
+                area.AxisY.TitleFont = option.Font;
+                area.AxisY.LabelStyle.Font = option.Font;
+            }
         }
     }
 }

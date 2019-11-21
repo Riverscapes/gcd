@@ -183,6 +183,12 @@ namespace GCDCore.UserInterface.BudgetSegregation
                     Series serNet = ucBars.chtControl.Series.FindByName(Visualization.ViewerBase.NET);
                     if (serNet is Series)
                         serNet.Color = serNet.Points[0].YValues[0] > 0 ? ProjectManager.ColorDeposition : ProjectManager.ColorErosion;
+
+                    if (ucClassChart is ucClassChart)
+                    {
+                        ucClassChart.UpdateChart(BudgetSeg.Folder, BudgetSeg.FilteredClasses, m_Options.VolumeUnits, true, BudgetSeg.IsMaskDirectional);
+                        ucClassChart.SetChartOptions(m_Options);
+                    }
                 }
 
             }
