@@ -7,6 +7,14 @@ weight: 4
 
 See the [commit history](https://github.com/Riverscapes/gcd/commits) in GitHub for fuller documentation of changes. Alternatively you can view the commits organized by each product [release](https://github.com/Riverscapes/gcd/releases). The release notes for [prior versions](#prior-versions) are linked at the bottom of this page.
 
+## 7.4.4 - 27 Nov 2019
+
+* The GCD now works consistently regardless of the User's Windows regionalization settings. i.e. whether they use commas or decimals as separators when reading and writing the GCD project file.
+* Ability to control the order of DoDs in the inter-comparison tool.
+* Directional budget segregations always write to the inter-comparision spreadsheet in the correct order.
+* Changing DoD result units is now reflected in the longitudinal screen.
+* Fixed mis-labelled DoD rasters in DoD properties screen.
+
 ## 7.4.3 - 5 Sep 2019
 
 * Fixe issue when GCD project units are mixed ([#358](https://github.com/Riverscapes/gcd/issues/358)). i.e. the horizontal and vertical units are in one family of units (say feet) but the area and volume units are in another (e.g. yards). Note that although this wasn't explicitly a metric/imperial problem, this was not an issue for most users whose projects were entirely based in metres (linear, squared and cubed). It is recommended that users with projects using mixed units and that that were created with GCD version 7.4.2 and earlier should delete all DoDs and budget segregations and recreate them using version 7.4.3 or newer).
