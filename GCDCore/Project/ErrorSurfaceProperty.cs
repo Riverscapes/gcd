@@ -3,6 +3,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
+using System.Globalization;
 
 namespace GCDCore.Project
 {
@@ -110,7 +111,7 @@ namespace GCDCore.Project
 
             if (nodUni is XmlNode)
             {
-                UniformValue = decimal.Parse(nodUni.InnerText);
+                UniformValue = decimal.Parse(nodUni.InnerText, CultureInfo.InvariantCulture);
             }
             else if (surf is DEMSurvey)
             {
@@ -135,7 +136,7 @@ namespace GCDCore.Project
             nodParent.AppendChild(nodParent.OwnerDocument.CreateElement("Name")).InnerText = Name;
 
             if (UniformValue.HasValue)
-                nodParent.AppendChild(nodParent.OwnerDocument.CreateElement("UniformValue")).InnerText = UniformValue.Value.ToString();
+                nodParent.AppendChild(nodParent.OwnerDocument.CreateElement("UniformValue")).InnerText = UniformValue.Value.ToString(CultureInfo.InvariantCulture);
 
             if (FISRuleFile is ErrorCalculation.FIS.FISLibraryItem)
                 nodParent.AppendChild(nodParent.OwnerDocument.CreateElement("FISRuleFile")).InnerText = ProjectManager.Project.GetRelativePath(FISRuleFile.FilePath);

@@ -56,9 +56,9 @@ namespace GCDCore.Project
             XmlNode nodSpatCo = nodDoD.SelectSingleNode("SpatialCoherence");
             if (nodSpatCo != null)
             {
-                int windowSize = int.Parse(nodSpatCo.SelectSingleNode("WindowSize").InnerText);
-                int inflectinA = int.Parse(nodSpatCo.SelectSingleNode("InflectionA").InnerText);
-                int inflectinB = int.Parse(nodSpatCo.SelectSingleNode("InflectionB").InnerText);
+                int windowSize = int.Parse(nodSpatCo.SelectSingleNode("WindowSize").InnerText, CultureInfo.InvariantCulture);
+                int inflectinA = int.Parse(nodSpatCo.SelectSingleNode("InflectionA").InnerText, CultureInfo.InvariantCulture);
+                int inflectinB = int.Parse(nodSpatCo.SelectSingleNode("InflectionB").InnerText, CultureInfo.InvariantCulture);
                 SpatialCoherence = new CoherenceProperties(windowSize, inflectinA, inflectinB);
 
                 PosteriorProbability = DeserializeRaster(nodDoD, "PosteriorProbability");
@@ -92,9 +92,9 @@ namespace GCDCore.Project
             if (SpatialCoherence != null)
             {
                 XmlNode nodSpatCo = nodDod.AppendChild(nodParent.OwnerDocument.CreateElement("SpatialCoherence"));
-                nodSpatCo.AppendChild(nodParent.OwnerDocument.CreateElement("WindowSize")).InnerText = SpatialCoherence.BufferSize.ToString();
-                nodSpatCo.AppendChild(nodParent.OwnerDocument.CreateElement("InflectionA")).InnerText = SpatialCoherence.InflectionA.ToString();
-                nodSpatCo.AppendChild(nodParent.OwnerDocument.CreateElement("InflectionB")).InnerText = SpatialCoherence.InflectionB.ToString();
+                nodSpatCo.AppendChild(nodParent.OwnerDocument.CreateElement("WindowSize")).InnerText = SpatialCoherence.BufferSize.ToString(CultureInfo.InvariantCulture);
+                nodSpatCo.AppendChild(nodParent.OwnerDocument.CreateElement("InflectionA")).InnerText = SpatialCoherence.InflectionA.ToString(CultureInfo.InvariantCulture);
+                nodSpatCo.AppendChild(nodParent.OwnerDocument.CreateElement("InflectionB")).InnerText = SpatialCoherence.InflectionB.ToString(CultureInfo.InvariantCulture);
             }
 
             return nodDod;

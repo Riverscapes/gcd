@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using GCDCore.Project.ProfileRoutes;
 using GCDCore.Project;
+using System.Globalization;
 
 namespace GCDCore.Project.LinearExtraction
 {
@@ -35,14 +36,14 @@ namespace GCDCore.Project.LinearExtraction
         {
             ProfileRoute = ProjectManager.Project.ProfileRoutes.First(x => string.Compare(x.Name, nodItem.SelectSingleNode("ProfileRoute").InnerText, true) == 0);
             Database = ProjectManager.Project.GetAbsolutePath(nodItem.SelectSingleNode("Database").InnerText);
-            SampleDistance = decimal.Parse(nodItem.SelectSingleNode("SampleDistance").InnerText);
+            SampleDistance = decimal.Parse(nodItem.SelectSingleNode("SampleDistance").InnerText, CultureInfo.InvariantCulture);
         }
 
         public virtual XmlNode Serialize(XmlNode nodParent)
         {
             XmlNode nodLE = nodParent.AppendChild(nodParent.OwnerDocument.CreateElement("LinearExtraction"));
             nodLE.AppendChild(nodParent.OwnerDocument.CreateElement("Name")).InnerText = Name;
-            nodLE.AppendChild(nodParent.OwnerDocument.CreateElement("SampleDistance")).InnerText = SampleDistance.ToString();
+            nodLE.AppendChild(nodParent.OwnerDocument.CreateElement("SampleDistance")).InnerText = SampleDistance.ToString(CultureInfo.InvariantCulture);
             nodLE.AppendChild(nodParent.OwnerDocument.CreateElement("ProfileRoute")).InnerText = ProfileRoute.Name;
             nodLE.AppendChild(nodParent.OwnerDocument.CreateElement("Database")).InnerText = ProjectManager.Project.GetRelativePath(Database);
             return nodLE;

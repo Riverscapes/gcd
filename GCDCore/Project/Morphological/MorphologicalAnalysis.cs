@@ -68,9 +68,9 @@ namespace GCDCore.Project.Morphological
             _DisplayUnits_Mass = UnitsNet.Units.MassUnit.Kilogram;
 
             _duration = Duration.From(double.Parse(nodDuration.InnerText, CultureInfo.InvariantCulture), DisplayUnits_Duration);
-            _porosity = decimal.Parse(nodAnalysis.SelectSingleNode("Porosity").InnerText);
-            _density = decimal.Parse(nodAnalysis.SelectSingleNode("Density").InnerText);
-            _competency = decimal.Parse(nodAnalysis.SelectSingleNode("Competency").InnerText);
+            _porosity = decimal.Parse(nodAnalysis.SelectSingleNode("Porosity").InnerText, CultureInfo.InvariantCulture);
+            _density = decimal.Parse(nodAnalysis.SelectSingleNode("Density").InnerText, CultureInfo.InvariantCulture);
+            _competency = decimal.Parse(nodAnalysis.SelectSingleNode("Competency").InnerText, CultureInfo.InvariantCulture);
             //_DataVolumeUnits = ProjectManager.Project.Units.VolUnit;
 
             double minFluxValue = double.Parse(nodAnalysis.SelectSingleNode("MinimumFluxVolume").InnerText, CultureInfo.InvariantCulture);
@@ -366,9 +366,9 @@ namespace GCDCore.Project.Morphological
             XmlNode nodMA = nodParent.AppendChild(nodParent.OwnerDocument.CreateElement("MorphologicalAnalysis"));
             nodMA.AppendChild(nodParent.OwnerDocument.CreateElement("Name")).InnerText = Name;
             nodMA.AppendChild(nodParent.OwnerDocument.CreateElement("Folder")).InnerText = ProjectManager.Project.GetRelativePath(OutputFolder.FullName);
-            nodMA.AppendChild(nodParent.OwnerDocument.CreateElement("Porosity")).InnerText = Porosity.ToString();
-            nodMA.AppendChild(nodParent.OwnerDocument.CreateElement("Density")).InnerText = Density.ToString();
-            nodMA.AppendChild(nodParent.OwnerDocument.CreateElement("Competency")).InnerText = Competency.ToString();
+            nodMA.AppendChild(nodParent.OwnerDocument.CreateElement("Porosity")).InnerText = Porosity.ToString(CultureInfo.InvariantCulture);
+            nodMA.AppendChild(nodParent.OwnerDocument.CreateElement("Density")).InnerText = Density.ToString(CultureInfo.InvariantCulture);
+            nodMA.AppendChild(nodParent.OwnerDocument.CreateElement("Competency")).InnerText = Competency.ToString(CultureInfo.InvariantCulture);
             nodMA.AppendChild(nodParent.OwnerDocument.CreateElement("Spreadsheet")).InnerText = ProjectManager.Project.GetRelativePath(Spreadsheet);
 
             XmlNode nodDuration = nodMA.AppendChild(nodParent.OwnerDocument.CreateElement("Duration"));
