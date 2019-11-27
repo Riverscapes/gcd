@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using GCDConsoleLib.Utility;
+using System.Globalization;
 
 namespace GCDConsoleLib.Internal.Operators
 {
@@ -366,11 +367,11 @@ namespace GCDConsoleLib.Internal.Operators
             {
                 switch (item)
                 {
-                    case (ECols.FID): csvcols.Add(fid.ToString()); break;
-                    case (ECols.X): csvcols.Add((fractionalpt[0]).ToString()); break;
-                    case (ECols.Y): csvcols.Add((fractionalpt[1]).ToString()); break;
-                    case (ECols.DISTANCE): if (!String.IsNullOrEmpty(sFieldName)) csvcols.Add(feat.GetFieldAsDouble(sFieldName).ToString()); break;
-                    case (ECols.STATION): csvcols.Add((finalDist).ToString()); break;
+                    case (ECols.FID): csvcols.Add(fid.ToString(CultureInfo.InvariantCulture)); break;
+                    case (ECols.X): csvcols.Add((fractionalpt[0]).ToString(CultureInfo.InvariantCulture)); break;
+                    case (ECols.Y): csvcols.Add((fractionalpt[1]).ToString(CultureInfo.InvariantCulture)); break;
+                    case (ECols.DISTANCE): if (!String.IsNullOrEmpty(sFieldName)) csvcols.Add(feat.GetFieldAsDouble(sFieldName).ToString(CultureInfo.InvariantCulture)); break;
+                    case (ECols.STATION): csvcols.Add((finalDist).ToString(CultureInfo.InvariantCulture)); break;
                 }
             }
             for (int did = 0; did < _inputRasters.Count; did++)
@@ -383,7 +384,7 @@ namespace GCDConsoleLib.Internal.Operators
                     if (_buffer[0].Equals(inNodataVals[did]))
                         csvcols.Add("");
                     else
-                        csvcols.Add(_buffer[0].ToString());
+                        csvcols.Add(DynamicMath.invariantString(_buffer[0]));
 
                 }
                 else

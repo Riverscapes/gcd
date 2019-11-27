@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using UnitsNet;
 
 namespace GCDConsoleLib.Utility
@@ -13,6 +14,7 @@ namespace GCDConsoleLib.Utility
         public static dynamic Subtract(dynamic a, dynamic b) { return a - b; }
         public static dynamic Multiply(dynamic a, dynamic b) { return a * b; }
         public static dynamic Divide(dynamic a, dynamic b) { return a / b; }
+        public static String invariantString(dynamic a) { return a.ToString(CultureInfo.InvariantCulture); }
 
 
         /// <summary>
