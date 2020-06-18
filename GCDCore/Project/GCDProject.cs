@@ -311,6 +311,98 @@ namespace GCDCore.Project
             }
 
             xmlDoc.Save(ProjectFile.FullName);
+
+            try
+            {
+                SaveRiverscapesProject(ProjectFile);
+            }
+            catch (Exception ex)
+            {
+                // Fail silently
+                Console.WriteLine("Error saving riverscapes project file.");
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        private void SaveRiverscapesProject(FileInfo gcdProjectFile)
+        {
+            XmlDocument xmlDoc = new XmlDocument();
+            XmlNode nodProject = xmlDoc.CreateElement("Project");
+            xmlDoc.AppendChild(nodProject);
+
+            XmlAttribute attNameSpace = xmlDoc.CreateAttribute("xmlns:xsi");
+            attNameSpace.InnerText = "http://www.w3.org/2001/XMLSchema-instance";
+            nodProject.Attributes.Append(attNameSpace);
+
+            XmlAttribute attSchema = xmlDoc.CreateAttribute("noNamespaceSchemaLocation", attNameSpace.InnerText);
+            attSchema.InnerText = "https://xml.riverscapes.xyz/Projects/XSD/V1/GCD.xsd";
+            nodProject.Attributes.Append(attSchema);
+
+            // Create an XML declaration. 
+            XmlDeclaration xmldecl;
+            xmldecl = xmlDoc.CreateXmlDeclaration("1.0", null, null);
+            xmlDoc.InsertBefore(xmldecl, xmlDoc.DocumentElement);
+
+            nodProject.AppendChild(xmlDoc.CreateElement("Name")).InnerText = Name;
+            nodProject.AppendChild(xmlDoc.CreateElement("ProjectType")).InnerText = "GCD";
+
+            XmlNode nodMetaData = nodProject.AppendChild(xmlDoc.CreateElement("MetaData"));
+
+            if (!MetaData.ContainsKey("Description"))
+            {
+                XmlNode nodItem = nodMetaData.AppendChild(xmlDoc.CreateElement("Meta"));
+                nodItem.InnerText = Description;
+
+                XmlAttribute attName = xmlDoc.CreateAttribute("name");
+                attName.InnerText = "Description";
+                nodItem.Attributes.Append(attName);
+            }
+
+            // Project Date Creation time
+            XmlNode nodMetaDate = nodMetaData.AppendChild(xmlDoc.CreateElement("Meta"));
+            nodMetaDate.InnerText = DateTimeCreated.ToString("o");
+            XmlAttribute attMetaDate = xmlDoc.CreateAttribute("name");
+            attMetaDate.InnerText = "DateCreated";
+            nodMetaDate.Attributes.Append(attMetaDate);
+
+            // GCD Version
+            XmlNode nodMetaVersion = nodMetaData.AppendChild(xmlDoc.CreateElement("Meta"));
+            nodMetaVersion.InnerText = GCDVersion;
+            XmlAttribute attMetaVersion = xmlDoc.CreateAttribute("name");
+            attMetaVersion.InnerText = "GCDVersion";
+            nodMetaVersion.Attributes.Append(attMetaVersion);
+
+            // GCD Project Metadata
+            foreach (KeyValuePair<string, string> item in MetaData)
+            {
+                XmlNode nodItem = nodMetaData.AppendChild(xmlDoc.CreateElement("Meta"));
+                nodItem.InnerText = item.Value;
+
+                XmlAttribute attName = xmlDoc.CreateAttribute("name");
+                attName.InnerText = item.Key;
+                nodItem.Attributes.Append(attName);
+            }
+
+            XmlNode nodRealizations = nodProject.AppendChild(xmlDoc.CreateElement("Realizations"));
+            XmlNode nodGCD = nodRealizations.AppendChild(xmlDoc.CreateElement("GCD"));
+
+            XmlAttribute attGUID = xmlDoc.CreateAttribute("id");
+            attGUID.InnerText = Guid.NewGuid().ToString();
+            nodGCD.Attributes.Append(attGUID);
+
+            XmlAttribute attDate = xmlDoc.CreateAttribute("dateCreated");
+            attDate.InnerText = DateTimeCreated.ToString("o");
+            nodGCD.Attributes.Append(attDate);
+
+            XmlAttribute attVersion = xmlDoc.CreateAttribute("productVersion");
+            attVersion.InnerText = GCDVersion;
+            nodGCD.Attributes.Append(attVersion);
+
+            nodGCD.AppendChild(xmlDoc.CreateElement("Name")).InnerText = Name;
+            nodGCD.AppendChild(xmlDoc.CreateElement("ProjectPath")).InnerText = GetRelativePath(gcdProjectFile);
+
+            FileInfo riverscapesFile = new FileInfo(Path.Combine(gcdProjectFile.DirectoryName, "project.rs.xml"));
+            xmlDoc.Save(riverscapesFile.FullName);
         }
 
         public static GCDProject Load(FileInfo projectFile)
