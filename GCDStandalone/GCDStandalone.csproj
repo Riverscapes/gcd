@@ -29,7 +29,7 @@
     <ProductName>GCD Stand Alone</ProductName>
     <PublisherName>North Arrow Research Ltd.</PublisherName>
     <SuiteName>Geomorphic Change Detection Software</SuiteName>
-    <ApplicationRevision>37</ApplicationRevision>
+    <ApplicationRevision>38</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -83,7 +83,7 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>86A31335C57F21775ABF0B39B08004B4316CB90F</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>341BDEF0CDAD9BFCF0DAE011184BC8DD379DBCFD</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestKeyFile>

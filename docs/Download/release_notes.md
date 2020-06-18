@@ -7,6 +7,10 @@ weight: 4
 
 See the [commit history](https://github.com/Riverscapes/gcd/commits) in GitHub for fuller documentation of changes. Alternatively you can view the commits organized by each product [release](https://github.com/Riverscapes/gcd/releases). The release notes for [prior versions](#prior-versions) are linked at the bottom of this page.
 
+## 7.5.4 - 18 Jun 2020
+
+* GCD now writes a [riverscapes](http://riverscapes.xyz) project file alongside the GCD project file.
+
 ## 7.4.4 - 27 Nov 2019
 
 * The GCD now works consistently regardless of the User's Windows regionalization settings. i.e. whether they use commas or decimals as separators when reading and writing the GCD project file.
