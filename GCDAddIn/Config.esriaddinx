@@ -8,7 +8,7 @@
   <Company>North Arrow Research</Company>
   <Date>06/18/2020</Date>
   <Targets>
-    <Target name="Desktop" version="10.4" />
+    <Target name="Desktop" version="10.6" />
   </Targets>
   <AddIn language="CLR" library="GCDAddIn.dll" namespace="GCDAddIn">
     <ArcMap>
