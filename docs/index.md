@@ -45,6 +45,7 @@ GCD 7 is always in development. How active that development is depends on our [f
 	<a class="button success" href="{{ site.baseurl}}/Download/future-feature-request#want-to-donate-to-the-cause" ><i class="fa fa-paypal"></i>&nbsp;&nbsp;Donate Now</a>
 	<a class="hollow button" href="{{ site.baseurl}}/Download/future-feature-request#making-feature-requests" ><i class="fa fa-lightbulb-o"></i>&nbsp;&nbsp;GCD Enhancements</a>
 </div>
+
 ------
 
 ### Note on Terminology
