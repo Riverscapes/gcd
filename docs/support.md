@@ -20,7 +20,7 @@ We have [taught five bespoke GCD workshops](http://www.joewheaton.org/workshops.
     <a class="hollow button" href="{{ site.baseurl }}/Workshops"><i class="fa fa-graduation-cap"></i>  GCD Workshops</a>  
 </div>
 
-# Issue Forum 
+# Discussion Forum & Issue Board
 
 We use [GitHub Discussions](https://github.com/Riverscapes/gcd/discussions) as a forum for [asking questions and getting help]({{ site.baseurl }}/Download/known-bugs.html#questions-or-help) as well as [reporting bugs]({{ site.baseurl }}/Download/known-bugs.html#bugs). You can search the forum for past issues without a login, but to post to the forum you will need to create a [free GitHub account](https://github.com/join).
 
