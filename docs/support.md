@@ -22,11 +22,13 @@ We have [taught five bespoke GCD workshops](http://www.joewheaton.org/workshops.
 
 # Issue Forum 
 
-We use [GitHub issue tracking](https://github.com/Riverscapes/gcd/issues) as a forum for [asking questions and getting help]({{ site.baseurl }}/Download/known-bugs.html#questions-or-help) as well as [reporting bugs]({{ site.baseurl }}/Download/known-bugs.html#bugs). You can search the forum for past issues without a login, but to post to the forum you will need to create a [free GitHub account](https://github.com/join).
+We use [GitHub Discussions](https://github.com/Riverscapes/gcd/discussions) as a forum for [asking questions and getting help]({{ site.baseurl }}/Download/known-bugs.html#questions-or-help) as well as [reporting bugs]({{ site.baseurl }}/Download/known-bugs.html#bugs). You can search the forum for past issues without a login, but to post to the forum you will need to create a [free GitHub account](https://github.com/join).
 
 <div style="text-align: center">
-    <a class="hollow button" href="https://github.com/Riverscapes/gcd/issues"><i class="fa fa-github"></i>  GCD Issue Forum</a>  
+    <a class="hollow button" href="https://github.com/Riverscapes/gcd/discussions"><i class="fa fa-github"></i>  GCD Discussion Forum</a>  
 </div>
+
+If discussion issues raised turn out to be bugs or turn into feature requests, we post them in our [Github Issue Board](https://github.com/Riverscapes/gcd/issues).
 
 # Example Datasets
 
