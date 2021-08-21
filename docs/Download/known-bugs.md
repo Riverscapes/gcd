@@ -8,18 +8,18 @@ GCD is under constant development and we are eager to resolve all known issues. 
 # Questions or Help
 You can explore or search [past user questions here](https://github.com/Riverscapes/gcd/discussions).
 
-<a class="button" href="https://github.com/Riverscapes/gcd/labels/question"><i class="fa fa-github"/> GCD Questions</a>
-<a class="button" href="https://github.com/Riverscapes/gcd/labels/help%20wanted"><i class="fa fa-github"/> GCD Help Wanted</a>
+<a class="button" href="https://github.com/Riverscapes/gcd/labels/question"><i class="fa fa-github" aria-hidden="true"></i> GCD Questions</a>
+<a class="button" href="https://github.com/Riverscapes/gcd/labels/help%20wanted"><i class="fa fa-github" aria-hidden="true"></i> GCD Help Wanted</a>
 
 # Bugs
 
 Before logging a suspected bug, please search [known open bugs](https://github.com/Riverscapes/gcd/labels/bug). If you have more information to report about this bug, please post a comment to the appropriate issue. Otherwise, you can post a new bug to the ["I need help please" Discussion](https://github.com/Riverscapes/gcd/discussions/categories/i-need-help-please). If we deem your problem to be a software bug, we will tranfer it to our [known bugs](https://github.com/Riverscapes/gcd/labels/bug) (note we sometimes fix simple bugs, but we often just put them in the development queue for when funding is avaialable to fix them ).
 
-<a class="button" href="https://github.com/Riverscapes/gcd/labels/bug"><i class="fa fa-github"/> GCD Bugs</a>
+<a class="button" href="https://github.com/Riverscapes/gcd/labels/bug"><i class="fa fa-github" aria-hidden="true"></i> GCD Bugs</a>
 
 # Posting an Issue
 
-If you find a bug, or simply want to report an issue with the software, please log a GitHub Discussion. <a class="button" href="https://github.com/Riverscapes/gcd/discussions/categories/i-need-help-please"><i class="fa fa-github"/> GitHub GCD Discussion</a> 
+If you find a bug, or simply want to report an issue with the software, please log a GitHub Discussion. <a class="button" href="https://github.com/Riverscapes/gcd/discussions/categories/i-need-help-please"><i class="fa fa-github" aria-hidden="true"></i> GitHub GCD Discussion</a> 
 
 Anyone in the GCD community and a member of GitHub  can respond, and the development team will receive a notification. Please be patient in your response. We don't have any budget for [supporting users]({{ site.baseurl }}/Download/future-feature-request), but we do try and respond to most issues when we can. Just bare in mind that the [development team]({{ site.baseurl }}/who), all have full-time jobs and any support we do of GCD users is usually on donated time. 
 
