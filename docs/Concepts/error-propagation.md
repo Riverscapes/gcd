@@ -11,15 +11,15 @@ weight: 2
 <iframe width="560" height="315" src="https://www.youtube.com/embed/boXszBr0RHQ" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
 </div>
 
-<-- #### Representing Propagated Errors as Probabilities -->
-
 ### How does GCD calculate +/- Error Volumes?
 
- The +/- error volumes are very conservatively estimated with error propagation on a cell-by-cell basis. For every change detection that is done based on error surfaces in the inputs, a properror.tif is calculated. This is nothing more than:
- 
+The +/- error volumes are very conservatively estimated with error propagation on a cell-by-cell basis. For every change detection that is done based on error surfaces in the inputs, a properror.tif is calculated. This is nothing more than:
+
 	PropError = √((ErrorDEM New)^2 + (ErrorDEM Old)^2)
 
-This is just error propagation on a cell by cell basis to get an estimate of propagated vertical error. The error volume is estimated just like change detection values are estimated: by multiplying vertical value (in this case propagated DEM error instead of elevation change) by the cell area, which is just the square of cell resolution.
+This is just error propagation on a cell by cell basis to get an estimate of propagated vertical error. Note that when using a minimum level of detection that is spatially uniform, the MinLoD is effectively the propagated error so it is not calculated separately. 
+
+The error volume is estimated just like change detection values are estimated: by multiplying vertical value (in this case propagated DEM error instead of elevation change) by the cell area, which is just the square of cell resolution.
 
 	Cell Error Volume = Cell-Resolution^2 * PropError
 
