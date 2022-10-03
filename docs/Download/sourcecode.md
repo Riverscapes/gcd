@@ -5,7 +5,7 @@ weight: 3
 
 # GCD 7
 
-The entire C# source code for GCD 7 is fully open source and available in the [Riverscapes Consortium](https://riverscapes.xyz) [GitHub Organization](https://github.com/Riverscapes).
+The entire C# source code for GCD 7 is fully open source and available in the [Riverscapes Consortium](https://riverscapes.net) [GitHub Organization](https://github.com/Riverscapes).
 
 <a class="button" href="https://github.com/Riverscapes/gcd/"><i class="fa fa-github"/> GCD GitHub Repository</a>
 

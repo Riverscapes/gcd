@@ -70,7 +70,7 @@
             this.lnkIssues.Size = new System.Drawing.Size(221, 13);
             this.lnkIssues.TabIndex = 6;
             this.lnkIssues.TabStop = true;
-            this.lnkIssues.Text = "http://gcd.riverscapes.xyz/Help/known-bugs";
+            this.lnkIssues.Text = "http://gcd.riverscapes.net/Help/known-bugs";
             this.lnkIssues.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkIssues_LinkClicked);
             // 
             // lnkOnlineHelp
@@ -82,7 +82,7 @@
             this.lnkOnlineHelp.Size = new System.Drawing.Size(158, 13);
             this.lnkOnlineHelp.TabIndex = 5;
             this.lnkOnlineHelp.TabStop = true;
-            this.lnkOnlineHelp.Text = "http://gcd.riverscapes.xyz/Help";
+            this.lnkOnlineHelp.Text = "http://gcd.riverscapes.net/Help";
             this.lnkOnlineHelp.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkOnlineHelp_LinkClicked);
             // 
             // lnkWebSite
@@ -93,7 +93,7 @@
             this.lnkWebSite.Size = new System.Drawing.Size(131, 13);
             this.lnkWebSite.TabIndex = 4;
             this.lnkWebSite.TabStop = true;
-            this.lnkWebSite.Text = "http://gcd.riverscapes.xyz";
+            this.lnkWebSite.Text = "http://gcd.riverscapes.net";
             this.lnkWebSite.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkWebSite_LinkClicked);
             // 
             // Label5

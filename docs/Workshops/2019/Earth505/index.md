@@ -7,9 +7,9 @@ This workshop is part of [Pre Conference Workshops](https://www.rcem2019.co.nz/p
 [![Waikato]({{ site.baseurl }}/assets/images/logos/Waikato_Logo.png)](https://www.waikato.ac.nz)
 [![USU]({{ site.baseurl }}/assets/images/logos/etal.png)](http://etal.joewheaton.org)
 
-[GCD]({{ site.baseurl }}/) is a [Riverscapes Consortium](http://riverscapes.xyz) Project.
+[GCD]({{ site.baseurl }}/) is a [Riverscapes Consortium](http://riverscapes.net) Project.
 
-[![Riverscapes]({{ site.baseurl }}/assets/images/logos/RiverscapesConsortium_Logo_Black_BHS_200w.png)](http://riverscapes.xyz)
+[![Riverscapes]({{ site.baseurl }}/assets/images/logos/RiverscapesConsortium_Logo_Black_BHS_200w.png)](http://riverscapes.net)
 
 ## Date & Times 
 

@@ -29,12 +29,12 @@ We were pleased to report that thanks to [North Arrow Research](http://northarro
 ------
 
 ## Software
-For the workshop, we presented the [Beta GCD 7 Software](https://github.com/Riverscapes/gcd/releases/download/7.0.16_BETA) to the GeoTERM working group and went through  [excercises]({{ site.baseurl}}/Help/Workshops/workshop-schedules/2018/Aberdeen/excercises.html) and demos to show off its features. Related to this we also unveiled [TAT](http://tat.riverscapes.xyz) and a very preliminary verison of the [Cross Section Viewer](http://xsviewer.northarrowresearch.com/)
+For the workshop, we presented the [Beta GCD 7 Software](https://github.com/Riverscapes/gcd/releases/download/7.0.16_BETA) to the GeoTERM working group and went through  [excercises]({{ site.baseurl}}/Help/Workshops/workshop-schedules/2018/Aberdeen/excercises.html) and demos to show off its features. Related to this we also unveiled [TAT](http://tat.riverscapes.net) and a very preliminary verison of the [Cross Section Viewer](http://xsviewer.northarrowresearch.com/)
 
 <div align="center">
     <a class="hollow button" href="https://github.com/Riverscapes/gcd/releases/download/7.0.16_BETA/2018_04_17_GCDAddIn_7_0_16.esriAddIn"><i class="fa fa-cloud-download"></i>  GCD 7.0.16 BETA AddIn </a>  
     <a class="hollow button" href="https://github.com/Riverscapes/gcd/releases/download/7.0.16_BETA/2018_04_17_GCDStandAlone_7_0_16.exe"><i class="fa fa-cloud-download"></i>  GCD 7.0.16 BETA Stand Alone </a>  
-    <a class="hollow button" href="http://tat.riverscapes.xyz/Download/"><i class="fa fa-cloud-download"></i>  TAT - Topographic Analysis Toolkit </a>  
+    <a class="hollow button" href="http://tat.riverscapes.net/Download/"><i class="fa fa-cloud-download"></i>  TAT - Topographic Analysis Toolkit </a>  
     <a class="hollow button" href="http://releases.northarrowresearch.com/XSViewer/setup.exe"><i class="fa fa-cloud-download"></i> Cross Section Viewer 2.0 BETA </a>  
 </div>
 
@@ -90,7 +90,7 @@ Our International Partners who have been generous with their time, sharing their
 
 GCD is a Riverscapes Project.
 
-[![Riverscapes]({{ site.baseurl }}/assets/images/logos/RiverscapesConsortium_Logo_Black_BHS_200w.png)](http://riverscapes.xyz)
+[![Riverscapes]({{ site.baseurl }}/assets/images/logos/RiverscapesConsortium_Logo_Black_BHS_200w.png)](http://riverscapes.net)
 
 ------
 <div align="center">

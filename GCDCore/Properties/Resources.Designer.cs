@@ -426,7 +426,7 @@ namespace GCDCore.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to http://gcd.riverscapes.xyz/.
+        ///   Looks up a localized string similar to http://gcd.riverscapes.net/.
         /// </summary>
         public static string GCDWebSiteURL {
             get {
@@ -445,7 +445,7 @@ namespace GCDCore.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to http://gcd.riverscapes.xyz/Help/.
+        ///   Looks up a localized string similar to http://gcd.riverscapes.net/Help/.
         /// </summary>
         public static string HelpBaseURL {
             get {
@@ -771,7 +771,7 @@ namespace GCDCore.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to http://tat.riverscapes.xyz/.
+        ///   Looks up a localized string similar to http://tat.riverscapes.net/.
         /// </summary>
         public static string TATWebSite {
             get {

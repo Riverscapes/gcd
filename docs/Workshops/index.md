@@ -37,11 +37,11 @@ weight: 4
 | 2014, Dec | [ANZGG - GCD Workshop](http://gcdworkshop.joewheaton.org/workshop-schedules/2014/anzgg---december-2014) | Brisbane, Australia | University of Queensland - [Australia New Zealand Geomorphology Group](http://www.anzgg.org/) <i class="fa fa-users" aria-hidden="true"></i> |
 |2013, March | [Geomorphic Change Detection Workshop](http://gcdkwo.joewheaton.org/) |Lawrence, KS |Kansas Water Office |
 |2012, May |[Geomorphic Change Detection Workshop](http://gcd-usace.joewheaton.org/) |Kansas City, MO | US Army Corps of Engineers |
-|2012, May |[Geomorphic Change Detection Workshop](http://gcd.riverscapes.xyz/Workshops/) |Park City, UT | Utah State University ICRRR <i class="fa fa-users" aria-hidden="true"></i> |
+|2012, May |[Geomorphic Change Detection Workshop](http://gcd.riverscapes.net/Workshops/) |Park City, UT | Utah State University ICRRR <i class="fa fa-users" aria-hidden="true"></i> |
 |2012, April | ‘2012 Annual Lecture Series – [Near Census Assessment of Fluvial Form, Process,  Change & Associated Ecosystem Services](http://borlecture.joewheaton.org/home)’ |Denver, CO |US Bureau of Reclamation |
-|2011, May | [Geomorphic Change Detection Workshop](http://gcd.riverscapes.xyz/Workshops/) |Park City, UT |Utah State University ICRRR <i class="fa fa-users" aria-hidden="true"></i> |
+|2011, May | [Geomorphic Change Detection Workshop](http://gcd.riverscapes.net/Workshops/) |Park City, UT |Utah State University ICRRR <i class="fa fa-users" aria-hidden="true"></i> |
 |2011, May |Geomorphic Change Detection Workshop |Flagstaff, AZ |US Geologic Survey Grand Canyon Monitoring Research Center |
-|2010, May |[Geomorphic Change Detection Workshop](http://gcd.riverscapes.xyz/Workshops/) |Logan, UT |Utah State University ICRRR <i class="fa fa-users" aria-hidden="true"></i> |
+|2010, May |[Geomorphic Change Detection Workshop](http://gcd.riverscapes.net/Workshops/) |Logan, UT |Utah State University ICRRR <i class="fa fa-users" aria-hidden="true"></i> |
 |2010, July |[NSF LiDaR Workshop on ‘New Tools in Process-Based Analysis of LiDaR Topographic Data](https://opentopography.org/community/workshops/lidar2_2010) |Boulder, CO |National Science Foundation <i class="fa fa-users" aria-hidden="true"></i> |
 |2010, Nov |[Geomorphic Change Detection Workshop](http://gcdworkshop.joewheaton.org/) |Boise, ID |Idaho Power |
 

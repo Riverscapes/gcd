@@ -24,7 +24,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>http://releases.northarrowresearch.com/GCD/StandAlone/</InstallUrl>
-    <SupportUrl>http://gcd.riverscapes.xyz</SupportUrl>
+    <SupportUrl>http://gcd.riverscapes.net</SupportUrl>
     <ErrorReportUrl>https://github.com/Riverscapes/gcd/issues</ErrorReportUrl>
     <ProductName>GCD Stand Alone</ProductName>
     <PublisherName>North Arrow Research Ltd.</PublisherName>

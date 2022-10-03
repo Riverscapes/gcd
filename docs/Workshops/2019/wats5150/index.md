@@ -17,7 +17,7 @@ All assignments for the GCD portion of fluvial geomorphology will be set and sub
 
 <div align="center">
 	<a class="button" href="https://usu.instructure.com/courses/532404"><i class="fa fa-spinner" aria-hidden="true"></i> Canvas Page for Students</a>
-	<a class="button" href="http://gcd.riverscapes.xyz/Workshops/2019/wats5150/topics.html"><i class="fa fa-desktop" aria-hidden="true"></i> Course Topics, Slides and Materials</a>
+	<a class="button" href="http://gcd.riverscapes.net/Workshops/2019/wats5150/topics.html"><i class="fa fa-desktop" aria-hidden="true"></i> Course Topics, Slides and Materials</a>
 </div>
 
 -----

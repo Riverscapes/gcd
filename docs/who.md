@@ -25,9 +25,9 @@ In 2015, James,  Joe and [Damia Vericat](http://www.damiavericat.eu/) teamed bac
 ## Development Team
 
 <a href="http://northarrowresearch.com/#people"><img class="float-right" src="{{ site.baseurl }}/assets/images/people/Matt_round.png"></a>
-The newest version of the GCD is currently under development by [North Arrow Research](http://northarrowresearch.com/) and [ET-AL](http://etal.joewheaton.org/). Since [GCD 5]({{ site.baseurl }}/Download/old_versions.html#gcd-5),   [Philip Bailey](http://northarrowresearch.com/#people) (North Arrow Research) has been the lead developer and architect of GCD. These days, Philip and [Matt Reimer](http://northarrowresearch.com/#people) ([North Arrow Research](http://northarrowresearch.com/)) are the primary developers of GCD.  Matt has really raised the bar and exposed the team to a wealth of new technologies and simpler, more elegant solutions. Matt, Philip and Joe envisioned and launched the [Riverscapes Consortium](https://riverscapes.xyz).
+The newest version of the GCD is currently under development by [North Arrow Research](http://northarrowresearch.com/) and [ET-AL](http://etal.joewheaton.org/). Since [GCD 5]({{ site.baseurl }}/Download/old_versions.html#gcd-5),   [Philip Bailey](http://northarrowresearch.com/#people) (North Arrow Research) has been the lead developer and architect of GCD. These days, Philip and [Matt Reimer](http://northarrowresearch.com/#people) ([North Arrow Research](http://northarrowresearch.com/)) are the primary developers of GCD.  Matt has really raised the bar and exposed the team to a wealth of new technologies and simpler, more elegant solutions. Matt, Philip and Joe envisioned and launched the [Riverscapes Consortium](https://riverscapes.net).
 
-[![Riverscapes]({{ site.baseurl }}/assets/images/logos/RiverscapesConsortium_Logo_Black_BHS_200w.png)](https://riverscapes.xyz)
+[![Riverscapes]({{ site.baseurl }}/assets/images/logos/RiverscapesConsortium_Logo_Black_BHS_200w.png)](https://riverscapes.net)
 
 
 ### Other Significant Contributors

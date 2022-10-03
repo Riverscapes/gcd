@@ -15,7 +15,7 @@ namespace GCDCore.UserInterface.About
         private void AboutForm_Load(Object sender, EventArgs e)
         {
             Text = string.Format("About {0}", Properties.Resources.ApplicationNameLong);
-            webBrowser1.Url = new Uri("http://gcd.riverscapes.xyz/dotnetack.html");            
+            webBrowser1.Url = new Uri("http://gcd.riverscapes.net/dotnetack.html");            
             lblName.Text = string.Format("{0} {1}", Properties.Resources.ApplicationNameShort, ProjectManager.IsArcMap ? "AddIn" : "Standalone");
             lblVersion.Text = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
         }

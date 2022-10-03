@@ -6,7 +6,7 @@
 
 2. Check out `master` branch and confirm correct commit.
 
-3. Update the [release notes ](http://gcd.riverscapes.xyz/release_notes.html) document
+3. Update the [release notes ](http://gcd.riverscapes.net/release_notes.html) document
 
 4. Set the release version for `GCDCore` project.
 

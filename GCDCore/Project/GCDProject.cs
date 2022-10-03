@@ -335,7 +335,7 @@ namespace GCDCore.Project
             nodProject.Attributes.Append(attNameSpace);
 
             XmlAttribute attSchema = xmlDoc.CreateAttribute("noNamespaceSchemaLocation", attNameSpace.InnerText);
-            attSchema.InnerText = "https://xml.riverscapes.xyz/Projects/XSD/V1/GCD.xsd";
+            attSchema.InnerText = "https://xml.riverscapes.net/Projects/XSD/V1/GCD.xsd";
             nodProject.Attributes.Append(attSchema);
 
             // Create an XML declaration. 

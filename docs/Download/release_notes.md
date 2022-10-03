@@ -9,7 +9,7 @@ See the [commit history](https://github.com/Riverscapes/gcd/commits) in GitHub f
 
 ## 7.5.4 - 18 Jun 2020
 
-* GCD now writes a [riverscapes](http://riverscapes.xyz) project file alongside the GCD project file.
+* GCD now writes a [riverscapes](http://riverscapes.net) project file alongside the GCD project file.
 
 ## 7.4.4 - 27 Nov 2019
 
@@ -96,7 +96,7 @@ This one is a big release that changes the platform of the Standalone so if you 
 
 * Probabilistic thresholded error raster.
 * Fixing DoD and budget segregation analysis inputs property grid to reference correct new and old surfaces.
-* Links to [TAT](http://tat.riverscapes.xyz) and [Cross Section Viewer](http://xsviewer.northarrowresearch.com) online help web sites.
+* Links to [TAT](http://tat.riverscapes.net) and [Cross Section Viewer](http://xsviewer.northarrowresearch.com) online help web sites.
 
 ## 7.0.15 - 17 Apr 2018
 
