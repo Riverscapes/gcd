@@ -20,3 +20,9 @@ Also make sure that the AddIn is not "registered for COM" on the Assembly Inform
 ## License
 
 [GNU Public License Version 3](https://raw.githubusercontent.com/Riverscapes/gcd/master/LICENSE)
+
+To cite the software:
+
+> Phlip Bailey, Joseph Wheaton, Matt Reimer, & James Brasington. (2020). Geomorphic Change Detection Software (7.5.0). Zenodo. https://doi.org/10.5281/zenodo.7248344.
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7248344.svg)](https://doi.org/10.5281/zenodo.7248344)
