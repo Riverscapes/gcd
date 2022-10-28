@@ -4,16 +4,15 @@ weight: 4
 ---
 
 
-<img class="float-right" src="{{ site.baseurl }}/assets/images/workshops/teaching.jpg">We have taught over 20 workshops, short-courses and full semester long classes since 2010 on geomorphic change detection (see table below).  There are four ways in which we have offered this training:
+<img class="float-right" src="{{ site.baseurl }}/assets/images/workshops/teaching.jpg">We  taught over 20 GCD workshops, short-courses and full semester long classes from 2010 to 2019 on geomorphic change detection (see table below).  There were four ways in which we  offered this training:
 1. Semester-long graduate student course through Utah State University Department of Watershed Sciences ([WATS 6850 & WATS 5150]({{ site.baseurl }}/Workshops/About/how-to-register)) 
 2. Short courses & workshops open to [public enrollment]({{ site.baseurl }}/Workshops/About/how-to-register.html) administered through Utah State University [Restoration Consortium](http://restoration.usu.edu) and/or Geospatial Consortium 
 3. Bespoke short courses & workshops open to public enrollment administered by other sponsor
 4.  Custom short course for private audience (paid for by sponsor)
 
-<div align="center" align="middle">
-	<a href="http://restoration.usu.edu"><img class="float-right" src="{{ site.baseurl }}/assets/images/logos/Restoration-PAIRED-05_Horizontal_BlueOnWhite.png"></a>
-	<a class="button" href="{{ site.baseurl }}/Workshops/About/how-to-register"><i class="fa fa-graduation-cap"></i> Take me to  Next Workshop or Course </a>
-</div>
+GCD is still covered in less detail  as part of Joe Wheaton's [WATS 5150 Fluvial Geomorphology Class](https://riverscapes.github.io/Fluvial-Geomorphology/Assignments/module-07_GCD.html). However, WATS 6850 and the public enrollment short courses are not longer being taught. We have no current plans to teach more courses. The GCD is still a useful tool and the documentation on this site and from past courses can be used for self-paced instruction.
+
+However, with no new GCD development since 2018, and ESRI's impending plans to stop supporting ArcGIS 10.X, we are unlikely to revitalize training anytime soon. If we do, it will be as part of a broader push and software developemnt to refactor GCD to Python and incorporate into the [Riverscapes Studio](https://qris.riverscapes.net). 
 
 
 -----

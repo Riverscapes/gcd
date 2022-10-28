@@ -10,16 +10,20 @@ Instills background theory of geomorphic change detection and sediment budgeting
 
 
 <div align = "center">
-<a class=" button" href="http://catalog.usu.edu/preview_course_nopop.php?catoid=12&coid=93001"><img src="{{ site.baseurl}}/assets/images/logos/USU_OldMainOnly.png"> WATS 6850 - Geomorphic Change Detection - Course Catalog Description</a>
+<a class=" button" href="https://gcd.riverscapes.net/Workshops/2019/wats6850/"><img src="{{ site.baseurl}}/assets/images/logos/USU_OldMainOnly.png"> WATS 6850 - Geomorphic Change Detection - Class Pages</a>
 </div>
+
+**Update!** As of 2020, WATS 6850 is no longer being taught. The coures was last taught in [Spring 2019](https://gcd.riverscapes.net/Workshops/2019/wats6850/).
+
 
 ### WATS 5150 - Fluvial Geomorphology
 
 This course focuses on field analysis of physical processes in streams that control their shape, plan form, slope, bed material, and channel bar distribution. Students apply geomorphology to aquatic ecology and environmental restoration. Weekend field trips are required.
 
-*Note that WATS 5150/6150 is a 3 credit, spring semester class co-taught by Jack Schmidt and Joe Wheaton. It now includes most of the WATS 6850 curriculum in the lab portion.* 
+*Note that WATS 5150/6150 is a 3 credit, spring semester class  taught by JJoe Wheaton. It now includes poritions of the WATS 6850 curriculum in the lab portion.* 
 
 <div align = "center">
-<a class=" button" href="http://catalog.usu.edu/preview_course_nopop.php?catoid=12&coid=92754"><img src="{{ site.baseurl}}/assets/images/logos/USU_OldMainOnly.png"> WATS 5150/6150 - Fluvial Geomorphology -  Catalog Description</a>
+<a class=" button" href="https://riverscapes.github.io/Fluvial-Geomorphology/"><img src="{{ site.baseurl}}/assets/images/logos/USU_OldMainOnly.png"> WATS 5150/6150 - Fluvial Geomorphology -  Course Webiste</a>
 </div>
 
+Please see 
