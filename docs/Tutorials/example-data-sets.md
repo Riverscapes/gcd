@@ -55,9 +55,10 @@ These example datasets are used in the [tutorials]({{ site.baseurl }}/Tutorials)
                     <li>31km river on the <i class="fa fa-map-marker"></i> <a href="https://www.google.com/maps/place/39%C2%B035'58.6%22S+176%C2%B043'23.7%22E/@-39.6060374,176.6490462,27291m/data=!3m1!1e3!4m5!3m4!1s0x0:0x0!8m2!3d-39.599602!4d176.723239">north island of New Zealand</a></li>
                     <li>Two LiDAR surveys</li>
                     <li>2m cell resolution</li>
-                    <li><a href="https://doi.org/10.5281/zenodo.7261536">Download</a></li>
+                    <li><a href="https://doi.org/10.5281/zenodo.7261574">Download</a></li>
                 </ul>
-                <a href="https://doi.org/10.5281/zenodo.7261536"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.7261536.svg" alt="DOI"></a>
+                <a href="https://doi.org/10.5281/zenodo.7261574"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.7261574.svg" alt="DOI"></a>
+
 
             </div>
         </div>
@@ -109,8 +110,9 @@ These example datasets are used in the [tutorials]({{ site.baseurl }}/Tutorials)
                     <li>Two LiDAR surveys</li>
                     <li>0.5m cell resolution</li>
                     <li><a href="https://s3-us-west-2.amazonaws.com/etalweb.joewheaton.org/GCD/GCD7/Tutorials/GeoTERM_Rees.zip">Download Full</a></li>
-                    <li><a href="https://s3-us-west-2.amazonaws.com/etalweb.joewheaton.org/GCD/GCD7/Tutorials/MaskOnly_MorphologicalApproach.zip">Download Morphological Only</a></li>
+                    <li><a href="https://doi.org/10.5281/zenodo.7261536">Download Morphological Only</a></li>
                 </ul>
+                <a href="https://doi.org/10.5281/zenodo.7261536"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.7261536.svg" alt="DOI"></a>
             </div>
         </div>
     </div>
