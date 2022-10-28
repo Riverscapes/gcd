@@ -18,7 +18,8 @@ These example datasets are used in the [tutorials]({{ site.baseurl }}/Tutorials)
                     <li>Two surveys</li>
                     <li>0.5m cell resolution</li>
                     <li>RTKGPS and Total Station</li>
-                    <li><a href="http://etalweb.joewheaton.org/etal_workshops/GCD/2015_USU/G_SimpleDoD.zip">Download</a></li>
+                    <li><a href="https://doi.org/10.5281/zenodo.7261312">Download</a></li>
+                    <li><a href="https://doi.org/10.5281/zenodo.7261312"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.7261312.svg" alt="DOI"></a></li>
                 </ul>
             </div>
         </div>     
