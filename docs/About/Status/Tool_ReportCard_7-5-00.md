@@ -3,7 +3,7 @@ title: Riverscapes Report Card
 weight: 1
 ---
 
-<img class="float-right" src="https://riverscapes.net/assets/images/tools/grade/TRL_5_128w.png"><img class="float-left" src="https://gcd.riverscapes.net/assets/images/icons/GCD_Logo_White_wText.png"> GCD is one of original tools developed by [North Arrow Research](https://northarrowresearch.com), and Utah State University's [Ecogeomorphology & Topographic Analysis Lab](https://etal.joewheaton.org) the [Riverscapes Consortium](https://riverscapes.net). This report card communicates GCD's compliance with the Riverscape Consortium's published [tool standards](https://riverscapes.net/Tools).
+<img class="float-right" src="https://riverscapes.net/assets/images/tools/grade/TRL_5_128w.png"><img class="float-left" width="150" src="https://gcd.riverscapes.net/assets/images/icons/GCD_Logo_White_wText.png"> GCD is one of original tools developed by [North Arrow Research](https://northarrowresearch.com), and Utah State University's [Ecogeomorphology & Topographic Analysis Lab](https://etal.joewheaton.org) the [Riverscapes Consortium](https://riverscapes.net). This report card communicates GCD's compliance with the Riverscape Consortium's published [tool standards](https://riverscapes.net/Tools).
 
 # Report Card Summary
 
@@ -13,7 +13,7 @@ weight: 1
 | Assessment Team | Wheaton |
 | [Current Assessment](http://brat.riverscapes.net/Tools#tool-status) | ![professional](https://raw.githubusercontent.com/Riverscapes/riverscapes-website/master/assets/images/tools/grade/TRL_5_32p.png) [Professional Grade](https://riverscapes.net/Tools/discrimination.html#tool-grade) |
 | Target Status | ![commercial](https://raw.githubusercontent.com/Riverscapes/riverscapes-website/master/assets/images/tools/grade/TRL_5_32p.png) Commercial Grade |
-| Riverscapes Compliance | ![Pending](https://riverscapes.net/assets/images/rc/RiverscapesCompliantPending_28.png) [Pending](https://riverscapes.net/Tools/#tools-pending-riverscapes-compliance) |
+| Riverscapes Compliance | ![Riverscapes Compliant](https://riverscapes.net/assets/images/rc/RiverscapesCompliant_32.png) [Pending](https://riverscapes.net/Tools/#riverscapes-compliant-tools) |
 | Assessment Rationale | GCD has been applied extensively throughout the world. It has been used extensively both as a research tool and practitioner tool in both monitoring and design at the reach-scale. The developers have taught over 20 workshops form 2010 to 2019 and the tool had a large user base. It is well deserving of a Professional Grade. |
 
 
