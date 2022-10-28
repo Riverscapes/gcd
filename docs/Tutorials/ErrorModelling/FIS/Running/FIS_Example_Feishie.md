@@ -14,8 +14,8 @@ This exercise will show you how to use GCD to build a spatially variable error m
 
 #### Datasets
 
-1. Feshie Example [N_FIS_Intro.zip](http://etalweb.joewheaton.org/etal_workshops/GCD/2015_USU/N_FIS_Intro.zip) File of Data for this Exercise 
-2. CHaMP Example
+1. [Feshie Example]({{ site.baseurl }}//Tutorials/example-data-sets)  File of Data for this Exercise 
+2. CHaMP Example (provided in class)
 
 Data for 1 (above) is from Wheaton et al. (2010) & for 2 (above) is from Bangen et al. (2016)
 
@@ -30,7 +30,7 @@ Data for 1 (above) is from Wheaton et al. (2010) & for 2 (above) is from Bangen 
 
 ### Step by Step
 
-**Exercise N - Part 1: RUNNING FIS ERROR MODELS**
+#### Exercise N - Part 1: RUNNING FIS ERROR MODELS
 
 Suggested Path: `C:\0_GCD\Exercises\N_FIS_Intro`
 
@@ -41,10 +41,11 @@ Suggested Path: `C:\0_GCD\Exercises\N_FIS_Intro`
 5. Load 2-input and 3-input FIS in FIS Library if not already present
 6. Derive point density and slope associated surfaces
 7. Run 2-Input point density, slope degrees FIS model to create new error surface
-
+<div class ="responsive-embed">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/Tp2wR20Z5aI" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
+</div>
 
-**Exercise N - Part 2: RUNNING FIS ERROR MODELS**
+#### Exercise N - Part 2: RUNNING FIS ERROR MODELS
 
 Suggested Path: `C:\0_GCD\Exercises\N_FIS_Intro`
 
@@ -63,7 +64,7 @@ Suggested Path: `C:\0_GCD\Exercises\N_FIS_Intro`
 
 - [GCD 6 Help]({{ site.baseurl }}/)
 
-- - [Fuzzy Inference Systems for Modeling DEM Error]({{ site.baseurl }}/gcd-concepts/fuzzy-inference-systems-for-modeling-dem-error)
+  - [Fuzzy Inference Systems for Modeling DEM Error]({{ site.baseurl }}/gcd-concepts/fuzzy-inference-systems-for-modeling-dem-error)
   - [ii. Derive Error Surface]({{ site.baseurl }}/gcd-command-reference/gcd-project-explorer/g-error-surfaces-context-menu/ii-derive-error-surface)
   - [F. Individual Associated Surface Context Menu]({{ site.baseurl }}/gcd-command-reference/gcd-project-explorer/f-individual-associated-surface-context-menu)
 

@@ -14,7 +14,7 @@ For the RCEM workshop, we used
     <a class="hollow button" href="http://releases.northarrowresearch.com/GCD/2019_GCDWorkshop/GeoTERM_SEPA.zip"><i class="fa fa-file-archive-o"></i>  Day 2 Exercises & Data</a>  
 </div>
 
-Note, the above and other example datasets for GCD can be found [here]({{ site.baseurl }}//example-data-sets).
+Note, the above and other example datasets for GCD can be found [here]({{ site.baseurl }}//Tutorials/example-data-sets).
 
 
 
