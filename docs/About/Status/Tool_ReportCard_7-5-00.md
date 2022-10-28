@@ -13,7 +13,7 @@ weight: 1
 | Assessment Team | Wheaton |
 | [Current Assessment](http://brat.riverscapes.net/Tools#tool-status) | ![professional](https://raw.githubusercontent.com/Riverscapes/riverscapes-website/master/assets/images/tools/grade/TRL_5_32p.png) [Professional Grade](https://riverscapes.net/Tools/discrimination.html#tool-grade) |
 | Target Status | ![commercial](https://raw.githubusercontent.com/Riverscapes/riverscapes-website/master/assets/images/tools/grade/TRL_5_32p.png) Commercial Grade |
-| Riverscapes Compliance | ![Riverscapes Compliant](https://riverscapes.net/assets/images/rc/RiverscapesCompliant_32.png) [Pending](https://riverscapes.net/Tools/#riverscapes-compliant-tools) |
+| Riverscapes Compliance | ![Riverscapes Compliant](https://riverscapes.net/assets/images/rc/RiverscapesCompliant_32.png) [Riverscapes Compliant](https://riverscapes.net/Tools/#riverscapes-compliant-tools) |
 | Assessment Rationale | GCD has been applied extensively throughout the world. It has been used as a research tool and practitioner tool in both monitoring and design at the reach-scale. The developers have taught over 20 workshops form 2010 to 2019 and the tool had a large user base. It is well deserving of a Professional Grade. |
 
 
