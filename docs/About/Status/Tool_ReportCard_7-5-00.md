@@ -3,12 +3,12 @@ title: Riverscapes Report Card
 weight: 1
 ---
 
-<img class="float-right" src="https://riverscapes.net/assets/images/tools/grade/TRL_5_128w.png"><img class="float-left" src="https://gcd.riverscapes.net/assets/images/screen/GCD_Logo_White_wText.png"> GCD is one of originall tools developed by [North Arrow Research](https://northarrowresearch.com), and Utah State University's [Ecogeomorphology & Topographic Analysis Lab](https://etal.joewheaton.org) the [Riverscapes Consortium](https://riverscapes.net). This report card communicates GCD's compliance with the Riverscape Consortium's published [tool standards](https://riverscapes.net/Tools).
+<img class="float-right" src="https://riverscapes.net/assets/images/tools/grade/TRL_5_128w.png"><img class="float-left" src="https://gcd.riverscapes.net/assets/images/icons/GCD_Logo_White_wText.png"> GCD is one of originall tools developed by [North Arrow Research](https://northarrowresearch.com), and Utah State University's [Ecogeomorphology & Topographic Analysis Lab](https://etal.joewheaton.org) the [Riverscapes Consortium](https://riverscapes.net). This report card communicates GCD's compliance with the Riverscape Consortium's published [tool standards](https://riverscapes.net/Tools).
 
 # Report Card Summary
 
-| Tool | [BRAT - Beaver Restoration Assessment Tool](https://gcd.riverscapes.net) |
-| Version | [3.1.00](https://github.com/Riverscapes/gcd/releases/tag/7.5.0) |
+| Tool | [GCD - Geomorphic Change Detection Tool](https://gcd.riverscapes.net) |
+| Version | [7.5.00](https://github.com/Riverscapes/gcd/releases/tag/7.5.0) |
 | Date | 2020-06-18 |
 | Assessment Team | Wheaton |
 | [Current Assessment](http://brat.riverscapes.net/Tools#tool-status) | ![professional](https://raw.githubusercontent.com/Riverscapes/riverscapes-website/master/assets/images/tools/grade/TRL_5_32p.png) [Professional Grade](https://riverscapes.net/Tools/discrimination.html#tool-grade) |
