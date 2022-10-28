@@ -77,8 +77,10 @@ These example datasets are used in the [tutorials]({{ site.baseurl }}/Tutorials)
                     <li>2.5km gravel bed, braided river near <i class="fa fa-map-marker"></i> <a href="https://www.google.com/maps/place/45%C2%B000'35.1%22S+168%C2%B045'56.3%22E/@-45.0103208,168.7612985,3923m/data=!3m1!1e3!4m5!3m4!1s0x0:0x0!8m2!3d-45.009756!4d168.765638">Queenstown, New Zealand</a></li>
                     <li>Two LiDAR surveys</li>
                     <li>1m cell resolution</li>
-                    <li><a href="https://s3-us-west-2.amazonaws.com/etalweb.joewheaton.org/GCD/GCD7/Tutorials/GeoTERM_ORC.zip">Download</a></li>
+                    <li><a href="https://doi.org/10.5281/zenodo.7261629">Download</a></li>
                 </ul>
+                <a href="https://doi.org/10.5281/zenodo.7261629"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.7261629.svg" alt="DOI"></a>
+
             </div>
         </div>     
     </div>
@@ -93,8 +95,10 @@ These example datasets are used in the [tutorials]({{ site.baseurl }}/Tutorials)
                     <li>6km of channel near <i class="fa fa-map-marker"></i> <a href="https://www.google.com/maps/place/57%C2%B002'53.9%22N+3%C2%B003'09.3%22W/@57.0490441,-3.0938372,8093m/data=!3m1!1e3!4m5!3m4!1s0x0:0x0!8m2!3d57.048317!4d-3.052569">Ballater, Scotland</a></li>
                     <li>Two LiDAR surveys</li>
                     <li>1m cell resolution</li>
-                    <li><a href="http://releases.northarrowresearch.com/GCD/2019_GCDWorkshop/GeoTERM_SEPA.zip">Download</a></li>
+                    <li><a href="https://doi.org/10.5281/zenodo.7261625">Download</a></li>
                 </ul>
+                <a href="https://doi.org/10.5281/zenodo.7261625"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.7261625.svg" alt="DOI"></a>
+
             </div>
         </div>
     </div>
