@@ -60,26 +60,26 @@ Fully Developed: <i class="fa fa-battery-full" aria-hidden="true"></i>
 
 ## Developer Intent
 
-The BRAT [devleopment team]({{ site.baseurl }}/support.html) are actively seeking funding to build a **Commercial-Grade** <img src="https://riverscapes.net/assets/images/tools/grade/TRL_7_32p.png"> version of BRAT, which would:
-- Have an inviting [web-map interface](https://riverscapes.net/Data_Warehouses/#web-maps) so non GIS-users can discover BRAT runs and explore them and interrogate them.
-- Making it easy for GIS users to download BRAT for use in [RAVE](https://rave.riverscapes.net) with [Riverscapes Projects](https://riverscapes.net/Tools/Technical_Reference/Documentation_Standards/Riverscapes_Projects/) <img  src="https://riverscapes.net/assets/images/data/RiverscapesProject_24.png">
-- Encourage more user-interaction with BRAT outputs and crowd-sourcing of information to create ownership of outputs
-  - Allow users to visualize dynamic outputs of BRAT through time 
-  - Allow users to upload their own BRAT projects
-  - Allow users to provide their own inputs locally (@ a reach) and produce local realizations.
-  - Allow users to upload (or make) their own beaver dam and activity observations
-  - Allow discovery of past BRAT runs in Warehouse
-  - Present transparent ranking of level of BRAT model curation or [dataset rank](https://riverscapes.net/Data_Warehouses/#dataset-rank) and facilitate community commenting
-  - Facilitate users paying modest prices (i.e. commercial) to have new runs or more carefully curated (validated, resolved, etc.) for a specific watershed and then share them with broader community
+The GCD [devleopment team](https://gcd.riverscapes.net/About/who.html) are not actively seeking funding to build a **Commercial-Grade** <img src="https://riverscapes.net/assets/images/tools/grade/TRL_7_32p.png"> version of GCD, but they hope to do so in the next 2 to 5 years. A commercial grade version of GCD has been demo'd, and it  would:
+- Reporduce the functionality of the GCD-AddIn entirely within a web-based interface, and do all the computation in the cloud. 
+- Have an inviting [web-map interface](https://riverscapes.net/Data_Warehouses/#web-maps) so non GIS-users can discover GCD runs and explore them and interrogate them.
+- Making it easy for GIS users to download GCD projects for use in [Riverscapes Viewer (RV)](https://rave.riverscapes.net) with [Riverscapes Projects](https://riverscapes.net/Tools/Technical_Reference/Documentation_Standards/Riverscapes_Projects/) <img  src="https://riverscapes.net/assets/images/data/RiverscapesProject_24.png">
+- Encourage more user-interaction with GCD outputs and crowd-sourcing of information to create ownership of outputs
+  - Allow users to visualize dynamic outputs of GCD through time 
+  - Allow users to upload their own GCD  projects
+  - Allow discovery of past GCD runs in Warehouse
+- Facilitate users paying modest prices (i.e. commercial) to have **production-grade** runs (similar to CHaMP) and more new runs or more carefully curated (validated, resolved, etc.) for a specific watershed and then share them with broader community
 
-![reports_TRL_BRAT]({{https://riverscapes.net/assets\images\tools\TRL_badges_pngs\reports_TRL_BRAT.jpg)
+
+The development team has also speculated about refactoring a **profesional-grade** version for QGIS either as its own PlugIn, or as part of the [Riverscape Studio for QGIS - QRiS](http://qris.riverscapes.net). 
+
+As part of either or both refactors, we would like to refactor the underlying source code to open-source Pyhton, to make it easier for researchers to fork and use in their own analyes (C# is above the skill level and familiarity of too many in the riverscapes research community).
+
 
 The development team at this point has already produced a beta version of a **Production-Grade** <img  src="https://riverscapes.net/assets/images/tools/grade/TRL_6_32p.png"> version of BRAT ([sqlBRAT](https://github.com/Riverscapes/sqlBRAT) with no release yet), which will be necessary to support the **Commercial-Grade**  <img src="https://riverscapes.net/assets/images/tools/grade/TRL_7_32p.png"> product. 
 
-If you share this [vision]({{ site.baseurl }}/Vision.html), get in touch with the developers to support/fund the effort. 
+If you share the above vision, get in touch with the developers to support/fund the effort. 
 
-
-
-
+--------------------
 <a href="https://riverscapes.net"><img class="float-left" src="https://riverscapes.net/assets/images/rc/RiverscapesConsortium_Logo_Black_BHS_200w.png"></a>
-The [Riverscapes Consortium's](https://riverscapes.net) Techncial Committee provides report cards for tools either deemed as "[riverscapes-compliant](https://riverscapes.net/Tools/#riverscapes-compliant)" <img  src="https://riverscapes.net/assets/images/rc/RiverscapesCompliant_24.png"> or "[pending riverscapes-compliance](https://riverscapes.net/Tools/#tools-pending-riverscapes-compliance)" <img  src="https://riverscapes.net/assets/images/rc/RiverscapesCompliantPending_28.png">. 
+The [Riverscapes Consortium's](https://riverscapes.net) Techncial Committee provides report cards for tools either deemed as "[riverscapes-compliant](https://riverscapes.net/Tools/#riverscapes-compliant)" <img  src="https://riverscapes.net/assets/images/rc/RiverscapesCompliant_28.png"> or "[pending riverscapes-compliance](https://riverscapes.net/Tools/#tools-pending-riverscapes-compliance)" <img  src="https://riverscapes.net/assets/images/rc/RiverscapesCompliantPending_28.png">. 
