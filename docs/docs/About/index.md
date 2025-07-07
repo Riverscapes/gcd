@@ -1,6 +1,6 @@
 ---
 title: About GCD Software
-sidebar_position: 2
+sidebar_position: 300
 ---
 
 GCD 7 is available as two separate products:
