@@ -3,4 +3,61 @@ title: Geomorphic Change Detection (GCD) Software website
 sidebar_label: Home
 sidebar_position: 1
 ---
-Welcome to the GCD documentation site!
+
+
+
+<div align="right">
+  ![GCD Splash Logo](/img/GCD_SplashLogo_200.png)<br />
+  [![Riverscapes Consortium Logo](/img/logos/RiverscapesConsortium_Logo_Black_BHS_200w.png)](https://riverscapes.net)
+</div>
+
+Welcome to the Geomorphic Change Detection (GCD) Software website. Here you will find [downloads](/Download), [help](/Help) and general information on the GCD software. GCD 7 is the current version of the software.
+
+GCD is part of the [Riverscapes Consortium's](https://riverscapes.net) much larger family of tools for analyzing riverscapes.  GCD is the Riverscapes Consortium's  longest-standing, best developed software with the largest user base. GCD has users all over the world. 
+
+
+[Download GCD 7](/Download) <br />
+[GCD 7 Help](/Help)
+
+<div class="responsive-embed">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/JjbXDDThqIg" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
+
+
+  *Animated GCD results produced by [Prof. James Brasington](https://www.waikato.ac.nz/staff-profiles/people/jbrasing/) of the [University of Waikato](https://www.waikato.ac.nz/), New Zealand, illustrating changes on the [Waiho River](https://en.wikipedia.org/wiki/Waiho_River), New Zealand.*
+
+
+------
+
+## Background
+
+The GCD software was developed primarily for topographic change detection in rivers, but will work for simple, raster-based change detection of any two surfaces. The volumetric change in storage is calculated from the difference in surface elevations from digital elevation models (DEMs) derived from repeat topographic surveys. 
+
+![StandAlone_500w](/img/screen/StandAlone_500w.png)
+
+As each DEM has an uncertain surface representation (which might vary in space and time), our ability to detect changes between surveys is highly dependent on surface representation uncertainties inherent in the individual DEMs. The fundamental problem is separating out the changes between the surveys that are due to topographic change as opposed to noise in the survey data. GCD provides a suite of tools for quantifying those uncertainties independently in each DEM and propagating them through to the DEM of difference. The program also provides ways for segregating the best estimates of change spatially using different types of masks. The overall suite of tools is more generically applicable to many different spatial raster-based change detection problems.
+
+## GCD Research
+
+The methodological development is described in ([Wheaton et al., 2010a](http://dx.doi.org/10.1002/esp.1886)), the Wheaton ([2008](http://sites.google.com/a/joewheaton.org/www/Home/research/projects-1/morphological-sediment-budgeting/phdthesis)) thesis, and the Wheaton et al. ([2010b](http://dx.doi.org/10.1002/rra.1305)) RRA paper. The [Matlab version of the code](/Download/old_versions.html#dod-3-matlab--gcd-3) (DoD 3) is provided as supplemental information with the [ESPL paper](http://dx.doi.org/10.1002/esp.1886) so that readers can test or extend the code as they see fit for their purposes.
+
+
+<div align="center">
+  [![ResearchGate Icon](/img/icons/ResearchGate_Icon.png)](https://www.researchgate.net/project/Geomorphic-Change-Detection)
+  <br /> [Check out GCD ResearchGate Project for Publications](https://www.researchgate.net/project/Geomorphic-Change-Detection)
+</div>
+
+## What's Next for GCD
+
+GCD 7 is always in development. How active that development is depends on our [funding levels](/acknowledgements). We post our wish list of enhancements on our [GCD GitHub Repository](https://github.com/Riverscapes/gcd/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement).  If you have ideas of your own, or would like to support these efforts click below:
+
+<div align="center">
+  [Donate Now](/Download/future-feature-request#want-to-donate-to-the-cause)
+  
+  [GCD Enhancements](/Download/future-feature-request#making-feature-requests)
+</div>
+
+------
+
+### Note on Terminology
+
+**DoD** is an acronym for DEM (digital elevation model) of Difference (not [Department of Defense](https://www.defense.gov/)). DoDs are derived from repeat topographic surveys and used in change detection studies and morphological sediment budgeting. We use **GCD** to mean geomorphic change detection, not [Glen Canyon Dam](https://www.usbr.gov/uc/rm/crsp/gc).
