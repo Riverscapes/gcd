@@ -1,0 +1,9 @@
+{
+  "label": "Concepts",
+  "position":700 ,
+  "link": {
+    "type": "generated-index",
+    "title": "Concepts",
+    "description": "Key concepts and background for GCD."
+  }
+}
