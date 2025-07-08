@@ -20,13 +20,24 @@ The GCD 7 software is now available in two different flavors.
 
 
 
-<p align="center">
-  
-  [⬇️  GCD 7 AddIn for ArcGIS 10.x](https://github.com/Riverscapes/gcd/releases/latest)
-  &nbsp;&nbsp;&nbsp;
-  [⬇️  GCD 7 Standalone](https://github.com/Riverscapes/gcd/releases/latest)
 
-</p>
+import { ToolsWrapper } from "../src/components/ToolsWrapper/ToolsWrapper";
+
+<ToolsWrapper
+  cards={[
+    {
+      title: "GCD 7 AddIn for ArcGIS 10.x",
+      logoUrl: "/img/gcd_addin.png",
+      toolUrl: "https://github.com/Riverscapes/gcd/releases/latest"
+    },
+    {
+      title: "GCD 7 Standalone",
+      logoUrl: "/img/gcd_standalone.png",
+      toolUrl: "https://github.com/Riverscapes/gcd/releases/latest"
+    }
+  ]}
+  cardsize="md"
+/>
 
 ------
 
