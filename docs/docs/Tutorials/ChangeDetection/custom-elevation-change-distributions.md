@@ -1,7 +1,9 @@
 ---
 title: Custom Elevation Change Distributions
 sidebar_position: 5
+slug: /Tutorials/ChangeDetection/custom-elevation-change-distributions
 ---
+# Custom Elevation Change Distributions
 
 #### Simply Customize Elevation Change Distributions in Excel
 

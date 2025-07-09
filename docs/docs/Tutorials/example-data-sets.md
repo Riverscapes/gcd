@@ -2,6 +2,7 @@
 title: Example Datasets
 sidebar_position: 3
 ---
+# Example Datasets
 
 import { ToolsWrapper } from "../src/components/ToolsWrapper/ToolsWrapper";
 

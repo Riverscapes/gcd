@@ -1,8 +1,9 @@
 ---
 title: Simple Change Detection in Raster Calculator vs. GCD
 sidebar_position: 1
+slug: /Tutorials/ChangeDetection/GCD_Simple-DoD
 ---
-
+# Simple Change Detection in Raster Calculator vs. GCD
 
 ### Overview
 

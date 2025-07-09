@@ -1,7 +1,10 @@
 ---
 title: Spatial Coherence Filter & Bayesian Updating Exercise
 sidebar_position: 4
+slug: /Tutorials/ChangeDetection/Bayesian-updating-excercise
 ---
+
+# Spatial Coherence Filter & Bayesian Updating Exercise
 
 ### Overview
 

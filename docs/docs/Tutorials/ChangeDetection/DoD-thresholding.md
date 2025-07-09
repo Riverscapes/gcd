@@ -1,25 +1,27 @@
 ---
 title: DoD Thresholding
 sidebar_position: 2
+slug: /Tutorials/ChangeDetection/DoD-thresholding
 ---
+# DoD Thresholding
 
-<div>
-<h1> Overview</h1>
+## Overview
 
-<p>This exercise contrasts the three most common forms of thresholding DoDs: i) Simple minimum level of detection, ii) propagated errors, and iii) probabilistic. We use the GCD Add-In to facilitate the analysis. </p>
+This exercise contrasts the three most common forms of thresholding DoDs:
 
-<h1>Data and Materials for Exercises</h1>
+1. **Simple minimum level of detection**
+2. **Propagated errors**
+3. **Probabilistic**
 
-<h2>Datasets</h2>
-<p>
-<ul>
-    <li> Wheaton JM. 2008. <a href="http://www.joewheaton.org/Home/research/projects-1/morphological-sediment-budgeting/phdthesis">Uncertainty in Morphological Sediment Budgeting of Rivers</a>. Unpublished PhD Thesis, University of Southampton, Southampton, 412 pp. - *See Chapter 4 & Appendix D*</li>
-</ul>
-</p>
+We use the GCD Add-In to facilitate the analysis.
 
+## Data and Materials for Exercises
 
+## Datasets
 
-<img src="/img/datasets/feshie_200h.png" alt="River Feshie, Scotland, UK" style={{ float: 'right', width: 200, margin: '0 0 0 10px' }} />
+- Wheaton JM. 2008. [Uncertainty in Morphological Sediment Budgeting of Rivers](http://www.joewheaton.org/Home/research/projects-1/morphological-sediment-budgeting/phdthesis). Unpublished PhD Thesis, University of Southampton, Southampton, 412 pp. - *See Chapter 4 & Appendix D*
+
+![River Feshie, Scotland, UK](/img/datasets/feshie_200h.png)
 
 **River Feshie, Scotland, UK**
 
@@ -28,8 +30,6 @@ sidebar_position: 2
 - Mix of RTKGPS and Total Station
 - 1m cell resolution
 - [Download](https://s3-us-west-2.amazonaws.com/etalweb.joewheaton.org/GCD/GCD7/Tutorials/GeoTERM_Feshie.zip)
-
-</div>
 -----
 #### Prerequisite for this Exercise
 
@@ -42,7 +42,7 @@ sidebar_position: 2
 
 ![GCD6_Form_ChangeDetectionConfiguration](/img/workshops/GCD6_Form_ChangeDetectionConfiguration.png)
 
-# Overview of Thresholding
+### Overview of Thresholding
 
 GCD Provides three primary ways for you to threshold data (all using [exclusion](http://forum.bluezone.usu.edu/gcd/viewtopic.php?f=40&t=117)):
 

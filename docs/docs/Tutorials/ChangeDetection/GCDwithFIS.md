@@ -1,7 +1,9 @@
 ---
 title: Running GCD w/ FIS
 sidebar_position: 3
+slug: /Tutorials/ChangeDetection/GCDwithFIS
 ---
+# Running GCD w/ FIS
 
 ### Overview
 
