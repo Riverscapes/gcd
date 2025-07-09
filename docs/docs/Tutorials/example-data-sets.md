@@ -12,37 +12,37 @@ These example datasets are used in the [tutorials](/Tutorials) and [command refe
     {
       title: "Sulphur Creek, CA",
       description: "300m of gravel bed river near St. Helena California that underwent a flood in December 2005.\nTwo surveys\n0.5m cell resolution\nRTKGPS and Total Station",
-      logoUrl: "/img/datasets/sulphur_200h.png",
+      imageUrl: "/img/datasets/sulphur_200h.png",
       toolUrl: "https://doi.org/10.5281/zenodo.7261312"
     },
     {
       title: "River Feshie, Scotland, UK",
       description: "700m braided gravel bed river in the Scottish Cairngorm mountains.\n5 annual surveys\nMix of RTKGPS and Total Station\n1m cell resolution",
-      logoUrl: "/img/datasets/feshie_200h.png",
+      imageUrl: "/img/datasets/feshie_200h.png",
       toolUrl: "https://doi.org/10.5281/zenodo.7261352"
     },
     {
       title: "Ngaruroro River, New Zealand",
       description: "31km river on the north island of New Zealand\nTwo LiDAR surveys\n2m cell resolution",
-      logoUrl: "/img/datasets/ngaruroro_200t.png",
+      imageUrl: "/img/datasets/ngaruroro_200t.png",
       toolUrl: "https://doi.org/10.5281/zenodo.7261574"
     },
     {
       title: "Shotover River, New Zealand",
       description: "2.5km gravel bed, braided river near Queenstown, New Zealand\nTwo LiDAR surveys\n1m cell resolution",
-      logoUrl: "/img/datasets/shotover_200h.png",
+      imageUrl: "/img/datasets/shotover_200h.png",
       toolUrl: "https://doi.org/10.5281/zenodo.7261629"
     },
     {
       title: "River Dee, Scotland",
       description: "6km of channel near Ballater, Scotland\nTwo LiDAR surveys\n1m cell resolution",
-      logoUrl: "/img/datasets/dee_200t.png",
+      imageUrl: "/img/datasets/dee_200t.png",
       toolUrl: "https://doi.org/10.5281/zenodo.7261625"
     },
     {
       title: "River Rees, New Zealand",
       description: "2km of braided river near Queenstown, New Zealand\nTwo LiDAR surveys\n0.5m cell resolution",
-      logoUrl: "/img/datasets/rees_200t.png",
+      imageUrl: "/img/datasets/rees_200t.png",
       toolUrl: "https://doi.org/10.5281/zenodo.7261536"
     }
   ]}

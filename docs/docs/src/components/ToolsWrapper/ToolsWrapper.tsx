@@ -6,6 +6,7 @@ type ToolCardProps = {
   description?: string;
   logoUrl?: string;
   toolUrl: string;
+  imageUrl?: string; // Optional image field
   // cardsize?: "sm" | "md" | "lg";
 };
 
@@ -37,6 +38,7 @@ export const ToolsWrapper: React.FC<ToolsWrapperProps> = ({
             description={card.description}
             logoUrl={card.logoUrl}
             toolUrl={card.toolUrl}
+            imageUrl={card.imageUrl}
             // cardsize={cardsize}
           />
         ))}
@@ -50,9 +52,19 @@ const ToolCard: React.FC<ToolCardProps> = ({
   description,
   logoUrl,
   toolUrl,
+  imageUrl,
   // cardsize = 'sm',
 }) => (
   <a href={toolUrl} className={styles.card}>
+    {imageUrl && (
+      <div className={styles.cardImageWrapper}>
+        <img
+          src={imageUrl}
+          alt={title + " image"}
+          className={styles.cardImage}
+        />
+      </div>
+    )}
     <div className={styles.cardHeader}>
       {logoUrl && (
         <div className={styles.logoRowWrapper}>

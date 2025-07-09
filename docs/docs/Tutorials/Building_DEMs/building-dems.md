@@ -10,7 +10,8 @@ import { ToolsWrapper } from "../../src/components/ToolsWrapper/ToolsWrapper";
     {
       title: "Pats Cabin",
       description: "500m channel in Bridge Creek, Oregon",
-      logoUrl: "/img/datasets/pats_cabin_200t.png",
+      imageUrl: "/img/datasets/pats_cabin_200t.png",
+     
       toolUrl: "http://etalweb.joewheaton.org/etal_workshops/GCD/2015_USU/D_DEM.zip"
     }
   ]}
