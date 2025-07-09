@@ -2,6 +2,8 @@
 title: Essential Best Practices to Support Change Detection
 weight: 2
 ---
+# Essential Best Practices to Support Change Detection
+
 
 ### Overview
 
