@@ -51,7 +51,7 @@ C:\0_GCD\Exercises\S_SpatialCoherence
 
 
 
-import YouTube from "../../src/components/YouTube";
+import YouTube from "@site/docs/src/components/YouTube";
 
 <YouTube embedId="n0wH63OWFFU" title="Bayesian Updating Exercise" />
 
@@ -70,12 +70,7 @@ import YouTube from "../../src/components/YouTube";
 
 ------
 
-← [Back to Previous Tutorial](/tutorials--how-to/workshop-tutorials/q-running-a-change-detection-w-fis)        [Ahead to Next Tutorial](/tutorials--how-to/workshop-tutorials/v-morphodynamic-signatures-from-budget-segeregation) →
-
-
-
-------
-import { ToolsWrapper } from "../../src/components/ToolsWrapper/ToolsWrapper";
+import { ToolsWrapper } from "@site/docs/src/components/ToolsWrapper/ToolsWrapper";
 
 <ToolsWrapper
   cards={[

@@ -46,7 +46,7 @@ C:\0_GCD\Exercises\R_BridgeCreek
 
 
 
-import YouTube from "../../src/components/YouTube";
+import YouTube from "@site/docs/src/components/YouTube";
 
 <YouTube embedId="vzsDEEwVVMk" title="Running GCD with FIS - Bridge Creek" />
 
@@ -62,11 +62,9 @@ import YouTube from "../../src/components/YouTube";
 
 ------
 
-← [Back to Previous Tutorial](/tutorials--how-to/workshop-tutorials/p-building-your-own-fis)        [Ahead to Next Tutorial](/tutorials--how-to/workshop-tutorials/s-bayesian-updating-excercise) →
 
-------
 
-import { ToolsWrapper } from "../../src/components/ToolsWrapper/ToolsWrapper";
+import { ToolsWrapper } from "@site/docs/src/components/ToolsWrapper/ToolsWrapper";
 
 <ToolsWrapper
   cards={[

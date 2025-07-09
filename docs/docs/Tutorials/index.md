@@ -1,6 +1,6 @@
 ---
 title: Tutorials
-weight: 2
+sidebar_position: 700
 ---
 # Tutorials
 
@@ -13,8 +13,7 @@ This is a reference list of concepts underpinning the GCD Software.
 
 ------
 
-
-import { ToolsWrapper } from "../src/components/ToolsWrapper/ToolsWrapper";
+import { ToolsWrapper } from "@site/docs/src/components/ToolsWrapper/ToolsWrapper";
 
 <ToolsWrapper
   cards={[

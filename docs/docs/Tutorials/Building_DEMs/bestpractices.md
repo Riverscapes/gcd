@@ -1,6 +1,7 @@
 ---
 title: Essential Best Practices to Support Change Detection
-weight: 2
+sidebar_position: 2
+slug: /Tutorials/Building_DEMs/building-dems
 ---
 # Essential Best Practices to Support Change Detection
 
@@ -15,9 +16,7 @@ This exercise is meant to help you understand how best to prepare raster DEMs to
 
 - [F_BestPractices.Zip](http://etalweb.joewheaton.org/etal_workshops/GCD/2015_USU/F_BestPractices.zip) Data for this Exercise:
 
-<div align="center">  
-<a class="button" href="http://etalweb.joewheaton.org/etal_workshops/GCD/2015_USU/F_BestPractices.zip"><i class="fas fa-file-archive"></i>  F_BestPractices.Zip </a>
-</div>
+
 
 #### Prerequisite for this Exercise
 
@@ -36,13 +35,15 @@ This exercise is meant to help you understand how best to prepare raster DEMs to
 
 ![ExcerciseF2](/img/tutorials/ExcerciseF2.png)
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/HM9o_xK0iD4" frameBorder="0" allow="encrypted-media" allowFullScreen title="Best Practices Part 2"></iframe>
+import YouTube from "@site/docs/src/components/YouTube";
+
+<YouTube embedId="HM9o_xK0iD4" title="Best Practices Part 2" />
 
 #### Part 3 - Clean Raster Tool Fix.. not ideal
 
 ![ExcerciseF3](/img/tutorials/ExcerciseF3.png)
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/CWDE6mQPq-0" frameBorder="0" allow="encrypted-media" allowFullScreen title="Best Practices Part 3"></iframe>
+<YouTube embedId="CWDE6mQPq-0" title="Best Practices Part 3" />
 
 #### Related Online Help or Tutorials for this Topic
 
@@ -51,18 +52,11 @@ This exercise is meant to help you understand how best to prepare raster DEMs to
 - [Data Preparation Best Practices](/gcd-concepts/data-preparation---best-practices) - Concept Reference
 
 
-------
 
-import { ToolsWrapper } from "../../src/components/ToolsWrapper/ToolsWrapper";
+import { ToolsWrapper } from "@site/docs/src/components/ToolsWrapper/ToolsWrapper";
 
 <ToolsWrapper
   cards={[
-	{
-	  title: "← Previous Tutorial",
-	  toolUrl: "/Tutorials/Building_DEMs/building-dems",
-	  logoUrl: "/img/icons/GCDAddIn.png",
-	  description: "Go to the previous tutorial."
-	},
 	{
 	  title: "Back to GCD Help",
 	  toolUrl: "/Help",
@@ -78,23 +72,4 @@ import { ToolsWrapper } from "../../src/components/ToolsWrapper/ToolsWrapper";
   ]}
   cardsize="sm"
 />
-
-------
-
-<ToolsWrapper
-  cards={[
-	{
-	  title: "Back to GCD Help",
-	  toolUrl: "/Help",
-	  logoUrl: "/img/icons/GCDAddIn.png",
-	  description: "Return to the main GCD Help page."
-	},
-	{
-	  title: "Back to GCD Home",
-	  toolUrl: "/",
-	  logoUrl: "/img/icons/GCDAddIn.png",
-	  description: "Go to the GCD Home page."
-	}
-  ]}
-  cardsize="sm"
 />

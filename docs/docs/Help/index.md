@@ -1,6 +1,6 @@
 ---
 title: GCD Software Help
-sidebar_position: 800
+sidebar_position: 500
 ---
 
 This command reference documentation is linked from the help within each tool and acts as a reference for all the commands within the GCD Software:

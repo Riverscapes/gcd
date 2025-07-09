@@ -48,14 +48,14 @@ What do I need to do to run the script?
 
 
 
-import YouTube from "../../src/components/YouTube";
+import YouTube from "@site/docs/src/components/YouTube";
 
 <YouTube embedId="ughZsKnmcCg" title="Custom Elevation Change Distributions in R" />
 
 
 
 ------
-import { ToolsWrapper } from "../../src/components/ToolsWrapper/ToolsWrapper";
+import { ToolsWrapper } from "@site/docs/src/components/ToolsWrapper/ToolsWrapper";
 
 <ToolsWrapper
   cards={[

@@ -50,7 +50,7 @@ This exercise is intended to contrast how to build a [DoD](/Concepts/dod) (DEM o
 
 ![ExcerciseG1A](/img/tutorials/ExcerciseG1A.png)
 
-import YouTube from "../../src/components/YouTube";
+import YouTube from "@site/docs/src/components/YouTube";
 
 <YouTube embedId="rda6aVCPF9Q" title="Simple DoD Analysis in ArcGIS 10" />
 
@@ -106,29 +106,8 @@ For corresponding lecture slides and more context, see [this topic](/Help/Worksh
 
 ------
 
-import { ToolsWrapper } from "../../src/components/ToolsWrapper/ToolsWrapper";
+import { ToolsWrapper } from "@site/docs/src/components/ToolsWrapper/ToolsWrapper";
 
-<ToolsWrapper
-  cards={[
-    {
-      title: "← Previous Tutorial",
-      toolUrl: "/tutorials--how-to/workshop-tutorials/f-essential-best-practices-to-support-change-detection",
-      logoUrl: "/img/icons/GCDAddIn.png",
-      description: "Go to the previous tutorial."
-    },
-    {
-      title: "Next Tutorial →",
-      toolUrl: "/tutorials--how-to/workshop-tutorials/i-dod-thresholding",
-      logoUrl: "/img/icons/GCDAddIn.png",
-      description: "Go to the next tutorial."
-    }
-  ]}
-  cardsize="sm"
-/>
-
-
-
-------
 
 <ToolsWrapper
   cards={[

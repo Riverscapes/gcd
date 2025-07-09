@@ -104,7 +104,7 @@ How to do in GCD 6:
 How to do in GCD 7:
 
 
-import YouTube from "../../src/components/YouTube";
+import YouTube from "@site/docs/src/components/YouTube";
 
 <YouTube embedId="HEJ8nOEwPiw" title="Probabilistic in GCD 7" />
 
@@ -114,7 +114,7 @@ How to do in GCD 6:
 
 
 ------
-import { ToolsWrapper } from "../../src/components/ToolsWrapper/ToolsWrapper";
+import { ToolsWrapper } from "@site/docs/src/components/ToolsWrapper/ToolsWrapper";
 
 <ToolsWrapper
   cards={[
