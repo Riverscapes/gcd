@@ -1,9 +1,13 @@
-import React from "react";
-
 /**
  * GoogleSlides component for embedding Google Slides presentations in MDX/Docusaurus.
+ * Import this component in MDX files using:
+         import GoogleSlides from "@site/docs/src/components/GoogleSlides";
  * Usage: <GoogleSlides src="..." width={960} height={749} />
  */
+
+
+import React from "react";
+
 export default function GoogleSlides({ src, width = 960, height = 749 }) {
   return (
     <div style={{ position: "relative", paddingBottom: `${(height / width) * 100}%`, height: 0, overflow: "hidden", maxWidth: width }}>
