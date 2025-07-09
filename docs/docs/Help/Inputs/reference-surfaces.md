@@ -13,7 +13,7 @@ The role of reference surfaces within the GCD software is intentionally flexible
 
 Each reference surface can have multiple error rasters associated with it. These error surfaces are then used when performing a [change detection](/Help/Analyses/Change_Detection/change-detection) analysis that uses spatially variable uncertainty.
 
-# Add Existing Reference Surface
+## Add Existing Reference Surface
 
 To use an existing raster as a reference surface right click on the Reference Surfaces node in the GCD Project Explorer and choose **Add Reference Surface**.
 
@@ -23,7 +23,7 @@ You will be prompted to browse to an existing raster file on your computer. GCD 
 
 The same raster import form is displayed after the raster is selected as that used to [add an existing DEM survey](/Help/Inputs/dem-surveys#add-existing-dem-survey). The form appears slightly differently when used for adding reference surfaces. The cell resolution and precision are both locked to those of the GCD project. This ensures that all reference surfaces are perfectly divisible with other rasters in the project. You can change the extent. Reference surfaces don't need to be concurrent with each other or DEM surveys.
 
-# Reference Surfaces From DEM Surveys
+## Reference Surfaces From DEM Surveys
 
 Reference surfaces can represent a statistical summary from a collection of DEM Surveys. For this feature to work you must have two or more DEM Surveys already loaded into your GCD project. The statistics available are:
 

@@ -17,7 +17,7 @@ The same basic requirements apply to all types of mask Polygon ShapeFiles:
 
 The polygons in a regular mask can overlap but this is not advisable since it will produce double accounting during budget segregations.
 
-# Add Existing Regular Mask
+## Add Existing Regular Mask
 
 To use an existing polygon ShapeFile as a regular mask right click on the Masks node of the GCD Project Explorer and choose **Add Existing Regular Mask**.
 
@@ -33,7 +33,7 @@ Note that changing the status and labels of fields can also be done after the ma
 
 ![Add mask](/img/CommandRefs/00_ProjectExplorer/inputs/masks/regular_mask.png)
 
-# Context Menu
+## Context Menu
 
 Right clicking on any regular mask brings up the context menu that allows you to perform the three operations described below. Note that the Add To Map option is only available in the ArcGIS Addin version of GCD and not the Standalone.
 

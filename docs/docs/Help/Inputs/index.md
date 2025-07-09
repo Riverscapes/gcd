@@ -3,7 +3,6 @@ title: Inputs
 sidebar_position: 2
 ---
 
-
 The GCD Software manages various different types of inputs. These can be related together or used to perform [analyses](/Help/Analyses):
 
 * [DEM Surveys](/Help/Inputs/dem-surveys)

@@ -5,13 +5,30 @@ sidebar_position: 1
 
 The GCD is open-source freeware and there are a variety of ways that you can get help and training on its use. The first thing to identify is what type of help you need. We have tried to make sure that there is a [free, self-supported](#free-support) way to get trained up and get done most everything you might need to do in the software. However, if you want some help getting up to speed quickly, you might want to take a [workshop](#gcd-workshops--courses), or get support from the GCD community, or hire a professional to help you if your problems are more complicated.
 
-# Free Support
+## Free Support
 
-The GCD is documented extensively. See the links below for help on understanding [GCD concepts](/Concepts), [tutorials](/Tutorials) and on how to use specific [GCD features](/Help).
+import { ToolsWrapper } from "../src/components/ToolsWrapper/ToolsWrapper";
 
-[**💡 GCD Concepts**](/Concepts)  
-[**🎥 GCD Tutorials**](/Tutorials)  
-[**💻 GCD Command Reference**](/Help)
+<ToolsWrapper
+  cards={[
+    {
+      title: "Concepts",
+      toolUrl: "/Concepts",
+      description: "Explains the fundamental principles of change detection analysis."
+    },
+    {
+      title: "Tutorials",
+      toolUrl: "/Tutorials",
+      description: "Exercises aimed at demonstrating how to use the software."
+    },
+    {
+      title: "Software Help",
+      toolUrl: "/Help",
+      description: "Instructions on using each individual feature of the software."
+    }
+  ]}
+  cardsize="sm"
+/>
 
 # Workshops & Courses
 
@@ -23,7 +40,7 @@ We have [taught five bespoke GCD workshops](http://www.joewheaton.org/workshops.
 
 We use [GitHub Discussions](https://github.com/Riverscapes/gcd/discussions) as a forum for [asking questions and getting help](/Download/known-bugs.html#questions-or-help) as well as [reporting bugs](/Download/known-bugs.html#bugs). You can search the forum for past issues without a login, but to post to the forum you will need to create a [free GitHub account](https://github.com/join).
 
-[**💬 GCD Discussion Forum**](https://github.com/Riverscapes/gcd/discussions)
+[**GCD Discussion Forum**](https://github.com/Riverscapes/gcd/discussions)
 
 If discussion issues raised turn out to be bugs or turn into feature requests, we post them in our [GitHub Issue Board](https://github.com/Riverscapes/gcd/issues).
 
@@ -39,11 +56,6 @@ While the software is free and reasonably well documented, it is not perfect, an
 
 If you're interested in [seeing new features added to GCD](/Download/future-feature-request.html#making-feature-requests) or having our development team build custom features or apps to meet your needs, please get in touch.
 
-<!-- [![Donate](/img/logos/paypal.png)] -->
-(/Download/future-feature-request#want-to-donate-to-the-cause)  
-[**💡 GCD Enhancements**](/Download/future-feature-request#making-feature-requests)
+[**GCD Enhancements**](/Download/future-feature-request#making-feature-requests)
 
-None of the GCD development or support happens without someone paying for it. When we are lucky enough to have secured [research grant funding](/acknowledgements) (from NSF or NERC), they provide temporary financial support for us to provide technical support to users at no additional cost. However, everything else is on [our personal time and personal dime](/who). If you want to ensure you get the help you need when you need it, you can hire an [USU ET-AL](http://etal.joewheaton.org) analyst. There are also a growing list of consulting firms that provide such services.
-
-[![NAR](/img/logos/NA_Logo_150pxTall.png)](http://northarrowresearch.com/)  
-[![USU](/img/logos/etal.png)](http://etal.joewheaton.org)
+None of the GCD development or support happens without someone paying for it. When we are lucky enough to have secured [research grant funding](/acknowledgements) (from NSF or NERC), they provide temporary financial support for us to provide technical support to users at no additional cost. However, everything else is on [our personal time and personal dime](/who). If you want to ensure you get the help you need when you need it, you can hire an [USU ET-AL](http://etal.joewheaton.org) analyst.

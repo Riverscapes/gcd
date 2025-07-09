@@ -16,7 +16,7 @@ The same basic requirements apply to all types of mask Polygon ShapeFiles:
 
 The polygons in a regular mask can overlap but this is not advisable since it will produce double accounting during budget segregations.
 
-# Add Existing Directional Mask
+## Add Existing Directional Mask
 
 To use an existing polygon ShapeFile as a directional mask right click on the Masks node of the GCD Project Explorer and choose **Add Existing Directional Mask**.
 
@@ -31,23 +31,23 @@ To use an existing polygon ShapeFile as a directional mask right click on the Ma
 
 ![Add mask](/img/CommandRefs/00_ProjectExplorer/inputs/masks/directional/directional_config.png)
 
-# Context Menu
+## Context Menu
 
 Right clicking on any mask brings up the context menu that allows you to perform the three operations described below. Note that the Add To Map option is only available in the ArcGIS Addin version of GCD and not the Standalone.
 
 ![mask cms](/img/CommandRefs/00_ProjectExplorer/inputs/masks/directional/directional_cms.png)
 
-# Edit Properties
+## Edit Properties
 
 Editing the properties of a mask it is possible to change the name used to refer to it and also whether the mask order is ascending or descending. However, it is not possible to change which attribute order direction fields are used.
 
-# Add To Map
+## Add To Map
 
 Directional masks are added to the current ArcMap document with a  semi-transparent symbology and labels that identify each region.
 
 ![mask cms](/img/CommandRefs/00_ProjectExplorer/inputs/masks/directional/directional_map.png)
 
-# Delete
+## Delete
 
 Deleting a directional mask removes it from the GCD project and permanently deletes the underlying ShpeFile within the GCD project. Note that you cannot delete a particular mask until all [budget segregations](/Help/Analyses/Budget_Segregation/budget-segregation) that refer to it have also been deleted.
 

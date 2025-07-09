@@ -14,7 +14,6 @@ The Help menu provides links to this site's online help as well as to several re
 
 </div>
 
----
 
 The About GCD dialog provides basic information about the software as well as lists the current version of the GCD you have installed.
 

@@ -15,7 +15,7 @@ The GCD project maintains a list of all DEM surveys within a project. This list 
 
 ![DEM Surveys](/img/CommandRefs/00_ProjectExplorer/inputs/dem-surveys/dem-surveys.png)
 
-# Add Existing DEM Survey
+## Add Existing DEM Survey
 
 Right click on the DEM Surveys node in the project explorer and choose **Add Existing DEM Survey**. You will be prompted to browse to an existing raster file on your computer. GCD is compatible with GeoTiff (`*.tiff`) and Erdas Imagine (`*.img`) raster formats. It is not compatible with any other formats including rasters stored in geodatabases, PostGIS etc. 
 

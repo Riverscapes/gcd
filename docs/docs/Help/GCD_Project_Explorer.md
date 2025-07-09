@@ -13,7 +13,7 @@ The GCD project explorer is also accessible by clicking the GCD logo ![ProjectEx
 
 The main way to interact with the GCD Project Explorer is to right click on items and use the context menu that appears. Each section within this documentation describes the individual context menu items. The menu when you right click on the topo level project item is described below.
 
-# Project Context Menu
+## Project Context Menu
 
 Right click the GCD Project item in the Project Explorer to access the **Project Context Menu** that provides access to several commands pertaining to the project itself.
 

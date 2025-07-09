@@ -13,7 +13,7 @@ Since associated surfaces belong to a parent DEM survey there are  specific requ
 * cell resolution
 * spatial extent
 
-# Add Existing Associated Surface
+## Add Existing Associated Surface
 
 To use an existing raster as an associated surface, first ensure that the project explorer node for the parent DEM Survey is already expanded. Then right click on the Associated Surfaces node and choose **Add Associated Surface**.
 

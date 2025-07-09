@@ -15,7 +15,7 @@ The same The same basic requirements apply to AOIs that apply to all types of ma
 
 Note that all polygons within the ShapeFile are considered part of the same, single AOI. You do not need to dissolve or merge together separate polygons. Any cells within any polygon feature are considered within of the AOI.
 
-# Add Existing AOI
+## Add Existing AOI
 
 To use an existing polygon ShapeFile as an AOI right click on the Masks node of the GCD Project Explorer and choose **Add Existing Area of Interest**.
 
@@ -25,21 +25,21 @@ Provide a unique name for the AOI and then click the plus icon to browse and sel
 
 ![aoi details](/img/CommandRefs/00_ProjectExplorer/inputs/masks/aoi/aoi_details.png)
 
-# Context Menu
+## Context Menu
 
 Right clicking on any AOI brings up the context menu that allows you to perform the three operations described below. Note that the Add To Map option is only available in the ArcGIS Addin version of GCD and not the Standalone.
 
 ![mask cms](/img/CommandRefs/00_ProjectExplorer/inputs/masks/aoi/aoi_cms.png)
 
-# Edit Properties
+## Edit Properties
 
 Editing the properties of an AOI it is possible to change the name.
 
-# Add To Map
+## Add To Map
 
 AOIs are added to the current ArcMap document with a red outline and a transparent fill symbology.
 
-# Delete
+## Delete
 
 Deleting an AOI removes it from the GCD project and permanently deletes the underlying ShpeFile within the GCD project. Note that you cannot delete a particular AOI until all [change detections](/Help/Analyses/Change_Detection/change-detection) that refer to it have also been deleted.
 

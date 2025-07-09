@@ -5,7 +5,7 @@ sidebar_position: 2
 
 The Options dialog includes tabs for customizing different aspects of the GCD software. All options are user-specific, meaning that any changes are saved for the current user only.
 
-# Survey Types
+## Survey Types
 
 Survey types can be customized to represent different topographic survey methods. Each survey type is associated with a default uncertainty method. These defaults are used during the calculation of multi-method error surfaces. If the [regular mask](/Help/Inputs/Masks/regular-masks) used to generate the [error surface](/Help/Inputs/error-surfaces) contains mask values that match one of the survey types in the list then the corresponding uncertainty value is used as the default uncertainty value. Users can override this value and the default is simply intended as the initial value.
 
@@ -15,7 +15,7 @@ This video shows you how to modify and/or add new survey types.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/ncR_m23hy18" frameBorder="0" allow="encrypted-media" allowFullScreen title="Survey Types Video"></iframe>
 
-# Symbology
+## Symbology
 
 The symbology tab allow users to control display properties when layers are added to ArcMap. This tab only affects the GCD AddIn and serves no purpose for the GCD Standalone.
 
@@ -37,7 +37,7 @@ The **font** specified is used as the default for all change detection graphics.
 
 ![Graphs](/img/CommandRefs/03_Customize/options-graphs.png)
 
-# Pyramids
+## Pyramids
 
 Check the box beside a particular type of GCD raster to have [pyramids](http://desktop.arcgis.com/en/arcmap/10.3/manage-data/raster-and-images/raster-pyramids.htm) produced automatically whenever GCD generates a raster of the corresponding type. Note that pyramids are only beneficial to the display of rasters and have no affect on the actual raster values themselves. Generating pyramids does slow GCD slightly and also the pyramid files require additional file storage which can be a consideration if you intend to share your GCD project with others.
 

@@ -7,10 +7,7 @@ sidebar_position: 2
 
 ### Error Propagation Theory Based on Minimum Level of Detection Logic
 
-
-<div align="center">
-  <iframe width="560" height="315" src="https://www.youtube.com/embed/boXszBr0RHQ" frameBorder="0" allow="encrypted-media" allowFullScreen title="Error Propagation Theory Video"></iframe>
-</div>
+<YouTubeEmbed videoId="boXszBr0RHQ"/>
 
 ### How does GCD calculate +/- Error Volumes?
 
@@ -30,9 +27,6 @@ For the summary tabular statistics, these are simply summed up for erosion cells
 <div align="center">
   <iframe width="560" height="315" src="https://www.youtube.com/embed/FHBcCf2Nx5k" frameBorder="0" allow="encrypted-media" allowFullScreen title="GCD Error Volumes Video"></iframe>
 </div>
-
-
---------------
 
 ### Further Reading on Error Propagation
 

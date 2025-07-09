@@ -9,7 +9,7 @@ The customize menu contains commands for managing the GCD software options and F
 |:--:|:--:|
 | GCD AddIn Project Menu | GCD Standalone Project Menu |
 
-# Commands
+## Commands
 
 - [FIS Library](/Help/customize-menu/fis-library)
 - [Options](/Help/customize-menu/options)

@@ -10,7 +10,7 @@ Before you can use the linear extraction feature you must already have one or mo
 
 The GCD software itself does not possess features for viewing linear extractions. However, the [Cross Section Viewer](http://xsviewer.northarrowresearch.com/) can ingest entire GCD projects and does possess several sophisticated tools for viewing and analyzing these data.
 
-# DEM Survey & Reference Surface Extractions
+## DEM Survey & Reference Surface Extractions
 
 The same method is used to generate a linear extraction from a [DEM Survey](/Help/Inputs/dem-surveys) or reference surface. Right click on one of these items in the GCD Project Explorer and choose
 

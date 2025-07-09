@@ -11,7 +11,7 @@ Error surfaces are rasters that represent uncertainty within a DEM Survey. The v
 
 Each error surface for a particular DEM survey must have a unique name. Only one of the error surfaces can be designated as the [default error surface](#default-error-surfaces).
 
-# Add Existing Error Surface
+## Add Existing Error Surface
 
 To use an existing raster as an error surface, first ensure that the project explorer node for the parent DEM Survey is already expanded. Then right click on the Error Surfaces node and choose **Add Error Surface**.
 

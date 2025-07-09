@@ -226,10 +226,3 @@ This one is a big release that changes the platform of the Standalone so if you 
 * First version of GCD standalone and GCD AddIn for ArcGIS
 * All core GCD 6 functionality
 * Multiple uncertainty analysis batch change detection
-
-------
-
-# Prior Versions
-
-* [GCD 6 Release Notes](/releasenotes/gcd6_releasenotes)
-* [GCD 5 Release Notes](old_versions)

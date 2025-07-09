@@ -9,7 +9,6 @@ The Project menu is the main entry point to begin using the GCD software. The me
 |:--:|:--:|
 | GCD AddIn Project Menu | GCD Standalone Project Menu |
 
------
 
 See the following sections for help on the project menu commands:
 

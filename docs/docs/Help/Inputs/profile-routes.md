@@ -11,7 +11,7 @@ Profile routes represent lines that can be used to extract values from the under
 
 The fields required to generate these two types of profile routes differ slightly, but apart from that the way that they are used to [extract values](/Help/Inputs/linear-extractions) from underlying rasters, as well as the way that they are managed within the GCD software, is identical.
 
-# Add Existing Transect Profile Route
+## Add Existing Transect Profile Route
 
 To use an existing polyline ShapeFile as a transect based profile route right click on the Profile Routes node of the GCD Project Explorer and choose **Add Existing Transect Profile Route**.
 
