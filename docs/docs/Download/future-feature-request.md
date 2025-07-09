@@ -3,23 +3,13 @@ title: Feature Requests
 sidebar_position: 4
 ---
 
-## Making Feature Requests
-
-
 We would like to hear what you have to say about the future direction of GCD development! Please log feature requests as [issues on GitHub](https://github.com/Riverscapes/gcd/issues). Be sure to tag them as *enhancement* (if you need help on how to post an issue see [here](/Download/known-bugs#posting-an-issue)).
 
-
-[💡 GCD Enhancements](https://github.com/Riverscapes/gcd/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement)
-
 ## How Features are Funded
-
-
-<a href="http://northarrowresearch.com"><img class="float-right" src="/img/logos/NA_Logo_150pxTall.png" alt="North Arrow Research Logo" width="120" /></a>
 
 The GCD Software is free and will always be under the [GNU Public License](https://github.com/Riverscapes/gcd/blob/master/LICENSE). Both the [ArcGIS Addin and Standalone](/Download) versions are freeware. However, nothing actually gets done truly for free. Someone ends up paying for it. As faculty at Utah State University, [Joe Wheaton](http://www.joewheaton.org) and [Philip Bailey](http://northarrowresearch.com) have both donated a ton of hours to this cause. However, we have been able to complete this works thanks to the [generous grants and contracts](/acknowledgements.html)  from our sponsors and partners. The research and software development to date has been funded from a mix of [public and private funds](/acknowledgements.html). Future software development and features are partly dependent on our ability to continue to secure grants and contracts for [North Arrow Research](http://northarrowresearch.com) to do this work. However, many small features, bug fixes and improvements can be made with smaller investments and donations from users.  
 
 ## Want to Donate to the Cause?
-
 
 💸 We have started a PayPal donation account for users who want to see specific features added to the GCD. You can contribute as little as $10 to the cause, or as much as $500. If you want to put your donation toward a specific development feature, please copy the URL from the [enhancement issue on GitHub](https://github.com/Riverscapes/gcd/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement), and we will apply your money toward that task.  Donations are accepted in any amount, and when we reach a threshold of donations for a specific feature, we will develop it and publish a new release.  You can make a secure donation below using PayPal:
 

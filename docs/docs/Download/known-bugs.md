@@ -5,23 +5,17 @@ sidebar_position: 10
 
 GCD is under constant development and we are eager to resolve all known issues.  However, please search [existing discussion posts](https://github.com/Riverscapes/gcd/issues),   [existing issue  posts](https://github.com/Riverscapes/gcd/issues)and our help pages first before [posting an issue](#Posting a Question).
 
-# Questions or Help
+## Questions or Help
+
 You can explore or search [past user questions here](https://github.com/Riverscapes/gcd/discussions).
-
-
-[❓ GCD Questions](https://github.com/Riverscapes/gcd/labels/question)
-
-[🆘 GCD Help Wanted](https://github.com/Riverscapes/gcd/labels/help%20wanted)
 
 # Bugs
 
 Before logging a suspected bug, please search [known open bugs](https://github.com/Riverscapes/gcd/labels/bug). If you have more information to report about this bug, please post a comment to the appropriate issue. Otherwise, you can post a new bug to the ["I need help please" Discussion](https://github.com/Riverscapes/gcd/discussions/categories/i-need-help-please). If we deem your problem to be a software bug, we will tranfer it to our [known bugs](https://github.com/Riverscapes/gcd/labels/bug) (note we sometimes fix simple bugs, but we often just put them in the development queue for when funding is avaialable to fix them ).
 
-
-[🐞 GCD Bugs](https://github.com/Riverscapes/gcd/labels/bug)
+* [GCD Bugs](https://github.com/Riverscapes/gcd/labels/bug)
 
 # Posting an Issue
-
 
 If you find a bug, or simply want to report an issue with the software, please log a GitHub Discussion. [💬 GitHub GCD Discussion](https://github.com/Riverscapes/gcd/discussions/categories/i-need-help-please)
 
@@ -30,10 +24,7 @@ Anyone in the GCD community and a member of GitHub  can respond, and the develop
 
 This video shows you how to post an issue and some helpful things to include:
 
-<div align="center">
-  <iframe width="560" height="315" src="https://www.youtube.com/embed/EFAQgvZQY0s?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-</div>
-
+<YouTubeEmbed videoId="EFAQgvZQY0s-xs"/>
 
 ### Please always include following information:
 

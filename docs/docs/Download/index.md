@@ -27,8 +27,9 @@ import { ToolsWrapper } from "../src/components/ToolsWrapper/ToolsWrapper";
   cards={[
     {
       title: "GCD 7 AddIn for ArcGIS 10.x",
-      logoUrl: "/img/gcd_addin.png",
-      toolUrl: "https://github.com/Riverscapes/gcd/releases/latest"
+      imageUrl: "/img/gcd_addin.png",
+      toolUrl: "https://github.com/Riverscapes/gcd/releases/latest",
+      description: "test"
     },
     {
       title: "GCD 7 Standalone",
@@ -38,9 +39,6 @@ import { ToolsWrapper } from "../src/components/ToolsWrapper/ToolsWrapper";
   ]}
   cardsize="md"
 />
-
-------
-
 
 The [GCD Addin for ArcGIS](/Download/about.html#gcd-addin-for-arcgis) provides full GCD functionality, including map display of GCD inputs and outputs. If you have ArcGIS 10.4 or newer (not ArcPro) then this version will give you 'Add to Map' and spatial visualization functionality embedded within ArcGIS. The downside is ArcGIS is a 32 Bit Application and can only use 4 GB of RAM, so it is slower. 
 
