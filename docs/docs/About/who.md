@@ -1,9 +1,10 @@
 ---
 title: Development Team
-sidebar_position: 3
+sidebar_position: 2
+slug: /About/who
 ---
-
-# Project Inception & Vision
+# Development Team
+## Project Inception & Vision
 
 ## The Early Days
 
@@ -28,7 +29,7 @@ In 2015, Joe, James, and [Damia Vericat](http://www.damiavericat.eu/) authored a
 
 ---
 
-# Development Team
+## Development Team
 
 ![Matt Reimer](/img/people/Matt_round.png)
 

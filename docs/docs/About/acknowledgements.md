@@ -1,8 +1,10 @@
 ---
 
 title: Financial Support
-sidebar_position: 2
+sidebar_position: 1
+slug: /About/acknowledgements
 --------------------
+# Financial Support
 
 ## Funding
 

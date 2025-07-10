@@ -1,7 +1,9 @@
 ---
 title: About GCD Software
+slug: /Download/sourcecode
 sidebar_position: 300
 ---
+# About GCD Software
 
 GCD 7 is available as two separate products:
 
