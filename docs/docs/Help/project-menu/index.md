@@ -1,8 +1,9 @@
 ---
 title: Project Menu
 sidebar_position: 4
+slug: /Help/project-menu/
 ---
-
+# Project Menu
 The Project menu is the main entry point to begin using the GCD software. The menu items differ slightly between the AddIn and standalone versions, with the main difference being that the standalone version maintains a list of recently opened projects.
 
 | ![GCD AddIn Project Menu](/img/CommandRefs/01_Project/addin_project_menu.png) | ![GCD Standalone Project Menu](/img/CommandRefs/01_Project/standalone_project_menu.png) |

@@ -52,6 +52,5 @@ The entire project tree can be refreshed and read from the GCD project file. Thi
 
 Add Entire Project to the Map adds all project inputs and analyses to the map. is an extremely useful command. As most ArcGIS users are aware, Map Documents can become corrupted and if you forget to store relative paths, the table of contents can be populated with many red exclamation marks (indicating the path to the layers is no longer valid). This allows you to open any map, and add your entire GCD project (with symbology) to the map's table of contents in the current data frame. This is illustrated in the video below:
 
-<div class="responsive-embed">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/OHzY6dzilwA" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe> </div>
+<YouTubeEmbed videoId="OHzY6dzilwA" title="Add Entire Project To Map Video" />
 -->

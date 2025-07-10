@@ -1,8 +1,9 @@
 ---
 title: New GCD Project
 sidebar_position: 1
+slug: /Help/project-menu/new-project
 ---
-
+# New GCD Project
 The `Create New GCD Project` dialog is where you create a new [project](/Concepts/projects) by specifying the fields described below.
 
 ![New project](/img/CommandRefs/01_Project/new-project.png)
@@ -21,4 +22,4 @@ The `Create New GCD Project` dialog is where you create a new [project](/Concept
 
 This video walks through the creation of a new project and shows what files and folders are created as a result of this process.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/YLMDF38R_8U?rel=0" frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen title="New Project Video"></iframe>
+<YouTubeEmbed videoId="YLMDF38R_8U" title="New Project Video" />
