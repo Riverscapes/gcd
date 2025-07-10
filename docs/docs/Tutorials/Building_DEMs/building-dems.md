@@ -1,7 +1,6 @@
 ---
 title: Building DEMs from Topographic Survey Data
 sidebar_position: 1
-slug: /Tutorials/Building_DEMs/building-dems
 ---
 
 
