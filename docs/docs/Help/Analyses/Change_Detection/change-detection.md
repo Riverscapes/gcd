@@ -1,11 +1,12 @@
 ---
 title: Change Detection
 sidebar_position: 1
+slug: /Help/Analyses/Change_Detection/change-detection
 ---
+# Change Detection
 
-<div align="right">
-  <img src="/img/Fly_GCD_DoD_Cartoon.png" alt="GCD Cartoon" style={{maxWidth: '300px', height: 'auto'}} />
-</div>
+![GCD Cartoon](/img/Fly_GCD_DoD_Cartoon.png)
+
 
 The ability to perform a change detection by subtracting two topographic surveys is the fundamental reason that the GCD Software exists.
 
@@ -20,7 +21,7 @@ This section of the GCD help describes the basic process of performing a change 
 * [Morphological analysis](/Help/Analyses/Change_Detection/morphological) of a change detection
 * [Inter-comparing](/Help/Analyses/Change_Detection/intercomparison) change detections
 
-# Calculating a Change Detection
+## Calculating a Change Detection
 
 
 Before performing any kind of change detection you must have at least two [DEM Surveys](/Help/Inputs/dem-surveys) in your GCD project and depending on the way that you want to represent uncertainty, each DEM might require an error surface.
@@ -43,13 +44,13 @@ The change detection form requires the following inputs:
 
 ![Change Detection](/img/CommandRefs/05_Analyses/cd/change_config.png)
 
-# Reusing the same Surfaces
+## Reusing the same Surfaces
 
 If you want to produce another change detection using the same new and old surfaces as an existing analysis then right click on the item in the project explorer that represents the pair of surfaces and choose "":
 
 ![Same surfaces](/img/CommandRefs/05_Analyses/cd/same_surfaces.png)
 
-# Context Menu
+## Context Menu
 
 Right clicking on an individual change detection in the project explorer displays a context menu that includes several operations described below. The following more involved items are described on their own pages:
 
@@ -77,9 +78,7 @@ It is also possible to add all thresholded rasters for all analyses to the map w
 
 A brief video showing how to utilize both of these commands is shown below:
 
-<div align="center">
-  <iframe width="560" height="315" src="https://www.youtube.com/embed/sd5u10Up4nY" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-</div>
+<YouTubeEmbed videoId="sd5u10Up4nY" title="Change Detection Commands Demo" />
 
 ## Explore Change Detection Folder
 

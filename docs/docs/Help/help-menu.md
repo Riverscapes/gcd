@@ -1,7 +1,9 @@
 ---
 title: Help Menu
 sidebar_position: 6
+slug: /Help/help-menu
 ---
+# Help Menu
 
 The Help menu provides links to this site's online help as well as to several related tools.
 

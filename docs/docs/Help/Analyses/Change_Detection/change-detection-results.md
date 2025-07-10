@@ -1,11 +1,13 @@
 ---
 title: Viewing Results
+slug: /Help/Analyses/Change_Detection/change-detection-results
 sidebar_position: 2
 ---
+# Viewing Results
 
 The GCD software produces a rich set of results with each [change detection](/Help/Analyses/Change_Detection/change-detection) analysis. This section describes both the user interface for exploring results within the software as well as the files that are saved to the project folder structure as part of the analysis.
 
-# User Interface
+## User Interface
 
 The change detection results user interface is displayed once the analysis has completed. They are also accessible by right clicking on an individual change detection in the project explorer:
 
@@ -67,7 +69,7 @@ The chart settings tab controls several aspects of the change detection histogra
 
 ![Same surfaces](/img/CommandRefs/05_Analyses/cd/change_props_charts.png)
 
-# Files and Folders
+## Files and Folders
 
 
 The results for an individual change detection are placed in a folder under the project called `Analyses`. Inside that folder is another called `CD` for "change detection" and then each analysis gets a sequentially numbered folder with the prefix `DoD`. For example

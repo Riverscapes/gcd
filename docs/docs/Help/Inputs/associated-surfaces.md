@@ -1,7 +1,9 @@
 ---
 title: Associated Surfaces
+slug: /Help/Inputs/associated-surfaces
 sidebar_position: 2
 ---
+# Associated Surfaces
 
 ![Feshie dataset](/img/datasets/feshie_200h.png)
 
@@ -23,7 +25,7 @@ You will be prompted to browse to an existing raster file on your computer. GCD 
 
 The same raster import form is displayed after the raster is selected as that used to [add an existing DEM survey](/Help/Inputs/dem-surveys#add-existing-dem-survey). The form appears slightly differently when used for adding associated surfaces. First, the output edge coordinates and cell resolution are **fixed** and locked to those of the parent DEM Survey. This ensures that all associated surfaces are perfectly concurrent with the parent DEM.
 
-# Calculating Point Density
+## Calculating Point Density
 
 GCD can calculate point density associated surface rasters providing that you have a point ShapeFile containing all the survey points that were used to generated the parent DEM survey. The surface raster will be created with the correct spatial extent, cell resolution and units. It will be stored in the appropriate folder within the GCD project and the correct type attached.
 
@@ -41,19 +43,19 @@ Point density is calculated by first creating a blank template raster with an id
 |:--:|:--:|
 | Round kernel | Square kernel |
 
-# Calculating Slope
+## Calculating Slope
 
 GCD can calculate associated surface slope rasters in either decimal degrees or percent. Right click on the Associated Surface node under the parent DEM and choose the desired type. The surface raster will be created with the correct spatial extent, cell resolution and units. It will be stored in the appropriate folder within the GCD project and the correct type attached.
 
 ![assoc context](/img/CommandRefs/00_ProjectExplorer/inputs/assoc/assoc_slope.png)
 
-# Context Menu
+## Context Menu
 
 Right clicking on any associated surface brings up the context menu that allows you to perform the three operations described below. Note that the Add To Map option is only available in the ArcGIS Addin version of GCD and not the Standalone.
 
 ![assoc context](/img/CommandRefs/00_ProjectExplorer/inputs/assoc/assoc_context.png)
 
-# Edit Properties
+## Edit Properties
 
 Editing the properties of an associated surface it is possible to change the name used to refer to it and also assign a type from one of the following:
 
@@ -70,13 +72,13 @@ The only place that this choice of associated surface type impacts GCD is in det
 
 ![Assoc properties](/img/CommandRefs/00_ProjectExplorer/inputs/assoc/assoc_properties.png)
 
-# Add To Map
+## Add To Map
 
 Associated surfaces are added to the current ArcMap document with a symbology that depends on the specified type. See edit properties above. Associated surfaces that do not have a type specified as added with an orange continuous color ramp.
 
 ![Assoc properties](/img/CommandRefs/00_ProjectExplorer/inputs/assoc/assoc_add_to_map.png)
 
-# Delete
+## Delete
 
 Deleting an associated surface removes the GCD project reference to the raster and permanently deletes the underlying raster file within the GCD project.
 

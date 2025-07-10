@@ -1,7 +1,9 @@
 ---
 title: Regular Masks
+slug: /Help/Inputs/Masks/regular-masks
 sidebar_position: 1
 ---
+# Regular Masks
 
 ![Regular Mask](/img/CommandRefs/00_ProjectExplorer/inputs/masks/regular.png)
 Regular masks group together regions of a GCD project into different categories. Each regular mask is represented as a polygon ShapeFile. An attribute field in the ShapeFile is used to distinguish the different regions. Multiple polygons can have the same region category.

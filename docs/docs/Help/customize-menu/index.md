@@ -1,7 +1,9 @@
 ---
 title: Customize Menu
+slug: /Help/customize-menu/
 sidebar_position: 5
 ---
+# Customize Menu
 
 The customize menu contains commands for managing the GCD software options and FIS library.
 

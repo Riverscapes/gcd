@@ -1,13 +1,15 @@
 ---
 title: Multiple Epoch Batch
 sidebar_position: 6
+slug: /Help/Analyses/Change_Detection/multiple-epoch
 ---
+# Multiple Epoch Batch
 
 It can be time consuming to set up and perform several change detection analyses. The GCD software simplifies this process with two batch change detection features. This section describes the multiple epoch batch intended for quickly analyzing predefined pairings of surfaces that are sorted into chronological order. See the [generic batch](/Help/Analyses/Change_Detection/batch-change-detection) documentation for information on the other kind.
 
 ![Add mask](/img/CommandRefs/05_Analyses/cd/batch/batch_cms.png)
 
-# Creating a Batch Analysis
+## Creating a Batch Analysis
 
 First before running this feature, it's a good idea to make sure that you have three or more [DEM Surveys](/Help/Inputs/dem-surveys) in your GCD project and that you've created the necessary [error surfaces](/Help/Inputs/error-surfaces) for those items that you want to use.
 
@@ -27,7 +29,7 @@ Click the **Multiple Epoch** menu item shown above to launch the user interface 
 
 ![Add mask](/img/CommandRefs/05_Analyses/cd/epoch/epoch_add.png)
 
-# Running the Batch
+## Running the Batch
 
 Once you have configured the multiple epoch batch, click the **Run Batch** button (8 above). Large batches might take several minutes to process. Watch the status bar for an indication of progress.
 

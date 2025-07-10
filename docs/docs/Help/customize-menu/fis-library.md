@@ -1,4 +1,8 @@
+---
 title: FIS Library
+slug: /Help/customize-menu/fis-library
+---
+# FIS Library
 
 The GCD maintains a library of fuzzy inference system rule files (`*.fis`) that are available when generating error surface rasters. The GCD ships with a set of *system* FIS rule files that define several typical FIS definitions. These system FIS are taken from the Utah State University [GitHub repository](https://github.com/Riverscapes/fis-dem-error). In addition, Users can add their own *user defined* FIS rule files. 
 
@@ -16,7 +20,7 @@ System FIS are **not** editable. All metadata describing system is read only. Sh
 
 Click the green plus button to browse to an existing FIS rule file and add it to the library. The FIS rule file will be copied into a folder in your Windows user profile. After browsing and selecting the `*.fis` rule file you will be presented with a metadata form where you can enter information describing the contents of the rule file. 
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/84KgNRMQp2k" frameBorder="0" allow="encrypted-media" allowFullScreen title="FIS Library Video"></iframe>
+<YouTubeEmbed videoId="84KgNRMQp2k" title="FIS Library Video" />
 
 ## Editing User Defined FIS
 

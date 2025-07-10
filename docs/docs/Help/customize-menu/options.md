@@ -1,7 +1,9 @@
 ---
 title: Options
+slug: /Help/customize-menu/options
 sidebar_position: 2
 ---
+# Options
 
 The Options dialog includes tabs for customizing different aspects of the GCD software. All options are user-specific, meaning that any changes are saved for the current user only.
 
@@ -13,7 +15,7 @@ Survey types can be customized to represent different topographic survey methods
 
 This video shows you how to modify and/or add new survey types.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/ncR_m23hy18" frameBorder="0" allow="encrypted-media" allowFullScreen title="Survey Types Video"></iframe>
+<YouTubeEmbed videoId="ncR_m23hy18" title="Survey Types Video" />
 
 ## Symbology
 

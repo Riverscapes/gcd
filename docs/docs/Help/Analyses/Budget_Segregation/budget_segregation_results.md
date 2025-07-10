@@ -1,10 +1,12 @@
 ---
 title: Budget Segregation Results
+slug: /Help/Analyses/Budget_Segregation/budget-segregation
 ---
+# Budget Segregation Results
 
 The GCD software produces a rich set of results with each [budget segregation](/Help/Analyses/Budget_Segregation/budget-segregation). This section describes both the user interface for exploring results within the software as well as the files that are saved to the project folder structure as part of the analysis.
 
-# User Interface
+## User Interface
 
 The budget segregation results user interface is displayed once the analysis has completed. They are also accessible by right clicking on an individual budget segregation in the project explorer:
 
@@ -29,7 +31,7 @@ The longitudinal breakdown shows the volume of surface raising and lowering for 
 
 ![longitudinal](/img/CommandRefs/05_Analyses/cd/budget/budget_results_long.png)
 
-# Files and Folders
+## Files and Folders
 
 Budget segregation results are stored in a folder called `BS` under that of the parent change detection. Each budget segregation gets a separate sub folder with the same prefix:
 

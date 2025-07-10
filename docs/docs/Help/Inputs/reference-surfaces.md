@@ -1,8 +1,9 @@
 ---
 title: Reference Surfaces
 sidebar_position: 4
+slug: /Help/Inputs/reference-surfaces
 ---
-
+# Reference Surfaces
 Reference surfaces are elevation rasters that originate from some other source than a topographic survey. They are very similar to [DEM Surveys](/Help/Inputs/dem-surveys) in that they share the same vertical units, cell resolution and spatial reference. They can also be used as one or both surfaces in a [change detection](/Help/Analyses/Change_Detection/change-detection) analysis.
 
 The role of reference surfaces within the GCD software is intentionally flexible, enabling users to leverage them for several purposes:
@@ -50,7 +51,7 @@ A reference error surface ([see below](#reference-error-surfaces)) will be gener
 |Mean|The mean DEM error surface value in each cell.|
 |Standard Deviation|The root mean square of all DEM error surface values in each cell.|
 
-# Uniform Reference Surfaces
+## Uniform Reference Surfaces
 
 Uniform reference surfaces are constant rasters that possess the same value in every cell. They can be useful for representing engineered planes, safety thresholds, reservoir draw down levels and spill holes etc.
 
@@ -62,27 +63,27 @@ Each reference surface will get a reference error surface generated with it usin
 
 ![uniform](/img/CommandRefs/00_ProjectExplorer/inputs/refsurface/refsurface_uniform.png)
 
-# Reference Error Surfaces
+## Reference Error Surfaces
 
 Each reference surface can have one or more error surfaces specified. These surfaces are managed much in the same way as regular [error surfaces](/Help/Inputs/error-surfaces) for DEM surveys. 
 
-# Context Menu
+## Context Menu
 
 Right clicking on any reference surface brings up the context menu that allows you to perform the three operations described below. Note that the Add To Map option is only available in the ArcGIS Addin version of GCD and not the Standalone.
 
 ![ref surface cms](/img/CommandRefs/00_ProjectExplorer/inputs/refsurface/refsurface_cms.png)
 
-# Edit Properties
+## Edit Properties
 
 Right clicking and choosing to edit allows you to change the name that GCD uses to refer to the reference surface. This does not change the name of the underlying raster file or the folder in which it is stored. It only applies to the name used in the GCD project.
 
-# Add To Map
+## Add To Map
 
 Reference surfaces are added to the current ArcMap document with a stretched color ramp symbology.
 
 ![add to map](/img/CommandRefs/00_ProjectExplorer/inputs/refsurface/ref_add_to_map.png)
 
-# Delete
+## Delete
 
 Deleting a reference surface removes the GCD project reference to the raster and permanently deletes the underlying raster file within the GCD project.
 

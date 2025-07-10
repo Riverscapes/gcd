@@ -1,13 +1,15 @@
 ---
 title: Batch Change Detection
+slug: /Help/Analyses/Change_Detection/change-detection
 sidebar_position: 5
 ---
+#  Batch Change Detection
 
 It can be time consuming to set up and perform several change detection analyses. The GCD software simplifies this process with two batch change detection features. This section describes the generic batch intended for quickly adding multiple analyses with different surfaces and thresholding. See the [multi-epoch batch] documentation for information on the other kind.
 
 ![Add mask](/img/CommandRefs/05_Analyses/cd/batch/batch_cms.png)
 
-# Creating a Batch Analysis
+## Creating a Batch Analysis
 
 Right click on the change detection item in the project explorer and choose "Generic Batch Change Detection" (see above).
 
@@ -43,7 +45,7 @@ The multiple probabilistic batch requires a range of confidence intervals to be 
 
 ![Add mask](/img/CommandRefs/05_Analyses/cd/batch/batch_multi_prob.png)
 
-# Running the Batch
+## Running the Batch
 
 Once you have populated the table with the desired batch of change detection analyses click the **Run Batch** button. Large batches might take several minutes to process. Watch the status bar for an indication of progress.
 

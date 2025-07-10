@@ -1,8 +1,9 @@
 ---
 title: Analyses
 sidebar_position: 3
+slug: /Help/Analyses/
 ---
-
+# Analyses
 The GCD software performs several different types of analyses:
 
 * [Change Detection](/Help/Analyses/Change_Detection/change-detection)

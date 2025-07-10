@@ -1,7 +1,9 @@
 ---
 title: Linear Extractions
-sidebar_position: 6
+sidebar_position: 6 
+slug: /Help/Inputs/linear-extractions
 ---
+# Linear Extractions
 
 ![Profile Routes](/img/CommandRefs/00_ProjectExplorer/inputs/profile/profile_routes.png)
 Linear extractions are the product of reading the values of a DEM survey, [reference surface](/Help/Inputs/reference-surfaces) or [change detection](/Help/Analyses/Change_Detection/change-detection) raster along the polylines contained in a profile route. Each linear extraction operation produces a comma separated value (CSV) file that contains the raster values from the selected raster at user-defined stations along the polylines. Values from a corresponding error surface are also written to the linear extraction CSV file, taken from the same coincident points as the values from the DEM or DoD raster.
@@ -25,7 +27,7 @@ The same method is used to generate a linear extraction from a [DEM Survey](/Hel
 ![Add linear extraction](/img/CommandRefs/00_ProjectExplorer/inputs/linear/linear_config.png)
 
 
-# Change Detection Linear Extractions
+## Change Detection Linear Extractions
 
 Generating a linear extraction from a [change detection](/Help/Analyses/Change_Detection/change-detection) is done in much the same way as described above. The main difference is that with change detections the user doesn't choose an error surface. This is chosen for you based on the type of thresholding that was used to generate the change detection.
 
@@ -38,28 +40,28 @@ Generating a linear extraction from a [change detection](/Help/Analyses/Change_D
 
 ![Add linear extraction](/img/CommandRefs/00_ProjectExplorer/inputs/linear/linear_cms_dod.png)
 
-# Context Menu
+## Context Menu
 
 Right clicking on any regular mask brings up the context menu that allows you to perform the three operations described below. Note that the Add To Map option is only available in the ArcGIS Addin version of GCD and not the Standalone.
 
 ![mask cms](/img/CommandRefs/00_ProjectExplorer/inputs/linear/linear_cms.png)
 
-# View Linear Extraction Folder
+## View Linear Extraction Folder
 
 Right click on a linear extraction and choose to view the folder. This will open Windows Explorer at the corresponding path. It is strongly advised that you don't edit or manipulate the CSV file within the GCD project. If you want to work with the file, it is recommended that you copy it and save it to a location outside of the GCD project folder structure and work with it there.
 
 ![mask cms](/img/CommandRefs/00_ProjectExplorer/inputs/linear/linear_folder.png)
 
-# Visualizing Linear Extractions
+## Visualizing Linear Extractions
 
 See the [Cross Section Viewer](http://xsviewer.northarrowresearch.com/Online_Help/File_Menu/import_gcd_project.html) help for instructions on how to view the contents of GCD linear extractions.
 
 ![Cross Section Viewer](/img/CommandRefs/00_ProjectExplorer/cross_section_viewer.png)
 
-# Edit Properties
+## Edit Properties
 
 Editing the properties of a linear extraction it is possible to change the name. No other attributes are editable.
 
-# Delete
+## Delete
 
 Deleting a linear extraction removes it from the GCD project and permanently deletes the underlying CSV file within the GCD folder structure.

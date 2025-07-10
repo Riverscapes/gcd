@@ -1,7 +1,9 @@
 ---
 title: DEM Surveys
 sidebar_position: 1
+slug : /Help/Inputs/dem-surveys
 ---
+# DEM Surveys
 
 ![Feshie Dataset](/img/datasets/feshie_200h.png)
 DEM Surveys are the foundation of a GCD project. Projects can contain multiple DEM surveys, each representing a single topographic survey as a single raster file. Typically the surveys within a GCD project capture the same general location, although each raster can have slightly different extents. However all rasters within a GCD project **must** share some specific properties:
@@ -34,15 +36,15 @@ Clicking **Add Raster** causes the form to validate all the inputs and copy the 
 This video walks you through the process:
 
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/JMmf8xFgMug?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+<YouTubeEmbed videoId="JMmf8xFgMug" title="DEM Survey Import Video" />
 
-# Context Menu
+## Context Menu
 
 The DEM Survey context menu is accessed by right clicking on any DEM in the GCD project. The tools available on this menu are described below. Note that the Add DEM Survey To Map option is only available in the GCD AddIn version.
 
 ![Edit Menu](/img/CommandRefs/00_ProjectExplorer/inputs/dem-surveys/dem-menu-edit.png)
 
-# Edit Properties
+## Edit Properties
 
 Editing displays several basic properties for a DEM Survey. Only the name is editable and this must be unique across all DEM Surveys within the current GCD project. The project path shows the path to the underlying raster, relative within the GCD project path. The raster properties and statistics display the fundamental properties of the underlying raster file.
 
@@ -54,16 +56,16 @@ Selecting survey dates is optional but recommended because it helps the GCD unde
 
 ![Survey Date](/img/CommandRefs/00_ProjectExplorer/inputs/dem-surveys/survey-date.png)
 
-# Add To Map
+## Add To Map
 
 The **Add DEM Survey to Map** command adds the selected DEM to the map (GCD AddIn only). Note this command does not add associated surfaces or error surfaces. This is a convenient command if you want to add your symbolized DEM inputs one at a time to the current ArcMap document. 
 
 All DEM Surveys within a GCD project can be added to the map with a single operation by right clicking on the DEM Surveys parent node in the project explorer (GCD ArcAddIn only).
 
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/dAgkkCwc3kA?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+<YouTubeEmbed videoId="dAgkkCwc3kA" title="Add DEM Survey to Map Video" />
 
-# Delete
+## Delete
 
 The **Delete DEM Survey** command deletes a DEM Survey from the GCD Project. This does several things:
 
@@ -75,7 +77,7 @@ The **Delete DEM Survey** command deletes a DEM Survey from the GCD Project. Thi
 * After, it deletes the `Inputs\Surveys\DEM000n` folder associated with the selected DEM Survey from the project directory (note this does not impact where you loaded or copied the DEM survey from originally). This physically deletes the files from your system.
 * It then deletes all the project information about this DEM Survey from the GCD project.
 
-# Sorting DEM Surveys
+## Sorting DEM Surveys
 
 The DEM Surveys within a GCD project can be organized in the project explorer tree in several different ways by right clicking on the parent **DEM Surveys**.
 

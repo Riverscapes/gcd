@@ -1,7 +1,9 @@
 ---
 title: Inputs
 sidebar_position: 2
+slug: /Help/Inputs/
 ---
+# Inputs
 
 The GCD Software manages various different types of inputs. These can be related together or used to perform [analyses](/Help/Analyses):
 

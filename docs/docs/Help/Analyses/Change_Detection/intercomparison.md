@@ -1,13 +1,15 @@
 ---
 title: Inter Comparisons
+slug: /Help/Analyses/Change_Detection/intercomparison
 sidebar_position: 7
 ---
+# Inter Comparisons
 
 Inter-comparisons quickly and easily summarize multiple [change detections](/Help/Analyses/Change_Detection/change-detection) together. This does not involve any geospatial analysis but merely involves an accounting exercise to sum up the various results from the relevant analyses.
 
 Each GCD project can have multiple inter-comparisons that can be added, viewed and deleted.
 
-# Creating an Inter-Comparison
+## Creating an Inter-Comparison
 
 Right click on the Inter-comparisons items in the GCD project explorer and choose "Create Change Detection Inter-Comparison":
 
@@ -19,7 +21,7 @@ In the form that appears provide a unique name for the new inter-comparison and 
 
 Click Save ![Inter-comparison CMS](/img/icons/Save.png) to run the analysis.
 
-# View Inter-Comparison Results
+## View Inter-Comparison Results
 
 Right click on an individual inter-comparison in the GCD project explorer to view the folder in which it was generated.
 
@@ -33,6 +35,6 @@ Use Microsoft Excel to open the inter-comparison Spreadsheet. The layout is an a
 
 ![Inter-comparison CMS](/img/CommandRefs/05_Analyses/cd/inter/inter_results.png)
 
-# Delete An Inter-Comparison
+## Delete An Inter-Comparison
 
 Before attempting to delete an inter-comparison, be sure to close the corresponding Excel Spreadsheet to prevent file lock issues. Then right click on an individual inter-comparison and choose **Delete** to remove it from the GCD project.

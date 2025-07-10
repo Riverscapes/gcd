@@ -1,7 +1,9 @@
 ---
 title: Profile Routes
 sidebar_position: 5
+slug: /Help/Inputs/profile-routes
 ---
+# Profile Routes
 
 ![Profile Routes](/img/CommandRefs/00_ProjectExplorer/inputs/profile/profile_routes.png)
 Profile routes represent lines that can be used to extract values from the underlying GCD rasters via the [linear extraction](/Help/Inputs/linear-extractions) feature. The GCD uses two types of profile routes that are distinguished by their direction:
@@ -11,7 +13,7 @@ Profile routes represent lines that can be used to extract values from the under
 
 The fields required to generate these two types of profile routes differ slightly, but apart from that the way that they are used to [extract values](/Help/Inputs/linear-extractions) from underlying rasters, as well as the way that they are managed within the GCD software, is identical.
 
-## Add Existing Transect Profile Route
+### Add Existing Transect Profile Route
 
 To use an existing polyline ShapeFile as a transect based profile route right click on the Profile Routes node of the GCD Project Explorer and choose **Add Existing Transect Profile Route**.
 
@@ -25,7 +27,7 @@ The optional label field can be used to override the strings in the value field 
 
 ![Transect](/img/CommandRefs/00_ProjectExplorer/inputs/profile/transect_details.png)
 
-# Add Existing Longitudinal Profile Route
+### Add Existing Longitudinal Profile Route
 
 To use an existing polyline ShapeFile as a longitudinal based profile route right click on the Profile Routes node of the GCD Project Explorer and choose **Add Existing Longitudinal Profile Route**.
 
@@ -39,20 +41,20 @@ The optional label field can be used to override the strings in the value field 
 
 ![Transect](/img/CommandRefs/00_ProjectExplorer/inputs/profile/long_details.png)
 
-# Context Menu
+## Context Menu
 
 Right clicking on a profile route of either type brings up the context menu that allows you to perform the three operations described below. Note that the Add To Map option is only available in the ArcGIS Addin version of GCD and not the Standalone.
 
 ![mask cms](/img/CommandRefs/00_ProjectExplorer/inputs/profile/profile_cms.png)
 
-# Edit Properties
+## Edit Properties
 
 Editing the properties of a profile route it is possible to change the name used to refer to it and change the station values or offsets field depending on whether it is a transect or longitudinal profile route.
 
-# Add To Map
+## Add To Map
 
 Profile routes are added to the current ArcMap document with ESRI's default symbology settings for vector ShapeFiles.
 
-# Delete
+## Delete
 
 Deleting a profile route removes it from the GCD project and permanently deletes the underlying ShpeFile within the GCD project.

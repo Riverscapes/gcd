@@ -1,7 +1,9 @@
 ---
 title: Error Surfaces
 sidebar_position: 3
+slug: /Help/Inputs/error-surfaces
 ---
+# Error Surfaces
 
 Error surfaces are rasters that represent uncertainty within a DEM Survey. The values in an error surface possess the same vertical units as those of the corresponding DEM and also, since error surfaces belong to a parent DEM survey, there are specific requirements regarding these rasters. Error surface rasters and the parent DEM survey must have **identical**:
 
@@ -21,7 +23,7 @@ You will be prompted to browse to an existing raster file on your computer. GCD 
 
 The same raster import form is displayed after the raster is selected as that used to [add an existing DEM survey](/Help/Inputs/dem-surveys#add-existing-dem-survey). The form appears slightly differently when used for adding error surfaces. First, the output edge coordinates and cell resolution are **fixed** and locked to those of the parent DEM Survey. This ensures that all error surfaces are perfectly concurrent with the parent DEM.
 
-# Calculating Error Surfaces
+## Calculating Error Surfaces
 
 GCD can calculate various types of error surfaces from very simple spatially uniform rasters to more sophisticated fuzzy inference system rasters.
 
@@ -57,17 +59,17 @@ When specifying a multi-method error surface you can specify a different error s
 
 ![multi method](/img/CommandRefs/00_ProjectExplorer/inputs/error/multi_method_config.png)
 
-# Context Menu
+## Context Menu
 
 Right clicking on an error surface brings up the context menu that allows you to perform the three operations described below. Note that the Add To Map option is only available in the ArcGIS Addin version of GCD and not the Standalone.
 
 ![error context](/img/CommandRefs/00_ProjectExplorer/inputs/error/error_context.png)
 
-# Edit Properties
+## Edit Properties
 
 Right clicking on an error surface displays a form showing the properties of the error surface raster. The particular form displayed varies depending on the method used to generate the raster (browse to existing, uniform or multi method). In all three cases, the form is locked down such that the user can only change the name of the GCD error surface and not change any other information about it. Basic raster properties are also shown on this form.
 
-# Default Error Surfaces
+## Default Error Surfaces
 
 Each DEM Survey can only have one error surface designated as the default. The first error surface that is added to each DEM survey is always configured to be the default. Adding additional error surfaces then allows the user to pick and choose which one should be the default. Switching the default status is done either by editing the error surface and checking the box underneath the name field (see above) or by right clicking on the error surface in the GCD Project Explorer:
 
@@ -79,13 +81,13 @@ The ability to specify a default error surface affects the GCD in three places. 
 2. generic batch change detection analysis.
 3. multi-epoch change detection analysis.
 
-# Add To Map
+## Add To Map
 
 Error surfaces are added to the current ArcMap document with a color ramp symbology that is stretched to the range of values in the underlying raster.
 
 ![error add to map](/img/CommandRefs/00_ProjectExplorer/inputs/error/error_add_to_map.png)
 
-# Delete
+## Delete
 
 Deleting an error surface removes the GCD project reference to the raster and permanently deletes the underlying raster file within the GCD project.
 
