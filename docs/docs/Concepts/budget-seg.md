@@ -1,8 +1,10 @@
 ---
 title: Budget Segregation FAQ
+slug: /Concepts/budget-seg
 sidebar_position: 4
 ---
 
+# Budget Segregation FAQ
 
 Here is a little description of how budget segregation works "under the hood". This is all internal workings that you don't need to know but it might help with the understanding:
 

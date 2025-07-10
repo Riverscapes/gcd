@@ -1,16 +1,16 @@
 ---
 title: Fuzzy Inference Systems for Modeling Errors
+slug: /Concepts/fuzzy-inference-systems-for-modeling-dem-error
 sidebar_position: 5
 ---
+# Fuzzy Inference Systems for Modeling Errors
 
 ### Background on Fuzzy Inference Systems
 
 This video tutorial goes through a portion of the background covered in the [Geomorphic Change Detection workshop](/) on fuzzy inferences systems as they are applied in deriving spatially variable elevation uncertainty rasters.
 
 
-<div align="center">
-  <iframe width="560" height="315" src="https://www.youtube.com/embed/gR-hwUkfJzc" frameBorder="0" allow="encrypted-media" allowFullScreen title="Fuzzy Inference Systems Video"></iframe>
-</div>
+<YouTubeEmbed videoId="gR-hwUkfJzc" title="Fuzzy Inference Systems Video" />
 
 ### Further Reading on Fuzzy Inference Systems
 

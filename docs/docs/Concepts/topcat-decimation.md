@@ -1,7 +1,9 @@
 ---
 title: ToPCAT Decimation
 sidebar_position: 8
+slug: /Concepts/topcat-decimation
 ---
+# ToPCAT Decimation
 
 ## Summary
 
@@ -36,9 +38,7 @@ The [command-line version of ToPCAT](https://code.google.com/archive/p/point-clo
 ### Visualizing Decimated Point Clouds
 
 
-<div align="center">
-  <iframe width="560" height="315" src="https://www.youtube.com/embed/yxz3NzRwDpA" frameborder="0" allow="encrypted-media" allowfullscreen></iframe>
-</div>
+<YouTubeEmbed videoId="yxz3NzRwDpA" title="Visualizing Decimated Point Clouds" />
 
 -------
 

@@ -1,8 +1,9 @@
 ---
 title: DEM Differencing
 sidebar_position: 1
+slug: /Concepts/dod
 ---
-
+# DEM Differencing
 A DEM (digital elevation model) of Difference (DoD), is the result of DEM differencing. DEM differencing is the simple act of subtracting the elevations of an older DEM from the elevations a newer DEM on a cell by cell basis:
 
 ![Fly_GCD_DoD_Cartoon](/img/Fly_GCD_DoD_Cartoon.png)
@@ -10,9 +11,7 @@ A DEM (digital elevation model) of Difference (DoD), is the result of DEM differ
 This video lecture covers the basics of DEM Differencing:
 
 
-<div align="center">
-  <iframe width="560" height="315" src="https://www.youtube.com/embed/U_0LqAfbZds" frameBorder="0" allow="encrypted-media" allowFullScreen title="DEM Differencing Video"></iframe>
-</div>
+<YouTubeEmbed videoId="U_0LqAfbZds" title="DEM Differencing Video" />
 
 For more information, see pages 59-61 of in [Chapter 3](http://www.gis.usu.edu/~jwheaton/Downloads/Thesis/JMWthesis_V7_LR_Chapter03.pdf) of Wheaton JM. 2008. [Uncertainty in Morphological Sediment Budgeting of Rivers](http://www.joewheaton.org/Home/research/projects-1/morphological-sediment-budgeting/phdthesis). Unpublished PhD Thesis, University of Southampton, Southampton, 412 pp.
 

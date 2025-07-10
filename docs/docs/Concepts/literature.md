@@ -1,7 +1,10 @@
 ---
 title: Research and Publications
+slug: /Concepts/literature
 sidebar_position: 7
 ---
+#  Research and Publications
+
 GCD methodological development is described in ([Wheaton et al., 2010a](http://dx.doi.org/10.1002/esp.1886)), the Wheaton ([2008](http://sites.google.com/a/joewheaton.org/www/Home/research/projects-1/morphological-sediment-budgeting/phdthesis)) thesis, and the Wheaton et al. ([2010b](http://dx.doi.org/10.1002/rra.1305)) RRA paper. The [Matlab version of the code](/Download/old_versions.html#dod-3-matlab--gcd-3) (DoD 3) is provided as supplemental information with the [ESPL paper](http://dx.doi.org/10.1002/esp.1886) so that readers can test or extend the code as they see fit for their purposes. The Milan et al. (2011) paper provides a nice overview of basic change detection methods and Williams (2012) provides a nice overview of DEM of Differencing.
 
 
@@ -9,14 +12,10 @@ GCD methodological development is described in ([Wheaton et al., 2010a](http://d
 - Milan DJ, Heritage GL, Large ARG and Fuller IC. 2011. Filtering spatial error from DEMs: Implications for morphological change estimation. Geomorphology. 125(1): 160-171. DOI: [10.1016/j.geomorph.2010.09.012](http://dx.doi.org/10.1016/j.geomorph.2010.09.012).
 - [📄](http://geomorphology.org.uk/sites/default/files/chapters/2.3.2_DEMsOfDifference.pdf) Williams RD. 2012. [DEMs of Difference](http://geomorphology.org.uk/sites/default/files/chapters/2.3.2_DEMsOfDifference.pdf). Clarke L and Nield JM (Eds), [Geomorphological Techniques](http://geomorphology.org.uk/geomorph_techniques). British Society for Geomorphology: London, UK.  
 
-<div align="center">
-  <a href="https://www.researchgate.net/project/Geomorphic-Change-Detection">
-    <img src="/img/icons/ResearchGate_Icon.png" alt="ResearchGate Icon" width="32" style={{verticalAlign: 'middle'}} />
-    &nbsp;&nbsp;Check out GCD ResearchGate Project for Publications
-  </a>
-</div>
 
-# Follow Up Papers
+[![ResearchGate Icon](/img/icons/ResearchGate_Icon.png)](https://www.researchgate.net/project/Geomorphic-Change-Detection) [Check out GCD ResearchGate Project for Publications](https://www.researchgate.net/project/Geomorphic-Change-Detection)
+
+## Follow Up Papers
 
 - Brasington J, Rumsby BT and Mcvey RA. 2000. Monitoring and modelling morphological change in a braided gravel-bed river using high resolution GPS-based survey. Earth Surface Processes and Landforms. 25(9): 973-990. DOI: [10.1002/1096-9837(200008)25:9&lt;973::AID-ESP111>3.0.CO;2-Y](http://dx.doi.org/10.1002/1096-9837%28200008%2925:9%3C973::AID-ESP111%3E3.0.CO;2-Y)
 

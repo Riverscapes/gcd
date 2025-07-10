@@ -1,7 +1,9 @@
 ---
 title: Error Propagation
+slug: /Concepts/error-propagation
 sidebar_position: 2
 ---
+#  Error Propagation
 
 ## Background Theory on Error Propagation
 
@@ -24,9 +26,7 @@ The error volume is estimated just like change detection values are estimated: b
 For the summary tabular statistics, these are simply summed up for erosion cells and deposition cells independently the same way that volumetric estimates of change are. In the video below, illustrate how GCD calculates error volumes under different thresholding techniques:
 
 
-<div align="center">
-  <iframe width="560" height="315" src="https://www.youtube.com/embed/FHBcCf2Nx5k" frameBorder="0" allow="encrypted-media" allowFullScreen title="GCD Error Volumes Video"></iframe>
-</div>
+<YouTubeEmbed videoId="FHBcCf2Nx5k" title="GCD Error Volumes Video" />
 
 ### Further Reading on Error Propagation
 
