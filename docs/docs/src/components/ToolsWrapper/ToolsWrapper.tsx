@@ -5,7 +5,7 @@ type ToolCardProps = {
   title: string;
   description?: string;
   logoUrl?: string;
-  toolUrl: string;
+  toolUrl?: string;
   imageUrl?: string; // Optional image field
   // cardsize?: "sm" | "md" | "lg";
 };
