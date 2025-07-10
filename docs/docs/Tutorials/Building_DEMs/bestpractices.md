@@ -35,15 +35,16 @@ This exercise is meant to help you understand how best to prepare raster DEMs to
 
 ![ExcerciseF2](/img/tutorials/ExcerciseF2.png)
 
-import YouTube from "@site/docs/src/components/YouTube";
+<!-- 
+import YouTubeEmbed from '@theme/YouTubeEmbed'; -->
 
-<YouTube embedId="HM9o_xK0iD4" title="Best Practices Part 2" />
+<YouTubeEmbed videoId="HM9o_xK0iD4" title="Best Practices Part 2" />
 
 #### Part 3 - Clean Raster Tool Fix.. not ideal
 
 ![ExcerciseF3](/img/tutorials/ExcerciseF3.png)
 
-<YouTube embedId="CWDE6mQPq-0" title="Best Practices Part 3" />
+<YouTubeEmbed videoId="CWDE6mQPq-0" title="Best Practices Part 3" />
 
 #### Related Online Help or Tutorials for this Topic
 

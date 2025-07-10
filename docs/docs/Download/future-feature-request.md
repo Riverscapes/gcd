@@ -1,7 +1,9 @@
 ---
 title: Feature Requests
 sidebar_position: 4
+slug: /Download/future-feature-request
 ---
+# Feature Requests
 
 We would like to hear what you have to say about the future direction of GCD development! Please log feature requests as [issues on GitHub](https://github.com/Riverscapes/gcd/issues). Be sure to tag them as *enhancement* (if you need help on how to post an issue see [here](/Download/known-bugs#posting-an-issue)).
 

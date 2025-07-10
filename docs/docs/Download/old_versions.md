@@ -1,7 +1,9 @@
 ---
 title: Prior Versions
 sidebar_position: 5
+slug: /Download/old_versions
 ---
+# Prior Versions
 
 GCD has been through multiple iterations with the current version being [GCD 7](/Download). However, all of the old versions can be downloaded below and still work (many with various version specific ESRI ArcGIS dependencies). We are no longer supporting any of these pre GCD 7 releases.
 

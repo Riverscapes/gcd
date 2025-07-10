@@ -1,7 +1,9 @@
 ---
 title: Installation & Updates
+slug: /Download/install
 sidebar_position: 1
 ---
+# Installation & Updates
 
 ## ArcGIS Add-In - GCD Toolbar
 To install GCD Add-In for first time to ArcGIS 10.4 or later, simply double-click on [downloaded](https://github.com/Riverscapes/gcd/releases/latest) `*.ESRIAddin` file, while **NOT** in an active ArcMap session. To update, remove the existing, earlier GCD 7.X add-in from your `Customize → AddIn Manager` menu, close ArcMap and install as per above. The video below walks you through this process of updating:

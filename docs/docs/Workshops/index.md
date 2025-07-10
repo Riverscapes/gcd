@@ -1,6 +1,6 @@
 ---
 title: Workshops & Courses
-sidebar_position: 900
+sidebar_position: 500
 slug: /Workshops/
 ---
 # Workshops & Courses

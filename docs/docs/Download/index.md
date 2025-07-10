@@ -1,7 +1,9 @@
 ---
 title: Download
 sidebar_position: 200
+slug: /Download/
 ---
+# Download
 
 The GCD 7 software is available in two different versions: 
 
