@@ -6,13 +6,19 @@ slug: /Workshops/2019/Earth505/
 
 This workshop is part of [Pre Conference Workshops](https://www.rcem2019.co.nz/pre-conference-workshop) for the [RCEM 2019 Conference](https://www.rcem2019.co.nz/) convened in Auckland. The workshop is led by [James Brasington](https://www.waikato.ac.nz/staff-profiles/people/jbrasing) ([University of Waikato](https://www.waikato.ac.nz)), [Joe Wheaton](http://joewheaton.org) ([Utah State University](http://qcnr.usu.edu/wats/)), and Philip Bailey ([North Arrow Research](http://northarrowresearch.com)).
 
-[![Waikato](/img/logos/Waikato_Logo.png)](https://www.waikato.ac.nz)
-[![USU](/img/logos/etal.png)](http://etal.joewheaton.org)
+
+import { LogoWrapper } from "@site/docs/src/components/LogoWrapper/LogoWrapper";
+
+<LogoWrapper
+  logos={[
+    { imageUrl: "/img/logos/Waikato_Logo.png", name: "Waikato", url: "https://www.waikato.ac.nz" },
+    { imageUrl: "/img/logos/etal.png", name: "USU", url: "http://etal.joewheaton.org" },
+    { imageUrl: "/img/logos/RiverscapesConsortium_Logo_Black_BHS_200w.png", name: "Riverscapes", url: "http://riverscapes.net" }
+  ]}
+  size="lg"
+/>
 
 [GCD](/) is a [Riverscapes Consortium](http://riverscapes.net) Project.
-
-[![Riverscapes](/img/logos/RiverscapesConsortium_Logo_Black_BHS_200w.png)](http://riverscapes.net)
-
 ## Date & Times
 
 - 9:00am Sat 16 Nov 2019 - 9am to 4:30pm
