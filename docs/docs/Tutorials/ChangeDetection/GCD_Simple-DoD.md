@@ -50,14 +50,13 @@ This exercise is intended to contrast how to build a [DoD](/Concepts/dod) (DEM o
 
 ![ExcerciseG1A](/img/tutorials/ExcerciseG1A.png)
 
-import YouTube from "@site/docs/src/components/YouTube";
 
-<YouTube embedId="rda6aVCPF9Q" title="Simple DoD Analysis in ArcGIS 10" />
+<YouTubeEmbed videoId="rda6aVCPF9Q" title="Simple DoD Analysis in ArcGIS 10" />
 
 In this video tutorial, we show you how to do a simple DoD Analysis in ArcGIS 10 just using the rater calculator.
 
 
-<YouTube embedId="YHbDByz6HO4" title="Simple DoD Analysis in ArcGIS 10 - Part 2" />
+<YouTubeEmbed videoId="YHbDByz6HO4" title="Simple DoD Analysis in ArcGIS 10 - Part 2" />
 
 The example data used in this tutorial are from Sulphur Creek, Napa County, California.
 
@@ -71,14 +70,14 @@ For corresponding lecture slides and more context, see [this topic](/Help/Worksh
 ![ExcerciseG1B_steps](/img/tutorials/ExcerciseG1B_steps.png)
 
 
-<YouTube embedId="_lbqCraoi0U" title="Thresholding in ArcGIS" />
+<YouTubeEmbed videoId="_lbqCraoi0U" title="Thresholding in ArcGIS" />
 
 #### Part 2 GCD
 
 ![ExcerciseG2](/img/tutorials/ExcerciseG2.png)
 
 
-<YouTube embedId="8KrOMnpBATY" title="GCD Analysis" />
+<YouTubeEmbed videoId="8KrOMnpBATY" title="GCD Analysis" />
 
 #### Part 3 Practice in GCD
 
@@ -86,10 +85,10 @@ For corresponding lecture slides and more context, see [this topic](/Help/Worksh
 
 ##### GCD 7 Tutorial Video
 
-<YouTube embedId="MI6p4DfT3Sk" title="GCD 7 Tutorial Video" />
+<YouTubeEmbed videoId="MI6p4DfT3Sk" title="GCD 7 Tutorial Video" />
 ##### GCD 6 Tutorial Video
 
-<YouTube embedId="khJE7dRsIKQ" title="GCD 6 Tutorial Video" />
+<YouTubeEmbed videoId="khJE7dRsIKQ" title="GCD 6 Tutorial Video" />
 
 ### Related Online Help or Tutorials for this Topic
 

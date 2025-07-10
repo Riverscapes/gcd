@@ -5,7 +5,6 @@ slug: /Tutorials/ErrorModelling/FIS/
 
 # Building your own FIS
 
-import YouTube from "@site/docs/src/components/YouTube";
 import { ToolsWrapper } from "@site/docs/src/components/ToolsWrapper/ToolsWrapper";
 
 
@@ -16,28 +15,28 @@ These video tutorials goes through how to customize a Fuzzy Inference System in 
 
 ### Part I - Getting Around in the Fuzzy Logic Toolbox
 
-<YouTube embedId="USy-Zk5wNuw" title="Getting Around in the Fuzzy Logic Toolbox" />
+<YouTubeEmbed videoId="USy-Zk5wNuw" title="Getting Around in the Fuzzy Logic Toolbox" />
 
 
 ### Part II - Looking at an Existing Fuzzy Inference System
 
 This goes through how an existing FIS that is installed with GCD 5 is set up, which is described in both Wheaton (2008) and Wheaton et al. (2010). The video shows you how to explore how the fuzzy inference system works and how it is organized.
 
-<YouTube embedId="mOYfYoNxRTY" title="Looking at an Existing Fuzzy Inference System" />
+<YouTubeEmbed videoId="mOYfYoNxRTY" title="Looking at an Existing Fuzzy Inference System" />
 
 
 ### Part III - Modifying a Fuzzy Inference System
 
 This video goes through modifying inputs and rules in Matlab's [Fuzzy Logic Toolbox](http://www.mathworks.com/products/fuzzylogic/).
 
-<YouTube embedId="ld1Q3uEo1SQ" title="Modifying a Fuzzy Inference System" />
+<YouTubeEmbed videoId="ld1Q3uEo1SQ" title="Modifying a Fuzzy Inference System" />
 
 
 ## Customizing Fuzzy Inference Systems with a Text Editor
 
 This video goes through how you customize a Fuzzy Inference System using either GCD or a text editor for use in GCD.
 
-<YouTube embedId="sPDx8Wsu2DA" title="Customizing Fuzzy Inference Systems with a Text Editor" />
+<YouTubeEmbed videoId="sPDx8Wsu2DA" title="Customizing Fuzzy Inference Systems with a Text Editor" />
 
 
 To see how to edit an FIS using the GCD's `Fuzzy Inference System Editor`, see here.
@@ -53,11 +52,11 @@ As a workaround, we've developed some simple Matlab code (`FIS_IT.m`) that allow
 
 This video tutorial goes through how to run the FIS it! code:
 
-<YouTube embedId="UmxxHcO_NcM" title="How to run the FIS it! code" />
+<YouTubeEmbed videoId="UmxxHcO_NcM" title="How to run the FIS it! code" />
 
 For those of you who might want to extend the code, this video tutorial walks through how the code is organized and works:
 
-<YouTube embedId="yPDJKem3GnI" title="How the FIS it! code is organized and works" />
+<YouTubeEmbed videoId="yPDJKem3GnI" title="How the FIS it! code is organized and works" />
 
 
 If you do make your own FIS, and want to produce some production quality plots of the input and output membership functions, check out '[R Plot Function for Fuzzy Membership Functions](/tutorials--how-to/viii-building-your-own-fis/fuzzymembershipplot)'.

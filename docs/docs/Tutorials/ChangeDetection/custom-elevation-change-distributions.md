@@ -48,9 +48,7 @@ What do I need to do to run the script?
 
 
 
-import YouTube from "@site/docs/src/components/YouTube";
-
-<YouTube embedId="ughZsKnmcCg" title="Custom Elevation Change Distributions in R" />
+<YouTubeEmbed videoId="ughZsKnmcCg" title="Custom Elevation Change Distributions in R" />
 
 
 

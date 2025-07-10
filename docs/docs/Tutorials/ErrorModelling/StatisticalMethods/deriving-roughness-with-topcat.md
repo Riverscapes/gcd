@@ -48,9 +48,8 @@ C:\0_GCD\Exercises\M_ToPCATRoughness\TLS_Flume\Exercise
 
 5. Due to scale of flume data you may want to adjust symbology.
 
-import YouTube from "@site/docs/src/components/YouTube";
 
-<YouTube embedId="v5xd9-UQook" title="ToPCAT Roughness Video Tutorial" />
+<YouTubeEmbed videoId="v5xd9-UQook" title="ToPCAT Roughness Video Tutorial" />
 
 ### Related Online Help or Tutorials for this Topic
 

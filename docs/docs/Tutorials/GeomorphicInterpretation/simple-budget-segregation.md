@@ -8,9 +8,8 @@ slug: /Tutorials/GeomorphicInterpretation/simple-budget-segregation
 The [`Budget Segregation`](/gcd-command-reference/gcd-analysis-menu/c-geomorphic-change-detection-submenu/budget-segregation) tool's application is illustrated in the video below:
 
 
-import YouTube from "@site/docs/src/components/YouTube";
 
-<YouTube embedId="27gm8EvbIC4" title="Basic Budget Segregation" />
+<YouTubeEmbed videoId="27gm8EvbIC4" title="Basic Budget Segregation" />
 
 See slides below for some background on Budget Segregation:
 

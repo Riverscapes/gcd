@@ -38,9 +38,9 @@ Everything you need to create a TIN can be found in the `PatsCabinSurveyPoints.c
 
 Although not covered in the video tutorial, I would suggest exporting the `PatsCabinSurveyPoints.csv` table you imported as X-Y points to a ShapeFile or feature class to use in the construction of the TIN (I named mine `TopoSurveyPoints`).
 
-import YouTube from "@site/docs/src/components/YouTube";
 
-<YouTube embedId="jb-UY6S6r8I" title="Pats Cabin Data Overview" />
+
+<YouTubeEmbed videoId="jb-UY6S6r8I" title="Pats Cabin Data Overview" />
 
 ## Prerequisite for this Exercise
 
@@ -60,28 +60,28 @@ The following steps lead you through the process of creating an initial TIN and 
 
 In this video tutorial, we go through the simplest form of constructing a TIN from just raw topographic survey point data. We also highlight some of the potential pitfalls to this approach.
 
-<YouTube embedId="FrXqYazKuAk" title="Your First TIN" />
+<YouTubeEmbed videoId="FrXqYazKuAk" title="Your First TIN" />
 
 
 ### A Better TIN
 
 In this video tutorial, we talk about how you can build a TIN using a polygon hardclip boundary as well as how to manually edit your tin with the TIN Editing Tools.
 
-<YouTube embedId="LoK6lazwGqM" title="A Better TIN" />
+<YouTubeEmbed videoId="LoK6lazwGqM" title="A Better TIN" />
 
 
 ### A Better TIN yet
 
 In this video tutorial, we will use the same data used in our first two TINs as well as the some 3D breakline data provided to you:
 
-<YouTube embedId="x3iCJ9xBocE" title="A Better TIN yet" />
+<YouTubeEmbed videoId="x3iCJ9xBocE" title="A Better TIN yet" />
 
 
 ### Building DEM
 
 Building the DEM is a simple matter of [converting the TIN to a Raster](http://help.arcgis.com/en/arcgisdesktop/10.0/help/index.html#//00q900000077000000.htm). This video tutorial walks you through the considerations.
 
-<YouTube embedId="cORkIYUp3_U" title="Building DEM" />
+<YouTubeEmbed videoId="cORkIYUp3_U" title="Building DEM" />
 
 For this exercise, we have not been careful with the creation of this raster (see [best practices](/gcd-concepts/data-preparation---best-practices) for a follow up).
 
@@ -98,14 +98,14 @@ Since we have a DEM that includes shots above the water and below the water, and
 
 The resulting water depth map can be overlaid on the DEM and provides a more intuitive context of the physcial habitat within the reach as the pools, bars, and beaver ponds jump out more clearly then from the topography alone. This video walks you through the sequence:
 
-<YouTube embedId="hSGW9p570Y8" title="Building Water Depth DEM" />
+<YouTubeEmbed videoId="hSGW9p570Y8" title="Building Water Depth DEM" />
 
 
 ### OPTIONAL: Pulling Some Cross Sections and a Long Profile Off DEM
 
 Using the 3D Analyst interpolate line and profile graph features, you can easily pull off a longitudinal profile and cross section(s) from the DEM. This video shows you how:
 
-<YouTube embedId="Kv263FBGJnE" title="Cross Sections and Long Profile" />
+<YouTubeEmbed videoId="Kv263FBGJnE" title="Cross Sections and Long Profile" />
 
 
 ## References

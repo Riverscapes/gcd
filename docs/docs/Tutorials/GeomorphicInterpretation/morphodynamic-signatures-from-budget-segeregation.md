@@ -42,12 +42,11 @@ Suggested path: `C:\0_GCD\Exercises\V_BudgetSeg`
 
 How to do in gCD 7
 
-import YouTube from "@site/docs/src/components/YouTube";
 
-<YouTube embedId="2A2R4L8yiq8" title="How to do in GCD 7" />
+<YouTubeEmbed videoId="2A2R4L8yiq8" title="How to do in GCD 7" />
 
 How to do in GCD 6:
-<YouTube embedId="IYUyBzTGMAA" title="How to do in GCD 6" />
+<YouTubeEmbed videoId="IYUyBzTGMAA" title="How to do in GCD 6" />
 
 #### Exercise V: Part 2: Derive GI Budget Segregation
 
@@ -61,7 +60,7 @@ C:\0_GCD\Exercises\V_BudgetSeg
 6. Use classified polygon in a budget segregation
 7. Interrogate results
 
-<YouTube embedId="W_zJNJ85dmc" title="Derive GI Budget Segregation" />
+<YouTubeEmbed videoId="W_zJNJ85dmc" title="Derive GI Budget Segregation" />
 
 ### Related Online Help or Tutorials for this Topic
 

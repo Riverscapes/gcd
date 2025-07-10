@@ -35,8 +35,7 @@ This exercise is meant to help you understand how best to prepare raster DEMs to
 
 ![ExcerciseF2](/img/tutorials/ExcerciseF2.png)
 
-<!-- 
-import YouTubeEmbed from '@theme/YouTubeEmbed'; -->
+
 
 <YouTubeEmbed videoId="HM9o_xK0iD4" title="Best Practices Part 2" />
 

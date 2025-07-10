@@ -2,7 +2,7 @@
 title: K. Statistical Methods of Estimating Error
 slug: /Tutorials/ErrorModelling/StatisticalMethods/statistical-methods-of-estimating-erro
 ---
-
+#  K. Statistical Methods of Estimating Error
 ### Overview
 
 This exercise shows how GCD can be used for coming up with statistical models of error. We will cover coincident point analysis, interpolation error, and using the ToPCAT algorithm to look at statistics from high resolution point clouds within a user-defined moving voxel. 
@@ -24,9 +24,8 @@ This exercise shows how GCD can be used for coming up with statistical models of
 ![ExcerciseK](/img/tutorials/ExcerciseK.png)
 
 
-import YouTube from "/docs/src/components/YouTube";
 
-<YouTube embedId="Dqcd53aEozU" title="Statistical Methods of Estimating Error" />
+<YouTubeEmbed videoId="Dqcd53aEozU" title="Statistical Methods of Estimating Error" />
 
 ### Related Online Help or Tutorials for this Topic
 

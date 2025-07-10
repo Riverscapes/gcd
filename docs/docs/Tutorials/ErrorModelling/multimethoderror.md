@@ -14,9 +14,8 @@ This exercise shows how GCD can be used to produce a multi-method error surface 
 
 The GCD supports the use of hybrid multi-method surveys in the [`Survey Library`](/system/errors/NodeNotFound?suri=wuid:gx:3ed05905e41de6f6). GCD allows you to load a survey method mask, which then is used to calculate errors using different methods within the different masks. In this video tutorial, we illustrate how this is done for two examples from a reach called Pats Cabin in Bridge Creek, Oregon:
 
-import YouTube from "@site/docs/src/components/YouTube";
 
-<YouTube embedId="3JXnCzlstBQ" title="Multi-Method Error Estimation Example" />
+<YouTubeEmbed videoId="3JXnCzlstBQ" title="Multi-Method Error Estimation Example" />
 
 ## Data and Materials for Exercises
 
@@ -37,7 +36,7 @@ Video, walking you through exercise with Grand Canyon data:
 
 ### GCD 6
 
-<YouTube embedId="1MVNmbM99e4" title="GCD 6 Multi-Method Error Estimation" />
+<YouTubeEmbed videoId="1MVNmbM99e4" title="GCD 6 Multi-Method Error Estimation" />
 
 import { ToolsWrapper } from "@site/docs/src/components/ToolsWrapper/ToolsWrapper";
 

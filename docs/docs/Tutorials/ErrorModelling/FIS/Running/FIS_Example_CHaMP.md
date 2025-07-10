@@ -51,9 +51,8 @@ C:\0_GCD\Exercises\O_CHaMP_FIS
 **9. **Compare outputs from different error models 
 
 
-import YouTube from "/docs/src/components/YouTube";
 
-<YouTube embedId="t7kLfLr-iTU" title="CHaMP FIS Error Modelling Example" />
+<YouTubeEmbed videoId="t7kLfLr-iTU" title="CHaMP FIS Error Modelling Example" />
 
 ### Related Online Help or Tutorials for this Topic
 

@@ -46,9 +46,8 @@ C:\0_GCD\Exercises\R_BridgeCreek
 
 
 
-import YouTube from "@site/docs/src/components/YouTube";
 
-<YouTube embedId="vzsDEEwVVMk" title="Running GCD with FIS - Bridge Creek" />
+<YouTubeEmbed videoId="vzsDEEwVVMk" title="Running GCD with FIS - Bridge Creek" />
 
 ### Related Online Help or Tutorials for this Topic
 
@@ -71,13 +70,11 @@ import { ToolsWrapper } from "@site/docs/src/components/ToolsWrapper/ToolsWrappe
     {
       title: "Back to GCD Help",
       toolUrl: "/Help",
-      logoUrl: "/img/icons/GCDAddIn.png",
       description: "Return to the main GCD Help page."
     },
     {
       title: "Back to GCD Home",
       toolUrl: "/",
-      logoUrl: "/img/icons/GCDAddIn.png",
       description: "Go to the GCD Home page."
     }
   ]}

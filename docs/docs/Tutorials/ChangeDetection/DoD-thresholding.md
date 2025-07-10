@@ -51,20 +51,20 @@ GCD Provides three primary ways for you to threshold data (all using [exclusion]
 In this video tutorial we explain how to use the GCD [`Change Detection`](/gcd-command-reference/gcd-analysis-menu/c-geomorphic-change-detection-submenu/change-detection) panel to to a basic DoD Analysis with simple minimum level of detection thresholding. This is the equivalent of the raster calculator operation in the [03. Simple DoD in Raster Calculator](/tutorials--how-to/ii-simple-dod-in-raster-calculator) tutorial.
 
 
-<YouTube embedId="KFWfuaWPMuw" title="Simple Minimum Level of Detection" />
+<YouTubeEmbed videoId="KFWfuaWPMuw" title="Simple Minimum Level of Detection" />
 
 #### Propagated Errors
 
 In this video tutorial we explain how to use the GCD [`Change Detection`](/gcd-command-reference/gcd-analysis-menu/c-geomorphic-change-detection-submenu/change-detection) panel to to a DoD Analysis with propagated errors (from error rasters in the [`Survey Library`](/system/errors/NodeNotFound?suri=wuid:gx:3ed05905e41de6f6)) to establish the level of detection threshold. 
 
-<YouTube embedId="ZB3qrOZOyH8" title="Propagated Errors" />
+<YouTubeEmbed videoId="ZB3qrOZOyH8" title="Propagated Errors" />
 
 #### Probability
 
 In this video tutorial we explain how to use the GCD [`Change Detection`](/gcd-command-reference/gcd-analysis-menu/c-geomorphic-change-detection-submenu/change-detection) panel to to a DoD Analysis with probabilistic thresholding based on a confidence interval.
 
 
-<YouTube embedId="IUaicRVUsog" title="Probability" />
+<YouTubeEmbed videoId="IUaicRVUsog" title="Probability" />
 
 This tutorial corresponds with topic [G. Thresholding Alternatives](/Help/Workshops/workshop-topics/1-Principles/g-thresholding-alternatives) in the [GCD Workshop](/). See the lecture materials [there](/Help/Workshops/workshop-topics/1-Principles/g-thresholding-alternatives) for more background on the underlying theories for these methods.
 
@@ -80,11 +80,11 @@ This tutorial corresponds with topic [G. Thresholding Alternatives](/Help/Worksh
 ![ExcerciseI1](/img/tutorials/ExcerciseI1.png)
 How to do in GCD 7:
 
-<YouTube embedId="olZiDNeg8Q4" title="Simple minLoD in GCD 7" />
+<YouTubeEmbed videoId="olZiDNeg8Q4" title="Simple minLoD in GCD 7" />
 
 How to do in GCD 6:
 
-<YouTube embedId="Lk5XHLasGZA" title="Simple minLoD in GCD 6" />
+<YouTubeEmbed videoId="Lk5XHLasGZA" title="Simple minLoD in GCD 6" />
 
 #### Part 2 - Propagated Error
 
@@ -92,11 +92,11 @@ How to do in GCD 6:
 
 How to do in GCD 7:
 
-<YouTube embedId="nqkamJv2KQ0" title="Propagated Error in GCD 7" />
+<YouTubeEmbed videoId="nqkamJv2KQ0" title="Propagated Error in GCD 7" />
 
 How to do in GCD 6:
 
-<YouTube embedId="_QQGBkFufvQ" title="Propagated Error in GCD 6" />
+<YouTubeEmbed videoId="_QQGBkFufvQ" title="Propagated Error in GCD 6" />
 
 #### Part 3 - Probabilistic 
 
@@ -104,13 +104,12 @@ How to do in GCD 6:
 How to do in GCD 7:
 
 
-import YouTube from "@site/docs/src/components/YouTube";
 
-<YouTube embedId="HEJ8nOEwPiw" title="Probabilistic in GCD 7" />
+<YouTubeEmbed videoId="HEJ8nOEwPiw" title="Probabilistic in GCD 7" />
 
 How to do in GCD 6:
 
-<YouTube embedId="1D0KpUrdCT8" title="Probabilistic in GCD 6" />
+<YouTubeEmbed videoId="1D0KpUrdCT8" title="Probabilistic in GCD 6" />
 
 
 ------

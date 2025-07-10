@@ -51,9 +51,7 @@ C:\0_GCD\Exercises\S_SpatialCoherence
 
 
 
-import YouTube from "@site/docs/src/components/YouTube";
-
-<YouTube embedId="n0wH63OWFFU" title="Bayesian Updating Exercise" />
+<YouTubeEmbed videoId="n0wH63OWFFU" title="Bayesian Updating Exercise" />
 
 ### Related Online Help or Tutorials for this Topic
 
