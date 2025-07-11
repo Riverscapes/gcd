@@ -13,12 +13,8 @@ const config: Config = {
     v4: true, // Enables compatibility with upcoming Docusaurus v4 features
   },
 
-  url: "https://your-docusaurus-site.example.com", // The base URL of your site (no trailing slash)
+  url: "https://gcd.riverscapes.net", // The base URL of your site (no trailing slash)
   baseUrl: "/", // The sub-path where your site is served (used in GitHub Pages)
-
-  // GitHub pages deployment config
-  organizationName: "Riverscapes", // GitHub org/user name
-  projectName: "riverscapes-docs", // GitHub repo name
 
   onBrokenLinks: "throw", // Throw an error on broken links
   onBrokenMarkdownLinks: "warn", // Warn instead of throwing for broken markdown links
