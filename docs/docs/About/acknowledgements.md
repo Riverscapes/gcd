@@ -79,17 +79,10 @@ Supported by:
 * [Bonneville Power Administration](https://www.bpa.gov/efw/Pages/default.aspx)
 * [Eco Logical Research](https://www.eco-logical-research.com/)
 
-import { LogoWrapper } from "@site/docs/src/components/LogoWrapper/LogoWrapper";
-
-<LogoWrapper
-  logos={[
-    { imageUrl: "/img/logos/nsf1.gif" },
-    { imageUrl: "/img/logos/IPC_GreenOnTransparent.png" },
-    { imageUrl: "/img/logos/ELRLogo.png" },
-    { imageUrl: "/img/logos/bpaTransparent.png", name: "BPA" }
-  ]}
-  size="md"
-/>
+![NSF](/img/logos/nsf1.gif)<br />
+![Idaho Power](/img/logos/IPC_GreenOnTransparent.png)<br />
+![Eco Logical Research](/img/logos/ELRLogo.png)<br />
+![BPA](/img/logos/bpaTransparent.png)
 
 ---
 
@@ -101,14 +94,9 @@ Supported by:
 * [US Army Corps of Engineers Kansas City District](https://www.nwk.usace.army.mil)
 * [USU ICRRR](https://www.cnr.usu.edu/icrrr/)
 
-<LogoWrapper
-  logos={[
-    { imageUrl: "/img/logos/USGS_logo.png" },
-    { imageUrl: "/img/logos/612px-US-ArmyCorpsOfEngineers-Logo.svg.png" },
-    { imageUrl: "/img/logos/ICRRR-Logo_64.gif" }
-  ]}
-  size="md"
-/>
+![USGS](/img/logos/USGS_logo.png)<br />
+![Army Corps](/img/logos/612px-US-ArmyCorpsOfEngineers-Logo.svg.png)<br />
+![ICRRR](/img/logos/ICRRR-Logo_64.gif)
 
 ---
 
