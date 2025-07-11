@@ -1,0 +1,9 @@
+{
+  "label": "Tutorials",
+  "position":400 ,
+  "link": {
+    "type": "generated-index",
+    "title": "GCD Tutorials",
+    "description": "This is a reference list of concepts underpinning the GCD Software."
+  }
+}

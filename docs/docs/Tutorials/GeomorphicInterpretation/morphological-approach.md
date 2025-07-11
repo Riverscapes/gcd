@@ -1,0 +1,68 @@
+---
+title: Morphological Approach to Estimating Sediment Transport
+sidebar_position: 5
+slug: /Tutorials/GeomorphicInterpretation/morphological-approach
+---
+
+## Materials
+### Excercise Data
+
+
+import GoogleSlides from "@site/docs/src/components/GoogleSlides";
+
+
+This is an exercise for the [River Rees](https://sites.google.com/site/reesscan/) in New Zealand. It is the same exercise data from the Vericat et al. (2017) paper.
+
+![River Rees, New Zealand](/img/datasets/rees_200t.png)
+
+- **2km of braided river near [Queenstown, New Zealand](https://www.google.com/maps/place/44%C2%B046'38.6%22S+168%C2%B024'17.9%22E/@-44.7767196,168.3891697,7451m/data=!3m1!1e3!4m5!3m4!1s0x0:0x0!8m2!3d-44.777379!4d168.404972)**
+- **Two LiDAR surveys**
+- **0.5m cell resolution**
+
+
+import { ToolsWrapper } from "@site/docs/src/components/ToolsWrapper/ToolsWrapper";
+
+<ToolsWrapper
+  cards={[
+    {
+      title: "Excercise Data (DEMs & Shapefile)",
+      toolUrl: "https://s3-us-west-2.amazonaws.com/etalweb.joewheaton.org/GCD/GCD7/Tutorials/GeoTERM_Rees.zip",
+      description: "Download DEMs & Shapefile for River Rees exercise."
+    },
+    {
+      title: "Excercise Data (Shapefile Mask Only)",
+      toolUrl: "https://s3-us-west-2.amazonaws.com/etalweb.joewheaton.org/GCD/GCD7/Tutorials/MaskOnly_MorphologicalApproach.zip",
+      description: "Download Shapefile Mask Only for River Rees exercise."
+    }
+  ]}
+  cardsize="sm"
+/>
+
+
+
+### Tutorial Slides
+<GoogleSlides src="https://docs.google.com/presentation/d/e/2PACX-1vScWGoxcX9jz-_hwzoCm9T5tsFXXQEZDztzdKbs6UxdCMeVbCJuOUbSIOKRNkzGThMo6Wze-alTNP8d/embed?start=false&loop=false&delayms=3000" title="Morphological Approach Tutorial Slides" width={960} height={749} />
+
+
+### Publications
+- [Vericat D, Wheaton JM and Brasington J. 2017. Revisiting the Morphological Approach](https://www.researchgate.net/publication/316997409_5_Revisiting_the_Morphological_Approach_Opportunities_and_Challenges_with_Repeat_High-Resolution_Topography), In: [Gravel-Bed Rivers](http://dx.doi.org/10.1002/9781118971437). John Wiley & Sons, Ltd, pp. 121-158. DOI: [10.1002/9781118971437.ch5](http://dx.doi.org/10.1002/9781118971437.ch5). (see [Damia's talk here](https://www.youtube.com/watch?v=JPuxqrXStNM))
+
+------
+
+<ToolsWrapper
+  cards={[
+    {
+      title: "Back to GCD Help",
+      toolUrl: "/Help",
+      logoUrl: "/img/icons/GCDAddIn.png",
+      description: "Return to the main GCD Help page."
+    },
+    {
+      title: "Back to GCD Home",
+      toolUrl: "/",
+      logoUrl: "/img/icons/GCDAddIn.png",
+      description: "Go to the GCD Home page."
+    }
+  ]}
+  cardsize="sm"
+/>
