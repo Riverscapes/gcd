@@ -3,8 +3,8 @@ title: Reporting Bugs & Getting Support
 sidebar_position: 10
 slug: /Download/known-bugs
 ---
-# Reporting Bugs & Getting Support
-GCD is under constant development and we are eager to resolve all known issues.  However, please search [existing discussion posts](https://github.com/Riverscapes/gcd/issues),   [existing issue  posts](https://github.com/Riverscapes/gcd/issues)and our help pages first before [posting an issue](#Posting a Question).
+
+GCD is under constant development and we are eager to resolve all known issues.  However, please search [existing discussion posts](https://github.com/Riverscapes/gcd/issues),   [existing issue  posts](https://github.com/Riverscapes/gcd/issues)and our help pages first before [posting an issue](#posting-an-issue).
 
 ## Questions or Help
 
@@ -12,13 +12,13 @@ You can explore or search [past user questions here](https://github.com/Riversca
 
 ## Bugs
 
-Before logging a suspected bug, please search [known open bugs](https://github.com/Riverscapes/gcd/labels/bug). If you have more information to report about this bug, please post a comment to the appropriate issue. Otherwise, you can post a new bug to the ["I need help please" Discussion](https://github.com/Riverscapes/gcd/discussions/categories/i-need-help-please). If we deem your problem to be a software bug, we will tranfer it to our [known bugs](https://github.com/Riverscapes/gcd/labels/bug) (note we sometimes fix simple bugs, but we often just put them in the development queue for when funding is avaialable to fix them ).
+Before logging a suspected bug, please search [known open bugs](https://github.com/Riverscapes/gcd/labels/bug). If you have more information to report about this bug, please post a comment to the appropriate issue. Otherwise, you can post a new bug to the ["I need help please" Discussion](https://github.com/Riverscapes/gcd/discussions/categories/i-need-help-please). If we deem your problem to be a software bug, we will tranfer it to our [known bugs](https://github.com/Riverscapes/gcd/labels/bug) (note we sometimes fix simple bugs, but we often just put them in the development queue for when funding is avaialable to fix them).
 
 * [GCD Bugs](https://github.com/Riverscapes/gcd/labels/bug)
 
 ## Posting an Issue
 
-If you find a bug, or simply want to report an issue with the software, please log a GitHub Discussion. [💬 GitHub GCD Discussion](https://github.com/Riverscapes/gcd/discussions/categories/i-need-help-please)
+If you find a bug, or simply want to report an issue with the software, please log a GitHub Discussion. [GitHub GCD Discussion](https://github.com/Riverscapes/gcd/discussions/categories/i-need-help-please).
 
 Anyone in the GCD community and a member of GitHub  can respond, and the development team will receive a notification. Please be patient in your response. We don't have any budget for [supporting users](/Download/future-feature-request), but we do try and respond to most issues when we can. Just bare in mind that the [development team](/who), all have full-time jobs and any support we do of GCD users is usually on donated time. 
 

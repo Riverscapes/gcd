@@ -3,7 +3,6 @@ title: About GCD Software
 slug: /Download/sourcecode
 sidebar_position: 300
 ---
-# About GCD Software
 
 GCD 7 is available as two separate products:
 
@@ -37,7 +36,7 @@ The **GCD Standalone** version lets you:
 - Perform change detection
 
 :::tip
-GCD Standalone does **not** include a map display. Ideal for those using QGIS or other GIS viewers.
+GCD Standalone does **not** include a map display. Ideal for those using QGIS or other GIS software.
 :::
 
 ### Key Features
@@ -51,18 +50,12 @@ GCD Standalone does **not** include a map display. Ideal for those using QGIS or
 
 ### Prerequisites
 
-Both AddIn and Standalone versions require:
-
-:::note
-[.NET Framework 4.5.2](https://www.microsoft.com/en-ca/download/details.aspx?id=42642)
-:::
-
-> Note: Already included with Windows 10.
+Both the AddIn and Standalone versions require [.NET Framework 4.5.2](https://www.microsoft.com/en-ca/download/details.aspx?id=42642) (that should already included with Windows 10).
 
 ## Other Notes
 
 - **Incompatibility**: GCD 6 and 7 projects cannot be opened across versions.
-- **Running Both Versions**: AddIn and Standalone can coexist. Only shared resource is the FIS Library. You can use both on the same `*.gcd` file. [Details](https://github.com/Riverscapes/gcd/issues/196)
+- **Running Both Versions**: AddIn and Standalone can coexist. The only shared resource is the FIS Library. You can use both on the same `*.gcd` file. [Details](https://github.com/Riverscapes/gcd/issues/196)
 
 ## Tutorials & Extensions
 

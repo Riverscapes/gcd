@@ -2,7 +2,7 @@
 title: GCD Source Code
 sidebar_position: 3
 ---
-# GCD Source Code
+
 The entire C# source code for GCD 7 is fully open source and available in the [Riverscapes Consortium](https://riverscapes.net) [GitHub Organization](https://github.com/Riverscapes) in the [GCD GitHub Repository](https://github.com/Riverscapes/gcd/).
 
 ## Software Citation

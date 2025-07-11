@@ -1,10 +1,8 @@
 ---
-
 title: Financial Support
 sidebar_position: 1
 slug: /About/acknowledgements
---------------------
-# Financial Support
+---
 
 ## Funding
 
@@ -14,11 +12,21 @@ We are grateful for generous grant support from multiple U.S. and U.K. federal a
 
 Funding provided by:
 
-* [NERC](https://nerc.ukri.org/) – U.K. Natural Environment Research Council ([Award NE/P016804/1](http://gotw.nerc.ac.uk/list_full.asp?pcode=NE%2FP016804%2F1))
-* [USGS GCMRC](https://www.gcmrc.gov/gcmrc.aspx)
+import { LogoWrapper } from "../src/components/LogoWrapper/LogoWrapper";
 
-![NERC](/img/logos/NERC.png)<br />
-![USGS](/img/logos/USGS_logo.png)
+<LogoWrapper
+  logos={[
+    { 
+      imageUrl: "/img/logos/NERC.png", 
+      url: "https://nerc.ukri.org"
+    },
+    {
+      imageUrl: "/img/logos/USGS_logo.png", 
+      url: "https://www.gcmrc.gov/gcmrc.aspx" 
+    },
+  ]}
+  size="md"
+/>
 
 #### GeoTERM NERC Project
 

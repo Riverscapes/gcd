@@ -7,6 +7,10 @@ slug: /Download/
 
 The GCD 7 software is available in two different versions: 
 
+:::info
+GCD performs all spatial operations using the free and open source GDAL library. You do not need ArcGIS to use GCD Standalone.
+:::
+
 import { ToolsWrapper } from "../src/components/ToolsWrapper/ToolsWrapper";
 
 <ToolsWrapper
@@ -21,7 +25,7 @@ import { ToolsWrapper } from "../src/components/ToolsWrapper/ToolsWrapper";
       title: "GCD 7 Standalone",
       imageUrl: "/img/gcd_standalone.png",
       toolUrl: "https://github.com/Riverscapes/gcd/releases/latest",
-      description: "Performs all core GCD functionality (building projects and performing change detection analyses etc) but does not include any map display. If you don't possess ArcGIS, or you want to use an alternative map display tool, such as QGIS, then we recommend this version. GCD performs all spatial operations using the free and open source GDAL library. You do not need ArcGIS to use GCD Standalone."
+      description: "Performs all core GCD functionality (building projects and performing change detection analyses etc) but does not include any map display. If you don't possess ArcGIS, or you want to use an alternative map display tool, such as QGIS, then we recommend this version. The standalone is natively 64 bit."
     }
   ]}
   cardsize="sm"

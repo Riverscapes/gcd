@@ -3,7 +3,7 @@ title: Release Notes
 sidebar_position: 4
 slugL: /Download/release_notes
 ---
-# Release Notes
+
 ## GCD 7
 
 See the [commit history](https://github.com/Riverscapes/gcd/commits) in GitHub for fuller documentation of changes. Alternatively you can view the commits organized by each product [release](https://github.com/Riverscapes/gcd/releases). The release notes for [prior versions](#prior-versions) are linked at the bottom of this page.

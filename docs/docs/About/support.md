@@ -3,7 +3,6 @@ title: Support
 sidebar_position: 3
 slug: /About/support
 ---
-# Support
 
 The GCD is open-source freeware and there are a variety of ways that you can get help and training on its use. The first thing to identify is what type of help you need. We have tried to make sure that there is a [free, self-supported](#free-support) way to get trained up and get done most everything you might need to do in the software. However, if you want some help getting up to speed quickly, you might want to take a [workshop](#gcd-workshops--courses), or get support from the GCD community, or hire a professional to help you if your problems are more complicated.
 
