@@ -4,10 +4,6 @@
         "name": "📜 GCD Docusaurus Site",
         "path": "./docs"
       },
-            {
-        "name": "📜 GCD OLD SITE",
-        "path": "./docs_old"
-      },
       {
         "name": "🏠 Root", 
         "path": "./"     
