@@ -1,0 +1,48 @@
+---
+title: GUT
+sidebar_position: 3
+slug: /Workshops/2018/Aberdeen/gut
+---
+
+
+There was a brief discussion about the Geomorphic Unit Toolkit ([GUT](https://riverscapes.github.io/pyGUT/)).
+
+
+import { ToolsWrapper } from "@site/docs/src/components/ToolsWrapper/ToolsWrapper";
+
+<ToolsWrapper
+  cards={[
+    {
+      title: "GUT - Geomorphic Unit Toolkit",
+      toolUrl: "https://riverscapes.github.io/pyGUT/",
+      logoUrl: "/img/workshops/GUT_32.png"
+    }
+  ]}
+/>
+
+Joe gave a quick overview of GUT and bounced around different parts of these slides below (we didn't cover all these slides, but they are provided for reference and context):
+
+
+import  GoogleSlides  from "@site/docs/src/components/GoogleSlides";
+
+<GoogleSlides
+  src="https://docs.google.com/presentation/d/e/2PACX-1vSXH9-9mXPV0BBGu8e7b0XDOlbCLhzEjFeJ6NTYtp0_vYExF3fS7ZQZywHliDaBguU9EsRsyTfn29hb/embed?start=false&loop=false&delayms=3000"
+  title="GUT Workshop Slides"
+  width={960}
+  height={749}
+/>
+
+
+
+<ToolsWrapper
+  cards={[
+    {
+      title: "Back to GCD Home",
+      toolUrl: "/"
+    },
+    {
+      title: "Back to Workshops",
+      toolUrl: "/Help/Workshops/"
+    }
+  ]}
+/>

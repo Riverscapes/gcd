@@ -1,0 +1,131 @@
+---
+title: Financial Support
+sidebar_position: 1
+slug: /About/acknowledgements
+---
+
+## Funding
+
+We are grateful for generous grant support from multiple U.S. and U.K. federal agencies as well as private companies. Their contributions made the professional development of GCD possible.
+
+### GCD 7 Development
+
+Funding provided by:
+
+import { LogoWrapper } from "../src/components/LogoWrapper/LogoWrapper";
+
+<LogoWrapper
+  logos={[
+    { imageUrl: "/img/logos/NERC.png", url: "https://nerc.ukri.org" },
+    { imageUrl: "/img/logos/USGS_logo.png", url: "https://www.gcmrc.gov/gcmrc.aspx" }
+  ]}
+  size="sm"
+/>
+<br /><br />
+
+#### GeoTERM NERC Project
+
+Our international partners provided generous support, sharing expertise, data, and funding:
+
+##### Agencies and Research Institutes
+
+* [Scottish Environmental Protection Agency](https://www.sepa.org.uk) – Alasdair Matheson & Helen Reid
+* [NIWA](https://www.niwa.co.nz/) – [Jo Hoyle](https://www.niwa.co.nz/people/jo-hoyle)
+* [James Hutton Institute](https://www.hutton.ac.uk) – [Stephen Addy](https://www.hutton.ac.uk/staff/stephen-addy)
+
+<LogoWrapper
+  logos={[
+    { imageUrl: "/img/logos/SEPA_Logo.png", url: "https://www.sepa.org.uk" },
+    { imageUrl: "/img/logos/NIWA.jpg", url: "https://www.niwa.co.nz" },
+    { imageUrl: "/img/logos/jhi.png", url: "https://www.hutton.ac.uk" }
+  ]}
+  size="md"
+/>
+<br /><br />
+##### New Zealand Regional Councils
+
+* [Hawkes Bay Regional Council](https://www.hbrc.govt.nz/)
+* [Ottago Regional Council](https://www.orc.govt.nz/)
+* [Environment Canterbury Regional Council](https://www.ecan.govt.nz/)
+<br />
+<LogoWrapper
+  logos={[
+    { imageUrl: "/img/logos/HawkesBay.png", url: "https://www.hbrc.govt.nz/" },
+    { imageUrl: "/img/logos/OtagoRegionalCouncil_Logo.png", url: "https://www.orc.govt.nz/" },
+    { imageUrl: "/img/logos/EnvironmentCanterbury_Logo.png", url: "https://www.ecan.govt.nz/" }
+  ]}
+  size="sm"
+/>
+<br /><br />
+##### Consulting Firms
+
+* [Land River Sea Consulting](http://www.landriversea.com/) – Matthew Gardner
+* [North Arrow Research](http://northarrowresearch.com) – Matt Reimer & Philip Bailey
+<br />
+<LogoWrapper
+  logos={[
+    { imageUrl: "/img/logos/NA_Logo_150pxTall.png", url: "http://northarrowresearch.com" },
+    { imageUrl: "/img/logos/LandRiverSea.png", url: "http://www.landriversea.com/" }
+  ]}
+  size="sm"
+/>
+<br /><br />
+##### Universities
+
+* [University of Waikato](https://www.waikato.ac.nz) – [James Brasington](https://www.waikato.ac.nz/staff-profiles/people/jbrasing)
+* [Utah State University](https://qcnr.usu.edu) – [Joe Wheaton](http://www.joewheaton.org)
+<br />
+<LogoWrapper
+  logos={[
+    { imageUrl: "/img/logos/Waikato_Logo.png", url: "https://www.waikato.ac.nz" },
+    { imageUrl: "/img/logos/etal.png", url: "https://qcnr.usu.edu" }
+  ]}
+  size="sm"
+/>
+
+---
+
+### GCD 6 Development
+
+Supported by:
+
+* [NSF](https://www.nsf.gov/awardsearch/showAward?AWD_ID=1226127) (Award #1226127 – Geoinformatics)
+* [Idaho Power Company](https://www.idahopower.com/about-us/environmental-stewardship/)
+* [Bonneville Power Administration](https://www.bpa.gov/efw/Pages/default.aspx)
+* [Eco Logical Research](https://www.eco-logical-research.com/)
+
+<LogoWrapper
+  logos={[
+    { imageUrl: "/img/logos/nsf1.gif", url: "https://www.nsf.gov/awardsearch/showAward?AWD_ID=1226127" },
+    { imageUrl: "/img/logos/IPC_GreenOnTransparent.png", url: "https://www.idahopower.com/about-us/environmental-stewardship/" },
+    { imageUrl: "/img/logos/ELRLogo.png", url: "https://www.eco-logical-research.com/" },
+    { imageUrl: "/img/logos/bpaTransparent.png", url: "https://www.bpa.gov/efw/Pages/default.aspx" }
+  ]}
+  size="sm"
+/>
+<br />
+---
+
+### GCD 5, 4, and 3 Development
+
+Supported by:
+
+* [USGS GCMRC](https://www.gcmrc.gov/gcmrc.aspx)
+* [US Army Corps of Engineers Kansas City District](https://www.nwk.usace.army.mil)
+* [USU ICRRR](https://www.cnr.usu.edu/icrrr/)
+
+<LogoWrapper
+  logos={[
+    { imageUrl: "/img/logos/USGS_logo.png", url: "https://www.gcmrc.gov/gcmrc.aspx" },
+    { imageUrl: "/img/logos/612px-US-ArmyCorpsOfEngineers-Logo.svg.png", url: "https://www.nwk.usace.army.mil" },
+    { imageUrl: "/img/logos/ICRRR-Logo_64.gif", url: "https://www.cnr.usu.edu/icrrr/" }
+  ]}
+  size="sm"
+/>
+<br />
+---
+
+## Keep it Going
+
+* [💰 Donate Now](/Download/future-feature-request#want-to-donate-to-the-cause)<br />
+* [💡 GCD Enhancements](/Download/future-feature-request#making-feature-requests)
