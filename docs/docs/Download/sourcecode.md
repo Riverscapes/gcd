@@ -1,5 +1,6 @@
 ---
 title: GCD Source Code
+slug: /Download/sourcecode
 sidebar_position: 3
 ---
 

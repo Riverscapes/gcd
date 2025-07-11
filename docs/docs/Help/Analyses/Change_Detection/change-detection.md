@@ -1,6 +1,7 @@
 ---
 title: Change Detection
 sidebar_position: 1
+slug: /Help/Analyses/Change_Detection/change-detection
 ---
 # Change Detection
 

@@ -1,7 +1,7 @@
 ---
 title: Essential Best Practices to Support Change Detection
 sidebar_position: 2
-slug: /Tutorials/Building_DEMs/building-dems
+slug: /Tutorials/Building_DEMs/bestpractices
 ---
 # Essential Best Practices to Support Change Detection
 

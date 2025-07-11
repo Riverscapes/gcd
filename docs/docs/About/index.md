@@ -1,6 +1,5 @@
 ---
 title: About GCD Software
-slug: /Download/sourcecode
 sidebar_position: 300
 ---
 
