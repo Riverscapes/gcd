@@ -49,9 +49,16 @@ Since [GCD 5](/Download/old_versions.html#gcd-5), [Philip Bailey](http://northar
 - [Chris Garrard](https://www.gis.usu.edu/~chrisg) – primary developer of GCD 4.
 - [Greg Pasternack](http://pasternack.ucdavis.edu/) – advisor & sounding board.
 
-![North Arrow Logo](/img/logos/NA_Logo_150pxTall.png)
-![ET-AL Logo](/img/logos/etal.png)
-![ESSA Logo](/img/logos/essa_logo_blank.png)
+import { LogoWrapper } from "../src/components/LogoWrapper/LogoWrapper";
+
+<LogoWrapper
+  logos={[
+    { imageUrl: "/img/logos/NA_Logo_150pxTall.png", url: "http://northarrowresearch.com" },
+    { imageUrl: "/img/logos/etal.png", url: "http://etal.joewheaton.org" },
+    { imageUrl: "/img/logos/essa_logo_blank.png", url: "https://essa.com" }
+  ]}
+  size="md"
+/>
 
 ---
 
