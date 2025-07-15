@@ -21,7 +21,7 @@ One of the most useful statistics from a point cloud can be those that describe 
 Figure 4 from Brasington et al. ([2012](#Relevant_Literature)) illustrates this workflow (at left). On a cell by cell basis this operation is computationally expensive and is not a standard tool in popular GIS. ToPCAT uses the point values contained within the defined grid size to calculate the minimum, maximum, mean, detrended mean, range, standard deviation, detrended standard deviation, skew, detrended skew, kurtosis, detrended kurtosis, and point density. A minimum number of points is necessary, generally 4, to calculate the detrended standard deviation; the necessity to have more than one point within the cell resolution of analysis is in support of many of the concepts presented in Cell Resolution. Having these statistics in a regularly spaced grid is invaluable for developing a detrended standard deviation raster to represent surface roughness.
 
 
-In [GCD 6](/Download/old_versions.html), you could run ToPCAT within GCD.
+In [GCD 6](/Download/old_versions), you could run ToPCAT within GCD.
 
 ![ToPCAT_Workflow](/img/ToPCAT_Workflow.png)
 
@@ -32,7 +32,7 @@ In [GCD 6](/Download/old_versions.html), you could run ToPCAT within GCD.
 The [command-line version of ToPCAT](https://code.google.com/archive/p/point-cloud-tools/) is straight forward to use, but requires a fair degree of pre and post processing. There are now three *other* ways to implement ToPCAT in a more familiar GIS environment:
 1. Now, with GCD 7, you can run [ToPCAT](http://tat.riverscapes.net/Help/Data_Preparation/topcat-menu/topcat-point-cloud-decimation-tool.html) from the [`Data Preparation → ToPCAT`](http://tat.riverscapes.net/Help/Data_Preparation/topcat-menu/) menu.  A common workflow is to export just the locally detrended standard deviation as a proxy roughness surface and input this into GCD as an associated surface.
 2. The [MBES Toolkit](http://sites.google.com/a/joewheaton.org/mbs-gcd/mbes-toolkit-download) (a standalone GUI), now makes these pre and post processing steps seamless and allows you to run ToPCAT from an easy to use user interface. The two main commands are [`ToPCAT Prep`](http://tat.riverscapes.net/Help/Data_Preparation/topcat-menu/topcat-preparation-tool.html)and [`ToPCAT Point Cloud Decimation`](http://tat.riverscapes.net/Help/Data_Preparation/topcat-menu/topcat-point-cloud-decimation-tool.html). 
-3. These same commands are available in the GCD 6 Add-In. In [GCD 6](/Download/old_versions.html), you could run ToPCAT within GCD from the [`Data Preparation → ToPCAT`](http://gcd6help.joewheaton.org/gcd-command-reference/data-prep-menu/e-topcat-menu) menu. 
+3. These same commands are available in the GCD 6 Add-In. In [GCD 6](/Download/old_versions), you could run ToPCAT within GCD from the [`Data Preparation → ToPCAT`](http://gcd6help.joewheaton.org/gcd-command-reference/data-prep-menu/e-topcat-menu) menu. 
 
 ### Visualizing Decimated Point Clouds
 

@@ -35,7 +35,7 @@ In 2015, Joe, James, and [Damia Vericat](http://www.damiavericat.eu/) authored a
 
 The latest version of GCD is being developed by [North Arrow Research](http://northarrowresearch.com/) and [ET-AL](http://etal.joewheaton.org/).
 
-Since [GCD 5](/Download/old_versions.html#gcd-5), [Philip Bailey](http://northarrowresearch.com/#people) has led development and architecture. He and [Matt Reimer](http://northarrowresearch.com/#people) are now the primary developers. Together with Joe, they launched the [Riverscapes Consortium](https://riverscapes.net).
+Since [GCD 5](/Download/old_versions#gcd-5), [Philip Bailey](http://northarrowresearch.com/#people) has led development and architecture. He and [Matt Reimer](http://northarrowresearch.com/#people) are now the primary developers. Together with Joe, they launched the [Riverscapes Consortium](https://riverscapes.net).
 
 [![Riverscapes Logo](/img/logos/RiverscapesConsortium_Logo_Black_BHS_200w.png)](https://riverscapes.net)
 

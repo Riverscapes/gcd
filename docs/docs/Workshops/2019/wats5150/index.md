@@ -28,7 +28,7 @@ import { ToolsWrapper } from "@site/docs/src/components/ToolsWrapper/ToolsWrappe
     },
     {
       title: "Course Topics, Slides and Materials",
-      toolUrl: "http://gcd.riverscapes.net/Workshops/2019/wats5150/topics.html"
+      toolUrl: "/Workshops/2019/wats5150/topics"
     }
   ]}
 />

@@ -14,11 +14,11 @@ Instills background theory of geomorphic change detection and sediment budgeting
 
 
 
-[![USU Old Main](../../../../static/img/logos/USU_OldMainOnly.png)](https://gcd.riverscapes.net/Workshops/2019/wats6850/)  
-[WATS 6850 - Geomorphic Change Detection - Class Pages](https://gcd.riverscapes.net/Workshops/2019/wats6850/)
+[![USU Old Main](../../../../static/img/logos/USU_OldMainOnly.png)](/Workshops/2019/wats6850/)  
+[WATS 6850 - Geomorphic Change Detection - Class Pages](/Workshops/2019/wats6850/)
 
 
-**Update!** As of 2020, WATS 6850 is no longer being taught. The course was last taught in [Spring 2019](https://gcd.riverscapes.net/Workshops/2019/wats6850/).
+**Update!** As of 2020, WATS 6850 is no longer being taught. The course was last taught in [Spring 2019](/Workshops/2019/wats6850/).
 
 
 

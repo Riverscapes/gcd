@@ -13,6 +13,6 @@ GCD organizes data and analyses into "projects". GCD projects are self contained
 ## Sharing GCD Projects
 
 
-Zipping up a GCD Project and all of its contents is easy, and anyone with the same version of GCD can [open up your project](/Help/project-menu/open-project.html) and view the results. We illustrate how below:
+Zipping up a GCD Project and all of its contents is easy, and anyone with the same version of GCD can [open up your project](/Help/project-menu/open-project) and view the results. We illustrate how below:
 
 <YouTubeEmbed videoId="s2v0-1c9XCg" title="Sharing GCD Projects Video" />

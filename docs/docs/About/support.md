@@ -39,7 +39,7 @@ We have [taught five bespoke GCD workshops](http://www.joewheaton.org/workshops.
 
 ## Discussion Forum & Issue Board
 
-We use [GitHub Discussions](https://github.com/Riverscapes/gcd/discussions) as a forum for [asking questions and getting help](/Download/known-bugs.html#questions-or-help) as well as [reporting bugs](/Download/known-bugs.html#bugs). You can search the forum for past issues without a login, but to post to the forum you will need to create a [free GitHub account](https://github.com/join).
+We use [GitHub Discussions](https://github.com/Riverscapes/gcd/discussions) as a forum for [asking questions and getting help](/Download/known-bugs#questions-or-help) as well as [reporting bugs](/Download/known-bugs#bugs). You can search the forum for past issues without a login, but to post to the forum you will need to create a [free GitHub account](https://github.com/join).
 
 [**GCD Discussion Forum**](https://github.com/Riverscapes/gcd/discussions)
 
@@ -49,13 +49,13 @@ If discussion issues raised turn out to be bugs or turn into feature requests, w
 
 There are lots of ways to get your hands on repeat topographic datasets even if you don't have your own. Through our [tutorials](/Tutorials) we provide a number of repeat topographic survey datasets from around the world for you to play with.
 
-[**🗂 Repeat Topographic Datasets & GCD Projects**](/example-data-sets.html)
+[**🗂 Repeat Topographic Datasets & GCD Projects**](/example-data-sets)
 
 ## Paid Support
 
 While the software is free and reasonably well documented, it is not perfect, and you get what you pay for. If you have [sponsored the development](/acknowledgements) of specific features or hired us to carry out research, we make sure you get exactly what you need. If you've downloaded the free software and [find a bug and report it](/Download/known-bugs#bugs), we try to fix it to the extent we can and we have funding support to do so.
 
-If you're interested in [seeing new features added to GCD](/Download/future-feature-request.html#making-feature-requests) or having our development team build custom features or apps to meet your needs, please get in touch.
+If you're interested in [seeing new features added to GCD](/Download/future-feature-request#making-feature-requests) or having our development team build custom features or apps to meet your needs, please get in touch.
 
 [**GCD Enhancements**](/Download/future-feature-request#making-feature-requests)
 

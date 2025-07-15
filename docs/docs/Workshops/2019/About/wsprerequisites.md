@@ -19,7 +19,7 @@ Before you get to workshop/class, all students/participants will need:
   - For ArcGIS to run efficiently in Windows, 4 GB or more of RAM is recommended 
   - A mouse is strongly encouraged over a trackpad
 - Required Software **Installed Before Workshop**
-  - [GCD Add-In](/Download/) ([Requires ArcGIS 10.4 or later](/Download/about.html))
+  - [GCD Add-In](/Download/) ([Requires ArcGIS 10.4 or later](/Download/about))
   - [GCD Standalone](/Download/)
 - Optional Software (NOT MANDATORY)
   - Powerful text editor, such as [Notepad++](http://notepad-plus-plus.org/)

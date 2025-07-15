@@ -8,7 +8,7 @@ slug: /Workshops/
 
 We taught over 20 GCD workshops, short-courses and full semester long classes from 2010 to 2019 on geomorphic change detection (see table below).  There were four ways in which we offered this training:
 1. Semester-long graduate student course through Utah State University Department of Watershed Sciences ([WATS 6850 & WATS 5150](/Workshops/About/how-to-register))
-2. Short courses & workshops open to [public enrollment](/Workshops/About/how-to-register.html) administered through Utah State University [Restoration Consortium](http://restoration.usu.edu) and/or Geospatial Consortium
+2. Short courses & workshops open to [public enrollment](/Workshops/About/how-to-register) administered through Utah State University [Restoration Consortium](http://restoration.usu.edu) and/or Geospatial Consortium
 3. Bespoke short courses & workshops open to public enrollment administered by other sponsor
 4. Custom short course for private audience (paid for by sponsor)
 
@@ -78,7 +78,7 @@ import { ToolsWrapper } from "@site/docs/src/components/ToolsWrapper/ToolsWrappe
     },
     {
       title: "Learning Outcomes",
-      toolUrl: "/Workshops/About/primary-learning-outcomes.html",
+      toolUrl: "/Workshops/About/primary-learning-outcomes",
       description: "Learning outcomes for GCD workshops and courses."
     },
     {

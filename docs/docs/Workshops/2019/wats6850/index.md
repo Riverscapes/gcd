@@ -99,6 +99,6 @@ We will rely heavily on the primary literature for course readings. Reading assi
 
 - [Background & Target Audience](/Workshops/About/background)
 - [Course Catalog Descriptions](/Workshops/About/how-to-register)
-- [Learning Outcomes](/Workshops/About/primary-learning-outcomes.html)
+- [Learning Outcomes](/Workshops/About/primary-learning-outcomes)
 - [Course Prerequisites](/Workshops/About/wsprerequisites)
 - [USU Course Policies](/Workshops/About/usucoursepolices)
