@@ -1,5 +1,0 @@
-/* Add spacing between cards on generated index pages */
-.theme-doc-category-generated-index .card {
-  margin-bottom: 1.5rem;
-  padding: 1rem;
-}

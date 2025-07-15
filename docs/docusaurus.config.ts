@@ -39,8 +39,6 @@ const config: Config = {
     ],
   ],
 
-  stylesheets: ['src/css/custom.css'],
-
   themeConfig: {
     image: 'img/logo.png', // Social sharing image
 
