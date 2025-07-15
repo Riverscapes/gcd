@@ -14,7 +14,7 @@ System FIS represented a snapshot of the [GitHub repository](https://github.com/
 
 If you need to use the latest version of an FIS file from the repository then manually download the file in question and add it to the GCD software FIS library as a *user defined* FIS.
 
-System FIS are **not** editable. All metadata describing system is read only. Should you need to update information about a system FIS then contact the [GCD development team](/support).
+System FIS are **not** editable. All metadata describing system is read only. Should you need to update information about a system FIS then contact the [GCD development team](/About/support).
 
 ## Adding User Defined FIS
 
