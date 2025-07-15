@@ -33,7 +33,7 @@ const config: Config = {
         docs: {
           sidebarPath: './sidebars.ts', // Path to sidebar config
           routeBasePath: '/', // Serve docs at site root
-          editUrl: 'https://github.com/Riverscapes/riverscapes-docs/tree/main/sites/template', // "Edit this page" link
+          editUrl: 'https://github.com/Riverscapes/GCD/tree/master/docs', // "Edit this page" link
         },
       } satisfies Preset.Options,
     ],
