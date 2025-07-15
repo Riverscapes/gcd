@@ -1,6 +1,6 @@
 ---
 title: WATS 6850 - Geomorphic Change Detection - Restoration Monitoring
-slug: Workshops/2019/wats6850/
+slug: /Workshops/2019/wats6850/
 weight: 1
 ---
 
