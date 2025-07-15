@@ -1,7 +1,7 @@
 ---
 title: Course & Workshop Prerequisites
 sidebar_position: 6
-slug: t/Workshops/About/wsprerequisites
+slug: /Workshops/About/wsprerequisites
 ---
 
 ## Participant Background
