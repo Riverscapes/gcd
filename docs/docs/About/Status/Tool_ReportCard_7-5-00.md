@@ -7,7 +7,7 @@ sidebar_position: 1
 <!-- ![TRL 5](/img/TRL_5_128w.png) -->
 ![GCD Logo](/img/icons/GCD_Logo_White_wText.png)<br />
 
-GCD is one of original tools developed by [North Arrow Research](https://northarrowresearch.com), and Utah State University's [Ecogeomorphology & Topographic Analysis Lab](https://etal.joewheaton.org) and the [Riverscapes Consortium](https://riverscapes.net). This report card communicates GCD's compliance with the Riverscape Consortium's published [tool standards](https://riverscapes.net/Tools).
+GCD is one of original tools developed by [North Arrow Research](https://northarrowresearch.com), and Utah State University's [Ecogeomorphology & Topographic Analysis Lab](https://etal.joewheaton.org) and the [Riverscapes Consortium](https://riverscapes.net). This report card communicates GCD's compliance with the Riverscape Consortium's published [tool standards](https://tools.riverscapes.net).
 
 
 
@@ -19,14 +19,14 @@ GCD is one of original tools developed by [North Arrow Research](https://northar
 | Version | [7.5.00](https://github.com/Riverscapes/gcd/releases/tag/7.5.0) |
 | Date | 2020-06-18 |
 | Assessment Team | Wheaton |
-| [Current Assessment](http://brat.riverscapes.net/Tools#tool-status) |[Professional Grade](https://riverscapes.net/Tools/discrimination.html#tool-grade) |
+| [Current Assessment](http://brat.riverscapes.net/Tools#tool-status) |[Professional Grade](https://tools.riverscapes.net) |
 | Target Status |Commercial Grade|
-| Riverscapes Compliance |[Riverscapes Compliant](https://riverscapes.net/Tools/#riverscapes-compliant-tools) |
+| Riverscapes Compliance |[Riverscapes Compliant](https://tools.riverscapes.net) |
 | Assessment Rationale | GCD has been applied extensively throughout the World. It has been used as a research tool and practitioner tool in both monitoring and design at the reach-scale. The developers have taught over 20 workshops from 2010 to 2019 and the tool has a large user base. It is well deserving of a Professional Grade. |
 
 ## Report Card Details
 
-This tool's [discrimnation](https://riverscapes.net/Tools/discrimination#model-discrimination) evaluation by the [Riverscapes Consortium's](https://riverscapes.net) is:
+This tool's [discrimnation](https://tools.riverscapes.net) evaluation by the [Riverscapes Consortium's](https://riverscapes.net) is:
 
 **Evaluation Key:**
 None or Not Applicable: <i class="fa fa-battery-empty" aria-hidden="true"></i> •
@@ -94,7 +94,7 @@ Overall summary of GCD **FAIR**-ness <i class="fa fa-battery-quarter" aria-hidde
 The GCD [devleopment team](/About/who) are not actively seeking funding to build a **Commercial-Grade**  version of GCD, but they hope to do so in the next 2 to 5 years. A commercial grade version of GCD has been demo'd, and it  would:
 - Reporduce the functionality of the GCD-AddIn entirely within a web-based interface, and do all the computation in the cloud. 
 - Have an inviting [web-map interface](https://riverscapes.net/Data_Warehouses/#web-maps) so non GIS-users can discover GCD runs and explore them and interrogate them.
- - Making it easy for GIS users to download GCD projects for use in [Riverscapes Viewer (RV)](https://rave.riverscapes.net) with [Riverscapes Projects](https://riverscapes.net/Tools/Technical_Reference/Documentation_Standards/Riverscapes_Projects/)
+ - Making it easy for GIS users to download GCD projects for use in [Riverscapes Viewer (RV)](https://rave.riverscapes.net) with [Riverscapes Projects](https://tools.riverscapes.net/)
 - Encourage more user-interaction with GCD outputs and crowd-sourcing of information to create ownership of outputs
   - Allow users to visualize dynamic outputs of GCD through time 
   - Allow users to upload their own GCD  projects
@@ -117,4 +117,4 @@ If you share the above vision, get in touch with the developers to support/fund 
 
 [[Riverscapes Consortium](https://riverscapes.net)]
 
-The [Riverscapes Consortium's](https://riverscapes.net) Techncial Committee provides report cards for tools either deemed as "[riverscapes-compliant](https://riverscapes.net/Tools/#riverscapes-compliant)" or "[pending riverscapes-compliance](https://riverscapes.net/Tools/#tools-pending-riverscapes-compliance)".
+The [Riverscapes Consortium's](https://riverscapes.net) Techncial Committee provides report cards for tools either deemed as "[riverscapes-compliant](https://tools.riverscapes.net)" or "[pending riverscapes-compliance](https://tools.riverscapes.net)".

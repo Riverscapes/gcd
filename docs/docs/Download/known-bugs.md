@@ -20,7 +20,7 @@ Before logging a suspected bug, please search [known open bugs](https://github.c
 
 If you find a bug, or simply want to report an issue with the software, please log a GitHub Discussion. [GitHub GCD Discussion](https://github.com/Riverscapes/gcd/discussions/categories/i-need-help-please).
 
-Anyone in the GCD community and a member of GitHub  can respond, and the development team will receive a notification. Please be patient in your response. We don't have any budget for [supporting users](/Download/future-feature-request), but we do try and respond to most issues when we can. Just bare in mind that the [development team](/who), all have full-time jobs and any support we do of GCD users is usually on donated time. 
+Anyone in the GCD community and a member of GitHub  can respond, and the development team will receive a notification. Please be patient in your response. We don't have any budget for [supporting users](/Download/future-feature-request), but we do try and respond to most issues when we can. Just bare in mind that the [development team](/About/who), all have full-time jobs and any support we do of GCD users is usually on donated time. 
 
 
 This video shows you how to post an issue and some helpful things to include:
