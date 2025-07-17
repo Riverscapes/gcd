@@ -30,6 +30,10 @@ const config: Config = {
     [
       'classic', // Docusaurus classic preset for docs/blog
       {
+        gtag: {
+          trackingID: 'G-ZX2LDXQ1CK',
+          anonymizeIP: true,
+        },
         docs: {
           sidebarPath: './sidebars.ts', // Path to sidebar config
           routeBasePath: '/', // Serve docs at site root
@@ -42,6 +46,18 @@ const config: Config = {
   themeConfig: {
     image: 'img/logo.png', // Social sharing image
 
+    algolia: {
+      // The application ID provided by Algolia
+      appId: '4TGS8ZPIMY',
+
+      // Public API key: it is safe to commit it
+      apiKey: 'd084a7919fe7b5940d7125f14221eaca',
+
+      indexName: 'gcd.riverscapes.net',
+
+      // Optional: see doc section below
+      contextualSearch: true,
+    },
     navbar: {
       title: 'Geomorphic Change Detection Software', // Navbar title
       logo: {

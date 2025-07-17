@@ -2499,7 +2499,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@docusaurus/theme-search-algolia@npm:3.8.1":
+"@docusaurus/theme-search-algolia@npm:3.8.1, @docusaurus/theme-search-algolia@npm:^3.8.1":
   version: 3.8.1
   resolution: "@docusaurus/theme-search-algolia@npm:3.8.1"
   dependencies:
@@ -3015,6 +3015,7 @@ __metadata:
     "@docusaurus/core": "npm:3.8.1"
     "@docusaurus/module-type-aliases": "npm:3.8.1"
     "@docusaurus/preset-classic": "npm:3.8.1"
+    "@docusaurus/theme-search-algolia": "npm:^3.8.1"
     "@docusaurus/tsconfig": "npm:3.8.1"
     "@docusaurus/types": "npm:3.8.1"
     "@mdx-js/react": "npm:^3.1.0"
