@@ -11,11 +11,11 @@ import { LogoWrapper } from "@site/docs/src/components/LogoWrapper/LogoWrapper";
 
 <LogoWrapper
   logos={[
-    { imageUrl: "/img/logos/Waikato_Logo.png", name: "Waikato", url: "https://www.waikato.ac.nz" },
-    { imageUrl: "/img/logos/etal.png", name: "USU", url: "http://etal.joewheaton.org" },
-    { imageUrl: "/img/logos/RiverscapesConsortium_Logo_Black_BHS_200w.png", name: "Riverscapes", url: "http://riverscapes.net" }
+    { imageUrl: "/img/logos/Waikato_Logo.png", url: "https://www.waikato.ac.nz" },
+    { imageUrl: "/img/logos/etal.png", url: "http://etal.joewheaton.org" },
+    { imageUrl: "/img/logos/RiverscapesConsortium_Logo_Black_BHS_200w.png", url: "http://riverscapes.net" }
   ]}
-  size="lg"
+  size="md"
 />
 
 [GCD](/) is a [Riverscapes Consortium](http://riverscapes.net) Project.
