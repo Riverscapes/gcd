@@ -72,7 +72,7 @@ const config: Config = {
         //   label: 'MENU1', // Label in the navbar
         // },
         {
-          href: 'https://github.com/Riverscapes/riverscapes-docs', // External GitHub link
+          href: 'https://github.com/Riverscapes/gcd', // External GitHub link
           label: 'GitHub',
           position: 'right',
         },
