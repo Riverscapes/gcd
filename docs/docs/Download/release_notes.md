@@ -22,7 +22,7 @@ See the [commit history](https://github.com/Riverscapes/gcd/commits) in GitHub f
 
 ## 7.4.3 - 5 Sep 2019
 
-* Fixe issue when GCD project units are mixed ([#358](https://github.com/Riverscapes/gcd/issues/358)). i.e. the horizontal and vertical units are in one family of units (say feet) but the area and volume units are in another (e.g. yards). Note that although this wasn't explicitly a metric/imperial problem, this was not an issue for most users whose projects were entirely based in metres (linear, squared and cubed). It is recommended that users with projects using mixed units and that that were created with GCD version 7.4.2 and earlier should delete all DoDs and budget segregations and recreate them using version 7.4.3 or newer).
+* Fixed issue when GCD project units are mixed ([#358](https://github.com/Riverscapes/gcd/issues/358)). i.e. the horizontal and vertical units are in one family of units (say feet) but the area and volume units are in another (e.g. yards). Note that although this wasn't explicitly a metric/imperial problem, this was not an issue for most users whose projects were entirely based in metres (linear, squared and cubed). It is recommended that users with projects using mixed units and that that were created with GCD version 7.4.2 and earlier should delete all DoDs and budget segregations and recreate them using version 7.4.3 or newer).
 
 ## 7.4.2 - 14 Aug 2019
 
