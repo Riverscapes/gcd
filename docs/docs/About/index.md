@@ -17,15 +17,6 @@ The following table shows compatibility of GCD versions with ArcGIS:
 | GCD 6       | ✅   | ✅   | ✅   | ✅   | ✅   | ✅   | ❌     |
 | GCD 7       | ❌   | ❌   | ❌   | ✅   | ✅   | ✅   | ❌     |
 
-### Free ArcGIS for Students & Researchers
-
-Most academic institutions offer ArcGIS licenses. ESRI also provides [free one-year licenses](http://www.esri.com/landing-pages/software/arcgis/arcgis-desktop-student-trial) for students and researchers.
-
-- [Installation Guide](http://gis.joewheaton.org/about/software/arcgis_install)<br />
-- [Latest Service Pack](http://resources.arcgis.com/content/patches-and-service-packs?fa=viewPatch&PID=66&MetaID=1843)<br />
-- [More on student licenses](http://www.joewheaton.org/Home/students-teaching/teaching-materials/gis-help/arcgis-desktop-10---education-edition)
-
-
 ## GCD Standalone
 
 The **GCD Standalone** version lets you:
@@ -59,8 +50,5 @@ Both the AddIn and Standalone versions require [.NET Framework 4.5.2](https://ww
 ## Tutorials & Extensions
 
 To build surfaces in ArcGIS, you need **Spatial Analyst** and **3D Analyst** extensions enabled.
-
-- [How to Enable Extensions](http://gis.joewheaton.org/assignments/labs/lab01/getting-organized-and-oriented/arcgis-10-desktop-orientation/about-the-software#TOC-Using-Extensions)<br />
-- [Building DEMs Tutorial](/Tutorials/Building_DEMs/building-dems)
 
 <YouTubeEmbed videoId="JgBlCnGco9M"/>

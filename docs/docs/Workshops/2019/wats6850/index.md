@@ -65,7 +65,7 @@ For those with extensive experience in topographic surveying, they can opt out o
 ![Joe Wheaton](/img/people/Wheaton_round.png)
 [Joe Wheaton](http://joewheaton.org) - Associate Professor in Department of Watershed Sciences @ Utah State University
 
-![Philip Bailey](/img/people/Phlip_round.png)
+![Philip Bailey](/img/people/Philip_round.png)
 [Philip Bailey](http://northarrowresearch.com/#people) - Adjunct Professor in Department of Watershed Sciences @ Utah State University & Owner of North Arrow Research
 
 ![Matt Reimver](/img/people/Matt_round.png)

@@ -4,12 +4,7 @@ sidebar_position: 1
 ---
 # Riverscapes Report Card
 
-<!-- ![TRL 5](/img/TRL_5_128w.png) -->
-![GCD Logo](/img/icons/GCD_Logo_White_wText.png)<br />
-
 GCD is one of original tools developed by [North Arrow Research](https://northarrowresearch.com), and Utah State University's [Ecogeomorphology & Topographic Analysis Lab](https://etal.joewheaton.org) and the [Riverscapes Consortium](https://riverscapes.net). This report card communicates GCD's compliance with the Riverscape Consortium's published [tool standards](https://tools.riverscapes.net).
-
-
 
 ## Report Card Summary
 

@@ -4,17 +4,21 @@ sidebar_position: 1
 slug : /Help/Inputs/dem-surveys
 ---
 
+<div>
+  <div style={{float: 'right'}}>
+    ![Feshie Dataset](/img/datasets/feshie_200h.png)
+  </div>
+  <div>
+    DEM Surveys are the foundation of a GCD project. Projects can contain multiple DEM surveys, each representing a single topographic survey as a single raster file. Typically the surveys within a GCD project capture the same general location, although each raster can have slightly different extents. However all rasters within a GCD project **must** share some specific properties:
 
-![Feshie Dataset](/img/datasets/feshie_200h.png)
-DEM Surveys are the foundation of a GCD project. Projects can contain multiple DEM surveys, each representing a single topographic survey as a single raster file. Typically the surveys within a GCD project capture the same general location, although each raster can have slightly different extents. However all rasters within a GCD project **must** share some specific properties:
+    * identical spatial reference (map projection)
+    * the same cell resolution
+    * be divisible but not necessarily concurrent
+    * possess the same vertical units
 
-* identical spatial reference (map projection)
-* the same cell resolution
-* be divisible but not necessarily concurrent
-* possess the same vertical units
-
-The GCD project maintains a list of all DEM surveys within a project. This list is displayed under the **Inputs** node within the project explorer. Right clicking on the DEM Surveys node reveals a context menu for adding new DEM surveys to the project and adding all the existing DEM surveys to the current ArcMap document (GCD AddIn only).
-
+    The GCD project maintains a list of all DEM surveys within a project. This list is displayed under the **Inputs** node within the project explorer. Right clicking on the DEM Surveys node reveals a context menu for adding new DEM surveys to the project and adding all the existing DEM surveys to the current ArcMap document (GCD AddIn only).
+  </div>
+</div>
 ![DEM Surveys](/img/CommandRefs/00_ProjectExplorer/inputs/dem-surveys/dem-surveys.png)
 
 ## Add Existing DEM Survey

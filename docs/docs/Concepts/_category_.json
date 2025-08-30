@@ -4,6 +4,7 @@
   "link": {
     "type": "generated-index",
     "title": "Concepts",
+    "slug": "/Concepts",
     "description": "Key concepts and background for GCD."
   }
 }

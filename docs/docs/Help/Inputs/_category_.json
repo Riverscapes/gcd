@@ -1,0 +1,10 @@
+{
+  "label": "Inputs",
+  "position":400 ,
+  "link": {
+    "type": "generated-index",
+    "title": "Inputs",
+    "slug": "/Help/Inputs",
+    "description": "The GCD Software manages various different types of inputs."
+  }
+}
