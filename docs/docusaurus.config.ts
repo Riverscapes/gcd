@@ -78,6 +78,32 @@ const config: Config = {
         },
       ],
     },
+    footer: {
+      links: [
+        {
+          // Note that this NEEDS to match what's in the default template or we get another column
+          title: 'User Resources',
+          items: [
+            // {
+            //   label: 'Join this User Community',
+            //   href: '',
+            // },
+            {
+              label: 'Search the Data Exchange',
+              href: 'https://data.riverscapes.net/s?type=Project&projectTypeId=gcd&view=map',
+            },
+            {
+              label: 'Developers & Code Repository',
+              href: 'https://github.com/Riverscapes/gcd',
+            },
+            // {
+            //   label: 'Knowledge Base',
+            //   href: 'https://riverscapes.freshdesk.com/support/solutions/folders/153000068960',
+            // },
+          ],
+        },
+      ],
+    },
 
     prism: {
       theme: prismThemes.github, // Code block theme for light mode
