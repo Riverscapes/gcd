@@ -1,7 +1,7 @@
 ---
 title: GCD Software Help
 sidebar_position: 600
-slug: /Help/
+slug: /help/
 ---
 
 This command reference documentation is linked from the help within each tool and acts as a reference for all the commands within the GCD Software:
