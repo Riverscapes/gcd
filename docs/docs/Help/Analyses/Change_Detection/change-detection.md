@@ -1,7 +1,7 @@
 ---
 title: Change Detection
 sidebar_position: 1
-slug: /Help/Analyses/Change_Detection/change-detection
+slug: /help/analyses/change_detection/change-detection
 ---
 
 ![GCD Cartoon](/img/Fly_GCD_DoD_Cartoon.png)

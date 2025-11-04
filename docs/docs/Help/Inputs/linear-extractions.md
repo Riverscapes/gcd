@@ -1,7 +1,7 @@
 ---
 title: Linear Extractions
 sidebar_position: 6 
-slug: /Help/Inputs/linear-extractions
+slug: /help/inputs/linear-extractions
 ---
 
 ![Profile Routes](/img/CommandRefs/00_ProjectExplorer/inputs/profile/profile_routes.png)

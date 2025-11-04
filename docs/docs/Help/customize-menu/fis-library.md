@@ -1,6 +1,6 @@
 ---
 title: FIS Library
-slug: /Help/customize-menu/fis-library
+slug: /help/customize-menu/fis-library
 ---
 
 

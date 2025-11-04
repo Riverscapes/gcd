@@ -1,6 +1,6 @@
 ---
 title: Batch Change Detection
-slug: /Help/Analyses/Change_Detection/batch-change-detection
+slug: /help/analyses/change_detection/batch-change-detection
 sidebar_position: 5
 ---
 

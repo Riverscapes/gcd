@@ -1,6 +1,6 @@
 ---
 title: Regular Masks
-slug: /Help/Inputs/Masks/regular-masks
+slug: /help/inputs/masks/regular-masks
 sidebar_position: 1
 ---
 

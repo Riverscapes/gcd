@@ -1,6 +1,6 @@
 ---
 title: Budget Segregation Results
-slug: /Help/Analyses/Budget_Segregation/budget-segregation
+slug: /help/analyses/budget_segregation/budget-segregation
 ---
 
 The GCD software produces a rich set of results with each [budget segregation](/Help/Analyses/Budget_Segregation/budget-segregation). This section describes both the user interface for exploring results within the software as well as the files that are saved to the project folder structure as part of the analysis.

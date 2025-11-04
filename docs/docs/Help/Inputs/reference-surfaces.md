@@ -1,7 +1,7 @@
 ---
 title: Reference Surfaces
 sidebar_position: 4
-slug: /Help/Inputs/reference-surfaces
+slug: /help/inputs/reference-surfaces
 ---
 
 Reference surfaces are elevation rasters that originate from some other source than a topographic survey. They are very similar to [DEM Surveys](/Help/Inputs/dem-surveys) in that they share the same vertical units, cell resolution and spatial reference. They can also be used as one or both surfaces in a [change detection](/Help/Analyses/Change_Detection/change-detection) analysis.

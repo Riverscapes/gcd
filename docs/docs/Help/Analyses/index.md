@@ -1,7 +1,7 @@
 ---
 title: Analyses
 sidebar_position: 3
-slug: /Help/Analyses/
+slug: /help/analyses/
 ---
 
 The GCD software performs several different types of analyses:

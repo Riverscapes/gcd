@@ -1,7 +1,7 @@
 ---
 title: Close GCD Project
 sidebar_position: 3
-slug: /Help/project-menu/close-project
+slug: /help/project-menu/close-project
 ---
 
 

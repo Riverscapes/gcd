@@ -1,7 +1,7 @@
 ---
 title: Multiple Epoch Batch
 sidebar_position: 6
-slug: /Help/Analyses/Change_Detection/multiple-epoch
+slug: /help/analyses/change_detection/multiple-epoch
 ---
 
 It can be time consuming to set up and perform several change detection analyses. The GCD software simplifies this process with two batch change detection features. This section describes the multiple epoch batch intended for quickly analyzing predefined pairings of surfaces that are sorted into chronological order. See the [generic batch](/Help/Analyses/Change_Detection/batch-change-detection) documentation for information on the other kind.

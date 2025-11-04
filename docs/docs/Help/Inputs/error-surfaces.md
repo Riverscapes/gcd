@@ -1,7 +1,7 @@
 ---
 title: Error Surfaces
 sidebar_position: 3
-slug: /Help/Inputs/error-surfaces
+slug: /help/inputs/error-surfaces
 ---
 
 

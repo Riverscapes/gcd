@@ -1,6 +1,6 @@
 ---
 title: Budget Segregation
-slug: /Help/Analyses/Budget_Segregation/budget_segregation_results
+slug: /help/analyses/budget_segregation/budget_segregation_results
 ---
 
 A GCD budget segregation is a way of grouping regions of a [change detection](/Help/Analyses/Change_Detection/change-detection) together into separated results. A polygon [mask](/Help/Inputs/Masks/regular-masks) is used to aggregate together all the change together within one or more polygons and then present them as if they are a separate analysis.

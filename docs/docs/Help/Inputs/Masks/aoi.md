@@ -1,7 +1,7 @@
 ---
 title: Areas Of Interest
 sidebar_position: 3
-slug: /Help/Inputs/Masks/aoi
+slug: /help/inputs/masks/aoi
 ---
 
 ![AOI](/img/CommandRefs/00_ProjectExplorer/inputs/masks/aoi/aoi.png)

@@ -1,6 +1,6 @@
 ---
 title: Directional Masks
-slug: /Help/Inputs/Masks/directional-masks
+slug: /help/inputs/masks/directional-masks
 sidebar_position: 2
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: Associated Surfaces
-slug: /Help/Inputs/associated-surfaces
+slug: /help/inputs/associated-surfaces
 sidebar_position: 2
 ---
 

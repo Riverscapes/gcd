@@ -1,6 +1,6 @@
 ---
 title: Customize Menu
-slug: /Help/customize-menu/
+slug: /help/customize-menu/
 sidebar_position: 5
 ---
 

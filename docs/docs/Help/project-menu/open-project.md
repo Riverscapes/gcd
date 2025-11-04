@@ -1,6 +1,6 @@
 ---
 title: Open GCD Project
-slug: /Help/project-menu/open-project
+slug: /help/project-menu/open-project
 sidebar_position: 2
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Profile Routes
 sidebar_position: 5
-slug: /Help/Inputs/profile-routes
+slug: /help/inputs/profile-routes
 ---
 
 

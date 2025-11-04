@@ -1,7 +1,7 @@
 ---
 title: New GCD Project
 sidebar_position: 1
-slug: /Help/project-menu/new-project
+slug: /help/project-menu/new-project
 ---
 
 The `Create New GCD Project` dialog is where you create a new [project](/Concepts/projects) by specifying the fields described below.

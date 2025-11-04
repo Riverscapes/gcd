@@ -1,6 +1,6 @@
 ---
 title: Options
-slug: /Help/customize-menu/options
+slug: /help/customize-menu/options
 sidebar_position: 2
 ---
 
