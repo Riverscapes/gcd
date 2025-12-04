@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ArcGIS defaultAssembly="GCDViewer.dll"
+        defaultNamespace="GCDViewer"
+        xmlns="http://schemas.esri.com/DADF/Registry"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://schemas.esri.com/DADF/Registry file:///C:/Program%20Files/ArcGIS/Pro/bin/ArcGIS.Desktop.Framework.xsd">
+
+  <AddInInfo id="{c1531ab1-ea6d-4a14-a8d6-af424f14c37a}" version="1.0" desktopVersion="3.6.59527" product="ArcGISPro">
+	<Name>GCDViewer</Name>
+	<Description>Geomorphic Change Detection for ArcGIS Pro</Description>
+	<Image>Images\GCD_32.png</Image>
+	<Author>North Arrow Research Ltd.</Author>
+	<Company>North Arrow Research Ltd.</Company>
+	<Date>12/1/2025 4:22:28 PM</Date>
+	<Subject>Framework</Subject>
+	<!-- Note subject can be one or more of these topics:
+                    Content, Framework, Editing, Geodatabase, Geometry, Geoprocessing, Layouts, Map Authoring, Map Exploration -->
+  </AddInInfo>
+
+  <modules>
+	<insertModule id="GCDViewer_Module" className="Module1" autoLoad="false" caption="Module1">
+	  <!-- uncomment to have the control hosted on a separate tab-->
+	  <tabs>
+		<tab id="GCDViewer_Tab" caption="GCD"  >
+		  <group refID="GCDViewer_Group"/>
+		</tab>
+	  </tabs>
+
+	  <groups>
+		<!-- comment this out if you have no controls on the Addin tab to avoid
+              an empty group-->
+		<group id="GCDViewer_Group" caption="GCD" appearsOnAddInTab="false">
+		  <!-- host controls within groups -->
+		  <button refID="GCDViewer_Buttons_OpenProject" size="large" />
+		  <button refID="GCDViewer_Buttons_CloseProject" size="large" />
+		  <button refID="GCDViewer_Buttons_AboutGCD" size="large" />
+		  <button refID="GCDViewer_Buttons_Help" size="large" />
+		</group>
+	  </groups>
+
+	  <controls>
+		<!-- add your controls here -->
+		<button id="GCDViewer_Buttons_OpenProject"
+				loadOnClick="true"
+				className="GCDViewer.Buttons.OpenProjectButton"
+				caption="Open Project"
+				smallImage="Images/open_32.png"
+				largeImage="Images/open_32.png"
+				keytip="O">
+		  <tooltip heading="Open Project">
+			Open GCD project and load it into the Project Explorer to view its contents.
+			<disabledText />
+		  </tooltip>
+		</button>
+		<button id="GCDViewer_Buttons_CloseProject"
+				loadOnClick="true"
+				className="GCDViewer.Buttons.CloseProjectButton"
+				caption="Close Project"
+				smallImage="Images/close_16.png"
+				largeImage="Images/close_32.png"
+				keytip="C">
+		  <tooltip heading="Open Project">
+			Close the currently open GCD project.
+			<disabledText />
+		  </tooltip>
+		</button>
+		<button id="GCDViewer_Buttons_AboutGCD"
+			loadOnClick="true"
+			className="GCDViewer.Buttons.AboutButton"
+			caption="About GCD"
+			smallImage="Images/GCD_16.png"
+			largeImage="Images/GCD_32.png"
+			keytip="C">
+		  <tooltip heading="About GCD">
+			Information about the Geomorphic Change Detection software.
+			<disabledText />
+		  </tooltip>
+		</button>
+		<button id="GCDViewer_Buttons_Help"
+			loadOnClick="true"
+			className="GCDViewer.Buttons.HelpButton"
+			caption="Online Help"
+			smallImage="Images/about_16.png"
+			largeImage="Images/about_32.png"
+			keytip="C">
+		  <tooltip heading="About GCD">
+			Online help for the Geomorphic Change Detection software.
+			<disabledText />
+		  </tooltip>
+		</button>
+	  </controls>
+
+	</insertModule>
+  </modules>
+</ArcGIS>

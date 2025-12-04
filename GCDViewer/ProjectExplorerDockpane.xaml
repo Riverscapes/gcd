@@ -1,0 +1,295 @@
+﻿<UserControl
+    x:Class="GCDViewer.ProjectExplorerDockpaneView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:extensions="clr-namespace:ArcGIS.Desktop.Extensions;assembly=ArcGIS.Desktop.Extensions"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="clr-namespace:GCDViewer"
+    d:DataContext="{Binding Path=ProjectExplorerDockpaneViewModel}"
+    d:DesignHeight="300"
+    d:DesignWidth="300"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <extensions:DesignOnlyResourceDictionary Source="pack://application:,,,/ArcGIS.Desktop.Framework;component\Themes\Default.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <ContextMenu x:Key="ProjectContextMenu">
+                <MenuItem
+                    Command="{Binding DataContext.BrowseFolder, RelativeSource={RelativeSource AncestorType=TreeView}}"
+                    CommandParameter="{Binding}"
+                    Header="Browse Project Folder">
+                    <MenuItem.Icon>
+                        <Image
+                            Width="16"
+                            Height="16"
+                            Source="pack://application:,,,/GCDViewer;component/Images/folder16.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem
+                    Command="{Binding DataContext.LayerMetaData, RelativeSource={RelativeSource AncestorType=TreeView}}"
+                    CommandParameter="{Binding}"
+                    Header="View Project MetaData">
+                    <MenuItem.Icon>
+                        <Image
+                            Width="16"
+                            Height="16"
+                            Source="pack://application:,,,/GCDViewer;component/Images/metadata16.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem
+                    Command="{Binding DataContext.DataExchange, RelativeSource={RelativeSource AncestorType=TreeView}}"
+                    CommandParameter="{Binding}"
+                    Header="View In Data Exchange">
+                    <MenuItem.Icon>
+                        <Image
+                            Width="16"
+                            Height="16"
+                            Source="pack://application:,,,/GCDViewer;component/Images/exchange16.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem
+                    Command="{Binding DataContext.AddAllLayersToMap, RelativeSource={RelativeSource AncestorType=TreeView}}"
+                    CommandParameter="{Binding}"
+                    Header="Add All Layers To Map">
+                    <MenuItem.Icon>
+                        <Image
+                            Width="16"
+                            Height="16"
+                            Source="pack://application:,,,/GCDViewer;component/Images/add_to_map16.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem
+                    Command="{Binding DataContext.Refresh, RelativeSource={RelativeSource AncestorType=TreeView}}"
+                    CommandParameter="{Binding}"
+                    Header="Refresh Project Hierarchy">
+                    <MenuItem.Icon>
+                        <Image
+                            Width="16"
+                            Height="16"
+                            Source="pack://application:,,,/GCDViewer;component/Images/refresh16.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem
+                    Command="{Binding DataContext.Close, RelativeSource={RelativeSource AncestorType=TreeView}}"
+                    CommandParameter="{Binding}"
+                    Header="Close Project">
+                    <MenuItem.Icon>
+                        <Image
+                            Width="16"
+                            Height="16"
+                            Source="pack://application:,,,/GCDViewer;component/Images/close16.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+            </ContextMenu>
+            <ContextMenu x:Key="FileContextMenu">
+                <MenuItem
+                    Command="{Binding DataContext.OpenFile, RelativeSource={RelativeSource AncestorType=TreeView}}"
+                    CommandParameter="{Binding}"
+                    Header="Open File">
+                    <MenuItem.Icon>
+                        <Image
+                            Width="16"
+                            Height="16"
+                            Source="pack://application:,,,/GCDViewer;component/Images/open16.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem
+                    Command="{Binding DataContext.BrowseFolder, RelativeSource={RelativeSource AncestorType=TreeView}}"
+                    CommandParameter="{Binding}"
+                    Header="Browse Folder">
+                    <MenuItem.Icon>
+                        <Image
+                            Width="16"
+                            Height="16"
+                            Source="pack://application:,,,/GCDViewer;component/Images/folder16.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+            </ContextMenu>
+            <ContextMenu x:Key="GroupContextMenu">
+                <MenuItem
+                    Command="{Binding DataContext.AddAllLayersToMap, RelativeSource={RelativeSource AncestorType=TreeView}}"
+                    CommandParameter="{Binding}"
+                    Header="Add All Layers To Map">
+                    <MenuItem.Icon>
+                        <Image
+                            Width="16"
+                            Height="16"
+                            Source="pack://application:,,,/GCDViewer;component/Images/add_to_map16.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+            </ContextMenu>
+            <ContextMenu x:Key="VectorContextMenu">
+                <MenuItem
+                    Command="{Binding DataContext.AddToMap, RelativeSource={RelativeSource AncestorType=TreeView}}"
+                    CommandParameter="{Binding}"
+                    Header="Add To Map">
+                    <MenuItem.Icon>
+                        <Image
+                            Width="16"
+                            Height="16"
+                            Source="pack://application:,,,/GCDViewer;component/Images/add_to_map16.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem
+                    Command="{Binding DataContext.LayerMetaData, RelativeSource={RelativeSource AncestorType=TreeView}}"
+                    CommandParameter="{Binding}"
+                    Header="View Layer MetaData">
+                    <MenuItem.Icon>
+                        <Image
+                            Width="16"
+                            Height="16"
+                            Source="pack://application:,,,/GCDViewer;component/Images/metadata16.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem
+                    Command="{Binding DataContext.BrowseFolder, RelativeSource={RelativeSource AncestorType=TreeView}}"
+                    CommandParameter="{Binding}"
+                    Header="Browse Folder">
+                    <MenuItem.Icon>
+                        <Image
+                            Width="16"
+                            Height="16"
+                            Source="pack://application:,,,/GCDViewer;component/Images/folder16.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+            </ContextMenu>
+            <ContextMenu x:Key="RasterContextMenu">
+                <MenuItem
+                    Command="{Binding DataContext.AddToMap, RelativeSource={RelativeSource AncestorType=TreeView}}"
+                    CommandParameter="{Binding}"
+                    Header="Add To Map">
+                    <MenuItem.Icon>
+                        <Image
+                            Width="16"
+                            Height="16"
+                            Source="pack://application:,,,/GCDViewer;component/Images/add_to_map16.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem
+                    Command="{Binding DataContext.LayerMetaData, RelativeSource={RelativeSource AncestorType=TreeView}}"
+                    CommandParameter="{Binding}"
+                    Header="View Layer MetaData">
+                    <MenuItem.Icon>
+                        <Image
+                            Width="16"
+                            Height="16"
+                            Source="pack://application:,,,/GCDViewer;component/Images/metadata16.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem
+                    Command="{Binding DataContext.BrowseFolder, RelativeSource={RelativeSource AncestorType=TreeView}}"
+                    CommandParameter="{Binding}"
+                    Header="Browse Folder">
+                    <MenuItem.Icon>
+                        <Image
+                            Width="16"
+                            Height="16"
+                            Source="pack://application:,,,/GCDViewer;component/Images/folder16.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+            </ContextMenu>
+            <ContextMenu x:Key="WMSContextMenu">
+                <MenuItem
+                    Command="{Binding DataContext.AddToMap, RelativeSource={RelativeSource AncestorType=TreeView}}"
+                    CommandParameter="{Binding}"
+                    Header="Add To Map">
+                    <MenuItem.Icon>
+                        <Image
+                            Width="16"
+                            Height="16"
+                            Source="pack://application:,,,/GCDViewer;component/Images/add_to_map16.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+            </ContextMenu>
+            <ContextMenu x:Key="ProjectViewContextMenu">
+                <MenuItem
+                    Command="{Binding DataContext.AddViewToMap, RelativeSource={RelativeSource AncestorType=TreeView}}"
+                    CommandParameter="{Binding}"
+                    Header="Add All Layers To Map">
+                    <MenuItem.Icon>
+                        <Image
+                            Width="16"
+                            Height="16"
+                            Source="pack://application:,,,/GCDViewer;component/Images/add_to_map16.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+            </ContextMenu>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <DockPanel
+            Name="Riverscapes"
+            Grid.Row="0"
+            KeyboardNavigation.TabNavigation="Local"
+            LastChildFill="true"
+            
+            >
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <TextBlock Style="{DynamicResource Esri_TextBlockDockPaneHeader}" Text="{Binding Heading}">
+                    <TextBlock.ToolTip>
+                        <WrapPanel MaxWidth="300" Orientation="Vertical">
+                            <TextBlock Text="{Binding Heading}" TextWrapping="Wrap" />
+                        </WrapPanel>
+                    </TextBlock.ToolTip>
+                </TextBlock>
+                <TreeView
+                    x:Name="treProject"
+                    Grid.Row="1"
+                    ItemsSource="{Binding TreeViewItems}"
+                    MouseDoubleClick="treProject_DoubleClick">
+                    <TreeView.ItemTemplate>
+                        <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                            <StackPanel Orientation="Horizontal">
+                                <Image
+                                    Width="16"
+                                    Height="16"
+                                    Margin="0,0,5,0"
+                                    Source="{Binding ImagePath}" />
+                                <TextBlock Text="{Binding Name}" />
+                            </StackPanel>
+                            <HierarchicalDataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding IsExpanded}" Value="True">
+                                    <Setter Property="TreeViewItem.IsExpanded" Value="True" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding IsExpanded}" Value="False">
+                                    <Setter Property="TreeViewItem.IsExpanded" Value="False" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding ContextMenu}" Value="RaveProject">
+                                    <Setter Property="ContextMenu" Value="{StaticResource ProjectContextMenu}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding ContextMenu}" Value="FileSystemDataset">
+                                    <Setter Property="ContextMenu" Value="{StaticResource FileContextMenu}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding ContextMenu}" Value="GroupLayer">
+                                    <Setter Property="ContextMenu" Value="{StaticResource GroupContextMenu}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding ContextMenu}" Value="Vector">
+                                    <Setter Property="ContextMenu" Value="{StaticResource VectorContextMenu}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding ContextMenu}" Value="Raster">
+                                    <Setter Property="ContextMenu" Value="{StaticResource RasterContextMenu}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding ContextMenu}" Value="WMSLayer">
+                                    <Setter Property="ContextMenu" Value="{StaticResource WMSContextMenu}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding ContextMenu}" Value="ProjectView">
+                                    <Setter Property="ContextMenu" Value="{StaticResource ProjectViewContextMenu}" />
+                                </DataTrigger>
+                            </HierarchicalDataTemplate.Triggers>
+                        </HierarchicalDataTemplate>
+                    </TreeView.ItemTemplate>
+                </TreeView>
+            </Grid>
+        </DockPanel>
+    </Grid>
+</UserControl>
