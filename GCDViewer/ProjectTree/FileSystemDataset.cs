@@ -1,9 +1,12 @@
-﻿using System.IO;
+﻿using ArcGIS.Core.Internal.CIM;
+using System.IO;
+using System.Xml;
 
 namespace GCDViewer.ProjectTree
 {
     public class FileSystemDataset : BaseDataset
     {
+        public override string Noun => throw new System.NotImplementedException();
         public enum GISDataStorageTypes
         {
             RasterFile,
@@ -23,6 +26,13 @@ namespace GCDViewer.ProjectTree
         {
             Project = project;
             Path = fsInfo;
+        }
+
+        public FileSystemDataset(GCDProject project, XmlNode nodItem, string image_Exists, string image_Missing)
+             : base(nodItem, image_Exists, image_Missing)
+        {
+            Path = project.GetAbsolutePath(nodItem.SelectSingleNode("Path").InnerText);
+            Project = project;
         }
 
         public override bool Exists

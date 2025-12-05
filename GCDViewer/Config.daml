@@ -89,7 +89,16 @@
 		  </tooltip>
 		</button>
 	  </controls>
-
+	  <dockPanes>
+		<dockPane id="GCDViewer_ProjectExplorerDockpane"
+				  caption="GCD"
+				  image="Images/GCD_16.png"
+				  className="ProjectExplorerDockpaneViewModel"
+				  dock="group"
+				  dockWith="esri_core_projectDockPane">
+		  <content className="ProjectExplorerDockpaneView" />
+		</dockPane>
+	  </dockPanes>
 	</insertModule>
   </modules>
 </ArcGIS>

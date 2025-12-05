@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Xml;
 
 namespace GCDViewer.ProjectTree
 {
@@ -41,13 +42,20 @@ namespace GCDViewer.ProjectTree
         //    }
         //}
 
-        public GISDataset(GCDProject project, string name, FileSystemInfo fsInfo, string symbologyKey, short transparency, string image_Exists, string image_Missing, string id, Dictionary<string, string> metadata)
-            : base(project, name, fsInfo, image_Exists, image_Missing, id)
+        public GISDataset(GCDProject project, string name, FileSystemInfo fsInfo, string image_Exists, string image_Missing)
+            : base(project, name, fsInfo, image_Exists, image_Missing, "")
         {
-            SymbologyKey = symbologyKey;
-            Transparency = transparency;
 
-            Metadata = metadata;
+
+
         }
+
+        public GISDataset(GCDProject project, XmlNode nodItem, string image_Exists, string image_Missing)
+            : base(project, nodItem,  image_Exists,  image_Missing)
+        {
+   
+        }
+
+
     }
 }

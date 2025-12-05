@@ -3,13 +3,21 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows.Navigation;
+using System.Xml;
 
 namespace GCDViewer.ProjectTree
 {
-    class Raster : GISDataset
+    public class Raster : GISDataset
     {
-        public Raster(GCDProject project, string name, string path, string symbology, short transparency, string id, Dictionary<string, string> metadata)
-            : base(project, name, new FileInfo(path), symbology, transparency, "raster16.png", "raster16.png", id, metadata)
+
+        public Raster(GCDProject project, string name, FileSystemInfo fsInfo, string image_exists, string image_missing)
+            : base(project, name, fsInfo, image_exists, image_missing)
+        {
+
+        }
+
+        public Raster(GCDProject project, XmlNode nodItem, string image_exists, string image_missing)
+             : base(project, nodItem, image_exists, image_missing)
         {
 
         }
