@@ -18,7 +18,7 @@ namespace GCDViewer
 {
     internal class ProjectExplorerDockpaneViewModel : DockPane, INotifyPropertyChanged
     {
-        private const string _dockPaneID = "ArcProViewer_ProjectExplorerDockpane";
+        private const string _dockPaneID = "GCDViewer_ProjectExplorerDockpane";
 
         /// <summary>
         /// User's RAVE AppData Folder
@@ -65,15 +65,6 @@ namespace GCDViewer
             //Refresh = new ContextMenuCommand(ExecuteRefresh, CanExecuteRefresh);
             //Close = new ContextMenuCommand(ExecuteClose, CanExecuteClose);
             //AddViewToMap = new ContextMenuCommand(ExecuteAddViewToMap, CanExecuteAddViewToMap);
-
-            try
-            {
-                //RefreshBaseMaps();
-            }
-            catch
-            {
-                Console.WriteLine("Failed to load Basemaps");
-            }
         }
 
         /// <summary>
@@ -91,7 +82,7 @@ namespace GCDViewer
         /// <summary>
         /// Text shown near the top of the DockPane.
         /// </summary>
-        private string _heading = "Riverscapes Viewer";
+        private string _heading = "GCD";
         public string Heading
         {
             get => _heading;
@@ -116,6 +107,7 @@ namespace GCDViewer
             }
 
             GCDProject newProject = new GCDProject(filePath);
+            newProject.Load();
             newProject.Name = pevm.GetUniqueProjectName(newProject);
 
             TreeViewItemModel projectItem = new TreeViewItemModel(newProject, null);

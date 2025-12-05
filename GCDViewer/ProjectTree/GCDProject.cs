@@ -5,28 +5,38 @@ using System.Xml;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
+using ArcGIS.Desktop.Core;
+using System.Globalization;
+using GCDViewer.ProjectTree.Masks;
+using GCDViewer.ProjectTree.ProfileRoutes;
+using System.Windows.Navigation;
 
 namespace GCDViewer.ProjectTree
 {
     public class GCDProject : ITreeItem, IMetadata
     {
-        // Special error code when there are no business logic files available. 
-        // This is typically because the user has not updated resources after initial
-        // install. This error code allows the UI to provide a custom warning.
-        public const string MISSING_BL_ERR_CODE = "Missing Business Logic File";
-
         public readonly FileInfo ProjectFile;
         public DirectoryInfo Folder { get { return ProjectFile.Directory; } }
-        public readonly string ProjectType;
 
         // Determines whether uses V1 or V2 XSD and business logic
-        public readonly int Version;
+        public readonly string GCDVersion;
 
         public readonly string OriginalName;
         public string Name { get; set; }
-        public string ImagePath => "viewer16.png";
+        public string ImagePath => "GCD_16.png";
+
+        public override string ToString()
+        {
+            return Name;
+        }
 
         public string WarehouseId { get; internal set; }
+
+        public readonly List<Mask> Masks;
+        public readonly List<ProfileRoute> ProfileRoutes;
+        public readonly List<DEMSurvey> DEMSurveys;
+        public readonly List<Surface> ReferenceSurfaces;
+        public readonly List<DoDBase> DoDs;
 
         public Dictionary<string, string> Metadata { get; internal set; }
 
@@ -39,19 +49,129 @@ namespace GCDViewer.ProjectTree
                 XmlDocument xmlDoc = new XmlDocument();
                 xmlDoc.Load(ProjectFile.FullName);
 
-                // Determine whether the project XSD is version 1 or version 2
-                this.Version = GetVersion(xmlDoc);
+                //var nsmgr = new XmlNamespaceManager(xmlDoc.NameTable);
+                //nsmgr.AddNamespace("p", "http://tempuri.org/ProjectDS.xsd");
 
-                ProjectType = GetProjectXPath(xmlDoc, "Project/ProjectType", true);
-                OriginalName = Name = GetProjectXPath(xmlDoc, "Project/Name", true);
-                WarehouseId = GetWarehouseId(xmlDoc);
-                Metadata = GetMetdata(xmlDoc);
+                XmlNode nodProject = xmlDoc.SelectSingleNode("Project");
+                Name = nodProject.SelectSingleNode("Name")?.InnerText;
+                GCDVersion = nodProject.SelectSingleNode("GCDVersion")?.InnerText;
+
+                Masks = new List<Mask>();
+                ProfileRoutes = new List<ProfileRoute>();
+                DEMSurveys = new List<DEMSurvey>();
+                ReferenceSurfaces = new List<Surface>();
+                DoDs = new List<DoDBase>();
+
+                // See if there's a WarehouseID in the adjacent Riverscapes project file
+                WarehouseId = string.Empty;
+                try
+                {
+                    var rs_project = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(projectFile), "project.rs.xml");
+                    if (System.IO.File.Exists(rs_project))
+                    {
+                        XmlDocument xmlRSProject = new XmlDocument();
+                        xmlRSProject.Load(rs_project);
+                        var nodWarehouse = xmlRSProject.SelectSingleNode("Project/Warehouse");
+                        if (nodWarehouse is XmlNode)
+                        {
+                            var attId = nodWarehouse.Attributes["id"];
+                            if (attId is XmlAttribute && !string.IsNullOrEmpty(attId.Value))
+                            {
+                                WarehouseId = attId.Value;
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Do nothing. Warehouse ID is nice to have.
+                }
             }
             catch (Exception ex)
             {
                 ex.Data["Project File"] = ProjectFile.FullName;
                 throw;
             }
+        }
+
+        public void Load()
+        {
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.Load(ProjectFile.FullName);
+
+            //var nsmgr = new XmlNamespaceManager(xmlDoc.NameTable);
+            //nsmgr.AddNamespace("p", "http://tempuri.org/ProjectDS.xsd");
+
+            XmlNode nodProject = xmlDoc.SelectSingleNode("Project");
+            Name = nodProject.SelectSingleNode("Name").InnerText;
+            string desc = nodProject.SelectSingleNode("Description").InnerText;
+            string gvn = nodProject.SelectSingleNode("GCDVersion").InnerText;
+            DateTime dtCreated = DateTime.Parse(nodProject.SelectSingleNode("DateTimeCreated").InnerText);
+
+            // Load masks before DEMs. DEMs will load error surfaces that refer to masks
+            foreach (XmlNode nodMask in nodProject.SelectNodes("Masks/Mask"))
+            {
+                if (nodMask.SelectSingleNode("Field") is XmlNode)
+                {
+                    // Regular or directional mask
+                    if (nodMask.SelectSingleNode("Items") is XmlNode)
+                    {
+                        Masks.Add(new RegularMask(this, nodMask));
+                    }
+                    else
+                    {
+                        Masks.Add(new DirectionalMask(this, nodMask));
+                    }
+                }
+                else
+                {
+                    // Area of interest
+                    Masks.Add(new AOIMask(this, nodMask));
+                }
+            }
+
+            // Load profile routes before DEMs, Ref Surfs and DoDs that might refer to
+            // routes in their linear extractions
+            foreach (XmlNode nodRoute in nodProject.SelectNodes("ProfileRoutes/ProfileRoute"))
+            {
+                ProfileRoutes.Add(new ProfileRoute(this, nodRoute));
+            }
+
+            foreach (XmlNode nodDEM in nodProject.SelectNodes("DEMSurveys/DEM"))
+            {
+                DEMSurveys.Add(new DEMSurvey(this, nodDEM));
+            }
+
+            foreach (XmlNode nodRefSurf in nodProject.SelectNodes("ReferenceSurfaces/ReferenceSurface"))
+            {
+                ReferenceSurfaces.Add(new Surface(this, nodRefSurf, "Reservoir.png", "Reservoir.png"));
+            }
+
+            foreach (XmlNode nodDoD in nodProject.SelectNodes("DoDs/DoD"))
+            {
+                DoDBase dod = null;
+                if (nodDoD.SelectSingleNode("Threshold") is XmlNode)
+                    dod = new DoDBase(this, nodDoD);
+                else if (nodDoD.SelectSingleNode("ConfidenceLevel") is XmlNode)
+                    dod = new DoDBase(this, nodDoD);
+                else
+                    dod = new DoDBase(this, nodDoD);
+
+                DoDs.Add(dod);
+            }
+
+            //foreach (XmlNode nodInter in nodProject.SelectNodes("InterComparisons/InterComparison"))
+            //{
+            //    InterComparison inter = new InterComparison(nodInter, ProjectManager.Project.DoDs);
+            //    ProjectManager.Project.InterComparisons.Add(inter);
+            //}
+
+            //foreach (XmlNode nodItem in nodProject.SelectNodes("MetaData/Item"))
+            //{
+            //    ProjectManager.Project.MetaData[nodItem.SelectSingleNode("Key").InnerText] = nodItem.SelectSingleNode("Value").InnerText;
+            //}
+
+            //return ProjectManager.Project;
         }
 
         /// <summary>
@@ -72,30 +192,6 @@ namespace GCDViewer.ProjectTree
                 throw new Exception(string.Format("The project node at XPath '{0}' contains no value. This XPath cannot be empty.", xPath));
 
             return xmlNode.InnerText;
-        }
-
-        private int GetVersion(XmlDocument xmlDoc)
-        {
-            Dictionary<int, String> versions = new Dictionary<int, String>()
-            {
-                { 1, "V1/[a-zA-Z]+.xsd"},
-                { 2, "/V2/RiverscapesProject.xsd"}
-            };
-
-            XmlNode nodProject = xmlDoc.SelectSingleNode("Project");
-            XmlAttribute attNamepsace = nodProject.Attributes["xsi:noNamespaceSchemaLocation"];
-
-            foreach (KeyValuePair<int, string> kvp in versions)
-            {
-                Regex re = new Regex(kvp.Value);
-                if (re.IsMatch(attNamepsace.Value))
-                    return kvp.Key;
-            }
-
-            // If got to here then the Project XSD path didn't match any of the known versions!
-            Exception ex = new Exception("Failed to determine project version");
-            ex.Data["Namespace"] = attNamepsace.Value;
-            throw ex;
         }
 
         public bool IsSame(string projectFile)
@@ -167,14 +263,14 @@ namespace GCDViewer.ProjectTree
         //    throw ex3;
         //}
 
-        public Dictionary<string, string> GetMetdata(XmlDocument xmlDoc)
-        {
-            XmlNode nodProject = xmlDoc.SelectSingleNode("Project");
-            if (nodProject == null)
-                return null;
+        //public Dictionary<string, string> GetMetdata(XmlDocument xmlDoc)
+        //{
+        //    XmlNode nodProject = xmlDoc.SelectSingleNode("Project");
+        //    if (nodProject == null)
+        //        return null;
 
-            return BaseDataset.LoadMetadata(nodProject);
-        }
+        //    return BaseDataset.LoadMetadata(nodProject);
+        //}
 
         private string GetWarehouseId(XmlDocument xmlDoc)
         {
@@ -218,10 +314,40 @@ namespace GCDViewer.ProjectTree
             // Remove all the existing child nodes (required if refreshing existing tree node)
             treProject.Children?.Clear();
 
-            // Determine the type of project
-            XmlDocument xmlProject = new XmlDocument();
-            xmlProject.Load(ProjectFile.FullName);
-            XmlNode projectXMLRoot = xmlProject.SelectSingleNode("Project");
+            var col_dems = new GroupLayer("DEM Surveys", false, "0");
+            var nod_dems = treProject.AddChild(col_dems);
+
+            foreach (DEMSurvey dem in DEMSurveys)
+            {
+                var nod_dem = nod_dems.AddChild(dem);
+
+                var col_assoc = new GroupLayer("Associated Surfaces", true, "0");
+                var nod_assoc = nod_dem.AddChild(col_assoc);
+                foreach (AssocSurface assoc in dem.AssocSurfaces)
+                    nod_assoc.AddChild(assoc);
+
+                var col_err = new GroupLayer("Error Surfaces", true, "0");
+                var nod_err = nod_dem.AddChild(col_err);
+                foreach (ErrorSurface err in dem.ErrorSurfaces)
+                    nod_err.AddChild(err);
+            }
+
+
+            var col_ref = new GroupLayer("Reference Surfaces", true, "0");
+            var nod_ref = treProject.AddChild(col_ref);
+
+            var col_masks = new GroupLayer("Masks", true, "0");
+            var nod_masks = treProject.AddChild(col_masks);
+
+            var col_anal = new GroupLayer("Analyses", false, "0");
+            var nod_anal = treProject.AddChild(col_anal);
+
+            var col_dod = new GroupLayer("Change Detection", false, "0");
+            var nod_dod = nod_anal.AddChild(col_dod);
+            foreach (DoDBase dod in DoDs)
+            {
+                nod_dod.AddChild(dod);
+            }
 
             // Load the business logic XML file and retrieve the root node. 
             //XmlNode nodBLRoot = LoadBusinessLogicXML();
@@ -483,101 +609,101 @@ namespace GCDViewer.ProjectTree
             if (nodGISNode == null)
                 return;
 
-            // If the project node has a ref attribute then lookup the redirect to the inputs
-            XmlAttribute attRef = nodGISNode.Attributes["ref"];
-            if (attRef is XmlAttribute)
-            {
-                nodGISNode = nodGISNode.OwnerDocument.SelectSingleNode(string.Format("Project/Inputs/*[@id='{0}']", attRef.InnerText));
-            }
+            //// If the project node has a ref attribute then lookup the redirect to the inputs
+            //XmlAttribute attRef = nodGISNode.Attributes["ref"];
+            //if (attRef is XmlAttribute)
+            //{
+            //    nodGISNode = nodGISNode.OwnerDocument.SelectSingleNode(string.Format("Project/Inputs/*[@id='{0}']", attRef.InnerText));
+            //}
 
-            if (string.IsNullOrEmpty(label))
-                label = nodGISNode.SelectSingleNode("Name").InnerText;
+            //if (string.IsNullOrEmpty(label))
+            //    label = nodGISNode.SelectSingleNode("Name").InnerText;
 
-            string path = String.Empty;
-            if (Version == 1)
-            {
-                path = nodGISNode.SelectSingleNode("Path").InnerText;
+            //string path = String.Empty;
+            //if (GCDVersion == 1)
+            //{
+            //    path = nodGISNode.SelectSingleNode("Path").InnerText;
 
-                if (string.Compare(nodGISNode.ParentNode.Name, "layers", true) == 0)
-                {
-                    XmlNode nodGeoPackage = nodGISNode.SelectSingleNode("../../Path");
-                    if (nodGeoPackage is XmlNode)
-                    {
-                        path = nodGeoPackage.InnerText + "/" + path;
-                    }
-                    else
-                    {
-                        throw new MissingMemberException("Unable to find GeoPackage file path");
-                    }
-                }
-            }
-            else if (Version == 2)
-            {
-                XmlNode nodPath = nodGISNode.SelectSingleNode("Path");
-                if (nodPath is XmlNode)
-                {
-                    path = nodPath.InnerText;
-                }
-                else
-                {
-                    if (string.Compare(nodGISNode.ParentNode.Name, "layers", true) == 0)
-                    {
-                        XmlNode nodGeoPackage = nodGISNode.SelectSingleNode("../../Path");
-                        XmlAttribute attLayerName = nodGISNode.Attributes["lyrName"];
+            //    if (string.Compare(nodGISNode.ParentNode.Name, "layers", true) == 0)
+            //    {
+            //        XmlNode nodGeoPackage = nodGISNode.SelectSingleNode("../../Path");
+            //        if (nodGeoPackage is XmlNode)
+            //        {
+            //            path = nodGeoPackage.InnerText + "/" + path;
+            //        }
+            //        else
+            //        {
+            //            throw new MissingMemberException("Unable to find GeoPackage file path");
+            //        }
+            //    }
+            //}
+            //else if (GCDVersion == 2)
+            //{
+            //    XmlNode nodPath = nodGISNode.SelectSingleNode("Path");
+            //    if (nodPath is XmlNode)
+            //    {
+            //        path = nodPath.InnerText;
+            //    }
+            //    else
+            //    {
+            //        if (string.Compare(nodGISNode.ParentNode.Name, "layers", true) == 0)
+            //        {
+            //            XmlNode nodGeoPackage = nodGISNode.SelectSingleNode("../../Path");
+            //            XmlAttribute attLayerName = nodGISNode.Attributes["lyrName"];
 
-                        if (nodGeoPackage is XmlNode && attLayerName is XmlAttribute)
-                        {
-                            path = nodGeoPackage.InnerText + "/" + attLayerName.InnerText;
-                        }
-                        else
-                        {
-                            throw new MissingMemberException("Unable to find GeoPackage file path");
-                        }
-                    }
-                }
-            }
+            //            if (nodGeoPackage is XmlNode && attLayerName is XmlAttribute)
+            //            {
+            //                path = nodGeoPackage.InnerText + "/" + attLayerName.InnerText;
+            //            }
+            //            else
+            //            {
+            //                throw new MissingMemberException("Unable to find GeoPackage file path");
+            //            }
+            //        }
+            //    }
+            //}
 
-            string absPath = Path.Combine(ProjectFile.DirectoryName, path);
+            //string absPath = Path.Combine(ProjectFile.DirectoryName, path);
 
-            // Load the layer metadata
-            Dictionary<string, string> metadata = BaseDataset.LoadMetadata(nodGISNode);
+            //// Load the layer metadata
+            //Dictionary<string, string> metadata = BaseDataset.LoadMetadata(nodGISNode);
 
-            FileSystemDataset dataset = null;
-            switch (type.ToLower())
-            {
-                case "file":
-                case "report":
-                    {
-                        dataset = new FileSystemDataset(this, label, new FileInfo(absPath), "draft16.png", "draft16.png", id);
-                        break;
-                    }
+            //FileSystemDataset dataset = null;
+            //switch (type.ToLower())
+            //{
+            //    case "file":
+            //    case "report":
+            //        {
+            //            dataset = new FileSystemDataset(this, label, new FileInfo(absPath), "draft16.png", "draft16.png", id);
+            //            break;
+            //        }
 
-                case "raster":
-                    {
-                        dataset = new Raster(this, label, absPath, symbology, transparency, id, metadata);
-                        break;
-                    }
+            //    case "raster":
+            //        {
+            //            dataset = new Raster(this, label, absPath, symbology, transparency, id, metadata);
+            //            break;
+            //        }
 
-                case "vector":
-                case "line":
-                case "point":
-                case "polygon":
-                    {
-                        dataset = new Vector(this, label, absPath, symbology, transparency, id, metadata, query_definition);
-                        break;
-                    }
+            //    case "vector":
+            //    case "line":
+            //    case "point":
+            //    case "polygon":
+            //        {
+            //            dataset = new Vector(this, label, absPath, symbology, transparency, id, metadata, query_definition);
+            //            break;
+            //        }
 
-                //case "tin":
-                //    {
-                //        dataset = new TIN(this, label, absPath, transparency, id, metadata);
-                //        break;
-                //    }
+            //    //case "tin":
+            //    //    {
+            //    //        dataset = new TIN(this, label, absPath, transparency, id, metadata);
+            //    //        break;
+            //    //    }
 
-                default:
-                    throw new Exception(string.Format("Unhandled Node type attribute string '{0}'", type));
-            }
+            //    default:
+            //        throw new Exception(string.Format("Unhandled Node type attribute string '{0}'", type));
+            //}
 
-            tnParent.AddChild(dataset);
+            //tnParent.AddChild(dataset);
         }
 
         private static string GetXPath(XmlNode businessLogicNode, string xPath)
@@ -600,6 +726,21 @@ namespace GCDViewer.ProjectTree
             }
 
             return xPath;
+        }
+
+        public FileInfo GetAbsolutePath(string sRelativePath)
+        {
+            if (string.IsNullOrEmpty(sRelativePath))
+                return null;
+            else if (sRelativePath.Contains(":") || sRelativePath.StartsWith("\\\\"))
+                return new FileInfo(sRelativePath);
+            else
+                return new FileInfo(Path.Combine(ProjectFile.DirectoryName, sRelativePath));
+        }
+
+        public DirectoryInfo GetAbsoluteDir(string sRelativeDir)
+        {
+            return new DirectoryInfo(Path.Combine(ProjectFile.DirectoryName, sRelativeDir));
         }
 
         private static string GetLabel(XmlNode businessLogicNode, XmlNode projectNode)

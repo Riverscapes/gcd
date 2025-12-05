@@ -28,17 +28,7 @@
                             Source="pack://application:,,,/GCDViewer;component/Images/folder16.png" />
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem
-                    Command="{Binding DataContext.LayerMetaData, RelativeSource={RelativeSource AncestorType=TreeView}}"
-                    CommandParameter="{Binding}"
-                    Header="View Project MetaData">
-                    <MenuItem.Icon>
-                        <Image
-                            Width="16"
-                            Height="16"
-                            Source="pack://application:,,,/GCDViewer;component/Images/metadata16.png" />
-                    </MenuItem.Icon>
-                </MenuItem>
+               
                 <MenuItem
                     Command="{Binding DataContext.DataExchange, RelativeSource={RelativeSource AncestorType=TreeView}}"
                     CommandParameter="{Binding}"
@@ -47,7 +37,7 @@
                         <Image
                             Width="16"
                             Height="16"
-                            Source="pack://application:,,,/GCDViewer;component/Images/exchange16.png" />
+                            Source="pack://application:,,,/GCDViewer;component/Images/DataExchange_16.png" />
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem
@@ -69,7 +59,7 @@
                         <Image
                             Width="16"
                             Height="16"
-                            Source="pack://application:,,,/GCDViewer;component/Images/refresh16.png" />
+                            Source="pack://application:,,,/GCDViewer;component/Images/refresh.png" />
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem
@@ -80,7 +70,7 @@
                         <Image
                             Width="16"
                             Height="16"
-                            Source="pack://application:,,,/GCDViewer;component/Images/close16.png" />
+                            Source="pack://application:,,,/GCDViewer;component/Images/close_16.png" />
                     </MenuItem.Icon>
                 </MenuItem>
             </ContextMenu>
@@ -93,7 +83,7 @@
                         <Image
                             Width="16"
                             Height="16"
-                            Source="pack://application:,,,/GCDViewer;component/Images/open16.png" />
+                            Source="pack://application:,,,/GCDViewer;component/Images/open_16.png" />
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem
@@ -134,17 +124,6 @@
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem
-                    Command="{Binding DataContext.LayerMetaData, RelativeSource={RelativeSource AncestorType=TreeView}}"
-                    CommandParameter="{Binding}"
-                    Header="View Layer MetaData">
-                    <MenuItem.Icon>
-                        <Image
-                            Width="16"
-                            Height="16"
-                            Source="pack://application:,,,/GCDViewer;component/Images/metadata16.png" />
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem
                     Command="{Binding DataContext.BrowseFolder, RelativeSource={RelativeSource AncestorType=TreeView}}"
                     CommandParameter="{Binding}"
                     Header="Browse Folder">
@@ -168,17 +147,7 @@
                             Source="pack://application:,,,/GCDViewer;component/Images/add_to_map16.png" />
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem
-                    Command="{Binding DataContext.LayerMetaData, RelativeSource={RelativeSource AncestorType=TreeView}}"
-                    CommandParameter="{Binding}"
-                    Header="View Layer MetaData">
-                    <MenuItem.Icon>
-                        <Image
-                            Width="16"
-                            Height="16"
-                            Source="pack://application:,,,/GCDViewer;component/Images/metadata16.png" />
-                    </MenuItem.Icon>
-                </MenuItem>
+               
                 <MenuItem
                     Command="{Binding DataContext.BrowseFolder, RelativeSource={RelativeSource AncestorType=TreeView}}"
                     CommandParameter="{Binding}"

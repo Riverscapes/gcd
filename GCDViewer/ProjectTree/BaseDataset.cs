@@ -25,6 +25,8 @@ namespace GCDViewer.ProjectTree
         public string Name { get; private set; }
         public string Id { get; private set; }
 
+        public abstract string Noun { get; }
+
         // No folder and no file extension
         private readonly string ImageFileNameExists;
         private readonly string ImageFileNameMissing;
@@ -42,6 +44,15 @@ namespace GCDViewer.ProjectTree
             ImageFileNameMissing = imageFileNameExists;
             Id = id;
         }
+
+        public BaseDataset(XmlNode nodItem, string imageFileNameExists, string imageFileNameMissing)
+        {
+            Name = nodItem.SelectSingleNode("Name").InnerText;
+            Id = nodItem.SelectSingleNode("ID")?.InnerText;
+            ImageFileNameExists = imageFileNameExists;
+            ImageFileNameMissing = imageFileNameExists;
+        }
+
         public static Dictionary<string, string> LoadMetadata(XmlNode nodeParent)
         {
             // Load the layer metadata

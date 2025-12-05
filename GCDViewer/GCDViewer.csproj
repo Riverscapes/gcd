@@ -8,12 +8,9 @@
     <NoWarn>CA1416</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <None Remove="Images\about.svg" />
     <None Remove="Images\about_16.png" />
     <None Remove="Images\about_32.png" />
     <None Remove="Images\about_64.png" />
-    <None Remove="Images\Add.png" />
-    <None Remove="Images\AddToMap.png" />
     <None Remove="Images\add_to_map16.png" />
     <None Remove="Images\add_to_map32.png" />
     <None Remove="Images\alphabetical.png" />
@@ -21,22 +18,17 @@
     <None Remove="Images\AOI.png" />
     <None Remove="Images\AssociatedSurfaces.png" />
     <None Remove="Images\bars.png" />
-    <None Remove="Images\BrowseFolder.png" />
     <None Remove="Images\BudgetSeg.png" />
     <None Remove="Images\chart.png" />
     <None Remove="Images\Check.png" />
     <None Remove="Images\chrono_ascending.png" />
     <None Remove="Images\chrono_descending.png" />
     <None Remove="Images\CleanRaster.png" />
-    <None Remove="Images\close.svg" />
     <None Remove="Images\close_16.png" />
     <None Remove="Images\close_32.png" />
     <None Remove="Images\close_64.png" />
     <None Remove="Images\CoincidentPoints.png" />
     <None Remove="Images\collapse.png" />
-    <None Remove="Images\ConcaveHull.png" />
-    <None Remove="Images\Copy.png" />
-    <None Remove="Images\DataExchange.svg" />
     <None Remove="Images\DataExchange_16.png" />
     <None Remove="Images\DataExchange_32.png" />
     <None Remove="Images\DataExchange_64.png" />
@@ -45,54 +37,31 @@
     <None Remove="Images\DEMSurvey.png" />
     <None Remove="Images\DirectionalBudgetSeg.png" />
     <None Remove="Images\down.png" />
-    <None Remove="Images\edit.png" />
     <None Remove="Images\Excel.png" />
-    <None Remove="Images\FISLibrary.png" />
     <None Remove="Images\folder16.png" />
     <None Remove="Images\folder32.png" />
-    <None Remove="Images\GCD.svg" />
     <None Remove="Images\GCD_16.png" />
     <None Remove="Images\GCD_256.png" />
     <None Remove="Images\GCD_32.png" />
     <None Remove="Images\GCD_64.png" />
     <None Remove="Images\Help.png" />
     <None Remove="Images\Histogram.png" />
-    <None Remove="Images\import.png" />
-    <None Remove="Images\info.png" />
-    <None Remove="Images\linear_extraction.png" />
     <None Remove="Images\longitudinal.png" />
     <None Remove="Images\mask.png" />
     <None Remove="Images\mask_dir.png" />
-    <None Remove="Images\NewProject.png" />
-    <None Remove="Images\open.svg" />
-    <None Remove="Images\OpenProject.png" />
     <None Remove="Images\open_16.png" />
     <None Remove="Images\open_32.png" />
     <None Remove="Images\open_64.png" />
-    <None Remove="Images\Options.png" />
     <None Remove="Images\PointDensity.png" />
-    <None Remove="Images\polygon.png" />
-    <None Remove="Images\print.png" />
     <None Remove="Images\refresh.png" />
-    <None Remove="Images\Report.png" />
     <None Remove="Images\Reservoir.png" />
     <None Remove="Images\Roughness.png" />
-    <None Remove="Images\Save.png" />
-    <None Remove="Images\SaveGIS.png" />
-    <None Remove="Images\SelectAll.png" />
-    <None Remove="Images\SelectNone.png" />
-    <None Remove="Images\Settings.png" />
-    <None Remove="Images\settings32.png" />
     <None Remove="Images\sigma.png" />
     <None Remove="Images\SlopeDegree.png" />
     <None Remove="Images\SlopePercent.png" />
-    <None Remove="Images\TopCat.png" />
-    <None Remove="Images\up.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Config.daml" />    
-    <Content Include="Images\AddInDesktop16.png" />
-    <Content Include="Images\AddInDesktop32.png" />
+    <Content Include="Config.daml" />
     <Content Include="DarkImages\AddInDesktop16.png" />
     <Content Include="DarkImages\AddInDesktop32.png" />    
   </ItemGroup>
@@ -177,86 +146,57 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Images\about.svg" />
     <Content Include="Images\about_16.png" />
     <Content Include="Images\about_32.png" />
     <Content Include="Images\about_64.png" />
-    <Content Include="Images\Add.png" />
-    <Content Include="Images\AddToMap.png" />
     <Content Include="Images\add_to_map16.png" />
     <Content Include="Images\add_to_map32.png" />
     <Content Include="Images\alphabetical.png" />
     <Content Include="Images\alpha_descending.png" />
-    <Content Include="Images\AOI.png" />
-    <Content Include="Images\AssociatedSurfaces.png" />
+    <Resource Include="Images\Layers\AOI.png" />
+    <Resource Include="Images\Layers\AssociatedSurfaces.png" />
     <Content Include="Images\bars.png" />
-    <Content Include="Images\BrowseFolder.png" />
-    <Content Include="Images\BudgetSeg.png" />
+    <Resource Include="Images\Layers\BudgetSeg.png" />
     <Content Include="Images\chart.png" />
     <Content Include="Images\Check.png" />
     <Content Include="Images\chrono_ascending.png" />
     <Content Include="Images\chrono_descending.png" />
-    <Content Include="Images\CleanRaster.png" />
-    <Content Include="Images\close.svg" />
+    <Resource Include="Images\Layers\CleanRaster.png" />
     <Content Include="Images\close_16.png" />
     <Content Include="Images\close_32.png" />
     <Content Include="Images\close_64.png" />
     <Content Include="Images\CoincidentPoints.png" />
     <Content Include="Images\collapse.png" />
-    <Content Include="Images\ConcaveHull.png" />
-    <Content Include="Images\Copy.png" />
-    <Content Include="Images\DataExchange.svg" />
     <Content Include="Images\DataExchange_16.png" />
     <Content Include="Images\DataExchange_32.png" />
     <Content Include="Images\DataExchange_64.png" />
     <Content Include="Images\Delete.png" />
-    <Content Include="Images\Delta.png" />
-    <Content Include="Images\DEMSurvey.png" />
-    <Content Include="Images\DirectionalBudgetSeg.png" />
+    <Resource Include="Images\Layers\Delta.png" />
+    <Resource Include="Images\Layers\DEMSurvey.png" />
+    <Resource Include="Images\Layers\DirectionalBudgetSeg.png" />
     <Content Include="Images\down.png" />
-    <Content Include="Images\edit.png" />
     <Content Include="Images\Excel.png" />
-    <Content Include="Images\FISLibrary.png" />
-    <Content Include="Images\folder16.png" />
+    <Resource Include="Images\folder16.png" />
     <Content Include="Images\folder32.png" />
-    <Resource Include="Images\GCD.svg" />
-    <Content Include="Images\GCD_16.png" />
+    <Resource Include="Images\GCD_16.png" />
     <Resource Include="Images\GCD_256.png" />
     <Resource Include="Images\GCD_32.png" />
     <Content Include="Images\GCD_64.png" />
     <Content Include="Images\Help.png" />
-    <Content Include="Images\Histogram.png" />
-    <Content Include="Images\import.png" />
-    <Content Include="Images\info.png" />
-    <Content Include="Images\linear_extraction.png" />
-    <Content Include="Images\longitudinal.png" />
-    <Content Include="Images\mask.png" />
-    <Content Include="Images\mask_dir.png" />
-    <Content Include="Images\NewProject.png" />
-    <Content Include="Images\open.svg" />
-    <Content Include="Images\OpenProject.png" />
+    <Resource Include="Images\Layers\Histogram.png" />
+    <Resource Include="Images\Layers\longitudinal.png" />
+    <Resource Include="Images\Layers\mask.png" />
+    <Resource Include="Images\Layers\mask_dir.png" />
     <Content Include="Images\open_16.png" />
     <Content Include="Images\open_32.png" />
     <Content Include="Images\open_64.png" />
-    <Content Include="Images\Options.png" />
-    <Content Include="Images\PointDensity.png" />
-    <Content Include="Images\polygon.png" />
-    <Content Include="Images\print.png" />
+    <Resource Include="Images\Layers\PointDensity.png" />
     <Content Include="Images\refresh.png" />
-    <Content Include="Images\Report.png" />
-    <Content Include="Images\Reservoir.png" />
-    <Content Include="Images\Roughness.png" />
-    <Content Include="Images\Save.png" />
-    <Content Include="Images\SaveGIS.png" />
-    <Content Include="Images\SelectAll.png" />
-    <Content Include="Images\SelectNone.png" />
-    <Content Include="Images\Settings.png" />
-    <Content Include="Images\settings32.png" />
-    <Content Include="Images\sigma.png" />
-    <Content Include="Images\SlopeDegree.png" />
-    <Content Include="Images\SlopePercent.png" />
-    <Content Include="Images\TopCat.png" />
-    <Content Include="Images\up.png" />
+    <Resource Include="Images\Layers\Reservoir.png" />
+    <Resource Include="Images\Layers\Roughness.png" />
+    <Resource Include="Images\Layers\sigma.png" />
+    <Resource Include="Images\Layers\SlopeDegree.png" />
+    <Resource Include="Images\Layers\SlopePercent.png" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
@@ -264,12 +204,23 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
    <Import Project="C:\Program Files\ArcGIS\Pro\bin\Esri.ProApp.SDK.Desktop.targets" Condition="Exists('C:\Program Files\ArcGIS\Pro\bin\Esri.ProApp.SDK.Desktop.targets') AND !Exists('Esri.ArcGISPro.Extensions.targets')" />
 </Project>

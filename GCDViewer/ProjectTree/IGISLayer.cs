@@ -5,6 +5,5 @@ namespace GCDViewer.ProjectTree
     {
         string Name { get; }
         string GISPath { get; }
-        string SymbologyKey { get; }
     }
 }
