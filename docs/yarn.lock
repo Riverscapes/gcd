@@ -2996,9 +2996,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@riverscapes/docusaurus-theme@npm:1.1.1":
-  version: 1.1.1
-  resolution: "@riverscapes/docusaurus-theme@npm:1.1.1"
+"@riverscapes/docusaurus-theme@npm:1.1.3":
+  version: 1.1.3
+  resolution: "@riverscapes/docusaurus-theme@npm:1.1.3"
   dependencies:
     loglevel: "npm:^1.9.2"
   peerDependencies:
@@ -3006,7 +3006,7 @@ __metadata:
     "@docusaurus/theme-classic": ^3.8.1
     react: ^19.0.0
     react-dom: ^19.0.0
-  checksum: 10/cdc2a5509381195b0238765cc3243a39566a698558e04258816a0faf5de3a8adeaf69c6d48b38a9db1cb16f63187ca63475ba43001ba88c83fdc7136a75c19d9
+  checksum: 10/d4f3ef7008c9ceaf0c7479096191c52a6d9a10fce1bf1660b5ab775e1b5b18c15da2fb0b38b54f9d4c632886ad6962d5d09e2914acc9682bd2f138c80c820c60
   languageName: node
   linkType: hard
 
@@ -3021,7 +3021,7 @@ __metadata:
     "@docusaurus/tsconfig": "npm:3.8.1"
     "@docusaurus/types": "npm:3.8.1"
     "@mdx-js/react": "npm:^3.1.0"
-    "@riverscapes/docusaurus-theme": "npm:1.1.1"
+    "@riverscapes/docusaurus-theme": "npm:1.1.3"
     "@typescript-eslint/eslint-plugin": "npm:8.37.0"
     "@typescript-eslint/parser": "npm:8.37.0"
     clsx: "npm:^2.1.1"
