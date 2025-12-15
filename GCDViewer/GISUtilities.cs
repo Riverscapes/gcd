@@ -17,6 +17,9 @@ using System.Collections;
 using ArcGIS.Desktop.Layouts;
 using ArcGIS.Core.Data.UtilityNetwork.Trace;
 using System.Windows;
+using ArcGIS.Desktop.Internal.Mapping.Voxel.Controls.Transparency;
+using System.Reflection.PortableExecutable;
+//using ArcGIS.Core.Internal.CIM;
 
 namespace GCDViewer
 {
@@ -174,34 +177,19 @@ namespace GCDViewer
                    else if (layer is RasterLayer rasterLayer)
                    {
                        Envelope extent = rasterLayer.GetRaster().GetExtent();
+                       SymbolizeRasterLayer(item.Item, rasterLayer);
+
+                       if (item.Item is DEMSurvey)
+                       {
+                           DEMSurvey dem = item.Item as DEMSurvey;
+                           Raster hillshade = dem.Hillshade;
+                           if (hillshade is Raster)
+                           {
+                               int hillshadeIndex = index;
+                               Layer hs_layer = LayerFactory.Instance.CreateLayer(hillshade.GISUri, parent as ILayerContainerEdit, index, string.Format("{0} - Hillshade", item.Name));
+                           }
+                       }
                    }
-
-                   // Apply symbology
-                   //FileInfo symbologyLayerFilePath = GetSymbologyFile(item.Item as GISDataset);
-                   //if (symbologyLayerFilePath != null)
-                   //{
-                   //    try
-                   //    {
-                   //        // Get the Layer Document from the lyrx file
-                   //        LayerDocument layerDoc = new LayerDocument(symbologyLayerFilePath.FullName);
-                   //        var cimLyrDoc = layerDoc.GetCIMLayerDocument();
-
-                   //        if (item.Item is ProjectTree.Raster)
-                   //        {
-                   //            var colorizer = ((CIMRasterLayer)cimLyrDoc.LayerDefinitions[0]).Colorizer as CIMRasterColorizer;
-                   //            ((RasterLayer)layer).SetColorizer(colorizer);
-                   //        }
-                   //        else
-                   //        {
-                   //            var rendererFromLayerFile = ((CIMFeatureLayer)cimLyrDoc.LayerDefinitions[0]).Renderer;
-                   //            ((FeatureLayer)layer).SetRenderer(rendererFromLayerFile);
-                   //        }
-                   //    }
-                   //    catch (Exception ex)
-                   //    {
-                   //        System.Diagnostics.Debug.Print($"Failed to apply symbology: {ex.Message}");
-                   //    }
-                   //}
 
                    // Store the ArcPro layer URI so that we can find this layer again
                    item.MapLayerUri = layer.URI;
@@ -257,6 +245,64 @@ namespace GCDViewer
                        }
                    }
                });
+        }
+
+        private async void SymbolizeRasterLayer(ITreeItem item, RasterLayer rasterLayer)
+        {
+            if (item is DEMSurvey)
+            {
+                await GIS.MapRenderers.ApplyDEMColorRampAsync(rasterLayer);
+                rasterLayer.SetTransparency(40);
+            }
+            else if (item is AssocSurface)
+            {
+                AssocSurface assoc = item as AssocSurface;
+                switch (assoc.AssocSurfaceType)
+                {
+                    case AssocSurface.AssociatedSurfaceTypes.Roughness:
+                        await GIS.MapRenderers.ApplyRoughnessColorRampAsync(rasterLayer);
+                        break;
+
+                    case AssocSurface.AssociatedSurfaceTypes.SlopePercent:
+                        await GIS.MapRenderers.ApplySlopePercentRiseColorRampAsync(rasterLayer);
+                        break;
+
+                    case AssocSurface.AssociatedSurfaceTypes.SlopeDegree:
+                        await GIS.MapRenderers.ApplySlopeDegreesColorRampAsync(rasterLayer);
+                        break;
+
+                        //TODO: point density
+                }
+            }
+            else if (item is DoDBase)
+            {
+                DoDBase dod = item as DoDBase as DoDBase;
+                await GIS.MapRenderers.ApplyDoDClassifyColorRampAsync(rasterLayer, 10);
+            }
+            else if (item is ErrorSurface)
+            {
+                //errRow.Raster.ComputeStatistics();
+                //Dictionary<string, decimal> stats = errRow.Raster.GetStatistics();
+                //double rMin = (double)stats["min"];
+                //double rMax = (double)stats["max"];
+
+                //if (rMin == rMax)
+                //{
+                //    IRasterRenderer rasterRenderer = RasterSymbolization.CreateESRIDefinedContinuousRenderer(errRow.Raster, 1, "Partial Spectrum");
+                //    AddRasterLayer(errRow.Raster, rasterRenderer, errRow.Name, pErrGrpLyr, sHeader, dTransparency);
+                //}
+                //else if (rMax <= 1 & rMax > 0.25)
+                //{
+                //    IRasterRenderer rasterRenderer = RasterSymbolization.CreateClassifyRenderer(errRow.Raster, 11, "Partial Spectrum", 1.1);
+                //    AddRasterLayer(errRow.Raster, rasterRenderer, errRow.Name, pErrGrpLyr, sHeader, dTransparency);
+                //}
+                //else
+                //{
+                //    IRasterRenderer rasterRenderer = RasterSymbolization.CreateClassifyRenderer(errRow.Raster, 11, "Partial Spectrum");
+                //    AddRasterLayer(errRow.Raster, rasterRenderer, errRow.Name, pErrGrpLyr, sHeader, dTransparency);
+                //}
+            }
+
         }
 
         private int GetInsertIndex(TreeViewItemModel newItem)
