@@ -12,7 +12,8 @@ namespace GCDViewer.Buttons
         {
             try
             {
-              
+                ProjectExplorerDockpaneViewModel.CloseAllProjects();
+
             }
             catch (Exception ex)
             {

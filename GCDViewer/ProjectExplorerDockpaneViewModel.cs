@@ -108,7 +108,6 @@ namespace GCDViewer
 
             GCDProject newProject = new GCDProject(filePath);
             newProject.Load();
-            newProject.Name = pevm.GetUniqueProjectName(newProject);
 
             TreeViewItemModel projectItem = new TreeViewItemModel(newProject, null);
             projectItem.IsExpanded = true;
