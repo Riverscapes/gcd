@@ -54,6 +54,8 @@
     <None Remove="Images\open_64.png" />
     <None Remove="Images\PointDensity.png" />
     <None Remove="Images\refresh.png" />
+    <None Remove="Images\reload_16.png" />
+    <None Remove="Images\reload_32.png" />
     <None Remove="Images\Reservoir.png" />
     <None Remove="Images\Roughness.png" />
     <None Remove="Images\sigma.png" />
@@ -63,7 +65,9 @@
   <ItemGroup>
     <Content Include="Config.daml" />
     <Content Include="DarkImages\AddInDesktop16.png" />
-    <Content Include="DarkImages\AddInDesktop32.png" />    
+    <Content Include="DarkImages\AddInDesktop32.png" />
+    <Content Include="Images\reload_16.png" />
+    <Content Include="Images\reload_32.png" />    
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\launchSettings.json" />

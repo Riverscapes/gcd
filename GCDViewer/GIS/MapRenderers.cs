@@ -15,6 +15,58 @@ namespace GCDViewer.GIS
 {
     public class MapRenderers
     {
+        /// <summary>
+        /// Apply one of the built-in ESRI color ramps to a raster layer
+        /// </summary>
+        /// <param name="rasterLayer"></param>
+        /// <param name="rampName"></param>
+        /// <remarks>Strategy learned from one of the ESRI SDK examples on GitHub
+        /// https://github.com/Esri/arcgis-pro-sdk-community-samples/blob/5c532b40b33b3b5474c5235c8768e56773ff7e9f/Map-Authoring/CIMExamples/CreateCIMRasterStretchColorizerFromScratch.cs#L39
+        /// </remarks>
+        public static async void ApplyStretchRenderer(RasterLayer rasterLayer, string rampName)
+        {
+            var parametersMin = Geoprocessing.MakeValueArray(rasterLayer, "MINIMUM");
+            var parametersMax = Geoprocessing.MakeValueArray(rasterLayer, "MAXIMUM");
+            var minRes =  await Geoprocessing.ExecuteToolAsync("GetRasterProperties_management", parametersMin);
+            var maxRes = await Geoprocessing.ExecuteToolAsync("GetRasterProperties_management", parametersMax);
+
+            var min = Convert.ToDouble(minRes.Values[0]);
+            var max = Convert.ToDouble(maxRes.Values[0]);
+
+            var cimColorRamp = GetNamedColorRamp(rampName);
+
+            // Create a stretch colorizer
+            var stretchColorizer = new CIMRasterStretchColorizer
+            {
+                ColorRamp = cimColorRamp,
+                StretchType = RasterStretchType.MinimumMaximum,
+                UseGammaStretch = false,
+                GammaValue = 1.0,
+                StretchClasses = new CIMRasterStretchClass[2]
+            };
+
+            stretchColorizer.StretchClasses[0] = new CIMRasterStretchClass() { Value = min, Label = min.ToString() };
+            stretchColorizer.StretchClasses[1] = new CIMRasterStretchClass() { Value = max, Label = max.ToString() };
+
+            rasterLayer.SetColorizer(stretchColorizer);
+        }
+
+        public static CIMColorRamp GetNamedColorRamp(string rampName)
+        {
+            var style = Project.Current.GetItems<StyleProjectItem>().FirstOrDefault(s => s.Name.Equals("ArcGIS Colors", StringComparison.OrdinalIgnoreCase));
+            var colorRamps = style.SearchColorRamps(rampName);
+
+            foreach (var ramp in colorRamps)
+            {
+                if (string.Compare(ramp.Name, rampName, true) == 0)
+                {
+                    return ramp.ColorRamp;
+                }
+            }
+
+            throw new Exception(String.Format("Failed to find built-in colour ramp called {0}", rampName));
+        }
+
         //public static async Task<RasterLayer> ApplyClassifyRenderer(RasterLayer rasterLayer, int classCount, string colorRampName, bool invert = false)
         //{
         //    if (rasterLayer == null)
@@ -252,11 +304,11 @@ namespace GCDViewer.GIS
             {
                 // Multipart color ramp
                 var ramps = new List<CIMColorRamp>
-            {
-            CreateAlgorithmicRamp(255, 235, 176, 38, 115, 0),
-            CreateAlgorithmicRamp(38, 115, 0, 115, 77, 0),
-            CreateAlgorithmicRamp(115, 77, 0, 255, 255, 255)
-            };
+                {
+                    CreateAlgorithmicRamp(255, 235, 176, 38, 115, 0),
+                    CreateAlgorithmicRamp(38, 115, 0, 115, 77, 0),
+                    CreateAlgorithmicRamp(115, 77, 0, 255, 255, 255)
+                };
 
                 var multiRamp = new CIMMultipartColorRamp
                 {
@@ -273,6 +325,21 @@ namespace GCDViewer.GIS
                 };
 
                 rasterLayer.SetColorizer(stretch);
+
+                // Get the current CIM definition of the raster layer
+                var cimRasterLayer = rasterLayer.GetDefinition() as CIMRasterLayer;
+
+                if (cimRasterLayer != null)
+                {
+                    cimRasterLayer.ShowLegends = true;
+
+                    // OPTIONAL: Ensure the layer is expanded by default in the TOC
+                    // If you want the legend to show immediately without clicking the triangle
+                    // cimRasterLayer.Expanded = true;
+
+                    // Apply the modified definition back to the layer
+                    rasterLayer.SetDefinition(cimRasterLayer);
+                }
             });
         }
 
@@ -282,10 +349,75 @@ namespace GCDViewer.GIS
             {
                 FromColor = ColorFactory.Instance.CreateRGBColor(r1, g1, b1),
                 ToColor = ColorFactory.Instance.CreateRGBColor(r2, g2, b2),
+                PrimitiveName = "Custom Ramp",
                 //Algorithm = ColorRampAlgorithm.LinearContinuous
             };
         }
 
+        /// <summary>
+        /// Applies a named, pre-defined color ramp from the project styles to a RasterLayer.
+        /// </summary>
+        /// <param name="rasterLayer">The RasterLayer to symbolize.</param>
+        /// <param name="colorRampName">The name of the color ramp (e.g., "Elevation #1", "Green-Yellow-Red").</param>
+        /// <param name="styleName">The name of the style containing the color ramp (e.g., "ArcGIS Colors").</param>
+        public static async Task ApplyNamedColorRampToRasterAsync(
+            RasterLayer rasterLayer,
+            string colorRampName,
+            string styleName = "ArcGIS Colors")
+        {
+            // 1. Find the Style in the current Project
+            StyleProjectItem style =
+                Project.Current.GetItems<StyleProjectItem>()
+                    .FirstOrDefault(s => s.Name.Equals(styleName, System.StringComparison.OrdinalIgnoreCase));
+
+            if (style == null)
+            {
+                ArcGIS.Desktop.Framework.Dialogs.MessageBox.Show($"Style '{styleName}' not found in the project.", "Symbology Error");
+                return;
+            }
+
+            // 2. Search for the Color Ramp by name (Must be on the QueuedTask.Run thread)
+            var colorRampList = await QueuedTask.Run(() => style.SearchColorRamps(colorRampName));
+
+            if (colorRampList == null || colorRampList.Count == 0)
+            {
+                ArcGIS.Desktop.Framework.Dialogs.MessageBox.Show($"Color Ramp '{colorRampName}' not found in style '{styleName}'.", "Symbology Error");
+                return;
+            }
+
+            // Retrieve the CIMColorRamp object from the first result
+            CIMColorRamp cimColorRamp = colorRampList[0].ColorRamp;
+
+            // 3. Create and Apply the Raster Stretch Colorizer (Must be on the QueuedTask.Run thread)
+            await QueuedTask.Run(() =>
+            {
+                var stretchColorizer = new CIMRasterStretchColorizer
+                {
+                    ColorRamp = cimColorRamp,
+                    // Configure the stretch type (MinimumMaximum is a common default for DEMs)
+                    StretchType = RasterStretchType.MinimumMaximum,
+                    UseGammaStretch = false,
+                    GammaValue = 1.0
+                };
+
+                // Apply the new colorizer to the layer
+                rasterLayer.SetColorizer(stretchColorizer);
+
+                var cimRasterLayer = rasterLayer.GetDefinition() as CIMRasterLayer;
+                if (cimRasterLayer == null)
+                    return;
+
+                cimRasterLayer.Colorizer = new CIMRasterStretchColorizer
+                {
+                    ColorRamp = cimColorRamp,
+                    StretchType = RasterStretchType.MinimumMaximum
+                };
+
+                cimRasterLayer.ShowLegends = true;
+
+                rasterLayer.SetDefinition(cimRasterLayer);
+            });
+        }
 
         public static async Task ApplyRoughnessColorRampAsync(RasterLayer rasterLayer)
         {
