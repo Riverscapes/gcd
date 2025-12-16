@@ -32,23 +32,50 @@
 		<group id="GCDViewer_Group" caption="GCD" appearsOnAddInTab="false">
 		  <!-- host controls within groups -->
 		  <button refID="GCDViewer_Buttons_OpenProject" size="large" />
+		  <button refID="GCDViewer_Buttons_ReloadProject" size="large" />
 		  <button refID="GCDViewer_Buttons_CloseProject" size="large" />
 		  <button refID="GCDViewer_Buttons_AboutGCD" size="large" />
 		  <button refID="GCDViewer_Buttons_Help" size="large" />
+		  <!--<button refID="GCDViewer_Buttons_Test" size="large" />-->
 		</group>
 	  </groups>
 
 	  <controls>
+
+		<!--<button id="GCDViewer_Buttons_Test"
+				loadOnClick="true"
+				className="GCDViewer.Buttons.TestButton"
+				caption="Test"
+				keytip="O">
+		  <tooltip heading="Open Project">
+			Test Raster Symbols
+			<disabledText />
+		  </tooltip>
+		</button>-->
+		
+		
 		<!-- add your controls here -->
 		<button id="GCDViewer_Buttons_OpenProject"
 				loadOnClick="true"
 				className="GCDViewer.Buttons.OpenProjectButton"
 				caption="Open Project"
-				smallImage="Images/open_32.png"
+				smallImage="Images/open_16.png"
 				largeImage="Images/open_32.png"
 				keytip="O">
 		  <tooltip heading="Open Project">
 			Open GCD project and load it into the Project Explorer to view its contents.
+			<disabledText />
+		  </tooltip>
+		</button>
+		<button id="GCDViewer_Buttons_ReloadProject"
+				loadOnClick="true"
+				className="GCDViewer.Buttons.ReloadProjectButton"
+				caption="Reload Project"
+				smallImage="Images/reload_16.png"
+				largeImage="Images/reload_32.png"
+				keytip="O">
+		  <tooltip heading="Open Project">
+			Reload the GCD project, using the latest contents to refresh the GCD Viewer project tree. 
 			<disabledText />
 		  </tooltip>
 		</button>

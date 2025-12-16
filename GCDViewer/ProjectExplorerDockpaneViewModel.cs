@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -89,7 +90,7 @@ namespace GCDViewer
             set => SetProperty(ref _heading, value);
         }
 
-        internal static void LoadProject(string filePath)
+        internal static void LoadProject(string filePath = null)
         {
             DockPane pane = FrameworkApplication.DockPaneManager.Find(_dockPaneID);
             if (pane == null)
@@ -97,14 +98,23 @@ namespace GCDViewer
 
             ProjectExplorerDockpaneViewModel pevm = (ProjectExplorerDockpaneViewModel)pane;
 
-            // Detect if project is already in tree and simply select the node and return;
-            foreach (TreeViewItemModel rootNod in pevm.TreeViewItems)
+            // If no file is supplied then looking for existing project to reload
+            TreeViewItemModel nodRoot = pevm.treeViewItems.FirstOrDefault<TreeViewItemModel>();
+            if (filePath == null)
             {
-                if (rootNod.Item is GCDProject && ((GCDProject)rootNod.Item).IsSame(filePath))
+                if (nodRoot == null)
                 {
                     return;
                 }
+                else
+                {
+                    // Get the existing project to reload
+                    filePath = ((GCDProject)nodRoot.Item).ProjectFile.FullName;
+                }
             }
+
+            // Clear ready for reload
+            pevm.treeViewItems.Clear();
 
             GCDProject newProject = new GCDProject(filePath);
             newProject.Load();
@@ -215,7 +225,8 @@ namespace GCDViewer
         {
             try
             {
-                AddLayerToMap(parameter as TreeViewItemModel, false);
+                // Explicit "fire and forget" asynchronous call
+                _ = AddLayerToMap(parameter as TreeViewItemModel, false);
             }
             catch (Exception ex)
             {
@@ -399,7 +410,7 @@ namespace GCDViewer
             return false;
         }
 
-        private void ExecuteRefresh(object parameter)
+        internal void ExecuteRefresh(object parameter)
         {
             if (parameter is TreeViewItemModel)
             {

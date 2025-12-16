@@ -19,6 +19,7 @@ using ArcGIS.Core.Data.UtilityNetwork.Trace;
 using System.Windows;
 using ArcGIS.Desktop.Internal.Mapping.Voxel.Controls.Transparency;
 using System.Reflection.PortableExecutable;
+using Microsoft.VisualBasic;
 //using ArcGIS.Core.Internal.CIM;
 
 namespace GCDViewer
@@ -177,18 +178,61 @@ namespace GCDViewer
                    else if (layer is RasterLayer rasterLayer)
                    {
                        Envelope extent = rasterLayer.GetRaster().GetExtent();
-                       SymbolizeRasterLayer(item.Item, rasterLayer);
+                       //SymbolizeRasterLayer(item.Item, rasterLayer);
+                       //GIS.MapRenderers.ApplyNamedColorRampToRasterAsync(rasterLayer, "Partial Spectrum");
 
                        if (item.Item is DEMSurvey)
                        {
+                           // Add the hillshade first
                            DEMSurvey dem = item.Item as DEMSurvey;
-                           Raster hillshade = dem.Hillshade;
-                           if (hillshade is Raster)
+                           //Raster hillshade = dem.Hillshade;
+                           //if (hillshade is Raster)
+                           //{
+                           //    int hillshadeIndex = index + 1;
+                           //    LayerFactory.Instance.CreateLayer(hillshade.GISUri, parent as ILayerContainerEdit, hillshadeIndex, string.Format("{0} - Hillshade", item.Name));
+                           //}
+
+                           GIS.MapRenderers.ApplyStretchRenderer(rasterLayer, "Brown to Blue Green Diverging, Bright");
+                       }
+                       else if (item.Item is ErrorSurface)
+                       {
+                           GIS.MapRenderers.ApplyStretchRenderer(rasterLayer, "Partial Spectrum");
+                       }
+                       else if (item.Item is AssocSurface)
+                       {
+                           AssocSurface assoc = item.Item as AssocSurface;
+                           switch (assoc.AssocSurfaceType)
                            {
-                               int hillshadeIndex = index;
-                               Layer hs_layer = LayerFactory.Instance.CreateLayer(hillshade.GISUri, parent as ILayerContainerEdit, index, string.Format("{0} - Hillshade", item.Name));
+                               case AssocSurface.AssociatedSurfaceTypes.InterpolationError:
+                               case AssocSurface.AssociatedSurfaceTypes.SlopeDegree:
+                               case AssocSurface.AssociatedSurfaceTypes.SlopePercent:
+                                   GIS.MapRenderers.ApplyStretchRenderer(rasterLayer, "Slope");
+                                   break;
+
+                               case AssocSurface.AssociatedSurfaceTypes.Roughness:
+                                   GIS.MapRenderers.ApplyStretchRenderer(rasterLayer, "Brown Light To Dark");
+                                   break;
+
+                               case AssocSurface.AssociatedSurfaceTypes.PointDensity:
+                                   GIS.MapRenderers.ApplyStretchRenderer(rasterLayer, "Green to Blue");
+                                   break;
+
+                               case AssocSurface.AssociatedSurfaceTypes.PointQuality3D:
+                                   GIS.MapRenderers.ApplyStretchRenderer(rasterLayer, "Precipitation");
+                                   break;
                            }
                        }
+
+                       //if (item.Item is DEMSurvey)
+                       //{
+                       //    DEMSurvey dem = item.Item as DEMSurvey;
+                       //    Raster hillshade = dem.Hillshade;
+                       //    if (hillshade is Raster)
+                       //    {
+                       //        int hillshadeIndex = index;
+                       //        Layer hs_layer = LayerFactory.Instance.CreateLayer(hillshade.GISUri, parent as ILayerContainerEdit, index, string.Format("{0} - Hillshade", item.Name));
+                       //    }
+                       //}
                    }
 
                    // Store the ArcPro layer URI so that we can find this layer again
@@ -264,11 +308,8 @@ namespace GCDViewer
                         break;
 
                     case AssocSurface.AssociatedSurfaceTypes.SlopePercent:
-                        await GIS.MapRenderers.ApplySlopePercentRiseColorRampAsync(rasterLayer);
-                        break;
-
                     case AssocSurface.AssociatedSurfaceTypes.SlopeDegree:
-                        await GIS.MapRenderers.ApplySlopeDegreesColorRampAsync(rasterLayer);
+                        await GIS.MapRenderers.ApplyNamedColorRampToRasterAsync(rasterLayer, "Slope");
                         break;
 
                         //TODO: point density
@@ -281,6 +322,9 @@ namespace GCDViewer
             }
             else if (item is ErrorSurface)
             {
+                //await GIS.MapRenderers.ApplyNamedColorRampToRasterAsync(rasterLayer, "Magma");
+                await GIS.MapRenderers.ApplyNamedColorRampToRasterAsync(rasterLayer, "Partial Spectrum");
+
                 //errRow.Raster.ComputeStatistics();
                 //Dictionary<string, decimal> stats = errRow.Raster.GetStatistics();
                 //double rMin = (double)stats["min"];

@@ -1,19 +1,21 @@
 ﻿using System;
 using ArcGIS.Desktop.Framework.Contracts;
 
+
 namespace GCDViewer.Buttons
 {
-    internal class CloseProjectButton : Button
+    internal class ReloadProjectButton : Button
     {
         protected override void OnClick()
         {
             try
             {
-                ProjectExplorerDockpaneViewModel.CloseAllProjects();
+
+                ProjectExplorerDockpaneViewModel.LoadProject();
             }
             catch (Exception ex)
             {
-                ArcGIS.Desktop.Framework.Dialogs.MessageBox.Show(ex.Message, "Error Closing GCD Projects");
+                ArcGIS.Desktop.Framework.Dialogs.MessageBox.Show(ex.Message, "Error reloading GCD Project");
             }
         }
     }
