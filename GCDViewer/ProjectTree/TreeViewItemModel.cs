@@ -36,7 +36,7 @@ namespace GCDViewer.ProjectTree
             Parent = parent;
         }
 
-        public string ContextMenu => Item.GetType().Name;
+        public string ContextMenu => Item.ContextMenu;
 
         public TreeViewItemModel() { }
 

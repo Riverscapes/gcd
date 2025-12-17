@@ -27,6 +27,8 @@ namespace GCDViewer.ProjectTree
 
         public abstract string Noun { get; }
 
+        public abstract string ContextMenu { get; }
+
         // No folder and no file extension
         private readonly string ImageFileNameExists;
         private readonly string ImageFileNameMissing;

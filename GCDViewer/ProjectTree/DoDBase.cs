@@ -28,6 +28,8 @@ namespace GCDViewer.ProjectTree
         //public List<BudgetSegregation> BudgetSegregations { get; internal set; }
         //public readonly List<LinearExtraction.LinearExtraction> LinearExtractions;
 
+        public override string ContextMenu => "Raster";
+
         public override bool Exists { get { return true; } }
 
         public override string Noun { get { return "Change Detection"; } }

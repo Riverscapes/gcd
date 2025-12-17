@@ -48,7 +48,7 @@
                         <Image
                             Width="16"
                             Height="16"
-                            Source="pack://application:,,,/GCDViewer;component/Images/add_to_map16.png" />
+                            Source="pack://application:,,,/GCDViewer;component/Images/map_16.png" />
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem
@@ -59,7 +59,7 @@
                         <Image
                             Width="16"
                             Height="16"
-                            Source="pack://application:,,,/GCDViewer;component/Images/refresh.png" />
+                            Source="pack://application:,,,/GCDViewer;component/Images/reload_16.png" />
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem
@@ -107,7 +107,7 @@
                         <Image
                             Width="16"
                             Height="16"
-                            Source="pack://application:,,,/GCDViewer;component/Images/add_to_map16.png" />
+                            Source="pack://application:,,,/GCDViewer;component/Images/map_16.png" />
                     </MenuItem.Icon>
                 </MenuItem>
             </ContextMenu>
@@ -144,7 +144,7 @@
                         <Image
                             Width="16"
                             Height="16"
-                            Source="pack://application:,,,/GCDViewer;component/Images/add_to_map16.png" />
+                            Source="pack://application:,,,/GCDViewer;component/Images/map_16.png" />
                     </MenuItem.Icon>
                 </MenuItem>
                
@@ -160,33 +160,7 @@
                     </MenuItem.Icon>
                 </MenuItem>
             </ContextMenu>
-            <ContextMenu x:Key="WMSContextMenu">
-                <MenuItem
-                    Command="{Binding DataContext.AddToMap, RelativeSource={RelativeSource AncestorType=TreeView}}"
-                    CommandParameter="{Binding}"
-                    Header="Add To Map">
-                    <MenuItem.Icon>
-                        <Image
-                            Width="16"
-                            Height="16"
-                            Source="pack://application:,,,/GCDViewer;component/Images/add_to_map16.png" />
-                    </MenuItem.Icon>
-                </MenuItem>
-            </ContextMenu>
-            <ContextMenu x:Key="ProjectViewContextMenu">
-                <MenuItem
-                    Command="{Binding DataContext.AddViewToMap, RelativeSource={RelativeSource AncestorType=TreeView}}"
-                    CommandParameter="{Binding}"
-                    Header="Add All Layers To Map">
-                    <MenuItem.Icon>
-                        <Image
-                            Width="16"
-                            Height="16"
-                            Source="pack://application:,,,/GCDViewer;component/Images/add_to_map16.png" />
-                    </MenuItem.Icon>
-                </MenuItem>
-            </ContextMenu>
-        </ResourceDictionary>
+         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -225,7 +199,7 @@
                                 <DataTrigger Binding="{Binding IsExpanded}" Value="False">
                                     <Setter Property="TreeViewItem.IsExpanded" Value="False" />
                                 </DataTrigger>
-                                <DataTrigger Binding="{Binding ContextMenu}" Value="RaveProject">
+                                <DataTrigger Binding="{Binding ContextMenu}" Value="GCDProject">
                                     <Setter Property="ContextMenu" Value="{StaticResource ProjectContextMenu}" />
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding ContextMenu}" Value="FileSystemDataset">
@@ -239,12 +213,6 @@
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding ContextMenu}" Value="Raster">
                                     <Setter Property="ContextMenu" Value="{StaticResource RasterContextMenu}" />
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding ContextMenu}" Value="WMSLayer">
-                                    <Setter Property="ContextMenu" Value="{StaticResource WMSContextMenu}" />
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding ContextMenu}" Value="ProjectView">
-                                    <Setter Property="ContextMenu" Value="{StaticResource ProjectViewContextMenu}" />
                                 </DataTrigger>
                             </HierarchicalDataTemplate.Triggers>
                         </HierarchicalDataTemplate>

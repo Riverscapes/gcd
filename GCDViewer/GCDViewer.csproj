@@ -47,13 +47,13 @@
     <None Remove="Images\Help.png" />
     <None Remove="Images\Histogram.png" />
     <None Remove="Images\longitudinal.png" />
+    <None Remove="Images\map_16.png" />
     <None Remove="Images\mask.png" />
     <None Remove="Images\mask_dir.png" />
     <None Remove="Images\open_16.png" />
     <None Remove="Images\open_32.png" />
     <None Remove="Images\open_64.png" />
     <None Remove="Images\PointDensity.png" />
-    <None Remove="Images\refresh.png" />
     <None Remove="Images\reload_16.png" />
     <None Remove="Images\reload_32.png" />
     <None Remove="Images\Reservoir.png" />
@@ -66,7 +66,8 @@
     <Content Include="Config.daml" />
     <Content Include="DarkImages\AddInDesktop16.png" />
     <Content Include="DarkImages\AddInDesktop32.png" />
-    <Content Include="Images\reload_16.png" />
+    <Resource Include="Images\map_16.png" />
+    <Resource Include="Images\reload_16.png" />
     <Content Include="Images\reload_32.png" />    
   </ItemGroup>
   <ItemGroup>
@@ -166,12 +167,12 @@
     <Content Include="Images\chrono_ascending.png" />
     <Content Include="Images\chrono_descending.png" />
     <Resource Include="Images\Layers\CleanRaster.png" />
-    <Content Include="Images\close_16.png" />
+    <Resource Include="Images\close_16.png" />
     <Content Include="Images\close_32.png" />
     <Content Include="Images\close_64.png" />
     <Content Include="Images\CoincidentPoints.png" />
     <Content Include="Images\collapse.png" />
-    <Content Include="Images\DataExchange_16.png" />
+    <Resource Include="Images\DataExchange_16.png" />
     <Content Include="Images\DataExchange_32.png" />
     <Content Include="Images\DataExchange_64.png" />
     <Content Include="Images\Delete.png" />
@@ -195,7 +196,6 @@
     <Content Include="Images\open_32.png" />
     <Content Include="Images\open_64.png" />
     <Resource Include="Images\Layers\PointDensity.png" />
-    <Content Include="Images\refresh.png" />
     <Resource Include="Images\Layers\Reservoir.png" />
     <Resource Include="Images\Layers\Roughness.png" />
     <Resource Include="Images\Layers\sigma.png" />

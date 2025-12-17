@@ -21,6 +21,8 @@ namespace GCDViewer.ProjectTree
         public readonly GCDProject Project;
         public readonly FileSystemInfo Path;
 
+        public override string ContextMenu => "FileSystemDataset";
+
         public FileSystemDataset(GCDProject project, string name, FileSystemInfo fsInfo, string image_Exists, string image_Missing, string id)
             : base(name, image_Exists, image_Missing, id)
         {
@@ -108,7 +110,7 @@ namespace GCDViewer.ProjectTree
                 }
                 else
                 {
-                    if ( System.IO.Directory.Exists(Path.FullName))
+                    if (System.IO.Directory.Exists(Path.FullName))
                     {
                         return GISDataStorageTypes.TIN; // ESRI GRID (folder)
                     }
