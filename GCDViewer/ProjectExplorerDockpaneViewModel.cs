@@ -1,4 +1,5 @@
-﻿using ArcGIS.Desktop.Framework;
+﻿using ArcGIS.Desktop.Core;
+using ArcGIS.Desktop.Framework;
 using ArcGIS.Desktop.Framework.Contracts;
 using GCDViewer.ProjectTree;
 using System;
@@ -34,8 +35,11 @@ namespace GCDViewer
         public static DirectoryInfo DeployFolder { get { return new DirectoryInfo(Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "RiverscapesXML")); } }
 
         public ICommand AddToMap { get; }
-
         public ICommand AddToMapScaled { get; }
+
+        public ICommand AddThresholdedDoDToMap { get; }
+
+        public ICommand AddRawDoDToMap { get; }
         public ICommand BrowseFolder { get; }
         public ICommand AddAllLayersToMap { get; }
         public ICommand DataExchange { get; }
@@ -59,6 +63,8 @@ namespace GCDViewer
 
             AddToMap = new ContextMenuCommand(ExecuteAddToMap, CanExecuteAddToMap);
             AddToMapScaled = new ContextMenuCommand(ExecuteAddToMapScaled, CanExecuteAddToMapScaled);
+            AddThresholdedDoDToMap = new ContextMenuCommand(ExecuteAddThresholdedDoDToMap, CanExecuteAddThresholdedDoDToMap);
+            AddRawDoDToMap = new ContextMenuCommand(ExecuteAddRawDoDToMap, CanExecuteAddRawDoDToMap);
             BrowseFolder = new ContextMenuCommand(ExecuteBrowseFolder, CanExecuteBrowseFolder);
             AddAllLayersToMap = new ContextMenuCommand(ExecuteAddAllLayersToMap, CanExecuteAddAllLayersToMap);
             OpenFile = new ContextMenuCommand(ExecuteOpenFile, CanExecuteOpenFile);
@@ -87,6 +93,20 @@ namespace GCDViewer
         {
             get => _heading;
             set => SetProperty(ref _heading, value);
+        }
+
+        internal static void VisitDataExchange()
+        {
+            DockPane pane = FrameworkApplication.DockPaneManager.Find(_dockPaneID);
+            if (pane == null)
+                return;
+
+            ProjectExplorerDockpaneViewModel pevm = (ProjectExplorerDockpaneViewModel)pane;
+
+            // Attempt to get GCD project at root of tree. If it fails then pass null
+            // and this should navigate to the root of the exchange.
+            TreeViewItemModel nodRoot = pevm.treeViewItems.FirstOrDefault<TreeViewItemModel>();
+            pevm.ExecuteDataExchange(nodRoot);
         }
 
         internal static void LoadProject(string filePath = null)
@@ -241,6 +261,64 @@ namespace GCDViewer
             // For example, always return true for now
             return true;
         }
+
+
+        public void ExecuteAddThresholdedDoDToMap(object parameter)
+        {
+            try
+            {
+                var node = parameter as TreeViewItemModel;
+                if (node.Item is DoDBase)
+                {
+                    var gis = new GISUtilities();
+                    int index = node.Parent.Children.IndexOf(node);
+                    _ = gis.AddDoDToMapAsync(node, index, false);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Adding a Layer to the Map");
+            }
+        }
+
+        private bool CanExecuteAddRawDoDToMap(object parameter)
+        {
+            // Your logic to determine if the command can execute
+            // For example, always return true for now
+            return true;
+        }
+
+
+        public void ExecuteAddRawDoDToMap(object parameter)
+        {
+            try
+            {
+                var node = parameter as TreeViewItemModel;
+                if (node.Item is DoDBase)
+                {
+                    var gis = new GISUtilities();
+                    int index = node.Parent.Children.IndexOf(node);
+                    _ = gis.AddDoDToMapAsync(node, index, true);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Adding a Layer to the Map");
+            }
+        }
+
+        private bool CanExecuteAddThresholdedDoDToMap(object parameter)
+        {
+            // Your logic to determine if the command can execute
+            // For example, always return true for now
+            return true;
+        }
+
+
+
+
+
+
 
         //private void ExecuteLayerMetaData(object parameter)
         //{
@@ -397,6 +475,9 @@ namespace GCDViewer
                     MessageBox.Show(ex.Message, "Error Opening Data Exchange");
                 }
             }
+
+            // No project open. Simply navigate  to the data exhcnage.
+            Process.Start(new ProcessStartInfo(Properties.Resources.DataExchangeURL) { UseShellExecute = true });
         }
 
         private bool CanExecuteDataExchange(object parameter)

@@ -33,9 +33,10 @@
 		  <!-- host controls within groups -->
 		  <button refID="GCDViewer_Buttons_OpenProject" size="large" />
 		  <button refID="GCDViewer_Buttons_ReloadProject" size="large" />
-		  <button refID="GCDViewer_Buttons_CloseProject" size="large" />
-		  <button refID="GCDViewer_Buttons_AboutGCD" size="large" />
-		  <button refID="GCDViewer_Buttons_Help" size="large" />
+		  <button refID="GCDViewer_Buttons_DataExchangeProject" size="large" />
+		  <button refID="GCDViewer_Buttons_CloseProject" size="small" />
+		  <button refID="GCDViewer_Buttons_Help" size="small" />
+		  <button refID="GCDViewer_Buttons_AboutGCD" size="small" />
 		  <!--<button refID="GCDViewer_Buttons_Test" size="large" />-->
 		</group>
 	  </groups>
@@ -85,6 +86,18 @@
 				caption="Close Project"
 				smallImage="Images/close_16.png"
 				largeImage="Images/close_32.png"
+				keytip="C">
+		  <tooltip heading="Open Project">
+			Close the currently open GCD project.
+			<disabledText />
+		  </tooltip>
+		</button>
+		<button id="GCDViewer_Buttons_DataExchangeProject"
+				loadOnClick="true"
+				className="GCDViewer.Buttons.DataExchangeButton"
+				caption="Data Exchange"
+				smallImage="Images/DataExchange_16.png"
+				largeImage="Images/DataExchange_32.png"
 				keytip="C">
 		  <tooltip heading="Open Project">
 			Close the currently open GCD project.
