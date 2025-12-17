@@ -23,6 +23,8 @@ namespace GCDViewer.ProjectTree
 
         public readonly string OriginalName;
         public string Name { get; set; }
+
+        public string ContextMenu => "GCDProject";
         public string ImagePath => "GCD_16.png";
 
         public override string ToString()

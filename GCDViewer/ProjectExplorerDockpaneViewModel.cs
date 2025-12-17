@@ -34,14 +34,12 @@ namespace GCDViewer
         public static DirectoryInfo DeployFolder { get { return new DirectoryInfo(Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "RiverscapesXML")); } }
 
         public ICommand AddToMap { get; }
-        public ICommand LayerMetaData { get; }
         public ICommand BrowseFolder { get; }
         public ICommand AddAllLayersToMap { get; }
         public ICommand DataExchange { get; }
         public ICommand OpenFile { get; }
         public ICommand Refresh { get; }
         public ICommand Close { get; }
-        public ICommand AddViewToMap { get; }
 
         private ObservableCollection<TreeViewItemModel> treeViewItems;
         public ObservableCollection<TreeViewItemModel> TreeViewItems
@@ -130,29 +128,6 @@ namespace GCDViewer
                 ex.Data["Project Path"] = newProject.ProjectFile.FullName;
                 throw;
             }
-
-            //// Load default project view
-            //if (Properties.Settings.Default.LoadDefaultProjectView)
-            //{
-            //    try
-            //    {
-            //        // Find the default project view among all the tree nodes
-            //        List<TreeViewItemModel> allNodes = new List<TreeViewItemModel>();
-            //        foreach (TreeViewItemModel node in projectItem.Children)
-            //            TreeViewItemModel.GetAllNodes(allNodes, node);
-
-            //        TreeViewItemModel nodDefault = allNodes.FirstOrDefault(x => x.Item is ProjectView && ((ProjectView)x.Item).IsDefaultView);
-            //        if (nodDefault is TreeViewItemModel)
-            //        {
-            //            pevm.ExecuteAddViewToMap(nodDefault);
-            //        }
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        // Loading the default project view is optional. Do nothing in production
-            //        System.Diagnostics.Debug.Assert(false, ex.Message);
-            //    }
-            //}
         }
 
         public static void CloseAllProjects()
@@ -465,119 +440,6 @@ namespace GCDViewer
             return parameter is TreeViewItemModel && ((TreeViewItemModel)parameter).Item is GCDProject;
         }
 
-        //public void ExecuteAddViewToMap(object parameter)
-        //{
-        //    try
-        //    {
-        //        if (parameter is TreeViewItemModel)
-        //        {
-        //            TreeViewItemModel projectNode = (TreeViewItemModel)parameter;
-        //            ProjectView view = projectNode.Item as ProjectView;
-        //            if (view is ProjectView)
-        //            {
-        //                view.Layers.ForEach(x => AddLayerToMap(x.LayerNode, false));
-        //            }
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show(ex.Message, "Error Adding View to Map");
-        //    }
-        //}
-
-        //private bool CanExecuteAddViewToMap(object parameter)
-        //{
-        //    return parameter is TreeViewItemModel && ((TreeViewItemModel)parameter).Item is ProjectView;
-        //}
-
         #endregion
-
-        //#region Basemaps
-
-        //public void RefreshBaseMaps()
-        //{
-        //    // Remove existing Basemap group
-        //    TreeViewItemModel bGroup = TreeViewItems.FirstOrDefault(x => x.Item is BasemapGroup);
-        //    if (bGroup != null)
-        //        TreeViewItems.Remove(bGroup);
-
-        //    // Exit if no base maps are required
-        //    if (!Properties.Settings.Default.LoadBaseMaps || string.IsNullOrEmpty(Properties.Settings.Default.BaseMap))
-        //        return;
-
-        //    List<string> searchFolders = new List<string>() {
-        //        AppDataFolder.FullName,
-        //        DeployFolder.FullName,
-        //    };
-
-        //    foreach (string folder in searchFolders)
-        //    {
-        //        string baseMapPath = Path.Combine(folder, "BaseMaps.xml");
-        //        if (File.Exists(baseMapPath))
-        //        {
-        //            try
-        //            {
-        //                XmlDocument xmlDoc = new XmlDocument();
-        //                xmlDoc.Load(baseMapPath);
-        //                XmlNode nodRegion = xmlDoc.SelectSingleNode(string.Format("BaseMaps/Region[@name='{0}']", Properties.Settings.Default.BaseMap));
-        //                if (nodRegion is XmlNode)
-        //                {
-        //                    var group = new BasemapGroup();
-        //                    TreeViewItemModel newGroup = new TreeViewItemModel(group, null);
-        //                    TreeViewItems.Add(newGroup);
-
-        //                    LoadBaseMapsFromXML(newGroup, nodRegion);
-        //                    return;
-        //                }
-        //            }
-        //            catch
-        //            {
-        //                // Do nothing. Proceed to next base map file
-        //            }
-        //        }
-        //    }
-        //}
-
-        //private void LoadBaseMapsFromXML(TreeViewItemModel nodParent, XmlNode nodXML)
-        //{
-        //    foreach (XmlNode node in nodXML.ChildNodes)
-        //    {
-        //        try
-        //        {
-        //            if (string.Compare(node.Name, "GroupLayer", true) == 0)
-        //            {
-        //                var group = new ProjectTree.GroupLayer(node.Attributes["name"].InnerText, true, "");
-        //                TreeViewItemModel groupNode = new TreeViewItemModel(group, nodParent);
-        //                if (nodParent.Children == null)
-        //                    nodParent.Children = new ObservableCollection<TreeViewItemModel>();
-        //                nodParent.Children.Add(groupNode);
-
-        //                LoadBaseMapsFromXML(groupNode, node);
-        //            }
-        //            else if (string.Compare(node.Name, "Layer", true) == 0)
-        //            {
-        //                // Skip all but WMS layers
-        //                XmlAttribute attType = node.Attributes["type"];
-        //                if (attType is XmlAttribute && !string.IsNullOrEmpty(attType.InnerText))
-        //                {
-        //                    if (string.Compare("wms", attType.InnerText, true) != 0)
-        //                        continue;
-        //                }
-
-        //                if (nodParent.Children == null)
-        //                    nodParent.Children = new ObservableCollection<TreeViewItemModel>();
-
-        //                var layer = new ProjectTree.WMSLayer(node.Attributes["name"].InnerText, node.Attributes["url"].InnerText, 0, string.Empty);
-        //                TreeViewItemModel newNode = new TreeViewItemModel(layer, nodParent);
-        //                nodParent.Children.Add(newNode);
-        //            }
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            // Do nothing. Proceed to next XML node
-        //        }
-        //    }
-        //}
-        //#endregion
     }
 }

@@ -8,6 +8,8 @@ namespace GCDViewer.ProjectTree
         public readonly bool Expanded;
         public readonly string Id;
 
+        public string ContextMenu => "GroupLayer";
+
         public string ImagePath => "folder16.png";
 
         public GroupLayer(string label, bool collapse, string id)

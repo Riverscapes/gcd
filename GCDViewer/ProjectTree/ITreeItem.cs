@@ -13,5 +13,7 @@ namespace GCDViewer.ProjectTree
         public string Name { get; }
         public string ImagePath { get; }
 
+        public string ContextMenu { get; }
+
     }
 }
