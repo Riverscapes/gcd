@@ -57,15 +57,13 @@ namespace GCDViewer
         {
             TreeViewItems = new ObservableCollection<TreeViewItemModel>();
 
-            //AddToMap = new ContextMenuCommand(ExecuteAddToMap, CanExecuteAddToMap);
-            //LayerMetaData = new ContextMenuCommand(ExecuteLayerMetaData, CanExecuteLayerMetaData);
-            //BrowseFolder = new ContextMenuCommand(ExecuteBrowseFolder, CanExecuteBrowseFolder);
-            //AddAllLayersToMap = new ContextMenuCommand(ExecuteAddAllLayersToMap, CanExecuteAddAllLayersToMap);
-            //OpenFile = new ContextMenuCommand(ExecuteOpenFile, CanExecuteOpenFile);
-            //DataExchange = new ContextMenuCommand(ExecuteDataExchange, CanExecuteDataExchange);
-            //Refresh = new ContextMenuCommand(ExecuteRefresh, CanExecuteRefresh);
-            //Close = new ContextMenuCommand(ExecuteClose, CanExecuteClose);
-            //AddViewToMap = new ContextMenuCommand(ExecuteAddViewToMap, CanExecuteAddViewToMap);
+            AddToMap = new ContextMenuCommand(ExecuteAddToMap, CanExecuteAddToMap);
+            BrowseFolder = new ContextMenuCommand(ExecuteBrowseFolder, CanExecuteBrowseFolder);
+            AddAllLayersToMap = new ContextMenuCommand(ExecuteAddAllLayersToMap, CanExecuteAddAllLayersToMap);
+            OpenFile = new ContextMenuCommand(ExecuteOpenFile, CanExecuteOpenFile);
+            DataExchange = new ContextMenuCommand(ExecuteDataExchange, CanExecuteDataExchange);
+            Refresh = new ContextMenuCommand(ExecuteRefresh, CanExecuteRefresh);
+            Close = new ContextMenuCommand(ExecuteClose, CanExecuteClose);
         }
 
         /// <summary>
