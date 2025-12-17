@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ArcGIS.Core.CIM;
 using ArcGIS.Core.Data.Raster;
+using ArcGIS.Core.Data.UtilityNetwork.Trace;
 using ArcGIS.Core.Internal.CIM;
 using ArcGIS.Desktop.Core;
 using ArcGIS.Desktop.Core.Geoprocessing;
@@ -23,15 +24,26 @@ namespace GCDViewer.GIS
         /// <remarks>Strategy learned from one of the ESRI SDK examples on GitHub
         /// https://github.com/Esri/arcgis-pro-sdk-community-samples/blob/5c532b40b33b3b5474c5235c8768e56773ff7e9f/Map-Authoring/CIMExamples/CreateCIMRasterStretchColorizerFromScratch.cs#L39
         /// </remarks>
-        public static async void ApplyStretchRenderer(RasterLayer rasterLayer, string rampName)
+        public static async void ApplyStretchRenderer(RasterLayer rasterLayer, string rampName, Tuple<double, double> range = null)
         {
-            var parametersMin = Geoprocessing.MakeValueArray(rasterLayer, "MINIMUM");
-            var parametersMax = Geoprocessing.MakeValueArray(rasterLayer, "MAXIMUM");
-            var minRes =  await Geoprocessing.ExecuteToolAsync("GetRasterProperties_management", parametersMin);
-            var maxRes = await Geoprocessing.ExecuteToolAsync("GetRasterProperties_management", parametersMax);
+            double min = 0;
+            double max = 0;
 
-            var min = Convert.ToDouble(minRes.Values[0]);
-            var max = Convert.ToDouble(maxRes.Values[0]);
+            if (range is null)
+            {
+                var parametersMin = Geoprocessing.MakeValueArray(rasterLayer, "MINIMUM");
+                var parametersMax = Geoprocessing.MakeValueArray(rasterLayer, "MAXIMUM");
+                var minRes = await Geoprocessing.ExecuteToolAsync("GetRasterProperties_management", parametersMin);
+                var maxRes = await Geoprocessing.ExecuteToolAsync("GetRasterProperties_management", parametersMax);
+
+                min = Convert.ToDouble(minRes.Values[0]);
+                max = Convert.ToDouble(maxRes.Values[0]);
+            }
+            else
+            {
+                min = range.Item1;
+                max = range.Item2;
+            }
 
             var cimColorRamp = GetNamedColorRamp(rampName);
 

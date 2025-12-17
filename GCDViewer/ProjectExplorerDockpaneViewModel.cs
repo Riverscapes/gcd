@@ -34,6 +34,8 @@ namespace GCDViewer
         public static DirectoryInfo DeployFolder { get { return new DirectoryInfo(Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "RiverscapesXML")); } }
 
         public ICommand AddToMap { get; }
+
+        public ICommand AddToMapScaled { get; }
         public ICommand BrowseFolder { get; }
         public ICommand AddAllLayersToMap { get; }
         public ICommand DataExchange { get; }
@@ -56,6 +58,7 @@ namespace GCDViewer
             TreeViewItems = new ObservableCollection<TreeViewItemModel>();
 
             AddToMap = new ContextMenuCommand(ExecuteAddToMap, CanExecuteAddToMap);
+            AddToMapScaled = new ContextMenuCommand(ExecuteAddToMapScaled, CanExecuteAddToMapScaled);
             BrowseFolder = new ContextMenuCommand(ExecuteBrowseFolder, CanExecuteBrowseFolder);
             AddAllLayersToMap = new ContextMenuCommand(ExecuteAddAllLayersToMap, CanExecuteAddAllLayersToMap);
             OpenFile = new ContextMenuCommand(ExecuteOpenFile, CanExecuteOpenFile);
@@ -208,6 +211,31 @@ namespace GCDViewer
         }
 
         private bool CanExecuteAddToMap(object parameter)
+        {
+            // Your logic to determine if the command can execute
+            // For example, always return true for now
+            return true;
+        }
+
+        public void ExecuteAddToMapScaled(object parameter)
+        {
+            try
+            {
+                var node = parameter as TreeViewItemModel;
+                if (node.Item is DEMSurvey)
+                {
+                    var gis = new GISUtilities();
+                    int index = node.Parent.Children.IndexOf(node);
+                    _ = gis.AddToMapScaledAsync(node, index);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Adding a Layer to the Map");
+            }
+        }
+
+        private bool CanExecuteAddToMapScaled(object parameter)
         {
             // Your logic to determine if the command can execute
             // For example, always return true for now

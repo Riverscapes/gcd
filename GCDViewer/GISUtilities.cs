@@ -20,6 +20,7 @@ using System.Windows;
 using ArcGIS.Desktop.Internal.Mapping.Voxel.Controls.Transparency;
 using System.Reflection.PortableExecutable;
 using Microsoft.VisualBasic;
+using ArcGIS.Desktop.Core.Geoprocessing;
 //using ArcGIS.Core.Internal.CIM;
 
 namespace GCDViewer
@@ -32,7 +33,7 @@ namespace GCDViewer
             Insert
         };
 
-        public async Task AddToMapAsync(TreeViewItemModel item, int index)
+        public async Task AddToMapAsync(TreeViewItemModel item, int index, Tuple<double, double> range = null)
         {
             await QueuedTask.Run(async () =>
                {
@@ -192,7 +193,7 @@ namespace GCDViewer
                            //    LayerFactory.Instance.CreateLayer(hillshade.GISUri, parent as ILayerContainerEdit, hillshadeIndex, string.Format("{0} - Hillshade", item.Name));
                            //}
 
-                           GIS.MapRenderers.ApplyStretchRenderer(rasterLayer, "Brown to Blue Green Diverging, Bright");
+                           GIS.MapRenderers.ApplyStretchRenderer(rasterLayer, "Brown to Blue Green Diverging, Bright", range);
                        }
                        else if (item.Item is ErrorSurface)
                        {
@@ -289,6 +290,41 @@ namespace GCDViewer
                        }
                    }
                });
+        }
+
+        public async Task AddToMapScaledAsync(TreeViewItemModel item, int index)
+        {
+            await QueuedTask.Run(async () =>
+            {
+
+                var dem = item.Item as DEMSurvey;
+                if (dem is null)
+                    return;
+
+                // Get the min and Max of all DEMs in the project
+                double? minElevation = new Nullable<double>();
+                double? maxElevation = new Nullable<double>();
+                foreach (DEMSurvey raster in dem.Project.DEMSurveys)
+                {
+                    var parametersMin = Geoprocessing.MakeValueArray(raster.GISPath, "MINIMUM");
+                    var parametersMax = Geoprocessing.MakeValueArray(raster.GISPath, "MAXIMUM");
+                    var minRes = await Geoprocessing.ExecuteToolAsync("GetRasterProperties_management", parametersMin);
+                    var maxRes = await Geoprocessing.ExecuteToolAsync("GetRasterProperties_management", parametersMax);
+
+                    double min = Convert.ToDouble(minRes.Values[0]);
+                    double max = Convert.ToDouble(maxRes.Values[0]);
+
+                    if (!minElevation.HasValue || min < minElevation.Value)
+                        minElevation = min;
+
+                    if (!maxElevation.HasValue || max > maxElevation.Value)
+                        maxElevation = max;
+                }
+
+                Tuple<double, double> range = new Tuple<double, double>(minElevation.Value, maxElevation.Value);
+
+                await AddToMapAsync(item, index, range);
+            });
         }
 
         private async void SymbolizeRasterLayer(ITreeItem item, RasterLayer rasterLayer)
