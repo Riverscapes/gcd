@@ -199,6 +199,46 @@ Header="Add To Map With Scaled Symbology">
                 </MenuItem>
             </ContextMenu>
 
+
+
+            <ContextMenu x:Key="DoDContextMenu">
+                <MenuItem
+         Command="{Binding DataContext.AddThresholdedDoDToMap, RelativeSource={RelativeSource AncestorType=TreeView}}"
+         CommandParameter="{Binding}"
+         Header="Add Thresholded DoD Raster To Map">
+                    <MenuItem.Icon>
+                        <Image
+                 Width="16"
+                 Height="16"
+                 Source="pack://application:,,,/GCDViewer;component/Images/map_16.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem
+Command="{Binding DataContext.AddRawDoDToMap, RelativeSource={RelativeSource AncestorType=TreeView}}"
+CommandParameter="{Binding}"
+Header="Add Raw DoD Raster To Map">
+                    <MenuItem.Icon>
+                        <Image
+        Width="16"
+        Height="16"
+        Source="pack://application:,,,/GCDViewer;component/Images/map_16.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+
+                <MenuItem
+         Command="{Binding DataContext.BrowseFolder, RelativeSource={RelativeSource AncestorType=TreeView}}"
+         CommandParameter="{Binding}"
+         Header="Browse Folder">
+                    <MenuItem.Icon>
+                        <Image
+                 Width="16"
+                 Height="16"
+                 Source="pack://application:,,,/GCDViewer;component/Images/folder16.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+            </ContextMenu>
+
+
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
