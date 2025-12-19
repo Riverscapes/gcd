@@ -48,7 +48,7 @@
                         <Image
                             Width="16"
                             Height="16"
-                            Source="pack://application:,,,/GCDViewer;component/Images/map_16.png" />
+                            Source="pack://application:,,,/GCDViewer;component/Images/add-to-map_16.png" />
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem
@@ -107,7 +107,7 @@
                         <Image
                             Width="16"
                             Height="16"
-                            Source="pack://application:,,,/GCDViewer;component/Images/map_16.png" />
+                            Source="pack://application:,,,/GCDViewer;component/Images/add-to-map_16.png" />
                     </MenuItem.Icon>
                 </MenuItem>
             </ContextMenu>
@@ -120,7 +120,7 @@
                         <Image
                             Width="16"
                             Height="16"
-                            Source="pack://application:,,,/GCDViewer;component/Images/add_to_map16.png" />
+                            Source="pack://application:,,,/GCDViewer;component/Images/add-to-map_16.png" />
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem
@@ -144,7 +144,7 @@
                         <Image
                             Width="16"
                             Height="16"
-                            Source="pack://application:,,,/GCDViewer;component/Images/map_16.png" />
+                            Source="pack://application:,,,/GCDViewer;component/Images/add-to-map_16.png" />
                     </MenuItem.Icon>
                 </MenuItem>
 
@@ -171,7 +171,7 @@
                         <Image
                  Width="16"
                  Height="16"
-                 Source="pack://application:,,,/GCDViewer;component/Images/map_16.png" />
+                 Source="pack://application:,,,/GCDViewer;component/Images/add-to-map_16.png" />
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem
@@ -182,7 +182,7 @@ Header="Add To Map With Scaled Symbology">
                         <Image
         Width="16"
         Height="16"
-        Source="pack://application:,,,/GCDViewer;component/Images/map_16.png" />
+        Source="pack://application:,,,/GCDViewer;component/Images/add-to-map_16.png" />
                     </MenuItem.Icon>
                 </MenuItem>
 
@@ -201,43 +201,52 @@ Header="Add To Map With Scaled Symbology">
 
 
 
-            <ContextMenu x:Key="DoDContextMenu">
+            <ContextMenu x:Key="DoDRasterContextMenu">
                 <MenuItem
-         Command="{Binding DataContext.AddThresholdedDoDToMap, RelativeSource={RelativeSource AncestorType=TreeView}}"
-         CommandParameter="{Binding}"
-         Header="Add Thresholded DoD Raster To Map">
-                    <MenuItem.Icon>
-                        <Image
-                 Width="16"
-                 Height="16"
-                 Source="pack://application:,,,/GCDViewer;component/Images/map_16.png" />
-                    </MenuItem.Icon>
+                     Command="{Binding DataContext.AddDoDDataRange, RelativeSource={RelativeSource AncestorType=TreeView}}"
+                     CommandParameter="{Binding}"
+                     Header="Add To Map Using DoD Data Range">
+                <MenuItem.Icon>
+                    <Image Width="16" Height="16" Source="pack://application:,,,/GCDViewer;component/Images/add-to-map_16.png" />
+                </MenuItem.Icon>
                 </MenuItem>
+
                 <MenuItem
-Command="{Binding DataContext.AddRawDoDToMap, RelativeSource={RelativeSource AncestorType=TreeView}}"
-CommandParameter="{Binding}"
-Header="Add Raw DoD Raster To Map">
+                    Command="{Binding DataContext.AddDoD2m, RelativeSource={RelativeSource AncestorType=TreeView}}"
+                    CommandParameter="{Binding}"
+                    Header="Add To Map Using ±2m Symbology Range">
                     <MenuItem.Icon>
-                        <Image
-        Width="16"
-        Height="16"
-        Source="pack://application:,,,/GCDViewer;component/Images/map_16.png" />
+                        <Image Width="16" Height="16" Source="pack://application:,,,/GCDViewer;component/Images/add-to-map_16.png" />
                     </MenuItem.Icon>
                 </MenuItem>
 
                 <MenuItem
-         Command="{Binding DataContext.BrowseFolder, RelativeSource={RelativeSource AncestorType=TreeView}}"
-         CommandParameter="{Binding}"
-         Header="Browse Folder">
+                    Command="{Binding DataContext.AddDoD5m, RelativeSource={RelativeSource AncestorType=TreeView}}"
+                    CommandParameter="{Binding}"
+                    Header="Add To Map Using ±5m Symbology Range">
                     <MenuItem.Icon>
-                        <Image
-                 Width="16"
-                 Height="16"
-                 Source="pack://application:,,,/GCDViewer;component/Images/folder16.png" />
+                        <Image Width="16" Height="16" Source="pack://application:,,,/GCDViewer;component/Images/add-to-map_16.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+
+                <MenuItem
+                     Command="{Binding DataContext.AddDoDAllRasters, RelativeSource={RelativeSource AncestorType=TreeView}}"
+                     CommandParameter="{Binding}"
+                     Header="Add To Map Using Range From All DoDs">
+                    <MenuItem.Icon>
+                        <Image Width="16" Height="16" Source="pack://application:,,,/GCDViewer;component/Images/add-to-map_16.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+
+                <MenuItem
+                    Command="{Binding DataContext.BrowseFolder, RelativeSource={RelativeSource AncestorType=TreeView}}"
+                    CommandParameter="{Binding}"
+                    Header="Browse Folder">
+                    <MenuItem.Icon>
+                        <Image Width="16" Height="16" Source="pack://application:,,,/GCDViewer;component/Images/folder16.png" />
                     </MenuItem.Icon>
                 </MenuItem>
             </ContextMenu>
-
 
         </ResourceDictionary>
     </UserControl.Resources>
@@ -293,8 +302,12 @@ Header="Add Raw DoD Raster To Map">
                                 <DataTrigger Binding="{Binding ContextMenu}" Value="Raster">
                                     <Setter Property="ContextMenu" Value="{StaticResource RasterContextMenu}" />
                                 </DataTrigger>
-                                <DataTrigger Binding="{Binding ContextMenu}" Value="Raster">
+                                <DataTrigger Binding="{Binding ContextMenu}" Value="DEMSurvey">
                                     <Setter Property="ContextMenu" Value="{StaticResource DEMContextMenu}" />
+                                </DataTrigger>
+
+                                <DataTrigger Binding="{Binding ContextMenu}" Value="DoDRaster">
+                                    <Setter Property="ContextMenu" Value="{StaticResource DoDRasterContextMenu}" />
                                 </DataTrigger>
 
                             </HierarchicalDataTemplate.Triggers>

@@ -16,7 +16,7 @@ namespace GCDViewer.ProjectTree
 
         public override string Noun { get { return "DEM Survey"; } }
 
-        public override string ContextMenu => "Raster";
+        public override string ContextMenu => "DEMSurvey";
 
         public DEMSurvey(GCDProject project, XmlNode nodDEM) :
             base(project, nodDEM, "DEMSurvey.png", "DEMSurvey.png")

@@ -11,6 +11,8 @@ namespace GCDViewer.ProjectTree
     {
         public override string Noun { get { return "DoD Raster"; } }
 
+        public override string ContextMenu => "DoDRaster";
+
         public DoDRaster(GCDProject project, string name, FileInfo rasterPath)
             : base(project, name, rasterPath, "GCD_16.png", "GCD_16.png")
         {

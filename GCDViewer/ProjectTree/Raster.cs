@@ -9,6 +9,7 @@ namespace GCDViewer.ProjectTree
 {
     public class Raster : GISDataset
     {
+        public override string ContextMenu => "Raster";
 
         public Raster(GCDProject project, string name, FileSystemInfo fsInfo, string image_exists, string image_missing)
             : base(project, name, fsInfo, image_exists, image_missing)

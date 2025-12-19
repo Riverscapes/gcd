@@ -37,9 +37,11 @@ namespace GCDViewer
         public ICommand AddToMap { get; }
         public ICommand AddToMapScaled { get; }
 
-        public ICommand AddThresholdedDoDToMap { get; }
-
-        public ICommand AddRawDoDToMap { get; }
+        public ICommand AddDoDDataRange { get; }
+        public ICommand AddDoD2m { get; }
+        public ICommand AddDoD5m { get; }
+        public ICommand AddDoDAllRasters { get; }
+  
         public ICommand BrowseFolder { get; }
         public ICommand AddAllLayersToMap { get; }
         public ICommand DataExchange { get; }
@@ -61,10 +63,12 @@ namespace GCDViewer
         {
             TreeViewItems = new ObservableCollection<TreeViewItemModel>();
 
-            AddToMap = new ContextMenuCommand(ExecuteAddToMap, CanExecuteAddToMap);
-            AddToMapScaled = new ContextMenuCommand(ExecuteAddToMapScaled, CanExecuteAddToMapScaled);
-            AddThresholdedDoDToMap = new ContextMenuCommand(ExecuteAddThresholdedDoDToMap, CanExecuteAddThresholdedDoDToMap);
-            AddRawDoDToMap = new ContextMenuCommand(ExecuteAddRawDoDToMap, CanExecuteAddRawDoDToMap);
+            AddToMap = new ContextMenuCommand(ExecuteAddToMap, CanExecuteDefault);
+            AddToMapScaled = new ContextMenuCommand(ExecuteAddToMapScaled, CanExecuteDefault);
+            AddDoDDataRange = new ContextMenuCommand(ExecuteAddDoDDataRange, CanExecuteDefault);
+            AddDoD2m = new ContextMenuCommand(ExecuteAddDoD2m, CanExecuteDefault);
+            AddDoD5m = new ContextMenuCommand(ExecuteAddDoD5m, CanExecuteDefault);
+            AddDoDAllRasters = new ContextMenuCommand(ExecuteAddDoDAllRasters, CanExecuteDefault);
             BrowseFolder = new ContextMenuCommand(ExecuteBrowseFolder, CanExecuteBrowseFolder);
             AddAllLayersToMap = new ContextMenuCommand(ExecuteAddAllLayersToMap, CanExecuteAddAllLayersToMap);
             OpenFile = new ContextMenuCommand(ExecuteOpenFile, CanExecuteOpenFile);
@@ -230,7 +234,7 @@ namespace GCDViewer
             }
         }
 
-        private bool CanExecuteAddToMap(object parameter)
+        private bool CanExecuteDefault(object parameter)
         {
             // Your logic to determine if the command can execute
             // For example, always return true for now
@@ -246,7 +250,7 @@ namespace GCDViewer
                 {
                     var gis = new GISUtilities();
                     int index = node.Parent.Children.IndexOf(node);
-                    _ = gis.AddToMapScaledAsync(node, index);
+                    _ = gis.AddToMapScaledDEMAsync(node, index);
                 }
             }
             catch (Exception ex)
@@ -255,24 +259,16 @@ namespace GCDViewer
             }
         }
 
-        private bool CanExecuteAddToMapScaled(object parameter)
-        {
-            // Your logic to determine if the command can execute
-            // For example, always return true for now
-            return true;
-        }
-
-
-        public void ExecuteAddThresholdedDoDToMap(object parameter)
+        public void ExecuteAddDoDDataRange(object parameter)
         {
             try
             {
                 var node = parameter as TreeViewItemModel;
-                if (node.Item is DoDBase)
+                if (node.Item is DoDRaster)
                 {
                     var gis = new GISUtilities();
                     int index = node.Parent.Children.IndexOf(node);
-                    _ = gis.AddDoDToMapAsync(node, index, false);
+                    _ = gis.AddToMapDoDAsync(node, index);
                 }
             }
             catch (Exception ex)
@@ -280,25 +276,16 @@ namespace GCDViewer
                 MessageBox.Show(ex.Message, "Error Adding a Layer to the Map");
             }
         }
-
-        private bool CanExecuteAddRawDoDToMap(object parameter)
-        {
-            // Your logic to determine if the command can execute
-            // For example, always return true for now
-            return true;
-        }
-
-
-        public void ExecuteAddRawDoDToMap(object parameter)
+        public void ExecuteAddDoD2m(object parameter)
         {
             try
             {
                 var node = parameter as TreeViewItemModel;
-                if (node.Item is DoDBase)
+                if (node.Item is DoDRaster)
                 {
                     var gis = new GISUtilities();
                     int index = node.Parent.Children.IndexOf(node);
-                    _ = gis.AddDoDToMapAsync(node, index, true);
+                    _ = gis.AddToMapAsync(node, index, 2);
                 }
             }
             catch (Exception ex)
@@ -307,17 +294,41 @@ namespace GCDViewer
             }
         }
 
-        private bool CanExecuteAddThresholdedDoDToMap(object parameter)
+        public void ExecuteAddDoD5m(object parameter)
         {
-            // Your logic to determine if the command can execute
-            // For example, always return true for now
-            return true;
+            try
+            {
+                var node = parameter as TreeViewItemModel;
+                if (node.Item is DoDRaster)
+                {
+                    var gis = new GISUtilities();
+                    int index = node.Parent.Children.IndexOf(node);
+                    _ = gis.AddToMapAsync(node, index, 5);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Adding a Layer to the Map");
+            }
         }
 
-
-
-
-
+        public void ExecuteAddDoDAllRasters(object parameter)
+        {
+            try
+            {
+                var node = parameter as TreeViewItemModel;
+                if (node.Item is DoDRaster)
+                {
+                    var gis = new GISUtilities();
+                    int index = node.Parent.Children.IndexOf(node);
+                    _ = gis.AddToMapScaledDoDAsync(node, index);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Adding a Layer to the Map");
+            }
+        }
 
 
         //private void ExecuteLayerMetaData(object parameter)

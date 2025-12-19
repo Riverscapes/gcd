@@ -120,8 +120,8 @@
 			loadOnClick="true"
 			className="GCDViewer.Buttons.HelpButton"
 			caption="Online Help"
-			smallImage="Images/about_16.png"
-			largeImage="Images/about_32.png"
+			smallImage="Images/help_16.png"
+			largeImage="Images/help_32.png"
 			keytip="C">
 		  <tooltip heading="About GCD">
 			Online help for the Geomorphic Change Detection software.
