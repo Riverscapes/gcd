@@ -32,13 +32,30 @@ namespace GCDViewer.GIS
 
             if (range is null)
             {
-                var parametersMin = Geoprocessing.MakeValueArray(rasterLayer, "MINIMUM");
-                var parametersMax = Geoprocessing.MakeValueArray(rasterLayer, "MAXIMUM");
-                var minRes = await Geoprocessing.ExecuteToolAsync("GetRasterProperties_management", parametersMin);
-                var maxRes = await Geoprocessing.ExecuteToolAsync("GetRasterProperties_management", parametersMax);
+                int attempts = 0;
+                while (attempts < 2)
+                {
+                    attempts++;
 
-                min = Convert.ToDouble(minRes.Values[0]);
-                max = Convert.ToDouble(maxRes.Values[0]);
+                    if (attempts > 1)
+                    {
+                        // Calculating stats is slow. Only do it if the process has failed one time already.
+                        var calcParams = Geoprocessing.MakeValueArray(rasterLayer);
+                        await Geoprocessing.ExecuteToolAsync("CalculateStatistics_management", calcParams);
+                    }
+
+                    var parametersMin = Geoprocessing.MakeValueArray(rasterLayer, "MINIMUM");
+                    var parametersMax = Geoprocessing.MakeValueArray(rasterLayer, "MAXIMUM");
+                    var minRes = await Geoprocessing.ExecuteToolAsync("GetRasterProperties_management", parametersMin);
+                    var maxRes = await Geoprocessing.ExecuteToolAsync("GetRasterProperties_management", parametersMax);
+
+                    if (minRes.ErrorCode == 0 || maxRes.ErrorCode == 0)
+                    {
+                        min = Convert.ToDouble(minRes.Values[0]);
+                        max = Convert.ToDouble(maxRes.Values[0]);
+                        attempts = 99;
+                    }
+                }
             }
             else
             {
@@ -317,11 +334,11 @@ namespace GCDViewer.GIS
                     label = "> " + lower.ToString(format);
                 else
                     label = $"{lower.ToString(format)} to {upper.ToString(format)}";
-                
+
                 // Hack, when the bin edge is extremely close to zero it messes up the class break
                 if (Math.Abs(upper) < 0.00001)
                     upper = 0;
-                
+
                 label = label.Replace("-0.00", "0.00");
 
                 System.Diagnostics.Debug.Print(string.Format("Upper: {0}, Label: {1}", upper, label));

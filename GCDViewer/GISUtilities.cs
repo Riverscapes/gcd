@@ -182,10 +182,10 @@ namespace GCDViewer
                        //SymbolizeRasterLayer(item.Item, rasterLayer);
                        //GIS.MapRenderers.ApplyNamedColorRampToRasterAsync(rasterLayer, "Partial Spectrum");
 
-                       if (item.Item is DEMSurvey)
+                       if (item.Item is DEMSurvey || item.Item is Surface)
                        {
                            // Add the hillshade first
-                           DEMSurvey dem = item.Item as DEMSurvey;
+                           var dem = item.Item as Surface;
 
                            Raster hillshade = dem.Hillshade;
                            if (hillshade is Raster)

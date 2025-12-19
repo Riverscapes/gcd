@@ -12,6 +12,8 @@ namespace GCDViewer.ProjectTree
         public readonly Raster Hillshade;
         public override string Noun { get { return "Reference Surface"; } }
 
+        public override string ContextMenu => "DEMSurvey";
+
         public readonly List<ErrorSurface> ErrorSurfaces;
         //public readonly List<LinearExtraction.LinearExtraction> LinearExtractions;
 
