@@ -6,6 +6,7 @@
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <NoWarn>CA1416</NoWarn>
+    <AssemblyVersion>7.5.5.1</AssemblyVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Images\about_16.png" />
@@ -18,7 +19,6 @@
     <None Remove="Images\alpha_descending.png" />
     <None Remove="Images\AOI.png" />
     <None Remove="Images\AssociatedSurfaces.png" />
-    <None Remove="Images\bars.png" />
     <None Remove="Images\BudgetSeg.png" />
     <None Remove="Images\chart.png" />
     <None Remove="Images\Check.png" />
@@ -50,7 +50,6 @@
     <None Remove="Images\help_32.png" />
     <None Remove="Images\Histogram.png" />
     <None Remove="Images\longitudinal.png" />
-    <None Remove="Images\map_16.png" />
     <None Remove="Images\mask.png" />
     <None Remove="Images\mask_dir.png" />
     <None Remove="Images\open_16.png" />
@@ -71,7 +70,6 @@
     <Content Include="DarkImages\AddInDesktop32.png" />
     <Content Include="Images\help_32.png" />
     <Resource Include="Images\add-to-map_16.png" />
-    <Resource Include="Images\map_16.png" />
     <Resource Include="Images\reload_16.png" />
     <Content Include="Images\reload_32.png" />    
   </ItemGroup>
@@ -158,7 +156,6 @@
   <ItemGroup>
     <Resource Include="Images\Layers\AOI.png" />
     <Resource Include="Images\Layers\AssociatedSurfaces.png" />
-    <Content Include="Images\bars.png" />
     <Resource Include="Images\Layers\BudgetSeg.png" />
     <Resource Include="Images\Layers\CleanRaster.png" />
     <Resource Include="Images\close_16.png" />

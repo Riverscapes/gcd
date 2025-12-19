@@ -28,9 +28,6 @@ namespace GCDViewer
         {
             InitializeComponent();
 
-            //this.Icon = new BitmapImage(new Uri("pack://application:,,,/Images/viewer16.png"));
-
-            //imgLogo.Source = new BitmapImage(new Uri("pack://application:,,,/Images/viewer256.png"));
             txtVersion.Text = Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
             SetHyperlink(lnkChangeLog, Properties.Resources.ChangeLog);
