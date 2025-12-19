@@ -7,7 +7,7 @@ import type * as Preset from '@docusaurus/preset-classic'
 const config: Config = {
   title: 'GCD', // Site title displayed in the browser tab
   tagline: 'Geomorphic Change Detection (GCD) Software website', // Short description shown in meta tags
-  favicon: 'favicon.ico', // Path to site favicon
+  favicon: '/img/icons/gcd.svg', // Path to site favicon
 
   future: {
     v4: true, // Enables compatibility with upcoming Docusaurus v4 features
@@ -44,7 +44,7 @@ const config: Config = {
   ],
 
   themeConfig: {
-    image: 'img/logo.png', // Social sharing image
+    image: 'img/icons/gcd.svg', // Social sharing image
 
     algolia: {
       // The application ID provided by Algolia
@@ -62,7 +62,7 @@ const config: Config = {
       title: 'Geomorphic Change Detection Software', // Navbar title
       logo: {
         alt: 'Riverscapes Studio Logo', // Logo alt text
-        src: 'img/logo.png', // Logo image path
+        src: 'img/icons/gcd.svg', // Logo image path
       },
       items: [
         // {
