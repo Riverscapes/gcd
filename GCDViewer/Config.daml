@@ -1,144 +1,126 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <ArcGIS defaultAssembly="GCDViewer.dll"
-        defaultNamespace="GCDViewer"
-        xmlns="http://schemas.esri.com/DADF/Registry"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://schemas.esri.com/DADF/Registry file:///C:/Program%20Files/ArcGIS/Pro/bin/ArcGIS.Desktop.Framework.xsd">
+	defaultNamespace="GCDViewer"
+	xmlns="http://schemas.esri.com/DADF/Registry"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://schemas.esri.com/DADF/Registry file:///C:/Program%20Files/ArcGIS/Pro/bin/ArcGIS.Desktop.Framework.xsd">
 
-  <AddInInfo id="{c1531ab1-ea6d-4a14-a8d6-af424f14c37a}" version="1.0" desktopVersion="3.6.59527" product="ArcGISPro">
-	<Name>GCDViewer</Name>
-	<Description>Geomorphic Change Detection for ArcGIS Pro</Description>
-	<Image>Images\GCD_32.png</Image>
-	<Author>North Arrow Research Ltd.</Author>
-	<Company>North Arrow Research Ltd.</Company>
-	<Date>12/1/2025 4:22:28 PM</Date>
-	<Subject>Framework</Subject>
-	<!-- Note subject can be one or more of these topics:
-                    Content, Framework, Editing, Geodatabase, Geometry, Geoprocessing, Layouts, Map Authoring, Map Exploration -->
-  </AddInInfo>
+	<AddInInfo id="{c1531ab1-ea6d-4a14-a8d6-af424f14c37a}" version="7.5.5.1" desktopVersion="3.6.59527"
+		product="ArcGISPro">
+		<Name>GCDViewer</Name>
+		<Description>Geomorphic Change Detection for ArcGIS Pro</Description>
+		<Image>Images\GCD_32.png</Image>
+		<Author>North Arrow Research Ltd.</Author>
+		<Company>North Arrow Research Ltd.</Company>
+		<Date>19/1/2025 4:22:28 PM</Date>
+		<Subject>Map Exploration</Subject>
+		<!-- Note subject can be one or more of these topics:
+                    Content, Framework, Editing, Geodatabase, Geometry, Geoprocessing, Layouts, Map Authoring, Map
+		Exploration -->
+	</AddInInfo>
 
-  <modules>
-	<insertModule id="GCDViewer_Module" className="Module1" autoLoad="false" caption="Module1">
-	  <!-- uncomment to have the control hosted on a separate tab-->
-	  <tabs>
-		<tab id="GCDViewer_Tab" caption="GCD"  >
-		  <group refID="GCDViewer_Group"/>
-		</tab>
-	  </tabs>
-
-	  <groups>
-		<!-- comment this out if you have no controls on the Addin tab to avoid
+	<modules>
+		<insertModule id="GCDViewer_Module" className="Module1" autoLoad="false" caption="Module1">
+			<!-- uncomment to have the control hosted on a separate tab-->
+			<tabs>
+				<tab id="GCDViewer_Tab" caption="GCD" keytip="">
+					<group refID="GCDViewer_Group" />
+				</tab>
+			</tabs>
+			<groups>
+				<!-- comment this out if you have no controls on the Addin tab to avoid
               an empty group-->
-		<group id="GCDViewer_Group" caption="GCD" appearsOnAddInTab="false">
-		  <!-- host controls within groups -->
-		  <button refID="GCDViewer_Buttons_OpenProject" size="large" />
-		  <button refID="GCDViewer_Buttons_ReloadProject" size="large" />
-		  <button refID="GCDViewer_Buttons_DataExchangeProject" size="large" />
-		  <button refID="GCDViewer_Buttons_CloseProject" size="small" />
-		  <button refID="GCDViewer_Buttons_Help" size="small" />
-		  <button refID="GCDViewer_Buttons_AboutGCD" size="small" />
-		  <!--<button refID="GCDViewer_Buttons_Test" size="large" />-->
-		</group>
-	  </groups>
-
-	  <controls>
-
-		<!--<button id="GCDViewer_Buttons_Test"
-				loadOnClick="true"
-				className="GCDViewer.Buttons.TestButton"
-				caption="Test"
-				keytip="O">
-		  <tooltip heading="Open Project">
-			Test Raster Symbols
-			<disabledText />
-		  </tooltip>
-		</button>-->
-		
-		
-		<!-- add your controls here -->
-		<button id="GCDViewer_Buttons_OpenProject"
-				loadOnClick="true"
-				className="GCDViewer.Buttons.OpenProjectButton"
-				caption="Open Project"
-				smallImage="Images/open_16.png"
-				largeImage="Images/open_32.png"
-				keytip="O">
-		  <tooltip heading="Open Project">
-			Open GCD project and load it into the Project Explorer to view its contents.
-			<disabledText />
-		  </tooltip>
-		</button>
-		<button id="GCDViewer_Buttons_ReloadProject"
-				loadOnClick="true"
-				className="GCDViewer.Buttons.ReloadProjectButton"
-				caption="Reload Project"
-				smallImage="Images/reload_16.png"
-				largeImage="Images/reload_32.png"
-				keytip="O">
-		  <tooltip heading="Open Project">
-			Reload the GCD project, using the latest contents to refresh the GCD Viewer project tree. 
-			<disabledText />
-		  </tooltip>
-		</button>
-		<button id="GCDViewer_Buttons_CloseProject"
-				loadOnClick="true"
-				className="GCDViewer.Buttons.CloseProjectButton"
-				caption="Close Project"
-				smallImage="Images/close_16.png"
-				largeImage="Images/close_32.png"
-				keytip="C">
-		  <tooltip heading="Open Project">
-			Close the currently open GCD project.
-			<disabledText />
-		  </tooltip>
-		</button>
-		<button id="GCDViewer_Buttons_DataExchangeProject"
-				loadOnClick="true"
-				className="GCDViewer.Buttons.DataExchangeButton"
-				caption="Data Exchange"
-				smallImage="Images/DataExchange_16.png"
-				largeImage="Images/DataExchange_32.png"
-				keytip="C">
-		  <tooltip heading="Open Project">
-			Close the currently open GCD project.
-			<disabledText />
-		  </tooltip>
-		</button>
-		<button id="GCDViewer_Buttons_AboutGCD"
-			loadOnClick="true"
-			className="GCDViewer.Buttons.AboutButton"
-			caption="About GCD"
-			smallImage="Images/GCD_16.png"
-			largeImage="Images/GCD_32.png"
-			keytip="C">
-		  <tooltip heading="About GCD">
-			Information about the Geomorphic Change Detection software.
-			<disabledText />
-		  </tooltip>
-		</button>
-		<button id="GCDViewer_Buttons_Help"
-			loadOnClick="true"
-			className="GCDViewer.Buttons.HelpButton"
-			caption="Online Help"
-			smallImage="Images/help_16.png"
-			largeImage="Images/help_32.png"
-			keytip="C">
-		  <tooltip heading="About GCD">
-			Online help for the Geomorphic Change Detection software.
-			<disabledText />
-		  </tooltip>
-		</button>
-	  </controls>
-	  <dockPanes>
-		<dockPane id="GCDViewer_ProjectExplorerDockpane"
-				  caption="GCD"
-				  image="Images/GCD_16.png"
-				  className="ProjectExplorerDockpaneViewModel"
-				  dock="group"
-				  dockWith="esri_core_projectDockPane">
-		  <content className="ProjectExplorerDockpaneView" />
-		</dockPane>
-	  </dockPanes>
-	</insertModule>
-  </modules>
+				<group id="GCDViewer_Group" caption="GCD" appearsOnAddInTab="false" keytip="">
+					<button refID="GCDViewer_Buttons_OpenProject" size="large" />
+					<button refID="GCDViewer_Buttons_ReloadProject" size="large" />
+					<button refID="GCDViewer_Buttons_DataExchangeProject" size="large" />
+					<button refID="GCDViewer_Buttons_CloseProject" size="small" />
+					<button refID="GCDViewer_Buttons_Help" size="small" />
+					<button refID="GCDViewer_Buttons_AboutGCD" size="small" />
+				</group>
+			</groups>
+			<controls>
+				<button id="GCDViewer_Buttons_OpenProject"
+					loadOnClick="true"
+					className="GCDViewer.Buttons.OpenProjectButton"
+					caption="Open Project"
+					smallImage="Images/open_16.png"
+					largeImage="Images/open_32.png"
+					keytip="O">
+					<tooltip heading="Open Project"> Open GCD project and load it into the Project
+						Explorer to view its contents.
+						<disabledText />
+					</tooltip>
+				</button>
+				<button id="GCDViewer_Buttons_ReloadProject"
+					loadOnClick="true"
+					className="GCDViewer.Buttons.ReloadProjectButton"
+					caption="Reload Project"
+					smallImage="Images/reload_16.png"
+					largeImage="Images/reload_32.png"
+					keytip="O">
+					<tooltip heading="Open Project"> Reload the GCD project, using the latest
+						contents to refresh the GCD Viewer project tree.
+						<disabledText />
+					</tooltip>
+				</button>
+				<button id="GCDViewer_Buttons_CloseProject"
+					loadOnClick="true"
+					className="GCDViewer.Buttons.CloseProjectButton"
+					caption="Close Project"
+					smallImage="Images/close_16.png"
+					largeImage="Images/close_32.png"
+					keytip="C">
+					<tooltip heading="Open Project"> Close the currently open GCD project.
+					<disabledText />
+					</tooltip>
+				</button>
+				<button id="GCDViewer_Buttons_DataExchangeProject"
+					loadOnClick="true"
+					className="GCDViewer.Buttons.DataExchangeButton"
+					caption="Data Exchange"
+					smallImage="Images/DataExchange_16.png"
+					largeImage="Images/DataExchange_32.png"
+					keytip="C">
+					<tooltip heading="Open Project"> Close the currently open GCD project.
+					<disabledText />
+					</tooltip>
+				</button>
+				<button id="GCDViewer_Buttons_AboutGCD"
+					loadOnClick="true"
+					className="GCDViewer.Buttons.AboutButton"
+					caption="About GCD"
+					smallImage="Images/GCD_16.png"
+					largeImage="Images/GCD_32.png"
+					keytip="C">
+					<tooltip heading="About GCD"> Information about the Geomorphic Change Detection
+						software.
+						<disabledText />
+					</tooltip>
+				</button>
+				<button id="GCDViewer_Buttons_Help"
+					loadOnClick="true"
+					className="GCDViewer.Buttons.HelpButton"
+					caption="Online Help"
+					smallImage="Images/help_16.png"
+					largeImage="Images/help_32.png"
+					keytip="C">
+					<tooltip heading="About GCD"> Online help for the Geomorphic Change Detection
+						software.
+						<disabledText />
+					</tooltip>
+				</button>
+			</controls>
+			<dockPanes>
+				<dockPane id="GCDViewer_ProjectExplorerDockpane"
+					caption="GCD"
+					image="Images/GCD_16.png"
+					className="ProjectExplorerDockpaneViewModel"
+					dock="group"
+					dockWith="esri_core_projectDockPane">
+					<content className="ProjectExplorerDockpaneView" />
+				</dockPane>
+			</dockPanes>
+		</insertModule>
+	</modules>
 </ArcGIS>

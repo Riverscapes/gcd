@@ -28,7 +28,7 @@ namespace GCDViewer.ProjectTree
         //public List<BudgetSegregation> BudgetSegregations { get; internal set; }
         //public readonly List<LinearExtraction.LinearExtraction> LinearExtractions;
 
-        public override string ContextMenu => "Raster";
+        public override string ContextMenu => "FileSystemDataset";
 
         public override bool Exists { get { return true; } }
 

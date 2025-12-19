@@ -2,26 +2,14 @@
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
-using ArcGIS.Desktop.Catalog;
 using ArcGIS.Desktop.Core;
 using ArcGIS.Desktop.Mapping;
 using GCDViewer.ProjectTree;
-using ArcGIS.Core.Data;
 using ArcGIS.Desktop.Framework.Threading.Tasks;
 using System.Threading.Tasks;
 using ArcGIS.Core.CIM;
-using System.Windows.Controls;
-using System.Xml.Linq;
 using ArcGIS.Core.Geometry;
-using System.Collections;
-using ArcGIS.Desktop.Layouts;
-using ArcGIS.Core.Data.UtilityNetwork.Trace;
-using System.Windows;
-using ArcGIS.Desktop.Internal.Mapping.Voxel.Controls.Transparency;
-using System.Reflection.PortableExecutable;
-using Microsoft.VisualBasic;
-using ArcGIS.Desktop.Core.Geoprocessing;
-//using ArcGIS.Core.Internal.CIM;
+
 
 namespace GCDViewer
 {

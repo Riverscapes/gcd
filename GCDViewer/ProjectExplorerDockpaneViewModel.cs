@@ -330,42 +330,6 @@ namespace GCDViewer
             }
         }
 
-
-        //private void ExecuteLayerMetaData(object parameter)
-        //{
-        //    if (parameter is TreeViewItemModel)
-        //    {
-        //        TreeViewItemModel node = (TreeViewItemModel)parameter;
-        //        if (node.Item is ProjectTree.IMetadata)
-        //        {
-        //            ProjectTree.IMetadata metadata = (ProjectTree.IMetadata)node.Item;
-        //            try
-        //            {
-        //                var metadataWindow = new MetadataWindow(node.Item is RaveProject);
-        //                MetadataViewModel model = metadataWindow.DataContext as MetadataViewModel;
-        //                foreach (KeyValuePair<string, string> item in metadata.Metadata)
-        //                    model.Items.Add(item);
-
-        //                metadataWindow.ShowDialog();
-        //            }
-        //            catch (Exception ex)
-        //            {
-        //                MessageBox.Show(ex.Message, "Error Adding All Layers to Map");
-        //            }
-        //        }
-        //    }
-        //}
-
-        //private bool CanExecuteLayerMetaData(object parameter)
-        //{
-        //    if (parameter is TreeViewItemModel)
-        //    {
-        //        var project = ((TreeViewItemModel)parameter).Item as GCDProject;
-        //        return project is GCDProject && project.Metadata != null && project.Metadata.Count > 0;
-        //    }
-        //    return false;
-        //}
-
         private void ExecuteBrowseFolder(object parameter)
         {
             try
@@ -408,6 +372,10 @@ namespace GCDViewer
                 else if (node.Item is GCDProject)
                 {
                     dir = ((GCDProject)node.Item).Folder;
+                }
+                else
+                {
+                    return false;
                 }
 
                 return dir.Exists;
