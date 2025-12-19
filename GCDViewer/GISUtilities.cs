@@ -186,12 +186,16 @@ namespace GCDViewer
                        {
                            // Add the hillshade first
                            DEMSurvey dem = item.Item as DEMSurvey;
-                           //Raster hillshade = dem.Hillshade;
-                           //if (hillshade is Raster)
-                           //{
-                           //    int hillshadeIndex = index + 1;
-                           //    LayerFactory.Instance.CreateLayer(hillshade.GISUri, parent as ILayerContainerEdit, hillshadeIndex, string.Format("{0} - Hillshade", item.Name));
-                           //}
+
+                           Raster hillshade = dem.Hillshade;
+                           if (hillshade is Raster)
+                           {
+                               int hillshadeIndex = index + 1;
+                               LayerFactory.Instance.CreateLayer(hillshade.GISUri, parent as ILayerContainerEdit, hillshadeIndex, string.Format("{0} - Hillshade", item.Name));
+
+                               // Only set the DEM semi-transparent when there is a hillshade
+                               rasterLayer.SetTransparency(40);
+                           }
 
                            GIS.MapRenderers.ApplyStretchRenderer(rasterLayer, "Brown to Blue Green Diverging, Bright");
                        }
