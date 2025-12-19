@@ -11,6 +11,7 @@
     <None Remove="Images\about_16.png" />
     <None Remove="Images\about_32.png" />
     <None Remove="Images\about_64.png" />
+    <None Remove="Images\add-to-map_16.png" />
     <None Remove="Images\add_to_map16.png" />
     <None Remove="Images\add_to_map32.png" />
     <None Remove="Images\alphabetical.png" />
@@ -45,6 +46,8 @@
     <None Remove="Images\GCD_32.png" />
     <None Remove="Images\GCD_64.png" />
     <None Remove="Images\Help.png" />
+    <None Remove="Images\help_16.png" />
+    <None Remove="Images\help_32.png" />
     <None Remove="Images\Histogram.png" />
     <None Remove="Images\longitudinal.png" />
     <None Remove="Images\map_16.png" />
@@ -66,6 +69,8 @@
     <Content Include="Config.daml" />
     <Content Include="DarkImages\AddInDesktop16.png" />
     <Content Include="DarkImages\AddInDesktop32.png" />
+    <Content Include="Images\help_32.png" />
+    <Resource Include="Images\add-to-map_16.png" />
     <Resource Include="Images\map_16.png" />
     <Resource Include="Images\reload_16.png" />
     <Content Include="Images\reload_32.png" />    
@@ -151,50 +156,30 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Images\about_16.png" />
-    <Content Include="Images\about_32.png" />
-    <Content Include="Images\about_64.png" />
-    <Content Include="Images\add_to_map16.png" />
-    <Content Include="Images\add_to_map32.png" />
-    <Content Include="Images\alphabetical.png" />
-    <Content Include="Images\alpha_descending.png" />
     <Resource Include="Images\Layers\AOI.png" />
     <Resource Include="Images\Layers\AssociatedSurfaces.png" />
     <Content Include="Images\bars.png" />
     <Resource Include="Images\Layers\BudgetSeg.png" />
-    <Content Include="Images\chart.png" />
-    <Content Include="Images\Check.png" />
-    <Content Include="Images\chrono_ascending.png" />
-    <Content Include="Images\chrono_descending.png" />
     <Resource Include="Images\Layers\CleanRaster.png" />
     <Resource Include="Images\close_16.png" />
     <Content Include="Images\close_32.png" />
-    <Content Include="Images\close_64.png" />
-    <Content Include="Images\CoincidentPoints.png" />
-    <Content Include="Images\collapse.png" />
     <Resource Include="Images\DataExchange_16.png" />
     <Content Include="Images\DataExchange_32.png" />
-    <Content Include="Images\DataExchange_64.png" />
-    <Content Include="Images\Delete.png" />
     <Resource Include="Images\Layers\Delta.png" />
     <Resource Include="Images\Layers\DEMSurvey.png" />
     <Resource Include="Images\Layers\DirectionalBudgetSeg.png" />
-    <Content Include="Images\down.png" />
-    <Content Include="Images\Excel.png" />
     <Resource Include="Images\folder16.png" />
     <Content Include="Images\folder32.png" />
     <Resource Include="Images\GCD_16.png" />
     <Resource Include="Images\GCD_256.png" />
     <Resource Include="Images\GCD_32.png" />
     <Content Include="Images\GCD_64.png" />
-    <Content Include="Images\Help.png" />
     <Resource Include="Images\Layers\Histogram.png" />
     <Resource Include="Images\Layers\longitudinal.png" />
     <Resource Include="Images\Layers\mask.png" />
     <Resource Include="Images\Layers\mask_dir.png" />
     <Content Include="Images\open_16.png" />
     <Content Include="Images\open_32.png" />
-    <Content Include="Images\open_64.png" />
     <Resource Include="Images\Layers\PointDensity.png" />
     <Resource Include="Images\Layers\Reservoir.png" />
     <Resource Include="Images\Layers\Roughness.png" />

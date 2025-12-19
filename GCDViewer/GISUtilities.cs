@@ -33,7 +33,7 @@ namespace GCDViewer
             Insert
         };
 
-        public async Task AddToMapAsync(TreeViewItemModel item, int index, Tuple<double, double> range = null)
+        public async Task AddToMapAsync(TreeViewItemModel item, int index, double? range = null)
         {
             await QueuedTask.Run(async () =>
                {
@@ -54,7 +54,7 @@ namespace GCDViewer
                        {
                            // No maps exist, so create a new map
                            map = MapFactory.Instance.CreateMap("NewMap", MapType.Map, MapViewingMode.Map);
-                           ProApp.Panes.CreateMapPaneAsync(map);
+                           await ProApp.Panes.CreateMapPaneAsync(map);
                        }
                        else
                        {
@@ -193,11 +193,16 @@ namespace GCDViewer
                            //    LayerFactory.Instance.CreateLayer(hillshade.GISUri, parent as ILayerContainerEdit, hillshadeIndex, string.Format("{0} - Hillshade", item.Name));
                            //}
 
-                           GIS.MapRenderers.ApplyStretchRenderer(rasterLayer, "Brown to Blue Green Diverging, Bright", range);
+                           GIS.MapRenderers.ApplyStretchRenderer(rasterLayer, "Brown to Blue Green Diverging, Bright");
                        }
                        else if (item.Item is ErrorSurface)
                        {
                            GIS.MapRenderers.ApplyStretchRenderer(rasterLayer, "Partial Spectrum");
+                       }
+                       else if (item.Item is DoDRaster)
+                       {
+                           // Only use this pathway for fixed range symbology (2, 5 m)
+                           GIS.MapRenderers.ApplyDoDClassifyColorRampAsync(rasterLayer, range.Value);
                        }
                        else if (item.Item is AssocSurface)
                        {
@@ -224,16 +229,7 @@ namespace GCDViewer
                            }
                        }
 
-                       //if (item.Item is DEMSurvey)
-                       //{
-                       //    DEMSurvey dem = item.Item as DEMSurvey;
-                       //    Raster hillshade = dem.Hillshade;
-                       //    if (hillshade is Raster)
-                       //    {
-                       //        int hillshadeIndex = index;
-                       //        Layer hs_layer = LayerFactory.Instance.CreateLayer(hillshade.GISUri, parent as ILayerContainerEdit, index, string.Format("{0} - Hillshade", item.Name));
-                       //    }
-                       //}
+                       zoomLayer = rasterLayer;
                    }
 
                    // Store the ArcPro layer URI so that we can find this layer again
@@ -292,7 +288,7 @@ namespace GCDViewer
                });
         }
 
-        public async Task AddToMapScaledAsync(TreeViewItemModel item, int index)
+        public async Task AddToMapScaledDEMAsync(TreeViewItemModel item, int index)
         {
             await QueuedTask.Run(async () =>
             {
@@ -301,123 +297,49 @@ namespace GCDViewer
                 if (dem is null)
                     return;
 
-                // Get the min and Max of all DEMs in the project
-                double? minElevation = new Nullable<double>();
-                double? maxElevation = new Nullable<double>();
-                foreach (DEMSurvey raster in dem.Project.DEMSurveys)
-                {
-                    var parametersMin = Geoprocessing.MakeValueArray(raster.GISPath, "MINIMUM");
-                    var parametersMax = Geoprocessing.MakeValueArray(raster.GISPath, "MAXIMUM");
-                    var minRes = await Geoprocessing.ExecuteToolAsync("GetRasterProperties_management", parametersMin);
-                    var maxRes = await Geoprocessing.ExecuteToolAsync("GetRasterProperties_management", parametersMax);
-
-                    double min = Convert.ToDouble(minRes.Values[0]);
-                    double max = Convert.ToDouble(maxRes.Values[0]);
-
-                    if (!minElevation.HasValue || min < minElevation.Value)
-                        minElevation = min;
-
-                    if (!maxElevation.HasValue || max > maxElevation.Value)
-                        maxElevation = max;
-                }
-
-                Tuple<double, double> range = new Tuple<double, double>(minElevation.Value, maxElevation.Value);
-
-                await AddToMapAsync(item, index, range);
+                var range = await GIS.MapRenderers.GetRasterMinMax(dem.Project.DEMSurveys);
+                await AddToMapAsync(item, index);
             });
         }
 
-        public async Task AddDoDToMapAsync(TreeViewItemModel item, int index, bool isRaw)
+        /// <summary>
+        /// This takes a raster, but then backs up to the project and determines range from all DoDs in project
+        /// </summary>
+        /// <param name="dod"></param>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public async Task AddToMapDoDAsync(TreeViewItemModel item, int index)
         {
             await QueuedTask.Run(async () =>
             {
+                var raster = item.Item as DoDRaster;
+                IEnumerable<DoDRaster> rasters = new List<DoDRaster> { raster };
+                var range = await GIS.MapRenderers.GetRasterMinMax(rasters);
 
-                var dem = item.Item as DoDBase;
-                if (dem is null)
-                    return;
-
-                //// Get the min and Max of all DEMs in the project
-                //double? minElevation = new Nullable<double>();
-                //double? maxElevation = new Nullable<double>();
-                //foreach (DEMSurvey raster in dem.Project.DEMSurveys)
-                //{
-                //    var parametersMin = Geoprocessing.MakeValueArray(raster.GISPath, "MINIMUM");
-                //    var parametersMax = Geoprocessing.MakeValueArray(raster.GISPath, "MAXIMUM");
-                //    var minRes = await Geoprocessing.ExecuteToolAsync("GetRasterProperties_management", parametersMin);
-                //    var maxRes = await Geoprocessing.ExecuteToolAsync("GetRasterProperties_management", parametersMax);
-
-                //    double min = Convert.ToDouble(minRes.Values[0]);
-                //    double max = Convert.ToDouble(maxRes.Values[0]);
-
-                //    if (!minElevation.HasValue || min < minElevation.Value)
-                //        minElevation = min;
-
-                //    if (!maxElevation.HasValue || max > maxElevation.Value)
-                //        maxElevation = max;
-                //}
-
-                //Tuple<double, double> range = new Tuple<double, double>(minElevation.Value, maxElevation.Value);
-
-                //await AddToMapAsync(item, index, range);
+                await AddToMapAsync(item, index, range.max);
             });
         }
 
-        private async void SymbolizeRasterLayer(ITreeItem item, RasterLayer rasterLayer)
+
+        /// <summary>
+        /// This takes a raster, but then backs up to the project and determines range from all DoDs in project
+        /// </summary>
+        /// <param name="dod"></param>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public async Task AddToMapScaledDoDAsync(TreeViewItemModel item, int index)
         {
-            if (item is DEMSurvey)
+            await QueuedTask.Run(async () =>
             {
-                await GIS.MapRenderers.ApplyDEMColorRampAsync(rasterLayer);
-                rasterLayer.SetTransparency(40);
-            }
-            else if (item is AssocSurface)
-            {
-                AssocSurface assoc = item as AssocSurface;
-                switch (assoc.AssocSurfaceType)
-                {
-                    case AssocSurface.AssociatedSurfaceTypes.Roughness:
-                        await GIS.MapRenderers.ApplyRoughnessColorRampAsync(rasterLayer);
-                        break;
+                // Hack to determine if this is raw or Thresholded
+                DoDRaster dod = item.Item as DoDRaster;
+                bool bRaw = dod.Name.ToLower().Contains("raw");
 
-                    case AssocSurface.AssociatedSurfaceTypes.SlopePercent:
-                    case AssocSurface.AssociatedSurfaceTypes.SlopeDegree:
-                        await GIS.MapRenderers.ApplyNamedColorRampToRasterAsync(rasterLayer, "Slope");
-                        break;
+                IEnumerable<DoDRaster> rasters = dod.Project.DoDs.Select<DoDBase, DoDRaster>(x => bRaw ? x.RawDoD : x.ThrDoD);
+                var range = await GIS.MapRenderers.GetRasterMinMax(rasters);
 
-                        //TODO: point density
-                }
-            }
-            else if (item is DoDBase)
-            {
-                DoDBase dod = item as DoDBase as DoDBase;
-                await GIS.MapRenderers.ApplyDoDClassifyColorRampAsync(rasterLayer, 10);
-            }
-            else if (item is ErrorSurface)
-            {
-                //await GIS.MapRenderers.ApplyNamedColorRampToRasterAsync(rasterLayer, "Magma");
-                await GIS.MapRenderers.ApplyNamedColorRampToRasterAsync(rasterLayer, "Partial Spectrum");
-
-                //errRow.Raster.ComputeStatistics();
-                //Dictionary<string, decimal> stats = errRow.Raster.GetStatistics();
-                //double rMin = (double)stats["min"];
-                //double rMax = (double)stats["max"];
-
-                //if (rMin == rMax)
-                //{
-                //    IRasterRenderer rasterRenderer = RasterSymbolization.CreateESRIDefinedContinuousRenderer(errRow.Raster, 1, "Partial Spectrum");
-                //    AddRasterLayer(errRow.Raster, rasterRenderer, errRow.Name, pErrGrpLyr, sHeader, dTransparency);
-                //}
-                //else if (rMax <= 1 & rMax > 0.25)
-                //{
-                //    IRasterRenderer rasterRenderer = RasterSymbolization.CreateClassifyRenderer(errRow.Raster, 11, "Partial Spectrum", 1.1);
-                //    AddRasterLayer(errRow.Raster, rasterRenderer, errRow.Name, pErrGrpLyr, sHeader, dTransparency);
-                //}
-                //else
-                //{
-                //    IRasterRenderer rasterRenderer = RasterSymbolization.CreateClassifyRenderer(errRow.Raster, 11, "Partial Spectrum");
-                //    AddRasterLayer(errRow.Raster, rasterRenderer, errRow.Name, pErrGrpLyr, sHeader, dTransparency);
-                //}
-            }
-
+                await AddToMapAsync(item, index, range.max);
+            });
         }
 
         private int GetInsertIndex(TreeViewItemModel newItem)
@@ -470,53 +392,6 @@ namespace GCDViewer
 
             return null;
         }
-
-
-
-        /// <summary>
-        /// Determine the location of the layer file for this GIS item
-        /// </summary>
-        /// <remarks>
-        /// The following locations will be searched in order for a 
-        /// file with the name SYMBOLOGY_KEY.lyr
-        /// 
-        /// 1. ProjectFolder
-        /// 2. %APPDATA%\RAVE\Symbology\esri\MODEL
-        /// 3. %APPDATA%\RAVE\Symbology\esrsi\Shared
-        /// 4. SOFTWARE_DEPLOYMENT\Symbology\esri\MODEL
-        /// 5. SOFTWARE_DEPLOYMENT\Symbology\esri\Shared
-        /// 
-        /// </remarks>
-        //public FileInfo GetSymbologyFile(GISDataset layer)
-        //{
-        //    if (layer is null || string.IsNullOrEmpty(layer.SymbologyKey))
-        //        return null;
-
-        //    string appDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Properties.Resources.AppDataFolder);
-        //    string symbologyFolder = Path.Combine(appDataFolder, Properties.Resources.AppDataSymbologyFolder);
-
-        //    List<string> SearchFolders = new List<string>()
-        //    {
-        //        layer.Project.Folder.FullName,
-        //        Path.Combine(symbologyFolder, layer.Project.ProjectType),
-        //        Path.Combine(symbologyFolder, Properties.Resources.AppDataSymbologySharedFolder)
-        //    };
-
-        //    foreach (string folder in SearchFolders)
-        //    {
-        //        MessageBox.Show(folder, "Symbology Search Folder", MessageBoxButton.OK, MessageBoxImage.Information);
-        //        if (Directory.Exists(folder))
-        //        {
-        //            string path = Path.ChangeExtension(Path.Combine(folder, layer.SymbologyKey), "lyrx");
-        //            if (File.Exists(path))
-        //            {
-        //                return new FileInfo(path);
-        //            }
-        //        }
-        //    }
-
-        //    return null;
-        //}
 
         public async Task RemoveGroupLayer(TreeViewItemModel item, ILayerContainer parent)
         {

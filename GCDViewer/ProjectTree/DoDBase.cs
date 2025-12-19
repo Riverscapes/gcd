@@ -51,9 +51,9 @@ namespace GCDViewer.ProjectTree
                 AOIMask = project.Masks.First(x => string.Compare(x.Name, nodAOI.InnerText, true) == 0) as Masks.AOIMask;
             }
 
-            RawDoD = new DoDRaster(project, string.Format(Name + " - Raw"), project.GetAbsolutePath(nodDoD.SelectSingleNode("RawDoD").InnerText));
-            ThrDoD = new DoDRaster(project, string.Format(Name + " - Thresholded"), project.GetAbsolutePath(nodDoD.SelectSingleNode("ThrDoD").InnerText));
-            ThrErr = new DoDRaster(project, string.Format(Name + " - Thresholded Error"), project.GetAbsolutePath(nodDoD.SelectSingleNode("ThrErr").InnerText));
+            RawDoD = new DoDRaster(project, string.Format(/*Name +*/ "DoD Raw"), project.GetAbsolutePath(nodDoD.SelectSingleNode("RawDoD").InnerText));
+            ThrDoD = new DoDRaster(project, string.Format(/*Name +*/ "DoD Thresholded"), project.GetAbsolutePath(nodDoD.SelectSingleNode("ThrDoD").InnerText));
+            ThrErr = new DoDRaster(project, string.Format(/*Name +*/ "DoD Thresholded Error"), project.GetAbsolutePath(nodDoD.SelectSingleNode("ThrErr").InnerText));
             //Histograms = new HistogramPair(ProjectManager.Project.GetAbsolutePath(nodDoD.SelectSingleNode("RawHistogram").InnerText),
             //SummaryXML = ProjectManager.Project.GetAbsolutePath(nodDoD.SelectSingleNode("SummaryXML").InnerText);
             //Statistics = DeserializeStatistics(nodDoD.SelectSingleNode("Statistics"), ProjectManager.Project.CellArea, ProjectManager.Project.Units);

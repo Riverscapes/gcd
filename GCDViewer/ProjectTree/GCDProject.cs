@@ -345,10 +345,13 @@ namespace GCDViewer.ProjectTree
             var nod_anal = treProject.AddChild(col_anal);
 
             var col_dod = new GroupLayer("Change Detection", false, "0");
-            var nod_dod = nod_anal.AddChild(col_dod);
+            var nod_dods = nod_anal.AddChild(col_dod);
             foreach (DoDBase dod in DoDs)
             {
-                nod_dod.AddChild(dod);
+                var nod_dod = nod_dods.AddChild(dod);
+                nod_dod.AddChild(dod.ThrDoD);
+                nod_dod.AddChild(dod.RawDoD);
+                nod_dod.AddChild(dod.ThrErr);
             }
 
             // Load the business logic XML file and retrieve the root node. 
