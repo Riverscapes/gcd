@@ -149,6 +149,8 @@ namespace GCDViewer.ProjectTree
                 ReferenceSurfaces.Add(new Surface(this, nodRefSurf, "Reservoir.png", "Reservoir.png"));
             }
 
+
+
             foreach (XmlNode nodDoD in nodProject.SelectNodes("DoDs/DoD"))
             {
                 DoDBase dod = null;
@@ -337,9 +339,24 @@ namespace GCDViewer.ProjectTree
 
             var col_ref = new GroupLayer("Reference Surfaces", true, "0");
             var nod_ref = treProject.AddChild(col_ref);
+            foreach(var surf in ReferenceSurfaces)
+            {
+                var nod_surf = nod_ref.AddChild(surf);
+            }
 
             var col_masks = new GroupLayer("Masks", true, "0");
             var nod_masks = treProject.AddChild(col_masks);
+            foreach(var mask in Masks)
+            {
+                var nod_mask = nod_masks.AddChild(mask);
+            }
+
+            var col_prof = new GroupLayer("Profile Routes", true, "0");
+            var nod_profs = treProject.AddChild(col_prof);
+            foreach(var prof in ProfileRoutes)
+            {
+                var nod_prof = nod_profs.AddChild(prof);
+            }
 
             var col_anal = new GroupLayer("Analyses", false, "0");
             var nod_anal = treProject.AddChild(col_anal);
