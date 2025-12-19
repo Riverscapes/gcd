@@ -11,6 +11,9 @@ namespace GCDViewer.ProjectTree.Masks
 {
     public class Mask : Vector
     {
+
+        public override string ContextMenu => "Vector";
+
         public Mask(GCDProject project, string name, string path)
      : base(project, name, path, "mask.png", "mask.png", "")
         {

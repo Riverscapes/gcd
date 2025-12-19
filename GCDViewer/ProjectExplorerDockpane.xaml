@@ -54,7 +54,7 @@
                 <MenuItem
                     Command="{Binding DataContext.Refresh, RelativeSource={RelativeSource AncestorType=TreeView}}"
                     CommandParameter="{Binding}"
-                    Header="Refresh Project Hierarchy">
+                    Header="Reload Project">
                     <MenuItem.Icon>
                         <Image
                             Width="16"

@@ -250,18 +250,18 @@ namespace GCDViewer.GIS
                 });
             }
 
-    //        double step = (maxRange - minRange) / colors.Count;
+            //        double step = (maxRange - minRange) / colors.Count;
 
-    //        for (int i = 0; i<colors.Count; i++)
-    //        {
-    //            double upperBound = minRange + step * (i + 1);
-    //    classBreaks.Add(new CIMRasterClassBreak
-    //            {
-    //                UpperBound = upperBound,
-    //                Label = $"{minRange + step * i:0.##} to {upperBound:0.##}",
-    //                Color = colors[i]
-    //});
-    //        }
+            //        for (int i = 0; i<colors.Count; i++)
+            //        {
+            //            double upperBound = minRange + step * (i + 1);
+            //    classBreaks.Add(new CIMRasterClassBreak
+            //            {
+            //                UpperBound = upperBound,
+            //                Label = $"{minRange + step * i:0.##} to {upperBound:0.##}",
+            //                Color = colors[i]
+            //});
+            //        }
 
             // Create classify colorizer
             var classifyColorizer = new CIMRasterClassifyColorizer
@@ -317,8 +317,14 @@ namespace GCDViewer.GIS
                     label = "> " + lower.ToString(format);
                 else
                     label = $"{lower.ToString(format)} to {upper.ToString(format)}";
-
+                
+                // Hack, when the bin edge is extremely close to zero it messes up the class break
+                if (Math.Abs(upper) < 0.00001)
+                    upper = 0;
+                
                 label = label.Replace("-0.00", "0.00");
+
+                System.Diagnostics.Debug.Print(string.Format("Upper: {0}, Label: {1}", upper, label));
 
                 result.Add(new Tuple<double, string>(upper, label));
                 lower = upper;
