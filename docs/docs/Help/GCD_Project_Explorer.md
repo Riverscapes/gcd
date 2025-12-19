@@ -1,6 +1,6 @@
 ---
 title: GCD Project Explorer
-sidebar_position: 1
+sidebar_position: 2
 slug: /help/GCD_Project_Explorer
 ---
 

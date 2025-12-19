@@ -1,6 +1,6 @@
 ---
 title: Project Menu
-sidebar_position: 4
+sidebar_position: 1
 slug: /help/project-menu/
 ---
 
