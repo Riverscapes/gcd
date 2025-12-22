@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ArcGIS.Desktop.Core;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.InteropServices;
@@ -101,6 +102,19 @@ namespace GCDViewer.ProjectTree
             }
 
             return null;
+        }
+
+        public List<TreeViewItemModel> ParentList()
+        {
+            var parentItems = new List<TreeViewItemModel>();
+            var parentItem = Parent;
+            while (parentItem is not null)
+            {
+                parentItems.Add(parentItem);
+                parentItem = parentItem.Parent;
+            }
+
+            return parentItems;
         }
     }
 }
