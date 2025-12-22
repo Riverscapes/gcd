@@ -36,19 +36,13 @@ namespace GCDViewer
                    // Attempt to find existing layer and exit if its present
                    if (!string.IsNullOrEmpty(item.MapLayerUri))
                    {
-                       Layer existingLayer = MapView.Active?.Map.FindLayer(item.MapLayerUri);
+                       Layer existingLayer = activeMap.FindLayer(item.MapLayerUri);
                        if (existingLayer != null)
                            return;
                    }
 
-                   // Build a list of the parent groups
-                   var parentItems = new List<TreeViewItemModel>();
-                   var parentItem = item.Parent;
-                   while (parentItem is not null)
-                   {
-                       parentItems.Add(parentItem);
-                       parentItem = parentItem.Parent;
-                   }
+                   // Build a list of the parent groups, traversing up the project hierarchy
+                   var parentItems = item.ParentList();
 
                    // Now try to find these groups, starting with the root, project entry
                    parentItems.Reverse();
