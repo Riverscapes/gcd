@@ -31,30 +31,7 @@ namespace GCDViewer
                    // If we need to zoom to layer then set this variable to the layer and then zoom to it at the end
                    Layer zoomLayer = null;
 
-                   // Check if there is an active map view
-                   if (MapView.Active == null)
-                   {
-                       // Check if there are any maps in the project
-                       var mapProjectItems = Project.Current.GetItems<MapProjectItem>();
-                       Map map = null;
-
-                       if (!mapProjectItems.Any())
-                       {
-                           // No maps exist, so create a new map
-                           map = MapFactory.Instance.CreateMap("NewMap", MapType.Map, MapViewingMode.Map);
-                           await ProApp.Panes.CreateMapPaneAsync(map);
-                       }
-                       else
-                       {
-                           // Use the first available map
-                           map = mapProjectItems.FirstOrDefault()?.GetMap();
-                       }
-                   }
-
-
-                   // At this point, there should be at least one map, so you can proceed to add layers
-                   Map activeMap = MapView.Active?.Map ?? Project.Current.GetItems<MapProjectItem>().FirstOrDefault()?.GetMap();
-
+                   Map activeMap = await GetOrCreateMapView();
 
                    // Attempt to find existing layer and exit if its present
                    if (!string.IsNullOrEmpty(item.MapLayerUri))
@@ -278,6 +255,33 @@ namespace GCDViewer
                        }
                    }
                });
+        }
+
+        public async static Task<Map> GetOrCreateMapView()
+        {
+            // Check if there is an active map view
+            if (MapView.Active == null)
+            {
+                // Check if there are any maps in the project
+                var mapProjectItems = Project.Current.GetItems<MapProjectItem>();
+                Map map = null;
+
+                if (!mapProjectItems.Any())
+                {
+                    // No maps exist, so create a new map
+                    map = MapFactory.Instance.CreateMap("NewMap", MapType.Map, MapViewingMode.Map);
+                    await ProApp.Panes.CreateMapPaneAsync(map);
+                }
+                else
+                {
+                    // Use the first available map
+                    map = mapProjectItems.FirstOrDefault()?.GetMap();
+                }
+            }
+
+            // At this point, there should be at least one map, so you can proceed to add layers
+            Map activeMap = MapView.Active?.Map ?? Project.Current.GetItems<MapProjectItem>().FirstOrDefault()?.GetMap();
+            return activeMap;
         }
 
         public async Task AddToMapScaledDEMAsync(TreeViewItemModel item, int index)
