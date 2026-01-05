@@ -205,7 +205,13 @@ namespace GCDViewer
             {
                 var gis = new GISUtilities();
                 int index = node.Parent.Children.IndexOf(node);
-                await gis.AddToMapAsync(node, index);
+
+                System.Diagnostics.Debug.Print(string.Format("Adding to map: {0}", node.Name));
+
+                if (node.Item is DoDRaster)
+                    await gis.AddToMapDoDAsync(node, index);
+                else
+                    await gis.AddToMapAsync(node, index);
             }
 
             if (recursive && node.Children != null && node.Children.Count > 0)
