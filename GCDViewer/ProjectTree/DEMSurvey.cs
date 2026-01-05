@@ -18,9 +18,15 @@ namespace GCDViewer.ProjectTree
 
         public override string ContextMenu => "DEMSurvey";
 
+        // This is a placeholder parent group that doesn't appear in the GCD project tree,
+        // but is used to create a node in the map ToC
+        public readonly TreeViewItemModel ParentGroupLayer;
+
         public DEMSurvey(GCDProject project, XmlNode nodDEM) :
             base(project, nodDEM, "DEMSurvey.png", "DEMSurvey.png")
         {
+            ParentGroupLayer = new TreeViewItemModel(new GroupLayer(base.Name, false, base.Id), null);
+
             //SurveyDateTime surveyDT = null;
             XmlNode nodSurveyDate = nodDEM.SelectSingleNode("SurveyDate");
             if (nodSurveyDate is XmlNode)

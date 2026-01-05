@@ -206,7 +206,7 @@ namespace GCDViewer
                    }
 
                    // Trace back up hierarchy and expand any group layers
-                   parentItem = item.Parent;
+                   var parentItem = item.Parent;
                    while (parentItem is not null)
                    {
                        if (!string.IsNullOrEmpty(parentItem.MapLayerUri))
