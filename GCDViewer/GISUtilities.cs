@@ -205,31 +205,7 @@ namespace GCDViewer
                            featureLayer.SetDefinitionQuery(vector.DefinitionQuery);
                    }
 
-                   // Trace back up hierarchy and expand any group layers
-                   var parentItem = item.Parent;
-                   while (parentItem is not null)
-                   {
-                       if (!string.IsNullOrEmpty(parentItem.MapLayerUri))
-                       {
-                           var parentLayer = activeMap.FindLayer(parentItem.MapLayerUri);
-                           if (parentLayer is ArcGIS.Desktop.Mapping.GroupLayer)
-                           {
-                               var groupLayer = parentLayer as ArcGIS.Desktop.Mapping.GroupLayer;
-                               if (parentItem.Item is ProjectTree.GroupLayer)
-                               {
-                                   var parentGroupItem = parentItem.Item as ProjectTree.GroupLayer;
-                                   if (!groupLayer.IsExpanded && parentGroupItem.Expanded)
-                                       groupLayer.SetExpanded(true);
-                               }
-                               else
-                               {
-                                   groupLayer.SetExpanded(true);
-                               }
-                           }
-
-                       }
-                       parentItem = parentItem.Parent;
-                   }
+                   EnsureAllParentsExpanded(activeMap, item);
 
 
                    if (layer == null)
@@ -249,6 +225,35 @@ namespace GCDViewer
                        }
                    }
                });
+        }
+
+        public void EnsureAllParentsExpanded(Map activeMap, TreeViewItemModel item)
+        {
+            // Trace back up hierarchy and expand any group layers
+            var parentItem = item.Parent;
+            while (parentItem is not null)
+            {
+                if (!string.IsNullOrEmpty(parentItem.MapLayerUri))
+                {
+                    var parentLayer = activeMap.FindLayer(parentItem.MapLayerUri);
+                    if (parentLayer is ArcGIS.Desktop.Mapping.GroupLayer)
+                    {
+                        var groupLayer = parentLayer as ArcGIS.Desktop.Mapping.GroupLayer;
+                        if (parentItem.Item is ProjectTree.GroupLayer)
+                        {
+                            var parentGroupItem = parentItem.Item as ProjectTree.GroupLayer;
+                            if (!groupLayer.IsExpanded && parentGroupItem.Expanded)
+                                groupLayer.SetExpanded(true);
+                        }
+                        else
+                        {
+                            groupLayer.SetExpanded(true);
+                        }
+                    }
+
+                }
+                parentItem = parentItem.Parent;
+            }
         }
 
         public async static Task<Map> GetOrCreateMapView()

@@ -368,7 +368,7 @@ namespace GCDViewer.ProjectTree
                 var nod_dod = nod_dods.AddChild(dod);
                 nod_dod.AddChild(dod.ThrDoD);
                 nod_dod.AddChild(dod.RawDoD);
-                nod_dod.AddChild(dod.ThrErr);
+                //nod_dod.AddChild(dod.ThrErr);
             }
 
             // Load the business logic XML file and retrieve the root node. 
