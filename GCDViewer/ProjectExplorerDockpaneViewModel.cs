@@ -1,6 +1,7 @@
 ﻿using ArcGIS.Desktop.Core;
 using ArcGIS.Desktop.Framework;
 using ArcGIS.Desktop.Framework.Contracts;
+using ArcGIS.Desktop.Internal.KnowledgeGraph;
 using GCDViewer.ProjectTree;
 using System;
 using System.Collections.Generic;
@@ -64,7 +65,7 @@ namespace GCDViewer
             TreeViewItems = new ObservableCollection<TreeViewItemModel>();
 
             AddToMap = new ContextMenuCommand(ExecuteAddToMap, CanExecuteDefault);
-            AddToMapScaled = new ContextMenuCommand(ExecuteAddToMapScaled, CanExecuteDefault);
+            AddToMapScaled = new ContextMenuCommand(ExecuteAddToMapScaled, CanExecuteAddToMapScaled);
             AddDoDDataRange = new ContextMenuCommand(ExecuteAddDoDDataRange, CanExecuteDefault);
             AddDoD2m = new ContextMenuCommand(ExecuteAddDoD2m, CanExecuteDefault);
             AddDoD5m = new ContextMenuCommand(ExecuteAddDoD5m, CanExecuteDefault);
@@ -242,8 +243,22 @@ namespace GCDViewer
 
         private bool CanExecuteDefault(object parameter)
         {
+            return true;
+        }
+
+        private bool CanExecuteAddToMapScaled(object parameter)
+        {
+            if (parameter is null)
+                return false;
+
             // Your logic to determine if the command can execute
             // For example, always return true for now
+            var node = parameter as TreeViewItemModel;
+            if (node.Item is Surface)
+            {
+                return node.Item is DEMSurvey;
+            }
+
             return true;
         }
 
