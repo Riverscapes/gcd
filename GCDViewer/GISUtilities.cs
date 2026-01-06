@@ -131,7 +131,7 @@ namespace GCDViewer
                    {
                        featurelayer.ClearSelection();
                        featurelayer.ClearDisplayCache();
-                       featurelayer.SetDefinitionQuery("");
+                       //featurelayer.SetDefinitionQuery("");
                        Envelope extent = featurelayer.QueryExtent();
                        System.Diagnostics.Debug.Print("Envelope: XMin={0}, YMin={1}, XMax={2}, YMax={3}", extent.XMin, extent.YMin, extent.XMax, extent.YMax);
                    }
