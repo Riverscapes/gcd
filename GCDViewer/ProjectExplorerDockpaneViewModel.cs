@@ -62,20 +62,28 @@ namespace GCDViewer
 
         public ProjectExplorerDockpaneViewModel()
         {
-            TreeViewItems = new ObservableCollection<TreeViewItemModel>();
+            try
+            {
 
-            AddToMap = new ContextMenuCommand(ExecuteAddToMap, CanExecuteDefault);
-            AddToMapScaled = new ContextMenuCommand(ExecuteAddToMapScaled, CanExecuteAddToMapScaled);
-            AddDoDDataRange = new ContextMenuCommand(ExecuteAddDoDDataRange, CanExecuteDefault);
-            AddDoD2m = new ContextMenuCommand(ExecuteAddDoD2m, CanExecuteDefault);
-            AddDoD5m = new ContextMenuCommand(ExecuteAddDoD5m, CanExecuteDefault);
-            AddDoDAllRasters = new ContextMenuCommand(ExecuteAddDoDAllRasters, CanExecuteDefault);
-            BrowseFolder = new ContextMenuCommand(ExecuteBrowseFolder, CanExecuteBrowseFolder);
-            AddAllLayersToMap = new ContextMenuCommand(ExecuteAddAllLayersToMap, CanExecuteAddAllLayersToMap);
-            OpenFile = new ContextMenuCommand(ExecuteOpenFile, CanExecuteOpenFile);
-            DataExchange = new ContextMenuCommand(ExecuteDataExchange, CanExecuteDataExchange);
-            Refresh = new ContextMenuCommand(ExecuteRefresh, CanExecuteRefresh);
-            Close = new ContextMenuCommand(ExecuteClose, CanExecuteClose);
+                TreeViewItems = new ObservableCollection<TreeViewItemModel>();
+
+                AddToMap = new ContextMenuCommand(ExecuteAddToMap, CanExecuteDefault);
+                AddToMapScaled = new ContextMenuCommand(ExecuteAddToMapScaled, CanExecuteAddToMapScaled);
+                AddDoDDataRange = new ContextMenuCommand(ExecuteAddDoDDataRange, CanExecuteDefault);
+                AddDoD2m = new ContextMenuCommand(ExecuteAddDoD2m, CanExecuteDefault);
+                AddDoD5m = new ContextMenuCommand(ExecuteAddDoD5m, CanExecuteDefault);
+                AddDoDAllRasters = new ContextMenuCommand(ExecuteAddDoDAllRasters, CanExecuteDefault);
+                BrowseFolder = new ContextMenuCommand(ExecuteBrowseFolder, CanExecuteBrowseFolder);
+                AddAllLayersToMap = new ContextMenuCommand(ExecuteAddAllLayersToMap, CanExecuteAddAllLayersToMap);
+                OpenFile = new ContextMenuCommand(ExecuteOpenFile, CanExecuteOpenFile);
+                DataExchange = new ContextMenuCommand(ExecuteDataExchange, CanExecuteDataExchange);
+                Refresh = new ContextMenuCommand(ExecuteRefresh, CanExecuteRefresh);
+                Close = new ContextMenuCommand(ExecuteClose, CanExecuteClose);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Construcing Dockable Pane");
+            }
         }
 
         /// <summary>
@@ -116,45 +124,54 @@ namespace GCDViewer
 
         internal static void LoadProject(string filePath = null)
         {
-            DockPane pane = FrameworkApplication.DockPaneManager.Find(_dockPaneID);
-            if (pane == null)
-                return;
-
-            ProjectExplorerDockpaneViewModel pevm = (ProjectExplorerDockpaneViewModel)pane;
-
-            // If no file is supplied then looking for existing project to reload
-            TreeViewItemModel nodRoot = pevm.treeViewItems.FirstOrDefault<TreeViewItemModel>();
-            if (filePath == null)
-            {
-                if (nodRoot == null)
-                {
-                    return;
-                }
-                else
-                {
-                    // Get the existing project to reload
-                    filePath = ((GCDProject)nodRoot.Item).ProjectFile.FullName;
-                }
-            }
-
-            // Clear ready for reload
-            pevm.treeViewItems.Clear();
-
-            GCDProject newProject = new GCDProject(filePath);
-            newProject.Load();
-
-            TreeViewItemModel projectItem = new TreeViewItemModel(newProject, null);
-            projectItem.IsExpanded = true;
             try
             {
-                newProject.BuildProjectTree(projectItem);
-                pevm.treeViewItems.Insert(0, projectItem);
+
+
+                DockPane pane = FrameworkApplication.DockPaneManager.Find(_dockPaneID);
+                if (pane == null)
+                    return;
+
+                ProjectExplorerDockpaneViewModel pevm = (ProjectExplorerDockpaneViewModel)pane;
+
+                // If no file is supplied then looking for existing project to reload
+                TreeViewItemModel nodRoot = pevm.treeViewItems.FirstOrDefault<TreeViewItemModel>();
+                if (filePath == null)
+                {
+                    if (nodRoot == null)
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        // Get the existing project to reload
+                        filePath = ((GCDProject)nodRoot.Item).ProjectFile.FullName;
+                    }
+                }
+
+                // Clear ready for reload
+                pevm.treeViewItems.Clear();
+
+                GCDProject newProject = new GCDProject(filePath);
+                newProject.Load();
+
+                TreeViewItemModel projectItem = new TreeViewItemModel(newProject, null);
+                projectItem.IsExpanded = true;
+                try
+                {
+                    newProject.BuildProjectTree(projectItem);
+                    pevm.treeViewItems.Insert(0, projectItem);
+                }
+                catch (Exception ex)
+                {
+                    ex.Data["Project Name"] = newProject.Name;
+                    ex.Data["Project Path"] = newProject.ProjectFile.FullName;
+                    throw;
+                }
             }
             catch (Exception ex)
             {
-                ex.Data["Project Name"] = newProject.Name;
-                ex.Data["Project Path"] = newProject.ProjectFile.FullName;
-                throw;
+                MessageBox.Show(ex.Message, "Error Loading Project");
             }
         }
 
