@@ -6,7 +6,7 @@
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <NoWarn>CA1416</NoWarn>
-    <AssemblyVersion>7.5.5.3</AssemblyVersion>
+    <AssemblyVersion>7.5.5.4</AssemblyVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Images\about_16.png" />
