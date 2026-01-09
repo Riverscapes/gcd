@@ -19,8 +19,6 @@ namespace GCDViewer
         {
             InitializeComponent();
             this.Name = "test";
-
-            this.DataContext = new ProjectExplorerDockpaneViewModel();
         }
 
         private void treProject_DoubleClick(object sender, EventArgs e)
