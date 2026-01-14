@@ -62,13 +62,13 @@ For those with extensive experience in topographic surveying, they can opt out o
 ## Instructors
 
 
-![Joe Wheaton](/img/people/Wheaton_round.png)
+![Joe Wheaton](https://docs.riverscapes.net/img/people/joe_wheaton.png)
 [Joe Wheaton](http://joewheaton.org) - Associate Professor in Department of Watershed Sciences @ Utah State University
 
-![Philip Bailey](/img/people/Philip_round.png)
+![Philip Bailey](https://docs.riverscapes.net/img/people/philip_bailey.png)
 [Philip Bailey](http://northarrowresearch.com/#people) - Adjunct Professor in Department of Watershed Sciences @ Utah State University & Owner of North Arrow Research
 
-![Matt Reimver](/img/people/Matt_round.png)
+![Matt Reimver](https://docs.riverscapes.net/img/people/matt_reimer.png)
 [Matt Reimver](http://northarrowresearch.com/#people) - Software Engineer & Guru @ North Arrow Research
 
 ## Venue
