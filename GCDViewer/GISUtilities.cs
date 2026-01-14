@@ -29,8 +29,6 @@ namespace GCDViewer
                    if (index < 0)
                        throw new ArgumentOutOfRangeException(nameof(index), "Layer index must be greater than or equal to zero");
 
-                   //MessageBox.Show("Add to Map Async 1", "Async");
-
                    // If we need to zoom to layer then set this variable to the layer and then zoom to it at the end
                    Layer zoomLayer = null;
 
@@ -68,7 +66,6 @@ namespace GCDViewer
                        // For now we just add it to the bottom of the map ToC (even though this
                        // means that it will be below any ESRI added basemaps
                        int groupIndex = 0;
-                       //MessageBox.Show("Add to Map Async 2", "Async");
 
                        if (!(groupItem is ProjectTree.GCDProject) && groupItem.Parent != null)
                        {
@@ -111,8 +108,6 @@ namespace GCDViewer
                    }
                    else
                    {
-                       //MessageBox.Show("Add to Map Async 3", "Async");
-
                        Uri uri = null;
                        if (item.Item is GISDataset dataset)
                        {
@@ -209,11 +204,8 @@ namespace GCDViewer
                        if (!string.IsNullOrEmpty(vector.DefinitionQuery))
                            featureLayer.SetDefinitionQuery(vector.DefinitionQuery);
                    }
-                   //MessageBox.Show("Add to Map Async 4", "Async");
 
                    EnsureAllParentsExpanded(activeMap, item);
-
-                   //MessageBox.Show("Add to Map Async 5", "Async");
 
                    if (layer == null)
                        throw new InvalidOperationException("Failed to create layer from the layer file.");
@@ -230,7 +222,6 @@ namespace GCDViewer
                            MapView view = MapView.Active;
                            view?.ZoomToAsync(layerExtent);
                        }
-                       //MessageBox.Show("Add to Map Async 6", "Async");
                    }
                });
         }

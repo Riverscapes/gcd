@@ -214,31 +214,23 @@ namespace GCDViewer
         {
             // Your action logic here
             // For example: System.Windows.MessageBox.Show("Action 1 executed");
-            System.Windows.MessageBox.Show("Action 1 executed");
+            //System.Windows.MessageBox.Show("Action 1 executed");
         }
 
         private async Task AddLayerToMap(TreeViewItemModel node, bool recursive)
         {
-            MessageBox.Show("Add to Map 1", "Add To Map");
-
             if (node.Item is IGISLayer)
             {
-                MessageBox.Show("Add to Map 2", "Add To Map");
-
                 var gis = new GISUtilities();
                 int index = node.Parent.Children.IndexOf(node);
 
-                System.Diagnostics.Debug.Print(string.Format("Adding to map: {0}", node.Name));
+                //System.Diagnostics.Debug.Print(string.Format("Adding to map: {0}", node.Name));
 
                 if (node.Item is DoDRaster)
                     await gis.AddToMapDoDAsync(node, index);
                 else
                 {
-                    MessageBox.Show("Add to Map 3", "Add To Map");
-
                     await gis.AddToMapAsync(node, index);
-
-                    MessageBox.Show("Add to Map 4", "Add To Map");
                 }
             }
 
@@ -250,8 +242,6 @@ namespace GCDViewer
                     await AddLayerToMap(child, recursive);
                 }
             }
-
-            MessageBox.Show("Add to Map 5", "Add To Map");
         }
 
 
@@ -261,12 +251,8 @@ namespace GCDViewer
         {
             try
             {
-                MessageBox.Show(string.Format("{0}", parameter), "ExecuteAddToMap");
-
                 // Await asynchronous call to ensure exceptions are caught
                 await AddLayerToMap(parameter as TreeViewItemModel, false);
-
-                MessageBox.Show("After add to map", "ExecuteAddToMap");
             }
             catch (Exception ex)
             {
