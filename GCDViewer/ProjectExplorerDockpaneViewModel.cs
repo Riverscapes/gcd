@@ -219,8 +219,12 @@ namespace GCDViewer
 
         private async Task AddLayerToMap(TreeViewItemModel node, bool recursive)
         {
+            MessageBox.Show("Add to Map 1", "Add To Map");
+
             if (node.Item is IGISLayer)
             {
+                MessageBox.Show("Add to Map 2", "Add To Map");
+
                 var gis = new GISUtilities();
                 int index = node.Parent.Children.IndexOf(node);
 
@@ -229,7 +233,13 @@ namespace GCDViewer
                 if (node.Item is DoDRaster)
                     await gis.AddToMapDoDAsync(node, index);
                 else
+                {
+                    MessageBox.Show("Add to Map 3", "Add To Map");
+
                     await gis.AddToMapAsync(node, index);
+
+                    MessageBox.Show("Add to Map 4", "Add To Map");
+                }
             }
 
             if (recursive && node.Children != null && node.Children.Count > 0)
@@ -240,17 +250,23 @@ namespace GCDViewer
                     await AddLayerToMap(child, recursive);
                 }
             }
+
+            MessageBox.Show("Add to Map 5", "Add To Map");
         }
 
 
         #region Context Menu Commands
 
-        public void ExecuteAddToMap(object parameter)
+        public async void ExecuteAddToMap(object parameter)
         {
             try
             {
-                // Explicit "fire and forget" asynchronous call
-                _ = AddLayerToMap(parameter as TreeViewItemModel, false);
+                MessageBox.Show(string.Format("{0}", parameter), "ExecuteAddToMap");
+
+                // Await asynchronous call to ensure exceptions are caught
+                await AddLayerToMap(parameter as TreeViewItemModel, false);
+
+                MessageBox.Show("After add to map", "ExecuteAddToMap");
             }
             catch (Exception ex)
             {
@@ -279,7 +295,7 @@ namespace GCDViewer
             return true;
         }
 
-        public void ExecuteAddToMapScaled(object parameter)
+        public async void ExecuteAddToMapScaled(object parameter)
         {
             try
             {
@@ -288,7 +304,7 @@ namespace GCDViewer
                 {
                     var gis = new GISUtilities();
                     int index = node.Parent.Children.IndexOf(node);
-                    _ = gis.AddToMapScaledDEMAsync(node, index);
+                    await gis.AddToMapScaledDEMAsync(node, index);
                 }
             }
             catch (Exception ex)
@@ -297,7 +313,7 @@ namespace GCDViewer
             }
         }
 
-        public void ExecuteAddDoDDataRange(object parameter)
+        public async void ExecuteAddDoDDataRange(object parameter)
         {
             try
             {
@@ -306,7 +322,7 @@ namespace GCDViewer
                 {
                     var gis = new GISUtilities();
                     int index = node.Parent.Children.IndexOf(node);
-                    _ = gis.AddToMapDoDAsync(node, index);
+                    await gis.AddToMapDoDAsync(node, index);
                 }
             }
             catch (Exception ex)
@@ -314,7 +330,7 @@ namespace GCDViewer
                 MessageBox.Show(ex.Message, "Error Adding a Layer to the Map");
             }
         }
-        public void ExecuteAddDoD2m(object parameter)
+        public async void ExecuteAddDoD2m(object parameter)
         {
             try
             {
@@ -323,25 +339,7 @@ namespace GCDViewer
                 {
                     var gis = new GISUtilities();
                     int index = node.Parent.Children.IndexOf(node);
-                    _ = gis.AddToMapAsync(node, index, 2);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error Adding a Layer to the Map");
-            }
-        }
-
-        public void ExecuteAddDoD5m(object parameter)
-        {
-            try
-            {
-                var node = parameter as TreeViewItemModel;
-                if (node.Item is DoDRaster)
-                {
-                    var gis = new GISUtilities();
-                    int index = node.Parent.Children.IndexOf(node);
-                    _ = gis.AddToMapAsync(node, index, 5);
+                    await gis.AddToMapAsync(node, index, 2);
                 }
             }
             catch (Exception ex)
@@ -350,7 +348,7 @@ namespace GCDViewer
             }
         }
 
-        public void ExecuteAddDoDAllRasters(object parameter)
+        public async void ExecuteAddDoD5m(object parameter)
         {
             try
             {
@@ -359,7 +357,25 @@ namespace GCDViewer
                 {
                     var gis = new GISUtilities();
                     int index = node.Parent.Children.IndexOf(node);
-                    _ = gis.AddToMapScaledDoDAsync(node, index);
+                    await gis.AddToMapAsync(node, index, 5);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Adding a Layer to the Map");
+            }
+        }
+
+        public async void ExecuteAddDoDAllRasters(object parameter)
+        {
+            try
+            {
+                var node = parameter as TreeViewItemModel;
+                if (node.Item is DoDRaster)
+                {
+                    var gis = new GISUtilities();
+                    int index = node.Parent.Children.IndexOf(node);
+                    await gis.AddToMapScaledDoDAsync(node, index);
                 }
             }
             catch (Exception ex)

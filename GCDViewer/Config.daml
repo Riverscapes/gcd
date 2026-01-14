@@ -5,7 +5,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://schemas.esri.com/DADF/Registry file:///C:/Program%20Files/ArcGIS/Pro/bin/ArcGIS.Desktop.Framework.xsd">
 
-	<AddInInfo id="{c1531ab1-ea6d-4a14-a8d6-af424f14c37a}" version="7.5.5.26" desktopVersion="3.5"
+	<AddInInfo id="{c1531ab1-ea6d-4a14-a8d6-af424f14c37a}" version="7.5.5.27" desktopVersion="3.5"
 		product="ArcGISPro">
 		<Name>GCDViewer</Name>
 		<Description>Geomorphic Change Detection for ArcGIS Pro</Description>
