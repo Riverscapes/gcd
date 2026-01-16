@@ -1,6 +1,6 @@
 ---
 title: Viewing Results
-slug: /help/analyses/change_detection/change-detection-results
+slug: /help/analyses/change-detection/change-detection-results
 sidebar_position: 2
 ---
 

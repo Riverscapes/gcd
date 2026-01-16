@@ -1,6 +1,6 @@
 ---
 title: Inter Comparisons
-slug: /help/analyses/change_detection/intercomparison
+slug: /help/analyses/change-detection/intercomparison
 sidebar_position: 7
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: Morphological Analysis
-slug: /help/analyses/change_detection/morphological
+slug: /help/analyses/change-detection/morphological
 sidebar_position: 4
 ---
 
