@@ -8,6 +8,10 @@ slugL: /Download/release_notes
 
 See the [commit history](https://github.com/Riverscapes/gcd/commits) in GitHub for fuller documentation of changes. Alternatively you can view the commits organized by each product [release](https://github.com/Riverscapes/gcd/releases). The release notes for [prior versions](#prior-versions) are linked at the bottom of this page.
 
+## 7.5.29 - 14 Jan 2026
+
+- First release of GCD for ArcGIS Pro 3.4 or newer.
+
 ## 7.5.4 - 18 Jun 2020
 
 * GCD now writes a [riverscapes](http://riverscapes.net) project file alongside the GCD project file.

@@ -79,7 +79,6 @@ The results for an individual change detection are placed in a folder under the 
 
 Within this folder are the following files and folders that contain the results of the GCD:
 
-|---|---|
 |Path|Description|
 |---|---|
 |`raw.tif`|The spatial results of the change detection in raster format without applying any thresholding techniques. Simply DEMnew - DEMold.|

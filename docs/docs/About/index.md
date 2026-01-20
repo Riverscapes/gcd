@@ -5,17 +5,15 @@ sidebar_position: 300
 
 GCD 7 is available as two separate products:
 
-- **GCD AddIn** (for users with ArcGIS) includes map display integration with ArcMap.
 - **GCD Standalone** is independent of ESRI and does not require ArcGIS. It has no built-in map display, but is otherwise fully functional.
+- **GCD AddIn for ArcGIS Pro** for read only display of GCD project data in ArcGIS Pro. 
+- **GCD AddIn for ArcGIS 10.x** fully functional GCD version that includes all of Standalone plus map display.
 
 ## GCD AddIn for ArcGIS
 
-The following table shows compatibility of GCD versions with ArcGIS:
+The [latest GCD release](https://github.com/Riverscapes/gcd/releases/latest) for ArcGIS Pro version 3.4 and higher. This is a limited version capable of displaying spatial GCD data in ArcGIS Pro. This version is read only and does not create or alter GCD projects.
 
-| GCD Version | 10.1 | 10.2 | 10.3 | 10.4 | 10.5 | 10.6 | ArcPro |
-|:------------|:----:|:----:|:----:|:----:|:----:|:----:|:------:|
-| GCD 6       | ✅   | ✅   | ✅   | ✅   | ✅   | ✅   | ❌     |
-| GCD 7       | ❌   | ❌   | ❌   | ✅   | ✅   | ✅   | ❌     |
+GCD 7 also has a legacy version for ArcGIS 10.4 and higher. This is a fully operational version of GCD that combines both map display as well as full functionality to create and manipulate GCD projects.
 
 ## GCD Standalone
 
@@ -40,7 +38,10 @@ GCD Standalone does **not** include a map display. Ideal for those using QGIS or
 
 ### Prerequisites
 
-Both the AddIn and Standalone versions require [.NET Framework 4.5.2](https://www.microsoft.com/en-ca/download/details.aspx?id=42642) (that should already included with Windows 10).
+The GCD Standalone version requires [.NET Framework 4.5.2](https://www.microsoft.com/en-ca/download/details.aspx?id=42642) (that should already included with Windows 10).
+
+The GCD AddIn for ArcGIS Pro requires .NET Framework 8 as well as ArcGIS Pro 3.4 or higher.
+
 
 ## Other Notes
 
