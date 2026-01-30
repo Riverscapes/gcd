@@ -4,7 +4,6 @@ slug: /help/customize-menu/options
 sidebar_position: 2
 ---
 
-
 The Options dialog includes tabs for customizing different aspects of the GCD software. All options are user-specific, meaning that any changes are saved for the current user only.
 
 ## Survey Types
@@ -27,7 +26,7 @@ The symbology tab allow users to control display properties when layers are adde
 
 ![Symbology](/img/CommandRefs/03_Customize/options-symbology.png)
 
-### Graphs Tab
+## Graphs
 
 The Graphs tab simply controls the output resolution and dimensions (in pixels) of the output `*.png` graphic image files that are automatically produced by GCD when generating a change detection analysis. The default is for a square graph at 600 x 600 pixels. The graphs currently exported by GCD include the volumetric and areal elevation change distributions associated with both the [Change Detection](/Help/Analyses/Change_Detection/change-detection) and [Budget Segregation](/Help/Analyses/Budget_Segregation/budget-segregation) panels.
 
