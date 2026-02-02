@@ -10,7 +10,7 @@ See the [commit history](https://github.com/Riverscapes/gcd/commits) in GitHub f
 
 ## 7.5.29 - 14 Jan 2026
 
-- First release of GCD for ArcGIS Pro 3.4 or newer.
+- First beta release of GCD for ArcGIS Pro 3.4 or newer.
 
 ## 7.5.4 - 18 Jun 2020
 
