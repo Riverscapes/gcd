@@ -43,7 +43,6 @@ Provide a unique name for the reference surface and then check or uncheck the bo
 
 A reference error surface ([see below](#reference-error-surfaces)) will be generated as part of the calculation. Also calculated on a cell-wise basis, this error surface is calculated as follows:
 
-|---|---|
 |Reference Surface Method|Error Calculation|
 |---|---|
 |Maximum|The maximum DEM error surface value in each cell.|
