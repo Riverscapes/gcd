@@ -30,7 +30,6 @@ The same method is used to generate a linear extraction from a [DEM Survey](/Hel
 
 Generating a linear extraction from a [change detection](/Help/Analyses/Change_Detection/change-detection) is done in much the same way as described above. The main difference is that with change detections the user doesn't choose an error surface. This is chosen for you based on the type of thresholding that was used to generate the change detection.
 
-|---|---|
 |Thresholding Method|Linear Extraction Error Surface Values|
 |---|---|
 |Minimum Level of Detection|A constant value that corresponds to the minimum level of detection.|
