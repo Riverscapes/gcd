@@ -4,8 +4,6 @@ sidebar_position: 8
 slug: /Concepts/topcat-decimation
 ---
 
-## Summary
-
 Topographic Point Cloud Analysis Toolkit ([ToPCAT](http://tat.riverscapes.net/Help/Data_Preparation/topcat-menu/)) is a tool developed by Brasington et al. ([2012](#Relevant_Literature)) used to decimate (or thin) a point cloud and calculate meaningful statistics for grid defined areas. The process of decimation can reduce computation time and produce meaningful summary outputs (e.g. Z<sub>Min</sub> for modeling bare earth elevations; and detrended standard deviation for modelling surface roughness). 
 
 ## Concepts
@@ -38,8 +36,6 @@ The [command-line version of ToPCAT](https://code.google.com/archive/p/point-clo
 
 
 <YouTubeEmbed videoId="yxz3NzRwDpA" title="Visualizing Decimated Point Clouds" />
-
--------
 
 ## Resources
 
