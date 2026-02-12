@@ -11,9 +11,6 @@ GCD methodological development is described in ([Wheaton et al., 2010a](http://d
 - Milan DJ, Heritage GL, Large ARG and Fuller IC. 2011. Filtering spatial error from DEMs: Implications for morphological change estimation. Geomorphology. 125(1): 160-171. DOI: [10.1016/j.geomorph.2010.09.012](http://dx.doi.org/10.1016/j.geomorph.2010.09.012).
 - [📄](http://geomorphology.org.uk/sites/default/files/chapters/2.3.2_DEMsOfDifference.pdf) Williams RD. 2012. [DEMs of Difference](http://geomorphology.org.uk/sites/default/files/chapters/2.3.2_DEMsOfDifference.pdf). Clarke L and Nield JM (Eds), [Geomorphological Techniques](http://geomorphology.org.uk/geomorph_techniques). British Society for Geomorphology: London, UK.  
 
-
-[![ResearchGate Icon](/img/icons/ResearchGate_Icon.png)](https://www.researchgate.net/project/Geomorphic-Change-Detection) [Check out GCD ResearchGate Project for Publications](https://www.researchgate.net/project/Geomorphic-Change-Detection)
-
 ## Follow Up Papers
 
 - Brasington J, Rumsby BT and Mcvey RA. 2000. Monitoring and modelling morphological change in a braided gravel-bed river using high resolution GPS-based survey. Earth Surface Processes and Landforms. 25(9): 973-990. DOI: [10.1002/1096-9837(200008)25:9&lt;973::AID-ESP111>3.0.CO;2-Y](http://dx.doi.org/10.1002/1096-9837%28200008%2925:9%3C973::AID-ESP111%3E3.0.CO;2-Y)
