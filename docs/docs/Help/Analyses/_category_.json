@@ -4,6 +4,7 @@
   "link": {
     "type": "generated-index",
     "title": "Analyses",
-    "slug": "/help/analyses/"
+    "slug": "/help/analyses/",
+    "description":"GCD's primary analysis is a change detection. But budget segregation allows zonal statistics for different regions of a change detection analysis"
   }
 }
