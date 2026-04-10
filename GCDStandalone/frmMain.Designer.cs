@@ -31,40 +31,41 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.projectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.newGCDProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openGCDProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiRecentGCDProjects = new System.Windows.Forms.ToolStripMenuItem();
             this.closeGCDProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.projectPropertiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.browseGCDProjectFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.customizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.fISLibraryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.uploadThisProjectToGCDOnlineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.checkForUpdatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.onlineGCDHelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.gCDWebSiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.topographicAnalysisToolkitTATToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.crossSectionViewerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.aboutGCDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tssProjectPath = new System.Windows.Forms.ToolStripStatusLabel();
             this.tssProgress = new System.Windows.Forms.ToolStripStatusLabel();
             this.tspProgress = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.ucProjectExplorer1 = new GCDCore.UserInterface.Project.ucProjectExplorer();
             this.tsiNewProject = new System.Windows.Forms.ToolStripButton();
             this.tsiOpenProject = new System.Windows.Forms.ToolStripButton();
             this.tsiProjectProperties = new System.Windows.Forms.ToolStripButton();
             this.tsiBrowseProjectFolder = new System.Windows.Forms.ToolStripButton();
-            this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.ucProjectExplorer1 = new GCDCore.UserInterface.Project.ucProjectExplorer();
+            this.newGCDProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openGCDProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.projectPropertiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.browseGCDProjectFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fISLibraryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.checkForUpdatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.onlineGCDHelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.gCDWebSiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.topographicAnalysisToolkitTATToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.crossSectionViewerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.riverscapesDataExchangeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutGCDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -102,22 +103,6 @@
             this.projectToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
             this.projectToolStripMenuItem.Text = "Project";
             // 
-            // newGCDProjectToolStripMenuItem
-            // 
-            this.newGCDProjectToolStripMenuItem.Image = global::GCDStandalone.Properties.Resources.NewProject;
-            this.newGCDProjectToolStripMenuItem.Name = "newGCDProjectToolStripMenuItem";
-            this.newGCDProjectToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
-            this.newGCDProjectToolStripMenuItem.Text = "New GCD Project...";
-            this.newGCDProjectToolStripMenuItem.Click += new System.EventHandler(this.ProjectProperties_Click);
-            // 
-            // openGCDProjectToolStripMenuItem
-            // 
-            this.openGCDProjectToolStripMenuItem.Image = global::GCDStandalone.Properties.Resources.OpenProject;
-            this.openGCDProjectToolStripMenuItem.Name = "openGCDProjectToolStripMenuItem";
-            this.openGCDProjectToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
-            this.openGCDProjectToolStripMenuItem.Text = "Open GCD Project...";
-            this.openGCDProjectToolStripMenuItem.Click += new System.EventHandler(this.openGCDProjectToolStripMenuItem_Click);
-            // 
             // tsmiRecentGCDProjects
             // 
             this.tsmiRecentGCDProjects.Name = "tsmiRecentGCDProjects";
@@ -130,22 +115,6 @@
             this.closeGCDProjectToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
             this.closeGCDProjectToolStripMenuItem.Text = "Close GCD Project";
             this.closeGCDProjectToolStripMenuItem.Click += new System.EventHandler(this.closeGCDProjectToolStripMenuItem_Click);
-            // 
-            // projectPropertiesToolStripMenuItem
-            // 
-            this.projectPropertiesToolStripMenuItem.Image = global::GCDStandalone.Properties.Resources.Settings;
-            this.projectPropertiesToolStripMenuItem.Name = "projectPropertiesToolStripMenuItem";
-            this.projectPropertiesToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
-            this.projectPropertiesToolStripMenuItem.Text = "Project Properties";
-            this.projectPropertiesToolStripMenuItem.Click += new System.EventHandler(this.ProjectProperties_Click);
-            // 
-            // browseGCDProjectFolderToolStripMenuItem
-            // 
-            this.browseGCDProjectFolderToolStripMenuItem.Image = global::GCDStandalone.Properties.Resources.BrowseFolder;
-            this.browseGCDProjectFolderToolStripMenuItem.Name = "browseGCDProjectFolderToolStripMenuItem";
-            this.browseGCDProjectFolderToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
-            this.browseGCDProjectFolderToolStripMenuItem.Text = "Browse GCD Project Folder";
-            this.browseGCDProjectFolderToolStripMenuItem.Click += new System.EventHandler(this.browseGCDProjectFolderToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
@@ -171,22 +140,6 @@
             this.customizeToolStripMenuItem.Size = new System.Drawing.Size(75, 20);
             this.customizeToolStripMenuItem.Text = "Customize";
             // 
-            // optionsToolStripMenuItem
-            // 
-            this.optionsToolStripMenuItem.Image = global::GCDStandalone.Properties.Resources.Settings;
-            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
-            this.optionsToolStripMenuItem.Text = "Options";
-            this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
-            // 
-            // fISLibraryToolStripMenuItem
-            // 
-            this.fISLibraryToolStripMenuItem.Image = global::GCDStandalone.Properties.Resources.FISLibrary;
-            this.fISLibraryToolStripMenuItem.Name = "fISLibraryToolStripMenuItem";
-            this.fISLibraryToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
-            this.fISLibraryToolStripMenuItem.Text = "FIS Library";
-            this.fISLibraryToolStripMenuItem.Click += new System.EventHandler(this.fISLibraryToolStripMenuItem_Click);
-            // 
             // uploadThisProjectToGCDOnlineToolStripMenuItem
             // 
             this.uploadThisProjectToGCDOnlineToolStripMenuItem.Name = "uploadThisProjectToGCDOnlineToolStripMenuItem";
@@ -199,14 +152,6 @@
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(196, 6);
             // 
-            // checkForUpdatesToolStripMenuItem
-            // 
-            this.checkForUpdatesToolStripMenuItem.Image = global::GCDStandalone.Properties.Resources.refresh;
-            this.checkForUpdatesToolStripMenuItem.Name = "checkForUpdatesToolStripMenuItem";
-            this.checkForUpdatesToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
-            this.checkForUpdatesToolStripMenuItem.Text = "Check For Updates";
-            this.checkForUpdatesToolStripMenuItem.Click += new System.EventHandler(this.checkForUpdatesToolStripMenuItem_Click);
-            // 
             // helpToolStripMenuItem1
             // 
             this.helpToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -215,61 +160,22 @@
             this.toolStripSeparator3,
             this.topographicAnalysisToolkitTATToolStripMenuItem,
             this.crossSectionViewerToolStripMenuItem,
+            this.riverscapesDataExchangeToolStripMenuItem,
             this.toolStripSeparator4,
             this.aboutGCDToolStripMenuItem});
             this.helpToolStripMenuItem1.Name = "helpToolStripMenuItem1";
             this.helpToolStripMenuItem1.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem1.Text = "Help";
             // 
-            // onlineGCDHelpToolStripMenuItem
-            // 
-            this.onlineGCDHelpToolStripMenuItem.Image = global::GCDStandalone.Properties.Resources.Help;
-            this.onlineGCDHelpToolStripMenuItem.Name = "onlineGCDHelpToolStripMenuItem";
-            this.onlineGCDHelpToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
-            this.onlineGCDHelpToolStripMenuItem.Text = "Online GCD Help";
-            this.onlineGCDHelpToolStripMenuItem.Click += new System.EventHandler(this.onlineGCDHelpToolStripMenuItem_Click);
-            // 
-            // gCDWebSiteToolStripMenuItem
-            // 
-            this.gCDWebSiteToolStripMenuItem.Image = global::GCDStandalone.Properties.Resources.Help;
-            this.gCDWebSiteToolStripMenuItem.Name = "gCDWebSiteToolStripMenuItem";
-            this.gCDWebSiteToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
-            this.gCDWebSiteToolStripMenuItem.Text = "GCD Web Site";
-            this.gCDWebSiteToolStripMenuItem.Click += new System.EventHandler(this.gCDWebSiteToolStripMenuItem_Click);
-            // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(254, 6);
             // 
-            // topographicAnalysisToolkitTATToolStripMenuItem
-            // 
-            this.topographicAnalysisToolkitTATToolStripMenuItem.Image = global::GCDStandalone.Properties.Resources.Help;
-            this.topographicAnalysisToolkitTATToolStripMenuItem.Name = "topographicAnalysisToolkitTATToolStripMenuItem";
-            this.topographicAnalysisToolkitTATToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
-            this.topographicAnalysisToolkitTATToolStripMenuItem.Text = "Topographic Analysis Toolkit (TAT)";
-            this.topographicAnalysisToolkitTATToolStripMenuItem.Click += new System.EventHandler(this.topographicAnalysisToolkitTATToolStripMenuItem_Click);
-            // 
-            // crossSectionViewerToolStripMenuItem
-            // 
-            this.crossSectionViewerToolStripMenuItem.Image = global::GCDStandalone.Properties.Resources.Help;
-            this.crossSectionViewerToolStripMenuItem.Name = "crossSectionViewerToolStripMenuItem";
-            this.crossSectionViewerToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
-            this.crossSectionViewerToolStripMenuItem.Text = "Cross Section Viewer";
-            this.crossSectionViewerToolStripMenuItem.Click += new System.EventHandler(this.crossSectionViewerToolStripMenuItem_Click);
-            // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
             this.toolStripSeparator4.Size = new System.Drawing.Size(254, 6);
-            // 
-            // aboutGCDToolStripMenuItem
-            // 
-            this.aboutGCDToolStripMenuItem.Image = global::GCDStandalone.Properties.Resources.GCD;
-            this.aboutGCDToolStripMenuItem.Name = "aboutGCDToolStripMenuItem";
-            this.aboutGCDToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
-            this.aboutGCDToolStripMenuItem.Text = "About GCD";
-            this.aboutGCDToolStripMenuItem.Click += new System.EventHandler(this.aboutGCDToolStripMenuItem_Click);
             // 
             // statusStrip1
             // 
@@ -320,46 +226,6 @@
             this.toolStrip1.TabIndex = 4;
             this.toolStrip1.Text = "toolStrip1";
             // 
-            // tsiNewProject
-            // 
-            this.tsiNewProject.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsiNewProject.Image = global::GCDStandalone.Properties.Resources.NewProject;
-            this.tsiNewProject.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsiNewProject.Name = "tsiNewProject";
-            this.tsiNewProject.Size = new System.Drawing.Size(23, 22);
-            this.tsiNewProject.Text = "Create New GCD Project";
-            this.tsiNewProject.Click += new System.EventHandler(this.ProjectProperties_Click);
-            // 
-            // tsiOpenProject
-            // 
-            this.tsiOpenProject.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsiOpenProject.Image = global::GCDStandalone.Properties.Resources.OpenProject;
-            this.tsiOpenProject.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsiOpenProject.Name = "tsiOpenProject";
-            this.tsiOpenProject.Size = new System.Drawing.Size(23, 22);
-            this.tsiOpenProject.Text = "Open Existing GCD Project";
-            this.tsiOpenProject.Click += new System.EventHandler(this.openGCDProjectToolStripMenuItem_Click);
-            // 
-            // tsiProjectProperties
-            // 
-            this.tsiProjectProperties.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsiProjectProperties.Image = global::GCDStandalone.Properties.Resources.Settings;
-            this.tsiProjectProperties.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsiProjectProperties.Name = "tsiProjectProperties";
-            this.tsiProjectProperties.Size = new System.Drawing.Size(23, 22);
-            this.tsiProjectProperties.Text = "GCD Project Properties";
-            this.tsiProjectProperties.Click += new System.EventHandler(this.ProjectProperties_Click);
-            // 
-            // tsiBrowseProjectFolder
-            // 
-            this.tsiBrowseProjectFolder.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsiBrowseProjectFolder.Image = global::GCDStandalone.Properties.Resources.BrowseFolder;
-            this.tsiBrowseProjectFolder.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsiBrowseProjectFolder.Name = "tsiBrowseProjectFolder";
-            this.tsiBrowseProjectFolder.Size = new System.Drawing.Size(23, 22);
-            this.tsiBrowseProjectFolder.Text = "Browse GCD Project Folder";
-            this.tsiBrowseProjectFolder.Click += new System.EventHandler(this.browseGCDProjectFolderToolStripMenuItem_Click);
-            // 
             // toolStripContainer1
             // 
             // 
@@ -402,6 +268,150 @@
             this.ucProjectExplorer1.Name = "ucProjectExplorer1";
             this.ucProjectExplorer1.Size = new System.Drawing.Size(901, 411);
             this.ucProjectExplorer1.TabIndex = 3;
+            // 
+            // tsiNewProject
+            // 
+            this.tsiNewProject.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsiNewProject.Image = global::GCDStandalone.Properties.Resources.NewProject;
+            this.tsiNewProject.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsiNewProject.Name = "tsiNewProject";
+            this.tsiNewProject.Size = new System.Drawing.Size(23, 22);
+            this.tsiNewProject.Text = "Create New GCD Project";
+            this.tsiNewProject.Click += new System.EventHandler(this.ProjectProperties_Click);
+            // 
+            // tsiOpenProject
+            // 
+            this.tsiOpenProject.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsiOpenProject.Image = global::GCDStandalone.Properties.Resources.OpenProject;
+            this.tsiOpenProject.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsiOpenProject.Name = "tsiOpenProject";
+            this.tsiOpenProject.Size = new System.Drawing.Size(23, 22);
+            this.tsiOpenProject.Text = "Open Existing GCD Project";
+            this.tsiOpenProject.Click += new System.EventHandler(this.openGCDProjectToolStripMenuItem_Click);
+            // 
+            // tsiProjectProperties
+            // 
+            this.tsiProjectProperties.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsiProjectProperties.Image = global::GCDStandalone.Properties.Resources.Settings;
+            this.tsiProjectProperties.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsiProjectProperties.Name = "tsiProjectProperties";
+            this.tsiProjectProperties.Size = new System.Drawing.Size(23, 22);
+            this.tsiProjectProperties.Text = "GCD Project Properties";
+            this.tsiProjectProperties.Click += new System.EventHandler(this.ProjectProperties_Click);
+            // 
+            // tsiBrowseProjectFolder
+            // 
+            this.tsiBrowseProjectFolder.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsiBrowseProjectFolder.Image = global::GCDStandalone.Properties.Resources.BrowseFolder;
+            this.tsiBrowseProjectFolder.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsiBrowseProjectFolder.Name = "tsiBrowseProjectFolder";
+            this.tsiBrowseProjectFolder.Size = new System.Drawing.Size(23, 22);
+            this.tsiBrowseProjectFolder.Text = "Browse GCD Project Folder";
+            this.tsiBrowseProjectFolder.Click += new System.EventHandler(this.browseGCDProjectFolderToolStripMenuItem_Click);
+            // 
+            // newGCDProjectToolStripMenuItem
+            // 
+            this.newGCDProjectToolStripMenuItem.Image = global::GCDStandalone.Properties.Resources.NewProject;
+            this.newGCDProjectToolStripMenuItem.Name = "newGCDProjectToolStripMenuItem";
+            this.newGCDProjectToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
+            this.newGCDProjectToolStripMenuItem.Text = "New GCD Project...";
+            this.newGCDProjectToolStripMenuItem.Click += new System.EventHandler(this.ProjectProperties_Click);
+            // 
+            // openGCDProjectToolStripMenuItem
+            // 
+            this.openGCDProjectToolStripMenuItem.Image = global::GCDStandalone.Properties.Resources.OpenProject;
+            this.openGCDProjectToolStripMenuItem.Name = "openGCDProjectToolStripMenuItem";
+            this.openGCDProjectToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
+            this.openGCDProjectToolStripMenuItem.Text = "Open GCD Project...";
+            this.openGCDProjectToolStripMenuItem.Click += new System.EventHandler(this.openGCDProjectToolStripMenuItem_Click);
+            // 
+            // projectPropertiesToolStripMenuItem
+            // 
+            this.projectPropertiesToolStripMenuItem.Image = global::GCDStandalone.Properties.Resources.Settings;
+            this.projectPropertiesToolStripMenuItem.Name = "projectPropertiesToolStripMenuItem";
+            this.projectPropertiesToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
+            this.projectPropertiesToolStripMenuItem.Text = "Project Properties";
+            this.projectPropertiesToolStripMenuItem.Click += new System.EventHandler(this.ProjectProperties_Click);
+            // 
+            // browseGCDProjectFolderToolStripMenuItem
+            // 
+            this.browseGCDProjectFolderToolStripMenuItem.Image = global::GCDStandalone.Properties.Resources.BrowseFolder;
+            this.browseGCDProjectFolderToolStripMenuItem.Name = "browseGCDProjectFolderToolStripMenuItem";
+            this.browseGCDProjectFolderToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
+            this.browseGCDProjectFolderToolStripMenuItem.Text = "Browse GCD Project Folder";
+            this.browseGCDProjectFolderToolStripMenuItem.Click += new System.EventHandler(this.browseGCDProjectFolderToolStripMenuItem_Click);
+            // 
+            // optionsToolStripMenuItem
+            // 
+            this.optionsToolStripMenuItem.Image = global::GCDStandalone.Properties.Resources.Settings;
+            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
+            this.optionsToolStripMenuItem.Text = "Options";
+            this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
+            // 
+            // fISLibraryToolStripMenuItem
+            // 
+            this.fISLibraryToolStripMenuItem.Image = global::GCDStandalone.Properties.Resources.FISLibrary;
+            this.fISLibraryToolStripMenuItem.Name = "fISLibraryToolStripMenuItem";
+            this.fISLibraryToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
+            this.fISLibraryToolStripMenuItem.Text = "FIS Library";
+            this.fISLibraryToolStripMenuItem.Click += new System.EventHandler(this.fISLibraryToolStripMenuItem_Click);
+            // 
+            // checkForUpdatesToolStripMenuItem
+            // 
+            this.checkForUpdatesToolStripMenuItem.Image = global::GCDStandalone.Properties.Resources.refresh;
+            this.checkForUpdatesToolStripMenuItem.Name = "checkForUpdatesToolStripMenuItem";
+            this.checkForUpdatesToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
+            this.checkForUpdatesToolStripMenuItem.Text = "Check For Updates";
+            this.checkForUpdatesToolStripMenuItem.Click += new System.EventHandler(this.checkForUpdatesToolStripMenuItem_Click);
+            // 
+            // onlineGCDHelpToolStripMenuItem
+            // 
+            this.onlineGCDHelpToolStripMenuItem.Image = global::GCDStandalone.Properties.Resources.Help;
+            this.onlineGCDHelpToolStripMenuItem.Name = "onlineGCDHelpToolStripMenuItem";
+            this.onlineGCDHelpToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
+            this.onlineGCDHelpToolStripMenuItem.Text = "Online GCD Help";
+            this.onlineGCDHelpToolStripMenuItem.Click += new System.EventHandler(this.onlineGCDHelpToolStripMenuItem_Click);
+            // 
+            // gCDWebSiteToolStripMenuItem
+            // 
+            this.gCDWebSiteToolStripMenuItem.Image = global::GCDStandalone.Properties.Resources.Help;
+            this.gCDWebSiteToolStripMenuItem.Name = "gCDWebSiteToolStripMenuItem";
+            this.gCDWebSiteToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
+            this.gCDWebSiteToolStripMenuItem.Text = "GCD Web Site";
+            this.gCDWebSiteToolStripMenuItem.Click += new System.EventHandler(this.gCDWebSiteToolStripMenuItem_Click);
+            // 
+            // topographicAnalysisToolkitTATToolStripMenuItem
+            // 
+            this.topographicAnalysisToolkitTATToolStripMenuItem.Image = global::GCDStandalone.Properties.Resources.Help;
+            this.topographicAnalysisToolkitTATToolStripMenuItem.Name = "topographicAnalysisToolkitTATToolStripMenuItem";
+            this.topographicAnalysisToolkitTATToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
+            this.topographicAnalysisToolkitTATToolStripMenuItem.Text = "Topographic Analysis Toolkit (TAT)";
+            this.topographicAnalysisToolkitTATToolStripMenuItem.Click += new System.EventHandler(this.topographicAnalysisToolkitTATToolStripMenuItem_Click);
+            // 
+            // crossSectionViewerToolStripMenuItem
+            // 
+            this.crossSectionViewerToolStripMenuItem.Image = global::GCDStandalone.Properties.Resources.Help;
+            this.crossSectionViewerToolStripMenuItem.Name = "crossSectionViewerToolStripMenuItem";
+            this.crossSectionViewerToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
+            this.crossSectionViewerToolStripMenuItem.Text = "Cross Section Viewer";
+            this.crossSectionViewerToolStripMenuItem.Click += new System.EventHandler(this.crossSectionViewerToolStripMenuItem_Click);
+            // 
+            // riverscapesDataExchangeToolStripMenuItem
+            // 
+            this.riverscapesDataExchangeToolStripMenuItem.Image = global::GCDStandalone.Properties.Resources.data_exchange_16;
+            this.riverscapesDataExchangeToolStripMenuItem.Name = "riverscapesDataExchangeToolStripMenuItem";
+            this.riverscapesDataExchangeToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
+            this.riverscapesDataExchangeToolStripMenuItem.Text = "Riverscapes Data Exchange";
+            this.riverscapesDataExchangeToolStripMenuItem.Click += new System.EventHandler(this.riverscapesDataExchangeToolStripMenuItem_Click);
+            // 
+            // aboutGCDToolStripMenuItem
+            // 
+            this.aboutGCDToolStripMenuItem.Image = global::GCDStandalone.Properties.Resources.GCD;
+            this.aboutGCDToolStripMenuItem.Name = "aboutGCDToolStripMenuItem";
+            this.aboutGCDToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
+            this.aboutGCDToolStripMenuItem.Text = "About GCD";
+            this.aboutGCDToolStripMenuItem.Click += new System.EventHandler(this.aboutGCDToolStripMenuItem_Click);
             // 
             // frmMain
             // 
@@ -471,6 +481,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripStatusLabel tssProgress;
         private System.Windows.Forms.ToolStripProgressBar tspProgress;
+        private System.Windows.Forms.ToolStripMenuItem riverscapesDataExchangeToolStripMenuItem;
     }
 }
 

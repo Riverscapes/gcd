@@ -558,5 +558,11 @@ namespace GCDStandalone
 
 
         }
+
+        private void riverscapesDataExchangeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(GCDCore.Properties.Resources.RiverscapesDataExchangeURL);
+
+        }
     }
 }
