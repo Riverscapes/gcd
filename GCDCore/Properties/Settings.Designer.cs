@@ -439,5 +439,29 @@ namespace GCDCore.Properties {
                 this["DoDSymbologyRange"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string InstallationID {
+            get {
+                return ((string)(this["InstallationID"]));
+            }
+            set {
+                this["InstallationID"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShareAnonynousData {
+            get {
+                return ((bool)(this["ShareAnonynousData"]));
+            }
+            set {
+                this["ShareAnonynousData"] = value;
+            }
+        }
     }
 }

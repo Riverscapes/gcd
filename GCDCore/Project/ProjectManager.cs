@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 
 namespace GCDCore.Project
@@ -22,6 +23,8 @@ namespace GCDCore.Project
         public static RasterPyramidManager PyramidManager { get; internal set; }
         private static FileInfo SurveyTypesPath { get; set; }
         public static ErrorCalculation.FIS.FISLibrary FISLibrary { get; internal set; }
+
+        public static TelemetryClient Telemetry { get; set; }
 
         // Used for display but not saved to project XML
         public static System.Drawing.Color ColorDeposition { get; set; }
@@ -104,6 +107,21 @@ namespace GCDCore.Project
                 Properties.Settings.Default.LastUsedProjectFolder = Path.GetDirectoryName(projectFile.FullName);
                 Properties.Settings.Default.Save();
                 success = true;
+
+                try
+                {
+                    if (Properties.Settings.Default.ShareAnonynousData == true)
+                    {
+                        if (Telemetry != null)
+                        {
+                            Telemetry.Send("OpenProject");
+                        }
+                    }
+                }
+                catch
+                {
+                    // Failed telemetry. Do Nothing.
+                }
             }
             catch (Exception ex)
             {
@@ -118,7 +136,7 @@ namespace GCDCore.Project
 
                 if (ex.Data.Contains("Solution"))
                 {
-                    msg += string.Format("\n\n{0}",ex.Data["Solution"]);
+                    msg += string.Format("\n\n{0}", ex.Data["Solution"]);
                 }
 
                 MessageBox.Show(msg, Properties.Resources.ApplicationNameLong, MessageBoxButtons.OK, MessageBoxIcon.Information);

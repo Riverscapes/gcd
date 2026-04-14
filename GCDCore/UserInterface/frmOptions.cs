@@ -115,6 +115,9 @@ namespace GCDCore.UserInterface.Options
                 valManualDoDRange.Value = (decimal)Properties.Settings.Default.DoDSymbologyRange;
             }
             chkManualDoDRange_CheckedChanged(sender, e);
+
+            // Anonymous usage data
+            chkShareData.Checked = Properties.Settings.Default.ShareAnonynousData;
         }
 
         private void btnOK_Click(System.Object sender, System.EventArgs e)
@@ -163,6 +166,9 @@ namespace GCDCore.UserInterface.Options
 
             // DoD symbology types (zero means that the setting is disable)
             Properties.Settings.Default.DoDSymbologyRange = chkManualDoDRange.Checked ? (double)valManualDoDRange.Value : 0;
+
+            // Share anonymous data
+            Properties.Settings.Default.ShareAnonynousData = chkShareData.Checked;
 
             ////////////////////////////////////////////////////////////////////
             // Save the project settings

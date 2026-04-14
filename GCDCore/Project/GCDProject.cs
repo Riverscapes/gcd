@@ -1,9 +1,11 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Linq;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Xml;
 using System.Globalization;
+using Rsxml.ProjectXml;
 
 namespace GCDCore.Project
 {
@@ -223,7 +225,7 @@ namespace GCDCore.Project
 
             // Create an XML declaration. 
             XmlDeclaration xmldecl;
-            xmldecl = xmlDoc.CreateXmlDeclaration("1.0", null, null);
+            xmldecl = xmlDoc.CreateXmlDeclaration("1.0", "UTF-8", null);
             xmlDoc.InsertBefore(xmldecl, xmlDoc.DocumentElement);
 
             nodProject.AppendChild(xmlDoc.CreateElement("Name")).InnerText = Name;
@@ -326,83 +328,368 @@ namespace GCDCore.Project
 
         private void SaveRiverscapesProject(FileInfo gcdProjectFile)
         {
-            XmlDocument xmlDoc = new XmlDocument();
-            XmlNode nodProject = xmlDoc.CreateElement("Project");
-            xmlDoc.AppendChild(nodProject);
+            HashSet<string> usedIds = new HashSet<string>();
 
-            XmlAttribute attNameSpace = xmlDoc.CreateAttribute("xmlns:xsi");
-            attNameSpace.InnerText = "http://www.w3.org/2001/XMLSchema-instance";
-            nodProject.Attributes.Append(attNameSpace);
-
-            XmlAttribute attSchema = xmlDoc.CreateAttribute("noNamespaceSchemaLocation", attNameSpace.InnerText);
-            attSchema.InnerText = "https://xml.riverscapes.net/Projects/XSD/V1/GCD.xsd";
-            nodProject.Attributes.Append(attSchema);
-
-            // Create an XML declaration. 
-            XmlDeclaration xmldecl;
-            xmldecl = xmlDoc.CreateXmlDeclaration("1.0", null, null);
-            xmlDoc.InsertBefore(xmldecl, xmlDoc.DocumentElement);
-
-            nodProject.AppendChild(xmlDoc.CreateElement("Name")).InnerText = Name;
-            nodProject.AppendChild(xmlDoc.CreateElement("ProjectType")).InnerText = "GCD";
-
-            XmlNode nodMetaData = nodProject.AppendChild(xmlDoc.CreateElement("MetaData"));
-
-            if (!MetaData.ContainsKey("Description"))
+            // Global metadata
+            List<Meta> metaVals = new List<Meta>
             {
-                XmlNode nodItem = nodMetaData.AppendChild(xmlDoc.CreateElement("Meta"));
-                nodItem.InnerText = Description;
-
-                XmlAttribute attName = xmlDoc.CreateAttribute("name");
-                attName.InnerText = "Description";
-                nodItem.Attributes.Append(attName);
-            }
-
-            // Project Date Creation time
-            XmlNode nodMetaDate = nodMetaData.AppendChild(xmlDoc.CreateElement("Meta"));
-            nodMetaDate.InnerText = DateTimeCreated.ToString("o");
-            XmlAttribute attMetaDate = xmlDoc.CreateAttribute("name");
-            attMetaDate.InnerText = "DateCreated";
-            nodMetaDate.Attributes.Append(attMetaDate);
-
-            // GCD Version
-            XmlNode nodMetaVersion = nodMetaData.AppendChild(xmlDoc.CreateElement("Meta"));
-            nodMetaVersion.InnerText = GCDVersion;
-            XmlAttribute attMetaVersion = xmlDoc.CreateAttribute("name");
-            attMetaVersion.InnerText = "GCDVersion";
-            nodMetaVersion.Attributes.Append(attMetaVersion);
-
-            // GCD Project Metadata
+                new Meta("GCDVersion", GCDVersion, null, null, false),
+                new Meta("DateCreated", DateTimeCreated.ToString("o"), null, null, false)
+            };
+            if (!string.IsNullOrEmpty(Description) && !MetaData.ContainsKey("Description"))
+                metaVals.Add(new Meta("Description", Description, null, null, false));
             foreach (KeyValuePair<string, string> item in MetaData)
-            {
-                XmlNode nodItem = nodMetaData.AppendChild(xmlDoc.CreateElement("Meta"));
-                nodItem.InnerText = item.Value;
+                metaVals.Add(new Meta(item.Key, item.Value, null, null, false));
 
-                XmlAttribute attName = xmlDoc.CreateAttribute("name");
-                attName.InnerText = item.Key;
-                nodItem.Attributes.Append(attName);
+            List<Realization> realizations = new List<Realization>();
+
+            // 1. One Realization per DEM Survey
+            foreach (DEMSurvey dem in DEMSurveys)
+            {
+                string demId = UniqueId(dem.Name, usedIds);
+                List<Dataset> demInputs = new List<Dataset>();
+
+                demInputs.Add(new Dataset(demId, dem.Name,
+                    SanitizePath(GetRelativePath(dem.Raster.GISFileInfo)),
+                    "DEM", "DEM", null, null, null, null,
+                    new MetaData(), null));
+
+                if (dem.Hillshade != null)
+                    demInputs.Add(new Dataset(UniqueId(dem.Name + "_hillshade", usedIds), dem.Hillshade.Name,
+                        SanitizePath(GetRelativePath(dem.Hillshade.Raster.GISFileInfo)),
+                        "Raster", "Hillshade", null, null, null, null,
+                        new MetaData(new List<Meta> { new Meta("ParentID", demId, null, null, false) }), null));
+
+                foreach (AssocSurface assoc in dem.AssocSurfaces)
+                    demInputs.Add(new Dataset(UniqueId(dem.Name + "_" + assoc.Name, usedIds), assoc.Name,
+                        SanitizePath(GetRelativePath(assoc.Raster.GISFileInfo)),
+                        "Raster", "AssociatedSurface", null, null, null, null,
+                        new MetaData(new List<Meta>
+                        {
+                            new Meta("ParentID", demId, null, null, false),
+                            new Meta("AssocType", assoc.AssocSurfaceType.ToString(), null, null, false)
+                        }), null));
+
+                foreach (ErrorSurface err in dem.ErrorSurfaces)
+                    demInputs.Add(new Dataset(UniqueId(dem.Name + "_" + err.Name, usedIds), err.Name,
+                        SanitizePath(GetRelativePath(err.Raster.GISFileInfo)),
+                        "Raster", "ErrorSurface", null, null, null, null,
+                        new MetaData(new List<Meta>
+                        {
+                            new Meta("ParentID", demId, null, null, false),
+                            new Meta("IsDefault", err.IsDefault.ToString(), null, null, false)
+                        }), null));
+
+                foreach (LinearExtraction.LinearExtraction le in dem.LinearExtractions)
+                {
+                    if (le.Database != null)
+                    {
+                        List<Meta> leMeta = new List<Meta>
+                        {
+                            new Meta("ParentID", demId, null, null, false),
+                            new Meta("ProfileRoute", le.ProfileRoute.Name, null, null, false)
+                        };
+                        LinearExtraction.LinearExtractionFromSurface leFromSurf = le as LinearExtraction.LinearExtractionFromSurface;
+                        if (leFromSurf != null && leFromSurf.ErrorSurface != null)
+                            leMeta.Add(new Meta("ErrorSurface", leFromSurf.ErrorSurface.Name, null, null, false));
+                        demInputs.Add(new Dataset(UniqueId(dem.Name + "_" + le.Name, usedIds), le.Name,
+                            SanitizePath(GetRelativePath(le.Database)),
+                            "Vector", "LinearExtraction", null, null, null, null,
+                            new MetaData(leMeta), null));
+                    }
+                }
+
+                realizations.Add(new Realization(dem.Name, UniqueId("realization_" + dem.Name, usedIds),
+                    DateTimeCreated, SanitizeVersion(GCDVersion),
+                    null, null, null,
+                    new MetaData(),
+                    null, null, null, demInputs, null));
             }
 
-            XmlNode nodRealizations = nodProject.AppendChild(xmlDoc.CreateElement("Realizations"));
-            XmlNode nodGCD = nodRealizations.AppendChild(xmlDoc.CreateElement("GCD"));
+            // 2. One Realization per DoD surface pair; each DoD becomes an Analysis
+            Dictionary<Tuple<string, string>, List<DoDBase>> pairGroups = new Dictionary<Tuple<string, string>, List<DoDBase>>();
+            foreach (DoDBase dod in DoDs)
+            {
+                Tuple<string, string> key = Tuple.Create(dod.NewSurface.Name, dod.OldSurface.Name);
+                if (!pairGroups.ContainsKey(key))
+                    pairGroups[key] = new List<DoDBase>();
+                pairGroups[key].Add(dod);
+            }
 
-            XmlAttribute attGUID = xmlDoc.CreateAttribute("id");
-            attGUID.InnerText = Guid.NewGuid().ToString();
-            nodGCD.Attributes.Append(attGUID);
+            foreach (KeyValuePair<Tuple<string, string>, List<DoDBase>> pair in pairGroups)
+            {
+                string pairId = UniqueId("dod_pair_" + pair.Key.Item1 + "_" + pair.Key.Item2, usedIds);
+                List<Analysis> pairAnalyses = new List<Analysis>();
 
-            XmlAttribute attDate = xmlDoc.CreateAttribute("dateCreated");
-            attDate.InnerText = DateTimeCreated.ToString("o");
-            nodGCD.Attributes.Append(attDate);
+                foreach (DoDBase dod in pair.Value)
+                {
+                    string dodId = UniqueId(dod.Name, usedIds);
+                    List<Dataset> products = new List<Dataset>();
 
-            XmlAttribute attVersion = xmlDoc.CreateAttribute("productVersion");
-            attVersion.InnerText = GCDVersion;
-            nodGCD.Attributes.Append(attVersion);
+                    products.Add(new Dataset(UniqueId(dod.Name + "_raw", usedIds), "Raw DoD",
+                        SanitizePath(GetRelativePath(dod.RawDoD.Raster.GISFileInfo)),
+                        "Raster", "RawDoD", null, null, null, null,
+                        new MetaData(), null));
 
-            nodGCD.AppendChild(xmlDoc.CreateElement("Name")).InnerText = Name;
-            nodGCD.AppendChild(xmlDoc.CreateElement("ProjectPath")).InnerText = GetRelativePath(gcdProjectFile);
+                    products.Add(new Dataset(UniqueId(dod.Name + "_thresh", usedIds), "Thresholded DoD",
+                        SanitizePath(GetRelativePath(dod.ThrDoD.Raster.GISFileInfo)),
+                        "Raster", "ThresholdedDoD", null, null, null, null,
+                        new MetaData(), null));
+
+                    products.Add(new Dataset(UniqueId(dod.Name + "_err", usedIds), "Thresholded Error",
+                        SanitizePath(GetRelativePath(dod.ThrErr.Raster.GISFileInfo)),
+                        "Raster", "DoDError", null, null, null, null,
+                        new MetaData(), null));
+
+                    if (dod.SummaryXML != null)
+                        products.Add(new Dataset(UniqueId(dod.Name + "_summary", usedIds), "DoD Summary",
+                            SanitizePath(GetRelativePath(dod.SummaryXML)),
+                            "DataTable", "DoDSummary", null, null, null, null,
+                            new MetaData(), null));
+
+                    DoDPropagated dodProp = dod as DoDPropagated;
+                    if (dodProp != null && dodProp.PropagatedError != null)
+                        products.Add(new Dataset(UniqueId(dod.Name + "_prop_err", usedIds), "Propagated Error",
+                            SanitizePath(GetRelativePath(dodProp.PropagatedError.GISFileInfo)),
+                            "Raster", "PropagatedError", null, null, null, null,
+                            new MetaData(), null));
+
+                    DoDProbabilistic dodProb = dod as DoDProbabilistic;
+                    if (dodProb != null && dodProb.PriorProbability != null)
+                        products.Add(new Dataset(UniqueId(dod.Name + "_prior_prob", usedIds), "Prior Probability",
+                            SanitizePath(GetRelativePath(dodProb.PriorProbability.GISFileInfo)),
+                            "Raster", "PriorProbability", null, null, null, null,
+                            new MetaData(), null));
+
+                    if (dod.Histograms != null)
+                    {
+                        if (dod.Histograms.Raw.Path != null)
+                            products.Add(new Dataset(UniqueId(dod.Name + "_raw_hist", usedIds), "Raw Histogram",
+                                SanitizePath(GetRelativePath(dod.Histograms.Raw.Path)),
+                                "DataTable", "RawHistogram", null, null, null, null,
+                                new MetaData(), null));
+                        if (dod.Histograms.Thr.Path != null)
+                            products.Add(new Dataset(UniqueId(dod.Name + "_thr_hist", usedIds), "Thresholded Histogram",
+                                SanitizePath(GetRelativePath(dod.Histograms.Thr.Path)),
+                                "DataTable", "ThresholdHistogram", null, null, null, null,
+                                new MetaData(), null));
+                    }
+
+                    foreach (BudgetSegregation bs in dod.BudgetSegregations)
+                        if (bs.SummaryXML != null)
+                            products.Add(new Dataset(UniqueId(dod.Name + "_" + bs.Name + "_bs_summary", usedIds), bs.Name,
+                                SanitizePath(GetRelativePath(bs.SummaryXML)),
+                                "DataTable", "BudgetSegSummary", null, null, null, null,
+                                new MetaData(), null));
+
+                    foreach (LinearExtraction.LinearExtraction le in dod.LinearExtractions)
+                    {
+                        if (le.Database != null)
+                        {
+                            List<Meta> leMeta = new List<Meta>
+                            {
+                                new Meta("ProfileRoute", le.ProfileRoute.Name, null, null, false)
+                            };
+                            LinearExtraction.LinearExtractionFromSurface leFromSurf = le as LinearExtraction.LinearExtractionFromSurface;
+                            if (leFromSurf != null && leFromSurf.ErrorSurface != null)
+                                leMeta.Add(new Meta("ErrorSurface", leFromSurf.ErrorSurface.Name, null, null, false));
+                            products.Add(new Dataset(UniqueId(dod.Name + "_" + le.Name + "_le", usedIds), le.Name,
+                                SanitizePath(GetRelativePath(le.Database)),
+                                "Vector", "DoDLinearExtraction", null, null, null, null,
+                                new MetaData(leMeta), null));
+                        }
+                    }
+
+                    List<Meta> dodMeta = new List<Meta>
+                    {
+                        new Meta("GCD_TYPE", "DoD", null, null, false),
+                        new Meta("NewSurface", dod.NewSurface.Name, null, null, false),
+                        new Meta("OldSurface", dod.OldSurface.Name, null, null, false)
+                    };
+                    if (dod.AOIMask != null)
+                        dodMeta.Add(new Meta("AOI", dod.AOIMask.Name, null, null, false));
+                    dodMeta.Add(new Meta("ErosionRawVolume",
+                        dod.Statistics.ErosionRaw.GetVolume(dod.Statistics.CellArea, dod.Statistics.StatsUnits).ToString(), null, null, false));
+                    dodMeta.Add(new Meta("DepositionRawVolume",
+                        dod.Statistics.DepositionRaw.GetVolume(dod.Statistics.CellArea, dod.Statistics.StatsUnits).ToString(), null, null, false));
+
+                    pairAnalyses.Add(new Analysis(dodId, dod.Name,
+                        new MetaData(),
+                        new List<Dataset>(), products,
+                        null, null, null,
+                        new MetaData(dodMeta)));
+                }
+
+                realizations.Add(new Realization(pair.Key.Item1 + " / " + pair.Key.Item2, pairId,
+                    DateTimeCreated, SanitizeVersion(GCDVersion),
+                    null, null, null,
+                    new MetaData(),
+                    null, null, null, new List<Dataset>(), null, null, pairAnalyses));
+            }
+
+            // 3. Summary Realization: reference surfaces, masks, config file, inter-comparisons
+            List<Dataset> summaryInputs = new List<Dataset>();
+
+            foreach (Surface surf in ReferenceSurfaces)
+            {
+                string surfId = UniqueId(surf.Name, usedIds);
+                summaryInputs.Add(new Dataset(surfId, surf.Name,
+                    SanitizePath(GetRelativePath(surf.Raster.GISFileInfo)),
+                    "Raster", "ReferenceSurface", null, null, null, null,
+                    new MetaData(), null));
+
+                if (surf.Hillshade != null)
+                    summaryInputs.Add(new Dataset(UniqueId(surf.Name + "_hillshade", usedIds), surf.Hillshade.Name,
+                        SanitizePath(GetRelativePath(surf.Hillshade.Raster.GISFileInfo)),
+                        "Raster", "Hillshade", null, null, null, null,
+                        new MetaData(new List<Meta> { new Meta("ParentID", surfId, null, null, false) }), null));
+
+                foreach (ErrorSurface err in surf.ErrorSurfaces)
+                    summaryInputs.Add(new Dataset(UniqueId(surf.Name + "_" + err.Name, usedIds), err.Name,
+                        SanitizePath(GetRelativePath(err.Raster.GISFileInfo)),
+                        "Raster", "ErrorSurface", null, null, null, null,
+                        new MetaData(new List<Meta>
+                        {
+                            new Meta("ParentID", surfId, null, null, false),
+                            new Meta("IsDefault", err.IsDefault.ToString(), null, null, false)
+                        }), null));
+
+                foreach (LinearExtraction.LinearExtraction le in surf.LinearExtractions)
+                {
+                    if (le.Database != null)
+                    {
+                        List<Meta> leMeta = new List<Meta>
+                        {
+                            new Meta("ParentID", surfId, null, null, false),
+                            new Meta("ProfileRoute", le.ProfileRoute.Name, null, null, false)
+                        };
+                        LinearExtraction.LinearExtractionFromSurface leFromSurf = le as LinearExtraction.LinearExtractionFromSurface;
+                        if (leFromSurf != null && leFromSurf.ErrorSurface != null)
+                            leMeta.Add(new Meta("ErrorSurface", leFromSurf.ErrorSurface.Name, null, null, false));
+                        summaryInputs.Add(new Dataset(UniqueId(surf.Name + "_" + le.Name, usedIds), le.Name,
+                            SanitizePath(GetRelativePath(le.Database)),
+                            "Vector", "LinearExtraction", null, null, null, null,
+                            new MetaData(leMeta), null));
+                    }
+                }
+            }
+
+            foreach (Masks.Mask mask in Masks)
+                summaryInputs.Add(new Dataset(UniqueId(mask.Name, usedIds), mask.Name,
+                    SanitizePath(GetRelativePath(mask.Vector.GISFileInfo)),
+                    "Vector", "Mask", null, null, null, null,
+                    new MetaData(), null));
+
+            foreach (ProfileRoutes.ProfileRoute route in ProfileRoutes)
+            {
+                List<Meta> routeMeta = new List<Meta>
+                {
+                    new Meta("RouteType", route.ProfileRouteType.ToString(), null, null, false),
+                    new Meta("DistanceField", route.DistanceField, null, null, false)
+                };
+                if (!string.IsNullOrEmpty(route.LabelField))
+                    routeMeta.Add(new Meta("LabelField", route.LabelField, null, null, false));
+                summaryInputs.Add(new Dataset(UniqueId(route.Name, usedIds), route.Name,
+                    SanitizePath(GetRelativePath(route.Vector.GISFileInfo)),
+                    "Vector", "ProfileRoute", null, null, null, null,
+                    new MetaData(routeMeta), null));
+            }
+
+            summaryInputs.Add(new Dataset("gcd_project_file", Name,
+                SanitizePath(gcdProjectFile.Name),
+                "ConfigFile", "ProjectConfig", null, null, null, null,
+                new MetaData(), null));
+
+            List<Analysis> summaryAnalyses = new List<Analysis>();
+            foreach (InterComparison ic in InterComparisons)
+            {
+                List<Dataset> icProducts = new List<Dataset>();
+                if (ic._SummaryXML != null)
+                    icProducts.Add(new Dataset(UniqueId(ic.Name + "_summary", usedIds), "Inter-Comparison Summary",
+                        SanitizePath(GetRelativePath(ic._SummaryXML)),
+                        "DataTable", "InterComparisonSummary", null, null, null, null,
+                        new MetaData(), null));
+
+                summaryAnalyses.Add(new Analysis(UniqueId(ic.Name, usedIds), ic.Name,
+                    new MetaData(),
+                    new List<Dataset>(), icProducts,
+                    null, null, null,
+                    new MetaData(new List<Meta>
+                    {
+                        new Meta("GCD_TYPE", "InterComparison", null, null, false),
+                        new Meta("DoDs", string.Join(", ", ic._DoDs.Select(d => d.Name)), null, null, false)
+                    })));
+            }
+
+            realizations.Add(new Realization("Project Summary and Analyses", "GCD_ANALYSES",
+                DateTimeCreated, SanitizeVersion(GCDVersion),
+                null, null, null,
+                new MetaData(),
+                null, null, null, summaryInputs, null, null, summaryAnalyses));
 
             FileInfo riverscapesFile = new FileInfo(Path.Combine(gcdProjectFile.DirectoryName, "project.rs.xml"));
-            xmlDoc.Save(riverscapesFile.FullName);
+
+            Warehouse existingWarehouse = null;
+            if (riverscapesFile.Exists)
+            {
+                try
+                {
+                    Rsxml.ProjectXml.Project existing = Rsxml.ProjectXml.Project.LoadProject(riverscapesFile.FullName);
+                    existingWarehouse = existing.Warehouse;
+                }
+                catch (Exception)
+                {
+                    // If the existing file can't be parsed, proceed without a warehouse
+                }
+            }
+
+            Rsxml.ProjectXml.Project project = new Rsxml.ProjectXml.Project(
+                Name, "GCD", null,
+                SanitizePath(GetRelativePath(gcdProjectFile)),
+                null, Description, null,
+                new MetaData(metaVals),
+                existingWarehouse, null, realizations, null);
+
+            project.Write(riverscapesFile.FullName);
+        }
+
+        private static string SanitizePath(string path)
+        {
+            return path.Replace('\\', '/').Replace(' ', '_');
+        }
+
+        private static string SanitizeVersion(string version)
+        {
+            if (string.IsNullOrEmpty(version))
+                return "1.0.0";
+            List<string> parts = new List<string>(version.Split('.'));
+            while (parts.Count < 3)
+                parts.Add("0");
+            return string.Join(".", parts.Take(3));
+        }
+
+        private static string MakeSafeId(string name)
+        {
+            string safe = Regex.Replace(name.ToLower(), @"[^a-z0-9_]", "_");
+            safe = Regex.Replace(safe, @"_+", "_").Trim('_');
+            if (safe.Length > 64)
+                return safe.Substring(0, 30) + "_" + safe.Substring(safe.Length - 33);
+            return string.IsNullOrEmpty(safe) ? "id" : safe;
+        }
+
+        private static string UniqueId(string name, HashSet<string> usedIds)
+        {
+            string baseId = MakeSafeId(name);
+            string candidate = baseId;
+            int counter = 2;
+            while (usedIds.Contains(candidate))
+            {
+                string suffix = "_" + counter;
+                candidate = baseId.Substring(0, Math.Min(baseId.Length, 64 - suffix.Length)) + suffix;
+                counter++;
+            }
+            usedIds.Add(candidate);
+            return candidate;
         }
 
         public static GCDProject Load(FileInfo projectFile)

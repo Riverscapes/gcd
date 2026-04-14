@@ -39,7 +39,7 @@ namespace GCDCore.UserInterface.Options
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmOptions));
             this.btnHelp = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
-            this.TabControl1 = new System.Windows.Forms.TabControl();
+            this.tabOptions = new System.Windows.Forms.TabControl();
             this.TabPage2 = new System.Windows.Forms.TabPage();
             this.grdSurveyTypes = new System.Windows.Forms.DataGridView();
             this.colSurveyType = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -83,7 +83,9 @@ namespace GCDCore.UserInterface.Options
             this.tTip = new System.Windows.Forms.ToolTip(this.components);
             this.frmColourPicker = new System.Windows.Forms.ColorDialog();
             this.frmFont = new System.Windows.Forms.FontDialog();
-            this.TabControl1.SuspendLayout();
+            this.tabGeneral = new System.Windows.Forms.TabPage();
+            this.chkShareData = new System.Windows.Forms.CheckBox();
+            this.tabOptions.SuspendLayout();
             this.TabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdSurveyTypes)).BeginInit();
             this.TabPage3.SuspendLayout();
@@ -101,6 +103,7 @@ namespace GCDCore.UserInterface.Options
             ((System.ComponentModel.ISupportInitialize)(this.numChartWidth)).BeginInit();
             this.TabPage5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SurveyTypesBindingSource)).BeginInit();
+            this.tabGeneral.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnHelp
@@ -125,20 +128,21 @@ namespace GCDCore.UserInterface.Options
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnOK_Click);
             // 
-            // TabControl1
+            // tabOptions
             // 
-            this.TabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.tabOptions.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TabControl1.Controls.Add(this.TabPage2);
-            this.TabControl1.Controls.Add(this.TabPage3);
-            this.TabControl1.Controls.Add(this.TabPage4);
-            this.TabControl1.Controls.Add(this.TabPage5);
-            this.TabControl1.Location = new System.Drawing.Point(13, 13);
-            this.TabControl1.Name = "TabControl1";
-            this.TabControl1.SelectedIndex = 0;
-            this.TabControl1.Size = new System.Drawing.Size(508, 244);
-            this.TabControl1.TabIndex = 0;
+            this.tabOptions.Controls.Add(this.TabPage2);
+            this.tabOptions.Controls.Add(this.TabPage3);
+            this.tabOptions.Controls.Add(this.TabPage4);
+            this.tabOptions.Controls.Add(this.TabPage5);
+            this.tabOptions.Controls.Add(this.tabGeneral);
+            this.tabOptions.Location = new System.Drawing.Point(13, 13);
+            this.tabOptions.Name = "tabOptions";
+            this.tabOptions.SelectedIndex = 0;
+            this.tabOptions.Size = new System.Drawing.Size(508, 244);
+            this.tabOptions.TabIndex = 0;
             // 
             // TabPage2
             // 
@@ -628,12 +632,35 @@ namespace GCDCore.UserInterface.Options
             this.SurveyTypesBindingSource.AllowNew = true;
             this.SurveyTypesBindingSource.DataMember = "SurveyTypes";
             // 
+            // tabGeneral
+            // 
+            this.tabGeneral.Controls.Add(this.chkShareData);
+            this.tabGeneral.Location = new System.Drawing.Point(4, 22);
+            this.tabGeneral.Name = "tabGeneral";
+            this.tabGeneral.Padding = new System.Windows.Forms.Padding(3);
+            this.tabGeneral.Size = new System.Drawing.Size(500, 218);
+            this.tabGeneral.TabIndex = 5;
+            this.tabGeneral.Text = "General";
+            this.tabGeneral.UseVisualStyleBackColor = true;
+            // 
+            // chkShareData
+            // 
+            this.chkShareData.AutoSize = true;
+            this.chkShareData.Checked = true;
+            this.chkShareData.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkShareData.Location = new System.Drawing.Point(7, 7);
+            this.chkShareData.Name = "chkShareData";
+            this.chkShareData.Size = new System.Drawing.Size(278, 17);
+            this.chkShareData.TabIndex = 0;
+            this.chkShareData.Text = "Help improve GCD by sharing anonymous usage data";
+            this.chkShareData.UseVisualStyleBackColor = true;
+            // 
             // frmOptions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(533, 298);
-            this.Controls.Add(this.TabControl1);
+            this.Controls.Add(this.tabOptions);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnHelp);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -643,7 +670,7 @@ namespace GCDCore.UserInterface.Options
             this.Name = "frmOptions";
             this.Text = "GCD Options";
             this.Load += new System.EventHandler(this.frmOptions_Load);
-            this.TabControl1.ResumeLayout(false);
+            this.tabOptions.ResumeLayout(false);
             this.TabPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.grdSurveyTypes)).EndInit();
             this.TabPage3.ResumeLayout(false);
@@ -668,13 +695,15 @@ namespace GCDCore.UserInterface.Options
             this.TabPage5.ResumeLayout(false);
             this.TabPage5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SurveyTypesBindingSource)).EndInit();
+            this.tabGeneral.ResumeLayout(false);
+            this.tabGeneral.PerformLayout();
             this.ResumeLayout(false);
 
 		}
         internal System.Windows.Forms.Button btnHelp;
         internal System.Windows.Forms.Button btnClose;
-		internal System.Windows.Forms.TabControl TabControl1;
-		internal System.Windows.Forms.TabPage TabPage2;
+		internal System.Windows.Forms.TabControl tabOptions;
+        internal System.Windows.Forms.TabPage TabPage2;
 		internal System.Windows.Forms.TabPage TabPage3;
 		internal System.Windows.Forms.ToolTip tTip;
 		internal System.Windows.Forms.BindingSource SurveyTypesBindingSource;
@@ -717,5 +746,7 @@ namespace GCDCore.UserInterface.Options
         private System.Windows.Forms.Button cmdResetColours;
         private System.Windows.Forms.CheckBox chkManualDoDRange;
         private System.Windows.Forms.NumericUpDown valManualDoDRange;
+        private System.Windows.Forms.TabPage tabGeneral;
+        private System.Windows.Forms.CheckBox chkShareData;
     }
 }

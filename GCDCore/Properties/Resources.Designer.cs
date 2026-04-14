@@ -681,6 +681,15 @@ namespace GCDCore.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to https://data.riverscapes.net.
+        /// </summary>
+        public static string RiverscapesDataExchangeURL {
+            get {
+                return ResourceManager.GetString("RiverscapesDataExchangeURL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         public static System.Drawing.Bitmap Roughness {
