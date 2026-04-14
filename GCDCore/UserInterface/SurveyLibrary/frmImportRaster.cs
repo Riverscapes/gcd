@@ -375,7 +375,7 @@ namespace GCDCore.UserInterface.SurveyLibrary
             // Verify the optional vertical units (if they are specified) for rasters that should share the project vertical units
             if (Purpose == Purposes.FirstDEM || Purpose == Purposes.SubsequentDEM)
             {
-                if (SourceRaster.VerticalUnits != UnitsNet.Units.LengthUnit.Undefined)
+                if (SourceRaster.VerticalUnits.HasValue)
                 {
                     if (SourceRaster.VerticalUnits != ProjectManager.Project.Units.VertUnit)
                     {

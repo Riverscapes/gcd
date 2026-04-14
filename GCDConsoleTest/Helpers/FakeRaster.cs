@@ -160,7 +160,7 @@ namespace GCDConsoleTest.Helpers
             Assert.AreEqual(frInit1.NodataValue<float>(), float.MinValue);
             Assert.AreEqual(frInit1.driver, Raster.RasterDriver.GTiff);
             Assert.AreEqual(frInit1.Proj.OriginalString, FakeRaster<decimal>.fakeproj);
-            Assert.AreEqual(UnitsNet.Length.GetAbbreviation(frInit1.VerticalUnits), FakeRaster<decimal>.fakeunit);
+            Assert.AreEqual(UnitsNet.Length.GetAbbreviation(frInit1.VerticalUnits.Value), FakeRaster<decimal>.fakeunit);
 
             
             FakeRaster<double> frInit2 = new FakeRaster<double>(dblArr);
@@ -175,7 +175,7 @@ namespace GCDConsoleTest.Helpers
             Assert.AreEqual(frInit2.NodataValue<float>(), float.MinValue);
             Assert.AreEqual(frInit2.driver, Raster.RasterDriver.GTiff);
             Assert.AreEqual(frInit2.Proj.OriginalString, FakeRaster<decimal>.fakeproj);
-            Assert.AreEqual(UnitsNet.Length.GetAbbreviation(frInit2.VerticalUnits), FakeRaster<decimal>.fakeunit);
+            Assert.AreEqual(UnitsNet.Length.GetAbbreviation(frInit2.VerticalUnits.Value), FakeRaster<decimal>.fakeunit);
 
             string myFakeProj = "GEOGCS[\"NAD83\",DATUM[\"North_American_Datum_1983\",SPHEROID[\"GRS 1980\",6378137,298.257222101,AUTHORITY[\"EPSG\",\"7019\"]],AUTHORITY[\"EPSG\",\"6269\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIU[\"degree\",0.01745329251994328,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"4269\"]]";
             string myFakeUnit = "ft";
@@ -191,7 +191,7 @@ namespace GCDConsoleTest.Helpers
             Assert.AreEqual(frInit2.NodataValue<float>(), float.MinValue);
             Assert.AreEqual(frInit3.driver, Raster.RasterDriver.HFA);
             Assert.AreEqual(frInit3.Proj.OriginalString, myFakeProj);
-            Assert.AreEqual(UnitsNet.Length.GetAbbreviation(frInit3.VerticalUnits), myFakeUnit);
+            Assert.AreEqual(UnitsNet.Length.GetAbbreviation(frInit3.VerticalUnits.Value), myFakeUnit);
 
             // Differen Types of rasters. Make sure the fills are working properly.
             FakeRaster<int> frInt = new FakeRaster<int>(intArr);

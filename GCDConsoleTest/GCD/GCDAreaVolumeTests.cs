@@ -141,7 +141,7 @@ namespace GCDConsoleLib.GCD.Tests
         public void GetVolumeMisMatchUnitsTest()
         {
             // All tests assume the same 4m² cell resolution (43 ft², 4.78 yd²)
-            Area cellArea = new Area(4);
+            Area cellArea = new Area(4, UnitsNet.Units.AreaUnit.SquareMeter);
             
             // All the tests use the same 1000 elevation, but interpret it differently depending on the units used.
             GCDAreaVolume areaVol = new GCDAreaVolume();

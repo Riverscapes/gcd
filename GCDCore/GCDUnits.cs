@@ -178,10 +178,10 @@ namespace GCDCore
                 new FormattedUnit<UnitsNet.Units.DurationUnit>(UnitsNet.Units.DurationUnit.Day),
                 new FormattedUnit<UnitsNet.Units.DurationUnit>(UnitsNet.Units.DurationUnit.Hour),
                 new FormattedUnit<UnitsNet.Units.DurationUnit>(UnitsNet.Units.DurationUnit.Minute),
-                new FormattedUnit<UnitsNet.Units.DurationUnit>(UnitsNet.Units.DurationUnit.Month),
+                new FormattedUnit<UnitsNet.Units.DurationUnit>(UnitsNet.Units.DurationUnit.Month30),
                 new FormattedUnit<UnitsNet.Units.DurationUnit>(UnitsNet.Units.DurationUnit.Second),
                 new FormattedUnit<UnitsNet.Units.DurationUnit>(UnitsNet.Units.DurationUnit.Week),
-                new FormattedUnit<UnitsNet.Units.DurationUnit>(UnitsNet.Units.DurationUnit.Year)
+                new FormattedUnit<UnitsNet.Units.DurationUnit>(UnitsNet.Units.DurationUnit.Year365)
             };
 
             return units;

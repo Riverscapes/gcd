@@ -13,7 +13,7 @@ namespace GCDConsoleLib
     {
         private bool _temporary;
         public enum RasterDriver : byte { GTiff, HFA }
-        public LengthUnit VerticalUnits;
+        public LengthUnit? VerticalUnits;
         private bool _bComputedStatistics { get; set; }
 
         private double? _origNodata;
@@ -204,7 +204,7 @@ namespace GCDConsoleLib
         /// <summary>
         /// Initialization function
         /// </summary>
-        protected void _Init(RasterDriver rdDriver, LengthUnit lUnits, Projection proj, GdalDataType dType,
+        protected void _Init(RasterDriver rdDriver, LengthUnit? lUnits, Projection proj, GdalDataType dType,
             ExtentRectangle theExtent, double? ndv)
         {
             _writepermission = false;
@@ -252,13 +252,11 @@ namespace GCDConsoleLib
         /// </summary>
         /// <param name="sUnit"></param>
         /// <returns></returns>
-        private LengthUnit UnitFromString(string sUnit)
+        private LengthUnit? UnitFromString(string sUnit)
         {
-            LengthUnit retUnit = LengthUnit.Undefined;
-            if (sUnit != "")
-                retUnit = Utility.Conversion.ParseLengthUnit(sUnit);
-
-            return retUnit;
+            if (string.IsNullOrEmpty(sUnit))
+                return null;
+            return Utility.Conversion.ParseLengthUnit(sUnit);
         }
 
         /// <summary>
