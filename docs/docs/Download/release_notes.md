@@ -8,6 +8,14 @@ slugL: /Download/release_notes
 
 See the [commit history](https://github.com/Riverscapes/gcd/commits) in GitHub for fuller documentation of changes. Alternatively you can view the commits organized by each product [release](https://github.com/Riverscapes/gcd/releases). The release notes for [prior versions](#prior-versions) are linked at the bottom of this page.
 
+## 7.7.0 - 17 Apr 2026
+
+- GCD Standalone now available in the [Microsoft Store](https://apps.microsoft.com/detail/9N28BNW3TSRJ?hl=en-us&gl=CA&ocid=pdpshare). This is now the preferred method for installing GCD Standalone.
+- GCD Standalone now depends on .Net Framework 4.8.
+- Updated dependencies for SQLite, UnitseNet and Newtonsoft JSON.
+- Anonymous user experience data now shared with developers to help improve performance stability. See [privacy polocy](/About/privacy).
+- No functional changes to any algorithms or calculations.
+
 ## 7.5.29 - 14 Jan 2026
 
 - First beta release of GCD for ArcGIS Pro 3.4 or newer.
