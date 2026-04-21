@@ -12,7 +12,7 @@ The GCD Software is free and will always be under the [GNU Public License](https
 
 ## Want to Donate to the Cause?
 
-💸 We have started a PayPal donation account for users who want to see specific features added to the GCD. You can contribute as little as $10 to the cause, or as much as $500. If you want to put your donation toward a specific development feature, please copy the URL from the [enhancement issue on GitHub](https://github.com/Riverscapes/gcd/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement), and we will apply your money toward that task.  Donations are accepted in any amount, and when we reach a threshold of donations for a specific feature, we will develop it and publish a new release.  You can make a secure donation below using PayPal:
+We have a PayPal donation account for users who want to see specific features added to the GCD. You can contribute as little as $10 to the cause, or as much as $500. If you want to put your donation toward a specific development feature, please copy the URL from the [enhancement issue on GitHub](https://github.com/Riverscapes/gcd/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement), and we will apply your money toward that task.  Donations are accepted in any amount, and when we reach a threshold of donations for a specific feature, we will develop it and publish a new release.  You can make a secure donation below using PayPal:
 
 
 <form xmlns="http://www.w3.org/1999/xhtml" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="paypal">
@@ -30,4 +30,4 @@ The GCD Software is free and will always be under the [GNU Public License](https
 
 ## Want Something More Specific and Concrete
 
-If you want to see specific features definitely incorporated into the GCD, get in touch [with us](http://www.joewheaton.org/contact) and we can discuss setting up a contract or grant.
+If you want to see specific features definitely incorporated into the GCD, get in touch with us (email: support@riverscapes.freshdesk.com) and we can discuss setting up a contract or grant.
