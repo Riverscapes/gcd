@@ -4,26 +4,44 @@ slug: /Download/install
 sidebar_position: 1
 ---
 
-## GCD ArcGIS Add-In
-To install the GCD Add-In for first time to ArcGIS 10.4 or later, simply double-click on [downloaded](https://github.com/Riverscapes/gcd/releases/latest) `*.ESRIAddin` file, while **NOT** in an active ArcMap session. To update, remove the existing, earlier GCD 7.X add-in from your `Customize → AddIn Manager` menu, close ArcMap and install as per above. The video below walks you through this process of updating:
-
-<YouTubeEmbed videoId="9F3k6pn_3RI"/>
+GCD is available as both a desktop standalone application, as well as an addin to ArcGIS. The installation and update processes for these different versions are very diffferent.
 
 ## GCD Standalone
 
-### Clean Install
+### Install
 
-To install GCD 7, Standalone for the first time, simply download the latest `2018_03_28_GCDStandAlone_7_0_*.exe` stand-alone executable install file from [GitHub](https://github.com/Riverscapes/gcd/releases/latest) and run the application. You will need to push pass some security warnings, as shown in the video below:
+GCD Standalone is available in the Microsoft Store.
 
-<YouTubeEmbed videoId="gRSMHbi8-xs"/>
+<a href="https://get.microsoft.com/installer/download/9N28BNW3TSRJ?referrer=appbadge" target="_self" style={{float: 'right', margin: '0 0 1em 1em'}}>
+  <img src="https://get.microsoft.com/images/en-us%20light.svg" width="200"/>
+</a>
+
+1. Open the Microsoft Store app on your Windows machine. This is usually available on the task bar or you can search for it in your start menu.
+1. Search for "GCD". You might need to scroll down if it doesn't appear at the top of the search results.
+1. Click on the blue "Get" link to install the software.
+1. After the install, click on the blue "Open" button in the store launch GCD Standalone.
 
 ### Update
-To update an existing installation of the GCD standalone, simply navigate to `Tools → Check for Updates`, if an update exists, click `Yes`, restart GCD, and follow prompts as illustrated in this video:
 
-<YouTubeEmbed videoId="T0v8NkOg2zc"/>
+Use the following steps to check for and install updates to GCD Standalone:
 
+1. Open the Microsoft Store app on your Windows machine. This is usually available on the task bar or you can search for it in your start menu.
+1. Click on the the bottom left of the Microsoft Store window for the word "Downloads".
+1. GCD Updates will appear in the list with the word "Update" in blue beside them.
+1. Close any existing copies of GCD Standalone software that are running.
+1. Click the blue "Update" button.
 
 ### Uninstall
-To unintsall the standalone GCD, simply navigate in your Windows Control Panel to `Uninstall or Change Program` and find GCD and uinstall it.
 
-<YouTubeEmbed videoId="668-0ZtoOzo"/>
+To unintsall the standalone GCD, navigate in your Windows Control Panel and search for "Add Remove Programs". Find GCD in the list of installed software and click "Remove".
+
+## GCD ArcGIS Add-In
+
+The GCD AddIn installation process is different from the Standalone. 
+
+1. Close all ESRI products.
+1. Download the latest GCD AddIn for ArcGIS from GitHub [here](https://github.com/Riverscapes/gcd/releases/tag/7.7.1). This file should end with the `*.esriaddinx` file extension.
+1. Double click the downloaded file. ArcGIS should pop up a dialog offering to install the AddIn. Click "Install".
+1. Launch ArcGIS and the GCD Toolbar should be visible in ArcGIS.
+
+To Update the AddIn, inside ArcGIS switch to the "Project" menu and then choose "AddIn Manager". Click on "GCD Viewer" and then click "Delete This AddIn" in the bottom right of the window. Now follow the installation steps above.
