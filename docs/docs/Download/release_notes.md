@@ -86,7 +86,7 @@ See the [commit history](https://github.com/Riverscapes/gcd/commits) in GitHub f
 
 ## 7.1.1 - 29 Jun 2018
 
-* Fixed GCD calling the Cross Section Viewer by changing the publisher to `North Arrow Research Ltd.`
+* Fixed GCD calling the [Cross Section Viewer](https://xsviewer.northarrowresearch.com) by changing the publisher to `North Arrow Research Ltd.`
 * Fixed budget segregation issue when the thresholded histogram possesses no values.
 
 ## 7.1.0 - 11 May 2018
